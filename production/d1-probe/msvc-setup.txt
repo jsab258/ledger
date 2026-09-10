@@ -1,4 +1,4 @@
-# MSVC build tools setup - 7a2b52a
+# MSVC build tools setup - f6508b3
 
 present: Microsoft.VisualStudio.Component.VC.Tools.x86.x64 (the C++ toolchain, for the game target)
 present: Microsoft.Net.Component.4.8.SDK (the .NET Framework SDK, for the editor target)
