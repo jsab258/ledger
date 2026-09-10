@@ -9,6 +9,60 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-10 20:15Z: THE INSTALL RE-RAN AND REFUSED, WHICH IS THE ANSWER
+
+RUN ff885ed9, measured on 9e49c53c, and it settles four things at once. Read it
+rather than the exit code:
+
+    workflowRef=main daemonsBranch=main
+    repo=C:\Users\Jafar\ledger-migrate
+    configLocalPresent=True
+    supervisorPath=C:\Users\Jafar\wc26-picks   on all four processes
+    resyncAction=skipped-supervisor-running
+    checkoutBroughtCurrentThisRun=False taskAlreadyNamesRepo=False
+    installAction=refused-checkout-not-current
+      wanted=C:\Users\Jafar\ledger-migrate taskHolds=C:\Users\Jafar\wc26-picks
+    installerExitCode=0
+
+1. THE BRANCH REPOINT WORKS. `daemonsBranch=main` where it read the old branch
+   this morning.
+2. THE NEW CHECKOUT EXISTS AND IS FOUND. Find-Repo resolves `ledger-migrate`
+   rather than throwing.
+3. TWO PREDICTIONS OF MINE WERE WRONG AND THE MEASUREMENT CORRECTED BOTH.
+   `configLocalPresent=True`: the Telegram key IS in the new checkout. I had
+   reasoned that because the file is gitignored and untracked the migration's
+   clone could not contain it, and I was about to report it as a blocker. Git
+   could not have put it there; something else did, and the question was
+   settled by running the entry point rather than by the inference. The other
+   was voice-live, below.
+4. A1 FIRED ON ITS FIRST REAL RUN. The refusal the director demanded is the
+   thing that stopped this push from arming a fleet pinned to the archive, and
+   it exits 0 because a refusal is a correct outcome.
+
+AND THE SEND HALF REFUSED TOO, FOR A DIFFERENT AND ALSO CORRECT REASON:
+
+    sweepCheckoutRunSha=9e49c53c... sweepCheckoutPcHeadSha=f6508b3b...
+    sweepCheckoutContains=no sweepCheckoutDecision=refuse
+    sweepCheckoutBehindSecByCommitTime=18073
+    sweepStatus=REFUSED-STALE-CHECKOUT sweepSent=0 sweepGateExit=3
+
+`ledger-migrate` is frozen at the migration commit, about five hours behind,
+because the thing that would refresh it lives in the fleet that is still in
+`wc26-picks`. So the sender declined to send a message written against files
+that checkout has never seen. TWO GATES REFUSED TONIGHT AND BOTH WERE RIGHT;
+neither is a fault and neither should be loosened.
+
+SO THE ROUND TRIP STANDS AT ONE OF FOUR ON THIS REPOSITORY. The probe landed
+here with a real payload. The receipt happened, on the archive. The message
+from his phone and the answer back are both blocked, by the one cause, behind
+his one action: stop the fleet once, or sign out and in.
+
+THE HOURLY TRIGGER IS PROVEN RATHER THAN MERELY ARMED. It fired at 20:03:44Z
+into this session, and its own rule (do the inbox half and stop when work is in
+flight) was the correct behaviour and what happened. The inbox read clean:
+newestMessageId=61 here against 64 and 65 on the archive, which is the split
+stated as a number.
+
 ## 2026-09-10 19:20Z: FIRST SESSION ON `ledger`, AND THE FLEET IS STILL ON THE ARCHIVE
 
 THE MOVE ITSELF IS GOOD, AND CHECKING IT CORRECTED WHAT I WAS ABOUT TO WRITE.
