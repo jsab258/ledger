@@ -97,21 +97,31 @@ echo.
 REM --- where is the repository? ---------------------------------------
 REM  The named path first, for the reason the studio machine gives: this
 REM  file may be running from a TEMP copy, so one level up from it is
-REM  nothing useful, and C:\Users\Jafar\wc26-picks is the path this
+REM  nothing useful, and C:\Users\Jafar\ledger-migrate is the path this
 REM  machine actually uses.
-set "REPO=%USERPROFILE%\wc26-picks"
+set "REPO=%USERPROFILE%\ledger-migrate"
 if not exist "%REPO%\CLAUDE.md" set "REPO=%~dp0."
 for %%I in ("%REPO%") do set "REPO=%%~fI"
 if not exist "%REPO%\CLAUDE.md" (
   echo   COULD NOT FIND THE PROJECT.
-  echo     looked in "%USERPROFILE%\wc26-picks"
+  echo     looked in "%USERPROFILE%\ledger-migrate"
   echo     and in    "%~dp0."
-  echo   Move the project folder back to %USERPROFILE%\wc26-picks and
+  echo   Move the project folder back to %USERPROFILE%\ledger-migrate and
   echo   click this again. Nothing was started.
   goto :theend
 )
 cd /d "%REPO%"
 echo   project : %REPO%
+
+REM --- point `origin` at the repository this project lives in ----------
+REM  BEFORE ANYTHING BELOW CAN RESET THIS CHECKOUT. "MIGRATE TO
+REM  LEDGER.bat" cloned this folder FROM THE OLD REPOSITORY and added the
+REM  new one as a second remote called `ledger`, so here the name `origin`
+REM  still points at the wc26-picks archive. The supervisor this window
+REM  starts resyncs through `origin` and hard-resets to what comes back,
+REM  so on the archive it would replace the project with the unrelated
+REM  football-picks site. Idempotent: saying it twice costs nothing.
+git remote set-url origin https://github.com/jsab258/ledger.git >nul 2>&1
 
 REM --- copy anything this machine made, somewhere git cannot reach -----
 REM  Look before you destroy: a cancelled job once deleted 24 clips

@@ -250,7 +250,7 @@ jobs:
           $ErrorActionPreference = "Continue"
           $out = "production/pc-ops/push-diagnosis.txt"
           New-Item -ItemType Directory -Force -Path "production/pc-ops" | Out-Null
-          $repo = "C:\Users\Jafar\wc26-picks"
+          $repo = "C:\Users\Jafar\ledger-migrate"
           $L = @(
             "# LEDGER push diagnosis - $($env:GITHUB_SHA.Substring(0,7)) @$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())",
             "# Line 1 names the commit this was read on. READ ONLY: nothing here",
@@ -400,7 +400,7 @@ jobs:
           # never reached the commit. Ruled 2026-09-08, section 4.
           $out = Join-Path (Get-Location).Path "production/pc-ops/outbox-sweep.txt"
           New-Item -ItemType Directory -Force -Path "production/pc-ops" | Out-Null
-          $repo = "C:\Users\Jafar\wc26-picks"
+          $repo = "C:\Users\Jafar\ledger-migrate"
           $sha = if ($env:GITHUB_SHA) { $env:GITHUB_SHA.Substring(0,7) } else { "SHA-UNKNOWN" }
           "# LEDGER one outbox sweep - $sha @$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())" |
             Set-Content $out -Encoding utf8
@@ -576,7 +576,7 @@ jobs:
           $ErrorActionPreference = "Continue"
           $out = Join-Path (Get-Location).Path "production/pc-ops/brief-send.txt"
           New-Item -ItemType Directory -Force -Path "production/pc-ops" | Out-Null
-          $repo = "C:\Users\Jafar\wc26-picks"
+          $repo = "C:\Users\Jafar\ledger-migrate"
           $sha = if ($env:GITHUB_SHA) { $env:GITHUB_SHA.Substring(0,7) } else { "SHA-UNKNOWN" }
           "# LEDGER one daily-brief send - $sha @$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())" |
             Set-Content $out -Encoding utf8
@@ -698,7 +698,7 @@ jobs:
           # never reached the commit. Ruled 2026-09-08, section 4.
           $out = Join-Path (Get-Location).Path "production/pc-ops/inbox-flush.txt"
           New-Item -ItemType Directory -Force -Path "production/pc-ops" | Out-Null
-          $repo = "C:\Users\Jafar\wc26-picks"
+          $repo = "C:\Users\Jafar\ledger-migrate"
           $sha = if ($env:GITHUB_SHA) { $env:GITHUB_SHA.Substring(0,7) } else { "SHA-UNKNOWN" }
           "# LEDGER one inbox flush - $sha @$([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())" |
             Set-Content $out -Encoding utf8
@@ -844,7 +844,7 @@ jobs:
           $ErrorActionPreference = "Continue"
           $out = "production/pc-ops/supervisor-status.txt"
           New-Item -ItemType Directory -Force -Path "production/pc-ops" | Out-Null
-          $src = "C:\Users\Jafar\wc26-picks\game-design\pc-jobs\supervisor-status.txt"
+          $src = "C:\Users\Jafar\ledger-migrate\game-design\pc-jobs\supervisor-status.txt"
           $sha = $env:GITHUB_SHA
           if ($sha) { $sha = $sha.Substring(0, [Math]::Min(7, $sha.Length)) } else { $sha = "SHA-UNKNOWN" }
           $stamp = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()

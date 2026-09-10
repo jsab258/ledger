@@ -40,7 +40,7 @@ import argparse
 import subprocess
 import sys
 
-BRANCH = "claude/game-dev-ai-automation-2h67ix"
+BRANCH = "main"
 
 
 def git(*args, check=False):

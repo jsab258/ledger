@@ -43,11 +43,11 @@ REM ===================================================================
 
 set "REPO=%~dp0"
 if "%REPO:~-1%"=="\" set "REPO=%REPO:~0,-1%"
-if not exist "%REPO%\CLAUDE.md" set "REPO=%USERPROFILE%\wc26-picks"
+if not exist "%REPO%\CLAUDE.md" set "REPO=%USERPROFILE%\ledger-migrate"
 if not exist "%REPO%\CLAUDE.md" (
   echo.
   echo   Could not find the LEDGER repository.
-  echo   Looked next to this file and in "%USERPROFILE%\wc26-picks".
+  echo   Looked next to this file and in "%USERPROFILE%\ledger-migrate".
   goto :theend
 )
 

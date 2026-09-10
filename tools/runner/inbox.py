@@ -49,7 +49,7 @@ import time
 
 #: The work branch, whose newest commit is the awake/asleep proxy. Same
 #: string as `tools/pc-watcher.py:BRANCH`.
-WORK_BRANCH = "claude/game-dev-ai-automation-2h67ix"
+WORK_BRANCH = "main"
 
 #: One writer (this file), disposable history, named beside `pc-results` so
 #: the pair reads as what it is: one branch out of the PC, one branch in.

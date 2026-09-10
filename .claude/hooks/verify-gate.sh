@@ -56,9 +56,19 @@ INPUT=$(cat)
 if command -v jq >/dev/null 2>&1; then
     COMMAND=$(printf '%s' "$INPUT" | jq -r '.tool_input.command // empty')
 else
+    # THE FALLBACK MUST DECODE `\n`, or the newline handling below is INERT on
+    # any container without jq: a real newline arrives over JSON as the two
+    # characters `\` `n`, and the scanner would never see a command boundary
+    # where the transcript plainly shows one. Measured 10 Sep: the raw
+    # extraction returns `echo a\ngit ...` with the backslash intact.
+    # It is a lesser decoder than jq and says so: a literal `\\n` in the
+    # command text decodes here as a newline. jq is present in this container
+    # and is the path actually taken; this is the degraded one.
     COMMAND=$(printf '%s' "$INPUT" \
         | grep -oE '"command"[[:space:]]*:[[:space:]]*"([^"\\]|\\.)*"' \
-        | head -1 | sed 's/^"command"[[:space:]]*:[[:space:]]*"//; s/"$//')
+        | head -1 | sed 's/^"command"[[:space:]]*:[[:space:]]*"//; s/"$//' \
+        | sed 's/\\n/\
+/g; s/\\t/\t/g; s/\\"/"/g; s/\\\\/\\/g')
 fi
 
 # Spaces in a `key=value` value truncate every reader that splits on
@@ -86,8 +96,124 @@ nsp() { printf '%s' "${1// /%20}"; }
 # `git commit;` is still caught (a `;` is a boundary) while `git commit-graph
 # write` — which creates no commit — is not.
 COMMIT_RE='(^|[;&|][[:space:]]*)git[[:space:]]+([-a-zA-Z]+[[:space:]]+|-[Cc][[:space:]]+[^[:space:]]+[[:space:]]+)*commit([^-_[:alnum:]]|$)'
-[[ "$COMMAND" =~ $COMMIT_RE ]] || exit 0
-INVOCATION="${BASH_REMATCH[0]}"
+
+# ---------------------------------------------------------------------------
+# THE SCANNABLE FORM, and it is the difference between a gate and a decoration.
+#
+# TWO HOLES, BOTH MEASURED 10 SEP by feeding JSON to this hook on stdin:
+#
+#   want 2 got 0   cat <<EOF\nx\nEOF\n<the commit>          MISSED
+#   want 2 got 0   cat > /tmp/m.txt <<'EOF'\nhi\nEOF\n<...>  MISSED
+#   want 2 got 0   echo a\n<the commit>                      MISSED
+#   want 0 got 2   grep -n "sim-shots\|git add\|<the verb>"  BLOCKED
+#
+# THE THIRD LINE IS THE DIAGNOSIS. It was reported as a heredoc bug, and a
+# heredoc is only how a newline usually gets in: the boundary class above is
+# `[;&|]`, which does not contain a newline, so a commit at the start of any
+# line but the first was never a commit as far as this gate was concerned.
+# That is the exact shape CLAUDE.md prescribes. "Write the message to a file,
+# not an unquoted heredoc", plus doing it in one Bash call, IS a heredoc
+# followed by a newline followed by the verb. The gate was open on the
+# recommended path and shut on nothing.
+#
+# The fourth is the mirror: `|` inside a QUOTED grep pattern read as a command
+# boundary, so a read-only grep whose pattern merely mentions the verb could
+# not run. `echo hi | grep hi` was always allowed, so the fault is quoting
+# blindness, not pipes.
+#
+# WHAT THIS IS NOT: a shell parser. It is a one-pass, LENGTH-PRESERVING mask,
+# in which every character maps to exactly one character. So the match found in
+# the masked text can be sliced back out of the original by offset, and the
+# `-C` and `cd` parsing below keeps reading the REAL text it always read.
+#
+#   inside '...' and "..."   -> `.`   (a quoted mention is not an invocation)
+#   inside a heredoc body    -> `.`   (data, not commands)
+#   newline (a real one)     -> `;`   (which is what a newline IS to the shell)
+#
+# ESCAPES OUTSIDE QUOTES ARE LEFT ALONE, deliberately. `echo a \| <the verb>`
+# runs no commit, so masking `\|` would be defensible and would also turn a
+# BLOCK into an ALLOW. Same-repo, this hook errs toward BLOCK, trading one
+# re-run against one unverified commit, so the conservative reading stands.
+scan_form() {
+    # RS is a control character so awk reads the whole command as ONE record;
+    # a line-based read cannot see which newlines are inside a heredoc body.
+    LC_ALL=C printf '%s' "$1" | LC_ALL=C awk '
+    BEGIN { RS = "\1" }
+    {
+        s = $0; n = length(s); out = ""; q = ""; hb = 0; tagn = 0; tagi = 0
+        line = ""; i = 1
+        while (i <= n) {
+            c = substr(s, i, 1)
+            if (hb) {                                   # heredoc body: data
+                if (c == "\n") {
+                    t = line
+                    if (strip[tagi]) sub(/^\t+/, "", t)
+                    if (t == tag[tagi]) { hb = 0; tagi++; out = out ";" }
+                    else out = out "."
+                    line = ""
+                } else { line = line c; out = out "." }
+                i++; continue
+            }
+            if (q != "") {                              # inside a quoted string
+                if (q == "\"" && c == "\\") { out = out ".."; i += 2; continue }
+                if (c == q) { out = out c; q = "" } else out = out "."
+                i++; continue
+            }
+            if (c == "'"'"'" || c == "\"") { q = c; out = out c; i++; continue }
+            if (c == "<" && substr(s, i + 1, 1) == "<") {
+                if (substr(s, i + 2, 1) == "<") {       # <<< is a herestring
+                    out = out "<<<"; i += 3; continue
+                }
+                j = i + 2; pre = "<<"; st = 0
+                if (substr(s, j, 1) == "-") { st = 1; pre = pre "-"; j++ }
+                while (substr(s, j, 1) == " " || substr(s, j, 1) == "\t") {
+                    pre = pre substr(s, j, 1); j++
+                }
+                tg = ""; qc = substr(s, j, 1)
+                if (qc == "'"'"'" || qc == "\"") {      # <<'"'"'EOF'"'"' and <<"EOF"
+                    pre = pre qc; j++
+                    while (j <= n && substr(s, j, 1) != qc) {
+                        tg = tg substr(s, j, 1); pre = pre substr(s, j, 1); j++
+                    }
+                    if (j <= n) { pre = pre qc; j++ }
+                } else {
+                    while (j <= n && substr(s, j, 1) ~ /[A-Za-z0-9_]/) {
+                        tg = tg substr(s, j, 1); pre = pre substr(s, j, 1); j++
+                    }
+                }
+                if (tg != "") { tag[tagn] = tg; strip[tagn] = st; tagn++ }
+                out = out pre; i = j; continue
+            }
+            if (c == "\n") {                            # a newline IS a boundary
+                out = out ";"
+                if (tagi < tagn) { hb = 1; line = "" }
+                i++; continue
+            }
+            out = out c; i++
+        }
+        printf "%s", out
+    }'
+}
+
+SCAN=$(scan_form "$COMMAND")
+[[ "$SCAN" =~ $COMMIT_RE ]] || exit 0
+
+# SLICE THE ORIGINAL BY OFFSET. The mask is length-preserving, so the match's
+# position in `$SCAN` is its position in `$COMMAND`, and everything downstream
+# reads the real characters, so a `git -C "/some dir" commit` keeps its path.
+INVOCATION_SCAN="${BASH_REMATCH[0]}"
+SCAN_PREFIX="${SCAN%%"$INVOCATION_SCAN"*}"
+INV_AT=${#SCAN_PREFIX}
+INVOCATION="${COMMAND:INV_AT:${#INVOCATION_SCAN}}"
+PREFIX="${COMMAND:0:INV_AT}"
+# AND CHECK THE ALIGNMENT RATHER THAN TRUST IT. Bash counts characters and awk
+# may count bytes, so a multi-byte character earlier in the command could shift
+# the slice. If it did, the slice will not contain the verb; fall back to the
+# masked text, which has the same structure and only loses quoted detail.
+if [[ "$INVOCATION" != *git* ]]; then
+    INVOCATION="$INVOCATION_SCAN"
+    PREFIX="$SCAN_PREFIX"
+fi
 
 # ---------------------------------------------------------------------------
 # WHICH REPOSITORY IS BEING COMMITTED TO. Until 24 Aug this hook did not ask:
@@ -110,8 +236,10 @@ if [[ "$INVOCATION" =~ $GITC_RE ]]; then
     TARGET_DIR="${BASH_REMATCH[2]}"
     TARGET_WHY="git-C"
 else
-    # `cd <dir> && ... git commit`: the LAST cd before the invocation.
-    PREFIX="${COMMAND%%"$INVOCATION"*}"
+    # `cd <dir> && ... git commit`: the LAST cd before the invocation. PREFIX is
+    # already the ORIGINAL text up to the match offset, computed above. It used
+    # to be re-derived here with `${COMMAND%%"$INVOCATION"*}`, which is the same
+    # value whenever the two agree and the wrong one when the mask has shifted.
     CD_ARG=$(printf '%s' "$PREFIX" \
         | grep -oE '(^|[;&|(][[:space:]]*)cd[[:space:]]+[^;&|)]+' | tail -1 \
         | sed -E 's/^[;&|(]?[[:space:]]*cd[[:space:]]+//; s/[[:space:]]+$//')

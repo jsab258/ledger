@@ -703,7 +703,7 @@ def run():
         import inbox as _inbox
         branch = _inbox.WORK_BRANCH
     except Exception:                                         # noqa: BLE001
-        branch = "claude/game-dev-ai-automation-2h67ix"
+        branch = "main"
 
     print("")
     print("  LEDGER supervisor. One window, every daemon, restarted when it")

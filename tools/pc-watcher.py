@@ -49,7 +49,7 @@ REQUEST = JOBS / "request.json"
 IDLE = "idle"
 RESULT = JOBS / "result.txt"
 STATE = ROOT / ".pc-watcher-state.json"          # gitignored; local memory
-BRANCH = "claude/game-dev-ai-automation-2h67ix"
+BRANCH = "main"
 # WHERE RESULTS GO, AND IT IS NOT THE BRANCH ABOVE. One writer per branch
 # is the whole redesign: this machine only ever READS `BRANCH` and only
 # ever WRITES `RESULTS`, so no push it makes can collide with a push I
