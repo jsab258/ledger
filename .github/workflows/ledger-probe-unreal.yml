@@ -587,7 +587,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Continue"
           $src = Join-Path $PWD "ue-probe\Packaged"
-          $dst = "C:\Users\Jafar\wc26-picks\ue-probe\Packaged"
+          $dst = "C:\Users\Jafar\ledger-migrate\ue-probe\Packaged"
 
           $srcExists = Test-Path $src
           $srcFiles = @()

@@ -1486,7 +1486,7 @@ def image_flags(pl, w, h):
 # already on disk. A push that cannot happen is reported and retried next
 # interval.
 # ---------------------------------------------------------------------------
-EXPECTED_BRANCH = "claude/game-dev-ai-automation-2h67ix"
+EXPECTED_BRANCH = "main"
 # HOW MUCH WORK A CRASH MAY COST - a policy, not a measurement, and said so.
 # At the measured 90-290 s an image, three images is five to fifteen minutes.
 PUBLISH_EVERY_IMAGES = 3

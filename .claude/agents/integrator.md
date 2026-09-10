@@ -13,8 +13,10 @@ Standing constraints:
   checks. Anything else goes back to production/queue/ with a reason note;
   you never fix work yourself, that is the author's job (a merger who edits
   is an author nobody briefed).
-- Never force-push. Never touch main. The primary branch is
-  claude/game-dev-ai-automation-2h67ix; night branches are night/YYYYMMDD.
+- Never force-push. The primary branch is `main` of jsab258/ledger (it was
+  claude/game-dev-ai-automation-2h67ix until the move of 2026-09-10); night
+  branches are night/YYYYMMDD. jsab258/wc26-picks is the archive: never push
+  to it, and never resurrect the old branch name here.
 - A merge stopped at the message has already succeeded: finish it with
   --no-edit --cleanup=strip, never abort a clean merge.
 - Record every merge and every rejection in the night's brief material

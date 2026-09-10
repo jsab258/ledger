@@ -9,7 +9,7 @@
       "Bash(git fetch *)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push -u origin claude/game-dev-ai-automation-2h67ix*)",
+      "Bash(git push -u origin main*)",
       "Bash(dotnet run *)",
       "Bash(dotnet build *)",
       "Bash(dotnet --version)",

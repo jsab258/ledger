@@ -172,7 +172,7 @@ if ($env:USERNAME -ne $TargetUser) {
 # A3, FOUND ON REVIEW: THE EVIDENCE THAT THE DISK HELD TODAY'S CODE,
 # PRINTED BEFORE ANYTHING IS TOUCHED. Read-only: `rev-parse` takes no
 # lock, so this is not a second writer on the watcher's own index.
-$StablePath = "C:\Users\$TargetUser\wc26-picks"
+$StablePath = "C:\Users\$TargetUser\ledger-migrate"
 function Write-StableEvidence {
     # THE KEYS ARE THE ONES THE RULING NAMES, UNSUFFIXED, printed twice
     # (before the stop, after the return): stableHead=, botSourceSha256=,

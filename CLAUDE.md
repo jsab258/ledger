@@ -156,9 +156,9 @@ deletes it, so paste the footer FROM THE FILE, never from the scrollback.
 Write the message to a file, not an unquoted heredoc: a backticked identifier
 has twice been executed by the shell.
 
-Branch: `claude/game-dev-ai-automation-2h67ix`. Never open a pull request
-unless asked. Never make a purchase or use an account; every purchase is
-Jafar's.
+Branch: `main` of `jsab258/ledger`; `wc26-picks` is the archive, never
+pushed. No pull request unless asked. Purchases and accounts are Jafar's
+alone.
 
 Voice sourcing consent rule: only corpora whose contributors donated their
 voices to build speech technology, and no identifiable public figures, ever.

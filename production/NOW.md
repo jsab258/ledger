@@ -9,6 +9,132 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-10 19:20Z: FIRST SESSION ON `ledger`, AND THE FLEET IS STILL ON THE ARCHIVE
+
+THE MOVE ITSELF IS GOOD, AND CHECKING IT CORRECTED WHAT I WAS ABOUT TO WRITE.
+All four branches arrived and the migration copied them identically, so all 170
+decision records keep resolving here. But "the identifiers are identical" is
+TRUE OF THE MIGRATION INSTANT AND FALSE NOW, because both repositories are live
+and have each moved since:
+
+    branch          ledger        archive(wc26-picks)
+    art/atlas-01    8c7a1b0a      46d7d759        ledger moved ahead, under CI
+    pc-inbox        2a7a234c      2ca5cc39        THE ARCHIVE MOVED AHEAD
+    pc-results      3efd67eb      3efd67eb        equal
+    main            8caa61d6      (e7c92cd)       both moved, see below
+
+The pc-inbox row is not a curiosity, it is the diagnosis. THE ARCHIVE'S RETURN
+BRANCH IS AHEAD BECAUSE HIS PC IS STILL WRITING TO IT: at 18:55:55Z the bot
+pushed two delivery receipts there, minutes after this session started. A
+sentence saying the identifiers match would have hidden exactly the fault this
+entry is about.
+
+THE ONE COMMIT THE MIGRATION MISSED came across this session: e7c92cd, model
+routing, made on wc26-picks after the copy. Its parent is the migration point,
+so it merged clean into main.
+
+THE RUNNER IS ALIVE ON THE NEW REPOSITORY AND A PROBE HAS ALREADY LANDED ON
+IT. `8caa61d6 UE machine probe from f6508b3b` is a real payload and not a green
+exit code: line 1 names the commit, and the verdict carries
+perceptionRows=2494 perceptionMismatches=0 probeTest=PASS verdictReached=end,
+with the frames and the gif regenerated beside it. That is the evidence channel
+working end to end on `ledger`, which was the thing most at risk in the move.
+
+WHAT IS NOT WORKING, AND IT IS ONE FAULT WITH THREE FACES: EVERY DAEMON ON HIS
+PC IS STILL RUNNING OUT OF `C:\Users\Jafar\wc26-picks` AND READING THE ARCHIVE.
+Measured off the bot restart this evening, which succeeded:
+botRootCommandLine names the wc26-picks path, and stableHead reads
+e7c92cdfdca0f5d558f01720e6ad9f6abb0fcaae, the archive branch tip. The
+supervisor's own status file agrees: statusSource is the wc26-picks path,
+supervisor=running daemons=3 running=3 gaveUp=0, botUptimeSec=68566,
+botSweepPasses=531 with botSweepLastResult=sent0/refused0/of17.
+
+So the channel is HEALTHY AND POINTED AT THE WRONG REPOSITORY. Three
+consequences, and the third is the one that blocks:
+
+1. A message from his phone lands in the ARCHIVE's `pc-inbox`, not this one.
+2. An outbox file pushed here is never swept, because the sweep reads his
+   checkout and his checkout is the old one.
+3. THE TRANSITION CANNOT BE DONE FROM HERE. The installer refuses to touch a
+   checkout while a supervisor or a bare pc-watcher is running, by design,
+   because two writers on one git index cost this project four days. The old
+   fleet is running, so the resync of the NEW checkout is skipped, so the new
+   checkout stays frozen at whatever the migration left. It is the same
+   deadlock shape the installer's own header already documents, one level
+   across: the watcher that would keep `ledger-migrate` current is running
+   inside the fleet that lives in `wc26-picks`.
+
+The registered scheduled task can be repointed from CI and that is done. The
+RUNNING processes move at his next logon, or when he stops them once. Nothing
+here forces that, deliberately.
+
+AND ONE THING GIT CANNOT CARRY. `tools/runner/config.local` is gitignored and
+untracked (`.gitignore:98`, 0 files tracked), so the clone the migration made
+CANNOT contain the Telegram token. Until it is copied across by hand, the new
+checkout can receive nothing and send nothing. The installer prints
+`configLocalPresent` for whichever path it is pointed at, so the re-run
+measures this rather than guessing it. The file is never printed and never
+committed.
+
+THE PRE-COMMIT GATE WAS UNREACHABLE HERE AND IS ALSO BYPASSABLE. Two separate
+faults, both found this session, both now repaired, and BOTH WERE WORSE THAN
+FIRST DESCRIBED.
+
+verify.py raised FileNotFoundError out of shape(), the FIRST entry in main(),
+because this container has no dotnet and that step had no missing-tool guard.
+checksRun=0. The repair is one chokepoint rather than 85 call sites: run()
+raises MissingTool for a bare argv[0] PATH cannot find, and main() turns that
+into the file's own idiom. A sweep of the call sites, with its denominators:
+
+    BEFORE  callSites=86 binaries=5 resolveHere=4/5 guarded=0/86
+            unguardedMissing=10 (all dotnet)
+    AFTER   guarded=75/86 unguardedMissing=0
+    footer  checks=70ran/11skipped/81total skippedFor=PowerShell:1/dotnet:10
+
+THE GATE HOOK'S HOLE WAS NOT THE HEREDOC. I reported it as a heredoc bypass;
+the builder found the real shape, which is larger. The boundary class was
+`[;&|]`, WHICH CONTAINS NO NEWLINE, so a commit on ANY LINE BUT THE FIRST was
+never a commit to this gate. A heredoc is only the usual way a newline gets in,
+and it is the way CLAUDE.md itself prescribes. Five of fourteen shapes wrong
+before, zero after.
+
+AND IT DATES TO THE HOOK'S FIRST COMMIT. The builder could not measure this
+because the clone was shallow at 60 commits; unshallowing to 2790 answered it.
+`cd30c19a`, 24 August, the commit that introduced the hook, already carries
+`(^|[;&|]\s*)`. So the gate has been open on the recommended command shape for
+its whole life, seventeen days, and 2b67763 this session is one instance.
+
+NINE REAL FAILURES CAME OUT FROM BEHIND THE CRASH and they are the argument for
+the repair. Most are this container lacking tools rather than code faults:
+game_compiles and reach both raise on dotnet ONE PROCESS BOUNDARY DOWN, where
+the chokepoint cannot see them; blender_hash_parse needs PowerShell; ref_bench
+wanted PIL and decal_ink numpy, both now installed; runs_map_to_commits read
+362 run files against 60 commits, which was the shallow clone and is now 2790;
+director_cadence wants the ruling this batch carries. sheet_read and voice_live
+are the two nobody has explained yet.
+
+THE HOOK SELFTEST FAILS ONE CASE AND IT IS PRE-EXISTING, proven by running the
+same selftest against the hook as HEAD holds it: 60 passed 1 failed there, 74
+passed 1 failed here, the same case. It greps for a key with a literal space
+that the emitter correctly encodes. The assertion is stale, not the code. NOT
+FIXED, deliberately, because fixing a test to make red go green is the one
+thing that erodes a gate.
+
+THE FIRST PUSH TO main STARTED TEN WORKFLOWS AT ONCE and they raced to push
+their evidence. The supervisor install lost: its verification commit ec844444
+exists only on the runner's disk, rejected non-fast-forward after its rebase
+hit a conflict in `production/pc-ops/supervisor-status.txt`. The install itself
+ran; only the push failed. Dispatch it ALONE, with the runner clear.
+
+TWO TRIGGERS ARE ARMED, both bound to this session, and one of them is not the
+cadence he asked for. Full record and both prompts in
+`production/repo-move-triggers.md`. The scheduler refuses any interval under
+an hour, so the thirty-minute trigger is hourly; two offset hourly triggers
+would produce his cadence and were deliberately NOT created, because each
+would pass the check alone while together they are exactly what the floor
+forbids. Neither trigger carries a connector, so a fired session may be unable
+to dispatch a workflow; the prompts themselves need none.
+
 ## 2026-09-10 09:00Z: THE FAIRVIEW SHEET LANDED AND THE TWO-ARM DESIGN PAID OFF
 
 BANKED, four of four, none blank, 171.1 to 188.8 seconds each. The estimator

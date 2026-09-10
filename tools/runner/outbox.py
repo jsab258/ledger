@@ -113,8 +113,8 @@ CLAUSE_CAP = 400
 
 #: The evidence link that rides behind the caption sentence, constitution law
 #: 12. Built from this repository's own remote, which is
-#: https://github.com/jsab258/wc26-picks.
-REPO_BLOB = "https://github.com/jsab258/wc26-picks/blob/main"
+#: https://github.com/jsab258/ledger.
+REPO_BLOB = "https://github.com/jsab258/ledger/blob/main"
 
 SHOTS_DIR = "game-design/sim-shots"
 

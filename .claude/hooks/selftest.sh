@@ -19,6 +19,30 @@ gate_out() {  # $1=command  -> prints the hook's stdout AND stderr, one channel
         | VERIFY_FOOTER="$FOOTER" bash "$HERE/verify-gate.sh" 2>&1
 }
 
+# THE TWO ABOVE INTERPOLATE STRAIGHT INTO JSON, so they cannot carry a newline
+# or a double quote. That is exactly the shape both holes found on 10 Sep
+# hide in. A case written with `call_gate` would have gone green on a command
+# the hook never actually received. This one escapes first.
+json_escape() {  # $1 -> the body of a JSON string
+    local s="$1"
+    s="${s//\\/\\\\}"          # backslash FIRST, or it doubles the others
+    s="${s//\"/\\\"}"
+    s="${s//$'\t'/\\t}"
+    s="${s//$'\n'/\\n}"
+    printf '%s' "$s"
+}
+call_gate_json() {  # $1=command, may contain newlines, quotes and heredocs
+    printf '{"tool_name":"Bash","tool_input":{"command":"%s"}}' \
+        "$(json_escape "$1")" \
+        | VERIFY_FOOTER="$FOOTER" bash "$HERE/verify-gate.sh" >/dev/null 2>&1
+}
+want_gate() {  # $1=expected exit, $2=command, $3=label
+    call_gate_json "$2"
+    local got=$?
+    if [ "$got" = "$1" ]; then say ok "$3"
+    else say bad "$3 (want exit $1, got $got)"; fi
+}
+
 WORK=$(mktemp -d); trap 'rm -rf "$WORK"' EXIT
 cd "$WORK"
 git init -q -b main .
@@ -184,6 +208,79 @@ sleep 1; echo "verify green" > "$FOOTER"; sleep 1; echo x > .claude/settings-not
 call_gate "git commit -m msg"
 [ $? -eq 2 ] && say ok "a sibling file in .claude/ is NOT excluded (named list, not a pattern)" \
              || say bad "a sibling file in .claude/ is NOT excluded (named list, not a pattern)"
+
+# ---- what counts as a command boundary (10 Sep) ----
+# TWO HOLES IN THE SCANNER, both measured by feeding JSON to the hook and both
+# invisible to every case above, because `call_gate` cannot express either.
+#
+#   MISSED  a commit on any line but the first. The boundary class was `[;&|]`
+#           and a newline is in none of them. So `<heredoc>\n<the verb>`, the
+#           shape CLAUDE.md prescribes for a commit message ("write the message
+#           to a file, not an unquoted heredoc"), sailed past ungated. That is
+#           how a commit landed on main with the footer absent.
+#   BLOCKED a read-only `grep` whose PATTERN mentions the verb, because a `|`
+#           inside a quoted string read as a pipe.
+#
+# THE FOOTER IS REMOVED FOR THIS BLOCK so the two outcomes cannot be confused:
+# with no footer, anything the scanner recognises as a commit is exit 2 and
+# anything it does not is exit 0. The question here is DETECTION, and freshness
+# is tested at length above.
+#
+# ACCEPTING FIRST. The expensive failure is a scanner that calls everything a
+# commit, which would block the whole session out of its own repository.
+mv "$FOOTER" "$FOOTER.hidden"
+
+want_gate 0 'grep -n "sim-shots\|git add\|git commit" f.yml | head -20' \
+    "a quoted grep PATTERN mentioning the verb is not an invocation"
+want_gate 0 'echo hi | grep hi' \
+    "a plain pipe with no commit in it still passes"
+want_gate 0 'echo "a git commit b"' \
+    "the verb inside double quotes is a mention, not an invocation"
+want_gate 0 "echo 'a git commit b'" \
+    "the verb inside single quotes is a mention, not an invocation"
+want_gate 0 $'cat <<EOF\ngit commit -m msg\nEOF' \
+    "the verb INSIDE a heredoc body is data, not an invocation"
+want_gate 0 'echo <<<"here git commit string"' \
+    "a herestring <<< is not a heredoc and opens no body"
+
+# REJECTING: the four the gate must catch, and the two boundaries that
+# already worked and must not regress.
+want_gate 2 $'cat <<EOF\nx\nEOF\ngit commit -m msg' \
+    "a commit after an unquoted heredoc is caught"
+want_gate 2 $'cat > msg.txt <<\'EOF\'\nhi\nEOF\ngit commit -F msg.txt' \
+    "a commit after a QUOTED-tag heredoc is caught"
+want_gate 2 $'cat <<-TAB\n\thi\n\tTAB\ngit commit -m msg' \
+    "a commit after a <<- tab-stripped heredoc is caught"
+want_gate 2 $'echo a\ngit commit -m msg' \
+    "a commit after a bare newline is caught (the heredoc was only how the
+     newline got in)"
+want_gate 2 'echo a && git commit -m msg' \
+    "the && boundary still works (not regressed)"
+want_gate 2 'echo a; git commit -m msg' \
+    "the ; boundary still works (not regressed)"
+
+# NOT LOOSENED. `echo a \| git commit` runs no commit, because the escaped pipe
+# makes the rest arguments to echo. Masking it would be defensible AND would turn
+# a BLOCK into an ALLOW. Same-repo this hook errs toward BLOCK: one re-run
+# against one unverified commit. Pinned here so nobody "fixes" it quietly.
+want_gate 2 'echo a \| git commit -m msg' \
+    "an escaped pipe outside quotes still errs toward BLOCK (deliberate)"
+
+# THE MASK IS LENGTH-PRESERVING AND THE ORIGINAL TEXT IS WHAT GETS PARSED.
+# This is the case that tells the two apart. A quoted string sits BEFORE the
+# invocation, so its characters are masked; if the offsets slipped by even one,
+# the `-C` argument would not parse, the hook would fall back to this repo, and
+# a commit in another repo would be BLOCKED. It reads the real path and passes.
+#
+# NOT PINNED HERE, because it has never worked and this is not the change that
+# makes it work: `git -C "<quoted path>" commit` is exit 2 on this version and
+# on the one before it, since the quotes are carried into the path and no such
+# directory exists. The `cd` branch strips them and the `-C` branch does not.
+# Measured 10 Sep against both hooks, reported rather than fixed.
+want_gate 0 "echo \"a quoted argument\" && git -C $OTHER commit -m msg" \
+    "a quoted string before the invocation does not shift the offsets"
+
+mv "$FOOTER.hidden" "$FOOTER"
 
 # The log-agent suite below counts rows from an empty start, so the fixture
 # log written above must not be left standing in its way.

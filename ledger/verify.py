@@ -26,6 +26,7 @@ import datetime
 import os
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -33,7 +34,50 @@ import tempfile
 ROOT = pathlib.Path(__file__).resolve().parent
 
 
+# ------------------------------------------------- a tool this container lacks
+# THE GATE WAS UNREACHABLE HERE, and not in the way that shows.
+#
+# On 10 September `python3 ledger/verify.py` in a container with no .NET SDK did
+# not go red. It RAISED, out of `shape()`, which is the FIRST entry in main()'s
+# tuple:
+#
+#     FileNotFoundError: [Errno 2] No such file or directory: 'dotnet'
+#
+# So checksRun was 0, no check after it ever ran, and `.verify-footer` was
+# ABSENT rather than deleted-because-red. Every one of the ~80 checks that needs
+# no .NET (every lint, every selftest, every docs and queue and agent check)
+# was reachable and went unexecuted, and a commit made from such a container
+# could not carry a footer at all.
+#
+# THE FILE ALREADY KNEW THE ANSWER, three times: `ue-probe instruments SKIPPED
+# (no g++ in this container)`, the pwsh skip and the backend-compile skip. What
+# it did not have was ONE PLACE to put it. A skip written per call site is the
+# shape this project keeps paying for. One idea, 85 sites, and the site nobody
+# edited is the one that raises. So the check goes HERE, at the single wrapper
+# every check already funnels through, and a call site added tomorrow inherits
+# it without anybody remembering to.
+#
+# MEASURED, not assumed. `tools/external-tool-sweep.py` walks this file's
+# subprocess invocations and prints the series; on the run that motivated this
+# it read callSites=86 binarySites=85/pathSites=0/dynamicSites=1 binaries=5
+# resolveHere=4/5 guarded=0/86 unguardedMissing=10 (all `dotnet`).
+#
+# ONLY A BARE NAME. `run([str(binp)] + args)` in `ue_probe_tests` is a binary
+# THIS REPO JUST COMPILED, and a missing one is a real build failure worth
+# seeing red. Anything holding a path separator is therefore left to raise.
+class MissingTool(Exception):
+    """argv[0] is not on PATH in this container. Caught in `main()`, where it
+    becomes a SKIP naming the tool, never a pass and never a crash."""
+
+    def __init__(self, tool):
+        super().__init__(tool)
+        self.tool = tool
+
+
 def run(cmd, cwd=None):
+    head = str(cmd[0]) if cmd else ""
+    if head and os.sep not in head and shutil.which(head) is None:
+        raise MissingTool(head)
     p = subprocess.run(cmd, cwd=cwd or ROOT, capture_output=True, text=True)
     return p.returncode, p.stdout + p.stderr
 
@@ -56,6 +100,81 @@ def run(cmd, cwd=None):
 # Grep `_cap(` before adding a 49th truncation.
 sys.path.insert(0, str(ROOT.parent / "tools"))     # tools/capsay.py
 from capsay import cap as _cap, NOTHING_MEASURED   # noqa: E402
+
+
+# ------------------------------------------------------------ skip accounting
+# A SKIP IS NOT A PASS, and the footer is where that has to be legible.
+#
+# The two words below are the file's OWN, both older than this block: `SKIPPED`
+# (`ue-probe instruments SKIPPED (no g++ in this container)`, `backend compile
+# SKIPPED (no onnxruntime assembly cached)`) and `NOT CHECKED` (the pwsh step,
+# whose docstring is where the rule "a denominator on the skip" is written down).
+# No third idiom is invented here. A fourth word would be a fourth thing this
+# tally has to know about, and this tally is the only reason the footer's count
+# is true.
+SKIP_MARKS = ("SKIPPED", "NOT CHECKED")
+
+# `... SKIPPED (no dotnet in this container)` -> `dotnet`
+#   `... SKIPPED (no onnxruntime assembly cached)` -> `onnxruntime`
+#   `... NOT CHECKED (no PowerShell ...)` -> `PowerShell`
+# One spaceless token per tool, so `skippedFor=` survives a whitespace split.
+_SKIP_TOOL = re.compile(r"\(no ([A-Za-z0-9+._-]+)")
+
+
+def _guarded(fn, name=None):
+    """Run one check; a tool this container lacks becomes a SKIP naming it.
+
+    THE CATCH IS HERE AND NOWHERE ELSE. Before 10 September a missing `dotnet`
+    propagated out of `shape()`, which is main()'s FIRST check, and took the
+    other ~80 with it, unrun and unreported. Catching per call site was the
+    alternative, and 85 call sites is 85 chances to forget one."""
+    try:
+        return fn()
+    except MissingTool as exc:
+        # SAME IDIOM AS THE THREE HAND-WRITTEN SKIPS, deliberately: a footer
+        # reader greps one word to find what did not run here.
+        return True, "%s SKIPPED (no %s in this container)" % (
+            name or getattr(fn, "__name__", "check"), exc.tool)
+
+
+def _footer(results):
+    """The footer line from `(ok, text)` per check. Whole-run counts first.
+
+    IT READS THE TEXTS RATHER THAN COUNTING ITS OWN CATCHES. Three checks skip
+    for reasons `MissingTool` cannot see. One wants an onnxruntime assembly that
+    is not cached, and one wants a pwsh that lives a process boundary away behind
+    `tools/ps-check.py`. A count of exceptions would say `2skipped` on a run
+    where five checks did not
+    run. Under-reporting what went unmeasured is the whole fault this line
+    exists to stop, so the tally reads what the run actually said.
+
+    ONLY A GREEN PART CAN BE A SKIP. A red check quoting a tool's output that
+    happens to contain the word would otherwise be counted as unrun, moving both
+    halves of the fraction at once.
+
+    Cumulative over the run; `ran` and `skipped` partition `total`."""
+    total = len(results)
+    skips = [t for ok, t in results if ok and any(m in t for m in SKIP_MARKS)]
+    tools = {}
+    for t in skips:
+        m = _SKIP_TOOL.search(t)
+        tools[m.group(1) if m else "unnamed"] = tools.get(
+            m.group(1) if m else "unnamed", 0) + 1
+    head = "checks=%dran/%dskipped/%dtotal" % (total - len(skips), len(skips),
+                                               total)
+    if skips:
+        # NO SPACES IN THE VALUE. `tool:count` pairs joined by `/`, and the
+        # counts sum to `skipped` above, so the two numbers can be checked
+        # against each other by eye rather than trusted.
+        head += " skippedFor=" + "/".join(
+            "%s:%d" % (k, tools[k]) for k in sorted(tools))
+    if not results:
+        # A ZERO THAT CANNOT READ AS CLEAN. This is the 10 September state
+        # exactly: checksRun=0, because the first check raised and the run
+        # therefore examined nothing. The words, not a blank, and no space in
+        # the value.
+        return "checks=%s/0ran/0skipped/0total, no check reported." % NOTHING_MEASURED
+    return head + ", " + ", ".join(t for _, t in results) + "."
 
 
 # ------------------------------------------------ a lint that went non-zero
@@ -6923,6 +7042,91 @@ def _strings_selftest():
     say(not r_bad[0] and "inboxUntracked=1/2" in r_bad[1],
         "an untracked message is red and names how many of how many", r_bad)
 
+    # ---- THE SKIP ACCOUNTING, ACCEPTING CASES FIRST (added 10 Sep).
+    #
+    # THE ARITHMETIC AND THE STRING ARE TESTED HERE because that is where this
+    # project puts them: a formatter that ships unrun and prints a plausible
+    # number is the silent-instrument failure, and `_footer` prints the one
+    # number a reader uses to decide whether a green footer means anything.
+    #
+    # THE EXPENSIVE FAILURE IS A COUNTER THAT CALLS EVERYTHING A SKIP, so the
+    # first two rungs are runs with NO skip in them at all: the fraction must
+    # say so, and `skippedFor=` must be absent rather than empty.
+    f_clean = _footer([(True, "3 shape errors"), (True, "2764 CoreTests")])
+    say("checks=2ran/0skipped/2total" in f_clean and "skippedFor" not in f_clean,
+        "footer rung 1: ACCEPTING: no skip prints 0 beside its denominator "
+        "and no skippedFor clause", f_clean)
+
+    f_red = _footer([(False, "CoreTests RED: FAILED Suspicion.Decay"),
+                     (True, "191 file(s) walked")])
+    say("checks=2ran/0skipped/2total" in f_red,
+        "footer rung 2: ACCEPTING: a red check counts as RAN, because it "
+        "measured something and found it wrong", f_red)
+
+    # RULE 5b's OTHER HALF: a run in which the thing it asserts CAN happen.
+    f_skip = _footer([(True, "shape SKIPPED (no dotnet in this container)"),
+                      (True, "core_tests SKIPPED (no dotnet in this container)"),
+                      (True, "backend compile SKIPPED (no onnxruntime assembly "
+                             "cached)"),
+                      (True, "191 file(s) walked")])
+    say("checks=1ran/3skipped/4total" in f_skip
+        and "skippedFor=dotnet:2/onnxruntime:1" in f_skip,
+        "footer rung 3: the counts partition the total and skippedFor names "
+        "each tool with how many checks it took out", f_skip)
+
+    # The pwsh skip is the file's OTHER word, and a tally that only knew
+    # `SKIPPED` would count this run as fully green.
+    f_pwsh = _footer([(True, "pwsh steps NOT CHECKED (no PowerShell — dotnet "
+                             "tool install --global PowerShell)"),
+                      (True, "191 file(s) walked")])
+    say("checks=1ran/1skipped/2total" in f_pwsh
+        and "skippedFor=PowerShell:1" in f_pwsh,
+        "footer rung 4: `NOT CHECKED` counts too, so the file's older skip "
+        "idiom cannot read as green", f_pwsh)
+
+    # ---- REJECTING: the shapes that must NOT be counted as skips.
+    f_quote = _footer([(False, "MESHGEN RED: the tool printed SKIPPED for 3 "
+                               "meshes"),
+                       (True, "191 file(s) walked")])
+    say("checks=2ran/0skipped/2total" in f_quote and "skippedFor" not in f_quote,
+        "footer rung 5: REJECTING: a RED check quoting the word SKIPPED out "
+        "of a tool's output is not a skip", f_quote)
+
+    f_none = _footer([])
+    say(NOTHING_MEASURED in f_none and "0ran/0skipped/0total" in f_none,
+        "footer rung 6: REJECTING: a run where nothing reported says the "
+        "words, never a clean 0", f_none)
+
+    say(all(" " not in p.split("=", 1)[1] for p in
+            [w for w in f_skip.split() if w.startswith("skippedFor=")]),
+        "footer rung 7: REJECTING: no space inside a key=value value, so a "
+        "whitespace-splitting reader cannot silently truncate it", f_skip)
+
+    # `_guarded` is the other half of the same idea: the catch that turns a
+    # missing tool into that text in the first place.
+    g_ok = _guarded(lambda: (True, "191 file(s) walked"))
+    say(g_ok == (True, "191 file(s) walked"),
+        "guard rung 1: ACCEPTING: a check that returns normally is passed "
+        "through untouched", g_ok)
+
+    def _raiser():
+        raise MissingTool("dotnet")
+    g_skip = _guarded(_raiser, name="shape")
+    say(g_skip[0] and g_skip[1] == "shape SKIPPED (no dotnet in this container)",
+        "guard rung 2: a missing tool becomes a named SKIP, not a crash and "
+        "not a bare pass", g_skip)
+
+    def _boom():
+        raise ValueError("the check itself is broken")
+    try:
+        _guarded(_boom)
+        g_other = "swallowed"
+    except ValueError:
+        g_other = "propagated"
+    say(g_other == "propagated",
+        "guard rung 3: REJECTING: any other exception still propagates, so "
+        "the catch cannot become a blanket amnesty", g_other)
+
     return passed, failed, lines
 
 
@@ -7096,7 +7300,7 @@ def main():
             print(l)
         return 2 if any(NOTHING_MEASURED in l for l in out[:1]) else 0
 
-    parts, all_ok = [], True
+    results = []                  # (ok, text) per check, in run order
     for fn in (director_cadence, footer_strings,
                lint, shape, shadow, tools_tracked, reach, stranger_test, shape_files, voice_cast, voice_gen, barks_current, voice_live, voice_assets, voices_into_build, pc_watcher, slop,
                card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, content_rule, producer_register, claude_md_size,
@@ -7115,15 +7319,20 @@ def main():
                verdict_emit_dupkeys, runs_map_to_commits, gate_detail_ceiling,
                save_chaos, soak,
                adversary, stale_anchors, clip_audit, picker_selftest, core_tests):
-        ok, text = fn()
-        all_ok &= ok
-        parts.append(text)
+        results.append(_guarded(fn))
     for spec in args.breaks:
-        ok, text = breaks(spec)
-        all_ok &= ok
-        parts.append(text)
+        results.append(_guarded(lambda s=spec: breaks(s), name="breaks/" + spec))
+    all_ok = all(ok for ok, _ in results)
+    parts = [text for _, text in results]
 
-    footer = ", ".join(parts) + "."
+    # THE FOOTER LEADS WITH WHAT DID NOT RUN. Whole-run numbers on the done
+    # line (this string IS the done line), per-check numbers in the parts after
+    # it. `ran` and `skipped` partition `total` by construction, so a reader
+    # pasting this into a commit message can tell "the suite was clean" from
+    # "the suite was clean about the part of itself it could reach". That is
+    # the distinction that did not exist when a missing `dotnet` took the whole
+    # gate out silently. Cumulative over this run; no other statistic.
+    footer = _footer(results)
     print()
     print("--- verification footer ---")
     print(footer)

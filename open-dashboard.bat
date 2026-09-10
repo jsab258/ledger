@@ -94,10 +94,10 @@ set "CHECKOUT=skip-no-working-copy"
 :fromcopy
 
 REM --- where is the repository? ---------------------------------------
-if not exist "%REPO%\CLAUDE.md" set "REPO=%USERPROFILE%\wc26-picks"
+if not exist "%REPO%\CLAUDE.md" set "REPO=%USERPROFILE%\ledger-migrate"
 if not exist "%REPO%\CLAUDE.md" (
   echo   NOTE: could not find the LEDGER repository.
-  echo         Looked in "%REPO%" and "%USERPROFILE%\wc26-picks".
+  echo         Looked in "%REPO%" and "%USERPROFILE%\ledger-migrate".
   echo         Without it there is nothing to read and no page to make.
   goto :theend
 )

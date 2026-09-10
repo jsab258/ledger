@@ -38,8 +38,8 @@ pause
 exit /b 1
 :begin
 
-set "REPO=%USERPROFILE%\wc26-picks"
-set "BRANCH=claude/game-dev-ai-automation-2h67ix"
+set "REPO=%USERPROFILE%\ledger-migrate"
+set "BRANCH=main"
 
 if not exist "%REPO%\.git" (
   echo  No project at %REPO%
@@ -59,6 +59,17 @@ REM  desktop client is installed. The prompt that stranded him twice on
 REM  26 Aug can come from any of those.
 git config core.editor true
 git config core.mergeoptions --no-edit
+
+REM  AND POINT `origin` AT THE REPOSITORY THIS PROJECT ACTUALLY LIVES IN.
+REM  "MIGRATE TO LEDGER.bat" cloned this folder FROM THE OLD REPOSITORY and
+REM  added the new one as a second remote called `ledger`, so here `origin`
+REM  still means the wc26-picks archive - and every line below reads the
+REM  origin-side tracking ref, so without this they would all report on the
+REM  archive
+REM  and "Already up to date" would be a lie about the wrong repository.
+REM  Set in the CLONE for the same reason the two lines above are: the
+REM  daemons and the other .bat files read the same remote. Idempotent.
+git remote set-url origin https://github.com/jsab258/ledger.git
 
 REM  AN UNFINISHED MERGE BLOCKS EVERY PULL AFTER IT, AND SAYS SO IN
 REM  GIT'S WORDS RATHER THAN ANYONE'S. 26 Aug: a pull opened vim to ask

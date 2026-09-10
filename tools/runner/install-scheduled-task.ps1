@@ -83,10 +83,35 @@ function Get-SupervisorProcesses {
         } else {
             'supervise.py'
         }
+        # WHICH CHECKOUT THIS ONE BELONGS TO, because two checkouts now exist
+        # on this machine (the wc26-picks archive clone and ledger-migrate)
+        # and a pid alone cannot say which git index a daemon is holding.
+        # Caller-side, from the same CommandLine the shared query already
+        # read, exactly as the Kind label above is.
+        #
+        # THE INTERPRETER PATH ALSO CONTAINS \tools\, so the capture is
+        # bounded by [^" ] and anchored on the script name: it cannot run
+        # from the python.exe at the front of the line across a quote or a
+        # space and into the script argument, which is how a loose pattern
+        # would report a path that is two paths glued together.
+        #
+        # FAIL CLOSED. A path that cannot be read prints as an unreadable=
+        # value and never as a blank or a missing line, because "no path"
+        # and "a path nobody could parse" are the pair this project keeps
+        # apart everywhere else.
+        $path = if (-not $_.CommandLine) {
+            'unreadable-no-commandline'
+        } elseif ($_.CommandLine -match
+                  '(?<p>[A-Za-z]:\\[^" ]*?)\\tools\\(?:runner\\)?(?:pc-watcher|supervise|launch-supervisor)\.py') {
+            $Matches['p']
+        } else {
+            'unreadable-no-checkout-path-in-commandline'
+        }
         [pscustomobject]@{
             ProcessId = $_.ProcessId
             ParentProcessId = $_.ParentProcessId
             Kind = $kind
+            Path = $path
         }
       })
     return [pscustomobject]@{ Ok = $true; Processes = $procs; QueryError = "" }
@@ -111,14 +136,15 @@ function Test-AnySupervisorRunning {
     foreach ($p in $r.Processes) {
         Write-Host ("supervisorQueryContext=$Label supervisorPid=$($p.ProcessId) " +
                    "supervisorParentPid=$($p.ParentProcessId) " +
-                   "supervisorKind=$($p.Kind)")
+                   "supervisorKind=$($p.Kind) " +
+                   "supervisorPath=$($p.Path -replace ' ','~')")
     }
     return [pscustomobject]@{ Determined = $true
                               AnyRunning = ($r.Processes.Count -gt 0)
                               Processes = $r.Processes }
 }
 
-# THE DEADLOCK, FOUND ON REVIEW: C:\Users\$TargetUser\wc26-picks is stale
+# THE DEADLOCK, FOUND ON REVIEW: C:\Users\$TargetUser\ledger-migrate is stale
 # because the only thing that updates it is pc-watcher's resync, which
 # runs INSIDE the supervisor, and the supervisor has been down since the
 # outage this ruling exists to end. So the install that would keep the
@@ -137,19 +163,42 @@ function Test-AnySupervisorRunning {
 # same question.
 #
 # THE BRANCH IS A LITERAL, NEVER $env:GITHUB_REF_NAME (B2, found on
-# review). This run's push ref happens to equal the daemons' own work
-# branch, but the workflow's header plans a future dispatch from `main`,
-# and a hard reset onto main's tip would move Jafar's local working-branch
-# checkout out from under every daemon reading it. The same string
-# tools/runner/inbox.py:WORK_BRANCH, tools/pc-watcher.py:BRANCH and
-# tools/supervise.py:run's own fallback already carry is used here
-# instead, hard-coded, and the ref this workflow actually ran on is only
-# PRINTED, for a mismatch to be visible, never acted on.
-$DaemonsBranch = "claude/game-dev-ai-automation-2h67ix"
+# review). The daemons' work branch became `main` at the move to the ledger
+# repository on 10 Sep, which is the same string this run's push ref now
+# usually carries - and that coincidence is exactly why the literal has to
+# stay. THREE OTHER BRANCHES ARE STILL LIVE AND STILL DISPATCHABLE
+# (art/atlas-01, pc-inbox, pc-results), so a dispatch from any one of them
+# would put its tip in $env:GITHUB_REF_NAME, and a hard reset onto the
+# message channel's tip would replace Jafar's whole checkout with an inbox.
+# The same string tools/runner/inbox.py:WORK_BRANCH,
+# tools/pc-watcher.py:BRANCH and tools/supervise.py:run's own fallback
+# already carry is used here instead, hard-coded, and the ref this workflow
+# actually ran on is only PRINTED, for a mismatch to be visible, never
+# acted on.
+$DaemonsBranch = "main"
 Write-Host ("workflowRef=$($env:GITHUB_REF_NAME) daemonsBranch=$DaemonsBranch " +
            "daemonsBranchIsWhatGitActuallyUses=true")
 
-$StableForResync = "C:\Users\$TargetUser\wc26-picks"
+# THE REPOSITORY IS A LITERAL TOO, FOR THE SAME REASON AND A SHARPER ONE.
+# "MIGRATE TO LEDGER.bat" cloned C:\Users\Jafar\ledger-migrate FROM THE OLD
+# REPOSITORY and added the new one as a SECOND remote named `ledger`, so in
+# that checkout the name `origin` still points at the wc26-picks archive.
+# `git fetch origin main` there resolves to the ARCHIVE's own main, and the
+# hard reset below would then replace the entire project with it. A
+# destructive operation reading ambient repository configuration is the same
+# class of fault as reading $env:GITHUB_REF_NAME for the branch, so it gets
+# the same answer: the fetch below names this URL, never a remote name, and
+# is correct whatever the checkout's remotes happen to say.
+$LedgerRemote = "https://github.com/jsab258/ledger.git"
+
+$StableForResync = "C:\Users\$TargetUser\ledger-migrate"
+
+# DID THIS RUN ACTUALLY BRING THAT CHECKOUT CURRENT? Every branch below
+# except one leaves this $false, including all four skips, because a skip
+# is precisely the case where something else was supposed to have done it
+# and this run has no evidence that anything did. The registration gate
+# near the bottom of this file reads it.
+$ResyncBroughtCurrent = $false
 $ResyncCheck = Test-AnySupervisorRunning -Label "before-resync"
 
 if (-not $ResyncCheck.Determined) {
@@ -202,11 +251,43 @@ if (-not $ResyncCheck.Determined) {
             Write-Host "resyncDirtyTracked=$($line.Trim() -replace '\s+','_')"
         }
 
+        # AND THE NAME IS REPAIRED WHILE WE ARE HERE, because the daemons DO
+        # say `origin` (tools/pc-watcher.py, tools/supervise.py:resync_once,
+        # tools/runner/inbox.py) and cannot each carry a URL. This is the one
+        # place on this machine that is gated by the three-way process read,
+        # the account check and a .git test, and is therefore the one place
+        # allowed to write to this checkout's configuration.
+        #
+        # READ BACK, NEVER ASSUMED: `git remote set-url` reporting success is
+        # not evidence the name moved, and this is the only line that decides
+        # where every daemon fetches from afterwards. Idempotent, and it
+        # accepts the URL with or without the .git suffix so a checkout that
+        # is already correct is not rewritten every run.
+        $OriginBefore = (& git remote get-url origin 2>&1 | Out-String).Trim()
+        Write-Host ("originUrlBefore=$($OriginBefore -replace '\s+','_')")
+        if (($OriginBefore -replace '\.git$','') -eq
+            ($LedgerRemote -replace '\.git$','')) {
+            Write-Host "originAction=already-ledger"
+        } else {
+            & git remote set-url origin $LedgerRemote 2>&1 | Out-Null
+            $OriginAfter = (& git remote get-url origin 2>&1 | Out-String).Trim()
+            if (($OriginAfter -replace '\.git$','') -eq
+                ($LedgerRemote -replace '\.git$','')) {
+                Write-Host ("originAction=repointed originUrlAfter=" +
+                           "$($OriginAfter -replace '\s+','_')")
+            } else {
+                Write-Host ("originAction=FAILED-still-not-ledger " +
+                           "originUrlAfter=$($OriginAfter -replace '\s+','_') " +
+                           "reason=daemons-that-say-origin-will-still-reach-" +
+                           "the-archive-but-the-fetch-below-is-unaffected")
+            }
+        }
+
         # STDERR IS CAPTURED, NEVER DISCARDED (A1). A failure used to leave
         # exitCode=128 with no words in the only channel anyone can read;
         # a stale .git/index.lock from the 11:30 stop is one of the named
         # ways this can fail, and its message only exists on stderr.
-        $FetchOutput = (& git fetch origin $DaemonsBranch 2>&1 |
+        $FetchOutput = (& git fetch $LedgerRemote $DaemonsBranch 2>&1 |
                         ForEach-Object { $_.ToString() })
         $fetchExit = $LASTEXITCODE
         if ($fetchExit -ne 0) {
@@ -228,6 +309,7 @@ if (-not $ResyncCheck.Determined) {
                                "error=$($ResetOutput -join ' | ')")
                 } else {
                     $short = $sha.Substring(0, [Math]::Min(7, $sha.Length))
+                    $ResyncBroughtCurrent = $true
                     Write-Host ("resyncAction=updated branch=$DaemonsBranch " +
                                "sha=$short")
                 }
@@ -243,12 +325,12 @@ function Find-Repo {
     # $env:USERPROFILE: under the self-hosted runner SERVICE, USERPROFILE
     # is whichever account runs that service, not necessarily
     # $TargetUser, and this project's own probe workflow already
-    # hard-codes exactly this path (C:\Users\Jafar\wc26-picks by default)
+    # hard-codes exactly this path (C:\Users\Jafar\ledger-migrate by default)
     # as the one checkout that survives between jobs. Everything else on
     # this machine under a service-era runner - including wherever THIS
     # SCRIPT itself happens to be checked out - can be the runner's own
     # `_work` directory, which gets swept between runs.
-    $stable = "C:\Users\$TargetUser\wc26-picks"
+    $stable = "C:\Users\$TargetUser\ledger-migrate"
     $runnerAccount = "$env:COMPUTERNAME\$env:USERNAME"
     Write-Host "runnerAccount=$runnerAccount"
     if (Test-Path (Join-Path $stable "CLAUDE.md")) {
@@ -270,7 +352,7 @@ function Find-Repo {
     }
     # NOT CI: the same two-step search "START EVERYTHING.bat" makes, kept
     # for the case Jafar runs this file directly, possibly from a copy.
-    $named = Join-Path $env:USERPROFILE "wc26-picks"
+    $named = Join-Path $env:USERPROFILE "ledger-migrate"
     if (Test-Path (Join-Path $named "CLAUDE.md")) {
         return (Resolve-Path $named).Path
     }
@@ -373,6 +455,68 @@ function Test-TaskMatches {
 }
 
 $Existing = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
+
+# THE FOURTH REFUSAL, AND LANDING THIS FILE IS WHAT MAKES IT REACHABLE.
+# This script sits in its own workflow's push-path filter, so the very
+# push that lands a change here fires the workflow. On a machine where
+# the old fleet is still alive in the archive clone, the three refusals
+# above all hold correctly and the resync is SKIPPED, which leaves
+# $StableForResync at whatever it already was. Nothing further down
+# refuses anything: THE SUPERVISOR LOCK IS PER CHECKOUT, so a fleet
+# running out of one directory does not stop a task being registered
+# against another. Without this gate the task is re-pointed at a
+# checkout no run has brought current, whose `origin` may still be the
+# archive, and the next sign-in starts a fleet against it. One path from
+# there hard-resets the project onto the archive's own main, which is an
+# unrelated site, so the ordinary act of landing this work is the
+# hazard.
+#
+# SO THE REGISTRATION IS ALLOWED ONLY ON EVIDENCE, ONE OF TWO KINDS:
+#   (a) THIS RUN brought that exact path current, which means the reset
+#       above actually landed ($ResyncBroughtCurrent, set in one place
+#       only) AND the path it landed on is the path being registered.
+#       The second half matters because Find-Repo has two fallbacks and
+#       can return a directory the resync never touched.
+#   (b) THE TASK ALREADY NAMES IT, in which case this run is not MOVING
+#       the fleet anywhere; it is at worst rewriting a registration that
+#       already points where it points, which is the idempotent case
+#       this script was built around.
+#
+# A REFUSAL IS A CORRECT OUTCOME, SO IT EXITS 0. A red job here would
+# read as a broken build in the only channel anyone can read, and this
+# is the opposite: it is the gate doing its job. The verdict line says
+# so in words, and names BOTH paths, because "wanted" and "held" is the
+# comparison a reader needs and neither one alone answers it.
+$TaskPathHeld = "no-task-registered"
+if ($Existing) {
+    $ExistingAction = $Existing.Actions | Select-Object -First 1
+    if ($ExistingAction -and $ExistingAction.WorkingDirectory) {
+        $TaskPathHeld = $ExistingAction.WorkingDirectory
+    } else {
+        $TaskPathHeld = "unreadable-task-has-no-working-directory"
+    }
+}
+$ThisRunBroughtRepoCurrent = ($ResyncBroughtCurrent -and
+    ($StableForResync.TrimEnd('\') -eq $Repo.TrimEnd('\')))
+$TaskAlreadyNamesRepo = ($TaskPathHeld.TrimEnd('\') -eq $Repo.TrimEnd('\'))
+Write-Host ("checkoutBroughtCurrentThisRun=$ThisRunBroughtRepoCurrent " +
+           "taskAlreadyNamesRepo=$TaskAlreadyNamesRepo " +
+           "taskPathHeld=$($TaskPathHeld -replace ' ','~')")
+if (-not $ThisRunBroughtRepoCurrent -and -not $TaskAlreadyNamesRepo) {
+    Write-Host ("installAction=refused-checkout-not-current " +
+               "wanted=$($Repo -replace ' ','~') " +
+               "taskHolds=$($TaskPathHeld -replace ' ','~') " +
+               "reason=refusing-to-point-the-logon-task-at-a-checkout-" +
+               "this-run-did-not-bring-current")
+    Write-Host ("install-scheduled-task: " +
+               "installAction=refused-checkout-not-current " +
+               "wanted=$($Repo -replace ' ','~') " +
+               "taskHolds=$($TaskPathHeld -replace ' ','~') " +
+               "exit=0 meaning=a-refusal-is-a-correct-outcome-not-a-" +
+               "failed-build")
+    exit 0
+}
+
 $InstallAction = "none"
 try {
     if (-not $Existing) {

@@ -210,6 +210,14 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   `game-design/decision-2026-09-10-ruling-the-four-lane-batch.md`
 - **2026-09-10** ruling on the painted pieces, queue 223, 226 and 227, 2026-09-10
   `game-design/decision-2026-09-10-ruling-the-painted-pieces.md`
+- **2026-09-10** ruling on the one rules file, 2026-09-10 (indexed 2026-09-10 evening; the file existed and this line did not)
+  `game-design/decision-2026-09-10-ruling-the-one-rules-file.md`
+- **2026-09-10** ruling on the D18 cleanup close-out, 2026-09-10 (indexed 2026-09-10 evening)
+  `game-design/decision-2026-09-10-ruling-the-d18-cleanup-close-out.md`
+- **2026-09-10** model routing, four tiers, 2026-09-10 (indexed 2026-09-10 evening)
+  `game-design/decision-2026-09-10-ruling-model-routing.md`
+- **2026-09-10** ruling on the move batch and the fleet left behind: CLAUDE.md names `main` of jsab258/ledger, the installer may not move the task onto a checkout it has not brought current (A1), Jafar's two clicks or queue 257 complete the move, queues 254 to 258 filed
+  `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
 
 ## Rulings that came off the card queue
 

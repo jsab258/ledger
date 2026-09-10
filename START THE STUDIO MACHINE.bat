@@ -77,16 +77,16 @@ REM --- where is the repository? ---------------------------------------
 REM  This file lives at the top of the project, so one level up from a
 REM  TEMP copy is nothing useful. The named path is tried first for that
 REM  reason, and it is the path this machine actually uses: the prop
-REM  batch of 1 Sep ran out of C:\Users\Jafar\wc26-picks.
-set "REPO=%USERPROFILE%\wc26-picks"
+REM  batch of 1 Sep ran out of C:\Users\Jafar\ledger-migrate.
+set "REPO=%USERPROFILE%\ledger-migrate"
 if not exist "%REPO%\CLAUDE.md" set "REPO=%~dp0."
 for %%I in ("%REPO%") do set "REPO=%%~fI"
 if not exist "%REPO%\CLAUDE.md" (
   echo   COULD NOT FIND THE PROJECT.
-  echo     looked in "%USERPROFILE%\wc26-picks"
+  echo     looked in "%USERPROFILE%\ledger-migrate"
   echo     and in    "%~dp0."
   echo   Without it there is nothing to watch. Move the project folder
-  echo   back to %USERPROFILE%\wc26-picks and click this again.
+  echo   back to %USERPROFILE%\ledger-migrate and click this again.
   goto :theend
 )
 cd /d "%REPO%"
@@ -104,11 +104,25 @@ REM --- update, so the watcher that runs is the current one -------------
 REM  A FAILED PULL IS NOT FATAL BUT IT IS SAID. "ran the old code" and
 REM  "ran the new code" must not look identical in the only window
 REM  anybody reads.
+REM  AND THE NAME IS REPAIRED, ONCE, BEFORE ANY DAEMON STARTS. Everything
+REM  this window launches resyncs through `origin`, so leaving it pointed at
+REM  the archive would hand the watcher the same hard reset this file just
+REM  refused to make. Idempotent: saying it twice costs nothing.
+git --no-pager remote set-url origin https://github.com/jsab258/ledger.git >nul 2>&1
 echo   Updating the project...
 git --no-pager rebase --abort >nul 2>&1
 git --no-pager merge --abort >nul 2>&1
 git --no-pager cherry-pick --abort >nul 2>&1
-git --no-pager fetch origin claude/game-dev-ai-automation-2h67ix
+REM  THE FETCH NAMES A URL, NOT `origin`, AND THE RESET BELOW IS WHY.
+REM  "MIGRATE TO LEDGER.bat" cloned this folder FROM THE OLD REPOSITORY and
+REM  added the new one as a second remote called `ledger`, so here the name
+REM  `origin` still points at the wc26-picks archive. `fetch origin main`
+REM  would bring back the ARCHIVE's own main, which is the unrelated
+REM  football-picks site, and the hard reset three lines down would then
+REM  replace the whole project with it. Same rule as
+REM  tools\runner\install-scheduled-task.ps1: a destructive step never
+REM  reads ambient repository configuration.
+git --no-pager fetch https://github.com/jsab258/ledger.git main
 if errorlevel 1 (
   echo         COULD NOT REACH GITHUB. Carrying on with the copy already
   echo         on this PC. If this behaves like an older version, that is
