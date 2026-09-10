@@ -1,40 +1,9 @@
-# LEDGER supervisor status as CI read it - f6508b3 @1789066573
+# LEDGER supervisor status as CI read it - 9e49c53 @1789070651
 # Line 1 names the commit this was read on.
-# Copied verbatim from the supervisor's own file on his PC,
-# read right after the restart step above, so a changed
-# telegram-botStarts or a reset telegram-botUptimeSec here is
-# the evidence the restart actually took effect.
-statusSource=C:\Users\Jafar\wc26-picks\game-design\pc-jobs\supervisor-status.txt
-statusFound=yes statusBytes=919 statusLines=30 statusAgeSec=22
-statusFresh=yes
-
-supervisor=running
-daemons=3
-running=2
-gaveUp=1
-autostart=removed
-resync=ok/e953e62b
-outboxFiles=18
-outboxReceipts=40
-outboxRefusals=0
-written=2026-09-10T20:55:52
-botSweepPasses=679
-botSweepSent=0
-botSweepRefused=0
-botSweepEverySec=120
-botSweepSecSinceLast=0
-botSweepLastResult=sent0/refused0/of18
-botBriefTapsFiled=0
-botBriefReasonsFiled=0
-botUptimeSec=87734
-botSweepWrittenAt=2026-09-10T20:55:31
-botSweepAgeSec=21
-botSweepStatus=read/10-key(s)
-executorState=idle
-executorHandled=1
-executorPending=0
-executorLimitResumeIn=none
-studio-watcher=gaveup studio-watcherUptimeSec=nothing-measured studio-watcherStarts=5 studio-watcherStops=5 studio-watcherLastExit=3221225786
-telegram-bot=running telegram-botUptimeSec=0 telegram-botStarts=2 telegram-botStops=1 telegram-botLastExit=4294967295
-claude-executor=running claude-executorUptimeSec=87760 claude-executorStarts=1 claude-executorStops=0 claude-executorLastExit=none
-
+# Copied verbatim from the supervisor's own file on his PC.
+# It is written there every 60s and was published nowhere until
+# this step existed, which is why a bot that stopped at 11:30 on
+# 2026-09-07 could not say so.
+statusSource=C:\Users\Jafar\ledger-migrate\game-design\pc-jobs\supervisor-status.txt
+statusFound=no statusBytes=0 statusLines=0 statusAgeSec=nothing-measured
+NOTHING MEASURED - the supervisor has written no status file at that path, so nothing here says which daemons are up.
