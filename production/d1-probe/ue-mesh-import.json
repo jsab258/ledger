@@ -16,7 +16,9 @@
   "pallet",
   "wooden_crate_01",
   "oil_barrel",
-  "awning_02"
+  "awning_02",
+  "fascia_cornice_01",
+  "fascia_console_01"
  ],
  "collisionStat": "simplePrims is a count read off the body setup and is a PROXY; collidable is the asset's own answer and is not a sweep in a level",
  "extraAssets": [
@@ -44,16 +46,16 @@
   "asked": 3,
   "canTranslate": 3,
   "enabledPlugins": [
-   "GLTFExporter",
+   "InterchangeAssets",
    "InterchangeEditor",
    "Interchange",
-   "InterchangeAssets",
+   "GLTFExporter",
    "InterchangeTests",
    "InterchangeAxfAssets"
   ]
  },
  "lampPost01": "imported/saved=yes/simplePrims=1/collidable=YES/simple-prims=1/extentUu=18.4,13.5,150.1",
- "line": "propImportStatus=PARTIAL propImportReturn=2 propMeshesAsked=16/23 propMeshesStat=unique-assets/over-pieces-asking propSources=16/16 propImported=15/16 propSaved=15/16 propCollisionPrims=15/15 propCollisionPrimsUnread=0/15 propCollisionRead=agg-geom-elems=15 propCollisionVia=not-needed/already-had-1=15 propCollisionAgree=agree=0;disagree=0;one-route=15;no-route=0/over=15 propCollisionFlagSet=0/15 propCollidable=15/15 propCollidableUnknown=0/15 propCollidableNo=0/15 propCollidableWhy=YES/simple-prims=1=15 propCollisionPrimsStat=saved-meshes-with-at-least-one-simple-primitive/count-read-off-the-body-setup/over-saved/A-PROXY-NOT-THE-QUESTION propCollidableStat=body-setup-plus-simple-prims-or-complex-as-simple/read-off-the-saved-asset/NOT-a-sweep/over-saved propImportVia=mixed-over-17 propPackageDir=/Game/Ledger/Props propNamePattern=SM_<asset> propGltfImporter=PRESENT/engine-says-it-can-translate/3-of-3 propGltfCanTranslate=3/3 propGltfPluginsEnabled=GLTFExporter;InterchangeEditor;Interchange;InterchangeAssets;InterchangeTests;InterchangeAxfAssets propGltfApi=InterchangeManager;AssetImportTask;InterchangeGenericAssetsPipeline;ImportAssetParameters propAcceptingCase=piece=prop_drainage_grate_01_0/asset=drainage_grate_01/RESOLVED/saved=yes/simplePrims=1/collidable=YES/simple-prims=1/bodySetup=present/traceFlag=CTF_USE_DEFAULT:~0>/sourceParts=1/materialSlots=1/worstOrderedMm=0.0474/worstSortedMm=0.0474 propImportPreexistingDeleted=15/16 propImportSnapshotShape=/Game/Ledger/Props/SM_lamp_post_01.SM_lamp_post_01,/Game/Ledger/Props/awning_02/Materials/DefaultMaterial.DefaultMaterial propImportTaskApi=is_async_import_complete=present;get_objects=present propImportTaskAsync=before=True/after=True=17 propImportResultType=not-reached propImportResultWaitAttrs=none propImportRenamed=15/17 propImportAppearedUnnamed=0/17 propImportLookedFor=/Game/Ledger/Props/SM_<asset> propImportedNames=drainage_grate_01=basic,SM_drainage_grate_01;roll_top_chimney=basic,SM_roll_top_chimney;decorative_bollard_02=DefaultMaterial,SM_decorative_bollard_02;swing_bin=DefaultMaterial,lid,swing_bin;outdoor_bin=DefaultMaterial,SM_outdoor_bin;crowd_control_barrier=basic,SM_crowd_control_barrier;(+11~more~not~shown) propImportResolvedVia=ambiguous-3-appeared/hinges,sign_back,sign_front=1;exact-name-different-folder=13;name-contains-the-asset-id=3 propImportRouteRan=asset-import-task=15;interchange-import-asset=2 propImportWaitTaken=1/17 propImportWaitChanged=0/1 propImportWaitMeans=above-zero-is-an-async-import/zero-is-not-a-rule-out/the-wait-is-a-registry-scan propBoundsWorstMm=44.0215/on=wooden_crate_01/axis=z/of=15 propBoundsWorstSortedMm=44.0215/on=wooden_crate_01 propBoundsBound=NONE-YET/this-run-prints-the-series propBoundsStat=spec-box-minus-engine-bounds-at-worst-over-assets propPivotsUu=drainage_grate_01=0.0,0.0,-0.8;roll_top_chimney=-0.0,-0.0,50.1;decorative_bollard_02=-0.0,0.0,50.4;swing_bin=0.0,0.0,35.6;outdoor_bin=0.0,0.0,38.2;crowd_control_barrier=0.0,0.0,56.8;(+9~more~not~shown) propFailed=1/16 propFailedWhy=pavement_sign=did-not-load-back/none-of-3-candidates/ambiguous-3-appeared/hinges,sign_back,sign_front/sourceParts=3=hinges,sign_front,sign_back propSourcePartsOver1=3/16 propSourcePartsWhich=pavement_sign=3;swing_bin=2;wooden_crate_01=2 propSourcePartsUnread=0/16 propSourcePartsStat=mesh-nodes-in-the-source-glb-per-asset/exactly-one-uasset-is-kept-per-asset/the-others-are-not-at-the-contract-path propSubsystems=StaticMeshEditorSubsystem=returned-None;EditorActorSubsystem=present;AssetEditorSubsystem=present;LevelEditorSubsystem=present propPipelineOpts=InterchangeGenericAssetsPipeline=0-of-50:none-matching;InterchangeGenericMeshPipeline=9-of-86:collision,combine_skeletal_meshes_behavior,combine_static_meshes,combine_static_meshes_behavior,fallback_collision_type,force_collision_primitive_generation,(+3~more~not~shown);InterchangePipelineStackOverride=0-of-27:none-matching propPipelineOptsFilter=collision|combine|convex|ucx/NOTHING-SET-THIS-RUN/names-read-for-the-next-one propScalePolicy=1/never-scaled/dims-policy-forbids-it propLampPost01=propExtras=lamp_post_01=imported/saved=yes/simplePrims=1/collidable=YES/simple-prims=1/extentUu=18.4,13.5,150.1 propMaterialSlotsOver1=0/15 propMaterialSlotsUnread=0 propSlotNote=the-street-overwrites-slot-0-only propUassetBytes=1739822 propVerdictIs=propImportReturn/not-the-editor-process-exit propNote=subsystem-count-refused=get_editor_subsystem-returned-None~x16/legacy-library-count-refused-with-sentinel=-1~x16/interchange-import-asset-with-result-raised='InterchangeManager'~object~has~no~attribute~'import_asset_with_result~x2",
+ "line": "propImportStatus=PARTIAL propImportReturn=2 propMeshesAsked=18/40 propMeshesStat=unique-assets/over-pieces-asking propSources=18/18 propImported=17/18 propSaved=17/18 propCollisionPrims=17/17 propCollisionPrimsUnread=0/17 propCollisionRead=agg-geom-elems=17 propCollisionVia=not-needed/already-had-1=17 propCollisionAgree=agree=0;disagree=0;one-route=17;no-route=0/over=17 propCollisionFlagSet=0/17 propCollidable=17/17 propCollidableUnknown=0/17 propCollidableNo=0/17 propCollidableWhy=YES/simple-prims=1=17 propCollisionPrimsStat=saved-meshes-with-at-least-one-simple-primitive/count-read-off-the-body-setup/over-saved/A-PROXY-NOT-THE-QUESTION propCollidableStat=body-setup-plus-simple-prims-or-complex-as-simple/read-off-the-saved-asset/NOT-a-sweep/over-saved propImportVia=mixed-over-19 propPackageDir=/Game/Ledger/Props propNamePattern=SM_<asset> propGltfImporter=PRESENT/engine-says-it-can-translate/3-of-3 propGltfCanTranslate=3/3 propGltfPluginsEnabled=InterchangeAssets;InterchangeEditor;Interchange;GLTFExporter;InterchangeTests;InterchangeAxfAssets propGltfApi=InterchangeManager;AssetImportTask;InterchangeGenericAssetsPipeline;ImportAssetParameters propAcceptingCase=piece=prop_drainage_grate_01_0/asset=drainage_grate_01/RESOLVED/saved=yes/simplePrims=1/collidable=YES/simple-prims=1/bodySetup=present/traceFlag=CTF_USE_DEFAULT:~0>/sourceParts=1/materialSlots=1/worstOrderedMm=0.0474/worstSortedMm=0.0474 propImportPreexistingDeleted=15/18 propImportSnapshotShape=/Game/Ledger/Props/SM_lamp_post_01.SM_lamp_post_01,/Game/Ledger/Props/awning_02/Materials/DefaultMaterial.DefaultMaterial propImportTaskApi=is_async_import_complete=present;get_objects=present propImportTaskAsync=before=True/after=True=19 propImportResultType=not-reached propImportResultWaitAttrs=none propImportRenamed=17/19 propImportAppearedUnnamed=0/19 propImportLookedFor=/Game/Ledger/Props/SM_<asset> propImportedNames=drainage_grate_01=basic,SM_drainage_grate_01;roll_top_chimney=basic,SM_roll_top_chimney;decorative_bollard_02=DefaultMaterial,SM_decorative_bollard_02;swing_bin=DefaultMaterial,lid,swing_bin;outdoor_bin=DefaultMaterial,SM_outdoor_bin;crowd_control_barrier=basic,SM_crowd_control_barrier;(+13~more~not~shown) propImportResolvedVia=ambiguous-3-appeared/hinges,sign_back,sign_front=1;exact-name-different-folder=15;name-contains-the-asset-id=3 propImportRouteRan=asset-import-task=17;interchange-import-asset=2 propImportWaitTaken=1/19 propImportWaitChanged=0/1 propImportWaitMeans=above-zero-is-an-async-import/zero-is-not-a-rule-out/the-wait-is-a-registry-scan propBoundsWorstMm=44.0215/on=wooden_crate_01/axis=z/of=17 propBoundsWorstSortedMm=44.0215/on=wooden_crate_01 propBoundsBound=NONE-YET/this-run-prints-the-series propBoundsStat=spec-box-minus-engine-bounds-at-worst-over-assets propPivotsUu=drainage_grate_01=0.0,0.0,-0.8;roll_top_chimney=-0.0,-0.0,50.1;decorative_bollard_02=-0.0,0.0,50.4;swing_bin=0.0,0.0,35.6;outdoor_bin=0.0,0.0,38.2;crowd_control_barrier=0.0,0.0,56.8;(+11~more~not~shown) propFailed=1/18 propFailedWhy=pavement_sign=did-not-load-back/none-of-3-candidates/ambiguous-3-appeared/hinges,sign_back,sign_front/sourceParts=3=hinges,sign_front,sign_back propSourcePartsOver1=3/18 propSourcePartsWhich=pavement_sign=3;swing_bin=2;wooden_crate_01=2 propSourcePartsUnread=0/18 propSourcePartsStat=mesh-nodes-in-the-source-glb-per-asset/exactly-one-uasset-is-kept-per-asset/the-others-are-not-at-the-contract-path propSubsystems=StaticMeshEditorSubsystem=returned-None;EditorActorSubsystem=present;AssetEditorSubsystem=present;LevelEditorSubsystem=present propPipelineOpts=InterchangeGenericAssetsPipeline=0-of-50:none-matching;InterchangeGenericMeshPipeline=9-of-86:collision,combine_skeletal_meshes_behavior,combine_static_meshes,combine_static_meshes_behavior,fallback_collision_type,force_collision_primitive_generation,(+3~more~not~shown);InterchangePipelineStackOverride=0-of-27:none-matching propPipelineOptsFilter=collision|combine|convex|ucx/NOTHING-SET-THIS-RUN/names-read-for-the-next-one propScalePolicy=1/never-scaled/dims-policy-forbids-it propLampPost01=propExtras=lamp_post_01=imported/saved=yes/simplePrims=1/collidable=YES/simple-prims=1/extentUu=18.4,13.5,150.1 propMaterialSlotsOver1=0/17 propMaterialSlotsUnread=0 propSlotNote=the-street-overwrites-slot-0-only propUassetBytes=1897955 propVerdictIs=propImportReturn/not-the-editor-process-exit propNote=subsystem-count-refused=get_editor_subsystem-returned-None~x18/legacy-library-count-refused-with-sentinel=-1~x18/interchange-import-asset-with-result-raised='InterchangeManager'~object~has~no~attribute~'import_asset_with_result~x2",
  "lookups": [
   {
    "asset": "drainage_grate_01",
@@ -674,6 +676,82 @@
    }
   },
   {
+   "asset": "fascia_cornice_01",
+   "detail": {
+    "appeared": [
+     "/Game/Ledger/Props/fascia_cornice_01/Materials/fascia_moulding_painted_timber",
+     "/Game/Ledger/Props/fascia_cornice_01/StaticMeshes/SM_fascia_cornice_01"
+    ],
+    "appearedClasses": {
+     "SM_fascia_cornice_01": "StaticMesh",
+     "fascia_moulding_painted_timber": "MaterialInstanceConstant"
+    },
+    "loadedFrom": "/Game/Ledger/Props/SM_fascia_cornice_01",
+    "lookedFor": "/Game/Ledger/Props/SM_fascia_cornice_01.SM_fascia_cornice_01",
+    "renamed": true,
+    "resolvedVia": "exact-name-different-folder",
+    "resultType": "not-reached",
+    "resultWaitAttrs": [],
+    "routeRan": "asset-import-task",
+    "snapshotShape": "/Game/Ledger/Props/awning_02/Materials/DefaultMaterial.DefaultMaterial",
+    "sourceMeshNames": [
+     "fascia_cornice_01"
+    ],
+    "sourceParts": 1,
+    "taskApi": [
+     "is_async_import_complete=present",
+     "get_objects=present"
+    ],
+    "taskAsyncAfter": true,
+    "taskAsyncBefore": true,
+    "taskPaths": [
+     "/Game/Ledger/Props/fascia_cornice_01/Materials/fascia_moulding_painted_timber.fascia_moulding_painted_timber",
+     "/Game/Ledger/Props/fascia_cornice_01/StaticMeshes/SM_fascia_cornice_01.SM_fascia_cornice_01"
+    ],
+    "unnamedBounds": null,
+    "waitChanged": false,
+    "waitTaken": false
+   }
+  },
+  {
+   "asset": "fascia_console_01",
+   "detail": {
+    "appeared": [
+     "/Game/Ledger/Props/fascia_console_01/Materials/fascia_moulding_painted_timber",
+     "/Game/Ledger/Props/fascia_console_01/StaticMeshes/SM_fascia_console_01"
+    ],
+    "appearedClasses": {
+     "SM_fascia_console_01": "StaticMesh",
+     "fascia_moulding_painted_timber": "MaterialInstanceConstant"
+    },
+    "loadedFrom": "/Game/Ledger/Props/SM_fascia_console_01",
+    "lookedFor": "/Game/Ledger/Props/SM_fascia_console_01.SM_fascia_console_01",
+    "renamed": true,
+    "resolvedVia": "exact-name-different-folder",
+    "resultType": "not-reached",
+    "resultWaitAttrs": [],
+    "routeRan": "asset-import-task",
+    "snapshotShape": "/Game/Ledger/Props/awning_02/Materials/DefaultMaterial.DefaultMaterial",
+    "sourceMeshNames": [
+     "fascia_console_01"
+    ],
+    "sourceParts": 1,
+    "taskApi": [
+     "is_async_import_complete=present",
+     "get_objects=present"
+    ],
+    "taskAsyncAfter": true,
+    "taskAsyncBefore": true,
+    "taskPaths": [
+     "/Game/Ledger/Props/fascia_console_01/Materials/fascia_moulding_painted_timber.fascia_moulding_painted_timber",
+     "/Game/Ledger/Props/fascia_console_01/StaticMeshes/SM_fascia_console_01.SM_fascia_console_01"
+    ],
+    "unnamedBounds": null,
+    "waitChanged": false,
+    "waitTaken": false
+   }
+  },
+  {
    "asset": "lamp_post_01",
    "detail": {
     "appeared": [
@@ -717,6 +795,8 @@
   "crowd_control_barrier": 1,
   "decorative_bollard_02": 2,
   "drainage_grate_01": 1,
+  "fascia_console_01": 11,
+  "fascia_cornice_01": 6,
   "framed_poster": 1,
   "oil_barrel": 1,
   "outdoor_bin": 1,
@@ -1698,6 +1778,134 @@
    "worstOrderedAxis": "y",
    "worstOrderedMm": 0.0492,
    "worstSortedMm": 0.0492
+  },
+  {
+   "asset": "fascia_cornice_01",
+   "bodySetup": "present",
+   "boundsVia": "get_bounds",
+   "collidable": "YES/simple-prims=1",
+   "collisionAddVia": "not-needed/already-had-1",
+   "collisionFlagSet": false,
+   "collisionFlagWhy": "not-needed",
+   "engineSizeM": [
+    5.892,
+    0.215,
+    0.15
+   ],
+   "importVia": "asset-import-task/exact-name-different-folder",
+   "localCentreUu": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "materialSlots": 1,
+   "objectPath": "/Game/Ledger/Props/SM_fascia_cornice_01.SM_fascia_cornice_01",
+   "orderedDeltaMm": [
+    0.0001,
+    0.0,
+    0.0
+   ],
+   "piecesUsingIt": 6,
+   "primsBefore": 1,
+   "saved": true,
+   "simplePrims": 1,
+   "simplePrimsAnswers": {
+    "agg-geom-elems": 1,
+    "aggPerList": {
+     "box_elems": 0,
+     "convex_elems": 1,
+     "sphere_elems": 0,
+     "sphyl_elems": 0,
+     "tapered_capsule_elems": 0
+    },
+    "legacy-library": "refused-with-sentinel/-1",
+    "subsystem": "refused/get_editor_subsystem-returned-None"
+   },
+   "simplePrimsVia": "agg-geom-elems",
+   "sortedDeltaMm": [
+    0.0,
+    0.0,
+    0.0001
+   ],
+   "sourceMeshNames": [
+    "fascia_cornice_01"
+   ],
+   "sourceParts": 1,
+   "specBoxM": [
+    5.892,
+    0.15,
+    0.215
+   ],
+   "staticMeshesAppeared": 1,
+   "traceFlag": "<CollisionTraceFlag.CTF_USE_DEFAULT:~0>",
+   "traceFlagVia": "trace-flag-property",
+   "worstOrderedAxis": "x",
+   "worstOrderedMm": 0.0001,
+   "worstSortedMm": 0.0001
+  },
+  {
+   "asset": "fascia_console_01",
+   "bodySetup": "present",
+   "boundsVia": "get_bounds",
+   "collidable": "YES/simple-prims=1",
+   "collisionAddVia": "not-needed/already-had-1",
+   "collisionFlagSet": false,
+   "collisionFlagWhy": "not-needed",
+   "engineSizeM": [
+    0.24,
+    0.18,
+    0.55
+   ],
+   "importVia": "asset-import-task/exact-name-different-folder",
+   "localCentreUu": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "materialSlots": 1,
+   "objectPath": "/Game/Ledger/Props/SM_fascia_console_01.SM_fascia_console_01",
+   "orderedDeltaMm": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "piecesUsingIt": 11,
+   "primsBefore": 1,
+   "saved": true,
+   "simplePrims": 1,
+   "simplePrimsAnswers": {
+    "agg-geom-elems": 1,
+    "aggPerList": {
+     "box_elems": 0,
+     "convex_elems": 1,
+     "sphere_elems": 0,
+     "sphyl_elems": 0,
+     "tapered_capsule_elems": 0
+    },
+    "legacy-library": "refused-with-sentinel/-1",
+    "subsystem": "refused/get_editor_subsystem-returned-None"
+   },
+   "simplePrimsVia": "agg-geom-elems",
+   "sortedDeltaMm": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "sourceMeshNames": [
+    "fascia_console_01"
+   ],
+   "sourceParts": 1,
+   "specBoxM": [
+    0.24,
+    0.55,
+    0.18
+   ],
+   "staticMeshesAppeared": 1,
+   "traceFlag": "<CollisionTraceFlag.CTF_USE_DEFAULT:~0>",
+   "traceFlagVia": "trace-flag-property",
+   "worstOrderedAxis": "x",
+   "worstOrderedMm": 0.0,
+   "worstSortedMm": 0.0
   }
  ],
  "reportLines": [
@@ -1718,6 +1926,10 @@
   "subsystem-count-refused=get_editor_subsystem-returned-None",
   "legacy-library-count-refused-with-sentinel=-1",
   "interchange-import-asset-with-result-raised='InterchangeManager' object has no attribute 'import_asset_with_result",
+  "subsystem-count-refused=get_editor_subsystem-returned-None",
+  "legacy-library-count-refused-with-sentinel=-1",
+  "subsystem-count-refused=get_editor_subsystem-returned-None",
+  "legacy-library-count-refused-with-sentinel=-1",
   "subsystem-count-refused=get_editor_subsystem-returned-None",
   "legacy-library-count-refused-with-sentinel=-1",
   "subsystem-count-refused=get_editor_subsystem-returned-None",
@@ -1802,9 +2014,17 @@
   {
    "asset": "awning_02",
    "meshes": 1
+  },
+  {
+   "asset": "fascia_cornice_01",
+   "meshes": 1
+  },
+  {
+   "asset": "fascia_console_01",
+   "meshes": 1
   }
  ],
- "specPath": "C:\\actions-runner-ledger\\_work\\wc26-picks\\wc26-picks\\production\\specs\\vignette-pieces.json",
+ "specPath": "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\production\\specs\\vignette-pieces.json",
  "subsystems": [
   "StaticMeshEditorSubsystem=returned-None",
   "EditorActorSubsystem=present",
