@@ -1,4 +1,4 @@
-# LEDGER telegram-bot remote restart - 8aaf780 @1788957183
+# LEDGER telegram-bot remote restart - f6508b3 @1789066546
 # Line 1 names the commit this was run on.
 # Route b, ruling 2026-09-07: stops the telegram-bot.py process
 # tree so tools/supervise.py restarts it on the code on disk.
@@ -7,30 +7,30 @@ requestReason=reason=the-two-buttons-his-tap-lands-in-a-process-that-has-never-h
 targetUser=Jafar
 runnerAccount=JAFAR-DESKTOP\Jafar
 stableEvidence=before
-stableHead=bc7e114ae6fcf316ed4bb9d3e0b653ca4fde18bb
-botSourceSha256=C0EA5105AFDB5BEEEAD9E284155FEFCE9E63885ABFDD0EB4ACE6DAA306F76E3A
-outboxSourceSha256=6BB49AB52727CFFA2B479D79E63705AF988D8959B05E4D0AF13F17AFD6AD0FE8
+stableHead=e7c92cdfdca0f5d558f01720e6ad9f6abb0fcaae
+botSourceSha256=C1B237D077B3F16487F43FBCC1FDB6E5A92598CF5EC29A21B8C2B9D3408E1010
+outboxSourceSha256=7FA64A1E0851A85F5E8A434DE800AA0CC962124871EC47A129D3C6CCCC4F0732
 botQueryOk=true botProcessesFound=2
-botCandidatePid=5620 botCandidateParentPid=14608 botCandidateCommandLine=C:\Users\Jafar\wc26-picks\tools\voice-live\env-export\Scripts\python.exe~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
-botCandidatePid=3868 botCandidateParentPid=5620 botCandidateCommandLine="C:\Users\Jafar\miniconda3\python.exe"~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
-botTreeBefore=14608>5620>3868
-botRootCommandLine=C:\Users\Jafar\wc26-picks\tools\voice-live\env-export\Scripts\python.exe~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
-supervisorQueryOk=True supervisorPidsSeen=19712,14608
-botLeafStopped=3868
+botCandidatePid=5280 botCandidateParentPid=12864 botCandidateCommandLine=C:\Users\Jafar\wc26-picks\tools\voice-live\env-export\Scripts\pythonw.exe~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
+botCandidatePid=14688 botCandidateParentPid=5280 botCandidateCommandLine="C:\Users\Jafar\miniconda3\pythonw.exe"~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
+botTreeBefore=12864>5280>14688
+botRootCommandLine=C:\Users\Jafar\wc26-picks\tools\voice-live\env-export\Scripts\pythonw.exe~C:\Users\Jafar\wc26-picks\tools\runner\telegram-bot.py
+supervisorQueryOk=True supervisorPidsSeen=9048,9384,10228,12864
+botLeafStopped=14688
 botRootExitedOnItsOwn=true
-botOldPid=3868
-botStopInstant=2026-09-09T12:33:03.7724185Z
+botOldPid=14688
+botStopInstant=2026-09-10T18:55:47.0820406Z
 botCameBackAfterSec=5
-botNewPid=27100
+botNewPid=9132
 botPidChanged=True
-botTreeJustAfter=14608>36200>27100
-botRootCreationDate=09/09/2026 14:33:09
-botTreeAfter=14608>36200>27100
+botTreeJustAfter=12864>11652>9132
+botRootCreationDate=09/10/2026 20:55:52
+botTreeAfter=12864>11652>9132
 botNewTreeStableForSec=20
 stableEvidence=after
-stableHead=bc7e114ae6fcf316ed4bb9d3e0b653ca4fde18bb
-botSourceSha256=C0EA5105AFDB5BEEEAD9E284155FEFCE9E63885ABFDD0EB4ACE6DAA306F76E3A
-outboxSourceSha256=6BB49AB52727CFFA2B479D79E63705AF988D8959B05E4D0AF13F17AFD6AD0FE8
+stableHead=e7c92cdfdca0f5d558f01720e6ad9f6abb0fcaae
+botSourceSha256=C1B237D077B3F16487F43FBCC1FDB6E5A92598CF5EC29A21B8C2B9D3408E1010
+outboxSourceSha256=7FA64A1E0851A85F5E8A434DE800AA0CC962124871EC47A129D3C6CCCC4F0732
 botStopped=True
 restartAction=restarted
 restartExitCode=0
