@@ -9,6 +9,34 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-11 14:25Z: THE ANSWER REACHED HIS PHONE, AND THE RECEIPT NAMES THE COMMIT
+
+The loop is now proven in the direction that matters, with this session's own
+commit inside the evidence rather than beside it:
+
+    commit    ce564254                                    14:20:22Z
+    sent      messageId=77 chars=1660                     14:22:27Z
+    receipt   production/outbound/2026-09-11-yes-it-works.answer.receipt.txt
+              on pc-inbox, fileCommit=ce5642541a598977a5435022f3b603fb6b9cf650
+    latency   125 s commit to send, ONE SAMPLE, not a rate
+
+A RECEIPT AND NOT A REFUSAL is the whole point. The ruling's condition 8 said a
+`refused-` record naming `linkfloor` would mean the PC's checkout or its copy of
+the tool was behind this commit. It did not appear. So the sender on his machine
+read `production/site-served.txt` in its own checkout, found `servedCommit=none`,
+suspended the floor and sent a message carrying no link. Queue 259's item 2 is
+proven end to end, by the only evidence that could prove it.
+
+WHAT HE NOW HAS ON HIS PHONE, in order: the machine's automatic note at 13:18:43Z
+saying the tool could not start, and the studio's considered answer at 14:22:27Z
+explaining what that note meant. The second exists because the director refused
+to let the first stand alone as "two contradictory answers on one phone".
+
+NEXT DISPATCH IS 261 AND IT IS NOT DISPATCHED. Jafar asked to be told what works
+and what does not and then for the session to stop, and the budget stands at 78
+total and 82 Fable against the standing 85. The hourly inbox and resume trigger
+is armed and NOW.md names the order: 261, 262, 260, 256.
+
 ## 2026-09-11 14:10Z: THE FLOOR IS CONDITIONAL, THE ORDER AGAINST 260 IS NARROWED, AND HE ALREADY HAD AN ANSWER
 
 Queue 259's code lands: the link floor reads production/site-served.txt

@@ -387,8 +387,66 @@ Jafar and not a build.
 
 ## 10. Landing
 
-Filled by the resident with printed numbers, one line per condition. Empty
-until then.
+Filled by the resident, 2026-09-11, one line per condition, every number
+printed rather than remembered. Landed as `ce564254`.
+
+1. VERIFY GREEN. `checks=81ran/0skipped/81total`, `director cadence ok (566
+   changed line(s) ... over threshold, REVIEWED)`, `rulingRecords=1/81
+   rulingFiles=77`, "1 ruling record(s) paired to a director row newer than the
+   reference", reference `1aedef87@2026-09-11T07:02:42Z`. No `NOT GREEN` in the
+   output (0 hits), and the footer was pasted FROM `ledger/.verify-footer`,
+   which was deleted before the run so it could only come from this one.
+   NOTE ON YOUR CONDITION 1: `rulingFresh=` is not a key this codebase emits, so
+   nothing could print it. The pairing sentence above is the equivalent fact.
+2. `git diff -- tools/producer-check.py` unstaged: 0 lines, so the tested file
+   and the staged file are one file. Selftest done line from that same file:
+   `PASS. 126 passed, 0 failed, 15 rejecting fixture(s) over 10 rule(s) ...,
+   9 rejecting gate fixture(s) in 30 measured gate run(s), 7 marker fixture(s)
+   and 3 link-floor ladder rung(s) at the gate`. SEVEN, as you read it, not the
+   5 I pasted from a stale run.
+3. `--gate: PASS filesChecked=23 ... markerOriginConsistent=true
+   filesLinkFloorOff=23/23 linkFloorActive=false
+   reason=no-page-served-yet..production/site-served.txt..servedCommit/none`
+   exit 0.
+4. A1's three rungs, ACCEPTING FIRST, pasted from the staged file:
+   rung 1 ACCEPTING, the LIVE tree, `markerOriginConsistent=true exit=0, 0 file
+   finding(s) over 23 checked, reason=none`; rung 2 REJECTING, SYNTHETIC
+   `servedCommit=0bc1def2` against the archive, `markerOriginConsistent=false
+   exit=1, 0 file finding(s) over 1 checked,
+   reason=marker-names-served-commit-but-SITE_ORIGIN-is-the-archive..production/site-served.txt`;
+   rung 3 ACCEPTING, the same tree against the origin 256 will produce,
+   `markerOriginConsistent=true exit=0`.
+5. The REVISED answer: `SEND register=answer rulesEnforced=3/10
+   rulesNotEnforced=wordcap/shape/options/deadline/nextvisible/linkfloor/split
+   markerOriginConsistent=true linkFloorActive=false` exit 0.
+6. `wc -c` on the revised answer: 1661, against the 4096 cap. The receipt in
+   condition 8 records 1660 sent, the difference being the trailing newline.
+7. `outbox.py --selftest exit=0 casesRun=115 casesFailed=0`. `executor.py
+   --selftest: 123 passed, 0 failed (of 123 case(s))`. Both fixtures run with
+   the floor LIVE for `marker-absent`, seen rather than assumed.
+8. THE RECEIPT LANDED, NOT A REFUSAL, 150 seconds after the push:
+   `production/outbound/2026-09-11-yes-it-works.answer.receipt.txt` on
+   `pc-inbox`, reading `receipt: sent  kind: answer  messageId: 77
+   chars: 1660  fileCommit: ce5642541a598977a5435022f3b603fb6b9cf650
+   sent: 2026-09-11T14:22:27+00:00  outboundLatencySec: 125`. The receipt NAMES
+   THIS COMMIT, which is what makes it evidence of this batch rather than of
+   some earlier one. That is 259's item 2 proven end to end: the sender read
+   the marker in its own checkout and did not refuse on `linkfloor`.
+   ONE SAMPLE of one message, not a rate.
+9. `docs-check: 178/178 clean under game-design/`. This record: STATUS LOG,
+   dated, em-dash count 0. Queue 262 declares `STATUS: READY`.
+10. Queue 261 NOT dispatched in this session. The resume is armed instead
+    (rule 13): the hourly inbox and resume trigger `trig_017Ho772fH6Uuysbith7b3CU`
+    fires at `3 * * * *`, last run SUCCEEDED at 2026-09-11T13:18:06Z, and
+    `production/NOW.md` names 261 as the next dispatch in order. The reason is
+    Jafar's own instruction to report and then stop, and a budget of 78 total
+    and 82 Fable against the standing 85.
+
+A1 WAS KEPT AT 83 LINES AGAINST YOUR SIXTY-LINE ESTIMATE. Ruled KEEP on the
+per-block measurement, which showed the overrun sitting in the specification
+rather than in padding: the selftest rungs are 28 lines, the pure function 16,
+the four done lines 10, the gate finding line 9, and no clause could be dropped
+that reached sixty. Trimming every comment recovers about 9 and lands at 74.
 
 ## History
 
