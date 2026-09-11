@@ -2,8 +2,8 @@ id: 1ed3463a
 due: 2026-09-11T04:00:00Z
 armedAt: 2026-09-10T06:06:35Z
 armedBy: director/brief-pictures
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-11T04:02:53Z
 capBitAt: -
 
 TOMORROW'S BRIEF CARRIES PICTURES, and today's could not. Today's message went out with its two buttons and no images because the daily sender owns the buttons and has no attachment path at all, which is queue 232; the fix was built on 10 September and must be CHECKED AS LANDED before this brief is written, by reading a receipt that names both the image and the buttons rather than by trusting the code is in the tree. WHAT RIDES IT, in this order. First the Hook comparison at game-design/sim-shots/hook_theirs_vs_ours.jpg: ours at two passes beside Codex's at three, best of four seeds on both sides so the comparison stays symmetric, and the caption says that. HONEST READING, which Jafar asked for by name: the correction pass fixed what it targeted, the rope and dustbin and crate the model had silently dropped are present on all four and the lettering held to two named fascias, and ours still loses on the harbour, where theirs is a working port with trawlers and nets and lobster pots and ours is a prettier basin with market stalls. Second the FIRST ORIGINAL DISTRICT SHEET, authored in-house from the form bible and the atlas and the research with no use of the outside prompt files, beside Codex's sheet for the same district, WITH THE PROVENANCE TABLE saying which words came from which source, because that table is the thing he asked to judge and the sheet without it does not answer his question. Third, if the sun-fixed render has landed by then, the BEFORE AND AFTER OF THE STREET, which is the one picture that shows the shadow arriving. His rules on the message are unchanged: no numbers with units, no coordinates, no file names, no studio vocabulary, images inside the message and never as links, at most two links and only to a page that is actually serving.
