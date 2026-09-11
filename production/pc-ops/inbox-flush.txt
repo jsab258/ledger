@@ -1,4 +1,4 @@
-# LEDGER one inbox flush - 9e49c53 @1789070619
+# LEDGER one inbox flush - c843afc @1789106409
 # Line 1 names the commit this was run on. This step PUSHES the
 # return half: his messages and the bot's own receipts, onto
 # pc-inbox. It sends nothing and loads no credentials. The return
@@ -12,7 +12,7 @@
 # read ok= and detail= below, and pcInboxHeadShort in the verify step,
 # before calling it fixed. Last measurement: HUNG at 150s, 12 waiting.
 flushPython=C:\Users\Jafar\miniconda3\python.exe
-flushRepoHead=f6508b3b
+flushRepoHead=c843afcb
 # QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
 # flushCheckoutRunSha is the commit CI was started FOR. flushCheckoutPcHeadSha is the
 # commit HIS CHECKOUT was AT when this step read it. Line 1 of this
@@ -21,8 +21,22 @@ flushRepoHead=f6508b3b
 # commits its own evidence, so flushCheckoutAheadCommits above 0 is normal.
 # flushCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-flushCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 flushCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 flushCheckoutContains=no flushCheckoutOutcome=absent flushCheckoutDecision=refuse
-flushCheckoutBehindCommits=nothing-measured flushCheckoutAheadCommits=nothing-measured flushCheckoutBehindSecByCommitTime=18073 flushCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-flushCheckoutWaitedSec=31/30 flushCheckoutPolls=7 flushCheckoutPollSec=5 flushCheckoutSeries=0s/f6508b3bef flushCheckoutSeriesShown=1/1
-flushCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
-flushStatus=REFUSED-STALE-CHECKOUT flushPushed=0 flushGateExit=3
+flushCheckoutRunSha=c843afcbf25d98fbee465c70be0beb20aa144c8b flushCheckoutPcHeadSha=c843afcbf25d98fbee465c70be0beb20aa144c8b flushCheckoutContains=yes flushCheckoutOutcome=contains flushCheckoutDecision=send
+flushCheckoutBehindCommits=0 flushCheckoutAheadCommits=0 flushCheckoutBehindSecByCommitTime=0 flushCheckoutPcHeadCommitIso=2026-09-11T04:45:24Z
+flushCheckoutWaitedSec=0/30 flushCheckoutPolls=1 flushCheckoutPollSec=5 flushCheckoutSeries=0s/c843afcbf2 flushCheckoutSeriesShown=1/1
+flushCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
+flushStatus=EXITED flushWaitedSec=33 flushExitCode=0
+flushStream=flush-raw.txt flushLines=12
+08:00:11  flush: waiting=537 tip=none
+08:00:11  flush: waiting production/inbox/2026-09-07T0550Z-79313218.md
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-00696729.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-006dfb7b.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-0191db4b.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-0267a5c8.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-02f75ac1.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-0628f638.txt
+08:00:11  flush: waiting production/outbound/2026-09-03-batch-landed-and-the-wait.unprompted.refused-06468ca9.txt
+08:00:11  flush: (+529 more not shown)
+08:00:41    inbox: pushed 537 file(s) as 7e22f2d to pc-inbox (no local tip pointer, so this push SETS the branch to the 537 message file(s) on this PC rather than adding to it)
+08:00:41  flush done: pushed=537/537 ok=True commit=7e22f2d replaced=True plain=none detail=pushed~537~file(s)~as~7e22f2d
+flushStream=flush-raw.txt.err flushLines=0
