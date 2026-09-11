@@ -9,6 +9,60 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-11 04:00Z: THE WAKE FIRED, NO BRIEF WAS WRITTEN, AND THAT IS THE FINDING
+
+SAID OUT LOUD BECAUSE THE PROMPT REQUIRES IT: on a day this wake fires a brief
+file for that day must exist, and its absence otherwise looks identical to a
+quiet day. There is no `production/briefs/2026-09-11.md`. This is the reason,
+and it is not that nobody looked.
+
+THE BRIEF PIPELINE IS STRUCTURALLY BLOCKED UNTIL QUEUE 259 LANDS. Measured this
+wake rather than assumed, on a throwaway file so nothing was left in the tree:
+
+    producer-check --kind brief  ->  DO NOT SEND  rulesEnforced=9/10
+      linkfloor   no link to any of the 5 published page(s)
+
+The brief register enforces the SAME link floor that held last night's answer,
+and all five permitted destinations still sit under the ARCHIVE's published
+pages, which after the move show the world as it was before it. So today's
+brief could only pass by carrying a link that misleads him. Writing it anyway
+would also turn verify red, because the register is walked by the gate, and
+that would block every other commit behind it. That is the wedge already
+documented in `production/outbox-blocked/README.md`.
+
+AND EVEN A PASSING BRIEF COULD NOT BE SENT. The fleet is still in the archive
+checkout, so the sender refuses on a stale checkout, exactly as it did at
+20:01Z. Two independent blocks, one message.
+
+THE STREAK IS 0/7 AND CANNOT MOVE. `briefStreakReadable=0/7 briefDaysTapped=0
+briefTapRecords=0 briefsSentEver=2 briefAccepted=no`. Nothing here is a tap he
+withheld; nothing has been deliverable since the move.
+
+THE DUE WAKE RECORD IS CARRIED FORWARD, NOT DROPPED AND NOT LEFT DUE. `1ed3463a`
+came due at 04:00Z asking for the Hook pair, the first authored district sheet
+with its provenance table, and the sun before and after, carried as one picture
+with the two buttons. None of that can ride a message that cannot be sent.
+
+Leaving it due would have fired the turn-boundary hook for ever; discharging it
+alone would have lost the instruction. So it is re-armed as `e80f2b15` for
+2026-09-12T04:00Z, carrying the same order in short form plus the two blocks to
+check BEFORE writing anything, and `1ed3463a` is discharged against that. The
+original record is not edited: it stays readable in full at
+`production/wakes/2026-09-11T0400Z-1ed3463a.wake.txt`, which is where the four
+cards still waiting on a ruling also live, each with a recommendation and a
+default.
+
+WHAT UNBLOCKS IT, in order and neither is the studio's to do alone: queue 259
+reconciles the link floor with the ruling that already permits zero links while
+no page is served here, moving `tools/runner/outbox.py:run_check` with the
+register or the message is refused at the door instead of at the gate; and the
+fleet moves when the LEDGER supervisor task is disabled and he signs back in.
+
+NOTHING ELSE WAS RUN THIS WAKE. The budget's newest reading is 2026-09-09 and a
+full session of heavy work has happened since, which the budget file's own rule
+says makes the day unmeasured and argues for stopping; Jafar also ruled the next
+reading follows his report. An unknown budget is not permission.
+
 ## 2026-09-10 20:15Z: THE INSTALL RE-RAN AND REFUSED, WHICH IS THE ANSWER
 
 RUN ff885ed9, measured on 9e49c53c, and it settles four things at once. Read it
