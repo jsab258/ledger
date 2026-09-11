@@ -9,6 +9,33 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-11 14:30Z: THE HOURLY TICK, BOTH JOBS DISCHARGED, NOTHING RESUMED
+
+The trigger fired at 14:12:05Z while the batch was mid-flight and was read after
+it landed. Both of its jobs are done and neither produced work:
+
+    inbox-read   seen=2 delivered=0/2 alreadyHere=2/2, nothing new
+    wake-queue   wakesDue=0/5, notYetDue=1/5 (e80f2b15, due 2026-09-12T04:00Z)
+
+NO QUESTION FROM JAFAR IS OUTSTANDING. The tool also confirms both of today's
+sends independently of the receipts: messageId=76 at 13:18:43Z (the executor's
+no-cli note) and messageId=77 at 14:22:27Z with outboundLatencySec=125 (the
+studio's answer).
+
+NOTHING WAS RESUMED AND THAT IS DELIBERATE. Jafar's instruction was to report
+what works and what does not and then stop, and the report is sent. The budget
+stands at 78 total and 82 Fable against the standing 85, which is three points
+on the governing meter. Next dispatch remains 261, then 262, 260, 256.
+
+ONE FINDING FROM THE TICK, and it is a correction of my own first reading. The
+inbox output was 90.6 percent one file's refusal records (494 of 545), which I
+took for a live retry loop of the kind queue 260 describes. It is not: the file
+left production/outbox/ at 7741eecd on 2026-09-09, so nothing is retrying and
+these are historical records re-listed in full every run. Rule 3 again, and the
+cheap check was `[ -f "$f" ]`. What IS live is that the listing has no cap while
+the tool already carries a cap and a selftest for the message text, so the half
+that floods is the half nobody bounded. Filed as production/queue/263.
+
 ## 2026-09-11 14:25Z: THE ANSWER REACHED HIS PHONE, AND THE RECEIPT NAMES THE COMMIT
 
 The loop is now proven in the direction that matters, with this session's own

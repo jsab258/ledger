@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-11T1316Z-79313220.answer.md
+kind: answer
+fileCommit: none
+fileCommitEpoch: none
+sent: 2026-09-11T13:18:43+00:00
+sentEpoch: 1789132723
+messageId: 76
+chars: 271
+outboundLatencySec: nothing-measured
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate. this file is not committed in this checkout, so there is no commit instant to measure from

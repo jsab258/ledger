@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-11-yes-it-works.answer.md
+kind: answer
+fileCommit: ce5642541a598977a5435022f3b603fb6b9cf650
+fileCommitEpoch: 1789136422
+sent: 2026-09-11T14:22:27+00:00
+sentEpoch: 1789136547
+messageId: 77
+chars: 1660
+outboundLatencySec: 125
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
