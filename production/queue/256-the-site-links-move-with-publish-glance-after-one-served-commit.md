@@ -49,3 +49,20 @@ tools/` at 0 over the files scanned.
 
 Jafar's setting, if the first run says so. Risk: flipping the links before
 the served commit is printed, which puts a 404 on his phone.
+
+## Amended 2026-09-11 by the director, section 5
+
+TWO ADDITIONS, and both exist because a printed fact beats a typed one.
+
+1. PROVENANCE. When `production/site-served.txt` gains a sha, its `printedBy=`
+   names the SHORT SHA of the CI commit carrying the `publish-glance` verdict
+   file. `ledger/verify.py` (which already has `_git`) checks that the commit
+   exists AND that a file in it carries `servedCommit=<the same sha>`. A marker
+   whose provenance cannot be found is A RED GATE, not a warning. This is what
+   stops a sha typed by a session that never watched it printed.
+2. The done line's `grep -rn 'github.io/wc26-picks' tools/` at 0 becomes "at 0
+   OUTSIDE `ARCHIVE_ORIGIN` and the rejecting fixtures that name it". Amendment
+   A1 keeps that string on purpose, because a rejecting fixture must name what
+   it rejects.
+
+Ruling: game-design/decision-2026-09-11-ruling-the-link-floor-marker-batch-and-the-answer-already-sent.md

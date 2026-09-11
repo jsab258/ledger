@@ -9,6 +9,132 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-11 14:10Z: THE FLOOR IS CONDITIONAL, THE ORDER AGAINST 260 IS NARROWED, AND HE ALREADY HAD AN ANSWER
+
+Queue 259's code lands: the link floor reads production/site-served.txt
+and is off while it says none, and every run prints which branch it
+took. The two held messages stay in outbox-blocked until 260 lands;
+that is the part of the 08:40Z ordering that still binds. Jafar's "Is
+this working?" was answered at 13:18:43Z by the executor's no-cli
+fallback, with the archive link, so the Producer's reply is revised to
+say what that note meant before it sends. Next builder dispatches, in
+order: 261 (the executor's cli keys and its journal tail reach
+production/pc-ops/), 262 (the executor stops adding the archive link
+while the register allows zero), 260, 256. Ruling:
+game-design/decision-2026-09-11-ruling-the-link-floor-marker-batch-and-the-answer-already-sent.md.
+
+## 2026-09-11 13:40Z: THE ROUND TRIP WORKS, AND WHAT CAME BACK WAS A FAILURE NOTICE
+
+THE LOOP IS PROVEN END TO END, by files the PC committed rather than by
+anything this session ran:
+
+    in       production/inbox/2026-09-11T1316Z-79313220.md      13:16:56Z
+    out      messageId=76 chars=271                              13:18:43Z
+    receipt  production/outbound/2026-09-11T1316Z-79313220.answer.receipt.txt
+             committed to pc-inbox at 8633feda                   13:18:43Z
+    latency  107 s, ONE SAMPLE of one message, not a rate
+
+That is the message from his phone, the answer back and the receipt, which is
+the whole of what Jafar asked to have proven. The inbound half and the return
+half both work.
+
+WHAT CAME BACK WAS NOT THE PRODUCER'S ANSWER. `chars: 271` in the receipt is
+what identifies it, and it identifies it uniquely: `fallback_no_cli()` called
+with no state words measures 271, the worktree variant 262 and the prepare
+variant 267, so 3 of 3 variants were measured and only one matches. That call
+is `tools/runner/executor.py:1533` and nowhere else. He was told "the tool it
+needs is not available on this machine right now".
+
+READ WHAT THAT LINE SITS UNDER, because it narrows the fault a long way. Line
+1533 is inside `if not res["started"]`, which is reached only after
+`worktree_ready` AND `prepare_worktree` have both returned ok. So the checkout
+was fine, the worktree was fine, and the Claude CLI itself would not start.
+
+AND THERE THE DIAGNOSIS STOPS, which is the finding that outranks the fault.
+The branch records its reason (`why=oneword(res["why"])`, and `run_session`
+separates "not on PATH" from "would not start", both with selftest fixtures).
+That reason is not published anywhere.
+
+I FIRST WROTE THAT NO CHANNEL EXISTED, WHICH WAS FALSE, and the correction is
+the more useful finding. Rule 3: my analysis said something was missing, so I
+opened the directory and looked. `production/pc-ops/supervisor-status.txt` is
+the supervisor's own status copied off the PC by CI every run, line 1 naming
+its commit, `statusFresh=yes`, and it already carries `executorState=idle
+executorHandled=1 executorPending=0`. The channel is built, it works, and it
+omits exactly one field. Measured:
+
+    grep "cli=|no-cli|notOnPath|wouldNotStart" over production/pc-ops/   0 hits
+    pc-jobs paths the tools name                                         8
+    of those, published by CI                                            1
+
+So the fix is a key on a status file that already ships, not a new channel.
+That is `production/queue/261`, and it is small. CLAUDE.md rule 12 still names
+it: the studio can read THAT the executor failed, from a character count in a
+receipt, and can read WHY from nothing.
+
+THE LINK IT CARRIED WAS THE ARCHIVE'S. The fallback wordings append `SITE_LINK`,
+which is `https://jsab258.github.io/wc26-picks/`, and the answer register
+enforces `linkdest`, which passes it because the archive is still ON the
+permitted list. So on the same morning the link floor was suspended precisely
+so that no stale link would reach him, one reached him anyway, down a path the
+floor does not govern. Queue 256 moves the site list; whether it also covers
+the hardcoded fallbacks is with the director.
+
+THE CEILING FIX WAS HALF DONE AND I FINISHED IT. Jafar asked for the standing
+ceiling to be "one line nobody can misread". The first pass put an unmissable
+block at the top and left the BODY contradicting it, which is the same fault
+one level down. Swept and measured:
+
+    lines containing 80                                     18
+    of those, near a ceiling or STOP word                   12
+    dated table rows, correctly historical                   8
+    the incident narrative, already says "retired"           1
+    LIVE rules still naming 80 before this sweep             3
+    historical arithmetic now marked as of its date          2
+    live rules naming 80 after it                            0
+
+The dangerous one was the mechanical stop condition: "1. Total reported use at
+or above 80 percent: STOP." A session reading only that list would have stopped
+five points early AND read one meter where the 2026-09-03 ruling says the
+HIGHER of two governs. It now reads "EITHER METER at or above 85 percent". The
+two arithmetic passages that price a particular day keep their 80 because
+recomputing them would falsify what they measured; both now say so in place.
+
+A6 PROVED ITSELF ON THE REAL CASE, not on a fixture. The 07:02Z install ran
+after Jafar disabled the task, and its committed evidence
+(`production/pc-ops/scheduled-task-verify.txt`, landed at `01c3fd57`) reads:
+
+    taskEnabledBefore=False
+    taskEnabledCarried=False reason=a-person-disabled-this-task-and-an-install-
+                                    does-not-re-enable-it
+    installAction=already-correct
+    startedNow=refused reason=task-is-disabled-a-person-turned-it-off
+    taskEnabled=False
+
+That is the guard doing the thing it was built for, against a human's off
+switch, in the live system rather than in its selftest. The same file reads
+`supervisorProcessesAfter=2`, which is the pre-fix pair still up from the old
+checkout, and `botSweepLastResult=sent0/refused0/of17`.
+
+TWO INSTRUMENT FAULTS OF MY OWN, both self-matches of a kind this file already
+records:
+
+1. `pkill -f "ledger/verify.py"` matched THE SHELL RUNNING IT and killed my own
+   command. Same shape as the `pgrep -f verify.py` incident that waited forty
+   minutes on itself. A pattern naming a process must not appear in the command
+   line of the process that greps for it.
+2. `producer-check.py <file>` with no `--kind` reported `register=unprompted`
+   and DO NOT SEND. The register is not derived from the filename in single
+   file mode; `--kind` defaults to unprompted. The real sender passes the
+   suffix-derived kind (`outbox.run_check` -> `--kind answer`), under which the
+   same file reads SEND. I nearly read a wrong invocation as a regression in
+   the tool. RUN THE CHECK THE WAY THE SENDER RUNS IT.
+
+A THIRD, WORTH THE LINE: a verify run was measuring a tree two agents were
+still writing to, and on green it would have written a footer that looked
+pasteable. Killed it and deleted the stale footer BEFORE relaunching, so the
+footer on disk can only ever come from the run that is current.
+
 ## 2026-09-11 08:40Z: THE WINDOWS WERE NEVER A CRASH LOOP, AND A CEILING I MISREAD
 
 THE CEILING FAULT IS MINE AND IT NARROWED REAL WORK. `production/budget.md`

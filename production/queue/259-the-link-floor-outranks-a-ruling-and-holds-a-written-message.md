@@ -51,3 +51,24 @@ wrong only about a window in which no page is served at all.
 Queue 256 decides when a page IS served on the new repository, which is the
 condition the reconciled floor reads. This item can land before 256 and should,
 because the message is waiting now.
+
+## Amended 2026-09-11 by the director, sections 4 and 5
+
+ITEMS 1 TO 3 LAND NOW; DONE ITEM 4 WAITS ON 260. The 08:40Z ordering ("259 must
+not land before 260's length gate") named ONE hazard: releasing the held
+4739-character message into the same permanent 400. This batch releases nothing
+from `production/outbox-blocked/`; both held messages stay there. So the code
+half lands, and item 4 (move the held message back, empty the directory) waits
+on 260 AND on the Producer rewriting both held messages under the cap or
+dropping them. The ordering ruling is not overturned, it is attached to the
+item it was written for.
+
+ITEM 2 IS SATISFIED BY CONSTRUCTION AND PROVEN ONLY BY A RECEIPT. `run_check`
+shells out to the single-file path with no `--root`, so it reads the marker in
+its own checkout. That is construction, not evidence. The evidence is
+`production/outbound/2026-09-11-yes-it-works.answer.receipt.txt` appearing on
+`pc-inbox` after the push. If a `refused-` record naming `linkfloor` appears
+instead, the PC's checkout or its copy of the tool is behind this commit, and
+the instrument is the first suspect.
+
+Ruling: game-design/decision-2026-09-11-ruling-the-link-floor-marker-batch-and-the-answer-already-sent.md
