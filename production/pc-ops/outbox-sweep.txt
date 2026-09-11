@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - 9e49c53 @1789070496
+# LEDGER one outbox sweep - c843afc @1789106399
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,8 +12,12 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 sweepCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 sweepCheckoutContains=no sweepCheckoutOutcome=absent sweepCheckoutDecision=refuse
-sweepCheckoutBehindCommits=nothing-measured sweepCheckoutAheadCommits=nothing-measured sweepCheckoutBehindSecByCommitTime=18073 sweepCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-sweepCheckoutWaitedSec=91/90 sweepCheckoutPolls=19 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/f6508b3bef sweepCheckoutSeriesShown=1/1
-sweepCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
-sweepStatus=REFUSED-STALE-CHECKOUT sweepSent=0 sweepGateExit=3
+sweepCheckoutRunSha=c843afcbf25d98fbee465c70be0beb20aa144c8b sweepCheckoutPcHeadSha=c843afcbf25d98fbee465c70be0beb20aa144c8b sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-11T04:45:24Z
+sweepCheckoutWaitedSec=0/90 sweepCheckoutPolls=1 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/c843afcbf2 sweepCheckoutSeriesShown=1/1
+sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
+sweepStatus=EXITED sweepWaitedSec=3 sweepExitCode=1
+sweepStream=sweep-raw.txt sweepLines=2
+08:00:01    outbox: NOT SENT production/outbox/2026-09-10-the-archive-landed.answer.md (Telegram said no (HTTP 400: Bad Request: message is too long)). It stays unsent and the next pass tries again.
+08:00:01  outbox done: outboxFiles=18 sent=0 captionedSent=0 captionedClipsSent=0 refused=0 unsent=1 alreadySent=17 held=0 sendFailed=1 receiptRefused=0 recordsWritten=0 latencySamples=0/0 outboundLatencySecAtWorst=nothing-measured
+sweepStream=sweep-raw.txt.err sweepLines=0
