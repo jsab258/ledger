@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 9e49c53 @1789070587
+# LEDGER one daily-brief send - c843afc @1789106404
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,8 +15,11 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 briefCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 briefCheckoutContains=no briefCheckoutOutcome=absent briefCheckoutDecision=refuse
-briefCheckoutBehindCommits=nothing-measured briefCheckoutAheadCommits=nothing-measured briefCheckoutBehindSecByCommitTime=18073 briefCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-briefCheckoutWaitedSec=31/30 briefCheckoutPolls=7 briefCheckoutPollSec=5 briefCheckoutSeries=0s/f6508b3bef briefCheckoutSeriesShown=1/1
-briefCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
-briefStatus=REFUSED-STALE-CHECKOUT briefSent=0 briefGateExit=3
+briefCheckoutRunSha=c843afcbf25d98fbee465c70be0beb20aa144c8b briefCheckoutPcHeadSha=c843afcbf25d98fbee465c70be0beb20aa144c8b briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-11T04:45:24Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/c843afcbf2 briefCheckoutSeriesShown=1/1
+briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
+briefStatus=EXITED briefWaitedSec=3 briefExitCode=6
+briefStream=brief-raw.txt briefLines=1
+08:00:06  brief: NOTHING MEASURED, there is no brief for 2026-09-11 (FileNotFoundError). 7 brief(s) are in the tree, newest 2026-09-10. Nothing was sent.
+briefStream=brief-raw.txt.err briefLines=0
