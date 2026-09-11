@@ -35,6 +35,14 @@ import subprocess
 import sys
 import time
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 
@@ -65,9 +73,14 @@ def is_alive_windows(pid):
     measurement made here.
     """
     try:
+        # creationflags: see NO_WINDOW at the top of this file. THIS ONE
+        # RUNS IN THE LAUNCHER ITSELF, the process the scheduled task starts
+        # windowless, and tasklist is a console program: unflagged, it puts a
+        # window on the screen at every launch that finds a lock file.
         out = subprocess.run(
             ["tasklist", "/FI", "PID eq %d" % pid, "/FO", "CSV", "/NH"],
-            capture_output=True, text=True, timeout=10)
+            capture_output=True, text=True, timeout=10,
+            creationflags=NO_WINDOW)
     except Exception:                                          # noqa: BLE001
         # Cannot ask, so assume alive. The safe side of a lock is to refuse
         # a launch, never to hand out a second one on a guess.
@@ -153,8 +166,12 @@ def selftest():
     # REJECTING CASE, WITH A REAL PROCESS. A fake pid would only prove the
     # arithmetic; this proves the liveness check against an OS process that
     # is actually alive, on the pid semantics Windows shares.
+    # creationflags: see NO_WINDOW at the top of this file. In the
+    # selftest, which is where the constant's no-op off Windows is actually
+    # exercised rather than asserted.
     proc = subprocess.Popen([sys.executable, "-c",
-                             "import time; time.sleep(30)"])
+                             "import time; time.sleep(30)"],
+                            creationflags=NO_WINDOW)
     lock2 = os.path.join(tmp, "b", "supervisor.lock")
     write_lock(lock2, proc.pid, "planted-live-holder")
     okB, whyB = acquire(lock2, who="second", pid=99999,

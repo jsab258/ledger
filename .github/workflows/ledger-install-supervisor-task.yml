@@ -78,6 +78,33 @@ name: LEDGER install supervisor scheduled task
 # off. Read from the `concurrency:` block below rather than taken on trust.
 on:
   workflow_dispatch:
+    # THE PROOF SWITCH, 2026-09-11. Off by default, and when it is ON the
+    # install job below does not run at all: a run that is proving the fleet
+    # must have no path to Register-ScheduledTask, Enable-ScheduledTask or
+    # Start-ScheduledTask, and the surest proof of that is that the job
+    # holding them was not selected. See the windowless-proof job at the
+    # bottom of this file for what it measures and why the pre-fix checkout
+    # has to be measured FIRST.
+    inputs:
+      windowless_proof:
+        description: >-
+          Prove the fleet starts windowless and stays up. Registers nothing,
+          enables nothing, starts no task.
+        type: boolean
+        default: false
+      windowless_proof_repo:
+        description: >-
+          Which checkout to start the fleet from. Empty means the one the
+          registered task holds. Point it at a PRE-FIX checkout to run the
+          instrument's own rejecting fixture.
+        type: string
+        default: ''
+      windowless_proof_seconds:
+        description: >-
+          Seconds to watch after the fleet is up. 300 is the ruled window; a
+          rejecting run is capped at 120 and stops at the first sighting.
+        type: string
+        default: '300'
   push:
     paths:
       - '.github/workflows/ledger-install-supervisor-task.yml'
@@ -111,6 +138,11 @@ concurrency:
 
 jobs:
   install-supervisor-task:
+    # MUTUALLY EXCLUSIVE WITH THE PROOF, 2026-09-11. A proof run must not
+    # register, enable or start anything; this is the job that can do all
+    # three, so it stands down entirely. On a push the input is empty, the
+    # condition is true, and the behaviour is exactly what it was.
+    if: github.event.inputs.windowless_proof != 'true'
     runs-on: [self-hosted, ledger-pc]
     # A CEILING ON A HANG, NOT A TARGET. Every step below measures single
     # digits of minutes at most; this is generous headroom, not an estimate
@@ -975,4 +1007,128 @@ jobs:
             sleep $((i * 5))
           done
           echo "could not push the install verification; it is committed locally on the agent"
+          exit 1
+  # ------------------------------------------------------------------ PROOF
+  # THE FIVE MINUTE WINDOWLESS PROOF, AND IT REGISTERS NOTHING.
+  #
+  # WHY IT IS A SEPARATE JOB rather than a step in the install job: this must
+  # be runnable WITHOUT registering, enabling or starting the scheduled task,
+  # and the surest way to prove the installer did not run is that the job
+  # containing it was not selected. The two jobs are mutually exclusive on
+  # one input, so a proof run has no path to Register-ScheduledTask,
+  # Enable-ScheduledTask or Start-ScheduledTask at all. It reads the task's
+  # state twice (before and after) and never writes it, which is the
+  # evidence, not the promise.
+  #
+  # WHAT IT ANSWERS. Section 1 of
+  # game-design/decision-2026-09-11-ruling-the-windowless-fleet-and-four-
+  # smaller-calls.md: the task goes back on only when ONE proof run has
+  # printed fixCommit, noWindowSites=11/11 unflagged=0, taskRegistered and
+  # taskEnabled at proof start, survivedSec=300/300 per process,
+  # windowlessSamples=n/n with handlesNonZero=0 and a CUMULATIVE
+  # conhostChildren=0, and only after the same step has been SEEN TO FAIL on
+  # the pre-fix checkout.
+  #
+  # SO IT TAKES THE CHECKOUT AS AN INPUT. Point windowless_proof_repo at a
+  # checkout of the commit Jafar watched fill his screen and the step reads
+  # its own role off the ast check on THAT tree: unflagged>0 (or no ast check
+  # in it at all, which is what the pre-fix commit looks like) means this run
+  # is the REJECTING fixture, it stops at the first window it sees, and
+  # verdict=WINDOWS-SEEN is the pass. A recipe for making that checkout
+  # without touching the live one, run once by hand on the PC:
+  #   git -C C:\Users\Jafar\ledger-migrate worktree add ^
+  #       C:\Users\Jafar\ledger-prefix <pre-fix-sha>
+  # then dispatch with windowless_proof_repo=C:\Users\Jafar\ledger-prefix and
+  # windowless_proof_seconds=120. A verdict of WINDOWLESS from a sampler that
+  # has never printed WINDOWS-SEEN only means the sampler is blind.
+  windowless-proof:
+    if: github.event.inputs.windowless_proof == 'true'
+    runs-on: [self-hosted, ledger-pc]
+    # warmup (60 s cap) + the window (300 s default) + cleanup, with headroom
+    # for a slow CIM query. A ceiling on a hang, not an estimate.
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        timeout-minutes: 6
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: tool PATH bootstrap (self-hosted parity)
+        timeout-minutes: 1
+        shell: cmd
+        run: |
+          call tools\runner\bootstrap-paths.cmd
+          exit /b %ERRORLEVEL%
+
+      # THE 472 LINES THAT WERE HERE ARE NOW tools/runner/prove-windowless.ps1,
+      # AND THAT IS A DISPATCH LIMIT, NOT TASTE. This step measured 27467
+      # characters against the MEASURED ceiling of 23184
+      # (tools/workflow-size.py): the commit would have been green and the
+      # 422 would have arrived the first time somebody dispatched the very
+      # job written to prove the fleet. Out there it is also read by
+      # PowerShell's own parser on every run through tools/ps-check.py.
+      #
+      # RUN AS A CHILD PROCESS (`& pwsh -File ...`), NOT DOT-SOURCED, for the
+      # same reason the install step above says: that script ends on `exit`,
+      # and `exit` inside a script run in the CURRENT session tears down the
+      # whole host process, skipping every step below it.
+      #
+      # THE INPUTS TRAVEL THROUGH env:, NEVER INTERPOLATED INTO THE COMMAND
+      # LINE. A dispatch input is a string somebody typed; pasted into a
+      # command line it is a string somebody typed INTO A SHELL.
+      - name: Prove the fleet starts windowless and stays up
+        id: proof
+        continue-on-error: true
+        timeout-minutes: 11
+        shell: pwsh
+        env:
+          PROOF_REPO: ${{ github.event.inputs.windowless_proof_repo }}
+          PROOF_SECONDS: ${{ github.event.inputs.windowless_proof_seconds }}
+        run: |
+          $ErrorActionPreference = "Continue"
+          $secs = "$env:PROOF_SECONDS"
+          if (-not $secs) { $secs = "300" }
+          & pwsh -File tools/runner/prove-windowless.ps1 `
+            -ProofRepo "$env:PROOF_REPO" `
+            -WindowSeconds "$secs" `
+            -OutFile "production/pc-ops/windowless-proof.txt" `
+            -Sha "$env:GITHUB_SHA"
+          Write-Host "proofScriptExitCode=$LASTEXITCODE"
+
+      # THE EVIDENCE CHANNEL, SAME RULES AS THE INSTALL JOB'S. Staged BY
+      # NAME, and a run that measured nothing says NO RUN under its own name
+      # rather than carrying the last run's file forward as this one's.
+      - name: Commit the windowless proof
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROOF_OUTCOME: ${{ steps.proof.outcome }}
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: "*"
+        run: |
+          set -u
+          OUT=production/pc-ops/windowless-proof.txt
+          if [ ! -f "$OUT" ] || ! grep -q "verdict=" "$OUT"; then
+            printf '# LEDGER windowless fleet proof - %s\nNO RUN - the proof step did not reach its done line (outcome: %s).\nNothing was measured on this commit; do not read an older file as this run.\n' \
+              "$(git rev-parse --short HEAD)" "${PROOF_OUTCOME:-unknown}" > "$OUT"
+          fi
+          git config user.name "LEDGER installer"
+          git config user.email "installer@ledger.local"
+          git add -A -- "$OUT"
+          git diff --cached --quiet && { echo "windowless proof unchanged; nothing to commit"; exit 0; }
+          git commit -m "windowless fleet proof from $(git rev-parse --short HEAD)"
+          BR="${GITHUB_REF_NAME}"
+          for i in 1 2 3; do
+            git pull --rebase --autostash --no-edit origin "$BR" || \
+              git rebase --abort || true
+            if git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${BR}"; then
+              echo "windowless proof pushed to $BR"; exit 0
+            fi
+            sleep $((i * 5))
+          done
+          echo "could not push the windowless proof; it is committed locally on the agent"
           exit 1

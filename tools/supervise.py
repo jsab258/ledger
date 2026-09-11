@@ -74,6 +74,14 @@ import sys
 import threading
 import time
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(HERE)
 RUNNER = os.path.join(HERE, "runner")
@@ -344,8 +352,10 @@ def default_task_exists(task_name=SCHEDULED_TASK_NAME):
     if os.name != "nt":
         return False
     try:
+        # creationflags: see NO_WINDOW at the top of this file.
         p = subprocess.run(["schtasks", "/query", "/tn", task_name],
-                           capture_output=True, text=True, timeout=15)
+                           capture_output=True, text=True, timeout=15,
+                           creationflags=NO_WINDOW)
     except Exception:                                          # noqa: BLE001
         return False
     return p.returncode == 0
@@ -462,7 +472,8 @@ def resync_once(repo, branch, say, run=None):
     """
     run = run or (lambda args: subprocess.run(
         ["git", "--no-pager"] + args, cwd=repo, env=git_env(),
-        capture_output=True, text=True, timeout=180))
+        capture_output=True, text=True, timeout=180,
+        creationflags=NO_WINDOW))
     try:
         p = run(["fetch", "-q", "origin", branch])
     except Exception as e:                                    # noqa: BLE001
@@ -658,7 +669,8 @@ def spawn(child, repo):
     child.proc = subprocess.Popen(
         child.argv, cwd=repo, env=git_env(),
         stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT, text=True, errors="replace", bufsize=1)
+        stderr=subprocess.STDOUT, text=True, errors="replace", bufsize=1,
+        creationflags=NO_WINDOW)
     return child.proc
 
 

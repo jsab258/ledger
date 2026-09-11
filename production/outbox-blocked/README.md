@@ -55,3 +55,24 @@ resolved by whoever happened to be holding the pen.
 sending. Even reconciled in `producer-check.py`, a message with no link is
 refused at the send step unless that path agrees. Both halves move together or
 the message never goes automatically.
+
+## Added 2026-09-11: a second message, held for a different reason
+
+`2026-09-10-the-archive-landed.answer.md` is 5346 characters against Telegram's
+4096 cap. It was NOT blocked by the register; it passes that. It is blocked by
+the platform, which answered `HTTP 400: Bad Request: message is too long`, and
+by a sender that treats every failure as retryable and so tried it again on
+every pass since 0db066b2, holding `sweepExitCode=1` on a channel that was
+otherwise working. Moved here by the ruling of 2026-09-11 so the sweep can go
+green and the next real failure is visible rather than queued behind this one.
+
+A 400 naming a property of the message is permanent: the input is wrong, not the
+moment. Queue 260 teaches the sender that difference and gates length at write
+time.
+
+AND THE ORDER OF THE TWO QUEUE ITEMS IS RULED, because getting it wrong walks
+the other held message into the same wall. `2026-09-10-the-move-and-the-one-
+thing-left.answer.md` is 4739 characters, also over the cap. Queue 259 would
+reconcile the link floor and move it into the outbox; if 260's length gate is
+not in first, it lands straight in another 400. SO 260 LANDS BEFORE 259, and
+both held messages are rewritten under the cap or dropped before either moves.

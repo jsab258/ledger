@@ -58,6 +58,54 @@ if HERE not in sys.path:
     sys.path.insert(0, HERE)
 import single_instance                                        # noqa: E402
 
+# --------------------------------------------------------------------------
+# NO_WINDOW REASONING LIVES HERE, ONCE. Seven other files define the same
+# one-line constant and point back at this comment rather than restating it:
+# tools/supervise.py, tools/pc-watcher.py, tools/runner/executor.py, and the
+# modules those import and therefore RUN INSIDE THEIR PROCESSES,
+# tools/runner/single_instance.py, inbox.py and outbox.py. One idea in twenty
+# places is how bootstrap-paths.cmd drifted. At a call site the NAME is the
+# pointer.
+#
+# WHAT HAPPENED, 2026-09-11. Jafar re-enabled the supervisor scheduled task and
+# his screen filled with cmd windows appearing and disappearing in a loop. He
+# ended and disabled the task. IT WAS NOT A CRASH LOOP: taskLastTaskResult
+# 267009 is 0x00041301, "the task is currently running", which is a status and
+# not a failure, and tools/pc-watcher.py imports only stdlib at module level so
+# it does not die on the miniconda interpreter it now gets.
+#
+# WHY IT ONLY APPEARED THAT MORNING, WHICH IS THE PART WORTH KEEPING. The task
+# registers pythonw.exe with windowless=True, so the TOP process has no
+# console. On Windows a child launched from a parent with NO console, from a
+# console-subsystem executable (git.exe, tasklist.exe, taskkill.exe,
+# schtasks.exe) and without CREATE_NO_WINDOW, ALLOCATES ITS OWN CONSOLE WINDOW.
+# Until that morning these daemons were always started from
+# "START EVERYTHING.bat", which has a console the children inherit silently.
+# The scheduled task is the first windowless parent they have ever had, so one
+# latent fault at every subprocess call site in the fleet became visible at
+# once. tools/pc-watcher.py hard resets the checkout about once a minute and
+# tools/runner/executor.py polls every 15 seconds, and each of those is a git
+# subprocess, so the windows arrive continuously. THE WINDOWLESS REQUIREMENT
+# WAS HALF MET: the parent, not its descendants.
+#
+# SO EVERY subprocess CALL THE FLEET CAN REACH PASSES creationflags=NO_WINDOW,
+# and a call that already passes creationflags ORs this in rather than
+# replacing it. TWENTY SITES, NOT THE ELEVEN THE FIRST COUNT FOUND: eleven sit
+# in the five files the supervisor spawns and nine in the modules those import,
+# which run in the same windowless processes and open exactly the same window
+# (tasklist inside the launcher itself, git inside the bot and the executor on
+# every pass). tools/lint-no-window.py derives that set by following imports,
+# walks every call site with ast, and fails when one does not carry the flag,
+# so a twenty-first call site added later fails a check rather than reopening
+# this quietly.
+#
+# A NO-OP OFF WINDOWS BY CONSTRUCTION. subprocess.CREATE_NO_WINDOW does not
+# exist on Linux, and creationflags=0 is what Popen already accepts there, so
+# this container runs the same line the PC does rather than a second path that
+# ships unrun.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 LOCK_REL = os.path.join("game-design", "pc-jobs", "supervisor.lock")
 REFUSED_REL = os.path.join("game-design", "pc-jobs", "supervisor-refused.txt")
 LOG_REL = os.path.join("game-design", "pc-jobs", "launch-supervisor.log")
@@ -131,9 +179,14 @@ def main(repo, who, spawn=None):
         supervise = os.path.join(repo, "tools", "supervise.py")
         if spawn is not None:
             return spawn([sys.executable, supervise], repo, log)
+        # creationflags: see NO_WINDOW at the top of this file. THIS IS
+        # THE SITE THAT MATTERS MOST, because this process is the one the
+        # scheduled task starts windowless, so tools/supervise.py is the
+        # first descendant that would otherwise allocate a console.
         proc = subprocess.run([sys.executable, supervise], cwd=repo,
                               stdin=subprocess.DEVNULL,
-                              stdout=log, stderr=log)
+                              stdout=log, stderr=log,
+                              creationflags=NO_WINDOW)
         return proc.returncode
     finally:
         try:

@@ -9,6 +9,121 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-11 08:40Z: THE WINDOWS WERE NEVER A CRASH LOOP, AND A CEILING I MISREAD
+
+THE CEILING FAULT IS MINE AND IT NARROWED REAL WORK. `production/budget.md`
+carried TWO ceilings at once: a stale "80% of the weekly limit" header near the
+top and the live "85 ON THE HIGHER METER, STANDING, ruled by Jafar 2026-09-10"
+sixty lines below it. I read the header, called his 78/82 reading a breach, and
+husbanded a budget that was not short. WHAT I NARROWED, named so it is
+un-narrowed rather than quietly forgotten: no agent was spawned at all, and
+`tools/container-setup.sh` was written by the resident instead of a builder,
+both decisions taken for a breach that had not happened. Jafar corrected it in
+the same session. The header now names 85, points at the ruling and carries this
+incident; a machine-readable single ceiling line is queued.
+
+THE HEADER IS THE FIRST THING READ AND THE LAST THING UPDATED. That is the whole
+mechanism and it is worth more than the apology.
+
+THE CMD WINDOWS ARE DIAGNOSED AND IT IS NOT A CRASH LOOP. Measured:
+
+    subprocess call sites   supervise 3, pc-watcher 2, executor 5,
+                            launch-supervisor 1, telegram-bot 0   = 11
+    carrying CREATE_NO_WINDOW                                     =  0
+
+The task registers `pythonw.exe` with `windowless=True`, so the TOP process has
+no console and that half was always right. On Windows a child launched from a
+console-subsystem executable by a parent with NO console ALLOCATES ITS OWN
+CONSOLE WINDOW. These daemons had only ever been started from `START
+EVERYTHING.bat`, which has a console the children inherit silently, so the
+scheduled task is the first windowless parent they have had and a latent fault
+in all eleven sites surfaced at once. pc-watcher resets the checkout about once
+a minute and the executor polls every fifteen seconds, each one a git
+subprocess, which is the loop he watched. THE WINDOWLESS REQUIREMENT WAS HALF
+MET: the parent, never its descendants.
+
+`taskLastTaskResult=267009` is 0x00041301, "currently running". It is a status
+and not a failure code, and the ruling forbids citing it as one again.
+
+THE RE-ENABLE IS GATED ON SIX PRINTED LINES, not on anybody's judgement, and the
+sharpest of them is not mine: THE INSTRUMENT MUST BE SEEN TO FAIL FIRST. The
+same proof step is run against the pre-fix checkout and must print
+`verdict=WINDOWS-SEEN`; without that, `verdict=WINDOWLESS` only means the
+sampler cannot see windows. The conhost count is CUMULATIVE because a git child
+lives a fraction of a second. And `survivedSec=300/300` per process, because a
+fleet that died inside the window is the trivially windowless one. Full
+condition in `game-design/decision-2026-09-11-ruling-the-windowless-fleet-and-
+four-smaller-calls.md`.
+
+ONE CONFLICT RAISED RATHER THAN RESOLVED ALONE. The ruling says re-enabling is
+Jafar's click and the resident never does it on his behalf. Jafar instructed the
+resident to re-enable it through the installer once proven. He outranks the
+director, so the resident will, after the proof passes, and he has been told the
+director wanted the click to be his.
+
+THE SWEEP'S PERMANENT RED IS MOVED OUT OF THE WAY. The 5346-character message is
+in `production/outbox-blocked/` and the next sweep should print exit 0; IF IT
+STILL READS 1 THE INSTRUMENT IS THE NEXT SUSPECT rather than another message.
+Queue 260 before queue 259, ruled, because the other held message is 4739
+characters and the link-floor fix would walk it into the same 400.
+
+## 2026-09-11 08:00Z: THE FLEET MOVED, THE INSTALL SUCCEEDED, AND A1 WAS PROVEN BOTH WAYS
+
+HE DISABLED THE TASK AND SIGNED BACK IN, AND EVERYTHING DOWNSTREAM FOLLOWED.
+Run 424cc7eb, measured on c843afcb:
+
+    resyncAction=updated branch=main sha=c843afc
+    repo=C:\Users\Jafar\ledger-migrate      configLocalPresent=True
+    checkoutBroughtCurrentThisRun=True  taskAlreadyNamesRepo=False
+      taskPathHeld=C:\Users\Jafar\wc26-picks
+    installAction=update                installerExitCode=0
+    supervisorPath=C:\Users\Jafar\ledger-migrate   on both processes
+
+A1 IS NOW TESTED ON BOTH OUTCOMES BY REAL RUNS RATHER THAN BY A FIXTURE, which
+is the accepting case rule satisfied in production. Last night it REFUSED, with
+the checkout stale and the task holding the old path. This morning it ALLOWED,
+because the resync ran first and brought the checkout current, so the first of
+its two conditions was met while the second was still false. A guard that only
+ever refuses is a ratchet; this one discriminates.
+
+THE RETURN HALF REACHED THIS REPOSITORY FOR THE FIRST TIME. `pc-inbox` here
+moved 2a7a234c to 7e22f2d9, carrying receipts 66 and 67 for two messages sent at
+06:00Z. The archive's pc-inbox stopped at 2ca5cc39 and is now the frozen one,
+which is the correct way round for the first time since the move.
+
+SO OUTBOUND AND THE RECEIPT ARE PROVEN ON LEDGER. INBOUND IS NOT: the only file
+under production/inbox/ on the branch is still 2026-09-07T0550Z-79313218.md, so
+no message has come from his phone since the move. That half is untested rather
+than broken, and it needs him to send one.
+
+THE SWEEP IS RED FOR A REASON THAT WILL NEVER CLEAR ITSELF, and it is not the
+move. `sweepCheckoutDecision=send` now, the staleness gate passes, and 17 of 18
+files are already sent. The eighteenth is 5346 characters against Telegram's
+4096 cap:
+
+    NOT SENT ... (HTTP 400: Bad Request: message is too long).
+    It stays unsent and the next pass tries again.
+    outboxFiles=18 sent=0 unsent=1 alreadySent=17 sendFailed=1
+
+A 400 naming a property of the message is not a retryable condition, so this has
+been failing every pass since 0db066b2, before the move, and a permanent red
+hides the next real failure behind it. Queue 260.
+
+AND IT CATCHES THE HELD MESSAGE TOO, which is worth knowing before anybody
+celebrates queue 259. `production/outbox-blocked/2026-09-10-the-move-and-the-
+one-thing-left.answer.md` is 4739 characters. Reconciling the link floor would
+have moved it into the outbox and straight into the same 400. TWO BLOCKS, NOT
+ONE, and the second was invisible until the first stopped hiding it.
+
+THE CONTAINER IS NOW REPRODUCIBLE. `tools/container-setup.sh` carries the five
+things installed by hand on 2026-09-10 to take verify from crashing on its first
+check to 81 of 81 green: dotnet 8 from apt, PowerShell from the official tarball
+because `dotnet tool install --global PowerShell` FAILS on this image, the three
+pip modules, the unshallow, and the tools path. Run on the accepting case and it
+reads stepsOk=5/5. Its first draft read pymods=FAILED on a container where all
+three modules were present, because the check called importlib.util.find_spec
+without importing importlib.util; the accepting-case run is what caught it.
+
 ## 2026-09-11 04:00Z: THE WAKE FIRED, NO BRIEF WAS WRITTEN, AND THAT IS THE FINDING
 
 SAID OUT LOUD BECAUSE THE PROMPT REQUIRES IT: on a day this wake fires a brief
