@@ -1,30 +1,32 @@
-# LEDGER scheduled task install/verify - c843afc @1789106387
+# LEDGER scheduled task install/verify - 70e9ac5 @1789110186
 # Line 1 names the commit this was measured on.
 # Installs tools/runner/launch-supervisor.py (wraps tools/supervise.py,
 # unmodified) as a Windows scheduled task. Ruling 2026-09-07.
 
 workflowRef=main daemonsBranch=main daemonsBranchIsWhatGitActuallyUses=true
-supervisorQueryOk=true supervisorQueryContext=before-resync supervisorProcessesFound=0
-resyncLocalAhead=f6508b3bef50296c4b78f0822e0f716818ca6662
-resyncDirtyTrackedPaths=0
-originUrlBefore=https://github.com/jsab258/wc26-picks.git
-originAction=repointed originUrlAfter=https://github.com/jsab258/ledger.git
-resyncAction=updated branch=main sha=c843afc
+supervisorQueryOk=true supervisorQueryContext=before-resync supervisorProcessesFound=2
+supervisorQueryContext=before-resync supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=before-resync supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
+resyncAction=skipped-supervisor-running kinds=supervise.py,pc-watcher.py reason=a-running-supervisor-or-watcher-already-keeps-this-checkout-current-do-not-touch-its-index
 runnerAccount=JAFAR-DESKTOP\Jafar
 repo=C:\Users\Jafar\ledger-migrate
 python=C:\Users\Jafar\miniconda3\python.exe
 pythonForTask=C:\Users\Jafar\miniconda3\pythonw.exe windowless=True
 configLocalPresent=True
-checkoutBroughtCurrentThisRun=True taskAlreadyNamesRepo=False taskPathHeld=C:\Users\Jafar\wc26-picks
-installAction=update
-supervisorQueryOk=true supervisorQueryContext=before-start supervisorProcessesFound=0
-startedNow=attempted
+taskEnabledBefore=False
+taskEnabledCarried=False reason=a-person-disabled-this-task-and-an-install-does-not-re-enable-it
+checkoutBroughtCurrentThisRun=False taskAlreadyNamesRepo=True taskPathHeld=C:\Users\Jafar\ledger-migrate
+installAction=already-correct
+supervisorQueryOk=true supervisorQueryContext=before-start supervisorProcessesFound=2
+supervisorQueryContext=before-start supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=before-start supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
+startedNow=refused reason=task-is-disabled-a-person-turned-it-off
 supervisorQueryOk=true supervisorQueryContext=after-verify supervisorProcessesFound=2
-supervisorQueryContext=after-verify supervisorPid=12800 supervisorParentPid=3124 supervisorKind=launch-supervisor.py supervisorPath=C:\Users\Jafar\ledger-migrate
 supervisorQueryContext=after-verify supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=after-verify supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
 taskExists=True
-taskState=Running
-taskEnabled=True
+taskState=Disabled
+taskEnabled=False
 taskTriggerKind=MSFT_TaskLogonTrigger
 taskRestartCount=999
 taskRestartInterval=PT1M
@@ -33,11 +35,11 @@ taskHiddenInSchedulerUI=True
 taskRunAsUser=Jafar
 taskLogonType=Interactive
 taskLastRunTime=09/11/2026 07:59:54
-taskLastTaskResult=267009
+taskLastTaskResult=267014
 taskNextRunTime=
-install-scheduled-task: installAction=update taskExists=True supervisorProcessesAfter=2
+install-scheduled-task: installAction=already-correct taskExists=True supervisorProcessesAfter=2
 installerExitCode=0
 
 # The existing channel, read rather than duplicated (ruling point 4).
-pcInboxReachable=true pcInboxHeadShort=7e22f2d9 pcInboxLastCommitAgeSec=7
+pcInboxReachable=true pcInboxHeadShort=1c7eb7f8 pcInboxLastCommitAgeSec=2765
 pcInboxNote=this-branch-is-the-studios-own-de-facto-heartbeat;no-new-transport-was-built
