@@ -115,6 +115,14 @@ import outbox                                                  # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(HERE))
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 # --------------------------------------------------------------------------
 # THE POLICY NUMBERS. NONE OF THEM IS MEASURED, and rule 2 means saying so
 # rather than implying otherwise: nobody has ever watched this loop run, so
@@ -677,9 +685,11 @@ def git_call(args, cwd, timeout=180):
     env.update({"GIT_TERMINAL_PROMPT": "0", "GIT_EDITOR": "true",
                 "GIT_MERGE_AUTOEDIT": "no", "GIT_PAGER": "cat"})
     try:
+        # creationflags: see NO_WINDOW at the top of this file. The poll
+        # loop reaches this every 15 seconds.
         p = subprocess.run(["git"] + list(args), cwd=cwd, env=env,
                            capture_output=True, text=True, errors="replace",
-                           timeout=timeout)
+                           timeout=timeout, creationflags=NO_WINDOW)
     except FileNotFoundError:
         return 127, "git is not on PATH on this PC"
     except subprocess.TimeoutExpired:
@@ -708,9 +718,11 @@ def worktree_ready(repo, worktree, say):
     env = dict(os.environ)
     env.update({"GIT_TERMINAL_PROMPT": "0", "GIT_EDITOR": "true"})
     try:
+        # creationflags: see NO_WINDOW at the top of this file.
         p = subprocess.run(["git", "worktree", "add", "--detach", worktree,
                             "HEAD"], cwd=repo, env=env, capture_output=True,
-                           text=True, errors="replace", timeout=300)
+                           text=True, errors="replace", timeout=300,
+                           creationflags=NO_WINDOW)
     except FileNotFoundError:
         return False, "git-is-not-on-PATH"
     except (OSError, subprocess.TimeoutExpired) as e:
@@ -955,8 +967,10 @@ def kill_tree(proc):
     """
     try:
         if os.name == "nt":
+            # creationflags: see NO_WINDOW at the top of this file.
             subprocess.run(["taskkill", "/F", "/T", "/PID", str(proc.pid)],
-                           capture_output=True, timeout=60)
+                           capture_output=True, timeout=60,
+                           creationflags=NO_WINDOW)
         else:
             proc.terminate()
     except Exception:                                         # noqa: BLE001
@@ -1046,9 +1060,14 @@ def run_session(prompt, cwd, log_path, turns=SESSION_TURNS,
             kw = {}
             if os.name != "nt":
                 kw["start_new_session"] = True
+            # creationflags: see NO_WINDOW at the top of this file. It is
+            # passed EXPLICITLY rather than through **kw, which carries only
+            # the POSIX start_new_session: a flag hidden inside a dict is a
+            # flag tools/lint-no-window.py cannot prove is there.
             return subprocess.Popen(a, cwd=c, stdin=subprocess.DEVNULL,
                                     stdout=out_fh, stderr=subprocess.STDOUT,
-                                    env=child_env, **kw)
+                                    env=child_env,
+                                    creationflags=NO_WINDOW, **kw)
     try:
         if os.path.dirname(log_path):
             os.makedirs(os.path.dirname(log_path), exist_ok=True)
@@ -2340,9 +2359,14 @@ def selftest():                                               # noqa: C901
     # The child writes STRAIGHT INTO THE LOG now and the log is read back, so
     # these fixtures hand it the file the way the real spawn does.
     def child(code, cwd, out_fh):
+        # creationflags: see NO_WINDOW at the top of this file. This one
+        # is in the selftest, and it is the ONE site that runs on this
+        # container: a NO_WINDOW that was not 0 off Windows would raise
+        # ValueError here rather than ship unrun.
         return subprocess.Popen([sys.executable, "-c", code], cwd=cwd,
                                 stdin=subprocess.DEVNULL, stdout=out_fh,
-                                stderr=subprocess.STDOUT)
+                                stderr=subprocess.STDOUT,
+                                creationflags=NO_WINDOW)
 
     log = os.path.join(tmp, "logs", "probe.log")
     res = run_session("ignored", tmp, log, spawn=lambda a, c, f: child(

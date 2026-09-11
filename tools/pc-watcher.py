@@ -42,6 +42,14 @@ import subprocess
 import sys
 import time
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 JOBS = ROOT / "game-design" / "pc-jobs"
 REQUEST = JOBS / "request.json"
@@ -522,8 +530,12 @@ def casting_files(root):
 
 
 def git(*args, cwd=None, timeout=600):
+    # creationflags: see NO_WINDOW at the top of this file. THE LOUDEST
+    # SITE IN THE FLEET: resync runs this several times a minute, so an
+    # unflagged git here is a window several times a minute.
     p = subprocess.run(["git"] + list(args), cwd=str(cwd or ROOT),
-                       capture_output=True, text=True, timeout=timeout)
+                       capture_output=True, text=True, timeout=timeout,
+                       creationflags=NO_WINDOW)
     return p.returncode, (p.stdout + p.stderr).strip()
 
 
@@ -642,8 +654,10 @@ def run_job(job, root, say, timeout=None, beat=print):
             env = dict(os.environ,
                        TQDM_DISABLE="1",
                        HF_HUB_DISABLE_PROGRESS_BARS="1")
+            # creationflags: see NO_WINDOW at the top of this file.
             p = subprocess.run(cmd, cwd=str(root), capture_output=True,
-                               text=True, timeout=timeout, env=env)
+                               text=True, timeout=timeout, env=env,
+                               creationflags=NO_WINDOW)
         except subprocess.TimeoutExpired as e:
             say(f"  TIMED OUT after {timeout}s")
             # THE PARTIAL OUTPUT TRAVELS. "Timed out" alone says only that

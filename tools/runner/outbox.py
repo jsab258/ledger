@@ -61,6 +61,14 @@ import inbox                                                   # noqa: E402
 
 REPO = os.path.dirname(os.path.dirname(HERE))
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 #: Where the Producer writes. Same string as `producer-check.py:GATE_TREES[0]`,
 #: and the selftest asserts the two agree rather than trusting this copy.
 OUTBOX_DIR = "production/outbox"
@@ -748,10 +756,12 @@ def run_check(repo, kind, rel, timeout=120):
         return False, ("the check itself is missing at tools/producer-check.py "
                        "on this machine, so nothing was checked"), ""
     try:
+        # creationflags: see NO_WINDOW at the top of this file. Runs
+        # inside the bot and the executor, both started windowless.
         p = subprocess.run([sys.executable, tool, "--kind", kind,
                             full_path(repo, rel)],
                            capture_output=True, text=True, timeout=timeout,
-                           cwd=repo)
+                           cwd=repo, creationflags=NO_WINDOW)
     except subprocess.TimeoutExpired:
         return False, ("the check did not finish within %d second(s), so this "
                        "message is not sent" % timeout), ""
@@ -1204,9 +1214,10 @@ def run_report_frame(repo, extra=None, timeout=120):
         return 2, ("report-frame: the picker is missing at "
                    "tools/report-frame.py on this machine")
     try:
+        # creationflags: see NO_WINDOW at the top of this file.
         p = subprocess.run([sys.executable, tool] + list(extra or []),
                            capture_output=True, text=True, timeout=timeout,
-                           cwd=repo)
+                           cwd=repo, creationflags=NO_WINDOW)
     except (subprocess.TimeoutExpired, OSError) as e:
         return 2, "report-frame: could not run (%s)" % type(e).__name__
     return p.returncode, (p.stdout or "") + (p.stderr or "")
@@ -1676,7 +1687,9 @@ def _fixture_repo(tmp):
     for args in (["init", "-q", "-b", "main"],
                  ["config", "user.email", "t@example.com"],
                  ["config", "user.name", "t"]):
-        subprocess.run(["git", "-C", tmp] + args, capture_output=True)
+        # creationflags: see NO_WINDOW at the top of this file.
+        subprocess.run(["git", "-C", tmp] + args, capture_output=True,
+                       creationflags=NO_WINDOW)
     # capsay.py travels too: producer-check refuses to run without it, and a
     # fixture that cannot run the real check would prove nothing about the
     # real check.
@@ -1701,9 +1714,11 @@ def _commit(tmp, rel, text, when=None):
         stamp = "%d +0000" % int(when)
         env["GIT_AUTHOR_DATE"] = stamp
         env["GIT_COMMITTER_DATE"] = stamp
-    subprocess.run(["git", "-C", tmp, "add", "--", rel], capture_output=True)
+    # creationflags: see NO_WINDOW at the top of this file.
+    subprocess.run(["git", "-C", tmp, "add", "--", rel], capture_output=True,
+                   creationflags=NO_WINDOW)
     subprocess.run(["git", "-C", tmp, "commit", "-q", "-m", "add " + rel],
-                   capture_output=True, env=env)
+                   capture_output=True, env=env, creationflags=NO_WINDOW)
     return rel
 
 

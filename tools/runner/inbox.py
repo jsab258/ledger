@@ -160,6 +160,14 @@ COMMIT_EMAIL = "ledger-bot@users.noreply.github.com"
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+# CREATION FLAGS FOR EVERY subprocess CALL IN THIS FILE, and a no-op off
+# Windows. THE REASONING IS NOT RESTATED HERE: it is one comment, beside the
+# same constant in tools/runner/launch-supervisor.py, and it is about the
+# console a console-subsystem child allocates for itself when its parent (the
+# scheduled task's pythonw.exe) has none.
+NO_WINDOW = (getattr(subprocess, "CREATE_NO_WINDOW", 0)
+             if os.name == "nt" else 0)
+
 
 # --------------------------------------------------------------------------
 # git, on a short leash
@@ -256,10 +264,15 @@ def _run_bounded(cmd, cwd, env, timeout, what=None):
     handle keeps a daemon thread alive and blocks nothing.
     """
     try:
+        # creationflags: see NO_WINDOW at the top of this file. This is
+        # the git every inbox pass runs, INSIDE the bot and the executor,
+        # which the supervisor starts windowless: unflagged, it is the
+        # once-a-pass window that filled the screen on 2026-09-11.
         p = subprocess.Popen(cmd, cwd=cwd, env=env,
                              stdin=subprocess.DEVNULL,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                             universal_newlines=True, errors="replace")
+                             universal_newlines=True, errors="replace",
+                             creationflags=NO_WINDOW)
     except FileNotFoundError:
         return 127, "", "git is not on PATH on this PC"
     except OSError as e:
@@ -1024,8 +1037,10 @@ def _fixture_git(args, cwd):
     env = dict(os.environ, GIT_TERMINAL_PROMPT="0", GIT_EDITOR="true",
                GIT_AUTHOR_NAME="T", GIT_AUTHOR_EMAIL="t@example.com",
                GIT_COMMITTER_NAME="T", GIT_COMMITTER_EMAIL="t@example.com")
+    # creationflags: see NO_WINDOW at the top of this file.
     p = subprocess.run(["git"] + list(args), cwd=cwd, env=env,
-                       capture_output=True, text=True, timeout=120)
+                       capture_output=True, text=True, timeout=120,
+                       creationflags=NO_WINDOW)
     return p.returncode, (p.stdout + p.stderr).strip()
 
 

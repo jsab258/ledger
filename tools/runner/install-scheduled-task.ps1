@@ -456,6 +456,48 @@ function Test-TaskMatches {
 
 $Existing = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
 
+# A6, 2026-09-11: THE DISABLE IS RESPECTED, BECAUSE A PERSON MADE IT.
+#
+# WHAT HAPPENED. On the morning of 2026-09-11 Jafar re-enabled this task and
+# his screen filled with cmd windows appearing and disappearing in a loop
+# (the 11 unflagged subprocess sites; see tools/runner/launch-supervisor.py
+# beside NO_WINDOW for why a windowless parent is what surfaced them). He
+# ended the task and DISABLED it. Two separate paths in this file would then
+# have undone that on the very next push, because this script sits in its
+# own workflow push-path filter and the fix itself touches files in it:
+#
+#   (a) $DesiredSettings is built by New-ScheduledTaskSettingsSet, which
+#       defaults to Enabled, and Test-TaskMatches does not compare Enabled.
+#       Any update for an unrelated reason would re-register the task with
+#       settings that say enabled, flipping his switch back on;
+#   (b) the start gate below asks only whether a supervisor is RUNNING. He
+#       had ended the processes, so nothing was running, so it would have
+#       called Start-ScheduledTask and filled his screen again.
+#
+# Neither asked the only question that matters: DID A HUMAN TURN THIS OFF ON
+# PURPOSE. An install updates paths, triggers and settings; it does not get
+# to decide that something a person switched off should be on. So the
+# registered value is READ FIRST and CARRIED INTO the settings used for the
+# update, and the start below refuses outright while it is off.
+#
+# THE VALUE IS READ, NEVER GUESSED, and it is printed either way: a
+# preserved disable and a task that was never disabled are different facts
+# and no reader can tell them apart from silence.
+$TaskEnabledBefore = $null
+if ($Existing) { $TaskEnabledBefore = $Existing.Settings.Enabled }
+$TaskEnabledBeforeText = if ($null -eq $TaskEnabledBefore) {
+    "no-task-registered"
+} else { "$TaskEnabledBefore" }
+Write-Host "taskEnabledBefore=$TaskEnabledBeforeText"
+if ($TaskEnabledBefore -eq $false) {
+    # CARRIED INTO THE WRITE. Register-ScheduledTask with these settings
+    # re-registers a DISABLED task, so an update that changes the action or
+    # the trigger cannot smuggle an enable in with it.
+    $DesiredSettings.Enabled = $false
+    Write-Host ("taskEnabledCarried=False reason=a-person-disabled-this-" +
+               "task-and-an-install-does-not-re-enable-it")
+}
+
 # THE FOURTH REFUSAL, AND LANDING THIS FILE IS WHAT MAKES IT REACHABLE.
 # This script sits in its own workflow's push-path filter, so the very
 # push that lands a change here fires the workflow. On a machine where
@@ -551,7 +593,16 @@ Write-Host "installAction=$InstallAction"
 # asked again after the resync and the install, not a second
 # implementation.
 $StartCheck = Test-AnySupervisorRunning -Label "before-start"
-if (-not $StartCheck.Determined) {
+if ($TaskEnabledBefore -eq $false) {
+    # A6, AHEAD OF THE OTHER THREE IN THE SAME CHAIN. Start-ScheduledTask
+    # runs a DISABLED task perfectly happily, so "it is disabled" has to be
+    # asked here explicitly or the disable only survives until the next
+    # push. A refusal is a correct outcome and this script still exits 0;
+    # the read-back below prints taskState and taskEnabled so the refusal
+    # is visible as a state rather than as an absence.
+    Write-Host ("startedNow=refused reason=task-is-disabled-a-person-" +
+               "turned-it-off")
+} elseif (-not $StartCheck.Determined) {
     # A QUERY THAT FAILED MUST REFUSE, NOT ASSUME NOTHING IS RUNNING (B1).
     # The task stays registered and fires normally at the next logon.
     Write-Host ("startedNow=refused reason=supervisor-query-failed-cannot-" +

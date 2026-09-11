@@ -62,7 +62,19 @@ FLOWS = ROOT / ".github" / "workflows"
 # workflows: adding a script to the sweep should be a decision somebody made,
 # and a missing entry here is then a visible omission rather than a glob that
 # quietly matched nothing.
-SCRIPTS = ("tools/runner/setup-blender.ps1",)
+SCRIPTS = ("tools/runner/setup-blender.ps1",
+           # Added 2026-09-11 with A6 (the disable is respected). This
+           # script is 700 lines of pwsh that only ever runs inside a
+           # self-hosted job, so until it was named here a brace or a
+           # quote wrong in it cost a round trip on his PC to find.
+           "tools/runner/install-scheduled-task.ps1",
+           # Added 2026-09-11 when the five-minute windowless proof
+           # moved out of ledger-install-supervisor-task.yml: the step
+           # holding it was 4283 characters over the measured dispatch
+           # ceiling. It was parsed here as a workflow step before the
+           # move, so naming it keeps the coverage the move would
+           # otherwise have deleted, which is what this list is for.
+           "tools/runner/prove-windowless.ps1")
 
 # dotnet puts its global tools here and it is not on PATH by default in a
 # fresh container, so look for it directly before giving up.
