@@ -31,6 +31,17 @@ front of a name is typed by the writer, so a date switch lets the specimen
 choose its own rulebook. The three already-sent messages are named; today's is
 not.
 
+THE FLOOR IS CONDITIONAL FROM 2026-09-11, and it is not deleted (see
+SERVED_MARKER_REL). Ruled 2026-09-10, queue 256 and queue 259: while NO page
+is served from the new repository, zero links is legal and `linkfloor` does
+not fire, because all five permitted destinations sit under the ARCHIVE's
+pages and a link sent today would show Jafar the world as it was before the
+move. Once a page is served the floor is one to two again. The condition is a
+committed marker naming the served commit, never a date and never a constant,
+and every run PRINTS the branch it took: `linkFloorActive=<true|false>
+reason=<...>` on the done line, with the effective floor beside the ruled band
+in the body. A missing or malformed marker leaves the floor LIVE.
+
 THE ONE RULED WHOLE-URL EXCEPTION, 2026-09-09 (see RULED_LINKS). Jafar asked
 for one message carrying a link to research that no published page holds, which
 his own band of 2026-09-06 forbids. A later, specific instruction from the
@@ -297,6 +308,11 @@ COUNTS_ALLOWED_IN = {"answer"}
 # repository, so it fails `linkdest` like any other; the picture goes to him as
 # a Telegram image, which is the sender's job and not this program's.
 SITE_ORIGIN = "https://jsab258.github.io/wc26-picks/"
+# THE ORIGIN A LINK MUST NEVER POINT AT after the move of 2026-09-10, and it is
+# KEPT after queue 256 flips SITE_ORIGIN off it, BECAUSE A REJECTING FIXTURE
+# MUST NAME WHAT IT REJECTS: a guard whose refused value was deleted from the
+# file is a guard nobody can prove still bites.
+ARCHIVE_ORIGIN = "https://jsab258.github.io/wc26-picks/"
 # (path under the origin, what to call it in a finding). The empty path is the
 # glance itself. Adding a page here is the ONE place the allowlist grows.
 SITE_PAGES = (("", "the-glance"),
@@ -324,6 +340,130 @@ SITE_PAGES = (("", "the-glance"),
 # two at most (Jafar, 2026-09-06). Both ends are his, neither is measured, and
 # both are cited rather than chosen.
 LINK_MIN, LINK_MAX = 1, 2
+
+# ---------- THE ONE CONDITION UNDER WHICH THE FLOOR DOES NOT FIRE, 2026-09-11
+#
+# THE FLOOR IS NOT DELETED AND THE BAND IS NOT WIDENED. `LINK_MIN` above is
+# still 1 and `SITE_PAGES` still names every destination a link may point at.
+# What changed is WHEN the floor applies, and the change is narrow, temporary
+# and ruled.
+#
+# THE RULING. `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-
+# fleet-left-behind.md`, section 5 finding 6, verbatim: "Until this item lands,
+# briefs carry no site link; the register allows zero." Filed as
+# `production/queue/256` (which decides when a page IS served) and
+# `production/queue/259` (the code catching up with the ruling, where the cost
+# is written down: this program refused a finished answer to Jafar on
+# `linkfloor` alone, and `tools/runner/outbox.py:run_check` reads exit 1 as DO
+# NOT SEND, so the message sat in the outbox and he got silence).
+#
+# WHY THE FLOOR IS WRONG TODAY AND NOT IN GENERAL. LEDGER moved off
+# `jsab258/wc26-picks` on 2026-09-10, and all five destinations in SITE_PAGES
+# sit under the ARCHIVE's published pages. After the move a link shows him the
+# world as it was BEFORE it. A message with no link is honest; a message with
+# one of those links is not. The floor's own reasoning, that a message without
+# evidence behind it teaches vagueness, is untouched by the move, which is why
+# the rule is made CONDITIONAL rather than removed or loosened.
+#
+# THE CONDITION IS A FACT ON DISK, NOT A GUESS AND NOT A DATE. One committed
+# marker, one machine-readable line, read by link_floor_state() below and by
+# nothing else. A date switch would let the specimen choose its own rulebook,
+# which is the fault already written down at LEGACY_LINK_RULES; a constant in
+# this file would be a session's opinion about a page it never loaded.
+#
+# THE FAILURE DIRECTION IS LOUD, ON PURPOSE. A missing marker, an unreadable
+# one, or a marker carrying anything other than exactly one `servedCommit=`
+# line all leave the floor LIVE, with the fault named in the printed reason. A
+# broken instrument then refuses a linkless message and somebody looks; the
+# other direction sends a message with no evidence because nobody could read
+# the fact, which is the silent-instrument failure `.claude/rules/
+# instruments.md` exists for.
+SERVED_MARKER_REL = "production/site-served.txt"
+SERVED_KEY = "servedCommit"
+#: The value that means NO page is served. Anything else is a served commit.
+SERVED_NONE = "none"
+#: Built from SERVED_KEY so the key has ONE spelling in this file.
+SERVED_LINE_RE = re.compile(r"(?m)^\s*%s=(\S+)" % SERVED_KEY)
+#: How much of the marker's value the printed reason carries. A whole sha is
+#: 40, so this never bites on a correct marker; cap() announces it when it does.
+SERVED_VALUE_WIDTH = 40
+#: The reason a caller that took no reading at all gets. Named rather than
+#: typed at the default, so `not-consulted` is greppable and can never be
+#: confused with `no-page-served-yet`: one is an instrument that did not look,
+#: the other is a fact it looked at.
+FLOOR_NOT_CONSULTED = ("not-consulted..caller-took-no-reading"
+                       "..floor-stays-live")
+
+
+def floor_reading(active, reason, served=None, lines=0):
+    """ONE CONSTRUCTOR for the link floor's reading, so the strict default and
+    the file reader cannot drift apart about which keys exist."""
+    return {"active": active, "reason": reason, "marker": SERVED_MARKER_REL,
+            "served": served, "marker_lines": lines}
+
+
+def link_floor_state(root):
+    """IS THE EVIDENCE FLOOR LIVE RIGHT NOW, and why, read off disk.
+
+    Returns floor_reading(). `active` is the branch; `reason` is a token with
+    NO SPACES in it (every reader of a key=value channel splits on whitespace),
+    structured with `/` and `..`, and both are printed by report() and
+    gate_report() on every run, pass or fail. A branch nobody can see taken is
+    a branch nobody audits.
+
+    FOUR OUTCOMES, THREE OF THEM STRICT:
+      - exactly one `servedCommit=none` line  -> floor OFF, zero links legal;
+      - exactly one `servedCommit=<sha>` line -> floor ON at LINK_MIN..LINK_MAX;
+      - no marker, or an unreadable one       -> floor ON, the absence named;
+      - zero or several `servedCommit=` lines -> floor ON, the count named.
+    """
+    marker = pathlib.Path(root) / SERVED_MARKER_REL
+    try:
+        text = marker.read_text(encoding="utf-8", errors="replace")
+    except FileNotFoundError:
+        return floor_reading(True, "marker-absent..%s..floor-stays-live"
+                             % SERVED_MARKER_REL)
+    except OSError:
+        return floor_reading(True, "marker-unreadable..%s..floor-stays-live"
+                             % SERVED_MARKER_REL)
+    hits = SERVED_LINE_RE.findall(text)
+    if len(hits) != 1:
+        return floor_reading(
+            True,
+            "marker-carries-%d-%s-lines-of-the-1-required..%s"
+            "..floor-stays-live" % (len(hits), SERVED_KEY, SERVED_MARKER_REL),
+            lines=len(hits))
+    value = hits[0]
+    # THE VALUE IS CAPPED AND THE CAP ANNOUNCES ITSELF, through the one
+    # implementation of the truncation notice this repo has. 40 characters is a
+    # whole sha, so it never bites on a correct marker; it exists so a marker
+    # carrying a paragraph cannot push the rest of a done line off a reader's
+    # screen and read as a finding. The value goes LAST in the token, so the
+    # `...` lands at the end and cannot be misread as a separator.
+    shown = cap([value], keep=1, width=SERVED_VALUE_WIDTH)
+    if value.lower() == SERVED_NONE:
+        return floor_reading(False, "no-page-served-yet..%s..%s/%s"
+                             % (SERVED_MARKER_REL, SERVED_KEY, shown),
+                             served=value, lines=1)
+    return floor_reading(True, "page-served..%s..%s/%s"
+                         % (SERVED_MARKER_REL, SERVED_KEY, shown),
+                         served=value, lines=1)
+
+
+def marker_origin_consistent(reading, site_origin):
+    """(ok, reason) for the ONE transition A1 forbids: a served commit typed
+    into the marker while site_origin is still the archive, which turns the
+    floor back ON and makes the STALE link MANDATORY, not merely legal. PURE.
+    ok is True while the floor is off or nothing is served (an absent or
+    malformed marker is A1's business only in that it passes); reason carries
+    no spaces and is empty on a pass."""
+    if not reading["active"] or reading["served"] is None:
+        return True, ""
+    if norm_url(site_origin) != norm_url(ARCHIVE_ORIGIN):
+        return True, ""
+    return False, ("marker-names-served-commit-but-SITE_ORIGIN-is-the-archive"
+                   "..%s" % reading["marker"])
+
 
 # THE ONE RULED WHOLE-URL EXCEPTION TO THE DESTINATION BAND, and it is an
 # EXCEPTION AND NOT A HOLE. (url, label, rulingRecordPath), frozen, one member.
@@ -788,10 +928,16 @@ def split_sections(text):
     return bodies, order
 
 
-def check(text, kind="unprompted", now=None, legacy_links=False):
+def check(text, kind="unprompted", now=None, legacy_links=False,
+          link_floor=None):
     """Every reading this program takes, as data. PURE: takes text, returns a
     dict, touches no file. The selftest drives it with synthetic fixtures and
     the report function only formats what comes out of here.
+
+    `link_floor` is a reading taken by link_floor_state() AT THE CALL SITE,
+    because this function reads no file. Passing nothing gets the STRICT
+    default: the floor LIVE, with the reason `not-consulted`, so a caller that
+    forgot to look can only ever be stricter than the ruling and never looser.
     """
     # `now` may be a datetime, None (meaning the wall clock, which is what the
     # SINGLE-FILE check wants) or UNPINNED (no instant at all, which is what
@@ -800,6 +946,10 @@ def check(text, kind="unprompted", now=None, legacy_links=False):
     # swallowed by a truthiness change later.
     if now is None:
         now = datetime.datetime.now()
+    # THE STRICT DEFAULT. See SERVED_MARKER_REL for why the direction of a
+    # missing reading is "refuse loudly" and never "send it anyway".
+    if link_floor is None:
+        link_floor = floor_reading(True, FLOOR_NOT_CONSULTED)
     word_cap, enforced = REGISTERS[kind]
     # A DECISION CARRIES ITS FLOOR INTO ANY REGISTER. The answer register has
     # no cap and no required shape, but the moment a message carries a NEEDS
@@ -818,6 +968,19 @@ def check(text, kind="unprompted", now=None, legacy_links=False):
     # all: it measures deadlines and nothing else.
     if legacy_links:
         enforced = [r for r in enforced if r not in LINK_BAND_RULES]
+    # THE FLOOR IS CONDITIONAL SINCE 2026-09-11 AND IT IS NOT DELETED. It drops
+    # out of `enforced` while no page is served, which means the existing NOT
+    # ENFORCED line names it and the done line's rulesNotEnforced= carries it:
+    # a rule that stopped biting in silence reads exactly like a rule that
+    # passed. The condition is a fact on disk, read by the caller; the reason is
+    # printed beside the branch on every run. See SERVED_MARKER_REL.
+    #
+    # IT APPLIES TO EVERY REGISTER, including the legacy rung, because the
+    # condition is about THE WORLD (no page is served from the new repository)
+    # and not about when a message was written. The legacy messages all carry
+    # links anyway, so nothing on that rung moves today.
+    if "linkfloor" in enforced and not link_floor["active"]:
+        enforced = [r for r in enforced if r != "linkfloor"]
     # THE CAP GOVERNS THE BODY THE PRODUCER WROTE. On the frozen legacy list
     # only, one leading HISTORICAL, line is an annotation the studio added
     # afterwards and is not charged to the writer: see historical_split() and
@@ -1060,6 +1223,21 @@ def check(text, kind="unprompted", now=None, legacy_links=False):
                                      and s in bodies],
         "items": len(items), "urls": urls, "good_links": good_links,
         "link_min": LINK_MIN, "link_max": LINK_MAX,
+        # THE BRANCH THE FLOOR TOOK, AND WHY, carried out of the pure function
+        # so the report never has to re-read the marker and can never disagree
+        # with the rule that ran. `link_min_effective` is the RULED floor when
+        # the floor is live and 0 while it is suspended: the pair of it and
+        # `link_min` is the before/after a reader needs, never one number whose
+        # meaning moved underneath them.
+        "link_floor_active": link_floor["active"],
+        "link_floor_reason": link_floor["reason"],
+        "link_floor_marker": link_floor["marker"],
+        "link_floor_served": link_floor["served"],
+        # A1, PRINTED ON THIS PATH AND DECISIVE ONLY AT THE GATE: the sender on
+        # his PC must not be where a stale-link-forcing marker is discovered.
+        "marker_origin_ok": marker_origin_consistent(link_floor,
+                                                     SITE_ORIGIN)[0],
+        "link_min_effective": LINK_MIN if link_floor["active"] else 0,
         "offsite_links": [u for u in urls if not link_ok(u, legacy_links)],
         "link_generation": link_rule_generation(legacy_links, ruled_labels),
         # WHICH of the published pages this message actually links, named. A
@@ -1198,11 +1376,17 @@ def report(r):
     # len(good_links) as "to the site", which was true while the site list was
     # the only way in and became a false claim with a number on it the day a
     # whole URL was admitted by ruling.
-    print("  links: %d URL(s) of the ruled %d..%d: %d to the site (%s), %d by "
+    # THE PAIRED READING: the RULED band and the band that actually applied on
+    # this run, on one line. "0 URL(s) of the ruled 1..2" read alone is a
+    # violation; the pair is what the reader needs, and the link floor line
+    # below carries the reason the two differ.
+    print("  links: %d URL(s) of the ruled %d..%d (effective this run %d..%d, "
+          "see the link floor line below): %d to the site (%s), %d by "
           "the ruled whole-URL exception, %d admitted by the retired host "
           "list, %d elsewhere. The only %d destination(s) allowed are %s under "
           "%s; a picture is sent as a Telegram image and never as a link"
           % (len(r["urls"]), r["link_min"], r["link_max"],
+             r["link_min_effective"], r["link_max"],
              len(r["site_links"]),
              "/".join(l for l in r["site_labels"] if l) or NOTHING,
              r["ruled_used"], len(r["retired_host_links"]),
@@ -1220,6 +1404,21 @@ def report(r):
              "/".join(r["ruled_labels"]) or NOTHING))
     print("  destination list applied: %s (the list is dated because the "
           "floor is older than today's ruling)" % r["link_generation"])
+    # THE FLOOR'S BRANCH AND ITS REASON, ON EVERY RUN, pass or fail, so nobody
+    # has to read tools/producer-check.py to know whether the floor was live.
+    # THE PAIRED READING: whether it applied and the effective floor it applied
+    # at, on ONE line, never two keys whose relationship the reader carries.
+    print("  link floor: linkFloorActive=%s reason=%s. Effective floor on this "
+          "run: %d link(s) at least, %d at most, against the ruled %d..%d. "
+          "Ruled 2026-09-10 (queue 256, queue 259): zero links is legal WHILE "
+          "no page is served from the new repository, because all %d permitted "
+          "destinations sit under the ARCHIVE's pages and a link would show "
+          "him the world as it was before the move. The floor is NOT deleted "
+          "and returns to %d..%d the run after %s names a served commit"
+          % ("true" if r["link_floor_active"] else "false",
+             r["link_floor_reason"], r["link_min_effective"], r["link_max"],
+             r["link_min"], r["link_max"], len(SITE_PAGES),
+             r["link_min"], r["link_max"], r["link_floor_marker"]))
     print("  claim-shaped means: not a question, the line does not begin with "
           "a section label or an option / recommendation / default / deadline "
           "marker, and the sentence carries a finite assertion verb")
@@ -1286,10 +1485,17 @@ def report(r):
         # which ones did not. rulesEnforced=9/10 on its own sends the reader
         # looking for the tenth; the names have no spaces so every reader that
         # splits on whitespace keeps them whole.
+        # linkFloorActive and its reason sit LAST and ADJACENT: the pair is one
+        # reading, and the reason is the only token here that can grow, so a
+        # reader truncating the line loses the explanation rather than a count.
         print("\nproducer-check: SEND register=%s rulesEnforced=%d/%d "
-              "rulesNotEnforced=%s"
+              "rulesNotEnforced=%s markerOriginConsistent=%s "
+              "linkFloorActive=%s reason=%s"
               % (r["kind"], len(r["enforced"]), len(RULES),
-                 "/".join(r["not_enforced"]) or "none"))
+                 "/".join(r["not_enforced"]) or "none",
+                 "true" if r["marker_origin_ok"] else "false",
+                 "true" if r["link_floor_active"] else "false",
+                 r["link_floor_reason"]))
         return 0
     shown = {}
     for f in r["findings"]:
@@ -1300,9 +1506,13 @@ def report(r):
         print("    %-18s %s" % (rule, cap(shown[rule], keep=FINDINGS_SHOWN,
                                           width=110, sep=" | ")))
     print("\nproducer-check: DO NOT SEND register=%s rulesEnforced=%d/%d "
-          "rulesNotEnforced=%s"
+          "rulesNotEnforced=%s markerOriginConsistent=%s "
+          "linkFloorActive=%s reason=%s"
           % (r["kind"], len(r["enforced"]), len(RULES),
-             "/".join(r["not_enforced"]) or "none"))
+             "/".join(r["not_enforced"]) or "none",
+             "true" if r["marker_origin_ok"] else "false",
+             "true" if r["link_floor_active"] else "false",
+             r["link_floor_reason"]))
     return 1
 
 
@@ -2344,6 +2554,246 @@ def selftest():
        and not gz["failed"] and gz["legacy_links"] == 0,
        (gz["legacy_absent"], gz["failed"]))
 
+    # ----------------------------- THE LINK FLOOR'S ONE CONDITION, 2026-09-11
+    # ACCEPTING CASE FIRST, and the accepting case is the one that mattered on
+    # the day this landed: a finished answer to a question Jafar asked from his
+    # phone, sound on every other rule, refused on `linkfloor` alone, and
+    # therefore never sent while he sat in silence.
+    #
+    # THE LADDER. ONE message, three rungs, ONE run, and the difference between
+    # the rungs is ONE LINE IN ONE FILE: the marker says `none`, then names a
+    # served commit, then is not there at all. Nothing else moves between them.
+    # A rung compared across runs is a different photograph.
+    print("\n  THE LINK FLOOR'S ONE CONDITION, ACCEPTING CASE FIRST:\n")
+    # THE LIVE REPOSITORY IS THE ACCEPTING FIXTURE for the half of this tool
+    # that reads the project (instruments.md), so DOING THE WORK THE MARKER
+    # PROMPTS can never break the tool: printing a served commit into it moves
+    # the reading, and this assertion pins the marker's SHAPE, never its value.
+    live_floor = link_floor_state(REPO)
+    ok("the live marker %s is readable and carries exactly 1 %s= line "
+       "(linkFloorActive=%s reason=%s)"
+       % (SERVED_MARKER_REL, SERVED_KEY,
+          "true" if live_floor["active"] else "false", live_floor["reason"]),
+       live_floor["marker_lines"] == 1,
+       (live_floor["marker_lines"], live_floor["reason"]))
+    # THE READER, DRIVEN DIRECTLY over five synthetic markers, because the two
+    # strict branches (absent, malformed) cannot be reached from the live tree
+    # and an unrun branch that a future session trusts is the silent-instrument
+    # failure. SYNTHETIC to the last byte: a rejecting fixture pinned to the
+    # real marker breaks the day queue 256 writes a served commit into it.
+    floor_cases = (
+        ("a marker saying none", "servedCommit=none servedRepo=none\n",
+         False, "no-page-served-yet"),
+        ("a marker naming a served commit",
+         "servedCommit=0bc1def2 servedRepo=jsab258/ledger\n",
+         True, "page-served"),
+        ("a marker with no servedCommit line at all",
+         "# a comment and nothing machine-readable\n", True,
+         "marker-carries-0-"),
+        ("a marker carrying two servedCommit lines",
+         "servedCommit=none\nservedCommit=0bc1def2\n", True,
+         "marker-carries-2-"),
+    )
+    for label, body, want_active, want_reason in floor_cases:
+        st = link_floor_state(_gate_tree({SERVED_MARKER_REL: body}))
+        ok("%-46s reads linkFloorActive=%s reason=%s"
+           % (label, "true" if want_active else "false", st["reason"]),
+           st["active"] is want_active and st["reason"].startswith(want_reason),
+           (st["active"], st["reason"]))
+    # THE CAP ON THE PRINTED VALUE, DRIVEN ON BOTH SIDES, because a cap that
+    # never runs is a branch nobody has seen and a cap that bites in silence
+    # reads as a finding. A whole sha is 40 characters and must NOT be cut.
+    sha40 = "a" * SERVED_VALUE_WIDTH
+    st_sha = link_floor_state(_gate_tree({SERVED_MARKER_REL:
+                                          "servedCommit=%s\n" % sha40}))
+    ok("a %d-character value (a whole sha) is printed WHOLE, uncut"
+       % SERVED_VALUE_WIDTH,
+       sha40 in st_sha["reason"] and not st_sha["reason"].endswith("..."),
+       st_sha["reason"])
+    st_long = link_floor_state(_gate_tree({SERVED_MARKER_REL:
+                                           "servedCommit=%s\n" % ("b" * 200)}))
+    ok("a 200-character value is cut to %d and the cut ANNOUNCES itself "
+       "(reason ends %s)" % (SERVED_VALUE_WIDTH, st_long["reason"][-8:]),
+       st_long["reason"].endswith("...")
+       and ("b" * (SERVED_VALUE_WIDTH + 1)) not in st_long["reason"]
+       and st_long["served"] == "b" * 200
+       and " " not in st_long["reason"], st_long["reason"])
+    st_absent = link_floor_state(_gate_tree({"production/other.txt": "x\n"}))
+    ok("NO marker at all leaves the floor LIVE rather than open (reason=%s): "
+       "the failure direction of an unreadable fact is refuse-loudly, never "
+       "send-anyway" % st_absent["reason"],
+       st_absent["active"] and st_absent["reason"].startswith("marker-absent")
+       and st_absent["marker_lines"] == 0, st_absent)
+    # THE TWO RUNGS THE REGISTER IS GRADED ON, read through the same reader the
+    # live run uses, so the fixture and the tool cannot drift about what a
+    # marker means.
+    floor_off = link_floor_state(_gate_tree({SERVED_MARKER_REL:
+                                             "servedCommit=none\n"}))
+    floor_on = link_floor_state(_gate_tree({SERVED_MARKER_REL:
+                                            "servedCommit=0bc1def2\n"}))
+    # SYNTHETIC, and deliberately NOT the real answer sitting in the outbox: a
+    # rejecting fixture pinned to a real message breaks the day the Producer
+    # edits it, which is the rule every other fixture in this file follows.
+    LINKLESS = ("HEADLINE: Yes. Your message reached the studio, and this "
+                "reply is the proof travelling back the other way.\n\n"
+                "Everything on your machine now works from the new folder "
+                "rather than the old one, which is also why there is no link "
+                "in this message: every page still shows the town as it was "
+                "before the move.\n")
+    r_off = check(LINKLESS, "answer", FIXTURE_NOW, link_floor=floor_off)
+    ok("a linkless answer PASSES while no page is served (%d URL(s), "
+       "effective floor %d of the ruled %d, 0 finding(s) over %d rule(s) "
+       "enforced)"
+       % (len(r_off["urls"]), r_off["link_min_effective"], LINK_MIN,
+          len(r_off["enforced"])),
+       not r_off["findings"] and r_off["link_min_effective"] == 0,
+       [str(f) for f in r_off["findings"]])
+    ok("and the suspended rule is NAMED rather than skipped in silence "
+       "(rulesNotEnforced=%s)" % "/".join(r_off["not_enforced"]),
+       "linkfloor" in r_off["not_enforced"]
+       and "linkfloor" not in r_off["enforced"], r_off["not_enforced"])
+    # REJECTING, RUNG TWO, AND THE MARKER IS PLANTED RATHER THAN REASONED
+    # ABOUT. The same text, the same register, the same instant: the ONLY thing
+    # that moved is the one line in the marker.
+    r_on = check(LINKLESS, "answer", FIXTURE_NOW, link_floor=floor_on)
+    ok("the SAME answer is refused again once a page IS served, by `linkfloor` "
+       "and nothing else (effective floor %d of the ruled %d, found %s)"
+       % (r_on["link_min_effective"], LINK_MIN,
+          "/".join(sorted({f.rule for f in r_on["findings"]})) or "nothing"),
+       {f.rule for f in r_on["findings"]} == {"linkfloor"}
+       and r_on["link_min_effective"] == LINK_MIN,
+       [str(f) for f in r_on["findings"]])
+    # REJECTING, RUNG THREE: a caller that took NO reading gets the floor live.
+    r_blind = check(LINKLESS, "answer", FIXTURE_NOW)
+    ok("a caller that consulted no marker gets the floor LIVE and the reason "
+       "says so (reason=%s), so a forgotten reading can only ever be stricter "
+       "than the ruling" % r_blind["link_floor_reason"],
+       {f.rule for f in r_blind["findings"]} == {"linkfloor"}
+       and r_blind["link_floor_reason"] == FLOOR_NOT_CONSULTED,
+       (r_blind["link_floor_reason"],
+        [str(f) for f in r_blind["findings"]]))
+    # THE DESTINATION LIST IS NOT LOOSENED, AND THIS IS THE HALF THAT PROVES
+    # IT. "Zero links is legal" must not read as "any link is legal": a message
+    # whose ONLY link points somewhere the band never permitted is still
+    # refused with the floor suspended, by `linkdest` and nothing else.
+    off_site_only = LINKLESS + ("[the card](https://github.com/jsab258/"
+                                "ledger/blob/main/q.md)\n")
+    r_bad_dest = check(off_site_only, "answer", FIXTURE_NOW,
+                       link_floor=floor_off)
+    ok("with the floor suspended, a message whose only link is NOT one of the "
+       "%d permitted destinations is still refused by `linkdest` and nothing "
+       "else (found %s)"
+       % (len(SITE_PAGES),
+          "/".join(sorted({f.rule for f in r_bad_dest["findings"]}))
+          or "nothing"),
+       {f.rule for f in r_bad_dest["findings"]} == {"linkdest"},
+       [str(f) for f in r_bad_dest["findings"]])
+    # AND THE CEILING IS NOT LOOSENED EITHER. The floor moved; the cap Jafar
+    # ruled on 2026-09-06 did not.
+    r_cap_off = check(BAD["linkcap"], "unprompted", FIXTURE_NOW,
+                      link_floor=floor_off)
+    ok("with the floor suspended, %d links is still over the ruled cap of %d "
+       "and is refused by `linkcap` and nothing else (found %s)"
+       % (len(r_cap_off["urls"]), LINK_MAX,
+          "/".join(sorted({f.rule for f in r_cap_off["findings"]}))
+          or "nothing"),
+       {f.rule for f in r_cap_off["findings"]} == {"linkcap"},
+       [str(f) for f in r_cap_off["findings"]])
+    # A FLOOR THAT QUIETLY BECAME OPTIONAL EVERYWHERE IS NOT WHAT WAS RULED, so
+    # EVERY rejecting fixture in this file is re-driven WITH THE FLOOR
+    # SUSPENDED. All but one must still be refused by their own rule; the one
+    # that now passes is `linkfloor` itself, which is the rule under
+    # suspension, and it is NAMED rather than quietly dropped from the count.
+    survived, suspended, lost = [], [], []
+    for want, text in BAD.items():
+        rules = {f.rule for f in check(text, "unprompted", FIXTURE_NOW,
+                                       link_floor=floor_off)["findings"]}
+        if want == "linkfloor":
+            (suspended if not rules else lost).append(
+                "%s->%s" % (want, "/".join(sorted(rules)) or "passes"))
+        elif want in rules:
+            survived.append(want)
+        else:
+            lost.append("%s->%s" % (want, "/".join(sorted(rules)) or "nothing"))
+    ok("with the floor suspended, %d of the %d other rejecting fixture(s) are "
+       "STILL refused by their own rule, and the %d that now passes is "
+       "`linkfloor` itself"
+       % (len(survived), len(BAD) - 1, len(suspended)),
+       len(survived) == len(BAD) - 1 and len(suspended) == 1 and not lost,
+       cap(lost, keep=4, sep=", "))
+    # THE BRIEF REGISTER'S OTHER RULES, THE BAN LIST AND THE WORD CAP, re-driven
+    # on the suspended rung for the same reason.
+    rb_off = check(GOOD_BRIEF, "brief", FIXTURE_NOW, link_floor=floor_off)
+    ok("the good brief still passes on the suspended rung (%d of %d word(s), "
+       "%d of %d required section(s))"
+       % (rb_off["words"], rb_off["cap"],
+          len(rb_off["sections_required_found"]),
+          len(rb_off["sections_required"])),
+       not rb_off["findings"], [str(f) for f in rb_off["findings"]])
+    for label, want, text in BAD_BRIEF_SURVIVING:
+        rules = {f.rule for f in check(text, "brief", FIXTURE_NOW,
+                                       link_floor=floor_off)["findings"]}
+        ok("on the suspended rung, %-42s is STILL refused in the BRIEF "
+           "register by `%s` and nothing else" % (label, want),
+           rules == {want}, "found %s" % (sorted(rules) or "nothing"))
+    # THE SAME LADDER AT THE GATE, because the gate is what holds the commit:
+    # three trees identical but for the marker, walked in this run.
+    floor_files = {"production/outbox/README.md": "# docs\n",
+                   "production/outbox/2026-09-11-x.answer.md": LINKLESS}
+    floor_rungs = []
+    for label, extra, want_fail, want_reason in (
+            ("no page served yet",
+             {SERVED_MARKER_REL: "servedCommit=none\n"}, False,
+             "no-page-served-yet"),
+            ("a page IS served",
+             {SERVED_MARKER_REL: "servedCommit=0bc1def2\n"}, True,
+             "page-served"),
+            ("no marker to read at all", {}, True, "marker-absent")):
+        files = dict(floor_files)
+        files.update(extra)
+        gfl = gate_run(_gate_tree(files), FIXTURE_NOW, pre_register=())
+        floor_rungs.append(gfl)
+        ok("at the gate, a linkless answer with %-20s %s "
+           "(linkFloorActive=%s reason=%s filesLinkFloorOff=%d/%d)"
+           % (label, "FAILS" if want_fail else "passes",
+              "true" if gfl["link_floor_active"] else "false",
+              gfl["link_floor_reason"], gfl["link_floor_off"], gfl["checked"]),
+           bool(gfl["failed"]) is want_fail
+           and gfl["link_floor_reason"].startswith(want_reason)
+           and gfl["link_floor_off"] == (0 if want_fail else gfl["checked"])
+           and gfl["checked"] == 1
+           and (not want_fail
+                or "linkfloor" in " ".join(w for _, w in gfl["failed"])),
+           (gfl["failed"], gfl["link_floor_reason"], gfl["link_floor_off"]))
+
+    # A1: rung 1 is the LIVE tree, rungs 2 and 3 are ONE SYNTHETIC tree graded
+    # against two origins, so writing the sha queue 256 owes cannot break this.
+    print("\n  A1, THE MARKER AGAINST SITE_ORIGIN, ACCEPTING CASE FIRST:\n")
+    a1_tree = _gate_tree({"production/outbox/2026-09-03-street.unprompted.md":
+                          GOOD, "production/briefs/README.md": "# docs\n",
+                          SERVED_MARKER_REL: "servedCommit=0bc1def2\n"})
+    for n, (want, label, g) in enumerate((
+            (True, "the LIVE tree (%s=%s, SITE_ORIGIN the archive)"
+             % (SERVED_KEY, live_floor["served"]), g_live),
+            (False, "SYNTHETIC servedCommit=0bc1def2 against ARCHIVE_ORIGIN",
+             gate_run(a1_tree, FIXTURE_NOW, pre_register=(),
+                      site_origin=ARCHIVE_ORIGIN)),
+            (True, "the SAME tree against the origin queue 256 will produce",
+             gate_run(a1_tree, FIXTURE_NOW, pre_register=(),
+                      site_origin="https://jsab258.github.io/ledger/"))), 1):
+        code, line = gate_done_line(g)
+        ok("A1 rung %d, %s, %s: markerOriginConsistent=%s exit=%d, %d file "
+           "finding(s) over %d checked, %d missing tree(s), reason=%s"
+           % (n, "ACCEPTING" if want else "REJECTING", label,
+              "true" if g["marker_origin_ok"] else "false", code,
+              len(g["failed"]), g["checked"], len(g["missing_trees"]),
+              g["marker_origin_reason"] or "none"),
+           g["marker_origin_ok"] is want and not g["failed"]
+           and not g["missing_trees"] and " " not in g["marker_origin_reason"]
+           and code == (GATE_EXIT_OK if want else GATE_EXIT_FAIL)
+           and ("markerOriginConsistent=%s" % ("true" if want else "false")
+                in line), line)
+
     # ------------------------------------------- THE OTHER CLOCK, REJECTING
     # The gate is pinned; the SINGLE-FILE check is not, and must not be. Its
     # question is "is this deadline far enough away to SEND", which is a
@@ -2378,7 +2828,8 @@ def selftest():
     print("\nproducer-check --selftest: %s. %d passed, %d failed, %d rejecting "
           "fixture(s) over %d rule(s) of which %d are enforced by no register "
           "(%s), %d detector fixture(s) for the retired split rule, %d "
-          "rejecting gate fixture(s) in %d measured gate run(s)"
+          "rejecting gate fixture(s) in %d measured gate run(s), %d marker "
+          "fixture(s) and %d link-floor ladder rung(s) at the gate"
           % ("PASS" if not failed else "FAILED", passed, len(failed), len(BAD),
              len(RULES),
              len([x for x in RULES
@@ -2386,7 +2837,8 @@ def selftest():
              "/".join(x for x in RULES
                       if not any(x in v[1] for v in REGISTERS.values()))
              or "none",
-             len(BAD_BRIEF), len(gate_bad), len(gate_runs)))
+             len(BAD_BRIEF), len(gate_bad), len(gate_runs),
+             len(floor_cases) + 3, len(floor_rungs)))
     for f in failed:
         print("  " + f)
     return 0 if not failed else 3
@@ -2508,7 +2960,7 @@ def gate_kind(rel):
 
 
 def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
-         legacy_links=LEGACY_LINK_RULES):
+         legacy_links=LEGACY_LINK_RULES, site_origin=SITE_ORIGIN):
     """Every message file under the ruled trees, against its own register.
 
     PURE-ISH: reads files, touches nothing, returns data. The report function
@@ -2523,6 +2975,14 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
     root = pathlib.Path(root)
     wall_now = (now if now is not None and now is not UNPINNED
                 else datetime.datetime.now())
+    # ONE READING FOR THE WHOLE WALK, taken from the root being walked, because
+    # the floor's condition is a fact about the REPOSITORY and not about a file.
+    # Read once so two files in one walk can never be graded against two
+    # different answers to the same question.
+    floor = link_floor_state(root)
+    # A1, ONE CALL FOR THE WALK on the reading just taken. WHOLE-RUN: one
+    # marker, one origin, so it rides the done line and never a file's line.
+    origin_ok, origin_reason = marker_origin_consistent(floor, site_origin)
     r = {"missing_trees": [], "walked": 0, "checked": 0, "exempt": 0,
          "failed": [], "notes": [], "listed_absent": [], "results": [],
          # OF THE FILES CHECKED, how many were graded under the retired
@@ -2553,6 +3013,20 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          # moves the day that register exists: a retirement that printed nothing
          # would be indistinguishable from a rule passing on every file.
          "split_enforced": 0, "brief_files": 0,
+         # THE LINK FLOOR'S BRANCH FOR THIS WALK, and its blast radius. The
+         # branch is a WHOLE-RUN fact (one marker, read once above) and goes on
+         # the done line; `link_floor_off` is CUMULATIVE over the walk, counting
+         # the checked files actually graded with the floor suspended, beside
+         # the denominator of files checked. A suspension with no count beside
+         # it cannot be told from a suspension that touched nothing.
+         "link_floor_active": floor["active"],
+         "link_floor_reason": floor["reason"],
+         "link_floor_marker": floor["marker"],
+         "link_floor_off": 0,
+         # A1: WHOLE-RUN and not a count. False ONLY for the one transition
+         # that would make the archive link mandatory again.
+         "marker_origin_ok": origin_ok,
+         "marker_origin_reason": origin_reason,
          "wall_now": wall_now.isoformat(timespec="minutes")}
     frozen = set(pre_register)
     seen = set()
@@ -2626,8 +3100,14 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             legacy = rel in legacy_links
             if legacy:
                 r["legacy_links"] += 1
-            res = check(text, kind, file_now, legacy_links=legacy)
+            res = check(text, kind, file_now, legacy_links=legacy,
+                        link_floor=floor)
             r["checked"] += 1
+            # READ OFF THE READING THIS FILE WAS ACTUALLY GRADED BY, never off
+            # the walk's constant, so the count moves by itself if the floor
+            # ever becomes per-file.
+            if not res["link_floor_active"]:
+                r["link_floor_off"] += 1
             # READ OFF THE REGISTER THIS FILE WAS ACTUALLY GRADED BY, never off
             # a constant, so the walk's reading moves by itself when a register
             # picks the rule up.
@@ -2701,6 +3181,30 @@ def gate_report(r):
               "exist: %s" % (len(r["legacy_absent"]),
                              cap(r["legacy_absent"], keep=3, width=60,
                                  sep=", ")))
+    # THE FLOOR'S BRANCH FOR THIS WALK, printed whether or not anything was
+    # checked, because a walk that measured nothing still has an answer to
+    # "was the floor live". The numerator is cumulative over the walk and its
+    # denominator is the files checked: 0/0 reads as a floor that suspended
+    # nothing, which is a different fact from a floor that let 23 files
+    # through.
+    print("  link floor: linkFloorActive=%s reason=%s. %d of %d checked "
+          "file(s) were graded with the floor suspended (zero links legal); "
+          "the rest faced the ruled %d..%d. Ruled 2026-09-10 (queue 256, queue "
+          "259): no link goes out while every permitted destination sits under "
+          "the ARCHIVE's pages. The floor is NOT deleted and returns the run "
+          "after %s names a served commit"
+          % ("true" if r["link_floor_active"] else "false",
+             r["link_floor_reason"], r["link_floor_off"], r["checked"],
+             LINK_MIN, LINK_MAX, r["link_floor_marker"]))
+    if not r["marker_origin_ok"]:
+        # FOUR SPACES AND A COLON, which is how ledger/verify.py harvests a
+        # FINDING out of this report; at two it reaches the footer as
+        # "see producer-check" and the reader has to run the tool again.
+        print("    MARKER VERSUS ORIGIN, WHOLE-RUN and no file's: "
+              "markerOriginConsistent=false reason=%s. SITE_ORIGIN is still "
+              "%s, so the floor is back on and every link it would accept is "
+              "stale: flip it in the commit that writes the sha (queue 256)"
+              % (r["marker_origin_reason"], ARCHIVE_ORIGIN))
     if r["checked"]:
         print("  link band: %d of %d checked file(s) graded under the RETIRED "
               "destination list because their name is one of the %d on "
@@ -2776,7 +3280,7 @@ def gate_report(r):
         print("  nothing measured: the trees exist and hold no markdown file "
               "at all")
         return GATE_EXIT_NOTHING
-    if not r["failed"]:
+    if not r["failed"] and r["marker_origin_ok"]:
         # A CLEAN GATE THAT CHECKED NOTHING IS NOT A CLEAN GATE. Today every
         # file in both trees is exempt, so "0 findings" would be true and
         # useless: the words go in the human line AND in the key, because the
@@ -2804,18 +3308,29 @@ def gate_report(r):
         # is a whole-run number, and in the verification footer through it, so
         # the retirement of 2026-09-09 is visible at every commit rather than
         # only in this file's comments.
+        # filesLinkFloorOff: CUMULATIVE count of checked files graded with the
+        # evidence floor suspended, over the files checked. linkFloorActive and
+        # its reason are WHOLE-RUN (one marker, read once) and sit last and
+        # adjacent, because the reason is the only token here that can grow.
         print("\nproducer-check --gate: PASS filesChecked=%s "
               "filesLegacyLinks=%d/%d linksRuledUsed=%d/%d "
               "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
-              "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d"
+              "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
+              "markerOriginConsistent=%s "
+              "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
               % (r["checked"] if r["checked"] else "0/" + NOTHING,
                  r["legacy_links"], r["checked"],
                  r["links_ruled_used"], r["links_ruled_of"],
                  r["historical_uncounted"], r["historical_listed"],
                  r["split_enforced"], r["checked"], r["brief_files"],
-                 r["exempt"], r["walked"], r["date_pinned"], r["checked"]))
+                 r["exempt"], r["walked"], r["date_pinned"], r["checked"],
+                 "true" if r["marker_origin_ok"] else "false",
+                 r["link_floor_off"], r["checked"],
+                 "true" if r["link_floor_active"] else "false",
+                 r["link_floor_reason"]))
         return GATE_EXIT_OK
-    print("  %d file(s) failed:" % len(r["failed"]))
+    print("  %d file(s) failed, %d whole-run finding(s):"
+          % (len(r["failed"]), 0 if r["marker_origin_ok"] else 1))
     for rel, why in r["failed"][:5]:
         print("    %s: %s" % (rel, why))
     if len(r["failed"]) > 5:
@@ -2824,12 +3339,18 @@ def gate_report(r):
     print("\nproducer-check --gate: FAIL filesFailed=%d filesChecked=%d "
           "filesLegacyLinks=%d/%d linksRuledUsed=%d/%d "
           "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
-          "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d"
+          "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
+          "markerOriginConsistent=%s "
+          "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
           % (len(r["failed"]), r["checked"], r["legacy_links"], r["checked"],
              r["links_ruled_used"], r["links_ruled_of"],
              r["historical_uncounted"], r["historical_listed"],
              r["split_enforced"], r["checked"], r["brief_files"],
-             r["exempt"], r["walked"], r["date_pinned"], r["checked"]))
+             r["exempt"], r["walked"], r["date_pinned"], r["checked"],
+             "true" if r["marker_origin_ok"] else "false",
+             r["link_floor_off"], r["checked"],
+             "true" if r["link_floor_active"] else "false",
+             r["link_floor_reason"]))
     return GATE_EXIT_FAIL
 
 
@@ -2844,7 +3365,10 @@ def main():
                     help="walk production/outbox/ and production/briefs/ and "
                          "check every message against its own register")
     ap.add_argument("--root", default=str(REPO),
-                    help="repository root the gate walks (default: this repo)")
+                    help="repository root the gate walks, and the root the "
+                         "served-page marker (%s) is read from for the "
+                         "single-file check too (default: this repo)"
+                         % SERVED_MARKER_REL)
     args = ap.parse_args()
     if args.selftest:
         return selftest()
@@ -2869,7 +3393,13 @@ def main():
         return 2
     now = (datetime.datetime.fromisoformat(args.now) if args.now
            else datetime.datetime.now())
-    return report(check(text, args.kind, now))
+    # THE FLOOR'S CONDITION IS READ HERE, at the call site, because check() is
+    # pure. `tools/runner/outbox.py:run_check` shells out to exactly this path
+    # with no --root, so the sender reads the marker in its own checkout and
+    # the gate and the sender can never disagree about whether a page is
+    # served.
+    return report(check(text, args.kind, now,
+                        link_floor=link_floor_state(args.root)))
 
 
 if __name__ == "__main__":

@@ -123,7 +123,9 @@ the file's to keep, which is why it is now written in the file.
 ## TWO METERS, RULED 2026-09-03, AND THE HIGHER ONE GOVERNS
 
 Every reading from Jafar records BOTH: the total meter and the Fable meter,
-each against its own 80 percent ceiling. Whichever is higher decides. A studio
+each against its own 85 percent ceiling (80 until Jafar raised it on
+2026-09-10; the header at the top of this file is the one place that number
+lives). Whichever is higher decides. A studio
 comfortable on the total and at 79 percent on Fable is not comfortable; it is
 one director spawn from a stop, and until today this file could not have said
 so because it recorded one number.
@@ -197,7 +199,7 @@ released that day, and it should NOT be expected to happen again.
 That matters because a session reading the rows below could otherwise infer a
 pattern from one event: "the week resets when it gets tight" is exactly the
 shape of a rule invented from a single reading. There is one rule and it is
-the next section: Monday 14:00 CEST, ceiling 80 percent, and nothing else.
+the next section: Monday 14:00 CEST, ceiling 85 percent, and nothing else.
 
 The 34 and 38 percent rows therefore describe a week that ended EARLY by
 accident, not a week that ran its course. They are kept because deleting a
@@ -306,7 +308,7 @@ be re-imposed by a session that reads the arithmetic without this heading.
 
 WHAT STILL BINDS, and it is not weakened by this:
 
-- The 80 percent ceiling. The other 20 percent is his and is not ours to
+- The 85 percent ceiling. The rest is his and is not ours to
   spend. Reaching it means STOP, whatever day it is.
 - A reading describes the moment it was taken. Substantial work since the
   newest one still means the day is UNMEASURED, and an unmeasured day is
@@ -335,7 +337,9 @@ given false precision:
     reset 18:00Z  period 138h  elapsed 20.7h (15.0%)  burn 1.55 pts/h
     reset 21:00Z  period 135h  elapsed 17.7h (13.1%)  burn 1.81 pts/h
 
-Against the 80 percent ceiling, sustainable is 0.41 points per hour, so the
+Against the 80 percent ceiling STANDING AT THE TIME (85 since 2026-09-10;
+this arithmetic is not recomputed because it prices that day), sustainable is
+0.41 points per hour, so the
 run rate is 3.8x to 4.4x over. At that rate the ceiling arrives in about 29
 hours with 117 hours of period left.
 
@@ -379,7 +383,8 @@ Jafar, at about 21:00Z, AFTER the 38 percent reading and knowing the ceiling:
 "just keep working through the night and show me what you got by 7 am cest".
 That is authority to work, given by the person whose budget it is, and it is
 not overridden by a governor that says prefer stopping. It also does not
-repeal the 80 percent ceiling, which he set in the same breath as "we just
+repeal the 80 percent ceiling THEN STANDING (85 since 2026-09-10), which he
+set in the same breath as "we just
 stop when our budget is used up".
 
 WHAT HAS BEEN SPENT SINCE THE 38 PERCENT READING, counted rather than felt:
@@ -514,7 +519,7 @@ because materialConnections held at 12/14 across two runs. Two reasons to hold,
 either of which would be enough.
 ## Stop conditions, mechanical
 
-1. Total reported use at or above 80 percent: STOP. Write the brief, push,
+1. EITHER METER at or above 85 percent: STOP. Write the brief, push,
    and do nothing further until Jafar gives a new number.
 2. No reading newer than 48 hours: treat the budget as UNKNOWN and work only
    on items that cost no model time (reading landed results, committing

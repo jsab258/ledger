@@ -1,0 +1,43 @@
+# IS A PAGE SERVED FROM THE NEW REPOSITORY? One machine-readable line, below.
+#
+# WHAT READS IT. `tools/producer-check.py` and nothing else. The Producer's
+# LINK FLOOR (at least one link, constitution law 12, evidence behind any
+# message that speaks) is LIVE only while this file names a served commit.
+# While it reads `none`, zero links is legal in every register and the check
+# prints `linkFloorActive=false` with its reason, on every run, so nobody has
+# to read the code to know which branch it took.
+#
+# WHY, AND IT IS NARROW AND TEMPORARY. LEDGER moved off `jsab258/wc26-picks`
+# on 2026-09-10. All five destinations the register permits sit under the
+# ARCHIVE's published pages, so a link sent today would show Jafar the world
+# as it was BEFORE the move. A message with no link is honest; a message with
+# one of those links is not. Ruled in
+# `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
+# section 5 finding 6, verbatim: "Until this item lands, briefs carry no site
+# link; the register allows zero." Filed as `production/queue/256` (which
+# decides when a page IS served) and `production/queue/259` (which is the
+# code catching up with the ruling).
+#
+# THE FLOOR IS NOT DELETED AND MUST NOT BE. It exists because a message
+# without evidence behind it teaches vagueness, and the move did not touch
+# that reasoning. It is wrong only about the window in which no page is
+# served at all.
+#
+# WHO MAY WRITE THE LINE, and it is one job: queue 256's deliverable 2. ONE
+# dispatched run of `publish-glance.yml` on `jsab258/ledger` prints the served
+# commit through its own `--check` step, which is the entry point that already
+# exists; that sha, that origin and that run's instant replace the `none`s
+# below, in the SAME commit that moves `SITE_ORIGIN` off the archive. A
+# session that types a sha it did not watch printed has turned the instrument
+# into a guess, which is the whole fault this file exists to prevent.
+#
+# EXACTLY ONE LINE BELOW BEGINS `servedCommit=`. Zero lines, two lines, or a
+# file that cannot be read all mean ONE thing to the reader: THE FLOOR STAYS
+# LIVE, and the printed reason says which fault it saw. The failure direction
+# is loud (a linkless message is refused and somebody looks) rather than quiet
+# (a linkless message goes out because the marker was broken).
+#
+#   servedCommit=none   no page is served yet, so zero links is legal.
+#   servedCommit=<sha>  a page IS served, so the floor is 1..2 again.
+#
+servedCommit=none servedUrl=none servedRepo=none printedBy=nothing-measured servedAt=nothing-measured

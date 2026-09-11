@@ -53,6 +53,44 @@ register cannot be committed even if nobody remembered to check it. The
 sender still runs the single-file check before sending; the gate only makes
 skipping it impossible.
 
+## The link floor is suspended today, and the check says so on every run
+
+WRITE YOUR MESSAGE WITH NO LINK IN IT while this is true. LEDGER moved off
+`jsab258/wc26-picks` on 2026-09-10 and all five destinations the register
+permits still sit under the ARCHIVE's published pages, so a link sent today
+shows Jafar the world as it was before the move. A message with no link is
+honest; a message with one of those links is not.
+
+Ruled 2026-09-10
+(`game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`,
+section 5 finding 6), verbatim: "Until this item lands, briefs carry no site
+link; the register allows zero." Filed as `production/queue/256` and
+`production/queue/259`.
+
+THE FLOOR IS NOT DELETED. It exists because a message without evidence behind
+it teaches vagueness, and the move did not touch that reasoning. It is wrong
+only about the window in which no page is served at all.
+
+THE CONDITION IS ONE COMMITTED FILE, `production/site-served.txt`, carrying
+exactly one line that begins `servedCommit=`. While that line reads `none`,
+zero links is legal in every register and `linkfloor` does not fire. The run
+after it names a served commit, the floor is one to two again and a linkless
+message is refused exactly as before. A missing or malformed marker leaves the
+floor LIVE, because the failure direction of an unreadable fact is to refuse
+loudly rather than to send with no evidence.
+
+WHICH BRANCH RAN IS PRINTED, never inferred. Every single-file run ends with
+`linkFloorActive=<true|false> reason=<...>` on its done line, the gate carries
+the same pair plus `filesLinkFloorOff=<n>/<checked>`, and `linkfloor` is named
+under NOT ENFORCED rather than skipped in silence. Nobody has to read the tool
+to know whether the floor was live.
+
+WHO WRITES THE SERVED COMMIT: queue 256's deliverable 2, and nobody else. One
+dispatched run of `publish-glance.yml` on `jsab258/ledger` prints it through
+that workflow's own `--check` step, in the same commit that moves `SITE_ORIGIN`
+off the archive. A sha typed by a session that did not watch it printed turns
+the instrument into a guess.
+
 ## The pre-register files, and why the marker is not an escape hatch
 
 Four files predate the register: three director briefs and one step-1 report,
