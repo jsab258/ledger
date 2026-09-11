@@ -1,4 +1,4 @@
-# LEDGER one inbox flush - 9e49c53 @1789070619
+# LEDGER one inbox flush - 8f5fa32 @1789107288
 # Line 1 names the commit this was run on. This step PUSHES the
 # return half: his messages and the bot's own receipts, onto
 # pc-inbox. It sends nothing and loads no credentials. The return
@@ -12,7 +12,7 @@
 # read ok= and detail= below, and pcInboxHeadShort in the verify step,
 # before calling it fixed. Last measurement: HUNG at 150s, 12 waiting.
 flushPython=C:\Users\Jafar\miniconda3\python.exe
-flushRepoHead=f6508b3b
+flushRepoHead=424cc7eb
 # QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
 # flushCheckoutRunSha is the commit CI was started FOR. flushCheckoutPcHeadSha is the
 # commit HIS CHECKOUT was AT when this step read it. Line 1 of this
@@ -21,8 +21,8 @@ flushRepoHead=f6508b3b
 # commits its own evidence, so flushCheckoutAheadCommits above 0 is normal.
 # flushCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-flushCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 flushCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 flushCheckoutContains=no flushCheckoutOutcome=absent flushCheckoutDecision=refuse
-flushCheckoutBehindCommits=nothing-measured flushCheckoutAheadCommits=nothing-measured flushCheckoutBehindSecByCommitTime=18073 flushCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-flushCheckoutWaitedSec=31/30 flushCheckoutPolls=7 flushCheckoutPollSec=5 flushCheckoutSeries=0s/f6508b3bef flushCheckoutSeriesShown=1/1
-flushCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
+flushCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 flushCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 flushCheckoutContains=no flushCheckoutOutcome=diverged flushCheckoutDecision=refuse
+flushCheckoutBehindCommits=1 flushCheckoutAheadCommits=1 flushCheckoutBehindSecByCommitTime=-25 flushCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+flushCheckoutWaitedSec=30/30 flushCheckoutPolls=7 flushCheckoutPollSec=5 flushCheckoutSeries=0s/424cc7ebfd flushCheckoutSeriesShown=1/1
+flushCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
 flushStatus=REFUSED-STALE-CHECKOUT flushPushed=0 flushGateExit=3

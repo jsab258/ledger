@@ -1,25 +1,43 @@
-# LEDGER scheduled task install/verify - 9e49c53 @1789070493
+# LEDGER scheduled task install/verify - 8f5fa32 @1789107158
 # Line 1 names the commit this was measured on.
 # Installs tools/runner/launch-supervisor.py (wraps tools/supervise.py,
 # unmodified) as a Windows scheduled task. Ruling 2026-09-07.
 
-workflowRef=main daemonsBranch=main daemonsBranchIsWhatGitActuallyUses=true
-supervisorQueryOk=true supervisorQueryContext=before-resync supervisorProcessesFound=4
-supervisorQueryContext=before-resync supervisorPid=9048 supervisorParentPid=3124 supervisorKind=launch-supervisor.py supervisorPath=C:\Users\Jafar\wc26-picks
-supervisorQueryContext=before-resync supervisorPid=9384 supervisorParentPid=9048 supervisorKind=launch-supervisor.py supervisorPath=C:\Users\Jafar\wc26-picks
-supervisorQueryContext=before-resync supervisorPid=10228 supervisorParentPid=9384 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\wc26-picks
-supervisorQueryContext=before-resync supervisorPid=12864 supervisorParentPid=10228 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\wc26-picks
-resyncAction=skipped-supervisor-running kinds=launch-supervisor.py,launch-supervisor.py,supervise.py,supervise.py reason=a-running-supervisor-or-watcher-already-keeps-this-checkout-current-do-not-touch-its-index
+workflowRef=pc-results daemonsBranch=main daemonsBranchIsWhatGitActuallyUses=true
+supervisorQueryOk=true supervisorQueryContext=before-resync supervisorProcessesFound=2
+supervisorQueryContext=before-resync supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=before-resync supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
+resyncAction=skipped-supervisor-running kinds=supervise.py,pc-watcher.py reason=a-running-supervisor-or-watcher-already-keeps-this-checkout-current-do-not-touch-its-index
 runnerAccount=JAFAR-DESKTOP\Jafar
 repo=C:\Users\Jafar\ledger-migrate
 python=C:\Users\Jafar\miniconda3\python.exe
 pythonForTask=C:\Users\Jafar\miniconda3\pythonw.exe windowless=True
 configLocalPresent=True
-checkoutBroughtCurrentThisRun=False taskAlreadyNamesRepo=False taskPathHeld=C:\Users\Jafar\wc26-picks
-installAction=refused-checkout-not-current wanted=C:\Users\Jafar\ledger-migrate taskHolds=C:\Users\Jafar\wc26-picks reason=refusing-to-point-the-logon-task-at-a-checkout-this-run-did-not-bring-current
-install-scheduled-task: installAction=refused-checkout-not-current wanted=C:\Users\Jafar\ledger-migrate taskHolds=C:\Users\Jafar\wc26-picks exit=0 meaning=a-refusal-is-a-correct-outcome-not-a-failed-build
+checkoutBroughtCurrentThisRun=False taskAlreadyNamesRepo=True taskPathHeld=C:\Users\Jafar\ledger-migrate
+installAction=already-correct
+supervisorQueryOk=true supervisorQueryContext=before-start supervisorProcessesFound=2
+supervisorQueryContext=before-start supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=before-start supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
+startedNow=refused reason=2_supervisor_process(es)_already_running kinds=supervise.py,pc-watcher.py
+supervisorQueryOk=true supervisorQueryContext=after-verify supervisorProcessesFound=2
+supervisorQueryContext=after-verify supervisorPid=8856 supervisorParentPid=12800 supervisorKind=supervise.py supervisorPath=C:\Users\Jafar\ledger-migrate
+supervisorQueryContext=after-verify supervisorPid=13776 supervisorParentPid=8856 supervisorKind=pc-watcher.py supervisorPath=C:\Users\Jafar\ledger-migrate
+taskExists=True
+taskState=Disabled
+taskEnabled=False
+taskTriggerKind=MSFT_TaskLogonTrigger
+taskRestartCount=999
+taskRestartInterval=PT1M
+taskMultipleInstancesPolicy=IgnoreNew
+taskHiddenInSchedulerUI=True
+taskRunAsUser=Jafar
+taskLogonType=Interactive
+taskLastRunTime=09/11/2026 07:59:54
+taskLastTaskResult=267014
+taskNextRunTime=
+install-scheduled-task: installAction=already-correct taskExists=True supervisorProcessesAfter=2
 installerExitCode=0
 
 # The existing channel, read rather than duplicated (ruling point 4).
-pcInboxReachable=true pcInboxHeadShort=2a7a234c pcInboxLastCommitAgeSec=55174
+pcInboxReachable=true pcInboxHeadShort=7e22f2d9 pcInboxLastCommitAgeSec=881
 pcInboxNote=this-branch-is-the-studios-own-de-facto-heartbeat;no-new-transport-was-built

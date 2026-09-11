@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 9e49c53 @1789070587
+# LEDGER one daily-brief send - 8f5fa32 @1789107257
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,8 +15,8 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 briefCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 briefCheckoutContains=no briefCheckoutOutcome=absent briefCheckoutDecision=refuse
-briefCheckoutBehindCommits=nothing-measured briefCheckoutAheadCommits=nothing-measured briefCheckoutBehindSecByCommitTime=18073 briefCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-briefCheckoutWaitedSec=31/30 briefCheckoutPolls=7 briefCheckoutPollSec=5 briefCheckoutSeries=0s/f6508b3bef briefCheckoutSeriesShown=1/1
-briefCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
+briefCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 briefCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 briefCheckoutContains=no briefCheckoutOutcome=diverged briefCheckoutDecision=refuse
+briefCheckoutBehindCommits=1 briefCheckoutAheadCommits=1 briefCheckoutBehindSecByCommitTime=-25 briefCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+briefCheckoutWaitedSec=30/30 briefCheckoutPolls=7 briefCheckoutPollSec=5 briefCheckoutSeries=0s/424cc7ebfd briefCheckoutSeriesShown=1/1
+briefCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
 briefStatus=REFUSED-STALE-CHECKOUT briefSent=0 briefGateExit=3

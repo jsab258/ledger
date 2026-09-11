@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - 9e49c53 @1789070496
+# LEDGER one outbox sweep - 8f5fa32 @1789107165
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,8 +12,8 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=9e49c53c8647e183be529032097eee2aa6e45d29 sweepCheckoutPcHeadSha=f6508b3bef50296c4b78f0822e0f716818ca6662 sweepCheckoutContains=no sweepCheckoutOutcome=absent sweepCheckoutDecision=refuse
-sweepCheckoutBehindCommits=nothing-measured sweepCheckoutAheadCommits=nothing-measured sweepCheckoutBehindSecByCommitTime=18073 sweepCheckoutPcHeadCommitIso=2026-09-10T14:59:32Z
-sweepCheckoutWaitedSec=91/90 sweepCheckoutPolls=19 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/f6508b3bef sweepCheckoutSeriesShown=1/1
-sweepCheckoutReason=his-checkout-has-never-fetched-this-runs-commit/nothing-was-sent/so-it-cannot-be-running-this-runs-files/run-sha-not-in-that-checkouts-objects
+sweepCheckoutRunSha=8f5fa323569b2a58aee5662ae02fb1e4f7329c85 sweepCheckoutPcHeadSha=424cc7ebfd7863f14715a7be3a07b0f23ecf3ea0 sweepCheckoutContains=no sweepCheckoutOutcome=diverged sweepCheckoutDecision=refuse
+sweepCheckoutBehindCommits=1 sweepCheckoutAheadCommits=1 sweepCheckoutBehindSecByCommitTime=-25 sweepCheckoutPcHeadCommitIso=2026-09-11T08:00:46+02:00
+sweepCheckoutWaitedSec=91/90 sweepCheckoutPolls=19 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/424cc7ebfd sweepCheckoutSeriesShown=1/1
+sweepCheckoutReason=his-checkout-is-on-a-commit-this-run-does-not-contain/nothing-was-sent/somebody-force-pushed-or-committed-there
 sweepStatus=REFUSED-STALE-CHECKOUT sweepSent=0 sweepGateExit=3
