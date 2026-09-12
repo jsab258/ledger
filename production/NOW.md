@@ -9,6 +9,71 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-12 04:30Z: THE BRIEF CARRIES A PICTURE, AND D18 HELD ONLY BECAUSE SOMEBODY LOOKED
+
+THE WAKE RECORD'S TWO BLOCKS ARE CLEARED, measured rather than assumed, which is
+what it asked for before anything was written:
+
+    linkless brief at the real gate   linkFloorActive=false, linkfloor NOT enforced
+    fleet on a stale checkout         messageId 77 sent 2026-09-11T14:22:27Z from
+                                      ledger-migrate, receipt behind it
+
+So the brief was writable for the first time since the 10th. It is 146 words,
+passes the register at 0 findings over 8 rules, and it went out at 2ae59607 with
+its sidecar and one composite picture.
+
+I TWICE NEARLY SHIPPED THE WRONG PICTURE AND ONLY OPENING IT CAUGHT EITHER. The
+third panel was captioned as our sheet beside theirs and showed only ours. I read
+that as a misnamed file, fetched the outside sheet back off origin/art/atlas-01,
+rebuilt the pair, OPENED IT, confirmed two proper halves, and stacked it into a
+message bound for his phone. That picture carried children in school uniform and
+a school nameplate. D18 forbids children rendered anywhere and queue 242 had
+cropped exactly that half out two days before, measuring the gutter rather than
+guessing the midline.
+
+THE NAME MADE A DELIBERATE REMOVAL LOOK LIKE A BUG, AND I REVERTED IT. What
+caught it was reading WHY the half was missing, one grep away before I built
+anything and run after. A removal that does not say it was a removal is an
+invitation. Queue 264.
+
+THE PRODUCER CAUGHT THE SECOND ONE AND IT IS OWED THE CREDIT. I told it our
+sheet reads as a worksheet, from heights, a gradient, colour codes and a
+bookkeeping line I had seen on fairview_sheet_finished.png. The panel in today's
+picture is fairview_sheet_short_s2.png, the raw output, which carries none of
+them. It refused to write a caption contradicting the image it rides on, and
+said so rather than dropping it quietly. It also refused to report a gate line
+it could not see, having no shell by design, and hand-checked the text against
+every rule instead.
+
+D18 HAS NOW HELD THREE TIMES ON SOMEBODY HAPPENING TO LOOK, and the third is
+still ahead rather than behind. The spec the studio is told to run next asks for
+children in the POSITIVE half of its prompts:
+
+    copper_row_weighhouse_lane      HITS: lads, pram
+    copper_row_weighhouse_lane_s2   HITS: lads, pram
+    copper_row_weighhouse_end       clean
+    copper_row_weighhouse_end_s2    clean
+    itemsWithChildTerms=2/4         negative names any child term: False
+
+Its own note says why a negative cannot save it: a veto cannot summon, and "no
+people" asks the model to push away the phrase and not the people. Queue 265,
+which asks for a check that reads the prompts before the run and ships with the
+two clean items as its accepting fixture.
+
+THE FOUR CARDS ARE NOT WHERE THE RECORD SAYS AND I DID NOT INVENT THEM. It
+points at the copper-row directory's DELIVERY for their recorded defaults; there
+is no DELIVERY in that directory, and the `defaults` key in its JSON is prompt
+settings. One of the four mints the Weighhouse into CANON, which is Jafar's to
+approve and a director's to route. Left for a director with budget.
+
+ONE CARD IN THE DECISION QUEUE LOOKS OVERTAKEN, named by the Producer rather
+than passed on: the repository-shape question deadlined 2026-09-14 still parses
+as WAITING and the round trip its default waits on has been proven since.
+
+NO PICTURE HAS EVER GONE DOWN THIS CHANNEL: photos=0 over every receipt walked.
+So this send is the accepting case for a path never once exercised, and the
+acceptance test is the receipt and not the code.
+
 ## 2026-09-11 14:30Z: THE HOURLY TICK, BOTH JOBS DISCHARGED, NOTHING RESUMED
 
 The trigger fired at 14:12:05Z while the batch was mid-flight and was read after
