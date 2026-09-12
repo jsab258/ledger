@@ -3,7 +3,7 @@ due: 2026-09-12T08:00:00Z
 armedAt: 2026-09-12T04:50:15Z
 armedBy: resident/brief-queued-behind-offline-runner
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-12T08:05:04Z
 capBitAt: -
 
 CONFIRM THE 2026-09-12 BRIEF ACTUALLY SENT. It was written, gated at SEND, and pushed at 2ae59607 with its sidecar and one composite picture. It has NOT been confirmed delivered and must not be recorded as delivered until it is. The acceptance test is the receipt and not the code: production/outbound/brief-2026-09-12.receipt.txt must contain 'receipt: sent-with-photo' AND 'photoSizeCount:' of at least one AND 'buttons: 2/2'. That is a grep, not a judgement. WHY IT DID NOT SEND ON THE 12th, diagnosed rather than guessed: the push fired workflow run 34673027827 at 04:27:00Z, its status stayed pending with updated_at frozen at 04:27:01Z, and no runner-committed evidence appeared anywhere; production/pc-ops/supervisor-status.txt still names 70e9ac5 from 2026-09-11 and pc-results has not moved since 2026-09-11 08:18. THE SELF-HOSTED RUNNER ledger-pc IS OFFLINE. The brief send is a one-shot --send-brief run by a workflow step on that runner, deliberately NOT in the bot poll loop (telegram-bot.py lines 625 and 1365), so no amount of waiting on the fleet will send it. It sends by itself when his runner comes back and nothing is lost. IF THE RECEIPT IS THERE: check the three keys, record briefPhotoCarried, and note that this was the first picture ever to go down this channel (photos=0 over every receipt walked before it). IF IT IS STILL NOT THERE: the runner is still off, say so plainly as a finding and re-arm rather than treating a queued run as a sent message. DO NOT rewrite or resend the brief; it is correct and it is waiting.
