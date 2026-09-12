@@ -2,7 +2,7 @@ id: e80f2b15
 due: 2026-09-12T04:00:00Z
 armedAt: 2026-09-11T04:02:46Z
 armedBy: director/brief-pictures-rearmed
-blocks: 0
+blocks: 2
 dischargedAt: -
 capBitAt: -
 
