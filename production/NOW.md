@@ -100,6 +100,16 @@ pushed, and the one thing left is a confirmation that only his machine can
 produce. Recording it as delivered would be the 2026-09-09T04:09 fault it exists
 to prevent.
 
+STILL OFF AT 08:04Z, three hours thirty seven minutes after the push, checked
+rather than assumed: no receipt on pc-inbox, pc-ops/supervisor-status.txt still
+naming 70e9ac5 from 2026-09-11, pc-results unmoved since 2026-09-11 08:18. The
+29f52423 check came due, found the receipt absent, and did what its own
+instruction says to do with that: report it and re-arm rather than treat a
+queued run as a sent message. 168f8b4d carries it to 12:00Z with one line added
+that the first re-arm lacked: do not write a second brief for the same day,
+because production/briefs/2026-09-12.md already exists and a wake day with a
+brief file present is not a missing brief.
+
 ## 2026-09-11 14:30Z: THE HOURLY TICK, BOTH JOBS DISCHARGED, NOTHING RESUMED
 
 The trigger fired at 14:12:05Z while the batch was mid-flight and was read after
