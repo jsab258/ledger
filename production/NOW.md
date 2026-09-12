@@ -74,6 +74,32 @@ NO PICTURE HAS EVER GONE DOWN THIS CHANNEL: photos=0 over every receipt walked.
 So this send is the accepting case for a path never once exercised, and the
 acceptance test is the receipt and not the code.
 
+AND IT HAS NOT SENT, BECAUSE HIS RUNNER IS OFFLINE. Diagnosed rather than
+guessed, after 35 minutes of polling turned up nothing:
+
+    workflow run 34673027827   event=push  head_sha=2ae59607
+    created_at 04:27:00Z       updated_at 04:27:01Z      status pending
+    pc-ops/supervisor-status.txt still names 70e9ac5 @ 2026-09-11
+    pc-results unmoved since 2026-09-11 08:18
+
+The trigger fired and nothing picked the job up. THE BRIEF SEND IS A ONE-SHOT
+`--send-brief` RUN BY A WORKFLOW STEP ON THAT RUNNER, deliberately not in the
+bot's poll loop (`telegram-bot.py` 625 and 1365), so waiting on the fleet cannot
+send it. It goes by itself when his machine returns; nothing is lost and the
+brief is not to be rewritten or resent.
+
+I CONSIDERED A SECOND MESSAGE TELLING HIM AND DECIDED AGAINST IT. The regime is
+one message a day and the brief is it. A message saying his machine is off is
+also largely self-defeating: the path that would carry it is mostly the path
+that needs him to fix the thing. So the record carries it instead and
+`29f52423` is armed for 08:00Z to check the receipt.
+
+e80f2b15 IS DISCHARGED ON THE WORK, NOT ON THE DELIVERY, and the distinction is
+the whole point of that record: everything it specified is done, gated and
+pushed, and the one thing left is a confirmation that only his machine can
+produce. Recording it as delivered would be the 2026-09-09T04:09 fault it exists
+to prevent.
+
 ## 2026-09-11 14:30Z: THE HOURLY TICK, BOTH JOBS DISCHARGED, NOTHING RESUMED
 
 The trigger fired at 14:12:05Z while the batch was mid-flight and was read after
