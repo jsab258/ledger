@@ -3,7 +3,7 @@ due: 2026-09-12T12:00:00Z
 armedAt: 2026-09-12T08:05:04Z
 armedBy: resident/brief-still-queued-runner-still-off
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-12T12:05:13Z
 capBitAt: -
 
 CONFIRM THE 2026-09-12 BRIEF ACTUALLY SENT. Second re-arm. The brief is written, gated at SEND, and pushed at 2ae59607 with its sidecar and one composite picture; it is CORRECT and must NOT be rewritten or resent. The acceptance test is a grep, not a judgement: production/outbound/brief-2026-09-12.receipt.txt must contain 'receipt: sent-with-photo' AND 'photoSizeCount:' of at least one AND 'buttons: 2/2'. THE RUNNER ledger-pc HAS BEEN OFFLINE SINCE AT LEAST 04:27Z. Checked again at 08:04Z, three hours thirty seven minutes after the push: no receipt on pc-inbox, production/pc-ops/supervisor-status.txt still names 70e9ac5 from 2026-09-11, pc-results unmoved since 2026-09-11 08:18. Workflow run 34673027827 is queued and was never picked up. The brief send is a one-shot --send-brief run by a workflow step on that runner, deliberately NOT in the bot poll loop (telegram-bot.py 625 and 1365), so the fleet cannot deliver it and waiting on the fleet is pointless. It sends by itself when his runner returns. IF THE RECEIPT IS THERE: check the three keys, record briefPhotoCarried, and note this was the first picture ever to go down this channel, photos=0 over every receipt walked before it. IF IT IS STILL NOT THERE: the runner is still off. Say so as a finding and re-arm again. DO NOT treat a queued run as a sent message, DO NOT rewrite the brief, and DO NOT write a second brief for the same day: production/briefs/2026-09-12.md already exists and a wake day with a brief file present is not a missing brief.

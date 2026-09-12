@@ -105,10 +105,23 @@ rather than assumed: no receipt on pc-inbox, pc-ops/supervisor-status.txt still
 naming 70e9ac5 from 2026-09-11, pc-results unmoved since 2026-09-11 08:18. The
 29f52423 check came due, found the receipt absent, and did what its own
 instruction says to do with that: report it and re-arm rather than treat a
-queued run as a sent message. 168f8b4d carries it to 12:00Z with one line added
+queued run as a sent message. 168f8b4d carried it to 12:00Z with one line added
 that the first re-arm lacked: do not write a second brief for the same day,
 because production/briefs/2026-09-12.md already exists and a wake day with a
 brief file present is not a missing brief.
+
+STILL OFF AT 12:04Z, SEVEN HOURS AFTER THE PUSH, measured a third time and
+identical every time: no receipt, pc-ops naming 70e9ac5, pc-results unmoved.
+
+THE THIRD RE-ARM IS DELIBERATELY LONG AND THAT IS THE ONLY NEW DECISION HERE.
+86b37ffe is due 2026-09-13T04:00Z, riding the daily wake, instead of firing
+again in four hours. Eight hourly ticks produced no new information, and each of
+them ALREADY checks this receipt for free, so the send is caught within the hour
+whenever his machine returns. The wake record is the durable backstop for a dead
+session, not the primary watcher, and re-arming it every few hours was
+generating commits that all said the same thing. It also carries what to do if
+the runner is still off tomorrow: say it in the brief as a plain fact about his
+machine, not as a studio failure, because nothing here can fix it.
 
 ## 2026-09-11 14:30Z: THE HOURLY TICK, BOTH JOBS DISCHARGED, NOTHING RESUMED
 
