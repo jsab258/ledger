@@ -116,3 +116,42 @@ plainly: 11 of the 30 runs sampled have `head_branch` `pc-results`, including
 core tests three times and the Unreal probe once. That is a separate item and
 may be deliberate. It is named here so the next reader does not have to
 rediscover it from the same list.
+
+## Closing line, 2026-09-13T04:25Z
+
+THE PAGE SERVED. `publish-glance` run 34737101663, job 103670366299, the first
+run of that workflow ever on this repository, fired by the landing push and
+matched BY ANCESTRY on `head_sha=dc04da736cbdbd3fffc119d1ff47801ec7706204`.
+Its own `--check` step requested all four pages back from the live site and
+read what came back, on the first attempt with no retry:
+
+    glance    pageHttp=200 pageBytes=8893    pageStampCommit=dc04da73.. expectCommit=dc04da73..
+    map       pageHttp=200 pageBytes=227991  pageStampCommit=dc04da73..
+    gallery   pageHttp=200 pageBytes=35092   pageStampCommit=dc04da73..
+    world     pageHttp=200 pageBytes=17770   pageStampCommit=dc04da73..
+    picture   pictureHttp=200 pictureBytes=317539/317539-expected
+              filesInManifest=158 picturesAsked=1/158
+    secretHits=0/7-patterns on every page
+    servedUrl=https://jsab258.github.io/ledger/
+    pagesEnableHttp=403   on the SET-THE-SOURCE call, not on serving
+
+WHAT I DID NOT VERIFY MYSELF, AND IT IS DONE-LINE 3. CLAUDE.md rule 4 says to
+open the artifact. CI opened it; I could not. This container's outbound proxy
+refuses `jsab258.github.io` with `CONNECT tunnel failed, response 403`, tried
+twice. So "the page serves, stamped with this commit" is MEASURED, by the
+step the project built for exactly this, and "the budget bar on the published
+bytes reads 85" is NOT independently measured by the resident. What IS
+measured here is that the same generator against the same document draws that
+bar from the standing line and says so on the page in its own words: "the
+ceiling on both bars is from the standing line in production/budget" and "the
+ceiling is the file's standing '85%' line". A reader who can open the page
+should close done-line 3 by looking; nobody in this container can.
+
+CITYPACK-INVENTORY RAN AND IT COMMITTED, which is the behaviour change the
+ruling flagged rather than a surprise. Run 34737101660 on the same sha, and
+its commit is `c022c872 City pack: what the catalogue actually holds`, 4003
+insertions and 3964 deletions across `tools/citypack/catalogue.json` and
+`candidates.json`: the ambientCG catalogue had drifted. The next push was
+REJECTED as non-fast-forward, exactly as predicted, and `git pull --rebase
+origin main` was run before pushing, which is now a standing cost of that
+trigger and is written into 269 rather than remembered.

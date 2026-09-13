@@ -660,6 +660,86 @@ adjacent and not taken here.
 
 ## 10. Landing
 
+Filled by the resident 2026-09-13T04:25Z, one line per condition.
+
+1. SECTION 6 APPLIED, three files: `ledger/verify.py`, `tools/budget-log-mark.py`
+   and `.github/workflows/citypack-fetch.yml`. Unstaged empty at commit, so the
+   tested tree and the staged tree were one.
+2. THE FOUR NEW TOOLS STAGED BY NAME, never by `git add tools/`, each reading
+   `A` and each returned by `git ls-files`: budget-ceiling.py,
+   budget-ceiling-check.py, budget-log-mark.py, workflow-branch-refs.py. Two of
+   the four are invisible to `tools_tracked`, which is queue 270.
+3. `budget-log-mark --selftest`: 13 passed, 0 failed, the renamed case
+   `reject/three-matching-rows-two-minutes-apart-are-not-a-group pass`, live
+   line `rows=90 readings=0/90-rows fixtures=90/90-rows unmarked=0/90-rows`.
+   Read-back: "90 row(s): 0 reading(s) Jafar typed, 90 fixture row(s) from the
+   selftest, 0 whose provenance this tool will not guess at".
+4. THE GUARD'S DONE LINE, whole: `budget-ceiling-check: PASS
+   doc=production/budget.md linesExamined=609 machineLines=1/1-wanted
+   machineAt=49 machinePct=85 proseStatements=3 proseAt=44/46/117
+   proseValues=85 checksRun=3/3-checks faults=0/3-checks-that-ran
+   fixturesAgreed=6/6-fixtures`. proseAt is 44/46/117 as this record rules, not
+   the morning ruling's 44 and 109.
+5. BOT SELFTEST 151 passed, 0 failed. `liveBudgetLogLines=90..90`. `ceiling:
+   ceilingPct=85 ceilingFrom=production/budget.md:49..the-standing-line`.
+   `duplicate that agrees: ceilingPct=71
+   ceilingFrom=production/budget.md:1/3..the-standing-line
+   guardOnTheSameBytes=fails-by-design`, which is the ruled asymmetry measured
+   on one line rather than argued. Namespace on the staged file:
+   STANDING_CEILING_PCT False, load_glance False, ceiling_from_text False, and
+   `read_ceiling()` returns `(85, 'production/budget.md:49..the-standing-line',
+   '')`.
+6. GLANCE `80 check(s) run, 0 failed`, live run `ceilingPct=85
+   ceilingFrom=the-standing-line..2026-09-11 ceilingStandingPct=85`.
+7. `workflow-branch-refs`: `0 dead of 8 branch name(s) tested in 18
+   workflow(s)`, `walked=18workflow(s) examined=38ref(s) tested=8
+   skipped=30expr/0glob/0sha/0empty`,
+   `branchSource=git-ls-remote/origin repoBranches=4
+   comparedAgainst=art/atlas-01,main,pc-inbox,pc-results`. `--selftest`: 8
+   passed, 0 failed. Neither printed SKIPPED, so the network held.
+8. THE DEAD NAME: 9 hits across 6 files of 18 walked, and all 9 begin with `#`.
+   `liveDeadBranchRefs=0 commentLines=9 of 9 hit(s)`. THE BUILDER REPORTED TEN
+   AND I MEASURE NINE; mine is the tree as committed and the difference is
+   recorded rather than reconciled away.
+9. THE REGISTRY READ, fresh rather than quoted: `total_count 18`, and every one
+   of the 18 carries `state: active`. This is the sentence the ruling refused to
+   let stand without its print, and it now has one.
+10. VERIFY GREEN, `checks=84ran/0skipped/84total`, cadence `over threshold,
+    REVIEWED`, `rulingRecords=1/83`, `1 ruling record(s) paired to a director
+    row newer than the reference`. `budget ceiling: faults=0/3-checks-that-ran
+    machineLines=1/1-wanted prose=3 of 609 line(s) examined [fixtures
+    6/6-fixtures]`. `0 workflow branch ref(s) absent of 8 tested`. `budget log
+    selftest ok (13 checks, 0 failed)`. Footer pasted FROM the file.
+11. DOCS-CHECK `180/180 clean under game-design/`, this record LOG and dated,
+    em-dash 0, italic 0.
+12. QUEUES 254, 256, 267, 268, 269 amended and 270, 271 filed; the NOW.md block
+    pasted. 268 was also RENAMED because its old title asserted something this
+    batch made false.
+13. AFTER THE PUSH, both runs matched BY ANCESTRY on
+    `dc04da736cbdbd3fffc119d1ff47801ec7706204`. `publish-glance` run
+    34737101663 served all four pages at 200 with the commit's own stamp, and
+    one of 158 pictures whole at its expected bytes; the detail is 269's
+    closing line and 256's step 1. THE ONE THING NOT VERIFIED BY THE RESIDENT
+    is done-line 3's bar: this container's proxy refuses `jsab258.github.io`
+    with `CONNECT tunnel failed, response 403`, tried twice, so CI opened the
+    artifact and the resident did not. Named, not glossed.
+    `citypack-inventory` run 34737101660 COMMITTED, `c022c872`, 4003 insertions
+    and 3964 deletions in the ambientCG catalogue; the next push was rejected
+    non-fast-forward exactly as ruled, and `git pull --rebase origin main`
+    preceded it.
+14. RULE 8 AND RULE 13: the watcher was armed in the same turn as the push and
+    fired at 04:13Z, which is how these numbers were read. THE RESUME AFTER IT
+    IS A STOP, not a queue item: at 04:16Z the Producer died on `HTTP 429,
+    "You've reached your Fable limit"`, so budget.md rule 1 fires. Queue 272
+    carries the deadlock it exposed, that rule 1's required action needs the
+    Producer and the Producer is the spent meter.
+15. THE PC: nothing expected and nothing arrived. `pc-results` unmoved since
+    2026-09-11 08:18, supervisor status still naming `70e9ac5`. 266 and 267
+    stay open on their PC conditions. The 2026-09-13 brief was NOT written, for
+    the reason in condition 14, and that is recorded as a finding in
+    production/NOW.md rather than left to look like a quiet day.
+
+
 Filled by the resident, one line per condition, with the numbers.
 
 ## 11. Dictated block for `production/NOW.md`, resident to paste at the top
