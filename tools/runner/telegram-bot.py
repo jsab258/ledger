@@ -19,6 +19,15 @@ message he did not ask for, and it asks for BOTH budget meters. Gallery
 images, notes and voice memos are still Monday's work and are deliberately
 absent rather than half-present.
 
+AND SINCE QUEUE 266 THE CEILING IT JUDGES THOSE METERS AGAINST IS READ, NOT
+CARRIED. `read_ceiling` opens production/budget.md at the moment a reading is
+judged and takes the standing number out of the one line tools/glance.py owns
+the pattern for. THERE IS NO FALLBACK NUMBER IN THIS FILE: a checkout where
+that line is missing, unreadable or self-contradictory gets a refusal naming
+the reason and nothing written down, because the constant this replaces sat at
+80 for three days after Jafar ruled 85 and turned three points under a ceiling
+into two points over it.
+
 BUTTONS FOR RULINGS, TYPED DIGITS FOR MEASUREMENTS, and that distinction is
 the point rather than a style. RULED 2026-09-05 (queue 104): a preset grid on
 a meter question turns a reading he SAW into a reading he ROUNDED, and near
@@ -100,6 +109,7 @@ its own code so a caller that still exists shows up red rather than green. 6
 a send either.
 """
 import datetime
+import importlib.util
 import json
 import os
 import re
@@ -122,12 +132,25 @@ import outbox                                                 # noqa: E402
 
 API = "https://api.telegram.org/bot%s/%s"
 
-#: THE CEILING IS NOT INVENTED HERE. 80 percent is the number
-#: production/NOW.md carries as the spend ceiling, and the rule that goes with
-#: it is that the HIGHER of the two meters governs, which is why this asks for
-#: both rather than one. If Jafar moves the ceiling, this constant moves with
-#: the document and not before it.
-CEILING_PCT = 80
+#: THE CEILING IS NOT INVENTED HERE, AND SINCE QUEUE 266 IT IS NOT COPIED
+#: HERE EITHER. This line read `CEILING_PCT = 80` under a comment promising
+#: the constant moved with the document. Jafar ruled the ceiling to 85 on
+#: 2026-09-10, production/budget.md moved and the constant did not, so against
+#: his own 2026-09-11 reading of 78 total and 82 Fable this bot said "2
+#: point(s) OVER the 80 percent ceiling" where the standing 85 makes it "3
+#: point(s) under". A stale copy did not print an old number, it REVERSED the
+#: verdict that decides whether the studio stops. The number is now read out
+#: of production/budget.md at the moment of each reading, by `read_ceiling`
+#: below, and there is no number in this file for the reader to fall back to.
+#:
+#: WHAT THE STUDIO BELIEVES IS STANDING, pinned here so that a future repeal
+#: has to pass through this file rather than surprise him on his phone.
+#: NOTHING COMPUTES WITH THIS: the only reader of it is the selftest case
+#: `accept/ceiling-is-the-standing-85`, which holds it against what the
+#: document actually says and goes red when the two part. The bot is right in
+#: between such an edit and after it either way, because the bot reads the
+#: document and never this.
+STANDING_CEILING_PCT = 85
 
 #: THE PRESET GRID IS GONE, RULED 2026-09-05 (queue 104). It was 15 buttons
 #: spanning 0 to 100 in steps of 5 and 10, and the meter reports integers, so
@@ -475,8 +498,164 @@ def fmt_pct(v):
     return ("%d" % v) if float(v).is_integer() else ("%.1f" % v)
 
 
-def budget_reading(total, fable, ceiling=CEILING_PCT):
+def load_glance():
+    """(module, why). tools/glance.py, imported by path for the one pattern
+    that knows where the standing ceiling is written, and for nothing else.
+
+    ONE IMPLEMENTATION PER IDEA, AND THE IDEA IS WHERE THE CEILING LIVES.
+    `glance.CEILING` is `Ceiling for LEDGER:\\s*(\\d+)\\s*%`, and
+    production/budget.md names that file, that line number and that pattern
+    as the contract in its own words, with a DO NOT TIDY THIS AWAY paragraph
+    beside it. A second regex written here would agree with it exactly until
+    the day the document is reworded, and then one of the two would answer
+    with an old number while both stayed green. The import is by path because
+    this file's sys.path holds tools/runner and glance sits one directory up;
+    it is the mechanism glance itself uses to import tools/runner/cards.py,
+    for the reason it states there.
+
+    A FAILED IMPORT IS A REFUSAL AND NEVER A CRASH. This bot is the channel
+    on Jafar's PC, so it does not die because a tool beside it was edited:
+    the sentence comes back, `read_ceiling` turns it into a refusal, and the
+    only thing lost is the verdict on one reading.
+
+    IMPORTED FROM THIS FILE'S OWN REPOSITORY, never from a caller's `repo`.
+    A planted tree supplies the data being read, never the rules for reading
+    it, which is the rule glance states for the same import in reverse.
+    """
+    p = os.path.join(REPO, "tools", "glance.py")
+    try:
+        spec = importlib.util.spec_from_file_location("ledger_glance", p)
+        if spec is None or spec.loader is None:
+            return None, ("tools/glance.py could not be loaded as a python "
+                          "module from %s" % p)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+    except Exception as exc:                                   # noqa: BLE001
+        return None, ("tools/glance.py could not be imported (%s: %s), so the "
+                      "ceiling pattern cannot be read off the one file that "
+                      "owns it and none is written here"
+                      % (type(exc).__name__, exc))
+    for name in ("CEILING", "BUDGET"):
+        if not hasattr(mod, name):
+            return None, ("tools/glance.py carries no %s, so the ceiling "
+                          "contract cannot be read off it" % name)
+    return mod, ""
+
+
+def ceiling_from_text(text, rel, pattern):
+    """(pct, from, why) out of a document's own words. The parsing, the
+    counting and the two strings all live here, where the selftest can reach
+    them without a network, a PC or a real budget document.
+
+    THE COUNT IS THE DENOMINATOR AND IT IS PART OF THE READING. One matching
+    line is the document doing its job; none is the state this repository was
+    actually in from 1aedef87 until 2026-09-13, when a rewrite asked for in
+    the words "one line nobody can misread" deleted the only line a tool
+    could read; two that disagree is the 2026-09-11 fault one level down,
+    where the file carried 80 near the top and 85 sixty lines below and the
+    wrong one was nearer the top. The first is answered, the other two are
+    REFUSED OUT LOUD. Nothing here falls back to a number, because the number
+    it would fall back to is the one that reversed a verdict.
+
+    WHERE THIS IS DELIBERATELY STRICTER THAN tools/glance.py: that file takes
+    the first match and draws a bar, this one refuses when two matches
+    disagree. The bar is read by a human who can see the file beside it; this
+    number is spoken to Jafar's phone as the word OVER or the word under.
+    """
+    # THE DENOMINATOR IS `splitlines`, NOT `count("\n") + 1`. The second
+    # counts one more line than the file has whenever it ends in a newline,
+    # which every file here does, and CLAUDE.md rule 3b names that exact
+    # move: a denominator one larger than the set examined turns a clean
+    # result into a false claim with a number on it. Measured against the
+    # live document while this was written: wc -l 587, splitlines 587,
+    # count-plus-one 588. The line NUMBERS beside it are the other case and
+    # do want the plus one, since no newline precedes line 1.
+    examined = len(text.splitlines())
+    hits = [(m, text.count("\n", 0, m.start()) + 1)
+            for m in pattern.finditer(text)]
+    if not hits:
+        return None, "nothing-measured", (
+            "%s carries no 'Ceiling for LEDGER: N%%' line, which is the one "
+            "wording any tool can read it from, and %d line(s) were examined "
+            "looking for it. Nothing in this bot carries a ceiling of its "
+            "own, so there is no number to answer with." % (rel, examined))
+    values = sorted({int(m.group(1)) for m, _ln in hits})
+    where = "/".join(str(ln) for _m, ln in hits)
+    if len(values) > 1:
+        return None, "nothing-measured", (
+            "%s states %d different ceilings at once (%s), on line(s) %s of "
+            "%d examined, and the file's own rule is that a disagreement is a "
+            "bug to fix on sight rather than one to reason around. Picking "
+            "one of them is the guess this refuses to make."
+            % (rel, len(values), ", ".join("%d percent" % v for v in values),
+               where, examined))
+    return values[0], "%s:%s..the-standing-line" % (rel, where), ""
+
+
+def read_ceiling(repo=None):
+    """(pct, from, why): the STANDING ceiling percent, read from
+    production/budget.md at the moment it is wanted, or (None,
+    "nothing-measured", why) and never a number out of this file.
+
+    THE STANDING ONE AND NOT A ROW'S OWN. production/budget.md carries both:
+    per-session ceilings written "THE CEILING IS 75 ON THE GOVERNING METER"
+    inside a dated table row, which that file says "expired with the reading
+    it came with", and the standing 85 that "STANDS until he changes it".
+    tools/glance.py draws a bar for a row IN the table and so prefers that
+    row's own ruling; this reads a number Jafar is typing NOW, which no old
+    row rules, so the standing line is the only right source. Six live rows
+    carry the per-session wording today and none of them may be mistaken for
+    this, which is what `reject/ceiling-a-per-session-row-is-not-standing`
+    holds.
+
+    READ PER READING RATHER THAN AT IMPORT. The old constant was bound when
+    this module loaded, so a ruling could not reach a bot that was already
+    running. This opens the file each time a reading is judged, which is once
+    or twice a day and cheap, and means an edit to the document reaches a
+    live bot without a restart.
+    """
+    mod, why = load_glance()
+    if mod is None:
+        return None, "nothing-measured", why
+    rel = mod.BUDGET
+    path = os.path.join(repo or REPO, *rel.split("/"))
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            text = fh.read()
+    except OSError as exc:
+        return None, "nothing-measured", (
+            "%s could not be read (%s), so the ceiling has no source. Nothing "
+            "in this bot carries one of its own." % (rel, exc))
+    return ceiling_from_text(text, rel, mod.CEILING)
+
+
+def ceiling_refusal(total, fable, why):
+    """What he sees when the ceiling cannot be read. HIS TWO NUMBERS COME
+    BACK IN IT: the meters are the measurement and only the verdict is
+    missing, so they stay visible in the chat rather than being swallowed by
+    the refusal, and he can send them again once the document is fixed."""
+    # `/budget` IS NAMED BECAUSE `pending` IS ALREADY CLEARED by the time this
+    # is sent (the handler closes the question before it reads the ceiling),
+    # so a bare number typed after this refusal is filed as prose, not read.
+    return ("I cannot read the ceiling, so I will not judge this reading.\n"
+            "You sent total %s percent and Fable %s percent, and the higher "
+            "of those governs, but whether that is under or OVER is a "
+            "comparison I have no number for.\n"
+            "Why: %s\n"
+            "Nothing was recorded. Fix the line in production/budget.md, then "
+            "send /budget and the two numbers again."
+            % (fmt_pct(total), fmt_pct(fable), why))
+
+
+def budget_reading(total, fable, ceiling, ceiling_from=None):
     """Both meters to (what the bot says, one key=value line for the log).
+
+    THE CEILING IS AN ARGUMENT WITH NO DEFAULT, AND THAT IS THE POINT OF
+    QUEUE 266. A default here is a number in the code, and the number in the
+    code was 80 for three days after Jafar ruled 85. Every live caller passes
+    what `read_ceiling` just read out of production/budget.md; the selftest
+    cases pass a fixture number of their own so that the arithmetic they
+    check stops moving when the standing ceiling moves.
 
     THE GOVERNING METER IS THE HIGHER ONE, at-worst rather than average,
     because the ceiling binds on whichever meter reaches it first: on
@@ -494,20 +673,35 @@ def budget_reading(total, fable, ceiling=CEILING_PCT):
         where = "exactly on the %d percent ceiling" % ceiling
     else:
         where = "%s point(s) OVER the %d percent ceiling" % (fmt_pct(-headroom), ceiling)
+    # THE PROVENANCE GOES TO HIS PHONE, not only to the log, and it is one
+    # short line rather than a path with line numbers in it. tools/glance.py
+    # states the reason for the same habit: a number whose provenance is
+    # invisible is the next silent fault of exactly this kind, and the 80 that
+    # reversed a verdict on 2026-09-11 was invisible in precisely this way.
+    said_where = ("That ceiling was read from production/budget.md just now "
+                  "and is not a number I carry.\n" if ceiling_from else "")
     text = ("Read back: total %s percent, Fable %s percent.\n"
             "The higher meter governs, so that is %s at %s percent, %s.\n"
-            "Written down on the PC. Getting it into the repo by itself is "
+            "%sWritten down on the PC. Getting it into the repo by itself is "
             "Monday's work." % (fmt_pct(total), fmt_pct(fable), governing,
-                                fmt_pct(high), where))
+                                fmt_pct(high), where, said_where))
     # `source=typed` IS QUEUE 082'S FIELD, AND ITS OTHER VALUE IS RETIRED.
     # Rows written before 2026-09-05 can carry `source=button`, which meant a
     # preset grid the reading may have been rounded onto; the grid is gone and
     # nothing writes that value any more. The name is kept so the older rows
     # stay readable rather than becoming a value nobody can look up.
+    # `ceilingFrom` IS THE HALF THAT WOULD HAVE CAUGHT QUEUE 266 FROM THE LOG
+    # ALONE. Ninety rows say `ceilingPct=80` and not one says where the 80
+    # came from, so nothing in the file distinguishes a ceiling read out of
+    # the document of record from a constant three days out of date. It is a
+    # path and line number(s), no spaces, `/` between lines and `..` before
+    # the kind, and it says `not-recorded` for the arithmetic fixtures below,
+    # which pass a number of their own and have no document to name.
     line = ("budgetTotalPct=%s budgetFablePct=%s governing=%s "
-            "governingPct=%s ceilingPct=%d headroomPct=%s source=typed"
+            "governingPct=%s ceilingPct=%d ceilingFrom=%s headroomPct=%s "
+            "source=typed"
             % (fmt_pct(total), fmt_pct(fable), governing, fmt_pct(high),
-               ceiling, fmt_pct(headroom)))
+               ceiling, ceiling_from or "not-recorded", fmt_pct(headroom)))
     return text, line
 
 
@@ -550,14 +744,56 @@ BUDGET_Q2 = ("2 of 2: the FABLE meter, percent used. %s, as typed."
              % NUMERIC_PLACEHOLDER.capitalize())
 
 
-def log_budget(line):
+BUDGET_LOG_REL = ("production", "logs", "telegram-budget.log")
+
+
+def budget_log_path(repo=None):
+    """WHERE THE READINGS GO, computed without writing anything, so the
+    selftest can name the live path and prove it is the default without
+    putting a line in it."""
+    return os.path.join(repo or REPO, *BUDGET_LOG_REL)
+
+
+def budget_log_lines(repo=None):
+    """(count, state) of one repository's budget log AS IT STANDS, a CUMULATIVE
+    count of every row in it whatever wrote it. No argument means the live
+    one; the selftest passes its own tree and reads the same counter, so the
+    two numbers it prints beside each other are taken the same way.
+
+    `state` is "present" or "absent" because a file that does not exist and a
+    file with nothing in it are different facts that both count zero: the log
+    is gitignored, so a fresh checkout and a bot nobody has answered yet are
+    indistinguishable on the number alone."""
+    try:
+        with open(budget_log_path(repo), "r", encoding="utf-8") as fh:
+            return sum(1 for _ in fh), "present"
+    except OSError:
+        return 0, "absent"
+
+
+def log_budget(line, repo=None):
     """One line into a gitignored log on the PC. production/logs/ is in
     .gitignore, so this can never travel into a commit, and it is written
-    where Jafar can read it back without the bot running."""
-    d = os.path.join(REPO, "production", "logs")
+    where Jafar can read it back without the bot running.
+
+    `repo` IS A PARAMETER BECAUSE THE SELFTEST WAS WRITING THIS FILE, queue
+    267. Three fixtures drive the real handler, and the handler called this
+    with no way to say where, so thirty verify runs put ninety lines into the
+    log Jafar was told he could read back: a flat 40 on the total meter and a
+    Fable meter stepping 62 to 77, all of it invented, none of it marked, and
+    sixty of the ninety closing on `headroomPct=3` which reads as a studio
+    three points off its ceiling. The callers that matter already knew where
+    they were: `Bot.repo` has pointed at a throwaway repository in the
+    selftest since the inbox half was written, and only this function ignored
+    it. Now the handler passes `self.repo` and the fixtures write inside
+    their own temporary tree. THE DEFAULT IS STILL THE LIVE REPOSITORY, which
+    is what `accept/budget-log-default-is-the-live-path` holds, because a
+    guard that stops all writing would be the other failure.
+    """
+    d = os.path.join(repo or REPO, *BUDGET_LOG_REL[:-1])
     try:
         os.makedirs(d, exist_ok=True)
-        with open(os.path.join(d, "telegram-budget.log"), "a",
+        with open(os.path.join(d, BUDGET_LOG_REL[-1]), "a",
                   encoding="utf-8") as fh:
             fh.write("%s %s\n" % (datetime.datetime.now().isoformat(
                 timespec="seconds"), line))
@@ -583,6 +819,12 @@ class Bot(object):
         self.readings = 0      # meter answers RECORDED, whole run
         self.answers = 0       # messages arriving while a meter is pending
         self.refused = 0       # of those, refused as not a whole number
+        # OF THE COMPLETE PAIRS, the ones no verdict could be spoken on
+        # because production/budget.md named no ceiling. Cumulative, whole
+        # run. Its denominator on the done line is readings + this, which is
+        # the pairs that reached the verdict, and it is computed at the emit
+        # rather than counted a third time.
+        self.ceiling_unreadable = 0
         self.pending = None    # None, "total" or "fable"
         self.total = None
         self.started = time.time()
@@ -1077,9 +1319,27 @@ class Bot(object):
                 OUT.say("budget: total meter read as typed (%d)" % v)
                 return self.reply(BUDGET_Q2, REMOVE_KEYBOARD)
             self.pending = None
+            # THE CEILING IS READ HERE, AT THE INSTANT THE VERDICT IS SPOKEN,
+            # and a reading it cannot source is REFUSED rather than judged
+            # against a number this file carries (queue 266). The pair is
+            # counted either way: `readings` is what was recorded and
+            # `ceiling_unreadable` is what was refused for want of a ceiling,
+            # and both are printed against the pairs seen on the done line, so
+            # a bot that silently stopped judging cannot read as a quiet day.
+            ceiling, ceiling_from, why_ceiling = read_ceiling(self.repo)
+            if ceiling is None:
+                self.ceiling_unreadable += 1
+                OUT.say("budget: REFUSED to judge a reading because the "
+                        "ceiling could not be read (%s). readings=%d "
+                        "unchanged, ceilingUnreadable=%d/%d pair(s) judged"
+                        % (why_ceiling, self.readings,
+                           self.ceiling_unreadable,
+                           self.readings + self.ceiling_unreadable))
+                return self.reply(ceiling_refusal(self.total, v, why_ceiling))
             self.readings += 1
-            text_out, line = budget_reading(self.total, v)
-            wrote = log_budget(line)
+            text_out, line = budget_reading(self.total, v, ceiling,
+                                            ceiling_from)
+            wrote = log_budget(line, self.repo)
             OUT.say("budget reading %d: %s (log written: %s)"
                     % (self.readings, line, "yes" if wrote else
                        "NO, production/logs is not writable"))
@@ -1387,6 +1647,7 @@ class Bot(object):
         return ("telegram-bot done: uptimeMin=%d updatesSeen=%d fromYou=%d/%d "
                 "ignoredOtherChats=%d/%d nonText=%d/%d budgetReadings=%d "
                 "budgetAnswersSeen=%d budgetRefused=%d/%d readingSource=typed "
+                "budgetCeilingUnreadable=%d/%d-pairs "
                 "taps=%d/%d tapsFiled=%d/%d tapsRefused=%d/%d "
                 "backlogFiled=%d/%d networkErrors=%d inboxFiled=%d "
                 "inboxPushed=%d/%d inboxPushFailures=%d inboxPending=%s "
@@ -1396,7 +1657,10 @@ class Bot(object):
                 % (int((time.time() - self.started) / 60), self.seen,
                    self.mine, self.seen, self.other, self.seen,
                    self.nontext, self.mine, self.readings, self.answers,
-                   self.refused, self.answers, self.taps, self.seen,
+                   self.refused, self.answers,
+                   self.ceiling_unreadable,
+                   self.readings + self.ceiling_unreadable,
+                   self.taps, self.seen,
                    self.taps_filed, self.taps, self.taps_refused, self.taps,
                    self.backlog_filed, self.backlog_seen, self.net_errors,
                    self.filed, self.pushed, self.filed, self.push_fails,
@@ -1817,22 +2081,173 @@ def _selftest_cases(ok, bad, state):
         print("  %-36s %s%s" % (name, "pass" if cond else "FAIL",
                                 (" : " + detail) if not cond else ""))
 
-    t, line = budget_reading(40, 62)
+    # THE LIVE LOG'S LINE COUNT AT THE START OF THE SUITE, read here and read
+    # again at the very bottom, because three fixtures below drive the real
+    # handler and for thirty verify runs that put ninety invented rows into
+    # the file Jafar was told he could read back (queue 267). The pair is
+    # printed and asserted at the end, where the denominator is every case
+    # that ran in between.
+    live_before, live_state_before = budget_log_lines()
+
+    # THE FOUR ARITHMETIC CASES PASS THEIR OWN CEILING (queue 266). What they
+    # are for is the arithmetic: which meter governs, that headroom goes
+    # NEGATIVE rather than clamping at zero, and that 91.5 prints as 91.5 and
+    # not 91. None of that is a question about policy, and while they read
+    # the standing number they could not move without four expected strings
+    # moving with them, which is the coupling that kept `CEILING_PCT = 80`
+    # alive for three days after Jafar ruled 85. ARITH_CEILING is theirs; the
+    # inputs and the expected strings are unchanged from when they were
+    # written and verified against it, so this change cannot quietly alter
+    # what they assert. The standing number is asserted once, on its own,
+    # further down, by reading the document.
+    ARITH_CEILING = 80
+    t, line80 = budget_reading(40, 62, ceiling=ARITH_CEILING)
     check("accept/fable-governs", "fable at 62" in t and
-          "headroomPct=18" in line and "governing=fable" in line, line)
-    print("      says: %s" % line)
-    t, line = budget_reading(77, 76)
+          "headroomPct=18" in line80 and "governing=fable" in line80, line80)
+    print("      says: %s" % line80)
+    t, line = budget_reading(77, 76, ceiling=ARITH_CEILING)
     check("accept/total-governs", "total at 77" in t and
           "governing=total" in line and "headroomPct=3" in line, line)
-    t, line = budget_reading(80, 12)
+    t, line = budget_reading(80, 12, ceiling=ARITH_CEILING)
     check("accept/exactly-on-ceiling", "exactly on the 80 percent" in t and
           "headroomPct=0" in line, line)
-    t, line = budget_reading(91.5, 12)
+    t, line = budget_reading(91.5, 12, ceiling=ARITH_CEILING)
     check("accept/over-ceiling-goes-negative",
           "11.5 point(s) OVER" in t and "headroomPct=-11.5" in line, line)
     print("      says: %s" % line)
     check("accept/no-spaces-in-values",
           all(" " not in kv.split("=")[1] for kv in line.split()), line)
+    # THE RUNG THAT PROVES THE ARGUMENT IS WIRED. One contributor moves, the
+    # ceiling, and nothing else: the same two meters, the same governing one,
+    # both rungs printed from the same vantage in the same run. Four cases
+    # passing `ceiling=` look exactly like four cases whose argument is
+    # ignored in favour of a number inside the function, and the difference
+    # between these two lines is the only thing that tells them apart.
+    t70, line70 = budget_reading(40, 62, ceiling=70)
+    check("accept/the-ceiling-argument-is-what-moves-the-verdict",
+          "headroomPct=8" in line70 and "under the 70 percent" in t70
+          and "headroomPct=18" in line80, "%s || %s" % (line80, line70))
+    print("      rung ceiling=%d: %s" % (ARITH_CEILING, line80))
+    print("      rung ceiling=70: %s" % line70)
+
+    # ---- THE CEILING COMES OUT OF THE DOCUMENT, queue 266 ---------------
+    #
+    # ACCEPTING CASE FIRST AND IT IS THE LIVE FILE, per instruments.md: for a
+    # tool that checks the project itself the live codebase is the accepting
+    # fixture, and the rejecting fixtures are synthetic documents that exist
+    # nowhere, so doing the work this prompts can never break the tool.
+    def planted_budget(text):
+        """A synthetic production/budget.md in a throwaway tree, returned as
+        a repo root `read_ceiling` can be pointed at. The tree is registered
+        for removal at exit rather than left behind."""
+        import atexit
+        import shutil
+        import tempfile
+        d = tempfile.mkdtemp(prefix="ledger-ceiling-")
+        atexit.register(shutil.rmtree, d, True)
+        os.makedirs(os.path.join(d, "production"), exist_ok=True)
+        with open(os.path.join(d, "production", "budget.md"), "w",
+                  encoding="utf-8") as fh:
+            fh.write(text)
+        return d
+
+    pct_live, from_live, why_live = read_ceiling()
+    print("      ceiling: ceilingPct=%s ceilingFrom=%s"
+          % (pct_live if pct_live is not None else "nothing-measured",
+             from_live))
+    check("accept/ceiling-is-read-from-the-live-document",
+          pct_live is not None and from_live.startswith("production/budget.md")
+          and why_live == "", why_live or from_live)
+    # THE ONE CASE THAT ASSERTS THE STANDING NUMBER ITSELF. A repeal that
+    # reaches production/budget.md but not this file fails HERE, in a suite
+    # ledger/verify.py runs, rather than on his phone as a reversed verdict.
+    check("accept/ceiling-is-the-standing-85",
+          pct_live == STANDING_CEILING_PCT,
+          "production/budget.md rules %s and this file pins %d; if Jafar "
+          "moved the ceiling, move STANDING_CEILING_PCT in the same edit as "
+          "the document" % (pct_live, STANDING_CEILING_PCT))
+    # AND THE PROSE BESIDE IT SAYS THE SAME NUMBER. That file carries the
+    # ceiling twice on purpose, once in the words Jafar reads and once in the
+    # line tools read, and its own instruction is that both change in the same
+    # edit. On 2026-09-11 they did not: the header said 80 while the ruling
+    # sixty lines below said 85, the wrong one was nearer the top, and work
+    # was narrowed for a breach that had not happened. THIS IS A CROSS-CHECK
+    # AND NEVER A SECOND SOURCE: it answers with no number of its own, it
+    # only refuses to let the two halves drift apart in silence.
+    try:
+        with open(os.path.join(REPO, "production", "budget.md"), "r",
+                  encoding="utf-8") as fh:
+            budget_text = fh.read()
+    except OSError as exc:
+        budget_text = ""
+        print("      prose: nothing measured, production/budget.md could not "
+              "be read (%s)" % exc)
+    prose = re.findall(r"\bthe\s+(?:standing\s+)?ceiling\s+is\s+(\d{1,3})\s*%?"
+                       r"\s+on\s+the\s+higher\s+meter\b", budget_text, re.I)
+    print("      prose: statements=%d values=%s"
+          % (len(prose), "/".join(sorted(set(prose))) or "nothing-measured"))
+    check("accept/the-prose-and-the-machine-line-agree",
+          len(prose) >= 1 and set(int(p) for p in prose) == {pct_live},
+          "%d prose statement(s) saying %s against the machine line's %s"
+          % (len(prose), "/".join(sorted(set(prose))) or "nothing", pct_live))
+    # AND THE NUMBER TRAVELS FROM A DOCUMENT, which a live reading of 85
+    # cannot prove on its own while 85 is also written in this file. A planted
+    # 71 is a number no copy anywhere carries.
+    pct_p, from_p, _why_p = read_ceiling(planted_budget(
+        "Ceiling for LEDGER: 71% of the weekly limit. The rest is his.\n"))
+    check("accept/ceiling-is-whatever-the-document-says",
+          pct_p == 71 and from_p.endswith("..the-standing-line"),
+          "%s from %s" % (pct_p, from_p))
+    # AND A ROW'S OWN PER-SESSION CEILING DOES NOT OVERRIDE THE STANDING ONE
+    # for a reading typed today: production/budget.md says those "expired with
+    # the reading" they came with, and six live rows still carry the wording.
+    pct_row, _f_row, _w_row = read_ceiling(planted_budget(
+        "| 2026-09-09 | ~25 in | 31% | 33% | THE CEILING IS 75 ON THE "
+        "GOVERNING METER, his fourth session running. |\n"
+        "Ceiling for LEDGER: 71% of the weekly limit.\n"))
+    check("accept/ceiling-a-row-ruling-does-not-override-the-standing-line",
+          pct_row == 71, "read %s where the standing line says 71" % pct_row)
+
+    # THE REJECTING HALF. Every one of these refuses OUT LOUD and none of them
+    # answers with a number, which is the whole of queue 266: a bot that
+    # cannot read the ceiling must say so rather than guess.
+    pct_n, from_n, why_n = read_ceiling(planted_budget(
+        "THE STANDING CEILING IS 85 ON THE HIGHER METER, ruled by Jafar.\n"
+        "Prose a person can read and no tool can.\n"))
+    # THE REFUSAL'S OWN DENOMINATOR IS PINNED HERE, to the line count of a
+    # document written two lines long on the line above. `count("\n") + 1`
+    # would say three, and a denominator one larger than the set examined is
+    # CLAUDE.md rule 3b's false claim with a number on it.
+    check("reject/ceiling-prose-alone-is-not-machine-readable",
+          pct_n is None and from_n == "nothing-measured"
+          and "Ceiling for LEDGER" in why_n and "no number" in why_n
+          and "2 line(s) were examined" in why_n, why_n)
+    print("      refuses: %s" % why_n)
+    # TWO THAT DISAGREE, which is the 2026-09-11 fault one level down: the
+    # file carried 80 near the top and 85 sixty lines below.
+    pct_2, _f_2, why_2 = read_ceiling(planted_budget(
+        "Ceiling for LEDGER: 80% of the weekly limit.\n"
+        "a hundred lines of prose\n"
+        "Ceiling for LEDGER: 85% of the weekly limit.\n"))
+    check("reject/ceiling-two-lines-that-disagree",
+          pct_2 is None and "80 percent" in why_2 and "85 percent" in why_2
+          and "line(s) 1/3 of 3 examined" in why_2, why_2)
+    print("      refuses: %s" % why_2)
+    # AND A PER-SESSION ROW ON ITS OWN IS NOT A STANDING CEILING. Loosening
+    # the pattern to read one would make the bot answer 75 out of a dated row
+    # that expired with its own reading.
+    pct_r, _f_r, why_r = read_ceiling(planted_budget(
+        "| 2026-09-09 | ~25 in | 31% | 33% | THE CEILING IS 75 ON THE "
+        "GOVERNING METER, his fourth session running. |\n"))
+    check("reject/ceiling-a-per-session-row-is-not-standing",
+          pct_r is None and "Ceiling for LEDGER" in why_r, why_r)
+    # AND A DOCUMENT THAT IS NOT THERE AT ALL, which is a checkout the PC
+    # could actually be in.
+    pct_m, _f_m, why_m = read_ceiling(
+        os.path.join(planted_budget(""), "no-such-checkout"))
+    check("reject/ceiling-no-document-at-all",
+          pct_m is None and "could not be read" in why_m
+          and "production/budget.md" in why_m, why_m)
 
     # THE READING IS AN INTEGER OR IT IS REFUSED, ruled 2026-09-05.
     check("accept/reading-77", parse_reading("77") == (77, ""))
@@ -1862,7 +2277,18 @@ def _selftest_cases(ok, bad, state):
           and "Nothing was recorded" in refusal_text("x", "total"),
           refusal_text("that is not a whole number", "total"))
     check("accept/the-log-line-names-the-reading-as-typed",
-          "source=typed" in budget_reading(77, 76)[1], budget_reading(77, 76)[1])
+          "source=typed" in budget_reading(77, 76, ceiling=ARITH_CEILING)[1],
+          budget_reading(77, 76, ceiling=ARITH_CEILING)[1])
+    # AND IT NAMES WHERE ITS CEILING CAME FROM, which ninety rows of this log
+    # do not: `ceilingPct=80` appears on all of them and nothing beside it
+    # says whether the 80 was read out of the document of record or carried in
+    # the code three days after it was repealed.
+    check("accept/the-log-line-names-where-the-ceiling-came-from",
+          "ceilingFrom=production/budget.md:1..the-standing-line"
+          in budget_reading(40, 62, 71,
+                            "production/budget.md:1..the-standing-line")[1],
+          budget_reading(40, 62, 71,
+                         "production/budget.md:1..the-standing-line")[1])
 
     long_text = "x" * (REPLY_CAP + 25)
     r = echo_reply(long_text)
@@ -1908,6 +2334,20 @@ def _selftest_cases(ok, bad, state):
     # Recorded before any case runs: on a crash the directory to open is the
     # first thing the reader needs, and `selftest()` prints it either way.
     state["fixture"] = home
+    # THE FIXTURE REPOSITORY GETS ITS OWN BUDGET DOCUMENT, and its ceiling is
+    # neither the standing 85 nor the repealed 80, so every handler case below
+    # proves the number travelled out of a document and into the verdict
+    # rather than out of this file. It also means those cases write their
+    # budget log inside this throwaway tree: `Bot.repo` has pointed here since
+    # the inbox half was written and only `log_budget` ignored it, which is
+    # how thirty verify runs put ninety invented rows in the live log.
+    FIXTURE_CEILING = 71
+    os.makedirs(os.path.join(watcher, "production"), exist_ok=True)
+    with open(os.path.join(watcher, "production", "budget.md"), "w",
+              encoding="utf-8") as fh:
+        fh.write("A throwaway budget document for the handler cases.\n"
+                 "Ceiling for LEDGER: %d%% of the weekly limit.\n"
+                 % FIXTURE_CEILING)
     creds = botconfig.Credentials(botconfig.FAKE_TOKEN, botconfig.FAKE_CHAT,
                                   "selftest", "selftest", 2)
     sent = 1788633012                                # 2026-09-05T18:30:12Z
@@ -1992,7 +2432,14 @@ def _selftest_cases(ok, bad, state):
     # AND A NUMBER ANSWERING THE BUDGET QUESTION IS NOT FILED EITHER.
     b4 = Captured()
     b4.pending, b4.total = "fable", 40
+    # THE ACCEPTING CASE FOR QUEUE 267, AND IT COMES FIRST: a genuine reading
+    # through the real handler still appends EXACTLY ONE line. A guard that
+    # stopped all writing would pass the live-log check at the bottom of this
+    # suite and leave Jafar with a log that never gains a reading, which is
+    # the same file being useless in the other direction.
+    fixture_log_before, _fixture_state = budget_log_lines(watcher)
     b4.handle(update("62", 4132))
+    fixture_log_after, _fixture_state = budget_log_lines(watcher)
     check("reject/inbox-a-budget-answer-is-not-filed",
           b4.filed == 0 and "fable at 62" in b4.said[-1],
           b4.said[-1][:60] if b4.said else "SILENT")
@@ -2000,6 +2447,69 @@ def _selftest_cases(ok, bad, state):
           b4.readings == 1 and b4.refused == 0 and b4.answers == 1
           and "budgetReadings=1" in b4.done_line()
           and "budgetRefused=0/1" in b4.done_line(), b4.done_line())
+    check("accept/a-reading-appends-exactly-one-line-to-the-log",
+          fixture_log_after == fixture_log_before + 1,
+          "fixtureBudgetLogLines=%d..%d beforeReading..afterReading"
+          % (fixture_log_before, fixture_log_after))
+    # READ DEFENSIVELY, because the case above is allowed to fail. Planting
+    # the regression it guards (the handler writing with no repository named)
+    # left this line raising FileNotFoundError, which killed 98 later cases
+    # over a fault that had already been reported cleanly one line up. A
+    # failing case says FAIL; it does not take the suite down with it.
+    try:
+        with open(budget_log_path(watcher), "r", encoding="utf-8") as fh:
+            fixture_rows = fh.read().splitlines()
+    except OSError:
+        fixture_rows = []
+    print("      fixture log row: %s"
+          % (fixture_rows[-1] if fixture_rows else "nothing measured"))
+    # AND THE CEILING IN IT CAME FROM THE FIXTURE'S OWN DOCUMENT (queue 266).
+    # 71 is written in no copy of anything: not in this file, not in
+    # production/budget.md, not in the ninety rows of the live log. If the
+    # handler were still reading a constant, this row would say 80 or 85.
+    check("accept/the-handler-judges-against-the-documents-ceiling",
+          bool(fixture_rows)
+          and "ceilingPct=%d" % FIXTURE_CEILING in fixture_rows[-1]
+          and "ceilingFrom=production/budget.md:2..the-standing-line"
+          in fixture_rows[-1]
+          and "under the %d percent ceiling" % FIXTURE_CEILING
+          in b4.said[-1],
+          fixture_rows[-1] if fixture_rows else "nothing measured")
+    check("accept/the-fixture-log-row-carries-no-spaces-in-a-value",
+          bool(fixture_rows)
+          and all(" " not in kv.split("=", 1)[1]
+                  for kv in fixture_rows[-1].split()[1:]),
+          fixture_rows[-1] if fixture_rows else "nothing measured")
+    # AND THE REFUSAL PATH, which is the half queue 266 cares about: a bot
+    # that cannot read the ceiling says so and records NOTHING rather than
+    # judging his reading against a number of its own.
+    b4c = Captured()
+    b4c.repo = os.path.join(home, "a-checkout-with-no-budget-document")
+    os.makedirs(b4c.repo, exist_ok=True)
+    b4c.pending, b4c.total = "fable", 82
+    b4c.handle(update("78", 4133))
+    check("reject/no-ceiling-no-verdict-and-nothing-recorded",
+          b4c.readings == 0 and b4c.ceiling_unreadable == 1
+          and budget_log_lines(b4c.repo) == (0, "absent")
+          and "I cannot read the ceiling" in b4c.said[-1]
+          and "Nothing was recorded" in b4c.said[-1],
+          b4c.said[-1][:110] if b4c.said else "SILENT")
+    check("reject/and-the-refusal-keeps-his-two-numbers-in-the-chat",
+          "total 82 percent" in b4c.said[-1] and "Fable 78 percent"
+          in b4c.said[-1] and "budgetCeilingUnreadable=1/1-pairs"
+          in b4c.done_line(), b4c.done_line())
+    # PRINTED WHOLE, AND THE CAP ANNOUNCES ITSELF IF IT EVER BITES. This line
+    # was `[:200]` with nothing said about it, and the sentence it exists to
+    # show ends in `/budget`, at character 362: the one word a reader needs
+    # was the one the cap ate, silently. instruments.md, every cap announces
+    # itself. The refusal is the artifact here, so the bound is generous and
+    # the overflow is named rather than dropped. 700 clears this line's ~520
+    # characters, most of which is a tempfile path inside the `why`, with room
+    # for that path to grow; if it ever bites the count says by how much.
+    _b4c = b4c.said[-1].replace("\n", " | ") if b4c.said else "SILENT"
+    print("      refuses: %s" % (_b4c if len(_b4c) <= 700 else
+                                 _b4c[:700] + " (+%d more character(s) not "
+                                 "shown)" % (len(_b4c) - 700)))
     # AND THE REFUSED HALF, with the counter as the thing that catches a
     # refusal that quietly records anyway.
     b4b = Captured()
@@ -2956,6 +3466,51 @@ def _selftest_cases(ok, bad, state):
     finally:
         OUT.say, inbox.pending_all, inbox.push_pending = (
             real_say, real_pending, real_push)
+
+    # ---- THE LAST CASE IN THE SUITE, AND IT MEASURES THE SUITE ---------
+    #
+    # QUEUE 267: the live log gains no line from a verify run. Three fixtures
+    # above drive the real handler, and until `log_budget` took a repository
+    # from its caller they wrote into production/logs/telegram-budget.log on
+    # whatever machine ran the suite: ninety rows across thirty runs, a flat
+    # 40 on the total meter, a Fable meter stepping 62 to 77, sixty of them
+    # closing on `headroomPct=3` which reads as a studio three points off its
+    # ceiling, and nothing in any row saying fixture.
+    #
+    # IT IS LAST ON PURPOSE: its denominator is every case that ran before it.
+    # If the suite dies earlier this case never runs, and `run_selftest` says
+    # so by printing that the count is a floor rather than a total.
+    live_after, live_state_after = budget_log_lines()
+    # THE ZERO SHIPS ITS DENOMINATOR. "The live log gained nothing" reads the
+    # same whether the fixtures moved or stopped writing altogether, so the
+    # rows they DID write are counted beside it, in the tree they went to.
+    fixture_rows_total, fixture_state = budget_log_lines(watcher)
+    print("      liveBudgetLogLines=%d..%d beforeSuite..afterSuite "
+          "state=%s..%s path=%s "
+          "fixtureBudgetLogLines=%d state=%s tree=%s"
+          % (live_before, live_after, live_state_before, live_state_after,
+             os.path.relpath(budget_log_path(), REPO).replace(os.sep, "/"),
+             fixture_rows_total, fixture_state, watcher))
+    check("accept/the-suite-still-wrote-its-rows-somewhere",
+          fixture_rows_total >= 1 and fixture_state == "present",
+          "%d row(s) (%s) landed in the fixture tree, so the case below "
+          "cannot tell a redirected write from no write at all"
+          % (fixture_rows_total, fixture_state))
+    check("reject/the-suite-writes-no-line-to-the-live-budget-log",
+          live_after == live_before and live_state_after == live_state_before,
+          "the live log went from %d line(s) (%s) to %d (%s) during this run, "
+          "so something in the suite is still writing the file Jafar reads "
+          "back" % (live_before, live_state_before, live_after,
+                    live_state_after))
+    # AND THE OTHER DIRECTION, so this is not a guard that stopped all
+    # writing: with no repository named, the log is still the live one.
+    check("accept/budget-log-default-is-the-live-path",
+          budget_log_path() == os.path.join(REPO, "production", "logs",
+                                            "telegram-budget.log")
+          and budget_log_path("/somewhere/else")
+          == os.path.join("/somewhere/else", "production", "logs",
+                          "telegram-budget.log"),
+          budget_log_path())
 
 
 def selftest():

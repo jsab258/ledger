@@ -650,6 +650,17 @@ def read_image(root, budget, chosen=None):
                          examined=denom)
 
 
+# THIS PATTERN HAS A SECOND READER, AND IT DIFFERS FROM THIS FILE ON
+# PURPOSE. tools/runner/telegram-bot.py imports CEILING and BUDGET by
+# path (queue 266) to judge a reading Jafar has just typed, and it reads
+# the STANDING line only: the per-session sentence in a row's note, which
+# this file prefers below for the bar it draws over THAT row, expired
+# with the reading it came with (production/budget.md, the 2026-09-10
+# ruling), and no old row rules a number typed now. Do not make either
+# reader match the other; the bot's selftest holds the difference
+# (reject/ceiling-a-per-session-row-is-not-standing). Renaming or moving
+# CEILING or BUDGET turns every reading on his phone into a refusal.
+# Ruled 2026-09-13, decision-2026-09-13-ruling-the-ceiling-is-read-not-carried-batch.md.
 CEILING = re.compile(r"Ceiling for LEDGER:\s*(\d+)\s*%")
 # THE CEILING JAFAR RULED IN THE SAME MESSAGE AS THE READING, read off the
 # SELECTED ROW'S OWN WORDS. Until 2026-09-09 this page took the ceiling from

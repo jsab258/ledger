@@ -9,6 +9,205 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-13 03:00Z: THE BOT READS ITS CEILING, 266 IS LANDED NOT CLOSED, AND THE ORDER IS 269 THEN 268
+
+The 266/267 batch lands under
+game-design/decision-2026-09-13-ruling-the-ceiling-is-read-not-carried-batch.md.
+The bot reads `Ceiling for LEDGER:` out of production/budget.md at each
+verdict through glance.py's own pattern, refuses out loud with his two
+numbers still in the chat when it cannot, names /budget in that refusal
+because the question is already closed by then, and the selftest writes
+nothing to the live log (90..90). 266 is LANDED and NOT CLOSED: it closes
+on the first row in production/logs/telegram-budget.log on his PC carrying
+ceilingFrom=production/budget.md, which needs the bot restarted on this
+commit or later; until then the bot on his phone judges against 80, and
+the daily brief says so. 267 landed points 1 and 2; 3 and 4 (mark the
+ninety rows, print the denominator on read-back) ride with 268's builder.
+268 is rewritten, not closed: the bot's suite now fails verify if the
+machine line goes, and what remains is the pattern's shared home, the
+document's exactly-one guard, and the pin out of the namespace. Two
+readers of budget.md differ on purpose and both files now say so: glance
+prefers a row's own sentence for the bar over that row, the bot reads the
+standing line for a number typed now. Next dispatch cycle, one review:
+269 (publish-glance re-pointed at main and proven by a run; the other
+five decided per workflow under rule 9) and 268 plus 267's remainder.
+
+## 2026-09-13 02:30Z: HIS BOT IS BACK UP, AND IT IS ASKING HIM A QUESTION IT WILL ANSWER WRONG
+
+THE TWO DIRTY PATHS AT THE 02:03Z TICK WERE RECEIPTS, AND THEY IDENTIFY.
+Every prior tick read `dirty: 0`. This one carried
+`2026-09-13T011415Z-reply-78` and `...011416Z-reply-79`, both `kind:
+bot-message`, 236 and 224 characters, sent one second apart at 01:14:15Z and
+01:14:16Z. No inbound message on `pc-inbox` dated 09-12 or 09-13
+(`52e5d509`: 0 message(s), 2 outbound record(s)), `briefTaps: onBranch=0`,
+`rulings: onBranch=0`. Two acks with nothing recorded behind them.
+
+I FIRST RECORDED THEM AS UNIDENTIFIABLE AND THAT WAS A MEASUREMENT FAULT,
+not a hole in the record. I length-matched against the SOURCE LITERALS and
+got `BUDGET_Q` 199 and `HELP` 647, neither of which matched, and I did not
+measure `OPENING` at all. The constants interpolate `NUMERIC_PLACEHOLDER`, so
+the literal in the file is not the string that is sent. Importing the module
+and measuring the objects gives it exactly:
+
+    OPENING   236   message 78
+    BUDGET_Q  224   message 79
+
+`run()` sends those two, in that order, at lines 1462 and 1464. So the
+finding is not a gap. IT IS THAT THE BOT STARTED ON HIS PC AT
+2026-09-13T01:14:15Z. Note also that `skip_backlog` FILES rather than drops
+since the 2026-09-05 ruling, and it filed nothing, which agrees with the 0
+messages on the branch: he sent nothing to a closed window. Nothing of his
+was lost.
+
+WHAT THAT DOES NOT ESTABLISH IS THAT IT IS STILL UP. The evidence is two
+sends at 01:14Z and nothing since, and a bot with an empty inbox and an
+unchanged outbox sends nothing, so a live bot polling quietly and a bot that
+started and died look identical from here. The claim that holds is that it
+started; anything stronger needs a fresh send or the PC.
+
+THE RUNNER IS STILL OFF, and those are different machines' worth of news.
+`pc-results` has not moved since 2026-09-11 08:18 and `pc-ops` still names
+`70e9ac5`.
+
+AND THE BOT BEING UP WOULD NOT RELEASE THE BRIEF ANYWAY, which is the
+assumption a fresh session will otherwise make. `poll_forever` does sweep:
+`flush_inbox` and `sweep_outbox` run every pass. But the 2026-09-12 brief is
+in `production/briefs/` and NOT in `production/outbox/`, and the loop's own
+comment says why the brief is not swept from there: "sent by `--send-brief`,
+which is a one-shot and deliberately NOT swept from here: two senders on one
+receipt race, and a duplicate of the one message a day is itself a channel
+failure." That one-shot is a workflow step on the runner. The brief stays
+queued until `ledger-pc` comes back, bot or no bot.
+
+### What the bot is doing right now, and why it ranks
+
+`run()` calls `ask_budget()`, which sets `pending = "total"` and sends
+`BUDGET_Q`. The bot is sitting on his phone with the budget question open,
+waiting for a number. The next thing he types goes through `budget_reading`.
+
+`CEILING_PCT = 80` at `telegram-bot.py:130`. Jafar ruled 85 on 2026-09-10
+(`budget.md:44`, `:90`). The comment at 125 says the constant moves with the
+document and not before it; the document moved and the constant did not. Run
+against his own last reading, 78 and 82:
+
+    now:          fable at 82 percent, 2 point(s) OVER the 80 percent ceiling
+    under the 85: fable at 82 percent, 3 point(s) under the 85 percent ceiling
+
+Over by two against under by three. It does not print a stale number, it
+REVERSES THE VERDICT, and the verdict decides whether the studio stops. This
+is the identical wrong read Jafar corrected in me on 2026-09-11, when I
+checked a stale header instead of the ruling sixty lines below it. My budget
+sweep that day fixed six lines of `budget.md` and never reached the Python.
+Filed as queue 266.
+
+WHAT CANNOT BE FIXED FROM HERE: the running process. The default is bound when
+the function is defined, so the bot now live on his PC keeps 80 until it is
+restarted. If he answers before then, his reading is computed against 80 and
+has to be re-read by hand.
+
+### And the log he was told he could read back is ninety fixtures
+
+`production/logs/telegram-budget.log`, the file `log_budget` describes as
+"written where Jafar can read it back without the bot running":
+
+    lines                                   90
+    distinct value pairs                     2   (40/62 x30, 40/77 x60)
+    readings he actually typed                0  of 90
+    selftest runs that wrote it              30
+    lines per selftest run                    3
+    lines carrying ceilingPct=80             90  of 90
+
+Three fixtures drive the real handler at line 1082 and so write the real log:
+b4 (1994), b4b (2006/2031), b8 (2130). The clusters sit at 04:24, 04:31,
+04:52, 08:06 and 12:07 on 09-12, which are my verify runs. The values are not
+merely plausible, they are ordinary budget percentages, and sixty of the
+ninety close on `headroomPct=3`, which reads as a studio three points off its
+ceiling. Filed as queue 267. The daily wake prompt already says SELFTESTS DO
+NOT COUNT; the same is owed to a log he opens.
+
+### Pulling the thread found two more, and one is his console
+
+RULE 1 SAYS GREP FOR THE SENTENCE, NOT THE SITE, so I swept every live copy of
+the repealed 80 rather than fixing the one I had found. Two more were live.
+
+`production/watchdog-prompt.md` lines 164 and 195 both told every scheduled
+session "The ceiling is 80 percent on BOTH meters". That is the prompt that
+fires on every wake, so every session since 2026-09-10 has been told the
+repealed number. Both lines do also say `production/budget.md` is the
+authority and this prompt is not, which is the mitigation and not an excuse:
+stating a specific wrong number next to "the file wins" is precisely the trap
+I fell into on 2026-09-11. Corrected in place, with the correction naming its
+own staleness. The changelog entry at 288 keeps its 80 because it is history.
+
+AND THEN THE INSTRUMENT ITSELF. `tools/glance.py:653` reads the ceiling with
+`Ceiling for LEDGER:\s*(\d+)\s*%` over `production/budget.md`. That line was
+not in the file. I deleted it at `1aedef87` on 2026-09-11, in the header
+rewrite Jafar asked for in the words "one line nobody can misread": the
+paragraphs that replaced it say 85 and are correct, and no tool can read one
+of them. Measured before and after restoring it:
+
+    before   ceilingPct=nothing-measured ceilingFrom=nothing-measured
+             budget    NOTHING MEASURED | production/budget.md
+             2 of 5 readings could not be taken (next, budget)
+    after    ceilingPct=85 ceilingFrom=the-standing-line..2026-09-11
+             1 of 5 readings could not be taken (next)
+
+THE INSTRUMENT DID EVERYTHING RIGHT and that is the part worth keeping. It
+printed `nothing-measured` rather than a number, named which of five readings
+it could not take, went GREY and drew no bar, exactly as its own comment says
+it must. It was right and unread for two days. The restored line carries a DO
+NOT TIDY THIS AWAY paragraph naming glance.py:653 as the contract, which is a
+comment and therefore the weak half; queue 268 was filed as the guard.
+
+QUEUE 268'S PREMISE THEN LASTED TWO HOURS, which is worth recording because it
+is the good direction for once. The builder's work on 266 put three cases into
+the bot's suite that read the LIVE production/budget.md rather than a fixture,
+and ledger/verify.py runs that suite at every commit, so deleting the
+machine-readable line again now turns the commit gate red in the same session:
+`accept/ceiling-is-read-from-the-live-document`,
+`accept/ceiling-is-the-standing-85` and
+`accept/the-prose-and-the-machine-line-agree`. 268 is rewritten and RENAMED to
+what is actually left, which is smaller: a DUPLICATE is still owned by nobody,
+because the bot deliberately accepts two lines that agree and refuses only two
+that disagree, and the guarantee currently lives inside the Telegram bot's
+selftest rather than beside the other document checks. A queue title asserting
+something false while its body corrects it is the header-nearer-the-top fault
+that produced this whole batch, so the title moved with the finding.
+
+### And the console could not have republished anyway
+
+Chasing who reads the glance produced the bigger finding. All 18 workflows
+examined; SIX still carry a live push trigger on
+`claude/game-dev-ai-automation-2h67ix`, the branch of the repository we left,
+which does not exist here. This repository has four branches: `main`,
+`art/atlas-01`, `pc-inbox`, `pc-results`.
+
+    citypack-fetch  citypack-inventory  ledger-build-mac
+    props-fetch     publish-glance      voice-candidates
+
+Effect rather than inference, per `.claude/rules/ci.md`: `publish-glance.yml`
+on `jsab258/ledger` returns `total_count 0, workflow_runs []`. It has never
+run here. Of the repository's 40 runs, the 30 most recent are all workflows
+WITHOUT the stale filter. A workflow that never triggers leaves no run, no log
+and no red tick, which is why three days passed. All six keep
+`workflow_dispatch`, so they look available rather than dead. Filed as 269.
+
+So his console has not rebuilt since the move, and 268 and 269 are the same
+fault twice: the instrument was not lying, it was not reached. Rule 4.
+
+ALSO NOTED, NOT CHASED: `ledger-restart-telegram-bot.yml` exists and has run
+on `main`. That is the mechanism for getting a fixed CEILING_PCT into the
+running bot, and it dispatches to `ledger-pc`, which is off. It is the right
+answer waiting on the same blocker as everything else.
+
+### In flight
+
+A tier 3 instrument-builder holds `tools/runner/telegram-bot.py` for 266 and
+267 together, briefed not to commit. DO NOT EDIT THAT FILE until the diff is
+reviewed. The ceiling is to be READ from `budget.md` rather than copied, with
+a loud refusal and no silent fallback if it cannot be read, because a bot
+that guesses a ceiling is the fault twice.
+
 ## 2026-09-12 04:30Z: THE BRIEF CARRIES A PICTURE, AND D18 HELD ONLY BECAUSE SOMEBODY LOOKED
 
 THE WAKE RECORD'S TWO BLOCKS ARE CLEARED, measured rather than assumed, which is

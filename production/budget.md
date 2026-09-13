@@ -46,6 +46,25 @@ it STANDS until he changes it rather than expiring with the reading it came
 with. It is restated in full further down, under "THE CEILING IS 85 ON THE
 HIGHER METER, STANDING", and the two say the same thing on purpose.
 
+Ceiling for LEDGER: 85% of the weekly limit. The other 15% is his.
+
+DO NOT TIDY THE LINE ABOVE AWAY. It is the MACHINE-READABLE copy, and its
+wording is a contract. `tools/glance.py:653` matches this pattern over the
+whole file and nothing else in it will do:
+
+    CEILING = re.compile(r"Ceiling for LEDGER:\s*(\d+)\s*%")
+
+The 2026-09-11
+header rewrite deleted it at `1aedef87` while replacing an 80 with an 85, which
+is how a rewrite asked for in the words "one line nobody can misread" produced
+a line no TOOL can read. From that commit until 2026-09-13 the console printed
+`ceilingPct=nothing-measured ceilingFrom=nothing-measured
+ceilingStandingPct=nothing-measured` and `budget NOTHING MEASURED`, drew no bar
+and went GREY, which is the instrument behaving correctly and refusing to draw
+a number it could not source. Nobody read it for two days. The prose paragraphs
+around this line are for Jafar; this line is for the tools; they carry the same
+number and BOTH are updated in the same edit.
+
 THIS LINE USED TO SAY 80 AND THAT COST A SESSION. On 2026-09-11 a reading of
 78 on the total and 82 on Fable was read against the stale 80 here rather than
 against the live 85 below, declared over the ceiling, and the work was narrowed
@@ -103,15 +122,29 @@ stops when HIS READING is at or over 85, at a session or model limit, or at a
 genuine blocker. A count of turns, calls or tokens is none of those, which is
 the misread recorded below.
 
+THE PARAGRAPH BELOW DESCRIBES THE PER-SESSION REGIME THAT THE 2026-09-10
+RULING RETIRED. It is kept because six rows above still carry that wording
+and `tools/glance.py` still honours it for the bar it draws over those
+rows. Two readers now take a ceiling from this file and they differ on
+purpose, ruled 2026-09-13: glance prefers the selected row's own sentence,
+because its bar is drawn over that row; the Telegram bot
+(`tools/runner/telegram-bot.py`, `read_ceiling`) reads the `Ceiling for
+LEDGER:` line above and nothing else, because a number Jafar is typing now
+is ruled by no old row. If he ever sets a ceiling for one session again,
+the bot's verdict on his phone is still against the standing line and its
+text says so; the session number is applied by the resident from the row,
+and whether the bot should read it is a decision to take then, not a fix
+to make quietly.
+
 HOW TO WRITE A PER-SESSION CEILING SO A MACHINE READS IT, added 2026-09-09 after
 it went wrong once. When Jafar sets a ceiling for a session, his number wins over
-the standing 80 above, and `tools/glance.py` reads it OUT OF THE ROW'S OWN NOTE.
+the standing line above, and `tools/glance.py` reads it OUT OF THE ROW'S OWN NOTE.
 It matches one phrase and nothing else:
 
     the ceiling ... is <N> on the governing meter
 
 So a row must contain a sentence of that shape, in those words, or the page draws
-his bar against the standing 80 and he sees a ceiling he retired. That happened
+his bar against the standing line and he sees a ceiling he retired. That happened
 within an hour of the reader being built: the 2026-09-09 09:00Z row first said
 "Ceiling 75 again, his third session running", which is perfectly clear English
 and matched nothing, and the page printed 80 against his 75.
