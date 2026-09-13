@@ -47,6 +47,19 @@ than advisory, and a resident swapping a model for a ruled role at the moment
 the rule bites is how a ruled table quietly becomes a suggestion. That call is
 Jafar's or a director's, and the director is the other unavailable thing.
 
+THE SERIES, SO FAR TWO POINTS, because one refusal is an event and two are the
+start of a shape. Fable was refused at 04:16Z and refused again at 07:19Z on
+the retry, the same HTTP 429 and the same wording both times, three hours and
+three minutes apart. NEITHER NOTICE CARRIED A RESET INSTANT. So what is known
+is that the window is longer than three hours and nothing more; it is NOT known
+whether this is a rolling window that will clear today or a weekly cap that
+will not, and a session that assumes either has invented the number. The next
+check is armed six hours out rather than three, which is a wider spacing chosen
+because a three-hour point has already been spent and a second one would tell
+us the same thing. If that is refused too, the honest reading becomes that the
+2026-09-13 brief may not be writable today at all, and THAT is the finding to
+record rather than a fourth attempt.
+
 THE DAY'S WORK THAT DID LAND is two commits above: 0e522c1f and dc04da73. His
 console is live and current for the first time since the move, measured by the
 build requesting all four pages back and reading them at 200 with this
