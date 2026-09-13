@@ -9,6 +9,58 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-13 13:25Z: THREE REFUSALS ACROSS NINE HOURS, AND THE BRIEF IS THE FINDING
+
+NO FOURTH ATTEMPT, BY THE RULE ARMED WITH THE THIRD. Fable refused the Producer
+three times today, the same HTTP 429 and the same wording each time:
+
+    04:16Z   first attempt, on the daily wake
+    07:19Z   +3h03m
+    13:21Z   +6h02m,  9h05m across the series
+
+NOT ONE NOTICE CARRIED A RESET INSTANT. Three points, widening spacing, and
+still no information about the window beyond "longer than nine hours". Whether
+this is a rolling window that clears tonight or a weekly cap that does not is
+STILL the thing not to guess at, and a fourth attempt on the same shape would
+buy a fourth point and no more. The rule to stop was written at 07:22Z, before
+this refusal, precisely so that stopping would not be a judgment made in the
+moment by a session that wanted to keep trying.
+
+THE 2026-09-13 BRIEF DOES NOT EXIST AND WILL NOT BE WRITTEN TODAY BY THIS
+SESSION. That is the finding, stated as one rather than left to look like a
+quiet day, which is the hole the daily wake prompt names in its own words.
+Every other day this file records what the studio did; today it records that
+the one message a day did not get written and why.
+
+WHAT IT WAS GOING TO SAY IS NOT LOST, and that matters more than the brief
+file. It is written three times over: in the wake record of 04:00Z, in the
+07:18Z resume, and in the 13:21Z one, each carrying the same three items in
+the same order. The first of those is the one that costs him something: his
+bot has had a budget question open on his phone since 01:14Z and the bot
+answering it carries the ceiling he repealed, so it will tell him he is OVER
+when he is UNDER, wrong in the direction that stops work, until it is
+restarted. That is now sixteen hours old and nobody has told him.
+
+QUEUE 272 IS NO LONGER THEORETICAL. budget.md rule 1 says that at the ceiling
+the studio writes the brief and stops. Today the ceiling was reached ON THE
+METER THE BRIEF NEEDS, so the rule's required action was unavailable at exactly
+the moment the rule fired, three times. The studio-director is the other Fable
+definition, so the review gate was gone with it: tier 3 could still build and
+nothing could land. That is the deadlock 272 describes, now with a date and
+three timestamps against it.
+
+WHAT I DID NOT DO, THREE TIMES. I did not re-spawn the Producer on another
+model. The four-tier routing table was ruled 2026-09-10 and is enforced rather
+than advisory, and a resident swapping a model for a ruled role at the moment
+the rule bites is how a ruled table quietly becomes a suggestion. That call is
+Jafar's or a director's. It is worth saying plainly that the cost of holding
+that line today was his morning message, and that this is the trade 272 asks
+him to rule on rather than one a session should keep making by default.
+
+THE NEXT MOVE BELONGS TO THE DAILY WAKE AT 04:00Z OR TO JAFAR. Nothing further
+is armed for the brief. The hourly tick keeps watching the inbox and the
+runner, which is free.
+
 ## 2026-09-13 04:20Z: THE FABLE METER IS SPENT, AND THE STOP RULE NEEDS IT
 
 THE 2026-09-13 BRIEF DOES NOT EXIST AND THAT IS A FINDING, SAID OUT LOUD
