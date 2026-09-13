@@ -55,12 +55,39 @@ TOOL = "tools/glance.py"
 ROOT = Path(__file__).resolve().parent.parent
 OUT_NAME = "glance.html"
 
+
+def _load_budget_ceiling():
+    """The module that owns every production/budget.md pattern, imported by
+    path because the file name carries a hyphen. Standard library only and
+    nothing but definitions at import, which is why this is safe to do at
+    module level in a file three other tools import.
+
+    A HARD FAILURE HERE IS THE HONEST ONE, unlike `load_cards` below. The
+    cards half of this page can say the words "nothing measured" and let the
+    other four blocks render; a missing ceiling pattern means this file has no
+    definition of where the budget lives at all, so it refuses to start with
+    one readable line rather than writing a page whose block 5 is a guess.
+    Ruled by the same reasoning that forbids a fallback number in the bot.
+    """
+    p = ROOT / "tools" / "budget-ceiling.py"
+    spec = importlib.util.spec_from_file_location("ledger_budget_ceiling", p)
+    if spec is None or spec.loader is None:
+        raise SystemExit("%s: %s could not be loaded as a python module, so "
+                         "this page has no ceiling pattern and will not "
+                         "render block 5 from a guess" % (TOOL, p))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+_bc = _load_budget_ceiling()
+
 # THE FIVE SOURCES, NAMED ONCE. Every number on the page carries the path it
 # came from, so this table is what the page quotes rather than a second copy.
 SENTENCE_DIR = "production/outbox"       # blocks 1 and 3, one named path
 DECISIONS = "production/decision-queue.md"  # block 2
 IMAGE_DIRS = ("production/frames", "game-design/sim-shots")  # block 4
-BUDGET = "production/budget.md"          # block 5
+BUDGET = _bc.BUDGET                      # block 5, named in tools/budget-ceiling.py
 AUDIT = ()  # dashboard.html and STATUS.md are NOT on the published site yet; a tap into a 404 is withheld, not shipped (ruling 2026-09-05 section 3)
 
 # THE LINK CONTRACT WITH THE PHONE, one string, both ends. tools/runner/cards.py
@@ -650,37 +677,26 @@ def read_image(root, budget, chosen=None):
                          examined=denom)
 
 
-# THIS PATTERN HAS A SECOND READER, AND IT DIFFERS FROM THIS FILE ON
-# PURPOSE. tools/runner/telegram-bot.py imports CEILING and BUDGET by
-# path (queue 266) to judge a reading Jafar has just typed, and it reads
-# the STANDING line only: the per-session sentence in a row's note, which
-# this file prefers below for the bar it draws over THAT row, expired
-# with the reading it came with (production/budget.md, the 2026-09-10
-# ruling), and no old row rules a number typed now. Do not make either
-# reader match the other; the bot's selftest holds the difference
-# (reject/ceiling-a-per-session-row-is-not-standing). Renaming or moving
-# CEILING or BUDGET turns every reading on his phone into a refusal.
-# Ruled 2026-09-13, decision-2026-09-13-ruling-the-ceiling-is-read-not-carried-batch.md.
-CEILING = re.compile(r"Ceiling for LEDGER:\s*(\d+)\s*%")
-# THE CEILING JAFAR RULED IN THE SAME MESSAGE AS THE READING, read off the
-# SELECTED ROW'S OWN WORDS. Until 2026-09-09 this page took the ceiling from
-# production/budget.md's standing "Ceiling for LEDGER: 80%" line over the whole
-# file, and drew his bar against 80 while the row it was reading said, in its
-# own words, "THE CEILING FOR THIS SESSION IS 75 ON THE GOVERNING METER, set by
-# him in the same message, not the standing 80". A bar drawn against a ceiling
-# he retired is a false reading with a number on it.
+# BOTH CEILING PATTERNS MOVED OUT OF THIS FILE 2026-09-13 (queue 268) and are
+# IMPORTED, never rewritten. They had three readers by then: this page, the
+# Telegram bot judging a reading Jafar has just typed, and the document guard
+# tools/budget-ceiling-check.py. The names below are the same names, so every
+# use in this file and every reader of `glance.CEILING` is unchanged; what
+# moved is the one copy of the wording, into a standard-library-only module,
+# so the channel on his PC no longer imports a 2,200-line page generator for
+# one regex.
 #
-# TIGHT ON PURPOSE, and the selftest's rejecting fixtures are what the
-# tightness is for. The phrase has to carry the number AND the words "on the
-# governing meter" after it, because the same column also says "4x over pace
-# against the 80% ceiling", "3 POINTS TO THE CEILING", "47 points to the 80
-# ceiling" and "the 80 ceiling is CROSSED on the governing meter", and any
-# pattern loose enough to read an integer near the word ceiling out of those
-# would invent a ruling out of prose. Rows are one line each in the table, so
-# this never spans two readings.
-ROW_CEILING = re.compile(
-    r"\bthe ceiling\b(?:\s+\w+){0,3}?\s+is\s+(\d{1,3})\s*%?\s+"
-    r"on the governing meter\b", re.I)
+# THE TWO READERS DIFFER ON PURPOSE AND THAT IS RULED (2026-09-13,
+# decision-2026-09-13-ruling-the-ceiling-is-read-not-carried-batch.md, section
+# 2b): the bot reads the STANDING line only, because the per-session sentence
+# in a row's note, which this file prefers below for the bar it draws over
+# THAT row, expired with the reading it came with, and no old row rules a
+# number typed now. Do not make either reader match the other; the bot's
+# selftest holds the difference (reject/ceiling-a-per-session-row-is-not-standing).
+# Renaming or moving CEILING or BUDGET in the module turns every reading on
+# his phone into a refusal and takes block 5 off this page.
+CEILING = _bc.CEILING
+ROW_CEILING = _bc.ROW_CEILING
 PERCENT = re.compile(r"(\d+)\s*%")
 HOURS_TO_RESET = re.compile(r"([\d.]+)\s*hours to the")
 
@@ -744,21 +760,41 @@ def read_budget(root):
     # a ceiling ruled in that tail would be invisible.
     note_text = " ".join(reading[4:])
     ruled = ROW_CEILING.search(note_text)
-    standing = CEILING.search(text)
-    if ruled is None and standing is None:
+    # THE STANDING HALF IS THE SHARED READER'S, not a `.search` of this file's
+    # own (queue 268). It is the same pattern either way; what the shared
+    # reader adds is the REFUSAL when the document states two different
+    # ceilings at once, which this page used to resolve silently by taking the
+    # first match. A bar drawn against whichever number happens to sit nearer
+    # the top is the 2026-09-11 fault drawn in pixels: the file carried 80 and
+    # 85 at once and the wrong one was nearer the top. The row's own ruling is
+    # still preferred below and is untouched by this.
+    standing_pct, _standing_from, standing_why = _bc.ceiling_from_text(text,
+                                                                       BUDGET)
+    standing_at = [ln for ln, _m in _bc.line_hits(text, CEILING)]
+    if ruled is None and standing_pct is None:
         return Look.missing(BUDGET, "the %s row rules no ceiling on the "
-                            "governing meter and %s carries no 'Ceiling for "
-                            "LEDGER: N%%' line either, so there is no ceiling "
-                            "to draw a bar against" % (reading[0], BUDGET))
-    standing_pct = int(standing.group(1)) if standing else None
+                            "governing meter and the standing line gives none "
+                            "either: %s" % (reading[0], standing_why))
+    # WHAT THE STANDING LINE SAID, IN WORDS, AND ABSENT IS NOT THE ONLY WAY TO
+    # SAY NOTHING. A refused standing half can mean no line at all or two
+    # lines that disagree, and calling the second one "absent" beside a file
+    # carrying two of them is a false clause on his page. The line numbers are
+    # the evidence a reader opens the file with, so they are named.
+    if standing_pct is not None:
+        standing_said = "%d%%" % standing_pct
+    elif not standing_at:
+        standing_said = "(which is absent)"
+    else:
+        standing_said = ("(which states %d ceilings at once, on line(s) %s, "
+                         "and is refused rather than guessed)"
+                         % (len(standing_at),
+                            "/".join(str(n) for n in standing_at)))
     if ruled is not None:
         ceiling, ceiling_from = int(ruled.group(1)), "the-row"
         how = ("the ceiling is THE SELECTED ROW'S OWN RULING, quoting it, '%s', "
                "and not the file's standing %s line, because a ceiling is set "
                "in the same message as the reading"
-               % (ruled.group(0),
-                  "%d%%" % standing_pct if standing_pct is not None
-                  else "(which is absent)"))
+               % (ruled.group(0), standing_said))
     else:
         ceiling, ceiling_from = standing_pct, "the-standing-line"
         how = ("the ceiling is the file's standing '%d%%' line, used because "

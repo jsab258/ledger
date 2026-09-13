@@ -1,6 +1,13 @@
 # 269: six workflows still trigger on the old repository's branch
 
-STATUS: READY
+STATUS: LANDED 2026-09-13 under
+decision-2026-09-13-ruling-the-triggers-and-the-ceilings-home-batch.md;
+CLOSES on done-line 3 (the served page opened, bar reads 85, servedCommit
+recorded). publish-glance and citypack-inventory are proven by the landing
+push's runs; citypack-fetch is proven at mechanism level ONLY, its job unrun
+since the move and dormant under D16, proven at its own level when
+tools/citypack/choices.json next changes. DUPLICATES 254, which closes with
+this.
 OPENED: 2026-09-13
 
 ## The fault, measured
@@ -98,6 +105,11 @@ rule 4.
    this exactly.
 
 ## What this does not cover
+
+A multi-line git command's CONTINUATION lines. `tools/workflow-branch-refs.py`
+examines a line for git targets only when the line itself contains `git `, and
+`publish-glance.yml` 197 to 198 carries `refs/heads/art/atlas-01` on a
+continuation. Filed as queue 271 rather than left implicit in a green result.
 
 Why every workflow also runs on `pc-results` pushes, which the run list shows
 plainly: 11 of the 30 runs sampled have `head_branch` `pc-results`, including

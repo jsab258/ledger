@@ -1,6 +1,10 @@
 # 254. Six push filters name a dead branch, and one would resurrect it
 
-STATUS: READY, 2026-09-10. Ruled out of the move batch by
+STATUS: CLOSES WITH 269, same evidence, 2026-09-13. The dispatched
+voice-candidates inventory run this item asked for is NOT taken: no literal
+branch name remains outside prose (grep 0 over 18 files) and
+tools/workflow-branch-refs.py keeps it so; the loop is proven by its first
+real dispatch when voice work resumes., 2026-09-10. Ruled out of the move batch by
 `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
 section 5, finding 1.
 

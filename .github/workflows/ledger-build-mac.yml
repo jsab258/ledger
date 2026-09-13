@@ -14,22 +14,48 @@ name: LEDGER macOS build
 # is whether the thing links, produces a .app, and survives the trip to a
 # real machine — which is what runs here.
 #
-# THE TRIGGER WATCHES THE BLIND SPOTS THAT BIT. On 4 Aug this fired only on
-# two paths, so three days and 252 files accumulated unbuilt — including
-# 223 MB of new character FBX — and were cashed in one run that failed on a
-# compile error found days earlier by the Windows job. Editor/** and
-# Characters/** are now watched; Scripts changes still ride on dispatch,
-# because a mac build per push would contend the single Personal licence
-# seat with every Windows dispatch. (The old comment here claimed dispatch
-# 404s from a feature branch; a dispatch on 15 Aug returned 204 and ran, so
-# that claim was stale and is retired.)
+# THE PUSH TRIGGER IS GONE, NOT RE-POINTED. Queue 269, decided per workflow
+# under CLAUDE.md rule 9 on 2026-09-13, and it agrees with the ruling already
+# on the books: the 2026-09-10 move-batch record, section 5 finding 1, said
+# `ledger-build-mac.yml` stays push-dead. What was read to decide:
+#
+#   runs-on: macos-latest, timeout-minutes 70, with a 30-minute Unity install
+#     inside it. The paragraph above this one carries the price in the file's
+#     own words: macOS runners bill at TEN TIMES the Linux rate. This is the
+#     expensive class rule 9 makes opt-in, and the only one of the six in
+#     queue 269 that is not on ubuntu-latest.
+#   It takes the single Unity Personal licence SEAT, which is why the trigger
+#     already refused to watch Assets/Scripts: the same paragraph says a mac
+#     build per push would contend that seat with every Windows dispatch. A
+#     seat lost at activation reads as NO PLAYER LOG, indistinguishable from a
+#     compile error, so the cost of an unwanted run is a misread, not just
+#     minutes.
+#   D16 (2026-09-10) made Unreal the engine and the Unity build THE LEGACY
+#     REFERENCE. Putting a retired 70-minute macOS build back on every push to
+#     main, by find-and-replace, on the day its branch name was corrected, is
+#     exactly the reflex that ruling forbids.
+#
+# The trigger it lost named `claude/game-dev-ai-automation-2h67ix`, the branch
+# of the repository we left on 2026-09-10, which does not exist on
+# jsab258/ledger (branches read 2026-09-13 from `git ls-remote --heads origin`:
+# main, art/atlas-01, pc-inbox, pc-results). So it has fired nothing since the
+# move, its run count on this repository is 0 of 0, and deleting it changes no
+# behaviour that exists today: it removes a line that could only ever mislead
+# the next reader into thinking a mac build still rides pushes.
+#
+# HOW IT RUNS NOW: workflow_dispatch, and that path is live rather than
+# assumed. All 18 of 18 workflows on disk are registered and state=active on
+# jsab258/ledger, read from the actions/workflows API on 2026-09-13, and main
+# is the default branch, so the dispatch endpoint resolves this file.
+#
+# THE PATHS IT USED TO WATCH, kept here because they were measured and the
+# reason not to lose them is written down: ".github/workflows/ledger-build-mac.yml",
+# "ledger/Assets/Editor/**", "ledger/Assets/Characters/**". On 4 Aug this fired
+# only on two paths, so three days and 252 files accumulated unbuilt, including
+# 223 MB of new character FBX, and were cashed in one run that failed on a
+# compile error the Windows job had found days earlier. If this build is ever
+# un-retired, that is the list to restore and that is why.
 on:
-  push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
-    paths:
-      - ".github/workflows/ledger-build-mac.yml"
-      - "ledger/Assets/Editor/**"
-      - "ledger/Assets/Characters/**"
   workflow_dispatch:
 
 jobs:

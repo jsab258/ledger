@@ -18,9 +18,33 @@ name: LEDGER city pack — inventory
 
 # ASK, TAKING NOTHING. Metadata only, about a minute. Runs when the tools that
 # do the asking change, because that is the only reason to ask again.
+
+# WHY THIS ONE KEEPS ITS PUSH TRIGGER AND MOVES TO MAIN, decided per workflow
+# under queue 269 and CLAUDE.md rule 9 rather than by find-and-replace. Read to
+# decide, all of it in this file or in the repository:
+#
+#   runs-on: ubuntu-latest, timeout-minutes 15, and the line above this one
+#     says what it actually costs: metadata only, about a minute. No Unity, no
+#     licence seat, no self-hosted runner, no image or audio download.
+#   Its concurrency group is its own name, `citypack-inventory`, so it cannot
+#     queue in front of a build or a stream. That is rule 9's test. (Named by
+#     value, not by line number: a line number in a comment decays the next
+#     time anyone edits above it.)
+#   The filter is three files, and the outputs it commits back
+#     (tools/citypack/catalogue.json, candidates.json, font-candidates.json)
+#     are NOT among them, so this job cannot re-trigger itself.
+#
+# A one-minute metadata read is the cheap-check class rule 9 protects, not the
+# expensive class it makes opt-in. Editing a fetcher and not re-asking the
+# catalogue is the drift this trigger exists to prevent, so it stays on push.
 on:
   push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
+    # `main`, not `claude/game-dev-ai-automation-2h67ix`: that was the branch
+    # of the repository we left on 2026-09-10 and it does not exist on
+    # jsab258/ledger (branches read 2026-09-13 from `git ls-remote --heads
+    # origin`: main, art/atlas-01, pc-inbox, pc-results). This workflow's run
+    # count on this repository was 0 of 0.
+    branches: [main]
     paths:
       - ".github/workflows/citypack-inventory.yml"
       - "tools/citypack/fetch_textures.py"

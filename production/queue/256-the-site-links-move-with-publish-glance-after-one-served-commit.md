@@ -1,6 +1,10 @@
 # 256. The site links move with publish-glance, after one run prints a served commit
 
-STATUS: READY, 2026-09-10. Ruled by
+STATUS: STEP 1 PENDING ON THE LANDING PUSH of 2026-09-13. The trigger moved
+under the morning ruling, so publish-glance fires on this push for the first
+time on this repository; step 1 is satisfied by what that run prints
+(servedCommit, or the Pages refusal, whichever it is), and the resident quotes
+it here once read. THE LINKS HAVE NOT MOVED and are this item. Step 2 next., 2026-09-10. Ruled by
 `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
 section 5, finding 6.
 

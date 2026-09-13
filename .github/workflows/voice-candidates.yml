@@ -13,17 +13,53 @@ name: LEDGER voice candidates
 # happens on a phone instead of at a desk. I never asked whether anything
 # other than his laptop could run it.
 
-# TRIGGERED BY A PUSH, NOT ONLY BY HAND. `workflow_dispatch` can only be
-# fired for workflows that exist on the DEFAULT branch, and this one lives on
-# a feature branch — the dispatch API answers 404, which reads like the file
-# is missing rather than like it is in the wrong place. A path-scoped push
-# trigger runs it from wherever it actually is.
+# BY HAND ONLY, AND THE PUSH TRIGGER IS DELETED RATHER THAN RE-POINTED.
+# Queue 269, decided per workflow under CLAUDE.md rule 9 on 2026-09-13. Four
+# things were read to decide, and the first of them is what settles it:
+#
+#   THE ONLY STATED REASON FOR THE PUSH TRIGGER IS DEAD. The comment that used
+#     to sit here said `workflow_dispatch` can only be fired for workflows that
+#     exist on the DEFAULT branch, that this one lived on a feature branch, and
+#     that the dispatch API therefore answered 404. Read on 2026-09-13 from the
+#     API rather than assumed: the repository endpoint gives
+#     default_branch=main, this file is on main, and the actions/workflows
+#     listing has all 18 of 18 workflows on disk registered and state=active,
+#     this one among them. Dispatch resolves. The workaround outlived its
+#     reason, and re-pointing it to main would have carried the workaround
+#     forward under a new branch name.
+#   WHAT A PUSH ACTUALLY BUYS, counted from the four jobs below rather than
+#     from the sentence that describes them. `inventory` and `candidates` are
+#     both gated `github.event_name == 'workflow_dispatch'`, so a push runs
+#     `page` (timeout 8, and it installs playwright plus a chromium) and
+#     `diagnose` (timeout 12, and it streams corpus metadata over the network).
+#     Up to 20 runner-minutes on ubuntu-latest per matching push, for a
+#     pipeline nothing is waiting on today.
+#   IT COULD TRIGGER ITSELF, which nothing here had noticed. The filter was
+#     `tools/voice-fetch/**`, and the `inventory` job commits
+#     `tools/voice-fetch/vctk-speakers.json`, which is INSIDE it. Every
+#     dispatched inventory run would land a commit on main that fires a second
+#     run of `page` and `diagnose` nobody asked for. Rule 9 is about knowing
+#     what your pushes trigger, and this one triggered itself.
+#   THE RESURRECT HAZARD, queue 254. This file named the dead branch at ten
+#     sites, not one: the filter, four checkout `ref:`s, and two commit loops
+#     that end in `git push origin HEAD:claude/game-dev-ai-automation-2h67ix`.
+#     While every checkout failed on a ref that does not exist, no push was
+#     ever reached. Moving the trigger alone would have made those two pushes
+#     live and CREATED the old branch in this repository, a second head no
+#     session should ever push to. All ten moved in this one edit: the refs are
+#     gone, so each job checks out the ref it was dispatched on, and both loops
+#     now push to `${GITHUB_REF_NAME}`, the same shape citypack-fetch,
+#     citypack-inventory, props-fetch and tier2-generate already use. A branch
+#     that does not exist cannot be the ref a dispatch resolved, so there is
+#     nothing left here that can invent one.
+#
+# THE PATHS IT USED TO WATCH, kept so nobody rediscovers them:
+# "tools/voice-fetch/**", ".github/workflows/voice-candidates.yml". The branch
+# it used to name was `claude/game-dev-ai-automation-2h67ix`, the repository we
+# left on 2026-09-10, absent from jsab258/ledger (branches read the same day
+# from `git ls-remote --heads origin`: main, art/atlas-01, pc-inbox,
+# pc-results). Run count on this repository: 0 of 0.
 on:
-  push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
-    paths:
-      - "tools/voice-fetch/**"
-      - ".github/workflows/voice-candidates.yml"
   workflow_dispatch:
     inputs:
       inventory:
@@ -64,9 +100,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
+      # No `ref:` pin (queue 269, 2026-09-13): it named the dead branch, so
+      # this checkout could only fail. The default is the ref the dispatch
+      # resolved, which is what ${GITHUB_REF_NAME} names further down. The
+      # full reason is at the top of this file.
       - uses: actions/checkout@v4
-        with:
-          ref: claude/game-dev-ai-automation-2h67ix
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -80,10 +118,21 @@ jobs:
           git add tools/voice-fetch/vctk-speakers.json
           if git diff --cached --quiet; then echo "unchanged"; else
             git commit -m "The VCTK speaker table, read from metadata"
+            # ${GITHUB_REF_NAME}, NEVER A BRANCH NAME TYPED IN. Queue 269,
+            # 2026-09-13. These three lines named
+            # claude/game-dev-ai-automation-2h67ix, and the push would have
+            # CREATED that branch in this repository the moment the checkout
+            # above stopped failing on it: a second head no session should
+            # push to. The ref a run was dispatched on exists by definition,
+            # so nothing in this loop can invent one.
+            # FETCH_HEAD rather than a remote-tracking name, matching
+            # citypack-fetch and props-fetch: a bare `git fetch origin <br>`
+            # need not update refs/remotes/origin/<br>, and FETCH_HEAD is
+            # exactly what the fetch on the line above brought back.
             for a in 1 2 3 4 5 6; do
-              git fetch origin claude/game-dev-ai-automation-2h67ix || true
-              git rebase origin/claude/game-dev-ai-automation-2h67ix || git rebase --abort || true
-              git push origin HEAD:claude/game-dev-ai-automation-2h67ix && break
+              git fetch origin "${GITHUB_REF_NAME}" || true
+              git rebase FETCH_HEAD || { git rebase --abort || true; }
+              git push origin "HEAD:${GITHUB_REF_NAME}" && break
               sleep $((a * 5))
             done
           fi
@@ -116,9 +165,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      # No `ref:` pin (queue 269, 2026-09-13): it named the dead branch, so
+      # this checkout could only fail. The default is the ref the dispatch
+      # resolved, which is what ${GITHUB_REF_NAME} names further down. The
+      # full reason is at the top of this file.
       - uses: actions/checkout@v4
-        with:
-          ref: claude/game-dev-ai-automation-2h67ix
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -143,9 +194,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
+      # No `ref:` pin (queue 269, 2026-09-13): it named the dead branch, so
+      # this checkout could only fail. The default is the ref the dispatch
+      # resolved, which is what ${GITHUB_REF_NAME} names further down. The
+      # full reason is at the top of this file.
       - uses: actions/checkout@v4
-        with:
-          ref: claude/game-dev-ai-automation-2h67ix
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -202,9 +255,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      # No `ref:` pin (queue 269, 2026-09-13): it named the dead branch, so
+      # this checkout could only fail. The default is the ref the dispatch
+      # resolved, which is what ${GITHUB_REF_NAME} names further down. The
+      # full reason is at the top of this file.
       - uses: actions/checkout@v4
-        with:
-          ref: claude/game-dev-ai-automation-2h67ix
 
       - uses: actions/setup-python@v5
         with:
@@ -394,11 +449,16 @@ jobs:
             # clips survived only as a build artifact nobody was looking for.
             # The job went green. Six exponential attempts cover about five
             # minutes, which is longer than any realistic burst of pushes.
+            # ${GITHUB_REF_NAME}, NEVER A BRANCH NAME TYPED IN. Queue 269,
+            # 2026-09-13, and the same three lines as the inventory job's
+            # loop: they named claude/game-dev-ai-automation-2h67ix and this
+            # push would have created that branch here. See that loop for the
+            # FETCH_HEAD reason.
             delay=5
             for attempt in 1 2 3 4 5 6; do
-              git fetch origin claude/game-dev-ai-automation-2h67ix || true
-              git rebase origin/claude/game-dev-ai-automation-2h67ix || git rebase --abort || true
-              if git push origin HEAD:claude/game-dev-ai-automation-2h67ix; then
+              git fetch origin "${GITHUB_REF_NAME}" || true
+              git rebase FETCH_HEAD || { git rebase --abort || true; }
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
                 echo "pushed on attempt $attempt"; break
               fi
               if [ "$attempt" = 6 ]; then

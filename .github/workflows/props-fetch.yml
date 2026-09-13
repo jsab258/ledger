@@ -18,21 +18,32 @@ name: LEDGER props — fetch CC0 model kits
 # committed to tools/props/listings.json even when extraction chooses
 # narrowly, so the next round of prop picks is made locally from
 # evidence rather than by dispatching another guess.
-# PUSH-TRIGGERED ON ITS OWN FILES, MEASURED, NOT PREFERRED. The API
-# dispatch endpoint resolves workflows from the DEFAULT branch's
-# registry — this file lives only on the working branch, so dispatch
-# returns 404 (tried twice, 16 Aug; the registry listing confirms all
-# nine registered workflows are main's). Until a merge to main
-# registers it, the trigger is a push touching this workflow or the
-# fetcher — which also means the edit that adds this comment starts
-# the first run.
+# THE PUSH TRIGGER IS GONE, AND THIS FILE ASKED FOR THAT. Queue 269, decided
+# per workflow under CLAUDE.md rule 9 on 2026-09-13. What was read to decide:
+#
+#   THE PARAGRAPH ABOVE IS THIS FILE'S OWN FIRST PREFERENCE, in its own words:
+#     "Dispatch-only: it costs a few tens of MB of downloads and there is no
+#     reason for it to ride every push." Nothing has happened since to make
+#     that false.
+#   THE ONLY REASON IT WAS PUSH-TRIGGERED IS NOW DEAD, and it is a measurement
+#     rather than a judgment. The comment that used to sit here said the
+#     dispatch API resolves workflows from the DEFAULT branch's registry, that
+#     this file lived only on a working branch, and that dispatch therefore
+#     returned 404 (tried twice, 16 Aug). Read on 2026-09-13 from the
+#     actions/workflows API: all 18 of 18 workflows on disk are registered on
+#     jsab258/ledger and every one is state=active, and the repository API
+#     gives default_branch=main, which is where this file now lives. The 404
+#     premise is retired, so the workaround it justified goes with it.
+#   Deleting it changes nothing that runs today. The trigger named
+#     `claude/game-dev-ai-automation-2h67ix`, the branch of the repository we
+#     left on 2026-09-10, absent from jsab258/ledger (branches read the same
+#     day from `git ls-remote --heads origin`: main, art/atlas-01, pc-inbox,
+#     pc-results). Run count on this repository: 0 of 0.
+#
+# THE PATHS IT USED TO WATCH, so a future reader need not rediscover them:
+# ".github/workflows/props-fetch.yml", "tools/props/fetch_props.py",
+# "tools/props/fetch_visual.py".
 on:
-  push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
-    paths:
-      - ".github/workflows/props-fetch.yml"
-      - "tools/props/fetch_props.py"
-      - "tools/props/fetch_visual.py"
   workflow_dispatch:
 
 # WRITE, OR THE COMMIT STEP IS THEATRE. The repo's default workflow
