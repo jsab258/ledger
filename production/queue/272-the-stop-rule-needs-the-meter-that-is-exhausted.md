@@ -3,6 +3,22 @@
 STATUS: READY
 OPENED: 2026-09-13, from a deadlock hit live at 04:16Z.
 
+## IT HAPPENED THREE TIMES, 2026-09-13, and the dates are the argument
+
+This item was filed at 04:20Z off one refusal. By 13:25Z there were three, the
+same HTTP 429 and the same wording each time, and not one notice carried a
+reset instant:
+
+    04:16Z   first attempt, on the daily wake
+    07:19Z   +3h03m
+    13:21Z   +6h02m,  9h05m across the series
+
+THE 2026-09-13 BRIEF WAS NEVER WRITTEN. Jafar's one message a day did not go
+out, on a day when the first thing it owed him was that his own bot has a
+budget question open on his phone and would answer it wrong in the direction
+that stops work. That is what the deadlock below costs when it fires, and it
+is no longer a thing that might happen.
+
 ## The fault, hit rather than predicted
 
 `production/budget.md`'s first stop condition reads, verbatim:
