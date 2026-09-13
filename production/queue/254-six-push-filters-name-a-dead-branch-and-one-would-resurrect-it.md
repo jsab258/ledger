@@ -51,3 +51,13 @@ table on `main` and nowhere else (`git ls-remote` shows no new branch).
 
 None on the fleet. Risk is the partial fix described above; the lint is what
 makes it a refusal rather than a memory.
+
+## Closing line, 2026-09-13T04:25Z
+
+CLOSES WITH 269 on the same evidence, which is recorded in full there. The
+resurrect hazard this item named on 2026-09-10 was real and was the half the
+269 builder found by counting: ten sites in `voice-candidates.yml`, not the
+three a later reader assumed, and a partial fix would have made
+`git push origin HEAD:claude/game-dev-ai-automation-2h67ix` reachable. This
+item had it written down first and the resident did not read it before filing
+269, which is recorded in 269 and in the commit message of dc04da73.

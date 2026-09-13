@@ -1,6 +1,6 @@
 # 256. The site links move with publish-glance, after one run prints a served commit
 
-STATUS: STEP 1 PENDING ON THE LANDING PUSH of 2026-09-13. The trigger moved
+STATUS: STEP 1 SATISFIED 2026-09-13T04:08Z, quoted below. The trigger moved
 under the morning ruling, so publish-glance fires on this push for the first
 time on this repository; step 1 is satisfied by what that run prints
 (servedCommit, or the Pages refusal, whichever it is), and the resident quotes
@@ -70,3 +70,29 @@ TWO ADDITIONS, and both exist because a printed fact beats a typed one.
    it rejects.
 
 Ruling: game-design/decision-2026-09-11-ruling-the-link-floor-marker-batch-and-the-answer-already-sent.md
+
+## Step 1, satisfied 2026-09-13T04:08Z
+
+What the run actually printed, rather than a summary of it:
+
+    servedCommit  dc04da736cbdbd3fffc119d1ff47801ec7706204
+    servedUrl     https://jsab258.github.io/ledger/
+    glance        pageHttp=200 pageStampCommit=dc04da73.. expectCommit=dc04da73..
+    printedBy     publish-glance run 34737101663, job 103670366299, step
+                  "REQUEST THE PUBLISHED PAGES AND READ WHAT CAME BACK"
+    servedAt      2026-09-13T04:08:07Z
+
+`production/site-served.txt` IS NOT UPDATED BY THIS AND THAT IS DELIBERATE.
+That file's own rule is that the served line moves in the SAME commit that
+moves `SITE_ORIGIN` off the archive, and `tools/producer-check.py:310` still
+reads `https://jsab258.github.io/wc26-picks/`. There is a named guard for
+exactly the half-move, `marker-names-served-commit-but-SITE_ORIGIN-is-the-archive`,
+so writing the marker alone would turn the floor back on and make the STALE
+link mandatory. Both move together in queue 259 or neither moves.
+
+MEASURED CONSEQUENCE, 2026-09-13T04:18Z: the resident told the Producer mid-turn
+that it could carry the link, then read `site_page()` and found it matches whole
+URLs against `SITE_ORIGIN`, so a link to the live site returns None and the
+message would have bounced on a `linkdest` refusal. Retracted before it shipped.
+THE PAGE BEING LIVE AND THE CHECKER KNOWING WHERE THE SITE LIVES ARE TWO
+DIFFERENT FACTS, and only the first changed this morning. Step 2 is the links.
