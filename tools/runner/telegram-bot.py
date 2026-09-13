@@ -21,12 +21,14 @@ absent rather than half-present.
 
 AND SINCE QUEUE 266 THE CEILING IT JUDGES THOSE METERS AGAINST IS READ, NOT
 CARRIED. `read_ceiling` opens production/budget.md at the moment a reading is
-judged and takes the standing number out of the one line tools/glance.py owns
-the pattern for. THERE IS NO FALLBACK NUMBER IN THIS FILE: a checkout where
-that line is missing, unreadable or self-contradictory gets a refusal naming
-the reason and nothing written down, because the constant this replaces sat at
-80 for three days after Jafar ruled 85 and turned three points under a ceiling
-into two points over it.
+judged and takes the standing number out of the one line tools/budget-ceiling.py
+owns the pattern for (it was tools/glance.py until queue 268 moved the pattern
+into a standard-library-only module the page, this channel and the document
+guard all import). THERE IS NO FALLBACK NUMBER IN THIS FILE AND NONE IN ITS
+NAMESPACE: a checkout where that line is missing, unreadable or
+self-contradictory gets a refusal naming the reason and nothing written down,
+because the constant this replaces sat at 80 for three days after Jafar ruled
+85 and turned three points under a ceiling into two points over it.
 
 BUTTONS FOR RULINGS, TYPED DIGITS FOR MEASUREMENTS, and that distinction is
 the point rather than a style. RULED 2026-09-05 (queue 104): a preset grid on
@@ -143,14 +145,14 @@ API = "https://api.telegram.org/bot%s/%s"
 #: of production/budget.md at the moment of each reading, by `read_ceiling`
 #: below, and there is no number in this file for the reader to fall back to.
 #:
-#: WHAT THE STUDIO BELIEVES IS STANDING, pinned here so that a future repeal
-#: has to pass through this file rather than surprise him on his phone.
-#: NOTHING COMPUTES WITH THIS: the only reader of it is the selftest case
-#: `accept/ceiling-is-the-standing-85`, which holds it against what the
-#: document actually says and goes red when the two part. The bot is right in
-#: between such an edit and after it either way, because the bot reads the
-#: document and never this.
-STANDING_CEILING_PCT = 85
+#: AND SINCE 2026-09-13 (queue 268) THERE IS NO NUMBER IN THIS NAMESPACE AT
+#: ALL. `STANDING_CEILING_PCT = 85` stood here as the pin on what the studio
+#: believes is standing, read by one selftest case and computed with by
+#: nothing. The name read like a setting, which is how a pin becomes a
+#: fallback one careless edit later, so the literal moved INTO the case that
+#: reads it: `accept/ceiling-is-the-standing-85`, same name, same message. A
+#: repeal that reaches production/budget.md and not that case still turns the
+#: commit gate red, and the sentence above is now true at module level.
 
 #: THE PRESET GRID IS GONE, RULED 2026-09-05 (queue 104). It was 15 buttons
 #: spanning 0 to 100 in steps of 5 and 10, and the meter reports integers, so
@@ -498,20 +500,29 @@ def fmt_pct(v):
     return ("%d" % v) if float(v).is_integer() else ("%.1f" % v)
 
 
-def load_glance():
-    """(module, why). tools/glance.py, imported by path for the one pattern
-    that knows where the standing ceiling is written, and for nothing else.
+def load_ceiling_patterns():
+    """(module, why). tools/budget-ceiling.py, imported by path for the one
+    pattern that knows where the standing ceiling is written, the reader that
+    turns it into a number, and nothing else.
 
     ONE IMPLEMENTATION PER IDEA, AND THE IDEA IS WHERE THE CEILING LIVES.
-    `glance.CEILING` is `Ceiling for LEDGER:\\s*(\\d+)\\s*%`, and
-    production/budget.md names that file, that line number and that pattern
-    as the contract in its own words, with a DO NOT TIDY THIS AWAY paragraph
-    beside it. A second regex written here would agree with it exactly until
-    the day the document is reworded, and then one of the two would answer
-    with an old number while both stayed green. The import is by path because
-    this file's sys.path holds tools/runner and glance sits one directory up;
+    `CEILING` is `Ceiling for LEDGER:\\s*(\\d+)\\s*%`, and production/budget.md
+    names that pattern as the contract in its own words, with a DO NOT TIDY
+    THIS AWAY paragraph beside it. A second regex written here would agree
+    with it exactly until the day the document is reworded, and then one of
+    the two would answer with an old number while both stayed green. The
+    import is by path because the file name carries a hyphen and because this
+    file's sys.path holds tools/runner while the module sits one directory up;
     it is the mechanism glance itself uses to import tools/runner/cards.py,
     for the reason it states there.
+
+    IT WAS tools/glance.py UNTIL 2026-09-13 (queue 268), which worked and cost
+    too much: the channel that runs on Jafar's PC imported a 2,200-line page
+    generator to get one regex, so every edit to that page was an edit to the
+    blast radius of his budget verdict. The pattern now lives in a few dozen
+    standard-library-only lines that three readers import, and the coupling
+    surface of the phone shrank by two thousand lines without the idea gaining
+    a second implementation.
 
     A FAILED IMPORT IS A REFUSAL AND NEVER A CRASH. This bot is the channel
     on Jafar's PC, so it does not die because a tool beside it was edited:
@@ -522,74 +533,25 @@ def load_glance():
     A planted tree supplies the data being read, never the rules for reading
     it, which is the rule glance states for the same import in reverse.
     """
-    p = os.path.join(REPO, "tools", "glance.py")
+    p = os.path.join(REPO, "tools", "budget-ceiling.py")
     try:
-        spec = importlib.util.spec_from_file_location("ledger_glance", p)
+        spec = importlib.util.spec_from_file_location("ledger_budget_ceiling",
+                                                      p)
         if spec is None or spec.loader is None:
-            return None, ("tools/glance.py could not be loaded as a python "
-                          "module from %s" % p)
+            return None, ("tools/budget-ceiling.py could not be loaded as a "
+                          "python module from %s" % p)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
     except Exception as exc:                                   # noqa: BLE001
-        return None, ("tools/glance.py could not be imported (%s: %s), so the "
-                      "ceiling pattern cannot be read off the one file that "
-                      "owns it and none is written here"
+        return None, ("tools/budget-ceiling.py could not be imported (%s: "
+                      "%s), so the ceiling pattern cannot be read off the one "
+                      "file that owns it and none is written here"
                       % (type(exc).__name__, exc))
-    for name in ("CEILING", "BUDGET"):
+    for name in ("CEILING", "BUDGET", "ceiling_from_text"):
         if not hasattr(mod, name):
-            return None, ("tools/glance.py carries no %s, so the ceiling "
-                          "contract cannot be read off it" % name)
+            return None, ("tools/budget-ceiling.py carries no %s, so the "
+                          "ceiling contract cannot be read off it" % name)
     return mod, ""
-
-
-def ceiling_from_text(text, rel, pattern):
-    """(pct, from, why) out of a document's own words. The parsing, the
-    counting and the two strings all live here, where the selftest can reach
-    them without a network, a PC or a real budget document.
-
-    THE COUNT IS THE DENOMINATOR AND IT IS PART OF THE READING. One matching
-    line is the document doing its job; none is the state this repository was
-    actually in from 1aedef87 until 2026-09-13, when a rewrite asked for in
-    the words "one line nobody can misread" deleted the only line a tool
-    could read; two that disagree is the 2026-09-11 fault one level down,
-    where the file carried 80 near the top and 85 sixty lines below and the
-    wrong one was nearer the top. The first is answered, the other two are
-    REFUSED OUT LOUD. Nothing here falls back to a number, because the number
-    it would fall back to is the one that reversed a verdict.
-
-    WHERE THIS IS DELIBERATELY STRICTER THAN tools/glance.py: that file takes
-    the first match and draws a bar, this one refuses when two matches
-    disagree. The bar is read by a human who can see the file beside it; this
-    number is spoken to Jafar's phone as the word OVER or the word under.
-    """
-    # THE DENOMINATOR IS `splitlines`, NOT `count("\n") + 1`. The second
-    # counts one more line than the file has whenever it ends in a newline,
-    # which every file here does, and CLAUDE.md rule 3b names that exact
-    # move: a denominator one larger than the set examined turns a clean
-    # result into a false claim with a number on it. Measured against the
-    # live document while this was written: wc -l 587, splitlines 587,
-    # count-plus-one 588. The line NUMBERS beside it are the other case and
-    # do want the plus one, since no newline precedes line 1.
-    examined = len(text.splitlines())
-    hits = [(m, text.count("\n", 0, m.start()) + 1)
-            for m in pattern.finditer(text)]
-    if not hits:
-        return None, "nothing-measured", (
-            "%s carries no 'Ceiling for LEDGER: N%%' line, which is the one "
-            "wording any tool can read it from, and %d line(s) were examined "
-            "looking for it. Nothing in this bot carries a ceiling of its "
-            "own, so there is no number to answer with." % (rel, examined))
-    values = sorted({int(m.group(1)) for m, _ln in hits})
-    where = "/".join(str(ln) for _m, ln in hits)
-    if len(values) > 1:
-        return None, "nothing-measured", (
-            "%s states %d different ceilings at once (%s), on line(s) %s of "
-            "%d examined, and the file's own rule is that a disagreement is a "
-            "bug to fix on sight rather than one to reason around. Picking "
-            "one of them is the guess this refuses to make."
-            % (rel, len(values), ", ".join("%d percent" % v for v in values),
-               where, examined))
-    return values[0], "%s:%s..the-standing-line" % (rel, where), ""
 
 
 def read_ceiling(repo=None):
@@ -614,7 +576,7 @@ def read_ceiling(repo=None):
     or twice a day and cheap, and means an edit to the document reaches a
     live bot without a restart.
     """
-    mod, why = load_glance()
+    mod, why = load_ceiling_patterns()
     if mod is None:
         return None, "nothing-measured", why
     rel = mod.BUDGET
@@ -626,7 +588,7 @@ def read_ceiling(repo=None):
         return None, "nothing-measured", (
             "%s could not be read (%s), so the ceiling has no source. Nothing "
             "in this bot carries one of its own." % (rel, exc))
-    return ceiling_from_text(text, rel, mod.CEILING)
+    return mod.ceiling_from_text(text, rel, mod.CEILING)
 
 
 def ceiling_refusal(total, fable, why):
@@ -2161,35 +2123,49 @@ def _selftest_cases(ok, bad, state):
     # THE ONE CASE THAT ASSERTS THE STANDING NUMBER ITSELF. A repeal that
     # reaches production/budget.md but not this file fails HERE, in a suite
     # ledger/verify.py runs, rather than on his phone as a reversed verdict.
+    #
+    # THE PIN IS THIS LOCAL AND NOTHING ELSE, moved out of the module
+    # namespace 2026-09-13 (queue 268). It was a module constant named like a
+    # setting, one careless edit away from becoming the fallback this bot
+    # exists to have none of. Here it is a literal inside the only case that
+    # ever read it: nothing at import can reach it, the name in the failure
+    # message below is still a real name a reader can grep for, and a repeal
+    # that misses it still goes red at the commit gate.
+    STANDING_CEILING_PCT = 85
     check("accept/ceiling-is-the-standing-85",
           pct_live == STANDING_CEILING_PCT,
           "production/budget.md rules %s and this file pins %d; if Jafar "
           "moved the ceiling, move STANDING_CEILING_PCT in the same edit as "
           "the document" % (pct_live, STANDING_CEILING_PCT))
-    # AND THE PROSE BESIDE IT SAYS THE SAME NUMBER. That file carries the
-    # ceiling twice on purpose, once in the words Jafar reads and once in the
-    # line tools read, and its own instruction is that both change in the same
-    # edit. On 2026-09-11 they did not: the header said 80 while the ruling
-    # sixty lines below said 85, the wrong one was nearer the top, and work
-    # was narrowed for a breach that had not happened. THIS IS A CROSS-CHECK
-    # AND NEVER A SECOND SOURCE: it answers with no number of its own, it
-    # only refuses to let the two halves drift apart in silence.
-    try:
-        with open(os.path.join(REPO, "production", "budget.md"), "r",
-                  encoding="utf-8") as fh:
-            budget_text = fh.read()
-    except OSError as exc:
-        budget_text = ""
-        print("      prose: nothing measured, production/budget.md could not "
-              "be read (%s)" % exc)
-    prose = re.findall(r"\bthe\s+(?:standing\s+)?ceiling\s+is\s+(\d{1,3})\s*%?"
-                       r"\s+on\s+the\s+higher\s+meter\b", budget_text, re.I)
-    print("      prose: statements=%d values=%s"
-          % (len(prose), "/".join(sorted(set(prose))) or "nothing-measured"))
-    check("accept/the-prose-and-the-machine-line-agree",
-          len(prose) >= 1 and set(int(p) for p in prose) == {pct_live},
-          "%d prose statement(s) saying %s against the machine line's %s"
-          % (len(prose), "/".join(sorted(set(prose))) or "nothing", pct_live))
+    # THE PROSE CROSS-CHECK MOVED OUT OF THIS SUITE 2026-09-13 (queue 268),
+    # to tools/budget-ceiling-check.py, where the other document checks run.
+    # It was `accept/the-prose-and-the-machine-line-agree` here and it was
+    # correct; what was wrong was the address. A rule about the shape of
+    # production/budget.md enforced by the selftest of the channel on Jafar's
+    # PC holds only while this suite exists and only while it keeps reading
+    # the live file, and nothing said so where an editor of either would look.
+    # The guard now owns "exactly one machine line, and the prose agrees with
+    # it", one implementation, and ledger/verify.py runs it at every commit.
+    #
+    # WHAT STAYS HERE IS THE HALF THAT IS THIS FILE'S: TWO LINES THAT AGREE
+    # ARE ANSWERED. Ruled 2026-09-13, section 2b point 2, and the guard is
+    # deliberately STRICTER than this: it fails on any duplicate, because
+    # "exactly one" is the document's rule, while refusing Jafar a verdict
+    # over a duplicate that agrees with itself is a refusal in the wrong
+    # direction for a channel. The duplicate stays visible either way, in
+    # `ceilingFrom` naming every line it matched. DO NOT ALIGN THE TWO.
+    pct_d, from_d, why_d = read_ceiling(planted_budget(
+        "Ceiling for LEDGER: 71% of the weekly limit.\n"
+        "sixty lines of prose\n"
+        "Ceiling for LEDGER: 71% of the weekly limit.\n"))
+    check("accept/ceiling-two-lines-that-agree-are-answered",
+          pct_d == 71 and from_d == "production/budget.md:1/3..the-standing-line"
+          and why_d == "",
+          "read %s from %s (%s), where the document guard FAILS the same "
+          "bytes on purpose" % (pct_d, from_d, why_d or "no refusal"))
+    print("      duplicate that agrees: ceilingPct=%s ceilingFrom=%s "
+          "guardOnTheSameBytes=fails-by-design"
+          % (pct_d if pct_d is not None else "nothing-measured", from_d))
     # AND THE NUMBER TRAVELS FROM A DOCUMENT, which a live reading of 85
     # cannot prove on its own while 85 is also written in this file. A planted
     # 71 is a number no copy anywhere carries.

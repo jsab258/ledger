@@ -1357,6 +1357,16 @@ TOOL_SELFTESTS = (
     ("checkout gate", "tools/runner/checkout-contains.py"),
     ("brief", "tools/runner/brief.py"),
     ("producer day", "tools/producer-day.py"),
+    # THE LOG JAFAR READS BACK, added 2026-09-13 (queue 267, points 3 and 4).
+    # Its suite reads this container's live log twice and writes it never,
+    # plants the four row shapes the PC's copy can hold at once (two verify
+    # runs, one reading typed since the fix, one pre-fix row that is not a
+    # fixture, three matching rows too far apart to be one), and proves the
+    # marking tool REFUSES to move a measured value. Without this row it is
+    # the sixth selftest nobody runs, which is the fault this table's own
+    # comment describes, and a fresh checkout missing the tool would say
+    # nothing until the PC runner tried to mark its log.
+    ("budget log", "tools/budget-log-mark.py"),
 )
 # `N passed, M failed` is the shape all four print. A tool that stops printing
 # it goes RED here rather than silently passing, which is the whole point: a
@@ -1493,6 +1503,14 @@ def producer_day_selftest():
     return _tool_selftest_run(9)
 
 
+def budget_log_mark_selftest():
+    """The budget log's read-back and marking (queue 267, points 3 and 4):
+    the denominator on read-back, a fixture group recognised by shape and
+    span rather than by a missing key, a typed reading left byte for byte,
+    and a moved value refusing the write."""
+    return _tool_selftest_run(10)
+
+
 def systems_inventory():
     code, out = run(["python3", str(ROOT.parent / SYSTEMS_INVENTORY_REL)])
     return _systems_inventory(code, out)
@@ -1627,6 +1645,80 @@ def docs_shape():
     if not m:
         return False, "docs-check did not report"
     return True, "docs %s" % m.group(0)
+
+
+def budget_ceiling_line():
+    """production/budget.md keeps exactly one machine-readable ceiling line,
+    and the prose beside it says the same number.
+
+    QUEUE 268, AND IT SITS BESIDE `docs_shape` BECAUSE IT IS THE SAME KIND OF
+    RULE: the shape of a document, checked where the other document checks
+    run. It was enforced until today by the selftest of `telegram-bot.py`,
+    which is the channel on Jafar's PC, and a guard living in another tool's
+    tests is one nobody knows to distrust: it holds only while that suite
+    exists and only while it keeps reading the live file rather than a
+    fixture, and nothing said so where an editor of either would see it.
+
+    WHAT IT CATCHES. `1aedef87` rewrote the header of that file and deleted
+    the only line any tool can read the ceiling from, so for two days the
+    console printed `ceilingPct=nothing-measured`, drew no bar and went GREY,
+    and nobody opened it. Two lines that disagree is the other half: on
+    2026-09-11 the file said 80 near the top and 85 sixty lines below, the
+    wrong one was nearer the top, and work was narrowed for a breach that had
+    not happened.
+
+    THE TOOL IS DELIBERATELY STRICTER THAN THE BOT, ruled 2026-09-13: it fails
+    on ANY duplicate, while the bot answers when two lines agree, because
+    refusing Jafar a verdict over a harmless duplicate is the wrong trade for
+    a channel and permitting a duplicate is the wrong trade for the document.
+    Its fixtures print both verdicts on the same bytes, so the pair is
+    measured in the same run rather than remembered.
+
+    Exit codes are distinct per outcome and are read as such here: 2 is
+    NOTHING MEASURED (the document is not there) and never a clean sweep, and
+    4 is a guard with no pattern behind it."""
+    tool = ROOT.parent / "tools" / "budget-ceiling-check.py"
+    code, out = run(["python3", str(tool)])
+    # THE LAST LINE CARRYING THE PREFIX, never the first: the done line is the
+    # last thing the tool prints, and a header that shared the prefix once made
+    # this report "exited 0 without reporting" every key it had just reported.
+    done = ([l for l in out.splitlines()
+             if l.startswith("budget-ceiling-check: ")] or [""])[-1]
+    if code == 2:
+        # THE REASON KEY, NOT A TAIL SLICE. `done[-90:]` cut the line
+        # mid-token and printed "cks faults=nothing-measured why=...", which
+        # is a truncation that does not say it bit.
+        w = re.search(r"why=(\S+)", done)
+        return False, ("BUDGET CEILING: %s, production/budget.md was not "
+                       "read (%s)"
+                       % (NOTHING_MEASURED, w.group(1) if w else "no reason "
+                          "given by the guard"))
+    if code == 4:
+        return False, ("BUDGET CEILING: the pattern module could not be "
+                       "imported, so no document was checked")
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines()
+               if l.strip().startswith("FAIL ") or " FAIL " in l]
+        return False, "BUDGET CEILING: " + _cap(bad, strip=5, width=100,
+                                                tail="see budget-ceiling-check"
+                                                ).strip()
+    keys = dict(re.findall(r"\b(machineLines|proseStatements|linesExamined|"
+                           r"faults|fixturesAgreed)=(\S+)", done))
+    if len(keys) < 5:
+        return False, ("BUDGET CEILING: the guard exited 0 without reporting "
+                       "%s" % "/".join(sorted({"machineLines",
+                                               "proseStatements",
+                                               "linesExamined", "faults",
+                                               "fixturesAgreed"}
+                                              - set(keys))))
+    # THE ZERO SHIPS ITS DENOMINATOR: "0 faults" beside the checks that ran,
+    # the lines examined and the fixtures that agreed, so a guard that walked
+    # an empty document cannot read like a clean one.
+    return True, ("budget ceiling: faults=%s machineLines=%s prose=%s of %s "
+                  "line(s) examined [fixtures %s]"
+                  % (keys["faults"], keys["machineLines"],
+                     keys["proseStatements"], keys["linesExamined"],
+                     keys["fixturesAgreed"]))
 
 
 def content_rule():
@@ -2094,6 +2186,105 @@ def workflow_size():
     m = re.search(r"largest step (\d+) chars \((\d+) under", out)
     return True, ("workflow steps ok (%s under the dispatch ceiling)" % m.group(2)
                   if m else "workflow steps ok")
+
+
+def workflow_branch_refs():
+    """Does any workflow name a branch this repository does not have.
+
+    QUEUE 269, AND IT SITS BESIDE `workflow_size` FOR THE SAME REASON: both
+    faults are raised by GitHub rather than by anything on this machine, and
+    both are INVISIBLE at the moment they land. A step past the expression
+    limit 422s at dispatch. A push trigger naming a branch that does not exist
+    is quieter still: it produces no run, no log and no red tick at all. Six of
+    eighteen workflows carried `branches: [claude/game-dev-ai-automation-2h67ix]`
+    for three days after the move of 2026-09-10, `publish-glance` among them,
+    so Jafar's console had not rebuilt since and its run count on this
+    repository was 0 out of 0. Nothing said so, because nothing ran.
+
+    TWO CHECKS, NOT ONE, and they answer different questions. The live run
+    says today's tree is clean. `--selftest` says the reader still works: its
+    accepting case is the live tree and its rejecting cases are synthetic
+    workflows naming a branch that exists nowhere, in each of the three slots
+    the fault takes (filter, checkout ref, git push). A guard that only ran its
+    own fixtures would keep passing while the repository drifted under it, and
+    a live run alone could not tell a clean tree from a blind check.
+
+    THE LIVE RUN IS READ FIRST, and that order was chosen from a printed
+    failure rather than by taste. Because the selftest's accepting case IS the
+    live tree, a planted fault fails BOTH, and selftest-first reported
+    `1 of 8 selftest check(s) FAILED` with the fixture's counts, which is true
+    and useless: the actionable message is the tool's own, naming the file, the
+    line, the slot and the remedy. So the live verdict wins when there is one,
+    and the selftest still speaks whenever the tree is clean, which is the case
+    where a broken reader would otherwise be invisible.
+
+    IT IS NOT A FIXED ALLOWLIST, and the tool prints which it used:
+    `git ls-remote --heads origin` first, the local remote-tracking refs as a
+    named weaker fallback (they are stale by construction: this container held
+    five against the remote's four on 2026-09-13), and a SKIP saying the words
+    nothing measured when neither answers. Offline must not be a false red on
+    every commit, and must not be a quiet green either."""
+    tool = ROOT.parent / "tools" / "workflow-branch-refs.py"
+    if not tool.exists():
+        return False, "WORKFLOW BRANCH REFS: %s, no tool on disk" % NOTHING_MEASURED
+
+    code, out = run(["python3", str(tool)])
+    skipped = any(mark in out for mark in SKIP_MARKS)
+    if code != 0 and not skipped:
+        hits = [l.strip() for l in out.splitlines()
+                if re.match(r"^\S+\.ya?ml:\d+\s", l.strip())]
+        if not hits:
+            hits = [l.strip() for l in out.splitlines() if l.strip()][-1:] or \
+                   ["the tool exited %s and printed nothing" % code]
+        return False, ("WORKFLOW NAMES A BRANCH THIS REPOSITORY DOES NOT HAVE: "
+                       + _cap(hits, width=80,
+                              tail="run tools/workflow-branch-refs.py for the remedy"))
+    live = out
+
+    code, out = run(["python3", str(tool), "--selftest"])
+    m = re.search(r"workflow-branch-refs selftest: (\d+) passed, (\d+) failed, "
+                  r"(\d+) checks run", out)
+    if not m:
+        return False, ("WORKFLOW BRANCH REFS: %s, the selftest printed no count "
+                       "line (exit %s)" % (NOTHING_MEASURED, code))
+    if m.group(2) != "0" or code != 0:
+        bad = [l.strip() for l in out.splitlines() if l.strip().startswith("FAIL")]
+        return False, ("WORKFLOW BRANCH REFS: %s of %s selftest check(s) FAILED: "
+                       % (m.group(2), m.group(3))
+                       + _cap(bad, strip=5, width=90, tail="selftest did not pass"))
+    rungs, out = m.group(3), live
+
+    if skipped:
+        # The branch list could not be read here. One line, the house idiom,
+        # so the footer's `skippedFor=` names it rather than counting it run.
+        # NO RUNG COUNT ON THIS LINE. The selftest cannot run either without a
+        # branch list, so it reported 0 checks run, and printing `[selftest 0]`
+        # beside a skip reads as a suite that ran and found nothing.
+        return True, ("workflow branch refs SKIPPED (no branch-list in this "
+                      "container, so the selftest could not run either)")
+
+    # KEYED LOOKUPS, NOT THE WHOLE LINE (the clip-motion lesson): a new key
+    # between these must be a new key, not a silent mis-read of the wrong one.
+    keys = dict(re.findall(r"\b(walked|examined|tested|repoBranches)=(\d+)", out))
+    absent = [k for k in ("walked", "examined", "tested", "repoBranches")
+              if k not in keys]
+    if absent:
+        return False, ("WORKFLOW BRANCH REFS: the tool exited 0 but did not "
+                       "report " + "/".join(absent))
+    src = re.search(r"branchSource=(\S+)", out)
+    # A ZERO NEEDS ITS DENOMINATOR (rule 3b). `0 dead` over 0 tested names
+    # is a check that looked at nothing, not a clean repository, and the two
+    # must not print the same way.
+    if keys["tested"] == "0":
+        return True, ("workflow branch refs: %s (no testable branch name in %s "
+                      "workflow(s); %s ref(s) examined, all unresolvable) "
+                      "[selftest %s]"
+                      % (NOTHING_MEASURED, keys["walked"], keys["examined"], rungs))
+    return True, ("0 workflow branch ref(s) absent of %s tested (%s walked/%s "
+                  "examined; %s against %s branch(es)) [selftest %s]"
+                  % (keys["tested"], keys["walked"], keys["examined"],
+                     src.group(1) if src else "branchSource=?",
+                     keys["repoBranches"], rungs))
 
 
 def _convo_wanted(src=None):
@@ -7303,12 +7494,12 @@ def main():
     results = []                  # (ok, text) per check, in run order
     for fn in (director_cadence, footer_strings,
                lint, shape, shadow, tools_tracked, reach, stranger_test, shape_files, voice_cast, voice_gen, barks_current, voice_live, voice_assets, voices_into_build, pc_watcher, slop,
-               card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, content_rule, producer_register, claude_md_size,
+               card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, budget_ceiling_line, content_rule, producer_register, claude_md_size,
                agent_model_values, agent_model_values_selftest, agent_model_overrides, agent_model_overrides_selftest,
-               inbox_selftest, inbox_read_selftest, bot_config_selftest, outbox_selftest, supervise_selftest, executor_selftest, wake_queue_selftest, checkout_gate_selftest, brief_selftest, producer_day_selftest, systems_inventory, inbox_tracked,
+               inbox_selftest, inbox_read_selftest, bot_config_selftest, outbox_selftest, supervise_selftest, executor_selftest, wake_queue_selftest, checkout_gate_selftest, brief_selftest, producer_day_selftest, budget_log_mark_selftest, systems_inventory, inbox_tracked,
                template_sync,
                attribution, game_compiles, backend_compiles, conditional_reach, nested_types,
-               static_instance, raw_avenues, bat_editor, bootstrap_single, blender_hash_parse, surface_tint_agreement, filename_as_type, namespace_as_value, workflow_size,
+               static_instance, raw_avenues, bat_editor, bootstrap_single, blender_hash_parse, surface_tint_agreement, filename_as_type, namespace_as_value, workflow_size, workflow_branch_refs,
                powershell_steps, sheet_read, prop_dimensions, prop_reach,
                ue_probe_tests,
                ue_material_selftest,

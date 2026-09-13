@@ -49,10 +49,18 @@ HIGHER METER, STANDING", and the two say the same thing on purpose.
 Ceiling for LEDGER: 85% of the weekly limit. The other 15% is his.
 
 DO NOT TIDY THE LINE ABOVE AWAY. It is the MACHINE-READABLE copy, and its
-wording is a contract. `tools/glance.py:653` matches this pattern over the
+wording is a contract. `tools/budget-ceiling.py` matches this pattern over the
 whole file and nothing else in it will do:
 
     CEILING = re.compile(r"Ceiling for LEDGER:\s*(\d+)\s*%")
+
+THAT PATTERN MOVED THERE ON 2026-09-13 (queue 268) and the wording did not
+change. It lived in `tools/glance.py` while that page was its only reader;
+three tools read it now, so it has one home and three importers: the page,
+`tools/runner/telegram-bot.py` for the verdict on a reading Jafar has just
+typed, and `tools/budget-ceiling-check.py`, which fails `ledger/verify.py` at
+every commit if this file ever carries no such line, carries two of them, or
+states a different number in the prose than in the line.
 
 The 2026-09-11
 header rewrite deleted it at `1aedef87` while replacing an 80 with an 85, which

@@ -1,6 +1,12 @@
 # 267: the budget log Jafar reads back is ninety fixture lines and no readings
 
-STATUS: POINTS 1 AND 2 LANDED 2026-09-13 under
+STATUS: POINTS 3 AND 4 LANDED 2026-09-13 under
+decision-2026-09-13-ruling-the-triggers-and-the-ceilings-home-batch.md;
+CLOSES on the PC run: `python3 tools/budget-log-mark.py --mark --log <PC
+copy>`, counts printed before and after. `unmarked>0` on the PC means READ
+THOSE ROWS before touching the 5-second bound, and a new bound needs the PC's
+printed series.
+POINTS 1 AND 2 LANDED 2026-09-13 at 0e522c1f under
 game-design/decision-2026-09-13-ruling-the-ceiling-is-read-not-carried-batch.md;
 POINTS 3 AND 4 OPEN, and they ride with 268's builder.
 OPENED: 2026-09-13
@@ -69,10 +75,14 @@ rows are real cannot tell nothing from fine, and this one currently cannot.
    thirty verify runs wrote the same ninety rows here: run the marking tool
    once against this copy and print its before and after counts. The PC copy
    is marked by the SAME tool when the runner returns, and that run is the
-   second accepting case rather than the first. One partial already fell out
-   of the 266 work for free: every row written from now on carries
-   `ceilingFrom=` and none of the ninety has that key, so pre-fix rows are
-   separable by content before any tool exists.
+   second accepting case rather than the first. A MISSING `ceilingFrom=` IS NECESSARY AND NOT
+   SUFFICIENT, which is the correction the builder made to this item's own
+   text and to the resident's brief: a reading Jafar typed on the PC BEFORE
+   0e522c1f lacks that key too, and marking one of his readings as a fixture
+   would be this fault committed a second time in the other direction. The
+   tool recognises a fixture GROUP by shape and span (40/62, 40/77, 40/77,
+   within 5 seconds, the bound set from the printed series) and counts
+   everything else as `unmarked` rather than guessing at it.
 4. The log prints its own denominator when read back: how many rows are
    readings and how many are not.
 

@@ -21,9 +21,52 @@ name: LEDGER city pack — fetch
 # A code change must never start one: three corpus runs once ended up queued in
 # front of the one somebody was waiting on, and one was queued behind a run of
 # the problem it would have fixed.
+
+# WHY THIS ONE KEEPS ITS PUSH TRIGGER AND MOVES TO MAIN, decided per workflow
+# under queue 269 and CLAUDE.md rule 9 rather than by find-and-replace. What was
+# read to decide:
+#
+#   THE FILTER IS THE OPT-IN ALREADY, and that is the deciding fact rather than
+#     the runtime. One path, tools/citypack/choices.json, and the paragraph
+#     above says why: committing that file IS somebody deciding a download
+#     should happen. Rule 9 asks that an expensive job be opt-in; this one's
+#     opt-in is expressed as a path filter instead of a dispatch, and moving it
+#     to workflow_dispatch would not make it more deliberate, only less
+#     legible. A code change still cannot start a fetch, which is the incident
+#     the two-file split above was written for.
+#   runs-on: ubuntu-latest, timeout-minutes 30. The cheap minute class: no
+#     Unity, no licence seat, no self-hosted runner. Contrast ledger-build-mac
+#     in this same batch, which went dispatch-only on exactly that reading.
+#   Its concurrency group is its own name, `citypack-fetch`, so it cannot queue
+#     in front of a build or a stream. (Named by value, not by line number: a
+#     line number in a comment decays the next time anyone edits above it.)
+#   A RE-RUN RE-DOWNLOADS. tools/citypack/fetch_textures.py has no
+#     skip-if-present path, so firing this is a real fetch every time, not a
+#     no-op over files already on disk. That is the cost of proving this
+#     trigger by a push, and it is why the filter stays at one decision file.
+#   It commits to ledger/Assets/StreamingAssets/CityPack,
+#     ledger/Assets/Resources/LedgerSans.* and tools/citypack/font-installed.json,
+#     none of which is in the filter, so it cannot re-trigger itself.
+#   WHAT IT COMMITS INTO IS THE LEGACY REFERENCE BUILD. D16 (2026-09-10)
+#     made Unreal the engine and archived the Unity tree, never deleted,
+#     and ledger/Assets/StreamingAssets/CityPack is inside that tree. So
+#     committing choices.json is a decision about the archived project and
+#     not about the game. This trigger has not fired since the move: its
+#     filter is proven at mechanism level by citypack-inventory's landing
+#     run of 2026-09-13 (push on main with a paths filter, same repository,
+#     a different list), and the job itself is UNRUN here and dormant by
+#     premise, proven at its own level on the day that file next changes.
+#     Ruled 2026-09-13,
+#     decision-2026-09-13-ruling-the-triggers-and-the-ceilings-home-batch.md.
 on:
   push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
+    # `main`, not `claude/game-dev-ai-automation-2h67ix`: that was the branch
+    # of the repository we left on 2026-09-10 and it does not exist on
+    # jsab258/ledger (branches read 2026-09-13 from `git ls-remote --heads
+    # origin`: main, art/atlas-01, pc-inbox, pc-results). This workflow's run
+    # count on this repository was 0 of 0, so committing choices.json has not
+    # started a fetch since the move.
+    branches: [main]
     paths:
       - "tools/citypack/choices.json"
   workflow_dispatch:

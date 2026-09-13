@@ -8,7 +8,13 @@ something false while the body corrects it is the header-nearer-the-top fault
 that produced this whole batch, so the title moved rather than the correction
 being left in a footnote.
 
-STATUS: READY
+STATUS: CLOSED 2026-09-13 under
+decision-2026-09-13-ruling-the-triggers-and-the-ceilings-home-batch.md:
+one home (tools/budget-ceiling.py), three importers, the document guard in
+ledger/verify.py at every commit (the `budget ceiling:` line in the footer),
+the pin a local in the case that reads it, and the asymmetry proven on both
+sides. proseAt=44/46/117 on the day of closing, three statements including
+the quotation spanning 46 to 47, ruled counted.
 OPENED: 2026-09-13
 
 ## What happened, and it is a resident fault

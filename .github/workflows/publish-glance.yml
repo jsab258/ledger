@@ -23,8 +23,28 @@
 name: publish-glance
 
 on:
+  # MAIN, AND THE FILTER BELOW IS UNCHANGED (queue 269, ruled 2026-09-13).
+  # This line read `claude/game-dev-ai-automation-2h67ix` until today, the
+  # branch of the repository we left on 2026-09-10. It does not exist on
+  # jsab258/ledger, whose branches are main, art/atlas-01, pc-inbox and
+  # pc-results (read from `git ls-remote --heads origin`, 2026-09-13). So the
+  # path filter below, 21 entries counted on 2026-09-13 rather than taken from
+  # the older comment that says thirteen, has been guarding a branch name
+  # nothing could ever match; this workflow's run count on this repository
+  # was 0 of 0,
+  # and the page behind Jafar's link is whatever the old repository last
+  # published. The trigger, not the instrument: exactly the shape of queue 268.
+  #
+  # NO JUDGMENT CALL ON THIS ONE, unlike the other five in that item. The job
+  # is one python run, one artifact upload and one deploy, about a minute on
+  # ubuntu-latest, no licence seat and no self-hosted runner; its concurrency
+  # group is its own name, `publish-glance`, so it cannot queue in front of
+  # anything. (The group is named here by VALUE and not by line number: a line
+  # number in a comment is a claim that decays the next time anyone edits above
+  # it, which is how this file came to describe a branch that no longer exists.)
+  # Cheap and Jafar-facing is the whole reason it rides every push.
   push:
-    branches: [claude/game-dev-ai-automation-2h67ix]
+    branches: [main]
     # The glance reads five sources and nothing else (tools/glance.py names
     # them at the top of the file). A commit that touches none of them cannot
     # change the page, so it does not need a deploy. This filter IS the

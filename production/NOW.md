@@ -9,6 +9,44 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-13 03:55Z: SIX TRIGGERS COME HOME, THE CEILING HAS ONE HOME, THE NINETY ROWS SAY WHAT THEY ARE
+
+The second half of the day's batch lands under
+game-design/decision-2026-09-13-ruling-the-triggers-and-the-ceilings-home-batch.md.
+269: publish-glance, citypack-inventory and citypack-fetch push on main
+with their filters; ledger-build-mac, props-fetch and voice-candidates
+are dispatch-only, each with its reason in its own YAML (voice-candidates
+could trigger itself, and its ten dead-branch sites moved in one edit so
+no push can create the old branch here). tools/workflow-branch-refs.py
+reads the repository's own branch list and fails verify on a name it
+does not have. 269 duplicated 254; both close on the served page reading
+85 after this push's publish-glance run, which is also 256's step 1;
+256's links are still 256. THIS PUSH ALSO FIRES citypack-inventory, and
+a drifted catalogue lands as one CI commit on main: pull with rebase
+before the next push. citypack-fetch is proven at mechanism level only
+and its target tree is legacy under D16. 268 is CLOSED: the ceiling
+pattern lives in tools/budget-ceiling.py, three importers, and
+tools/budget-ceiling-check.py fails verify on zero lines, two lines, or
+prose that disagrees (proseAt=44/46/117 today, the quotation at 46
+counted on purpose). 267 points 3 and 4 landed: the ninety container
+rows carry source=selftest-fixture, recognised by shape and span and
+never by a missing key, because a reading he typed before 0e522c1f
+lacks ceilingFrom= too; the PC copy is marked by the same tool when the
+runner returns and closes 267. The marker's selftest runs in verify
+(checks 83 to 84). New: 270 (tools_tracked cannot see a tool only
+verify.py runs) and 271 (the branch check skips git continuation lines).
+266 unchanged: open on the first PC row carrying ceilingFrom=.
+
+AND ONE THING THE RESIDENT OWES THIS RECORD. 269 DUPLICATED 254, which had
+been READY since 2026-09-10 and whose own filename says
+`six-push-filters-name-a-dead-branch-and-one-would-resurrect-it`. The
+resurrect hazard the 269 builder found was already written down. I filed 269
+off a fresh measurement without grepping the queue for an item that already
+covered it, which is the same fault as writing a threshold without reading
+the series: the evidence was on disk and I went and re-derived it. The two
+close together and nothing was lost but the filing, and the rule to take from
+it is that a new queue item checks the queue first.
+
 ## 2026-09-13 03:00Z: THE BOT READS ITS CEILING, 266 IS LANDED NOT CLOSED, AND THE ORDER IS 269 THEN 268
 
 The 266/267 batch lands under
