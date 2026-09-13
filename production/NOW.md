@@ -9,6 +9,50 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-13 04:20Z: THE FABLE METER IS SPENT, AND THE STOP RULE NEEDS IT
+
+THE 2026-09-13 BRIEF DOES NOT EXIST AND THAT IS A FINDING, SAID OUT LOUD
+because the daily wake prompt names this exact hole: "on a day this wake fires,
+a brief file for that day must EXIST. Its absence currently looks identical to
+a quiet day." It is not a quiet day. The Producer turn died mid-read at 04:16Z
+on an API refusal, quoted whole because its wording is the evidence:
+
+    You've reached your Fable limit. Switch to another model, or manage usage
+    credits ... (error type rate_limit, HTTP 429, model sent to the API:
+    claude-fable-5-1)
+
+NO RESET INSTANT WAS GIVEN. Rule 13 says to parse the reset from the notice
+and arm for it; this notice carries none, so the resume is armed on an
+interval and that fact is recorded rather than a reset being invented.
+
+WHAT THIS MEANS UNDER THE BUDGET RULE, AND IT IS A DEADLOCK. budget.md rule 1:
+"EITHER METER at or above 85 percent: STOP. Write the brief, push, and do
+nothing further until Jafar gives a new number." Fable is at its hard limit,
+so rule 1 fires, and rule 1's required action is to write the brief. The brief
+is the Producer's alone, ruled 2026-09-03, and the Producer is one of exactly
+two Fable definitions; the other is the studio-director. So the stop rule
+requires the spent meter to perform the stop, and the review gate is spent
+alongside it. Filed as queue 272 with the options laid out rather than one
+improvised here.
+
+WHAT IS STILL POSSIBLE AND WHAT IS NOT. Tier 3 builders are Opus and could
+still run, so the studio can BUILD and cannot REVIEW, which means it could
+produce work it is forbidden to land. That is a reason to stop rather than a
+reason to keep going, and the last reading, 78 total and 82 Fable, was already
+three points under a ceiling the Fable side has now reached.
+
+WHAT I DID NOT DO, DELIBERATELY. I did not re-spawn the Producer on another
+model. The four-tier routing table was ruled 2026-09-10 and is enforced rather
+than advisory, and a resident swapping a model for a ruled role at the moment
+the rule bites is how a ruled table quietly becomes a suggestion. That call is
+Jafar's or a director's, and the director is the other unavailable thing.
+
+THE DAY'S WORK THAT DID LAND is two commits above: 0e522c1f and dc04da73. His
+console is live and current for the first time since the move, measured by the
+build requesting all four pages back and reading them at 200 with this
+commit's own stamp. The brief that would have told him so is the one thing
+that did not get written.
+
 ## 2026-09-13 03:55Z: SIX TRIGGERS COME HOME, THE CEILING HAS ONE HOME, THE NINETY ROWS SAY WHAT THEY ARE
 
 The second half of the day's batch lands under
