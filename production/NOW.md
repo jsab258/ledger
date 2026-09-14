@@ -9,6 +9,73 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-14 04:09Z: THE FOURTH REFUSAL IS THE FIRST INFORMATIVE ONE, AND THE WINDOW IS LONGER THAN A DAY
+
+THE 2026-09-14 BRIEF DOES NOT EXIST. Second consecutive day, said out loud
+because the daily wake prompt names this exact hole and because two missing
+days in a row is the shape the streak cannot distinguish from a quiet week.
+
+THE FOURTH ATTEMPT WAS THE DAILY WAKE'S TO MAKE and it made it. Yesterday's
+record ended "THE NEXT MOVE BELONGS TO THE DAILY WAKE AT 04:00Z OR TO JAFAR",
+so this is the armed move rather than a session deciding in the moment to try
+once more. The wake fired at 04:06:59Z, the Producer was dispatched on its
+ruled model with the gathered dossier, and it refused at 04:08:58Z with the
+same HTTP 429 and the same wording as the other three.
+
+    04:16Z 13 Sep   first attempt, on the daily wake
+    07:19Z 13 Sep   +3h03m
+    13:21Z 13 Sep   +6h02m
+    04:08Z 14 Sep   +14h47m,  23h52m across the series
+
+WHAT THIS POINT BOUGHT, AND IT IS THE FIRST ONE THAT BOUGHT ANYTHING. The
+three points yesterday established only "longer than nine hours", which was
+compatible with a rolling window that would clear overnight. It did not clear
+overnight. The window is now known to be longer than 23h52m, which RULES OUT
+the short rolling window and leaves a cap measured in days. That is a change
+of conclusion, not another tally mark, and it is the reason the fourth attempt
+was worth making when a fourth point at three hours would not have been.
+
+STILL NOT KNOWN AND STILL NOT TO BE GUESSED: no notice in the series has ever
+carried a reset instant, so nothing here says WHICH cap. Rule 13 says parse
+the reset from the notice and arm for it; the notice carries none for the
+fourth time, and that absence is recorded rather than a number being invented
+to fill it.
+
+NOTHING EXTRA IS ARMED, AND THAT IS THE TEST. The last weekly reset this file
+records was 2026-09-08, so the daily wake at 04:00Z tomorrow lands near where
+a weekly cap would clear and tests that hypothesis for free. A retry sooner
+would spend a spawn to learn less. The hourly tick keeps watching the inbox
+and the runner, which costs nothing.
+
+WHAT I DID NOT DO, FOR THE FOURTH TIME. I did not re-spawn the Producer on
+another model. The routing table was ruled 2026-09-10 and is enforced rather
+than advisory; the studio-director who could rule otherwise is the other Fable
+role and is unavailable with it. The cost of holding that line is now two of
+his mornings rather than one, and that is the trade queue 272 asks him to rule
+on. It is worth saying plainly that the line held four times is starting to
+look less like discipline and more like the deadlock reporting itself.
+
+THE BUDGET READING WENT STALE DURING THIS. The newest row is 2026-09-11, which
+is past the 48 hour bound both triggers set, so by their own rule the studio is
+held to work that costs no model time until he sends two fresh figures. That
+now compounds rather than merely coexists: the reading is stale BECAUSE the
+channel is down, and the channel is down on the meter the reading would price.
+
+WHAT WOULD HAVE HAPPENED IF THE BRIEF HAD BEEN WRITTEN, because it changes who
+is waiting on whom. The sender is the bot on his PC, not the self hosted
+runner: tools/runner/telegram-bot.py imports tools/runner/brief.py, and the
+runner has been dark since 2026-09-11T08:18. So a written brief did not need
+the runner. Whether it would have reached him is UNDETERMINED: pc-inbox last
+moved 2026-09-13T03:14 with the two receipts for message 79, and a bot with
+nothing to say pushes exactly as little as a bot that has stopped. That is a
+missing denominator, not a diagnosis, and it is not worth a spawn to settle
+while nothing can be written to send.
+
+THE THREE SMALL THINGS WAITING ON HIM are unchanged and are now a day older:
+restart the bot so it stops quoting the ceiling he repealed, start ledger-pc,
+and read two figures off his usage page. The first has had a question open on
+his phone since 01:14Z on 2026-09-13, which is now over a day.
+
 ## 2026-09-13 13:25Z: THREE REFUSALS ACROSS NINE HOURS, AND THE BRIEF IS THE FINDING
 
 NO FOURTH ATTEMPT, BY THE RULE ARMED WITH THE THIRD. Fable refused the Producer
