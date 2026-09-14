@@ -232,9 +232,25 @@ in-character reply, from the container and from the game.
 
 | state | first sound | sustained tok/s vs 25 needed |
 |---|---|---|
-| today, if streamed | ~2.2s | 23.8 — **underruns** |
+| ~~today, if streamed~~ RETRACTED 2026-09-14 | ~~~2.2s~~ | ~~23.8 underruns~~ |
+| today, lever A landed (17.2ms steps) | not measured at this step time | **58, clears 25 at 2.3x** |
 | A or B lands (steps ~20ms) | ~1.2s | ~50 |
 | A+B+C land (steps ~12ms) | ~0.9s | ~80 |
+
+THE FIRST ROW WAS FALSE FROM 12 AUGUST UNTIL 14 SEPTEMBER AND THIS TABLE IS
+WHERE IT SURVIVED. "23.8 tok/s, underruns" was the 42ms/step reading at the top
+of this document (section 2). Lever A landed the same day, further up this very
+page: 17.2ms flat, ZERO slope, bit-exact, 58 tok/s sustained against playback's
+25, a 2.3x margin, in fp32, with guidance, on the vendor-neutral path. The
+prose was corrected and the SUMMARY TABLE WAS NOT, so every later reader who
+skipped to the bottom read a solved problem as an open one. Jafar caught it on
+2026-09-14 from a research topic that quoted the stale row back at him.
+
+The first-sound cell says "not measured" rather than a number because none was
+taken at 17.2ms steps. The 1.2s and 0.9s below are for OTHER step times and
+interpolating between them would be inventing a measurement, which is the
+failure this document already contains one instance of. A run that measures
+first sound at the landed step time replaces that cell and nothing else.
 
 Plus design cover on top: text is instant in all cases, and the reaction beat
 absorbs most of the first second. That is "close to real time" territory —
