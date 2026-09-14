@@ -81,3 +81,11 @@ status: READY 2026-09-14. The judged row moves to 0.100 in the same
   statistics cannot see. Both frames were opened and the difference reads as
   deeper shadow rather than a changed light, but that is an eye and not a
   measurement.
+
+  RULED 2026-09-14 20:01Z
+  (decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md):
+  Jafar took sky 0.70 at fog 0.100 off this series ('Sky 0.70 at fog 0.100 is
+  taken. Apply it as the value and continue'). The last clause of this item's
+  acceptance is met when the dispatch carrying sky 0.70 lands and the note on
+  overcast_day names run, commit and rung; this item moves to done/ on that
+  landing, and its rows leave under 293.

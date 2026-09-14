@@ -4,7 +4,9 @@ spec: at fog 0.000 the atmosphere alone renders the sky band at 0.6222
   sheet's 0.808 (verdict 32bae70 line 209). The four constants at
   VignetteShot.cpp 183 to 186 are "a starting point" with no series. Print
   a series over Mie scattering scale (0.04, 0.08, 0.16, 0.32) at fog
-  0.100 and sky 1.00, Rayleigh held, reading band.skyCentre.meanLuma and
+  0.100 and the judged sky, 0.70 since 2026-09-14 20:01Z (a series at 1.00
+  would be about the retired street), Rayleigh held, reading
+  band.skyCentre.meanLuma and
   the B minus R gap per rung. No constant moves in that run.
 acceptance: a committed run printing the Mie series; the rung where the
   sky band's B minus R gap closes to within the null spread named; and
