@@ -43,6 +43,21 @@ namespace Ledger.Soak
     ///      make the run print the number, look, and set the threshold from
     ///      evidence. Inventing a rumour ceiling here would be `nightNotDarker`
     ///      failing at 0.136 against 0.135, again.
+    ///
+    ///   4. MEMORY IS PERMANENT, AND WHAT THAT COSTS. Added by Jafar's ruling on
+    ///      queue 115, 2026-09-14: canon says nothing is ever wiped, so the only
+    ///      open question is the bill. Two things run here that did not before.
+    ///      A GATE: no resident's remembered event count may ever fall, which is
+    ///      the canon property stated as something a run can fail, and which the
+    ///      600-event prune removed on 2026-09-14 would have failed on this very
+    ///      street. A PROJECTION: the per-event cost is measured and the town's
+    ///      bill is printed at D25's three and five hundred residents, so the
+    ///      next session reads the number instead of the argument.
+    ///
+    ///      THE RATE IS THE SOFT HALF AND IT SAYS SO. Seven agents is not a
+    ///      town (queue 116), so the projection names its denominators and the
+    ///      HEADROOM is printed as a multiple of the measured rate, which is
+    ///      the direction that does not inherit the rate's uncertainty.
     static class Program
     {
         static int _checks, _failed;
@@ -84,7 +99,9 @@ namespace Ledger.Soak
 
             // ---- 3. growth, reported --------------------------------------
             Console.WriteLine($"  ran {a.digests.Count} day(s), verdict {a.verdict}");
-            Console.WriteLine("  growth (REPORTED, NOT GATED — no ceiling has been measured):");
+            // NO CEILING IS GATED ON ANY ROW HERE, memories included: section 4
+            // gates the DIRECTION of that one series and never its size.
+            Console.WriteLine("  growth (REPORTED, NOT GATED: no ceiling has been measured):");
             foreach (var (label, series) in a.growth)
             {
                 var shown = Sample(series, 8);
@@ -96,6 +113,9 @@ namespace Ledger.Soak
                                   + $"per-day={slope:+0.000;-0.000;0.000}");
             }
 
+            // ---- 4. memory is permanent, and what the town's costs ---------
+            MemoryReport(a);
+
             Console.WriteLine();
             if (_failed == 0)
             {
@@ -105,6 +125,98 @@ namespace Ledger.Soak
             Console.WriteLine($"soak FAILED — {_failed} of {_checks} checks");
             foreach (var f in _findings) Console.WriteLine("  FAILED " + f);
             return 1;
+        }
+
+        /// THE POPULATIONS, THE HORIZON AND THE REFERENCE SCALE ARE CORE'S,
+        /// not restated here: `MemoryStore.TargetResidentsLow` and `High` are
+        /// D25's three and five hundred, `LongCampaignDays` is BalanceLab's
+        /// 400 weeks, and `ReferenceScaleBytes` is a gibibyte that nothing
+        /// gates on. The same constants feed SimDirector's verdict line, and
+        /// two copies of a number are two numbers as soon as one moves.
+        static readonly int[] TownSizes =
+            { MemoryStore.TargetResidentsLow, MemoryStore.TargetResidentsHigh };
+
+        /// Queue 115, ruled by Jafar 2026-09-14. The gate is canon stated as
+        /// something a run can fail; the numbers under it are the bill.
+        static void MemoryReport(Outcome a)
+        {
+            // THE ACCEPTING CASE FIRST, and it ships its denominator: a clean
+            // "never fell" is worthless without the count of what was looked
+            // at, and a run that remembered nothing must not read the same as
+            // a run that remembered everything.
+            Require(a.memFellOnDay < 0,
+                    a.memFellOnDay < 0
+                        ? $"nothing is ever wiped ({a.events} events over {a.agents} residents"
+                          + $" x {a.closedDays} closed days examined)"
+                        : $"nothing is ever wiped: day {a.memFellOnDay}, {a.memFellWhy}");
+
+            // AND THE CASE IT MUST CATCH. A gate that has never seen the fault
+            // is a ratchet (rule 5b), so here is the 600-event prune's own
+            // shape, a block of the oldest weak events going at once, fed to
+            // the same FirstFall the gate above used.
+            var planted = new List<int> { 1, 2, 3, 598, 599, 600, 500, 501 };
+            Require(FirstFall(planted) == 6,
+                    FirstFall(planted) == 6
+                        ? "and a store that pruned 600 back to 500 would have failed that"
+                        : $"and a store that pruned 600 back to 500 would have failed that"
+                          + $" (detector said {FirstFall(planted)}, wanted 6)");
+
+            if (a.events <= 0)
+            {
+                Console.WriteLine("  memory: NOTHING MEASURED"
+                                  + $" (0 events over {a.agents} residents x {a.closedDays} closed days)");
+                return;
+            }
+
+            // MEANS, over every event the run produced. A mean and not a
+            // median because the projection multiplies by a COUNT, and the
+            // only average that survives multiplication by a count is the one
+            // that was summed. The bytes figure is the SUM of the per-event
+            // model divided by the count, not the model of the mean.
+            int textChars = (int)(a.textChars / a.events);
+            int kindChars = (int)(a.kindChars / a.events);
+            int bytes = (int)(a.eventBytes / a.events);
+            double rate = a.events / (double)a.agents / a.closedDays;
+            double busiest = a.busiestAgentEvents / (double)a.closedDays;
+
+            Console.WriteLine("  memory: permanent (canon.md:99, queue 115 ruled 2026-09-14). The bill:");
+            Console.WriteLine($"    bytesPerEventAtWorst={bytes}"
+                              + $" textChars/event(mean-over-{a.events}-events)={textChars}"
+                              + $" kindChars/event(mean)={kindChars}");
+            Console.WriteLine($"    eventsPerNpcPerDay(mean-over-{a.agents}-residents-x-{a.closedDays}-days)={rate:0.000}"
+                              + $" busiestResident={busiest:0.000}"
+                              + $"   [queue-116:{a.agents}-residents-is-not-a-town]");
+            foreach (int town in TownSizes)
+                Console.WriteLine($"    {town}residents/{a.closedDays}days={Mb(town, a.closedDays, rate, bytes)}"
+                                  + $"  {town}residents/{MemoryStore.LongCampaignDays}days={Mb(town, MemoryStore.LongCampaignDays, rate, bytes)}"
+                                  + $"  atBusiestRate/{MemoryStore.LongCampaignDays}days={Mb(town, MemoryStore.LongCampaignDays, busiest, bytes)}");
+            double affords = MemoryStore.AffordableEventsPerNpcPerDay(
+                                 MemoryStore.ReferenceScaleBytes, TownSizes[0],
+                                 MemoryStore.LongCampaignDays, bytes);
+            // KEY=VALUE AND NO SPACES IN A VALUE, because the headroom is the
+            // number a later reader greps for rather than reads.
+            Console.WriteLine($"    headroomAt={TownSizes[0]}residents/{MemoryStore.LongCampaignDays}days/1GiB(reference-scale,not-a-budget)"
+                              + $" affordsEventsPerNpcPerDay={affords:0.00}"
+                              + $" xMeasuredMean={affords / rate:0.0} xBusiestResident={affords / busiest:0.0}");
+        }
+
+        static string Mb(int residents, int days, double rate, int bytes) =>
+            (MemoryStore.ProjectedBytes(residents, days, rate, bytes) / (1024.0 * 1024.0))
+                .ToString("0.0") + "MB";
+
+        /// The index of the first reading in one resident's memory series that
+        /// is SMALLER than the one before it, or -1 for a series that only
+        /// ever grew. Canon says nothing is ever wiped, so a fall is a
+        /// deletion and there is no second explanation available for one.
+        ///
+        /// A FUNCTION RATHER THAN A CONDITION INSIDE THE DAY LOOP, so the gate
+        /// and the planted counter-case are the same code rather than two
+        /// implementations of one idea.
+        static int FirstFall(List<int> counts)
+        {
+            for (int i = 1; i < counts.Count; i++)
+                if (counts[i] < counts[i - 1]) return i;
+            return -1;
         }
 
         static void Require(bool ok, string what)
@@ -124,6 +236,22 @@ namespace Ledger.Soak
             public int brokenOn = -1;
             public string brokenWhy = "";
             public string verdict = "?";
+
+            /// Queue 115. The first day any resident's remembered event count
+            /// FELL, and whose, or -1 for never. Per resident and not on the
+            /// total, because a total hides one person forgetting while
+            /// another is talked about.
+            public int memFellOnDay = -1;
+            public string memFellWhy = "";
+
+            /// The denominators the memory projection is divided by, carried
+            /// out of the run so the print cannot invent one: events summed
+            /// over every resident at the end, the residents that held them,
+            /// the closed days they took, and the characters of Text and Kind
+            /// those events actually used.
+            public int events, agents, closedDays;
+            public long textChars, kindChars, eventBytes;
+            public int busiestAgentEvents;
         }
 
         /// One full run of the real Core systems, hour by hour.
@@ -162,6 +290,8 @@ namespace Ledger.Soak
             var reasons = new List<int>();
             var leads = new List<int>();
             var purseCash = new List<int>();
+            var memories = new List<int>();
+            var perAgentMemory = new Dictionary<string, List<int>>();
 
             var now = new GameTime(1, 9, 0);
             int lastClosedDay = 1;
@@ -204,6 +334,19 @@ namespace Ledger.Soak
                 reasons.Add(mill.Agents.Sum(g => g.Suspicion.Reasons.Count));
                 leads.Add(mill.Leads("player").Count());
                 purseCash.Add(purses.All.Sum(p => p.Cash));
+                memories.Add(mill.Agents.Sum(g => g.Memory.Events.Count));
+
+                // Canon, day by day, PER RESIDENT and not on the total: a
+                // total hides one person forgetting while another is being
+                // talked about. Kept as a series rather than judged here so
+                // the gate and its planted counter-case run the same
+                // FirstFall, one idea and one implementation.
+                foreach (var g in mill.Agents)
+                {
+                    if (!perAgentMemory.TryGetValue(g.Id, out var series))
+                        perAgentMemory[g.Id] = series = new List<int>();
+                    series.Add(g.Memory.Events.Count);
+                }
             }
 
             o.verdict = camp.Verdict.ToString();
@@ -211,6 +354,34 @@ namespace Ledger.Soak
             o.growth.Add(("suspicion notes", reasons));
             o.growth.Add(("leads on player", leads));
             o.growth.Add(("purse cash", purseCash));
+            o.growth.Add(("memories", memories));
+
+            foreach (var kv in perAgentMemory.OrderBy(k => k.Key, StringComparer.Ordinal))
+            {
+                int fell = FirstFall(kv.Value);
+                if (fell < 0 || o.memFellOnDay >= 0) continue;
+                o.memFellOnDay = fell + 1;                       // index 0 is the first closed day
+                o.memFellWhy = $"{kv.Key} remembered {kv.Value[fell - 1]} events and then {kv.Value[fell]}";
+            }
+
+            o.agents = mill.Agents.Count();
+            o.closedDays = o.digests.Count;
+            foreach (var g in mill.Agents)
+            {
+                o.events += g.Memory.Events.Count;
+                if (g.Memory.Events.Count > o.busiestAgentEvents)
+                    o.busiestAgentEvents = g.Memory.Events.Count;
+                foreach (var e in g.Memory.Events)
+                {
+                    o.textChars += e.Text.Length;
+                    o.kindChars += e.Kind.Length;
+                    // SUMMED PER EVENT, never BytesPerEvent(mean, mean): the
+                    // per-string cost steps in eights, so a mean fed through
+                    // the model reads 2% under the same events costed one at
+                    // a time (224 against 229 on the first run of this).
+                    o.eventBytes += MemoryStore.BytesPerEvent(e.Text.Length, e.Kind.Length);
+                }
+            }
             return o;
         }
 

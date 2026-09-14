@@ -8,9 +8,11 @@
 // not allow.
 //
 // SCOPE, from the crime ruling section 1 item 4: MemoryEvent 8 to 24;
-// MemoryStore 55 to 99 IN MEMORY ONLY (MaxEvents, PruneTo, Append, Prune),
-// EventsOnDay 124 to 125, ToMarkdown 148 to 159. The markdown IS the
-// artefact of "permanently remember" and the crime run commits it.
+// MemoryStore 52 to 91 IN MEMORY ONLY (Append), EventsOnDay 231 to 232,
+// ToMarkdown 255 to 266. The markdown IS the artefact of "permanently
+// remember" and the crime run commits it. MaxEvents, PruneTo and Prune were
+// in that scope until the queue 115 ruling of 2026-09-14 deleted them from
+// the C# and from here in the same change.
 //
 // _filePath IS ALWAYS NULL HERE, which is the C#'s own in-memory mode, so
 // LoadFrom, Save, AppendToFile, MemoryEvent.FromLine and ReplaceBeliefs are
@@ -27,7 +29,6 @@
 #include "GameTime.h"
 #include "Perception.h"   // LedgerCore::Clamp
 
-#include <algorithm>
 #include <cstdio>
 #include <cstdlib>
 #include <string>
@@ -231,20 +232,28 @@ namespace LedgerCore
 		}
 	};
 
-	// MemoryStore.cs 55 to 99, 124 to 125, 148 to 159. One character's
+	// MemoryStore.cs 52 to 91, 231 to 232, 255 to 266. One character's
 	// persistent memory: an append-only event stream plus a small set of
 	// distilled beliefs. Stored as human-readable markdown so memories can be
 	// inspected, debugged and hand-edited.
 	class MemoryStore
 	{
 	public:
-		// MemoryStore.cs 62 to 63. A long campaign must not grow a brain
-		// without bound (audit 2026-07-27): past this cap the weakest events
-		// from the OLDER half give way in blocks, so the day that mattered
-		// survives a thousand ordinary hours. Generous on purpose: pruning is
-		// for scale, not for forgetting.
-		static const int MaxEvents = 600;
-		static const int PruneTo   = 500;
+		// MemoryStore.cs 52 to 71. NOTHING IS EVER WIPED: canon.md line 99
+		// and pillar 1. MaxEvents = 600 and PruneTo = 500 stood here, ported
+		// from the C#, until Jafar ruled queue 115 on 2026-09-14 ("canon
+		// stands, the code changes"), and both sides dropped them together.
+		// They are named here because a reader of the D1 probe's record will
+		// come looking for them: the golden scenario that pinned them is now
+		// mem_permanent and pins their absence instead.
+		//
+		// THE BUDGET HALF IS NOT PORTED: BytesPerEvent, ProjectedBytes,
+		// AffordableEventsPerNpcPerDay, BudgetLine and the four constants
+		// beside them (MemoryStore.cs 93 to 206). They model the .NET heap,
+		// which is not what this engine allocates, so a transliteration of
+		// them would be a number that looked measured and was not. Their live
+		// caller is SimDirector's verdict line, which is Unity and outside
+		// this port's scope entirely.
 
 		std::string CharacterId;
 
@@ -260,67 +269,23 @@ namespace LedgerCore
 		explicit MemoryStore(const std::string& InCharacterId)
 			: CharacterId(InCharacterId)
 		{
-			// MemoryStore.cs 73 to 78: the constructor's second argument is
+			// MemoryStore.cs 80 to 85: the constructor's second argument is
 			// the file path and it is null here by the ruling, so the
 			// LoadFrom(File.ReadAllText(...)) branch cannot be taken and is
 			// not ported.
 		}
 
-		// MemoryStore.cs 80 to 88.
+		// MemoryStore.cs 87 to 91.
 		void Append(const MemoryEvent& E)
 		{
 			Events.push_back(E);
-			if ((int)Events.size() > MaxEvents)
-			{
-				Prune();
-				// C# calls Save() here (structure changed: full rewrite).
-				// _filePath is null, so Save returns immediately; not ported.
-			}
-			// C# else-branch: if (!AppendToFile(e)) Save(). For an in-memory
-			// store AppendToFile returns true at its first line, so nothing
-			// happens; not ported.
+			// C# branch: if (!AppendToFile(e)) Save(). For an in-memory store
+			// AppendToFile returns true at its first line, so nothing
+			// happens; not ported. The cap-and-prune branch that stood above
+			// this one went with the queue 115 ruling on both sides.
 		}
 
-		// MemoryStore.cs 92 to 99. Drop the lowest-importance events from the
-		// older half until the list is back to PruneTo. Recency shields the
-		// newer half entirely.
-		//
-		// BY INDEX, BECAUSE THE C# SET IS A SET OF REFERENCES. The C# builds
-		// a HashSet<MemoryEvent> of the doomed OBJECTS and removes exactly
-		// those instances; two events that happen to be equal field for field
-		// are still two objects there. A C++ vector of values has no such
-		// identity, so the port marks the chosen indices instead, which is
-		// the same removal for every input and does not accidentally delete a
-		// duplicate the C# would have kept.
-		//
-		// TIES ARE ENGINE-DEFINED AND THE GOLDEN CASE AVOIDS THEM. C#'s
-		// List.Sort is an unstable introsort and so is std::sort, so two
-		// events of EQUAL importance in the old half may be dropped in either
-		// order by either engine. std::stable_sort here makes this side
-		// deterministic; the scenario in the golden table uses distinct
-		// importances so the comparison is well defined rather than lucky.
-		void Prune()
-		{
-			const int Half = (int)Events.size() / 2;
-			std::vector<int> OldHalf;
-			OldHalf.reserve((std::vector<int>::size_type)Half);
-			for (int I = 0; I < Half; ++I) { OldHalf.push_back(I); }
-			std::stable_sort(OldHalf.begin(), OldHalf.end(), ByImportance(*this));
-			const int ToDrop = (int)Events.size() - PruneTo;
-			const int N = ToDrop < (int)OldHalf.size() ? ToDrop : (int)OldHalf.size();
-
-			std::vector<bool> Doomed(Events.size(), false);
-			for (int I = 0; I < N; ++I) { Doomed[(std::vector<bool>::size_type)OldHalf[(std::vector<int>::size_type)I]] = true; }
-			std::vector<MemoryEvent> Kept;
-			Kept.reserve(Events.size());
-			for (std::vector<MemoryEvent>::size_type I = 0; I < Events.size(); ++I)
-			{
-				if (!Doomed[I]) { Kept.push_back(Events[I]); }
-			}
-			Events.swap(Kept);
-		}
-
-		// MemoryStore.cs 124 to 125.
+		// MemoryStore.cs 231 to 232.
 		std::vector<MemoryEvent> EventsOnDay(int Day) const
 		{
 			std::vector<MemoryEvent> Out;
@@ -331,7 +296,7 @@ namespace LedgerCore
 			return Out;
 		}
 
-		// MemoryStore.cs 148 to 159. AppendLine is "\n" here: the C# uses
+		// MemoryStore.cs 255 to 266. AppendLine is "\n" here: the C# uses
 		// StringBuilder.AppendLine, whose separator is Environment.NewLine
 		// and is therefore "\r\n" on Jafar's Windows PC and "\n" on the Linux
 		// container. THE PORT WRITES "\n" ALWAYS and the golden comparison
@@ -357,20 +322,5 @@ namespace LedgerCore
 			return Sb;
 		}
 
-	private:
-		// A comparator object rather than a lambda, because this file
-		// compiles under -std=c++11 in the container and inside Unreal's own
-		// toolchain, and the plainest construct is the one that survives
-		// both.
-		struct ByImportance
-		{
-			const MemoryStore& S;
-			explicit ByImportance(const MemoryStore& InS) : S(InS) {}
-			bool operator()(int A, int B) const
-			{
-				return S.Events[(std::vector<MemoryEvent>::size_type)A].Importance
-				     < S.Events[(std::vector<MemoryEvent>::size_type)B].Importance;
-			}
-		};
 	};
 }

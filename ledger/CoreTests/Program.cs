@@ -65,6 +65,7 @@ namespace Ledger.CoreTests
                 TestCharacterCard();
                 TestMemoryStoreRoundtrip();
                 TestMemoryRobustness();
+                TestMemoryIsPermanent();
                 TestRetrieval();
                 TestVoiceOnTheLine();
                 TestIntentArguments();
@@ -268,6 +269,182 @@ namespace Ledger.CoreTests
             // A line with no metadata parens returns null rather than throwing.
             Check(MemoryEvent.FromLine("- [D1 10:00] :) no metadata here") == null,
                 "line with no metadata parens returns null, not an exception");
+        }
+
+        /// The lowest `i` in 0..n-1 whose "an ordinary hour i" is no longer in
+        /// the list, or -1 when every one of them is still there. A COUNT
+        /// CANNOT ANSWER THIS: the prune that stood in MemoryStore until
+        /// 2026-09-14 took the weakest events out of the OLDER half, so what
+        /// it left was a hole in the middle with both ends looking right, and
+        /// any later append put the count back up again.
+        static int FirstMissingHour(List<MemoryEvent> events, int n)
+        {
+            var present = new HashSet<string>();
+            foreach (var e in events) present.Add(e.Text);
+            for (int i = 0; i < n; i++)
+                if (!present.Contains($"an ordinary hour {i}")) return i;
+            return -1;
+        }
+
+        /// THE PRUNE AS MEMORYSTORE CARRIED IT UNTIL 2026-09-14, and it lives
+        /// here now and nowhere else. A guard that has never seen its fault is
+        /// a ratchet (rule 5b), so the rejecting fixture has to be able to
+        /// PRODUCE the fault: lowest importance first, from the older half
+        /// only, in one block, back down to `pruneTo`. Transcribed from the
+        /// deleted method rather than approximated, because a fixture that
+        /// deletes differently proves the guard catches something else.
+        static List<MemoryEvent> PrunedLikeTheOldStore(List<MemoryEvent> events, int pruneTo)
+        {
+            var copy = new List<MemoryEvent>(events);
+            int half = copy.Count / 2;
+            var oldHalf = copy.GetRange(0, half);
+            oldHalf.Sort((x, y) => x.Importance.CompareTo(y.Importance));
+            int toDrop = copy.Count - pruneTo;
+            var doomed = new HashSet<MemoryEvent>(oldHalf.GetRange(0, Math.Min(toDrop, oldHalf.Count)));
+            copy.RemoveAll(doomed.Contains);
+            return copy;
+        }
+
+        /// Bytes of managed heap held by `n` retained events of a given shape,
+        /// as a GC delta. Called twice at different `n` by the caller: the
+        /// MARGINAL cost between two sizes cancels the list's own fixed
+        /// overhead and any collection noise, and what is left is the cost of
+        /// ONE MORE remembered hour.
+        static long HeapForEvents(int n, int textChars, int kindChars)
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            long before = GC.GetTotalMemory(true);
+            var held = new List<MemoryEvent>(n);
+            for (int i = 0; i < n; i++)
+                held.Add(new MemoryEvent(new GameTime(1, 9, 0), new string('k', kindChars),
+                                         0.5, new string('t', textChars)));
+            long after = GC.GetTotalMemory(true);
+            GC.KeepAlive(held);
+            return after - before;
+        }
+
+        /// Queue 115, ruled by Jafar 2026-09-14: "canon stands, the code
+        /// changes. Permanent per-NPC memory is pillar 1 and nothing is ever
+        /// wiped." Canon is `canon.md` line 99.
+        ///
+        /// THE PRUNE WAS NOT THEORETICAL. At 2800 game-days, the horizon
+        /// `BalanceLab` already drives, the soak's seven agents ended holding
+        /// 3,377 events with the cap in and 7,417 with it out: it had thrown
+        /// away 4,040 of 7,417, and the soak's own memory series read as a
+        /// street that had gone quiet rather than as a store that was
+        /// deleting. Both figures are one run of seed 1 over 2,799 closed
+        /// days; the soak prints the live one every commit.
+        ///
+        /// AND IT IS AFFORDABLE, which is what the ruling asked. See the cost
+        /// half below and `ledger/Soak`'s memory block for the town bill.
+        static void TestMemoryIsPermanent()
+        {
+            Console.WriteLine("MemoryStore permanence (canon.md:99, queue 115):");
+
+            // ACCEPTING FIRST. A thousand hours, of which two matter.
+            var mem = new MemoryStore("longtimer");
+            mem.Append(new MemoryEvent(new GameTime(1, 9, 0), "observation", 0.95, "the day the bar changed hands"));
+            for (int i = 0; i < 900; i++)
+                mem.Append(new MemoryEvent(new GameTime(2 + i / 20, 9, 0), "ambient", 0.15, $"an ordinary hour {i}"));
+            Check(mem.Events.Count == 901 && FirstMissingHour(mem.Events, 900) < 0,
+                "901 events appended, 901 events remembered, none missing from the middle",
+                $"count={mem.Events.Count} firstMissing={FirstMissingHour(mem.Events, 900)}");
+
+            // AND THE CASE THAT MUST FAIL. The same 901 events through the
+            // deleted prune: the detector has to see that, or it is a check
+            // that would pass on a store which had quietly resumed forgetting.
+            var pruned = PrunedLikeTheOldStore(mem.Events, 500);
+            Check(pruned.Count == 500 && FirstMissingHour(pruned, 900) >= 0,
+                "and the old 600-to-500 prune is caught: it drops to 500 and holes the middle",
+                $"count={pruned.Count} firstMissing={FirstMissingHour(pruned, 900)}");
+            Check(pruned.Exists(e => e.Text.Contains("changed hands")),
+                "which is exactly why a count-and-a-highlight could not catch it:"
+                + " the day that mattered survived the prune too");
+
+            // THE MARKDOWN IS THE ARTEFACT of "permanently remember", so the
+            // round trip carries all 901 too. A store that remembered in RAM
+            // and forgot on disk would pass every check above.
+            var reloaded = new MemoryStore("longtimer");
+            reloaded.LoadFrom(mem.ToMarkdown());
+            Check(reloaded.Events.Count == 901 && FirstMissingHour(reloaded.Events, 900) < 0,
+                "and the markdown round trip carries all 901 (900 hours examined)",
+                $"count={reloaded.Events.Count} firstMissing={FirstMissingHour(reloaded.Events, 900)}");
+
+            // WHAT IT COSTS, measured against a real heap rather than read off
+            // the field types. This is the guard on MemoryStore.BytesPerEvent:
+            // the model is a claim about the runtime, and a claim about the
+            // runtime that nothing measures is the silent-instrument failure.
+            //
+            // 53 characters is the soak's own median event text over 1,261
+            // real events, and 12 is "conversation", the longest Kind.
+            const int n = 25000, textChars = 53, kindChars = 12;
+            double marginal = (HeapForEvents(2 * n, textChars, kindChars)
+                               - HeapForEvents(n, textChars, kindChars)) / (double)n;
+            int model = MemoryStore.BytesPerEvent(textChars, kindChars);
+            // ONE 8-BYTE ALLOCATION QUANTUM, which is a derivation and not a
+            // taste: x64 rounds every allocation to 8, so the model can only
+            // differ from a real heap by less than one step without being
+            // wrong about a field. The first run of this came in at 0.001.
+            Check(Math.Abs(marginal - model) < 8.0,
+                "a remembered hour costs what MemoryStore.BytesPerEvent says it does",
+                $"model={model} measured={marginal:0.000} n={n}..{2 * n} textChars={textChars}");
+
+            // AND THE TOWN BILL, from D25's three and five hundred residents
+            // at the rate the soak measured over SEVEN (queue 116: seven is
+            // not a town, which is why the headroom below is the finding and
+            // the projection is only the arithmetic).
+            const double soakRate = 0.361;      // events/npc/game-day, mean over 7 residents x 499 days
+            const int days = MemoryStore.LongCampaignDays;   // BalanceLab.WeeksPerPolicy x 7
+            double mb300 = MemoryStore.ProjectedBytes(
+                               MemoryStore.TargetResidentsLow, days, soakRate, model) / (1024.0 * 1024.0);
+            double mb500 = MemoryStore.ProjectedBytes(
+                               MemoryStore.TargetResidentsHigh, days, soakRate, model) / (1024.0 * 1024.0);
+            Check(mb300 > 0 && mb500 > mb300,
+                $"the town bill at {days} days is {mb300:0}MB"
+                + $" for 300 residents and {mb500:0}MB for 500,"
+                + $" AT A RATE OF 0.361/npc/day TYPED FROM THE SOAK OF 2026-09-14 OVER 7 RESIDENTS x 499 CLOSED DAYS (queue 116: seven is not a town; queue 284: the rate against population is unmeasured)",
+                $"{mb300:0.0}/{mb500:0.0}");
+            double affords = MemoryStore.AffordableEventsPerNpcPerDay(
+                                 MemoryStore.ReferenceScaleBytes, MemoryStore.TargetResidentsLow, days, model);
+            Check(affords / soakRate > 1.0,
+                $"and one gibibyte at 300 residents buys {affords:0.00} events/npc/day,"
+                + $" {affords / soakRate:0.0}x the measured rate,"
+                + $" AT A RATE OF 0.361/npc/day TYPED FROM THE SOAK OF 2026-09-14 OVER 7 RESIDENTS x 499 CLOSED DAYS (queue 116: seven is not a town; queue 284: the rate against population is unmeasured)",
+                $"affords={affords:0.000} soakRate={soakRate}");
+
+            // THE VERDICT LINE ITSELF, because SimDirector is the live caller
+            // and SimDirector does not compile in this container: everything
+            // below is the half of that instrument that CAN run here, and if
+            // it does not run here it runs nowhere before a Windows build.
+            long lineBytes = 0;
+            foreach (var e in mem.Events) lineBytes += MemoryStore.BytesPerEvent(e.Text.Length, e.Kind.Length);
+            string line = MemoryStore.BudgetLine(mem.Events.Count, lineBytes, 7, 15);
+            Check(line.Contains("memEvents=901") && line.Contains("memAgents=7")
+                  && line.Contains("memDays=15") && !line.Contains("nothing-measured"),
+                "the verdict's memory line carries its own denominators", line);
+
+            // A ZERO CANNOT BE TOLD FROM A TOWN THAT REMEMBERS NOTHING unless
+            // it says so, so the never-ran case prints the words and still
+            // prints the three counts that make it readable.
+            string none = MemoryStore.BudgetLine(0, 0, 0, 0);
+            Check(none.Contains("memEvents=0") && none.Contains("memAgents=0")
+                  && none.Contains("memBytesPerEvent=nothing-measured")
+                  && none.Contains("memHeadroomX=nothing-measured"),
+                "and a run that measured nothing says nothing-measured, with the zero's denominators", none);
+
+            // NO SPACES IN A VALUE. Every reader of a verdict line splits on
+            // whitespace, so a value holding one is truncated in silence;
+            // this is that rule as something that can fail. Both lines,
+            // because the nothing-measured branch is a second formatter.
+            var tokens = (line + " " + none).Split(' ');
+            int malformed = 0;
+            foreach (string tok in tokens)
+                if (tok.Length > 0 && tok.Split('=').Length != 2) malformed++;
+            Check(malformed == 0,
+                "and every token of both memory lines is one key and one value"
+                + $" ({tokens.Length} tokens examined)",
+                $"malformed={malformed}");
         }
 
         static CharacterCard MakeLenaCard() => CharacterCard.Parse(
@@ -1703,16 +1880,29 @@ namespace Ledger.CoreTests
             Check(m3.Discredit("player.location_d2", "docks", now).Outcome == DcOutcome.AlreadyDenied,
                 "and repeating the same denial is still priced in");
 
-            // Memory is bounded on a long campaign: the weakest old events give
-            // way, the strong ones survive, and the cap is generous.
+            // Memory over a long campaign. THIS CHECK USED TO ASSERT THE
+            // OPPOSITE OF CANON: it appended the same 900 ordinary hours and
+            // asserted the count had stayed under a 600-event cap, so it
+            // PASSED BECAUSE THE PRUNE FIRED and the violation sat inside a
+            // green suite being confirmed by every verify run. Jafar ruled
+            // queue 115 on 2026-09-14, canon stands and the code changed.
+            // The rejecting half, a store pruned the old way, is in
+            // TestMemoryIsPermanent; this is the accepting case.
             var mem = new MemoryStore("longtimer");
             mem.Append(new MemoryEvent(new GameTime(1, 9, 0), "observation", 0.95, "the day the bar changed hands"));
             for (int i = 0; i < 900; i++)
                 mem.Append(new MemoryEvent(new GameTime(2 + i / 20, 9, 0), "ambient", 0.15, $"an ordinary hour {i}"));
-            Check(mem.Events.Count <= MemoryStore.MaxEvents,
-                "a lifetime of ordinary hours stays bounded", mem.Events.Count.ToString());
+            Check(mem.Events.Count == 901,
+                "a lifetime of ordinary hours is remembered entire, all 901 of them",
+                mem.Events.Count.ToString());
             Check(mem.Events.Exists(e => e.Text.Contains("changed hands")),
-                "while the day that mattered is never the one forgotten");
+                "including the day that mattered");
+            // AND NOT ONE HOUR OUT OF THE MIDDLE. The count alone cannot see
+            // it: the old prune took the weakest events from the OLDER half,
+            // so what it left behind was a hole with the right-looking ends.
+            Check(FirstMissingHour(mem.Events, 900) < 0,
+                "and no ordinary hour went quietly out of the middle (900 examined)",
+                FirstMissingHour(mem.Events, 900).ToString());
 
             // -- AN ID IS NOT A NAME ------------------------------------------
             //

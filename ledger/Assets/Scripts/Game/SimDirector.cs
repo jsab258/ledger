@@ -14397,10 +14397,26 @@ namespace Ledger.Game
             int walkerCount = 0;
             foreach (var w in FindObjectsByType<NpcWalker>(FindObjectsSortMode.None)) walkerCount++;
             int millCount = 0, crowdMill = 0, strandedEmpty = 0;
+            // QUEUE 115: what the town's permanent memory actually costs, on
+            // the real populace rather than on the soak's seven (queue 116).
+            // Tallied here because this loop already visits every agent, and
+            // BEFORE the crowd-only `continue` below so authored residents
+            // are counted too. The arithmetic and the string are in
+            // MemoryStore.BudgetLine, where the tests run.
+            int memEvents = 0;
+            long memBytes = 0;
             if (mill != null)
                 foreach (var a in mill.Agents)
                 {
                     millCount++;
+                    if (a.Memory != null)
+                        foreach (var e in a.Memory.Events)
+                        {
+                            memEvents++;
+                            memBytes += MemoryStore.BytesPerEvent(
+                                e.Text != null ? e.Text.Length : 0,
+                                e.Kind != null ? e.Kind.Length : 0);
+                        }
                     if (a.Id == null || a.Id.Length < 2 || a.Id[0] != 'r' || !char.IsDigit(a.Id[1])) continue;
                     crowdMill++;
                     // The leak signal is an EMPTY crowd agent stranded outside
@@ -15902,7 +15918,7 @@ namespace Ledger.Game
                       $"cargoes={_game.Empire.CargoesLanded} manifests={_game.Empire.ManifestsSigned} " +
                       $"coverageOk={coverageOk} openModeForced={_openModeForced} endScreen={_endScreenDismissed} " +
                       $"daysSkipped={_daysSkipped} endDay={_endDay} " +
-                      $"weekLostAs={_weekLostVerdict} frozenCloses={_frozenCloses} cutOffDay={_cutOffDay} cutOffNights={_cutOffNights} walkers={walkerCount} crowdWalkers={_game.CrowdWalkerCount} streetBodies={_streetBodies} streetBodiesNear={_streetBodiesNear} streetBodiesLive={_streetBodiesLive} streetBodiesSkinned={_streetBodiesSkinned} streetBodiesSeen={_streetBodiesSeen} streetBodiesSeenNear={_streetBodiesSeenNear} streetSeenBlockBy={_streetSeenBlockBy} millAgents={millCount} crowdMill={crowdMill} strandedEmpty={strandedEmpty} heapMb={heapMb} frameAvgMs={avgMs:0.0} frameWorstMs={_frameWorst * 1000.0:0} " +
+                      $"weekLostAs={_weekLostVerdict} frozenCloses={_frozenCloses} cutOffDay={_cutOffDay} cutOffNights={_cutOffNights} walkers={walkerCount} crowdWalkers={_game.CrowdWalkerCount} streetBodies={_streetBodies} streetBodiesNear={_streetBodiesNear} streetBodiesLive={_streetBodiesLive} streetBodiesSkinned={_streetBodiesSkinned} streetBodiesSeen={_streetBodiesSeen} streetBodiesSeenNear={_streetBodiesSeenNear} streetSeenBlockBy={_streetSeenBlockBy} millAgents={millCount} crowdMill={crowdMill} strandedEmpty={strandedEmpty} heapMb={heapMb} {MemoryStore.BudgetLine(memEvents, memBytes, millCount, _endDay)} frameAvgMs={avgMs:0.0} frameWorstMs={_frameWorst * 1000.0:0} " +
                       $"actTwoOpened={a2.Opened} actTwoOk={act2Ok} actTwoMissed=[{string.Join(",", act2Missed)}] " +
                       $"actThree={_actThreeStaged} opened={_game.ActThree.Opened} [{_actThreeWhy}] " +
                       $"ending={_actThreeEnding} handed={_actThreeHandedOver} " +

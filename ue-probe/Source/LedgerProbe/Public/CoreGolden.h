@@ -183,18 +183,24 @@ namespace Golden
 		Put(R, "markdown", Escape(S.ToMarkdown()));
 	}
 
-	inline void ScenarioMemPrune(Readings& R)
+	inline void ScenarioMemPermanent(Readings& R)
 	{
-		// IMPORTANCES ARE ALL DISTINCT ON PURPOSE. C#'s List.Sort and
-		// std::sort are both unstable introsorts, so which of two EQUAL
-		// importances gets dropped is engine-defined; with distinct values
-		// the answer is a fact about the model rather than about a sort.
+		// WAS ScenarioMemPrune. Jafar ruled queue 115 on 2026-09-14: canon.md
+		// line 99 stands, nothing is ever wiped, and MaxEvents/PruneTo left
+		// both engines in the same change.
+		//
+		// THE APPEND COUNTS ARE UNCHANGED AT 601 AND 701 ON PURPOSE, because
+		// those are the appends that used to trigger the cap: a scenario that
+		// stopped crossing it would prove nothing about the engine that
+		// removed it. countAfter601 was 500 and is 601; countAfter701 was
+		// 600 and is 701.
+		//
+		// The importances still ascend one per event. They no longer decide
+		// which event survives, since all of them do, but e0 is the weakest
+		// and the oldest, so firstTextAfter701 is canon stated cross-engine.
+		// firstTextAfter601 was e101 and is e0, which names the 101 weakest
+		// events of the older half the cap used to take.
 		MemoryStore S("w1");
-		// 601 appends: the 601st crosses MaxEvents and prunes back to
-		// PruneTo, so the count after it is what pins PruneTo. C#'s PruneTo
-		// is a PRIVATE const, so the generator on the other side cannot read
-		// the number directly and this reading is how the two engines compare
-		// it at all.
 		for (int Idx = 0; Idx <= 600; ++Idx)
 		{
 			S.Append(MemoryEvent(GameTime(1, Idx / 60, Idx % 60), "observation",
@@ -212,7 +218,7 @@ namespace Golden
 		Put(R, "countAfter701", FromInt((long long)S.Events.size()));
 		Put(R, "firstImportanceAfter701", FromDouble(S.Events[0].Importance));
 		Put(R, "lastTextAfter701", Escape(S.Events[S.Events.size() - 1].Text));
-		Put(R, "maxEvents", FromInt((long long)(int)MemoryStore::MaxEvents));
+		Put(R, "firstTextAfter701", Escape(S.Events[0].Text));
 	}
 
 	// The crime run's own scenario, built from the ruling's numbers: two
@@ -606,7 +612,7 @@ namespace Golden
 	{
 		Readings R;
 		if      (Name == "mem_basic")             ScenarioMemBasic(R);
-		else if (Name == "mem_prune")             ScenarioMemPrune(R);
+		else if (Name == "mem_permanent")         ScenarioMemPermanent(R);
 		else if (Name == "gossip_crime")          ScenarioGossipCrime(R);
 		else if (Name == "gossip_dropped")        ScenarioGossipDropped(R);
 		else if (Name == "gossip_contradiction")  ScenarioGossipContradiction(R);
@@ -625,7 +631,7 @@ namespace Golden
 	inline const char* ScenarioNames(int Index)
 	{
 		static const char* Names[] = {
-			"mem_basic", "mem_prune", "gossip_crime", "gossip_dropped",
+			"mem_basic", "mem_permanent", "gossip_crime", "gossip_dropped",
 			"gossip_contradiction", "gossip_exposure", "gossip_suppressed",
 			"gossip_leashed", "gossip_indelible", "gossip_indelible_floor",
 			"witness_upgrade", "observation_four", "knowledge", "summaries", 0
