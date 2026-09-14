@@ -98,3 +98,21 @@ status: READY 2026-09-10 08:30Z. THE ACCEPTANCE TEST BUILT FOR THIS CAUGHT IT,
   all four shared rungs. So whatever moves camA does not reach a band
   statistic. A test that isolates shot 1 is what this item still owes, and
   290 is still needed first so the two frames can be opened.
+
+  THE DELTA HAS WIDENED TWICE, ACROSS THREE READINGS, and that is a series
+  rather than a reading. Two widenings and not three: the count of increases
+  is one fewer than the count of points, and saying otherwise inflates it. rigMeanLumaDelta +0.0034 on 32bae70, +0.0045 on 622bc39, +0.0047 on
+  ce99814, with rigDiffPct 85.12 then 86.69. Over the same three runs the
+  rig pair itself fell as the scene darkened (0.6409/0.6443, then
+  0.5436/0.5480, then 0.5198/0.5245), which is the fog and then the sky
+  arriving on camA_day's condition and is expected. THE DIFFERENCE BETWEEN
+  THE PAIR IS THE PART THAT IS NOT EXPECTED, and it is widening while the
+  scene gets darker.
+  WORTH A THOUGHT FOR WHOEVER TAKES THIS, offered as a question and not a
+  finding: the delta has grown each time the frame got darker. A fixed
+  additive difference would look like a growing RATIO as the mean falls, and
+  a fixed ratio would look like a shrinking delta. Neither is what the three
+  points show, so nobody should assume which it is; the three numbers are
+  recorded here so the next person can read them rather than re-derive them.
+  Queue 290 is still needed first: the repeat frame is deleted before anyone
+  can open it, so none of this can be looked at, only counted.

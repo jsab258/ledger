@@ -82,6 +82,29 @@ status: READY 2026-09-14. The judged row moves to 0.100 in the same
   deeper shadow rather than a changed light, but that is an eye and not a
   measurement.
 
+  CONFIRMED ON A SECOND RUN, ce99814, AND BOTH STATISTICS ARE NOW ON THE
+  SHEET. Jafar took sky 0.70 off this series and it was applied and rendered.
+  The judged row vign_hook_day reads band.skyCentre.p50 0.8035 against the
+  Hook sheet's 0.808 and band.ground.p05 0.2006 against its 0.1935, nothing
+  clipped: 0.0045 under and 0.0071 over. Before the fog moved, the street's
+  dark end read 0.4618, so the gap closed from 0.268 to 0.007.
+  THE SKY-IS-FOG FINDING SURVIVED A DELIBERATE ATTEMPT TO BREAK IT. The
+  dispatch predicted, in writing and before the run, that the sky band would
+  NOT move while the ground did, and said in terms that if it moved the
+  finding was wrong and that would be the more interesting result. It read
+  0.8035, unchanged to four decimals, while band.ground.p05 fell 0.2536 to
+  0.2006. So at fog 0.100 the sky band is the fog and not the sky, now shown
+  twice: once across four sky settings within one run, and once across two
+  runs on different commits.
+  AND THE VALUE'S ARRIVAL WAS CHECKED PER ROW, which is the thing this series
+  could never do for the fog: all NINE rows of the null group read
+  shotSkyIntensityAsked=0.700 beside shotSkyIntensityRead=0.700, nine of nine.
+  The fog has no per-shot read and that gap is queue 287.
+  ALL SIX PREDICTIONS IN THE RUN 43 DISPATCH LANDED, including nullSeriesIds
+  as the nine in the predicted shot order with nullSeriesTiedGroups=0 and
+  nullSeriesVerdict=CLEAR, and fogMaxOpacityRead=0.100 on the run-level sky
+  line.
+
   RULED 2026-09-14 20:01Z
   (decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md):
   Jafar took sky 0.70 at fog 0.100 off this series ('Sky 0.70 at fog 0.100 is
