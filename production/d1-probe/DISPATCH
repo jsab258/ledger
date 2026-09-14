@@ -1264,3 +1264,54 @@ to a lost licence seat; read the verdict before the run's colour.
 # band.skyCentre.p50 and band.ground.p05 ONLY, per section 2.1: whole-frame
 # mean and near-black are contaminated below about fog 0.25 by the open end of
 # the street. Then OPEN ue-vign_hook_day.png BEFORE READING ANY GATE COLOUR.
+
+# ---------------------------------------------------------------------------
+# run 43 - 2026-09-14 - JAFAR'S SKY 0.70, AND THE FIRST QUESTION IS WHETHER IT
+# REACHED A FRAME AT ALL. Ruled by him off the cross rendered on 622bc39 ("Sky
+# 0.70 at fog 0.100 is taken. Apply it as the value and continue"), cascaded by
+# game-design/decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md.
+#
+# WHAT CHANGED. overcast_day sky_intensity 1.00 to 0.70. The reference-cell
+# ROLE moved to grid_sky070_sun003 (fog 0.450 to 0.100), which the grid already
+# held at the judged row's sky and sun; grid_sky100_sun003 went BACK to the
+# grid's 0.450 and its name is true again. The null repeat, the three wetness
+# rows and the four pin rungs took sky 0.70. Eleven rows moved in the emitted
+# file and no others. 33 conditions, 43 shots, unchanged.
+#
+# WHAT THIS RUN IS EXPECTED TO READ, WRITTEN BEFORE IT RUNS:
+#
+#   1. THE SKY HAS A PER-SHOT READ AND THE FOG DOES NOT, so this is the one
+#      lever whose arrival is checkable per row rather than once per run.
+#      shotSkyIntensityAsked=0.700 beside shotSkyIntensityRead on ALL NINE of
+#      the group's shot lines. A row asking 0.700 and reading 1.000 is the
+#      field not arriving, and it voids everything below it.
+#   2. THE JUDGED FRAME DARKENS AT THE GROUND AND NOT AT THE SKY. On 622bc39
+#      vign_fog010_sky070 read band.skyCentre.p50 0.8035 and band.ground.p05
+#      0.2003 at exactly these settings, so vign_hook_day should now land
+#      there. The sky band should NOT move from 0.8035: at fog 0.100 that band
+#      is fog rather than sky, proved on 622bc39 by p50, p05, p95 and spread
+#      reading identically across four sky settings with clipHiAny=0/23040.
+#      IF THE SKY BAND MOVES, THAT FINDING IS WRONG and it is the more
+#      interesting result.
+#   3. rigMeanLumaFirst AND rigMeanLumaRepeat BOTH FALL AGAIN, from 0.5436 and
+#      0.5480, because the rig repeat is of vign_camA_day, camA_day runs on
+#      overcast_day, and the sky lever moves the ground. A lower pair is the
+#      sky arriving; a changed DIFFERENCE between them is the rig.
+#   4. nullSeriesIds is the NINE in shot order: hook_day, grid_sky070_sun003,
+#      wet_000, wet_060, wet_100, fog010_sky070, pin_030_afternight,
+#      pin_030_afterday, grid_null_repeat, with the repeat last and
+#      nullSeriesTiedGroups=0. The local suites read exactly this list.
+#   5. fogMaxOpacityRead on the run-level sky line reads 0.100, since it is the
+#      cap of the LAST condition applied and grid_null_repeat now carries it.
+#   6. rigDeterminism STILL READS DIFFERS. Nothing in this batch touches the
+#      cause, and the camA delta is queue 235's with 290 needed before it.
+#
+# WHAT THIS RUN CANNOT SETTLE. It cannot make the street read wet: wetness is
+# parsed and has no read site in VignetteShot.cpp, and the other engine applies
+# it at StreetVignetteHost.cs line 715. It cannot produce dusk. It cannot make
+# the bins and railings read as materials, which is queue 181 and the loudest
+# thing in the frame after this.
+#
+# THE READING ORDER. lightAimStatus first. Then the nine shotSkyIntensityRead
+# values, because a sky that did not arrive voids the rest. Then OPEN
+# ue-vign_hook_day.png BEFORE READING ANY GATE COLOUR.

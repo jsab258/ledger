@@ -9,6 +9,39 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-14 21:05Z: THE SKY IS APPLIED AND UNPROVEN, AND RUN 43 IS THE PROOF
+
+IN FLIGHT: run 43, dispatched on the commit carrying Jafar's sky 0.70. THE
+CHANGE IS COMMITTED AND NOTHING YET SHOWS IT REACHED A FRAME. The keys that
+answer it are shotSkyIntensityAsked beside shotSkyIntensityRead on all nine
+rows of the null group, which is checkable PER ROW because the sky has a
+per-shot read and the fog does not. Predictions are written into
+production/d1-probe/DISPATCH before the run so no reading can be explained
+afterwards. Do not re-dispatch; watch by ancestry.
+
+LANDED TONIGHT, newest first: d6e21c1e sky 0.70 with the reference-cell role
+moved to grid_sky070_sun003; b5fddb10 the four structural defences and three
+research claims checked; 97b460f7 the judged frame to Jafar; 689d6938 the fog
+series across the bracket; 622bc390 the fog cap at 0.100.
+
+THE OPEN DECISION IS HIS AND NOT A DIRECTOR'S: what "deterministic" means for
+D31 step 1, pixel-identical or within the measured floor. The card went with
+the frame, id 94. Until he rules, nothing is pinned and nothing is judged.
+
+WHAT IS NEXT, in his order: materials (queue 181, blocked behind 180 and he
+must unblock it, not a resident), then the sky itself (286), then the dusk
+frame. D39's twenty recommendations have 0 of 20 queue items; 16 need filing.
+
+TWO CORRECTIONS THIS SESSION OWES ITS OWN RECORD. Queue 291's cause was wrong:
+the brief path was never broken, it has a caller at
+.github/workflows/ledger-install-supervisor-task.yml:683 and sent id 95 with
+buttons 2/2. A grep's own exclusion filter deleted the caller because the
+caller names the callee. The real defect is narrower: --send-brief keys on
+TODAY in UTC, so a brief that misses its day is unreachable afterwards, and
+exit 6 is continue-on-error so the miss is silent. And queue 295: cards.py
+--selftest is red on main and is not among verify.py's ten TOOL_SELFTESTS rows,
+so no commit has ever run it.
+
 ## 2026-09-14 14:15Z: THE LEAK LANDS, THE WEEK OPENS, AND THREE OF MY CONCLUSIONS WERE WRONG
 
 LANDED AS 04e3cea4 ON MAIN, 46 paths, verified by ancestry rather than by the
