@@ -112,3 +112,27 @@ status: READY 2026-09-14. The judged row moves to 0.100 in the same
   acceptance is met when the dispatch carrying sky 0.70 lands and the note on
   overcast_day names run, commit and rung; this item moves to done/ on that
   landing, and its rows leave under 293.
+
+  THE INFERENCE IS RETRACTED, 2026-09-14, AND THE MEASUREMENTS STAND. This item
+  concluded from the sky-intensity cross that "at fog 0.100 the sky band is FOG
+  and not sky". THAT DOES NOT FOLLOW AND IT IS WITHDRAWN. SkyIntensity has
+  exactly one write site, VignetteShot.cpp:1598,
+  SC->SetIntensity((float)C.SkyIntensity) on the USkyLightComponent. A skylight
+  is a LIGHT: it scales what the sky CASTS onto the street, not the radiance the
+  atmosphere RENDERS AT. So a sky band that holds while the ground moves is the
+  EXPECTED reading from a working sky, not evidence the band is something other
+  than sky. Refuted on the same verdict that produced it.
+  AND THERE IS A SKY ACTOR, which this item implied there was not. Run ce99814:
+  skyAtmosphere=yes, skyAtmosphereComponent=yes,
+  skyModel=skyatmosphere+skylight-realtime-capture/not-an-hdri,
+  ambientModel=skylight-captured-sky/ONE-OWNER/trilight-retired-to-zero.
+  ASkyAtmosphere spawns at VignetteShot.cpp:1294.
+  WHAT SURVIVES, measured rather than inferred: the seven-point fog series moves
+  the sky band 0.9331 to 0.6285, so the FOG does drive that band substantially;
+  the four-point sky cross does not move it; and fog 0.100 with sky 0.70 puts
+  both band statistics within about 0.007 of the Hook sheet, confirmed on
+  ce99814 at 0.8035 and 0.2006. None of that rested on the withdrawn inference.
+  WHAT IT COST: nothing in the values, and one sentence that reached Jafar in
+  message 97. A correction is owed to him and is being sent. The lesson is
+  ordinary: two numbers moving differently is not a mechanism, and the mechanism
+  was one grep away in the file that writes the field.
