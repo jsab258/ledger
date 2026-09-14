@@ -76,3 +76,25 @@ status: READY 2026-09-10 08:30Z. THE ACCEPTANCE TEST BUILT FOR THIS CAUGHT IT,
   prose. Needs 290 first so the repeat frame can be opened. Whether
   "one picture" for JUDGING means pixel-identical or within the null
   floor is Jafar's, on the card the ruling dictates.
+
+  ONE CANDIDATE WAS TESTED ON 2026-09-14 AND THE TEST DID NOT REACH IT.
+  The 18:23Z ruling named "the first frame after the scene build" as a
+  candidate for the camA delta. The dispatch was written to test it: the null
+  group at cam_hook grew to nine and now contains vign_hook_day, an early
+  shot, so if early frames drift the nine-frame spread should widen and
+  hook_day should be the outlier. Run 622bc39 read
+  nullSpreadMeanLuma=0.0002, max=vign_grid_sky100_sun003 0.5402,
+  min=vign_grid_null_repeat 0.5400. The spread held at 0.0002, hook_day sits
+  inside it and is NOT the outlier, and the group spans shot 5 to shot 43.
+  THAT WEAKENS "EARLY FRAMES DRIFT" AND DOES NOT TEST "THE FIRST FRAME".
+  vign_hook_day is shot 5 of 43; the rig repeat is of vign_camA_day, which is
+  SHOT 1, and it is at cam_A while the null group is at cam_hook. So the one
+  frame the candidate is about was not in the group that tested it. Reading
+  this as "the candidate is refuted" would be the error, and it is written
+  down here so nobody makes it.
+  MEANWHILE THE DELTA GREW: rigMeanLumaDelta +0.0034 on 32bae70 to +0.0045 on
+  622bc39, with rigDiffPct 85.12 to 86.69, while the seven fog rows'
+  band.skyCentre.meanLuma reproduced ACROSS the two runs to four decimals on
+  all four shared rungs. So whatever moves camA does not reach a band
+  statistic. A test that isolates shot 1 is what this item still owes, and
+  290 is still needed first so the two frames can be opened.

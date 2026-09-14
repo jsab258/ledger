@@ -23,7 +23,23 @@ acceptance: briefsSentEver rises on the next day a brief is written, and that
   brief through the outbox and rebuild the readable/unreadable buttons there,
   or retire the brief file and make the daily message an outbox message.
 max_sessions: 1
-status: READY 2026-09-14. Found while checking whether today's brief would
+status: READY 2026-09-14.
+  PROVEN ON THE SAME DAY IT WAS FILED. The 2026-09-14 brief was sent through
+  the outbox as ruled here. production/pc-ops/outbox-sweep.txt on 622bc39
+  records all three of that evening's messages leaving the PC in three
+  seconds, message ids 92, 93 and 94, consecutive: sent=1 captionedSent=2
+  refused=0 unsent=0 sendFailed=0 receiptRefused=0 recordsWritten=3
+  outboundLatencySecAtWorst=39 (file commit instant to send instant). The
+  brief FILE path was not invoked that night and sent nothing, exactly as
+  this item predicts. So the accepting case for the outbox route is already
+  on record; what is owed is the choice of route and the buttons.
+  NOTE FOR WHOEVER TAKES THIS: receipts are pushed to the pc-inbox BRANCH
+  (the sweep line reads "inbox: pushed 3 file(s) as 09c6d19 to pc-inbox"),
+  not to main, so an absence of receipts under production/outbound/ on main
+  is NOT evidence that nothing sent. That absence misled this resident for
+  several minutes before the sweep log settled it, which is the ci.md rule
+  working: run the existing entry point and read its output.
+  Found while checking whether today's brief would
   reach Jafar before writing it. It would not have. The 2026-09-14 brief was
   therefore ALSO written as an outbox message so it would send, and the
   double-send risk was accepted deliberately: twice is better than never, and
