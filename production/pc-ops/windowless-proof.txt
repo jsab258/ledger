@@ -1,0 +1,36 @@
+# LEDGER windowless fleet proof - 5b0e3f2 @1789392778
+# Line 1 names the commit this was measured on.
+# THIS RUN DID NOT REGISTER, ENABLE OR START THE SCHEDULED TASK.
+# It starts the fleet by hand through tools/runner/launch-supervisor.py
+# from a DELIBERATELY CONSOLE-LESS parent (CreateProcess with
+# DETACHED_PROCESS), which is the scheduled task's condition and the
+# condition a .bat double-click never reproduces: a console-subsystem
+# child of a parent with no console allocates its own console window.
+# Two readings per sample, because either alone could miss it: the
+# MainWindowHandle of every process in the tree, and every conhost.exe
+# or OpenConsole.exe whose parent is in the tree. The conhost tally is
+# CUMULATIVE over the window (distinct pids), never last-wins.
+# CADENCE=1s, SAID OUT LOUD: a git child can live under a second, so
+# this sampler can miss one. That is why the ruling also requires the
+# same step to have printed WINDOWS-SEEN on the pre-fix checkout.
+
+runnerAccount=JAFAR-DESKTOP\Jafar
+runnerSessionId=5
+# MainWindowHandle is readable for processes in this session; a fleet
+# started here runs in THIS session, so compare runnerSessionId with
+# the per-process session= below before reading a 0 as reassurance.
+taskRegistered=True taskEnabled=True taskState=Running taskLastRunBefore=2026-09-11T15:12:59.0000000+02:00
+proofRepo=C:\Users\Jafar\ledger-migrate proofRepoSource=input
+fixCommit=5b0e3f2cab179a3abd8d480f10653d27e7970863 fixCommitDate=2026-09-14T15:23:51+02:00
+pythonForProof=C:\Users\Jafar\miniconda3\pythonw.exe interpreterSource=registered-task windowless=True
+astCheck=20/20 unflagged=0
+role=accepting
+windowSec=300 sampleIntervalSec=1 stopAtFirstSighting=False warmupCapSec=60
+fleetBefore=5
+  fleetBeforePid=24484 cmd="C:\Users\Jafar\miniconda3\pythonw.exe"~"C:\Users\Jafar\ledger-migrate\tools\runner\launch-supervisor.py"~scheduled-task
+  fleetBeforePid=25368 cmd=C:\Users\Jafar\miniconda3\pythonw.exe~C:\Users\Jafar\ledger-migrate\tools\supervise.py
+  fleetBeforePid=26004 cmd=C:\Users\Jafar\miniconda3\pythonw.exe~C:\Users\Jafar\ledger-migrate\tools\pc-watcher.py
+  fleetBeforePid=20636 cmd=C:\Users\Jafar\miniconda3\pythonw.exe~C:\Users\Jafar\ledger-migrate\tools\runner\executor.py
+  fleetBeforePid=1728 cmd=C:\Users\Jafar\miniconda3\pythonw.exe~C:\Users\Jafar\ledger-migrate\tools\runner\telegram-bot.py
+
+windowless-proof: fixCommit=5b0e3f2cab179a3abd8d480f10653d27e7970863 noWindowSites=20/20 unflagged=0 role=accepting taskRegistered=True taskEnabled=True windowSec=0 samplesTaken=0 windowlessSamples=0/0 handlesNonZero=nothing-measured conhostChildren=nothing-measured transientChildrenSeen=0 processesWatched=0/0 survivedSec=nothing-measured/300 restartsObserved=0 verdict=NOT-MEASURED notMeasuredWhy=a-fleet-is-already-running-so-this-would-have-measured-someone-elses-start
