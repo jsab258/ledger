@@ -45,3 +45,7 @@ status: READY 2026-09-10 08:30Z. THE ACCEPTANCE TEST BUILT FOR THIS CAUGHT IT,
   AutoExposureMinBrightness and MaxBrightness set equal, and which queue 219
   already names. The cost is that the rig can then never judge an adaptation
   moment, and that cost was accepted in writing when the rate was snapped.
+
+  RULED 2026-09-14: the acceptance render is dispatched AFTER the pin batch, with
+  rigRepeatOf on a pinned day condition. IDENTICAL there is step 1 met on that
+  condition and says nothing about night, which stays at auto.

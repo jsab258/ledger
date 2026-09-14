@@ -108,6 +108,220 @@ static bool NoSpacePastPrefix(const std::string& Line, const char* From)
 	return Tokens > 0 && Tokens == Equals;
 }
 
+// THE VALUE OF ONE KEY ON A key=value LINE, up to the next space, so a list
+// can be compared for EQUALITY rather than for containment: a find() of
+// "nullSeriesIds=a;b" is satisfied by "nullSeriesIds=a;b;c", which is the
+// one comparison a growing list must not pass.
+static std::string ValueOfKey(const std::string& Line, const char* Key)
+{
+	const size_t At = Line.find(Key);
+	if (At == std::string::npos) { return std::string("key-not-on-the-line"); }
+	const size_t From = At + std::string(Key).size();
+	const size_t End = Line.find(' ', From);
+	return Line.substr(From, End == std::string::npos ? std::string::npos : End - From);
+}
+
+static void SplitOn(const std::string& In, char Sep, std::vector<std::string>& Out)
+{
+	size_t At = 0;
+	while (At <= In.size())
+	{
+		size_t End = In.find(Sep, At);
+		if (End == std::string::npos) { End = In.size(); }
+		Out.push_back(In.substr(At, End - At));
+		if (End == In.size()) { break; }
+		At = End + 1;
+	}
+}
+
+// ---- THE PIN INVARIANT OF 2026-09-14, ONE EVALUATOR, FIVE RUNS -----------
+//
+// RULED in game-design/decision-2026-09-14-ruling-the-pin-belongs-to-the-rig-
+// and-the-render-waits-for-it.md section 6, replacing "the only rows asking
+// for a pin are the ladder rungs". THE OLD GUARD WAS RIGHT ON 10 SEPTEMBER
+// AND IS WRONG NOW, and the reason is a reading rather than a preference: on
+// 10 September no value had been read off the ladder, so any row outside it
+// carried a guess. Run 41 lines 189 to 213 then photographed twenty five rows
+// under automatic exposure, six of them one identical-input group at cam_hook
+// reading 0.5800, 0.6057, 0.0765, 0.5741, 0.9591 and 0.6057: a spread of
+// 0.8826 against that run's smallest sky step of 0.0023, verdict NO-READ. The
+// four pinned rungs on the same run agree within 0.0001, four pairs of four,
+// across an intervening night frame. So what has to be refused is not "a pin
+// outside the ladder" but what the old comment actually said, "an exposure
+// nobody chose": a pin value that is neither a rung's nor the one live value
+// whose provenance the file names.
+//
+// ONE EVALUATOR, CALLED ONCE ON THE LIVE FILE AND ONCE PER PLANT, so a plant
+// cannot pass by being judged with different arithmetic from the accepting
+// case. Every count it reports is a whole-file tally over the conditions it
+// was handed, never a statistic of one row.
+struct PinReading
+{
+	int DayPinned, DayUnpinned, NightPinned, NightUnpinned;
+	int LiveRows, Rungs, Count, ProvPinTokens;
+	double Live, RungLo, RungHi;
+	bool bSame;
+	bool bA, bB, bC, bD;
+	std::string ProvPin;      // the pinX.XXXX token's value, or nothing-declared
+	std::string ProvRungId;   // the condition cond.<id> names, or none-named
+	std::string RungState;    // present-and-equal / present-and-differs / absent-token-stands-alone
+	std::string Line;         // the series, printed before any bound is read
+	PinReading() : DayPinned(0), DayUnpinned(0), NightPinned(0), NightUnpinned(0),
+	               LiveRows(0), Rungs(0), Count(0), ProvPinTokens(0),
+	               Live(0.0), RungLo(0.0), RungHi(0.0), bSame(true),
+	               bA(false), bB(false), bC(false), bD(false),
+	               ProvPin("nothing-declared"), ProvRungId("none-named"),
+	               RungState("absent-token-stands-alone") {}
+};
+
+// A LADDER RUNG BY THE ID SHAPE THE RULING NAMES, `pin_` with
+// `pin_setter_night` excluded: the setter is the night row that proves the
+// pin from the shot before it does not survive into an unpinned frame, so it
+// is a rung of the mechanism and not of the value.
+static bool IsLadderRung(const std::string& Id)
+{
+	return Id.compare(0, 4, "pin_") == 0 && Id != "pin_setter_night";
+}
+
+// THE PROVENANCE IS A SLASH-SEPARATED LIST AND IS READ AS TOKENS, NOT AS A
+// SUBSTRING. `find("pin0.3000")` would be satisfied by `pin0.30001` and by
+// `notapin0.3000`; a token walk cannot be. The count comes back too, because
+// two tokens carrying two values is not the same fact as one.
+static void ProvenanceTokens(const std::string& Prov, const std::string& Prefix,
+                             std::vector<std::string>& Out)
+{
+	size_t At = 0;
+	while (At <= Prov.size())
+	{
+		size_t End = Prov.find('/', At);
+		if (End == std::string::npos) { End = Prov.size(); }
+		const std::string Tok = Prov.substr(At, End - At);
+		if (Tok.size() > Prefix.size() && Tok.compare(0, Prefix.size(), Prefix) == 0)
+		{
+			Out.push_back(Tok.substr(Prefix.size()));
+		}
+		if (End == Prov.size()) { break; }
+		At = End + 1;
+	}
+}
+
+static PinReading ReadPins(const std::vector<LedgerVignette::Condition>& Conds,
+                           const std::string& Provenance)
+{
+	PinReading R;
+	R.Count = (int)Conds.size();
+	for (size_t I = 0; I < Conds.size(); ++I)
+	{
+		const LedgerVignette::Condition& C = Conds[I];
+		const bool bAsked = LedgerVignette::ExposurePinAsked(C.ExposurePin);
+		const bool bRung = IsLadderRung(C.Id);
+		if (C.SunOn) { if (bAsked) { ++R.DayPinned; } else { ++R.DayUnpinned; } }
+		else         { if (bAsked) { ++R.NightPinned; } else { ++R.NightUnpinned; } }
+		if (bRung)
+		{
+			if (R.Rungs == 0 || C.ExposurePin < R.RungLo) { R.RungLo = C.ExposurePin; }
+			if (R.Rungs == 0 || C.ExposurePin > R.RungHi) { R.RungHi = C.ExposurePin; }
+			++R.Rungs;
+		}
+		if (C.SunOn && !bRung)
+		{
+			if (R.LiveRows == 0) { R.Live = C.ExposurePin; }
+			else if (std::fabs(C.ExposurePin - R.Live) > 1e-12) { R.bSame = false; }
+			++R.LiveRows;
+		}
+	}
+	// (a) EVERY CONDITION ANSWERS THE PIN QUESTION, kept from the guard this
+	// replaces. It is an identity over the same loop and the other three
+	// counts are read against it.
+	R.bA = (R.DayPinned + R.DayUnpinned + R.NightPinned + R.NightUnpinned == R.Count)
+	       && R.Count > 0;
+	// (b) SUN ON IMPLIES A PIN, SUN OFF IMPLIES NONE, with both denominators
+	// required to be non-zero so neither half can be vacuously true on a file
+	// that carries no day rows or no night rows.
+	R.bB = (R.DayUnpinned == 0) && (R.NightPinned == 0)
+	       && R.DayPinned > 0 && R.NightUnpinned > 0;
+	// (c) ONE LIVE VALUE ON EVERY SUN-ON ROW THAT IS NOT A RUNG.
+	R.bC = R.LiveRows > 0 && R.bSame && LedgerVignette::ExposurePinAsked(R.Live);
+	// (d) AND THAT LIVE VALUE IS THE ONE THE PROVENANCE NAMES, to the four
+	// decimals the shot line prints, so a value edited onto the rows without
+	// re-reading the ladder series is refused. While the rung the provenance
+	// names is still in the file its own pin must agree with the token; when
+	// the one-run rows leave, the token stands alone and the clause still
+	// bites.
+	char Want[32];
+	std::snprintf(Want, sizeof(Want), "%.4f", R.Live);
+	std::vector<std::string> PinToks, CondToks;
+	ProvenanceTokens(Provenance, "pin", PinToks);
+	ProvenanceTokens(Provenance, "cond.", CondToks);
+	R.ProvPinTokens = (int)PinToks.size();
+	if (R.ProvPinTokens >= 1) { R.ProvPin = PinToks[0]; }
+	if (!CondToks.empty())
+	{
+		R.ProvRungId = CondToks[0];
+		for (size_t I = 0; I < Conds.size(); ++I)
+		{
+			if (Conds[I].Id != R.ProvRungId) { continue; }
+			char Has[32];
+			std::snprintf(Has, sizeof(Has), "%.4f", Conds[I].ExposurePin);
+			R.RungState = (R.ProvPin == std::string(Has)) ? "present-and-equal"
+			                                             : "present-and-differs";
+		}
+	}
+	R.bD = (R.ProvPinTokens == 1) && (R.ProvPin == std::string(Want))
+	       && R.RungState != std::string("present-and-differs");
+	char Buf[640];
+	std::snprintf(Buf, sizeof(Buf),
+		"pins: dayPinned=%d dayUnpinned=%d nightPinned=%d nightUnpinned=%d "
+		"live=%.4f liveRows=%d liveAgree=%s rungs=%d span=%.3f..%.3f "
+		"provenancePin=%s provenancePinTokens=%d provenanceRung=%s/%s "
+		"of %d conditions",
+		R.DayPinned, R.DayUnpinned, R.NightPinned, R.NightUnpinned,
+		R.Live, R.LiveRows, R.bSame ? "yes" : "no", R.Rungs, R.RungLo, R.RungHi,
+		R.ProvPin.c_str(), R.ProvPinTokens, R.ProvRungId.c_str(),
+		R.RungState.c_str(), R.Count);
+	R.Line = Buf;
+	return R;
+}
+
+// THE PROVENANCE STRING IS READ OFF THE SCENE FILE BESIDE THE PIECE LIST, AND
+// THIS IS A MEASUREMENT AND NOT A CONVENIENCE. production/specs/vignette-
+// scene.json is where the resident writes the string; the piece list is
+// generated from it by StreetVignettePieces.cs, whose condition writer (line
+// 496) copies `exposure_pin` and NOT `exposure_pin_provenance`, so the root
+// key ParseSpec reads at VignetteSpec.h line 415 is absent from the generated
+// file and the run's own `expPinProvenance=` reads nothing-declared. Both
+// readings are printed at the call site so the gap is a number rather than a
+// remark. FAIL-CLOSED: no scene file, or no key in it, and clause (d) goes
+// red naming what was missing, because a clause that quietly skips is the
+// silent-instrument failure this file exists to prevent.
+static std::string ScenePathBeside(const char* SpecPath)
+{
+	const std::string P(SpecPath);
+	const size_t At = P.find_last_of("/\\");
+	return (At == std::string::npos ? std::string() : P.substr(0, At + 1))
+	     + "vignette-scene.json";
+}
+
+// ONE ROOT-LEVEL STRING OUT OF A JSON FILE, by scan rather than by parse: the
+// value wanted carries no escape and no quote (it is space-free by the
+// project's own key=value rule), and the alternative is a second reader in a
+// test whose subject is the first one.
+static std::string JsonStringField(const std::string& Text, const char* Key, bool& Found)
+{
+	Found = false;
+	const std::string Needle = std::string("\"") + Key + "\"";
+	size_t At = Text.find(Needle);
+	if (At == std::string::npos) { return std::string(); }
+	At = Text.find(':', At + Needle.size());
+	if (At == std::string::npos) { return std::string(); }
+	const size_t Open = Text.find('"', At);
+	if (Open == std::string::npos) { return std::string(); }
+	const size_t Close = Text.find('"', Open + 1);
+	if (Close == std::string::npos) { return std::string(); }
+	Found = true;
+	return Text.substr(Open + 1, Close - Open - 1);
+}
+
 int main(int argc, char** argv)
 {
 	const char* SpecPath = (argc > 1) ? argv[1] : "production/specs/vignette-pieces.json";
@@ -2952,8 +3166,8 @@ int main(int argc, char** argv)
 	// renders identically, not one subtraction. The accepting fixture is the
 	// committed spec, which is this project's rule for a tool that checks the
 	// project itself, and the thing being checked is the DISCOVERY: the group
-	// is found from the conditions, so nobody has to keep a list of seven shot
-	// ids in a header. The statistics are synthetic, because no frame exists in
+	// is found from the conditions, so nobody has to keep a list of shot ids
+	// in a header. The statistics are synthetic, because no frame exists in
 	// this container, and the model is named rather than assumed: a signal
 	// linear in sky intensity plus a bounded per-shot noise.
 	{
@@ -2990,10 +3204,14 @@ int main(int argc, char** argv)
 		// Rows enter and leave this file by the item that needs them, so a
 		// literal 7 of 25 fails for the wrong reason the first time a row is
 		// added. WHAT IS BEING CHECKED IS THE DISCOVERY, so the expected
-		// numbers are recomputed from the same conditions by an independent
-		// tally here, and the SEVEN NAMED IDS below are what anchors that
-		// tally to the review's own group: if the discovery ever picks a
-		// different group, the id list fails even though both counts agree.
+		// numbers are recomputed from the same conditions by the tally here.
+		// THIS TALLY IS NOT INDEPENDENT OF THE DISCOVERY and said it was
+		// until 2026-09-14: it calls the same SampleKey NullSeriesLine calls,
+		// so the two agree on a group by construction and only a MISCOUNT
+		// (the loop, the denominator, the largest-of) can separate them. What
+		// anchors the group to the review's own is the list DERIVED below
+		// from the reference cell, field by field, which calls no shared
+		// function at all.
 		int Largest = 0, DistinctGroups = 0;
 		{
 			std::vector<std::string> Keys;
@@ -3027,15 +3245,133 @@ int main(int argc, char** argv)
 		      "independent tally over the same conditions counts, over the shots the file "
 		      "actually carries, recovered from the conditions and not from a list of ids",
 		      std::string(WantSamples) + " and " + WantMeasured + " against: " + NS);
-		Check(NS.find("nullSeriesIds=vign_hook_day;vign_grid_sky100_sun003;"
-		              "vign_fog_maxop0450;vign_wet_000;vign_wet_060;vign_wet_100;"
-		              "vign_grid_null_repeat") != std::string::npos,
-		      "and they are the seven shots the review named, in shot order, with the "
-		      "judged hook frame among them", NS);
+		// ---- THE ANCHOR, DERIVED FROM ONE NAMED ID AND NOT TYPED --------
+		//
+		// THE LIST USED TO BE SEVEN IDS TYPED IN, and the comment above says
+		// why: to anchor the discovery to the review's own group, since the
+		// tally beside it calls the same SampleKey the discovery calls and is
+		// therefore not independent of it. The typed list has two scheduled
+		// reasons to change in one week: the pin batch grows it to nine
+		// (`expPin` is part of the fingerprint at VignetteSpec.h 2574, so the
+		// two shots of rung 0.300 are correctly null samples of the live
+		// rows), and D28 step 5 wires wetness, after which wet_000 and
+		// wet_100 leave it. A typed list would fail for the wrong reason
+		// twice.
+		//
+		// SO THE ANCHOR IS BUILT THE WAY THE NULL-CELL CHECK ABOVE COMPARES
+		// TWO CONDITIONS, field by field, from ONE named id: the reference
+		// cell grid_sky100_sun003 that the grid ruling defined. Walk the
+		// shots in shot order, keep those standing at the reference cell's
+		// own camera whose condition matches it in every field that lights a
+		// frame plus exposure_pin, excluding the one field the line itself
+		// says it excludes. Nothing here calls SampleKey.
+		{
+			const LedgerVignette::Condition* RefC = 0;
+			for (size_t I = 0; I < S.Conditions.size(); ++I)
+			{
+				if (S.Conditions[I].Id == "grid_sky100_sun003") { RefC = &S.Conditions[I]; }
+			}
+			std::string RefCam = "no-shot-for-the-reference-cell";
+			for (size_t I = 0; I < S.Shots.size() && RefC != 0; ++I)
+			{
+				if (S.Shots[I].ConditionId == RefC->Id
+				    && RefCam == "no-shot-for-the-reference-cell")
+				{
+					RefCam = S.Shots[I].CameraId;
+				}
+			}
+			std::vector<std::string> SameConds;
+			for (size_t I = 0; I < S.Conditions.size() && RefC != 0; ++I)
+			{
+				const LedgerVignette::Condition& C = S.Conditions[I];
+				// WETNESS IS THE EXCLUDED FIELD and the line beside this one
+				// says so with its reason; every other field the engine reads
+				// must match, the pin included.
+				if (C.Hdri == RefC->Hdri && C.SunOn == RefC->SunOn
+				    && C.LanternsOn == RefC->LanternsOn && C.WindowsOn == RefC->WindowsOn
+				    && std::fabs(C.SunIntensity - RefC->SunIntensity) < 1e-12
+				    && std::fabs(C.SkyIntensity - RefC->SkyIntensity) < 1e-12
+				    && std::fabs(C.FogDensity - RefC->FogDensity) < 1e-12
+				    && std::fabs(C.FogMaxOpacity - RefC->FogMaxOpacity) < 1e-12
+				    && std::fabs(C.ExposurePin - RefC->ExposurePin) < 1e-12)
+				{
+					SameConds.push_back(C.Id);
+				}
+			}
+			std::vector<std::string> WantIds;
+			for (size_t I = 0; I < S.Shots.size(); ++I)
+			{
+				if (S.Shots[I].CameraId != RefCam) { continue; }
+				for (size_t J = 0; J < SameConds.size(); ++J)
+				{
+					if (SameConds[J] == S.Shots[I].ConditionId)
+					{
+						WantIds.push_back(S.Shots[I].Id);
+						break;
+					}
+				}
+			}
+			// THE CAP THE EMITTER APPLIES IS MIRRORED HERE AND ANNOUNCES
+			// WHETHER IT BIT, because a derived list longer than the cap must
+			// expect the emitter's own "+N-more-not-shown" tail rather than
+			// the whole list.
+			const size_t kIdCap = 12;
+			std::string WantLine;
+			for (size_t I = 0; I < WantIds.size() && I < kIdCap; ++I)
+			{
+				if (!WantLine.empty()) { WantLine += ";"; }
+				WantLine += WantIds[I];
+			}
+			if (WantIds.size() > kIdCap)
+			{
+				char More[64];
+				std::snprintf(More, sizeof(More), "/+%d-more-not-shown",
+				              (int)(WantIds.size() - kIdCap));
+				WantLine += More;
+			}
+			const std::string GotLine = ValueOfKey(NS, "nullSeriesIds=");
+			std::vector<std::string> GotIds;
+			SplitOn(GotLine, ';', GotIds);
+			std::printf("    derived from grid_sky100_sun003: camera=%s condsMatching=%d/of=%d "
+			            "shotsWalked=%d derivedIds=%d discoveredIds=%d capBites=%s/cap=%d\n",
+			            RefCam.c_str(), (int)SameConds.size(), (int)S.Conditions.size(),
+			            (int)S.Shots.size(), (int)WantIds.size(), (int)GotIds.size(),
+			            WantIds.size() > kIdCap ? "yes" : "no", (int)kIdCap);
+			std::printf("    derivedIds=%s\n",
+			            WantLine.empty() ? "none" : WantLine.c_str());
+			Check(RefC != 0 && !WantIds.empty() && GotLine == WantLine,
+			      "the discovered null series is EXACTLY the group derived from the reference "
+			      "cell field by field at its own camera, in shot order, re-derived every run "
+			      "rather than typed, so a row entering or leaving moves both sides together",
+			      "derived=" + WantLine + " discovered=" + GotLine);
+			// THREE ASSERTIONS THE TYPED LIST CARRIED IMPLICITLY, kept.
+			bool bHookIn = false;
+			for (size_t I = 0; I < GotIds.size(); ++I)
+			{
+				if (GotIds[I] == "vign_hook_day") { bHookIn = true; }
+			}
+			Check(bHookIn,
+			      "the judged hook frame is one of the null samples, which is what makes the "
+			      "group a statement about the frame Jafar looks at", GotLine);
+			Check(!GotIds.empty() && GotIds[GotIds.size() - 1] == "vign_grid_null_repeat",
+			      "and the null cell is the last of them, identical inputs at the maximum "
+			      "order separation the run allows", GotLine);
+			bool bRefIn = false, bNullIn = false;
+			for (size_t I = 0; I < GotIds.size(); ++I)
+			{
+				if (GotIds[I] == "vign_grid_sky100_sun003") { bRefIn = true; }
+				if (GotIds[I] == "vign_grid_null_repeat")   { bNullIn = true; }
+			}
+			Check(bRefIn && bNullIn && (int)GotIds.size() >= 2,
+			      "and the group holds the grid's reference cell and its null cell, the pair "
+			      "the grid ruling defined, so the spread is read over the comparison the "
+			      "grid exists for", GotLine + " over " + std::to_string((int)GotIds.size())
+			      + " ids");
+		}
 		Check(NS.find("nullSeriesExcludes=wetness/because-VignetteShot.cpp-has-no-read-"
 		              "site-for-it-on-this-commit") != std::string::npos,
-		      "the line says which field it excluded and why, because three of the seven "
-		      "are null samples HERE only for want of a read site", NS);
+		      "the line says which field it excluded and why, because the three wetness "
+		      "rows are null samples HERE only for want of a read site", NS);
 		Check(NS.find("nullSeriesStatus=READ") != std::string::npos
 		      && NS.find("nullSeriesVerdict=CLEAR") != std::string::npos
 		      && NS.find("nullSeriesClear=3/of=3/") != std::string::npos,
@@ -3214,34 +3550,134 @@ int main(int argc, char** argv)
 	// row whose pin failed to land.
 	{
 		std::printf("  the exposure pin, asked beside read, and the ladder it sets a value from\n");
-		// THE LIVE FILE IS THE ACCEPTING FIXTURE. Every condition must carry
-		// the field, exactly the ladder rungs may ask for a pin, and the four
-		// asked values are read back off the file rather than retyped here.
-		int Pinned = 0, Unpinned = 0, Rungs = 0;
-		double Lo = 0.0, Hi = 0.0;
-		for (size_t I = 0; I < S.Conditions.size(); ++I)
-		{
-			const LedgerVignette::Condition& C = S.Conditions[I];
-			if (LedgerVignette::ExposurePinAsked(C.ExposurePin))
-			{
-				++Pinned;
-				if (Pinned == 1 || C.ExposurePin < Lo) { Lo = C.ExposurePin; }
-				if (Pinned == 1 || C.ExposurePin > Hi) { Hi = C.ExposurePin; }
-			}
-			else { ++Unpinned; }
-			if (C.Id.compare(0, 4, "pin_") == 0 && C.Id != "pin_setter_night") { ++Rungs; }
-		}
-		std::printf("    pins: pinned=%d unpinned=%d rungs=%d span=%.3f..%.3f of %d conditions\n",
-		            Pinned, Unpinned, Rungs, Lo, Hi, (int)S.Conditions.size());
-		Check(Pinned + Unpinned == (int)S.Conditions.size() && Pinned == Rungs && Rungs > 0,
-		      "every condition in the live file answers the pin question, and the only rows "
-		      "asking for a pin are the ladder rungs",
-		      "a row pinned by accident would be photographed at an exposure nobody chose");
-		Check(Hi > Lo * 100.0,
+		// THE LIVE FILE IS THE ACCEPTING FIXTURE, AND THE SERIES IS PRINTED
+		// BEFORE ANY BOUND IS READ OFF IT, which is rule 2's order. Four
+		// clauses, dictated in section 6 of the 2026-09-14 ruling, evaluated
+		// by ReadPins above; the rungs' own values are read off the file and
+		// never retyped here.
+		bool SceneOk = false;
+		const std::string ScenePath = ScenePathBeside(SpecPath);
+		const std::string SceneText = Slurp(ScenePath.c_str(), SceneOk);
+		bool ProvFound = false;
+		const std::string Prov = SceneOk
+		    ? JsonStringField(SceneText, "exposure_pin_provenance", ProvFound)
+		    : std::string();
+		// BOTH READINGS, SO THE GAP BETWEEN THE TWO FILES IS A NUMBER. The
+		// piece list is what the Unreal run reads and it is generated without
+		// this key; the scene file is where the string is written.
+		std::printf("    provenanceFrom=%s sceneRead=%s keyFound=%s "
+		            "provenanceChars=%d pieceListDeclares=%s\n",
+		            ScenePath.c_str(), SceneOk ? "yes" : "NO-FILE",
+		            ProvFound ? "yes" : "NO-KEY", (int)Prov.size(),
+		            S.ExposurePinProvenance.c_str());
+		const PinReading LivePins = ReadPins(S.Conditions, Prov);
+		std::printf("    %s\n", LivePins.Line.c_str());
+		// (a) KEPT FROM THE GUARD THIS REPLACES. It cannot be planted from a
+		// file and that is not an omission: VignetteSpec.h line 519 requires
+		// `exposure_pin` on every condition through NeedNum, fail-closed, so
+		// a row that does not answer the pin question never reaches this
+		// evaluator; the parse refused the file one step earlier.
+		Check(LivePins.bA,
+		      "(a) every condition in the live file answers the pin question, pinned plus "
+		      "unpinned summing to the condition count",
+		      LivePins.Line);
+		Check(LivePins.bB,
+		      "(b) every sun-on condition asks for a pin and every sun-off condition asks "
+		      "for none, both denominators counted so neither half is vacuous",
+		      LivePins.Line);
+		Check(LivePins.bC,
+		      "(c) every sun-on row that is not a ladder rung carries one and the same live "
+		      "value, so the run has one live pin and not a scatter",
+		      LivePins.Line);
+		Check(LivePins.bD,
+		      "(d) and that live value is the one the file's exposure_pin_provenance names, "
+		      "to the four decimals the shot line prints, with the named rung agreeing while "
+		      "it is still in the file",
+		      LivePins.Line + " provenance=" + (Prov.empty() ? std::string("EMPTY") : Prov));
+		Check(LivePins.RungHi > LivePins.RungLo * 100.0,
 		      "the ladder spans more than two decades of the engine's own clamp range, which "
 		      "is a bracket rather than a guess",
 		      "the value cannot be computed from any committed luma, so the rungs have to "
 		      "straddle the answer");
+		// ---- FOUR PLANTED REJECTIONS, ALL WATCHED, ACCEPTING CASE ABOVE --
+		//
+		// Rule 5b: a guard needs a run where the thing it asserts CAN happen.
+		// Each plant is the live conditions with ONE edit, judged by the same
+		// ReadPins, and each Check names the clause it targets AND asserts
+		// the invariant as a whole goes false.
+		{
+			// 1. A DAY ROW LEFT AT AUTO, planted on the LAST sun-on non-rung
+			// row so the live value still reads off the first. This one plant
+			// breaks two clauses by construction and the check says so: an
+			// auto row is both an unpinned day row and not the live value.
+			std::vector<LedgerVignette::Condition> P1 = S.Conditions;
+			std::string P1Id = "none";
+			for (size_t I = 0; I < P1.size(); ++I)
+			{
+				if (P1[I].SunOn && !IsLadderRung(P1[I].Id)) { P1Id = P1[I].Id; }
+			}
+			for (size_t I = 0; I < P1.size(); ++I)
+			{
+				if (P1[I].Id == P1Id) { P1[I].ExposurePin = 0.0; }
+			}
+			const PinReading R1 = ReadPins(P1, Prov);
+			std::printf("    planted day-row-at-auto on %s: %s\n", P1Id.c_str(), R1.Line.c_str());
+			Check(!R1.bB && !R1.bC && R1.bA && !(R1.bA && R1.bB && R1.bC && R1.bD),
+			      "planted: one day row left at auto is refused, clause (b) going false and "
+			      "clause (c) with it because an auto row is also not the live value",
+			      R1.Line);
+			// 2. A NIGHT ROW GIVEN A PIN, which clause (c) cannot see because
+			// night rows are not live rows: this is (b)'s other direction.
+			std::vector<LedgerVignette::Condition> P2 = S.Conditions;
+			std::string P2Id = "none";
+			for (size_t I = 0; I < P2.size(); ++I)
+			{
+				if (!P2[I].SunOn && P2Id == "none") { P2Id = P2[I].Id; P2[I].ExposurePin = 0.300; }
+			}
+			const PinReading R2 = ReadPins(P2, Prov);
+			std::printf("    planted night-row-pinned on %s: %s\n", P2Id.c_str(), R2.Line.c_str());
+			Check(!R2.bB && R2.bA && R2.bC && R2.bD,
+			      "planted: one night row given a day value is refused by clause (b) alone, "
+			      "the night staying at auto until a settled night reference exists",
+			      R2.Line);
+			// 3. TWO DAY ROWS DISAGREEING, both pinned, so (b) holds and (c)
+			// is the only clause that can see it.
+			std::vector<LedgerVignette::Condition> P3 = S.Conditions;
+			std::string P3Id = "none";
+			for (size_t I = 0; I < P3.size(); ++I)
+			{
+				if (P3[I].SunOn && !IsLadderRung(P3[I].Id)) { P3Id = P3[I].Id; }
+			}
+			for (size_t I = 0; I < P3.size(); ++I)
+			{
+				if (P3[I].Id == P3Id) { P3[I].ExposurePin = LivePins.Live * 2.0; }
+			}
+			const PinReading R3 = ReadPins(P3, Prov);
+			std::printf("    planted two-day-values on %s: %s\n", P3Id.c_str(), R3.Line.c_str());
+			Check(!R3.bC && R3.bA && R3.bB,
+			      "planted: two day rows carrying different pins are refused by clause (c), "
+			      "which is the scatter a per-row edit would produce",
+			      R3.Line);
+			// 4. A LIVE VALUE THE PROVENANCE DOES NOT NAME, moved on EVERY
+			// live row at once so (a), (b) and (c) all still hold: this is
+			// the case no count can catch and the reason clause (d) exists.
+			// 0.4102 is the reference sheet's own figure, the number the
+			// ruling records as NOT interpolated toward.
+			std::vector<LedgerVignette::Condition> P4 = S.Conditions;
+			int Moved = 0;
+			for (size_t I = 0; I < P4.size(); ++I)
+			{
+				if (P4[I].SunOn && !IsLadderRung(P4[I].Id)) { P4[I].ExposurePin = 0.4102; ++Moved; }
+			}
+			const PinReading R4 = ReadPins(P4, Prov);
+			std::printf("    planted live-value-not-in-provenance on %d rows: %s\n",
+			            Moved, R4.Line.c_str());
+			Check(!R4.bD && R4.bA && R4.bB && R4.bC && Moved > 0,
+			      "planted: a live value edited onto every day row without re-reading the "
+			      "series passes (a), (b) and (c) and is refused by clause (d), which is the "
+			      "whole of that clause's reason for existing",
+			      R4.Line);
+		}
 		// THE SEGMENT, FOUR CASES, IN THE ORDER THE RULE ASKS FOR.
 		LedgerVignette::ExposurePinIn Held;
 		Held.Asked = 0.300; Held.ReadMin = 0.300000011920929; Held.ReadMax = 0.300000011920929;
