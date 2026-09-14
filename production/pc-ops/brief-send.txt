@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 8574fb7 @1789400831
+# LEDGER one daily-brief send - 622bc39 @1789412941
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,11 +15,13 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 briefCheckoutPcHeadSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-14T15:46:32Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/8574fb764b briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=622bc3901b712478931bf9e9830f0f86735e99b6 briefCheckoutPcHeadSha=622bc3901b712478931bf9e9830f0f86735e99b6 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-14T19:08:13Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/622bc3901b briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-briefStatus=EXITED briefWaitedSec=3 briefExitCode=6
-briefStream=brief-raw.txt briefLines=1
-17:47:12  brief: NOTHING MEASURED, there is no brief for 2026-09-14 (FileNotFoundError). 8 brief(s) are in the tree, newest 2026-09-12. Nothing was sent.
+briefStatus=EXITED briefWaitedSec=6 briefExitCode=0
+briefStream=brief-raw.txt briefLines=3
+21:09:03    brief sent: production/briefs/2026-09-14.md chars=840 buttons=2 messageId=95 photoRef=production/d1-probe/ue-vign_fog_maxop0100.png photoState=carried photoSizes=90x51/320x180/800x450/1280x720
+21:09:03  brief-send done: briefDay=2026-09-14 briefSent=1/1 briefAlready=0/1 briefRefused=0/1 briefChecked=yes briefButtons=2 briefChars=840 messageId=95 records=1 briefPhotoCarried=1/1 briefPhoto=carried briefPhotoCapOverBy=0 clause=none
+21:09:06    inbox: pushed 1 file(s) as 6b62d79 to pc-inbox
 briefStream=brief-raw.txt.err briefLines=0

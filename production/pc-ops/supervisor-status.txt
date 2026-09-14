@@ -1,11 +1,11 @@
-# LEDGER supervisor status as CI read it - 8574fb7 @1789400841
+# LEDGER supervisor status as CI read it - 622bc39 @1789412954
 # Line 1 names the commit this was read on.
 # Copied verbatim from the supervisor's own file on his PC.
 # It is written there every 60s and was published nowhere until
 # this step existed, which is why a bot that stopped at 11:30 on
 # 2026-09-07 could not say so.
 statusSource=C:\Users\Jafar\ledger-migrate\game-design\pc-jobs\supervisor-status.txt
-statusFound=yes statusBytes=904 statusLines=30 statusAgeSec=48
+statusFound=yes statusBytes=909 statusLines=30 statusAgeSec=35
 statusFresh=yes
 
 supervisor=running
@@ -14,27 +14,27 @@ running=3
 gaveUp=0
 autostart=removed
 resync=ok/f76c3398
-outboxFiles=19
-outboxReceipts=55
+outboxFiles=29
+outboxReceipts=65
 outboxRefusals=494
-written=2026-09-14T17:46:33
-botSweepPasses=68
+written=2026-09-14T21:08:39
+botSweepPasses=162
 botSweepSent=0
 botSweepRefused=0
 botSweepEverySec=120
 botSweepSecSinceLast=0
-botSweepLastResult=sent0/refused0/of19
+botSweepLastResult=sent0/refused0/of29
 botBriefTapsFiled=0
 botBriefReasonsFiled=0
-botUptimeSec=8579
-botSweepWrittenAt=2026-09-14T17:46:29
-botSweepAgeSec=4
+botUptimeSec=20609
+botSweepWrittenAt=2026-09-14T21:06:58
+botSweepAgeSec=101
 botSweepStatus=read/10-key(s)
 executorState=idle
 executorHandled=2
 executorPending=0
 executorLimitResumeIn=none
-studio-watcher=running studio-watcherUptimeSec=268411 studio-watcherStarts=1 studio-watcherStops=0 studio-watcherLastExit=none
-telegram-bot=running telegram-botUptimeSec=8584 telegram-botStarts=5 telegram-botStops=4 telegram-botLastExit=4294967295
-claude-executor=running claude-executorUptimeSec=268220 claude-executorStarts=5 claude-executorStops=4 claude-executorLastExit=3
+studio-watcher=running studio-watcherUptimeSec=280537 studio-watcherStarts=1 studio-watcherStops=0 studio-watcherLastExit=none
+telegram-bot=running telegram-botUptimeSec=20710 telegram-botStarts=5 telegram-botStops=4 telegram-botLastExit=4294967295
+claude-executor=running claude-executorUptimeSec=280346 claude-executorStarts=5 claude-executorStops=4 claude-executorLastExit=3
 

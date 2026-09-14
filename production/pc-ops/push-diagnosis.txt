@@ -1,31 +1,31 @@
-# LEDGER push diagnosis - 8574fb7 @1789400818
+# LEDGER push diagnosis - 622bc39 @1789412928
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=23afb243469303fe9fdb1cbb0b8fc02943f2f740
-localTipRef=23afb243469303fe9fdb1cbb0b8fc02943f2f740
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=15db42b56d9ba913c7a5cf6e9fed143a37100df2
+localTipRef=15db42b56d9ba913c7a5cf6e9fed143a37100df2
 onDisk_production_inbox=3
-onDisk_production_outbound=549
+onDisk_production_outbound=559
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=55 newestShown=16/16 (+39 older not shown)
+receiptsOnDisk=65 newestShown=16/16 (+49 older not shown)
+receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md messageId=91 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md messageId=90 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md messageId=89 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md messageId=88 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-3of5-rdr2-part2.answer.md messageId=87 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-3of5-rdr2-part1.answer.md messageId=86 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md messageId=83 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md messageId=85 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-2of5-hitman-part1.answer.md messageId=84 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-1of5-kcd2-part1.answer.md messageId=82 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbound/2026-09-14T132330Z-reply-81.receipt.txt messageId=81 sent=2026-09-14T13:23:30+00:00
 receipt file=production/outbound/2026-09-14T132330Z-reply-80.receipt.txt messageId=80 sent=2026-09-14T13:23:30+00:00
-receipt file=production/outbound/2026-09-13T011416Z-reply-79.receipt.txt messageId=79 sent=2026-09-13T01:14:16+00:00
 receipt file=production/outbound/2026-09-13T011415Z-reply-78.receipt.txt messageId=78 sent=2026-09-13T01:14:15+00:00
+receipt file=production/outbound/2026-09-13T011416Z-reply-79.receipt.txt messageId=79 sent=2026-09-13T01:14:16+00:00
 receipt file=production/outbox/2026-09-11T1316Z-79313220.answer.md messageId=76 sent=2026-09-11T13:18:43+00:00
 receipt file=production/outbox/2026-09-11-yes-it-works.answer.md messageId=77 sent=2026-09-11T14:22:27+00:00
-receipt file=production/outbound/2026-09-11T131659Z-reply-75.receipt.txt messageId=75 sent=2026-09-11T13:16:59+00:00
-receipt file=production/outbound/2026-09-11T131345Z-reply-73.receipt.txt messageId=73 sent=2026-09-11T13:13:45+00:00
-receipt file=production/outbound/2026-09-11T131324Z-reply-72.receipt.txt messageId=72 sent=2026-09-11T13:13:24+00:00
-receipt file=production/outbound/2026-09-11T075732Z-reply-70.receipt.txt messageId=70 sent=2026-09-11T07:57:32+00:00
-receipt file=production/outbound/2026-09-11T075733Z-reply-71.receipt.txt messageId=71 sent=2026-09-11T07:57:33+00:00
-receipt file=production/outbound/2026-09-11T061844Z-reply-68.receipt.txt messageId=68 sent=2026-09-11T06:18:44+00:00
-receipt file=production/outbound/2026-09-11T061844Z-reply-69.receipt.txt messageId=69 sent=2026-09-11T06:18:44+00:00
-receipt file=production/outbound/2026-09-11T060000Z-reply-66.receipt.txt messageId=66 sent=2026-09-11T06:00:00+00:00
-receipt file=production/outbound/2026-09-11T060000Z-reply-67.receipt.txt messageId=67 sent=2026-09-11T06:00:00+00:00
-receipt file=production/briefs/2026-09-10.md messageId=63 sent=2026-09-10T04:44:37+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent
