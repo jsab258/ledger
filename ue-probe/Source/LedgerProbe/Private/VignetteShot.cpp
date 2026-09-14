@@ -209,7 +209,10 @@ namespace
 	// production/specs/vignette-scene.json as fog_max_opacity, required in
 	// both readers, and four probe rows at the grid's reference cell print
 	// the series 0.450 / 0.250 / 0.100 / 0.000 that a constant would be set
-	// from. The two judged conditions carry 0.450, so nothing moved.
+	// from. The two judged conditions carried 0.450 when this was retired,
+	// so nothing moved that day; overcast_day moved to 0.100 on 2026-09-14
+	// by ruling off the rendered series, and the rows sharing its cell
+	// followed it (ruling of 18:23Z).
 	// The derivation is kept because it is what the series is read against:
 	// the far field measured 0.980 luma against the reference panel's 0.808,
 	// and for an atmosphere rendering at S between 0.60 and 0.70 the cap that
@@ -1545,7 +1548,10 @@ namespace
 				// measured ones and an unknown, and it was never a series.
 				// The field is required in both readers, so there is no path
 				// where this silently falls back to the literal; the verdict
-				// prints fogMaxOpacityRead beside what was asked.
+				// prints fogMaxOpacityRead ONCE PER RUN on the sky line, read
+				// off the component after the last condition applied
+				// (SkySegmentNow, last-wins), with nothing asked beside it;
+				// the per-shot read beside the ask is queue 287.
 				F->SetFogMaxOpacity(bWhole ? (float)C.FogMaxOpacity : 1.0f);
 			}
 		}

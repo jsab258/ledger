@@ -1175,3 +1175,92 @@ to a lost licence seat; read the verdict before the run's colour.
 # ladder.pin*.afterDayMinusAfterNightMeanLuma differences with both halves and
 # ladderSmallestDiffPin. A pin whose two halves disagree is not the answer, and
 # if none agree then none is, which is a result and not a failure.
+
+# ---------------------------------------------------------------------------
+# run 42 - 2026-09-14 - THE FOG COMES DOWN AND THE SKY IS THE THING BEING
+# PHOTOGRAPHED. Section 2.5 of
+# game-design/decision-2026-09-14-ruling-the-prune-is-gone-seven-is-a-floor-and-the-fog-is-the-cloud-deck.md.
+#
+# WHAT CHANGED IN THE SPEC. overcast_day fog_max_opacity 0.450 to 0.100,
+# chosen off a RENDERED cell rather than interpolated: vign_fog_maxop0100 on
+# 32bae70. Six new one-run probe rows, three fog rungs inside the 0.100 to
+# 0.000 bracket nothing had photographed (0.020, 0.050, 0.080) and three sky
+# rungs crossed with the new cap (sky 0.35, 0.50, 0.70 at fog 0.100). The four
+# exposure rungs follow the judged cell to 0.100 because a rung is the judged
+# day cell in every field but the pin; pin_setter_night stays at 0.450 because
+# it matches wet_night, which this ruling does not touch. THE PIN ITSELF IS
+# UNTOUCHED at 0.030 / 0.300 / 3.000 / 10.000, value in force still 0.300.
+#
+# AND FIVE MORE ROWS FOLLOW, ruled 18:23Z in
+# game-design/decision-2026-09-14-ruling-the-null-series-follows-the-judged-row.md:
+# grid_sky100_sun003, grid_null_repeat, wet_000, wet_060 and wet_100 go to
+# 0.100 as well. They carried a LITERAL 0.450 copied on 9 September that
+# nothing derived, and the grid's reference cell exists to carry the judged
+# row's inputs, so when the judged row moved they were stale rather than
+# independent. No guard was re-anchored and no bound moved to achieve this;
+# one guard was ADDED in both suites asserting the reference cell equals the
+# judged day row in every field that lights a frame, tested red on the unmoved
+# file before it was tested green on the moved one.
+#
+# THE COST, NAMED BEFORE THE RUN RATHER THAN DISCOVERED AFTER IT: the eleven
+# other grid cells stay at 0.450 and therefore carry NO identical-input pair
+# from this dispatch on. NO CELL OF THE TWELVE-CELL SKY GRID MAY BE QUOTED
+# FROM THIS RUN OR ANY LATER ONE. Its 32bae70 reading stands on that run's own
+# CLEAR floor and is the last one that will. Queue 285's landing decides
+# whether those eleven move or retire.
+#
+# WHAT THIS RUN IS EXPECTED TO READ, WRITTEN BEFORE IT RUNS so that no reading
+# can be explained afterwards:
+#
+#   1. THE JUDGED FRAME GETS DARKER AND THAT IS THE CHANGE ARRIVING, NOT A
+#      REGRESSION. On 32bae70 vign_hook_day read band.skyCentre.p50 0.9331 and
+#      band.ground.p05 0.4618. Its twin at the new cap, vign_fog_maxop0100,
+#      read 0.8035 and 0.2532 in the same run, and the two conditions are
+#      identical on all eleven compared fields, so those are the values
+#      vign_hook_day should now land on. Anything far from them means the cap
+#      did not arrive.
+#   2. rigMeanLumaFirst AND rigMeanLumaRepeat BOTH MOVE DOWN, because the rig
+#      repeat is of vign_camA_day and camA_day's condition is the judged row
+#      whose fog just fell. On 32bae70 they read 0.6409 and 0.6443. A lower
+#      pair is the fog; a changed DIFFERENCE between them is the rig.
+#   3. rigDeterminism IS STILL EXPECTED TO READ DIFFERS. It read 784509 of
+#      921600 pixels on 32bae70, down from 921600 of 921600 on 83dec33, and
+#      nothing in this batch touches the cause. Queue 235's acceptance is NOT
+#      met by this run. Predicting the shortfall before the dispatch is what
+#      stops it being explained afterwards.
+#   3b. THE NULL GROUP BECOMES NINE AND IT NOW CONTAINS AN EARLY SHOT, which
+#      is a test of the second cause and not only bookkeeping. Expected ids in
+#      shot order: hook_day, grid_sky100_sun003, fog_maxop0100, wet_000,
+#      wet_060, wet_100, pin_030_afternight, pin_030_afterday,
+#      grid_null_repeat, with the repeat last and no tied group. On 32bae70 the
+#      nine at cam_hook spread 0.0002 on mean luma. The camA repeat, by
+#      contrast, read a delta of +0.0034, seventeen times that spread, which
+#      sub-pixel antialiasing does not explain; the 18:23Z ruling names "the
+#      first frame after the scene build" as a CANDIDATE and not a finding.
+#      vign_hook_day is an early shot in this list. IF THAT CANDIDATE IS REAL
+#      THE NINE-FRAME SPREAD WIDENS AND hook_day IS THE OUTLIER; if the spread
+#      holds near 0.0002 with hook_day inside it, the candidate is weakened.
+#      Either reading is a result. Queue 235 owns the decisive version.
+#   4. THE SEVEN-ROW FOG SEQUENCE IS NOT MONOTONE IN SHOT ORDER (0.450, 0.250,
+#      0.100, 0.000, then 0.020, 0.050, 0.080) and neither is the sky trio, so
+#      a drift ordered by shot cannot pass as a response to the lever. That is
+#      condition C6 of the grid ruling applied to both new series.
+#   5. NO CONSTANT IS SET FROM THIS RUN. The finer fog series is read by queue
+#      285 and the sky's own lever by queue 286. This run prints; a later
+#      ruling sets.
+#
+# WHAT THIS RUN CANNOT SETTLE, said plainly.
+#   - It cannot make the street READ WET. wetness is parsed at
+#     VignetteSpec.h:497 and has no read site in VignetteShot.cpp; the other
+#     engine applies it at StreetVignetteHost.cs line 715 and it was never
+#     ported. Every wetness row in this run photographs the same dry street.
+#   - It cannot produce dusk. Every row here is a midday sun elevation; a dusk
+#     built by dimming sun_intensity while the elevation stays at 36 is
+#     refused by the ruling and is queue 283's to build.
+#   - It cannot close the open end of the street, which is queue 180.
+#
+# THE READING ORDER. lightAimStatus first, because a sun that did not arrive
+# voids the rest. Then the seven fog rows and the three sky rows on
+# band.skyCentre.p50 and band.ground.p05 ONLY, per section 2.1: whole-frame
+# mean and near-black are contaminated below about fog 0.25 by the open end of
+# the street. Then OPEN ue-vign_hook_day.png BEFORE READING ANY GATE COLOUR.

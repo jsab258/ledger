@@ -283,6 +283,89 @@ static PinReading ReadPins(const std::vector<LedgerVignette::Condition>& Conds,
 	return R;
 }
 
+// ---- THE REFERENCE CELL AGAINST THE JUDGED DAY ROW, 2026-09-14 -----------
+//
+// Ruled at 18:23Z in game-design/decision-2026-09-14-ruling-the-null-series-
+// follows-the-judged-row.md. The grid's reference cell exists to carry the
+// judged row's inputs, which is the whole reason the judged hook frame is
+// itself a member of the null series. Its fields were a COPY of overcast_day's
+// taken on 9 September and nothing in the spec derives them, so when the
+// judged row moved to fog_max_opacity 0.100 the copy went stale in silence and
+// the judged frame walked out of its own noise floor. This comparison is the
+// pair that move owes.
+//
+// IT NAMES THE FIRST FIELD THAT DIFFERS AND BOTH VALUES, because "the two rows
+// differ" sends the reader back to the JSON and "fog_max_opacity ref=0.450000
+// judged=0.100000" does not.
+//
+// WETNESS IS IN THE COMPARISON AND IS NOT IN THE APPLIED-INPUT FINGERPRINT,
+// which is deliberate and not an oversight: `wetness` has no read site in
+// VignetteShot.cpp on this commit (queue 186), so two rows differing only in
+// it render one street HERE, but a reference cell that has drifted in wetness
+// is a false reference the day queue 186 wires it. The fingerprint says what
+// this engine renders; this says what the reference cell is FOR.
+static std::string NullRefFieldStr(double V)
+{
+	char Buf[64];
+	std::snprintf(Buf, sizeof(Buf), "%.6f", V);
+	return std::string(Buf);
+}
+
+static std::string RefCellAgainstJudged(const LedgerVignette::Condition& Ref,
+                                        const LedgerVignette::Condition& Day)
+{
+	if (Ref.Hdri != Day.Hdri)
+	{
+		return "hdri ref=" + Ref.Hdri + " judged=" + Day.Hdri;
+	}
+	if (Ref.SunOn != Day.SunOn)
+	{
+		return std::string("sun ref=") + (Ref.SunOn ? "on" : "off")
+		     + " judged=" + (Day.SunOn ? "on" : "off");
+	}
+	if (Ref.LanternsOn != Day.LanternsOn)
+	{
+		return std::string("lanterns ref=") + (Ref.LanternsOn ? "on" : "off")
+		     + " judged=" + (Day.LanternsOn ? "on" : "off");
+	}
+	if (Ref.WindowsOn != Day.WindowsOn)
+	{
+		return std::string("window_practicals ref=") + (Ref.WindowsOn ? "on" : "off")
+		     + " judged=" + (Day.WindowsOn ? "on" : "off");
+	}
+	if (std::fabs(Ref.SunIntensity - Day.SunIntensity) > 1e-12)
+	{
+		return "sun_intensity ref=" + NullRefFieldStr(Ref.SunIntensity)
+		     + " judged=" + NullRefFieldStr(Day.SunIntensity);
+	}
+	if (std::fabs(Ref.SkyIntensity - Day.SkyIntensity) > 1e-12)
+	{
+		return "sky_intensity ref=" + NullRefFieldStr(Ref.SkyIntensity)
+		     + " judged=" + NullRefFieldStr(Day.SkyIntensity);
+	}
+	if (std::fabs(Ref.Wetness - Day.Wetness) > 1e-12)
+	{
+		return "wetness ref=" + NullRefFieldStr(Ref.Wetness)
+		     + " judged=" + NullRefFieldStr(Day.Wetness);
+	}
+	if (std::fabs(Ref.FogDensity - Day.FogDensity) > 1e-12)
+	{
+		return "fog_density ref=" + NullRefFieldStr(Ref.FogDensity)
+		     + " judged=" + NullRefFieldStr(Day.FogDensity);
+	}
+	if (std::fabs(Ref.FogMaxOpacity - Day.FogMaxOpacity) > 1e-12)
+	{
+		return "fog_max_opacity ref=" + NullRefFieldStr(Ref.FogMaxOpacity)
+		     + " judged=" + NullRefFieldStr(Day.FogMaxOpacity);
+	}
+	if (std::fabs(Ref.ExposurePin - Day.ExposurePin) > 1e-12)
+	{
+		return "exposure_pin ref=" + NullRefFieldStr(Ref.ExposurePin)
+		     + " judged=" + NullRefFieldStr(Day.ExposurePin);
+	}
+	return std::string();
+}
+
 // THE PROVENANCE STRING IS READ OFF THE SCENE FILE BESIDE THE PIECE LIST, AND
 // THIS IS A MEASUREMENT AND NOT A CONVENIENCE. production/specs/vignette-
 // scene.json is where the resident writes the string; the piece list is
@@ -472,8 +555,18 @@ int main(int argc, char** argv)
 		      "the day condition carries the retired sun literal and day sky constant unchanged");
 		Check(std::fabs(NightSun) < 1e-9 && std::fabs(NightSky - 0.35) < 1e-9,
 		      "the night condition carries the night sky constant with its sun at zero");
-		Check(std::fabs(DayCap - 0.450) < 1e-9,
-		      "and the retired fog cap literal, 0.45, unchanged on the judged day row");
+		// THE JUDGED ROW MOVED, 2026-09-14, AND THIS IS THE OTHER HALF OF THE
+		// MATCHED SET: CoreTests asserts the same number in the same commit, so
+		// the two engines cannot disagree about what the street is judged at.
+		// Until today this read 0.450 under the sentence "the field replaced the
+		// literal and moved no number", which was true on 9 September and is
+		// deliberately false now. A RENDERED cell, not an interpolation:
+		// vign_fog_maxop0100 on 32bae70, verdict line 208, band.skyCentre.meanLuma
+		// 0.7979 against the sheet's 0.808 and band.ground.p05 0.2532 against
+		// its 0.1935.
+		Check(std::fabs(DayCap - 0.100) < 1e-9,
+		      "the judged day row's fog cap is 0.100, moved by the ruling of 2026-09-14 "
+		      "from the fog series on 32bae70");
 		// THE GRID IS THE CROSS AND NOTHING ELSE, counted out of the file.
 		const double Skies[4] = { 1.00, 0.70, 0.50, 0.35 };
 		const double Suns[3]  = { 3.0, 10.0, 30.0 };
@@ -522,6 +615,46 @@ int main(int argc, char** argv)
 		      && std::fabs(Null->FogMaxOpacity - Ref->FogMaxOpacity) < 1e-12,
 		      "the null cell is the reference cell in every field that lights a frame",
 		      "a null pair that differs in any input measures that difference and not the rig");
+		// AND THE OTHER HALF OF THE SAME CLAIM, ADDED 2026-09-14 BY THE
+		// RULING OF 18:23Z (game-design/decision-2026-09-14-ruling-the-null-
+		// series-follows-the-judged-row.md): THE REFERENCE CELL IS THE JUDGED
+		// DAY ROW. The check above proves the null cell repeats the reference
+		// cell; nothing proved the reference cell was still the row Jafar
+		// judges. It was not, from the moment overcast_day moved to
+		// fog_max_opacity 0.100 and the five rows sharing its cell kept their
+		// 9 September copies of 0.450, and the guard that went red was the one
+		// at the far end of the file, one round trip later. ACCEPTING CASE
+		// FIRST, then the planted rejection below.
+		const LedgerVignette::Condition* JudgedDay = 0;
+		for (size_t I = 0; I < S.Conditions.size(); ++I)
+		{
+			if (S.Conditions[I].Id == "overcast_day") { JudgedDay = &S.Conditions[I]; }
+		}
+		std::string RefDiff = "nothing measured: overcast_day or grid_sky100_sun003 is not in the spec";
+		if (Ref != 0 && JudgedDay != 0) { RefDiff = RefCellAgainstJudged(*Ref, *JudgedDay); }
+		Check(Ref != 0 && JudgedDay != 0 && RefDiff.empty(),
+		      "the grid's reference cell is the judged day row in every field that lights a "
+		      "frame, because the reference cell exists to carry the judged row's inputs and "
+		      "a judged frame that is not in its own null series has walked out of the floor "
+		      "that speaks for it",
+		      RefDiff);
+		// THE REJECTING CASE, PLANTED, so this is watched on every run and not
+		// only on the night it was written (rule 5b). A copy of the parsed
+		// reference cell with its fog set back to the 0.450 it carried before
+		// the ruling: the comparison must refuse it, and must refuse it BY
+		// NAMING fog_max_opacity, since a refusal for some other reason would
+		// pass a check that had stopped reading the field it is about.
+		std::string PlantedDiff = "nothing measured: no reference cell to plant into";
+		if (Ref != 0 && JudgedDay != 0)
+		{
+			LedgerVignette::Condition Planted = *Ref;
+			Planted.FogMaxOpacity = 0.450;
+			PlantedDiff = RefCellAgainstJudged(Planted, *JudgedDay);
+		}
+		Check(PlantedDiff.rfind("fog_max_opacity ", 0) == 0,
+		      "and the comparison refuses a reference cell planted back at the retired fog cap, "
+		      "naming fog_max_opacity and both values",
+		      PlantedDiff.empty() ? std::string("accepted a planted 0.450 as equal") : PlantedDiff);
 		// C6, MECHANICALLY: THE SHOT ORDER RISES AND FALLS IN SKY. The
 		// retired ladder rendered in increasing order, so a drift ordered by
 		// shot was perfectly confounded with a response to the light.
@@ -549,22 +682,80 @@ int main(int argc, char** argv)
 		      "the grid's shot order rises and falls in sky, so no drift ordered by shot passes as a sky response",
 		      "rose and fell are both required, which is condition C6");
 		// A4, THE FOG SERIES, AND A3, THE WETNESS SERIES.
-		const double WantFog[4] = { 0.450, 0.250, 0.100, 0.000 };
-		int FogRows = 0;
-		for (int A = 0; A < 4; ++A)
+		// SEVEN VALUES SINCE 2026-09-14, section 2.5 item 2 of the prune-and-fog
+		// ruling, and the three added are the ones nothing has photographed: the
+		// four rendered on 32bae70 read skyCentre 0.9268 / 0.8822 / 0.7979 /
+		// 0.6222 and ground.p05 0.4617 / 0.3625 / 0.2532 / 0.0862 against the
+		// sheet's 0.808 and 0.1935, so the sky crosses the sheet just above 0.100
+		// while the dark end is still 0.060 over it, and the whole disagreement
+		// between the two statistics lies inside 0.100 to 0.000.
+		// THE ROW COUNT IS ASSERTED BESIDE THE VALUE COUNT: an eighth fog row
+		// nobody named would otherwise ride in behind seven satisfied values.
+		const double WantFog[7] = { 0.450, 0.250, 0.100, 0.080, 0.050, 0.020, 0.000 };
+		int FogValues = 0, FogRows = 0;
+		for (int A = 0; A < 7; ++A)
 		{
 			for (size_t I = 0; I < S.Conditions.size(); ++I)
 			{
 				if (S.Conditions[I].Id.compare(0, 9, "fog_maxop") != 0) { continue; }
 				if (std::fabs(S.Conditions[I].FogMaxOpacity - WantFog[A]) < 1e-9)
 				{
-					++FogRows; break;
+					++FogValues; break;
 				}
 			}
 		}
-		Check(FogRows == 4,
-		      "four fog rows at 0.450, 0.250, 0.100 and 0.000, which is a series and not a pair",
-		      std::to_string(FogRows) + " of 4");
+		for (size_t I = 0; I < S.Conditions.size(); ++I)
+		{
+			if (S.Conditions[I].Id.compare(0, 9, "fog_maxop") == 0) { ++FogRows; }
+		}
+		Check(FogValues == 7 && FogRows == 7,
+		      "seven fog rows at 0.450, 0.250, 0.100, 0.080, 0.050, 0.020 and 0.000, which is a "
+		      "series across the bracket the sheet is crossed in and not a pair",
+		      std::to_string(FogValues) + " of 7 asked values found over "
+		      + std::to_string(FogRows) + " fog_maxop rows examined");
+		// AND THE THREE SKY ROWS THAT CROSS THE NEW CAP, FIELD BY FIELD against
+		// the judged day cell: a sky rung that also moved the wetness would
+		// measure the wetness. The twelve-cell grid was shot with fog pinned at
+		// 0.450, so this cross has never been rendered.
+		{
+			const LedgerVignette::Condition* Day = 0;
+			for (size_t I = 0; I < S.Conditions.size(); ++I)
+			{
+				if (S.Conditions[I].Id == "overcast_day") { Day = &S.Conditions[I]; }
+			}
+			const double WantCrossSky[3] = { 0.35, 0.50, 0.70 };
+			int CrossRows = 0, CrossMatching = 0, CrossSkies = 0;
+			for (size_t I = 0; I < S.Conditions.size(); ++I)
+			{
+				const LedgerVignette::Condition& C = S.Conditions[I];
+				if (C.Id.compare(0, 10, "fog010_sky") != 0) { continue; }
+				++CrossRows;
+				if (Day != 0 && C.Hdri == Day->Hdri && C.SunOn == Day->SunOn
+				    && C.LanternsOn == Day->LanternsOn && C.WindowsOn == Day->WindowsOn
+				    && std::fabs(C.SunIntensity - Day->SunIntensity) < 1e-12
+				    && std::fabs(C.Wetness - Day->Wetness) < 1e-12
+				    && std::fabs(C.FogDensity - Day->FogDensity) < 1e-12
+				    && std::fabs(C.ExposurePin - Day->ExposurePin) < 1e-12
+				    && std::fabs(C.FogMaxOpacity - 0.100) < 1e-12) { ++CrossMatching; }
+			}
+			for (int A = 0; A < 3; ++A)
+			{
+				for (size_t I = 0; I < S.Conditions.size(); ++I)
+				{
+					if (S.Conditions[I].Id.compare(0, 10, "fog010_sky") != 0) { continue; }
+					if (std::fabs(S.Conditions[I].SkyIntensity - WantCrossSky[A]) < 1e-9)
+					{
+						++CrossSkies; break;
+					}
+				}
+			}
+			Check(CrossRows == 3 && CrossMatching == 3 && CrossSkies == 3,
+			      "three sky rows cross the new fog cap at 0.35, 0.50 and 0.70, each the judged "
+			      "day cell in every field but the sky it moves",
+			      std::to_string(CrossRows) + " rows, " + std::to_string(CrossMatching)
+			      + " matching the judged cell at fog 0.100, " + std::to_string(CrossSkies)
+			      + " of 3 asked sky values found");
+		}
 		const double WantWet[3] = { 0.0, 0.60, 1.0 };
 		int WetRows = 0;
 		for (int A = 0; A < 3; ++A)

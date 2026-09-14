@@ -115,11 +115,21 @@ his mornings rather than one, and that is the trade queue 272 asks him to rule
 on. It is worth saying plainly that the line held four times is starting to
 look less like discipline and more like the deadlock reporting itself.
 
-THE BUDGET READING WENT STALE DURING THIS. The newest row is 2026-09-11, which
-is past the 48 hour bound both triggers set, so by their own rule the studio is
-held to work that costs no model time until he sends two fresh figures. That
-now compounds rather than merely coexists: the reading is stale BECAUSE the
-channel is down, and the channel is down on the meter the reading would price.
+THE BUDGET READING WENT STALE DURING THIS, AND THAT IS RETRACTED AS OF
+2026-09-14T18:45Z. The paragraph above said "the newest row is 2026-09-11",
+that the reading was past the 48 hour bound, and that the studio was therefore
+held to work costing no model time. All three were true when written and all
+three are now false. production/budget.md row 43 is dated 2026-09-14 and reads
+2 per cent total and 0 per cent Fable, reported by Jafar at about 13:0xZ
+opening the visual-slice week, and that row records the weekly limit resetting,
+which voids every rate computed before it. The hold is lifted and the ceiling
+is 85 on the governing meter, standing.
+
+THE RUNNER IS BACK, WHICH THE NEXT PARAGRAPH ALSO PREDATES. It was dark from
+2026-09-11 until today; the Unreal probe then ran to success on Jafar's PC at
+2026-09-14T14:53Z on commit 32bae70, which is the run every fog reading in
+today's work is taken from. Anything below written on the assumption that the
+channel is down describes 11 to 13 September and not now.
 
 WHAT WOULD HAVE HAPPENED IF THE BRIEF HAD BEEN WRITTEN, because it changes who
 is waiting on whom. The sender is the bot on his PC, not the self hosted

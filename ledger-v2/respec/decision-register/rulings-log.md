@@ -236,6 +236,13 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   `game-design/decision-2026-09-14-ruling-twelve-rulings-the-visual-week-and-the-producer-may-step-down.md`
 - **2026-09-14** the plan is two documents, the phases FOLD into `production/stages.md`, and `roadmap-v2.md` is retired as a plan document; the edits owed to CLAUDE.md, the goal block and four pointers are dictated in it
   `game-design/decision-2026-09-14-ruling-the-plan-is-two-documents-and-the-phases-fold.md`
+- **2026-09-14** the null series follows the judged row: the grid's
+  reference cell, its null repeat and the three wetness rows take the
+  judged row's fog (0.100) because their 0.450 was a copy; no guard
+  re-anchored, no bound moved; item 6 of the 16:25Z fog ruling
+  restated to what the verdict can answer; 287 to 290 filed and 235
+  given its next measurement
+  `game-design/decision-2026-09-14-ruling-the-null-series-follows-the-judged-row.md`
 
 ## Rulings that came off the card queue
 
