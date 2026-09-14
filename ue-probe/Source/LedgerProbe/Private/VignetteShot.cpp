@@ -491,7 +491,19 @@ namespace
 	// the 2026-09-09 ruling: the action is per camera placement and the
 	// evidence for it was not, and only the evidence is committed.
 	LedgerVignette::ExposurePinIn GShotPin;
-	int32 GPinAsking = 0, GPinRead = 0, GPinHeld = 0;
+	int32 GPinAsking = 0, GPinRead = 0, GPinHeld = 0, GPinLeaked = 0;
+	// ---- WHAT THE COMPONENT SAID BEFORE THIS MODULE TOUCHED IT ----------
+	//
+	// CAPTURED, NEVER ASSUMED. A shot that asks for no pin has to put the two
+	// brightness fields back to something, and the only honest something is
+	// what was there first. Typing the engine defaults in from memory would
+	// make an unpinned frame carry this file's idea of the engine's policy;
+	// the run at f6508b3 read them as 0.0300 and 8.0000, which is evidence
+	// about ONE engine version and not a constant.
+	// Captured ONCE, at the first camera placement of the run, before the
+	// first write. bCaptured false means no camera component ever answered.
+	bool   GPinCaptured    = false;
+	double GPinCapturedMin = 0.0, GPinCapturedMax = 0.0;
 	// THE LADDER'S ROWS, COLLECTED IN SHOT ORDER. Only rows whose condition
 	// asks for a pin enter this, and the predecessor's lighting family is READ
 	// off the shot photographed before this one rather than off the row's name.
@@ -1475,7 +1487,8 @@ namespace
 		// HANDED TO THE ONE PLACE THAT WRITES POST-PROCESS VALUES. Zero or
 		// less is a condition asking for nothing, which is what every
 		// condition written before 2026-09-10 says, and PlaceCamera then
-		// writes no override at all.
+		// writes the override flags FALSE and restores the captured clamp
+		// values, 2026-09-14; see the LEAK block at the write site.
 		GExposurePinNow = C.ExposurePin;
 		GExposurePinFamilySunOn = C.SunOn;
 		const FLinearColor DaySky(0.42f, 0.46f, 0.52f, 1.0f);
@@ -1816,13 +1829,43 @@ namespace
 				// post-process value in this module; the block below reads.
 				// The write sits at the camera placement, which happens once
 				// per shot, so the pin is per frame and not per run.
-				if (LedgerVignette::ExposurePinAsked(GExposurePinNow))
+				//
+				// ---- THE LEAK, AND WHY THERE IS NO `if` WITHOUT AN `else`
+				// HERE ANY MORE, 2026-09-14 ----
+				//
+				// THE COMMENT ABOVE WAS FALSE AND THE VERDICT SAID SO FOR A
+				// WHOLE RUN. "A condition asking for nothing writes NO
+				// override here, so the rows that were already being
+				// photographed are photographed exactly as before" is only
+				// true of a camera that is thrown away between shots. This
+				// one is SPAWNED ONCE AND MOVED, which the run line prints
+				// as shotCamActorStat=one-per-run, so an override written by
+				// a pinned shot stayed in force for every shot after it.
+				// Four rows of thirty seven at f6508b3 asked for no pin and
+				// read back 0.0300, 0.3000, 3.0000 and 10.0000 with
+				// overrides 1/1, and the determinism repeat, an overcast_day
+				// frame asking for nothing, came back at 0.0518 against the
+				// same shot's 0.6099 at the top of the run.
+				//
+				// SO THE FLAGS ARE WRITTEN ON EVERY SHOT, true or false, and
+				// the decision is made in VignetteSpec.h where g++ runs it.
+				// An unpinned shot restores the values CAPTURED off the
+				// component before the run's first write.
+				if (!GPinCaptured)
 				{
-					PPW.bOverride_AutoExposureMinBrightness = true;
-					PPW.AutoExposureMinBrightness           = (float)GExposurePinNow;
-					PPW.bOverride_AutoExposureMaxBrightness = true;
-					PPW.AutoExposureMaxBrightness           = (float)GExposurePinNow;
+					GPinCaptured    = true;
+					GPinCapturedMin = (double)PPW.AutoExposureMinBrightness;
+					GPinCapturedMax = (double)PPW.AutoExposureMaxBrightness;
 				}
+				const LedgerVignette::ExposurePinWriteOut PinWrite =
+					LedgerVignette::ExposurePinWriteFor(
+						GExposurePinNow, GPinCaptured, GPinCapturedMin, GPinCapturedMax,
+						(double)PPW.AutoExposureMinBrightness,
+						(double)PPW.AutoExposureMaxBrightness);
+				PPW.bOverride_AutoExposureMinBrightness = PinWrite.bOverride;
+				PPW.bOverride_AutoExposureMaxBrightness = PinWrite.bOverride;
+				PPW.AutoExposureMinBrightness           = (float)PinWrite.Min;
+				PPW.AutoExposureMaxBrightness           = (float)PinWrite.Max;
 				const FPostProcessSettings& PP = CC->PostProcessSettings;
 				// ASKED BESIDE READ, PER SHOT, THE WAY THE LIGHT AIM LINE
 				// DOES IT. A value that lands on the game thread and never
@@ -2262,14 +2305,28 @@ namespace
 		Out.Add(FString(UTF8_TO_TCHAR(LightAimNow().c_str())));
 		// QUEUE 235: THE EXPOSURE LADDER AND THE RUN'S PIN TALLY, IMMEDIATELY
 		// BEFORE THE DETERMINISM LINE THEY EXIST TO REPAIR. The ladder is the
-		// series a later commit reads the pinned value off; the run line says
-		// how many rows asked for a pin, how many held it, and in as many
-		// words that NO CONSTANT WAS SET FROM THIS RUN.
+		// series the pinned value was read off; the run line says how many
+		// rows asked for a pin, how many held it, HOW MANY WERE PHOTOGRAPHED
+		// AT AN EXPOSURE NOBODY ASKED FOR, and where the live value came from.
 		Out.Add(FString(UTF8_TO_TCHAR(
 			LedgerVignette::ExposureLadderLine(GLadder).c_str())));
-		Out.Add(FString(UTF8_TO_TCHAR(LedgerVignette::ExposurePinDoneLine(
-			(int)GPinAsking, (int)GPinHeld, (int)GPinRead,
-			(int)GSpec.Shots.size()).c_str())));
+		{
+			LedgerVignette::ExposurePinRun PinRun;
+			PinRun.RowsAsking  = (int)GPinAsking;
+			PinRun.RowsHeld    = (int)GPinHeld;
+			PinRun.RowsRead    = (int)GPinRead;
+			PinRun.RowsLeaked  = (int)GPinLeaked;
+			PinRun.RowsOffered = (int)GSpec.Shots.size();
+			// THE CONDITION HALF IS COUNTED OFF THE SPEC, not off the shots:
+			// a condition carrying a pin and a shot taking one are different
+			// facts and a run can photograph none of the conditions that
+			// carry one.
+			PinRun.CondsWithPin = LedgerVignette::ConditionsCarryingAPin(GSpec.Conditions);
+			PinRun.CondsOffered = (int)GSpec.Conditions.size();
+			PinRun.Provenance   = GSpec.ExposurePinProvenance;
+			Out.Add(FString(UTF8_TO_TCHAR(
+				LedgerVignette::ExposurePinDoneLine(PinRun).c_str())));
+		}
 		// THE RIG'S OWN DETERMINISM, BESIDE THE PASS SUMMARIES IT QUALIFIES.
 		Out.Add(FString(UTF8_TO_TCHAR(GRigLine.c_str())));
 		Out.Add(FString(UTF8_TO_TCHAR(DoneLine.c_str())));
@@ -2552,6 +2609,11 @@ namespace
 				++GPinAsking;
 				if (LedgerVignette::ExposurePinHeld(GShotPin)) { ++GPinHeld; }
 			}
+			// AND THE ROWS THAT ASKED FOR NOTHING AND GOT SOMEBODY ELSE'S
+			// EXPOSURE. Counted here, above every early return, for the same
+			// reason the other three are: a row whose frame never landed was
+			// still photographed at whatever the component carried.
+			else if (LedgerVignette::ExposurePinLeaked(GShotPin)) { ++GPinLeaked; }
 			// WHAT THIS ROW FOLLOWED, READ BEFORE THE MEMORY MOVES ON. The
 			// pairing is the measurement and the predecessor is read off the
 			// shot loop, never off the row's name.

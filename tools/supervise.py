@@ -316,8 +316,33 @@ def executor_sentence(repo):
                 "window are the authority." % type(e).__name__)
 
 
+#: What an executor status file that PREDATES a key reads as. An executor
+#: process started before the code that writes a key keeps running with the
+#: old code, so its file is missing the key rather than unreadable, and that
+#: is the state on the first run after any of this lands. Two different facts,
+#: two different words (rule 3b).
+KEY_ABSENT = "nothing-measured/key-absent"
+NO_STATUS_FILE = "nothing-measured/no-status-file"
+
+
 def executor_keys(repo):
-    """key=value pairs for the status file, from the executor's own file."""
+    """key=value pairs for the status file, from the executor's own file.
+
+    EVERY VALUE HERE IS COPIED, NEVER RECOMPUTED. The executor owns its own
+    arithmetic (`executor.cli_start_keys`, pure and tested there); a second
+    tally written over here would be the second implementation nobody fixes.
+
+    WHOLE-RUN NUMBERS, ON THE SUPERVISOR'S OWN LINE. `executorSessionsStarted`
+    is the executor's CUMULATIVE `<started>/<attempted>` since ITS process
+    started, which is not this supervisor's uptime; it is carried as one
+    paired value so a reader cannot join a numerator to the wrong denominator.
+
+    QUEUE 261. `executorCliWhy` is the one key this file did not carry on
+    2026-09-11, the day the executor told Jafar the tool was "not available"
+    and no channel anywhere said which of run_session's reasons that was.
+    `executorCli` stays and means only that `which()` resolved the NAME, which
+    executor.py's A6 case proves is NOT proof it starts.
+    """
     try:
         import executor as _executor
         st = _executor.read_status(repo)
@@ -325,11 +350,20 @@ def executor_keys(repo):
         st = {}
     if not st:
         return ["executorState=nothing-measured", "executorHandled=none",
-                "executorPending=none"]
+                "executorPending=none",
+                "executorCli=%s" % NO_STATUS_FILE,
+                "executorCliLastStart=%s" % NO_STATUS_FILE,
+                "executorCliWhy=%s" % NO_STATUS_FILE,
+                "executorSessionsStarted=%s" % NO_STATUS_FILE]
     return ["executorState=%s" % st.get("executor", "unreadable"),
             "executorHandled=%s" % st.get("handledTotal", "unreadable"),
             "executorPending=%s" % st.get("pendingNow", "unreadable"),
-            "executorLimitResumeIn=%s" % st.get("limitResumeIn", "none")]
+            "executorLimitResumeIn=%s" % st.get("limitResumeIn", "none"),
+            "executorCli=%s" % st.get("cli", KEY_ABSENT),
+            "executorCliLastStart=%s" % st.get("cliLastStart", KEY_ABSENT),
+            "executorCliWhy=%s" % st.get("cliWhy", KEY_ABSENT),
+            "executorSessionsStarted=%s" % st.get("sessionsStarted",
+                                                  KEY_ABSENT)]
 
 
 # --------------------------------------------------------------------------
@@ -1030,6 +1064,53 @@ def selftest():
     check("accept/and-its-keys-are-one-word-each-like-every-other-key-here",
           all("=" in t and " " not in t for t in executor_keys(exrepo)),
           executor_keys(exrepo))
+
+    # QUEUE 261: THE REASON THE CLI DID NOT START REACHES THIS FILE. On
+    # 2026-09-11 Jafar was told the tool was "not available on this machine"
+    # and `grep -rn "no-cli|notOnPath|wouldNotStart" production/pc-ops/` gave
+    # 0 hits over 8 pc-jobs paths. ACCEPTING CASE FIRST: a started session.
+    _executor.write_status(exrepo, dict(
+        {"executor": "working", "handledTotal": 2, "seenTotal": 3,
+         "pendingNow": 0, "cli": "found", "limitResumeIn": "none"},
+        **_executor.cli_start_keys(1, 1, True, "")))
+    keys = dict(k.split("=", 1) for k in executor_keys(exrepo))
+    check("accept/a-session-that-started-is-published-with-its-own-count",
+          keys["executorCliLastStart"] == "started"
+          and keys["executorSessionsStarted"] == "1/1", keys)
+    check("accept/and-a-started-session-publishes-no-reason-for-a-non-event",
+          keys["executorCliWhy"] == "none", keys)
+    # AND THE FAULT ITSELF: a session that did not start, with which reason.
+    _executor.write_status(exrepo, dict(
+        {"executor": "idle", "handledTotal": 1, "seenTotal": 1,
+         "pendingNow": 0, "cli": "missing", "limitResumeIn": "none"},
+        **_executor.cli_start_keys(1, 0, False,
+                                   "the session would not start (OSError)")))
+    keys = dict(k.split("=", 1) for k in executor_keys(exrepo))
+    check("accept/the-reason-the-CLI-did-not-start-is-on-the-published-file",
+          keys["executorCliWhy"] == "would-not-start/OSError"
+          and keys["executorCliLastStart"] == "not-started", keys)
+    check("accept/and-the-count-carries-its-denominator-on-the-same-key",
+          keys["executorSessionsStarted"] == "0/1", keys)
+    check("accept/every-published-key-is-still-one-word-per-value",
+          all("=" in t and " " not in t for t in executor_keys(exrepo)),
+          executor_keys(exrepo))
+    # REJECTING FIXTURES. An executor process older than this code writes a
+    # file WITHOUT these keys, which is the state on the first run after this
+    # lands: that is nothing measured, never "unreadable" and never a zero.
+    _executor.write_status(exrepo, {"executor": "idle", "handledTotal": 1,
+                                    "seenTotal": 1, "pendingNow": 0,
+                                    "cli": "found", "limitResumeIn": "none"})
+    keys = dict(k.split("=", 1) for k in executor_keys(exrepo))
+    check("reject/a-status-file-older-than-these-keys-says-key-absent",
+          keys["executorCliWhy"] == KEY_ABSENT
+          and keys["executorSessionsStarted"] == KEY_ABSENT, keys)
+    check("reject/and-never-prints-a-zero-a-reader-could-read-as-fine",
+          "0" not in keys["executorSessionsStarted"], keys)
+    nofile = dict(k.split("=", 1)
+                  for k in executor_keys(os.path.join(tmp, "no-executor")))
+    check("reject/and-no-status-file-at-all-is-a-different-word-again",
+          nofile["executorCliWhy"] == NO_STATUS_FILE
+          and NO_STATUS_FILE != KEY_ABSENT, nofile)
 
     # Autostart: written, read back, and the failure case named.
     good = os.path.join(tmp, "Startup")

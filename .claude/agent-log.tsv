@@ -569,3 +569,12 @@ when	agent	model	reason	agentId
 2026-09-13T07:19:15Z	producer	fable	default	a71bff254937410cb
 2026-09-13T13:21:37Z	producer	fable	default	adf986aebfe5963b1
 2026-09-14T04:08:35Z	producer	fable	default	ae1ebb9e741d1be0c
+2026-09-14T13:14:18Z	engine-specialist	opus	default	a7ea9438ed0d1ede6
+2026-09-14T13:14:38Z	claim-auditor	sonnet	default	a8fcd2d10ca75250d
+2026-09-14T13:18:16Z	instrument-builder	opus	default	a16d05a49b0495aa1
+2026-09-14T13:18:58Z	studio-director	fable	default	ab6fcb897fbfece03
+2026-09-14T13:24:28Z	engine-specialist	opus	default	a7ea9438ed0d1ede6
+2026-09-14T13:30:45Z	instrument-builder	opus	default	a16d05a49b0495aa1
+2026-09-14T13:31:06Z	claim-auditor	sonnet	default	a8fcd2d10ca75250d
+2026-09-14T13:32:57Z	engine-specialist	opus	default	a7ea9438ed0d1ede6
+2026-09-14T13:39:10Z	studio-director	fable	default	ab8dc97171d9eb224

@@ -1,4 +1,13 @@
 # D15: Mickey's is sited on the street that already exists
+
+> **SUPERSEDED 2026-09-14 BY D19.** Jafar ruled that Mickey's is a MINICAB
+> OFFICE, not a pub. This record is kept for its SITING argument, which D19
+> does not disturb: the reasoning about one street, one place, and two lanes
+> each free to build it somewhere still holds. What is DEAD here is every
+> sentence that treats the interior as a pub. Read D19 first, then this for
+> the siting only. Marked at Jafar's instruction in the same message as D19,
+> so the register carries no live-looking decisions that are dead.
+
 Date: 2026-09-08. Status: APPROVED (Jafar, in session). Owner: Direction.
 Context: the project has exactly one street built to the visual bar, walkable,
 and proven so by machine: 593 pieces, a character that walks it, collision that

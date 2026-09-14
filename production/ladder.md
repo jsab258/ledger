@@ -1,10 +1,12 @@
-# The plan: the visual ladder, and the phases underneath it
+# The plan's rungs: the visual ladder, under the stages
 
-STATUS: LIVE. verified 2026-09-10. THIS FILE PLUS `production/queue/` IS THE
-PLAN, ruled by Jafar 2026-09-10 in the same cleanup batch that gave the project
-one decision register. Before that ruling there were four plan documents and a
-reader had to guess which one governed. The fold is recorded at the bottom of
-this file, under "The fold of 2026-09-10".
+STATUS: LIVE. verified 2026-09-14. THIS FILE IS THE RUNGS OF THE PLAN. The arc
+above it is `production/stages.md`, the six stages Jafar ruled on 2026-09-14
+(D22); this file plus `production/queue/` is what he ruled the plan on
+2026-09-10, in the same cleanup batch that gave the project one decision
+register, and the stages now sit above it as the thing the rungs serve. Before
+the 2026-09-10 ruling there were four plan documents and a reader had to guess
+which one governed. The folds are recorded at the bottom of this file.
 
 The ladder itself was ruled by Jafar 2026-09-09, item 5 of that
 morning's message, and his own words are the whole specification: "The next
@@ -17,14 +19,16 @@ project overview's first screen, so the columns are a contract: `rung`, `name`,
 `later`. Exactly one row may be `current`. Change a rung's name here and the
 map changes; there is no second copy.
 
-WHAT THE LADDER MEASURES, AND WHAT THE PHASES MEASURE. The rung table below is
+WHAT THE LADDER MEASURES, AND WHAT THE STAGES MEASURE. The rung table below is
 ONE AXIS, the one Jafar can see without being told what to look at, and it ends
 at the Meridian Test's first condition: a person who loves GTA or KCD2 plays
-thirty minutes and does not bounce off the visuals. The phases and their exit
-gates, further down this file, are the other axis: what gets built, in what
-order, and what has to be true before a phase is done. They are not two plans.
-The rung is what Jafar looks at this week; the phase is what the work is for.
-`production/queue/` is where both turn into items somebody can pick up.
+thirty minutes and does not bounce off the visuals. The stages in
+`production/stages.md` are the other axis: what gets built, in what order, and
+what has to be true before a stage is done, with the phases' instrumented gates
+folded under them. They are not two plans. The rung is what Jafar looks at this
+week; the stage is what the work is for. `production/queue/` is where both turn
+into items somebody can pick up. The current stage is read off the rung marked
+`current` below and is typed nowhere else.
 
 WHY IT IS VISUAL-FIRST NOW. The art line shipped its research and its plans and
 skipped its visual half, and the channel was reporting counts rather than
@@ -61,90 +65,17 @@ ladder that only climbs is a ladder that lies.
 
 ## The phases, and the exit gate each one gets out on
 
-Folded in from `ledger-v2/respec/roadmap-v2.md` on 2026-09-10, where these rows
-were the whole plan from the respec of 2026-08-31. A gate here is a measurement,
-not an opinion, and the phase is not done until the gate reads true.
-
-ROW LAW, carried with the rows: a milestone stays under 80 words, carries an
-instrument link and a verified date, and detail lives in a milestone file. THE
-LAW IS NOT MET AND NOTHING MEASURES IT. Counted by hand on 2026-09-05, whole
-row: R 18 words, phase 0 39, 1 70, 2 68, 3 49, 4 44, 5 22, 6 22, worst 70 of 80;
-0 of 8 rows carries an instrument link or a verified date. `tools/docs-check.py`
-walks `game-design/` only and no tool reads a doc-decay rule, so the cap above is
-a hand count and not a gate. The checker is a queued process item,
-`production/queue/107-the-row-law-nothing-enforces.md`.
-
-- **Phase R, respec landed, canon written and approved.** Exit gate: Jafar
-  approves `canon.md` and the respec package.
-- **Phase 0, studio v2 scaffold; D1 engine probe; one assembly line piloted
-  (dialogue bank); judge calibration.** Exit gate: D1 decision recorded with
-  measurements; the pilot line yields a verified piece; judge agreement at or
-  above the threshold in `ledger-v2/studio-v2/verification.md`.
-- **Phase 1, the engine of consequence: Core on the chosen engine (perception,
-  memory, gossip, schedules, save), largely transliteration guarded by the
-  existing test suite.** Exit gate: the gossip instrument green, a witnessed
-  crime reaching a second and a third NPC within one in-game week; the sim
-  holding frame budget at target resident count; Core tests passing; and arrest
-  reachable from live play, meaning the arrest outcome's callers outside Core
-  counted and printed, not zero.
-- **Phase 2, a street that lives:** one street at the visual bar; kit and decal
-  density; moving faces; the live voice loop; the Ledger (D12); a
-  what-they-know HUD for law enforcement in wanted states only; petty crime
-  verbs; the witness-to-phone-box chase; 30 to 50 residents. Exit gate: Jafar's
-  feel check passed; the screenshot bar met per D7 judges; conversation latency
-  within budget; and the phase carrying a time budget set at kickoff.
-- **Phase 3, the town:** full Phase A scope; interior tiers; economy and cash;
-  factions; narrative v2; radio, TV and the brand bible; venues. Exit gate: the
-  hours-of-content instrument; the repetition blind test passed, no detectable
-  line repetition in a two-hour session; Meridian Test conditions 2 and 3
-  sampled.
-- **Phase 4, fists:** melee combat, improvised weapons, scarce firearms as
-  events. Exit gate: Core combat resolving a blow from a call site outside Core,
-  callers counted and printed, in a landed run; a feel check; and a gunshot
-  producing a measured town-wide perception event.
-- **Phase 5, the region:** Phase B land, driving, traffic. Gated on 3 and 4;
-  gates set at kickoff.
-- **Phase 6, ship-prep,** deferred until the quality bar is met. Exit gate: the
-  Meridian Test, all four conditions.
-
-STANDING RULE, carried with the rows: every phase with a taste gate also gets a
-time or attempt budget at kickoff, set while calm. M17.10's lesson, instrumented
-phases and bounded milestones.
-
-TWO GATES WERE REPAIRED ON 2026-09-05 AND THE REPAIR IS WHY TWO ROWS READ AS
-THEY DO. Phase 4's gate used to read "combat runs and is called from live play",
-which the walk loop already satisfied through `Combat.StaminaAfterMoving` at
-`Game/PlayerController.cs:399`, the one Core combat method with a caller outside
-Core, and it is the stamina term: the gate could not tell a fight from a walk, so
-it now names a resolved blow. Phase 1's gate did not see arrest, and
-`CoatHost.Arrested` had no callers, so the gate would have gone green with the
-consequence spine's terminal state unreachable: it now names arrest. Both are a
-director's call on an approved package and Jafar reverts either on one word.
-Ruling: `game-design/decision-2026-09-05-ruling-build-batch-and-roadmap-fold.md`.
-
-## How many systems each phase carries: read it, never copy it
-
-The phase rows used to carry a per-phase count of
-`production/systems-inventory.json`. THOSE CELLS ARE GONE AND ARE NOT REPLACED BY
-HAND. They existed only because somebody copied the validator's printed `byPhase`
-line into a table, and they went stale inside a day, twice: the file moved from
-27 entries to 69 on 2026-09-09 and from 69 to 91 on 2026-09-10. A plan carrying
-a hand-copied census is a plan that lies about its own size.
-
-Read it through the validator, never around it. A refused inventory exits
-non-zero and emits nothing, so a broken file cannot be read as a plan:
-
-    python3 tools/systems-inventory-check.py --emit-json > inv.json
-    python3 -c "import json;[print(e['phase'],e['status'],e['name']) for e in json.load(open('inv.json'))]" | sort
-
-AND THE STATUS IT PRINTS IS NOT A GATE READING. Jafar ruled on 2026-09-09 that
-status on that page is a TYPED JUDGEMENT, attributable to a person and a date and
-changed by a ruling rather than by a grep; `exists` no longer means that a path
-resolves. The standard the typing follows: a tile is green only if the thing its
-name promises can happen to a player in a build that exists today. So a count of
-`exists` is a reading of somebody's judgement, never a gate reading, and never a
-floor a gate may stand on. Ruling:
-`game-design/decision-2026-09-09-ruling-typed-systems-inventory.md`.
+FOLDED AGAIN ON 2026-09-14, INTO THE STAGES. The phase rows and their exit gates
+lived here from 2026-09-10 to 2026-09-14, copied in from
+`ledger-v2/respec/roadmap-v2.md`. Jafar ruled the six stages on 2026-09-14 (D22)
+and they are `production/stages.md`, ABOVE this file: the arc the rungs serve.
+Every phase row and its gate now hangs under the stage it serves there, in the
+section "The phases, folded in", together with the row law, the 2026-09-05 gate
+repairs, the standing rule about time budgets at kickoff, and the validator
+command for the systems census. Change a gate THERE and nowhere else. This
+heading stays so the 2026-09-10 fold record below and `roadmap-v2.md`'s banner
+still resolve. Which rung hangs under which stage is the table "Where the rungs
+of production/ladder.md hang" in the stages file.
 
 ## The Meridian Test, which is the last gate of all
 
@@ -172,8 +103,8 @@ Jafar ruled one plan in the cleanup batch of 2026-09-10: this file plus
 `production/queue/`. What folded in, and what did not:
 
 - `ledger-v2/respec/roadmap-v2.md` FOLDED IN and STAYED AT ITS PATH. Its phase
-  rows and their exit gates are above, and its stale systems column is replaced
-  by the validator command above. The file could not move under `legacy/`
+  rows and their exit gates were above, and its stale systems column was replaced
+  by the validator command. The file could not move under `legacy/`
   because `CLAUDE.md` line 133 names it as the plan and `.claude/agents/planner.md`
   line 3 tells the planner to decompose its milestones, and a separate lane owns
   both of those files. `tools/dashboard/build-dashboard.py` also parses its phase
@@ -187,3 +118,19 @@ Jafar ruled one plan in the cleanup batch of 2026-09-10: this file plus
 - `game-design/queue.md` was already retired and is not touched.
   `tools/queue-check.py` prints `retiredNotRead=game-design/queue.md`.
 - `production/week-plan.md` was already gone.
+
+## The fold of 2026-09-14: the stages above, the phases out
+
+Jafar ruled D22 on 2026-09-14: the plan is two documents, the stages above this
+ladder and the visual path as a decision record. What moved:
+
+- The phase rows and gates that sat in this file since 2026-09-10 moved whole
+  to `production/stages.md`, each under the stage it serves. Nothing was
+  deleted; the section above is now a pointer.
+- `ledger-v2/respec/roadmap-v2.md` is retired as a plan document and says so in
+  its first lines. Its table stays at its path as parser input for the dashboard
+  until `SOURCES["roadmap"]` is repointed.
+- The visual path is `ledger-v2/respec/decision-register/D31-the-visual-path.md`,
+  the route inside stage 1, feeding rung 1, then 2 and 3.
+- The rung table above did not change by one byte. Ruling:
+  `game-design/decision-2026-09-14-ruling-the-plan-is-two-documents-and-the-phases-fold.md`.

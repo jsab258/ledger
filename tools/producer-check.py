@@ -288,6 +288,60 @@ RULES_IF_NEEDS_YOU = ["options", "deadline"]
 # THE TWO RULES THE LINK BAND ADDED on 2026-09-06, named once so the legacy
 # switch and the report cannot come to disagree about which rules it covers.
 LINK_BAND_RULES = ("linkcap", "linkdest")
+
+# ---------------------------------------------------------------------------
+# RESEARCH DELIVERIES THAT GO TO HIM VERBATIM. Ruled by Jafar 2026-09-14: when
+# a research delivery lands, its SUMMARY.md goes to him "through the bot as its
+# own message, in full, before you act on anything in it".
+#
+# WHY THE REGISTER HAD TO MOVE AND NOT THE DOCUMENTS. Five coverage audits were
+# staged on 2026-09-14 and four were refused, every one of them on `banned:run
+# internals` alone, for these words used as ORDINARY ENGLISH: "job" (the man
+# whose job it is opens the yard), "commit"/"committed" (committing a crime),
+# and "gate" (a gate in a city). The ban list is a word filter and cannot tell a
+# CI job from a man's job. It must not try: a context-sensitive word filter is a
+# worse instrument than a narrow exemption that is counted. Obeying the register
+# here would mean editing documents Jafar asked for IN FULL, and the channel
+# regime of 2026-09-09 says the register "stays as a FORMAT CHECK AFTER the
+# Producer writes, never as a gate that shapes what is written". His instruction
+# is the authority; the register is not.
+#
+# THE SHAPE IS LEGACY_LINK_RULES', DELIBERATELY, and not a second mechanism: a
+# frozen tuple of repo-relative NAMES, waiving a NAMED subset of the rules, that
+# widens only in a reviewed diff. BY NAME AND NEVER BY PATTERN, for the reason
+# written at LEGACY_LINK_RULES: a rule that matched "research" in a filename
+# would let any future session name a file into the exemption and out of the ban
+# list, which is the specimen choosing its own rulebook.
+#
+# IT IS NOT A HOLE. Only `banned` is waived. linkcap, linkdest and linkfloor
+# still bind in full on these files, `banned` is still named under NOT ENFORCED
+# on every one of them, and the gate prints how many of these entries the waiver
+# actually CHANGED anything for, which is what stops a dead exemption sitting
+# here for ever pretending to do work.
+#
+# WHY ALL FIVE ARE LISTED AND NOT ONLY THE FOUR THAT FAILED. The category is
+# "a third-party document he ruled goes to him unedited", not "the files that
+# happened to trip the filter". A list assembled from failures cannot be read
+# by the next person: kcd2's absence would say nothing about whether it is a
+# research delivery. It is listed, and the LADDER below measures whether the
+# waiver did anything for it (it does not, today: 4 of these 5 files), so
+# "kcd2 passes the ban list on its own merits" is a reading printed on every
+# run rather than an arrangement nobody can see.
+RESEARCH_VERBATIM = (
+    "production/outbox/2026-09-14-research-coverage-audit-kcd2.answer.md",
+    "production/outbox/2026-09-14-research-coverage-audit-hitman.answer.md",
+    "production/outbox/2026-09-14-research-coverage-audit-rdr2.answer.md",
+    "production/outbox/2026-09-14-research-coverage-audit-disco-elysium"
+    ".answer.md",
+    "production/outbox/2026-09-14-research-coverage-audit-shadows-of-doubt"
+    ".answer.md",
+)
+# THE ONE RULE THE VERBATIM EXEMPTION WAIVES, named once so the switch, the
+# report and the gate cannot come to disagree about what it covers. Adding a
+# name here widens the exemption for every file on the list above at once,
+# which is why it is a constant a reviewer can see and not a literal inside a
+# branch.
+RESEARCH_WAIVED_RULES = ("banned",)
 # Counts are legitimate in an answer and only there. Named as its own set
 # rather than hidden inside the register tuple, so the exemption is greppable.
 COUNTS_ALLOWED_IN = {"answer"}
@@ -929,7 +983,7 @@ def split_sections(text):
 
 
 def check(text, kind="unprompted", now=None, legacy_links=False,
-          link_floor=None):
+          link_floor=None, research_verbatim=False):
     """Every reading this program takes, as data. PURE: takes text, returns a
     dict, touches no file. The selftest drives it with synthetic fixtures and
     the report function only formats what comes out of here.
@@ -968,6 +1022,16 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
     # all: it measures deadlines and nothing else.
     if legacy_links:
         enforced = [r for r in enforced if r not in LINK_BAND_RULES]
+    # THE VERBATIM RESEARCH EXEMPTION, decided BY NAME by the caller exactly as
+    # the line above is, and never by anything inside the text: a document that
+    # could talk its way out of the ban list is not an exemption, it is a hole.
+    # `waived` is what was ACTUALLY removed, read off this file's own register
+    # rather than off the constant, so a rule the register never enforced here
+    # cannot be reported as waived. See RESEARCH_VERBATIM for the ruling.
+    waived = ([r for r in enforced if r in RESEARCH_WAIVED_RULES]
+              if research_verbatim else [])
+    if waived:
+        enforced = [r for r in enforced if r not in waived]
     # THE FLOOR IS CONDITIONAL SINCE 2026-09-11 AND IT IS NOT DELETED. It drops
     # out of `enforced` while no page is served, which means the existing NOT
     # ENFORCED line names it and the done line's rulesNotEnforced= carries it:
@@ -1265,6 +1329,13 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
         # named in LEGACY_LINK_RULES. Printed, never silent: a rule skipped in
         # silence is indistinguishable from a rule that passed.
         "legacy_links": legacy_links,
+        # PER MESSAGE, not cumulative: whether this file was graded under the
+        # verbatim research exemption, and WHICH rule(s) it actually removed
+        # from this file's register. The pair is one reading: membership alone
+        # would not say the exemption did anything, and the walk's own count is
+        # on the gate's done line.
+        "research_verbatim": bool(research_verbatim),
+        "research_waived": list(waived),
         # THE ANNOTATION THE CAP DID NOT CHARGE FOR: per message, 0 or 1, with
         # the words it would have cost. Printed by report() and counted by the
         # gate, never silent, so "118 of 120" cannot be read without the line
@@ -1323,6 +1394,35 @@ def needs_you_items(lines):
 
 
 # ------------------------------------------------------------------- reporting
+
+def research_bit_key(r):
+    """The `researchVerbatimWaiverBit=` value for a gate done line. PURE.
+
+    THE DENOMINATOR IS THE FILES THE WAIVER COULD HAVE BITTEN ON, which is the
+    listed files this walk actually graded, and when that is zero the value is
+    the WORDS. `0/0` would be a zero nobody can read: a walk where no listed
+    delivery was present and a walk where five were present and the exemption
+    changed nothing are different facts with the same digits.
+    """
+    if not r["research_graded"]:
+        return "%s/no-listed-delivery-in-this-walk" % NOTHING
+    return "%d/%d" % (r["research_waiver_bit"], r["research_graded"])
+
+
+def research_key(r):
+    """The `researchVerbatimWaived=` value for a done line. PURE, one word.
+
+    ONE ENTRY CARRYING BOTH MOMENTS: what the exemption actually waived on this
+    file, and whether this file is on the list at all, so no reader has to join
+    two keys to learn that "none" meant "not exempt" rather than "exempt and it
+    changed nothing". Structure is `..` and `/` because every reader of a
+    key=value channel here splits on whitespace.
+    """
+    listed = ("listed-1-of-%d" % len(RESEARCH_VERBATIM)
+              if r["research_verbatim"]
+              else "not-on-the-%d-name-list" % len(RESEARCH_VERBATIM))
+    return "%s..%s" % ("/".join(r["research_waived"]) or "none", listed)
+
 
 def report(r):
     """The report. Every zero here ships the denominator that produced it."""
@@ -1462,6 +1562,20 @@ def report(r):
                               len(LEGACY_LINK_RULES)))
                  if r["legacy_links"] else ""))
 
+    # THE VERBATIM EXEMPTION IS NEVER SILENT, and the zero ships its
+    # denominator: a file on the list that waived nothing reads differently
+    # from a file that waived the ban list. Denominator is the frozen list,
+    # because that is the only set this exemption can ever be claimed from.
+    if r["research_verbatim"]:
+        print("  verbatim research delivery: %s waived for this file, 1 of "
+              "the %d name(s) on the frozen RESEARCH_VERBATIM list in "
+              "tools/producer-check.py. Ruled 2026-09-14: a research "
+              "SUMMARY goes to him IN FULL, and the ban list cannot tell a "
+              "CI job from the man whose job it is. Waived here: %s. Every "
+              "other rule in this register still binds"
+              % ("/".join(RESEARCH_WAIVED_RULES), len(RESEARCH_VERBATIM),
+                 "/".join(r["research_waived"]) or NOTHING))
+
     if r["claims"]:
         print("  advisory, not a rejection: %d of %d claim-shaped sentence(s) "
               "sit in a section carrying no link (%s). The ruled floor is one "
@@ -1489,10 +1603,11 @@ def report(r):
         # reading, and the reason is the only token here that can grow, so a
         # reader truncating the line loses the explanation rather than a count.
         print("\nproducer-check: SEND register=%s rulesEnforced=%d/%d "
-              "rulesNotEnforced=%s markerOriginConsistent=%s "
+              "rulesNotEnforced=%s researchVerbatimWaived=%s "
+              "markerOriginConsistent=%s "
               "linkFloorActive=%s reason=%s"
               % (r["kind"], len(r["enforced"]), len(RULES),
-                 "/".join(r["not_enforced"]) or "none",
+                 "/".join(r["not_enforced"]) or "none", research_key(r),
                  "true" if r["marker_origin_ok"] else "false",
                  "true" if r["link_floor_active"] else "false",
                  r["link_floor_reason"]))
@@ -1506,10 +1621,11 @@ def report(r):
         print("    %-18s %s" % (rule, cap(shown[rule], keep=FINDINGS_SHOWN,
                                           width=110, sep=" | ")))
     print("\nproducer-check: DO NOT SEND register=%s rulesEnforced=%d/%d "
-          "rulesNotEnforced=%s markerOriginConsistent=%s "
+          "rulesNotEnforced=%s researchVerbatimWaived=%s "
+          "markerOriginConsistent=%s "
           "linkFloorActive=%s reason=%s"
           % (r["kind"], len(r["enforced"]), len(RULES),
-             "/".join(r["not_enforced"]) or "none",
+             "/".join(r["not_enforced"]) or "none", research_key(r),
              "true" if r["marker_origin_ok"] else "false",
              "true" if r["link_floor_active"] else "false",
              r["link_floor_reason"]))
@@ -1784,6 +1900,78 @@ def selftest():
        "the band was ruled on %s" % (len(LEGACY_LINK_RULES),
                                      LINK_BAND_RULED_ON.isoformat()),
        not late and len(LEGACY_LINK_RULES) == 3, late)
+
+    # ---- THE VERBATIM RESEARCH EXEMPTION, ruled 2026-09-14 (queue: five
+    # coverage audits staged, four refused on ordinary English). A LADDER:
+    # ONE BODY, TWO RULEBOOKS, ONE RUN, and the only number it yields is the
+    # difference between the rungs. ACCEPTING CASE FIRST.
+    RESEARCH = ("The man whose job it is opens the yard gate on Tuesday, and "
+                "the crime he committed that morning is on the record.\n"
+                "[the gallery](https://jsab258.github.io/wc26-picks/"
+                "gallery.html)\n")
+    r_ver = check(RESEARCH, "answer", FIXTURE_NOW, research_verbatim=True)
+    ok("a verbatim research delivery passes with ordinary-English job, gate "
+       "and committed in it",
+       not r_ver["findings"], [str(f) for f in r_ver["findings"]])
+    ok("and the waived rule is NAMED as not enforced rather than skipped in "
+       "silence (%s)" % "/".join(r_ver["research_waived"]),
+       r_ver["research_waived"] == list(RESEARCH_WAIVED_RULES)
+       and set(RESEARCH_WAIVED_RULES) <= set(r_ver["not_enforced"]),
+       (r_ver["research_waived"], r_ver["not_enforced"]))
+    ok("and its done-line key carries both moments in one value (%s)"
+       % research_key(r_ver),
+       research_key(r_ver).startswith("banned..listed-1-of-")
+       and " " not in research_key(r_ver), research_key(r_ver))
+    # THE SECOND RUNG. Same body, same instant, exemption OFF: the ban list
+    # still bites, which is what proves the rule was not disabled.
+    r_plainv = check(RESEARCH, "answer", FIXTURE_NOW)
+    ok("the SAME body off the list is still refused by the ban list, so the "
+       "rule was narrowed and not disabled (%s)"
+       % ",".join(sorted({f.rule for f in r_plainv["findings"]})),
+       [f.rule for f in r_plainv["findings"]] == ["banned:run internals"],
+       [str(f) for f in r_plainv["findings"]])
+    ok("and its key says not-on-the-list rather than an empty waiver (%s)"
+       % research_key(r_plainv),
+       research_key(r_plainv).startswith("none..not-on-the-"),
+       research_key(r_plainv))
+    # NARROWNESS, BOTH WAYS. The exemption is one rule wide, and the other
+    # rules still refuse a listed file.
+    ok("the exemption waives exactly one rule (%s) and can only widen in a "
+       "reviewed diff" % "/".join(RESEARCH_WAIVED_RULES),
+       RESEARCH_WAIVED_RULES == ("banned",), RESEARCH_WAIVED_RULES)
+    THREE = RESEARCH + ("[a](https://jsab258.github.io/wc26-picks/)\n"
+                        "[b](https://jsab258.github.io/wc26-picks/map.html)\n")
+    r_cap = check(THREE, "answer", FIXTURE_NOW, research_verbatim=True)
+    ok("a listed file that breaks the link cap is STILL refused",
+       any(f.rule == "linkcap" for f in r_cap["findings"]),
+       [str(f) for f in r_cap["findings"]])
+    BADDEST = ("The man whose job it is.\n"
+               "[x](https://github.com/jsab258/ledger/blob/main/CLAUDE.md)\n")
+    r_dest = check(BADDEST, "answer", FIXTURE_NOW, research_verbatim=True)
+    ok("and a listed file that links to a repo markdown file is STILL refused",
+       any(f.rule == "linkdest" for f in r_dest["findings"]),
+       [str(f) for f in r_dest["findings"]])
+    # MEMBERSHIP IS BY NAME AND BY LOCATION, and the sender's absolute path
+    # must resolve to the same name the gate's walk produces or the two would
+    # grade one file by two rulebooks. SYNTHETIC ROOT: a rejecting case pinned
+    # to a real delivery breaks the day that delivery is sent and cleared.
+    import tempfile as _tf
+    _root = pathlib.Path(_tf.mkdtemp())
+    (_root / "production" / "outbox").mkdir(parents=True)
+    _abs = _root / "production" / "outbox" / "x.answer.md"
+    _abs.write_text("")
+    ok("an absolute path resolves to the repo-relative name the gate walks",
+       rel_under(str(_abs), str(_root)) == "production/outbox/x.answer.md",
+       rel_under(str(_abs), str(_root)))
+    _outside = str(_root.parent / "not-in-the-repo.md")
+    ok("a path outside the root claims no membership at all, and nor does "
+       "stdin", rel_under(_outside, str(_root)) is None
+       and rel_under("-", str(_root)) is None,
+       (rel_under(_outside, str(_root)), rel_under("-", str(_root))))
+    ok("a name on the frozen list that exists nowhere is still only a name: "
+       "membership never reads the text",
+       "production/outbox/never-existed.answer.md" not in RESEARCH_VERBATIM,
+       RESEARCH_VERBATIM)
     ok("and it is under the ruled cap (%d of %d words)"
        % (r["words"], CAP_UNPROMPTED), r["words"] <= CAP_UNPROMPTED, r["words"])
     ok("its five sections are all found, in order",
@@ -2192,6 +2380,49 @@ def selftest():
                  pre_register=("production/briefs/2026-09-02.md",))
     ok("a compliant outbox message passes the gate", not g["failed"],
        g["failed"])
+    # THE VERBATIM RESEARCH EXEMPTION AT THE GATE, ACCEPTING CASE FIRST, and
+    # both rungs of the ladder in ONE walk. SYNTHETIC to the last byte: the
+    # frozen list is injected, so this case cannot break the day a real
+    # delivery is sent and cleared off the outbox.
+    RTXT = ("The man whose job it is opens the yard gate.\n"
+            "[the gallery](https://jsab258.github.io/wc26-picks/gallery.html)"
+            "\n")
+    rel_in = "production/outbox/2026-09-14-research-in.answer.md"
+    rel_out = "production/outbox/2026-09-14-research-out.answer.md"
+    v_tree = _gate_tree({rel_in: RTXT, rel_out: RTXT,
+                         "production/briefs/README.md": "# not a message\n"})
+    gv = gate_run(v_tree, FIXTURE_NOW, research_verbatim=(rel_in,))
+    ok("a listed research delivery passes the gate with ordinary English in it",
+       not any(rel == rel_in for rel, _w in gv["failed"]), gv["failed"])
+    ok("and the SAME text off the list still fails the gate on the ban list, "
+       "so the exemption is a name and not a hole",
+       any(rel == rel_out and "banned" in w for rel, w in gv["failed"]),
+       gv["failed"])
+    ok("the walk counts what it waived over both denominators (%d/%d graded, "
+       "bit %s)" % (gv["research_graded"], gv["research_listed"],
+                    research_bit_key(gv)),
+       (gv["research_graded"], gv["research_listed"],
+        gv["research_waiver_bit"], gv["research_findings_waived"])
+       == (1, 1, 1, 1),
+       (gv["research_graded"], gv["research_listed"],
+        gv["research_waiver_bit"], gv["research_findings_waived"]))
+    ok("and the file's own line names the waiver where the file is named",
+       any(rel == rel_in and "research-verbatim:banned-waived" in w
+           for rel, _s, w in gv["results"]), gv["results"])
+    # REJECTING FIXTURE FOR THE ROT CHECK: a frozen entry with no file behind
+    # it is a note with a count, never a silent zero.
+    gv2 = gate_run(v_tree, FIXTURE_NOW,
+                   research_verbatim=("production/outbox/never-existed"
+                                      ".answer.md",))
+    ok("a frozen RESEARCH_VERBATIM entry that no longer exists is counted, "
+       "not silent (%d of %d)" % (len(gv2["research_absent"]),
+                                  gv2["research_listed"]),
+       len(gv2["research_absent"]) == 1 and gv2["research_graded"] == 0
+       and gv2["research_waiver_bit"] == 0, gv2["research_absent"])
+    ok("and a walk with no listed delivery in it prints the WORDS rather than "
+       "a zero over a zero (%s)" % research_bit_key(gv2),
+       research_bit_key(gv2).startswith(NOTHING)
+       and " " not in research_bit_key(gv2), research_bit_key(gv2))
     ok("and the README is exempt BY NAME, counted, not skipped in silence",
        g["exempt"] == 2 and g["walked"] == 3 and g["checked"] == 1,
        (g["exempt"], g["walked"], g["checked"]))
@@ -2946,6 +3177,27 @@ def gate_clock(rel):
             "pinned to the date in its own name")
 
 
+def rel_under(path, root):
+    """The repo-relative posix name for `path`, or None when it is not under
+    `root`. PURE-ISH: resolves paths, opens nothing.
+
+    THE TWO CALLERS MUST PRODUCE THE SAME NAME. The gate walks and gets
+    "production/outbox/x.answer.md"; the sender
+    (`tools/runner/outbox.py:run_check`) shells out with an ABSOLUTE path and
+    no --root. Without this they would disagree about whether one file is on a
+    frozen list, and the file that reached his phone would be the one graded by
+    the looser of the two. None for stdin and for anything outside the root, so
+    an exemption can never be claimed by a file this repository does not hold.
+    """
+    if not path or path == "-":
+        return None
+    try:
+        return pathlib.Path(path).resolve().relative_to(
+            pathlib.Path(root).resolve()).as_posix()
+    except (ValueError, OSError):
+        return None
+
+
 def gate_kind(rel):
     """(kind, why) for a repo-relative path, or (None, why-not)."""
     name = rel.rsplit("/", 1)[-1]
@@ -2960,7 +3212,8 @@ def gate_kind(rel):
 
 
 def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
-         legacy_links=LEGACY_LINK_RULES, site_origin=SITE_ORIGIN):
+         legacy_links=LEGACY_LINK_RULES, site_origin=SITE_ORIGIN,
+         research_verbatim=RESEARCH_VERBATIM):
     """Every message file under the ruled trees, against its own register.
 
     PURE-ISH: reads files, touches nothing, returns data. The report function
@@ -3003,6 +3256,20 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          # Cumulative over the walk, printed beside its denominator, which is
          # the list itself because nothing else can carry the exclusion.
          "historical_uncounted": 0, "historical_listed": len(legacy_links),
+         # THE VERBATIM RESEARCH EXEMPTION, AS A LADDER. `research_graded` is
+         # CUMULATIVE over the walk: checked files whose NAME is on the frozen
+         # RESEARCH_VERBATIM list, over that list's length, so an entry that
+         # never gets walked is visible as a gap rather than as nothing.
+         # `research_waiver_bit` is the second rung: of those, how many the
+         # waiver actually CHANGED anything for, measured by running the same
+         # file through the same check() twice in the same run with the one
+         # contributor toggled. A membership count alone cannot tell an
+         # exemption that is doing work from one that is dead weight, and a
+         # dead entry is how a narrow exemption becomes a wide one nobody
+         # noticed. `research_findings_waived` is CUMULATIVE findings removed.
+         "research_graded": 0, "research_listed": len(research_verbatim),
+         "research_waiver_bit": 0, "research_findings_waived": 0,
+         "research_absent": [],
          # OF THE FILES CHECKED, how many had an instant to measure from.
          # Cumulative over the walk, printed beside its denominator.
          "date_pinned": 0, "unpinned": 0,
@@ -3100,9 +3367,25 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             legacy = rel in legacy_links
             if legacy:
                 r["legacy_links"] += 1
+            # BY NAME HERE TOO. See RESEARCH_VERBATIM for the ruling.
+            research = rel in research_verbatim
             res = check(text, kind, file_now, legacy_links=legacy,
-                        link_floor=floor)
+                        link_floor=floor, research_verbatim=research)
             r["checked"] += 1
+            # THE SECOND RUNG, from the same vantage in the same run: the same
+            # file, the same instant, the same floor, the exemption OFF. The
+            # difference between the rungs is the only number this yields, and
+            # it is the one that says whether the exemption is doing anything.
+            waiver_removed = 0
+            if research:
+                r["research_graded"] += 1
+                plain = check(text, kind, file_now, legacy_links=legacy,
+                              link_floor=floor, research_verbatim=False)
+                waiver_removed = max(0, len(plain["findings"])
+                                     - len(res["findings"]))
+                r["research_findings_waived"] += waiver_removed
+                if waiver_removed:
+                    r["research_waiver_bit"] += 1
             # READ OFF THE READING THIS FILE WAS ACTUALLY GRADED BY, never off
             # the walk's constant, so the count moves by itself if the floor
             # ever becomes per-file.
@@ -3130,6 +3413,12 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                 r["links_ruled_files"].append(rel)
             ruled = (", ruled-link:" + "+".join(res["ruled_labels"])
                      if res["ruled_labels"] else "")
+            # THE EXEMPTION RIDES ON THE FILE'S OWN LINE, pass or fail, with
+            # what it removed HERE: a waiver counted only in the footer cannot
+            # be attached to the file it let through.
+            verbatim = ((", research-verbatim:%s-waived/%d-finding(s)-removed"
+                         % ("/".join(res["research_waived"]) or NOTHING,
+                            waiver_removed)) if research else "")
             if res["findings"]:
                 r["failed"].append(
                     (rel, "%s: %s" % (kind,
@@ -3138,14 +3427,14 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                                           sep=" | "))))
                 r["results"].append((rel, "fail", "%s, %d finding(s), %s%s%s"
                                      % (kind, len(res["findings"]), as_of,
-                                        hist, ruled)))
+                                        hist, ruled + verbatim)))
             else:
                 r["results"].append(
                     (rel, "pass-legacy-links" if legacy else "pass",
                      "%s, %d of %s word(s), %s%s%s%s"
                      % (kind, res["words"],
                         res["cap"] if res["cap"] else "no-cap", as_of, hist,
-                        ruled,
+                        ruled + verbatim,
                         ", the link band is not enforced on it: written "
                         "before it was ruled and named in LEGACY_LINK_RULES"
                         if legacy else "")))
@@ -3157,6 +3446,11 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
     # whose file is gone is legitimate history and an invisible one is not, so
     # it prints with its own count on every run.
     r["legacy_absent"] = sorted(rel for rel in legacy_links if rel not in seen)
+    # AND THE SAME ROT CHECK FOR THE VERBATIM LIST. A named delivery that has
+    # been sent and removed is legitimate; an entry nobody can see rotting is
+    # not, so it prints with its own count on every run.
+    r["research_absent"] = sorted(rel for rel in research_verbatim
+                                  if rel not in seen)
     return r
 
 
@@ -3181,6 +3475,24 @@ def gate_report(r):
               "exist: %s" % (len(r["legacy_absent"]),
                              cap(r["legacy_absent"], keep=3, width=60,
                                  sep=", ")))
+    if r["research_absent"]:
+        print("  note: %d of the %d frozen RESEARCH_VERBATIM entry/entries no "
+              "longer exist (sent and cleared, or renamed): %s"
+              % (len(r["research_absent"]), r["research_listed"],
+                 cap(r["research_absent"], keep=3, width=60, sep=", ")))
+    # THE EXEMPTION'S LADDER, PRINTED WHETHER OR NOT IT BIT. Both rungs come
+    # from the same walk and the same instant. The zero ships two denominators
+    # because they answer different questions: how many listed files this walk
+    # graded, and of those, how many the waiver changed anything for.
+    print("  verbatim research deliveries: %d of the %d name(s) on the frozen "
+          "RESEARCH_VERBATIM list were graded in this walk with %s waived; "
+          "the waiver changed the verdict on %d of them, removing %d "
+          "finding(s) in total. Ruled 2026-09-14: a research SUMMARY goes to "
+          "him IN FULL. An entry the waiver never bites on is dead weight and "
+          "comes off the list; every other rule still binds on all of them"
+          % (r["research_graded"], r["research_listed"],
+             "/".join(RESEARCH_WAIVED_RULES), r["research_waiver_bit"],
+             r["research_findings_waived"]))
     # THE FLOOR'S BRANCH FOR THIS WALK, printed whether or not anything was
     # checked, because a walk that measured nothing still has an answer to
     # "was the floor live". The numerator is cumulative over the walk and its
@@ -3313,13 +3625,16 @@ def gate_report(r):
         # its reason are WHOLE-RUN (one marker, read once) and sit last and
         # adjacent, because the reason is the only token here that can grow.
         print("\nproducer-check --gate: PASS filesChecked=%s "
-              "filesLegacyLinks=%d/%d linksRuledUsed=%d/%d "
+              "filesLegacyLinks=%d/%d researchVerbatimWaiverBit=%s "
+              "researchVerbatimGraded=%d/%d linksRuledUsed=%d/%d "
               "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
               "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
               "markerOriginConsistent=%s "
               "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
               % (r["checked"] if r["checked"] else "0/" + NOTHING,
                  r["legacy_links"], r["checked"],
+                 research_bit_key(r),
+                 r["research_graded"], r["research_listed"],
                  r["links_ruled_used"], r["links_ruled_of"],
                  r["historical_uncounted"], r["historical_listed"],
                  r["split_enforced"], r["checked"], r["brief_files"],
@@ -3337,12 +3652,15 @@ def gate_report(r):
         print("    (+%d more not shown of %d)"
               % (len(r["failed"]) - 5, len(r["failed"])))
     print("\nproducer-check --gate: FAIL filesFailed=%d filesChecked=%d "
-          "filesLegacyLinks=%d/%d linksRuledUsed=%d/%d "
+          "filesLegacyLinks=%d/%d researchVerbatimWaiverBit=%s "
+          "researchVerbatimGraded=%d/%d linksRuledUsed=%d/%d "
           "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
           "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
           "markerOriginConsistent=%s "
           "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
           % (len(r["failed"]), r["checked"], r["legacy_links"], r["checked"],
+             research_bit_key(r),
+             r["research_graded"], r["research_listed"],
              r["links_ruled_used"], r["links_ruled_of"],
              r["historical_uncounted"], r["historical_listed"],
              r["split_enforced"], r["checked"], r["brief_files"],
@@ -3398,8 +3716,14 @@ def main():
     # with no --root, so the sender reads the marker in its own checkout and
     # the gate and the sender can never disagree about whether a page is
     # served.
+    #
+    # AND MEMBERSHIP OF THE FROZEN VERBATIM LIST IS DECIDED HERE TOO, for the
+    # same reason: check() reads no path. Resolved through rel_under so this
+    # call site and the gate's walk name the same file the same way.
     return report(check(text, args.kind, now,
-                        link_floor=link_floor_state(args.root)))
+                        link_floor=link_floor_state(args.root),
+                        research_verbatim=rel_under(args.file, args.root)
+                        in RESEARCH_VERBATIM))
 
 
 if __name__ == "__main__":

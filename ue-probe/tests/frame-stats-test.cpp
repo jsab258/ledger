@@ -669,6 +669,13 @@ int main()
 		Check(L.find("rigRepeatAfterShots=11/11") != std::string::npos,
 		      "the repeat prints how many shots stood between it and the first frame");
 		Check(ValuesHaveNoSpaces(L), "the rig determinism line is space-free");
+		// AND THE RATIO THE FAULT IS STATED IN. production/NOW.md records the
+		// original as "darker by a luma ratio of 0.82"; two identical frames
+		// are 1.0000 and that is the only reading a same-picture claim rests
+		// on. Accepting case first, here, on the identical pair.
+		Check(RepeatRatioExists(Same) && Near(RepeatLumaRatio(Same), 1.0)
+		      && L.find("rigMeanLumaRatio=1.0000") != std::string::npos,
+		      "two identical frames print a luma ratio of exactly 1.0000");
 
 		// ---- AND THE PLANTED CASE THE KEY EXISTS TO CATCH ----------------
 		//
@@ -690,6 +697,48 @@ int main()
 		Check(Moved.MeanLumaRepeat < Moved.MeanLumaFirst
 		      && M.find("rigMeanLumaDelta=-") != std::string::npos,
 		      "a repeat that came back darker prints a signed negative delta");
+		// AND WHAT THE RATIO CANNOT SEE, WHICH IS WHY IT SHIPS BESIDE THE
+		// COUNT AND NEVER INSTEAD OF IT. Three moved pixels in 1600 move the
+		// whole-frame ratio by about one part in a hundred thousand, so it
+		// prints 1.0000 while rigDiffPixels prints 3/1600. A run read on the
+		// ratio alone would call this pair the same picture.
+		Check(RepeatLumaRatio(Moved) < 1.0
+		      && M.find("rigMeanLumaRatio=1.0000") != std::string::npos
+		      && M.find("rigDiffPixels=3/1600") != std::string::npos,
+		      "three moved pixels leave the whole-frame ratio at 1.0000 to four decimals "
+		      "while the per-pixel count sees them, which is why both are printed");
+		// ---- THE RATIO PLANTED AT THE SIZE THE FAULT WAS REPORTED AT -----
+		//
+		// 0.82 in production/NOW.md and 0.0849 at f6508b3 (0.0518 over
+		// 0.6099). A whole frame at 82 per cent of another whole frame is the
+		// case the key exists to print, so it is planted rather than argued.
+		{
+			std::vector<unsigned char> Bright = Flat(W, H, 200, 200, 200);
+			std::vector<unsigned char> Dim    = Flat(W, H, 164, 164, 164);
+			const RepeatDiff Ratio82 = MeasureRepeat(Bright.data(), Dim.data(), W, H);
+			const std::string R82 = RigDeterminismLine("vign_camA_day", 25, 25,
+			                                           "MEASURED", Ratio82);
+			std::printf("    %s\n", R82.c_str());
+			Check(Near(RepeatLumaRatio(Ratio82), 0.82)
+			      && R82.find("rigMeanLumaRatio=0.8200") != std::string::npos
+			      && R82.find("rigDiffPixels=1600/1600") != std::string::npos,
+			      "a repeat at 82 per cent of the first frame prints 0.8200 beside every "
+			      "one of its 1600 differing pixels");
+		}
+		// AND A FIRST FRAME WITH NO LIGHT IN IT HAS NO RATIO, which is not a
+		// zero: the division has no denominator and the line says so.
+		{
+			std::vector<unsigned char> Black = Flat(W, H, 0, 0, 0);
+			std::vector<unsigned char> Lit   = Flat(W, H, 128, 128, 128);
+			const RepeatDiff FromBlack = MeasureRepeat(Black.data(), Lit.data(), W, H);
+			const std::string FB = RigDeterminismLine("vign_camA_day", 25, 25,
+			                                          "MEASURED", FromBlack);
+			Check(!RepeatRatioExists(FromBlack)
+			      && FB.find("rigMeanLumaRatio=nothing-measured/") != std::string::npos
+			      && FB.find("rigMeanLumaRatio=0.0000") == std::string::npos,
+			      "a first frame at zero luma has no ratio rather than a ratio of zero");
+			Check(ValuesHaveNoSpaces(FB), "and that line is space-free too");
+		}
 
 		// ---- AND A RUN THAT COULD NOT TAKE THE REPEAT --------------------
 		//
@@ -702,7 +751,8 @@ int main()
 		      "a missing half measures nothing rather than measuring agreement");
 		Check(N.find("rigDeterminism=NOTHING-MEASURED") != std::string::npos
 		      && N.find("rigRepeatStatus=NO-FIRST-FRAME") != std::string::npos
-		      && N.find("rigDiffPixels=nothing-measured") != std::string::npos,
+		      && N.find("rigDiffPixels=nothing-measured") != std::string::npos
+		      && N.find("rigMeanLumaRatio=nothing-measured") != std::string::npos,
 		      "and the line says the words rather than printing a zero difference");
 		Check(ValuesHaveNoSpaces(N), "the nothing-measured rig line is space-free too");
 		// A DECODED PAIR THE CALLER MARKED UNMEASURED STAYS UNMEASURED: the

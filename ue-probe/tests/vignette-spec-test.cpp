@@ -3292,6 +3292,61 @@ int main(int argc, char** argv)
 		      && AS.find("shotExposurePinRead=0.0300/8.0000") != std::string::npos,
 		      "a condition asking for no pin reads AUTO and prints the engine's own clamp "
 		      "range rather than a residual against a number nobody asked for", AS);
+		// ---- THE LEAK, PLANTED FROM THE ROW THAT REALLY HAPPENED --------
+		//
+		// vign_grid_null_repeat at f6508b3: asked 0.0000, read 10.0000/10.0000,
+		// overrides 1/1, printed as AUTO, frame at 0.0610 which is the pin-10
+		// neighbourhood and not auto exposure. THE ACCEPTING CASE IS `Auto`
+		// DIRECTLY ABOVE, which has the same asked value and no override and
+		// must keep reading AUTO; this is the rejecting one.
+		LedgerVignette::ExposurePinIn Leaked;
+		Leaked.Asked = 0.0; Leaked.ReadMin = 10.0; Leaked.ReadMax = 10.0;
+		Leaked.bOverMin = true; Leaked.bOverMax = true;
+		Leaked.bRead = true; Leaked.bSunOn = true;
+		const std::string LK = LedgerVignette::ExposurePinSegment(Leaked);
+		std::printf("    %s\n", LK.c_str());
+		Check(LK.find("shotExposurePin=LEAKED-PIN") != std::string::npos
+		      && LK.find("shotExposurePin=AUTO") == std::string::npos
+		      && LK.find("shotExposurePinRead=10.0000/10.0000") != std::string::npos,
+		      "a row asking for no pin whose component still carries an override is "
+		      "LEAKED-PIN and never AUTO, which is the word the run at f6508b3 printed "
+		      "over four frames photographed at an earlier rung's exposure", LK);
+		Check(LedgerVignette::ExposurePinLeaked(Leaked)
+		      && !LedgerVignette::ExposurePinLeaked(Auto)
+		      && !LedgerVignette::ExposurePinLeaked(Held),
+		      "and the predicate the run tally counts on agrees with the word: the leaked "
+		      "row yes, the genuinely auto row no, the pinned row no");
+		Check(EveryTokenIsKeyValue(LK), "the leaked shot segment is space-free", LK);
+		// ---- WHAT THE WRITE SITE IS TOLD TO DO, BOTH BRANCHES ------------
+		//
+		// THE BUG WAS AN `if` WITH NO `else` IN THE LAYER THAT DOES NOT
+		// COMPILE HERE, so the decision moved into the header and this is the
+		// test that could not have existed before. Accepting case first: a
+		// pinned condition writes the override on with its value.
+		{
+			const LedgerVignette::ExposurePinWriteOut WPin =
+				LedgerVignette::ExposurePinWriteFor(0.3, true, 0.03, 8.0, 10.0, 10.0);
+			Check(WPin.bOverride && WPin.Min == 0.3 && WPin.Max == 0.3,
+			      "a condition asking for a pin writes both overrides on and both "
+			      "brightnesses to the asked value");
+			// AND THE REJECTING CASE, which is the whole fault: an unpinned
+			// condition must CLEAR the override and put back what was
+			// captured, not leave the last rung standing.
+			const LedgerVignette::ExposurePinWriteOut WAuto =
+				LedgerVignette::ExposurePinWriteFor(0.0, true, 0.03, 8.0, 10.0, 10.0);
+			Check(!WAuto.bOverride && WAuto.Min == 0.03 && WAuto.Max == 8.0,
+			      "a condition asking for NO pin clears both overrides and restores the "
+			      "CAPTURED values, so the next unpinned frame is not photographed at the "
+			      "last rung's exposure");
+			// AND WITH NOTHING CAPTURED, the values are left where they are
+			// rather than invented: a number typed in here would be this
+			// file's idea of the engine's default.
+			const LedgerVignette::ExposurePinWriteOut WNone =
+				LedgerVignette::ExposurePinWriteFor(0.0, false, 0.0, 0.0, 10.0, 10.0);
+			Check(!WNone.bOverride && WNone.Min == 10.0 && WNone.Max == 10.0,
+			      "with nothing captured the flags still clear and the values are left "
+			      "alone, because an uncaptured default would be a guess");
+		}
 		// AND NOTHING READ, which is not a zero.
 		LedgerVignette::ExposurePinIn Never;
 		Never.Asked = 3.0;
@@ -3422,23 +3477,72 @@ int main(int argc, char** argv)
 			Check(EveryTokenIsKeyValue(ZL), "the nothing-measured ladder line is space-free", ZL);
 		}
 		// ---- THE WHOLE-RUN PIN LINE, AND THE COST ON IT ------------------
-		const std::string PD = LedgerVignette::ExposurePinDoneLine(8, 8, 37, 37);
+		LedgerVignette::ExposurePinRun RunIn;
+		RunIn.RowsAsking = 8; RunIn.RowsHeld = 8; RunIn.RowsRead = 37;
+		RunIn.RowsLeaked = 0; RunIn.RowsOffered = 37;
+		RunIn.CondsWithPin = 24; RunIn.CondsOffered = 27;
+		RunIn.Provenance = "run41/f6508b3/cond.pin_030/cam_hook";
+		const std::string PD = LedgerVignette::ExposurePinDoneLine(RunIn);
 		std::printf("    %s\n", PD.c_str());
 		Check(PD.find("expPinStatus=ALL-HELD") != std::string::npos
 		      && PD.find("expPinRowsAsking=8/of=37/shots-offered") != std::string::npos
 		      && PD.find("expPinRowsHeld=8/of=8/shots-asking-for-a-pin") != std::string::npos
-		      && PD.find("expPinConstantSet=no/") != std::string::npos,
-		      "the run line carries the counts with their denominators and says in as many "
-		      "words that no constant was set from this run", PD);
+		      && PD.find("expPinRowsLeaked=0/of=29/shots-asking-for-NO-pin") != std::string::npos,
+		      "the run line carries the counts with their denominators, and the zero leak "
+		      "ships the count of rows that COULD have leaked rather than the shot total", PD);
+		Check(PD.find("expPinConditions=24/of=27/conditions-in-the-spec") != std::string::npos
+		      && PD.find("expPinConstantSet=yes/") != std::string::npos
+		      && PD.find("expPinProvenance=run41/f6508b3/cond.pin_030/cam_hook")
+		         != std::string::npos,
+		      "a spec carrying a live pin reads expPinConstantSet=yes and names where the "
+		      "value came from, which is queue 219's acceptance", PD);
 		Check(PD.find("expPinCost=a-pinned-frame-can-never-judge-an-adaptation-moment/"
 		              "walking-out-of-a-dark-alley-is-the-example") != std::string::npos,
 		      "and the cost of the pin is restated where a reader of the verdict meets it, "
 		      "not only in a comment", PD);
-		const std::string PZ = LedgerVignette::ExposurePinDoneLine(0, 0, 0, 0);
+		// THE ACCEPTING CASE FOR THE OTHER BRANCH: a spec carrying no pin at
+		// all must still read `no`, which is what the line said unconditionally
+		// before 2026-09-14 whatever the spec held.
+		{
+			LedgerVignette::ExposurePinRun NoPin = RunIn;
+			NoPin.CondsWithPin = 0; NoPin.RowsAsking = 0; NoPin.RowsHeld = 0;
+			NoPin.Provenance = "";
+			const std::string PN = LedgerVignette::ExposurePinDoneLine(NoPin);
+			Check(PN.find("expPinConstantSet=no/") != std::string::npos
+			      && PN.find("expPinConditions=0/of=27/conditions-in-the-spec") != std::string::npos
+			      && PN.find("expPinProvenance=nothing-declared") != std::string::npos
+			      && PN.find("expPinStatus=NONE-ASKED") != std::string::npos,
+			      "a spec carrying no pin reads no, and a file that declared no provenance "
+			      "prints the words rather than an empty value", PN);
+		}
+		// ---- THE LEAK, AND IT OUTRANKS ALL-HELD --------------------------
+		//
+		// THE RUN THIS IS PLANTED FROM IS REAL. At f6508b3 the line read
+		// expPinStatus=ALL-HELD while four rows of thirty seven were
+		// photographed at an earlier rung's exposure, because nothing counted
+		// them. Planting the count is the rejecting case; the accepting case
+		// is RunIn above, whose leak is zero over a denominator of 29.
+		{
+			LedgerVignette::ExposurePinRun Leak = RunIn;
+			Leak.RowsLeaked = 4;
+			const std::string PL = LedgerVignette::ExposurePinDoneLine(Leak);
+			std::printf("    %s\n", PL.c_str());
+			Check(PL.find("expPinStatus=LEAKED") != std::string::npos
+			      && PL.find("expPinStatus=ALL-HELD") == std::string::npos
+			      && PL.find("expPinRowsLeaked=4/of=29/shots-asking-for-NO-pin")
+			         != std::string::npos,
+			      "four leaked rows outrank eight held pins, which is the reading the run "
+			      "at f6508b3 could not give", PL);
+			Check(EveryTokenIsKeyValue(PL), "the leaked run line is space-free", PL);
+		}
+		LedgerVignette::ExposurePinRun ZeroIn;
+		const std::string PZ = LedgerVignette::ExposurePinDoneLine(ZeroIn);
 		Check(PZ.find("expPinStatus=NOTHING-MEASURED") != std::string::npos
 		      && PZ.find("expPinStatus=ALL-HELD") == std::string::npos,
 		      "a run that offered no shot is NOTHING-MEASURED and not all-held over zero", PZ);
-		const std::string PP2 = LedgerVignette::ExposurePinDoneLine(8, 7, 37, 37);
+		LedgerVignette::ExposurePinRun PartIn = RunIn;
+		PartIn.RowsHeld = 7;
+		const std::string PP2 = LedgerVignette::ExposurePinDoneLine(PartIn);
 		Check(PP2.find("expPinStatus=PARTIAL") != std::string::npos
 		      && PP2.find("expPinRowsHeld=7/of=8/") != std::string::npos,
 		      "one row of eight whose pin did not hold makes the run PARTIAL, which is the "
