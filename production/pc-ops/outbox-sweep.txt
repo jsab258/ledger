@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - a4870b2 @1789422061
+# LEDGER one outbox sweep - 93dcc03 @1789424540
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,13 +12,13 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=a4870b2c2985f5181e3ce991828d213cb1a88e7c sweepCheckoutPcHeadSha=a4870b2c2985f5181e3ce991828d213cb1a88e7c sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
-sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-14T21:40:38Z
-sweepCheckoutWaitedSec=20/90 sweepCheckoutPolls=5 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/d4dc03953c,20s/a4870b2c29 sweepCheckoutSeriesShown=2/2
+sweepCheckoutRunSha=93dcc03f7825fec1ce85122f288e23e96ecc44c5 sweepCheckoutPcHeadSha=93dcc03f7825fec1ce85122f288e23e96ecc44c5 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-14T22:21:56Z
+sweepCheckoutWaitedSec=41/90 sweepCheckoutPolls=9 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/c3d931def7,41s/93dcc03f78 sweepCheckoutSeriesShown=2/2
 sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
 sweepStatus=EXITED sweepWaitedSec=6 sweepExitCode=0
 sweepStream=sweep-raw.txt sweepLines=3
-23:41:24    outbox: sent production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md kind=brief AS-CAPTIONED-PHOTO photoRef=production/d1-probe/ue-vign_hook_day.png chars=847 messageId=97 photoSizes=90x51/320x180/800x450/1280x720 outboundLatencySec=45 receipt=production/outbound/2026-09-14-the-street-then-your-sky-on-it.brief.receipt.txt
-23:41:24  outbox done: outboxFiles=34 sent=0 captionedSent=1 captionedClipsSent=0 refused=0 unsent=0 alreadySent=33 held=0 sendFailed=0 receiptRefused=0 recordsWritten=1 latencySamples=1/1 outboundLatencySecAtWorst=45
-23:41:27    inbox: pushed 1 file(s) as 42ef296 to pc-inbox
+00:23:03    outbox: sent production/outbox/2026-09-14-the-street-then-your-sky-strike-one-sentence.answer.md kind=answer chars=1004 messageId=98 outboundLatencySec=67 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-the-street-then-your-sky-strike-one-sentence.answer.receipt.txt
+00:23:03  outbox done: outboxFiles=35 sent=1 captionedSent=0 captionedClipsSent=0 refused=0 unsent=0 alreadySent=34 held=0 sendFailed=0 receiptRefused=0 recordsWritten=1 latencySamples=1/1 outboundLatencySecAtWorst=67
+00:23:06    inbox: pushed 1 file(s) as 861af07 to pc-inbox
 sweepStream=sweep-raw.txt.err sweepLines=0
