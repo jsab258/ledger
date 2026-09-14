@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md
+kind: brief
+photoRef: production/d1-probe/ue-vign_fog_maxop0100.png
+fileCommit: 622bc3901b712478931bf9e9830f0f86735e99b6
+fileCommitEpoch: 1789412893
+sent: 2026-09-14T19:08:52+00:00
+sentEpoch: 1789412932
+messageId: 93
+chars: 866
+photoSizes: 90x51/320x180/800x450/1280x720
+photoSizeCount: 4
+outboundLatencySec: 39
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
