@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - 70e9ac5 @1789110194
+# LEDGER one outbox sweep - 8574fb7 @1789400820
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,12 +12,22 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=70e9ac5da2b4e2c56b1e565c282da0aabf7fe04f sweepCheckoutPcHeadSha=70e9ac5da2b4e2c56b1e565c282da0aabf7fe04f sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
-sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-11T07:02:48Z
-sweepCheckoutWaitedSec=83/90 sweepCheckoutPolls=17 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/424cc7ebfd,83s/70e9ac5da2 sweepCheckoutSeriesShown=2/2
+sweepCheckoutRunSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 sweepCheckoutPcHeadSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-14T15:46:32Z
+sweepCheckoutWaitedSec=0/90 sweepCheckoutPolls=1 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/8574fb764b sweepCheckoutSeriesShown=1/1
 sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-sweepStatus=EXITED sweepWaitedSec=3 sweepExitCode=0
-sweepStream=sweep-raw.txt sweepLines=2
-09:04:38  outbox done: outboxFiles=17 sent=0 captionedSent=0 captionedClipsSent=0 refused=0 unsent=0 alreadySent=17 held=0 sendFailed=0 receiptRefused=0 recordsWritten=0 latencySamples=0/0 outboundLatencySecAtWorst=nothing-measured
-09:04:38  nothing measured: all 17 file(s) in production/outbox already carry a receipt, so no message was checked or sent this pass.
+sweepStatus=EXITED sweepWaitedSec=9 sweepExitCode=0
+sweepStream=sweep-raw.txt sweepLines=12
+17:47:02    outbox: sent production/outbox/2026-09-14-research-1of5-kcd2-part1.answer.md kind=answer chars=3855 messageId=82 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-1of5-kcd2-part1.answer.receipt.txt
+17:47:02    outbox: sent production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md kind=answer chars=2619 messageId=83 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-1of5-kcd2-part2.answer.receipt.txt
+17:47:03    outbox: sent production/outbox/2026-09-14-research-2of5-hitman-part1.answer.md kind=answer chars=3721 messageId=84 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-2of5-hitman-part1.answer.receipt.txt
+17:47:03    outbox: sent production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md kind=answer chars=2119 messageId=85 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-2of5-hitman-part2.answer.receipt.txt
+17:47:04    outbox: sent production/outbox/2026-09-14-research-3of5-rdr2-part1.answer.md kind=answer chars=3978 messageId=86 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-3of5-rdr2-part1.answer.receipt.txt
+17:47:04    outbox: sent production/outbox/2026-09-14-research-3of5-rdr2-part2.answer.md kind=answer chars=1571 messageId=87 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-3of5-rdr2-part2.answer.receipt.txt
+17:47:04    outbox: sent production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md kind=answer chars=2553 messageId=88 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-4of5-disco-elysium-part1.answer.receipt.txt
+17:47:05    outbox: sent production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md kind=answer chars=3063 messageId=89 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-4of5-disco-elysium-part2.answer.receipt.txt
+17:47:05    outbox: sent production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md kind=answer chars=3736 messageId=90 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.receipt.txt
+17:47:05    outbox: sent production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md kind=answer chars=2369 messageId=91 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.receipt.txt
+17:47:05  outbox done: outboxFiles=29 sent=10 captionedSent=0 captionedClipsSent=0 refused=0 unsent=0 alreadySent=19 held=0 sendFailed=0 receiptRefused=0 recordsWritten=10 latencySamples=10/10 outboundLatencySecAtWorst=30
+17:47:09    inbox: pushed 10 file(s) as 15db42b to pc-inbox
 sweepStream=sweep-raw.txt.err sweepLines=0
