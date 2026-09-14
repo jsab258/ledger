@@ -178,8 +178,22 @@ namespace
 	// raised because Mie is the pale haze an overcast sky is made of;
 	// anisotropy is dropped toward zero because a forward-scattering halo is
 	// a clear-sky look and the reference is flat; multi-scattering is taken
-	// to its top because that is what fills a shaded sky. Every one is
-	// printed and the sky band series is what moves them next run.
+	// to its top because that is what fills a shaded sky.
+	//
+	// "EVERY ONE IS PRINTED" WAS FALSE AND IS CORRECTED, 2026-09-14. NONE of
+	// the four is printed. Grepped the whole tree and the committed verdict:
+	// there is no mie, rayleigh or scatter KEY anywhere in
+	// production/d1-probe/ue-vignette-verdict.txt; the single textual hit is
+	// the word "inscattering" in a prose line about meanRGB. The only uses of
+	// these four are this declaration and the setters below.
+	// AND NO RUN HAS EVER VARIED ONE. The atmosphere actor and all four
+	// constants landed in a single commit, 884f049c on 2026-09-09, and nothing
+	// has moved them since, so NOT ONE OF THE FOUR HAS EVER BEEN SHOWN TO MOVE
+	// A PIXEL. That is queue 286's real first question and it is why 286's
+	// series carries a Mie 0.000 rung as its own positive control: Mie off
+	// against Mie at eighty times the engine default must change a sky if the
+	// setter works, and if the rungs come back identical the run can then tell
+	// "Mie is not the lever" from "the setter never took".
 	const float kSkyRayleighScale   = 0.004f;   // engine default 0.0331
 	const float kSkyMieScale        = 0.040f;   // engine default 0.003996
 	const float kSkyMieAnisotropy   = 0.05f;    // engine default 0.8
