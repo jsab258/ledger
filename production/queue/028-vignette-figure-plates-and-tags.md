@@ -2,7 +2,7 @@ line: production (asset pipeline)
 spec: game-design/decision-2026-09-02-vignette-batch-canon-crews-d1-timebox.md, Ruling 10
 acceptance: a figures block placed in Unity; plates regenerated from canon's street-districts line; twenty G7 tags off the five canon names; every image under decals2d/ OPENED and the manifest's review line dated and specific
 max_sessions: 2
-status: CLOSED 2026-09-10, not on the ladder and untouched for 8 days 2026-09-02. content-wrangler first, then engine-specialist.
+status: REOPENED 2026-09-14 by Jafar. Was: CLOSED 2026-09-10, not on the ladder (closed by cd55a79c, an archiving commit, with no ruling naming what went with it; see production/queue/275). and untouched for 8 days 2026-09-02. content-wrangler first, then engine-specialist.
 
 1. THE FIGURE. A `figures` block in `vignette-scene.json`: which held body,
    which idle clip, x, z, facing. Sizes come from the fbx manifest and are

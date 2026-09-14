@@ -1,4 +1,4 @@
-status: CLOSED 2026-09-10, not on the ladder and untouched for 8 days
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 8 days
 line: signage/brand
 spec: production/specs/brand-bible-v1.md, the fields register and physical
 acceptance: at least three brands named by something the game runs; a reach check that fails when a brand entry has no consumer; the throughput ledger's W36 zero replaced by a real count

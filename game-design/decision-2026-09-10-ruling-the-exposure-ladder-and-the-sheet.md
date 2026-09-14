@@ -132,6 +132,13 @@ The night pin is therefore a RESEARCH RUNG and goes to the queue with a name:
 "settled night exposure reference". Its shape, dictated so the next brief does
 not have to invent it:
 
+(Marker added 2026-09-14, when Jafar ruled that an order to the queue names its
+item by number and something checks the item exists. This order sat dark for
+four days because it named the work and not the number. The item now exists and
+`tools/docs-check.py` resolves the line below on every run.)
+
+QUEUE: 276 settled-night-exposure-reference
+
 1. Hold the night condition and render the same camera repeatedly, printing
    the output luma series per frame, until the series stops moving. Print the
    series. Do not set anything.
@@ -155,6 +162,10 @@ requires the full matrix printed with its count, because the shape of the
 spread across pairs decides whether this is adaptation carry-over between
 conditions (expected to show on the pairs that follow a different condition)
 or something worse.
+
+Marker added 2026-09-14, four days late, by the ruling that shipped D32's checker.
+The order above predates the rule; the item it names was filed the same day.
+QUEUE: 278 the-determinism-matrix-a-ruling-ordered-and-nobody-filed
 
 ## 4. Question 6: exposure_pin being required
 
@@ -305,6 +316,10 @@ instruction" reports as the instruction never having been read. Grep for other
 specs that put requirements in a negative prompt and list them. That is
 ADJACENT, so it goes to the queue with a name and does not enter this change:
 "negative-half requirements audit".
+
+Marker added 2026-09-14, four days late, by the same ruling. Queue 234 was ruled
+NOT to satisfy this order, so it carries its own number.
+QUEUE: 279 negative-half-requirements-audit
 
 ## 8. The four repaired literals
 

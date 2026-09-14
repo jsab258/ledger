@@ -5,7 +5,7 @@ spec: A capsule sweep against a named piece's own component in the walk probe,
 acceptance: the verdict names the piece a sweep hit, and a sunk or missing piece reads
   as a miss with the reason rather than as a silent pass
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
   game-design/decision-2026-09-08-queue-147-the-composed-telling-and-the-clause-the-bank-never-had.md
   section 7, as the next rung above every proxy in queue 161.
   WHY A COUNT CANNOT ANSWER IT. A primitive count is a proxy for collision and a

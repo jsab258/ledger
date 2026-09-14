@@ -6,7 +6,12 @@ acceptance: a person other than Jafar can start something on his PC, commit one
   crime on the textured Meridian street, be seen, and HEAR the town react,
   without reading any instructions from this repository
 max_sessions: 3
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. THE NEXT MILESTONE. Everything below is assembly of
+status: REOPENED 2026-09-14 BY JAFAR, BY NAME. His words: "Queue 138 is
+  reopened." It was closed 2026-09-10 by cd55a79c, an archiving commit, with no
+  ruling naming what went with it (see production/queue/275). Four days later he
+  wrote the stages and named THIS item's deliverable, stage 3, as THE MILESTONE
+  TO PROTECT IF ANYTHING SLIPS, while its queue item sat closed and the ladder he
+  judges by eye carried no rung under it.
   parts that now exist separately; almost nothing here is new invention, and
   that is the point.
 

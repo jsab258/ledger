@@ -2,7 +2,7 @@ line: infrastructure (the evidence channel)
 spec: game-design/decision-2026-09-05-ruling-build-batch-and-roadmap-fold.md, section 4 and section 11 item B
 acceptance: the gate refuses a commit while an untracked record sits in production/inbox, production/outbound OR production/rulings, printing inboxUntracked=N/M per directory with the words "nothing measured" on an empty one; a rejecting fixture PER DIRECTORY, accepting case first
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-05. NOT STARTED THIS WEEK by Jafar's rule that after item 4 the studio stops building studio.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-05. NOT STARTED THIS WEEK by Jafar's rule that after item 4 the studio stops building studio.
 
 ## The gap
 

@@ -2,7 +2,7 @@ line: infrastructure (instruments)
 spec: production/queue/900-process-audit.md items 8 and 9
 acceptance: a doc gate that resolves every D<n> citation against the register and FAILS on one that resolves to nothing, printing both counts; accepting case is the live tree; rejecting case a planted citation to a number no file carries
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 7 days 2026-09-02. instrument-builder. The audit items are the manual half; this is the mechanical one.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 7 days 2026-09-02. instrument-builder. The audit items are the manual half; this is the mechanical one.
 
 On 2 September a decision record shipped citing D11, which did not exist,
 and DENYING D10, which had existed since commit 0ff1ee17 and is cited from

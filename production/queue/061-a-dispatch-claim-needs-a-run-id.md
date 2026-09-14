@@ -2,7 +2,7 @@ line: infrastructure (the dispatch discipline)
 spec: this file
 acceptance: a tool that takes a commit sha and a workflow name and answers "did a run start on THIS sha", returning the run number and status or the words NO RUN STARTED, with an accepting fixture (a sha that did start a run) and a rejecting one (a sha that did not); plus a line in .claude/rules/ci.md making the claim "this push is run N" unsayable without it
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 7 days 2026-09-03. instrument-builder, small. Found by making the mistake.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 7 days 2026-09-03. instrument-builder, small. Found by making the mistake.
 
 ## The finding
 

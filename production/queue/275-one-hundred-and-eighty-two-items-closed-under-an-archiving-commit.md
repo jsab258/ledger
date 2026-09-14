@@ -37,6 +37,47 @@ Also among them, per the director's read: the weekly process audit (900), the
 row-law checker (107), and every item the quality ladder's next rungs cite for
 stages 2 and 3.
 
+## HE RULED IT, 2026-09-14, and these are his words
+
+    "Queue 138 is reopened. Of the other 181 closed on 10 September, reopen only
+     what the stages name a route for, and correct the closure phrase to name its
+     commit."
+
+THOSE WORDS ARE THE AUTHORITY FOR ALL FOURTEEN REOPENINGS, not only 138. He gave
+the criterion (what the stages name a route for) as well as the one item, so the
+thirteen the audit selected stand on his ruling and not on the studio's discretion.
+What remains his is whether the audit applied that criterion correctly.
+
+## WHAT THE AUDIT FOUND, with its coverage stated
+
+    reopened      13   of 181   plus 138, which he named himself
+    kept closed  139   of 181
+    UNDECIDED     29   of 181
+    13 + 139 + 29 = 181, and 14 + 168 = 182 including 138
+
+COVERAGE, SAID PLAINLY RATHER THAN IMPLIED: full prose was read for about twenty
+items. The rest were classified on their status and spec lines, which are real
+content and not filenames, but are not the whole item. That is why the undecided
+bucket is 29 and not smaller: it is what an honest reader could not call.
+
+THE TWENTY-NINE UNDECIDED, by number:
+
+    027 035 051 059 102 114 116 117 118 121 122 136 144 149 154 155 156 157 159 160 162 165 167 168 185 188 190 194 228
+
+Each carries, in its own file, the one sentence that would settle it. None was
+swept into reopen to be safe, because a queue nobody can read is the condition the
+2026-09-10 sweep was correctly trying to fix.
+
+## ONE OF THE 182 WAS NOT A CLOSURE QUESTION AT ALL
+
+`production/queue/115-canon-says-nothing-is-wiped-and-the-code-prunes.md` is a
+LIVE CANON VIOLATION and was P1, MANDATORY DIRECTOR RULING. The closure audit
+wrote "not reopened" on it. A director reversed that on 2026-09-14 and it is now
+REOPENED: canon.md line 99 says nothing is ever wiped, MemoryStore.cs prunes to 500
+at 601 events, and CoreTests Program.cs:1712 asserts the prune fires, so the
+violation sits inside a green suite. The prune itself is Jafar's ruling and nothing
+moves before it.
+
 ## What is being asked
 
 THIS IS A DECISION AND NOT A CLEANUP, which is why it is addressed to him.

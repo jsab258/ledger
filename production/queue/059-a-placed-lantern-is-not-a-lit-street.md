@@ -2,7 +2,7 @@ line: production (D1 admissibility, the Unreal side)
 spec: this file, from run 17's four frames opened 2026-09-03
 acceptance: (1) a per-light contribution reading on the scene line that answers "did this light reach the frame", not merely "was it placed": for each lantern and practical, the luma of the frame with it on minus the same frame with it off, at a named sample region, printed as a series before any bound is set; (2) an exposure reading per shot naming what the tone mapper did, with the clipped-pixel count at both ends over its denominator (shotPixels), so a blown ground and a crushed night are numbers rather than impressions; (3) both fixtures run in the ue-probe selftest against committed frames, accepting case first
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 7 days 2026-09-03. engine-specialist. Found by opening run 17's four frames, which is the only way it could have been found.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and UNDECIDED, the audit could not make this call for him; see production/queue/275. and untouched for 7 days 2026-09-03. engine-specialist. Found by opening run 17's four frames, which is the only way it could have been found.
 
 ## The finding
 

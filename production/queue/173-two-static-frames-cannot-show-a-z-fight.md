@@ -7,7 +7,7 @@ acceptance: a planted tie is detected by the flicker half, not only by the speck
   and the nothing-measured wording distinguishes "no tie" from "this pair could not
   have shown one"
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. Found by reading the first real output rather than by review.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09. Found by reading the first real output rather than by review.
   THE RULING SAID flicker is the evidence and speckle is context, because the control
   rectangle sits at a different distance and angle over asphalt and all three
   differences reduce its speckle. That reasoning is right about the control and wrong

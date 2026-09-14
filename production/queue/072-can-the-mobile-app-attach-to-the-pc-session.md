@@ -2,7 +2,7 @@ line: infrastructure (the conversation channel)
 spec: Jafar's Director's Console rulings, 2026-09-03, item 12
 acceptance: a stated answer, yes, no, or what it needs, ESTABLISHED rather than assumed, with the source named; if the answer is "it needs X", X is listed concretely enough for Jafar to do it in one sitting
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-03. RESEARCH, cannot be answered from the build container.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-03. RESEARCH, cannot be answered from the build container.
 
 ## The question
 

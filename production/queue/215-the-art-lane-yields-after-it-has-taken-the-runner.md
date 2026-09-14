@@ -5,7 +5,7 @@ spec: The art lane's queue step runs as a job step, so by the time it asks wheth
 acceptance: either the wait happens before the runner is occupied, or the workflow states in
   its own header why that is impossible on this runner and what the holding costs.
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09, ruled in game-design/decision-2026-09-09-ruling-the-settled-exposure-and-the-two-lanes.md. IT IS THE STRUCTURAL VERSION OF QUEUE 213: narrowing
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09, ruled in game-design/decision-2026-09-09-ruling-the-settled-exposure-and-the-two-lanes.md. IT IS THE STRUCTURAL VERSION OF QUEUE 213: narrowing
   the wait list reduces how long the runner is held for nothing, and this item asks whether it
   need be held at all.
   Not obviously solvable. A job's steps cannot run before the job is scheduled, so a

@@ -2,7 +2,7 @@ line: infrastructure (the PC channel)
 spec: found 2026-09-04 when UPDATE FROM CLAUDE.bat aborted a pull for Jafar
 acceptance: a pull on the PC after a local generation run succeeds without a human moving files by hand; proven by planting the exact collision (an untracked generated file that an incoming commit also carries) and watching the update path survive it
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-04. engine-specialist, small. THIS BLOCKS JAFAR AT THE MOMENT HE MOST WANTS THE PULL, so it outranks its size.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-04. engine-specialist, small. THIS BLOCKS JAFAR AT THE MOMENT HE MOST WANTS THE PULL, so it outranks its size.
 
 ## What happened, verbatim from his screen
 

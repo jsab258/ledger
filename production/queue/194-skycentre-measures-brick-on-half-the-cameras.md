@@ -9,7 +9,7 @@ acceptance: on ONE committed run, the sky number for cam_A and cam_hook answers 
   question, the per-column found-count prints beside it, and a planted frame with no sky
   visible at all prints nothing measured rather than a number.
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. FOUND BY BEING MISLED BY IT, which is the only reason it is
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and UNDECIDED, the audit could not make this call for him; see production/queue/275.; filed as a finding rather than as ladder work 2026-09-09. FOUND BY BEING MISLED BY IT, which is the only reason it is
   filed: the director read cam_A's 0.8459 as the rung-1 camera's sky and reported the fog
   signature gone. The rung-1 camera's own value on the same run is 0.9323 at spread
   0.0078, seventy times flatter than cam_A's 0.5434, because cam_A's spread is BRICK.

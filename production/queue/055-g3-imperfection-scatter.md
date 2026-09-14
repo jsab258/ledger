@@ -2,7 +2,7 @@ line: production (dressing)
 spec: this file; BOM line G3
 acceptance: a scatter rule that places imperfections from the existing ambientCG sets with a stated density and a stated random seed, so the same street regenerates identically; the frame is opened before any density is set, and the density is read off a printed series rather than chosen
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 7 days 2026-09-03. Ordered LAST of the six by the 3 September ruling, and correctly.
+status: REOPENED 2026-09-14 by Jafar. Was: CLOSED 2026-09-10, not on the ladder (closed by cd55a79c, an archiving commit, with no ruling naming what went with it; see production/queue/275). and untouched for 7 days 2026-09-03. Ordered LAST of the six by the 3 September ruling, and correctly.
 
 ## The finding
 
