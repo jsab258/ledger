@@ -49,3 +49,30 @@ status: READY 2026-09-10 08:30Z. THE ACCEPTANCE TEST BUILT FOR THIS CAUGHT IT,
   RULED 2026-09-14: the acceptance render is dispatched AFTER the pin batch, with
   rigRepeatOf on a pinned day condition. IDENTICAL there is step 1 met on that
   condition and says nothing about night, which stays at auto.
+
+  RULED 2026-09-14 18:23Z (decision-2026-09-14-ruling-the-null-series-
+  follows-the-judged-row.md, section 13). The post-pin run 32bae70 read
+  DIFFERS 784509/921600, +0.0034, ratio 1.0053 (verdict line 323) on
+  the pinned camA repeat, while the nine identical-input frames at
+  cam_hook spread 0.0002 (line 319). A verifier's diagnosis names
+  sub-pixel anti-aliasing sampling as the cause of the pixel COUNT
+  (histogram shouldering at one and two codes, gradient-correlated, no
+  one-pixel shift improves the match); the project's own FrameStats.h
+  316 to 320 already says temporal AA moves pixels by a code value or
+  two and measures a control for it; nothing under ue-probe, tools or
+  .github pins the AA method or jitter (zero hits) and
+  DefaultEngine.ini has no RendererSettings section. The camA delta of
+  +0.0034 (ratio 1.0053) is NOT explained by that cause, whose ratio
+  the verifier measured at 1.0000 on two pairs: a second cause is live,
+  and the first frame after the scene build is a candidate, not a
+  finding. NEXT STEP, THE CHEAPEST DECISIVE MEASUREMENT: one diagnostic
+  run with the anti-aliasing method set to none for the probe, the
+  method printed on the scene line so the run says what it rendered
+  with, the same shot list, its frames neither judged nor captioned;
+  read rigDiffPixels and rigMeanLumaDelta. Zero pixels differing proves
+  the count is AA and the acceptance above becomes reachable by pinning
+  the method; a surviving delta on camA has the second cause. The
+  acceptance is then set from that printed series, never loosened by
+  prose. Needs 290 first so the repeat frame can be opened. Whether
+  "one picture" for JUDGING means pixel-identical or within the null
+  floor is Jafar's, on the card the ruling dictates.

@@ -616,4 +616,43 @@ markers above name them.
       (LookForNamedHdri prints whether the file is reachable). Whichever
       series lands first decides the sky's lever.
 
+## CORRECTION 2026-09-14, 18:23Z
+
+Section 2.5 item 1 moved `overcast_day` alone and item 6 expected
+`nullSeriesIds` to follow "by derivation". The null series is
+discovered from the condition rows, and the rows that share the
+judged cell (`grid_sky100_sun003`, `grid_null_repeat`, `wet_000`,
+`wet_060`, `wet_100`) carry a literal 0.450 with no derivation, so on
+the working tree the judged frame left its own null series and the
+hook guard went red. Ruled 18:23Z in
+`decision-2026-09-14-ruling-the-null-series-follows-the-judged-row.md`:
+those five rows follow the judged row, and item 6's "asked beside
+read on all seven fog rows" is restated there, because
+`fogMaxOpacityRead` is one run-level, last-wins read (verdict line
+186) and no shot line carries it.
+
+## CORRECTION 2026-09-14, by the resident, to a quotation and not to a ruling
+
+This record attributes to Jafar the sentence "nothing is judged until two
+photographs of one scene are one picture" and calls it his own rule. HE DID NOT
+WRITE THOSE WORDS. Grepped across the tree: the phrase appears in no decision
+record of his and nowhere in `ledger-v2/respec/decision-register/D31-the-visual-path.md`.
+What D31 says, in its Pace section, is "Step 1 is the one exception and it gates
+only the judging: the work continues while the rig is made deterministic, and
+nothing is judged until it is." The "one picture" phrasing is THE INSTRUMENT'S,
+from the verdict key `rigRule=identical-inputs-must-be-the-same-picture`.
+
+THE SUBSTANCE IS UNHARMED and neither ruling changes: D31 does hold the judging
+until the rig is deterministic, which is what both rulings rest on. The reason
+this is worth a correction is the card. The card sent to Jafar on 2026-09-14
+asks him to define this very wording, and handing him a phrase he never used,
+labelled as his, pre-loads the question he is being asked. The card was
+rewritten before it sent to quote D31's recorded words and to ask what
+DETERMINISTIC means, which is the real question: he said deterministic, the code
+chose pixel-identical, and whether those are the same thing is his to say.
+
+CLAUDE.md rule 1: when a claim turns out false, grep for the SENTENCE and not
+the site. Done. The phrase sits in exactly two records, this one and the other
+ruling of the same day, and both now carry this note.
+
 <!--RULING spawn=2026-09-14T16:25:22Z-->

@@ -19680,6 +19680,65 @@ namespace Ledger.CoreTests
             Check(nothing.Kind == IntentKind.Narrative && llm.LastRequest == null,
                 "with nothing to route to, no call is made");
         }
+        /// THE REFERENCE CELL AGAINST THE JUDGED DAY ROW, 2026-09-14.
+        ///
+        /// Ruled at 18:23Z in game-design/decision-2026-09-14-ruling-the-null-
+        /// series-follows-the-judged-row.md. The grid's reference cell exists
+        /// to carry the judged row's inputs, which is the whole reason the
+        /// judged hook frame is itself a member of the null series. Its fields
+        /// were a COPY of overcast_day's taken on 9 September and nothing in
+        /// the spec derives them, so when the judged row moved to
+        /// fog_max_opacity 0.100 the copy went stale in silence and the judged
+        /// frame walked out of its own noise floor.
+        ///
+        /// IT NAMES THE FIRST FIELD THAT DIFFERS AND BOTH VALUES, because "the
+        /// two rows differ" sends the reader back to the JSON and
+        /// "fog_max_opacity ref=0.450000 judged=0.100000" does not. Empty
+        /// string means they agree.
+        ///
+        /// WETNESS IS IN THE COMPARISON AND IS NOT IN THE UNREAL APPLIED-INPUT
+        /// FINGERPRINT, which is deliberate: `wetness` has no read site in
+        /// VignetteShot.cpp on this commit (queue 186), so two rows differing
+        /// only in it render one street THERE, but a reference cell that has
+        /// drifted in wetness is a false reference the day 186 wires it, and
+        /// this engine reads the field already at StreetVignetteHost.cs:715.
+        static string RefCellAgainstJudged(StreetVignette.Condition refCell,
+                                           StreetVignette.Condition day)
+        {
+            string N(double v) => v.ToString("0.000000",
+                System.Globalization.CultureInfo.InvariantCulture);
+            if (refCell.Hdri != day.Hdri)
+                return "hdri ref=" + refCell.Hdri + " judged=" + day.Hdri;
+            if (refCell.SunOn != day.SunOn)
+                return "sun ref=" + (refCell.SunOn ? "on" : "off")
+                     + " judged=" + (day.SunOn ? "on" : "off");
+            if (refCell.LanternsOn != day.LanternsOn)
+                return "lanterns ref=" + (refCell.LanternsOn ? "on" : "off")
+                     + " judged=" + (day.LanternsOn ? "on" : "off");
+            if (refCell.WindowsOn != day.WindowsOn)
+                return "window_practicals ref=" + (refCell.WindowsOn ? "on" : "off")
+                     + " judged=" + (day.WindowsOn ? "on" : "off");
+            if (Math.Abs(refCell.SunIntensity - day.SunIntensity) > 1e-12)
+                return "sun_intensity ref=" + N(refCell.SunIntensity)
+                     + " judged=" + N(day.SunIntensity);
+            if (Math.Abs(refCell.SkyIntensity - day.SkyIntensity) > 1e-12)
+                return "sky_intensity ref=" + N(refCell.SkyIntensity)
+                     + " judged=" + N(day.SkyIntensity);
+            if (Math.Abs(refCell.Wetness - day.Wetness) > 1e-12)
+                return "wetness ref=" + N(refCell.Wetness)
+                     + " judged=" + N(day.Wetness);
+            if (Math.Abs(refCell.FogDensity - day.FogDensity) > 1e-12)
+                return "fog_density ref=" + N(refCell.FogDensity)
+                     + " judged=" + N(day.FogDensity);
+            if (Math.Abs(refCell.FogMaxOpacity - day.FogMaxOpacity) > 1e-12)
+                return "fog_max_opacity ref=" + N(refCell.FogMaxOpacity)
+                     + " judged=" + N(day.FogMaxOpacity);
+            if (Math.Abs(refCell.ExposurePin - day.ExposurePin) > 1e-12)
+                return "exposure_pin ref=" + N(refCell.ExposurePin)
+                     + " judged=" + N(day.ExposurePin);
+            return "";
+        }
+
         /// THE D1b STREET VIGNETTE, READ FROM THE SHIPPED SCENE FILE.
         ///
         /// THE LIVE JSON IS THE ACCEPTING FIXTURE, per the standing rule for
@@ -19748,7 +19807,7 @@ namespace Ledger.CoreTests
                               $"bomLines={plan.PerBom.Count} cameras={plan.Cameras.Count} " +
                               $"conditions={plan.Conditions.Count} shots={plan.Shots.Count}");
             Check(plan.Cameras.Count == 3, "three cameras", plan.Cameras.Count.ToString());
-            // TWO JUDGED CONDITIONS PLUS THE TWENTY ONE-RUN PROBE ROWS.
+            // TWO JUDGED CONDITIONS PLUS THE TWENTY SIX ONE-RUN PROBE ROWS.
             //
             // THE LADDER IS RETIRED, 2026-09-09, by section 9 of
             // game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md,
@@ -19766,16 +19825,22 @@ namespace Ledger.CoreTests
             //
             // AND THE FIVE ROWS QUEUE 235 ADDS ARE COUNTED APART AGAIN, for
             // the same reason: four exposure rungs plus the night setter that
-            // puts darkness before each afternight rung. A bare 27 would read
+            // puts darkness before each afternight rung. A bare 33 would read
             // as the grid having grown.
+            //
+            // THE PROBE GROUP WENT 20 TO 26 ON 2026-09-14, section 2.5 item 2 of
+            // game-design/decision-2026-09-14-ruling-the-prune-is-gone-seven-is-a-floor-and-the-fog-is-the-cloud-deck.md:
+            // three fog rungs inside the unrendered 0.100 to 0.000 bracket and
+            // three sky rungs crossed with the new fog cap. The grid is
+            // untouched at twelve, which is why the groups are counted apart.
             int judgedConds = 0, probeConds = 0, pinConds = 0;
             foreach (var cd in plan.Conditions)
                 if (cd.Id == "overcast_day" || cd.Id == "wet_night") judgedConds++;
                 else if (cd.Id.StartsWith("pin_")) pinConds++;
                 else probeConds++;
-            Check(plan.Conditions.Count == 27 && judgedConds == 2 && probeConds == 20
+            Check(plan.Conditions.Count == 33 && judgedConds == 2 && probeConds == 26
                   && pinConds == 5,
-                  "two judged conditions, twenty one-run probe rows, and the five exposure rows",
+                  "two judged conditions, twenty six one-run probe rows, and the five exposure rows",
                   plan.Conditions.Count + " total, " + judgedConds + " judged, " + probeConds
                   + " probe, " + pinConds + " pin");
 
@@ -19949,6 +20014,48 @@ namespace Ledger.CoreTests
                   "the null cell is the reference cell in every field that lights a frame",
                   "a null pair that differs in any input measures the difference, not the rig");
 
+            // AND THE OTHER HALF OF THE SAME CLAIM, ADDED 2026-09-14 BY THE
+            // RULING OF 18:23Z (game-design/decision-2026-09-14-ruling-the-
+            // null-series-follows-the-judged-row.md): THE REFERENCE CELL IS
+            // THE JUDGED DAY ROW. The check above proves the null cell repeats
+            // the reference cell; nothing proved the reference cell was still
+            // the row Jafar judges. It was not, from the moment overcast_day
+            // moved to fog_max_opacity 0.100 and the five rows sharing its
+            // cell kept their 9 September copies of 0.450, and the guard that
+            // noticed sat in the other engine's suite, one round trip later.
+            // ACCEPTING CASE FIRST, then the planted rejection below.
+            StreetVignette.Condition judgedDay = default;
+            bool haveJudged = false;
+            foreach (var cd in plan.Conditions)
+                if (cd.Id == "overcast_day") { judgedDay = cd; haveJudged = true; }
+            string refDiff = (haveRef && haveJudged)
+                ? RefCellAgainstJudged(refCell, judgedDay)
+                : "nothing measured: overcast_day or grid_sky100_sun003 is not in the spec";
+            Check(haveRef && haveJudged && refDiff.Length == 0,
+                  "the grid's reference cell is the judged day row in every field that lights a "
+                  + "frame, because the reference cell exists to carry the judged row's inputs "
+                  + "and a judged frame that is not in its own null series has walked out of the "
+                  + "floor that speaks for it",
+                  refDiff);
+            // THE REJECTING CASE, PLANTED, so this is watched on every run and
+            // not only on the night it was written (rule 5b). A copy of the
+            // parsed reference cell with its fog set back to the 0.450 it
+            // carried before the ruling: the comparison must refuse it, and
+            // must refuse it BY NAMING fog_max_opacity, since a refusal for
+            // some other reason would pass a check that had stopped reading
+            // the field it is about.
+            string plantedDiff = "nothing measured: no reference cell to plant into";
+            if (haveRef && haveJudged)
+            {
+                var planted = refCell;
+                planted.FogMaxOpacity = 0.450;
+                plantedDiff = RefCellAgainstJudged(planted, judgedDay);
+            }
+            Check(plantedDiff.StartsWith("fog_max_opacity "),
+                  "and the comparison refuses a reference cell planted back at the retired fog "
+                  + "cap, naming fog_max_opacity and both values",
+                  plantedDiff.Length == 0 ? "accepted a planted 0.450 as equal" : plantedDiff);
+
             // A4: THE FOG CAP IS A FIELD ON EVERY ROW, AND A SERIES ON FOUR.
             int noCap = 0;
             foreach (var cd in plan.Conditions)
@@ -19956,21 +20063,79 @@ namespace Ledger.CoreTests
             Check(noCap == 0,
                   "every condition carries a fog cap, and only the transparent probe row is allowed a zero",
                   noCap + " of " + plan.Conditions.Count + " rows carry no cap");
-            var wantFog = new double[] { 0.450, 0.250, 0.100, 0.000 };
-            int fogFound = 0;
+            // SEVEN VALUES SINCE 2026-09-14, and the three that were added are
+            // the ones nothing has photographed. The four rendered on 32bae70
+            // read band.skyCentre.meanLuma 0.9268 / 0.8822 / 0.7979 / 0.6222 and
+            // band.ground.p05 0.4617 / 0.3625 / 0.2532 / 0.0862 against the
+            // sheet's 0.808 and 0.1935, so the sky crosses the sheet just above
+            // 0.100 and the dark end has not crossed it yet: the disagreement
+            // between the two statistics lies entirely inside 0.100 to 0.000.
+            // Section 2.5 item 2 of
+            // game-design/decision-2026-09-14-ruling-the-prune-is-gone-seven-is-a-floor-and-the-fog-is-the-cloud-deck.md.
+            // THE ROW COUNT IS ASSERTED BESIDE THE VALUE COUNT so that an extra
+            // fog row cannot ride in unnamed: seven asked values found over
+            // seven fog_maxop rows is the only reading that passes.
+            var wantFog = new double[] { 0.450, 0.250, 0.100, 0.080, 0.050, 0.020, 0.000 };
+            int fogFound = 0, fogRows = 0;
             foreach (var w in wantFog)
                 foreach (var cd in plan.Conditions)
                     if (cd.Id.StartsWith("fog_maxop") && Math.Abs(cd.FogMaxOpacity - w) < 1e-9)
                     { fogFound++; break; }
-            Check(fogFound == 4,
-                  "four fog rows at 0.450, 0.250, 0.100 and 0.000, which is a series and not a pair",
-                  fogFound + " of 4");
+            foreach (var cd in plan.Conditions)
+                if (cd.Id.StartsWith("fog_maxop")) fogRows++;
+            Check(fogFound == 7 && fogRows == 7,
+                  "seven fog rows at 0.450, 0.250, 0.100, 0.080, 0.050, 0.020 and 0.000, which is "
+                  + "a series across the bracket the sheet is crossed in and not a pair",
+                  fogFound + " of 7 asked values found over " + fogRows
+                  + " fog_maxop rows examined");
             double dayCap = -1;
             foreach (var cd in plan.Conditions)
                 if (cd.Id == "overcast_day") dayCap = cd.FogMaxOpacity;
-            Check(Math.Abs(dayCap - 0.450) < 1e-9,
-                  "the judged day condition carries the retired kFogMaxOpacityWithSky literal unchanged",
+            // THE JUDGED ROW MOVED, 2026-09-14, AND THIS IS THE GUARD THAT SAYS SO.
+            // Until today this asserted 0.450 and its sentence was "the field
+            // replaced the literal and moved no number", which was the right
+            // claim on 9 September and is deliberately false now. The value is
+            // a RENDERED cell and not an interpolation: vign_fog_maxop0100 on
+            // 32bae70, verdict line 208, band.skyCentre.meanLuma 0.7979 against
+            // the sheet's 0.808 and band.ground.p05 0.2532 against its 0.1935.
+            Check(Math.Abs(dayCap - 0.100) < 1e-9,
+                  "the judged day condition carries fog cap 0.100, moved by the ruling of "
+                  + "2026-09-14 from the fog series on 32bae70",
                   dayCap.ToString());
+            // AND THE SIX ROWS THAT RIDE THE SAME DISPATCH ARE THE REFERENCE
+            // CELL IN EVERY FIELD BUT THE ONE THEY MOVE, ASSERTED FIELD BY
+            // FIELD rather than by reading rows of JSON side by side. A sky
+            // rung that also moved the wetness would measure the wetness.
+            {
+                StreetVignette.Condition dayCell = default;
+                bool haveDayCell = false;
+                foreach (var cd in plan.Conditions)
+                    if (cd.Id == "overcast_day") { dayCell = cd; haveDayCell = true; }
+                var wantCrossSky = new double[] { 0.35, 0.50, 0.70 };
+                int crossRows = 0, crossMatching = 0, crossSkies = 0;
+                foreach (var cd in plan.Conditions)
+                {
+                    if (!cd.Id.StartsWith("fog010_sky")) continue;
+                    crossRows++;
+                    if (haveDayCell
+                        && cd.Hdri == dayCell.Hdri && cd.SunOn == dayCell.SunOn
+                        && cd.LanternsOn == dayCell.LanternsOn && cd.WindowsOn == dayCell.WindowsOn
+                        && Math.Abs(cd.SunIntensity - dayCell.SunIntensity) < 1e-12
+                        && Math.Abs(cd.Wetness - dayCell.Wetness) < 1e-12
+                        && Math.Abs(cd.FogDensity - dayCell.FogDensity) < 1e-12
+                        && Math.Abs(cd.ExposurePin - dayCell.ExposurePin) < 1e-12
+                        && Math.Abs(cd.FogMaxOpacity - 0.100) < 1e-12) crossMatching++;
+                }
+                foreach (var w in wantCrossSky)
+                    foreach (var cd in plan.Conditions)
+                        if (cd.Id.StartsWith("fog010_sky")
+                            && Math.Abs(cd.SkyIntensity - w) < 1e-9) { crossSkies++; break; }
+                Check(crossRows == 3 && crossMatching == 3 && crossSkies == 3,
+                      "three sky rows cross the new fog cap at 0.35, 0.50 and 0.70, each the "
+                      + "judged day cell in every field but the sky it moves",
+                      crossRows + " rows, " + crossMatching + " matching the judged cell at fog "
+                      + "0.100, " + crossSkies + " of 3 asked sky values found");
+            }
 
             // A3: WETNESS AS A SERIES, BOTH ENDS AND THE VALUE IN FORCE.
             var wantWet = new double[] { 0.0, 0.60, 1.0 };
@@ -20010,12 +20175,12 @@ namespace Ledger.CoreTests
                 }
                 else if (sh.CameraId == "cam_A" || sh.CameraId == "cam_B") matched++;
             }
-            Check(plan.Shots.Count == 37,
-                  "four matched shots plus the hook viewpoint plus twenty probe rows plus the "
+            Check(plan.Shots.Count == 43,
+                  "four matched shots plus the hook viewpoint plus twenty six probe rows plus the "
                   + "twelve exposure rows",
                   plan.Shots.Count.ToString());
             Check(matched == 4, "the four judged pairs are still exactly four", matched.ToString());
-            Check(probeShots == 20 && probeAtHook == 32,
+            Check(probeShots == 26 && probeAtHook == 38,
                   "every probe row and every exposure row stands at cam_hook, the camera rung 1 "
                   + "is judged from",
                   probeAtHook + " at cam_hook over " + probeShots + " probe and "
@@ -20052,8 +20217,8 @@ namespace Ledger.CoreTests
                       setterShots + " setters, " + ladderShots + " ladder rows");
             }
             // THE NULL CELL IS SHOT LAST, which is the whole of its value: its
-            // twin grid_sky100_sun003 is shot 7 of 25, so the pair is
-            // EIGHTEEN SHOTS APART ON IDENTICAL INPUTS, with every condition
+            // twin grid_sky100_sun003 is shot 7 of 43, so the pair is
+            // THIRTY SIX SHOTS APART ON IDENTICAL INPUTS, with every condition
             // change and every light probe between them. Not the maximum
             // separation the run could hold, which six preceding shots rule
             // out, and corrected here by amendment 3(b) of
