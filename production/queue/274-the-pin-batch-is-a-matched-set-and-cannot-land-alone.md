@@ -1,6 +1,9 @@
 # 274: the exposure pin batch is a matched set, and a C++ invariant refuses it
 
-STATUS: BLOCKED on a pin-eligibility ruling
+STATUS: RULED 2026-09-14, position B, under
+game-design/decision-2026-09-14-ruling-the-pin-belongs-to-the-rig-and-the-render-waits-for-it.md.
+Lands as one commit per its section 8; closes when the first Unreal run on or
+after it prints section 9's keys.
 OPENED: 2026-09-14, established by reverting one file at a time.
 
 ## What was learned, by experiment rather than by reading the diff

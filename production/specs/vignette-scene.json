@@ -889,7 +889,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "art-direction R-B2 makes overcast the DEFAULT British frame rather than a side case: 1403 sunshine hours against about 4400 daylight hours is under a third of daylight with the sun out. Wet but not raining, which is what D1b asks for. The fog density is the first value of a series that has never been printed for this scene and is named as such."
@@ -919,7 +919,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 1 of 12, sky 0.50 crossed with sun 10, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -934,7 +934,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 2 of 12, sky 1.00 crossed with sun 3, shot at cam_hook. THIS IS THE GRID'S REFERENCE CELL and the first half of the null pair: grid_null_repeat carries these same values and is shot last, so the difference between the two frames is this run's own exposure drift. If that difference is not smaller than the smallest sky step in the grid at shotMeanLuma, band.ground.p05 and band.ground.p50, THE GRID IS A NO-READ and no cell may be quoted. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -949,7 +949,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 3 of 12, sky 0.35 crossed with sun 30, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -964,7 +964,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 4 of 12, sky 0.70 crossed with sun 3, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -979,7 +979,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 5 of 12, sky 1.00 crossed with sun 30, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -994,7 +994,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 6 of 12, sky 0.50 crossed with sun 3, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1009,7 +1009,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 7 of 12, sky 0.35 crossed with sun 10, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1024,7 +1024,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 8 of 12, sky 0.70 crossed with sun 30, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1039,7 +1039,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 9 of 12, sky 1.00 crossed with sun 10, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1054,7 +1054,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 10 of 12, sky 0.50 crossed with sun 30, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1069,7 +1069,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 11 of 12, sky 0.35 crossed with sun 3, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1084,7 +1084,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A1 GRID CELL 12 of 12, sky 0.70 crossed with sun 10, shot at cam_hook. THE CAMERA IS AN INSTRUMENT REPAIR AND NOT ONLY JAFAR'S JUDGING CAMERA: the three control quads are hidden on cam_hook, so no whole-frame key on this row photographs the instrument, and at fovV 39.0 band.skyCentre is sky rather than the rooftops it holds at fovV 60.0. SHOT ORDER IS NOT MONOTONE IN SKY, which is condition C6, and the order is sky050/sun010 sky100/sun003 sky035/sun030 sky070/sun003 sky100/sun030 sky050/sun003 sky035/sun010 sky070/sun030 sky100/sun010 sky050/sun030 sky035/sun003 sky070/sun010. NO CONSTANT IS SET FROM THIS ROW."
@@ -1099,7 +1099,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.1 (A1a), BLOCKING of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. THE GRID'S OWN NULL CELL, and it is a standing instrument rather than a rung. Every field is a character-for-character duplicate of grid_sky100_sun003, the grid's reference cell, and it is shot LAST while its twin grid_sky100_sun003 is shot 7 of 25, so the two are eighteen shots apart on identical inputs, with every condition change and every light probe between them. Run 38 carried this same test as ladder_sun003 against vign_camA_day, IT FAILED at 0.1106 of whole-frame mean luma and 0.1172 at band.ground.p05, and nobody read it. A hundredfold of sun moved the dark end by 1.06 of that null, which is why the ladder measured nothing. READ THIS PAIR BEFORE ANY CELL: if the three differences are not each smaller than the smallest sky step in the grid, the grid is a NO-READ and the reader escalates rather than quoting a cell."
@@ -1114,7 +1114,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.4 (A4) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A4 FOG ROW 1 of 4, fog_max_opacity 0.450 at the grid's reference cell (sky 1.00, sun 3, wetness 0.60), shot at cam_hook. The value in force was the hardcoded kFogMaxOpacityWithSky 0.45f, and queue 186 names it in its own text as something that must come down in the same change or a sky behind an opaque fog is invisible. FOUR ROWS RATHER THAN TWO: two are a pair and four are a series, and the transparent end is the one that says how much of the white far field is fog at all. The 0.450 row is the series' own first point and repeats the value in force. fogMaxOpacityRead is printed beside what was asked on every shot, so this row's own frame says whether the field arrived. NO CONSTANT IS SET FROM THIS ROW: queue 206 reads the series."
@@ -1129,7 +1129,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.250,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.4 (A4) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A4 FOG ROW 2 of 4, fog_max_opacity 0.250 at the grid's reference cell (sky 1.00, sun 3, wetness 0.60), shot at cam_hook. The value in force was the hardcoded kFogMaxOpacityWithSky 0.45f, and queue 186 names it in its own text as something that must come down in the same change or a sky behind an opaque fog is invisible. FOUR ROWS RATHER THAN TWO: two are a pair and four are a series, and the transparent end is the one that says how much of the white far field is fog at all. The 0.450 row is the series' own first point and repeats the value in force. fogMaxOpacityRead is printed beside what was asked on every shot, so this row's own frame says whether the field arrived. NO CONSTANT IS SET FROM THIS ROW: queue 206 reads the series."
@@ -1144,7 +1144,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.100,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.4 (A4) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A4 FOG ROW 3 of 4, fog_max_opacity 0.100 at the grid's reference cell (sky 1.00, sun 3, wetness 0.60), shot at cam_hook. The value in force was the hardcoded kFogMaxOpacityWithSky 0.45f, and queue 186 names it in its own text as something that must come down in the same change or a sky behind an opaque fog is invisible. FOUR ROWS RATHER THAN TWO: two are a pair and four are a series, and the transparent end is the one that says how much of the white far field is fog at all. The 0.450 row is the series' own first point and repeats the value in force. fogMaxOpacityRead is printed beside what was asked on every shot, so this row's own frame says whether the field arrived. NO CONSTANT IS SET FROM THIS ROW: queue 206 reads the series."
@@ -1159,7 +1159,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.000,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.4 (A4) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A4 FOG ROW 4 of 4, fog_max_opacity 0.000 at the grid's reference cell (sky 1.00, sun 3, wetness 0.60), shot at cam_hook. The value in force was the hardcoded kFogMaxOpacityWithSky 0.45f, and queue 186 names it in its own text as something that must come down in the same change or a sky behind an opaque fog is invisible. FOUR ROWS RATHER THAN TWO: two are a pair and four are a series, and the transparent end is the one that says how much of the white far field is fog at all. The 0.450 row is the series' own first point and repeats the value in force. fogMaxOpacityRead is printed beside what was asked on every shot, so this row's own frame says whether the field arrived. NO CONSTANT IS SET FROM THIS ROW: queue 206 reads the series."
@@ -1174,7 +1174,7 @@
       "wetness": 0.00,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.3 (A3) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A3 WETNESS ROW 1 of 3, wetness 0.00 at the grid's reference cell (sky 1.00, sun 3, fog_max_opacity 0.450), shot at cam_hook. Until this commit `wetness` was parsed by both readers and applied by ONE renderer and not the other: three hits in the whole ue-probe tree, all in VignetteSpec.h, and none in VignetteShot.cpp. CLAUDE.md rule 6, built is not running. A SERIES AND NOT A VALUE, both ends plus the value the judged conditions already carry, so a later session can see whether 0.60 was ever chosen or merely typed. WHAT THESE THREE ROWS CAN AND CANNOT ANSWER, STATED RATHER THAN ASSUMED: as this row is written there is STILL NO READ SITE for wetness in ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp, and no base-material parameter for it, so in Unreal these three frames measure the ABSENCE and are the BEFORE half of the call-site grep that condition C10 of the ruling asks for; the read site is queue 186's work and is named, not assumed. THE OTHER ENGINE DOES READ IT: ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715 calls AssetLibrary.SetWetness with this field, so these three rows are a three-point series in Unity and the absence in Unreal, which is two answers and not one. A frame is what would answer it, never a readback: a value that lands on the game thread and never reaches the render proxy reads back as the same number. NO CONSTANT IS SET FROM THIS ROW."
@@ -1189,7 +1189,7 @@
       "wetness": 0.60,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.3 (A3) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A3 WETNESS ROW 2 of 3, wetness 0.60 at the grid's reference cell (sky 1.00, sun 3, fog_max_opacity 0.450), shot at cam_hook. Until this commit `wetness` was parsed by both readers and applied by ONE renderer and not the other: three hits in the whole ue-probe tree, all in VignetteSpec.h, and none in VignetteShot.cpp. CLAUDE.md rule 6, built is not running. A SERIES AND NOT A VALUE, both ends plus the value the judged conditions already carry, so a later session can see whether 0.60 was ever chosen or merely typed. WHAT THESE THREE ROWS CAN AND CANNOT ANSWER, STATED RATHER THAN ASSUMED: as this row is written there is STILL NO READ SITE for wetness in ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp, and no base-material parameter for it, so in Unreal these three frames measure the ABSENCE and are the BEFORE half of the call-site grep that condition C10 of the ruling asks for; the read site is queue 186's work and is named, not assumed. THE OTHER ENGINE DOES READ IT: ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715 calls AssetLibrary.SetWetness with this field, so these three rows are a three-point series in Unity and the absence in Unreal, which is two answers and not one. A frame is what would answer it, never a readback: a value that lands on the game thread and never reaches the render proxy reads back as the same number. NO CONSTANT IS SET FROM THIS ROW."
@@ -1204,7 +1204,7 @@
       "wetness": 1.00,
       "fog_density": 0.0120,
       "fog_max_opacity": 0.450,
-      "exposure_pin": 0.000,
+      "exposure_pin": 0.300,
       "lanterns": "off",
       "window_practicals": "off",
       "note": "ONE-RUN PROBE ROW, ordered by section 4.3 (A3) of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md, and the item that reads this run removes it in the same change: rows kept by default are rows nobody chose. A3 WETNESS ROW 3 of 3, wetness 1.00 at the grid's reference cell (sky 1.00, sun 3, fog_max_opacity 0.450), shot at cam_hook. Until this commit `wetness` was parsed by both readers and applied by ONE renderer and not the other: three hits in the whole ue-probe tree, all in VignetteSpec.h, and none in VignetteShot.cpp. CLAUDE.md rule 6, built is not running. A SERIES AND NOT A VALUE, both ends plus the value the judged conditions already carry, so a later session can see whether 0.60 was ever chosen or merely typed. WHAT THESE THREE ROWS CAN AND CANNOT ANSWER, STATED RATHER THAN ASSUMED: as this row is written there is STILL NO READ SITE for wetness in ue-probe/Source/LedgerProbe/Private/VignetteShot.cpp, and no base-material parameter for it, so in Unreal these three frames measure the ABSENCE and are the BEFORE half of the call-site grep that condition C10 of the ruling asks for; the read site is queue 186's work and is named, not assumed. THE OTHER ENGINE DOES READ IT: ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715 calls AssetLibrary.SetWetness with this field, so these three rows are a three-point series in Unity and the absence in Unreal, which is two answers and not one. A frame is what would answer it, never a readback: a value that lands on the game thread and never reaches the render proxy reads back as the same number. NO CONSTANT IS SET FROM THIS ROW."
@@ -1330,6 +1330,10 @@
 
   "lighting_grid_note": "THREE REQUIRED FIELDS ON EVERY CONDITION: sun_intensity and sky_intensity, added 2026-09-09 by queue 205, and fog_max_opacity, added the same evening by section 4.4 of game-design/decision-2026-09-09-ruling-the-grid-not-the-ladder.md. All three were bare numbers inside the two emitters: the sun was the literal 3.0f at VignetteShot.cpp:1240, the sky was kSkyIntensityDay 1.0 or kSkyIntensityNight 0.35 picked by whether the sun was on, and the fog cap was const float kFogMaxOpacityWithSky = 0.45f. None was ever measured. THE VALUES CARRIED BY overcast_day AND wet_night ARE THE OLD LITERALS UNCHANGED, so this file moves where the numbers live and moves no number. Required rather than defaulted in both readers: a condition that does not name its sun, its sky or its fog cap refuses loudly instead of inheriting a value nobody chose. THE SUN LADDER IS RETIRED AND ITS SERIES IS PRESERVED IN SECTION 3 OF THAT RULING, which is the condition queue 206 set for removing it: five rungs at 3, 10, 30, 100 and 300 moved band.ground.p05 by 0.1243 across a HUNDREDFOLD of sun, against a null of 0.1172 measured between two shots of one condition, so the ladder measured 1.06 nulls and the rungs were rendered in increasing order, which confounds a drift in shot order with a response to the sun. WHAT REPLACES IT IS A GRID AT cam_hook: sky 1.00, 0.70, 0.50 and 0.35 crossed with sun 3, 10 and 30, twelve cells, interleaved so the shot order is not monotone in sky, plus ITS OWN NULL CELL (grid_null_repeat) shot last, plus four fog rows and three wetness rows at the reference cell. EVERY ROW ADDED HERE IS A ONE-RUN PROBE ROW and the item that reads the run removes it: at about 1.67 MB of committed PNG per row per run, rows kept by default are rows nobody chose. NO CONSTANT IS SET FROM ANY OF THEM.",
 
+
+  "exposure_pin_provenance": "run41/verdict-f6508b3/cond.pin_030/pin0.3000/cam_hook/afterNight0.6591/afterDay0.6590/clipHiAny0-of-921600/chosen-rung-not-interpolated/day-conditions-only/night-left-AUTO-pending-a-settled-night-reference",
+
+  "exposure_pin_note": "QUEUE 219 AND 235, SET 2026-09-14, AND IT IS A CHOSEN RUNG RATHER THAN AN INTERPOLATION. Read off the printed ladder of run 41, committed at production/d1-probe/ue-vignette-verdict.txt whose line 1 names f6508b3: condition pin_030 at cam_hook came out at 0.6591 mean luma photographed after a night frame and 0.6590 photographed after a day frame, with clipHiAny 0/921600 and clipLoAll 0/921600 on both rows. It is the only photographed rung that lands in the 0.59 to 0.62 band this rig's own auto exposure settled to on the six day frames of that run that did not follow darkness, so pinning here moves no frame far from the level the resident has been judging. Rung 0.030 is refused by its own row, which held its pin perfectly and blew 206373 of 921600 pixels while doing it. Rungs 3.000 and 10.000 held at 0.1892 and 0.0610, both far below that band. WHAT THIS VALUE IS NOT: a photometric match to the reference street photograph, which reads 0.4102 on this project's ruler and sits between rungs 0.300 and 3.000. The value is HELD at 0.300 through D28 step 2 by the ruling of 2026-09-14 (game-design/decision-2026-09-14-ruling-the-pin-belongs-to-the-rig-and-the-render-waits-for-it.md), so that the sky and sun series are read at one exposure; a finer ladder inside the 0.300 to 3.000 bracket is re-raised only with that series printed, and no number here was interpolated toward the reference's 0.4102.",
 
   "not_emitted_from_this_file": [
     {

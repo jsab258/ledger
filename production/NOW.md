@@ -63,8 +63,11 @@ and the installer deliberately never re-enables what a person turned off. It
 now reads taskEnabled=True taskState=Running with five daemons; by what act is
 NOT measured.
 
-NEXT: the pin ruling, then the render for step 1. Step 2 (light and weather)
-does not wait on either.
+RULED 14:12Z: every sun-on condition carries the pin (B); the batch lands as one
+commit; the step 1 render is dispatched after it and reads expPinRowsLeaked=0/of=6,
+rigDiffPixels on a pinned vign_camA_day, and the nine-id null series. Night stays
+at auto; the pin is held at 0.300 through step 2. Step 2 (light and weather) does
+not wait on either.
 
 ## 2026-09-14 04:09Z: THE FOURTH REFUSAL IS THE FIRST INFORMATIVE ONE, AND THE WINDOW IS LONGER THAN A DAY
 

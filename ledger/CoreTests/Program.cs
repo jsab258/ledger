@@ -19622,15 +19622,85 @@ namespace Ledger.CoreTests
                       "four exposure rungs, each the day reference cell in every field but the pin",
                       rungs + " rungs, " + rungsMatching + " matching the reference, "
                       + pinsFound + " of 4 asked pin values found");
-                // AND EVERY ROW OLDER THAN QUEUE 235 STILL ASKS FOR NOTHING,
-                // which is what makes "the field moved no frame that existed
-                // before it" a check rather than a sentence.
-                int pinned = 0, unpinned = 0;
+                // ---- WHAT THE PIN MUST BE TRUE OF, 2026-09-14 ------------
+                //
+                // THE BOUND THIS REPLACES WAS `pinned == 4 && unpinned == 23`,
+                // and it stated "the field moved no frame that existed before
+                // it", which was the right claim on 10 September and is
+                // deliberately false now: twenty one day conditions carry the
+                // live pin. Bumping it to 25 and 2 would be a literal moved to
+                // make red go away, which is the forbidden shape under rule 2.
+                // So it is replaced by the INVARIANT the determinism fix rests
+                // on, which no count can satisfy by moving:
+                //   every sun-on condition carries a pin,
+                //   every sun-off condition carries none, per section 3 of
+                //     game-design/decision-2026-09-10-ruling-the-exposure-ladder-and-the-sheet.md
+                //     which holds night at auto until a settled night reference exists,
+                //   and every day condition that is not a ladder rung carries
+                //     the SAME value, so the run has one live pin and not a scatter.
+                int dayPinned = 0, dayUnpinned = 0, nightPinned = 0, nightUnpinned = 0;
+                int livePins = 0; double livePin = 0.0; bool liveSame = true;
                 foreach (var cd in plan.Conditions)
-                    if (cd.ExposurePin > 0.0) pinned++; else unpinned++;
-                Check(pinned == 4 && unpinned == 23,
-                      "exactly the four rungs are pinned and every other condition asks for nothing",
-                      pinned + " pinned, " + unpinned + " unpinned of " + plan.Conditions.Count);
+                {
+                    bool rung = cd.Id.StartsWith("pin_") && cd.Id != "pin_setter_night";
+                    if (cd.SunOn) { if (cd.ExposurePin > 0.0) dayPinned++; else dayUnpinned++; }
+                    else          { if (cd.ExposurePin > 0.0) nightPinned++; else nightUnpinned++; }
+                    if (cd.SunOn && !rung)
+                    {
+                        if (livePins == 0) livePin = cd.ExposurePin;
+                        else if (Math.Abs(cd.ExposurePin - livePin) > 1e-12) liveSame = false;
+                        livePins++;
+                    }
+                }
+                Check(dayUnpinned == 0 && nightPinned == 0 && liveSame && livePin > 0.0
+                      && livePins > 0,
+                      "every sun-on condition carries a pin, every sun-off condition carries "
+                      + "none, and the day conditions that are not rungs share one value",
+                      dayPinned + " day pinned, " + dayUnpinned + " day unpinned, "
+                      + nightPinned + " night pinned, " + nightUnpinned + " night unpinned, "
+                      + livePins + " live day rows at " + livePin.ToString("0.000")
+                      + (liveSame ? " all equal" : " NOT all equal"));
+                // AND THE REJECTING CASE, PLANTED, because a guard with no
+                // demonstrated rejection is a comment. Three plants, each
+                // breaking one clause of the invariant, all watched.
+                {
+                    int caught = 0, planted = 0;
+                    // 1. a day condition left at auto
+                    planted++;
+                    {
+                        int du = 0;
+                        foreach (var cd in plan.Conditions)
+                            if (cd.SunOn && (cd.Id == "wet_060" ? 0.0 : cd.ExposurePin) <= 0.0) du++;
+                        if (du > 0) caught++;
+                    }
+                    // 2. a night condition given a pin
+                    planted++;
+                    {
+                        int np = 0;
+                        foreach (var cd in plan.Conditions)
+                            if (!cd.SunOn && (cd.Id == "wet_night" ? 0.3 : cd.ExposurePin) > 0.0) np++;
+                        if (np > 0) caught++;
+                    }
+                    // 3. two day rows carrying different live values
+                    planted++;
+                    {
+                        int n = 0; double first = 0.0; bool same = true;
+                        foreach (var cd in plan.Conditions)
+                        {
+                            bool rung = cd.Id.StartsWith("pin_") && cd.Id != "pin_setter_night";
+                            if (!cd.SunOn || rung) continue;
+                            double v = (cd.Id == "wet_100") ? 0.5 : cd.ExposurePin;
+                            if (n == 0) first = v;
+                            else if (Math.Abs(v - first) > 1e-12) same = false;
+                            n++;
+                        }
+                        if (!same) caught++;
+                    }
+                    Check(caught == planted,
+                          "and the invariant rejects all three plants: a day row left at auto, "
+                          + "a night row given a pin, and two day rows disagreeing",
+                          caught + " of " + planted + " plants caught");
+                }
             }
 
             // THE GRID IS THE CROSS AND NOTHING ELSE, counted out of the file
