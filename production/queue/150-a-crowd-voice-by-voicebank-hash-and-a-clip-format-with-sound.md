@@ -5,6 +5,6 @@ spec: A GIF is silent, so the overheard exchange is read rather than heard. Voic
 acceptance: the overheard beat carries a voice, in a clip format that carries sound, with
   the licence allowlist satisfied and the consent rule honoured
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
+status: REOPENED 2026-09-14 by Jafar. Was: CLOSED 2026-09-10, not on the ladder (closed by cd55a79c, an archiving commit, with no ruling naming what went with it; see production/queue/275).; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
   game-design/decision-2026-09-08-crimeprobe-the-grate-and-the-art-line.md,
   section 7, which files names rather than work.

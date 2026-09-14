@@ -4,7 +4,7 @@ spec: .github/workflows/ledger-art-blender-preview.yml declares
   `[self-hosted, ledger-pc]`. Pin it to ledger-pc like its neighbours.
 acceptance: all nine self-hosted workflows name the same machine label, counted and printed.
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. `windows` is an automatic runner label, not a machine name. It
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09. `windows` is an automatic runner label, not a machine name. It
   matched today because ledger-pc carries both, so nothing is broken now. The hazard is
   future and quiet: a second Windows runner joining the account would become eligible for
   Blender renders on a machine that has no Blender, and the failure would look like a broken

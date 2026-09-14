@@ -7,7 +7,7 @@ acceptance: a named brick_red piece, proven unobstructed by a z-ordered
   1.290 and chroma mean 31.9, with the piece name and the coverage result
   printed beside the reading
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. Small, and it closes the one check left open by the
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-06. Small, and it closes the one check left open by the
   street's success.
 
 ## Why this exists

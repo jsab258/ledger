@@ -4,7 +4,7 @@ spec: ledger/verify.py ue_probe_tests takes LAST-WINS PER BINARY over the two su
 acceptance: a binary printing two summary lines contributes one total, and a line
   matching both shapes counts once, proved by a fixture in both directions
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-08. Filed by the director ruling
   game-design/decision-2026-09-08-queue-147-the-composed-telling-and-the-clause-the-bank-never-had.md,
   amendment A1b, which put the warning comment in beside the regexes as dictated text
   and left the fix to this item.

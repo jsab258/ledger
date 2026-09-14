@@ -1,4 +1,4 @@
-status: CLOSED 2026-09-10, not on the ladder and untouched for 7 days
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 7 days
 line: verification (weekly process audit; CHEAP MODEL per the routing law)
 spec: ledger-v2/studio-v2/learning.md and this file
 acceptance: every check below reports a number or a named violation; violations become queue items; findings summarized for the morning brief

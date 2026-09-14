@@ -6,7 +6,7 @@ acceptance: a run whose checkout is behind refuses with both shas named and send
   nothing; a run whose checkout contains the run's commit sends normally. Both watched,
   the accepting case first.
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09, and it is BLOCKING for the channel being actionable.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09, and it is BLOCKING for the channel being actionable.
   MEASURED, on the first real cards pass: it sent six cards from the queue as it stood
   BEFORE that morning's edits, including one card the studio had deliberately withdrawn
   and missing the two added that day, printing waitingTotal=6 where the branch said 7.

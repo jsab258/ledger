@@ -74,6 +74,7 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D29-body-language-is-a-moat-surface.md` D29: body language is part of the moat, not polish
 - `D30-the-narrative-is-owed.md` D30: the narrative is owed
 - `D31-the-visual-path.md` D31: the visual path, in order, with the reason for each step, D28's ten steps inside it, and the estimate as plan-to-test (a scheduling document under D22)
+- `D32-a-ruling-names-its-queue-item.md` D32: a ruling that orders work to the queue names the item by number
 
 ## The director's rulings, date order
 

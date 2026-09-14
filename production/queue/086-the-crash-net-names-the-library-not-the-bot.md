@@ -2,7 +2,7 @@ line: infrastructure (the Telegram bot)
 spec: found by the resident 2026-09-04 running the ruling's own three commands; recorded in section 0 of game-design/decision-2026-09-04-ruling-067-telegram-bot-first-pass.md
 acceptance: a planted crash inside a library frame prints the innermost frame that belongs to this project, and still prints no exception message; both halves watched, and the withholding of the message must not regress
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-04. instrument-builder, small.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-04. instrument-builder, small.
 
 ## What the run actually printed
 

@@ -2,7 +2,7 @@ line: infrastructure (governance)
 spec: game-design/decision-2026-09-02-constitution-cut-attribution-pc-channel.md, Ruling 7
 acceptance: step one is a printed payload, not a parser; then a third column accepted at both widths with nothing migrated; then the three consumers in the order below
 max_sessions: 3
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 1 SUBSTITUTED 2026-09-03: the payload was read off the binary rather than printed from a live event, and the hook is now REGISTERED so the first real row is the printed payload 024 asked for. Read it. Then step (d) below. instrument-builder.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 1 SUBSTITUTED 2026-09-03: the payload was read off the binary rather than printed from a live event, and the hook is now REGISTERED so the first real row is the printed payload 024 asked for. Read it. Then step (d) below. instrument-builder.
 
 THE ATTENDANCE HOLE, THIRD INSTANCE, AND ONE INSTRUMENT FOR ITS THREE
 CONSUMERS. `.claude/agent-log.tsv` has two columns, `when` and `agent`. Every

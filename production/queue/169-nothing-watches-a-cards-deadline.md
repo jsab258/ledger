@@ -7,7 +7,7 @@ acceptance: a card whose deadline passed unruled turns the check red until eithe
   default is applied and recorded or the deadline is deliberately moved, and the clean
   line prints how many cards were read and how many carry a deadline at all
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. Filed from a live instance found while inventorying the
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09. Filed from a live instance found while inventorying the
   cards for a morning brief.
   THE INSTANCE: "How close should strangers stand?" carries DEFAULT B if unruled by
   2026-09-07, the Monday reset. That Monday came and went. Two days later the card

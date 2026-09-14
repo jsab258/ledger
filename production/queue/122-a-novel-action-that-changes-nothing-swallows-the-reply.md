@@ -2,7 +2,7 @@ line: production (dialogue and game feel)
 spec: game-design/decision-2026-09-06-ruling-113-the-model-does-not-adjudicate.md, section 10 item B
 acceptance: a novel action that moves nothing gets an answer from the person the player spoke to, or a narration that does not claim something happened; and NovelLine never says "It lands" when nothing was armed; both proven by a case that fails on the current text
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. Game feel, found while closing P0. NOT a Core change, so no mandatory director review under the 2026-09-06 narrowing.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and UNDECIDED, the audit could not make this call for him; see production/queue/275.; filed as a finding rather than as ladder work 2026-09-06. Game feel, found while closing P0. NOT a Core change, so no mandatory director review under the 2026-09-06 narrowing.
 
 ## Two faults, both about telling the player something untrue
 

@@ -5,7 +5,7 @@ acceptance: the UV head connection READS BACK as connected, with the pin names
   that made it printed; or `materialConnections` stops counting a connection it
   cannot read back
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. It calls queue 062's discharge into question and
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-06. It calls queue 062's discharge into question and
   nobody has looked at it.
 
 ## The finding

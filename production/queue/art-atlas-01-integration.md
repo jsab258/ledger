@@ -10,7 +10,7 @@ acceptance: a delivery on art/atlas-01 is reviewed, the review is committed to
   review accepts is reachable from the game with a number that proves the call
   happened, not merely present in the tree
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-08. BLOCKED ON A DELIVERY, and that is the honest state:
+status: REOPENED 2026-09-14 by Jafar. Was: CLOSED 2026-09-10, not on the ladder (closed by cd55a79c, an archiving commit, with no ruling naming what went with it; see production/queue/275).; filed as a finding rather than as ladder work 2026-09-08. BLOCKED ON A DELIVERY, and that is the honest state:
   the studio has issued the pin and there is nothing to integrate yet.
 
 ## What the studio has issued, and what it is waiting for

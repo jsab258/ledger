@@ -2,7 +2,7 @@ line: production (asset pipeline)
 spec: production/specs/vignette-bill-of-materials.json, and decision-2026-09-02-constitution-cut-attribution-pc-channel.md Ruling 5
 acceptance: seven files on disk, each attributed by the run that wrote it, none blank, review state recorded
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 8 days 2026-09-02. One content-wrangler. This IS step 4, folded: the 26 PROC lines went to the D1b scene generator, which has to exist anyway.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 8 days 2026-09-02. One content-wrangler. This IS step 4, folded: the 26 PROC lines went to the D1b scene generator, which has to exist anyway.
 
 The seven 2D lines of the bill of materials, and nothing else:
 

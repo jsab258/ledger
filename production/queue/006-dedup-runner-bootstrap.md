@@ -1,4 +1,4 @@
-status: CLOSED 2026-09-10, not on the ladder and untouched for 8 days
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 8 days
 line: infrastructure
 spec: this file
 acceptance: one implementation of the self-hosted PATH bootstrap called by both workflows; both dispatched once and green; the duplicated blocks gone

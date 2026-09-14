@@ -9,7 +9,7 @@ acceptance: the live tree prints 0 unresolvable of 21 jobs, a planted matrix wor
   no exemption goes red naming it, and the same workflow with a written reason passes and is
   counted separately from the ordinary exemptions.
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09, item A of
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09, item A of
   game-design/decision-2026-09-09-ruling-the-sun-the-bootstrap-and-the-board.md section 6.
   NOT URGENT AND NOT SPECULATIVE: the lint already prints
   "0 job(s) with a runs-on this lint cannot resolve of 21", so the case is measured as empty

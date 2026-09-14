@@ -5,7 +5,7 @@ acceptance: headroom on the largest workflow step stated as a SERIES over
   recent commits rather than a single reading, and a bound set from it; or the
   build step split so no single step is within a comment line of the ceiling
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. NOT this weekend. Filed because the number is
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-06. NOT this weekend. Filed because the number is
   frightening and nobody had printed it.
 
 ## The reading

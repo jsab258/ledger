@@ -5,7 +5,7 @@ acceptance: the map's memory area reads a state that cannot be read as healthy
   while lieHeard is 0 of 90, derived from the sweep's own committed numbers and
   not typed
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. P1. It is the same fault the map was built to
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and UNDECIDED, the audit could not make this call for him; see production/queue/275.; filed as a finding rather than as ladder work 2026-09-06. P1. It is the same fault the map was built to
   prevent, one area over.
 
 ## The finding

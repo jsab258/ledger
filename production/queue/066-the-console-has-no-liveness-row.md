@@ -2,7 +2,7 @@ line: production (the console)
 spec: game-design/decision-2026-09-03-directors-console-step-2.md, ruling E, and Jafar's approval of the addition on 2026-09-03
 acceptance: a liveness row on the console that Jafar never has to look at and that goes amber on its own: it states when the studio last did something real, not when a page was regenerated, and it goes amber after a stated silence and red after a longer one, with both bounds READ OFF A PRINTED SERIES rather than chosen
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-03. instrument-builder, small. Jafar approved it and the step 2 batch did not build it.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-03. instrument-builder, small. Jafar approved it and the step 2 batch did not build it.
 
 ## Why it exists, in one incident
 

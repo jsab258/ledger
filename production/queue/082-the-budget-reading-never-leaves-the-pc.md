@@ -2,7 +2,7 @@ line: infrastructure (the budget instrument)
 spec: production/NOW.md, "JAFAR'S STANDING ORDER, 2026-09-05", item 1, readings clause; and game-design/decision-2026-09-04-ruling-067-telegram-bot-first-pass.md, section 2
 acceptance: a reading Jafar gives the bot on his phone arrives in production/budget.md as a dated row carrying BOTH meters and a source field per queue 104, without him typing anything into a terminal; proven by one real round trip on the PC, not by a selftest
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-05. Carries item 1's readings clause. Depends on queue 088 for the route: the reading travels as a record on the inbox branch and a fold tool in the container writes the budget.md row, never the PC editing that file on the work branch. The `source` field is amended by queue 104 (typed only, the retired value named so older rows stay readable). After 088.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-05. Carries item 1's readings clause. Depends on queue 088 for the route: the reading travels as a record on the inbox branch and a fold tool in the container writes the budget.md row, never the PC editing that file on the work branch. The `source` field is amended by queue 104 (typed only, the retired value named so older rows stay readable). After 088.
 
 ## The gap
 

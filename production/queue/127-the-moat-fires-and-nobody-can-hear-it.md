@@ -7,7 +7,7 @@ acceptance: a landed change after which a player who is seen committing a
   who told the truth would not hear; measured over the same sweep, so the
   number that moves is lieHeard, today 0 of 90
 max_sessions: 2
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-06. P0 on the moat. THE SUPPORTED FINDING, in Jafar's
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-06. P0 on the moat. THE SUPPORTED FINDING, in Jafar's
   own words and no stronger: "In the tested scenarios, caught lies did not
   change the spoken responses, and recognition stayed below threshold.
   Overheard gossip provides a separate working route to audible consequences."

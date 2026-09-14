@@ -2,7 +2,7 @@ line: infrastructure (instruments)
 spec: game-design/decision-2026-09-02-rotation-fix-lands.md, Ruling 3
 acceptance: Foot5 rotates its corner offsets by the piece's actual yaw; the litter footprints probed at their true corners; the print shows what changed
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder and untouched for 8 days 2026-09-02. Not a landing condition, ruled a queue item.
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened. and untouched for 8 days 2026-09-02. Not a landing condition, ruled a queue item.
 
 `Foot5` swaps the footprint half-extents at yaw 90 and probes every other
 yaw UNROTATED. Its comment claimed "yaw is 0 or 90 for everything this

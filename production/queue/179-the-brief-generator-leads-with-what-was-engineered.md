@@ -8,7 +8,7 @@ acceptance: on a morning when a crime landed and a piece reached a frame, the
   generated headline says so rather than counting pictures, and a brief that omits the
   studio versus game split does not pass
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. Found by running the tool the daily wake names, AFTER a brief
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09. Found by running the tool the daily wake names, AFTER a brief
   had already been written by hand and sent, which is the only reason the divergence
   was visible at all.
   MEASURED: sourcesRead=7/7, words=112/150, registerFindings=0. It works. Its headline

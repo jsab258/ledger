@@ -319,23 +319,85 @@ LINK_BAND_RULES = ("linkcap", "linkdest")
 # actually CHANGED anything for, which is what stops a dead exemption sitting
 # here for ever pretending to do work.
 #
-# WHY ALL FIVE ARE LISTED AND NOT ONLY THE FOUR THAT FAILED. The category is
+# WHY EVERY PART IS LISTED AND NOT ONLY THE ONES THAT FAIL. The category is
 # "a third-party document he ruled goes to him unedited", not "the files that
 # happened to trip the filter". A list assembled from failures cannot be read
-# by the next person: kcd2's absence would say nothing about whether it is a
-# research delivery. It is listed, and the LADDER below measures whether the
-# waiver did anything for it (it does not, today: 4 of these 5 files), so
-# "kcd2 passes the ban list on its own merits" is a reading printed on every
-# run rather than an arrangement nobody can see.
-RESEARCH_VERBATIM = (
-    "production/outbox/2026-09-14-research-coverage-audit-kcd2.answer.md",
-    "production/outbox/2026-09-14-research-coverage-audit-hitman.answer.md",
-    "production/outbox/2026-09-14-research-coverage-audit-rdr2.answer.md",
-    "production/outbox/2026-09-14-research-coverage-audit-disco-elysium"
-    ".answer.md",
-    "production/outbox/2026-09-14-research-coverage-audit-shadows-of-doubt"
-    ".answer.md",
+# by the next person: 1of5-kcd2-part1's absence would say nothing about
+# whether it is a research delivery. All ten parts are listed, and the LADDER
+# below measures whether the waiver did anything for each one, so "part 1 of
+# kcd2 passes the ban list on its own merits" is a reading printed on every
+# run rather than an arrangement nobody can see. MEASURED on these ten files,
+# 2026-09-14, and printed on every gate run as researchVerbatimWaiverBit: the
+# waiver changes the verdict on 5 of the 10, and the other 5 pass with it and
+# without it.
+#
+# WHY THE TEN SPLIT PARTS AND NOT THE FIVE UNSPLIT FILES, ruled 2026-09-14.
+# Jafar ruled the same day that each summary goes to him in TWO messages with
+# the cut announced in both halves. The five unsplit files run 5300 to 6221
+# characters, every one of them over the wire's cap, so no sweep can ever send
+# one and they are held in BLOCKED_DIR. Listing one here would be an exemption
+# for a file that must never go out, which is why the selftest asserts both
+# halves of that: no BLOCKED_DIR original is on the sendable list, and every
+# name on that list measures under the wire cap while every original measures
+# over it, with the cap READ FROM tools/runner/executor.py rather than typed
+# here.
+#
+# AND THE SPLIT IS ASSERTED LOSSLESS RATHER THAN TRUSTED. "In full" is his
+# word for what a research delivery owes him, and a split that silently
+# dropped a paragraph would be the worst failure available here: it would pass
+# every rule in this file while delivering less than he asked for. So
+# research_rejoin() below rebuilds each original from its two parts and the
+# selftest compares it to the file in BLOCKED_DIR byte for byte.
+#
+# WHY THE ORIGINAL IS NAMED IN THE ROW AND NOT DERIVED FROM THE PART'S NAME.
+# It was derived, for about an hour on 2026-09-14, and then the ten parts were
+# renamed to carry Jafar's send order (research-1of5-kcd2-part1 and so on)
+# while the five originals kept the name they were written under. Name
+# arithmetic would have gone on returning a path that no longer exists, and
+# the lossless check would have reported nothing measured over five pairs it
+# could not read, which is the silent instrument this file exists to prevent.
+# So each delivery is ONE ROW carrying all three names, the sendable register
+# is DERIVED from the rows rather than typed a second time, and a rename shows
+# up as a red or as a counted absence instead of as a quiet skip.
+RESEARCH_DELIVERIES = (
+    ("production/outbox/"
+     "2026-09-14-research-1of5-kcd2-part1.answer.md",
+     "production/outbox/"
+     "2026-09-14-research-1of5-kcd2-part2.answer.md",
+     "production/outbox-blocked/"
+     "2026-09-14-research-coverage-audit-kcd2.answer.md"),
+    ("production/outbox/"
+     "2026-09-14-research-2of5-hitman-part1.answer.md",
+     "production/outbox/"
+     "2026-09-14-research-2of5-hitman-part2.answer.md",
+     "production/outbox-blocked/"
+     "2026-09-14-research-coverage-audit-hitman.answer.md"),
+    ("production/outbox/"
+     "2026-09-14-research-3of5-rdr2-part1.answer.md",
+     "production/outbox/"
+     "2026-09-14-research-3of5-rdr2-part2.answer.md",
+     "production/outbox-blocked/"
+     "2026-09-14-research-coverage-audit-rdr2.answer.md"),
+    ("production/outbox/"
+     "2026-09-14-research-4of5-disco-elysium-part1.answer.md",
+     "production/outbox/"
+     "2026-09-14-research-4of5-disco-elysium-part2.answer.md",
+     "production/outbox-blocked/"
+     "2026-09-14-research-coverage-audit-disco-elysium.answer.md"),
+    ("production/outbox/"
+     "2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md",
+     "production/outbox/"
+     "2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md",
+     "production/outbox-blocked/"
+     "2026-09-14-research-coverage-audit-shadows-of-doubt.answer.md"),
 )
+# THE SENDABLE REGISTER, DERIVED: the two PARTS of every row and never the
+# third name, which is the unsplit original and must never be sendable. One
+# line, so a reader can see that the register cannot contain anything the rows
+# above do not, and the selftest asserts the exclusion rather than trusting
+# this expression.
+RESEARCH_VERBATIM = tuple(rel for row in RESEARCH_DELIVERIES
+                          for rel in row[:2])
 # THE ONE RULE THE VERBATIM EXEMPTION WAIVES, named once so the switch, the
 # report and the gate cannot come to disagree about what it covers. Adding a
 # name here widens the exemption for every file on the list above at once,
@@ -345,6 +407,128 @@ RESEARCH_WAIVED_RULES = ("banned",)
 # Counts are legitimate in an answer and only there. Named as its own set
 # rather than hidden inside the register tuple, so the exemption is greppable.
 COUNTS_ALLOWED_IN = {"answer"}
+
+# ---------------------------------------------------------------------------
+# THE SPLIT, AND PROVING IT LOST NOTHING. Ruled by Jafar 2026-09-14: each
+# research summary is split in two, "with the cut announced in the message",
+# and all five go out in order before anything acts on them. The register above
+# lists the parts. What follows is the arithmetic that puts them back together,
+# and it lives HERE, in the layer the selftest runs, rather than in the script
+# that did the splitting: a split asserted once in a throwaway script is a
+# split nobody can re-check on the day somebody edits one of these files.
+
+#: Where the Producer writes, and the first of GATE_TREES below, which is
+#: built from this name rather than repeating it: `tools/runner/outbox.py`
+#: asserts its own OUTBOX_DIR equals GATE_TREES[0], so a third copy of the
+#: string is a third place for the sender and the gate to disagree about which
+#: directory is the outbox.
+OUTBOX_DIR = "production/outbox"
+
+#: Where a message OVER THE WIRE CAP is held so no sweep can ever pick it up.
+#: Deliberately NOT one of GATE_TREES: nothing in here is sendable, and walking
+#: it would grade files whose whole problem is that they must not go out.
+BLOCKED_DIR = "production/outbox-blocked"
+
+#: How a split part names itself, and what the unsplit original it came from is
+#: called. Name arithmetic only; nothing here reads a file.
+RESEARCH_PART_SUFFIXES = ("-part1.answer.md", "-part2.answer.md")
+RESEARCH_WHOLE_SUFFIX = ".answer.md"
+
+#: THE TWO LINES THE SPLIT ADDED and the ONLY text research_rejoin() removes.
+#: Matched at the START of a line because that is where the splitter put them.
+#: If a marker ever stops matching, the marker text stays in the rejoin and the
+#: byte comparison goes RED, which is the safe direction for a guard to fail.
+CUT_MARKERS = (b"[CUT HERE:", b"[PART 2 of 2")
+
+
+def research_pairs(rows=RESEARCH_DELIVERIES):
+    """(part1, part2, unsplit-original) per delivery, and every row that does
+    not hold that shape. PURE: name arithmetic, reads no file, so it answers
+    the same on a machine with no outbox at all.
+
+    Returns (pairs, faults). A row is a FAULT rather than a pair when its two
+    parts are not the two announced part suffixes under the outbox, or when
+    its third name is not under BLOCKED_DIR. That last one is the dangerous
+    typo: an original listed where a part belongs would put an unsendable file
+    on the sendable register. A fault is RETURNED AND NAMED, never dropped, so
+    a row nobody could parse cannot read as a row that passed.
+    """
+    pairs, faults = [], []
+    for row in rows:
+        if len(row) != 3:
+            faults.append("%d-name(s)-in-a-row-that-needs-3/%s"
+                          % (len(row), "+".join(row) or "empty"))
+            continue
+        p1, p2, whole = row
+        bad = [rel for rel, suffix in zip((p1, p2), RESEARCH_PART_SUFFIXES)
+               if not (rel.endswith(suffix)
+                       and rel.startswith(OUTBOX_DIR + "/"))]
+        if not whole.startswith(BLOCKED_DIR + "/") \
+                or not whole.endswith(RESEARCH_WHOLE_SUFFIX):
+            bad.append(whole)
+        if bad:
+            faults.append("/".join(bad))
+            continue
+        pairs.append((p1, p2, whole))
+    return pairs, faults
+
+
+def research_rejoin(part1, part2, markers=CUT_MARKERS):
+    """The two halves of a split delivery put back together. PURE: bytes in,
+    a reading out, reads no file.
+
+    THE ONLY TEXT IT REMOVES is a line starting with one of the announced cut
+    markers, and the ONLY thing it normalises is the run of blank lines at the
+    seam, which is what the split itself inserted. Every other byte of either
+    half survives into the rejoin, which is the whole point: this exists to
+    catch a split that dropped a paragraph, so it must not be able to tidy one
+    away.
+    """
+    dropped = []
+
+    def strip(blob):
+        kept = []
+        for line in blob.split(b"\n"):
+            if any(line.startswith(m) for m in markers):
+                dropped.append(line)
+            else:
+                kept.append(line)
+        return b"\n".join(kept)
+
+    a, b = strip(part1), strip(part2)
+    return {"joined": a.rstrip(b"\n") + b"\n\n" + b.lstrip(b"\n"),
+            # CUMULATIVE over both halves: how many announced marker lines this
+            # rejoin took out. Two is the shape the splitter of 2026-09-14
+            # produced; zero would mean the markers stopped matching.
+            "markers_dropped": len(dropped),
+            "bytes_part1": len(part1), "bytes_part2": len(part2)}
+
+
+def research_rejoin_reading(original, part1, part2):
+    """research_rejoin() against the file it claims to reproduce. PURE.
+
+    THE PAIRED READING: `equal` never travels without `first_diff`, the BYTE
+    OFFSET of the first difference (-1 when identical), and `bytes_delta`, the
+    rejoin's length minus the original's. Equality alone says a split is sound;
+    the offset says where to look when it is not, in the same entry, so no
+    reader has to join two numbers from two lines.
+    """
+    r = research_rejoin(part1, part2)
+    joined = r["joined"]
+    r["bytes_joined"] = len(joined)
+    r["bytes_original"] = len(original)
+    r["bytes_delta"] = len(joined) - len(original)
+    r["equal"] = joined == original
+    first = -1
+    if not r["equal"]:
+        for i in range(min(len(joined), len(original))):
+            if joined[i] != original[i]:
+                first = i
+                break
+        else:
+            first = min(len(joined), len(original))
+    r["first_diff"] = first
+    return r
 
 # WHERE A LINK MAY POINT, RULED BY JAFAR 2026-09-06, verbatim: "images are
 # sent as Telegram images, never as links; at most two links per message, and
@@ -1972,6 +2156,222 @@ def selftest():
        "membership never reads the text",
        "production/outbox/never-existed.answer.md" not in RESEARCH_VERBATIM,
        RESEARCH_VERBATIM)
+
+    # ---- THE SPLIT LOST NOTHING, ruled 2026-09-14 ("in full"). SYNTHETIC
+    # ACCEPTING CASE FIRST, so the arithmetic is exercised on every machine
+    # including one with no outbox at all; the live files follow as the series.
+    WHOLE = (b"# A title\n\nFirst paragraph, which is the one a bad split "
+             b"eats.\n\n## The header it was cut at\n\nSecond paragraph.\n")
+    HALF1 = (b"# A title\n\nFirst paragraph, which is the one a bad split "
+             b"eats.\n\n[CUT HERE: part 1 of 2. The rest follows as its own "
+             b"message.]\n")
+    HALF2 = (b"[PART 2 of 2, continuing: A title. Part 1 was the previous "
+             b"message.]\n\n## The header it was cut at\n\nSecond "
+             b"paragraph.\n")
+    rj = research_rejoin_reading(WHOLE, HALF1, HALF2)
+    ok("two announced halves rejoin to the whole byte for byte (%d+%d bytes "
+       "in, %d of %d out, delta %+d, %d marker line(s) dropped, firstDiff=%d)"
+       % (rj["bytes_part1"], rj["bytes_part2"], rj["bytes_joined"],
+          rj["bytes_original"], rj["bytes_delta"], rj["markers_dropped"],
+          rj["first_diff"]),
+       rj["equal"] and rj["markers_dropped"] == 2 and rj["first_diff"] == -1,
+       rj["joined"])
+    # REJECTING, TWICE, because a check that only ever sees a good split is the
+    # validator nothing survives. Fixture one drops a paragraph, which is the
+    # failure this exists for. Fixture two swaps bytes for the SAME NUMBER of
+    # bytes, which is what proves the comparison reads bytes and not lengths.
+    LOST = HALF2.replace(b"\n\nSecond paragraph.\n", b"\n")
+    rj_lost = research_rejoin_reading(WHOLE, HALF1, LOST)
+    ok("a part 2 with one paragraph missing does NOT rejoin, and the reading "
+       "says where (firstDiff=%d, delta %+d bytes)"
+       % (rj_lost["first_diff"], rj_lost["bytes_delta"]),
+       not rj_lost["equal"] and rj_lost["first_diff"] >= 0
+       and rj_lost["bytes_delta"] < 0, rj_lost["bytes_delta"])
+    EDITED = HALF2.replace(b"Second paragraph.", b"Secund paragraph.")
+    rj_edit = research_rejoin_reading(WHOLE, HALF1, EDITED)
+    ok("and a part 2 edited without changing its LENGTH is caught too, so the "
+       "comparison is bytes and not sizes (firstDiff=%d, delta %+d bytes)"
+       % (rj_edit["first_diff"], rj_edit["bytes_delta"]),
+       not rj_edit["equal"] and rj_edit["bytes_delta"] == 0,
+       rj_edit["bytes_delta"])
+    # AND THE MARKERS ARE NOT A WILDCARD: ordinary text that merely mentions a
+    # cut is not removed, or the rejoin could tidy away the very line a bad
+    # split ate.
+    rj_body = research_rejoin(b"a\nthe [CUT HERE: ...] is mid-line\n",
+                              b"b\n")
+    ok("a cut marker that is not at the start of a line is left in the body "
+       "(%d dropped)" % rj_body["markers_dropped"],
+       rj_body["markers_dropped"] == 0 and b"mid-line" in rj_body["joined"],
+       rj_body["joined"])
+    # AND A HALF THAT LOST ITS ANNOUNCEMENT IS VISIBLE AS A COUNT, not as a
+    # pass. Jafar's ruling has TWO clauses, "split each into two parts" and
+    # "with the cut announced in the message", and losslessness alone cannot
+    # see the second: a part 1 with no CUT HERE line rejoins to exactly the
+    # same bytes, because a line that was never added is a line the rejoin
+    # never has to remove.
+    rj_silent = research_rejoin_reading(WHOLE, HALF1.replace(
+        b"\n[CUT HERE: part 1 of 2. The rest follows as its own message.]\n",
+        b"\n"), HALF2)
+    ok("a part 1 that lost its cut announcement still rejoins (equal=%s), so "
+       "the announcement is counted SEPARATELY: %d marker(s) dropped where 2 "
+       "is the ruled shape"
+       % ("true" if rj_silent["equal"] else "false",
+          rj_silent["markers_dropped"]),
+       rj_silent["equal"] and rj_silent["markers_dropped"] == 1,
+       rj_silent["markers_dropped"])
+
+    # ---- THE ROWS THE REGISTER IS BUILT FROM. PURE and NEVER VACUOUS: these
+    # hold whether or not a single delivery is still on disk.
+    pairs, faults = research_pairs()
+    ok("the %d delivery row(s) all hold the ruled shape (two parts in %s/, "
+       "one unsplit original in %s/) and produce the %d listed name(s)"
+       % (len(RESEARCH_DELIVERIES), OUTBOX_DIR, BLOCKED_DIR,
+          len(RESEARCH_VERBATIM)),
+       not faults and len(pairs) == len(RESEARCH_DELIVERIES)
+       and len(pairs) * len(RESEARCH_PART_SUFFIXES) == len(RESEARCH_VERBATIM),
+       faults or len(pairs))
+    on_list = [b for _p1, _p2, b in pairs if b in RESEARCH_VERBATIM]
+    ok("and not one of the %d unsplit original(s) is itself on the sendable "
+       "register: those are over the wire cap and must never be sent"
+       % len(pairs), not on_list, on_list)
+    # REJECTING, SYNTHETIC, and pinned to no real asset: the dangerous typo is
+    # a row that puts an unsplit original where a part belongs, which would
+    # make an unsendable file sendable. It is reported as a fault, never
+    # dropped, and the derived register does not gain the name.
+    BAD_ROW = (("production/outbox/never-existed-part1.answer.md",
+                "production/outbox-blocked/never-existed.answer.md",
+                "production/outbox-blocked/never-existed.answer.md"),)
+    bad_pairs, bad_faults = research_pairs(BAD_ROW)
+    ok("a synthetic row naming a blocked original where part 2 belongs is a "
+       "counted fault and yields no pair (%d fault(s), %d pair(s))"
+       % (len(bad_faults), len(bad_pairs)),
+       len(bad_faults) == 1 and not bad_pairs
+       and "never-existed.answer.md" in bad_faults[0], (bad_faults, bad_pairs))
+    ok("and a synthetic row of the wrong length is counted too rather than "
+       "unpacked into an exception",
+       research_pairs((("a-part1.answer.md",),))[1]
+       and not research_pairs((("a-part1.answer.md",),))[0],
+       research_pairs((("a-part1.answer.md",),)))
+
+    # ---- THE LIVE SERIES. The repo IS the accepting fixture here. Every zero
+    # ships its denominator: a pair whose files are not on disk is COUNTED as
+    # unverifiable and NAMED, never passed in silence, because "sent and
+    # cleared" and "silently truncated" must not read the same. The rejoin is
+    # red only for a pair that could be read and did not match.
+    rejoin_checked, rejoin_equal, rejoin_missing, rejoin_bad = 0, 0, [], []
+    # THE SECOND CLAUSE OF THE RULING, counted over the same denominator and
+    # in the same pass: part 1 carries its CUT HERE line and part 2 carries
+    # its PART 2 line. Read off the two halves separately, never off the
+    # rejoin's total, or one half carrying both markers would read as two
+    # announced halves.
+    rejoin_announced, rejoin_silent = 0, []
+    for p1_rel, p2_rel, orig_rel in pairs:
+        blobs, gone = [], []
+        for rel in (orig_rel, p1_rel, p2_rel):
+            f = REPO / rel
+            try:
+                blobs.append(f.read_bytes())
+            except OSError:
+                gone.append(rel)
+        if gone:
+            rejoin_missing.extend(gone)
+            continue
+        rejoin_checked += 1
+        rr = research_rejoin_reading(*blobs)
+        announced = all(
+            any(line.startswith(marker) for line in half.split(b"\n"))
+            for half, marker in zip(blobs[1:], CUT_MARKERS))
+        if announced:
+            rejoin_announced += 1
+        else:
+            rejoin_silent.append(orig_rel.rsplit("/", 1)[-1])
+        if rr["equal"]:
+            rejoin_equal += 1
+        else:
+            rejoin_bad.append("%s firstDiff=%d delta=%+d"
+                              % (orig_rel.rsplit("/", 1)[-1],
+                                 rr["first_diff"], rr["bytes_delta"]))
+        print("       rejoin %-22s parts=%d+%d rejoined=%d/%d delta=%+d "
+              "markersDropped=%d cutAnnounced=%s equal=%s"
+              % (orig_rel.rsplit("/", 1)[-1].replace("2026-09-14-research-"
+                                                     "coverage-audit-", "")
+                 .replace(".answer.md", ""),
+                 rr["bytes_part1"], rr["bytes_part2"], rr["bytes_joined"],
+                 rr["bytes_original"], rr["bytes_delta"],
+                 rr["markers_dropped"], "true" if announced else "FALSE",
+                 "true" if rr["equal"] else "FALSE"))
+    ok("every pair on disk rebuilds its unsplit original in %s/ byte for "
+       "byte (rejoinPairsVerified=%s)%s"
+       % (BLOCKED_DIR,
+          "%d/%d" % (rejoin_equal, rejoin_checked) if rejoin_checked
+          else "%s/no-pair-on-disk-in-this-run" % NOTHING,
+          "" if not rejoin_missing
+          else (". %d file(s) absent, so %d pair(s) could not be read: %s"
+                % (len(rejoin_missing), len(pairs) - rejoin_checked,
+                   cap([m.rsplit("/", 1)[-1] for m in rejoin_missing],
+                       keep=3, width=60, sep=", ")))),
+       not rejoin_bad, rejoin_bad)
+    ok("and every pair on disk announces its cut in BOTH halves, which is the "
+       "other half of the ruling (cutAnnounced=%s)"
+       % ("%d/%d" % (rejoin_announced, rejoin_checked) if rejoin_checked
+          else "%s/no-pair-on-disk-in-this-run" % NOTHING),
+       not rejoin_silent, rejoin_silent)
+
+    # ---- THE WIRE CAP, READ FROM THE ONE PLACE IT IS WRITTEN DOWN. The number
+    # is not typed here: a second copy of 4096 in this file is a second place
+    # for it to be wrong. The series is printed before the bound is read off
+    # it, and the peak carries its own position (value@file).
+    #
+    # A FILE THAT IS NOT THERE IS COUNTED, NOT RED, exactly as the gate's rot
+    # note treats a frozen entry whose file is gone: the day these deliveries
+    # are cleared off the outbox, the denominator falls to the words NOTHING
+    # MEASURED in this line and researchVerbatimGraded=0/10 on the gate's done
+    # line, which is loud in both places. What IS red is a file that exists and
+    # contradicts the bound.
+    try:
+        ex_src = (REPO / "tools" / "runner"
+                  / "executor.py").read_text(encoding="utf-8")
+    except OSError:
+        ex_src = ""
+    ex_cap = re.search(r"^TELEGRAM_TEXT_MAX = (\d+)$", ex_src, re.M)
+    wire = int(ex_cap.group(1)) if ex_cap else None
+    ok("the wire cap is read from tools/runner/executor.py rather than typed "
+       "here (%s)" % (wire if wire else "%s: the file could not be read"
+                      % NOTHING),
+       wire is not None, ex_cap)
+    # OVER THE LIST ITSELF, not over the pairs derived from it, so a name that
+    # is not part-shaped is still measured: the invariant that matters is that
+    # NOTHING ON THIS LIST IS UNSENDABLE, and an entry the pair arithmetic
+    # could not parse is exactly where an unsplit file would hide.
+    part_chars, orig_chars = [], []
+    for rel, bucket in ([(x, part_chars) for x in RESEARCH_VERBATIM]
+                        + [(o, orig_chars) for _1, _2, o in pairs]):
+        try:
+            bucket.append((len((REPO / rel).read_text(encoding="utf-8")),
+                           rel.rsplit("/", 1)[-1]))
+        except OSError:
+            pass
+    over = [n for n in part_chars if wire and n[0] > wire]
+    under = [n for n in orig_chars if wire and n[0] <= wire]
+    # PEAK for the parts and MINIMUM for the originals, because each is the
+    # AT-WORST case for the claim beside it: the longest part is the one
+    # closest to breaking "every part fits", the shortest original the one
+    # closest to breaking "no original fits". Each carries its own position.
+    worst_part = max(part_chars) if part_chars else None
+    ok("every name on the list that was measured is under the wire cap: %s "
+       "file(s) read, "
+       "peak %s (the cap's own unit is characters, and these files are ASCII)"
+       % (len(part_chars) or NOTHING,
+          "%d@%s" % (worst_part[0], worst_part[1]) if worst_part else NOTHING),
+       wire is not None and not over, over)
+    slimmest = min(orig_chars) if orig_chars else None
+    ok("and every unsplit original measured is OVER it, which is why none of "
+       "them is on the list: %s original(s) read, shortest %s against a cap "
+       "of %s"
+       % (len(orig_chars) or NOTHING,
+          "%d@%s" % (slimmest[0], slimmest[1]) if slimmest else NOTHING,
+          wire if wire else NOTHING),
+       wire is not None and not under, under)
     ok("and it is under the ruled cap (%d of %d words)"
        % (r["words"], CAP_UNPROMPTED), r["words"] <= CAP_UNPROMPTED, r["words"])
     ok("its five sections are all found, in order",
@@ -3086,7 +3486,7 @@ def selftest():
 # where it mattered. `docs_shape` in verify.py carries the same story about
 # tools/docs-check.py, one tool and three weeks earlier.
 
-GATE_TREES = ("production/outbox", "production/briefs")
+GATE_TREES = (OUTBOX_DIR, "production/briefs")
 
 # The outbox names its kind in the filename because the three registers
 # enforce different rules, and a gate that GUESSES the kind checks a message

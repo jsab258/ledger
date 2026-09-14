@@ -2,7 +2,30 @@ line: simulation (Core, and canon)
 spec: external audit 2026-09-06, P1. canon.md outranks every document and every agent, so this is a canon conflict rather than a bug report
 acceptance: a stated ruling on which is true, the OTHER one changed to match, and the change recorded; if pruning stays, canon.md and every public claim about permanent memory change with it, and the claims are found by grep rather than by memory
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work1, ready 2026-09-06, after the P0 pair. MANDATORY DIRECTOR RULING: this touches canon, which outranks everything.
+status: REOPENED 2026-09-14 by director ruling,
+  game-design/decision-2026-09-14-ruling-the-marker-batch-lands-and-115-is-a-live-canon-violation.md.
+  P1; MANDATORY DIRECTOR RULING stands and the ruling is Jafar's, pillar 1.
+
+  A LIVE CANON VIOLATION: canon.md line 99 against MemoryStore.cs lines 62 to 97, in
+  the tree since the 2026-07-27 audit the code's own comment cites; CoreTests
+  Program.cs:1712 asserts the prune fires, so the violation sits inside a GREEN
+  SUITE and the suite passing is not evidence against it.
+
+  Was: CLOSED 2026-09-10 by cd55a79c with no ruling (see production/queue/275); the
+  2026-09-14 closure audit wrote "not reopened" on it, which the ruling above
+  reverses. That audit call was worse than the sweep it was correcting, because the
+  sweep never claimed to have looked.
+
+  THE LANDING OF THE 2026-09-14 BATCH IS NOT ACCEPTANCE OF THE PRUNE. Nothing in
+  MemoryStore.cs, CoreTests 1706 to 1715 or canon.md 99 changes before he rules,
+  INCLUDING no "disable the prune to be safe": disabling it is also a decision about
+  pillar 1 and it is also his.
+
+  Jafar put this on his own list on 2026-09-14: "Rule the memory prune against canon,
+  open since 5 September: canon says nothing is ever wiped, MemoryStore prunes at 600
+  events, one of them changes. Pillar 1 is the thing being decided, so this is a
+  ruling and not a tidy-up." Quoted from the message as received; it is recorded
+  nowhere else in the tree, and this line is that record.
 
 ## The conflict
 

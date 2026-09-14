@@ -7,7 +7,7 @@ acceptance: on a morning when a delivery landed in the studio checkout, the tool
   output names it rather than printing 0 of 0, and game-design/art-collaboration.md no
   longer holds two sentences that contradict each other about where a delivery lives
 max_sessions: 1
-status: CLOSED 2026-09-10, not on the ladder; filed as a finding rather than as ladder work 2026-09-09. Found by running the tool the daily wake names, which is the
+status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 lands at five sites, 510 files are archived and nothing is deleted). No ruling named this closure; see production/queue/275. Reviewed 2026-09-14 against production/stages.md and not reopened.; filed as a finding rather than as ladder work 2026-09-09. Found by running the tool the daily wake names, which is the
   first time it has been run since the ruling that retired its input.
   MEASURED: branchesWalked=0 deliveriesFound=0/0-branches, and the tool says plainly
   that this is NO ART BRANCHES AT ALL rather than art branches with nothing on them.
