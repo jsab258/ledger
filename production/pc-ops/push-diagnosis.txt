@@ -1,31 +1,31 @@
-# LEDGER push diagnosis - 70e9ac5 @1789110191
+# LEDGER push diagnosis - 8574fb7 @1789400818
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=1c7eb7f89f318bf2fa37842097e3230591695352
-localTipRef=1c7eb7f89f318bf2fa37842097e3230591695352
-onDisk_production_inbox=2
-onDisk_production_outbound=538
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=23afb243469303fe9fdb1cbb0b8fc02943f2f740
+localTipRef=23afb243469303fe9fdb1cbb0b8fc02943f2f740
+onDisk_production_inbox=3
+onDisk_production_outbound=549
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=44 newestShown=16/16 (+28 older not shown)
-receipt file=production/outbound/2026-09-11T061844Z-reply-69.receipt.txt messageId=69 sent=2026-09-11T06:18:44+00:00
+receiptsOnDisk=55 newestShown=16/16 (+39 older not shown)
+receipt file=production/outbound/2026-09-14T132330Z-reply-81.receipt.txt messageId=81 sent=2026-09-14T13:23:30+00:00
+receipt file=production/outbound/2026-09-14T132330Z-reply-80.receipt.txt messageId=80 sent=2026-09-14T13:23:30+00:00
+receipt file=production/outbound/2026-09-13T011416Z-reply-79.receipt.txt messageId=79 sent=2026-09-13T01:14:16+00:00
+receipt file=production/outbound/2026-09-13T011415Z-reply-78.receipt.txt messageId=78 sent=2026-09-13T01:14:15+00:00
+receipt file=production/outbox/2026-09-11T1316Z-79313220.answer.md messageId=76 sent=2026-09-11T13:18:43+00:00
+receipt file=production/outbox/2026-09-11-yes-it-works.answer.md messageId=77 sent=2026-09-11T14:22:27+00:00
+receipt file=production/outbound/2026-09-11T131659Z-reply-75.receipt.txt messageId=75 sent=2026-09-11T13:16:59+00:00
+receipt file=production/outbound/2026-09-11T131345Z-reply-73.receipt.txt messageId=73 sent=2026-09-11T13:13:45+00:00
+receipt file=production/outbound/2026-09-11T131324Z-reply-72.receipt.txt messageId=72 sent=2026-09-11T13:13:24+00:00
+receipt file=production/outbound/2026-09-11T075732Z-reply-70.receipt.txt messageId=70 sent=2026-09-11T07:57:32+00:00
+receipt file=production/outbound/2026-09-11T075733Z-reply-71.receipt.txt messageId=71 sent=2026-09-11T07:57:33+00:00
 receipt file=production/outbound/2026-09-11T061844Z-reply-68.receipt.txt messageId=68 sent=2026-09-11T06:18:44+00:00
-receipt file=production/outbound/2026-09-11T060000Z-reply-67.receipt.txt messageId=67 sent=2026-09-11T06:00:00+00:00
+receipt file=production/outbound/2026-09-11T061844Z-reply-69.receipt.txt messageId=69 sent=2026-09-11T06:18:44+00:00
 receipt file=production/outbound/2026-09-11T060000Z-reply-66.receipt.txt messageId=66 sent=2026-09-11T06:00:00+00:00
+receipt file=production/outbound/2026-09-11T060000Z-reply-67.receipt.txt messageId=67 sent=2026-09-11T06:00:00+00:00
 receipt file=production/briefs/2026-09-10.md messageId=63 sent=2026-09-10T04:44:37+00:00
-receipt file=? messageId=52 sent=2026-09-09T08:54:05+00:00
-receipt file=? messageId=50 sent=2026-09-09T08:54:05+00:00
-receipt file=? messageId=49 sent=2026-09-09T08:54:05+00:00
-receipt file=? messageId=51 sent=2026-09-09T08:54:05+00:00
-receipt file=? messageId=55 sent=2026-09-09T08:54:06+00:00
-receipt file=? messageId=54 sent=2026-09-09T08:54:06+00:00
-receipt file=production/briefs/2026-09-09.md messageId=56 sent=2026-09-09T10:55:44+00:00
-receipt file=production/outbound/2026-09-09T183320Z-reply-62.receipt.txt messageId=62 sent=2026-09-09T18:33:20+00:00
-receipt file=? messageId=53 sent=2026-09-09T08:54:05+00:00
-receipt file=production/outbound/2026-09-09T183320Z-reply-61.receipt.txt messageId=61 sent=2026-09-09T18:33:20+00:00
-receipt file=production/outbound/2026-09-09T123408Z-reply-60.receipt.txt messageId=60 sent=2026-09-09T12:34:08+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent

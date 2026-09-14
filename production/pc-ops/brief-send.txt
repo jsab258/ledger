@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 70e9ac5 @1789110282
+# LEDGER one daily-brief send - 8574fb7 @1789400831
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,11 +15,11 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=70e9ac5da2b4e2c56b1e565c282da0aabf7fe04f briefCheckoutPcHeadSha=70e9ac5da2b4e2c56b1e565c282da0aabf7fe04f briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-11T07:02:48Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/70e9ac5da2 briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 briefCheckoutPcHeadSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-14T15:46:32Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/8574fb764b briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
 briefStatus=EXITED briefWaitedSec=3 briefExitCode=6
 briefStream=brief-raw.txt briefLines=1
-09:04:43  brief: NOTHING MEASURED, there is no brief for 2026-09-11 (FileNotFoundError). 7 brief(s) are in the tree, newest 2026-09-10. Nothing was sent.
+17:47:12  brief: NOTHING MEASURED, there is no brief for 2026-09-14 (FileNotFoundError). 8 brief(s) are in the tree, newest 2026-09-12. Nothing was sent.
 briefStream=brief-raw.txt.err briefLines=0
