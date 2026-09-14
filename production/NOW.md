@@ -9,6 +9,63 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-14 14:15Z: THE LEAK LANDS, THE WEEK OPENS, AND THREE OF MY CONCLUSIONS WERE WRONG
+
+LANDED AS 04e3cea4 ON MAIN, 46 paths, verified by ancestry rather than by the
+push message. Two CI commits (the bot restart and the windowless proof) landed
+while the batch was being built, so it was rebased onto them rather than forced.
+
+THE EXPOSURE FAULT WAS A LEAKED OVERRIDE, not the snapped rate and not the
+missing pin. The camera actor is spawned once and moved; the two AutoExposure
+override flags were written only when a condition ASKED for a pin, so they
+persisted. Run 41: four rows of 37 ask 0.0000 and read 0.0300, 0.3000, 3.0000,
+10.0000 with overrides=1/1, printed AUTO. One condition at three mean lumas.
+THE VALUE WAS ON THE LINE ALL ALONG. Probe suites 393/393 and 113/113.
+
+WHAT THE COMMIT DOES NOT DO: it does not make the rig deterministic.
+rigDeterminism is EXPECTED to still read DIFFERS because vign_camA_day is
+unpinned. The reading that proves the fix is expPinRowsLeaked=0 over the rows
+that could have leaked. Do not report that line as this fix failing.
+
+THREE WRONG CONCLUSIONS, MINE, EACH CAUGHT BY SOMETHING ELSE, and the pattern
+is the finding: every time I measured ONE instrument and generalised I was
+wrong; every time I opened the artifact I was right.
+
+  1  cmd-window loop blamed on RestartCount=999/PT1M   refuted by a verifier
+  2  273's guard pair called mutually unsatisfiable    refuted by a director:
+     --ahead-of-run exists and THE FAILING CHECK PRINTED IT three lines on
+  3  pin batch reported as landing on 4355/4355        refuted by the gate:
+     that is the C# suite; the UE probe suite read 391/393
+
+WHAT IS OPEN AND WHO OWNS IT
+
+  274  WHICH CONDITIONS MAY ASK FOR A PIN. An invariant says ladder rungs only
+       ("a row pinned by accident would be photographed at an exposure nobody
+       chose"); the builder's scene pins 25 of 27. Both defensible, code cannot
+       hold both. DIRECTOR'S CALL, Core and spec. Blocks step 1's render.
+  275  182 of 267 queue items closed under an archiving commit with no ruling.
+       Queue 138, the crime loop, is among them and is the milestone Jafar
+       named today as the one to protect. HIS CALL.
+  273  the ahead_of_unity_run key can never be spent: its anchor is the newest
+       LANDED UNITY RUN and D16 made the engine Unreal, so none will ever land.
+
+THE FIVE RESEARCH DELIVERIES ARE STAGED AND NOT SENT, in
+production/outbox-blocked/. All five exceed the 4096 wire cap (5300 to 6221
+bytes) and nothing in the sweep splits, so sending them would have been a
+refusal retrying every two minutes for ever. Jafar asked for them "in full, as
+its own message"; those cannot both hold and the choice is his. NOTHING IN THEM
+HAS BEEN ACTED ON, per his rule.
+
+THE CHANNEL IS BACK. Runner picked up a job at 13:23:05Z, bot pushed a receipt
+at 13:23:30Z. Last brief he actually received: 2026-09-10, messageId 63. Three
+mornings missing, not two. The sending task was disabled 2026-09-11T07:59:54
+and the installer deliberately never re-enables what a person turned off. It
+now reads taskEnabled=True taskState=Running with five daemons; by what act is
+NOT measured.
+
+NEXT: the pin ruling, then the render for step 1. Step 2 (light and weather)
+does not wait on either.
+
 ## 2026-09-14 04:09Z: THE FOURTH REFUSAL IS THE FIRST INFORMATIVE ONE, AND THE WINDOW IS LONGER THAN A DAY
 
 THE 2026-09-14 BRIEF DOES NOT EXIST. Second consecutive day, said out loud
