@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md
+kind: brief
+photoRef: production/d1-probe/ue-vign_hook_day.png
+fileCommit: a4870b2c2985f5181e3ce991828d213cb1a88e7c
+fileCommitEpoch: 1789422038
+sent: 2026-09-14T21:41:23+00:00
+sentEpoch: 1789422083
+messageId: 97
+chars: 847
+photoSizes: 90x51/320x180/800x450/1280x720
+photoSizeCount: 4
+outboundLatencySec: 45
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.

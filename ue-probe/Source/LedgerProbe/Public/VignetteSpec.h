@@ -2556,6 +2556,24 @@ namespace LedgerVignette
 	// read it, at ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715,
 	// so the same arithmetic in Unity gives a different group and this
 	// function is named for the engine it speaks for.
+	//
+	// AND A READ SITE IS NOT THE ONLY THING MISSING, WHICH IS THE HALF THIS
+	// VALUE LEFT OUT UNTIL 2026-09-14 AND WHICH COST A BUILDER A BRIEF.
+	// /Game/Ledger/M_LedgerSurface exposes three texture parameters and two
+	// scalars and nothing else. MEASURED, not read off the script that makes
+	// it: `scalar parameter names in the finished material: 2 of 2 asked for,
+	// and the material answered 2 name(s): TilingU/TilingV` in
+	// production/d1-probe/ue-material-log.txt, run ce99814. Base colour is
+	// wired straight from its sampler and roughness straight from its
+	// sampler's R, so there is no parameter a read site could drive. A
+	// dynamic instance asked for a parameter the material does not have SETS
+	// NOTHING, RETURNS NOTHING AND LOGS NOTHING, which tools/ue/
+	// make_base_material.py says where it declares the contract: a read site
+	// added on its own would be a dead write that reads back green and moves
+	// no pixel. The material graph is the other half of queue 186's wetness
+	// rung, it is in the cook step rather than in this tree, and the value
+	// below now names it so the next reader sizes the job from the verdict
+	// rather than from the grep.
 	// AND THE EXPOSURE PIN IS PART OF THE FINGERPRINT, QUEUE 235. Two
 	// conditions differing only in exposure_pin render the same street at two
 	// different exposures, so they are NOT null samples of each other. Left
@@ -2716,7 +2734,9 @@ namespace LedgerVignette
 			"rival-groups-whose-size-equals-the-largest-excluding-the-one-kept"
 			" nullSeriesApplied=%s"
 			" nullSeriesExcludes=wetness/because-VignetteShot.cpp-has-no-read-site-for-it-"
-			"on-this-commit/the-other-engine-applies-it-at-StreetVignetteHost.cs-line-715",
+			"on-this-commit/AND-M_LedgerSurface-has-no-parameter-a-read-site-could-drive/"
+			"its-scalars-are-TilingU-TilingV-only-so-a-read-site-alone-would-set-nothing-"
+			"and-log-nothing/the-other-engine-applies-it-at-StreetVignetteHost.cs-line-715",
 			G.size() >= 2 ? "READ" : "TOO-FEW-SAMPLES",
 			(int)G.size(), Measured, Measured, (int)All.size(),
 			TiedGroups, DistinctGroups,

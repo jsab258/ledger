@@ -304,6 +304,21 @@ static PinReading ReadPins(const std::vector<LedgerVignette::Condition>& Conds,
 // it render one street HERE, but a reference cell that has drifted in wetness
 // is a false reference the day queue 186 wires it. The fingerprint says what
 // this engine renders; this says what the reference cell is FOR.
+//
+// AND WIRING IT IS TWO CHANGES AND NOT ONE, which the excludes value now says
+// rather than leaving to a grep: M_LedgerSurface carries TilingU and TilingV
+// and no other scalar, so the read site needs a material parameter to write
+// to before it can move a pixel.
+//
+// THE CASCADE, COUNTED ON THE COMMITTED SPEC RATHER THAN REASONED ABOUT. The
+// day the fingerprint gains wetness, the largest identical-input group at
+// cam_hook goes from NINE rows to SEVEN and the distinct-group count from 28
+// to 30. Only vign_wet_000 and vign_wet_100 leave: vign_wet_060 carries 0.6000,
+// which is the judged row's own wetness, so it STAYS in the group. The obvious
+// guess is six, all three wetness rows leaving, and it is wrong for that
+// reason; the number is written here because it was measured and not because
+// it was expected. Seven is still above the two samples a spread needs, so
+// nullSeriesStatus stays READ across the change.
 static std::string NullRefFieldStr(double V)
 {
 	char Buf[64];
@@ -3588,9 +3603,28 @@ int main(int argc, char** argv)
 			      + " ids");
 		}
 		Check(NS.find("nullSeriesExcludes=wetness/because-VignetteShot.cpp-has-no-read-"
-		              "site-for-it-on-this-commit") != std::string::npos,
-		      "the line says which field it excluded and why, because the three wetness "
-		      "rows are null samples HERE only for want of a read site", NS);
+		              "site-for-it-on-this-commit") != std::string::npos
+		      && NS.find("AND-M_LedgerSurface-has-no-parameter-a-read-site-could-drive")
+		         != std::string::npos,
+		      "the line says which field it excluded and BOTH reasons it is excluded: no "
+		      "read site AND no material parameter one could drive, because the second "
+		      "half is what sizes the work and the value carried only the first until "
+		      "2026-09-14", NS);
+		// THE VALUE ABOVE IS BUILT IN A char Buf[960] AND THIS EDIT SPENT 153 OF
+		// ITS 344 FREE CHARACTERS: measured on the committed spec, the buffer
+		// portion ran 615 of 960 before and 768 of 960 after, so 191 are left. A
+		// snprintf that overruns TRUNCATES SILENTLY and the key that would lose
+		// its tail is the last one in the buffer, which is this one. So the tail
+		// token is asserted present AND asserted to be followed by the key that
+		// is appended after the buffer: a cut line fails both halves rather than
+		// reading as a short one.
+		{
+			const size_t Tail = NS.find("StreetVignetteHost.cs-line-715");
+			const size_t Ids  = NS.find(" nullSeriesIds=");
+			Check(Tail != std::string::npos && Ids != std::string::npos && Ids > Tail,
+			      "the excludes value reaches its last token and the next key follows "
+			      "it, so the capped buffer that carries it did not truncate", NS);
+		}
 		Check(NS.find("nullSeriesStatus=READ") != std::string::npos
 		      && NS.find("nullSeriesVerdict=CLEAR") != std::string::npos
 		      && NS.find("nullSeriesClear=3/of=3/") != std::string::npos,
