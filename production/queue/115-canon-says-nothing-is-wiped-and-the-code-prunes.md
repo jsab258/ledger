@@ -2,7 +2,16 @@ line: simulation (Core, and canon)
 spec: external audit 2026-09-06, P1. canon.md outranks every document and every agent, so this is a canon conflict rather than a bug report
 acceptance: a stated ruling on which is true, the OTHER one changed to match, and the change recorded; if pruning stays, canon.md and every public claim about permanent memory change with it, and the claims are found by grep rather than by memory
 max_sessions: 1
-status: REOPENED 2026-09-14 by director ruling,
+status: RULED 2026-09-14 by Jafar, "canon stands, the code changes"; landed under
+  game-design/decision-2026-09-14-ruling-the-prune-is-gone-seven-is-a-floor-and-the-fog-is-the-cloud-deck.md.
+  The prune is gone from MemoryStore.cs and MemoryStore.h; CoreTests 1845 to 1867
+  asserts 901 of 901 with no hole; the soak gates that no resident's count ever
+  falls. CLOSES when ledger/.verify-footer on the landing commit prints the soak's 5
+  checks and CoreTests above 4355. The bill at 300 residents is a FLOOR (66.2 MB at
+  the seven-resident rate) with a ceiling of 2.84 GB if the rate scales with
+  population; queue 284 measures which.
+
+  Previously REOPENED 2026-09-14 by director ruling,
   game-design/decision-2026-09-14-ruling-the-marker-batch-lands-and-115-is-a-live-canon-violation.md.
   P1; MANDATORY DIRECTOR RULING stands and the ruling is Jafar's, pillar 1.
 

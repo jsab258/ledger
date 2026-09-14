@@ -460,24 +460,34 @@ namespace Ledger.PerceptionGolden
                 Key(sb, "mem_basic", "line2", Esc(s.Events[2].ToLine()));
                 Key(sb, "mem_basic", "markdown", Esc(s.ToMarkdown()));
             }
-            {   // mem_prune. Distinct importances on purpose: List.Sort and
-                // std::sort are both unstable, so a tie would be answered by
-                // the sort rather than by the model.
+            {   // mem_permanent. Was mem_prune until Jafar ruled queue 115 on
+                // 2026-09-14: canon.md line 99 stands, nothing is ever wiped,
+                // and the 600-event cap this scenario used to pin went with
+                // the ruling. The row counts are kept exactly where they were,
+                // 601 and 701, because THOSE ARE THE APPENDS THAT USED TO
+                // TRIGGER IT: a scenario that stopped crossing the old cap
+                // would prove nothing about the engine that removed it.
+                //
+                // The importances still ascend one per event. It no longer
+                // decides which event survives (all of them do), but it is
+                // what makes the first row distinguishable from the last in
+                // both engines, and e0 is the weakest and oldest of the lot,
+                // so `firstTextAfter701` is canon stated cross-engine.
                 var s = new MemoryStore("w1");
                 for (int i = 0; i <= 600; i++)
                     s.Append(new MemoryEvent(new GameTime(1, i / 60, i % 60), "observation",
                                              i / 1000.0, "e" + i.ToString(Inv)));
-                Key(sb, "mem_prune", "countAfter601", s.Events.Count.ToString(Inv));
-                Key(sb, "mem_prune", "firstImportanceAfter601", D(s.Events[0].Importance));
-                Key(sb, "mem_prune", "firstTextAfter601", Esc(s.Events[0].Text));
-                Key(sb, "mem_prune", "lastImportanceAfter601", D(s.Events[s.Events.Count - 1].Importance));
+                Key(sb, "mem_permanent", "countAfter601", s.Events.Count.ToString(Inv));
+                Key(sb, "mem_permanent", "firstImportanceAfter601", D(s.Events[0].Importance));
+                Key(sb, "mem_permanent", "firstTextAfter601", Esc(s.Events[0].Text));
+                Key(sb, "mem_permanent", "lastImportanceAfter601", D(s.Events[s.Events.Count - 1].Importance));
                 for (int i = 601; i <= 700; i++)
                     s.Append(new MemoryEvent(new GameTime(1, i / 60, i % 60), "observation",
                                              i / 1000.0, "e" + i.ToString(Inv)));
-                Key(sb, "mem_prune", "countAfter701", s.Events.Count.ToString(Inv));
-                Key(sb, "mem_prune", "firstImportanceAfter701", D(s.Events[0].Importance));
-                Key(sb, "mem_prune", "lastTextAfter701", Esc(s.Events[s.Events.Count - 1].Text));
-                Key(sb, "mem_prune", "maxEvents", MemoryStore.MaxEvents.ToString(Inv));
+                Key(sb, "mem_permanent", "countAfter701", s.Events.Count.ToString(Inv));
+                Key(sb, "mem_permanent", "firstImportanceAfter701", D(s.Events[0].Importance));
+                Key(sb, "mem_permanent", "lastTextAfter701", Esc(s.Events[s.Events.Count - 1].Text));
+                Key(sb, "mem_permanent", "firstTextAfter701", Esc(s.Events[0].Text));
             }
             {   // gossip_crime: the ruling's own numbers.
                 var g = new SocialGraph();

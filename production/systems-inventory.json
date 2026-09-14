@@ -102,12 +102,12 @@
       "typedBy": "director/studio-director",
       "typedOn": "2026-09-09",
       "evidence": [
-        "ledger/Assets/Scripts/Core/MemoryStore.cs#PruneTo",
+        "ledger/Assets/Scripts/Core/MemoryStore.cs#BytesPerEvent",
         "ledger/Assets/Scripts/Core/MemoryStore.cs#ToMarkdown",
         "ledger/Assets/Scripts/Core/MemoryRetrieval.cs",
         "ue-probe/Source/LedgerProbe/Public/MemoryStore.h"
       ],
-      "note": "Events append per person and the markdown a crime run commits is the artefact of remembering. It prunes at 600 events while canon says nothing is ever wiped, an open conflict (queue 115). Typed down from exists because the pillar word is permanent."
+      "note": "Events append per person and the markdown a crime run commits is the artefact of remembering. THE 600-EVENT PRUNE IS GONE, removed 2026-09-14 on Jafar's ruling of queue 115 (canon stands, the code changes), from the C# store and the C++ twin alike; it had been deleting 54.5 percent of a seven-agent soak street's memory at 2800 days while its own series read quiet. What permanence COSTS is now measured: 229 bytes per event, and 66MB at 300 residents AS A FLOOR, because the rate behind it comes from seven residents (queue 116) and whether it scales with population is unmeasured (queue 284). The status stays partial for that reason, not because anything is still wiped."
     },
     {
       "name": "gossip propagation",
