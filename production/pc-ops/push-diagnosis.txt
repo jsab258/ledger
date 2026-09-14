@@ -1,31 +1,31 @@
-# LEDGER push diagnosis - 622bc39 @1789412928
+# LEDGER push diagnosis - 97b460f @1789415021
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=15db42b56d9ba913c7a5cf6e9fed143a37100df2
-localTipRef=15db42b56d9ba913c7a5cf6e9fed143a37100df2
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=6b62d79001360665a06e888df4bcab30f6b53c9b
+localTipRef=6b62d79001360665a06e888df4bcab30f6b53c9b
 onDisk_production_inbox=3
-onDisk_production_outbound=559
+onDisk_production_outbound=563
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=65 newestShown=16/16 (+49 older not shown)
+receiptsOnDisk=69 newestShown=16/16 (+53 older not shown)
+receipt file=production/briefs/2026-09-14.md messageId=95 sent=2026-09-14T19:09:03+00:00
+receipt file=production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md messageId=94 sent=2026-09-14T19:08:52+00:00
+receipt file=production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md messageId=93 sent=2026-09-14T19:08:52+00:00
+receipt file=production/outbox/2026-09-14-the-street-before.answer.md messageId=92 sent=2026-09-14T19:08:52+00:00
 receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md messageId=91 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md messageId=90 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md messageId=89 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md messageId=88 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md messageId=90 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbox/2026-09-14-research-3of5-rdr2-part2.answer.md messageId=87 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md messageId=88 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbox/2026-09-14-research-3of5-rdr2-part1.answer.md messageId=86 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md messageId=83 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md messageId=85 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbox/2026-09-14-research-2of5-hitman-part1.answer.md messageId=84 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md messageId=85 sent=2026-09-14T15:47:02+00:00
+receipt file=production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md messageId=83 sent=2026-09-14T15:47:02+00:00
 receipt file=production/outbox/2026-09-14-research-1of5-kcd2-part1.answer.md messageId=82 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbound/2026-09-14T132330Z-reply-81.receipt.txt messageId=81 sent=2026-09-14T13:23:30+00:00
 receipt file=production/outbound/2026-09-14T132330Z-reply-80.receipt.txt messageId=80 sent=2026-09-14T13:23:30+00:00
-receipt file=production/outbound/2026-09-13T011415Z-reply-78.receipt.txt messageId=78 sent=2026-09-13T01:14:15+00:00
-receipt file=production/outbound/2026-09-13T011416Z-reply-79.receipt.txt messageId=79 sent=2026-09-13T01:14:16+00:00
-receipt file=production/outbox/2026-09-11T1316Z-79313220.answer.md messageId=76 sent=2026-09-11T13:18:43+00:00
-receipt file=production/outbox/2026-09-11-yes-it-works.answer.md messageId=77 sent=2026-09-11T14:22:27+00:00
+receipt file=production/outbound/2026-09-14T132330Z-reply-81.receipt.txt messageId=81 sent=2026-09-14T13:23:30+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent
