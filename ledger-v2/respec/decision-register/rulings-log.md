@@ -47,7 +47,7 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D2-faces.md` D2: Faces move
 - `D3-comedy-register.md` D3: Comedy register
 - `D4-combat-before-driving.md` D4: Combat before driving
-- `D5-interiors.md` D5: Interiors, three tiers plus promotion by attention
+- `D5-interiors.md` D5: Interiors, three tiers plus promotion by attention (SUPERSEDED by D14)
 - `D6-spend.md` D6: Spend plan, lower Tier 1
 - `D7-verification-model.md` D7: Verification, calibrated taste judges
 - `D8-visual-bar.md` D8: Visual bar, resolved for v2
@@ -57,10 +57,23 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D12-information-surfaces.md` D12: information surfaces
 - `D13-street-layout-method.md` D13: street layout method
 - `D14-authored-interiors.md` D14: Authored interiors, and the stylised ceiling retired
-- `D15-mickeys-on-the-built-street.md` D15: Mickey's is sited on the street that already exists
+- `D15-mickeys-on-the-built-street.md` D15: Mickey's is sited on the street that already exists (SUPERSEDED by D19, siting only still stands)
 - `D16-engine-unreal.md` D16: the engine is Unreal
 - `D17-no-alcohol-no-gambling.md` D17: no alcohol and no gambling, anywhere
 - `D18-content-rule.md` D18: the content rule, permanent
+- `D19-mickeys-is-a-minicab-office.md` D19: Mickey's is a minicab office (SUPERSEDES D15)
+- `D20-no-minimap-for-phase-a.md` D20: no minimap for Phase A
+- `D21-map-tiles-are-retyped-against-the-rulings.md` D21: the map's tiles are re-typed against the rulings
+- `D22-the-plan-is-recorded-stages-and-visual-path.md` D22: record the plan, two documents (stages, and the visual path); discharged 2026-09-14 by `production/stages.md` and D31
+- `D23-the-phase-a-bar-is-the-hook-sheet.md` D23: the bar for Phase A is the in-house Hook sheet, a floor not a ceiling
+- `D24-what-ledger-is-not.md` D24: what LEDGER is not
+- `D25-residents-are-tiered-by-authoring-never-by-memory.md` D25: residents are tiered by authoring, never by memory
+- `D26-sound-is-a-lane.md` D26: sound becomes a lane with a standing daily deliverable
+- `D27-the-ambition-is-the-end-state.md` D27: the ambition is the end state and the phases are the route
+- `D28-presentation-is-built-early.md` D28: the presentation layer is built early, not last
+- `D29-body-language-is-a-moat-surface.md` D29: body language is part of the moat, not polish
+- `D30-the-narrative-is-owed.md` D30: the narrative is owed
+- `D31-the-visual-path.md` D31: the visual path, in order, with the reason for each step, D28's ten steps inside it, and the estimate as plan-to-test (a scheduling document under D22)
 
 ## The director's rulings, date order
 
@@ -218,6 +231,10 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   `game-design/decision-2026-09-10-ruling-model-routing.md`
 - **2026-09-10** ruling on the move batch and the fleet left behind: CLAUDE.md names `main` of jsab258/ledger, the installer may not move the task onto a checkout it has not brought current (A1), Jafar's two clicks or queue 257 complete the move, queues 254 to 258 filed
   `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
+- **2026-09-14** twelve rulings land (D19 to D30), the visual slice becomes the week, and the Producer may step down a tier (the resident's line, moved into date order by the D22 director on 2026-09-14)
+  `game-design/decision-2026-09-14-ruling-twelve-rulings-the-visual-week-and-the-producer-may-step-down.md`
+- **2026-09-14** the plan is two documents, the phases FOLD into `production/stages.md`, and `roadmap-v2.md` is retired as a plan document; the edits owed to CLAUDE.md, the goal block and four pointers are dictated in it
+  `game-design/decision-2026-09-14-ruling-the-plan-is-two-documents-and-the-phases-fold.md`
 
 ## Rulings that came off the card queue
 

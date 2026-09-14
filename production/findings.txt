@@ -7,6 +7,32 @@ Plain text on purpose. tools/producer-check.py walks *.md and tools/docs-check.p
 governs game-design/, so a .txt here is outside both and cannot turn verify red.
 
 --------------------------------------------------------------------------
+2026-09-14  CORRECTION TO "THE PIN WORKS" (2026-09-10): THE DETERMINISM
+            REPEAT WAS PHOTOGRAPHED UNDER A LEAKED PIN, NOT UNDER AUTO.
+--------------------------------------------------------------------------
+The entry below says the determinism test "measures a condition the fix
+was never applied to". It was applied to it, by leak. The camera actor is
+spawned once and moved (verdict line 187, shotCamActorStat=one-per-run),
+and the two AutoExposure override flags were written only when a condition
+asked for a pin, so they stayed in force for every shot after. Run 41's
+own shot lines carry it: pinset_night_2/3/4 and vign_grid_null_repeat ask
+0.0000 and read 0.0300, 0.3000, 3.0000 and 10.0000 with overrides=1/1,
+printed as AUTO (lines 216, 219, 222, 225). One condition, three mean
+lumas: 0.4085, 0.0943, 0.0081. The repeat of vign_camA_day (0.0518 against
+0.6099) inherited pin 10 from the last shot. THE VALUE WAS ON THE LINE FOR
+THE WHOLE RUN AND THE WORD BESIDE IT SAID THE OPPOSITE, the same shape as
+queue 224's sun elevation. Fixed at the write site with the decision moved
+into VignetteSpec.h where g++ runs it; the word is now LEAKED-PIN and the
+run line counts expPinRowsLeaked with its denominator. What the old entry
+still gets right: the repeat sits on an unpinned condition and, with the
+leak gone, is back under auto exposure, which run 39 measured as DIFFERS
+on its own; so rigDeterminism on the leak fix alone is expected to read
+DIFFERS, and the reading that proves the fix is expPinRowsLeaked=0 over
+the rows that could have leaked. Ruling of 2026-09-14, the leak lands
+alone. The copies of the retired sentence in brief-input/2026-09-11.md and
+2026-09-12.md are what the Producer was handed and are left as they were.
+
+--------------------------------------------------------------------------
 2026-09-08  A RUN MEASURED EVERYTHING AND PUBLISHED NOTHING, BECAUSE ONE
             GIT CALL OUTSIDE THE BRACES DIED ON DIRECTORY OWNERSHIP.
 --------------------------------------------------------------------------

@@ -282,6 +282,84 @@ def oneword(value):
     return "_".join(text.split())
 
 
+#: EVERY SENTENCE `run_session` RETURNS WHEN A SESSION NEVER STARTED, paired
+#: with the one word that carries it into a key=value channel. The needles are
+#: fragments of the sentences at `_not_started`'s three call sites, and the
+#: selftest drives all three THROUGH run_session rather than quoting them, so
+#: a sentence reworded upstream fails the suite here instead of quietly
+#: reading as the fallback.
+CLI_WHY_WORDS = (
+    ("not on PATH", "not-on-PATH"),
+    ("would not start", "would-not-start"),
+    ("log could not be opened", "log-could-not-be-opened"),
+)
+
+
+def cli_why_word(why):
+    """One word for run_session's `why`, keeping its reasons DISTINCT.
+
+    "not on PATH" and "would not start" are different faults with different
+    fixes, and on 2026-09-11 Jafar was told only that the tool was "not
+    available" (queue 261): the branch knew which, and nothing published it.
+
+    The exception name run_session puts in brackets rides the SAME value
+    after a `/` ("would-not-start/OSError"), because structure in this channel
+    is `/` and `..`; a space would cut the line in half in every reader here.
+
+    AN UNRECOGNISED REASON IS NEITHER DROPPED NOR RELABELLED: it comes back as
+    its own words joined by underscores, so a sentence changed upstream reads
+    as a strange value rather than as a familiar one that is wrong. An empty
+    reason is the words, never a blank that reads as fine.
+    """
+    text = str(why or "")
+    if not text.strip():
+        return NOTHING_MEASURED
+    head = ""
+    for needle, word in CLI_WHY_WORDS:
+        if needle in text:
+            head = word
+            break
+    if not head:
+        return oneword(text)
+    found = re.search(r"\(([A-Za-z_][A-Za-z0-9_]*)\)", text)
+    return "%s/%s" % (head, found.group(1)) if found else head
+
+
+def cli_start_keys(attempted, started, last_started, last_why):
+    """The three CLI keys for the status file, as {key: value}. PURE.
+
+    Written here and not in the daemon loop because measurement arithmetic and
+    formatting live where the tests run (.claude/rules/instruments.md): this
+    file's selftest runs in the container, the daemon itself only ever runs on
+    his PC, and a formatter that has never run is the silent-instrument
+    failure this project has already paid for.
+
+    WHAT EACH NUMBER IS A STATISTIC OF:
+      sessionsStarted  CUMULATIVE since this process started, and it ships its
+                       own denominator on the SAME key as `<started>/<attempted>`:
+                       one paired reading, never two keys whose relationship a
+                       reader has to remember. Nothing attempted prints the
+                       WORDS, never `0/0`, which cannot be told apart from a
+                       process that tried and failed every single time.
+      cliLastStart     LAST-WINS over the attempts of this process. It
+                       describes the most recent attempt and says nothing
+                       about any earlier one.
+      cliWhy           the reason of that SAME attempt, so the pair is one
+                       moment on one line; `none` when it started, because a
+                       reason for a session that ran is a reading with no
+                       event under it.
+    NO BOUND IS SET ON ANY OF THESE. They are printers: rule 2 wants the
+    series first, and there is no series yet.
+    """
+    if attempted <= 0:
+        return {"cliLastStart": NOTHING_MEASURED,
+                "cliWhy": NOTHING_MEASURED,
+                "sessionsStarted": NOTHING_MEASURED}
+    return {"cliLastStart": "started" if last_started else "not-started",
+            "cliWhy": "none" if last_started else cli_why_word(last_why),
+            "sessionsStarted": "%d/%d" % (started, attempted)}
+
+
 def stamp(now=None):
     return time.strftime("%Y-%m-%dT%H:%M:%SZ",
                          time.gmtime(now if now is not None else time.time()))
@@ -1206,10 +1284,14 @@ def place_answer(repo, worktree, stem, text, say, tag=""):
 # --------------------------------------------------------------------------
 def status_lines(state):
     """key=value lines, every value one word. PURE."""
+    # `cli` says only that `shutil.which` resolved the NAME, which A6 in this
+    # file proved is not proof it starts; the three keys after it say what
+    # happened when something tried to start it.
     order = ("executor", "handledTotal", "answeredTotal", "seenTotal",
              "pendingNow", "backlogSkippedAtFirstStart", "lastMsg",
              "lastOutcome", "lastElapsedSec", "limitPausesThisInstruction",
-             "limitResumeIn", "cli", "worktree", "stopFile", "written")
+             "limitResumeIn", "cli", "cliLastStart", "cliWhy",
+             "sessionsStarted", "worktree", "stopFile", "written")
     out = []
     for key in order:
         if key in state:
@@ -1265,7 +1347,18 @@ def status_sentence(repo):
     if st.get("limitResumeIn", "none") not in ("none", "", "unreadable"):
         tail = (" PAUSED on the account allowance, back %s."
                 % st.get("limitResumeIn"))
-    if st.get("cli") == "missing":
+    # WHICH KIND OF MISSING. `cli=missing` is set both by `which` at start-up
+    # and by any session that did not start, so this sentence alone told a
+    # reader "not on this PC" for a spawn that failed with the CLI installed.
+    # When the last attempt has a reason, the reason is printed, with the
+    # start count beside it so the sentence cannot read as a lifetime verdict.
+    last = st.get("cliLastStart", NOTHING_MEASURED)
+    if last == "not-started":
+        tail += (" The last session DID NOT START, reason %s; sessions "
+                 "started %s since this executor came up."
+                 % (st.get("cliWhy", NOTHING_MEASURED),
+                    st.get("sessionsStarted", NOTHING_MEASURED)))
+    elif st.get("cli") == "missing":
         tail += (" The claude command is NOT on this PC, so nothing can be "
                  "run: instructions are answered with a note saying so.")
     return ("executor: %s of %s instruction(s) handled, %s waiting now, "
@@ -1362,10 +1455,20 @@ class Executor(object):
         self.branch = branch or inbox.WORK_BRANCH
         self.journal = Journal(os.path.join(state, "journal.log"))
         self.backlog_skipped = 0
+        # CUMULATIVE SINCE THIS PROCESS STARTED, both of them, counted at the
+        # one place a session is attempted so that started can never exceed
+        # attempted. Not a lifetime count: the journal is the lifetime record,
+        # and a restart is meant to reset these to the words.
+        self.sessions_attempted = 0
+        self.sessions_started = 0
         self.status = {"executor": "starting", "cli": "unknown",
                        "worktree": "unknown", "stopFile": "absent",
                        "limitResumeIn": "none",
                        "limitPausesThisInstruction": 0}
+        # THE WORDS BEFORE THE FIRST ATTEMPT, so a status file read between
+        # start-up and the first instruction cannot be mistaken for a clean
+        # run of nothing (rule 3b).
+        self.status.update(cli_start_keys(0, 0, False, ""))
 
     # -- the record ------------------------------------------------------
     def beat(self):
@@ -1397,6 +1500,23 @@ class Executor(object):
         if extra:
             self.status.update(extra)
         write_status(self.repo, self.status)
+
+    def note_session(self, res):
+        """Count one `run_session` return and re-read the three CLI keys.
+
+        MEMBERSHIP AND ORDER ONLY: the two counters move here, every number
+        and every word comes back from `cli_start_keys`, which is pure and
+        tested. Queue 261: the no-cli branch already RECORDED its reason in
+        the journal on his PC, and the journal is published nowhere, so the
+        reason reached no reader.
+        """
+        self.sessions_attempted += 1
+        if res.get("started"):
+            self.sessions_started += 1
+        self.status.update(cli_start_keys(self.sessions_attempted,
+                                          self.sessions_started,
+                                          bool(res.get("started")),
+                                          res.get("why", "")))
 
     # -- the first start -------------------------------------------------
     def first_start_backlog(self):
@@ -1526,6 +1646,11 @@ class Executor(object):
             res = run_session(prompt, self.worktree, log, extra=extra, say=say,
                               beat=self.beat, stop=self.stopped)
             self.beat()
+            # THE ONE PLACE AN ATTEMPT IS COUNTED, on both branches below, so
+            # the pair on `sessionsStarted` can never claim more starts than
+            # attempts. The keys land in `self.status` here and reach the file
+            # on the next `publish_status`, which both branches do.
+            self.note_session(res)
             if not res["started"]:
                 self.status["cli"] = "missing"
                 self.record("no-cli", msg=stemname,
@@ -2134,6 +2259,88 @@ def selftest():                                               # noqa: C901
     check("accept/and-a-missing-tool-is-named-rather-than-read-as-idle",
           "claude command is NOT on this PC" in status_sentence(st_repo),
           status_sentence(st_repo))
+
+    # -- QUEUE 261: WHY THE CLI DID NOT START, ON THE STATUS FILE ------------
+    # On 2026-09-11 Jafar was told "the tool it needs is not available on this
+    # machine right now" and nothing anywhere said which of run_session's
+    # reasons that was. The branch recorded it in the journal on his PC; the
+    # journal is published nowhere. These are PRINTERS: no bound is set on any
+    # of them, because there is no series yet (rule 2).
+    #
+    # ACCEPTING CASE FIRST: a session that STARTED.
+    started_keys = cli_start_keys(1, 1, True, "")
+    check("accept/a-session-that-started-reads-as-started-with-its-count",
+          started_keys["cliLastStart"] == "started"
+          and started_keys["sessionsStarted"] == "1/1", started_keys)
+    check("accept/and-a-started-session-has-no-reason-because-there-is-none",
+          started_keys["cliWhy"] == "none", started_keys)
+    mixed = cli_start_keys(4, 3, True, "")
+    check("accept/the-count-is-cumulative-and-ships-its-own-denominator",
+          mixed["sessionsStarted"] == "3/4", mixed)
+    # AND THE THREE REASONS STAY APART, driven THROUGH run_session so the
+    # words are its own and a reworded sentence fails here rather than
+    # silently reading as the fallback.
+    why_path = run_session("x", tmp, os.path.join(tmp, "logs", "w1.log"),
+                           which=lambda _n: None)["why"]
+    why_spawn = run_session("x", tmp, os.path.join(tmp, "logs", "w2.log"),
+                            spawn=lambda a, c, f: (_ for _ in ()).throw(
+                                OSError("no such tool")))["why"]
+    # A FILE where the log's directory would be, so the open really fails.
+    blocker = os.path.join(tmp, "not-a-directory")
+    with open(blocker, "w", encoding="utf-8") as fh:
+        fh.write("this is a file, so nothing can be created underneath it\n")
+    why_log = run_session("x", tmp, os.path.join(blocker, "w3.log"),
+                          spawn=lambda a, c, f: None)["why"]
+    words = [cli_why_word(w) for w in (why_path, why_spawn, why_log)]
+    check("accept/not-on-PATH-and-would-not-start-are-different-readings",
+          words[0] == "not-on-PATH"
+          and words[1] == "would-not-start/OSError", words)
+    check("accept/and-the-third-reason-is-distinct-from-both-of-those",
+          len(set(words)) == 3 and words[2].startswith(
+              "log-could-not-be-opened/"), words)
+    check("accept/every-reason-word-is-one-word-for-a-key-value-channel",
+          all(w and " " not in w for w in words), words)
+    stopped_keys = cli_start_keys(2, 1, False, why_spawn)
+    check("accept/a-failed-attempt-carries-its-reason-beside-its-count",
+          stopped_keys["cliLastStart"] == "not-started"
+          and stopped_keys["cliWhy"] == "would-not-start/OSError"
+          and stopped_keys["sessionsStarted"] == "1/2", stopped_keys)
+    # REJECTING FIXTURES: nothing measured must never read as a clean zero,
+    # and a reason nobody recognises must never read as one that is known.
+    none_yet = cli_start_keys(0, 0, False, "")
+    check("reject/nothing-attempted-prints-the-words-and-never-0-slash-0",
+          set(none_yet.values()) == {NOTHING_MEASURED}
+          and "0/0" not in "".join(none_yet.values()), none_yet)
+    check("reject/an-unknown-reason-keeps-its-own-words-and-is-not-relabelled",
+          cli_why_word("the moon was in the way")
+          == "the_moon_was_in_the_way", cli_why_word("the moon was in the "
+                                                     "way"))
+    check("reject/an-empty-reason-is-the-words-not-a-blank-that-reads-as-fine",
+          cli_why_word("") == NOTHING_MEASURED, cli_why_word(""))
+    # AND ON THE FILE, through the writer the supervisor actually reads.
+    write_status(st_repo, {"executor": "idle", "handledTotal": 1,
+                           "seenTotal": 1, "pendingNow": 0, "cli": "missing",
+                           "limitResumeIn": "none",
+                           "cliLastStart": "not-started",
+                           "cliWhy": "would-not-start/OSError",
+                           "sessionsStarted": "0/1"})
+    check("accept/the-reason-reaches-the-file-a-reader-off-this-PC-opens",
+          read_status(st_repo).get("cliWhy") == "would-not-start/OSError",
+          read_status(st_repo))
+    check("accept/and-the-one-line-says-the-reason-rather-than-guessing-PATH",
+          "would-not-start/OSError" in status_sentence(st_repo)
+          and "0/1" in status_sentence(st_repo), status_sentence(st_repo))
+    check("reject/and-it-no-longer-claims-not-on-this-PC-for-a-spawn-failure",
+          "NOT on this PC" not in status_sentence(st_repo),
+          status_sentence(st_repo))
+    check("accept/every-status-line-is-still-one-word-per-value",
+          all(len(ln.split()) == 1 for ln in status_lines(
+              {"cli": "missing", "cliLastStart": "not-started",
+               "cliWhy": "would-not-start/OSError",
+               "sessionsStarted": "0/1"})),
+          status_lines({"cli": "missing", "cliLastStart": "not-started",
+                        "cliWhy": "would-not-start/OSError",
+                        "sessionsStarted": "0/1"}))
 
     # -- reading the inbox: the format comes from the bot's own module -------
     fake_repo = os.path.join(tmp, "inboxrepo")

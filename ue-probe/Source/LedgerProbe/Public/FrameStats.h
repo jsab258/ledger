@@ -939,6 +939,23 @@ namespace LedgerFrame
 		return D;
 	}
 
+	// THE RATIO, BECAUSE THE FAULT IS STATED IN ONE. production/NOW.md records
+	// the original reading as "the later shot darker by a luma ratio of 0.82",
+	// and until now the line printed only the DIFFERENCE, so the number a
+	// reader came looking for had to be divided by hand off two other keys.
+	// It is repeat OVER first, so under 1 means the run got darker, and a
+	// first frame at zero luma has no ratio rather than an infinite one.
+	inline bool RepeatRatioExists(const RepeatDiff& D)
+	{
+		return D.Comparable && D.MeanLumaFirst > 0.0;
+	}
+
+	inline double RepeatLumaRatio(const RepeatDiff& D)
+	{
+		if (!RepeatRatioExists(D)) { return 0.0; }
+		return D.MeanLumaRepeat / D.MeanLumaFirst;
+	}
+
 	// ONE LINE, WHOLE-RUN, AND THE WORD IS DECIDED FROM THE COUNT AND NEVER
 	// FROM A TOLERANCE. There is no epsilon here on purpose: the claim being
 	// tested is that two frames with identical inputs are the same picture,
@@ -951,7 +968,7 @@ namespace LedgerFrame
 	                                      const std::string& Status,
 	                                      const RepeatDiff& D)
 	{
-		char Buf[900];
+		char Buf[1200];
 		const bool bMeasured = (Status == "MEASURED") && D.Comparable && D.Pixels > 0;
 		if (!bMeasured)
 		{
@@ -961,7 +978,7 @@ namespace LedgerFrame
 				"rigDiffPixels=nothing-measured rigDiffPct=nothing-measured "
 				"rigMaxAbsChannelDiff=nothing-measured "
 				"rigMeanLumaFirst=nothing-measured rigMeanLumaRepeat=nothing-measured "
-				"rigMeanLumaDelta=nothing-measured "
+				"rigMeanLumaDelta=nothing-measured rigMeanLumaRatio=nothing-measured "
 				"rigStat=per-pixel-difference-between-the-first-shots-frame-and-a-repeat-of-its-"
 				"camera-and-condition-photographed-last/whole-frame/one-per-run "
 				"rigRule=identical-inputs-must-be-the-same-picture/"
@@ -972,11 +989,27 @@ namespace LedgerFrame
 				ShotsBetween, ShotsAsked);
 			return std::string(Buf);
 		}
+		char Ratio[48];
+		if (RepeatRatioExists(D))
+		{
+			std::snprintf(Ratio, sizeof(Ratio), "%.4f", RepeatLumaRatio(D));
+		}
+		else
+		{
+			// A FIRST FRAME AT ZERO LUMA HAS NO RATIO. Printing 0.0000 there
+			// would read as the darkest possible drift when the truth is that
+			// the division has no denominator.
+			std::snprintf(Ratio, sizeof(Ratio),
+			              "nothing-measured/the-first-frames-mean-luma-is-zero");
+		}
 		std::snprintf(Buf, sizeof(Buf),
 			"rigDeterminism=%s rigRepeatStatus=MEASURED rigRepeatOf=%s "
 			"rigRepeatAfterShots=%d/%d "
 			"rigDiffPixels=%lld/%lld rigDiffPct=%.2f rigMaxAbsChannelDiff=%d/255 "
 			"rigMeanLumaFirst=%.4f rigMeanLumaRepeat=%.4f rigMeanLumaDelta=%+.4f "
+			"rigMeanLumaRatio=%s "
+			"rigRatioStat=repeat-over-first/whole-frame/one-per-run/under-1-means-the-run-got-"
+			"darker/1.0000-is-the-only-reading-a-same-picture-claim-may-rest-on "
 			"rigStat=per-pixel-difference-between-the-first-shots-frame-and-a-repeat-of-its-"
 			"camera-and-condition-photographed-last/whole-frame/one-per-run "
 			"rigRule=identical-inputs-must-be-the-same-picture/"
@@ -986,7 +1019,7 @@ namespace LedgerFrame
 			(RepeatOfShotId.empty() ? "none" : RepeatOfShotId.c_str()),
 			ShotsBetween, ShotsAsked,
 			D.DiffPixels, D.Pixels, Pct(D.DiffPixels, D.Pixels), D.MaxAbsChannel,
-			D.MeanLumaFirst, D.MeanLumaRepeat, D.MeanLumaDelta);
+			D.MeanLumaFirst, D.MeanLumaRepeat, D.MeanLumaDelta, Ratio);
 		return std::string(Buf);
 	}
 }

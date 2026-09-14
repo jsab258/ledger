@@ -1,21 +1,34 @@
 # Roadmap v2 (2026-08-31)
 
-FOLDED 2026-09-10, AND THIS IS NOT THE PLAN ANY MORE. Jafar ruled one plan in
-the cleanup batch of 2026-09-10: `production/ladder.md` plus
-`production/queue/`. The phase rows below and their exit gates were copied into
-`production/ladder.md` under "The phases, and the exit gate each one gets out
-on", which is where they are now maintained. Change a gate THERE.
+RETIRED AS A PLAN DOCUMENT ON 2026-09-14, BY D22. The plan is
+`production/stages.md`, the six stages Jafar ruled on 2026-09-14, over
+`production/ladder.md`, the rungs he judges by eye, with `production/queue/` as
+the live queue. THE PHASE ROWS BELOW WERE FOLDED INTO THE STAGES: each row and
+its exit gate now hangs under the stage it serves, in the section "The phases,
+folded in" of `production/stages.md`, and that is the only place a gate is
+changed. Read nothing below as the plan.
 
-WHY THIS FILE STILL EXISTS AT THIS PATH rather than under `legacy/`. Three live
-readers name it and two of them belong to a lane this batch may not touch:
-`CLAUDE.md` line 133 calls it the plan, `.claude/agents/planner.md` line 3 tells
-the planner to decompose its milestones, and
-`tools/dashboard/build-dashboard.py` PARSES the phase table below
-(`SOURCES["roadmap"]` at line 417, read by `read_phases` at line 577 and parsed
-by `parse_roadmap` at line 311, all measured 2026-09-10) to derive the current
-phase for the dashboard. Moving the file would break all three, so the
-path stays and the table stays parseable. When CLAUDE.md and the planner brief
-are repointed, this file can move and the dashboard source moves with it.
+WHY THE FILE IS STILL AT THIS PATH, AND WHY THE TABLE IS STILL HERE. One program
+parses the table: `tools/dashboard/build-dashboard.py` sets `SOURCES["roadmap"]`
+to this path (line 417 when measured 2026-09-14) and `parse_roadmap` (line 311)
+reads every table row with three or more cells to derive the dashboard's
+current-phase reading. Until that source is repointed at the stages, the table
+stays byte for byte as it was on 2026-09-10 so the dashboard keeps reading it,
+AND THE TABLE IS PARSER INPUT, NOT A PLAN. Four documents also name this path as
+the plan and are repointed by their own lanes: `CLAUDE.md` line 133,
+`.claude/agents/planner.md` line 3, `ledger-v2/handoff/HANDOFF.md` line 8, and
+`ledger-v2/respec/vision-pillars-v2.md` line 12, which says the Meridian Test
+"sits at the end of roadmap-v2.md" and is Jafar's to amend, with the copy in
+`CLAUDE.md` line 17 moving with it under `tools/goal-block-check.py`. When those
+are repointed and the dashboard source moves, this file moves under `legacy/`
+whole. Ruling:
+`game-design/decision-2026-09-14-ruling-the-plan-is-two-documents-and-the-phases-fold.md`.
+
+THE EARLIER FOLD OF 2026-09-10 STANDS AS HISTORY: the rows were copied into
+`production/ladder.md` that day under "The phases, and the exit gate each one
+gets out on"; on 2026-09-14 that section became a pointer to the stages so the
+rows have one prose home. Everything below this line is as it stood on
+2026-09-10, kept whole because a deleted record cannot be audited.
 
 Row law: each milestone row stays under 80 words, carries an instrument link and a verified date; detail lives in a milestone file; landed rows move to roadmap-history. Rows over the cap, or stale against code changes touching their area, fail the doc-decay gate.
 

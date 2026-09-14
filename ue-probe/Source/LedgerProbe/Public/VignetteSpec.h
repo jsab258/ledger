@@ -318,9 +318,16 @@ namespace LedgerVignette
 		double     SunElevationDeg, SunAzimuthDeg;
 		std::string AheadOfRun;   // "none" when the file is not declared ahead
 		int         AheadPiecesThen;
+		// QUEUE 219: WHERE THE LIVE exposure_pin CAME FROM, carried from the
+		// shared file to the verdict so a later reader can tell a pinned
+		// exposure from an automatic one that happened to settle AND can find
+		// the run and the condition the number was read off. OPTIONAL, and a
+		// file that does not declare it prints the words rather than a blank.
+		std::string ExposurePinProvenance;
 		Spec() : HeaderPieces(0), HeaderMultiRotation(-1),
 		         SunElevationDeg(0), SunAzimuthDeg(0),
-		         AheadOfRun("none"), AheadPiecesThen(0) {}
+		         AheadOfRun("none"), AheadPiecesThen(0),
+		         ExposurePinProvenance("nothing-declared") {}
 	};
 
 	// THE SCHEMA THIS READER UNDERSTANDS. A consumer that does not
@@ -372,6 +379,11 @@ namespace LedgerVignette
 		return true;
 	}
 
+	// DECLARED HERE, DEFINED BELOW. The parse needs it and the definition
+	// sits with the other emit helpers; moving the definition up would put a
+	// formatting helper in the middle of the reader.
+	inline std::string NoSpaces(const std::string& In);
+
 	inline bool ParseSpec(const std::string& Text, Spec& Out, std::string& Err)
 	{
 		Err.clear();
@@ -393,6 +405,20 @@ namespace LedgerVignette
 		if (!NeedNum(*Counts, "multi_rotation", D, Err, "counts")) return false;
 		Out.HeaderMultiRotation = (int)D;
 
+		// OPTIONAL AND FAIL-SOFT ON PURPOSE, which is the opposite choice
+		// from exposure_pin itself. The pin is REQUIRED because zero and
+		// forgotten are the same bytes; a provenance string has no such
+		// collision, its absence is visible in the verdict as the literal
+		// word, and a reader can tell "the file did not say" from "the file
+		// said this". Refusing to load a street over a missing citation
+		// would cost a round trip for a string.
+		if (const Value* Prov = Root.Find("exposure_pin_provenance"))
+		{
+			if (Prov->Type == T_STR && !Prov->Str.empty())
+			{
+				Out.ExposurePinProvenance = NoSpaces(Prov->Str);
+			}
+		}
 		const Value* Ahead = Root.Find("ahead_of_unity_run");
 		if (Ahead != 0)
 		{
@@ -2895,11 +2921,85 @@ namespace LedgerVignette
 		return DMin <= Allow && DMax <= Allow;
 	}
 
+	// ---- THE LEAK, MEASURED ON RUN 41 AND NOT ARGUED ---------------------
+	//
+	// THE CAMERA ACTOR IS SPAWNED ONCE AND MOVED PER SHOT, which the run line
+	// says in as many words (shotCamActorStat=one-per-run). Its post-process
+	// settings therefore SURVIVE the shot they were written in. Until
+	// 2026-09-14 the write site set the two override flags when a condition
+	// asked for a pin and did NOTHING when one did not, so the flags stayed
+	// set for the rest of the run and every later unpinned row was
+	// photographed at the LAST RUNG'S exposure.
+	//
+	// THE READING THAT SHOWS IT, off production/d1-probe/ue-vignette-verdict.txt
+	// at f6508b3, four rows of thirty seven:
+	//     pinset_night_2        asked=0.0000 read=0.0300/0.0300  overrides=1/1
+	//     pinset_night_3        asked=0.0000 read=0.3000/0.3000  overrides=1/1
+	//     pinset_night_4        asked=0.0000 read=3.0000/3.0000  overrides=1/1
+	//     vign_grid_null_repeat asked=0.0000 read=10.0000/10.0000 overrides=1/1
+	// One condition, pin_setter_night, photographed at three different
+	// exposures: 0.4085, 0.0943, 0.0081 of mean luma. And the determinism
+	// repeat, an overcast_day frame asking for nothing, came back at 0.0518
+	// against the same shot's 0.6099 at the top of the run, which is the
+	// pin-10 neighbourhood and not an adaptation.
+	//
+	// SO THE WORD HAS TO SEPARATE THEM. A row asking for no pin whose
+	// component still carries an override is NOT auto exposure, and printing
+	// it as AUTO is the silent-instrument failure: the number was on the line
+	// all along and the word beside it said the opposite. LEAKED-PIN is its
+	// own class and it is counted on the run line with its denominator.
 	inline const char* ExposurePinWord(const ExposurePinIn& In)
 	{
 		if (!In.bRead)                      { return "NOT-READ"; }
-		if (!ExposurePinAsked(In.Asked))    { return "AUTO"; }
+		if (!ExposurePinAsked(In.Asked))
+		{
+			return (In.bOverMin || In.bOverMax) ? "LEAKED-PIN" : "AUTO";
+		}
 		return ExposurePinHeld(In) ? "PINNED-HELD" : "PINNED-DIFFERS";
+	}
+
+	inline bool ExposurePinLeaked(const ExposurePinIn& In)
+	{
+		return std::string(ExposurePinWord(In)) == "LEAKED-PIN";
+	}
+
+	// ---- WHAT THE WRITE SITE MUST DO, DECIDED WHERE THE TEST RUNS --------
+	//
+	// The branch that caused the leak was an `if` with no `else` in the
+	// layer that does not compile in this container, so nothing could have
+	// caught it here. The DECISION moves into this header and the .cpp keeps
+	// only the four field assignments: bOverride is written on EVERY shot,
+	// true or false, and the values written when it is false are the ones
+	// CAPTURED off the component before this module touched it, never the
+	// engine defaults typed in from memory.
+	struct ExposurePinWriteOut
+	{
+		bool   bOverride;       // write this into both override flags
+		double Min, Max;        // write these into the two brightness fields
+		ExposurePinWriteOut() : bOverride(false), Min(0), Max(0) {}
+	};
+
+	// CapturedMin/Max are the component's own values, read once before the
+	// first write of the run. bCaptured false means nothing was captured, and
+	// then an unpinned shot leaves the VALUES alone and clears only the
+	// FLAGS, because a value invented here would be this function's idea of
+	// the engine's default rather than the engine's.
+	inline ExposurePinWriteOut ExposurePinWriteFor(double Asked, bool bCaptured,
+	                                               double CapturedMin, double CapturedMax,
+	                                               double CurrentMin, double CurrentMax)
+	{
+		ExposurePinWriteOut W;
+		if (ExposurePinAsked(Asked))
+		{
+			W.bOverride = true;
+			W.Min = Asked;
+			W.Max = Asked;
+			return W;
+		}
+		W.bOverride = false;
+		W.Min = bCaptured ? CapturedMin : CurrentMin;
+		W.Max = bCaptured ? CapturedMax : CurrentMax;
+		return W;
 	}
 
 	// PER-SAMPLE KEYS ONLY. The pin is written at every camera placement, so
@@ -2953,7 +3053,8 @@ namespace LedgerVignette
 			"shotExposurePinStat=per-sample/min-then-max-read-off-the-cameras-post-process-"
 			"after-the-write/residual-is-read-minus-asked/a-row-asking-for-no-pin-reads-AUTO-"
 			"and-its-two-numbers-are-the-engines-own-clamp-range/HELD-is-the-game-threads-"
-			"agreement-and-not-a-pixels",
+			"agreement-and-not-a-pixels/LEAKED-PIN-is-a-row-that-asked-for-none-and-found-an-"
+			"override-still-in-force-from-an-earlier-shot-and-its-frame-is-not-auto-exposed",
 			Word, In.Asked, Read, Resid, Over,
 			In.bSunOn ? "day" : "night", ExposurePinRefuseAtRel());
 		return std::string(Buf);
@@ -3124,23 +3225,73 @@ namespace LedgerVignette
 
 	// THE WHOLE-RUN PIN LINE. Only numbers that are true of the RUN, and the
 	// cost of the pin restated where a reader of the verdict will meet it.
-	inline std::string ExposurePinDoneLine(int Pinned, int Held, int Read, int Offered)
+	// THE CONDITION-SIDE DENOMINATOR, counted off the spec rather than off the
+	// shots, because a condition carrying a pin and a shot taking one are
+	// different facts: twenty conditions can carry a pin and a run can
+	// photograph none of them. Amendment 2 of section 4 of
+	// game-design/decision-2026-09-10-ruling-the-exposure-ladder-and-the-sheet.md
+	// asks for both counts by name.
+	inline int ConditionsCarryingAPin(const std::vector<Condition>& All)
 	{
-		char Buf[820];
+		int N = 0;
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			if (ExposurePinAsked(All[I].ExposurePin)) { ++N; }
+		}
+		return N;
+	}
+
+	struct ExposurePinRun
+	{
+		int RowsAsking, RowsHeld, RowsRead, RowsLeaked, RowsOffered;
+		int CondsWithPin, CondsOffered;
+		std::string Provenance;   // where the live value was read from, space-free
+		ExposurePinRun() : RowsAsking(0), RowsHeld(0), RowsRead(0), RowsLeaked(0),
+		                   RowsOffered(0), CondsWithPin(0), CondsOffered(0),
+		                   Provenance("nothing-declared") {}
+	};
+
+	// STATUS IS DECIDED BY THE WORST THING ON THE RUN, and a leak outranks a
+	// held pin: a run can hold every pin it asked for and still photograph
+	// four frames at an exposure nobody asked for, which is exactly what
+	// f6508b3 did while printing ALL-HELD.
+	inline const char* ExposurePinRunStatus(const ExposurePinRun& R)
+	{
+		if (R.RowsOffered == 0)       { return "NOTHING-MEASURED"; }
+		if (R.RowsLeaked > 0)         { return "LEAKED"; }
+		if (R.RowsAsking == 0)        { return "NONE-ASKED"; }
+		if (R.RowsHeld == R.RowsAsking) { return "ALL-HELD"; }
+		return "PARTIAL";
+	}
+
+	inline std::string ExposurePinDoneLine(const ExposurePinRun& R)
+	{
+		const bool bSet = R.CondsWithPin > 0;
+		char Buf[1500];
 		std::snprintf(Buf, sizeof(Buf),
 			"expPinStatus=%s expPinRowsAsking=%d/of=%d/shots-offered "
 			"expPinRowsRead=%d/of=%d/shots-offered "
 			"expPinRowsHeld=%d/of=%d/shots-asking-for-a-pin "
-			"expPinConstantSet=no/this-run-prints-the-ladder-series-only/the-value-is-set-in-a-"
-			"later-commit-from-what-it-printed "
+			"expPinRowsLeaked=%d/of=%d/shots-asking-for-NO-pin "
+			"expPinConditions=%d/of=%d/conditions-in-the-spec "
+			"expPinConstantSet=%s "
+			"expPinProvenance=%s "
+			"expPinLeakRule=a-row-asking-for-no-pin-whose-component-still-carries-an-override-was-"
+			"photographed-at-an-earlier-shots-exposure/the-camera-actor-is-spawned-once-and-moved/"
+			"any-nonzero-here-voids-every-unpinned-row-after-the-first-pinned-one "
 			"expPinCost=a-pinned-frame-can-never-judge-an-adaptation-moment/walking-out-of-a-"
 			"dark-alley-is-the-example "
 			"expPinStat=whole-run/asking-is-a-condition-with-a-positive-exposure_pin/held-is-the-"
-			"readback-agreeing-at-the-placement-that-photographed-the-frame",
-			Offered == 0 ? "NOTHING-MEASURED"
-			             : (Pinned == 0 ? "NONE-ASKED"
-			                            : (Held == Pinned ? "ALL-HELD" : "PARTIAL")),
-			Pinned, Offered, Read, Offered, Held, Pinned);
+			"readback-agreeing-at-the-placement-that-photographed-the-frame/leaked-is-an-override-"
+			"in-force-on-a-row-that-asked-for-none/conditions-is-counted-off-the-spec-and-rows-off-"
+			"the-shots-and-they-are-different-facts",
+			ExposurePinRunStatus(R),
+			R.RowsAsking, R.RowsOffered, R.RowsRead, R.RowsOffered,
+			R.RowsHeld, R.RowsAsking, R.RowsLeaked, R.RowsOffered - R.RowsAsking,
+			R.CondsWithPin, R.CondsOffered,
+			bSet ? "yes/the-spec-carries-a-live-pin-and-expPinProvenance-names-where-it-came-from"
+			     : "no/no-condition-in-the-spec-carries-a-pin/every-frame-is-the-engines-own-policy",
+			R.Provenance.empty() ? "nothing-declared" : NoSpaces(R.Provenance).c_str());
 		return std::string(Buf);
 	}
 
