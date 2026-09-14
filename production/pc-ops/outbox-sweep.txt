@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - 8574fb7 @1789400820
+# LEDGER one outbox sweep - 622bc39 @1789412930
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,22 +12,15 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 sweepCheckoutPcHeadSha=8574fb764ba9ef7ee804d3329cc120709dcdeff6 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
-sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-14T15:46:32Z
-sweepCheckoutWaitedSec=0/90 sweepCheckoutPolls=1 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/8574fb764b sweepCheckoutSeriesShown=1/1
+sweepCheckoutRunSha=622bc3901b712478931bf9e9830f0f86735e99b6 sweepCheckoutPcHeadSha=622bc3901b712478931bf9e9830f0f86735e99b6 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-14T19:08:13Z
+sweepCheckoutWaitedSec=0/90 sweepCheckoutPolls=1 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/622bc3901b sweepCheckoutSeriesShown=1/1
 sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
 sweepStatus=EXITED sweepWaitedSec=9 sweepExitCode=0
-sweepStream=sweep-raw.txt sweepLines=12
-17:47:02    outbox: sent production/outbox/2026-09-14-research-1of5-kcd2-part1.answer.md kind=answer chars=3855 messageId=82 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-1of5-kcd2-part1.answer.receipt.txt
-17:47:02    outbox: sent production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md kind=answer chars=2619 messageId=83 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-1of5-kcd2-part2.answer.receipt.txt
-17:47:03    outbox: sent production/outbox/2026-09-14-research-2of5-hitman-part1.answer.md kind=answer chars=3721 messageId=84 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-2of5-hitman-part1.answer.receipt.txt
-17:47:03    outbox: sent production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md kind=answer chars=2119 messageId=85 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-2of5-hitman-part2.answer.receipt.txt
-17:47:04    outbox: sent production/outbox/2026-09-14-research-3of5-rdr2-part1.answer.md kind=answer chars=3978 messageId=86 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-3of5-rdr2-part1.answer.receipt.txt
-17:47:04    outbox: sent production/outbox/2026-09-14-research-3of5-rdr2-part2.answer.md kind=answer chars=1571 messageId=87 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-3of5-rdr2-part2.answer.receipt.txt
-17:47:04    outbox: sent production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md kind=answer chars=2553 messageId=88 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-4of5-disco-elysium-part1.answer.receipt.txt
-17:47:05    outbox: sent production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md kind=answer chars=3063 messageId=89 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-4of5-disco-elysium-part2.answer.receipt.txt
-17:47:05    outbox: sent production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md kind=answer chars=3736 messageId=90 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.receipt.txt
-17:47:05    outbox: sent production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md kind=answer chars=2369 messageId=91 outboundLatencySec=30 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.receipt.txt
-17:47:05  outbox done: outboxFiles=29 sent=10 captionedSent=0 captionedClipsSent=0 refused=0 unsent=0 alreadySent=19 held=0 sendFailed=0 receiptRefused=0 recordsWritten=10 latencySamples=10/10 outboundLatencySecAtWorst=30
-17:47:09    inbox: pushed 10 file(s) as 15db42b to pc-inbox
+sweepStream=sweep-raw.txt sweepLines=5
+21:08:53    outbox: sent production/outbox/2026-09-14-the-street-before.answer.md kind=answer AS-CAPTIONED-PHOTO photoRef=production/d1-probe/ue-vign_hook_day.png chars=396 messageId=92 photoSizes=90x51/320x180/800x450/1280x720 outboundLatencySec=39 receipt=production/outbound/2026-09-14-the-street-before.answer.receipt.txt
+21:08:54    outbox: sent production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md kind=brief AS-CAPTIONED-PHOTO photoRef=production/d1-probe/ue-vign_fog_maxop0100.png chars=866 messageId=93 photoSizes=90x51/320x180/800x450/1280x720 outboundLatencySec=39 receipt=production/outbound/2026-09-14-the-street-then-after-the-brief.brief.receipt.txt
+21:08:55    outbox: sent production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md kind=brief chars=903 messageId=94 outboundLatencySec=39 outboundLatencySecFrom=fileCommitInstant outboundLatencySecTo=sendInstant receipt=production/outbound/2026-09-14-the-street-then-one-call-for-you.brief.receipt.txt
+21:08:55  outbox done: outboxFiles=32 sent=1 captionedSent=2 captionedClipsSent=0 refused=0 unsent=0 alreadySent=29 held=0 sendFailed=0 receiptRefused=0 recordsWritten=3 latencySamples=3/3 outboundLatencySecAtWorst=39
+21:08:58    inbox: pushed 3 file(s) as 09c6d19 to pc-inbox
 sweepStream=sweep-raw.txt.err sweepLines=0
