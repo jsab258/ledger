@@ -188,7 +188,10 @@ namespace
 	// It was kSkyIntensityDay = 1.0f and kSkyIntensityNight = 0.35f,
 	// chosen here by whether the sun was on. Both values now ride on the
 	// CONDITION as sky_intensity, carried unchanged into overcast_day and
-	// wet_night, because the ladder's control row needs a day condition
+	// wet_night on 9 September; overcast_day's moved to 0.70 on 2026-09-14 by
+	// Jafar's ruling off the sky cross on 622bc39
+	// (decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md),
+	// because the ladder's control row needs a day condition
 	// with the sky at 0.35 and a constant keyed on SunOn cannot express
 	// one. THEY ARE DELETED RATHER THAN LEFT UNUSED: a constant that
 	// still looks live and feeds nothing is a number a later session

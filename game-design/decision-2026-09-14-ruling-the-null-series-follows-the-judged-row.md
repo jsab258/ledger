@@ -711,4 +711,19 @@ CLAUDE.md rule 1: when a claim turns out false, grep for the SENTENCE and not
 the site. Done. The phrase sits in exactly two records, this one and the other
 ruling of the same day, and both now carry this note.
 
+## CORRECTION 2026-09-14, 20:01Z
+
+Section 3 and section 8 item 1 make `grid_sky100_sun003` follow the judged
+row. It did, for the fog, and two hours later the judged row's sky moved to
+0.70 (Jafar), where the grid already holds a cell, `grid_sky070_sun003`.
+Ruled 20:01Z in
+`decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md`:
+the reference cell is the grid cell at the judged row's sky and sun, so the
+role moved to `grid_sky070_sun003` (fog to 0.100), `grid_sky100_sun003`
+returned to 0.450, and the null repeat, the wets and the four pin rungs took
+sky 0.70. The expected group is nine with `vign_grid_sky070_sun003` and
+`vign_fog010_sky070` in and `vign_grid_sky100_sun003` and
+`vign_fog_maxop0100` out. "Whether the eleven 0.450 grid cells move or
+retire" is decided there: retire, queue 293.
+
 <!--RULING spawn=2026-09-14T18:23:24Z-->

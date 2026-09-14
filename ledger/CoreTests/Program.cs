@@ -19991,7 +19991,7 @@ namespace Ledger.CoreTests
             bool haveRef = false, haveNull = false;
             foreach (var cd in plan.Conditions)
             {
-                if (cd.Id == "grid_sky100_sun003") { refCell = cd; haveRef = true; }
+                if (cd.Id == "grid_sky070_sun003") { refCell = cd; haveRef = true; }
                 if (cd.Id == "grid_null_repeat") { nullCell = cd; haveNull = true; }
             }
             Check(haveRef && haveNull,
@@ -20030,7 +20030,7 @@ namespace Ledger.CoreTests
                 if (cd.Id == "overcast_day") { judgedDay = cd; haveJudged = true; }
             string refDiff = (haveRef && haveJudged)
                 ? RefCellAgainstJudged(refCell, judgedDay)
-                : "nothing measured: overcast_day or grid_sky100_sun003 is not in the spec";
+                : "nothing measured: overcast_day or grid_sky070_sun003 is not in the spec";
             Check(haveRef && haveJudged && refDiff.Length == 0,
                   "the grid's reference cell is the judged day row in every field that lights a "
                   + "frame, because the reference cell exists to carry the judged row's inputs "
@@ -20055,6 +20055,28 @@ namespace Ledger.CoreTests
                   "and the comparison refuses a reference cell planted back at the retired fog "
                   + "cap, naming fog_max_opacity and both values",
                   plantedDiff.Length == 0 ? "accepted a planted 0.450 as equal" : plantedDiff);
+            // AND THE FIELD THAT WENT STALE TONIGHT, PLANTED IN THE SAME
+            // SHAPE, 2026-09-14 20:01Z. The plant above watches the field
+            // that went stale at 18:23Z; this one watches the field that went
+            // stale two hours later, when Jafar took sky 0.70 and the
+            // reference-cell role moved to grid_sky070_sun003. A copy of the
+            // parsed reference cell with its sky set back to the 1.00 it
+            // carried before: the comparison must refuse it, and must name
+            // sky_intensity, because sky is compared before fog and a refusal
+            // naming any other field would mean this guard had stopped
+            // reading the field it is about.
+            string skyPlantedDiff = "nothing measured: no reference cell to plant into";
+            if (haveRef && haveJudged)
+            {
+                var skyPlanted = refCell;
+                skyPlanted.SkyIntensity = 1.00;
+                skyPlantedDiff = RefCellAgainstJudged(skyPlanted, judgedDay);
+            }
+            Check(skyPlantedDiff.StartsWith("sky_intensity "),
+                  "and the comparison refuses a reference cell planted back at the retired sky, "
+                  + "naming sky_intensity and both values",
+                  skyPlantedDiff.Length == 0 ? "accepted a planted 1.00 as equal"
+                                             : skyPlantedDiff);
 
             // A4: THE FOG CAP IS A FIELD ON EVERY ROW, AND A SERIES ON FOUR.
             int noCap = 0;
@@ -20217,8 +20239,8 @@ namespace Ledger.CoreTests
                       setterShots + " setters, " + ladderShots + " ladder rows");
             }
             // THE NULL CELL IS SHOT LAST, which is the whole of its value: its
-            // twin grid_sky100_sun003 is shot 7 of 43, so the pair is
-            // THIRTY SIX SHOTS APART ON IDENTICAL INPUTS, with every condition
+            // twin grid_sky070_sun003 is shot 9 of 43, so the pair is
+            // THIRTY FOUR SHOTS APART ON IDENTICAL INPUTS, with every condition
             // change and every light probe between them. Not the maximum
             // separation the run could hold, which six preceding shots rule
             // out, and corrected here by amendment 3(b) of

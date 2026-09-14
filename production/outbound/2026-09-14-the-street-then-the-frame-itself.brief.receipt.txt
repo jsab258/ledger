@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md
+kind: brief
+photoRef: production/d1-probe/ue-vign_hook_day.png
+fileCommit: 97b460f71e20c58075de04cafa0b9e1ed76c5b83
+fileCommitEpoch: 1789414998
+sent: 2026-09-14T19:44:26+00:00
+sentEpoch: 1789415066
+messageId: 96
+chars: 876
+photoSizes: 90x51/320x180/800x450/1280x720
+photoSizeCount: 4
+outboundLatencySec: 68
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.

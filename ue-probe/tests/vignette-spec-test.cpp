@@ -551,8 +551,15 @@ int main(int argc, char** argv)
 		// rather than a claim. 3.0f was the bare literal at
 		// VignetteShot.cpp:1240; 1.0 and 0.35 were kSkyIntensityDay and
 		// kSkyIntensityNight; 0.45f was kFogMaxOpacityWithSky.
-		Check(std::fabs(DaySun - 3.0) < 1e-9 && std::fabs(DaySky - 1.0) < 1e-9,
-		      "the day condition carries the retired sun literal and day sky constant unchanged");
+		// The sky moved on 2026-09-14 (ruling of 20:01Z): a RENDERED cell,
+		// vign_fog010_sky070 on 622bc39, verdict line 217, band.skyCentre.p50
+		// 0.8035 against the sheet's 0.808 and band.ground.p05 0.2003 against
+		// its 0.1935.
+		Check(std::fabs(DaySun - 3.0) < 1e-9,
+		      "the day condition carries the retired sun literal unchanged");
+		Check(std::fabs(DaySky - 0.70) < 1e-9,
+		      "the judged day row's sky is 0.70, moved by the ruling of 2026-09-14 20:01Z "
+		      "from the sky cross on 622bc39, row vign_fog010_sky070");
 		Check(std::fabs(NightSun) < 1e-9 && std::fabs(NightSky - 0.35) < 1e-9,
 		      "the night condition carries the night sky constant with its sun at zero");
 		// THE JUDGED ROW MOVED, 2026-09-14, AND THIS IS THE OTHER HALF OF THE
@@ -600,7 +607,7 @@ int main(int argc, char** argv)
 		const LedgerVignette::Condition* Null = 0;
 		for (size_t I = 0; I < S.Conditions.size(); ++I)
 		{
-			if (S.Conditions[I].Id == "grid_sky100_sun003") { Ref = &S.Conditions[I]; }
+			if (S.Conditions[I].Id == "grid_sky070_sun003") { Ref = &S.Conditions[I]; }
 			if (S.Conditions[I].Id == "grid_null_repeat")    { Null = &S.Conditions[I]; }
 		}
 		Check(Ref != 0 && Null != 0,
@@ -630,7 +637,7 @@ int main(int argc, char** argv)
 		{
 			if (S.Conditions[I].Id == "overcast_day") { JudgedDay = &S.Conditions[I]; }
 		}
-		std::string RefDiff = "nothing measured: overcast_day or grid_sky100_sun003 is not in the spec";
+		std::string RefDiff = "nothing measured: overcast_day or grid_sky070_sun003 is not in the spec";
 		if (Ref != 0 && JudgedDay != 0) { RefDiff = RefCellAgainstJudged(*Ref, *JudgedDay); }
 		Check(Ref != 0 && JudgedDay != 0 && RefDiff.empty(),
 		      "the grid's reference cell is the judged day row in every field that lights a "
@@ -655,6 +662,27 @@ int main(int argc, char** argv)
 		      "and the comparison refuses a reference cell planted back at the retired fog cap, "
 		      "naming fog_max_opacity and both values",
 		      PlantedDiff.empty() ? std::string("accepted a planted 0.450 as equal") : PlantedDiff);
+		// AND THE FIELD THAT WENT STALE TONIGHT, PLANTED IN THE SAME SHAPE,
+		// 2026-09-14 20:01Z. The plant above watches the field that went stale
+		// at 18:23Z; this one watches the field that went stale two hours
+		// later, when Jafar took sky 0.70 and the reference-cell role moved to
+		// grid_sky070_sun003. A copy of the parsed reference cell with its sky
+		// set back to the 1.00 it carried before: the comparison must refuse
+		// it, and must name sky_intensity, because sky is compared before fog
+		// and a refusal naming any other field would mean this guard had
+		// stopped reading the field it is about.
+		std::string SkyPlantedDiff = "nothing measured: no reference cell to plant into";
+		if (Ref != 0 && JudgedDay != 0)
+		{
+			LedgerVignette::Condition SkyPlanted = *Ref;
+			SkyPlanted.SkyIntensity = 1.00;
+			SkyPlantedDiff = RefCellAgainstJudged(SkyPlanted, *JudgedDay);
+		}
+		Check(SkyPlantedDiff.rfind("sky_intensity ", 0) == 0,
+		      "and the comparison refuses a reference cell planted back at the retired sky, "
+		      "naming sky_intensity and both values",
+		      SkyPlantedDiff.empty() ? std::string("accepted a planted 1.00 as equal")
+		                             : SkyPlantedDiff);
 		// C6, MECHANICALLY: THE SHOT ORDER RISES AND FALLS IN SKY. The
 		// retired ladder rendered in increasing order, so a drift ordered by
 		// shot was perfectly confounded with a response to the light.
@@ -3451,7 +3479,7 @@ int main(int argc, char** argv)
 		//
 		// SO THE ANCHOR IS BUILT THE WAY THE NULL-CELL CHECK ABOVE COMPARES
 		// TWO CONDITIONS, field by field, from ONE named id: the reference
-		// cell grid_sky100_sun003 that the grid ruling defined. Walk the
+		// cell grid_sky070_sun003 that the grid ruling defined. Walk the
 		// shots in shot order, keep those standing at the reference cell's
 		// own camera whose condition matches it in every field that lights a
 		// frame plus exposure_pin, excluding the one field the line itself
@@ -3460,7 +3488,7 @@ int main(int argc, char** argv)
 			const LedgerVignette::Condition* RefC = 0;
 			for (size_t I = 0; I < S.Conditions.size(); ++I)
 			{
-				if (S.Conditions[I].Id == "grid_sky100_sun003") { RefC = &S.Conditions[I]; }
+				if (S.Conditions[I].Id == "grid_sky070_sun003") { RefC = &S.Conditions[I]; }
 			}
 			std::string RefCam = "no-shot-for-the-reference-cell";
 			for (size_t I = 0; I < S.Shots.size() && RefC != 0; ++I)
@@ -3523,7 +3551,7 @@ int main(int argc, char** argv)
 			const std::string GotLine = ValueOfKey(NS, "nullSeriesIds=");
 			std::vector<std::string> GotIds;
 			SplitOn(GotLine, ';', GotIds);
-			std::printf("    derived from grid_sky100_sun003: camera=%s condsMatching=%d/of=%d "
+			std::printf("    derived from grid_sky070_sun003: camera=%s condsMatching=%d/of=%d "
 			            "shotsWalked=%d derivedIds=%d discoveredIds=%d capBites=%s/cap=%d\n",
 			            RefCam.c_str(), (int)SameConds.size(), (int)S.Conditions.size(),
 			            (int)S.Shots.size(), (int)WantIds.size(), (int)GotIds.size(),
@@ -3550,7 +3578,7 @@ int main(int argc, char** argv)
 			bool bRefIn = false, bNullIn = false;
 			for (size_t I = 0; I < GotIds.size(); ++I)
 			{
-				if (GotIds[I] == "vign_grid_sky100_sun003") { bRefIn = true; }
+				if (GotIds[I] == "vign_grid_sky070_sun003") { bRefIn = true; }
 				if (GotIds[I] == "vign_grid_null_repeat")   { bNullIn = true; }
 			}
 			Check(bRefIn && bNullIn && (int)GotIds.size() >= 2,

@@ -75,6 +75,23 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D30-the-narrative-is-owed.md` D30: the narrative is owed
 - `D31-the-visual-path.md` D31: the visual path, in order, with the reason for each step, D28's ten steps inside it, and the estimate as plan-to-test (a scheduling document under D22)
 - `D32-a-ruling-names-its-queue-item.md` D32: a ruling that orders work to the queue names the item by number
+- `D33-the-player-sees-their-own-position-never-other-minds.md` D33: the player sees their own position, never other minds
+- `D34-the-town-has-no-opinion-only-people.md` D34: the town has no opinion, only people
+- `D35-nothing-stops-reloading-and-the-game-says-so.md` D35: nothing mechanically stops reloading, and the game says so
+- `D36-a-maps-design-follows-the-worlds-size.md` D36: a map's design follows the world's size, no map for Phase A
+- `D37-the-ledger-is-the-notebook-not-a-corkboard.md` D37: the Ledger is the notebook, not a corkboard
+- `D38-the-audits-findings-become-tiles.md` D38: the audit's findings become tiles
+- `D39-the-audits-twenty-recommendations-ordered.md` D39: the audit's twenty recommendations, ordered, none starting before the visual slice lands
+
+## A claim checked, 2026-09-14
+
+A research lane reported that D24, D28 and D34 do not exist in this
+checkout, ahead of the D33 to D39 batch above. Checked the same day: D24 and
+D28 are both present and unchanged (`D24-what-ledger-is-not.md`,
+`D28-presentation-is-built-early.md`). D34 was genuinely absent and is
+created in this batch. The claim was wrong on two of three. The full note,
+including how each was checked, sits in
+`D34-the-town-has-no-opinion-only-people.md`.
 
 ## The director's rulings, date order
 
@@ -243,6 +260,13 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   restated to what the verdict can answer; 287 to 290 filed and 235
   given its next measurement
   `game-design/decision-2026-09-14-ruling-the-null-series-follows-the-judged-row.md`
+
+- **2026-09-14** the reference cell is the grid cell at the judged
+  row's sky and sun: Jafar's sky 0.70 applied; the role moves to
+  `grid_sky070_sun003`, the null repeat, wets and pin rungs follow;
+  the guard keeps every field and gains the sky plant; the read
+  series retire (293) and the twins' derivation is filed (294)
+  `game-design/decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md`
 
 ## Rulings that came off the card queue
 
