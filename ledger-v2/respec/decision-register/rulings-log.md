@@ -317,3 +317,12 @@ A ruling about the GAME gets a D-number: a new file in this directory and a
 line in the spine above. Every other ruling gets a line in the date-ordered log
 above, naming its file. A ruling with no line here is a ruling the next session
 cannot find, which is the failure this file exists to stop.
+
+- **2026-09-15** D38 lands as four files: the fourth status is a status and
+  every tally keeps it apart from absent, the five built systems' citations
+  were re-read against the code and all five turn out measured, the board's
+  judgement line is derived and read back and its pixel against the fold is
+  owed as a printed line, the sleep pair goes to Jafar, D38's third rule (five
+  later items to the queue) is filed by the resident, and the tally readback
+  guard is queued
+  `game-design/decision-2026-09-15-ruling-d38-lands-the-fourth-status-is-a-status-and-the-judgement-line-owes-its-pixel.md`

@@ -9,6 +9,67 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 20:05Z: THE HOLD LIFTED AT 19:42:59Z, AND D38 IS LANDED
+
+THE HOLD IS OVER AND THE RECORD SAYS SO EXPLICITLY, because the director
+reviewing D38 refused to leave it unwritten and was right to. The 19:20Z block
+below says NO BUILDERS and "do not spawn a director for it". Two agents were
+then spawned. Here is the sequence with its instants, so nobody has to
+reconstruct it:
+    19:20Z  the hold is recorded, his newest reading fifteen hours old
+    19:42:59Z  HIS READING ARRIVES: total 43, Fable 44, "taken now"
+    19:43:24Z  the studio-director is spawned, 25 seconds later
+    19:44:56Z  the queue 314 builder is spawned
+THE READING LIFTED THE HOLD BEFORE EITHER SPAWN. This is not a breach and it
+is not a waiver: it is the rule working exactly as he designed it, one number
+turning the studio back on. What was missing was this paragraph, not the
+permission. The 19:20Z block stays below UNEDITED because it was true when it
+was written, and a hold rewritten after the fact is a hold nobody can audit.
+
+D38 IS LANDED UNDER THE 19:43Z RULING, which read the diff, RE-VERIFIED ALL
+FIVE CITATIONS AGAINST THE CODE rather than against D38's table, and OPENED
+THE PAGE rather than ruling from the selftest.
+
+THE PIXEL IS ANSWERED AND THE SECOND QUESTION TO HIM IS SPENT. The ruling
+prepared a question in advance in case his judgement line and RULING 3's
+ladder could not share the first screen. Printed from the live run:
+judgementLineTopPx=798/844-fold, judgementLineHeightPx=43,
+judgementTopIsAboveTheFold=yes, and the stronger
+judgementWholeLineAboveTheFold=yes, with ladderBottomPx=749. They co-exist
+with 46 px to spare, so the question is not asked.
+
+THE PAGE HALVED AND NOTHING WAS DELETED: pageScrollPx 4255 against 8556 had
+the audit stayed inline, auditOnTheScroll=no-it-is-one-tap-down,
+nothingDeletedToShorten=true. That last token is the 2026-09-07 rebuild's own
+rule holding, which was that the evidence moves and does not go away.
+
+WHAT THE BOARD NOW SAYS FIRST, which is the thing he asked for: "20 of 111
+tiles here carry your judgement. The other 91 are the studio's reading." It is
+DERIVED at render time from roleCounts, read back by check_typed_attribution
+against the run's own count, and the guard bites if it claims every tile,
+drops its denominator, or is deleted.
+
+THE CITATION READING OVERTURNED ONE OF D38'S OWN SENTENCES. D38 said each of
+the five should be "marked built-not-measured where no verdict key emits it".
+The director read the verdict file and ALL FIVE HAVE A KEY: blood, provenance,
+carry, the disguise gate, windowsLit=3/6. So the clause had no case to apply
+to. The lit window is typed PARTIAL rather than exists on the builder's own
+reading, and that is the one colour the code changed.
+
+THREE ITEMS FILED BY THE RULING, 315, 316 and 317, and one of them is the
+honest limit of tonight: the board's tally sentence is DERIVED AND NOTHING
+READS IT BACK, and map.py's selftest plants no ruled-out tile, so the only
+accepting case for the fourth mark is today's live data. Not blocking while
+the data carries four, and filed because it stops being an accepting case the
+moment the last ruled-out tile is retyped.
+
+STILL OPEN AND GOING TO HIM: the sleep pair. "sleep and the day boundary"
+(player-facing, 2026-09-10) and "sleep as a way to cross a day" (moat, D39
+item 5) are one verb on two absent tiles. The director's recommendation is one
+tile in the moat row under D39 with the older tile retyped into it under D21,
+which would read 110 with 20 his. It landed as two because his record said
+twenty tiles, and collapsing them is his call rather than the studio's.
+
 ## 2026-09-15 19:20Z: THE STUDIO IS AT INBOX ONLY. HIS TEN HOUR RULE BIT THE HOUR HE MADE IT.
 
 RULED TONIGHT BY JAFAR, replacing forty eight hours: a budget reading older

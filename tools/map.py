@@ -74,9 +74,40 @@ worse than one that was deleted. What replaces the refusal to draw is
 check_heatmap_is_typed_not_measured: the board SAYS on its face that its
 colours are a human's judgement.
 
+RULING OF 2026-09-15, VERBATIM, AND IT IS THE SAME MOVE AS 2026-09-07. "The
+page is too long. The board and the next three are the page; everything
+diagnostic goes behind a tap. The first screen says how many tiles carry my
+judgement, which today is zero."
+
+So the audit view left the scroll and went into the sheet mechanism this page
+already had, beside the areas, the tasks, the rungs and the board's own
+provenance. NOTHING IN IT WAS DELETED, REWORDED OR REORDERED: every guard that
+policed it reads the same bytes, the whole block is still in the page, and the
+two heights are printed side by side on the done line
+(pageScrollPx..IfAuditWereInline) so "shorter" is a number and not a feeling.
+On the day it landed that pair read 4255 and 8556.
+
+AND THE COUNT HE ASKED FOR IS NOW THE FIRST SENTENCE OF THE BOARD. It already
+existed inside the attribution sentence, and the fold model put that sentence
+at 846 px against a fold of 844: his number was two pixels below the first
+screen, which is the same as not being on it. heat_judgement_words computes it
+from typedBy every run, check_typed_attribution parses it back off the rendered
+bytes with its denominator, and the line's own top is printed against the fold
+every run with NO BOUND SET, because RULING 3 keeps the visual ladder above
+everything and the ladder alone is 735 px of an 844 px screen. That collision
+is a director's to rule on and the pixel is what a ruling should read.
+
+THE FOURTH STATUS, RULED THE SAME DAY: ruled-out, meaning DECIDED AGAINST, as
+against absent, which means NOT BUILT YET. The vocabulary belongs to
+tools/systems-inventory-check.py and this file IMPORTS it (see
+load_inventory_check) rather than keeping the second copy it used to keep; the
+mark, the class and the colour are the page's, and a status the validator
+allows which this page cannot draw is counted in HEAT_UNDRAWABLE rather than
+drawn as a question mark nobody notices.
+
 THE PAGE, TOP TO BOTTOM, AS RULED: the visual ladder, the board, the next
-three, then the audit view under its own heading, carrying everything that used
-to be the first screen plus the seven derived areas and the chain.
+three, and then a tap to the audit view, which carries everything that used to
+be the first screen plus the seven derived areas and the chain.
 
 THE FIRST PHONE SCREEN BELOW THE LADDER ANSWERS EXACTLY THREE THINGS, and
 nothing else may compete for it. THESE THREE ARE NOW THE AUDIT VIEW'S, not the
@@ -242,6 +273,41 @@ except Exception as exc:                                         # noqa: BLE001
 
 PAGE_BYTE_CAP = GLANCE.PAGE_BYTE_CAP
 MAX_DECLARED_WIDTH_PX = GLANCE.MAX_DECLARED_WIDTH_PX
+
+
+def load_inventory_check():
+    """THE FIXED SET OF STATUSES BELONGS TO THE VALIDATOR, and this page
+    imports it rather than keeping a second copy.
+
+    Its docstring has said "consumers import these rather than writing a second
+    copy" since it was written, and this file wrote the second copy anyway:
+    HEAT_STATES was a literal ("exists", "partial", "absent") sitting next to a
+    tuple it was supposed to BE. The two agreed for six days and then a fourth
+    status was ruled and there were two places to change it, which is the site
+    nobody looks at when the first one gets fixed. Presentation stays here (a
+    mark, a class, a colour are the page's business); membership is the
+    validator's. A status it allows and this page cannot draw is COUNTED and
+    printed rather than silently drawn as unknown.
+    """
+    p = ROOT / "tools" / "systems-inventory-check.py"
+    spec = importlib.util.spec_from_file_location("systems_inventory_check", p)
+    if spec is None or spec.loader is None:
+        raise ImportError("no loader for %s" % p)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+try:
+    INVCHECK = load_inventory_check()
+except Exception as exc:                                         # noqa: BLE001
+    if __name__ == "__main__":
+        sys.stderr.write("map: %s could not be imported (%s); refusing to "
+                         "keep a second copy of the status vocabulary\n"
+                         % (INVENTORY_VALIDATOR, exc))
+        sys.exit(4)
+    raise ImportError("%s could not be imported: %s"
+                      % (INVENTORY_VALIDATOR, exc))
 
 
 def load_queue_check():
@@ -2115,16 +2181,44 @@ HEAT_OTHER_NAME = "an area this page does not draw"
 # element made every tile model as two lines and the board read 2213 px when
 # the browser draws one line per tile. A tile is one text node, the border
 # carries the colour, and the glyph carries the shape.
-HEAT_STATES = ("exists", "partial", "absent")
-HEAT_MARK = {"exists": "●", "partial": "◐", "absent": "○"}
+#
+# THE MEMBERSHIP IS THE VALIDATOR'S AND THE DRAWING IS THIS PAGE'S. HEAT_STATES
+# is imported (see load_inventory_check above); the mark, the class and the
+# colour are here because they are how a page draws a word. The fourth state,
+# ruled-out, was ruled on 2026-09-15 and its mark continues the shape ladder
+# rather than starting a second vocabulary: filled, half, hollow, struck.
+# A RULED-OUT TILE IS NOT AN ABSENT TILE. Absent is not built yet; ruled-out is
+# decided against, and the board must not let a reader merge them, which is why
+# it gets its own mark, its own border style, its own colour and its own word
+# in the legend and its own term in every count on the face.
+HEAT_STATES = INVCHECK.STATUSES
+HEAT_MARK = {"exists": "●", "partial": "◐", "absent": "○", "ruled-out": "⊘"}
 HEAT_CLASS = {"exists": "h-exists", "partial": "h-partial",
-              "absent": "h-absent"}
+              "absent": "h-absent", "ruled-out": "h-ruledout"}
+# A STATE THE VALIDATOR ALLOWS AND THIS PAGE CANNOT DRAW, counted here and
+# printed on the done line rather than discovered as a board full of question
+# marks. The class name carries no hyphen after h- on purpose: the guard that
+# reads a tile's colour back off the rendered bytes matches h-[a-z]+, so a
+# class of the h-ruled-out shape would fall out of its count silently.
+HEAT_UNDRAWABLE = tuple(s for s in HEAT_STATES
+                        if s not in HEAT_MARK or s not in HEAT_CLASS)
+# THE STATES THIS PAGE CAN ACTUALLY DRAW, which is what the legend, the tally
+# and the guard that reads the legend back off the bytes all walk. It is
+# HEAT_STATES minus anything undrawable, so a validator that gains a fifth
+# value before this page gains its mark prints a number instead of crashing.
+HEAT_DRAWN_STATES = tuple(s for s in HEAT_STATES if s not in HEAT_UNDRAWABLE)
 HEAT_UNKNOWN_CLASS = "h-unknown"
 HEAT_UNKNOWN_MARK = "?"
+# THE WORD A TILE GETS WHEN ITS STATE IS IN NO LIST. It named the count of
+# states ("not-one-of-the-three") until a fourth was ruled, which is a
+# number baked into a label that nothing recomputed; the count now lives
+# only where it is derived.
+HEAT_STATE_OUTSIDE = "status-outside-the-fixed-set"
 # THE MARK A TILE OF EACH COLOUR MUST CARRY, inverted once here so the guard
 # can read a tile's shape back off the bytes and compare it with its colour.
 # One table, two readers: the builder and check_heatmap.
-HEAT_MARK_OF_CLASS = dict([(HEAT_CLASS[s], HEAT_MARK[s]) for s in HEAT_STATES]
+HEAT_MARK_OF_CLASS = dict([(HEAT_CLASS[s], HEAT_MARK[s]) for s in HEAT_STATES
+                           if s not in HEAT_UNDRAWABLE]
                           + [(HEAT_UNKNOWN_CLASS, HEAT_UNKNOWN_MARK)])
 # NO LENGTH CAP ON A TILE LABEL, AND THE CAP THAT WAS HERE IS RETIRED. Until
 # 2026-09-09 this was HEAT_NAME_CAP = 50 and cap_text clipped a longer name to
@@ -2293,6 +2387,13 @@ def heatmap(root):
                    shortUsed=0, labelLongest=0, labelLongestOn="",
                    labelChars=[], whereCounts={}, greenWhere={},
                    whereMissing=0,
+                   # THE POPULATION THAT OWES A `where`, counted directly as
+                   # the exists and partial tiles. It was written twice as
+                   # "tiles minus absent", which was the same number until a
+                   # fourth status existed and then silently counted every
+                   # ruled-out tile as one that owed a codebase. One count,
+                   # one name, three readers.
+                   owesWhere=0,
                    # ATTRIBUTION, COMPUTED AND NEVER TYPED INTO THE PAGE.
                    roleCounts={}, typedOldest=None, typedNewest=None,
                    untyped=0)
@@ -2341,6 +2442,8 @@ def heatmap(root):
         elif state in ("exists", "partial"):
             reading["whereMissing"] += 1
             eng = HEAT_WHERE_UNKNOWN
+        if state in ("exists", "partial"):
+            reading["owesWhere"] += 1
         if state == "exists":
             key = where or "none"
             reading["greenWhere"][key] = reading["greenWhere"].get(key, 0) + 1
@@ -2359,7 +2462,7 @@ def heatmap(root):
                 reading["typedOldest"] = on
             if not reading["typedNewest"] or on > reading["typedNewest"]:
                 reading["typedNewest"] = on
-        known = state in HEAT_STATES
+        known = state in HEAT_DRAWN_STATES
         if not known:
             reading["badStates"].append("%s/%s" % (re.sub(r"\s+", ".",
                                                           name[:20]),
@@ -2372,7 +2475,7 @@ def heatmap(root):
         reading["sentencesScoped"] += scoped
         tile = {"name": name, "label": label, "capped": False, "state": state,
                 "short": short,
-                "stateWord": state if known else "status-not-one-of-the-three",
+                "stateWord": state if known else HEAT_STATE_OUTSIDE,
                 "known": known,
                 "cls": HEAT_CLASS[state] if known else HEAT_UNKNOWN_CLASS,
                 "mark": HEAT_MARK[state] if known else HEAT_UNKNOWN_MARK,
@@ -2486,6 +2589,36 @@ def heat_series(vals):
     if not v:
         return NOTHING.replace(" ", "-") + "/n=0"
     return "%d..%d/med%d/n=%d" % (v[0], v[-1], v[len(v) // 2], len(v))
+
+
+def heat_judgement_words(reading):
+    """THE FIRST SCREEN'S OWN SENTENCE, RULED BY JAFAR ON 2026-09-15: "the
+    first screen says how many tiles carry my judgement, which today is zero."
+
+    WHY IT IS A SEPARATE SENTENCE AND NOT A REORDERING. The count he asked for
+    was already on the page inside the attribution sentence, and the fold model
+    put that sentence at 846 px against a fold of 844: his number was two
+    pixels below the first screen, which is the same as not being on it. So the
+    count comes up to the top of the board in its own line, and the attribution
+    sentence keeps saying it too, in its own register, one line further down.
+
+    THE TWO ARE ONE COUNT READ TWICE AND NOT TWO COUNTS. Both read roleCounts,
+    which heatmap() builds once while it walks the file, and the guard parses
+    BOTH back off the rendered bytes and compares them with what this run
+    counted, so a sentence that drifts from the other cannot ship quietly.
+
+    THE ZERO SHIPS ITS DENOMINATOR AND THE ZERO IS THE POINT. "0 of 91" and "0"
+    are different sentences: the first is an invitation and the second reads as
+    a clean result. A board with no tiles at all says the words nothing
+    measured instead, because a denominator of zero measures nothing.
+    """
+    total = reading.get("tiles", 0)
+    mine = (reading.get("roleCounts") or {}).get("jafar", 0)
+    if not total:
+        return ("How many tiles carry your judgement: %s, because no tile was "
+                "drawn on this board at all." % NOTHING)
+    return ("%d of %d tiles here carry your judgement. The other %d are the "
+            "studio's reading." % (mine, total, total - mine))
 
 
 def heat_typed_words(reading):
@@ -2625,7 +2758,7 @@ def heatmap_html(rows, r):
                    HEAT_END))
     legend = " ".join('<span class="hKey %s">%s %s</span>'
                       % (HEAT_CLASS[s], HEAT_MARK[s], esc(s))
-                      for s in HEAT_STATES)
+                      for s in HEAT_DRAWN_STATES)
     body = []
     for row in rows:
         n = len(row["tiles"])
@@ -2676,11 +2809,13 @@ def heatmap_html(rows, r):
         note.append("%d system(s) name an area this board does not draw"
                     % r["unplaced"])
     if r["badStates"]:
-        note.append("%d system(s) carry a state that is not one of the three"
-                    % len(r["badStates"]))
+        note.append("%d system(s) carry a state that is not one of the %d "
+                    "this board can colour"
+                    % (len(r["badStates"]), len(HEAT_DRAWN_STATES)))
     tail = (" " + ". ".join(note) + ".") if note else ""
     return ('%s<section class="heat" id="heatmap">'
             '<p class="hHead">THE BOARD</p>'
+            '<p class="hJudge">%s</p>'
             '<p class="hNow">%s</p>'
             '<p class="hTyped">%s</p>'
             '<p class="hSplit">%s</p>'
@@ -2689,6 +2824,10 @@ def heatmap_html(rows, r):
             'these come from, and who typed each one</a></p>'
             '%s</section>%s'
             % (HEAT_START,
+               # RULED 2026-09-15 AND IT SITS ABOVE EVERY OTHER SENTENCE HERE:
+               # how many tiles carry HIS judgement, computed from typedBy on
+               # every run and never typed into this page.
+               esc(heat_judgement_words(r)),
                esc("%d systems, %s." % (r["tiles"], heat_counts_words(r))),
                # THE TWO COMPUTED SENTENCES THE RULING PUTS HERE, both
                # computed from the file every run and neither typed into this
@@ -2788,7 +2927,9 @@ def heatmap_sheets(rows, r):
                r.get("labelLongest", 0), r.get("labelLongestOn") or NOTHING,
                ", ".join("%d %s" % (r.get("whereCounts", {}).get(k, 0), k)
                          for k in HEAT_WHERE_ORDER)
-               + (", %d absent and carrying none" % r["counts"].get("absent", 0))
+               + (", %d absent and %d ruled out, all of which carry none"
+                  % (r["counts"].get("absent", 0),
+                     r["counts"].get("ruled-out", 0)))
                + (", %d naming a codebase outside the fixed set"
                   % sum(n for k, n in (r.get("whereCounts") or {}).items()
                         if k not in HEAT_WHERE_ORDER)
@@ -3195,6 +3336,8 @@ a { color: #8fb8ff; }
 .hSplit { font-size: 13px; line-height: 1.45; color: #c9ced5;
   margin: 0 0 8px; }
 .hLegend { font-size: 12px; margin: 0 0 6px; color: #aab1b9; }
+.hJudge { font-size: 15px; line-height: 1.45; margin: 4px 0 2px;
+  color: #f2f4f6; font-weight: 700; }
 .hKey { display: inline-block; margin-right: 13px; letter-spacing: 0.04em; }
 .hNote { font-size: 12.5px; line-height: 1.5; color: #868d95; margin: 0 0 12px; }
 .hArea { font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase;
@@ -3212,6 +3355,8 @@ a { color: #8fb8ff; }
 .h-exists { border-left-color: #57c39a; border-left-style: solid; }
 .h-partial { border-left-color: #e0a640; border-left-style: dashed; }
 .h-absent { border-left-color: #8e97a1; border-left-style: dotted; }
+.h-ruledout { border-left-color: #6f6a86; border-left-style: double;
+  text-decoration: line-through; text-decoration-color: #6f6a86; }
 .h-unknown { border-left-color: #ff8f8f; border-left-style: double; }
 .hStale .hHead { color: #ff8f8f; }
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 7px;
@@ -3326,6 +3471,7 @@ h2 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
   .tile { background: #ffffff; border-color: #d9dee4; }
   .tile .tName { color: #12161a; } .tile .tWord { color: #4d545c; }
   .hHead { color: #5d646c; } .hNow { color: #12161a; }
+  .hJudge { color: #0f1216; }
   .hLegend { color: #3c434a; } .hNote { color: #5d646c; }
   .hTyped { color: #23282e; } .hSplit { color: #23282e; }
   .hTile[data-eng]::before { color: #5d646c; }
@@ -3335,6 +3481,7 @@ h2 { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
   .h-exists { border-left-color: #18815e; }
   .h-partial { border-left-color: #9a6a00; }
   .h-absent { border-left-color: #5d646c; }
+  .h-ruledout { border-left-color: #5b5370; text-decoration-color: #5b5370; }
   .h-unknown { border-left-color: #a32222; }
   .ladderHead { color: #0f1216; } .ladderNow { color: #23282e; }
   .rung { background: #ffffff; border-color: #d9dee4; color: #2b3138; }
@@ -3771,6 +3918,29 @@ MATERIAL_RULE = (
 )
 
 
+def audit_sheet(inner):
+    """THE AUDIT VIEW, ONE TAP DOWN, in the mechanism this page already has.
+
+    Ruled 2026-09-15: "the page is too long. The board and the next three are
+    the page; everything diagnostic goes behind a tap." This is not a second
+    disclosure mechanism and must never become one: it is the same CSS :target
+    sheet the areas, the tasks, the rungs and the board's provenance already
+    open into, so a tap still makes no request and needs no JavaScript.
+
+    WHAT IS IN HERE IS BYTE FOR BYTE WHAT WAS ON THE SCROLL. Nothing was
+    dropped to make the page shorter, which is the rule the 2026-09-07 rebuild
+    set when it moved every sha and verdict key down one level: a page gets
+    shorter by moving evidence, never by losing it. The close links top and
+    bottom are the convention every other sheet here uses, because a fixed
+    overlay with no way out is the unreadable-output fault of rule 12.
+    """
+    return ('<section class="sheet" id="audit"><div class="inner">'
+            '<a class="close" href="#map">back to the map</a>'
+            '%s'
+            '<a class="close" href="#map">back to the map</a>'
+            '</div></section>' % inner)
+
+
 def about_sheet(model, now, lines):
     pic = model["picture"]
     pic_line = ("shown, %d bytes encoded from a %d byte source at JPEG quality "
@@ -4138,11 +4308,11 @@ def build(root, now, out_path=None, served=None):
         "heatStates=%s heatStatesTyped=%d/%d "
         "heatStatesProven=0/%d-because-a-state-here-is-ruled-not-measured "
         "heatAreas=%d/%d-ruled heatEmptyAreas=%d/%d heatUnplaced=%d/%d "
-        "heatStatesNotOneOfThree=%d/%d heatShortLabels=%d/%d-tiles "
+        "heatStatesOutsideTheFixedSet=%d/%d-tiles heatShortLabels=%d/%d-tiles "
         "heatLabelsClipped=%d/%d-tiles-never-clipped-since-the-ruling "
         "heatLongestLabelChars=%d/on=%s "
         "heatLabelCharsSeries=%s/whole-run-min..max-med "
-        "heatTilesByWhere=%s heatWhereMissing=%d/%d-not-absent "
+        "heatTilesByWhere=%s heatWhereMissing=%d/%d-exists-or-partial "
         "heatGreenTilesByWhere=%s "
         "heatTypedBy=%s/untyped.%d/of.%d heatTypedOn=%s..%s-oldest..newest "
         "heatAreaLabelsAgreeWithTheRuling=%d/%d-in-the-file heatStampField=%s "
@@ -4163,8 +4333,7 @@ def build(root, now, out_path=None, served=None):
            where_tally_text(h.get("whereCounts") or {},
                             "census-of-where-over-the-%d-tile(s)-drawn"
                             % h["tiles"]),
-           h.get("whereMissing", 0),
-           h["tiles"] - h["counts"].get("absent", 0),
+           h.get("whereMissing", 0), h["owesWhere"],
            where_tally_text(h.get("greenWhere") or {},
                             "over-the-%d-green-tile(s)-only"
                             % h["counts"].get("exists", 0)),
@@ -4211,23 +4380,16 @@ def build(root, now, out_path=None, served=None):
                      + [visual_ladder_sheets(vrungs, r5)]
                      + [heatmap_sheets(heat_rows, r6)]
                      + [tools_sheet(rows, r1), about_sheet(model, now, detail)])
-    body = "\n".join([
-        # THE FIRST SCREEN, RULED BY JAFAR 2026-09-09 AND REBUILT THE SAME DAY:
-        # his ladder, THEN THE BOARD (five areas, every system a tile, three
-        # typed states), then the next three. Nothing else above the fold, and
-        # no diagnostic text: every path, key, sha and count is below or one
-        # tap down, and check_first_screen_clean reads the rendered bytes.
-        visual_ladder_html(vrungs, r5),
-        heat_html,
-        '<h2>the next three, in order</h2>',
-        '<section id="next-three">%s</section>' % next_html(items, r3),
-        # AND BELOW THE FOLD, THE AUDIT VIEW: everything that was the first
-        # screen before, in the order it was already checked in, plus the seven
-        # derived areas as tiles and the chain. Every word in here is derived
-        # from a committed file and the four guards that used to police the
-        # first screen police THIS half now, unchanged and unweakened.
-        '<a class="tap" href="#audit">the audit view, which is measured</a>',
-        '<section id="audit">',
+    # THE AUDIT VIEW, ASSEMBLED ON ITS OWN SO IT CAN BE MEASURED ON ITS OWN.
+    # RULED 2026-09-15, Jafar: "the page is too long. The board and the next
+    # three are the page; everything diagnostic goes behind a tap." So this
+    # block moves into the sheet mechanism the page already has, which is the
+    # same move the 2026-09-07 rebuild made with every sha and verdict key:
+    # THE EVIDENCE DID NOT GO AWAY, IT WENT ONE TAP DOWN. Nothing in here is
+    # deleted, reworded or reordered, every guard that policed it still reads
+    # the same bytes, and the height it used to add to the scroll is printed
+    # on the done line beside the height without it.
+    audit_inner = "\n".join([
         '<h2>the audit view: what this page measured, not what anybody typed'
         '</h2>',
         '<p class="legend">The board above is typed judgement. Everything '
@@ -4253,8 +4415,28 @@ def build(root, now, out_path=None, served=None):
         'file.</p>',
         LADDER_START, ladder_html(ladder, r4), LADDER_END,
         foot_html(r3),
-        '</section>',
+    ])
+    # THE HEIGHT IT USED TO COST THE SCROLL, MEASURED IN THE SAME RUN AND FROM
+    # THE SAME MODEL AS THE PAGE ITSELF. This is the ladder shape: one
+    # contributor toggled, both rungs read from one vantage. Comparing the
+    # shipped page with a remembered number from another run would be two
+    # photographs, so the inline height is computed here instead.
+    audit_px = block_height_px('<section id="audit">%s</section>' % audit_inner)
+    body = "\n".join([
+        # THE PAGE, RULED BY JAFAR 2026-09-15: "the board and the next three
+        # are the page; everything diagnostic goes behind a tap." Above it all,
+        # unchanged and out of scope, RULING 3's visual ladder. Nothing else is
+        # on the scroll: every path, key, sha and count is one tap down, and
+        # check_first_screen_clean reads the rendered bytes to prove it.
+        visual_ladder_html(vrungs, r5),
+        heat_html,
+        '<h2>the next three, in order</h2>',
+        '<section id="next-three">%s</section>' % next_html(items, r3),
+        # AND THE TAP ITSELF. The link is the page's; the audit view is a
+        # sheet, with the others, at the bottom of the bytes.
+        '<a class="tap" href="#audit">the audit view, which is measured</a>',
         sheets,
+        audit_sheet(audit_inner),
         "<!-- Generated by %s at %s UTC -->"
         % (TOOL, now.strftime("%Y-%m-%d %H:%M")),
         "<!-- mapDigest=%s mapFields=%s -->" % (dig, encode_fields(fields)),
@@ -4275,6 +4457,27 @@ def build(root, now, out_path=None, served=None):
     model["fold"]["landmarks"] = {
         land: block_span(model["fold"]["rows"], land)
         for land in ("ladder-visual", "heatmap", "next-three", "audit")}
+    # THE AUDIT VIEW IS DELIBERATELY NOT ON THE SCROLL SINCE 2026-09-15, so its
+    # landmark reads found=no and that is the ruling working rather than a
+    # block that went missing. The pair below is what says so with numbers: the
+    # scroll as it ships, and the scroll it would be with the same bytes
+    # inline. Both are this run, this model, this vantage.
+    judge_rows = [r for r in model["fold"]["rows"]
+                  if "carry your judgement" in (r.get("text") or "")]
+    model["judgement"] = {
+        "topPx": int(judge_rows[0]["top"]) if judge_rows else None,
+        "heightPx": int(judge_rows[0]["h"]) if judge_rows else 0,
+        "foldPx": FOLD_PX,
+        "onTheFirstScreen": bool(judge_rows
+                                 and judge_rows[0]["top"] < FOLD_PX),
+        "wholeLineAboveTheFold": bool(
+            judge_rows
+            and judge_rows[0]["top"] + judge_rows[0]["h"] <= FOLD_PX)}
+    model["audit"] = {
+        "behindATap": True, "inlineHeightPx": audit_px,
+        "scrollPx": int(model["fold"]["pageHeightPx"]),
+        "scrollPxIfInline": int(model["fold"]["pageHeightPx"]) + audit_px,
+        "onTheScroll": bool(model["fold"]["landmarks"]["audit"]["found"])}
     return page, model
 
 
@@ -4682,21 +4885,38 @@ DIAGNOSTIC_SHAPES = (
 # board still bites. The count excused is printed by the board's own guard, so
 # an exemption that starts covering more than two sentences shows up as a
 # number rather than as silence.
+# THE FOURTH SHAPE, RULED 2026-09-15: "the first screen says how many tiles
+# carry my judgement, which today is zero." A zero needs its denominator, so
+# the sentence is a counted fraction by construction and is excused BY SHAPE
+# like the three above it. The number of exemptions that FIRED is returned by
+# diagnostics_above_fold and printed by both guards that call it, because an
+# exemption list that quietly starts covering a fourth sentence is the thing
+# this comment used to claim was counted and was not.
 FOLD_ALLOWED = (re.compile(r"RUNG \d+ OF \d+"), re.compile(r"STEP \d+ OF \d+"),
                 re.compile(r"\d+ of \d+ typed by a director"),
                 re.compile(r"\d+ of \d+ ruled by you"),
-                re.compile(r"\d+ of \d+ typed by nobody"))
+                re.compile(r"\d+ of \d+ typed by nobody"),
+                re.compile(r"\d+ of \d+ tiles here carry your judgement"))
 
 
 def diagnostics_above_fold(text):
-    """(hits, tokensExamined) over the first screen's own words."""
+    """(hits, tokensExamined, exemptionsFired) over the first screen's words.
+
+    THE THIRD RETURN IS NEW AND IT MAKES AN OLD COMMENT TRUE. The block above
+    FOLD_ALLOWED has claimed since 2026-09-09 that "the count excused is
+    printed by the board's own guard"; nothing counted it and nothing printed
+    it. It is counted here now, over the shapes allowed, so a list that grows a
+    fourth member shows up as a number rather than as silence.
+    """
+    fired = 0
     for rx in FOLD_ALLOWED:
-        text = rx.sub(" ", text)
+        text, n = rx.subn(" ", text)
+        fired += n
     hits = []
     for name, rx in DIAGNOSTIC_SHAPES:
         for m in rx.findall(text):
             hits.append("%s/%s" % (name, str(m)[:28].replace(" ", "-")))
-    return hits, len(text.split())
+    return hits, len(text.split()), fired
 
 
 # ---------------------------------------------------------------------------
@@ -5014,7 +5234,7 @@ def check_heatmap(page, model):
     # colour reads the same board. A tile whose mark and class disagree is
     # counted, not just found.
     marks = sum(1 for cls, ch in pairs if ch == HEAT_MARK_OF_CLASS.get(cls))
-    words = sum(1 for s in HEAT_STATES
+    words = sum(1 for s in HEAT_DRAWN_STATES
                 if ("%s %s</span>" % (HEAT_MARK[s], s)) in slice_)
     areas_on_page = re.findall(r'<a class="hLink" href="#h-([^"]+)"', slice_)
     want_areas = [row["key"] for row in h["rows"]]
@@ -5024,7 +5244,7 @@ def check_heatmap(page, model):
     zero_said = sum(1 for row in h["rows"] if not row["tiles"]
                     and ("none of %d" % h["walked"]) in slice_)
     ok = (drawn == want and areas_on_page == want_areas
-          and words == len(HEAT_STATES) and marks == len(drawn)
+          and words == len(HEAT_DRAWN_STATES) and marks == len(drawn)
           and len(drawn) == h["tiles"] == sum(h["areaCounts"].values())
           and zero_said == h["emptyAreas"])
     return ("heatmap", ok,
@@ -5034,7 +5254,7 @@ def check_heatmap(page, model):
             "tapsToAnAreaSheet=%d/%d"
             % (len(drawn), h["walked"], "yes" if drawn == want else "no",
                len(areas_on_page), len(want_areas), marks, len(drawn),
-               words, len(HEAT_STATES), zero_said, h["emptyAreas"],
+               words, len(HEAT_DRAWN_STATES), zero_said, h["emptyAreas"],
                sum(1 for k in areas_on_page if ('id="h-%s"' % k) in page),
                len(areas_on_page)))
 
@@ -5070,17 +5290,17 @@ def check_heatmap_is_typed_not_measured(page, model):
     said_not_measured = "not measured by this page" in slice_
     ticks = slice_.count("✓")
     text = re.sub(r"<[^>]+>", " ", slice_)
-    hits, tokens = diagnostics_above_fold(text)
+    hits, tokens, excused = diagnostics_above_fold(text)
     ok = (said_typed and said_ruled and said_not_measured and ticks == 0
           and not hits)
     return ("heatmapIsTyped", ok,
             "typedWordOnBoard=%s ruledWordOnBoard=%s notMeasuredWordOnBoard=%s "
             "tickGlyphs=%d/0-allowed diagnosticShapesOnBoard=%d/%d-tokens-"
-            "examined%s"
+            "examined fractionsExcusedByShape=%d/%d-shapes-allowed%s"
             % ("yes" if said_typed else "MISSING",
                "yes" if said_ruled else "MISSING",
                "yes" if said_not_measured else "MISSING", ticks, len(hits),
-               tokens,
+               tokens, excused, len(FOLD_ALLOWED),
                "" if not hits else " (" + ",".join(hits[:3])
                + (" +%d-more-not-shown" % (len(hits) - 3) if len(hits) > 3
                   else "") + ")"))
@@ -5088,6 +5308,12 @@ def check_heatmap_is_typed_not_measured(page, model):
 
 TYPED_LINE_RX = re.compile(r"(\d+) of (\d+) typed by a director, (\d+) by a "
                            r"builder.*?(\d+) of (\d+) ruled by you")
+# THE JUDGEMENT LINE'S OWN SHAPE, READ BACK OFF THE BOARD. Ruled 2026-09-15.
+# The anchor is the sentence heat_judgement_words writes, and what is parsed is
+# the NUMBER and its DENOMINATOR, both compared with what this run counted out
+# of typedBy. A count Jafar reads first is the one most worth hardcoding, so it
+# is the one most worth reading back.
+JUDGE_LINE_RX = re.compile(r"(\d+) of (\d+) tiles here carry your judgement")
 GREEN_SPLIT_RX = re.compile(r"Of the (\d+) tiles typed exists")
 # THE PLAIN SENTENCE'S OWN SHAPE, READ BACK OFF THE BOARD'S RENDERED BYTES. The
 # anchor is HEAT_SPLIT_PLAIN itself and not a second copy of the wording, so a
@@ -5181,6 +5407,17 @@ def check_typed_attribution(page, model):
             roles.get("jafar", 0), h["tiles"])
     m = TYPED_LINE_RX.search(re.sub(r"<[^>]+>", " ", slice_))
     got = tuple(int(x) for x in m.groups()) if m else None
+    # THE JUDGEMENT LINE, THE SAME WAY AND FOR THE SAME REASON. It is the count
+    # Jafar ruled onto the first screen, so the guard reads the number AND the
+    # denominator back (a zero with no denominator is the failure rule 3b
+    # names) and requires it ABOVE the count sentence it summarises: a headline
+    # under its own detail is not a headline.
+    jm = JUDGE_LINE_RX.search(re.sub(r"<[^>]+>", " ", slice_))
+    judge_got = tuple(int(x) for x in jm.groups()) if jm else None
+    judge_want = (roles.get("jafar", 0), h["tiles"])
+    at_judge = slice_.find("tiles here carry your judgement")
+    at_typed = slice_.find("typed by a director")
+    judge_first = 0 <= at_judge < at_typed if at_typed >= 0 else at_judge >= 0
     # THE MARKS VERSION IS READ IN THE SHEET, THE PLAIN VERSION ON THE BOARD.
     # Both halves are checked because both were ruled: the count survives one
     # tap down beside the glossary that defines the marks, and the fact is back
@@ -5207,9 +5444,12 @@ def check_typed_attribution(page, model):
     at_tile = slice_.find(HEAT_FIRST_TILE)
     above_tiles = 0 <= at_split < at_tile if at_tile >= 0 else at_split >= 0
     ok = (got == want and green_on_page == green_want and on_board
-          and counts_ok and above_tiles
+          and counts_ok and above_tiles and judge_got == judge_want
+          and judge_first
           and (h.get("typedOldest") or "") in slice_)
     return ("typedAttribution", ok,
+            "judgementOnPage=%s/counted=%d judgementDenominatorOnPage=%s/"
+            "tilesDrawn=%d judgementAboveTheAttributionSentence=%s "
             "attributionSentenceFound=%s directorOnPage=%s/counted=%d "
             "builderOnPage=%s/counted=%d ruledByJafarOnPage=%s/counted=%d "
             "denominatorOnPage=%s/tilesDrawn=%d greenSplitDenominator=%s/"
@@ -5218,7 +5458,10 @@ def check_typed_attribution(page, model):
             "greenSplitTotalOnTheBoard=%s/greenTilesCounted=%d "
             "greenSplitAboveTheFirstTile=%s "
             "typedOnOldestOnPage=%s rolesCounted=%s"
-            % ("yes" if m else "MISSING",
+            % (judge_got[0] if judge_got else "MISSING", judge_want[0],
+               judge_got[1] if judge_got else "MISSING", judge_want[1],
+               "yes" if judge_first else "MISSING",
+               "yes" if m else "MISSING",
                got[0] if got else "MISSING", want[0],
                got[2] if got else "MISSING", want[2],
                got[3] if got else "MISSING", want[3],
@@ -5355,19 +5598,20 @@ def check_first_screen_clean(page, model):
     his sentences.
     """
     f = model["fold"]
-    hits, tokens = diagnostics_above_fold(f["textAbove"])
+    hits, tokens, excused = diagnostics_above_fold(f["textAbove"])
     ok = not hits and f["proseWords"] <= FOLD_PROSE_WORD_BOUND
     return ("firstScreenClean", ok,
             "diagnosticTokensAboveFold%d=%d/%d-tokens-examined "
             "proseWordsAboveFold%d=%d/%d-bound labelWordsAboveFold%d=%d "
             "wordsAboveFold%d=%d distinctNumbersAboveFold%d=%d "
             "blocksAboveFold=%d/%d modelledPageHeightPx=%d foldModel=%s "
-            "unknownClasses=%d%s"
+            "unknownClasses=%d fractionsExcusedByShape=%d/%d-shapes-allowed%s"
             % (FOLD_PX, len(hits), tokens, FOLD_PX, f["proseWords"],
                FOLD_PROSE_WORD_BOUND, FOLD_PX, f["labelWords"], FOLD_PX,
                f["words"], FOLD_PX, f["distinctNumbers"],
                f["blocksAboveFold"], f["blocksTotal"], f["pageHeightPx"],
-               f["model"], len(f["unknownClasses"]),
+               f["model"], len(f["unknownClasses"]), excused,
+               len(FOLD_ALLOWED),
                "" if not hits else " (" + ",".join(hits[:4])
                + (" +%d-more-not-shown" % (len(hits) - 4) if len(hits) > 4
                   else "") + ")"))
@@ -5525,10 +5769,25 @@ def check_links(page, model):
            if h not in allowed and h != "#audit"
            and not re.match(r"^#(a-|t-|v-|h-)", h)]
     md = [h for h in hrefs if h.endswith(".md")]
-    return ("links", not bad and not md,
-            "hrefsExamined=%d outsideTheAllowList=%d markdownLinks=%d%s"
-            % (len(hrefs), len(bad), len(md),
-               "" if not bad else " (" + ",".join(bad[:3]) + ")"))
+    # A TAP THAT LANDS NOWHERE, COUNTED. Added 2026-09-15 with the ruling that
+    # moved the audit view one tap down: from that day the whole derived half
+    # of this page is reachable ONLY through an anchor, and an anchor whose id
+    # is not in the bytes is a section that silently stopped existing. Every
+    # in-page href is resolved against the ids actually rendered, so the
+    # evidence-went-one-tap-down claim is measured rather than asserted. The
+    # sibling pages are not resolved here: they are other files.
+    ids = set(re.findall(r'\sid="([^"]+)"', page))
+    in_page = [h for h in hrefs if h.startswith("#")]
+    dead = sorted({h for h in in_page if h[1:] not in ids})
+    return ("links", not bad and not md and not dead,
+            "hrefsExamined=%d outsideTheAllowList=%d markdownLinks=%d "
+            "inPageAnchors=%d deadAnchors=%d/%d-resolved-against-%d-ids%s%s"
+            % (len(hrefs), len(bad), len(md), len(in_page), len(dead),
+               len(in_page), len(ids),
+               "" if not bad else " (" + ",".join(bad[:3]) + ")",
+               "" if not dead else " (dead:" + ",".join(dead[:3])
+               + (" +%d-more-not-shown" % (len(dead) - 3) if len(dead) > 3
+                  else "") + ")"))
 
 
 def check_denominators(page, model):
@@ -6566,8 +6825,8 @@ def selftest():
        % (eng_on_page, want_eng, hm["tiles"],
           "/".join("%s.%d" % (k, hm["whereCounts"].get(k, 0))
                    for k in HEAT_WHERE_ORDER)),
-       eng_on_page == want_eng and want_eng == hm["tiles"]
-       - hm["counts"].get("absent", 0) and hm["whereMissing"] == 0,
+       eng_on_page == want_eng and want_eng == hm["owesWhere"]
+       and hm["whereMissing"] == 0,
        (eng_on_page, want_eng, hm["whereCounts"], hm["whereMissing"]))
     # THE SENTENCE ITSELF IS THE FIXTURE, never a typed copy of it: a second
     # copy here would drift the first time the wording moved, which it did.
@@ -6833,12 +7092,14 @@ def selftest():
        and bread["areasDrawn"] == len(HEAT_AREAS) + 1
        and "a planted elsewhere" in bhtml
        and HEAT_OTHER_NAME in bhtml, bread)
-    ok("and a state that is not one of the three is counted, said on the face "
-       "and coloured as a fault rather than guessed (badStates=%s)"
-       % "/".join(bread["badStates"]),
+    ok("and a state outside the validator's fixed set is counted, said on "
+       "the face with the number of states this board CAN colour, and drawn "
+       "as a fault rather than guessed (badStates=%s, statesDrawable=%d)"
+       % ("/".join(bread["badStates"]), len(HEAT_DRAWN_STATES)),
        len(bread["badStates"]) == 1 and HEAT_UNKNOWN_CLASS in bhtml
-       and "not one of the three" in bhtml
-       and bread["counts"].get("status-not-one-of-the-three") == 1, bread)
+       and ("not one of the %d this board can colour"
+            % len(HEAT_DRAWN_STATES)) in bhtml
+       and bread["counts"].get(HEAT_STATE_OUTSIDE) == 1, bread)
     ok("and an area with no system prints its zero with what it was counted "
        "over, so an empty area cannot read as a finished one",
        ("none of %d" % bread["walked"]) in bhtml
@@ -6904,6 +7165,50 @@ def selftest():
         page.replace(HEAT_START, HEAT_START + "<p>all done ✓</p>", 1), model)
     ok("and bites on a tick glyph on the board, the same way both ladders "
        "refuse one", not c, s)
+    # THE JUDGEMENT LINE, RULED 2026-09-15. ACCEPTING FIRST, ON THE LIVE PAGE:
+    # the count Jafar reads first is derived from typedBy, carries its
+    # denominator, and sits above the sentence it summarises. Then the three
+    # ways it can go wrong, each planted on the live bytes.
+    n, c, s = check_typed_attribution(page, model)
+    ok("typedAttribution PASSES the live page, whose judgement line says %d of "
+       "%d and whose typedBy count says the same (%s)"
+       % (roles.get("jafar", 0), hm["tiles"], s), c, s)
+    # THE COMPARISON UNESCAPES FIRST, and that is not a detail: this rung
+    # failed on its first run because the sentence carries an apostrophe and
+    # the page ships it as &#x27;. A guard that reads raw bytes for a rendered
+    # string passes whenever the string contains punctuation, which is the
+    # silent-instrument failure in miniature.
+    board_words = html.unescape(re.sub(r"<[^>]+>", " ", heat_slice(page)))
+    ok("and the judgement line is DERIVED, not typed: the live sentence is "
+       "the one this run computes out of roleCounts ('%s')"
+       % heat_judgement_words(hm),
+       heat_judgement_words(hm) in board_words, heat_judgement_words(hm))
+    ok("and it is the whole line above the fold, which is what 'the first "
+       "screen says' means (judgementLineTopPx=%s/%d-fold heightPx=%d "
+       "ladderBottomPx=%s, a printed series with no bound set)"
+       % (model["judgement"]["topPx"], FOLD_PX,
+          model["judgement"]["heightPx"],
+          model["fold"]["landmarks"]["ladder-visual"].get("bottom")),
+       model["judgement"]["onTheFirstScreen"], model["judgement"])
+    live_judge = "%d of %d tiles here carry your judgement" % (
+        roles.get("jafar", 0), hm["tiles"])
+    n, c, s = check_typed_attribution(
+        page.replace(live_judge, "%d of %d tiles here carry your judgement"
+                     % (hm["tiles"], hm["tiles"]), 1), model)
+    ok("and BITES when the judgement line claims Jafar has ruled every tile, "
+       "which is the sentence with his name on it and therefore the one worth "
+       "reading back (%s)" % s, not c, s)
+    n, c, s = check_typed_attribution(
+        page.replace(live_judge, "%d tiles here carry your judgement"
+                     % roles.get("jafar", 0), 1), model)
+    ok("and bites when the judgement count drops its denominator, so a zero "
+       "cannot read as a clean result (%s)" % s, not c, s)
+    n, c, s = check_typed_attribution(
+        page.replace(heat_slice(page),
+                     heat_slice(page).replace(esc(heat_judgement_words(hm)),
+                                              "", 1), 1), model)
+    ok("and bites when the judgement line is deleted from the board "
+       "altogether, so silence is not a pass (%s)" % s, not c, s)
     # THE ATTRIBUTION GUARD MUST GO RED THREE WAYS, or a hardcoded sentence
     # survives it. Every planted page is the live bytes with one number or one
     # sentence changed.
@@ -7147,6 +7452,32 @@ def selftest():
     ok("and bites on a zero heard printed without its denominator", not c, s)
     n, c, s = check_links('<a href="production/NOW.md">x</a>', m2)
     ok("links bites on a repository markdown link", not c, s)
+    # THE AUDIT VIEW, ONE TAP DOWN, RULED 2026-09-15. ACCEPTING FIRST, ON THE
+    # LIVE PAGE: it is off the scroll, it is still WHOLE in the bytes, and the
+    # tap that reaches it lands on an id that exists. Then the refusal, which
+    # is the failure mode the move created: an anchor with nothing behind it.
+    n, c, s = check_links(page, model)
+    ok("links PASSES the live page and every in-page tap lands on an id that "
+       "is really there, which is what the audit view being one tap down now "
+       "rests on (%s)" % s, c, s)
+    ok("the audit view is OFF the scroll and WHOLE in the bytes: not on the "
+       "fold walk (found=%s), reachable at #audit, and still carrying its own "
+       "heading, the studio ladder and the derived area tiles "
+       "(scrollPx=%d, and %d px of it would be the audit view inline)"
+       % ("no" if not model["fold"]["landmarks"]["audit"]["found"] else "yes",
+          model["audit"]["scrollPx"], model["audit"]["inlineHeightPx"]),
+       not model["fold"]["landmarks"]["audit"]["found"]
+       and '<section class="sheet" id="audit">' in page
+       and 'href="#audit"' in page
+       and "the audit view: what this page measured" in page
+       and LADDER_START in page and LADDER_END in page
+       and model["audit"]["inlineHeightPx"] > 0,
+       model["audit"])
+    n, c, s = check_links(page.replace('id="audit"', 'id="audit-moved"', 1),
+                          model)
+    ok("and links BITES when the tap has nothing behind it, which is how a "
+       "section that moved one tap down would silently stop existing (%s)"
+       % s, not c, s)
     n, c, s = check_material_rule("<p>nothing</p>", m2)
     ok("materialRule bites when the rule, the digest and the fields are gone",
        not c, s)
@@ -7255,9 +7586,10 @@ def main():
                                         counts.get(s, 0), len(row["tiles"]))
                           for s in HEAT_STATES)
                  + ("" if len(counts) <= len(HEAT_STATES) else
-                    " notOneOfTheThree=%d/%d"
+                    " notOneOfTheFixedSet=%d/%d-of-%d-states-asked"
                     % (sum(n for w, n in counts.items()
-                           if w not in HEAT_STATES), len(row["tiles"])))))
+                           if w not in HEAT_STATES), len(row["tiles"]),
+                       len(HEAT_STATES)))))
     # PER-STEP NUMBERS ON THE STEP'S OWN LINE. A done step's evidence is a
     # per-sample reading (which file, which key, was it found), so it belongs
     # here and not on the done line, where a grep would read one step's pairs
@@ -7313,18 +7645,42 @@ def main():
                  span["top"] if span["found"] else NOTHING.replace(" ", "-"),
                  span["bottom"] if span["found"] else NOTHING.replace(" ", "-"),
                  span["heightPx"], span["blocks"], span["words"], FOLD_PX))
-    hits, tokens = diagnostics_above_fold(f["textAbove"])
+    # THE PAGE'S LENGTH AS A PAIRED READING, ruled 2026-09-15. One line
+    # carrying both moments: what the scroll IS with the audit view one tap
+    # down, and what the same bytes would make it if it were inline. A reader
+    # who greps one without the other has half a comparison. Both come from
+    # this run and this model, so they are one photograph and not two.
+    j = model["judgement"]
+    print("map: judgementLineTopPx=%s/%d-fold judgementLineHeightPx=%d "
+          "judgementTopIsAboveTheFold=%s judgementWholeLineAboveTheFold=%s "
+          "ladderBottomPx=%s (series, NO BOUND SET: RULING 3 puts the visual "
+          "ladder above everything and this pass does not move it)"
+          % (j["topPx"] if j["topPx"] is not None
+             else NOTHING.replace(" ", "-"), j["foldPx"], j["heightPx"],
+             "yes" if j["onTheFirstScreen"] else "no",
+             "yes" if j["wholeLineAboveTheFold"] else "no",
+             (model["fold"]["landmarks"]["ladder-visual"] or {}).get("bottom")
+             or NOTHING.replace(" ", "-")))
+    a = model["audit"]
+    print("map: pageScrollPx..IfAuditWereInline=%d..%d auditBehindATapPx=%d "
+          "auditOnTheScroll=%s auditReachableAt=#audit "
+          "nothingDeletedToShorten=true foldModel=%s"
+          % (a["scrollPx"], a["scrollPxIfInline"], a["inlineHeightPx"],
+             "yes" if a["onTheScroll"] else "no-it-is-one-tap-down",
+             FOLD_MODEL))
+    hits, tokens, excused = diagnostics_above_fold(f["textAbove"])
     print("map: proseWordsAboveFold%d=%d/%d-bound labelWordsAboveFold%d=%d "
           "wordsAboveFold%d=%d distinctNumbersAboveFold%d=%d "
           "diagnosticTokensAboveFold%d=%d/%d-tokens-examined "
           "blocksAboveFold=%d/%d modelledPageHeightPx=%d foldModel=%s "
-          "cssRulesIndexed=%d/%d unknownClassesAboveFold=%d"
+          "cssRulesIndexed=%d/%d unknownClassesAboveFold=%d "
+          "fractionsExcusedByShape=%d/%d-shapes-allowed"
           % (FOLD_PX, f["proseWords"], FOLD_PROSE_WORD_BOUND, FOLD_PX,
              f["labelWords"], FOLD_PX, f["words"], FOLD_PX,
              f["distinctNumbers"], FOLD_PX, len(hits), tokens,
              f["blocksAboveFold"], f["blocksTotal"], f["pageHeightPx"],
              f["model"], f["cssRulesIndexed"], f["cssRulesSeen"],
-             len(f["unknownClasses"])))
+             len(f["unknownClasses"]), excused, len(FOLD_ALLOWED)))
     # PAGE BYTES ARE THE BYTES THIS RUN WROTE, with the picture's share beside
     # them so no reader can take the page's weight for the shell's.
     print("map: %s pageBytesGenerated=%d/%d-cap ofWhichPictureB64=%d "

@@ -3,8 +3,8 @@
   "source": "The five areas and the typed-state contract are Jafar's ruling of 2026-09-09. The 27 player-facing names are his standing order of 2026-09-05, pinned in production/queue/098-the-player-facing-systems-inventory-as-data.md and unchanged here. The moat, world, content and studio entries are derived from this repository.",
   "ruling": "Jafar, 2026-09-09: the heatmap approved on 31 August, every system a tile in five areas coloured exists, partial or absent, is the map, and this file is its data. ON THIS PAGE, TYPED IS THE STANDARD: a director's overview is a human's judgement of state, ruled by him and updated by rulings; measured evidence sits one tap below and never on the first screen.",
   "validator": "tools/systems-inventory-check.py",
-  "typedOn": "2026-09-09",
-  "typedAgainst": "this checkout at commit 42af6769",
+  "typedOn": "2026-09-15",
+  "typedAgainst": "this checkout at commit ec66f99a",
   "areas": [
     {
       "key": "moat",
@@ -39,17 +39,17 @@
   ],
   "howToRead": [
     "area is the layer a system mostly lives in, and the five are Jafar's own, in his order: the moat (social memory, consequence persistence, information), the world (the simulation that runs whether you look or not), what the player touches (the surfaces and inputs a player meets in a session), content (authored material), the studio (its tools and its process). The keys are stable and the labels the page shows are in the areas block above.",
-    "status is a TYPED JUDGEMENT of where a system stands: exists, partial, absent. It is the studio's reading, ruled by Jafar, and it changes by a ruling rather than by a grep.",
+    "status is a TYPED JUDGEMENT of where a system stands: exists, partial, absent or ruled-out. It is the studio's reading, ruled by Jafar, and it changes by a ruling rather than by a grep. RULED-OUT IS NOT ABSENT, ruled by Jafar on 2026-09-15 and landed with D38: absent is not built yet and waits its turn; ruled-out is decided against, its note names the record that struck it and the validator refuses one that does not, and no work follows it. No tally sums the two.",
     "WHY THE OLD RULE EXISTED, because it was not stupid. Until 2026-09-09 this field said status is evidenced, never guessed, and every exists and partial had to carry a path that resolves. It existed so nobody could paint a tile green on a hope, which is the fault this project keeps repeating: 37 props and 14 decals were once counted as progress while the grep for the mesh token returned 0 in both street scripts. That risk is real and it does not go away.",
     "WHAT REPLACES THAT GUARD: a typed state is ATTRIBUTABLE. Every entry carries typedBy and typedOn, so a wrong tile is somebody's wrong judgement with a date on it rather than an anonymous colour. typedBy is role/name with role one of jafar, director, builder or producer; typedOn is the date that state was last typed. A director or Jafar retyping a state replaces both.",
-    "evidence stays on every entry that has any and is now PROVENANCE for the audit view one tap down, never the thing that licenses the state. It is still checked for shape where present: path or path#token, no whitespace, the path resolving in this checkout and the token found inside that file. It is not required. An entry typed absent carries none, so a tile cannot read absent while citing paths that say otherwise.",
+    "evidence stays on every entry that has any and is now PROVENANCE for the audit view one tap down, never the thing that licenses the state. It is still checked for shape where present: path or path#token, no whitespace, the path resolving in this checkout and the token found inside that file. It is not required. An entry typed absent or ruled-out carries none, so a tile cannot read as nowhere while citing paths that say otherwise.",
     "EVIDENCE RESOLUTION IS BRANCH-LOCAL and that is a known blind spot. The art deliveries live on the art/atlas-01 branch and cannot be cited from here, so an art system reads thinner in its evidence list than it is. The note says so where it bites.",
     "status is about where a system stands in the project, judged on the working codebase (ledger/, C#, where the tests and the headless sim run) plus the Unreal probe under ue-probe/. It does NOT claim a person has played it: D1 is the one open decision, no packaged game build is committed in this checkout, and the note and the blocker carry what stands between a system and live play.",
     "TYPE THE LOWER STATE WHEN UNSURE and say why in the note. A partial that is really absent is a lie Jafar discovers by playing, and the whole value of this page is that its colours can be trusted at a glance.",
     "note is the short plain-words reading. Where a state was typed DOWN from what the code alone would suggest, the note says what the lower reading is for.",
     "phase names a row in ledger-v2/respec/roadmap-v2.md and means the phase whose gate this system has to clear, not the phase it was first touched in.",
     "blocker is a queue number (queue-NNN), a decision id, or the word none. D1, the engine probe, is the ONLY decision record still open, and it is the commonest blocker here for the reason the first version gave: every system built in Unity waits on D1 before more is invested in it. D2 to D15 are all decided or approved, so a blocker naming one of those is stale, as is one naming a landed queue item, and the validator prints how many of each there are with their denominators.",
-    "where is WHICH CODEBASE THIS TILE'S COLOUR IS ABOUT, one of core-csharp, ue-probe, both or repo, REQUIRED when status is exists or partial and FORBIDDEN when it is absent, for the same reason evidence is: a system that is nowhere cannot be somewhere. core-csharp means the colour is a reading of the C# game under ledger/ and nothing on the Unreal side has been measured for this statement; ue-probe means the Unreal probe only; both is EARNED by a golden parity row or a printed key on each side and never by a ported header; repo means files and process and neither engine. A ported header with no measurement behind it is core-csharp, which is the same type-the-lower-state-when-unsure rule as above.",
+    "where is WHICH CODEBASE THIS TILE'S COLOUR IS ABOUT, one of core-csharp, ue-probe, both or repo, REQUIRED when status is exists or partial and FORBIDDEN when it is absent or ruled-out, for the same reason evidence is: a system that is nowhere cannot be somewhere. core-csharp means the colour is a reading of the C# game under ledger/ and nothing on the Unreal side has been measured for this statement; ue-probe means the Unreal probe only; both is EARNED by a golden parity row or a printed key on each side and never by a ported header; repo means files and process and neither engine. A ported header with no measurement behind it is core-csharp, which is the same type-the-lower-state-when-unsure rule as above.",
     "short is the optional display label a tile uses when the name does not fit. Ten entries carry one and the page shows the FULL NAME WRAPPED, never clipped, for the rest. No length threshold is set anywhere: no rendered width has been measured at 360px yet, so the trigger is a gap in the name-length distribution (48, 40, 34, 34, 30, 30, then 29 and down) and the pixel measurement is the next rung.",
     "class is the authoring cost, cheap-to-author, taste-bound or moat-adjacent. It is a judgement too and the same attribution covers it."
   ],
@@ -1492,6 +1492,274 @@
         "ledger/Assets/Scripts/Game/Audio.cs#OutsideBleed"
       ],
       "note": "Named by Jafar's ruling of 2026-09-10, which added the absent systems to this census. NOT ABSENT indoors. Game/RoomTone.cs holds a room-tone authority and Game/Audio.cs:335 gains it through Core.Acoustics.OutsideBleed, so an interior has a tone and a door muffles it. Typed partial because the tokens ambientBed, ambientLoop and BackgroundLoop return zero in 218 files: outdoors there is no bed."
+    },
+    {
+      "name": "blood on the player, with noticing, ageing and washing",
+      "short": "blood on the player",
+      "area": "moat",
+      "status": "exists",
+      "where": "core-csharp",
+      "class": "moat-adjacent",
+      "phase": "1",
+      "blocker": "none",
+      "typedBy": "jafar/D38",
+      "typedOn": "2026-09-15",
+      "evidence": [
+        "ledger/Assets/Scripts/Core/Traces.cs#Stain",
+        "ledger/Assets/Scripts/Core/Traces.cs#WashMinutes",
+        "ledger/Assets/Scripts/Game/ViolenceHost.cs#StainsNoticed",
+        "game-design/sim-shots/verdict.txt#blood[taken=",
+        "ledger-v2/respec/decision-register/D38-the-audits-findings-become-tiles.md"
+      ],
+      "note": "D38's first tile, and its citation re-verified on 2026-09-15: Core/Traces.cs carries class Stain with Noticeable, Age and Wash, and WashMinutes is 25, so water, privacy and twenty-five minutes are the price of getting clean. Game/ViolenceHost.cs puts the stain on the player, ages it on the game clock and counts who saw it. D38 expected this to be built and not measured; it is measured too, because the sim verdict emits the gate blood[taken noticed washed publicFailed atHome worstCost] every run."
+    },
+    {
+      "name": "object provenance across five origins",
+      "short": "object provenance",
+      "area": "moat",
+      "status": "exists",
+      "where": "core-csharp",
+      "class": "moat-adjacent",
+      "phase": "1",
+      "blocker": "none",
+      "typedBy": "jafar/D38",
+      "typedOn": "2026-09-15",
+      "evidence": [
+        "ledger/Assets/Scripts/Core/Traces.cs#Origin",
+        "ledger/Assets/Scripts/Game/EvidenceHost.cs#Traces.Acquire",
+        "game-design/sim-shots/verdict.txt#provenance[bought=",
+        "ledger-v2/respec/decision-register/D38-the-audits-findings-become-tiles.md"
+      ],
+      "note": "D38's second tile, re-verified on 2026-09-15: Core/Traces.cs enum Origin still carries exactly five values, Bought, Stolen, Taken, Inherited and Ordinary, and Game/EvidenceHost.cs reaches them through Acquire, Used, Dispose and ResidualRisk, so a weapon is a thing with a history rather than an inventory row. Built and MEASURED rather than built-not-measured: the verdict emits the provenance gate with a risk for each of the five origins."
+    },
+    {
+      "name": "disguise",
+      "area": "moat",
+      "status": "exists",
+      "where": "core-csharp",
+      "class": "moat-adjacent",
+      "phase": "1",
+      "blocker": "none",
+      "typedBy": "jafar/D38",
+      "typedOn": "2026-09-15",
+      "evidence": [
+        "ledger/Assets/Scripts/Core/Gossip.cs#disguise",
+        "ledger/Assets/Scripts/Game/GameController.cs#CoatWitnessConfidence",
+        "game-design/sim-shots/verdict.txt#disguise",
+        "ledger-v2/respec/decision-register/D38-the-audits-findings-become-tiles.md"
+      ],
+      "note": "D38's third tile, cited at Core/Gossip.cs:259 and that is still the exact line on 2026-09-15: the Witness method takes a confidence under 1.0 for a disguise, distance or darkness, so the witness saw something and cannot swear to who, and spread, heat and bribe prices inherit the doubt. GameController passes CoatWitnessConfidence 0.6 while you are coated. Built and MEASURED: the verdict carries a disguise gate and coatConf."
+    },
+    {
+      "name": "the four-rung concealment model",
+      "short": "the concealment model",
+      "area": "player-facing",
+      "status": "exists",
+      "where": "core-csharp",
+      "class": "moat-adjacent",
+      "phase": "1",
+      "blocker": "none",
+      "typedBy": "jafar/D38",
+      "typedOn": "2026-09-15",
+      "evidence": [
+        "ledger/Assets/Scripts/Core/Arsenal.cs#Concealment",
+        "ledger/Assets/Scripts/Core/Coat.cs#Arsenal.FriskCost",
+        "game-design/sim-shots/verdict.txt#carry[took=",
+        "ledger-v2/respec/decision-register/D38-the-audits-findings-become-tiles.md"
+      ],
+      "note": "D38's fourth tile, re-verified on 2026-09-15: Core/Arsenal.cs enum Concealment still carries exactly four values, Innocent, Concealable, Damning and Impossible, FriskCost prices all four and Fits reads two of them, and Core/Coat.cs reaches Get, Fits and FriskCost. Built and MEASURED: the verdict emits the carry gate with a frisk found, its cost and a refusal. Sits beside the inventory tile, which is the surface a player meets it on."
+    },
+    {
+      "name": "the lit window as an information carrier",
+      "short": "the lit window",
+      "area": "world",
+      "status": "partial",
+      "where": "core-csharp",
+      "class": "moat-adjacent",
+      "phase": "1",
+      "blocker": "none",
+      "typedBy": "jafar/D38",
+      "typedOn": "2026-09-15",
+      "evidence": [
+        "ledger/Assets/Scripts/Core/Occupancy.cs#WindowLit",
+        "ledger/Assets/Scripts/Game/WorldBuilder.cs#SetWindowsLit",
+        "game-design/sim-shots/verdict.txt#windowsLit=",
+        "ledger-v2/respec/decision-register/D38-the-audits-findings-become-tiles.md"
+      ],
+      "note": "D38's fifth tile, re-verified on 2026-09-15: Core/Occupancy.cs says in its own comment that a lit window means somebody is in and that this is the information pillar rather than decoration, and WorldBuilder.SetWindowsLit asks Occupancy.WindowLit and ShopLit for every window. The verdict emits windowsLit, so the half that exists is measured. Typed PARTIAL and not exists under the type-the-lower-state rule: the information runs one way today and nothing reads a window back on the player's behalf, which is the work D39 orders as the lit window looking back out."
+    },
+    {
+      "name": "appearance as a perception input",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's next batch, item 1, in his words: the identification ladder's bottom rung is clothing and nothing supplies it. Core/Observation.cs names the ladder against Perception.IdRung and no code reads what you are wearing into it. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order.",
+      "short": "appearance as an input"
+    },
+    {
+      "name": "the gap between the act and the discovery",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's next batch, item 2: HomicideBook.Pressure at Core/Homicide.cs sums the body count and a weight from the best believed confidence, and no term in it reads a time or a distance for a report to travel. That gap is the whole item. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order.",
+      "short": "act to discovery gap"
+    },
+    {
+      "name": "objects traceable to what you did",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's next batch, item 3, the other end of a model that already exists: object provenance runs backwards from the weapon to the seller today, and nothing runs forwards from what you did to the object that carries it. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order.",
+      "short": "objects traceable to you"
+    },
+    {
+      "name": "the lit window looking back out",
+      "area": "world",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's next batch, item 4, so the information runs both ways. The outward half is the tile named the lit window as an information carrier, which is built and measured; this is the half where a player reads a window and learns who is in. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order.",
+      "short": "the window looking back"
+    },
+    {
+      "name": "sleep as a way to cross a day",
+      "area": "moat",
+      "status": "absent",
+      "class": "cheap-to-author",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's next batch, item 5, so rumour travel is something the player plays against rather than something that happens to them. The player-facing half of the same verb is the tile named sleep and the day boundary; this one is the moat half and the two are not one system counted twice. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "enforcers",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 1, in his words: who sees through a disguise is who knows you. The disguise discount is flat today, so a stranger and your own brother read a coat the same way. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "show the working",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 2: the itemised reasons that are D33's surface, so the player sees their own position rather than being told a number. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "what you leave at a scene",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 3: prints and a heel mark and a dropped object. Core/Traces.cs marks the player and the weapon; the scene itself keeps nothing. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "frisking at a threshold",
+      "area": "world",
+      "status": "absent",
+      "class": "cheap-to-author",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 4, which finally exercises the concealment model at a door rather than in a staged gate. Sits beside the doors and who gets in tile. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "finding a person from a description",
+      "area": "moat",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 5: the identification ladder run backwards, so a description a witness gave is something the law or the player can search with. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order."
+    },
+    {
+      "name": "the town changing its behaviour after a crime",
+      "area": "world",
+      "status": "absent",
+      "class": "moat-adjacent",
+      "phase": "3",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "D39's following batch, item 6. The town has routines and heat today; what it does not have is a crowd that moves differently the morning after. Nothing here starts before the visual slice lands, which is D39's gate on all twenty and D28 and D31's order.",
+      "short": "the town after a crime"
+    },
+    {
+      "name": "blend-in behaviour",
+      "area": "player-facing",
+      "status": "ruled-out",
+      "class": "taste-bound",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "STRUCK BY D39, ruled out with the reason recorded: it is Hitman's disguise game rather than ours. Not absent and not waiting for a turn: decided against, so no queue item follows it. The phase is the one it would have sat in."
+    },
+    {
+      "name": "a universal greet or antagonise verb",
+      "area": "player-facing",
+      "status": "ruled-out",
+      "class": "taste-bound",
+      "phase": "2",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "STRUCK BY D39, ruled out with the reason recorded: it would make every stranger shallow in a game whose point is that interactions are not. Not absent and not waiting for a turn. The phase is the one it would have sat in.",
+      "short": "a greet or antagonise verb"
+    },
+    {
+      "name": "a codex entry on first contact",
+      "area": "player-facing",
+      "status": "ruled-out",
+      "class": "cheap-to-author",
+      "phase": "3",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "STRUCK BY D39, ruled out with the reason recorded: it is tutorial furniture. Not absent and not waiting for a turn. The phase is the one it would have sat in, beside the first hour and tutorial tile.",
+      "short": "a codex on first contact"
+    },
+    {
+      "name": "the phone box as a distraction verb",
+      "area": "player-facing",
+      "status": "ruled-out",
+      "class": "moat-adjacent",
+      "phase": "3",
+      "blocker": "none",
+      "typedBy": "jafar/D39",
+      "typedOn": "2026-09-15",
+      "note": "STRUCK BY D39, ruled out with the reason recorded: it costs a phone system, an NPC response and a reason to answer, for a small tactical gain. The phone boxes and answering machines tile is the world half and is untouched by this. The phase is the one it would have sat in.",
+      "short": "the phone box distraction"
     }
   ]
 }
