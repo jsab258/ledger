@@ -267,6 +267,14 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   the guard keeps every field and gains the sky plant; the read
   series retire (293) and the twins' derivation is filed (294)
   `game-design/decision-2026-09-14-ruling-the-reference-cell-is-the-grid-cell-at-the-judged-sky.md`
+- **2026-09-15** the grade lands as the legacy build's number and not
+  as a bar: queue 299 applied as parity, residual to Jafar labelled
+  partial (wetness owed, 186); concrete named a wetness list doing
+  brightness duty and filed as 302, split waits on the frame; no
+  retirement spent for a key, tally and readback land with 293; the
+  outbox brief register retires (291) on a record of zero catches
+  and two duplicates, the missed-day click is 303
+  `game-design/decision-2026-09-15-ruling-the-grade-lands-as-the-legacy-number-and-the-outbox-brief-was-never-a-net.md`
 
 ## Rulings that came off the card queue
 

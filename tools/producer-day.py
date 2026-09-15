@@ -96,6 +96,12 @@ def _load(path, name):
 
 
 _queue_check = _load(HERE / "queue-check.py", "queue_check")
+#: THE BRANCH HALF OF WHERE RECEIPTS LAND, queue 291 fix three. Imported
+#: rather than reimplemented: tools/inbox-read.py owns the ref, the fetch
+#: and the walk, and it is the file the resident already runs at the top of
+#: every turn. None when it cannot be loaded, which brief_receipts reports
+#: as an unread branch rather than swallowing.
+_inbox_read = _load(HERE / "inbox-read.py", "inbox_read")
 
 #: Where the gathered dossier goes. ONE FILE PER DAY, and it is an INPUT to a
 #: Producer turn rather than a page, a report or a tally: the Producer agent has
@@ -381,26 +387,93 @@ def tap_records(root):
     return out
 
 
-def brief_receipts(root):
-    """{path: content} for the receipts, or None when the folder is absent.
+def brief_receipts(root, fetch=True):
+    """(records, reading) for the receipts, from BOTH PLACES THEY LAND.
 
-    None RATHER THAN AN EMPTY DICT, so "no brief was ever sent" and "nothing is
-    known about what was sent" print differently. `brief.streak` turns the
-    second into the words nothing measured.
+    QUEUE 291, FIX THREE, AND THE BUG IS WORTH STATING IN FULL BECAUSE THE
+    COUNTER WAS NEVER WRONG ABOUT WHAT IT READ. This walked
+    production/outbound/ in the checkout and nothing else. The bot writes a
+    receipt on Jafar's PC and pushes it to the `pc-inbox` BRANCH;
+    `tools/inbox-read.py` is what later copies it into a checkout. On
+    2026-09-14 brief-2026-09-14.receipt.txt was on origin/pc-inbox from
+    19:09Z and not on main, so this printed briefsSentEver=2 while three
+    briefs had in fact been delivered, and the queue item opened on that
+    number. THE COUNTER WAS READING A BRANCH THAT IS NOT WHERE RECEIPTS LAND.
+
+    SO IT READS BOTH AND UNIONS THEM BY PATH. The branch half is
+    `tools/inbox-read.py:outbound_from_branch` CALLED, not copied: that file
+    owns the ref, the fetch and the ls-tree, and a second implementation here
+    is the site nobody fixes.
+
+    AND WHEN THE BRANCH CANNOT BE REACHED IT RETURNS None, which
+    `brief.streak` prints as the words nothing measured. NOT the checkout's
+    own number: a fresh clone or a machine with no network can see only half
+    of where receipts land, and half of a total is not a smaller total, it is
+    an unknown one. The checkout's count is still carried in `reading` and
+    printed in words, so nothing measured is not the same as nothing known.
+
+    `reading` is the dict `receipts_source_line` renders: worktree count,
+    branch count, union count, the fetch state and the ref.
     """
-    d = os.path.join(str(root), *inbox.OUTBOUND_DIR.split("/"))
-    if not os.path.isdir(d):
-        return None
-    out = {}
-    for n in sorted(os.listdir(d)):
-        if not inbox.OUTBOUND_RE.match(n):
-            continue
-        try:
-            with open(os.path.join(d, n), "r", encoding="utf-8") as fh:
-                out["%s/%s" % (inbox.OUTBOUND_DIR, n)] = fh.read()
-        except OSError:
-            continue
-    return out
+    reading = {"worktree": None, "branch": None, "union": None,
+               "fetch": "skipped", "detail": "", "ref": "",
+               "branchState": "not-read"}
+    tree = outbox.outbound_records(str(root))
+    reading["worktree"] = None if tree is None else len(tree)
+    if _inbox_read is None:
+        reading["branchState"] = "no-reader"
+        reading["detail"] = "tools/inbox-read.py could not be imported"
+        return None, reading
+    reading["ref"] = _inbox_read.TRACKING
+    if fetch:
+        reading["fetch"], reading["detail"] = \
+            _inbox_read.fetch_branch(str(root))
+    if not _inbox_read.ref_exists(str(root)):
+        # NO COPY OF THE BRANCH AT ALL: a fresh clone, or a fetch that failed
+        # on a checkout that had never fetched it. Either way the half of the
+        # answer that lives there was not read, and saying so is the whole
+        # point of this branch of the function.
+        reading["branchState"] = "unreachable"
+        return None, reading
+    on_branch = _inbox_read.outbound_from_branch(str(root))
+    reading["branch"] = len(on_branch)
+    reading["branchState"] = ("ok" if reading["fetch"] == "ok"
+                              else "last-fetched-copy")
+    merged = dict(on_branch)
+    merged.update(tree or {})
+    reading["union"] = len(merged)
+    if tree is None and not merged:
+        return None, reading
+    return merged, reading
+
+
+def receipts_source_line(reading):
+    """One line naming WHERE the receipts were read from, with both counts.
+
+    A CUMULATIVE COUNT OF RECORDS, not of briefs: how many outbound records
+    each place holds. The brief-day count made from them is briefsSentEver on
+    the streak line, and the two are deliberately different numbers with
+    different names.
+    """
+    tree = ("nothing-measured" if reading["worktree"] is None
+            else "%d" % reading["worktree"])
+    if reading["union"] is not None:
+        return ("  RECEIPTS WERE READ FROM BOTH PLACES THEY LAND: %s record(s) "
+                "in this checkout, %d on %s (fetch=%s), %d in the union, and "
+                "the union is what briefsSentEver counts."
+                % (tree, reading["branch"], reading["ref"], reading["fetch"],
+                   reading["union"]))
+    return ("  RECEIPTS COULD NOT BE READ FROM BOTH PLACES THEY LAND: %s "
+            "record(s) in this checkout, and %s could not be read "
+            "(state=%s fetch=%s%s). briefsSentEver is therefore nothing "
+            "measured rather than a number that looks like an answer: a "
+            "receipt lands on the pc-inbox branch first and reaches a "
+            "checkout later. Run `python3 tools/inbox-read.py` from a machine "
+            "with network."
+            % (tree, reading["ref"] or "the pc-inbox branch",
+               reading["branchState"], reading["fetch"],
+               (" detail=" + reading["detail"].replace(" ", "_")[:80])
+               if reading["detail"] else ""))
 
 
 def his_messages_since(root, since_epoch, cap=INBOX_MESSAGES):
@@ -424,7 +497,7 @@ def his_messages_since(root, since_epoch, cap=INBOX_MESSAGES):
 def channel_state(root, day):
     """Everything about the channel itself, in one dict."""
     taps = brief.taps_from(tap_records(root))
-    receipts = brief_receipts(root)
+    receipts, reading = brief_receipts(root)
     sent_days = (None if receipts is None
                  else brief.sent_days_from_receipts(receipts))
     s = brief.streak(taps, sent_days)
@@ -440,7 +513,9 @@ def channel_state(root, day):
     msgs, msgs_total = his_messages_since(root, since_epoch)
     return {"streak": s, "taps": taps, "lastBriefDay": last_day,
             "lastBriefPath": last_path, "messages": msgs,
-            "messagesTotal": msgs_total, "day": day}
+            "messagesTotal": msgs_total, "day": day,
+            "receiptsReading": reading, "sentDays": sent_days,
+            "briefsOnDisk": brief.briefs_on_disk(str(root))}
 
 
 def channel_lines(st):
@@ -448,7 +523,14 @@ def channel_lines(st):
     lines = ["THE CHANNEL, AND THIS IS THE ONLY MEASURE OF IT (ruled "
              "2026-09-09):",
              "  %s" % brief.streak_words(s),
-             "  %s" % brief.streak_line(s)]
+             "  %s" % brief.streak_line(s),
+             receipts_source_line(st["receiptsReading"]),
+             # QUEUE 291 FIX TWO, AND THIS IS THE PLACE A PERSON SEES IT. The
+             # sender says it too, into production/pc-ops/brief-send.txt,
+             # which nothing in this repository reads and nobody opens. THIS
+             # file is read by the Producer turn that writes the next brief,
+             # every day, by the runbook (production/watchdog-prompt.md).
+             "  %s" % brief.unsent_line(st["briefsOnDisk"], st["sentDays"])]
     if not s["tapsEver"]:
         lines.append("  NO TAP HAS EVER BEEN RECORDED. %d of %d "
                      "consecutive, over %s brief(s) sent down the daily path "
@@ -580,7 +662,7 @@ def run(root, day, write=True, say=print):
 # --------------------------------------------------------------------------
 def _selftest():
     import tempfile
-    passed, failed, bad = 0, 0, []
+    passed, failed, bad, skipped = 0, 0, [], []
 
     def check(name, cond, detail=""):
         nonlocal passed, failed
@@ -626,6 +708,68 @@ def _selftest():
           and s["readableRun"] <= s["daysTapped"],
           brief.streak_line(s))
 
+    # ---- ACCEPTING: BOTH PLACES A RECEIPT LANDS ARE READ AND UNIONED -----
+    # QUEUE 291 FIX THREE, ON THE LIVE TREE, WHICH IS THE ACCEPTING FIXTURE.
+    # The union is the number briefsSentEver prints, and the line names both
+    # halves so a reader can see which one moved.
+    rd = res["channel"]["receiptsReading"]
+    src = receipts_source_line(rd)
+    if rd["union"] is not None:
+        check("accept/live/receipts-are-read-from-the-checkout-AND-the-branch",
+              rd["worktree"] is not None and rd["branch"] is not None
+              and rd["union"] >= max(rd["worktree"], rd["branch"])
+              and "BOTH PLACES" in src
+              and ("briefsSentEver=%d" % s["briefsSentEver"])
+              in brief.streak_line(s), src)
+    else:
+        # NOT A PASS AND NOT A FAILURE. No network here means the branch half
+        # was not read, and the guard for THAT is the planted case below.
+        skipped.append("accept/live/receipts-from-the-checkout-AND-the-branch")
+        print("  NOT MEASURED accept/live/receipts-from-the-checkout-AND-the-"
+              "branch: %s" % src.strip())
+    check("accept/the-source-line-names-the-ref-it-read-and-both-counts",
+          rd["ref"] == _inbox_read.TRACKING and "pc-inbox" in rd["ref"]
+          and str(rd["worktree"]) in src, (rd["ref"], src))
+    print("      says: receiptsInCheckout=%s receiptsOnBranch=%s "
+          "receiptsUnion=%s fetch=%s briefsSentEver=%s briefsWritten=%d"
+          % (rd["worktree"], rd["branch"], rd["union"], rd["fetch"],
+             s["briefsSentEver"] if s["briefsSentKnown"] else "nothing-measured",
+             len(res["channel"]["briefsOnDisk"])))
+
+    # ---- REJECTING: A TREE WHOSE BRANCH HALF CANNOT BE READ ---------------
+    # THE EXACT SHAPE OF THE 2026-09-14 FAULT, PLANTED: receipts ARE in the
+    # checkout, and the branch they also land on cannot be reached (this
+    # fixture is not a git checkout at all). The old counter printed the
+    # checkout's number and it looked like an answer. It must now print the
+    # words, and the checkout's count must survive in the line beside them.
+    half = tempfile.mkdtemp(prefix="producer-day-halfblind-")
+    rec_dir = os.path.join(half, *inbox.OUTBOUND_DIR.split("/"))
+    os.makedirs(rec_dir, exist_ok=True)
+    with open(os.path.join(rec_dir, "brief-2026-09-14.receipt.txt"), "w",
+              encoding="utf-8") as fh:
+        fh.write("receipt: sent\nfile: production/briefs/2026-09-14.md\n"
+                 "kind: brief\nmessageId: 95\nsent: 2026-09-14T19:09:03Z\n")
+    h_recs, h_read = brief_receipts(half, fetch=False)
+    h_line = receipts_source_line(h_read)
+    check("reject/a-branch-that-cannot-be-read-is-not-the-checkouts-number",
+          h_recs is None and h_read["union"] is None
+          and h_read["worktree"] == 1
+          and h_read["branchState"] == "unreachable"
+          and "COULD NOT BE READ" in h_line and "1 record(s)" in h_line,
+          h_line)
+    h_st = brief.streak(brief.taps_from({}), None)
+    check("reject/and-briefsSentEver-prints-the-words-nothing-measured",
+          "briefsSentEver=nothing-measured" in brief.streak_line(h_st)
+          and h_st["briefsSentKnown"] is False,
+          brief.streak_line(h_st))
+    # AND THE SAME TREE, READ THE OLD WAY, IS THE NUMBER THAT MISLED: the
+    # rung that proves this guard can tell the two apart rather than always
+    # saying nothing measured.
+    check("accept/the-checkout-half-on-its-own-is-still-a-real-reading",
+          len(brief.sent_days_from_receipts(
+              outbox.outbound_records(half))) == 1,
+          "1 brief day in the checkout half")
+
     # ---- REJECTING: a tree with none of the five sources -----------------
     tmp = tempfile.mkdtemp(prefix="producer-day-selftest-")
     said2 = []
@@ -664,9 +808,14 @@ def _selftest():
           not any(rel == "production/no-such-source.md" for _n, rel in SOURCES)
           and len(SOURCES) == 5, str([r for _n, r in SOURCES]))
 
-    print("producer-day selftest: %d passed, %d failed, %d checks run%s"
-          % (passed, failed, passed + failed,
-             "" if not bad else " FAILED: " + ", ".join(bad[:4])))
+    # EVERY ZERO BESIDE ITS DENOMINATOR, INCLUDING THE ONE THAT DID NOT RUN:
+    # a live row this container could not offer is NOT a pass.
+    print("producer-day selftest: %d passed, %d failed, %d checks run, "
+          "notMeasured=%d%s%s"
+          % (passed, failed, passed + failed, len(skipped),
+             "" if not bad else " FAILED: " + ", ".join(bad[:4]),
+             "" if not skipped else
+             " NOT MEASURED: " + ", ".join(skipped[:4])))
     return 0 if not failed else 3
 
 

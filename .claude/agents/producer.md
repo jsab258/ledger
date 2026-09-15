@@ -133,7 +133,15 @@ REGISTER because the gate must not guess which rules apply:
 
     production/outbox/<YYYY-MM-DD>-<slug>.unprompted.md
     production/outbox/<YYYY-MM-DD>-<slug>.answer.md
-    production/outbox/<YYYY-MM-DD>-<slug>.brief.md
+
+THE BRIEF REGISTER IS RETIRED FROM THE OUTBOX, 2026-09-15, queue 291.
+`<YYYY-MM-DD>-<slug>.brief.md` there is REFUSED on send and the refusal names
+this line. The outbox sweep hands its sender no keyboard, so a brief that goes
+that way arrives without the readable/unreadable pair, which is the only thing
+this channel measures; on 2026-09-14 it arrived as a SECOND copy, messageId 93,
+of a message that had already gone with its buttons as messageId 95. The day's
+message goes to `production/briefs/<YYYY-MM-DD>.md` and `--send-brief` sends it
+once. A push that is not the day's message is `.unprompted.md`.
 
 THE DATE IN THE NAME IS THE CLOCK. `producer-check --gate` measures every
 deadline in a file from midnight of the date in its own name, so a file is

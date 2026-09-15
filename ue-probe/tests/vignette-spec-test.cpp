@@ -2469,6 +2469,241 @@ int main(int argc, char** argv)
 		      "a decal blend is not a library surface and stops claiming to be one");
 		Check(BlendLine.find("card.png") == std::string::npos,
 		      "and it names no candidate filename, because card.png can never exist");
+
+		// ---- THE ALBEDO GRADE, QUEUE 299 -----------------------------
+		//
+		// WHAT THIS PROVES AND WHAT IT CANNOT. It proves the ARITHMETIC and
+		// the STRINGS. It cannot prove a frame: no Unreal module compiles in
+		// this container and nothing here renders a pixel, so whether the
+		// street comes out looking right is the landed run's business and
+		// this suite must never be quoted as though it had seen one.
+		//
+		// ACCEPTING CASE FIRST, which is the half that goes unrun. The
+		// accepting case here is the one that must NOT change anything: a
+		// material instance that never sets AlbedoGrade renders exactly as
+		// it does today, and the default that makes that true is white.
+		{
+			// 1. THE DEFAULT. A Grade nobody filled in is white in both
+			// spaces and says it decided nothing. If this ever became any
+			// other colour, every control quad and every decal card in the
+			// frame would darken without one line of code asking them to.
+			LedgerSurface::Grade Fresh;
+			Check(Fresh.R == 1.0 && Fresh.G == 1.0 && Fresh.B == 1.0,
+			      "a grade nobody set is WHITE, so an instance that never sets "
+			      "the parameter renders exactly as it did before this existed");
+			Check(Fresh.GammaR == 1.0 && Fresh.GammaG == 1.0
+			      && Fresh.GammaB == 1.0 && !Fresh.bGround,
+			      "and its gamma half is white too, so neither space can be the "
+			      "one that quietly darkens");
+			const LedgerSurface::Texel FreshT = LedgerSurface::GradeTexel(Fresh);
+			Check(FreshT.R == 255 && FreshT.G == 255 && FreshT.B == 255,
+			      "white as a texel is 255.255.255, which is the multiply having "
+			      "no effect on any albedo byte");
+
+			// 2. A SURFACE THAT IS NOT GROUND TAKES TextureGrade ONLY.
+			// HAND-COMPUTED, WRITTEN DOWN, so this check is not the
+			// implementation restated back to itself:
+			//   ((0.74 + 0.055) / 1.055) ^ 2.4
+			// = (0.75355450) ^ 2.4
+			// = 0.50707851, and 0.74 as a byte is 0.74 x 255 + 0.5 = 189.
+			const LedgerSurface::Grade Wall =
+				LedgerSurface::AlbedoGradeFor("brick_red", true);
+			Check(!Wall.bGround, "brick_red is not a ground surface");
+			Check(Wall.GammaR == 0.74 && Wall.GammaG == 0.76
+			      && Wall.GammaB == 0.80,
+			      "a non-ground pack surface takes TextureGrade and nothing else, "
+			      "in gamma, exactly as AssetLibrary.BaseColour does for it");
+			Check(std::fabs(Wall.R - (0.50707851)) < 1e-7
+			      && std::fabs(Wall.G - (0.53823552)) < 1e-7
+			      && std::fabs(Wall.B - (0.60382734)) < 1e-7,
+			      "and the linear triple is the hand-computed sRGB transfer of "
+			      "0.74/0.76/0.80, because an Unreal vector parameter is read AS "
+			      "linear and is never converted for us");
+			const LedgerSurface::Texel WallT = LedgerSurface::GradeTexel(Wall);
+			Check(WallT.R == 189 && WallT.G == 194 && WallT.B == 204,
+			      "a white texel under the non-ground grade comes out 189.194.204, "
+			      "which is 0.74/0.76/0.80 x 255 rounded and checkable on paper");
+
+			// 3. A SURFACE THAT IS GROUND TAKES TextureGrade TIMES
+			// GroundGrade, MULTIPLIED IN GAMMA AND CONVERTED ONCE, which is
+			// ProceduralAlbedoTexel's own order and not a second opinion.
+			// HAND-COMPUTED: 0.74 x 0.55 = 0.407, and
+			//   ((0.407 + 0.055) / 1.055) ^ 2.4
+			// = (0.43791469) ^ 2.4
+			// = 0.13782717. As a byte, 0.407 x 255 + 0.5 = 104.285 -> 104.
+			const LedgerSurface::Grade Road =
+				LedgerSurface::AlbedoGradeFor("kerb", true);
+			Check(Road.bGround, "kerb IS a ground surface");
+			Check(std::fabs(Road.GammaR - (0.407)) < 1e-12
+			      && std::fabs(Road.GammaG - (0.418)) < 1e-12
+			      && std::fabs(Road.GammaB - (0.440)) < 1e-12,
+			      "a ground pack surface folds GroundGrade in IN GAMMA, 0.74 x "
+			      "0.55 = 0.407, which is the order AssetLibrary.BaseColour uses");
+			Check(std::fabs(Road.R - (0.13782717)) < 1e-7
+			      && std::fabs(Road.G - (0.14583469)) < 1e-7
+			      && std::fabs(Road.B - (0.16264719)) < 1e-7,
+			      "and the conversion to linear happens ONCE, on the product, so "
+			      "the linear red is the hand-computed 0.13782717 and not "
+			      "0.50707851 x 0.55");
+			const LedgerSurface::Texel RoadT = LedgerSurface::GradeTexel(Road);
+			Check(RoadT.R == 104 && RoadT.G == 107 && RoadT.B == 112,
+			      "a white texel under the ground grade comes out 104.107.112");
+			// AND THE ORDER IS LOAD-BEARING, so the wrong order is asserted
+			// to be a DIFFERENT number rather than left as a claim. Linear
+			// first would give 0.50707851 x 0.55 = 0.27889318, which is
+			// twice the right answer: a road at double brightness.
+			Check(std::fabs(Road.R - (0.50707851 * 0.55)) > 1e-4,
+			      "converting first and multiplying second would be a different "
+			      "colour, not a rounding difference, and it is not what this does");
+
+			// 4. EVERY MEMBER OF THE GROUND FAMILY, ONE AT A TIME. A rule
+			// that happens to be right for kerb and wrong for concrete
+			// passes any single-case test and mis-grades 150 of the
+			// street's 610 pieces, so the four are named separately and a
+			// non-member is asserted beside them.
+			const char* Ground[4] = {"asphalt", "sidewalk", "kerb", "concrete"};
+			for (int I = 0; I < 4; ++I)
+			{
+				const LedgerSurface::Grade G =
+					LedgerSurface::AlbedoGradeFor(Ground[I], true);
+				Check(LedgerSurface::IsGroundSurface(Ground[I]) && G.bGround
+				      && std::fabs(G.GammaR - (0.407)) < 1e-12,
+				      (std::string("the ground surface ") + Ground[I]
+				       + " takes TextureGrade x GroundGrade").c_str());
+			}
+			const char* NotGround[5] = {"metal", "wood", "window", "plaster",
+			                            "glass"};
+			for (int I = 0; I < 5; ++I)
+			{
+				const LedgerSurface::Grade G =
+					LedgerSurface::AlbedoGradeFor(NotGround[I], true);
+				Check(!LedgerSurface::IsGroundSurface(NotGround[I]) && !G.bGround
+				      && G.GammaR == 0.74,
+				      (std::string("the non-ground surface ") + NotGround[I]
+				       + " takes TextureGrade only").c_str());
+			}
+
+			// 5. THE ONE WAY THIS GOES WRONG IS TWICE. A procedural surface's
+			// texel ALREADY carries both grades, so its parameter must be
+			// white or the street is graded squared: interior would render
+			// at 0.74 x 0.74 = 0.5476 of its tint.
+			const LedgerSurface::Grade Proc =
+				LedgerSurface::AlbedoGradeFor("interior", true);
+			Check(Proc.R == 1.0 && Proc.G == 1.0 && Proc.B == 1.0,
+			      "a procedural surface gets WHITE, because ProceduralAlbedoTexel "
+			      "already baked both grades into the flat texel it built");
+			Check(std::string(Proc.Why).find("already-baked") != std::string::npos,
+			      "and it says WHY it is white, so white-by-rule and "
+			      "white-by-accident are different readings on the line");
+			const LedgerSurface::Grade Paint =
+				LedgerSurface::AlbedoGradeFor("paint_yellow", true);
+			Check(Paint.R == 1.0 && Paint.G == 1.0 && Paint.B == 1.0,
+			      "and so does paint_yellow, the other procedural surface");
+			// THE GUARD RUN WHERE THE CONDITION IT ASSERTS CAN HAPPEN: the
+			// tint texel is unchanged by this whole change, so the number
+			// the suite already pinned above still holds.
+			const LedgerSurface::Texel Unchanged =
+				LedgerSurface::ProceduralAlbedoTexel("interior");
+			Check(Unchanged.R == 31 && Unchanged.G == 22 && Unchanged.B == 14,
+			      "and the procedural texel itself did not move, so nothing was "
+			      "double-graded and nothing was un-graded");
+
+			// 6. A DECAL BLEND GETS WHITE, because StreetVignetteHost.
+			// EmitDecal never assigns mat.color: Unity's decals are
+			// ungraded and a graded one here would OPEN a difference.
+			for (int I = 0; I < 2; ++I)
+			{
+				const char* Blend2 = (I == 0) ? "card" : "multiply";
+				const LedgerSurface::Grade G =
+					LedgerSurface::AlbedoGradeFor(Blend2, true);
+				Check(G.R == 1.0 && G.G == 1.0 && G.B == 1.0,
+				      (std::string("the decal blend ") + Blend2
+				       + " gets white, because Unity sets no colour on a decal").c_str());
+			}
+
+			// 7. AN UNTEXTURED SURFACE GETS WHITE, because Unity's
+			// BaseColour takes its other branch there and uses
+			// SurfaceSpec.Tint, a table this side has two rows of. Same
+			// surface, other argument, so the argument is proven live.
+			const LedgerSurface::Grade Bare =
+				LedgerSurface::AlbedoGradeFor("kerb", false);
+			Check(Bare.R == 1.0 && Bare.G == 1.0 && Bare.B == 1.0
+			      && !Bare.bGround,
+			      "a surface with no albedo bound gets white even when it is in "
+			      "the ground family, because Unity would be using a tint there");
+			Check(std::string(Bare.Why) != std::string(Road.Why),
+			      "and the two kerbs give different reasons, so bTextured is a "
+			      "live argument and not decoration");
+
+			// 8. THE PARAMETER HAS ONE SPELLING and the generator reads it.
+			Check(std::string(LedgerSurface::AlbedoGradeParam()) == "AlbedoGrade",
+			      "the vector parameter is spelled AlbedoGrade in the one place "
+			      "tools/ue/make_base_material.py --selftest looks for it");
+
+			// 9. THE FOUR DEAD FIELDS, NOW CARRYING THE GRADE, AND NO NEW
+			// KEY. Every pack surface printed tintTexel=not-built
+			// tintFrom=not-built tintPattern=not-built
+			// roughnessTexel=not-built until this change.
+			LedgerSurface::Bound K;
+			K.Surface = "kerb"; K.Pieces = 95; K.PiecesAssigned = 95;
+			K.Status = "RESOLVED"; K.Route = "pack";
+			K.MapFound[0] = true; K.MapFile[0] = "kerb.jpg";
+			K.MapW[0] = 2048; K.MapH[0] = 1024;
+			K.MapLoadedAs[0] = "JPEG-BGRA8/srgb=yes";
+			K.MapFound[2] = true; K.MapFile[2] = "kerb_r.jpg";
+			K.MapW[2] = 2048; K.MapH[2] = 1024;
+			K.MapLoadedAs[2] = "JPEG-BGRA8/srgb=no";
+			K.Graded = LedgerSurface::AlbedoGradeFor("kerb", true);
+			K.bGradeSet = true;
+			const std::string KLine = LedgerSurface::SurfaceLine(K);
+			std::printf("    %s\n", KLine.c_str());
+			Check(KLine.find("not-built") == std::string::npos,
+			      "a graded pack surface has no not-built field left on its line: "
+			      "four dead fields turned live without one new key");
+			Check(KLine.find("tintTexel=grade-on-white.104.107.112")
+			      != std::string::npos,
+			      "tintTexel on a pack line is the grade on a white reference "
+			      "texel, and the VALUE says which of the two it is");
+			Check(KLine.find("/groundGrade.0.55") != std::string::npos
+			      && KLine.find("/linear.0.1378.0.1458.0.1626") != std::string::npos,
+			      "tintFrom carries the gamma inputs AND the linear triple the "
+			      "parameter actually holds, so it can be recomputed off the line");
+			Check(KLine.find("tintPattern=pack-jpeg-times-AlbedoGradeParam")
+			      != std::string::npos,
+			      "tintPattern says the albedo is a file with a parameter on it "
+			      "rather than a flat card");
+			Check(KLine.find("roughnessTexel=from-the-pack-roughness-file")
+			      != std::string::npos,
+			      "and roughnessTexel says where the roughness came from instead "
+			      "of claiming a texel this run never computed");
+			// AND THE REJECTING CASE FOR THE SAME LINE. A surface the
+			// material pass never reached must still print the words, or
+			// "no grade was set" becomes unreadable as "the grade is white".
+			LedgerSurface::Bound Never;
+			Never.Surface = "kerb"; Never.Pieces = 95;
+			Never.Status = "NOT-REACHED";
+			const std::string NeverLine = LedgerSurface::SurfaceLine(Never);
+			Check(NeverLine.find("tintTexel=not-built") != std::string::npos
+			      && NeverLine.find("tintFrom=not-built") != std::string::npos
+			      && NeverLine.find("tintPattern=not-built") != std::string::npos
+			      && NeverLine.find("roughnessTexel=not-built") != std::string::npos,
+			      "a surface the material pass never reached STILL prints not-built "
+			      "on all four, because nothing-happened is not white");
+			// 10. THE PROCEDURAL LINE SAYS ITS PARAMETER IS WHITE, so a
+			// reader of two adjacent lines cannot think the tint surfaces
+			// were graded twice.
+			Check(SurfLine.find("AlbedoGradeParam.white-because-the-product-is-"
+			                    "already-in-this-texel") != std::string::npos,
+			      "the procedural line names the parameter as white beside the "
+			      "grade baked into its texel, which is where a double-apply "
+			      "would show");
+			// 11. NO SPACES, on both new shapes, because every reader of
+			// this file splits on whitespace.
+			Check(EveryTokenIsKeyValue(KLine.substr(KLine.find("surfaceStatus=")))
+			      && KLine.find("  ") == std::string::npos,
+			      "the graded pack surface line is key=value throughout with no "
+			      "value carrying a space");
+		}
 		// EveryTokenIsKeyValue AND NOT THE ONE-EQUALS FORM, and the reason is
 		// a value this project already prints: a decoder's own words are
 		// `JPEG-BGRA8/srgb=no`, so a map line legitimately carries a second

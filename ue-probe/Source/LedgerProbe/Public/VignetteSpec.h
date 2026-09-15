@@ -596,6 +596,16 @@ namespace LedgerVignette
 	// it needs the product taken in linear and then re-encoded, and an
 	// approximate inverse would shift every one of those surfaces by a
 	// fraction of a stop for no reason. Asserted round-trip in the g++ test.
+	//
+	// THE SENTENCE ABOVE WAS TRUE WHEN WRITTEN AND IS NOW HALF TRUE, and
+	// it is corrected here rather than left to be believed, which is the
+	// habit SurfaceBind.h keeps. "The Unreal base material has no colour
+	// parameter to multiply by" stopped being true at queue 299:
+	// M_LedgerSurface carries AlbedoGrade, and the twelve PACK surfaces
+	// take their grade through it rather than baked. The baking is still
+	// real and this pair is still why it works, for the two PROCEDURAL
+	// surfaces whose albedo this project generates as a flat texel; those
+	// are sent a white parameter so the product is never taken twice.
 	inline double LinearToSrgb(double C)
 	{
 		if (C <= 0.0) return 0.0;

@@ -857,6 +857,29 @@ def holds_for(repo, rel):
     return out
 
 
+def outbound_records(repo):
+    """{repo-relative path: content} for the outbound records ON THIS DISK.
+
+    THE ONE WALKER OF THAT FOLDER IN THE CHECKOUT, added 2026-09-15 because
+    there were about to be three: `tools/producer-day.py` had its own copy,
+    the brief sender wanted the same read to say which briefs were never sent,
+    and `tools/inbox-read.py:outbound_from_branch` is the same read against
+    the pc-inbox BRANCH. The pattern is `inbox.OUTBOUND_RE` and it is the
+    denominator: a README dropped in that folder is outside every count made
+    from this.
+
+    A FOLDER THAT IS NOT THERE RETURNS None, never {}, so "nothing was ever
+    sent" and "nothing is known about what was sent" cannot print as one fact.
+    """
+    d = os.path.join(repo, *OUTBOUND_DIR.split("/"))
+    if not os.path.isdir(d):
+        return None
+    out = {}
+    for rel in inbox.outbound_files(repo):
+        out[rel] = _read(repo, rel) or ""
+    return out
+
+
 def sweep(repo, sender, now=None, say=None, only=None, photo_sender=None,
          video_sender=None):
     """Check and send every unsent file in the outbox. Returns a dict.
@@ -917,6 +940,29 @@ def sweep(repo, sender, now=None, say=None, only=None, photo_sender=None,
             res["held"].append((rel, held[-1]))
             say("  outbox: HELD %s by %s. Delete that record once you know "
                 "whether it arrived." % (rel, held[-1]))
+            continue
+        if kind == "brief":
+            # RETIRED 2026-09-15, QUEUE 291. The clause, the ruling and the
+            # incident are `brief.OUTBOX_BRIEF_CLAUSE`, which is where a brief
+            # is defined; this is only the door it is refused at.
+            #
+            # AFTER THE already / bad_receipt / held CHECKS AND NOT BEFORE
+            # THEM, deliberately: every `.brief.md` in the live outbox on the
+            # day this landed (9 of 9, four from 8 September, one from the
+            # 9th, four from the 14th) already carries a receipt, so all nine
+            # short-circuit above and NOT ONE of them is refused retroactively
+            # or has a refusal record written about it. Checked before the
+            # retirement went in, not assumed.
+            #
+            # A LAZY IMPORT AT ONE CALL SITE: brief.py imports THIS module at
+            # module level, so the reverse cannot be a module-level import.
+            import brief as brief_mod                         # noqa: PLC0415
+            clause = brief_mod.OUTBOX_BRIEF_CLAUSE
+            rec = _write(repo, refusal_rel(rel, clause),
+                         render_refusal(rel, kind, clause, now, False))
+            res["refused"].append((rel, clause))
+            res["records"].append(rec)
+            say("  outbox: REFUSED %s (%s): %s" % (rel, kind, clause))
             continue
         ok, clause, output = run_check(repo, kind, rel)
         if not ok:
@@ -2035,6 +2081,51 @@ def _selftest_cases(ok, bad, state):
     check("reject/a-name-with-no-kind-is-refused-not-guessed",
           r4["sent"] == [] and ".unprompted.md" in nk and ".answer.md" in nk
           and ".brief.md" in nk, nk)
+
+    # ---- THE BRIEF REGISTER IS RETIRED FROM THE OUTBOX. QUEUE 291. -------
+    # ACCEPTING CASE FIRST, AND IT IS THE ONE THAT MATTERS: a brief already
+    # sent out of the outbox is NOT refused retroactively. The refusal sits
+    # after the already/held checks precisely so nothing that reached him
+    # grows a refusal record afterwards.
+    import brief as _brief_mod                           # noqa: PLC0415
+    sent_brief_rel = "%s/2026-09-08-already-went.brief.md" % OUTBOX_DIR
+    _commit(repo, sent_brief_rel, good_text, when=commit_at)
+    _write(repo, receipt_rel(sent_brief_rel),
+           render_receipt(sent_brief_rel, "brief", sent_at, 93, 10, None,
+                          None, None, "", None, ""))
+    calls_before = len(calls)
+    r_old_brief = sweep(repo, sender, now=sent_at + 250, only=sent_brief_rel)
+    check("accept/a-brief-already-sent-out-of-the-outbox-is-not-re-refused",
+          r_old_brief["already"] == [sent_brief_rel]
+          and not r_old_brief["refused"] and not r_old_brief["records"]
+          and len(calls) == calls_before, r_old_brief)
+    # AND THE LIVE OUTBOX IS THE ACCEPTING FIXTURE FOR THE RETIREMENT'S BLAST
+    # RADIUS: every .brief.md in it today already carries a receipt, so this
+    # refuses 0 of them. The denominator is printed beside the zero.
+    live_briefs = [f for f in outbox_files(REPO) if kind_of_name(f)[0] == "brief"]
+    live_unsent = [f for f in live_briefs if _read(REPO, receipt_rel(f)) is None]
+    check("accept/live/the-retirement-refuses-nothing-that-already-went",
+          len(live_briefs) > 0 and not live_unsent,
+          "%d of %d live .brief.md file(s) have no receipt: %s"
+          % (len(live_unsent), len(live_briefs), live_unsent[:4]))
+    print("      says: liveOutboxBriefs=%d liveOutboxBriefsWithNoReceipt=%d "
+          "refusedByTheRetirementToday=%d"
+          % (len(live_briefs), len(live_unsent), len(live_unsent)))
+    # THE REJECTING CASE: an UNSENT brief in the outbox never reaches the wire
+    # again, and the clause names the path that does work.
+    new_brief_rel = "%s/2026-09-15-a-second-copy.brief.md" % OUTBOX_DIR
+    _commit(repo, new_brief_rel, good_text, when=commit_at)
+    r_new_brief = sweep(repo, sender, now=sent_at + 260, only=new_brief_rel)
+    nb_clause = r_new_brief["refused"][0][1] if r_new_brief["refused"] else ""
+    check("reject/an-unsent-brief-in-the-outbox-is-refused-not-sent",
+          r_new_brief["sent"] == [] and len(r_new_brief["refused"]) == 1
+          and len(calls) == calls_before
+          and nb_clause == _brief_mod.OUTBOX_BRIEF_CLAUSE
+          and "production/briefs" in nb_clause
+          and "--send-brief" in nb_clause, nb_clause or "NOTHING WAS REFUSED")
+    check("reject/and-the-refusal-travels-back-as-a-record",
+          (_read(repo, refusal_rel(new_brief_rel, nb_clause)) or "")
+          .count("clause: ") == 1, r_new_brief["records"])
 
     noid_rel = "%s/2026-09-05-no-id-back.unprompted.md" % OUTBOX_DIR
     _commit(repo, noid_rel, good_text, when=commit_at)

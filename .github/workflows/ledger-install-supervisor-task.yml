@@ -698,6 +698,20 @@ jobs:
                     Start-Sleep -Seconds 2
                   } else {
                     "briefStatus=EXITED briefWaitedSec=$waited briefExitCode=$($proc.ExitCode)" | Add-Content $out
+                    # QUEUE 291 FIX TWO. EXIT 6 IS "THERE WAS NO BRIEF FOR
+                    # THIS DAY", and this step is continue-on-error, so a
+                    # silent miss used to look exactly like a success: the
+                    # 09-12 brief went unsent for three days and nothing said
+                    # so anywhere but production/pc-ops/brief-send.txt, which
+                    # nothing in the repository reads. The SAME annotation
+                    # mechanism this step already uses for a refused checkout,
+                    # pointed at the other way this step can send nothing. The
+                    # durable half is the dossier: tools/producer-day.py
+                    # prints BRIEFS WRITTEN AND NEVER SENT off the files, so
+                    # the next Producer turn sees it without opening a log.
+                    if ($proc.ExitCode -eq 6) {
+                      Write-Host "::warning title=LEDGER daily brief: NOTHING WAS SENT::There was no brief for today in UTC and the one-day recovery found nothing to send either. This is exit 6, not a failure, and this step is continue-on-error, so nothing else would have said it. The count of briefs written and never sent is printed by tools/producer-day.py on the BRIEFS WRITTEN AND NEVER SENT line; the lines this run reached are in production/pc-ops/brief-send.txt."
+                    }
                   }
                 }
                 Pop-Location

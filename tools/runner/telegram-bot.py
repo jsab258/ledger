@@ -1808,32 +1808,80 @@ def brief_pass(creds, repo=None, say=None, day=None):
     failure. The step that runs this is in
     .github/workflows/ledger-install-supervisor-task.yml and fires on a push
     that touches production/briefs/.
+
+    AND SINCE QUEUE 291 IT RECOVERS A BRIEF THAT MISSED ITS OWN DAY, which is
+    fix ONE of that item and needs NO new caller, NO new step and NO second
+    sender: the day argument this function already took is now supplied by
+    `brief.recovery_target` when no brief exists for today. Every decision
+    about WHICH day that is lives there, where the tests run; every decision
+    about whether it may go is `BriefReceipts.state`'s, the one-receipt-per-day
+    guard, which this passes IN rather than reimplementing. A day named
+    explicitly on the command line is never second-guessed: the recovery fires
+    only when the caller asked for today and today has nothing.
     """
     repo = repo or REPO
     say = say or OUT.say
+    asked_for = day
     day = day or brief.today()
+    store = brief.BriefReceipts(repo)
+
+    def read_brief(d):
+        try:
+            with open(outbox.full_path(repo, brief.brief_rel(d)), "r",
+                      encoding="utf-8") as fh:
+                return fh.read(), None
+        except OSError as e:
+            return None, type(e).__name__
+
+    text, why_no_text = read_brief(day)
+    if text is None and asked_for is None:
+        # FIX ONE OF QUEUE 291. The 09-12 brief sat unsent because no run
+        # happened on its day and the day is the only key this sender accepts.
+        target, why = brief.recovery_target(
+            day, brief.briefs_on_disk(repo), store.state)
+        if target:
+            say("brief: RECOVERING %s. There is no brief for %s (%s), and %s"
+                % (brief.brief_rel(target), day, why_no_text, why))
+            recovered, why_no_text = read_brief(target)
+            if recovered is not None:
+                day, text = target, recovered
+            else:
+                say("brief: the recovery could not read %s either (%s)"
+                    % (brief.brief_rel(target), why_no_text))
+        else:
+            say("brief: no recovery either: %s" % why)
     rel = brief.brief_rel(day)
-    try:
-        with open(outbox.full_path(repo, rel), "r", encoding="utf-8") as fh:
-            text = fh.read()
-    except OSError as e:
+    if text is None:
         # NOT AN ERROR AND NOT A PASS EITHER: no brief for today is a real
         # state of this channel (silence is an acceptable exit) and it prints
         # its denominator rather than a bare zero.
-        here = sorted(brief.briefs_on_disk(repo))
+        #
+        # AND IT PRINTS THE SAME DONE LINE AS EVERY OTHER OUTCOME, queue 291
+        # fix two. It used to return here, so a run that found nothing left NO
+        # `brief-send done:` line at all: a grep across the log could not tell
+        # a miss from a step that never started, and exit 6 is swallowed by
+        # continue-on-error in the workflow. One line per run, always.
+        on_disk = brief.briefs_on_disk(repo)
+        here = sorted(on_disk)
         say("brief: NOTHING MEASURED, there is no brief for %s (%s). %d "
             "brief(s) are in the tree, newest %s. Nothing was sent."
-            % (day, type(e).__name__, len(here),
+            % (day, why_no_text, len(here),
                here[-1] if here else "nothing-measured"))
-        return {"day": day, "rel": rel, "sent": None, "already": None,
-                "refused": None, "clause": "", "messageId": None,
-                "records": [], "checked": False, "buttons": 0, "chars": 0,
-                "missing": True,
-                # NOTHING MEASURED ABOUT A PICTURE EITHER, said in the words
-                # rather than left to a default: no brief means nobody looked.
-                "photoState": "nothing-measured", "photoRef": None,
-                "photoSizes": "", "photoArrived": False, "photoWhy": "",
-                "photoOverBy": 0}
+        on_pc = outbox.outbound_records(repo)
+        say("brief: %s" % brief.unsent_line(
+            on_disk,
+            None if on_pc is None else brief.sent_days_from_receipts(on_pc)))
+        res = {"day": day, "rel": rel, "sent": None, "already": None,
+               "refused": None, "clause": "", "messageId": None,
+               "records": [], "checked": False, "buttons": 0, "chars": 0,
+               "missing": True,
+               # NOTHING MEASURED ABOUT A PICTURE EITHER, said in the words
+               # rather than left to a default: no brief means nobody looked.
+               "photoState": "nothing-measured", "photoRef": None,
+               "photoSizes": "", "photoArrived": False, "photoWhy": "",
+               "photoOverBy": 0}
+        say(brief.brief_done_line(res))
+        return res
 
     def sender(body, keyboard):
         try:

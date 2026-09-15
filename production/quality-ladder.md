@@ -58,7 +58,9 @@ would perceive the difference.
 Everything visual. The bar is the Meridian Test and the engine is undecided,
 so a rung written today would be written against a renderer that may not be
 the one that ships. That is a reason to wait, and it is recorded here so
-that waiting is a decision rather than an oversight.
+that waiting is a decision rather than an oversight. The engine was decided on
+2026-09-10 (D16); rows for the visual aspects begin below with the first one
+that shipped a frame.
 
 ---
 
@@ -129,3 +131,4 @@ this file records elsewhere.
 | Witness (the decision) | `Observe.Resolve` on two real line traces, the actor's own bounds and an accumulated watching time; the vantage read before the deed with the glass standing; the pawn's speed a typed 1.4. | `Perception.Attention` ported so `SecondsWatching` and `RungFloor` come from the accumulator; the pawn's measured velocity in place of the typed speed; the walked and teleported halves of the approach printed (queues 146, 148). |
 | Overheard line | A bank pick at the achieved rung, seeded `Day*31+Hour`, burnt as a caption on the heard frames. | `StreetVoice.Exchange` ported so the reply is composed from what was actually carried; a crowd voice by `VoiceBank` hash (queues 147, 150). |
 | NPC body | A 0.4 by 1.75 m cylinder carrying the engine's default material, moved by its own transform. | The surface bound at spawn through the material instances `BindSurfaces` already made (queue 145); then a held Mixamo body with an idle (queue 028). |
+| Pack surfaces, albedo (queue 299) | Twelve pack surfaces carry the legacy build's dry grade through one vector parameter, tested in the container, printed per surface on the landed line. | The grade's list and constants in the shared spec both readers read, split by role and not by rain (302); the wetness term this side does not carry (186); a whole-run tally and a readback of the parameter on the done line (with 293); then the number itself, judged by Jafar against the Hook sheet under D23, recorded as his. |

@@ -233,6 +233,145 @@ def today(now=None):
     return t.strftime("%Y-%m-%d")
 
 
+def previous_day(day):
+    """The UTC day before this one, as the brief names it."""
+    return (datetime.date.fromisoformat(day)
+            - datetime.timedelta(days=1)).isoformat()
+
+
+# --------------------------------------------------------------------------
+# THE BRIEF THAT MISSED ITS OWN DAY. Queue 291, acceptance superseded
+# 2026-09-14.
+# --------------------------------------------------------------------------
+#: THE DAY THIS PATH OPENED, so a brief written BEFORE it is never counted as
+#: one this path failed to send. Jafar's ruling of 2026-09-09 created the one
+#: message a day and its two buttons; the briefs dated earlier in
+#: production/briefs/ either went out of production/outbox/ with no buttons on
+#: them or never went at all, and neither is a miss of a sender that did not
+#: exist. A RULING DATE, NOT A MEASURED THRESHOLD: nothing was tuned to it,
+#: and it is the same boundary `sent_days_from_receipts` already states in
+#: words.
+DAILY_PATH_OPENED = "2026-09-09"
+
+#: How many unsent days `unsent_line` names before the cap bites. It announces
+#: itself; the whole list is `unsent_briefs`'s return value.
+UNSENT_SHOWN = 6
+
+
+def recovery_target(day, on_disk, state):
+    """(day, why) for the ONE brief a run that found nothing for `day` may
+    still send, or (None, why-not). Both halves always carry a sentence.
+
+    THE TARGET IS THE DAY BEFORE, AND ONLY THAT DAY, and the reason it is not
+    a window is that there is no measured window to set one from. Read off the
+    live tree on 2026-09-15: every brief ever sent down this path was sent on
+    its own day, lag series [0, 0, 0] over 3 receipts, so the repository holds
+    NO distribution of recovery lag and rule 2 forbids inventing one. One day
+    is therefore not a bound chosen to look generous: it is the gap between
+    the day a brief was written and the next run of the step that sends it.
+
+    AND OLDER THAN THAT IS DELIBERATELY NOT SWEPT UP, for a reason that is in
+    the tree rather than in taste: production/briefs/2026-09-12.md asks him to
+    "end the two leftover background programs and copy the project folder",
+    which was done on the 14th (production/pc-ops/windowless-proof.txt). A
+    recovery that quietly delivered it three days late would put a stale ASK
+    on his phone AND would hide the fault that actually caused it, which was
+    sixty one hours with no run at all. That fault is `unsent_line`'s to say
+    out loud, not this function's to paper over.
+
+    `state(day)` IS `BriefReceipts.state` AND THE GUARD IS NOT COPIED HERE:
+    the one-receipt-per-day rule answers "is it still unsent", so a recovery
+    can never be the second send of a day. It is passed in so this decision
+    runs with no repository at all.
+    """
+    prev = previous_day(day)
+    if prev not in (on_disk or {}):
+        return None, ("there is no brief for %s either, so there is nothing "
+                      "to recover; %d brief(s) are in the tree"
+                      % (prev, len(on_disk or {})))
+    st, detail = state(prev)
+    if st == "sent":
+        return None, ("%s was already sent (%s), so nothing is owed for it"
+                      % (prev, detail))
+    if st != "unsent":
+        return None, ("%s is %s and is not recoverable by this pass: %s"
+                      % (prev, st, detail))
+    return prev, ("%s was written and the run on its own day never sent it, "
+                  "so this pass sends it instead of nothing" % prev)
+
+
+def unsent_briefs(on_disk, sent_days, since=DAILY_PATH_OPENED):
+    """The days a brief was WRITTEN down the daily path and no receipt says it
+    went, oldest first. None when nothing is known about what was sent.
+
+    WHAT THIS IS A STATISTIC OF: a CUMULATIVE set over the whole tree, not a
+    run length and not a rate. `since` is DAILY_PATH_OPENED and is what keeps
+    the denominator honest: counting the five briefs dated before this sender
+    existed would turn a working channel into a five-strong failure list.
+    """
+    if sent_days is None:
+        return None
+    return [d for d in sorted(on_disk or {})
+            if d >= since and d not in sent_days]
+
+
+def unsent_line(on_disk, sent_days, since=DAILY_PATH_OPENED,
+                shown=UNSENT_SHOWN):
+    """One line naming the briefs written and never sent, with its denominator.
+
+    THE LINE FIX TWO OF QUEUE 291 ASKS FOR. A run that finds no brief for
+    today exits 6 into a file nobody opens, so the durable statement of the
+    miss is this: read off the FILES rather than off a log, so it is true on
+    any checkout and keeps being true until somebody sends the brief. It goes
+    both in the sender's own output and in the dossier the next Producer turn
+    reads, which is where a person actually looks.
+
+    Every zero ships its denominator, the never-ran case is the words nothing
+    measured, and the cap announces when it bites.
+    """
+    written = sorted(d for d in (on_disk or {}) if d >= since)
+    missing = unsent_briefs(on_disk, sent_days, since)
+    if missing is None:
+        return ("BRIEFS WRITTEN AND NEVER SENT: nothing measured, nothing is "
+                "known about what was sent, so the %d brief(s) written since "
+                "the daily path opened on %s cannot be graded either way."
+                % (len(written), since))
+    if not missing:
+        return ("BRIEFS WRITTEN AND NEVER SENT: 0 of %d written since the "
+                "daily path opened on %s; every one of them has a receipt."
+                % (len(written), since))
+    head = missing[:shown]
+    return ("BRIEFS WRITTEN AND NEVER SENT: %d of %d written since the daily "
+            "path opened on %s have no receipt of any kind: %s%s. Send one "
+            "from his PC with `python3 tools/runner/telegram-bot.py "
+            "--send-brief %s`."
+            % (len(missing), len(written), since, ", ".join(head),
+               "" if len(head) == len(missing)
+               else " (+%d more not shown)" % (len(missing) - len(head)),
+               missing[-1]))
+
+
+#: RETIRED 2026-09-15, QUEUE 291: THE BRIEF REGISTER DOES NOT LEAVE THE
+#: OUTBOX. On 2026-09-14 Jafar received the same brief twice, messageId 95
+#: down this path with its two buttons and messageId 93 as a copy written into
+#: production/outbox/, eleven seconds apart, because a resident hedged against
+#: a path they had been told was dead and was not. The outbox sweep hands its
+#: sender a `sender(text)` with nowhere to put a keyboard, so a brief that
+#: goes that way arrives WITHOUT the only thing this channel measures. One
+#: brief is one message: it sits in production/briefs/<day>.md and
+#: `--send-brief` sends it. `tools/runner/outbox.py:sweep` refuses the rest,
+#: AFTER its already-sent check, so nothing already delivered is re-refused.
+OUTBOX_BRIEF_CLAUSE = (
+    "the brief register is retired from the outbox (2026-09-15, queue 291): "
+    "the outbox sweep has nowhere to put the readable/unreadable pair, so a "
+    "brief sent this way arrives without the only measure this channel has, "
+    "and on 2026-09-14 it arrived as a SECOND copy of a message that had "
+    "already gone with its buttons. Write the day's message to "
+    "%s/<YYYY-MM-DD>.md instead, where --send-brief sends it once with both "
+    "buttons; a push that is not the day's brief goes as .unprompted.md"
+    % BRIEFS_DIR)
+
+
 # --------------------------------------------------------------------------
 # The two buttons
 # --------------------------------------------------------------------------
@@ -1419,6 +1558,96 @@ def _selftest():
           == "production/briefs/1999-01-01.photo.txt"
           and photo_plan(body, nothing_there, lambda p, c, k: None)["state"]
           == "none-named", nothing_there)
+
+    # ---- ACCEPTING: A BRIEF THAT MISSED ITS OWN DAY IS RECOVERED ---------
+    # QUEUE 291, FIX ONE, AND THE ACCEPTING CASE IS FIRST: yesterday's brief
+    # is on disk, nothing sent it, and the pass that found nothing for today
+    # sends THAT one rather than exiting into silence.
+    disk = {"2026-09-12": brief_rel("2026-09-12"),
+            "2026-09-14": brief_rel("2026-09-14")}
+    t_day, t_why = recovery_target("2026-09-15", disk,
+                                   lambda _d: ("unsent", ""))
+    check("accept/a-brief-that-missed-its-own-day-is-recovered-the-next-day",
+          t_day == "2026-09-14" and "never sent it" in t_why, (t_day, t_why))
+    # AND IT GOES THROUGH THE ONE-RECEIPT-PER-DAY GUARD, NOT AROUND IT: the
+    # same store the sender asks, answering sent, stops the recovery dead.
+    s_day, s_why = recovery_target(
+        "2026-09-15", disk, lambda _d: ("sent", "messageId=95"))
+    check("reject/a-recovery-cannot-be-the-second-send-of-a-day",
+          s_day is None and "already sent" in s_why and "messageId=95" in s_why,
+          (s_day, s_why))
+    h_day, h_why = recovery_target(
+        "2026-09-15", disk, lambda _d: ("held", "a hold record is on it"))
+    check("reject/a-held-day-is-not-recovered-either",
+          h_day is None and "held" in h_why, (h_day, h_why))
+    n_day, n_why = recovery_target("2026-09-14", disk,
+                                   lambda _d: ("unsent", ""))
+    check("reject/a-day-whose-predecessor-was-never-written-recovers-nothing",
+          n_day is None and "no brief for 2026-09-13" in n_why
+          and "2 brief(s)" in n_why, (n_day, n_why))
+    # AND THE WINDOW IS ONE DAY AND STAYS ONE DAY: 2026-09-12 is two days
+    # behind 2026-09-14 and is never the target, which is the rung that would
+    # go red if somebody widened the window without a series to widen it from.
+    w_day, _w_why = recovery_target("2026-09-14", {"2026-09-12": "x"},
+                                    lambda _d: ("unsent", ""))
+    check("reject/the-recovery-window-does-not-reach-back-two-days",
+          w_day is None, w_day)
+
+    # ---- THE BRIEFS WRITTEN AND NEVER SENT, WITH THEIR DENOMINATOR -------
+    # QUEUE 291, FIX TWO. Accepting case first: a tree where everything
+    # written since the path opened has a receipt reads as 0 of N, never as a
+    # bare 0.
+    all_sent = {"2026-09-09": "x", "2026-09-10": "x"}
+    clean = unsent_line({"2026-09-09": "a", "2026-09-10": "b"}, all_sent)
+    check("accept/every-brief-sent-reads-as-0-of-its-denominator",
+          clean.startswith("BRIEFS WRITTEN AND NEVER SENT: 0 of 2")
+          and "every one of them has a receipt" in clean, clean)
+    gap = unsent_line({"2026-08-31": "old", "2026-09-09": "a",
+                       "2026-09-10": "b", "2026-09-12": "c",
+                       "2026-09-14": "d"},
+                      {"2026-09-09": "x", "2026-09-10": "x",
+                       "2026-09-14": "x"})
+    check("accept/a-brief-written-and-never-sent-is-named-with-its-command",
+          "1 of 4 written" in gap and "2026-09-12" in gap
+          and "--send-brief 2026-09-12" in gap
+          and "2026-08-31" not in gap, gap)
+    check("accept/a-brief-written-before-the-path-opened-is-outside-the-count",
+          unsent_briefs({"2026-08-31": "old"}, {}) == []
+          and DAILY_PATH_OPENED == "2026-09-09", DAILY_PATH_OPENED)
+    many = {("2026-09-%02d" % d): "x" for d in range(9, 30)}
+    capped = unsent_line(many, {})
+    named = capped.split("no receipt of any kind: ", 1)[-1].split(" (+")[0]
+    check("accept/the-cap-on-that-list-announces-when-it-bites",
+          ("+%d more not shown" % (len(many) - UNSENT_SHOWN)) in capped
+          and len(named.split(", ")) == UNSENT_SHOWN, (named, capped))
+    check("reject/nothing-known-about-what-was-sent-is-nothing-measured",
+          unsent_briefs({"2026-09-12": "c"}, None) is None
+          and unsent_line({"2026-09-12": "c"}, None).startswith(
+              "BRIEFS WRITTEN AND NEVER SENT: nothing measured"),
+          unsent_line({"2026-09-12": "c"}, None))
+    # AND THE LIVE TREE IS THE ACCEPTING FIXTURE FOR BOTH READERS AT ONCE.
+    live_disk = briefs_on_disk(outbox.REPO)
+    check("accept/live/the-live-tree-reads-as-a-real-series-not-an-empty-one",
+          len(live_disk) > 0 and all(BRIEF_NAME_RE.match(p.rsplit("/", 1)[-1])
+                                     for p in live_disk.values()),
+          "%d brief(s) on disk" % len(live_disk))
+    # NO SENT-SET IS CLAIMED HERE. This suite reads no receipts and must not
+    # print a number that looks like one: which of these were sent is read off
+    # production/outbound AND off origin/pc-inbox, and that reading is
+    # tools/producer-day.py's, in its own selftest, where the walker lives.
+    print("      says: briefsOnDisk=%d briefsSincePathOpened=%d "
+          "recoveryWindowDays=1 briefsSentEver=not-read-here/see-producer-day"
+          % (len(live_disk),
+             len([d for d in live_disk if d >= DAILY_PATH_OPENED])))
+
+    # ---- THE OUTBOX COPY OF A BRIEF IS RETIRED ---------------------------
+    # QUEUE 291's retirement, stated here because this is the file that owns
+    # what a brief is. The sweep's two outcomes are in outbox.py's own suite.
+    check("accept/the-retirement-clause-names-the-path-that-does-work",
+          BRIEFS_DIR in OUTBOX_BRIEF_CLAUSE
+          and "--send-brief" in OUTBOX_BRIEF_CLAUSE
+          and ".unprompted.md" in OUTBOX_BRIEF_CLAUSE
+          and "2026-09-14" in OUTBOX_BRIEF_CLAUSE, OUTBOX_BRIEF_CLAUSE[:60])
 
     # ---- REJECTING: the send path refuses rather than guessing -----------
     empty_store = _FakeStore()

@@ -107,7 +107,9 @@ connection is asked for under UV_PIN_CANDIDATES, most likely pair first,
 until the editor accepts one, and the pair that answered is printed as
 materialUvHeadVia. The sweep contains the exact pair runs 19 and 20 used, so
 it cannot wire less than they did; it counts ONE connection however many
-names it tries, so the denominator stays 14; and the graph is read back
+names it tries, so the denominator counts connections and not pin names
+(it was 14 through run 24 and is 16 since queue 299 put the AlbedoGrade
+multiply in front of Base Color); and the graph is read back
 afterwards, because the editor's boolean is not the only witness worth
 having.
 
@@ -146,6 +148,22 @@ import sys
 # there. Order is base colour, normal, roughness, matching MapParam().
 TEXTURE_PARAMS = ["BaseColorMap", "NormalMap", "RoughnessMap"]
 SCALAR_PARAMS = ["TilingU", "TilingV"]
+
+# THE ONE VECTOR PARAMETER, ADDED BY QUEUE 299, AND WHY A MATERIAL NEEDED IT.
+# AssetLibrary.BuildMaterial multiplies every Unity albedo by TextureGrade
+# (0.74, 0.76, 0.80) and every ground surface by a further GroundGrade (0.55).
+# This material had nowhere to put that, so the twelve pack surfaces rendered
+# at full brightness on this side and one street from one input came out of the
+# two engines at two brightnesses. The grade itself is decided in
+# SurfaceBind.h::AlbedoGradeFor, where g++ runs it; this file only gives it a
+# slot to arrive in.
+#
+# IT DEFAULTS TO WHITE, WHICH IS THE ACCEPTING CASE AND IS NOT A CONVENIENCE.
+# An instance that never sets it must render exactly as it does today, so that
+# this change cannot darken anything by existing: the control quads and the
+# decal cards set nothing and must be untouched. Asserted in --selftest.
+VECTOR_PARAMS = ["AlbedoGrade"]
+VECTOR_PARAM_DEFAULT = (1.0, 1.0, 1.0, 1.0)
 
 # THE ONE PAIR OF PIN NAMES THIS SCRIPT CANNOT ESTABLISH FROM HERE.
 # Each entry is (output pin name on the TextureCoordinate, input pin name on
@@ -1033,7 +1051,11 @@ class Wiring(object):
 
     asked counts CONNECTIONS ASKED FOR and never candidate pin names: a head
     connection swept over nine candidate names is one connection, so the
-    denominator stays 14 whatever the sweep costs. wired counts the ones the
+    sweep can never move the denominator. THE DENOMINATOR IS NOT A
+    CONSTANT and this docstring used to imply it was: it read 14 for runs
+    19 to 24 and reads 16 since queue 299 added the AlbedoGrade node and
+    its two wires. Nothing compares it to a literal; MADE is wired ==
+    asked. wired counts the ones the
     editor accepted. materialStatus reads MADE only when the two are equal
     AND no head stood on the last-resort property write, which is the
     3 September rule and its amendment, and neither is relaxed here.
@@ -1277,6 +1299,57 @@ def selftest():
         if ('"%s"' % s) not in blob:
             bad.append("no C++ site in the %d source file(s) under ue-probe/Source "
                        "sets the scalar parameter %s" % (files, s))
+    # ---- THE VECTOR PARAMETER, QUEUE 299 --------------------------------
+    # THE ACCEPTING CASE FIRST, and it is the DEFAULT rather than the name.
+    # A vector parameter that exists and defaults to anything but white
+    # darkens every instance that never sets it: the control quads and the
+    # decal cards set nothing, and they are the two things in the frame that
+    # exist to be compared against a known value. So the default is checked
+    # as a number here, in the container, before a 25 minute round trip can
+    # report a dim street as a graded one.
+    checks += 1
+    if VECTOR_PARAM_DEFAULT != (1.0, 1.0, 1.0, 1.0):
+        bad.append("the AlbedoGrade default is %s and must be white (1,1,1,1) "
+                   "so an instance that never sets it renders unchanged"
+                   % (VECTOR_PARAM_DEFAULT,))
+    # And the C++ contract, WHICH IS NOT THE ONE THE SCALARS GET, because the
+    # same test would pass on the wrong evidence. The scalars appear as bare
+    # literals only at their set sites, so a grep for "TilingU" over the tree
+    # is a grep for the set site. AlbedoGrade is spelled ONCE, in
+    # SurfaceBind.h::AlbedoGradeParam, and the binder calls that function: a
+    # grep for the literal would be satisfied by the declaration alone and
+    # would print green over a parameter nothing ever sets. So this asks for
+    # the two halves separately, in the .cpp files only.
+    cpp = ""
+    cpp_files = 0
+    for base, _dirs, found in os.walk(src):
+        for n in found:
+            if n.endswith(".cpp"):
+                cpp_files += 1
+                cpp += open(os.path.join(base, n), "r", encoding="utf-8").read()
+    checks += 1
+    if "SetVectorParameterValue" not in cpp:
+        bad.append("no .cpp of the %d under ue-probe/Source calls "
+                   "SetVectorParameterValue, so %s is a slot nothing fills"
+                   % (cpp_files, VECTOR_PARAMS[0]))
+    checks += 1
+    if "AlbedoGradeParam" not in cpp:
+        bad.append("no .cpp of the %d under ue-probe/Source names "
+                   "AlbedoGradeParam, so the set site is not using the "
+                   "header's one spelling of %s" % (cpp_files, VECTOR_PARAMS[0]))
+    checks += 1
+    if ('"%s"' % VECTOR_PARAMS[0]) not in blob:
+        bad.append("no C++ site in the %d source file(s) under ue-probe/Source "
+                   "spells the vector parameter %s at all"
+                   % (files, VECTOR_PARAMS[0]))
+    # AND THE ARITHMETIC IS NOT HERE. AlbedoGradeFor lives in SurfaceBind.h
+    # where g++ runs it; this only checks the header has it, because a
+    # parameter wired to nothing is the failure this file can see and the
+    # value it should carry is the failure it cannot.
+    checks += 1
+    if "AlbedoGradeFor" not in text:
+        bad.append("SurfaceBind.h has no AlbedoGradeFor, so nothing tested "
+                   "decides what %s is set to" % VECTOR_PARAMS[0])
     # ---- the verdict rule, both ways round, ACCEPTING CASE FIRST ---------
     # A guard shipped without a run in which it passes is a ratchet, and one
     # shipped without a run in which it fires is a claim. Both are here, and
@@ -2255,8 +2328,10 @@ def selftest():
     print("    %s" % prop_line)
     print("    %s" % fail_line)
     print("make_base_material --selftest: %d check(s), %d failure(s), "
-          "params=%s scalars=%s header=%s"
+          "params=%s scalars=%s vectors=%s/default.%s header=%s"
           % (checks, len(bad), "/".join(TEXTURE_PARAMS), "/".join(SCALAR_PARAMS),
+             "/".join(VECTOR_PARAMS),
+             ".".join("%g" % c for c in VECTOR_PARAM_DEFAULT),
              os.path.relpath(header, root)))
     for b in bad:
         print("  FAIL %s" % b)
@@ -2984,8 +3059,11 @@ def main():
     # THE HEAD OF THE UV CHAIN, WHICH IS THE ONE PAIR OF NAMES THIS SCRIPT
     # COULD NOT ESTABLISH BEFORE THE RUN. See UV_PIN_CANDIDATES. One
     # connection is counted however many names it costs, so materialConnections
-    # keeps the denominator 14 that runs 19 and 20 printed and the fraction
-    # stays comparable across the three runs.
+    # does not move because a sweep was long. It DID move at queue 299, from
+    # 14 to 16, because the graph genuinely grew a node: see the AlbedoGrade
+    # block below. A fraction short of its own denominator is still the
+    # reading; only a comparison against the literal 14 would have broken,
+    # and there is none.
     uv_head = []
 
     def connect_uv_head(src, dst, what):
@@ -3043,7 +3121,56 @@ def main():
     # map is worth having; a script that gives up halfway is not.
     made = []
 
-    def sampler(name, y, sampler_type, default_tex, prop, out_pin, label):
+    # ---- THE ALBEDO GRADE, AND IT IS ONE NODE AND TWO WIRES ---------------
+    #
+    # QUEUE 299. Unity multiplies every albedo by TextureGrade and every
+    # ground surface by GroundGrade as well; this material had no slot for
+    # that number, so the pack surfaces rendered ungraded and the kerb came
+    # out the brightest thing in the street. The parameter goes in AFTER the
+    # BaseColorMap sample, because that is where Unity's mat.color lands: a
+    # multiply on the sampled colour, not on the UVs and not on the texture.
+    #
+    # WHITE BY DEFAULT, so an instance that never sets it is bit-for-bit what
+    # this material renders today. That is the accepting case and it is the
+    # half that goes unrun, so --selftest asserts the default rather than the
+    # presence.
+    #
+    # WHAT THIS CHANGES ABOUT THE DENOMINATOR, said out loud because a
+    # comment two screens up used to state it as a constant: the base colour
+    # sampler's output now goes to the multiply instead of straight to the
+    # property, and two wires are added (the parameter into B, the multiply
+    # into Base Color). materialConnections therefore reads 16 where runs 19
+    # to 24 read 14. A fraction is still a fraction and MADE still needs
+    # wired == asked; only the number moved, and it moved here.
+    grade = expr(unreal.MaterialExpressionVectorParameter, -520, -460)
+    try:
+        grade.set_editor_property("parameter_name", VECTOR_PARAMS[0])
+    except Exception:
+        w.notes.append("albedograde-parameter-name-refused")
+    # THE DEFAULT IS TRIED TWO WAYS AND THE FAILURE IS NAMED. A vector
+    # parameter that silently keeps the engine's own default (black, in some
+    # versions) would multiply every pack surface to nothing, which is a
+    # black street rather than a graded one: the loudest possible failure is
+    # the one worth engineering for here, and a note is how it reaches the
+    # verdict line.
+    grade_default_set = False
+    try:
+        grade.set_editor_property("default_value",
+                                  unreal.LinearColor(*VECTOR_PARAM_DEFAULT))
+        grade_default_set = True
+    except Exception:
+        try:
+            grade.set_editor_property("default_value", VECTOR_PARAM_DEFAULT)
+            grade_default_set = True
+        except Exception:
+            pass
+    if not grade_default_set:
+        w.notes.append("albedograde-default-REFUSED-both-ways/parameter-"
+                       "may-be-black-and-would-darken-every-pack-surface-to-zero")
+    grade_mul = expr(unreal.MaterialExpressionMultiply, -120, -340)
+
+    def sampler(name, y, sampler_type, default_tex, prop, out_pin, label,
+                via=None, via_pin="A"):
         s = expr(unreal.MaterialExpressionTextureSampleParameter2D, -300, y)
         s.set_editor_property("parameter_name", name)
         # THE TEXTURE BEFORE THE TYPE, AND THE TYPE ONLY WHEN IT EXISTS. A
@@ -3065,7 +3192,16 @@ def main():
             except Exception:
                 w.notes.append("%s-samplertype-refused" % label)
         connect(app, "", s, "UVs", "%s-uvs" % label)
-        if connect_prop(s, out_pin, prop, "%s-out" % label):
+        # A SAMPLER WITH A via GOES THROUGH IT, AND made STILL MEANS THE SAME
+        # THING: this parameter's output reached the graph. The hop from the
+        # multiply to Base Color is its own counted connection below, so a
+        # base colour that never reaches the property still shows as a short
+        # materialConnections and cannot hide behind a full materialParamsMade.
+        if via is None:
+            landed = connect_prop(s, out_pin, prop, "%s-out" % label)
+        else:
+            landed = connect(s, out_pin, via, via_pin, "%s-out-to-grade" % label)
+        if landed:
             made.append(name)
         return s
 
@@ -3082,7 +3218,14 @@ def main():
              (mp.MP_ROUGHNESS, "R", "roughness", 300))):
         tex, _source, _path, got, asked, _reading = resolved[I]
         sampler(TEXTURE_PARAMS[I], y,
-                _sampler_enum(unreal, got or asked), tex, prop, out_pin, label)
+                _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
+                via=grade_mul if prop == mp.MP_BASE_COLOR else None)
+
+    # The other two wires of the grade. B rather than A because the sampler
+    # took A, and the pair is what makes the multiply a multiply rather than
+    # a node with one input.
+    connect(grade, "", grade_mul, "B", "albedograde-to-grade")
+    connect_prop(grade_mul, "", mp.MP_BASE_COLOR, "grade-to-basecolor")
 
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------
     # RUN 23 ASKED FOR A RECOMPILE, CAUGHT AN EXCEPTION THAT NEVER CAME AND
@@ -3124,7 +3267,9 @@ def main():
     for getter, wanted, what in (("get_texture_parameter_names", TEXTURE_PARAMS,
                                   "texture"),
                                  ("get_scalar_parameter_names", SCALAR_PARAMS,
-                                  "scalar")):
+                                  "scalar"),
+                                 ("get_vector_parameter_names", VECTOR_PARAMS,
+                                  "vector")):
         fn = getattr(mel, getter, None)
         if fn is None:
             report.append("# %s is not available in this engine version"

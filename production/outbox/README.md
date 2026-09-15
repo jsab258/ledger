@@ -27,8 +27,16 @@ the decay the recursive walk exists to stop.
 ## The name carries the kind, because the gate must not guess
 
     <YYYY-MM-DD>-<slug>.unprompted.md     120 words, the full shape
-    <YYYY-MM-DD>-<slug>.brief.md          150 words, the full shape
     <YYYY-MM-DD>-<slug>.answer.md         he asked, so the length follows
+    <YYYY-MM-DD>-<slug>.brief.md          RETIRED 2026-09-15, refused on send
+
+THE BRIEF REGISTER IS RETIRED FROM THIS DIRECTORY, queue 291. The suffix is
+still RECOGNISED, so the refusal can name the path that works instead of
+reading as a nameless register; `tools/runner/outbox.py:sweep` refuses it
+AFTER its already-sent check, so the nine `.brief.md` files already here, all
+of which carry receipts, are untouched and none of them grows a refusal
+record. The day's message lives at `production/briefs/<YYYY-MM-DD>.md`, where
+`--send-brief` sends it once with two buttons on it.
 
     2026-09-03-street-textures.unprompted.md
     2026-09-03-how-many-objects.answer.md
