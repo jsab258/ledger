@@ -1,0 +1,17 @@
+receipt: sent-with-photo
+file: production/briefs/2026-09-15.md
+kind: brief
+photoRef: game-design/sim-shots/grade_three_way.jpg
+fileCommit: e7564eb578d93ca1c124c9f729dc271d4db08bbc
+fileCommitEpoch: 1789443185
+sent: 2026-09-15T03:34:08+00:00
+sentEpoch: 1789443248
+messageId: 99
+chars: 947
+photoSizes: 78x90/279x320/697x800/1115x1280/1192x1369
+photoSizeCount: 5
+outboundLatencySec: 63
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+buttons: 2/2
+note: one sample of one message, not a rate.
