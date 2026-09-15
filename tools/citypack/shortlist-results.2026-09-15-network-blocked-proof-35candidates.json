@@ -1,0 +1,179 @@
+{
+ "_status": [
+  "DEAD RUN, KEPT AS EVIDENCE, NOT A CANDIDATE VERDICT. 2026-09-15, run inside",
+  "the dev container, not CI. Attempted 35 candidates (a since-superseded spread",
+  "of 10 per surface for kerb/metal/concrete, all 5 remaining for plaster)",
+  "against tools/citypack/shortlist-candidates.json AS IT STOOD THAT RUN, not as",
+  "it stands now.",
+  "",
+  "0 of 35 arrived. Every one failed with the SAME error, 'URLError: <urlopen",
+  "error Tunnel connection failed: 403 Forbidden>' -- confirming ambientcg.com is",
+  "unreachable from the dev container (matching fetch_textures.py's own header)",
+  "and, just as importantly, that the code fails PER CANDIDATE, cleanly and",
+  "informatively, rather than crashing the run. That is the only thing this file",
+  "is evidence OF.",
+  "",
+  "tools/citypack/shortlist-candidates.json now holds 230 ids (kerb 67, metal",
+  "100, plaster 5, concrete 58), widened after this run, and this file DOES NOT",
+  "REFLECT THAT LIST. A live run (CI, real network) writes to",
+  "tools/citypack/shortlist-results.json -- the un-suffixed name -- and that is",
+  "the file to read once one exists. Until then, that path has no file, which is",
+  "the honest state: NOTHING MEASURED, not this file moved back into its place."
+ ],
+ "resolution": "1K-JPG",
+ "surfaces": {
+  "concrete": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 107.2,
+    "lumSD": 9.3,
+    "chromaSpread": 6.8,
+    "file": "concrete.jpg"
+   },
+   "candidates": {
+    "Concrete001": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete007": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete014": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete021": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete027": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete035": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete041A": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete042D": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete044C": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Concrete048": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+   }
+  },
+  "kerb": {
+   "current": {
+    "width": 2048,
+    "height": 1024,
+    "lumMean": 184.3,
+    "lumSD": 6.6,
+    "chromaSpread": 0.0,
+    "file": "kerb.jpg"
+   },
+   "candidates": {
+    "Rock001": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock008": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock016": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock023": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock030": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock038": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock043S": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock049": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock057": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Rock064": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+   }
+  },
+  "metal": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 134.8,
+    "lumSD": 4.6,
+    "chromaSpread": 22.5,
+    "file": "metal.jpg"
+   },
+   "candidates": {
+    "Metal001": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal012": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal023": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal035": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal043A": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal048B": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal052A": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal055C": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal059B": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Metal063": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+   }
+  },
+  "plaster": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 211.7,
+    "lumSD": 5.8,
+    "chromaSpread": 7.2,
+    "file": "plaster.jpg"
+   },
+   "candidates": {
+    "Plaster003": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Plaster004": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Plaster005": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Plaster006": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    },
+    "Plaster007": {
+     "error": "URLError: <urlopen error Tunnel connection failed: 403 Forbidden>"
+    }
+   }
+  }
+ }
+}

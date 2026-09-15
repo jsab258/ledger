@@ -44,7 +44,11 @@
 // ONE OWNER PER GLOBAL, WHICH THIS PROJECT HAS PAID FOR TWICE. ApplyCondition
 // below is the ONLY writer of the fog, the sun and the ambient fill, and it
 // writes all three every time a condition changes. Two writers on one render
-// setting is how a fog calibration was lost for a week.
+// setting is how a fog calibration was lost for a week. SINCE QUEUE 309 it
+// owns the street's WETNESS on the same terms, through ReDriveWetness: the
+// Wetness scalar and the AlbedoGrade vector on every ground piece's material
+// instance are written by that function and by nothing else once BindSurfaces
+// has seeded them, and it is the only caller.
 #include "VignetteShot.h"
 #include "VignetteSpec.h"
 #include "FrameStats.h"
@@ -625,14 +629,20 @@ namespace
 	// line. Its denominator is the pieces the loop EXAMINED, never the count
 	// the file asked for.
 	LedgerSurface::PaintTally GPaint;
-	// THE ONE WETNESS THIS RUN BINDS, QUEUE 186. Chosen once, in
-	// SurfaceBind.h where g++ runs the choosing, and read by the piece loop
-	// below. It is STATIC for the whole run and the verdict says so: nothing
-	// keeps the material instances, so ApplyCondition has no handle to
-	// re-drive this per condition, and making it keep one is a design call
-	// this change does not make. See WetnessForBind's block for the counts
-	// that size the compromise.
+	// THE WETNESS THIS RUN SEEDS ITS INSTANCES WITH, QUEUE 186. Chosen once,
+	// in SurfaceBind.h where g++ runs the choosing, and read by the piece
+	// loop below. IT IS A SEED AND NOT THE RUN'S WETNESS SINCE QUEUE 309:
+	// BindSurfaces runs inside BuildScene, before any condition exists, so
+	// this is what every instance is MADE with and nothing more. What each
+	// frame is photographed at is driven per condition by ReDriveWetness
+	// below, and the verdict prints both under different names.
 	LedgerSurface::WetnessChoice GWetness;
+	// THE PER-CONDITION RE-DRIVE'S GUARD AND ITS TALLIES, QUEUE 309. Written
+	// by ReDriveWetness and by nothing else, which is the same rule the sun,
+	// the fills, the fog and the sky already live under; ReDriveWetness in
+	// turn is called by ApplyCondition and by nothing else. The decision, the
+	// counts and every string are in SurfaceBind.h where g++ runs them.
+	LedgerSurface::WetRedrive GWetRedrive;
 	std::string GMaterialsLine =
 		"materialsStatus=NOT-REACHED materialsNote=the-material-pass-never-ran";
 
@@ -1558,9 +1568,173 @@ namespace
 		    && GAtmosphere->FindComponentByClass<USkyAtmosphereComponent>() != nullptr;
 	}
 
-	// THE ONLY WRITER OF THE SUN, THE FILL, THE FOG AND THE SKY. Every
-	// condition change writes all of them, so no setting can carry over from
-	// the previous shot and be attributed to this one.
+	// ---- QUEUE 309: THE WETNESS, RE-DRIVEN ON THE INSTANCES THE SCENE
+	// ALREADY KEEPS -------------------------------------------------------
+	//
+	// RULED 2026-09-15 07:55Z: NO NEW GLOBAL AND NO SECOND LIST. Queue 186
+	// bound one wetness for the whole run because nothing kept the material
+	// instances it made. The scene DOES keep them: every piece actor holds a
+	// static mesh component and BindSurfaces called Comp->SetMaterial(0, Mid)
+	// on it, which run ce99814 proved by asking rather than by assuming
+	// (compMaterialIsMid=is-the-instance-we-made on every reached line). So
+	// this is the owner, the list is the scene, and no second one exists.
+	//
+	// WHY THE WALK IS OVER GSpec.Pieces AND NOT OVER GByName'S KEYS, which
+	// is the one place this departs from the ruling's wording and is worth a
+	// reader's minute. The ruling says "walk GByName". GByName maps a piece
+	// NAME to an actor and carries no surface, and WetBindFor's membership
+	// test is IsGroundSurface(surface): a walk over the map alone cannot ask
+	// the question. This walks the shared file's pieces, which is where the
+	// surface is, and resolves each one through GByName.Find, which is the
+	// idiom BindSurfaces itself uses at its piece loop and the lit-window
+	// pass uses before it. Nothing is stored, nothing is listed, and the
+	// membership is still IsGroundSurface via the same two tested functions.
+	//
+	// WHAT THIS FILE DECIDES: nothing. Whether a walk happens at all
+	// (WetRedriveNeeded), which pieces may be touched (WetRedriveTouches),
+	// what each parameter becomes (WetBindFor, WetGradeFor) and every printed
+	// string are in SurfaceBind.h, which g++ compiles and runs before any
+	// dispatch. This supplies the walk and live state only.
+	void ReDriveWetness(const Condition& C)
+	{
+		LedgerSurface::WetRedriveAsked(GWetRedrive);
+		const double Want = LedgerSurface::WetClamp01(C.Wetness);
+		// THE WRITE-ON-CHANGE GUARD, AND IT IS HERE FOR A MEASURED REASON
+		// rather than a feared one: this function's caller is re-entered on
+		// EVERY tick while a condition settles, so a naive re-drive is one
+		// parameter write per piece per tick over 593 pieces. The sky in
+		// ApplyCondition below carries the same guard for the same reason.
+		// Both counters ride the materials done line, so nobody has to take
+		// this comment's word for it.
+		if (!LedgerSurface::WetRedriveNeeded(GWetRedrive, Want))
+		{
+			LedgerSurface::WetRedriveSkipped(GWetRedrive);
+			return;
+		}
+		LedgerSurface::WetRedriveWalked(GWetRedrive, Want, C.Id);
+		// ONE READBACK PER SURFACE PER WALK, WHICH IS THE BIND'S OWN RULE.
+		// A flag per surface and not per piece: 593 pieces would answer one
+		// question about the material 593 times. This is
+		// a local of this walk and not a kept list; it is sized by the bind
+		// records, which exist either way.
+		std::vector<bool> ReadTaken(GBinds.size(), false);
+		bool bRunReadTaken = false;
+		for (size_t P = 0; P < GSpec.Pieces.size(); ++P)
+		{
+			const Piece& Pc = GSpec.Pieces[P];
+			int32 Idx = -1;
+			for (size_t I = 0; I < GBinds.size(); ++I)
+			{
+				if (GBinds[I].Surface == Pc.Surface) { Idx = (int32)I; break; }
+			}
+			if (Idx < 0)
+			{
+				LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_NoBind);
+				continue;
+			}
+			// THE SAME DECISION THE BIND MADE, RE-RUN FROM THE SAME THREE
+			// INPUTS rather than remembered. A decal card's instance is real
+			// and carries neither of these two parameters on purpose, so a
+			// walk that wrote to every MID it found would put an AlbedoGrade
+			// on ten shop signs and ten posters in the judged frame.
+			const LedgerSurface::EPaintRoute Route = LedgerSurface::RouteFor(
+				Pc.Surface, Pc.Shape == "decal",
+				LedgerSurface::IsResolved(GBinds[(size_t)Idx]));
+			if (!LedgerSurface::WetRedriveTouches(Route))
+			{
+				LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_NotOurRoute);
+				continue;
+			}
+			AStaticMeshActor** Found = GByName.Find(FString(UTF8_TO_TCHAR(Pc.Name.c_str())));
+			if (Found == nullptr || *Found == nullptr)
+			{
+				LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_NoActor);
+				continue;
+			}
+			UStaticMeshComponent* Comp = (*Found)->GetStaticMeshComponent();
+			if (Comp == nullptr)
+			{
+				LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_NoComponent);
+				continue;
+			}
+			// THE INSTANCE, OFF THE COMPONENT, AND THE CAST IS THE WHOLE
+			// TEST. A component still wearing the parent material answers
+			// with a UMaterialInterface that is not a dynamic instance, and
+			// setting a parameter on that is a write to the asset rather than
+			// to this piece. Cast returning null is counted and named, never
+			// worked around.
+			UMaterialInstanceDynamic* Mid =
+				Cast<UMaterialInstanceDynamic>(Comp->GetMaterial(0));
+			if (Mid == nullptr)
+			{
+				LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_NoMid);
+				continue;
+			}
+			// BOTH PARAMETERS, THROUGH THE TWO FUNCTIONS THE BIND USED, with
+			// the same two inputs: the surface name and whether that surface's
+			// albedo texture actually bound. The second is read off the bind
+			// record because the texture array that answered it lives inside
+			// BindSurfaces and is gone by now.
+			const bool bAlbedoBound = GBinds[(size_t)Idx].bAlbedoBound;
+			const LedgerSurface::WetBind Wet =
+				LedgerSurface::WetBindFor(GBinds[(size_t)Idx].Surface, bAlbedoBound, Want);
+			const LedgerSurface::Grade Graded =
+				LedgerSurface::WetGradeFor(GBinds[(size_t)Idx].Surface, bAlbedoBound, Want);
+			Mid->SetVectorParameterValue(
+				FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
+				FLinearColor((float)Graded.R, (float)Graded.G,
+				             (float)Graded.B, 1.0f));
+			Mid->SetScalarParameterValue(
+				FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
+				(float)Wet.Wetness);
+			LedgerSurface::WetRedriveVisit(GWetRedrive, LedgerSurface::WetRedrive_Wrote);
+			// AND THE SURFACE'S OWN RECORD FOLLOWS THE WRITE, so the
+			// per-surface line and the frame cannot disagree about which
+			// condition's wetness the street is wearing. LAST-WINS by
+			// construction, and wetSetStat says so on the line.
+			GBinds[(size_t)Idx].Wet = Wet;
+			GBinds[(size_t)Idx].bWetSet = true;
+			GBinds[(size_t)Idx].Graded = Graded;
+			GBinds[(size_t)Idx].bGradeSet = true;
+			GBinds[(size_t)Idx].WetFrom = C.Id;
+			// AND THE READBACK, ONCE PER SURFACE PER WALK, ON THE FIRST PIECE
+			// OF THAT SURFACE THE WALK WROTE. Asked in the same few statements
+			// as the set, so nothing in between can explain a difference, and
+			// it is the key that answers "dead write or not" for the re-drive
+			// exactly as the bind's own readback answers it for the bind.
+			// WHAT IT CANNOT SEE is what the bind's readback cannot see: this
+			// is the game thread's copy, not the render proxy, and the control
+			// quads are the render side of that question.
+			//
+			// bAsked IS NOT TOUCHED HERE, deliberately. It means "the bind
+			// made an instance for this surface and asked it for its texture
+			// and tiling back", and a re-drive asks neither; widening it would
+			// move what a key means without moving its name. The wetness half
+			// of the readback is the half a re-drive owns, and the run's copy
+			// of it rides wetnessRedriveSetGot on the done line where no
+			// bAsked gate stands in front of it.
+			if (!ReadTaken[(size_t)Idx])
+			{
+				ReadTaken[(size_t)Idx] = true;
+				const double Got = (double)Mid->K2_GetScalarParameterValue(
+					FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())));
+				LedgerSurface::Readback& RB = GBinds[(size_t)Idx].Read;
+				RB.bWetAsked = true;
+				RB.SetWet = Wet.Wetness;
+				RB.GotWet = Got;
+				RB.bWetSame = LedgerSurface::ScalarMatches(RB.SetWet, RB.GotWet);
+				if (!bRunReadTaken)
+				{
+					bRunReadTaken = true;
+					LedgerSurface::WetRedriveReadback(GWetRedrive, Wet.Wetness, Got);
+				}
+			}
+		}
+	}
+
+	// THE ONLY WRITER OF THE SUN, THE FILL, THE FOG, THE SKY AND THE WETNESS.
+	// Every condition change writes all of them, so no setting can carry over
+	// from the previous shot and be attributed to this one.
 	//
 	// THE FILLS ARE RETIRED WHEN THE SKY IS WHOLE, AND ONLY THEN. Two
 	// sources of ambient light in one scene is the fault this file's own
@@ -1694,6 +1868,14 @@ namespace
 				SC->RecaptureSky();
 			}
 		}
+		// ---- AND THE WETNESS, QUEUE 309, ON THE SAME WRITE-ON-CHANGE RULE
+		//
+		// LAST IN THE FUNCTION AND NOT FIRST, for one reason: everything
+		// above writes a handful of components and this walks the street, so
+		// a condition that fails to light is not also a condition that spent
+		// its tick in a piece loop. The order has no other meaning; a
+		// material parameter and a light are not read by each other.
+		ReDriveWetness(C);
 	}
 
 	// ---- QUEUE 186: WHAT THE SKY ACTUALLY IS, READ WHEN IT IS ASKED ------
@@ -2335,7 +2517,15 @@ namespace
 		{
 			Out.Add(TEXT("# no surface line: the material pass did not reach a surface."));
 		}
-		Out.Add(FString(UTF8_TO_TCHAR(GMaterialsLine.c_str())));
+		// THE RE-DRIVE'S TALLIES ARE APPENDED HERE AND NOT BUILT INTO
+		// GMaterialsLine, AND THE REASON IS A TIMING ONE. That line is
+		// composed at the end of BindSurfaces, which runs inside BuildScene
+		// before any condition has been applied, so a re-drive count built
+		// there would read 0 walks of 0 calls on every run for ever: stale
+		// rather than wrong in a way anybody could see. This is the same
+		// reason SkySegmentNow is taken when a verdict asks for the line.
+		Out.Add(FString(UTF8_TO_TCHAR(
+			(GMaterialsLine + LedgerSurface::WetRedriveSegment(GWetRedrive)).c_str())));
 		// THE DECALS, AFTER THE SURFACES, because card and multiply appear on
 		// both: as two surface names that are NOT library surfaces, and here as
 		// twenty pieces each carrying its own picture. A cap on the lines would
@@ -2846,6 +3036,29 @@ namespace
 		// last-wins.
 		Line += " ";
 		Line += ExposurePinNow();
+		// AND WHAT WETNESS THIS FRAME WAS PHOTOGRAPHED AT, QUEUE 309, asked
+		// beside carried. PER-SAMPLE AND UNDER ITS OWN KEY NAMES, because the
+		// surface line's wetSet is last-wins over the run and cannot tell a
+		// value re-driven per condition from a value set once to the last
+		// condition's number. shotWetnessAgrees is the whole reading: the
+		// wetness this row's condition ASKS for against the wetness the
+		// street is CARRYING at the moment the shutter opens.
+		{
+			LedgerSurface::WetShotIn WS;
+			WS.AskedFrom = S.ConditionId;
+			if (const Condition* WC = FindCondition(S.ConditionId))
+			{
+				WS.Asked = WC->Wetness;
+			}
+			WS.bEverApplied = GWetRedrive.bEverApplied;
+			WS.OnPieces     = GWetRedrive.LastWetness;
+			WS.WalkedAt     = GWetRedrive.LastFrom;
+			// NO SEPARATOR ADDED: WetShotFields opens with its own space, the
+			// habit every Wet* segment in SurfaceBind.h follows, and a second
+			// one here would put two spaces in a line every reader splits on
+			// whitespace.
+			Line += LedgerSurface::WetShotFields(WS);
+		}
 		GShotLines.push_back(Line);
 		// ---- THE LADDER'S ROWS, AND WHAT CAME BEFORE THEM -----------------
 		//
@@ -3923,6 +4136,14 @@ namespace
 			GBinds[(size_t)Idx].bGradeSet = true;
 			GBinds[(size_t)Idx].Wet = Wet;
 			GBinds[(size_t)Idx].bWetSet = true;
+			// AND WHETHER THE ALBEDO BOUND, QUEUE 309, recorded rather than
+			// recomputed: ReDriveWetness has to hand WetBindFor and
+			// WetGradeFor the SAME second argument this line just did, and
+			// Maps is local to this function. bAlbedo on the WetBind above
+			// cannot stand in for it, because a wall's albedo can bind and
+			// still leave bAlbedo false: that flag is albedo-bound AND
+			// in-WetSurfaces, and this is only the first half.
+			GBinds[(size_t)Idx].bAlbedoBound = bAlbedoBound;
 
 			// THE READBACK, ONCE PER SURFACE, ON THE FIRST INSTANCE MADE FOR
 			// IT. The engine is asked for the parameter straight back, in the

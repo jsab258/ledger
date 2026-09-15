@@ -941,33 +941,36 @@ namespace LedgerSurface
 	}
 
 
-	// ---- WHICH WETNESS THE BIND USES, AND THE HONEST ANSWER IS "ONE" -----
+	// ---- WHICH WETNESS THE BIND SEEDS ITS INSTANCES WITH -----------------
 	//
-	// BindSurfaces RUNS ONCE, inside BuildScene, BEFORE ANY CONDITION IS
-	// APPLIED. Measured rather than recalled: VignetteShot.cpp calls it at
-	// line 1506 and the first ApplyCondition is at 4259, inside the shot
-	// loop. So there is no condition in force at the moment a material
-	// instance is made, and the instance is the only thing that can carry a
-	// parameter.
+	// THIS WAS "THE ONE WETNESS THE RUN USES" UNTIL QUEUE 309, 2026-09-15,
+	// AND IT IS A SEED NOW. The paragraph the heading used to carry said
+	// nothing keeps the instances, so ApplyCondition cannot re-drive a
+	// parameter per condition, and called that a design call the batch did
+	// not make. The ruling of 07:55Z made it: the scene was keeping every
+	// instance all along, on the component of every piece actor, and
+	// ApplyCondition re-drives both parameters off GetMaterial(0) per
+	// condition. So the sentences below are about a SEED, and every count
+	// this struct carries is a count about that seed and not about any frame.
 	//
-	// AND NOTHING KEEPS THE INSTANCES. MIDs are created per piece in
-	// BindSurfaces and assigned to components; no list is kept, so
-	// ApplyCondition has no handle on them and CANNOT re-drive a parameter
-	// per condition. Queue 186 says so in its own text and calls the list a
-	// new global that wants an owner named. THAT IS A DESIGN CALL AND IT IS
-	// NOT MADE HERE.
+	// BindSurfaces STILL RUNS ONCE, inside BuildScene, BEFORE ANY CONDITION
+	// IS APPLIED, and that has not changed: there is no condition in force at
+	// the moment a material instance is made, and the instance is the only
+	// thing that can carry a parameter. Something has to be handed to it, and
+	// this is the rule for what.
 	//
-	// SO THIS IS A STATIC CHOICE AND IT IS PRINTED AS ONE. The rule is the
-	// interactive path's own rule at VignetteShot.cpp:4420, which is already
-	// the project's answer to "which condition is THE street's condition":
-	// the shared file's own first shot, then overcast_day, then conditions[0].
-	// A second opinion about that would put two answers in one project.
+	// THE RULE IS THE INTERACTIVE PATH'S OWN, which is already the project's
+	// answer to "which condition is THE street's condition": the shared
+	// file's own first shot, then overcast_day, then conditions[0]. A second
+	// opinion about that would put two answers in one project.
 	//
-	// WHAT MAKES IT READABLE RATHER THAN A GUESS: the count of shots the
-	// choice is RIGHT for, over every shot offered. On the committed spec
-	// that is 35 of 43, because eight rows carry a different wetness, and
-	// those eight photograph a street at the wrong one. A reader of the
-	// verdict learns the size of the compromise without opening this file.
+	// WHAT THE COUNTS MEAN NOW. ShotsAtValue over ShotsExamined was the size
+	// of the static bind's compromise, because the shots at another wetness
+	// were photographed at the wrong one. Since 309 every shot is
+	// photographed at its own, so the gap is no longer a compromise: it is
+	// how many shots needed no re-drive at all, and wetnessRedriveWalks on
+	// the done line is the number that says what the re-drive did. On the
+	// committed spec the seed is right for 35 of 43 without a walk.
 	struct WetnessChoice
 	{
 		double      Value;
@@ -1539,6 +1542,22 @@ namespace LedgerSurface
 		// different next actions and one of them is a dead write.
 		WetBind     Wet;
 		bool        bWetSet = false;
+		// WHICH CONDITION'S WETNESS THIS SURFACE IS CURRENTLY CARRYING,
+		// QUEUE 309. Wet above used to be written once, at bind time, and
+		// was therefore the whole story; ApplyCondition now re-drives it per
+		// condition, so Wet is LAST-WINS over the conditions the run applied
+		// and a value with no condition beside it would not say which frame
+		// it describes. The words below are what a run that never re-drove
+		// anything prints, so "the bind's own seed" can never read as "the
+		// last condition asked for this".
+		std::string WetFrom = "bind-time-seed/no-condition-was-applied-after-it";
+		// WHETHER THIS SURFACE'S ALBEDO TEXTURE ACTUALLY BOUND, recorded at
+		// the bind site for the reason Graded is: the re-drive has to hand
+		// WetBindFor and WetGradeFor the SAME two inputs BindSurfaces handed
+		// them or the two would disagree about the colour half, and the
+		// texture array that answered the question at bind time is local to
+		// that function and gone by the time a condition is applied.
+		bool        bAlbedoBound = false;
 		double      TileU = 0.0;          // the last piece's tiling, as a sample
 		double      TileV = 0.0;
 		// WHAT THE FIRST INSTANCE OF THIS SURFACE ANSWERED WHEN ASKED. Kept
@@ -1664,6 +1683,285 @@ namespace LedgerSurface
 		return std::string(Buf) + WetTotal;
 	}
 
+	// ---- QUEUE 309: THE PER-CONDITION RE-DRIVE, AND ITS GUARD ------------
+	//
+	// RULED 2026-09-15 07:55Z: NO NEW GLOBAL AND NO SECOND LIST. Queue 186
+	// left the wetness static because nothing kept the material instances it
+	// made, and called a list of them a new global wanting an owner. The
+	// ruling refused the list: the scene ALREADY keeps every instance, on the
+	// component of every piece actor, and run ce99814 proved it by asking
+	// (compMaterialIsMid=is-the-instance-we-made on every reached line). So
+	// the owner is ApplyCondition, the list is the scene, and what lives here
+	// is the decision, the counts and every printed string.
+	//
+	// WHAT THE .cpp SUPPLIES: the walk and live state. Which pieces exist,
+	// which component answers with a dynamic instance, and the condition in
+	// force. Not one word of the string below is decided up there, for the
+	// reason this whole header exists: VignetteShot.cpp does not compile in
+	// the container the tests run in, so arithmetic written there ships
+	// UNRUN and an unrun formatter printing a plausible string is the
+	// silent-instrument failure.
+	//
+	// WHY THIS BLOCK SITS HERE AND NOT BESIDE WetBindFor. The guard compares
+	// two wetnesses, and this project has exactly ONE scalar tolerance,
+	// ScalarMatches, declared above. A second epsilon written 600 lines
+	// earlier so the block could sit with its relatives would be two
+	// tolerances for one job, which is the shape every duplicated rule in
+	// this file has been corrected back from.
+
+	// WHICH PIECES A RE-DRIVE MAY TOUCH, AND IT IS NOT "EVERY PIECE THAT
+	// CARRIES AN INSTANCE". THE TRAP, NAMED BEFORE THE CODE: the decal-card
+	// route in BindSurfaces also creates a dynamic instance and deliberately
+	// sets NEITHER AlbedoGrade NOR Wetness on it, so a walk that re-drove
+	// every MID it found would write two parameters onto ten shop signs and
+	// ten posters that have never carried them, and would do it in the frame
+	// rung 1 is judged on. The routes below are exactly the ones whose
+	// instances BindSurfaces sets the pair on: it handles both decal routes
+	// and `continue`s, and everything that falls through is pack or tint.
+	// RouteFor is the same decision the bind used, re-run from the same three
+	// inputs, so no membership is stored anywhere.
+	inline bool WetRedriveTouches(EPaintRoute R)
+	{
+		return R == Paint_Pack || R == Paint_Tint;
+	}
+
+	// EVERY OUTCOME OF ONE PIECE'S VISIT IS COUNTED, because "the walk wrote
+	// nothing" and "the walk found nothing it was allowed to write on" are
+	// different findings with different next actions, and a bare
+	// piecesWritten=0 reads as the first when it is usually the second.
+	enum EWetRedriveOutcome
+	{
+		WetRedrive_Wrote = 0,     // both parameters written on this piece
+		WetRedrive_NotOurRoute,   // a decal card, a stain, or nothing painted it
+		WetRedrive_NoActor,       // the piece name is in the file and not in the scene
+		WetRedrive_NoComponent,   // the actor has no static mesh component
+		WetRedrive_NoMid,         // GetMaterial(0) is not a dynamic instance
+		WetRedrive_NoBind,        // the piece's surface is in no bind record
+		WetRedrive_OutcomeCount
+	};
+
+	// THE WRITE-ON-CHANGE GUARD'S STATE AND ITS WHOLE-RUN TALLIES.
+	//
+	// WHY A GUARD AT ALL, and it is a measurement rather than a worry:
+	// ApplyCondition is re-entered on EVERY tick while a condition settles,
+	// and the sky above it carries the same guard for the same reason with
+	// its own two counters. A naive re-drive is one parameter write per piece
+	// per tick over 593 pieces, and nothing in a verdict would say so.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF, and all of them are CUMULATIVE over
+	// the whole run rather than per shot:
+	//   Calls        times ApplyCondition asked for a wetness. Ticks, not
+	//                shots: this is the denominator the guard is read against.
+	//   Walks        times the guard let a walk run, which is once per
+	//                CHANGED wetness and not once per tick. Walks + Skipped
+	//                is Calls, and a line that breaks that identity says so.
+	//   Skipped      asks the guard refused because the wetness had not moved.
+	//   PieceVisits  pieces examined across every walk that ran.
+	//   Out[]        what became of each of those visits, one bucket each.
+	struct WetRedrive
+	{
+		double      LastWetness;
+		bool        bEverApplied;
+		std::string LastFrom;
+		int         Calls, Walks, Skipped, PieceVisits;
+		int         Out[WetRedrive_OutcomeCount];
+		// THE READBACK TAKEN AT THE LAST WALK, on the first piece that walk
+		// wrote. A value that lands on the game thread's copy and never
+		// reaches the render proxy still reads back same-value, which is what
+		// the control quads answer; this answers the other half, which is
+		// whether the material carries the parameter at all.
+		bool        bReadAsked;
+		bool        bReadSame;
+		double      ReadSet, ReadGot;
+		WetRedrive()
+			: LastWetness(0.0), bEverApplied(false),
+			  LastFrom("no-condition-was-applied"),
+			  Calls(0), Walks(0), Skipped(0), PieceVisits(0),
+			  bReadAsked(false), bReadSame(false), ReadSet(0.0), ReadGot(0.0)
+		{
+			for (int I = 0; I < WetRedrive_OutcomeCount; ++I) { Out[I] = 0; }
+		}
+	};
+
+	// THE DECISION, AND IT IS THE WHOLE GUARD. A first application always
+	// writes, because "nothing has been applied yet" is not "the value has
+	// not moved": the instances carry the bind-time seed and the first
+	// condition may disagree with it. After that it is the one tolerance.
+	inline bool WetRedriveNeeded(const WetRedrive& G, double Wetness)
+	{
+		if (!G.bEverApplied) { return true; }
+		return !ScalarMatches(G.LastWetness, WetClamp01(Wetness));
+	}
+
+	inline void WetRedriveAsked(WetRedrive& G) { ++G.Calls; }
+
+	inline void WetRedriveSkipped(WetRedrive& G) { ++G.Skipped; }
+
+	// LATCHED ON THE ASK AND NOT ON A SUCCESSFUL WRITE, deliberately. The
+	// guard's question is "has this value already been walked for", and a
+	// scene in which no piece could be written is a scene where walking again
+	// next tick would find the same nothing 593 times a second. What that
+	// failure costs instead is visibility, and it is paid for in full: the
+	// outcome buckets below print which refusal happened and how often, so a
+	// walk that wrote zero pieces is a NUMBER on the line rather than a
+	// silent re-walk nobody can see.
+	inline void WetRedriveWalked(WetRedrive& G, double Wetness,
+	                             const std::string& CondId)
+	{
+		G.LastWetness  = WetClamp01(Wetness);
+		G.bEverApplied = true;
+		G.LastFrom     = CondId;
+		++G.Walks;
+	}
+
+	inline void WetRedriveVisit(WetRedrive& G, EWetRedriveOutcome O)
+	{
+		++G.PieceVisits;
+		if ((int)O >= 0 && (int)O < WetRedrive_OutcomeCount) { ++G.Out[(int)O]; }
+	}
+
+	inline void WetRedriveReadback(WetRedrive& G, double Set, double Got)
+	{
+		G.bReadAsked = true;
+		G.ReadSet    = Set;
+		G.ReadGot    = Got;
+		G.bReadSame  = ScalarMatches(Set, Got);
+	}
+
+	// THE WHOLE-RUN SEGMENT, FOR THE MATERIALS DONE LINE. Whole-run keys
+	// only: every number here is cumulative over the run and none of them is
+	// true of one frame, so none may ride a shot line. The per-frame half is
+	// WetShotFields below and carries different key names on purpose.
+	//
+	// A RUN THAT NEVER APPLIED A CONDITION PRINTS THE WORDS. `0/0` and "the
+	// owner was never called" read alike to a grep and are different facts.
+	inline std::string WetRedriveSegment(const WetRedrive& G)
+	{
+		if (G.Calls == 0)
+		{
+			return " wetnessNow=nothing-measured wetnessNowFrom=no-condition-was-applied"
+			       " wetnessRedriveWalks=nothing-measured/of=0/ApplyCondition-calls"
+			       " wetnessRedriveSkipped=nothing-measured/of=0/ApplyCondition-calls"
+			       " wetnessRedriveWrote=nothing-measured/of=0/piece-visits"
+			       " wetnessRedriveRefused=nothing-measured"
+			       " wetnessRedriveReadback=not-asked wetnessRedriveSetGot=not-asked"
+			       " wetnessRedriveStat=whole-run/cumulative/ApplyCondition-was-never-"
+			       "called-so-no-wetness-was-ever-driven-and-the-pieces-carry-the-bind-seed";
+		}
+		char Buf[860];
+		std::snprintf(Buf, sizeof(Buf),
+			" wetnessNow=%.4f wetnessNowFrom=%s"
+			" wetnessRedriveWalks=%d/of=%d/ApplyCondition-calls/"
+			"one-walk-per-CHANGED-wetness-and-not-one-per-settle-tick"
+			" wetnessRedriveSkipped=%d/of=%d/ApplyCondition-calls/"
+			"the-guard-refused-an-unchanged-wetness"
+			" wetnessRedriveWrote=%d/of=%d/piece-visits-across-the-walks-that-ran"
+			" wetnessRedriveRefused=notOurRoute.%d/noBind.%d/noActor.%d/"
+			"noComponent.%d/noMid.%d"
+			" wetnessRedriveReadback=%s wetnessRedriveSetGot=%.4f..%.4f"
+			" wetnessRedriveStat=whole-run/cumulative-over-every-walk/"
+			"walks-plus-skipped-is-calls/wrote-over-piece-visits-and-NOT-over-"
+			"pieces-in-the-file/readback-is-the-last-walks-first-written-piece",
+			G.bEverApplied ? G.LastWetness : 0.0,
+			LedgerVignette::NoSpaces(G.LastFrom).c_str(),
+			G.Walks, G.Calls, G.Skipped, G.Calls,
+			G.Out[WetRedrive_Wrote], G.PieceVisits,
+			G.Out[WetRedrive_NotOurRoute], G.Out[WetRedrive_NoBind],
+			G.Out[WetRedrive_NoActor], G.Out[WetRedrive_NoComponent],
+			G.Out[WetRedrive_NoMid],
+			!G.bReadAsked ? "not-asked" : (G.bReadSame ? "same-value" : "DIFFERENT"),
+			G.ReadSet, G.ReadGot);
+		std::string Out(Buf);
+		if (!G.bReadAsked)
+		{
+			// THE PAIR OF NUMBERS ABOVE IS 0.0000..0.0000 WHEN NOTHING WAS
+			// ASKED, and that is the same string a dead write on a dry
+			// condition prints. The word not-asked is on the readback key and
+			// this says which of the two it is in prose, because the numbers
+			// alone cannot.
+			Out += " wetnessRedriveReadNote=no-piece-was-written-so-nothing-was-"
+			       "asked-back/the-pair-above-is-a-placeholder-and-not-a-reading";
+		}
+		// ONE IDENTITY, PRINTED ONLY WHEN IT BREAKS, which is the shape
+		// VignetteSpec.h's propCollisionReadingsMismatch already uses. Every
+		// ask is either walked or skipped, from one counter each, and a key
+		// that appears at all means one of the three is wrong.
+		if (G.Walks + G.Skipped != G.Calls)
+		{
+			char M[128];
+			std::snprintf(M, sizeof(M),
+			              " wetnessRedriveTallyMismatch=walks=%d/skipped=%d/calls=%d",
+			              G.Walks, G.Skipped, G.Calls);
+			Out += M;
+		}
+		return Out;
+	}
+
+	// ---- QUEUE 309: THE WETNESS ONE FRAME WAS PHOTOGRAPHED AT ------------
+	//
+	// PER-SAMPLE KEYS ON THE SAMPLE LINE, AND THE NAMES ARE THE SURFACE
+	// LINE'S WITH A shot PREFIX RATHER THAN THE SAME NAMES. midWetSetGot is a
+	// statement about ONE SURFACE and lives on that surface's line; a key of
+	// the same name on 43 shot lines would be the thing this file forbids
+	// twice over already (midTilingReadback against midScalarReadback), where
+	// a grep for either returns whichever line it reaches first.
+	//
+	// WHY THIS EXISTS AT ALL, which is the only evidence 309 can offer. The
+	// surface line's wetSet is LAST-WINS over the run: it cannot tell "the
+	// wetness was re-driven per condition" from "the wetness was set once, to
+	// the last condition's value". Only a per-frame key can, and the way it
+	// does it is shotWetnessAgrees: the wetness this frame's condition ASKS
+	// for, against the wetness the pieces are CARRYING at the moment the
+	// frame is taken.
+	//
+	//   shotWetness         what this frame's condition asks for. Not a
+	//                       statistic: one number off one row of the file.
+	//   shotWetnessOnPieces what the pieces carry, off the guard's latch.
+	//   shotWetnessAgrees   the two compared with the one tolerance. NO is
+	//                       the fault: the frame was photographed at a
+	//                       wetness the street is not wearing.
+	//   shotWetnessWalkedAt the condition the last walk ran for. It is
+	//                       DIFFERENT from this shot's condition whenever the
+	//                       guard skipped, which is the guard working and not
+	//                       a fault, so both are printed rather than one.
+	struct WetShotIn
+	{
+		double      Asked;         // this frame's condition's wetness
+		std::string AskedFrom;     // this frame's condition id
+		bool        bEverApplied;  // has any walk run at all
+		double      OnPieces;      // the guard's latched value
+		std::string WalkedAt;      // the condition the last walk ran for
+		WetShotIn() : Asked(0.0), AskedFrom("none"), bEverApplied(false),
+		              OnPieces(0.0), WalkedAt("no-condition-was-applied") {}
+	};
+
+	inline std::string WetShotFields(const WetShotIn& In)
+	{
+		if (!In.bEverApplied)
+		{
+			return " shotWetness=" + std::string("nothing-measured")
+			     + " shotWetnessOnPieces=nothing-measured"
+			     + " shotWetnessAgrees=nothing-measured"
+			     + " shotWetnessWalkedAt=no-walk-ran-before-this-frame"
+			     + " shotWetnessStat=per-sample/this-frame-only/"
+			       "no-condition-had-been-applied-when-this-frame-was-taken";
+		}
+		char Buf[420];
+		std::snprintf(Buf, sizeof(Buf),
+			" shotWetness=%.4f shotWetnessFrom=%s"
+			" shotWetnessOnPieces=%.4f shotWetnessAgrees=%s"
+			" shotWetnessWalkedAt=%s"
+			" shotWetnessStat=per-sample/this-frame-only/asked-is-off-this-rows-"
+			"condition-and-onPieces-is-the-value-the-re-drive-last-latched/"
+			"walkedAt-differing-from-From-is-the-guard-skipping-an-unchanged-"
+			"wetness-and-is-not-a-fault",
+			WetClamp01(In.Asked), LedgerVignette::NoSpaces(In.AskedFrom).c_str(),
+			In.OnPieces,
+			ScalarMatches(WetClamp01(In.Asked), In.OnPieces) ? "yes" : "NO",
+			LedgerVignette::NoSpaces(In.WalkedAt).c_str());
+		return std::string(Buf);
+	}
+
 	// THE WHOLE-RUN WETNESS SEGMENT, FOR THE MATERIALS DONE LINE.
 	//
 	// A SPEC WHOSE WETNESS IS ZERO PRINTS THAT IT WAS ZERO. "0.0000" and "no
@@ -1673,17 +1971,51 @@ namespace LedgerSurface
 	// many the scalar was set on, and how many shots the one value is right
 	// for.
 	//
+	// THE KEY WAS wetnessValue UNTIL QUEUE 309 AND IT IS wetnessBindValue
+	// NOW, because the thing it names stopped being the thing it named. It
+	// was "the one value handed to every instance this run" and it is now
+	// "the value every instance was MADE with, before any condition existed";
+	// the value in force is wetnessNow on the re-drive segment. A key whose
+	// meaning moves under its own name is the quietest way this project has
+	// found to lose a reading, so the name moved with the meaning and the
+	// suite asserts the old token is NOT on the line: a reader greping the
+	// old name on a new verdict gets nothing rather than a number that means
+	// something else. Same for wetnessFrom, now wetnessBindFrom.
+	//
 	// WHAT EACH NUMBER IS A STATISTIC OF:
-	//   wetnessValue        the ONE value handed to every instance this run,
-	//                       chosen once at bind time. Not a peak, not a
-	//                       median: there is one.
-	//   wetnessSurfacesSet  surfaces whose first instance had the scalar set,
-	//                       over surfaces the shared file asked for.
-	//   wetnessSurfacesWet  of those, how many are in WetSurfaces and so took
-	//                       a non-zero value.
-	//   wetnessShotsAtValue shots whose condition carries THIS wetness, over
-	//                       shots offered. The gap is the size of the
-	//                       compromise a static bind makes.
+	//   wetnessBindValue    the value every instance was MADE with, chosen
+	//                       once at bind time before any condition was
+	//                       applied. Not a peak, not a median: there is one,
+	//                       and it is a SEED rather than what any frame was
+	//                       shot at.
+	//   wetnessSurfacesSet  surfaces whose instances carry the scalar, over
+	//                       surfaces the shared file asked for. MEMBERSHIP
+	//                       and not a value: the bind sets it on the pack
+	//                       and tint routes and the re-drive rewrites the
+	//                       same set on every walk, so it is last-wins in
+	//                       form and cannot move in value. A run in which it
+	//                       moves is a run in which the walk reached a
+	//                       surface the bind did not, and that is the finding.
+	//   wetnessSurfacesWet  of those, how many are in WetSurfaces. Membership
+	//                       again: bWet is IsGroundSurface and is true at
+	//                       wetness 0.0 too, so this reads 4 after wet_000
+	//                       and after wet_100 alike and never says what value
+	//                       the four hold. wetnessNow and the shot lines do.
+	//   wetnessSurfacesDarkened  of those, how many bound an albedo and so
+	//                       took the colour half as well as the roughness
+	//                       half. Membership, off bAlbedoBound recorded at
+	//                       the bind and handed to the walk unchanged.
+	//   wetnessShotsAtValue shots whose condition carries the SEED value,
+	//                       over shots offered. Until 309 the gap was the
+	//                       size of the static bind's compromise; it is not
+	//                       that any more, because ApplyCondition re-drives
+	//                       the value per condition and every shot is now
+	//                       photographed at its own. The gap is NOT how many
+	//                       shots skipped a walk: the guard is keyed on the
+	//                       LAST applied value, so a seed-value shot after a
+	//                       night row walks. On the committed file 35 shots
+	//                       carry the seed and 26 skip. wetnessRedriveWalks
+	//                       is the reading that matters.
 	inline std::string WetnessDoneSegment(const std::vector<Bound>& All,
 	                                      const WetnessChoice& Choice)
 	{
@@ -1697,16 +2029,18 @@ namespace LedgerSurface
 		}
 		char Buf[700];
 		std::snprintf(Buf, sizeof(Buf),
-			" wetnessValue=%.4f wetnessFrom=%s/%s"
+			" wetnessBindValue=%.4f wetnessBindFrom=%s/%s"
 			" wetnessSurfacesSet=%d/%d wetnessSurfacesWet=%d/%d"
 			" wetnessSurfacesDarkened=%d/%d"
 			" wetnessShotsAtValue=%d/%d wetnessCondsAtValue=%d/%d"
 			" wetnessParam=%s wetnessDryIs=%.4f"
-			" wetnessModel=static-at-bind-time/one-value-for-every-shot/"
-			"no-MID-list-is-kept-so-ApplyCondition-cannot-redrive-it"
-			" wetnessStat=one-value-per-run-not-a-peak-or-a-median/"
+			" wetnessModel=per-condition-since-queue-309/ApplyCondition-re-drives-"
+			"the-instances-the-scene-already-keeps/write-on-change-keyed-on-the-"
+			"last-applied-wetness"
+			" wetnessStat=bindValue-is-one-seed-per-run-not-a-peak-or-a-median/"
 			"surfacesSet-over-surfaces-the-file-asked-for/"
-			"shotsAtValue-over-shots-offered-and-the-gap-is-the-compromise",
+			"shotsAtValue-over-shots-offered-and-since-309-that-gap-is-NOT-a-"
+			"compromise-shots-at-the-seed-value-not-shots-that-skipped-a-walk",
 			Choice.Value,
 			LedgerVignette::NoSpaces(Choice.FromCondition).c_str(), Choice.Why,
 			Set, (int)All.size(), Wet, Set, Albedo, Set,
@@ -1721,12 +2055,16 @@ namespace LedgerSurface
 		}
 		else if (Choice.Value <= 0.0)
 		{
-			// THE ZERO THAT IS A READING, NAMED. A run whose chosen condition
-			// is dry renders today's street exactly, and that is a PASS, not a
-			// failure to apply anything: the words are here so a reader never
-			// has to tell the two apart by the absence of a key.
-			Out += " wetnessNote=the-chosen-condition-is-DRY-at-0.0000/every-"
-			       "instance-was-set-and-set-to-zero/this-frame-is-todays-frame";
+			// THE ZERO THAT IS A READING, NAMED. A seed of zero means every
+			// instance was MADE dry, and that is a PASS and not a failure to
+			// apply anything: the words are here so a reader never has to tell
+			// the two apart by the absence of a key. IT NO LONGER SAYS
+			// ANYTHING ABOUT A FRAME, queue 309: the seed is what the street
+			// wore before the first condition, and what each frame was shot at
+			// is shotWetness on that frame's own line.
+			Out += " wetnessNote=the-SEED-condition-is-DRY-at-0.0000/every-"
+			       "instance-was-made-dry/says-nothing-about-any-frame-since-"
+			       "queue-309/see-shotWetness-per-shot-and-wetnessNow-for-last-wins";
 		}
 		return Out;
 	}
@@ -1738,7 +2076,15 @@ namespace LedgerSurface
 	// carries the reason; this follows texRootTried's habit instead.
 	//
 	// WHAT EACH NUMBER IS A STATISTIC OF, per surface and never per run:
-	//   wetSet         the value handed to this surface's Wetness parameter.
+	//   wetSet         the value handed to this surface's Wetness parameter,
+	//                  LAST-WINS over the conditions the run applied. It was
+	//                  one value for the whole run until queue 309; since
+	//                  ApplyCondition re-drives it, a bare number would not
+	//                  say which frame it describes, so wetSetFrom names the
+	//                  condition it belongs to and wetSetStat says last-wins
+	//                  out loud. The per-frame answer is shotWetness, on that
+	//                  frame's own line and under its own name.
+	//   wetSetFrom     the condition whose wetness this surface is wearing.
 	//   wetApplied     which halves reached it: both, roughness only, or
 	//                  neither, with the reason in the value.
 	//   wetAlbedoScale the gamma multiplier folded into AlbedoGrade. 1.0000
@@ -1751,12 +2097,24 @@ namespace LedgerSurface
 	//                  texel and no single byte of it is known in this
 	//                  process, so the datum is named in the value and a
 	//                  reader can never take one for the other.
+	// THE TAIL IS CONCATENATED AND NOT FORMATTED, so it has no cap to
+	// announce and cannot push the Buf[420] below over: the two keys it adds
+	// are a spaceless condition id and a fixed sentence, neither of which
+	// needs a number formatted.
+	inline std::string WetFromFields(const Bound& B)
+	{
+		return " wetSetFrom=" + LedgerVignette::NoSpaces(B.WetFrom)
+		     + " wetSetStat=per-surface/LAST-WINS-over-the-conditions-this-run-"
+		       "applied/re-driven-per-condition-since-queue-309/"
+		       "not-a-mean-and-not-the-bind-time-seed";
+	}
+
 	inline std::string WetFields(const Bound& B)
 	{
 		if (!B.bWetSet)
 		{
 			return " wetSet=not-set wetApplied=not-set wetAlbedoScale=not-set"
-			       " wetRoughAt=not-set";
+			       " wetRoughAt=not-set" + WetFromFields(B);
 		}
 		const double DrySmooth = GroundDrySmoothness(B.Surface);
 		char Buf[420];
@@ -1770,7 +2128,7 @@ namespace LedgerSurface
 				"no-dry-smoothness-is-quoted-for-it",
 				B.Wet.Wetness, Applied, B.Wet.Why, B.Wet.AlbedoScale,
 				LedgerVignette::NoSpaces(B.Surface).c_str());
-			return std::string(Buf);
+			return std::string(Buf) + WetFromFields(B);
 		}
 		const double DryRough = RoughnessFromSmoothness(DrySmooth);
 		std::snprintf(Buf, sizeof(Buf),
@@ -1781,7 +2139,7 @@ namespace LedgerSurface
 			B.Wet.Wetness, Applied, B.Wet.Why, B.Wet.AlbedoScale,
 			DryRough, WetRoughness(DryRough, B.Wet.Wetness), DrySmooth,
 			WetRoughnessFloor());
-		return std::string(Buf);
+		return std::string(Buf) + WetFromFields(B);
 	}
 
 	// ONE LINE PER SURFACE. Per-surface numbers only; the run's totals are on

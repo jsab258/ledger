@@ -243,6 +243,46 @@ it, so the two cannot drift apart.
 The directory sits outside any engine's asset folder because the D1b vignette
 is engine-neutral by ruling and the engine is undecided until D1 closes.
 
+## City pack shortlist candidates, ambientCG, CC0 (citypack_shortlist)
+
+| | |
+|---|---|
+| **Source** | **ambientCG** (https://ambientcg.com), fetched by `tools/citypack/fetch_textures.py --shortlist` from the ids named in `tools/citypack/shortlist-candidates.json` |
+| **Licence** | CC0 1.0 Universal (ambientcg.com/license), the same source and licence as the decal and vignette-surfaces rows above and as the shipped pack under `ledger/Assets/StreamingAssets/CityPack/`, whose own row this file still owes (queue 323). ambientCG is line 5 of `ledger-v2/research/license-allowlist.md`. |
+| **Where** | `tools/citypack/shortlist/`, one 1K tile per candidate under `<surface>/<assetId>.jpg`, a `contact-<surface>.png` sheet per surface, and `ATTRIBUTION.json` written by the same run that writes the pixels |
+| **What** | queue 300's shortlist pass: several named CANDIDATE tiles per flagged surface (kerb, metal, plaster and concrete today; the set `shortlist-candidates.json` names can grow), downloaded at 1K so a surface can be picked by looking rather than by name. The ids actually downloaded in any one run are enumerated in `shortlist-results.json`, which travels with them. |
+
+A SOURCING AID, NEVER SHIPPED. Nothing under `tools/citypack/shortlist/` is
+read by `AssetLibrary` or packaged into any build; it exists so the surface
+eventually chosen into `choices.json` and fetched properly by `--fetch` is
+chosen from evidence. The token is deliberately NOT "ambientCG": that word is
+already in this file for the decals and the vignette surfaces above, so a row
+keyed on it would pass without anybody writing anything, which is a guard
+that goes green for the wrong reason.
+
+THE TOKEN IS ALSO DELIBERATELY SPELLED WITH AN UNDERSCORE rather than the
+hyphenated `citypack-shortlist` this section's own draft used at first: a
+hyphenated token is a PREFIX of `.github/workflows/citypack-shortlist.yml`,
+named two paragraphs down, so a rejecting-case test (CLAUDE.md rule 5b: a
+guard needs a run where the thing it asserts CAN fail, not just one where it
+passes) found the row passing even with its own declaration deleted, purely
+because the workflow filename supplied the same characters. The underscore
+is the smallest change that stops the token being a substring of a filename
+this row also needs to mention.
+
+THIS ROW IS AHEAD OF THE BYTES ON PURPOSE, the same order the vignette
+surfaces row above uses: the directory does not exist in a fresh checkout,
+and `tools/attribution-check.py` treats an unpopulated watched path as an
+obligation recorded early rather than as a failure, so the licence is
+identified before the fetch and recorded with it. The first live run of
+`.github/workflows/citypack-shortlist.yml` commits
+`tools/citypack/shortlist/contact-*.png` straight to this path, so the row
+has to be here before that run lands, not after.
+
+WHAT WOULD MAKE THIS ROW FALSE: the day `--shortlist` downloads a candidate
+from a source that is not ambientCG, this row understates what the directory
+holds and has to be corrected or widened.
+
 ## Skies — Poly Haven, CC0
 
 | | |
