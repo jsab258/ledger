@@ -1,0 +1,9 @@
+id: c82517ea
+due: 2026-09-15T00:41:32Z
+armedAt: 2026-09-15T00:37:32Z
+armedBy: resident/materials-batch-awaiting-two-builders
+blocks: 1
+dischargedAt: 2026-09-15T00:45:43Z
+capBitAt: -
+
+Two builders are in flight on the materials batch: the engine one on queue 299 (AlbedoGrade on M_LedgerSurface, SurfaceBind.h + make_base_material.py + VignetteShot.cpp) and the instrument one on queue 291's superseded acceptance (the brief send). NOTHING IS COMMITTED AND NOTHING SHOULD BE until both report, because verify is red on director_cadence at 165 changed lines in the ueprobe scope against a 100 threshold, and a resident never commits a builder's work-in-progress because a stop hook asked. WHEN BOTH HAVE REPORTED: review the two diffs, spawn a studio-director for the batch review (the cadence gate needs a director row newer than reference commit 397ed0cd plus a ruling record stamped with that row), re-run verify, then commit staging BY NAME. My own finished work in the tree is queue 181 corrected and unblocked on Jafar's words, queue 186 noted against 299, new queue 299, 300 and 301, and game-design/sim-shots/materials_vs_reference.jpg. Then the Producer writes the daily brief with that picture: the materials cause is measured and is not what anyone guessed, and he owes a ruling on the sky, because staging the HDRI moves no pixel and binding it overturns a written position at VignetteShot.cpp:163-171.

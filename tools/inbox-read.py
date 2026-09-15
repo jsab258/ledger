@@ -89,6 +89,19 @@ def fetch_branch(repo, remote="origin", branch=None):
     return "unreachable", (out.strip().splitlines() or [""])[-1][:160]
 
 
+def ref_exists(repo, ref=TRACKING):
+    """Is there a local copy of the branch at all. Added 2026-09-15 for queue
+    291 fix three.
+
+    `outbound_from_branch` and `records_from_branch` both return {} when the
+    ls-tree fails, which cannot tell "the branch carries no receipts" from
+    "this checkout has never seen the branch". A caller counting receipts must
+    tell those apart or it prints a zero that looks like an answer, so it asks
+    this first."""
+    rc, _out = git_run(["rev-parse", "--verify", "--quiet", ref], repo)
+    return rc == 0
+
+
 def branch_files(repo, ref=TRACKING):
     """Message files carried by the branch, sorted. The pattern is
     `inbox.NAME_RE`, so the folder's README is not in the denominator."""

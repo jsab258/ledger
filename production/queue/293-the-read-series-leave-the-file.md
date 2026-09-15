@@ -15,6 +15,16 @@ spec: every note on the grid, the fog series and the sky cross says
   the seven-value fog check, the cross check, the 33/26/5 count)
   go with the rows or are restated to what remains. The wetness trio
   stays (queue 186) and the pin rungs stay (queue 235).
+  AND, RULED 2026-09-15 00:52Z: the materials done line gains
+  surfacesGraded=N/of and groundGraded=N/of, whole-run tallies of the
+  per-surface grade lines queue 299 made live, and the surface line gains
+  midGradeReadback of the AlbedoGrade parameter on the first instance per
+  surface, the vector twin of midTexReadback and midTilingReadback, IN THE SAME
+  BATCH as this item's retirement of the read series, so the tally and the
+  readback are paid for by a retirement already ruled and the monthly rule is
+  met in the batch it is measured in. The word at SurfaceBind.h 1245 for an
+  untextured ground surface becomes not-applied-because-white in the same
+  touch.
 acceptance: both suites green on the reduced file with the counts
   printed; a committed run whose nullSeriesIds is the judged group
   in shot order, hook first and null repeat last, on the shorter

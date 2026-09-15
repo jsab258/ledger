@@ -64,3 +64,43 @@ status: READY 2026-09-09, and it is RUNG 1's real obstacle. Found while measurin
   makes the road darker and smoother WITH NOTHING TO REFLECT, which is a black road
   rather than a wet one. A builder given only the wetness half would discover that the
   expensive way.
+
+  QUEUE 299 OPENS THE DOOR THIS ITEM NEEDS, noted 2026-09-15 while measuring
+  the materials for queue 181 and not while looking for it. 299 gives
+  M_LedgerSurface a colour parameter so the Unreal side can apply Unity's
+  static albedo grade, which it has never applied. Core/LightModel.cs:601
+  AlbedoScale(rain) = clamp(1.0 - 0.45 * rain, 0.55, 1.0) is a MULTIPLIER ON
+  ALBEDO and wants the same parameter. So the two grades multiply into one
+  colour and 299 is the half of this item that has no per-condition problem in
+  it. The line beside it, LightModel.cs:588-593, is why it matters here and it
+  is this item's own thesis in the original author's words: "Raising smoothness
+  alone gives a bright shiny road that reads as polished plastic. Dropping
+  albedo at the same time is what makes the lamps' reflections POP off a dark
+  road, which is the entire look of a rainy street at night."
+  WHAT 299 DOES NOT SOLVE, so that nobody reads this note as more than it is.
+  The grade is per SURFACE and static, so it is set once at bind time and needs
+  no handle on anything. Wetness is per CONDITION, so it still needs the MID
+  list this item already says nothing keeps. 299 is the easy half arriving
+  first; the hard half is untouched.
+
+  AND THE HDRI HALF IS TWO PIECES OF WORK, NOT ONE, checked 2026-09-15 because
+  Jafar's order for the visual slice puts "the sky itself" second and this item
+  is where that lands. Both halves were read rather than recalled.
+  THE ASSET IS ON DISK: ledger/Assets/Resources/Sky/polyhaven/
+  belfast_open_field_2k.hdr, and overcast_day plus every grid_ condition names
+  it. So "not a missing asset, a missing staging line" above is TRUE and stays.
+  BUT STAGING IT ALONE MOVES NO PIXEL, and the code says so in its own words.
+  VignetteShot.cpp:431 heads the three globals with "THE HDRI THE SHARED FILE
+  NAMES: looked for, measured, NOT bound." LookForNamedHdri() is called at 1435
+  and only measures. Line 36 of the same file lists what is deliberately absent:
+  "No textures, no materials, no HDRI". So a staging line would move
+  skyHdriFoundAt off NOT-FOUND and skyHdriBytes off 0 and change nothing a
+  judge can see, which is exactly the shape CLAUDE.md rule 6 is about.
+  AND THE SECOND PIECE IS A DESIGN CALL WITH A WRITTEN POSITION AGAINST IT.
+  VignetteShot.cpp:163-171 argues for the atmosphere and the captured skylight
+  over "the HDRI the shared file names", on the ground that what is LIT and
+  what is REFLECTED are then the same object, "which an HDRI ambient beside an
+  atmosphere backdrop would not", and it closes "The HDRI is the next rung".
+  Swapping the sky model is therefore a ruling and not a task: the code holds a
+  reasoned position, the position may well be right, and a resident does not
+  overturn it by staging a file. PUT TO JAFAR RATHER THAN DECIDED HERE.

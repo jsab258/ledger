@@ -127,3 +127,112 @@ acceptance-superseded-2026-09-14: the original acceptance below was written
   somewhere a person sees, rather than exiting 6 under continue-on-error; and
   briefsSentEver counts receipts wherever they land rather than only on main.
   Nothing about the delivery mechanism itself needs rebuilding.
+
+BUILT 2026-09-15, all three fixes and the retirement, in one batch with queue
+299. Nothing here was proven to DELIVER and that is said first: the workflow
+runs on Jafar's PC, no run could be made from the container, and no receipt
+exists. The logic and the selftests are proven; the accepting case for the real
+path is the next day a brief is written on his machine.
+
+  FIX ONE, ROUTE CHOSEN: A MODE OF THE SENDER. telegram-bot.py's brief_pass
+  asks brief.recovery_target when the caller asked for today and today has no
+  brief, and hands the answer to the day argument --send-brief already took.
+  NOT the workflow step, because choosing which day to recover is measurement
+  arithmetic and a decision, and a day-chooser written in pwsh on a machine
+  this container cannot execute ships UNRUN, which is the silent-instrument
+  failure .claude/rules/instruments.md names. NOT the sweep, because
+  outbox.sweep hands its sender a sender(text) with nowhere to put a keyboard,
+  so wiring the brief into it builds a second sender for the one message a day,
+  which is the race brief.py's own docstring forbids and the thing being
+  retired. It goes THROUGH the one-receipt-per-day guard rather than around it:
+  recovery_target takes BriefReceipts.state as an argument and returns None
+  when it answers sent or held.
+
+  THE WINDOW IS ONE DAY AND THE SERIES IS WHY. The lag between each brief's own
+  day and the day it was sent, over every brief on disk, is [0, 0, 0] across 3
+  receipts. THE REPOSITORY HOLDS NO DISTRIBUTION OF RECOVERY LAG AT ALL, so
+  there is nothing to set a wider bound from and rule 2 forbids inventing one.
+  One day is not a chosen threshold, it is the gap between the day a brief is
+  written and the next run of the step that sends it.
+
+  AND 2026-09-12 IS DELIBERATELY NOT SWEPT UP. Its NEEDS YOU asks Jafar to "end
+  the two leftover background programs and copy the project folder", which he
+  did on the 14th (production/pc-ops/windowless-proof.txt). Delivering it now
+  puts a stale ask on his phone and hides the fault that caused it, which was
+  sixty one hours with no run. It is named out loud by fix TWO instead, with
+  the exact command beside it, so sending it costs one run if anyone wants it.
+
+  FIX TWO, SAID WHERE A PERSON OPENS IT. producer-day.py is what the resident
+  runs before every brief and what the Producer reads, so the channel section
+  now prints, off the FILES rather than off a log: "BRIEFS WRITTEN AND NEVER
+  SENT: 1 of 4 written since the daily path opened on 2026-09-09 have no
+  receipt of any kind: 2026-09-12", with the command. Three more silences
+  closed: brief_pass emits its done line on the missing path too, where it used
+  to return before it and leave NO done line at all, so a grep could not tell a
+  miss from a step that never started; the same line goes into brief-send.txt;
+  and the workflow's exit-6 branch emits a warning annotation.
+
+  FIX THREE WAS OPEN, AND THE EVIDENCE IS A GREP THAT RETURNED NOTHING.
+  producer-day.py's brief_receipts read only production/outbound in the
+  checkout, and a grep of that file for pc-inbox, inbox-read, INBOX_BRANCH and
+  outbound_from_branch returned no hit. The existing briefsSentKnown and
+  nothing-measured path fires only when the FOLDER is absent, never when the
+  BRANCH is unreadable, which is exactly why 2026-09-14 printed
+  briefsSentEver=2: the folder existed, held two, and the third was on
+  origin/pc-inbox. A number that looked like an answer. brief_receipts now
+  unions both places by CALLING tools/inbox-read.py rather than copying the
+  ref, the fetch or the walk, and returns None when the branch cannot be read,
+  so briefsSentEver prints nothing-measured instead of the checkout's number
+  while the checkout's count survives in words beside it. ref_exists was added
+  to inbox-read.py because outbound_from_branch returned an empty dict both for
+  "no receipts" and for "never saw the branch", which cannot be told apart.
+
+  WHAT THE FIX DOES NOT DO TODAY, and it is claimed nowhere else: the tree and
+  the branch currently AGREE at 566 records and 3 brief-days, so the union
+  moves no number right now. It buys the window between the PC pushing and
+  inbox-read delivering, which is the window the incident fell into.
+
+  THE RETIREMENT, AND THE NET WAS MEASURED BEFORE IT WAS REMOVED. Retired: the
+  brief register in production/outbox/. outbox.sweep refuses a .brief.md, the
+  clause names production/briefs/<day>.md and --send-brief and .unprompted.md,
+  and .claude/agents/producer.md and production/outbox/README.md say so.
+  BLAST RADIUS, COUNTED RATHER THAN ASSUMED: all 9 .brief.md files in the live
+  outbox already carry receipts, and the refusal sits after the already and
+  held checks, so 0 of 9 are refused and none grows a refusal record. That is a
+  live selftest row printing its own denominator.
+  AND WHAT THE NET CAUGHT ON 8 AND 9 SEPTEMBER WAS NOT A FAILURE OF THIS PATH:
+  --send-brief and its buttons did not exist until Jafar's ruling of
+  2026-09-09, so those five went out because nothing else could send them. The
+  outbox route has NO KEYBOARD, so the ruling's only measure cannot ride it; it
+  was never a net for the brief, it was a way to send an unmeasurable copy.
+  THE COST THAT IS REAL, stated rather than waved away: a Producer push in
+  brief shape is gone, and .unprompted.md is 120 words against 150 and requires
+  BUDGET, so four messages on the 14th would have needed trimming.
+
+  SELFTESTS, run by the resident rather than taken from the report: brief.py 45
+  to 57 with 0 failed, producer-day.py 14 to 19 with 0 failed and notMeasured=0,
+  outbox.py 115 to 119 cases with 0 failed, inbox-read.py 28 unchanged,
+  telegram-bot.py 151 unchanged.
+  THE ONE notMeasured=1 IS NOT THIS BATCH'S AND WAS CHECKED RATHER THAN
+  ACCEPTED: accept/live/2026-09-15-names-a-picture is queue 232's live fixture
+  for the photo sidecar reader, and it sits at lines 1205 to 1214 of the
+  COMMITTED brief.py, proven with git show. It cannot measure on a day with no
+  brief written, it prints its own NOT MEASURED line with the reason, and it is
+  counted outside "0 failed" rather than folded into it. It will measure on the
+  next day a brief with a picture is written, which is the same event that
+  proves fix ONE.
+
+  RULED 2026-09-15 00:52Z (decision-2026-09-15-ruling-the-grade-lands-as-the-
+  legacy-number-and-the-outbox-brief-was-never-a-net.md): the outbox brief
+  register retires as built. Its record since the daily path opened on
+  2026-09-09: zero catches (no copy of the 12th was written) and two duplicates
+  (the 9th, id 39 then id 56; the 14th, id 93 then id 95). THE FILE PATH DID
+  SEND ON THE 9TH: brief-2026-09-09.receipt.txt, messageId 56, 10:55:44Z, which
+  corrects the framing this item and its brief both carried. On a runner-dark
+  day the day's message goes ONCE as .unprompted.md and no brief file is
+  written for that day, so the file path cannot duplicate it when the runner
+  returns; the streak then carries a true hole. The one-day recovery does not
+  reach the 12th (no brief on the 13th to recover from) and --send-brief <day>
+  has no caller: queue 303. The 12th's brief is not sent by this item; the
+  Producer decides in the next brief whether to say one was missed.
+

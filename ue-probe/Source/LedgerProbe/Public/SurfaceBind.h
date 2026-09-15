@@ -300,18 +300,36 @@ namespace LedgerSurface
 	// BaseColour(logical, textured), which is TextureGrade for any surface
 	// carrying a texture, times GroundGrade for the four ground surfaces.
 	// Every surface in that host therefore renders its albedo DARKENED, and
-	// the Unreal base material has no colour parameter to darken it with, so
-	// for the surfaces this section paints the product is baked into the
+	// for the two surfaces this section paints the product is baked into the
 	// texel. Taken in LINEAR, because that is where Unity's shader takes it.
 	//
-	// WHAT THIS DOES NOT DO, said here rather than left to be found: the
-	// twelve surfaces that resolve from the pack are still bound at full
-	// brightness on this side, because baking a grade into a 2048x2048 jpeg
-	// is per-texel work on every import and a colour parameter on the base
-	// material is the right answer to it. So these two surfaces are now
-	// closer to the Unity pair than the twelve around them, the gap is named
-	// on the materials line as gradeAppliedTo, and it is one number, not a
-	// taste.
+	// THIS COMMENT PREVIOUSLY CLAIMED A GUARD THAT NEVER EXISTED and is
+	// corrected here rather than quietly rewritten, which is the habit set
+	// at ProceduralSurfaceCount above. It said the twelve pack surfaces were
+	// bound at full brightness, which was TRUE, and then said "the gap is
+	// named on the materials line as gradeAppliedTo, and it is one number,
+	// not a taste", which was FALSE for the whole life of the sentence: a
+	// grep for gradeAppliedTo over ue-probe returned this comment and
+	// nothing else, no line carried the key and no code ever emitted it. A
+	// reader of queue 181 believed it, went looking for the number, and
+	// found only the promise. A comment promising a measurement is not a
+	// measurement, and it is worse than none, because the reader who
+	// believes it does not measure.
+	//
+	// WHAT IS TRUE NOW, queue 299. M_LedgerSurface carries a vector
+	// parameter AlbedoGrade (tools/ue/make_base_material.py, VECTOR_PARAMS),
+	// multiplied into Base Color after the BaseColorMap sample and
+	// defaulting to white, and AlbedoGradeFor below is what VignetteShot.cpp
+	// sets it from. So the twelve pack surfaces take the same grade Unity
+	// gives them, the two painted here still take it baked into the texel,
+	// and NO KEY WAS ADDED for it: the grade is on the surface line in
+	// tintTexel, tintFrom, tintPattern and roughnessTexel, four fields that
+	// printed not-built on every pack surface until this change.
+	//
+	// THE ONE WAY THIS GOES WRONG IS TWICE. A surface whose texel already
+	// carries the product must be sent WHITE, or the street is graded
+	// squared. That is why AlbedoGradeFor asks ProceduralSurfaceIndex first
+	// and why the g++ suite checks both halves.
 	inline void TextureGrade(double& R, double& G, double& B)
 	{
 		R = 0.74; G = 0.76; B = 0.80;
@@ -320,9 +338,14 @@ namespace LedgerSurface
 	inline double GroundGrade() { return 0.55; }
 
 	// THE GROUND FAMILY, AssetLibrary.WetSurfaces, character for character.
-	// Neither surface this section paints is in it, and the rule is
-	// implemented rather than assumed away: the day a ground surface needs a
-	// tint the arithmetic is already right.
+	// Neither surface the procedural section paints is in it, and the rule
+	// was implemented rather than assumed away: the day a ground surface
+	// needed the arithmetic it was already right, and queue 299 is that day.
+	// FOUR MEMBERS AND EACH IS LOAD-BEARING SEPARATELY: kerb is 95 pieces
+	// and concrete is 150 of the street's 610, so a list that happened to be
+	// right about kerb and wrong about concrete would pass any one-surface
+	// check and mis-grade a quarter of the street. The g++ suite asserts the
+	// four one at a time and asserts a non-member with them.
 	inline bool IsGroundSurface(const std::string& Surface)
 	{
 		return Surface == "asphalt" || Surface == "sidewalk"
@@ -403,6 +426,129 @@ namespace LedgerSurface
 	inline bool IsMultiplyBlend(const std::string& Surface)
 	{
 		return Surface == "multiply";
+	}
+
+	// ---- THE ALBEDO GRADE, WHICH IS WHAT A PACK SURFACE GETS INSTEAD -----
+	//
+	// This sits below IsDecalBlend rather than beside TextureGrade because it
+	// needs that predicate; the grade block above points here.
+	//
+	// WHAT IT IS. The value VignetteShot.cpp sets on the AlbedoGrade vector
+	// parameter of M_LedgerSurface, which is multiplied into Base Color after
+	// the BaseColorMap sample. It is the SECOND READER of
+	// AssetLibrary.BaseColour(logical, textured) and deliberately takes the
+	// same two arguments that function takes, so the two can be compared by
+	// eye: Unity's is `textured ? TextureGrade : SurfaceSpec.Tint`, then
+	// times GroundGrade for the four in WetSurfaces.
+	//
+	// WHAT IT IS A STATISTIC OF: nothing. It is a computed constant per
+	// surface, not a measurement, and the surface line prints the inputs
+	// beside it so a reader can recompute it without this file.
+	//
+	// THE SPACE, WHICH IS THE WHOLE TRAP. Unity's mat.color is a gamma
+	// number converted to linear on upload; Unreal's FLinearColor parameter
+	// is used by the shader AS LINEAR, with no conversion. So the gamma
+	// product is formed first and converted once, which is exactly the order
+	// ProceduralAlbedoTexel uses one screen above: GroundGrade multiplies
+	// the grade IN GAMMA, and SrgbToLinear is applied to the product. Any
+	// other order is a different colour, not a rounding difference.
+	//
+	// THREE SURFACES GET WHITE, AND EACH FOR ITS OWN REASON.
+	//   1. A PROCEDURAL SURFACE, because ProceduralAlbedoTexel has already
+	//      baked both grades into the flat texel it built. Sending the grade
+	//      again would square it: interior would render at 0.74 x 0.74. This
+	//      is the failure mode this function most has to avoid and it is the
+	//      first thing it tests.
+	//   2. A DECAL BLEND, because StreetVignetteHost.EmitDecal builds its
+	//      material with `new Material(sh) { mainTexture = tex }` and never
+	//      assigns mat.color at all, so Unity's decals are UNGRADED and a
+	//      graded one here would be a new difference rather than a closed
+	//      one. Implemented rather than assumed away, on the habit of
+	//      IsGroundSurface above, even though the decal path builds its own
+	//      instance and does not call this.
+	//   3. AN UNTEXTURED SURFACE, because Unity's BaseColour takes its OTHER
+	//      branch there and uses SurfaceSpec.Tint, a table this side has only
+	//      two rows of. White with the reason printed is the honest answer; a
+	//      grade would be a guess wearing a constant's clothes.
+	//
+	// Why is a value a NAMED REASON rather than a comment: the surface line
+	// prints it, so "this surface is white" and "white because the texel
+	// already carries it" are never the same reading.
+	struct Grade
+	{
+		double R, G, B;          // LINEAR, the space the parameter is read in
+		double GammaR, GammaG, GammaB;  // the product before the conversion
+		bool   bGround;          // was GroundGrade folded in
+		const char* Why;
+		Grade() : R(1.0), G(1.0), B(1.0), GammaR(1.0), GammaG(1.0),
+		          GammaB(1.0), bGround(false),
+		          Why("white/nothing-decided-yet") {}
+	};
+
+	// THE PARAMETER'S ONE SPELLING, and it is spelled ONCE. Named here for
+	// the same reason MapParam is, so the generator and the binder cannot
+	// drift apart without the container saying so before a dispatch.
+	//
+	// THE SELFTEST THAT HOLDS IT DOES NOT GREP FOR THIS LITERAL, and the
+	// difference matters. A grep over the tree would be satisfied by the
+	// line below and would print green over a parameter nothing ever sets,
+	// which is the shape of every comment-shaped guard this file has had to
+	// correct. make_base_material.py --selftest instead asks the .cpp files
+	// for SetVectorParameterValue and for AlbedoGradeParam separately: the
+	// declaration cannot satisfy either.
+	inline const char* AlbedoGradeParam() { return "AlbedoGrade"; }
+
+	inline Grade AlbedoGradeFor(const std::string& Surface, bool bTextured)
+	{
+		Grade Out;
+		if (ProceduralSurfaceIndex(Surface) >= 0)
+		{
+			Out.Why = "white/the-grade-is-already-baked-into-the-procedural-texel";
+			return Out;
+		}
+		if (IsDecalBlend(Surface))
+		{
+			Out.Why = "white/EmitDecal-sets-no-material-colour-so-unity-decals-are-ungraded";
+			return Out;
+		}
+		if (!bTextured)
+		{
+			Out.Why = "white/no-albedo-bound-and-unity-would-use-the-SurfaceSpec-tint-here";
+			return Out;
+		}
+		double Gr = 0.0, Gg = 0.0, Gb = 0.0;
+		TextureGrade(Gr, Gg, Gb);
+		Out.bGround = IsGroundSurface(Surface);
+		if (Out.bGround)
+		{
+			Gr *= GroundGrade(); Gg *= GroundGrade(); Gb *= GroundGrade();
+		}
+		Out.GammaR = Gr; Out.GammaG = Gg; Out.GammaB = Gb;
+		Out.R = LedgerVignette::SrgbToLinear(Gr);
+		Out.G = LedgerVignette::SrgbToLinear(Gg);
+		Out.B = LedgerVignette::SrgbToLinear(Gb);
+		Out.Why = Out.bGround ? "textureGrade-times-groundGrade"
+		                      : "textureGrade-only";
+		return Out;
+	}
+
+	// THE GRADE AS A TEXEL, so the pack lines and the procedural lines carry
+	// tintTexel in THE SAME UNITS. A procedural surface's tintTexel is the
+	// albedo byte its one flat texel ends up at; a pack surface has 2048x2048
+	// of them and no single byte, so the reference texel is WHITE and this is
+	// what white comes out as. The value on the line names which of the two
+	// it is, because one key may not mean two things unnoticed.
+	//
+	// White is the identity in either space (SrgbToLinear(1) is 1), so this
+	// is ByteOf of the gamma product, and a reader can check it with a
+	// calculator: 0.74 x 0.55 x 255 rounds to 104.
+	inline Texel GradeTexel(const Grade& G)
+	{
+		Texel T;
+		T.R = LedgerVignette::ByteOf(LedgerVignette::LinearToSrgb(G.R));
+		T.G = LedgerVignette::ByteOf(LedgerVignette::LinearToSrgb(G.G));
+		T.B = LedgerVignette::ByteOf(LedgerVignette::LinearToSrgb(G.B));
+		return T;
 	}
 
 	// THE IMAGE A CARD DECAL ASKS FOR. The Unity host's rule, at
@@ -856,6 +1002,15 @@ namespace LedgerSurface
 		std::string Route;
 		Texel       Tint;
 		bool        bTintBuilt = false;
+		// WHAT WAS ACTUALLY HANDED TO THE AlbedoGrade PARAMETER, recorded at
+		// the bind site rather than recomputed by the printer. The two are
+		// the same number today and would stop being the same number the
+		// first time a bind is skipped, which is precisely the case the line
+		// has to be able to say out loud: bGradeSet false prints not-built,
+		// exactly as bTintBuilt false does, so "no grade was set" can never
+		// be read as "the grade was set to this".
+		Grade       Graded;
+		bool        bGradeSet = false;
 		double      TileU = 0.0;          // the last piece's tiling, as a sample
 		double      TileV = 0.0;
 		// WHAT THE FIRST INSTANCE OF THIS SURFACE ANSWERED WHEN ASKED. Kept
@@ -1019,8 +1174,38 @@ namespace LedgerSurface
 		// THE ROUTE AND THE TEXEL, ON THE LINE THAT NAMES THE SURFACE THEY
 		// BELONG TO. A tint nobody can read off the verdict is a number only
 		// the source says, and the source is not evidence.
+		//
+		// THREE BRANCHES AND NO NEW KEY, QUEUE 299. Until this change a
+		// pack surface printed tintTexel, tintFrom, tintPattern and
+		// roughnessTexel all as not-built: four dead fields on twelve of
+		// the sixteen lines, because the only thing that filled them was
+		// the procedural tint. A graded pack surface has a real colour to
+		// report, so it reports it THROUGH THOSE FOUR and adds nothing.
+		// The standing rule is Jafar's: no new instrument this month
+		// unless one is retired in the same batch, and none is.
+		//
+		// tintTexel MEANS ONE THING AND THE VALUE SAYS WHICH. On a
+		// procedural line it is the albedo byte of the one flat texel this
+		// run built. On a pack line there are 2048x2048 texels and no
+		// single byte, so the number is the grade ON A WHITE REFERENCE
+		// TEXEL, in the same units, and the value carries the word
+		// grade-on-white so a grep can never take one for the other. That
+		// is this file's rule about one key meaning two things, satisfied
+		// in the value because the key may not move.
+		//
+		// NOT-BUILT STILL MEANS NOTHING HAPPENED. A surface the material
+		// pass never reached prints the words, exactly as before, because
+		// "no grade was set" and "the grade is white" are different
+		// findings with different next actions.
+		//
+		// THE BUFFER IS MEASURED AND NOT GUESSED. The longest string this
+		// block can produce is 398 characters, taken by sweeping every
+		// surface name against both values of bTextured and measuring the
+		// result; 420 left 22 characters of headroom and a surfaceRoute
+		// longer than decal-multiply would have eaten it. A silently
+		// truncated verdict line is the quietest instrument fault there is.
 		{
-			char Buf[320];
+			char Buf[560];
 			if (B.bTintBuilt)
 			{
 				double Tr = 0.0, Tg = 0.0, Tb = 0.0, Gr = 0.0, Gg = 0.0, Gb = 0.0;
@@ -1029,7 +1214,8 @@ namespace LedgerSurface
 				TextureGrade(Gr, Gg, Gb);
 				std::snprintf(Buf, sizeof(Buf),
 					" surfaceRoute=%s tintTexel=%d.%d.%d tintFrom=spec.%.2f.%.2f.%.2f"
-					"/grade.%.2f.%.2f.%.2f%s tintPattern=flat-here/%s"
+					"/grade.%.2f.%.2f.%.2f%s/AlbedoGradeParam.white-because-the-"
+					"product-is-already-in-this-texel tintPattern=flat-here/%s"
 					" roughnessTexel=%d",
 					B.Route.empty() ? "none" : LedgerVignette::NoSpaces(B.Route).c_str(),
 					B.Tint.R, B.Tint.G, B.Tint.B, Tr, Tg, Tb, Gr, Gg, Gb,
@@ -1037,6 +1223,32 @@ namespace LedgerSurface
 					B.Surface == "interior" ? "unity-adds-a-0.10-noise-over-it"
 					                        : "unity-is-flat-too",
 					ProceduralRoughnessTexel(B.Surface));
+			}
+			else if (B.bGradeSet)
+			{
+				// A PACK SURFACE, AND EVERY NUMBER HERE IS ONE THE BIND SITE
+				// ACTUALLY HANDED THE ENGINE, carried on B.Graded rather than
+				// recomputed from the surface name. tintFrom ends with the
+				// LINEAR triple, which is the thing the parameter really
+				// holds, so a reader comparing the verdict against a material
+				// instance dump is comparing like with like.
+				const Texel GT = GradeTexel(B.Graded);
+				std::snprintf(Buf, sizeof(Buf),
+					" surfaceRoute=%s tintTexel=grade-on-white.%d.%d.%d"
+					" tintFrom=%s/grade.%.2f.%.2f.%.2f%s/linear.%.4f.%.4f.%.4f"
+					" tintPattern=pack-jpeg-times-AlbedoGradeParam/%s"
+					" roughnessTexel=%s",
+					B.Route.empty() ? "none" : LedgerVignette::NoSpaces(B.Route).c_str(),
+					GT.R, GT.G, GT.B,
+					B.Graded.Why,
+					B.Graded.GammaR, B.Graded.GammaG, B.Graded.GammaB,
+					B.Graded.bGround ? "/groundGrade.0.55" : "/groundGrade.not-a-ground-surface",
+					B.Graded.R, B.Graded.G, B.Graded.B,
+					B.MapFound[0] ? "the-albedo-is-the-file-and-the-grade-is-a-parameter-on-it"
+					              : "no-albedo-file-bound-so-the-grade-sits-on-the-material-default",
+					B.MapFound[2] ? "from-the-pack-roughness-file/not-computed-here"
+					              : (B.MapBorrowed[2] ? "borrowed-with-the-maps/not-computed-here"
+					                                 : "no-roughness-file-and-none-built/material-default"));
 			}
 			else
 			{

@@ -3787,6 +3787,27 @@ namespace
 			const LedgerSurface::Tiling T = LedgerSurface::TilingFor(Pc, kMetresPerTile);
 			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), (float)T.U);
 			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), (float)T.V);
+			// THE ALBEDO GRADE, QUEUE 299, AND THE ARITHMETIC IS NOT HERE.
+			// AlbedoGradeFor is in SurfaceBind.h where g++ runs it before
+			// this file is compiled; this supplies the surface name and one
+			// piece of live state (whether an albedo texture actually bound)
+			// and nothing else. The value is LINEAR because an Unreal vector
+			// parameter is read as linear with no conversion, and the header
+			// is where that conversion happens and where it is tested.
+			//
+			// THIS INSTANCE COVERS BOTH ROUTES AND THAT IS THE TRAP. The tint
+			// route arrives here too, and its texel ALREADY carries both
+			// grades; AlbedoGradeFor returns white for it, which is why the
+			// surface name is passed rather than a bare bool.
+			const bool bAlbedoBound =
+				Maps[Idx * LedgerSurface::MapCount() + 0] != nullptr;
+			const LedgerSurface::Grade Graded =
+				LedgerSurface::AlbedoGradeFor(GBinds[(size_t)Idx].Surface,
+				                              bAlbedoBound);
+			Mid->SetVectorParameterValue(
+				FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
+				FLinearColor((float)Graded.R, (float)Graded.G,
+				             (float)Graded.B, 1.0f));
 			Comp->SetMaterial(0, Mid);
 			++GMidsCreated;
 			if (Route == LedgerSurface::Paint_Tint) { ++GPaint.Tint; }
@@ -3794,6 +3815,8 @@ namespace
 			++GBinds[(size_t)Idx].PiecesAssigned;
 			GBinds[(size_t)Idx].TileU = T.U;
 			GBinds[(size_t)Idx].TileV = T.V;
+			GBinds[(size_t)Idx].Graded = Graded;
+			GBinds[(size_t)Idx].bGradeSet = true;
 
 			// THE READBACK, ONCE PER SURFACE, ON THE FIRST INSTANCE MADE FOR
 			// IT. The engine is asked for the parameter straight back, in the
