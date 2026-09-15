@@ -9,6 +9,69 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 07:15Z: RUN 45 IS QUEUED AND HAS NEVER STARTED. THE RUNNER IS NOT TAKING JOBS.
+
+MEASURED, NOT INFERRED, off the Actions API and two branches, all read at
+07:15Z:
+  run 45 (LEDGER Unreal probe, id 34936220494) status=QUEUED, created
+    2026-09-15T06:16:37Z, updated 06:16:37Z, run_started_at equal to created.
+    Fifty nine minutes with no update and no start.
+  THE CONTROL, AND IT IS THE READING THAT MATTERS. The SAME push produced two
+    runs at the SAME instant 06:16:37Z on the SAME commit cb0c55a2:
+    publish-glance, which runs on a GitHub-hosted runner, COMPLETED SUCCESS;
+    the probe, which runs on [self-hosted, ledger-pc], never started. Actions
+    is not degraded and the queue is not stuck. It is that label.
+  the workflow holds NO concurrency group, and the probe-unreal job carries no
+    needs and no if. Nothing but a runner can be holding it. (Checked because
+    a held group looks exactly like an absent runner from here.)
+  run 44, the SAME workflow on the SAME runner, went created 02:12:27Z to
+    completed 02:18:53Z. Six and a half minutes.
+  the runner LAST CLAIMED A JOB at 03:33:09Z: ledger-install-supervisor-task
+    on e7564eb5, completed success. Run 45 is the first self-hosted job
+    dispatched since, so the window in which it stopped claiming is 03:33Z to
+    06:16Z and cannot be narrowed from here.
+  THE MACHINE WAS ALIVE AT 04:47Z, inside that window. pc-inbox head f858854e
+    is the bot on his PC pushing two reply receipts at 2026-09-15T04:47:20Z,
+    one hour and fourteen minutes after the runner's last successful claim. So
+    "the machine went off at 03:34" is refuted. Anything after 04:47Z is open.
+  the last thing I ran on that machine CHANGED NOTHING, which is worth saying
+    before he goes looking: the 03:33Z install printed installAction=
+    already-correct, startedNow=refused reason=3_supervisor_process(es)_
+    already_running, resyncAction=skipped-supervisor-running, exit 0.
+
+A ZERO WITH ITS DENOMINATOR, because the other channel proves nothing here:
+pc-results last moved 2026-09-11T06:18Z and the pc-watcher channel has been
+silent four days. That silence is NOT evidence about the machine. Nothing has
+been ASKED of it in those four days, so the denominator is zero requests and
+zero answers is the expected reading. game-design/pc-jobs/request.json still
+names fetch-the-vignette-surfaces / vignette-fetch-01, which pc-results shows
+was RUN on 2026-09-11T06:01Z: the file is stale, not pending.
+
+SO THE ledger-pc RUNNER IS NOT CLAIMING JOBS. WHY is NOT diagnosed and must
+not be guessed at: asleep, the runner service stopped, signed out, and a
+machine taken back for his own use are all consistent with what is measured,
+and only his machine can say which. What IS established is that a queued job
+with no runner is not a slow job, and that it is the self-hosted half and not
+Actions.
+
+THIS IS A GENUINE BLOCKER AND IT STOPS THE VISUAL SLICE. Run 45 is the re-read
+he ordered in his own words. Nothing in the container can start it, nothing
+can be learned by waiting, and DO NOT RE-DISPATCH: a second queued job behind
+a runner that is not claiming would prove nothing and would confuse the
+ancestry check when the runner returns.
+
+THE PRECEDENT IS WHY THIS GOES TO HIM NOW RATHER THAN WAITING. Queue 291
+records a SIXTY ONE HOUR gap, 2026-09-11 09:04 to 2026-09-14 17:47, in which
+this same runner took no job and nobody noticed; the briefs of the 12th and
+13th were lost to it. His standing rule since 2026-09-15 is one message a day
+with two exceptions, a card he must answer and something genuinely blocking,
+and both must say so in their first line. This is the second.
+
+WHEN THE RUNNER RETURNS: run 45 should claim and complete on its own, because
+the job is queued and not cancelled. Check by ancestry that the landed verdict
+CONTAINS e1d19817, then read it in the ruling's section 11 order, FRAME FIRST,
+quoting no prediction.
+
 ## 2026-09-15 06:10Z: THE BATCH IS REVIEWED AND LANDS, ONE STATEMENT BACK WITH THE DIRECTOR
 
 LANDED UNDER THE RULING OF 05:43Z (game-design/decision-2026-09-15-ruling-the-
