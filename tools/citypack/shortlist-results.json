@@ -1,0 +1,1663 @@
+{
+ "resolution": "1K-JPG",
+ "surfaces": {
+  "concrete": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 107.2,
+    "lumSD": 9.3,
+    "chromaSpread": 6.8,
+    "file": "concrete.jpg"
+   },
+   "candidates": {
+    "Concrete001": {
+     "width": 1024,
+     "height": 715,
+     "lumMean": 154.9,
+     "lumSD": 17.2,
+     "chromaSpread": 38.5
+    },
+    "Concrete002": {
+     "width": 1024,
+     "height": 596,
+     "lumMean": 155.4,
+     "lumSD": 10.4,
+     "chromaSpread": 1.8
+    },
+    "Concrete003": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 146.1,
+     "lumSD": 16.2,
+     "chromaSpread": 7.9
+    },
+    "Concrete004": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 157.7,
+     "lumSD": 9.8,
+     "chromaSpread": 9.0
+    },
+    "Concrete005": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 135.6,
+     "lumSD": 13.5,
+     "chromaSpread": 12.0
+    },
+    "Concrete006": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 134.9,
+     "lumSD": 5.1,
+     "chromaSpread": 0.0
+    },
+    "Concrete007": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 123.0,
+     "lumSD": 7.5,
+     "chromaSpread": 2.5
+    },
+    "Concrete008": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 160.6,
+     "lumSD": 8.5,
+     "chromaSpread": 0.7
+    },
+    "Concrete009": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.1,
+     "lumSD": 9.6,
+     "chromaSpread": 0.8
+    },
+    "Concrete010": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 138.6,
+     "lumSD": 10.4,
+     "chromaSpread": 0.8
+    },
+    "Concrete011": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 125.8,
+     "lumSD": 28.3,
+     "chromaSpread": 22.2
+    },
+    "Concrete012": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 128.4,
+     "lumSD": 9.6,
+     "chromaSpread": 24.6
+    },
+    "Concrete013": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 179.6,
+     "lumSD": 8.3,
+     "chromaSpread": 3.7
+    },
+    "Concrete014": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.4,
+     "lumSD": 8.8,
+     "chromaSpread": 6.8
+    },
+    "Concrete015": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 98.4,
+     "lumSD": 4.9,
+     "chromaSpread": 7.1
+    },
+    "Concrete016": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 130.0,
+     "lumSD": 6.4,
+     "chromaSpread": 9.0
+    },
+    "Concrete018": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 171.1,
+     "lumSD": 26.0,
+     "chromaSpread": 28.2
+    },
+    "Concrete019": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 123.1,
+     "lumSD": 15.5,
+     "chromaSpread": 6.6
+    },
+    "Concrete020": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 124.6,
+     "lumSD": 8.8,
+     "chromaSpread": 6.2
+    },
+    "Concrete021": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 137.5,
+     "lumSD": 21.8,
+     "chromaSpread": 13.4
+    },
+    "Concrete022": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 117.7,
+     "lumSD": 10.5,
+     "chromaSpread": 6.7
+    },
+    "Concrete023": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 130.7,
+     "lumSD": 13.1,
+     "chromaSpread": 2.5
+    },
+    "Concrete024": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 134.6,
+     "lumSD": 5.6,
+     "chromaSpread": 5.9
+    },
+    "Concrete025": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 181.9,
+     "lumSD": 27.8,
+     "chromaSpread": 5.5
+    },
+    "Concrete026": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 145.2,
+     "lumSD": 34.3,
+     "chromaSpread": 25.6
+    },
+    "Concrete027": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 96.5,
+     "lumSD": 7.7,
+     "chromaSpread": 7.1
+    },
+    "Concrete028": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 101.2,
+     "lumSD": 7.7,
+     "chromaSpread": 7.9
+    },
+    "Concrete029": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 100.9,
+     "lumSD": 7.0,
+     "chromaSpread": 7.4
+    },
+    "Concrete030": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 96.4,
+     "lumSD": 7.1,
+     "chromaSpread": 7.4
+    },
+    "Concrete031": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 96.8,
+     "lumSD": 8.5,
+     "chromaSpread": 7.9
+    },
+    "Concrete032": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 76.7,
+     "lumSD": 7.0,
+     "chromaSpread": 13.6
+    },
+    "Concrete033": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 76.1,
+     "lumSD": 6.8,
+     "chromaSpread": 14.0
+    },
+    "Concrete035": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 130.5,
+     "lumSD": 18.5,
+     "chromaSpread": 13.4
+    },
+    "Concrete036": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 147.7,
+     "lumSD": 13.5,
+     "chromaSpread": 15.9
+    },
+    "Concrete037": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 149.3,
+     "lumSD": 21.1,
+     "chromaSpread": 16.3
+    },
+    "Concrete038": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.7,
+     "lumSD": 21.6,
+     "chromaSpread": 71.2
+    },
+    "Concrete039": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.3,
+     "lumSD": 15.4,
+     "chromaSpread": 40.7
+    },
+    "Concrete040": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 121.9,
+     "lumSD": 15.5,
+     "chromaSpread": 31.6
+    },
+    "Concrete041A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 81.1,
+     "lumSD": 6.0,
+     "chromaSpread": 7.5
+    },
+    "Concrete041B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 80.5,
+     "lumSD": 7.5,
+     "chromaSpread": 8.9
+    },
+    "Concrete041C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 82.7,
+     "lumSD": 12.2,
+     "chromaSpread": 15.0
+    },
+    "Concrete041D": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 82.6,
+     "lumSD": 17.3,
+     "chromaSpread": 23.6
+    },
+    "Concrete042B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 92.7,
+     "lumSD": 8.7,
+     "chromaSpread": 9.0
+    },
+    "Concrete042C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 86.8,
+     "lumSD": 14.6,
+     "chromaSpread": 16.1
+    },
+    "Concrete042D": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 80.7,
+     "lumSD": 17.6,
+     "chromaSpread": 23.6
+    },
+    "Concrete043A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 68.3,
+     "lumSD": 6.4,
+     "chromaSpread": 9.5
+    },
+    "Concrete043B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 68.9,
+     "lumSD": 7.9,
+     "chromaSpread": 10.3
+    },
+    "Concrete043C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 78.1,
+     "lumSD": 12.7,
+     "chromaSpread": 15.4
+    },
+    "Concrete043D": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 81.0,
+     "lumSD": 15.2,
+     "chromaSpread": 19.6
+    },
+    "Concrete044A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 81.5,
+     "lumSD": 5.9,
+     "chromaSpread": 7.6
+    },
+    "Concrete044B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 82.8,
+     "lumSD": 7.6,
+     "chromaSpread": 8.0
+    },
+    "Concrete044C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 87.3,
+     "lumSD": 9.9,
+     "chromaSpread": 9.3
+    },
+    "Concrete044D": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 96.8,
+     "lumSD": 10.8,
+     "chromaSpread": 11.5
+    },
+    "Concrete045": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 202.9,
+     "lumSD": 11.1,
+     "chromaSpread": 30.5
+    },
+    "Concrete046": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 204.0,
+     "lumSD": 8.2,
+     "chromaSpread": 20.9
+    },
+    "Concrete047A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 135.9,
+     "lumSD": 15.3,
+     "chromaSpread": 29.3
+    },
+    "Concrete047B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 132.0,
+     "lumSD": 18.3,
+     "chromaSpread": 33.8
+    },
+    "Concrete048": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 152.9,
+     "lumSD": 7.2,
+     "chromaSpread": 27.1
+    }
+   }
+  },
+  "kerb": {
+   "current": {
+    "width": 2048,
+    "height": 1024,
+    "lumMean": 184.3,
+    "lumSD": 6.6,
+    "chromaSpread": 0.0,
+    "file": "kerb.jpg"
+   },
+   "candidates": {
+    "Rock001": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 115.2,
+     "lumSD": 24.5,
+     "chromaSpread": 8.7
+    },
+    "Rock002": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 84.3,
+     "lumSD": 7.8,
+     "chromaSpread": 1.7
+    },
+    "Rock003": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 134.9,
+     "lumSD": 19.4,
+     "chromaSpread": 34.8
+    },
+    "Rock004": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 184.9,
+     "lumSD": 14.3,
+     "chromaSpread": 41.2
+    },
+    "Rock005": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 114.7,
+     "lumSD": 15.3,
+     "chromaSpread": 6.4
+    },
+    "Rock006": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 55.5,
+     "lumSD": 18.5,
+     "chromaSpread": 6.3
+    },
+    "Rock007": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 73.1,
+     "lumSD": 22.2,
+     "chromaSpread": 8.3
+    },
+    "Rock008": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 69.9,
+     "lumSD": 22.6,
+     "chromaSpread": 10.8
+    },
+    "Rock009": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 73.4,
+     "lumSD": 19.1,
+     "chromaSpread": 35.5
+    },
+    "Rock010": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 77.5,
+     "lumSD": 11.8,
+     "chromaSpread": 4.7
+    },
+    "Rock011": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 76.0,
+     "lumSD": 11.4,
+     "chromaSpread": 9.4
+    },
+    "Rock012": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 33.7,
+     "lumSD": 13.8,
+     "chromaSpread": 4.2
+    },
+    "Rock013": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 65.3,
+     "lumSD": 13.0,
+     "chromaSpread": 5.3
+    },
+    "Rock014": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 58.9,
+     "lumSD": 11.8,
+     "chromaSpread": 2.1
+    },
+    "Rock015": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 80.0,
+     "lumSD": 12.5,
+     "chromaSpread": 11.4
+    },
+    "Rock016": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 73.8,
+     "lumSD": 12.1,
+     "chromaSpread": 2.4
+    },
+    "Rock017": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 185.8,
+     "lumSD": 15.1,
+     "chromaSpread": 8.2
+    },
+    "Rock018": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 186.6,
+     "lumSD": 11.9,
+     "chromaSpread": 7.2
+    },
+    "Rock019": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 181.8,
+     "lumSD": 18.6,
+     "chromaSpread": 9.3
+    },
+    "Rock020": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 77.9,
+     "lumSD": 18.2,
+     "chromaSpread": 9.5
+    },
+    "Rock021": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 168.4,
+     "lumSD": 10.9,
+     "chromaSpread": 21.8
+    },
+    "Rock022": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 98.9,
+     "lumSD": 20.8,
+     "chromaSpread": 3.3
+    },
+    "Rock023": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.3,
+     "lumSD": 23.2,
+     "chromaSpread": 4.0
+    },
+    "Rock024": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 133.5,
+     "lumSD": 16.9,
+     "chromaSpread": 9.3
+    },
+    "Rock025": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 169.7,
+     "lumSD": 17.0,
+     "chromaSpread": 4.4
+    },
+    "Rock026": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 159.6,
+     "lumSD": 41.9,
+     "chromaSpread": 5.2
+    },
+    "Rock027": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 132.3,
+     "lumSD": 25.2,
+     "chromaSpread": 3.5
+    },
+    "Rock028": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 76.4,
+     "lumSD": 23.6,
+     "chromaSpread": 11.8
+    },
+    "Rock029": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 89.8,
+     "lumSD": 15.2,
+     "chromaSpread": 66.8
+    },
+    "Rock030": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 76.7,
+     "lumSD": 17.8,
+     "chromaSpread": 9.9
+    },
+    "Rock031": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 45.8,
+     "lumSD": 24.4,
+     "chromaSpread": 3.2
+    },
+    "Rock032": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 87.6,
+     "lumSD": 15.8,
+     "chromaSpread": 3.8
+    },
+    "Rock033": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 32.3,
+     "lumSD": 26.9,
+     "chromaSpread": 8.2
+    },
+    "Rock034": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 79.1,
+     "lumSD": 22.5,
+     "chromaSpread": 10.9
+    },
+    "Rock035": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 24.1,
+     "lumSD": 16.0,
+     "chromaSpread": 14.2
+    },
+    "Rock036": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 89.7,
+     "lumSD": 21.8,
+     "chromaSpread": 31.4
+    },
+    "Rock037": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 32.0,
+     "lumSD": 26.7,
+     "chromaSpread": 6.9
+    },
+    "Rock038": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 104.5,
+     "lumSD": 30.4,
+     "chromaSpread": 21.6
+    },
+    "Rock039": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 105.0,
+     "lumSD": 15.8,
+     "chromaSpread": 27.9
+    },
+    "Rock040": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 176.1,
+     "lumSD": 24.7,
+     "chromaSpread": 34.3
+    },
+    "Rock041": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 104.1,
+     "lumSD": 12.7,
+     "chromaSpread": 19.9
+    },
+    "Rock042L": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 147.8,
+     "lumSD": 20.4,
+     "chromaSpread": 29.0
+    },
+    "Rock042S": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 148.4,
+     "lumSD": 22.4,
+     "chromaSpread": 29.3
+    },
+    "Rock043L": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.3,
+     "lumSD": 26.8,
+     "chromaSpread": 10.6
+    },
+    "Rock043S": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.9,
+     "lumSD": 33.9,
+     "chromaSpread": 11.7
+    },
+    "Rock044": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 138.2,
+     "lumSD": 27.2,
+     "chromaSpread": 31.5
+    },
+    "Rock045": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 135.3,
+     "lumSD": 25.8,
+     "chromaSpread": 21.3
+    },
+    "Rock046L": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 141.0,
+     "lumSD": 47.3,
+     "chromaSpread": 21.8
+    },
+    "Rock046S": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 139.3,
+     "lumSD": 48.9,
+     "chromaSpread": 22.3
+    },
+    "Rock047": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 112.7,
+     "lumSD": 31.0,
+     "chromaSpread": 25.1
+    },
+    "Rock048": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 136.0,
+     "lumSD": 35.7,
+     "chromaSpread": 7.3
+    },
+    "Rock049": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 94.6,
+     "lumSD": 21.4,
+     "chromaSpread": 28.2
+    },
+    "Rock050": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 88.8,
+     "lumSD": 19.0,
+     "chromaSpread": 3.5
+    },
+    "Rock051": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 113.8,
+     "lumSD": 24.1,
+     "chromaSpread": 20.2
+    },
+    "Rock052": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 143.7,
+     "lumSD": 12.6,
+     "chromaSpread": 51.5
+    },
+    "Rock053": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 92.8,
+     "lumSD": 14.2,
+     "chromaSpread": 34.8
+    },
+    "Rock054": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 153.7,
+     "lumSD": 5.5,
+     "chromaSpread": 66.8
+    },
+    "Rock055": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 126.9,
+     "lumSD": 22.9,
+     "chromaSpread": 108.4
+    },
+    "Rock056": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 115.6,
+     "lumSD": 22.2,
+     "chromaSpread": 96.1
+    },
+    "Rock057": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 118.2,
+     "lumSD": 31.1,
+     "chromaSpread": 67.7
+    },
+    "Rock058": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 83.7,
+     "lumSD": 11.7,
+     "chromaSpread": 14.5
+    },
+    "Rock059": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 87.1,
+     "lumSD": 7.6,
+     "chromaSpread": 18.6
+    },
+    "Rock060": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 91.9,
+     "lumSD": 11.0,
+     "chromaSpread": 9.2
+    },
+    "Rock061": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 81.8,
+     "lumSD": 10.0,
+     "chromaSpread": 19.1
+    },
+    "Rock062": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 79.7,
+     "lumSD": 10.0,
+     "chromaSpread": 13.5
+    },
+    "Rock063": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 116.8,
+     "lumSD": 32.0,
+     "chromaSpread": 82.2
+    },
+    "Rock064": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.1,
+     "lumSD": 23.6,
+     "chromaSpread": 46.0
+    }
+   }
+  },
+  "metal": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 134.8,
+    "lumSD": 4.6,
+    "chromaSpread": 22.5,
+    "file": "metal.jpg"
+   },
+   "candidates": {
+    "Metal001": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 156.1,
+     "lumSD": 12.4,
+     "chromaSpread": 6.1
+    },
+    "Metal002": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 152.4,
+     "lumSD": 13.6,
+     "chromaSpread": 5.3
+    },
+    "Metal003": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.6,
+     "lumSD": 11.7,
+     "chromaSpread": 5.6
+    },
+    "Metal004": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 189.2,
+     "lumSD": 15.1,
+     "chromaSpread": 7.7
+    },
+    "Metal005": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 118.8,
+     "lumSD": 21.2,
+     "chromaSpread": 5.3
+    },
+    "Metal006": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 152.6,
+     "lumSD": 10.7,
+     "chromaSpread": 7.0
+    },
+    "Metal007": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 155.8,
+     "lumSD": 10.7,
+     "chromaSpread": 117.7
+    },
+    "Metal008": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 137.1,
+     "lumSD": 11.9,
+     "chromaSpread": 69.0
+    },
+    "Metal009": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 148.3,
+     "lumSD": 4.9,
+     "chromaSpread": 5.8
+    },
+    "Metal010": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 138.2,
+     "lumSD": 10.3,
+     "chromaSpread": 13.9
+    },
+    "Metal011": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 159.9,
+     "lumSD": 5.3,
+     "chromaSpread": 9.0
+    },
+    "Metal012": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 220.0,
+     "lumSD": 3.7,
+     "chromaSpread": 15.1
+    },
+    "Metal013": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 106.2,
+     "lumSD": 16.3,
+     "chromaSpread": 24.7
+    },
+    "Metal014": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 204.3,
+     "lumSD": 16.6,
+     "chromaSpread": 20.6
+    },
+    "Metal015": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 113.4,
+     "lumSD": 8.9,
+     "chromaSpread": 17.2
+    },
+    "Metal016": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 219.2,
+     "lumSD": 21.2,
+     "chromaSpread": 5.4
+    },
+    "Metal017": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 126.1,
+     "lumSD": 12.4,
+     "chromaSpread": 35.2
+    },
+    "Metal018": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 103.1,
+     "lumSD": 14.3,
+     "chromaSpread": 28.2
+    },
+    "Metal019": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 115.6,
+     "lumSD": 10.4,
+     "chromaSpread": 15.6
+    },
+    "Metal020": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 149.0,
+     "lumSD": 25.6,
+     "chromaSpread": 12.4
+    },
+    "Metal021": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 95.9,
+     "lumSD": 13.4,
+     "chromaSpread": 15.6
+    },
+    "Metal022": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 89.8,
+     "lumSD": 26.7,
+     "chromaSpread": 29.8
+    },
+    "Metal023": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 94.9,
+     "lumSD": 22.9,
+     "chromaSpread": 26.9
+    },
+    "Metal024": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 121.7,
+     "lumSD": 14.8,
+     "chromaSpread": 3.7
+    },
+    "Metal025": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 67.6,
+     "lumSD": 11.6,
+     "chromaSpread": 29.4
+    },
+    "Metal026": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 95.6,
+     "lumSD": 22.7,
+     "chromaSpread": 22.7
+    },
+    "Metal027": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 45.6,
+     "lumSD": 3.9,
+     "chromaSpread": 7.7
+    },
+    "Metal028": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 31.9,
+     "lumSD": 4.4,
+     "chromaSpread": 4.4
+    },
+    "Metal029": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 33.0,
+     "lumSD": 4.9,
+     "chromaSpread": 4.4
+    },
+    "Metal030": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 84.3,
+     "lumSD": 1.0,
+     "chromaSpread": 11.0
+    },
+    "Metal031": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 84.7,
+     "lumSD": 1.4,
+     "chromaSpread": 10.9
+    },
+    "Metal033": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 83.6,
+     "lumSD": 1.6,
+     "chromaSpread": 18.0
+    },
+    "Metal034": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 175.2,
+     "lumSD": 0.5,
+     "chromaSpread": 219.9
+    },
+    "Metal035": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 122.3,
+     "lumSD": 1.4,
+     "chromaSpread": 116.6
+    },
+    "Metal036": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 70.3,
+     "lumSD": 3.4,
+     "chromaSpread": 8.1
+    },
+    "Metal037": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 115.8,
+     "lumSD": 12.1,
+     "chromaSpread": 2.8
+    },
+    "Metal038": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 97.1,
+     "lumSD": 4.1,
+     "chromaSpread": 2.6
+    },
+    "Metal039": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 126.6,
+     "lumSD": 13.7,
+     "chromaSpread": 2.8
+    },
+    "Metal040": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 109.9,
+     "lumSD": 19.7,
+     "chromaSpread": 5.8
+    },
+    "Metal041A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 185.4,
+     "lumSD": 2.8,
+     "chromaSpread": 4.7
+    },
+    "Metal041B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 141.8,
+     "lumSD": 32.8,
+     "chromaSpread": 24.9
+    },
+    "Metal041C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 73.4,
+     "lumSD": 23.1,
+     "chromaSpread": 72.2
+    },
+    "Metal042A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 215.1,
+     "lumSD": 3.1,
+     "chromaSpread": 97.8
+    },
+    "Metal042B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 176.0,
+     "lumSD": 16.9,
+     "chromaSpread": 72.7
+    },
+    "Metal043A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 204.7,
+     "lumSD": 4.0,
+     "chromaSpread": 55.9
+    },
+    "Metal043B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 135.2,
+     "lumSD": 30.9,
+     "chromaSpread": 30.6
+    },
+    "Metal044A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 236.7,
+     "lumSD": 3.6,
+     "chromaSpread": 5.9
+    },
+    "Metal044B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 235.2,
+     "lumSD": 12.1,
+     "chromaSpread": 4.1
+    },
+    "Metal045A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 193.3,
+     "lumSD": 4.0,
+     "chromaSpread": 20.0
+    },
+    "Metal045B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 193.2,
+     "lumSD": 5.3,
+     "chromaSpread": 20.1
+    },
+    "Metal046A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 92.5,
+     "lumSD": 4.0,
+     "chromaSpread": 2.0
+    },
+    "Metal046B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 62.8,
+     "lumSD": 8.6,
+     "chromaSpread": 0.3
+    },
+    "Metal047A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 144.4,
+     "lumSD": 2.9,
+     "chromaSpread": 110.4
+    },
+    "Metal047B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 85.1,
+     "lumSD": 17.4,
+     "chromaSpread": 40.3
+    },
+    "Metal048A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 227.8,
+     "lumSD": 1.6,
+     "chromaSpread": 97.8
+    },
+    "Metal048B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 225.1,
+     "lumSD": 4.6,
+     "chromaSpread": 97.1
+    },
+    "Metal048C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 223.1,
+     "lumSD": 8.4,
+     "chromaSpread": 96.3
+    },
+    "Metal049A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 250.7,
+     "lumSD": 1.6,
+     "chromaSpread": 5.7
+    },
+    "Metal049B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 246.7,
+     "lumSD": 5.3,
+     "chromaSpread": 5.5
+    },
+    "Metal049C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 247.3,
+     "lumSD": 3.1,
+     "chromaSpread": 5.8
+    },
+    "Metal050A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 247.9,
+     "lumSD": 1.7,
+     "chromaSpread": 1.9
+    },
+    "Metal050B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 246.4,
+     "lumSD": 2.2,
+     "chromaSpread": 1.9
+    },
+    "Metal050C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 245.7,
+     "lumSD": 2.4,
+     "chromaSpread": 1.6
+    },
+    "Metal051A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 248.1,
+     "lumSD": 1.8,
+     "chromaSpread": 1.9
+    },
+    "Metal051B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 248.2,
+     "lumSD": 4.3,
+     "chromaSpread": 1.6
+    },
+    "Metal051C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 242.5,
+     "lumSD": 10.8,
+     "chromaSpread": 1.2
+    },
+    "Metal052A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 198.4,
+     "lumSD": 2.7,
+     "chromaSpread": 4.8
+    },
+    "Metal052B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 194.8,
+     "lumSD": 6.8,
+     "chromaSpread": 4.5
+    },
+    "Metal052C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 191.5,
+     "lumSD": 10.0,
+     "chromaSpread": 3.5
+    },
+    "Metal053A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 197.6,
+     "lumSD": 2.9,
+     "chromaSpread": 4.7
+    },
+    "Metal053B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 181.9,
+     "lumSD": 24.8,
+     "chromaSpread": 13.5
+    },
+    "Metal053C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 140.2,
+     "lumSD": 34.7,
+     "chromaSpread": 49.8
+    },
+    "Metal054A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 195.4,
+     "lumSD": 7.6,
+     "chromaSpread": 4.6
+    },
+    "Metal054B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 175.3,
+     "lumSD": 22.2,
+     "chromaSpread": 20.0
+    },
+    "Metal054C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 115.2,
+     "lumSD": 20.3,
+     "chromaSpread": 74.6
+    },
+    "Metal055A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 190.0,
+     "lumSD": 8.7,
+     "chromaSpread": 2.5
+    },
+    "Metal055B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 186.5,
+     "lumSD": 17.0,
+     "chromaSpread": 5.5
+    },
+    "Metal055C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 117.1,
+     "lumSD": 30.6,
+     "chromaSpread": 67.3
+    },
+    "Metal056A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 184.6,
+     "lumSD": 15.3,
+     "chromaSpread": 11.2
+    },
+    "Metal056B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 171.4,
+     "lumSD": 23.9,
+     "chromaSpread": 22.1
+    },
+    "Metal056C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 113.2,
+     "lumSD": 26.1,
+     "chromaSpread": 63.5
+    },
+    "Metal057A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 216.6,
+     "lumSD": 1.7,
+     "chromaSpread": 57.8
+    },
+    "Metal057B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 216.1,
+     "lumSD": 1.8,
+     "chromaSpread": 57.8
+    },
+    "Metal057C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 211.4,
+     "lumSD": 7.7,
+     "chromaSpread": 57.2
+    },
+    "Metal058A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 211.5,
+     "lumSD": 6.1,
+     "chromaSpread": 57.5
+    },
+    "Metal058B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 199.2,
+     "lumSD": 9.3,
+     "chromaSpread": 33.0
+    },
+    "Metal058C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 173.3,
+     "lumSD": 14.5,
+     "chromaSpread": 43.1
+    },
+    "Metal059A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 187.9,
+     "lumSD": 2.3,
+     "chromaSpread": 17.0
+    },
+    "Metal059B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 183.5,
+     "lumSD": 12.2,
+     "chromaSpread": 17.1
+    },
+    "Metal059C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 176.4,
+     "lumSD": 21.8,
+     "chromaSpread": 17.5
+    },
+    "Metal060A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 204.9,
+     "lumSD": 2.3,
+     "chromaSpread": 21.0
+    },
+    "Metal060B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 178.4,
+     "lumSD": 7.7,
+     "chromaSpread": 23.0
+    },
+    "Metal060C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 171.2,
+     "lumSD": 11.0,
+     "chromaSpread": 24.3
+    },
+    "Metal061A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 204.1,
+     "lumSD": 3.2,
+     "chromaSpread": 5.0
+    },
+    "Metal061B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 193.7,
+     "lumSD": 4.7,
+     "chromaSpread": 2.8
+    },
+    "Metal061C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 174.0,
+     "lumSD": 10.7,
+     "chromaSpread": 11.4
+    },
+    "Metal062A": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 209.5,
+     "lumSD": 4.2,
+     "chromaSpread": 13.0
+    },
+    "Metal062B": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 206.2,
+     "lumSD": 6.5,
+     "chromaSpread": 13.3
+    },
+    "Metal062C": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 186.7,
+     "lumSD": 36.6,
+     "chromaSpread": 15.2
+    },
+    "Metal063": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 109.5,
+     "lumSD": 6.9,
+     "chromaSpread": 6.0
+    }
+   }
+  },
+  "plaster": {
+   "current": {
+    "width": 2048,
+    "height": 2048,
+    "lumMean": 211.7,
+    "lumSD": 5.8,
+    "chromaSpread": 7.2,
+    "file": "plaster.jpg"
+   },
+   "candidates": {
+    "Plaster003": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 212.1,
+     "lumSD": 18.0,
+     "chromaSpread": 6.7
+    },
+    "Plaster004": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.0,
+     "lumSD": 8.8,
+     "chromaSpread": 5.0
+    },
+    "Plaster005": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 165.3,
+     "lumSD": 7.0,
+     "chromaSpread": 4.8
+    },
+    "Plaster006": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 167.8,
+     "lumSD": 7.6,
+     "chromaSpread": 5.5
+    },
+    "Plaster007": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 189.5,
+     "lumSD": 12.1,
+     "chromaSpread": 9.1
+    }
+   }
+  }
+ }
+}
