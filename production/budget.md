@@ -565,9 +565,31 @@ either of which would be enough.
 
 1. EITHER METER at or above 85 percent: STOP. Write the brief, push,
    and do nothing further until Jafar gives a new number.
-2. No reading newer than 48 hours: treat the budget as UNKNOWN and work only
-   on items that cost no model time (reading landed results, committing
-   finished work). An unknown budget is not permission.
+2. NO READING NEWER THAN TEN HOURS: treat the day as UNMEASURED. INBOX HALF
+   ONLY, NO BUILDERS, NO DISPATCHES, NO RENDERS. Reading landed results and
+   committing finished work still cost no model time and are still allowed.
+   An unknown budget is not permission.
+   RULED BY JAFAR 2026-09-15, REPLACING FORTY EIGHT HOURS, in his words: "The
+   ceiling does not brake anything, because you cannot read the meter and work
+   from whatever number I last typed. A night can spend thirty points while
+   every check says the morning's figure." And on the bound itself: "Not forty
+   eight hours, which is longer than a night that can spend a third of a week."
+   THE SECOND HALF OF THE SAME RULING, which is what makes the first half cost
+   him nothing: THE BRIEF ASKS FOR THE READING AS ITS FIRST LINE, EVERY
+   MORNING, AND THE STUDIO HOLDS AT INBOX ONLY UNTIL HE ANSWERS. No reading,
+   no spending. His reason, verbatim: "That way I am asked once a day rather
+   than having to remember, and forgetting costs nothing."
+   WHAT THIS BOUND NEEDS THAT THE TABLE DOES NOT YET CARRY, said here because
+   a rule nothing can evaluate is decoration: every row's date column is a
+   DATE and its time lives in prose as "at about 04:1xZ", which is not a
+   parseable instant. Forty eight hours survived on date arithmetic
+   (tools/morning-brief.py reads it as BUDGET_STALE_DAYS = 2 and says so in
+   its own comment); TEN HOURS CANNOT. From this ruling every row carries
+   `takenAt=<ISO instant>`, stamped by the resident at the moment the reading
+   ARRIVES rather than asked of him, because when it arrived is what staleness
+   is about and asking him for a precise clock time would reintroduce exactly
+   the remembering he just ruled away. A row with no `takenAt` reads as
+   UNMEASURED rather than as fresh.
 3. `production/STOP` exists: stop, same as the night runner.
 4. THE DAY'S ALLOCATION IS SPENT: stop for the day even though the week is
    fine. Added 2026-09-01 17:20Z by a watchdog firing that found no stop

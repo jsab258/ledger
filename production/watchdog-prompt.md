@@ -84,7 +84,7 @@ BUDGET FIRST, BEFORE ANY WORK. Read `production/budget.md`. IT IS THE AUTHORITY 
 
 This prompt deliberately states NO budget figure and no over-or-under judgement. It used to say Jafar was over budget for the week; the weekly limit reset and that sentence became false while being read hourly, which is a decayed claim in the one instruction every session obeys. The file is dated, this prompt is not, so the file wins by construction.
 
-Two things the file cannot say for itself. An unknown budget is not permission: with no reading newer than 48 hours, do only work that costs no model time. And a reading describes the moment it was taken, so when substantial work has happened since the newest one, treat the day as unmeasured and prefer stopping.
+Two things the file cannot say for itself. An unknown budget is not permission: with no reading newer than TEN HOURS the day is unmeasured, so inbox half only, no builders, no dispatches, no renders (Jafar, 2026-09-15, replacing forty eight hours), and the brief asks him for the reading as its first line every morning. And a reading describes the moment it was taken, so when substantial work has happened since the newest one, treat the day as unmeasured and prefer stopping.
 
 THEN READ `production/NOW.md` BEFORE THE QUEUE. It names what is already moving, what waits on Jafar, and the standing hazards. The queue says what to do next; NOW says what a fresh session would otherwise duplicate, abandon, or wait for forever. Keep it current as you work, or the next session inherits a lie.
 
