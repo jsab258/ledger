@@ -273,7 +273,7 @@ path is the next day a brief is written on his machine.
   branch union is producer-day.py's and that is the resident's dossier, not
   this step.
 
-  THE ACCEPTING CASE LANDED AT 05:34:08Z ON RUN e7564eb5, AND IT CLOSES THIS
+  THE ACCEPTING CASE LANDED AT 03:34:08Z ON RUN e7564eb5, AND IT CLOSES THIS
   ITEM. The acceptance written at the top asks for exactly one thing:
   "briefsSentEver rises on the next day a brief is written, and that is the
   accepting case rather than a green run." It has.
@@ -305,7 +305,7 @@ path is the next day a brief is written on his machine.
   two runs four hours apart: the 03:21:03Z run proved the REJECTING half (the
   recovery declined because the 14th was already sent, the miss said so with
   its denominator, the dossier named the one unsent day and its command), and
-  the 05:34:08Z run proved the ACCEPTING half. Rule 5b asks for both outcomes
+  the 03:34:08Z run proved the ACCEPTING half. Rule 5b asks for both outcomes
   with the accepting case first; the live path delivered them in the other
   order, which is not a choice anyone made and is worth saying plainly.
 
@@ -316,4 +316,16 @@ path is the next day a brief is written on his machine.
   whose brief was written and missed, which is the case queue 303 exists for
   and which nobody can manufacture without waiting for the runner to go dark
   again.
+
+  ONE CORRECTION TO THE PARAGRAPHS ABOVE, made from the receipt rather than
+  from the log. They first read 05:34:08Z, and the instant is 03:34:08Z.
+  production/outbound/brief-2026-09-15.receipt.txt states it unambiguously as
+  "sent: 2026-09-15T03:34:08+00:00". The 05:34:08 in brief-send.txt is the
+  PC's own wall clock, which is CEST and two hours ahead of UTC, and a Z was
+  appended to a local time that never carried one. Three copies were grepped
+  by the sentence and fixed, two here and one in NOW.md.
+  THE RECEIPT ALSO CARRIES THE NUMBER THE LOG DOES NOT: outboundLatencySec=63,
+  measured fileCommitInstant to sendInstant, with its own note that it is "one
+  sample of one message, not a rate". So the brief was committed and on his
+  phone about a minute later, once a run of the step came round.
 

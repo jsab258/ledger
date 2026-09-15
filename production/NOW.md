@@ -15,7 +15,7 @@ IN FLIGHT: nothing. Run 44 landed on 17710df and was read in the ruling's
 section 10 order. Both builders and the director are finished and their work
 is committed and pushed.
 
-THE BRIEF REACHED HIM AT 05:34:08Z as messageId 99, with BOTH BUTTONS and the
+THE BRIEF REACHED HIM AT 03:34:08Z as messageId 99, with BOTH BUTTONS and the
 PICTURE carried (game-design/sim-shots/grade_three_way.jpg, three panels: his
 Hook sheet, the street before, the street after). briefsSentEver moved 2 to 4
 across the night. That is queue 291's acceptance met on the live path and the
