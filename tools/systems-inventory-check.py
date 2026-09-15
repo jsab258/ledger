@@ -3,10 +3,19 @@
 
 WHAT THIS IS. `production/systems-inventory.json` is the data behind the
 heatmap Jafar approved on 31 August: every system a tile, in five areas, in
-his order, coloured exists, partial or absent. One entry per system with the
-six fields he named (name, area, status, class, phase, blocker), a one-line
-note he reads, an optional evidence list, and the two attribution fields the
-contract below turns on.
+his order, coloured exists, partial, absent or ruled-out. One entry per system
+with the six fields he named (name, area, status, class, phase, blocker), a
+one-line note he reads, an optional evidence list, and the two attribution
+fields the contract below turns on.
+
+THE FOURTH STATUS, RULED 2026-09-15 AND LANDED WITH D38. `ruled-out` means
+DECIDED AGAINST, and it is a different fact from `absent`, which means NOT
+BUILT YET. D38 left the choice between a status value and "absent plus a note"
+to implementation and Jafar settled it: "the schema needs a fourth status for
+ruled-out; add it." A ruled-out tile carries no `where` and no `evidence`, for
+the same reason an absent one does not, and its note NAMES THE RECORD THAT
+STRUCK IT, which is D38's own requirement and the thing that stops a decision
+reading as an oversight. Nothing printed here sums the two.
 
 THE CONTRACT CHANGED ON 2026-09-09, AND THIS TOOL CHANGED WITH IT. Jafar:
 "ON THIS PAGE, TYPED IS THE STANDARD: a director's overview is a human's
@@ -108,7 +117,30 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # The fixed sets. Consumers (the map view, the roadmap fold) import these
 # rather than writing a second copy: one implementation per idea.
 AREAS = ("moat", "world", "player-facing", "content", "studio")
-STATUSES = ("exists", "partial", "absent")
+# THE FOURTH STATUS, RULED BY JAFAR ON 2026-09-15, and it is a status and not a
+# note: D38 left "a new status value or absent plus a note" to implementation
+# and he settled it ("the schema needs a fourth status for ruled-out; add it").
+#
+# ABSENT AND RULED-OUT ARE NOT THE SAME FACT AND NO TALLY HERE MAY LUMP THEM.
+# `absent` is NOT BUILT YET, which is a queue item waiting for its turn.
+# `ruled-out` is DECIDED AGAINST, which is a record that struck it and no work
+# that will ever follow. Reading the second as the first is how a decision
+# turns back into an oversight, which is the fault D38 names in its own words:
+# the map should show what was decided against "rather than leaving it to look
+# like an oversight". Every count below prints them apart.
+STATUSES = ("exists", "partial", "absent", "ruled-out")
+# THE STATES A SYSTEM IS NOWHERE IN. `where` and `evidence` are both FORBIDDEN
+# on these for the one reason: a system that is nowhere cannot be somewhere,
+# and a thing decided against is nowhere in exactly the way a thing not built
+# yet is. One tuple, two rungs, so the pair cannot drift apart.
+NOWHERE_STATUSES = ("absent", "ruled-out")
+# WHAT A RULED-OUT TILE MUST NAME. D38: "Everything ruled out (D39) gets a tile
+# typed ruled-out, NAMING THE RECORD THAT STRUCK IT". The record goes in the
+# note, because `blocker` means something else (what stands between this system
+# and being built) and a ruled-out system has nothing standing in front of it.
+# The id is found by this shape and then resolved against the register, so a
+# tile cannot name a record that does not exist.
+RECORD_IN_NOTE_RX = re.compile(r"\bD\d+\b")
 CLASSES = ("cheap-to-author", "taste-bound", "moat-adjacent")
 PHASES = ("R", "0", "1", "2", "3", "4", "5", "6")
 # WHICH CODEBASE A TILE'S COLOUR IS ABOUT, ruled 2026-09-09 section 4b. It is
@@ -422,6 +454,7 @@ def validate(doc, entries, names, today=None):
     dates = []
     q_blockers = d_blockers = 0
     q_landed, d_settled = [], []
+    ruled_out_records = []       # name->record, one per ruled-out tile
 
     checks += 1
     check_header(doc, problems)
@@ -467,10 +500,34 @@ def validate(doc, entries, names, today=None):
                             "is this colour a reading of (%s)?"
                             % (tag, st, "|".join(WHERES)))
         checks += 1
-        if st == "absent" and wh not in (None, ""):
-            problems.append("%s status=absent must carry no 'where' (got %r): "
+        if st in NOWHERE_STATUSES and wh not in (None, ""):
+            problems.append("%s status=%s must carry no 'where' (got %r): "
                             "a system that is nowhere cannot be somewhere"
-                            % (tag, wh))
+                            % (tag, st, wh))
+        # THE RULED-OUT RUNG, AND IT IS THE WHOLE POINT OF THE FOURTH STATUS.
+        # A tile that says "decided against" and cannot say BY WHAT is the
+        # anonymous colour again with a different word on it, so the note names
+        # a decision record and the record has to exist in the register.
+        if st == "ruled-out":
+            note_text = e.get("note") if isinstance(e.get("note"), str) else ""
+            ids = RECORD_IN_NOTE_RX.findall(note_text)
+            found = [i for i in ids if decision_records(i)]
+            checks += 1
+            if not ids:
+                problems.append("%s status=ruled-out names no decision record "
+                                "in its note; a tile typed ruled-out says "
+                                "WHICH record struck it or it reads as an "
+                                "oversight, which is what the status exists "
+                                "to prevent" % tag)
+            checks += 1
+            if ids and not found:
+                problems.append("%s status=ruled-out names %s in its note and "
+                                "no such record is in %s"
+                                % (tag, "/".join(sorted(set(ids))),
+                                   rel(os.path.join(ROOT, "ledger-v2", "respec",
+                                                    "decision-register"))))
+            if found:
+                ruled_out_records.append(pair(name, found[0]))
 
         # `short`, THE OPTIONAL DISPLAY LABEL, four shape rungs and NO LENGTH
         # BOUND. No rendered width has been measured at 360px in any session,
@@ -552,10 +609,14 @@ def validate(doc, entries, names, today=None):
             with_ev += 1
         # EVIDENCE IS NO LONGER REQUIRED for exists or partial: the state is
         # typed and attributed instead. The one rule kept is that an entry
-        # typed absent may not cite paths that say otherwise.
+        # typed into one of the NOWHERE states may not cite paths that say
+        # otherwise. The record that struck a ruled-out tile is named in its
+        # note and not here, because evidence is provenance for something that
+        # was BUILT and a ruled-out system never was.
         checks += 1
-        if status == "absent" and ev:
-            problems.append("%s status=absent must carry no evidence" % tag)
+        if status in NOWHERE_STATUSES and ev:
+            problems.append("%s status=%s must carry no evidence"
+                            % (tag, status))
         for ref in ev:
             ev_refs += 1
             checks += 1
@@ -589,8 +650,15 @@ def validate(doc, entries, names, today=None):
         "wheres": wheres,
         "shortLens": sorted(short_lens),
         "nameLens": sorted(name_lens),
+        # THE POPULATION THAT MUST NAME A CODEBASE, counted directly as the
+        # exists and partial tiles rather than as "everything that is not
+        # absent". It was the second form until the fourth status landed, and
+        # that form quietly counted a ruled-out tile as one that owed a
+        # `where`: a denominator one larger than the set examined is the
+        # clean-result-that-is-a-false-claim shape.
         "notAbsent": sum(1 for e in entries if isinstance(e, dict)
                          and e.get("status") in ("exists", "partial")),
+        "ruledOutRecords": sorted(ruled_out_records),
         "roles": roles,
         "dates": sorted(dates),
         "qBlockers": q_blockers,
@@ -678,13 +746,14 @@ def run(path, names_path=None, out=sys.stdout, emit=False, today=None):
     print("  byArea:   " + fmt_tally(st["tally"]["area"], n), file=out)
     print("  byPhase:  " + fmt_tally(st["tally"]["phase"], n), file=out)
     # WHICH CODEBASE THE COLOURS ARE ABOUT, a whole-file census at this run.
-    # `none` is the absent tiles, which may not carry one; `missing` is the
-    # fault, and it prints its denominator either way so a clean run cannot be
-    # confused with a run that examined nothing.
+    # `none` is the absent and ruled-out tiles, neither of which may carry
+    # one; `missing` is the fault, and it prints its denominator either way
+    # so a clean run cannot be confused with a run that examined nothing.
     missing_where = sum(1 for e in entries if isinstance(e, dict)
                         and e.get("status") in ("exists", "partial")
                         and not e.get("where"))
-    print("  byWhere:  %s none=%d/%d-absent missingWhere=%d/%d-not-absent"
+    print("  byWhere:  %s none=%d/%d-absent-or-ruled-out "
+          "missingWhere=%d/%d-exists-or-partial"
           % (" ".join("%s=%d/%d" % (k, st["wheres"].get(k, 0), n)
                       for k in WHERES),
              st["wheres"].get("none", 0), n, missing_where, st["notAbsent"]),
@@ -697,6 +766,7 @@ def run(path, names_path=None, out=sys.stdout, emit=False, today=None):
           % (len(st["shortLens"]), n, series(st["shortLens"]),
              series(st["nameLens"])), file=out)
     absent = st["tally"]["status"]["absent"]
+    ruled_out = st["tally"]["status"]["ruled-out"]
     # TYPED, AND BY WHOM. The zero that matters here is untypedBy: a tile with
     # no owner is the anonymous colour the ruling replaced.
     print("  typedBy:  %s untyped=%d/%d typedOn=%s..%s (oldest..newest of %d)"
@@ -706,10 +776,21 @@ def run(path, names_path=None, out=sys.stdout, emit=False, today=None):
              st["dates"][0] if st["dates"] else NOTHING.replace(" ", "_"),
              st["dates"][-1] if st["dates"] else NOTHING.replace(" ", "_"),
              len(st["dates"])), file=out)
+    # THE TWO NOWHERE STATES PRINT APART, NEVER SUMMED. "not built yet" and
+    # "decided against" carry no evidence for two different reasons and a
+    # reader who cannot tell them apart from this line has to open the file.
     print("  evidence: refs=%d resolved=%d/%d entriesWithEvidence=%d/%d "
-          "absentCarryNone=%d (%s for those) evidenceIsProvenanceNotTheGate=true"
+          "absentCarryNone=%d ruledOutCarryNone=%d (%s for those) "
+          "evidenceIsProvenanceNotTheGate=true"
           % (st["evRefs"], st["evOk"], st["evRefs"], st["withEv"], n, absent,
-             NOTHING), file=out)
+             ruled_out, NOTHING), file=out)
+    # THE RECORD THAT STRUCK EACH RULED-OUT TILE, as a paired reading: the
+    # system and the record in one entry, so the relationship is not two keys
+    # a reader has to hold together. A zero here ships its denominator.
+    print("  ruledOut: tiles=%d/%d namingARecord=%d/%d records=%s"
+          % (ruled_out, n, len(st["ruledOutRecords"]), ruled_out,
+             ",".join(capped(st["ruledOutRecords"]))
+             or NOTHING.replace(" ", "_")), file=out)
     # PRINTED SERIES, NOT BOUNDS. Neither line refuses anything today; both
     # exist so a director can read real runs before any number is set.
     print("  noteChars: %s (series, no bound set)" % series(st["noteLens"]),
@@ -836,6 +917,20 @@ def selftest():
             dict(GOOD, name="planted-absent-with-no-where")], tag="wheresh"))
         rungs.append(("accept/where-on-exists-and-absent-with-none", 0, code))
 
+        # RUNG 4 ACCEPTING: THE FOURTH STATUS, and it comes BEFORE any of its
+        # refusals. The record it names is a REAL one, because the accepting
+        # fixture for a tool that checks this project is the project; every
+        # refusal below names D9999, which exists nowhere, so doing the work
+        # this tool asks for can never break the tool.
+        print("\n== rung 4 ACCEPTING: a tile typed ruled-out, naming the "
+              "record that struck it ==")
+        code = run(_fixture(tmp, [
+            dict(GOOD, name="planted-ruled-out", status="ruled-out",
+                 note="Struck by D39, which is a real record in the "
+                      "register. This entry exists nowhere in the project.")],
+            tag="ruledout"))
+        rungs.append(("accept/ruled-out-naming-its-record", 0, code))
+
         planted = [
             ("refuse/schema-from-the-retired-contract", 1,
              [dict(GOOD)], dict(HEADER, schema="systems-inventory/v1")),
@@ -867,6 +962,27 @@ def selftest():
                              "#ZzQqSyntheticTokenThatExistsNowhere"])], None),
             ("refuse/area-outside-the-five", 1,
              [dict(GOOD, name="planted-area", area="vibes")], None),
+            # THE FOURTH STATUS'S OWN REFUSALS. The first is the one that
+            # proves adding a value did not open the field to any word: a
+            # status in no list still fails.
+            ("refuse/status-outside-the-four", 1,
+             [dict(GOOD, name="planted-status", status="shelved")], None),
+            ("refuse/ruled-out-carrying-where", 1,
+             [dict(GOOD, name="planted-ruled-out-somewhere",
+                   status="ruled-out", where="core-csharp",
+                   note="Struck by D39. Synthetic.")], None),
+            ("refuse/ruled-out-carrying-evidence", 1,
+             [dict(GOOD, name="planted-ruled-out-cited", status="ruled-out",
+                   evidence=["ledger/verify.py"],
+                   note="Struck by D39. Synthetic.")], None),
+            ("refuse/ruled-out-naming-no-record", 1,
+             [dict(GOOD, name="planted-ruled-out-anonymous",
+                   status="ruled-out",
+                   note="Decided against, and this note says by whom "
+                        "nowhere.")], None),
+            ("refuse/ruled-out-naming-a-record-that-exists-nowhere", 1,
+             [dict(GOOD, name="planted-ruled-out-ghost", status="ruled-out",
+                   note="Struck by D9999, which is in no register.")], None),
             # THE FIVE THE RULING NAMES, then three more that keep each shape
             # rung from being a ratchet. Every fixture is synthetic.
             ("refuse/where-outside-the-four", 1,

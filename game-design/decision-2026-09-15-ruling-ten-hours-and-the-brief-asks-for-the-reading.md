@@ -82,6 +82,28 @@ rule is first evaluated against. The convention starts with his next reading.
 Today's row reads unmeasured under the new bound, which is also what the clock
 says: 04:1xZ to 19:1xZ is fifteen hours.
 
+## Amended the same evening: opening a page is not spending
+
+After the rule bit once, holding the D38 batch he had asked for an hour
+earlier, he added a third allowed act. His words: **"reading a landed run and
+committing finished work stay allowed as you have it, and I would add opening
+a page to that list. Looking at what already exists costs nothing and is how I
+judge; it should not be gated with the things that spend."**
+
+THE LINE IS BETWEEN OPENING AND MAKING AND IT MUST NOT BE BLURRED. Opening
+`map.html`, a landed still, or the published site is allowed: the artifact
+already exists and reading it spends nothing. REGENERATING A PAGE IS NOT
+OPENING IT. `python3 tools/map.py` WRITES `map.html`; it stays gated, as does
+dispatching a render. A session that reads "opening a page is allowed" and
+runs the generator has crossed the line this section exists to draw.
+
+WHY THE AMENDMENT IS RIGHT AND NOT A LOOSENING. The bound exists because the
+studio cannot read the meter and therefore cannot know what it is spending.
+Opening a file that is already on disk moves no meter at all, and it is the
+only way he judges anything: the whole visual slice is settled by him looking
+at a frame. A bound that stopped him looking would be stopping the judgement
+rather than the spend, which is the opposite of its purpose.
+
 ## What this ruling costs him, which is the point of change two
 
 Nothing. He is asked once, in the first line of the one message a day he
