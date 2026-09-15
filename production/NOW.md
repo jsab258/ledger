@@ -9,6 +9,66 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 19:20Z: THE STUDIO IS AT INBOX ONLY. HIS TEN HOUR RULE BIT THE HOUR HE MADE IT.
+
+RULED TONIGHT BY JAFAR, replacing forty eight hours: a budget reading older
+than TEN HOURS means the day is UNMEASURED, and unmeasured means INBOX HALF
+ONLY, NO BUILDERS, NO DISPATCHES, NO RENDERS. And the brief asks him for the
+reading as its first line every morning, with the studio holding at inbox only
+until he answers. Recorded in production/budget.md stop condition 2,
+production/repo-move-triggers.md step 3, production/watchdog-prompt.md,
+.claude/agents/producer.md as item 0, and
+game-design/decision-2026-09-15-ruling-ten-hours-and-the-brief-asks-for-the-
+reading.md.
+
+THE STUDIO IS HELD AS OF NOW. His newest reading is 34/36 at about 04:1xZ.
+It is 19:20Z. FIFTEEN HOURS. Under the rule he has just made, tonight is
+unmeasured and nothing may be spawned, dispatched or rendered until he gives a
+number. READING LANDED RESULTS AND COMMITTING FINISHED WORK STILL COST NO MODEL
+TIME AND ARE STILL ALLOWED, which is what this block is.
+
+WHAT IS HELD, NAMED SO NOBODY RESTARTS IT BY ACCIDENT:
+  THE D38 BUILDER IS NOT RESUMED. It hit its turn limit a third time at 19:14Z
+    with Parts 1 and 2 DONE and Part 3 unverified. Its work is ON DISK AND
+    UNCOMMITTED. Do not spawn it again, do not spawn a director for it, and do
+    not finish it by hand: the resident does not implement.
+  QUEUE 314, the two tool changes that would make his ten hour rule
+    mechanical, is filed and BLOCKED on the same rule. The first thing his
+    next reading buys is the checker that enforces the rule about readings.
+  NOTHING IS DISPATCHED. Run 46 landed and was read; no run 47 goes out under
+    an unmeasured day.
+
+WHAT THE D38 BUILDER ACTUALLY GOT DONE, measured off the tree rather than
+taken from a report it never delivered:
+  PART 1, THE SCHEMA, DONE AND GREEN. STATUSES is now the four value tuple
+    with ruled-out; NOWHERE_STATUSES groups absent with ruled-out without
+    collapsing them; and systems-inventory-check.py 511 to 517 REQUIRES a
+    ruled-out tile to name a decision record, which is better than the
+    convention I briefed and makes D38's "rather than leaving it to look like
+    an oversight" impossible to forget. Selftests 44/44 on the inventory
+    checker with 12 accepting first, 152/152 over 38 checks on the map.
+  PART 2, THE TWENTY TILES, WRITTEN AND THE COUNTS ARE EXACTLY D38'S. The
+    inventory went 91 to 111 systems, which is plus twenty. absent went 25 to
+    36, plus eleven, D39's now-or-next. ruled-out is 4, D39's struck items.
+    exists plus four and partial plus one is D38's five built systems, typed
+    on their own evidence rather than blanket typed, which is the difference
+    between reading the code and copying the ruling.
+    AND THE NUMBER HE ASKED FOR: 20 of 111 tiles now name him in typedBy,
+    against 0 of 91 this morning.
+  PART 3, THE PAGE, UNVERIFIED. map.html is modified so something was done,
+    but whether the first screen carries the judgement count derived at render
+    time, and whether the diagnostics moved behind the tap, HAS NOT BEEN
+    CHECKED BY ANYONE. Do not claim it landed. The page was rejected once
+    before for how it READ rather than for what it computed, so the check is
+    to open it, not to run the selftest.
+
+NOTHING OF D33 TO D39 HAD LANDED BEFORE TONIGHT, which was his first question
+and the answer was zero of seven, not some of seven. Their only citation
+outside their own files was rulings-log.md, the register's own index. The
+inventory's newest cited ruling was D16; Traces.cs and Arsenal.cs were cited
+zero times in it, exactly as D38 predicted on the day it was written; and
+DayCircleHeat, which D34 says to record as ruled, appeared zero times.
+
 ## 2026-09-15 18:30Z: RUN 46 RENDERED WET, BOTH NAMED FAULTS WERE AVOIDED, AND THE ALBEDO HALF WON
 
 WHICH RUN, BY GIT AND BY THE ARTIFACT, because the sanctioned watcher is broken

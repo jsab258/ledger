@@ -56,6 +56,22 @@ should not reach him, and choosing which is the judgment he is paying for.
 
 ## The shape, in this order
 
+0. **THE READING, AND IT IS THE FIRST LINE OF EVERY BRIEF.** Ask him for the
+   two meter figures. Ruled by Jafar 2026-09-15 and it is not a courtesy, it
+   is the studio's brake: with no reading newer than ten hours the day is
+   UNMEASURED and the studio holds at inbox only, no builders, no dispatches,
+   no renders, until he answers. NO READING, NO SPENDING. His reason, verbatim:
+   "That way I am asked once a day rather than having to remember, and
+   forgetting costs nothing."
+   IT IS A LINE, NOT A NEEDS YOU ITEM. It carries no options, no
+   recommendation, no default and no deadline, because there is no default: a
+   day he does not answer is a day the studio does not spend, and that is the
+   ruling working rather than failing. Keeping it out of NEEDS YOU also keeps
+   that section what it is, the things he must decide.
+   SAY WHAT IS HELD BY IT WHEN SOMETHING IS. If the studio is already at
+   inbox only waiting on him, the line says so in its own words, because
+   "I am waiting on you" and "good morning" are different messages.
+
 1. **HEADLINE.** One sentence. What a person would say first.
 2. **WHAT CHANGED.** Since the last message he read, not since the start.
 3. **NEEDS YOU.** Each item carries two to four options, a recommendation, a
