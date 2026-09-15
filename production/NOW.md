@@ -9,6 +9,49 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 09:48Z: THE DEDICATED WATCHER IS STOOD DOWN AND THE HOURLY NET TAKES IT
+
+THE ONE CHECK, AND IT BELONGS HERE RATHER THAN IN A WAKE RECORD NOBODY OPENS:
+
+    python3 tools/landed.py --contains 0942cf1e
+
+READ THE PRINTED LINE, never an exit code through a pipe. At 09:47Z it read
+"not yet: no run contains 0942cf1. 362 run(s) known, newest cb4767e", with run
+45 queued 211 minutes since 06:16:37Z. Watch by ancestry and never by branch
+movement.
+
+IF IT HAS LANDED the runner returned and the visual lane is open. Read the
+FRAME FIRST in section 9 of
+game-design/decision-2026-09-15-ruling-wetness-lands-static-and-the-widening-
+is-not-an-instrument.md, measure before writing any sentence, and take
+materialConnections=19/19 as the PRECONDITION before any wetness key, because a
+short Alpha means every surface sat at the node's constant 0.5 and is not a
+wetness result at all. Then settle WHICH run rendered it by ancestry and not by
+expectation: run 45 checks out cb0c55a2 by its own push event, so if the landed
+commit CONTAINS 0942cf1e it rendered WET and his 0.85 dry re-read was never
+taken, and the Producer owes him that in one sentence.
+
+IF IT HAS NOT LANDED: do not re-dispatch, do not touch production/d1-probe/
+DISPATCH, and do not start a queue item to look busy. The 08:26Z block above
+shows why every item in his order is behind this one frame.
+
+WHY NO DEDICATED WATCHER IS ARMED, decided at 09:48Z and written down so the
+next session does not read it as a dropped thread. The hourly INBOX AND RESUME
+trigger reads this file before the queue and can make the check above, so a
+second one-shot at fifty minutes does the same work twice for about twenty five
+minutes of extra cover. THE THING BEING WAITED FOR IS A PERSON, not a job: he
+was told at 07:41:27Z, pc-inbox has not moved since, and it is late morning on a
+working Tuesday. Against a precedent measured in DAYS, being fifty minutes late
+to notice costs nothing, and polling a machine that is waiting on a person is
+not diligence. The hourly trigger is the armed resume; this block is its
+instruction.
+
+HE HAS NOT REPLIED OR TAPPED. pc-inbox head is 634da649, unchanged since
+07:41:28Z. A tap or a reply is an ANSWER, a different register from a second
+unprompted message, and is answered in the same run it arrives. Nothing else
+goes to him today: one message a day is his ruling, he has had the blocking
+exception, and a correction is not a second message in his own words.
+
 ## 2026-09-15 08:26Z: EVERY ITEM IN HIS ORDER IS NOW BEHIND ONE FRAME FROM ONE MACHINE
 
 CHECKED RATHER THAN ASSUMED, because "there is nothing to do" is the claim a
