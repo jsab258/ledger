@@ -236,3 +236,40 @@ path is the next day a brief is written on his machine.
   has no caller: queue 303. The 12th's brief is not sent by this item; the
   Producer decides in the next brief whether to say one was missed.
 
+  AND IT RAN ON THE LIVE PATH WITHIN THE HOUR, unasked, which is the evidence
+  this item said could only come from his machine. production/pc-ops/
+  brief-send.txt on run af6700c at 03:21:03Z, the first run of the step after
+  the fix landed. All three lines are new; none of them existed before tonight.
+
+    brief: no recovery either: 2026-09-14 was already sent (messageId=95),
+      so nothing is owed for it
+    brief: NOTHING MEASURED, there is no brief for 2026-09-15
+      (FileNotFoundError). 9 brief(s) are in the tree, newest 2026-09-14.
+      Nothing was sent.
+    brief: BRIEFS WRITTEN AND NEVER SENT: 1 of 4 written since the daily path
+      opened on 2026-09-09 have no receipt of any kind: 2026-09-12. Send one
+      from his PC with `python3 tools/runner/telegram-bot.py --send-brief
+      2026-09-12`.
+    brief-send done: briefDay=2026-09-15 briefSent=0/1 briefAlready=0/1
+      briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=0
+      messageId=none records=0 briefPhotoCarried=0/1
+
+  WHAT EACH ONE PROVES. The first is FIX ONE'S REJECTING CASE on the live
+  path: the recovery ran, asked the one-receipt-per-day guard rather than
+  going around it, was told the 14th already went as messageId 95, and
+  declined to send anything. The second is FIX TWO: the miss says so, with its
+  denominator (9 in the tree, newest named), where it used to exit 6 into
+  silence. The third is the dossier line, in the log a person opens, naming
+  the one unsent day and the exact command. AND THE DONE LINE EXISTS AT ALL,
+  which is the quietest of the four and not the smallest: brief_pass used to
+  return before it on this path, so a run that found nothing left NO done line
+  and a grep could not tell a miss from a step that never started.
+  briefExitCode is still 6 and that is correct: nothing was owed and nothing
+  was sent.
+  WHAT IS STILL NOT PROVEN, and no run since has changed it: a brief being
+  SENT. Every line above is a run that correctly sent nothing. The accepting
+  case needs a day on which a brief exists and has not gone, which is the next
+  day the Producer writes one. Fix THREE is not visible here either: the
+  branch union is producer-day.py's and that is the resident's dossier, not
+  this step.
+
