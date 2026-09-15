@@ -9,6 +9,51 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 04:05Z: NOTHING IS IN FLIGHT AND TWO QUESTIONS ARE WITH JAFAR
+
+IN FLIGHT: nothing. Run 44 landed on 17710df and was read in the ruling's
+section 10 order. Both builders and the director are finished and their work
+is committed and pushed.
+
+THE BRIEF REACHED HIM AT 05:34:08Z as messageId 99, with BOTH BUTTONS and the
+PICTURE carried (game-design/sim-shots/grade_three_way.jpg, three panels: his
+Hook sheet, the street before, the street after). briefsSentEver moved 2 to 4
+across the night. That is queue 291's acceptance met on the live path and the
+item CLOSES.
+
+WHAT HE WAS ASKED, and until he answers the visual slice does not move:
+  ONE, the D23 question: the bottom frame beside his sheet, which way does the
+  gap run. Measured it is darker (ground median 0.271 against his 0.373) but
+  his eye rules and no number was asked for. Default: nothing moves.
+  TWO, the sky: does the overcast photograph become the sky, or does the built
+  sky stay. Staging the photograph moves no pixel on its own and using it
+  overturns the reasoned position at VignetteShot.cpp 163 to 173, so it is his
+  and not a director's. Default: keep the built sky.
+Both deadlines 2026-09-18.
+
+WHAT LANDED TONIGHT: the albedo grade (299) with run 44 proving it reached the
+frame; the brief path's three fixes and the outbox retirement (291), both
+halves proven live; the ruling of 00:52Z; queues 300 to 303 filed.
+
+WHAT IS UNBLOCKED IF WORK RESUMES BEFORE HE ANSWERS: queue 293 (retire the read
+series, and with it the whole-run grade tally and the AlbedoGrade readback the
+ruling deferred there so the monthly instrument rule is paid in the batch it is
+measured in) and queue 303 (a day input on the existing send step, so a brief
+that misses its day by more than one run can be sent at all). Queue 302 is
+BLOCKED and its block was NOT spent: the trim reading was written, measured and
+withdrawn, because the sills and lintels project at a median of 5.1 pixels
+through cam_hook and that camera cannot answer the question. Queue 300 changed
+shape: the bins are now the brightest thing in the street at 177.6 to 200.0
+against a ground median of 69.1, the grade barely moved them (0.884), and a
+distance-and-fog explanation is recorded there as a HYPOTHESIS WITH ITS TEST
+NAMED AND NOT RUN. Do not start a sourcing round on that item until the
+distance term is measured.
+
+BUDGET IS UNMEASURED FROM HERE. The last reading is 25/25 at about 20:0xZ on
+2026-09-14, inside 48 hours so it is not a stop, but a night of two builders, a
+director and a Producer has run since and none of it is counted. The ceiling is
+85 on the governing meter and where the meter actually sits is not known.
+
 ## 2026-09-15 02:05Z: THE GRADE IS COMMITTED AND RUN 44 IS WHETHER IT REACHED A FRAME
 
 IN FLIGHT: run 44, dispatched on af6700cb, the sha captured BEFORE the

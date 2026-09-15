@@ -273,3 +273,47 @@ path is the next day a brief is written on his machine.
   branch union is producer-day.py's and that is the resident's dossier, not
   this step.
 
+  THE ACCEPTING CASE LANDED AT 05:34:08Z ON RUN e7564eb5, AND IT CLOSES THIS
+  ITEM. The acceptance written at the top asks for exactly one thing:
+  "briefsSentEver rises on the next day a brief is written, and that is the
+  accepting case rather than a green run." It has.
+
+    brief sent: production/briefs/2026-09-15.md chars=947 buttons=2
+      messageId=99 photoRef=game-design/sim-shots/grade_three_way.jpg
+      photoState=carried
+      photoSizes=78x90/279x320/697x800/1115x1280/1192x1369
+    brief-send done: briefDay=2026-09-15 briefSent=1/1 briefAlready=0/1
+      briefRefused=0/1 briefChecked=yes briefButtons=2 briefChars=947
+      messageId=99 records=1 briefPhotoCarried=1/1 briefPhoto=carried
+      briefPhotoCapOverBy=0 clause=none
+    briefExitCode=0
+
+  WHAT EACH PART OF THAT PROVES. briefSent=1/1 with briefExitCode=0 is the
+  path working on its own, unaided, on a day a brief existed. buttons=2 is the
+  ruling's only measure riding the message, which the retired outbox route
+  could never carry. briefPhotoCarried=1/1 is the PICTURE arriving, which is
+  the whole point of a brief about a frame, and briefChars=947 is why: the
+  Producer wrote to 947 against the 1024 caption cap, and brief.photo_plan
+  drops the picture and sends the words alone when a brief goes over it.
+  AND THE COUNTER MOVED: producer-day now reads briefsSentEver=4, where it
+  read 2 before tonight and 3 after the fix landed. That is fix THREE working
+  on live data rather than on a fixture, because the run's own receipt was
+  pushed to pc-inbox as 8f2a506 and the counter reads the union of the branch
+  and the checkout rather than the checkout alone.
+
+  SO ALL THREE FIXES AND THE RETIREMENT ARE NOW PROVEN ON THE LIVE PATH, in
+  two runs four hours apart: the 03:21:03Z run proved the REJECTING half (the
+  recovery declined because the 14th was already sent, the miss said so with
+  its denominator, the dossier named the one unsent day and its command), and
+  the 05:34:08Z run proved the ACCEPTING half. Rule 5b asks for both outcomes
+  with the accepting case first; the live path delivered them in the other
+  order, which is not a choice anyone made and is worth saying plainly.
+
+  WHAT IS STILL NOT PROVEN, and it is the one thing left: a RECOVERY actually
+  sending. Both live runs exercised the recovery and both correctly declined,
+  one because the day was already sent and one because today's brief existed
+  so no recovery was needed. The recovery's own accepting case needs a day
+  whose brief was written and missed, which is the case queue 303 exists for
+  and which nobody can manufacture without waiting for the runner to go dark
+  again.
+
