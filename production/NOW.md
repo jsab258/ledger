@@ -9,6 +9,70 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 18:30Z: RUN 46 RENDERED WET, BOTH NAMED FAULTS WERE AVOIDED, AND THE ALBEDO HALF WON
+
+WHICH RUN, BY GIT AND BY THE ARTIFACT, because the sanctioned watcher is broken
+(queue 312) and was not used. Commit c7f2cc01 rendered 64103f7b, which CONTAINS
+0942cf1e; the verdict's own line 1 reads "UE vignette shot 64103f7", which is
+the ci.md rule and outranks any tool. Dispatched 18:08Z, landed by 18:26Z:
+SEVENTEEN MINUTES, so the runner is healthy again after nine hours of not
+claiming.
+
+THE PRECONDITION HOLDS AND IT WAS READ FIRST: materialConnections=19/19 in the
+live ue-build.txt. The graph grew its three wetness wires and every one is
+connected, so Alpha is not short and B is not short. This is a wetness result
+and not a node-graph fault wearing one. (The 12/14 and 14/14 elsewhere in
+d1-probe are DISPATCH prose from runs 19 to 24, not readings.)
+
+BOTH FAULTS NAMED BEFORE THE RUN EXISTED WERE AVOIDED, neither narrowly:
+  NO DEAD WRITE. midWetReadbackAll=14/14, every surface's wetness came back as
+    it went in. midWetSetGot=0.6000..0.6000 on four surfaces and
+    0.0000..0.0000 on ten. Queue 186 named this as the rung's likeliest
+    failure and it did not happen: the parameter exists on the material and it
+    is set.
+  NOT POLISHED PLASTIC. wetnessSurfacesWet=4/14 and
+    wetnessSurfacesDarkened=4/14, the SAME four. Every surface that got
+    shinier also got darker, which is the original author's whole thesis
+    holding in an engine for the first time.
+  wetnessSurfacesSet=14/16, wetnessValue=0.6000 from
+    overcast_day/first-shot-condition, wetnessShotsAtValue=35/43,
+    wetnessCondsAtValue=29/33.
+
+AND THE NUMBER NOBODY PREDICTED, on the row named shot vign_hook_day
+camera=cam_hook condition=overcast_day, run 45 read off the same named row:
+
+    band.ground.p50        0.2987  ->  0.2702
+    ground meanRGB    68.5/69.6/73.2  ->  67.6/69.8/75.3
+    band.skyCentre.p50     0.8035  ->  0.8035     control, unmoved
+    shotExposurePinRead 0.3000/0.3000 -> 0.3000/0.3000  control, unmoved
+
+THE ALBEDO HALF WON. The entry refused to predict the direction because the
+albedo term darkens by about 0.73 in gamma and the roughness term brightens by
+reflecting a brighter sky, and a one-point model cannot say which wins. It
+came down. THE PER-CHANNEL DETAIL IS THE BETTER HALF: red FELL, 68.5 to 67.6,
+while blue ROSE, 73.2 to 75.3. The road got darker AND bluer, which is what a
+wet surface reflecting an overcast sky should do and is not something either
+term produces alone.
+
+THE WET LADDER CONFIRMS THE STATIC BIND AS A MEASUREMENT RATHER THAN AN
+ARGUMENT. vign_wet_000, vign_wet_060 and vign_wet_100 all read
+band.ground.p50=0.2702, identical. A shot asking for wetness 0.000 renders at
+0.6 exactly like one asking for 1.000, because the bind takes the first shot's
+condition and never re-drives. THE LADDER THAT EXISTS TO VARY WETNESS DOES NOT
+VARY. That is not a bug in this batch, it is the documented cost of the static
+half, and it is queue 309's justification visible rather than argued.
+
+A FINDING FROM THE NIGHT FRAME, NOT ASKED FOR, AND DELIBERATELY UNDER-DIAGNOSED.
+ue-vign_camA_night.png carries, in the middle of the shot, a piece reading as a
+four-quadrant primary-colour card (green, yellow, red, blue) on the lamp post,
+and two texture swatches apparently floating against the left-hand brick. The
+spec DOES have card-shaped piece kinds (flat_cards, shop_cards,
+_lit_interior_card), so these are plausibly spec pieces rendering wrong rather
+than stray debug geometry, BUT WHICH IT IS HAS NOT BEEN MEASURED and is not
+claimed here: a picture is strong evidence that something is wrong and weak
+evidence of what. Filed as queue 313. It matters because his third item is a
+dusk frame he judges by, and neither of these belongs in it.
+
 ## 2026-09-15 17:15Z: RUN 45 LANDED, IT RENDERED DRY, AND HIS 0.85 IS 0.2987
 
 WHICH RUN, SETTLED BY ANCESTRY AND NOT BY EXPECTATION. Commit 22c922ee, "UE
