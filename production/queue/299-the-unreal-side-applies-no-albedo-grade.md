@@ -163,3 +163,80 @@ status: READY 2026-09-15. Cause TWO of the three measured in queue 181, filed
   judged wetness and this side has no wetness read site (queue 186). He is
   asked which way the gap runs, not for a number. The split of the ground
   family from the wetness list is queue 302 and waits on this item's frame.
+
+  LANDED, RUN 44 ON 17710df, READ IN THE RULING'S SECTION 10 ORDER WITH THE
+  FRAME FIRST. Ancestry checked rather than branch movement: the landed
+  verdict names 17710df and git merge-base confirms it CONTAINS af6700cb.
+
+  THE HEADLINE IS THE PREDICTION WRITTEN TO FAIL, AND IT HELD. band.ground.p50
+  went 0.5117 to 0.2711 against the Hook sheet's 0.373. THE GAP CROSSED ZERO:
+  the render was 37 per cent brighter than the reference and is now 27 per
+  cent darker. Full parity with the legacy build's dry grade OVERSHOOTS the
+  sheet, which is exactly the disagreement the ruling of 00:52Z said would be
+  Jafar's under D23 and nobody else's. No bound is set here and none is
+  proposed.
+
+  EVERY OTHER PREDICTION, against its ce99814 value:
+    12 of 12 RESOLVED surface lines, 0 still reading not-built (predicted).
+      The four ground lines read tintTexel=grade-on-white.104.107.112 with
+      groundGrade.0.55; metal and brick_red read 189.194.204. Counted, not
+      adjectived.
+    materialConnections 16/16 where ce99814 read 14/14 (predicted).
+    band.ground.p05 0.2006 to 0.1217; meanLuma 0.4501 to 0.2490; meanRGB
+      114.8/114.7/115.5 to 62.2/63.4/67.4.
+    THE BLUE CHANNEL FELL LEAST, as predicted and for the stated reason: the
+      per-channel ratios are R 0.542, G 0.553, B 0.583 against a grade of
+      0.74/0.76/0.80. That is the check that proves the parameter is read as a
+      colour and not as a scalar, and it is the one that would have caught a
+      one-channel implementation.
+    THE CONTROL HELD EXACTLY. band.skyCentre.p50 0.8035 to 0.8035, identical
+      to four places; meanLuma 0.7975 to 0.7971; shotExposurePinRead still
+      0.3000/0.3000. Nothing in the sky wears a grade and nothing in the sky
+      moved, so the exposure and the instrument are not what produced the
+      ground's fall.
+    TOO DARK AS A NUMBER, reported and not bounded: shotMinLuma 0.0777 to
+      0.0659; shotClipLoAll 0/921600 both runs, so NOTHING IS CRUSHED TO
+      BLACK; the darkest of the eight luma bands went 2440 to 31431 of
+      921600, which is 0.26 per cent of the frame to 3.41 per cent.
+
+  ONE PREDICTION MISSED AND IT IS REPORTED RATHER THAN SMOOTHED. The ruling
+  predicted materialStatus=MADE; it reads COMPILE-UNPROVEN. The detail says
+  why and it is not a broken material: materialCompileErrors=0/8, both markers
+  present, and materialCompileInstructions=pixel.0..vertex.0. By the
+  generator's own rule an instruction count of zero beside a NONZERO control
+  is NO-SHADER and anything else is UNPROVEN, so the control was unavailable
+  too and the compile could not confirm itself. THE MATERIAL DEMONSTRABLY
+  WORKS: the frame rendered, twelve lines carry the grade, and the ground fell
+  by a measured amount in the predicted per-channel proportion. What is
+  unproven is the readback, not the material.
+
+  AND THE EYE WAS WRONG TWICE, WHICH IS THE MOST USEFUL THING IN THIS READ.
+  Opening the two crops first, as rule 4 and the ruling both require, the kerb
+  looked barely moved and the railings looked untouched. Measured by
+  projecting the pieces and sampling at their faces, the kerb went 179.7 to
+  93.7 (ratio 0.522) and metal went 125.7 to 99.4 (0.791). Both moved a lot.
+  THE EYE READS CONTRAST AND NOT VALUE: everything around them darkened in the
+  same pass, so the relationships held and the change was invisible. This is
+  rule 4 running the OTHER WAY from usual. The rule's warning is that looking
+  overstates what it has found; here looking UNDERSTATED a real change by a
+  factor of two, and only the projection caught it.
+
+  AND THE RENDERED RATIOS ARE NOT THE TEXEL RATIOS, systematically, which no
+  prediction here anticipated. Rendered against predicted-texel, per surface:
+  kerb 0.522 against 0.406, asphalt 0.712 against 0.337, sidewalk 0.727
+  against 0.376, concrete 0.591 against 0.377, metal 0.791 against 0.747,
+  brick_red 0.819 against 0.745, wood 0.790 against 0.737, plaster 0.717
+  against 0.757. Every ground surface darkened MUCH LESS than its texel did,
+  and the four of them differ from each other although they take an identical
+  grade. The reading that fits: the render is not linear in albedo, ambient
+  and indirect light do not scale with it, and the tonemap is monotone rather
+  than linear, so a surface high on the curve (the kerb at 179.7) has more
+  room to fall than one low on it (concrete at 75.2). NOTHING IS CONCLUDED
+  FROM THIS TONIGHT; it is printed because a later session comparing a texel
+  ratio to a rendered one would otherwise call the difference a fault.
+
+  THE TRIM SENTENCE QUEUE 302 WAITS ON is not written here: concrete's
+  rendered sample is a piece-centre patch on sills, lintels and gum discs and
+  is not clean enough to carry that judgement. 302 stays blocked and its
+  opening reading is owed from a look, not from this number.
+
