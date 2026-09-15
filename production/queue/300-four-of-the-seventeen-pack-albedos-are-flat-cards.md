@@ -114,3 +114,30 @@ status: READY 2026-09-15, BEHIND QUEUE 299 and the order is deliberate. 299 is
   painted iron, usually dark, usually weathered. Both are sourcing decisions
   with a right answer in the panel, and the panel is
   production/art/atlas-01/concepts/hook.png on origin/art/atlas-01.
+
+  RUN 44 MOVED THIS ITEM TO THE TOP OF THE VISIBLE PROBLEM, and the number is
+  new. After the grade landed, the five bins on screen in vign_hook_day render
+  at 177.6 to 200.0 with a median of 177.6, measured on solid objects wide
+  enough that the patch is the object rather than its background. In the same
+  frame the ground band median is 69.1, brick_red is 127.7 and the kerb is
+  93.7. SO THE BINS ARE NOW THE BRIGHTEST THING IN THE STREET, and in absolute
+  terms they sit close to where the kerb was BEFORE the fix (179.7). One of
+  the three things Jafar named is fixed and another has become the worst.
+
+  AND THE GRADE BARELY TOUCHED THEM: the bins' before-and-after ratio is 0.884
+  where the predicted texel ratio for metal is 0.747. A LIKELY REASON IS NAMED
+  AND NOT ASSERTED: they stand at 18 to 27 m, the fog cap is 0.100 and the sky
+  is around 205, so aerial perspective lifts a far object toward the sky value
+  and the albedo it started from matters less. THAT IS A HYPOTHESIS AND NOT A
+  READING. What would test it is the same bin measured at two distances in one
+  frame, or the fog set to 0.000 in a single cell, and neither has been done.
+
+  WHAT THIS DOES TO THE ITEM. metal.jpg is lumMean 134.8 with lumSD 4.6, a
+  near-blank card, so nothing in the pack gives a bin its dents, its rust or
+  its grime, and the darkening this batch shipped cannot supply them. But if
+  the fog hypothesis holds, a better texture will be lifted by the same fog
+  and may not fix the brightness either. SO THE ORDER IS NOT OBVIOUS ANY MORE
+  and this item should not be picked up as though it were: measure the
+  distance term first, because a sourcing round that cannot move the pixel is
+  the shape of waste this project keeps finding.
+
