@@ -1,6 +1,6 @@
 # 259: the link floor outranks a ruling, and it is holding a finished message
 
-STATUS: READY
+STATUS: ITEMS 1 TO 3 LANDED; THE CONDITION FLIPPED 2026-09-15. ITEM 4 STILL WAITS ON 260.
 OPENED: 2026-09-10
 
 ## What is wrong
@@ -72,3 +72,35 @@ instead, the PC's checkout or its copy of the tool is behind this commit, and
 the instrument is the first suspect.
 
 Ruling: game-design/decision-2026-09-11-ruling-the-link-floor-marker-batch-and-the-answer-already-sent.md
+
+## The window closed, 2026-09-15
+
+The conditional floor items 1 to 3 built has been sitting in the OFF branch
+since it landed, because `production/site-served.txt` read `servedCommit=none`.
+Queue 256 landed the other half in one commit and that file now names a served
+commit, so the floor is LIVE again at the ruled 1..2 and the register requires
+a link once more. Read off the gate's own done line rather than from the code:
+
+    linkFloorActive=true reason=page-served..production/site-served.txt..
+    servedCommit/5a8ef789dc1f5044052abd496667352c752b1b9c
+    filesLinkFloorOff=40/42 markerOriginConsistent=true
+
+`filesLinkFloorOff=40/42` is NOT the floor failing to bite. Those 40 are the
+messages already sent when the site moved, named on `PRE_MOVE_MESSAGES` and
+counted on their own report line; the 2 files not on it faced the full floor
+and passed. A message the Producer writes tomorrow is on no list and is refused
+without a link, which is the behaviour this item exists to restore.
+
+ITEM 2 IS UNCHANGED AND STILL PROVEN ONLY BY A RECEIPT. `run_check` shells out
+to the single-file path with no `--root`, so it reads the marker in its own
+checkout. Nothing about today's change alters that; what changes is which
+branch that read takes. The evidence remains a receipt appearing on `pc-inbox`
+rather than a `refused-` record naming `linkfloor`.
+
+ITEM 4 STILL WAITS ON 260 and on the Producer rewriting or dropping the held
+messages. `production/outbox-blocked/` holds seven files and this batch
+releases none of them.
+
+  RULED 2026-09-15 05:43Z: the floor is back at the ruled 1..2 and the forty
+  are waived by name at the gate only; at the door every name faces the live
+  floor. Item 4 unchanged, still waiting on 260.

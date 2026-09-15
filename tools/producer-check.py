@@ -290,6 +290,120 @@ RULES_IF_NEEDS_YOU = ["options", "deadline"]
 LINK_BAND_RULES = ("linkcap", "linkdest")
 
 # ---------------------------------------------------------------------------
+# THE MESSAGES THAT WERE ALREADY SENT WHEN THE SITE MOVED, 2026-09-15.
+#
+# WHAT HAPPENED, AND IT WAS MEASURED BEFORE IT WAS HANDLED rather than
+# discovered by a red gate. Queue 256 moves `SITE_ORIGIN` off the archive and
+# writes a served commit into `production/site-served.txt` in one commit. Both
+# halves change what an ALREADY COMMITTED message is graded against, and this
+# walk re-grades every message in the tree on every commit, so the two halves
+# together turned a clean live walk into 40 failures out of 42 files checked.
+#
+# THE LADDER THAT SAID WHICH HALF DID WHAT. One live tree, one vantage, four
+# rungs, all in one run on 2026-09-15, toggling one contributor at a time:
+#
+#   rung A  origin=archive  floor off (that morning)    0 of 42 failing
+#   rung B  origin=ledger   floor off                  19 of 42 failing
+#   rung C  origin=archive  floor ON                   20 of 42 failing
+#   rung D  origin=ledger   floor ON  (what ships)     39 of 42 failing
+#
+# and 40 rather than 39 once `RULED_LINKS` moved to the `ledger` tree URL too,
+# which took the atlas-02 digest with it. The rungs are differences within one
+# run; a rung read from a different run would be a different photograph.
+#
+# WHY A WAIVER AND NOT A FIX. Neither class of failure is a fault in the
+# message. The 20 `linkdest` failures are messages whose link pointed at the
+# archive's pages, which is where the pages WERE when they were written. The 40
+# `linkfloor` failures include every message written during the window in which
+# zero links was LEGAL by ruling (`servedCommit=none`, 2026-09-10 to today).
+# Both were correct under the rulebook in force when they went. Grading them
+# under today's is letting today's rulebook grade yesterday's specimen, which
+# is the fault already written down at LEGACY_LINK_RULES, and the fix nobody
+# may make is editing the archived copy of a message Jafar has already read.
+#
+# THE SHAPE IS LEGACY_LINK_RULES' AND RESEARCH_VERBATIM'S, DELIBERATELY, and
+# it is the third instance of ONE idea rather than a new one: a frozen tuple of
+# repo-relative NAMES, waiving a NAMED subset of the rules, counted with its
+# denominators, with a rot check for entries no file answers. MEMBERSHIP IS BY
+# NAME AND NEVER BY THE DATE IN THE NAME: a date switch would let a specimen
+# choose its own rulebook by choosing its own filename, which is the reasoning
+# at LEGACY_LINK_RULES and it is unchanged here.
+#
+# IT CANNOT GROW BY ITSELF AND IT DOES NOT COVER TOMORROW. Every name below was
+# in the tree before this commit (measured 2026-09-15: all 40 tracked at HEAD,
+# newest last-commit 2026-09-15T03:33Z, before the move landed), and 37 of the
+# 40 have a send receipt in `production/outbound/`. The three without one are
+# `production/briefs/2026-09-06.md`, `2026-09-07.md` and `2026-09-12.md`; they
+# are named here on the same ground as the rest, which is WHEN they were
+# written and not whether a receipt was found for them. A message written from
+# here on is not on this list and faces the full band and the full floor, which
+# is the whole point: the next linkless brief is refused.
+#
+# THE NEXT RUNG DELETES ENTRIES RATHER THAN ADDING THEM. When an archived
+# message is superseded or cleared out of `production/outbox/`, its name comes
+# off this tuple in the same diff, and the walk's rot count says how many names
+# no file answers so that never happens in silence.
+# GATE-ONLY, EXACTLY AS LEGACY_LINK_RULES IS, AND ON PURPOSE (ruled
+# 2026-09-15 05:43Z). main() below, the single-file path that
+# tools/runner/outbox.py:run_check and the brief sender shell out to,
+# passes research_verbatim by name and does not pass pre_move, so at
+# the DOOR a name on this list faces the floor in force at the moment
+# of sending. That is the right direction: this list grades messages
+# that were already sent, and a message sent after the move carries
+# a link or does not go. Three names here have no receipt (briefs
+# 2026-09-06, -07 and -12); if one of them is ever sent it is refused
+# on linkfloor at the door and the Producer rewrites it with a link
+# or drops it. Do not "fix" the door by passing pre_move to it.
+PRE_MOVE_MESSAGES = (
+    "production/briefs/2026-09-06.md",
+    "production/briefs/2026-09-07.md",
+    "production/briefs/2026-09-09.md",
+    "production/briefs/2026-09-10.md",
+    "production/briefs/2026-09-12.md",
+    "production/briefs/2026-09-14.md",
+    "production/briefs/2026-09-15.md",
+    "production/outbox/2026-09-06-pc-processes-one-window.answer.md",
+    "production/outbox/2026-09-06-the-map-and-its-link.unprompted.md",
+    "production/outbox/2026-09-06-where-the-project-stands.unprompted.md",
+    "production/outbox/2026-09-07-the-map-changed-4917df34e120.unprompted.md",
+    "production/outbox/2026-09-07-the-map-changed-78a360dcdf18.unprompted.md",
+    "production/outbox/2026-09-07-the-walk.answer.md",
+    "production/outbox/2026-09-08-closing-status.brief.md",
+    "production/outbox/2026-09-08-the-first-crime.brief.md",
+    "production/outbox/2026-09-08-the-four-confirmations.brief.md",
+    "production/outbox/2026-09-08-the-return-half-works.unprompted.md",
+    "production/outbox/2026-09-08-the-street-and-the-correction.brief.md",
+    "production/outbox/2026-09-08-you-were-right-about-11-30.unprompted.md",
+    "production/outbox/2026-09-09-atlas-02-research-digest.unprompted.md",
+    "production/outbox/2026-09-09-morning-brief.brief.md",
+    "production/outbox/2026-09-09-the-grate-readable.unprompted.md",
+    "production/outbox/2026-09-09-the-map-changed-388cdbcead10.unprompted.md",
+    "production/outbox/2026-09-11-yes-it-works.answer.md",
+    "production/outbox/2026-09-14-research-1of5-kcd2-part1.answer.md",
+    "production/outbox/2026-09-14-research-1of5-kcd2-part2.answer.md",
+    "production/outbox/2026-09-14-research-2of5-hitman-part1.answer.md",
+    "production/outbox/2026-09-14-research-2of5-hitman-part2.answer.md",
+    "production/outbox/2026-09-14-research-3of5-rdr2-part1.answer.md",
+    "production/outbox/2026-09-14-research-3of5-rdr2-part2.answer.md",
+    "production/outbox/2026-09-14-research-4of5-disco-elysium-part1.answer.md",
+    "production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md",
+    "production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md",
+    "production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md",
+    "production/outbox/2026-09-14-the-street-before.answer.md",
+    "production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md",
+    "production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md",
+    "production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md",
+    "production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md",
+    "production/outbox/2026-09-14-the-street-then-your-sky-strike-one-sentence"
+    ".answer.md",
+)
+# EXACTLY THE TWO RULES THE MOVE BROKE, and nothing else. `linkcap` is NOT
+# here: nothing about the move changed how many links a message carries, so a
+# pre-move message over the cap is still refused. Named in one constant so the
+# waiver, the report and the selftest cannot come to disagree about its width.
+PRE_MOVE_WAIVED_RULES = ("linkfloor", "linkdest")
+
+# ---------------------------------------------------------------------------
 # RESEARCH DELIVERIES THAT GO TO HIM VERBATIM. Ruled by Jafar 2026-09-14: when
 # a research delivery lands, its SUMMARY.md goes to him "through the bot as its
 # own message, in full, before you act on anything in it".
@@ -545,11 +659,26 @@ def research_rejoin_reading(original, part1, part2):
 # AN IMAGE IS NOT A LINK EITHER. A blob link to a .png is still a link to the
 # repository, so it fails `linkdest` like any other; the picture goes to him as
 # a Telegram image, which is the sender's job and not this program's.
-SITE_ORIGIN = "https://jsab258.github.io/wc26-picks/"
+# MOVED 2026-09-15 (queue 256 deliverable 2, queue 259). It held the value of
+# `ARCHIVE_ORIGIN` below, character for character, from the move of 2026-09-10
+# until today (named that way rather than repeated, so this file carries the
+# archive string ONCE, at the constant that rejects it), because nobody here
+# could measure whether either site served: the
+# container's egress proxy refuses github.io at CONNECT. publish-glance run 26
+# (id 34928226785) measured it on a runner instead and its check step passed on
+# all four published pages at commit ada1535b, which is the sha now in
+# `production/site-served.txt`. THE TWO FACTS ARE STILL SEPARATE: that run
+# proves the PAGE serves, this constant is what the CHECKER believes, and
+# moving one without the other is the half-move `marker_origin_consistent()`
+# below exists to refuse.
+SITE_ORIGIN = "https://jsab258.github.io/ledger/"
 # THE ORIGIN A LINK MUST NEVER POINT AT after the move of 2026-09-10, and it is
 # KEPT after queue 256 flips SITE_ORIGIN off it, BECAUSE A REJECTING FIXTURE
 # MUST NAME WHAT IT REJECTS: a guard whose refused value was deleted from the
-# file is a guard nobody can prove still bites.
+# file is a guard nobody can prove still bites. SINCE 2026-09-15 THE TWO
+# CONSTANTS DIFFER, which is the first day this rejecting fixture can actually
+# fire: while they were equal, "an archive link is refused" was untestable, and
+# the selftest now drives it (search REJECTING, THE ARCHIVE ORIGIN ITSELF).
 ARCHIVE_ORIGIN = "https://jsab258.github.io/wc26-picks/"
 # (path under the origin, what to call it in a finding). The empty path is the
 # glance itself. Adding a page here is the ONE place the allowlist grows.
@@ -731,7 +860,7 @@ def marker_origin_consistent(reading, site_origin):
 # THE URL IS ONE UNWRAPPED LITERAL ON PURPOSE, so a grep for the whole URL
 # finds the place that admits it.
 RULED_LINKS = (
-    ("https://github.com/jsab258/wc26-picks/tree/claude/game-dev-ai-automation-2h67ix/production/art/atlas-02/research",
+    ("https://github.com/jsab258/ledger/tree/main/production/art/atlas-02/research",
      "atlas-02-research",
      "game-design/decision-2026-09-09-the-hook-comparison-the-ruled-link-and-the-stale-pages.md"),
 )
@@ -952,7 +1081,7 @@ def site_page(url):
     """Which of the published pages in SITE_PAGES this URL IS, or None.
 
     Whole-URL matching, not host matching. `https://github.com/...blob/....md`
-    and `https://jsab258.github.io/wc26-picks/map.html` differ only in the part
+    and `https://jsab258.github.io/ledger/map.html` differ only in the part
     a host check throws away, and throwing it away is what let ten repository
     links through on 2026-09-05."""
     u = norm_url(url)
@@ -1167,7 +1296,7 @@ def split_sections(text):
 
 
 def check(text, kind="unprompted", now=None, legacy_links=False,
-          link_floor=None, research_verbatim=False):
+          link_floor=None, research_verbatim=False, pre_move=False):
     """Every reading this program takes, as data. PURE: takes text, returns a
     dict, touches no file. The selftest drives it with synthetic fixtures and
     the report function only formats what comes out of here.
@@ -1229,6 +1358,16 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
     # links anyway, so nothing on that rung moves today.
     if "linkfloor" in enforced and not link_floor["active"]:
         enforced = [r for r in enforced if r != "linkfloor"]
+    # THE MESSAGES THAT WERE ALREADY SENT WHEN THE SITE MOVED, 2026-09-15,
+    # decided BY NAME by the caller exactly as the two exemptions above are.
+    # `pre_move_waived` is what was ACTUALLY removed, read off this file's own
+    # register rather than off the constant, so a rule this register never
+    # enforced cannot be reported as waived and a message on the list that was
+    # passing anyway reports a waiver of nothing. See PRE_MOVE_MESSAGES.
+    pre_move_waived = ([r for r in enforced if r in PRE_MOVE_WAIVED_RULES]
+                       if pre_move else [])
+    if pre_move_waived:
+        enforced = [r for r in enforced if r not in pre_move_waived]
     # THE CAP GOVERNS THE BODY THE PRODUCER WROTE. On the frozen legacy list
     # only, one leading HISTORICAL, line is an annotation the studio added
     # afterwards and is not charged to the writer: see historical_split() and
@@ -1485,7 +1624,11 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
         # his PC must not be where a stale-link-forcing marker is discovered.
         "marker_origin_ok": marker_origin_consistent(link_floor,
                                                      SITE_ORIGIN)[0],
-        "link_min_effective": LINK_MIN if link_floor["active"] else 0,
+        # READ OFF THE REGISTER THIS MESSAGE WAS ACTUALLY GRADED BY, never off
+        # the marker alone: since 2026-09-15 the floor can also drop out
+        # PER FILE (PRE_MOVE_MESSAGES), and a number derived from the marker
+        # would keep saying 1 for a file graded at 0.
+        "link_min_effective": LINK_MIN if "linkfloor" in enforced else 0,
         "offsite_links": [u for u in urls if not link_ok(u, legacy_links)],
         "link_generation": link_rule_generation(legacy_links, ruled_labels),
         # WHICH of the published pages this message actually links, named. A
@@ -1520,6 +1663,14 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
         # on the gate's done line.
         "research_verbatim": bool(research_verbatim),
         "research_waived": list(waived),
+        # PER MESSAGE, not cumulative, and the SAME PAIR the research exemption
+        # prints: whether this file was named on PRE_MOVE_MESSAGES, and WHICH
+        # rule(s) that actually removed from its register. Membership alone
+        # would not say the waiver did anything; the walk's counts are on the
+        # gate's report lines. See PRE_MOVE_MESSAGES for the ladder this list
+        # was read off.
+        "pre_move": bool(pre_move),
+        "pre_move_waived": list(pre_move_waived),
         # THE ANNOTATION THE CAP DID NOT CHARGE FOR: per message, 0 or 1, with
         # the words it would have cost. Printed by report() and counted by the
         # gate, never silent, so "118 of 120" cannot be read without the line
@@ -1827,7 +1978,7 @@ GOOD = """HEADLINE: the town has textures again, and the street is worth a look.
 
 WHAT CHANGED: the grey street now paints properly, and the first picture of it
 is up. Everything else waited on that.
-[the gallery](https://jsab258.github.io/wc26-picks/gallery.html)
+[the gallery](https://jsab258.github.io/ledger/gallery.html)
 
 NEEDS YOU: how close should strangers stand on a pavement?
 A. Almost touching, a crowded market.
@@ -1836,7 +1987,7 @@ C. Reserved, a town that keeps its distance.
 RECOMMENDATION B, a working port town rather than a festival.
 DEFAULT B if you say nothing.
 DEADLINE 2026-09-07.
-[where things stand](https://jsab258.github.io/wc26-picks/)
+[where things stand](https://jsab258.github.io/ledger/)
 
 NEXT VISIBLE THING: a walk through that street, tomorrow evening.
 
@@ -1877,12 +2028,12 @@ BAD = {
     "linkcap": GOOD.replace(
         "NEXT VISIBLE THING: a walk through that street, tomorrow evening.",
         "NEXT VISIBLE THING: a walk through that street, tomorrow evening.\n"
-        "[the map](https://jsab258.github.io/wc26-picks/map.html)"),
+        "[the map](https://jsab258.github.io/ledger/map.html)"),
     # A REPOSITORY MARKDOWN LINK, which is exactly what Jafar rejected. The
     # other site link stays, so the floor is satisfied and only the
     # destination rule can fire.
     "linkdest": GOOD.replace(
-        "[the gallery](https://jsab258.github.io/wc26-picks/gallery.html)",
+        "[the gallery](https://jsab258.github.io/ledger/gallery.html)",
         "[the card](https://github.com/jsab258/wc26-picks/blob/main/q.md)"),
     "shape": GOOD.replace("BUDGET:", "MONEY:"),
     "options": GOOD.replace("B. Normal British pavement distance.\n", "")
@@ -1990,20 +2141,26 @@ HIST_TWO = HISTORICAL_LINE + "\n" + HISTORICAL_SECOND + "\n" + AT_CAP
 # about to edit goes red for something that is not a fault. The LIVE file is
 # covered by the gate's live walk instead, which checks whatever is in the
 # outbox on every run and prints linksRuledUsed=N/M for it.
+#
+# Derived, never typed twice: the fixtures below are built from the entry, and
+# THAT NOW INCLUDES THE DIGEST'S OWN LINK. It was a second literal copy of the
+# URL until 2026-09-15, when the tree link moved with the site and the two
+# copies had to be found by grep rather than by the program; a copy the program
+# cannot see is the one nobody updates.
+RULED_URL = RULED_LINKS[0][0]
+RULED_LABEL = RULED_LINKS[0][1]
+
 RULED_DIGEST = """HEADLINE: Period research is in; the street needs a beer hatch.
 
 WHAT CHANGED: Pubs were rooms, not one space; a surviving snug means poor or stubborn. No under-fourteens in the bar, by law; all-day opening only since eighty-eight. Houses get newer up the hill; one in five lacks central heating. Dockers lost their guaranteed work in eighty-nine: same coat, new standing. Evening buses thinned; the last bus matters. Still missing, pending a machine that can reach the sources: a real pub's measurements, what a trawlerman or barmaid wore, prices, a last-bus time. Nothing built yet.
-[the research you asked for](https://github.com/jsab258/wc26-picks/tree/claude/game-dev-ai-automation-2h67ix/production/art/atlas-02/research)
+[the research you asked for](%s)
 
 NEEDS YOU: nothing new.
 
 NEXT VISIBLE THING: Mickey's laid out; when, unknown.
 
 BUDGET: nothing bought for this.
-"""
-# Derived, never typed twice: the fixtures below are built from the entry.
-RULED_URL = RULED_LINKS[0][0]
-RULED_LABEL = RULED_LINKS[0][1]
+""" % RULED_URL
 
 # The date the fixtures are checked against. Fixed, because a deadline fixture
 # that reads the wall clock passes in September and fails in October, and a
@@ -2091,7 +2248,7 @@ def selftest():
     # difference between the rungs. ACCEPTING CASE FIRST.
     RESEARCH = ("The man whose job it is opens the yard gate on Tuesday, and "
                 "the crime he committed that morning is on the record.\n"
-                "[the gallery](https://jsab258.github.io/wc26-picks/"
+                "[the gallery](https://jsab258.github.io/ledger/"
                 "gallery.html)\n")
     r_ver = check(RESEARCH, "answer", FIXTURE_NOW, research_verbatim=True)
     ok("a verbatim research delivery passes with ordinary-English job, gate "
@@ -2123,8 +2280,8 @@ def selftest():
     ok("the exemption waives exactly one rule (%s) and can only widen in a "
        "reviewed diff" % "/".join(RESEARCH_WAIVED_RULES),
        RESEARCH_WAIVED_RULES == ("banned",), RESEARCH_WAIVED_RULES)
-    THREE = RESEARCH + ("[a](https://jsab258.github.io/wc26-picks/)\n"
-                        "[b](https://jsab258.github.io/wc26-picks/map.html)\n")
+    THREE = RESEARCH + ("[a](https://jsab258.github.io/ledger/)\n"
+                        "[b](https://jsab258.github.io/ledger/map.html)\n")
     r_cap = check(THREE, "answer", FIXTURE_NOW, research_verbatim=True)
     ok("a listed file that breaks the link cap is STILL refused",
        any(f.rule == "linkcap" for f in r_cap["findings"]),
@@ -2445,7 +2602,7 @@ def selftest():
     # because his question sets the length and asks for the number.
     answer = ("You asked how many objects carry textures. Nearly all of them: "
               "563 of 593. The rest are the wet ground. "
-              "https://jsab258.github.io/wc26-picks/gallery.html " +
+              "https://jsab258.github.io/ledger/gallery.html " +
               "The remaining ones are small and none of them is in shot. " * 12)
     ra = check(answer, "answer", FIXTURE_NOW)
     ok("a long ANSWER carrying a count passes (%d words, no cap)" % ra["words"],
@@ -2619,20 +2776,40 @@ def selftest():
         "a child blob under it": RULED_URL.replace("/tree/", "/blob/")
                                  + "/transport-timetables.md",
         "blob instead of tree": RULED_URL.replace("/tree/", "/blob/"),
-        "the same path on main":
-            RULED_URL.replace("claude/game-dev-ai-automation-2h67ix", "main"),
+        # RE-DERIVED 2026-09-15, AND THE REASON IS THE WHOLE POINT OF THE
+        # `differs` GUARD BELOW. This member read "the same path on main",
+        # built by swapping the archive's working branch out of the ruled URL,
+        # and it was a correct near miss for as long as the ruled entry pointed
+        # at that branch. Queue 256 moved the entry ONTO main, which silently
+        # turned `.replace(...)` into a no-op: the fixture then quoted the
+        # RULED URL ITSELF and asserted it must be refused, so it failed with
+        # ruledUsed=1/1. A near-miss set is relative to whatever the ruled URL
+        # currently is. The one edit is now the branch, and art/atlas-01 is a
+        # branch that EXISTS on jsab258/ledger (main, art/atlas-01, pc-inbox,
+        # pc-results, read from `git ls-remote --heads origin` 2026-09-13), so
+        # this stays the hardest version of the case: a real branch, a real
+        # path, and still not the one admitted.
+        "the same path on another branch":
+            RULED_URL.replace("/tree/main/", "/tree/art/atlas-01/"),
         "one character appended": RULED_URL + "x",
     }
+    # EVERY MEMBER MUST ACTUALLY DIFFER FROM THE RULED URL, asserted on the
+    # member's own line rather than as a sixth case. A derivation that becomes
+    # a no-op when the entry moves is how this group broke on 2026-09-15, and
+    # a fixture that quietly equals the thing it rejects tests nothing.
     for name, url in near_misses.items():
         near = RULED_DIGEST.replace(RULED_URL, url) \
             + "\n[where things stand](%s)\n" % SITE_ORIGIN
         rn = check(near, "unprompted", FIXTURE_NOW)
         rules = {f.rule for f in rn["findings"]}
-        ok("%-23s is refused by linkdest and admitted by nothing "
-           "(ruledUsed=%d/%d, %d of %d link(s) offsite)"
-           % (name, rn["ruled_used"], rn["ruled_of"],
+        ok("%-31s is refused by linkdest and admitted by nothing "
+           "(differsFromRuledUrl=%s, ruledUsed=%d/%d, %d of %d link(s) "
+           "offsite)"
+           % (name, "true" if url != RULED_URL else "FALSE-it-IS-the-ruled-url",
+              rn["ruled_used"], rn["ruled_of"],
               len(rn["offsite_links"]), len(rn["urls"])),
-           rules == {"linkdest"} and rn["ruled_used"] == 0
+           url != RULED_URL
+           and rules == {"linkdest"} and rn["ruled_used"] == 0
            and ruled_link(url) is None and not link_ok(url)
            and len(rn["offsite_links"]) == 1,
            "found %s for %s" % (sorted(rules) or "nothing", url))
@@ -2785,7 +2962,7 @@ def selftest():
     # frozen list is injected, so this case cannot break the day a real
     # delivery is sent and cleared off the outbox.
     RTXT = ("The man whose job it is opens the yard gate.\n"
-            "[the gallery](https://jsab258.github.io/wc26-picks/gallery.html)"
+            "[the gallery](https://jsab258.github.io/ledger/gallery.html)"
             "\n")
     rel_in = "production/outbox/2026-09-14-research-in.answer.md"
     rel_out = "production/outbox/2026-09-14-research-out.answer.md"
@@ -3397,6 +3574,113 @@ def selftest():
                 or "linkfloor" in " ".join(w for _, w in gfl["failed"])),
            (gfl["failed"], gfl["link_floor_reason"], gfl["link_floor_off"]))
 
+    # ---------------------------- THE PRE-MOVE WAIVER, ACCEPTING CASE FIRST
+    # ONE SYNTHETIC TREE, TOGGLED ONE CONTRIBUTOR AT A TIME, ALL IN THIS RUN.
+    # Synthetic to the last byte, and the two message names are dated but do
+    # not exist anywhere: clearing a real message out of the outbox can never
+    # break this case, and the live tree can never make it pass by accident.
+    # The marker in the tree names a served commit, so the floor is LIVE on
+    # every rung and the waiver is the only thing that can move the verdict.
+    print("\n  THE PRE-MOVE WAIVER AT THE GATE, ACCEPTING CASE FIRST:\n")
+    # THE DATE IN EACH NAME IS THE INSTANT THAT BODY IS GRADED AT, because
+    # gate_clock pins every file to its own name. GOOD carries DEADLINE
+    # 2026-09-07, so the archive body is dated 2026-09-03 exactly as the other
+    # GOOD-derived gate fixtures are; naming it 2026-09-08 made it fail on
+    # `deadline` at -15.0 hours and proved nothing about the waiver.
+    pm_linkless = "production/outbox/2026-09-11-pm-linkless.answer.md"
+    pm_archive = "production/outbox/2026-09-03-pm-archive.unprompted.md"
+    # DERIVED, NEVER TYPED: the archive body is the good body with the origin
+    # swapped, so the day either constant moves this fixture moves with it.
+    pm_tree_files = {"production/outbox/README.md": "# docs\n",
+                     "production/briefs/README.md": "# docs\n",
+                     pm_linkless: LINKLESS,
+                     pm_archive: GOOD.replace(SITE_ORIGIN, ARCHIVE_ORIGIN),
+                     SERVED_MARKER_REL: "servedCommit=0bc1def2\n"}
+    pm_listed = (pm_linkless, pm_archive)
+    g_pm = gate_run(_gate_tree(pm_tree_files), FIXTURE_NOW, pre_register=(),
+                    pre_move=pm_listed)
+    ok("ACCEPTING: %d listed message(s) of %d pass the gate with a page "
+       "SERVED (linkFloorActive=%s, floorOff=%d/%d, waiverChangedVerdictOn="
+       "%d/%d, %d finding(s) removed, rule(s) %s)"
+       % (g_pm["pre_move_graded"], g_pm["pre_move_listed"],
+          "true" if g_pm["link_floor_active"] else "false",
+          g_pm["link_floor_off"], g_pm["checked"],
+          g_pm["pre_move_waiver_bit"], g_pm["pre_move_graded"],
+          g_pm["pre_move_findings_waived"],
+          "/".join(g_pm["pre_move_rules"]) or NOTHING),
+       not g_pm["failed"] and g_pm["link_floor_active"]
+       and g_pm["pre_move_graded"] == 2 and g_pm["pre_move_waiver_bit"] == 2
+       and g_pm["link_floor_off"] == 2 and g_pm["checked"] == 2
+       and set(g_pm["pre_move_rules"]) == set(PRE_MOVE_WAIVED_RULES),
+       (g_pm["failed"], g_pm["pre_move_rules"]))
+    # THE SECOND RUNG: THE SAME TREE, THE SAME INSTANT, THE SAME MARKER, THE
+    # LIST EMPTY. The difference between the rungs is the only number a ladder
+    # yields, and a waiver that cannot be switched off is not a waiver.
+    g_pm_off = gate_run(_gate_tree(pm_tree_files), FIXTURE_NOW,
+                        pre_register=(), pre_move=())
+    off_rules = set()
+    for _rel, _w in g_pm_off["failed"]:
+        off_rules.update(w.split(":")[0] for w in _w.split() if ":" in w)
+    ok("REJECTING: the SAME two message(s) OFF the list FAIL the same walk "
+       "(%d of %d checked, by %s), so the waiver is a name and not a hole"
+       % (len(g_pm_off["failed"]), g_pm_off["checked"],
+          "/".join(sorted(off_rules & set(PRE_MOVE_WAIVED_RULES))) or NOTHING),
+       len(g_pm_off["failed"]) == 2 and g_pm_off["pre_move_graded"] == 0
+       and g_pm_off["pre_move_waiver_bit"] == 0
+       and set(PRE_MOVE_WAIVED_RULES) <= off_rules,
+       (g_pm_off["failed"], sorted(off_rules)))
+    # NARROWNESS, AND IT IS THE HALF THAT KEEPS A WAIVER FROM BECOMING A HOLE.
+    # The waiver is exactly two rules wide. A listed file that breaks a THIRD
+    # rule is still refused by it, and `linkcap` is the right third rule
+    # because the move changed nothing about how many links a message carries.
+    pm_capped = GOOD.replace(
+        "[the gallery](%sgallery.html)" % SITE_ORIGIN,
+        "[the gallery](%sgallery.html)\n[a](%smap.html)\n[b](%sworld.html)"
+        % (ARCHIVE_ORIGIN, ARCHIVE_ORIGIN, ARCHIVE_ORIGIN))
+    r_pm_cap = check(pm_capped, "unprompted", FIXTURE_NOW,
+                     link_floor=floor_reading(True, "fixture..page-served",
+                                              served="0bc1def2", lines=1),
+                     pre_move=True)
+    ok("REJECTING: a listed message over the ruled cap of %d is STILL refused "
+       "by `linkcap` and by nothing else, so the waiver is %d rule(s) wide "
+       "and not three (waived here: %s)"
+       % (LINK_MAX, len(PRE_MOVE_WAIVED_RULES),
+          "/".join(r_pm_cap["pre_move_waived"]) or NOTHING),
+       {f.rule for f in r_pm_cap["findings"]} == {"linkcap"}
+       and set(r_pm_cap["pre_move_waived"]) == set(PRE_MOVE_WAIVED_RULES),
+       [str(f) for f in r_pm_cap["findings"]])
+    # THE ROT CHECK, REJECTING: a frozen name no file answers is COUNTED, never
+    # a silent zero. This is the list most likely to rot, because every name on
+    # it is an archived message and archived messages get cleared out.
+    g_pm_rot = gate_run(_gate_tree(pm_tree_files), FIXTURE_NOW,
+                        pre_register=(),
+                        pre_move=("production/outbox/never-existed.answer.md",))
+    ok("REJECTING: a frozen PRE_MOVE_MESSAGES entry that no longer exists is "
+       "counted, not silent (%d of %d listed, %d graded)"
+       % (len(g_pm_rot["pre_move_absent"]), g_pm_rot["pre_move_listed"],
+          g_pm_rot["pre_move_graded"]),
+       g_pm_rot["pre_move_absent"] == ["production/outbox/never-existed"
+                                       ".answer.md"]
+       and g_pm_rot["pre_move_graded"] == 0
+       and g_pm_rot["pre_move_waiver_bit"] == 0, g_pm_rot["pre_move_absent"])
+    # ---------------------- REJECTING, THE ARCHIVE ORIGIN ITSELF, 2026-09-15
+    # THE FIRST DAY THIS CASE CAN FIRE. SITE_ORIGIN and ARCHIVE_ORIGIN were the
+    # same string from 2026-09-10 until queue 256 landed, so "an archive link
+    # is refused" was untestable and the constant kept for a rejecting fixture
+    # had nothing to reject. THE PAIRED READING, one entry, both moments: the
+    # same page path under each origin, graded in the same run.
+    for label, origin, want_ok in (("the LIVE site", SITE_ORIGIN, True),
+                                   ("the ARCHIVE", ARCHIVE_ORIGIN, False)):
+        u = origin + "map.html"
+        ok("%s: map.html under %s is %s by the destination band "
+           "(sitePage=%s, linkOk=%s)"
+           % ("ACCEPTING" if want_ok else "REJECTING", label,
+              "ADMITTED" if want_ok else "REFUSED",
+              site_page(u) or NOTHING, "true" if link_ok(u) else "false"),
+           link_ok(u) is want_ok
+           and (site_page(u) is not None) is want_ok
+           and norm_url(SITE_ORIGIN) != norm_url(ARCHIVE_ORIGIN), u)
+
     # A1: rung 1 is the LIVE tree, rungs 2 and 3 are ONE SYNTHETIC tree graded
     # against two origins, so writing the sha queue 256 owes cannot break this.
     print("\n  A1, THE MARKER AGAINST SITE_ORIGIN, ACCEPTING CASE FIRST:\n")
@@ -3404,14 +3688,21 @@ def selftest():
                           GOOD, "production/briefs/README.md": "# docs\n",
                           SERVED_MARKER_REL: "servedCommit=0bc1def2\n"})
     for n, (want, label, g) in enumerate((
-            (True, "the LIVE tree (%s=%s, SITE_ORIGIN the archive)"
-             % (SERVED_KEY, live_floor["served"]), g_live),
+            # THE LABEL IS READ OFF THE CONSTANTS, NOT TYPED. It said
+            # "SITE_ORIGIN the archive" until 2026-09-15 and would have gone on
+            # saying it after queue 256 moved the constant, which is a label
+            # describing a world the run is no longer in.
+            (True, "the LIVE tree (%s=%s, SITE_ORIGIN=%s, archive=%s)"
+             % (SERVED_KEY, cap([str(live_floor["served"])], keep=1, width=12),
+                SITE_ORIGIN,
+                "same" if norm_url(SITE_ORIGIN) == norm_url(ARCHIVE_ORIGIN)
+                else "a-different-origin"), g_live),
             (False, "SYNTHETIC servedCommit=0bc1def2 against ARCHIVE_ORIGIN",
              gate_run(a1_tree, FIXTURE_NOW, pre_register=(),
                       site_origin=ARCHIVE_ORIGIN)),
-            (True, "the SAME tree against the origin queue 256 will produce",
+            (True, "the SAME tree against the origin queue 256 produced",
              gate_run(a1_tree, FIXTURE_NOW, pre_register=(),
-                      site_origin="https://jsab258.github.io/ledger/"))), 1):
+                      site_origin=SITE_ORIGIN))), 1):
         code, line = gate_done_line(g)
         ok("A1 rung %d, %s, %s: markerOriginConsistent=%s exit=%d, %d file "
            "finding(s) over %d checked, %d missing tree(s), reason=%s"
@@ -3613,7 +3904,7 @@ def gate_kind(rel):
 
 def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          legacy_links=LEGACY_LINK_RULES, site_origin=SITE_ORIGIN,
-         research_verbatim=RESEARCH_VERBATIM):
+         research_verbatim=RESEARCH_VERBATIM, pre_move=PRE_MOVE_MESSAGES):
     """Every message file under the ruled trees, against its own register.
 
     PURE-ISH: reads files, touches nothing, returns data. The report function
@@ -3670,6 +3961,21 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          "research_graded": 0, "research_listed": len(research_verbatim),
          "research_waiver_bit": 0, "research_findings_waived": 0,
          "research_absent": [],
+         # THE PRE-MOVE WAIVER, AS THE SAME LADDER, for the same reason: a
+         # membership count cannot tell a waiver doing work from dead weight.
+         # `pre_move_graded` is CUMULATIVE over the walk (checked files whose
+         # NAME is on PRE_MOVE_MESSAGES) over that list's length, so an entry
+         # nothing walks is visible as a gap rather than as nothing.
+         # `pre_move_waiver_bit` is the second rung: of those, how many the
+         # waiver actually CHANGED the verdict for, measured by running the
+         # same file through the same check() twice in the same run with the
+         # one contributor toggled. `pre_move_findings_waived` is CUMULATIVE
+         # findings removed, and `pre_move_rules` is the set of rule names
+         # those findings carried, so the report can say WHICH rules the
+         # waiver is actually holding up rather than only how many.
+         "pre_move_graded": 0, "pre_move_listed": len(pre_move),
+         "pre_move_waiver_bit": 0, "pre_move_findings_waived": 0,
+         "pre_move_rules": set(), "pre_move_absent": [],
          # OF THE FILES CHECKED, how many had an instant to measure from.
          # Cumulative over the walk, printed beside its denominator.
          "date_pinned": 0, "unpinned": 0,
@@ -3769,8 +4075,11 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                 r["legacy_links"] += 1
             # BY NAME HERE TOO. See RESEARCH_VERBATIM for the ruling.
             research = rel in research_verbatim
+            # AND HERE. See PRE_MOVE_MESSAGES for the ladder it was read off.
+            premove = rel in pre_move
             res = check(text, kind, file_now, legacy_links=legacy,
-                        link_floor=floor, research_verbatim=research)
+                        link_floor=floor, research_verbatim=research,
+                        pre_move=premove)
             r["checked"] += 1
             # THE SECOND RUNG, from the same vantage in the same run: the same
             # file, the same instant, the same floor, the exemption OFF. The
@@ -3779,17 +4088,48 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             waiver_removed = 0
             if research:
                 r["research_graded"] += 1
+                # ONE CONTRIBUTOR TOGGLED, AND `pre_move` IS CARRIED RATHER
+                # THAN DROPPED. It was dropped when the pre-move waiver landed
+                # on 2026-09-15, and the reading moved from 5 of 10 to 10 of
+                # 10 in one run: with `pre_move=False` this rung also faced the
+                # floor, so the linkfloor finding it gained was being credited
+                # to the RESEARCH waiver. Two contributors toggled at once is
+                # not a ladder, and the number it yields belongs to neither.
+                # A banned finding's rule carries its label after a colon
+                # (banned:run internals, at the Finding() that builds it), so
+                # the match is on the name before the colon, the suite's own
+                # idiom. Ruled 2026-09-15 05:43Z, corrected in section 15 of
+                # the same record after the first form matched nothing.
                 plain = check(text, kind, file_now, legacy_links=legacy,
-                              link_floor=floor, research_verbatim=False)
-                waiver_removed = max(0, len(plain["findings"])
-                                     - len(res["findings"]))
+                              link_floor=floor, research_verbatim=False,
+                              pre_move=premove)
+                waiver_removed = sum(
+                    1 for f in plain["findings"]
+                    if f.rule.split(":", 1)[0] in res["research_waived"])
                 r["research_findings_waived"] += waiver_removed
                 if waiver_removed:
                     r["research_waiver_bit"] += 1
-            # READ OFF THE READING THIS FILE WAS ACTUALLY GRADED BY, never off
-            # the walk's constant, so the count moves by itself if the floor
-            # ever becomes per-file.
-            if not res["link_floor_active"]:
+            # THE PRE-MOVE WAIVER'S SECOND RUNG, taken exactly as the research
+            # one above is: same file, same instant, same floor, ONE
+            # contributor toggled, both readings inside this run.
+            if premove:
+                r["pre_move_graded"] += 1
+                plain = check(text, kind, file_now, legacy_links=legacy,
+                              link_floor=floor, research_verbatim=research,
+                              pre_move=False)
+                removed = [f.rule for f in plain["findings"]
+                           if f.rule in res["pre_move_waived"]]
+                r["pre_move_findings_waived"] += len(removed)
+                r["pre_move_rules"].update(removed)
+                if removed:
+                    r["pre_move_waiver_bit"] += 1
+            # READ OFF THE REGISTER THIS FILE WAS ACTUALLY GRADED BY, never
+            # off the walk's constant. That mattered on 2026-09-15, when the
+            # floor DID become per-file: `link_floor_active` is the marker's
+            # whole-run answer and stays true for a file PRE_MOVE_MESSAGES
+            # exempts, so counting it would have reported a floor that bit 42
+            # files while it bit 2.
+            if "linkfloor" not in res["enforced"]:
                 r["link_floor_off"] += 1
             # READ OFF THE REGISTER THIS FILE WAS ACTUALLY GRADED BY, never off
             # a constant, so the walk's reading moves by itself when a register
@@ -3819,6 +4159,14 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             verbatim = ((", research-verbatim:%s-waived/%d-finding(s)-removed"
                          % ("/".join(res["research_waived"]) or NOTHING,
                             waiver_removed)) if research else "")
+            # AND THE PRE-MOVE WAIVER RIDES ON IT TOO, pass or fail, with what
+            # it removed HERE. Same shape as the line above, for the same
+            # reason: a waiver counted only in the footer cannot be attached to
+            # the file it let through.
+            premoved = ((", pre-move:%s-waived/%d-finding(s)-removed"
+                         % ("/".join(res["pre_move_waived"]) or NOTHING,
+                            len(removed) if premove else 0))
+                        if premove else "")
             if res["findings"]:
                 r["failed"].append(
                     (rel, "%s: %s" % (kind,
@@ -3827,14 +4175,15 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                                           sep=" | "))))
                 r["results"].append((rel, "fail", "%s, %d finding(s), %s%s%s"
                                      % (kind, len(res["findings"]), as_of,
-                                        hist, ruled + verbatim)))
+                                        hist,
+                                        ruled + verbatim + premoved)))
             else:
                 r["results"].append(
                     (rel, "pass-legacy-links" if legacy else "pass",
                      "%s, %d of %s word(s), %s%s%s%s"
                      % (kind, res["words"],
                         res["cap"] if res["cap"] else "no-cap", as_of, hist,
-                        ruled + verbatim,
+                        ruled + verbatim + premoved,
                         ", the link band is not enforced on it: written "
                         "before it was ruled and named in LEGACY_LINK_RULES"
                         if legacy else "")))
@@ -3851,6 +4200,12 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
     # not, so it prints with its own count on every run.
     r["research_absent"] = sorted(rel for rel in research_verbatim
                                   if rel not in seen)
+    # AND THE SAME ROT CHECK FOR THE PRE-MOVE LIST, which is the one most
+    # likely to rot: every name on it is an archived message, and archived
+    # messages get cleared out. An entry nobody can see rotting is a waiver
+    # that outlives the file it was written for.
+    r["pre_move_absent"] = sorted(rel for rel in pre_move if rel not in seen)
+    r["pre_move_rules"] = sorted(r["pre_move_rules"])
     return r
 
 
@@ -3880,6 +4235,13 @@ def gate_report(r):
               "longer exist (sent and cleared, or renamed): %s"
               % (len(r["research_absent"]), r["research_listed"],
                  cap(r["research_absent"], keep=3, width=60, sep=", ")))
+    if r["pre_move_absent"]:
+        print("  note: %d of the %d frozen PRE_MOVE_MESSAGES entry/entries no "
+              "longer exist (cleared out of the outbox, or renamed), so the "
+              "waiver they carry is holding nothing up and the name comes off "
+              "the tuple: %s"
+              % (len(r["pre_move_absent"]), r["pre_move_listed"],
+                 cap(r["pre_move_absent"], keep=3, width=60, sep=", ")))
     # THE EXEMPTION'S LADDER, PRINTED WHETHER OR NOT IT BIT. Both rungs come
     # from the same walk and the same instant. The zero ships two denominators
     # because they answer different questions: how many listed files this walk
@@ -3893,6 +4255,27 @@ def gate_report(r):
           % (r["research_graded"], r["research_listed"],
              "/".join(RESEARCH_WAIVED_RULES), r["research_waiver_bit"],
              r["research_findings_waived"]))
+    # THE PRE-MOVE WAIVER'S LADDER, PRINTED WHETHER OR NOT IT BIT, and its
+    # zeros ship three denominators because they answer three questions: how
+    # many listed names this walk graded, of those how many the waiver changed
+    # the verdict for, and WHICH rules those removed findings carried. A walk
+    # where the second number is 0 over a non-zero first is a list that has
+    # stopped doing anything and should be deleted; a walk where it equals the
+    # first is the list holding the gate up on its own. NAMED AS A CUMULATIVE
+    # COUNT OVER THE WALK, not a peak and not a per-file number.
+    print("  messages already sent when the site moved: %d of the %d name(s) "
+          "on the frozen PRE_MOVE_MESSAGES list were graded in this walk with "
+          "%s waived; the waiver changed the verdict on %d of them, removing "
+          "%d finding(s) in total, carrying the rule(s) %s. Queue 256 moved "
+          "SITE_ORIGIN and turned the floor back on in one commit, and both "
+          "halves re-grade messages that were already sent: these were correct "
+          "under the rulebook in force when they went. Membership is by name, "
+          "never by the date in the name, and a message written after the move "
+          "is not on it"
+          % (r["pre_move_graded"], r["pre_move_listed"],
+             "/".join(PRE_MOVE_WAIVED_RULES), r["pre_move_waiver_bit"],
+             r["pre_move_findings_waived"],
+             "/".join(r["pre_move_rules"]) or NOTHING))
     # THE FLOOR'S BRANCH FOR THIS WALK, printed whether or not anything was
     # checked, because a walk that measured nothing still has an answer to
     # "was the floor live". The numerator is cumulative over the walk and its

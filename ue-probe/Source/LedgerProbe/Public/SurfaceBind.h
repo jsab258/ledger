@@ -337,6 +337,86 @@ namespace LedgerSurface
 
 	inline double GroundGrade() { return 0.55; }
 
+	// ---- JAFAR'S WALK-BACK, RULED 2026-09-15, AND IT IS PROVISIONAL ------
+	//
+	// IT IS A SEPARATE TERM ON PURPOSE. The two constants above are the
+	// legacy build's numbers, read off AssetLibrary and owed to parity. This
+	// one is a judgement about THIS ENGINE made by the one person who may
+	// make it (D23), and when wetness lands (queue 186) one of the two will
+	// have to move. Folded into TextureGrade or GroundGrade they could not be
+	// told apart, and a later session would read his placeholder as the
+	// legacy table.
+	//
+	// IT HAS AN EXPIRY AND THE EXPIRY IS NAMED. Re-read when wetness lands,
+	// not carried forward as settled. His words: "this value is provisional
+	// and gets re-read when wetness lands rather than kept". A session that
+	// finds 0.85 here and treats it as derived is reading a placeholder as a
+	// result. It is ALSO not tuned toward the Hook sheet and may not be: "the
+	// sheet is wet and the street is dry", so solving for the factor that
+	// lands the sheet's 0.373 is forbidden rather than merely unnecessary.
+	//
+	// WHAT HE SAW. Run 44 landed full legacy parity and band.ground.p50 went
+	// 0.5117 to 0.2711 against the sheet's 0.373. The gap CROSSED ZERO: the
+	// render was 37 per cent brighter than the reference and came out 27 per
+	// cent darker. "The full legacy grade overshoots in this engine, so take
+	// it to about 0.85 of what landed and re-read."
+	//
+	// ---- WHICH OF THE FOUR READINGS THIS IS, AND WHY THE OTHER THREE ARE
+	// NOT IT. "0.85 of what landed" is ambiguous and getting it wrong is
+	// silent, so the reasoning is written down here rather than left in a
+	// dispatch nobody will find.
+	//
+	// THE DIRECTION IS FIXED BY HIS OWN SENTENCE AND IS NOT A JUDGEMENT.
+	// He says the grade OVERSHOOTS and that the frame is DARKER than his
+	// reference. The grade multiplies base colour, so a smaller grade is a
+	// darker frame, monotonically, in any engine and under any tonemap.
+	// THEREFORE THE NEW GRADE MUST BE CLOSER TO WHITE THAN WHAT LANDED.
+	// A plain 0.85x on the grade takes the ground gamma term 0.4070 to
+	// 0.3460 and the frame FURTHER DOWN, deeper into the overshoot he asked
+	// to have undone. It is the most literal reading of the words and it is
+	// refuted by the clause in front of them.
+	//
+	// SO THE TERM IS A STRENGTH, MEASURED FROM WHITE: the new grade keeps
+	// 0.85 of the DARKENING that landed. That is what makes his number
+	// literally true of the quantity the grade IS. A grade's whole content
+	// is its distance below 1.0; at strength 1.0 this reproduces run 44 byte
+	// for byte, and at strength 0.0 it is white and the grade is off. Those
+	// two anchors are why a strength is the right shape for a provisional
+	// knob: it has the landed value as its identity.
+	//
+	// AND IT IS APPLIED IN GAMMA, WHICH IS NOT A FREE CHOICE EITHER. The
+	// block at AlbedoGradeFor rules that grade terms compose in gamma and the
+	// product is converted ONCE, because Unity's mat.color is a gamma number
+	// and "any other order is a different colour, not a rounding difference".
+	// This is a third grade term and it composes where the other two do. The
+	// same walk-back applied in linear would take the ground term to 0.5537
+	// in gamma rather than 0.4960, which is a different picture and not a
+	// rounding difference.
+	//
+	// THE OTHER TWO DIRECTION-CORRECT READINGS ARE NAMED SO A RE-READ IS ONE
+	// CONSTANT AND NOT AN ARCHAEOLOGY. G/0.85 gives a ground term of 0.4788
+	// and G^0.85 gives 0.4658, against this reading's 0.4960. All three are
+	// inside "about 0.85" and all three are far from the refuted 0.3460.
+	// If his eye says this landed too bright, those are the next two rungs
+	// down and the strength below is the only line that moves.
+	//
+	// WHAT THIS IS A STATISTIC OF: nothing. It is a judged constant with a
+	// date and an owner, and the surface line prints it beside the two
+	// legacy terms so a reader can recompute the product without this file.
+	inline double JafarGradeStrength() { return 0.85; }
+
+	// THE DATE AND THE OWNER TRAVEL WITH THE NUMBER onto the verdict line,
+	// so a frame can never be read against this grade without the reader
+	// learning that it is provisional and whose it is.
+	inline const char* JafarGradeStrengthWhen() { return "2026-09-15"; }
+
+	// KEEP 0.85 OF THE DARKENING THAT LANDED. Strength 1.0 is run 44 exactly,
+	// strength 0.0 is white. Takes and returns a GAMMA grade term.
+	inline double JafarWalkBack(double GammaGrade)
+	{
+		return 1.0 - JafarGradeStrength() * (1.0 - GammaGrade);
+	}
+
 	// THE GROUND FAMILY, AssetLibrary.WetSurfaces, character for character.
 	// Neither surface the procedural section paints is in it, and the rule
 	// was implemented rather than assumed away: the day a ground surface
@@ -350,6 +430,55 @@ namespace LedgerSurface
 	{
 		return Surface == "asphalt" || Surface == "sidewalk"
 		    || Surface == "kerb" || Surface == "concrete";
+	}
+
+	// THE WHOLE GAMMA CHAIN, IN ONE PLACE, BECAUSE IT HAS TWO CALLERS.
+	// ProceduralAlbedoTexel bakes the product into a flat texel and
+	// AlbedoGradeFor hands it to a material parameter; they must not be able
+	// to drift, and before this existed the chain was written out twice. It
+	// sits below IsGroundSurface because it needs it.
+	//
+	// THIS IS THE LEGACY PAIR AND ONLY THE LEGACY PAIR. JAFAR'S WALK-BACK IS
+	// NOT IN IT, AND THAT IS THE WHOLE POINT OF THE SPLIT.
+	//
+	// A BUILDER PUT THE WALK-BACK IN HERE ON 2026-09-15 AND IT WAS WRONG.
+	// The reasoning was "one street, one grade policy": the ten procedurally
+	// painted pieces sit in the frame Jafar judged, so walking back only the
+	// parameter route would leave them as an island at the full legacy grade.
+	// That reasoning is about the FRAME and it is not baseless, but it loses
+	// to what this particular value IS.
+	//
+	// WHAT THE PROCEDURAL TEXEL IS, AND WHY NO ENGINE-LOCAL NUMBER MAY ENTER
+	// IT. ProceduralAlbedoTexel REPRODUCES A UNITY VALUE. It exists so that
+	// the flat colour this engine paints on interior and paint_yellow is the
+	// same byte Unity's AssetLibrary bakes into them, and the suite asserts
+	// it against values hand-computed from the Unity literals. Jafar's 0.85
+	// is an UNREAL-ONLY correction to how that grade lands in THIS renderer.
+	// Multiplying it into the texel would make the texel stop equalling the
+	// thing it is defined to equal, and the parity check above it would then
+	// be asserting a number that no longer means parity. The grade would
+	// still be applied exactly once per surface, so this is not a
+	// double-grade; it is the quieter fault of a parity value that has
+	// silently stopped being one.
+	//
+	// SO THE SPLIT IS: the legacy chain has one owner and both routes take
+	// it, and the walk-back is applied at exactly one site, AlbedoGradeFor,
+	// where only the vector parameter can see it.
+	//
+	// THE FRAME CONSEQUENCE IS REAL AND IS NOT HIDDEN. Ten pieces of 610
+	// (interior and paint_yellow) stay at the full legacy grade while the
+	// twelve pack surfaces come up by the walk-back, so those ten render
+	// slightly darker relative to their neighbours than they did in run 44.
+	// That is a reported residual for Jafar's eye, not a thing to fix by
+	// putting an engine-local constant into a parity value.
+	inline void GradeChainGamma(const std::string& Surface,
+	                            double& R, double& G, double& B)
+	{
+		TextureGrade(R, G, B);
+		if (IsGroundSurface(Surface))
+		{
+			R *= GroundGrade(); G *= GroundGrade(); B *= GroundGrade();
+		}
 	}
 
 	// ONE TEXEL, THE WHOLE OF A PROCEDURAL SURFACE'S ALBEDO ON THIS SIDE.
@@ -377,11 +506,11 @@ namespace LedgerSurface
 		double Tr = 0.0, Tg = 0.0, Tb = 0.0;
 		ProceduralSurfaceTint(I, Tr, Tg, Tb);
 		double Gr = 0.0, Gg = 0.0, Gb = 0.0;
-		TextureGrade(Gr, Gg, Gb);
-		if (IsGroundSurface(Surface))
-		{
-			Gr *= GroundGrade(); Gg *= GroundGrade(); Gb *= GroundGrade();
-		}
+		// THE LEGACY CHAIN, AND DELIBERATELY NOT JAFAR'S WALK-BACK. This
+		// texel reproduces a Unity value byte for byte and an Unreal-only
+		// correction inside it would make it stop being the thing it is
+		// asserted to equal. GradeChainGamma's comment carries the ruling.
+		GradeChainGamma(Surface, Gr, Gg, Gb);
 		// THE BYTE FIRST, BECAUSE UNITY STORES THE TINT AS A BYTE. Color32
 		// rounds the float literal into a texel and the shader then reads
 		// that texel, so the product starts from 199/255 and not from 0.78.
@@ -517,18 +646,28 @@ namespace LedgerSurface
 			return Out;
 		}
 		double Gr = 0.0, Gg = 0.0, Gb = 0.0;
-		TextureGrade(Gr, Gg, Gb);
 		Out.bGround = IsGroundSurface(Surface);
-		if (Out.bGround)
-		{
-			Gr *= GroundGrade(); Gg *= GroundGrade(); Gb *= GroundGrade();
-		}
+		// THE LEGACY PAIR FIRST, FROM THE ONE OWNER OF THAT CHAIN, so this
+		// route and the texel route cannot drift on it.
+		GradeChainGamma(Surface, Gr, Gg, Gb);
+		// AND THEN JAFAR'S WALK-BACK, AT THIS ONE SITE AND NOWHERE ELSE.
+		// THIS IS THE ONLY PLACE THE 0.85 IS APPLIED IN THE WHOLE PROJECT.
+		// It is here rather than inside GradeChainGamma because only the
+		// vector parameter may see it: the other caller of that chain builds
+		// a texel that reproduces a Unity value, and an engine-local
+		// correction inside a parity value is a parity value that has
+		// stopped being one. Still in GAMMA, still converted once below.
+		Gr = JafarWalkBack(Gr); Gg = JafarWalkBack(Gg); Gb = JafarWalkBack(Gb);
 		Out.GammaR = Gr; Out.GammaG = Gg; Out.GammaB = Gb;
 		Out.R = LedgerVignette::SrgbToLinear(Gr);
 		Out.G = LedgerVignette::SrgbToLinear(Gg);
 		Out.B = LedgerVignette::SrgbToLinear(Gb);
-		Out.Why = Out.bGround ? "textureGrade-times-groundGrade"
-		                      : "textureGrade-only";
+		// THE REASON NAMES THE WALK-BACK, because a reader comparing this
+		// frame against the legacy build must not read a walked-back grade as
+		// parity. The number itself is on the line beside it.
+		Out.Why = Out.bGround
+			? "textureGrade-times-groundGrade-times-jafar-walkback-2026-09-15"
+			: "textureGrade-times-jafar-walkback-2026-09-15";
 		return Out;
 	}
 
@@ -1199,11 +1338,19 @@ namespace LedgerSurface
 		// findings with different next actions.
 		//
 		// THE BUFFER IS MEASURED AND NOT GUESSED. The longest string this
-		// block can produce is 398 characters, taken by sweeping every
+		// block can produce is 426 characters, taken by sweeping every
 		// surface name against both values of bTextured and measuring the
 		// result; 420 left 22 characters of headroom and a surfaceRoute
 		// longer than decal-multiply would have eaten it. A silently
 		// truncated verdict line is the quietest instrument fault there is.
+		//
+		// RE-MEASURED 2026-09-15 AND IT MOVED, 398 to 426, because the
+		// walk-back term added `/jafarWalkBack.0.85..ruled.2026-09-15` to
+		// tintFrom on both branches. THE NUMBER WAS RE-SWEPT RATHER THAN
+		// ADJUSTED BY ARITHMETIC: every surface name against every route,
+		// both values of bTextured and both of bTintBuilt/bGradeSet. The
+		// longest is still the white-grade pack branch, whose Why string is
+		// longer than either graded one. 560 leaves 134 characters.
 		{
 			char Buf[560];
 			if (B.bTintBuilt)
@@ -1212,14 +1359,24 @@ namespace LedgerSurface
 				const int ProcIdx = ProceduralSurfaceIndex(B.Surface);
 				if (ProcIdx >= 0) { ProceduralSurfaceTint(ProcIdx, Tr, Tg, Tb); }
 				TextureGrade(Gr, Gg, Gb);
+				// THE WALK-BACK IS NAMED HERE OR THE TEXEL CANNOT BE
+				// RECOMPUTED FROM THE INPUTS BESIDE IT. This branch prints
+				// the legacy terms as the inputs and the texel as the
+				// result, and since 2026-09-15 a third term sits between
+				// them. Leaving it out would not be a missing detail, it
+				// would make the line's own arithmetic fail to close.
+				// NO NEW KEY: it goes inside tintFrom's value, which is
+				// already a `/`-separated structure.
 				std::snprintf(Buf, sizeof(Buf),
 					" surfaceRoute=%s tintTexel=%d.%d.%d tintFrom=spec.%.2f.%.2f.%.2f"
-					"/grade.%.2f.%.2f.%.2f%s/AlbedoGradeParam.white-because-the-"
+					"/grade.%.2f.%.2f.%.2f%s/jafarWalkBack.%.2f..ruled.%s"
+					"/AlbedoGradeParam.white-because-the-"
 					"product-is-already-in-this-texel tintPattern=flat-here/%s"
 					" roughnessTexel=%d",
 					B.Route.empty() ? "none" : LedgerVignette::NoSpaces(B.Route).c_str(),
 					B.Tint.R, B.Tint.G, B.Tint.B, Tr, Tg, Tb, Gr, Gg, Gb,
 					IsGroundSurface(B.Surface) ? "/groundGrade.0.55" : "",
+					JafarGradeStrength(), JafarGradeStrengthWhen(),
 					B.Surface == "interior" ? "unity-adds-a-0.10-noise-over-it"
 					                        : "unity-is-flat-too",
 					ProceduralRoughnessTexel(B.Surface));
@@ -1235,7 +1392,8 @@ namespace LedgerSurface
 				const Texel GT = GradeTexel(B.Graded);
 				std::snprintf(Buf, sizeof(Buf),
 					" surfaceRoute=%s tintTexel=grade-on-white.%d.%d.%d"
-					" tintFrom=%s/grade.%.2f.%.2f.%.2f%s/linear.%.4f.%.4f.%.4f"
+					" tintFrom=%s/grade.%.2f.%.2f.%.2f%s/jafarWalkBack.%.2f..ruled.%s"
+					"/linear.%.4f.%.4f.%.4f"
 					" tintPattern=pack-jpeg-times-AlbedoGradeParam/%s"
 					" roughnessTexel=%s",
 					B.Route.empty() ? "none" : LedgerVignette::NoSpaces(B.Route).c_str(),
@@ -1243,6 +1401,12 @@ namespace LedgerSurface
 					B.Graded.Why,
 					B.Graded.GammaR, B.Graded.GammaG, B.Graded.GammaB,
 					B.Graded.bGround ? "/groundGrade.0.55" : "/groundGrade.not-a-ground-surface",
+					// THE STRENGTH AND ITS DATE, SO NO FRAME IS READ AGAINST
+					// THIS GRADE WITHOUT THE READER LEARNING IT IS PROVISIONAL.
+					// grade.* is now the walked-back gamma triple, which is
+					// what the parameter was built from; the two legacy terms
+					// are the words in tintFrom's first field.
+					JafarGradeStrength(), JafarGradeStrengthWhen(),
 					B.Graded.R, B.Graded.G, B.Graded.B,
 					B.MapFound[0] ? "the-albedo-is-the-file-and-the-grade-is-a-parameter-on-it"
 					              : "no-albedo-file-bound-so-the-grade-sits-on-the-material-default",

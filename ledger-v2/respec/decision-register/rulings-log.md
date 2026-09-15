@@ -286,6 +286,17 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   tier; one message a day, exceptions saying so in their first line; the Sunday
   page is written every Sunday and accumulates
   `ledger-v2/respec/decision-register/D40-the-sky-is-a-photograph-not-an-atmosphere.md`
+- **2026-09-15** the forty are waived by name and the fourth list is
+  the line: PRE_MOVE_MESSAGES lands as the right shape and the right
+  forty, gate-only, the receipt question is 307; the 0.85 walk-back
+  stands as his number as a strength from white in gamma and the
+  0.368 is withdrawn as a prediction (an exponent fitted in gamma and
+  applied in linear); the provenance guard checks ancestry and origin
+  because the workflow commits nothing, its rejecting fixtures are
+  306; the done line is three, named, with a clause for dated
+  transcripts; the ruled URL stays with zero users and 184's closure
+  is 275's class
+  `game-design/decision-2026-09-15-ruling-the-forty-are-waived-by-name-and-the-walk-back-stands-as-his-number.md`
 
 ## Rulings that came off the card queue
 

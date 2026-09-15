@@ -27,8 +27,8 @@ capturing SkyLight instead of the HDRI the shared spec names:
    atmosphere backdrop would not.
 
 HIS RULING DEFEATS 3 AND ONLY 3. Reasons 1 and 2 are not arguments, they are
-work, and they remain true after this record. They become queue 299's successor
-and the builder solves them or reports precisely why it cannot. A record that
+work, and they remain true after this record. They are queue 186's, and the
+builder solves them there or reports precisely why it cannot. A record that
 let them be forgotten would be the shape of failure this project keeps finding:
 an aesthetic call quietly deleting an engineering constraint.
 

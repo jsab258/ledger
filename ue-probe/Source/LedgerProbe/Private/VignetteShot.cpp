@@ -172,6 +172,74 @@ namespace
 	// prints whether the file is even reachable so that rung is a fact
 	// rather than a guess.
 	//
+	// ---- THE PARAGRAPH ABOVE IS OVERTURNED IN PART, 2026-09-15 ----------
+	//
+	// IT IS KEPT RATHER THAN DELETED because two thirds of it are still
+	// true and are still the work. What was overturned, and by whom:
+	//
+	// OVERTURNED: THE THIRD REASON, ON AESTHETICS, BY JAFAR, 2026-09-15.
+	// The record is ledger-v2/respec/decision-register/D40. "The photograph
+	// becomes the sky." The reasoned position above was written before
+	// anyone had compared a rendered sky against the reference sheet, and
+	// the comparison is what defeats it. Making the seen thing and the
+	// reflected thing one object is a real virtue and it is not what is in
+	// dispute; what is in dispute is that the object in question cannot be
+	// made to look like the reference. Scattering constants move a physical
+	// sky along a physical-sky axis, and the gap is not on that axis.
+	//
+	// WHAT THE GAP ACTUALLY IS, MEASURED, because a false reason inside a
+	// correction is worse than no correction. Measured on the brightest 30
+	// per cent of the top band of each, render against the Hook sheet:
+	//     render      meanRGB 200.4/203.2/210.7  B/R 1.051
+	//                 lumSD 2.21  p05-p95 spread 6.7
+	//     Hook sheet  meanRGB 205.7/212.6/224.5  B/R 1.091
+	//                 lumSD 4.18  p05-p95 spread 12.5
+	// THE RENDER IS LESS BLUE THAN THE REFERENCE, NOT MORE: B/R 1.051
+	// against 1.091. So this correction does NOT say the atmosphere renders
+	// clear-sky blue, because it measurably does not, and anyone writing
+	// that here later should read these six numbers first. What the numbers
+	// do say is that the sheet has about TWICE THE STRUCTURE (lumSD 4.18
+	// against 2.21, spread 12.5 against 6.7) and is 6 points brighter. THE
+	// ATMOSPHERE RENDERS FLAT WHERE AN OVERCAST SKY HAS CLOUD STRUCTURE,
+	// and flatness is what the spread measures. No scattering constant adds
+	// cloud, because cloud is not a scattering term. A photograph has the
+	// structure already.
+	//
+	// NOT OVERTURNED: REASONS ONE AND TWO. THEY WERE NEVER ARGUMENTS, THEY
+	// ARE WORK, and a ruling on taste does not do any of it. They stand as
+	// the cost of the rung, restated as tasks:
+	//
+	//   1. THE CUBE. A USkyLightComponent in SLS_SpecifiedCubemap takes a
+	//      UTextureCube and this engine builds none at runtime. NOTE, for
+	//      whoever takes the rung, that this component is already in
+	//      SLS_CapturedScene (spawn site below) and that a captured skylight
+	//      never needed a cube: the engine builds one internally from what
+	//      is in the scene. The question that path turns into is therefore
+	//      not "how do we build a cube" but "what puts the photograph in
+	//      front of the capture", which is a backdrop mesh and an unlit
+	//      material, neither of which exists here yet. That is a different
+	//      and smaller problem than the sentence above states, but it is
+	//      not no problem and it is not done.
+	//
+	//   2. THE STAGING. Still exactly true and still not done. Measured
+	//      2026-09-15 rather than assumed: the workflow stages
+	//      CityPackTextures and LedgerDecals by name and HAS NO SKY STEP AT
+	//      ALL, which is why GHdriFoundAt reads NOT-FOUND. One detail for
+	//      whoever writes that step, because it is easy to get wrong: the
+	//      shared file's hdri field is "Sky/polyhaven/belfast_open_field_2k"
+	//      and CARRIES ITS SUBDIRECTORY, so a flat copy answers nothing and
+	//      the destination has to be SkyHdri/Sky/polyhaven/, the way the
+	//      decal step keeps `generated`. Radiance decoding is the link after
+	//      that and it is UNMEASURED: LookForNamedHdri already asks the
+	//      ImageWrapper module what the file is, and skyHdriDetectedAs will
+	//      answer it the first run the file is reachable, at the cost of no
+	//      new key.
+	//
+	// SO THIS RUN STILL BINDS NOTHING AND SAYS SO. skyHdriBoundAs reads
+	// NOTHING and skyModel reads not-an-hdri, which is the honest state. A
+	// sky that claims to be bound and is not is the failure this project
+	// keeps finding, and a half-bound one would render a black dome.
+	//
 	// THE FOUR ATMOSPHERE NUMBERS ARE A STARTING POINT AND SAY SO. Rule 2
 	// forbids calling them anything better: no series exists. Rayleigh is
 	// cut because Rayleigh is the blue and Meridian is not blue; Mie is

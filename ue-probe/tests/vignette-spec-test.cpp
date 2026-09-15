@@ -2297,11 +2297,31 @@ int main(int argc, char** argv)
 			LedgerSurface::ProceduralAlbedoTexel("interior");
 		std::printf("    tint texels: paint_yellow %d.%d.%d interior %d.%d.%d\n",
 		            Y.R, Y.G, Y.B, In.R, In.G, In.B);
+		// THESE TWO DID NOT MOVE ON 2026-09-15 AND THAT IS THE ASSERTION.
+		// Jafar's walk-back is applied at exactly one site, AlbedoGradeFor,
+		// where only the vector parameter sees it. This texel REPRODUCES A
+		// UNITY VALUE and an Unreal-only correction inside it would make it
+		// stop equalling the thing it is defined to equal. A builder did put
+		// the 0.85 in the shared chain that day; these values are what caught
+		// it, and they would have read 154.133.36 and 33.24.15 if it had
+		// stayed. HAND-COMPUTED from the Unity literals, unchanged:
+		//   0.78 as a byte is 0.78 x 255 + 0.5 = 199.4 -> 199, /255 = 0.78039216
+		//   TextureGrade red 0.74, NOT walked back
+		//   linear 0.57112483 x 0.50707851 = 0.28960382 -> sRGB -> 147
 		Check(Y.R == 147 && Y.G == 127 && Y.B == 35,
 		      "worn municipal yellow at 0.78/0.66/0.18, quantised as Unity quantises "
 		      "it and multiplied by TextureGrade in linear");
 		Check(In.R == 31 && In.G == 22 && In.B == 14,
 		      "and the shop interior at 0.18/0.13/0.08 through the same arithmetic");
+		// AND THE WALK-BACK IS ASSERTED NOT TO HAVE REACHED THIS ROUTE, by
+		// name and in both directions, because the failure is silent: the
+		// texel would still be a plausible colour and only its parity meaning
+		// would be gone. The rejecting case is the exact value the shared-chain
+		// mistake produced.
+		Check(Y.R != 154 && In.R != 33,
+		      "the walk-back did NOT reach the procedural texel, which reproduces a "
+		      "Unity value and may not carry an engine-local correction; 154 and 33 "
+		      "are what it read while the 0.85 was wrongly in the shared chain");
 		// THE GRADE ACTUALLY DARKENS, which is the half a typo would not move:
 		// a grade applied in the wrong direction, or not at all, leaves the
 		// raw byte standing.
@@ -2500,61 +2520,71 @@ int main(int argc, char** argv)
 			      "white as a texel is 255.255.255, which is the multiply having "
 			      "no effect on any albedo byte");
 
-			// 2. A SURFACE THAT IS NOT GROUND TAKES TextureGrade ONLY.
-			// HAND-COMPUTED, WRITTEN DOWN, so this check is not the
+			// 2. A SURFACE THAT IS NOT GROUND TAKES TextureGrade, WALKED
+			// BACK. HAND-COMPUTED, WRITTEN DOWN, so this check is not the
 			// implementation restated back to itself:
-			//   ((0.74 + 0.055) / 1.055) ^ 2.4
-			// = (0.75355450) ^ 2.4
-			// = 0.50707851, and 0.74 as a byte is 0.74 x 255 + 0.5 = 189.
+			//   TextureGrade red 0.74, walked back at strength 0.85:
+			//   1 - 0.85 x (1 - 0.74) = 1 - 0.221 = 0.779
+			//   ((0.779 + 0.055) / 1.055) ^ 2.4
+			// = (0.79052133) ^ 2.4
+			// = 0.56884326, and 0.779 as a byte is 0.779 x 255 + 0.5 = 199.
+			// UNTIL 2026-09-15 THESE READ 0.74 / 0.50707851 / 189, which was
+			// the full legacy grade run 44 landed and Jafar judged too dark.
 			const LedgerSurface::Grade Wall =
 				LedgerSurface::AlbedoGradeFor("brick_red", true);
 			Check(!Wall.bGround, "brick_red is not a ground surface");
-			Check(Wall.GammaR == 0.74 && Wall.GammaG == 0.76
-			      && Wall.GammaB == 0.80,
-			      "a non-ground pack surface takes TextureGrade and nothing else, "
-			      "in gamma, exactly as AssetLibrary.BaseColour does for it");
-			Check(std::fabs(Wall.R - (0.50707851)) < 1e-7
-			      && std::fabs(Wall.G - (0.53823552)) < 1e-7
-			      && std::fabs(Wall.B - (0.60382734)) < 1e-7,
-			      "and the linear triple is the hand-computed sRGB transfer of "
-			      "0.74/0.76/0.80, because an Unreal vector parameter is read AS "
-			      "linear and is never converted for us");
+			Check(std::fabs(Wall.GammaR - 0.779) < 1e-12
+			      && std::fabs(Wall.GammaG - 0.796) < 1e-12
+			      && std::fabs(Wall.GammaB - 0.830) < 1e-12,
+			      "a non-ground pack surface takes TextureGrade and nothing else "
+			      "of the legacy pair, walked back at 0.85 in gamma");
+			Check(std::fabs(Wall.R - (0.56884326)) < 1e-7
+			      && std::fabs(Wall.G - (0.59706971)) < 1e-7
+			      && std::fabs(Wall.B - (0.65593068)) < 1e-7,
+			      "and the linear triple is the hand-computed sRGB transfer of the "
+			      "walked-back 0.779/0.796/0.830, because an Unreal vector "
+			      "parameter is read AS linear and is never converted for us");
 			const LedgerSurface::Texel WallT = LedgerSurface::GradeTexel(Wall);
-			Check(WallT.R == 189 && WallT.G == 194 && WallT.B == 204,
-			      "a white texel under the non-ground grade comes out 189.194.204, "
-			      "which is 0.74/0.76/0.80 x 255 rounded and checkable on paper");
+			Check(WallT.R == 199 && WallT.G == 203 && WallT.B == 212,
+			      "a white texel under the non-ground grade comes out 199.203.212, "
+			      "which is 0.779/0.796/0.830 x 255 rounded and checkable on paper");
 
 			// 3. A SURFACE THAT IS GROUND TAKES TextureGrade TIMES
-			// GroundGrade, MULTIPLIED IN GAMMA AND CONVERTED ONCE, which is
-			// ProceduralAlbedoTexel's own order and not a second opinion.
-			// HAND-COMPUTED: 0.74 x 0.55 = 0.407, and
-			//   ((0.407 + 0.055) / 1.055) ^ 2.4
-			// = (0.43791469) ^ 2.4
-			// = 0.13782717. As a byte, 0.407 x 255 + 0.5 = 104.285 -> 104.
+			// GroundGrade, THEN THE WALK-BACK, ALL MULTIPLIED IN GAMMA AND
+			// CONVERTED ONCE, which is ProceduralAlbedoTexel's own order and
+			// not a second opinion.
+			// HAND-COMPUTED: 0.74 x 0.55 = 0.407, walked back at 0.85:
+			//   1 - 0.85 x (1 - 0.407) = 1 - 0.50405 = 0.49595, and
+			//   ((0.49595 + 0.055) / 1.055) ^ 2.4
+			// = (0.52222749) ^ 2.4
+			// = 0.21031166. As a byte, 0.49595 x 255 + 0.5 = 126.97 -> 126.
+			// UNTIL 2026-09-15 THESE READ 0.407 / 0.13782717 / 104.
 			const LedgerSurface::Grade Road =
 				LedgerSurface::AlbedoGradeFor("kerb", true);
 			Check(Road.bGround, "kerb IS a ground surface");
-			Check(std::fabs(Road.GammaR - (0.407)) < 1e-12
-			      && std::fabs(Road.GammaG - (0.418)) < 1e-12
-			      && std::fabs(Road.GammaB - (0.440)) < 1e-12,
+			Check(std::fabs(Road.GammaR - (0.49595)) < 1e-12
+			      && std::fabs(Road.GammaG - (0.50530)) < 1e-12
+			      && std::fabs(Road.GammaB - (0.52400)) < 1e-12,
 			      "a ground pack surface folds GroundGrade in IN GAMMA, 0.74 x "
-			      "0.55 = 0.407, which is the order AssetLibrary.BaseColour uses");
-			Check(std::fabs(Road.R - (0.13782717)) < 1e-7
-			      && std::fabs(Road.G - (0.14583469)) < 1e-7
-			      && std::fabs(Road.B - (0.16264719)) < 1e-7,
-			      "and the conversion to linear happens ONCE, on the product, so "
-			      "the linear red is the hand-computed 0.13782717 and not "
-			      "0.50707851 x 0.55");
+			      "0.55 = 0.407, and the walk-back lands it at 0.49595, which is "
+			      "the order AssetLibrary.BaseColour uses with one term added");
+			Check(std::fabs(Road.R - (0.21031166)) < 1e-7
+			      && std::fabs(Road.G - (0.21897957)) < 1e-7
+			      && std::fabs(Road.B - (0.23693142)) < 1e-7,
+			      "and the conversion to linear happens ONCE, on the whole gamma "
+			      "product, so the linear red is the hand-computed 0.21031166");
 			const LedgerSurface::Texel RoadT = LedgerSurface::GradeTexel(Road);
-			Check(RoadT.R == 104 && RoadT.G == 107 && RoadT.B == 112,
-			      "a white texel under the ground grade comes out 104.107.112");
+			Check(RoadT.R == 126 && RoadT.G == 129 && RoadT.B == 134,
+			      "a white texel under the ground grade comes out 126.129.134");
 			// AND THE ORDER IS LOAD-BEARING, so the wrong order is asserted
-			// to be a DIFFERENT number rather than left as a claim. Linear
-			// first would give 0.50707851 x 0.55 = 0.27889318, which is
-			// twice the right answer: a road at double brightness.
-			Check(std::fabs(Road.R - (0.50707851 * 0.55)) > 1e-4,
-			      "converting first and multiplying second would be a different "
-			      "colour, not a rounding difference, and it is not what this does");
+			// to be a DIFFERENT number rather than left as a claim. Walking
+			// back in LINEAR instead would give 1 - 0.85 x (1 - 0.13782717)
+			// = 0.26715, which is a different picture: the ground would come
+			// up by 1.94x instead of 1.53x.
+			Check(std::fabs(Road.R - (1.0 - 0.85 * (1.0 - 0.13782717))) > 1e-4,
+			      "walking back in linear rather than in gamma would be a "
+			      "different colour, not a rounding difference, and it is not "
+			      "what this does");
 
 			// 4. EVERY MEMBER OF THE GROUND FAMILY, ONE AT A TIME. A rule
 			// that happens to be right for kerb and wrong for concrete
@@ -2567,9 +2597,10 @@ int main(int argc, char** argv)
 				const LedgerSurface::Grade G =
 					LedgerSurface::AlbedoGradeFor(Ground[I], true);
 				Check(LedgerSurface::IsGroundSurface(Ground[I]) && G.bGround
-				      && std::fabs(G.GammaR - (0.407)) < 1e-12,
+				      && std::fabs(G.GammaR - (0.49595)) < 1e-12,
 				      (std::string("the ground surface ") + Ground[I]
-				       + " takes TextureGrade x GroundGrade").c_str());
+				       + " takes TextureGrade x GroundGrade walked back to "
+				         "0.49595").c_str());
 			}
 			const char* NotGround[5] = {"metal", "wood", "window", "plaster",
 			                            "glass"};
@@ -2578,9 +2609,9 @@ int main(int argc, char** argv)
 				const LedgerSurface::Grade G =
 					LedgerSurface::AlbedoGradeFor(NotGround[I], true);
 				Check(!LedgerSurface::IsGroundSurface(NotGround[I]) && !G.bGround
-				      && G.GammaR == 0.74,
+				      && std::fabs(G.GammaR - 0.779) < 1e-12,
 				      (std::string("the non-ground surface ") + NotGround[I]
-				       + " takes TextureGrade only").c_str());
+				       + " takes TextureGrade only, walked back to 0.779").c_str());
 			}
 
 			// 5. THE ONE WAY THIS GOES WRONG IS TWICE. A procedural surface's
@@ -2660,14 +2691,32 @@ int main(int argc, char** argv)
 			Check(KLine.find("not-built") == std::string::npos,
 			      "a graded pack surface has no not-built field left on its line: "
 			      "four dead fields turned live without one new key");
-			Check(KLine.find("tintTexel=grade-on-white.104.107.112")
+			// MOVED 2026-09-15 BY JAFAR'S WALK-BACK, AND STILL PINNED
+			// EXACTLY. These read grade-on-white.104.107.112 and
+			// linear.0.1378.0.1458.0.1626 while the parameter carried the
+			// full legacy grade. HAND-COMPUTED from the new arithmetic:
+			//   0.74 x 0.55 = 0.407; walked back 1 - 0.85 x 0.593 = 0.49595
+			//   as a byte 0.49595 x 255 + 0.5 = 126.97 -> 126
+			//   ((0.49595 + 0.055) / 1.055) ^ 2.4 = 0.21031166 -> 0.2103
+			// NEITHER CHECK IS LOOSENED TO A TOLERANCE OR A SHORTER
+			// SUBSTRING. The whole value of this pair is that it pins the
+			// exact printed string a reader will recompute the grade from.
+			Check(KLine.find("tintTexel=grade-on-white.126.129.134")
 			      != std::string::npos,
 			      "tintTexel on a pack line is the grade on a white reference "
 			      "texel, and the VALUE says which of the two it is");
 			Check(KLine.find("/groundGrade.0.55") != std::string::npos
-			      && KLine.find("/linear.0.1378.0.1458.0.1626") != std::string::npos,
+			      && KLine.find("/linear.0.2103.0.2190.0.2369") != std::string::npos,
 			      "tintFrom carries the gamma inputs AND the linear triple the "
 			      "parameter actually holds, so it can be recomputed off the line");
+			// AND THE WALK-BACK IS ON THE LINE WITH ITS DATE, so no frame can
+			// be read against this grade without the reader learning that the
+			// number is provisional and whose it is. NO NEW KEY: this is
+			// inside tintFrom's existing `/`-separated value.
+			Check(KLine.find("/jafarWalkBack.0.85..ruled.2026-09-15")
+			      != std::string::npos,
+			      "the walked-back grade names its strength and the date it was "
+			      "ruled, inside tintFrom rather than in a key of its own");
 			Check(KLine.find("tintPattern=pack-jpeg-times-AlbedoGradeParam")
 			      != std::string::npos,
 			      "tintPattern says the albedo is a file with a parameter on it "
