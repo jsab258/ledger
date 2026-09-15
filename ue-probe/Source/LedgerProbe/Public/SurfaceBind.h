@@ -671,6 +671,377 @@ namespace LedgerSurface
 		return Out;
 	}
 
+	// ---- WETNESS, QUEUE 186, AND THE TRAP IS IN THE UNITS ----------------
+	//
+	// WHAT THIS IS. Two functions out of ledger/Assets/Scripts/Core/
+	// LightModel.cs, lines 594 and 601, ported here for the standing reason
+	// the rest of this file exists: in a project whose top layer does not
+	// compile locally, arithmetic written there ships UNRUN, and an unrun
+	// formula producing a plausible number is the quietest fault there is.
+	// They are a SECOND READER of that file, not a second copy with a new
+	// opinion in it, and the g++ suite asserts them against values computed
+	// from the C# by hand.
+	//
+	// THE THESIS, IN THE ORIGINAL AUTHOR'S WORDS AT LightModel.cs:588-593,
+	// because it is the only reason both halves are one change: "Raising
+	// smoothness alone gives a bright shiny road that reads as polished
+	// plastic. Dropping albedo at the same time is what makes the lamps'
+	// reflections POP off a dark road, which is the entire look of a rainy
+	// street at night." A wet surface is not just shinier, it is DARKER: the
+	// water film fills the micro-structure, so less light scatters back out
+	// and more reflects specularly. Ship one half and the road reads as
+	// plastic.
+	//
+	// ---- THE TRAP, NAMED BEFORE ANY CODE ---------------------------------
+	//
+	// UNITY'S PARAMETER IS SMOOTHNESS. UNREAL'S IS ROUGHNESS. They are
+	// opposites: roughness = 1 - smoothness. A direct port of Smoothness
+	// into a roughness pin gives a road that gets ROUGHER as it gets wetter,
+	// which is the exact opposite of the look, and every number in the
+	// verdict would read plausible while the frame was backwards. THE
+	// CONVERSION HAPPENS AT ONE NAMED SITE, RoughnessFromSmoothness BELOW,
+	// AND NOWHERE ELSE, and the suite asserts the direction rather than only
+	// the value: wetter must mean a SMALLER roughness.
+	inline double WetClamp01(double V)
+	{
+		// Feel.Clamp01's shape, written out because this header has no Feel.
+		return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V);
+	}
+
+	inline double WetClamp(double V, double Lo, double Hi)
+	{
+		return V < Lo ? Lo : (V > Hi ? Hi : V);
+	}
+
+	// THE SMOOTHNESS A FULLY WET SURFACE APPROACHES. LightModel.Smoothness's
+	// 0.92, named once so the roughness floor below is derived from it and
+	// the two can never disagree by an edit.
+	//
+	// WHAT IT IS A STATISTIC OF: nothing. It is the other engine's constant,
+	// copied, and guarded by tools/surface-tint-check.py.
+	inline double WetSmoothnessCeiling() { return 0.92; }
+
+	// LightModel.Smoothness(dry, rain), character for character.
+	inline double WetSmoothness(double DrySmoothness, double Rain)
+	{
+		Rain = WetClamp01(Rain);
+		return WetClamp01(DrySmoothness
+		                  + (WetSmoothnessCeiling() - DrySmoothness) * Rain);
+	}
+
+	// LightModel.AlbedoScale(rain), character for character. A MULTIPLIER ON
+	// ALBEDO, never a replacement for one: Unity applies it to the product
+	// BaseColour already carries, so a wet road runs 0.55 x AlbedoScale and a
+	// dry one runs 0.55 (AssetLibrary.SetWetness, lines 835-843).
+	inline double WetAlbedoScale(double Rain)
+	{
+		Rain = WetClamp01(Rain);
+		return WetClamp(1.0 - 0.45 * Rain, 0.55, 1.0);
+	}
+
+	// ---- THE ONE CONVERSION SITE -----------------------------------------
+	//
+	// roughness = 1 - smoothness. THIS IS THE ONLY PLACE IN THIS PROJECT
+	// THAT SPELLS THAT, and every value that reaches an Unreal roughness pin
+	// comes through it. ProceduralRoughnessTexel above writes the same
+	// arithmetic inline and predates this function; it is left alone
+	// deliberately rather than routed through here, because it reproduces a
+	// Unity byte and the suite asserts it against a hand-computed value, and
+	// that is a different job from this one. The suite asserts the two agree.
+	inline double RoughnessFromSmoothness(double Smooth)
+	{
+		return 1.0 - Smooth;
+	}
+
+	inline double SmoothnessFromRoughness(double Rough)
+	{
+		return 1.0 - Rough;
+	}
+
+	// THE ROUGHNESS A FULLY WET SURFACE APPROACHES, derived from the ceiling
+	// rather than typed. This is the number the material graph's lerp uses as
+	// its B pin, and tools/ue/make_base_material.py reads it OUT OF THIS FILE
+	// rather than carrying its own copy.
+	inline double WetRoughnessFloor()
+	{
+		return RoughnessFromSmoothness(WetSmoothnessCeiling());
+	}
+
+	// THE SAME ARITHMETIC IN THE SPACE UNREAL ACTUALLY READS, and the whole
+	// point of naming it: a caller reaching for a roughness never has to do
+	// the flip itself.
+	//
+	// IT IS ALGEBRAICALLY A LERP, WHICH IS WHY THE MATERIAL GRAPH CAN BE ONE
+	// NODE. With d = 1 - R:
+	//     1 - Smoothness(d, r) = 1 - d - (0.92 - d) r
+	//                          = R - (R - 0.08) r
+	//                          = R (1 - r) + 0.08 r
+	// so Lerp(RoughnessMap.R, WetRoughnessFloor(), Wetness) per texel IS
+	// this function per texel, and at Wetness 0 it is the map untouched,
+	// bit for bit. The suite asserts the identity over a sweep rather than
+	// trusting the three lines above.
+	inline double WetRoughness(double DryRoughness, double Rain)
+	{
+		return RoughnessFromSmoothness(
+			WetSmoothness(SmoothnessFromRoughness(DryRoughness), Rain));
+	}
+
+	// THE DRY SMOOTHNESS OF THE FOUR SURFACES RAIN LANDS ON, read out of
+	// AssetLibrary.SurfaceSpec.For and guarded against it by
+	// tools/surface-tint-check.py. It is a SECOND READER of that switch.
+	//
+	// WHAT IT IS FOR, AND WHAT IT IS NOT FOR. It is not an input to anything
+	// that reaches a pixel on this side: the roughness a pack surface renders
+	// is its own 2048x2048 roughness file, lerped per texel, and no scalar
+	// here replaces it. It is the DATUM the verdict quotes so the direction
+	// is readable from the numbers alone, and it is the other engine's own
+	// number so the two runs are quoting the same surface.
+	inline int GroundDryCount() { return 4; }
+
+	inline const char* GroundDryName(int I)
+	{
+		const char* N[4] = {"asphalt", "sidewalk", "kerb", "concrete"};
+		return (I >= 0 && I < 4) ? N[I] : "out-of-range";
+	}
+
+	inline double GroundDrySmoothnessAt(int I)
+	{
+		const double S[4] = {0.18, 0.10, 0.12, 0.10};
+		return (I >= 0 && I < 4) ? S[I] : -1.0;
+	}
+
+	// -1 FOR A SURFACE THAT HAS NO ROW, because a surface with no datum and a
+	// surface whose datum is zero are different facts and a shared 0.0 would
+	// merge them.
+	inline double GroundDrySmoothness(const std::string& Surface)
+	{
+		for (int I = 0; I < GroundDryCount(); ++I)
+		{
+			if (Surface == GroundDryName(I)) { return GroundDrySmoothnessAt(I); }
+		}
+		return -1.0;
+	}
+
+	// THE TWO LISTS MUST BE THE SAME FOUR SURFACES. IsGroundSurface decides
+	// WHO gets wet and this table says HOW ROUGH each of them is dry; a
+	// surface in one and not the other is a silent half-treatment, so the
+	// suite asserts them against each other in both directions.
+	inline bool GroundDryTableAgreesWithWetSurfaces()
+	{
+		for (int I = 0; I < GroundDryCount(); ++I)
+		{
+			if (!IsGroundSurface(GroundDryName(I))) { return false; }
+		}
+		return true;
+	}
+
+	// ---- WHAT A SURFACE'S BIND DOES WITH A WETNESS -----------------------
+	//
+	// THE PARAMETER'S ONE SPELLING, for the reason AlbedoGradeParam has one:
+	// the generator and the binder cannot drift apart without the container
+	// saying so before a dispatch. THE SELFTEST THAT HOLDS IT DOES NOT GREP
+	// FOR THIS LITERAL. A grep over the tree would be satisfied by the line
+	// below and would print green over a parameter nothing ever sets, which
+	// is the shape of every comment-shaped guard this file has had to
+	// correct. make_base_material.py --selftest asks the .cpp files for a
+	// scalar set call and for WetnessParam IN THE SAME FILE: the declaration
+	// here cannot satisfy either.
+	inline const char* WetnessParam() { return "Wetness"; }
+
+	// DRY IS ZERO, AND ZERO IS THE MATERIAL'S DEFAULT. An instance that never
+	// sets this parameter renders exactly what it renders today, bit for bit,
+	// because the lerp at alpha 0 is its A pin untouched. That is the
+	// accepting case and it is the half that ships unrun, so the generator
+	// asserts the number rather than the presence.
+	inline double WetnessDry() { return 0.0; }
+
+	// WHO GETS WET, AND IT IS THE OTHER ENGINE'S LIST. AssetLibrary's own
+	// comment: "Ground the rain lands on. Walls and roofs are deliberately
+	// absent - a vertical brick face does not pool water". IsGroundSurface
+	// above is AssetLibrary.WetSurfaces character for character and this
+	// reuses it rather than writing a fifth list.
+	struct WetBind
+	{
+		double Wetness;       // what the scalar parameter is set to
+		double AlbedoScale;   // the gamma multiplier folded into the grade
+		bool   bWet;          // did this surface take the wetness at all
+		bool   bAlbedo;       // did the COLOUR half apply as well as the roughness
+		const char* Why;
+		WetBind() : Wetness(0.0), AlbedoScale(1.0), bWet(false), bAlbedo(false),
+		            Why("dry/nothing-decided-yet") {}
+	};
+
+	// THE TWO HALVES CAN DISAGREE AND THE STRUCT SAYS SO. The roughness half
+	// applies to any ground surface, because a roughness map or the
+	// material's default is there either way. The COLOUR half applies only
+	// where AlbedoGradeFor took its textured branch: on the three white-grade
+	// branches the value means "Unity would use a tint table this side has
+	// only two rows of", and multiplying a wetness into that white would turn
+	// an honest gap into a number. A ground surface whose albedo never bound
+	// therefore gets the shine and not the darkening, WHICH IS THE FAILURE
+	// THE THESIS ABOVE NAMES, so it is printed rather than hidden. All four
+	// ground surfaces bound their albedo on run ce99814, so this is a guard
+	// against a future gap and not a description of today.
+	inline WetBind WetBindFor(const std::string& Surface, bool bTextured,
+	                          double Wetness)
+	{
+		WetBind Out;
+		if (!IsGroundSurface(Surface))
+		{
+			Out.Why = "not-in-AssetLibrary-WetSurfaces/walls-and-roofs-do-not-pool-water";
+			return Out;
+		}
+		Out.bWet = true;
+		Out.Wetness = WetClamp01(Wetness);
+		if (!bTextured)
+		{
+			Out.Why = "no-albedo-bound-so-the-grade-is-white-and-a-wet-multiply-on-white-would-be-a-guess";
+			return Out;
+		}
+		Out.bAlbedo = true;
+		Out.AlbedoScale = WetAlbedoScale(Out.Wetness);
+		Out.Why = "AssetLibrary-SetWetness-shape/both-halves";
+		return Out;
+	}
+
+	// THE GRADE WITH THE WETNESS IN IT, AND THE CHAIN'S LAW IS UNCHANGED:
+	// grade terms compose IN GAMMA and the product is converted ONCE.
+	//
+	// WHY GAMMA IS NOT A FREE CHOICE HERE EITHER. AssetLibrary.SetWetness
+	// writes `mat.color = baseCol * albedo` where baseCol is a gamma Color
+	// and Unity converts the product on upload, so the wetness multiply
+	// happens in the same space GroundGrade and the walk-back happen in.
+	//
+	// AND JAFAR'S WALK-BACK IS NOT RE-APPLIED AND DOES NOT MOVE. It is
+	// applied inside AlbedoGradeFor, at the one site it has always been
+	// applied at, to exactly the legacy pair it was measured against; the
+	// wetness multiplies the result. THE ORDER MATTERS AND IS NOT A
+	// PREFERENCE: the walk-back is affine (1 - s(1 - G)) rather than a
+	// multiply, so folding wetness in before it would put his 0.85 on a
+	// darkening he has never seen in a frame. His own expiry note at
+	// JafarGradeStrength says the value gets RE-READ when wetness lands.
+	// This change does not re-read it and does not move it; it leaves the
+	// number and the date on the verdict line so he can.
+	inline Grade WetGradeFor(const std::string& Surface, bool bTextured,
+	                         double Wetness)
+	{
+		Grade Out = AlbedoGradeFor(Surface, bTextured);
+		const WetBind W = WetBindFor(Surface, bTextured, Wetness);
+		if (!W.bAlbedo) { return Out; }
+		Out.GammaR *= W.AlbedoScale;
+		Out.GammaG *= W.AlbedoScale;
+		Out.GammaB *= W.AlbedoScale;
+		Out.R = LedgerVignette::SrgbToLinear(Out.GammaR);
+		Out.G = LedgerVignette::SrgbToLinear(Out.GammaG);
+		Out.B = LedgerVignette::SrgbToLinear(Out.GammaB);
+		Out.Why = Out.bGround
+			? "textureGrade-times-groundGrade-times-jafar-walkback-times-wetAlbedoScale"
+			: "textureGrade-times-jafar-walkback-times-wetAlbedoScale";
+		return Out;
+	}
+
+
+	// ---- WHICH WETNESS THE BIND USES, AND THE HONEST ANSWER IS "ONE" -----
+	//
+	// BindSurfaces RUNS ONCE, inside BuildScene, BEFORE ANY CONDITION IS
+	// APPLIED. Measured rather than recalled: VignetteShot.cpp calls it at
+	// line 1506 and the first ApplyCondition is at 4259, inside the shot
+	// loop. So there is no condition in force at the moment a material
+	// instance is made, and the instance is the only thing that can carry a
+	// parameter.
+	//
+	// AND NOTHING KEEPS THE INSTANCES. MIDs are created per piece in
+	// BindSurfaces and assigned to components; no list is kept, so
+	// ApplyCondition has no handle on them and CANNOT re-drive a parameter
+	// per condition. Queue 186 says so in its own text and calls the list a
+	// new global that wants an owner named. THAT IS A DESIGN CALL AND IT IS
+	// NOT MADE HERE.
+	//
+	// SO THIS IS A STATIC CHOICE AND IT IS PRINTED AS ONE. The rule is the
+	// interactive path's own rule at VignetteShot.cpp:4420, which is already
+	// the project's answer to "which condition is THE street's condition":
+	// the shared file's own first shot, then overcast_day, then conditions[0].
+	// A second opinion about that would put two answers in one project.
+	//
+	// WHAT MAKES IT READABLE RATHER THAN A GUESS: the count of shots the
+	// choice is RIGHT for, over every shot offered. On the committed spec
+	// that is 35 of 43, because eight rows carry a different wetness, and
+	// those eight photograph a street at the wrong one. A reader of the
+	// verdict learns the size of the compromise without opening this file.
+	struct WetnessChoice
+	{
+		double      Value;
+		const char* Why;
+		std::string FromCondition;
+		int ShotsAtValue, ShotsExamined;
+		int CondsAtValue, CondsExamined;
+		WetnessChoice() : Value(0.0), Why("dry/nothing-examined"),
+		                  FromCondition("none"),
+		                  ShotsAtValue(0), ShotsExamined(0),
+		                  CondsAtValue(0), CondsExamined(0) {}
+	};
+
+	inline const LedgerVignette::Condition* FindConditionIn(
+		const LedgerVignette::Spec& S, const std::string& Id)
+	{
+		for (size_t I = 0; I < S.Conditions.size(); ++I)
+		{
+			if (S.Conditions[I].Id == Id) { return &S.Conditions[I]; }
+		}
+		return 0;
+	}
+
+	inline WetnessChoice WetnessForBind(const LedgerVignette::Spec& S)
+	{
+		WetnessChoice Out;
+		Out.CondsExamined = (int)S.Conditions.size();
+		Out.ShotsExamined = (int)S.Shots.size();
+		const LedgerVignette::Condition* Pick = 0;
+		if (!S.Shots.empty())
+		{
+			Pick = FindConditionIn(S, S.Shots[0].ConditionId);
+			if (Pick != 0) { Out.Why = "first-shot-condition"; }
+		}
+		if (Pick == 0)
+		{
+			Pick = FindConditionIn(S, "overcast_day");
+			if (Pick != 0) { Out.Why = "overcast_day/no-usable-first-shot"; }
+		}
+		if (Pick == 0 && !S.Conditions.empty())
+		{
+			Pick = &S.Conditions[0];
+			Out.Why = "conditions0/no-overcast_day-either";
+		}
+		if (Pick == 0)
+		{
+			// NOTHING MEASURED IS NOT ZERO WETNESS THAT SOMEBODY CHOSE. The
+			// value is the same 0.0 either way and the reason is what tells
+			// them apart, which is why the reason is on the line.
+			Out.Why = "dry/the-shared-file-named-no-condition-at-all";
+			return Out;
+		}
+		Out.Value = WetClamp01(Pick->Wetness);
+		Out.FromCondition = Pick->Id;
+		for (size_t I = 0; I < S.Conditions.size(); ++I)
+		{
+			if (std::fabs(WetClamp01(S.Conditions[I].Wetness) - Out.Value) < 1e-9)
+			{
+				++Out.CondsAtValue;
+			}
+		}
+		for (size_t I = 0; I < S.Shots.size(); ++I)
+		{
+			const LedgerVignette::Condition* C =
+				FindConditionIn(S, S.Shots[I].ConditionId);
+			if (C != 0
+			    && std::fabs(WetClamp01(C->Wetness) - Out.Value) < 1e-9)
+			{
+				++Out.ShotsAtValue;
+			}
+		}
+		return Out;
+	}
+
 	// THE GRADE AS A TEXEL, so the pack lines and the procedural lines carry
 	// tintTexel in THE SAME UNITS. A procedural surface's tintTexel is the
 	// albedo byte its one flat texel ends up at; a pack surface has 2048x2048
@@ -1095,6 +1466,15 @@ namespace LedgerSurface
 		std::string CompGot = "not-asked";
 		double SetU = 0.0, GotU = 0.0;
 		double SetV = 0.0, GotV = 0.0;
+		// THE WETNESS SCALAR, ASKED STRAIGHT BACK. A parameter the material
+		// does not carry SETS NOTHING, RETURNS NOTHING AND LOGS NOTHING, so
+		// the only thing that can tell a live parameter from a dead write is
+		// asking the instance what it now holds. bWetAsked false prints the
+		// words: an instance nothing was set on is not an instance that
+		// answered wrongly.
+		bool   bWetAsked = false;
+		bool   bWetSame = false;
+		double SetWet = 0.0, GotWet = 0.0;
 	};
 
 	// ONE TOLERANCE, NAMED, BECAUSE THE ENGINE STORES A FLOAT AND THE FILE
@@ -1150,6 +1530,15 @@ namespace LedgerSurface
 		// be read as "the grade was set to this".
 		Grade       Graded;
 		bool        bGradeSet = false;
+		// AND WHAT THE WETNESS HALF DID, recorded at the bind site rather
+		// than recomputed by the printer, for the reason Graded is: the two
+		// would be the same number today and would stop being the same
+		// number the first time a bind is skipped. bWetSet false prints the
+		// words, exactly as bGradeSet false does, because "no wetness was
+		// set" and "the wetness was set to zero" are different findings with
+		// different next actions and one of them is a dead write.
+		WetBind     Wet;
+		bool        bWetSet = false;
 		double      TileU = 0.0;          // the last piece's tiling, as a sample
 		double      TileV = 0.0;
 		// WHAT THE FIRST INSTANCE OF THIS SURFACE ANSWERED WHEN ASKED. Kept
@@ -1177,7 +1566,8 @@ namespace LedgerSurface
 		{
 			return " midTexReadback=not-asked midTilingReadback=not-asked"
 			       " midTexResource=not-asked midCompMaterial=not-asked"
-			       " midTilingSetGot=not-asked";
+			       " midTilingSetGot=not-asked midWetReadback=not-asked"
+			       " midWetSetGot=not-asked";
 		}
 		const std::string TexWord = R.bTexSame
 			? std::string("same-pointer")
@@ -1192,7 +1582,25 @@ namespace LedgerSurface
 			R.bScalarSame ? "same-value" : "DIFFERENT",
 			R.bResourceValid ? "valid" : "NULL",
 			R.SetU, R.GotU, R.SetV, R.GotV);
-		return " midTexReadback=" + TexWord + Buf + " midCompMaterial=" + CompWord;
+		// THE WETNESS SCALAR'S OWN READBACK, AND IT IS THE ONE THAT ANSWERS
+		// "IS THIS A DEAD WRITE". A material with no such parameter accepts
+		// the set silently and returns the parameter's absence as zero, so a
+		// value that went in as 0.6000 and comes back 0.0000 is the failure
+		// queue 186 predicted, named, on the line, with both numbers.
+		char WBuf[140];
+		if (!R.bWetAsked)
+		{
+			std::snprintf(WBuf, sizeof(WBuf),
+				" midWetReadback=not-asked midWetSetGot=not-asked");
+		}
+		else
+		{
+			std::snprintf(WBuf, sizeof(WBuf),
+				" midWetReadback=%s midWetSetGot=%.4f..%.4f",
+				R.bWetSame ? "same-value" : "DIFFERENT", R.SetWet, R.GotWet);
+		}
+		return " midTexReadback=" + TexWord + Buf + " midCompMaterial=" + CompWord
+		     + WBuf;
 	}
 
 	// THE RUN'S READBACK TOTALS, COUNTED OVER THE SURFACES A PARAMETER WAS
@@ -1209,8 +1617,19 @@ namespace LedgerSurface
 	inline std::string ReadbackDoneSegment(const std::vector<Bound>& All)
 	{
 		int Asked = 0, Tex = 0, Scalar = 0, Res = 0, Comp = 0;
+		// THE WETNESS READBACK HAS ITS OWN DENOMINATOR AND NOT THIS ONE.
+		// A surface that is not in WetSurfaces is still asked, so folding it
+		// into Asked would be right; but a run in which the scalar was never
+		// asked at all must not read as a run in which it came back wrong,
+		// so the count of ASKINGS is carried separately.
+		int WetAsked = 0, WetSame = 0;
 		for (size_t I = 0; I < All.size(); ++I)
 		{
+			if (All[I].Read.bWetAsked)
+			{
+				++WetAsked;
+				if (All[I].Read.bWetSame) { ++WetSame; }
+			}
 			if (!All[I].Read.bAsked) { continue; }
 			++Asked;
 			if (All[I].Read.bTexSame)        { ++Tex; }
@@ -1218,6 +1637,12 @@ namespace LedgerSurface
 			if (All[I].Read.bResourceValid)  { ++Res; }
 			if (All[I].Read.bCompIsMid)      { ++Comp; }
 		}
+		const std::string WetTotal = WetAsked == 0
+			? std::string(" midWetReadbackAll=nothing-measured/no-surface-was-"
+			              "asked-for-the-wetness-scalar")
+			: (" midWetReadbackAll=" + std::to_string(WetSame) + "/"
+			   + std::to_string(WetAsked)
+			   + "/surfaces-whose-wetness-came-back-as-it-went-in-over-surfaces-asked");
 		char Buf[520];
 		if (Asked == 0)
 		{
@@ -1227,7 +1652,7 @@ namespace LedgerSurface
 				" compMaterialIsMid=nothing-measured"
 				" midReadbackNote=no-surface-reached-an-instance/nothing-was-set-so-nothing-was-read-back",
 				(int)All.size());
-			return std::string(Buf);
+			return std::string(Buf) + WetTotal;
 		}
 		std::snprintf(Buf, sizeof(Buf),
 			" midReadbackAsked=%d/%d midParamReadback=%d/%d midScalarReadback=%d/%d"
@@ -1236,6 +1661,126 @@ namespace LedgerSurface
 			" midReadbackPairRule=both-full-is-candidate-C/scalar-full-and-texture-short-is-B/both-short-is-A",
 			Asked, (int)All.size(), Tex, Asked, Scalar, Asked,
 			Res, Asked, Comp, Asked);
+		return std::string(Buf) + WetTotal;
+	}
+
+	// THE WHOLE-RUN WETNESS SEGMENT, FOR THE MATERIALS DONE LINE.
+	//
+	// A SPEC WHOSE WETNESS IS ZERO PRINTS THAT IT WAS ZERO. "0.0000" and "no
+	// wetness was applied" are different findings and a blank would merge
+	// them, so the value is always printed and the reason always beside it.
+	// EVERY ZERO SHIPS ITS DENOMINATOR: how many surfaces were examined, how
+	// many the scalar was set on, and how many shots the one value is right
+	// for.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF:
+	//   wetnessValue        the ONE value handed to every instance this run,
+	//                       chosen once at bind time. Not a peak, not a
+	//                       median: there is one.
+	//   wetnessSurfacesSet  surfaces whose first instance had the scalar set,
+	//                       over surfaces the shared file asked for.
+	//   wetnessSurfacesWet  of those, how many are in WetSurfaces and so took
+	//                       a non-zero value.
+	//   wetnessShotsAtValue shots whose condition carries THIS wetness, over
+	//                       shots offered. The gap is the size of the
+	//                       compromise a static bind makes.
+	inline std::string WetnessDoneSegment(const std::vector<Bound>& All,
+	                                      const WetnessChoice& Choice)
+	{
+		int Set = 0, Wet = 0, Albedo = 0;
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			if (!All[I].bWetSet) { continue; }
+			++Set;
+			if (All[I].Wet.bWet)    { ++Wet; }
+			if (All[I].Wet.bAlbedo) { ++Albedo; }
+		}
+		char Buf[700];
+		std::snprintf(Buf, sizeof(Buf),
+			" wetnessValue=%.4f wetnessFrom=%s/%s"
+			" wetnessSurfacesSet=%d/%d wetnessSurfacesWet=%d/%d"
+			" wetnessSurfacesDarkened=%d/%d"
+			" wetnessShotsAtValue=%d/%d wetnessCondsAtValue=%d/%d"
+			" wetnessParam=%s wetnessDryIs=%.4f"
+			" wetnessModel=static-at-bind-time/one-value-for-every-shot/"
+			"no-MID-list-is-kept-so-ApplyCondition-cannot-redrive-it"
+			" wetnessStat=one-value-per-run-not-a-peak-or-a-median/"
+			"surfacesSet-over-surfaces-the-file-asked-for/"
+			"shotsAtValue-over-shots-offered-and-the-gap-is-the-compromise",
+			Choice.Value,
+			LedgerVignette::NoSpaces(Choice.FromCondition).c_str(), Choice.Why,
+			Set, (int)All.size(), Wet, Set, Albedo, Set,
+			Choice.ShotsAtValue, Choice.ShotsExamined,
+			Choice.CondsAtValue, Choice.CondsExamined,
+			WetnessParam(), WetnessDry());
+		std::string Out(Buf);
+		if (Set == 0)
+		{
+			Out += " wetnessNote=no-surface-reached-an-instance/nothing-was-set-"
+			       "so-no-frame-can-be-read-against-this-value";
+		}
+		else if (Choice.Value <= 0.0)
+		{
+			// THE ZERO THAT IS A READING, NAMED. A run whose chosen condition
+			// is dry renders today's street exactly, and that is a PASS, not a
+			// failure to apply anything: the words are here so a reader never
+			// has to tell the two apart by the absence of a key.
+			Out += " wetnessNote=the-chosen-condition-is-DRY-at-0.0000/every-"
+			       "instance-was-set-and-set-to-zero/this-frame-is-todays-frame";
+		}
+		return Out;
+	}
+
+	// THE WETNESS HALF OF ONE SURFACE'S LINE, APPENDED RATHER THAN FORMATTED
+	// INTO SurfaceLine's CAPPED BUFFER. That buffer was measured at 426 of
+	// 560 characters and a snprintf that overruns TRUNCATES SILENTLY, which
+	// reads as a short line rather than as a cut one. The tint block already
+	// carries the reason; this follows texRootTried's habit instead.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF, per surface and never per run:
+	//   wetSet         the value handed to this surface's Wetness parameter.
+	//   wetApplied     which halves reached it: both, roughness only, or
+	//                  neither, with the reason in the value.
+	//   wetAlbedoScale the gamma multiplier folded into AlbedoGrade. 1.0000
+	//                  means the colour did not move.
+	//   wetRoughAt     THE DIRECTION, READABLE FROM THE NUMBERS ALONE. The
+	//                  dry and wet roughness of ONE NAMED DATUM: this
+	//                  surface's dry smoothness in AssetLibrary.SurfaceSpec,
+	//                  flipped to roughness. IT IS NOT THE PACK TEXEL. The
+	//                  material's roughness is a 2048x2048 file lerped per
+	//                  texel and no single byte of it is known in this
+	//                  process, so the datum is named in the value and a
+	//                  reader can never take one for the other.
+	inline std::string WetFields(const Bound& B)
+	{
+		if (!B.bWetSet)
+		{
+			return " wetSet=not-set wetApplied=not-set wetAlbedoScale=not-set"
+			       " wetRoughAt=not-set";
+		}
+		const double DrySmooth = GroundDrySmoothness(B.Surface);
+		char Buf[420];
+		const char* Applied = B.Wet.bAlbedo ? "roughness-and-albedo"
+		                    : (B.Wet.bWet ? "roughness-only" : "none");
+		if (DrySmooth < 0.0)
+		{
+			std::snprintf(Buf, sizeof(Buf),
+				" wetSet=%.4f wetApplied=%s/%s wetAlbedoScale=%.4f"
+				" wetRoughAt=no-datum/%s-is-not-in-AssetLibrary-WetSurfaces-so-"
+				"no-dry-smoothness-is-quoted-for-it",
+				B.Wet.Wetness, Applied, B.Wet.Why, B.Wet.AlbedoScale,
+				LedgerVignette::NoSpaces(B.Surface).c_str());
+			return std::string(Buf);
+		}
+		const double DryRough = RoughnessFromSmoothness(DrySmooth);
+		std::snprintf(Buf, sizeof(Buf),
+			" wetSet=%.4f wetApplied=%s/%s wetAlbedoScale=%.4f"
+			" wetRoughAt=dry.%.4f..wet.%.4f/datum.unity-surfacespec-smoothness."
+			"%.2f/NOT-the-pack-roughness-texel"
+			" wetRoughFloor=%.4f",
+			B.Wet.Wetness, Applied, B.Wet.Why, B.Wet.AlbedoScale,
+			DryRough, WetRoughness(DryRough, B.Wet.Wetness), DrySmooth,
+			WetRoughnessFloor());
 		return std::string(Buf);
 	}
 
@@ -1423,6 +1968,8 @@ namespace LedgerSurface
 			}
 			Out += Buf;
 		}
+		// THE WETNESS, ON THE LINE THAT NAMES THE SURFACE IT WAS SET ON.
+		Out += WetFields(B);
 		char Tail[200];
 		std::snprintf(Tail, sizeof(Tail),
 			" tileUVsample=%.2fx%.2f surfaceReason=%s",

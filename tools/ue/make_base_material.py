@@ -108,8 +108,9 @@ until the editor accepts one, and the pair that answered is printed as
 materialUvHeadVia. The sweep contains the exact pair runs 19 and 20 used, so
 it cannot wire less than they did; it counts ONE connection however many
 names it tries, so the denominator counts connections and not pin names
-(it was 14 through run 24 and is 16 since queue 299 put the AlbedoGrade
-multiply in front of Base Color); and the graph is read back
+(it was 14 through run 24, 16 when queue 299 put the AlbedoGrade multiply
+in front of Base Color, and 19 since queue 186 put a three-node wetness lerp
+in front of Roughness); and the graph is read back
 afterwards, because the editor's boolean is not the only witness worth
 having.
 
@@ -142,6 +143,7 @@ count. The absence of a raised exception is not evidence and never was.
 """
 
 import os
+import re
 import sys
 
 # THE CONTRACT. Read by --selftest out of the tested header, never retyped
@@ -164,6 +166,32 @@ SCALAR_PARAMS = ["TilingU", "TilingV"]
 # decal cards set nothing and must be untouched. Asserted in --selftest.
 VECTOR_PARAMS = ["AlbedoGrade"]
 VECTOR_PARAM_DEFAULT = (1.0, 1.0, 1.0, 1.0)
+
+# THE WETNESS SCALAR, ADDED BY QUEUE 186, AND IT IS NOT IN SCALAR_PARAMS ON
+# PURPOSE. Those two are spelled as bare literals at their set sites, so a
+# grep for "TilingU" over the tree IS a grep for the set site. This one is
+# spelled ONCE, in SurfaceBind.h::WetnessParam, exactly as AlbedoGrade is, so
+# a grep for the literal would be satisfied by the header's own declaration
+# and would print green over a parameter nothing ever sets. The selftest asks
+# a different question for it: see the wetness block there.
+#
+# IT DEFAULTS TO DRY AND DRY IS ZERO. The roughness pin is
+# Lerp(RoughnessMap.R, WET_ROUGHNESS_FLOOR, Wetness), and a lerp at alpha 0
+# is its A pin untouched, bit for bit. So a material generated and never
+# driven renders exactly what it renders today: the control quads and the
+# decal cards set nothing and must be unchanged by this existing. That is the
+# accepting case and it is the half that ships unrun, so --selftest asserts
+# the NUMBER rather than the presence.
+WETNESS_PARAM = "Wetness"
+WETNESS_PARAM_DEFAULT = 0.0
+
+# THE ROUGHNESS A FULLY WET SURFACE APPROACHES, and this file does not get to
+# have an opinion about it. It is 1 - 0.92 where 0.92 is
+# LightModel.Smoothness's ceiling, the arithmetic lives in SurfaceBind.h where
+# g++ runs it, and --selftest READS THE CEILING OUT OF THAT HEADER and refuses
+# a disagreement. A constant typed twice is a constant that drifts, and this
+# one would drift into a road that gets rougher as it gets wetter.
+WET_ROUGHNESS_FLOOR = 0.08
 
 # THE ONE PAIR OF PIN NAMES THIS SCRIPT CANNOT ESTABLISH FROM HERE.
 # Each entry is (output pin name on the TextureCoordinate, input pin name on
@@ -1053,9 +1081,10 @@ class Wiring(object):
     connection swept over nine candidate names is one connection, so the
     sweep can never move the denominator. THE DENOMINATOR IS NOT A
     CONSTANT and this docstring used to imply it was: it read 14 for runs
-    19 to 24 and reads 16 since queue 299 added the AlbedoGrade node and
-    its two wires. Nothing compares it to a literal; MADE is wired ==
-    asked. wired counts the ones the
+    19 to 24, 16 when queue 299 added the AlbedoGrade node and its two
+    wires, and 19 since queue 186 added the wetness parameter, the wet
+    floor constant and the lerp between them. Nothing compares it to a
+    literal; MADE is wired == asked. wired counts the ones the
     editor accepted. materialStatus reads MADE only when the two are equal
     AND no head stood on the last-resort property write, which is the
     3 September rule and its amendment, and neither is relaxed here.
@@ -1161,12 +1190,65 @@ def uv_head_fields(results, candidates_total):
             "%d/%d..unreadable%d" % (yes, len(results), unreadable))
 
 
+def wetness_field(param_on_material, names_answered, names_asked,
+                  default_set, floor_set):
+    """THE WETNESS SEGMENT, AND IT SEPARATES TWO FACTS A READER WOULD
+    OTHERWISE HAVE TO INFER.
+
+    EXISTS AND WAS SET ARE DIFFERENT FACTS WITH DIFFERENT NEXT ACTIONS. This
+    half answers only the first: whether the finished material CARRIES a
+    scalar parameter called Wetness. A dynamic instance asking for a
+    parameter the material does not have sets nothing, returns nothing and
+    logs nothing, which is the failure queue 186 names in its own text, so
+    "the read site ran" over a material with no slot is a green line about a
+    dead write. WHETHER ANY INSTANCE SET IT is on the materials done line, in
+    the ue-probe tree, because that is where the binder runs.
+
+    WHAT EACH NUMBER IS A STATISTIC OF:
+      materialWetnessOnMaterial  did get_scalar_parameter_names return this
+                                 name, over the names it returned at all.
+                                 not-available means the engine version has
+                                 no such call and NOTHING WAS MEASURED, which
+                                 is not the same as no.
+      materialWetnessDefault     the number the parameter is created with.
+                                 Zero is dry, and dry is what this material
+                                 renders today.
+      materialWetnessFloor       the lerp's B pin: the roughness a fully wet
+                                 surface approaches, 1 - 0.92, read out of
+                                 SurfaceBind.h by --selftest rather than
+                                 owned here.
+    """
+    if param_on_material is None:
+        on = "not-available/get_scalar_parameter_names-is-not-in-this-engine"
+        counted = "nothing-measured"
+    else:
+        on = "yes" if param_on_material else "NO"
+        counted = "%d/%d" % (names_answered, names_asked)
+    return ("materialWetnessParam=%s materialWetnessOnMaterial=%s "
+            "materialWetnessNamesRead=%s "
+            "materialWetnessDefault=%g materialWetnessDefaultIs=%s "
+            "materialWetnessFloor=%.4f "
+            "materialWetnessDefaultSet=%s materialWetnessFloorSet=%s "
+            "materialWetnessModel=roughness.Lerp(RoughnessMap.R..%.4f..Wetness)"
+            "/which-is-1-minus-Smoothness(1-minus-map..Wetness)-per-texel "
+            "materialWetnessTrap=unreal-roughness-is-the-OPPOSITE-of-unity-"
+            "smoothness/converted-once-at-SurfaceBind.h..RoughnessFromSmoothness "
+            "materialWetnessStat=names-this-material-answered-with/over-names-"
+            "asked-for/EXISTS-only-never-whether-an-instance-SET-it"
+            % (WETNESS_PARAM, on, counted, WETNESS_PARAM_DEFAULT,
+               "dry/a-lerp-at-alpha-zero-is-its-A-pin-untouched",
+               WET_ROUGHNESS_FLOOR,
+               "yes" if default_set else "REFUSED",
+               "yes" if floor_set else "REFUSED",
+               WET_ROUGHNESS_FLOOR))
+
+
 def material_line(status, params_made, params_asked, wired, asked, existed,
                   colour_from, normal_from, roughness_from,
                   defaults_bound, defaults_asked, defaults_detail,
                   compile_block, generated_block,
                   saved, notes, uv_via, uv_tried, uv_readback, uv_by_prop,
-                  compression_block=None):
+                  compression_block=None, wetness_block=None):
     """The one line the workflow copies into the build verdict.
 
     No spaces inside any value: every reader of these files splits on
@@ -1235,14 +1317,14 @@ def material_line(status, params_made, params_asked, wired, asked, existed,
             "materialRoughnessDefault=%s "
             "materialDefaultsBound=%d/%d materialDefaultsDetail=%s "
             "materialDefaultsStat=samplers-with-a-default-whose-derived-type-matches/over-texture-parameters "
-            "%s %s %s "
+            "%s %s %s %s "
             "materialSaved=%s "
             "materialVerdictIs=materialScriptReturn/not-the-editor-process-exit "
             "materialNote=%s"
             % (status, material_return(status), ASSET_PATH,
                "yes" if existed else "no",
                "/".join(TEXTURE_PARAMS), params_made, params_asked,
-               "/".join(SCALAR_PARAMS), wired, asked,
+               "/".join(SCALAR_PARAMS + [WETNESS_PARAM]), wired, asked,
                uv_via, uv_tried, uv_readback, uv_by_prop,
                str(colour_from).replace(" ", "~"),
                str(normal_from).replace(" ", "~"),
@@ -1250,6 +1332,8 @@ def material_line(status, params_made, params_asked, wired, asked, existed,
                defaults_bound, defaults_asked, defaults_detail,
                compression_block if compression_block else compression_field([]),
                compile_block, generated_block,
+               wetness_block if wetness_block
+               else wetness_field(None, 0, 0, True, True),
                "yes" if saved else "NO",
                "/".join(notes) if notes else "none"))
 
@@ -1350,6 +1434,118 @@ def selftest():
     if "AlbedoGradeFor" not in text:
         bad.append("SurfaceBind.h has no AlbedoGradeFor, so nothing tested "
                    "decides what %s is set to" % VECTOR_PARAMS[0])
+    # ---- THE WETNESS SCALAR, QUEUE 186 ----------------------------------
+    # THE ACCEPTING CASE FIRST, and for this parameter the accepting case is
+    # DRY: an instance that never sets it must render exactly what this
+    # material renders today. A lerp at alpha 0 is its A pin untouched, so
+    # the whole claim rests on this number being zero, and it is checked here
+    # in the container rather than after a 25 minute round trip.
+    checks += 1
+    if WETNESS_PARAM_DEFAULT != 0.0:
+        bad.append("the Wetness default is %r and must be 0.0, because dry is "
+                   "zero and an instance that never sets it must render "
+                   "unchanged" % (WETNESS_PARAM_DEFAULT,))
+    # AND THE FLOOR IS NOT THIS FILE'S NUMBER. It is 1 minus the ceiling in
+    # SurfaceBind.h, read out of the header, so a constant typed twice cannot
+    # drift into a road that gets rougher as it gets wetter.
+    checks += 1
+    ceil_at = re.search(r"WetSmoothnessCeiling\(\)\s*\{\s*return\s*"
+                        r"([0-9.]+)\s*;", text)
+    if not ceil_at:
+        bad.append("SurfaceBind.h has no WetSmoothnessCeiling to read the wet "
+                   "roughness floor from, so this file would be the only owner "
+                   "of a number the shader and the tests must share")
+    elif abs((1.0 - float(ceil_at.group(1))) - WET_ROUGHNESS_FLOOR) > 1e-9:
+        bad.append("the wet roughness floor here is %.4f and SurfaceBind.h's "
+                   "ceiling %s makes it %.4f: the material graph and the "
+                   "tested arithmetic would disagree"
+                   % (WET_ROUGHNESS_FLOOR, ceil_at.group(1),
+                      1.0 - float(ceil_at.group(1))))
+    # THE ARITHMETIC IS NOT HERE, exactly as it is not here for AlbedoGrade.
+    # Three functions, named separately, because the one that matters most is
+    # the CONVERSION: a port of Smoothness straight into a roughness pin is
+    # plausible in every number and backwards in the frame.
+    for want, why in ((("WetnessParam"), "nothing names the parameter"),
+                      (("WetRoughness"),
+                       "nothing tested turns a wetness into a ROUGHNESS"),
+                      (("RoughnessFromSmoothness"),
+                       "the smoothness-to-roughness conversion has no named "
+                       "site, and an unnamed one is the trap this rung exists "
+                       "for"),
+                      (("WetGradeFor"),
+                       "nothing tested folds the wetness into the albedo, so "
+                       "the road would go shiny without going dark")):
+        checks += 1
+        if want not in text:
+            bad.append("SurfaceBind.h has no %s: %s" % (want, why))
+    # AND THE SET SITE, WHICH IS NOT A GREP FOR THE LITERAL AND MUST NOT BE.
+    # The header declares the string "Wetness" at WetnessParam, so a grep over
+    # the tree for that literal is satisfied by the DECLARATION and would
+    # print green over a parameter nothing ever sets. That is the exact shape
+    # of guard this project has had to correct three times. So the question is
+    # asked of the .cpp files only, and BOTH HALVES IN THE SAME FILE: a file
+    # that names WetnessParam and a different file that happens to call
+    # SetScalarParameterValue for the tiling scalars would satisfy two
+    # separate greps and prove nothing.
+    setter_and_name = []
+    cpp_names_param = 0
+    for base, _dirs, found in os.walk(src):
+        for n in found:
+            if not n.endswith(".cpp"):
+                continue
+            one = open(os.path.join(base, n), "r", encoding="utf-8").read()
+            if "WetnessParam" in one:
+                cpp_names_param += 1
+                if "SetScalarParameterValue" in one:
+                    setter_and_name.append(n)
+    checks += 1
+    if not setter_and_name:
+        bad.append("no .cpp of the %d under ue-probe/Source both names "
+                   "WetnessParam and calls SetScalarParameterValue, so %s is "
+                   "a slot nothing fills (%d file(s) name it without setting "
+                   "anything)" % (cpp_files, WETNESS_PARAM, cpp_names_param))
+    # ---- THE SEGMENT, BOTH WAYS ROUND, AND THE THIRD STATE ---------------
+    # not-available is NOT no. An engine version with no
+    # get_scalar_parameter_names measured nothing, and a run that measured
+    # nothing must not read the same as a run that measured a missing
+    # parameter.
+    wet_yes = wetness_field(True, 3, 3, True, True)
+    wet_no = wetness_field(False, 2, 3, True, True)
+    wet_unknown = wetness_field(None, 0, 0, True, True)
+    wet_refused = wetness_field(True, 3, 3, False, False)
+    checks += 1
+    if "materialWetnessOnMaterial=yes" not in wet_yes or \
+            "materialWetnessNamesRead=3/3" not in wet_yes:
+        bad.append("the accepting wetness segment does not say yes with its "
+                   "denominator: %s" % wet_yes)
+    checks += 1
+    if "materialWetnessOnMaterial=NO" not in wet_no or \
+            "materialWetnessNamesRead=2/3" not in wet_no:
+        bad.append("a material without the parameter must read NO with the "
+                   "names it did answer with: %s" % wet_no)
+    checks += 1
+    if "materialWetnessOnMaterial=not-available" not in wet_unknown or \
+            "materialWetnessNamesRead=nothing-measured" not in wet_unknown:
+        bad.append("an engine that cannot be asked must print nothing-measured "
+                   "rather than a clean zero: %s" % wet_unknown)
+    checks += 1
+    if "materialWetnessDefaultSet=REFUSED" not in wet_refused or \
+            "materialWetnessFloorSet=REFUSED" not in wet_refused:
+        bad.append("a refused default or floor must say so on the line, "
+                   "because both are silent in the editor: %s" % wet_refused)
+    checks += 1
+    if "materialWetnessDefault=0 " not in wet_yes:
+        bad.append("the segment must carry the default as a number a reader "
+                   "can check: %s" % wet_yes)
+    checks += 1
+    dirty_wet = [t for t in wet_yes.split() if t.count("=") != 1]
+    if dirty_wet:
+        bad.append("a wetness token is not one key=value: %s" % dirty_wet)
+    checks += 1
+    if wet_yes == wet_no or wet_yes == wet_unknown or wet_no == wet_unknown:
+        bad.append("two of the three wetness states print the same string, so "
+                   "the line cannot tell them apart")
+
     # ---- the verdict rule, both ways round, ACCEPTING CASE FIRST ---------
     # A guard shipped without a run in which it passes is a ratchet, and one
     # shipped without a run in which it fires is a claim. Both are here, and
@@ -2328,10 +2524,12 @@ def selftest():
     print("    %s" % prop_line)
     print("    %s" % fail_line)
     print("make_base_material --selftest: %d check(s), %d failure(s), "
-          "params=%s scalars=%s vectors=%s/default.%s header=%s"
+          "params=%s scalars=%s vectors=%s/default.%s wetness=%s/default.%g/"
+          "floor.%.4f header=%s"
           % (checks, len(bad), "/".join(TEXTURE_PARAMS), "/".join(SCALAR_PARAMS),
              "/".join(VECTOR_PARAMS),
              ".".join("%g" % c for c in VECTOR_PARAM_DEFAULT),
+             WETNESS_PARAM, WETNESS_PARAM_DEFAULT, WET_ROUGHNESS_FLOOR,
              os.path.relpath(header, root)))
     for b in bad:
         print("  FAIL %s" % b)
@@ -3060,10 +3258,11 @@ def main():
     # COULD NOT ESTABLISH BEFORE THE RUN. See UV_PIN_CANDIDATES. One
     # connection is counted however many names it costs, so materialConnections
     # does not move because a sweep was long. It DID move at queue 299, from
-    # 14 to 16, because the graph genuinely grew a node: see the AlbedoGrade
-    # block below. A fraction short of its own denominator is still the
-    # reading; only a comparison against the literal 14 would have broken,
-    # and there is none.
+    # 14 to 16, because the graph genuinely grew a node, and again at queue
+    # 186, from 16 to 19, for the wetness lerp: see the AlbedoGrade and
+    # wetness blocks below. A fraction short of its own denominator is
+    # still the reading; only a comparison against a literal would have
+    # broken, and there is none.
     uv_head = []
 
     def connect_uv_head(src, dst, what):
@@ -3139,9 +3338,10 @@ def main():
     # comment two screens up used to state it as a constant: the base colour
     # sampler's output now goes to the multiply instead of straight to the
     # property, and two wires are added (the parameter into B, the multiply
-    # into Base Color). materialConnections therefore reads 16 where runs 19
-    # to 24 read 14. A fraction is still a fraction and MADE still needs
-    # wired == asked; only the number moved, and it moved here.
+    # into Base Color). materialConnections therefore read 16 where runs 19
+    # to 24 read 14; it reads 19 since queue 186 added the wetness lerp and
+    # its three wires, in the block that follows. A fraction is still a
+    # fraction and MADE still needs wired == asked; only the number moved.
     grade = expr(unreal.MaterialExpressionVectorParameter, -520, -460)
     try:
         grade.set_editor_property("parameter_name", VECTOR_PARAMS[0])
@@ -3169,8 +3369,61 @@ def main():
                        "may-be-black-and-would-darken-every-pack-surface-to-zero")
     grade_mul = expr(unreal.MaterialExpressionMultiply, -120, -340)
 
+    # ---- WETNESS, QUEUE 186, AND IT IS THREE NODES AND FOUR WIRES ---------
+    #
+    # WHAT IT IS. A wet road is not just shinier, it is DARKER, and this is
+    # the shinier half: Unity's AssetLibrary.SetWetness drives SMOOTHNESS and
+    # Unreal's pin is ROUGHNESS, which are opposites. The conversion is done
+    # ONCE, in SurfaceBind.h::RoughnessFromSmoothness, and what lands here is
+    # its consequence:
+    #     Roughness = Lerp(RoughnessMap.R, 1 - 0.92, Wetness)
+    # which is 1 - Smoothness(1 - RoughnessMap.R, Wetness) PER TEXEL, proven
+    # by a 441-sample sweep in ue-probe/tests/vignette-spec-test.cpp. Doing it
+    # per texel rather than on one scalar is what keeps the pack roughness
+    # file's own variation in the frame: at rain 0.6 the road is 40 per cent
+    # its own map and 60 per cent the wet floor, not a flat number.
+    #
+    # THE DARKER HALF IS NOT HERE AND THAT IS DELIBERATE. It multiplies into
+    # AlbedoGrade, the vector parameter this material already carries, so
+    # there is no second colour parameter to keep in step. SurfaceBind.h::
+    # WetGradeFor composes it.
+    #
+    # ZERO IS DRY AND ZERO IS THE DEFAULT, so this change cannot move a pixel
+    # on any instance that does not set it.
+    wet = expr(unreal.MaterialExpressionScalarParameter, -520, 460)
+    try:
+        wet.set_editor_property("parameter_name", WETNESS_PARAM)
+    except Exception:
+        w.notes.append("wetness-parameter-name-refused")
+    wet_default_set = False
+    try:
+        wet.set_editor_property("default_value", WETNESS_PARAM_DEFAULT)
+        wet_default_set = True
+    except Exception:
+        pass
+    # A WETNESS DEFAULT THAT REFUSED IS THE LOUD FAILURE, NAMED. The engine's
+    # own default for a scalar parameter is zero in every version this project
+    # has seen, so a refusal here is most likely harmless; "most likely" is
+    # not a reading, and a non-zero default would make every control quad and
+    # every decal card in the frame a polished one. The note is how that
+    # reaches the verdict line instead of the still.
+    if not wet_default_set:
+        w.notes.append("wetness-default-REFUSED/parameter-may-not-be-zero-and-"
+                       "every-instance-that-sets-nothing-would-render-wet")
+    wet_floor = expr(unreal.MaterialExpressionConstant, -520, 560)
+    wet_floor_set = False
+    try:
+        wet_floor.set_editor_property("r", WET_ROUGHNESS_FLOOR)
+        wet_floor_set = True
+    except Exception:
+        pass
+    if not wet_floor_set:
+        w.notes.append("wetness-floor-constant-REFUSED/the-lerp-B-pin-may-be-"
+                       "zero-and-a-wet-road-would-go-to-a-mirror-not-to-0.08")
+    wet_lerp = expr(unreal.MaterialExpressionLinearInterpolate, -120, 460)
+
     def sampler(name, y, sampler_type, default_tex, prop, out_pin, label,
-                via=None, via_pin="A"):
+                via=None, via_pin="A", via_what="grade"):
         s = expr(unreal.MaterialExpressionTextureSampleParameter2D, -300, y)
         s.set_editor_property("parameter_name", name)
         # THE TEXTURE BEFORE THE TYPE, AND THE TYPE ONLY WHEN IT EXISTS. A
@@ -3200,7 +3453,8 @@ def main():
         if via is None:
             landed = connect_prop(s, out_pin, prop, "%s-out" % label)
         else:
-            landed = connect(s, out_pin, via, via_pin, "%s-out-to-grade" % label)
+            landed = connect(s, out_pin, via, via_pin,
+                             "%s-out-to-%s" % (label, via_what))
         if landed:
             made.append(name)
         return s
@@ -3217,15 +3471,36 @@ def main():
              (mp.MP_NORMAL, "RGB", "normal", 0),
              (mp.MP_ROUGHNESS, "R", "roughness", 300))):
         tex, _source, _path, got, asked, _reading = resolved[I]
+        # TWO OF THE THREE SAMPLERS NOW GO THROUGH A NODE RATHER THAN STRAIGHT
+        # TO THEIR PROPERTY: base colour through the grade multiply, roughness
+        # through the wetness lerp. The hop from that node to the property is
+        # its own counted connection below, so a map that never reaches the
+        # pin still shows as a short materialConnections.
+        via_node, via_name = None, "grade"
+        if prop == mp.MP_BASE_COLOR:
+            via_node = grade_mul
+        elif prop == mp.MP_ROUGHNESS:
+            via_node, via_name = wet_lerp, "wetlerp"
         sampler(TEXTURE_PARAMS[I], y,
                 _sampler_enum(unreal, got or asked), tex, prop, out_pin, label,
-                via=grade_mul if prop == mp.MP_BASE_COLOR else None)
+                via=via_node, via_what=via_name)
 
     # The other two wires of the grade. B rather than A because the sampler
     # took A, and the pair is what makes the multiply a multiply rather than
     # a node with one input.
     connect(grade, "", grade_mul, "B", "albedograde-to-grade")
     connect_prop(grade_mul, "", mp.MP_BASE_COLOR, "grade-to-basecolor")
+
+    # The other three wires of the wetness lerp. A is the roughness sampler,
+    # taken above; B is the wet floor; Alpha is the parameter. THE PIN NAMES
+    # ARE THE ENGINE'S OWN FOR THIS NODE and are not swept the way the UV head
+    # is: LinearInterpolate draws A, B and Alpha as labelled inputs, which is
+    # the case the UV head's ComponentMask was not. If a run comes back short
+    # here, materialNote names which of the three refused and the sweep that
+    # already exists for the head is the pattern to copy.
+    connect(wet_floor, "", wet_lerp, "B", "wetfloor-to-wetlerp")
+    connect(wet, "", wet_lerp, "Alpha", "wetness-to-wetlerp")
+    connect_prop(wet_lerp, "", mp.MP_ROUGHNESS, "wetlerp-to-roughness")
 
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------
     # RUN 23 ASKED FOR A RECOMPILE, CAUGHT AN EXCEPTION THAT NEVER CAME AND
@@ -3264,10 +3539,14 @@ def main():
     # checked that the material ended up carrying it. Reported and not gated:
     # an API that is missing in some engine version must not be able to fail
     # a run whose material is correct.
+    # NOT-AVAILABLE IS NOT NO. A missing engine call and a missing parameter
+    # are different findings, so the default here is None and only a call that
+    # ANSWERED can move it.
+    name_read = {"wetness": None, "answered": 0, "asked": 0}
     for getter, wanted, what in (("get_texture_parameter_names", TEXTURE_PARAMS,
                                   "texture"),
-                                 ("get_scalar_parameter_names", SCALAR_PARAMS,
-                                  "scalar"),
+                                 ("get_scalar_parameter_names",
+                                  SCALAR_PARAMS + [WETNESS_PARAM], "scalar"),
                                  ("get_vector_parameter_names", VECTOR_PARAMS,
                                   "vector")):
         fn = getattr(mel, getter, None)
@@ -3281,6 +3560,15 @@ def main():
             report.append("# %s raised: %s" % (getter, str(e)[:160]))
             continue
         found = len([n for n in wanted if n in names])
+        # THE ONE OF THESE THAT REACHES THE VERDICT LINE. The report file is
+        # the diagnostics channel; a parameter the material does not carry is
+        # a fact a reader of the one-line verdict must not have to open a
+        # second file for, because a read site driving a parameter that does
+        # not exist sets nothing and logs nothing.
+        if what == "scalar":
+            name_read["wetness"] = WETNESS_PARAM in names
+            name_read["answered"] = len(names)
+            name_read["asked"] = len(wanted)
         report.append("# %s parameter names in the finished material: %d of %d "
                       "asked for, and the material answered %d name(s): %s"
                       % (what, found, len(wanted), len(names),
@@ -3341,7 +3629,11 @@ def main():
                                          len(made_generated)),
                          saved, w.notes,
                          uv_via, uv_tried, uv_readback, by_prop_field,
-                         compression_block))
+                         compression_block,
+                         wetness_field(name_read["wetness"],
+                                       name_read["answered"],
+                                       name_read["asked"],
+                                       wet_default_set, wet_floor_set)))
     return material_return(status)
 
 

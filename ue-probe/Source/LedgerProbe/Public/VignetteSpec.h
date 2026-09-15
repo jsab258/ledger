@@ -2558,14 +2558,27 @@ namespace LedgerVignette
 	// ruling moves the series without anybody editing this function. Seven is
 	// a reading, never a constant.
 	//
-	// WETNESS IS EXCLUDED AND THE STRING SAYS WHY. VignetteShot.cpp has no
-	// read site for `wetness` on this commit: three hits in the whole ue-probe
-	// tree, all in this header. Two conditions differing only in wetness
-	// therefore render the same street HERE, which is what makes wet_000,
-	// wet_060 and wet_100 null samples in this engine. The other engine does
-	// read it, at ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715,
-	// so the same arithmetic in Unity gives a different group and this
-	// function is named for the engine it speaks for.
+	// WETNESS IS EXCLUDED AND THE STRING SAYS WHY, AND THE WHY CHANGED ON
+	// 2026-09-15 WHILE THE EXCLUSION STAYED RIGHT. It used to be that
+	// VignetteShot.cpp had NO read site for `wetness`: three hits in the whole
+	// ue-probe tree, all in this header. Queue 186's wetness rung gave it one,
+	// at BindSurfaces, and the old sentence would now be false. THE FIELD IS
+	// STILL EXCLUDED, FOR A DIFFERENT AND NARROWER REASON: the read site is
+	// STATIC. BindSurfaces runs once, before any condition is applied, and
+	// nothing keeps the material instances it makes, so ApplyCondition has no
+	// handle to re-drive the parameter per condition. One wetness is chosen
+	// for the whole run, off the first shot's condition, and two conditions
+	// differing only in wetness therefore STILL render the same street HERE,
+	// which is what keeps wet_000, wet_060 and wet_100 null samples in this
+	// engine. The other engine does read it per condition, at
+	// ledger/Assets/Scripts/Game/StreetVignetteHost.cs line 715, so the same
+	// arithmetic in Unity gives a different group and this function is named
+	// for the engine it speaks for.
+	//
+	// THE DAY A MID LIST IS KEPT, THIS FIELD JOINS THE FINGERPRINT and the
+	// wet rows stop being null samples. That is a ruling and not a task: see
+	// SurfaceBind.h::WetnessForBind, whose verdict segment prints how many of
+	// the run's shots the one static value is right for.
 	//
 	// AND A READ SITE IS NOT THE ONLY THING MISSING, WHICH IS THE HALF THIS
 	// VALUE LEFT OUT UNTIL 2026-09-14 AND WHICH COST A BUILDER A BRIEF.
@@ -2743,10 +2756,11 @@ namespace LedgerVignette
 			" nullSeriesTiedGroups=%d/of=%d/distinct-groups-examined/groups-not-frames/"
 			"rival-groups-whose-size-equals-the-largest-excluding-the-one-kept"
 			" nullSeriesApplied=%s"
-			" nullSeriesExcludes=wetness/because-VignetteShot.cpp-has-no-read-site-for-it-"
-			"on-this-commit/AND-M_LedgerSurface-has-no-parameter-a-read-site-could-drive/"
-			"its-scalars-are-TilingU-TilingV-only-so-a-read-site-alone-would-set-nothing-"
-			"and-log-nothing/the-other-engine-applies-it-at-StreetVignetteHost.cs-line-715",
+			" nullSeriesExcludes=wetness/because-the-read-site-added-2026-09-15-is-"
+			"STATIC-at-bind-time/one-value-for-the-whole-run-off-the-first-shot-"
+			"condition/so-two-conditions-differing-only-in-wetness-still-render-the-"
+			"same-street-HERE/per-condition-needs-a-MID-list-nothing-keeps/"
+			"the-other-engine-applies-it-at-StreetVignetteHost.cs-line-715",
 			G.size() >= 2 ? "READ" : "TOO-FEW-SAMPLES",
 			(int)G.size(), Measured, Measured, (int)All.size(),
 			TiedGroups, DistinctGroups,

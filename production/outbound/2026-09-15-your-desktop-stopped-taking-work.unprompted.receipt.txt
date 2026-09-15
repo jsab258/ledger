@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-15-your-desktop-stopped-taking-work.unprompted.md
+kind: unprompted
+fileCommit: 2c28f18e01b852f1cd689c1cb50f1f3249e9fddd
+fileCommitEpoch: 1789457900
+sent: 2026-09-15T07:41:27+00:00
+sentEpoch: 1789458087
+messageId: 102
+chars: 772
+outboundLatencySec: 187
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.

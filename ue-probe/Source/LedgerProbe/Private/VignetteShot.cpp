@@ -625,6 +625,14 @@ namespace
 	// line. Its denominator is the pieces the loop EXAMINED, never the count
 	// the file asked for.
 	LedgerSurface::PaintTally GPaint;
+	// THE ONE WETNESS THIS RUN BINDS, QUEUE 186. Chosen once, in
+	// SurfaceBind.h where g++ runs the choosing, and read by the piece loop
+	// below. It is STATIC for the whole run and the verdict says so: nothing
+	// keeps the material instances, so ApplyCondition has no handle to
+	// re-drive this per condition, and making it keep one is a design call
+	// this change does not make. See WetnessForBind's block for the counts
+	// that size the compromise.
+	LedgerSurface::WetnessChoice GWetness;
 	std::string GMaterialsLine =
 		"materialsStatus=NOT-REACHED materialsNote=the-material-pass-never-ran";
 
@@ -3485,6 +3493,13 @@ namespace
 	// worth less than one that loads less and says so.
 	void BindSurfaces()
 	{
+		// THE WETNESS, DECIDED BEFORE THE FIRST INSTANCE IS MADE, because an
+		// instance is the only thing that can carry the parameter and this
+		// function is the only place instances are made. The rule, the counts
+		// and every printed string are in SurfaceBind.h where g++ runs them
+		// before this file is compiled; this supplies the spec and nothing
+		// else.
+		GWetness = LedgerSurface::WetnessForBind(GSpec);
 		GBaseMaterial = LoadObject<UMaterialInterface>(nullptr, kBaseMaterialPath);
 		GTexRoot = FindTexRoot(GTexRootFiles, GTexRootTried);
 		// THE DECALS ARE A SECOND ROOT AND A SECOND READING. They are staged by
@@ -3869,13 +3884,34 @@ namespace
 			// surface name is passed rather than a bare bool.
 			const bool bAlbedoBound =
 				Maps[Idx * LedgerSurface::MapCount() + 0] != nullptr;
+			// THE WETNESS, QUEUE 186, AND BOTH HALVES OF IT GO THROUGH ONE
+			// DECISION. WetBindFor says whether this surface is in
+			// AssetLibrary's WetSurfaces at all and whether its albedo bound,
+			// and WetGradeFor folds the albedo term into the SAME vector
+			// parameter the grade already uses: there is no second colour
+			// parameter to keep in step. The roughness half is the scalar
+			// below, and Unreal's pin is ROUGHNESS where Unity's is
+			// SMOOTHNESS, which is why the conversion lives at one named site
+			// in the header and not in this file.
+			const LedgerSurface::WetBind Wet =
+				LedgerSurface::WetBindFor(GBinds[(size_t)Idx].Surface,
+				                          bAlbedoBound, GWetness.Value);
 			const LedgerSurface::Grade Graded =
-				LedgerSurface::AlbedoGradeFor(GBinds[(size_t)Idx].Surface,
-				                              bAlbedoBound);
+				LedgerSurface::WetGradeFor(GBinds[(size_t)Idx].Surface,
+				                           bAlbedoBound, GWetness.Value);
 			Mid->SetVectorParameterValue(
 				FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 				FLinearColor((float)Graded.R, (float)Graded.G,
 				             (float)Graded.B, 1.0f));
+			// SET ON EVERY SURFACE AND NOT ONLY ON THE WET ONES. A dry
+			// surface is set to exactly 0.0, which is the material's own
+			// default and therefore changes nothing, and the verdict can then
+			// say "every instance was set" with a denominator instead of
+			// leaving a reader to work out whether a missing write was a
+			// decision or a bug.
+			Mid->SetScalarParameterValue(
+				FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
+				(float)Wet.Wetness);
 			Comp->SetMaterial(0, Mid);
 			++GMidsCreated;
 			if (Route == LedgerSurface::Paint_Tint) { ++GPaint.Tint; }
@@ -3885,6 +3921,8 @@ namespace
 			GBinds[(size_t)Idx].TileV = T.V;
 			GBinds[(size_t)Idx].Graded = Graded;
 			GBinds[(size_t)Idx].bGradeSet = true;
+			GBinds[(size_t)Idx].Wet = Wet;
+			GBinds[(size_t)Idx].bWetSet = true;
 
 			// THE READBACK, ONCE PER SURFACE, ON THE FIRST INSTANCE MADE FOR
 			// IT. The engine is asked for the parameter straight back, in the
@@ -3931,6 +3969,22 @@ namespace
 				RB.GotV = (double)Mid->K2_GetScalarParameterValue(FName(TEXT("TilingV")));
 				RB.bScalarSame = LedgerSurface::ScalarMatches(RB.SetU, RB.GotU)
 				              && LedgerSurface::ScalarMatches(RB.SetV, RB.GotV);
+				// AND THE WETNESS, ASKED STRAIGHT BACK IN THE SAME BREATH.
+				// THIS IS THE KEY THAT ANSWERS "DEAD WRITE OR NOT". A
+				// material that does not carry the parameter accepts the set
+				// silently and answers zero, so a 0.6000 that comes back
+				// 0.0000 is the exact failure queue 186 predicted, and it is
+				// a NUMBER on the line rather than an inference from a grey
+				// road. WHAT IT CANNOT SEE is what the tiling readback
+				// cannot see either: this is the game thread's copy, and a
+				// value that lands here and never reaches the render proxy
+				// still reads back same-value. The control quads are the
+				// render-side half of that question.
+				RB.bWetAsked = true;
+				RB.SetWet = Wet.Wetness;
+				RB.GotWet = (double)Mid->K2_GetScalarParameterValue(
+					FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())));
+				RB.bWetSame = LedgerSurface::ScalarMatches(RB.SetWet, RB.GotWet);
 				UMaterialInterface* CompMat = Comp->GetMaterial(0);
 				RB.bCompIsMid = (CompMat == (UMaterialInterface*)Mid);
 				if (CompMat == nullptr)
@@ -3956,7 +4010,8 @@ namespace
 			TCHAR_TO_UTF8(*GTexRoot), GTexRootFiles, GTexRootTried,
 			(int)GSpec.Pieces.size(),
 			GTexturesImported, GMidsCreated, kMetresPerTile)
-			+ LedgerSurface::PaintRouteSegment(GPaint);
+			+ LedgerSurface::PaintRouteSegment(GPaint)
+			+ LedgerSurface::WetnessDoneSegment(GBinds, GWetness);
 		GDecalsLine = LedgerSurface::DecalsDoneLine(
 			GDecalResults, std::string(TCHAR_TO_UTF8(*GDecalRoot)),
 			GDecalRootFiles, GDecalRootTried);

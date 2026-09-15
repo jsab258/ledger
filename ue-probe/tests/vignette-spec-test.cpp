@@ -812,6 +812,47 @@ int main(int argc, char** argv)
 		Check(WetRows == 3,
 		      "three wetness rows at 0.0, 0.60 and 1.0, both ends and the value the judged rows carry",
 		      std::to_string(WetRows) + " of 3");
+
+		// ---- WHICH WETNESS THE BIND CHOOSES, ON THE LIVE FILE ----------
+		// ACCEPTING CASE FIRST AND THE LIVE SPEC IS THE FIXTURE, which is
+		// this project's rule for anything that checks the project itself.
+		{
+			const LedgerSurface::WetnessChoice W =
+				LedgerSurface::WetnessForBind(S);
+			std::printf("    wetnessForBind: value=%.4f from=%s/%s shots=%d/%d "
+			            "conds=%d/%d\n", W.Value, W.FromCondition.c_str(),
+			            W.Why, W.ShotsAtValue, W.ShotsExamined,
+			            W.CondsAtValue, W.CondsExamined);
+			Check(!W.FromCondition.empty() && W.FromCondition != "none",
+			      "the choice NAMES the condition it came from, so a value on "
+			      "the verdict line can be traced to a row of the shared file",
+			      W.FromCondition);
+			Check(!S.Shots.empty()
+			      && W.FromCondition == S.Shots[0].ConditionId
+			      && std::string(W.Why) == std::string("first-shot-condition"),
+			      "on the committed file the bind takes the FIRST SHOT'S "
+			      "condition, which is the interactive path's own rule at "
+			      "VignetteShot.cpp:4420 rather than a second opinion about "
+			      "which condition is the street's",
+			      W.FromCondition + "/" + W.Why);
+			Check(W.ShotsExamined == (int)S.Shots.size()
+			      && W.CondsExamined == (int)S.Conditions.size()
+			      && W.ShotsAtValue > 0 && W.ShotsAtValue <= W.ShotsExamined,
+			      "and every count ships the denominator it was taken over: "
+			      "shots examined is the shot list and conditions examined is "
+			      "the condition list",
+			      std::to_string(W.ShotsAtValue) + "/"
+			      + std::to_string(W.ShotsExamined));
+			// THE COMPROMISE IS A NUMBER AND NOT A WORD. A static bind is
+			// wrong for every shot whose condition carries a different
+			// wetness, and the gap is what a reader needs to size it.
+			Check(W.ShotsAtValue < W.ShotsExamined,
+			      "the committed file HAS shots at another wetness, so this "
+			      "reading is not a tautology: the static bind is right for "
+			      "some and wrong for the rest, and the line says how many",
+			      std::to_string(W.ShotsExamined - W.ShotsAtValue)
+			      + " shot(s) at another wetness");
+		}
 	}
 
 	// REJECTING CASE, SYNTHESISED FROM THE LIVE FILE BY DELETING ONE KEY,
@@ -2753,6 +2794,601 @@ int main(int argc, char** argv)
 			      "the graded pack surface line is key=value throughout with no "
 			      "value carrying a space");
 		}
+
+		// ---- WETNESS, QUEUE 186, AND THE TRAP IS THE UNITS --------------
+		//
+		// THE ACCEPTING CASE FIRST, EVERYWHERE IN THIS BLOCK, and for this
+		// feature the accepting case is DRY: a material generated and never
+		// driven must render exactly what it renders today. Every guard
+		// below is asserted on the case it should PASS before the case it
+		// should refuse, and the refusing case is PLANTED rather than waited
+		// for.
+		{
+			// 1. THE PORT ITSELF, AGAINST HAND-COMPUTED VALUES FROM
+			// Core/LightModel.cs:594-604. Written out here so these checks
+			// are not the implementation restated back to itself:
+			//   Smoothness(0.18, 0.6) = 0.18 + (0.92 - 0.18) x 0.6
+			//                         = 0.18 + 0.444 = 0.624
+			//   Smoothness(0.18, 0.0) = 0.18 exactly, the dry value untouched
+			//   Smoothness(0.18, 1.0) = 0.92, the ceiling
+			//   AlbedoScale(0.6)      = 1 - 0.45 x 0.6 = 0.73
+			//   AlbedoScale(0.9)      = 1 - 0.405     = 0.595
+			//   AlbedoScale(1.0)      = 0.55, which IS the lower clamp
+			Check(std::fabs(LedgerSurface::WetSmoothness(0.18, 0.6) - 0.624) < 1e-12,
+			      "Smoothness(0.18, 0.60) is the hand-computed 0.624",
+			      std::to_string(LedgerSurface::WetSmoothness(0.18, 0.6)));
+			Check(LedgerSurface::WetSmoothness(0.18, 0.0) == 0.18,
+			      "and at rain zero it is the dry value EXACTLY, not nearly: "
+			      "this is the accepting case the whole default-is-dry chain "
+			      "rests on");
+			Check(std::fabs(LedgerSurface::WetSmoothness(0.18, 1.0)
+			                - LedgerSurface::WetSmoothnessCeiling()) < 1e-12,
+			      "and at rain one it is the 0.92 ceiling whatever the dry value");
+			Check(std::fabs(LedgerSurface::WetAlbedoScale(0.6) - 0.73) < 1e-12
+			      && std::fabs(LedgerSurface::WetAlbedoScale(0.9) - 0.595) < 1e-12,
+			      "AlbedoScale(0.60) is 0.73 and AlbedoScale(0.90) is 0.595");
+			Check(LedgerSurface::WetAlbedoScale(0.0) == 1.0,
+			      "and at rain zero it is EXACTLY 1.0, so a dry surface is not "
+			      "multiplied by something that merely rounds to one");
+
+			// 2. THE CLAMPS, BOTH WAYS ROUND, AND ONE OF THEM IS
+			// STRUCTURAL RATHER THAN ACTIVE. SAID OUT LOUD BECAUSE A GREEN
+			// CHECK OVER A CLAMP THAT CANNOT FIRE IS A CLAIM: over the whole
+			// domain rain is clamped to [0,1] FIRST, so 1 - 0.45 r never
+			// goes below 0.55 and the lower bound is touched only at r = 1,
+			// where it is reached exactly and not exceeded. The bound is
+			// kept because it is the other engine's line character for
+			// character, and the case in which it WOULD bite is planted here
+			// with the coefficient it would take.
+			Check(std::fabs(LedgerSurface::WetAlbedoScale(1.0) - 0.55) < 1e-12,
+			      "AlbedoScale reaches its lower bound exactly at rain 1.0");
+			Check(1.0 - 0.45 * 1.0 >= 0.55 - 1e-12
+			      && 1.0 - 0.60 * 1.0 < 0.55,
+			      "PLANTED: at the shipped 0.45 coefficient the lower clamp can "
+			      "never bite for any rain in [0,1], and at 0.60 it would, so the "
+			      "bound is structural today and is not decoration tomorrow");
+			Check(LedgerSurface::WetSmoothness(0.18, 2.0)
+			      == LedgerSurface::WetSmoothness(0.18, 1.0)
+			      && LedgerSurface::WetSmoothness(0.18, -1.0)
+			      == LedgerSurface::WetSmoothness(0.18, 0.0),
+			      "rain outside [0,1] is clamped before it is used, both ends, so "
+			      "a spec row with 1.5 in it cannot drive a surface past the ceiling");
+			Check(LedgerSurface::WetSmoothness(1.5, 0.0) == 1.0
+			      && LedgerSurface::WetSmoothness(-0.5, 0.0) == 0.0,
+			      "and the RESULT is clamped too, which is what stops a dry value "
+			      "outside [0,1] leaving the surface outside it");
+
+			// 3. THE TRAP. UNITY'S PARAMETER IS SMOOTHNESS AND UNREAL'S IS
+			// ROUGHNESS, AND THEY ARE OPPOSITES. A direct port of Smoothness
+			// into a roughness pin gives a road that gets ROUGHER as it gets
+			// wetter, which reads plausible in every number and is exactly
+			// backwards in the frame. The two directions are asserted
+			// SEPARATELY, so this cannot pass by both moving the same way.
+			const double DrySmooth = 0.18;               // asphalt, AssetLibrary
+			const double DryRough  = 1.0 - DrySmooth;    // 0.82
+			Check(LedgerSurface::WetSmoothness(DrySmooth, 0.6) > DrySmooth,
+			      "wetter is SMOOTHER in Unity's units, which is the number the "
+			      "port starts from");
+			Check(LedgerSurface::WetRoughness(DryRough, 0.6) < DryRough,
+			      "and wetter is LESS ROUGH in Unreal's units, which is the trap: "
+			      "the same physical change is a rise in one engine and a fall in "
+			      "the other");
+			Check(std::fabs(LedgerSurface::WetRoughness(DryRough, 0.6) - 0.376) < 1e-12,
+			      "WetRoughness(0.82, 0.60) is the hand-computed 0.376, which is "
+			      "1 - 0.624");
+			// PLANTED: THE WRONG PORT, WRITTEN OUT, AND ASSERTED TO BE A
+			// DIFFERENT NUMBER IN THE OTHER DIRECTION. Rule 5b wants a run in
+			// which the thing the guard asserts CAN happen; this is that run,
+			// and it is the mistake this whole block is named for.
+			const double WrongPort = LedgerSurface::WetSmoothness(DryRough, 0.6);
+			Check(WrongPort > DryRough
+			      && std::fabs(WrongPort - LedgerSurface::WetRoughness(DryRough, 0.6)) > 0.4,
+			      "PLANTED: feeding the dry ROUGHNESS straight to Smoothness and "
+			      "calling the answer a roughness gives 0.892 where the right "
+			      "answer is 0.376, and it moves UP with rain instead of down",
+			      std::to_string(WrongPort));
+
+			// 4. THE CONVERSION HAS ONE SITE AND THE SITE IS AN INVOLUTION.
+			Check(LedgerSurface::RoughnessFromSmoothness(0.92) ==
+			      LedgerSurface::SmoothnessFromRoughness(0.92),
+			      "the two names are the same arithmetic, which is why only one "
+			      "of them may be a second copy of it");
+			Check(std::fabs(LedgerSurface::WetRoughnessFloor() - 0.08) < 1e-12,
+			      "the roughness floor is 1 - 0.92 = 0.08, DERIVED from the "
+			      "ceiling rather than typed beside it");
+			for (int I = 0; I <= 20; ++I)
+			{
+				const double S = 0.05 * (double)I;
+				if (std::fabs(LedgerSurface::SmoothnessFromRoughness(
+				              LedgerSurface::RoughnessFromSmoothness(S)) - S) > 1e-12)
+				{
+					Check(false, "the smoothness/roughness flip round-trips over "
+					             "the whole 0..1 range", std::to_string(S));
+					break;
+				}
+			}
+			Check(true, "the smoothness/roughness flip round-trips at all 21 "
+			            "sampled points of 0..1, examined=21");
+
+			// 5. THE LERP IDENTITY, WHICH IS WHAT LETS THE MATERIAL GRAPH BE
+			// ONE NODE. Lerp(RoughnessMap.R, 0.08, Wetness) per texel IS
+			// WetRoughness per texel, so the shader and this header cannot
+			// mean two different things. SWEPT rather than spot-checked,
+			// because the identity is the load-bearing claim.
+			int LerpSamples = 0, LerpBad = 0;
+			double LerpWorst = 0.0;
+			for (int RI = 0; RI <= 20; ++RI)
+			{
+				for (int WI = 0; WI <= 20; ++WI)
+				{
+					const double R = 0.05 * (double)RI;
+					const double W = 0.05 * (double)WI;
+					const double Mine = LedgerSurface::WetRoughness(R, W);
+					const double Lerp = R * (1.0 - W)
+					                  + LedgerSurface::WetRoughnessFloor() * W;
+					const double D = std::fabs(Mine - Lerp);
+					++LerpSamples;
+					if (D > LerpWorst) { LerpWorst = D; }
+					if (D > 1e-12) { ++LerpBad; }
+				}
+			}
+			std::printf("    wetness lerp identity: %d sample(s) examined, %d "
+			            "disagreement(s), worst |diff| %.3e\n",
+			            LerpSamples, LerpBad, LerpWorst);
+			Check(LerpSamples == 441 && LerpBad == 0,
+			      "WetRoughness IS Lerp(dryRoughness, 0.08, wetness) over a 21x21 "
+			      "sweep, 441 examined, which is the arithmetic the material "
+			      "graph performs per texel",
+			      std::to_string(LerpBad) + "/" + std::to_string(LerpSamples));
+			// AND THE SWEEP CAN FAIL. A floor of 0.10 instead of 0.08 is a
+			// plausible typo and it breaks the identity at every wetness
+			// above zero, so the denominator above is not counting a
+			// tautology.
+			int PlantedBad = 0;
+			for (int RI = 0; RI <= 20; ++RI)
+			{
+				for (int WI = 1; WI <= 20; ++WI)
+				{
+					const double R = 0.05 * (double)RI;
+					const double W = 0.05 * (double)WI;
+					if (std::fabs(LedgerSurface::WetRoughness(R, W)
+					              - (R * (1.0 - W) + 0.10 * W)) > 1e-12)
+					{
+						++PlantedBad;
+					}
+				}
+			}
+			Check(PlantedBad == 420,
+			      "PLANTED: a floor of 0.10 disagrees at all 420 of the 420 "
+			      "wet samples, so the identity check above is a measurement "
+			      "and not a tautology",
+			      std::to_string(PlantedBad));
+
+			// 6. MONOTONE IN RAIN, WHICH IS THE ONLY PROPERTY A FRAME CAN
+			// BE JUDGED AGAINST WITHOUT A REFERENCE. Strictly down for
+			// roughness, strictly up for smoothness, over the same sweep.
+			int RoughDown = 0, SmoothUp = 0, Steps = 0;
+			for (int I = 1; I <= 20; ++I)
+			{
+				const double Lo = 0.05 * (double)(I - 1);
+				const double Hi = 0.05 * (double)I;
+				++Steps;
+				if (LedgerSurface::WetRoughness(DryRough, Hi)
+				    < LedgerSurface::WetRoughness(DryRough, Lo)) { ++RoughDown; }
+				if (LedgerSurface::WetSmoothness(DrySmooth, Hi)
+				    > LedgerSurface::WetSmoothness(DrySmooth, Lo)) { ++SmoothUp; }
+			}
+			Check(Steps == 20 && RoughDown == 20 && SmoothUp == 20,
+			      "roughness falls at every one of 20 steps and smoothness rises "
+			      "at every one, over 20 examined, so the direction is a reading "
+			      "and not a spot check",
+			      std::to_string(RoughDown) + "/" + std::to_string(SmoothUp)
+			      + " of " + std::to_string(Steps));
+
+			// 7. THE DRY-SMOOTHNESS DATUM TABLE, WHICH IS A SECOND COPY OF
+			// AssetLibrary.SurfaceSpec.For AND IS GUARDED AS ONE. The four
+			// are asserted ONE AT A TIME for the reason IsGroundSurface's
+			// four are: a table right about kerb and wrong about concrete
+			// passes any single-surface check and misquotes 150 of the
+			// street's 610 pieces.
+			Check(std::fabs(LedgerSurface::GroundDrySmoothness("asphalt") - 0.18) < 1e-12,
+			      "asphalt's dry smoothness is AssetLibrary's 0.18");
+			Check(std::fabs(LedgerSurface::GroundDrySmoothness("sidewalk") - 0.10) < 1e-12,
+			      "sidewalk's is 0.10");
+			Check(std::fabs(LedgerSurface::GroundDrySmoothness("kerb") - 0.12) < 1e-12,
+			      "kerb's is 0.12");
+			Check(std::fabs(LedgerSurface::GroundDrySmoothness("concrete") - 0.10) < 1e-12,
+			      "concrete's is 0.10");
+			Check(LedgerSurface::GroundDrySmoothness("brick_red") < 0.0
+			      && LedgerSurface::GroundDrySmoothness("") < 0.0,
+			      "a surface with no row answers -1 and not 0.0, because no datum "
+			      "and a datum of zero are different facts");
+			Check(LedgerSurface::GroundDryTableAgreesWithWetSurfaces(),
+			      "every surface in the datum table is in AssetLibrary.WetSurfaces");
+			{
+				// AND THE OTHER DIRECTION, which the function above cannot
+				// see: a member of WetSurfaces with no row would get the
+				// shine with no datum to quote it against.
+				const char* Wet[4] = {"asphalt", "sidewalk", "kerb", "concrete"};
+				int Rows = 0;
+				for (int I = 0; I < 4; ++I)
+				{
+					if (LedgerSurface::GroundDrySmoothness(Wet[I]) >= 0.0) { ++Rows; }
+				}
+				Check(Rows == 4 && LedgerSurface::GroundDryCount() == 4,
+				      "and all four members of WetSurfaces have a row, 4 examined",
+				      std::to_string(Rows));
+			}
+
+			// 8. WHO GETS WET. AssetLibrary's own list, and its own reason:
+			// "Ground the rain lands on. Walls and roofs are deliberately
+			// absent - a vertical brick face does not pool water."
+			{
+				const LedgerSurface::WetBind Wall =
+					LedgerSurface::WetBindFor("brick_red", true, 1.0);
+				Check(!Wall.bWet && !Wall.bAlbedo && Wall.Wetness == 0.0
+				      && Wall.AlbedoScale == 1.0,
+				      "a wall takes no wetness at all even at rain 1.0, and its "
+				      "albedo scale is EXACTLY 1.0 so nothing multiplies it");
+				const LedgerSurface::WetBind Road =
+					LedgerSurface::WetBindFor("kerb", true, 0.6);
+				Check(Road.bWet && Road.bAlbedo
+				      && std::fabs(Road.Wetness - 0.6) < 1e-12
+				      && std::fabs(Road.AlbedoScale - 0.73) < 1e-12,
+				      "a textured ground surface takes both halves: the scalar at "
+				      "0.60 and the albedo multiplier at 0.73");
+				const LedgerSurface::WetBind Bare =
+					LedgerSurface::WetBindFor("kerb", false, 0.6);
+				Check(Bare.bWet && !Bare.bAlbedo && Bare.AlbedoScale == 1.0,
+				      "a ground surface with NO albedo bound takes the shine and "
+				      "not the darkening, which is the polished-plastic failure "
+				      "the thesis names, and the struct says so rather than "
+				      "hiding it");
+				Check(std::string(Bare.Why) != std::string(Road.Why)
+				      && std::string(Wall.Why) != std::string(Road.Why),
+				      "and all three reasons differ, so bTextured and the ground "
+				      "test are live arguments and not decoration");
+				const LedgerSurface::WetBind Over =
+					LedgerSurface::WetBindFor("asphalt", true, 2.0);
+				Check(std::fabs(Over.Wetness - 1.0) < 1e-12,
+				      "a spec row asking for 2.0 is clamped at the bind, so the "
+				      "parameter can never carry a value the material's lerp "
+				      "would read as an extrapolation");
+			}
+
+			// 9. THE GRADE WITH WETNESS IN IT. THE ACCEPTING CASE FIRST AND
+			// IT IS THE WHOLE SAFETY ARGUMENT: at wetness zero the grade is
+			// BIT FOR BIT the grade that ships today, so this change cannot
+			// darken anything by existing.
+			{
+				const LedgerSurface::Grade Today =
+					LedgerSurface::AlbedoGradeFor("kerb", true);
+				const LedgerSurface::Grade Dry =
+					LedgerSurface::WetGradeFor("kerb", true,
+					                           LedgerSurface::WetnessDry());
+				Check(Dry.R == Today.R && Dry.G == Today.G && Dry.B == Today.B
+				      && Dry.GammaR == Today.GammaR
+				      && Dry.GammaG == Today.GammaG
+				      && Dry.GammaB == Today.GammaB
+				      && Dry.bGround == Today.bGround,
+				      "at WetnessDry() the wet grade is the shipped grade EXACTLY, "
+				      "every one of six channels, which is what makes a material "
+				      "that is generated and never driven render today's frame");
+				Check(LedgerSurface::WetnessDry() == 0.0,
+				      "and dry is zero, which is the material parameter's default");
+
+				// AND THE WET CASE, HAND-COMPUTED so this is not the
+				// implementation restated:
+				//   kerb gamma today = 0.49595 (0.74 x 0.55, walked back 0.85)
+				//   AlbedoScale(0.6) = 0.73
+				//   0.49595 x 0.73  = 0.36204350
+				//   ((0.3620435 + 0.055) / 1.055) ^ 2.4 = 0.10780263
+				//   as a byte: LinearToSrgb back to 0.3620435, x 255 -> 92
+				const LedgerSurface::Grade Wet =
+					LedgerSurface::WetGradeFor("kerb", true, 0.6);
+				Check(std::fabs(Wet.GammaR - 0.36204350) < 1e-9
+				      && std::fabs(Wet.GammaG - 0.36886900) < 1e-9
+				      && std::fabs(Wet.GammaB - 0.38252000) < 1e-9,
+				      "the wetness multiplies into the grade IN GAMMA, which is "
+				      "where AssetLibrary.SetWetness multiplies it, giving the "
+				      "hand-computed 0.36204350");
+				Check(std::fabs(Wet.R - 0.10780263) < 1e-7,
+				      "and the conversion to linear still happens ONCE, on the "
+				      "whole gamma product including the wetness term");
+				const LedgerSurface::Texel WT = LedgerSurface::GradeTexel(Wet);
+				Check(WT.R == 92 && WT.G == 94 && WT.B == 98,
+				      "a white texel under the wet ground grade comes out 92.94.98 "
+				      "against the dry 126.129.134, which is the road going DARK "
+				      "as it goes shiny");
+				Check(WT.R < LedgerSurface::GradeTexel(Today).R,
+				      "and the direction is asserted as a comparison rather than "
+				      "left to a reader of two constants: wet is darker than dry");
+
+				// THE ORDER IS LOAD-BEARING AND THE WRONG ORDER IS A
+				// DIFFERENT NUMBER. Folding wetness in BEFORE the walk-back
+				// would put Jafar's 0.85 on a darkening he has never seen in
+				// a frame: 0.407 x 0.73 = 0.29711, walked back to
+				// 1 - 0.85 x 0.70289 = 0.4025435, which is LIGHTER than the
+				// 0.36204350 this produces.
+				Check(std::fabs(Wet.GammaR - (1.0 - 0.85 * (1.0 - 0.407 * 0.73)))
+				      > 1e-4,
+				      "PLANTED: applying the walk-back after the wetness instead "
+				      "of before would give 0.4025 where this gives 0.3620, a "
+				      "different picture and not a rounding difference");
+
+				// A WALL STAYS WHERE IT WAS AT ANY RAIN.
+				const LedgerSurface::Grade WallDry =
+					LedgerSurface::AlbedoGradeFor("brick_red", true);
+				const LedgerSurface::Grade WallWet =
+					LedgerSurface::WetGradeFor("brick_red", true, 1.0);
+				Check(WallWet.GammaR == WallDry.GammaR
+				      && WallWet.R == WallDry.R,
+				      "brick at rain 1.0 is the same colour it was dry, because "
+				      "walls are not in WetSurfaces");
+
+				// AND THE THREE WHITE BRANCHES STAY WHITE.
+				const LedgerSurface::Grade BareWet =
+					LedgerSurface::WetGradeFor("kerb", false, 1.0);
+				Check(BareWet.R == 1.0 && BareWet.G == 1.0 && BareWet.B == 1.0,
+				      "an untextured ground surface stays WHITE at rain 1.0: a "
+				      "wetness multiply on a white that means -unity would use a "
+				      "tint here- would turn an honest gap into a number");
+				const LedgerSurface::Grade ProcWet =
+					LedgerSurface::WetGradeFor("interior", true, 1.0);
+				Check(ProcWet.R == 1.0 && ProcWet.G == 1.0 && ProcWet.B == 1.0,
+				      "and a procedural surface stays white, so the grade baked "
+				      "into its texel can never be multiplied twice");
+			}
+
+			// 10. THE PARAMETER HAS ONE SPELLING, for the reason
+			// AlbedoGradeParam has one.
+			Check(std::string(LedgerSurface::WetnessParam()) == "Wetness",
+			      "the scalar parameter is spelled Wetness in the one place "
+			      "tools/ue/make_base_material.py --selftest looks for it");
+
+			// 11. THE FALLBACK LADDER, SYNTHETIC, ALL FOUR RUNGS. The live
+			// file exercises only the first, so the other three would ship
+			// unrun; they are the ones that decide what a spec with no shots
+			// or no conditions renders, and a wrong answer there is a street
+			// bound at somebody's guess.
+			{
+				LedgerVignette::Spec Sp;
+				LedgerVignette::Condition A; A.Id = "overcast_day"; A.Wetness = 0.6;
+				LedgerVignette::Condition B; B.Id = "wet_night";    B.Wetness = 0.9;
+				Sp.Conditions.push_back(B);   // deliberately NOT first
+				Sp.Conditions.push_back(A);
+				// RUNG 2: no shots, so overcast_day by name, NOT conditions[0].
+				const LedgerSurface::WetnessChoice NoShots =
+					LedgerSurface::WetnessForBind(Sp);
+				Check(std::fabs(NoShots.Value - 0.6) < 1e-12
+				      && NoShots.FromCondition == "overcast_day"
+				      && NoShots.ShotsExamined == 0 && NoShots.ShotsAtValue == 0,
+				      "with no shots the bind takes overcast_day BY NAME and not "
+				      "the first row, and the shot counts print 0 of 0 rather "
+				      "than a fraction of nothing",
+				      NoShots.FromCondition + "/" + NoShots.Why);
+				// RUNG 1 BEATS RUNG 2: a shot naming the other condition wins.
+				LedgerVignette::Shot Sh;
+				Sh.Id = "s1"; Sh.CameraId = "cam_A"; Sh.ConditionId = "wet_night";
+				Sp.Shots.push_back(Sh);
+				const LedgerSurface::WetnessChoice FromShot =
+					LedgerSurface::WetnessForBind(Sp);
+				Check(std::fabs(FromShot.Value - 0.9) < 1e-12
+				      && FromShot.FromCondition == "wet_night"
+				      && FromShot.ShotsAtValue == 1 && FromShot.ShotsExamined == 1,
+				      "and a first shot naming wet_night beats overcast_day, so "
+				      "rung 1 is live rather than shadowed by rung 2",
+				      FromShot.FromCondition + "/" + FromShot.Why);
+				// RUNG 3: a first shot naming a condition that does not exist
+				// AND no overcast_day falls to conditions[0], not to dry.
+				LedgerVignette::Spec Sp3;
+				LedgerVignette::Condition C; C.Id = "fog_only"; C.Wetness = 0.25;
+				Sp3.Conditions.push_back(C);
+				LedgerVignette::Shot Sh3;
+				Sh3.Id = "s"; Sh3.ConditionId = "a-condition-nobody-declared";
+				Sp3.Shots.push_back(Sh3);
+				const LedgerSurface::WetnessChoice Fallback =
+					LedgerSurface::WetnessForBind(Sp3);
+				Check(std::fabs(Fallback.Value - 0.25) < 1e-12
+				      && Fallback.FromCondition == "fog_only"
+				      && std::string(Fallback.Why).find("conditions0")
+				         != std::string::npos,
+				      "a shot naming a condition that does not exist falls to "
+				      "conditions[0] and SAYS SO, rather than binding dry and "
+				      "leaving a reader to think the street is dry on purpose",
+				      Fallback.FromCondition + "/" + Fallback.Why);
+				Check(Fallback.ShotsAtValue == 0 && Fallback.ShotsExamined == 1,
+				      "and the unresolvable shot counts in the denominator and "
+				      "not in the numerator, so 0 of 1 is the honest reading");
+				// RUNG 4: nothing at all. The value is the same 0.0 a dry
+				// spec would give and ONLY THE REASON TELLS THEM APART.
+				LedgerVignette::Spec Empty;
+				const LedgerSurface::WetnessChoice None =
+					LedgerSurface::WetnessForBind(Empty);
+				Check(None.Value == 0.0 && None.FromCondition == "none"
+				      && std::string(None.Why).find("named-no-condition")
+				         != std::string::npos,
+				      "a spec with no condition at all binds dry AND says the "
+				      "file named none, because nothing-measured and a chosen "
+				      "zero are different findings with the same number",
+				      None.Why);
+				LedgerVignette::Spec Dry;
+				LedgerVignette::Condition D; D.Id = "wet_000"; D.Wetness = 0.0;
+				Dry.Conditions.push_back(D);
+				const LedgerSurface::WetnessChoice Zero =
+					LedgerSurface::WetnessForBind(Dry);
+				Check(Zero.Value == None.Value
+				      && std::string(Zero.Why) != std::string(None.Why),
+				      "and the two zeroes carry the SAME value and DIFFERENT "
+				      "reasons, which is the whole point of printing a reason");
+			}
+
+			// 12. THE PER-SURFACE LINE. THE ACCEPTING CASE FIRST: a surface
+			// nothing was set on prints the words, because "no wetness was
+			// set" and "the wetness is zero" are different findings.
+			{
+				LedgerSurface::Bound NoWet;
+				NoWet.Surface = "kerb"; NoWet.Pieces = 95;
+				const std::string NW = LedgerSurface::WetFields(NoWet);
+				Check(NW.find("wetSet=not-set") != std::string::npos
+				      && NW.find("wetRoughAt=not-set") != std::string::npos,
+				      "a surface the material pass never reached prints not-set "
+				      "on every wetness field", NW);
+				LedgerSurface::Bound Wk;
+				Wk.Surface = "asphalt"; Wk.Pieces = 2; Wk.PiecesAssigned = 2;
+				Wk.bWetSet = true;
+				Wk.Wet = LedgerSurface::WetBindFor("asphalt", true, 0.6);
+				const std::string WL = LedgerSurface::WetFields(Wk);
+				std::printf("    %s\n", WL.c_str());
+				// HAND-COMPUTED: asphalt dry smoothness 0.18 -> dry roughness
+				// 0.82; at 0.60 the lerp gives 0.82 x 0.40 + 0.08 x 0.60
+				// = 0.328 + 0.048 = 0.376.
+				Check(WL.find("wetSet=0.6000") != std::string::npos
+				      && WL.find("wetRoughAt=dry.0.8200..wet.0.3760")
+				         != std::string::npos,
+				      "a wet ground surface prints the value it was set to AND "
+				      "the dry and wet roughness it produces, so the DIRECTION "
+				      "is readable from the numbers with no second file", WL);
+				Check(WL.find("datum.unity-surfacespec-smoothness.0.18")
+				      != std::string::npos
+				      && WL.find("NOT-the-pack-roughness-texel") != std::string::npos,
+				      "and the datum is NAMED in the value, because the material's "
+				      "roughness is a 2048x2048 file lerped per texel and this "
+				      "number is not a byte of it", WL);
+				Check(WL.find("wetAlbedoScale=0.7300") != std::string::npos
+				      && WL.find("wetApplied=roughness-and-albedo/AssetLibrary-"
+				                 "SetWetness-shape") != std::string::npos,
+				      "and the albedo half is on the same line with its own "
+				      "number, so a road that went shiny without going dark "
+				      "would be visible as 1.0000 here", WL);
+				// A WALL, WHICH TAKES NEITHER HALF.
+				LedgerSurface::Bound Wall2;
+				Wall2.Surface = "brick_red"; Wall2.bWetSet = true;
+				Wall2.Wet = LedgerSurface::WetBindFor("brick_red", true, 0.6);
+				const std::string BL = LedgerSurface::WetFields(Wall2);
+				Check(BL.find("wetSet=0.0000") != std::string::npos
+				      && BL.find("wetApplied=none") != std::string::npos
+				      && BL.find("wetRoughAt=no-datum") != std::string::npos,
+				      "a wall prints 0.0000 and no-datum rather than a roughness "
+				      "pair computed from a dry smoothness it does not have", BL);
+				Check(EveryTokenIsKeyValue(WL.substr(1))
+				      && EveryTokenIsKeyValue(BL.substr(1))
+				      && EveryTokenIsKeyValue(NW.substr(1)),
+				      "all three wetness shapes are key=value with no value "
+				      "carrying a space");
+			}
+
+			// 13. THE WHOLE-RUN SEGMENT. A ZERO SHIPS ITS DENOMINATOR AND A
+			// RUN THAT SET NOTHING SAYS SO.
+			{
+				std::vector<LedgerSurface::Bound> Few;
+				LedgerSurface::Bound G1; G1.Surface = "asphalt"; G1.bWetSet = true;
+				G1.Wet = LedgerSurface::WetBindFor("asphalt", true, 0.6);
+				LedgerSurface::Bound G2; G2.Surface = "brick_red"; G2.bWetSet = true;
+				G2.Wet = LedgerSurface::WetBindFor("brick_red", true, 0.6);
+				LedgerSurface::Bound G3; G3.Surface = "sidewalk";   // never bound
+				Few.push_back(G1); Few.push_back(G2); Few.push_back(G3);
+				LedgerSurface::WetnessChoice Ch;
+				Ch.Value = 0.6; Ch.Why = "first-shot-condition";
+				Ch.FromCondition = "overcast_day";
+				Ch.ShotsAtValue = 35; Ch.ShotsExamined = 43;
+				Ch.CondsAtValue = 29; Ch.CondsExamined = 33;
+				const std::string Seg2 = LedgerSurface::WetnessDoneSegment(Few, Ch);
+				std::printf("   %s\n", Seg2.c_str());
+				Check(Seg2.find("wetnessValue=0.6000") != std::string::npos
+				      && Seg2.find("wetnessFrom=overcast_day/first-shot-condition")
+				         != std::string::npos,
+				      "the done line carries the one value and the row it came "
+				      "from", Seg2);
+				Check(Seg2.find("wetnessSurfacesSet=2/3") != std::string::npos
+				      && Seg2.find("wetnessSurfacesWet=1/2") != std::string::npos
+				      && Seg2.find("wetnessSurfacesDarkened=1/2") != std::string::npos,
+				      "every count ships its denominator, and the denominators "
+				      "are DIFFERENT on purpose: set is over surfaces the file "
+				      "asked for, wet is over surfaces actually set", Seg2);
+				Check(Seg2.find("wetnessShotsAtValue=35/43") != std::string::npos,
+				      "and the size of the static-bind compromise is a number on "
+				      "the line rather than a thing a reader infers", Seg2);
+				Check(EveryTokenIsKeyValue(Seg2.substr(1)),
+				      "the wetness segment is key=value throughout", Seg2);
+				// THE ZERO CASES, BOTH OF THEM, BECAUSE THEY ARE DIFFERENT
+				// FINDINGS WITH THE SAME NUMBER.
+				std::vector<LedgerSurface::Bound> NoneSet;
+				NoneSet.push_back(G3);
+				const std::string SegNone =
+					LedgerSurface::WetnessDoneSegment(NoneSet, Ch);
+				Check(SegNone.find("wetnessSurfacesSet=0/1") != std::string::npos
+				      && SegNone.find("wetnessNote=no-surface-reached-an-instance")
+				         != std::string::npos,
+				      "a run that set nothing prints 0 over what it examined AND "
+				      "says no surface reached an instance", SegNone);
+				LedgerSurface::WetnessChoice DryCh;
+				DryCh.Value = 0.0; DryCh.Why = "first-shot-condition";
+				DryCh.FromCondition = "wet_000";
+				DryCh.ShotsAtValue = 1; DryCh.ShotsExamined = 43;
+				std::vector<LedgerSurface::Bound> DrySet;
+				LedgerSurface::Bound D1; D1.Surface = "asphalt"; D1.bWetSet = true;
+				D1.Wet = LedgerSurface::WetBindFor("asphalt", true, 0.0);
+				DrySet.push_back(D1);
+				const std::string SegDry =
+					LedgerSurface::WetnessDoneSegment(DrySet, DryCh);
+				Check(SegDry.find("wetnessValue=0.0000") != std::string::npos
+				      && SegDry.find("wetnessSurfacesSet=1/1") != std::string::npos
+				      && SegDry.find("the-chosen-condition-is-DRY-at-0.0000")
+				         != std::string::npos,
+				      "and a spec whose wetness IS zero prints that it was zero "
+				      "with the count of what was set, rather than printing "
+				      "nothing and reading like a feature that never ran", SegDry);
+				Check(SegDry.find("wetnessNote=no-surface-reached-an-instance")
+				      == std::string::npos,
+				      "and the two zero notes are not the same note, so a dry "
+				      "street cannot be read as a dead pass");
+			}
+
+			// 14. THE READBACK, WHICH IS THE KEY THAT ANSWERS -DEAD WRITE-.
+			// A material with no such parameter accepts the set and answers
+			// zero, so the pair of numbers is the whole reading.
+			{
+				LedgerSurface::Bound R1; R1.Surface = "asphalt";
+				R1.Read.bAsked = true; R1.Read.bWetAsked = true;
+				R1.Read.SetWet = 0.6; R1.Read.GotWet = 0.6;
+				R1.Read.bWetSame = true;
+				const std::string F1 = LedgerSurface::ReadbackFields(R1.Read);
+				Check(F1.find("midWetReadback=same-value") != std::string::npos
+				      && F1.find("midWetSetGot=0.6000..0.6000") != std::string::npos,
+				      "the accepting readback prints same-value AND both numbers",
+				      F1);
+				LedgerSurface::Bound R2; R2.Surface = "asphalt";
+				R2.Read.bAsked = true; R2.Read.bWetAsked = true;
+				R2.Read.SetWet = 0.6; R2.Read.GotWet = 0.0;
+				R2.Read.bWetSame = false;
+				const std::string F2 = LedgerSurface::ReadbackFields(R2.Read);
+				Check(F2.find("midWetReadback=DIFFERENT") != std::string::npos
+				      && F2.find("midWetSetGot=0.6000..0.0000") != std::string::npos,
+				      "PLANTED: a 0.6000 that comes back 0.0000 is the dead-write "
+				      "failure queue 186 predicted, and it reads as DIFFERENT "
+				      "with both numbers rather than as a grey road", F2);
+				LedgerSurface::Bound R3; R3.Surface = "asphalt";
+				const std::string F3 = LedgerSurface::ReadbackFields(R3.Read);
+				Check(F3.find("midWetReadback=not-asked") != std::string::npos,
+				      "and a surface nothing was set on prints not-asked, which "
+				      "is not the same as an engine answering wrongly", F3);
+				std::vector<LedgerSurface::Bound> RAll;
+				RAll.push_back(R1); RAll.push_back(R2); RAll.push_back(R3);
+				const std::string RSeg = LedgerSurface::ReadbackDoneSegment(RAll);
+				Check(RSeg.find("midWetReadbackAll=1/2/") != std::string::npos,
+				      "the run total counts wetness readbacks over surfaces ASKED "
+				      "and not over surfaces examined, so a surface nothing was "
+				      "set on cannot read as a failure", RSeg);
+				std::vector<LedgerSurface::Bound> RNone;
+				RNone.push_back(R3);
+				Check(LedgerSurface::ReadbackDoneSegment(RNone)
+				      .find("midWetReadbackAll=nothing-measured")
+				      != std::string::npos,
+				      "and a run that asked nothing prints nothing-measured "
+				      "rather than a clean 0/0");
+			}
+		}
 		// EveryTokenIsKeyValue AND NOT THE ONE-EQUALS FORM, and the reason is
 		// a value this project already prints: a decoder's own words are
 		// `JPEG-BGRA8/srgb=no`, so a map line legitimately carries a second
@@ -3886,14 +4522,30 @@ int main(int argc, char** argv)
 			      "grid exists for", GotLine + " over " + std::to_string((int)GotIds.size())
 			      + " ids");
 		}
-		Check(NS.find("nullSeriesExcludes=wetness/because-VignetteShot.cpp-has-no-read-"
-		              "site-for-it-on-this-commit") != std::string::npos
-		      && NS.find("AND-M_LedgerSurface-has-no-parameter-a-read-site-could-drive")
+		// THE REASON MOVED ON 2026-09-15 AND THE EXCLUSION DID NOT. Wetness
+		// now HAS a read site, at BindSurfaces, so "no read site" would be a
+		// false string; what keeps the field out of the fingerprint is that
+		// the read site is STATIC, one value for the whole run, so two
+		// conditions differing only in wetness still render the same street
+		// in this engine. Both halves of the new reason are asserted,
+		// because a value carrying only the first would read as the old one.
+		Check(NS.find("nullSeriesExcludes=wetness/because-the-read-site-added-"
+		              "2026-09-15-is-STATIC-at-bind-time") != std::string::npos
+		      && NS.find("one-value-for-the-whole-run-off-the-first-shot-condition")
+		         != std::string::npos
+		      && NS.find("per-condition-needs-a-MID-list-nothing-keeps")
 		         != std::string::npos,
-		      "the line says which field it excluded and BOTH reasons it is excluded: no "
-		      "read site AND no material parameter one could drive, because the second "
-		      "half is what sizes the work and the value carried only the first until "
-		      "2026-09-14", NS);
+		      "the line says which field it excluded and the reason it is STILL "
+		      "excluded now that a read site exists: the read site is static, one "
+		      "value for the run, and per-condition wetness needs a list of "
+		      "material instances nothing keeps", NS);
+		// AND THE OLD REASON IS GONE RATHER THAN LEFT BESIDE THE NEW ONE. A
+		// verdict that carries both a true and a false explanation of the
+		// same exclusion is worse than one that carries neither, because the
+		// reader who finds the false one first stops reading.
+		Check(NS.find("has-no-read-site-for-it-on-this-commit") == std::string::npos,
+		      "and the superseded reason, which said VignetteShot.cpp has no read "
+		      "site at all, is not on the line any more", NS);
 		// THE VALUE ABOVE IS BUILT IN A char Buf[960] AND THIS EDIT SPENT 153 OF
 		// ITS 344 FREE CHARACTERS: measured on the committed spec, the buffer
 		// portion ran 615 of 960 before and 768 of 960 after, so 191 are left. A
