@@ -1457,3 +1457,67 @@ to a lost licence seat; read the verdict before the run's colour.
 # sentence each. AND MEASURE BEFORE WRITING ANY OF THOSE SENTENCES: the eye
 # reads contrast rather than value and invents differences across time, ruled
 # a standing rule 2026-09-15 after three readings failed in one night.
+
+RUN 46, 2026-09-15: THE WETNESS TERM MEETS A RENDERER FOR THE FIRST TIME
+#
+# DISPATCHED FROM ffcc0dcf, captured BEFORE the push, watched by ancestry and
+# never by branch movement. The batch under test is 0942cf1e, queue 186's
+# wetness rung, landed under the 07:55Z ruling and NEVER RENDERED: the
+# arithmetic is proven under g++ and the generator's set-site guard was watched
+# red before the call site existed and green after, and NEITHER OF THOSE IS A
+# PIXEL. Run 45 rendered cb0c55a2, which does not contain this batch.
+#
+# THE PRECONDITION COMES BEFORE ANY WETNESS KEY, and reading them out of order
+# is how a node-graph fault gets written up as a look. materialConnections must
+# read 19/19. A SHORT ALPHA MEANS EVERY SURFACE SAT AT THE LERP NODE'S CONSTANT
+# ALPHA OF 0.5 AND IS NOT A WETNESS RESULT AT ALL; a short B means the lerp ran
+# the wrong way and wetter is rougher. Neither is a number about the road.
+#
+# THEN THE KEY THAT ANSWERS "DEAD WRITE", which queue 186 predicted as this
+# rung's likeliest failure: midWetSetGot. A 0.6000 handed in that reads 0.0000
+# back is a parameter that does not exist on the material, and it prints as
+# DIFFERENT with both numbers rather than as a plausible colour.
+#
+# THEN THE FOUR GROUND LINES, at Unity's own datum and NOT the pack texel:
+#   asphalt   dry 0.8200 -> wet 0.3760
+#   kerb      dry 0.8800 -> wet 0.4000
+#   sidewalk  dry 0.9000 -> wet 0.4080
+#   concrete  dry 0.9000 -> wet 0.4080
+# with wetnessValue 0.6000 taken from overcast_day, the first shot's condition,
+# covering 35 of 43 shots and 29 of 33 conditions. The eight exceptions are
+# night rows and the wet ladder and they are photographed at 0.6 too: that is
+# the static bind's cost, printed as a number rather than hidden.
+#
+# AND ONLY THEN band.ground.p50, BESIDE 0.2987 FROM RUN 45, beside the full
+# legacy 0.5117 and his sheet's 0.373.
+#
+# NO PREDICTION OF p50 IS CARRIED, FOR THE SECOND RUN RUNNING AND FOR A BETTER
+# REASON THAN LAST TIME. The two halves of wetness pull opposite ways: the
+# albedo term multiplies the ground DARKER by about 0.73 in gamma, and the
+# roughness term drops roughness toward 0.08 so the road reflects a brighter
+# overcast sky and comes UP. A one-point model cannot say which wins. This run
+# prints the figure; it is not told it.
+#
+# WHAT COUNTS AS A FAULT, NAMED BEFORE THE RUN EXISTS so nobody has to decide
+# after seeing it: midWetReadback DIFFERENT at 0.6000..0.0000 is the dead
+# write. wetnessSurfacesDarkened short of wetnessSurfacesWet is the polished
+# plastic failure by name, a road that got shinier without getting darker,
+# which the original author called "a bright shiny road that reads as polished
+# plastic". Both have their denominators on the line.
+#
+# TWO CONTROLS THAT MUST NOT MOVE: band.skyCentre.p50 at 0.8035 and
+# shotExposurePinRead at 0.3000/0.3000, unmoved across runs 44 and 45. Nothing
+# in the sky wears a wetness term and this batch binds no sky. IF EITHER MOVES,
+# SUSPECT THE EXPOSURE OR THE INSTRUMENT BEFORE THE ROAD.
+#
+# HIS 0.85 IS NOT TOUCHED AND ITS RE-READ IS HIS. He said the value "is
+# provisional and gets re-read when wetness lands rather than kept". This is
+# wetness landing. The walk-back stays at 0.85 with its date on every graded
+# line, and what the re-read should be is his call on a frame, not ours on a
+# number.
+#
+# THE READING ORDER IS THE 07:55Z RULING'S SECTION 9 AND NOT THIS FILE'S.
+# FRAME FIRST: open ue-vign_hook_day.png and the three wet_ stills, and MEASURE
+# BEFORE WRITING ANY SENTENCE. The eye reads contrast rather than value and
+# invents differences across time, and this seat got that wrong three times
+# today in one form or another.
