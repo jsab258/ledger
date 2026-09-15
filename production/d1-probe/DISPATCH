@@ -1385,3 +1385,75 @@ to a lost licence seat; read the verdict before the run's colour.
 # IT, one sentence each on the kerb, the road, the trim, the railings and bins
 # and the plaster. The sentence on the trim is queue 302's opening reading and
 # decides whether the ground family is split at all.
+
+# run 45 - 2026-09-15 - HIS WALK-BACK ON THE STREET, AND NO NUMBER IS PREDICTED
+# THIS TIME.
+#
+# Dispatched on e1d19817, the sha captured BEFORE the dispatch and watched by
+# ancestry, never by branch movement. Ruled 2026-09-15 05:43Z in
+# game-design/decision-2026-09-15-ruling-the-forty-are-waived-by-name-and-the-
+# walk-back-stands-as-his-number.md, whose section 11 is the reading order this
+# entry serves. Queue 299, and it is the RE-READ Jafar asked for in his own
+# words: "take it to about 0.85 of what landed and re-read".
+#
+# WHAT CHANGED. AlbedoGradeFor gains a third term, JafarWalkBack, a STRENGTH
+# MEASURED FROM WHITE applied in gamma, G' = 1 - 0.85 * (1 - G), at exactly one
+# call site and with zero references inside ProceduralAlbedoTexel. The ground
+# gamma term goes 0.4070 to 0.4960 and the wall term 0.74/0.76/0.80 to
+# 0.779/0.796/0.830. The sky is unchanged: D40 rules it becomes a photograph
+# and THIS BATCH BINDS NONE, so skyHdriBoundAs stays NOTHING.
+#
+# NO PREDICTED band.ground.p50 APPEARS IN THIS ENTRY, AND THAT IS DELIBERATE.
+# Run 44's entry carried one and it was withdrawn: the exponent behind it was
+# fitted on two GAMMA-BYTE ratios and applied to a LINEAR ratio, and applied
+# consistently the three candidate readings of his 0.85 differ by less than a
+# one-point model can resolve. A predicted number from a one-point model is
+# rule 2's own failure, so this run PRINTS the number instead of being told it.
+#
+# WHAT IS ASSERTED, all of it checkable and none of it a prediction of p50:
+#
+#   1. TWELVE OF TWELVE RESOLVED PACK LINES CARRY
+#      /jafarWalkBack.0.85..ruled.2026-09-15. The four ground lines read
+#      tintTexel=grade-on-white.126.129.134 with
+#      /linear.0.2103.0.2190.0.2369; the eight others read 199.203.212. THE
+#      COUNT IS PRINTED, NOT THE ADJECTIVE.
+#   2. THE TWO PROCEDURAL LINES DO NOT MOVE: interior stays tintTexel=31.22.14
+#      and paint_yellow stays 147.127.35. They are PARITY VALUES reproducing
+#      Unity literals, and the whole reason the walk-back is at one site is
+#      that an engine-local constant inside them would make them stop equalling
+#      what they are defined to equal while still printing a plausible colour.
+#      IF EITHER MOVED, THE SEPARATION FAILED.
+#   3. band.ground.p50 moves UP from run 44's 0.2711. Direction only. The
+#      residual to ce99814's 0.5117 and to the sheet's 0.373 is stated and NOT
+#      graded, and the sheet is wet where the street is dry, which is his own
+#      label and the reason no bound is set.
+#   4. band.ground.meanRGB rises from 62.2/63.4/67.4 WITH BLUE STILL HIGHEST,
+#      because the grade stays 0.74/0.76/0.80 in proportion. Three channels
+#      rising together would mean the parameter is being read as a scalar.
+#   5. THE CONTROL MUST NOT MOVE: band.skyCentre.p50 at 0.8035 to four places
+#      and shotExposurePinRead at 0.3000/0.3000. Nothing in the sky wears a
+#      grade and this batch binds no sky. IF EITHER MOVED, SUSPECT THE
+#      EXPOSURE OR THE INSTRUMENT BEFORE THE GRADE.
+#   6. skyHdriFoundAt stays NOT-FOUND and skyHdriBoundAs stays NOTHING. The
+#      staging step is not in this batch and the entry says so rather than
+#      letting a reader infer that D40 has been built.
+#   7. TOO DARK AS A NUMBER, reported and not bounded: shotMinLuma beside
+#      0.0659, shotClipLoAll beside 0/921600, and the darkest of the eight
+#      luma bands beside 31431 of 921600, whose direction should be back
+#      toward ce99814's 2440.
+#   8. materialStatus is reported as it reads, beside run 44's
+#      COMPILE-UNPROVEN, with no claim that it should have changed.
+#
+# THE RESIDUAL THE BUILDER NAMED AND NOBODY HAS SEEN. The ten procedural
+# pieces of 610 stay at the full legacy grade while the twelve pack surfaces
+# come up, so they render slightly darker relative to their neighbours than in
+# run 44. That is Jafar's eye to judge. Look at them beside their neighbours
+# in step (a) and write one sentence, because it is the only part of this
+# change nobody can predict.
+#
+# THE READING ORDER IS THE RULING'S SECTION 11 AND NOT THIS FILE'S. OPEN
+# ue-vign_hook_day.png BESIDE RUN 44'S AND ce99814'S BEFORE QUOTING ANY NUMBER:
+# the kerb, the road, the trim, the railings and bins, the plaster, one
+# sentence each. AND MEASURE BEFORE WRITING ANY OF THOSE SENTENCES: the eye
+# reads contrast rather than value and invents differences across time, ruled
+# a standing rule 2026-09-15 after three readings failed in one night.
