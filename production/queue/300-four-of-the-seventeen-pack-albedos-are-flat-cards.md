@@ -141,3 +141,49 @@ status: READY 2026-09-15, BEHIND QUEUE 299 and the order is deliberate. 299 is
   distance term first, because a sourcing round that cannot move the pixel is
   the shape of waste this project keeps finding.
 
+  THE DISTANCE TEST RAN AND THE FOG HYPOTHESIS IS REFUTED FOR THE BINS,
+  2026-09-15, ordered by Jafar to run BEFORE any texture sourcing. It cost no
+  dispatch: run 44 already carried a fog 0.000 cell on cam_hook
+  (vign_fog_maxop0000, status WROTE), so the control was a file on disk and
+  the entry point was cheaper than the argument, per .claude/rules/ci.md.
+
+  SAME camera, SAME grade, SAME pieces, only the fog cap differs:
+
+    piece                dist_m   fog 0.100   fog 0.000   ratio
+    dustbin0               18.3       200.0       195.1   0.976
+    dustbin0_lid           18.3       177.6       166.7   0.939
+    dustbin1               18.9       177.6       167.6   0.943
+    dustbin1_lid           18.9       169.4       156.5   0.924
+    prop_outdoor_bin_0     26.6       197.5       190.2   0.963
+    bollard (decorative)   16.1        76.8        33.9   0.441
+    bollard (decorative)   19.6        78.9        31.0   0.392
+
+  7 of the 8 bin and bollard pieces in the spec are wide enough to sample at
+  8 px or more; the eighth is not and was not sampled.
+
+  SO: TAKING THE FOG AWAY ENTIRELY DROPS A BIN BY BETWEEN 2 AND 8 PER CENT.
+  They read 156 to 195 with NO FOG AT ALL, against a ground band median of
+  69.1. The bins are not fog-lifted. They are bright on their own, and the
+  hypothesis recorded here yesterday, that aerial perspective was doing the
+  work, is WRONG. It was recorded as a hypothesis with its test named rather
+  than as a reading, and the test refuted it, which is the only reason this
+  paragraph can be written instead of a wasted sourcing round.
+
+  THE ANSWER TO JAFAR'S QUESTION IS THEREFORE: a better texture WILL move the
+  pixel, and THIS ITEM IS THE RIGHT ONE. The bins are lit metal wearing a
+  near-blank pale card (metal.jpg, lumMean 134.8, lumSD 4.6) with no dirt, no
+  dents and no rust in it, and the grade cannot supply what the file lacks.
+
+  AND THE TEST FOUND SOMETHING NOBODY ASKED FOR: THE BOLLARDS ARE FOG-LIFTED
+  AND THE BINS ARE NOT, on the same surface at the same distances. A bollard
+  falls to 0.39 and 0.44 when the fog goes, from about 77 to about 31, so fog
+  was supplying roughly 60 per cent of what it rendered at; a bin at a GREATER
+  distance falls to 0.96. Same material, same camera, opposite behaviour. The
+  reading that fits without further evidence is that the bins face the sky and
+  are lit while the bollards are shadowed or turned away, so the bin starts
+  bright and has little headroom for fog to add while the bollard starts dark
+  and is mostly fog. THAT IS A READING OF ONE FRAME AND NOT A MEASUREMENT OF
+  THE LIGHTING, and it is written as such. It matters here because it means a
+  single number for how metal renders would be wrong: the same surface is
+  doing two different things in one street.
+

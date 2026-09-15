@@ -246,3 +246,33 @@ status: READY 2026-09-15. Cause TWO of the three measured in queue 181, filed
   302's block stands. What would spend it is named there: a frame in which a
   lintel is large enough to read as a material.
 
+  JAFAR ANSWERED THE D23 QUESTION 2026-09-15 AND THE NUMBER IS HIS, with his
+  date on it, per this item's own condition and queue 302's: "If he names one
+  anyway it is recorded as his, with the date, and it goes where queue 302 puts
+  the numbers, not into a legacy C# file."
+
+  HIS WORDS: "A, darker than mine. Ground median 0.271 against the sheet's
+  0.373, after 0.512 before. The full legacy grade overshoots in this engine,
+  so take it to about 0.85 of what landed and re-read. Do not tune by eye
+  toward the sheet, because the sheet is wet and the street is dry; this value
+  is provisional and gets re-read when wetness lands rather than kept."
+
+  THREE THINGS IN THAT ARE BINDING AND EASY TO LOSE.
+  ONE, 0.85 IS PROVISIONAL AND HAS AN EXPIRY: it is re-read when wetness lands
+  (queue 186), not carried forward as a settled constant. A later session
+  finding it and treating it as derived would be reading a placeholder as a
+  result.
+  TWO, IT IS NOT TUNED TOWARD THE SHEET, and he gave the reason: the sheet is
+  WET and the street is DRY, so matching the two on a ground median would be
+  matching two different things. That forbids the obvious next move of solving
+  for the factor that lands 0.373.
+  THREE, "0.85 OF WHAT LANDED" IS AMBIGUOUS and the builder was told to resolve
+  it explicitly rather than guess: 0.85 on the gamma grade before the linear
+  conversion, 0.85 on the linear value after it, and 0.85 on the rendered
+  result are three different numbers, and only the first two are things a
+  parameter can do.
+
+  AND IT IS A SEPARATE TERM, not folded into TextureGrade or GroundGrade, so
+  that the legacy build's number and his adjustment can be told apart when
+  wetness arrives and one of them has to move.
+

@@ -240,6 +240,47 @@ would have cost a CI round trip and a wrong commit.
 
 <!-- moved verbatim from CLAUDE.md lines 595-611 on 2026-09-01, task 013 -->
 
+### The night of 2026-09-14, and TWO MECHANISMS the rule did not name
+
+Ruled a standing addition by Jafar 2026-09-15: "record the pattern from last
+night rather than leaving it in the log: three readings did not survive being
+checked, in both directions, and every one was caught by measuring rather than
+looking. The eye reads contrast, not value, and it invents differences across
+time. Measure before writing a finding, and never construct a difference from
+two crops viewed apart."
+
+THREE READINGS, IN BOTH DIRECTIONS, ALL IN ONE NIGHT ON ONE FRAME.
+
+UNDERSTATED. Opening the crops of run 44 first, as this rule requires, the kerb
+looked barely moved and the railings looked untouched. The projection said the
+kerb had gone 179.7 to 93.7 and metal 125.7 to 99.4. Both had moved by a lot.
+THE EYE READS CONTRAST AND NOT VALUE: everything around them darkened in the
+same pass, the relationships held, and a change of nearly half went invisible.
+This is the direction the rule does NOT warn about. Its warning is that looking
+overstates; here looking understated a real change by a factor of two, and only
+a number caught it.
+
+OVERSTATED. The trim sentence that queue 302's block waited on was written from
+two crops looked at several minutes apart: the sills and lintels had gone from
+pale stone trim to near-black bars. Measured, the 72 pieces project at a MEDIAN
+HEIGHT OF 5.1 PIXELS, a 3x3 patch on one is mostly the wall behind it, and the
+single lintel big enough to look at read as a dark bar in BOTH runs. It was
+never pale. THE EYE INVENTS DIFFERENCES ACROSS TIME: two crops viewed apart are
+not a comparison, they are two memories, and the difference between them is
+constructed rather than found.
+
+AND A THIRD, WHICH IS THE SAME FAULT IN ARITHMETIC. A per-channel mean column
+was corrupted by a float32 strided reduction and read 127.31/133.35/145.10
+where the truth is 124.93/136.49/147.42; it was found only because a builder's
+table disagreed and the disagreement was chased instead of averaged.
+
+WHAT TO DO INSTEAD, and it is cheap. Measure BEFORE writing a finding, not
+after. Never construct a difference from two crops viewed apart: put them in
+one image, at one scale, with the same rectangle, or do not claim a difference
+at all. And when a change should be visible and is not, suspect the eye before
+suspecting the change, because a uniform shift is the one thing vision is built
+to discard.
+
 ## 5. Look before you destroy, and make the guard know the difference
 
 - A cancelled CI run committed its empty output directory and **deleted 24

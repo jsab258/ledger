@@ -54,3 +54,25 @@ status: READY 2026-09-15. Found by nearly walking into it, which is the only
   wake at 04:00 UTC, and a ruling that dictates the Producer send something.
   Tonight they missed each other by twenty-six minutes. Nobody decided that
   ordering and nothing enforces it.
+
+  RULED BY JAFAR 2026-09-15, in his words: "Queue 304 is right and gets the
+  assertion: nothing reads fileCommit back, so a changed brief looks identical
+  to an unchanged one and a tap can be recorded against text I never saw. Only
+  one thing may write a day's brief; if a ruling dictates a send, the daily
+  wake defers rather than overwriting."
+
+  SO THE ITEM GAINS A SECOND HALF, and it is the ordering rule rather than the
+  assertion. The assertion says a changed brief is NOTICED. The ordering rule
+  says it should not happen: ONE WRITER PER DAY'S BRIEF, and when a ruling
+  dictates a send the daily wake DEFERS rather than overwriting. That is the
+  near miss of this morning turned into a rule: the wake fired at 04:06:55Z on
+  a brief already sent at 03:34:08Z, and twenty-six minutes was the whole
+  margin.
+  THE DEFERRAL NEEDS SOMETHING TO READ. A wake that is to defer must be able to
+  tell that today's brief already went, and the receipt is what says so:
+  production/outbound/brief-<day>.receipt.txt exists with a messageId. That is
+  the same file the assertion reads for fileCommit, so both halves of this item
+  read one artifact and neither needs a new one.
+  STATUS: READY, and both halves land together. The assertion without the
+  ordering rule would report a collision it could have prevented.
+
