@@ -3295,11 +3295,35 @@ int main(int argc, char** argv)
 				Ch.CondsAtValue = 29; Ch.CondsExamined = 33;
 				const std::string Seg2 = LedgerSurface::WetnessDoneSegment(Few, Ch);
 				std::printf("   %s\n", Seg2.c_str());
-				Check(Seg2.find("wetnessValue=0.6000") != std::string::npos
-				      && Seg2.find("wetnessFrom=overcast_day/first-shot-condition")
+				std::printf("    wetness done segment: %d of 700 buffer byte(s) "
+				            "(no note appended on this shape)\n", (int)Seg2.size());
+				Check(Seg2.find("wetnessBindValue=0.6000") != std::string::npos
+				      && Seg2.find("wetnessBindFrom=overcast_day/first-shot-condition")
 				         != std::string::npos,
-				      "the done line carries the one value and the row it came "
+				      "the done line carries the SEED value and the row it came "
 				      "from", Seg2);
+				// THE KEYS MOVED WITH THEIR MEANING, QUEUE 309, AND THE OLD
+				// NAMES ARE ASSERTED ABSENT. wetnessValue meant "the one value
+				// handed to every instance this run" and there is no such
+				// value any more; leaving the name on the seed would hand a
+				// reader who greps it a number that answers a different
+				// question. A run carrying both names would be worse still.
+				Check(Seg2.find("wetnessValue=") == std::string::npos
+				      && Seg2.find(" wetnessFrom=") == std::string::npos,
+				      "and the superseded key names are gone rather than left "
+				      "beside the new ones, so a grep for the old meaning returns "
+				      "nothing instead of a number that no longer means it", Seg2);
+				Check(Seg2.find("wetnessModel=per-condition-since-queue-309")
+				      != std::string::npos
+				      && Seg2.find("write-on-change-keyed-on-the-last-applied-wetness")
+				         != std::string::npos
+				      && Seg2.find("static-at-bind-time") == std::string::npos,
+				      "the model token says per-condition with the guard named, "
+				      "and the word static is not on the line anywhere", Seg2);
+				Check(Seg2.find("the-gap-is-the-compromise") == std::string::npos,
+				      "and the stat no longer calls the shotsAtValue gap a "
+				      "compromise, because since 309 every shot is photographed "
+				      "at its own wetness", Seg2);
 				Check(Seg2.find("wetnessSurfacesSet=2/3") != std::string::npos
 				      && Seg2.find("wetnessSurfacesWet=1/2") != std::string::npos
 				      && Seg2.find("wetnessSurfacesDarkened=1/2") != std::string::npos,
@@ -3307,10 +3331,13 @@ int main(int argc, char** argv)
 				      "are DIFFERENT on purpose: set is over surfaces the file "
 				      "asked for, wet is over surfaces actually set", Seg2);
 				Check(Seg2.find("wetnessShotsAtValue=35/43") != std::string::npos,
-				      "and the size of the static-bind compromise is a number on "
-				      "the line rather than a thing a reader infers", Seg2);
+				      "and the count of shots at the seed value is a number on "
+				      "the line, and it is not a count of walks", Seg2);
 				Check(EveryTokenIsKeyValue(Seg2.substr(1)),
 				      "the wetness segment is key=value throughout", Seg2);
+				Check(Seg2.find("not-shots-that-skipped-a-walk") != std::string::npos,
+				      "the done segment reaches its last token, so the 700-byte "
+				      "buffer that carries it did not truncate", Seg2);
 				// THE ZERO CASES, BOTH OF THEM, BECAUSE THEY ARE DIFFERENT
 				// FINDINGS WITH THE SAME NUMBER.
 				std::vector<LedgerSurface::Bound> NoneSet;
@@ -3332,13 +3359,18 @@ int main(int argc, char** argv)
 				DrySet.push_back(D1);
 				const std::string SegDry =
 					LedgerSurface::WetnessDoneSegment(DrySet, DryCh);
-				Check(SegDry.find("wetnessValue=0.0000") != std::string::npos
+				Check(SegDry.find("wetnessBindValue=0.0000") != std::string::npos
 				      && SegDry.find("wetnessSurfacesSet=1/1") != std::string::npos
-				      && SegDry.find("the-chosen-condition-is-DRY-at-0.0000")
+				      && SegDry.find("the-SEED-condition-is-DRY-at-0.0000")
 				         != std::string::npos,
-				      "and a spec whose wetness IS zero prints that it was zero "
-				      "with the count of what was set, rather than printing "
+				      "and a spec whose SEED wetness IS zero prints that it was "
+				      "zero with the count of what was set, rather than printing "
 				      "nothing and reading like a feature that never ran", SegDry);
+				Check(SegDry.find("says-nothing-about-any-frame-since-queue-309")
+				      != std::string::npos,
+				      "and the dry note no longer claims the frame is today's "
+				      "frame, because since 309 the seed says nothing about what "
+				      "any shot was photographed at", SegDry);
 				Check(SegDry.find("wetnessNote=no-surface-reached-an-instance")
 				      == std::string::npos,
 				      "and the two zero notes are not the same note, so a dry "
@@ -3387,6 +3419,366 @@ int main(int argc, char** argv)
 				      != std::string::npos,
 				      "and a run that asked nothing prints nothing-measured "
 				      "rather than a clean 0/0");
+			}
+
+			// 15. QUEUE 309: THE PER-CONDITION RE-DRIVE AND ITS GUARD.
+			//
+			// EVERYTHING THE .cpp's WALK DECIDES IS HERE, which is the point:
+			// VignetteShot.cpp does not compile in this container, so a guard
+			// written up there would ship unrun and the first thing to find
+			// out whether it works would be a 28-minute round trip.
+			{
+				std::printf("  queue 309, the per-condition wetness re-drive\n");
+
+				// 15a. WHICH ROUTES A RE-DRIVE MAY TOUCH. The decal card's
+				// instance is real and carries NEITHER parameter on purpose,
+				// so a walk that wrote to every MID it found would put an
+				// AlbedoGrade on ten shop signs and ten posters in the judged
+				// frame. Every route the enum has is examined, so the zero
+				// below has the enum's own size as its denominator.
+				{
+					int Examined = 0, Touched = 0;
+					const LedgerSurface::EPaintRoute All[5] = {
+						LedgerSurface::Paint_None, LedgerSurface::Paint_Pack,
+						LedgerSurface::Paint_Tint, LedgerSurface::Paint_DecalCard,
+						LedgerSurface::Paint_DecalMultiply };
+					for (int I = 0; I < 5; ++I)
+					{
+						++Examined;
+						if (LedgerSurface::WetRedriveTouches(All[I])) { ++Touched; }
+					}
+					std::printf("    routes examined=%d touched=%d (%s)\n",
+					            Examined, Touched, "pack and tint only");
+					Check(Examined == 5 && Touched == 2
+					      && LedgerSurface::WetRedriveTouches(LedgerSurface::Paint_Pack)
+					      && LedgerSurface::WetRedriveTouches(LedgerSurface::Paint_Tint),
+					      "the two routes whose instances BindSurfaces sets the "
+					      "pair on are the two a re-drive may touch, of five "
+					      "routes examined");
+					Check(!LedgerSurface::WetRedriveTouches(LedgerSurface::Paint_DecalCard)
+					      && !LedgerSurface::WetRedriveTouches(LedgerSurface::Paint_DecalMultiply)
+					      && !LedgerSurface::WetRedriveTouches(LedgerSurface::Paint_None),
+					      "PLANTED: a decal card carries a real dynamic instance "
+					      "and neither parameter, and the walk refuses it, so a "
+					      "poster cannot be graded by a wetness re-drive");
+				}
+
+				// 15b. THE GUARD, ACCEPTING CASE FIRST: A CHANGED WETNESS IS
+				// WRITTEN. Two outcomes, both watched, and the accepting one
+				// runs before the refusing one.
+				{
+					LedgerSurface::WetRedrive G;
+					Check(LedgerSurface::WetRedriveNeeded(G, 0.6),
+					      "a guard that has never applied anything needs a walk, "
+					      "because the instances carry the bind seed and the "
+					      "first condition may disagree with it");
+					LedgerSurface::WetRedriveAsked(G);
+					LedgerSurface::WetRedriveWalked(G, 0.6, "overcast_day");
+					Check(LedgerSurface::WetRedriveNeeded(G, 0.9),
+					      "and a wetness that MOVED needs a walk: 0.6 latched, "
+					      "0.9 asked");
+					// 15c. THE PLANTED REJECTING CASE, WHICH IS THE HALF THAT
+					// GOES UNRUN. The thing the guard asserts can happen is a
+					// settle loop re-entering with a wetness that has not
+					// moved, so the condition is PLANTED and the bound is not
+					// loosened: not one write may happen.
+					Check(!LedgerSurface::WetRedriveNeeded(G, 0.6),
+					      "PLANTED: the same wetness asked again is refused, "
+					      "which is the whole guard");
+					Check(!LedgerSurface::WetRedriveNeeded(G, 0.6 + 1e-9),
+					      "PLANTED: and a float round trip through the engine is "
+					      "not a change, because the comparison is the project's "
+					      "one tolerance and not an equality");
+					Check(LedgerSurface::WetRedriveNeeded(G, 0.6 + 1e-2),
+					      "while a real move of 0.01 still needs a walk, so the "
+					      "tolerance is not a rounding-away of the feature");
+				}
+
+				// 15d. THE SETTLE LOOP ITSELF, RUN. The guard's claim is
+				// arithmetic about a loop, so the loop is executed here rather
+				// than reasoned about: three conditions, forty ticks each,
+				// four hundred pieces. WHAT WOULD HAPPEN WITHOUT THE GUARD is
+				// computed beside it from the same numbers, so the saving is a
+				// ratio with both terms printed and not an assertion.
+				{
+					LedgerSurface::WetRedrive G;
+					const double Conds[3] = {0.6, 0.9, 0.6};
+					const int kTicks = 40, kPieces = 400;
+					int Writes = 0;
+					for (int C = 0; C < 3; ++C)
+					{
+						for (int T = 0; T < kTicks; ++T)
+						{
+							LedgerSurface::WetRedriveAsked(G);
+							if (!LedgerSurface::WetRedriveNeeded(G, Conds[C]))
+							{
+								LedgerSurface::WetRedriveSkipped(G);
+								continue;
+							}
+							LedgerSurface::WetRedriveWalked(G, Conds[C], "cond");
+							for (int P = 0; P < kPieces; ++P)
+							{
+								LedgerSurface::WetRedriveVisit(
+									G, LedgerSurface::WetRedrive_Wrote);
+								++Writes;
+							}
+						}
+					}
+					const int Naive = 3 * kTicks * kPieces;
+					std::printf("    settle loop: calls=%d walks=%d skipped=%d "
+					            "pieceWrites=%d naiveWouldBe=%d\n",
+					            G.Calls, G.Walks, G.Skipped, Writes, Naive);
+					Check(G.Calls == 120 && G.Walks == 3 && G.Skipped == 117
+					      && Writes == 1200 && Naive == 48000,
+					      "over 120 asks the guard let three walks through, one "
+					      "per CHANGED wetness, and refused 117; 1200 piece "
+					      "writes against the 48000 a naive re-drive would have "
+					      "made, of 120 asks examined",
+					      std::to_string(G.Walks) + "/" + std::to_string(G.Calls));
+					// AND THE THIRD CONDITION IS THE ONE THAT MATTERS: it
+					// returns to 0.6, which the guard has NOT been holding
+					// since 0.9 came through, so it must walk again. A guard
+					// keyed on "have we ever seen this value" instead of "the
+					// last one applied" would photograph the third condition
+					// at 0.9 and no number would say so.
+					Check(G.Walks == 3,
+					      "and a wetness returning to a value the run has already "
+					      "used still walks, because the key is the LAST applied "
+					      "value and not the set of values seen");
+					const std::string RS = LedgerSurface::WetRedriveSegment(G);
+					std::printf("    %s\n", RS.c_str());
+					std::printf("    redrive segment: %d of 860 buffer byte(s)\n",
+					            (int)RS.size());
+					Check(RS.find("wetnessRedriveWalks=3/of=120/ApplyCondition-calls")
+					      != std::string::npos
+					      && RS.find("wetnessRedriveSkipped=117/of=120/ApplyCondition-calls")
+					         != std::string::npos,
+					      "the guard's writes-per-tick prints WITH ITS "
+					      "DENOMINATOR, walks and skips both over the asks", RS);
+					Check(RS.find("wetnessRedriveWrote=1200/of=1200/piece-visits")
+					      != std::string::npos
+					      && RS.find("wetnessNow=0.6000") != std::string::npos
+					      && RS.find("wetnessRedriveTallyMismatch") == std::string::npos,
+					      "and the pieces written ship the visits they were taken "
+					      "over, the latched value is the last condition's, and "
+					      "the identity walks+skipped==calls holds so no mismatch "
+					      "key appears", RS);
+					Check(EveryTokenIsKeyValue(RS.substr(1)),
+					      "the re-drive segment is key=value with no value "
+					      "carrying a space", RS);
+					// THE SERIES THE BUFFER IS SIZED FROM, PRINTED BEFORE THE
+					// NUMBER IS SET. Two shapes measured above; the third is
+					// the worst this function can build, and it is built here
+					// rather than guessed: the longest condition id the
+					// committed file carries is pin_setter_night at 16, the
+					// counters are widened to five digits, and the readback
+					// note is appended OUTSIDE the buffer so it is measured
+					// apart. A snprintf that overruns truncates silently, and
+					// the key that would lose its tail is the last one in the
+					// buffer.
+					LedgerSurface::WetRedrive Worst = G;
+					Worst.LastFrom = "pin_setter_night_and_then_some";
+					Worst.Calls = 99999; Worst.Walks = 99999;
+					Worst.Skipped = 0; Worst.PieceVisits = 99999;
+					Worst.Out[LedgerSurface::WetRedrive_Wrote] = 99999;
+					for (int I = 1; I < LedgerSurface::WetRedrive_OutcomeCount; ++I)
+					{
+						Worst.Out[I] = 99999;
+					}
+					LedgerSurface::WetRedriveReadback(Worst, 0.6, 0.6);
+					const std::string WS = LedgerSurface::WetRedriveSegment(Worst);
+					// WHAT THESE NUMBERS ARE: the WHOLE returned string in
+					// each case. Only the snprintf portion is capped; the
+					// readback note and the tally-mismatch key are std::string
+					// concatenations appended after it and cannot overrun
+					// anything. So the worst shape below is the worst BUFFER
+					// portion by construction, because it takes the readback
+					// (no note) and holds the identity (no mismatch key),
+					// while the live shape above is longer only because it
+					// carries an appended note outside the cap.
+					std::printf("    redrive segment series, whole string: live=%d "
+					            "(carries an appended note outside the cap) "
+					            "nothingMeasured=%d (no snprintf at all) "
+					            "worstBufferShape=%d of 860, %d free\n",
+					            (int)RS.size(),
+					            (int)LedgerSurface::WetRedriveSegment(
+					                LedgerSurface::WetRedrive()).size(),
+					            (int)WS.size(), 860 - (int)WS.size());
+					Check((int)WS.size() < 860
+					      && WS.find("wetnessRedriveStat=whole-run") != std::string::npos
+					      && WS.find("readback-is-the-last-walks-first-written-piece")
+					         != std::string::npos,
+					      "the worst shape this function can build fits the "
+					      "buffer that carries it AND still reaches its last "
+					      "token, which is the measurement the size is set from",
+					      std::to_string((int)WS.size()) + "/860");
+				}
+
+				// 15e. THE REFUSALS ARE COUNTED AND NAMED. A walk that wrote
+				// nothing and a walk that found nothing it was allowed to
+				// write on are different findings, and a bare wrote=0 reads as
+				// the first when it is usually the second.
+				{
+					LedgerSurface::WetRedrive G;
+					LedgerSurface::WetRedriveAsked(G);
+					LedgerSurface::WetRedriveWalked(G, 0.9, "wet_night");
+					LedgerSurface::WetRedriveVisit(G, LedgerSurface::WetRedrive_NotOurRoute);
+					LedgerSurface::WetRedriveVisit(G, LedgerSurface::WetRedrive_NoActor);
+					LedgerSurface::WetRedriveVisit(G, LedgerSurface::WetRedrive_NoComponent);
+					LedgerSurface::WetRedriveVisit(G, LedgerSurface::WetRedrive_NoMid);
+					LedgerSurface::WetRedriveVisit(G, LedgerSurface::WetRedrive_NoBind);
+					const std::string RS = LedgerSurface::WetRedriveSegment(G);
+					Check(RS.find("wetnessRedriveWrote=0/of=5/piece-visits")
+					      != std::string::npos
+					      && RS.find("wetnessRedriveRefused=notOurRoute.1/noBind.1/"
+					                 "noActor.1/noComponent.1/noMid.1")
+					         != std::string::npos,
+					      "PLANTED: a walk that wrote nothing prints 0 over the "
+					      "visits it made AND the bucket each refusal fell in, so "
+					      "a dead walk cannot read as a clean one", RS);
+					Check(RS.find("wetnessRedriveReadback=not-asked") != std::string::npos
+					      && RS.find("wetnessRedriveReadNote=no-piece-was-written")
+					         != std::string::npos,
+					      "and the readback pair says not-asked with a note, "
+					      "because 0.0000..0.0000 is also what a dead write on a "
+					      "dry condition prints", RS);
+					// THE MISMATCH KEY, PLANTED, because a key that only ever
+					// appears when something is wrong is a key nothing proves
+					// works. The identity is broken by hand here.
+					LedgerSurface::WetRedrive Broken = G;
+					Broken.Calls = 9;
+					Check(LedgerSurface::WetRedriveSegment(Broken)
+					      .find("wetnessRedriveTallyMismatch=walks=1/skipped=0/calls=9")
+					      != std::string::npos,
+					      "PLANTED: walks plus skipped not summing to calls prints "
+					      "all three numbers, so a broken denominator announces "
+					      "itself instead of being divided by");
+				}
+
+				// 15f. A RUN THAT NEVER APPLIED A CONDITION SAYS SO. Rule 3b:
+				// 0/0 and "the owner was never called" read alike to a grep.
+				{
+					LedgerSurface::WetRedrive G;
+					const std::string RS = LedgerSurface::WetRedriveSegment(G);
+					Check(RS.find("wetnessNow=nothing-measured") != std::string::npos
+					      && RS.find("wetnessRedriveWalks=nothing-measured/of=0/")
+					         != std::string::npos
+					      && RS.find("ApplyCondition-was-never-called") != std::string::npos,
+					      "a run whose owner was never called prints the words and "
+					      "never a clean zero", RS);
+					Check(EveryTokenIsKeyValue(RS.substr(1)),
+					      "and the nothing-measured re-drive segment is space-free "
+					      "too", RS);
+				}
+
+				// 15g. THE PER-FRAME KEY, WHICH IS THE ONLY EVIDENCE 309 CAN
+				// OFFER. The surface line's wetSet is last-wins over the run
+				// and cannot tell "re-driven per condition" from "set once to
+				// the last condition's value". This can: one run shows 0.9000
+				// on a night row and 0.0000 on wet_000, on the two rows' own
+				// lines, which is what the item asked for under the one key
+				// name this file's naming law allows (midWetSetGot is a
+				// statement about ONE SURFACE and may not also be a statement
+				// about one frame).
+				{
+					LedgerSurface::WetShotIn N;
+					N.Asked = 0.9; N.AskedFrom = "wet_night";
+					N.bEverApplied = true; N.OnPieces = 0.9; N.WalkedAt = "wet_night";
+					const std::string NF = LedgerSurface::WetShotFields(N);
+					LedgerSurface::WetShotIn Z;
+					Z.Asked = 0.0; Z.AskedFrom = "wet_000";
+					Z.bEverApplied = true; Z.OnPieces = 0.0; Z.WalkedAt = "wet_000";
+					const std::string ZF = LedgerSurface::WetShotFields(Z);
+					std::printf("   night:%s\n", NF.c_str());
+					std::printf("   wet000:%s\n", ZF.c_str());
+					std::printf("    shot wetness fields: %d and %d of 420 "
+					            "buffer byte(s)\n", (int)NF.size(), (int)ZF.size());
+					Check(NF.find("shotWetness=0.9000") != std::string::npos
+					      && NF.find("shotWetnessOnPieces=0.9000") != std::string::npos
+					      && NF.find("shotWetnessAgrees=yes") != std::string::npos,
+					      "a night row prints 0.9000 asked, 0.9000 carried, and "
+					      "agrees", NF);
+					Check(ZF.find("shotWetness=0.0000") != std::string::npos
+					      && ZF.find("shotWetnessOnPieces=0.0000") != std::string::npos
+					      && ZF.find("shotWetnessAgrees=yes") != std::string::npos,
+					      "and the dry end of the ladder prints 0.0000 on the same "
+					      "keys in the same run, which is the difference a "
+					      "last-wins surface line cannot show", ZF);
+					// THE FAULT, PLANTED AND NAMED BEFORE ANY RUN: a frame
+					// photographed at a wetness the street is not wearing. It
+					// is what a guard keyed on the wrong thing, or a walk that
+					// wrote nothing, would produce.
+					LedgerSurface::WetShotIn Bad;
+					Bad.Asked = 0.9; Bad.AskedFrom = "wet_night";
+					Bad.bEverApplied = true; Bad.OnPieces = 0.6;
+					Bad.WalkedAt = "overcast_day";
+					const std::string BF = LedgerSurface::WetShotFields(Bad);
+					Check(BF.find("shotWetnessAgrees=NO") != std::string::npos
+					      && BF.find("shotWetness=0.9000") != std::string::npos
+					      && BF.find("shotWetnessOnPieces=0.6000") != std::string::npos
+					      && BF.find("shotWetnessWalkedAt=overcast_day") != std::string::npos,
+					      "PLANTED: a frame shot at a wetness the street is not "
+					      "wearing reads NO with both numbers and the condition "
+					      "the last walk ran for, rather than as a grey road", BF);
+					// AND A SKIP IS NOT A FAULT. Two conditions at one wetness
+					// mean the second never walks, so walkedAt names the first
+					// while the numbers agree; a reader must be able to tell
+					// that from the fault above.
+					LedgerSurface::WetShotIn Skip;
+					Skip.Asked = 0.6; Skip.AskedFrom = "grid_sky070_sun003";
+					Skip.bEverApplied = true; Skip.OnPieces = 0.6;
+					Skip.WalkedAt = "overcast_day";
+					const std::string SF = LedgerSurface::WetShotFields(Skip);
+					Check(SF.find("shotWetnessAgrees=yes") != std::string::npos
+					      && SF.find("shotWetnessFrom=grid_sky070_sun003") != std::string::npos
+					      && SF.find("shotWetnessWalkedAt=overcast_day") != std::string::npos,
+					      "a shot the guard skipped agrees while naming a "
+					      "different walk, so the guard working does not read as "
+					      "the fault above", SF);
+					LedgerSurface::WetShotIn None;
+					const std::string NoneF = LedgerSurface::WetShotFields(None);
+					Check(NoneF.find("shotWetness=nothing-measured") != std::string::npos
+					      && NoneF.find("shotWetnessAgrees=nothing-measured")
+					         != std::string::npos,
+					      "and a frame taken before any walk ran prints the words "
+					      "rather than a 0.0000 that reads as a dry street",
+					      NoneF);
+					Check(EveryTokenIsKeyValue(NF.substr(1))
+					      && EveryTokenIsKeyValue(BF.substr(1))
+					      && EveryTokenIsKeyValue(NoneF.substr(1)),
+					      "all three shot-wetness shapes are space-free");
+				}
+
+				// 15h. THE SURFACE LINE NAMES THE CONDITION ITS VALUE CAME
+				// FROM. A last-wins number with no condition beside it cannot
+				// say which frame it describes.
+				{
+					LedgerSurface::Bound B; B.Surface = "asphalt"; B.bWetSet = true;
+					B.Wet = LedgerSurface::WetBindFor("asphalt", true, 0.9);
+					B.WetFrom = "wet_night";
+					const std::string F = LedgerSurface::WetFields(B);
+					std::printf("   %s\n", F.c_str());
+					Check(F.find("wetSet=0.9000") != std::string::npos
+					      && F.find("wetSetFrom=wet_night") != std::string::npos
+					      && F.find("wetSetStat=per-surface/LAST-WINS") != std::string::npos,
+					      "the per-surface line prints the value, the condition it "
+					      "came from and the word LAST-WINS, so a reader is never "
+					      "left inferring which condition a number belongs to", F);
+					LedgerSurface::Bound Seed; Seed.Surface = "asphalt";
+					Seed.bWetSet = true;
+					Seed.Wet = LedgerSurface::WetBindFor("asphalt", true, 0.6);
+					const std::string SF = LedgerSurface::WetFields(Seed);
+					Check(SF.find("wetSetFrom=bind-time-seed/no-condition-was-"
+					              "applied-after-it") != std::string::npos,
+					      "and a surface no condition ever re-drove says the value "
+					      "is the bind's own seed, which is not the same finding "
+					      "as a condition having chosen it", SF);
+					LedgerSurface::Bound Un; Un.Surface = "asphalt";
+					Check(LedgerSurface::WetFields(Un).find("wetSetFrom=") != std::string::npos,
+					      "and a surface nothing was set on still carries the key, "
+					      "so a grep over the surface lines has the same "
+					      "denominator on every row");
+				}
 			}
 		}
 		// EveryTokenIsKeyValue AND NOT THE ONE-EQUALS FORM, and the reason is
@@ -4438,10 +4830,16 @@ int main(int argc, char** argv)
 			for (size_t I = 0; I < S.Conditions.size() && RefC != 0; ++I)
 			{
 				const LedgerVignette::Condition& C = S.Conditions[I];
-				// WETNESS IS THE EXCLUDED FIELD and the line beside this one
-				// says so with its reason; every other field the engine reads
-				// must match, the pin included.
-				if (C.Hdri == RefC->Hdri && C.SunOn == RefC->SunOn
+				// NOTHING IS EXCLUDED SINCE QUEUE 309 and the line beside
+				// this one says so: wetness joined the fingerprint when
+				// ApplyCondition began re-driving it per condition, so it is
+				// compared here like every other field the engine reads, the
+				// pin included. A field left out of this list while the
+				// emitter reads it would make the derived anchor WIDER than
+				// the discovered group and the comparison below would fail,
+				// which is what keeps the two sides honest about each other.
+				if (std::fabs(C.Wetness - RefC->Wetness) < 1e-12
+				    && C.Hdri == RefC->Hdri && C.SunOn == RefC->SunOn
 				    && C.LanternsOn == RefC->LanternsOn && C.WindowsOn == RefC->WindowsOn
 				    && std::fabs(C.SunIntensity - RefC->SunIntensity) < 1e-12
 				    && std::fabs(C.SkyIntensity - RefC->SkyIntensity) < 1e-12
@@ -4522,44 +4920,97 @@ int main(int argc, char** argv)
 			      "grid exists for", GotLine + " over " + std::to_string((int)GotIds.size())
 			      + " ids");
 		}
-		// THE REASON MOVED ON 2026-09-15 AND THE EXCLUSION DID NOT. Wetness
-		// now HAS a read site, at BindSurfaces, so "no read site" would be a
-		// false string; what keeps the field out of the fingerprint is that
-		// the read site is STATIC, one value for the whole run, so two
-		// conditions differing only in wetness still render the same street
-		// in this engine. Both halves of the new reason are asserted,
-		// because a value carrying only the first would read as the old one.
-		Check(NS.find("nullSeriesExcludes=wetness/because-the-read-site-added-"
-		              "2026-09-15-is-STATIC-at-bind-time") != std::string::npos
-		      && NS.find("one-value-for-the-whole-run-off-the-first-shot-condition")
-		         != std::string::npos
+		// THE EXCLUSION ENDED ON 2026-09-15 AT QUEUE 309, having survived one
+		// earlier rewrite of its reason. The field was out because
+		// VignetteShot.cpp had no read site for it; then because the read site
+		// queue 186 added was STATIC, one value for the whole run; it is in
+		// now because ApplyCondition re-drives it per condition, so two
+		// conditions differing only in wetness render two different streets.
+		// Both halves of the new value are asserted, because a value carrying
+		// only the first would read as a field somebody forgot.
+		Check(NS.find("nullSeriesExcludes=none/every-field-this-engine-applies-"
+		              "is-in-the-fingerprint-since-queue-309") != std::string::npos
+		      && NS.find("wetness-JOINED-2026-09-15-when-ApplyCondition-began-"
+		                 "re-driving-it-per-condition") != std::string::npos,
+		      "the line says nothing is excluded any more AND says which field "
+		      "joined, when, and what changed to let it", NS);
+		// AND BOTH SUPERSEDED REASONS ARE GONE RATHER THAN LEFT BESIDE THE
+		// NEW ONE. A verdict carrying a true and a false explanation of the
+		// same thing is worse than one carrying neither, because the reader
+		// who finds the false one first stops reading. THE SECOND TOKEN IS
+		// THE ONE THAT MATTERS HERE: `nullSeriesExcludes=wetness` was true
+		// this morning and is false tonight, and it is the string a reader
+		// coming from the 07:55Z ruling would grep for.
+		Check(NS.find("has-no-read-site-for-it-on-this-commit") == std::string::npos
+		      && NS.find("nullSeriesExcludes=wetness") == std::string::npos
 		      && NS.find("per-condition-needs-a-MID-list-nothing-keeps")
-		         != std::string::npos,
-		      "the line says which field it excluded and the reason it is STILL "
-		      "excluded now that a read site exists: the read site is static, one "
-		      "value for the run, and per-condition wetness needs a list of "
-		      "material instances nothing keeps", NS);
-		// AND THE OLD REASON IS GONE RATHER THAN LEFT BESIDE THE NEW ONE. A
-		// verdict that carries both a true and a false explanation of the
-		// same exclusion is worse than one that carries neither, because the
-		// reader who finds the false one first stops reading.
-		Check(NS.find("has-no-read-site-for-it-on-this-commit") == std::string::npos,
-		      "and the superseded reason, which said VignetteShot.cpp has no read "
-		      "site at all, is not on the line any more", NS);
-		// THE VALUE ABOVE IS BUILT IN A char Buf[960] AND THIS EDIT SPENT 153 OF
-		// ITS 344 FREE CHARACTERS: measured on the committed spec, the buffer
-		// portion ran 615 of 960 before and 768 of 960 after, so 191 are left. A
-		// snprintf that overruns TRUNCATES SILENTLY and the key that would lose
-		// its tail is the last one in the buffer, which is this one. So the tail
-		// token is asserted present AND asserted to be followed by the key that
-		// is appended after the buffer: a cut line fails both halves rather than
-		// reading as a short one.
+		         == std::string::npos,
+		      "and neither superseded reason survives: not the one that said "
+		      "there is no read site, and not the one that said the read site is "
+		      "static and per-condition needs a list nothing keeps", NS);
+		// AND THE FINGERPRINT ITSELF CARRIES THE FIELD, not just the prose
+		// about it. nullSeriesApplied is the winning group's key, so a wet
+		// token on it is the proof that AppliedFieldsUnreal reads the value
+		// rather than that this comment believes it does.
+		Check(ValueOfKey(NS, "nullSeriesApplied=").find("/wet") != std::string::npos,
+		      "and the applied fingerprint the group was formed on carries a wet "
+		      "term, so the exclusion ended in the arithmetic and not only in the "
+		      "sentence about it", ValueOfKey(NS, "nullSeriesApplied="));
+		// THE VALUE ABOVE IS BUILT IN A char Buf[960] AND QUEUE 309 GAVE
+		// CHARACTERS BACK. Measured on the committed spec by the printer three
+		// lines down rather than hand-counted: the buffer portion ran 615 of
+		// 960 before queue 186, 768 after it, and this edit shortens the
+		// excludes value while AppliedFieldsUnreal's new /wet%.4f term
+		// lengthens nullSeriesApplied. A snprintf that overruns TRUNCATES
+		// SILENTLY and the key that would lose its tail is the last one in the
+		// buffer, which is this one. So the tail token is asserted present AND
+		// asserted to be followed by the key appended after the buffer: a cut
+		// line fails both halves rather than reading as a short one.
 		{
-			const size_t Tail = NS.find("StreetVignetteHost.cs-line-715");
+			const size_t Tail = NS.find("no-longer-a-null-sample-of-the-day-group");
 			const size_t Ids  = NS.find(" nullSeriesIds=");
 			Check(Tail != std::string::npos && Ids != std::string::npos && Ids > Tail,
 			      "the excludes value reaches its last token and the next key follows "
 			      "it, so the capped buffer that carries it did not truncate", NS);
+			// THE SERIES, PRINTED, WHICH IS WHAT A BOUND IS READ OFF. The
+			// buffer portion is everything up to the first key appended after
+			// it, and nullSeriesIds is that key on every shape this function
+			// can build.
+			std::printf("    nullSeries buffer portion: %d of 960 byte(s), "
+			            "%d free, whole line %d byte(s)\n",
+			            (int)Ids, 960 - (int)Ids, (int)NS.size());
+			Check((int)Ids < 960,
+			      "and the measured buffer portion is inside the buffer that "
+			      "carries it, which is the number the size is set from rather "
+			      "than a hand count", std::to_string((int)Ids) + "/960");
+		}
+		// ---- THE WET LADDER'S ROWS, COUNTED RATHER THAN PREDICTED --------
+		//
+		// QUEUE 309's ACCEPTANCE SAID THE GROUP DROPS "THE THREE wet_ ROWS"
+		// AND THE COMMITTED FILE SAYS TWO. wet_000 is at wetness 0.0 and
+		// wet_100 at 1.0, so both leave; wet_060 is at 0.6, which IS the
+		// wetness the reference cell carries, so it stays and it is right that
+		// it stays: it is a genuine null sample of the day group in this
+		// engine. The number is counted off the discovered ids here rather
+		// than typed, so a later row entering or leaving moves it.
+		{
+			const std::string Ids = ValueOfKey(NS, "nullSeriesIds=");
+			std::vector<std::string> Got;
+			SplitOn(Ids, ';', Got);
+			int WetRows = 0;
+			for (size_t I = 0; I < Got.size(); ++I)
+			{
+				if (Got[I].find("vign_wet_") == 0) { ++WetRows; }
+			}
+			std::printf("    wet ladder rows still in the null group: %d of 3 "
+			            "offered (wet_000 0.0, wet_060 0.6, wet_100 1.0)\n", WetRows);
+			Check(WetRows == 1
+			      && Ids.find("vign_wet_060") != std::string::npos
+			      && Ids.find("vign_wet_000") == std::string::npos
+			      && Ids.find("vign_wet_100") == std::string::npos,
+			      "exactly the wet-ladder rows at ANOTHER wetness leave the null "
+			      "group, and the one at the reference cell's own 0.6 stays, which "
+			      "is one row of the three and not three", Ids);
 		}
 		Check(NS.find("nullSeriesStatus=READ") != std::string::npos
 		      && NS.find("nullSeriesVerdict=CLEAR") != std::string::npos

@@ -1,0 +1,167 @@
+# WHY THIS IS A THIRD FILE AND NOT A THIRD MODE BOLTED ONTO ONE OF THE OTHER
+# TWO WORKFLOWS. `citypack-fetch.yml` ships a CHOSEN pack to
+# ledger/Assets/StreamingAssets/CityPack and reads choices.json; committing
+# choices.json IS the decision that a surface changes. `citypack-inventory.yml`
+# asks the catalogue what exists, metadata only. This job downloads several
+# CANDIDATES per flagged surface at 1K, measures each against the surface's
+# CURRENT file, and commits a CONTACT SHEET -- it touches neither
+# ledger/Assets/StreamingAssets/CityPack nor choices.json. Mixing this into
+# either of the other two would make "did the shipped pack change" a question
+# you have to read the diff to answer instead of one the job's own name
+# answers. Queue 300, 2026-09-15: "a surface cannot be chosen from [the
+# catalogue] without seeing pixels" -- this is the job that shows the pixels.
+
+name: LEDGER city pack — shortlist
+
+# COMMITTING tools/citypack/shortlist-candidates.json IS THE DECISION, same
+# reasoning citypack-fetch.yml gives for its own push trigger: the paths
+# filter IS the opt-in, so a code change cannot start a download and nobody
+# has to remember to click dispatch. workflow_dispatch stays as the manual
+# fallback for re-running the SAME candidate list without touching the file
+# again (a flaky download, a changed measurement).
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/citypack/shortlist-candidates.json"
+  workflow_dispatch:
+
+concurrency:
+  group: citypack-shortlist
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  shortlist:
+    runs-on: ubuntu-latest
+    # UNMEASURED, SO GENEROUS RATHER THAN CONFIDENT (Jafar, 2026-09-15). The
+    # only real cost run so far was 35 candidates against a blocked host,
+    # which measures nothing about real transfer time. Rough arithmetic from
+    # first principles: up to 230 candidates, one sequential `urllib` call
+    # each (no concurrency in fetch_textures.py), each a small 1K zip -- call
+    # it low seconds per candidate including TLS setup, so well under 20
+    # minutes of transfer, plus setup and four contact-sheet renders. 45
+    # gives real headroom over that estimate without being open-ended.
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ONLY THIS JOB NEEDS AN IMAGE LIBRARY. --catalogue, --inventory,
+      # --validate and --fetch never have, on purpose (fetch_textures.py's
+      # own comment beside measure_texel_stats), so the install lives here
+      # and nowhere else.
+      - name: Pillow and numpy
+        run: pip install pillow numpy
+
+      # THE INSTRUMENT FIRST, AND IT MUST PASS BEFORE A SINGLE CANDIDATE IS
+      # DOWNLOADED. No continue-on-error: a broken measure_texel_stats would
+      # otherwise spend the whole download budget and hand back a contact
+      # sheet with a wrong number under every tile, which is a broken
+      # instrument showing the wrong world rather than an absent one.
+      # Accepting case is the real committed kerb.jpg reproducing queue 300's
+      # own published number; rejecting/edge case is a synthetic solid-colour
+      # image (instruments.md: selftest ships with the tool, accepting case
+      # first). Failing here skips every step below, including the commit --
+      # "caught before the download budget is spent" means nothing happens
+      # at all, not just that the pack is spared.
+      - name: Selftest the measurement (no network)
+        run: python3 tools/citypack/fetch_textures.py --selftest
+
+      - name: Download candidates, measure, write contact sheets
+        id: shortlist
+        continue-on-error: true
+        run: python3 tools/citypack/fetch_textures.py --shortlist
+
+      # COMMIT THE VERDICT, NOT THE EVIDENCE LOCKER. tools/citypack/
+      # fetch_textures.py's own invariant 7 (without --fetch's all-or-nothing
+      # half: one candidate id failing does not invalidate the ones that
+      # answered) means a partial shortlist is still real evidence and still
+      # worth keeping -- but "keeping" and "committing to git history forever"
+      # are not the same thing, and this step draws that line on purpose.
+      - name: Commit whatever arrived
+        run: |
+          git config user.name  "Claude"
+          git config user.email "noreply@anthropic.com"
+          # NAMED, NOT A BROAD ADD. This job writes exactly these paths and
+          # nothing else -- never ledger/Assets/StreamingAssets/CityPack,
+          # never choices.json -- so staging by name cannot catch a stale
+          # checkout's files the way a wider `git add` could (ci.md).
+          #
+          # THE PER-SURFACE CANDIDATE DIRECTORIES (tools/citypack/shortlist/
+          # <surface>/*.jpg, all 230 raw downloads) ARE DELIBERATELY LEFT
+          # UNSTAGED. D41: the boundary between visual and structural is what
+          # UNDOING a wrong answer costs. Roughly 228 of these 230 will be
+          # discarded within the hour once one per surface is picked -- undone
+          # by picking, not by another render, but the point still holds in
+          # reverse: committing them would need a HISTORY REWRITE to undo,
+          # which this repository has never done and rule 5 asks every
+          # destructive step to earn. `upload-artifact` below already carries
+          # the full directory, `if: always()`, for the one person who wants
+          # to download it once and look -- that is the right shelf for a
+          # large intermediate nobody needs a second time, not git history.
+          # DO NOT widen this back to `git add tools/citypack/shortlist`: that
+          # is the whole directory, candidates included, and it is the change
+          # this comment exists to stop.
+          #
+          # TWO CALLS, NOT ONE WITH TWO PATHSPECS. Checked directly
+          # (2026-09-15): `git add a b` where `b` matches nothing aborts
+          # BEFORE staging `a` either -- "fatal: pathspec ... did not match
+          # any files", exit 128, nothing added at all, not even the half
+          # that existed. Both paths below are created together whenever
+          # --shortlist runs at all, but a commit step should not depend on
+          # that staying true forever when splitting it costs two lines.
+          # THREE, SINCE THE 22:25Z RULING: ATTRIBUTION.json is the record the
+          # THIRD-PARTY.md row promises beside the pixels, and a commit of the
+          # sheets without it makes that row false on the first live run.
+          git add tools/citypack/shortlist/contact-*.png 2>/dev/null || true
+          git add tools/citypack/shortlist-results.json 2>/dev/null || true
+          git add tools/citypack/shortlist/ATTRIBUTION.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "nothing arrived -- shortlist outcome=${{ steps.shortlist.outcome }}"
+            exit 0
+          fi
+          git commit -m "City pack: what the candidates actually look like
+
+          Contact sheets and measurements for the surfaces named in
+          shortlist-candidates.json, downloaded at 1K, measured on queue
+          300's three numbers beside each surface's current file. Never
+          touches the shipped pack or choices.json -- the choice from here
+          is made locally, by looking, the same way choices.json itself
+          always has been.
+
+          The 1K candidate images themselves are NOT in this commit -- they
+          are in this run's citypack-shortlist artifact. Most of them are
+          discarded within the hour once one per surface is picked, and git
+          history keeps a committed file forever; the artifact is the right
+          shelf for something read once and then never needed again."
+          # REBASE BEFORE RETRYING, not a bare retry: a push rejected because
+          # the branch moved underneath this job is not the same fault as a
+          # flaky network, and treating it as one has dropped a commit's
+          # worth of work here before.
+          for i in 1 2 3 4 5 6; do
+            git push origin HEAD:${GITHUB_REF_NAME} && exit 0
+            echo "push failed, attempt $i — refetching and rebasing"
+            git fetch origin ${GITHUB_REF_NAME} || true
+            git rebase FETCH_HEAD || { git rebase --abort || true; }
+            sleep $((2 ** i))
+          done
+          exit 1
+
+      - name: The verdict
+        run: |
+          [ "${{ steps.shortlist.outcome }}" = "success" ] || { echo "SHORTLIST FETCH FAILED (or landed nothing)"; exit 1; }
+          echo "candidates downloaded, measured, and contact sheets written"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: citypack-shortlist
+          if-no-files-found: warn
+          path: |
+            tools/citypack/shortlist
+            tools/citypack/shortlist-results.json

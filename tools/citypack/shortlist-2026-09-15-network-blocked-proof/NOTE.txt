@@ -1,0 +1,30 @@
+DEAD RUN, KEPT AS EVIDENCE. 2026-09-15, dev container, not CI.
+
+This run attempted 35 candidates and every one failed with "Tunnel
+connection failed: 403 Forbidden" -- ambientcg.com is unreachable from the
+dev container. The four contact-*.png it produced each showed ONE tile (the
+CURRENT shipped file, because no candidate ever arrived to sit beside it),
+and the four per-surface subdirectories were empty for the same reason.
+
+The measurements and per-candidate errors for this run are in
+../shortlist-results.2026-09-15-network-blocked-proof-35candidates.json.
+
+REMOVED 2026-09-15, same day, while fixing the attribution-check red build
+that the four contact-*.png caused (they had landed in this timestamped
+directory rather than the live tools/citypack/shortlist/ tree, and
+attribution-check.py had no row that knew about either path). The four
+contact-*.png and the four now-empty per-surface subdirectories (concrete/
+kerb/ metal/ plaster/) were deleted: each PNG was a picture of one file
+already shipped, attributed and committed at full resolution under
+ledger/Assets/StreamingAssets/CityPack/textures/, so the sheets added
+nothing beyond what the JSON above already proves, and keeping them would
+have parked a permanent attribution obligation on a run that will never
+repeat. Only this NOTE.txt and the sibling JSON remain, and that is
+deliberate, not an accident of a partial cleanup.
+
+The candidate list has since been widened to 230 ids
+(tools/citypack/shortlist-candidates.json). A live run against that list
+writes to tools/citypack/shortlist/ -- the un-suffixed name, a sibling of this
+directory -- which is the one to look at once it exists, and which now has
+its own THIRD-PARTY.md row (token citypack_shortlist) recorded ahead of the
+bytes.

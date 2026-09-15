@@ -640,3 +640,13 @@ when	agent	model	reason	agentId
 2026-09-15T20:00:06Z	instrument-builder	opus	default	ad2014bdb3f3b9999
 2026-09-15T20:14:36Z	instrument-builder	opus	default	a989d68681c4df4b5
 2026-09-15T21:04:41Z	content-wrangler	sonnet	default	a1a5b501841ad4140
+2026-09-15T21:20:03Z	content-wrangler	sonnet	default	a1a5b501841ad4140
+2026-09-15T21:25:17Z	content-wrangler	sonnet	default	a1a5b501841ad4140
+2026-09-15T21:34:24Z	content-wrangler	sonnet	default	a1a5b501841ad4140
+2026-09-15T21:52:56Z	content-wrangler	sonnet	default	a033ca21ff0daf5e6
+2026-09-15T21:58:05Z	engine-specialist	opus	default	a795a0601b5bd0f53
+2026-09-15T22:07:43Z	engine-specialist	opus	default	a795a0601b5bd0f53
+2026-09-15T22:10:45Z	content-wrangler	sonnet	default	a033ca21ff0daf5e6
+2026-09-15T22:21:00Z	content-wrangler	sonnet	default	a033ca21ff0daf5e6
+2026-09-15T22:21:55Z	engine-specialist	opus	default	a795a0601b5bd0f53
+2026-09-15T22:25:05Z	studio-director	fable	default	a5c2cc1041900065b

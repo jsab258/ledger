@@ -26,6 +26,20 @@ because I had no way to ASK it anything; the day was fixed by building an
 without downloading a single image. Then the choice is made HERE, locally, in
 seconds, from evidence — and `--fetch` takes named assets rather than sweeping.
 
+QUEUE 300, 2026-09-15: THE SAME SHAPE ONE LEVEL FURTHER IN. `--inventory`
+answers "what exists"; it cannot answer "which one looks right", because the
+catalogue carries an id and a size list and nothing else — no tag, no
+preview. Four of the first twelve surfaces turned out to be near-flat cards
+picked blind on category and stable id. `--shortlist` downloads several named
+CANDIDATES per surface at 1K, measures each on queue 300's three numbers
+beside the surface's current file, and writes a contact sheet — so THAT
+choice is also made locally, from evidence, instead of from a name:
+
+    python3 tools/citypack/fetch_textures.py --shortlist      # see candidates
+    python3 tools/citypack/fetch_textures.py --measure-pack   # print the
+                                                                # current series
+    python3 tools/citypack/fetch_textures.py --selftest       # no network
+
 DESTRUCTIVE OPERATIONS ARE SCOPED TO WHAT THIS RUN PRODUCED. A CI job on this
 project once deleted 24 clips Jafar had already listened to and reported
 success. Nothing here removes a file it did not just write, and a run that fills
@@ -131,6 +145,90 @@ def link_for(asset, resolution):
     for z in zips:
         if isinstance(z, dict) and z.get("attribute") == resolution:
             return z.get("downloadLink")
+    return None
+
+
+def extract_maps(blob):
+    """Colour, NormalGL and Roughness bytes from a downloaded zip, plus the
+    colour entry's name. Factored out of `fetch()` on 2026-09-15 (queue 300)
+    so `--fetch` and `--shortlist` read a zip exactly the same way and can
+    never quietly disagree about which file inside it is the colour map.
+
+    NAMED, NOT `next()`. A bare `next()` raises StopIteration with an EMPTY
+    message, which is how twelve identical failures once reached the log
+    saying only "StopIteration:" and cost a CI round trip to identify. If no
+    colour map is in there, ValueError carries what WAS in the zip instead."""
+    with zipfile.ZipFile(io.BytesIO(blob)) as z:
+        inside = z.namelist()
+        name = norm_name = rough_name = None
+        for n in inside:
+            low = n.lower()
+            if not low.endswith((".jpg", ".png")):
+                continue
+            if "color" in low and name is None:
+                name = n
+            # NormalGL, not NormalDX: Unity's tangent space is OpenGL-handed
+            # (green up). The DX map inverts green and would emboss every
+            # mortar line outward.
+            if "normalgl" in low and norm_name is None:
+                norm_name = n
+            if "roughness" in low and rough_name is None:
+                rough_name = n
+        if name is None:
+            raise ValueError("no colour map among " + ", ".join(inside[:8]))
+        img = z.read(name)
+        norm = z.read(norm_name) if norm_name else None
+        rough = z.read(rough_name) if rough_name else None
+    return img, norm, rough, name
+
+
+# Rec. 709 luma on sRGB bytes, UNLINEARIZED — this is what "measured over
+# every texel, sRGB bytes" in production/queue/300 means: the JPEG's own
+# decoded bytes, no gamma step. VERIFIED 2026-09-15 against the five numbers
+# queue 300 printed, by re-measuring the committed files with three candidate
+# luma formulas (Rec. 601, Rec. 709, plain average) and keeping the one that
+# reproduced all five exactly: plaster 211.7/5.8/7.2, kerb 184.3/6.6/0.0,
+# metal 134.8/4.6/22.5, concrete 107.2/9.3/6.8, roof_b 49.0/4.4/5.0 — Rec.
+# 709. The other two formulas were off by up to 1.5 on plaster and metal, and
+# would silently compare a shortlist candidate against a different ruler than
+# the one queue 300 was written against. Do not change this tuple without
+# re-running that check (--selftest covers the kerb.jpg half of it).
+LUMA_R, LUMA_G, LUMA_B = 0.2126, 0.7152, 0.0722
+
+
+def measure_texel_stats(image_bytes):
+    """lumMean, lumSD and chromaSpread, exactly as queue 300 defines them:
+    lumSD is a standard deviation OVER THE FILE, not a peak; chromaSpread is
+    the MEAN OF (max channel minus min channel) PER TEXEL; both over every
+    texel, sRGB bytes. Needs Pillow and numpy, which `--catalogue`,
+    `--inventory`, `--validate` and `--fetch` do not — imported here, not at
+    module level, so a missing package cannot break any of those four."""
+    import numpy as np
+    from PIL import Image
+    im = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+    a = np.asarray(im).astype(np.float64)
+    r, g, b = a[..., 0], a[..., 1], a[..., 2]
+    lum = LUMA_R * r + LUMA_G * g + LUMA_B * b
+    chroma = a.max(axis=-1) - a.min(axis=-1)
+    return {
+        "width": im.size[0],
+        "height": im.size[1],
+        "lumMean": round(float(lum.mean()), 1),
+        "lumSD": round(float(lum.std()), 1),
+        "chromaSpread": round(float(chroma.mean()), 1),
+    }
+
+
+def measure_pack_file(logical):
+    """The CURRENT committed pack's stats for one logical surface, read from
+    disk exactly where `AssetLibrary` looks (`.jpg` then `.png`). None when
+    the pack has no file under that name — a fact, not an error."""
+    for ext in (".jpg", ".png"):
+        p = PACK / "textures" / (logical + ext)
+        if p.exists():
+            stats = measure_texel_stats(p.read_bytes())
+            stats["file"] = p.name
+            return stats
     return None
 
 
@@ -368,6 +466,21 @@ def validate():
     return 1 if bad else 0
 
 
+def _ambientcg_attribution(asset_id, resolution):
+    """The four facts every ambientCG download owes a record: id, source,
+    licence and the page to verify them on. QUEUE 300 (2026-09-15): one
+    implementation, so `fetch()` and `shortlist()` can never quietly
+    disagree about what an ambientCG credit says, the same reasoning
+    `extract_maps` above was factored out for."""
+    return {
+        "assetId": asset_id,
+        "source": "ambientCG",
+        "licence": "CC0 1.0 Universal",
+        "url": f"https://ambientcg.com/view?id={asset_id}",
+        "resolution": resolution,
+    }
+
+
 def fetch():
     choices = load_choices()
     if choices is None:
@@ -436,34 +549,7 @@ def fetch():
         # taught to sample it, so it stops being weight for nothing the
         # build after it lands. AO alone stays behind: nothing samples it.
         try:
-            with zipfile.ZipFile(io.BytesIO(blob)) as z:
-                inside = z.namelist()
-                # NAMED, NOT `next()`. A bare `next()` raises StopIteration with
-                # an EMPTY message, which is how twelve identical failures
-                # reached the log saying only "StopIteration:" and cost a CI
-                # round trip to identify. If no colour map is in there, the
-                # useful thing to print is what WAS.
-                name = None
-                norm_name = None
-                rough_name = None
-                for n in inside:
-                    low = n.lower()
-                    if not low.endswith((".jpg", ".png")):
-                        continue
-                    if "color" in low and name is None:
-                        name = n
-                    # NormalGL, not NormalDX: Unity's tangent space is
-                    # OpenGL-handed (green up). The DX map inverts green and
-                    # would emboss every mortar line outward.
-                    if "normalgl" in low and norm_name is None:
-                        norm_name = n
-                    if "roughness" in low and rough_name is None:
-                        rough_name = n
-                if name is None:
-                    raise ValueError("no colour map among " + ", ".join(inside[:8]))
-                img = z.read(name)
-                norm = z.read(norm_name) if norm_name else None
-                rough = z.read(rough_name) if rough_name else None
+            img, norm, rough, name = extract_maps(blob)
         except Exception as e:                                   # noqa: BLE001
             print(f"  {logical:<12} FAILED to read colour map from {asset_id}: "
                   f"{type(e).__name__}: {e}")
@@ -485,11 +571,7 @@ def fetch():
             r_to.write_bytes(rough)
             rough_note = f"+ {r_to.name} {len(rough) // 1024} KiB"
         attribution[logical] = {
-            "assetId": asset_id,
-            "source": "ambientCG",
-            "licence": "CC0 1.0 Universal",
-            "url": f"https://ambientcg.com/view?id={asset_id}",
-            "resolution": want_res,
+            **_ambientcg_attribution(asset_id, want_res),
             "file": dest.name,
             "normal": (logical + "_n" + ext) if norm is not None else None,
             "roughness": (logical + "_r" + ext) if rough is not None else None,
@@ -515,6 +597,290 @@ def fetch():
     return 0
 
 
+# 1K is enough to SEE a material; the final pick is re-fetched at
+# choices.json's own resolution (2K-JPG as of this writing) by an ordinary
+# `--fetch` once choices.json names it, so this mode never ships a 1K file.
+SHORTLIST_RES = "1K-JPG"
+
+
+def _write_shortlist_attribution(out_root, resolution, surfaces):
+    """ATTRIBUTION.json for `tools/citypack/shortlist/`, the record this
+    directory owed before it could go on `WATCHED` in
+    `tools/attribution-check.py` (queue 300, 2026-09-15).
+
+    WRITTEN EVERY TIME THIS IS CALLED, never appended to and never skipped
+    on a bad or empty run: `surfaces={}` still produces a file, so a run
+    that downloaded nothing overwrites whatever an earlier run left rather
+    than letting it be read as describing this one (ci.md: "a run that
+    measured nothing must not carry forward the previous run's files under
+    its own name"). Modelled on `fetch()`'s own `PACK / "ATTRIBUTION.json"`
+    a few dozen lines up, and reusing `_ambientcg_attribution` so the two
+    can never quietly disagree about what an ambientCG credit says.
+
+    Only candidates this run actually WROTE TO DISK are named here: a
+    candidate that failed (403, no link, a bad zip) is not an asset and
+    `shortlist-results.json` is where its error lives, not here."""
+    out_root.mkdir(parents=True, exist_ok=True)
+    n = sum(len(v) for v in surfaces.values())
+    (out_root / "ATTRIBUTION.json").write_text(
+        json.dumps({"note": "Sources for every CANDIDATE tile this "
+                            "shortlist pass actually wrote to disk. Nothing "
+                            "under tools/citypack/shortlist/ is shipped or "
+                            "read by AssetLibrary; THIRD-PARTY.md is the "
+                            "human-readable copy and both must agree.",
+                    "resolution": resolution,
+                    "candidatesWritten": n,
+                    "surfaces": surfaces}, indent=1), encoding="utf-8")
+    return n
+
+
+def shortlist():
+    """THE PIECE QUEUE 300 NAMED AS MISSING. Download several CANDIDATES per
+    flagged surface at 1K, measure every one on the three queue-300 numbers
+    beside the surface's CURRENT file, and lay every candidate for a surface
+    into ONE contact sheet — so the choice that follows is made from
+    evidence instead of from a name, which is how kerb ended up wearing
+    smooth cast concrete the first time (choices.json's own history: "PICKED
+    BY NAME... No image can be seen from this container").
+
+        python3 tools/citypack/fetch_textures.py --shortlist
+
+    Reads `tools/citypack/shortlist-candidates.json`:
+        {"resolution": "1K-JPG", "surfaces": {"kerb": ["Rock001", ...], ...}}
+
+    Writes, and NEVER touches the shipped pack or choices.json — this is the
+    look-before-you-choose pass, not the choice:
+        tools/citypack/shortlist/<surface>/<assetId>.jpg   the actual pixels
+        tools/citypack/shortlist/contact-<surface>.png     every candidate
+            for one surface (current file first) tiled into ONE picture at
+            ONE scale. The eye reads contrast and not value, and two crops
+            looked at minutes apart are two memories and not a comparison
+            (instruments.md) — this is the one-picture, one-scale,
+            one-rectangle version of that rule, applied to a contact sheet
+            instead of a before/after pair.
+        tools/citypack/shortlist-results.json              the measured
+            table, the surface's CURRENT file included by name so a
+            candidate that is merely a DIFFERENT flat card is visible as one
+            before anything is chosen.
+        tools/citypack/shortlist/ATTRIBUTION.json           source, licence
+            and download link for every candidate this run actually wrote to
+            disk, written in this SAME run rather than by a separate step,
+            so the pixels and the record cannot drift apart (LEDGER's
+            provenance rule: the licence identified before the fetch,
+            recorded WITH it). Overwritten every time this runs, including a
+            run that downloads nothing, so a later reader can never mistake
+            an earlier run's record for this one's.
+
+    Emits no verdict key and gates nothing — flagged to Jafar in queue 300 as
+    a possible new instrument rather than decided there; this stays quiet by
+    the same reasoning until he rules on it."""
+    path = HERE / "shortlist-candidates.json"
+    if not path.exists():
+        print(f"no {path.relative_to(ROOT)} — nothing to shortlist")
+        _write_shortlist_attribution(HERE / "shortlist", SHORTLIST_RES, {})
+        return 1
+    spec = json.loads(path.read_text(encoding="utf-8"))
+    surfaces = spec.get("surfaces", {})
+    want_res = spec.get("resolution", SHORTLIST_RES)
+    if not surfaces:
+        print("shortlist-candidates.json names no surfaces — nothing to do")
+        _write_shortlist_attribution(HERE / "shortlist", want_res, {})
+        return 1
+
+    # LINKS FROM THE COMMITTED CATALOGUE FIRST, exactly as --fetch does, and
+    # for the same reason: the q= search endpoint has lied three times and
+    # nothing in this file asks it anything any more.
+    cat_path = HERE / "catalogue.json"
+    cat_links = {}
+    if cat_path.exists():
+        for a in json.loads(cat_path.read_text(encoding="utf-8")).get("assets", []):
+            if a.get("link") and want_res in (a.get("link") or ""):
+                cat_links[a["id"]] = a["link"]
+
+    all_ids = sorted({aid for ids in surfaces.values() for aid in ids})
+    unresolved = [aid for aid in all_ids if aid not in cat_links]
+    links = dict(cat_links)
+    if unresolved:
+        links.update(links_for(unresolved, want_res))
+
+    out_root = HERE / "shortlist"
+    results = {"resolution": want_res, "surfaces": {}}
+    attribution = {}
+    total_written, total_failed = 0, 0
+
+    for surface, ids in sorted(surfaces.items()):
+        print(f"\n{surface} — {len(ids)} candidate(s)")
+        surf_dir = out_root / surface
+        surf_dir.mkdir(parents=True, exist_ok=True)
+        current = measure_pack_file(surface)
+        row = {"current": current, "candidates": {}}
+        surf_attribution = {}
+        thumbs = []  # (label, jpeg/png bytes), current first
+        if current is not None:
+            cur_path = PACK / "textures" / current["file"]
+            thumbs.append((f"CURRENT {current['file']}", cur_path.read_bytes()))
+            print(f"  {'CURRENT':<16}      lumMean={current['lumMean']:<6} "
+                  f"lumSD={current['lumSD']:<5} chromaSpread={current['chromaSpread']}")
+
+        for aid in ids:
+            link = links.get(aid)
+            if not link:
+                print(f"  {aid:<16} FAILED: no {want_res} download link")
+                row["candidates"][aid] = {"error": "no download link"}
+                total_failed += 1
+                continue
+            try:
+                blob = get(link, timeout=180)
+                img, _norm, _rough, name = extract_maps(blob)
+            except Exception as e:                               # noqa: BLE001
+                print(f"  {aid:<16} FAILED: {type(e).__name__}: {e}")
+                row["candidates"][aid] = {"error": f"{type(e).__name__}: {e}"}
+                total_failed += 1
+                continue
+            ext = ".jpg" if name.lower().endswith(".jpg") else ".png"
+            dest = surf_dir / (aid + ext)
+            dest.write_bytes(img)
+            stats = measure_texel_stats(img)
+            row["candidates"][aid] = stats
+            surf_attribution[aid] = {
+                **_ambientcg_attribution(aid, want_res),
+                "downloadLink": link,
+                "file": f"{surface}/{dest.name}",
+            }
+            thumbs.append((aid, img))
+            total_written += 1
+            print(f"  {aid:<16} ok   lumMean={stats['lumMean']:<6} "
+                  f"lumSD={stats['lumSD']:<5} chromaSpread={stats['chromaSpread']}")
+
+        _write_contact_sheet(out_root / f"contact-{surface}.png", thumbs)
+        results["surfaces"][surface] = row
+        if surf_attribution:
+            attribution[surface] = surf_attribution
+
+    (HERE / "shortlist-results.json").write_text(
+        json.dumps(results, indent=1), encoding="utf-8")
+    # WRITTEN IN THIS SAME RUN, UNCONDITIONALLY, before the invariant-7 exit
+    # below, and whether that exit is about to fire or not, so ATTRIBUTION.json
+    # always describes what THIS run actually wrote rather than what an
+    # earlier one did (ci.md: a run that measured nothing must not carry
+    # forward the previous run's files under its own name).
+    n_attributed = _write_shortlist_attribution(out_root, want_res, attribution)
+    print(f"\n{total_written} candidate(s) written, {total_failed} failed")
+    print(f"wrote {(HERE / 'shortlist-results.json').relative_to(ROOT)}")
+    print(f"wrote {(out_root / 'ATTRIBUTION.json').relative_to(ROOT)} "
+          f"({n_attributed} candidate(s) attributed)")
+    print("wrote contact sheets under "
+          f"{out_root.relative_to(ROOT)}/contact-<surface>.png")
+    # INVARIANT 7 AGAIN, BUT NOT `fetch()`'s ALL-OR-NOTHING VERSION. `fetch()`
+    # fails on ANY missing surface because the shipped pack must be complete.
+    # This is a gather-evidence pass, not a ship: one candidate id being
+    # unavailable does not invalidate the comparison the way a missing
+    # SHIPPED surface would, so this only fails when NOTHING at all arrived
+    # — the "a run that fills none of its targets exits non-zero" half of
+    # invariant 7, deliberately without the "and every target" half.
+    if total_written == 0:
+        print("NOTHING WAS WRITTEN — this run failed whatever is on disk.")
+        return 1
+    if total_failed:
+        print(f"PARTIAL — {total_failed} candidate(s) did not arrive; the "
+              "rest are still real evidence")
+    return 0
+
+
+def _write_contact_sheet(dest, thumbs, tile=256, cols=8):
+    """One picture, one scale, one rectangle — every candidate for a surface
+    side by side, because the eye reads contrast and not value and cannot
+    compare two images it saw minutes apart (instruments.md). Each tile is a
+    plain resize to a square, deliberately: this sheet is for material
+    identity and tone, not for judging tiling or aspect ratio.
+
+    COLS IS A LAYOUT CHOICE, NOT A RESOLUTION CHOICE — `tile` alone controls
+    how many pixels a candidate gets, so widening `cols` costs no legibility.
+    8 (2026-09-15, Jafar) turns metal's worst case (101 tiles: 100 candidates
+    + current) from 26 rows / ~7200px at 4 columns into 13 rows / ~3620px at
+    8, without shrinking a single tile below its full 256px, because the two
+    numbers are independent in this function and always have been."""
+    from PIL import Image, ImageDraw, ImageFont
+    if not thumbs:
+        return
+    rows = (len(thumbs) + cols - 1) // cols
+    pad, label_h = 6, 16
+    sheet = Image.new("RGB", (cols * (tile + pad) + pad,
+                              rows * (tile + label_h + pad) + pad),
+                      (32, 32, 32))
+    draw = ImageDraw.Draw(sheet)
+    font = ImageFont.load_default()
+    for i, (label, blob) in enumerate(thumbs):
+        im = Image.open(io.BytesIO(blob)).convert("RGB")
+        im = im.resize((tile, tile), Image.LANCZOS)
+        x = pad + (i % cols) * (tile + pad)
+        y = pad + (i // cols) * (tile + label_h + pad)
+        sheet.paste(im, (x, y))
+        draw.text((x, y + tile + 2), label[:28], fill=(255, 255, 255), font=font)
+    sheet.save(dest)
+    print(f"  wrote {dest.relative_to(ROOT)}  ({len(thumbs)} tile(s))")
+
+
+def measure_pack_cmd(names):
+    """`--measure-pack [SURFACE ...]` — print the CURRENT committed pack's
+    series, no network. This is the instrument the before/after table in
+    queue 300's acceptance comes from: run it before a fetch and after, and
+    the two printouts are "the new pack, printed beside the old". NO BOUND
+    IS SET here and this prints no verdict key — a sourcing aid, not a gate,
+    matching queue 300's own framing."""
+    names = list(names) or list(SURFACES)
+    print(f"{'file':<14} {'lumMean':>8} {'lumSD':>7} {'chromaSpread':>13}")
+    found = 0
+    for logical in names:
+        stats = measure_pack_file(logical)
+        if stats is None:
+            print(f"{logical:<14} {'nothing measured — no file on disk under this name':>8}")
+            continue
+        found += 1
+        print(f"{logical:<14} {stats['lumMean']:>8.1f} {stats['lumSD']:>7.1f} "
+              f"{stats['chromaSpread']:>13.1f}   {stats['file']}")
+    print(f"\n{found}/{len(names)} named surface(s) had a file to measure")
+    return 0
+
+
+def selftest():
+    """ACCEPTING CASE FIRST (instruments.md): the committed pack is real
+    evidence that already exists, so re-measuring kerb.jpg and getting queue
+    300's own published number back is the strongest test available and
+    costs no fixture. REJECTING/EDGE CASE: a synthetic single-colour image
+    built in memory, so the arithmetic is checked against numbers nobody
+    could have reverse-engineered the code from."""
+    ok = True
+
+    kerb = measure_pack_file("kerb")
+    if kerb is None:
+        print("SELFTEST SKIP: no kerb.jpg on disk — nothing to check against")
+    else:
+        want = {"lumMean": 184.3, "lumSD": 6.6, "chromaSpread": 0.0}
+        for k, v in want.items():
+            got = kerb[k]
+            good = abs(got - v) <= 0.15
+            print(f"  {'ok' if good else 'FAIL':<4} accepting: kerb.jpg {k}="
+                  f"{got} (queue 300: {v})")
+            ok = ok and good
+
+    from PIL import Image
+    buf = io.BytesIO()
+    Image.new("RGB", (16, 16), (255, 0, 0)).save(buf, format="PNG")
+    synth = measure_texel_stats(buf.getvalue())
+    want_synth = {"lumMean": round(LUMA_R * 255, 1), "lumSD": 0.0,
+                  "chromaSpread": 255.0}
+    for k, v in want_synth.items():
+        got = synth[k]
+        good = abs(got - v) <= 0.05
+        print(f"  {'ok' if good else 'FAIL':<4} synthetic: solid-red {k}={got} "
+              f"(want {v})")
+        ok = ok and good
+
+    print("SELFTEST PASS" if ok else "SELFTEST FAIL")
+    return 0 if ok else 1
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--catalogue", action="store_true",
@@ -525,6 +891,18 @@ def main():
                     help="check choices.json against the catalogue; no network")
     ap.add_argument("--fetch", action="store_true",
                     help="download the assets named in choices.json")
+    ap.add_argument("--shortlist", action="store_true",
+                    help="download tools/citypack/shortlist-candidates.json at "
+                         "1K, measure each against the surface's current file, "
+                         "write a contact sheet per surface; never touches the "
+                         "shipped pack or choices.json")
+    ap.add_argument("--measure-pack", nargs="*", metavar="SURFACE", default=None,
+                    help="print the CURRENT committed pack's lumMean/lumSD/"
+                         "chromaSpread for the named logical surfaces (default: "
+                         "every surface AssetLibrary asks for); no network")
+    ap.add_argument("--selftest", action="store_true",
+                    help="check measure_texel_stats against the committed pack "
+                         "and a synthetic image; no network")
     args = ap.parse_args()
     if args.catalogue:
         return catalogue()
@@ -534,6 +912,12 @@ def main():
         return inventory()
     if args.fetch:
         return fetch()
+    if args.shortlist:
+        return shortlist()
+    if args.measure_pack is not None:
+        return measure_pack_cmd(args.measure_pack)
+    if args.selftest:
+        return selftest()
     ap.print_help()
     return 2
 

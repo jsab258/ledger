@@ -2558,8 +2558,23 @@ namespace LedgerVignette
 	// ruling moves the series without anybody editing this function. Seven is
 	// a reading, never a constant.
 	//
-	// WETNESS IS EXCLUDED AND THE STRING SAYS WHY, AND THE WHY CHANGED ON
-	// 2026-09-15 WHILE THE EXCLUSION STAYED RIGHT. It used to be that
+	// WETNESS IS IN THE FINGERPRINT SINCE QUEUE 309, 2026-09-15, AND IT WAS
+	// EXCLUDED TWICE BEFORE THAT FOR TWO DIFFERENT REASONS. The paragraph
+	// below is the history, kept because the key's value has now said three
+	// things and a reader who finds only the last one cannot tell whether the
+	// field was forgotten or ruled on. WHAT CHANGED: ApplyCondition re-drives
+	// the Wetness scalar and the AlbedoGrade vector on the instances the
+	// scene already keeps, per condition, so two conditions differing only in
+	// wetness render two DIFFERENT streets in this engine and are no longer
+	// null samples of each other. MEASURED ON THE COMMITTED FILE rather than
+	// predicted: of the three wet-ladder rows at cam_hook, wet_000 (0.0) and
+	// wet_100 (1.0) leave the group and wet_060 STAYS, because its wetness IS
+	// the 0.6 the reference cell carries and it is therefore a genuine null
+	// sample of the day group. The suite re-derives the whole group from the
+	// reference cell every run, so nobody has to believe that sentence.
+	//
+	// THE TWO SUPERSEDED REASONS, for the record and for nothing else.
+	// It used to be that
 	// VignetteShot.cpp had NO read site for `wetness`: three hits in the whole
 	// ue-probe tree, all in this header. Queue 186's wetness rung gave it one,
 	// at BindSurfaces, and the old sentence would now be false. THE FIELD IS
@@ -2576,9 +2591,9 @@ namespace LedgerVignette
 	// for the engine it speaks for.
 	//
 	// THE DAY A MID LIST IS KEPT, THIS FIELD JOINS THE FINGERPRINT and the
-	// wet rows stop being null samples. That is a ruling and not a task: see
-	// SurfaceBind.h::WetnessForBind, whose verdict segment prints how many of
-	// the run's shots the one static value is right for.
+	// wet rows stop being null samples. That day is queue 309 and it is
+	// above; no list was kept in the end, because the ruling of 07:55Z found
+	// the scene was already keeping every instance on the components.
 	//
 	// AND A READ SITE IS NOT THE ONLY THING MISSING, WHICH IS THE HALF THIS
 	// VALUE LEFT OUT UNTIL 2026-09-14 AND WHICH COST A BUILDER A BRIEF.
@@ -2612,18 +2627,20 @@ namespace LedgerVignette
 		if (bWithSky)
 		{
 			std::snprintf(Buf, sizeof(Buf),
-				"sun.%s/sunI%.3f/skyI%.4f/hdri.%s/fog%.4f/fogMaxOp%.3f/lant.%s/prac.%s/expPin%.4f",
+				"sun.%s/sunI%.3f/skyI%.4f/hdri.%s/fog%.4f/fogMaxOp%.3f/lant.%s/prac.%s/expPin%.4f/wet%.4f",
 				C.SunOn ? "on" : "off", C.SunIntensity, C.SkyIntensity,
 				NoSpaces(C.Hdri).c_str(), C.FogDensity, C.FogMaxOpacity,
-				C.LanternsOn ? "on" : "off", C.WindowsOn ? "on" : "off", C.ExposurePin);
+				C.LanternsOn ? "on" : "off", C.WindowsOn ? "on" : "off",
+				C.ExposurePin, C.Wetness);
 		}
 		else
 		{
 			std::snprintf(Buf, sizeof(Buf),
-				"sun.%s/sunI%.3f/hdri.%s/fog%.4f/fogMaxOp%.3f/lant.%s/prac.%s/expPin%.4f",
+				"sun.%s/sunI%.3f/hdri.%s/fog%.4f/fogMaxOp%.3f/lant.%s/prac.%s/expPin%.4f/wet%.4f",
 				C.SunOn ? "on" : "off", C.SunIntensity,
 				NoSpaces(C.Hdri).c_str(), C.FogDensity, C.FogMaxOpacity,
-				C.LanternsOn ? "on" : "off", C.WindowsOn ? "on" : "off", C.ExposurePin);
+				C.LanternsOn ? "on" : "off", C.WindowsOn ? "on" : "off",
+				C.ExposurePin, C.Wetness);
 		}
 		return std::string(Buf);
 	}
@@ -2756,11 +2773,10 @@ namespace LedgerVignette
 			" nullSeriesTiedGroups=%d/of=%d/distinct-groups-examined/groups-not-frames/"
 			"rival-groups-whose-size-equals-the-largest-excluding-the-one-kept"
 			" nullSeriesApplied=%s"
-			" nullSeriesExcludes=wetness/because-the-read-site-added-2026-09-15-is-"
-			"STATIC-at-bind-time/one-value-for-the-whole-run-off-the-first-shot-"
-			"condition/so-two-conditions-differing-only-in-wetness-still-render-the-"
-			"same-street-HERE/per-condition-needs-a-MID-list-nothing-keeps/"
-			"the-other-engine-applies-it-at-StreetVignetteHost.cs-line-715",
+			" nullSeriesExcludes=none/every-field-this-engine-applies-is-in-the-"
+			"fingerprint-since-queue-309/wetness-JOINED-2026-09-15-when-"
+			"ApplyCondition-began-re-driving-it-per-condition/so-a-wet-ladder-row-"
+			"at-another-wetness-is-no-longer-a-null-sample-of-the-day-group",
 			G.size() >= 2 ? "READ" : "TOO-FEW-SAMPLES",
 			(int)G.size(), Measured, Measured, (int)All.size(),
 			TiedGroups, DistinctGroups,

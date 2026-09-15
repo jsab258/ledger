@@ -1,0 +1,9 @@
+id: e84fd567
+due: 2026-09-15T23:00:00Z
+armedAt: 2026-09-15T22:25:23Z
+armedBy: resident/both-builders-landed-director-reviewing
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+Both builders handed back and I verified both halves independently: 3382 probe checks green (3348 at HEAD), no new compiler warning (HEAD compiled in a worktree, identical byte figures), attribution ok rows 16 to 17, assetFiles 2860 to 2856. studio-director spawned for the batch review and owes a record under game-design/ with a <!--RULING spawn=...--> stamp naming a row newer than 24b54723@20:40Z. WHEN IT LANDS: read the ruling, re-run verify, paste the footer FROM ledger/.verify-footer, commit, push, then dispatch citypack-shortlist.yml. Cleared already, do not redo: the verdict-key manifest holds 1076 keys of which 3 contain wet and neither renamed key is among them, so the rename cannot go red. Queue 309 and 310 corrected under D43. The JPEG contact-sheet change was NOT done (the builder declined it as out of scope) and is optional, 25.3 MiB PNG against 7.2 MiB JPEG q92.

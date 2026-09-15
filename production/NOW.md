@@ -9,6 +9,85 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 22:55Z: THE 22:25Z BATCH IS RULED AND COMMITTED, AND UNRENDERED
+
+Both halves of the batch land under
+`game-design/decision-2026-09-15-ruling-per-condition-wetness-lands-and-the-licence-record-owes-the-pack-its-row.md`,
+whose eight dictated corrections were hand-applied before the commit and whose
+hold condition was met and printed: the g++ suite went 3382 to 3383 and the
+done segment measured 636 of its 700 bytes, under the 680 bound.
+
+THE WETNESS HALF IS UNRENDERED. Every line of VignetteShot.cpp is unverifiable
+in this container. THE READING ORDER FOR THE RUN THAT CARRIES IT IS SECTION 10
+of that record, which was written BEFORE the run existed so the run can refute
+it, and the DISPATCH note for that run quotes section 10 verbatim and dated. A
+prediction written after a run is not a prediction.
+
+322, 323 and 324 are filed by the ruling. 323 is the one that matters outside
+the studio: the SHIPPED CityPack has no row in THIRD-PARTY.md at all, and that
+file's ATTRIBUTION.json claims a tool enforces agreement with a file the tool
+never opens. Nothing unlicensed ships, ambientCG is allowlist line 5; the
+RECORD is what is wrong, and this project's own words say the record is the
+part that has to be right.
+
+313 IS EFFECTIVELY DIAGNOSED AND IT IS NOT A FAULT. The four-quadrant card and
+the two swatches are the probe's own measurement controls: MakeControlTexture
+builds a 2x2 nearest-filtered texture its own comment calls "four flat
+quadrants", controlQuads reads 3/3, and shotWholeFrameIncludesControlQuads
+reads yes on exactly 2 of 43 shots, both of them cam_A, one of them
+vign_camA_night. The decisive measurement still owed is the colour quad's
+projected box against 313's rectangle. THE CONSEQUENCE FOR JAFAR'S DUSK FRAME:
+it must not be taken from cam_A with the controls shown.
+
+DO NOT DISPATCH citypack-shortlist.yml until item 7 of section 11 is in the
+tree (it is, as of this commit): the first live run must commit
+ATTRIBUTION.json beside the sheets or the new THIRD-PARTY.md row is false.
+
+## 2026-09-15 22:10Z: TWO BUILDERS LIVE IN THE TREE, NOTHING COMMITTABLE
+
+DO NOT COMMIT, DO NOT STASH, DO NOT SPAWN A THIRD BUILDER INTO THESE FILES.
+Both agents hit the 45-turn limit without reporting and were RESUMED, not
+restarted. The tree holds two half-finished batches at once.
+
+    content-wrangler   THIRD-PARTY.md, tools/attribution-check.py,
+                       tools/citypack/fetch_textures.py
+    engine-specialist  ue-probe/Source/LedgerProbe/Public/SurfaceBind.h,
+                       .../Private/VignetteShot.cpp, .../Public/VignetteSpec.h
+
+THREE THINGS INDEPENDENTLY BLOCK A COMMIT and a stop hook asking for one is
+not a fourth opinion, it is the case CLAUDE.md names: the resident never
+commits a builder's work-in-progress because a stop hook asks.
+  1. ledger/.verify-footer does not exist. verify is red, and red DELETES it.
+  2. director cadence: 445 GATED ue-probe line(s) of 1599 changed, vs the 100
+     bound. The newest studio-director row is 2026-09-15T19:43:24Z, OLDER than
+     the reference commit 24b54723@20:40Z, so a FRESH spawn and a fresh
+     <!--RULING spawn=...--> stamp are required. The citypack half is entirely
+     ungated under D45 (tools 991, workflows 163) and would commit alone, but
+     the gate reads the whole tree, so it cannot.
+  3. Both builders are mid-edit. The engine one moved 406 to 445 gated lines
+     while this was being written.
+
+WHAT IS ALREADY SETTLED, so nobody re-does it:
+  D38 batch and its PUBLISH are DONE. publish-glance run 37 (id 35021034653)
+  published 24b54723, which contains D38, and its step 13 requested the page
+  back and matched. production/site-served.txt still names run 27 and is a
+  DECAYED HAND-MAINTAINED MARKER, not the state of the page: queue 318.
+  RUN 46 IS READ. Wetness binds but does not reach the frame per condition.
+  Measured against a null control rather than from the median: two frames the
+  run certifies as sharing every applied input differ by 75.59 per cent of
+  pixels at maxChannelDelta 29/255, and wet_000 vs wet_060 differ by 76.03 per
+  cent at 41/255. The wetness difference is INSIDE the noise floor. Queue 309
+  is the fix and is what the engine builder is on.
+
+FILED THIS TURN, not to be re-found: 318 (the served marker has no writer),
+319 (the lantern state is asked per condition and read back nowhere, which is
+ahead of the dusk frame because "lamps lit" is the ask), and a measured
+appendix on 313 (the colour card predates the wetness batch by three runs).
+
+THE ORDER WHEN BOTH HAND BACK: review both diffs, spawn studio-director for
+the batch, verify green, footer FROM THE FILE, commit, push, THEN dispatch
+citypack-shortlist.yml. Wake record 0f32ea3a carries the same instruction.
+
 ## 2026-09-15 20:05Z: THE HOLD LIFTED AT 19:42:59Z, AND D38 IS LANDED
 
 THE HOLD IS OVER AND THE RECORD SAYS SO EXPLICITLY, because the director

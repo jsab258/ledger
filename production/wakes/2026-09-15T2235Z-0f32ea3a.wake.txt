@@ -1,0 +1,9 @@
+id: 0f32ea3a
+due: 2026-09-15T22:35:00Z
+armedAt: 2026-09-15T22:10:58Z
+armedBy: resident/two-builders-resumed-after-turn-limits
+blocks: 0
+dischargedAt: 2026-09-15T22:25:23Z
+capBitAt: -
+
+Both builders hit 45-turn limits and were resumed. content-wrangler owes queue 320 plus the rejecting case and the future-directory case for the new WATCHED row; engine-specialist owes queue 309 coherent plus the g++ suites plus the guard's two outcomes plus the VignetteSpec.h buffer arithmetic. When both hand back: review both diffs, spawn studio-director for the batch (445+ GATED ue-probe lines vs the 100 bound, and the newest director row 19:43:24Z is OLDER than the reference commit 24b54723@20:40Z so the ruling stamp must be fresh), then verify green, footer FROM ledger/.verify-footer, commit, push, then dispatch citypack-shortlist.yml for the materials. Do not commit builder work-in-progress and do not stash a tree a builder is live in.

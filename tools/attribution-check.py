@@ -93,6 +93,50 @@ WATCHED = {
     # tensor from somebody's recording does not launder the recording.
     "game-design/voice-conds": "VCTK",
     "ledger/Assets/StreamingAssets/CityPack": "CityPack",
+    # THE SHORTLIST'S OWN LIVE DIRECTORY, ADDED 2026-09-15 (queue 300) BEFORE
+    # THE FIRST LIVE RUN WRITES TO IT. `tools/citypack/fetch_textures.py
+    # --shortlist` downloads several 1K CANDIDATE tiles per flagged surface
+    # from ambientCG and lays them into contact sheets under this path, so a
+    # surface can be picked by looking rather than by name (queue 300:
+    # "PICKED BY NAME... No image can be seen from this container"). CC0 1.0
+    # Universal, same licence as every other ambientCG row in this file;
+    # ambientCG is line 5 of `ledger-v2/research/license-allowlist.md`. The
+    # ids actually downloaded in any one run are enumerated in
+    # `shortlist-results.json`, which travels with the pixels, and in
+    # `ATTRIBUTION.json`, written by the same run.
+    #
+    # NOT SHIPPED. This is a sourcing aid for choosing what the pack wears
+    # next; nothing under this path is read by `AssetLibrary` or packaged
+    # into a build.
+    #
+    # THE TOKEN IS NOT "ambientCG", for the same reason `vignette-surfaces`
+    # two rows down is not either: that word is already in THIRD-PARTY.md for
+    # the decals, so a row keyed on it would pass without anybody writing
+    # anything, which is a guard that goes green for the wrong reason.
+    #
+    # THE TOKEN IS ALSO NOT "citypack-shortlist" WITH A HYPHEN, which is what
+    # this row said until the REJECTING-case test (CLAUDE.md rule 5b) caught
+    # it: THIRD-PARTY.md's own row names the CI workflow that writes here,
+    # `.github/workflows/citypack-shortlist.yml`, and a hyphenated token is a
+    # PREFIX of that filename, so the check passed even with the real
+    # declaration deleted, on the strength of the workflow's own name in the
+    # same sentence, which is the exact "goes green for the wrong reason"
+    # fault the paragraph above exists to avoid. The underscore is not a
+    # style choice; it is the smallest change that stops the token being a
+    # substring of a filename this row is also going to mention.
+    #
+    # AHEAD OF THE BYTES ON PURPOSE, the same order the vignette-surfaces row
+    # below uses: `.github/workflows/citypack-shortlist.yml` commits
+    # `tools/citypack/shortlist/contact-*.png` straight to this path on its
+    # first live run (the dev-container run kept as evidence under
+    # `tools/citypack/shortlist-2026-09-15-network-blocked-proof/` never
+    # reached this path at all; every one of its 35 candidates 403'd), so the
+    # obligation is recorded before that run lands rather than after.
+    #
+    # WHAT WOULD MAKE THIS ROW FALSE: the day `--shortlist` downloads a
+    # candidate from a source that is not ambientCG, this row understates
+    # what the directory holds and has to be corrected or widened.
+    "tools/citypack/shortlist": "citypack_shortlist",
     # The CC0 model kits (props-fetch job). CC0 needs no credit by law and
     # gets one anyway: the project's rule is that every third-party file
     # is named, and Props/ATTRIBUTION.json + THIRD-PARTY.md are written by

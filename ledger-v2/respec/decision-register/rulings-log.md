@@ -338,3 +338,17 @@ cannot find, which is the failure this file exists to stop.
   `ledger-v2/respec/decision-register/D43-document-corrections-are-applied-not-ruled.md`
   `ledger-v2/respec/decision-register/D44-queue-order-is-the-studios-within-the-ladder.md`
   `ledger-v2/respec/decision-register/D45-rigour-is-scoped-to-where-a-fault-hides.md`
+- **2026-09-15** per-condition wetness lands (309): the per-shot key
+  group is the only evidence the item can have and its own acceptance
+  sentence was an impossible ask; the rename to wetnessBindValue and
+  wetnessBindFrom is upheld; the route filter is correct and protects
+  ten card instances from a write of their own defaults; the three
+  membership keys cannot move and their comment is corrected; a done-
+  line token that called the seed count a walk count is corrected;
+  the walk over GSpec.Pieces is BindSurfaces' own idiom; 313's card is
+  very probably the A1(d) control quad; the shortlist token fix is
+  complete and one of twelve tokens is still satisfied by a path,
+  CityPack, over a shipped pack with no row (323); the workflow never
+  staged ATTRIBUTION.json, one line dictated; 322 and 324 filed;
+  predictions for the run written before it exists
+  `game-design/decision-2026-09-15-ruling-per-condition-wetness-lands-and-the-licence-record-owes-the-pack-its-row.md`
