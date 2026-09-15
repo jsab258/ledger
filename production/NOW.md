@@ -9,6 +9,141 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 08:15Z: WETNESS IS LANDED AND UNRENDERED, AND A SECOND ERROR OF MINE IS IN IT
+
+THE BATCH IS COMMITTED UNDER THE 07:55Z RULING and NOTHING IN IT HAS BEEN SEEN
+BY A RENDERER. The builder said so itself and it is repeated here because a
+landed batch reads like a finished one: the arithmetic is proven under g++, the
+generator's set-site guard was watched red before the call site existed and
+green after, and NEITHER OF THOSE IS A PIXEL. The frame claim, a darker and
+shinier road, is not made by anyone yet.
+
+RUN 45 STAYS QUEUED AND IS NOT RE-DISPATCHED. WHICH RUN RENDERS THIS BATCH IS
+SETTLED BY ANCESTRY AND NOT BY ANYBODY'S EXPECTATION, which is section 9 of the
+ruling and is the half most likely to be got wrong in a hurry: the workflow
+checks out with no explicit ref, which takes the run's own sha, but ci.md
+records a runner here checking out the branch tip at start. So if the landed
+run's commit CONTAINS this batch, RUN 45 RENDERED WET and the dry walk-back
+re-read Jafar asked for was never taken, and the Producer says that in one
+sentence rather than letting him read a wet road as an answer about his 0.85.
+
+THE FIRST WET FRAME IS READ IN SECTION 9's ORDER, FRAME FIRST, and the
+precondition comes before the wetness keys: materialConnections must read 19/19,
+because a short Alpha means every surface sat at the node's constant alpha of
+0.5 and is not a wetness result at all, and a short B means wetter is rougher.
+Then the wetness keys, then the four ground lines, and only then band.ground.p50
+beside 0.2711, 0.5117 and the sheet's 0.373. NO PREDICTION OF p50 IS CARRIED and
+that is deliberate for a second time: the albedo term darkens and the roughness
+term reflects a brighter overcast sky and brightens, and a one-point model
+cannot say which wins.
+
+THE SECOND ERROR OF MINE TODAY, AND IT IS A PROCESS FAULT RATHER THAN A NUMBER.
+I ran `git stash` to compile HEAD while the director was reading the tree. Six
+of its reads landed on HEAD instead of the batch, which it noticed, discarded
+and re-read, and it proved the batch was back by its own grep counts before
+ruling. IT COULD HAVE RULED ON THE WRONG TREE AND STAMPED THE BATCH ANYWAY. The
+rule it wrote for this seat is right and is recorded here so the next session
+has it: A COMPARISON COMPILE OF HEAD GOES IN `git worktree add`, NEVER IN A
+STASH OF THE TREE A REVIEWER IS READING. Both of today's errors are the same
+root, a HEAD comparison taken carelessly, and the first was the -fsyntax-only
+reading above.
+
+WHAT THE RULING SETTLED, in one line each. The widening of the tint tool is a
+widening and NOT a new instrument, so no retirement is spent or owed. Per
+condition wetness needs NO NEW GLOBAL AND NO LIST, because the components
+already hold the instances and GByName already holds the actors, with
+ApplyCondition the owner and a write-on-change guard; that is queue 309 and it
+is taken AFTER the first wet frame, not before. The exposure pin line is queue
+310 and it is WORSE than I measured: the NOT-READ shape comes to about 794
+against Buf[760], so the cap is reachable rather than latent and loses the tail
+of the last key, cut mid-word. The footer's missing denominator is queue 311.
+His 0.85 stays on the line with its date, and the re-read is HIS, on the first
+wet frame.
+
+## 2026-09-15 08:05Z: THE BATCH DID NOT INTRODUCE THAT WARNING. MY RULER DID.
+
+WHAT I TOLD THE DIRECTOR AS MEASURED FACT: that the wetness batch introduces a
+-Wformat-truncation warning absent at HEAD, and that something the builder
+changed must have widened the compiler's estimate.
+
+WHAT WAS ACTUALLY WRONG: I measured HEAD with `g++ -fsyntax-only`.
+-Wformat-truncation is a CODE GENERATION warning and cannot fire under a flag
+that skips code generation. My "zero occurrences at HEAD" was an artifact of my
+own flag and not a fact about HEAD. Rule 3 names this exact move, suspect the
+instrument before the reading, and I did not make it.
+
+RE-MEASURED PROPERLY, stashed tree at -O1 with code generation on: ONE
+occurrence at HEAD, same directive, the same 511-byte figure, at
+VignetteSpec.h:3081. The batch adds fourteen comment lines above that snprintf,
+so the identical warning now reports at 3095. A line-number-sensitive reading
+calls that new. It is not new.
+
+THE BUILDER CAUGHT IT FIRST AND INDEPENDENTLY, having built four variants in a
+scratchpad without touching the tree, and it was right. It also corrected three
+other things in the brief I gave it, and EVERY ONE I COULD CHECK WAS RIGHT:
+  the Wetness field sits at VignetteSpec.h 257/284/497, not the 246/248/434 my
+    brief asserted;
+  "read by nothing" was already stale when the queue wrote it, since
+    vignette-spec-test.cpp reads C.Wetness in eight places; the true and
+    narrower claim is that no read site existed in VignetteShot.cpp;
+  two comments in make_base_material.py state the connection denominator as 16
+    where the figure after this change is 19, confirmed at lines 3261 and 3340,
+    both left over from last night's AlbedoGrade batch.
+
+WHAT SURVIVES OF THE FINDING, because the measurement was right even though the
+conclusion was wrong: the emitted verdict lines are 733 and 738 bytes into a
+char Buf[760]. Twenty two bytes of headroom at worst, on a line that loses its
+trailing keys silently past it. That is a real latent cap in ExposurePinFields,
+it PREDATES this work, and it is its own item rather than a condition of this
+batch landing or something quietly folded into it.
+
+AND TOMORROW'S BRIEF OWES THIS, under the line he asked for on 2026-09-15:
+what we got wrong and corrected, in one sentence.
+
+## 2026-09-15 07:57Z: HE HAS BEEN TOLD, AND THE SEND ITSELF NARROWED THE DIAGNOSIS TO THE SERVICE
+
+THE RECEIPT, which is the EFFECT and not the commit going green:
+  production/outbound/2026-09-15-your-desktop-stopped-taking-work.unprompted
+  .receipt.txt, on pc-inbox head 634da649, reads receipt=sent
+  fileCommit=2c28f18e01b852f1cd689c1cb50f1f3249e9fddd
+  sent=2026-09-15T07:41:27+00:00 messageId=102 chars=772
+  outboundLatencySec=187 from fileCommitInstant to sendInstant. The
+  fileCommit matches what was pushed, so the text he has is the text that
+  was reviewed.
+
+AND THE SEND IS THE MEASUREMENT NOTHING ELSE COULD TAKE. Within one hundred
+and eighty seven seconds of a push to main, HIS MACHINE pulled it, resynced
+its checkout, swept the outbox, reached Telegram, and pushed a receipt back.
+That is four things working on the machine whose runner has left a job queued
+for eighty five minutes.
+
+SO THREE OF THE FOUR CANDIDATES ARE ELIMINATED BY MEASUREMENT RATHER THAN BY
+ARGUMENT. Asleep is out, signed out is out, taken back for his own use is out.
+What is left is the self-hosted service itself: stopped, crashed,
+deregistered, or connected to nothing. WHICH of those is still not
+established and still must not be guessed at, but the class is now one
+instead of four, and it was the message going out that settled it.
+
+NO SECOND MESSAGE TODAY, AND THAT IS HIS OWN RULE APPLIED TO ITS OWN EXAMPLE.
+He ruled one message a day on 2026-09-15 after a night of seven, with two
+exceptions, a card he must answer and something genuinely blocking, and the
+words he used were "A render landing, a correction, and a frame are not three
+messages; they are one brief tomorrow morning". This is a correction to a
+diagnosis. The ask, the recommendation and the deadline are all unchanged: he
+goes and looks at the desktop either way. It goes in tomorrow's brief, or into
+an answer if he taps, because an answer to his tap is a different register and
+not a second unprompted message.
+
+THE RISK THIS CARRIES, NAMED RATHER THAN LEFT IMPLIED, and it belongs in
+tomorrow's brief: the message told him his desktop stopped taking work, and
+when he looks he will find a machine that appears perfectly healthy. If he
+replies, the answer says the helper that takes work is the part that stopped
+and that everything else on that machine is fine.
+
+RUN 45 IS STILL QUEUED at 07:57Z. tools/landed.py --contains e1d19817 reads
+"not yet: no run contains e1d1981. 362 run(s) known, newest cb4767e". Watch by
+ancestry, never by branch movement. DO NOT RE-DISPATCH.
+
 ## 2026-09-15 07:15Z: RUN 45 IS QUEUED AND HAS NEVER STARTED. THE RUNNER IS NOT TAKING JOBS.
 
 MEASURED, NOT INFERRED, off the Actions API and two branches, all read at

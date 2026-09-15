@@ -28,6 +28,13 @@ only the TINTS of the procedural surfaces. Smoothness, emission, tiling and
 pattern are copied too and are not compared here; the same shape of check
 would cover them and the next hand to touch this file should widen it rather
 than trust a green line about a narrower thing.
+
+SINCE QUEUE 186 A SECOND LINE COMPARES THE WETNESS COPIES: the dry
+smoothness of the four ground surfaces against AssetLibrary.SurfaceSpec,
+and the 0.92 ceiling and 0.45 albedo slope against Core/LightModel.cs,
+each with its own denominator. The smoothness of the two procedural
+surfaces is still not compared, and the tint line's tintsOnly token is
+about that table alone.
 """
 import argparse
 import pathlib
@@ -43,6 +50,14 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 UE = "ue-probe/Source/LedgerProbe/Public/SurfaceBind.h"
 UNITY = "ledger/Assets/Scripts/Game/AssetLibrary.cs"
+# THE THIRD FILE, ADDED BY QUEUE 186's WETNESS RUNG. SurfaceBind.h now carries
+# a second copy of TWO MORE THINGS, and an unguarded copy is the fault this
+# whole tool exists for. The docstring above says the next hand to touch this
+# file should WIDEN it rather than trust a green line about a narrower thing;
+# this is that widening.
+#   the dry smoothness of the four ground surfaces -> AssetLibrary.SurfaceSpec
+#   the 0.92 wet ceiling and the 0.45 albedo slope -> Core/LightModel.cs
+UNITY_LIGHT = "ledger/Assets/Scripts/Core/LightModel.cs"
 # The C# names are CamelCase, the C++ names are the spec's snake_case. The
 # mapping is stated here rather than derived because it is the one thing the
 # two files legitimately spell differently.
@@ -99,6 +114,97 @@ def compare(ue, unity):
     return findings, compared
 
 
+# ---- THE WETNESS CONSTANTS, QUEUE 186 --------------------------------------
+#
+# WHICH SIDE IS AUTHORITATIVE is unchanged and is the same argument: the C#
+# has shipped, the C++ is the copy, and a disagreement is reported as the UE
+# side being wrong whichever was edited last.
+
+# The four surfaces rain lands on. C# name -> the spec's snake_case, exactly
+# the shape NAME_MAP has, kept separate because these four are a DIFFERENT
+# table in the same switch and merging them would make one denominator mean
+# two things.
+GROUND_MAP = {"Asphalt": "asphalt", "Sidewalk": "sidewalk",
+              "Kerb": "kerb", "Concrete": "concrete"}
+
+
+def parse_ue_ground(text):
+    """The C++ copy: a name array and a parallel dry-smoothness table."""
+    names = re.search(r'GroundDryName\(int I\).*?\{.*?\{(.*?)\}', text, re.S)
+    vals = re.search(r'GroundDrySmoothnessAt\(.*?const double S\[\d+\]'
+                     r'\s*=\s*\{(.*?)\};', text, re.S)
+    if not names or not vals:
+        return None, "the UE ground table did not parse"
+    order = re.findall(r'"([a-z_]+)"', names.group(1))
+    rows = re.findall(r'([0-9.]+)', vals.group(1))
+    if len(order) != len(rows):
+        return None, ("the UE ground name list and smoothness table are "
+                      "different lengths: %d name(s) against %d row(s)"
+                      % (len(order), len(rows)))
+    return {n: float(v) for n, v in zip(order, rows)}, None
+
+
+def parse_unity_ground(text):
+    """The C# original: Make(new Color(...), <smoothness>f, ...) per case."""
+    out = {}
+    for cs_name, spec_name in GROUND_MAP.items():
+        m = re.search(r'case\s+AssetLibrary\.' + cs_name +
+                      r'\s*:.*?Make\(\s*new\s+Color\([^)]*\)\s*,\s*'
+                      r'([0-9.]+)f', text, re.S)
+        if m:
+            out[spec_name] = float(m.group(1))
+    return out
+
+
+def parse_ue_wet_constants(text):
+    """The two scalars of the wetness arithmetic, off the UE side."""
+    out = {}
+    m = re.search(r'WetSmoothnessCeiling\(\)\s*\{\s*return\s*([0-9.]+)\s*;',
+                  text)
+    if m:
+        out["ceiling"] = float(m.group(1))
+    m = re.search(r'WetClamp\(1\.0\s*-\s*([0-9.]+)\s*\*\s*Rain', text)
+    if m:
+        out["albedoSlope"] = float(m.group(1))
+    return out
+
+
+def parse_unity_wet_constants(text):
+    """The same two out of Core/LightModel.cs, which is where they were
+    written first: the 0.92 inside Smoothness and the 0.45 inside
+    AlbedoScale."""
+    out = {}
+    m = re.search(r'Clamp01\(dry\s*\+\s*\(([0-9.]+)\s*-\s*dry\)\s*\*\s*rain\)',
+                  text)
+    if m:
+        out["ceiling"] = float(m.group(1))
+    m = re.search(r'Clamp\(1\.0\s*-\s*([0-9.]+)\s*\*\s*rain', text)
+    if m:
+        out["albedoSlope"] = float(m.group(1))
+    return out
+
+
+def compare_numbers(ue, unity, what):
+    """Findings and the denominator is what was COMPARED, the same rule the
+    tint comparison follows. Floats compared with a tolerance, because both
+    sides are decimal literals read out of source and 0.18f is not 0.18."""
+    findings, compared = [], 0
+    for name in sorted(unity):
+        if name not in ue:
+            findings.append("%s %s: in the Unity source and NOT in the UE copy"
+                            % (what, name))
+            continue
+        compared += 1
+        if abs(ue[name] - unity[name]) > 1e-9:
+            findings.append("%s %s: unity=%.6f ue=%.6f -- the UE copy is wrong"
+                            % (what, name, unity[name], ue[name]))
+    for name in sorted(ue):
+        if name not in unity:
+            findings.append("%s %s: in the UE copy and NOT in the Unity source"
+                            % (what, name))
+    return findings, compared
+
+
 def run(root=None):
     root = pathlib.Path(root) if root else ROOT
     up, np_ = root / UE, root / UNITY
@@ -106,11 +212,13 @@ def run(root=None):
         if not p.exists():
             print("surface-tint-check: NOTHING MEASURED, %s is not on disk" % p)
             return 2
-    ue, err = parse_ue(up.read_text(encoding="utf-8"))
+    ue_text = up.read_text(encoding="utf-8")
+    unity_text = np_.read_text(encoding="utf-8")
+    ue, err = parse_ue(ue_text)
     if err:
         print("surface-tint-check: NOTHING MEASURED, %s" % err)
         return 2
-    unity = parse_unity(np_.read_text(encoding="utf-8"))
+    unity = parse_unity(unity_text)
     if not unity:
         print("surface-tint-check: NOTHING MEASURED, the Unity switch did not "
               "parse")
@@ -125,6 +233,45 @@ def run(root=None):
     print("surface-tint-check: ok - %d surface(s) compared, 0 disagreement(s), "
           "tintsOnly=yes/smoothness-emission-tiling-pattern-not-compared"
           % compared)
+    # ---- AND THE WETNESS COPIES, ON THEIR OWN LINE WITH THEIR OWN
+    # DENOMINATOR. A separate line because one key may not mean two things:
+    # "surface(s) compared" already names the tint table and ledger/verify.py
+    # reads that number off this output.
+    lm = root / UNITY_LIGHT
+    ue_ground, gerr = parse_ue_ground(ue_text)
+    wet_findings, wet_compared = [], 0
+    if gerr:
+        print("surface-tint-check: NOTHING MEASURED for the ground table, %s"
+              % gerr)
+        return 2
+    f, c = compare_numbers(ue_ground, parse_unity_ground(unity_text),
+                           "drySmoothness")
+    wet_findings += f
+    wet_compared += c
+    if not lm.exists():
+        print("surface-tint-check: NOTHING MEASURED for the wetness scalars, "
+              "%s is not on disk" % lm)
+        return 2
+    lm_text = lm.read_text(encoding="utf-8")
+    ue_wet = parse_ue_wet_constants(ue_text)
+    unity_wet = parse_unity_wet_constants(lm_text)
+    if len(unity_wet) != 2:
+        print("surface-tint-check: NOTHING MEASURED for the wetness scalars, "
+              "Core/LightModel.cs gave %d of 2" % len(unity_wet))
+        return 2
+    f, c = compare_numbers(ue_wet, unity_wet, "wetConstant")
+    wet_findings += f
+    wet_compared += c
+    if wet_findings:
+        print("surface-tint-check: FAIL %d disagreement(s) over %d wetness "
+              "constant(s) compared" % (len(wet_findings), wet_compared))
+        for x in wet_findings:
+            print("   ", x)
+        return 1
+    print("surface-tint-check: ok - %d wetness constant(s) compared, 0 "
+          "disagreement(s), wetCovers=drySmoothness-of-the-four-ground-"
+          "surfaces/the-0.92-ceiling/the-0.45-albedo-slope"
+          % wet_compared)
     return 0
 
 
@@ -169,8 +316,54 @@ def selftest():
     ck("reject/an unparseable UE table says nothing measured",
        ue2 is None and err2, "err=%r" % err2)
 
+    # ---- THE WETNESS COPIES, QUEUE 186. ACCEPTING CASE FIRST, and the live
+    # tree is the fixture for the same reason it is above.
+    ue_text = (ROOT / UE).read_text(encoding="utf-8")
+    unity_text = (ROOT / UNITY).read_text(encoding="utf-8")
+    lm_text = (ROOT / UNITY_LIGHT).read_text(encoding="utf-8")
+    live_g, gerr = parse_ue_ground(ue_text)
+    ck("accept/the UE ground table parses", gerr is None and len(live_g) == 4,
+       gerr or "got %r" % live_g)
+    live_gu = parse_unity_ground(unity_text)
+    ck("accept/the Unity ground smoothness parses", len(live_gu) == 4,
+       "got %r" % live_gu)
+    live_wc = parse_ue_wet_constants(ue_text)
+    live_wu = parse_unity_wet_constants(lm_text)
+    ck("accept/both wetness scalars parse on both sides",
+       len(live_wc) == 2 and len(live_wu) == 2,
+       "ue=%r unity=%r" % (live_wc, live_wu))
+    ck("accept/the ceiling is 0.92 and the slope 0.45 on the Unity side",
+       live_wu.get("ceiling") == 0.92 and live_wu.get("albedoSlope") == 0.45,
+       "unity=%r" % live_wu)
+    f, c = compare_numbers(live_g, live_gu, "drySmoothness")
+    ck("accept/the four ground smoothness values agree",
+       not f and c == 4, "findings=%r compared=%d" % (f, c))
+
+    # REJECTING CASES, SYNTHETIC, so real work cannot break the fixture.
+    drift = dict(live_gu)
+    drift["kerb"] = drift["kerb"] + 0.01
+    f, c = compare_numbers(live_g, drift, "drySmoothness")
+    ck("reject/a drifted ground smoothness is caught",
+       len(f) == 1 and "wrong" in f[0] and c == 4, "findings=%r" % f)
+    f, _ = compare_numbers({}, live_gu, "drySmoothness")
+    ck("reject/a surface missing from the UE ground table is caught",
+       len(f) == 4, "findings=%r" % f)
+    f, _ = compare_numbers(live_g, {}, "drySmoothness")
+    ck("reject/a surface missing from the Unity switch is caught",
+       len(f) == 4, "findings=%r" % f)
+    f, _ = compare_numbers({"ceiling": 0.90, "albedoSlope": 0.45}, live_wu,
+                           "wetConstant")
+    ck("reject/a drifted 0.92 ceiling is caught",
+       len(f) == 1 and "ceiling" in f[0], "findings=%r" % f)
+    g2, gerr2 = parse_ue_ground("nothing that looks like the ground table")
+    ck("reject/an unparseable UE ground table says nothing measured",
+       g2 is None and gerr2, "err=%r" % gerr2)
+    ck("reject/an unparseable LightModel gives fewer than two scalars",
+       len(parse_unity_wet_constants("no arithmetic here")) == 0,
+       "got %r" % parse_unity_wet_constants("no arithmetic here"))
+
     print("surface-tint-check selftest: %d ok, %d failed, over %d check(s) "
-          "(accepting first: 3 of them)"
+          "(accepting first: 8 of them)"
           % (checks - len(fails), len(fails), checks))
     for f in fails:
         print("  FAIL", f)
