@@ -1,4 +1,4 @@
-# UE material step evidence, sha 17710df8e275a33dbc65f78f0df30c0711cdff9e
+# UE material step evidence, sha cb0c55a2ef1651b3af61cddb1af2ecbcee4b5755
 # Section 1: what the script measured inside the editor.
 # LEDGER material step, /Game/Ledger/M_LedgerSurface
 # compression_settings readback for BaseColorMap: leaf=DEFAULT via=enum-identity srgb=True str=<TextureCompressionSettings.TC_DEFAULT: 0> repr=<TextureCompressionSettings.TC_DEFAULT: 0>
@@ -31,126 +31,126 @@
 # which is where a process exit code is explained. Cap announced.
 # material.log holds 247 line(s)
 (+127 earlier line(s) not shown)
-[2026.09.15-02.15.18:413][  0]LogAssetRegistry: Display: FindShardedCacheFiles: 0 via .ref, 0 via migration fallback, 0 total
-[2026.09.15-02.15.18:413][  0]LogAssetRegistry: Display: AssetDataGatherer spent 0.001s loading caches from ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Intermediate/CachedAssetRegistry.
-[2026.09.15-02.15.18:442][  0]LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
-[2026.09.15-02.15.18:489][  0]LogPython: Display: No pip-enabled plugins with python dependencies found, skipping
-[2026.09.15-02.15.18:872][  0]LogCsvProfiler: Display: Metadata set : raytracing="0"
-[2026.09.15-02.15.19:040][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... started...
-[2026.09.15-02.15.19:052][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... took 12.278 ms
-[2026.09.15-02.15.19:053][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... started...
-[2026.09.15-02.15.19:077][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... took 24.215 ms (total: 36.493 ms)
-[2026.09.15-02.15.19:077][  0]LogPythonScriptCommandlet: Display: Running Python script: C:\actions-runner-ledger\_work\ledger\ledger\tools\ue\make_base_material.py
-[2026.09.15-02.15.19:263][  0]LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
-[2026.09.15-02.15.19:737][  0]LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
-[2026.09.15-02.15.19:743][  0]LogInterchangeEngine: Display: Interchange start importing source [C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/LedgerGenerated/T_LedgerDefaultNormal.tga]
-[2026.09.15-02.15.19:744][  0]LogInterchangePipeline: Display: Auto-detected normal map
-[2026.09.15-02.15.19:744][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...aved/LedgerGenerated/T_LedgerDefaultNormal.tga]
-[2026.09.15-02.15.20:115][  0]LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
-[2026.09.15-02.15.20:116][  0]LogInterchangeEngine: Display: Interchange start importing source [C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/LedgerGenerated/T_LedgerDefaultRough.tga]
-[2026.09.15-02.15.20:121][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...aved/LedgerGenerated/T_LedgerDefaultRough.tga]
-[2026.09.15-02.15.20:622][  0]LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
-[2026.09.15-02.15.20:623][  0]LogOutputDevice: Warning: 
+[2026.09.15-15.05.43:645][  0]LogAssetRegistry: Display: FindShardedCacheFiles: 0 via .ref, 0 via migration fallback, 0 total
+[2026.09.15-15.05.43:646][  0]LogAssetRegistry: Display: AssetDataGatherer spent 0.000s loading caches from ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Intermediate/CachedAssetRegistry.
+[2026.09.15-15.05.43:768][  0]LogCsvProfiler: Display: Metadata set : largeworldcoordinates="1"
+[2026.09.15-15.05.43:971][  0]LogPython: Display: No pip-enabled plugins with python dependencies found, skipping
+[2026.09.15-15.05.44:409][  0]LogCsvProfiler: Display: Metadata set : raytracing="0"
+[2026.09.15-15.05.44:814][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... started...
+[2026.09.15-15.05.44:865][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/IKRig/Content/Python/init_unreal.py... took 50.810 ms
+[2026.09.15-15.05.44:865][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... started...
+[2026.09.15-15.05.44:955][  0]LogPython: Display: Running start-up script C:/Program Files/Epic Games/UE_5.8/Engine/Plugins/Animation/ControlRig/Content/Python/init_unreal.py... took 89.434 ms (total: 140.244 ms)
+[2026.09.15-15.05.44:955][  0]LogPythonScriptCommandlet: Display: Running Python script: C:\actions-runner-ledger\_work\ledger\ledger\tools\ue\make_base_material.py
+[2026.09.15-15.05.45:157][  0]LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
+[2026.09.15-15.05.45:817][  0]LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
+[2026.09.15-15.05.45:853][  0]LogInterchangeEngine: Display: Interchange start importing source [C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/LedgerGenerated/T_LedgerDefaultNormal.tga]
+[2026.09.15-15.05.45:858][  0]LogInterchangePipeline: Display: Auto-detected normal map
+[2026.09.15-15.05.45:859][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...aved/LedgerGenerated/T_LedgerDefaultNormal.tga]
+[2026.09.15-15.05.46:232][  0]LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
+[2026.09.15-15.05.46:233][  0]LogInterchangeEngine: Display: Interchange start importing source [C:/actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/LedgerGenerated/T_LedgerDefaultRough.tga]
+[2026.09.15-15.05.46:237][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...aved/LedgerGenerated/T_LedgerDefaultRough.tga]
+[2026.09.15-15.05.46:778][  0]LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
+[2026.09.15-15.05.46:778][  0]LogOutputDevice: Warning: 
 
 Script Stack (1 frames) :
 /Script/EditorScriptingUtilities.EditorAssetLibrary.DeleteAsset
 
-[2026.09.15-02.15.20:657][  0]LogOutputDevice: Error: === Handled ensure: ===
-[2026.09.15-02.15.20:657][  0]LogOutputDevice: Error: 
-[2026.09.15-02.15.20:657][  0]LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
-[2026.09.15-02.15.20:657][  0]LogOutputDevice: Error: 
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: 					from the file system manually: 
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
-[2026.09.15-02.15.20:658][  0]LogOutputDevice: Error: Stack: 
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffbb5ed0595 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffbb54a6dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffbb5845de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb792466a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffbbe797b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x00007ffbbeb11992 UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.15-02.15.20:659][  0]LogOutputDevice: Error: [Callstack] 0x0000024591ad5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x0000024591b23d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x0000024591b212c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x0000024591a3937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb9bee1263 python311.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb9bee48df python311.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb9bee60b2 python311.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb9bf456bf python311.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x00007ffb9bf470bf python311.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x0000024591abf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:660][  0]LogOutputDevice: Error: [Callstack] 0x0000024591aeb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x0000024591abfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x0000024591ad83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974c71bb UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974bc289 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974bc5ba UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:661][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974c1256 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:662][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974d5c74 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:662][  0]LogOutputDevice: Error: [Callstack] 0x00007ff6974d838a UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.20:662][  0]LogOutputDevice: Error: [Callstack] 0x00007ffce03acd87 KERNEL32.DLL!UnknownFunction []
-[2026.09.15-02.15.20:662][  0]LogOutputDevice: Error: [Callstack] 0x00007ffce1cecaec ntdll.dll!UnknownFunction []
-[2026.09.15-02.15.20:662][  0]LogOutputDevice: Error: 
-[2026.09.15-02.15.21:656][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
-[2026.09.15-02.15.21:656][  0]LogInit: Display: 
-[2026.09.15-02.15.21:656][  0]LogInit: Display: Warning/Error Summary (Unique only)
-[2026.09.15-02.15.21:656][  0]LogInit: Display: -----------------------------------
-[2026.09.15-02.15.21:656][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
-[2026.09.15-02.15.21:657][  0]LogInit: Display: LogOutputDevice: Error: 
-[2026.09.15-02.15.21:657][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
-[2026.09.15-02.15.21:657][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
-[2026.09.15-02.15.21:657][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
-[2026.09.15-02.15.21:657][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
-[2026.09.15-02.15.21:658][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
-[2026.09.15-02.15.21:658][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
-[2026.09.15-02.15.21:658][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
-[2026.09.15-02.15.21:658][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffbb5ed0595 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.21:659][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffbb54a6dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.21:659][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffbb5845de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.15-02.15.21:659][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb792466a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
-[2026.09.15-02.15.21:659][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffbbe797b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.15-02.15.21:659][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffbbeb11992 UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591ad5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591b23d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591b212c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591a3937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb9bee1263 python311.dll!UnknownFunction []
-[2026.09.15-02.15.21:660][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb9bee48df python311.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb9bee60b2 python311.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb9bf456bf python311.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffb9bf470bf python311.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591abf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591aeb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591abfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:661][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x0000024591ad83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.15-02.15.21:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974c71bb UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974bc289 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974bc5ba UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974c1256 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974d5c74 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6974d838a UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.15-02.15.21:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffce03acd87 KERNEL32.DLL!UnknownFunction []
-[2026.09.15-02.15.21:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffce1cecaec ntdll.dll!UnknownFunction []
-[2026.09.15-02.15.21:664][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
-[2026.09.15-02.15.21:664][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
-[2026.09.15-02.15.21:664][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
-[2026.09.15-02.15.21:664][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
-[2026.09.15-02.15.21:665][  0]LogInit: Display: LogOutputDevice: Warning: 
+[2026.09.15-15.05.46:816][  0]LogOutputDevice: Error: === Handled ensure: ===
+[2026.09.15-15.05.46:816][  0]LogOutputDevice: Error: 
+[2026.09.15-15.05.46:816][  0]LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
+[2026.09.15-15.05.46:816][  0]LogOutputDevice: Error: 
+[2026.09.15-15.05.46:816][  0]LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: 					from the file system manually: 
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: Stack: 
+[2026.09.15-15.05.46:817][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd48780595 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd47d56dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd480f5de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x000001e8782266a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd525f7b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd52971992 UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x000001e8732e5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:818][  0]LogOutputDevice: Error: [Callstack] 0x000001e873333d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x000001e8733312c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x000001e87324937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb1263 python311.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb48df python311.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb60b2 python311.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd2fc156bf python311.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x00007ffd2fc170bf python311.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x000001e8732cf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:819][  0]LogOutputDevice: Error: [Callstack] 0x000001e8732fb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x000001e8732cfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x000001e8732e83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67be971bb UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67be8c289 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67be8c5ba UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:820][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67be91256 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:821][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67bea5c74 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:821][  0]LogOutputDevice: Error: [Callstack] 0x00007ff67bea838a UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.46:821][  0]LogOutputDevice: Error: [Callstack] 0x00007ffe7652cd87 KERNEL32.DLL!UnknownFunction []
+[2026.09.15-15.05.46:821][  0]LogOutputDevice: Error: [Callstack] 0x00007ffe7766caec ntdll.dll!UnknownFunction []
+[2026.09.15-15.05.46:821][  0]LogOutputDevice: Error: 
+[2026.09.15-15.05.48:100][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
+[2026.09.15-15.05.48:100][  0]LogInit: Display: 
+[2026.09.15-15.05.48:100][  0]LogInit: Display: Warning/Error Summary (Unique only)
+[2026.09.15-15.05.48:100][  0]LogInit: Display: -----------------------------------
+[2026.09.15-15.05.48:101][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
+[2026.09.15-15.05.48:101][  0]LogInit: Display: LogOutputDevice: Error: 
+[2026.09.15-15.05.48:101][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
+[2026.09.15-15.05.48:101][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
+[2026.09.15-15.05.48:101][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
+[2026.09.15-15.05.48:102][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
+[2026.09.15-15.05.48:102][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
+[2026.09.15-15.05.48:102][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
+[2026.09.15-15.05.48:102][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd48780595 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd47d56dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd480f5de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8782266a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd525f7b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.15-15.05.48:103][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd52971992 UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8732e5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e873333d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8733312c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e87324937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb1263 python311.dll!UnknownFunction []
+[2026.09.15-15.05.48:104][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb48df python311.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb60b2 python311.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fc156bf python311.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fc170bf python311.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8732cf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8732fb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8732cfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:105][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x000001e8732e83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.15-15.05.48:106][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67be971bb UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:106][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67be8c289 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:106][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67be8c5ba UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:106][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67be91256 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:107][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67bea5c74 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:107][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff67bea838a UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.15-15.05.48:107][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7652cd87 KERNEL32.DLL!UnknownFunction []
+[2026.09.15-15.05.48:107][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7766caec ntdll.dll!UnknownFunction []
+[2026.09.15-15.05.48:107][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
+[2026.09.15-15.05.48:108][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
+[2026.09.15-15.05.48:108][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
+[2026.09.15-15.05.48:108][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
+[2026.09.15-15.05.48:108][  0]LogInit: Display: LogOutputDevice: Warning: 
 
 Script Stack (1 frames) :
 /Script/EditorScriptingUtilities.EditorAssetLibrary.DeleteAsset
 
-[2026.09.15-02.15.21:665][  0]LogInit: Display: 
-[2026.09.15-02.15.21:665][  0]LogInit: Display: Failure - 38 error(s), 5 warning(s)
-[2026.09.15-02.15.21:665][  0]LogInit: Display: 
+[2026.09.15-15.05.48:109][  0]LogInit: Display: 
+[2026.09.15-15.05.48:109][  0]LogInit: Display: Failure - 38 error(s), 5 warning(s)
+[2026.09.15-15.05.48:109][  0]LogInit: Display: 
 
-Execution of commandlet took:  2.62 seconds, PeakPhysMemoryMB=1624 MB, PeakVirtMemoryMB=1420 MB
-[2026.09.15-02.15.21:766][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
-[2026.09.15-02.15.21:766][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
-[2026.09.15-02.15.21:926][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
-[2026.09.15-02.15.21:969][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
+Execution of commandlet took:  3.29 seconds, PeakPhysMemoryMB=1623 MB, PeakVirtMemoryMB=1420 MB
+[2026.09.15-15.05.48:229][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
+[2026.09.15-15.05.48:229][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.15-15.05.48:474][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
+[2026.09.15-15.05.48:517][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
 
 # Section 3: the editor process stderr, first 60 lines.
 # material.err holds 0 line(s)
