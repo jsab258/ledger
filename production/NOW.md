@@ -9,6 +9,45 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 02:05Z: THE GRADE IS COMMITTED AND RUN 44 IS WHETHER IT REACHED A FRAME
+
+IN FLIGHT: run 44, dispatched on af6700cb, the sha captured BEFORE the
+dispatch and watched by ancestry. Do not re-dispatch. Predictions are written
+into production/d1-probe/DISPATCH before the run, eight of them, one written
+to fail on purpose: that full parity lands band.ground.p50 BELOW the Hook
+sheet's 0.373. The reading order is the ruling's section 10 and it opens with
+THE FRAME, not a gate.
+
+LANDED: af6700cb, the batch of queue 299 and 291 under the ruling of 00:52Z
+(game-design/decision-2026-09-15-ruling-the-grade-lands-as-the-legacy-number-
+and-the-outbox-brief-was-never-a-net.md). 33 paths, 15 of them code.
+M_LedgerSurface has the AlbedoGrade vector parameter the legacy build's grade
+had nowhere to land in; the brief sender recovers a day it missed, says so
+when it finds nothing, and reads receipts from both branches they land on;
+the outbox brief register is retired on a record of zero catches and two
+duplicates. Suites: 447/447, 149, 57 (1 not measured and named), 19, 119, 28.
+
+WHAT IS NEXT, in Jafar's order: materials LANDED as far as the grade goes and
+run 44 is its frame; then the sky itself; then the dusk frame. Queue 302 (the
+ground family is a wetness list doing brightness duty) is BLOCKED on run 44's
+frame and the block is spent by looking at the trim, nothing else. Queue 303
+(the missed-day click) is ready and not blocking. Queue 300 (four near-flat
+pack albedos on 411 of 610 pieces) waits on the same frame, because a darker
+flat card may be quiet enough.
+
+THREE THINGS ARE JAFAR'S AND NO DIRECTOR MAY TAKE THEM. The sky: staging the
+HDRI moves no pixel and binding it overturns a reasoned position written at
+VignetteShot.cpp:163-171, so it is a ruling and not a task. The residual after
+run 44, because tonight's parity is PARTIAL (this side carries no wetness
+term, queue 186) and the ruling refuses any sentence to him calling it full.
+And whether to spend a retirement on the verdict key his no-new-instrument
+rule cost queue 299; the tally and readback currently ride queue 293.
+
+STILL OPEN FROM BEFORE: what "deterministic" means for D31 step 1, pixel
+identical or within the measured floor. The card went with the frame, id 94.
+D39's twenty recommendations still have 0 of 20 queue items filed, and D39
+itself says which of the sixteen to file is HIS to decide, not a resident's.
+
 ## 2026-09-14 21:05Z: THE SKY IS APPLIED AND UNPROVEN, AND RUN 43 IS THE PROOF
 
 IN FLIGHT: run 43, dispatched on the commit carrying Jafar's sky 0.70. THE

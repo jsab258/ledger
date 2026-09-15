@@ -1315,3 +1315,73 @@ to a lost licence seat; read the verdict before the run's colour.
 # THE READING ORDER. lightAimStatus first. Then the nine shotSkyIntensityRead
 # values, because a sky that did not arrive voids the rest. Then OPEN
 # ue-vign_hook_day.png BEFORE READING ANY GATE COLOUR.
+
+# run 44 - 2026-09-15 - THE LEGACY BUILD'S ALBEDO GRADE REACHES THE STREET, OR
+# IT DOES NOT, AND THE KERB IS WHERE IT SHOWS.
+#
+# Dispatched on af6700cb, the sha captured BEFORE the dispatch and watched by
+# ancestry, never by branch movement. Ruled 2026-09-15 00:52Z in
+# game-design/decision-2026-09-15-ruling-the-grade-lands-as-the-legacy-number-
+# and-the-outbox-brief-was-never-a-net.md, whose section 10 is the reading
+# order this entry serves. Queue 299.
+#
+# WHAT CHANGED. M_LedgerSurface has a vector parameter AlbedoGrade, default
+# white, multiplied into Base Color. VignetteShot.cpp sets it per surface from
+# SurfaceBind.h::AlbedoGradeFor, which returns TextureGrade 0.74/0.76/0.80 for
+# a textured pack surface, times GroundGrade 0.55 for the four ground names,
+# multiplied in GAMMA and converted once to linear. It returns WHITE for a
+# procedural surface (whose texel already carries the product), for a decal
+# blend, and for a surface whose albedo did not bind.
+#
+# PREDICTIONS, WRITTEN BEFORE THE RUN SO NO READING CAN BE EXPLAINED
+# AFTERWARDS. Every one names the ce99814 value it is measured against.
+#
+#   1. TWELVE OF TWELVE RESOLVED SURFACE LINES CARRY A GRADE AND NONE STILL
+#      READS not-built on the four fields. The four ground lines (asphalt,
+#      sidewalk, kerb, concrete) read tintTexel=grade-on-white.104.107.112 and
+#      /groundGrade.0.55; the eight others read 189.194.204 and
+#      textureGrade-only. interior stays tintTexel=31.22.14 and paint_yellow
+#      stays 147.127.35, both with the white-because-the-product-is-already-in-
+#      this-texel reason. card and multiply stay not-built on all four. THE
+#      COUNT IS PRINTED, NOT THE ADJECTIVE.
+#   2. materialConnections reads 16/16 where ce99814 read 14/14, because the
+#      grade adds a Multiply and its parameter. materialStatus=MADE.
+#   3. band.ground.p50 FALLS from 0.5117. Direction down, no bound, and the
+#      residual to the Hook sheet's 0.373 stated rather than graded.
+#   4. band.ground.meanRGB falls from 114.8/114.7/115.5 WITH THE BLUE CHANNEL
+#      FALLING LEAST, because the grade is 0.74/0.76/0.80 and blue is the
+#      largest of the three. If the three fall together the parameter is not
+#      per-channel and something read it as a scalar.
+#   5. THE ONE WRITTEN TO FAIL, AND IT IS THE INTERESTING RESULT EITHER WAY:
+#      band.ground.p50 lands BELOW the sheet's 0.373, because the texel
+#      arithmetic takes the ground surfaces down by roughly a third where the
+#      measured gap is a factor of 0.73. THIS CAN BE WRONG FOR A REASON THAT
+#      IS NOT THE GRADE: a texel factor and a band median are different
+#      quantities, the band carries sky reflection, shadow and surfaces that
+#      are not ground, and the tonemap between them is monotone rather than
+#      linear. If it lands above 0.373 the prediction is wrong and the reading
+#      stands; if it lands below, parity and the sheet disagree and that is
+#      Jafar's under D23, not a director's and not a resident's.
+#   6. THE CONTROL THAT MUST NOT MOVE: band.skyCentre.p50 stays 0.8035 and
+#      band.skyCentre.meanLuma stays 0.7975. Nothing in the sky wears a grade.
+#      IF THE SKY MOVED, SUSPECT THE EXPOSURE OR THE INSTRUMENT BEFORE THE
+#      GRADE (rule 3). shotExposurePinRead still 0.3000/0.3000.
+#   7. The control quads are unchanged on whichever camera shows them. They
+#      set no grade and the default is white, so a control that moved means
+#      the default is not white and the street is graded twice.
+#   8. rigDeterminism STILL READS DIFFERS. Nothing in this batch touches the
+#      cause; it is queue 235 with 290 needed before it.
+#
+# WHAT THIS RUN CANNOT SETTLE, said so nobody reads more into it. It cannot
+# make the street read WET: wetness is parsed, has no read site on this side,
+# and the legacy host applies it at StreetVignetteHost.cs:715, which is queue
+# 186 and is why tonight's parity is PARTIAL and not full. It cannot produce
+# dusk. It cannot fix the four near-flat pack albedos (queue 300): kerb.jpg is
+# a greyscale card at lumMean 184.3 with lumSD 6.6 and a chroma spread of
+# exactly 0.00, and a darker flat card is still a flat card.
+#
+# THE READING ORDER IS THE RULING'S AND NOT THIS FILE'S. OPEN
+# ue-vign_hook_day.png BESIDE ce99814's COPY BEFORE QUOTING ANY NUMBER BELOW
+# IT, one sentence each on the kerb, the road, the trim, the railings and bins
+# and the plaster. The sentence on the trim is queue 302's opening reading and
+# decides whether the ground family is split at all.
