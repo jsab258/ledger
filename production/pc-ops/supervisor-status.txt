@@ -1,11 +1,11 @@
-# LEDGER supervisor status as CI read it - af6700c @1789435272
+# LEDGER supervisor status as CI read it - e7564eb @1789443258
 # Line 1 names the commit this was read on.
 # Copied verbatim from the supervisor's own file on his PC.
 # It is written there every 60s and was published nowhere until
 # this step existed, which is why a bot that stopped at 11:30 on
 # 2026-09-07 could not say so.
 statusSource=C:\Users\Jafar\ledger-migrate\game-design\pc-jobs\supervisor-status.txt
-statusFound=yes statusBytes=908 statusLines=30 statusAgeSec=21
+statusFound=yes statusBytes=908 statusLines=30 statusAgeSec=23
 statusFresh=yes
 
 supervisor=running
@@ -17,8 +17,8 @@ resync=ok/f76c3398
 outboxFiles=35
 outboxReceipts=72
 outboxRefusals=494
-written=2026-09-15T03:20:50
-botSweepPasses=336
+written=2026-09-15T05:33:54
+botSweepPasses=399
 botSweepSent=0
 botSweepRefused=0
 botSweepEverySec=120
@@ -26,15 +26,15 @@ botSweepSecSinceLast=0
 botSweepLastResult=sent0/refused0/of35
 botBriefTapsFiled=0
 botBriefReasonsFiled=0
-botUptimeSec=42947
-botSweepWrittenAt=2026-09-15T03:19:17
-botSweepAgeSec=93
+botUptimeSec=51001
+botSweepWrittenAt=2026-09-15T05:33:30
+botSweepAgeSec=24
 botSweepStatus=read/10-key(s)
 executorState=idle
 executorHandled=2
 executorPending=0
 executorLimitResumeIn=none
-studio-watcher=running studio-watcherUptimeSec=302868 studio-watcherStarts=1 studio-watcherStops=0 studio-watcherLastExit=none
-telegram-bot=running telegram-botUptimeSec=43041 telegram-botStarts=5 telegram-botStops=4 telegram-botLastExit=4294967295
-claude-executor=running claude-executorUptimeSec=302678 claude-executorStarts=5 claude-executorStops=4 claude-executorLastExit=3
+studio-watcher=running studio-watcherUptimeSec=310852 studio-watcherStarts=1 studio-watcherStops=0 studio-watcherLastExit=none
+telegram-bot=running telegram-botUptimeSec=51025 telegram-botStarts=5 telegram-botStops=4 telegram-botLastExit=4294967295
+claude-executor=running claude-executorUptimeSec=310662 claude-executorStarts=5 claude-executorStops=4 claude-executorLastExit=3
 
