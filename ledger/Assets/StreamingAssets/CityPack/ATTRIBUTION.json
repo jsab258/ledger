@@ -52,10 +52,10 @@
    "roughness": "brick_red_b_r.jpg"
   },
   "concrete": {
-   "assetId": "Concrete017",
+   "assetId": "Concrete035",
    "source": "ambientCG",
    "licence": "CC0 1.0 Universal",
-   "url": "https://ambientcg.com/view?id=Concrete017",
+   "url": "https://ambientcg.com/view?id=Concrete035",
    "resolution": "2K-JPG",
    "file": "concrete.jpg",
    "normal": "concrete_n.jpg",
@@ -82,30 +82,30 @@
    "roughness": "glass_r.jpg"
   },
   "kerb": {
-   "assetId": "Concrete034",
+   "assetId": "Rock048",
    "source": "ambientCG",
    "licence": "CC0 1.0 Universal",
-   "url": "https://ambientcg.com/view?id=Concrete034",
+   "url": "https://ambientcg.com/view?id=Rock048",
    "resolution": "2K-JPG",
    "file": "kerb.jpg",
    "normal": "kerb_n.jpg",
    "roughness": "kerb_r.jpg"
   },
   "metal": {
-   "assetId": "Metal032",
+   "assetId": "Metal005",
    "source": "ambientCG",
    "licence": "CC0 1.0 Universal",
-   "url": "https://ambientcg.com/view?id=Metal032",
+   "url": "https://ambientcg.com/view?id=Metal005",
    "resolution": "2K-JPG",
    "file": "metal.jpg",
    "normal": "metal_n.jpg",
    "roughness": "metal_r.jpg"
   },
   "plaster": {
-   "assetId": "Plaster001",
+   "assetId": "Plaster007",
    "source": "ambientCG",
    "licence": "CC0 1.0 Universal",
-   "url": "https://ambientcg.com/view?id=Plaster001",
+   "url": "https://ambientcg.com/view?id=Plaster007",
    "resolution": "2K-JPG",
    "file": "plaster.jpg",
    "normal": "plaster_n.jpg",
