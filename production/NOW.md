@@ -47,6 +47,34 @@ zero answers is the expected reading. game-design/pc-jobs/request.json still
 names fetch-the-vignette-surfaces / vignette-fetch-01, which pc-results shows
 was RUN on 2026-09-11T06:01Z: the file is stale, not pending.
 
+WHICH CHANNEL STILL REACHES HIM, BECAUSE THEY ARE NOT THE SAME CHANNEL AND
+THIS IS THE DIFFERENCE BETWEEN TELLING HIM AND NOT. NOT A NEW FINDING, and
+saying so is the point: the grade ruling of 05:43Z this morning already states
+it in its own words, "outbox on the PC and needs no runner, where --send-brief
+is a workflow" step. This is that ruling being USED rather than rediscovered.
+  THE DAILY BRIEF CANNOT BE SENT. --send-brief has exactly one caller, a step
+    of ledger-install-supervisor-task.yml, and that step runs on the runner
+    that is not claiming. Queue 303 already names this; today is its second
+    occurrence.
+  THE OUTBOX CAN. tools/runner/telegram-bot.py sweeps production/outbox/ IN
+    ITS OWN LOOP every 120 seconds (sweep_outbox, every=120), inside the bot
+    process running on his machine. --send-outbox is a one-shot entry point
+    for the same work, not the only route. So a message placed in the outbox
+    does NOT ride the runner.
+  AND THE BOT'S LOOP WAS ALIVE AT 04:47Z, which is what the two reply receipts
+    on pc-inbox are. It has not been proven alive since, and nothing has been
+    placed in the outbox since, so the denominator is zero and silence there
+    means nothing. COMMITTING THE MESSAGE IS THE TEST, and the receipt landing
+    on pc-inbox is its EFFECT, which is the thing to verify rather than the
+    commit going green.
+  THE ONE FILE THAT WOULD SETTLE IT IS UNREADABLE FROM HERE, and that is worth
+    filing rather than rediscovering: the bot writes botSweepPasses,
+    botUptimeSec and botSweepWrittenAt to game-design/pc-jobs/bot-sweep.txt,
+    in an UNTRACKED directory, pushed by nothing. It reaches this side only
+    when a step on the self-hosted runner copies it out. The one instrument
+    that says "the machine is up, the service is not" is invisible in exactly
+    the situation it exists for. Filed as queue 308.
+
 SO THE ledger-pc RUNNER IS NOT CLAIMING JOBS. WHY is NOT diagnosed and must
 not be guessed at: asleep, the runner service stopped, signed out, and a
 machine taken back for his own use are all consistent with what is measured,
