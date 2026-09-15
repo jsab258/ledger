@@ -9,6 +9,69 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 17:15Z: RUN 45 LANDED, IT RENDERED DRY, AND HIS 0.85 IS 0.2987
+
+WHICH RUN, SETTLED BY ANCESTRY AND NOT BY EXPECTATION. Commit 22c922ee, "UE
+machine probe from cb0c55a2", landed 15:09Z with 72 files. Every verdict's line
+1 reads cb0c55a. cb0c55a2 CONTAINS e1d19817, the walk-back batch, and DOES NOT
+CONTAIN 0942cf1e, the wetness batch. So run 45 rendered DRY and the dry re-read
+he asked for in his own words WAS TAKEN. That is the cleaner of the two
+branches written down this morning and it is the one he can read without
+interpreting a wet road.
+
+HIS NUMBER, ON THE HOOK DAY ROW, LIKE FOR LIKE, run 44 read out of git rather
+than from memory. The file carries ONE ROW PER SHOT AND CONDITION, so the row
+is named: shot vign_hook_day camera=cam_hook condition=overcast_day.
+
+    band.ground.p50        0.2711  ->  0.2987
+    ground meanRGB    62.2/63.4/67.4  ->  68.5/69.6/73.2
+    band.skyCentre.p50     0.8035  ->  0.8035     (control, must not move)
+    shotExposurePinRead 0.3000/0.3000 -> 0.3000/0.3000  (control)
+
+THE DIRECTION HELD AND THE CONTROLS DID NOT MOVE, which is what makes the
+ground movement attributable to the grade rather than to exposure. Blue is
+still highest, 73.2 over 69.6 over 68.5, so the parameter is read as a COLOUR
+and not collapsed to a scalar.
+
+AN ERROR OF MINE, CAUGHT IN THE SAME TURN AND WORTH THE LINE. I first quoted
+0.3048. That came from a grep across the WHOLE FILE, which picked an arbitrary
+row out of the many this file carries. The hook day figure is 0.2987. Two
+numbers off different rows compared as one is precisely what this project's own
+rules name, and I did it before catching it. Third error of the day; the first
+two were the -fsyntax-only reading and the stash under a reviewer.
+
+ALL EIGHT ASSERTIONS IN THE DISPATCH ENTRY HELD, and that entry deliberately
+carried NO predicted p50:
+  12 of 12 resolved pack lines carry jafarWalkBack.0.85..ruled.2026-09-15,
+    four at grade-on-white.126.129.134 and eight at grade-on-white.199.203.212,
+    counted exactly 4 and exactly 8.
+  the two procedural parity lines are UNMOVED at 31.22.14 and 147.127.35, one
+    each, which is the whole point of the walk-back sitting at one call site.
+  the two controls above.
+
+THE FRAME, READ BEFORE ANY OF THOSE NUMBERS, per the ruling's section 9. Brick
+reads as brick and the rubble wall on the right carries real material
+variation. THE CONSPICUOUS FAULT IS THE BINS: they are the brightest things in
+the picture, near-white cylinders against a mid-grey street, reading as
+untextured primitives. That is queue 300's finding VISIBLE rather than
+inferred, and it agrees with this morning's bins test, which refuted the fog
+hypothesis by measurement. NO EYE COMPARISON AGAINST RUN 44 WAS MADE and none
+will be: the standing rule ruled this morning is that the eye reads contrast,
+not value, and invents differences across time. The table above is the
+comparison.
+
+WHAT IS STILL OPEN AGAINST HIS SHEET. 0.2987 sits 0.074 under the sheet's
+0.373 and 0.213 under the full legacy 0.5117. His own instruction covers it:
+"Do not tune by eye toward the sheet, because the sheet is wet and the street
+is dry; this value is provisional and gets re-read when wetness lands rather
+than kept." Wetness is now BUILT and UNRENDERED, so the re-read he named has a
+date rather than a wish.
+
+THE PRODUCER OWES HIM THIS TOMORROW, not today: he has had the blocking
+exception and one message a day is his ruling. The brief carries the 0.2987
+with its two neighbours in one sentence, that the dry re-read was taken and
+wetness is next, and the three errors of this seat under the line he asked for.
+
 ## 2026-09-15 09:48Z: THE DEDICATED WATCHER IS STOOD DOWN AND THE HOURLY NET TAKES IT
 
 THE ONE CHECK, AND IT BELONGS HERE RATHER THAN IN A WAKE RECORD NOBODY OPENS:
