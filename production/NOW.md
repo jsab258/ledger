@@ -9,6 +9,41 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 08:26Z: EVERY ITEM IN HIS ORDER IS NOW BEHIND ONE FRAME FROM ONE MACHINE
+
+CHECKED RATHER THAN ASSUMED, because "there is nothing to do" is the claim a
+session is most likely to make lazily:
+  THE BINS, his first, are DONE and the fog hypothesis is refuted. Removing fog
+    moves a bin by 2 to 8 percent, so a better texture is still the item.
+  WETNESS, his second and "the term owed", is LANDED at 0942cf1e under the
+    07:55Z ruling and is UNRENDERED. It needs a frame, not more code.
+  THE DUSK FRAME, his third and the picture he judges by, IS a frame.
+  QUEUE 300, the only visual item that looked startable, is explicitly BEHIND
+    QUEUE 299 in its own status, and the order is deliberate in its own words:
+    "299 lands, the frame is looked at, and THEN this item is re-scoped against
+    what is left". 299 landed last night. THE FRAME HAS NOT BEEN LOOKED AT,
+    because the frame is run 45.
+  QUEUE 309 is ordered AFTER the first wet frame by the ruling that filed it.
+  QUEUES 310 and 311 are instrument work, which is studio and not game, and his
+    standing rule puts two thirds of the week's spend on the game.
+
+SO THE VISUAL LANE IS NOT SLOW, IT IS STOPPED, and it is stopped at exactly one
+point: a queued job on a runner that is not claiming. Run 45 has been queued
+129 minutes at 08:25Z and tools/landed.py --contains reads "not yet" for both
+e1d1981 and 0942cf1, over 362 runs known.
+
+THIS IS RULE 13's GENUINE BLOCKER AND NOT AN IDLE ENDING. A watcher is armed
+rather than a queue item started, because starting one would mean working on
+the studio while the game waits, which is the thing his two thirds rule exists
+to stop, and because the budget reading behind this session is four hours old
+and has been spent against hard.
+
+WHAT A RETURNING RUNNER CHANGES, so nobody has to work it out under time
+pressure: run 45 checks out cb0c55a2 by its own push event, so if the landed
+run's commit CONTAINS 0942cf1e it rendered WET and his 0.85 dry re-read was
+never taken. That is the sentence the Producer owes him, and it is not
+something he should have to infer from looking at a wet road.
+
 ## 2026-09-15 08:15Z: WETNESS IS LANDED AND UNRENDERED, AND A SECOND ERROR OF MINE IS IN IT
 
 THE BATCH IS COMMITTED UNDER THE 07:55Z RULING and NOTHING IN IT HAS BEEN SEEN
