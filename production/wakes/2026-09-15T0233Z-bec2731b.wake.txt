@@ -2,8 +2,8 @@ id: bec2731b
 due: 2026-09-15T02:33:14Z
 armedAt: 2026-09-15T02:13:14Z
 armedBy: resident/run-44-in-flight
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-15T03:13:47Z
 capBitAt: -
 
 RUN 44 IS IN FLIGHT, dispatched on af6700cb, watched BY ANCESTRY and never by branch movement. DO NOT RE-DISPATCH. Eight predictions are written into production/d1-probe/DISPATCH before the run, one of them written to fail on purpose: that full parity lands band.ground.p50 BELOW the Hook sheet's 0.373. WHEN IT LANDS, read it in the ruling's section 10 order and not in any other: (a) OPEN ue-vign_hook_day.png beside ce99814's copy BEFORE quoting any number, one sentence each on the kerb, the road, the trim, the railings and bins, and the plaster, because the trim sentence is queue 302's opening reading and spends its block; (b) twelve of twelve surface lines free of not-built, the four ground ones at grade-on-white.104.107.112 with /groundGrade.0.55 and the eight others at 189.194.204; (c) materialConnections 16/16 where ce99814 read 14/14; (d) band.ground.p50 beside 0.5117 and the sheet's 0.373 with NO BOUND, p05 beside 0.2006, meanLuma beside 0.4501, meanRGB beside 114.8/114.7/115.5 with blue falling least; (e) shotMinLuma beside 0.0777 and shotLumaBands[0] beside 2440 as the too-dark numbers, reported not bounded; (f) THE CONTROL band.skyCentre.p50 at 0.8035 must NOT move, and if it did suspect exposure or instrument before the grade. If run 44 has not landed, do not chase it: check ancestry, say so, and re-arm. THE BRIEF FOR 2026-09-15 IS NOT YET WRITTEN and the live sender said so at 03:21:03Z; that is the daily wake's job and not this chain's.

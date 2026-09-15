@@ -235,8 +235,14 @@ status: READY 2026-09-15. Cause TWO of the three measured in queue 181, filed
   FROM THIS TONIGHT; it is printed because a later session comparing a texel
   ratio to a rendered one would otherwise call the difference a fault.
 
-  THE TRIM SENTENCE QUEUE 302 WAITS ON is not written here: concrete's
-  rendered sample is a piece-centre patch on sills, lintels and gum discs and
-  is not clean enough to carry that judgement. 302 stays blocked and its
-  opening reading is owed from a look, not from this number.
+  THE TRIM SENTENCE QUEUE 302 WAITS ON IS STILL NOT WRITTEN, and it was
+  attempted and withdrawn rather than skipped. A sentence saying the sills and
+  lintels had gone from pale stone trim to near-black bars was written into
+  302 and then retracted, because the measurement refused it: the 72 sill and
+  lintel pieces project at a MEDIAN HEIGHT OF 5.1 PIXELS through cam_hook, the
+  largest is 20 pixels and half off the left edge, and that largest one reads
+  as a dark bar in the brick in BOTH runs. So cam_hook cannot answer 302 at
+  all, the finding is about the instrument rather than the grade (rule 3), and
+  302's block stands. What would spend it is named there: a frame in which a
+  lintel is large enough to read as a material.
 
