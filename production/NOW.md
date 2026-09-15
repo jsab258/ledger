@@ -9,6 +9,42 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-15 06:10Z: THE BATCH IS REVIEWED AND LANDS, ONE STATEMENT BACK WITH THE DIRECTOR
+
+LANDED UNDER THE RULING OF 05:43Z (game-design/decision-2026-09-15-ruling-the-
+forty-are-waived-by-name-and-the-walk-back-stands-as-his-number.md): queue 299
+(his 0.85 walk-back, a strength from white in gamma, one call site), D40 (the
+sky is a photograph; the batch binds none and says so), and queues 256 and 259
+(the site links moved, the served marker written from a watched run, the link
+floor live again with the forty waived by name).
+
+ONE CONDITION OF THAT RULING IS NOT APPLIED AND IS BACK WITH THE DIRECTOR. Its
+dictated item 1 replaced the research ladder's raw-difference count with a
+by-rule-name count; measured, it took researchVerbatimWaiverBit from 5/10 to
+0/10 AND the register selftest from 163/0 to 10 failed. The ruling's own
+condition was "equal, or the line is reverted and the inequality is reported as
+a finding", so it is reverted and reported. DO NOT INVENT A THIRD VERSION. The
+open question is whether the statement reads the wrong side of the ladder, or
+whether 0/10 is the true by-rule-name reading and 5/10 has been the artefact
+all along, which would make the fault larger than the ruling states.
+
+RUN 45 IS THE NEXT DISPATCH and it is the re-read Jafar asked for. Read it in
+the ruling's section 11 order, FRAME FIRST.
+
+THE BRIEF CARRIES NO PREDICTED p50, AND THIS OVERRIDES THE EARLIER PLAN. The
+0.368 that an earlier wake told the Producer to carry is WITHDRAWN: the
+resident's exponent was fitted on two gamma-byte ratios and applied to a linear
+ratio, and applied consistently the three candidate readings give 0.313, 0.305
+and 0.299, inside what a one-point model can resolve. The brief names the
+reading taken and the two alternatives in one sentence and quotes no
+prediction; run 45 prints the measured number.
+
+QUEUES FILED BY THE RULING: 306 (the provenance guard's rejecting fixtures have
+never run) and 307 (three frozen name lists grade an archive, and the fourth is
+the line). Filed by the resident: 305 (cards.py --selftest has been red and
+outside the gate since 2026-09-10, and nobody has counted how many other tool
+selftests verify does not run).
+
 ## 2026-09-15 04:05Z: NOTHING IS IN FLIGHT AND TWO QUESTIONS ARE WITH JAFAR
 
 IN FLIGHT: nothing. Run 44 landed on 17710df and was read in the ruling's

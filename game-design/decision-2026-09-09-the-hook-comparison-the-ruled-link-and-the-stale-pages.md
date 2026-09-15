@@ -461,4 +461,40 @@ without a second change; B1 must print the staged list from the compare
 directory before the sentinel push. I did not count the research digest's
 words against `count_words`; the Producer's 117 is quoted, and A6 prints it.
 
+## 7. The ruled URL moved with the site, 2026-09-15 (queue 256)
+
+THE ENTRY IS NOT DELETED AND ITS REASONING IS UNTOUCHED. Section 2.4's next
+rung, a published page carrying the research, has not been built, so the one
+ruled whole-URL exception still stands. What moved is where the research lives.
+
+LEDGER left `jsab258/wc26-picks` on 2026-09-10 and the branch named in the URL
+above, `claude/game-dev-ai-automation-2h67ix`, does not exist on
+`jsab258/ledger` (its branches are main, art/atlas-01, pc-inbox, pc-results).
+The entry therefore pointed at a tree nothing could resolve. Queue 256
+deliverable 2 moves it, in the same commit that moves `SITE_ORIGIN`, to:
+
+    https://github.com/jsab258/ledger/tree/main/production/art/atlas-02/research
+
+MEASURED BEFORE IT WAS TYPED, rather than assumed: `git ls-tree -r --name-only
+HEAD -- production/art/atlas-02/research` on 2026-09-15 returns five files
+(adult-clothing-by-occupation, hillside-housing-dated-series,
+household-contents-and-upstairs, small-pub-plan-measured,
+transport-timetables), so the path in the new URL exists on `main` in this
+repository. Nobody here has loaded github.com to see the rendered tree; the
+egress proxy allows the API and refuses the site, which is the same limit
+recorded throughout section 3.
+
+THE OLD URL IS LEFT IN SECTIONS 2 AND 2.5 ON PURPOSE. Those sections are the
+record of what was ruled on 2026-09-09, and a record edited to agree with today
+is not a record. `tools/producer-check.py`'s selftest asserts that this file
+carries the URL the tuple currently names, which is why the new one is written
+out in full above rather than described.
+
+ONE CONSEQUENCE, NAMED. `production/outbox/2026-09-09-atlas-02-research-digest.
+unprompted.md` was sent carrying the OLD tree URL, so from 2026-09-15 that
+archived message no longer matches the ruled entry and would fail `linkdest`
+on a re-walk. It is one of the messages on `PRE_MOVE_MESSAGES` in
+`tools/producer-check.py` for exactly that reason: a message already sent
+cannot be graded against a rulebook written after it went.
+
 <!--RULING spawn=2026-09-09T08:04:25Z-->

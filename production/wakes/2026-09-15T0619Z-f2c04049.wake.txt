@@ -1,0 +1,9 @@
+id: f2c04049
+due: 2026-09-15T06:19:33Z
+armedAt: 2026-09-15T06:07:33Z
+armedBy: resident/dictated-text-applied-item-1-back-with-the-director
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+SUPERSEDES 29c6df09, discharged now. ONE LINE OF IT IS OBSOLETE AND IS CORRECTED HERE RATHER THAN EDITED OUT: its brief plan says to tell Jafar the 0.85 reading predicts 0.368 against a sheet he said not to tune toward. THAT PREDICTION IS WITHDRAWN and must not reach him. The ruling of 05:43Z section 4 showed the resident's exponent was fitted on two GAMMA-BYTE ratios and applied to a LINEAR ratio; applied consistently the three candidate readings give 0.313, 0.305 and 0.299, inside what a one-point model can resolve. The resident reproduced that arithmetic itself before accepting it. The brief names the reading taken and the two alternatives in ONE SENTENCE and carries NO predicted p50; run 45 prints the measured one. WHERE THE BATCH STANDS: the studio-director has ruled (record decision-2026-09-15-ruling-the-forty-are-waived-by-name-and-the-walk-back-stands-as-his-number.md, stamp 2026-09-15T05:43:41Z). The batch LANDS. Dictated items 2 to 11 are being applied by the resident. ITEM 1 IS REVERTED AND BACK WITH THE DIRECTOR: its dictated statement took researchVerbatimWaiverBit from 5/10 to 0/10 and the selftest from 163/0 to 10 FAILED, so the director's own condition (equal, or revert and report) fired. Awaiting a corrected statement or a ruling that it leaves this batch as its own item. DO NOT INVENT A THIRD VERSION OF THAT STATEMENT. WHEN THE DIRECTOR ANSWERS: apply or drop item 1 as ruled, re-run verify, paste the footer FROM ledger/.verify-footer, commit staging BY NAME, push. THEN DISPATCH RUN 45 and read it in the ruling's section 11 order, FRAME FIRST, quoting no prediction.

@@ -219,7 +219,7 @@ FIELD_CAP = 540
 #: question, the options, the recommendation, the default and the deadline IN
 #: FULL: the link is a convenience, the message is the payload, and no wording
 #: here promises the link works.
-SITE_ORIGIN = "https://jsab258.github.io/wc26-picks/"
+SITE_ORIGIN = "https://jsab258.github.io/ledger/"
 CARDS_PAGE = "index.html"
 CARD_ANCHOR_PREFIX = "card-"
 

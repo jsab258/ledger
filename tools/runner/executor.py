@@ -195,7 +195,7 @@ LOCK_STALE_SEC = 5 * POLL_SEC + 60
 #: and the selftest reads that file and asserts the two agree rather than
 #: trusting this copy: a drifted link would fail the link floor on every
 #: answer this daemon ever writes.
-SITE_LINK = "https://jsab258.github.io/wc26-picks/"
+SITE_LINK = "https://jsab258.github.io/ledger/"
 
 #: Where the worktree and the record live. Siblings of the repository, for the
 #: ownership reasons in the module docstring. Named here so there is one place

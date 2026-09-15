@@ -23,3 +23,11 @@ acceptance: a dispatch with the input set to a day whose brief is
   item's.
 max_sessions: 1
 status: READY 2026-09-15, filed by the ruling of 00:52Z. Not blocking.
+
+  RULED 2026-09-15 05:43Z: the 12th's brief as written cannot be this item's
+  accepting specimen. It is linkless, the floor is live since 05:20:56Z, and
+  the single-file check the send step runs does not apply PRE_MOVE_MESSAGES
+  (gate-only by design, producer-check.py at the list), so a dispatch naming
+  2026-09-12 today produces a refused-record on linkfloor and no receipt. The
+  accepting specimen is a brief carrying a link, or the 12th rewritten with
+  one, and whether the 12th is rewritten at all is the Producer's call.

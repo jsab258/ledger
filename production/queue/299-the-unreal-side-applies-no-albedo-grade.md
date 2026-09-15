@@ -276,3 +276,86 @@ status: READY 2026-09-15. Cause TWO of the three measured in queue 181, filed
   that the legacy build's number and his adjustment can be told apart when
   wetness arrives and one of them has to move.
 
+  HOW 0.85 WAS READ, AND THE RESIDENT'S OWN BRIEF CONTRADICTED ITSELF.
+  The dispatch listed three candidate readings (0.85 on the gamma grade, 0.85
+  on the linear value, 0.85 on the rendered result) and then said separately
+  that "the grade gets closer to white, not further from it". THE THREE
+  CANDIDATES ARE ALL MULTIPLIES AND ALL GO THE WRONG WAY. Checked rather than
+  argued, on the landed ground gamma term of 0.4070:
+
+    literal 0.85x            gamma 0.3460  vs 0.4070   DARKER
+    0.85x on the linear      linear 0.1172 vs 0.1378   DARKER
+    1 - 0.85*(1-G)           gamma 0.4960  vs 0.4070   LIGHTER   <- taken
+    G / 0.85                 gamma 0.4788  vs 0.4070   LIGHTER
+    G ** 0.85                gamma 0.4658  vs 0.4070   LIGHTER
+
+  The grade MULTIPLIES base colour, so a smaller grade is a darker frame, and
+  Jafar's own sentence says the grade OVERSHOOTS and the frame is darker than
+  his sheet. Undoing an overshoot moves the grade UP. The direction sentence
+  was right and the candidate list under it was wrong; the builder caught the
+  contradiction and resolved it in favour of the direction, which is his
+  sentence rather than anyone's inference.
+
+  TAKEN: a STRENGTH MEASURED FROM WHITE, APPLIED IN GAMMA, G' = 1 - 0.85 *
+  (1 - G). It makes "0.85 of what landed" literally true of the quantity a
+  grade IS, its distance below 1.0; it composes in gamma where the other two
+  grade terms already compose, by that block's own rule that any other order
+  is a different colour rather than a rounding difference; and it anchors, so
+  strength 1.0 reproduces run 44 exactly and strength 0.0 is white. G/0.85 and
+  G**0.85 are named in the header with their numbers so a re-read is one
+  constant rather than an archaeology.
+
+  ONE TENSION TO PUT TO HIM RATHER THAN RESOLVE HERE. The reading taken
+  predicts a ground p50 near 0.368 against his sheet's 0.373, and he said
+  explicitly NOT to tune by eye toward the sheet because the sheet is wet and
+  the street is dry. G**0.85 lands near 0.334 and G/0.85 near 0.348, both short
+  of the sheet and so more consistent with that instruction. THE PREDICTION IS
+  SOFT AND NOTHING WAS DESIGNED FROM IT: it comes from a ONE-POINT response
+  model (the kerb's rendered 0.522 against its texel 0.406), which is rule 2's
+  own failure of setting a number from a series that does not exist. The
+  direction conclusion is model-free; only this tension depends on the model.
+
+  AND THE RESIDENT'S DIAGNOSIS OF THE FAILING CHECK WAS WRONG IN ITS MECHANISM.
+  It called the procedural failure a double-grade. It is not: AlbedoGradeFor
+  returns white for a procedural surface, so each surface still takes the term
+  exactly once. THE REAL FAULT IS QUIETER AND WORSE. ProceduralAlbedoTexel
+  REPRODUCES A UNITY VALUE and is asserted against hand-computed Unity
+  literals, so putting an Unreal-only aesthetic constant inside it makes it
+  stop equalling the thing it is defined to equal while still printing a
+  plausible colour. A parity value that has silently stopped being one. The
+  conclusion (keep the walk-back out of that function) was right for the wrong
+  reason, and the right reason is the one worth keeping.
+
+  WHERE IT LANDED: JafarWalkBack is called at exactly ONE site, inside
+  AlbedoGradeFor, and ProceduralAlbedoTexel carries zero references to it,
+  both checked by grep rather than by reading the report. Suite 447 to 449,
+  0 failed. No new key: the strength rides tintFrom's existing value as
+  /jafarWalkBack.0.85..ruled.2026-09-15.
+
+  RESIDUAL, REPORTED AND NOT FIXED: the 10 procedural pieces of 610 (interior,
+  paint_yellow) stay at the full legacy grade while the twelve pack surfaces
+  come up, so they render slightly darker relative to their neighbours than in
+  run 44. That is his eye to judge and not a thing to fix by putting an
+  engine-local constant into a parity value.
+
+  RULED 2026-09-15 05:43Z (decision-2026-09-15-ruling-the-forty-are-waived-by-
+  name-and-the-walk-back-stands-as-his-number.md, section 4): THE READING
+  STANDS AS HIS NUMBER, and THE 0.368 ABOVE IS WITHDRAWN AS A PREDICTION.
+  The three figures in the tension paragraph reproduce exactly from one model,
+  p50 = 0.2711 x (Lin(G')/Lin(0.407))^k with k = ln 0.522 / ln 0.406 = 0.7213.
+  THE EXPONENT WAS FITTED ON TWO GAMMA-BYTE RATIOS (rendered 93.7/179.7, texel
+  74.8/184.3) AND APPLIED TO A LINEAR RATIO. Applied in the space it was fitted
+  in, the same one-point model reads 0.313 for the reading taken, 0.299 for
+  G**0.85 and 0.305 for G/0.85; fitted and applied in linear it reads 0.31,
+  0.30 and 0.30. The resident reproduced that arithmetic before accepting it.
+  SO THE NEAR-COINCIDENCE WITH THE SHEET'S 0.373 WAS A PROPERTY OF THE MIXED
+  ARITHMETIC AND NOT OF THE READING, and under a consistent model the three
+  readings differ by less than the model can resolve. NO PREDICTED p50 ENTERS
+  THIS ITEM, THE DISPATCH OR THE BRIEF: run 45 prints the measured one.
+  The reading is kept because it is the one under which "0.85 of what landed"
+  is literally true of what a grade is, its distance below white, and not
+  because of any number it predicts. If run 45 lands near 0.373 that is a
+  measured coincidence reported under his own label (the sheet is wet, the
+  street is dry), never a tuning: the constant was fixed before the run and is
+  his. Nothing goes back to him as a question before the frame.
+

@@ -40,6 +40,13 @@ inside `tools/publish-glance.py`. Measured 2026-09-06 from the container:
     curl https://jsab258.github.io/wc26-picks/map.html
     curl: (56) CONNECT tunnel failed, response 403       http=000
 
+THAT URL IS NOT MOVED WITH THE SITE AND MUST NOT BE, and it is the one
+`github.io/wc26-picks` string left in this file. It is a TRANSCRIPT of a
+request made on 2026-09-06 against the origin that was live that day, not a
+link anything follows. Rewriting it to `github.io/ledger` on 2026-09-15 with
+the rest of queue 256 would claim a measurement nobody took. The fixtures
+below, which are links a message carries, DID move.
+
 The container cannot request the served page at all, so a consumer there could
 only ASSUME publication succeeded, and a notification linking to a page that
 did not publish is worse than no notification. It is not inside
@@ -603,7 +610,7 @@ def selftest():
                               "changedFields": "none", "message": None})
             before = outbox_count(r1)
             code, done, rel, _ = run(r1, base + "/map.html",
-                                     "https://jsab258.github.io/wc26-picks/"
+                                     "https://jsab258.github.io/ledger/"
                                      "map.html", commit)
             codes["accept"] = code
             wrote = (Path(r1) / rel).is_file() if rel else False
@@ -619,7 +626,7 @@ def selftest():
                 if wrote else ""
             ok("acceptMessageNamesTheFieldAndCarriesTheMapLink",
                GROUP_WORDS["q2"] in body_written
-               and "jsab258.github.io/wc26-picks/map.html" in body_written
+               and "jsab258.github.io/ledger/map.html" in body_written
                and "q2" not in body_written,
                "namesTheGroupInWords=%s carriesTheMapLink=%s carriesAKey=%s"
                % (GROUP_WORDS["q2"] in body_written,
@@ -639,7 +646,7 @@ def selftest():
             for c in combos:
                 f = tmp / ("combo-%s.unprompted.md" % "-".join(c))
                 f.write_text(render_message(
-                    c, "https://jsab258.github.io/wc26-picks/map.html"),
+                    c, "https://jsab258.github.io/ledger/map.html"),
                     encoding="utf-8")
                 good, said = grade(f)
                 passes += 1 if good else 0
@@ -660,7 +667,7 @@ def selftest():
                               "why": "planted-already-notified",
                               "changedFields": "none", "message": None})
             code, done, rel, _ = run(r2, base + "/later.html",
-                                     "https://jsab258.github.io/wc26-picks/"
+                                     "https://jsab258.github.io/ledger/"
                                      "map.html", commit, quiet=True)
             codes["timestamp"] = code
             ok("rejectRegeneratedTimestamp",
@@ -678,7 +685,7 @@ def selftest():
             # no message is written.
             r3 = _repo(tmp / "firstrun")
             code, done, rel, _ = run(r3, base + "/map.html",
-                                     "https://jsab258.github.io/wc26-picks/"
+                                     "https://jsab258.github.io/ledger/"
                                      "map.html", commit, quiet=True)
             codes["firstrun"] = code
             rec3 = read_record(r3)[0]
@@ -693,7 +700,7 @@ def selftest():
             # ... and the run after the baseline is silent too, which is the
             # half that proves the baseline is not an announcement deferred.
             code2, _, rel2, _ = run(r3, base + "/map.html",
-                                    "https://jsab258.github.io/wc26-picks/"
+                                    "https://jsab258.github.io/ledger/"
                                     "map.html", commit, quiet=True)
             ok("rejectTheRunAfterABaseline",
                code2 == EXIT_NO_CHANGE and not rel2 and outbox_count(r3) == 0,
@@ -703,7 +710,7 @@ def selftest():
             # A SERVED PAGE WITH NO MATERIAL STATE is also nothing measured.
             r4 = _repo(tmp / "nostate")
             code, done, rel, _ = run(r4, base + "/nostate.html",
-                                     "https://jsab258.github.io/wc26-picks/"
+                                     "https://jsab258.github.io/ledger/"
                                      "map.html", commit, quiet=True)
             codes["nostate"] = code
             ok("rejectServedPageWithNoMaterialState",
@@ -722,11 +729,11 @@ def selftest():
                               "why": "planted-previous-state",
                               "changedFields": "none", "message": None})
             c_a, _, rel_a, _ = run(r5, base + "/map.html",
-                                   "https://jsab258.github.io/wc26-picks/"
+                                   "https://jsab258.github.io/ledger/"
                                    "map.html", commit, quiet=True)
             after_first = outbox_count(r5)
             c_b, _, rel_b, _ = run(r5, base + "/map.html",
-                                   "https://jsab258.github.io/wc26-picks/"
+                                   "https://jsab258.github.io/ledger/"
                                    "map.html", commit, quiet=True)
             codes["twice"] = c_b
             ok("rejectTheSecondPublishOfOneState",
@@ -773,7 +780,7 @@ def selftest():
                           "why": "planted-previous-state",
                           "changedFields": "none", "message": None})
         code, done, rel, _ = run(r7, "http://127.0.0.1:1/map.html",
-                                 "https://jsab258.github.io/wc26-picks/"
+                                 "https://jsab258.github.io/ledger/"
                                  "map.html", commit, quiet=True)
         codes["unreachable"] = code
         ok("refusalToRequestIsNotAFailedPublish",

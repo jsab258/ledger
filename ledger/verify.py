@@ -1775,6 +1775,108 @@ def content_rule():
                   % (fixtures, nums.group(2), nums.group(3), nums.group(1)))
 
 
+SERVED_MARKER_REL = "production/site-served.txt"
+#: A whole sha and nothing shorter. The marker is written from a run's
+#: `head_sha`, which is always 40 hex; accepting a short one would accept a
+#: prefix a session could have typed from memory.
+SERVED_SHA_RE = re.compile(r"^[0-9a-f]{40}$")
+
+
+def served_marker_provenance(root=None):
+    """(ok, token) for the served-page marker, checked against GIT, offline.
+
+    `root` EXISTS SO THE REJECTING CASE CAN BE PINNED TO A SYNTHETIC TREE. The
+    accepting fixture is the LIVE repository, which is this project's rule for
+    a tool that checks the project itself; the rejecting fixtures are markers
+    carrying shas and origins that exist nowhere, so doing the work this guard
+    prompts can never break the guard.
+
+    WHAT THIS IS AND WHY ITS SHAPE IS NOT THE ONE THE AMENDMENT ASKED FOR.
+    `production/queue/256`'s amendment of 2026-09-11 says `printedBy=` names
+    the short sha of "the CI commit carrying the publish-glance verdict file",
+    and that this function check that commit exists AND that a file in it
+    carries `servedCommit=<the same sha>`. THAT MECHANISM DESCRIBES A WORKFLOW
+    THAT DOES NOT EXIST. `.github/workflows/publish-glance.yml` was read on
+    2026-09-15: it runs on ubuntu-latest with `permissions: contents: read`,
+    has no `git add`, `git commit` or `git push` in any step, and writes its
+    verdict to `$GITHUB_STEP_SUMMARY` and nowhere else. There is no CI commit
+    to name, so the amendment implemented literally would be a guard that can
+    never pass, which is the validator-nothing-survives failure this project
+    has already paid for once.
+
+    WHAT IS ACTUALLY CHECKABLE FROM INSIDE THIS CONTAINER, and it is what runs
+    below. The egress proxy refuses github.io and the Actions log redirects to
+    a blob host it also refuses, so the run cannot be re-read here and the page
+    cannot be loaded here. Git can. Four readings, all offline:
+
+      1. `servedCommit` is a whole 40-hex sha, not a prefix and not prose;
+      2. that object EXISTS in this repository and is a commit;
+      3. it is an ANCESTOR of HEAD. Never equality: publish-glance rides every
+         push, so the served commit is routinely one or more commits behind by
+         the time anything reads this, and an equality test would go red for
+         the ordinary case. Ancestry is what refutes a FABRICATED sha and a sha
+         from another repository;
+      4. `servedUrl` is the origin `tools/producer-check.py` actually links to.
+         That is the half-move guard from the other side: the tool's own
+         `marker_origin_consistent()` refuses a served commit while SITE_ORIGIN
+         is the ARCHIVE, and this refuses a marker naming an origin the tool
+         does not serve links for.
+
+    WHAT IT CANNOT DO, SAID PLAINLY RATHER THAN IMPLIED. None of this proves a
+    RUN printed the sha. A session could type the sha of any ancestor commit.
+    `printedBy` is the audit trail for that and it is checked for SHAPE only
+    (it names publish-glance and a run id), because verifying it means an
+    Actions API call and this gate runs before every commit, offline, in a
+    container whose network is not guaranteed. The honest boundary: git refutes
+    an invented sha, `printedBy` is what a human re-queries. THAT IS STRONGER
+    THAN THE AMENDMENT ASKED FOR IN ONE WAY (it points at the run, the job and
+    the step that printed, rather than at a commit that might carry a file) and
+    weaker in another (nothing here re-reads the run), and both halves are
+    written down so the next reader does not have to work it out.
+
+    A MARKER READING `none` IS AN ACCEPTING CASE, not a skip: the floor is off
+    by ruling and there is no provenance to check. It returns its own token so
+    the footer can never read the same as a marker nobody looked at."""
+    repo = pathlib.Path(root) if root else ROOT.parent
+    marker = repo / SERVED_MARKER_REL
+    try:
+        text = marker.read_text(encoding="utf-8", errors="replace")
+    except OSError as e:
+        return False, "markerProvenance=unreadable/%s" % type(e).__name__
+    hits = [ln for ln in text.splitlines() if ln.startswith("servedCommit=")]
+    if len(hits) != 1:
+        return False, ("markerProvenance=marker-carries-%d-servedCommit-lines"
+                       "-of-the-1-required" % len(hits))
+    fields = dict(kv.split("=", 1) for kv in hits[0].split() if "=" in kv)
+    sha = fields.get("servedCommit", "")
+    if sha == "none":
+        return True, "markerProvenance=no-page-served-yet/nothing-to-check"
+    if not SERVED_SHA_RE.match(sha):
+        return False, ("markerProvenance=not-a-whole-40-hex-sha/%s"
+                       % _cap([sha], width=44))
+    code, out = _git(repo, "cat-file", "-t", sha)
+    if code != 0 or out.strip() != "commit":
+        return False, ("markerProvenance=commit-not-in-this-repository/%s"
+                       % sha[:12])
+    code, _out = _git(repo, "merge-base", "--is-ancestor", sha,
+                      "HEAD")
+    if code != 0:
+        return False, ("markerProvenance=commit-is-not-an-ancestor-of-HEAD/%s"
+                       % sha[:12])
+    printed = fields.get("printedBy", "")
+    if ("publish-glance" not in printed) or ("/id-" not in printed):
+        return False, ("markerProvenance=printedBy-names-no-publish-glance-run"
+                       "/%s" % (_cap([printed], width=40) or "empty"))
+    url = fields.get("servedUrl", "")
+    src = (ROOT.parent / "tools" / "producer-check.py").read_text(
+        encoding="utf-8", errors="replace")
+    if ('SITE_ORIGIN = "%s"' % url) not in src:
+        return False, ("markerProvenance=servedUrl-is-not-producer-check-"
+                       "SITE_ORIGIN/%s" % _cap([url], width=44))
+    return True, ("markerProvenance=ok/commit-%s/ancestor-of-HEAD/%s"
+                  % (sha[:12], printed))
+
+
 def producer_register():
     """Every Producer message, against the ruled register, before it commits.
 
@@ -1800,10 +1902,22 @@ def producer_register():
 
     Reported like every other check, with the numbers on the footer line, so a
     gate that walks nothing is visible as a number rather than as silence."""
+    # THE MARKER'S PROVENANCE, READ BEFORE THE WALK AND REPORTED WITH IT.
+    # Folded into this check rather than given its own, because it is the same
+    # question one layer down: the register the walk applies is chosen by that
+    # marker, so a marker whose sha nothing here can find is a walk graded by a
+    # number somebody typed. A RED, not a warning, per queue 256's amendment.
+    prov_ok, prov = served_marker_provenance()
     code, out = run(["python3", str(ROOT.parent / "tools" / "producer-check.py"),
                      "--gate"])
     tail = [l.strip() for l in out.splitlines() if l.startswith("producer-check --gate:")]
     keys = tail[-1].split(": ", 1)[1] if tail else ""
+    if not prov_ok:
+        return False, ("PRODUCER REGISTER: the served-page marker %s cannot be "
+                       "traced: %s. The link floor reads that file, so a sha "
+                       "nothing can find is a rulebook nobody chose "
+                       "(queue 256). [%s]"
+                       % (SERVED_MARKER_REL, prov, keys or NOTHING_MEASURED))
     if code != 0:
         # The detail lines, not the per-file table: `  fail  <path> <why>` is
         # padded for the table and the padding reaches the footer as a double
@@ -1817,7 +1931,7 @@ def producer_register():
                        + " [" + (keys or NOTHING_MEASURED) + "]")
     if not keys:
         return False, "producer-check --gate did not report"
-    return True, "producer register %s" % keys
+    return True, "producer register %s %s" % (keys, prov)
 
 
 CLAUDE_MD_WORDS = 2000

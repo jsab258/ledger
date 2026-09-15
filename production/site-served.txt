@@ -1,26 +1,35 @@
 # IS A PAGE SERVED FROM THE NEW REPOSITORY? One machine-readable line, below.
 #
-# WHAT READS IT. `tools/producer-check.py` and nothing else. The Producer's
-# LINK FLOOR (at least one link, constitution law 12, evidence behind any
-# message that speaks) is LIVE only while this file names a served commit.
-# While it reads `none`, zero links is legal in every register and the check
-# prints `linkFloorActive=false` with its reason, on every run, so nobody has
-# to read the code to know which branch it took.
+# WHAT READS IT. `tools/producer-check.py` and nothing else grades messages by
+# it; `ledger/verify.py:producer_register()` reads it a second time to check
+# its PROVENANCE before any commit. The Producer's LINK FLOOR (at least one
+# link, constitution law 12, evidence behind any message that speaks) is LIVE
+# only while this file names a served commit. While it reads `none`, zero links
+# is legal in every register and the check prints `linkFloorActive=false` with
+# its reason, on every run, so nobody has to read the code to know which branch
+# it took.
 #
-# WHY, AND IT IS NARROW AND TEMPORARY. LEDGER moved off `jsab258/wc26-picks`
-# on 2026-09-10. All five destinations the register permits sit under the
-# ARCHIVE's published pages, so a link sent today would show Jafar the world
-# as it was BEFORE the move. A message with no link is honest; a message with
-# one of those links is not. Ruled in
+# WHY, AND IT WAS NARROW AND TEMPORARY. LEDGER moved off `jsab258/wc26-picks`
+# on 2026-09-10. Every destination the register permitted sat under the
+# ARCHIVE's published pages, so a link sent between then and 2026-09-15 would
+# have shown Jafar the world as it was BEFORE the move. A message with no link
+# is honest; a message with one of those links is not. Ruled in
 # `game-design/decision-2026-09-10-ruling-the-move-batch-and-the-fleet-left-behind.md`
 # section 5 finding 6, verbatim: "Until this item lands, briefs carry no site
 # link; the register allows zero." Filed as `production/queue/256` (which
 # decides when a page IS served) and `production/queue/259` (which is the
 # code catching up with the ruling).
 #
+# THE WINDOW IS CLOSED, 2026-09-15. The line below names a served commit, so
+# the floor is back at 1..2 for everything written from here on. It moved in
+# THE SAME COMMIT that moved `tools/producer-check.py:SITE_ORIGIN` off the
+# archive, which is what this file's own rule requires and what the named guard
+# `marker-names-served-commit-but-SITE_ORIGIN-is-the-archive` refuses to let
+# happen by halves.
+#
 # THE FLOOR IS NOT DELETED AND MUST NOT BE. It exists because a message
 # without evidence behind it teaches vagueness, and the move did not touch
-# that reasoning. It is wrong only about the window in which no page is
+# that reasoning. It was wrong only about the window in which no page was
 # served at all.
 #
 # WHO MAY WRITE THE LINE, and it is one job: queue 256's deliverable 2. ONE
@@ -31,6 +40,54 @@
 # session that types a sha it did not watch printed has turned the instrument
 # into a guess, which is the whole fault this file exists to prevent.
 #
+# WHAT THE RUN NAMED BELOW ACTUALLY PRINTED, and how much of it is checkable
+# from inside this container (the egress proxy refuses github.io, so NOBODY
+# HERE HAS LOADED THE PAGE and this file does not claim anyone has).
+#
+#   publish-glance run 27, id 34932214186, on jsab258/ledger, push to `main`,
+#   head_sha 5a8ef789dc1f5044052abd496667352c752b1b9c, conclusion `success`,
+#   completed 2026-09-15T05:21:01Z. Job `publish` id 104262618410. Its step 13,
+#   "REQUEST THE PUBLISHED PAGES AND READ WHAT CAME BACK", ran
+#   2026-09-15T05:20:55Z to 05:20:56Z and concluded `success`.
+#
+#   RUN 26 (id 34928226785, head_sha ada1535b) IS THE READING THE DIRECTOR
+#   WATCHED AND QUOTED INTO queue 256, and it is named here rather than
+#   dropped. It was superseded at 05:21:01Z, four minutes before this line was
+#   written, by run 27 above: the workflow rides every push to `main` and a
+#   commit landed while this item was being built. Re-queried rather than
+#   assumed. The newer reading is the one the line below carries, because the
+#   marker's question is "is a page served NOW", and 5a8ef789 was HEAD at the
+#   moment it was written. IT WILL NOT STAY HEAD, and that is correct and
+#   expected: the guard in ledger/verify.py asks whether the served commit is
+#   an ANCESTOR of HEAD, never whether it equals it, because every commit that
+#   lands before the next publish deploy would fail an equality test.
+#
+#   THAT STEP'S SUCCESS IS THE ASSERTION, not a log line somebody copied, and
+#   it is the strongest evidence reachable from here: the raw job log redirects
+#   to a blob host the egress proxy refuses (CONNECT 403), so the step's
+#   CONCLUSION from the Actions API is what a session in this container can
+#   actually read. The step runs under `set -eu` and calls
+#   `tools/publish-glance.py --check` four times, once per published page;
+#   `check()` returns 1 on STALE (including `reason=commit-mismatch`, which is
+#   the stale-CDN case) and 2 on a secret leak, and `main()` exits that code.
+#   So the step could not have concluded `success` unless all four pages
+#   returned 200 with `pageStampCommit` equal to its `--expect-commit`, and
+#   unless the first published picture served at its manifest byte count.
+#
+#   FOR RUN 26 THE SUMMARY ITSELF WAS READ, by the director who dispatched it:
+#   `pageHttp=200 pageResult=OK pageStampCommit=ada1535b..
+#   expectCommit=ada1535b.. secretHits=0/7-patterns` and `pictureHttp=200
+#   pictureBytes=110471/110471-expected`, with map, gallery and world URLs
+#   under https://jsab258.github.io/ledger/. That is the same four-page check
+#   run 27 passed; only the commit differs.
+#
+#   `pagesEnableHttp: 403` IS NOT A FAILURE AND MUST NOT BE READ AS ONE. That
+#   is the workflow's optional attempt to SET the Pages build source through
+#   the API, refused for lack of permission on the job token. Pages is already
+#   configured and serving, which is what step 13 measures, so the refusal
+#   changes nothing. The step records it rather than swallowing it; a recorded
+#   refusal is the ruled ending, not a red one.
+#
 # EXACTLY ONE LINE BELOW BEGINS `servedCommit=`. Zero lines, two lines, or a
 # file that cannot be read all mean ONE thing to the reader: THE FLOOR STAYS
 # LIVE, and the printed reason says which fault it saw. The failure direction
@@ -40,4 +97,11 @@
 #   servedCommit=none   no page is served yet, so zero links is legal.
 #   servedCommit=<sha>  a page IS served, so the floor is 1..2 again.
 #
-servedCommit=none servedUrl=none servedRepo=none printedBy=nothing-measured servedAt=nothing-measured
+# NO VALUE BELOW MAY CONTAIN A SPACE. Every reader of a key=value channel
+# splits on whitespace, so `printedBy` uses `/` for structure and names the
+# run by number AND by id: the number is what a human reads, the id is what
+# re-queries the API. `servedAt` is the instant the SERVING was measured (step
+# 13's completion), not the instant the page was generated and not the instant
+# this line was typed.
+#
+servedCommit=5a8ef789dc1f5044052abd496667352c752b1b9c servedUrl=https://jsab258.github.io/ledger/ servedRepo=jsab258/ledger printedBy=publish-glance/run-27/id-34932214186/job-104262618410/step-13-REQUEST-THE-PUBLISHED-PAGES servedAt=2026-09-15T05:20:56Z

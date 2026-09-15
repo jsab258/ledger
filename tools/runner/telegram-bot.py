@@ -2884,7 +2884,7 @@ def _selftest_cases(ok, bad, state):
     os.makedirs(os.path.dirname(join_abs), exist_ok=True)
     with open(join_abs, "w", encoding="utf-8", newline="\n") as fh:
         fh.write("The street walks.\n\n"
-                 "[the map](https://jsab258.github.io/wc26-picks/map.html)\n")
+                 "[the map](https://jsab258.github.io/ledger/map.html)\n")
     with open(join_abs[:-3] + ".photo.txt", "w", encoding="utf-8",
               newline="\n") as fh:
         fh.write("clip: %s\n" % gif_rel)
