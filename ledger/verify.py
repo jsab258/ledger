@@ -3368,12 +3368,65 @@ DIRECTOR_MIN_LINES = 100                      # MORE than this is "substantial"
 #     python3 ledger/verify.py --cadence-series 120
 # REVISIT when a per-prefix series exists (the printer's next rung, queue
 # 018) or when a fresh 120-commit row shows a value inside 89..110.
-DIRECTOR_MIN_SOURCE = ("MEASURED 1 Sep 2026 from --cadence-series 120 under "
-                       "the eight-prefix scope (gap 89..110, 26 of 120 over); "
-                       "a per-prefix series is the next rung")
+#
+# RE-MEASURED 15 SEP 2026 UNDER D45, AND IT SURVIVED. D45 moved five of the
+# nine prefixes off the gated side, which makes the gated half a DIFFERENT
+# POPULATION from the one the 1 Sep row was read on — the same trap the 1 Sep
+# widening set, so the row was printed again before the number was kept rather
+# than carried on the assumption that a bound is a bound. Run, both rungs from
+# one walk of the last 200 landed commits:
+#     python3 ledger/verify.py --cadence-series 200
+#   [all]   148 zeroes of 200; non-zero median 911, p90 5145, max 11760,
+#           cumulative 88,703; 40 of 200 substantial at 100
+#   [gated] 169 zeroes of 200; non-zero sorted
+#           2 4 16 17 18 30 48 62 79 | 251 293 389 407 416 470 510 ... 2750;
+#           median 510, p90 1515, cumulative 21,486; 22 of 200 substantial
+#   difference: 67,217 of 88,703 lines leave the gated side (24.2% remains),
+#           and 18 of 200 commits stop being substantial (40 -> 22)
+# THE BOUND SITS IN A REAL GAP IN THE NEW POPULATION TOO, and a wider one than
+# before: nothing lands between 79 and 251 in the gated row, where the 1 Sep
+# row had 89..110. So 100 is EVIDENCE under this scope and not inherited, and
+# nothing in the row argues for a neighbour — 200 would exempt nothing at all
+# (there is no gated value between 100 and 251), 50 would add one commit at 62
+# and one at 79.
+# REVISIT when a fresh 200-commit gated row shows a value inside 79..251.
+DIRECTOR_MIN_SOURCE = ("MEASURED 1 Sep 2026 and RE-MEASURED 15 Sep under D45's "
+                       "gated-only scope from --cadence-series 200 (gated gap "
+                       "79..251, wider than the 89..110 it was set in; 22 of "
+                       "200 gated-substantial, 40 before D45); D45 leaves "
+                       "24.2% of landed work lines on the gated side")
 DIRECTOR_SCRIPTS = "ledger/Assets/Scripts/"   # git paths are repo-root relative
 DIRECTOR_LOG = ".claude/agent-log.tsv"
 DIRECTOR_AGENT = "studio-director"
+
+#: THE MEASURING HALF OF `ledger/`, CARVED OUT BY NAME FOR D45 (15 Sep).
+#: A NAMED LIST AND NOT A HEURISTIC, for the same reason `GAME_AGENTS` is:
+#: "is this thing a checker" is a judgement about what an artefact is FOR, and
+#: no path convention carries it — `ledger/CoreTests/` and `ledger/ReachCheck/`
+#: are both `.csproj` directories under `ledger/` and they land on opposite
+#: sides of the ruling. Listing them means a new harness is GATED until
+#: somebody names it, which is the safe direction: the cost of forgetting is
+#: one review that was not needed, and the cost of a wildcard that swallowed
+#: CoreTests is a Core change with no review at all.
+#: Order inside this tuple does not matter (str.startswith takes a tuple);
+#: order of the ENTRY in DIRECTOR_WORK does, and it sits ahead of `ledger/`.
+DIRECTOR_LEDGER_TOOLS = (
+    "ledger/verify.py",            # this file: the gate itself
+    "ledger/lint-usings.py",       # a lint
+    "ledger/sim-report.md",        # a report the harness writes
+    "ledger/ShapeCheck/",
+    "ledger/ReachCheck/",
+    "ledger/GameCheck/",
+    "ledger/BackendCheck/",
+    "ledger/Adversary/",
+    "ledger/SaveChaos/",
+    "ledger/Soak/",
+    "ledger/ConvoProbe/",
+    "ledger/StrangerTest/",
+    "ledger/BalanceLab/",
+    "ledger/SpeechBench/",
+    "ledger/SimHarness/",
+)
 
 #: THE REVIEWED SCOPE — (git path prefix, LABEL, why it counts as work), IN
 #: ORDER. Repo-root relative, forward slashes, exactly as git prints them.
@@ -3402,30 +3455,99 @@ DIRECTOR_AGENT = "studio-director"
 #: LABELS carry no whitespace, no `/` and no `:` — they are printed as ONE
 #: `key=value` token (`workByScope=scripts:0/tools:1206/...`) into a channel
 #: that splits on whitespace and truncates silently.
+#:
+#: THE THIRD FIELD IS D45'S ANSWER, ADDED 15 SEP: True = GATED (a review is
+#: owed at the bound), False = UNGATED (reported, never gated). D45's words:
+#: "A tool that measures the game is ungated. A tool the GAME RUNS ON is not:
+#: the line is whether the artefact ships inside the thing being played or
+#: only reports on it." Where an artefact does both, D41's structural test
+#: decides — WHAT UNDOING A WRONG ANSWER COSTS: "if a wrong answer is undone
+#: by another render, it is visual. If undoing it means a migration, a golden
+#: file, a canon edit or a schema change, it is structural."
+#:
+#: THE ASSIGNMENT IS PRINTED (`d45Gated=` / `d45Ungated=`), NOT BURIED, because
+#: it is the half of this gate most likely to decay: a prefix's contents move
+#: and nothing goes red to say the side it was put on stopped being true.
+#:
+#: MEASURED BEFORE IT WAS ASSIGNED, AND RE-PRINTED AFTER — CUMULATIVE landed
+#: work lines per prefix over the last 200 commits (`--cadence-series 200`), so
+#: the split is sized rather than guessed. G=gated, u=ungated:
+#:   u tools 61,315 (69.1%)   G ueprobe 18,559 (20.9%)  G ledger 1,980 (2.2%)
+#:   u workflows 3,234 (3.6%) u ledgertools 1,620 (1.8%) u claude 1,048 (1.2%)
+#:   G scripts 583 (0.7%)     G content 364 (0.4%)       u githooks 0 (0.0%)
+#:   TOTAL 88,703, of which 21,486 (24.2%) stays GATED.
+#: So this ruling moves 67,217 of 88,703 landed work lines — 75.8% — off the
+#: gated side, and 18 of 200 landed commits stop being substantial (40 -> 22).
+#: That is the number that makes `linesGated` mandatory: a gated count near
+#: zero is now the NORMAL reading for a busy day, and without its denominator
+#: beside it "0 gated" reads as "nothing happened" — which is exactly how a
+#: full day of work read on 1 Sep, one prefix list ago.
+#:
+#: AND THE ONE SPLIT D45 FORCED. `ledger/` genuinely holds both kinds: of its
+#: 3,600 landed lines in that window, 1,443 are `ledger/verify.py` alone (this
+#: file — the studio's own checker, whose fault announces itself in the next
+#: footer) and 177 more are Soak and ReachCheck, while 1,453 are
+#: `ledger/CoreTests/` and 32 are `ledger/PerceptionGolden/`, which D45 names
+#: by hand as what the Core keeps ("golden files, planted rejecting cases").
+#: Picking one side for the whole prefix would have been wrong either way, so
+#: the measuring half is carved out as its own prefix AHEAD of `ledger/` —
+#: order is load-bearing, first match wins — and the catch-all keeps the game.
 DIRECTOR_WORK = (
-    ("ledger/Assets/Scripts/", "scripts",
-     "the Unity game layer: the ORIGINAL scope, kept first and reported "
-     "separately so the question this gate used to ask is still asked"),
-    ("ledger/", "ledger",
-     "the rest of the game project and its local toolchain — verify.py, "
-     "breakrun.py, ShapeCheck, CoreTests, break specs, project settings"),
-    ("tools/", "tools",
-     "every instrument, generator and checker the studio runs; since the v2 "
-     "respec this is where most of a working day lands"),
-    (".github/workflows/", "workflows",
-     "CI is the evidence channel, so a workflow edit changes what every build "
-     "is able to measure"),
-    (".githooks/", "githooks",
-     "the hooks that enforce process on every commit"),
-    (".claude/", "claude",
-     "the studio's own process code: hooks, the permission surface in "
-     "settings.json, the two rules files loaded into every session, and the "
-     "agent definitions carrying the `model:` line THIS GATE'S OWN spend "
-     "reading consumes, so a change to one changes what every footer reports"),
-    ("ue-probe/", "ueprobe",
-     "the Unreal probe: C++ sources and project config"),
-    ("content/", "content",
-     "authored and generated game content — props, brands, dialogue"),
+    (("ledger/Assets/Scripts/",), "scripts", True,
+     "GATED: the Unity C# layer the game RUNS ON, Core and Game both; undoing "
+     "a wrong answer here is a migration and a golden re-derivation, never "
+     "another render. The ORIGINAL scope, kept first and reported separately "
+     "so the question this gate used to ask is still asked"),
+    (DIRECTOR_LEDGER_TOOLS, "ledgertools", False,
+     "UNGATED (D45): the studio's own checkers, lints, probes and benches that "
+     "happen to live under ledger/ — verify.py itself, lint-usings, ShapeCheck, "
+     "ReachCheck, GameCheck, BackendCheck, Adversary, SaveChaos, Soak, "
+     "ConvoProbe, StrangerTest, BalanceLab, SpeechBench, SimHarness. Each only "
+     "REPORTS on the game; a fault in one shows up the next time somebody reads "
+     "what it printed. NOT in this list and therefore still gated: CoreTests, "
+     "PerceptionGolden, breakrun.py and breaks/ (planted rejecting cases and "
+     "golden files, named by D45), Tier2Gen and BarkGen (generators whose "
+     "output ships — 0 landed lines in the 200-commit window, so leaving them "
+     "gated is a judgement with no measured cost, taken in the safe direction)"),
+    (("ledger/",), "ledger", True,
+     "GATED: what is left of the game project after that carve-out — the Unity "
+     "project, Assets, ProjectSettings, Packages, CoreTests, PerceptionGolden "
+     "and the break specs. D45 keeps the Core's full apparatus"),
+    (("tools/",), "tools", False,
+     "UNGATED (D45): every instrument, generator and checker the studio runs, "
+     "and 69.1% of landed work lines. Nothing here is loaded by the game — it "
+     "reads their OUTPUT (content/, Assets/), never these scripts. This is "
+     "D45's measuring half by name: checkers, watchers, lints, dashboards"),
+    ((".github/workflows/",), "workflows", False,
+     "UNGATED (D45): CI is the EVIDENCE CHANNEL. A workflow decides what a "
+     "build is able to measure and report, never what a player runs, and a "
+     "wrong answer announces itself in the very next committed verdict file"),
+    ((".githooks/",), "githooks", False,
+     "UNGATED (D45): one `commit-msg` hook enforcing process on the studio's "
+     "own commits. Nothing the game loads, and a fault shows on the next "
+     "commit attempt. 0 landed lines in the 200-commit window — measured, so "
+     "this assignment is cheap either way"),
+    ((".claude/",), "claude", False,
+     "UNGATED (D45): the studio's own process code — hooks, the permission "
+     "surface in settings.json, the two rules files, and the agent definitions "
+     "carrying the `model:` line this gate's own tier reading consumes. None "
+     "of it ships inside the thing being played. THE HAZARD, NAMED: an edit "
+     "here changes what the instrument reports about itself, which is a "
+     "self-measurement fault and not a game fault, and D45 puts exactly that "
+     "class on the ungated side because it announces itself in the next footer"),
+    (("ue-probe/",), "ueprobe", True,
+     "GATED: the Unreal port of the Core and the moat itself — Perception, "
+     "MemoryStore, Gossip, Suspicion, Observation — pinned by the golden file "
+     "`ue-probe/perception-golden.txt`. `ue-probe/tests/` is 5,623 of its "
+     "18,559 landed lines and is DELIBERATELY NOT carved out: D45 keeps "
+     "planted rejecting cases with the Core, and a loosened Core test is undone "
+     "by re-deriving a golden, which is D41's structural side exactly"),
+    (("content/",), "content", True,
+     "GATED: authored dialogue, the brand bible and the content rules SHIP "
+     "INSIDE the thing being played, and undoing a wrong line is a canon edit "
+     "(CLAUDE.md: canon outranks every document). The machine-written half — "
+     "content/props/manifest.json and ATTRIBUTION.json — was already carved "
+     "out by DIRECTOR_EVIDENCE below, so this prefix's split predates D45"),
 )
 
 #: EVIDENCE, NOT WORK — (git path prefix or one exact file, LABEL, why it is
@@ -3584,8 +3706,8 @@ def _cadence_scope(path):
     for entry, label, _why in DIRECTOR_EVIDENCE:
         if p.startswith(entry) if entry.endswith("/") else p == entry:
             return "evidence", label
-    for prefix, label, _why in DIRECTOR_WORK:
-        if p.startswith(prefix):
+    for prefixes, label, _gated, _why in DIRECTOR_WORK:
+        if p.startswith(prefixes):          # str.startswith takes a tuple
             return "work", label
     return "other", ""
 
@@ -3648,8 +3770,65 @@ def _cadence_pathspec():
     matters: a commit touching only `ledger/.verify-footer` — inside a work
     prefix, excluded as evidence — does NOT move the reference, which is only
     true if the exclusion reached the git call as well as the python one."""
-    return ([prefix for prefix, _l, _w in DIRECTOR_WORK]
+    return ([pre for prefixes, _l, _g, _w in DIRECTOR_WORK for pre in prefixes]
             + [":(exclude)" + entry for entry, _l, _w in DIRECTOR_EVIDENCE])
+
+
+#: THE ROLE CLASSES OF `.claude/agents/README.md`, read into this file so the
+#: tier printer can say WHAT KIND OF WORK a day bought and not only what it
+#: cost. A literal map for the same reason `GAME_AGENTS` is one: the class of
+#: an agent is a judgement about what it is FOR, and `instrument-builder` is a
+#: builder by name and tooling by purpose. Unlisted names count as `other` and
+#: are printed with their own count, never folded into a class they are not in.
+#: SOURCE, quoted so a reader can check it without leaving this file: "the
+#: tier 2 verifiers (measurement-auditor, claim-auditor, artifact-reader,
+#: guard-tester, reach-auditor) map to Verification; the tier 3 builders
+#: (systems-builder, instrument-builder, engine-specialist, content-wrangler)
+#: map to Engineering and World; studio-director maps to Direction", plus
+#: producer, "tier 1, minted 2026-09-03".
+AGENT_ROLE_CLASS = {
+    "studio-director": "direction", "producer": "direction",
+    "measurement-auditor": "verify", "claim-auditor": "verify",
+    "artifact-reader": "verify", "guard-tester": "verify",
+    "reach-auditor": "verify",
+    "systems-builder": "build", "instrument-builder": "build",
+    "engine-specialist": "build", "content-wrangler": "build",
+    "planner": "plan", "integrator": "plan", "dialogue-writer": "world",
+    "world-designer": "world",
+}
+#: The two tiers a spawn is expensive on, named once. "Top" means the upper
+#: half of AGENT_MODEL_LADDER (haiku < sonnet < opus < fable).
+AGENT_TOP_TIERS = ("opus", "fable")
+
+
+def _agent_tier_map(repo):
+    """{agent name: declared tier} plus the COUNT of definitions read.
+
+    ONE PARSER, NOT A SECOND ONE. This calls `_agent_model_defs`, which E1 and
+    E3 already use, rather than re-reading `model:` out of the front matter —
+    `_cadence_fable_agents` above is the older, narrower reader for one value
+    and this is deliberately not a third. Only `kind == "ok"` records (exactly
+    one `model:` line, value on the ladder) produce a tier; everything else is
+    a definition E1 already refuses and this reading leaves UNRESOLVED rather
+    than guessing at.
+
+    Returns (tiers, files_read). `files_read` is the denominator: an empty map
+    with 0 files read measured NOTHING, and an empty map with 16 files read is
+    a roster where no definition is rankable. Those must never print alike."""
+    records, files = _agent_model_defs(repo)
+    return ({rec["name"]: rec["value"] for rec in records
+             if rec["kind"] == "ok"}, files)
+
+
+def _cadence_gated_labels():
+    """{label: True/False} for the CURRENT `DIRECTOR_WORK` — D45's assignment.
+
+    DERIVED AT CALL TIME, NEVER CACHED AT IMPORT. The r18/r21 ladder rebinds
+    `DIRECTOR_WORK` to read the same fixture tree under an older scope, and a
+    module-level dict built at import would keep answering for the wide scope
+    while the ladder read the narrow one — a rung measuring a different world
+    than it claims to, which is the exact defect a ladder exists to avoid."""
+    return {label: bool(gated) for _p, label, gated, _w in DIRECTOR_WORK}
 
 
 def _cadence_epoch(text):
@@ -4651,7 +4830,8 @@ def _cadence_read(repo):
     repo = pathlib.Path(repo)
     r = {"changed": 0, "tracked": 0, "files": 0, "binary": 0, "rows": 0,
          "walked": 0, "work_paths": 0, "evidence_paths": 0, "other_paths": 0,
-         "by_scope": {label: 0 for _p, label, _w in DIRECTOR_WORK},
+         "by_scope": {label: 0 for _p, label, _g, _w in DIRECTOR_WORK},
+         "gated": 0, "ungated": 0,
          "evidence_hits": {},
          "since_code": 0, "stale_code": 0, "unparsed": 0, "unparsed_dir": 0,
          "ref_ct": None, "ref_iso": "", "ref_sha": "", "ref_kind": "nocode",
@@ -4660,6 +4840,9 @@ def _cadence_read(repo):
          "unreadable": 0, "log": True, "newest_dir": "", "head_iso": "",
          "spawn_since": 0, "fable_rows": 0, "day_iso": "", "day_rows": 0,
          "day_fable": 0, "day_game": 0, "fable_agents": [], "agent_files": 0,
+         "tier_all": {}, "tier_day": {}, "class_all": {}, "class_day": {},
+         "tier_files": 0, "tier_defined": 0, "tier_idle": [],
+         "tier_idle_by_tier": {}, "tier_unres_all": 0, "tier_unres_day": 0,
          "ruling_files": 0, "ruling_stamps": 0, "ruling_fresh": 0,
          "ruling_stale": 0, "ruling_unmatched": 0, "unruled_rows": 0,
          "want_spawn": "",
@@ -4668,6 +4851,13 @@ def _cadence_read(repo):
     # READ FIRST, so every exit below — including the no-HEAD one — carries a
     # fable set with its denominator rather than an empty field.
     r["fable_agents"], r["agent_files"] = _cadence_fable_agents(repo)
+    # THE TIER MAP, read in the same place and for the same reason as the fable
+    # set: which model a spawn cost is a fact about the definitions on disk,
+    # never a fact anybody should recall. Read BEFORE every exit below so the
+    # no-HEAD branch still carries its denominator.
+    tier_of, r["tier_files"] = _agent_tier_map(repo)
+    r["tier_defined"] = len(tier_of)
+    seen_agents = set()
     if not r["agent_files"]:
         # NOTHING MEASURED about the set: fall back to the one agent known to
         # be on fable, and let `agentFilesRead=0` say the set is assumed. The
@@ -4718,6 +4908,10 @@ def _cadence_read(repo):
     r["ref_iso"] = datetime.datetime.fromtimestamp(
         r["ref_ct"], datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
+    # D45'S ASSIGNMENT, read ONCE for this whole reading so both walks below
+    # bucket against the same answer.
+    gated_labels = _cadence_gated_labels()
+
     code, out = _git(repo, "diff", "HEAD", "--numstat")
     for line in out.splitlines():
         cols = line.split("\t")
@@ -4748,6 +4942,10 @@ def _cadence_read(repo):
         # CUMULATIVE lines per work prefix, attributed to the FIRST prefix the
         # path matched — the breakdown that says WHICH part of the scope moved.
         r["by_scope"][label] = r["by_scope"].get(label, 0) + n
+        # AND THE D45 SPLIT OF THE SAME LINE, in the same pass off the same
+        # label, so the two halves and the per-prefix breakdown can never be
+        # two readings of two moments (rule: same instant, same line).
+        r["gated" if gated_labels.get(label) else "ungated"] += n
 
     # THE ENUMERATOR IS THE ONE ALREADY HERE, and that is the point. A sibling
     # repo's twin of this gate walked `git status --porcelain`, which COLLAPSES
@@ -4794,6 +4992,7 @@ def _cadence_read(repo):
         n = len(data.decode("utf-8", "replace").splitlines())
         r["untracked"] += n
         r["by_scope"][label] = r["by_scope"].get(label, 0) + n
+        r["gated" if gated_labels.get(label) else "ungated"] += n
 
     # THE GATED TOTAL, named as the sum it is. Both components print beside it
     # in the summary as one paired reading, so "0 changed" can never again mean
@@ -4803,6 +5002,9 @@ def _cadence_read(repo):
     # COUNTS PER UTC DAY, {day: [fable, all]} — accumulated per row so the day
     # window is a real window; the newest key is picked after the loop.
     day_counts = {}
+    # {day: {tier: COUNT}} and {day: {class: COUNT}} — accumulated beside
+    # `day_counts` off the same rows in the same pass.
+    tier_by_day, class_by_day = {}, {}
     # {epoch: [COUNT of studio-director rows at that instant, raw stamp]}
     dir_rows = {}
     log = repo / DIRECTOR_LOG
@@ -4828,6 +5030,18 @@ def _cadence_read(repo):
             # `since_code` below is untouched and still reads DIRECTOR_AGENT.
             is_fable = agent in fable_set
             r["fable_rows"] += 1 if is_fable else 0        # CUMULATIVE, whole log
+            # THE TIER READING, same pass, same read of the same file as
+            # `rows`, so the share and its denominator are ONE instant. A row
+            # whose agent has no rankable definition counts as UNRESOLVED and
+            # is never folded into a tier it was not measured to be on.
+            seen_agents.add(agent)
+            tier = tier_of.get(agent)
+            if tier:
+                r["tier_all"][tier] = r["tier_all"].get(tier, 0) + 1
+            else:
+                r["tier_unres_all"] += 1
+            cls = AGENT_ROLE_CLASS.get(agent, "other")
+            r["class_all"][cls] = r["class_all"].get(cls, 0) + 1
             ts = _cadence_epoch(when)
             if ts is None:
                 r["unparsed"] += 1
@@ -4847,6 +5061,12 @@ def _cadence_read(repo):
             # That is the number the fable share could not show, because it
             # asks a different question: WHICH MODEL, not WHICH WORK.
             slot[2] += 1 if agent in GAME_AGENTS else 0
+            # PER-DAY TIER AND CLASS, keyed by the same day string as `slot`,
+            # so the day window is one window and not two.
+            tslot = tier_by_day.setdefault(day, {})
+            tslot[tier or "unresolved"] = tslot.get(tier or "unresolved", 0) + 1
+            cslot = class_by_day.setdefault(day, {})
+            cslot[cls] = cslot.get(cls, 0) + 1
             if ts > r["ref_ct"]:
                 r["spawn_since"] += 1     # DENOMINATOR of since_code, same pass
             if agent != DIRECTOR_AGENT:
@@ -4871,6 +5091,21 @@ def _cadence_read(repo):
     if day_counts:
         r["day_iso"] = max(day_counts)
         r["day_fable"], r["day_rows"], r["day_game"] = day_counts[r["day_iso"]]
+        # THE SAME DAY'S TIER AND CLASS SLICES, taken off the SAME key, so
+        # `tierMixDay` and `fableShareDay` can never name two different days.
+        r["tier_day"] = dict(tier_by_day.get(r["day_iso"], {}))
+        r["class_day"] = dict(class_by_day.get(r["day_iso"], {}))
+        r["tier_unres_day"] = r["tier_day"].pop("unresolved", 0)
+    # ROSTER COVERAGE: definitions that exist and were never selected in the
+    # WHOLE log. Its denominator is `tier_defined`, printed beside it. This is
+    # a fact about the ROSTER, not about a day, which is why it is not gated:
+    # it fires identically on every day in recorded history and a gate that
+    # refuses every day is the ratchet rule 5b names.
+    idle = sorted(n for n in tier_of if n not in seen_agents)
+    r["tier_idle"] = idle
+    for n in idle:
+        t = tier_of[n]
+        r["tier_idle_by_tier"][t] = r["tier_idle_by_tier"].get(t, 0) + 1
 
     # THE DIRECTOR ROW COUNTS, derived from the one row-set above.
     for ts, (cnt, _raw) in dir_rows.items():
@@ -4901,7 +5136,11 @@ def _cadence_read(repo):
     # search. Empty when every fresh row has a ruling.
     r["want_spawn"] = unruled[max(unruled)][1] if unruled else ""   # raw stamp
 
-    substantial = r["changed"] > DIRECTOR_MIN_LINES
+    # THE BOUND READS THE GATED HALF ONLY, D45 (15 Sep). `changed` stays the
+    # CUMULATIVE total of every pending work line, gated and ungated, because
+    # it is the denominator that stops a small gated number reading as a small
+    # batch; `gated` is the numerator the threshold compares.
+    substantial = r["gated"] > DIRECTOR_MIN_LINES
     if substantial and not r["log"]:
         r["state"] = "logmissing"
     elif substantial and r["since_code"] == 0:
@@ -5006,6 +5245,131 @@ def _cadence_spend(r):
                  % (r["agent_files"], FABLE_MODEL))
     if measured and not r["spawn_since"]:
         text += "; no spawn rows at all are dated after that reference commit"
+    return text + _cadence_tiers(r)
+
+
+def _cadence_tiers(r):
+    """SPAWNS BY TIER, the reading Jafar asked for in the brief on 15 Sep, and
+    the REASON no bound rides on it.
+
+    STILL A READING AND NOT A GATE, and this time that is a finding rather than
+    a deferral. The instruction was "the gate exists; turn it on", and the
+    series printed before this was written says the gate would be aimed at the
+    wrong variable. `--tier-series` is the printer; what it printed:
+
+      18 UTC days in `.claude/agent-log.tsv`, 640 rows, 0 undated, 19 rows on
+      agents with no rankable definition. Top-two share (opus+fable) per day,
+      oldest first:
+        0.70 0.75 0.82 0.75 0.87 1.00 1.00 0.93 1.00 0.81 0.90 0.94 0.78
+        1.00 1.00 1.00 0.84 1.00
+      Beside it, per day, the share of spawns whose ROLE CLASS is build or
+      direction. The two columns are EQUAL to two decimal places on 13 of the
+      18 days, and the largest gap on the other five is 0.21.
+
+    SO THE TOP-TIER SHARE IS THE ROLE MIX RESTATED — two numbers derived from
+    one variable are one number twice, which is this project's own standing
+    rule and the reason this clause carries no bound. The map from agent to
+    tier is TOTAL: every one of the 15 rankable definitions declares exactly
+    one model, so picking an agent picks a tier and there is no second degree
+    of freedom for a bound to read. Measured CUMULATIVE over the whole log, by
+    role class: build 410, direction 170, verify 26, world 12, plan 3, other
+    19 — and by tier, haiku 0, sonnet 70, opus 381, fable 170, unresolved 19.
+    Direction is ALL fable and verification is ALL sonnet, so the only builder
+    rows not on opus are `content-wrangler`, the one tier-3 builder on sonnet,
+    and those rows ARE the whole gap between the two columns above.
+
+    A BOUND ON THE TOP-TIER SHARE WOULD THEREFORE FIRE ON "today was
+    implementation", not on "today was lazily routed", and on a roster where
+    code implementation has no cheap route it would be red every day it was
+    right and red every day it was wrong. The lowest top-two share in 18 days
+    is 0.70; a bound under it refuses nothing, and a bound over it refuses days
+    the roster forced. There is no accepting case in the recorded series, which
+    is precisely the state rule 2 says ships a printer and not a number.
+
+    WHAT WOULD MAKE A BOUND HONEST LATER, named so this is a deferral with an
+    address and not a shrug: a roster where at least one tier-3 builder role
+    for CODE exists below opus, which turns the tier a spawn lands on back
+    into a choice. Until then the number to watch is `tierClassDay`'s verify
+    count, which is 26 of 640 lifetime.
+
+    WHAT THE SERIES DID FIND, and it needs no threshold because its boundary is
+    "used at all" rather than a percentile: `guard-tester`, `integrator` and
+    `reach-auditor` have been selected ZERO times in 640 rows across 18 days,
+    and they are exactly the three haiku definitions. The bottom tier of the
+    ladder has never once been reached. That is a fact about the ROSTER, so it
+    is reported here every run and gated nowhere: it holds identically on all
+    18 days, and a gate that refuses every day in recorded history is the
+    ratchet rule 5b names.
+
+    Keys, each named for the statistic it is, every value whitespace-free:
+
+      tierMixDay=haiku:0/sonnet:0/opus:17/fable:9@<date>  COUNTs over the
+          NEWEST UTC DAY PRESENT IN THE LOG — the same day `fableShareDay`
+          names, taken off the same key in the same pass. The date rides
+          INSIDE the value so a log that went quiet cannot read as today.
+      tierTopShareDay=<a>/<b>@<date>  COUNT of that day's spawns on opus or
+          fable over ALL that day's spawns. A SHARE OF ONE DAY, not a rate.
+      tierMixAll=...  CUMULATIVE COUNTs over every row in the log.
+      tierClassDay=build:17/direction:13/verify:0/...@<date>  the day's spawns
+          by ROLE CLASS — the variable the tier mix turned out to be. Printed
+          beside the tier mix on purpose: read together they are the evidence
+          that a routing bound would be measuring the work and not the choice.
+      tierRosterIdle=<n>/<m>  COUNT of agent definitions NEVER selected in the
+          whole log, over the count of rankable definitions read.
+      tierUnresolved=<day>/<all>  COUNTs of rows whose agent has no rankable
+          definition (`general-purpose`, a deleted role). Never folded into a
+          tier, because a spawn of unknown cost is not a cheap one.
+
+    NOTHING-MEASURED IN WORDS for each way this can measure nothing: no agent
+    definitions read at all, no log, no dateable row."""
+    def mix(d, order):
+        return "/".join("%s:%d" % (k, d.get(k, 0)) for k in order) or "none"
+    ladder = AGENT_MODEL_LADDER               # haiku < sonnet < opus < fable
+    classes = ("build", "direction", "verify", "world", "plan", "other")
+    if not r["log"] or r["rows"] == 0:
+        day_mix = all_mix = cls_day = top_day = NOTHING_MEASURED
+    else:
+        all_mix = mix(r["tier_all"], ladder)
+        if r["day_rows"]:
+            day_mix = "%s@%s" % (mix(r["tier_day"], ladder), r["day_iso"])
+            cls_day = "%s@%s" % (mix(r["class_day"], classes), r["day_iso"])
+            top = sum(r["tier_day"].get(t, 0) for t in AGENT_TOP_TIERS)
+            # THE DENOMINATOR IS THE DAY'S OWN ROW COUNT, captured on the same
+            # key in the same pass — not the lifetime total, which would make
+            # a share of one window wear another window's denominator.
+            top_day = "%d/%d@%s" % (top, r["day_rows"], r["day_iso"])
+        else:
+            day_mix = cls_day = top_day = NOTHING_MEASURED
+    idle = ("%d/%d" % (len(r["tier_idle"]), r["tier_defined"])
+            if r["tier_files"] else NOTHING_MEASURED)
+    text = ("; spawns by tier, READING ONLY (no bound — the series says the "
+            "top-tier share is the role mix restated; see _cadence_tiers): "
+            "tierMixDay=%s tierTopShareDay=%s tierMixAll=%s tierClassDay=%s "
+            "tierRosterIdle=%s tierUnresolved=%d/%d tierDefsRead=%d "
+            "— COUNTs by declared model over the newest UTC day present in the "
+            "log / that day's top-two (opus+fable) COUNT over ALL its spawns / "
+            "CUMULATIVE COUNTs over every log row / that same day by ROLE CLASS "
+            "/ definitions NEVER selected in the whole log over definitions "
+            "read / rows with no rankable definition, day and lifetime"
+            % (day_mix, top_day, all_mix, cls_day, idle,
+               r["tier_unres_day"], r["tier_unres_all"], r["tier_files"]))
+    if not r["tier_files"]:
+        text += ("; 0 agent definitions were read from %s, so EVERY row is "
+                 "unresolved and nothing was measured about tiers"
+                 % DIRECTOR_AGENTS_DIR)
+    elif not r["tier_defined"]:
+        text += ("; %d definition(s) read and NONE declares a rankable model, "
+                 "so the tier mix above is a measured nothing, not a zero"
+                 % r["tier_files"])
+    elif r["tier_idle"]:
+        # THE FINDING, IN WORDS, WITH THE TIERS IT SITS ON. A list of names is
+        # a fact; the tiers are what makes it a finding.
+        by_t = "/".join("%s:%d" % (t, r["tier_idle_by_tier"][t])
+                        for t in ladder if t in r["tier_idle_by_tier"])
+        text += ("; %d of %d definition(s) were NEVER selected in the whole "
+                 "log (%s) and they sit on %s"
+                 % (len(r["tier_idle"]), r["tier_defined"],
+                    _cap(r["tier_idle"], keep=6, sep=","), by_t))
     return text
 
 
@@ -5041,18 +5405,40 @@ def _cadence_scope_phrase(r):
     sentence around it: the tokens come first and each is followed by a space,
     the same construction `_cadence_ruling_phrase` uses one clause down."""
     by = "/".join("%s:%d" % (label, r["by_scope"].get(label, 0))
-                  for _p, label, _w in DIRECTOR_WORK) or NOTHING_MEASURED
-    toks = ("workByScope=%s scopePrefixes=%d pathsWalked=%d pathsWork=%d "
+                  for _p, label, _g, _w in DIRECTOR_WORK) or NOTHING_MEASURED
+    gl = _cadence_gated_labels()
+    # THE ASSIGNMENT ITSELF, printed so it is auditable rather than buried in
+    # a constant nobody opens. Values are whitespace-free and use `/` for
+    # structure; `none` when a side is empty, so an empty side cannot read as
+    # a dropped token.
+    g_names = "/".join(l for l in gl if gl[l]) or "none"
+    u_names = "/".join(l for l in gl if not gl[l]) or "none"
+    # THE PAIRED READING D45 MAKES MANDATORY: the gated count and the WHOLE
+    # pending work total in ONE entry. Since 15 Sep roughly three quarters of
+    # this project's landed line volume is ungated, so a low gated number is
+    # the normal reading of a busy day; split across two keys a reader would
+    # take `0` for "nothing happened" exactly as 1 Sep's reader did.
+    toks = ("linesGated=%d/%d workByScope=%s d45Gated=%s d45Ungated=%s "
+            "scopePrefixes=%d/%d pathsWalked=%d pathsWork=%d "
             "pathsEvidence=%d pathsOther=%d "
-            % (by, len(DIRECTOR_WORK), r["walked"], r["work_paths"],
+            % (r["gated"], r["changed"], by, g_names, u_names,
+               sum(1 for l in gl if gl[l]), len(DIRECTOR_WORK),
+               r["walked"], r["work_paths"],
                r["evidence_paths"], r["other_paths"]))
     if not r["walked"]:
         return toks + ("— 0 pending path(s) walked, so the scope measured "
                        "NOTHING; the %d-line bound above is %s"
                        % (DIRECTOR_MIN_LINES, DIRECTOR_MIN_SOURCE))
-    words = ("— %d pending path(s) walked across %d work prefix(es) and %d "
-             "evidence rule(s)" % (r["walked"], len(DIRECTOR_WORK),
-                                   len(DIRECTOR_EVIDENCE)))
+    words = ("— %d pending path(s) walked across %d work prefix(es) (%d GATED, "
+             "%d ungated per D45) and %d evidence rule(s)"
+             % (r["walked"], len(DIRECTOR_WORK),
+                sum(1 for l in gl if gl[l]), sum(1 for l in gl if not gl[l]),
+                len(DIRECTOR_EVIDENCE)))
+    if r["ungated"]:
+        # NEVER SILENT. An ungated batch is the one thing this change can hide,
+        # so it says its size in words on every run that has one.
+        words += ("; %d line(s) are UNGATED under D45 (%s) and were NOT "
+                  "compared against the bound" % (r["ungated"], u_names))
     if r["evidence_hits"]:
         hits = ["%s x%d" % (k, v) for k, v in sorted(r["evidence_hits"].items())]
         words += ("; %d path(s) excluded as EVIDENCE by %d of %d rule(s): %s"
@@ -5162,9 +5548,10 @@ def _cadence_summary(r):
     # because the hole this closed was exactly a reader taking "0 changed
     # line(s)" for "nothing is pending" while 300 untracked lines sat beside it
     # in a note — two keys whose relationship the reader had to remember.
-    lines = ("%d changed line(s) (%d tracked + %d untracked in %d new file(s)) "
-             "vs %d threshold over the reviewed scope" % (
-                 r["changed"], r["tracked"], r["untracked"],
+    lines = ("%d GATED line(s) of %d changed work line(s) (%d tracked + %d "
+             "untracked in %d new file(s)) vs %d threshold — D45 gates the "
+             "game and only REPORTS the tools that measure it" % (
+                 r["gated"], r["changed"], r["tracked"], r["untracked"],
                  r["untracked_files"], DIRECTOR_MIN_LINES))
     if not r["log"]:
         rows = "agent log ABSENT (%s) — nothing measured" % DIRECTOR_LOG
@@ -5245,7 +5632,7 @@ def _cadence_summary(r):
     # was killed before it ruled. It is now computed from the number of RULING
     # RECORDS, which is the same number the gate turns on — there is no way for
     # the word and the state to disagree.
-    if r["changed"] > DIRECTOR_MIN_LINES:
+    if r["gated"] > DIRECTOR_MIN_LINES:
         verdict = "over threshold, REVIEWED" if r["ruling_fresh"] else "over threshold"
     else:
         verdict = "under threshold, review not required"
@@ -5285,19 +5672,20 @@ def _cadence_series(repo, n=60):
     out = []
     code, blob = _git(repo, "log", "-n", str(n), "--numstat",
                       "--format=%x01%h %ct", "--no-renames", "HEAD")
+    gl = _cadence_gated_labels()
     per, cur = [], None
     for line in blob.splitlines():
         if line.startswith("\x01"):
             if cur is not None:
                 per.append(cur)
-            cur = [line[1:].split()[0] if line[1:].split() else "?", 0]
+            cur = [line[1:].split()[0] if line[1:].split() else "?", {}]
             continue
         cols = line.split("\t")
         if cur is None or len(cols) < 3 or cols[0] == "-":
             continue
-        bucket, _label = _cadence_classify("\t".join(cols[2:]))
+        bucket, label = _cadence_classify("\t".join(cols[2:]))
         if bucket == "work":
-            cur[1] += int(cols[0]) + int(cols[1])
+            cur[1][label] = cur[1].get(label, 0) + int(cols[0]) + int(cols[1])
     if cur is not None:
         per.append(cur)
     if not per:
@@ -5305,34 +5693,204 @@ def _cadence_series(repo, n=60):
                    "nothing was measured (is this a repository with history?)"
                    % NOTHING_MEASURED)
         return out
-    vals = [v for _sha, v in per]
-    nz = sorted(v for v in vals if v)
     out.append("director-cadence series: CUMULATIVE work lines per landed "
                "commit, over %d commit(s) walked" % len(per))
     out.append("  scope: %d work prefix(es) [%s], %d evidence rule(s)"
                % (len(DIRECTOR_WORK),
-                  "/".join(l for _p, l, _w in DIRECTOR_WORK),
+                  "/".join(l for _p, l, _g, _w in DIRECTOR_WORK),
                   len(DIRECTOR_EVIDENCE)))
-    out.append("  newest first: " + " ".join(str(v) for v in vals))
-    out.append("  non-zero sorted: " + (" ".join(str(v) for v in nz)
-                                        if nz else NOTHING_MEASURED))
-    if nz:
-        out.append("  zeroes=%d of %d walked; non-zero median=%d p90=%d max=%d"
-                   % (len(vals) - len(nz), len(vals), nz[len(nz) // 2],
-                      nz[min(len(nz) - 1, int(len(nz) * 0.9))], nz[-1]))
+    out.append("  D45: gated=[%s] ungated=[%s]"
+               % ("/".join(l for l in gl if gl[l]) or "none",
+                  "/".join(l for l in gl if not gl[l]) or "none"))
+
+    # THE LADDER, ONE WALK, TWO RUNGS FROM THE SAME VANTAGE. Rung "all" is
+    # every work line (what this printer measured before D45); rung "gated" is
+    # the half the bound now reads. The DIFFERENCE between the rows is the only
+    # number this yields, and it is the one a future bound must be read off —
+    # a gated row compared against the 1 Sep all-prefix row would be two
+    # photographs of two populations.
+    rows = (("all", lambda c: sum(c.values())),
+            ("gated", lambda c: sum(v for k, v in c.items() if gl.get(k))))
+    stats = {}
+    for name, fn in rows:
+        vals = [fn(c) for _sha, c in per]
+        nz = sorted(v for v in vals if v)
+        stats[name] = (vals, nz)
+        out.append("  [%s] newest first: %s" % (name, " ".join(str(v) for v in vals)))
+        out.append("  [%s] non-zero sorted: %s"
+                   % (name, " ".join(str(v) for v in nz) if nz else NOTHING_MEASURED))
+        if nz:
+            out.append("  [%s] zeroes=%d of %d walked; non-zero median=%d "
+                       "p90=%d max=%d cumulative=%d"
+                       % (name, len(vals) - len(nz), len(vals),
+                          nz[len(nz) // 2],
+                          nz[min(len(nz) - 1, int(len(nz) * 0.9))], nz[-1],
+                          sum(vals)))
+        else:
+            out.append("  [%s] zeroes=%d of %d walked; no commit in the window "
+                       "touched this half of the scope, so the distribution "
+                       "measured NOTHING" % (name, len(vals), len(vals)))
+        over = [v for v in vals if v > DIRECTOR_MIN_LINES]
+        out.append("  [%s] at the current bound of %d: %d of %d walked "
+                   "commit(s) would be substantial"
+                   % (name, DIRECTOR_MIN_LINES, len(over), len(vals)))
+
+    # THE DIFFERENCE BETWEEN THE RUNGS, stated as a number rather than left to
+    # a reader subtracting two rows — this is what D45 cost the gate.
+    all_cum, gated_cum = sum(stats["all"][0]), sum(stats["gated"][0])
+    all_over = sum(1 for v in stats["all"][0] if v > DIRECTOR_MIN_LINES)
+    gated_over = sum(1 for v in stats["gated"][0] if v > DIRECTOR_MIN_LINES)
+    out.append("  [rung difference] D45 moves %d of %d cumulative work line(s) "
+               "off the gated side (%.1f%% left gated), and %d of %d walked "
+               "commit(s) stop being substantial (%d -> %d)"
+               % (all_cum - gated_cum, all_cum,
+                  100.0 * gated_cum / all_cum if all_cum else 0.0,
+                  all_over - gated_over, len(per), all_over, gated_over))
+    out.append("  the bound is %s" % DIRECTOR_MIN_SOURCE)
+
+    # THE PER-PREFIX ROW, which `director_cadence`'s docstring has promised
+    # since 1 Sep as "the printer's next rung" (queue 018). CUMULATIVE over the
+    # window, every prefix printed including the zeroes, each marked with the
+    # side D45 put it on — so the assignment can be audited against the volume
+    # it actually governs instead of against a memory of what a prefix holds.
+    out.append("  per-prefix CUMULATIVE over the window (G=gated, u=ungated):")
+    for _p, label, gated, _w in DIRECTOR_WORK:
+        tot = sum(c.get(label, 0) for _sha, c in per)
+        hits = sum(1 for _sha, c in per if c.get(label))
+        out.append("    %-12s %s %8d line(s)  %3d/%d commit(s)  %5.1f%%"
+                   % (label, "G" if gated else "u", tot, hits, len(per),
+                      100.0 * tot / all_cum if all_cum else 0.0))
+    top = ["%s:%d" % (sha, sum(c.values())) for sha, c in sorted(
+        per, key=lambda x: -sum(x[1].values())) if sum(c.values())]
+    out.append("  biggest [all]: " + _cap(top, keep=6, sep=" ",
+                                          tail="nothing-measured"))
+    return out
+
+
+def _tier_series(repo, n=0):
+    """PRINT THE SERIES BEFORE ANYONE SETS A ROUTING BOUND (rule 2). Lines.
+
+    ONE ROW PER UTC DAY PRESENT IN THE LOG, newest LAST so the row reads left
+    to right as time, which is how a regime change is seen in a second and how
+    no aggregate can show it at all.
+
+    WHAT EACH COLUMN IS A STATISTIC OF, said out loud:
+      all       COUNT of spawn rows dated into that day
+      haiku..fable  COUNTs of those rows by the model their agent DEFINITION
+                declares today. Not the log's own `model` column: only 111 of
+                640 rows carry one (the rest predate the 2026-09-10 ruling), so
+                a series read off that column would have a denominator of 17%
+                and would not say so. `unres` is the rows whose agent has no
+                rankable definition, counted and never folded into a tier.
+      top2      COUNT on opus or fable, over `all` — a SHARE OF ONE DAY.
+      bld+dir   COUNT whose ROLE CLASS is build or direction, over `all`.
+      delta     top2 minus bld+dir, and THE WHOLE POINT OF THIS PRINTER.
+
+    THE LADDER IS THE TWO SHARE COLUMNS, read from the same rows in the same
+    pass: one contributor toggled (tier versus role class), same vantage, same
+    run. If `delta` is ~0 the tier mix carries no information the role mix does
+    not already carry, and a bound on it would gate WHAT THE DAY'S WORK WAS
+    rather than how it was routed. Read 15 Sep 2026 over the whole log: equal
+    to two decimals on 13 of 18 days, max |delta| 0.22, and every non-zero
+    delta is `content-wrangler`, the one tier-3 builder not on opus.
+
+    ROSTER COVERAGE closes the print, because a share cannot show a definition
+    that is never chosen at all: the denominator of "which tiers get used" is
+    the roster, not the log."""
+    out = []
+    tier_of, files = _agent_tier_map(repo)
+    log = pathlib.Path(repo) / DIRECTOR_LOG
+    if not log.exists():
+        out.append("tier series: %s — %s not found, so nothing was measured "
+                   "(%d agent definition(s) read)"
+                   % (NOTHING_MEASURED, DIRECTOR_LOG, files))
+        return out
+    days, rows_total, undated, seen = {}, 0, 0, set()
+    for i, line in enumerate(log.read_text(encoding="utf-8",
+                                           errors="replace").splitlines()):
+        if not line.strip():
+            continue
+        cols = line.split("\t")
+        if i == 0 and cols[0].strip() == "when":
+            continue
+        rows_total += 1
+        agent = cols[1].strip().lower() if len(cols) > 1 else ""
+        seen.add(agent)
+        ts = _cadence_epoch(cols[0] if cols else "")
+        if ts is None:
+            undated += 1                         # counted in NO day window
+            continue
+        day = datetime.datetime.fromtimestamp(
+            ts, datetime.timezone.utc).strftime("%Y-%m-%d")
+        slot = days.setdefault(day, {"all": 0, "tier": {}, "cls": {}})
+        slot["all"] += 1
+        t = tier_of.get(agent) or "unres"
+        slot["tier"][t] = slot["tier"].get(t, 0) + 1
+        c = AGENT_ROLE_CLASS.get(agent, "other")
+        slot["cls"][c] = slot["cls"].get(c, 0) + 1
+    if not days:
+        out.append("tier series: %s — %d row(s) in %s and NONE could be dated, "
+                   "so no day window exists (%d agent definition(s) read)"
+                   % (NOTHING_MEASURED, rows_total, DIRECTOR_LOG, files))
+        return out
+    keys = sorted(days)
+    capped = 0
+    if n and len(keys) > n:
+        capped = len(keys) - n
+        keys = keys[-n:]
+    out.append("tier series: COUNT of spawn rows per UTC DAY by the model "
+               "their agent DEFINITION declares, over %d day(s) of %d row(s) "
+               "in %s (%d undated, counted in no day)"
+               % (len(keys), rows_total, DIRECTOR_LOG, undated))
+    if capped:
+        # EVERY CAP ANNOUNCES ITSELF.
+        out.append("  (+%d older day(s) not shown — pass --tier-series 0 for "
+                   "every day)" % capped)
+    out.append("  %-11s %5s %6s %7s %6s %6s %6s | %-11s %-11s %6s"
+               % ("day", "all", "haiku", "sonnet", "opus", "fable", "unres",
+                  "top2", "bld+dir", "delta"))
+    deltas, equal = [], 0
+    for d in keys:
+        s = days[d]
+        t, c, a = s["tier"], s["cls"], s["all"]
+        top2 = sum(t.get(x, 0) for x in AGENT_TOP_TIERS)
+        bd = c.get("build", 0) + c.get("direction", 0)
+        delta = top2 / a - bd / a
+        deltas.append(abs(delta))
+        equal += 1 if round(top2 / a, 2) == round(bd / a, 2) else 0
+        out.append("  %-11s %5d %6d %7d %6d %6d %6d | %5d/%-5d %5d/%-5d %+6.2f"
+                   % (d, a, t.get("haiku", 0), t.get("sonnet", 0),
+                      t.get("opus", 0), t.get("fable", 0), t.get("unres", 0),
+                      top2, a, bd, a, delta))
+    out.append("  THE LADDER: top2 and bld+dir agree to 2dp on %d of %d day(s); "
+               "max |delta| %.2f. A delta near zero means the tier mix is the "
+               "ROLE MIX RESTATED and a bound on it would gate the work type, "
+               "not the routing." % (equal, len(keys), max(deltas)))
+    # WHOLE-WINDOW TOTALS ON THEIR OWN LINE, never mixed into a day row.
+    tot = {}
+    cls_tot = {}
+    for d in keys:
+        for k, v in days[d]["tier"].items():
+            tot[k] = tot.get(k, 0) + v
+        for k, v in days[d]["cls"].items():
+            cls_tot[k] = cls_tot.get(k, 0) + v
+    n_all = sum(tot.values())
+    out.append("  window CUMULATIVE by tier: %s (of %d row(s) dated into the "
+               "window)"
+               % ("/".join("%s:%d" % (k, tot.get(k, 0))
+                           for k in AGENT_MODEL_LADDER + ("unres",)), n_all))
+    out.append("  window CUMULATIVE by role class: %s"
+               % "/".join("%s:%d" % (k, v) for k, v in sorted(cls_tot.items())))
+    idle = sorted(x for x in tier_of if x not in seen)
+    if not files:
+        out.append("  roster coverage: %s — 0 definition(s) read from %s"
+                   % (NOTHING_MEASURED, DIRECTOR_AGENTS_DIR))
     else:
-        out.append("  zeroes=%d of %d walked; no commit in the window touched "
-                   "the reviewed scope, so the distribution measured NOTHING"
-                   % (len(vals), len(vals)))
-    over = [v for v in vals if v > DIRECTOR_MIN_LINES]
-    out.append("  at the current bound of %d: %d of %d walked commit(s) would "
-               "be substantial (%s)"
-               % (DIRECTOR_MIN_LINES, len(over), len(vals),
-                  DIRECTOR_MIN_SOURCE))
-    top = ["%s:%d" % (sha, v) for sha, v in sorted(
-        per, key=lambda x: -x[1]) if v]
-    out.append("  biggest: " + _cap(top, keep=6, sep=" ",
-                                    tail="nothing-measured"))
+        out.append("  roster coverage: %d of %d rankable definition(s) were "
+                   "NEVER selected in the whole log%s"
+                   % (len(idle), len(tier_of),
+                      (" — " + ", ".join("%s(%s)" % (x, tier_of[x])
+                                         for x in idle)) if idle else ""))
     return out
 
 
@@ -5554,7 +6112,8 @@ def _cadence_selftest():
     # nothing survives, wearing a scope's clothes.
     # ==================================================================
     say(_cadence_scope("ledger/Assets/Scripts/Sim.cs") == ("work", "scripts")
-        and _cadence_scope("ledger/verify.py") == ("work", "ledger")
+        and _cadence_scope("ledger/verify.py") == ("work", "ledgertools")
+        and _cadence_scope("ledger/CoreTests/SimTests.cs") == ("work", "ledger")
         and _cadence_scope("tools/gates.py") == ("work", "tools")
         and _cadence_scope(".github/workflows/ledger-core-tests.yml")
             == ("work", "workflows")
@@ -5564,7 +6123,27 @@ def _cadence_selftest():
         and _cadence_scope("content/dialogue/pub-regular-v1.json")
             == ("work", "content"),
         "ACCEPT one live path per work prefix, each labelled with the prefix "
-        "it matched: the eight the 1 Sep day was invisible to")
+        "it matched: the nine the 1 Sep day was invisible to")
+    # D45'S OWN CARVE-OUT, ASSERTED IN BOTH DIRECTIONS ON THE SAME DIRECTORY.
+    # `ledger/verify.py` and `ledger/CoreTests/` are both under `ledger/` and
+    # land on OPPOSITE sides of the ruling, which is the whole reason the
+    # carve-out is a named list and not a heuristic. If the ledgertools entry
+    # ever slipped below the `ledger/` catch-all in DIRECTOR_WORK, the first
+    # line here would still pass and this one would fail.
+    gl_t = _cadence_gated_labels()
+    say(_cadence_scope("ledger/verify.py")[1] == "ledgertools"
+        and gl_t["ledgertools"] is False
+        and _cadence_scope("ledger/CoreTests/SimTests.cs")[1] == "ledger"
+        and gl_t["ledger"] is True
+        and gl_t["scripts"] is True and gl_t["ueprobe"] is True
+        and gl_t["content"] is True
+        and gl_t["tools"] is False and gl_t["workflows"] is False
+        and gl_t["githooks"] is False and gl_t["claude"] is False,
+        "ACCEPT D45'S ASSIGNMENT: the checker half of ledger/ is UNGATED and "
+        "CoreTests beside it stays GATED — %d gated, %d ungated"
+        % (sum(1 for v in gl_t.values() if v),
+           sum(1 for v in gl_t.values() if not v)),
+        "/".join("%s=%s" % (k, "G" if v else "u") for k, v in gl_t.items()))
     say(_cadence_scope("ledger/Assets/Scripts/A.cs")[1] == "scripts"
         and _cadence_scope("ledger/Assets/Art/A.png")[1] == "ledger",
         "ACCEPT ORDER IS LOAD-BEARING: Assets/Scripts is attributed to the "
@@ -5607,15 +6186,17 @@ def _cadence_selftest():
         "the stricter side wins",
         str(_cadence_rename_paths("a/{ => sub}/f.cs")))
     spec = _cadence_pathspec()
-    say(len(spec) == len(DIRECTOR_WORK) + len(DIRECTOR_EVIDENCE)
-        and all(p in spec for p, _l, _w in DIRECTOR_WORK)
+    n_inc = sum(len(pre) for pre, _l, _g, _w in DIRECTOR_WORK)
+    say(len(spec) == n_inc + len(DIRECTOR_EVIDENCE)
+        and all(p in spec for pre, _l, _g, _w in DIRECTOR_WORK for p in pre)
         and all(":(exclude)" + e in spec for e, _l, _w in DIRECTOR_EVIDENCE),
         "ACCEPT the git pathspec is DERIVED from the same two constants — %d "
         "include(s) + %d exclude(s), none hand-written"
-        % (len(DIRECTOR_WORK), len(DIRECTOR_EVIDENCE)), " ".join(spec))
-    labels = [l for _p, l, _w in DIRECTOR_WORK] + [l for _e, l, _w in DIRECTOR_EVIDENCE]
+        % (n_inc, len(DIRECTOR_EVIDENCE)), " ".join(spec))
+    labels = ([l for _p, l, _g, _w in DIRECTOR_WORK]
+              + [l for _e, l, _w in DIRECTOR_EVIDENCE])
     say(all(l and not re.search(r"[\s/:]", l) for l in labels)
-        and len(set(l for _p, l, _w in DIRECTOR_WORK)) == len(DIRECTOR_WORK),
+        and len(set(l for _p, l, _g, _w in DIRECTOR_WORK)) == len(DIRECTOR_WORK),
         "ACCEPT every scope label is whitespace-free, holds no / or :, and the "
         "work labels are unique — they ride a key=value channel",
         "/".join(labels))
@@ -5625,8 +6206,9 @@ def _cadence_selftest():
     a1 = _cadence_read(d)
     say(a1["ok"] and a1["state"] == "ok",
         "ACCEPT small diff with no director row", a1["summary"])
-    say("5 changed line(s) (5 tracked + 0 untracked in 0 new file(s)) "
-        "vs 100 threshold" in a1["summary"]
+    say("5 GATED line(s) of 5 changed work line(s) (5 tracked + 0 untracked "
+        "in 0 new file(s)) vs 100 threshold" in a1["summary"]
+        and "linesGated=5/5" in a1["summary"]
         and "1 log row(s) examined" in a1["summary"],
         "ACCEPT summary carries both denominators and the tracked/untracked split",
         a1["summary"])
@@ -5699,7 +6281,9 @@ def _cadence_selftest():
     a7 = _cadence_read(d)
     say(a7["ok"] and a7["changed"] == 10 and a7["untracked"] == 5
         and a7["untracked_files"] == 1
-        and "10 changed line(s) (5 tracked + 5 untracked in 1 new file(s))" in a7["summary"],
+        and "10 GATED line(s) of 10 changed work line(s) (5 tracked + 5 "
+            "untracked in 1 new file(s))" in a7["summary"]
+        and "linesGated=10/10" in a7["summary"],
         "ACCEPT a SMALL new untracked directory, counted and split in the line",
         a7["summary"])
 
@@ -5885,7 +6469,7 @@ def _cadence_selftest():
     # two consumers, and this is the fixture that would catch them drifting.
     d = _cadence_fixture(work, "a18-footer-commit-not-reference", 150,
                          [(CADENCE_FRESH, "studio-director")],
-                         work_path="tools/build-dashboard.py",
+                         work_path="ue-probe/Source/Big.cpp",
                          noncode_commit=True,
                          noncode_path="ledger/.verify-footer",
                          ruling=_ruling_doc(STAMP_FRESH))
@@ -5998,7 +6582,8 @@ def _cadence_selftest():
                          [(CADENCE_STALE, "studio-director")], noncode_commit=True)
     r8 = _cadence_read(d)
     say(not r8["ok"] and r8["state"] == "unspawned" and r8["stale_code"] == 1
-        and r8["since_code"] == 0 and "150 changed line(s)" in r8["summary"]
+        and r8["since_code"] == 0 and r8["gated"] == 150
+        and "150 GATED line(s) of 150 changed work line(s)" in r8["summary"]
         and "all older than that reference" in r8["summary"]
         and "code commit" in r8["summary"],
         "REJECT a director row OLDER than the last code commit, even with a "
@@ -6159,45 +6744,69 @@ def _cadence_selftest():
                                (".githooks/commit-msg", 10)])
     d18 = d
     r18 = _cadence_read(d)
-    say(not r18["ok"] and r18["state"] == "unspawned"
-        and r18["changed"] == 170 and r18["by_scope"]["scripts"] == 0
+    say(r18["ok"] and r18["state"] == "ok"
+        and r18["changed"] == 170 and r18["gated"] == 40
+        and r18["ungated"] == 130
+        and r18["by_scope"]["scripts"] == 0
         and r18["by_scope"]["tools"] == 90
         and r18["by_scope"]["workflows"] == 30
         and r18["by_scope"]["ueprobe"] == 40
         and r18["by_scope"]["githooks"] == 10
-        and "workByScope=scripts:0/ledger:0/tools:90/workflows:30/githooks:10/"
-            "claude:0/ueprobe:40/content:0" in r18["summary"],
-        "REJECT 1 SEPTEMBER: 170 lines of tools, a workflow, C++ and a hook "
-        "with no director row — RED now, and scripts:0 is what the old gate "
-        "measured on the same tree", r18["summary"])
-    # THE LADDER: ONE CONTRIBUTOR TOGGLED, BOTH RUNGS READ FROM THE SAME
-    # VANTAGE IN THE SAME RUN. The rung above is the widened scope; this one
-    # re-reads THE SAME FIXTURE DIRECTORY with the pre-1-Sep configuration
-    # restored — `ledger/Assets/Scripts/` alone, no evidence list — so the
-    # claim "this would have gone green before" is a MEASUREMENT and not an
-    # inference off `by_scope`. A rung compared across runs would be a
-    # different photograph; these two are one tree, one second, two answers.
+        and "linesGated=40/170" in r18["summary"]
+        and "130 line(s) are UNGATED under D45" in r18["summary"]
+        and "workByScope=scripts:0/ledgertools:0/ledger:0/tools:90/"
+            "workflows:30/githooks:10/claude:0/ueprobe:40/content:0"
+            in r18["summary"],
+        "ACCEPT 1 SEPTEMBER'S BATCH UNDER D45: 170 line(s) of tools, a "
+        "workflow, C++ and a hook — only the 40 lines of C++ are GATED, the "
+        "130 are reported and named, and the low gated number can never read "
+        "as a small batch because its denominator is on the same token",
+        r18["summary"])
+    # THE LADDER: ONE CONTRIBUTOR TOGGLED PER RUNG, ALL THREE RUNGS READ FROM
+    # THE SAME VANTAGE IN THE SAME RUN, off THE SAME FIXTURE DIRECTORY. A rung
+    # compared across runs is a different photograph; these are one tree, one
+    # second, three answers.
+    #
+    #   rung 1  pre-1-Sep      `ledger/Assets/Scripts/` alone, no evidence list
+    #   rung 2  1 Sep .. D45   the nine prefixes, ALL gated
+    #   rung 3  today (r18)    the same nine, D45's assignment applied
+    #
+    # Rung 2 is DERIVED from the live constant with one field flipped, never
+    # restated: a hand-written copy of the prefix list here would drift from
+    # DIRECTOR_WORK the first time a prefix moved, and the rung would then be
+    # measuring a scope this project has never had.
     #
     # The globals are restored in a `finally`, and the restoration is asserted
-    # below, because a suite that leaked the narrow scope into the fixtures
-    # after it would quietly test the OLD gate and pass.
+    # below, because a suite that leaked a narrow scope into the fixtures after
+    # it would quietly test a different gate and pass.
     wide_work, wide_evidence = DIRECTOR_WORK, DIRECTOR_EVIDENCE
     try:
-        DIRECTOR_WORK = ((DIRECTOR_SCRIPTS, "scripts",
+        DIRECTOR_WORK = (((DIRECTOR_SCRIPTS,), "scripts", True,
                           "the scope as it stood before 1 Sep 2026"),)
         DIRECTOR_EVIDENCE = ()
         r18_old = _cadence_read(d18)
     finally:
         DIRECTOR_WORK, DIRECTOR_EVIDENCE = wide_work, wide_evidence
-    say(r18_old["ok"] and r18_old["state"] == "ok" and r18_old["changed"] == 0
+    try:
+        DIRECTOR_WORK = tuple((pre, label, True, why)
+                              for pre, label, _g, why in wide_work)
+        r18_allgated = _cadence_read(d18)
+    finally:
+        DIRECTOR_WORK = wide_work
+    say(r18_old["ok"] and r18_old["changed"] == 0
         and "under threshold, review not required" in r18_old["summary"]
-        and not r18["ok"] and r18["changed"] == 170,
-        "THE LADDER, ONE TREE, TWO SCOPES: the pre-1-Sep gate reads %d changed "
-        "line(s) and says review not required; the widened one reads %d and "
-        "refuses. That difference is the fix"
-        % (r18_old["changed"], r18["changed"]), r18_old["summary"])
+        and not r18_allgated["ok"] and r18_allgated["state"] == "unspawned"
+        and r18_allgated["gated"] == 170 and r18_allgated["ungated"] == 0
+        and r18["ok"] and r18["gated"] == 40 and r18["ungated"] == 130,
+        "THE LADDER, ONE TREE, THREE SCOPES: pre-1-Sep reads %d gated and "
+        "says review not required; 1-Sep-all-gated reads %d and REFUSES; D45 "
+        "reads %d gated with %d ungated beside it and accepts. The middle rung "
+        "is the fault 1 Sep fixed, the third is what D45 changed, and neither "
+        "difference is an inference"
+        % (r18_old["gated"], r18_allgated["gated"], r18["gated"],
+           r18["ungated"]), r18_allgated["summary"])
     say(DIRECTOR_WORK is wide_work and DIRECTOR_EVIDENCE is wide_evidence
-        and len(DIRECTOR_WORK) == 8,
+        and len(DIRECTOR_WORK) == 9,
         "the ladder restored the widened scope before any later fixture ran "
         "(%d work prefix(es), %d evidence rule(s))"
         % (len(DIRECTOR_WORK), len(DIRECTOR_EVIDENCE)))
@@ -6211,7 +6820,8 @@ def _cadence_selftest():
     # until somebody happened to touch the Unity tree.
     d = _cadence_fixture(work, "r19-tools-commit-moves-reference", 150,
                          [(CADENCE_FRESH, "studio-director")],
-                         work_path="tools/gates.py", noncode_commit=True,
+                         work_path="content/dialogue/bank.json",
+                         noncode_commit=True,
                          noncode_path="tools/newly-landed.py",
                          ruling=_ruling_doc(STAMP_FRESH))
     r19 = _cadence_read(d)
@@ -6236,14 +6846,79 @@ def _cadence_selftest():
                          also=[(".claude/settings.json", 40),
                                (".claude/template-sync.txt", 20)])
     r20 = _cadence_read(d)
-    say(not r20["ok"] and r20["state"] == "unspawned"
+    say(r20["ok"] and r20["state"] == "ok"
         and r20["changed"] == 160 and r20["by_scope"]["claude"] == 160
+        and r20["gated"] == 0 and r20["ungated"] == 160
+        and "linesGated=0/160" in r20["summary"]
+        and "160 line(s) are UNGATED under D45" in r20["summary"]
         and r20["evidence_paths"] == 2
         and sorted(r20["evidence_hits"]) == ["agentlog", "templatesync"],
-        "REJECT a hook rewrite plus a permissions edit under .claude/ is 160 "
-        "line(s) of WORK and needs a review, while the agent log and the "
-        "template-sync stamp beside them stay evidence at 0",
+        "ACCEPT UNDER D45, AND IT USED TO REFUSE: a hook rewrite plus a "
+        "permissions edit under .claude/ is still 160 line(s) of WORK — "
+        "counted, bucketed, moving the reference — and is UNGATED, so it needs "
+        "no review and says so in words. The agent log and the template-sync "
+        "stamp beside them stay evidence at 0",
         r20["summary"])
+
+    # ======================= D45, BOTH OUTCOMES =======================
+    # ACCEPTING FIRST, and here that ordering is not a formality: D45's whole
+    # content is a LOOSENING, so the expensive failure is the opposite of the
+    # usual one — a gate that kept refusing tool work would make the ruling a
+    # dead letter while printing green fixtures all the way.
+    d = _cadence_fixture(work, "a20-large-ungated-batch", 900,
+                         [(CADENCE_FRESH, "instrument-builder")],
+                         work_path="tools/meshgen/run.py",
+                         also=[("ledger/verify.py", 60),
+                               (".github/workflows/ci.yml", 40)])
+    a20 = _cadence_read(d)
+    say(a20["ok"] and a20["state"] == "ok"
+        and a20["changed"] == 1000 and a20["gated"] == 0
+        and a20["ungated"] == 1000
+        and a20["by_scope"]["tools"] == 900
+        and a20["by_scope"]["ledgertools"] == 60
+        and a20["by_scope"]["workflows"] == 40
+        and "linesGated=0/1000" in a20["summary"]
+        and "1000 line(s) are UNGATED under D45" in a20["summary"]
+        and "under threshold, review not required" in a20["summary"],
+        "ACCEPT 1,000 line(s) of tools, verify.py itself and a workflow with "
+        "NO ruling record: ten times the bound, zero gated, and the footer "
+        "prints 0/1000 rather than a bare 0 — the reading D45 makes normal",
+        a20["summary"])
+
+    # AND THE GATED HALF STILL BITES, on the same shape of batch. Without this
+    # the change above would be indistinguishable from switching the gate off:
+    # `linesGated` would read 0 on every tree and every fixture would be green.
+    d = _cadence_fixture(work, "r21-gated-batch-still-refuses", 900,
+                         [(CADENCE_FRESH, "instrument-builder")],
+                         work_path="tools/meshgen/run.py",
+                         also=[("ue-probe/Source/Perception.cpp", 80),
+                               ("content/dialogue/bank.json", 40)])
+    r21 = _cadence_read(d)
+    say(not r21["ok"] and r21["state"] == "unspawned"
+        and r21["changed"] == 1020 and r21["gated"] == 120
+        and r21["ungated"] == 900
+        and r21["by_scope"]["ueprobe"] == 80
+        and r21["by_scope"]["content"] == 40
+        and "linesGated=120/1020" in r21["summary"],
+        "REJECT the SAME 900 ungated lines with 120 lines of Core port and "
+        "dialogue beside them — the gated half crosses the bound and the gate "
+        "refuses, so D45 is a narrowing and not an off switch",
+        r21["summary"])
+
+    # THE PLANTED CONDITION rule 5b asks for, on the new number specifically:
+    # a batch that is UNDER the bound in total but OVER it in the gated half
+    # cannot exist, and one that is over in total and under in the gated half
+    # must be green. Asserted as an invariant over the pair above rather than
+    # as a third fixture, because it is a property of the arithmetic.
+    say(a20["gated"] <= a20["changed"] and r21["gated"] <= r21["changed"]
+        and a20["gated"] + a20["ungated"] == a20["changed"]
+        and r21["gated"] + r21["ungated"] == r21["changed"],
+        "THE SPLIT IS A PARTITION: gated + ungated == changed on both D45 "
+        "fixtures, so `linesGated`'s denominator is the whole batch and not a "
+        "second count of a subset",
+        "a20=%d+%d/%d r21=%d+%d/%d"
+        % (a20["gated"], a20["ungated"], a20["changed"],
+           r21["gated"], r21["ungated"], r21["changed"]))
 
     # NEVER LOOSER THAN THE VERSION IT REPLACES, asserted over every fixture in
     # the suite rather than argued in prose: any substantial diff that goes
@@ -6251,10 +6926,10 @@ def _cadence_selftest():
     # ruling record (the new one). A regression that stopped reading the log
     # would pass every individual case above and die here.
     every = (a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14,
-             a15, a16, a17, a18, a19,
+             a15, a16, a17, a18, a19, a20,
              r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14,
-             r15, r16, r17, r18, r19, r20)
-    loose = [x for x in every if x["ok"] and x["changed"] > DIRECTOR_MIN_LINES
+             r15, r16, r17, r18, r19, r20, r21)
+    loose = [x for x in every if x["ok"] and x["gated"] > DIRECTOR_MIN_LINES
              and not (x["since_code"] > 0 and x["ruling_fresh"] > 0)]
     say(not loose,
         "NEVER LOOSER: across %d fixtures, every GREEN substantial diff has "
@@ -6281,7 +6956,7 @@ def _cadence_selftest():
     # fixture summary, zeroes included.
     missing = [x["summary"][:40] for x in every
                if any(("%s:%d" % (l, x["by_scope"].get(l, 0)))
-                      not in x["summary"] for _p, l, _w in DIRECTOR_WORK)]
+                      not in x["summary"] for _p, l, _g, _w in DIRECTOR_WORK)]
     say(not missing,
         "EVERY WORK PREFIX PRINTS ITS OWN LINE COUNT, zeroes included, in all "
         "%d fixture summaries — nothing is dropped from workByScope"
@@ -6549,14 +7224,33 @@ def _cadence_selftest():
     # fault one layer down, caught here rather than by a reader who silently
     # gets half a stamp.
     KEYS = ("directorSpawns", "fableShareDay", "fableShareAll", "fableAgents",
-            "agentFilesRead", "rulingRecords", "rulingFiles", "rulingUnmatched",
+            "agentFilesRead",
+            # `gameShareDay` HAS BEEN EMITTED SINCE 26 AUG AND WAS NEVER IN
+            # THIS LIST — found 15 Sep while adding the tier keys. It is the
+            # one spend value this scan could never have caught a space in,
+            # which is precisely the silent half of the fault the scan exists
+            # for; the denominator below moves from 160 to 260 because of it
+            # and the nine keys added beside it.
+            "gameShareDay",
+            "rulingRecords", "rulingFiles", "rulingUnmatched",
             "rulingRowsUnruled", "rulingUnruledNewest",
             # THE SCOPE KEYS RIDE THE SAME SCAN (1 Sep). `workByScope` is the
             # longest value this line has ever carried and it is built from a
             # constant, which is exactly the shape that acquires a space the
             # day somebody adds a prefix with one in it.
             "workByScope", "scopePrefixes", "pathsWalked", "pathsWork",
-            "pathsEvidence", "pathsOther")
+            "pathsEvidence", "pathsOther",
+            # THE D45 KEYS (15 Sep). `d45Gated` and `d45Ungated` are built from
+            # the SAME constant `workByScope` is, so they acquire a space on
+            # the same day it would; `linesGated` carries a `/` pair and is the
+            # one token a reader must never see truncated, because half of it
+            # is the denominator that stops a low number reading as a quiet day.
+            "linesGated", "d45Gated", "d45Ungated",
+            # THE TIER KEYS (15 Sep). Every one is assembled from agent names
+            # read off disk, which is the same shape as `fableAgents` — a value
+            # whose content nobody in this file controls.
+            "tierMixDay", "tierTopShareDay", "tierMixAll", "tierClassDay",
+            "tierRosterIdle", "tierUnresolved", "tierDefsRead")
     reads = (("s1", s1), ("s2", s2), ("s3", s3), ("s4", s4), ("s5", s5),
              ("s6", s6), ("s7", s7), ("s8a", s8a), ("s8c", s8c),
              ("s8d", s8d))
@@ -7560,6 +8254,12 @@ def main():
                     help="print per-commit work lines under the reviewed scope "
                          "over the last N landed commits (default 60) and exit "
                          "— the printer a bound comes from, never the reverse")
+    ap.add_argument("--tier-series", nargs="?", type=int, const=0,
+                    metavar="N",
+                    help="print the per-UTC-day spawn mix by declared model "
+                         "tier and by role class over the last N days (0 or "
+                         "omitted = every day in the log) and exit — the "
+                         "printer a routing bound would have to come from")
     ap.add_argument("--selftest-strings", action="store_true",
                     help="run the footer-string fixtures, both ways, and exit")
     args = ap.parse_args()
@@ -7569,7 +8269,7 @@ def main():
     # BrokenPipeError traceback costs twenty minutes before somebody notices it
     # worked. The full run is left alone: it is not a pipe-into-head tool.
     if (args.selftest or args.cadence or args.selftest_strings
-            or args.cadence_series):
+            or args.cadence_series or args.tier_series is not None):
         try:
             import signal
             signal.signal(signal.SIGPIPE, signal.SIG_DFL)
@@ -7601,6 +8301,14 @@ def main():
         # NOTHING — a caller piping this into a bound-setting decision must be
         # able to tell an empty window from a quiet one without reading prose.
         out = _cadence_series(ROOT.parent, args.cadence_series)
+        for l in out:
+            print(l)
+        return 2 if any(NOTHING_MEASURED in l for l in out[:1]) else 0
+
+    if args.tier_series is not None:
+        # SAME EXIT CONTRACT AS --cadence-series: 0 when a series printed, 2
+        # when the walk measured nothing (no log, or no row could be dated).
+        out = _tier_series(ROOT.parent, args.tier_series)
         for l in out:
             print(l)
         return 2 if any(NOTHING_MEASURED in l for l in out[:1]) else 0

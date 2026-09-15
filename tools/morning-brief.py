@@ -8,6 +8,22 @@ queue, receipts and ladder, and decides what I see and what I never see. The
 brief generator, the cards pass and the page notifier are retired; the register
 stays as a format check after the Producer writes."
 
+WHAT THIS PROGRAM EVALUATES THAT NOTHING IN THE LIVE PATH DOES, 2026-09-15,
+AND IT IS A HOLE AND NOT A FEATURE. Queue 314 put Jafar's ten-hour staleness
+bound in here, because this is where the 48-hour reading lived. The bound is
+now correct and is driven by three planted fixtures under --selftest. IT IS
+STILL INSIDE A RETIRED PROGRAM: main() below returns 5 and reads nothing, so
+the only entry point that evaluates the bound is the selftest. MEASURED
+2026-09-15: tools/producer-day.py, the tool that replaced this one and gathers
+what the Producer's one daily turn reads, names six sources (queue, findings,
+decision queue, receipts, ladder, channel) and production/budget.md is not one
+of them, so the daily path reads no budget at all. Until a live reader calls
+read_budget() or its own copy of this arithmetic, THE TEN-HOUR RULE IS STILL
+ENFORCED BY AGENTS READING PROSE, which is what queue 314 set out to end. The
+arithmetic is deliberately a pair of small pure functions (budget_freshness,
+reading_age_hours) so the live reader imports them rather than typing a second
+copy.
+
 THIS IS THE BRIEF GENERATOR. WHAT REPLACED IT:
   - tools/producer-day.py gathers the five sources he named for one Producer
     turn, and prints the consecutive readable count.
@@ -56,7 +72,9 @@ tool's own provenance lines below the message:
     the ONE queue counter in this repository (ledger/verify.py reads the same
     numbers, so the brief and the verification footer cannot disagree);
   - production/decision-queue.md, the WAITING cards;
-  - production/budget.md, the newest row that is a READING, with its age;
+  - production/budget.md, the newest row that is a READING, with its AGE IN
+    HOURS against Jafar's ten-hour bound of 2026-09-15, taken from that row's
+    own `takenAt=` stamp and never from the date column;
   - .claude/agent-log.tsv, for the studio-versus-game split, classified by
     ledger/verify.py's GAME_AGENTS so the set has one definition;
   - git, for what landed since the previous brief;
@@ -215,12 +233,30 @@ def site_url(path):
                                      for n, _ in pc.SITE_PAGES)))
 
 # THE BUDGET STALENESS BOUND, and it is Jafar's, not this program's:
-# production/budget.md, stop condition 2, "with no reading newer than 48 hours,
-# do only work that costs no model time". The table's granularity is a DATE,
-# not an instant, so 48 hours is read as two days and the comparison is the
-# conservative one: a row dated two days back is between 24 and 72 hours old
-# and is called stale. The age in days is printed beside the verdict.
-BUDGET_STALE_DAYS = 2
+# production/budget.md, stop condition 2. IT WAS 48 HOURS AND IS NOW TEN,
+# RULED 2026-09-15 in his words: "The ceiling does not brake anything, because
+# you cannot read the meter and work from whatever number I last typed. A night
+# can spend thirty points while every check says the morning's figure." And on
+# the bound itself: "Not forty eight hours, which is longer than a night that
+# can spend a third of a week."
+#
+# WHAT STOOD HERE AND WHY IT COULD NOT SURVIVE THE NEW BOUND. This constant was
+# BUDGET_STALE_DAYS = 2 and its comment said: "The table's granularity is a
+# DATE, not an instant, so 48 hours is read as two days." That reading was
+# honest for 48 hours and is impossible for ten: a row dated today is between
+# zero and twenty-four hours old, so date arithmetic cannot tell a reading
+# taken forty minutes ago from one taken before breakfast, and TEN HOURS is
+# inside that gap. The ruling supplies the missing half: every row now carries
+# `takenAt=<ISO instant>`, stamped by the RESIDENT at the moment the reading
+# arrives rather than asked of Jafar, because when it ARRIVED is what staleness
+# means and asking him for a clock time would reintroduce the remembering he
+# ruled away.
+#
+# A ROW WITH NO takenAt READS UNMEASURED, NEVER FRESH, and that direction is
+# not negotiable: the thing being guarded is unbounded spend, so the
+# conservative reading is the only safe one. Every row in the table before
+# 2026-09-15b carries none.
+BUDGET_STALE_HOURS = 10
 
 ONES = ("no", "one", "two", "three", "four", "five", "six", "seven", "eight",
         "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
@@ -249,6 +285,26 @@ def in_words(n):
 
 def plural(n, one, many):
     return one if int(n) == 1 else many
+
+
+def age_in_words(hours):
+    """How old a reading is, as words a person reads, with no digit in it.
+
+    THE STATISTIC IS A POINT AGE at the instant the brief was composed: now
+    minus the row's own takenAt, rounded to the nearest hour for the sentence
+    only. The unrounded figure rides the done line as budgetAgeHours=, so
+    nothing here is the only place the number exists.
+
+    ROUNDED, NEVER FLOORED. Floor would write "nine hours ago" for a reading
+    of 9.6 hours against a ten-hour bound, which reads as comfortable when it
+    is twenty-four minutes from unmeasured.
+    """
+    if hours is None:
+        return "at an unknown time"
+    if hours < 1:
+        return "less than an hour ago"
+    n = int(round(hours))
+    return "about %s %s ago" % (in_words(n), plural(n, "hour", "hours"))
 
 
 def _lower_first(s):
@@ -286,6 +342,15 @@ DETAIL_MAX_WORDS = 20
 # dropping it once is usually the only drop the cap needs. Every drop is named
 # on the done line with the words it saved.
 TRIM_ORDER = ("detail", "quote", "second", "picture")
+# THE READING ASK, RULED BY JAFAR 2026-09-15 AND THE BRIEF'S FIRST LINE. His
+# reason, verbatim: "That way I am asked once a day rather than having to
+# remember, and forgetting costs nothing." tools/producer-check.py's `reading`
+# rule grades the first non-blank line of every brief on three parts: it asks
+# (a question mark), it names what he is to read (the meter or the usage
+# figure), and it carries NO option, recommendation, default or deadline,
+# because it is a line and not a decision. This string satisfies all three and
+# the selftest drives it through that rule rather than asserting it does.
+READING_ASK = "READING: what do your two usage meters say now?"
 # AND WHAT CHANGED IS NEVER EMPTY. The first version of the ladder above could
 # drop every clause in that section and printed `WHAT CHANGED:` with nothing
 # after it, which reads as a morning where nothing happened rather than as a
@@ -329,19 +394,93 @@ def read_cards(root):
             True, DECISIONS_REL)
 
 
-BUDGET_ROW_RE = re.compile(r"^\|\s*(\d{4}-\d{2}-\d{2})\s*\|([^|]*)\|([^|]*)\|"
-                           r"([^|]*)\|")
+# THE DATE COLUMN IS NOT ALWAYS A BARE ISO DATE, MEASURED ON THE LIVE TABLE
+# 2026-09-15: a second reading on one day is written `2026-09-14b` and a third
+# would be `2026-09-15c`. The old pattern demanded whitespace straight after
+# the date, so IT SKIPPED EVERY SUFFIXED ROW SILENTLY -- both the 2026-09-14b
+# row and the 2026-09-15b row that carries the first takenAt in the file, which
+# is to say the two newest readings in the table were invisible to this reader
+# and it reported the 04:1xZ row as the newest. The suffix is captured
+# separately so the row's ISO date stays parseable and the letter is not lost.
+BUDGET_ROW_RE = re.compile(r"^\|\s*(\d{4}-\d{2}-\d{2})([a-z]?)\s*\|"
+                           r"([^|]*)\|([^|]*)\|([^|]*)\|")
 PCT_RE = re.compile(r"(\d{1,3})\s*%")
+# THE INSTANT THE READING ARRIVED, stamped by the resident, ruled 2026-09-15.
+# Anchored to the key so a date anywhere else in a note (and the notes are full
+# of them) can never be read as the row's own instant.
+TAKEN_AT_RE = re.compile(r"\btakenAt=(\d{4}-\d{2}-\d{2}"
+                         r"[T ]\d{2}:\d{2}(?::\d{2})?Z?)")
 
 
-def read_budget(root, today):
-    """The newest row of production/budget.md THAT IS A READING, with its age.
+def parse_taken_at(value):
+    """A `takenAt=` value as a UTC instant, or None if it cannot be read.
+
+    UNPARSEABLE READS AS ABSENT, which reads as UNMEASURED: a stamp this cannot
+    parse is not evidence about when the reading arrived, and guessing at one
+    would be the instrument inventing the fact it exists to measure.
+    """
+    if not value:
+        return None
+    try:
+        d = datetime.datetime.fromisoformat(value.replace("Z", "+00:00")
+                                            .replace(" ", "T"))
+    except ValueError:
+        return None
+    return d if d.tzinfo else d.replace(tzinfo=datetime.timezone.utc)
+
+
+def reading_age_hours(taken_at, now):
+    """How old this reading is, in hours, at the instant `now`. None when the
+    row carries no readable stamp, which is NOT an age of zero.
+
+    A POINT READING, not a peak and not a mean: it is one subtraction between
+    two instants, and it is the only statistic a staleness bound can be read
+    off.
+    """
+    if taken_at is None:
+        return None
+    return (now - taken_at).total_seconds() / 3600.0
+
+
+def budget_freshness(taken_at, now, bound_hours=BUDGET_STALE_HOURS):
+    """(verdict, ageHours) against Jafar's bound. THE ARITHMETIC LIVES HERE,
+    in the layer the selftest drives directly, because a bound evaluated only
+    inside a composer ships half-run.
+
+    THREE CASES AND THE THIRD IS THE ONE THAT MATTERS:
+      inside the bound          -> ("FRESH", age)
+      outside it                -> ("UNMEASURED", age)
+      no readable takenAt       -> ("UNMEASURED", None)
+    The third is UNMEASURED and never FRESH, by his ruling, because the thing
+    being guarded is unbounded spend.
+    """
+    age = reading_age_hours(taken_at, now)
+    if age is None:
+        return "UNMEASURED", None
+    return ("FRESH" if age < bound_hours else "UNMEASURED"), age
+
+
+def read_budget(root, now):
+    """The newest row of production/budget.md THAT IS A READING, with the
+    instant it was taken at and its AGE IN HOURS against Jafar's ten-hour bound.
 
     LAST-WINS over the table in file order, which is chronological. A row with
     no percentage on either meter is NOT a reading and the file says so in its
     own words (the limit-event rows of 3 and 5 September); counting one would
     be inventing a measurement. The governing meter is the HIGHER of the two,
     ruled 2026-09-03.
+
+    `now` IS AN INSTANT AND NOT A DATE, and that is the whole change of
+    2026-09-15: a ten-hour bound cannot be evaluated against a date column, so
+    the row's own `takenAt=` stamp is what is subtracted from. A row with no
+    readable stamp reads UNMEASURED, never fresh.
+
+    EVERY ZERO SHIPS ITS DENOMINATOR: `rows` is the rows that ARE readings,
+    `not_readings` the rows skipped for carrying no percentage, and
+    `rows_taken_at` how many of the readings carry a stamp at all. On the live
+    table today that last pair reads one of fifteen, and a reader who cannot
+    see it would take a table full of unstamped rows for a table nobody has
+    read.
     """
     p = pathlib.Path(root) / BUDGET_REL
     try:
@@ -349,24 +488,43 @@ def read_budget(root, today):
     except Exception as e:                                       # noqa: BLE001
         return {}, False, "%s could not be read (%s)" % (BUDGET_REL,
                                                          type(e).__name__)
-    rows, skipped = [], 0
+    rows, skipped, walked, stamped = [], 0, 0, 0
     for line in text.splitlines():
         m = BUDGET_ROW_RE.match(line.strip())
         if not m:
             continue
-        pcts = [int(x.group(1)) for col in (m.group(3), m.group(4))
+        walked += 1
+        pcts = [int(x.group(1)) for col in (m.group(4), m.group(5))
                 for x in [PCT_RE.search(col)] if x]
         if not pcts:
             skipped += 1
             continue
-        rows.append((m.group(1), max(pcts)))
+        # THE STAMP IS LOOKED FOR IN THE WHOLE LINE, not only the note column:
+        # the notes carry pipes and the row splitter stops at the fifth field,
+        # so a stamp written late in a long note would be invisible to a
+        # column-scoped search. TAKEN_AT_RE is anchored to the key, so nothing
+        # else in the line can be mistaken for it.
+        tm = TAKEN_AT_RE.search(line)
+        taken = parse_taken_at(tm.group(1) if tm else None)
+        if taken is not None:
+            stamped += 1
+        rows.append((m.group(1) + m.group(2), max(pcts), taken))
     if not rows:
         return ({"reading": None, "rows": 0, "not_readings": skipped,
-                 "age_days": None, "stale": True}, True, BUDGET_REL)
-    day, pct = rows[-1]
-    age = (today - datetime.date.fromisoformat(day)).days
-    return ({"reading": pct, "day": day, "age_days": age, "rows": len(rows),
-             "not_readings": skipped, "stale": age >= BUDGET_STALE_DAYS},
+                 "walked": walked, "rows_taken_at": 0, "taken_at": None,
+                 "age_hours": None, "freshness": "UNMEASURED",
+                 "why": "no-row-in-the-table-carries-a-percentage",
+                 "stale": True}, True, BUDGET_REL)
+    day, pct, taken = rows[-1]
+    verdict, age = budget_freshness(taken, now)
+    return ({"reading": pct, "day": day, "taken_at": taken, "age_hours": age,
+             "freshness": verdict, "rows": len(rows),
+             "not_readings": skipped, "walked": walked,
+             "rows_taken_at": stamped,
+             "why": ("none" if verdict == "FRESH" else
+                     ("the-newest-reading-carries-no-takenAt" if age is None
+                      else "older-than-the-ten-hour-bound")),
+             "stale": verdict != "FRESH"},
             True, BUDGET_REL)
 
 
@@ -882,9 +1040,19 @@ def previous_brief_day(root, today):
 
 # --------------------------------------------------------------- composition
 
-def compose(root, today):
+def compose(root, today, now=None):
     """(text, facts). PURE-ISH: reads, writes nothing, returns the message and
-    every number behind it with the path it was read from."""
+    every number behind it with the path it was read from.
+
+    `today` IS THE BRIEF'S DATE and `now` IS THE INSTANT THE BUDGET IS AGED
+    AGAINST, and they are two arguments because they are two facts. Every
+    window in this brief is a day wide; the staleness bound Jafar ruled on
+    2026-09-15 is ten hours wide, and a date cannot carry it. Passing no `now`
+    takes the wall clock, which is what a real morning wants; the selftest
+    pins it, which is what three deterministic staleness fixtures need.
+    """
+    if now is None:
+        now = datetime.datetime.now(datetime.timezone.utc)
     facts = {"sources": [], "failed": []}
 
     def source(name, res):
@@ -899,7 +1067,7 @@ def compose(root, today):
     until = today.isoformat()
     q = source("queue", read_queue(root))
     cards = source("cards", read_cards(root))
-    budget = source("budget", read_budget(root, today))
+    budget = source("budget", read_budget(root, now))
     split = source("split", read_split(root, since, until))
     landed = source("landed", read_landed(root, since))
     frame = source("frame", read_frame(root))
@@ -912,7 +1080,8 @@ def compose(root, today):
                   "pictures": pics, "ladder": ladder, "outcomes": outcomes,
                   "steps": steps,
                   "window_since": since, "window_until": until,
-                  "prev_brief": prev})
+                  "prev_brief": prev,
+                  "now": now.strftime("%Y-%m-%dT%H:%M:%SZ")})
     if facts["failed"]:
         return None, facts
 
@@ -1009,15 +1178,39 @@ def compose(root, today):
     facts["rung_detail_words"] = detail_words
     facts["rung_detail_used"] = 1 if detail else 0
 
-    if budget["reading"] is None or budget["stale"]:
-        money = ("Nothing measured on the budget: no reading newer than two "
-                 "days, so today's spend is unknown and an unknown budget is "
+    # THE WORDS "today" AND "yesterday" ARE GONE FROM THIS SENTENCE, and the
+    # reason is the ruling and not tidiness. They were picked off a DAY count,
+    # and under a ten-hour bound a calendar word is wrong in both directions:
+    # a reading taken at 23:50 and read at 00:10 is twenty minutes old and
+    # "yesterday" by date, which understates it; a reading taken at 00:05 and
+    # read at 23:55 is nearly a full day old and "today" by date, which
+    # OVERSTATES it. The second direction is the dangerous one and it is
+    # precisely the failure Jafar's ruling names: "A night can spend thirty
+    # points while every check says the morning's figure." So the sentence now
+    # says the AGE and never the calendar, in words because the register bans
+    # digits in anything he reads.
+    #
+    # TWO WAYS TO BE UNMEASURED AND THEY ARE DIFFERENT FACTS, so they get
+    # different sentences: the newest reading carries no instant at all, or it
+    # carries one and it is older than the bound. A single "nothing measured"
+    # covering both would hide which half of the convention is missing.
+    if budget["reading"] is None:
+        money = ("Nothing measured on the budget: no reading in the table at "
+                 "all, so today's spend is unknown and an unknown budget is "
+                 "not permission.")
+    elif budget["age_hours"] is None:
+        money = ("Nothing measured on the budget: your newest reading carries "
+                 "no record of when it was taken, so it is treated as "
+                 "unmeasured, and an unknown budget is not permission.")
+    elif budget["stale"]:
+        money = ("Nothing measured on the budget: no reading newer than ten "
+                 "hours, so today's spend is unknown and an unknown budget is "
                  "not permission.")
     else:
         money = ("Your newest reading was %s percent on the meter that "
                  "governs, taken %s."
                  % (in_words(budget["reading"]),
-                    "today" if budget["age_days"] == 0 else "yesterday"))
+                    age_in_words(budget["age_hours"])))
     # THE SPLIT SENTENCE, REQUIRED IN EVERY BRIEF by the standing order in the
     # daily wake, in WORDS, in this section, COUNTED IN SESSIONS, WITH ITS
     # DENOMINATOR, and with the reason it is not points. "Fifty-seven" and
@@ -1081,7 +1274,16 @@ def compose(root, today):
     # longest, so it is the first thing dropped rather than the thing that
     # refuses the morning.
     def render(on):
-        out = ["HEADLINE: %s, and %s." % (lead, stands), ""]
+        # THE READING ASK IS THE FIRST LINE AND IS NOT OPTIONAL, ruled by Jafar
+        # 2026-09-15 and enforced by tools/producer-check.py's `reading` rule,
+        # which this program self-checks against before it writes. It is NOT in
+        # the trim ladder: a cap that could drop the ask would silently produce
+        # the brief the ruling exists to forbid. It is a LINE and not a NEEDS
+        # YOU item, so it carries no option, no recommendation, no default and
+        # no deadline: there is no default, because a day he does not answer is
+        # a day the studio does not spend.
+        out = [READING_ASK, "",
+               "HEADLINE: %s, and %s." % (lead, stands), ""]
         changed = []
         if "quote" in on and quote and not quote_findings:
             changed.append('One of them said: "%s"' % quote)
@@ -1142,10 +1344,25 @@ def compose(root, today):
     # THE HEADLINE GUARD RUNS ON EVERY MORNING, not only in the selftest. A
     # guard nothing calls is decoration (CLAUDE.md rule 6), and this one let a
     # count headline through for three days while passing its own test.
-    ok, lead_reading = leads_with_the_game(text.splitlines()[0])
+    # THE HEADLINE LINE, FOUND BY ITS LABEL AND NOT BY ITS POSITION. It was
+    # `splitlines()[0]` until 2026-09-15, which was true while the headline was
+    # the first line and became a silent lie the moment the reading ask moved
+    # in above it: the guard would have graded the ASK as the headline, found
+    # no engineering word and no count in it, and passed every morning for ever.
+    ok, lead_reading = leads_with_the_game(headline_line(text))
     facts["lead_ok"], facts["lead_reading"] = ok, lead_reading
     facts["split_ok"], facts["split_reading"] = split_in_words(text, split)
     return text, facts
+
+
+def headline_line(text):
+    """The brief's HEADLINE line, by its label. The words "nothing measured"
+    when the brief carries no such line, so a guard reading this can never take
+    some other line for the headline and pass it."""
+    for line in text.splitlines():
+        if line.strip().upper().startswith("HEADLINE"):
+            return line.strip()
+    return "nothing measured"
 
 
 def brief_path(root, today):
@@ -1170,11 +1387,30 @@ def provenance(facts):
         "budgetNewestReadingPct=%s %s" % (
             b["reading"] if b["reading"] is not None else "nothing-measured",
             BUDGET_REL),
-        "budgetAgeDays=%s %s" % (
-            b["age_days"] if b["age_days"] is not None else "nothing-measured",
-            BUDGET_REL),
-        "budgetRowsThatAreReadings=%d/%d %s"
-        % (b["rows"], b["rows"] + b["not_readings"], BUDGET_REL),
+        # THE AGE AND THE INSTANT IT IS AN AGE FROM, ON ONE LINE, because
+        # neither half can be read without the other: an age with no takenAt
+        # beside it cannot be checked, and a takenAt with no age beside it
+        # makes every reader do the subtraction. THE VERDICT IS ON THE SAME
+        # LINE AS THE BOUND IT WAS TAKEN AGAINST, so nobody has to remember
+        # what ten hours was. budgetAgeHours is a POINT AGE at the instant this
+        # brief was composed, not a peak and not a mean.
+        "budgetFreshness=%s budgetAgeHours=%s budgetTakenAt=%s "
+        "budgetBoundHours=%d why=%s %s"
+        % (b["freshness"],
+           ("%.2f" % b["age_hours"]) if b["age_hours"] is not None
+           else "nothing-measured",
+           b["taken_at"].strftime("%Y-%m-%dT%H:%M:%SZ") if b["taken_at"]
+           else "nothing-measured",
+           BUDGET_STALE_HOURS, b["why"], BUDGET_REL),
+        # THREE DENOMINATORS AND THEY COUNT DIFFERENT THINGS. `walked` is every
+        # table row this reader matched; `rows` is those that ARE readings;
+        # `rowsWithTakenAt` is how many of the readings carry a stamp at all.
+        # The third is the one that would otherwise be invisible: on the day the
+        # convention landed it reads 1, and a reader seeing only a FRESH verdict
+        # could not tell a stamped table from a table with one stamped row in it.
+        "budgetRowsThatAreReadings=%d/%d-walked budgetRowsWithTakenAt=%d/%d "
+        "%s" % (b["rows"], b["walked"], b["rows_taken_at"], b["rows"],
+                BUDGET_REL),
         # THE SPLIT, CUMULATIVE OVER THE WINDOW, WITH ITS BASIS AND ITS
         # DENOMINATOR ON THE SAME LINE AS THE NUMERATOR. `splitUnparsedRows` is
         # the rows the classifier could not read at all (three merge-conflict
@@ -1264,13 +1500,18 @@ def provenance(facts):
     return out
 
 
-def run_once(root, today, dry_run=False, write_latest=False, quiet=False):
-    """Compose, self-check, write. Returns (exit code, text or None, facts)."""
+def run_once(root, today, dry_run=False, write_latest=False, quiet=False,
+             now=None):
+    """Compose, self-check, write. Returns (exit code, text or None, facts).
+
+    `now` is the instant the budget reading is aged against and is threaded
+    straight through to compose(); see its docstring for why it is not `today`.
+    """
     def say(*a):
         if not quiet:
             print(*a)
 
-    text, facts = compose(root, today)
+    text, facts = compose(root, today, now)
     if text is None:
         say("morning-brief: REFUSED to write. %d of %d source(s) could not be "
             "read, and a brief with a hole in it is worse than no brief:"
@@ -1307,7 +1548,7 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False):
         lr = facts["lead_reading"]
         say("morning-brief: REFUSED to write. The headline does not lead with "
             "the game, ruled by Jafar 2026-09-06:")
-        say("    %s" % text.splitlines()[0])
+        say("    %s" % headline_line(text))
         say("    engineering word(s): %s" % (", ".join(lr["engineered"])
                                              or "none"))
         say("    counted artifact(s): %s" % (", ".join(lr["counted"])
@@ -1403,7 +1644,9 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False):
         "queueReady=%d/%d queueBlocked=%d/%d queueDone=%d cardsWaiting=%d/%d "
         "splitStudio=%d/%d splitGame=%d/%d splitBasis=spawns splitReported=1/1 "
         "splitUnparsedRows=%d artShare=nothing-measured "
-        "splitSource=%s splitWindow=%s..%s budgetAgeDays=%s "
+        "splitSource=%s splitWindow=%s..%s "
+        "budgetFreshness=%s budgetAgeHours=%s budgetRowsWithTakenAt=%d/%d "
+        "budgetRowsWalked=%d "
         "cardTitleUsed=%d/%d attach=%s attachDated=%s frame=%s "
         "briefChars=%d/%s-telegram-caption-cap "
         "briefWritten=%d/1 latestWritten=%d/1 generatedAt=%s"
@@ -1425,8 +1668,12 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False):
            facts["cards"]["waiting"], facts["cards"]["scanned"],
            s["studio"], s["total"], s["game"], s["total"], s["unparsed"],
            AGENT_LOG_REL, facts["window_since"], facts["window_until"],
-           facts["budget"]["age_days"] if facts["budget"]["age_days"]
-           is not None else "nothing-measured",
+           facts["budget"]["freshness"],
+           ("%.2f" % facts["budget"]["age_hours"])
+           if facts["budget"]["age_hours"] is not None
+           else "nothing-measured",
+           facts["budget"]["rows_taken_at"], facts["budget"]["rows"],
+           facts["budget"]["walked"],
            facts.get("card_title_used", 0), 1 if facts["cards"]["waiting"] else 0,
            facts["pictures"]["newest"] or "nothing-measured",
            in_date_words(facts["pictures"]["newestWhen"]).replace(" ", "-")
@@ -1462,10 +1709,15 @@ def _tree(files):
     return d
 
 
-def _fixture_files(budget_day, extra=None):
+def _fixture_files(budget_day, extra=None, taken_at=None):
     """A planted tree: a queue, a decision queue, a budget table and an agent
     log. Synthetic to the last file; nothing here is pinned to a real asset, so
-    doing the work this tool reports can never break its own test."""
+    doing the work this tool reports can never break its own test.
+
+    `taken_at` IS THE STAMP ON THE NEWEST READING ROW, or None for a row that
+    carries none, which is the third staleness case and the one every row in
+    the live table before 2026-09-15b is an instance of.
+    """
     files = {
         "production/queue/README.md": "# docs\n",
         "production/queue/900-process-audit.md": qc._item("READY 2026-09-05"),
@@ -1481,7 +1733,8 @@ def _fixture_files(budget_day, extra=None):
             "|---|---|---|---|---|\n"
             "| 2026-09-01 | a | 34% | 41% | a reading |\n"
             "| " + budget_day + " | b | not read | not read | NOT A READING |\n"
-            "| " + budget_day + " | c | 12% | 14% | a reading |\n",
+            "| " + budget_day + " | c | 12% | 14% | a reading"
+            + ((" takenAt=" + taken_at) if taken_at else "") + " |\n",
         ".claude/agent-log.tsv":
             "when\tagent\n"
             "2026-09-05T01:00:00Z\tinstrument-builder\n"
@@ -1530,10 +1783,30 @@ def selftest():
        [str(f) for f in res["findings"]])
     ok("its five sections are all found, in the ruled order",
        res["sections_found"] == pc.SECTIONS, res["sections_found"])
-    ok("the split rule is ENFORCED in this register and found the sentence",
-       "split" in res["enforced"] and not [f for f in res["findings"]
-                                           if f.rule == "split"],
-       res["enforced"])
+    # THE SPLIT RULE IS RETIRED FROM THE BRIEF REGISTER, 2026-09-09, and this
+    # assertion said the opposite until 2026-09-15. IT HAD BEEN RED FOR SIX
+    # DAYS: producer-check's ruling block at SECTIONS_RETIRED_IN_BRIEF took
+    # `split` out of every register on 9 September and nothing here moved, so
+    # this file's selftest exited 3 on every run and the two failures were the
+    # first thing a reader saw. A suite that is red for a reason nobody intends
+    # to fix stops being read, which is how the next real failure hides.
+    #
+    # WHAT IT ASSERTS NOW IS THE PAIR, both halves in this run: the register
+    # does NOT enforce it and NAMES it under NOT ENFORCED (so a retirement
+    # cannot be confused with a rule that passed), and the DETECTOR still finds
+    # all five parts in this brief's own BUDGET body (so the guard the Sunday
+    # summary inherits is alive rather than quietly gone).
+    split_body = " ".join(pc.split_sections(text)[0].get("BUDGET", []))
+    split_n, split_missing = pc.split_parts(split_body)
+    ok("the split rule is RETIRED from the brief register (named under NOT "
+       "ENFORCED: %s) and its detector still finds %d of %d part(s) in this "
+       "brief's BUDGET section (missing %s)"
+       % ("/".join(res["not_enforced"]) or "none", split_n,
+          len(pc.SPLIT_PARTS), "/".join(split_missing) or "none"),
+       "split" not in res["enforced"] and "split" in res["not_enforced"]
+       and not [f for f in res["findings"] if f.rule == "split"]
+       and split_n == len(pc.SPLIT_PARTS) and not split_missing,
+       (res["enforced"], split_n, split_missing))
     # THE LINK BAND, ruled 2026-09-06. The register enforces it above; this
     # names the reading so a failure says which half broke, and prints the
     # destinations rather than only their count.
@@ -1550,7 +1823,9 @@ def selftest():
     # engineered". Mechanical and therefore narrow: the headline must not open
     # on the work list, and must name something of his (the town, a picture, or
     # a decision waiting). It cannot tell whether the sentence is any good.
-    headline = text.splitlines()[0]
+    # BY ITS LABEL, NEVER BY POSITION: the reading ask is line one from
+    # 2026-09-15 and a positional read would grade it as the headline.
+    headline = headline_line(text)
     lead_ok, lr = leads_with_the_game(headline)
     ok("the headline leads with the game, not the paperwork (%d engineering "
        "word(s) of %d looked for, %d counted artifact(s), %d game word(s) of "
@@ -1674,30 +1949,131 @@ def selftest():
         for line in text.splitlines())
     rs = pc.check(stripped, "brief",
                   datetime.datetime.combine(today, datetime.time(0, 0)))
-    ok("the same brief with the split sentence removed is REFUSED by the "
-       "split rule", any(f.rule == "split" for f in rs["findings"]),
-       [str(f) for f in rs["findings"]] or "nothing")
+    stripped_body = " ".join(pc.split_sections(stripped)[0].get("BUDGET", []))
+    stripped_n, stripped_missing = pc.split_parts(stripped_body)
+    # THE OTHER HALF OF THE SAME PAIR, and it asserted the pre-2026-09-09 world
+    # until 2026-09-15 for the reason written at the assertion above. The
+    # REGISTER must not refuse this brief (the retirement is real and not a
+    # comment) and the DETECTOR must (the guard is alive). One of those two
+    # going quiet is the whole risk of that retirement, which is why both are
+    # read in one run off one text.
+    ok("the same brief with the split sentence removed is NOT refused by the "
+       "retired brief register (%d finding(s)) and IS refused by the kept "
+       "detector (%d of %d part(s), missing %s)"
+       % (len([f for f in rs["findings"] if f.rule == "split"]), stripped_n,
+          len(pc.SPLIT_PARTS), "/".join(stripped_missing) or "none"),
+       not [f for f in rs["findings"] if f.rule == "split"]
+       and stripped_n < len(pc.SPLIT_PARTS) and bool(stripped_missing),
+       ([str(f) for f in rs["findings"]] or "nothing", stripped_missing))
 
     print("\n  REJECTING AND NOTHING-MEASURED FIXTURES, all planted:\n")
-    # ACCEPTING HALF OF THE STALENESS BOUND FIRST: a reading from today must
-    # reach the message, or a bound that always says "stale" would pass the
-    # rejecting case while measuring nothing.
-    fresh = _tree(_fixture_files(today.isoformat()))
-    code_f, tf, ff = run_once(fresh, today, dry_run=True, quiet=True)
-    ok("a budget row dated today reaches the message as a reading (age %s "
-       "day(s))" % ff["budget"]["age_days"],
-       code_f == 0 and "newest reading" in tf and not ff["budget"]["stale"],
-       (code_f, ff["budget"]))
-    stale_day = (today - datetime.timedelta(days=3)).isoformat()
-    stale = _tree(_fixture_files(stale_day))
-    code_s, ts, fs = run_once(stale, today, dry_run=True, quiet=True)
-    ok("a budget row three days old reads as nothing measured, and the stale "
-       "figure is NOT carried as current (age %s day(s))"
-       % fs["budget"]["age_days"],
-       code_s == 0 and "Nothing measured on the budget" in ts
-       and "twelve percent" not in ts, (code_s, ts))
-    ok("and the stale tree still carries the split sentence in words",
-       "not points until the rate is measured" in ts, ts)
+    # ---------------- THE TEN-HOUR BOUND, THREE CASES, ALL THREE WATCHED
+    # RULED BY JAFAR 2026-09-15: a reading older than TEN HOURS means the day
+    # is UNMEASURED. The three cases are planted as three trees and read at ONE
+    # PINNED INSTANT, so all three are differences within one run rather than
+    # three photographs; the fixtures differ from each other in the stamp and
+    # in nothing else.
+    #
+    # ACCEPTING CASE FIRST, and it is first for the reason this whole suite is
+    # ordered that way: a bound that always says UNMEASURED would pass both
+    # rejecting cases while measuring nothing, and the brief would say the
+    # budget was unknown every morning for ever.
+    pinned = datetime.datetime(2026, 9, 15, 12, 0,
+                               tzinfo=datetime.timezone.utc)
+
+    def _stamp(hours_ago):
+        return (pinned - datetime.timedelta(hours=hours_ago)).strftime(
+            "%Y-%m-%dT%H:%M:%SZ")
+
+    fresh = _tree(_fixture_files(today.isoformat(), taken_at=_stamp(2)))
+    code_f, tf, ff = run_once(fresh, today, dry_run=True, quiet=True,
+                              now=pinned)
+    ok("CASE 1, ACCEPTING: a row stamped two hours ago reads %s at %.2f "
+       "hour(s) against the bound of %d, and the reading reaches the message "
+       "(%d of %d row(s) carried a stamp, %d row(s) walked)"
+       % (ff["budget"]["freshness"], ff["budget"]["age_hours"],
+          BUDGET_STALE_HOURS, ff["budget"]["rows_taken_at"],
+          ff["budget"]["rows"], ff["budget"]["walked"]),
+       code_f == 0 and ff["budget"]["freshness"] == "FRESH"
+       and not ff["budget"]["stale"] and "newest reading" in tf
+       and "about two hours ago" in tf
+       and ff["budget"]["rows_taken_at"] == 1,
+       (code_f, ff["budget"], tf))
+    # CASE 2, REJECTING: the SAME tree, the SAME instant, ONE contributor
+    # moved. Eleven hours rather than two is the only difference between this
+    # rung and the one above, so the difference in verdict belongs to the bound
+    # and to nothing else.
+    old = _tree(_fixture_files(today.isoformat(), taken_at=_stamp(11)))
+    code_o, to, fo = run_once(old, today, dry_run=True, quiet=True, now=pinned)
+    ok("CASE 2, REJECTING: a row stamped eleven hours ago reads %s at %.2f "
+       "hour(s) against the same bound of %d, and the stale figure is NOT "
+       "carried as current (why=%s)"
+       % (fo["budget"]["freshness"], fo["budget"]["age_hours"],
+          BUDGET_STALE_HOURS, fo["budget"]["why"]),
+       code_o == 0 and fo["budget"]["freshness"] == "UNMEASURED"
+       and fo["budget"]["stale"]
+       and "no reading newer than ten hours" in to
+       and "fourteen percent" not in to, (code_o, fo["budget"], to))
+    # CASE 3, REJECTING: NO STAMP AT ALL, which is every row in the live table
+    # before 2026-09-15b. UNMEASURED and never FRESH, by his ruling, because
+    # the thing being guarded is unbounded spend. The message says WHICH of the
+    # two unmeasured cases it is: "carries no record of when it was taken" is a
+    # different fault from "older than ten hours" and needs a different fix.
+    nostamp = _tree(_fixture_files(today.isoformat()))
+    code_n2, tn2, fn2 = run_once(nostamp, today, dry_run=True, quiet=True,
+                                 now=pinned)
+    ok("CASE 3, REJECTING: a row with NO takenAt at all reads %s with the age "
+       "%s, never fresh (%d of %d reading(s) carried a stamp, why=%s)"
+       % (fn2["budget"]["freshness"],
+          "nothing measured" if fn2["budget"]["age_hours"] is None
+          else "%.2f hour(s)" % fn2["budget"]["age_hours"],
+          fn2["budget"]["rows_taken_at"], fn2["budget"]["rows"],
+          fn2["budget"]["why"]),
+       code_n2 == 0 and fn2["budget"]["freshness"] == "UNMEASURED"
+       and fn2["budget"]["age_hours"] is None
+       and fn2["budget"]["rows_taken_at"] == 0
+       and "carries no record of when it was taken" in tn2
+       and "fourteen percent" not in tn2, (code_n2, fn2["budget"], tn2))
+    # AND THE ARITHMETIC ITSELF, DRIVEN DIRECTLY, because a bound evaluated
+    # only through a composer ships half-run. THE BOUNDARY IS READ FROM BOTH
+    # SIDES: the comparison is `age < bound`, so exactly ten hours is
+    # UNMEASURED and a minute under it is FRESH, and a suite that never asked
+    # could not tell a bound of ten from a bound of eleven.
+    edge = [(h, budget_freshness(pinned - datetime.timedelta(hours=h),
+                                 pinned)[0])
+            for h in (0.0, 9.9, 10.0, 10.1, 24.0)]
+    ok("the bound is read from both sides: %s"
+       % "/".join("%.1fh..%s" % (h, v) for h, v in edge),
+       [v for _h, v in edge] == ["FRESH", "FRESH", "UNMEASURED",
+                                 "UNMEASURED", "UNMEASURED"], edge)
+    ok("and a row with no stamp is UNMEASURED with no age, straight out of the "
+       "arithmetic (%s)" % (budget_freshness(None, pinned),),
+       budget_freshness(None, pinned) == ("UNMEASURED", None),
+       budget_freshness(None, pinned))
+    # THE LIVE TABLE IS THE ACCEPTING FIXTURE FOR THE PARSER, and only for the
+    # parser: the VERDICT is printed and not asserted, because a live row goes
+    # stale by the clock and an assertion on it would turn this suite red at
+    # 05:43 tomorrow with nobody having touched the tree.
+    live_budget, _lok, _lwhy = read_budget(REPO, datetime.datetime.now(
+        datetime.timezone.utc))
+    # EVERY TABLE ROW IS REACHED, and this is the regression guard for the bug
+    # this change found: the old pattern demanded whitespace after the ISO
+    # date, so it skipped `2026-09-14b` and `2026-09-15b` in silence and
+    # reported the 04:1xZ row as the newest reading in the file.
+    live_rows = len([l for l in (pathlib.Path(REPO) / BUDGET_REL).read_text(
+        encoding="utf-8", errors="replace").splitlines()
+        if re.match(r"^\|\s*\d{4}-\d{2}-\d{2}[a-z]?\s*\|", l.strip())])
+    ok("ACCEPTING, THE LIVE TABLE: every one of its %d dated row(s) is reached "
+       "by the reader (%d walked, %d are readings, %d carry takenAt), and its "
+       "newest reading is row %s reading %s percent, %s at %s hour(s)"
+       % (live_rows, live_budget["walked"], live_budget["rows"],
+          live_budget["rows_taken_at"], live_budget["day"],
+          live_budget["reading"], live_budget["freshness"],
+          "nothing-measured" if live_budget["age_hours"] is None
+          else "%.2f" % live_budget["age_hours"]),
+       live_rows == live_budget["walked"] and live_budget["rows_taken_at"] >= 1
+       and live_budget["taken_at"] is not None,
+       (live_rows, live_budget))
     # THE PROPERTY, NOT THE SENTENCE: the brief must say it could not look, and
     # must NOT say nothing landed. Asserting both halves is what makes this
     # survive a rewording without going quiet: the wording moved on 2026-09-06
@@ -1708,11 +2084,19 @@ def selftest():
     # which is the same question ("how much work happened") answered twice from
     # two variables, and Jafar ruled counts out of the lead. It lives on the
     # provenance line, which is where a machine reads it.
-    prov = "\n".join(provenance(fs))
+    # READ OFF CASE 2'S TREE, which is planted and therefore has no git history
+    # exactly as the old stale fixture did. The tree changed name when the
+    # staleness cases were rewritten for the ten-hour bound; the property being
+    # asserted did not.
+    prov = "\n".join(provenance(fo))
     ok("a tree with no history reports landed as nothing measured on the "
        "provenance line, not zero, and the message carries no count of it",
-       "landed=nothing-measured" in prov and fs["landed"]["n"] is None
-       and "landed" not in ts, (prov.splitlines(), ts))
+       "landed=nothing-measured" in prov and fo["landed"]["n"] is None
+       and "landed" not in to, (prov.splitlines(), to))
+    # AND THE UNMEASURED BRANCH STILL CARRIES THE SPLIT SENTENCE. A budget the
+    # brief could not read must not take the rest of the BUDGET section with it.
+    ok("and the unmeasured-budget tree still carries the split sentence in "
+       "words", "not points until the rate is measured" in to, to)
 
     # A SOURCE THAT CANNOT BE READ: refuse, name it, write nothing.
     broken = _tree(_fixture_files(today.isoformat()))
@@ -1763,18 +2147,36 @@ def selftest():
           len(set(h["token"] for h in hits)), len(OUTCOMES),
           fp["outcomes"]["chosenBy"]),
        code_p == 0 and hits and hits[0]["token"] == "overheardStatus=HEARD"
-       and hits[0]["sentence"].lower() in tp.splitlines()[0].lower(),
+       and hits[0]["sentence"].lower() in headline_line(tp).lower(),
        (code_p, tp))
     ok("and the planted ladder's one current rung is where it says the project "
        "stands (rung %s of %d)"
        % (fp["ladder"]["current"]["rung"] if fp["ladder"]["current"]
           else "nothing measured", fp["ladder"]["total"]),
        fp["ladder"]["current"] is not None
-       and "a door that opens" in tp.splitlines()[0], tp.splitlines()[0])
-    ok("and the spoken line the planted game composed is quoted, undashed "
-       "(quoteInBrief=%d trimmed=%s)"
-       % (fp["quote_ok"], ",".join(fp["trimmed"]) or "none"),
-       "She saw him do it and she knows his face." in tp, tp)
+       and "a door that opens" in headline_line(tp), headline_line(tp))
+    # TWO HALVES, AND THE SECOND ONE WAS ADDED 2026-09-15 WHEN THE ASK MOVED
+    # IN ABOVE THE HEADLINE. The reading ask is nine words of a 150-word cap
+    # and it is not in the trim ladder, so nine words came off the composed
+    # message and on this fixture the cap took the quote: `trimmed=` on this
+    # run reads quote..5-words-over..saved-14. The reader is what this case is
+    # for, so the READER is asserted directly (the line was found, undashed and
+    # clean), and the message half is asserted as EITHER carried OR announced.
+    # A guard that demanded the quote in the text would now be unsatisfiable
+    # for a reason that has nothing to do with the quote; one that dropped the
+    # message half would stop noticing a quote that vanished in silence.
+    quote_trimmed = "quote" in [d.split("..")[0] for d in fp["trimmed"]]
+    ok("and the spoken line the planted game composed is READ and undashed "
+       "(quoteRead=%d whyNotInMessage=%s trimmed=%s)"
+       % (fp["quote_ok"],
+          "carried" if not quote_trimmed else "trimmed-for-the-word-cap",
+          ",".join(fp["trimmed"]) or "none"),
+       fp["quote_ok"] == 1
+       and fp["outcomes"]["hits"][0]["quote"]
+       == "She saw him do it and she knows his face."
+       and (("She saw him do it and she knows his face." in tp)
+            or quote_trimmed),
+       (fp["quote_ok"], fp["outcomes"]["hits"][0]["quote"], fp["trimmed"]))
     # A COMMENT MAY NOT WRITE A KEY. The same planted file carries
     # crimeStatus=COMMITTED on a hash line only, and the crime sentence must be
     # nowhere in the brief: this is queue 064's rule, and the live tree is where
@@ -1823,20 +2225,31 @@ def selftest():
     real_compose = globals()["compose"]
 
     def _with(mangle):
-        def faked(root, t):
-            txt, f = real_compose(root, t)
+        # `now` IS ACCEPTED AND FORWARDED, not swallowed. It was a two-argument
+        # wrapper until 2026-09-15 and compose() gained the staleness instant;
+        # a wrapper that dropped it would have pinned these two gates to the
+        # wall clock while the rest of the suite ran pinned.
+        def faked(root, t, now=None):
+            txt, f = real_compose(root, t, now)
             txt = mangle(txt)
             f["lead_ok"], f["lead_reading"] = \
-                leads_with_the_game(txt.splitlines()[0])
+                leads_with_the_game(headline_line(txt))
             f["split_ok"], f["split_reading"] = split_in_words(txt, f["split"])
             return txt, f
         return faked
 
     try:
+        # THE HEADLINE LINE IS REPLACED BY ITS LABEL, NOT BY ITS POSITION. This
+        # mangler swapped line one until 2026-09-15, which was the headline;
+        # from the reading ask landing above it, line one is the ask, and a
+        # positional swap would have planted the rejected headline where no
+        # guard reads and certified a gate that never fired.
         globals()["compose"] = _with(
-            lambda t: "HEADLINE: Eighteen new pictures of the street since the "
-                      "previous brief, and six decisions are waiting for you."
-                      + t.split("\n", 1)[1])
+            lambda t: "\n".join(
+                ("HEADLINE: Eighteen new pictures of the street since the "
+                 "previous brief, and six decisions are waiting for you.")
+                if ln.strip().upper().startswith("HEADLINE") else ln
+                for ln in t.splitlines()) + "\n")
         code_h, _th, fh = run_once(tree, today, dry_run=True, quiet=True)
         ok("run_once REFUSES the count headline and writes nothing (exit %d, "
            "%d register finding(s), so it refused at the headline gate and not "

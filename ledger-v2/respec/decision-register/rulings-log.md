@@ -326,3 +326,15 @@ cannot find, which is the failure this file exists to stop.
   later items to the queue) is filed by the resident, and the tally readback
   guard is queued
   `game-design/decision-2026-09-15-ruling-d38-lands-the-fourth-status-is-a-status-and-the-judgement-line-owes-its-pixel.md`
+- **2026-09-15** D41 to D45, rigour scoped to where a fault hides: visual work
+  is ungated against the Hook sheet and sound against his ear, document and
+  number corrections are applied rather than ruled, queue order inside the
+  ladder is the studio's, and the tools that measure the game get a test and
+  no review while the Core keeps everything. The boundary is his: if a wrong
+  answer is undone by another render it is visual, if undoing it means a
+  migration, a golden file, a canon edit or a schema change it is structural
+  `ledger-v2/respec/decision-register/D41-visual-work-is-ungated-and-the-sheet-is-the-judge.md`
+  `ledger-v2/respec/decision-register/D42-sound-is-ungated-and-the-test-is-his-ear.md`
+  `ledger-v2/respec/decision-register/D43-document-corrections-are-applied-not-ruled.md`
+  `ledger-v2/respec/decision-register/D44-queue-order-is-the-studios-within-the-ladder.md`
+  `ledger-v2/respec/decision-register/D45-rigour-is-scoped-to-where-a-fault-hides.md`

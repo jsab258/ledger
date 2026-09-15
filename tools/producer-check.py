@@ -51,6 +51,18 @@ rung that publishes the research DELETES the entry. Whole-string equality and
 not a prefix is the whole difference between an exception and a hole: a prefix
 match on a tree URL would admit every file under it, which is the repository.
 
+THE READING ASK, RULED 2026-09-15 AND ENFORCED IN THE BRIEF REGISTER ONLY
+(see READING_PARTS). A budget reading older than TEN HOURS means the day is
+UNMEASURED, and the half that makes that cost Jafar nothing is that the brief
+ASKS HIM FOR THE READING AS ITS FIRST LINE, every morning, with the studio at
+inbox only until he answers. So a brief's first non-blank line must ask: a
+question mark, the meter or the usage figure named, and NO option,
+recommendation, default or deadline on it, because it is a LINE and not a
+NEEDS YOU item and there is no default. A day he does not answer is a day the
+studio does not spend. The 17 briefs written before the ruling are named on
+PRE_READING_BRIEFS and waive exactly that rule, by name and never by the date
+in the name.
+
 THE REGISTERS. UNPROMPTED and BRIEF get the shape, the cap, the ban list and
 the link floor. ANSWER gets the ban list and the link rules only, because
 Jafar's question sets the length and a question asking for a number is
@@ -176,7 +188,7 @@ SPLIT_RETIRED_ON = datetime.date(2026, 9, 9)
 # The rules, by name, so a register can say which of them it enforces and the
 # report can print the ones it did not.
 RULES = ["wordcap", "shape", "options", "deadline", "nextvisible",
-         "banned", "linkfloor", "linkcap", "linkdest", "split"]
+         "banned", "linkfloor", "linkcap", "linkdest", "split", "reading"]
 # `split` IS ENFORCED IN NO REGISTER TODAY: retired from the brief by the ruling
 # block above, and never applied to an unprompted message or an answer, which
 # Jafar's 2026-09-05 order says nothing about. IT STAYS IN RULES ON PURPOSE, so
@@ -185,9 +197,16 @@ RULES = ["wordcap", "shape", "options", "deadline", "nextvisible",
 # this list would read exactly like a rule that passed, and the ruling would be
 # lost rather than moved.
 RULES_NO_REGISTER = ("split",)
+# ENFORCED IN THE BRIEF AND NOWHERE ELSE, ruled by Jafar 2026-09-15 (see
+# READING_PARTS). The daily message is the one place he is asked for the meter;
+# an unprompted message and an answer are not that place and would turn the
+# one daily ask into a nag. Named in one constant so the register, the report
+# and the selftest cannot come to disagree about which kinds it binds.
+RULES_BRIEF_ONLY = ("reading",)
 REGISTERS = {
     "unprompted": (CAP_UNPROMPTED,
-                   [r for r in RULES if r not in RULES_NO_REGISTER]),
+                   [r for r in RULES if r not in RULES_NO_REGISTER
+                    and r not in RULES_BRIEF_ONLY]),
     "brief": (CAP_BRIEF, [r for r in RULES if r not in RULES_NO_REGISTER]),
     # ANSWER: his question sets the length, so the cap and the shape are not
     # enforced and are NAMED as not enforced. The ban list and the link floor
@@ -402,6 +421,68 @@ PRE_MOVE_MESSAGES = (
 # pre-move message over the cap is still refused. Named in one constant so the
 # waiver, the report and the selftest cannot come to disagree about its width.
 PRE_MOVE_WAIVED_RULES = ("linkfloor", "linkdest")
+
+# ---------------------------------------------------------------------------
+# THE BRIEFS THAT WERE WRITTEN BEFORE THE READING ASK WAS RULED, 2026-09-15.
+#
+# THE SHAPE IS LEGACY_LINK_RULES', RESEARCH_VERBATIM'S AND PRE_MOVE_MESSAGES',
+# DELIBERATELY, and it is the fourth instance of ONE idea rather than a new
+# one: a frozen tuple of repo-relative NAMES, waiving a NAMED subset of the
+# rules, counted with its denominators, with a rot check for entries no file
+# answers. MEMBERSHIP IS BY NAME AND NEVER BY THE DATE IN THE NAME, which is
+# the reasoning written out at LEGACY_LINK_RULES and unchanged here: the date
+# at the front of a filename is typed by the writer, so a date switch lets the
+# specimen choose its own rulebook.
+#
+# IT IS NOT FOLDED INTO PRE_MOVE_MESSAGES even though the two lists overlap.
+# That list's own comment says "EXACTLY THE TWO RULES THE MOVE BROKE, and
+# nothing else"; a reading ask has nothing to do with the site move, and two
+# waivers under one name is how a narrow exemption becomes a wide one nobody
+# noticed.
+#
+# MEASURED BEFORE IT WAS WRITTEN, on the live tree at 2026-09-15T19:51Z:
+# `--gate` graded 17 of 43 checked files as briefs and every one of them was
+# written before this evening's ruling, so requiring the ask without this list
+# would turn a clean walk (0 failing of 43) into 17 failures on messages that
+# were correct when they went, and the fix nobody may make is editing a brief
+# Jafar has already read.
+#
+# GATE-ONLY, EXACTLY AS LEGACY_LINK_RULES AND PRE_MOVE_MESSAGES ARE, AND ON
+# PURPOSE. main() below, the single-file path the sender shells out to, does
+# not pass pre_reading, so AT THE DOOR a name on this list still faces the
+# rule: measured 2026-09-15, `--kind brief production/briefs/2026-09-15.md`
+# reports the ask at 1 of 3 parts and refuses. That is the right direction.
+# This list grades briefs that were already sent; a brief sent from here on
+# carries the ask or does not go. Do not "fix" the door by passing pre_reading
+# to it.
+#
+# IT CANNOT GROW BY ITSELF AND IT DOES NOT COVER TOMORROW. A brief written from
+# here on is not on this list and is refused without the ask, which is the
+# whole point. The next rung DELETES entries rather than adding them, and the
+# walk's rot count says how many names no file answers so that never happens in
+# silence.
+PRE_READING_BRIEFS = (
+    "production/briefs/2026-09-05.md",
+    "production/briefs/2026-09-06.md",
+    "production/briefs/2026-09-07.md",
+    "production/briefs/2026-09-09.md",
+    "production/briefs/2026-09-10.md",
+    "production/briefs/2026-09-12.md",
+    "production/briefs/2026-09-14.md",
+    "production/briefs/2026-09-15.md",
+    "production/outbox/2026-09-08-closing-status.brief.md",
+    "production/outbox/2026-09-08-the-first-crime.brief.md",
+    "production/outbox/2026-09-08-the-four-confirmations.brief.md",
+    "production/outbox/2026-09-08-the-street-and-the-correction.brief.md",
+    "production/outbox/2026-09-09-morning-brief.brief.md",
+    "production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md",
+    "production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md",
+    "production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md",
+    "production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md",
+)
+# EXACTLY THE ONE RULE THE RULING ADDED, and nothing else. Every other rule
+# still binds on every name above.
+PRE_READING_WAIVED_RULES = ("reading",)
 
 # ---------------------------------------------------------------------------
 # RESEARCH DELIVERIES THAT GO TO HIM VERBATIM. Ruled by Jafar 2026-09-14: when
@@ -1295,8 +1376,83 @@ def split_sections(text):
     return bodies, order
 
 
+# ------------------------------------------------- the reading line, 2026-09-15
+# RULED BY JAFAR 2026-09-15, recorded in production/budget.md stop condition 2,
+# production/repo-move-triggers.md, production/watchdog-prompt.md and
+# .claude/agents/producer.md. His reasoning, verbatim: "The ceiling does not
+# brake anything, because you cannot read the meter and work from whatever
+# number I last typed. A night can spend thirty points while every check says
+# the morning's figure." A reading older than TEN HOURS means the day is
+# UNMEASURED, and the half that makes that cost him nothing is this one: "THE
+# BRIEF ASKS FOR THE READING AS ITS FIRST LINE, EVERY MORNING, AND THE STUDIO
+# HOLDS AT INBOX ONLY UNTIL HE ANSWERS", because "that way I am asked once a
+# day rather than having to remember, and forgetting costs nothing".
+#
+# IT IS A LINE AND NOT A NEEDS YOU ITEM, and the distinction is the ruling's.
+# A NEEDS YOU item carries two to four options, a recommendation, a DEFAULT and
+# a deadline no shorter than 24 hours (RULES_IF_NEEDS_YOU above). The reading
+# has none of those and CANNOT have them: there is no default, because a day he
+# does not answer is a day the studio does not spend, and that is the rule
+# working rather than failing. Putting it through the options-and-deadline
+# machinery would manufacture a default for the one question that must not have
+# one, so the third part below REFUSES a line carrying those markers.
+#
+# WHY POSITION IS A PART. "As its first line" is the ruling's own wording, and
+# it is the cheapest property in this file to satisfy and the hardest to
+# satisfy by accident: a brief cannot drift the ask into the middle where he
+# stops reading, and a line that is first cannot also be inside NEEDS YOU, so
+# the two halves of the ruling are enforced by one reading.
+#
+# THE PARTS ARE NAMED, for SPLIT_PARTS' reason one rule up: a single regex over
+# a whole sentence that missed the ask would report this rule as passing, and a
+# writer told only that "the reading line is wrong" has to guess which half.
+READING_PARTS = (
+    ("an ask and not a statement, a question mark on the line",
+     lambda line: "?" in line),
+    ("what he is asked to read, the meter or the usage figure",
+     lambda line: bool(re.search(r"\b(meters?|usage)\b", line, re.I))),
+    # REFUSING, not requiring: this part is FOUND when the markers are ABSENT.
+    ("no option, recommendation, default or deadline on it: it is a line and "
+     "not a decision",
+     lambda line: not re.search(r"\b(RECOMMENDATION|RECOMMEND|DEFAULT|"
+                               r"DEADLINE|OPTION)\b", line, re.I)),
+)
+# Printed wherever the rule is mentioned. No spaces: it crosses key=value
+# channels, and every reader of those splits on whitespace.
+READING_RULED_ON = datetime.date(2026, 9, 15)
+READING_OWED_BY = "the-brief/its-first-line/ruled-2026-09-15"
+
+
+def reading_line(text):
+    """(the first non-blank line, its 1-based number). ("", 0) for a blank
+    message, which is nothing measured and not a line that failed."""
+    for n, line in enumerate(text.splitlines(), 1):
+        if line.strip():
+            return line.strip(), n
+    return "", 0
+
+
+def reading_parts(text):
+    """(howManyFound, whichAreMissing, theLineItRead) for the reading ask.
+
+    THE MEASUREMENT LIVES HERE, IN THE TESTED LAYER, for split_parts()' reason:
+    driven only through check() a detector ships half-run, and the selftest
+    drives this function directly over its fixtures on every run as well as
+    through the register.
+
+    POSITION IS MEASURED BY THE CALLER'S CHOICE OF LINE, not by a fourth part:
+    this function is handed the first non-blank line, so "it is first" is true
+    of whatever it grades. A brief whose ask sits lower down fails because the
+    FIRST line is graded and does not ask, and the finding prints both.
+    """
+    line, _n = reading_line(text)
+    missing = [name for name, fn in READING_PARTS if not fn(line)]
+    return len(READING_PARTS) - len(missing), missing, line
+
+
 def check(text, kind="unprompted", now=None, legacy_links=False,
-          link_floor=None, research_verbatim=False, pre_move=False):
+          link_floor=None, research_verbatim=False, pre_move=False,
+          pre_reading=False):
     """Every reading this program takes, as data. PURE: takes text, returns a
     dict, touches no file. The selftest drives it with synthetic fixtures and
     the report function only formats what comes out of here.
@@ -1368,6 +1524,16 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
                        if pre_move else [])
     if pre_move_waived:
         enforced = [r for r in enforced if r not in pre_move_waived]
+    # THE BRIEFS WRITTEN BEFORE THE READING ASK WAS RULED, 2026-09-15, decided
+    # BY NAME by the caller exactly as the three exemptions above are.
+    # `pre_reading_waived` is what was ACTUALLY removed, read off this file's
+    # own register rather than off the constant, so a rule this register never
+    # enforced (every non-brief kind) cannot be reported as waived. See
+    # PRE_READING_BRIEFS.
+    pre_reading_waived = ([r for r in enforced if r in PRE_READING_WAIVED_RULES]
+                          if pre_reading else [])
+    if pre_reading_waived:
+        enforced = [r for r in enforced if r not in pre_reading_waived]
     # THE CAP GOVERNS THE BODY THE PRODUCER WROTE. On the frozen legacy list
     # only, one leading HISTORICAL, line is an annotation the studio added
     # afterwards and is not charged to the writer: see historical_split() and
@@ -1588,6 +1754,37 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
                    cap(split_missing, keep=5, sep=", ")),
                 "BUDGET" if budget_body else "the section is empty"))
 
+    # 8. THE READING LINE, ruled by Jafar 2026-09-15. See READING_PARTS for the
+    # ruling and for why position is one of the readings. ENFORCED IN THE BRIEF
+    # REGISTER ONLY (RULES_BRIEF_ONLY), so every other register names it under
+    # NOT ENFORCED rather than skipping it in silence.
+    # `reading_found` is None when nothing measured it, NOT 0, for the reason
+    # written at `split_found` one rule up: a zero would read as three parts
+    # looked for and none found, which is a different fact from a rule that
+    # did not run.
+    reading_found, reading_missing = None, [n for n, _ in READING_PARTS]
+    read_line, read_line_no = reading_line(text)
+    if "reading" in enforced:
+        reading_found, reading_missing, read_line = reading_parts(text)
+        if reading_missing:
+            found.append(Finding(
+                "reading",
+                "the first line of this brief does not ask Jafar for his "
+                "budget reading: it carries %d of %d required part(s) and is "
+                "missing %s. Ruled 2026-09-15: the brief asks for the reading "
+                "as its FIRST line, every morning, and the studio holds at "
+                "inbox only until he answers. It is a LINE and not a NEEDS YOU "
+                "item: no options, no recommendation, no default and no "
+                "deadline, because a day he does not answer is a day the "
+                "studio does not spend. The line this rule graded, which is "
+                "line %d: %s"
+                % (reading_found, len(READING_PARTS),
+                   cap(reading_missing, keep=5, sep="; "), read_line_no,
+                   cap([read_line], keep=1, width=60) if read_line
+                   else "the message is blank, which is nothing measured"),
+                "line %d" % read_line_no if read_line_no
+                else "the message is blank"))
+
     return {
         # WHICH CLOCK PRODUCED THE DEADLINE READING, carried out of the pure
         # function so the report never has to guess which of the two callers
@@ -1671,6 +1868,11 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
         # was read off.
         "pre_move": bool(pre_move),
         "pre_move_waived": list(pre_move_waived),
+        # PER MESSAGE, not cumulative, and the SAME PAIR the other three
+        # waivers print: whether this file was named on PRE_READING_BRIEFS,
+        # and WHICH rule(s) that actually removed from its register.
+        "pre_reading": bool(pre_reading),
+        "pre_reading_waived": list(pre_reading_waived),
         # THE ANNOTATION THE CAP DID NOT CHARGE FOR: per message, 0 or 1, with
         # the words it would have cost. Printed by report() and counted by the
         # gate, never silent, so "118 of 120" cannot be read without the line
@@ -1681,6 +1883,21 @@ def check(text, kind="unprompted", now=None, legacy_links=False,
         "historical_eligible": bool(legacy_links),
         "split_found": split_found, "split_of": len(SPLIT_PARTS),
         "split_missing": split_missing,
+        # THE READING ASK: how many of its parts were found, out of how many,
+        # which are missing, and THE LINE THE RULE ACTUALLY GRADED with its
+        # number. The line and its number travel together because "it asks"
+        # and "it asks FIRST" are two readings and a reader given only the
+        # first cannot tell a brief that buried the ask from one that has none.
+        "reading_found": reading_found, "reading_of": len(READING_PARTS),
+        "reading_missing": reading_missing,
+        "reading_line": read_line, "reading_line_no": read_line_no,
+        # WHAT THE ASK COSTS THE CAP, measured off the line the rule graded and
+        # never a typed constant. MEASURED ON THE LIVE CORPUS 2026-09-15: the
+        # ask is 9 words, the 17 brief-kind files in the tree run 106 to 150
+        # words with a median of 146, and 14 of the 17 would cross the 150 cap
+        # with it. So "157 of 150" must never be readable without the part of
+        # it that is mandatory; the pair is printed on one line below.
+        "reading_line_words": len(count_words(read_line)) if read_line else 0,
         "banned_checked": banned_checked,
         "enforced": list(enforced),
         "not_enforced": [r for r in RULES if r not in enforced],
@@ -1876,6 +2093,32 @@ def report(r):
               "detector is kept and is driven by the selftest on every run"
               % (NOTHING.replace("-", " "), SPLIT_RETIRED_ON.isoformat(),
                  SPLIT_OWED_BY, r["split_of"]))
+    if "reading" in r["enforced"] and r["cap"] is not None:
+        print("  of the %d word(s) above, %d are the mandatory reading ask on "
+              "line %d, leaving %d of the %d cap for what the Producer chose "
+              "to write. Both halves on one line because a count over the cap "
+              "cannot be read without the part of it nobody may cut"
+              % (r["words"], r["reading_line_words"], r["reading_line_no"],
+                 r["cap"] - r["reading_line_words"], r["cap"]))
+    if "reading" in r["enforced"]:
+        print("  the reading ask: %d of %d required part(s) found on line %d, "
+              "which is the first non-blank line and the only one this rule "
+              "grades (%s). Ruled 2026-09-15: the brief asks for the meter "
+              "reading as its first line and the studio holds at inbox only "
+              "until he answers. No default and no deadline belong on it"
+              % (r["reading_found"], r["reading_of"], r["reading_line_no"],
+                 "; ".join(n for n, _ in READING_PARTS)))
+    else:
+        # NOT "0 of 3". Nothing measured it in this register, and the words say
+        # so, or a reader takes a rule that did not run for a rule this message
+        # passed. The brief register is named, so the reader knows where it does
+        # bite rather than only that it did not bite here.
+        print("  the reading ask: %s, the rule is enforced in the brief "
+              "register only (ruled %s) and this is the %s register. Where it "
+              "binds it is owed by %s; the %d-part detector is kept and is "
+              "driven by the selftest on every run"
+              % (NOTHING.replace("-", " "), READING_RULED_ON.isoformat(),
+                 r["kind"], READING_OWED_BY, r["reading_of"]))
     if "deadline" in r["enforced"]:
         # TWO CALLERS, TWO CLOCKS, so neither may leave its instant implicit.
         # This path is the SINGLE-FILE check and its clock is the wall clock:
@@ -2051,8 +2294,18 @@ BRIEF_SPLIT = ("BUDGET: your newest reading was seven percent on the meter "
                "that governs, taken today. Nine sessions went to the studio "
                "and two to the game since the previous brief, counted in "
                "sessions and not points until the rate is measured.")
-GOOD_BRIEF = GOOD.replace("BUDGET: £0 spent, well inside the month.",
-                          BRIEF_SPLIT)
+# THE READING ASK, ruled 2026-09-15 and required in the BRIEF register only.
+# Its three parts are the ask (a question mark), what he is asked to read (the
+# meter or the usage figure) and the ABSENCE of the NEEDS YOU markers, because
+# the ruling makes it a LINE and not a decision: no options, no recommendation,
+# no default, no deadline. It sits FIRST because the ruling says first.
+# FIFTEEN WORDS IN ITS FIRST FORM PUT GOOD_BRIEF AT 151 OF 150, MEASURED, so
+# it is nine and says the same thing: the accepting fixture may not sit over
+# the cap it is meant to demonstrate, and padding the cap to fit a fixture
+# would be moving the bound to fit the reading.
+BRIEF_READING = "READING: what do your two usage meters say now?"
+GOOD_BRIEF = BRIEF_READING + "\n\n" + GOOD.replace(
+    "BUDGET: £0 spent, well inside the month.", BRIEF_SPLIT)
 
 BAD_BRIEF = {
     "a brief with no split sentence at all":
@@ -2078,6 +2331,40 @@ BAD_BRIEF = {
                            "studio and two to the game, counted in sessions "
                            "and not points until the rate is measured."),
 }
+
+# THE READING ASK, REJECTING, FOUR WAYS. Each differs from GOOD_BRIEF in ONE
+# thing and every one is SYNTHETIC: pinning a rejecting fixture to a real brief
+# would break the day somebody writes one, which is the reasoning already
+# written at BAD_BRIEF_SURVIVING. (label, the exact rule name it must trip,
+# the text). The four cover the three parts and the position separately,
+# because a single fixture failing all of them at once would let three of the
+# four stop biting in silence.
+BAD_BRIEF_READING = (
+    # NO ASK AT ALL. The brief opens on the headline, which is every brief in
+    # the tree before this evening and is the case the rule exists for.
+    ("a brief that never asks for the reading", "reading",
+     GOOD_BRIEF.replace(BRIEF_READING + "\n\n", "")),
+    # THE ASK EXISTS AND IS NOT FIRST. Ruled "as its FIRST line", and this is
+    # the fixture that proves position is measured rather than described: the
+    # text contains every word of the ask and is still refused.
+    ("an ask buried below the headline", "reading",
+     GOOD_BRIEF.replace(BRIEF_READING + "\n\n", "")
+               .replace("WHAT CHANGED:", BRIEF_READING + "\n\nWHAT CHANGED:")),
+    # A STATEMENT, NOT AN ASK. He is told a number instead of asked for one,
+    # which is precisely the "work from whatever number I last typed" his
+    # ruling refuses.
+    ("a first line that tells him the meter instead of asking", "reading",
+     GOOD_BRIEF.replace(BRIEF_READING,
+                        "READING: your usage meters stood where you left "
+                        "them.")),
+    # THE ASK PUT THROUGH THE NEEDS YOU MACHINERY. The ruling is explicit that
+    # this is the OPPOSITE of what it asked for: a default on this question
+    # manufactures permission to spend on a day he never answered.
+    ("an ask carrying a default and a deadline", "reading",
+     GOOD_BRIEF.replace(BRIEF_READING,
+                        BRIEF_READING + " DEFAULT: yesterday's number. "
+                        "DEADLINE: noon.")),
+)
 
 # WHAT THE BRIEF REGISTER MUST STILL REFUSE AFTER THE RETIREMENT OF 2026-09-09.
 # Two things left the brief's list; these are the proof that the rest did not
@@ -2609,7 +2896,8 @@ def selftest():
        not ra["findings"], [str(f) for f in ra["findings"]])
     ok("and the answer register NAMES the rules it did not enforce",
        set(ra["not_enforced"]) == {"wordcap", "shape", "options", "deadline",
-                                   "nextvisible", "split"}, ra["not_enforced"])
+                                   "nextvisible", "split", "reading"},
+       ra["not_enforced"])
 
     # ACCEPTING, third: a message with nothing needing him is not forced to
     # invent an item.
@@ -2631,6 +2919,55 @@ def selftest():
        % (rb["words"], rb["cap"], len(rb["sections_required_found"]),
           len(rb["sections_required"])),
        not rb["findings"], [str(f) for f in rb["findings"]])
+
+    # THE READING ASK, ACCEPTING CASE FIRST, ruled by Jafar 2026-09-15. The
+    # expensive failure for a new register rule is a rule nothing survives, so
+    # the brief that CARRIES the ask is read before any brief that does not,
+    # and it is read twice in the same run: through the DETECTOR directly (the
+    # tested layer, so it cannot ship half-run) and through the REGISTER.
+    rd_found, rd_missing, rd_line = reading_parts(GOOD_BRIEF)
+    _rd_text, rd_no = reading_line(GOOD_BRIEF)
+    ok("ACCEPTING: a brief whose FIRST line asks for the meter reading passes "
+       "the brief register, and the detector finds %d of %d part(s) on line %d "
+       "(missing %s)"
+       % (rd_found, len(READING_PARTS), rd_no,
+          cap(rd_missing, keep=5, sep=", ") or "none"),
+       not rb["findings"] and rd_found == len(READING_PARTS)
+       and not rd_missing and rd_no == 1
+       and "reading" in rb["enforced"],
+       "found=%d missing=%s line=%d enforced=%s"
+       % (rd_found, rd_missing, rd_no, "reading" in rb["enforced"]))
+    # THE RULE IS THE BRIEF'S AND NOBODY ELSE'S, both directions in one run.
+    # An unprompted message and an answer NAME it under NOT ENFORCED rather
+    # than skipping it in silence, and a message with no ask in those two
+    # registers is not refused for the lack of one.
+    ru_noask = check(GOOD, "unprompted", FIXTURE_NOW)
+    ra_noask = check("You asked how many. Nearly all of them.\n"
+                     "https://jsab258.github.io/ledger/gallery.html",
+                     "answer", FIXTURE_NOW)
+    ok("and the ask is required in the BRIEF register ONLY: an unprompted "
+       "message and an answer with no ask on them carry `reading` under NOT "
+       "ENFORCED and are not refused for it (%s / %s)"
+       % ("/".join(ru_noask["not_enforced"]),
+          "/".join(ra_noask["not_enforced"])),
+       "reading" in ru_noask["not_enforced"]
+       and "reading" in ra_noask["not_enforced"]
+       and "reading" not in {f.rule for f in ru_noask["findings"]}
+       and "reading" not in {f.rule for f in ra_noask["findings"]}
+       and tuple(RULES_BRIEF_ONLY) == ("reading",),
+       (ru_noask["not_enforced"], ra_noask["not_enforced"]))
+    # AND `reading_found` IS None, NOT 0, WHERE THE RULE DID NOT RUN. A zero
+    # would read as three parts looked for and none found, which is a different
+    # fact from a rule that never looked; the report prints the words for it.
+    ok("a register that does not enforce the ask reports it as nothing "
+       "measured and never as zero of %d (unprompted=%s, answer=%s)"
+       % (len(READING_PARTS), ru_noask["reading_found"],
+          ra_noask["reading_found"]),
+       ru_noask["reading_found"] is None
+       and ra_noask["reading_found"] is None
+       and rb["reading_found"] == len(READING_PARTS),
+       (ru_noask["reading_found"], ra_noask["reading_found"],
+        rb["reading_found"]))
 
     # THE LADDER FOR THE RETIREMENT: ONE TEXT, TWO REGISTERS, ONE RUN, and the
     # only thing that changes between the rungs is which register grades it. The
@@ -2886,6 +3223,25 @@ def selftest():
               len(rr["sections_required"])),
            rules == {want},
            "found %s" % (sorted(rules) or "nothing"))
+
+    # THE READING ASK, REJECTING, FOUR WAYS, each refused by `reading` AND BY
+    # NOTHING ELSE, so a fixture that fails for some unrelated reason cannot
+    # certify this rule. The line the rule graded and the parts it missed are
+    # printed on every row, because "the brief has no ask" and "the ask is
+    # three lines down" are different faults and a reader given only the rule
+    # name cannot tell them apart.
+    for label, want, text in BAD_BRIEF_READING:
+        rr = check(text, "brief", FIXTURE_NOW)
+        rules = {f.rule for f in rr["findings"]}
+        ok("%-52s is refused by `%s` and nothing else (%d of %d part(s) on "
+           "line %d, missing %s)"
+           % (label, want, rr["reading_found"], rr["reading_of"],
+              rr["reading_line_no"],
+              cap(rr["reading_missing"], keep=3, width=46, sep="; ")),
+           rules == {want} and rr["reading_found"] < rr["reading_of"],
+           "found=%s rules=%s line=%r"
+           % (rr["reading_found"], sorted(rules) or "nothing",
+              rr["reading_line"][:60]))
 
     for want, text in BAD.items():
         rr = check(text, "unprompted", FIXTURE_NOW)
@@ -3663,6 +4019,124 @@ def selftest():
                                        ".answer.md"]
        and g_pm_rot["pre_move_graded"] == 0
        and g_pm_rot["pre_move_waiver_bit"] == 0, g_pm_rot["pre_move_absent"])
+    # ------------------------ THE PRE-READING WAIVER, ACCEPTING CASE FIRST
+    # ONE SYNTHETIC TREE, TOGGLED ONE CONTRIBUTOR AT A TIME, ALL IN THIS RUN,
+    # the shape of the pre-move ladder above. Synthetic to the last byte: the
+    # brief name is dated but exists nowhere, so deleting or writing a real
+    # brief can never break this case and the live tree can never make it pass
+    # by accident.
+    print("\n  THE PRE-READING WAIVER AT THE GATE, ACCEPTING CASE FIRST:\n")
+    pr_old = "production/briefs/2026-09-04.md"
+    pr_tree_files = {
+        "production/outbox/README.md": "# docs\n",
+        # THE OLD BRIEF IS GOOD_BRIEF WITH THE ASK TAKEN OFF, DERIVED AND NEVER
+        # TYPED, so the day the ask's wording moves this fixture moves with it.
+        pr_old: GOOD_BRIEF.replace(BRIEF_READING + "\n\n", ""),
+        SERVED_MARKER_REL: "servedCommit=0bc1def2\n"}
+    g_pr = gate_run(_gate_tree(pr_tree_files), FIXTURE_NOW, pre_register=(),
+                    pre_move=(pr_old,), pre_reading=(pr_old,))
+    ok("ACCEPTING: %d listed brief(s) of %d pass the gate with the reading "
+       "rule LIVE (readingEnforcedOn=%d/%d, waiverChangedVerdictOn=%d/%d, "
+       "%d finding(s) removed, rule(s) %s)"
+       % (g_pr["pre_reading_graded"], g_pr["pre_reading_listed"],
+          g_pr["reading_enforced"], g_pr["checked"],
+          g_pr["pre_reading_waiver_bit"], g_pr["pre_reading_graded"],
+          g_pr["pre_reading_findings_waived"],
+          "/".join(g_pr["pre_reading_rules"]) or NOTHING),
+       not g_pr["failed"] and g_pr["pre_reading_graded"] == 1
+       and g_pr["pre_reading_waiver_bit"] == 1
+       and g_pr["reading_enforced"] == 0 and g_pr["checked"] == 1
+       and set(g_pr["pre_reading_rules"]) == set(PRE_READING_WAIVED_RULES),
+       (g_pr["failed"], g_pr["pre_reading_rules"]))
+    # THE SECOND RUNG: THE SAME TREE, THE SAME INSTANT, THE LIST EMPTY. The
+    # difference between the rungs is the only number a ladder yields, and a
+    # waiver that cannot be switched off is not a waiver.
+    g_pr_off = gate_run(_gate_tree(pr_tree_files), FIXTURE_NOW,
+                        pre_register=(), pre_move=(pr_old,), pre_reading=())
+    off_reading = " ".join(w for _rel, w in g_pr_off["failed"])
+    ok("REJECTING: the SAME brief OFF the list FAILS the same walk (%d of %d "
+       "checked, readingEnforcedOn=%d/%d), so the waiver is a name and not a "
+       "hole"
+       % (len(g_pr_off["failed"]), g_pr_off["checked"],
+          g_pr_off["reading_enforced"], g_pr_off["checked"]),
+       len(g_pr_off["failed"]) == 1 and "reading" in off_reading
+       and g_pr_off["pre_reading_graded"] == 0
+       and g_pr_off["pre_reading_waiver_bit"] == 0
+       and g_pr_off["reading_enforced"] == 1,
+       (g_pr_off["failed"], g_pr_off["reading_enforced"]))
+    # A BRIEF WRITTEN UNDER THE RULE NEEDS NO WAIVER AT ALL, which is the whole
+    # point of the list being frozen: the same walk, the same empty list, the
+    # ask restored. If this rung failed, the rule would be unsatisfiable and
+    # the list would be load-bearing for ever.
+    # THE DATE IN THE NAME IS THE INSTANT THIS BODY IS GRADED AT and selects no
+    # rule: gate_clock pins every file to its own name, GOOD_BRIEF carries
+    # DEADLINE 2026-09-07, and naming this 2026-09-16 made it fail on
+    # `deadline` at -216 hours and proved nothing about the ask. Membership of
+    # the waiver is by NAME and the list is EMPTY on this rung, so an early
+    # date buys this fixture nothing.
+    pr_new = "production/briefs/2026-09-03.md"
+    g_pr_new = gate_run(_gate_tree({"production/outbox/README.md": "# docs\n",
+                                    pr_new: GOOD_BRIEF,
+                                    SERVED_MARKER_REL:
+                                        "servedCommit=0bc1def2\n"}),
+                        FIXTURE_NOW, pre_register=(), pre_move=(pr_new,),
+                        pre_reading=())
+    ok("ACCEPTING: a brief CARRYING the ask passes with the list empty "
+       "(readingEnforcedOn=%d/%d, preReadingGraded=%d/%d), so the rule is "
+       "satisfiable without the waiver"
+       % (g_pr_new["reading_enforced"], g_pr_new["checked"],
+          g_pr_new["pre_reading_graded"], g_pr_new["pre_reading_listed"]),
+       not g_pr_new["failed"] and g_pr_new["reading_enforced"] == 1
+       and g_pr_new["checked"] == 1 and g_pr_new["pre_reading_graded"] == 0,
+       (g_pr_new["failed"], g_pr_new["reading_enforced"]))
+    # NARROWNESS: the waiver is exactly one rule wide. A listed brief that
+    # breaks a SECOND rule is still refused by it, and `shape` is the right
+    # second rule because the ruling changed nothing about the sections.
+    r_pr_shape = check(GOOD_BRIEF.replace(BRIEF_READING + "\n\n", "")
+                                 .replace("HEADLINE: the town has textures",
+                                          "The town has textures"),
+                       "brief", FIXTURE_NOW,
+                       link_floor=floor_reading(True, "fixture..page-served",
+                                                served="0bc1def2", lines=1),
+                       pre_reading=True)
+    ok("REJECTING: a listed brief that also breaks `shape` is STILL refused by "
+       "it, so the waiver is %d rule(s) wide and not two (waived here: %s)"
+       % (len(PRE_READING_WAIVED_RULES),
+          "/".join(r_pr_shape["pre_reading_waived"]) or NOTHING),
+       {f.rule for f in r_pr_shape["findings"]} == {"shape"}
+       and set(r_pr_shape["pre_reading_waived"])
+       == set(PRE_READING_WAIVED_RULES),
+       [str(f) for f in r_pr_shape["findings"]])
+    # THE ROT CHECK, REJECTING: a frozen name no file answers is COUNTED, never
+    # a silent zero.
+    g_pr_rot = gate_run(_gate_tree(pr_tree_files), FIXTURE_NOW,
+                        pre_register=(), pre_move=(pr_old,),
+                        pre_reading=("production/briefs/never-existed.md",))
+    ok("REJECTING: a frozen PRE_READING_BRIEFS entry that no longer exists is "
+       "counted, not silent (%d of %d listed, %d graded)"
+       % (len(g_pr_rot["pre_reading_absent"]), g_pr_rot["pre_reading_listed"],
+          g_pr_rot["pre_reading_graded"]),
+       g_pr_rot["pre_reading_absent"] == ["production/briefs/never-existed.md"]
+       and g_pr_rot["pre_reading_graded"] == 0
+       and g_pr_rot["pre_reading_waiver_bit"] == 0,
+       g_pr_rot["pre_reading_absent"])
+    # AND THE LIVE TREE, WHICH IS THE ACCEPTING FIXTURE THE LIST WAS SIZED
+    # AGAINST. Every name on PRE_READING_BRIEFS must be a file this walk
+    # actually graded, or the list is describing a tree that no longer exists.
+    g_live_pr = gate_run(REPO, FIXTURE_NOW)
+    ok("ACCEPTING, THE LIVE TREE: %d of the %d frozen PRE_READING_BRIEFS "
+       "name(s) were graded in this walk and the waiver changed the verdict on "
+       "%d of them; readingEnforcedOn=%d/%d of %d brief(s), %d file(s) failed"
+       % (g_live_pr["pre_reading_graded"], g_live_pr["pre_reading_listed"],
+          g_live_pr["pre_reading_waiver_bit"], g_live_pr["reading_enforced"],
+          g_live_pr["checked"], g_live_pr["brief_files"],
+          len(g_live_pr["failed"])),
+       not g_live_pr["failed"] and not g_live_pr["pre_reading_absent"]
+       and g_live_pr["pre_reading_graded"] == len(PRE_READING_BRIEFS)
+       and g_live_pr["pre_reading_waiver_bit"]
+       == g_live_pr["pre_reading_graded"],
+       (g_live_pr["failed"][:2], g_live_pr["pre_reading_absent"]))
+
     # ---------------------- REJECTING, THE ARCHIVE ORIGIN ITSELF, 2026-09-15
     # THE FIRST DAY THIS CASE CAN FIRE. SITE_ORIGIN and ARCHIVE_ORIGIN were the
     # same string from 2026-09-10 until queue 256 landed, so "an archive link
@@ -3750,6 +4224,7 @@ def selftest():
     print("\nproducer-check --selftest: %s. %d passed, %d failed, %d rejecting "
           "fixture(s) over %d rule(s) of which %d are enforced by no register "
           "(%s), %d detector fixture(s) for the retired split rule, %d "
+          "rejecting fixture(s) for the reading ask, %d "
           "rejecting gate fixture(s) in %d measured gate run(s), %d marker "
           "fixture(s) and %d link-floor ladder rung(s) at the gate"
           % ("PASS" if not failed else "FAILED", passed, len(failed), len(BAD),
@@ -3759,7 +4234,8 @@ def selftest():
              "/".join(x for x in RULES
                       if not any(x in v[1] for v in REGISTERS.values()))
              or "none",
-             len(BAD_BRIEF), len(gate_bad), len(gate_runs),
+             len(BAD_BRIEF), len(BAD_BRIEF_READING),
+             len(gate_bad), len(gate_runs),
              len(floor_cases) + 3, len(floor_rungs)))
     for f in failed:
         print("  " + f)
@@ -3904,7 +4380,8 @@ def gate_kind(rel):
 
 def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          legacy_links=LEGACY_LINK_RULES, site_origin=SITE_ORIGIN,
-         research_verbatim=RESEARCH_VERBATIM, pre_move=PRE_MOVE_MESSAGES):
+         research_verbatim=RESEARCH_VERBATIM, pre_move=PRE_MOVE_MESSAGES,
+         pre_reading=PRE_READING_BRIEFS):
     """Every message file under the ruled trees, against its own register.
 
     PURE-ISH: reads files, touches nothing, returns data. The report function
@@ -3976,6 +4453,16 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          "pre_move_graded": 0, "pre_move_listed": len(pre_move),
          "pre_move_waiver_bit": 0, "pre_move_findings_waived": 0,
          "pre_move_rules": set(), "pre_move_absent": [],
+         # THE PRE-READING WAIVER, AS THE SAME LADDER AND FOR THE SAME REASON.
+         # `pre_reading_graded` is CUMULATIVE over the walk (checked files whose
+         # NAME is on PRE_READING_BRIEFS) over that list's length;
+         # `pre_reading_waiver_bit` is the second rung, measured by running the
+         # same file through the same check() twice in the same run with the one
+         # contributor toggled; `pre_reading_findings_waived` is CUMULATIVE
+         # findings removed.
+         "pre_reading_graded": 0, "pre_reading_listed": len(pre_reading),
+         "pre_reading_waiver_bit": 0, "pre_reading_findings_waived": 0,
+         "pre_reading_rules": set(), "pre_reading_absent": [],
          # OF THE FILES CHECKED, how many had an instant to measure from.
          # Cumulative over the walk, printed beside its denominator.
          "date_pinned": 0, "unpinned": 0,
@@ -3986,6 +4473,13 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
          # moves the day that register exists: a retirement that printed nothing
          # would be indistinguishable from a rule passing on every file.
          "split_enforced": 0, "brief_files": 0,
+         # OF THE FILES CHECKED, how many were graded by a register that
+         # actually enforced `reading` after every waiver. CUMULATIVE over the
+         # walk, printed beside its denominator: on the day it landed it reads
+         # 0 of N, because every brief in the tree predates the ruling and is
+         # named on PRE_READING_BRIEFS, and it climbs by itself as briefs are
+         # written under the rule.
+         "reading_enforced": 0,
          # THE LINK FLOOR'S BRANCH FOR THIS WALK, and its blast radius. The
          # branch is a WHOLE-RUN fact (one marker, read once above) and goes on
          # the done line; `link_floor_off` is CUMULATIVE over the walk, counting
@@ -4077,9 +4571,12 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             research = rel in research_verbatim
             # AND HERE. See PRE_MOVE_MESSAGES for the ladder it was read off.
             premove = rel in pre_move
+            # AND HERE. See PRE_READING_BRIEFS for the ruling and the
+            # measurement that sized the list.
+            prereading = rel in pre_reading
             res = check(text, kind, file_now, legacy_links=legacy,
                         link_floor=floor, research_verbatim=research,
-                        pre_move=premove)
+                        pre_move=premove, pre_reading=prereading)
             r["checked"] += 1
             # THE SECOND RUNG, from the same vantage in the same run: the same
             # file, the same instant, the same floor, the exemption OFF. The
@@ -4123,6 +4620,24 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                 r["pre_move_rules"].update(removed)
                 if removed:
                     r["pre_move_waiver_bit"] += 1
+            # THE PRE-READING WAIVER'S SECOND RUNG, taken exactly as the two
+            # above are: same file, same instant, same floor, ONE contributor
+            # toggled, both readings inside this run. `removed_reading` is its
+            # own name and never `removed`: reusing the pre-move variable would
+            # credit one waiver's findings to the other, which is the two-
+            # contributors-at-once fault written out at the research rung.
+            removed_reading = []
+            if prereading:
+                r["pre_reading_graded"] += 1
+                plain_r = check(text, kind, file_now, legacy_links=legacy,
+                                link_floor=floor, research_verbatim=research,
+                                pre_move=premove, pre_reading=False)
+                removed_reading = [f.rule for f in plain_r["findings"]
+                                   if f.rule in res["pre_reading_waived"]]
+                r["pre_reading_findings_waived"] += len(removed_reading)
+                r["pre_reading_rules"].update(removed_reading)
+                if removed_reading:
+                    r["pre_reading_waiver_bit"] += 1
             # READ OFF THE REGISTER THIS FILE WAS ACTUALLY GRADED BY, never
             # off the walk's constant. That mattered on 2026-09-15, when the
             # floor DID become per-file: `link_floor_active` is the marker's
@@ -4136,6 +4651,13 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
             # picks the rule up.
             if "split" in res["enforced"]:
                 r["split_enforced"] += 1
+            # READ OFF THE REGISTER THIS FILE WAS ACTUALLY GRADED BY, never off
+            # a constant, for the reason one line up: since 2026-09-15 the
+            # reading rule can drop out PER FILE (PRE_READING_BRIEFS), and a
+            # number derived from the register alone would report the rule as
+            # biting on every brief while it bit on none of them.
+            if "reading" in res["enforced"]:
+                r["reading_enforced"] += 1
             if kind == "brief":
                 r["brief_files"] += 1
             # THE UNCOUNTED LINE RIDES ON THE FILE'S OWN LINE, pass or fail,
@@ -4167,6 +4689,11 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                          % ("/".join(res["pre_move_waived"]) or NOTHING,
                             len(removed) if premove else 0))
                         if premove else "")
+            # AND THE PRE-READING WAIVER RIDES ON IT TOO, for the same reason.
+            prereaded = ((", pre-reading:%s-waived/%d-finding(s)-removed"
+                          % ("/".join(res["pre_reading_waived"]) or NOTHING,
+                             len(removed_reading)))
+                         if prereading else "")
             if res["findings"]:
                 r["failed"].append(
                     (rel, "%s: %s" % (kind,
@@ -4176,14 +4703,15 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
                 r["results"].append((rel, "fail", "%s, %d finding(s), %s%s%s"
                                      % (kind, len(res["findings"]), as_of,
                                         hist,
-                                        ruled + verbatim + premoved)))
+                                        ruled + verbatim + premoved
+                                        + prereaded)))
             else:
                 r["results"].append(
                     (rel, "pass-legacy-links" if legacy else "pass",
                      "%s, %d of %s word(s), %s%s%s%s"
                      % (kind, res["words"],
                         res["cap"] if res["cap"] else "no-cap", as_of, hist,
-                        ruled + verbatim + premoved,
+                        ruled + verbatim + premoved + prereaded,
                         ", the link band is not enforced on it: written "
                         "before it was ruled and named in LEGACY_LINK_RULES"
                         if legacy else "")))
@@ -4206,6 +4734,9 @@ def gate(root, now=None, pre_register=PRE_REGISTER, trees=GATE_TREES,
     # that outlives the file it was written for.
     r["pre_move_absent"] = sorted(rel for rel in pre_move if rel not in seen)
     r["pre_move_rules"] = sorted(r["pre_move_rules"])
+    r["pre_reading_absent"] = sorted(rel for rel in pre_reading
+                                     if rel not in seen)
+    r["pre_reading_rules"] = sorted(r["pre_reading_rules"])
     return r
 
 
@@ -4242,6 +4773,13 @@ def gate_report(r):
               "the tuple: %s"
               % (len(r["pre_move_absent"]), r["pre_move_listed"],
                  cap(r["pre_move_absent"], keep=3, width=60, sep=", ")))
+    if r["pre_reading_absent"]:
+        print("  note: %d of the %d frozen PRE_READING_BRIEFS entry/entries no "
+              "longer exist (superseded, cleared or renamed), so the waiver "
+              "they carry is holding nothing up and the name comes off the "
+              "tuple: %s"
+              % (len(r["pre_reading_absent"]), r["pre_reading_listed"],
+                 cap(r["pre_reading_absent"], keep=3, width=60, sep=", ")))
     # THE EXEMPTION'S LADDER, PRINTED WHETHER OR NOT IT BIT. Both rungs come
     # from the same walk and the same instant. The zero ships two denominators
     # because they answer different questions: how many listed files this walk
@@ -4276,6 +4814,23 @@ def gate_report(r):
              "/".join(PRE_MOVE_WAIVED_RULES), r["pre_move_waiver_bit"],
              r["pre_move_findings_waived"],
              "/".join(r["pre_move_rules"]) or NOTHING))
+    # THE PRE-READING WAIVER'S LADDER, PRINTED WHETHER OR NOT IT BIT, with the
+    # same three denominators as the one above and for the same reasons. THE
+    # SECOND NUMBER IS THE ONE THAT MATTERS: briefs graded over briefs listed
+    # says the walk found them, and verdicts changed over those says the list
+    # is doing work rather than sitting there. CUMULATIVE OVER THE WALK.
+    print("  briefs written before the reading ask was ruled: %d of the %d "
+          "name(s) on the frozen PRE_READING_BRIEFS list were graded in this "
+          "walk with %s waived; the waiver changed the verdict on %d of them, "
+          "removing %d finding(s) in total, carrying the rule(s) %s. Ruled "
+          "2026-09-15: from that ruling the brief asks Jafar for his meter "
+          "reading as its FIRST line. Every name above was written before it "
+          "and was correct under the rulebook in force when it went; a brief "
+          "written after it is not on the list and is refused without the ask"
+          % (r["pre_reading_graded"], r["pre_reading_listed"],
+             "/".join(PRE_READING_WAIVED_RULES), r["pre_reading_waiver_bit"],
+             r["pre_reading_findings_waived"],
+             "/".join(r["pre_reading_rules"]) or NOTHING))
     # THE FLOOR'S BRANCH FOR THIS WALK, printed whether or not anything was
     # checked, because a walk that measured nothing still has an answer to
     # "was the floor live". The numerator is cumulative over the walk and its
@@ -4411,6 +4966,8 @@ def gate_report(r):
               "filesLegacyLinks=%d/%d researchVerbatimWaiverBit=%s "
               "researchVerbatimGraded=%d/%d linksRuledUsed=%d/%d "
               "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
+              "readingEnforcedOn=%d/%d preReadingGraded=%d/%d "
+              "preReadingWaiverBit=%d/%d "
               "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
               "markerOriginConsistent=%s "
               "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
@@ -4420,7 +4977,11 @@ def gate_report(r):
                  r["research_graded"], r["research_listed"],
                  r["links_ruled_used"], r["links_ruled_of"],
                  r["historical_uncounted"], r["historical_listed"],
-                 r["split_enforced"], r["checked"], r["brief_files"],
+                 r["split_enforced"], r["checked"],
+                 r["reading_enforced"], r["checked"],
+                 r["pre_reading_graded"], r["pre_reading_listed"],
+                 r["pre_reading_waiver_bit"], r["pre_reading_graded"],
+                 r["brief_files"],
                  r["exempt"], r["walked"], r["date_pinned"], r["checked"],
                  "true" if r["marker_origin_ok"] else "false",
                  r["link_floor_off"], r["checked"],
@@ -4438,6 +4999,8 @@ def gate_report(r):
           "filesLegacyLinks=%d/%d researchVerbatimWaiverBit=%s "
           "researchVerbatimGraded=%d/%d linksRuledUsed=%d/%d "
           "historicalLinesUncounted=%d/%d splitEnforcedOn=%d/%d "
+          "readingEnforcedOn=%d/%d preReadingGraded=%d/%d "
+          "preReadingWaiverBit=%d/%d "
           "filesBriefs=%d filesExempt=%d filesWalked=%d filesDatePinned=%d/%d "
           "markerOriginConsistent=%s "
           "filesLinkFloorOff=%d/%d linkFloorActive=%s reason=%s"
@@ -4446,7 +5009,11 @@ def gate_report(r):
              r["research_graded"], r["research_listed"],
              r["links_ruled_used"], r["links_ruled_of"],
              r["historical_uncounted"], r["historical_listed"],
-             r["split_enforced"], r["checked"], r["brief_files"],
+             r["split_enforced"], r["checked"],
+             r["reading_enforced"], r["checked"],
+             r["pre_reading_graded"], r["pre_reading_listed"],
+             r["pre_reading_waiver_bit"], r["pre_reading_graded"],
+             r["brief_files"],
              r["exempt"], r["walked"], r["date_pinned"], r["checked"],
              "true" if r["marker_origin_ok"] else "false",
              r["link_floor_off"], r["checked"],
