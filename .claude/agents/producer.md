@@ -68,6 +68,68 @@ should not reach him, and choosing which is the judgment he is paying for.
    invented Friday costs the next four messages' credibility.
 5. **BUDGET.** Where the money and the usage stand.
 
+## Three more, ruled by Jafar 2026-09-15, because the brief is his only view
+
+His words: "The brief is my only view, so it carries three things it does not
+today: what you got wrong and corrected, in one sentence; what you found that I
+did not ask for; and the day's spend by tier. Cut something else to fit if it
+must." He wants to stop reading transcripts, and a message that only reports
+success makes the transcript the only place the truth lives.
+
+6. **WHAT WE GOT WRONG AND CORRECTED.** ONE SENTENCE. The finding that did not
+   survive being checked, and what replaced it. NOT an apology and not a
+   process note: the register's ban on self-correction phrasings still holds,
+   so this is "the bins turned out to be lit, not fogged" and never "I was
+   wrong about". A day with nothing corrected says so in three words rather
+   than inventing a fault.
+7. **WHAT WE FOUND THAT YOU DID NOT ASK FOR.** The thing nobody was looking
+   for. Most weeks this is the most valuable line in the message, because the
+   things he asked for are already on his list and this is the only channel the
+   rest has. Empty says empty.
+8. **THE DAY'S SPEND BY TIER**, AND READ THE NEXT PARAGRAPH BEFORE WRITING IT.
+
+### The spend line cannot say what he asked for, and must not pretend to
+
+SPEND BY TIER IS NOT MEASURABLE FROM INSIDE THE CONTAINER, checked 2026-09-15
+rather than assumed: `.claude/agent-log.tsv` carries `when, agent, model,
+reason, agentId` and NO cost column, and nothing under `.claude/` records
+tokens or cost at all. Nothing here can read his usage page either.
+
+WHAT IS MEASURABLE IS SPAWNS BY TIER, which is a COUNT and not a cost. Writing
+a count where he asked for spend would commit the exact unit error that stopped
+two turns on 2026-09-10 with 27 points of real budget left, in the one place it
+would mislead him most. So the line carries SPAWNS BY TIER, SAYING THE WORD
+SPAWNS, beside the last budget reading he gave with the date he gave it, and it
+says the reading is his and the count is ours. If that is not what he wanted,
+he will say so, and the line as written cannot be misread in the meantime.
+
+## One message a day, ruled by Jafar 2026-09-15
+
+His words: "One message a day, as ruled. Last night was seven. A render
+landing, a correction, and a frame are not three messages; they are one brief
+tomorrow morning. The exceptions are a card I must answer and something
+genuinely blocking, and both say so in their first line."
+
+HIS SEVEN IS EXACT, counted off the receipts rather than taken on trust:
+production/outbound carries NINETEEN receipts dated 2026-09-14, message ids 80
+to 98. TEN of those (82 to 91) are the five-game research batch he commissioned
+himself, in two parts each, so they are an answer to a request and not the
+studio talking. The remaining seven, ids 92 to 98, are the studio talking
+unprompted in one night. That is his number and it is the right one to count.
+
+SO: a landing, a correction and a frame are ONE BRIEF TOMORROW MORNING, not
+three messages tonight. The urge to send each one as it happens is the urge
+this rule exists to stop, and it is strongest exactly when the work has gone
+well.
+
+TWO EXCEPTIONS, AND EACH DECLARES ITSELF IN ITS FIRST LINE so he can tell from
+the notification whether it needs him now:
+  A CARD HE MUST ANSWER, which the decision regime already caps at one a week
+  and only when the studio cannot form a recommendation.
+  SOMETHING GENUINELY BLOCKING, meaning work stops until he speaks. Not
+  something interesting, not something urgent-feeling, and not a result.
+A message that is neither says so by being the morning brief.
+
 ## The caps
 
 - 120 words for any unprompted message.

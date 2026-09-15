@@ -38,6 +38,16 @@ you the wrong world.
   check the project itself, the live codebase is the accepting fixture,
   and the rejecting fixture is synthetic (a key that exists nowhere), so
   doing the work the tool prompts can never break the tool.
+- **The eye reads CONTRAST, not value, and it invents differences across
+  time.** A uniform shift is the one thing vision discards, so a change that
+  moved every surface can look like no change at all; and two crops viewed
+  minutes apart are two memories, not a comparison. Measure BEFORE writing a
+  finding. Never claim a difference from two images looked at separately: put
+  them in one picture, one scale, one rectangle, or do not claim it. Ruled a
+  standing rule 2026-09-15 after three readings failed in one night, twice
+  understating and once inventing; the incidents are in casebook-claims under
+  rule 4.
+
 - **Before concluding from two numbers, read the code that produces them**
   and ask whether either can move while the other stands still — two
   numbers derived from one variable are one number twice.

@@ -82,6 +82,7 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D37-the-ledger-is-the-notebook-not-a-corkboard.md` D37: the Ledger is the notebook, not a corkboard
 - `D38-the-audits-findings-become-tiles.md` D38: the audit's findings become tiles
 - `D39-the-audits-twenty-recommendations-ordered.md` D39: the audit's twenty recommendations, ordered, none starting before the visual slice lands
+- `D40-the-sky-is-a-photograph-not-an-atmosphere.md` D40: the sky is a photograph and not an atmosphere; his ruling overturns reason 3 of VignetteShot.cpp:163-173 and leaves reasons 1 and 2 standing as work, and his stated reason (clear-sky blue) is recorded as not surviving measurement while the ruling stands
 
 ## A claim checked, 2026-09-14
 
@@ -275,6 +276,16 @@ was ruled, and the file it lives in, all under `game-design/`. Counted
   outbox brief register retires (291) on a record of zero catches
   and two duplicates, the missed-day click is 303
   `game-design/decision-2026-09-15-ruling-the-grade-lands-as-the-legacy-number-and-the-outbox-brief-was-never-a-net.md`
+- **2026-09-15** Jafar answers the brief and rules the batch: the gap runs
+  DARKER, so the grade goes to about 0.85 of what landed, PROVISIONAL and
+  re-read when wetness lands rather than kept, and not tuned by eye toward a
+  sheet that is wet while the street is dry; the sky becomes the photograph
+  (D40); queue 304 gets its assertion and only one thing may write a day's
+  brief, the daily wake deferring to a ruling that dictates a send; the brief
+  gains what was got wrong, what was found unasked, and the day's spend by
+  tier; one message a day, exceptions saying so in their first line; the Sunday
+  page is written every Sunday and accumulates
+  `ledger-v2/respec/decision-register/D40-the-sky-is-a-photograph-not-an-atmosphere.md`
 
 ## Rulings that came off the card queue
 
