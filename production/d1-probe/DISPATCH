@@ -1758,3 +1758,47 @@ A day row that moved is a bug in this batch, not a finding about the figure.
 NOT IN THIS RUN: the road's reflection (359, printer first), the lit test's
 missing margin (358), the sky's horizon band of trees and dry field at the
 vanishing point (373), and the second annulus (375).
+
+RUN 53, dispatched 2026-09-16. THE FIGURE AGAIN, carrying two fixes and one
+correction of the record. Run 52 published no binary on a single wrong include.
+THE INCLUDE: Animation/SkeletalMeshActor.h, not Engine/. ASkeletalMeshActor
+sits beside Skeleton.h and AnimSequence.h, and the three Animation/ includes
+above it were already right when that one was wrong.
+THE SILENT ONE, AND IT IS THE REASON THIS RUN IS WORTH MORE THAN RUN 52 WOULD
+HAVE BEEN. FigureDoneSegment carried char B[900] under a format literal of 1156
+characters. Measured in the container twice, independently: 24 specifiers cost
+66, so 1090 characters print WITH EVERY VALUE EMPTY. snprintf truncates rather
+than overflows, so that line would have come back GREEN, stopping mid-word at
+899, with the whole placement readback and both shot tallies missing:
+figureAtM, figureYawDeg, figureShoulders, figurePlacementBound, figureScale,
+figureShownShots, figureScopedTo. Nothing in game-design/sim-shots/ has ever
+carried a figure= line, so no run would have caught it and no reader who did
+not already know the keys existed would have missed them. Buffer is 2048 and
+the cap now announces itself as figureSegTruncated=yes/wantedChars=N/cap=N.
+WHAT TO CHECK FIRST ON THE DONE LINE: that those seven keys are PRESENT. If
+they are, the buffer fix landed. If figureSegTruncated appears at all, 2048 is
+also too small and the number it prints says by how much.
+TWO UNUSED INCLUDES ARE KEPT DELIBERATELY, so this is not read later as an
+oversight: Animation/AnimSingleNodeInstance.h and Animation/Skeleton.h name
+types the file uses zero times. Removing an include is the same class of
+speculative edit as adding a wrong one, and both are Animation/ paths of
+exactly the shape run 52 just proved correct. If either is wrong the log says
+C1083 and names the file, which resolves it in one round trip either way.
+HOW THE LOG DISCRIMINATES, so the next reading is not a guess: C1083 is an
+include path; C2039 or C2660 is a renamed method or changed signature, and the
+ranked suspects are GetMaterials().Num() then GetBounds(); LNK2019 means a
+module is missing from Build.cs, which is a build-configuration change and goes
+to a director rather than being fixed in place.
+ELEVEN ENGINE NAMES IN THIS BLOCK HAVE EXACTLY ONE HIT EACH in ue-probe/Source,
+not five as first counted: SetSkeletalMeshAsset, GetComponentSpaceTransforms,
+GetPlayLength, SetPosition, GetSkeletalMeshComponent, SetAnimation, SetPlayRate,
+GetPosition, SetAnimationMode, VisibilityBasedAnimTickOption, GetMaterials.
+None is backed by prior working use here and a compile stops at the first.
+STILL TRUE FROM RUN 52's DISPATCH: open every night still BEFORE any figure
+key; read projH against the predicted 76.7 px, then person-or-mannequin and
+coat-or-not IN WORDS, then figureSil with coreMinusRingMeanLuma; the 31 day
+rows must be unchanged, and a day row that moved is a bug in this batch.
+ONE THING A DESTROYED VERDICT MUST NOT BE BELIEVED ON ITS OWN: the pose
+readback assumes a STOPPED single-node instance still evaluates at its set
+time. If that is wrong the build succeeds, prints figurePoseMaxBoneDeltaCm=0.000
+and destroys a perfectly good figure. Read the still before accepting it.

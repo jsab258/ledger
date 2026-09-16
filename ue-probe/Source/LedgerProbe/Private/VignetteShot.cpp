@@ -5232,15 +5232,17 @@ namespace
 		}
 		// THE BUFFER IS 2048 AND NOT 900, AND THE 900 WAS SILENTLY EATING
 		// SEVEN KEYS. MEASURED IN THIS CONTAINER, not recalled: the format
-		// literal below is 1161 characters on its own, 62 of them the 24
-		// specifier tokens, so 1099 characters print before one value is
-		// substituted. A representative STANDING/pose-evaluated run renders
-		// 1339. std::snprintf does not overflow, it TRUNCATES, so at 900 this
+		// literal below is 1156 characters on its own, 66 of them the 24
+		// specifier tokens, so 1090 characters print before one value is
+		// substituted - already over a 900 buffer with every value empty.
+		// Rendered: 1334 for STANDING/pose-evaluated, 1371 for the bind-pose
+		// DESTROYED case, 1444 for the longest NOTHING/why.
+		// std::snprintf does not overflow, it TRUNCATES, so at 900 this
 		// line stopped mid-word at 899 characters and the last seven keys -
 		// figureAtM, figureYawDeg, figureShoulders, figurePlacementBound,
 		// figureScale, figureShownShots and figureScopedTo - never reached the
 		// verdict at all: the whole placement readback and both shot tallies.
-		// The worst case is about 1641 (GFigureWhy is bounded by W[160] and
+		// The worst case is about 1644 (GFigureWhy is bounded by W[160] and
 		// GFigureShoulderAxis by S[160]), so 2048 carries it with headroom.
 		// CONFIDENT BECAUSE NO ENGINE API IS INVOLVED: a stack array size and
 		// a return value of std::snprintf, both standard C++, both checkable
