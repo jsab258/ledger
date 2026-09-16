@@ -19,8 +19,18 @@ acceptance: a caught claim is refused by the mill and the witnessed fact
   suspicion 0.03 afterwards; the five-repetition suspicion series is printed
   rather than only asserted
 max_sessions: 1
-status: FIX WRITTEN, NOT COMMITTED 2026-09-16, raised by Jafar from an external
-  audit. Ruled in
+status: DONE 2026-09-16, landed in commit d2687bf9 ("The audit's four items,
+  and the floor comes back to the day frames"), an ancestor of HEAD. Raised by
+  Jafar from an external audit. `Gossip.cs:365-366` now reads
+  `var verdict = n.Knowledge.CheckClaim(claim);` then
+  `if (verdict != ClaimResult.Contradiction) n.Knowledge.Learn(claim);`, `Learn`
+  is untouched, and the memory line is kept in BOTH branches so a refused claim
+  is still a conversation that happened. CoreTests 4405. The red obtained
+  against the parent behaviour failed on exactly one assertion, "the witnessed
+  truth is still what she knows: she cannot be talked out of it".
+
+  THE STATUS LINE BELOW WAS STALE FOR SIX HOURS and is corrected rather than
+  rewritten, under D43. It read "FIX WRITTEN, NOT COMMITTED". Ruled in
   game-design/decision-2026-09-16-ruling-a-caught-claim-is-not-what-they-know-and-canon-follows-its-rulings.md,
   sections 3 and 4 (option B: refuse inside the mill; gating the call site and
   fixing inside `Learn` were both REJECTED there, with reasons).

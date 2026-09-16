@@ -2719,6 +2719,85 @@ namespace LedgerSurface
 		return B;
 	}
 
+	// ---- QUEUE 333: WHERE A PIECE'S WHOLE SOLID LANDS ON THE FRAME -------
+	//
+	// THE SAME PINHOLE OVER EIGHT CORNERS INSTEAD OF FOUR. ControlQuadBox
+	// above takes a flat quad. A lamp head is a box with depth, and four
+	// corners of one face of it under-report its footprint on the picture by
+	// however much the box is turned away from the camera. This is that
+	// function with the corner walk widened, in the same header, exercised by
+	// the same binary.
+	//
+	// THE ROTATION ORDER IS THE FILE'S OWN AND IS NOT RE-DECIDED HERE: pitch
+	// about +x, then yaw about +y taking +x toward +z, then roll about +z.
+	// That is the composition LedgerVignette::SpecBoxBounds walks
+	// (VignetteSpec.h 1034), whose comment says in as many words that the day
+	// a piece carries two rotations at once this order must not be quietly
+	// picked a second time. Copied rather than invented, so the two cannot
+	// disagree about where a turned piece is.
+	//
+	// WHAT IT IS AND IS NOT. A model of where the solid SHOULD land, from the
+	// spec file and the camera the spec file describes, with no engine in the
+	// loop. It says WHERE TO LOOK in the still and says nothing at all about
+	// what colour is there: the pixels are read in FrameStats.h, where a test
+	// can build a frame.
+	//
+	// bMeasured IS EIGHT CORNERS AHEAD, not four and not some. A box with a
+	// corner behind the eye projects to something that is not a box, and a
+	// half-answer must not read as a measurement. IT DIFFERS FROM
+	// ControlQuadBox IN ONE WAY ON PURPOSE: the quad version returns early
+	// when its centre is behind the camera, and this one walks all eight
+	// corners anyway, because CornersAhead is then a NUMBER a caller can read
+	// (0 is behind the camera, 1 to 7 is straddling the eye plane) instead of
+	// a silence.
+	inline ScreenBox PieceScreenBox(const LedgerVignette::Camera& C,
+	                                const LedgerVignette::Piece& P, int W, int H)
+	{
+		ScreenBox B;
+		const ScreenAt Mid = ProjectFilePoint(C, P.X, P.Y, P.Z, W, H);
+		B.DistM = Mid.ForwardM;
+		B.CxPx  = Mid.Px;
+		B.CyPx  = Mid.Py;
+		const double HX = P.SX * 0.5, HY = P.SY * 0.5, HZ = P.SZ * 0.5;
+		const double CP = std::cos(DegToRad(P.PitchDeg));
+		const double SP = std::sin(DegToRad(P.PitchDeg));
+		const double CYw = std::cos(DegToRad(P.YawDeg));
+		const double SYw = std::sin(DegToRad(P.YawDeg));
+		const double CR = std::cos(DegToRad(P.RollDeg));
+		const double SR = std::sin(DegToRad(P.RollDeg));
+		for (int I = 0; I < 8; ++I)
+		{
+			double X = (I & 1) ? HX : -HX;
+			double Y = (I & 2) ? HY : -HY;
+			double Z = (I & 4) ? HZ : -HZ;
+			double T;
+			T = Y * CP - Z * SP;    Z = Y * SP + Z * CP;    Y = T;   // pitch about +x
+			T = X * CYw - Z * SYw;  Z = X * SYw + Z * CYw;  X = T;   // yaw about +y
+			T = X * CR - Y * SR;    Y = X * SR + Y * CR;    X = T;   // roll about +z
+			const ScreenAt S = ProjectFilePoint(C, P.X + X, P.Y + Y, P.Z + Z, W, H);
+			if (!S.bAhead) { continue; }
+			if (B.CornersAhead == 0)
+			{
+				B.X0 = B.X1 = S.Px;
+				B.Y0 = B.Y1 = S.Py;
+			}
+			else
+			{
+				if (S.Px < B.X0) { B.X0 = S.Px; }
+				if (S.Px > B.X1) { B.X1 = S.Px; }
+				if (S.Py < B.Y0) { B.Y0 = S.Py; }
+				if (S.Py > B.Y1) { B.Y1 = S.Py; }
+			}
+			++B.CornersAhead;
+			if (S.Px >= 0.0 && S.Px <= (double)W && S.Py >= 0.0 && S.Py <= (double)H)
+			{
+				++B.CornersInFrame;
+			}
+		}
+		B.bMeasured = (B.CornersAhead == 8);
+		return B;
+	}
+
 	// ---- DOES THIS SHOT'S OWN WHOLE-FRAME NUMBERS INCLUDE THE INSTRUMENT --
 	//
 	// A1(d), amendment 1 of

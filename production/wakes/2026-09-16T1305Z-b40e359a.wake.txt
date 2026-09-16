@@ -1,0 +1,19 @@
+id: b40e359a
+due: 2026-09-16T13:05:00Z
+armedAt: 2026-09-16T12:28:34Z
+armedBy: resident/two-builders-on-the-policy-batch-and-the-lamp-instrument
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+265a5a7c is HEAD and PUSHED; the tree is DIRTY and the dirt is two builders plus the resident's documents, NOT yours to commit blind. Budget 2026-09-16d: 65 total, 65 Fable, ceiling 85, so the day is measured until about 22:2xZ. Inbox at 12:27Z: seen=2 delivered=0/2, nothing new, no unanswered question. Wake queue 0 due, 40/40 discharged.
+
+TWO BUILDERS OUT, both told not to commit. (1) instrument-builder on the WIRING: canon-gate --corpus and goal-block-check into ledger/verify.py AND tools/ci-checks.sh, template_sync retired for them under D45. It has written --corpus, run it over 212 files, and is triaging: the one spec edit so far is the right class, a reword of the ban's own prose in vignette-scene.json, one line, layout intact. A GATE NEVER LANDS RED. (2) engine-specialist on queue 333's third (b), the lamp acceptance instrument: PieceScreenBox in SurfaceBind.h, pixel maths and the formatter in FrameStats.h, both with a planted rejecting case. +354 and +79 lines so far.
+
+WHEN THEY LAND: review both diffs, run verify to completion, paste the footer FROM ledger/.verify-footer, ONE commit, push. The push IS the send: tools/runner/config.local is not in this container, so the card cannot go from here and reaches Jafar only when the PC's bot sweeps the pushed outbox. The card is production/outbox/2026-09-16-your-four-items-one-is-yours-to-call.answer.md, producer-check says SEND with 0 findings, and it carries a BLOCKING TODAY question that holds the third element of his own order. Do not sit on it.
+
+THEN, IN THIS ORDER, and it is written down so it is not re-derived: queue 333 third (c), the .cpp wiring in VignetteShot.cpp, and queue 332 in FrameStats.h, dispatched TOGETHER because they are different files. Then ONE dispatch of ledger-probe-unreal, carrying everything, because the round trip costs the same with one change or six. Capture the sha BEFORE dispatching and watch by ancestry.
+
+TODAY IS THE VISUAL SLICE AND NOTHING ELSE (Jafar, this morning): wetness, materials, then dusk with lamps lit, wet road and a figure in silhouette, ungated under D41 and judged against the Hook sheet by the resident. The sheet is reachable at git show origin/art/atlas-01:production/art/atlas-01/concepts/hook.png. THE FIGURE IS BLOCKED ON HIM: queue 335, no person in the scene spec, and the walk pawn has no skeletal mesh. The frame ships without one if he has not answered.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. That is his rule of today and it is now CLAUDE.md rule 11. Do not let a finding generate its own work in this session.

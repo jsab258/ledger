@@ -201,14 +201,25 @@ TWO THINGS THAT NEED A RULING AND NOT A BUILDER'S GUESS:
   projection in SurfaceBind.h, pixel maths and the formatter in FrameStats.h,
   whose test already builds synthetic BGRA frames (Flat(W,H,B,G,R) at :41).
 
-  2. SECTION 3 CONDITION 3 AND PREDICTION P4 CONTRADICT EACH OTHER. Condition 3
-  says the segment prints per lantern per PROBED shot. P4 predicts it prints
-  "no" at day rows of the same cameras. A day row is NOT a probed shot:
-  ShouldProbeShot at :2789-2794 returns true only when the condition has
-  lanterns or practicals on. So P4's refutable prediction is unreachable under
-  condition 3. The yes-at-night-no-at-day pair in ONE run is this item's
-  acceptance sentence, which argues for P4 and for printing on every shot line
-  with a decoded frame.
+  2. SECTION 3 CONDITION 3 AND PREDICTION P4 CONTRADICTED EACH OTHER, AND THIS
+  IS SETTLED. Condition 3 said the segment prints per lantern per PROBED shot.
+  P4 predicts it prints "no" at day rows of the same cameras. A day row is NOT
+  a probed shot: ShouldProbeShot at :2789-2794 returns true only when the
+  condition has lanterns or practicals on. So P4's refutable prediction was
+  unreachable under condition 3.
+
+  RULED 2026-09-16, section 3.4 of
+  game-design/decision-2026-09-16-ruling-wire-or-delete-the-last-instrument-and-seven-settlements.md:
+  P4 WINS AND CONDITION 3 IS REWRITTEN TO THIS, which is now what the builder
+  implements. A refutable prediction that cannot be reached is not a
+  prediction, and P4 carries this item's acceptance sentence.
+
+      The segment prints on EVERY shot line that has a decoded frame, per
+      lantern, yes or no, with its denominator (lanterns examined) on the
+      line, and `(+N not shown)` if the per-line count is capped.
+
+  The yes-at-night-no-at-day pair in ONE run is this item's acceptance
+  sentence, and the rewrite is what makes it reachable.
 
 AND THE DISPATCH WAS SIZED WRONG, which is the resident's finding about its own
 brief. The brief named four call sites across five files totalling 13,734

@@ -325,6 +325,18 @@ denominator printed:
 1. NO OPEN ITEM IS DECIDED. Every `Dn` cited under canon's `## OPEN` heading
    resolves to a register record whose status line is not DECIDED, APPROVED
    or SUPERSEDED. (D1 under OPEN 1 fails this today.)
+
+   AMENDED 2026-09-16 by section 3.1 of
+   game-design/decision-2026-09-16-ruling-wire-or-delete-the-last-instrument-and-seven-settlements.md,
+   so that the spec and the tool do not disagree: THE UNIT OF THIS ASSERTION
+   IS THE ITEM, NOT THE CITATION. An OPEN item is red when the item as a
+   whole is a decided thing still filed as open, not when any `Dn` inside it
+   resolves to a DECIDED record. The reason is in that ruling and is not a
+   preference: section 9.2 of THIS record dictated item 1 under `## OPEN` as
+   "Engine: DECIDED, Unreal (D16 ...)", kept numbered so that "OPEN 2" keeps
+   its meaning, so a per-citation unit would have arrived red on the very
+   line this ruling dictated. A gate red on its own spec's text is the 06:35Z
+   failure. Both modes print and both are counted.
 2. NO SUPERSEDED RECORD IS CITED WITHOUT ITS SUCCESSOR. Every `Dn` cited
    anywhere in canon whose record carries "SUPERSEDED ... BY Dm" is cited
    beside `Dm`. (Nothing fails this today; D15 is not cited by number.)

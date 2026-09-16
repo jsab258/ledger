@@ -30,6 +30,7 @@
 #pragma once
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 #include <string>
 #include <vector>
@@ -1965,5 +1966,358 @@ namespace LedgerFrame
 			D.DiffPixels, D.Pixels, Pct(D.DiffPixels, D.Pixels), D.MaxAbsChannel,
 			D.MeanLumaFirst, D.MeanLumaRepeat, D.MeanLumaDelta, Ratio);
 		return std::string(Buf);
+	}
+}
+
+// =======================================================================
+// QUEUE 333: IS THE LANTERN THE BRIGHTEST WARM THING IN ITS OWN CORNER OF
+// THE PICTURE. The pixel half of the lamp acceptance instrument; the other
+// half is LedgerSurface::PieceScreenBox, which says WHERE on the frame the
+// lamp head is and nothing about what is there. This file carries no spec
+// type on purpose, so the rectangle arrives as four doubles and this half
+// never learns what a Piece is.
+//
+// WHAT IT PRINTS AND WHAT IT DOES NOT. It prints a SERIES: the peaks and
+// means inside the lantern's own projected rectangle, and the same numbers
+// for the ring of picture around it. IT SETS NO BOUND. Queue 333's reference
+// numbers, measured off the approved Hook sheet under D41 (globe maxLuma 242
+// of 255, maxWarm 140, meanLuma 188 over 141 pixels, against a sky at 181),
+// are what a lit lamp looks like; they are NOT a gate and nothing here
+// compares against them. Rule 2: ship the printer, read real runs, set the
+// number afterwards.
+//
+// THE ONE THING IT DOES DECIDE IS A COMPARISON AND NOT A THRESHOLD. yes
+// means the brightest pixel of the lamp's own rectangle is strictly brighter
+// than the brightest pixel of the ring around it AND the warmest pixel of
+// the rectangle is strictly warmer than the warmest of the ring. Both sides
+// of that come out of the same frame, so no constant is chosen anywhere:
+// a flat field ties and reads no, a dark head against a pale sky reads no,
+// and a lit globe against the same sky reads yes. That sentence is the
+// item's acceptance, which asks for the fixture to be "measurably the
+// brightest warm thing in its own neighbourhood".
+//
+// THE UNITS ARE sRGB BYTES, not the 0-to-1 luma the rest of this file
+// prints, because the reference above was measured in bytes and a reading
+// that cannot be put beside its reference is half a reading. Same weights,
+// different scale, and the scale is named on the line.
+namespace LedgerFrame
+{
+	// THE SAME WEIGHTS AS Luma ON THE BYTE SCALE, rounded to nearest.
+	inline int LumaByte(unsigned char R, unsigned char G, unsigned char B)
+	{
+		return (int)(Luma(R, G, B) * 255.0 + 0.5);
+	}
+
+	// WARM IS R MINUS B IN sRGB BYTES, the same quantity queue 333 measured
+	// the reference globe and the probe's night frame with, so the three
+	// numbers are comparable. It is SIGNED: a cold pixel is negative, and a
+	// max over a cold region is negative rather than zero.
+	inline int WarmByte(unsigned char R, unsigned char B)
+	{
+		return (int)R - (int)B;
+	}
+
+	// THE RING IS A NEIGHBOURHOOD DEFINITION, NOT A THRESHOLD. It is the
+	// lamp's own projected box grown by its own longer side on every edge,
+	// so a lamp near the camera and one far down the street are each read
+	// against a ring in proportion to themselves rather than against a fixed
+	// number of pixels that means something different at every distance. The
+	// floor of 1 is "at least one pixel of ring to compare with", not a tuned
+	// value, and both rectangles are printed in pixels so any reader can
+	// re-derive the whole thing from the line.
+	inline int LampRingPadPx(int CoreW, int CoreH)
+	{
+		const int Bigger = (CoreW > CoreH) ? CoreW : CoreH;
+		return (Bigger > 1) ? Bigger : 1;
+	}
+
+	// EVERY VALUE ON A VERDICT LINE IS SPLIT ON WHITESPACE BY EVERY READER
+	// HERE, so an id that carries a space would truncate the token silently.
+	// Sanitised in the tested layer rather than trusted from the caller.
+	inline std::string LampSafeId(const std::string& Id)
+	{
+		std::string Out;
+		for (size_t I = 0; I < Id.size(); ++I)
+		{
+			const char C = Id[I];
+			Out += (C > ' ' && C != '=') ? C : '_';
+		}
+		return Out.empty() ? std::string("unnamed") : Out;
+	}
+
+	// ONE LANTERN'S READING. Measured false means this lantern produced NO
+	// reading at all and Why says which of the ways: it is not a "no", and
+	// the segment below never counts it as one.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF:
+	//   CoreMaxLuma          PEAK luma over the lamp's own rectangle
+	//   CoreWarmAtMaxLuma    the warmth of THAT pixel, captured at the peak
+	//   CoreMaxWarm          PEAK warmth over the same rectangle
+	//   CoreLumaAtMaxWarm    the luma of THAT pixel, captured at the peak
+	//   CoreMeanLuma         mean luma over the rectangle, its denominator
+	//                        being CorePixels
+	//   Ring*                the same four statistics over the annulus
+	// The two peaks are usually two different pixels, which is why each
+	// carries its companion: the reference sheet's globe reads 242 and 140
+	// the same way.
+	struct LampPatch
+	{
+		bool        Measured = false;
+		std::string Id       = "unnamed";
+		std::string Why      = "nothing-measured";
+		int         CX0 = 0, CY0 = 0, CX1 = 0, CY1 = 0;
+		int         RX0 = 0, RY0 = 0, RX1 = 0, RY1 = 0;
+		long long   CorePixels = 0, RingPixels = 0;
+		int         CoreMaxLuma = 0, CoreWarmAtMaxLuma = 0;
+		int         CoreMaxWarm = 0, CoreLumaAtMaxWarm = 0;
+		int         RingMaxLuma = 0, RingWarmAtMaxLuma = 0;
+		int         RingMaxWarm = 0, RingLumaAtMaxWarm = 0;
+		double      CoreMeanLuma = 0.0, RingMeanLuma = 0.0;
+	};
+
+	// BGRA8, top row first, the same convention Measure and MeasureBand are
+	// given. The rectangle is the projection's four doubles, unrounded, and
+	// the rounding happens HERE so the caller in the module does no
+	// arithmetic: floor and ceil, so a lamp narrower than a pixel still
+	// covers the pixel it falls in instead of rounding away to nothing.
+	//
+	// bBoxMeasured IS THE PROJECTION'S OWN VERDICT and it outranks the
+	// numbers: a box with a corner behind the eye reports nothing-measured
+	// here rather than a rectangle computed from the corners that happened
+	// to be in front.
+	inline LampPatch MeasureLampPatch(const unsigned char* Bgra, int W, int H,
+	                                  const std::string& Id, bool bBoxMeasured,
+	                                  double X0, double Y0, double X1, double Y1)
+	{
+		LampPatch P;
+		P.Id = LampSafeId(Id);
+		if (Bgra == 0 || W <= 0 || H <= 0)
+		{
+			P.Why = "no-decoded-frame";
+			return P;
+		}
+		if (!bBoxMeasured)
+		{
+			P.Why = "the-projection-did-not-answer-for-this-lantern";
+			return P;
+		}
+		int CX0 = (int)std::floor(X0), CX1 = (int)std::ceil(X1);
+		int CY0 = (int)std::floor(Y0), CY1 = (int)std::ceil(Y1);
+		if (CX1 <= CX0) { CX1 = CX0 + 1; }
+		if (CY1 <= CY0) { CY1 = CY0 + 1; }
+		// THE PAD IS TAKEN FROM THE UNCLIPPED BOX, deliberately: a lamp half
+		// off the edge of the frame is still its own size, and scaling the
+		// ring to the visible sliver would read it against a neighbourhood
+		// that shrinks as the lamp leaves the picture.
+		const int Pad = LampRingPadPx(CX1 - CX0, CY1 - CY0);
+		int RX0 = CX0 - Pad, RX1 = CX1 + Pad;
+		int RY0 = CY0 - Pad, RY1 = CY1 + Pad;
+		if (CX0 < 0) { CX0 = 0; }
+		if (CY0 < 0) { CY0 = 0; }
+		if (CX1 > W) { CX1 = W; }
+		if (CY1 > H) { CY1 = H; }
+		if (RX0 < 0) { RX0 = 0; }
+		if (RY0 < 0) { RY0 = 0; }
+		if (RX1 > W) { RX1 = W; }
+		if (RY1 > H) { RY1 = H; }
+		P.CX0 = CX0; P.CY0 = CY0; P.CX1 = CX1; P.CY1 = CY1;
+		P.RX0 = RX0; P.RY0 = RY0; P.RX1 = RX1; P.RY1 = RY1;
+		if (CX1 <= CX0 || CY1 <= CY0)
+		{
+			P.Why = "the-lanterns-box-falls-outside-this-frame";
+			return P;
+		}
+		double CoreSum = 0.0, RingSum = 0.0;
+		bool bFirstCore = true, bFirstRing = true;
+		for (int Y = RY0; Y < RY1; ++Y)
+		{
+			for (int X = RX0; X < RX1; ++X)
+			{
+				const long long At = (long long)Y * (long long)W + (long long)X;
+				const unsigned char B = Bgra[At * 4];
+				const unsigned char G = Bgra[At * 4 + 1];
+				const unsigned char R = Bgra[At * 4 + 2];
+				const int L = LumaByte(R, G, B);
+				const int Wm = WarmByte(R, B);
+				const bool bCore = (X >= CX0 && X < CX1 && Y >= CY0 && Y < CY1);
+				if (bCore)
+				{
+					++P.CorePixels;
+					CoreSum += (double)L;
+					if (bFirstCore || L > P.CoreMaxLuma)
+					{
+						P.CoreMaxLuma = L; P.CoreWarmAtMaxLuma = Wm;
+					}
+					if (bFirstCore || Wm > P.CoreMaxWarm)
+					{
+						P.CoreMaxWarm = Wm; P.CoreLumaAtMaxWarm = L;
+					}
+					bFirstCore = false;
+				}
+				else
+				{
+					++P.RingPixels;
+					RingSum += (double)L;
+					if (bFirstRing || L > P.RingMaxLuma)
+					{
+						P.RingMaxLuma = L; P.RingWarmAtMaxLuma = Wm;
+					}
+					if (bFirstRing || Wm > P.RingMaxWarm)
+					{
+						P.RingMaxWarm = Wm; P.RingLumaAtMaxWarm = L;
+					}
+					bFirstRing = false;
+				}
+			}
+		}
+		if (P.CorePixels == 0)
+		{
+			P.Why = "the-lanterns-box-covers-no-pixel-of-this-frame";
+			return P;
+		}
+		// A RING WITH NO PIXELS IS NOT A NEIGHBOURHOOD, and a comparison
+		// against nothing may not print as a no: a lamp whose box fills the
+		// whole frame has no outside to be brighter than.
+		if (P.RingPixels == 0)
+		{
+			P.Why = "this-lantern-has-no-ring-pixel-on-this-frame";
+			return P;
+		}
+		P.CoreMeanLuma = CoreSum / (double)P.CorePixels;
+		P.RingMeanLuma = RingSum / (double)P.RingPixels;
+		P.Measured = true;
+		P.Why = "measured";
+		return P;
+	}
+
+	// STRICTLY GREATER ON BOTH, so a tie is a no. Nothing else is decided
+	// here and no constant appears: both sides come off the same frame.
+	inline bool LampPatchLit(const LampPatch& P)
+	{
+		if (!P.Measured) { return false; }
+		return P.CoreMaxLuma > P.RingMaxLuma && P.CoreMaxWarm > P.RingMaxWarm;
+	}
+
+	// THREE WORDS AND NOT TWO. An unmeasured lantern is not a dark one.
+	inline const char* LampPatchWord(const LampPatch& P)
+	{
+		if (!P.Measured) { return "nothing-measured"; }
+		return LampPatchLit(P) ? "yes" : "no";
+	}
+
+	inline std::string LampPatchToken(int Index, const LampPatch& P)
+	{
+		char T[640];
+		int Needed;
+		if (!P.Measured)
+		{
+			Needed = std::snprintf(T, sizeof(T), "lampGlow%d=%s/nothing-measured/%s",
+			                       Index, P.Id.c_str(), P.Why.c_str());
+		}
+		else
+		{
+			Needed = std::snprintf(T, sizeof(T),
+				"lampGlow%d=%s/%s"
+				"/coreMaxLuma=%d/coreWarmAtMaxLuma=%d"
+				"/coreMaxWarm=%d/coreLumaAtMaxWarm=%d"
+				"/coreMeanLuma=%.1f/corePx=%lld"
+				"/ringMaxLuma=%d/ringWarmAtMaxLuma=%d"
+				"/ringMaxWarm=%d/ringLumaAtMaxWarm=%d"
+				"/ringMeanLuma=%.1f/ringPx=%lld"
+				"/box=x%d..%d/y%d..%d/ring=x%d..%d/y%d..%d",
+				Index, P.Id.c_str(), LampPatchWord(P),
+				P.CoreMaxLuma, P.CoreWarmAtMaxLuma,
+				P.CoreMaxWarm, P.CoreLumaAtMaxWarm,
+				P.CoreMeanLuma, P.CorePixels,
+				P.RingMaxLuma, P.RingWarmAtMaxLuma,
+				P.RingMaxWarm, P.RingLumaAtMaxWarm,
+				P.RingMeanLuma, P.RingPixels,
+				P.CX0, P.CX1, P.CY0, P.CY1,
+				P.RX0, P.RX1, P.RY0, P.RY1);
+		}
+		std::string Out(T);
+		// snprintf TRUNCATES IN SILENCE and a cut token reads as a short one,
+		// which is what a key that was never emitted looks like.
+		if (Needed < 0 || (size_t)Needed >= sizeof(T)) { Out += "/lampTokenCut=yes/at-640-chars"; }
+		return Out;
+	}
+
+	// THE PER-SHOT SEGMENT, FOR ANY SHOT LINE THAT HAS A DECODED FRAME.
+	//
+	// EVERY NUMBER HERE IS TRUE OF ONE FRAME. None of it may ride a done
+	// line, which is the same separation WetRedriveSegment and WetShotFields
+	// keep, and the key family is its own so a grep for a lamp key cannot
+	// return the scene line's lampGain.
+	//
+	// RULED 2026-09-16, section 3.4: it prints on EVERY shot line with a
+	// decoded frame and not only on probed shots, because a day row is never
+	// a probed shot and "no at day, yes at night in one run" is this item's
+	// acceptance sentence. A segment that could only print at night could
+	// never be refuted.
+	//
+	// THE DENOMINATORS, all three, because a zero here has three different
+	// meanings (rule 3b). inFile is how many emissive pieces the street file
+	// carries; examined is how many of them the run could hand this function
+	// a rectangle for, which is smaller whenever a lantern fell down an
+	// unpainted exit and has no instance; and `of` beside the lit count is
+	// how many of those examined produced a reading at all.
+	//
+	// THE CAP ANNOUNCES ITSELF. instruments.md dictates `(+N more not
+	// shown)`, and that phrasing carries spaces, which every reader of these
+	// lines splits on; so the same fact is carried space-free as
+	// lampGlowShown=<k>/notShown=<n>, which prints on every line and not only
+	// when it bites. MaxShown of 0 or less means no cap.
+	inline std::string LampGlowSegment(const std::vector<LampPatch>& Patches,
+	                                   int LanternsInFile, bool bDecodedFrame,
+	                                   int MaxShown)
+	{
+		char Head[400];
+		if (!bDecodedFrame)
+		{
+			std::snprintf(Head, sizeof(Head),
+				"lampGlow=nothing-measured/this-shot-line-carries-no-decoded-frame"
+				" lampGlowExamined=0/inFile=%d", LanternsInFile);
+			return std::string(Head);
+		}
+		if (LanternsInFile <= 0)
+		{
+			return std::string("lampGlow=nothing-measured/this-street-carries-no-emissive-piece"
+			                   " lampGlowExamined=0/inFile=0");
+		}
+		if (Patches.empty())
+		{
+			std::snprintf(Head, sizeof(Head),
+				"lampGlow=nothing-measured/no-lantern-could-be-examined-on-this-frame"
+				" lampGlowExamined=0/inFile=%d", LanternsInFile);
+			return std::string(Head);
+		}
+		int Read = 0, Lit = 0;
+		for (size_t I = 0; I < Patches.size(); ++I)
+		{
+			if (!Patches[I].Measured) { continue; }
+			++Read;
+			if (LampPatchLit(Patches[I])) { ++Lit; }
+		}
+		int Shown = (int)Patches.size();
+		if (MaxShown > 0 && Shown > MaxShown) { Shown = MaxShown; }
+		const int NotShown = (int)Patches.size() - Shown;
+		const int Needed = std::snprintf(Head, sizeof(Head),
+			"lampGlowStat=per-lantern/this-frame-only"
+			"/lamps-own-box-peak-vs-the-peak-of-the-ring-around-it/strictly-greater-on-both"
+			" lampGlowUnits=srgb-bytes/luma=0.299r+0.587g+0.114b/warm=r-minus-b"
+			" lampGlowLit=%d/of=%d/examined=%d/inFile=%d"
+			" lampGlowShown=%d/notShown=%d",
+			Lit, Read, (int)Patches.size(), LanternsInFile, Shown, NotShown);
+		std::string Out(Head);
+		if (Needed < 0 || (size_t)Needed >= sizeof(Head))
+		{
+			Out += " lampGlowHeadCut=yes/at-400-chars";
+		}
+		for (int I = 0; I < Shown; ++I)
+		{
+			Out += " ";
+			Out += LampPatchToken(I + 1, Patches[(size_t)I]);
+		}
+		return Out;
 	}
 }

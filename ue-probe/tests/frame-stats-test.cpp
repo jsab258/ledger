@@ -80,6 +80,30 @@ static bool ValuesHaveNoSpaces(const std::string& Line)
 	return Tokens > 0;
 }
 
+// A RECTANGLE OF ONE COLOUR PAINTED INTO A FRAME, which is how a lit globe
+// and a warm window are both built. Clamped to the image so a fixture cannot
+// walk off the end of the buffer.
+static void Paint(std::vector<unsigned char>& Px, int W, int H,
+                  int X0, int Y0, int X1, int Y1,
+                  unsigned char B, unsigned char G, unsigned char R)
+{
+	if (X0 < 0) { X0 = 0; }
+	if (Y0 < 0) { Y0 = 0; }
+	if (X1 > W) { X1 = W; }
+	if (Y1 > H) { Y1 = H; }
+	for (int Y = Y0; Y < Y1; ++Y)
+	{
+		for (int X = X0; X < X1; ++X)
+		{
+			const long long P = (long long)Y * (long long)W + (long long)X;
+			Px[(size_t)(P * 4)] = B;
+			Px[(size_t)(P * 4 + 1)] = G;
+			Px[(size_t)(P * 4 + 2)] = R;
+			Px[(size_t)(P * 4 + 3)] = 255;
+		}
+	}
+}
+
 int main()
 {
 	// ---- THE SPACE CHECKER ITSELF, BOTH OUTCOMES, BEFORE IT IS TRUSTED ---
@@ -1278,6 +1302,153 @@ int main()
 		Check(P.find("rigDeterminism=NOTHING-MEASURED") != std::string::npos
 		      && P.find("rigRepeatStatus=NO-FILE") != std::string::npos,
 		      "a repeat whose file never landed cannot read as IDENTICAL");
+	}
+
+	// ---- QUEUE 333: THE LAMP ACCEPTANCE INSTRUMENT, PIXEL HALF -----------
+	//
+	// ACCEPTING CASE FIRST (rule 5b). The expensive failure for this guard is
+	// not that it misses a dark lamp; it is that it says no to a lamp that IS
+	// lit and the studio spends a CI round trip raising a strength constant
+	// that was never the problem. So the first fixture is a lit lamp and the
+	// check is that it reads yes.
+	//
+	// WHAT THESE FRAMES ARE. Synthetic BGRA built by Flat and Paint, with the
+	// cold background standing in for a night street (r30 g40 b60, warm -30)
+	// and the blob standing in for a sodium globe (r250 g200 b10, warm 240).
+	// Nothing here is measured off a render: this proves the arithmetic and
+	// the strings, and what a real lamp reads is the run's business.
+	{
+		std::printf("  -- queue 333: the lantern against its own ring --\n");
+		const int LW = 200, LH = 120;
+		const int LanternsInFile = 4;
+
+		// (1) ACCEPTING: a warm bright blob filling the lamp's own box.
+		std::vector<unsigned char> Lit = Flat(LW, LH, 60, 40, 30);
+		Paint(Lit, LW, LH, 90, 50, 110, 60, 10, 200, 250);
+		const LampPatch Yes = MeasureLampPatch(Lit.data(), LW, LH, "lantern0",
+		                                       true, 90.0, 50.0, 110.0, 60.0);
+		std::printf("    core %d/%d ring %d/%d corePx=%lld ringPx=%lld word=%s\n",
+		            Yes.CoreMaxLuma, Yes.CoreMaxWarm, Yes.RingMaxLuma, Yes.RingMaxWarm,
+		            Yes.CorePixels, Yes.RingPixels, LampPatchWord(Yes));
+		Check(Yes.Measured && LampPatchLit(Yes),
+		      "a warm bright globe inside the lamp's own box reads as lit");
+		Check(Yes.CoreMaxLuma == 193 && Yes.CoreWarmAtMaxLuma == 240
+		      && Yes.CoreMaxWarm == 240 && Yes.CoreLumaAtMaxWarm == 193,
+		      "and its two peaks each carry the companion measured at the same pixel");
+		Check(Yes.CorePixels == 200 && Yes.RingPixels == 2800
+		      && Near(Yes.CoreMeanLuma, 193.0),
+		      "over 200 core pixels and a ring of 2800, the ring being the box grown "
+		      "by its own longer side");
+		Check(Yes.RingMaxLuma == 39 && Yes.RingMaxWarm == -30,
+		      "the ring reads the cold background, and its warm peak is negative "
+		      "rather than clamped to zero");
+
+		// (2) REJECTING, AND THE CASE THE ITEM WAS FILED FOR: the same blob
+		// moved into the RING. This is the silhouette the probe actually
+		// renders today, a dark head against something brighter, and the
+		// instrument must say no to it.
+		std::vector<unsigned char> Silhouette = Flat(LW, LH, 60, 40, 30);
+		Paint(Silhouette, LW, LH, 72, 32, 82, 42, 10, 200, 250);
+		const LampPatch No = MeasureLampPatch(Silhouette.data(), LW, LH, "lantern0",
+		                                      true, 90.0, 50.0, 110.0, 60.0);
+		Check(No.Measured && !LampPatchLit(No)
+		      && std::string(LampPatchWord(No)) == "no",
+		      "a dark lamp head with the bright warm thing beside it rather than in "
+		      "it reads no");
+		Check(No.CoreMaxLuma == 39 && No.RingMaxLuma == 193,
+		      "and the two numbers that decided it are both on the line");
+
+		// (3) REJECTING, THE TIE: a flat field. Every pixel equal means the
+		// core cannot be STRICTLY brighter than the ring, and a tie is not a
+		// lit lamp. This is the case a bound chosen by eye would get wrong.
+		std::vector<unsigned char> FlatField = Flat(LW, LH, 60, 40, 30);
+		const LampPatch Tie = MeasureLampPatch(FlatField.data(), LW, LH, "lantern0",
+		                                       true, 90.0, 50.0, 110.0, 60.0);
+		Check(Tie.Measured && !LampPatchLit(Tie),
+		      "a flat field ties on both axes and ties do not read as lit");
+
+		// (4) AND THE THREE WAYS A LANTERN PRODUCES NO READING AT ALL, none
+		// of which may print as a no.
+		const LampPatch NoBox = MeasureLampPatch(Lit.data(), LW, LH, "lantern0",
+		                                         false, 0.0, 0.0, 0.0, 0.0);
+		Check(!NoBox.Measured && !LampPatchLit(NoBox)
+		      && std::string(LampPatchWord(NoBox)) == "nothing-measured"
+		      && NoBox.Why == "the-projection-did-not-answer-for-this-lantern",
+		      "a lantern whose box the projection refused says the words rather than no");
+		const LampPatch OffFrame = MeasureLampPatch(Lit.data(), LW, LH, "lantern0",
+		                                            true, 500.0, 50.0, 520.0, 60.0);
+		Check(!OffFrame.Measured
+		      && OffFrame.Why == "the-lanterns-box-falls-outside-this-frame",
+		      "a lantern projected off the edge of the picture measures nothing");
+		const LampPatch NoFrame = MeasureLampPatch(0, LW, LH, "lantern0",
+		                                           true, 90.0, 50.0, 110.0, 60.0);
+		Check(!NoFrame.Measured && NoFrame.Why == "no-decoded-frame",
+		      "and so does a shot with no decoded frame behind it");
+
+		// (5) THE SEGMENT, WHICH IS THE THING THE SHOT LINE CARRIES.
+		std::vector<LampPatch> Four;
+		Four.push_back(Yes);
+		Four.push_back(No);
+		Four.push_back(Tie);
+		Four.push_back(NoBox);
+		const std::string Seg = LampGlowSegment(Four, LanternsInFile, true, 0);
+		std::printf("    %s\n", Seg.c_str());
+		Check(Seg.find("lampGlowLit=1/of=3/examined=4/inFile=4") != std::string::npos,
+		      "the lit count ships all three of its denominators: read, examined and "
+		      "in the file, which are three different numbers");
+		Check(Seg.find("lampGlow1=lantern0/yes/") != std::string::npos
+		      && Seg.find("lampGlow2=lantern0/no/") != std::string::npos
+		      && Seg.find("lampGlow4=lantern0/nothing-measured/") != std::string::npos,
+		      "and every lantern prints its own word on the same line, yes or no or "
+		      "the words");
+		Check(Seg.find("box=x90..110/y50..60") != std::string::npos
+		      && Seg.find("ring=x70..130/y30..80") != std::string::npos,
+		      "with both rectangles in pixels, so the ring can be re-derived from the "
+		      "line rather than trusted");
+		Check(ValuesHaveNoSpaces(Seg), "the lamp segment is space-free");
+
+		// (6) A LANTERN THAT FELL DOWN AN UNPAINTED EXIT IS MISSING FROM THE
+		// VECTOR ENTIRELY, and the line has to keep saying 4 were in the file.
+		std::vector<LampPatch> One;
+		One.push_back(Yes);
+		const std::string Short = LampGlowSegment(One, LanternsInFile, true, 0);
+		Check(Short.find("lampGlowLit=1/of=1/examined=1/inFile=4") != std::string::npos,
+		      "a run that could only examine one of four lanterns says one of four "
+		      "rather than one of one");
+
+		// (7) THE CAP ANNOUNCES ITSELF, and it announces on every line rather
+		// than only when it bites, so a reader never has to know the cap.
+		const std::string Capped = LampGlowSegment(Four, LanternsInFile, true, 2);
+		Check(Capped.find("lampGlowShown=2/notShown=2") != std::string::npos
+		      && Capped.find("lampGlow3=") == std::string::npos,
+		      "a capped line says how many it did not show, and does not show them");
+		Check(Seg.find("lampGlowShown=4/notShown=0") != std::string::npos,
+		      "and an uncapped line says so with a zero rather than with silence");
+		Check(ValuesHaveNoSpaces(Capped), "the capped line is space-free too");
+
+		// (8) THE TWO WHOLE-SEGMENT NOTHING-MEASURED CASES.
+		const std::string NoDecode = LampGlowSegment(Four, LanternsInFile, false, 0);
+		Check(NoDecode.find("lampGlow=nothing-measured/") != std::string::npos
+		      && NoDecode.find("lampGlowLit=") == std::string::npos,
+		      "a shot line with no decoded frame prints nothing-measured and no lit "
+		      "count at all");
+		const std::string NoLanterns = LampGlowSegment(std::vector<LampPatch>(), 0, true, 0);
+		Check(NoLanterns.find("lampGlow=nothing-measured/") != std::string::npos
+		      && NoLanterns.find("inFile=0") != std::string::npos,
+		      "and a street with no emissive piece in it says that, with its zero");
+		Check(ValuesHaveNoSpaces(NoDecode) && ValuesHaveNoSpaces(NoLanterns),
+		      "both nothing-measured lines are space-free");
+
+		// (9) AN ID WITH A SPACE IN IT WOULD TRUNCATE EVERY TOKEN AFTER IT.
+		// Sanitised here, in the tested layer, rather than trusted from the
+		// module that reads the name out of the file.
+		const LampPatch Spaced = MeasureLampPatch(Lit.data(), LW, LH, "lantern 0 head",
+		                                          true, 90.0, 50.0, 110.0, 60.0);
+		std::vector<LampPatch> SpacedOne;
+		SpacedOne.push_back(Spaced);
+		const std::string SpacedSeg = LampGlowSegment(SpacedOne, 1, true, 0);
+		Check(Spaced.Id == "lantern_0_head" && ValuesHaveNoSpaces(SpacedSeg),
+		      "an id carrying spaces is sanitised before it reaches the line");
 	}
 
 	std::printf("frame-stats-test: %d check(s), %d failure(s)\n", Checks, Failures);

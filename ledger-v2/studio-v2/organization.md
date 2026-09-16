@@ -192,3 +192,24 @@ frame when the street looks different. Simple terms, no shas, no metric
 names. Between his asks: nothing on a clock (the 22 Aug rule stands), and
 his independent heartbeat is the branch's commit feed — if pushes are
 flowing, work is flowing.
+
+## Escalation mechanics, moved from CLAUDE.md 2026-09-16
+
+Moved here intact from CLAUDE.md on 2026-09-16; the mechanism is
+`director_cadence` in `ledger/verify.py`:
+
+The resident hand-applies
+only dictated text or a one-line fix, and never commits a builder's
+work-in-progress because a stop hook asks. `director_cadence` blocks a commit of
+builder work no ruling covers; a ruling is a record under `game-design/` with a
+`<!--RULING spawn=...-->` stamp naming a spawn row newer than the reference
+commit. A spawn alone is attendance, and a resident never stamps the ruling.
+
+## Tiers and their limits, moved from CLAUDE.md 2026-09-16
+
+Moved here intact under the reserve named in the ruling of 2026-09-16,
+addendum 1.3b, taken the same day by the next addition to CLAUDE.md:
+
+Tier 2 (read-only) are the
+verifiers, tier 3 the builders: all implementation happens there, the finding
+in the brief, a standing instruction not to commit.

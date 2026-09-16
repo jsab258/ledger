@@ -9,6 +9,91 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-16 CLOSE: JAFAR STOPPED THIS THREAD. TOMORROW IS THE VISUAL SLICE ONLY
+
+HIS WORDS: "Land the policy batch when the director rules on what leaves
+CLAUDE.md, and nothing else from this thread afterwards. Today produced no
+game work at all and the two-thirds rule is judged weekly. Tomorrow is the
+visual slice and nothing else: wetness, materials, then dusk with lamps lit
+and a figure in silhouette, ungated under D41. If another enforcement finding
+turns up, file it and keep going."
+
+  THE JUDGEMENT IS ACCURATE AND IS NOT ARGUED WITH HERE. 25 spawns today: 11
+  instrument-builder, 5 studio-director, 3 engine-specialist, 2
+  systems-builder, 2 artifact-reader, 1 producer, 1 claim-auditor. The nearest
+  thing to game work was the caught-claim fix in Core, which repaired a bug in
+  pillar 1 rather than building anything. NO FRAME MOVED. The visual slice
+  gained a material parameter defaulting to black and a written map, and the
+  lamp is still dark.
+
+  WHAT THE DAY ACTUALLY BOUGHT, so the ledger is honest in both directions:
+  five false or narrowed enforcement claims found and a policy ruled over
+  them, the caught-claim fix, the null floor back on the day frames, canon
+  reconciled with three rulings, and fourteen queue items filed. All of it is
+  the project working on itself, which is the thing the two-thirds rule
+  exists to bound, and he is judging it weekly rather than daily.
+
+  THE DIRECTOR HAS RULED, 2026-09-16 12:0xZ, addendum 1.3b of
+  game-design/decision-2026-09-16-ruling-wire-or-delete-the-last-instrument-and-seven-settlements.md.
+  THE BOUND DOES NOT MOVE: it is one of the six cleanly true enforcement
+  claims, so raising it inside the batch that exists to make enforcement
+  claims true would be the batch refuting itself. Eleven dictated edits A to
+  K moved the enforcement DETAIL to the constitution, operations.md,
+  organization.md, .claude/rules/ci.md and the legacy index, and struck the
+  runner recital from every sentence because proving a runner is the check's
+  job, not a sentence's.
+
+  APPLIED BY THE RESIDENT, A TO J PLUS THE RESERVE: CLAUDE.md prints
+  1920/2000 after A to J and about 1951 after the reserve was taken for
+  Jafar's new standing rule. K lands WITH the enforcement-claims check,
+  because it names a tool that has no runner until then. One miss was caught
+  and fixed in the same pass: edit G deleted its passage from CLAUDE.md
+  without adding it to organization.md, so for one edit the text existed
+  nowhere.
+
+## IN FLIGHT RIGHT NOW, 2026-09-16 midday, three agents
+
+- **instrument-builder, the wiring.** canon-gate `--corpus` and
+  goal-block-check into BOTH runners, template_sync retired for them under
+  D45. The order is fixed and is the point: RUN THE CORPUS FIRST and paste
+  the series, because the gate has never run over these roots and nothing
+  predicts a colour. A GATE NEVER LANDS RED.
+- **producer, the four-item card.** Jafar's four audit items answered in one
+  card, the lead being that item 1 was already fixed in d2687bf9 six hours
+  before he asked us to file it.
+- **engine-specialist, the lamp acceptance instrument.** Third (b) of queue
+  333's own three-way split, the half that runs locally: PieceScreenBox in
+  SurfaceBind.h, pixel maths and the formatter in FrameStats.h, both with a
+  planted rejecting case. Third (a), the material parameter, landed in
+  e7fbc9a8. Third (c), the .cpp wiring, comes after this one and cannot be
+  verified until CI.
+
+  THE DISPATCH PLAN FOR THE REST OF THE DAY, written down so a reset does not
+  re-derive it. Queue 333 says it builds after 329, 332 and 337 because it
+  shares their files, and all three are READY and none is done. The files
+  decide the order, not the numbers: 329 and 332 are both FrameStats.h
+  MeasureLightDelta, 337 and 333's third (c) are both VignetteShot.cpp.
+  So: the instrument lands first (in flight), then 333 (c) and 332 go out
+  together because they are in different files, then ONE dispatch of
+  ledger-probe-unreal carries all of it. The round trip costs the same
+  carrying one change or six, and a second round trip costs a whole evening.
+
+  THE THIRD ELEMENT OF HIS ORDER IS BLOCKED AND HE IS BEING ASKED: there is no
+  figure to silhouette. Queue 335, raised to blocking today with the evidence.
+  The dusk frame can land without one; the figure follows his answer.
+
+  THE FOUR ITEMS ARE FILED AND NOT STARTED, per his standing rule of today:
+  350 marked DONE at d2687bf9, 355 filed for the throughput ledger's piece
+  definition, 344 and 345 already filed for the role-proxy split. His rule
+  now sits in CLAUDE.md rule 11, which is the rule it generalises.
+
+  TOMORROW, IN HIS ORDER: wetness, materials, then dusk with lamps lit and a
+  figure in silhouette. Ungated under D41, so no director, no predictions, no
+  ruling records. Queue 333 carries the lamp's full implementation map,
+  already bought with an agent's whole budget; queue 028 half one is the
+  figure. AND IF ANOTHER ENFORCEMENT FINDING TURNS UP: FILE IT AND KEEP GOING.
+  Do not open a third front on it, which is what happened today.
+
 ## 2026-09-16 09:05Z: THE AUDIT LANDED IN FULL. d2687bf9 IS PUSHED, TREE CLEAN
 
 His external audit at 07:30Z named four things and ALL FOUR CHECKED OUT AT THE
