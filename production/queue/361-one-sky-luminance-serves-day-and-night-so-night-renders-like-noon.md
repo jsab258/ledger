@@ -30,8 +30,20 @@ acceptance: the dome's luminance is driven PER CONDITION through a write-on
   -change guard, on the precedent of ReDriveWetness and ReDriveLampEmissive
   which already do exactly this two and one condition-fields over; the value
   and the condition it came from are read back on the scene line; and a night
-  row's meanLuma returns to the order of run 49's 43.6 while the day rows are
-  unmoved. WHICHEVER FIELD DRIVES IT, the first value is a FIRST VALUE OF A
+  row's meanLuma returns to the order of run 49's 43.6 while THE 10 ROWS WHOSE
+  sky_intensity IS 1.00 ARE UNMOVED, the dome being 1.00 times a gain of 1.0
+  there exactly as before, and every other row moves in proportion to its own
+  sky_intensity; A MOVED 1.00 ROW IS A FAULT ELSEWHERE.
+
+  (CORRECTED 2026-09-16 under D43, and the correction is the RESIDENT'S OWN
+  ERROR rather than a builder's. This line read "while the day rows are
+  unmoved", which asked for two incompatible things: holding day still while
+  moving night needs the per-condition dome field the brief forbade. Counted
+  rather than assumed: 33 conditions carry FOUR values of sky_intensity, 1.00
+  on 10 rows, 0.70 on 13, 0.50 on 4 and 0.35 on 6, of which only 2 are night.
+  So 21 of the 31 day rows move, each by its own value, and the 10 at 1.00 are
+  THE CHANGE'S OWN NULL CONTROL, which did not exist as a concept when the
+  line was written.) WHICHEVER FIELD DRIVES IT, the first value is a FIRST VALUE OF A
   SERIES and says so, exactly as kLampEmissiveUnitless does
 max_sessions: 1
 status: READY 2026-09-16, produced by run 50 and filed under Jafar's standing

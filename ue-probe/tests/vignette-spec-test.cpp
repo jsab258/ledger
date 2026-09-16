@@ -6581,6 +6581,138 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// ---- QUEUE 361: THE SKY DOME'S LUMINANCE, PER CONDITION -------------
+	//
+	// WHAT THIS IS FOR. The dome is an UNLIT surface, so it renders at its
+	// own value whatever the lights do, and its value was one global
+	// constant written once at build: a night row rendered at 3.3 times the
+	// mean of the same file shot the run before. The drive that fixes it
+	// keeps its arithmetic, its guard and its string here, where g++ runs
+	// them, because the engine file they are called from cannot be compiled
+	// in the container that writes it and an unrun formatter printing a
+	// plausible string is the silent-instrument failure.
+	//
+	// ACCEPTING CASE FIRST, AND IT IS THE TWO NUMBERS THE LIVE SCENE FILE
+	// CARRIES: overcast_day at 0.70 and the night conditions at 0.35.
+	{
+		const double Day   = LedgerVignette::SkyDomeLuminance(0.70, 1.0);
+		const double Night = LedgerVignette::SkyDomeLuminance(0.35, 1.0);
+		std::printf("    skyDomeLuminance: day=%.3f night=%.3f gain=1.000\n",
+		            Day, Night);
+		Check(std::fabs(Day - 0.70) < 1e-12 && std::fabs(Night - 0.35) < 1e-12,
+		      "the dome's luminance is the condition's sky_intensity times the gain, "
+		      "for both of the live file's values");
+		Check(Day != Night,
+		      "and a day row and a night row therefore cannot land on one dome value, "
+		      "which is the whole of what queue 361 is");
+		Check(std::fabs(LedgerVignette::SkyDomeLuminance(0.35, 2.0) - 0.70) < 1e-12,
+		      "the gain scales the condition, so a second value of the series moves "
+		      "every condition by the same factor");
+		// REJECTING: A NEGATIVE EMISSIVE IS NOT A DARKER SKY. A hand-edited
+		// condition asking for one lands on the floor, not on a value the
+		// renderer would swallow silently.
+		Check(LedgerVignette::SkyDomeLuminance(-0.5, 1.0) == 0.0,
+		      "a negative sky_intensity floors at zero rather than reaching the dome");
+
+		// THE GUARD, BOTH OUTCOMES WATCHED. The drive is re-entered on every
+		// tick while a condition settles, so the SKIP is the case that costs
+		// a parameter write per tick when it is wrong.
+		LedgerVignette::SkyLumDrive D;
+		Check(LedgerVignette::SkyLumNeeded(D, Night),
+		      "the first condition of the run is a write, because nothing has been "
+		      "applied yet");
+		D.bHaveLast = true; D.Last = Night;
+		Check(!LedgerVignette::SkyLumNeeded(D, Night),
+		      "a second tick of the SAME condition is skipped");
+		Check(LedgerVignette::SkyLumNeeded(D, Day),
+		      "and a day row after a night row is a write");
+
+		// THE STRING, WHICH IS THE HALF THAT SHIPS UNRUN IF IT IS WRITTEN
+		// ANYWHERE ELSE. Never called first: a drive that never ran and a
+		// drive that ran and wrote nothing are different facts.
+		LedgerVignette::SkyLumDrive Never;
+		const std::string NeverSeg = LedgerVignette::SkyLumDriveSegment(Never, 1.0);
+		std::printf("    skyLumDrive never called:%s\n", NeverSeg.c_str());
+		Check(NeverSeg.find("nothing-measured") != std::string::npos
+		      && NeverSeg.find("skyLumValue=") == std::string::npos,
+		      "a drive that was never called says the words and prints no plausible "
+		      "zero beside them", NeverSeg);
+		Check(NeverSeg.find("skyLumGain=1.000/unitless/FIRST-VALUE-OF-A-SERIES")
+		      != std::string::npos,
+		      "and still prints the gain, saying on the line that it is the first "
+		      "value of a series", NeverSeg);
+
+		LedgerVignette::SkyLumDrive Ran;
+		Ran.Calls = 43; Ran.Walks = 2; Ran.Skipped = 41; Ran.Wrote = 2;
+		Ran.bHaveLast = true; Ran.Last = Night; Ran.LastAsked = 0.35;
+		// A SPACE IN THE ID ON PURPOSE: NoSpaces is what keeps this line
+		// readable by a reader that splits on whitespace, and it escapes to
+		// a tilde rather than dropping the character.
+		Ran.LastFrom = "pin setter night";
+		Ran.bReadTaken = true; Ran.ReadSet = Night; Ran.ReadGot = 0.34999999403953552;
+		const std::string RanSeg = LedgerVignette::SkyLumDriveSegment(Ran, 1.0);
+		std::printf("    skyLumDrive walked:%s\n", RanSeg.c_str());
+		Check(RanSeg.find("skyLumValue=0.350") != std::string::npos
+		      && RanSeg.find("skyLumSkyIntensity=0.350") != std::string::npos
+		      && RanSeg.find("skyLumFrom=pin~setter~night") != std::string::npos,
+		      "a drive that walked prints the value applied, the condition field it "
+		      "came from and the condition's id", RanSeg);
+		Check(RanSeg.find("skyLumDriveWrote=2/ofWalks=2/noInstance=0") != std::string::npos
+		      && RanSeg.find("skyLumDriveAsked=43/walked=2/skipped=41") != std::string::npos,
+		      "and every zero on the line ships its denominator", RanSeg);
+		Check(RanSeg.find("set=0.350/got=0.350/same=yes") != std::string::npos,
+		      "the readback of a float parameter widened back agrees with what was set",
+		      RanSeg);
+		// REJECTING: A DEAD WRITE MUST NOT READ AS AGREEMENT.
+		LedgerVignette::SkyLumDrive Dead = Ran;
+		Dead.ReadGot = 1.0;
+		const std::string DeadSeg = LedgerVignette::SkyLumDriveSegment(Dead, 1.0);
+		Check(DeadSeg.find("same=NO/") != std::string::npos,
+		      "an instance that kept its old value reads as NO and not as yes",
+		      DeadSeg);
+		// REJECTING: A WALK THAT FOUND NO DOME IS NOT A WALK THAT WROTE.
+		LedgerVignette::SkyLumDrive NoDome;
+		NoDome.Calls = 4; NoDome.Walks = 2; NoDome.Skipped = 2; NoDome.NoMid = 2;
+		NoDome.bHaveLast = true; NoDome.Last = Night; NoDome.LastAsked = 0.35;
+		const std::string NoDomeSeg = LedgerVignette::SkyLumDriveSegment(NoDome, 1.0);
+		Check(NoDomeSeg.find("skyLumDriveWrote=0/ofWalks=2/noInstance=2") != std::string::npos
+		      && NoDomeSeg.find("skyLumReadback=nothing-measured") != std::string::npos,
+		      "a run whose dome never spawned prints zero writes over two walks and "
+		      "measures no readback", NoDomeSeg);
+
+		// AND THE RULE EVERY READER OF THESE LINES DEPENDS ON: no spaces
+		// inside a value, because every reader splits on whitespace and
+		// truncates silently. Every token of every segment above must be a
+		// key=value.
+		const std::string All[4] = { NeverSeg, RanSeg, DeadSeg, NoDomeSeg };
+		int Tokens = 0, Bad = 0;
+		std::string BadOne;
+		for (int I = 0; I < 4; ++I)
+		{
+			std::string Tok;
+			std::string Line = All[I] + " ";
+			for (size_t K = 0; K < Line.size(); ++K)
+			{
+				if (Line[K] != ' ') { Tok += Line[K]; continue; }
+				if (!Tok.empty())
+				{
+					++Tokens;
+					if (Tok.find('=') == std::string::npos)
+					{
+						++Bad;
+						if (BadOne.empty()) { BadOne = Tok; }
+					}
+					Tok.clear();
+				}
+			}
+		}
+		std::printf("    skyLumDrive tokens examined=%d bare=%d\n", Tokens, Bad);
+		Check(Tokens > 0 && Bad == 0,
+		      "every token of every sky-luminance segment is a key=value, over the "
+		      "count of tokens examined",
+		      Bad == 0 ? std::string() : ("first bare token: " + BadOne));
+	}
+
 	std::printf("%s: %d of %d check(s) failed\n",
 	            gFailed == 0 ? "PASS" : "FAIL", gFailed, gChecks);
 	return gFailed == 0 ? 0 : 1;

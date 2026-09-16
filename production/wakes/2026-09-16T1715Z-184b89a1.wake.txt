@@ -2,8 +2,8 @@ id: 184b89a1
 due: 2026-09-16T17:15:00Z
 armedAt: 2026-09-16T16:44:37Z
 armedBy: resident/run-50-in-flight-read-the-four-flags-first
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-16T17:22:00Z
 capBitAt: -
 
 RUN 50 IS IN FLIGHT AND THIS WAKE READS IT. 727d6a46 is HEAD and pushed, tree clean. Nothing is running in this container. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, sixteen points of headroom, measured until about 01:33Z.
@@ -26,3 +26,36 @@ STILL OWED, none started: enforcement-claims-check.py with constitution law 13 a
 THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT. The scene spec has no person; the walk pawn has no skeletal mesh. Real work, not started.
 
 HIS REGISTER RULE BINDS EVERY MESSAGE: a filed item gets ONE LINE saying it is filed. The reasoning goes in the record.
+
+DISCHARGED 2026-09-16T17:22Z. ITS WORK WAS ALREADY DONE BEFORE IT CAME DUE:
+run 50 landed early, was read in exactly the order this record fixes, and
+landed at 78ac0c50 at about 17:00Z. Kept as written rather than edited out.
+
+THE ORDER EARNED ITSELF. Reading the four flags first is what let the cause be
+named in one pass instead of argued over: all four read with no refusals,
+skyDomeMatIsSky=yes, so the ambient was attributable and the question became
+WHICH CONSTANT rather than which subsystem.
+
+  skyDomeMatIsSky=yes/from=bIsSky
+  skyDomeMatTwoSided=yes/from=TwoSided
+  skyDomeMatShadingModelRead=0-MSM_Unlit/from=ShadingModel
+  skyLightLowerHemisphereSolid=yes/from=bLowerHemisphereIsBlack
+
+THE FOURTH SETTLED A QUESTION RATHER THAN REPORTING A STATE: the lower
+hemisphere is solid, so each photograph's mirrored lower half NEVER REACHES
+THE CAPTURE. The director had named that as the difference between the
+mirroring being a real problem and a non-issue. It is a non-issue, and now
+known rather than assumed.
+
+THEN THE FRAME, WHICH IS WHERE THE GOOD NEWS STOPPED. ue-pinset_night_3.png,
+same file same ruler: meanLuma 43.6 to 142.9, three and a third times brighter
+on a NIGHT row. Cause read in the code, not inferred from the picture:
+kSkyLuminance was a GLOBAL constant and sky_intensity drove only the SkyLight.
+Filed as queue 361, and a builder has since fixed it without a schema change.
+
+WHAT THIS RECORD DID NOT ANTICIPATE: that the fix would trip the cadence gate
+again. Three instances today, two of them correctly (the lamp and the sky dome
+were genuinely structural) and this one wrongly, because the gate reads PATHS
+and knows nothing of D41. Filed as queue 363 with the obvious fix named as
+probably wrong: a marker the resident sets would reopen the spawn-row hole
+this project already closed once.

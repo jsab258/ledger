@@ -27,7 +27,20 @@ acceptance: either (a) throughput.md defines a piece in one sentence at the
   and not both halves left implied. Whichever is chosen, the two readings above
   are printed beside the count so a reader can see which one it is.
 max_sessions: 1
-status: READY 2026-09-16, raised by Jafar from an external audit and filed
+status: READY 2026-09-16, and RE-ORDERED BY JAFAR THE SAME EVENING as the
+  FIRST HALF OF A PAIR. His words: "Fix what a piece means in the throughput
+  ledger, since twenty-two rows came from fifteen meshes and the cost divides
+  by the wrong number. Then measure one real unit properly."
+
+  THE SECOND HALF IS QUEUE 362 AND THIS ITEM GATES IT, in his own order.
+  362 puts one fully authored resident through all five stations with both
+  meters read before and after, then a second, to get a cost and a first
+  marginal from real work. THOSE TWO NUMBERS ARE COSTS PER UNIT. If the unit
+  is still undefined when they are taken, they join exactly the confusion this
+  item exists to end, and the measurement is wasted rather than merely
+  imprecise. Define the unit, then measure it.
+
+  Originally raised by Jafar from an external audit and filed
   under his ruling of the same day: an audit finding is FILED and the standing
   order resumes. DO NOT START before the visual slice lands.
 
