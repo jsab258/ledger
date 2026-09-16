@@ -102,3 +102,21 @@ status: READY 2026-09-14. The other route to an overcast, binding the
   not measured.
 
 <!--RULING spawn=2026-09-14T16:25:22Z-->
+
+  JAFAR SETTLED THE FORK 2026-09-16T14:1xZ, AND HE SETTLED IT BY WIDENING IT.
+  His words: "I approved the photograph, not a particular binding. If it needs
+  a different asset type or a different setup to render as a sky, do that under
+  D41 without asking; the ruling was the overcast photograph rather than the
+  mechanism."
+
+  SO THE LEVER IS THE PHOTOGRAPH AND NOT THE ATMOSPHERE. This item offered two
+  routes and said whichever series landed first would decide; it is decided
+  without a series, because the thing he approved was never a scattering
+  constant. THE MIE SERIES IS NOT THE ROUTE and is not to be run to "compare
+  fairly": running it now would spend a round trip settling a question he has
+  answered.
+
+  AND THE MECHANISM IS EXPLICITLY NOT HIS TO APPROVE, which is the part that
+  unblocks the work. A different asset type or a different setup is the
+  studio's call under D41, without asking. That removes the only thing that
+  made this item wait.
