@@ -68,3 +68,45 @@ status: READY 2026-09-16, produced by run 50 and filed under Jafar's standing
   It is already per-condition and already correct at 0.35; it governs the
   captured contribution and not the emissive surface the camera sees. Changing
   it would darken the lighting while leaving the blown sky exactly as it is.
+
+## ANSWERED BY RUN 51, 2026-09-16, evidence commit 73c902b5
+
+THE DRIVE FIRED: skyLumDriveAsked=4656/walked=32/skipped=4624,
+skyLumDriveWrote=32/ofWalks=32/noInstance=0, readback set=0.700/got=0.700/
+same=yes. Not one dead write.
+
+THE BRACKET, on the exposure-pinned night frame, each number from its own
+named evidence commit rather than from a filename:
+
+    run 49  e1b4de77  no dome            meanLuma= 43.6   (floor)
+    run 50  654dd381  dome at 1.0        meanLuma=142.9   (ceiling)
+    run 51  73c902b5  dome per condition meanLuma= 47.4
+
+INSIDE THE BRACKET AND ABOVE THE FLOOR, which is the right direction: the night
+now has a sky that contributes a little light rather than none or noon. It did
+NOT overshoot, so the double-coupling worry (dome 0.35 as the captured surface
+AND SkyLight 0.35 scaling that capture, possibly compounding) did not bite at
+this value. That is one point, not a curve.
+
+THE NULL CONTROL HELD, and it is the strongest thing in this reading because
+nobody designed it. Run 50 to run 51, whole-frame meanLuma:
+
+    sky_intensity=1.000  ue-vign_fog_maxop0000.png       142.5 -> 142.5  (+0.1)
+    sky_intensity=0.700  ue-vign_camB_day.png            115.4 -> 106.4  (-8.9)
+    sky_intensity=0.500  ue-vign_grid_sky050_sun030.png  178.0 -> 171.7  (-6.3)
+
+The 10 rows at 1.00 did not move. Everything else did. The change touched
+exactly what it should.
+
+WHAT THIS READING DOES NOT CLAIM: that 0.500 falling LESS than 0.700 means
+anything. Those are different scenes with different amounts of sky in frame, so
+whole-frame means are not comparable across conditions, and the ordering the
+ruling predicted cannot be tested this way. A per-band reading grouped by
+shotSkyIntensityRead is what would test it.
+
+AND ONE ERROR CAUGHT BY TWO NUMBERS BEING IDENTICAL: the first bracket read
+43.6 for BOTH run 49 and run 50, because the run 50 frame was pulled from
+727d6a46, which is the commit that DISPATCHED run 51 rather than the one
+carrying run 50's evidence. Run 50's frames landed later, in 654dd381. Two
+identical numbers are the instrument-suspect signal (rule 3) and it fired
+correctly.
