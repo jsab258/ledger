@@ -167,6 +167,28 @@ SCALAR_PARAMS = ["TilingU", "TilingV"]
 VECTOR_PARAMS = ["AlbedoGrade"]
 VECTOR_PARAM_DEFAULT = (1.0, 1.0, 1.0, 1.0)
 
+# THE EMISSIVE COLOUR, ADDED BY QUEUE 333, AND IT IS NOT IN VECTOR_PARAMS ON
+# PURPOSE, for the reason the wetness scalar below is not in SCALAR_PARAMS.
+# The summary line at the foot of --selftest prints
+# vectors=<joined>/default.<one default>: ONE default over however many names
+# are in that list. A second name there would print AlbedoGrade's white over a
+# parameter that is black, which is a false reading with a number on it rather
+# than a long line. So it carries its own name, its own default and its own
+# field, and the name-readback loop asks for VECTOR_PARAMS + [EMISSIVE_PARAM].
+#
+# IT DEFAULTS TO PURE BLACK, WHICH IS THE ACCEPTING CASE AND IS THE POINT.
+# Unreal ADDS Emissive Color to the shaded result, so black added is the
+# result untouched, bit for bit: every surface the vignette already renders is
+# unmoved by this parameter existing, and the hook_day control frames are the
+# live proof of it. The lit value is the engine's half and is driven per
+# piece; nothing in this file ever sets a non-black emissive.
+#
+# ASSERTED AS A NUMBER IN --selftest, because this half ships unrun: no
+# container can build the graph, so the default is checked where it can be,
+# and the REFUSING case is the lit sodium triple, which exists nowhere here.
+EMISSIVE_PARAM = "EmissiveColor"
+EMISSIVE_PARAM_DEFAULT = (0.0, 0.0, 0.0, 1.0)
+
 # THE WETNESS SCALAR, ADDED BY QUEUE 186, AND IT IS NOT IN SCALAR_PARAMS ON
 # PURPOSE. Those two are spelled as bare literals at their set sites, so a
 # grep for "TilingU" over the tree IS a grep for the set site. This one is
@@ -1082,9 +1104,13 @@ class Wiring(object):
     sweep can never move the denominator. THE DENOMINATOR IS NOT A
     CONSTANT and this docstring used to imply it was: it read 14 for runs
     19 to 24, 16 when queue 299 added the AlbedoGrade node and its two
-    wires, and 19 since queue 186 added the wetness parameter, the wet
-    floor constant and the lerp between them. Nothing compares it to a
-    literal; MADE is wired == asked. wired counts the ones the
+    wires, 19 when queue 186 added the wetness parameter, the wet floor
+    constant and the lerp between them, and 20 since queue 333 added the
+    EmissiveColor parameter and its one wire to MP_EMISSIVE_COLOR. The
+    rungs and their reasons are WIRE_SERIES below, and --selftest counts
+    the call sites in main() against the ledger beside it, so the number
+    moves when the graph moves rather than when someone remembers to move
+    it. Nothing compares it to a literal; MADE is wired == asked. wired counts the ones the
     editor accepted. materialStatus reads MADE only when the two are equal
     AND no head stood on the last-resort property write, which is the
     3 September rule and its amendment, and neither is relaxed here.
@@ -1105,6 +1131,97 @@ class Wiring(object):
         elif note:
             self.notes.append(note)
         return ok
+
+
+# THE CONNECTION DENOMINATOR AS A SERIES WITH ITS REASONS, rather than a
+# magic number in a docstring. Each rung is (connections asked for, what
+# moved it), oldest first; the last rung is what main() asks for today.
+# CUMULATIVE for the whole graph, not per sample: it belongs on the run's
+# done line and never on a per-texture one.
+WIRE_SERIES = (
+    (14, "runs-19-to-24-the-original-graph"),
+    (16, "queue-299-albedograde-node-and-its-two-wires"),
+    (19, "queue-186-wetness-parameter-floor-and-lerp"),
+    (20, "queue-333-emissivecolor-parameter-and-its-one-wire"),
+)
+
+# The pair of markers that bound the wired region of main(). They are spelled
+# in HALVES here and only here, so that this declaration is not itself a
+# marker: the counter must find exactly the one pair main() carries, and a
+# second pair anywhere is reported as nothing measured rather than guessed at.
+WIRE_REGION_BEGIN = "WIRE-PLAN" + "-REGION-BEGIN"
+WIRE_REGION_END = "WIRE-PLAN" + "-REGION-END"
+
+
+def wire_plan(texture_params=None):
+    """The ledger of connections main() asks the editor for, readable without
+    Unreal, so the container can check the denominator the verdict divides by.
+
+    Returns (rows, sites, connections). rows are (name, sites, connections,
+    why), sites is the CUMULATIVE count of call sites in the source and
+    connections the CUMULATIVE count of connections at run time. THE TWO ARE
+    NOT THE SAME NUMBER and that is the whole reason this is a table: the
+    sampler helper is one site called once per texture parameter, and its
+    output is two sites of which exactly one is taken per call. Counting
+    sites and calling them connections is how a graph reads 16 when it wires
+    19."""
+    n_tex = len(TEXTURE_PARAMS if texture_params is None else texture_params)
+    rows = [
+        ("uvhead", 2, 2, "a-head-swept-over-nine-names-is-ONE-connection"),
+        ("uvchain", 6, 6, "one-site-one-connection"),
+        ("sampleruvs", 1, n_tex, "one-site-called-once-per-texture-parameter"),
+        ("samplerout", 2, n_tex, "two-branches-exactly-one-taken-per-call"),
+        ("grade", 2, 2, "one-site-one-connection"),
+        ("wetness", 3, 3, "one-site-one-connection"),
+        ("emissive", 1, 1, "one-site-one-connection"),
+    ]
+    return rows, sum(r[1] for r in rows), sum(r[2] for r in rows)
+
+
+def count_wire_call_sites(source):
+    """Count the connect call sites between the two markers in a source text.
+
+    Returns (sites, by_name, why). by_name is cumulative over the region, one
+    entry per helper. SITES IS -1 AND NOT ZERO when the markers are not found
+    as exactly one pair, because a zero here would read as a graph with no
+    wires in it instead of as a counter that measured nothing, and why says
+    which count was wrong with what was wanted beside it."""
+    begins = source.count(WIRE_REGION_BEGIN)
+    ends = source.count(WIRE_REGION_END)
+    if begins != 1 or ends != 1:
+        return -1, {}, ("nothing-measured/begin.%d..end.%d..wanted.1..1"
+                        % (begins, ends))
+    at = source.index(WIRE_REGION_BEGIN)
+    to = source.index(WIRE_REGION_END)
+    if to < at:
+        return -1, {}, "nothing-measured/end-marker-stands-before-begin-marker"
+    pat = re.compile(r"(?<![A-Za-z0-9_])"
+                     r"(connect_uv_head|connect_prop|connect)\s*\(")
+    by_name = {}
+    sites = 0
+    for line in source[at:to].splitlines():
+        code = line.split("#")[0]
+        if code.strip().startswith("def "):
+            continue
+        for m in pat.finditer(code):
+            by_name[m.group(1)] = by_name.get(m.group(1), 0) + 1
+            sites += 1
+    return sites, by_name, "counted"
+
+
+def emissive_default_note(default):
+    """None when the emissive default is the pure black that leaves every
+    instance which never sets it rendering exactly as it did before this
+    parameter existed, and a reason naming the value when it is not.
+
+    A pure function so that --selftest can run the REFUSING case on a
+    synthetic value without touching the live one: the value that must fail
+    as a default is the lit sodium triple this parameter gets DRIVEN to."""
+    if tuple(default) == (0.0, 0.0, 0.0, 1.0):
+        return None
+    return ("default-is-%s-not-black/the-emissive-pin-is-an-ADD-so-every-"
+            "instance-that-sets-nothing-would-glow"
+            % ".".join("%g" % c for c in default))
 
 
 def pin_token(out_name, in_name):
@@ -2519,17 +2636,98 @@ def selftest():
         bad.append("the not-compiled line does not carry the word, the "
                    "return, the diagnostic count with its denominator and "
                    "the defaults that explain it: %s" % fail_line)
+    # ---- THE EMISSIVE PARAMETER, QUEUE 333 -------------------------------
+    # ACCEPTING CASE FIRST, and it is the DEFAULT rather than the name. The
+    # emissive pin is an ADD, so pure black is the one value that leaves every
+    # surface built before this parameter existed rendering exactly as it did,
+    # and the hook_day control frames can only prove that if the number is
+    # this one. A 25 minute round trip must not be what tells us it moved.
+    checks += 1
+    note = emissive_default_note(EMISSIVE_PARAM_DEFAULT)
+    if note is not None:
+        bad.append("the %s default is not the accepting case: %s"
+                   % (EMISSIVE_PARAM, note))
+    # REFUSING CASE, and it is SYNTHETIC on purpose: the lit sodium triple is
+    # the value this parameter gets driven to, it appears as a default nowhere
+    # in this file, and a guard that cannot tell it from black is a ratchet
+    # that would pass a material which makes every surface in the town glow.
+    checks += 1
+    if emissive_default_note((1.0, 0.857, 0.0, 1.0)) is None:
+        bad.append("a lit default passed the black check, so this guard "
+                   "cannot tell an unlit material from a glowing one")
+    # AND IT IS KEPT OUT OF VECTOR_PARAMS. The summary line at the foot of
+    # this function prints ONE default over the whole joined list, so a second
+    # name in it would print white over a parameter that is black.
+    checks += 1
+    if EMISSIVE_PARAM in VECTOR_PARAMS:
+        bad.append("%s is in VECTOR_PARAMS, where the summary line prints one "
+                   "default (%s) over every name in the list, so the line "
+                   "would report a black parameter as white"
+                   % (EMISSIVE_PARAM,
+                      ".".join("%g" % c for c in VECTOR_PARAM_DEFAULT)))
+    # ---- THE CONNECTION DENOMINATOR, COUNTED TWO WAYS --------------------
+    # ACCEPTING CASE: this file's own source is the live fixture, as the rule
+    # for tools that check the project itself requires. The ledger says how
+    # many call sites the wired region should carry and the counter reads how
+    # many it does; the two are arrived at independently, so a wire added
+    # without a rung on WIRE_SERIES moves one and not the other.
+    rows, plan_sites, plan_conn = wire_plan()
+    src_text = open(os.path.abspath(__file__), "r", encoding="utf-8").read()
+    sites, by_name, why = count_wire_call_sites(src_text)
+    checks += 1
+    if sites != plan_sites:
+        bad.append("the wire ledger asks for %d call site(s) and the marked "
+                   "region of this file carries %d (%s): %s"
+                   % (plan_sites, sites, why,
+                      "/".join("%s.%d" % (k, by_name[k])
+                               for k in sorted(by_name)) or "none-counted"))
+    checks += 1
+    if plan_conn != WIRE_SERIES[-1][0]:
+        bad.append("the ledger asks the editor for %d connection(s) and the "
+                   "last rung of WIRE_SERIES is %d (%s), so the denominator "
+                   "moved without a reason being written beside it"
+                   % (plan_conn, WIRE_SERIES[-1][0], WIRE_SERIES[-1][1]))
+    # REFUSING CASE, synthetic twice over: one more wire inside the region
+    # must be SEEN, and a source with no markers must say nothing measured
+    # rather than zero, because a zero there reads as a graph with no wires.
+    at_end = src_text.index(WIRE_REGION_END)
+    line_start = src_text.rindex("\n", 0, at_end) + 1
+    planted = (src_text[:line_start]
+               + "    connect_prop(x, \"\", y, \"synthetic-extra-wire\")\n"
+               + src_text[line_start:])
+    checks += 1
+    planted_sites, _pby, _pwhy = count_wire_call_sites(planted)
+    if planted_sites != sites + 1:
+        bad.append("a wire planted inside the marked region did not move the "
+                   "count, so this counter cannot see the next one: %d "
+                   "against %d" % (planted_sites, sites))
+    checks += 1
+    no_sites, _nby, no_why = count_wire_call_sites("a source with no markers\n")
+    if no_sites != -1 or "nothing-measured" not in no_why:
+        bad.append("a source carrying no markers counted %d wire(s) instead "
+                   "of reporting nothing measured: %s" % (no_sites, no_why))
     print("    %s" % line)
     print("    %s" % good_line)
     print("    %s" % prop_line)
     print("    %s" % fail_line)
+    # THE WHOLE-RUN NUMBERS, ON THE RUN'S OWN DONE LINE. checks is the
+    # denominator every zero above is read against; connections is the
+    # CUMULATIVE count of connections main() asks the editor for, over the
+    # call sites the ledger declares and the count read out of the source
+    # beside it, with the per-group breakdown so a total that moved says
+    # which group moved it. No spaces in any value.
     print("make_base_material --selftest: %d check(s), %d failure(s), "
           "params=%s scalars=%s vectors=%s/default.%s wetness=%s/default.%g/"
-          "floor.%.4f header=%s"
+          "floor.%.4f emissive=%s/default.%s "
+          "connections=%d/sites.%d..bysource.%d..%s header=%s"
           % (checks, len(bad), "/".join(TEXTURE_PARAMS), "/".join(SCALAR_PARAMS),
              "/".join(VECTOR_PARAMS),
              ".".join("%g" % c for c in VECTOR_PARAM_DEFAULT),
              WETNESS_PARAM, WETNESS_PARAM_DEFAULT, WET_ROUGHNESS_FLOOR,
+             EMISSIVE_PARAM,
+             ".".join("%g" % c for c in EMISSIVE_PARAM_DEFAULT),
+             plan_conn, plan_sites, sites,
+             "..".join("%s.%d" % (r[0], r[2]) for r in rows),
              os.path.relpath(header, root)))
     for b in bad:
         print("  FAIL %s" % b)
@@ -3306,6 +3504,11 @@ def main():
     mul_v = expr(unreal.MaterialExpressionMultiply, -700, 80)
     app = expr(unreal.MaterialExpressionAppendVector, -520, 0)
 
+    # WIRE-PLAN-REGION-BEGIN. Everything between this and the END marker is
+    # counted by count_wire_call_sites and checked against wire_plan in
+    # --selftest, so a wire added or lost here cannot pass as the same graph
+    # with a different number. Call sites, not connections: the two differ and
+    # the ledger says where.
     connect_uv_head(tc, mask_u, "texcoord-to-maskU")
     connect_uv_head(tc, mask_v, "texcoord-to-maskV")
     connect(mask_u, "", mul_u, "A", "maskU-to-mulU")
@@ -3339,8 +3542,9 @@ def main():
     # sampler's output now goes to the multiply instead of straight to the
     # property, and two wires are added (the parameter into B, the multiply
     # into Base Color). materialConnections therefore read 16 where runs 19
-    # to 24 read 14; it reads 19 since queue 186 added the wetness lerp and
-    # its three wires, in the block that follows. A fraction is still a
+    # to 24 read 14; 19 since queue 186 added the wetness lerp and its three
+    # wires, in the block that follows; and 20 since queue 333 added the
+    # emissive parameter and its one wire. A fraction is still a
     # fraction and MADE still needs wired == asked; only the number moved.
     grade = expr(unreal.MaterialExpressionVectorParameter, -520, -460)
     try:
@@ -3368,6 +3572,55 @@ def main():
         w.notes.append("albedograde-default-REFUSED-both-ways/parameter-"
                        "may-be-black-and-would-darken-every-pack-surface-to-zero")
     grade_mul = expr(unreal.MaterialExpressionMultiply, -120, -340)
+
+    # ---- THE EMISSIVE COLOUR, QUEUE 333, ONE NODE AND ONE WIRE ------------
+    #
+    # WHAT IT IS FOR. The vignette's sodium lanterns spawn a point light and
+    # have no lit element at all: the lamp head renders through the ordinary
+    # metal surface, so it is a dark rectangle against a pale sky. Measured
+    # rather than described, in the committed frames: 26 warm pixels of
+    # 921600 in ue-pinset_night_3.png, against 5981 of 563200 at a STRICTER
+    # bound in the approved reference sheet. This parameter is the slot the
+    # lit element arrives in. The strength, the drive and the per-piece
+    # instance are the engine's half and are decided in the C++, not here;
+    # this file only gives them somewhere to land, as it does for AlbedoGrade.
+    #
+    # BLACK BY DEFAULT AND THE PIN IS AN ADD, so an instance that never sets
+    # it emits nothing and renders bit for bit what it renders today. That is
+    # the accepting case, it is the half that ships unrun, and --selftest
+    # asserts the NUMBER rather than the presence, with the lit sodium triple
+    # as the case it must refuse.
+    #
+    # WHAT IT DOES TO THE DENOMINATOR, said out loud because it is not a
+    # constant: one wire, so the connections asked for read 20 where queue
+    # 186 left them at 19. The rungs are WIRE_SERIES and --selftest counts
+    # the call sites between the markers below against the ledger.
+    emissive = expr(unreal.MaterialExpressionVectorParameter, -520, -620)
+    try:
+        emissive.set_editor_property("parameter_name", EMISSIVE_PARAM)
+    except Exception:
+        w.notes.append("emissive-parameter-name-refused")
+    # THE DEFAULT IS TRIED THE TWO WAYS THE GRADE BLOCK ABOVE TRIES IT, and
+    # the refusal is NAMED rather than caught and forgotten. A vector
+    # parameter left on some engine default other than black would make every
+    # surface in the frame emit, which is the loudest failure available here
+    # and the one worth engineering for; the note is how it reaches the
+    # verdict line instead of the still.
+    emissive_default_set = False
+    try:
+        emissive.set_editor_property(
+            "default_value", unreal.LinearColor(*EMISSIVE_PARAM_DEFAULT))
+        emissive_default_set = True
+    except Exception:
+        try:
+            emissive.set_editor_property("default_value",
+                                         EMISSIVE_PARAM_DEFAULT)
+            emissive_default_set = True
+        except Exception:
+            pass
+    if not emissive_default_set:
+        w.notes.append("emissive-default-REFUSED-both-ways/parameter-may-not-"
+                       "be-black-and-every-surface-in-the-frame-would-glow")
 
     # ---- WETNESS, QUEUE 186, AND IT IS THREE NODES AND FOUR WIRES ---------
     #
@@ -3502,6 +3755,14 @@ def main():
     connect(wet, "", wet_lerp, "Alpha", "wetness-to-wetlerp")
     connect_prop(wet_lerp, "", mp.MP_ROUGHNESS, "wetlerp-to-roughness")
 
+    # The emissive parameter's ONE wire, and it goes straight to the property.
+    # There is no multiply and no lerp in front of it because black added is
+    # nothing added: the drive sets the colour it wants whole, and an instance
+    # that sets nothing is the material this file shipped yesterday.
+    connect_prop(emissive, "", mp.MP_EMISSIVE_COLOR,
+                 "emissive-to-emissivecolor")
+    # WIRE-PLAN-REGION-END.
+
     # ---- THE COMPILE, AND THE EVIDENCE THAT IT HAPPENED ------------------
     # RUN 23 ASKED FOR A RECOMPILE, CAUGHT AN EXCEPTION THAT NEVER CAME AND
     # CALLED THAT SUCCESS. The absence of a raised exception says nothing
@@ -3547,7 +3808,8 @@ def main():
                                   "texture"),
                                  ("get_scalar_parameter_names",
                                   SCALAR_PARAMS + [WETNESS_PARAM], "scalar"),
-                                 ("get_vector_parameter_names", VECTOR_PARAMS,
+                                 ("get_vector_parameter_names",
+                                  VECTOR_PARAMS + [EMISSIVE_PARAM],
                                   "vector")):
         fn = getattr(mel, getter, None)
         if fn is None:
