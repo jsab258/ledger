@@ -3,7 +3,7 @@ due: 2026-09-16T18:10:00Z
 armedAt: 2026-09-16T17:35:45Z
 armedBy: resident/run-51-group-by-sky-intensity-before-any-band
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T18:06:19Z
 capBitAt: -
 
 RUN 51 IS IN FLIGHT AND THIS WAKE READS IT. 118281a9 is HEAD and pushed, tree clean. Nothing is running in this container. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, measured until about 01:33Z.
