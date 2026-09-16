@@ -9,6 +9,45 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-16 06:50Z: THE TWO THINGS HE ASKED FOR IN TOMORROW'S BRIEF
+
+He named them himself and said to put them in the brief rather than as
+messages, so they are recorded here for the Producer to pick up rather than
+sent. Both are read off the 06:37Z verify footer, not recalled.
+
+ONE, DID THE NIGHT FRAMES SURVIVE STAGING. YES, ALL OF THEM.
+shotFilesNamed=43 shotFilesPresent=43 shotFilesTracked=43 shotFilesMissing=0.
+The four ue-pinset_night frames had been rendered and discarded on every run
+since they entered the spec, zero commits ever, because four workflow sites
+filtered on ue-vign_*.png and the copy step was the decisive one. They are in
+the repository now and the waiver that forgave their absence expired by itself
+on the run that landed them. He gets a clean yes.
+
+TWO, THE SPAWNS BY TIER, AND HIS PREMISE NEEDS HALVING RATHER THAN AGREEING
+WITH. He said "now that routing is enforced". Half of that is true and the half
+that is not is the interesting half.
+
+  ENFORCED: the model LADDER. ledger/verify.py's agent-model-overrides check
+  fails the build on any spawn that ran ABOVE its definition's declared model
+  without a resolving written reason. It examined 135 rows this run and found
+  justifiedUp=0 downOrSame=135, so nothing needed a reason because nothing
+  exceeded its definition.
+
+  NOT ENFORCED: the MIX. The tier keys carry their own disclaimer in the
+  footer, "READING ONLY (no bound, nothing here is gated)". Nothing anywhere
+  says spawn fewer of the expensive ones.
+
+  AND THE NUMBER WORTH HIS ATTENTION IS THE BOTTOM RUNG, WHICH HAS NEVER BEEN
+  USED AT ALL. Today: haiku 0, sonnet 2, opus 8, fable 2 over 12 spawns, with
+  the top two at 10 of 12. LIFETIME: haiku 0, sonnet 79, opus 392, fable 173
+  over 644 classified rows of 663 (the other 19 have no rankable definition).
+  ZERO HAIKU SPAWNS EVER. And tierRosterIdle=3/15 names the three definitions
+  never selected in the whole log, guard-tester, integrator and reach-auditor,
+  which are exactly the three that sit on haiku. The cheapest rung is unused
+  because the only roles defined at it are roles the studio never reaches for.
+  That is a fact about the roster, not about routing, and it is the one a
+  ceiling at 85 on the governing meter makes worth saying.
+
 ## 2026-09-16 06:10Z: RUN 48 READ. THE FRAMES ARRIVED AND THE LAMPS DO NOT LIGHT
 
 His reading came in unprompted in answer to the brief's first line: 54 and 57,

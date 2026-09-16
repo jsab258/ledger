@@ -10,7 +10,9 @@ spec: D28 step 2 and the Hook sheet both want dusk with the sodium lamps lit.
   no lit element of any kind exists in the scene.
 acceptance: the lamp head carries a surface that reads as the emitting part at
   night, and a night frame in which the fixture is measurably the brightest
-  warm thing in its own neighbourhood rather than a silhouette against the sky
+  warm thing in its own neighbourhood rather than a silhouette against the sky.
+  THE TARGET IS MEASURED OFF THE APPROVED REFERENCE rather than chosen: see
+  THE REFERENCE HAS THE ANATOMY below
 max_sessions: 2
 status: READY 2026-09-16, filed from run 48's committed frames and the source.
 
@@ -50,3 +52,39 @@ status: READY 2026-09-16, filed from run 48's committed frames and the source.
   THIS IS SPEC AND ENGINE WORK, NOT A TOOL. It touches production/specs and
   probably the surface vocabulary, so it is GATED and wants a director before
   it lands, unlike 329 and 332 beside it.
+
+THE PICTURE IS COMMITTED, at game-design/sim-shots/lamp_reference_vs_probe.jpg:
+the two fixtures side by side out of the SAME size source rectangle at the SAME
+magnification, with their provenance and both numbers printed under them, so
+the comparison is one picture at one scale rather than two memories.
+
+THE REFERENCE HAS THE ANATOMY AND THE PROBE HAS HALF OF IT, read 2026-09-16 off
+production/art/atlas-01/concepts/hook.png on origin/art/atlas-01, which is the
+approved reference under D41. Its harbour panel carries a wall lamp, magnified
+and looked at rather than described: A DARK METAL SHADE WITH A GLOWING GLASS
+GLOBE UNDER IT, a wire cage over the globe, and visible warm spill on the wall
+beside it. The probe's lantern is the SHADE ONLY. The glowing part does not
+exist as geometry or as a surface.
+
+  MEASURED, so the acceptance is a number and not an adjective. The reference
+  lamp's lit element, the blob at (146,189) to (170,203) in a 1024x1536 sheet:
+
+      maxLuma   242 of 255
+      maxWarm   140  (R minus B, sRGB bytes)
+      meanLuma  188  over its own 141 pixels
+
+  Its lit window below it, (41,290) to (58,334), reads maxLuma 237 maxWarm 115
+  meanLuma 138 over 460 pixels. Over the whole harbour panel, 5981 pixels of
+  563200 (1.06 per cent) are both warm and bright at R minus B at or above 40
+  AND luma at or above 100.
+
+  THE PROBE'S NIGHT FRAME READS ZERO AT A LOOSER BOUND. ue-pinset_night_3.png
+  has no pixel at all that is both luma 120 or more and R minus B 20 or more.
+  The reference's 5981 are counted at the STRICTER threshold. That is the gap,
+  stated as two counts over two stated denominators rather than as an
+  impression.
+
+  AND IT SETTLES THE SKY QUESTION BEFORE ANYONE SPENDS A RUN ON IT. The
+  reference lamp is lit against a STILL BRIGHT overcast sky and reads as lit
+  anyway, because the globe at 242 is brighter than the sky behind it. So the
+  fix is not to darken the sky and it is not the exposure. It is the globe.
