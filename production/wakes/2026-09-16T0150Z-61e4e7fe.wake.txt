@@ -3,7 +3,7 @@ due: 2026-09-16T01:50:00Z
 armedAt: 2026-09-16T01:13:19Z
 armedBy: resident/run-47-read-three-items-block-the-dusk-frame
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T02:04:44Z
 capBitAt: -
 
 Run 47 is READ and committed at d2df1662. Wetness reaches the frame (6.6x the null floor on mean delta, monotonic ladder); the 2K pack is visible (kerb -4.78, railings -4.15); both controls held. NOTHING IS IN FLIGHT. THREE ITEMS NOW BLOCK JAFAR'S DUSK FRAME and all three are about whether a lantern-lit night frame can be trusted: 325 (two pin_setter_night shots rendered BLANK in run 47 where run 46 had none, undiagnosed, bigger 2K textures named as the first thing to TEST not as the cause), 319 (the lantern state is asked per condition and read back nowhere, 0 of 109 keys on the night shot line), 324 (shotWetnessAgrees is the guard's latch and can read yes when the walk wrote nothing). Take 325 FIRST: a frame that renders black half the time is not a frame anybody can judge, and it is a regression against a known-good run so the comparison is cheap. Then 319, then 324, then the dusk frame, which must NOT be shot from cam_A because the three control quads are shown on exactly the two cam_A shots of 43. Budget reading is Jafar's 45/47 takenAt 2026-09-15T20:11:11Z; it goes STALE at 06:11Z and the studio holds at inbox-only until he answers the morning ask.

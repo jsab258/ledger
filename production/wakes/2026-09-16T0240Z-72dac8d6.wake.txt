@@ -1,0 +1,9 @@
+id: 72dac8d6
+due: 2026-09-16T02:40:00Z
+armedAt: 2026-09-16T02:06:34Z
+armedBy: resident/325-first-half-staging-gap-builder-running
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+instrument-builder is on queue 325's FIRST half: the probe's staging glob at ledger-probe-unreal.yml:1968 covers ue-vign_*.png only, so all four ue-pinset_night_*.png have been rendered and discarded on EVERY run since the shots entered the spec (0 commits ever touched them, against 29 for ue-vign_*). It owes: the glob widened without degrading to a directory add, plus a GATE that reads the verdict's file= list and asserts each is present with both counts, wired into verify.py. Its rejecting case is free, today's tree names 43 and has 39. EXPECT VERIFY TO GO RED when its check lands, and that is CORRECT: the tree really is missing four files. DO NOT weaken the check or fabricate frames to get green. Land it red-honest, then the NEXT probe run supplies the frames and verify goes green on its own. ONLY THEN can 325's second half (why 2 of 4 pin_setter_night shots rendered BLANK at shotMeanLuma 0.0015 and shotNonBlackPct 17.73) be diagnosed, because that needs the pictures. After 325: 319, then 324, then the dusk frame, NOT from cam_A. Budget 45/47 takenAt 2026-09-15T20:11:11Z goes STALE at 06:11Z.
