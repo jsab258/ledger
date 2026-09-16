@@ -89,7 +89,13 @@
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Engine/SkeletalMeshActor.h"
+// ANIMATION/, NOT ENGINE/, and run 52 is what proves it: `fatal error C1083:
+// Cannot open include file: 'Engine/SkeletalMeshActor.h'`, which cost a whole
+// round trip and published no binary at all. ASkeletalMeshActor lives beside
+// Skeleton.h and AnimSequence.h in Engine/Classes/Animation/, not beside
+// StaticMeshActor.h in Engine/Classes/Engine/, and the three Animation/
+// includes above were already right when this one was wrong.
+#include "Animation/SkeletalMeshActor.h"
 #include "Engine/PointLight.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
@@ -5224,8 +5230,23 @@ namespace
 			std::snprintf(Tmp, sizeof(Tmp), "%.3f", GFigureFootGapCm);
 			FootGap = Tmp;
 		}
-		char B[900];
-		std::snprintf(B, sizeof(B),
+		// THE BUFFER IS 2048 AND NOT 900, AND THE 900 WAS SILENTLY EATING
+		// SEVEN KEYS. MEASURED IN THIS CONTAINER, not recalled: the format
+		// literal below is 1161 characters on its own, 62 of them the 24
+		// specifier tokens, so 1099 characters print before one value is
+		// substituted. A representative STANDING/pose-evaluated run renders
+		// 1339. std::snprintf does not overflow, it TRUNCATES, so at 900 this
+		// line stopped mid-word at 899 characters and the last seven keys -
+		// figureAtM, figureYawDeg, figureShoulders, figurePlacementBound,
+		// figureScale, figureShownShots and figureScopedTo - never reached the
+		// verdict at all: the whole placement readback and both shot tallies.
+		// The worst case is about 1641 (GFigureWhy is bounded by W[160] and
+		// GFigureShoulderAxis by S[160]), so 2048 carries it with headroom.
+		// CONFIDENT BECAUSE NO ENGINE API IS INVOLVED: a stack array size and
+		// a return value of std::snprintf, both standard C++, both checkable
+		// here, which is why this is changed rather than flagged.
+		char B[2048];
+		const int Need = std::snprintf(B, sizeof(B),
 			" figure=%s figureWhy=%s"
 			" figureBody=Michelle.fbx/michelle/ADULT/D18-no-children-anywhere"
 			" figureClip=idle_2/Standing~Idle~01"
@@ -5263,7 +5284,20 @@ namespace
 			kFigureXM, kFigureFootYM, kFigureZM, GFigureYawDeg,
 			GFigureShoulderAxis.c_str(),
 			GFigureShown, GFigureHidden);
-		return std::string(B);
+		// AND THE CAP ANNOUNCES WHEN IT BITES, which is the half 900 never
+		// had: snprintf returns the length it WANTED, so a line that outgrows
+		// this buffer says so on the line itself instead of dropping its tail
+		// keys where only a reader who knew they existed would miss them.
+		std::string Out(B);
+		if (Need >= (int)sizeof(B))
+		{
+			char T[96];
+			std::snprintf(T, sizeof(T),
+				" figureSegTruncated=yes/wantedChars=%d/cap=%d",
+				Need, (int)sizeof(B));
+			Out += T;
+		}
+		return Out;
 	}
 
 	// BIND EVERY SURFACE THE SHARED FILE ASKED FOR, and count what did not
