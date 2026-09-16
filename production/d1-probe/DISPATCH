@@ -1583,3 +1583,55 @@ wetness key and a texel series cannot be mistaken for one another.
 # for waits on 319 and on 324, and must not be shot from cam_A, because the
 # three control quads are shown on exactly the two cam_A shots of 43 and one of
 # them is that frame.
+run 48 - 2026-09-16 - THE CARRYING RUN FOR QUEUE 326, and it settles three
+things at once: whether the light floor reads as the ruling predicts, whether
+the four pinset_night frames finally arrive, and whether the blank-probe-frame
+fault is what queue 329 says it is.
+#
+# THE PREDICTIONS ARE NOT WRITTEN HERE. They are section 9 of
+# game-design/decision-2026-09-16-ruling-326-lands-amended-the-floor-is-read-and-the-key-that-changed-meaning-changes-name.md,
+# P1 to P8, written 2026-09-16 03:27Z BEFORE this run existed so the run can
+# refute them, and read from there rather than paraphrased, because a
+# paraphrase of a prediction is a prediction nobody can lose. The short form
+# for a reader deciding whether to open it: the accounting identities
+# U+N+K=P and a+b+c=n; Moved at least Rose at every edge on every line; every
+# light line's exposure pin equal to its shot line's; no cut marker anywhere;
+# and P7, which decides queue 329's priority.
+#
+# THE KEY THAT CHANGED ITS NAME. lightsReachedFrame is gone and
+# lightsAboveFloor is what this run prints. THE OLD NUMBER WAS 30/42 ON RUN 47
+# AND 36/42 ON RUN 46 AND BOTH WERE WRONG: they were decided by one pixel
+# rising by one code value, against a control that at one camera moved EVERY
+# pixel past EVERY code edge. Four of seven lights there matched the control's
+# six integers to the pixel. Do not compare this run's numerator to either.
+#
+# WHAT THIS RUN OWES THAT NO RUN BEFORE IT COULD GIVE: the four
+# ue-pinset_night_*.png frames. They have been rendered and discarded on every
+# run since the shots entered the spec, zero commits ever, because four sites
+# in this workflow filtered on ue-vign_*.png and the copy step was the
+# decisive one. Fixed at 00bf7189. THE NUMBER TO READ FIRST is the staging
+# step's stagedPngLeavesAbsent beside stagedPngLeavesInSpec=43, then
+# vignStaged and vignNamed on the commit step. If those four do not arrive,
+# the fix did not work and nothing else in this run about night lighting can
+# be trusted.
+#
+# AND THE WAIVER EXPIRES BY ITSELF ON THIS RUN. tools/verdict-shot-files.py
+# forgives four named-but-absent frames only while the verdict on disk is run
+# c738797. This run writes a different sha, so the waiver stops applying and
+# the check demands every named file. If the frames arrive, it goes green
+# because there is nothing to forgive; if they do not, it goes RED and that is
+# the correct outcome, not a regression to work around.
+#
+# THE BLANK-FRAME QUESTION, WHICH IS THE ONE THAT DECIDES WHETHER ANY LIGHT
+# NUMBER FROM THIS RUN MEANS ANYTHING. On run 47 four of the six reads that
+# survive the new floor are frames whose light-off mean sits at about 0.0015
+# against references of 0.24388 and 0.19480, with pairwise identical
+# histograms. That is queue 325's blank signature. The floor catches a blank
+# CONTROL and is blind to a blank LIGHT frame under a good control, which is
+# queue 329 and is NOT in this run. So read lightsAboveFloor as a number whose
+# numerator is still contaminated, and say so wherever it is quoted.
+#
+# NOTHING ABOUT THE PACK OR THE WETNESS CHANGED SINCE RUN 47. Both landed
+# there and were read. If a ground band number moves this run, the pack did
+# not move it and neither did wetness; suspect the instrument or the exposure
+# before either.

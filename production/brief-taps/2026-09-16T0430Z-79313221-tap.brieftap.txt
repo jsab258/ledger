@@ -1,0 +1,6 @@
+record: tap
+briefDay: 2026-09-16
+verdict: readable
+tapped: 2026-09-16T04:30:05+00:00
+tappedEpoch: 1789533005
+update: 79313221
