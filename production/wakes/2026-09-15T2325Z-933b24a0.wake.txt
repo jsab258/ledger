@@ -3,7 +3,7 @@ due: 2026-09-15T23:25:00Z
 armedAt: 2026-09-15T23:05:43Z
 armedBy: resident/citypack-shortlist-run1-in-flight
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-15T23:17:06Z
 capBitAt: -
 
 Batch 07ea030d is landed and pushed; HEAD is now aa385f3b (citypack-inventory rewrote the catalogue, harmless: both old and new resolve 230/230 over 2010 assets). IN FLIGHT: citypack-shortlist run#1 id=35033500220, push-triggered on 07ea030d, in_progress since 22:58:09Z, expect roughly 45 min for 230 downloads plus four contact sheets. My duplicate workflow_dispatch run#2 id=35033510147 was CANCELLED (concurrency cancel-in-progress is false so it would have queued, not replaced). WHEN IT LANDS: verify by ANCESTRY not branch movement, read the four contact sheets with the Read tool, choose four replacement ids for kerb metal plaster concrete against the Hook sheet, commit choices.json (which IS the decision that a 2K download happens), then run citypack-fetch.yml. Check the run committed ATTRIBUTION.json beside the sheets, which the 22:25Z ruling's dictation 7 added and which makes the new THIRD-PARTY.md row true. AFTER MATERIALS: queue 319 (lantern state unmeasured) and 324 before the dusk frame; the dusk frame must NOT be shot from cam_A because the three control quads are shown there.

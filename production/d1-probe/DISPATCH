@@ -1521,3 +1521,65 @@ RUN 46, 2026-09-15: THE WETNESS TERM MEETS A RENDERER FOR THE FIRST TIME
 # BEFORE WRITING ANY SENTENCE. The eye reads contrast rather than value and
 # invents differences across time, and this seat got that wrong three times
 # today in one form or another.
+run 47 - 2026-09-16 - TWO UNRENDERED BATCHES IN ONE ROUND TRIP: per-condition
+wetness (queue 309, landed 07ea030d under the 22:25Z ruling) and the four
+replaced pack surfaces (queue 300, landed ad02021a). The round trip costs the
+same carrying one change or two (ci.md), and the two do not confound: wetness
+writes two material PARAMETERS and the pack changes four TEXTURE FILES, so a
+wetness key and a texel series cannot be mistaken for one another.
+#
+# THE PREDICTIONS FOR THE WETNESS HALF ARE NOT WRITTEN HERE. They are section
+# 10 of
+# game-design/decision-2026-09-15-ruling-per-condition-wetness-lands-and-the-licence-record-owes-the-pack-its-row.md,
+# written 2026-09-15 22:25Z BEFORE this run existed so the run can refute them,
+# and they are read from there rather than paraphrased here, because a
+# paraphrase of a prediction is a prediction nobody can lose. The short form,
+# for a reader deciding whether to open that file: seventeen walks derived from
+# the shot order, the last at pin_1000 and 0.6; wetnessRedriveWrote=10030/of=
+# 10370; wetnessRedriveRefused=notOurRoute.340 and zero in every other bucket;
+# wetnessRedriveReadback=same-value; TallyMismatch and ReadNote ABSENT;
+# shotWetnessAgrees=yes on all 43; the null series down to 7 of 43 over 30
+# groups with wet_060 STAYING because 0.6 is the reference cell's own wetness.
+#
+# THE PACK HALF CARRIES A MEASURED BEFORE AND AFTER AND NO PREDICTION OF A
+# FRAME. --measure-pack on the landed 2K files, beside queue 300's table:
+#
+#     surface   old lumMean/lumSD/chroma   new lumMean/lumSD/chroma
+#     kerb          184.3 / 6.6 / 0.0          136.1 / 39.8 / 7.3
+#     metal         134.8 / 4.6 / 22.5         118.7 / 22.4 / 5.6
+#     concrete      107.2 / 9.3 / 6.8          130.5 / 19.6 / 13.4
+#     plaster       211.7 / 5.8 / 7.2          189.5 / 13.1 / 9.1
+#
+# The kerb's chromaSpread was EXACTLY 0.0, R equals G equals B on every texel
+# of the card 95 kerbstones wore. It is 7.3 now. lumSD is 6.0x, 4.9x, 2.1x and
+# 2.3x. Those are texel numbers and NOT a frame, which is the whole distinction
+# queue 300's acceptance rests on: a replacement that is merely a different
+# flat card must be visible as one, and these are not flat, but whether they
+# READ as materials rather than as painted primitives is the frame's answer and
+# Jafar's under D23.
+#
+# WHAT THE PACK HALF COULD DO TO A WETNESS READING, named before rather than
+# discovered after. band.ground.p50 has THREE reasons to move this run and only
+# one of them is wetness: the kerb is 48 points darker and the concrete 23
+# points paler than the files run 46 measured, and both are in the ground band.
+# SO THE GROUND MEDIAN IS NOT A WETNESS READING THIS RUN and must not be quoted
+# as one. The wetness evidence is the KEYS and the wet_000 against wet_100
+# frame pair, both of which hold the pack constant.
+#
+# THE ONE CONTROL THE PACK HALF CANNOT TOUCH, and it is why it is worth
+# naming: band.skyCentre.p50 at 0.8035 and shotExposurePinRead at 0.3000/
+# 0.3000. No sky wears a pack texture and no sky wears a wetness term. If
+# either moves, suspect the exposure or the instrument before either batch.
+#
+# THE READING ORDER. Frame first, and MEASURE BEFORE WRITING ANY SENTENCE: the
+# eye reads contrast rather than value and invents differences across time, so
+# the wet_000 against wet_100 pair goes in ONE picture at ONE scale against the
+# certified null pair's floor (75.59 per cent of pixels at maxChannelDelta
+# 29/255), never in two looks minutes apart. Then the keys. Then section 10.
+#
+# NOT IN THIS RUN AND SAID SO PLAINLY: the lantern state is still read back
+# nowhere (queue 319, 0 of 109 keys on the night shot line), so this run cannot
+# say whether the lamps in vign_camA_night are lit. The dusk frame Jafar asked
+# for waits on 319 and on 324, and must not be shot from cam_A, because the
+# three control quads are shown on exactly the two cam_A shots of 43 and one of
+# them is that frame.
