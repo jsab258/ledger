@@ -325,14 +325,53 @@ namespace Ledger.Core
         }
 
         /// The player tells one NPC something checkable. Recorded so a later rumor can
-        /// contradict it — this is how a lie eventually catches up with the liar.
-        public void PlayerClaims(string npcId, Fact claim, GameTime now)
+        /// contradict it: this is how a lie eventually catches up with the liar.
+        ///
+        /// A CLAIM THE LISTENER ALREADY KNOWS TO BE FALSE IS REMEMBERED AND
+        /// NEVER LEARNED. `Learn` replaces on topic, because people update, so
+        /// the version that stored every claim wrote a caught lie OVER the
+        /// witnessed fact that had just caught it, and the listener's own
+        /// knowledge then agreed with the liar. `KnowledgeBase` says "an NPC
+        /// cannot be talked out of what it knows"; this is the method that has
+        /// to keep that true, because it is the only one through which the
+        /// player talks.
+        ///
+        /// The arithmetic of the old behaviour was exact rather than
+        /// rhetorical. `Claims.Process` raises suspicion 0.15 on a
+        /// contradiction and lowers it 0.03 when the story checks out, and
+        /// every repeat of a stored lie reads Consistent, so the fifth
+        /// repetition of a lie the listener had already caught returned them
+        /// to where they stood before catching it and the sixth was a net gain
+        /// in trust for having lied.
+        ///
+        /// CHECK BEFORE LEARN is the same order `Tick` keeps below, and for
+        /// the same reason: learning first makes the listener's new fact agree
+        /// with itself and swallow the contradiction it was supposed to
+        /// expose. `Learn` is not the place for the rule, because
+        /// replace-on-topic is CORRECT for witnessing, for a restored save and
+        /// for a planted fact. Only this method knows the fact arrived by
+        /// being TOLD.
+        ///
+        /// Returns what it did, so a caller can count refusals beside catches
+        /// (`LawHost.ClaimsRefused` against `ClaimsCaught`). Contradiction
+        /// means refused, anything else means learned. An NPC this mill has
+        /// never heard of returns Unknown having recorded nothing at all,
+        /// which is why a caller seeing a catch without a refusal should read
+        /// broken wiring rather than an honest claim.
+        public ClaimResult PlayerClaims(string npcId, Fact claim, GameTime now)
         {
             var n = Get(npcId);
-            if (n == null) return;
-            n.Knowledge.Learn(claim);
+            if (n == null) return ClaimResult.Unknown;
+            var verdict = n.Knowledge.CheckClaim(claim);
+            if (verdict != ClaimResult.Contradiction) n.Knowledge.Learn(claim);
+            // THE MEMORY LINE IN BOTH CASES. The town keeps "he told me X"
+            // whatever the telling turned out to be worth, and `Claims.Process`
+            // has already written the 0.8-salience "they lied to me" line, so a
+            // caught lie is remembered twice at two saliences: what was said,
+            // and what it was worth.
             n.Memory.Append(new MemoryEvent(now, "conversation", 0.4,
                 $"The new owner told me: {claim.Predicate.Replace('_', ' ')} was {claim.Value}."));
+            return verdict;
         }
 
         /// One gossip round. `together` decides which tied pairs are actually in a

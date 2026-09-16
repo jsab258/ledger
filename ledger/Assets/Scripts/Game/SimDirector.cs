@@ -5276,6 +5276,17 @@ namespace Ledger.Game
         bool _denounceStaged;
         bool _pledged, _pledgeRefused, _brokeWith;
         bool _claimHeld, _claimCaught;
+        /// Whether the witness still knew the TRUTH after being lied to, read
+        /// once at the end of the staged claim beat. Last-wins over the run,
+        /// because the beat is staged exactly once (`_claimStaged`).
+        ///
+        /// THE THIRD PROOF, and the only one taken in the live game rather
+        /// than in Core. `LawHost.Claim` caught the lie and then handed it to
+        /// `GossipMill.PlayerClaims`, which learned it over the fact that had
+        /// just caught it, so the run could print `caught=True` while the
+        /// witness's knowledge had already been rewritten by the liar. Caught
+        /// and kept are different facts and only the first was on the line.
+        bool _claimTruthKept;
         bool _denounceIgnored, _denounceStuck, _poached, _claimStaged;
 
         /// Whether the one crew member who is not feuding was given something
@@ -6144,6 +6155,14 @@ namespace Ledger.Game
                                  == ClaimResult.Consistent;
                     _claimCaught = LawHost.Claim(_game, listener, "I was at the Hook Street pub")
                                    == ClaimResult.Contradiction;
+                    // AND HE STILL KNOWS WHAT HE KNEW. The lie above was
+                    // caught, so it must not have been written over the docks
+                    // fact planted at the top of this block. Read against the
+                    // SAME key the plant used, not a rebuilt one: `LocationKey`
+                    // is time-derived and a second spelling of the topic would
+                    // check a fact nobody filed and pass for the wrong reason.
+                    _claimTruthKept = listener.Knowledge.CheckClaim(
+                        new Fact("player", Claims.LocationKey(now), "docks")) == ClaimResult.Consistent;
                     _claimStaged = LawHost.ClaimsMade > 0;
                     if (bystander != null) bystander.transform.position = stood;
                 }
@@ -14890,7 +14909,10 @@ namespace Ledger.Game
             // Both halves, because either alone is satisfiable by a broken
             // system: a run where every alibi is consistent proves nothing
             // about the contradiction branch.
-            bool claimsOk = _claimHeld && _claimCaught && LawHost.ClaimsMade >= 2;
+            // AND THE THIRD HALF, added with the 2026-09-16 claim ruling:
+            // catching a lie is worthless if the lie then overwrites the fact
+            // that caught it, and the run could not tell those two apart.
+            bool claimsOk = _claimHeld && _claimCaught && _claimTruthKept && LawHost.ClaimsMade >= 2;
 
             bool allegianceOk = _pledged && _pledgeRefused && _brokeWith
                 && GameController.AllegianceChanges >= 2
@@ -15431,9 +15453,10 @@ namespace Ledger.Game
                 ($"law[denounced={LawHost.Denounced} marks={LawHost.MarksFiled} ignored={_denounceIgnored} stuck={_denounceStuck} backers={_denounceWitnesses} redirected={LawHost.Redirected} pointedAt={(string.IsNullOrEmpty(_game.Homicides.PointedAt) ? "nobody" : _game.Homicides.PointedAt)} {LawHost.LastVerdict}]", lawOk),
                 ($"allegiance[pledged={_pledged} refused={_pledgeRefused} broke={_brokeWith} poached={_poached} moves={GameController.AllegianceChanges} poachHeard={(_game?.Empire != null ? _game.Empire.PoachesHeard : -1)}]", allegianceOk),
                 // THE GATE'S OWN OPERANDS, which this line did not carry.
-                // `claimsOk` reads `_claimHeld && _claimCaught && ClaimsMade
-                // >= 2`, and the detail printed `LawHost.ClaimsCaught` — a
-                // DIFFERENT quantity with nearly the same name: an int
+                // `claimsOk` reads `_claimHeld && _claimCaught &&
+                // _claimTruthKept && ClaimsMade >= 2`, and the detail printed
+                // `LawHost.ClaimsCaught`, a DIFFERENT quantity with nearly the
+                // same name: an int
                 // counting contradictions over the run, against a bool set by
                 // one specific `Claim` call. So a red `claims` showed
                 // `caught=1`, which looks healthy, while the condition that
@@ -15445,8 +15468,18 @@ namespace Ledger.Game
                 // getting WORSE: 15% of the last forty runs against 7.5%
                 // lifetime. A gate that cannot explain its own failure is
                 // why it went uninvestigated.
+                // TRUTHKEPT AND REFUSED ARE THE SAME EVENT SEEN FROM BOTH
+                // ENDS, and both are here because either alone is ambiguous.
+                // `truthKept` is the staged beat's bool, last-wins over the
+                // run; `refused` is `LawHost.ClaimsRefused`, cumulative over
+                // the run, and it must equal `contradictions` because
+                // `GossipDirector` gives the mill agent the host's own
+                // knowledge, so one verdict is reached twice. `contradictions`
+                // above `refused` means the mill never saw the claim at all,
+                // which is a wiring break neither number shows on its own.
                 ($"claims[made={LawHost.ClaimsMade} caught={_claimCaught} "
-                 + $"held={_claimHeld} contradictions={LawHost.ClaimsCaught}]", claimsOk),
+                 + $"held={_claimHeld} truthKept={_claimTruthKept} "
+                 + $"contradictions={LawHost.ClaimsCaught} refused={LawHost.ClaimsRefused}]", claimsOk),
                 ("budgets", budgetsOk),
                 ("actTwo", act2Ok), ("actThree", actThreeOk), ("coverage", coverageOk),
                 ($"lighting[{string.Join("|", lightingWhy)}]", lightingOk),
@@ -16408,7 +16441,13 @@ namespace Ledger.Game
                       // tarmac is sixteen people standing in traffic.
                       $"headingIntoRoadCells={GameController.WalkersHeadingIntoRoadCells} " +
                       $"crowdSpread={NpcWalker.WidestSpread:0.00} " +
-                      $"claimHeld={_claimHeld} claimCaught={_claimCaught} claimsOk={claimsOk} " +
+                      // EVERY OPERAND OF `claimsOk`, which is the lesson the
+                      // gate line above records: a detail line missing one of
+                      // the gate's own operands cannot say which one failed.
+                      // `claimTruthKept` joined the gate on 2026-09-16 and
+                      // joins the line in the same edit.
+                      $"claimHeld={_claimHeld} claimCaught={_claimCaught} "
+                      + $"claimTruthKept={_claimTruthKept} claimsOk={claimsOk} " +
                       $"claimWhy=[{LawHost.ClaimWhy}] claimVia=[{_claimVia}] " +
                       $"lines={_game.Phones.All.Count} answered={_callsAnswered} " +
                       $"wrongPerson={_callsWrongPerson} rangOut={_callsRangOut} "

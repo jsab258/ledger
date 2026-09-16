@@ -55,3 +55,34 @@ that genuinely built the game reports as game.
 Rejecting: a day of pure console work reporting any game sessions at all fails
 the fixture. A fix that simply moves engine-specialist out of the set has
 recreated the fault mirrored, since that agent DID build the game on 062.
+
+THE CLOSURE WAS WRONG AND THE ACCEPTANCE WAS NEVER MET. Corrected 2026-09-16
+under D43, applied rather than ruled, because this is a fact about what the
+code does and not a decision.
+
+  This item was CLOSED 2026-09-10 by cd55a79c, an archiving commit that named
+  no ruling, and REVIEWED 2026-09-14 and left closed. On 2026-09-16 the
+  classification at ledger/verify.py was still `agent in GAME_AGENTS`, which is
+  the exact thing the acceptance above forbids. So the item was closed, then
+  reviewed, then confirmed closed, while the defect it names sat untouched for
+  six days.
+
+  ITS OWN MEASURED HALF STILL RECOMPUTES. Against today's log with the live
+  GAME_AGENTS set, 2026-09-05 reads exactly 12/27 game by role, 10 of the 27
+  being engine-specialist, matching the splitGame=12/27 this item printed on
+  6 September. The number did not drift; nothing was done about it.
+
+  WHAT LANDED ON 2026-09-16 IS THE CAPTION AND NOT THE FIX. Jafar raised it
+  again from an external audit, and queue 344 established that the other half
+  of this item's acceptance is UNAVAILABLE: .claude/agent-log.tsv has five
+  columns, none naming a file, so "computed from WHAT a pass changed" cannot be
+  done without a sixth column. That is why 344 does the caption and files the
+  capture separately. THIS ITEM'S ACCEPTANCE REMAINS UNMET and should not be
+  closed again until a spawn's touch is recorded.
+
+  AND IT IS THE SECOND ITEM FOUND CLOSED BY THAT COMMIT WITHOUT A RULING.
+  Queue 275 carries the first 182. Queue 138 was the third, reopened by Jafar
+  by name on 2026-09-14. The pattern is the finding: an archiving commit closed
+  items whose work was not done, and two of the three recoveries so far came
+  from Jafar noticing rather than from the studio.
+

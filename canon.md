@@ -4,10 +4,14 @@ STATUS: APPROVED 2026-08-31 by Jafar, with rulings recorded in
 ledger-v2/respec/decision-register/D8 and D9. This outranks every document and
 agent; violating it is a gate failure.
 
+A ruling that changes canon edits canon in the same batch (Jafar,
+2026-09-16). A DECIDED record whose subject is a world fact names the
+canon lines it changes, and canon cites the record at those lines.
+
 ## Game
 - LEDGER: open-town crime sim and social RPG. Single player, PC first.
 - Town: Meridian, a fictional British port town. One map, seven districts:
-  the Hook (old port, the player's pub), Copper Row (market quarter), the Exchange
+  the Hook (old port, Mickey's, the player's minicab office), Copper Row (market quarter), the Exchange
   (offices, lawyers), the Parade (nightlife), Fairview (residential hills), Ironside
   (industrial), Gullwing (faded resort waterfront).
 - Streets minted: Quay Street, Weighhouse Lane, Tannery Row.
@@ -21,7 +25,13 @@ agent; violating it is a gate failure.
   the street had a district and they carry no claim about where it is. Renaming
   them would break the bill of materials, the golden rows and every verdict key
   that has ever named a piece, for nothing. Canon and the atlas agree: one
-  street, Quay Street, the Hook, the player's pub on it.
+  street, Quay Street, the Hook, the player's minicab office on it.
+- MICKEY'S IS A MINICAB OFFICE (D19, decided 2026-09-14, supersedes
+  D15's pub; D15's siting on Quay Street stands). Its information room
+  is the business: a book of every fare, a radio nobody can help
+  overhearing, a yard with two escapes, a rank outside. Other pubs
+  remain as buildings on the street, boarded or serving food, never
+  entered for drink.
 - Graffiti tags, minted 2026-09-02 (Jafar delegated the naming to the studio
   on 2 September): TANNER (Ironside), SNIDE (Copper Row), GULL (Gullwing),
   QUAY FIRM (the Hook), PARADE RATS (the Parade). Wall names, not any of the
@@ -46,7 +56,7 @@ agent; violating it is a gate failure.
 
 ## Premise and cast (baseline pending OPEN 2)
 - Player: Tom Novak, arriving with one suitcase and a letter. His uncle Mickey
-  has died and left him the pub, Mickey's, in the Hook, plus a half-dead criminal
+  has died and left him Mickey's, a minicab office in the Hook (D19), plus a half-dead criminal
   outfit and a book of uncollectable debts.
 - Inherited loyalists: Rocco (old muscle), Lena (older bookkeeper).
 - Three rival organisations: the old-money machine (corruption and lawyers, head
@@ -102,18 +112,29 @@ which clauses the gate checks and which it does not claim to.
 - Deterministic Core decides every outcome the player feels. LLMs classify, never
   adjudicate.
 
+## What LEDGER is not (D24, decided 2026-09-14)
+- NOT an open-world sandbox, NOT a shooter, NOT a driving game, NOT an
+  economy simulation, NOT a story-first narrative game. It is a small
+  dense town where what people know about you is the mechanic.
+- Anything that does not feed perception, memory, gossip or consequence
+  gets the smallest budget that keeps it from looking wrong. A spend
+  rule, not a ban: driving, fighting and trade may exist and must not
+  look broken.
+
 ## Brands and law
 - Every brand, band, club, product, weapon and vehicle is fictional. No real people,
   voices, logos, lyrics, car models. The license allowlist is law.
-- Minted: Mickey's (the pub), the Tivoli (cinema), Meridian Harbour Board, Meridian
+- Minted: Mickey's (the minicab office; a pub until D19), the Tivoli (cinema), Meridian Harbour Board, Meridian
   Ferry. The brand bible still owes: the football club, the local paper, the pirate
   radio station, the regional TV channel, the telephone operator (the kiosk's
   mark and lettering) and the postal cypher (the pillar box); the last two were
   found owed by the vignette bill of materials on 2026-09-02.
 
 ## OPEN
-1. Engine. Unity holds the codebase; the UE5 probe is authorized (D1). No document
-   pre-commits before the probe lands.
+1. Engine: DECIDED, Unreal (D16, 2026-09-10; closes D1). Unity is the
+   legacy reference build; the C# Core stays the source of truth the C++
+   port is checked against. Kept as item 1 so that "OPEN 2" above keeps
+   its meaning; it is not open.
 2. Narrative survival. Whether Tom Novak, Acts I to III and the empire roster survive
    as baseline is decided in Phase 1 planning, along with the cast-sketch-versus-
    built-cards mismatch (Sam and Ada, written at one-street scale).

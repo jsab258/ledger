@@ -381,6 +381,201 @@ static std::string RefCellAgainstJudged(const LedgerVignette::Condition& Ref,
 	return std::string();
 }
 
+// TWO CONDITIONS ARE ONE FAMILY when they match in every field this engine
+// applies EXCEPT sky, which is the no-sky fingerprint written out field by
+// field. Written here rather than reached for through SampleKey, because the
+// checks that use it exist to disagree with the emitter when the emitter is
+// wrong, and a check calling the code it audits can only ever agree with it.
+static bool SameNullFamily(const LedgerVignette::Condition& A,
+                           const LedgerVignette::Condition& B)
+{
+	return A.Hdri == B.Hdri && A.SunOn == B.SunOn
+	    && A.LanternsOn == B.LanternsOn && A.WindowsOn == B.WindowsOn
+	    && std::fabs(A.SunIntensity - B.SunIntensity) < 1e-12
+	    && std::fabs(A.Wetness - B.Wetness) < 1e-12
+	    && std::fabs(A.FogDensity - B.FogDensity) < 1e-12
+	    && std::fabs(A.FogMaxOpacity - B.FogMaxOpacity) < 1e-12
+	    && std::fabs(A.ExposurePin - B.ExposurePin) < 1e-12;
+}
+
+// THE NULL CELL'S POSITION, RESTATED TO THE THING IT PROTECTS. Section 4 of
+// game-design/decision-2026-09-16-ruling-the-floor-is-read-in-a-family-that-
+// holds-a-step-and-the-settle-rows-are-outside-it-by-their-own-fields.md.
+// The check used to read "the null cell is the last shot in the LIST", which
+// its own comment explained as identical inputs at maximum order separation.
+// The 06:35Z ruling then placed queue 334's six settle rows at the end of the
+// list for a measured reason (so no existing row's predecessor changes, which
+// is what keeps the first run carrying them comparable with run 48), and the
+// two sentences cannot both hold. The separation the value comes from is
+// separation from the null cell's OWN family: six frames of another family
+// sitting after it neither shorten it nor could lengthen it. So the invariant
+// is restated to the last shot at the reference cell's camera whose condition
+// matches the reference cell in every field but sky, and every case the old
+// sentence caught for its stated purpose this one still catches: a family row
+// placed after the null cell fails it.
+//
+// Returns the index of that shot, or -1 when the reference cell has no shot
+// of its own. The family shots walked are handed back so the assertion's zero
+// can never read as a clean result.
+static int LastShotOfRefFamily(const LedgerVignette::Spec& S, const char* RefCondId,
+                               int& OutFamilyShots)
+{
+	OutFamilyShots = 0;
+	const LedgerVignette::Condition* RefC = 0;
+	for (size_t I = 0; I < S.Conditions.size(); ++I)
+	{
+		if (S.Conditions[I].Id == RefCondId) { RefC = &S.Conditions[I]; }
+	}
+	if (RefC == 0) { return -1; }
+	std::string RefCam;
+	for (size_t I = 0; I < S.Shots.size() && RefCam.empty(); ++I)
+	{
+		if (S.Shots[I].ConditionId == RefC->Id) { RefCam = S.Shots[I].CameraId; }
+	}
+	if (RefCam.empty()) { return -1; }
+	int Last = -1;
+	for (size_t I = 0; I < S.Shots.size(); ++I)
+	{
+		if (S.Shots[I].CameraId != RefCam) { continue; }
+		const LedgerVignette::Condition* C = 0;
+		for (size_t J = 0; J < S.Conditions.size(); ++J)
+		{
+			if (S.Conditions[J].Id == S.Shots[I].ConditionId) { C = &S.Conditions[J]; }
+		}
+		if (C == 0 || !SameNullFamily(*C, *RefC)) { continue; }
+		++OutFamilyShots;
+		Last = (int)I;
+	}
+	return Last;
+}
+
+// THE FAMILY TALLY, RECOUNTED HERE RATHER THAN READ OFF THE LINE IT CHECKS.
+// Section 3 of the same ruling moved the floor from the largest identical-
+// input group to the largest one WHOSE NO-SKY FAMILY HOLDS A SKY-ONLY PAIR,
+// because a spread with no step in its own family has nothing to be read
+// against. Every number this file asserts about that rule is counted here, so
+// a row entering or leaving the spec moves both sides together and none of
+// these numbers is typed.
+//
+// WHAT IS SHARED AND WHAT IS NOT, stated rather than claimed. The family and
+// group IDENTITIES come from SampleKey, which the emitter also calls: the
+// tally beside the discovery has always worked this way and the comment there
+// says what that costs, which is that the two cannot disagree about which
+// frames share a fingerprint. What this recount can catch is a MISCOUNT: the
+// loop, the denominator, the largest-of, the qualification, the tie. The STEP
+// TEST here is the conditions' own sky values compared to each other, not the
+// emitter's IsSkyOnlyPair, and the sun flag is the condition's own boolean
+// handed in by the caller rather than a substring sniffed out of a key, so
+// "does this family hold a step" is answered by two different routes.
+struct NullFamilyTally
+{
+	int Families;             // distinct no-sky families over MEASURED frames
+	int StepFamilies;         // of those, holding at least one sky-only pair
+	int SunOffFamilies;       // of those, whose condition has the sun off
+	int StepFamiliesSunOff;   // THE RATCHET: step-holding AND sun off
+	int OutsideFrames;        // measured frames whose family holds no step
+	int DistinctGroups;       // distinct identical-input groups over measured frames
+	int QualifyingGroups;     // of those, whose own family holds a step
+	int Largest;              // frames in the largest group BY SIZE ALONE, the old rule
+	int LargestQualifying;    // frames in the largest QUALIFYING group, the rule now
+	std::string LargestKey;            // the key size alone would have kept
+	std::string LargestQualifyingKey;  // the key the family rule keeps
+	std::vector<std::string> OutsideIds;   // shot order, uncapped: callers cap their own print
+	// THE FAMILY ROWS THEMSELVES, in shot order of first appearance, so the
+	// series can be PRINTED before any bound is read off it and the next rung
+	// (production/queue/346) has the shape it needs already on the page.
+	std::vector<std::string> FamilyKeys;
+	std::vector<int> FamilyStep, FamilySunOff, FamilyFrames;
+	NullFamilyTally() : Families(0), StepFamilies(0), SunOffFamilies(0),
+	                    StepFamiliesSunOff(0), OutsideFrames(0), DistinctGroups(0),
+	                    QualifyingGroups(0), Largest(0), LargestQualifying(0) {}
+};
+
+static NullFamilyTally TallyNullFamilies(
+	const std::vector<LedgerVignette::FrameSample>& Samples,
+	const std::vector<int>& SunOff)
+{
+	NullFamilyTally T;
+	std::vector<std::string>& FamKeys = T.FamilyKeys;
+	std::vector<int>& FamStep = T.FamilyStep;
+	std::vector<int>& FamSunOff = T.FamilySunOff;
+	std::vector<double> FamFirstSky;
+	for (size_t I = 0; I < Samples.size(); ++I)
+	{
+		if (!Samples[I].bMeasured) { continue; }
+		const std::string F = LedgerVignette::SampleKey(Samples[I], false);
+		size_t At = FamKeys.size();
+		for (size_t Q = 0; Q < FamKeys.size(); ++Q)
+		{
+			if (FamKeys[Q] == F) { At = Q; break; }
+		}
+		if (At == FamKeys.size())
+		{
+			FamKeys.push_back(F);
+			FamFirstSky.push_back(Samples[I].SkyIntensity);
+			FamStep.push_back(0);
+			FamSunOff.push_back(I < SunOff.size() ? SunOff[I] : 0);
+			T.FamilyFrames.push_back(1);
+			continue;
+		}
+		++T.FamilyFrames[At];
+		// A FAMILY HOLDS A STEP the moment one of its frames sits at another
+		// sky value than the first one seen: if any two of its frames differ,
+		// at least one of them differs from the first, so one comparison per
+		// frame finds every family that holds a pair.
+		if (std::fabs(Samples[I].SkyIntensity - FamFirstSky[At]) > 1e-12) { FamStep[At] = 1; }
+	}
+	T.Families = (int)FamKeys.size();
+	for (size_t Q = 0; Q < FamKeys.size(); ++Q)
+	{
+		if (FamStep[Q]) { ++T.StepFamilies; }
+		if (FamSunOff[Q]) { ++T.SunOffFamilies; }
+		if (FamStep[Q] && FamSunOff[Q]) { ++T.StepFamiliesSunOff; }
+	}
+	std::vector<std::string> GroupKeys;
+	std::vector<int> GroupSizes, GroupStep;
+	for (size_t I = 0; I < Samples.size(); ++I)
+	{
+		if (!Samples[I].bMeasured) { continue; }
+		const std::string K = LedgerVignette::SampleKey(Samples[I], true);
+		const std::string F = LedgerVignette::SampleKey(Samples[I], false);
+		int Holds = 0;
+		for (size_t Q = 0; Q < FamKeys.size(); ++Q)
+		{
+			if (FamKeys[Q] == F) { Holds = FamStep[Q]; break; }
+		}
+		if (!Holds)
+		{
+			++T.OutsideFrames;
+			T.OutsideIds.push_back(Samples[I].ShotId);
+		}
+		size_t At = GroupKeys.size();
+		for (size_t Q = 0; Q < GroupKeys.size(); ++Q)
+		{
+			if (GroupKeys[Q] == K) { At = Q; break; }
+		}
+		if (At == GroupKeys.size())
+		{
+			GroupKeys.push_back(K); GroupSizes.push_back(0); GroupStep.push_back(Holds);
+			At = GroupKeys.size() - 1;
+		}
+		++GroupSizes[At];
+	}
+	T.DistinctGroups = (int)GroupKeys.size();
+	for (size_t Q = 0; Q < GroupKeys.size(); ++Q)
+	{
+		if (GroupSizes[Q] > T.Largest) { T.Largest = GroupSizes[Q]; T.LargestKey = GroupKeys[Q]; }
+		if (!GroupStep[Q]) { continue; }
+		++T.QualifyingGroups;
+		if (GroupSizes[Q] > T.LargestQualifying)
+		{
+			T.LargestQualifying = GroupSizes[Q];
+			T.LargestQualifyingKey = GroupKeys[Q];
+		}
+	}
+	return T;
+}
+
 // THE PROVENANCE STRING IS READ OFF THE SCENE FILE BESIDE THE PIECE LIST, AND
 // THIS IS A MEASUREMENT AND NOT A CONVENIENCE. production/specs/vignette-
 // scene.json is where the resident writes the string; the piece list is
@@ -529,11 +724,100 @@ int main(int argc, char** argv)
 		Check(ProbeShots > 0 && ProbeAtHook == ProbeShots,
 		      "every probe row stands at cam_hook, the camera rung 1 is judged from",
 		      "a probe row at another camera would be two pixel populations read as one");
-		// THE NULL CELL IS SHOT LAST. Identical inputs at maximum order
-		// separation is the whole of its value.
-		Check(!S.Shots.empty() && S.Shots[S.Shots.size() - 1].ConditionId == "grid_null_repeat",
-		      "the null cell is the last shot in the list, as far from its twin as the run allows",
-		      S.Shots.empty() ? std::string("no shots") : S.Shots[S.Shots.size() - 1].Id);
+		// THE NULL CELL IS SHOT LAST OF ITS OWN FAMILY. Identical inputs at
+		// maximum order separation is the whole of its value, and the
+		// separation that value comes from is separation from the frames it is
+		// a null sample OF. Restated by section 4 of the 2026-09-16 ruling
+		// when the 06:35Z placement put six rows of another family after it
+		// for a measured reason; LastShotOfRefFamily above carries the
+		// reasoning and walks the list field by field, calling no shared
+		// function. ACCEPTING CASE FIRST, on the live file.
+		{
+			int FamilyShots = 0;
+			const int LastFam = LastShotOfRefFamily(S, "grid_sky070_sun003", FamilyShots);
+			std::printf("    null cell position: shots of the reference cell's family at its "
+			            "camera=%d of %d walked, last=%s/%s, last shot in the whole list=%s\n",
+			            FamilyShots, (int)S.Shots.size(),
+			            LastFam < 0 ? "nothing-measured" : S.Shots[LastFam].Id.c_str(),
+			            LastFam < 0 ? "nothing-measured" : S.Shots[LastFam].ConditionId.c_str(),
+			            S.Shots.empty() ? "nothing-measured" : S.Shots[S.Shots.size() - 1].Id.c_str());
+			Check(FamilyShots > 0 && LastFam >= 0
+			      && S.Shots[LastFam].ConditionId == "grid_null_repeat",
+			      "the null cell is the last shot of its own family at the reference camera, "
+			      "as far from the frames it is a null sample of as the run allows",
+			      LastFam < 0 ? std::string("no shot of the reference cell's family")
+			                  : (S.Shots[LastFam].Id + "/" + S.Shots[LastFam].ConditionId
+			                     + " over " + std::to_string(FamilyShots) + " family shot(s)"));
+			// AND BOTH PLANTED CASES, because the restatement is only worth
+			// the old sentence if it still refuses what the old sentence
+			// refused. The rows are built from the reference cell itself
+			// rather than from a named row of the spec, so doing the work this
+			// file prompts can never break the check.
+			const LedgerVignette::Condition* RefC = 0;
+			for (size_t I = 0; I < S.Conditions.size(); ++I)
+			{
+				if (S.Conditions[I].Id == "grid_sky070_sun003") { RefC = &S.Conditions[I]; }
+			}
+			std::string RefCam;
+			for (size_t I = 0; I < S.Shots.size() && RefCam.empty() && RefC != 0; ++I)
+			{
+				if (S.Shots[I].ConditionId == RefC->Id) { RefCam = S.Shots[I].CameraId; }
+			}
+			if (RefC != 0 && !RefCam.empty())
+			{
+				// REFUSED: a row of the null cell's OWN family placed after it,
+				// which is the thing that shortens the separation.
+				LedgerVignette::Spec T = S;
+				LedgerVignette::Condition Fam = *RefC;
+				Fam.Id = "planted_family_row_at_another_sky";
+				Fam.SkyIntensity = RefC->SkyIntensity * 0.5 + 0.01;
+				T.Conditions.push_back(Fam);
+				LedgerVignette::Shot FamShot;
+				FamShot.Id = "planted_family_shot";
+				FamShot.CameraId = RefCam;
+				FamShot.ConditionId = Fam.Id;
+				T.Shots.push_back(FamShot);
+				int PlantedFamShots = 0;
+				const int PlantedLast = LastShotOfRefFamily(T, "grid_sky070_sun003",
+				                                            PlantedFamShots);
+				std::printf("    planted family row after the null cell: familyShots=%d "
+				            "last=%s\n", PlantedFamShots,
+				            PlantedLast < 0 ? "nothing-measured"
+				                            : T.Shots[PlantedLast].Id.c_str());
+				Check(PlantedLast >= 0
+				      && T.Shots[PlantedLast].ConditionId != "grid_null_repeat"
+				      && PlantedFamShots == FamilyShots + 1,
+				      "a row of the null cell's own family placed after it FAILS the restated "
+				      "check, which is the case the old sentence caught and this one must too",
+				      PlantedLast < 0 ? std::string("no family shot")
+				                      : T.Shots[PlantedLast].Id);
+				// ACCEPTED: a row of ANOTHER family after it, which is what
+				// the six settle rows are and what the 06:35Z placement chose.
+				LedgerVignette::Spec U = S;
+				LedgerVignette::Condition Other = *RefC;
+				Other.Id = "planted_other_family_row";
+				Other.FogMaxOpacity = RefC->FogMaxOpacity + 0.25;
+				U.Conditions.push_back(Other);
+				LedgerVignette::Shot OtherShot;
+				OtherShot.Id = "planted_other_family_shot";
+				OtherShot.CameraId = RefCam;
+				OtherShot.ConditionId = Other.Id;
+				U.Shots.push_back(OtherShot);
+				int OtherFamShots = 0;
+				const int OtherLast = LastShotOfRefFamily(U, "grid_sky070_sun003",
+				                                          OtherFamShots);
+				std::printf("    planted other-family row after the null cell: familyShots=%d "
+				            "last=%s\n", OtherFamShots,
+				            OtherLast < 0 ? "nothing-measured" : U.Shots[OtherLast].Id.c_str());
+				Check(OtherLast >= 0
+				      && U.Shots[OtherLast].ConditionId == "grid_null_repeat"
+				      && OtherFamShots == FamilyShots,
+				      "and a row of another family placed after it PASSES, which is what the "
+				      "six settle rows are and why the 06:35Z placement stands",
+				      OtherLast < 0 ? std::string("no family shot")
+				                    : U.Shots[OtherLast].Id);
+			}
+		}
 	}
 
 	// ---- A1: THE GRID, ITS NULL CELL, AND THE TWO PROBE SERIES ----------
@@ -4724,6 +5008,10 @@ int main(int argc, char** argv)
 		// Noise: 0.0005 times the shot index modulo 4, so no spread over any
 		// identical-input group can exceed 0.0015.
 		std::vector<LedgerVignette::FrameSample> Samples;
+		// THE SUN FLAG RIDES BESIDE THE SAMPLES AND IS NEVER SNIFFED OUT OF A
+		// KEY: the condition's own boolean, one entry per sample, which is
+		// what the ratchet below counts step-holding families by.
+		std::vector<int> SunOff;
 		for (size_t I = 0; I < S.Shots.size(); ++I)
 		{
 			const LedgerVignette::Condition* C = 0;
@@ -4743,6 +5031,7 @@ int main(int argc, char** argv)
 			F.GroundP05 = F.MeanLuma * 0.50;
 			F.GroundP50 = F.MeanLuma * 0.80;
 			Samples.push_back(F);
+			SunOff.push_back(C->SunOn ? 0 : 1);
 		}
 		const std::string NS = LedgerVignette::NullSeriesLine(Samples);
 		std::printf("    %s\n", NS.c_str());
@@ -4758,39 +5047,135 @@ int main(int argc, char** argv)
 		// anchors the group to the review's own is the list DERIVED below
 		// from the reference cell, field by field, which calls no shared
 		// function at all.
-		int Largest = 0, DistinctGroups = 0;
-		{
-			std::vector<std::string> Keys;
-			std::vector<int> Counts;
-			for (size_t I = 0; I < Samples.size(); ++I)
-			{
-				if (!Samples[I].bMeasured) { continue; }
-				const std::string K = LedgerVignette::SampleKey(Samples[I], true);
-				size_t At = Keys.size();
-				for (size_t J = 0; J < Keys.size(); ++J) { if (Keys[J] == K) { At = J; } }
-				if (At == Keys.size()) { Keys.push_back(K); Counts.push_back(0); }
-				++Counts[At];
-			}
-			DistinctGroups = (int)Keys.size();
-			for (size_t J = 0; J < Counts.size(); ++J)
-			{
-				if (Counts[J] > Largest) { Largest = Counts[J]; }
-			}
-		}
-		char WantSamples[96], WantMeasured[96];
-		std::snprintf(WantSamples, sizeof(WantSamples), "nullSeriesSamples=%d/of=%d/",
-		              Largest, (int)S.Shots.size());
+		const NullFamilyTally NT = TallyNullFamilies(Samples, SunOff);
+		char WantMeasured[96];
 		std::snprintf(WantMeasured, sizeof(WantMeasured), "nullSeriesMeasured=%d/of=%d/",
 		              (int)Samples.size(), (int)S.Shots.size());
-		std::printf("    counted independently: largestGroup=%d distinctGroups=%d "
-		            "samples=%d of shots=%d\n",
-		            Largest, DistinctGroups, (int)Samples.size(), (int)S.Shots.size());
-		Check(NS.find(WantSamples) != std::string::npos
-		      && NS.find(WantMeasured) != std::string::npos,
-		      "the live file's largest identical-input group in THIS engine is the size an "
-		      "independent tally over the same conditions counts, over the shots the file "
-		      "actually carries, recovered from the conditions and not from a list of ids",
-		      std::string(WantSamples) + " and " + WantMeasured + " against: " + NS);
+		std::printf("    counted independently: largestBySizeAlone=%d largestQualifying=%d "
+		            "distinctGroups=%d qualifyingGroups=%d families=%d stepFamilies=%d "
+		            "sunOffFamilies=%d stepFamiliesSunOff=%d outsideFrames=%d samples=%d "
+		            "of shots=%d\n",
+		            NT.Largest, NT.LargestQualifying, NT.DistinctGroups, NT.QualifyingGroups,
+		            NT.Families, NT.StepFamilies, NT.SunOffFamilies, NT.StepFamiliesSunOff,
+		            NT.OutsideFrames, (int)Samples.size(), (int)S.Shots.size());
+		Check(NS.find(WantMeasured) != std::string::npos,
+		      "the live file's measured count is what an independent tally over the same "
+		      "conditions counts, over the shots the file actually carries",
+		      std::string(WantMeasured) + " against: " + NS);
+		// ---- THE RULE THAT PICKED THE GROUP, ASSERTED AS WELL AS THE GROUP --
+		//
+		// SIZE ALONE WOULD HAVE KEPT ANOTHER GROUP SINCE 2026-09-16, and this
+		// is where the two are told apart. The emitter keeps the largest
+		// identical-input group whose no-sky family holds a sky-only pair; the
+		// key beside it names what size alone would have kept, which on the
+		// live file is the ten-frame night group queue 334's six settle rows
+		// completed. Every number here is NT's, counted above, so none of them
+		// is typed and a row entering or leaving the spec moves both sides.
+		{
+			char WantBySize[96];
+			std::snprintf(WantBySize, sizeof(WantBySize), "/n=%d/spreadMeanLuma=", NT.Largest);
+			const std::string BySize = ValueOfKey(NS, "nullSeriesBySizeAlone=");
+			const std::string Applied = ValueOfKey(NS, "nullSeriesApplied=");
+			std::printf("    bySizeAlone=%s\n", BySize.c_str());
+			Check(BySize.find(NT.LargestKey) == 0
+			      && BySize.find(WantBySize) != std::string::npos,
+			      "the line names the group SIZE ALONE would have kept, with the size an "
+			      "independent tally counts, so a floor that moves moves on the line",
+			      "wanted " + NT.LargestKey + WantBySize + " got " + BySize);
+			Check(BySize.size() > 17
+			      && BySize.compare(BySize.size() - 17, 17, "DIFFERS-FROM-KEPT") == 0
+			      && NT.LargestKey != NT.LargestQualifyingKey
+			      && Applied == NT.LargestQualifyingKey,
+			      "and on the live file it DIFFERS from the kept group, which is the six "
+			      "settle rows joining the four pinset rows into a night group of ten while "
+			      "the floor stays on the day family that holds a step",
+			      "bySizeAlone=" + BySize + " applied=" + Applied);
+			// ONE ENTRY CARRYING BOTH MOMENTS, IN ORDER: the group, then its
+			// size, then ITS OWN spread, then the word. A reader never has to
+			// hold two keys' relationship in their head, and a buffer that
+			// truncated anywhere loses the tail this asserts.
+			const size_t AtN = BySize.find("/n=");
+			const size_t AtSpread = BySize.find("/spreadMeanLuma=");
+			const size_t AtWord = BySize.find("DIFFERS-FROM-KEPT");
+			Check(AtN != std::string::npos && AtSpread != std::string::npos
+			      && AtWord != std::string::npos && AtN < AtSpread && AtSpread < AtWord,
+			      "and the size, the spread and the verdict word ride in that order inside "
+			      "one value, so the size and the spread on it are of one group",
+			      BySize);
+		}
+		// ---- THE FAMILIES AND THE FRAMES OUTSIDE THEM -----------------------
+		{
+			char WantFam[128], WantOutside[128];
+			std::snprintf(WantFam, sizeof(WantFam),
+			              "nullSeriesFamilies=%d/of=%d/no-sky-families-holding-a-sky-only-pair/",
+			              NT.StepFamilies, NT.Families);
+			std::snprintf(WantOutside, sizeof(WantOutside),
+			              "nullSeriesOutsideStepFamilies=%d/of=%d/measured-frames-whose-family-"
+			              "holds-no-sky-only-pair/ids=", NT.OutsideFrames, (int)Samples.size());
+			Check(NS.find(WantFam) != std::string::npos,
+			      "the step-holding families print with the families examined as their "
+			      "denominator, both counted independently and neither typed", WantFam);
+			Check(NS.find(WantOutside) != std::string::npos,
+			      "and the measured frames whose family holds no sky-only pair print with the "
+			      "measured frames as theirs, so a reader sees how much of the run no floor "
+			      "can be read off", WantOutside);
+			// THE CAP BITES ON THE LIVE FILE AND MUST SAY SO. Twelve ids, and
+			// the live file has more frames outside than that, so the tail is
+			// the announcement rather than a silent truncation. The number is
+			// computed from the same count, never typed.
+			const std::string OutIds = ValueOfKey(NS, "nullSeriesOutsideStepFamilies=");
+			const size_t IdsAt = OutIds.find("/ids=");
+			std::vector<std::string> Shown;
+			SplitOn(IdsAt == std::string::npos ? std::string("no-ids-segment-on-the-key")
+			                                   : OutIds.substr(IdsAt + 5), ';', Shown);
+			char WantMore[64];
+			std::snprintf(WantMore, sizeof(WantMore), "/+%d-more-not-shown",
+			              NT.OutsideFrames - 12);
+			std::printf("    outside-step ids shown=%d of %d outside, capBites=%s/cap=12\n",
+			            (int)Shown.size(), NT.OutsideFrames,
+			            NT.OutsideFrames > 12 ? "yes" : "no");
+			Check(NT.OutsideFrames <= 12
+			      ? OutIds.find("-more-not-shown") == std::string::npos
+			      : OutIds.find(WantMore) != std::string::npos,
+			      "and the id list's cap announces itself when it bites, with the number it "
+			      "withheld, so a capped list cannot read as the whole of a finding",
+			      std::string(WantMore) + " against " + OutIds);
+			// EVERY FRAME OF A SUN-OFF CONDITION AT THE REFERENCE CAMERA IS
+			// OUTSIDE, which is the ruling's own statement of where the settle
+			// and pinset rows now sit. Section 3 predicted this count would BE
+			// the outside total; the tree says it is a SUBSET of it, because
+			// the two other cameras and the fog and wetness ladders hold no
+			// sky-only pair either. The subset is asserted and the two numbers
+			// are printed side by side, since a prediction corrected by a count
+			// is worth more than a prediction repeated.
+			int RefCamSunOff = 0;
+			std::string RefCam;
+			for (size_t I = 0; I < S.Shots.size() && RefCam.empty(); ++I)
+			{
+				if (S.Shots[I].ConditionId == "grid_sky070_sun003") { RefCam = S.Shots[I].CameraId; }
+			}
+			bool bAllOutside = true;
+			for (size_t I = 0; I < Samples.size(); ++I)
+			{
+				if (Samples[I].CameraId != RefCam || !SunOff[I]) { continue; }
+				++RefCamSunOff;
+				bool bFound = false;
+				for (size_t J = 0; J < NT.OutsideIds.size(); ++J)
+				{
+					if (NT.OutsideIds[J] == Samples[I].ShotId) { bFound = true; break; }
+				}
+				if (!bFound) { bAllOutside = false; }
+			}
+			std::printf("    sun-off frames at the reference camera=%d, all outside a "
+			            "step-holding family=%s, outside frames in the whole run=%d\n",
+			            RefCamSunOff, bAllOutside ? "yes" : "no", NT.OutsideFrames);
+			Check(RefCamSunOff > 0 && bAllOutside && NT.OutsideFrames >= RefCamSunOff,
+			      "every sun-off frame at the reference camera sits outside any step-holding "
+			      "family, which is where the six settle rows and the four pinset rows are by "
+			      "their own fields and not by a key any row declares",
+			      std::to_string(RefCamSunOff) + " sun-off at " + RefCam + " of "
+			      + std::to_string(NT.OutsideFrames) + " outside");
+		}
 		// ---- THE ANCHOR, DERIVED FROM ONE NAMED ID AND NOT TYPED --------
 		//
 		// THE LIST USED TO BE SEVEN IDS TYPED IN, and the comment above says
@@ -4919,6 +5304,32 @@ int main(int argc, char** argv)
 			      "the grid ruling defined, so the spread is read over the comparison the "
 			      "grid exists for", GotLine + " over " + std::to_string((int)GotIds.size())
 			      + " ids");
+			// AND THE COUNT ON THE LINE IS THE LENGTH OF THAT DERIVED LIST,
+			// which is where nullSeriesSamples is anchored since 2026-09-16.
+			// It used to be anchored to the largest group by size, and that is
+			// the number that moved when the six settle rows landed: the count
+			// and the ids would have disagreed about which group was read, one
+			// of them silently. The size-alone number has not left the line, it
+			// has moved to the key that names what it is a count OF.
+			char WantSamples[96];
+			std::snprintf(WantSamples, sizeof(WantSamples), "nullSeriesSamples=%d/of=%d/",
+			              (int)WantIds.size(), (int)S.Shots.size());
+			Check(NS.find(WantSamples) != std::string::npos
+			      && (int)WantIds.size() == NT.LargestQualifying,
+			      "the count of null samples is the length of the derived list and the size of "
+			      "the largest qualifying group an independent tally counts, so the number and "
+			      "the ids on this line are of one group",
+			      std::string(WantSamples) + " derived=" + std::to_string((int)WantIds.size())
+			      + " qualifying=" + std::to_string(NT.LargestQualifying));
+			Check(NS.find("nullSeriesSamples=" + std::to_string((int)WantIds.size())
+			              + "/of=" + std::to_string((int)S.Shots.size())
+			              + "/measured-frames-sharing-the-largest-identical-applied-input-"
+			                "group-at-one-camera/within-a-family-that-holds-a-sky-only-pair")
+			      != std::string::npos,
+			      "and the descriptor beside it names BOTH rules that picked them, the largest "
+			      "identical-input group and the family holding a sky-only pair, so the count "
+			      "keeps its name while the rule that chose it is printed in full",
+			      ValueOfKey(NS, "nullSeriesSamples="));
 		}
 		// THE EXCLUSION ENDED ON 2026-09-15 AT QUEUE 309, having survived one
 		// earlier rewrite of its reason. The field was out because
@@ -5061,6 +5472,163 @@ int main(int argc, char** argv)
 			      "a rig whose null spread is wider than the smallest sky step makes the "
 			      "grid a NO-READ, and the key names which statistic failed", LN);
 		}
+		// ---- THE FAMILY RULE, REFUSED AND FIRED ------------------------------
+		//
+		// RULE 5b BOTH WAYS. The accepting case is the whole block above, run
+		// on the live file: the day group of seven is kept because its own
+		// family holds the 0.35/0.50/0.70 sky steps at fog010. The refusing
+		// case cannot be waited for, so it is planted: the same run with the
+		// reference family's sky-only siblings marked UNMEASURED, which is
+		// what a run where those frames fail to land looks like. The day
+		// family then holds no step, the day group stops qualifying, and the
+		// line must say so rather than quietly reading the floor off it.
+		{
+			const LedgerVignette::FrameSample* RefS = 0;
+			for (size_t I = 0; I < Samples.size(); ++I)
+			{
+				if (Samples[I].ShotId == "vign_grid_sky070_sun003") { RefS = &Samples[I]; }
+			}
+			std::vector<LedgerVignette::FrameSample> NoStep = Samples;
+			std::vector<int> NoStepSunOff = SunOff;
+			int Blanked = 0;
+			if (RefS != 0)
+			{
+				const std::string RefFam = LedgerVignette::SampleKey(*RefS, false);
+				const double RefSky = RefS->SkyIntensity;
+				for (size_t I = 0; I < NoStep.size(); ++I)
+				{
+					if (LedgerVignette::SampleKey(NoStep[I], false) != RefFam) { continue; }
+					if (std::fabs(NoStep[I].SkyIntensity - RefSky) < 1e-12) { continue; }
+					NoStep[I].bMeasured = false;
+					++Blanked;
+				}
+			}
+			const NullFamilyTally NST = TallyNullFamilies(NoStep, NoStepSunOff);
+			const std::string NSL = LedgerVignette::NullSeriesLine(NoStep);
+			std::printf("    planted, the day family's sky-only siblings unmeasured: "
+			            "blanked=%d stepFamilies=%d of %d families, kept=%s\n",
+			            Blanked, NST.StepFamilies, NST.Families,
+			            ValueOfKey(NSL, "nullSeriesApplied=").c_str());
+			Check(Blanked > 0 && NST.StepFamilies == NT.StepFamilies - 1,
+			      "the plant lands: blanking the reference family's sky-only siblings leaves "
+			      "one fewer step-holding family than the live file has, counted both times "
+			      "and typed neither",
+			      std::to_string(Blanked) + " blanked, " + std::to_string(NST.StepFamilies)
+			      + " step families against the live " + std::to_string(NT.StepFamilies));
+			Check(ValueOfKey(NSL, "nullSeriesApplied=") != NT.LargestQualifyingKey
+			      && ValueOfKey(NSL, "nullSeriesIds=").find("vign_grid_sky070_sun003")
+			         == std::string::npos,
+			      "and the day group is NOT kept once its own family holds no step, which is "
+			      "the case the rule exists to refuse",
+			      "applied=" + ValueOfKey(NSL, "nullSeriesApplied="));
+			Check(NSL.find("nullSeriesOutsideStepFamilies=") != std::string::npos
+			      && ValueOfKey(NSL, "nullSeriesOutsideStepFamilies=")
+			         .find("vign_grid_sky070_sun003") != std::string::npos,
+			      "and the words say why: the reference cell is named among the measured "
+			      "frames whose family holds no sky-only pair",
+			      ValueOfKey(NSL, "nullSeriesOutsideStepFamilies="));
+			Check(EveryTokenIsKeyValue(NSL),
+			      "the planted no-step line is space-free too", NSL);
+		}
+		// ---- THE RATCHET, AND THE RUN WHERE IT FIRES -------------------------
+		//
+		// SECTION 3 OF THE 2026-09-16 RULING. The family rule is a SCREEN and
+		// not a reading: today exactly one family qualifies, so one floor is
+		// printed and "which family" never arises. It arises the moment a
+		// second one does, and the first candidate is a night sky-only pair,
+		// because a night grid would then have a qualifying night family and
+		// SIZE would choose between families again. Until per-family floors
+		// land (production/queue/346-the-floor-is-read-per-family-so-a-night-
+		// grid-has-a-night-floor.md), this suite refuses that spec rather than
+		// reading it, and the refusal is here rather than in anyone's memory.
+		//
+		// THE SERIES IS PRINTED FIRST, one row per family, because no run has
+		// yet printed two qualifying families and 346's builder reads the
+		// shape off this print rather than off a description of it.
+		{
+			const size_t kFamCap = 24;
+			for (size_t Q = 0; Q < NT.FamilyKeys.size() && Q < kFamCap; ++Q)
+			{
+				std::printf("    family[%d] frames=%d holdsStep=%s sunOff=%s key=%s\n",
+				            (int)Q, NT.FamilyFrames[Q],
+				            NT.FamilyStep[Q] ? "yes" : "no",
+				            NT.FamilySunOff[Q] ? "yes" : "no",
+				            NT.FamilyKeys[Q].c_str());
+			}
+			if (NT.FamilyKeys.size() > kFamCap)
+			{
+				std::printf("    (+%d more family row(s) not shown, cap=%d)\n",
+				            (int)(NT.FamilyKeys.size() - kFamCap), (int)kFamCap);
+			}
+			std::printf("    RATCHET: step-holding families with the sun off = %d of %d "
+			            "step-holding families, over %d families and %d sun-off families\n",
+			            NT.StepFamiliesSunOff, NT.StepFamilies, NT.Families, NT.SunOffFamilies);
+			Check(NT.StepFamilies > 0 && NT.StepFamiliesSunOff == 0,
+			      "NO step-holding family in the live spec has the sun off, so exactly one "
+			      "kind of family can be the floor and size never chooses between families; "
+			      "a night sky-only pair entering the spec fails HERE until the per-family "
+			      "floor of production/queue/346 lands, which retires this assertion in the "
+			      "same diff",
+			      std::to_string(NT.StepFamiliesSunOff) + "/of="
+			      + std::to_string(NT.StepFamilies) + " step-holding families, "
+			      + std::to_string(NT.SunOffFamilies) + " sun-off families of "
+			      + std::to_string(NT.Families));
+			// AND THE RUN WHERE IT FIRES, PLANTED: one night frame moved to
+			// another sky value is a night sky-only pair, which is exactly the
+			// spec change this assertion refuses. A guard that cannot be made
+			// to fail is a ratchet, so it is made to fail here on purpose.
+			std::vector<LedgerVignette::FrameSample> NightStep = Samples;
+			std::vector<int> NightSunOff = SunOff;
+			int Moved = -1;
+			for (size_t I = 0; I < NightStep.size(); ++I)
+			{
+				if (!NightSunOff[I] || NightStep[I].CameraId != "cam_hook") { continue; }
+				Moved = (int)I;
+			}
+			if (Moved >= 0)
+			{
+				// The sky value moves and the applied fingerprint moves with
+				// it, which is what a spec row at another sky would produce.
+				NightStep[Moved].SkyIntensity += 0.25;
+				NightStep[Moved].Applied += "/planted-night-sky-sibling";
+				NightStep[Moved].MeanLuma += 0.05;
+				const NullFamilyTally RT = TallyNullFamilies(NightStep, NightSunOff);
+				const std::string RL = LedgerVignette::NullSeriesLine(NightStep);
+				std::printf("    planted night sky-only pair on %s: stepFamiliesSunOff=%d "
+				            "of %d step-holding, kept=%s\n",
+				            NightStep[Moved].ShotId.c_str(), RT.StepFamiliesSunOff,
+				            RT.StepFamilies, ValueOfKey(RL, "nullSeriesApplied=").c_str());
+				Check(RT.StepFamiliesSunOff == 1
+				      && RT.StepFamilies == NT.StepFamilies + 1,
+				      "planting one night sky-only pair makes the ratchet's count ONE rather "
+				      "than zero, so the assertion above can fail and is not a ratchet that "
+				      "only ever reads clean",
+				      std::to_string(RT.StepFamiliesSunOff) + "/of="
+				      + std::to_string(RT.StepFamilies));
+				// AND THE RATCHET'S OWN PREDICATE, EVALUATED ON THE PLANTED
+				// FIXTURE AND ASSERTED FALSE. The check above reads the two
+				// counts; this one reads the SENTENCE the assertion is made
+				// of, so nobody has to derive that it would have failed.
+				const bool bRatchetHolds = (RT.StepFamilies > 0 && RT.StepFamiliesSunOff == 0);
+				Check(!bRatchetHolds,
+				      "and the ratchet's own predicate is FALSE on that fixture: the same "
+				      "sentence that passes on the live file refuses the planted spec, which "
+				      "is the run where the guard is seen firing",
+				      std::string("predicate=") + (bRatchetHolds ? "held" : "refused"));
+				Check(ValueOfKey(RL, "nullSeriesApplied=").find("/sun.off/")
+				      != std::string::npos
+				      && ValueOfKey(RL, "nullSeriesApplied=") != NT.LargestQualifyingKey,
+				      "and the floor moves onto the night family in that run, which is WHY "
+				      "the assertion above refuses the spec change until a floor is read per "
+				      "family", ValueOfKey(RL, "nullSeriesApplied="));
+			}
+			else
+			{
+				Check(false, "the ratchet's planted case needs a sun-off frame at the hook "
+				             "camera and the live file offered none",
+				      "nothing measured: no sun-off frame at cam_hook");
+			}
+		}
 		// AND A RUN THAT MEASURED NOTHING, WHICH IS NOT A CLEAN RESULT.
 		std::vector<LedgerVignette::FrameSample> None;
 		const std::string Z = LedgerVignette::NullSeriesLine(None);
@@ -5070,16 +5638,59 @@ int main(int argc, char** argv)
 		      && Z.find("nullSeriesVerdict=CLEAR") == std::string::npos,
 		      "a run with no measured frame prints the words and never the passing "
 		      "verdict, so an empty series cannot read as a clear one", Z);
-		// ONE MEASURED FRAME IS NOT A SPREAD EITHER.
+		// ONE MEASURED FRAME IS NOT A SPREAD EITHER, AND SINCE 2026-09-16 IT
+		// IS REFUSED ONE STEP EARLIER AND SAYS SO. A single frame is a family
+		// of one, which holds no sky-only pair, so no group qualifies and the
+		// status is the word for that rather than TOO-FEW-SAMPLES: the two
+		// sentences are both true of this fixture and the line prints the one
+		// that is checked FIRST, which is the ruling's own order. The
+		// too-few-samples word is still reachable and is checked on the
+		// fixture below, where a family DOES hold a step and its largest
+		// qualifying group is a single frame.
 		std::vector<LedgerVignette::FrameSample> One;
 		if (!Samples.empty()) { One.push_back(Samples[0]); }
 		const std::string O = LedgerVignette::NullSeriesLine(One);
-		Check(O.find("nullSeriesStatus=TOO-FEW-SAMPLES") != std::string::npos
-		      && O.find("nullSeriesVerdict=nothing-measured/one-frame-cannot-hold-a-spread")
+		std::printf("    one measured frame: %s\n", O.substr(0, 260).c_str());
+		Check(O.find("nullSeriesStatus=NO-FAMILY-HOLDS-A-STEP") != std::string::npos
+		      && O.find("nullSeriesIds=none") != std::string::npos
+		      && O.find("nullSeriesVerdict=nothing-measured/no-group-has-a-family-that-holds-"
+		                "a-sky-only-pair") != std::string::npos
+		      && O.find("nullSeriesVerdict=CLEAR") == std::string::npos
+		      && O.find("nullSeriesFamilies=0/of=1/") != std::string::npos,
+		      "one frame is a family of one, so no group qualifies, the line says which rule "
+		      "refused it, the ids are none and the zero ships the one family it examined", O);
+		// AND THE TOO-FEW-SAMPLES WORD, ON THE FIXTURE THAT CAN STILL REACH
+		// IT: two frames of one family at two sky values, which holds a step,
+		// so both its groups qualify and the largest qualifying group is one
+		// frame. Built from the live file's own first sample so it carries a
+		// real fingerprint, with the sky moved to make the sibling.
+		std::vector<LedgerVignette::FrameSample> Pair;
+		if (!Samples.empty())
+		{
+			LedgerVignette::FrameSample A = Samples[0];
+			LedgerVignette::FrameSample B = Samples[0];
+			B.ShotId = A.ShotId + "_sky_sibling";
+			B.SkyIntensity = A.SkyIntensity + 0.25;
+			B.Applied = A.Applied + "/planted-sky-sibling";   // another group, same family
+			B.MeanLuma = A.MeanLuma + 0.05;
+			B.GroundP05 = B.MeanLuma * 0.50;
+			B.GroundP50 = B.MeanLuma * 0.80;
+			Pair.push_back(A);
+			Pair.push_back(B);
+		}
+		const std::string P2 = LedgerVignette::NullSeriesLine(Pair);
+		std::printf("    two frames, one family, two groups: %s\n", P2.substr(0, 300).c_str());
+		Check(P2.find("nullSeriesStatus=TOO-FEW-SAMPLES") != std::string::npos
+		      && P2.find("nullSeriesVerdict=nothing-measured/one-frame-cannot-hold-a-spread")
+		         != std::string::npos
+		      && P2.find("nullSeriesFamilies=1/of=1/") != std::string::npos
+		      && P2.find("nullSeriesTiedGroups=1/of=2/qualifying-groups-examined/")
 		         != std::string::npos,
-		      "and one frame says so rather than printing a spread of zero", O);
-		Check(EveryTokenIsKeyValue(Z) && EveryTokenIsKeyValue(O),
-		      "both refusing null series lines are space-free too");
+		      "a family that holds a step whose largest qualifying group is one frame still "
+		      "says TOO-FEW-SAMPLES rather than printing a spread of zero, so the two refusals "
+		      "are told apart by the line and not by the reader", P2);
+		Check(EveryTokenIsKeyValue(Z) && EveryTokenIsKeyValue(O) && EveryTokenIsKeyValue(P2),
+		      "all three refusing null series lines are space-free too");
 		// AMENDMENT 5: THE TIE COUNTER COUNTS GROUPS, AND THIS IS THE RUN THAT
 		// FAILS ON THE CODE THAT COUNTED FRAMES.
 		//
@@ -5098,18 +5709,41 @@ int main(int argc, char** argv)
 		// PLANTED, because the committed spec has exactly one largest group and
 		// a tie cannot be waited for; the accepting case is the live line NS
 		// above, read by name so the no-tie reading is watched too.
+		//
+		// AND THE DENOMINATOR IS QUALIFYING GROUPS SINCE 2026-09-16, not
+		// distinct ones: a group the rule never weighed is not a rival this
+		// count may claim to have weighed. On the live file that is 15 of the
+		// 30 distinct groups, both counted by the tally above and neither
+		// typed here.
 		char WantTies[112];
 		std::snprintf(WantTies, sizeof(WantTies),
-		              "nullSeriesTiedGroups=0/of=%d/distinct-groups-examined/", DistinctGroups);
-		Check(NS.find(WantTies) != std::string::npos,
-		      "the live spec has ONE largest group so the tie count is zero, and the zero "
-		      "ships as its denominator the number of distinct groups an independent tally "
-		      "over the same conditions examined", std::string(WantTies) + " against: " + NS);
+		              "nullSeriesTiedGroups=0/of=%d/qualifying-groups-examined/",
+		              NT.QualifyingGroups);
+		Check(NS.find(WantTies) != std::string::npos && NT.QualifyingGroups < NT.DistinctGroups,
+		      "the live spec has ONE largest qualifying group so the tie count is zero, and "
+		      "the zero ships as its denominator the number of qualifying groups an "
+		      "independent tally over the same conditions examined, which is fewer than the "
+		      "distinct groups because the night groups are not among them",
+		      std::string(WantTies) + " over " + std::to_string(NT.DistinctGroups)
+		      + " distinct against: " + NS);
 		{
 			// TWO GROUPS OF THREE PLUS A SINGLETON, so the tie count and the
 			// denominator are different numbers and neither can stand in for
 			// the other. One rival group: the answer is 1, never 3.
+			//
+			// ONE FAMILY, THREE SKY VALUES, AMENDED 2026-09-16. The three
+			// groups used to carry one sky value and their own no-sky key
+			// each, which under the family rule means no family holds a step
+			// and nothing qualifies: the fixture would have printed
+			// NO-FAMILY-HOLDS-A-STEP and tested the tie counter on nothing.
+			// They now sit in ONE no-sky family at three sky values, which is
+			// the grid's own shape and is internally consistent in the way the
+			// real fingerprint is: same applied key means same sky, same
+			// family at another sky means another applied key. The tie count
+			// and its denominator are unchanged by the amendment, so this is
+			// still the run that fails on the frame-counting code.
 			const char* Two[7] = { "gA", "gA", "gA", "gB", "gB", "gB", "gC" };
+			const double TwoSky[7] = { 1.0, 1.0, 1.0, 2.0, 2.0, 2.0, 3.0 };
 			std::vector<LedgerVignette::FrameSample> Tie;
 			for (int I = 0; I < 7; ++I)
 			{
@@ -5119,8 +5753,8 @@ int main(int argc, char** argv)
 				F.ShotId = Sid;
 				F.CameraId = "cam_tie";
 				F.Applied = Two[I];
-				F.AppliedNoSky = Two[I];
-				F.SkyIntensity = 1.0;
+				F.AppliedNoSky = "fam_tie";
+				F.SkyIntensity = TwoSky[I];
 				F.bMeasured = true;
 				F.MeanLuma = 0.50;
 				F.GroundP05 = 0.25;
@@ -5130,11 +5764,15 @@ int main(int argc, char** argv)
 			const std::string T2 = LedgerVignette::NullSeriesLine(Tie);
 			std::printf("    planted two-way tie: %s\n",
 			            T2.substr(0, 260).c_str());
-			Check(T2.find("nullSeriesTiedGroups=1/of=3/distinct-groups-examined/"
+			Check(T2.find("nullSeriesTiedGroups=1/of=3/qualifying-groups-examined/"
 			              "groups-not-frames/") != std::string::npos,
 			      "one rival group of three frames prints ONE tied GROUP of three "
-			      "distinct groups examined, where the frame-counting code printed 3",
+			      "qualifying groups examined, where the frame-counting code printed 3",
 			      T2);
+			Check(T2.find("nullSeriesFamilies=1/of=1/") != std::string::npos
+			      && T2.find("nullSeriesOutsideStepFamilies=0/of=7/") != std::string::npos,
+			      "and all seven frames are inside the one family that holds a step, so the "
+			      "tie is weighed over every group this fixture offers", T2);
 			Check(T2.find("nullSeriesIds=tie_00;tie_01;tie_02") != std::string::npos,
 			      "and the kept group on a tie is still the first in shot order, which "
 			      "the strict greater-than preserves", T2);
@@ -5143,12 +5781,15 @@ int main(int argc, char** argv)
 		}
 		{
 			// THREE GROUPS OF THREE, A SINGLETON, AND ONE UNMEASURED FRAME
-			// CARRYING A KEY OF ITS OWN. Two rival groups, four distinct groups
-			// examined, and the unmeasured frame must enter NEITHER number: a
-			// denominator larger than the set examined turns a clean result
-			// into a false claim with a number on it.
+			// CARRYING A KEY OF ITS OWN. Two rival groups, four qualifying
+			// groups examined, and the unmeasured frame must enter NEITHER
+			// number: a denominator larger than the set examined turns a clean
+			// result into a false claim with a number on it. One family at
+			// four sky values, for the reason the fixture above carries.
 			const char* Three[11] = { "gA", "gA", "gA", "gB", "gB", "gB",
 			                          "gC", "gC", "gC", "gD", "gZ" };
+			const double ThreeSky[11] = { 1.0, 1.0, 1.0, 2.0, 2.0, 2.0,
+			                              3.0, 3.0, 3.0, 4.0, 5.0 };
 			std::vector<LedgerVignette::FrameSample> Tie3;
 			for (int I = 0; I < 11; ++I)
 			{
@@ -5158,8 +5799,8 @@ int main(int argc, char** argv)
 				F.ShotId = Sid;
 				F.CameraId = "cam_tie";
 				F.Applied = Three[I];
-				F.AppliedNoSky = Three[I];
-				F.SkyIntensity = 1.0;
+				F.AppliedNoSky = "fam_tie3";
+				F.SkyIntensity = ThreeSky[I];
 				F.bMeasured = (I != 10);
 				F.MeanLuma = 0.50;
 				F.GroundP05 = 0.25;
@@ -5169,15 +5810,16 @@ int main(int argc, char** argv)
 			const std::string T3 = LedgerVignette::NullSeriesLine(Tie3);
 			std::printf("    planted three-way tie: %s\n",
 			            T3.substr(0, 260).c_str());
-			Check(T3.find("nullSeriesTiedGroups=2/of=4/distinct-groups-examined/"
+			Check(T3.find("nullSeriesTiedGroups=2/of=4/qualifying-groups-examined/"
 			              "groups-not-frames/") != std::string::npos,
 			      "two rival groups of three frames each print TWO tied GROUPS of four "
-			      "distinct groups examined, where the frame-counting code printed 6",
+			      "qualifying groups examined, where the frame-counting code printed 6",
 			      T3);
-			Check(T3.find("nullSeriesMeasured=10/of=11/shots-offered") != std::string::npos,
-			      "and the unmeasured frame is outside both the tie count and the "
-			      "distinct-group denominator, while the measured count still names the "
-			      "eleven offered", T3);
+			Check(T3.find("nullSeriesMeasured=10/of=11/shots-offered") != std::string::npos
+			      && T3.find("nullSeriesOutsideStepFamilies=0/of=10/") != std::string::npos,
+			      "and the unmeasured frame is outside the tie count, the qualifying-group "
+			      "denominator and the outside-frames denominator alike, while the measured "
+			      "count still names the eleven offered", T3);
 			Check(EveryTokenIsKeyValue(T3),
 			      "the three-way tied line is space-free too", T3);
 		}

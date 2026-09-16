@@ -182,18 +182,36 @@ namespace Ledger.Game
         public static int NotorietyFiled;
         public static double LastNotoriety;
 
-        /// How many alibis the player has offered, and how many were caught.
+        /// Why the last claim attempt did what it did. See the guards.
+        public static string ClaimWhy { get; private set; } = "not tried";
+
+        /// How many alibis the player has offered, how many were caught out,
+        /// and how many the street then REFUSED to write down.
         ///
         /// Counted because "the claim path runs" and "the claim path can catch
         /// a lie" are different facts and only the first is obvious. A run
         /// where claims are made and none is ever contradicted would look
-        /// identical to a working system and be a broken one — the same split
+        /// identical to a working system and be a broken one, the same split
         /// `speechMissing` needed before it could be read.
-        /// Why the last claim attempt did what it did. See the guards.
-        public static string ClaimWhy { get; private set; } = "not tried";
-
+        ///
+        /// CAUGHT AND REFUSED ARE TWO COUNTERS FOR ONE EVENT AND THEY MUST
+        /// AGREE, the same shape as `Denounced` against `MarksFiled` above.
+        /// `Claims.Process` checks the claim against `host.Knowledge` and
+        /// `PlayerClaims` checks it against the mill agent's, and
+        /// `GossipDirector` builds every mill agent with `host.Knowledge`, so
+        /// on this path the two are ONE knowledge base reaching one verdict.
+        /// A catch without a refusal therefore does not mean the refusal
+        /// failed: it means the mill never saw the claim, because the host's
+        /// name found no agent and `PlayerClaims` returned having recorded
+        /// nothing. That wiring break is invisible to either counter alone,
+        /// which is the whole reason there are two.
+        ///
+        /// All three are CUMULATIVE over the process and are never reset:
+        /// `Reset` above clears the denunciation counters only, so a sim run
+        /// reads them as totals since the domain was loaded.
         public static int ClaimsMade { get; private set; }
         public static int ClaimsCaught { get; private set; }
+        public static int ClaimsRefused { get; private set; }
 
         /// THE PLAYER SAYS WHERE THEY WERE, and the street writes it down.
         ///
@@ -233,11 +251,22 @@ namespace Ledger.Game
             double weight = host.OnTheLine ? PhoneBook.Damped(1.0) : 1.0;
             var was = Claims.Process(host.Knowledge, host.Suspicion, host.Memory, claim, game.Now, weight);
             if (was == ClaimResult.Contradiction) ClaimsCaught++;
-            // AND THE STREET CARRIES IT. `ProcessClaim` moves one person's
+            // AND THE STREET CARRIES IT. `Claims.Process` moves one person's
             // suspicion; `PlayerClaims` is what makes the alibi a thing that
             // exists after the conversation ends and can be checked against
-            // later — which is the half `Informing` accuses from.
-            game.Gossip?.Mill?.PlayerClaims(host.Card?.Name ?? "", claim, game.Now);
+            // later.
+            //
+            // NOT THE HALF `Informing` ACCUSES FROM, which is what this comment
+            // claimed and the code never did. `Denounce` accuses from
+            // `g.Best(topic)`, which is RUMOURS, and `PlayerClaims` writes
+            // knowledge and memory only. The half `Informing` accuses from is
+            // the overheard `Witness` below, which files a rumour.
+            //
+            // AND IT CAN REFUSE. A claim this listener already knows to be
+            // false is remembered and never learned, so the lie cannot be
+            // written over the fact that just caught it.
+            var filed = game.Gossip?.Mill?.PlayerClaims(host.Card?.Name ?? "", claim, game.Now);
+            if (filed == ClaimResult.Contradiction) ClaimsRefused++;
 
             // AND WHOEVER ELSE WAS STANDING THERE.
             //

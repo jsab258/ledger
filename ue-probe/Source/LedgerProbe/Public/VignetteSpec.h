@@ -2676,6 +2676,25 @@ namespace LedgerVignette
 		     + (bWithSky ? S.Applied : S.AppliedNoSky);
 	}
 
+	// THE SKY-ONLY PAIR TEST, ONE IMPLEMENTATION, READ BY TWO CALLERS. Two
+	// measured frames are a sky-only pair when they carry one no-sky
+	// fingerprint at one camera and their sky intensities differ: that is the
+	// smallest signal the grid is allowed to claim, and it is also what makes
+	// a family readable at all. The step loop below calls this to find the
+	// smallest step, and the family tally in NullSeriesLine calls the SAME
+	// function to decide which families hold a step, so the step a spread is
+	// read against and the families allowed to be read against it can never
+	// drift apart. Written 2026-09-16 for
+	// game-design/decision-2026-09-16-ruling-the-floor-is-read-in-a-family-
+	// that-holds-a-step-and-the-settle-rows-are-outside-it-by-their-own-
+	// fields.md section 3, which says reused and not re-invented.
+	inline bool IsSkyOnlyPair(const FrameSample& A, const FrameSample& B)
+	{
+		return A.bMeasured && B.bMeasured
+		    && SampleKey(A, false) == SampleKey(B, false)
+		    && A.SkyIntensity != B.SkyIntensity;
+	}
+
 	inline double SampleStat(const FrameSample& S, int Which)
 	{
 		if (Which == 0) { return S.MeanLuma; }
@@ -2702,18 +2721,58 @@ namespace LedgerVignette
 		}
 		if (Measured == 0)
 		{
-			char Buf[420];
+			// NOTHING MEASURED PRINTS THE WORDS FOR EVERY KEY A READER GREPS,
+			// including the two the 2026-09-16 ruling added: a reader asking
+			// this run which family the floor came from, or what size alone
+			// would have kept, gets the words rather than an absent key they
+			// have to interpret.
+			char Buf[640];
 			std::snprintf(Buf, sizeof(Buf),
 				"nullSeriesStatus=NOTHING-MEASURED nullSeriesSamples=nothing-measured/of=%d"
-				"/shots-offered nullSeriesIds=none nullSeriesVerdict=nothing-measured"
+				"/shots-offered nullSeriesIds=none"
+				" nullSeriesFamilies=nothing-measured/of=0/no-sky-families-holding-a-sky-"
+				"only-pair/of-distinct-families-at-any-camera"
+				" nullSeriesOutsideStepFamilies=nothing-measured/of=0/measured-frames-"
+				"whose-family-holds-no-sky-only-pair/ids=none"
+				" nullSeriesBySizeAlone=nothing-measured/n=0/spreadMeanLuma=nothing-"
+				"measured/NO-GROUP-WAS-CHOSEN"
+				" nullSeriesVerdict=nothing-measured"
 				" nullSeriesStat=whole-run/no-frame-was-measured-so-there-is-no-noise-floor",
 				(int)All.size());
 			return std::string(Buf);
 		}
 		// THE GROUP: the largest set of measured frames sharing one applied
-		// fingerprint. Largest, because the noise floor is read off the widest
-		// set of frames the run renders identically; a tie keeps the first
-		// group in shot order, and the tie is printed rather than hidden.
+		// fingerprint WHOSE OWN NO-SKY FAMILY HOLDS A SKY-ONLY PAIR. Largest,
+		// because the noise floor is read off the widest set of frames the run
+		// renders identically; inside a step-holding family, because a spread
+		// with no step in its own family has nothing to be read against, which
+		// is what this function already says for the run as a whole where it
+		// prints nullFloor=nothing-measured on zero pairs. A tie keeps the
+		// first group in shot order, and the tie is printed rather than hidden.
+		//
+		// SIZE ALONE WAS A PROXY FOR THIS AND STOPPED COINCIDING WITH IT ON
+		// 2026-09-16, ruled in game-design/decision-2026-09-16-ruling-the-
+		// floor-is-read-in-a-family-that-holds-a-step-and-the-settle-rows-are-
+		// outside-it-by-their-own-fields.md section 3. The fingerprint carries
+		// field VALUES and no condition id, so the six settle_night rows queue
+		// 334 added joined the four pinset_night rows in all eleven fields
+		// that are read: ten night frames at cam_hook overtaking the day group
+		// of seven, and the floor every grid cell is quoted against moving
+		// onto night frames nobody had measured. Off run 48's committed lines,
+		// that is a day margin of 193x (spread 0.0001 against step 0.0193)
+		// replaced by a night one of 1.9x (spread 0.0102 over three frames):
+		// the largest number in the comparison wearing the name of the
+		// smallest, which is the fault SampleKey's camera half and queue 235's
+		// pin term already exist to stop. Both night conditions carry one sky
+		// value, 0.35, so that family holds no pair and those frames are
+		// outside the floor by their own fields, with no row declaring it.
+		//
+		// WHAT THIS RULE DOES NOT CHANGE: the sky step is still the SMALLEST
+		// difference over ALL sky-only pairs anywhere in the run, so the
+		// verdict is still a spread read against the smallest step anywhere.
+		// And nullSeriesBySizeAlone prints what size alone would have kept,
+		// with its own spread, so the floor can never move again without the
+		// move being on the line that quotes it.
 		//
 		// THE TIE COUNTER COUNTS GROUPS, AND IT COUNTED FRAMES UNTIL
 		// AMENDMENT 5 of
@@ -2731,10 +2790,50 @@ namespace LedgerVignette
 		// equals the largest, MINUS the one that is kept. Keys are recorded in
 		// shot order of first appearance and the winner is taken on a STRICT
 		// greater-than, so the kept group is still the first in shot order.
-		// The denominator is the number of distinct groups examined, because a
-		// bare zero here cannot tell no rival apart from nothing looked at.
+		// The denominator is the number of QUALIFYING groups examined, because
+		// a bare zero here cannot tell no rival apart from nothing looked at,
+		// and because a group the rule never considered is not a rival this
+		// count may claim to have weighed.
+		//
+		// THE FAMILIES ARE TALLIED FIRST, in shot order of first appearance
+		// like the groups, over MEASURED frames only: an unmeasured frame is
+		// not a reading and may enter neither a numerator nor a denominator
+		// here.
+		std::vector<std::string> FamilyKeys;
+		std::vector<int> FamilyHoldsStep;   // 1 when two measured frames of it are a sky-only pair
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			if (!All[I].bMeasured) { continue; }
+			const std::string F = SampleKey(All[I], false);
+			bool bSeen = false;
+			for (size_t Q = 0; Q < FamilyKeys.size(); ++Q)
+			{
+				if (FamilyKeys[Q] == F) { bSeen = true; break; }
+			}
+			if (!bSeen) { FamilyKeys.push_back(F); FamilyHoldsStep.push_back(0); }
+		}
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			for (size_t J = I + 1; J < All.size(); ++J)
+			{
+				// THE PAIR TEST IS CALLED, NOT COPIED: the same IsSkyOnlyPair
+				// the step loop below reads.
+				if (!IsSkyOnlyPair(All[I], All[J])) { continue; }
+				const std::string F = SampleKey(All[I], false);
+				for (size_t Q = 0; Q < FamilyKeys.size(); ++Q)
+				{
+					if (FamilyKeys[Q] == F) { FamilyHoldsStep[Q] = 1; break; }
+				}
+			}
+		}
+		int StepFamilies = 0;   // families holding at least one sky-only pair
+		for (size_t Q = 0; Q < FamilyKeys.size(); ++Q)
+		{
+			if (FamilyHoldsStep[Q]) { ++StepFamilies; }
+		}
 		std::vector<std::string> GroupKeys;
 		std::vector<int> GroupSizes;
+		std::vector<int> GroupQualifies;    // 1 when this group's own family holds a step
 		for (size_t I = 0; I < All.size(); ++I)
 		{
 			if (!All[I].bMeasured) { continue; }
@@ -2744,21 +2843,99 @@ namespace LedgerVignette
 			{
 				if (GroupKeys[Q] == K) { At = Q; break; }
 			}
-			if (At == GroupKeys.size()) { GroupKeys.push_back(K); GroupSizes.push_back(0); }
+			if (At == GroupKeys.size())
+			{
+				GroupKeys.push_back(K);
+				GroupSizes.push_back(0);
+				// The family is read off the frame that opened the group, and
+				// every frame in a group shares its family by construction:
+				// two frames with one applied fingerprint carry one no-sky
+				// fingerprint, since the second is a prefix-wise subset of the
+				// fields of the first.
+				int Holds = 0;
+				const std::string F = SampleKey(All[I], false);
+				for (size_t Q = 0; Q < FamilyKeys.size(); ++Q)
+				{
+					if (FamilyKeys[Q] == F) { Holds = FamilyHoldsStep[Q]; break; }
+				}
+				GroupQualifies.push_back(Holds);
+			}
 			++GroupSizes[At];
 		}
 		std::string BestKey;
 		int Best = 0;
+		int QualifyingGroups = 0;
 		for (size_t Q = 0; Q < GroupKeys.size(); ++Q)
 		{
+			if (!GroupQualifies[Q]) { continue; }
+			++QualifyingGroups;
 			if (GroupSizes[Q] > Best) { Best = GroupSizes[Q]; BestKey = GroupKeys[Q]; }
 		}
 		int TiedGroups = 0;
 		for (size_t Q = 0; Q < GroupKeys.size(); ++Q)
 		{
+			if (!GroupQualifies[Q]) { continue; }
 			if (GroupSizes[Q] == Best && GroupKeys[Q] != BestKey) { ++TiedGroups; }
 		}
-		const int DistinctGroups = (int)GroupKeys.size();
+		// WHAT SIZE ALONE WOULD HAVE KEPT, so a reader sees the floor move
+		// rather than inherits it. Same strict greater-than and same
+		// first-in-shot-order tie rule, over every group including the ones
+		// no family qualifies.
+		std::string BySizeKey;
+		int BySize = 0;
+		for (size_t Q = 0; Q < GroupKeys.size(); ++Q)
+		{
+			if (GroupSizes[Q] > BySize) { BySize = GroupSizes[Q]; BySizeKey = GroupKeys[Q]; }
+		}
+		// ITS SPREAD IS MAX MINUS MIN OF MeanLuma OVER THAT GROUP, which is
+		// the same statistic nullSpreadMeanLuma is of the kept group, so the
+		// two numbers on this line are read against each other and not across
+		// two runs. MeanLuma only, because the word beside it is a comparison
+		// and not a verdict.
+		double BySizeSpread = 0.0;
+		{
+			double Lo = 0.0, Hi = 0.0;
+			bool bFirst = true;
+			for (size_t I = 0; I < All.size(); ++I)
+			{
+				if (!All[I].bMeasured || SampleKey(All[I], true) != BySizeKey) { continue; }
+				const double V = All[I].MeanLuma;
+				if (bFirst) { Lo = V; Hi = V; bFirst = false; }
+				else { if (V < Lo) { Lo = V; } if (V > Hi) { Hi = V; } }
+			}
+			BySizeSpread = Hi - Lo;
+		}
+		// THE FRAMES NO FLOOR CAN BE READ OFF IN THIS RUN, counted with the
+		// measured frames as the denominator and named in shot order under the
+		// cap both id lists on this line answer to. This is the count that
+		// shows ten night frames sitting outside the floor without any row
+		// having declared anything.
+		const size_t kIdCap = 12;
+		int Outside = 0;
+		std::string OutsideIds;
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			if (!All[I].bMeasured) { continue; }
+			const std::string F = SampleKey(All[I], false);
+			int Holds = 0;
+			for (size_t Q = 0; Q < FamilyKeys.size(); ++Q)
+			{
+				if (FamilyKeys[Q] == F) { Holds = FamilyHoldsStep[Q]; break; }
+			}
+			if (Holds) { continue; }
+			if ((size_t)Outside < kIdCap)
+			{
+				if (!OutsideIds.empty()) { OutsideIds += ";"; }
+				OutsideIds += NoSpaces(All[I].ShotId);
+			}
+			++Outside;
+		}
+		if ((size_t)Outside > kIdCap)
+		{
+			char More[64];
+			std::snprintf(More, sizeof(More), "/+%d-more-not-shown", Outside - (int)kIdCap);
+			OutsideIds += More;
+		}
 		std::vector<FrameSample> G;
 		for (size_t I = 0; I < All.size(); ++I)
 		{
@@ -2768,22 +2945,23 @@ namespace LedgerVignette
 		char Buf[960];
 		std::snprintf(Buf, sizeof(Buf),
 			"nullSeriesStatus=%s nullSeriesSamples=%d/of=%d/measured-frames-sharing-the-"
-			"largest-identical-applied-input-group-at-one-camera"
+			"largest-identical-applied-input-group-at-one-camera/within-a-family-that-"
+			"holds-a-sky-only-pair"
 			" nullSeriesMeasured=%d/of=%d/shots-offered"
-			" nullSeriesTiedGroups=%d/of=%d/distinct-groups-examined/groups-not-frames/"
+			" nullSeriesTiedGroups=%d/of=%d/qualifying-groups-examined/groups-not-frames/"
 			"rival-groups-whose-size-equals-the-largest-excluding-the-one-kept"
 			" nullSeriesApplied=%s"
 			" nullSeriesExcludes=none/every-field-this-engine-applies-is-in-the-"
 			"fingerprint-since-queue-309/wetness-JOINED-2026-09-15-when-"
 			"ApplyCondition-began-re-driving-it-per-condition/so-a-wet-ladder-row-"
 			"at-another-wetness-is-no-longer-a-null-sample-of-the-day-group",
-			G.size() >= 2 ? "READ" : "TOO-FEW-SAMPLES",
+			QualifyingGroups == 0 ? "NO-FAMILY-HOLDS-A-STEP"
+			                      : (G.size() >= 2 ? "READ" : "TOO-FEW-SAMPLES"),
 			(int)G.size(), Measured, Measured, (int)All.size(),
-			TiedGroups, DistinctGroups,
+			TiedGroups, QualifyingGroups,
 			BestKey.empty() ? "none" : BestKey.c_str());
 		Out += Buf;
 		// THE IDS, IN SHOT ORDER, AND THE CAP ANNOUNCES ITSELF.
-		const size_t kIdCap = 12;
 		std::string Ids;
 		for (size_t I = 0; I < G.size() && I < kIdCap; ++I)
 		{
@@ -2797,10 +2975,58 @@ namespace LedgerVignette
 			Ids += More;
 		}
 		Out += " nullSeriesIds=" + (Ids.empty() ? std::string("none") : Ids);
+		// THE RULE THAT PICKED THEM, ON THE SAME LINE AS THE COUNT IT PICKED,
+		// AND ON EVERY SHAPE THIS FUNCTION CAN BUILD: appended before the
+		// too-few-samples return below, so a refusing line carries the reason
+		// it refused rather than leaving a reader to grep the next run for it.
+		char Fam[880];
+		std::snprintf(Fam, sizeof(Fam),
+			" nullSeriesFamilies=%d/of=%d/no-sky-families-holding-a-sky-only-pair/"
+			"of-distinct-families-at-any-camera"
+			" nullSeriesOutsideStepFamilies=%d/of=%d/measured-frames-whose-family-"
+			"holds-no-sky-only-pair/ids=%s",
+			StepFamilies, (int)FamilyKeys.size(),
+			Outside, Measured,
+			OutsideIds.empty() ? "none" : OutsideIds.c_str());
+		Out += Fam;
+		// SHAPE 3 OF THE SAME RULING, WHICH RIDES ALONG: the group the OLD
+		// rule would have kept, its size, its own MeanLuma spread as max minus
+		// min over it, and one word saying whether it is the group that WAS
+		// kept. A floor that moves between two runs moves on this line, in one
+		// picture at one scale, rather than in the memory of a reader
+		// comparing two verdict files.
+		char BySizeS[760];
+		if (BySize >= 2)
+		{
+			std::snprintf(BySizeS, sizeof(BySizeS),
+				" nullSeriesBySizeAlone=%s/n=%d/spreadMeanLuma=%.4f/%s",
+				BySizeKey.empty() ? "none" : BySizeKey.c_str(), BySize, BySizeSpread,
+				BySizeKey == BestKey ? "SAME-AS-KEPT"
+				                     : (BestKey.empty()
+				                        ? "DIFFERS-FROM-KEPT/no-group-qualified-so-nothing-was-kept"
+				                        : "DIFFERS-FROM-KEPT"));
+		}
+		else
+		{
+			std::snprintf(BySizeS, sizeof(BySizeS),
+				" nullSeriesBySizeAlone=%s/n=%d/spreadMeanLuma=nothing-measured/%s",
+				BySizeKey.empty() ? "none" : BySizeKey.c_str(), BySize,
+				BySizeKey == BestKey ? "SAME-AS-KEPT"
+				                     : (BestKey.empty()
+				                        ? "DIFFERS-FROM-KEPT/no-group-qualified-so-nothing-was-kept"
+				                        : "DIFFERS-FROM-KEPT"));
+		}
+		Out += BySizeS;
 		if (G.size() < 2)
 		{
-			Out += " nullSeriesVerdict=nothing-measured/one-frame-cannot-hold-a-spread";
-			Out += " nullSeriesStat=whole-run/spread-is-max-minus-min-over-the-group";
+			Out += QualifyingGroups == 0
+			     ? std::string(" nullSeriesVerdict=nothing-measured/no-group-has-a-family-"
+			                   "that-holds-a-sky-only-pair/there-is-no-step-to-read-a-"
+			                   "spread-against")
+			     : std::string(" nullSeriesVerdict=nothing-measured/one-frame-cannot-hold-a-spread");
+			Out += " nullSeriesStat=whole-run/spread-is-max-minus-min-over-the-group/"
+			       "bySizeAlone-spread-is-the-same-statistic-over-the-group-size-alone-"
+			       "would-have-kept";
 			return Out;
 		}
 		// THE SPREAD, THE DRIFT AND THE SMALLEST SKY STEP, PER STATISTIC.
@@ -2842,12 +3068,13 @@ namespace LedgerVignette
 			std::string StepA, StepB;
 			for (size_t I = 0; I < All.size(); ++I)
 			{
-				if (!All[I].bMeasured) { continue; }
 				for (size_t J = I + 1; J < All.size(); ++J)
 				{
-					if (!All[J].bMeasured) { continue; }
-					if (SampleKey(All[I], false) != SampleKey(All[J], false)) { continue; }
-					if (All[I].SkyIntensity == All[J].SkyIntensity) { continue; }
+					// THE PAIR TEST IS CALLED, NOT COPIED: the same
+					// IsSkyOnlyPair the family tally above reads, which is the
+					// whole of why a qualifying family is guaranteed to have a
+					// step in this loop's Pairs count.
+					if (!IsSkyOnlyPair(All[I], All[J])) { continue; }
 					const double D = std::fabs(SampleStat(All[I], W) - SampleStat(All[J], W));
 					if (Pairs == 0 || D < Step)
 					{
@@ -2898,7 +3125,8 @@ namespace LedgerVignette
 			"read-against nullSeriesStat=whole-run/spread-is-max-minus-min-over-the-group/"
 			"drift-is-last-minus-first-in-shot-order/sky-step-is-the-SMALLEST-difference-"
 			"between-two-frames-differing-in-sky-alone/a-spread-not-smaller-than-that-step-"
-			"makes-the-grid-a-NO-READ",
+			"makes-the-grid-a-NO-READ/bySizeAlone-spread-is-the-same-max-minus-min-over-"
+			"the-group-size-alone-would-have-kept",
 			Judged == 0 ? "nothing-measured"
 			            : (Clear == Judged ? "CLEAR" : "NO-READ/no-cell-may-be-quoted"),
 			Clear, Judged);

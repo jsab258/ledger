@@ -43,7 +43,7 @@ commit gate, which is a director's call and not a cleanup's.
 
 Decisions about the game. Cited by number; a number never changes meaning.
 
-- `D1-engine-probe.md` D1: Engine (probe, do not debate)
+- `D1-engine-probe.md` D1: Engine (probe, do not debate) (CLOSED by D16)
 - `D2-faces.md` D2: Faces move
 - `D3-comedy-register.md` D3: Comedy register
 - `D4-combat-before-driving.md` D4: Combat before driving
@@ -378,4 +378,13 @@ cannot find, which is the failure this file exists to stop.
   rather than saying it wrongly, and Mixamo's terms are quoted nowhere in
   this tree to cite; predictions written before the run
   `game-design/decision-2026-09-16-ruling-run-48-measured-three-lights-and-no-lantern-and-the-lamp-glows-where-the-flag-is-read.md`
+- **2026-09-16** the floor is read in a family that holds a step (08:04Z):
+  the test's invariant is upheld and the emitter's size proxy is replaced
+  by "largest group whose no-sky family holds a sky-only pair"; the settle
+  and pinset rows are outside the floor by their own fields and no key
+  declares it; nullSeriesBySizeAlone prints what size would have kept; the
+  null-cell-is-last check is restated to the last of its family and the
+  06:35Z placement stands; light_probe is found written and unread on the
+  UE side, 334 stays open on it; per-family floors filed as the next rung
+  `game-design/decision-2026-09-16-ruling-the-floor-is-read-in-a-family-that-holds-a-step-and-the-settle-rows-are-outside-it-by-their-own-fields.md`
 

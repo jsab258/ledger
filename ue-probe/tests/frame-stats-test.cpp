@@ -447,17 +447,27 @@ int main()
 		LightFloor F;
 		F.ShotId = "vign_camB_night"; F.CameraId = "cam_B"; F.ConditionId = "wet_night";
 		LightFloorSetControl(F, Quiet);
-		const bool ReadReal = LightFloorAddLight(F, "lantern1", Real);
-		const bool ReadDark = LightFloorAddLight(F, "lantern2", Dark);
-		Check(ReadReal, "ACCEPTING CASE: a light that lit 16 pixels over a quiet control READS");
-		Check(!ReadDark, "and a light that moved nothing over that same quiet control does not");
+		// THE RETURN IS A BUCKET, NOT A YES, AND IT IS NEVER TESTED FOR
+		// TRUTH. It was a bool meaning "beat its own floor" and it is now
+		// ClassifyLightRead's answer, so `if (Read)` reads the WORST outcome
+		// on the list as false: LightReadBlankShot is 0. Held in an int and
+		// compared against the named kind at every site below.
+		const int ReadReal = LightFloorAddLight(F, "lantern1", "lantern", Real, false);
+		const int ReadDark = LightFloorAddLight(F, "lantern2", "lantern", Dark, false);
+		Check(ReadReal == LightReadMeasured,
+		      "ACCEPTING CASE: a light that lit 16 pixels over a quiet control is MEASURED");
+		Check(ReadDark == LightReadVoidControl,
+		      "and a light that moved nothing over that same quiet control is certified by "
+		      "nothing, which queue 332 files as VOID-CONTROL and not as a failed read");
 		Check(LightFloorUsable(F) && F.Read == 1 && F.Lights == 2,
 		      "so the shot has a usable floor and counts 1 of its 2 lights");
 		const std::string FL = LightFloorLine(F);
 		std::printf("    %s\n", FL.c_str());
 		Check(FL.find("lightFloorVerdict=FLOOR-USABLE") != std::string::npos
-		      && FL.find("lightsReadThisShot=1/2") != std::string::npos,
-		      "the per-shot line says FLOOR-USABLE and carries that shot's own count");
+		      && FL.find("lightsReadThisShot=1/1") != std::string::npos,
+		      "the per-shot line says FLOOR-USABLE and carries that shot's own count, over "
+		      "the lights this shot MEASURED and not over all 2 it probed: the second one "
+		      "was screened out by its own control and never got as far as the floor");
 		Check(FL.find("lightFloorBest=lantern1/at32codes") != std::string::npos
 		      && FL.find("lightFloorBestPx=16..vs..0") != std::string::npos,
 		      "and the winning pair is one entry at one edge, both counts together");
@@ -466,15 +476,29 @@ int main()
 		      "the control's zeros ship the count of what was examined");
 		Check(ValuesHaveNoSpaces(FL.substr(FL.find("shot="))),
 		      "every value on the floor line is space-free");
-		const std::string SegYes = LightFloorSegment(F, Real, false);
-		const std::string SegNo  = LightFloorSegment(F, Dark, false);
+		const std::string SegYes = LightFloorSegment(F, Real, false, ReadReal);
+		const std::string SegNo  = LightFloorSegment(F, Dark, false, ReadDark);
 		Check(SegYes.find("lightAboveFloor=YES") != std::string::npos
 		      && SegYes.find("lightVsFloorPx=16..vs..0") != std::string::npos,
 		      "the light's own line says YES and carries both counts at the deciding edge");
-		Check(SegNo.find("lightAboveFloor=NO") != std::string::npos
-		      && SegNo.find("lightVsFloorPx=0..vs..0") != std::string::npos,
-		      "and a light that did not clear the floor prints NO with the same pair");
-		Check(LightFloorSegment(F, Quiet, true).find("lightAboveFloor=IS-THE-FLOOR")
+		// AND THE LIGHT THAT DID NOT CLEAR THE FLOOR NO LONGER GETS A WORD
+		// AT ALL. It printed `NO` with a `0..vs..0` pair, which is a light
+		// that was weighed; queue 332 screens it out one step earlier, as a
+		// rise its own control cannot certify, and the segment says which
+		// screen bit. `NO` is reserved for a MEASURED light that lost at
+		// every edge, and no fixture in this file reaches that branch: with a
+		// control that moved nothing, any measured light has risen pixels the
+		// control does not, so it always wins. That gap is unfilled here and
+		// named so rather than papered over with an assertion that passes.
+		Check(SegNo.find("lightAboveFloor=nothing-measured/VOID-CONTROL") != std::string::npos
+		      && SegNo.find("lightVsFloorPx=nothing-measured") != std::string::npos,
+		      "and a light its own control cannot certify says which screen bit, rather "
+		      "than a verdict on a comparison nobody was entitled to make");
+		Check(SegNo.find("lightAboveFloor=NO") == std::string::npos,
+		      "GUARD FIRES: the word that run 48 printed for seven lights whose OFF frame "
+		      "was simply brighter is absent, not merely outranked");
+		Check(LightFloorSegment(F, Quiet, true, LightReadMeasured)
+		          .find("lightAboveFloor=IS-THE-FLOOR")
 		      != std::string::npos,
 		      "the control is not measured against itself and does not print a failed light");
 
@@ -483,11 +507,20 @@ int main()
 		std::vector<LightFloor> Good; Good.push_back(F);
 		const std::string RG = LightProbeDoneLine(2, 2, Good, 0, 0, 0, 0, 1, 11, 240.0, 4.0, 32, 1);
 		std::printf("    %s\n", RG.c_str());
-		Check(RG.find("lightsAboveFloor=1/2") != std::string::npos
+		Check(RG.find("lightsAboveFloor=1/1") != std::string::npos
 		      && RG.find("lightFloorShotsUsable=1/1") != std::string::npos
-		      && RG.find("lightsInNoReadShots=0/2") != std::string::npos,
+		      && RG.find("lightsMeasured=1/2") != std::string::npos
+		      && RG.find("lightsNothingMeasuredVoidControl=1/2") != std::string::npos,
 		      "ACCEPTING CASE ON THE DONE LINE: a quiet control still counts, and the "
 		      "zero ships its denominator");
+		// THE TWO COARSE KEYS WENT WITH THE SIX BUCKETS AND THEIR ABSENCE IS
+		// ASSERTED, not assumed: they cut the same lights a second way, and
+		// two partitions of one variable under two key families is one number
+		// printed twice on a line a grep reads as two.
+		Check(RG.find("lightsInNoReadShots=") == std::string::npos
+		      && RG.find("lightsInNoControlShots=") == std::string::npos,
+		      "and the two coarse light keys queue 332 removed are absent from the "
+		      "accepting done line");
 		Check(ValuesHaveNoSpaces(RG), "every light-pass value is space-free");
 		// THE OLD KEY IS GONE AND ITS ABSENCE IS ASSERTED, not assumed. The
 		// ruling of 2026-09-16 renamed it because its rule AND its denominator
@@ -499,15 +532,17 @@ int main()
 		// pass ran. Checked on every done line this file builds, below.
 		Check(RG.find("lightsReachedFrame=") == std::string::npos,
 		      "RENAMED: the old key is absent from the accepting done line");
-		Check(RG.find("lightsAboveFloorStat=whole-run/count-of-lights-that-beat-their-OWN-shots-"
-		              "control-at-some-code-edge/denominator-is-lights-probed-in-shots-with-a-"
-		              "usable-floor-and-lightsInNoReadShots-and-lightsInNoControlShots-are-the-"
-		              "rest-of-lightsProbed/RENAMED-BY-QUEUE-326-from-lightsReachedFrame-which-"
-		              "counted-one-pixel-rising-by-one-code-value-through-run-47-and-is-not-"
-		              "comparable") != std::string::npos,
+		Check(RG.find("lightsAboveFloorStat=whole-run/count-of-MEASURED-lights-that-beat-their-"
+		              "OWN-shots-control-at-some-code-edge/denominator-is-the-lights-MEASURED-in-"
+		              "shots-with-a-usable-floor-and-NOT-every-light-they-probed/"
+		              "RENAMED-BY-QUEUE-326-from-lightsReachedFrame-which-counted-one-pixel-"
+		              "rising-by-one-code-value-through-run-47-and-is-not-comparable/"
+		              "RE-DENOMINATED-BY-QUEUE-332-on-2026-09-16-so-runs-before-that-are-not-"
+		              "comparable-either") != std::string::npos,
 		      "and the stat token names what the number is a statistic OF, what its "
-		      "denominator counts, which two keys hold the rest, and which key it replaces, "
-		      "as one space-free value a reader gets whole from the line they greped");
+		      "denominator counts, and BOTH of the two changes that make an older run "
+		      "incomparable, as one space-free value a reader gets whole from the line "
+		      "they greped");
 
 		// ---- REJECTING: A CONTROL THAT EXCEEDS EVERY LIGHT --------------
 		//
@@ -533,21 +568,27 @@ int main()
 		LightFloor N;
 		N.ShotId = "vign_camA_night"; N.CameraId = "cam_A"; N.ConditionId = "wet_night";
 		LightFloorSetControl(N, Loud);
-		Check(!LightFloorAddLight(N, "lantern0", Small),
+		Check(LightFloorAddLight(N, "lantern0", "lantern", Small, false) == LightReadVoidControl,
 		      "REJECTING CASE: a light smaller than its own control is not a reading");
-		Check(!LightFloorAddLight(N, "lantern1", Same),
+		Check(LightFloorAddLight(N, "lantern1", "lantern", Same, false) == LightReadVoidControl,
 		      "and a light that equals the control to the pixel is not one either: a tie "
 		      "is not a surplus and no epsilon was invented to make it one");
 		Check(!LightFloorUsable(N) && N.Read == 0 && N.Lights == 2,
 		      "so the shot has no usable floor at all");
 		const std::string NL = LightFloorLine(N);
 		std::printf("    %s\n", NL.c_str());
-		Check(NL.find("lightFloorVerdict=NO-READ") != std::string::npos,
-		      "the per-shot line says NO-READ rather than printing a count of zero");
-		Check(NL.find("lightFloorBestPx=32..vs..32") != std::string::npos
+		Check(NL.find("lightFloorVerdict=NOT-USABLE") != std::string::npos,
+		      "the per-shot line says NOT-USABLE rather than printing a count of zero: this "
+		      "control certified no light at all, which is a weaker claim than NO-READ's "
+		      "and queue 332 gave it its own word");
+		Check(NL.find("lightsReadThisShot=nothing-measured/0-of-2-lights-in-this-shot-were-"
+		              "measurable") != std::string::npos
+		      && NL.find("lightFloorBest=nothing-measured/no-MEASURED-light-in-this-shot")
+		         != std::string::npos
 		      && NL.find("lightFloorCtrlMeanFull=+0.25098") != std::string::npos,
-		      "and a NO-READ carries BOTH numbers: the closest a light came, and the "
-		      "control's own whole-frame movement");
+		      "and it carries the control's own whole-frame movement beside the words, "
+		      "never a closest-light pair: 32..vs..32 named a nearest miss among lights "
+		      "this control was never entitled to weigh");
 		Check(ValuesHaveNoSpaces(NL.substr(NL.find("shot="))),
 		      "the NO-READ line is space-free too");
 
@@ -571,7 +612,7 @@ int main()
 		LightFloor S;
 		S.ShotId = "pinset_night_2"; S.CameraId = "cam_A"; S.ConditionId = "pin_setter_night";
 		LightFloorSetControl(S, AllDarker);
-		Check(!LightFloorAddLight(S, "lantern3", Faint),
+		Check(LightFloorAddLight(S, "lantern3", "lantern", Faint, false) == LightReadVoidControl,
 		      "GUARD FIRES: a one-pixel rise under a control that dragged the whole frame "
 		      "down is NOT a read, which a rise-only floor would have called one");
 
@@ -593,9 +634,10 @@ int main()
 		LightFloorSetControl(NC, NoPair);
 		Check(!NC.bHaveControl,
 		      "a control whose frame never decoded leaves the shot with no floor");
-		Check(!LightFloorAddLight(NC, "lantern1", Real),
+		const int ReadNoCtrl = LightFloorAddLight(NC, "lantern1", "lantern", Real, false);
+		Check(ReadNoCtrl == LightReadBlankShot,
 		      "a light that DID measure cannot read above a floor that does not exist");
-		Check(!LightFloorAddLight(NC, "lantern2", NoPair),
+		Check(LightFloorAddLight(NC, "lantern2", "lantern", NoPair, false) == LightReadBlankShot,
 		      "and neither can a light that did not measure either");
 		Check(NC.Lights == 2 && NC.Read == 0,
 		      "both are still counted as lights this shot examined, so the denominator "
@@ -616,22 +658,31 @@ int main()
 		// THE TWO no-comparable WORDS ON THE LIGHT'S OWN SEGMENT, both sides
 		// of the same `if`: no control for this SHOT, and no delta for this
 		// LIGHT under a control that worked. Neither had a fixture.
-		const std::string SegNoCtrl = LightFloorSegment(NC, Real, false);
-		Check(SegNoCtrl.find("lightAboveFloor=nothing-measured/this-shot-has-no-comparable-control")
-		      != std::string::npos,
-		      "PLANTED BRANCH: a light in a shot with no control prints the words and says "
-		      "which half is missing");
-		const std::string SegNoDelta = LightFloorSegment(F, NoPair, false);
-		Check(SegNoDelta.find("lightAboveFloor=nothing-measured/this-light-has-no-comparable-delta")
-		      != std::string::npos,
+		const std::string SegNoCtrl = LightFloorSegment(NC, Real, false, ReadNoCtrl);
+		Check(SegNoCtrl.find("lightAboveFloor=nothing-measured/BLANK-SHOT") != std::string::npos,
+		      "PLANTED BRANCH: a light in a shot with no control prints the words and the "
+		      "bucket it was filed under, which is the same word its lightStatus carries "
+		      "and the same one the run line counts it in");
+		// NO-PAIR IS THIS LIGHT'S OWN BUCKET AND IT IS HANDED IN, NOT
+		// RE-DERIVED: this light WAS photographed under a control that
+		// worked, and its pair is the thing that is not comparable. The other
+		// two values the parameter takes would both be a different fact: -1
+		// says the light was never photographed at all, and BLANK-SHOT says
+		// the shot lost its own reference.
+		const std::string SegNoDelta = LightFloorSegment(F, NoPair, false, LightReadNoPair);
+		Check(SegNoDelta.find("lightAboveFloor=nothing-measured/NO-PAIR") != std::string::npos,
 		      "PLANTED BRANCH: and a light that did not measure, under a control that did, "
-		      "names the other half");
+		      "names the other half under its own bucket word");
 
 		// THE CONTROL LINE OF A SHOT WHOSE CONTROL MEASURED NOTHING. It used
 		// to print IS-THE-FLOOR, which is a floor claimed by a line whose own
 		// lightDelta says NOTHING-MEASURED. Reachable today: EmitLightLine
 		// passes Seq = -1 for a NO-REFERENCE shot.
-		const std::string SegCtrlDead = LightFloorSegment(NC, NoPair, true);
+		// -1 IS THE LIVE RIG'S OWN VALUE HERE. EmitLightLine defaults Read to
+		// -1 and the control paths that reach this branch (NO-FILE,
+		// UNDECODABLE, NOT-COMPARABLE) all take that default; the bIsControl
+		// branch returns before reading it either way.
+		const std::string SegCtrlDead = LightFloorSegment(NC, NoPair, true, -1);
 		Check(SegCtrlDead.find("lightAboveFloor=nothing-measured/the-control-did-not-measure-so-"
 		                       "this-shot-has-no-floor") != std::string::npos
 		      && SegCtrlDead.find("lightAboveFloorEdge=nothing-measured") != std::string::npos
@@ -640,7 +691,7 @@ int main()
 		      "says so on all three keys instead of claiming IS-THE-FLOOR");
 		Check(SegCtrlDead.find("IS-THE-FLOOR") == std::string::npos,
 		      "and the word that was wrong is absent, not merely outranked");
-		const std::string SegCtrlLive = LightFloorSegment(F, Quiet, true);
+		const std::string SegCtrlLive = LightFloorSegment(F, Quiet, true, LightReadMeasured);
 		Check(SegCtrlLive.find("lightAboveFloor=IS-THE-FLOOR") != std::string::npos
 		      && SegCtrlLive.find("nothing-measured") == std::string::npos,
 		      "ACCEPTING CASE FOR THAT GUARD: a control that DID measure still reads "
@@ -654,9 +705,11 @@ int main()
 		                                           240.0, 3.0, 32, 1);
 		std::printf("    %s\n", NCD.c_str());
 		Check(NCD.find("lightFloorShotsNoControl=1/1") != std::string::npos
-		      && NCD.find("lightsInNoControlShots=2/2") != std::string::npos,
+		      && NCD.find("lightsNothingMeasuredBlankShot=2/2") != std::string::npos
+		      && NCD.find("lightsInNoControlShots=") == std::string::npos,
 		      "the done line counts a NO-CONTROL shot and its lights on their OWN keys, "
-		      "so no shot is folded under a word that says its control swamped it");
+		      "so no shot is folded under a word that says its control swamped it, and "
+		      "the coarse key that used to hold them is gone rather than duplicated");
 		Check(NCD.find("lightFloorShotsNoRead=0/1") != std::string::npos,
 		      "and NO-READ's own count is a zero with its denominator, not silence");
 		Check(NCD.find("lightsReachedFrame=") == std::string::npos,
@@ -691,10 +744,12 @@ int main()
 		      "and the shot count, never 0/0");
 		Check(NUD.find("lightsAboveFloor=0/0") == std::string::npos,
 		      "and the zero over a zero it would have printed is absent");
-		Check(NUD.find("lightFloorShotsNoRead=1/1") != std::string::npos
-		      && NUD.find("lightsInNoReadShots=2/2") != std::string::npos,
-		      "while the shot that DID have a control is still counted as NO-READ, which "
-		      "is the fact the words above do not carry");
+		Check(NUD.find("lightFloorShotsNotUsable=1/1") != std::string::npos
+		      && NUD.find("lightFloorShotsNoRead=0/1") != std::string::npos
+		      && NUD.find("lightsNothingMeasuredVoidControl=2/2") != std::string::npos,
+		      "while the shot that DID have a control is still counted, as NOT-USABLE and "
+		      "not as NO-READ, which is the fact the words above do not carry: its control "
+		      "certified nothing rather than beating something");
 		Check(NUD.find("lightsReachedFrame=") == std::string::npos,
 		      "RENAMED: the old key is absent from the no-usable-floor done line");
 		Check(ValuesHaveNoSpaces(NUD), "every value on the no-usable-floor line is space-free");
@@ -719,26 +774,30 @@ int main()
 		      && M.find("lightsSkippedBudget=1") != std::string::npos,
 		      "a budget that bit announces itself with the count it cost");
 		Check(M.find("lightFloorShotsUsable=1/3") != std::string::npos
-		      && M.find("lightFloorShotsNoRead=2/3") != std::string::npos
+		      && M.find("lightFloorShotsNotUsable=2/3") != std::string::npos
+		      && M.find("lightFloorShotsNoRead=0/3") != std::string::npos
 		      && M.find("lightFloorShotsNoControl=0/3") != std::string::npos,
 		      "the done line separates shots with a usable floor from shots whose control "
-		      "swamped them and from shots that had no control, with all three counts over "
-		      "the same denominator");
+		      "certified nothing, from shots whose lights all lost to a floor that worked, "
+		      "and from shots that had no control, with all four counts over the same "
+		      "denominator, and the four sum to the floors");
 		Check(M.find("lightsProbed=5/6") != std::string::npos
-		      && M.find("lightsAboveFloor=1/2") != std::string::npos
-		      && M.find("lightsInNoReadShots=3/5") != std::string::npos
-		      && M.find("lightsInNoControlShots=0/5") != std::string::npos,
-		      "and the four numbers the accounting identity is read from are all on this "
-		      "one line: 2 lights under a usable floor, 3 in NO-READ shots, 0 in NO-CONTROL "
-		      "shots, 5 probed");
+		      && M.find("lightsAboveFloor=1/1") != std::string::npos
+		      && M.find("lightsMeasured=1/5") != std::string::npos
+		      && M.find("lightsNothingMeasuredVoidControl=4/5") != std::string::npos,
+		      "and the numbers the accounting identity is read from are all on this one "
+		      "line: 5 lights probed, 1 measured, 4 certified by nothing, and the one that "
+		      "was measured beat its own floor");
 		Check(M.find("lightsReachedFrame=") == std::string::npos,
 		      "RENAMED: the old key is absent from the mixed done line");
 		Check(M.find("lightFloorWorstShot=pinset_night_2") != std::string::npos
 		      && M.find("lightFloorWorstCtrlMeanFull=-0.37647") != std::string::npos
-		      && M.find("lightFloorBestLightMeanFullAtWorst=+0.00012/lantern3")
+		      && M.find("lightFloorBestLightMeanFullAtWorst=nothing-measured")
 		         != std::string::npos,
 		      "the worst floor and the best light UNDER IT are one pair from one shot, "
-		      "named AtWorst, never the run's best light from somewhere else");
+		      "named AtWorst, never the run's best light from somewhere else: the worst "
+		      "shot here measured no light at all, so the half that would be the light "
+		      "says so instead of reporting +0.00012 from a comparison that was void");
 		Check(ValuesHaveNoSpaces(M), "every value on the mixed run line is space-free");
 
 		// ---- THE EXPOSURE THE PAIR WAS PHOTOGRAPHED UNDER ---------------
@@ -786,11 +845,15 @@ int main()
 		R47F.ShotId = "vign_camA_night"; R47F.CameraId = "cam_A";
 		R47F.ConditionId = "wet_night";
 		LightFloorSetControl(R47F, R47);
-		LightFloorAddLight(R47F, "east_parade_interior5", R47);
+		// KIND IS `practical` HERE, THE SAME WORD THE LIGHT LINE BELOW
+		// PRINTS FOR THIS ID, so the lantern split on the done line and the
+		// kind on the light line are one fact and not two.
+		const int ReadR47 = LightFloorAddLight(R47F, "east_parade_interior5", "practical",
+		                                       R47, false);
 		const std::string FullLine =
 			LightDeltaLine("east_parade_interior5", "practical", 8, 8, "vign_camA_night",
 			               "cam_A", "wet_night", "MEASURED", R47, "")
-			+ " " + LightFloorSegment(R47F, R47, false) + " " + LightPinSegment(P);
+			+ " " + LightFloorSegment(R47F, R47, false, ReadR47) + " " + LightPinSegment(P);
 		const std::string R47L = LightFloorLine(R47F);
 		const std::string R47D = LightProbeDoneLine(42, 42, Mixed, 0, 0, 0, 0, 6, 43,
 		                                            240.0, 12.5, 32, 6);
@@ -800,11 +863,19 @@ int main()
 		const std::string R47Delta =
 			LightDeltaLine("east_parade_interior5", "practical", 8, 8, "vign_camA_night",
 			               "cam_A", "wet_night", "MEASURED", R47, "");
+		// EACH LENGTH IS PRINTED AGAINST THE BUFFER IT IS ACTUALLY WRITTEN
+		// INTO, read off the declarations in FrameStats.h (Head[420]+Body[1400],
+		// Head[320]+Buf[1700], Buf[2600], Buf[820], Buf[420]). Three of these
+		// five denominators had gone stale: `doneLineChars=2238/of1500` names a
+		// buffer that was raised to 2600, and a length printed over a
+		// denominator smaller than itself reads as a truncation that did not
+		// happen. The numerators below are what this build prints; no bound is
+		// set from them here.
 		std::printf("    atRealFrameWidth: deltaLineChars=%d/head420+body1400 "
-		            "floorLineChars=%d/head320+body1100 doneLineChars=%d/of1500 "
-		            "floorSegChars=%d/of420 pinSegChars=%d/of420 assembledChars=%d\n",
+		            "floorLineChars=%d/head320+body1700 doneLineChars=%d/of2600 "
+		            "floorSegChars=%d/of820 pinSegChars=%d/of420 assembledChars=%d\n",
 		            (int)R47Delta.size(), (int)R47L.size(), (int)R47D.size(),
-		            (int)LightFloorSegment(R47F, R47, false).size(), (int)PS.size(),
+		            (int)LightFloorSegment(R47F, R47, false, ReadR47).size(), (int)PS.size(),
 		            (int)FullLine.size());
 		std::printf("    atFixtureWidth:   deltaLineChars=%d floorLineChars=%d "
 		            "doneLineChars=%d\n",
@@ -831,7 +902,13 @@ int main()
 		      "ending mid-key and reading as a missing measurement");
 		LightFloor LongBest = R47F;
 		LongBest.BestId = std::string(600, 'y');
-		Check(LightFloorLine(LongBest).find("lightFloorLineCut=yes/at-1100-chars-of-body")
+		// bHaveBest IS PLANTED, NOT ASSUMED. Since queue 332 only a MEASURED
+		// light sets it, and R47F's one light is screened out by its own
+		// control, so the 600-character id would never reach the body buffer
+		// and the cap under test would never bite. A guard that cannot fire is
+		// a comment: the condition is planted here, and the bound is untouched.
+		LongBest.bHaveBest = true;
+		Check(LightFloorLine(LongBest).find("lightFloorLineCut=yes/at-1700-chars-of-body")
 		      != std::string::npos,
 		      "and the body's own cap announces itself separately from the head's");
 		// AND THE DONE LINE'S OWN ANNOUNCER, WHICH COULD NOT FIRE BEFORE.
@@ -847,7 +924,7 @@ int main()
 		std::vector<LightFloor> LongRun; LongRun.push_back(LongWorst);
 		const std::string CutD = LightProbeDoneLine(1, 1, LongRun, 0, 0, 0, 0, 1, 43,
 		                                            240.0, 12.5, 32, 1);
-		Check(CutD.find("lightProbeDoneLineCut=yes/at-1500-chars") != std::string::npos,
+		Check(CutD.find("lightProbeDoneLineCut=yes/at-2600-chars") != std::string::npos,
 		      "GUARD FIRES: a done line whose worst shot's id overran the buffer says so, "
 		      "which a pre-cap on that id would have made impossible");
 		Check(CutD.find(std::string(300, 'z')) != std::string::npos,
