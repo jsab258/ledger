@@ -665,3 +665,5 @@ when	agent	model	reason	agentId
 2026-09-16T06:35:34Z	studio-director	fable	default	a825ff542a7789807
 2026-09-16T06:44:39Z	artifact-reader	sonnet	default	a42d99c1ccbd92834
 2026-09-16T06:57:44Z	artifact-reader	sonnet	default	a42d99c1ccbd92834
+2026-09-16T07:10:54Z	instrument-builder	opus	default	a4c97c72ca286bd91
+2026-09-16T07:11:17Z	systems-builder	opus	default	a1c8d4848509575bd
