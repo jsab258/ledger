@@ -352,3 +352,15 @@ cannot find, which is the failure this file exists to stop.
   staged ATTRIBUTION.json, one line dictated; 322 and 324 filed;
   predictions for the run written before it exists
   `game-design/decision-2026-09-15-ruling-per-condition-wetness-lands-and-the-licence-record-owes-the-pack-its-row.md`
+
+- **2026-09-16** queue 326 lands amended (03:27Z): the control floor is
+  read per shot on integer counts at the same edge, strict, no epsilon;
+  moves floor rises; the run key is renamed lightsAboveFloor because its
+  rule and denominator changed and the stat token is not what a grep
+  returns; two unrun print branches, a NO-CONTROL fold, a wrong count in
+  the header, a fixture whose tallies disagree and two silent caps are
+  conditions; the reverted accounted key is queue B; four of run 47's
+  six certain reads are blank probe frames, queue A; the ue-probe gate
+  stays whole and the carve-out is queue C, research first; predictions
+  written before the run
+  `game-design/decision-2026-09-16-ruling-326-lands-amended-the-floor-is-read-and-the-key-that-changed-meaning-changes-name.md`
