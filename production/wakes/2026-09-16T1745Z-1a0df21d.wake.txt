@@ -1,0 +1,27 @@
+id: 1a0df21d
+due: 2026-09-16T17:45:00Z
+armedAt: 2026-09-16T17:05:31Z
+armedBy: resident/361-builder-out-on-the-sky-night-level
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+ONE BUILDER OUT ON QUEUE 361, THE SKY'S NIGHT LEVEL. 78ac0c50 is HEAD and pushed. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, sixteen points of headroom, measured until about 01:33Z. Inbox clean, no wakes due at 17:04Z.
+
+RUN 50 LANDED AND WAS READ IN THE RULED ORDER. THE SKY WORKS: all four flags read with no refusals, skyDomeMatIsSky=yes, skyHdriBytes=2224812 where run 49 read 0, and ambientModel says the photograph on the dome is what lights the street. The fourth read settled the mirroring question: skyLightLowerHemisphereSolid=yes, so the mirrored lower half NEVER REACHES THE CAPTURE and is a non-issue rather than an unknown.
+
+AND IT MADE NIGHT RENDER LIKE NOON, measured on the same file with the same ruler: ue-pinset_night_3.png went meanLuma 43.6 to 142.9. kSkyLuminance=1.0f at VignetteShot.cpp:384 is a GLOBAL constant written once at dome build; sky_intensity is per-condition (day 0.70, night 0.35) but drives only the SkyLight at :2217, and an unlit emissive surface renders at its own value regardless of any light. That is queue 361 and the builder is on it.
+
+THE ONE THING THE BUILDER MAY HAND BACK INSTEAD OF A FIX: it was told that if a NEW CONDITION FIELD is genuinely needed, it must say so and STOP, because a new field is a schema change and therefore structural under Jafar's own boundary, needing a director. That is a correct outcome, not a failure. If that is what comes back, spawn the director rather than adding the field.
+
+DO NOT TUNE THE VALUE TO MATCH RUN 49's 43.6. That frame had NO SKY IN IT, so matching it would be matching an absence. Whatever lands is the FIRST VALUE OF A SERIES and says so on the scene line, exactly as kLampEmissiveUnitless does.
+
+THE LAMP DID NOT REGRESS IN RUN 50 and this must not be misread later: night rows still read 2 to 3 lanterns lit, 9 rows with two or more, unchanged. The DAY false positives fell from about 20 rows to 4 because a brighter ambient stops a lamp head beating its ring by one byte of noise. Queue 358 is still the item for that missing margin; run 50 made its symptom rarer without fixing it.
+
+WHEN THE BUILDER LANDS: review, verify, ONE commit, push, then dispatch run 51 by appending to production/d1-probe/DISPATCH. Capture the sha BEFORE pushing, watch by ancestry, compare run files BY PREFIX. Baseline for the night level is run 50, verdict 727d6a46; baseline for the lamp is run 49.
+
+STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, together or not at all; the lamp drive guard's move into the tested header BEFORE the lamp constant's second value; the sky parameter-name contract into SurfaceBind.h BEFORE anything else reads SkyMap or SkyLuminance; 332, 356, 357, 358, 359 (printer first, not the road), 360 (seventeen characters of dispatch margin, do NOT raise the bound).
+
+THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT. The scene spec has no person; the walk pawn has no skeletal mesh.
+
+HIS REGISTER RULE: a filed item gets ONE LINE saying it is filed. The reasoning goes in the record.
