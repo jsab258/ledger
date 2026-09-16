@@ -1,1 +1,1 @@
-photo: production/d1-probe/ue-vign_hook_day.png
+photo: game-design/sim-shots/brief_2026-09-16_hook_day_run51.png
