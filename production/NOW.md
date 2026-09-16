@@ -9,6 +9,58 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-16 09:05Z: THE AUDIT LANDED IN FULL. d2687bf9 IS PUSHED, TREE CLEAN
+
+His external audit at 07:30Z named four things and ALL FOUR CHECKED OUT AT THE
+SOURCE, arithmetic included. All four are landed in d2687bf9, 36 paths. His
+budget row is 2026-09-16b: 59 total, 60 Fable, ceiling 85, 25 points headroom,
+takenAt 07:30:09Z.
+
+WHAT IS MOVING RIGHT NOW: one engine-specialist on queue 333, the sodium lamp's
+emissive element, briefed from section 3 of the 06:35Z ruling. Nothing else.
+The tree was clean and committed when it started, so anything dirty is its
+work.
+
+THREE CORRECTIONS I OWE AND HAVE SENT, kept here because a later reader meets
+this file and not the conversation:
+
+  1. I TOLD HIM THE CLAIM BUG PROBABLY EXPLAINED THE 2026-09-06 SWEEP. It does
+     not, and the director established it rather than arguing it:
+     study-sweep.txt reads claim=/Unknown on 72 of 72 paths, zero
+     Contradiction. Sightings file at 0.9 and knowledge promotes at 0.95, so
+     nobody in that grid could be lied to about something they knew. What
+     survives is narrower and still real: the sweep never put a lie in front
+     of an eyewitness in 648 sessions, so the instrument is blind exactly
+     where the bug lives. Queue 348 is owed for that arm.
+
+  2. I REPORTED QUEUE 334 AS LANDED AND IT IS OPEN ON RULE 6. light_probe is
+     written into the golden 49 times and read ZERO times: struct Shot at
+     VignetteSpec.h:288 is {Id, CameraId, ConditionId}, S.LightProbe appears
+     nowhere under ue-probe/Source, and ShouldProbeShot reads the CONDITION's
+     lantern flags, which are on for wet_night. All six settling rows would be
+     probed, which is the one thing a settling series forbids. No carrying run
+     until the reader lands.
+
+  3. I DAMAGED vignette-scene.json AND REPAIRED IT. Applying the dictated
+     settle_note text through json.dumps reformatted the whole hand-authored
+     file, 1448/536. Reconstructed from HEAD's text with the three semantic
+     deltas re-applied in HEAD's own one-line aligned style; 51/44 now and the
+     data asserts equal to the verified version. Rule 5, and I broke it on a
+     file I had just fenced two builders out of.
+
+THE SEVEN TURN-LIMIT DEATHS ARE THE DAY'S REAL COST. Roughly 1.2M subagent
+tokens across seven agents that hit their limit without reporting, several
+having FINISHED the work and simply never said so. Queue 336 is rewritten
+around the actual diagnosis: the instruction is present in the definitions AND
+in the briefs and does not fire, and a stop condition tied to success cannot
+fire when the work does not succeed. Two-sided conditions are the only thing
+that has worked.
+
+STILL OWED, none of it dispatched: the canon gate tools/canon-register-check.py
+(so his standing rule is currently a sentence nothing enforces); queue 028 half
+one, the Blender GLB bake; queues 348 and 349 to file; and the D29 and D30
+judgement calls the canon sweep left for him rather than applying.
+
 ## 2026-09-16 06:50Z: THE TWO THINGS HE ASKED FOR IN TOMORROW'S BRIEF
 
 He named them himself and said to put them in the brief rather than as
