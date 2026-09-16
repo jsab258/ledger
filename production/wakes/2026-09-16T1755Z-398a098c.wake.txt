@@ -3,7 +3,7 @@ due: 2026-09-16T17:55:00Z
 armedAt: 2026-09-16T17:27:42Z
 armedBy: resident/director-ruling-361-two-of-jafars-items-uncommitted
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T17:36:00Z
 capBitAt: -
 
 A DIRECTOR IS RULING THE SKY LUMINANCE BATCH AND THE GATE IS CORRECTLY REFUSING ITS ATTENDANCE. 13acb9a4 is HEAD and pushed. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, measured until about 01:33Z.
@@ -25,3 +25,13 @@ AND THE DAY ROWS MOVE, which queue 361's acceptance said they would not. That ac
 FILED TODAY AND NOT STARTED: 355, 356, 357, 358, 359, 360, 361 (in flight), 362, 363. 363 is new: the cadence gate reads PATHS and knows nothing of D41, so visual engine work always trips it. Three instances today, right twice and wrong once. Its obvious fix is named as probably wrong.
 
 THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT.
+
+DISCHARGED 2026-09-16T17:36Z. The stamp landed, the batch is committed at
+118281a9, and RUN 51 IS QUEUED (GitHub run 35129105903, head_sha 118281a9,
+17:35:13Z). Jafar's two items are committed and no longer at risk.
+
+THE DIRECTOR RULED THAT NO RULING WAS NEEDED: visual under D41, the gate fired
+only because it reads paths. It also corrected the resident's acceptance line
+more sharply than the resident had, and the correction found something nobody
+designed: 33 conditions carry FOUR sky_intensity values, and the 10 rows at
+1.00 are UNMOVED by arithmetic. THE CHANGE HAS ITS OWN NULL CONTROL.
