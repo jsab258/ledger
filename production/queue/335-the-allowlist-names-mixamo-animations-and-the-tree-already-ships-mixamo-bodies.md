@@ -28,8 +28,19 @@ acceptance: line 6 of the allowlist says what it means about bodies, either
   way, and if the answer is that bodies are allowed it says so in the same
   words the other three documents already use
 max_sessions: 1
-status: READY 2026-09-16, filed as a CLARITY item and NOT as a claimed
-  violation, which the evidence does not support.
+status: DONE 2026-09-16, ANSWERED BY JAFAR. His reply was one character,
+  "A", taking the card's option A: Mixamo bodies are in the same way Mixamo
+  animations are, and the allowlist line says so in the words the other
+  documents already use. Recorded as D46; the allowlist's SHIP-SAFE item 3
+  is edited in the same batch, which is what a ruling that changes the law
+  owes the law.
+
+  THE FIGURE IS UNBLOCKED. This item was raised to BLOCKING at midday
+  because the third element of his order for the day had no body it was
+  allowed to use. It now does.
+
+  Filed originally as a CLARITY item and NOT as a claimed violation, which
+  the evidence did not support.
 
   RAISED TO BLOCKING 2026-09-16 MIDDAY: THIS NOW BLOCKS THE THIRD ELEMENT OF
   TODAY'S ORDER. Jafar's order for the day is "wetness, materials, then dusk

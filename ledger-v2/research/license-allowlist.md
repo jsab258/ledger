@@ -3,7 +3,7 @@
 SHIP-SAFE
 1. Voices: the local voice pipeline as built; Kokoro (Apache 2.0), Chatterbox (MIT, keep watermark), Piper (MIT original; the active fork is GPL-3.0, acceptable for generated audio, check before embedding code). ElevenLabs on paid tiers if adopted.
 2. 3D: TRELLIS/TRELLIS 2 (MIT). Meshy or Tripo paid tiers only. CC0 libraries (Poly Haven, ambientCG, Sketchfab CC0 filter). Fab purchases under the Fab Standard License. Objaverse only with per-object license filtering.
-3. Characters: MetaHuman (free under 1M revenue, usable outside Unreal, never to train or enhance AI models). Character Creator 4 exports per Reallusion EULA. Mixamo animations.
+3. Characters: MetaHuman (free under 1M revenue, usable outside Unreal, never to train or enhance AI models). Character Creator 4 exports per Reallusion EULA. Mixamo characters AND animations, with Jafar's account and a token he supplies (D46, ruled by Jafar 2026-09-16: bodies are in the same way animations are). Nothing is purchased; a Mixamo character is a download.
 4. Faces: Audio2Face-3D (MIT).
 5. Music: self-hosted MusicGen (MIT) or Stable Audio Open; ElevenLabs Music if adopted. Final pick re-verified when radio production starts (open-questions 4).
 6. Geodata: OSM/Overture as skeleton only, geometry self-generated, OSM attribution shipped, layouts fictionalized.

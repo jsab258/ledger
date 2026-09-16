@@ -3,7 +3,7 @@ due: 2026-09-16T14:55:00Z
 armedAt: 2026-09-16T14:17:41Z
 armedBy: resident/day-order-done-and-judged-awaiting-his-answer
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T15:10:00Z
 capBitAt: -
 
 THE DAY'S ORDERED WORK IS DONE AND JUDGED. 3e045e92 is HEAD and pushed, tree clean. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. NOTHING IS RUNNING: no builders, no directors, no CI.
@@ -19,3 +19,41 @@ STILL OWED, none of it started: enforcement-claims-check.py with constitution la
 THE THREE CLAIMS THAT FAILED A CHECK TODAY, kept because method is what survives a reset: a push read as successful when it had been rejected (the pipeline returned tail's exit code, not the push's); 212 read as the same denominator as 209 (offered against examined, one paragraph apart in the same output); and queue 335's claim that the Unity path renders a Mixamo body, repeated toward Jafar before it was caught. A fourth was caught before it became a claim: the road was first measured on the exposure-pin frame rather than a wetness frame. Each fell to running the command rather than re-reading the sentence.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11, his rule of today.
+
+DISCHARGED 2026-09-16T15:10Z. JAFAR ANSWERED AND HE ALSO CORRECTED THE
+REGISTER, so this wake's "awaiting his answer" is spent.
+
+HIS MESSAGE, 14:12:36Z, in full: "A." then "And the register has drifted
+again. Two messages, and the second is mostly explanation of items I filed
+rather than asked about. A filed item needs one line saying it is filed, not
+four paragraphs on its reasoning. Put the reasoning in the record where I can
+read it if I want it; the message carries the decision and the picture."
+
+"A" ANSWERS BOTH CARDS AND THE READING IS STATED HERE RATHER THAN ASSUMED
+SILENTLY. Both NEEDS YOU blocks offered an A and the studio recommended A in
+both. He sent one "A" after both messages and his second paragraph shows he
+read the second one. So: part 1's A (Mixamo bodies are in) and part 2's A (the
+smallest loop, once the slice has landed). THE STAKES ARE UNEVEN AND THAT IS
+WHY THIS IS SAFE: part 1's A is acted on now and is the blocking one; part 2's
+A starts no work today, so if he meant only one of them there is time to
+correct before anything is spent on it.
+
+ACTED ON: D46 written, the allowlist's SHIP-SAFE item 3 edited in the same
+batch, queue 335 closed, THE FIGURE IS UNBLOCKED.
+
+AND THE INOCULATION I WROTE THIS MORNING BECAME FALSE THE MOMENT D46 EXISTED.
+verify.py carried "There is no D46", written against a builder who cited one.
+Creating D46 without fixing that sentence would have been me manufacturing the
+exact decay I caught. It now says a D46 exists, that it is about Mixamo bodies
+and not about wire-or-delete, and that a reader reaching for it here would
+still be citing the wrong record.
+
+THE REGISTER FIX IS THE MORE IMPORTANT HALF. "Drifted AGAIN" is his phrase and
+again means this is not the first time. The rule is in .claude/agents/
+producer.md under the caps, with the instance that ruled it. AND IT IS NAMED IN
+THE CHECKER RATHER THAN LEFT AS DECORATION: `filedline` is now in
+producer-check's RULES and in RULES_NO_REGISTER, so every run prints it under
+NOT ENFORCED. No bound was invented to make it look enforced, because detecting
+"this sentence reports a filed item" is a phrase-list problem and a phrase list
+is the weak link in every checker here that has one. Selftest 176 passed, 0
+failed.

@@ -188,7 +188,8 @@ SPLIT_RETIRED_ON = datetime.date(2026, 9, 9)
 # The rules, by name, so a register can say which of them it enforces and the
 # report can print the ones it did not.
 RULES = ["wordcap", "shape", "options", "deadline", "nextvisible",
-         "banned", "linkfloor", "linkcap", "linkdest", "split", "reading"]
+         "banned", "linkfloor", "linkcap", "linkdest", "split", "reading",
+         "filedline"]
 # `split` IS ENFORCED IN NO REGISTER TODAY: retired from the brief by the ruling
 # block above, and never applied to an unprompted message or an answer, which
 # Jafar's 2026-09-05 order says nothing about. IT STAYS IN RULES ON PURPOSE, so
@@ -196,7 +197,16 @@ RULES = ["wordcap", "shape", "options", "deadline", "nextvisible",
 # rulesEnforced=9/10 beside rulesNotEnforced=split. A retired rule deleted from
 # this list would read exactly like a rule that passed, and the ruling would be
 # lost rather than moved.
-RULES_NO_REGISTER = ("split",)
+# `filedline` IS ENFORCED IN NO REGISTER EITHER, and it is here for the same
+# reason rather than as a placeholder. Jafar ruled it 2026-09-16 after a
+# two-part answer spent four paragraphs explaining items he had raised and the
+# studio had already filed: "A filed item needs one line saying it is filed,
+# not four paragraphs on its reasoning." NOTHING CHECKS THAT TODAY. Detecting
+# "this sentence reports a filed item" is a phrase-list problem, and a phrase
+# list is the weak link in every checker here that has one, so a bound was not
+# invented to make the rule look enforced. It is NAMED at every run instead, so
+# the next drift is visible in the done line rather than discovered by him.
+RULES_NO_REGISTER = ("split", "filedline")
 # ENFORCED IN THE BRIEF AND NOWHERE ELSE, ruled by Jafar 2026-09-15 (see
 # READING_PARTS). The daily message is the one place he is asked for the meter;
 # an unprompted message and an answer are not that place and would turn the
@@ -2896,7 +2906,8 @@ def selftest():
        not ra["findings"], [str(f) for f in ra["findings"]])
     ok("and the answer register NAMES the rules it did not enforce",
        set(ra["not_enforced"]) == {"wordcap", "shape", "options", "deadline",
-                                   "nextvisible", "split", "reading"},
+                                   "nextvisible", "split", "reading",
+                                   "filedline"},
        ra["not_enforced"])
 
     # ACCEPTING, third: a message with nothing needing him is not forced to
