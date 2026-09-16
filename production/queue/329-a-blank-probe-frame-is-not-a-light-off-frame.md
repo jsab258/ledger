@@ -43,3 +43,36 @@ status: READY 2026-09-16, filed by the 22:25Z ruling's section 10 as item A.
   as queue 325's second half; the ruling says A is still owed as an instrument
   even if it is, because 325 asks why frames blank and this asks that a blank
   frame never be read as a measurement.
+
+QUANTIFIED ON RUN 48, 2026-09-16, and the fault is live rather than historical.
+Queue 326's floor shipped and its first real run reads lightsAboveFloor=17/28
+over 4 usable shots of 6. EIGHT OF THOSE SEVENTEEN READS ARE THIS FAULT:
+
+    shot             light                    meanOffFull   counted as
+    vign_camA_night  lantern2                   0.00075       YES
+    vign_camA_night  lantern3                   0.00075       YES
+    vign_camA_night  east_parade_interior2      0.00075       YES
+    pinset_night_3   east_parade_interior2      0.00152       YES
+    pinset_night_3   east_parade_interior5      0.00152       YES
+    pinset_night_4   lantern0                   0.00152       YES
+    pinset_night_4   lantern1                   0.00152       YES
+    pinset_night_4   lantern2                   0.00152       YES
+
+  CORRECTED 06:40Z FROM FIVE TO EIGHT, and the correction is itself the lesson.
+  The first count filtered on the literal string 0.00152, which is the black
+  level the pinset camera writes. camA_night writes its blanks at 0.00075, a
+  different number for the same condition, and three reads were missed by
+  matching a VALUE where the test is a THRESHOLD. There is no value in the
+  whole 48-line series between 0.00152 and 0.02392, a factor of 15.7, so the
+  threshold has a printed gap under it rather than a guess.
+
+  So the true count is at most 9 of 28, and 17/28 must not be quoted until this
+  lands. AT MOST, because a second and separate fault removes six more: see
+  queue 332, which this item does not cover and must not be assumed to.
+
+  AND THE FLOOR CAUGHT THE OTHER HALF, which is worth recording because it says
+  the design is right and only incomplete: pinset_night_2's CONTROL itself came
+  back at meanOffFull=0.00152, and that shot correctly reads NO-READ. A blank
+  control is caught; a blank light frame under a good control is not. Exactly
+  the asymmetry this item was filed for, now with both sides observed in one
+  run.

@@ -3376,28 +3376,27 @@ def vignette_shot_files(verdict=None):
         return True, ("vignette shot files %s (the verdict measured nothing; "
                       "no frame was named, so none was checked), %s"
                       % (NOTHING_MEASURED, selft))
-    # THE WAIVER RIDES THE GREEN LINE OR IT IS NOT A WAIVER, IT IS A HOLE.
-    # `4 missing` beside a green tick would read as a broken check; the footer
-    # has to say the four are forgiven, how many the frozen list holds, and
-    # which run the forgiveness is pinned to, so the day the pin moves nobody
-    # is surprised. Same shape as `preReadingWaiverBit=17/17`.
+    # A WAIVER RODE THIS LINE UNTIL 16 SEPTEMBER and it is gone with the
+    # machinery: `shotFilesWaived` and `shotFilesWaivedRun` forgave four
+    # named-but-absent frames while the verdict on disk was run c738797, which
+    # is the run whose staging bug lost them. Run 48 landed the frames at
+    # 4e257ee, the pin stopped matching by itself, and neither key is printed
+    # by the tool any more.
     # THE KEYS TRAVEL IN THE SHAPE THE TOOL PRINTS THEM, character for
     # character, so one grep for `shotFiles` finds the same fields in the
     # footer and in the verdict reading. A key that means `39` in one channel
     # and `39/43` in another is two keys wearing one name.
-    w = re.search(r"\bshotFilesWaived=(\d+)/(\d+)", out)
-    run_pin = re.search(r"\bshotFilesWaivedRun=(\S+)", out)
+    # `shotFilesTracked` RIDES THE GREEN LINE BECAUSE THE ADJECTIVE CANNOT.
+    # This branch is reachable with git unable to answer the index question at
+    # all, and the old sentence said "all present and tracked" either way; the
+    # number says which it was, and reads `nothing-measured` when nobody asked
+    # the index successfully.
+    tr = re.search(r"\bshotFilesTracked=(\S+)", out)
     keys = ("shotFilesNamed=%d shotFilesPresent=%d shotFilesMissing=%d "
-            "shotFilesWaived=%s shotFilesWaivedRun=%s"
-            % (named, present, missing, w.group(0).split("=")[1] if w else
-               NOTHING_MEASURED,
-               run_pin.group(1) if run_pin else NOTHING_MEASURED))
-    if w and int(w.group(1)):
-        return True, ("verdict shot files: %s, so %s named frame(s) are "
-                      "forgiven on that one run and the waiver self-expires "
-                      "(a verdict from any other run faces the full check), %s"
-                      % (keys, w.group(1), selft))
-    return True, ("verdict shot files: %s, all present and tracked, %s"
+            "shotFilesTracked=%s"
+            % (named, present, missing,
+               tr.group(1) if tr else NOTHING_MEASURED))
+    return True, ("verdict shot files: %s, every named frame is on disk, %s"
                   % (keys, selft))
 
 

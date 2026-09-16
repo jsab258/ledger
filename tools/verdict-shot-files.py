@@ -95,52 +95,15 @@ STAMP_RX = re.compile(r"\b([0-9a-f]{7,40})\s+@(\d+)")
 DETAIL_KEEP = 12
 DETAIL_WIDTH = 200
 
-# ---------------------------------------------------------------------------
-# THE WAIVER, PINNED TO ONE RUN, AND IT DELETES ITSELF.
-# ---------------------------------------------------------------------------
-# WHY A WAIVER EXISTS AT ALL, WHICH IS THE PART A LATER READER NEEDS. This
-# check was written on 16 September and went red on the tree that day,
-# correctly: the committed verdict from run c738797 names 43 frames and four of
-# them have never existed anywhere. The repair for that is in
-# .github/workflows/ledger-probe-unreal.yml, where the capture step now derives
-# its leaf names from the spec and the commit step stages every one of them.
-#
-# AND THAT REPAIR COULD NOT LAND. Committing here needs a green
-# `ledger/verify.py`; this check cannot go green until a probe run stages those
-# four frames; and no probe run can stage them until the workflow repair is
-# committed and pushed. A correct gate had locked the door it was standing in.
-# The alternatives were both worse: loosening the check makes it unable to tell
-# a regression from an improvement (rule 5b's ratchet), and fabricating the
-# four PNGs puts invented evidence in the evidence channel.
-#
-# SO IT IS PINNED TO THE RUN AND NOT TO THE FILENAMES, which is the whole
-# design. The four names below are forgiven only while the verdict ON DISK is
-# the one measured by run c738797, a sha this tool already reads off line 1 and
-# already prints as `verdictRun=`. The first verdict from any other run faces
-# the full check, including these four, with nothing for anybody to remember to
-# delete. A waiver keyed on the filenames would have forgiven them for ever.
-#
-# WHAT IT DOES NOT FORGIVE, and each of these is a case in `--selftest`:
-#   a fifth name absent on run c738797 (it is not on the list, so it fails);
-#   these four absent on any other run (the pin has moved, so they fail);
-#   these four present on disk and NOT STAGED on any run at all, which is the
-#     exact fault this whole file exists to catch and must never be waived.
-#
-# THE NUMBERS DO NOT MOVE. `shotFilesMissing` still reads 4 while the waiver
-# holds; the waiver changes the EXIT CODE and nothing else, and prints
-# `shotFilesWaived=4/4` beside it. A waiver that edited the measurement would
-# be the silent-instrument failure wearing a permission slip.
-WAIVED_RUN = "c738797"
-WAIVED_ABSENT_FILES = (
-    "ue-pinset_night_1.png",
-    "ue-pinset_night_2.png",
-    "ue-pinset_night_3.png",
-    "ue-pinset_night_4.png",
-)
-# ONLY ABSENCE, never the staging fault. `on-disk-but-not-in-the-index` is the
-# bug that lost these four in the first place; forgiving it here would waive
-# the finding this tool was built to make.
-WAIVABLE_FAULT_PREFIX = "absent-from-disk"
+# A WAIVER LIVED HERE AND HAS EXPIRED ON ITS OWN, WHICH IS WHY IT WAS BUILT
+# THAT WAY. From 16 September it forgave four named-but-absent frames,
+# `ue-pinset_night_1.png` through `_4.png`, and only while the verdict on disk
+# was the one measured by run c738797: the staging repair for them could not
+# land while this check was red, so the forgiveness was pinned to that ONE RUN
+# rather than to the names, and nobody had to remember to delete it. Run 48
+# landed the four frames at 4e257ee, the pin stopped matching by itself, and
+# the machinery is deleted here rather than left as a constant nobody dares
+# remove. `git log -S WAIVED_ABSENT_FILES` has the whole of it.
 
 
 def _nospace(s):
@@ -201,12 +164,8 @@ def read(verdict):
         "shotLines": 0, "linesWithoutFile": 0,
         "named": 0, "present": 0, "tracked": 0, "untracked": 0, "missing": 0,
         "namedWithPath": 0,
-        "faults": [],           # one dict per UNWAIVED fault, in verdict order
+        "faults": [],           # one dict per fault, in verdict order
         "trackedKnown": False,  # whether git could answer at all
-        # Defaulted here as well as set below, because the no-verdict path
-        # returns early and `report_lines` must never reach a missing key.
-        "waived": [], "waiverApplies": False,
-        "waiverRun": WAIVED_RUN, "waiverListLen": len(WAIVED_ABSENT_FILES),
     }
     if not vp.is_file():
         return r
@@ -282,22 +241,6 @@ def read(verdict):
             why = "on-disk-but-not-in-the-index"
         r["faults"].append({**row, "why": why})
 
-    # THE WAIVER IS APPLIED LAST, TO THE FAULT LIST AND TO NOTHING ELSE. Every
-    # count above was taken before this ran and none of them moves, so
-    # `shotFilesMissing` on the done line is the true number whether the waiver
-    # holds or not; what changes is how many faults are left to fail on.
-    r["waiverRun"] = WAIVED_RUN
-    r["waiverApplies"] = (r["run"] == WAIVED_RUN)
-    r["waiverListLen"] = len(WAIVED_ABSENT_FILES)
-    waived, kept = [], []
-    for f in r["faults"]:
-        if (r["waiverApplies"] and f["file"] in WAIVED_ABSENT_FILES
-                and f["why"].startswith(WAIVABLE_FAULT_PREFIX)):
-            waived.append(f)
-        else:
-            kept.append(f)
-    r["waived"] = waived
-    r["faults"] = kept
     return r
 
 
@@ -333,30 +276,6 @@ def report_lines(r):
         L.extend(cap(detail, keep=DETAIL_KEEP, width=DETAIL_WIDTH,
                      sep="\n").split("\n"))
 
-    if r["waived"]:
-        # PRINTED, NEVER SILENT. A waived fault that produced no output would
-        # be indistinguishable from a frame that landed, which is the whole
-        # class of failure this file was written for.
-        wl = ["shotFileWaived file=%s shot=%s verdictStatus=%s verdictBytes=%s "
-              "fault=%s waivedBy=frozen-list-pinned-to-run/%s"
-              % (_nospace(f["file"]), _nospace(f["shot"]), _nospace(f["status"]),
-                 _nospace(f["bytes"]), f["why"], _nospace(r["waiverRun"]))
-              for f in r["waived"]]
-        L.extend(cap(wl, keep=DETAIL_KEEP, width=DETAIL_WIDTH,
-                     sep="\n").split("\n"))
-        L.append("WAIVED %d of %d named-but-absent frame(s), because the "
-                 "verdict on disk is run %s and the repair for them is the "
-                 "workflow change in the same commit. The pin is the run, not "
-                 "the names: the first verdict from any other run faces the "
-                 "full check." % (len(r["waived"]), r["waiverListLen"],
-                                  _nospace(r["waiverRun"])))
-    elif r["waiverApplies"]:
-        # THE LIST HAS ROTTED IN THE RIGHT DIRECTION. Said out loud rather than
-        # left as a silent zero, because the next rung DELETES these entries.
-        L.append("WAIVER UNUSED - the verdict is run %s and none of the %d "
-                 "frozen name(s) needed forgiving; delete the list."
-                 % (_nospace(r["waiverRun"]), r["waiverListLen"]))
-
     reading = "cumulative-over-one-verdict"
     if r["named"] == 0 and not r["captured"]:
         reading = NOTHING_MEASURED
@@ -373,8 +292,12 @@ def report_lines(r):
              "verdictCaptured=%s verdictShotLines=%d shotLinesWithoutFile=%d "
              "shotFilesNamed=%d shotFilesPresent=%d shotFilesMissing=%d "
              "shotFilesTracked=%s shotFilesUntracked=%s shotFilesNamedWithPath=%d "
-             "shotFilesWaived=%d/%d shotFilesWaivedRun=%s shotFilesWaiverApplies=%s "
-             "shotFilesUnwaivedFaults=%d "
+             # `shotFilesFaults` is the number the exit code is made of,
+             # printed so nobody has to derive it - and it cannot be derived
+             # from the per-shot lines above, because the cap can truncate
+             # those. It was `shotFilesUnwaivedFaults` until the waiver was
+             # retired on 16 September; there is no waiver left to be un-.
+             "shotFilesFaults=%d "
              "shotFilesStat=cumulative-over-one-verdict"
              % (vrel, _nospace(r["run"] or NOTHING_MEASURED), reading,
                 "yes" if r["captured"] else "no",
@@ -382,14 +305,7 @@ def report_lines(r):
                 r["missing"],
                 r["tracked"] if r["trackedKnown"] else NOTHING_MEASURED,
                 r["untracked"] if r["trackedKnown"] else NOTHING_MEASURED,
-                r["namedWithPath"],
-                # `shotFilesWaived` is waived-this-run over the frozen list's
-                # length, so 4/4 and 0/4 are different facts on the same line:
-                # the second says the frames landed and the list can go.
-                # `shotFilesUnwaivedFaults` is the number the exit code is made
-                # of, printed so nobody has to derive it.
-                len(r["waived"]), r["waiverListLen"], _nospace(r["waiverRun"]),
-                "yes" if r["waiverApplies"] else "no", len(r["faults"])))
+                r["namedWithPath"], len(r["faults"])))
     return L
 
 
@@ -412,6 +328,26 @@ def verdict_exit(r):
 
 
 # --------------------------------------------------------------- selftest
+def _live_tracked(directory, want):
+    """Up to `want` files git reports TRACKED in `directory` and that are on
+    disk right now, name-sorted so the pick is stable.
+
+    THE ACCEPTING FIXTURE'S SUPPLY, AND IT ASKS THE INDEX RATHER THAN A GLOB.
+    A live-tree fixture may assert INVARIANTS and must not assert today's
+    incidental values, so nothing here names a shot family, a file count or a
+    run: it takes whatever is tracked, and the caller derives its expected
+    counts from HOW MANY came back. Names carrying whitespace are dropped
+    because the fixture writes them into a `key=value` channel.
+    """
+    code, out = _git(directory, ["ls-files", "--", "."])
+    if code != 0:
+        return []
+    names = sorted(set(l.strip() for l in out.splitlines()
+                       if l.strip() and "/" not in l.strip()
+                       and not re.search(r"\s", l.strip())))
+    return [n for n in names if (directory / n).is_file()][:want]
+
+
 def _write(p, text):
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(text, encoding="utf-8")
@@ -437,15 +373,24 @@ def _verdict_text(rows, captured=True, run="abc1234"):
 def selftest():
     """Both outcomes watched, ACCEPTING CASE FIRST (CLAUDE.md rule 5b).
 
-    THE ACCEPTING FIXTURE IS THE LIVE REPOSITORY. Real frames that are on disk
+    THE ACCEPTING FIXTURE IS THE LIVE REPOSITORY. Real files that are on disk
     and in the index today are named by a verdict this builds, so the case this
     tool must let through is made of assets somebody would have to delete to
     break. THE REJECTING FIXTURES ARE SYNTHETIC, naming files that exist
-    nowhere, so doing the work this tool asks for (landing the four missing
-    pinset frames) can never make the selftest fail.
+    nowhere, so doing the work this tool asks for (landing the frames a verdict
+    names) can never make the selftest fail.
+
+    AND A LIVE-TREE FIXTURE ASSERTS INVARIANTS, NEVER TODAY'S VALUES. This is
+    the lesson the first version of this file paid for: it also asserted WHICH
+    RUN the live verdict was measured on, and the morning the missing frames
+    landed, doing the work the tool exists to prompt turned the tool red. No
+    fixture below asserts a run sha, a file count the next probe run changes,
+    or which shots exist; the live counts are derived from the files git names
+    at the moment the fixture is built.
 
     The expensive failure for a checker is the validator nothing survives, so
-    the first three assertions below are all cases that must come back green.
+    the first two fixtures below, the live tree and a verdict that honestly
+    measured nothing, are both cases that must come back GREEN.
     """
     ok, bad = 0, []
 
@@ -480,35 +425,44 @@ def selftest():
     print("nothing survives proves nothing when it is red)\n")
 
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="vsf-selftest-"))
-    probe = ROOT / "production" / "d1-probe"
 
-    # ---- ACCEPTING 1: the live repository's own frames, named by a verdict
-    # written beside them. These are real files, really tracked, really here.
-    live = sorted(probe.glob("ue-vign_*.png"))[:3]
-    if len(live) < 3:
-        bad.append("the live accepting fixture needs 3 committed frames under "
-                   "production/d1-probe and found %d" % len(live))
-        print("  FAIL live accepting fixture: only %d frame(s) on disk" % len(live))
-    else:
-        acc = probe / "ue-vignette-verdict.SELFTEST-ACCEPT.txt"
-        # WRITTEN BESIDE THE FRAMES AND REMOVED AGAIN. It has to sit in the
-        # real directory because the whole question is about real paths and
+    # ---- ACCEPTING 1: the live repository's own tracked files, named by a
+    # verdict written beside them. Real paths, the real index, really here.
+    #
+    # THE FILES ARE WHATEVER GIT NAMES, AND THE COUNTS COME FROM THAT LIST.
+    # An earlier version globbed one shot family out of production/d1-probe and
+    # demanded three of them; that is a count the next probe run moves and a
+    # family name the next spec renames, in a fixture whose whole job is to be
+    # unbreakable by doing the work. This directory holds THIS FILE, tracked,
+    # so the supply cannot run dry, and nothing in production/ is written to.
+    live = _live_tracked(HERE, want=3)
+    liveN = len(live)
+    # THE DENOMINATOR RIDES THE LABEL. A fixture that quietly found nothing to
+    # examine would print the same `ok` as one that examined three files.
+    want("live tracked: fixture built from %d live file(s), needs >=1" % liveN,
+         liveN >= 1, True)
+    if liveN:
+        acc = HERE / ".selftest-accept-verdict.txt"
+        # WRITTEN BESIDE THE FILES AND REMOVED AGAIN. It has to sit in a real
+        # tracked directory because the whole question is about real paths and
         # the real index; it is deleted in the `finally` below either way.
         try:
-            _write(acc, _verdict_text([(p.stem[3:], p.name) for p in live]))
+            _write(acc, _verdict_text([("selftest_live_%d" % i, name)
+                                       for i, name in enumerate(live, 1)]))
             r = read(acc)
             text = "\n".join(report_lines(r))
-            want("live frames: named", r["named"], 3)
-            want("live frames: present", r["present"], 3)
-            want("live frames: missing", r["missing"], 0)
-            want("live frames: tracked (git answered)", r["tracked"], 3)
-            want("live frames: untracked", r["untracked"], 0)
-            want("live frames: exit code is OK", verdict_exit(r), EXIT_OK)
-            want_in("live frames: done line ships the denominator",
-                    "shotFilesNamed=3 shotFilesPresent=3 shotFilesMissing=0", text)
-            want_not_in("live frames: a clean run says no cap bit",
+            want("live tracked: named", r["named"], liveN)
+            want("live tracked: present", r["present"], liveN)
+            want("live tracked: missing", r["missing"], 0)
+            want("live tracked: tracked (git answered)", r["tracked"], liveN)
+            want("live tracked: untracked", r["untracked"], 0)
+            want("live tracked: exit code is OK", verdict_exit(r), EXIT_OK)
+            want_in("live tracked: done line ships the denominator",
+                    "shotFilesNamed=%d shotFilesPresent=%d shotFilesMissing=0"
+                    % (liveN, liveN), text)
+            want_not_in("live tracked: a clean run says no cap bit",
                         "more of", text)
-            want_not_in("live frames: a clean run is not nothing-measured",
+            want_not_in("live tracked: a clean run is not nothing-measured",
                         NOTHING_MEASURED, text)
         finally:
             acc.unlink(missing_ok=True)
@@ -611,98 +565,6 @@ def selftest():
             "(+%d more of %d)" % (n - DETAIL_KEEP, n), text)
     want("%d faults: only the cap's worth are shown" % n,
          text.count("shotFileFault "), DETAIL_KEEP)
-
-    # ---- THE WAIVER, FOUR CASES, ACCEPTING FIRST. Every one of them uses the
-    # real frozen list and the real pinned run; none of them writes anything
-    # into production/d1-probe.
-    #
-    # ACCEPTING, AND IT IS THE LIVE TREE. Written so it keeps holding after the
-    # four frames land: the assertion is that NOTHING IS LEFT UNWAIVED, not
-    # that four things were waived. `waived == missing` reads 4 == 4 today and
-    # 0 == 0 the day the probe stages them, so doing the work this tool exists
-    # to prompt cannot break the tool.
-    if DEFAULT_VERDICT.is_file():
-        rl = read(DEFAULT_VERDICT)
-        want("live verdict: the run it was measured on", rl["run"], WAIVED_RUN)
-        want("live verdict: nothing is left unwaived", len(rl["faults"]), 0)
-        want("live verdict: every absent frame is a waived one",
-             len(rl["waived"]), rl["missing"])
-        want("live verdict: exit code is OK", verdict_exit(rl), EXIT_OK)
-        want_in("live verdict: the waiver is PRINTED, not silent",
-                "WAIVED", "\n".join(report_lines(rl)))
-    else:
-        bad.append("the live verdict %s is not there to be the accepting "
-                   "fixture" % DEFAULT_VERDICT)
-        print("  FAIL live verdict missing: %s" % DEFAULT_VERDICT)
-
-    # A fixture directory holding ONE real file, so the waived names are the
-    # only absentees and a fault list can be compared name for name.
-    wv = tmp / "waiver"
-    wv.mkdir(parents=True, exist_ok=True)
-    (wv / "ue-vign_selftest_here.png").write_bytes(b"\x89PNG\r\n\x1a\n here")
-    rows = [("selftest_here", "ue-vign_selftest_here.png")]
-    rows += [("pinset_night_%d" % i, n)
-             for i, n in enumerate(WAIVED_ABSENT_FILES, start=1)]
-
-    # REJECTING: the same four names, one run later. The pin has moved, so the
-    # waiver is gone and the check demands all four.
-    moved = wv / "ue-vignette-verdict.txt"
-    _write(moved, _verdict_text(rows, run="deadbee"))
-    r = read(moved)
-    text = "\n".join(report_lines(r))
-    want("waiver expires: a different run gets no forgiveness",
-         verdict_exit(r), EXIT_MISSING)
-    want("waiver expires: all four are faults again", len(r["faults"]),
-         len(WAIVED_ABSENT_FILES))
-    want("waiver expires: and none was waived", len(r["waived"]), 0)
-    want_in("waiver expires: the done line says it did not apply",
-            "shotFilesWaived=0/%d shotFilesWaivedRun=%s shotFilesWaiverApplies=no"
-            % (len(WAIVED_ABSENT_FILES), WAIVED_RUN), text)
-    want_in("waiver expires: it still names the first of them",
-            "shotFileFault file=%s" % WAIVED_ABSENT_FILES[0], text)
-
-    # REJECTING: the pinned run, plus a FIFTH absent frame. The waiver is a
-    # list of four names, not a mood about run c738797.
-    fifth = wv / "fifth" / "ue-vignette-verdict.txt"
-    _write(fifth, _verdict_text(rows + [("selftest_fifth",
-                                         "ue-selftest_fifth_absent.png")],
-                                run=WAIVED_RUN))
-    # the one real file lives in the parent fixture dir, so re-make it here
-    (fifth.parent / "ue-vign_selftest_here.png").write_bytes(b"\x89PNG\r\n\x1a\n")
-    r = read(fifth)
-    text = "\n".join(report_lines(r))
-    want("not a blanket: a fifth absent name on the pinned run still fails",
-         verdict_exit(r), EXIT_MISSING)
-    want("not a blanket: exactly one fault survives the waiver",
-         len(r["faults"]), 1)
-    want("not a blanket: and it is the fifth",
-         r["faults"][0]["file"] if r["faults"] else None,
-         "ue-selftest_fifth_absent.png")
-    want("not a blanket: the four are still waived",
-         len(r["waived"]), len(WAIVED_ABSENT_FILES))
-    want_in("not a blanket: both counts ride the done line",
-            "shotFilesWaived=4/4", text)
-
-    # REJECTING: a waived NAME that is on disk and unstaged. This is the fault
-    # that lost the four in the first place and it is never forgiven, pin or
-    # no pin.
-    srepo = tmp / "waiver-repo"
-    srepo.mkdir(parents=True, exist_ok=True)
-    _git(srepo, ["init", "-q"])
-    _git(srepo, ["config", "user.email", "selftest@ledger.local"])
-    _git(srepo, ["config", "user.name", "selftest"])
-    (srepo / WAIVED_ABSENT_FILES[0]).write_bytes(b"\x89PNG\r\n\x1a\n rendered")
-    sv = srepo / "ue-vignette-verdict.txt"
-    _write(sv, _verdict_text([("pinset_night_1", WAIVED_ABSENT_FILES[0])],
-                             run=WAIVED_RUN))
-    r = read(sv)
-    text = "\n".join(report_lines(r))
-    want("staging fault is never waived: on the pinned run, still red",
-         verdict_exit(r), EXIT_MISSING)
-    want("staging fault is never waived: it is not on the waived list",
-         len(r["waived"]), 0)
-    want_in("staging fault is never waived: named with its reason",
-            "fault=on-disk-but-not-in-the-index", text)
 
     # ---- NO VALUE CARRIES A SPACE, on any line this prints, in any outcome.
     # Every reader in this project splits on whitespace and truncates silently.

@@ -93,3 +93,25 @@ acceptance ADDENDUM, and this half comes FIRST: every `file=` the vignette
   and therefore free. Only once the frames land can the BLANK cause be
   diagnosed, and the run that lands them is the one that supplies the
   evidence. Under D45 the checker is a tool: a test, no review, no ruling.
+
+RUN 48 SETTLES THE SHAPE OF IT, 2026-09-16. The staging fix worked and the
+frames are in the repository for the first time, so the second half is finally
+diagnosable. And the first thing the frames say is that THE BLANK IS NOT
+DETERMINISTIC:
+
+    run 46 (c7f2cc01)   43 WROTE   0 BLANK
+    run 47 (bf6fc61a)   41 WROTE   2 BLANK   pinset_night_2, pinset_night_3
+    run 48 (c36857c0)   42 WROTE   1 BLANK   pinset_night_1
+
+  A DIFFERENT SHOT, AND FEWER OF THEM. Same condition, same camera, same
+  capture path. A fault deterministic to a shot or to a scene would take the
+  same shots every run; this moves. That is a timing or streaming race, and it
+  removes the candidate this item named first, that the bigger 2K textures
+  cause it deterministically. They may still make it MORE LIKELY, which is a
+  different claim and is not measured.
+
+  THE FRAMES ARE NOW ON DISK AND COMMITTED: 43 named, 43 present, 43 tracked,
+  0 missing, and tools/verdict-shot-files.py's waiver EXPIRED BY ITSELF because
+  run 48's verdict carries a different sha. It reads
+  shotFilesWaiverApplies=no shotFilesUnwaivedFaults=0, green because there is
+  nothing left to forgive rather than because anything was excused.
