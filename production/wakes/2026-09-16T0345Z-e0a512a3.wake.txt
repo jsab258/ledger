@@ -1,0 +1,9 @@
+id: e0a512a3
+due: 2026-09-16T03:45:00Z
+armedAt: 2026-09-16T03:04:58Z
+armedBy: resident/326-light-probe-control-builder-running
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+instrument-builder is on queue 326: the light probe's control_no_toggle (which toggles NOTHING) reads deltaMeanFull=0.25060 at camA_night on run 47, and lantern1, lantern2, lantern3 and east_parade_interior5 read the SAME NUMBER to five decimals, so four of eight deltas carry no information. lightsReachedFrame is decided by RoseAtLeast[0]>0, one pixel one code value, which that control clears trivially, so 30/42 stands on a floor that swamps it. It owes: lightsReachedFrame decided against the control's own distribution per shot with NO-READ carrying both numbers, the exposure pin state on the light line, and the done line separating shots with a usable floor from shots without, with both counts. It was told NOT to invent a threshold (rule 2) and to print a series first if it cannot avoid one. ue-probe is GATED so over 100 lines it needs a studio-director with a fresh RULING stamp. AFTER IT LANDS: ONE probe run carries 326 AND collects the four pinset frames the 00bf7189 staging fix now stages; that run's verdict has a different sha so it EXPIRES the waiver by itself, and only then is 325's second half (why 2 of 4 pin_setter_night shots blanked) diagnosable. Then 319's surviving clause (per-shot asked-against-read lantern state, the rejecting path has never fired: lightsSkippedAlreadyOff=0 with a denominator of ZERO), then 324, then the dusk frame, NOT from cam_A. BUDGET 45/47 takenAt 2026-09-15T20:11:11Z is 6.9h old at 03:04Z and goes STALE at 06:11Z, after which inbox-only until Jafar answers the morning ask.
