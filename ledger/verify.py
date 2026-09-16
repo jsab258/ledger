@@ -1974,6 +1974,65 @@ def claude_md_size(path=None):
     return True, "CLAUDE.md %d/%d words" % (words, CLAUDE_MD_WORDS)
 
 
+def canon_register():
+    """JAFAR, 2026-09-16: a ruling that changes canon edits canon in the same
+    batch. Until this row existed the rule was a sentence in canon's STATUS
+    block and nothing read it, which is the exact failure the rule was made
+    against: D16 was decided on 2026-09-10 and canon still called the engine
+    OPEN six days later, and D24's own text said it was recorded in canon
+    while canon had no such lines.
+
+    CITATION AND STATUS ONLY. It does not claim canon's sentences AGREE with
+    the rulings they cite; agreement is a reading and the reading stays the
+    resident's. The tool says so in its own docstring.
+
+    THE SELFTEST RUNS FIRST, for the same reason `content_rule` runs
+    content-gate's: an unwired guard and a broken guard look identical from
+    here, and this one carries a phrase list that decays by design.
+    """
+    tool = ROOT.parent / "tools" / "canon-register-check.py"
+    code, out = run(["python3", str(tool), "--selftest"])
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines() if "FAIL" in l]
+        return False, "CANON-REGISTER SELFTEST: " + _cap(
+            bad, strip=5, width=100, tail="see canon-register-check").strip()
+    m = re.search(r"selftest: (\d+) passed, (\d+) failed", out)
+    fixtures = m.group(1) if m else "?"
+    code, out = run(["python3", str(tool)])
+    done = next((l for l in out.splitlines()
+                 if l.startswith("canon-register:") and "assertionsHeld=" in l),
+                "")
+    if code == 2:
+        return False, "CANON-REGISTER: NOTHING MEASURED - " + done[-90:]
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines() if "VIOLATION=" in l]
+        return False, ("CANON FOLLOWS ITS RULINGS: " + _cap(
+            bad, strip=0, width=110, tail="see canon-register-check").strip())
+    if not done:
+        return False, ("canon-register-check printed no done line, which is "
+                       "nothing measured and not a pass")
+    nums = re.search(r"recordsWalked=(\d+) canonLines=(\d+) "
+                     r"canonCitationsRaw=(\d+)", done)
+    # `out` IS A STRING. The first version wrote `"\n".join(out)` here, which
+    # joins a string's CHARACTERS, found nothing, and printed `?/?` in the
+    # footer beside a green result: a placeholder that reads as a value is
+    # the silent-instrument failure this file exists to stop. So a missing
+    # pair is red, never a question mark.
+    unm = re.search(r"mentionsCanonButNoPhraseOrDirective=(\d+)/(\d+)", out)
+    if not nums:
+        return False, "canon-register-check's done line lost its denominators"
+    if not unm:
+        return False, ("canon-register-check printed no UNMATCHED pair, so the "
+                       "phrase list's decay went unmeasured on a green run")
+    # The UNMATCHED pair rides in the footer on purpose: it is the phrase
+    # list's decay, and a number nobody sees is a list nobody maintains.
+    return True, ("canon follows its rulings (%s fixtures, 3/3 assertions, "
+                  "%s record(s), %s canon line(s), %s citation(s), "
+                  "%s/%s canon-mentioning records unmatched by phrase)"
+                  % (fixtures, nums.group(1), nums.group(2), nums.group(3),
+                     unm.group(1), unm.group(2)))
+
+
 def template_sync():
     """RETIRED 2026-08-31 by decision D10 (ledger-v2/respec/decision-register/
     D10-framework-freeze.md). The game-studio repo is FROZEN as legacy
@@ -8480,7 +8539,7 @@ def main():
     results = []                  # (ok, text) per check, in run order
     for fn in (director_cadence, footer_strings,
                lint, shape, shadow, tools_tracked, reach, stranger_test, shape_files, voice_cast, voice_gen, barks_current, voice_live, voice_assets, voices_into_build, pc_watcher, slop,
-               card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, budget_ceiling_line, content_rule, producer_register, claude_md_size,
+               card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, budget_ceiling_line, content_rule, producer_register, claude_md_size, canon_register,
                agent_model_values, agent_model_values_selftest, agent_model_overrides, agent_model_overrides_selftest,
                inbox_selftest, inbox_read_selftest, bot_config_selftest, outbox_selftest, supervise_selftest, executor_selftest, wake_queue_selftest, checkout_gate_selftest, brief_selftest, producer_day_selftest, budget_log_mark_selftest, systems_inventory, inbox_tracked,
                template_sync,

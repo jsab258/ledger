@@ -18,3 +18,21 @@ of need). Current files:
 
 Standing constraints live INSIDE each role file, never in task briefs
 (waste lesson 2).
+
+Every definition carries a `## Budget and lessons` section: the frontmatter
+`maxTurns` restated in prose, so the agent and the dispatcher both see the
+number at the moment of dispatch (a number only the YAML held was declared and
+never read through eight turn-limit deaths on 2026-09-16), plus
+`lessons=N/N/N` naming the waste lessons that bite that role. A role touched by
+none writes `lessons=none-apply`: silence and none are different facts.
+
+Each section also prints `Observed spend` from `.claude/agent-turns.tsv`
+(n, median, peak) beside the declared ceiling, so a ceiling nobody has checked
+against real runs cannot read as a measured one. TWO CAVEATS, both load
+bearing. The log's unit is a TRANSCRIPT TURN counted by `tools/spawn-cost.py`,
+and whether that equals one `maxTurns` unit is UNSETTLED here: 8 of the 15
+roles show a peak above their own declared ceiling, which is impossible if the
+two units match and the ceiling is enforced. Until `tools/spawn-cost.py`
+settles the unit, read the pair as a comparison of the same role against
+itself over time, not as proof a spawn was cut off. And a role with 0 rows
+prints the words "nothing measured": its ceiling is a shape guess.

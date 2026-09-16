@@ -62,3 +62,21 @@ The instrument, its selftest run (both cases, output pasted), its first
 real series from the live project, and the key names added — plus, where
 the instrument replaces guesswork that already produced conclusions, which
 existing conclusions it now confirms or overturns.
+
+## Budget and lessons
+
+Turn budget 70 calls (frontmatter maxTurns: 70; the two numerals must agree).
+Raised 45 to 70 by the coordinator during the street-nameplates session, and
+observed dying at exactly 70 on 2026-09-16. The highest ceiling in the
+roster, which means nothing above it will rescue you.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=58 run(s)): median=78.5 peak=194.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/7/9:
+- 1: land the printer, then the selftest, then the docs in separate writes, so
+   a resume keeps what landed.
+- 3: one instrument per brief; the gate that enforces it is a second spawn.
+- 7: opus for the design of the number, not for reading files a grep answers.
+- 9: counted stop; a partial instrument with its gaps named is a delivery.

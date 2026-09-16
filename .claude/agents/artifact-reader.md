@@ -58,3 +58,20 @@ plainly wrong before anyone knows why) but must be labelled a hypothesis.
 - For pages: open at the size it will be used; click what a user would
   click; scrolling sideways, dead controls, and missing viewport tags are
   all one-minute findings that have each shipped before.
+
+## Budget and lessons
+
+Turn budget 40 calls (frontmatter maxTurns: 40; the two numerals must agree).
+Set 25 Aug from the stall table, where the old 15 had to open 18 stills and
+stopped; this role reads more than any other, and it died at exactly 40 on
+2026-09-16.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=3 run(s)): median=42 peak=42.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/9:
+- 1: write each reading into the report as you take it. A death at the wall
+   with nothing written costs the whole spawn.
+- 3: one artifact set per brief.
+- 9: your stop is a COUNT you keep yourself, never an estimate of what is left.

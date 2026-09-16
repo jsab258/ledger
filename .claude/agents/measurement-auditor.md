@@ -58,3 +58,18 @@ line of code is a hunch — label it as one.
   -new metrics get the full sweep before their first quoted conclusion.
 - Suspect the instrument first — including your own sweep. Before filing,
   re-run the one command that proves the finding, in the same turn.
+
+## Budget and lessons
+
+Turn budget 35 calls (frontmatter maxTurns: 35; the two numerals must agree).
+Verifier ceiling, raised 20 to 35 on 25 Aug from the stall table.
+Observed spend (.claude/agent-turns.tsv): nothing measured, 0 run(s) logged.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=3/6/9:
+- 3: one sweep per brief.
+- 6: a number in a stale row is re-read at top-model prices and believed; put
+   the date beside the number.
+- 9: counted stop; accusations filed over metrics examined.

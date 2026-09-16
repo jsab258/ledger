@@ -83,6 +83,8 @@ real_table() {
     shape-check-selftest  "$REPO"                 "python3 tools/shape-check.py --selftest" \
     attribution           "$REPO"                 "python3 tools/attribution-check.py" \
     attribution-selftest  "$REPO"                 "python3 tools/attribution-check.py --selftest" \
+    canon-register        "$REPO"                 "python3 tools/canon-register-check.py" \
+    canon-register-selftest "$REPO"               "python3 tools/canon-register-check.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     playtest-fake         "$REPO/ledger/SimHarness" "dotnet run -c Release"
 }

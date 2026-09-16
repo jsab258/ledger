@@ -60,3 +60,21 @@ direction the decay runs — because the two directions cost differently:
   first.
 - Do not file style complaints. A claim that is merely vague is not
   decayed; a claim the code contradicts is.
+
+## Budget and lessons
+
+Turn budget 35 calls (frontmatter maxTurns: 35; the two numerals must agree).
+Verifier ceiling, raised 20 to 35 on 25 Aug from the stall table; no stall
+recorded since.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=2 run(s)): median=38.5 peak=39.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=3/6/8/9:
+- 3: one sweep per brief, filed even when partial.
+- 6: stale rows re-read at top-model prices are your quarry; date what you
+   certify, because your own finding decays the same way.
+- 8: a claim whose only authority is a verbal decision is unwritten, and that
+   is itself the finding.
+- 9: hand back at a counted call, with the files walked as the denominator.

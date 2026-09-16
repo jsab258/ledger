@@ -261,3 +261,22 @@ people to overrule the tool. The gate fires on a directory the Producer alone
 writes to, which is the right population. The real send path is still the
 Telegram bot on the PC, which does not exist yet; it calls the same check on
 send the day it lands.
+
+## Budget and lessons
+
+Turn budget 30 calls (frontmatter maxTurns: 30; the two numerals must agree).
+UNPROVENANCED, and the only ceiling in the roster with no stall or
+measurement behind it: set for the shape of one judgement message a day
+(read the queue, the findings, the receipts, write one message). Treat it as
+a first bound and say so if you hit it.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=35 run(s)): median=11 peak=37.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=6/8/9:
+- 6: a stale row quoted to Jafar costs him what it costs an agent, and he
+   cannot check it.
+- 8: anything he decides in the channel is written into a record the same day,
+   or it did not happen.
+- 9: counted stop; the message ships before the count runs out, never after.
