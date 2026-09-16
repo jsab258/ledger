@@ -1,0 +1,21 @@
+id: 7e7e807c
+due: 2026-09-16T14:55:00Z
+armedAt: 2026-09-16T14:17:41Z
+armedBy: resident/day-order-done-and-judged-awaiting-his-answer
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+THE DAY'S ORDERED WORK IS DONE AND JUDGED. 3e045e92 is HEAD and pushed, tree clean. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. NOTHING IS RUNNING: no builders, no directors, no CI.
+
+WHAT JAFAR ASKED FOR TODAY AND WHERE EACH PART STANDS. "Wetness, materials, then dusk with lamps lit, wet road and a figure in silhouette, ungated under D41 and judged against the Hook sheet by you." THE LAMPS ARE LIT, measured against a bound stated before the change: ue-pinset_night_3.png went from 0 pixels at luma>=120 AND R-B>=20 to 1569 of 921600, same file, same ruler, one pass over both. THE JUDGING IS DONE and produced queue 359: the road does not reflect, v/h 1.63 on the reference against 1.01 to 1.05 on three of ours. THE FIGURE IS BLOCKED ON HIM and he has the question: part1 messageId=105, sent 13:17:28Z, confirmed by receipt.
+
+DO NOT START QUEUE 359 WITHOUT CHECKING FOR HIS ANSWER FIRST, and when it is started, its FIRST job is the printer and not the road. Every number in it was computed by hand off committed PNGs, so nothing can regress against it. Ship the printer, read real runs, set the bound last. That is the order the lamp followed and the reason the lamp's constant is trusted.
+
+DO NOT RAISE `wetness` TO CHASE THE ROAD. It is already 0.9 of 1.0 on both night conditions, the drive reports set==got with noMid.0, and the material carries the parameter. The missing thing is a reflection SOURCE, and whether this scene has one IS NOT ESTABLISHED: nothing in this container reads the Unreal render settings and no verdict key names one. Do not guess it.
+
+STILL OWED, none of it started: enforcement-claims-check.py with constitution law 13 and its one CLAUDE.md sentence, which land together or not at all because a law naming a tool with no runner is the thing being outlawed; the lamp drive guard's move into the tested header, which must land BEFORE the constant's second value is written; 332 (a no-toggle control disagreeing with itself by 0.16498 while certifying a surplus); 356 the sendability gap; 357 the workflow trigger that outlived its boundary; 358 the lit test's missing margin; 359 the road.
+
+THE THREE CLAIMS THAT FAILED A CHECK TODAY, kept because method is what survives a reset: a push read as successful when it had been rejected (the pipeline returned tail's exit code, not the push's); 212 read as the same denominator as 209 (offered against examined, one paragraph apart in the same output); and queue 335's claim that the Unity path renders a Mixamo body, repeated toward Jafar before it was caught. A fourth was caught before it became a claim: the road was first measured on the exposure-pin frame rather than a wetness frame. Each fell to running the command rather than re-reading the sentence.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11, his rule of today.
