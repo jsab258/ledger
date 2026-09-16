@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-16-the-figure-frame.answer.md
+kind: answer
+photoRef: game-design/sim-shots/figure_run53_camA_before_after.png
+fileCommit: 79c1121ca10db95aae78e5c45cb0b68cb96de454
+fileCommitEpoch: 1789589896
+sent: 2026-09-16T20:18:45+00:00
+sentEpoch: 1789589925
+messageId: 111
+chars: 698
+photoSizes: 90x33/320x118/800x294/1280x470/2440x896
+photoSizeCount: 5
+outboundLatencySec: 29
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
