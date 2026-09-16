@@ -56,3 +56,27 @@ status: READY 2026-09-16, found by the builder sent to do queue 319, while
   surviving clause: 319 adds a reading nobody has, this one says an existing
   reading is not trustworthy, and a false green is worse than a blank. Sits
   with 325 and 324 ahead of the dusk frame.
+
+DONE 2026-09-16 under the ruling of 2026-09-16 03:27Z, amended by its C1 to
+C5. Landed at c5ecf3ce, verify green, the four g++ binaries 3416 to 3445 with
+no check that was green going red and none removed or loosened.
+
+THE ACCEPTANCE'S `lightsReachedFrame` IS `lightsAboveFloor` BY THAT RULING,
+because the rule and the denominator both changed and this project keeps
+per-run verdict copies under one path, so a grep for the old key would have
+returned 30/42, 36/42 and the new number as one series. The rule is as this
+item accepted it: a light reads when its risen-pixel count EXCEEDS the
+control's moved-pixel count at the same pre-existing code edge, strict,
+integers, no epsilon, a tie is not a surplus. No measurement threshold was
+invented; the caps that exist were sized from a printed series read first.
+
+WHAT THIS ITEM'S ACCEPTANCE DID NOT ASK FOR, AND IT IS THE THING THAT MATTERS
+MOST: a blank LIGHT frame under a good control. The floor catches a blank
+control, which is why vign_camA_night correctly reads NO-READ, and is blind to
+the other case. Four of the six reads surviving the new floor are that fault.
+Queue 329, ordered behind the carrying run. So this item is DONE and the
+number it produces is NOT YET REPORTABLE, which are different facts and both
+belong on this line.
+
+The first carrying run is read against the ruling's section 9, written before
+that run existed, before any number from it is reported.
