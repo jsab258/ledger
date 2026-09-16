@@ -1,0 +1,28 @@
+id: 184b89a1
+due: 2026-09-16T17:15:00Z
+armedAt: 2026-09-16T16:44:37Z
+armedBy: resident/run-50-in-flight-read-the-four-flags-first
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+RUN 50 IS IN FLIGHT AND THIS WAKE READS IT. 727d6a46 is HEAD and pushed, tree clean. Nothing is running in this container. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, sixteen points of headroom, measured until about 01:33Z.
+
+THE SHA TO WATCH BY, captured BEFORE the push: 727d6a46bc28ec215602eb2eb44c9a67e4101ece. GitHub run 35123763846, queued 16:44:02Z. WATCH BY ANCESTRY: a landed run file under game-design/sim-shots/runs/ whose commit CONTAINS that sha. Never by branch movement. Compare BY PREFIX: run files are 7 chars, git abbreviates to 8.
+
+READ IN THIS ORDER AND DO NOT REORDER IT.
+
+1. THE FOUR NEW READS, on the whole-run sky line, BEFORE any band: skyDomeMatIsSky, skyDomeMatTwoSided, skyDomeMatShadingModelRead, skyLightLowerHemisphereSolid. They are taken off the live objects through reflection over candidate spellings, so a name this engine version does not carry prints nothing-measured AND NAMES EVERY SPELLING TRIED, which the next run fixes with no round trip. A REFUSED READ IS NEVER A NO.
+2. skyModel and ambientModel, which are now DERIVED from the sky flag's tri-state rather than asserted. If skyDomeMatIsSky reads yes, the photograph is what lights the street and the atmosphere is occluded from the capture. If no, they are two objects. If nothing-measured, NEITHER may be claimed.
+3. ONLY THEN the bands. A moved band.ground has FOUR candidate causes now: the ambient, the road, the grade, the lamp. Attribute it to the ambient ONLY when skyDomeMatIsSky reads yes and every other shot-line read-back equals the run 49 baseline, verdict 355e8d8. The exposure-pinned rows pin_003 to pin_1000 show the level change auto-exposure cannot hide and are where SkyLuminance's second value comes from.
+4. OPEN THE FRAMES before reading any gate (rule 4), and put any before-and-after in ONE picture at ONE scale or do not claim it.
+
+IF skyDomeMatIsSky COMES BACK nothing-measured, section 6 of the sky ruling owes a second director and the question becomes live. It is not live now, because A1 did not take the build-log fallback: the flag is read off the running object.
+
+THE LAMP RIDES ALONG UNCHANGED: lampGlowLit=4/of=4 at night against 0/of=4 at day is still the acceptance pair. Day rows currently read 1 lit because the test has no margin, which is queue 358 with the series already in run 49's committed tokens.
+
+STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, together or not at all; the lamp drive guard's move into the tested header BEFORE the lamp constant's second value; the sky parameter-name contract into SurfaceBind.h BEFORE anything else reads SkyMap or SkyLuminance; 332, 356, 357, 358, 359 (printer first, not the road), 360 (the dispatch step's seventeen characters, do NOT raise the bound).
+
+THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT. The scene spec has no person; the walk pawn has no skeletal mesh. Real work, not started.
+
+HIS REGISTER RULE BINDS EVERY MESSAGE: a filed item gets ONE LINE saying it is filed. The reasoning goes in the record.
