@@ -1,0 +1,9 @@
+id: af0da47a
+due: 2026-09-15T23:45:00Z
+armedAt: 2026-09-15T23:17:06Z
+armedBy: resident/2k-fetch-in-flight-after-the-picks-landed
+blocks: 0
+dischargedAt: 2026-09-16T00:05:23Z
+capBitAt: -
+
+Queue 300's picks are committed at 482a6932 and the 2K fetch is IN FLIGHT: citypack-fetch.yml run#1 id=35034934881, push-triggered, started 23:16:45Z. DO NOT DISPATCH IT AS WELL; the push is the trigger and a second run is the mistake recorded in 1383a03a. WHEN IT LANDS: confirm by ancestry that a landed commit contains 482a6932, then run 'python3 tools/citypack/fetch_textures.py --measure-pack' and print the NEW pack's series beside queue 300's old table, which is that item's stated acceptance (a replacement that is merely a different flat card must be visible as one). Expect kerb 184.3/6.6/0.0 to become about 136.0/35.7/7.3, metal 134.8/4.6/22.5 to about 118.8/21.2/5.3, concrete 107.2/9.3/6.8 to about 130.5/18.5/13.4, plaster 211.7/5.8/7.2 to about 189.5/12.1/9.1; these are the 1K measurements so the 2K figures will differ slightly and a LARGE divergence means the wrong file landed. Then the frame: a render is needed to judge, and under D41 that is ungated and iterated against the Hook sheet without a director. AFTER MATERIALS, in order: queue 319 (lantern state unmeasured, 0 of 109 keys on the night shot line) and 324, THEN the dusk frame, which must NOT be shot from cam_A because the three control quads are shown on exactly the two cam_A shots.
