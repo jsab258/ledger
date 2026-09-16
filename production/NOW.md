@@ -9,6 +9,53 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-16 01:15Z: RUN 47 READ. WETNESS REACHES THE FRAME; TWO NIGHT SHOTS DO NOT
+
+bf6fc61a rendered c7387972. Section 10 of the 22:25Z ruling was written before
+the run existed and it hit almost exactly: walks=17 as derived from the shot
+order, wetnessRedriveWrote=10030/of=10370, refused=notOurRoute.340 with every
+other bucket zero, readback=same-value, TallyMismatch ABSENT,
+shotWetnessAgrees=yes on all 43, nullSeriesTiedGroups=0/of=30. Controls held:
+band.skyCentre.p50=0.8035 and shotExposurePinRead=0.3000/0.3000 on hook_day,
+unmoved across four runs.
+
+WETNESS NOW REACHES THE FRAME, and the statistic that shows it is NOT the one
+section 10 named. Against the certified null pair:
+
+    pair                    px differing   maxChannelDelta   MEAN over differing
+    null (same inputs)         79.86%          38/255             1.944
+    wet_000 vs wet_060         82.07%          63/255             8.653
+    wet_000 vs wet_100         76.82%         124/255            12.825
+
+  The magnitude is 6.6x the null floor and the ladder is now MONOTONIC. In run
+  46 the wetness pair sat BELOW the null (1.463 against 1.487) and the order
+  was inverted. But the PERCENTAGE statistic is SATURATED: render noise already
+  moves four fifths of the pixels, so wet_000 vs wet_100 differs in FEWER
+  pixels than the null while differing far more in each. Section 10 predicted
+  separation "on the same two statistics" and on percentage it does not. The
+  prediction was half measuring the wrong thing, and it was mine.
+
+TWO SHOTS CAME BACK BLANK AND RUN 46 HAD NONE: pinset_night_2 and
+pinset_night_3, both pin_setter_night, 2 of the 4 shots at that condition.
+shotMeanLuma=0.0015 and shotNonBlackPct=17.73 against a working sibling's
+0.2439 and 100.00. NOT a wetness fault: those rows read shotWetness=0.9000,
+shotWetnessOnPieces=0.9000, shotWetnessAgrees=yes. QUEUE 325, and it is ahead
+of the dusk frame with 319 and 324, because pin_setter_night is one of only
+two conditions that light the lanterns and the dusk frame is that family.
+
+THE PACK IS VISIBLE AND THE ROAD IS NOT WET. Measured on rectangles, run 46
+against run 47, hook_day, same camera and wetness 0.6 in both:
+sky control +0.00 (sd 1.68 to 1.69), PURE ASPHALT centre -0.01 (its texture is
+byte-identical between the runs), kerb region -4.78, railings -4.15 with sd
+46.28 to 40.91. I FIRST WROTE THAT THE ROAD READ WET IN RUN 47 AND THE
+MEASUREMENT REFUTED IT: what I saw was the kerb sitting 48 points darker in a
+crop I had not measured. The eye reads contrast and invents differences, and
+the cell map I ran before cropping did not excuse the sentence I wrote after.
+
+band.ground.p50 moved 0.2702 to 0.2658 and IS NOT A WETNESS READING, exactly
+as the dispatch entry said in advance: the kerb is 48 points darker and the
+concrete 23 points paler this run, both inside that band.
+
 ## 2026-09-15 22:55Z: THE 22:25Z BATCH IS RULED AND COMMITTED, AND UNRENDERED
 
 Both halves of the batch land under
