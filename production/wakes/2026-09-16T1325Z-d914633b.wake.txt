@@ -1,0 +1,23 @@
+id: d914633b
+due: 2026-09-16T13:25:00Z
+armedAt: 2026-09-16T12:51:04Z
+armedBy: resident/lamp-drive-and-readback-in-flight
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+d9af9a3d IS HEAD AND PUSHED, tree clean at arming. Budget 2026-09-16d: 65 total, 65 Fable, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. Inbox at 12:27Z: nothing new. The policy batch is LANDED and THIS THREAD IS CLOSED per Jafar: nothing else from it.
+
+ONE BUILDER OUT: engine-specialist on queue 333's third (c), the lamp DRIVE and READBACK in VignetteShot.cpp. Four pieces: record the existing MID for emissive pieces (:4260), the drive at the lantern visibility loop (:1817-1818) copying ReDriveWetness in shape, kLampEmissiveUnitless at :141 printed on the scene line, and the readback at MeasureShot (:3113-3120). NONE OF IT COMPILES IN THIS CONTAINER, so the review bar is that every call signature was opened and read, not that a test went green.
+
+THE ONE WAY IT GETS QUIETLY WRONG, told to it and worth re-checking at review: LanternsInFile must be the count of emissive pieces IN THE SCENE FILE, never Patches.size(). A lantern that fell down an unpainted exit has no instance, contributes no patch, and must still be counted, or the third denominator is a lie.
+
+WHEN IT LANDS: review the diff against the four call sites, run verify, ONE commit, push, THEN DISPATCH ledger-probe-unreal. Capture the sha BEFORE dispatching and watch by ancestry, never by branch movement. That run is the point of the whole day.
+
+QUEUE 332 RIDES THE SAME DISPATCH IF THERE IS TIME, and it cannot go in parallel because it touches VignetteShot.cpp too. It is a real finding: in run 48 a no-toggle control, the same scene photographed twice with NOTHING changed, disagreed with itself by 0.16498 while certifying a light surplus, and still read FLOOR-USABLE. It is NOT on tonight's critical path, because the new lampGlow instrument compares a lamp's own box against its ring within ONE frame and never reads the control.
+
+TODAY IS THE VISUAL SLICE AND NOTHING ELSE. Dusk with lamps lit, wet road, a figure in silhouette, ungated under D41, judged against the Hook sheet by the resident: git show origin/art/atlas-01:production/art/atlas-01/concepts/hook.png. THE FIGURE IS BLOCKED ON JAFAR (queue 335, raised to blocking): there is no person in the scene spec and the walk pawn has no skeletal mesh. The card asking him was pushed in d9af9a3d. THE FRAME SHIPS WITHOUT THE FIGURE if he has not answered; do not hold it.
+
+STILL OWED FROM THE POLICY BATCH AND NOT TO BE STARTED TODAY: enforcement-claims-check.py, constitution law 13, and the one CLAUDE.md sentence naming it. They land together or not at all, because a law naming a tool with no runner is the thing being outlawed.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11, his rule of today.
