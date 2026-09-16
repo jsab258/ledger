@@ -139,6 +139,24 @@ namespace
 	// the value applied, and the first night frame is what a bound comes
 	// from.
 	const float kLampGainUnitless = 1.0f;
+	// QUEUE 333: AND THE LAMP'S OWN GLASS, WHICH IS A DIFFERENT NUMBER ABOUT
+	// A DIFFERENT THING. kLampGainUnitless above scales the point light the
+	// lantern CASTS. This scales the EmissiveColor the lamp head's own
+	// material CARRIES, which is the lit element the fixture never had: the
+	// emissive flag spawned a light under the box and left the box itself
+	// rendering through the ordinary metal surface, so the head was a dark
+	// rectangle with an invisible lamp under it.
+	//
+	// THIS IS THE FIRST VALUE OF A SERIES THAT HAS NEVER BEEN PRINTED, and
+	// rule 2 forbids calling it anything better. 1.0 unitless times the
+	// file's lantern colour converted to linear gives (1.00, 0.70, 0.00)
+	// linear, while the approved reference globe reads 242 of 255 against a
+	// sky at 181 (queue 333, measured off the Hook sheet under D41), SO THIS
+	// MAY WELL BE UNDER. It is deliberately NOT guessed upward to
+	// compensate: the instrument that prints the series ships in the same
+	// run (lampGlow on every shot line) so the second value comes off a
+	// reading instead of off an argument.
+	const float kLampEmissiveUnitless = 1.0f;
 	// AND THE FOG. Unity's fogDensity is an exponential-squared coefficient
 	// per metre; this engine's height fog density is a different
 	// parameterisation entirely. Named, applied, printed, and NOT called
@@ -670,6 +688,73 @@ namespace
 	// turn is called by ApplyCondition and by nothing else. The decision, the
 	// counts and every string are in SurfaceBind.h where g++ runs them.
 	LedgerSurface::WetRedrive GWetRedrive;
+
+	// ---- QUEUE 333: THE EMISSIVE PIECES, AND THE INSTANCE EACH ONE HOLDS -
+	//
+	// RECORDED BY THE PAINT LOOP, NEVER MADE HERE. Every non-decal piece
+	// already gets one UMaterialInstanceDynamic of its own under the ONE
+	// INSTANCE PER PIECE comment below, and the four lanterns are
+	// shape=box surface=metal so they come through exactly that route. This
+	// keeps a SECOND REFERENCE to the instance that route made, so the
+	// per-condition drive can write EmissiveColor on the instance the
+	// renderer is actually using instead of making a second one nothing
+	// draws.
+	//
+	// THE LIFETIME IS THE COMPONENT'S AND NOT THIS VECTOR'S: the same
+	// instance is held by Comp->SetMaterial(0, Mid) on an actor in the
+	// world, which is what keeps it from being collected. This is never the
+	// only reference to it, in the same way GLanterns is never the only
+	// reference to a point light actor.
+	//
+	// AND THE DENOMINATOR FALLS OUT OF THE SIZE. A lantern that fell down
+	// any of the paint loop's unpainted exits (no bind record, no actor, no
+	// component, no instance) is never pushed here, so held over
+	// EmissiveCount is the count that can glow over the count the file
+	// asks for, and the two differ exactly when one was lost.
+	struct LampPiece
+	{
+		size_t                    PieceIndex;   // into GSpec.Pieces
+		UMaterialInstanceDynamic* Mid;
+		UStaticMeshComponent*     Comp;
+	};
+	std::vector<LampPiece> GLampPieces;
+
+	// ---- QUEUE 333: THE WRITE-ON-CHANGE GUARD FOR THAT DRIVE ------------
+	//
+	// WHY THIS STRUCT IS IN THIS FILE AND NOT BESIDE LedgerSurface::
+	// WetRedrive IN THE TESTED HEADER, said here rather than left to be
+	// found: this change was scoped to one file. It therefore ships UNRUN,
+	// which is the silent-instrument risk instruments.md names, so the
+	// arithmetic in it is held down to counter increments and one boolean
+	// compare: there is no division, no percentage and no derived statistic
+	// anywhere in it or in its segment. Moving it into SurfaceBind.h beside
+	// WetRedrive, where g++ runs it, is the named next step.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF: Calls, Skipped, Walks, Visits,
+	// Wrote and NoMid are CUMULATIVE over the run; bWantOn and LastFrom are
+	// LAST-WINS, the state the most recent walk wrote.
+	struct LampDrive
+	{
+		int         Calls;         // drive entries, one per ApplyCondition
+		int         Skipped;       // entries the guard turned away
+		int         Walks;         // entries that wrote
+		int         Visits;        // emissive pieces stepped over
+		int         Wrote;         // pieces whose instance took the write
+		int         NoMid;         // kept pointer came back null
+		bool        bEverApplied;
+		bool        bWantOn;       // last-wins
+		bool        bHaveWant;
+		std::string LastFrom;      // last-wins: the condition id
+		bool        bCompIsMidAsked;
+		bool        bCompIsMid;
+		std::string CompIsMidOn;   // which lantern answered it
+		LampDrive()
+			: Calls(0), Skipped(0), Walks(0), Visits(0), Wrote(0), NoMid(0),
+			  bEverApplied(false), bWantOn(false), bHaveWant(false),
+			  LastFrom("none"), bCompIsMidAsked(false), bCompIsMid(false),
+			  CompIsMidOn("none") {}
+	};
+	LampDrive GLampDrive;
 	std::string GMaterialsLine =
 		"materialsStatus=NOT-REACHED materialsNote=the-material-pass-never-ran";
 
@@ -1531,15 +1616,32 @@ namespace
 		// LedgerVignette::SunSegment prints off the live component. Two
 		// producers for one key on one line would make the reader's answer
 		// depend on which token it split first.
-		char Buf[420];
-		std::snprintf(Buf, sizeof(Buf),
+		char Buf[640];
+		// QUEUE 333: lampEmissive RIDES HERE BESIDE lampGain, which is the
+		// other unmeasured lamp number, so the two first-values-of-a-series
+		// are read together. ITS KEY IS NOT lampColourSpace: that key is
+		// already produced by LedgerVignette::SceneLine off the file's own
+		// stated space, and two producers for one key on one line would make
+		// a reader's answer depend on which token it split first, which is
+		// the fault that retired `sun=` from this same snprintf in queue 205.
+		const int SceneNeeded = std::snprintf(Buf, sizeof(Buf),
 			" fill=%d/3 fog=%s"
 			" lampGain=%.2f fogGain=%.2f"
+			" lampEmissive=%.2f/unitless/first-value-of-a-series/never-measured"
+			" lampEmissiveSpace=lantern-gamma>linear/gain-applied-after-the-conversion"
 			" lightUnits=unitless/not-candelas decalLiftCm=%.1f decalModel=quad/phase-C-owns-the-decal",
 			(GFillA ? 1 : 0) + (GFillB ? 1 : 0) + (GFillC ? 1 : 0),
 			GFog ? "yes" : "SPAWN-FAILED",
-			kLampGainUnitless, kFogDensityGain, kDecalLiftCm);
+			kLampGainUnitless, kFogDensityGain,
+			kLampEmissiveUnitless, kDecalLiftCm);
 		GSceneLine += Buf;
+		// AND THE CAP ANNOUNCES ITSELF, instruments.md. snprintf truncates in
+		// silence and a cut tail reads exactly like a key that was never
+		// emitted, which is what this segment looked like before it grew.
+		if (SceneNeeded < 0 || (size_t)SceneNeeded >= sizeof(Buf))
+		{
+			GSceneLine += " sceneTailCut=yes/at-640-chars";
+		}
 		// ---- QUEUE 186: LOOK FOR THE HDRI THE SHARED FILE NAMES --------
 		//
 		// Done here, once, while the spec is loaded, and NOT bound to
@@ -1759,6 +1861,136 @@ namespace
 		}
 	}
 
+	// ---- QUEUE 333: THE LAMP HEAD'S OWN GLASS, DRIVEN BY THE CONDITION ---
+	//
+	// WHAT THIS EXISTS FOR, in one sentence: emissive=true on a piece spawned
+	// a point light 0.05 m under it and did NOTHING to the piece, so the
+	// fixture was a dark box with an invisible lamp beneath it and no lit
+	// element existed anywhere in the scene. This writes the material
+	// parameter that makes the head itself emit.
+	//
+	// THE WRITE-ON-CHANGE GUARD IS HERE FOR THE SAME MEASURED REASON as
+	// ReDriveWetness above and the sky below: ApplyCondition is RE-ENTERED
+	// ON EVERY TICK while a condition settles, so an unguarded drive is one
+	// vector write per lantern per tick. The asked count and the walk count
+	// both ride the materials done line, so the guard can be checked instead
+	// of believed.
+	//
+	// WHAT THIS FUNCTION DECIDES: nothing about pixels. It supplies
+	// membership (the pieces the paint loop recorded as emissive), order
+	// (the file's own) and live state (the condition's LanternsOn). The
+	// colour conversion is the same one LinearFromGamma uses at the point
+	// light spawn, so the bulb and the glass cannot end up disagreeing about
+	// the colour of sodium.
+	void ReDriveLampEmissive(const Condition& C)
+	{
+		++GLampDrive.Calls;
+		const bool bWant = C.LanternsOn;
+		if (GLampDrive.bHaveWant && GLampDrive.bWantOn == bWant)
+		{
+			++GLampDrive.Skipped;
+			return;
+		}
+		GLampDrive.bHaveWant = true;
+		GLampDrive.bWantOn = bWant;
+		GLampDrive.bEverApplied = true;
+		GLampDrive.LastFrom = NoSpaces(C.Id);
+		++GLampDrive.Walks;
+		// THE VALUE, AND OFF IS EXACTLY BLACK. SrgbToLinear is the tested
+		// header's conversion and the one LinearFromGamma calls, so this is
+		// the file's stated colour space converted once and not a second
+		// pow() written here. Lanterns off multiplies by a hard 0.0f, which
+		// lands exactly (0,0,0,1): the material's own default for this
+		// parameter, so a day condition leaves the glass at the value the
+		// asset ships with rather than at a small lit number.
+		const double Gain = bWant ? (double)kLampEmissiveUnitless : 0.0;
+		const FLinearColor Value(
+			(float)(SrgbToLinear(GSpec.Lantern.R) * Gain),
+			(float)(SrgbToLinear(GSpec.Lantern.G) * Gain),
+			(float)(SrgbToLinear(GSpec.Lantern.B) * Gain),
+			1.0f);
+		for (size_t I = 0; I < GLampPieces.size(); ++I)
+		{
+			++GLampDrive.Visits;
+			UMaterialInstanceDynamic* Mid = GLampPieces[I].Mid;
+			if (Mid == nullptr) { ++GLampDrive.NoMid; continue; }
+			Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")), Value);
+			++GLampDrive.Wrote;
+			// AND THE READBACK, IN THE SAME FEW STATEMENTS AS THE SET, so
+			// nothing in between can explain a difference. ONCE PER WALK and
+			// not once per lantern: four lanterns would answer one question
+			// about the material four times.
+			//
+			// WHAT IT ASKS AND WHAT IT DELIBERATELY DOES NOT. It asks the
+			// component whether the material it will be DRAWN with is still
+			// the instance this write went to, which is the dead-write
+			// question a game-thread parameter echo cannot answer. It does
+			// NOT ask the value back, for two reasons: the value's real
+			// readback is the frame, where lampGlow on every shot line is
+			// the render side of this write and is the item's acceptance
+			// instrument; and the engine call that would echo a VECTOR
+			// parameter has no signature readable in the container this was
+			// written in and no precedent anywhere in this repository, while
+			// every call above it does. An unverified signature costs a
+			// whole CI round trip and buys a weaker answer than the frame.
+			if (!GLampDrive.bCompIsMidAsked && GLampPieces[I].Comp != nullptr)
+			{
+				GLampDrive.bCompIsMidAsked = true;
+				UMaterialInterface* CompMat = GLampPieces[I].Comp->GetMaterial(0);
+				GLampDrive.bCompIsMid = (CompMat == (UMaterialInterface*)Mid);
+				const size_t At = GLampPieces[I].PieceIndex;
+				if (At < GSpec.Pieces.size())
+				{
+					GLampDrive.CompIsMidOn = NoSpaces(GSpec.Pieces[At].Name);
+				}
+			}
+		}
+	}
+
+	// THE DRIVE'S TALLIES, AND EVERY ZERO HERE SHIPS ITS DENOMINATOR.
+	// WHOLE-RUN NUMBERS ONLY: this rides the materials done line, never a
+	// shot line, which is the separation WetRedriveSegment keeps. The
+	// per-frame half of this item is lampGlow and it is on the shot lines.
+	//
+	// A RUN WHERE THE DRIVE NEVER RAN PRINTS THE WORDS "nothing measured"
+	// and still prints inFile, because a street with no emissive piece and a
+	// drive that was never called are different facts and a bare 0 cannot
+	// tell them apart.
+	std::string LampDriveSegment()
+	{
+		const int InFile = LedgerVignette::EmissiveCount(GSpec.Pieces);
+		const int Held = (int)GLampPieces.size();
+		char B[560];
+		if (GLampDrive.Calls == 0)
+		{
+			std::snprintf(B, sizeof(B),
+				" lampDrive=nothing-measured/the-drive-was-never-called"
+				" lampDriveHeld=%d/inFile=%d", Held, InFile);
+			return std::string(B);
+		}
+		std::snprintf(B, sizeof(B),
+			" lampDriveStat=cumulative-over-the-run/value-and-from-are-last-wins"
+			" lampDriveAsked=%d/walked=%d/skipped=%d"
+			" lampDriveWrote=%d/visits=%d/nullInstance=%d"
+			" lampDriveHeld=%d/inFile=%d"
+			" lampDriveOn=%s lampDriveFrom=%s lampDriveValue=%.2f/unitless"
+			" lampDriveCompIsMid=%s/on=%s"
+			" lampDriveValueReadback=the-frame/lampGlow-on-the-shot-lines"
+			"/not-a-game-thread-echo",
+			GLampDrive.Calls, GLampDrive.Walks, GLampDrive.Skipped,
+			GLampDrive.Wrote, GLampDrive.Visits, GLampDrive.NoMid,
+			Held, InFile,
+			GLampDrive.bWantOn ? "yes" : "no",
+			GLampDrive.LastFrom.c_str(),
+			GLampDrive.bWantOn ? kLampEmissiveUnitless : 0.0f,
+			GLampDrive.bCompIsMidAsked
+				? (GLampDrive.bCompIsMid ? "is-the-instance-we-wrote"
+				                         : "SOMETHING-ELSE")
+				: "nothing-measured",
+			GLampDrive.CompIsMidOn.c_str());
+		return std::string(B);
+	}
+
 	// THE ONLY WRITER OF THE SUN, THE FILL, THE FOG, THE SKY AND THE WETNESS.
 	// Every condition change writes all of them, so no setting can carry over
 	// from the previous shot and be attributed to this one.
@@ -1815,6 +2047,12 @@ namespace
 		SetDirectional(GFillC, Sky * 0.45f, kFillGround * FillScale);
 		for (int32 I = 0; I < GLanterns.Num(); ++I)
 			if (ULightComponent* L = GLanterns[I]->GetLightComponent()) L->SetVisibility(C.LanternsOn);
+		// AND THE LAMP HEADS THEMSELVES, QUEUE 333, IMMEDIATELY BESIDE THE
+		// LIGHTS THEY BELONG TO. The two lines above switch the light the
+		// fixture CASTS; this switches the glass the fixture IS. They are
+		// driven off the same C.LanternsOn in the same breath so no
+		// condition can light one without the other.
+		ReDriveLampEmissive(C);
 		for (int32 I = 0; I < GWindows.Num(); ++I)
 			if (ULightComponent* L = GWindows[I]->GetLightComponent()) L->SetVisibility(C.WindowsOn);
 		if (GFog != nullptr)
@@ -2551,8 +2789,14 @@ namespace
 		// there would read 0 walks of 0 calls on every run for ever: stale
 		// rather than wrong in a way anybody could see. This is the same
 		// reason SkySegmentNow is taken when a verdict asks for the line.
+		// AND THE LAMP DRIVE'S TALLIES WITH THEM, QUEUE 333, FOR THE SAME
+		// TIMING REASON: GMaterialsLine is composed at the end of
+		// BindSurfaces, which runs before any condition has been applied, so
+		// a lamp-drive count built there would read 0 walks of 0 calls on
+		// every run for ever.
 		Out.Add(FString(UTF8_TO_TCHAR(
-			(GMaterialsLine + LedgerSurface::WetRedriveSegment(GWetRedrive)).c_str())));
+			(GMaterialsLine + LedgerSurface::WetRedriveSegment(GWetRedrive)
+			 + LampDriveSegment()).c_str())));
 		// THE DECALS, AFTER THE SURFACES, because card and multiply appear on
 		// both: as two surface names that are NOT library surfaces, and here as
 		// twenty pieces each carrying its own picture. A cap on the lines would
@@ -2931,6 +3175,60 @@ namespace
 			(int)GQuadActors.Num(), bWholeFrameKeysOnThisLine, kShotW, kShotH);
 	}
 
+	// ---- QUEUE 333: IS THE LAMP THE BRIGHTEST WARM THING IN ITS CORNER ---
+	//
+	// ON EVERY SHOT LINE, RULED 2026-09-16 SECTION 3.4, and the reason is
+	// the whole acceptance sentence. ShouldProbeShot is true only when the
+	// condition has lanterns or practicals on, so a segment that printed
+	// only on probed shots could never produce the DAY row that refutes it,
+	// and "no at day, yes at night, in one run" is what this item is
+	// accepted on. A prediction that cannot be reached is not a prediction.
+	//
+	// AND ON THE TWO EXITS WITH NO FRAME BEHIND THEM TOO, where the tested
+	// formatter prints its nothing-measured branch with inFile beside it: a
+	// shot whose file never landed MEASURED NOTHING, which is a different
+	// fact from a lantern that came out dark, and the line has to say which.
+	//
+	// NOTHING IS DECIDED HERE. The rectangle is LedgerSurface::
+	// PieceScreenBox and the pixels, the yes-or-no comparison, the three
+	// denominators and every printed string are LedgerFrame's, both in
+	// headers g++ compiles and runs before this file is built. This supplies
+	// membership (which pieces are emissive), order (the file's own) and
+	// live state (the camera and the frame just decoded).
+	std::string LampGlowNow(const Shot& S, const unsigned char* Bgra, int W, int H)
+	{
+		const int InFile = LedgerVignette::EmissiveCount(GSpec.Pieces);
+		const bool bDecoded = (Bgra != nullptr && W > 0 && H > 0);
+		std::vector<LedgerFrame::LampPatch> Patches;
+		// THE CAMERA THE FILE NAMES FOR THIS ROW, not the camera the world
+		// happens to be standing at: the projection is a model of where the
+		// solid SHOULD land taken from the same file the frame was shot
+		// from. A row naming a camera that is not in the file contributes no
+		// patch and the segment says so with examined=0 beside inFile.
+		const Camera* C = bDecoded ? FindCamera(S.CameraId) : nullptr;
+		if (C != nullptr)
+		{
+			for (size_t I = 0; I < GSpec.Pieces.size(); ++I)
+			{
+				const Piece& Pc = GSpec.Pieces[I];
+				if (!Pc.Emissive) { continue; }
+				const LedgerSurface::ScreenBox Box =
+					LedgerSurface::PieceScreenBox(*C, Pc, W, H);
+				Patches.push_back(LedgerFrame::MeasureLampPatch(
+					Bgra, W, H, Pc.Name, Box.bMeasured,
+					Box.X0, Box.Y0, Box.X1, Box.Y1));
+			}
+		}
+		// NO CAP, AND THAT IS A DECISION WITH A REASON rather than an
+		// oversight. MaxShown of 0 or less means no cap; the file carries
+		// four emissive pieces today, so a cap would be a number nobody has
+		// measured (rule 2) standing in front of a list of four. The cap
+		// announces itself either way: lampGlowShown/notShown prints on
+		// every line whether or not it bites, so the day the file grows is
+		// visible in the line rather than in a silence.
+		return LedgerFrame::LampGlowSegment(Patches, InFile, bDecoded, 0);
+	}
+
 	// MEASURE THE FILE THAT IS ABOUT TO BE COMMITTED, not the buffer the
 	// engine had in memory, and let the maths and the string come from the
 	// tested header.
@@ -2981,7 +3279,8 @@ namespace
 				std::string(TCHAR_TO_UTF8(*GNote)))
 				+ " " + ShotCamAndCaptureNow()
 				+ " " + ShotControlQuadsNow(S, false)
-				+ " " + ExposurePinNow());
+				+ " " + ExposurePinNow()
+				+ " " + LampGlowNow(S, nullptr, 0, 0));
 			NoteLadderRow(S.Id, bAfterNight, false, 0.0, 0, 0, 0);
 			return;
 		}
@@ -2998,7 +3297,8 @@ namespace
 				TCHAR_TO_UTF8(*FPaths::GetCleanFilename(PngPath)), Note)
 				+ " " + ShotCamAndCaptureNow()
 				+ " " + ShotControlQuadsNow(S, false)
-				+ " " + ExposurePinNow());
+				+ " " + ExposurePinNow()
+				+ " " + LampGlowNow(S, nullptr, 0, 0));
 			NoteLadderRow(S.Id, bAfterNight, false, 0.0, 0, 0, 0);
 			return;
 		}
@@ -3119,6 +3419,12 @@ namespace
 			// whitespace.
 			Line += LedgerSurface::WetShotFields(WS);
 		}
+		// AND WHETHER THE LAMPS ARE LIT IN THIS FRAME, QUEUE 333. PER-SAMPLE
+		// and off the pixels of the frame just decoded: every number in it is
+		// true of this one picture, which is why none of it rides the
+		// materials done line where the drive's cumulative tallies are.
+		Line += " ";
+		Line += LampGlowNow(S, (const unsigned char*)Bgra.GetData(), W, H);
 		GShotLines.push_back(Line);
 		// ---- THE LADDER'S ROWS, AND WHAT CAME BEFORE THEM -----------------
 		//
@@ -4316,6 +4622,28 @@ namespace
 				(float)Wet.Wetness);
 			Comp->SetMaterial(0, Mid);
 			++GMidsCreated;
+			// QUEUE 333: AND AN EMISSIVE PIECE KEEPS A REFERENCE TO THE
+			// INSTANCE THIS LOOP JUST MADE. Not a second instance: this is
+			// the one the component is now wearing, recorded so the
+			// per-condition drive can write EmissiveColor on it without
+			// re-running the four decisions above and without making a MID
+			// the renderer is not using.
+			//
+			// RECORDED HERE AND NOT ON THE DECAL ROUTE ABOVE, and that is
+			// correct rather than an omission: the four lanterns read
+			// shape=box surface=metal in the file, so they arrive here, and
+			// a decal card carries neither this parameter nor a lamp. Any
+			// emissive piece that fell down one of the exits above is
+			// absent from this vector, which is what makes held/inFile on
+			// the done line a real denominator instead of a restatement.
+			if (Pc.Emissive)
+			{
+				LampPiece LP;
+				LP.PieceIndex = P;
+				LP.Mid = Mid;
+				LP.Comp = Comp;
+				GLampPieces.push_back(LP);
+			}
 			if (Route == LedgerSurface::Paint_Tint) { ++GPaint.Tint; }
 			else                                    { ++GPaint.Pack; }
 			++GBinds[(size_t)Idx].PiecesAssigned;

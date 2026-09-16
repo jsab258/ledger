@@ -3,10 +3,27 @@ spec: CLAUDE.md says THE LICENCE ALLOWLIST IS LAW and that nothing ships that
   is not on it. Line 6 of the allowlist reads "Characters: MetaHuman ...
   Character Creator 4 exports per Reallusion EULA. Mixamo animations." IT
   NAMES ANIMATIONS AND NOT BODIES. The tree already ships 18 full Mixamo
-  character bodies under ledger/Assets/Characters, and the Unity path renders
-  one. A figure in a frame is the next visual step Jafar named, so this is
-  worth one line of clarity BEFORE a body reaches a rendered frame rather
-  than after.
+  character bodies under ledger/Assets/Characters. A figure in a frame is the
+  next visual step Jafar named, so this is worth one line of clarity BEFORE a
+  body reaches a rendered frame rather than after.
+
+  CORRECTED 2026-09-16 UNDER D43, and the correction matters because the
+  sentence was the strongest evidence in the item. This spec said "and the
+  Unity path renders one". IT DOES NOT AND NEVER HAS. Checked at the source
+  rather than re-read: `ledger/Assets/Resources` exists and contains NO
+  `Characters/Body`; `find ledger/Assets -iname "Body*.prefab" -o -iname
+  "Body*.fbx"` returns nothing; and RealBody.cs:1287 carries the fallback
+  `Why = "Resources/Characters/Body not in the build"` under a comment saying
+  the likeliest cause is that the Editor step did not run. So the path is
+  WIRED to load a body and no body asset is committed.
+
+  THE CORRECTION STRENGTHENS THE ITEM rather than weakening it. If a Mixamo
+  body had already been rendered, the allowlist question would be retroactive
+  and arguably settled by practice. It has not, so the first body to reach a
+  frame is still ahead of us, and the line gets its clarity before that
+  happens exactly as this item asks. The count of 18 was re-counted the same
+  day and is right: 18 .fbx files, no child-looking name among them, which is
+  also D18 checked rather than assumed.
 acceptance: line 6 of the allowlist says what it means about bodies, either
   way, and if the answer is that bodies are allowed it says so in the same
   words the other three documents already use
