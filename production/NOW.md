@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-03 after the batch ruling.
+STATUS: LIVE. Verified 2026-09-16 13:20Z, when the in-flight section was corrected: it had named three agents that finished an hour earlier.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -51,36 +51,46 @@ turns up, file it and keep going."
   without adding it to organization.md, so for one edit the text existed
   nowhere.
 
-## IN FLIGHT RIGHT NOW, 2026-09-16 midday, three agents
+## IN FLIGHT 2026-09-16 13:20Z: RUN 49 ON THE MACHINE, NOTHING IN THIS CONTAINER
 
-- **instrument-builder, the wiring.** canon-gate `--corpus` and
-  goal-block-check into BOTH runners, template_sync retired for them under
-  D45. The order is fixed and is the point: RUN THE CORPUS FIRST and paste
-  the series, because the gate has never run over these roots and nothing
-  predicts a colour. A GATE NEVER LANDS RED.
-- **producer, the four-item card.** Jafar's four audit items answered in one
-  card, the lead being that item 1 was already fixed in d2687bf9 six hours
-  before he asked us to file it.
-- **engine-specialist, the lamp acceptance instrument.** Third (b) of queue
-  333's own three-way split, the half that runs locally: PieceScreenBox in
-  SurfaceBind.h, pixel maths and the formatter in FrameStats.h, both with a
-  planted rejecting case. Third (a), the material parameter, landed in
-  e7fbc9a8. Third (c), the .cpp wiring, comes after this one and cannot be
-  verified until CI.
+NO BUILDERS, NO DIRECTORS, NOTHING TO RESTART. All four agents of the day
+landed and were reviewed. What is moving is a CI run on Jafar's PC.
 
-  THE DISPATCH PLAN FOR THE REST OF THE DAY, written down so a reset does not
-  re-derive it. Queue 333 says it builds after 329, 332 and 337 because it
-  shares their files, and all three are READY and none is done. The files
-  decide the order, not the numbers: 329 and 332 are both FrameStats.h
-  MeasureLightDelta, 337 and 333's third (c) are both VignetteShot.cpp.
-  So: the instrument lands first (in flight), then 333 (c) and 332 go out
-  together because they are in different files, then ONE dispatch of
-  ledger-probe-unreal carries all of it. The round trip costs the same
-  carrying one change or six, and a second round trip costs a whole evening.
+- **Run 49**, GitHub run 35100795215, head_sha
+  355e8d87d0654418253272d718648437088a0d02, started 13:15:50Z. Dispatched by
+  appending to `production/d1-probe/DISPATCH`, which is also its own 48-run
+  log, so the reason it ran is recorded in the act of running it. WATCH BY
+  ANCESTRY against that sha, never by branch movement, and compare run files
+  BY PREFIX because they are 7 chars and git abbreviates to 8.
+- **The 13:50Z wake record carries the reading order** and it is not to be
+  reordered: the build verdict's material line FIRST, then the probe's
+  lampGlow lines, then the frames themselves before any gate. On the probe
+  alone, "the base material predates EmissiveColor so the write is a silent
+  no-op" and "1.00 is simply too low" produce the SAME two readings, a healthy
+  drive and a dark lamp. Only the pair separates them.
+- **Two card parts are waiting on the PC's next sweep.** The single card they
+  replaced was refused by Telegram as too long and would have retried for
+  ever. Confirm `sent=2` from the sweep log rather than assuming; part one
+  carries the licence question that blocks tonight's figure.
 
-  THE THIRD ELEMENT OF HIS ORDER IS BLOCKED AND HE IS BEING ASKED: there is no
-  figure to silhouette. Queue 335, raised to blocking today with the evidence.
-  The dusk frame can land without one; the figure follows his answer.
+## What landed today, so a fresh session does not re-derive it
+
+The policy batch (d9af9a3d): canon-gate and goal-block wired into both
+runners, template_sync retired for them, CLAUDE.md back under its bound at
+1951/2000. THE CANON GATE'S FIRST RUN FOUND NOTHING: 0 findings in 209 files,
+114,156 lines. The sentence two documents had asserted for months was false
+only in the sense that nothing ran it.
+
+The lamp (355e8d87): queue 333's three parts are all in. The acceptance is one
+pair in one run, stated before the run: lampGlowLit=4/of=4 on a night row and
+0/of=4 on a day row of the same camera.
+
+THREE CLAIMS OF THE RESIDENT'S FAILED A CHECK TODAY and each was caught by
+running a command rather than re-reading a sentence: a push read as successful
+when it had been rejected (the pipeline returned tail's exit code); 212 read as
+the same denominator as 209 (offered against examined); and queue 335's claim
+that the Unity path renders a Mixamo body, repeated into a message to Jafar
+before it was caught. It does not and never has.
 
   THE FOUR ITEMS ARE FILED AND NOT STARTED, per his standing rule of today:
   350 marked DONE at d2687bf9, 355 filed for the throughput ledger's piece
