@@ -1635,3 +1635,19 @@ fault is what queue 329 says it is.
 # there and were read. If a ground band number moves this run, the pack did
 # not move it and neither did wetness; suspect the instrument or the exposure
 # before either.
+run 49 - 2026-09-16 - THE LAMP IS ASKED TO GLOW AND THE FRAME IS ASKED WHETHER
+IT DID. Queue 333 lands all three thirds: the EmissiveColor parameter
+(e7fbc9a8), the acceptance instrument in the two tested headers (d9af9a3d),
+and the drive plus readback in VignetteShot.cpp under the ruling of
+2026-09-16 (game-design/decision-2026-09-16-ruling-the-lamp-drive-lands-and-
+the-frame-is-the-readback.md). THE ACCEPTANCE IS ONE PAIR IN ONE RUN:
+lampGlowLit=4/of=4 on a night row and lampGlowLit=0/of=4 on a day row of the
+same camera. READ THE BUILD VERDICT'S MATERIAL LINE FIRST, ruled: return 0
+with 20/20 connections and EmissiveColor in the vectors= readback. If it
+reads 19/19, or a nonzero return, or a vectors list without EmissiveColor,
+that is the queue 186 shape (the base material predates the parameter, the
+write is a silent no-op) and NO CONSTANT MOVES on the strength of a dark
+lamp. kLampEmissiveUnitless ships at 1.00 as the FIRST VALUE OF A SERIES and
+is EXPECTED TO BE UNDER: the reference globe reads 242 of 255 against a sky
+at 181. Its second value comes off this run's own coreMaxLuma against
+ringMaxLuma per lantern, never off an argument.

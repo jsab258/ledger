@@ -1,6 +1,4 @@
-HEADLINE: Your four items, answered; the second is yours to call, nothing starts before the visual slice lands, and one word from you puts a figure in tonight's frame.
-
-1. THE LIE. Already fixed; it landed six hours before you asked. Someone who catches you in a lie now keeps what they saw, refuses the lie, and still remembers the exchange. A lie nobody can catch is still believed, as before. Proved against the old behaviour rather than assumed: the one thing that broke there was the bug itself, she could be talked out of what she had witnessed, and everything else held both ways.
+HEADLINE: Second of two: agency, the throughput ledger and the split, then which loop to build once the slice lands. The first message carried the lie, already fixed, and the figure question that blocks tonight. Nothing here starts before the visual slice lands.
 
 2. PLAYER AGENCY. Agreed, with one split. Agency is the largest blocker to the town knowing the player and feeling alive; it is not the blocker to the picture, which is what a player meets in the first minute. So agency is the largest blocker to the moat, the slice is the largest blocker to the door, and finishing the slice first stays right, as you ruled. It is also not new: it is the crime-and-consequence milestone you reopened by name two days ago and called the one to protect if anything slips. Confirmation, not discovery.
 
@@ -19,10 +17,3 @@ C. Neither yet; choose after you have seen the slice.
 RECOMMENDATION: A. It is the first half of B either way, and it can be measured in one sitting before any person plays it.
 DEFAULT: A, starting only after the slice lands, as already ruled.
 DEADLINE: 2026-09-18; nothing decays while it waits, because nothing starts before the slice lands.
-
-NEEDS YOU: BLOCKING TODAY. Your order for tonight ends with a figure in silhouette, and there is no figure to put in that frame without one word from you. The scene the street is drawn from has no person in it, by design: its own list of what it leaves out names three street fittings and nobody. The walk build's player is a camera on a boom with no body, so its frames carry an invisible person. The only bodies anywhere in the project are eighteen from Mixamo, and one of them already shows in the Unity build. The licence allowlist, which outranks every other document and which nothing may ship outside of, lists under Characters: MetaHuman, Character Creator exports, and Mixamo animations. Animations, not bodies. Four other documents, yours among them, say bodies are in; your own words are that characters and animations come from Mixamo with your account and a token you supply. The reading that fits is that the allowlist line is terse, not restrictive. But the allowlist outranks your working file, its wording is absolute about what may ship, and a generous reading by us is exactly the move the licence law exists to prevent. So the studio will not settle it by doing, which is the rule you set this morning.
-A. Yes: Mixamo bodies are in, the same way Mixamo animations are, and the allowlist line is changed to say so, in the words your other documents already use.
-B. No: the figure comes from somewhere else, and tonight's dusk frame ships without one.
-RECOMMENDATION: A. It is what your own file already says, and the alternative holds the third element of your own order.
-DEFAULT: hold the figure; the dusk frame ships with the wet road and the lamps lit, and the figure goes in the moment you answer.
-DEADLINE: 2026-09-18; the frame can land without the figure.
