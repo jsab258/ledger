@@ -3,7 +3,7 @@ due: 2026-09-16T16:35:00Z
 armedAt: 2026-09-16T16:07:17Z
 armedBy: resident/director-ruling-the-sky-batch-nothing-commits-yet
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T16:45:00Z
 capBitAt: -
 
 A DIRECTOR IS RULING THE SKY BATCH AND NOTHING COMMITS UNTIL IT STAMPS. 85e3eb09 is HEAD and pushed; the working tree carries the sky builder's work, which is REVIEWED and NOT committed. Budget 2026-09-16e: 69 total, 69 Fable, ceiling 85, takenAt 15:33Z, so sixteen points of headroom and the day is measured until about 01:33Z.
@@ -23,3 +23,22 @@ STILL OWED, none started: enforcement-claims-check.py with constitution law 13 a
 THE FIGURE IS UNBLOCKED (D46) AND NOTHING IS BUILT TOWARD IT. The scene spec has no person and the walk pawn has no skeletal mesh. Real work, not started.
 
 HIS REGISTER RULE BINDS EVERY MESSAGE: a filed item gets ONE LINE saying it is filed. The reasoning goes in the record.
+
+DISCHARGED 2026-09-16T16:45Z. The stamp landed, A1 landed, the batch is
+committed at 727d6a46 and RUN 50 IS QUEUED (GitHub run 35123763846, head_sha
+727d6a46, queued 16:44:02Z), verified by the run record rather than by a push
+exit code.
+
+THE DIRECTOR AGREED WITH THE RESIDENT ON QUESTION 2 AND PROVED IT FROM THE
+BATCH'S OWN TOOLS: make_sky_material.py sets is_sky with the reason
+"the-skylight-realtime-capture-reads-sky-materials", so a closed sky-flagged
+dome means the capture sees the PHOTOGRAPH and not the atmosphere. The ambient
+change is ACCEPTED; the word was REFUSED. The two words are now derived from a
+tri-state read, three cases and no fourth, in the header where g++ runs them.
+
+TWO FIXES THE RESIDENT APPLIED, both real: the dome is destroyed when its
+material cannot be instanced (it was leaving a 2 km default-material sphere
+round the street while the verdict said NOTHING bound), and both new tools'
+selftests are wired into verify.py AND ci-checks.sh (they had no caller at all,
+which is rule 6 inside the batch that landed under today's wire-or-delete
+policy). checks 87 to 88.
