@@ -3953,6 +3953,35 @@ if __name__ == "__main__":
     # explain. The verdict inside the editor travels in the file, as
     # materialScriptReturn, which is the channel this project trusts.
     _code = main()
+    # ---- QUEUE 186 / D41: AND THE SKY MATERIAL, IN THE SAME EDITOR RUN ----
+    #
+    # NOT A BRANCH IN THIS SCRIPT AND NOT A SECOND WORKFLOW STEP. The dome
+    # that carries the approved photograph needs an unlit two-sided material,
+    # which is a different material and has its own file; but the workflow
+    # step that would have launched a second editor is 220 characters under
+    # the largest block that has ever dispatched (tools/workflow-size.py), so
+    # the second script is called from here instead of from there. It writes
+    # its own key=value line into ue-material.txt, which the step already
+    # reads whole, so the sky keys reach the verdict with no yml change.
+    #
+    # IT CANNOT TAKE THIS SCRIPT DOWN WITH IT. Everything above has already
+    # run and already written its line; this is wrapped so that a fault in
+    # the sky material prints as a sky key and never as a missing material.
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import make_sky_material
+        make_sky_material.main()
+    except Exception as _sky_err:
+        try:
+            import unreal
+            _root = unreal.Paths.project_dir()
+        except Exception:
+            _root = "."
+        with open(os.path.join(_root, "ue-material.txt"), "a",
+                  encoding="utf-8") as _f:
+            _f.write("skyMaterialStatus=RAISED skyMaterialReturn=2 "
+                     "skyMaterialNote=%s\n"
+                     % str(_sky_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "

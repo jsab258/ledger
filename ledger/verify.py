@@ -1087,6 +1087,52 @@ def ue_material_selftest():
     return True, f"ue material generator ok ({m.group(1)} checks)"
 
 
+def sky_tools_selftest():
+    """The two sky tools' own checks, RUN, in the container.
+
+    SAME SHAPE AND SAME REASON AS `ue_material_selftest` ABOVE, and it is the
+    wire-or-delete policy of 2026-09-16 applied to the batch that landed under
+    it. Both tools shipped a two-armed `--selftest` and NEITHER HAD A CALLER:
+    a grep for make_sky_material over the whole tree returned eight hits and
+    none of them was a runner. That is CLAUDE.md rule 6 with the tool's own
+    guard as the thing that was built and not running, and the director named
+    wiring them a PRECONDITION of the batch rather than a follow-up.
+
+    WHY IT MATTERS HERE SPECIFICALLY. `make_sky_material.py` decides the three
+    material flags the whole sky reading rests on, including is_sky, which is
+    what makes the skylight's real-time capture read the dome at all.
+    `hdr-to-longlat.py` decides the linear scale and the sRGB encode of the
+    photograph itself, and it already caught its author asserting a wrong
+    constant. Neither has an engine anywhere near it, so the container can run
+    every rule either one applies.
+
+    BOTH ARMS, ONE GATE, AND A SKIP NAMES ITSELF rather than reading green."""
+    out_parts = []
+    for name, rel in (("make_sky_material", ("tools", "ue", "make_sky_material.py")),
+                      ("hdr-to-longlat", ("tools", "hdr-to-longlat.py"))):
+        tool = ROOT.parent.joinpath(*rel)
+        if not tool.exists():
+            return False, "SKY TOOL MISSING: " + "/".join(rel)
+        code, out = run(["python3", str(tool), "--selftest"])
+        line = ""
+        for l in out.splitlines():
+            if l.startswith(name + " --selftest:"):
+                line = l.strip()
+        if code != 0 or not line:
+            bad = [l.strip() for l in out.splitlines() if l.strip().startswith("FAIL")]
+            return False, ("SKY TOOL SELFTEST RED (" + name + "): "
+                           + (_cap(bad, keep=3, tail="selftest did not pass")
+                              if bad else "no summary line, exit " + str(code)))
+        m = re.search(r"checks=(\d+) failed=(\d+)", line)
+        if not m or m.group(2) != "0":
+            return False, "SKY TOOL SELFTEST RED (" + name + "): " + line
+        if m.group(1) == "0":
+            return False, ("SKY TOOL SELFTEST NOTHING MEASURED (" + name
+                           + "): 0 checks ran, which is not a pass")
+        out_parts.append(name + ":" + m.group(1))
+    return True, "sky tools ok (" + "/".join(out_parts) + " checks, 0 failed)"
+
+
 def ue_prop_import_selftest():
     """The prop mesh importer's own checks, RUN, in the container.
 
@@ -8646,7 +8692,7 @@ def main():
                powershell_steps, sheet_read, prop_dimensions, prop_reach,
                ue_probe_tests,
                ue_material_selftest,
-               ue_prop_import_selftest,
+               ue_prop_import_selftest, sky_tools_selftest,
                propview, meshgen_suite, ref_bench,
                decal_ink,
                frame_drift, verdict_keys, verdict_format, verdict_dupkeys,

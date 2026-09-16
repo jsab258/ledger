@@ -55,6 +55,7 @@
 #include "SurfaceBind.h"
 
 #include "CoreMinimal.h"
+#include "UObject/UnrealType.h"
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
@@ -257,10 +258,23 @@ namespace
 	//      answer it the first run the file is reachable, at the cost of no
 	//      new key.
 	//
-	// SO THIS RUN STILL BINDS NOTHING AND SAYS SO. skyHdriBoundAs reads
-	// NOTHING and skyModel reads not-an-hdri, which is the honest state. A
-	// sky that claims to be bound and is not is the failure this project
-	// keeps finding, and a half-bound one would render a black dome.
+	// ---- AND THE RUNG WAS TAKEN, 2026-09-16, UNDER D41 ------------------
+	//
+	// Both costs above are paid and neither is paid the way the paragraph
+	// expected. THE CUBE WAS NEVER NEEDED: a sky light draws nothing, so the
+	// thing that puts a photograph in a frame is geometry, and the dome is an
+	// engine sphere with an unlit two-sided material (kSkyDomeMeshPath and
+	// kSkyMaterialPath above). THE STAGING IS A WORKFLOW STEP that copies
+	// ledger/Assets/Resources/Sky beside the project and beside the exe,
+	// subdirectory and all, the way the decal step keeps `generated`. And the
+	// RADIANCE DECODE was answered by not needing one: the photograph ships
+	// as an 8-bit sRGB long-lat PNG made by tools/hdr-to-longlat.py, which is
+	// a format this binary's own decoder reads 563 times a run.
+	//
+	// THE ATMOSPHERE IS KEPT AND IS NOT THE SEEN SKY ANY MORE. It still feeds
+	// the sky light's real-time capture and still owns aerial perspective, so
+	// nothing this file has calibrated moves; the dome sits in front of it.
+	// skyModel names both halves and skyHdriBoundAs names the photograph.
 	//
 	// THE FOUR ATMOSPHERE NUMBERS ARE A STARTING POINT AND SAY SO. Rule 2
 	// forbids calling them anything better: no series exists. Rayleigh is
@@ -329,6 +343,45 @@ namespace
 	// name; nothing stages this, so NOT-FOUND is the expected answer and it
 	// is worth having as a fact rather than as an assumption.
 	const TCHAR* kSkyHdriExt = TEXT(".hdr");
+	// ---- QUEUE 186 / D41: WHAT THE PHOTOGRAPH SHIPS AS ------------------
+	//
+	// PNG FIRST AND THE .hdr SECOND, and the order is the decision. The one
+	// runtime image path this binary owns is ImportTexture below, which asks
+	// the ImageWrapper module what the bytes are; that module has decoded a
+	// PNG 563 times a run for the city pack and has never been shown to read
+	// Radiance here. tools/hdr-to-longlat.py turns the approved Radiance file
+	// into an 8-bit sRGB long-lat PNG beside it, measuring the photograph as
+	// it goes. The .hdr is kept as the second candidate rather than dropped:
+	// if this engine can read it, skyHdriDetectedAs says so on the first run
+	// that reaches it, at the cost of no new key.
+	const TCHAR* kSkyPhotoExts[2] = { TEXT(".png"), TEXT(".hdr") };
+	// THE DOME, AND WHY A DOME AT ALL. A sky light DRAWS NOTHING: it lights
+	// and it reflects. The only thing that puts a photograph in a frame is
+	// geometry with an unlit material, which is also what the correction of
+	// 2026-09-15 above says the rung turns into. One engine sphere, seen from
+	// inside, big enough to enclose every piece the street spawns and small
+	// enough that nothing here goes near the world bounds: the cameras sit
+	// within about 100 m of the origin, so a 1 km radius moves the horizon by
+	// under 6 degrees between them, and an overcast sky has no feature that
+	// reading could be wrong about. The engine's basic shapes are one metre,
+	// so the scale IS the diameter in metres, exactly as the piece loop says.
+	const TCHAR* kSkyDomeMeshPath  = TEXT("/Engine/BasicShapes/Sphere.Sphere");
+	const float  kSkyDomeDiameterM = 2000.0f;
+	// THE MATERIAL, MADE BY tools/ue/make_sky_material.py IN THE EDITOR STEP,
+	// never by hand, for the reason make_base_material.py's docstring gives:
+	// a material is compiled shader code and a packaged game can only make
+	// INSTANCES of materials that already exist as assets.
+	const TCHAR* kSkyMaterialPath   = TEXT("/Game/Ledger/M_LedgerSky.M_LedgerSky");
+	const TCHAR* kSkyMapParam       = TEXT("SkyMap");
+	const TCHAR* kSkyLuminanceParam = TEXT("SkyLuminance");
+	// THE FIRST VALUE OF A SERIES THAT HAS NEVER BEEN PRINTED, and rule 2
+	// forbids calling it anything better. The dome is unlit, so this is an
+	// absolute emissive going into an auto-exposed filmic tonemap whose key
+	// nothing in the container that wrote this line can compute. 1.0 is the
+	// identity and is deliberately NOT guessed upward to compensate for
+	// anything: the frame's own sky band is the reading the second value
+	// comes off, exactly as the lamp glow constant above is handled.
+	const float  kSkyLuminance = 1.0f;
 	// HOW FAR A DECAL QUAD IS LIFTED OFF THE SURFACE IT SITS ON. Not in the
 	// file: the file describes a decal, which has no thickness and no
 	// z-fighting, and this engine is drawing it as a quad until Phase C.
@@ -518,10 +571,37 @@ namespace
 	int32       GWantSkyEpoch = 0;    // bumped once per pass, at build and per shot
 	int32       GApplyCalls   = 0;
 	int32       GSkyWrites    = 0;
-	// THE HDRI THE SHARED FILE NAMES: looked for, measured, NOT bound.
+	// THE PHOTOGRAPH THE SHARED FILE NAMES: looked for, measured, AND NOW
+	// BOUND. GHdriFoundAt is sanitised for the verdict line; GHdriFoundPath
+	// is the same path as the file system spells it, because a key that has
+	// had its spaces taken out is not a path any longer.
 	std::string GHdriFoundAt    = "NOT-LOOKED-FOR";
 	long long   GHdriBytes      = 0;
 	std::string GHdriDetectedAs = "not-read";
+	FString     GHdriFoundPath;
+	// WHAT BECAME OF IT, WHICH IS THE ONE KEY A READER TRUSTS. Only the two
+	// functions that own the dome write it, and a failure writes NOTHING with
+	// its reason rather than a plausible silence.
+	std::string GHdriBoundAs    = "NOTHING/not-attempted";
+	// LAST-WINS: which photograph is on the dome right now. Per-condition,
+	// because the night condition names a different one and a day sky over a
+	// night street is worse than the sky this replaces.
+	std::string GSkyPhotoNow    = "none";
+	// CUMULATIVE over the run: texture writes to the dome. Under write-on-
+	// change this is the number of CHANGES and not the number of shots, so it
+	// is smaller than the shot count by design and says so here.
+	int         GSkyPhotoBinds  = 0;
+	AStaticMeshActor*         GSkyDome    = nullptr;
+	UMaterialInstanceDynamic* GSkyDomeMid = nullptr;
+	// THE MATERIAL THE INSTANCE WAS MADE FROM. is-sky, two-sided and the
+	// shading model are the PARENT material's properties; a dynamic instance
+	// does not carry them, so reading them off GSkyDomeMid would report
+	// nothing-measured for ever. Set only where the instance is made, so it
+	// is non-null exactly when a dome stands.
+	UMaterialInterface*       GSkyDomeParent = nullptr;
+	// One decoded photograph per NAME, so a 43-shot plan decodes two files
+	// and not forty-three.
+	TMap<FString, UTexture2D*> GSkyPhotoCache;
 	ACameraActor* GCam = nullptr;
 	TArray<APointLight*> GLanterns;
 	TArray<APointLight*> GWindows;
@@ -797,6 +877,8 @@ namespace
 	// QUEUE 186. Defined beside the texture search it borrows its candidate
 	// list from; declared here because BuildScene calls it.
 	void LookForNamedHdri();
+	void BuildSkyDome(UWorld* World);
+	void BindSkyPhoto(const std::string& Name);
 	void SpawnControlQuads(UWorld* World, UStaticMesh* Plane);
 	// A1(d): the per-sample control-quad declaration needs the camera the
 	// quads were placed from, and MeasureShot is written above the lookup.
@@ -1648,6 +1730,10 @@ namespace
 		// anything. The reading rides the sky segment, which is taken when
 		// the line is READ rather than now: see SkySegmentNow below.
 		LookForNamedHdri();
+		// AND BIND IT. The look is the reading and the build is the work; they
+		// are two calls so that a run which finds the file and cannot use it
+		// still prints where the file was.
+		BuildSkyDome(World);
 		// PHASE C, AFTER EVERY PIECE IS SPAWNED AND NAMED. It reads GByName,
 		// so it cannot run before the pieces are in it.
 		BindSurfaces();
@@ -2019,6 +2105,10 @@ namespace
 		// writes the override flags FALSE and restores the captured clamp
 		// values, 2026-09-14; see the LEAK block at the write site.
 		GExposurePinNow = C.ExposurePin;
+		// THE SKY THIS CONDITION NAMES, ON THE DOME. Write-on-change: a
+		// condition naming the photograph already up costs nothing, and a day
+		// photograph left over a night street is the failure this prevents.
+		BindSkyPhoto(C.Hdri);
 		GExposurePinFamilySunOn = C.SunOn;
 		const FLinearColor DaySky(0.42f, 0.46f, 0.52f, 1.0f);
 		const FLinearColor NightSky(0.05f, 0.05f, 0.07f, 1.0f);
@@ -2143,6 +2233,72 @@ namespace
 		ReDriveWetness(C);
 	}
 
+	// ---- AMENDMENT A1: FOUR FLAGS, READ OFF THE LIVE OBJECTS -------------
+	//
+	// WHY REFLECTION AND NOT A MEMBER ACCESS, which is a constraint of this
+	// project and not a preference. This module cannot be compiled in the
+	// container that writes it, so a member spelled wrong is a compile error
+	// found on a machine 17 to 33 minutes away, and the next reading is a
+	// day later. A property name spelled wrong HERE is a nothing-measured on
+	// the verdict naming every spelling it tried, which the next run fixes
+	// with no round trip at all. The cost is real and is stated: a property
+	// this engine version does carry under a third name reads as unmeasured
+	// rather than as read.
+	//
+	// AND IT CAN ONLY EVER RETURN nothing-measured, NEVER no (rule 3b). A
+	// flag nobody could read must not print as a flag that was false: this
+	// whole amendment exists because a verdict said which sky lights the
+	// street from state that was never read.
+	int ReadFlagProp(const UObject* Obj, const TCHAR* const* Names, int Count,
+	                 std::string& FromOut)
+	{
+		std::string Tried;
+		for (int I = 0; I < Count; ++I)
+		{
+			if (I > 0) { Tried += ".."; }
+			Tried += std::string(TCHAR_TO_UTF8(Names[I]));
+		}
+		FromOut = NoSpaces(Tried);
+		if (Obj == nullptr) { return LedgerVignette::SkyFlag_NotMeasured; }
+		for (int I = 0; I < Count; ++I)
+		{
+			if (FBoolProperty* Prop =
+			        FindFProperty<FBoolProperty>(Obj->GetClass(), FName(Names[I])))
+			{
+				FromOut = NoSpaces(std::string(TCHAR_TO_UTF8(Names[I])));
+				return Prop->GetPropertyValue_InContainer(Obj)
+				     ? LedgerVignette::SkyFlag_Yes : LedgerVignette::SkyFlag_No;
+			}
+		}
+		return LedgerVignette::SkyFlag_NotMeasured;
+	}
+
+	// THE SHADING MODEL IS A TEnumAsByte, which the reflection system carries
+	// as a byte property. Its VALUE is returned, not a word: the word is the
+	// header's, where g++ runs it.
+	int ReadEnumByteProp(const UObject* Obj, const TCHAR* const* Names, int Count,
+	                     std::string& FromOut)
+	{
+		std::string Tried;
+		for (int I = 0; I < Count; ++I)
+		{
+			if (I > 0) { Tried += ".."; }
+			Tried += std::string(TCHAR_TO_UTF8(Names[I]));
+		}
+		FromOut = NoSpaces(Tried);
+		if (Obj == nullptr) { return LedgerVignette::SkyFlag_NotMeasured; }
+		for (int I = 0; I < Count; ++I)
+		{
+			if (FByteProperty* Prop =
+			        FindFProperty<FByteProperty>(Obj->GetClass(), FName(Names[I])))
+			{
+				FromOut = NoSpaces(std::string(TCHAR_TO_UTF8(Names[I])));
+				return (int)Prop->GetPropertyValue_InContainer(Obj);
+			}
+		}
+		return LedgerVignette::SkyFlag_NotMeasured;
+	}
+
 	// ---- QUEUE 186: WHAT THE SKY ACTUALLY IS, READ WHEN IT IS ASKED ------
 	//
 	// skyModel and ambientModel used to be two literals inside a format
@@ -2236,7 +2392,54 @@ namespace
 		In.HdriFoundAt    = GHdriFoundAt;
 		In.HdriBytes      = GHdriBytes;
 		In.HdriDetectedAs = GHdriDetectedAs;
-		In.HdriBoundAs    = "NOTHING/a-skylight-takes-a-cube-and-this-engine-builds-none-at-runtime";
+		// WHAT IT BOUND TO, NOT WHAT IT WAS ASKED FOR. The string is composed
+		// where the bind happens and is read here; a run that bound nothing
+		// carries NOTHING and the reason, which is a different reading from a
+		// run that bound and must never be printable by one that did not.
+		In.HdriBoundAs    = GHdriBoundAs;
+		In.bPhotoDomeBound = (GSkyDome != nullptr && GSkyDomeMid != nullptr
+		                      && GSkyPhotoBinds > 0);
+		// ---- AMENDMENT A1. FOUR READS, HERE WITH EVERY OTHER WHOLE-RUN
+		// READ, so they are taken after the last condition applied and off
+		// the same objects the run rendered with.
+		{
+			static const TCHAR* const kIsSkyNames[] =
+				{ TEXT("bIsSky"), TEXT("IsSky") };
+			static const TCHAR* const kTwoSidedNames[] =
+				{ TEXT("TwoSided"), TEXT("bTwoSided") };
+			static const TCHAR* const kShadingNames[] =
+				{ TEXT("ShadingModel"), TEXT("ShadingModels") };
+			// NOT SET BY THIS FILE AND NEVER HAS BEEN: a grep for
+			// LowerHemisphere over this module returns this block and
+			// nothing else. It sits at the engine default and this is the
+			// first run to print what that default is. READ, NOT WRITTEN.
+			static const TCHAR* const kLowerHemiNames[] =
+				{ TEXT("bLowerHemisphereIsBlack"),
+				  TEXT("bLowerHemisphereIsSolidColor") };
+			// NOTHING IS READ OFF THE MATERIAL WHEN NO DOME STANDS. The
+			// parent asset would answer the same three flags whether or not
+			// anything in this run was wearing it, and that reading would be
+			// true about the asset and false about the frame.
+			const UObject* DomeMat = (GSkyDome != nullptr && GSkyDomeMid != nullptr)
+			                       ? (const UObject*)GSkyDomeParent : nullptr;
+			In.DomeMatIsSky = ReadFlagProp(DomeMat, kIsSkyNames,
+				(int)(sizeof(kIsSkyNames) / sizeof(kIsSkyNames[0])),
+				In.DomeMatIsSkyFrom);
+			In.DomeMatTwoSided = ReadFlagProp(DomeMat, kTwoSidedNames,
+				(int)(sizeof(kTwoSidedNames) / sizeof(kTwoSidedNames[0])),
+				In.DomeMatTwoSidedFrom);
+			In.DomeMatShadingModel = ReadEnumByteProp(DomeMat, kShadingNames,
+				(int)(sizeof(kShadingNames) / sizeof(kShadingNames[0])),
+				In.DomeMatShadingModelFrom);
+			const UObject* SkyComp = nullptr;
+			if (GSky != nullptr)
+			{
+				SkyComp = GSky->FindComponentByClass<USkyLightComponent>();
+			}
+			In.SkyLightLowerHemiSolid = ReadFlagProp(SkyComp, kLowerHemiNames,
+				(int)(sizeof(kLowerHemiNames) / sizeof(kLowerHemiNames[0])),
+				In.SkyLightLowerHemiSolidFrom);
+		}
 		return LedgerVignette::SkySegment(In);
 	}
 
@@ -2617,8 +2820,10 @@ namespace
 		Out.Add(TEXT("#   were hardcoded literals in a format string until 2026-09-09 and one of"));
 		Out.Add(TEXT("#   them was false. skyWrites=N/of=M is write-on-change: M is how many times"));
 		Out.Add(TEXT("#   ApplyCondition ran and N how many times the sky was rewritten, and N<M is"));
-		Out.Add(TEXT("#   the point rather than a fault. skyHdriBoundAs says NOTHING on purpose:"));
-		Out.Add(TEXT("#   this run looks for the HDRI the shared file names and binds none of it."));
+		Out.Add(TEXT("#   the point rather than a fault. skyHdriBoundAs names WHAT THE SKY BOUND"));
+		Out.Add(TEXT("#   TO: the approved photograph as a long-lat PNG on an unlit dome, or NOTHING"));
+		Out.Add(TEXT("#   and the reason. Those are different readings and one may never print the"));
+		Out.Add(TEXT("#   other. The atmosphere and the sky light are unchanged and still light it."));
 		Out.Add(TEXT("# shotSunIntensityAsked / shotSkyIntensityAsked: A1(c), 2026-09-09. THE"));
 		Out.Add(TEXT("#   VALUE THE CONDITION ROW ASKED FOR, beside the one the component read"));
 		Out.Add(TEXT("#   back, with shotCellAgrees per frame and cellAgree=N/of=M once per run."));
@@ -4139,6 +4344,27 @@ namespace
 	// RECORDED whether or not it answered, for the reason run 19 established:
 	// NOT-FOUND with no list beside it does not say whether the file or the
 	// search is in the wrong place.
+	// EVERY PLACE A NAMED PHOTOGRAPH COULD BE, IN ONE LIST, so the probe that
+	// REPORTS and the bind that USES can never search different places and
+	// disagree about whether a file exists. Four roots times two extensions;
+	// the roots are FindTexRoot's, deliberately, because the pack and the sky
+	// are staged by the same kind of step.
+	void SkyPhotoCandidates(const std::string& Name, TArray<FString>& Out)
+	{
+		const FString Base = FString(UTF8_TO_TCHAR(Name.c_str()));
+		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
+		for (int32 E = 0; E < 2; ++E)
+		{
+			const FString Leaf = Base + FString(kSkyPhotoExts[E]);
+			Out.Add(AbsProject(*(FString(TEXT("SkyHdri/")) + Leaf)));
+			Out.Add(FPaths::ConvertRelativePathToFull(
+				FPaths::Combine(ExeDir, TEXT("SkyHdri"), *Leaf)));
+			Out.Add(AbsProject(*(FString(TEXT("../ledger/Assets/Resources/")) + Leaf)));
+			Out.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+				ExeDir, TEXT("../../../../ledger/Assets/Resources"), *Leaf)));
+		}
+	}
+
 	void LookForNamedHdri()
 	{
 		if (GSpec.Conditions.empty() || GSpec.Conditions[0].Hdri.empty())
@@ -4146,24 +4372,17 @@ namespace
 			GHdriFoundAt = "NOT-LOOKED-FOR/the-shared-file-named-no-hdri";
 			return;
 		}
-		const FString Leaf = FString(UTF8_TO_TCHAR(GSpec.Conditions[0].Hdri.c_str()))
-		                   + FString(kSkyHdriExt);
-		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
 		TArray<FString> Cands;
-		Cands.Add(AbsProject(*(FString(TEXT("SkyHdri/")) + Leaf)));
-		Cands.Add(FPaths::ConvertRelativePathToFull(
-			FPaths::Combine(ExeDir, TEXT("SkyHdri"), *Leaf)));
-		Cands.Add(AbsProject(*(FString(TEXT("../ledger/Assets/Resources/")) + Leaf)));
-		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
-			ExeDir, TEXT("../../../../ledger/Assets/Resources"), *Leaf)));
+		SkyPhotoCandidates(GSpec.Conditions[0].Hdri, Cands);
 		std::string Tried;
 		for (int32 I = 0; I < Cands.Num(); ++I)
 		{
 			if (!Tried.empty()) { Tried += ";"; }
 			Tried += NoSpaces(std::string(TCHAR_TO_UTF8(*Cands[I])));
 			if (!IFileManager::Get().FileExists(*Cands[I])) { continue; }
-			GHdriFoundAt = NoSpaces(std::string(TCHAR_TO_UTF8(*Cands[I])));
-			GHdriBytes   = (long long)IFileManager::Get().FileSize(*Cands[I]);
+			GHdriFoundAt   = NoSpaces(std::string(TCHAR_TO_UTF8(*Cands[I])));
+			GHdriFoundPath = Cands[I];
+			GHdriBytes     = (long long)IFileManager::Get().FileSize(*Cands[I]);
 			// WHAT THE BYTES ARE, ASKED RATHER THAN INFERRED FROM THE SUFFIX,
 			// the same rule ImportTexture follows. The enum VALUE is printed
 			// beside the name because this file's ImageFormatName knows four
@@ -4194,6 +4413,178 @@ namespace
 			return;
 		}
 		GHdriFoundAt = "NOT-FOUND/tried=" + Tried;
+	}
+
+	// ---- QUEUE 186 / D41: THE PHOTOGRAPH BECOMES THE SKY ----------------
+	//
+	// D40 approved the photograph. D41, 2026-09-16: "I approved the
+	// photograph, not a particular binding. If it needs a different asset
+	// type or a different setup to render as a sky, do that under D41 without
+	// asking." So the asset type and the setup are the studio's, and both are
+	// named here rather than left to be inferred from the code: an 8-bit
+	// sRGB LONG-LAT PNG, made from the approved Radiance file by
+	// tools/hdr-to-longlat.py, sampled by an unlit two-sided material on an
+	// engine sphere seen from inside.
+	//
+	// WHAT IS NOT TOUCHED, AND THIS IS THE OWNERSHIP RULE RATHER THAN
+	// TIMIDITY. The atmosphere stays, the sky light stays on
+	// SLS_CapturedScene in real time, the fog keeps its calibrated maximum
+	// opacity, and not one of their values is written here. The dome is
+	// GEOMETRY: it occludes the atmosphere's backdrop for the camera and it
+	// leaves every global this file already has an owner for exactly where
+	// that owner put it. That is also what makes the change fail soft: if any
+	// one of the mesh, the material or the photograph is missing, no dome is
+	// spawned and the frame is the frame this project has been shooting all
+	// along, with skyHdriBoundAs naming which of the three was missing.
+	UTexture2D* LoadSkyPhoto(const std::string& Name, std::string& OutNote)
+	{
+		// OutNote CARRIES THE READING IN BOTH DIRECTIONS: on success it is what
+		// the decoder said the file WAS (size and format, read back off the
+		// import and never off the suffix); on failure it is why not.
+		const FString Key = FString(UTF8_TO_TCHAR(Name.c_str()));
+		if (UTexture2D** Hit = GSkyPhotoCache.Find(Key))
+		{
+			OutNote = "already-decoded";
+			return *Hit;
+		}
+		TArray<FString> Cands;
+		SkyPhotoCandidates(Name, Cands);
+		std::string Tried;
+		for (int32 I = 0; I < Cands.Num(); ++I)
+		{
+			if (!Tried.empty()) { Tried += ";"; }
+			Tried += NoSpaces(std::string(TCHAR_TO_UTF8(*Cands[I])));
+			if (!IFileManager::Get().FileExists(*Cands[I])) { continue; }
+			int32 W = 0, H = 0;
+			FString LoadedAs;
+			UTexture2D* Tex = ImportTexture(Cands[I], true, W, H, LoadedAs);
+			if (Tex == nullptr)
+			{
+				OutNote = "decode-refused/"
+				        + NoSpaces(std::string(TCHAR_TO_UTF8(*LoadedAs)));
+				return nullptr;
+			}
+			Tex->AddToRoot();
+			GSkyPhotoCache.Add(Key, Tex);
+			char B[192];
+			std::snprintf(B, sizeof(B), "%dx%d/%s", W, H,
+			              TCHAR_TO_UTF8(*LoadedAs));
+			OutNote = NoSpaces(std::string(B));
+			return Tex;
+		}
+		OutNote = "NOT-FOUND/tried=" + Tried;
+		return nullptr;
+	}
+
+	// WRITE ON CHANGE, NEVER PER SHOT. Setting a texture parameter asks the
+	// renderer to rebuild the instance, and 43 shots that name two
+	// photographs must cost two writes. The count of writes is printed, so
+	// the fight is visible if anything else ever starts writing this.
+	void BindSkyPhoto(const std::string& Name)
+	{
+		if (GSkyDomeMid == nullptr || Name.empty()) { return; }
+		if (Name == GSkyPhotoNow) { return; }
+		std::string Note;
+		UTexture2D* Tex = LoadSkyPhoto(Name, Note);
+		if (Tex == nullptr)
+		{
+			// THE DOME KEEPS THE LAST PHOTOGRAPH THAT DID LOAD rather than
+			// going grey, and the verdict says a photograph was refused. Both
+			// halves are needed: a grey dome would read as a bound sky.
+			GHdriBoundAs = "PARTIAL/dome-holds=" + NoSpaces(GSkyPhotoNow)
+			             + "/refused=" + NoSpaces(Name) + "/" + Note;
+			return;
+		}
+		GSkyDomeMid->SetTextureParameterValue(FName(kSkyMapParam), Tex);
+		GSkyPhotoNow = Name;
+		++GSkyPhotoBinds;
+		char B[512];
+		std::snprintf(B, sizeof(B),
+			"photograph-longlat-png-on-an-unlit-sky-dome/lastWins=%s/%s/"
+			"mesh=%s/diameterM=%.0f/lum=%.3f/writes=%d-on-change/photos=%d",
+			NoSpaces(GSkyPhotoNow).c_str(), Note.c_str(),
+			TCHAR_TO_UTF8(kSkyDomeMeshPath), kSkyDomeDiameterM, kSkyLuminance,
+			GSkyPhotoBinds, GSkyPhotoCache.Num());
+		GHdriBoundAs = NoSpaces(std::string(B));
+	}
+
+	void BuildSkyDome(UWorld* World)
+	{
+		if (World == nullptr) { GHdriBoundAs = "NOTHING/no-world"; return; }
+		if (GSpec.Conditions.empty() || GSpec.Conditions[0].Hdri.empty())
+		{
+			GHdriBoundAs = "NOTHING/the-shared-file-named-no-photograph";
+			return;
+		}
+		UMaterialInterface* SkyMat =
+			LoadObject<UMaterialInterface>(nullptr, kSkyMaterialPath);
+		if (SkyMat == nullptr)
+		{
+			GHdriBoundAs = "NOTHING/sky-material-missing/"
+			               "did-tools-ue-make_sky_material.py-run/path="
+			             + NoSpaces(std::string(TCHAR_TO_UTF8(kSkyMaterialPath)));
+			return;
+		}
+		UStaticMesh* Dome = LoadShape(kSkyDomeMeshPath);
+		if (Dome == nullptr)
+		{
+			GHdriBoundAs = "NOTHING/dome-mesh-missing/"
+			               "is-Engine-BasicShapes-in-DirectoriesToAlwaysCook/path="
+			             + NoSpaces(std::string(TCHAR_TO_UTF8(kSkyDomeMeshPath)));
+			return;
+		}
+		std::string Note;
+		if (LoadSkyPhoto(GSpec.Conditions[0].Hdri, Note) == nullptr)
+		{
+			GHdriBoundAs = "NOTHING/photograph-unreadable/" + Note;
+			return;
+		}
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride =
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		GSkyDome = World->SpawnActor<AStaticMeshActor>(
+			AStaticMeshActor::StaticClass(), FVector::ZeroVector,
+			FRotator::ZeroRotator, Params);
+		if (GSkyDome == nullptr)
+		{
+			GHdriBoundAs = "NOTHING/dome-actor-would-not-spawn";
+			return;
+		}
+		MakeMovable(GSkyDome);
+		UStaticMeshComponent* C = GSkyDome->GetStaticMeshComponent();
+		if (C == nullptr)
+		{
+			GHdriBoundAs = "NOTHING/dome-actor-has-no-static-mesh-component";
+			return;
+		}
+		C->SetMobility(EComponentMobility::Movable);
+		C->SetStaticMesh(Dome);
+		// THE COLLIDER THE MESH SHIPS WITH IS NOT WANTED, and a sky that casts
+		// a shadow is a black street. Neither is left to a default: both are
+		// sites this project has already been bitten at.
+		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		C->SetCastShadow(false);
+		GSkyDome->SetActorScale3D(FVector(kSkyDomeDiameterM, kSkyDomeDiameterM,
+		                                  kSkyDomeDiameterM));
+		GSkyDomeMid = UMaterialInstanceDynamic::Create(SkyMat, GSkyDome);
+		if (GSkyDomeMid == nullptr)
+		{
+			// AND THE DOME GOES WITH IT. Without this the sphere stays
+			// spawned carrying the DEFAULT material, a 2 km enclosure round
+			// the whole street, while the verdict below says NOTHING bound:
+			// a wrecked frame reported as no sky at all. Ruled 2026-09-16.
+			GSkyDome->Destroy();
+			GSkyDome = nullptr;
+			GHdriBoundAs = "NOTHING/could-not-instance-the-sky-material";
+			return;
+		}
+		GSkyDomeParent = SkyMat;
+		GSkyDomeMid->SetScalarParameterValue(FName(kSkyLuminanceParam),
+		                                     kSkyLuminance);
+		C->SetMaterial(0, GSkyDomeMid);
+		// AND THE FIRST PHOTOGRAPH. Every later shot rebinds only when its
+		// condition names a different one.
+		BindSkyPhoto(GSpec.Conditions[0].Hdri);
 	}
 
 	// BIND EVERY SURFACE THE SHARED FILE ASKED FOR, and count what did not

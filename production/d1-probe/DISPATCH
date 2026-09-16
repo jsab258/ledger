@@ -1651,3 +1651,35 @@ lamp. kLampEmissiveUnitless ships at 1.00 as the FIRST VALUE OF A SERIES and
 is EXPECTED TO BE UNDER: the reference globe reads 242 of 255 against a sky
 at 181. Its second value comes off this run's own coreMaxLuma against
 ringMaxLuma per lantern, never off an argument.
+run 50 - 2026-09-16 - THE APPROVED PHOTOGRAPH IS ASKED TO BE THE SKY, AND THE
+VERDICT IS ASKED WHAT LIGHTS THE STREET RATHER THAN TOLD. Jafar ruled this
+morning that he approved the photograph and not a binding, and that a different
+asset type or setup is the studio's under D41 without asking. Run 49 measured
+why nothing had changed: skyHdriFoundAt=NOT-FOUND over four paths, skyHdriBytes
+=0, skyHdriBoundAs=NOTHING/a-skylight-takes-a-cube-and-this-engine-builds-none
+-at-runtime. TWO INDEPENDENT FAULTS, both fixed here: the file was never staged
+into the package, and a .hdr is the wrong asset type for a runtime SkyLight.
+THE BASELINE IS RUN 49, verdict 355e8d8. Read it against this one.
+READ THE FOUR NEW READS BEFORE READING ANY BAND. skyDomeMatIsSky,
+skyDomeMatTwoSided, skyDomeMatShadingModelRead, skyLightLowerHemisphereSolid.
+They are read off the live objects through reflection, so a spelling this
+engine version does not carry prints nothing-measured AND NAMES EVERY SPELLING
+IT TRIED, which the next run fixes with no round trip. A refused read is never
+a no.
+THE AMBIENT WILL MOVE AND THAT IS EXPECTED, NOT A FAULT. The sky light is
+SLS_CapturedScene with real-time capture on, so a closed 2000 m sky-flagged
+dome means the capture sees the PHOTOGRAPH and not the atmosphere. An overcast
+sky lighting a street like an overcast sky is the point. But a moved
+band.ground now has four candidate causes (the ambient, the road, the grade,
+the lamp), so attribute it to the ambient ONLY when skyDomeMatIsSky reads yes
+and every other shot-line read-back equals the 355e8d8 baseline. The
+exposure-pinned rows pin_003 to pin_1000 show the level change auto-exposure
+cannot hide, and are where SkyLuminance's second value comes from.
+IF skyDomeMatIsSky COMES BACK nothing-measured, a second director is owed by
+section 6 of the ruling and the question becomes live; it is not live now.
+THE LAMP RIDES ALONG UNCHANGED: lampGlowLit=4/of=4 at night against 0/of=4 at
+day is still the acceptance pair, and queue 358 is why day rows currently read
+1 lit on a test with no margin.
+NOT IN THIS RUN AND NOT TO BE READ FOR: the road's reflection (queue 359, whose
+first job is a printer and not the road), and the figure, which D46 unblocked
+this afternoon and toward which nothing is yet built.

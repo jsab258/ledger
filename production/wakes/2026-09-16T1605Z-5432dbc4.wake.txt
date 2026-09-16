@@ -2,8 +2,8 @@ id: 5432dbc4
 due: 2026-09-16T16:05:00Z
 armedAt: 2026-09-16T15:36:43Z
 armedBy: resident/sky-builder-out-photograph-not-mechanism
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-16T16:06:00Z
 capBitAt: -
 
 ONE BUILDER OUT ON THE SKY. 4cf62064 is HEAD and pushed. Budget 2026-09-16e: 69 total, 69 Fable, ceiling 85, takenAt 15:33Z, so SIXTEEN POINTS OF HEADROOM and the day is measured until about 01:33Z. Do not start a second builder without a reason: one CI round trip is likely all this budget should carry today.
@@ -21,3 +21,46 @@ HIS REGISTER CORRECTION BINDS EVERY MESSAGE FROM NOW: a filed item gets ONE LINE
 STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, which land together or not at all; the lamp drive guard's move into the tested header, BEFORE the lamp constant's second value is written; 332 the control that disagrees with itself; 356 sendability; 357 the workflow trigger; 358 the lit test's missing margin; 359 the road printer, whose FIRST job is the printer and not the road.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.
+
+DISCHARGED 2026-09-16T16:06Z. The builder landed and was reviewed; the commit
+this record anticipated CANNOT HAPPEN YET and the reason is named rather than
+worked around.
+
+THE SKY IS BUILT AND BOTH FAULTS ARE ADDRESSED. The builder chose, as the
+ruling let it: an 8-bit sRGB long-lat PNG on an unlit two-sided sphere seen
+from inside, atmosphere and skylight and fog untouched. Its reasons hold up on
+reading: a skylight changes what LIGHTS the street rather than what the camera
+SEES, so a cubemap would have left the sky in the frame identical; the one
+runtime image path this binary owns decodes PNG 563 times a run and has never
+been shown to read Radiance; and a .hdr's extra range buys headroom an
+auto-exposed filmic frame never spends.
+
+VERIFY IS RED AND THE BLOCKER IS THE CADENCE GATE: DIRECTOR NOT SPAWNED, 329
+GATED line(s). A director is out. This batch IS structural by Jafar's own
+boundary (a schema field in VignetteSpec.h, two new tools, a workflow change),
+so the gate is right and D41 does not exempt it. His ruling removed HIM from
+the mechanism decision, not the studio's own review.
+
+WHAT I CHECKED AT THE SOURCE rather than taking from the hand-back, because
+one line in it was alarming: THE BUILDER TRUNCATED THE DISPATCH WORKFLOW TO
+19KB MID-RUN AND RESTORED IT. That file is how every rendered frame in this
+project is produced. It is intact: +4 lines against HEAD, 137588 bytes against
+137024, parses as YAML, 13 steps. The truncation left nothing behind. Also
+checked: the schema field defaults false, Poly Haven is on the allowlist as
+CC0 and attribution-check passes with 0 unclassified over 5930 files, and I
+opened the photograph (genuine layered overcast, which is the one thing no
+scattering constant can add).
+
+THE CONSEQUENCE THE HAND-BACK DOES NOT NAME, and it went to the director as
+the question I most want ruled: the skylight is SLS_CapturedScene with
+real-time capture ON. A captured skylight captures what surrounds it, so
+wrapping the scene in a large emissive dome CHANGES THE AMBIENT on every
+surface, whatever the builder believes about not touching the lighting. That
+is not automatically wrong, since an overcast sky should light a street like
+an overcast sky. The risk is that the next run's moved ground band gets
+attributed to the road, the grade or the lamp.
+
+FILED, NOT STARTED: queue 360. workflow-size reads 23167 characters, SEVENTEEN
+under the largest ever accepted, and that bound is an observation of what has
+happened to work rather than a measured limit. The next line anyone adds to
+the dispatch step breaks the only feedback channel this project can read.

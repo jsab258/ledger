@@ -1017,6 +1017,8 @@ jobs:
           # DENOMINATOR, so `0` cannot read the same as `nobody looked`. The
           # binary prints which directory answered and how many files it saw,
           # and those two numbers are what this step is checked against.
+          $skyRoot = "$PWD\ledger\Assets\Resources\Sky"; $skyStaged = 0
+          $skyPng = @(Get-ChildItem $skyRoot -File -Recurse -Filter *.png -EA SilentlyContinue)
           $texSrc = "ledger/Assets/StreamingAssets/CityPack/textures"
           $texAsked = 0
           $texStaged = 0
@@ -1040,6 +1042,7 @@ jobs:
               $landed = @(Get-ChildItem $dest -File -ErrorAction SilentlyContinue).Count
               $texStaged += $landed
               $texDests++
+              $skyPng | ForEach-Object { $sto = Join-Path $d ("SkyHdri\Sky\" + $_.Directory.Name + "\" + $_.Name); $null = New-Item -ItemType Directory -Force -Path (Split-Path $sto -Parent); Copy-Item $_.FullName $sto -Force -EA SilentlyContinue; if (Test-Path $sto) { $skyStaged++ } }
             }
             if ($texDests -eq 0) { $texNote = "nothing-staged-neither-destination-directory-exists" }
             elseif ($texAsked -eq 0) { $texNote = "nothing-staged-the-pack-directory-is-empty" }
@@ -1194,6 +1197,7 @@ jobs:
             "stagedDecalFrom=$($decSrc -replace ' ','~') " +
             "stagedDecalAs=LedgerDecals/generated/beside-the-project-and-beside-the-exe " +
             "stagedDecalNote=$decNote " +
+            "stagedSkyFiles=$skyStaged/$($skyPng.Count * $texDests) stagedSkyAs=SkyHdri/Sky/dir/x2-dests " +
             "stagedVerdictCandidates=$($vCands.Count) " +
             "stagedVerdictFound=$(if ($vf) { 'yes' } else { 'no' }) " +
             "stagedPngCopied=$copied stagedPngBytes=$pngBytes " +

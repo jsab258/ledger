@@ -89,6 +89,8 @@ real_table() {
     canon-gate-selftest   "$REPO"                 "python3 tools/canon-gate.py --selftest" \
     goal-block            "$REPO"                 "python3 tools/goal-block-check.py" \
     goal-block-selftest   "$REPO"                 "python3 tools/goal-block-check.py --selftest" \
+    sky-material-selftest "$REPO"                 "python3 tools/ue/make_sky_material.py --selftest" \
+    sky-longlat-selftest  "$REPO"                 "python3 tools/hdr-to-longlat.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     playtest-fake         "$REPO/ledger/SimHarness" "dotnet run -c Release"
 }
