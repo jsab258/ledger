@@ -1,17 +1,19 @@
-# LEDGER push diagnosis - d9af9a3 @1789562957
+# LEDGER push diagnosis - 355e8d8 @1789565057
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=db74e5dfbdd9aa8d74483d48d7bd9845dd4d1c65
-localTipRef=db74e5dfbdd9aa8d74483d48d7bd9845dd4d1c65
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=3daa995d527679a0e0a5550ea594858221b81881
+localTipRef=3daa995d527679a0e0a5550ea594858221b81881
 onDisk_production_inbox=3
-onDisk_production_outbound=572
+onDisk_production_outbound=574
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=78 newestShown=16/16 (+62 older not shown)
+receiptsOnDisk=80 newestShown=16/16 (+64 older not shown)
+receipt file=production/outbox/2026-09-16-your-four-items-one-is-yours-to-call-part2.answer.md messageId=106 sent=2026-09-16T13:17:28+00:00
+receipt file=production/outbox/2026-09-16-your-four-items-one-is-yours-to-call-part1.answer.md messageId=105 sent=2026-09-16T13:17:28+00:00
 receipt file=production/briefs/2026-09-16.md messageId=103 sent=2026-09-16T04:30:05+00:00
 receipt file=production/outbound/2026-09-16T050232Z-reply-104.receipt.txt messageId=104 sent=2026-09-16T05:02:32+00:00
 receipt file=production/outbox/2026-09-15-your-desktop-stopped-taking-work.unprompted.md messageId=102 sent=2026-09-15T07:41:27+00:00
@@ -21,11 +23,9 @@ receipt file=production/briefs/2026-09-15.md messageId=99 sent=2026-09-15T03:34:
 receipt file=production/outbox/2026-09-14-the-street-then-your-sky-strike-one-sentence.answer.md messageId=98 sent=2026-09-14T22:23:03+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md messageId=97 sent=2026-09-14T21:41:23+00:00
 receipt file=production/briefs/2026-09-14.md messageId=95 sent=2026-09-14T19:09:03+00:00
-receipt file=production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md messageId=96 sent=2026-09-14T19:44:26+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md messageId=94 sent=2026-09-14T19:08:52+00:00
+receipt file=production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md messageId=96 sent=2026-09-14T19:44:26+00:00
 receipt file=production/outbox/2026-09-14-the-street-before.answer.md messageId=92 sent=2026-09-14T19:08:52+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md messageId=93 sent=2026-09-14T19:08:52+00:00
 receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part2.answer.md messageId=91 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-4of5-disco-elysium-part2.answer.md messageId=89 sent=2026-09-14T15:47:02+00:00
-receipt file=production/outbox/2026-09-14-research-5of5-shadows-of-doubt-part1.answer.md messageId=90 sent=2026-09-14T15:47:02+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent
