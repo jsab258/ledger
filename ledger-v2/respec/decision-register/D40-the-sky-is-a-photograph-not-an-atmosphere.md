@@ -84,3 +84,65 @@ Queue 186 carries the staging half and the two engine obstacles. This record
 carries the ruling. The correction to the comment at `VignetteShot.cpp:163-173`
 names this record, keeps reasons 1 and 2 visible as work, and does NOT claim
 the atmosphere renders blue, because it measurably does not.
+
+## Amendment A1, 2026-09-16: the ruling is the PHOTOGRAPH, not the binding
+
+Ruled by Jafar twice on 2026-09-16, and recorded here because the first time he
+put it in a budget message and it never reached this file. His words, the
+second time, which are the ones that matter:
+
+"I approved the overcast photograph as the sky, not a particular binding. Fix
+the mechanism under D41 without asking; the ruling was the photograph, not how
+it is wired."
+
+And the first time, inside a budget line: "On the sky: I approved the
+photograph, not a particular binding. If it needs a different asset type or a
+different setup to render as a sky, do that under D41 without asking."
+
+WHAT THIS AMENDMENT ADDS TO THE RULING ABOVE. D40 as written settles WHICH SKY
+and leaves the two engine obstacles standing as work. It does not say who owns
+the MECHANISM. This amendment says: the mechanism is D41's, which means visual,
+which means ungated, which means no spawn asks him before changing it. A future
+session that finds the binding wrong changes it and renders again; it does not
+write a card.
+
+## What was already true when he ruled it the second time
+
+HIS PREMISE THE SECOND TIME WAS THAT IT HAD NEVER RENDERED, AND THAT WAS NO
+LONGER TRUE. It is recorded rather than smoothed over, because a record that
+quietly agrees with a stale premise is how a fixed thing gets fixed twice.
+
+The `.hdr` WAS the wrong asset type for a runtime SkyLight, exactly as he
+described, and that was obstacle 1 and 2 of the three above. It was re-bound
+under D41 without asking, on 2026-09-16, as a long-lat PNG on an unlit dome
+that a SkyLight captures. Runs 50 and 51 are the proof, and the keys are
+quoted rather than summarised, from the landed verdict at commit 73c902b5:
+
+    skyDomeMatIsSky=yes/from=bIsSky
+    skyHdriBytes=2224812
+    ambientModel=skylight-captured-sky=THE-PHOTOGRAPH-ON-THE-DOME
+    skyLightLowerHemisphereSolid=yes/from=bLowerHemisphereIsBlack
+    skyLumDriveWrote=32/ofWalks=32/noInstance=0
+
+`bIsSky` is the engine's OWN sky-material flag, so "a texture Unreal does not
+read as a sky" describes the state before the re-bind and not after it. The
+frame was opened as well as the keys read, per CLAUDE.md rule 4: overcast sky
+down the street and above the rooftops, four lanterns lit, wet road.
+
+Night brightness, the three-way bracket, read in the ruled order:
+
+    run 49   e1b4de77   no dome              meanLuma  43.6   floor
+    run 50   654dd381   dome at 1.0          meanLuma 142.9   ceiling
+    run 51   73c902b5   dome per condition   meanLuma  47.4
+
+The ten day rows at `sky_intensity=1.000` moved by +0.1 between runs 50 and 51,
+which is the undesigned null control that makes 47.4 a reading rather than a
+coincidence.
+
+## What is still open about the sky, so this record does not read as finished
+
+The photograph's HORIZON BAND, trees and a dry field from 0 to about 11 degrees
+of elevation, is visible at the vanishing point of the street: fogged and
+subtle, but present, and a British port town's skyline is not an open field.
+The horizon-fade rung is therefore open rather than hypothetical. It is visual,
+so it is D41's and needs no ruling; it needs a render.

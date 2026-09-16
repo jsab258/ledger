@@ -51,7 +51,148 @@ turns up, file it and keep going."
   without adding it to organization.md, so for one edit the text existed
   nowhere.
 
-## IN FLIGHT 2026-09-16 13:20Z: RUN 49 ON THE MACHINE, NOTHING IN THIS CONTAINER
+## 2026-09-16 18:35Z: THE COST ASSESSMENT, AND A RATIO IS WITHDRAWN THE SAME HOUR
+
+A SECOND EXTERNAL ASSESSMENT LANDED, on cost, and its finding is that PHASE A
+CANNOT BE COSTED FROM WHAT EXISTS. Four things came with it. Three are filed
+and NOT started, per his instruction and per CLAUDE.md rule 11. One could not
+wait and did not.
+
+- **Queue 369, price a batch end to end and not a piece.** His four conditions
+  are all four: end to end, rejected work counted INSIDE the number, both
+  meters read before and after, nothing else running in the window. A window
+  missing one is refused and re-run, never recorded with a caveat.
+- **Queue 370, the spawn log records who ran and not what they touched.** He
+  notes this is the THIRD audit to say it.
+- **Queue 371, author places from reusable kits and accept complete playable
+  batches.** His words: the one to act on WHEN THE SLICE LANDS, so it is first
+  after the slice and not during it. His caveat is part of the item: assume no
+  saving until a batch is measured.
+- **Queue 362 is reshaped, not duplicated.** "The resident measurement I asked
+  for earlier becomes the first such batch rather than a per-item cost." The
+  second resident stands, because one batch cannot say whether the marginal
+  cost falls.
+
+**TWO FORECASTS ARE WITHDRAWN AND BOTH ARE RECORDED AS WITHDRAWN RATHER THAN
+DELETED**, which is his instruction and also the only way a retired number
+stops circulating: queue 120's 14 to 34 weeks, and D22's six to ten weeks for
+the visual slice, which he calls his own and untested. Both paragraphs now
+carry the withdrawal above the number, so a reader who remembers the figure
+meets the withdrawal first. Nothing may quote either, as a date or a range.
+
+**THE ONE THAT COULD NOT WAIT.** His instruction on the split was an OR: "Add
+the column before claiming the ratio again, or stop printing the number." The
+column is queue 370 and waits for the slice by his own order, so the other
+branch applied IMMEDIATELY, because the footer prints that ratio on every
+verify run and it is pasted into every commit message. The next commit would
+have claimed it again.
+
+  AND GREPPING THE SENTENCE RATHER THAN THE SITE FOUND THREE PLACES, NOT ONE,
+  which is CLAUDE.md rule 1 working exactly as written. `gameShareDay` in
+  `ledger/verify.py`'s footer was the one I knew about.
+  `tools/morning-brief.py` also writes it as PROSE TO JAFAR ("Of N sessions
+  since the previous brief, X went to the studio and Y to the game"), which is
+  the site that actually reaches him, and emits `splitStudio` and `splitGame`
+  as verdict keys beside it. A third builder is withdrawing all three.
+
+  THE COUNTING IS NOT DELETED, only the claim. `GAME_AGENTS` and the tally
+  stay, so the day queue 370 lands the ratio does not have to be rebuilt from
+  nothing. `GAME_SHARE_BASIS` does go, because a caption describes a reading
+  and there is no reading left for it to describe.
+
+  A WITHDRAWAL IS NOT A ZERO AND NOT A NOTHING-MEASURED, and the builder was
+  told to keep all three distinguishable in the printed line. Withdrawn means
+  the instrument still counts and the answer is refused; nothing-measured
+  means no window existed. Two of them looking alike is how a fixture starts
+  passing for the wrong reason.
+
+## IN FLIGHT 2026-09-16 18:15Z: TWO BUILDERS ON THE FIGURE, THE LAST ELEMENT OF THE SLICE
+
+HEAD is `7a620fd2`, pushed, tree clean, wake queue 0 due. Nothing is on the
+machine: run 51 landed, was read in the ruled order and is committed. What is
+moving is two tier-3 builders in this container.
+
+- **instrument-builder** on `ue-probe/Source/LedgerProbe/Public/FrameStats.h`
+  only: `FigurePatch`, `MeasureFigurePatch`, `FigureReadsAsSilhouette`,
+  `FigureSilhouetteSegment`, written beside the lamp path at :2088 and :2270
+  in that idiom. It was told to set NO constant: the silhouette decision is
+  core mean luma below ring mean luma and nothing else, exactly as
+  `LampPatchLit` compares two measured quantities. There are no frames with a
+  figure in them yet, so there is no series to set a margin from.
+- **engine-specialist** on `tools/ue/import_figure.py`, the spawn in
+  `VignetteShot.cpp` and the import step in `ledger-probe-unreal.yml`. It
+  compiles against a header the other builder is still writing, which is the
+  lamp batch's shape and worked there.
+
+**THE TREE CANNOT BE COMMITTED AND THE REASON IS THE CADENCE GATE, not a
+fault.** `python3 ledger/verify.py` exits 1 at 18:2xZ with, verbatim:
+
+    DIRECTOR NOT SPAWNED: 647 GATED line(s) of 647 changed work line(s)
+    (647 tracked + 0 untracked in 0 new file(s)) vs 100 threshold
+    workByScope=...ueprobe:647...  0 director row(s) newer than the reference
+    reference = code commit 73c902b5@2026-09-16T17:42:43Z
+
+  THAT IS QUEUE 363's EXACT PREDICTED SYMPTOM and it is filed, not fixed here:
+  Jafar ruled the visual slice ungated under D41, the gate cannot see D41, so
+  his own ungated work trips it every time. The gate is RIGHT on its own
+  terms and is not worked around. Nothing commits until a director rules on
+  the batch, and the ruling is ONE spawn covering all of it, not three,
+  because questions fold into one spawn.
+
+  DO NOT COMMIT THE DOCUMENTS SEPARATELY TO GET THE TREE CLEAN. The gate
+  reads the TREE and not the staged set, so it stays red either way, and a
+  commit on a red verify is the thing CLAUDE.md forbids in as many words: red
+  deletes `ledger/.verify-footer`, so there is no footer to paste that is not
+  scrollback.
+
+  UNCOMMITTED AND AT RISK IF THE CONTAINER IS RECLAIMED: the three cost items
+  369, 370, 371 and the ring item 372, the two withdrawals in queue 120 and
+  D22, the 362 reshape and the 355 annotation, queue 368, two NOW.md sections,
+  and both builders' code. All of it lands in the one commit after the ruling.
+
+**WHY THIS IS UNGATED UNDER D41, and the reasoning has to survive a reset.**
+The figure is a CODE-SPAWNED ACTOR, like the sky dome, the fog, the
+atmosphere, the sky light, the camera and the player start, none of which are
+pieces in `vignette-pieces.json`. It adds no shape kind, no condition field
+and no shot row. Each of those three would be a schema change and therefore
+structural under Jafar's own boundary, and BOTH BRIEFS SAY TO STOP AND SAY SO
+rather than add one. A hand-back saying a schema change is unavoidable is a
+correct outcome: spawn the director, do not add the field.
+
+**THE FIGURE STANDS ONLY WHERE THE LAMPS ARE LIT**, which is 2 conditions of
+33. That is probe scoping and NOT a world rule, and it is written into the
+code comment as such, because a later reader finding it would otherwise have
+canon saying nobody walks the street by day. The reason is arithmetic: it
+leaves the 31 day rows byte-identical, so the sky brightness bracket and its
+null control, which hold to +0.1, keep their meaning. A figure in every
+condition would move frame `meanLuma` by roughly 0.2 at the size it will
+render, which is ABOVE that tolerance.
+
+**THE TWO THINGS MOST LIKELY TO COME BACK WRONG**, and the verdict was
+designed to print both whether they are wrong or not. First, the mesh HEIGHT
+IN CENTIMETRES: Mixamo and Unreal disagree about units, the failure modes are
+a figure a hundred times too large and a hundred times too small, and neither
+is a rendering opinion that a frame diagnoses on its own. Second, whether the
+pose EVALUATED or silently fell back to the bind pose, because a T-pose
+renders perfectly well and reports success. The sky dome's rule at
+`VignetteShot.cpp:4665` was made law in both briefs: if the mesh is absent or
+the skin did not come through, DESTROY THE ACTOR. A grey mannequin standing in
+Quay Street while the verdict reads no figure is the same failure as a
+2 km sphere carrying the default material, and worse here because it looks
+plausible.
+
+**WHAT UNBLOCKED IT, all checked at 18:1xZ rather than remembered.** Sixteen
+real Mixamo bodies are TRACKED IN GIT under `ledger/Assets/Characters`, not
+merely present on this disk, so the PC's checkout has them; 42 clips sit
+beside them including Standing Idle 01, Old Man Walk, Walking With Shopping
+Bag and Leaning On A Wall; D46 puts bodies on the allowlist the way animations
+already were; and `grep -rn SkeletalMesh ue-probe/Source/LedgerProbe/` returns
+nothing at all, so the probe has never placed anything skeletal.
+`tools/mixamo-pick/fetch_bodies.py` already names the project's own picks
+(michelle, remy, sophie) and already carries the sentence that matters: a
+silhouette has to read as a person in a coat.
+
+## SUPERSEDED 2026-09-16 13:20Z: RUN 49 ON THE MACHINE, NOTHING IN THIS CONTAINER
 
 NO BUILDERS, NO DIRECTORS, NOTHING TO RESTART. All four agents of the day
 landed and were reviewed. What is moving is a CI run on Jafar's PC.

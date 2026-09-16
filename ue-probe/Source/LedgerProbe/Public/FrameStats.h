@@ -2320,4 +2320,405 @@ namespace LedgerFrame
 		}
 		return Out;
 	}
+
+	// ---- THE FIGURE AGAINST WHAT IS BEHIND IT ----------------------------
+	//
+	// A FIGURE READS AS A SILHOUETTE WHEN IT IS DARKER THAN ITS SURROUND, so
+	// this is the lamp's comparison turned over: the lantern asks whether its
+	// own box is the BRIGHTEST thing in its neighbourhood, the figure asks
+	// whether its own box is DARKER than its neighbourhood. Same geometry,
+	// same rounding, opposite direction, and the geometry is the lamp's own
+	// helpers (LampRingPadPx, LampSafeId) rather than a second copy of the
+	// arithmetic: a second copy is the site nobody looks at when the first
+	// one gets fixed.
+	//
+	// WHAT THE SHARED RING COSTS HERE, said out loud. LampRingPadPx pads by
+	// the box's LONGER side, so a standing figure (tall, narrow) is read
+	// against a ring padded by its HEIGHT: about its own height of ground out
+	// to each side and about its own height of sky above. That is a large
+	// neighbourhood and on a street it will take in road and sky rather than
+	// only what is directly behind the shoulders. It is shared anyway,
+	// deliberately, because "pad by the shorter side" is a different rule
+	// that nobody has measured, and because both rectangles print on the line
+	// in pixels so a reader can re-derive exactly what was compared. If the
+	// series says the ring is wrong, the ring is one edit in one place.
+	//
+	// NO CONSTANT DECIDES ANYTHING. FigureReadsAsSilhouette compares two
+	// numbers off the same frame and nothing else, exactly as LampPatchLit
+	// does. How much darker a figure on a wet Meridian street is has never
+	// been measured, so no margin is set here; the token prints
+	// coreMinusRingMeanLuma, signed, so the series exists BEFORE anyone
+	// proposes a bound to read it against.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF:
+	//   CoreMeanLuma   MEAN luma over the figure's own rectangle; its
+	//                  denominator is CorePixels and prints beside it
+	//   RingMeanLuma   MEAN luma over the annulus; denominator RingPixels
+	//   CoreMinLuma    the FLOOR, darkest single pixel of the core rectangle
+	//   CoreMaxLuma    the PEAK, brightest single pixel of that rectangle
+	//   RingMinLuma    the FLOOR over the annulus
+	//   RingMaxLuma    the PEAK over the annulus
+	//   CoreDarkerThanRingMeanPixels
+	//                  COUNT of core pixels strictly below RingMeanLuma, out
+	//                  of CorePixels: the half that separates a dark figure
+	//                  from a bright figure in a dark hat, which two means on
+	//                  their own cannot tell apart
+	//   ProjW/ProjH    the caller's UNROUNDED projected extent in pixels,
+	//                  carried so a box clipped by the frame edge shows as
+	//                  projW=20.00 beside box=x0..15 instead of passing for a
+	//                  small figure
+	// The four extremes are single-pixel peaks over a named rectangle. THE
+	// DECISION READS THE MEANS AND NOT THE PEAKS, because one bright button
+	// on a dark coat is not the figure failing to be a silhouette, and one
+	// dark window behind it is not the street failing to be brighter.
+	//
+	// Measured false means this figure produced NO reading at all and Why
+	// says which of the six ways: it is not a "no", and the segment below
+	// never counts it as one.
+	struct FigurePatch
+	{
+		bool        Measured = false;
+		std::string Id       = "unnamed";
+		std::string Why      = "nothing-measured";
+		int         CX0 = 0, CY0 = 0, CX1 = 0, CY1 = 0;
+		int         RX0 = 0, RY0 = 0, RX1 = 0, RY1 = 0;
+		long long   CorePixels = 0, RingPixels = 0;
+		double      CoreMeanLuma = 0.0, RingMeanLuma = 0.0;
+		int         CoreMinLuma = 0, CoreMaxLuma = 0, RingMinLuma = 0, RingMaxLuma = 0;
+		// ADDED beside the dictated fields, never in place of one.
+		long long   CoreDarkerThanRingMeanPixels = 0;
+		double      ProjW = 0.0, ProjH = 0.0;
+		// True once the projection answered and the caller's four doubles
+		// were read, which is the only condition under which ProjW and ProjH
+		// mean anything. Without it a projW of 0.00 would be indistinguishable
+		// from a projW nobody ever supplied.
+		bool        ProjKnown = false;
+	};
+
+	// BGRA8, top row first, the same convention MeasureLampPatch is given.
+	// The rectangle is the projection's four doubles, unrounded, and the
+	// rounding happens HERE so the caller in the module does no arithmetic.
+	//
+	// bBoxMeasured IS THE PROJECTION'S OWN VERDICT and it outranks the
+	// numbers, exactly as it does for a lantern.
+	//
+	// A ONE-PIXEL FIGURE IS NOT A FIGURE, and this is the only comparison
+	// against a literal in the whole path: the literal is ONE PIXEL, the
+	// sampling grid's own unit, not a bound anybody chose. The lamp floors
+	// and ceils so a sub-pixel lantern still covers its pixel, and that is
+	// right for a lantern: what is being read there is the GLOW of a point
+	// source, and one pixel of glow is a real reading. A figure is read by
+	// the mean of its interior against the mean of its surround, and a box
+	// under a pixel wide has no interior: after floor and ceil it would be a
+	// single pixel of whatever the rasteriser blended, largely out of the
+	// background it is supposed to be darker than, so a "silhouette" decided
+	// from it would be a reading of the antialiasing. Such a figure is
+	// therefore reported MEASURED-BUT-TOO-SMALL, with its projected extent on
+	// the line, rather than given an invented size. HOW MANY pixels a figure
+	// needs before its mean means anything is a BOUND and it waits for the
+	// series; one pixel is not that bound, it is the floor below which there
+	// is no sample at all.
+	inline FigurePatch MeasureFigurePatch(const unsigned char* Bgra, int W, int H,
+	                                      const std::string& Id, bool bBoxMeasured,
+	                                      double X0, double Y0, double X1, double Y1)
+	{
+		FigurePatch P;
+		P.Id = LampSafeId(Id);
+		if (Bgra == 0 || W <= 0 || H <= 0)
+		{
+			P.Why = "no-decoded-frame";
+			return P;
+		}
+		if (!bBoxMeasured)
+		{
+			P.Why = "the-projection-did-not-answer-for-this-figure";
+			return P;
+		}
+		P.ProjKnown = true;
+		P.ProjW = X1 - X0;
+		P.ProjH = Y1 - Y0;
+		// A BOX WITH NO EXTENT IS A DEGENERATE ANSWER, not a distant figure,
+		// and the two get different words: one is the projection handing back
+		// a point or an inverted rectangle, the other is a person far down
+		// the street.
+		if (P.ProjW <= 0.0 || P.ProjH <= 0.0)
+		{
+			P.Why = "the-figures-box-has-no-width-or-no-height-at-all";
+			return P;
+		}
+		if (P.ProjW < 1.0 || P.ProjH < 1.0)
+		{
+			P.Why = "the-figures-box-is-under-one-pixel-and-too-small-to-read";
+			return P;
+		}
+		int CX0 = (int)std::floor(X0), CX1 = (int)std::ceil(X1);
+		int CY0 = (int)std::floor(Y0), CY1 = (int)std::ceil(Y1);
+		if (CX1 <= CX0) { CX1 = CX0 + 1; }
+		if (CY1 <= CY0) { CY1 = CY0 + 1; }
+		// THE PAD IS TAKEN FROM THE UNCLIPPED BOX, deliberately and for the
+		// lamp's reason: a figure half off the edge of the frame is still its
+		// own size, and scaling the ring to the visible sliver would read it
+		// against a neighbourhood that shrinks as the figure walks out of
+		// the picture.
+		const int Pad = LampRingPadPx(CX1 - CX0, CY1 - CY0);
+		int RX0 = CX0 - Pad, RX1 = CX1 + Pad;
+		int RY0 = CY0 - Pad, RY1 = CY1 + Pad;
+		if (CX0 < 0) { CX0 = 0; }
+		if (CY0 < 0) { CY0 = 0; }
+		if (CX1 > W) { CX1 = W; }
+		if (CY1 > H) { CY1 = H; }
+		if (RX0 < 0) { RX0 = 0; }
+		if (RY0 < 0) { RY0 = 0; }
+		if (RX1 > W) { RX1 = W; }
+		if (RY1 > H) { RY1 = H; }
+		P.CX0 = CX0; P.CY0 = CY0; P.CX1 = CX1; P.CY1 = CY1;
+		P.RX0 = RX0; P.RY0 = RY0; P.RX1 = RX1; P.RY1 = RY1;
+		if (CX1 <= CX0 || CY1 <= CY0)
+		{
+			P.Why = "the-figures-box-falls-outside-this-frame";
+			return P;
+		}
+		double CoreSum = 0.0, RingSum = 0.0;
+		bool bFirstCore = true, bFirstRing = true;
+		for (int Y = RY0; Y < RY1; ++Y)
+		{
+			for (int X = RX0; X < RX1; ++X)
+			{
+				const long long At = (long long)Y * (long long)W + (long long)X;
+				const unsigned char B = Bgra[At * 4];
+				const unsigned char G = Bgra[At * 4 + 1];
+				const unsigned char R = Bgra[At * 4 + 2];
+				const int L = LumaByte(R, G, B);
+				const bool bCore = (X >= CX0 && X < CX1 && Y >= CY0 && Y < CY1);
+				if (bCore)
+				{
+					++P.CorePixels;
+					CoreSum += (double)L;
+					if (bFirstCore || L < P.CoreMinLuma) { P.CoreMinLuma = L; }
+					if (bFirstCore || L > P.CoreMaxLuma) { P.CoreMaxLuma = L; }
+					bFirstCore = false;
+				}
+				else
+				{
+					++P.RingPixels;
+					RingSum += (double)L;
+					if (bFirstRing || L < P.RingMinLuma) { P.RingMinLuma = L; }
+					if (bFirstRing || L > P.RingMaxLuma) { P.RingMaxLuma = L; }
+					bFirstRing = false;
+				}
+			}
+		}
+		if (P.CorePixels == 0)
+		{
+			P.Why = "the-figures-box-covers-no-pixel-of-this-frame";
+			return P;
+		}
+		// A RING WITH NO PIXELS IS NOT A NEIGHBOURHOOD, and a comparison
+		// against nothing may not print as a no: a figure whose box fills the
+		// whole frame has no outside to be darker than.
+		if (P.RingPixels == 0)
+		{
+			P.Why = "this-figure-has-no-ring-pixel-on-this-frame";
+			return P;
+		}
+		P.CoreMeanLuma = CoreSum / (double)P.CorePixels;
+		P.RingMeanLuma = RingSum / (double)P.RingPixels;
+		// SECOND PASS OVER THE CORE ONLY, because this count needs the ring
+		// mean and the ring mean is not known until the first pass ends. Its
+		// denominator is CorePixels, the same rectangle, same frame.
+		for (int Y = CY0; Y < CY1; ++Y)
+		{
+			for (int X = CX0; X < CX1; ++X)
+			{
+				const long long At = (long long)Y * (long long)W + (long long)X;
+				const int L = LumaByte(Bgra[At * 4 + 2], Bgra[At * 4 + 1], Bgra[At * 4]);
+				if ((double)L < P.RingMeanLuma) { ++P.CoreDarkerThanRingMeanPixels; }
+			}
+		}
+		P.Measured = true;
+		P.Why = "measured";
+		return P;
+	}
+
+	// STRICTLY DARKER, so a tie is a no. Nothing else is decided here and no
+	// constant appears: both sides come off the same frame, and the margin
+	// this comparison does not have is queued rather than invented.
+	inline bool FigureReadsAsSilhouette(const FigurePatch& P)
+	{
+		if (!P.Measured) { return false; }
+		return P.CoreMeanLuma < P.RingMeanLuma;
+	}
+
+	// THREE WORDS AND NOT TWO. A figure nothing could be read from is not a
+	// figure that failed to be a silhouette.
+	inline const char* FigureSilhouetteWord(const FigurePatch& P)
+	{
+		if (!P.Measured) { return "nothing-measured"; }
+		return FigureReadsAsSilhouette(P) ? "yes" : "no";
+	}
+
+	inline std::string FigurePatchToken(int Index, const FigurePatch& P)
+	{
+		char T[720];
+		int Needed;
+		if (!P.Measured)
+		{
+			// THE PROJECTED EXTENT RIDES THE UNMEASURED TOKEN TOO whenever
+			// the projection answered, because "too small to read" is a claim
+			// a reader must be able to check: projW=0.40 is the evidence for
+			// it. Where the projection never answered there is no extent, and
+			// the words say so rather than a zero standing in for them.
+			if (P.ProjKnown)
+			{
+				Needed = std::snprintf(T, sizeof(T),
+					"figureSil%d=%s/nothing-measured/%s/projW=%.2f/projH=%.2f",
+					Index, P.Id.c_str(), P.Why.c_str(), P.ProjW, P.ProjH);
+			}
+			else
+			{
+				Needed = std::snprintf(T, sizeof(T),
+					"figureSil%d=%s/nothing-measured/%s"
+					"/projW=nothing-measured/projH=nothing-measured",
+					Index, P.Id.c_str(), P.Why.c_str());
+			}
+		}
+		else
+		{
+			Needed = std::snprintf(T, sizeof(T),
+				"figureSil%d=%s/%s"
+				"/coreMeanLuma=%.1f/coreMinLuma=%d/coreMaxLuma=%d/corePx=%lld"
+				"/ringMeanLuma=%.1f/ringMinLuma=%d/ringMaxLuma=%d/ringPx=%lld"
+				"/coreMinusRingMeanLuma=%.1f/coreDarkerThanRingMean=%lld/of=%lld"
+				"/projW=%.2f/projH=%.2f"
+				"/box=x%d..%d/y%d..%d/ring=x%d..%d/y%d..%d",
+				Index, P.Id.c_str(), FigureSilhouetteWord(P),
+				P.CoreMeanLuma, P.CoreMinLuma, P.CoreMaxLuma, P.CorePixels,
+				P.RingMeanLuma, P.RingMinLuma, P.RingMaxLuma, P.RingPixels,
+				P.CoreMeanLuma - P.RingMeanLuma,
+				P.CoreDarkerThanRingMeanPixels, P.CorePixels,
+				P.ProjW, P.ProjH,
+				P.CX0, P.CX1, P.CY0, P.CY1,
+				P.RX0, P.RX1, P.RY0, P.RY1);
+		}
+		std::string Out(T);
+		// snprintf TRUNCATES IN SILENCE and a cut token reads as a short one,
+		// which is what a key that was never emitted looks like.
+		if (Needed < 0 || (size_t)Needed >= sizeof(T)) { Out += "/figureTokenCut=yes/at-720-chars"; }
+		return Out;
+	}
+
+	// THE PER-SHOT SEGMENT, FOR ANY SHOT LINE THAT HAS A DECODED FRAME.
+	//
+	// EVERY NUMBER HERE IS TRUE OF ONE FRAME, the same separation the lamp
+	// segment keeps: none of it may ride a done line, and the key family is
+	// its own so a grep for a figure key cannot return a scene-level key.
+	//
+	// FOUR DISTINCT NOTHING-MEASURED EXITS, because "0 silhouettes" and "no
+	// figure was in this frame" are different facts and a reader who cannot
+	// tell them apart will report the second as the first (rule 3b):
+	//   1 no decoded frame behind this shot line at all
+	//   2 no figure in the scene to look for
+	//   3 figures in the scene but not one of them could be examined here
+	//   4 figures examined but NOT ONE produced a reading, which is the exit
+	//     a bare figureSilYes=0/of=0 would have hidden inside a zero
+	// Each prints its own words, and only a run that got a reading prints a
+	// figureSilYes count at all.
+	//
+	// THE DENOMINATORS. inScene is how many figures the run believes are in
+	// the scene; examined is how many of them this function was handed a
+	// rectangle for on THIS frame, which is smaller whenever a figure never
+	// spawned or never projected; and `of` beside the yes count is how many
+	// of those examined produced a reading.
+	//
+	// THE CAP ANNOUNCES ITSELF ON EVERY LINE, not only when it bites, and
+	// space-free: instruments.md dictates `(+N more not shown)` and that
+	// phrasing carries spaces, which every reader here splits on. So the same
+	// fact rides as figureSilShown=<k>/notShown=<n>. MaxShown of 0 or less
+	// means no cap.
+	//
+	// THE INVARIANT, TRUE ON EVERY LINE THIS FUNCTION CAN PRINT: shown plus
+	// notShown is the number of patches the caller handed in, whatever the
+	// reason the rest are absent. So notShown is "patches this line did not
+	// print", which the cap is only one cause of: four patches arriving at a
+	// line with no decoded frame print as shown=0/notShown=4 and are VISIBLE
+	// as a caller contradiction rather than silently dropped. A reader
+	// summing notShown across lines is counting unprinted patches, not cap
+	// bites, and the head token beside it says which.
+	inline std::string FigureSilhouetteSegment(const std::vector<FigurePatch>& Patches,
+	                                           int FiguresInScene, bool bDecodedFrame,
+	                                           int MaxShown)
+	{
+		char Head[512];
+		const int Handed = (int)Patches.size();
+		if (!bDecodedFrame)
+		{
+			std::snprintf(Head, sizeof(Head),
+				"figureSil=nothing-measured/this-shot-line-carries-no-decoded-frame"
+				" figureSilExamined=0/inScene=%d figureSilShown=0/notShown=%d",
+				FiguresInScene, Handed);
+			return std::string(Head);
+		}
+		if (FiguresInScene <= 0)
+		{
+			std::snprintf(Head, sizeof(Head),
+				"figureSil=nothing-measured/no-figure-was-in-this-scene-to-look-for"
+				" figureSilExamined=0/inScene=0 figureSilShown=0/notShown=%d",
+				Handed);
+			return std::string(Head);
+		}
+		if (Patches.empty())
+		{
+			std::snprintf(Head, sizeof(Head),
+				"figureSil=nothing-measured/no-figure-could-be-examined-on-this-frame"
+				" figureSilExamined=0/inScene=%d figureSilShown=0/notShown=0",
+				FiguresInScene);
+			return std::string(Head);
+		}
+		int Read = 0, Yes = 0;
+		for (size_t I = 0; I < Patches.size(); ++I)
+		{
+			if (!Patches[I].Measured) { continue; }
+			++Read;
+			if (FigureReadsAsSilhouette(Patches[I])) { ++Yes; }
+		}
+		int Shown = Handed;
+		if (MaxShown > 0 && Shown > MaxShown) { Shown = MaxShown; }
+		const int NotShown = Handed - Shown;
+		int Needed;
+		if (Read == 0)
+		{
+			// THE FOURTH EXIT. Figures were examined and every one of them
+			// came back with a Why instead of a number, so there is no yes
+			// count to print: printing one would put a zero where a reader
+			// looks for a silhouette that was measured and found absent.
+			Needed = std::snprintf(Head, sizeof(Head),
+				"figureSil=nothing-measured/no-figures-projection-answered-on-this-frame"
+				" figureSilRead=0/examined=%d/inScene=%d"
+				" figureSilShown=%d/notShown=%d",
+				Handed, FiguresInScene, Shown, NotShown);
+		}
+		else
+		{
+			Needed = std::snprintf(Head, sizeof(Head),
+				"figureSilStat=per-figure/this-frame-only"
+				"/figures-own-box-mean-luma-vs-the-mean-of-the-ring-around-it"
+			"/ring=box-grown-by-its-LONGER-side-on-every-edge/queue-372"
+			"/strictly-darker"
+				" figureSilUnits=srgb-bytes/luma=0.299r+0.587g+0.114b"
+				" figureSilYes=%d/of=%d/examined=%d/inScene=%d"
+				" figureSilShown=%d/notShown=%d",
+				Yes, Read, Handed, FiguresInScene, Shown, NotShown);
+		}
+		std::string Out(Head);
+		if (Needed < 0 || (size_t)Needed >= sizeof(Head))
+		{
+			Out += " figureSilHeadCut=yes/at-512-chars";
+		}
+		for (int I = 0; I < Shown; ++I)
+		{
+			Out += " ";
+			Out += FigurePatchToken(I + 1, Patches[(size_t)I]);
+		}
+		return Out;
+	}
 }

@@ -38,6 +38,20 @@ max_sessions: 3
 status: READY 2026-09-16, ordered by Jafar, FILED AND NOT STARTED. His
   instruction was for after the visual slice.
 
+  RESHAPED BY HIM THE SAME DAY, AFTER AN EXTERNAL COST ASSESSMENT: "The
+  resident measurement I asked for earlier becomes the first such batch rather
+  than a per-item cost." THIS IS NO LONGER A PRICE PER RESIDENT. It is the
+  first measured BATCH under queue 369's four conditions, which are all four
+  and not three: end to end, rejected work counted INSIDE the number, both
+  meters read before and after, nothing else running in the window. A window
+  that loses any one of them is refused and re-run, not recorded with a
+  caveat.
+
+  WHAT DOES NOT CHANGE: the second resident. Whether the marginal cost falls
+  is still the question that decides the plan, and one batch cannot answer it.
+  His reason stands as he gave it: "I would rather know it is unaffordable at
+  resident two than at resident fifty."
+
   QUEUE 355 COMES FIRST AND IS NOT OPTIONAL, because he named both in one
   breath and in that order. 355 fixes what a PIECE means in the throughput
   ledger, where 22 placements from 15 meshes were counted as 22 verified pieces

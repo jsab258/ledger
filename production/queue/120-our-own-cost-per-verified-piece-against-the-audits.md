@@ -7,9 +7,21 @@ status: CLOSED 2026-09-10, not on the ladder, BY COMMIT cd55a79c (subject: D18 l
 ## What the audit said, and it is a claim about us
 
 Its affordable target: ONE BLOCK, A PUB, TWO INTERIORS, TWELVE RESIDENTS, and a
-60 to 90 minute crime-and-gossip scenario. Its cost model puts the stated 300
-to 500 resident town at 14 TO 34 WEEKS OF FULL BUDGET ALLOCATION FOR CONTENT
-ALONE.
+60 to 90 minute crime-and-gossip scenario. Its cost model put the stated 300
+to 500 resident town at 14 to 34 weeks of full budget allocation for content
+alone.
+
+**THAT FORECAST IS WITHDRAWN, by Jafar 2026-09-16, and it is recorded here as
+withdrawn rather than deleted so that a later reader meets the withdrawal
+instead of the number.** His words, relaying a second external cost
+assessment: "two forecasts are withdrawn: queue 120's fourteen to thirty-four
+weeks, and D22's six to ten weeks for the visual slice, which was always mine
+and untested. Record both as withdrawn rather than leaving them in the
+documents as if they held." NOTHING MAY QUOTE THE 14 TO 34 WEEKS AS A LIVE
+ESTIMATE. What replaces it is not a better forecast: it is queue 369, which
+prices a measured BATCH end to end with both meters read and nothing else
+running, because the same assessment found that Phase A cannot be costed from
+what exists.
 
 That is an outside estimate of our throughput. It may be wrong. THE ONLY WAY TO
 FIND OUT IS TO PRODUCE OURS, from data, and set the two side by side.

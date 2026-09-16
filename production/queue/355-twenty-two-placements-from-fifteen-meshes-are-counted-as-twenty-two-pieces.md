@@ -33,6 +33,16 @@ status: READY 2026-09-16, and RE-ORDERED BY JAFAR THE SAME EVENING as the
   by the wrong number. Then measure one real unit properly."
 
   THE SECOND HALF IS QUEUE 362 AND THIS ITEM GATES IT, in his own order.
+
+  WHAT THE 2026-09-16 COST ASSESSMENT CHANGED ABOUT THIS ITEM, and it does not
+  close it: cost is now measured per BATCH (queue 369) and not per piece, so
+  the half of this item that exists to make a COST-PER-PIECE figure honest has
+  lost the figure it was serving. The other half stands on its own and is why
+  this is not closed here: twenty-two placements from fifteen meshes counted
+  as twenty-two verified pieces is a COUNTING error in the throughput ledger,
+  and a wrong count misreports throughput whether or not anything is divided
+  by it. Whether that half still earns its place ahead of the slice is his
+  call or a director's, not this file's.
   362 puts one fully authored resident through all five stations with both
   meters read before and after, then a second, to get a cost and a first
   marginal from real work. THOSE TWO NUMBERS ARE COSTS PER UNIT. If the unit

@@ -3977,13 +3977,31 @@ FABLE_MODEL = "fable"
 #: an unrecognised agent is not evidence that the game got built.
 GAME_AGENTS = frozenset((
     "systems-builder", "content-wrangler", "engine-specialist"))
-#: THE CAPTION THAT RIDES INSIDE `gameShareDay`'s OWN VALUE, because that
-#: number is a COUNT OF ROLES printed as a count of game work and a reader
-#: meets the limitation here or not at all. ONE definition, used by the emit
-#: and by the two selftest rungs that pin it, so the caption and the
-#: assertion about it cannot drift apart. Whitespace-free, and joined with
-#: `..` rather than `/` so it cannot read as another term of the ratio.
-GAME_SHARE_BASIS = "by-role-not-by-work"
+#: THE WITHDRAWAL THAT RIDES IN `gameShareDay`'s PLACE, and the reason lives
+#: here so that no later reader can reinstate the number without meeting the
+#: ruling. Jafar, 2026-09-16, verbatim: "The split cannot be computed at all
+#: until the spawn log records what a session touched, not just who ran and
+#: why. Three audits have now said this. Add the column before claiming the
+#: ratio again, or stop printing the number." The column is queue 370 and it
+#: waits for the visual slice by his own instruction, so this is the other
+#: branch of that sentence: the ratio is printed nowhere.
+#:
+#: IT IS NOT A ZERO AND IT IS NOT A NOTHING-MEASURED, and those are three
+#: different facts. `nothing-measured` says no window existed; a zero says
+#: the day built nothing; this says a window existed, the rows were counted,
+#: and the ANSWER IS REFUSED. The counting survives on purpose (`day_game` is
+#: still tallied and still returned), so the day the column lands the reading
+#: is rebuilt from a column rather than from nothing. What stopped is the
+#: claim.
+#:
+#: ONE DEFINITION, imported by tools/morning-brief.py, which already imports
+#: GAME_AGENTS from here for exactly this reason: two copies of a withdrawal
+#: drift apart the same way two copies of a caption did. Whitespace-free,
+#: because every reader of a key=value line splits on whitespace, and joined
+#: with `..` rather than `/` so it cannot read as a term of the ratio it
+#: replaced.
+GAME_SHARE_WITHDRAWN = ("withdrawn..spawn-log-has-no-column-naming-what-a-"
+                        "session-touched..Jafar-2026-09-16")
 # THE ARTIFACT HALF, added 25 Aug after a SPAWN ROW certified an unreviewed
 # batch for the SECOND time. CLAUDE.md named this hole in the words "the spawn
 # log is an attendance register, not a review record", listed two candidate
@@ -5397,17 +5415,18 @@ def _cadence_read(repo):
             # reason, agentId) and none of them names a file. So an
             # engine-specialist repairing an instrument counts here as game
             # work, and an instrument-builder adding a gameplay readback does
-            # not. Reported twice, queue 111 on 6 Sep and queue 344 on 16 Sep.
-            # Classifying by what a spawn TOUCHED needs a sixth column that
-            # nothing writes today, so the limitation is PRINTED where the
-            # number is read instead, inside the value (GAME_SHARE_BASIS).
-            # Measured 26 Aug after the owner asked why a night cost so much:
-            # 25 Aug ran 110 spawns of which 39 were instrument-builder and 23
-            # were the director, so 78 of 110, 71%, were the project working
-            # on itself BY THIS SAME PROXY. That is the number the fable share
-            # could not show, because it asks a different question: WHICH
-            # MODEL, not WHICH WORK. This one asks WHICH ROLE, which is not
-            # WHICH WORK either, and now says so on the line it prints.
+            # not. Reported three times: queue 111 on 6 Sep, queue 344 and
+            # queue 345 on 16 Sep.
+            #
+            # THE SHARE BUILT FROM THIS COLUMN IS NO LONGER CLAIMED. Jafar
+            # ruled on 2026-09-16 that the split is not to be printed until
+            # the log records what a session touched; `gameShareDay` now emits
+            # GAME_SHARE_WITHDRAWN and the sixth column is queue 370. THE
+            # TALLY STAYS ANYWAY, because the day that column lands the
+            # reading should be rebuilt from a column rather than from
+            # nothing, and because `day_game` is in the returned dict where a
+            # selftest can prove the counting still discriminates while the
+            # printed line refuses to answer.
             slot[2] += 1 if agent in GAME_AGENTS else 0
             # PER-DAY TIER AND CLASS, keyed by the same day string as `slot`,
             # so the day window is one window and not two.
@@ -5555,35 +5574,34 @@ def _cadence_spend(r):
     else:
         spawns = all_share = NOTHING_MEASURED
     if measured and r["day_rows"]:
-        day = "%d/%d@%s" % (r["day_fable"], r["day_rows"], r["day_iso"])
-        # SAME DAY, SAME DENOMINATOR, ON THE SAME LINE. The share and the mix
-        # are one reading of one window, so they are captured together and
-        # printed together; splitting them across two lines is the fault
+        # NUMERATOR AND DENOMINATOR AND THE DAY THEY BOTH CAME FROM, in one
+        # token: the fable share of the newest day is one reading of one
+        # window, and splitting a pair across two lines is the fault
         # `verdict-read.py` exists to catch one layer down.
-        # THE ROLE PROXY, CAPTIONED IN ITS OWN VALUE: a COUNT of that day's
-        # spawns whose ROLE is in GAME_AGENTS, over that same day's rows. The
-        # caption rides inside the value because a reader who greps the number
-        # out of the footer must not be able to get the number without it.
-        mix = "%d/%d@%s..%s" % (r["day_game"], r["day_rows"], r["day_iso"],
-                                GAME_SHARE_BASIS)
+        day = "%d/%d@%s" % (r["day_fable"], r["day_rows"], r["day_iso"])
     else:
-        day = mix = NOTHING_MEASURED
+        day = NOTHING_MEASURED
+    # THE GAME SHARE IS WITHDRAWN IN EVERY BRANCH, and unconditionally is the
+    # whole point: a marker that read `withdrawn` on a day with rows and
+    # something else on a day without would leak one bit of the number it
+    # replaced. The refusal is prior to the log's contents anyway, the ratio
+    # is refused whether or not there was anything to count, so it does not
+    # branch on `measured`. The other three values on this line still say
+    # `nothing-measured` when they measured nothing, which is how a reader of
+    # an absent-log footer can still tell the two facts apart.
+    mix = GAME_SHARE_WITHDRAWN
     who = "/".join(r["fable_agents"]) if r["fable_agents"] else "none"
     text = ("; fable spend, READING ONLY (no bound, nothing here is gated): "
             "directorSpawns=%s fableShareDay=%s fableShareAll=%s gameShareDay=%s "
             "fableAgents=%s agentFilesRead=%d — COUNT of studio-director rows "
             "over ALL spawn rows since that same reference commit / SHARE over "
             "the newest UTC day present in the log / CUMULATIVE share over "
-            "every log row / of that same day, a COUNT of spawns whose ROLE "
-            "is in GAME_AGENTS over that day's spawns, which is a ROLE PROXY "
-            "for game work and NOT a reading of what a spawn touched: an "
-            "engine-specialist repairing an instrument counts here as game "
-            "work, an instrument-builder adding a gameplay readback does not, "
-            "and the spawn log has no column naming a file, so this proxy's "
-            "error cannot be measured from it (25 Aug read 32/110 BY ROLE, so "
-            "71%% of that day was the project working on itself by the same "
-            "proxy, and 5 Sep read 12/27 by role on a day queue item 111 "
-            "counted the work at 1, which is the size of error this admits)"
+            "every log row / WITHDRAWN and not zero and not unmeasured: that "
+            "share counted spawns whose ROLE is in GAME_AGENTS, which is not "
+            "a reading of what a spawn touched, and Jafar ruled on 2026-09-16 "
+            "that the split is not to be claimed until the spawn log records "
+            "what a session touched (the column is queue 370), with the rows "
+            "still counted here and the answer refused"
             % (spawns, day, all_share, mix, who, r["agent_files"]))
     # THE WORDS, for each way this can measure nothing. Values alone are
     # greppable; a person reading the footer needs the sentence.
@@ -7414,32 +7432,51 @@ def _cadence_selftest():
         "MEASURE the fable set is READ from the definitions and printed with "
         "the count of files examined", s1["summary"])
 
-    # MEASURED: THE GAME SHARE, WHICH ASKS A DIFFERENT QUESTION FROM THE FABLE
-    # ONE AND MUST BE ABLE TO DISAGREE WITH IT. s1's newest day is one row,
-    # `studio-director` — fable AND not game — so the shares read 1/1 and 0/1
-    # off the same window and the same denominator. A game share that merely
-    # mirrored the fable share would pass a looser fixture and tell nobody
-    # anything: 25 Aug was 13% fable and 29% game, which is why both exist.
-    say("gameShareDay=0/1@2023-11-15..%s" % GAME_SHARE_BASIS in s1["summary"],
-        "MEASURE the game share reads 0/1 where the fable share reads 1/1, "
-        "same day, same denominator, opposite answer, and the value carries "
-        "the ROLE-PROXY caption that says which of the two it counted",
+    # THE WITHDRAWAL, FIRST HALF, AND IT IS AN ACCEPTING CASE: the ruling took
+    # ONE value off this line and left the other three alive. s1's newest day
+    # is one row, `studio-director` — fable AND not game — so the fable share
+    # still reads 1/1 off that window while `gameShareDay` refuses to answer.
+    # This rung asserted `gameShareDay=0/1@2023-11-15..by-role-not-by-work`
+    # until 2026-09-16; the number it pinned is the number Jafar withdrew.
+    say(("gameShareDay=%s" % GAME_SHARE_WITHDRAWN) in s1["summary"]
+        and "fableShareDay=1/1@2023-11-15" in s1["summary"]
+        and not re.search(r"gameShareDay=\d+/\d+", s1["summary"]),
+        "ACCEPT the game share prints the WITHDRAWAL and no ratio of any "
+        "shape, while the fable share on the same line still reads 1/1 off "
+        "the same window — the withdrawal did not take the neighbours with it",
         s1["summary"])
 
-    # AND THE ACCEPTING CASE FOR IT: a day whose spawns DID build the game must
-    # not read as self-measurement. This is the half that goes unrun, and here
-    # it is the half that matters — a mix stuck at zero would look like a
-    # damning finding every single day and nobody would question it.
+    # AND THE ACCEPTING CASE THAT MATTERS NOW: a day whose spawns DID build the
+    # game must print THE SAME withdrawal as a day of pure self-measurement.
+    # Until 2026-09-16 this fixture existed to prove the number COULD MOVE (it
+    # read 2/3 here against 0/1 in s1), which was the right accepting case
+    # while the number was claimed; a mix stuck at zero would have looked like
+    # a damning finding every day and nobody would have questioned it. With
+    # the claim withdrawn the case inverts: a marker that differed between
+    # these two days would be the withdrawn number leaking through its own
+    # replacement.
     d = _cadence_fixture(work, "s1b-game-day", 5,
                          [(CADENCE_NEWEST, "systems-builder"),
                           (CADENCE_NEWEST, "content-wrangler"),
                           (CADENCE_NEWEST, "instrument-builder")],
                          agents=ONE_FABLE)
     s1b = _cadence_read(d)
-    say("gameShareDay=2/3@" in s1b["summary"]
-        and "fableShareDay=0/3@" in s1b["summary"],
-        "ACCEPT a day of real building reads 2/3 game and 0/3 fable — the "
-        "number moves, and it is not the fable share wearing a new name",
+    # THE COUNTING MUST STILL DISCRIMINATE UNDERNEATH THE REFUSAL. `day_game`
+    # is 2 here and 0 in s1 off the same classifier and the same GAME_AGENTS
+    # set, so the day queue 370 gives the log a column naming what a session
+    # touched, the reading is REBUILT from that column rather than written
+    # again from nothing. Asserted on the returned dict, never on the line:
+    # the line is exactly where it must not appear.
+    say(("gameShareDay=%s" % GAME_SHARE_WITHDRAWN) in s1b["summary"]
+        and ("gameShareDay=%s" % GAME_SHARE_WITHDRAWN) in s1["summary"]
+        and not re.search(r"gameShareDay=\d+/\d+", s1b["summary"])
+        and "fableShareDay=0/3@" in s1b["summary"]
+        and s1b["day_game"] == 2 and s1["day_game"] == 0,
+        "ACCEPT a day of real building (day_game %d of 3 rows) and a day of "
+        "pure self-measurement (day_game %d of 1 row) print the IDENTICAL "
+        "withdrawal and no ratio — the marker does not move with the number, "
+        "and the tally underneath it still tells the two days apart"
+        % (s1b["day_game"], s1["day_game"]),
         s1b["summary"])
 
     # MEASURED: A SECOND AGENT ON FABLE. The share must count it — otherwise
@@ -7485,16 +7522,22 @@ def _cadence_selftest():
     s4 = _cadence_read(d)
     say("directorSpawns=%s" % NOTHING_MEASURED in s4["summary"]
         and "fableShareDay=%s" % NOTHING_MEASURED in s4["summary"]
-        and "gameShareDay=%s" % NOTHING_MEASURED in s4["summary"]
         and "fableShareAll=%s" % NOTHING_MEASURED in s4["summary"]
         and "the agent log is ABSENT, so nothing was measured" in s4["summary"]
-        # AND NO BASIS CAPTION ON A NUMBER THAT DOES NOT EXIST. A caption
-        # describes a reading; printed beside `nothing-measured` it dresses an
-        # absence as one, which is the exact failure rule 3b exists for.
-        and GAME_SHARE_BASIS not in s4["summary"],
-        "NOTHING MEASURED: an ABSENT log prints the words in all three windows, "
-        "never a zero, and carries no role-proxy caption because there is no "
-        "reading to caption", s4["summary"])
+        # AND NOTHING-MEASURED AND WITHDRAWN STAY TWO FACTS ON ONE LINE. The
+        # three fable windows print the words because no window existed; the
+        # game share prints the withdrawal because the question is refused
+        # whether a window existed or not. If the absent-log case printed
+        # `gameShareDay=nothing-measured` it would say the number exists on
+        # days the log is there, which is the implication the ruling kills —
+        # and this fixture would then be indistinguishable from the others.
+        and ("gameShareDay=%s" % GAME_SHARE_WITHDRAWN) in s4["summary"]
+        and ("gameShareDay=%s" % NOTHING_MEASURED) not in s4["summary"]
+        and not re.search(r"gameShareDay=\d+/\d+", s4["summary"]),
+        "NOTHING MEASURED: an ABSENT log prints the words in all three fable "
+        "windows, never a zero — and the game share prints the WITHDRAWAL in "
+        "the same breath, so a reader can still tell an absent window from a "
+        "refused answer", s4["summary"])
 
     d = _cadence_fixture(work, "s5-header-only", 5, [], agents=ONE_FABLE)
     s5 = _cadence_read(d)
@@ -7639,6 +7682,29 @@ def _cadence_selftest():
         % (scanned, want, len(reads)),
         "bad=%s badCount=%d scanned=%d want=%d"
         % (",".join(bad[:3]) or "none", len(bad), scanned, want))
+
+    # AND NO RATIO ANYWHERE THE SUITE CAN SEE — the withdrawal in one sweep,
+    # with its denominator. Every `gameShareDay=` token in every fixture
+    # summary must BE the marker; a rung-by-rung check would miss the branch
+    # nobody wrote a rung for, which is how this number came to be printed in
+    # three places before Jafar found it.
+    not_marker, carries = [], 0
+    for tag, rr in reads:
+        for tok in rr["summary"].split():
+            if tok.startswith("gameShareDay="):
+                if tok.split("=", 1)[1] == GAME_SHARE_WITHDRAWN:
+                    carries += 1
+                else:
+                    not_marker.append("%s:%s" % (tag, tok))
+    shown = ",".join(not_marker[:3]) or "none"
+    if len(not_marker) > 3:
+        shown += "(+%d more not shown)" % (len(not_marker) - 3)
+    say(not not_marker and carries == len(reads),
+        "THE WITHDRAWAL IS UNCONDITIONAL: %d of %d fixture summaries carry the "
+        "withdrawal marker and %d carry a game-share value that is not it "
+        "(a ratio printed anywhere here is the claim Jafar withdrew)"
+        % (carries, len(reads), len(not_marker)),
+        "notTheMarker=%s carries=%d/%d" % (shown, carries, len(reads)))
 
     return passed, failed, lines
 

@@ -11,8 +11,16 @@
 // formatter that ships unrun and prints a plausible string is the quietest
 // instrument fault there is.
 //
-//   g++ -std=c++17 -O0 -Wall -Wextra -o /tmp/frame-stats-test ue-probe/tests/frame-stats-test.cpp
+//   g++ -std=c++11 -O1 -Wall -o /tmp/frame-stats-test ue-probe/tests/frame-stats-test.cpp
 //   /tmp/frame-stats-test
+//
+// THOSE ARE THE GATE'S OWN FLAGS, read off ledger/verify.py:1028 on
+// 2026-09-16 and not chosen here. This line said -std=c++17 -O0 -Wall
+// -Wextra until then, which is a LOOSER standard and a STRICTER warning
+// set than the gate uses: code written against it could compile clean by
+// hand and fail in CI on a c++14-or-later construct, which is the one
+// direction this comment must never be wrong in. If the two ever
+// disagree again, verify.py is the truth and this line is the decay.
 #include "../Source/LedgerProbe/Public/FrameStats.h"
 
 #include <cmath>
@@ -1448,6 +1456,279 @@ int main()
 		SpacedOne.push_back(Spaced);
 		const std::string SpacedSeg = LampGlowSegment(SpacedOne, 1, true, 0);
 		Check(Spaced.Id == "lantern_0_head" && ValuesHaveNoSpaces(SpacedSeg),
+		      "an id carrying spaces is sanitised before it reaches the line");
+	}
+
+	// ---- THE FIGURE AGAINST WHAT IS BEHIND IT, PIXEL HALF ----------------
+	//
+	// ACCEPTING CASE FIRST (rule 5b). The expensive failure for this guard is
+	// not that it misses a bright figure; it is that it says no to a figure
+	// that IS a silhouette, and the studio spends a CI round trip darkening a
+	// character material that was never the problem. So the first fixture is
+	// a dark figure on a light street and the check is that it reads yes.
+	//
+	// WHAT THESE FRAMES ARE. Synthetic BGRA built by Flat and Paint. The
+	// background stands in for an overcast wet street (r120 g125 b130, luma
+	// 124) and the figure for a dark coat against it (r20 g22 b24, luma 22).
+	// NOTHING HERE IS MEASURED OFF A RENDER: this proves the arithmetic and
+	// the strings. What a real figure on the real street reads is the run's
+	// business, and the series this prints is what any future margin has to
+	// be read off. There is no margin in the comparison today, deliberately.
+	{
+		std::printf("  -- the figure against what is behind it --\n");
+		const int FW = 200, FH = 120;
+		const int FiguresInScene = 4;
+		// The figure's box: 18 wide, 60 tall, the proportions of a standing
+		// person rather than a square, because the shared ring pads by the
+		// LONGER side and a square would hide what that costs.
+		const double BX0 = 90.0, BY0 = 30.0, BX1 = 108.0, BY1 = 90.0;
+
+		// (1) ACCEPTING: a dark rectangle on a light field.
+		std::vector<unsigned char> Dark = Flat(FW, FH, 130, 125, 120);
+		Paint(Dark, FW, FH, 90, 30, 108, 90, 24, 22, 20);
+		const FigurePatch Yes = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                           true, BX0, BY0, BX1, BY1);
+		std::printf("    core mean %.1f (min %d max %d) over %lld px, ring mean %.1f "
+		            "(min %d max %d) over %lld px, gap %.1f, word %s\n",
+		            Yes.CoreMeanLuma, Yes.CoreMinLuma, Yes.CoreMaxLuma, Yes.CorePixels,
+		            Yes.RingMeanLuma, Yes.RingMinLuma, Yes.RingMaxLuma, Yes.RingPixels,
+		            Yes.CoreMeanLuma - Yes.RingMeanLuma, FigureSilhouetteWord(Yes));
+		Check(Yes.Measured && FigureReadsAsSilhouette(Yes)
+		      && std::string(FigureSilhouetteWord(Yes)) == "yes",
+		      "a dark figure on a light street reads as a silhouette");
+		Check(Near(Yes.CoreMeanLuma, 22.0) && Near(Yes.RingMeanLuma, 124.0)
+		      && Yes.CoreMinLuma == 22 && Yes.CoreMaxLuma == 22
+		      && Yes.RingMinLuma == 124 && Yes.RingMaxLuma == 124,
+		      "and both means and both pairs of extremes are on the patch, in sRGB "
+		      "luma bytes");
+		Check(Yes.CorePixels == 1080 && Yes.RingPixels == 15480,
+		      "over 1080 core pixels and a ring of 15480, the ring being the box "
+		      "grown by its own LONGER side and clipped to the frame");
+		Check(Yes.CoreDarkerThanRingMeanPixels == 1080,
+		      "with every one of its 1080 core pixels darker than the ring mean, "
+		      "which is what tells a dark figure from a bright one in a dark hat");
+		Check(Near(Yes.ProjW, 18.0) && Near(Yes.ProjH, 60.0) && Yes.ProjKnown,
+		      "and the unrounded projected extent it was handed rides along with it");
+
+		// (2) REJECTING, THE TIE: a uniform field. Every pixel equal means
+		// the core cannot be STRICTLY darker than the ring, and a tie is not
+		// a silhouette. This is the case a bound chosen by eye gets wrong.
+		std::vector<unsigned char> Uniform = Flat(FW, FH, 130, 125, 120);
+		const FigurePatch Tie = MeasureFigurePatch(Uniform.data(), FW, FH, "figure0",
+		                                           true, BX0, BY0, BX1, BY1);
+		Check(Tie.Measured && !FigureReadsAsSilhouette(Tie)
+		      && std::string(FigureSilhouetteWord(Tie)) == "no"
+		      && Tie.Why == "measured",
+		      "a uniform field ties, and a tie reads no rather than nothing-measured: "
+		      "it was measured, and the answer was no");
+		Check(Near(Tie.CoreMeanLuma, Tie.RingMeanLuma)
+		      && Tie.CoreDarkerThanRingMeanPixels == 0 && Tie.CorePixels == 1080,
+		      "and its zero darker-than-ring count ships the 1080 it is out of");
+
+		// (3) REJECTING, THE LIT FIGURE: a core BRIGHTER than its ring. A
+		// figure standing in the lamp's pool is not a silhouette, and the
+		// instrument must say so rather than reporting any strong contrast.
+		std::vector<unsigned char> Bright = Flat(FW, FH, 130, 125, 120);
+		Paint(Bright, FW, FH, 90, 30, 108, 90, 230, 235, 240);
+		const FigurePatch Lit = MeasureFigurePatch(Bright.data(), FW, FH, "figure0",
+		                                           true, BX0, BY0, BX1, BY1);
+		Check(Lit.Measured && !FigureReadsAsSilhouette(Lit)
+		      && Near(Lit.CoreMeanLuma, 236.0) && Near(Lit.RingMeanLuma, 124.0),
+		      "a figure brighter than what is behind it reads no, however strong the "
+		      "contrast is");
+
+		// (3b) THE DARKER-THAN-RING COUNT IS A SECOND PASS OVER THE PIXELS
+		// WITH ITS OWN CHANNEL EXPRESSION, and every fixture above is a grey
+		// or near-grey where B, G and R swapped would read the same. So one
+		// asymmetric fixture pins it: a core of PURE RED (luma 76) inside a
+		// grey ring of luma 50. Read correctly the count is 0 of 1080,
+		// because 76 is above 50; read with red and blue swapped the same
+		// pixels would score 29 and the count would be 1080 of 1080. The two
+		// answers are opposite, which is the only way this pass can be
+		// checked at all.
+		std::vector<unsigned char> Red = Flat(FW, FH, 50, 50, 50);
+		Paint(Red, FW, FH, 90, 30, 108, 90, 0, 0, 255);
+		const FigurePatch Chan = MeasureFigurePatch(Red.data(), FW, FH, "figure0",
+		                                            true, BX0, BY0, BX1, BY1);
+		std::printf("    channel fixture: core mean %.1f ring mean %.1f "
+		            "darkerThanRingMean %lld of %lld\n",
+		            Chan.CoreMeanLuma, Chan.RingMeanLuma,
+		            Chan.CoreDarkerThanRingMeanPixels, Chan.CorePixels);
+		Check(Near(Chan.CoreMeanLuma, 76.0) && Near(Chan.RingMeanLuma, 50.0),
+		      "a pure red core reads 76 and not 29, so the first pass weights the "
+		      "channels the way BGRA is laid out");
+		Check(Chan.CoreDarkerThanRingMeanPixels == 0 && Chan.CorePixels == 1080
+		      && !FigureReadsAsSilhouette(Chan),
+		      "and the second pass agrees with it: none of the 1080 is darker than "
+		      "the ring mean, which a swapped channel would turn into all 1080");
+
+		// (4) THE SIX WAYS A FIGURE PRODUCES NO READING AT ALL, none of which
+		// may print as a no.
+		const FigurePatch NoBox = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                             false, 0.0, 0.0, 0.0, 0.0);
+		Check(!NoBox.Measured && !FigureReadsAsSilhouette(NoBox)
+		      && std::string(FigureSilhouetteWord(NoBox)) == "nothing-measured"
+		      && NoBox.Why == "the-projection-did-not-answer-for-this-figure"
+		      && !NoBox.ProjKnown,
+		      "a figure whose box the projection refused says the words rather than no");
+		const FigurePatch NoFrame = MeasureFigurePatch(0, FW, FH, "figure0",
+		                                               true, BX0, BY0, BX1, BY1);
+		Check(!NoFrame.Measured && NoFrame.Why == "no-decoded-frame",
+		      "and so does a shot with no decoded frame behind it");
+		const FigurePatch Empty = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                             true, 90.0, 30.0, 90.0, 90.0);
+		Check(!Empty.Measured && Empty.ProjKnown && Near(Empty.ProjW, 0.0)
+		      && Empty.Why == "the-figures-box-has-no-width-or-no-height-at-all",
+		      "a box with no width at all is a degenerate projection, said in its own "
+		      "words rather than folded into the too-small case");
+		// A ONE-PIXEL FIGURE IS NOT A FIGURE. Deliberate and written down in
+		// the header: the lamp floors and ceils because one pixel of GLOW is
+		// a real reading, while a figure under a pixel wide has no interior
+		// and its "silhouette" would be a reading of the antialiasing. It is
+		// reported measured-but-too-small, with the extent that proves it.
+		const FigurePatch Speck = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                             true, 90.0, 30.0, 90.4, 30.6);
+		Check(!Speck.Measured && Speck.ProjKnown
+		      && Speck.Why == "the-figures-box-is-under-one-pixel-and-too-small-to-read",
+		      "a figure whose box is under a pixel is too small to read rather than "
+		      "rounded up into a reading");
+		const FigurePatch OffFrame = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                               true, 500.0, 30.0, 518.0, 90.0);
+		Check(!OffFrame.Measured
+		      && OffFrame.Why == "the-figures-box-falls-outside-this-frame",
+		      "a figure projected off the edge of the picture measures nothing");
+		const FigurePatch NoRing = MeasureFigurePatch(Dark.data(), FW, FH, "figure0",
+		                                              true, 0.0, 0.0, 200.0, 120.0);
+		Check(!NoRing.Measured
+		      && NoRing.Why == "this-figure-has-no-ring-pixel-on-this-frame",
+		      "and a figure whose box fills the frame has no outside to be darker "
+		      "than, which is not the same as not being darker");
+
+		// (5) CLIPPED BY THE FRAME EDGE. It still reads, and the line carries
+		// both moments: the extent it was handed beside the box that survived
+		// clipping, so a half-visible figure cannot pass for a small one.
+		std::vector<unsigned char> Edge = Flat(FW, FH, 130, 125, 120);
+		Paint(Edge, FW, FH, 0, 30, 10, 90, 24, 22, 20);
+		const FigurePatch Clip = MeasureFigurePatch(Edge.data(), FW, FH, "figure0",
+		                                            true, -8.0, 30.0, 10.0, 90.0);
+		Check(Clip.Measured && FigureReadsAsSilhouette(Clip)
+		      && Clip.CorePixels == 600 && Clip.RingPixels == 7800,
+		      "a figure half off the left edge still reads, over the 600 core pixels "
+		      "that are actually in the picture");
+		Check(Clip.CX0 == 0 && Clip.CX1 == 10 && Near(Clip.ProjW, 18.0),
+		      "and its clipped box prints beside the 18.00 pixels it was handed, so "
+		      "the clip is visible rather than passing for a small figure");
+
+		// (6) THE SEGMENT, WHICH IS THE THING THE SHOT LINE CARRIES.
+		std::vector<FigurePatch> Four;
+		Four.push_back(Yes);
+		Four.push_back(Tie);
+		Four.push_back(Lit);
+		Four.push_back(NoBox);
+		const std::string Seg = FigureSilhouetteSegment(Four, FiguresInScene, true, 0);
+		std::printf("    %s\n", Seg.c_str());
+		Check(Seg.find("figureSilYes=1/of=3/examined=4/inScene=4") != std::string::npos,
+		      "the silhouette count ships all three of its denominators: read, "
+		      "examined and in the scene, which are three different numbers");
+		Check(Seg.find("figureSil1=figure0/yes/") != std::string::npos
+		      && Seg.find("figureSil2=figure0/no/") != std::string::npos
+		      && Seg.find("figureSil4=figure0/nothing-measured/") != std::string::npos,
+		      "and every figure prints its own word on the same line, yes or no or "
+		      "the words");
+		Check(Seg.find("coreMeanLuma=22.0") != std::string::npos
+		      && Seg.find("ringMeanLuma=124.0") != std::string::npos
+		      && Seg.find("coreMinusRingMeanLuma=-102.0") != std::string::npos,
+		      "the two numbers that decided it are both on the line, and so is the "
+		      "signed gap between them, which is the series a margin would come from");
+		Check(Seg.find("coreDarkerThanRingMean=1080/of=1080") != std::string::npos,
+		      "the darker-than-ring count carries its denominator inside the value");
+		Check(Seg.find("box=x90..108/y30..90") != std::string::npos
+		      && Seg.find("ring=x30..168/y0..120") != std::string::npos,
+		      "with both rectangles in pixels, so the ring can be re-derived from the "
+		      "line rather than trusted");
+		Check(Seg.find("figureSil4=figure0/nothing-measured/"
+		               "the-projection-did-not-answer-for-this-figure"
+		               "/projW=nothing-measured") != std::string::npos,
+		      "and a figure with no projected extent says those words too rather than "
+		      "printing a zero-sized box");
+		Check(ValuesHaveNoSpaces(Seg), "the figure segment is space-free");
+
+		// (7) A FIGURE THAT NEVER SPAWNED IS MISSING FROM THE VECTOR
+		// ENTIRELY, and the line has to keep saying 4 were in the scene.
+		std::vector<FigurePatch> One;
+		One.push_back(Yes);
+		const std::string Short = FigureSilhouetteSegment(One, FiguresInScene, true, 0);
+		Check(Short.find("figureSilYes=1/of=1/examined=1/inScene=4") != std::string::npos,
+		      "a run that could only examine one of four figures says one of four "
+		      "rather than one of one");
+
+		// (8) THE CAP ANNOUNCES ITSELF ON EVERY LINE, not only when it bites,
+		// so a reader never has to know what the cap was.
+		const std::string Capped = FigureSilhouetteSegment(Four, FiguresInScene, true, 2);
+		Check(Capped.find("figureSilShown=2/notShown=2") != std::string::npos
+		      && Capped.find("figureSil3=") == std::string::npos,
+		      "a capped line says how many it did not show, and does not show them");
+		Check(Seg.find("figureSilShown=4/notShown=0") != std::string::npos,
+		      "and an uncapped line says so with a zero rather than with silence");
+		Check(ValuesHaveNoSpaces(Capped), "the capped line is space-free too");
+
+		// (9) THE FOUR NOTHING-MEASURED EXITS, EACH DISTINGUISHABLE. "0
+		// silhouettes" and "no figure was in this frame" are different facts
+		// and a reader who cannot tell them apart reports the second as the
+		// first, which is rule 3b with a person in it.
+		const std::string NoDecode = FigureSilhouetteSegment(Four, FiguresInScene, false, 0);
+		std::printf("    %s\n", NoDecode.c_str());
+		Check(NoDecode.find("figureSil=nothing-measured/"
+		                    "this-shot-line-carries-no-decoded-frame") != std::string::npos
+		      && NoDecode.find("figureSilYes=") == std::string::npos,
+		      "exit 1: a shot line with no decoded frame prints the words and no "
+		      "silhouette count at all");
+		Check(NoDecode.find("figureSilShown=0/notShown=4") != std::string::npos,
+		      "and it says the four patches it was handed went unprinted, so they "
+		      "cannot vanish between the caller and the line");
+		const std::string NoFigures =
+			FigureSilhouetteSegment(std::vector<FigurePatch>(), 0, true, 0);
+		std::printf("    %s\n", NoFigures.c_str());
+		Check(NoFigures.find("figureSil=nothing-measured/"
+		                     "no-figure-was-in-this-scene-to-look-for") != std::string::npos
+		      && NoFigures.find("inScene=0") != std::string::npos,
+		      "exit 2: a scene with no figure in it says that, with its zero");
+		const std::string NoneExaminable =
+			FigureSilhouetteSegment(std::vector<FigurePatch>(), FiguresInScene, true, 0);
+		std::printf("    %s\n", NoneExaminable.c_str());
+		Check(NoneExaminable.find("figureSil=nothing-measured/"
+		                          "no-figure-could-be-examined-on-this-frame") != std::string::npos
+		      && NoneExaminable.find("inScene=4") != std::string::npos,
+		      "exit 3: four figures in the scene and none examinable here is a "
+		      "different sentence from no figure at all, and keeps its four");
+		std::vector<FigurePatch> NoneRead;
+		NoneRead.push_back(NoBox);
+		NoneRead.push_back(Speck);
+		const std::string NoAnswer =
+			FigureSilhouetteSegment(NoneRead, FiguresInScene, true, 0);
+		std::printf("    %s\n", NoAnswer.c_str());
+		Check(NoAnswer.find("figureSil=nothing-measured/"
+		                    "no-figures-projection-answered-on-this-frame") != std::string::npos
+		      && NoAnswer.find("figureSilYes=") == std::string::npos
+		      && NoAnswer.find("figureSilRead=0/examined=2/inScene=4") != std::string::npos,
+		      "exit 4: figures examined and not one readable prints the words and a "
+		      "read count of zero over its two denominators, never a yes count of zero");
+		Check(NoAnswer.find("/projW=0.40/projH=0.60") != std::string::npos,
+		      "and the too-small figure carries the extent that proves it was too "
+		      "small, rather than asking the reader to take the word for it");
+		Check(ValuesHaveNoSpaces(NoDecode) && ValuesHaveNoSpaces(NoFigures)
+		      && ValuesHaveNoSpaces(NoneExaminable) && ValuesHaveNoSpaces(NoAnswer),
+		      "all four nothing-measured lines are space-free");
+
+		// (10) AN ID WITH A SPACE IN IT WOULD TRUNCATE EVERY TOKEN AFTER IT.
+		// Sanitised here, in the tested layer, rather than trusted from the
+		// module that reads the actor's name.
+		const FigurePatch Spaced2 = MeasureFigurePatch(Dark.data(), FW, FH, "figure 0 coat",
+		                                               true, BX0, BY0, BX1, BY1);
+		std::vector<FigurePatch> SpacedTwo;
+		SpacedTwo.push_back(Spaced2);
+		Check(Spaced2.Id == "figure_0_coat"
+		      && ValuesHaveNoSpaces(FigureSilhouetteSegment(SpacedTwo, 1, true, 0)),
 		      "an id carrying spaces is sanitised before it reaches the line");
 	}
 

@@ -38,10 +38,22 @@ ladder's rungs hang under whichever stage they serve.
 
 ## The estimate, and what kind of number it is
 
-**Estimates are mine and untested: six to ten weeks to a frame I would call
-convincing at a glance, against one measured piece of production data, so the
-record says PLAN-TO-TEST rather than SCHEDULE.** No gate reads this number and
-no plan may quote it as a date.
+**WITHDRAWN BY JAFAR, 2026-09-16.** The estimate that stood here was six to
+ten weeks to a frame he would call convincing at a glance, against one
+measured piece of production data, recorded as PLAN-TO-TEST rather than
+SCHEDULE. It is withdrawn in his own words, relaying an external cost
+assessment: "two forecasts are withdrawn: queue 120's fourteen to thirty-four
+weeks, and D22's six to ten weeks for the visual slice, which was always mine
+and untested. Record both as withdrawn rather than leaving them in the
+documents as if they held."
+
+The number is kept in this paragraph rather than deleted so that a reader who
+remembers it meets the withdrawal, which is the only way a retired forecast
+stops circulating. NO GATE EVER READ IT AND NO PLAN MAY QUOTE IT, as a date or
+as a range. What replaces it is queue 369: a measured batch, end to end, with
+the rejected work counted in, both meters read before and after, and nothing
+else running in the window. Until one such batch exists there is no forecast
+here at all, and that is the honest state rather than a gap.
 
 ## The obligation to roadmap-v2
 
