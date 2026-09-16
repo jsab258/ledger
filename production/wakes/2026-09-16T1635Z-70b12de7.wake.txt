@@ -1,0 +1,25 @@
+id: 70b12de7
+due: 2026-09-16T16:35:00Z
+armedAt: 2026-09-16T16:07:17Z
+armedBy: resident/director-ruling-the-sky-batch-nothing-commits-yet
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+A DIRECTOR IS RULING THE SKY BATCH AND NOTHING COMMITS UNTIL IT STAMPS. 85e3eb09 is HEAD and pushed; the working tree carries the sky builder's work, which is REVIEWED and NOT committed. Budget 2026-09-16e: 69 total, 69 Fable, ceiling 85, takenAt 15:33Z, so sixteen points of headroom and the day is measured until about 01:33Z.
+
+VERIFY IS RED ON THE CADENCE GATE, DIRECTOR NOT SPAWNED, 329 GATED lines. That is the only blocker. The gate counts PENDING lines in the working tree rather than staged ones, so staging by name does not help and no partial commit is available. Wait for the stamp.
+
+WHEN THE STAMP LANDS: run verify to completion, paste the footer FROM ledger/.verify-footer and never from scrollback, ONE commit, push, THEN dispatch by appending a run 50 line to production/d1-probe/DISPATCH. Capture the sha BEFORE pushing, watch by ancestry, compare run files BY PREFIX (7 chars against git's 8). Run 49 is the model: e1b4de77 named 355e8d87.
+
+THE ONE THING THE NEXT RUN MUST NOT BE READ NAIVELY. The skylight is SLS_CapturedScene with real-time capture ON, so the new emissive sky dome WILL be captured and the AMBIENT WILL MOVE on every surface. An overcast sky lighting a street like an overcast sky is the point, not a fault. But a moved band.ground reading in run 50 has at least four candidate causes now (the ambient, the road, the grade, the lamp) and attributing it to the wrong one costs a round trip. Read the director's ruling on question 2 before reading the ground band at all.
+
+THE OTHER NAMED COST: the lower half of each sky photograph is the sky half MIRRORED, so the horizon band carries trees and an open field with their reflection below. Meridian is a British port town. The dome is 1 km in radius and the street's buildings occlude most of it, so this may not reach a frame; the director was asked to rule whether it matters now or is the next rung.
+
+QUEUE 360 IS FILED AND NOT STARTED: the dispatch step has SEVENTEEN characters of margin, against a bound that is the largest ever ACCEPTED rather than a measured limit. Do not raise the bound. The cheap fix is moving inline PowerShell into a committed .ps1 the step calls.
+
+STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, together or not at all; the lamp drive guard's move into the tested header, BEFORE the lamp constant's second value is written; the sky material's parameter-name contract, which the director was asked to rule on; 332, 356, 357, 358, 359 the road printer whose FIRST job is the printer and not the road.
+
+THE FIGURE IS UNBLOCKED (D46) AND NOTHING IS BUILT TOWARD IT. The scene spec has no person and the walk pawn has no skeletal mesh. Real work, not started.
+
+HIS REGISTER RULE BINDS EVERY MESSAGE: a filed item gets ONE LINE saying it is filed. The reasoning goes in the record.

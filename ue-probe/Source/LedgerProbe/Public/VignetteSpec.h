@@ -1997,6 +1997,20 @@ namespace LedgerVignette
 	// component is there, what the component says its own mode and intensity
 	// are AFTER being written, and how many times each was written. Not one
 	// word of the printed string is decided up there.
+	// ---- AMENDMENT A1: A READ HAS THREE OUTCOMES, NOT TWO ----------------
+	//
+	// Rule 3b. A flag that could not be read off the live object is NOT a
+	// flag that was false, and the two must never print the same string: the
+	// second sends a reader looking for a material bug that is not there,
+	// and here it would also let the verdict claim what lights the street on
+	// the strength of a read that never happened.
+	enum ESkyFlagRead
+	{
+		SkyFlag_NotMeasured = -1,
+		SkyFlag_No          = 0,
+		SkyFlag_Yes         = 1
+	};
+
 	struct SkyIn
 	{
 		// SPAWNED, read back as a pointer being non-null at the moment the
@@ -2060,6 +2074,42 @@ namespace LedgerVignette
 		long long   HdriBytes;
 		std::string HdriDetectedAs;
 		std::string HdriBoundAs;
+		// DID THE PHOTOGRAPH ACTUALLY LAND ON A DOME. Defaults false, so every
+		// reader that predates it reads exactly what it read before; only a
+		// run that spawned the dome, instanced its material AND wrote a texture
+		// into it may set it.
+		bool bPhotoDomeBound;
+		// ---- AMENDMENT A1: WHAT THE ENGINE REPORTS, NOT WHAT WE ASSUME ---
+		//
+		// THE VERDICT USED TO ASSERT WHAT LIGHTS THE STREET. It said the
+		// atmosphere behind the dome "lights and is captured", composed
+		// from two booleans neither of which knows what the sky light
+		// captured. The sky light is SLS_CapturedScene with real-time
+		// capture on, and such a capture reads every mesh whose material
+		// carries the sky flag, so a closed 2000 m sky-flagged sphere means
+		// the capture sees the DOME and the atmosphere behind it is
+		// occluded from it. Which of those two worlds a run was in is now
+		// READ off the live objects. Ruled 2026-09-16, section 3.
+		//
+		// FOUR READS, and the fourth is the sky light's. If the lower
+		// hemisphere is solid colour the dome's mirrored lower half never
+		// reaches the capture, which is the difference between the
+		// mirroring being a non-issue and being a real one. Nothing in this
+		// project has ever written that flag, so it sits at the engine
+		// default and this is the first run to print it.
+		int DomeMatIsSky;            // ESkyFlagRead
+		int DomeMatTwoSided;         // ESkyFlagRead
+		int DomeMatShadingModel;     // the engine's own enum value, or -1
+		int SkyLightLowerHemiSolid;  // ESkyFlagRead
+		// WHERE EACH READ CAME FROM, or what was looked for when it failed.
+		// The engine half of this project cannot be compiled in the
+		// container that writes it, so the property spellings are a guess
+		// until a run answers; a read that prints the name it answered ON
+		// turns the next session's guess into a reading.
+		std::string DomeMatIsSkyFrom;
+		std::string DomeMatTwoSidedFrom;
+		std::string DomeMatShadingModelFrom;
+		std::string SkyLightLowerHemiSolidFrom;
 		SkyIn() : bSkyLightActor(false), bSkyLightComponent(false),
 		          bAtmosphereActor(false), bAtmosphereComponent(false),
 		          bFogComponent(false), SourceTypeRead(-1),
@@ -2072,7 +2122,15 @@ namespace LedgerVignette
 		          ApplyCalls(0), SkyWrites(0),
 		          HdriAsked("none"), HdriFoundAt("NOT-LOOKED-FOR"),
 		          HdriBytes(0), HdriDetectedAs("not-read"),
-		          HdriBoundAs("NOTHING") {}
+		          HdriBoundAs("NOTHING"), bPhotoDomeBound(false),
+		          DomeMatIsSky(SkyFlag_NotMeasured),
+		          DomeMatTwoSided(SkyFlag_NotMeasured),
+		          DomeMatShadingModel(SkyFlag_NotMeasured),
+		          SkyLightLowerHemiSolid(SkyFlag_NotMeasured),
+		          DomeMatIsSkyFrom("NOT-LOOKED-FOR"),
+		          DomeMatTwoSidedFrom("NOT-LOOKED-FOR"),
+		          DomeMatShadingModelFrom("NOT-LOOKED-FOR"),
+		          SkyLightLowerHemiSolidFrom("NOT-LOOKED-FOR") {}
 		// THE SKY IS STRUCTURALLY PRESENT only when every piece of it is.
 		// A skylight with no atmosphere captures a black scene, which is the
 		// exact failure the fill-light comment in VignetteShot.cpp warned
@@ -2084,11 +2142,79 @@ namespace LedgerVignette
 		}
 	};
 
+	// A READ PRINTS ITS VALUE AND WHERE IT CAME FROM, in one space-free key.
+	// instruments.md gives / and .. as the structure characters, and both
+	// halves are needed: yes/from=bIsSky is a reading, yes on its own is a
+	// claim about a property nobody can name afterwards.
+	inline std::string SkyFlagWord(int Read)
+	{
+		if (Read == SkyFlag_Yes) { return "yes"; }
+		if (Read == SkyFlag_No)  { return "no"; }
+		return "nothing-measured";
+	}
+
+	inline std::string SkyFlagValue(int Read, const std::string& From)
+	{
+		const std::string Name = From.empty() ? std::string("UNNAMED") : From;
+		if (Read == SkyFlag_Yes || Read == SkyFlag_No)
+		{
+			return SkyFlagWord(Read) + "/from=" + Name;
+		}
+		return "nothing-measured/lookedFor=" + Name;
+	}
+
+	// THE SHADING MODEL PRINTS THE ENGINE'S OWN NUMBER FIRST and the local
+	// reading of it second, which is how sunMobilityRead already does it: a
+	// number nobody can interpret and a word nobody can check are both worse
+	// than the pair. The two spellings named are the only two this file
+	// claims to know; any other value says so rather than being guessed at.
+	inline std::string SkyShadingModelValue(const SkyIn& In)
+	{
+		const std::string Name = In.DomeMatShadingModelFrom.empty()
+		                       ? std::string("UNNAMED") : In.DomeMatShadingModelFrom;
+		if (In.DomeMatShadingModel < 0) { return "nothing-measured/lookedFor=" + Name; }
+		char B[64];
+		std::snprintf(B, sizeof(B), "%d-%s", In.DomeMatShadingModel,
+			In.DomeMatShadingModel == 0 ? "MSM_Unlit"
+			: (In.DomeMatShadingModel == 1 ? "MSM_DefaultLit" : "other-enum-value"));
+		return std::string(B) + "/from=" + Name;
+	}
+
 	// THE MODEL WORDS. Each names the mechanism AND the thing a reader would
 	// otherwise assume: an atmosphere is not a photographed sky, and a sky
 	// that failed to spawn must not read as a sky that is dark.
 	inline std::string SkyModelWord(const SkyIn& In)
 	{
+		// THE PHOTOGRAPH FIRST, because when it is up it is what a viewer SEES
+		// and the atmosphere behind it is only what lights the street. Both
+		// halves are named: a reader who is told only "photograph" would go
+		// looking for the atmosphere that is still there.
+		// WHAT THE CAPTURE READS IS THE SKY FLAG'S QUESTION and it is
+		// answered by the flag, never by this file. Three cases, which is
+		// how many outcomes the read has; there is no fourth.
+		if (In.bPhotoDomeBound && In.Whole())
+		{
+			if (In.DomeMatIsSky == SkyFlag_Yes)
+			{
+				return "photograph-longlat-png-on-an-unlit-dome/isSkyFlagRead=yes/"
+				       "the-skylight-realtime-capture-reads-the-dome-so-the-photograph-"
+				       "is-captured/the-skyatmosphere-behind-it-is-OCCLUDED-from-that-capture";
+			}
+			if (In.DomeMatIsSky == SkyFlag_No)
+			{
+				return "photograph-longlat-png-on-an-unlit-dome/isSkyFlagRead=no/"
+				       "the-capture-does-not-read-the-dome-so-the-photograph-is-NOT-captured/"
+				       "the-skyatmosphere-behind-it-is-what-lights-the-street";
+			}
+			return "photograph-longlat-png-on-an-unlit-dome/isSkyFlagRead=nothing-measured/"
+			       "WHAT-THE-CAPTURE-READ-IS-UNKNOWN-THIS-RUN/"
+			       "neither-the-photograph-nor-the-atmosphere-may-be-claimed-as-what-lights";
+		}
+		if (In.bPhotoDomeBound)
+		{
+			return "photograph-longlat-png-on-an-unlit-dome/SKY-INCOMPLETE/"
+			       "nothing-captures-it-so-the-ambient-is-not-this-photograph";
+		}
 		if (In.Whole()) { return "skyatmosphere+skylight-realtime-capture/not-an-hdri"; }
 		if (In.bAtmosphereActor && !In.bSkyLightActor)
 		{
@@ -2101,8 +2227,37 @@ namespace LedgerVignette
 		return "SPAWN-FAILED/no-sky-of-any-kind/the-far-field-is-the-height-fog";
 	}
 
+	// ONE SPELLING OF THE TRILIGHT FACT for the branches added here. The two
+	// pre-existing words below keep their own wording to the letter, because
+	// they are what every landed verdict and the tests already read.
+	inline std::string TrilightClause(const SkyIn& In)
+	{
+		return In.bFillsRetired ? "ONE-OWNER/trilight-retired-to-zero"
+		                        : "TWO-CONTRIBUTORS/trilight-still-on";
+	}
+
 	inline std::string AmbientModelWord(const SkyIn& In)
 	{
+		// THE DOME DECIDES THE AMBIENT ONLY IF THE CAPTURE READS IT, and
+		// that is a read. Same three cases as the model word, off the same
+		// flag, so the two lines can never disagree about the world.
+		if (In.bPhotoDomeBound && In.Whole())
+		{
+			if (In.DomeMatIsSky == SkyFlag_Yes)
+			{
+				return "skylight-captured-sky=THE-PHOTOGRAPH-ON-THE-DOME/"
+				       "not-the-skyatmosphere-which-the-dome-occludes/"
+				     + TrilightClause(In);
+			}
+			if (In.DomeMatIsSky == SkyFlag_No)
+			{
+				return "TWO-OBJECTS/seenSky=the-photograph-on-the-dome/"
+				       "litSky=the-skyatmosphere-the-capture-still-reads/"
+				     + TrilightClause(In);
+			}
+			return "nothing-measured/the-is-sky-flag-was-not-read-so-WHAT-THE-SKYLIGHT-"
+			       "CAPTURED-IS-UNKNOWN/" + TrilightClause(In);
+		}
 		if (In.Whole() && In.bFillsRetired)
 		{
 			return "skylight-captured-sky/ONE-OWNER/trilight-retired-to-zero";
@@ -2503,9 +2658,16 @@ namespace LedgerVignette
 
 	inline std::string SkySegment(const SkyIn& In)
 	{
-		// GROWN FOR THE SUN SEGMENT. snprintf truncates in silence, which
-		// on a verdict line is a key that vanishes rather than an error.
-		char Buf[2200];
+		// GROWN FOR THE SUN SEGMENT, AND AGAIN FOR AMENDMENT A1's FOUR
+		// READS. snprintf truncates in silence, which on a verdict line is a
+		// key that vanishes rather than an error, and the keys that vanish
+		// first are the ones at the end, which are now the new ones. The
+		// number is not a guess: vignette-spec-test.cpp prints the length of
+		// every line it plants and asserts the longest against this bound,
+		// so a word grown past it fails in the container rather than on the
+		// build machine. Longest planted line, printed
+		// by the test and peak over the four it plants: 1673 chars.
+		char Buf[3600];
 		std::snprintf(Buf, sizeof(Buf),
 			"skyModel=%s ambientModel=%s "
 			"skyLight=%s skyLightComponent=%s skyAtmosphere=%s skyAtmosphereComponent=%s "
@@ -2516,6 +2678,11 @@ namespace LedgerVignette
 			"fillsRetiredToZero=%s fillsSpawned=%d/3 "
 			"skyHdriAsked=%s skyHdriFoundAt=%s skyHdriBytes=%lld skyHdriDetectedAs=%s "
 			"skyHdriBoundAs=%s "
+			"skyDomeMatIsSky=%s skyDomeMatTwoSided=%s skyDomeMatShadingModelRead=%s "
+			"skyLightLowerHemisphereSolid=%s "
+			"skyDomeReadStat=one-per-run/last-wins/off-the-dome-parent-material-and-the-"
+			"skylight-component-after-the-last-condition/a-property-name-this-engine-"
+			"version-does-not-carry-reads-nothing-measured-and-NEVER-no "
 			"skyReadStat=every-value-above-is-read-back-off-the-component-after-the-write/"
 			"never-the-value-that-was-asked-for",
 			SkyModelWord(In).c_str(), AmbientModelWord(In).c_str(),
@@ -2529,7 +2696,12 @@ namespace LedgerVignette
 			In.FogDensityRead, In.FogMaxOpacityRead,
 			In.bFillsRetired ? "yes" : "no", In.FillsSpawned,
 			In.HdriAsked.c_str(), In.HdriFoundAt.c_str(), In.HdriBytes,
-			In.HdriDetectedAs.c_str(), In.HdriBoundAs.c_str());
+			In.HdriDetectedAs.c_str(), In.HdriBoundAs.c_str(),
+			SkyFlagValue(In.DomeMatIsSky, In.DomeMatIsSkyFrom).c_str(),
+			SkyFlagValue(In.DomeMatTwoSided, In.DomeMatTwoSidedFrom).c_str(),
+			SkyShadingModelValue(In).c_str(),
+			SkyFlagValue(In.SkyLightLowerHemiSolid,
+			             In.SkyLightLowerHemiSolidFrom).c_str());
 		return std::string(Buf);
 	}
 
