@@ -25,3 +25,20 @@ status: REOPENED 2026-09-14 by Jafar. Was: CLOSED 2026-09-10, not on the ladder 
    a DATED SENTENCE NAMING WHAT WAS LOOKED AT. Three of eight were opened at
    generation; the rest are unread and the manifest currently says so
    honestly. Rule 4: open the artifact you are shipping.
+
+  RE-SCOPED 2026-09-16 (06:35Z ruling, section 6) for the UE probe, which
+  has no skeletal path (0 hits for SkeletalMesh, FBX, AnimSequence, Bone
+  under ue-probe/Source) and an importer that reads GLB by magic bytes.
+  Item 1 in two halves. Half one, a tool, STARTS NOW: a Blender step in CI
+  takes one held body and one clip at one named frame from the 91 files
+  under ledger/Assets/Characters, applies the pose, exports a static GLB
+  to the props path; body, clip and frame named in the item, sizes from
+  the manifest, never invented. Half two, Core: the figures block emitted
+  as a prop piece with a dark tint surface, golden regenerated; waits only
+  for 333 and 334's Core changes to land, one builder in Core at a time.
+  The decal route stays refused: a decal card is opaque and rectangular
+  by SurfaceBind.h's own words. No token is needed.
+
+  THE ALLOWLIST LINE IS NOT CORRECTED AND THE RULING'S INSTRUCTION TO
+  CORRECT IT IS NOT APPLIED. See queue 335, which carries the reason and
+  the evidence. It is withheld, not forgotten.

@@ -58,3 +58,15 @@ status: READY 2026-09-16, filed from run 48's committed verdict.
 
   UNDER D45 this is a tool that measures the game: a test, no review, no
   ruling record.
+
+  RULED 2026-09-16 (06:35Z ruling, section 2): both statistics, each for
+  its own question. The signed gap (lightFloorCtrlMeanFull) is the
+  exposure-state screen; the MOVED histogram stays the per-edge floor.
+  The screen is RELATIVE, from this item's own sentence, and no absolute
+  bound is set: a light whose mean fell below minus the control's absolute
+  gap reads EXPOSURE-SWUNG; a light whose rise over the gap does not
+  exceed the gap reads VOID-CONTROL; the rest are MEASURED and take the
+  326 edge test; a shot that certified nothing reads NOT-USABLE. Every
+  bucket prints beside lightsProbed. Run 48's 48 lines are the fixtures:
+  measured 3/42, lanterns 0/24, buckets 14/8/7/10. The 0.001 proposed
+  above is withdrawn; the column keeps printing.

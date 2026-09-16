@@ -118,6 +118,12 @@ this file records elsewhere.
 | aspect | current rung | next rung, from resources we have |
 |---|---|---|
 | Kerb | square 125 mm face, 915 mm blocks, gully recess cut to the measured grate | the 12 mm batter over the top 50 mm named in the JSON's kerb note, as a chamfer piece per block |
+| Light probe floor | per-shot control, integer edge test, strict; run 48 read honestly as 3 measured of 42 and 0 lanterns of 24 | two controls per shot, and a light must beat the floor by more than the two controls differ from each other, so a six-pixel win at a sixteen-pixel floor has a margin statistic under it and no epsilon is invented |
+| Light probe exposure | AUTO on both halves of every difference; the loop's answer is in every reading | the hold at speed zero (337); if the engine will not hold, the adapted value read back from the view state and pinned for the pass |
+| Sodium lantern | a point light under a dark metal box | the box emits when its condition lights it (333); then housing and bowl as two pieces with a bowl surface for the day look; then the reflection of the bowl in the wet road measured on its own rectangle, which the spec's own note names as the thing the engines will differ on |
+| Night exposure reference | none; night rows carry exposure_pin 0.000 | 276 step 1 as six settle rows (334); step 2 names the count and the level as last-wins or NOT-SETTLED; only then step 3, the night rung set, and no arithmetic from any day pin |
+| Figure | none placed | a posed static bake of a held body through the GLB path, in silhouette (028 half one); then the figures block in the spec (half two); then the skeletal path for an idle, which is the row D29 owes |
+| Dusk reference | none; the Hook sheet is a day frame | a research row: a measured dusk sheet on the allowlist, or Jafar's eye under D41's second path, named before the dusk frame is sent |
 | Footed furniture | level on a 1 in 40 footway, 11 mm upslope corner float, measured | bedded: `footY = gy - halfFootprint * crossfall`; proof is floatMax near 0 and sinkMax near 0.022 on the same instrument |
 | Placement bound | one scalar, widest footprint through the crossfall arithmetic | per-probe expected gap asserted to 1 mm, so a 10 mm float under a dustbin is seen |
 | Crossover | kerb drops, footway does not ramp (125 mm over 2 m, named in Core) | ramp the footway over the crossover width |
