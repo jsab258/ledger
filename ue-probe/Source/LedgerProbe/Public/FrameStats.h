@@ -318,6 +318,18 @@ namespace LedgerFrame
 	// the caller is expected to run a CONTROL probe that toggles nothing:
 	// the control's histogram is this run's own noise floor and no invented
 	// epsilon is needed.
+	//
+	// AND FOR SIX WEEKS NOTHING READ IT, queue 326. The comment below on
+	// `reached the frame` said in as many words that "the control line beside
+	// it is what says whether that edge means anything in this run"; the
+	// count was taken against `RoseAtLeast[0] > 0` regardless, one pixel
+	// rising by one code value. On run 47 at vign_camA_night the control that
+	// toggled NOTHING moved the whole frame by 0.25060 of the luma range and
+	// four of seven lanterns reported that same number to five decimals, so
+	// `lightsReachedFrame=30/42` was a count standing on a floor that swamped
+	// it. The pairing is done below now, per shot, against that shot's own
+	// control, and a shot whose control is bigger than its lights prints
+	// NO-READ with both numbers instead of a count.
 	struct LightDelta
 	{
 		bool      Comparable = false;   // two decoded frames of equal size
@@ -332,6 +344,15 @@ namespace LedgerFrame
 		long long PixelsDarkerWithLightOn = 0;
 		static const int Edges = 6;     // 1,2,4,8,16,32 code values
 		long long RoseAtLeast[6] = {0, 0, 0, 0, 0, 0};
+		// AND THE SAME HISTOGRAM WITHOUT THE SIGN: pixels whose luma MOVED by
+		// at least that many code values in EITHER direction. RoseAtLeast
+		// alone cannot floor anything, which the series said and nobody had
+		// looked: run 47's pinset_night_2 control has RoseAtLeast=0/0/0/0/0/0
+		// and reads like a pristine floor, while its mean is -0.37873 and all
+		// 921600 of its pixels got DARKER. A probe that toggled nothing and
+		// moved the frame by a third of the luma range has no floor left to
+		// lend, whichever way it moved, so the floor is measured on |delta|.
+		long long MovedAtLeast[6] = {0, 0, 0, 0, 0, 0};
 		int       Cols = 0, Rows = 0;
 		int       PeakCol = -1, PeakRow = -1;
 		int       PeakX0 = 0, PeakX1 = 0, PeakY0 = 0, PeakY1 = 0;
@@ -378,11 +399,16 @@ namespace LedgerFrame
 				if (-Rise > D.MaxDrop) { D.MaxDrop = -Rise; }
 				if (Rise < 0.0) { ++D.PixelsDarkerWithLightOn; }
 				const double Codes = Rise * 255.0;
+				const double Moved = (Codes < 0.0) ? -Codes : Codes;
 				for (int E = 0; E < LightDelta::Edges; ++E)
 				{
-					// The edges climb, so the first one not met ends it.
-					if (Codes >= (double)DeltaCodeEdge(E) - 1e-9) { ++D.RoseAtLeast[E]; }
-					else { break; }
+					// The edges climb, so the first one not met ends it. A RISE
+					// is a MOVE, so the move test is the outer one and no rise
+					// can be cut short by it.
+					const double Edge = (double)DeltaCodeEdge(E) - 1e-9;
+					if (Moved < Edge) { break; }
+					++D.MovedAtLeast[E];
+					if (Codes >= Edge) { ++D.RoseAtLeast[E]; }
 				}
 				int Tx = (X * Cols) / W;
 				if (Tx >= Cols) { Tx = Cols - 1; }
@@ -419,6 +445,104 @@ namespace LedgerFrame
 		return D;
 	}
 
+	// ---- QUEUE 326: THE READING IS A COMPARISON, NOT A COUNT -------------
+	//
+	// WHICH CODE EDGE, IF ANY, THIS LIGHT BEAT ITS OWN SHOT'S CONTROL AT.
+	// Returns the HIGHEST edge index with a surplus, or -1 for none.
+	//
+	// IT IS ASYMMETRIC ON PURPOSE AND THE ASYMMETRY IS THE PHYSICS. The
+	// numerator is pixels the light RAISED, because the probe frame is the
+	// one with the light switched OFF and taking a light away can only take
+	// light away; a frame that came back BRIGHTER with the light off is the
+	// auto-exposure answering, which is what `deltaPixelsDarkerWithLightOn`
+	// already counts, and counting it as a contribution is the false green
+	// this pairing exists to stop. The floor is pixels the control MOVED in
+	// either direction, because the control toggled nothing, so every pixel
+	// it moved is this run's own disturbance whichever way it went.
+	//
+	// NO EPSILON AND NO BOUND. Both sides are integer pixel counts at the
+	// same printed code edge, compared with a strict `>`, so nothing here was
+	// chosen: a light that matches its control to the pixel is not a reading,
+	// and on run 47's vign_camA_night four lanterns matched it at all six
+	// edges exactly. Comparing the floats would have been a coin toss at
+	// those four, which is why the decision rides the counts.
+	inline int LightReadEdge(const LightDelta& Control, const LightDelta& Light)
+	{
+		if (!Control.Comparable || !Light.Comparable)   { return -1; }
+		if (Control.Pixels != Light.Pixels)             { return -1; }
+		for (int E = LightDelta::Edges - 1; E >= 0; --E)
+		{
+			if (Light.RoseAtLeast[E] > Control.MovedAtLeast[E]) { return E; }
+		}
+		return -1;
+	}
+
+	// ONE SHOT'S FLOOR PASS. The .cpp hands this the shot's control delta and
+	// then each light's delta as it lands, in probe order; every comparison,
+	// tally and string is here, where g++ runs them before any dispatch.
+	//
+	// THE BEST PAIR IS CAPTURED AT ONE EDGE, whichever edge decided it, so
+	// the light's count and the control's count on the line are the same
+	// instant and not two moments a reader has to relate. When a light won,
+	// the surplus is positive and that edge is where it won; when none did,
+	// the surplus is zero or negative and that edge is where a light came
+	// CLOSEST, which is the number a NO-READ has to carry to be worth
+	// anything. One shape, both cases, key names that never move.
+	struct LightFloor
+	{
+		std::string ShotId, CameraId, ConditionId;
+		bool       bHaveControl = false;
+		LightDelta Control;
+		int        Lights = 0;          // lights whose delta was measured here
+		int        Read   = 0;          // ... that beat this shot's own control
+		std::string BestId;             // the light at the best surplus
+		int        BestEdge    = -1;    // and the edge that surplus is AT
+		long long  BestLightPx = 0;     // its RoseAtLeast at that edge
+		long long  BestCtrlPx  = 0;     // the control's MovedAtLeast there
+		double     BestMeanFull = 0.0;  // that same light's whole-frame mean
+		bool       bHaveBest   = false;
+	};
+
+	// A SHOT READS WHEN AT LEAST ONE OF ITS LIGHTS BEAT ITS OWN CONTROL.
+	// With no control there is nothing to read against, which is not the same
+	// fact and gets its own word on the line.
+	inline bool LightFloorUsable(const LightFloor& F)
+	{
+		return F.bHaveControl && F.Read > 0;
+	}
+
+	inline void LightFloorSetControl(LightFloor& F, const LightDelta& D)
+	{
+		F.Control = D;
+		F.bHaveControl = D.Comparable;
+	}
+
+	// Returns whether this light read above its shot's floor, so the caller
+	// never re-derives it. The surplus scan runs high edge to low so a tie on
+	// the surplus keeps the STRONGER edge, which is the more informative half
+	// of the pair.
+	inline bool LightFloorAddLight(LightFloor& F, const std::string& LightId,
+	                               const LightDelta& D)
+	{
+		++F.Lights;
+		if (!F.bHaveControl || !D.Comparable) { return false; }
+		const int ReadAt = LightReadEdge(F.Control, D);
+		if (ReadAt >= 0) { ++F.Read; }
+		for (int E = LightDelta::Edges - 1; E >= 0; --E)
+		{
+			const long long Surplus = D.RoseAtLeast[E] - F.Control.MovedAtLeast[E];
+			const long long BestSoFar = F.BestLightPx - F.BestCtrlPx;
+			if (F.bHaveBest && Surplus <= BestSoFar) { continue; }
+			F.bHaveBest  = true;
+			F.BestId     = LightId;
+			F.BestEdge   = E;
+			F.BestLightPx = D.RoseAtLeast[E];
+			F.BestCtrlPx  = F.Control.MovedAtLeast[E];
+			F.BestMeanFull = D.MeanDeltaFull;
+		}
+		return ReadAt >= 0;
+	}
+
 	// ONE LINE PER PROBED LIGHT. Status is the caller's, because a light that
 	// was already off in this condition, a probe the budget cut, and a probe
 	// whose frame would not decode are three different facts and none of them
@@ -444,15 +568,18 @@ namespace LedgerFrame
 			Out += (Note.empty() ? std::string("no-comparable-pair") : Note);
 			return Out;
 		}
-		char Body[1200];
-		std::snprintf(Body, sizeof(Body),
+		char Body[1400];
+		const int Needed = std::snprintf(Body, sizeof(Body),
 			" deltaStat=luma-on-minus-off/per-pixel "
 			"region=full deltaMeanFull=%.5f meanOnFull=%.5f meanOffFull=%.5f "
 			"peakRegion=c%dr%d/of%dx%d peakRegionPx=x%d..%d/y%d..%d "
 			"deltaMeanPeak=%.5f meanOnPeak=%.5f meanOffPeak=%.5f "
 			"deltaMaxRise=%.5f deltaMaxDrop=%.5f "
 			"deltaCodeEdges=1/2/4/8/16/32 deltaPixelsRoseAtLeast=%lld/%lld/%lld/%lld/%lld/%lld "
+			"deltaPixelsMovedAtLeast=%lld/%lld/%lld/%lld/%lld/%lld "
 			"deltaPixelsOf=%lld deltaHistStat=pixel-count-with-luma-rise-at-or-above-edge-in-8bit-codes "
+			"deltaMovedHistStat=same-edges-on-absolute-luma-change-either-direction/this-is-what-a-"
+			"control-floors-with "
 			"deltaPixelsDarkerWithLightOn=%lld/%lld "
 			"deltaDarkerRule=auto-exposure-suspected-if-large lightDeltaNote=%s",
 			D.MeanDeltaFull, D.MeanOnFull, D.MeanOffFull,
@@ -462,38 +589,354 @@ namespace LedgerFrame
 			D.MaxRise, D.MaxDrop,
 			D.RoseAtLeast[0], D.RoseAtLeast[1], D.RoseAtLeast[2],
 			D.RoseAtLeast[3], D.RoseAtLeast[4], D.RoseAtLeast[5],
+			D.MovedAtLeast[0], D.MovedAtLeast[1], D.MovedAtLeast[2],
+			D.MovedAtLeast[3], D.MovedAtLeast[4], D.MovedAtLeast[5],
 			D.Pixels, D.PixelsDarkerWithLightOn, D.Pixels,
 			(Note.empty() ? "none" : Note.c_str()));
 		Out += Body;
+		// QUEUE 310'S RULE, APPLIED RATHER THAN HOPED: snprintf truncates in
+		// SILENCE and a cut line reads as a short one, which is what a key
+		// that was never emitted looks like. The series this buffer was sized
+		// from is printed by frame-stats-test.cpp on every run; the longest
+		// light line in the committed run 47 verdict is 704 characters and
+		// this body is the larger part of it.
+		if (Needed < 0 || (size_t)Needed >= sizeof(Body))
+		{
+			Out += " lightLineCut=yes/at-1400-chars";
+		}
+		return Out;
+	}
+
+	// ---- QUEUE 326 (b): WHAT EXPOSURE THE PAIR WAS PHOTOGRAPHED UNDER ----
+	//
+	// Every probed shot on run 47 ran shotExposurePin=AUTO reading back
+	// 0.0300/8.0000, and every light line on that run carried
+	// deltaPixelsDarkerWithLightOn beside a rule that says in as many words
+	// `auto-exposure-suspected-if-large` - 332097 of 921600 at camA. A reader
+	// holding one light line could not tell an exposure artefact from a
+	// light, because the two halves of that sentence were on different lines.
+	// They ride together now.
+	//
+	// THE WORD IS NOT DECIDED HERE. LedgerVignette::ExposurePinWord is the
+	// one implementation of that idea in this tree and this header cannot
+	// see it, so the .cpp hands the answer across and this only names and
+	// formats it. Its own key prefix, `lightExposurePin*`, because the shot
+	// line's `shotExposurePin*` counts shots and a second family under the
+	// same names would make every one of them ambiguous across a file that
+	// holds both.
+	struct LightPin
+	{
+		std::string Word;               // ExposurePinWord's answer, handed across
+		bool   bRead = false;           // did a camera component answer at all
+		double ReadMin = 0.0, ReadMax = 0.0;
+		LightPin() : Word("NOT-READ") {}
+	};
+
+	inline std::string LightPinSegment(const LightPin& P)
+	{
+		// 420 AND NOT 220: g++ -Wformat-truncation reads the pin word as up
+		// to 256 characters and said so, which is the buffer series being
+		// printed by the compiler rather than guessed at by the author.
+		char Buf[420];
+		char Read[64];
+		if (P.bRead) { std::snprintf(Read, sizeof(Read), "%.4f/%.4f", P.ReadMin, P.ReadMax); }
+		else         { std::snprintf(Read, sizeof(Read), "nothing-measured/nothing-measured"); }
+		std::snprintf(Buf, sizeof(Buf),
+			"lightExposurePin=%s lightExposurePinRead=%s "
+			"lightExposurePinStat=per-light-line/the-shots-own-pin-word-and-clamp-range-read-back-"
+			"after-the-write/read-it-beside-deltaPixelsDarkerWithLightOn",
+			P.Word.empty() ? "NOT-READ" : P.Word.c_str(), Read);
+		return std::string(Buf);
+	}
+
+	// ---- QUEUE 326 (a): THIS LIGHT AGAINST ITS OWN SHOT'S CONTROL --------
+	//
+	// THE PAIR IS ON ONE LINE AT ONE EDGE. lightVsFloorPx carries the light's
+	// count and the control's count at the SAME code edge, so the number and
+	// the thing it had to beat cannot be greped apart into two moments.
+	// bIsControl is the caller's: the control is the floor and cannot be
+	// measured against itself, and printing 0 for it would read as a light
+	// that failed.
+	inline std::string LightFloorSegment(const LightFloor& F, const LightDelta& D,
+	                                     bool bIsControl)
+	{
+		char Buf[420];
+		if (bIsControl)
+		{
+			// A CONTROL THAT NEVER MEASURED IS NOT THE FLOOR. The .cpp emits a
+			// control line with Seq = -1 for a shot whose REFERENCE never
+			// decoded, and that line carries lightDelta=NOTHING-MEASURED;
+			// IS-THE-FLOOR beside it names a floor that does not exist, on the
+			// one line a reader goes to for the floor. Reachable in the live
+			// rig today, so it is planted rather than argued.
+			if (!D.Comparable)
+			{
+				std::snprintf(Buf, sizeof(Buf),
+					"lightAboveFloor=nothing-measured/the-control-did-not-measure-so-this-shot-has-"
+					"no-floor lightAboveFloorEdge=nothing-measured "
+					"lightVsFloorPx=nothing-measured");
+				return std::string(Buf);
+			}
+			std::snprintf(Buf, sizeof(Buf),
+				"lightAboveFloor=IS-THE-FLOOR lightAboveFloorEdge=not-applicable/this-line-is-the-"
+				"control lightVsFloorPx=not-applicable/this-line-is-the-control");
+			return std::string(Buf);
+		}
+		if (!F.bHaveControl || !D.Comparable)
+		{
+			std::snprintf(Buf, sizeof(Buf),
+				"lightAboveFloor=nothing-measured/%s lightAboveFloorEdge=nothing-measured "
+				"lightVsFloorPx=nothing-measured",
+				F.bHaveControl ? "this-light-has-no-comparable-delta"
+				               : "this-shot-has-no-comparable-control");
+			return std::string(Buf);
+		}
+		const int E = LightReadEdge(F.Control, D);
+		// THE EDGE A NO IS REPORTED AT is the strongest one, 32 code values,
+		// because that is where a light with any real contribution is least
+		// likely to be buried; the whole histogram is on the same line for a
+		// reader who wants the rest.
+		const int At = (E >= 0) ? E : (LightDelta::Edges - 1);
+		std::snprintf(Buf, sizeof(Buf),
+			"lightAboveFloor=%s lightAboveFloorEdge=%dcodes "
+			"lightVsFloorPx=%lld..vs..%lld "
+			"lightAboveFloorRule=this-lights-pixels-risen-at-that-edge-strictly-exceed-the-pixels-"
+			"this-shots-own-control-MOVED-at-it/integer-counts/no-epsilon/YES-names-the-highest-"
+			"edge-it-won-at-and-NO-reports-the-32-code-edge",
+			(E >= 0) ? "YES" : "NO", DeltaCodeEdge(At),
+			D.RoseAtLeast[At], F.Control.MovedAtLeast[At]);
+		return std::string(Buf);
+	}
+
+	// ---- QUEUE 326 (c): ONE LINE PER PROBED SHOT -------------------------
+	//
+	// PER-SHOT NUMBERS ON THE PER-SHOT LINE. The count of lights that read is
+	// true of THIS shot and of no other, and run 47 is the reason it cannot
+	// live only on the done line: four of its six shots had no usable floor
+	// and two did, and a single whole-run count cannot say that.
+	//
+	// A NO-READ CARRIES BOTH NUMBERS. A shot whose control beat every light
+	// is not a shot with zero lights working; it is a shot that measured
+	// nothing about its lights, and the two numbers that say so are the
+	// control's own whole-frame movement and the closest a light came to it.
+	inline std::string LightFloorLine(const LightFloor& F)
+	{
+		char Head[320];
+		const int HeadNeeded = std::snprintf(Head, sizeof(Head),
+			"lightfloor shot=%s camera=%s condition=%s lightFloorVerdict=%s",
+			F.ShotId.c_str(), F.CameraId.c_str(), F.ConditionId.c_str(),
+			!F.bHaveControl ? "NO-CONTROL" : (F.Read > 0 ? "FLOOR-USABLE" : "NO-READ"));
+		const bool bHeadCut = (HeadNeeded < 0 || (size_t)HeadNeeded >= sizeof(Head));
+		std::string Out(Head);
+		if (!F.bHaveControl)
+		{
+			Out += " lightsReadThisShot=nothing-measured/";
+			char N[48]; std::snprintf(N, sizeof(N), "%d", F.Lights);
+			Out += N;
+			Out += " lightFloorCtrl=nothing-measured/no-comparable-control-frame-for-this-shot";
+			if (bHeadCut) { Out += " lightFloorLineCut=yes/at-320-chars-of-head"; }
+			return Out;
+		}
+		// THE LIGHT ID IS THE ONE UNBOUNDED INPUT AND IT IS NOT CAPPED HERE.
+		// A second cap of its own would truncate it silently BEFORE the body
+		// buffer ever saw it, which would leave the body's announcer unable to
+		// fire at all - a guard that cannot fire is a comment. So the id goes
+		// in as a string and the body's single cap is the one that announces.
+		std::string Best;
+		if (F.bHaveBest)
+		{
+			char T[160];   // bounded: an edge, two pixel counts and a mean
+			std::snprintf(T, sizeof(T),
+				"/at%dcodes lightFloorBestPx=%lld..vs..%lld lightFloorBestMeanFull=%+.5f",
+				DeltaCodeEdge(F.BestEdge), F.BestLightPx, F.BestCtrlPx, F.BestMeanFull);
+			Best = "lightFloorBest=" + F.BestId + T;
+		}
+		else
+		{
+			Best = "lightFloorBest=nothing-measured/no-comparable-light-in-this-shot "
+			       "lightFloorBestPx=nothing-measured lightFloorBestMeanFull=nothing-measured";
+		}
+		// 1100 FROM A PRINTED SERIES, NOT FROM A GUESS. At the real frame
+		// width this body measures 678 characters (frame-stats-test.cpp
+		// prints it on every run as floorLineChars, head plus body); 820
+		// would have left seventeen per cent, which is one added key.
+		char Buf[1100];
+		const int Needed = std::snprintf(Buf, sizeof(Buf),
+			" lightsReadThisShot=%d/%d lightFloorCtrlMeanFull=%+.5f "
+			"lightFloorCtrlMovedAtLeast=%lld/%lld/%lld/%lld/%lld/%lld "
+			"lightFloorCtrlDarker=%lld/%lld lightFloorCtrlPxOf=%lld "
+			"lightFloorCodeEdges=1/2/4/8/16/32 %s "
+			"lightFloorStat=per-shot/lightsReadThisShot-is-the-count-of-this-shots-lights-whose-"
+			"risen-pixels-beat-this-shots-own-control-at-some-code-edge/lightFloorBest-is-the-"
+			"largest-surplus-found-and-its-two-counts-are-at-the-one-edge-that-surplus-is-AT/"
+			"a-NO-READ-shot-measured-nothing-about-its-lights-and-is-not-a-shot-with-no-lights-"
+			"working",
+			F.Read, F.Lights, F.Control.MeanDeltaFull,
+			F.Control.MovedAtLeast[0], F.Control.MovedAtLeast[1], F.Control.MovedAtLeast[2],
+			F.Control.MovedAtLeast[3], F.Control.MovedAtLeast[4], F.Control.MovedAtLeast[5],
+			F.Control.PixelsDarkerWithLightOn, F.Control.Pixels, F.Control.Pixels,
+			Best.c_str());
+		Out += Buf;
+		// BOTH HALVES OF THE LINE ARE WATCHED, and the marker names which one
+		// bit: a cut head loses the shot id and a cut body loses the counts,
+		// and both read as a line that simply did not carry them.
+		if (bHeadCut)                                       { Out += " lightFloorLineCut=yes/at-320-chars-of-head"; }
+		if (Needed < 0 || (size_t)Needed >= sizeof(Buf))    { Out += " lightFloorLineCut=yes/at-1100-chars-of-body"; }
 		return Out;
 	}
 
 	// THE WHOLE-RUN SUMMARY FOR THE LIGHT PASS, on its own line, carrying
-	// only numbers that are true of the RUN. `reachedFrame` is the count of
-	// probed lights whose luma rose by at least one code value somewhere,
-	// over the number actually probed, and a pass that probed nothing says
+	// only numbers that are true of the RUN. A pass that probed nothing says
 	// the words instead of printing 0/0 as though it had looked.
-	inline std::string LightProbeDoneLine(int Probed, int Eligible, int ReachedFrame,
+	//
+	// `lightsAboveFloor` REPLACES `lightsReachedFrame`, RENAMED BY THE RULING
+	// OF 2026-09-16 03:27Z, and the rename is the finding. The old key counted
+	// every probed light whose `RoseAtLeast[0]` was above zero, one pixel
+	// rising by one code value, over every light probed. This one counts the
+	// lights that beat their OWN shot's control at some code edge, over the
+	// lights probed in shots WITH A USABLE FLOOR. Rule and denominator both
+	// changed, so the two are one series under one name only to a grep, and
+	// the evidence channel here is a committed file with a git history of the
+	// same path: a key-grep over it would have plotted two instruments on one
+	// axis. No tombstone key, because `lightProbeStatus` on this same line
+	// already says whether the pass ran; the old name is gone and the test
+	// asserts it ABSENT on every done line it builds.
+	//
+	// APPLIED TO RUN 47'S COMMITTED NUMBERS, from the ruling's own per-shot
+	// table read off verdict lines 275 to 322: three of six probed shots
+	// usable, six of twenty-one certain and at most twelve of twenty-one,
+	// twenty-one of forty-two lights in NO-READ shots, where the line said
+	// 30 of 42. AND FOUR OF THOSE SIX CERTAIN READS ARE BLANK PROBE FRAMES,
+	// which this rule cannot see: a probe frame that came back blank
+	// differences against the reference as the whole reference, the largest
+	// surplus any light can show, and the control floor catches a blank
+	// CONTROL but not a blank LIGHT frame under a good control. Queue item A
+	// refuses them by the shot line's own structural Blank rule. Until it
+	// lands, R is not a number to report.
+	inline std::string LightProbeDoneLine(int Probed, int Eligible,
+	                                      const std::vector<LightFloor>& Floors,
 	                                      int SkippedAlreadyOff, int SkippedBudget,
 	                                      int NoFile, int RestoreMismatch,
 	                                      int ShotsProbed, int ShotsAsked,
 	                                      double BudgetSeconds, double SpentSeconds,
 	                                      int FramesBeforeShot, int Controls)
 	{
-		char Buf[700];
-		std::snprintf(Buf, sizeof(Buf),
-			"lightProbeStatus=%s lightsProbed=%d/%d lightsReachedFrame=%d/%d "
+		// THE TALLY IS TAKEN HERE AND NOWHERE ELSE, so the per-shot lines and
+		// the run line cannot disagree: both are reductions of the same
+		// vector, and the .cpp no longer counts anything about reads.
+		//
+		// THREE BUCKETS AND NOT TWO. A shot whose control never measured is not
+		// a shot whose control swamped its lights, and folding the first into
+		// NO-READ put a word on the run line that the per-shot line refutes:
+		// `lightFloorShotStat` says NO-READ means the control beat the lights,
+		// which is false of a shot that had no control to beat them with.
+		// Every floor lands in exactly one of the three, so a + b + c is the
+		// floor count and a reader can check it against the `lightfloor` lines.
+		int ShotsUsable = 0, ShotsNoRead = 0, ShotsNoControl = 0;
+		int Reached = 0, InUsable = 0, InNoRead = 0, InNoControl = 0;
+		// THE WORST FLOOR AND ITS SHOT'S OWN BEST LIGHT, CAPTURED AT THE SAME
+		// INSTANT AND NAMED SO. The control's whole-frame movement is the
+		// numerator's floor, so the light printed beside it is that shot's,
+		// never the run's best light from somewhere else.
+		const LightFloor* Worst = 0;
+		for (size_t I = 0; I < Floors.size(); ++I)
+		{
+			const LightFloor& F = Floors[I];
+			if (LightFloorUsable(F)) { ++ShotsUsable;    InUsable    += F.Lights; Reached += F.Read; }
+			else if (F.bHaveControl) { ++ShotsNoRead;    InNoRead    += F.Lights; }
+			else                     { ++ShotsNoControl; InNoControl += F.Lights; }
+			if (!F.bHaveControl) { continue; }
+			double Mag = F.Control.MeanDeltaFull; if (Mag < 0) { Mag = -Mag; }
+			double Cur = Worst ? Worst->Control.MeanDeltaFull : 0.0; if (Cur < 0) { Cur = -Cur; }
+			if (Worst == 0 || Mag > Cur) { Worst = &F; }
+		}
+		char Reach[96];   // bounded: two counts, or one fixed phrase and a count
+		if (Probed == 0 || Floors.empty())
+		{
+			std::snprintf(Reach, sizeof(Reach), "nothing-measured/no-shot-carried-a-floor-pass");
+		}
+		else if (ShotsUsable == 0)
+		{
+			// R/U MAY NOT PRINT 0/0 OVER A SET NO SHOT COULD HAVE READ FROM.
+			// With no usable floor anywhere, InUsable is zero by construction,
+			// and `0/0` is the shape rule 3b refuses: it cannot be told apart
+			// from a run whose lights all failed against a floor that worked.
+			std::snprintf(Reach, sizeof(Reach),
+			              "nothing-measured/no-usable-floor-in-any-of-%d-shots", (int)Floors.size());
+		}
+		else
+		{
+			std::snprintf(Reach, sizeof(Reach), "%d/%d", Reached, InUsable);
+		}
+		// CONDITION C5: THE WORST SEGMENT IS A STRING, NOT A PRE-CAP. It was
+		// two fixed buffers, and each carried an UNBOUNDED id: a shot id
+		// through a 300-byte buffer and a light id through a 40-byte one, both
+		// truncating in silence before the done line's own 1500-character
+		// announcer could ever see the overflow. That is the fault the comment
+		// in LightFloorLine names and avoids for `Best`, applied at one site
+		// and not the other. The ids go in as strings and only the two means
+		// go through a bounded snprintf, so the line has ONE cap and that cap
+		// announces.
+		std::string WorstSeg;
+		if (Worst == 0)
+		{
+			WorstSeg = "lightFloorWorstShot=nothing-measured "
+			           "lightFloorWorstCtrlMeanFull=nothing-measured "
+			           "lightFloorBestLightMeanFullAtWorst=nothing-measured";
+		}
+		else
+		{
+			char CtrlMean[48];   // bounded: one mean
+			std::snprintf(CtrlMean, sizeof(CtrlMean), "%+.5f", Worst->Control.MeanDeltaFull);
+			WorstSeg  = "lightFloorWorstShot=" + Worst->ShotId;
+			WorstSeg += " lightFloorWorstCtrlMeanFull=";
+			WorstSeg += CtrlMean;
+			WorstSeg += " lightFloorBestLightMeanFullAtWorst=";
+			if (Worst->bHaveBest)
+			{
+				char BestMean[48];   // bounded: one mean
+				std::snprintf(BestMean, sizeof(BestMean), "%+.5f", Worst->BestMeanFull);
+				WorstSeg += BestMean;
+				WorstSeg += "/";
+				WorstSeg += Worst->BestId;
+			}
+			else
+			{
+				WorstSeg += "nothing-measured";
+			}
+		}
+		char Buf[1500];
+		const int Needed = std::snprintf(Buf, sizeof(Buf),
+			"lightProbeStatus=%s lightsProbed=%d/%d lightsAboveFloor=%s "
 			"lightsSkippedAlreadyOff=%d lightsSkippedBudget=%d lightProbesNoFile=%d "
 			"lightRestoreMismatch=%d/%d controlProbes=%d "
+			"lightFloorShotsUsable=%d/%d lightFloorShotsNoRead=%d/%d "
+			"lightFloorShotsNoControl=%d/%d "
+			"lightsInNoReadShots=%d/%d lightsInNoControlShots=%d/%d %s "
 			"shotsProbed=%d/%d lightProbeBudgetSeconds=%.1f lightProbeSpentSeconds=%.1f "
 			"lightProbeFramesBeforeShot=%d/same-as-reference "
-			"lightProbeMethod=one-light-off-vs-reference/same-camera-condition-framecount",
+			"lightProbeMethod=one-light-off-vs-reference/same-camera-condition-framecount "
+			"lightsAboveFloorStat=whole-run/count-of-lights-that-beat-their-OWN-shots-control-at-"
+			"some-code-edge/denominator-is-lights-probed-in-shots-with-a-usable-floor-and-"
+			"lightsInNoReadShots-and-lightsInNoControlShots-are-the-rest-of-lightsProbed/"
+			"RENAMED-BY-QUEUE-326-from-lightsReachedFrame-which-counted-one-pixel-rising-by-one-"
+			"code-value-through-run-47-and-is-not-comparable "
+			"lightFloorShotStat=whole-run/a-shot-is-usable-when-at-least-one-of-its-lights-beat-its-"
+			"own-control-and-NO-READ-means-the-control-swamped-them-not-that-the-lights-are-dark",
 			Probed == 0 ? "NOTHING-MEASURED" : (SkippedBudget > 0 ? "PARTIAL-BUDGET-BIT" : "ALL"),
-			Probed, Eligible, ReachedFrame, Probed,
+			Probed, Eligible, Reach,
 			SkippedAlreadyOff, SkippedBudget, NoFile,
 			RestoreMismatch, Probed, Controls,
+			ShotsUsable, (int)Floors.size(), ShotsNoRead, (int)Floors.size(),
+			ShotsNoControl, (int)Floors.size(),
+			InNoRead, Probed, InNoControl, Probed, WorstSeg.c_str(),
 			ShotsProbed, ShotsAsked, BudgetSeconds, SpentSeconds, FramesBeforeShot);
-		return std::string(Buf);
+		std::string Out(Buf);
+		if (Needed < 0 || (size_t)Needed >= sizeof(Buf))
+		{
+			Out += " lightProbeDoneLineCut=yes/at-1500-chars";
+		}
+		return Out;
 	}
 }
 

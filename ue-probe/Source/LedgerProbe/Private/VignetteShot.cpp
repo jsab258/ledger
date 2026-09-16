@@ -533,9 +533,17 @@ namespace
 	int32   GRefW = 0, GRefH = 0;
 	std::string GRefShotId;
 	std::vector<std::string> GLightLines;
-	int GProbed = 0, GEligible = 0, GReached = 0, GSkippedOff = 0;
+	int GProbed = 0, GEligible = 0, GSkippedOff = 0;
 	int GSkippedBudget = 0, GProbeNoFile = 0, GRestoreMismatch = 0;
 	int GShotsProbed = 0, GControls = 0;
+	// QUEUE 326: THE FLOOR PASS, WHICH IS WHERE `REACHED` NOW COMES FROM.
+	// `GReached` used to be counted here against `RoseAtLeast[0] > 0`, one
+	// pixel rising by one code value, which run 47's control cleared while
+	// toggling nothing. Nothing in this file counts a read any more: the
+	// shot's control and its lights go into a LedgerFrame::LightFloor and
+	// every comparison and tally happens in the header where g++ runs them.
+	LedgerFrame::LightFloor GFloor;                    // the shot in flight
+	std::vector<LedgerFrame::LightFloor> GFloors;      // one per probed shot
 	FString GToneLine = TEXT("tonemapRead=NOT-REACHED");
 
 	// ---- the rig's own determinism (the shot-order exposure fault) -------
@@ -2569,8 +2577,21 @@ namespace
 				Out.Add(FString(UTF8_TO_TCHAR(GLightLines[I].c_str())));
 			}
 		}
+		// QUEUE 326: ONE FLOOR LINE PER PROBED SHOT, BEFORE THE RUN LINE THAT
+		// REDUCES THEM. Per-shot counts on the per-shot line; the run's own
+		// counts on the done line. A run that probed no shot prints the words
+		// rather than leaving the reader to read absence as agreement.
+		for (size_t I = 0; I < GFloors.size(); ++I)
+		{
+			Out.Add(FString(UTF8_TO_TCHAR(LedgerFrame::LightFloorLine(GFloors[I]).c_str())));
+		}
+		if (GFloors.empty())
+		{
+			Out.Add(TEXT("# no lightfloor line: no shot ran a light-probe floor pass on this "
+			             "commit; lightsAboveFloor below says nothing-measured."));
+		}
 		Out.Add(FString(UTF8_TO_TCHAR(LedgerFrame::LightProbeDoneLine(
-			GProbed, GEligible, GReached, GSkippedOff, GSkippedBudget, GProbeNoFile,
+			GProbed, GEligible, GFloors, GSkippedOff, GSkippedBudget, GProbeNoFile,
 			GRestoreMismatch, GShotsProbed, (int)GSpec.Shots.size(),
 			kLightProbeBudgetSeconds, GProbeSpent,
 			kWarmFrames + kTimedFrames, GControls).c_str())));
@@ -3175,14 +3196,27 @@ namespace
 			GFirstShotId, OfShots, OfShots, "MEASURED", D);
 	}
 
+	// QUEUE 326: THE LINE, ITS FLOOR VERDICT AND THE EXPOSURE IT WAS TAKEN
+	// UNDER, ASSEMBLED IN ONE PLACE. Every string below is formatted in
+	// FrameStats.h; this supplies membership (which light, which shot), the
+	// control it is being read against, and the live pin state. The pin WORD
+	// comes from LedgerVignette::ExposurePinWord, which is this tree's one
+	// implementation of that idea, and is handed across rather than re-decided.
 	void EmitLightLine(const Shot& S, int32 Seq, const char* Status,
 	                   const LedgerFrame::LightDelta& D, const std::string& Note)
 	{
 		const std::string Id = (Seq < 0) ? std::string("control_no_toggle") : ProbeId(Seq);
 		const char* Kind = (Seq < 0) ? "control" : ProbeKind(Seq);
+		LedgerFrame::LightPin Pin;
+		Pin.Word    = LedgerVignette::ExposurePinWord(GShotPin);
+		Pin.bRead   = GShotPin.bRead;
+		Pin.ReadMin = GShotPin.ReadMin;
+		Pin.ReadMax = GShotPin.ReadMax;
 		GLightLines.push_back(LedgerFrame::LightDeltaLine(
 			Id, Kind, Seq + 1, ProbeTargetCount(), S.Id, S.CameraId, S.ConditionId,
-			Status, D, Note));
+			Status, D, Note)
+			+ " " + LedgerFrame::LightFloorSegment(GFloor, D, Seq < 0)
+			+ " " + LedgerFrame::LightPinSegment(Pin));
 	}
 
 	// ADVANCE TO THE NEXT THING TO PHOTOGRAPH, OR END THE PASS.
@@ -3282,14 +3316,20 @@ namespace
 		const LedgerFrame::LightDelta D = LedgerFrame::MeasureLightDelta(
 			(const unsigned char*)GRefBgra.GetData(), (const unsigned char*)Bgra.GetData(),
 			W, H, kProbeGridCols, kProbeGridRows);
-		if (GProbeSeq >= 0)
+		// QUEUE 326: THE CONTROL IS THE SHOT'S FLOOR AND IT IS PROBED FIRST,
+		// at sequence -1, so by the time any light of this shot lands the
+		// thing it has to beat is already in hand. REACHED THE FRAME is no
+		// longer counted here: it was `RoseAtLeast[0] > 0`, one pixel rising
+		// by one code value, which run 47's control cleared at four shots
+		// while toggling nothing. The comparison is LightFloorAddLight's.
+		if (GProbeSeq < 0)
+		{
+			LedgerFrame::LightFloorSetControl(GFloor, D);
+		}
+		else
 		{
 			++GProbed;
-			// REACHED THE FRAME means at least one pixel rose by at least one
-			// eight-bit code value. It is the first edge of the printed
-			// histogram and not a tuned bound; the control line beside it is
-			// what says whether that edge means anything in this run.
-			if (D.RoseAtLeast[0] > 0) { ++GReached; }
+			LedgerFrame::LightFloorAddLight(GFloor, ProbeId(GProbeSeq), D);
 		}
 		EmitLightLine(S, GProbeSeq, "MEASURED", D, "none");
 	}
@@ -3297,10 +3337,24 @@ namespace
 	bool StartLightProbe(const Shot& S)
 	{
 		if (!ShouldProbeShot(S)) { return false; }
+		// THE FLOOR IS CLEARED BEFORE ANY LINE OF THIS SHOT IS WRITTEN,
+		// including the NO-REFERENCE line below, because a floor left over
+		// from the previous shot would print the previous shot's control
+		// beside this shot's lights. That is the cross-shot pairing this
+		// whole item exists to stop, and it would have been invisible.
+		GFloor = LedgerFrame::LightFloor();
+		GFloor.ShotId      = S.Id;
+		GFloor.CameraId    = S.CameraId;
+		GFloor.ConditionId = S.ConditionId;
 		if (GRefBgra.Num() == 0 || GRefShotId != S.Id)
 		{
 			EmitLightLine(S, -1, "NO-REFERENCE", LedgerFrame::LightDelta(),
 			              "the-reference-frame-did-not-decode/nothing-to-difference-against");
+			// A SHOT THAT TRIED AND HAD NOTHING TO DIFFERENCE AGAINST IS IN
+			// THE DENOMINATOR, with the verdict NO-CONTROL on its own line.
+			// Dropped, the floor totals would describe a smaller set than the
+			// one examined, which is the shape rule 3b refuses.
+			GFloors.push_back(GFloor);
 			return false;
 		}
 		GProbing = true;
@@ -3342,6 +3396,10 @@ namespace
 				return;
 			}
 			GProbing = false;
+			// THE SHOT'S FLOOR IS CLOSED HERE, WHERE ITS LAST LIGHT LANDED,
+			// so the per-shot line's counts are that shot's and the run line
+			// is a reduction over the same vector rather than a second tally.
+			GFloors.push_back(GFloor);
 			GRefBgra.Empty();
 			GRefW = 0; GRefH = 0; GRefShotId.clear();
 			++GShotIndex;
