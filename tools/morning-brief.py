@@ -75,8 +75,15 @@ tool's own provenance lines below the message:
   - production/budget.md, the newest row that is a READING, with its AGE IN
     HOURS against Jafar's ten-hour bound of 2026-09-15, taken from that row's
     own `takenAt=` stamp and never from the date column;
-  - .claude/agent-log.tsv, for the studio-versus-game split, classified by
-    ledger/verify.py's GAME_AGENTS so the set has one definition;
+  - .claude/agent-log.tsv, for HOW MANY SESSIONS ran in the window. THE SPLIT
+    BETWEEN THE STUDIO AND THE GAME IS WITHDRAWN, Jafar 2026-09-16: the log
+    records who ran and why, not what a session touched, so the share is
+    refused rather than estimated. The rows are still classified by
+    ledger/verify.py's GAME_AGENTS and the withdrawal text is that same file's
+    GAME_SHARE_WITHDRAWN, so the brief and the verification footer cannot
+    withdraw it in two different words, and the day the log carries a column
+    naming what a session touched (queue 370) the reading is rebuilt rather
+    than reinvented;
   - git, for what landed since the previous brief;
   - tools/report-frame.py, for the picture, which it withholds when the last
     build measured nothing;
@@ -124,8 +131,10 @@ Jafar ruled bare counts, file paths and verdict keys out of anything he reads
 (tools/producer-check.py, the brief register). So every quantity in the message
 is written in words, and every number with its source path is printed on this
 program's own lines, where a machine reads them and the register does not
-apply. `splitBasis=` therefore appears on the done line and NOWHERE in the
-message, which is section 6 of the same ruling.
+apply. `splitSessionsInWindow=` therefore appears on the done line and NOWHERE
+in the message, which is section 6 of the same ruling. (It read `splitBasis=`
+until 2026-09-16, when the split it was the basis of was withdrawn: a caption
+outlives its subject quietly, so it went with it.)
 
 IT SELF-CHECKS BEFORE IT WRITES. The composed text goes through
 producer-check's brief register in this process, and a composition with any
@@ -1001,6 +1010,13 @@ def leads_with_the_game(headline):
 # completes the first one by guessing. The standing order in the daily wake is
 # "every brief reports the studio versus game split", so this is the half that
 # makes the report a measurement rather than a number.
+#
+# ITS SUBJECT CHANGED ON 2026-09-16 AND SO DID ITS FOURTH PART. Jafar withdrew
+# the split until the spawn log records what a session touched, so what this
+# gate now requires in the BUDGET section is the WITHDRAWAL, with the same
+# denominator beside it. Without `theWithdrawalIsStated` a brief that quietly
+# put the two numerators back would clear this gate on the other three parts,
+# which is the gate certifying the thing it exists to stop.
 def split_in_words(text, split):
     """(verdict, reading). The reading names every part it looked for, so a
     failure says which half broke rather than only that one did."""
@@ -1017,6 +1033,9 @@ def split_in_words(text, split):
         "theRegistersFiveParts": not register,
         "theDenominatorInWords": bool(body) and bool(denom.search(body)),
         "theBasisIsNamedAsSessions": "sessions" in body.lower(),
+        # THE WORD ITSELF, because the withdrawal is what the section owes now
+        # and a missing word is the only way it can go absent quietly.
+        "theWithdrawalIsStated": bool(re.search(r"\bwithdrawn\b", body, re.I)),
     }
     return all(parts.values()), {"parts": parts, "denominator": total,
                                  "registerFindings": [str(f) for f in register]}
@@ -1218,17 +1237,41 @@ def compose(root, today, now=None):
     # one is the fact a reader completes by guessing.
     # producer-check --kind brief refuses a brief without the five parts; this
     # program's own gate refuses one without the denominator.
-    if split["total"]:
-        money += (" Of %s %s since the previous brief, %s went to the studio "
-                  "and %s to the game, in sessions not points until the rate "
-                  "is measured."
-                  % (in_words(split["total"]),
-                     plural(split["total"], "session", "sessions"),
-                     in_words(split["studio"]), in_words(split["game"])))
-    else:
-        money += (" No sessions at all since the previous brief, so the studio "
-                  "and the game both read nothing, in sessions not points "
-                  "until the rate is measured.")
+    # WITHDRAWN 2026-09-16, AND THE TWO BRANCHES ARE COLLAPSED INTO ONE ON
+    # PURPOSE. Jafar, verbatim: "The split cannot be computed at all until the
+    # spawn log records what a session touched, not just who ran and why.
+    # Three audits have now said this. Add the column before claiming the
+    # ratio again, or stop printing the number." The column is queue 370 and
+    # it waits for the visual slice, so this is the other branch of his
+    # sentence: the two numerators are gone from the message he reads and
+    # NOTHING was invented to stand in for them.
+    #
+    # THE DENOMINATOR STAYS. Withdrawn over fifty-eight sessions and withdrawn
+    # over no sessions at all are different facts, the window is still
+    # measured, and this sentence is the only place he can tell them apart.
+    # ONE SENTENCE FOR BOTH CASES for the same reason the footer marker does
+    # not branch: a withdrawal worded differently on a busy day than on a
+    # quiet one leaks the number it replaced.
+    # AND IT IS KEPT SHORT, WITH THE SERIES THAT SET THE LENGTH. The
+    # register's cap is 150 words. A 74-word first draft of this sentence was
+    # MEASURED at 171 words on the live tree and 151 on the busiest planted
+    # fixture, both REFUSED by this program's own register check; the 36-word
+    # version reads 148 and 140. Those two pairs are not differences of the
+    # same quantity — the trim ladder drops rungs to fit and announces it in
+    # `trimmed=`, so a longer sentence loses a rung before it loses the cap —
+    # which is why all four numbers are read rather than one subtracted from
+    # another. PAIRED OFF ONE TREE AT ONE INSTANT, the ratio sentence against
+    # this one: 138>148 words of 150, both with the quote rung trimmed and
+    # announced (`trimmed=quote..21-words-over` before, `..31-words-over`
+    # after). So the withdrawal costs 10 words, it did not cause the trim,
+    # and the live brief now sits 2 under the cap. A withdrawal that cannot
+    # be sent is not a withdrawal.
+    money += (" Of %s %s since the previous brief, the studio-versus-game "
+              "split is withdrawn on your ruling: it cannot be computed "
+              "until the log records what a session touched. In sessions not "
+              "points until the rate is measured."
+              % (in_words(split["total"]),
+                 plural(split["total"], "session", "sessions")))
     # THE ART SHARE IS A THIRD QUANTITY AND IS NOT THE SPLIT. Jafar ruled on
     # 2026-09-08 that the art line takes at most a quarter of the WEEK'S POINTS,
     # and the hand-written brief of 2026-09-09 reported the art share where the
@@ -1411,16 +1454,21 @@ def provenance(facts):
         "budgetRowsThatAreReadings=%d/%d-walked budgetRowsWithTakenAt=%d/%d "
         "%s" % (b["rows"], b["walked"], b["rows_taken_at"], b["rows"],
                 BUDGET_REL),
-        # THE SPLIT, CUMULATIVE OVER THE WINDOW, WITH ITS BASIS AND ITS
-        # DENOMINATOR ON THE SAME LINE AS THE NUMERATOR. `splitUnparsedRows` is
-        # the rows the classifier could not read at all (three merge-conflict
-        # markers sit in the log as of 2026-09-09): they are in neither answer
-        # and would otherwise vanish, which is how a denominator quietly stops
-        # counting what it claims to.
-        "splitStudio=%d/%d basis=spawns %s" % (s["studio"], s["total"],
-                                               AGENT_LOG_REL),
-        "splitGame=%d/%d basis=spawns %s" % (s["game"], s["total"],
-                                             AGENT_LOG_REL),
+        # THE SPLIT IS WITHDRAWN: NOT A ZERO, NOT A NOTHING-MEASURED, AND NOT
+        # A NUMBER. The marker is ledger/verify.py's one definition, so this
+        # line and the verification footer cannot withdraw it in two different
+        # words. `splitStudio=` and `splitGame=` were emitted here until
+        # 2026-09-16 and are the claim Jafar withdrew.
+        "splitStudioGame=%s %s" % (vf.GAME_SHARE_WITHDRAWN, AGENT_LOG_REL),
+        # WHAT SURVIVES IS THE WINDOW, and it has to: withdrawn over fifty
+        # sessions and withdrawn over none are different facts, and the second
+        # one is the only case where nothing at all was there to classify.
+        # CUMULATIVE over the window named by splitWindow below, counted in
+        # spawn rows. `splitUnparsedRows` is the rows the classifier could not
+        # read at all (three merge-conflict markers sit in the log as of
+        # 2026-09-09): they are in neither count and would otherwise vanish,
+        # which is how a denominator quietly stops counting what it claims to.
+        "splitSessionsInWindow=%d %s" % (s["total"], AGENT_LOG_REL),
         "splitUnparsedRows=%d %s" % (s["unparsed"], AGENT_LOG_REL),
         # THE ART SHARE IS A THIRD QUANTITY AND IS NOT MEASURED HERE. Named on
         # its own line with the reason, because the failure this replaces was a
@@ -1569,14 +1617,15 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False,
     if not facts["split_ok"]:
         sr = facts["split_reading"]
         say("morning-brief: REFUSED to write. The BUDGET section does not "
-            "report the studio-versus-game split with its denominator:")
+            "state the WITHDRAWAL of the studio-versus-game split with its "
+            "denominator:")
         for part, good in sr["parts"].items():
             say("    %-28s %s" % (part, "found" if good else "MISSING"))
         say("    the denominator looked for: %s" % sr["denominator"])
         for f in sr["registerFindings"]:
             say("    %s" % f)
-        say("morning-brief: REFUSED splitReported=0/1 splitPartsFound=%d/%d "
-            "briefWritten=0/1"
+        say("morning-brief: REFUSED splitWithdrawalStated=0/1 "
+            "splitPartsFound=%d/%d briefWritten=0/1"
             % (sum(1 for v in sr["parts"].values() if v), len(sr["parts"])))
         return 1, text, facts
 
@@ -1642,7 +1691,8 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False,
         "outcome=%s outcomeKeysFound=%d/%d ladderRung=%s/%d "
         "quoteInBrief=%d/1 quoteWhy=%s trimmed=%s "
         "queueReady=%d/%d queueBlocked=%d/%d queueDone=%d cardsWaiting=%d/%d "
-        "splitStudio=%d/%d splitGame=%d/%d splitBasis=spawns splitReported=1/1 "
+        "splitStudioGame=%s splitSessionsInWindow=%d "
+        "splitWithdrawalStated=1/1 "
         "splitUnparsedRows=%d artShare=nothing-measured "
         "splitSource=%s splitWindow=%s..%s "
         "budgetFreshness=%s budgetAgeHours=%s budgetRowsWithTakenAt=%d/%d "
@@ -1666,7 +1716,7 @@ def run_once(root, today, dry_run=False, write_latest=False, quiet=False,
            facts["queue"]["blocked"], facts["queue"]["walked"],
            facts["queue"]["done"],
            facts["cards"]["waiting"], facts["cards"]["scanned"],
-           s["studio"], s["total"], s["game"], s["total"], s["unparsed"],
+           vf.GAME_SHARE_WITHDRAWN, s["total"], s["unparsed"],
            AGENT_LOG_REL, facts["window_since"], facts["window_until"],
            facts["budget"]["freshness"],
            ("%.2f" % facts["budget"]["age_hours"])
@@ -1893,20 +1943,30 @@ def selftest():
     for label, pat in pc.NUMERAL_OK:
         if "date" in label:
             datescrub = re.sub(pat, " ", datescrub, flags=re.I)
-    ok("the message carries no `splitBasis=` and no bare count (%d found), and "
-       "every digit left in it is a date (%d outside one)"
+    # `splitBasis=` UNTIL 2026-09-16: that key went with the split it was the
+    # basis of, and an assertion that a deleted key is absent can never fail
+    # again. It now names the key this program DOES print on the done line, so
+    # the check still has something to catch.
+    ok("the message carries no `splitSessionsInWindow=` and no bare count (%d "
+       "found), and every digit left in it is a date (%d outside one)"
        % (len(counts), len(re.findall(r"\d", datescrub))),
-       "splitBasis" not in prose and not counts
-       and not re.search(r"\d", datescrub),
+       "splitSessionsInWindow" not in prose and "splitBasis" not in prose
+       and not counts and not re.search(r"\d", datescrub),
        (counts, re.findall(r"\S*\d\S*", datescrub)[:4]))
-    # THE SPLIT COVERAGE GATE, ACCEPTING HALF: the live brief reports the split
-    # with its denominator in words.
+    # THE SPLIT COVERAGE GATE, ACCEPTING HALF: the live brief states the
+    # WITHDRAWAL with its denominator in words. It read "reports the split"
+    # until 2026-09-16; the thing the section owes changed that day and this
+    # rung is what makes the withdrawal mandatory rather than merely done
+    # once. The parts are printed, so a half that goes missing is named.
     sp_ok, sp = split_in_words(text, facts["split"])
-    ok("the BUDGET section reports the split with its denominator in words "
-       "(%s, basis spawns, denominator %s)"
-       % ("/".join(k for k, v in sp["parts"].items() if v) or "nothing",
-          sp["denominator"]),
-       sp_ok, sp)
+    ok("the BUDGET section states the WITHDRAWAL and carries the denominator "
+       "in words (%d of %d part(s): %s, denominator %s), and the two "
+       "numerators appear nowhere in it (%d found)"
+       % (sum(1 for v in sp["parts"].values() if v), len(sp["parts"]),
+          "/".join(k for k, v in sp["parts"].items() if v) or "nothing",
+          sp["denominator"],
+          len(re.findall(r"went to the (?:studio|game)", text, re.I))),
+       sp_ok and not re.search(r"went to the (?:studio|game)", text, re.I), sp)
     # AND THE REJECTING HALF OF THE SAME GATE: the denominator taken out of the
     # sentence, which the register's own split rule cannot see at all.
     denom_phrase = ("Of %s %s since the previous brief, "
@@ -1919,6 +1979,24 @@ def selftest():
        "there, so this gate is not a second copy of that one)"
        % len(nd["registerFindings"]),
        no_denominator != text and not nd_ok and not nd["registerFindings"], nd)
+    # AND THE REJECTING HALF THAT GUARDS THE RULING ITSELF: the withdrawal
+    # word taken out of the sentence, which is what a brief quietly putting
+    # the two numerators back would look like. The register cannot see this at
+    # all (its split rule is retired), so without this rung the reinstated
+    # ratio would clear every gate this program has.
+    reinstated = re.sub(
+        r"the studio-versus-game split is withdrawn on your ruling: it cannot "
+        r"be computed until the log records what a session touched\.",
+        "nine sessions went to the studio and two to the game.", text)
+    ri_ok, ri = split_in_words(reinstated, facts["split"])
+    ok("and the same brief with the withdrawal replaced by a reinstated ratio "
+       "is REFUSED (%d of %d part(s) left, missing %s), while the register "
+       "itself still passes it (%d finding(s))"
+       % (sum(1 for v in ri["parts"].values() if v), len(ri["parts"]),
+          "/".join(k for k, v in ri["parts"].items() if not v) or "none",
+          len(ri["registerFindings"])),
+       reinstated != text and not ri_ok and not ri["registerFindings"]
+       and not ri["parts"]["theWithdrawalIsStated"], ri)
     text2, _ = compose(REPO, today)
     ok("two composes on one checkout are byte-identical (%d bytes)"
        % len(text.encode("utf-8")), text == text2,
@@ -2095,8 +2173,10 @@ def selftest():
        and "landed" not in to, (prov.splitlines(), to))
     # AND THE UNMEASURED BRANCH STILL CARRIES THE SPLIT SENTENCE. A budget the
     # brief could not read must not take the rest of the BUDGET section with it.
-    ok("and the unmeasured-budget tree still carries the split sentence in "
-       "words", "not points until the rate is measured" in to, to)
+    ok("and the unmeasured-budget tree still carries the WITHDRAWAL sentence "
+       "in words, denominator and all",
+       "not points until the rate is measured" in to and "withdrawn" in to,
+       to)
 
     # A SOURCE THAT CANNOT BE READ: refuse, name it, write nothing.
     broken = _tree(_fixture_files(today.isoformat()))
@@ -2268,11 +2348,35 @@ def selftest():
            code_d == 1 and not fd["split_ok"]
            and not fd.get("check", {}).get("findings"),
            (code_d, fd.get("split_reading")))
+        # AND THE WHOLE PROGRAM REFUSES A REINSTATED RATIO, not just the
+        # function that reads for it: the rung above this block drives
+        # split_in_words directly, and a gate whose only caller is a test
+        # asserting it passes is the failure CLAUDE.md rule 6 names. The
+        # condition is PLANTED, the composer is wrapped for one call and the
+        # withdrawn sentence is replaced by the claim Jafar forbade, and the
+        # wrapper comes off in the `finally` below.
+        globals()["compose"] = _with(
+            lambda t: re.sub(
+                r"the studio-versus-game split is withdrawn on your ruling: "
+                r"it cannot be computed until the log records what a session "
+                r"touched\.",
+                "nine sessions went to the studio and two to the game.", t))
+        code_r, _tr, fr = run_once(tree, today, dry_run=True, quiet=True)
+        ok("run_once REFUSES a brief that puts the two numerators back where "
+           "the withdrawal was, and the register passes it (exit %d, %d "
+           "register finding(s), withdrawalStated=%s)"
+           % (code_r, len(fr.get("check", {}).get("findings", [])),
+              fr["split_reading"]["parts"]["theWithdrawalIsStated"]),
+           code_r == 1 and not fr["split_ok"]
+           and not fr["split_reading"]["parts"]["theWithdrawalIsStated"]
+           and not fr.get("check", {}).get("findings"),
+           (code_r, fr.get("split_reading")))
     finally:
         globals()["compose"] = real_compose
     code_back, _tb, fb2 = run_once(tree, today, dry_run=True, quiet=True)
     ok("and the unwrapped composer passes both gates again (exit %d, leadOk=%s "
-       "splitReported=%s)" % (code_back, fb2["lead_ok"], fb2["split_ok"]),
+       "splitWithdrawalStated=%s)"
+       % (code_back, fb2["lead_ok"], fb2["split_ok"]),
        code_back == 0 and fb2["lead_ok"] and fb2["split_ok"], code_back)
 
     # THE SERIES BEHIND DETAIL_MAX_WORDS, printed from the LIVE ladder so the

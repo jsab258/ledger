@@ -78,6 +78,18 @@
 // primitives the imported prop mesh actually carries. A mesh with none
 // renders perfectly and lets a walking Character straight through it.
 #include "PhysicsEngine/BodySetup.h"
+// THE FIGURE. A skeletal mesh actor, a single-node animation instance and
+// the two asset types tools/ue/import_figure.py makes, all of them in
+// Engine, so no module dependency moves for this. Named individually rather
+// than pulled in through a convenience header for the reason every include
+// in this list is: this container cannot compile a line of this file, and a
+// header that moved between engine versions is a 17 to 33 minute round trip.
+#include "Engine/SkeletalMesh.h"
+#include "Animation/Skeleton.h"
+#include "Animation/AnimSequence.h"
+#include "Animation/AnimSingleNodeInstance.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Engine/SkeletalMeshActor.h"
 #include "Engine/PointLight.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
@@ -407,6 +419,80 @@ namespace
 	// cameras see, and it is printed so nobody has to find it in code.
 	const float kDecalLiftCm = 1.0f;
 
+	// ---- THE FIGURE, WHICH IS THE LAST ELEMENT OF THE VISUAL SLICE -------
+	//
+	// A CODE-SPAWNED ACTOR, exactly as the fog, the atmosphere, the sky
+	// light, the sky dome and the camera above it are. It is deliberately
+	// NOT a piece in production/specs/vignette-pieces.json: adding a shape
+	// kind to that file is a schema change and therefore structural under
+	// D41, and this is not one.
+	//
+	// THE ASSETS COME FROM tools/ue/import_figure.py, which runs in the same
+	// editor step as the base material and writes ue-figure.txt beside the
+	// project. THE PATHS ARE A CONTRACT WITH THAT SCRIPT and its --selftest
+	// reads these two literals out of this file rather than trusting that
+	// the two were kept in step by hand.
+	const TCHAR* kFigureMeshPath = TEXT("/Game/Ledger/Figure/SK_michelle.SK_michelle");
+	const TCHAR* kFigureAnimPath = TEXT("/Game/Ledger/Figure/A_michelle_idle_2.A_michelle_idle_2");
+	// The id the patch is measured under. No spaces: every reader of these
+	// lines splits on whitespace and truncates silently.
+	const char*  kFigureId = "figure_michelle";
+
+	// ---- WHERE IT STANDS, AND EVERY NUMBER IS THE FIRST OF A SERIES ------
+	//
+	// DERIVED, NOT CHOSEN, and the derivation is a function rather than a
+	// paragraph: tools/ue/import_figure.py::placement_series() walks the
+	// east footway centre line at half-metre steps and scores each position
+	// by how much more lamp light reaches a standing torso from BEHIND it
+	// than from IN FRONT of it, which is the silhouette stated as geometry
+	// before any frame exists. chosen_placement() is its argmax under three
+	// constraints written down before the search: the dominant backlight
+	// must be at most 35 degrees above the torso (above that it is TOP
+	// light, which lands on the head and shoulders and is a different
+	// picture), and the figure must be between 6 and 20 m from cam_A so it
+	// has pixels and still stands inside the frame.
+	//
+	// WHAT THE SERIES SAID, run in this container on 2026-09-16 and printed
+	// whole into ue-figure.json by every run of the script:
+	//     x=10.0 ratio=0.24   x=14.0 ratio=0.95   x=17.0 ratio=2.31
+	//     x=17.5 ratio=2.62  <- the maximum
+	//     x=18.0 ratio=0.46   (the west lamp at x=18 passes from behind the
+	//                          figure to in front of it, and the ratio falls
+	//                          off a cliff: that discontinuity is why this
+	//                          is a search and not a midpoint)
+	// At x=17.5 the lamps at x=18 west and x=28 east are both behind the
+	// figure, the one at x=8 east is 9.5 m in front of it, the dominant
+	// backlight sits 28.7 degrees above the torso, and the figure stands
+	// 13.5 m from cam_A, where a 1.66 m body is about 77 px of the 720.
+	//
+	// NOTHING HERE IS TUNED TO A FRAME. No frame with a figure in it has
+	// been rendered at the time these were written. figurePlacementBound on
+	// the import line says NONE-YET in as many words.
+	const double kFigureXM = 17.5;
+	// THE EAST FOOTWAY'S CENTRE LINE, which is also cam_A's own z, so the
+	// figure stands on the camera's axis with the lit ground beyond it
+	// directly behind.
+	const double kFigureZM = 4.0;
+	// THE SURFACE ITS FEET SIT ON: the carriageway is y=0 and the footway is
+	// one kerb upstand above it. The actor is placed so that the MESH'S OWN
+	// MEASURED BOUNDS MINIMUM lands here, never by assuming where the
+	// importer put the pivot.
+	const double kFigureFootYM = 0.125;
+	// WHERE IN THE CLIP THE POSE IS FROZEN, as a fraction of the clip's
+	// MEASURED duration, so it cannot overrun a length nothing here has
+	// read. 0.35 is away from t=0, where a Mixamo clip often sits close to
+	// the neutral pose the mesh was bound in. First value of a series; the
+	// resolved seconds are printed beside the duration they came from.
+	const float kFigurePoseFraction = 0.35f;
+	// HOW MANY CONDITION TICKS THE POSE READBACK MAY SPEND WAITING FOR THE
+	// FIRST EVALUATION BEFORE IT CALLS THE POSE A BIND POSE. A component's
+	// space transforms are seeded FROM the reference pose and only diverge
+	// once the animation has ticked once, so a verdict taken on the tick
+	// after the spawn would destroy a perfectly good figure. It is a retry
+	// BUDGET and not a measured threshold, and it announces itself: the
+	// ticks used and the budget both print as figurePoseTicks.
+	const int32 kFigurePoseTickBudget = 8;
+
 	// ---- queue 059: what it takes to ask whether a light reached a pixel --
 	//
 	// THE PROBE GRID. The peak sample region is a cell of this grid and the
@@ -611,6 +697,53 @@ namespace
 	int         GSkyPhotoBinds  = 0;
 	AStaticMeshActor*         GSkyDome    = nullptr;
 	UMaterialInstanceDynamic* GSkyDomeMid = nullptr;
+
+	// ---- THE FIGURE'S LIVE STATE AND ITS READBACKS ----------------------
+	//
+	// ONE OWNER. DriveFigure below is the only writer of every field here
+	// and the only caller of BuildFigure, and it is called from
+	// ApplyCondition beside the lanterns it belongs to, so no condition can
+	// light the street without deciding whether the figure is in it.
+	ASkeletalMeshActor*      GFigure     = nullptr;
+	USkeletalMeshComponent*  GFigureComp = nullptr;
+	USkeletalMesh*           GFigureMesh = nullptr;
+	UAnimSequence*           GFigureAnim = nullptr;
+	// The word the done line prints. NOT-ASKED is the honest state of a run
+	// whose conditions never lit a lantern, and it is a different fact from
+	// a figure that failed to spawn.
+	std::string GFigureState = "NOT-ASKED/no-condition-has-lit-a-lantern-yet";
+	std::string GFigureWhy   = "nothing-measured";
+	bool   GFigureAsked      = false;   // spawn attempted, write-on-change
+	bool   GFigureVisibleNow = false;   // live, for the shot line's denominator
+	int32  GFigureShown      = 0;       // shots the figure was visible in
+	int32  GFigureHidden     = 0;       // shots it was hidden for
+	// THE POSE READBACK. MaxBoneDeltaCm is the largest distance between a
+	// bone's component-space location and the same bone's location in the
+	// REFERENCE pose: a figure that fell back to the bind pose reads exactly
+	// 0 on every bone, which is why the test is equality and needs no
+	// measured threshold. -1 means nothing was read at all.
+	double GFigurePoseMaxDeltaCm = -1.0;
+	int32  GFigurePoseBonesRead  = 0;
+	int32  GFigurePoseTicks      = 0;
+	bool   GFigurePoseLatched    = false;
+	// The drive/readback pair, the shape ReDriveSkyLuminance uses: what was
+	// written, what the engine answered, and whether they are the same.
+	double GFigurePoseSetS = -1.0;
+	double GFigurePoseGotS = -1.0;
+	// Read off the ASSET, not off an intention: the bone count, the mesh's
+	// own bounds and the height that decides whether the import is a hundred
+	// times out.
+	int32  GFigureRefBones   = 0;
+	double GFigureMeshHeightCm = -1.0;
+	double GFigureActorZCm     = 0.0;
+	double GFigureFootGapCm    = 0.0;
+	// A GAP CAN LEGITIMATELY BE NEGATIVE (a figure sunk into the pavement),
+	// so "not taken" cannot be a sentinel VALUE and is a flag. A reading
+	// nobody took prints the words nothing measured.
+	bool   GFigureFootGapTaken = false;
+	double GFigureFootwayMarginM = -1.0;
+	double GFigureYawDeg       = 0.0;
+	std::string GFigureShoulderAxis = "nothing-measured";
 	// THE MATERIAL THE INSTANCE WAS MADE FROM. is-sky, two-sided and the
 	// shading model are the PARENT material's properties; a dynamic instance
 	// does not carry them, so reading them off GSkyDomeMid would report
@@ -902,6 +1035,12 @@ namespace
 	// list from; declared here because BuildScene calls it.
 	void LookForNamedHdri();
 	void BuildSkyDome(UWorld* World);
+	// THE FIGURE. Defined beside the sky dome, whose rule it obeys, and
+	// declared here because ApplyCondition and the done line are both
+	// written above it.
+	void BuildFigure(UWorld* World);
+	void DriveFigure(const Condition& C);
+	std::string FigureDoneSegment();
 	void BindSkyPhoto(const std::string& Name);
 	void SpawnControlQuads(UWorld* World, UStaticMesh* Plane);
 	// A1(d): the per-sample control-quad declaration needs the camera the
@@ -2231,6 +2370,13 @@ namespace
 		// driven off the same C.LanternsOn in the same breath so no
 		// condition can light one without the other.
 		ReDriveLampEmissive(C);
+		// AND THE FIGURE, IN THE SAME BREATH AS THE LAMPS IT IS LIT BY,
+		// so that no condition can light the street without deciding
+		// whether a person is standing in it. DriveFigure is the only
+		// caller of BuildFigure and the only writer of the figure's
+		// visibility: one owner, the rule this file already keeps for the
+		// sun, the fills, the fog, the sky and the wetness.
+		DriveFigure(C);
 		for (int32 I = 0; I < GWindows.Num(); ++I)
 			if (ULightComponent* L = GWindows[I]->GetLightComponent()) L->SetVisibility(C.WindowsOn);
 		if (GFog != nullptr)
@@ -3090,6 +3236,7 @@ namespace
 		Out.Add(FString(UTF8_TO_TCHAR(
 			(GMaterialsLine + LedgerSurface::WetRedriveSegment(GWetRedrive)
 			 + LampDriveSegment()
+			 + FigureDoneSegment()
 			 + LedgerVignette::SkyLumDriveSegment(
 			       GSkyLumDrive, (double)kSkyLuminanceGain)).c_str())));
 		// THE DECALS, AFTER THE SURFACES, because card and multiply appear on
@@ -3524,6 +3671,69 @@ namespace
 		return LedgerFrame::LampGlowSegment(Patches, InFile, bDecoded, 0);
 	}
 
+	// AND WHETHER THE FIGURE READS AS A SILHOUETTE IN THIS FRAME. PER
+	// SAMPLE, off the pixels of the frame just decoded, exactly as
+	// LampGlowNow above is: every number in it is true of this one picture,
+	// which is why none of it rides the materials done line where the
+	// figure's whole-run state is. The arithmetic and the string are in
+	// FrameStats.h where g++ runs them; this supplies membership (is there a
+	// figure and is it visible in this condition), the camera the file names
+	// for this row, and the projection.
+	std::string FigureNow(const Shot& S, const unsigned char* Bgra, int W, int H)
+	{
+		const bool bDecoded = (Bgra != nullptr && W > 0 && H > 0);
+		const bool bInScene = (GFigure != nullptr && GFigureVisibleNow);
+		// THE SHOT TALLY IS TAKEN HERE, ONCE PER SHOT, because exactly one
+		// of this function's three call sites runs for any one shot. The
+		// determinism repeat is not a shot the file asked for and is not
+		// counted, the rule the quad tally and the ladder already follow.
+		if (!GRepeating)
+		{
+			if (bInScene) { ++GFigureShown; } else { ++GFigureHidden; }
+		}
+		std::vector<LedgerFrame::FigurePatch> Patches;
+		const Camera* C = bDecoded ? FindCamera(S.CameraId) : nullptr;
+		if (C != nullptr && bInScene)
+		{
+			// THE BOX IS THE FIGURE'S OWN LIVE BOUNDS, READ BACK OFF THE
+			// ACTOR, AND NOT THE BIND POSE'S. A Mixamo bind pose is a T
+			// pose, so its bounds are an arm span wide: projecting those
+			// would put most of the street inside the patch and dilute the
+			// core the silhouette is measured in. What is wanted is the box
+			// the POSED figure occupies at the moment the shutter opened,
+			// which is what the actor answers.
+			const FBox WB = GFigure->GetComponentsBoundingBox(true);
+			if (WB.IsValid != 0)
+			{
+				const FVector Ctr = WB.GetCenter();
+				const FVector Ext = WB.GetExtent();
+				// World centimetres back into the file's frame, which is the
+				// frame PieceScreenBox projects in: file (x, y, z) is engine
+				// (X, Z, Y) over 100. The box is axis aligned in world space
+				// so it carries no rotation.
+				LedgerVignette::Piece Box;
+				Box.Name = kFigureId;
+				Box.X  = (double)Ctr.X / 100.0;
+				Box.Y  = (double)Ctr.Z / 100.0;
+				Box.Z  = (double)Ctr.Y / 100.0;
+				Box.SX = (double)FMath::Abs(Ext.X) * 2.0 / 100.0;
+				Box.SY = (double)FMath::Abs(Ext.Z) * 2.0 / 100.0;
+				Box.SZ = (double)FMath::Abs(Ext.Y) * 2.0 / 100.0;
+				const LedgerSurface::ScreenBox SB =
+					LedgerSurface::PieceScreenBox(*C, Box, W, H);
+				Patches.push_back(LedgerFrame::MeasureFigurePatch(
+					Bgra, W, H, std::string(kFigureId), SB.bMeasured,
+					SB.X0, SB.Y0, SB.X1, SB.Y1));
+			}
+		}
+		// NO CAP, for LampGlowNow's reason: there is one figure, so a cap
+		// would be a number nobody has measured standing in front of a list
+		// of one. MaxShown of 0 or less means no cap and the segment
+		// announces either way.
+		return LedgerFrame::FigureSilhouetteSegment(Patches, bInScene ? 1 : 0,
+		                                            bDecoded, 0);
+	}
+
 	// MEASURE THE FILE THAT IS ABOUT TO BE COMMITTED, not the buffer the
 	// engine had in memory, and let the maths and the string come from the
 	// tested header.
@@ -3575,7 +3785,8 @@ namespace
 				+ " " + ShotCamAndCaptureNow()
 				+ " " + ShotControlQuadsNow(S, false)
 				+ " " + ExposurePinNow()
-				+ " " + LampGlowNow(S, nullptr, 0, 0));
+				+ " " + LampGlowNow(S, nullptr, 0, 0)
+				+ " " + FigureNow(S, nullptr, 0, 0));
 			NoteLadderRow(S.Id, bAfterNight, false, 0.0, 0, 0, 0);
 			return;
 		}
@@ -3593,7 +3804,8 @@ namespace
 				+ " " + ShotCamAndCaptureNow()
 				+ " " + ShotControlQuadsNow(S, false)
 				+ " " + ExposurePinNow()
-				+ " " + LampGlowNow(S, nullptr, 0, 0));
+				+ " " + LampGlowNow(S, nullptr, 0, 0)
+				+ " " + FigureNow(S, nullptr, 0, 0));
 			NoteLadderRow(S.Id, bAfterNight, false, 0.0, 0, 0, 0);
 			return;
 		}
@@ -3720,6 +3932,12 @@ namespace
 		// materials done line where the drive's cumulative tallies are.
 		Line += " ";
 		Line += LampGlowNow(S, (const unsigned char*)Bgra.GetData(), W, H);
+		// AND WHETHER THE FIGURE READS AS A SILHOUETTE IN THIS ONE
+		// PICTURE. Per sample and off the same decoded pixels, beside the
+		// lamps it is lit by. Its whole-run state rides the materials done
+		// line and never this one.
+		Line += " ";
+		Line += FigureNow(S, (const unsigned char*)Bgra.GetData(), W, H);
 		GShotLines.push_back(Line);
 		// ---- THE LADDER'S ROWS, AND WHAT CAME BEFORE THEM -----------------
 		//
@@ -4686,6 +4904,366 @@ namespace
 		// AND THE FIRST PHOTOGRAPH. Every later shot rebinds only when its
 		// condition names a different one.
 		BindSkyPhoto(GSpec.Conditions[0].Hdri);
+	}
+
+	// ---- THE FIGURE ------------------------------------------------------
+	//
+	// IT STANDS ONLY WHERE THE LAMPS ARE LIT, AND THE REASON IS PROBE
+	// SCOPING RATHER THAN A WORLD RULE. A person on a street at noon is not
+	// forbidden in Meridian and nothing here says it is. The condition list
+	// carries lanterns on for 2 of its 33 rows; the sky brightness bracket
+	// and its null control were established on the other 31 hours before
+	// this actor existed and hold to +0.1, and an actor standing in those
+	// frames would move their pixels and retire that reading. So the figure
+	// is spawned on the first condition that lights a lantern and is hidden
+	// for every condition that does not, which leaves the 31 day rows
+	// rendering exactly what they rendered yesterday. That is a decision
+	// about THIS PROBE and it expires with it.
+	//
+	// AND IT OBEYS THE SKY DOME'S RULE, which BuildSkyDome above states in
+	// as many words: an object that cannot be dressed is DESTROYED rather
+	// than left standing while the verdict says it is absent. A grey T-posed
+	// mannequin in Quay Street beside a verdict reading "no figure" is worse
+	// than an empty street, because it looks plausible. Three ways in:
+	//   the asset is missing            -> nothing is ever spawned (NOTHING)
+	//   the skin did not come through   -> spawned, then destroyed
+	//   the pose is MEASURABLY the bind pose -> spawned, then destroyed
+	// A pose that could not be READ is a fourth and different case: it
+	// leaves the figure standing under the word POSE-UNPROVEN, because
+	// destroying the subject to punish the instrument deletes the evidence
+	// that would diagnose it, and the word is not a success word either way.
+
+	// THE REFERENCE POSE IN COMPONENT SPACE, composed from the skeleton's
+	// own local bone poses. This is the thing a figure whose animation never
+	// evaluated is standing in, so it is the thing the live pose is compared
+	// against.
+	bool RefPoseComponentSpace(const USkeletalMesh* Mesh, TArray<FTransform>& Out)
+	{
+		if (Mesh == nullptr) { return false; }
+		const FReferenceSkeleton& Ref = Mesh->GetRefSkeleton();
+		const TArray<FTransform>& Local = Ref.GetRefBonePose();
+		const int32 N = Local.Num();
+		if (N <= 0) { return false; }
+		Out.SetNum(N);
+		for (int32 I = 0; I < N; ++I)
+		{
+			const int32 P = Ref.GetParentIndex(I);
+			Out[I] = (P >= 0 && P < I) ? (Local[I] * Out[P]) : Local[I];
+		}
+		return true;
+	}
+
+	// HOW FAR THE LIVE POSE IS FROM THE BIND POSE, IN CENTIMETRES, AT WORST
+	// OVER THE BONES, with the bone count it was taken over beside it.
+	// -1 means nothing could be read, which is not zero: zero is the exact
+	// reading a figure standing in its bind pose gives, and the two must
+	// never print the same number.
+	double PoseDeltaFromRefCm(USkeletalMeshComponent* C, int32& BonesRead)
+	{
+		BonesRead = 0;
+		if (C == nullptr || GFigureMesh == nullptr) { return -1.0; }
+		TArray<FTransform> Ref;
+		if (!RefPoseComponentSpace(GFigureMesh, Ref)) { return -1.0; }
+		const TArray<FTransform>& Live = C->GetComponentSpaceTransforms();
+		const int32 N = FMath::Min(Ref.Num(), Live.Num());
+		BonesRead = N;
+		if (N <= 0) { return -1.0; }
+		double Worst = 0.0;
+		for (int32 I = 0; I < N; ++I)
+		{
+			const double D = (double)FVector::Dist(Ref[I].GetLocation(),
+			                                       Live[I].GetLocation());
+			if (D > Worst) { Worst = D; }
+		}
+		return Worst;
+	}
+
+	void BuildFigure(UWorld* World)
+	{
+		if (World == nullptr) { GFigureState = "NOTHING"; GFigureWhy = "no-world"; return; }
+		// BOTH ASSETS BEFORE ANY ACTOR. A body with no clip is a T-pose, and
+		// a T-pose is not a person: it is refused here rather than spawned
+		// and cleaned up, so no frame can ever hold one.
+		USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, kFigureMeshPath);
+		if (Mesh == nullptr)
+		{
+			GFigureState = "NOTHING";
+			GFigureWhy = "skeletal-mesh-missing/did-tools-ue-import_figure.py-run/path="
+			           + NoSpaces(std::string(TCHAR_TO_UTF8(kFigureMeshPath)));
+			return;
+		}
+		UAnimSequence* Anim = LoadObject<UAnimSequence>(nullptr, kFigureAnimPath);
+		if (Anim == nullptr)
+		{
+			GFigureState = "NOTHING";
+			GFigureWhy = "anim-missing/a-T-pose-is-not-a-person/path="
+			           + NoSpaces(std::string(TCHAR_TO_UTF8(kFigureAnimPath)));
+			return;
+		}
+		GFigureMesh = Mesh;
+		GFigureAnim = Anim;
+		// ---- MEASURE THE ASSET BEFORE PLACING IT -------------------------
+		// Bounds, bones and height come off the asset the importer made, in
+		// the engine's own units, and the placement is derived FROM them.
+		// The height is the number the whole import step exists for: a
+		// Mixamo FBX and an Unreal scene disagree about units and the two
+		// failure modes are a hundred times too large and a hundred times
+		// too small. NOTHING IS SCALED TO CORRECT IT: a scale here would
+		// hide the one reading that can name the fault.
+		GFigureRefBones = Mesh->GetRefSkeleton().GetNum();
+		const FBoxSphereBounds MB = Mesh->GetBounds();
+		GFigureMeshHeightCm = (double)FMath::Abs(MB.BoxExtent.Z) * 2.0;
+		// THE SKIN, AS A PROXY, AND NAMED AS ONE. Nothing cheap in a game
+		// module counts skinned vertices; the import script does, and
+		// figureSkinVerts on its line is the count. What is readable here is
+		// that the mesh has material slots and non-zero bounds, and a
+		// skeleton with no skin on it has neither.
+		const int32 Slots = Mesh->GetMaterials().Num();
+		if (GFigureRefBones <= 0 || Slots <= 0 || !(GFigureMeshHeightCm > 0.0))
+		{
+			GFigureState = "NOTHING";
+			char W[160];
+			std::snprintf(W, sizeof(W),
+				"no-skin-proxy/bones=%d/materialSlots=%d/heightCm=%.2f",
+				GFigureRefBones, Slots, GFigureMeshHeightCm);
+			GFigureWhy = W;
+			return;
+		}
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride =
+			ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		GFigure = World->SpawnActor<ASkeletalMeshActor>(
+			ASkeletalMeshActor::StaticClass(), FVector::ZeroVector,
+			FRotator::ZeroRotator, Params);
+		if (GFigure == nullptr)
+		{
+			GFigureState = "NOTHING"; GFigureWhy = "actor-would-not-spawn"; return;
+		}
+		MakeMovable(GFigure);
+		GFigureComp = GFigure->GetSkeletalMeshComponent();
+		if (GFigureComp == nullptr)
+		{
+			GFigure->Destroy(); GFigure = nullptr;
+			GFigureState = "DESTROYED"; GFigureWhy = "actor-has-no-skeletal-mesh-component";
+			return;
+		}
+		GFigureComp->SetMobility(EComponentMobility::Movable);
+		GFigureComp->SetSkeletalMeshAsset(Mesh);
+		// THE COLLIDER IS NOT WANTED. A capsule standing in the carriageway
+		// is a thing the walk clip can be stopped by and a thing the camera
+		// can be pushed by, and neither is this frame's question.
+		GFigureComp->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		// THE SHADOW IS. A backlit figure with no shadow is a sticker.
+		GFigureComp->SetCastShadow(true);
+		// AND THE POSE IS EVALUATED WHETHER OR NOT THE FIGURE IS ON SCREEN,
+		// so that the readback below measures the animation rather than the
+		// renderer's opinion about visibility.
+		GFigureComp->VisibilityBasedAnimTickOption =
+			EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+		// ---- A T-POSE IS NOT A PERSON: ONE CLIP, FROZEN AT ONE TIME ------
+		GFigureComp->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+		GFigureComp->SetAnimation(Anim);
+		GFigureComp->SetPlayRate(0.0f);
+		GFigureComp->Stop();
+		const double Len = (double)Anim->GetPlayLength();
+		const double Want = (Len > 0.0)
+			? FMath::Clamp((double)kFigurePoseFraction * Len, 0.0, Len) : 0.0;
+		GFigureComp->SetPosition((float)Want, false);
+		// THE DRIVE AND ITS READBACK IN THE SAME FEW STATEMENTS, the shape
+		// ReDriveSkyLuminance uses: what was written, what the engine
+		// answered, and the pair printed so a refusal cannot read as a set.
+		GFigurePoseSetS = Want;
+		GFigurePoseGotS = (double)GFigureComp->GetPosition();
+		// ---- WHERE IT STANDS, FROM THE MEASUREMENT AND NOT FROM A GUESS --
+		// The actor's origin is wherever the importer put it, so the actor
+		// is placed by the mesh's own bounds MINIMUM rather than by assuming
+		// the pivot is between the feet. figureFootGapCm is the distance
+		// from that minimum to the footway surface and is 0 by construction:
+		// it is printed anyway, because a placement metric that cannot print
+		// its own datum distance is a placement metric nobody can check.
+		const double MinZCm = (double)(MB.Origin.Z - FMath::Abs(MB.BoxExtent.Z));
+		const double FootCm = kFigureFootYM * 100.0;
+		GFigureActorZCm = FootCm - MinZCm;
+		// THE FACING, DECIDED BY THE MESH'S OWN PROPORTIONS. A standing body
+		// is wider across the shoulders than it is deep through the chest,
+		// so the WIDER horizontal axis of the bind-pose bounds is the
+		// shoulder axis. cam_A looks down +X, so the shoulders have to lie
+		// along Y for the figure to face the camera or away from it. WHICH
+		// OF THOSE TWO IS UNRESOLVED HERE AND SAYS SO: the sign needs a
+		// front-back asymmetry this reading does not have, and a silhouette
+		// does not distinguish them.
+		const bool bShouldersOnY =
+			FMath::Abs(MB.BoxExtent.Y) >= FMath::Abs(MB.BoxExtent.X);
+		GFigureYawDeg = bShouldersOnY ? 0.0 : 90.0;
+		{
+			char S[160];
+			std::snprintf(S, sizeof(S),
+				"%s/extentXcm=%.1f/extentYcm=%.1f/facing-sign-unresolved",
+				bShouldersOnY ? "Y" : "X",
+				(double)FMath::Abs(MB.BoxExtent.X),
+				(double)FMath::Abs(MB.BoxExtent.Y));
+			GFigureShoulderAxis = S;
+		}
+		GFigure->SetActorLocationAndRotation(
+			FVector((float)(kFigureXM * 100.0), (float)(kFigureZM * 100.0),
+			        (float)GFigureActorZCm),
+			FRotator(0.0f, (float)GFigureYawDeg, 0.0f));
+		GFigureFootGapCm = (GFigureActorZCm + MinZCm) - FootCm;
+		GFigureFootGapTaken = true;
+		// AND THE OTHER HALF OF THE PLACEMENT METRIC: is there footway UNDER
+		// it at all. Distance to the datum alone cannot see a figure
+		// standing perfectly on a surface that is not there, which is the
+		// fault the eight blocks over open sea taught this project. The
+		// footway runs z = 3.0 .. 5.0 east and the street runs x = 0 .. 42.
+		{
+			const double MarginZ = FMath::Min(kFigureZM - 3.0, 5.0 - kFigureZM);
+			const double MarginX = FMath::Min(kFigureXM, 42.0 - kFigureXM);
+			GFigureFootwayMarginM = FMath::Min(MarginZ, MarginX);
+		}
+		GFigureState = "STANDING";
+		GFigureWhy = "pose-not-read-yet";
+	}
+
+	// THE POSE VERDICT, TAKEN ON CONDITION TICKS AND LATCHED ONCE.
+	// A component's space transforms are SEEDED from the reference pose and
+	// only diverge after the animation has ticked once, so a verdict taken
+	// on the tick after the spawn would destroy a perfectly good figure.
+	// The budget is a retry budget and it announces how much of itself it
+	// used; it is not a threshold on any measurement.
+	void FigurePoseCheck()
+	{
+		if (GFigurePoseLatched || GFigure == nullptr || GFigureComp == nullptr)
+		{
+			return;
+		}
+		++GFigurePoseTicks;
+		int32 Bones = 0;
+		const double D = PoseDeltaFromRefCm(GFigureComp, Bones);
+		GFigurePoseBonesRead = Bones;
+		GFigurePoseMaxDeltaCm = D;
+		if (D > 0.0)
+		{
+			// THE ANIMATION EVALUATED. Equality with the bind pose is exact,
+			// so any positive number here is a pose the clip produced and no
+			// measured threshold is needed to say so.
+			GFigurePoseLatched = true;
+			GFigureState = "STANDING";
+			GFigureWhy = "pose-evaluated";
+			return;
+		}
+		if (GFigurePoseTicks < kFigurePoseTickBudget) { return; }
+		GFigurePoseLatched = true;
+		if (D < 0.0)
+		{
+			// NOTHING COULD BE READ. The figure stands and the word is not a
+			// success word: destroying it would delete the evidence needed
+			// to diagnose the instrument, and the still is the judge.
+			GFigureState = "STANDING-POSE-UNPROVEN";
+			GFigureWhy = "no-component-space-transforms-could-be-read";
+			return;
+		}
+		// MEASURABLY THE BIND POSE. This is the sky dome's case exactly: an
+		// object that could not be dressed does not get to stand in the
+		// frame while the verdict says it is fine.
+		if (GFigure != nullptr) { GFigure->Destroy(); GFigure = nullptr; }
+		GFigureComp = nullptr;
+		GFigureVisibleNow = false;
+		GFigureState = "DESTROYED";
+		GFigureWhy = "bind-pose/every-bone-at-exactly-the-reference-pose";
+	}
+
+	// THE ONE OWNER OF THE FIGURE'S EXISTENCE AND VISIBILITY, called from
+	// ApplyCondition beside the lanterns, so no condition can light the
+	// street without deciding whether the figure is in it.
+	void DriveFigure(const Condition& C)
+	{
+		if (!C.LanternsOn)
+		{
+			if (GFigure != nullptr) { GFigure->SetActorHiddenInGame(true); }
+			GFigureVisibleNow = false;
+			return;
+		}
+		// WRITE-ON-CHANGE. ApplyCondition is re-entered every tick while a
+		// condition settles, and a spawn per tick would be a street full of
+		// figures. The flag is set BEFORE the build so a build that raises
+		// cannot be retried once per tick either.
+		if (!GFigureAsked)
+		{
+			GFigureAsked = true;
+			BuildFigure(GameWorld());
+		}
+		if (GFigure == nullptr) { GFigureVisibleNow = false; return; }
+		GFigure->SetActorHiddenInGame(false);
+		GFigureVisibleNow = true;
+		FigurePoseCheck();
+		// FigurePoseCheck may have destroyed it on this tick.
+		if (GFigure == nullptr) { GFigureVisibleNow = false; }
+	}
+
+	// THE WHOLE-RUN FIGURE BLOCK. It rides the materials done line, never a
+	// shot line: the per-sample half is the pixel patch in FigureNow, and a
+	// number about the run and a number about one frame must never appear
+	// under one key.
+	std::string FigureDoneSegment()
+	{
+		// THE TWO OPTIONAL READINGS ARE FORMATTED FIRST, as strings, because
+		// each of them has a "nobody took this reading" state that must print
+		// the words nothing measured rather than a plausible number. A
+		// reading built inside the argument list could only have printed a
+		// zero.
+		char Tmp[48];
+		std::string PoseDelta = "nothing-measured";
+		if (GFigurePoseMaxDeltaCm >= 0.0)
+		{
+			std::snprintf(Tmp, sizeof(Tmp), "%.3f", GFigurePoseMaxDeltaCm);
+			PoseDelta = Tmp;
+		}
+		std::string FootGap = "nothing-measured";
+		if (GFigureFootGapTaken)
+		{
+			std::snprintf(Tmp, sizeof(Tmp), "%.3f", GFigureFootGapCm);
+			FootGap = Tmp;
+		}
+		char B[900];
+		std::snprintf(B, sizeof(B),
+			" figure=%s figureWhy=%s"
+			" figureBody=Michelle.fbx/michelle/ADULT/D18-no-children-anywhere"
+			" figureClip=idle_2/Standing~Idle~01"
+			" figureMeshPath=%s figureAnimPath=%s"
+			" figureBones=%d figureMeshHeightCm=%.2f"
+			" figureHeightIs=the-engines-own-reading-off-the-asset"
+			"/ue-figure.txt-carries-it-beside-the-FBXs-own-measured-height"
+			" figurePoseSet=%.4f/got=%.4f/same=%s"
+			" figurePoseMaxBoneDeltaCm=%s/overBones=%d"
+			" figurePoseStat=at-worst-over-bones/component-space-distance-from-the-REFERENCE-pose"
+			"/exactly-zero-is-the-bind-pose-and-needs-no-threshold"
+			" figurePoseTicks=%d/%d figurePoseLatched=%s"
+			" figureActorZCm=%.2f figureFootGapCm=%s figureFootwayMarginM=%.2f"
+			" figurePlacementStat=gap-to-the-footway-surface-AND-the-margin-to-the-nearest-footway-edge"
+			"/both-halves-because-a-zero-gap-over-no-footway-is-not-a-placement"
+			" figureAtM=x.%.2f/y.%.3f/z.%.2f figureYawDeg=%.1f figureShoulders=%s"
+			" figurePlacementBound=NONE-YET/every-placement-number-is-the-first-value-of-a-series"
+			" figureScale=1/never-scaled/a-wrong-height-is-a-wrong-import"
+			" figureShownShots=%d/hidden=%d"
+			" figureScopedTo=lanterns-on-only/PROBE-SCOPING-NOT-A-WORLD-RULE"
+			"/the-31-day-rows-keep-the-sky-bracket-they-were-established-on",
+			GFigureState.c_str(), GFigureWhy.c_str(),
+			TCHAR_TO_UTF8(kFigureMeshPath), TCHAR_TO_UTF8(kFigureAnimPath),
+			GFigureRefBones, GFigureMeshHeightCm,
+			GFigurePoseSetS, GFigurePoseGotS,
+			(GFigurePoseSetS >= 0.0
+			 && FMath::Abs(GFigurePoseSetS - GFigurePoseGotS) < 1e-4) ? "yes" : "NO",
+			PoseDelta.c_str(),
+			GFigurePoseBonesRead,
+			GFigurePoseTicks, (int32)kFigurePoseTickBudget,
+			GFigurePoseLatched ? "yes" : "no",
+			GFigureActorZCm,
+			FootGap.c_str(),
+			GFigureFootwayMarginM,
+			kFigureXM, kFigureFootYM, kFigureZM, GFigureYawDeg,
+			GFigureShoulderAxis.c_str(),
+			GFigureShown, GFigureHidden);
+		return std::string(B);
 	}
 
 	// BIND EVERY SURFACE THE SHARED FILE ASKED FOR, and count what did not

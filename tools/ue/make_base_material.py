@@ -3996,6 +3996,41 @@ if __name__ == "__main__":
                 _f.write("skyMaterialStatus=RAISED skyMaterialReturn=2 "
                          "skyMaterialNote=%s\n"
                          % str(_sky_err).replace(" ", "~")[:160])
+    # ---- AND THE FIGURE, IN THE SAME EDITOR RUN, FOR THE SAME REASON ----
+    #
+    # NOT A SECOND WORKFLOW STEP, AND THE REASON IS A MEASUREMENT RATHER
+    # THAN A PREFERENCE. tools/workflow-size.py on 2026-09-16 reads the
+    # build step of .github/workflows/ledger-probe-unreal.yml at 23167
+    # characters, SEVENTEEN under the largest `run:` block GitHub has ever
+    # accepted from this repository (23184; 24868 was a 422 and nothing
+    # could be dispatched at all). An import step written into that block
+    # costs about 1500, so it would take the only channel out of CI down
+    # with it. This is exactly the constraint that put make_sky_material
+    # here rather than in the yml, and the answer is the same one: the
+    # script is called from this one, in the one editor process the step
+    # already starts, and it appends its own key=value line to
+    # ue-material.txt, which the step already reads WHOLE. The figure keys
+    # reach the verdict with no yml change and no second editor.
+    #
+    # IT CANNOT TAKE THIS SCRIPT DOWN WITH IT. Everything above has already
+    # run and already written its line; a fault in the figure import prints
+    # as a figure key and never as a missing material.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_figure
+            import_figure.main()
+        except Exception as _fig_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("figureImportStatus=RAISED figureImportReturn=2 "
+                         "figureNote=%s\n"
+                         % str(_fig_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "

@@ -96,6 +96,12 @@ before you reach it.
 Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
 lessons=1/3/7/9:
 - 1: write findings as you get them; the CI round trip is what eats the budget.
+- 2: BEFORE ADDING ANY STEP TO `ledger-probe-unreal.yml`, run
+   `python3 tools/workflow-size.py` and paste its headroom line. That file's
+   build step is the largest anywhere and sat 17 characters under the ceiling
+   on 2026-09-16; past it, dispatch returns 422 and NOTHING runs, so the step
+   that does not fit goes through the editor process `make_base_material.py`
+   already starts, as the sky material and the figure import both do.
 - 3: one deliverable per brief. The brief that failed worst named four call
    sites across 13,734 lines.
 - 7: opus time is for the constraint knowledge; mechanical edits go back down
