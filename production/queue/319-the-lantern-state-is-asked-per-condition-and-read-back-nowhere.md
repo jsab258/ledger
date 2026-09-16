@@ -58,3 +58,58 @@ status: READY 2026-09-15, found while reading run 46's night still for queue
   figure in silhouette, that is the picture I judge by" is the deliverable and
   today nothing could tell him whether the lamps in it are lit. Sibling of 309
   and cheaper; neither blocks the other.
+
+CORRECTED 2026-09-16 02:50Z. THE CENTRAL CLAIM ABOVE IS FALSE AND THE ITEM IS
+NARROWED. The builder sent to do it refused and was right. The original text
+stays above UNEDITED, because an item rewritten after the fact is an item
+nobody can audit.
+
+WHAT WAS WRONG. "occurrences of any light key in the whole vignette verdict 1"
+and everything drawn from it. The true reading:
+
+    light LINES in run 47's verdict                                48
+    shots they cover      exactly the 6 lanterns-true shots (camA, camB,
+                          pinset_night_1 through _4)
+    done line             lightProbeStatus=ALL lightsProbed=42/42
+                          lightsReachedFrame=30/42 shotsProbed=6/43
+
+  Queue 059's LIGHT PROBE has shipped this for six runs. It keeps the shot's
+  own frame, turns ONE light off, re-renders at the same camera and condition,
+  diffs in the g++-tested header, restores and reads the restore back
+  (lightRestoreMismatch=0/42), and renders a control that toggles nothing.
+
+  HOW I GOT IT WRONG, because the shape of the mistake is the lesson. I
+  grepped KEY NAMES, `lant[A-Za-z]*=` and `prac[A-Za-z]*=`, and the probe
+  emits a LINE TYPE: `light lantern0 kind=lantern ...`, carrying the lantern
+  in a VALUE. So the count of 1 was true of key names and false of the
+  verdict. CLAUDE.md rule 1 says grep for the SENTENCE and not the site; this
+  is the same fault one level down, grepping for the shape I expected instead
+  of reading what the file emits. Third time tonight in this seat: the same
+  error found materialConnections absent when it was in ue-build.txt, and made
+  an ancestry check pass against my own push.
+
+WHAT SURVIVES, and it is one clause of four. THE PER-SHOT APPLIED STATE IS
+STILL MISSING: 0 of 115 keys on run 47's vign_camA_night shot line name a
+lantern or a practical, and the probe only looks at the 6 shots whose
+condition has lights on. So `lightsSkippedAlreadyOff=0` over four runs is a
+zero with a DENOMINATOR OF ZERO: the rejecting path exists and has never
+fired, which is rule 5b's shape exactly. A per-shot asked-against-read pair
+fixes that for free and prints the rejecting outcome on all 37 lanterns-false
+shots.
+
+WHAT DOES NOT SURVIVE, and must not be built:
+  - the two-conditions-differing-only-in-lanterns experiment. It EXISTS and
+    the existing one is tighter: one light at a time inside one condition at
+    one camera, with its own floor on an identically formatted line. Building
+    the proposed pair would add a 34th condition and a 44th shot, move the 43
+    that several counts key on, and answer a weaker question.
+  - the null-series clause. Already met: AppliedFieldsUnreal has carried
+    lant.%s/prac.%s in the fingerprint since before this item, and run 47
+    prints nullSeriesApplied=...lant.off/prac.off...
+acceptance, REPLACED: the shot line carries shotLanternsAsked and
+  shotLanternsRead=N/4, shotPracticalsAsked and shotPracticalsRead=N/3, and an
+  agree key, the counts taken by walking the same populations lanternsPlaced
+  and windowsLit report, the formatter and the agree decision in the
+  g++-compiled header per queue 309's shape. It costs no render time and needs
+  no spec change. Both outcomes watched, and the rejecting one is free: 37 of
+  43 shots are lanterns-false and must read so.

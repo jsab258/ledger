@@ -1,0 +1,9 @@
+id: cf6b1363
+due: 2026-09-16T03:15:00Z
+armedAt: 2026-09-16T02:42:22Z
+armedBy: resident/319-lantern-readback-builder-running
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+325's FIRST half LANDED at 00bf7189, verify green at 85 checks. The wake it discharged predicted 'land it red-honest, the next run goes green on its own'; what actually happened is better and the record should say so: the run-pinned waiver landed it GREEN immediately with the measurement intact (shotFilesMissing still reads 4 beside shotFilesWaived=4/4, the waiver moves only the exit code). MY FINDING WAS ALSO WRONG AND THE BUILDER CORRECTED IT: four workflow sites, not one glob, and line 1090 (the COPY into production/d1-probe) is the decisive one; VignetteShot.cpp:3110 writes to the PROJECT dir, so widening only the staging line would have staged an empty set. NOW RUNNING: engine-specialist on queue 319, the per-shot lantern readback. ue-probe is GATED so it needs a studio-director review with a fresh <!--RULING spawn=...--> stamp naming a row newer than the reference commit. WHEN IT LANDS: one probe run carries BOTH 319 and the four pinset frames the staging fix now stages, per ci.md batching; that run's verdict has a different sha so it EXPIRES THE WAIVER on its own, and only then can 325's second half (why 2 of 4 pin_setter_night shots blanked at shotMeanLuma 0.0015) be diagnosed. Then 324, then the dusk frame, NOT from cam_A. Budget 45/47 takenAt 2026-09-15T20:11:11Z: 6.5h old at 02:41Z, STALE at 06:11Z, after which inbox-only until Jafar answers the morning ask.
