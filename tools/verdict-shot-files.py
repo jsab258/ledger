@@ -1,0 +1,762 @@
+#!/usr/bin/env python3
+"""EVERY FILE THE SHOT VERDICT NAMES IS A FILE THE COMMIT WILL CARRY.
+
+    python3 tools/verdict-shot-files.py                  # the live UE vignette verdict
+    python3 tools/verdict-shot-files.py --verdict PATH   # any verdict with shot lines
+    python3 tools/verdict-shot-files.py --selftest       # accepting case FIRST
+
+WHY THIS EXISTS, MEASURED ON 16 SEPTEMBER AND NOT SUSPECTED.
+
+`production/d1-probe/ue-vignette-verdict.txt` names 43 shot files, each with a
+byte count the engine measured. Four of them had never been in the repository,
+on any commit, from any run:
+
+    git log --oneline --all -- 'production/d1-probe/ue-pinset_night_*.png'  0
+    git log --oneline --all -- 'production/d1-probe/ue-vign_*.png'         29
+
+The four are `ue-pinset_night_1.png` through `_4.png`. The probe collects and
+stages its frames BY NAME PREFIX, `ue-vign_*.png`, which is ci.md's rule obeyed
+exactly, and that rule is right: `git add <directory>` is how a failed run
+commits its stale checkout's files as its own evidence. But a by-name stage
+goes blind the moment a new shot family arrives under a name no pattern covers,
+and nothing was watching the join. Two of the four had rendered perfectly that
+run, at 1367920 and 1278041 bytes, and were thrown away beside the two that
+came back blank. The queue item asking for the blank ones to be diagnosed could
+not be done, because the pictures did not exist.
+
+A WIDER GLOB IS NOT THE FIX, IT IS THE SAME BET PLACED AGAIN. The fix is that
+the join gets watched by something. The verdict is the list of what the run
+says it produced; the index is the list of what the commit will carry; a name
+in the first and not the second is a frame nobody can ever open. That
+comparison is this file, and it does not care what the glob is.
+
+WHAT IT REFUSES TO CONFLATE.
+  ABSENT and UNTRACKED are separate counts because they are separate faults.
+  A frame that never rendered is the engine's problem. A frame sitting on disk
+  that git does not know about is the staging step's problem, and that is the
+  one that has been happening here.
+
+  A VERDICT THAT MEASURED NOTHING IS NOT A CLEAN RUN. The probe writes a
+  NOTHING-EMITTED placeholder when it never reached a capture, and a
+  placeholder names no files at all. `0 missing of 0 named` would read green
+  for ever, so that case prints the words `nothing-measured` instead, and rides
+  a separate key so no reader has to infer it (rule 3b).
+
+  A SHOT LINE WITH NO `file=` IS NOT A NAMED FILE. It is counted, on the same
+  done line, as `shotLinesWithoutFile`, so the named count always ships the
+  population it was drawn from.
+
+WHAT THE NUMBERS ARE STATISTICS OF: all of them are CUMULATIVE COUNTS OVER ONE
+VERDICT FILE. Not peaks, not medians, not last-wins. `shotFilesStat=` on the
+done line says so in the output rather than only here, because a number nobody
+has read yet is the one most likely to be quoted as the wrong kind.
+"""
+import argparse
+import os
+import pathlib
+import re
+import subprocess
+import sys
+import tempfile
+
+HERE = pathlib.Path(__file__).resolve().parent
+ROOT = HERE.parent
+
+# ONE IMPLEMENTATION PER IDEA: the truncation notice and the never-measured
+# words already exist in this repo and are imported, never re-typed.
+sys.path.insert(0, str(HERE))                        # tools/capsay.py
+from capsay import cap, NOTHING_MEASURED             # noqa: E402
+
+DEFAULT_VERDICT = ROOT / "production" / "d1-probe" / "ue-vignette-verdict.txt"
+
+# EXIT CODES, ONE PER OUTCOME, so a caller can tell the three apart without
+# reading prose. A report that ends in the wrong exit code costs twenty
+# minutes before somebody notices which thing happened.
+EXIT_OK = 0            # every named file is on disk and in the index
+EXIT_MISSING = 1       # at least one named file is absent, or present untracked
+EXIT_NO_VERDICT = 2    # could not look: there is no verdict file to read
+EXIT_NAMED_NONE = 3    # the verdict claims a capture and still names no file
+
+# THE SPELLINGS THE PROBE WRITES WHEN A RUN MEASURED NOTHING, quoted from
+# .github/workflows/ledger-probe-unreal.yml rather than paraphrased. A marker
+# matched loosely is a marker that stops matching the day somebody rewords the
+# sentence, and both placeholders in that workflow carry both of these.
+NO_CAPTURE = ("captureStatus=NOTHING-MEASURED", "NOTHING MEASURED")
+
+SHOT_LINE = re.compile(r"^shot\s+(\S+)")
+FILE_RX = re.compile(r"\bfile=(\S+)")
+STATUS_RX = re.compile(r"\bstatus=(\S+)")
+BYTES_RX = re.compile(r"\bbytes=(\d+)")
+STAMP_RX = re.compile(r"\b([0-9a-f]{7,40})\s+@(\d+)")
+
+# HOW MANY FAULTS GET A LINE EACH before the cap bites. The cap announces
+# itself through `capsay.cap`, which appends `(+N more of M)`; there is no
+# second truncation in this file.
+DETAIL_KEEP = 12
+DETAIL_WIDTH = 200
+
+# ---------------------------------------------------------------------------
+# THE WAIVER, PINNED TO ONE RUN, AND IT DELETES ITSELF.
+# ---------------------------------------------------------------------------
+# WHY A WAIVER EXISTS AT ALL, WHICH IS THE PART A LATER READER NEEDS. This
+# check was written on 16 September and went red on the tree that day,
+# correctly: the committed verdict from run c738797 names 43 frames and four of
+# them have never existed anywhere. The repair for that is in
+# .github/workflows/ledger-probe-unreal.yml, where the capture step now derives
+# its leaf names from the spec and the commit step stages every one of them.
+#
+# AND THAT REPAIR COULD NOT LAND. Committing here needs a green
+# `ledger/verify.py`; this check cannot go green until a probe run stages those
+# four frames; and no probe run can stage them until the workflow repair is
+# committed and pushed. A correct gate had locked the door it was standing in.
+# The alternatives were both worse: loosening the check makes it unable to tell
+# a regression from an improvement (rule 5b's ratchet), and fabricating the
+# four PNGs puts invented evidence in the evidence channel.
+#
+# SO IT IS PINNED TO THE RUN AND NOT TO THE FILENAMES, which is the whole
+# design. The four names below are forgiven only while the verdict ON DISK is
+# the one measured by run c738797, a sha this tool already reads off line 1 and
+# already prints as `verdictRun=`. The first verdict from any other run faces
+# the full check, including these four, with nothing for anybody to remember to
+# delete. A waiver keyed on the filenames would have forgiven them for ever.
+#
+# WHAT IT DOES NOT FORGIVE, and each of these is a case in `--selftest`:
+#   a fifth name absent on run c738797 (it is not on the list, so it fails);
+#   these four absent on any other run (the pin has moved, so they fail);
+#   these four present on disk and NOT STAGED on any run at all, which is the
+#     exact fault this whole file exists to catch and must never be waived.
+#
+# THE NUMBERS DO NOT MOVE. `shotFilesMissing` still reads 4 while the waiver
+# holds; the waiver changes the EXIT CODE and nothing else, and prints
+# `shotFilesWaived=4/4` beside it. A waiver that edited the measurement would
+# be the silent-instrument failure wearing a permission slip.
+WAIVED_RUN = "c738797"
+WAIVED_ABSENT_FILES = (
+    "ue-pinset_night_1.png",
+    "ue-pinset_night_2.png",
+    "ue-pinset_night_3.png",
+    "ue-pinset_night_4.png",
+)
+# ONLY ABSENCE, never the staging fault. `on-disk-but-not-in-the-index` is the
+# bug that lost these four in the first place; forgiving it here would waive
+# the finding this tool was built to make.
+WAIVABLE_FAULT_PREFIX = "absent-from-disk"
+
+
+def _nospace(s):
+    """A value safe for a `key=value` channel every reader splits on
+    whitespace. Paths in this project have no spaces; a scratch directory in a
+    selftest can, and a silently truncated path is the failure this encodes
+    around rather than risks."""
+    return re.sub(r"\s", "%20", str(s))
+
+
+def _git(cwd, args):
+    try:
+        p = subprocess.run(["git"] + args, cwd=str(cwd), capture_output=True,
+                           text=True)
+    except (OSError, ValueError):
+        return 1, ""
+    return p.returncode, p.stdout
+
+
+def shot_rows(text):
+    """Every `shot ` line's (shot id, file, status, bytes), in file order.
+
+    READ OFF THE `shot ` LINES ONLY, never by a `grep -o 'file='` over the
+    whole file. The header of a verdict is prose, and prose that happens to
+    contain the token would be collected as a frame. That is the `verdict-read`
+    incident in miniature: a value returned from a line the reader cannot name.
+    """
+    rows = []
+    for n, line in enumerate(text.splitlines(), 1):
+        m = SHOT_LINE.match(line)
+        if not m:
+            continue
+        f = FILE_RX.search(line)
+        s = STATUS_RX.search(line)
+        b = BYTES_RX.search(line)
+        rows.append({
+            "line": n,
+            "shot": m.group(1),
+            "file": f.group(1) if f else None,
+            "status": s.group(1) if s else "no-status",
+            "bytes": b.group(1) if b else "no-bytes",
+        })
+    return rows
+
+
+def read(verdict):
+    """The whole reading for one verdict, as data. No printing here.
+
+    Measurement arithmetic lives where the tests run, so the tally and the
+    comparison are in this function and the strings are in `report_lines`;
+    both are driven by `--selftest`."""
+    vp = pathlib.Path(verdict)
+    r = {
+        "verdict": vp,
+        "verdictExists": vp.is_file(),
+        "run": None, "stamp": None,
+        "captured": False,
+        "shotLines": 0, "linesWithoutFile": 0,
+        "named": 0, "present": 0, "tracked": 0, "untracked": 0, "missing": 0,
+        "namedWithPath": 0,
+        "faults": [],           # one dict per UNWAIVED fault, in verdict order
+        "trackedKnown": False,  # whether git could answer at all
+        # Defaulted here as well as set below, because the no-verdict path
+        # returns early and `report_lines` must never reach a missing key.
+        "waived": [], "waiverApplies": False,
+        "waiverRun": WAIVED_RUN, "waiverListLen": len(WAIVED_ABSENT_FILES),
+    }
+    if not vp.is_file():
+        return r
+
+    text = vp.read_text(encoding="utf-8", errors="replace")
+    first = text.split("\n", 1)[0]
+    m = STAMP_RX.search(first)
+    if m:
+        r["run"], r["stamp"] = m.group(1), m.group(2)
+    # A CAPTURE IS CLAIMED UNLESS THE FILE SAYS IT MEASURED NOTHING. Stated
+    # this way round on purpose: a verdict that has lost its banner reads as
+    # claiming a capture, which is the direction that goes red rather than the
+    # direction that goes quietly green.
+    r["captured"] = not any(mark in text for mark in NO_CAPTURE)
+
+    rows = shot_rows(text)
+    r["shotLines"] = len(rows)
+
+    vdir = vp.parent
+    # THE INDEX, ASKED ONCE. 43 `git ls-files --error-unmatch` calls answer the
+    # same question 43 times and cost 43 processes; one listing of the
+    # directory is the same answer. `git ls-files` reads the INDEX, which is
+    # what the next commit will carry, and that is the question being asked:
+    # not "is it in HEAD" but "would committing now include it".
+    code, out = _git(vdir, ["rev-parse", "--show-toplevel"])
+    tracked = None
+    if code == 0 and out.strip():
+        top = pathlib.Path(out.strip())
+        code, out = _git(top, ["ls-files", "--full-name", "--",
+                               os.path.relpath(str(vdir), str(top))])
+        if code == 0:
+            tracked = set(l.strip() for l in out.splitlines() if l.strip())
+            r["trackedKnown"] = True
+            r["top"] = top
+
+    for row in rows:
+        name = row["file"]
+        if name is None:
+            r["linesWithoutFile"] += 1
+            continue
+        r["named"] += 1
+        if "/" in name or "\\" in name:
+            # ANNOUNCED RATHER THAN NORMALISED AWAY. The engine writes a bare
+            # leaf (`ue-<shotId>.png`), so a separator here means the emitter
+            # changed shape and the reader should know before the count is
+            # believed.
+            r["namedWithPath"] += 1
+        target = vdir / name
+        on_disk = target.is_file()
+        in_index = None
+        if tracked is not None and "top" in r:
+            rel = os.path.relpath(str(target), str(r["top"])).replace(os.sep, "/")
+            in_index = rel in tracked
+        if on_disk:
+            r["present"] += 1
+        if in_index:
+            r["tracked"] += 1
+        if on_disk and in_index is False:
+            r["untracked"] += 1
+        if not on_disk:
+            r["missing"] += 1
+        if on_disk and in_index is not False:
+            continue
+        # THE FAULT NAMES BOTH HALVES AT ONCE. "absent" and "untracked" are
+        # different repairs: one is the engine or the copy step, the other is
+        # the staging step, and a single word would send the reader to the
+        # wrong one half the time.
+        if not on_disk and in_index:
+            why = "absent-from-disk-but-in-the-index"
+        elif not on_disk:
+            why = "absent-from-disk-and-not-in-the-index"
+        else:
+            why = "on-disk-but-not-in-the-index"
+        r["faults"].append({**row, "why": why})
+
+    # THE WAIVER IS APPLIED LAST, TO THE FAULT LIST AND TO NOTHING ELSE. Every
+    # count above was taken before this ran and none of them moves, so
+    # `shotFilesMissing` on the done line is the true number whether the waiver
+    # holds or not; what changes is how many faults are left to fail on.
+    r["waiverRun"] = WAIVED_RUN
+    r["waiverApplies"] = (r["run"] == WAIVED_RUN)
+    r["waiverListLen"] = len(WAIVED_ABSENT_FILES)
+    waived, kept = [], []
+    for f in r["faults"]:
+        if (r["waiverApplies"] and f["file"] in WAIVED_ABSENT_FILES
+                and f["why"].startswith(WAIVABLE_FAULT_PREFIX)):
+            waived.append(f)
+        else:
+            kept.append(f)
+    r["waived"] = waived
+    r["faults"] = kept
+    return r
+
+
+def report_lines(r):
+    """The printed report for one reading, as a list of lines.
+
+    THE SHAPE IS FIXED: per-shot faults on their own lines, whole-run counts on
+    the `done` line and nowhere else. A reader grepping `shotFilesNamed` across
+    two lines would otherwise be reading two moments as one."""
+    L = []
+    vrel = _nospace(_rel(r["verdict"]))
+
+    if not r["verdictExists"]:
+        L.append("NOTHING MEASURED - there is no verdict at %s to read, so no "
+                 "shot file was examined; this is not a clean tree, it is an "
+                 "unexamined one." % vrel)
+        L.append("done shotFilesVerdict=%s verdictRun=%s shotFilesReading=%s "
+                 "verdictShotLines=0 shotLinesWithoutFile=0 shotFilesNamed=0 "
+                 "shotFilesPresent=0 shotFilesMissing=0 shotFilesTracked=0 "
+                 "shotFilesUntracked=0 shotFilesStat=cumulative-over-one-verdict"
+                 % (vrel, NOTHING_MEASURED, NOTHING_MEASURED))
+        return L
+
+    if r["faults"]:
+        detail = ["shotFileFault file=%s shot=%s verdictStatus=%s "
+                  "verdictBytes=%s verdictLine=%d fault=%s"
+                  % (_nospace(f["file"]), _nospace(f["shot"]), _nospace(f["status"]),
+                     _nospace(f["bytes"]), f["line"], f["why"])
+                  for f in r["faults"]]
+        # EVERY CAP ANNOUNCES ITSELF, and this is the project's one
+        # implementation of that: `capsay.cap` appends `(+N more of M)` and
+        # appends nothing when it did not bite.
+        L.extend(cap(detail, keep=DETAIL_KEEP, width=DETAIL_WIDTH,
+                     sep="\n").split("\n"))
+
+    if r["waived"]:
+        # PRINTED, NEVER SILENT. A waived fault that produced no output would
+        # be indistinguishable from a frame that landed, which is the whole
+        # class of failure this file was written for.
+        wl = ["shotFileWaived file=%s shot=%s verdictStatus=%s verdictBytes=%s "
+              "fault=%s waivedBy=frozen-list-pinned-to-run/%s"
+              % (_nospace(f["file"]), _nospace(f["shot"]), _nospace(f["status"]),
+                 _nospace(f["bytes"]), f["why"], _nospace(r["waiverRun"]))
+              for f in r["waived"]]
+        L.extend(cap(wl, keep=DETAIL_KEEP, width=DETAIL_WIDTH,
+                     sep="\n").split("\n"))
+        L.append("WAIVED %d of %d named-but-absent frame(s), because the "
+                 "verdict on disk is run %s and the repair for them is the "
+                 "workflow change in the same commit. The pin is the run, not "
+                 "the names: the first verdict from any other run faces the "
+                 "full check." % (len(r["waived"]), r["waiverListLen"],
+                                  _nospace(r["waiverRun"])))
+    elif r["waiverApplies"]:
+        # THE LIST HAS ROTTED IN THE RIGHT DIRECTION. Said out loud rather than
+        # left as a silent zero, because the next rung DELETES these entries.
+        L.append("WAIVER UNUSED - the verdict is run %s and none of the %d "
+                 "frozen name(s) needed forgiving; delete the list."
+                 % (_nospace(r["waiverRun"]), r["waiverListLen"]))
+
+    reading = "cumulative-over-one-verdict"
+    if r["named"] == 0 and not r["captured"]:
+        reading = NOTHING_MEASURED
+        L.append("NOTHING MEASURED - the verdict at %s says it captured "
+                 "nothing and names no shot file, so a zero here counts "
+                 "nothing examined rather than nothing wrong." % vrel)
+    elif r["named"] == 0:
+        L.append("SHOT VERDICT NAMES NO FILE AT ALL while claiming a capture: "
+                 "%d shot line(s), %d of them with no file= on them. The "
+                 "emitter changed shape or the grep that builds this stopped "
+                 "matching." % (r["shotLines"], r["linesWithoutFile"]))
+
+    L.append("done shotFilesVerdict=%s verdictRun=%s shotFilesReading=%s "
+             "verdictCaptured=%s verdictShotLines=%d shotLinesWithoutFile=%d "
+             "shotFilesNamed=%d shotFilesPresent=%d shotFilesMissing=%d "
+             "shotFilesTracked=%s shotFilesUntracked=%s shotFilesNamedWithPath=%d "
+             "shotFilesWaived=%d/%d shotFilesWaivedRun=%s shotFilesWaiverApplies=%s "
+             "shotFilesUnwaivedFaults=%d "
+             "shotFilesStat=cumulative-over-one-verdict"
+             % (vrel, _nospace(r["run"] or NOTHING_MEASURED), reading,
+                "yes" if r["captured"] else "no",
+                r["shotLines"], r["linesWithoutFile"], r["named"], r["present"],
+                r["missing"],
+                r["tracked"] if r["trackedKnown"] else NOTHING_MEASURED,
+                r["untracked"] if r["trackedKnown"] else NOTHING_MEASURED,
+                r["namedWithPath"],
+                # `shotFilesWaived` is waived-this-run over the frozen list's
+                # length, so 4/4 and 0/4 are different facts on the same line:
+                # the second says the frames landed and the list can go.
+                # `shotFilesUnwaivedFaults` is the number the exit code is made
+                # of, printed so nobody has to derive it.
+                len(r["waived"]), r["waiverListLen"], _nospace(r["waiverRun"]),
+                "yes" if r["waiverApplies"] else "no", len(r["faults"])))
+    return L
+
+
+def _rel(p):
+    try:
+        return pathlib.Path(p).resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        return str(p)
+
+
+def verdict_exit(r):
+    """Which outcome this reading is. One code per outcome."""
+    if not r["verdictExists"]:
+        return EXIT_NO_VERDICT
+    if r["faults"]:
+        return EXIT_MISSING
+    if r["named"] == 0 and r["captured"]:
+        return EXIT_NAMED_NONE
+    return EXIT_OK
+
+
+# --------------------------------------------------------------- selftest
+def _write(p, text):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(text, encoding="utf-8")
+
+
+def _verdict_text(rows, captured=True, run="abc1234"):
+    """A verdict built from (shotId, fileName) pairs, in the live file's shape."""
+    L = ["# UE vignette shot %s @1789517651" % run,
+         "# Line 1 names the commit this was measured on.",
+         ""]
+    if not captured:
+        L += ["sceneStatus=NOTHING-EMITTED piecesEmitted=0/0",
+              "captureStatus=NOTHING-MEASURED shotsWrote=0/0 shotsBlank=0/0",
+              "NOTHING MEASURED - no frame of the street was taken on this commit."]
+    for i, (sid, fname) in enumerate(rows):
+        L.append("shot %s camera=cam_A condition=overcast_day status=WROTE "
+                 "px=1280x720 file=%s bytes=%d shotBlank=no"
+                 % (sid, fname, 1000 + i))
+    L.append("shotReached=end")
+    return "\n".join(L) + "\n"
+
+
+def selftest():
+    """Both outcomes watched, ACCEPTING CASE FIRST (CLAUDE.md rule 5b).
+
+    THE ACCEPTING FIXTURE IS THE LIVE REPOSITORY. Real frames that are on disk
+    and in the index today are named by a verdict this builds, so the case this
+    tool must let through is made of assets somebody would have to delete to
+    break. THE REJECTING FIXTURES ARE SYNTHETIC, naming files that exist
+    nowhere, so doing the work this tool asks for (landing the four missing
+    pinset frames) can never make the selftest fail.
+
+    The expensive failure for a checker is the validator nothing survives, so
+    the first three assertions below are all cases that must come back green.
+    """
+    ok, bad = 0, []
+
+    def want(label, got, expect):
+        nonlocal ok
+        if got == expect:
+            ok += 1
+            print("  ok   %-58s %r" % (label, got))
+        else:
+            bad.append("%s: got %r, wanted %r" % (label, got, expect))
+            print("  FAIL %-58s %r  wanted %r" % (label, got, expect))
+
+    def want_in(label, needle, hay):
+        nonlocal ok
+        if needle in hay:
+            ok += 1
+            print("  ok   %-58s contains %r" % (label, needle))
+        else:
+            bad.append("%s: %r not in %r" % (label, needle, hay[:400]))
+            print("  FAIL %-58s missing %r" % (label, needle))
+
+    def want_not_in(label, needle, hay):
+        nonlocal ok
+        if needle not in hay:
+            ok += 1
+            print("  ok   %-58s omits %r" % (label, needle))
+        else:
+            bad.append("%s: %r unexpectedly in %r" % (label, needle, hay[:400]))
+            print("  FAIL %-58s contains %r" % (label, needle))
+
+    print("verdict-shot-files selftest - ACCEPTING CASES FIRST (a gate that")
+    print("nothing survives proves nothing when it is red)\n")
+
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="vsf-selftest-"))
+    probe = ROOT / "production" / "d1-probe"
+
+    # ---- ACCEPTING 1: the live repository's own frames, named by a verdict
+    # written beside them. These are real files, really tracked, really here.
+    live = sorted(probe.glob("ue-vign_*.png"))[:3]
+    if len(live) < 3:
+        bad.append("the live accepting fixture needs 3 committed frames under "
+                   "production/d1-probe and found %d" % len(live))
+        print("  FAIL live accepting fixture: only %d frame(s) on disk" % len(live))
+    else:
+        acc = probe / "ue-vignette-verdict.SELFTEST-ACCEPT.txt"
+        # WRITTEN BESIDE THE FRAMES AND REMOVED AGAIN. It has to sit in the
+        # real directory because the whole question is about real paths and
+        # the real index; it is deleted in the `finally` below either way.
+        try:
+            _write(acc, _verdict_text([(p.stem[3:], p.name) for p in live]))
+            r = read(acc)
+            text = "\n".join(report_lines(r))
+            want("live frames: named", r["named"], 3)
+            want("live frames: present", r["present"], 3)
+            want("live frames: missing", r["missing"], 0)
+            want("live frames: tracked (git answered)", r["tracked"], 3)
+            want("live frames: untracked", r["untracked"], 0)
+            want("live frames: exit code is OK", verdict_exit(r), EXIT_OK)
+            want_in("live frames: done line ships the denominator",
+                    "shotFilesNamed=3 shotFilesPresent=3 shotFilesMissing=0", text)
+            want_not_in("live frames: a clean run says no cap bit",
+                        "more of", text)
+            want_not_in("live frames: a clean run is not nothing-measured",
+                        NOTHING_MEASURED, text)
+        finally:
+            acc.unlink(missing_ok=True)
+
+    # ---- ACCEPTING 2: a verdict that honestly measured nothing is GREEN and
+    # says the words. Red here would be a ratchet: every local commit would be
+    # blocked by a probe run that failed on somebody else's machine, for a
+    # join that does not exist when nothing was captured.
+    none_v = tmp / "nothing" / "ue-vignette-verdict.txt"
+    _write(none_v, _verdict_text([], captured=False))
+    r = read(none_v)
+    text = "\n".join(report_lines(r))
+    want("measured nothing: exit code is OK", verdict_exit(r), EXIT_OK)
+    want("measured nothing: named", r["named"], 0)
+    want_in("measured nothing: prints the words", NOTHING_MEASURED, text)
+    want_in("measured nothing: and says so in prose", "NOTHING MEASURED", text)
+    want_in("measured nothing: verdictCaptured=no", "verdictCaptured=no", text)
+
+    # ---- REJECTING 1: a name that exists nowhere. SYNTHETIC on purpose: it
+    # can never be satisfied by doing the work, so it cannot rot into a
+    # fixture somebody has to keep alive.
+    rej = tmp / "reject" / "ue-vignette-verdict.txt"
+    _write(rej, _verdict_text([("selftest_nosuchshot",
+                                "ue-selftest_nosuchshot_9x9.png")]))
+    r = read(rej)
+    text = "\n".join(report_lines(r))
+    want("a file that exists nowhere: exit code is MISSING",
+         verdict_exit(r), EXIT_MISSING)
+    want("a file that exists nowhere: missing count", r["missing"], 1)
+    want("a file that exists nowhere: named count", r["named"], 1)
+    want_in("a file that exists nowhere: it is NAMED in the output",
+            "file=ue-selftest_nosuchshot_9x9.png", text)
+    want_in("a file that exists nowhere: the fault says which half",
+            "fault=absent-from-disk", text)
+
+    # ---- REJECTING 2: rendered, on disk, and never staged. This is the exact
+    # shape of the live fault and it needs its own scratch repository, because
+    # "on disk" and "in the index" are the two halves that must not be one
+    # number twice: here one moves and the other does not.
+    repo = tmp / "scratch-repo"
+    (repo / "shots").mkdir(parents=True, exist_ok=True)
+    _git(repo, ["init", "-q"])
+    _git(repo, ["config", "user.email", "selftest@ledger.local"])
+    _git(repo, ["config", "user.name", "selftest"])
+    (repo / "shots" / "ue-staged.png").write_bytes(b"\x89PNG\r\n\x1a\n staged")
+    _git(repo, ["add", "-A", "--", "shots/ue-staged.png"])
+    (repo / "shots" / "ue-unstaged.png").write_bytes(b"\x89PNG\r\n\x1a\n loose")
+    both = repo / "shots" / "ue-vignette-verdict.txt"
+    _write(both, _verdict_text([("staged", "ue-staged.png"),
+                                ("unstaged", "ue-unstaged.png")]))
+    r = read(both)
+    text = "\n".join(report_lines(r))
+    want("on disk but unstaged: git answered at all", r["trackedKnown"], True)
+    want("on disk but unstaged: present counts both", r["present"], 2)
+    want("on disk but unstaged: missing is zero", r["missing"], 0)
+    want("on disk but unstaged: untracked is one", r["untracked"], 1)
+    want("on disk but unstaged: exit code is MISSING",
+         verdict_exit(r), EXIT_MISSING)
+    want_in("on disk but unstaged: the fault says which half",
+            "fault=on-disk-but-not-in-the-index", text)
+    want_not_in("on disk but unstaged: the staged one is not a fault",
+                "file=ue-staged.png", text)
+
+    # ---- REJECTING 3: no verdict at all is NOT a pass. Exit 2, its own code,
+    # because "I could not look" and "I looked and it was clean" are the two
+    # readings this project keeps confusing for each other.
+    r = read(tmp / "no-such-dir" / "ue-vignette-verdict.txt")
+    text = "\n".join(report_lines(r))
+    want("no verdict at all: exit code is NO_VERDICT",
+         verdict_exit(r), EXIT_NO_VERDICT)
+    want_in("no verdict at all: prints the words", NOTHING_MEASURED, text)
+
+    # ---- REJECTING 4: a verdict claiming a capture that names no file is its
+    # own outcome. A grep that stopped matching produces exactly this and it
+    # must not read as a clean zero.
+    empty = tmp / "claims" / "ue-vignette-verdict.txt"
+    _write(empty, "# UE vignette shot abc1234 @1\n\nshot lonely camera=cam_A "
+                  "status=NO-FILE\nshotReached=end\n")
+    r = read(empty)
+    text = "\n".join(report_lines(r))
+    want("claims a capture, names nothing: exit code is NAMED_NONE",
+         verdict_exit(r), EXIT_NAMED_NONE)
+    want("claims a capture, names nothing: the line is still counted",
+         r["shotLines"], 1)
+    want("claims a capture, names nothing: and counted as file-less",
+         r["linesWithoutFile"], 1)
+
+    # ---- THE CAP ANNOUNCES ITSELF WHEN IT BITES, and stays silent when it
+    # does not. Both halves, because a cap that stamps its clause on
+    # everything trains readers to skip the clause that matters.
+    many = tmp / "many" / "ue-vignette-verdict.txt"
+    n = DETAIL_KEEP + 7
+    _write(many, _verdict_text([("selftest_gone_%d" % i,
+                                 "ue-selftest_gone_%d.png" % i)
+                                for i in range(n)]))
+    r = read(many)
+    text = "\n".join(report_lines(r))
+    want("%d faults: all are counted" % n, r["missing"], n)
+    want_in("%d faults: the cap says it bit" % n,
+            "(+%d more of %d)" % (n - DETAIL_KEEP, n), text)
+    want("%d faults: only the cap's worth are shown" % n,
+         text.count("shotFileFault "), DETAIL_KEEP)
+
+    # ---- THE WAIVER, FOUR CASES, ACCEPTING FIRST. Every one of them uses the
+    # real frozen list and the real pinned run; none of them writes anything
+    # into production/d1-probe.
+    #
+    # ACCEPTING, AND IT IS THE LIVE TREE. Written so it keeps holding after the
+    # four frames land: the assertion is that NOTHING IS LEFT UNWAIVED, not
+    # that four things were waived. `waived == missing` reads 4 == 4 today and
+    # 0 == 0 the day the probe stages them, so doing the work this tool exists
+    # to prompt cannot break the tool.
+    if DEFAULT_VERDICT.is_file():
+        rl = read(DEFAULT_VERDICT)
+        want("live verdict: the run it was measured on", rl["run"], WAIVED_RUN)
+        want("live verdict: nothing is left unwaived", len(rl["faults"]), 0)
+        want("live verdict: every absent frame is a waived one",
+             len(rl["waived"]), rl["missing"])
+        want("live verdict: exit code is OK", verdict_exit(rl), EXIT_OK)
+        want_in("live verdict: the waiver is PRINTED, not silent",
+                "WAIVED", "\n".join(report_lines(rl)))
+    else:
+        bad.append("the live verdict %s is not there to be the accepting "
+                   "fixture" % DEFAULT_VERDICT)
+        print("  FAIL live verdict missing: %s" % DEFAULT_VERDICT)
+
+    # A fixture directory holding ONE real file, so the waived names are the
+    # only absentees and a fault list can be compared name for name.
+    wv = tmp / "waiver"
+    wv.mkdir(parents=True, exist_ok=True)
+    (wv / "ue-vign_selftest_here.png").write_bytes(b"\x89PNG\r\n\x1a\n here")
+    rows = [("selftest_here", "ue-vign_selftest_here.png")]
+    rows += [("pinset_night_%d" % i, n)
+             for i, n in enumerate(WAIVED_ABSENT_FILES, start=1)]
+
+    # REJECTING: the same four names, one run later. The pin has moved, so the
+    # waiver is gone and the check demands all four.
+    moved = wv / "ue-vignette-verdict.txt"
+    _write(moved, _verdict_text(rows, run="deadbee"))
+    r = read(moved)
+    text = "\n".join(report_lines(r))
+    want("waiver expires: a different run gets no forgiveness",
+         verdict_exit(r), EXIT_MISSING)
+    want("waiver expires: all four are faults again", len(r["faults"]),
+         len(WAIVED_ABSENT_FILES))
+    want("waiver expires: and none was waived", len(r["waived"]), 0)
+    want_in("waiver expires: the done line says it did not apply",
+            "shotFilesWaived=0/%d shotFilesWaivedRun=%s shotFilesWaiverApplies=no"
+            % (len(WAIVED_ABSENT_FILES), WAIVED_RUN), text)
+    want_in("waiver expires: it still names the first of them",
+            "shotFileFault file=%s" % WAIVED_ABSENT_FILES[0], text)
+
+    # REJECTING: the pinned run, plus a FIFTH absent frame. The waiver is a
+    # list of four names, not a mood about run c738797.
+    fifth = wv / "fifth" / "ue-vignette-verdict.txt"
+    _write(fifth, _verdict_text(rows + [("selftest_fifth",
+                                         "ue-selftest_fifth_absent.png")],
+                                run=WAIVED_RUN))
+    # the one real file lives in the parent fixture dir, so re-make it here
+    (fifth.parent / "ue-vign_selftest_here.png").write_bytes(b"\x89PNG\r\n\x1a\n")
+    r = read(fifth)
+    text = "\n".join(report_lines(r))
+    want("not a blanket: a fifth absent name on the pinned run still fails",
+         verdict_exit(r), EXIT_MISSING)
+    want("not a blanket: exactly one fault survives the waiver",
+         len(r["faults"]), 1)
+    want("not a blanket: and it is the fifth",
+         r["faults"][0]["file"] if r["faults"] else None,
+         "ue-selftest_fifth_absent.png")
+    want("not a blanket: the four are still waived",
+         len(r["waived"]), len(WAIVED_ABSENT_FILES))
+    want_in("not a blanket: both counts ride the done line",
+            "shotFilesWaived=4/4", text)
+
+    # REJECTING: a waived NAME that is on disk and unstaged. This is the fault
+    # that lost the four in the first place and it is never forgiven, pin or
+    # no pin.
+    srepo = tmp / "waiver-repo"
+    srepo.mkdir(parents=True, exist_ok=True)
+    _git(srepo, ["init", "-q"])
+    _git(srepo, ["config", "user.email", "selftest@ledger.local"])
+    _git(srepo, ["config", "user.name", "selftest"])
+    (srepo / WAIVED_ABSENT_FILES[0]).write_bytes(b"\x89PNG\r\n\x1a\n rendered")
+    sv = srepo / "ue-vignette-verdict.txt"
+    _write(sv, _verdict_text([("pinset_night_1", WAIVED_ABSENT_FILES[0])],
+                             run=WAIVED_RUN))
+    r = read(sv)
+    text = "\n".join(report_lines(r))
+    want("staging fault is never waived: on the pinned run, still red",
+         verdict_exit(r), EXIT_MISSING)
+    want("staging fault is never waived: it is not on the waived list",
+         len(r["waived"]), 0)
+    want_in("staging fault is never waived: named with its reason",
+            "fault=on-disk-but-not-in-the-index", text)
+
+    # ---- NO VALUE CARRIES A SPACE, on any line this prints, in any outcome.
+    # Every reader in this project splits on whitespace and truncates silently.
+    spaced = []
+    for label, rr in (("live-shaped", read(many)), ("nothing", read(none_v))):
+        for line in report_lines(rr):
+            if line.startswith("NOTHING MEASURED") or line.startswith("SHOT "):
+                continue          # prose lines are prose, not a key=value channel
+            for tok in line.split():
+                if "=" in tok and " " in tok.split("=", 1)[1]:
+                    spaced.append("%s: %s" % (label, tok))
+    want("no key=value on a record line carries a space", spaced, [])
+
+    # ---- WIRED: the modes this file advertises reach their functions. Rule 6
+    # in miniature, and it costs one read of this file.
+    src = pathlib.Path(__file__).read_text(encoding="utf-8")
+    want("--selftest and --verdict both reach code",
+         ("a.selftest" in src and "selftest()" in src
+          and "read(a.verdict)" in src), True)
+
+    import shutil as _sh
+    _sh.rmtree(tmp, ignore_errors=True)
+
+    print()
+    for b in bad:
+        print("FAIL " + b)
+    print("verdict-shot-files selftest: %d passed, %d failed" % (ok, len(bad)))
+    return 0 if not bad else 1
+
+
+def main(argv=None):
+    # A CORRECT RUN MUST SURVIVE `| head`. A traceback after a clean reading
+    # costs twenty minutes before anybody notices it worked.
+    try:
+        import signal
+        signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+    except (ImportError, AttributeError, ValueError):
+        pass
+
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--verdict", default=str(DEFAULT_VERDICT),
+                    help="the verdict to read (default: the UE vignette one)")
+    ap.add_argument("--selftest", action="store_true",
+                    help="accepting case first, then the rejecting ones")
+    a = ap.parse_args(argv)
+
+    if a.selftest:
+        return selftest()
+
+    r = read(a.verdict)
+    for line in report_lines(r):
+        print(line)
+    return verdict_exit(r)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

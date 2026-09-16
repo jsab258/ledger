@@ -3273,6 +3273,134 @@ def verdict_emit_dupkeys():
                     .replace(" same-line duplicate key(s) (", ", ") + ")"
 
 
+def vignette_shot_files(verdict=None):
+    """Every frame the vignette verdict NAMES is a frame the commit carries.
+
+    MEASURED 16 SEPTEMBER, NOT SUSPECTED. The verdict named 43 shot files with
+    a byte count each; four of them had never been in the repository on any
+    commit (`git log --all -- 'production/d1-probe/ue-pinset_night_*.png'`
+    returns nothing, against 29 commits for the `ue-vign_` family). The probe
+    collected and staged its frames by name prefix, `ue-vign_*.png`, which is
+    ci.md's rule obeyed exactly; then the spec grew a `pinset_` family the
+    prefix did not cover, and four frames were rendered and thrown away on
+    every run since. Two of them were perfect, at 1367920 and 1278041 bytes.
+
+    THE GLOB IS FIXED IN THE WORKFLOW AND THAT IS NOT WHAT THIS IS. A wider
+    pattern is the same bet placed again; this is the thing that would have
+    said so. It compares the two lists that must agree, the names the run
+    printed and the paths the index holds, and does not care what the pattern
+    is.
+
+    BOTH HALVES RUN. The selftest says the reader still works at all, with its
+    accepting case on the live repository's own committed frames; the reading
+    says today's tree agrees with today's verdict. A green selftest over a red
+    tree is a working instrument reporting a real gap, and the two must not be
+    able to stand in for each other."""
+    tool = str(ROOT.parent / "tools" / "verdict-shot-files.py")
+    code, out = run(["python3", tool, "--selftest"])
+    m = re.search(r"selftest: (\d+) passed, (\d+) failed", out)
+    if not m:
+        return False, "verdict-shot-files selftest did not report"
+    if code != 0 or m.group(2) != "0":
+        bad = [l.strip() for l in out.splitlines() if l.strip().startswith("FAIL")]
+        return False, ("SHOT-FILE CHECK BROKEN: %s of %s fixture(s) failed: %s"
+                       % (m.group(2), int(m.group(1)) + int(m.group(2)),
+                          _cap(bad, width=110, tail="and named none of them")))
+    selft = "%s fixtures" % m.group(1)
+
+    # THE ARGUMENT EXISTS SO THIS WRAPPER'S GREEN BRANCH CAN BE DRIVEN, the
+    # same reason `claude_md_size(path=None)` and `convo_probe(src=None)` take
+    # one. Default None is the live verdict, which is what the suite reads.
+    # RESOLVED AGAINST THE REPOSITORY, NOT AGAINST `run`'s cwd, which is
+    # `ledger/`. A relative path handed in here silently became `ledger/<path>`
+    # and came back "nothing measured" instead of reading the file the caller
+    # meant. It failed loudly rather than passing, but it named the wrong
+    # reason, which costs the turn all the same.
+    if verdict is not None and not os.path.isabs(str(verdict)):
+        verdict = ROOT.parent / str(verdict)
+    code, out = run(["python3", tool]
+                    + ([] if verdict is None else ["--verdict", str(verdict)]))
+    # KEYED LOOKUPS, NOT A PINNED LINE. A positional reader that silently
+    # returns the wrong field is the `grep -o` fault this whole family of
+    # tools exists to stop, and a new key between two old ones must be a new
+    # key rather than a breakage.
+    keys = dict(re.findall(r"\b(shotFilesNamed|shotFilesPresent|shotFilesMissing"
+                           r"|verdictShotLines)=(\d+)", out))
+    want = ("shotFilesNamed", "shotFilesPresent", "shotFilesMissing")
+    absent = [k for k in want if k not in keys]
+    if absent:
+        return False, "verdict-shot-files did not report " + ", ".join(absent)
+    named, present, missing = (int(keys[k]) for k in want)
+
+    if code != 0:
+        # THE NAME AND THE REASON, PROJECTED BEFORE THE CAP. A first version
+        # passed the whole fault line through `_cap(width=78)`, which cut it
+        # at `verdictBytes=` and dropped `fault=` off every entry: the footer
+        # then said four frames were lost without saying whether they were
+        # never rendered or rendered and never staged, which is the whole
+        # difference between an engine bug and a staging bug.
+        faults = []
+        for l in out.splitlines():
+            if not l.startswith("shotFileFault "):
+                continue
+            f = re.search(r"\bfile=(\S+)", l)
+            w = re.search(r"\bfault=(\S+)", l)
+            faults.append("%s(%s)" % (f.group(1) if f else "unnamed",
+                                      w.group(1) if w else NOTHING_MEASURED))
+        if named == 0:
+            # EXIT 2 IS "I COULD NOT LOOK" AND EXIT 3 IS "IT NAMED NOTHING
+            # WHILE CLAIMING A CAPTURE". Neither is "four frames are missing",
+            # and a reader sent to look for absent frames when the verdict is
+            # simply gone loses the turn.
+            return False, ("VIGNETTE SHOT FILES %s: the verdict named no frame "
+                           "at all (exit %d): %s"
+                           % (NOTHING_MEASURED, code,
+                              _cap([l.strip() for l in out.splitlines() if l.strip()],
+                                   width=120, last=True)))
+        # THE COUNT COMES FROM THE DONE LINE, NOT FROM len(faults). The tool
+        # caps its per-frame lines, so counting them here would report the cap
+        # as the finding, which is the `| head -3` incident one layer out.
+        untracked = re.search(r"\bshotFilesUntracked=(\d+)", out)
+        lost = missing + (int(untracked.group(1)) if untracked else 0)
+        return False, ("VIGNETTE SHOT FILES LOST: %d of %d named frame(s) are "
+                       "not in the commit (%d missing from disk, %s present but "
+                       "unstaged): %s"
+                       % (lost, named, missing,
+                          untracked.group(1) if untracked else NOTHING_MEASURED,
+                          _cap(faults, keep=4, width=78)))
+
+    # A ZERO NEEDS ITS DENOMINATOR (rule 3b). `0 missing` over a verdict that
+    # named nothing is the placeholder a failed probe writes, and it must not
+    # print the same sentence as 43 frames all present.
+    if named == 0:
+        return True, ("vignette shot files %s (the verdict measured nothing; "
+                      "no frame was named, so none was checked), %s"
+                      % (NOTHING_MEASURED, selft))
+    # THE WAIVER RIDES THE GREEN LINE OR IT IS NOT A WAIVER, IT IS A HOLE.
+    # `4 missing` beside a green tick would read as a broken check; the footer
+    # has to say the four are forgiven, how many the frozen list holds, and
+    # which run the forgiveness is pinned to, so the day the pin moves nobody
+    # is surprised. Same shape as `preReadingWaiverBit=17/17`.
+    # THE KEYS TRAVEL IN THE SHAPE THE TOOL PRINTS THEM, character for
+    # character, so one grep for `shotFiles` finds the same fields in the
+    # footer and in the verdict reading. A key that means `39` in one channel
+    # and `39/43` in another is two keys wearing one name.
+    w = re.search(r"\bshotFilesWaived=(\d+)/(\d+)", out)
+    run_pin = re.search(r"\bshotFilesWaivedRun=(\S+)", out)
+    keys = ("shotFilesNamed=%d shotFilesPresent=%d shotFilesMissing=%d "
+            "shotFilesWaived=%s shotFilesWaivedRun=%s"
+            % (named, present, missing, w.group(0).split("=")[1] if w else
+               NOTHING_MEASURED,
+               run_pin.group(1) if run_pin else NOTHING_MEASURED))
+    if w and int(w.group(1)):
+        return True, ("verdict shot files: %s, so %s named frame(s) are "
+                      "forgiven on that one run and the waiver self-expires "
+                      "(a verdict from any other run faces the full check), %s"
+                      % (keys, w.group(1), selft))
+    return True, ("verdict shot files: %s, all present and tracked, %s"
+                  % (keys, selft))
+
+
 def frame_drift():
     """Layer 3 of the testing system: the instrument that reads the render.
 
@@ -8329,7 +8457,8 @@ def main():
                propview, meshgen_suite, ref_bench,
                decal_ink,
                frame_drift, verdict_keys, verdict_format, verdict_dupkeys,
-               verdict_emit_dupkeys, runs_map_to_commits, gate_detail_ceiling,
+               verdict_emit_dupkeys, vignette_shot_files,
+               runs_map_to_commits, gate_detail_ceiling,
                save_chaos, soak,
                adversary, stale_anchors, clip_audit, picker_selftest, core_tests):
         results.append(_guarded(fn))
