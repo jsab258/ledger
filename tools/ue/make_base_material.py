@@ -3967,21 +3967,35 @@ if __name__ == "__main__":
     # IT CANNOT TAKE THIS SCRIPT DOWN WITH IT. Everything above has already
     # run and already written its line; this is wrapped so that a fault in
     # the sky material prints as a sky key and never as a missing material.
-    try:
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-        import make_sky_material
-        make_sky_material.main()
-    except Exception as _sky_err:
+    # AND ONLY INSIDE THE EDITOR, which was missing and cost a tracked file.
+    # Chained unconditionally, this block runs on every container invocation
+    # INCLUDING `--selftest`, which ledger/verify.py now calls before every
+    # commit. `unreal` does not import there, so the handler fell to
+    # `_root = "."` and APPENDED "skyMaterialStatus=RAISED ... No~module~
+    # named~'unreal'" to a ue-material.txt in the working directory, once per
+    # verify run. It created and then grew ledger/ue-material.txt, five
+    # identical lines of a failure that never happened in any build, in a file
+    # shaped exactly like the build evidence the workflow reads at
+    # ue-probe/ue-material.txt. A check that writes is bad; a check that
+    # writes FAILURE LINES into something shaped like an evidence channel is
+    # the fault this project has a rule about. Outside the editor there is no
+    # editor run to chain, so there is nothing to report and nothing to write.
+    if _inside_unreal():
         try:
-            import unreal
-            _root = unreal.Paths.project_dir()
-        except Exception:
-            _root = "."
-        with open(os.path.join(_root, "ue-material.txt"), "a",
-                  encoding="utf-8") as _f:
-            _f.write("skyMaterialStatus=RAISED skyMaterialReturn=2 "
-                     "skyMaterialNote=%s\n"
-                     % str(_sky_err).replace(" ", "~")[:160])
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_sky_material
+            make_sky_material.main()
+        except Exception as _sky_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("skyMaterialStatus=RAISED skyMaterialReturn=2 "
+                         "skyMaterialNote=%s\n"
+                         % str(_sky_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "
