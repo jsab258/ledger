@@ -3,7 +3,7 @@ due: 2026-09-16T00:35:00Z
 armedAt: 2026-09-16T00:09:54Z
 armedBy: resident/run-47-dispatched-two-batches
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T01:13:19Z
 capBitAt: -
 
 Run 47 dispatched at c7387972 by committing production/d1-probe/DISPATCH; sha BEFORE dispatch was ad02021a. Watch BY ANCESTRY (git merge-base --is-ancestor c7387972 <landed>), never by branch movement or run name; tools/landed.py --contains is BROKEN, queue 312. Run 46 took 17 minutes wall. WHEN IT LANDS, in this order: (1) FRAME FIRST, and measure before writing any sentence: put ue-vign_wet_000.png and ue-vign_wet_100.png in ONE picture at ONE scale and compare their pixel difference against the certified null floor of 75.59 per cent at maxChannelDelta 29/255, because run 46's wetness pair sat INSIDE that floor at 76.03 per cent and 41/255; section 10 predicts this run separates BEYOND it. (2) the keys against section 10 of the 22:25Z ruling, which was written before the run existed. (3) DO NOT quote band.ground.p50 as a wetness reading: the kerb is 48 points darker and the concrete 23 points paler this run, both in the ground band. (4) controls band.skyCentre.p50 0.8035 and shotExposurePinRead 0.3000/0.3000 must not move; if either does, suspect the exposure or the instrument before either batch. (5) queue 300's frame half is then judged against the Hook sheet under D41, no director, and Jafar sees it only if it matches or if I am stuck. NEXT AFTER THAT: queue 319 then 324, then the dusk frame, NOT from cam_A.
