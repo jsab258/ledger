@@ -113,3 +113,119 @@ exist as geometry or as a surface.
   like, and they are NOT a dusk reference. The dusk frame's judge is D41's
   second path until a dusk sheet exists, and that blank rung is now a row on
   the quality ladder.
+
+THE IMPLEMENTATION MAP, 2026-09-16, BOUGHT WITH A WHOLE AGENT'S BUDGET AND
+WRITTEN DOWN SO IT IS NEVER BOUGHT TWICE. An engine-specialist spent 49 tool
+calls and wrote no code. What it produced instead is below, every site traced
+against the tree rather than against the ruling. The next agent starts at turn
+one with this.
+
+  THE RULING'S LINE NUMBERS ARE UNIFORMLY ABOUT 19 LINES STALE. Every block it
+  names is the right block and every number is wrong, consistent with one
+  insertion upstream since it was written. Corrected:
+
+      emissive block, "1310 to 1326"      is 1329-1347, with Lamp at 1332
+      ApplyCondition visibility, ":1798"  is 1817-1818
+      generator docstring, ":1083"        is 1077-1091
+      decal precedent, ":4089"            is the ONE INSTANCE PER PIECE
+                                          comment at 4097; the decal card's
+                                          Create is 4227 and the generic
+                                          per-piece Create is 4260
+
+  (a) THE PARAMETER, tools/ue/make_base_material.py. EMISSIVE_PARAM and
+  EMISSIVE_PARAM_DEFAULT beside VECTOR_PARAMS at :167, and KEPT OUT of
+  VECTOR_PARAMS for the reason the file already gives for keeping WETNESS_PARAM
+  out of SCALAR_PARAMS at :170-186: the summary at :2526-2532 prints
+  vectors=<joined>/default.<one default>, so a second name there prints one
+  default over two parameters. Name-readback loop at :3550 takes
+  VECTOR_PARAMS + [EMISSIVE_PARAM]. The node goes beside grade at :3345-3366,
+  a MaterialExpressionVectorParameter with the default set the two ways the
+  grade block already tries. One wire, with the other connect_prop calls at
+  :3488-3502.
+
+  (b) THE DENOMINATOR IS 19 TODAY AND 20 AFTER, counted at the call sites and
+  not assumed: 2 connect_uv_head + 6 connect in the UV chain (:3311-3318),
+  3 samplers making 2 each (:3425-3459, called at :3480), then
+  albedograde-to-grade, grade-to-basecolor, wetfloor-to-wetlerp,
+  wetness-to-wetlerp, wetlerp-to-roughness. 8 + 6 + 5 = 19. This is the one
+  number in the ruling the tree bears out exactly.
+
+  (c) THE PER-PIECE INSTANCE ALREADY EXISTS AND THE RULING READS AS IF IT DOES
+  NOT. VignetteShot.cpp:4260 already does
+  UMaterialInstanceDynamic::Create(GBaseMaterial, *Found) for every non-decal
+  piece, under the ONE INSTANCE PER PIECE comment at :4097, and the lanterns
+  are shape=box surface=metal so they take that path. The work is to RECORD
+  the existing MID for pieces where Pc.Emissive, not to create a second.
+  AND IT OWES A DENOMINATOR the ruling does not name: a lantern falling down
+  any unpainted exit (NoBind :4128, NoActor :4137, NoComponent :4139,
+  NoInstance :4261) has no MID and cannot glow, so the drive prints emissive
+  pieces holding an instance over emissive pieces in the file.
+
+  (d) THE DRIVE, VignetteShot.cpp:1817-1818, the two-line lantern visibility
+  loop. Copy ReDriveWetness at :1625-1759 in shape: a guard struct in the
+  tested header (WetRedrive at SurfaceBind.h:1761, its counters at
+  :1790-1836), counters on a done line, readback taken in the same few
+  statements as the set. ApplyCondition is RE-ENTERED EVERY TICK while a
+  condition settles, which is the measured reason that guard exists
+  (:1631-1636). Value: the Lamp linear triple times the strength when
+  C.LanternsOn, exactly (0,0,0,1) when not.
+
+  (e) THE READBACK, MeasureShot at VignetteShot.cpp:3113-3120, where
+  WetShotFields appends its asked-beside-carried segment, after
+  ShotControlQuadsNow and ExposurePinNow. Bgra, W and H are in scope there,
+  which is what lets a pixel instrument read the frame just decoded.
+
+  (f) THE PROJECTION ALREADY EXISTS AND DOES NOT NEED WRITING.
+  SurfaceBind.h:2631 has ProjectFilePoint(Camera, XM, YM, ZM, W, H) returning
+  ScreenAt{Px,Py,ForwardM,bAhead}, and :2679 has ControlQuadBox returning
+  ScreenBox with CornersAhead and CornersInFrame from four projected corners.
+  A PieceScreenBox over the piece's eight corners is a near copy, in the same
+  header, exercised by the same binary.
+
+  (g) THE CONSTANT was not chosen because the edit was never reached. Shape
+  settled: kLampEmissiveUnitless beside kLampGainUnitless at
+  VignetteShot.cpp:141, printed on the scene line beside lampGain in the
+  snprintf at :1536-1541, with the colour space named as lampColourSpace
+  already does at VignetteSpec.h:760. FLAGGED FOR THE DIRECTOR: 1.0 unitless
+  times the linear triple gives emissive (1.0, 0.70, 0.0) linear, while the
+  reference globe reads 242 of 255 against a sky at 181, so 1.0 may be under.
+  That is the argument for shipping it as a series' first value WITH the
+  instrument in the same run, rather than guessing upward.
+
+TWO THINGS THAT NEED A RULING AND NOT A BUILDER'S GUESS:
+
+  1. "THE TESTED HEADER" IS TWO HEADERS AND THE WORK DOES NOT FIT IN ONE.
+  LedgerVignette::Camera and Piece live in VignetteSpec.h and SurfaceBind.h and
+  cannot be reached from FrameStats.h, which deliberately carries no spec type.
+  The split that keeps both halves inside binaries verify.py already runs:
+  projection in SurfaceBind.h, pixel maths and the formatter in FrameStats.h,
+  whose test already builds synthetic BGRA frames (Flat(W,H,B,G,R) at :41).
+
+  2. SECTION 3 CONDITION 3 AND PREDICTION P4 CONTRADICT EACH OTHER. Condition 3
+  says the segment prints per lantern per PROBED shot. P4 predicts it prints
+  "no" at day rows of the same cameras. A day row is NOT a probed shot:
+  ShouldProbeShot at :2789-2794 returns true only when the condition has
+  lanterns or practicals on. So P4's refutable prediction is unreachable under
+  condition 3. The yes-at-night-no-at-day pair in ONE run is this item's
+  acceptance sentence, which argues for P4 and for printing on every shot line
+  with a decoded frame.
+
+AND THE DISPATCH WAS SIZED WRONG, which is the resident's finding about its own
+brief. The brief named four call sites across five files totalling 13,734
+lines in a codebase that is 60 to 70 per cent comment by line, where the
+comments are load-bearing and a 20-line window round a call site tells you
+nothing. It was a READING task sized as a writing task. SPLIT IT THREE WAYS,
+which have almost no overlap: the material generator plus its selftest (self
+contained, runs locally, about 80 lines); the instrument plus its three
+fixtures (self contained, runs locally); the .cpp wiring (cannot be verified
+locally at all). Only the third is unverifiable until CI. And hand each one its
+precedent function BY NAME WITH ITS LINE RANGE, because roughly a third of the
+spent budget went to finding ReDriveWetness, ControlQuadBox and the paint
+loop's Create.
+
+THE RECORD'S CONTENT CLAIMS HOLD, re-checked by the resident because the agent
+declined to take three of them on trust and was right to: 0 hits for emissive
+or selfillum in SurfaceBind.h and make_base_material.py, 4 emissive pieces of
+610, and StreetVignette.cs:89 reads `public bool Emissive;    // the lantern
+bowls, and nothing else`.
+
