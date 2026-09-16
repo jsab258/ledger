@@ -51,6 +51,65 @@ turns up, file it and keep going."
   without adding it to organization.md, so for one edit the text existed
   nowhere.
 
+## 2026-09-16 20:0xZ CLOSE: RUN 53 PUT A FIGURE IN QUAY STREET AND IT IS A T-POSE BEHIND A CRATE
+
+READ THIS FIRST ON MONDAY. The figure LANDED, and three of the four things
+that had to work did. What did not work is legible and filed, so this opens on
+the figure and not on a cold read.
+
+**WHAT WORKED, all read off the landed verdict at `4696d113` (probe from
+`61e46c4e`), not predicted.** The build succeeded. `figure=STANDING`,
+`figureBones=65`, `figureMeshHeightCm=166.50` against the 166.442 measured off
+Michelle's own FBX in this container, so the UNIT CONFUSION IS RULED OUT and
+the import is right. `figureScale=1/never-scaled`. `figureAtM=x.17.50/y.0.125/
+z.4.00` and `figureFootGapCm=0.000`, so it stands on the kerb where the search
+put it. `figureScopedTo=lanterns-on-only` held and `figureShownShots=12/
+hidden=37`.
+
+**THE BUFFER FIX HELD.** All seven keys that `char B[900]` was eating are
+present, and `figureSegTruncated` is absent, so 2048 carries the line. Without
+the audit that found it, this run would have returned green with the entire
+placement readback missing and nobody would have known the keys existed.
+
+**WHAT DID NOT WORK, AND IT IS TWO SEPARATE FAULTS.**
+
+- **Queue 379, the pose.** `figurePoseMaxBoneDeltaCm=0.000/overBones=65` beside
+  `figureWhy=pose-evaluated`. Those cannot both be true: the test needs no
+  threshold precisely because a figure that never evaluated reads delta exactly
+  0 on every bone. It read exactly 0 on all 65. So the figure is a T-POSE, and
+  the destroy decision that exists for that case did not fire. The
+  engine-specialist predicted this exact failure at 0.8 confidence before the
+  run; what happened is that fault with the opposite ending.
+- **Queue 380, the silhouette reads yes on an empty box.** Six `settle_night`
+  shots reported `figureSil1=figure_michelle/yes`. THE BOX WAS OPENED AND THERE
+  IS NO FIGURE IN IT: a shopfront doorway, railings, crates. The projection was
+  checked independently and is CORRECT (14.8 m, 13.3 degrees right of the
+  cam_hook axis, x about 905, about 114 px against the reported box=x827..936
+  and projH=120.80). Darkness is not evidence of a person and a core-versus-
+  ring test has no way to ask whether one is there.
+
+**THE ONE PLACE IT IS VISIBLE, measured rather than glanced at.** On
+`ue-vign_camA_night`, the figure's own box differs from run 51's same rectangle
+in 461 of 5460 pixels by more than 2/255, largest channel difference 168. The
+before/after/difference picture is
+`game-design/sim-shots/figure_run53_camA_before_after.png` and it shows a
+NARROW VERTICAL SLIVER where run 51 had bright sky. The figure is almost
+entirely occluded by a crate and only the part blocking a sky gap is visible.
+`projH=77.63` against the 76.7 px predicted before the run, which is the
+placement arithmetic confirmed.
+
+**A CORRECTION TO MY OWN READING, recorded because it is the rule this project
+keeps re-learning.** I first opened the camA crop and said it showed a dark
+form with a readable head and shoulders. THAT WAS A GLANCE, NOT A MEASUREMENT,
+and rule 4 says exactly why it is worthless: a picture is strong evidence that
+something is wrong and weak evidence of what. The before/after/difference is
+what settled it, and what it settles is smaller than what I claimed.
+
+**WHERE MONDAY STARTS:** queue 379 first and its two bugs IN ORDER, the
+contradiction before the pose, because a word and a number that disagree make
+every future green line unreadable. Then 380. The occlusion is a placement
+question and belongs with them, not before them.
+
 ## 2026-09-16 18:35Z: THE COST ASSESSMENT, AND A RATIO IS WITHDRAWN THE SAME HOUR
 
 A SECOND EXTERNAL ASSESSMENT LANDED, on cost, and its finding is that PHASE A
