@@ -1,0 +1,23 @@
+id: 5432dbc4
+due: 2026-09-16T16:05:00Z
+armedAt: 2026-09-16T15:36:43Z
+armedBy: resident/sky-builder-out-photograph-not-mechanism
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+ONE BUILDER OUT ON THE SKY. 4cf62064 is HEAD and pushed. Budget 2026-09-16e: 69 total, 69 Fable, ceiling 85, takenAt 15:33Z, so SIXTEEN POINTS OF HEADROOM and the day is measured until about 01:33Z. Do not start a second builder without a reason: one CI round trip is likely all this budget should carry today.
+
+JAFAR RULED THE SKY AT 14:1xZ AND HE RULED IT BY WIDENING IT: "I approved the photograph, not a particular binding. If it needs a different asset type or a different setup to render as a sky, do that under D41 without asking; the ruling was the overcast photograph rather than the mechanism." That settles queue 286's fork WITHOUT a series: the lever is the photograph, not the Mie constants. DO NOT RUN THE MIE SERIES to compare fairly; it would spend a round trip on a question he has answered.
+
+WHAT RUN 49 MEASURED, which is where the builder started: skyHdriAsked=Sky/polyhaven/belfast_open_field_2k, skyHdriFoundAt=NOT-FOUND over four paths all under ue-probe/Packaged/, skyHdriBytes=0, skyHdriBoundAs=NOTHING/a-skylight-takes-a-cube-and-this-engine-builds-none-at-runtime, skyModel=skyatmosphere+skylight-realtime-capture/not-an-hdri. TWO INDEPENDENT FAULTS: the .hdr is in the repo at ledger/Assets/Resources/Sky/polyhaven/ and nothing stages it into the package, AND a .hdr is the wrong asset type for a runtime SkyLight. Fixing one alone changes no frame.
+
+WHEN IT LANDS: review the diff, run verify, ONE commit, push, then dispatch ledger-probe-unreal by appending to production/d1-probe/DISPATCH. Capture the sha BEFORE pushing and watch by ancestry, never by branch movement, comparing run files BY PREFIX because they are 7 chars and git abbreviates to 8. Run 49 is the model: e1b4de77 named 355e8d87 and that is how the landing was recognised.
+
+THE FIGURE IS UNBLOCKED AS OF D46. Mixamo bodies are in, ruled by Jafar, allowlist edited in the same batch, queue 335 closed. Eighteen bodies at ledger/Assets/Characters, no child-looking name among them. NOTHING HAS BEEN BUILT TOWARD PUTTING ONE IN A FRAME: the vignette scene spec has no person and the walk pawn has no skeletal mesh. That is real work and it is not started.
+
+HIS REGISTER CORRECTION BINDS EVERY MESSAGE FROM NOW: a filed item gets ONE LINE saying it is filed, not paragraphs of reasoning. The reasoning goes in the record where he can open it. The rule is in .claude/agents/producer.md under the caps and is NAMED in producer-check as `filedline` under NOT ENFORCED, because no bound was invented to make it look enforced.
+
+STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, which land together or not at all; the lamp drive guard's move into the tested header, BEFORE the lamp constant's second value is written; 332 the control that disagrees with itself; 356 sendability; 357 the workflow trigger; 358 the lit test's missing margin; 359 the road printer, whose FIRST job is the printer and not the road.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.
