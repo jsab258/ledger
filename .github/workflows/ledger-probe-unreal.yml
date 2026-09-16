@@ -902,13 +902,71 @@ jobs:
             if ($sha) { $sha = $sha.Substring(0, [Math]::Min(7, $sha.Length)) } else { $sha = "SHA-UNKNOWN" }
           }
           $epoch = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
+
+          # WHICH FILES THIS STEP'S FRAMES ARE, DEFINED ONCE FOR THE WHOLE
+          # STEP. Read this before editing any of the three sites below.
+          #
+          # THE INCIDENT, 16 SEPTEMBER. `ue-vign_*.png` was written at FOUR
+          # sites in this file: the clear above, the clear of the engine's own
+          # output dirs, the copy into production/d1-probe, and the `git add`
+          # in the commit step. The spec then grew a fifth and sixth shot
+          # family, `pinset_night_1` through `_4`, and the engine wrote them as
+          # `ue-pinset_night_*.png` (VignetteShot.cpp builds every leaf as
+          # `ue-<shotId>.png`, so the leaf is whatever the spec's id is). Not
+          # one of the four sites matched. All four frames were rendered and
+          # thrown away on every run since, INCLUDING the two that came back
+          # perfect at 1367920 and 1278041 bytes, and the queue item asking for
+          # the two blank ones to be diagnosed could not be done because no
+          # picture existed to open.
+          #
+          # SO THE LIST COMES FROM THE SPEC, which is the same file the engine
+          # reads its shot ids out of. A family added there is covered here on
+          # the run it arrives, with nothing for anybody to remember.
+          #
+          # THE PATTERNS SURVIVE AS A FLOOR, not as the definition. If the
+          # spec cannot be parsed the list is empty, and an empty list would
+          # clear nothing, which is the one failure that would let a previous
+          # run's picture be committed as this run's evidence. The union of
+          # the two is therefore what every site uses, and the step PRINTS
+          # both counts so a reader can see which half did the work.
+          $shotLeaves = @()
+          try {
+            $spec = Get-Content "production/specs/vignette-pieces.json" -Raw | ConvertFrom-Json
+            $shotLeaves = @($spec.shots | ForEach-Object { "ue-$($_.id).png" })
+          } catch {
+            $shotLeaves = @()
+          }
+          $shotPatterns = @("ue-vign_*.png", "ue-pinset_*.png")
+          function Test-IsShotPng([string]$name) {
+            if ($shotLeaves -contains $name) { return $true }
+            foreach ($p in $shotPatterns) { if ($name -like $p) { return $true } }
+            return $false
+          }
+          # WHOLE-STEP COUNTS, on the step's own line, named for what they are
+          # statistics OF: `shotLeavesFromSpec` is the number of shot ids the
+          # committed spec carries, and a 0 there means the parse failed and
+          # the patterns are carrying the step alone.
+          $leafSrc = if ($shotLeaves.Count -gt 0) { "spec" } else { "nothing-measured/patterns-only" }
+          Write-Host ("shotLeavesFromSpec=$($shotLeaves.Count) shotLeafSource=$leafSrc " +
+                      "shotPatternFloor=$($shotPatterns -join '/')")
+          # AND HANDED TO THE COMMIT STEP BY NAME, one leaf per line, so the
+          # `git add` down there stages the same set this step cleared and
+          # collected rather than a second copy of the idea. Untracked scratch
+          # in the workspace root, beside vign-run.log; it is never staged.
+          if ($shotLeaves.Count -gt 0) {
+            $shotLeaves | Set-Content "vign-shot-leaves.txt" -Encoding utf8
+          } else {
+            Remove-Item "vign-shot-leaves.txt" -Force -ErrorAction SilentlyContinue
+          }
+
           # THE TRACKED COPIES GO FIRST, ALL OF THEM. They are tracked files,
           # so the checkout restored the PREVIOUS run's pictures and verdict;
           # a run that renders nothing would otherwise leave last night's
           # street in the repository beside a verdict saying nothing was
           # measured, and a reader would attribute the picture to this commit.
           Remove-Item $out -Force -ErrorAction SilentlyContinue
-          Get-ChildItem "production/d1-probe" -Filter "ue-vign_*.png" -ErrorAction SilentlyContinue |
+          Get-ChildItem "production/d1-probe" -Filter "ue-*.png" -ErrorAction SilentlyContinue |
+            Where-Object { Test-IsShotPng $_.Name } |
             Remove-Item -Force -ErrorAction SilentlyContinue
 
           $exe = $env:SHOT_EXE
@@ -1043,9 +1101,13 @@ jobs:
                       (Join-Path $binDir "ue-vignette-verdict.txt"),
                       (Join-Path $PWD "ue-probe\ue-vignette-verdict.txt"))
           foreach ($c in $vCands) { Remove-Item $c -Force -ErrorAction SilentlyContinue }
+          # SAME SET AS THE CLEAR AND THE COPY, from Test-IsShotPng at the top
+          # of this step. A clear narrower than the copy is how a previous
+          # run's frame survives to be collected and reported as this one's.
           foreach ($d in @($proj, $binDir, (Join-Path $PWD "ue-probe"))) {
             if ($d -and (Test-Path $d)) {
-              Get-ChildItem $d -Filter "ue-vign_*.png" -ErrorAction SilentlyContinue |
+              Get-ChildItem $d -Filter "ue-*.png" -ErrorAction SilentlyContinue |
+                Where-Object { Test-IsShotPng $_.Name } |
                 Remove-Item -Force -ErrorAction SilentlyContinue
             }
           }
@@ -1079,15 +1141,23 @@ jobs:
               "shotReached=end") | Set-Content $out -Encoding utf8
           }
 
-          # THE FRAMES, COLLECTED BY NAME PREFIX FROM WHICHEVER PLACE THE
-          # BINARY WROTE THEM. Copied into the repository under the same
-          # names the verdict's shot lines carry, so a reader holding the
-          # verdict can open the picture it describes.
+          # THE FRAMES, COLLECTED BY NAME FROM WHICHEVER PLACE THE BINARY
+          # WROTE THEM. Copied into the repository under the same names the
+          # verdict's shot lines carry, so a reader holding the verdict can
+          # open the picture it describes.
+          #
+          # THIS IS THE SITE THAT LOST THE FOUR PINSET FRAMES, and it is
+          # upstream of the `git add` in the commit step: a frame that is
+          # never copied here cannot be staged there however wide that glob
+          # gets. Test-IsShotPng at the top of this step is now the one
+          # definition of what a shot frame is, for the two clears and for
+          # this copy.
           $copied = 0
           $pngBytes = 0
           foreach ($d in @($proj, $binDir, (Join-Path $PWD "ue-probe"))) {
             if (-not $d -or -not (Test-Path $d)) { continue }
-            foreach ($f in (Get-ChildItem $d -Filter "ue-vign_*.png" -ErrorAction SilentlyContinue)) {
+            foreach ($f in (Get-ChildItem $d -Filter "ue-*.png" -ErrorAction SilentlyContinue |
+                            Where-Object { Test-IsShotPng $_.Name })) {
               $dest = Join-Path "production/d1-probe" $f.Name
               if (-not (Test-Path $dest)) {
                 Copy-Item $f.FullName $dest -Force
@@ -1096,6 +1166,19 @@ jobs:
               }
             }
           }
+          # THE DENOMINATOR, MEASURED AT THE INSTANT THE NUMERATOR STOPS
+          # MOVING (rule 3b). `stagedPngCopied=39` was byte-identical whether
+          # the spec asked for 39 frames or 43, which is exactly how four went
+          # missing for weeks without a single line of output looking wrong.
+          # Both numbers are counts over this one run, not peaks.
+          $leavesAbsent = @()
+          foreach ($leaf in $shotLeaves) {
+            if (-not (Test-Path (Join-Path "production/d1-probe" $leaf))) { $leavesAbsent += $leaf }
+          }
+          $absentSay = if ($shotLeaves.Count -eq 0) { "nothing-measured" }
+                       elseif ($leavesAbsent.Count -eq 0) { "none" }
+                       else { ($leavesAbsent | Select-Object -First 8) -join "/" }
+          if ($leavesAbsent.Count -gt 8) { $absentSay += "/(+$($leavesAbsent.Count - 8)-more-not-shown)" }
 
           # THE STEP'S OWN LINE, KEYS THE GAME CANNOT KNOW. The exit code is
           # not the verdict here for the same reason it is not one above:
@@ -1114,6 +1197,10 @@ jobs:
             "stagedVerdictCandidates=$($vCands.Count) " +
             "stagedVerdictFound=$(if ($vf) { 'yes' } else { 'no' }) " +
             "stagedPngCopied=$copied stagedPngBytes=$pngBytes " +
+            "stagedPngLeavesInSpec=$($shotLeaves.Count) " +
+            "stagedPngLeavesAbsent=$($leavesAbsent.Count) " +
+            "stagedPngLeavesAbsentNames=$absentSay " +
+            "stagedPngStat=counts-over-this-one-run/not-peaks " +
             "stagedVignExitIsNotTheVerdict=true")
 
           # THE TRANSCRIPT GOES IN THE LOG FILE, NOT THE VERDICT, so the
@@ -1961,11 +2048,85 @@ jobs:
               "$SHORT" "$(date -u +%s)" > "$VIGNVERDICT"
           fi
           [ -f "$VIGNVERDICT" ] && git add -- "$VIGNVERDICT"
-          # The four frames, by NAME PREFIX and never by directory, with -A so
-          # that their ABSENCE is staged too. The capture step deletes the
-          # tracked copies before running, so these paths either hold pictures
-          # this run rendered or hold nothing.
-          git add -A -- 'production/d1-probe/ue-vign_*.png' 2>/dev/null || true
+          # THE SHOT FRAMES, BY NAME AND NEVER BY DIRECTORY, with -A so that
+          # their ABSENCE is staged too. The capture step deletes the tracked
+          # copies before running, so these paths either hold pictures this run
+          # rendered or hold nothing.
+          #
+          # WHY NOT `git add production/d1-probe/`, WHICH WOULD HAVE CAUGHT
+          # THIS. Because it would have caught it by committing whatever was
+          # lying in that directory, which on a self-hosted runner is the
+          # previous run's checkout. ci.md's rule is right and it stays: a
+          # directory add trades a gap you can see for one you cannot.
+          #
+          # WHAT WENT WRONG INSTEAD, 16 SEPTEMBER. The single pattern here was
+          # `ue-vign_*.png`. The spec grew `pinset_night_1` through `_4`, the
+          # engine wrote them as `ue-pinset_night_*.png` (it builds every leaf
+          # as `ue-<shotId>.png`), and a by-name stage is blind to a family no
+          # pattern covers. Four frames were rendered and discarded on every
+          # run since, two of them perfect. So the names come from OUTSIDE this
+          # line now, three ways, cheapest first:
+          #
+          #   1. the leaf list the capture step derived from
+          #      production/specs/vignette-pieces.json, which is the same file
+          #      the engine takes its shot ids from, so a family added there is
+          #      staged on the run it arrives;
+          #   2. every `file=` the verdict itself printed, which covers a frame
+          #      the engine wrote under a name the spec does not describe;
+          #   3. the two literal patterns as a floor, so a run whose capture
+          #      step never got far enough to write the leaf list still stages
+          #      the ABSENCE of the frames it did not render.
+          #
+          # All three go through `git add -A --`, so a name in any of them that
+          # holds no file stages that file's deletion instead. Nothing here can
+          # stage a path this run did not name.
+          vignStaged=0; vignRefused=0; vignNamed=0; vignRepeat=0; vignSeen="|"
+          stage_shot_png() {
+            # ONE LEAF, NO PATH. A value carrying a separator or a `..` is
+            # refused and counted rather than joined onto the directory: the
+            # verdict is a file this repository writes, and the day it writes
+            # something else is the day this must not act on it.
+            case "$1" in
+              ""|*[/\\]*|*..*) vignRefused=$((vignRefused + 1)); return 0 ;;
+              *.png) ;;
+              *) vignRefused=$((vignRefused + 1)); return 0 ;;
+            esac
+            # COUNTED ONCE PER DISTINCT LEAF. The three sources overlap by
+            # design, so a plain tally read `vignNamed=6` over three files on
+            # its first run here, and a denominator larger than the set
+            # examined is how a clean result becomes a false claim with a
+            # number on it. The overlap itself is kept as `vignRepeat`.
+            case "$vignSeen" in
+              *"|$1|"*) vignRepeat=$((vignRepeat + 1)); return 0 ;;
+            esac
+            vignSeen="$vignSeen$1|"
+            vignNamed=$((vignNamed + 1))
+            if git add -A -- "production/d1-probe/$1" 2>/dev/null; then
+              vignStaged=$((vignStaged + 1))
+            fi
+          }
+          if [ -f vign-shot-leaves.txt ]; then
+            vignLeafSrc=spec-list
+            while read -r leaf; do
+              stage_shot_png "$(printf '%s' "$leaf" | tr -d '\r')"
+            done < vign-shot-leaves.txt
+          else
+            vignLeafSrc=nothing-measured/no-leaf-list-from-the-capture-step
+          fi
+          for leaf in $(grep -o 'file=[^ ]*\.png' "$VIGNVERDICT" 2>/dev/null | sed 's/^file=//' | sort -u); do
+            stage_shot_png "$leaf"
+          done
+          for pat in 'ue-vign_*.png' 'ue-pinset_*.png'; do
+            git add -A -- "production/d1-probe/$pat" 2>/dev/null || true
+          done
+          # WHOLE-STEP COUNTS ON THE STEP'S OWN LINE. `vignNamed` counts
+          # DISTINCT leaves and is the denominator `vignStaged` is a fraction
+          # of, read at the same instant; `vignRepeat` is how often the three
+          # sources named the same leaf, which is the overlap working rather
+          # than a fault; `vignRefused` counts names this declined to touch, so
+          # a verdict that starts emitting paths says so here instead of going
+          # quiet. All cumulative over this commit step, not peaks.
+          echo "vignStaged=$vignStaged vignNamed=$vignNamed vignRepeat=$vignRepeat vignRefused=$vignRefused vignLeafSrc=$vignLeafSrc vignStageStat=cumulative-over-this-step/distinct-leaves"
           # RULING 1'S FIVE JUDGMENTS, THE SAME TWO RULES AGAIN. The walk
           # verdict is a TRACKED file, so a run that never reached the walk
           # step (or that hung and was killed before it could write one)
