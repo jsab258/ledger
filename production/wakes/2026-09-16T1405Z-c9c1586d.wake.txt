@@ -3,7 +3,7 @@ due: 2026-09-16T14:05:00Z
 armedAt: 2026-09-16T13:30:08Z
 armedBy: resident/run-49-read-confirm-the-card-sent
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T14:10:00Z
 capBitAt: -
 
 RUN 49 IS READ AND THE LAMP IS LIT. Nothing is running: no builders, no directors, no CI. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, measured until roughly 22:2xZ.
@@ -21,3 +21,31 @@ STILL OWED, NONE OF IT TO BE STARTED WITHOUT CHECKING THE ORDER OF THE DAY FIRST
 JAFAR'S ORDER FOR TODAY WAS THE VISUAL SLICE AND NOTHING ELSE: wetness, materials, then dusk with lamps lit, wet road and a figure in silhouette. The lamps are lit and the road is wet in the frame. THE FIGURE IS BLOCKED ON HIM (queue 335) and the frame shipped without one, which is what the card's default said would happen.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.
+
+DISCHARGED 2026-09-16T14:10Z.
+
+ITS FIRST JOB IS DONE AND THE ANSWER IS YES, checked by RECEIPT and not by the
+summary line, which would have been the wrong reading:
+
+    part1  messageId=105  sentAt=2026-09-16T13:17:28Z  outboundLatencySec=109
+    part2  messageId=106  sentAt=2026-09-16T13:17:28Z  outboundLatencySec=109
+
+Jafar has both, and part 1 carries the licence question that blocks the figure.
+THE SUMMARY LINE ALONE WOULD NOT HAVE SETTLED IT: the 15:24 sweep on 355e8d8
+reads `sent=0 unsent=0 alreadySent=38 sendFailed=0`, and a reader taking sent=0
+at face value would have concluded nothing went. They went at 13:17 in an
+earlier pass, which is why the later sweep counts them as already sent. Two
+numbers about two different moments, which is the shape this project keeps
+meeting.
+
+INBOX: nothing new, seen=2 delivered=0/2 alreadyHere=2/2. No question pending.
+
+NOTHING IS RUNNING and the budget allows work: 65/65 against a ceiling of 85,
+the reading about two hours old and so inside the ten-hour bound.
+
+WHAT THE STANDING ORDER NOW IS, because the ordered work has landed as far as
+it can without him. Wetness, materials and dusk-with-lamps-lit are in the
+frame; the figure is blocked on his one word and the frame shipped without it.
+What remains of his instruction is the half nobody has done yet: "judged
+against the Hook sheet by you". That is the D41 loop, ungated, no director, no
+predictions, and it is the next thing rather than a new item from the queue.
