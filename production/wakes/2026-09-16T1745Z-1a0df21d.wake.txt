@@ -3,7 +3,7 @@ due: 2026-09-16T17:45:00Z
 armedAt: 2026-09-16T17:05:31Z
 armedBy: resident/361-builder-out-on-the-sky-night-level
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T18:06:19Z
 capBitAt: -
 
 ONE BUILDER OUT ON QUEUE 361, THE SKY'S NIGHT LEVEL. 78ac0c50 is HEAD and pushed. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, sixteen points of headroom, measured until about 01:33Z. Inbox clean, no wakes due at 17:04Z.
