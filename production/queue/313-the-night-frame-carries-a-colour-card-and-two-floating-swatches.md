@@ -75,3 +75,24 @@ THREE LEADS, none of them a diagnosis.
      swatch has, and one is fewer than the two swatches seen, so it cannot
      explain both. Worth opening before the card pieces are.
   3. decalQuads=20/20 on the same line, all placed.
+
+ANSWERED 2026-09-16, and the swatches this item could not localise are the
+run's own control quads. An artifact-reader matched the verdict's projected
+boxes to the card and both swatches, and the resident re-measured the three
+from ue-vign_camA_day.png: the card at x488..614 shows four saturated colours
+(within-quad channel spread 148.4), and the two swatches at x309..437 and
+x130..261 are UNIFORM PALE FALLBACKS at spread 10.2 and 16.1. This item's
+hand-read rectangle (487,298) to (613,423) matches the projected box
+x488..614 y298..422 to within two pixels, which is why the eye-chosen
+rectangle for the card worked and the ones for the swatches did not: the
+swatches are not a different material, they are the same instrument failing
+to load its texture, so there was no chroma separation to find. The
+measurement that this item reported as a failure was correct and its target
+was wrong.
+
+  So this item's question is closed and the FAULT it uncovered is queue 339.
+  Nothing here is spec geometry: controlQuadVisibility is
+  hidden-for-every-shot-whose-camera-is-not-the-one-they-were-placed-from,
+  and the quads are built in code, which is why ruling out the 10 pieces
+  tagged surface card was correct and led nowhere.
+

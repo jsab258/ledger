@@ -43,3 +43,49 @@ status: READY 2026-09-16, filed as a CLARITY item and NOT as a claimed
   AND NO TOKEN IS AT STAKE. The 91 files already in the tree suffice;
   tools/mixamo-pick/README.md says Jafar's bearer token is needed only to
   fetch NEW characters or clips. Nothing here asks him for anything.
+
+RULED 2026-09-16 (06:35Z ruling, section 6 and correction 7) AND THE RULING'S
+INSTRUCTION IS NOT APPLIED. The ruling directs the resident to correct line 6
+under D43 to name Mixamo characters, "citing Adobe's terms in the correcting
+commit". The resident checked the two premises before editing a file CLAUDE.md
+calls LAW, and both fail. Recorded here rather than argued, so the next
+session inherits the evidence and not the disagreement.
+
+  PREMISE ONE, THAT D29 ALREADY FLAGGED THE GAP. It does, and it says the
+  OPPOSITE of what a D43 correction needs. D29 line 30, verbatim:
+
+      The register decides faces in D2 and NOTHING decides bodies. The
+      eighty-nine archived FBX files and the Mixamo entry in the licence
+      allowlist are an implied answer nobody has written down.
+
+  D43 covers a document that says something factually wrong. A line that is
+  an "implied answer nobody has written down" is not wrong, it is UNDECIDED,
+  and writing the answer in is a decision. The distinction is the whole of
+  why D43 exists.
+
+  PREMISE TWO, THAT ADOBE'S TERMS CAN BE CITED. They cannot be cited from
+  here. A grep of the tree for Adobe or for Mixamo beside licen/terms/royalt
+  returns exactly one hit, tools/mixamo-pick/README.md line 73, and it is
+  about being polite to Adobe's servers. THERE IS NO STATEMENT OF MIXAMO'S
+  TERMS ANYWHERE IN THIS REPOSITORY. Citing them would mean writing a
+  citation from memory into the file that governs what ships, which is rule
+  1 exactly.
+
+  AND THE STANDING LAW SETTLES IT WITHOUT THE RESIDENT'S JUDGEMENT. CLAUDE.md:
+  "THE LICENCE ALLOWLIST IS LAW ... nothing ships that is not on it, and a new
+  tool enters only through a decision record naming its weights licence." The
+  06:35Z record does not name Mixamo's terms; it instructs that they be named
+  in the commit. So by the allowlist's own entry rule the line cannot be added
+  yet, and this is not the resident overruling a director.
+
+  WHAT IS OWED, and it is small: the actual Mixamo terms read and quoted, then
+  line 6 written from that quote in a record that names it. Until then the
+  line stands as it is and nothing is blocked, because the probe cannot render
+  a skeletal mesh at all and queue 028 half one bakes a STATIC GLB, which is a
+  posed mesh export and hits this same question the moment it ships rather
+  than avoiding it. So this wants doing before 028 half one lands, not before
+  it starts.
+
+  NOTHING HERE ASKS JAFAR FOR ANYTHING. His account and his token are not
+  involved; the 91 files are already in the tree.
+

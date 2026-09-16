@@ -88,3 +88,28 @@ exist as geometry or as a surface.
   reference lamp is lit against a STILL BRIGHT overcast sky and reads as lit
   anyway, because the globe at 242 is brighter than the sky behind it. So the
   fix is not to darken the sky and it is not the exposure. It is the globe.
+
+  RULED 2026-09-16 (06:35Z ruling, section 3): the NARROWER change, in the
+  engine and the material where the flag is already half-read. Core's own
+  field comment calls the emissive pieces "the lantern bowls"
+  (StreetVignette.cs 89), so the spec already says they emit; no new surface
+  kind, no golden, no CoreTests change. EmissiveColor vector parameter,
+  default black, asserted in --selftest; a per-piece material instance on
+  the decal-card precedent (VignetteShot.cpp 4089); driven by
+  ApplyCondition's LanternsOn through a write-on-change guard; read back on
+  the shot line; the strength an engine constant named as the first value of
+  a series and printed on the scene line; the acceptance instrument is the
+  projected lantern rectangle against its ring, in the tested header, three
+  fixtures. Structural by the wetness precedent (a parameter, a node, a
+  readback key): full review at landing. Next rung: housing and bowl as two
+  pieces, for the day look, named on the ladder. Builds AFTER 329, 332 and
+  337 because it shares their files.
+
+  AND ONE CORRECTION TO THIS ITEM'S OWN TEXT, applied under D43. The
+  reference measurement above is read off the Hook sheet's HARBOUR panel,
+  which is a DAY frame with a lamp lit in it. THE PROJECT HAS NO DUSK
+  REFERENCE SHEET AT ALL: the ruling grepped the spec for dusk and found
+  zero. So the numbers above are a fair target for what a lit lamp looks
+  like, and they are NOT a dusk reference. The dusk frame's judge is D41's
+  second path until a dusk sheet exists, and that blank rung is now a row on
+  the quality ladder.

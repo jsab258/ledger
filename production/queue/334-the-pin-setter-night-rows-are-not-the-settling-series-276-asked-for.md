@@ -53,3 +53,15 @@ status: READY 2026-09-16, filed so the wrong series is not adopted as the right 
   because it outranks the pin by that item's own words: on the evidence that
   exists, the night condition has NOT been shown to settle. That is not yet
   the finding step 2 wants, because this is not yet the series step 1 wants.
+
+  RULED 2026-09-16 (06:35Z ruling, section 4): spec rows in Core, not a rig
+  loop. Six consecutive settle_night rows at the END of the shot list, at
+  cam_hook under wet_night (or pin_setter_night if the builder shows the
+  two conditions identical in every field), excluded from the light probe
+  by a per-shot boolean ShouldProbeShot reads beside the condition's flag;
+  Shots.Count 43 to 49 with the assertions' sentences and arithmetic
+  updated in the same diff; the series reduced in the tested layer to a
+  done-line key naming first, last, largest consecutive step and the
+  statistic (last-wins). Six is a cost cap and announces when it bites:
+  NOT-SETTLED-WITHIN-6 is the finding 276 step 2 names, not a failure.
+  Structural (a golden): full review at landing, same batch.

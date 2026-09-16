@@ -364,3 +364,18 @@ cannot find, which is the failure this file exists to stop.
   stays whole and the carve-out is queue C, research first; predictions
   written before the run
   `game-design/decision-2026-09-16-ruling-326-lands-amended-the-floor-is-read-and-the-key-that-changed-meaning-changes-name.md`
+- **2026-09-16** run 48 measured three lights and no lantern (06:35Z):
+  lightsAboveFloor is 3/3 over 3 measured of 42, lanterns 0 of 24 and
+  the word is nothing-measured; 332 takes both control statistics with a
+  relative screen from its own sentence and no absolute bound, run 48's
+  lines as fixtures; 333 is the narrower change in the engine (the spec
+  already calls the piece a bowl), structural by the wetness precedent;
+  334 is six settle rows in Core; the exposure-hold item is filed as 337
+  and not the 335 the record names, because 335 and 336 were taken while
+  it was being written; 028 re-scoped as a posed static bake now and a
+  spec piece behind the Core changes; THE ALLOWLIST LINE IS NOT CORRECTED
+  and queue 335 carries why, because D29 says nothing decides bodies
+  rather than saying it wrongly, and Mixamo's terms are quoted nowhere in
+  this tree to cite; predictions written before the run
+  `game-design/decision-2026-09-16-ruling-run-48-measured-three-lights-and-no-lantern-and-the-lamp-glows-where-the-flag-is-read.md`
+
