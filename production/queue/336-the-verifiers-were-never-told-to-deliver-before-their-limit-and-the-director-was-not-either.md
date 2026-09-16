@@ -85,3 +85,35 @@ matter.
   UNSUCCESSFUL exit, because "hand back what you have" is a judgement and
   "name every file you touched and say whether it compiles" is not.
 
+AND THE ROOT IS MEASURED NOW, 2026-09-16, not inferred. The rewrite above
+argued that asking an agent to judge its own remaining budget asks it to
+estimate what it cannot observe. That was a reading. Here is the count:
+
+    agent definitions examined                      16
+    declaring a turn budget in any form              0
+
+  The grep covers "turn limit", "N turns", "tool call budget" and "max turns"
+  over every file in .claude/agents/. NOTHING declares one. And the real
+  limits DIFFER BY ROLE: the engine-specialist died at 45 tool calls, the
+  instrument-builders and the systems-builder at 70. So the number an agent is
+  asked to measure itself against is not merely hard to estimate, IT IS
+  WRITTEN NOWHERE THE AGENT OR THE DISPATCHER CAN READ IT.
+
+  THE EIGHTH DEATH PROVED THE TWO-SIDED VERSION IS NOT ENOUGH EITHER. It was
+  given "green OR two thirds of your budget". The first exit fires only on
+  success; the second is the unobservable estimate above. Two exits, neither
+  reachable. That agent spent 49 tool calls and wrote NOTHING, which is the
+  opposite tail from the agents that finished and never reported: from outside
+  the session, a dirty tree and a clean one look identical to an agent that is
+  still thinking.
+
+  SO THE EXIT MUST BE COUNTABLE BY THE AGENT ITSELF. "Hand back after your
+  30th tool call, counting them as you go" is a tally. "After your third
+  failed attempt at the same compile" is a tally. Both are things the agent
+  observes rather than estimates. The first dispatch under that form went out
+  at 10:05Z.
+
+  SECOND HALF OF THE ACCEPTANCE, ADDED: each definition states its own turn
+  budget, so the dispatcher can set the tally honestly instead of guessing a
+  number that turns out to be 45 when it assumed 70.
+
