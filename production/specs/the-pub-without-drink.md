@@ -327,8 +327,8 @@ Each with the question that would settle it. None is hidden above.
    pub club and its book.
 3. **THE SLATE IS ASSUMED**, and so is the coin box being the house's only line
    in 1990, since the pay-on-answer source is about the 1970s. SETTLED BY: a
-   cited account of pub credit in the 1980s, and a BT or Post Office
-   Telecommunications source on pub installations late in the decade.
+   cited account of pub credit in the 1980s, and a national telephone
+   operator's archive source on pub installations late in the decade.
 4. **WHAT SHARE OF TRADE FOOD COULD CARRY.** No figure found inside the window.
    The nearest is 2016, 50 percent drink against 31 percent catering (Mintel and
    Morning Advertiser summaries), outside the window and not to be used. SETTLED

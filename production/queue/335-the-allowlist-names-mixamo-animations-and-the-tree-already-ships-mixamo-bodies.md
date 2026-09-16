@@ -14,6 +14,26 @@ max_sessions: 1
 status: READY 2026-09-16, filed as a CLARITY item and NOT as a claimed
   violation, which the evidence does not support.
 
+  RAISED TO BLOCKING 2026-09-16 MIDDAY: THIS NOW BLOCKS THE THIRD ELEMENT OF
+  TODAY'S ORDER. Jafar's order for the day is "wetness, materials, then dusk
+  with lamps lit, wet road and A FIGURE IN SILHOUETTE". Read in the code
+  rather than assumed: the vignette scene spec has no figure of any kind
+  (`production/specs/vignette-scene.json` has no character key, and its
+  `not_emitted_from_this_file` list names three street fittings and no
+  person), and the walk build's `ALedgerCharacter` is a third-person pawn
+  with a 350 cm spring arm and NO SKELETAL MESH ASSIGNED
+  (`LedgerCharacter.cpp:36-49`; the file sets a CameraBoom and a
+  FollowCamera and never sets a mesh), so the frames it writes have an
+  invisible player in them.
+
+  SO THE FIGURE HAS TO COME FROM SOMEWHERE, AND THE ONLY BODIES IN THE TREE
+  ARE THE 18 MIXAMO ONES THIS ITEM IS ABOUT. That is why a terse allowlist
+  line stops being a clarity item today: the next step is putting one of
+  those bodies in a rendered frame, which is the exact act the line does not
+  cover in its own words. It goes to Jafar as a card rather than to a
+  resident's generous reading, because the allowlist outranks CLAUDE.md and
+  reading it generously is the move the licence law exists to prevent.
+
   WHAT THE REST OF THE TREE ALREADY SAYS, all three of them treating Mixamo
   bodies as settled:
 

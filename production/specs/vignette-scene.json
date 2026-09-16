@@ -7,7 +7,7 @@
   "bill_of_materials": "production/specs/vignette-bill-of-materials.json. Every emitted piece carries the id of the BOM line that authorises it; the 26 lines with make_by=PROC are the ones this file drives.",
   "period": {
     "years": "1988 to 1992",
-    "note": "Late analog Britain. Landlines, cash, paper. Nothing on this street may imply a mobile phone, the internet, a wheeled refuse bin, or blister tactile paving, whose introduction date is unverified and which the BOM excludes for that reason."
+    "note": "Late analog Britain. Landlines, cash, paper. Nothing on this street may imply a hand-held telephone, a computer network of any kind, a wheeled refuse bin, or blister tactile paving, whose introduction date is unverified and which the BOM excludes for that reason."
   },
 
   "frame": {

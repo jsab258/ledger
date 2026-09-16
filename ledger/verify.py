@@ -2033,29 +2033,124 @@ def canon_register():
                      unm.group(1), unm.group(2)))
 
 
-def template_sync():
-    """RETIRED 2026-08-31 by decision D10 (ledger-v2/respec/decision-register/
-    D10-framework-freeze.md). The game-studio repo is FROZEN as legacy
-    reference; ledger-v2/studio-v2/ is the single operative framework, and
-    game-studio is updated only by HARVEST at phase exit, never by continuous
-    sync. This check WAS the continuous sync: it fingerprinted CLAUDE.md's
-    process sections and went red until game-studio absorbed the change or a
-    queue item deferred it. Under D10 that is the forbidden mechanism, so the
-    gate is retired rather than left to fight the decision.
+def canon_gate():
+    """CANON IS ENFORCED OVER THE CORPUS, which CLAUDE.md and canon.md have
+    both ASSERTED since 2026-09-16 and nothing checked until this runner.
 
-    THE INCIDENT THAT BUILT IT IS STILL TRUE and is why harvest is mandatory
-    rather than optional: on 24 Aug the template drifted from the process
-    sections within hours of shipping and was caught by Jafar reading it, not
-    by any instrument. The replacement trigger is structural instead of
-    per-edit: a phase CANNOT CLOSE without a harvest commit, and the weekly
-    process audit checks that every closed phase has one
-    (ledger-v2/studio-v2/learning.md). tools/template-sync.py and its marker
-    stay on disk as the fingerprint machinery a harvest may reuse.
+    WIRE OR DELETE, Jafar's policy of 2026-09-16, section 1.1 of
+    game-design/decision-2026-09-16-ruling-wire-or-delete-the-last-instrument-and-seven-settlements.md :
+    the corpus is declared in the tool, not here, so this runner and
+    tools/ci-checks.sh cannot drift apart about what canon governs. Both call
+    `--corpus`; the roots live in canon-gate.py. (There is no D46, and there
+    is no constitution law 13 either AS THIS LANDS: the register stops at
+    D45, the constitution stops at 12, and the standing rule behind this
+    wiring is ruled to become law 13 WITH tools/enforcement-claims-check.py,
+    which is not built yet. Cite the record above until then. Checked on the
+    day: `ls ledger-v2/respec/decision-register/` and the constitution's own
+    numbering.)
 
-    This retirement is lesson L1 in learning.md's index: terminated as a gate
-    change, which is exactly the pipeline the decision creates."""
-    return True, ("template sync RETIRED by D10: game-studio frozen, harvest "
-                  "at phase exit replaces continuous sync (learning.md L1)")
+    NOTHING MEASURED IS RED, not clean. Exit 2 from the tool means the walk
+    found no file or a declared root is gone, and a zero denominator on the
+    done line means the same thing a second way (rule 3b). Deleting content/
+    must not turn this gate green, so both are refused here as well as there.
+
+    The selftest runs FIRST and its failure is its own message: an unwired
+    gate and a broken gate look identical from the footer otherwise.
+    """
+    tool = ROOT.parent / "tools" / "canon-gate.py"
+    code, out = run(["python3", str(tool), "--selftest"])
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines() if "FAIL" in l]
+        return False, "CANON-GATE SELFTEST: " + _cap(
+            bad, strip=5, width=100, tail="see canon-gate --selftest").strip()
+    m = re.search(r"(\d+) passed, (\d+) failed", out)
+    fixtures = m.group(1) if m else "?"
+    code, out = run(["python3", str(tool), "--corpus"])
+    done = next((l for l in out.splitlines() if l.startswith("canon-gate:")), "")
+    ladder = next((l.strip() for l in out.splitlines()
+                   if l.strip().startswith("ladder ")), "")
+    roots = re.search(r"rootsDeclared=(\d+) rootsPresent=(\d+)", out)
+    if code == 2:
+        return False, "CANON GATE: NOTHING MEASURED - " + done[-110:]
+    if not done:
+        return False, ("canon-gate printed no done line over the corpus, which "
+                       "is nothing measured and not a pass")
+    nums = re.search(r"(\d+) finding\(s\) in (\d+) file\(s\), (\d+) line\(s\) "
+                     r"examined, (\d+) era term\(s\) and (\d+) brand token\(s\)", done)
+    if not nums:
+        return False, "canon-gate's done line lost its denominators: " + done[-110:]
+    if not roots:
+        return False, "canon-gate printed no root denominators over the corpus"
+    if int(nums.group(2)) == 0 or int(nums.group(3)) == 0:
+        return False, ("CANON GATE: NOTHING MEASURED - %s file(s) and %s line(s) "
+                       "examined. A run that examined nothing is not clean."
+                       % (nums.group(2), nums.group(3)))
+    if roots.group(1) != roots.group(2):
+        return False, ("CANON GATE: NOTHING MEASURED for %s of %s declared "
+                       "corpus root(s), which are not on disk"
+                       % (int(roots.group(1)) - int(roots.group(2)), roots.group(1)))
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines() if "CANON:" in l]
+        return False, ("CANON GOVERNS THE CORPUS: " + _cap(
+            bad, strip=0, width=110, tail="see canon-gate --corpus").strip())
+    # THE PEEL DELTAS RIDE IN THE FOOTER on purpose: they are how much of the
+    # raw match count this gate does NOT read as content (comments,
+    # identifiers, cited URLs, metric keys), and a suppression nobody sees is
+    # a suppression nobody audits.
+    return True, ("canon clean over the corpus (%s fixtures, %s/%s root(s), "
+                  "%s file(s), %s line(s), %s era term(s), %s brand token(s); %s)"
+                  % (fixtures, roots.group(2), roots.group(1), nums.group(2),
+                     nums.group(3), nums.group(4), nums.group(5),
+                     ladder or "no ladder printed"))
+
+
+def goal_block():
+    """THE GOAL BLOCK AT THE TOP OF CLAUDE.md MATCHES ITS SOURCE, verbatim.
+
+    CLAUDE.md line 3 says tools/goal-block-check.py proves the copy matches.
+    Nothing ran it until this runner, under the same 2026-09-16 wire-or-
+    delete policy and record cited in canon_gate above. DIRECTION IS THE
+    TOOL'S: the
+    source wins, so a red here is fixed by re-copying the block from
+    ledger-v2/respec/vision-pillars-v2.md into CLAUDE.md, never the reverse.
+
+    Exit 2 from the tool is NOT CHECKED (the source is missing), which is
+    nothing measured and red, never a pass; and a comparison of 0 chars is
+    the same fact reached a second way.
+    """
+    tool = ROOT.parent / "tools" / "goal-block-check.py"
+    # THE CHECK RUNS BEFORE THE SELFTEST HERE, and the order is the opposite
+    # of canon_gate's for a reason worth keeping: this tool's ACCEPTING
+    # fixture IS the live tree (goal-block-check.py:93-96), which is the
+    # right fixture, but it means a real drift fails the selftest too. Run
+    # selftest-first and a drifted copy reports "SELFTEST: FAIL ACCEPTING",
+    # which reads as "the tool is broken" and sends the reader to the wrong
+    # file. Measured 2026-09-16 by planting a one-word change in the source.
+    code, out = run(["python3", str(tool)])
+    said = " ".join(out.split())
+    if code == 2:
+        return False, "GOAL BLOCK: NOTHING MEASURED - " + said[:150]
+    if code != 0:
+        return False, "GOAL BLOCK DIFFERS FROM ITS SOURCE: " + said[:200]
+    nums = re.search(r"\((\d+) chars, (\d+) lines compared\)", said)
+    if not nums:
+        return False, ("goal-block-check passed without saying what it "
+                       "compared, which is nothing measured and not a pass")
+    if int(nums.group(1)) == 0 or int(nums.group(2)) == 0:
+        return False, ("GOAL BLOCK: NOTHING MEASURED - %s char(s), %s line(s) "
+                       "compared" % (nums.group(1), nums.group(2)))
+    # The copy matches, so the selftest's live-tree accepting case can only
+    # fail now if the TOOL is broken, which is the fact it can report cleanly.
+    code, out = run(["python3", str(tool), "--selftest"])
+    if code != 0:
+        bad = [l.strip() for l in out.splitlines() if "FAIL" in l]
+        return False, "GOAL-BLOCK SELFTEST: " + _cap(
+            bad, strip=0, width=100, tail="see goal-block-check --selftest").strip()
+    m = re.search(r"(\d+) ok, (\d+) failed", out)
+    fixtures = m.group(1) if m else "?"
+    return True, ("goal block matches vision-pillars-v2.md verbatim "
+                  "(%s fixtures, %s chars, %s line(s) compared)"
+                  % (fixtures, nums.group(1), nums.group(2)))
 
 
 def attribution():
@@ -8542,7 +8637,7 @@ def main():
                card_writing, shipped_cards, convo_probe, queue_depth, docs_shape, budget_ceiling_line, content_rule, producer_register, claude_md_size, canon_register,
                agent_model_values, agent_model_values_selftest, agent_model_overrides, agent_model_overrides_selftest,
                inbox_selftest, inbox_read_selftest, bot_config_selftest, outbox_selftest, supervise_selftest, executor_selftest, wake_queue_selftest, checkout_gate_selftest, brief_selftest, producer_day_selftest, budget_log_mark_selftest, systems_inventory, inbox_tracked,
-               template_sync,
+               canon_gate, goal_block,
                attribution, game_compiles, backend_compiles, conditional_reach, nested_types,
                static_instance, raw_avenues, bat_editor, bootstrap_single, blender_hash_parse, surface_tint_agreement, filename_as_type, namespace_as_value, workflow_size, workflow_branch_refs,
                powershell_steps, sheet_read, prop_dimensions, prop_reach,

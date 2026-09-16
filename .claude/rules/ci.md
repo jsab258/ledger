@@ -42,6 +42,9 @@ globs: [".github/workflows/**", "**/ci/**", "tools/*dispatch*", "tools/*landed*"
   one change or six — and respect the project's stated concurrency limit
   (licence seats and shared runners fail SILENTLY in the only channel you
   can read).
+- **HuggingFace and most external hosts are blocked here, so corpus work
+  goes through CI.** Make each run maximally informative, not a blind
+  attempt. Moved intact from CLAUDE.md, 2026-09-16.
 - **Any cap in a log-extraction step must announce when it bites** — a
   `| head -N` that outgrew its input once read as "three of five systems
   failed" when nothing was broken.

@@ -1,5 +1,20 @@
 # Superseded passages cut from CLAUDE.md, 2026-09-01
 
+## Index of the 2026-09-01 move, moved here from CLAUDE.md on 2026-09-16
+
+Task `production/queue/013`; nothing deleted, every passage moved intact.
+
+Under `ledger-v2/studio-v2/`: `casebook-claims.md` has rules 1, 3, 4, 5, 5b, 6
+with their incidents; `casebook-measurement.md` has 2 and 3b;
+`casebook-build-and-evidence.md` has 12; `operations.md` has 7 to 11 and
+reporting; `organization.md` the split; `runner.md` dispatch. Also
+`.claude/rules/instruments.md` and `ci.md`, `production/quality-ladder.md`, and
+`legacy/claude-md-superseded-2026-09-01.md` for the GTA V bar retired by D8.
+
+`ledger/verify.py` prints this file's word count so it cannot quietly grow
+back; `tools/goal-block-check.py` proves the goal block still matches
+`ledger-v2/respec/vision-pillars-v2.md`.
+
 STATUS: LOG. NOT CURRENT. Dated 2026-09-01.
 
 These passages were live in CLAUDE.md until task 013 cut that file to standing

@@ -166,7 +166,15 @@ separately.
 
 <!-- moved verbatim from CLAUDE.md lines 1512-1543 on 2026-09-01, task 013 -->
 
-### Reporting — RETIRED 22 Aug by Jafar ("drop the updates")
+### Reporting: RETIRED 22 Aug by Jafar ("drop the updates"), superseded 2026-09-03
+
+Moved here intact from CLAUDE.md on 2026-09-16 under the ruling of that date:
+
+Reporting to Jafar is THE PRODUCER'S ALONE, ruled 2026-09-03:
+`.claude/agents/producer.md` carries the register, the cap and the required
+link. Resident owns the record, Producer the channel. Judgment, never a status
+dump, with a picture `tools/report-frame.py` withholds when the last build
+measured nothing.
 
 No scheduled reports of any kind. Message him only when something needs
 him, when he asks, or when a deliverable he waits on is ready. The style

@@ -2,7 +2,9 @@
 
 STATUS: APPROVED 2026-08-31 by Jafar, with rulings recorded in
 ledger-v2/respec/decision-register/D8 and D9. This outranks every document and
-agent; violating it is a gate failure.
+agent; violating it in content is a gate failure (`tools/canon-gate.py
+--corpus`, era and brands, over content/, ledger/Assets/Scripts and
+production/specs). Tone is the judge's under D7, not a gate.
 
 A ruling that changes canon edits canon in the same batch (Jafar,
 2026-09-16). A DECIDED record whose subject is a world fact names the

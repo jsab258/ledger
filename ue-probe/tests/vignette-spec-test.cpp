@@ -6293,6 +6293,125 @@ int main(int argc, char** argv)
 		}
 	}
 
+	// ---- QUEUE 333: WHERE THE LANTERN'S SOLID LANDS ON THE FRAME ---------
+	//
+	// THE ACCEPTING FIXTURE IS THE LIVE FILE'S OWN LANTERN, which is this
+	// project's rule for anything that checks the project itself: the piece
+	// comes out of production/specs/vignette-pieces.json as committed, with
+	// its real 0.55 by 0.2 by 0.3 box, and only the camera is synthetic. A
+	// camera built here rather than taken from the scene file is deliberate:
+	// it is placed at the lamp's own height looking straight along +x, which
+	// is the one arrangement whose projection has a closed form, so the check
+	// below is an ARITHMETIC IDENTITY and not a re-statement of the code.
+	//
+	// The rejecting fixtures are synthetic because a refusal has to be
+	// provoked: the committed street has no lantern behind the camera in it.
+	{
+		std::printf("  -- queue 333: the lantern's eight corners --\n");
+		int LanternAt = -1;
+		for (size_t I = 0; I < S.Pieces.size(); ++I)
+		{
+			if (S.Pieces[I].Emissive) { LanternAt = (int)I; break; }
+		}
+		Check(LanternAt >= 0,
+		      "the committed street carries an emissive piece for the lamp instrument "
+		      "to be exercised against");
+		if (LanternAt >= 0)
+		{
+			const LedgerVignette::Piece& L = S.Pieces[(size_t)LanternAt];
+			const int FW = 1280, FH = 720;
+			const double Pi = 3.14159265358979323846;
+			std::printf("    lantern %s box %.3fx%.3fx%.3f at (%.3f,%.3f,%.3f)\n",
+			            L.Name.c_str(), L.SX, L.SY, L.SZ, L.X, L.Y, L.Z);
+			Check(L.PitchDeg == 0.0 && L.YawDeg == 0.0 && L.RollDeg == 0.0,
+			      "and it is unrotated in the file, which is what lets the closed form "
+			      "below be written down at all");
+
+			LedgerVignette::Camera C;
+			C.Id = "queue333_synthetic";
+			C.GroundY = 0.0;
+			C.EyeHeightM = L.Y;     // dead level with the lamp head
+			C.FovVerticalDeg = 50.0;
+			C.YawDeg = 0.0;         // forward is +x, right is +z
+			C.PitchDeg = 0.0;
+			const double D = 10.0;
+			C.X = L.X - D;
+			C.Z = L.Z;
+
+			const LedgerSurface::ScreenBox B = LedgerSurface::PieceScreenBox(C, L, FW, FH);
+			std::printf("    ahead=%d inFrame=%d x %.3f..%.3f y %.3f..%.3f dist=%.3f\n",
+			            B.CornersAhead, B.CornersInFrame, B.X0, B.X1, B.Y0, B.Y1, B.DistM);
+			Check(B.bMeasured && B.CornersAhead == 8 && B.CornersInFrame == 8,
+			      "a lantern square in front of the camera answers on all eight corners");
+			Check(std::fabs(B.CxPx - FW * 0.5) < 1e-6
+			      && std::fabs(B.CyPx - FH * 0.5) < 1e-6
+			      && B.X0 < B.CxPx && B.CxPx < B.X1
+			      && B.Y0 < B.CyPx && B.CyPx < B.Y1,
+			      "its centre lands in the middle of the frame and inside its own box");
+
+			// THE CLOSED FORM. The widest corner is the NEAR face's, at
+			// sz/2 to the side and sx/2 closer than the centre, so a box
+			// measured from the centre depth alone would be too narrow. This
+			// is the half of the reading that four corners of one face could
+			// not give.
+			const double TanH = std::tan(LedgerVignette::HorizontalFovDeg(
+				C.FovVerticalDeg, FW, FH) * 0.5 * Pi / 180.0);
+			const double TanV = std::tan(C.FovVerticalDeg * 0.5 * Pi / 180.0);
+			const double WantX1 = FW * (0.5 + 0.5 * ((L.SZ * 0.5) / (D - L.SX * 0.5)) / TanH);
+			const double WantY0 = FH * (0.5 - 0.5 * ((L.SY * 0.5) / (D - L.SX * 0.5)) / TanV);
+			std::printf("    x1 got %.6f want %.6f | y0 got %.6f want %.6f\n",
+			            B.X1, WantX1, B.Y0, WantY0);
+			Check(std::fabs(B.X1 - WantX1) < 1e-6 && std::fabs(B.Y0 - WantY0) < 1e-6,
+			      "and its edges are the near face's corners to six decimal places, "
+			      "which is the pinhole written out independently rather than the "
+			      "function asked twice");
+
+			// THE YAW PATH, WHICH IS THE PART THAT WAS COPIED AND THEREFORE
+			// THE PART MOST WORTH WATCHING. Turned a quarter turn, the file's
+			// own rotation takes +x toward +z, so the 0.55 m side faces the
+			// camera where the 0.30 m side did and the box gets WIDER by a
+			// ratio nothing in the code computes.
+			LedgerVignette::Piece Turned = L;
+			Turned.YawDeg = 90.0;
+			const LedgerSurface::ScreenBox T =
+				LedgerSurface::PieceScreenBox(C, Turned, FW, FH);
+			const double Plain  = B.X1 - B.X0;
+			const double Yawed  = T.X1 - T.X0;
+			const double WantRatio = ((L.SX / (D - L.SZ * 0.5)) / (L.SZ / (D - L.SX * 0.5)));
+			std::printf("    widthPlain=%.4f widthYawed=%.4f ratio=%.4f want=%.4f\n",
+			            Plain, Yawed, Yawed / Plain, WantRatio);
+			Check(T.bMeasured && std::fabs((Yawed / Plain) - WantRatio) < 1e-6,
+			      "a quarter turn in yaw presents the long side, by the exact ratio the "
+			      "file's own rotation order predicts");
+
+			// REJECTING (1): THE LANTERN BEHIND THE CAMERA. Nothing ahead,
+			// nothing measured, and the box is not a box.
+			LedgerVignette::Camera Away = C;
+			Away.YawDeg = 180.0;
+			const LedgerSurface::ScreenBox Behind =
+				LedgerSurface::PieceScreenBox(Away, L, FW, FH);
+			Check(!Behind.bMeasured && Behind.CornersAhead == 0
+			      && Behind.CornersInFrame == 0,
+			      "a lantern behind the camera measures nothing on all eight corners");
+
+			// REJECTING (2), AND IT IS THE CASE THE EIGHT-CORNER RULE EXISTS
+			// FOR: the camera standing level with the lamp at its own x, so
+			// four corners are in front of the eye plane and four behind. A
+			// bounding box of the four that answered would be a drawing. The
+			// count is on the struct either way, so a caller can tell this
+			// from behind-the-camera without guessing.
+			LedgerVignette::Camera Inside = C;
+			Inside.X = L.X;
+			const LedgerSurface::ScreenBox Straddle =
+				LedgerSurface::PieceScreenBox(Inside, L, FW, FH);
+			std::printf("    straddling the eye plane: ahead=%d of 8\n",
+			            Straddle.CornersAhead);
+			Check(!Straddle.bMeasured && Straddle.CornersAhead == 4,
+			      "a lantern straddling the eye plane reports four of eight and refuses "
+			      "to call itself measured");
+		}
+	}
+
 	std::printf("%s: %d of %d check(s) failed\n",
 	            gFailed == 0 ? "PASS" : "FAIL", gFailed, gChecks);
 	return gFailed == 0 ? 0 : 1;

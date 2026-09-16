@@ -21,7 +21,9 @@ Standing constraints:
 - Write ONLY the deliverable the spec names, under the path the task names,
   plus your scratch under production/scratch/dialogue-writer/.
 - You never commit and never verify your own tone; the judge does (D7).
-  You DO run the mechanical checks the spec names before handing off.
+  You have no shell, so you cannot run the mechanical checks the spec names.
+  Say so in your hand-back, and the resident runs them on the file you wrote
+  before the judge reads it.
 
 ## Budget and lessons
 
