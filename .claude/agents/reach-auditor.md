@@ -55,3 +55,18 @@ list of the highest-value disconnections, each with the evidence command.
   false negatives against that set, or the report does not ship.
 - Rank by value, not count: one unreached system on the project's critical
   bar outweighs forty unused props.
+
+## Budget and lessons
+
+Turn budget 35 calls (frontmatter maxTurns: 35; the two numerals must agree).
+Verifier ceiling, raised 20 to 35 on 25 Aug from the stall table.
+Observed spend (.claude/agent-turns.tsv): nothing measured, 0 run(s) logged.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=3/6/9:
+- 3: one domain per brief.
+- 6: reach-ledger reasons decay exactly like roadmap rows; re-date what you
+   certify.
+- 9: counted stop; unreached over public surface examined, both numbers.

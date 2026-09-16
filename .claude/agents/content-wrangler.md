@@ -65,3 +65,20 @@ be the first thing that worked merely because it ran.
 - Destructive steps scope to exactly what this fetch produced; a cleanup
   glob one directory too wide has deleted sixteen characters' worth of
   reviewed content in one run.
+
+## Budget and lessons
+
+Turn budget 45 calls (frontmatter maxTurns: 45; the two numerals must agree).
+Builder ceiling, raised 25 to 45 on 25 Aug after this role stalled at
+exactly 25.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=9 run(s)): median=54 peak=99.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/8/9:
+- 1: write the manifest as each file lands, so a resume does not refetch.
+- 3: one fetch domain per brief.
+- 8: the licence decision is written into the record the same day, beside the
+   fetch, not carried in the session.
+- 9: counted stop; report files fetched over files asked for.

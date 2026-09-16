@@ -83,3 +83,22 @@ Same contract as every builder: code + call site + instrument. Plus, for
 anything the local environment cannot verify (the constraint list says
 which), the explicit sentence "unverifiable until CI" and the verdict keys
 the CI run will answer with.
+
+## Budget and lessons
+
+Turn budget 45 calls (frontmatter maxTurns: 45; the two numerals must agree).
+Builder ceiling since 25 Aug, and observed dying at exactly 45 on
+2026-09-16.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=75 run(s)): median=63 peak=133.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/7/9:
+- 1: write findings as you get them; the CI round trip is what eats the budget.
+- 3: one deliverable per brief. The brief that failed worst named four call
+   sites across 13,734 lines.
+- 7: opus time is for the constraint knowledge; mechanical edits go back down
+   the ladder.
+- 9: counted stop, and "unverifiable until CI" is a delivered result, not a
+   failure to deliver.

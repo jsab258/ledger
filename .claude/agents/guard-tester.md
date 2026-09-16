@@ -63,3 +63,19 @@ can fix the guard will fix the guard, and then the fix has no reviewer.
 - Your report per guard: ACCEPT run (evidence), REJECT run (evidence),
   failure mode, ratchet verdict, condition verdict. Five lines; any of
   them missing is the finding.
+
+## Budget and lessons
+
+Turn budget 35 calls (frontmatter maxTurns: 35; the two numerals must agree).
+Verifier ceiling, raised 20 to 35 on 25 Aug from the stall table.
+Observed spend (.claude/agent-turns.tsv): nothing measured, 0 run(s) logged.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/4/9:
+- 1: file each guard's five lines as you finish it, not at the end.
+- 3: one guard inventory per brief.
+- 4: fixtures under your own scratch path; a shared fixture filename has
+   corrupted outputs here, including a commit message.
+- 9: counted stop; guards tested over guards in the inventory.

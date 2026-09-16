@@ -89,8 +89,28 @@ AND THE ROOT IS MEASURED NOW, 2026-09-16, not inferred. The rewrite above
 argued that asking an agent to judge its own remaining budget asks it to
 estimate what it cannot observe. That was a reading. Here is the count:
 
-    agent definitions examined                      16
-    declaring a turn budget in any form              0
+    agent definitions examined (excluding README)   15
+    declaring maxTurns in their YAML frontmatter    11
+    NOT declaring it                                 4
+
+  CORRECTED 2026-09-16 FROM "0 of 16", WHICH WAS THE RESIDENT'S OWN GREP
+  FAILING THE SAME WAY THIS ITEM IS ABOUT. The first count searched for the
+  prose phrasings "turn limit", "N turns", "tool call budget" and "max turns"
+  with a space, and missed `maxTurns:` in the YAML frontmatter, which is where
+  it actually lives. Third instance in one session of matching the phrasing
+  expected rather than the thing itself; the first lost three blank-frame
+  reads to a literal 0.00152.
+
+  AND THE CORRECTION MAKES THE DIAGNOSIS WORSE, NOT BETTER. The declared
+  values match EVERY observed death to the number: artifact-reader 40,
+  engine-specialist 45, instrument-builder 70, systems-builder 70. The budget
+  was knowable before every one of the eight briefs. THE FAULT IS NOT THAT IT
+  WAS UNDECLARED, IT IS THAT NOTHING PUT IT IN FRONT OF THE DISPATCHER OR THE
+  AGENT AT THE MOMENT OF DISPATCH. A number sitting in frontmatter that no
+  step consults is Jafar's own test of a decorative lesson, applied to a
+  config value.
+
+  THE FOUR THAT LACK IT: dialogue-writer, integrator, planner, world-designer.
 
   The grep covers "turn limit", "N turns", "tool call budget" and "max turns"
   over every file in .claude/agents/. NOTHING declares one. And the real

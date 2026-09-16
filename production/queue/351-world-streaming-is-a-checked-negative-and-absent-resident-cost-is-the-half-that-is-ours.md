@@ -63,14 +63,23 @@ status: READY 2026-09-16, ruled by Jafar in his own words. The negative half is
   round stopped terminating" are three different findings and only one of them
   changes the design.
 
-  AND IT IS NOT QUEUE 116, though they touch. 116 asks that no document cite
-  the seven-agent soak as evidence for hundreds, which is a citation fix and is
-  partly already done (the soak's own comment now carries the caveat). THIS
-  asks for the measurement that would make such a citation possible. 116 was
-  CLOSED 2026-09-10 by commit cd55a79c, an archiving commit naming no ruling,
-  and is the FOURTH item found closed that way (with 111, 138 and the 182 of
-  queue 275). Whoever takes this should read 116 first and decide whether it
-  reopens or is superseded; that call is not made here.
+  QUEUE 116 IS REOPENED AND RIDES WITH THIS ITEM. Ruled by Jafar 2026-09-16:
+  "it is the scale evidence for pillar 1. Reopen it as part of 351 rather than
+  leaving the decision to whoever picks that up." The first version of this
+  item deferred that call to an unnamed later reader, which is the same shape
+  as the archiving commit that closed 116 in the first place.
+
+  THEY ARE NOT THE SAME WORK AND NEITHER SUBSUMES THE OTHER. 116 asks that no
+  document cite the seven-agent soak as evidence for hundreds; THIS asks for
+  the measurement that would make such a citation honest. The citation fix is
+  DOWNSTREAM of the number: at 200 the citations need correcting to say 200,
+  and at a failure by 50 they need removing entirely. So 351 runs first and
+  116 closes on its result, and 116's own acceptance (the count of citations
+  found and changed, printed) is part of this item's close-out.
+
+  116 was CLOSED 2026-09-10 by cd55a79c, an archiving commit naming no ruling,
+  and is the FOURTH item found closed that way, with 111, 138 and the 182 of
+  queue 275.
 
   UNDER D45 this is the game and not a tool that measures it: the soak is the
   instrument, but what it would establish is a property of the simulation, so

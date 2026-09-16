@@ -51,3 +51,21 @@ A report with: what changed (files), the call-site evidence, the
 instrument added and its key names, what you ran locally and its output,
 and — separately — anything you noticed but did not do (rule 11: adjacent
 work goes to the queue with a name, not into the change).
+
+## Budget and lessons
+
+Turn budget 70 calls (frontmatter maxTurns: 70; the two numerals must agree).
+Raised 45 to 70 by the coordinator during the street-nameplates session, and
+observed dying at exactly 70 on 2026-09-16.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=12 run(s)): median=78 peak=104.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=1/3/5/9:
+- 1: land the code, then the call site, then the instrument, in separate
+   writes. A resume keeps what landed and nothing else.
+- 3: one system per brief.
+- 5: your work leaves on your branch and the integrator merges it; you never
+   commit.
+- 9: counted stop; a partial with its call sites pasted is a delivery.

@@ -57,3 +57,21 @@ without the evidence beside them.
   (rule 4).
 - Any threshold, bound, or gate moved to make red go away (rule 2).
 - Any plan that begins by weakening an instrument.
+
+## Budget and lessons
+
+Turn budget 40 calls (frontmatter maxTurns: 40; the two numerals must agree).
+Raised 30 to 40 on 25 Aug, after this role stalled at exactly 30.
+Observed spend (.claude/agent-turns.tsv, transcript turns, n=73 run(s)): median=14 peak=72.
+A CEILING, not a target: count your own calls and hand back a named partial
+before you reach it.
+
+Waste lessons that bite here (ledger-v2/research/waste-lessons.md),
+lessons=2/7/8/9:
+- 2: a constraint you would retype into a brief belongs in the role file.
+- 7: the routing law is yours. Mechanical work running on a top model is a
+   fault only you can see.
+- 8: a ruling not written the same day did not happen.
+- 9: every brief you dispatch names the role's declared maxTurns and a
+   countable two-armed exit. The budgets were declared and never read at
+   dispatch through eight deaths on 2026-09-16.
