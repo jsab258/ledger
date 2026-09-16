@@ -1,0 +1,23 @@
+id: c9c1586d
+due: 2026-09-16T14:05:00Z
+armedAt: 2026-09-16T13:30:08Z
+armedBy: resident/run-49-read-confirm-the-card-sent
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+RUN 49 IS READ AND THE LAMP IS LIT. Nothing is running: no builders, no directors, no CI. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, measured until roughly 22:2xZ.
+
+THE FIRST JOB OF THIS WAKE, and it is not optional: CONFIRM THE TWO CARD PARTS SENT. production/pc-ops/outbox-sweep.txt, after a sweep that ran on 355e8d87 or later. The single card they replaced was REFUSED by Telegram as too long and would have retried for ever, so read sent= and do not assume. Part one carries the licence question that blocks the figure in tonight's frame, and a message that did not send is a question Jafar never saw. If it still has not gone, read the refusal text before proposing anything (ci.md: the entry point is cheaper than the argument).
+
+WHAT LANDED, so it is not re-derived: the lamps glow. Same file, same ruler, one pass over both versions: ue-pinset_night_3.png went from 0 pixels at luma>=120 AND R-B>=20 to 1569 of 921600, brightest warm pixel R-B=189 at luma=204, frame maxLuma 183 to 251. Hook sheet reference globe is maxLuma 242 maxWarm 140, so kLampEmissiveUnitless at 1.00 is CLOSE rather than short and NO CASE HAS BEEN MADE TO MOVE IT. The picture is game-design/sim-shots/lamp_before_after_run49.jpg, one rectangle, one scale, numbers under it.
+
+THE ACCEPTANCE SENTENCE IS NOT MET AND THE REASON IS QUEUE 358, filed. Day rows read 1 lit where 0 is correct, because LampPatchLit is strictly-greater with no margin: coreLuma 217 against ringLuma 215 passes exactly as 193 against 39 does. THE SERIES TO SET A BOUND FROM ALREADY EXISTS in run 49's committed tokens; no new render is needed. Do not raise a bound before reading it and do not drop the day rows from the denominator, because the day row is the half that refutes.
+
+TWO THINGS THE BUILD VERDICT DID NOT ANSWER and the probe did. materialScriptReturn=2, materialCompile=UNPROVEN, and NO materialVectors= key exists at all, so the EmissiveColor readback the ruling asked for is absent. The night-versus-day difference rules out the queue 186 silent-no-op shape by itself: a no-op writes nothing, so both would read alike, and they do not. Also materialCompileControl=pixel.0, meaning the compile instrument's own control read zero, so UNPROVEN is the ruler failing rather than the shader.
+
+STILL OWED, NONE OF IT TO BE STARTED WITHOUT CHECKING THE ORDER OF THE DAY FIRST: enforcement-claims-check.py with constitution law 13 and its one CLAUDE.md sentence, which land together or not at all; the drive guard's move into the tested header, which must land BEFORE the constant's second value is written; queue 332 (a no-toggle control disagreeing with itself by 0.16498 while certifying a surplus); 356 the sendability gap; 357 the workflow trigger; 358 the missing margin.
+
+JAFAR'S ORDER FOR TODAY WAS THE VISUAL SLICE AND NOTHING ELSE: wetness, materials, then dusk with lamps lit, wet road and a figure in silhouette. The lamps are lit and the road is wet in the frame. THE FIGURE IS BLOCKED ON HIM (queue 335) and the frame shipped without one, which is what the card's default said would happen.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.

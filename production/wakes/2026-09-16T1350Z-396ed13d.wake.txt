@@ -3,7 +3,7 @@ due: 2026-09-16T13:50:00Z
 armedAt: 2026-09-16T13:16:47Z
 armedBy: resident/run-49-in-flight-read-the-build-verdict-first
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T13:32:00Z
 capBitAt: -
 
 RUN 49 IS IN FLIGHT AND THIS WAKE EXISTS TO READ IT. 355e8d87 is HEAD and pushed. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. NOTHING IS RUNNING IN THIS CONTAINER: no builders, no directors. Do not start one before reading the run.
@@ -25,3 +25,53 @@ CHECK THE CARD WENT. production/pc-ops/outbox-sweep.txt, after the PC has swept 
 TODAY IS THE VISUAL SLICE AND NOTHING ELSE, and the policy thread is CLOSED. Still owed and NOT to be started today: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence (they land together or not at all); queue 356 the sendability gap; 357 the workflow trigger; the drive guard's move into the tested header, which must land BEFORE the constant's second value is written; queue 332's control-disagrees-with-itself finding.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.
+
+DISCHARGED EARLY 2026-09-16T13:32Z, before its 13:50 due instant, because the
+run landed first. Read in the order this record fixed, and that order earned
+itself.
+
+THE LANDING, BY ANCESTRY: e1b4de77 "UE machine probe from 355e8d87", which
+names the sha captured before the dispatch. Not branch movement, not a run
+name.
+
+1. THE BUILD VERDICT FIRST, and it is EQUIVOCAL rather than clean.
+   materialConnections=20/20, which is exactly the 19-to-20 that third (a)
+   added, so the wire is there. BUT materialScriptReturn=2, materialCompile
+   =UNPROVEN, and THERE IS NO materialVectors= KEY AT ALL, so the readback the
+   ruling asked to see does not exist in the file. By the ruling's literal
+   words (nonzero return) this is the no-constant-moves case.
+
+   THE PROBE THEN SETTLED WHAT THE BUILD VERDICT COULD NOT, and this is the
+   reading worth keeping: THE QUEUE 186 SHAPE IS RULED OUT BY THE NIGHT-DAY
+   DIFFERENCE ITSELF. A silent no-op writes nothing, so night and day would
+   read identically. They do not: night rows read 1 to 3 lit and day rows read
+   0 to 1. The parameter is on the material and the write lands, whatever the
+   build verdict failed to say. Also note materialCompileControl=pixel.0, so
+   the compile instrument's own CONTROL read zero, which is why the status is
+   UNPROVEN rather than NO-SHADER: the ruler could not measure, so our zero
+   means nothing (rule 3, suspect the instrument first).
+
+2. THE DRIVE IS HEALTHY: lampDriveHeld=4/inFile=4, lampDriveWrote=60/visits=60
+   /nullInstance=0, lampDriveCompIsMid=is-the-instance-we-wrote. No lantern
+   fell down an unpainted exit, which was the third denominator's whole point.
+
+3. THE LAMPS ARE LIT, AND IT IS MEASURED AGAINST A BOUND STATED BEFOREHAND.
+   Queue 333 measured ue-pinset_night_3.png and found ZERO pixels at luma>=120
+   AND R-B>=20. The same file from run 49, same ruler, one pass over both:
+   BEFORE 0 of 921600, AFTER 1569 of 921600, brightest warm pixel R-B=189 at
+   luma=204, frame maxLuma 183 to 251. The Hook sheet reference globe reads
+   maxLuma 242 maxWarm 140, so 1.00 unitless is close rather than short.
+   The one picture at one scale is game-design/sim-shots/lamp_before_after_
+   run49.jpg, same rectangle on both, numbers printed under it.
+
+4. AND THE ACCEPTANCE SENTENCE IS NOT MET, for a measurement reason and not a
+   lighting one. Day rows read 1 lit where 0 is correct, on 11 of them. The
+   cause is exact: LampPatchLit is strictly-greater with NO MARGIN, so
+   coreLuma=217 against ringLuma=215 and coreWarm=1 against ringWarm=0 passes
+   exactly as 154 and 270 do on a real night row. Filed as queue 358 with the
+   series, which already exists in this run's own committed tokens and needs
+   no further render to read.
+
+THE CARD: not yet confirmed sent. The sweep that ran against d9af9a3 predates
+the split, so the two parts have not had a sweep of their own yet. THE NEXT
+WAKE MUST CHECK IT and must not assume.
