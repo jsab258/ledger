@@ -1,0 +1,27 @@
+id: 396ed13d
+due: 2026-09-16T13:50:00Z
+armedAt: 2026-09-16T13:16:47Z
+armedBy: resident/run-49-in-flight-read-the-build-verdict-first
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+RUN 49 IS IN FLIGHT AND THIS WAKE EXISTS TO READ IT. 355e8d87 is HEAD and pushed. Budget 2026-09-16d: 65/65, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. NOTHING IS RUNNING IN THIS CONTAINER: no builders, no directors. Do not start one before reading the run.
+
+THE SHA TO WATCH BY, captured BEFORE the dispatch: 355e8d87d0654418253272d718648437088a0d02. GitHub run 35100795215, started 2026-09-16T13:15:50Z, was in_progress at 13:16Z. WATCH BY ANCESTRY: is there a LANDED run file whose commit CONTAINS 355e8d87, under game-design/sim-shots/runs/. Never by branch movement, never by run name. The run files are 7 chars and git abbrev is 8, so COMPARE BY PREFIX and never by equality.
+
+READ IN THIS ORDER, RULED 2026-09-16 and not to be reordered because the two cases look identical if you read the probe first:
+
+1. THE BUILD VERDICT'S MATERIAL LINE, production/d1-probe/ue-build.txt. Wanted: return 0, twenty of twenty connections, and EmissiveColor present in the vectors= readback. The shape to fear is materialScriptReturn nonzero, or 19/19, or a vectors list WITHOUT EmissiveColor. That is queue 186's shape: the base material predates the parameter, SetVectorParameterValue is a SILENT NO-OP, lampDriveWrote reads healthy and the lamp stays dark. IF THAT IS WHAT IT SAYS, NO CONSTANT MOVES.
+2. THEN the probe's lampGlow lines. THE ACCEPTANCE IS ONE PAIR IN ONE RUN: lampGlowLit=4/of=4 on a night row and lampGlowLit=0/of=4 on a day row of the same camera.
+3. THEN OPEN THE FRAMES THEMSELVES before reading any gate (rule 4). A green number is not the picture it claims to describe, and the eye reads contrast rather than value, so any before-and-after claim goes in ONE image at ONE scale or it is not made.
+
+IF THE LAMP IS LIT BUT DIM: kLampEmissiveUnitless is 1.00 and was shipped as the FIRST VALUE OF A SERIES, expected to be under. Its second value comes off THIS RUN's coreMaxLuma against ringMaxLuma per lantern, never off an argument. The reference globe reads 242 of 255 against a sky at 181.
+
+JUDGE THE FRAME AGAINST THE HOOK SHEET, which is Jafar's instruction for today and is the resident's own call under D41: git show origin/art/atlas-01:production/art/atlas-01/concepts/hook.png
+
+CHECK THE CARD WENT. production/pc-ops/outbox-sweep.txt, after the PC has swept 355e8d87. Two parts, 2617 and 3430 chars. The previous single card was REFUSED as too long and retried for ever, so confirm sent=2 rather than assuming. A message that did not send is a question Jafar never saw, and part 1 carries the one that blocks tonight's figure.
+
+TODAY IS THE VISUAL SLICE AND NOTHING ELSE, and the policy thread is CLOSED. Still owed and NOT to be started today: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence (they land together or not at all); queue 356 the sendability gap; 357 the workflow trigger; the drive guard's move into the tested header, which must land BEFORE the constant's second value is written; queue 332's control-disagrees-with-itself finding.
+
+AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11.

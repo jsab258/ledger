@@ -3,7 +3,7 @@ due: 2026-09-16T13:25:00Z
 armedAt: 2026-09-16T12:51:04Z
 armedBy: resident/lamp-drive-and-readback-in-flight
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T13:18:00Z
 capBitAt: -
 
 d9af9a3d IS HEAD AND PUSHED, tree clean at arming. Budget 2026-09-16d: 65 total, 65 Fable, ceiling 85, taken about 12:1xZ, so the day is measured until roughly 22:2xZ. Inbox at 12:27Z: nothing new. The policy batch is LANDED and THIS THREAD IS CLOSED per Jafar: nothing else from it.
@@ -21,3 +21,38 @@ TODAY IS THE VISUAL SLICE AND NOTHING ELSE. Dusk with lamps lit, wet road, a fig
 STILL OWED FROM THE POLICY BATCH AND NOT TO BE STARTED TODAY: enforcement-claims-check.py, constitution law 13, and the one CLAUDE.md sentence naming it. They land together or not at all, because a law naming a tool with no runner is the thing being outlawed.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. CLAUDE.md rule 11, his rule of today.
+
+DISCHARGED 2026-09-16T13:18Z. The work it armed is done and then some.
+
+THE LAMP BATCH LANDED AND RUN 49 IS DISPATCHED. 355e8d87 pushed to main, and
+the dispatch is VERIFIED BY ITS EFFECT rather than by an exit code: GitHub run
+35100795215, head_sha 355e8d87d0654418253272d718648437088a0d02, status
+in_progress, started 13:15:50Z. That sha was captured BEFORE the push and is
+what the landing must be watched against, by ancestry and never by branch
+movement.
+
+THE DIRECTOR RULED AND STAMPED, clearing the cadence gate (rulingRecords=1/100,
+director cadence ok). It shipped the drive guard UNRUN this once, because the
+unrun formatter carries no number any decision reads, and queued the move into
+the tested header with its fixtures named. It ruled the frame is the value's
+readback and fixed the reading order for the run: the build verdict's material
+line FIRST (return 0, 20 of 20 connections, EmissiveColor in the vectors
+readback), THEN the probe's lampGlow lines, because only that pair tells a
+silent no-op apart from a constant that is too low.
+
+THE ONE CHECK THE DIRECTOR COULD NOT MAKE, made here by compiling and running
+it rather than by reading it: MaxShown=0 prints lampGlowShown=4/notShown=0 and
+MaxShown=2 prints 2/notShown=2. Zero means no cap. Had it meant the opposite,
+the run would have carried no per-lantern detail at all and the round trip
+would have been wasted.
+
+AND A FALSE CLAIM OF MINE WAS CAUGHT BEFORE IT REACHED HIM: queue 335 said the
+Unity path renders a Mixamo body and the card repeated it. It does not and
+never has. Corrected in both, and the correction strengthens the licence
+question rather than weakening it.
+
+WHAT THIS RECORD DID NOT ANTICIPATE: the card never sent at all. Telegram
+refused it at 5538 bytes against 4096 and the sweep would have retried it for
+ever. It is now two parts, both SEND, riding in 355e8d87. Queue 356 is the
+instrument gap behind it; queue 357 is the workflow trigger that outlived its
+boundary. Both filed, neither started.
