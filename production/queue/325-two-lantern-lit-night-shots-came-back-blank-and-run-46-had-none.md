@@ -55,3 +55,41 @@ status: READY 2026-09-16, found by reading run 47's shot statuses against run
   324, because all three are about whether a lantern-lit night frame can be
   trusted. Under D41 the frame itself is ungated; this is not a look, it is a
   frame that does not exist, so it keeps its review.
+
+CORRECTED AND REORDERED 2026-09-16 02:05Z, BEFORE ANYONE TOOK IT. The item
+above says to diagnose the blank frames. THAT CANNOT BE DONE, because the
+frames are not in the repository and never have been:
+
+    commits that ever touched production/d1-probe/ue-pinset_night_*.png     0
+    commits that ever touched production/d1-probe/ue-vign_*.png            29
+    shot files the run 47 verdict NAMES with a byte count                  43
+    of those, missing from disk                                            4
+      (ue-pinset_night_1.png through _4.png, and ONLY those four)
+
+  THE CAUSE IS ONE GLOB. `.github/workflows/ledger-probe-unreal.yml` line 1968
+  stages `git add -A -- 'production/d1-probe/ue-vign_*.png'`. The four pinset
+  shots write `ue-pinset_night_*.png`, which that pattern does not match. So
+  all four have been rendered and discarded on every run since they entered
+  the spec, INCLUDING the two that wrote normally this run at 1367920 and
+  1278041 bytes.
+
+  WHAT THIS CORRECTS IN THE ITEM ABOVE. The BLANK status IS new: run 46 read
+  43 WROTE and run 47 reads 41 WROTE and 2 BLANK, and that comparison stands
+  because it is made on the VERDICT, which is committed. What is NOT new is
+  the absence of the pictures. The item's acceptance asks for a cause named by
+  a measurement, and the measurement needs the frames.
+
+  AND IT IS NOT A FAILURE OF ci.md's RULE, WHICH MAKES IT WORTH RECORDING.
+  That rule says stage outputs BY NAME and never `git add <directory>`, and
+  line 1968 obeys it. A by-name stage still goes blind when a new shot family
+  arrives with a name the pattern does not cover, and nothing was watching the
+  join. The durable fix is not a wider glob, it is a check that every file the
+  verdict NAMES is a file that got committed, with both counts printed so a
+  zero cannot read as nothing-measured.
+acceptance ADDENDUM, and this half comes FIRST: every `file=` the vignette
+  verdict names is present in the commit, proven by a check that prints
+  namedFiles=N/committed=M and fails when they differ; the planted rejecting
+  case is a verdict naming a file nobody staged, which is today's live tree
+  and therefore free. Only once the frames land can the BLANK cause be
+  diagnosed, and the run that lands them is the one that supplies the
+  evidence. Under D45 the checker is a tool: a test, no review, no ruling.
