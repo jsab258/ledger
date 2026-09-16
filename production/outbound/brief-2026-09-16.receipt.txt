@@ -1,0 +1,17 @@
+receipt: sent-with-photo
+file: production/briefs/2026-09-16.md
+kind: brief
+photoRef: production/d1-probe/ue-vign_hook_day.png
+fileCommit: 9a185738264d28c8e76a74eba8acc64437ee9b59
+fileCommitEpoch: 1789532968
+sent: 2026-09-16T04:30:05+00:00
+sentEpoch: 1789533005
+messageId: 103
+chars: 950
+photoSizes: 90x51/320x180/800x450/1280x720
+photoSizeCount: 4
+outboundLatencySec: 37
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+buttons: 2/2
+note: one sample of one message, not a rate.
