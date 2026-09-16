@@ -3,7 +3,7 @@ due: 2026-09-16T13:05:00Z
 armedAt: 2026-09-16T12:28:34Z
 armedBy: resident/two-builders-on-the-policy-batch-and-the-lamp-instrument
 blocks: 0
-dischargedAt: -
+dischargedAt: 2026-09-16T12:50:00Z
 capBitAt: -
 
 265a5a7c is HEAD and PUSHED; the tree is DIRTY and the dirt is two builders plus the resident's documents, NOT yours to commit blind. Budget 2026-09-16d: 65 total, 65 Fable, ceiling 85, so the day is measured until about 22:2xZ. Inbox at 12:27Z: seen=2 delivered=0/2, nothing new, no unanswered question. Wake queue 0 due, 40/40 discharged.
@@ -17,3 +17,35 @@ THEN, IN THIS ORDER, and it is written down so it is not re-derived: queue 333 t
 TODAY IS THE VISUAL SLICE AND NOTHING ELSE (Jafar, this morning): wetness, materials, then dusk with lamps lit, wet road and a figure in silhouette, ungated under D41 and judged against the Hook sheet by the resident. The sheet is reachable at git show origin/art/atlas-01:production/art/atlas-01/concepts/hook.png. THE FIGURE IS BLOCKED ON HIM: queue 335, no person in the scene spec, and the walk pawn has no skeletal mesh. The frame ships without one if he has not answered.
 
 AUDIT FINDINGS ARE FILED AND THE STANDING ORDER RESUMES. That is his rule of today and it is now CLAUDE.md rule 11. Do not let a finding generate its own work in this session.
+
+DISCHARGED EARLY 2026-09-16T12:50Z, before its 13:05 due instant, because the
+work it armed is finished. Kept as written rather than edited out.
+
+BOTH BUILDERS LANDED AND THE BATCH IS PUSHED: d9af9a3d on main, HEAD equal to
+origin/main. verify.py was run to completion by the resident, exit 0, footer
+written to ledger/.verify-footer and pasted from the file: checks=87ran/0
+skipped/87total, CLAUDE.md 1951/2000 words, canon clean over the corpus,
+director cadence ok.
+
+THE CANON GATE'S FIRST RUN IS THE RESULT WORTH CARRYING: 0 finding(s) in 209
+file(s), 114156 line(s) examined. The sentence was false only in the sense
+that nothing ran it, never in the sense that the corpus was dirty.
+
+TWO THINGS THE REVIEW CAUGHT that this record did not anticipate. The wiring
+arrived citing D46 in four places and THERE IS NO D46; the register stops at
+D45. And the inoculation left in its place then claimed the rule "went into
+the constitution", which is also not yet true: the constitution stops at 12
+and law 13 is ruled to land with tools/enforcement-claims-check.py, which is
+not built. Both corrected before the commit. A citation to a record nobody can
+open is an enforcement claim with no runner wearing a different hat, which is
+the exact fault this batch exists to stop, so it is recorded rather than
+quietly fixed.
+
+THE CARD IS PUSHED AND THEREFORE SENT: production/outbox/2026-09-16-your-four-
+items-one-is-yours-to-call.answer.md rides in d9af9a3d, and the PC's bot
+sweeps the outbox from the pushed tree. producer-check said SEND with 0
+findings over 6 enforced rules.
+
+STILL OWED FROM THE POLICY BATCH, not carried by this discharge:
+tools/enforcement-claims-check.py, constitution law 13 and the one CLAUDE.md
+sentence naming it. They land together or not at all.
