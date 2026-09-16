@@ -1,0 +1,27 @@
+id: 398a098c
+due: 2026-09-16T17:55:00Z
+armedAt: 2026-09-16T17:27:42Z
+armedBy: resident/director-ruling-361-two-of-jafars-items-uncommitted
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+A DIRECTOR IS RULING THE SKY LUMINANCE BATCH AND THE GATE IS CORRECTLY REFUSING ITS ATTENDANCE. 13acb9a4 is HEAD and pushed. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, measured until about 01:33Z.
+
+VERIFY IS RED WITH "DIRECTOR RAN BUT DID NOT RULE": rulingRecords=0/101, rulingUnruledNewest=2026-09-16T17:21:05Z. That is the gate distinguishing a SPAWN from a COMPLETED REVIEW, which is the hole organization.md records being closed on 25 August after a killed director cleared the gate over an unreviewed 1800-line batch. It is working. Wait for the stamp; do not commit around it.
+
+JAFAR SENT TWO ITEMS AT ABOUT 17:10Z, BOTH FILED AND NOT STARTED, AND THEY ARE UNCOMMITTED IN THIS TREE. Queue 355 (re-ordered as the first half of a pair) and queue 362 (new). If this container is lost before the stamp lands, THOSE TWO FILES ARE THE THING TO RECOVER FIRST, because they are his words and nothing else holds them.
+
+HIS ORDER, so it survives: "Fix what a piece means in the throughput ledger, since twenty-two rows came from fifteen meshes and the cost divides by the wrong number. Then measure one real unit properly: one resident, fully authored, face, voice, schedule and a place in the town, taken through all five stations with both meters read before and after and nothing else running in that window. Then a second resident, to see whether the marginal cost falls. Two numbers from real work." And his reason: "That number decides the plan. Phase A is three to five hundred residents and nobody can say what that costs, so every estimate I have is a guess. I would rather know it is unaffordable at resident two than at resident fifty."
+
+TWO THINGS 362 CANNOT BE STARTED WITHOUT, written into the item: the window must contain ONE THING (a window containing anything else is REFUSED and re-run, never published with a caveat), and THE STUDIO CANNOT TAKE THE READINGS. Nothing in the container reads his usage page, so all four meter readings are his and the window is bounded by them. It needs him present at the open and the close.
+
+WHEN THE STAMP LANDS: review, verify, ONE commit, push, then dispatch run 51 by appending to production/d1-probe/DISPATCH. Capture the sha BEFORE pushing, watch by ancestry, compare BY PREFIX. Night-level baseline is run 50 (verdict 727d6a46, ue-pinset_night_3.png meanLuma 142.9); lamp baseline is run 49.
+
+WHAT RUN 51 MUST BE READ FOR, and it is not just the night level. One field now moves the ambient TWICE: at night the dome is 0.35 as the captured surface AND the SkyLight is 0.35 scaling that capture, so the night ambient may fall as the product rather than the sum. The builder named it and did not resolve it. It may overshoot.
+
+AND THE DAY ROWS MOVE, which queue 361's acceptance said they would not. That acceptance line was the resident's and was wrong: it asked for two incompatible things, since holding day still while moving night needs the schema change the brief forbade. Day goes 1.0 to 0.70, which is Jafar's own value off the sky cross.
+
+FILED TODAY AND NOT STARTED: 355, 356, 357, 358, 359, 360, 361 (in flight), 362, 363. 363 is new: the cadence gate reads PATHS and knows nothing of D41, so visual engine work always trips it. Three instances today, right twice and wrong once. Its obvious fix is named as probably wrong.
+
+THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT.

@@ -3769,4 +3769,131 @@ namespace LedgerVignette
 			Wrote, Asked, Blank, Asked, NoFile, Asked, SecondsTotal, Ticks);
 		return std::string(Buf);
 	}
+
+	// ---- QUEUE 361: THE DOME'S LUMINANCE, ONE VALUE PER CONDITION -------
+	//
+	// WHAT IS BEING CORRECTED. kSkyLuminance in VignetteShot.cpp was a
+	// GLOBAL constant written into the dome's material instance once at
+	// build and never again. The dome is UNLIT, so it renders at its own
+	// value whatever the lights do: the condition's sky_intensity 0.35
+	// scaled what the SkyLight CAPTURED and did nothing at all to what the
+	// camera SAW. One night row of ue-pinset_night_3.png measured meanLuma
+	// 142.9 on run 50 against the same file's 43.6 on run 49, 3.3 times
+	// brighter on a night condition, with the sky band blown white.
+	//
+	// NO NEW CONDITION FIELD, AND THAT IS THE DECISION THIS CARRIES.
+	// sky_intensity is already per condition, already required in both
+	// readers, and already means "how bright is the sky in this condition";
+	// it now says that to the surface the camera sees as well as to the
+	// light the sky casts.
+	//
+	// THE COUPLING THAT CREATES IS NAMED HERE RATHER THAN FOUND LATER. The
+	// dome's material carries the engine's is-sky flag, which run 50 read
+	// back as skyDomeMatIsSky=yes, so the real-time capture SEES the dome.
+	// One field therefore moves the ambient twice: once as the surface being
+	// captured, once as the intensity scaling that capture. A night ambient
+	// falls further than the dome does, by a factor this container cannot
+	// compute. THAT IS A READING THE NEXT RUN TAKES, not an argument settled
+	// here, which is why the gain is printed as a series and the drive
+	// prints what it asked, where it came from, and what it read back.
+	//
+	// THE ARITHMETIC LIVES HERE, WHERE g++ RUNS IT, and not in the engine
+	// file no container here can compile: instruments.md, the rule written
+	// after the third unrun formatter printed a plausible string.
+	//
+	// THE FLOOR IS ZERO AND THERE IS NO CEILING. A negative emissive is not
+	// a darker sky, it is a nonsense the renderer would swallow silently, so
+	// a hand-edited condition asking for one gets 0.0 and the printed value
+	// says what was applied. No upper clamp: nothing measured here knows one.
+	inline double SkyDomeLuminance(double SkyIntensity, double Gain)
+	{
+		const double L = SkyIntensity * Gain;
+		return L > 0.0 ? L : 0.0;
+	}
+
+	// WHAT EACH NUMBER IS A STATISTIC OF: Calls, Skipped, Walks, Wrote and
+	// NoMid are CUMULATIVE over the run; Last, LastAsked and LastFrom are
+	// LAST-WINS, the state the most recent walk asked for; ReadSet and
+	// ReadGot are the ONE readback taken in the same few statements as a set.
+	struct SkyLumDrive
+	{
+		int         Calls;      // drive entries, one per ApplyCondition
+		int         Skipped;    // entries the guard turned away
+		int         Walks;      // entries that changed the value
+		int         Wrote;      // walks the dome instance took
+		int         NoMid;      // walks with no dome instance to write to
+		bool        bHaveLast;
+		double      Last;       // last-wins: the luminance asked of the dome
+		double      LastAsked;  // last-wins: the condition's sky_intensity
+		std::string LastFrom;   // last-wins: the condition id it came from
+		bool        bReadTaken;
+		double      ReadSet, ReadGot;
+		SkyLumDrive()
+			: Calls(0), Skipped(0), Walks(0), Wrote(0), NoMid(0),
+			  bHaveLast(false), Last(0.0), LastAsked(0.0), LastFrom("none"),
+			  bReadTaken(false), ReadSet(0.0), ReadGot(0.0) {}
+	};
+
+	// THE GUARD'S ONE DECISION, HERE AND NOT IN THE ENGINE FILE, so that the
+	// case which must be SKIPPED has a test rather than an argument behind
+	// it. EXACT COMPARE: both sides come out of SkyDomeLuminance over the
+	// same two inputs, so two conditions asking for the same sky give
+	// bit-identical doubles, and a tolerance would buy nothing while
+	// silently swallowing a deliberate change smaller than itself.
+	inline bool SkyLumNeeded(const SkyLumDrive& D, double Want)
+	{
+		return !(D.bHaveLast && D.Last == Want);
+	}
+
+	// THE DRIVE'S TALLIES, WHOLE-RUN NUMBERS ONLY, FOR THE MATERIALS DONE
+	// LINE beside the wetness and lamp drives that already ride it.
+	//
+	// A RUN WHERE THE DRIVE WAS NEVER CALLED PRINTS THE WORDS "nothing
+	// measured" and still prints the gain, because a drive that never ran
+	// and a drive that ran and wrote nothing are different facts and a bare
+	// 0 cannot tell them apart. Every zero here ships its denominator: wrote
+	// against walks, walks and skips against calls.
+	//
+	// THE GAIN SAYS ON THE LINE THAT IT IS THE FIRST VALUE OF A SERIES,
+	// exactly as kLampEmissiveUnitless does, because rule 2 forbids calling
+	// an unmeasured number anything better. The series is what the next
+	// run's sky band prints; the value moves from that reading and not from
+	// an argument.
+	inline std::string SkyLumDriveSegment(const SkyLumDrive& D, double Gain)
+	{
+		char Buf[760];
+		if (D.Calls == 0)
+		{
+			std::snprintf(Buf, sizeof(Buf),
+				" skyLumDrive=nothing-measured/the-drive-was-never-called"
+				" skyLumGain=%.3f/unitless/FIRST-VALUE-OF-A-SERIES",
+				Gain);
+			return std::string(Buf);
+		}
+		char Read[200];
+		if (D.bReadTaken)
+		{
+			std::snprintf(Read, sizeof(Read), "set=%.3f/got=%.3f/same=%s",
+				D.ReadSet, D.ReadGot,
+				CellAgrees(D.ReadSet, D.ReadGot)
+					? "yes" : "NO/the-instance-refused-the-write");
+		}
+		else
+		{
+			std::snprintf(Read, sizeof(Read),
+				"nothing-measured/no-walk-reached-a-dome-instance");
+		}
+		std::snprintf(Buf, sizeof(Buf),
+			" skyLumDriveStat=cumulative-over-the-run/value-asked-and-from-are-last-wins"
+			" skyLumDriveAsked=%d/walked=%d/skipped=%d"
+			" skyLumDriveWrote=%d/ofWalks=%d/noInstance=%d"
+			" skyLumValue=%.3f skyLumFrom=%s skyLumSkyIntensity=%.3f"
+			" skyLumGain=%.3f/unitless/FIRST-VALUE-OF-A-SERIES"
+			" skyLumReadback=%s"
+			" skyLumSeenValueReadback=the-frame/the-sky-band-on-the-shot-lines",
+			D.Calls, D.Walks, D.Skipped,
+			D.Wrote, D.Walks, D.NoMid,
+			D.Last, NoSpaces(D.LastFrom).c_str(), D.LastAsked, Gain, Read);
+		return std::string(Buf);
+	}
 }

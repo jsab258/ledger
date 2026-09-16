@@ -1683,3 +1683,37 @@ day is still the acceptance pair, and queue 358 is why day rows currently read
 NOT IN THIS RUN AND NOT TO BE READ FOR: the road's reflection (queue 359, whose
 first job is a printer and not the road), and the figure, which D46 unblocked
 this afternoon and toward which nothing is yet built.
+run 51 - 2026-09-16 - THE SKY IS ASKED TO BE NIGHT AT NIGHT, AND THE CHANGE
+BRINGS ITS OWN NULL CONTROL. Run 50 bound the approved photograph and it works
+(all four flags read, skyDomeMatIsSky=yes, the photograph is what lights the
+street), but one global luminance served every condition, so a NIGHT row
+rendered at meanLuma 142.9 against run 49's 43.6. The dome's luminance is now
+driven per condition from sky_intensity, which already existed, so there is NO
+schema change and this is visual under D41. Ruled in
+game-design/decision-2026-09-16-ruling-the-sky-luminance-is-visual-and-no
+-ruling-was-needed.md.
+BASELINES, TWO OF THEM AND THEY ANSWER DIFFERENT QUESTIONS: run 50, verdict
+727d6a46, is the night-level baseline and the dome at 1.0. Run 49, verdict
+355e8d8, is the NO-DOME frame and the lamp baseline.
+GROUP THE SHOT LINES BY shotSkyIntensityRead BEFORE READING ANY BAND. The 33
+conditions carry FOUR values: 1.00 on 10 rows, 0.70 on 13, 0.50 on 4, 0.35 on
+6 of which only 2 are night. THE 10 ROWS AT 1.00 ARE THE NULL CONTROL: the
+dome is 1.00 times a gain of 1.0 there, exactly as in run 50, so their sky band
+MUST BE UNCHANGED against run 50 within this run's own spread. A MOVED 1.00 ROW
+IS A FAULT ELSEWHERE AND NOT A WIN. The 0.70, 0.50 and 0.35 groups should fall,
+in that order. No sizes are predicted: nobody has printed that series.
+THE NUMBER THAT SAYS IT WENT TOO FAR, and it is bracketed rather than guessed:
+the ground band's mean on pin_setter_night, which is exposure pinned and has a
+bracket from run 49 (no dome) and run 50 (dome at 1.0). INSIDE THE BRACKET IS
+FINE. BELOW RUN 49 IS THE WRONG DIRECTION and opens the separate-dome-field
+question as a structural item. Read whole-frame meanLuma second: it is
+confounded by the sky band itself.
+AND ONE FIELD NOW MOVES THE AMBIENT TWICE, stated as a hypothesis before the
+run. At night the dome is 0.35 as the captured surface AND the SkyLight is 0.35
+scaling that capture, so if the capture is linear the ambient goes as
+sky_intensity squared while the seen sky goes as sky_intensity. That is what
+the pin_setter_night bracket is for.
+kSkyLuminanceGain=1.0 is a FIRST VALUE OF A SERIES and says so on the line.
+NOT IN THIS RUN: the road's reflection (359, printer first), the lit test's
+missing margin (358, whose symptom run 50 made rarer without fixing), and the
+figure, which D46 unblocked and toward which nothing is built.

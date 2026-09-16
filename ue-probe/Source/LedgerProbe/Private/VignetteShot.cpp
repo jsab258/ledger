@@ -381,7 +381,25 @@ namespace
 	// identity and is deliberately NOT guessed upward to compensate for
 	// anything: the frame's own sky band is the reading the second value
 	// comes off, exactly as the lamp glow constant above is handled.
-	const float  kSkyLuminance = 1.0f;
+	//
+	// ---- QUEUE 361, AND THE NAME CHANGED WITH THE MEANING ---------------
+	//
+	// IT IS A GAIN NOW AND NOT THE VALUE. It was written into the instance
+	// once at build and served day and night alike, which is why a night row
+	// rendered at 3.3 times its previous mean. The value in force is this
+	// gain times the CONDITION's sky_intensity, computed by
+	// LedgerVignette::SkyDomeLuminance where g++ runs it and written by
+	// ReDriveSkyLuminance, which is the ONLY writer of this parameter: the
+	// build no longer writes it, for the reason this file's own header gives
+	// about two writers on one setting.
+	//
+	// 1.0 IS STILL THE IDENTITY AND STILL UNMEASURED. It is deliberately NOT
+	// guessed in either direction to compensate for anything, and in
+	// particular it is NOT tuned to land a night frame back on run 49's mean
+	// of 43.6: that frame had no dome in it at all, so matching it would be
+	// matching an absence. The frame's own sky band is the reading the second
+	// value comes off, exactly as the lamp glow constant above is handled.
+	const float  kSkyLuminanceGain = 1.0f;
 	// HOW FAR A DECAL QUAD IS LIFTED OFF THE SURFACE IT SITS ON. Not in the
 	// file: the file describes a decal, which has no thickness and no
 	// z-fighting, and this engine is drawing it as a quad until Phase C.
@@ -835,6 +853,12 @@ namespace
 			  CompIsMidOn("none") {}
 	};
 	LampDrive GLampDrive;
+	// QUEUE 361: THE DOME'S LUMINANCE GUARD, AND ITS STRUCT, ITS ARITHMETIC
+	// AND ITS STRING ALL LIVE IN THE TESTED HEADER, which is the named next
+	// step LampDrive above is still owed. Nothing about this drive ships
+	// unrun except the three engine calls, and every one of those has a
+	// signature already compiled in this file.
+	LedgerVignette::SkyLumDrive GSkyLumDrive;
 	std::string GMaterialsLine =
 		"materialsStatus=NOT-REACHED materialsNote=the-material-pass-never-ran";
 
@@ -2033,6 +2057,63 @@ namespace
 		}
 	}
 
+	// ---- QUEUE 361: THE SKY DOME'S LUMINANCE, DRIVEN BY THE CONDITION ---
+	//
+	// THE SAME SHAPE AS THE TWO DRIVES ABOVE AND DELIBERATELY NOT A THIRD
+	// ONE: a guard keyed on the last applied value, re-entered on every tick
+	// while a condition settles, counters on the materials done line, and
+	// the readback taken in the same few statements as the set.
+	//
+	// WHAT IT DECIDES: nothing. It supplies live state (the condition's
+	// sky_intensity) and order; the multiplication, the floor and the whole
+	// printed string are in VignetteSpec.h where the tests run.
+	//
+	// THE GUARD COMPARES EXACTLY AND NOT WITHIN A TOLERANCE. Both sides come
+	// out of the same function over the same two inputs, so equal conditions
+	// give bit-identical doubles; a tolerance here would buy nothing and
+	// would silently swallow a deliberate change smaller than itself. The
+	// READBACK below is the comparison that needs one, because the parameter
+	// is a float and the echo is a float widened back.
+	void ReDriveSkyLuminance(const Condition& C)
+	{
+		++GSkyLumDrive.Calls;
+		const double Want = LedgerVignette::SkyDomeLuminance(
+			C.SkyIntensity, (double)kSkyLuminanceGain);
+		if (!LedgerVignette::SkyLumNeeded(GSkyLumDrive, Want))
+		{
+			++GSkyLumDrive.Skipped;
+			return;
+		}
+		GSkyLumDrive.bHaveLast = true;
+		GSkyLumDrive.Last      = Want;
+		GSkyLumDrive.LastAsked = C.SkyIntensity;
+		GSkyLumDrive.LastFrom  = NoSpaces(C.Id);
+		++GSkyLumDrive.Walks;
+		// NO DOME IS COUNTED, NOT WORKED AROUND. A sky that failed to spawn
+		// leaves nothing to write to, and walks minus wrote is the
+		// denominator that says so on the line.
+		if (GSkyDomeMid == nullptr) { ++GSkyLumDrive.NoMid; return; }
+		GSkyDomeMid->SetScalarParameterValue(FName(kSkyLuminanceParam),
+		                                     (float)Want);
+		++GSkyLumDrive.Wrote;
+		// AND THE READBACK, IN THE SAME FEW STATEMENTS AS THE SET, through
+		// the one echo call this repository already compiles: ReDriveWetness
+		// asks K2_GetScalarParameterValue for its wetness in exactly this
+		// shape. LAST-WINS, one pair, because 43 shots answering the same
+		// question 43 times is one fact printed 43 times.
+		//
+		// WHAT IT CANNOT SEE, said here rather than discovered later: this is
+		// the game thread's copy of the parameter, not the render proxy, and
+		// it says nothing whatever about how bright the sky LOOKS. The render
+		// side of this write is the frame, and the sky band on the shot lines
+		// is the acceptance instrument for this item.
+		const double Got = (double)GSkyDomeMid->K2_GetScalarParameterValue(
+			FName(kSkyLuminanceParam));
+		GSkyLumDrive.bReadTaken = true;
+		GSkyLumDrive.ReadSet    = Want;
+		GSkyLumDrive.ReadGot    = Got;
+	}
+
 	// THE DRIVE'S TALLIES, AND EVERY ZERO HERE SHIPS ITS DENOMINATOR.
 	// WHOLE-RUN NUMBERS ONLY: this rides the materials done line, never a
 	// shot line, which is the separation WetRedriveSegment keeps. The
@@ -2109,6 +2190,13 @@ namespace
 		// condition naming the photograph already up costs nothing, and a day
 		// photograph left over a night street is the failure this prevents.
 		BindSkyPhoto(C.Hdri);
+		// AND THE DOME'S OTHER PARAMETER IN THE SAME BREATH, QUEUE 361. The
+		// line above decides WHICH photograph the dome wears; this decides
+		// HOW BRIGHT it renders, off the same condition. They are written
+		// together so no condition can change one without the other, which
+		// is the failure this item is: one luminance served a day row and a
+		// night row and the night rendered like noon.
+		ReDriveSkyLuminance(C);
 		GExposurePinFamilySunOn = C.SunOn;
 		const FLinearColor DaySky(0.42f, 0.46f, 0.52f, 1.0f);
 		const FLinearColor NightSky(0.05f, 0.05f, 0.07f, 1.0f);
@@ -3001,7 +3089,9 @@ namespace
 		// every run for ever.
 		Out.Add(FString(UTF8_TO_TCHAR(
 			(GMaterialsLine + LedgerSurface::WetRedriveSegment(GWetRedrive)
-			 + LampDriveSegment()).c_str())));
+			 + LampDriveSegment()
+			 + LedgerVignette::SkyLumDriveSegment(
+			       GSkyLumDrive, (double)kSkyLuminanceGain)).c_str())));
 		// THE DECALS, AFTER THE SURFACES, because card and multiply appear on
 		// both: as two surface names that are NOT library surfaces, and here as
 		// twenty pieces each carrying its own picture. A cap on the lines would
@@ -4501,9 +4591,11 @@ namespace
 		char B[512];
 		std::snprintf(B, sizeof(B),
 			"photograph-longlat-png-on-an-unlit-sky-dome/lastWins=%s/%s/"
-			"mesh=%s/diameterM=%.0f/lum=%.3f/writes=%d-on-change/photos=%d",
+			"mesh=%s/diameterM=%.0f/lumGain=%.3f"
+			"/lumPerCondition=skyLumDrive-on-the-materials-line"
+			"/writes=%d-on-change/photos=%d",
 			NoSpaces(GSkyPhotoNow).c_str(), Note.c_str(),
-			TCHAR_TO_UTF8(kSkyDomeMeshPath), kSkyDomeDiameterM, kSkyLuminance,
+			TCHAR_TO_UTF8(kSkyDomeMeshPath), kSkyDomeDiameterM, kSkyLuminanceGain,
 			GSkyPhotoBinds, GSkyPhotoCache.Num());
 		GHdriBoundAs = NoSpaces(std::string(B));
 	}
@@ -4579,8 +4671,17 @@ namespace
 			return;
 		}
 		GSkyDomeParent = SkyMat;
-		GSkyDomeMid->SetScalarParameterValue(FName(kSkyLuminanceParam),
-		                                     kSkyLuminance);
+		// THE LUMINANCE IS NOT WRITTEN HERE ANY MORE, QUEUE 361, AND THE
+		// ABSENCE IS THE POINT. This site wrote a global constant once, at a
+		// moment when no condition had been applied and none could be, and
+		// nothing ever re-drove it: one value served day and night and the
+		// night rendered like noon. ReDriveSkyLuminance is the ONE OWNER of
+		// this parameter now, and it is called from ApplyCondition before
+		// any frame is photographed. Until it first runs the dome carries
+		// the value M_LedgerSky itself ships with, exactly as a lamp head
+		// carries its material's own emissive until the first condition
+		// lands; skyLumDriveAsked on the materials done line is what proves
+		// the drive ran at all.
 		C->SetMaterial(0, GSkyDomeMid);
 		// AND THE FIRST PHOTOGRAPH. Every later shot rebinds only when its
 		// condition names a different one.
