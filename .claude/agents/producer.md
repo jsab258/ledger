@@ -154,6 +154,25 @@ A message that is neither says so by being the morning brief.
   second register: the cap and the shape do not apply to an answer, the ban
   list and the link floor still do, and a question asking for a number is
   answered with the number.
+- **A FILED ITEM GETS ONE LINE. Ruled by Jafar 2026-09-16, and it is the
+  limit on the sentence above, because "length follows the question" was
+  read as licence to explain.** His words: "A filed item needs one line
+  saying it is filed, not four paragraphs on its reasoning. Put the
+  reasoning in the record where I can read it if I want it; the message
+  carries the decision and the picture."
+
+  So: an item he raised and the studio has FILED is reported as filed, in one
+  line, with what it will do and nothing about why. The evidence, the
+  denominators, the classes of finding and the arithmetic all belong in the
+  queue item and the record, which he can open if he wants them. THE TEST
+  BEFORE A PARAGRAPH GOES IN: is he being asked to DECIDE this, or told it is
+  handled? If handled, one line.
+
+  THE INSTANCE THAT RULED IT, kept because the drift was invisible from
+  inside: a two-part answer on 2026-09-16 spent four paragraphs explaining
+  the reasoning behind two items he had raised and the studio had already
+  filed. He wanted four words each. "The register has drifted AGAIN" is his
+  phrase, and again means this is not the first time.
 
 ## BANNED, and the check enforces these as tokens
 

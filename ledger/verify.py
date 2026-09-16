@@ -2041,13 +2041,16 @@ def canon_gate():
     game-design/decision-2026-09-16-ruling-wire-or-delete-the-last-instrument-and-seven-settlements.md :
     the corpus is declared in the tool, not here, so this runner and
     tools/ci-checks.sh cannot drift apart about what canon governs. Both call
-    `--corpus`; the roots live in canon-gate.py. (There is no D46, and there
-    is no constitution law 13 either AS THIS LANDS: the register stops at
-    D45, the constitution stops at 12, and the standing rule behind this
-    wiring is ruled to become law 13 WITH tools/enforcement-claims-check.py,
-    which is not built yet. Cite the record above until then. Checked on the
-    day: `ls ledger-v2/respec/decision-register/` and the constitution's own
-    numbering.)
+    `--corpus`; the roots live in canon-gate.py. (A NOTE THAT WAS TRUE FOR
+    THREE HOURS AND IS KEPT CORRECTED RATHER THAN DELETED, because it is the
+    same decay it was written against: when this landed there was no D46, and
+    a builder had cited one. THERE IS A D46 NOW, ruled by Jafar the same
+    afternoon, and it is about Mixamo bodies and NOT about wire-or-delete, so
+    a reader reaching for it here would still be citing the wrong record.
+    Cite the ruling record named above. There is still no constitution law 13:
+    the constitution stops at 12, and the standing rule behind this wiring is
+    ruled to become law 13 WITH tools/enforcement-claims-check.py, which is
+    not built yet.)
 
     NOTHING MEASURED IS RED, not clean. Exit 2 from the tool means the walk
     found no file or a declared root is gone, and a zero denominator on the
