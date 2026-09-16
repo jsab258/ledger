@@ -1,0 +1,27 @@
+id: e734665a
+due: 2026-09-16T18:10:00Z
+armedAt: 2026-09-16T17:35:45Z
+armedBy: resident/run-51-group-by-sky-intensity-before-any-band
+blocks: 0
+dischargedAt: -
+capBitAt: -
+
+RUN 51 IS IN FLIGHT AND THIS WAKE READS IT. 118281a9 is HEAD and pushed, tree clean. Nothing is running in this container. Budget 2026-09-16e: 69/69, ceiling 85, takenAt 15:33Z, measured until about 01:33Z.
+
+WATCH BY ANCESTRY against 118281a900b38aac256b44b12094bf32c81d2bc1. GitHub run 35129105903, queued 17:35:13Z. Compare run files BY PREFIX: 7 chars against git's 8.
+
+GROUP THE SHOT LINES BY shotSkyIntensityRead BEFORE READING ANY BAND. This is the whole reading and it is not optional. The 33 conditions carry FOUR values: 1.00 on 10 rows, 0.70 on 13, 0.50 on 4, 0.35 on 6 of which only 2 are night.
+
+THE 10 ROWS AT 1.00 ARE THE NULL CONTROL AND NOBODY DESIGNED THEM. The dome is 1.00 times a gain of 1.0 there, exactly as in run 50, so their sky band MUST BE UNCHANGED against run 50 within this run's own spread. A MOVED 1.00 ROW IS A FAULT ELSEWHERE AND NOT A WIN. The 0.70, 0.50 and 0.35 groups should fall, in that order. No sizes were predicted: nobody has printed that series.
+
+THE NUMBER THAT SAYS IT WENT TOO FAR IS BRACKETED RATHER THAN GUESSED: the ground band's mean on pin_setter_night, which is exposure pinned and sits between run 49 (no dome, meanLuma 43.6 whole-frame) and run 50 (dome at 1.0, 142.9). INSIDE THE BRACKET IS FINE. BELOW RUN 49 IS THE WRONG DIRECTION and opens the separate-dome-field question as a structural item needing a director. Read whole-frame meanLuma SECOND: the sky band confounds it.
+
+THE HYPOTHESIS STATED BEFORE THE RUN: one field now moves the ambient twice. At night the dome is 0.35 as the captured surface AND the SkyLight is 0.35 scaling that capture, so if the capture is linear the ambient goes as sky_intensity SQUARED while the seen sky goes as sky_intensity. The bracket settles it.
+
+THEN OPEN THE FRAMES (rule 4), and any before-and-after goes in ONE picture at ONE scale or it is not claimed.
+
+JAFAR'S TWO ITEMS OF THIS EVENING ARE FILED AND NOT STARTED: 355 (fix what a piece means; the first half of a pair and it GATES 362) and 362 (one fully authored resident through all five stations with both meters read before and after and NOTHING ELSE in the window, then a second for the marginal). TWO THINGS 362 CANNOT START WITHOUT: a window containing one thing (anything else and it is REFUSED and re-run, never published with a caveat), and HIM, because nothing in the container can read his usage page so all four readings are his.
+
+STILL OWED, none started: enforcement-claims-check.py with constitution law 13 and its CLAUDE.md sentence, together or not at all; the lamp drive guard into the tested header BEFORE the lamp constant's second value; the sky parameter-name contract into SurfaceBind.h BEFORE anything else reads SkyMap or SkyLuminance; 332, 356, 357, 358, 359 (printer first), 360 (do NOT raise the bound), 363 (the gate reads paths, and its own draft heuristic would have gated today's visual batch too).
+
+THE FIGURE IS UNBLOCKED BY D46 AND NOTHING IS BUILT TOWARD IT.
