@@ -1717,3 +1717,44 @@ kSkyLuminanceGain=1.0 is a FIRST VALUE OF A SERIES and says so on the line.
 NOT IN THIS RUN: the road's reflection (359, printer first), the lit test's
 missing margin (358, whose symptom run 50 made rarer without fixing), and the
 figure, which D46 unblocked and toward which nothing is built.
+
+RUN 52, dispatched 2026-09-16 from 045ba7e8. THE FIGURE, and it is the first
+time a person has ever been in this street. Forty-two frames of Quay Street
+have been rendered and every one of them was empty.
+WHAT TO READ FIRST, AND IT IS NOT A GATE: open every night still before any
+figure key. A green key over an empty street is the failure mode this project
+has already had once, when a build committed stills it could not have
+rendered.
+THE TWO ARITHMETIC FAULTS ARE PRINTED WHETHER THEY HAPPEN OR NOT, because
+neither is a rendering opinion that a frame diagnoses on its own.
+figureHeightRatio carries a WORD: AGREES, A-HUNDRED-TIMES-TOO-SMALL,
+A-HUNDRED-TIMES-TOO-LARGE or DISAGREES. The bands are decades and cannot judge
+the figure, only the unit confusion. figureSourceCm reads 166.442 measured off
+Michelle's own FBX vertex arrays in the container, so the engine's
+figureHeightCm has something real to disagree with.
+THE POSE IS THE OTHER HALF AND IT NEEDS NO THRESHOLD: component-space
+transforms are seeded from the reference pose, so a figure that never evaluated
+reads delta exactly 0 on every bone. A bind pose DESTROYS the actor. A pose
+that could not be READ leaves it standing under STANDING-POSE-UNPROVEN, which
+is not a success word, and the still is what tells a T-pose from a posed person.
+THE SKELETON MATCH IS THE BIGGEST IMPORT RISK and it is printed:
+figureAnimSkeleton, figureMeshSkeleton, figureSkeletonsMatch. The clip FBX
+carries 0 geometries, which is correct for an animation-only export and also
+means the whole import hangs on that binding.
+THE IMPORT DOES NOT RIDE ITS OWN WORKFLOW STEP, deliberately. workflow-size.py
+reads 23167 chars with 17 under the ceiling, an import step costs about 1500,
+and past the ceiling dispatch returns 422 and NOTHING runs. It goes through the
+editor process make_base_material.py already starts, as the sky material does.
+So figureImportStatus=RAISED in ue-material.txt is the shape a failure takes.
+77 PX IS THE FIRST VALUE AND NOT THE ANSWER. The figure is 13.5 m out because a
+lantern that is both BEHIND and LOW cannot be had nearer: heads are 4.96 m up
+and columns sit at x=8/18/28/38. Record per night still: projH against the
+predicted 76.7, then person-or-mannequin and coat-or-not IN WORDS, then
+figureSil with coreMinusRingMeanLuma. The placement and instrument faults are
+read BEFORE the taste question.
+THE 31 DAY ROWS MUST BE UNCHANGED. The figure is scoped to lanterns-on, 2
+conditions of 33, so the sky bracket and its null control keep their meaning.
+A day row that moved is a bug in this batch, not a finding about the figure.
+NOT IN THIS RUN: the road's reflection (359, printer first), the lit test's
+missing margin (358), the sky's horizon band of trees and dry field at the
+vanishing point (373), and the second annulus (375).
