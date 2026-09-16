@@ -1,5 +1,6 @@
 # D1: Engine (probe, do not debate)
 Date: 2026-08-31. Status: OPEN, probe authorized. Owner: Engineering.
+CLOSED 2026-09-10 BY D16: the engine is Unreal.
 Context: photoreal target, driving later, faces required, big world later, full rebuild authorized. UE5 offers Lumen, Nanite, World Partition, MetaHuman, City Sample crowds and vehicles, all free. Unity holds the working codebase, CI, screenshot instruments, and faster agent iteration loops (C# vs C++ builds; text YAML vs binary uassets).
 Choice mechanism: a two-week timeboxed probe, then a decision record citing measurements, never taste.
 Probe spec: port the perception core plus its tests to UE5 C++ (transliteration); build one instrumented street scene (screenshot pipeline, frame budget capture); measure (a) agent-loop friction (median edit-build-test cycle time, failed-edit rate on binary assets), (b) visual ceiling reached in the timebox on the same street built in both engines, (c) CI and instrument rebuild cost estimate, (d) faces path (MetaHuman plus Audio2Face vs CC4 plus Audio2Face in Unity).

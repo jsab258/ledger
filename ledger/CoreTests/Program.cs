@@ -101,6 +101,7 @@ namespace Ledger.CoreTests
                 TestDayJob();
                 TestResponseValidator();
                 await TestConversationEngine();
+                TestCaughtClaimIsNotLearned();
                 await TestTranscriptRollback();
                 await TestReflection();
                 TestPhysique();
@@ -3724,6 +3725,186 @@ namespace Ledger.CoreTests
             Check(ConversationEngine.ValidateReply("<thinking>only reasoning</thinking>") == "...",
                 "reply that is nothing but reasoning becomes ellipsis, not leaked reasoning");
             Check(ConversationEngine.ValidateReply(new string('x', 2000)).Length <= ConversationEngine.MaxReplyChars, "long reply capped");
+        }
+
+        /// A CLAIM THAT IS CAUGHT OUT DOES NOT BECOME WHAT THEY KNOW.
+        ///
+        /// `KnowledgeBase` says in its own summary that "an NPC cannot be
+        /// talked out of what it knows", and until this test existed the code
+        /// broke that invariant on the one path through which the player
+        /// talks. `LawHost.Claim` caught a lie with `Claims.Process` and then
+        /// handed the same lie to `GossipMill.PlayerClaims`, which learned it,
+        /// and `Learn` replaces on topic: the lie was written over the
+        /// witnessed fact that had just caught it.
+        ///
+        /// THE COST WAS ARITHMETIC, NOT RHETORIC. `Claims.Process` raises
+        /// suspicion 0.15 on a contradiction and lowers it 0.03 when the story
+        /// checks out, and every repeat of a stored lie read Consistent, so the
+        /// fifth repetition of a caught lie cancelled the penalty for being
+        /// caught and the sixth was a net gain in trust. The series below is
+        /// printed rather than only asserted so that the next reader setting a
+        /// bound here sets it from evidence.
+        ///
+        /// ACCEPTING CASE FIRST, and it is the half that matters most: a claim
+        /// nobody can contradict must STILL become what they know. A guard that
+        /// cannot tell a caught lie from an honest correction would quietly
+        /// stop the town ever updating, which is a worse bug than the one it
+        /// was written to fix.
+        static void TestCaughtClaimIsNotLearned()
+        {
+            Console.WriteLine("A caught claim is not what they know:");
+            var now = new GameTime(3, 12, 0);
+            Fact At(string where) => new Fact("player", "location_d2_evening", where);
+
+            // ---- ACCEPTING: an uncaught claim is still learned ----
+            {
+                var (mill, _, lena) = FreshMill();
+                var verdict = mill.PlayerClaims("lena", At("home"), now);
+                Check(verdict == ClaimResult.Unknown,
+                      "a claim about a topic the listener knows nothing about is Unknown, not refused",
+                      verdict.ToString());
+                Check(lena.Knowledge.CheckClaim(At("home")) == ClaimResult.Consistent,
+                      "an uncaught claim STILL becomes what they know");
+                Check(lena.Knowledge.Facts.Count == 1,
+                      "and it is the one fact they hold on the subject",
+                      lena.Knowledge.Facts.Count.ToString());
+
+                // And it is still a lie that can catch up with them later,
+                // which is the entire reason the claim is stored at all: Rocco
+                // saw the warehouse, and one gossip round brings it over.
+                var evs = mill.Tick(now.AddMinutes(30), (a, b) => true);
+                Check(evs.Exists(e => e.ToId == "lena" && e.Contradiction),
+                      "a stored claim is still exposed when the rumour reaches the person it was told to",
+                      $"{evs.Count} event(s)");
+            }
+
+            // ---- ACCEPTING, THE HONEST CORRECTION ----
+            // Told a place, then told the same place again. Nothing here is a
+            // contradiction, so nothing is refused and the fact stands.
+            {
+                var (mill, _, lena) = FreshMill();
+                mill.PlayerClaims("lena", At("home"), now);
+                var again = mill.PlayerClaims("lena", At("home"), now.AddMinutes(5));
+                Check(again == ClaimResult.Consistent, "repeating a claim they already hold is Consistent",
+                      again.ToString());
+                Check(lena.Knowledge.Facts.Count == 1, "and does not file a second copy",
+                      lena.Knowledge.Facts.Count.ToString());
+            }
+
+            // ---- REJECTING: the planted case, the bug itself ----
+            {
+                var (mill, _, lena) = FreshMill();
+                // THE TRUTH, PLANTED. Lena knows where the player was.
+                lena.Knowledge.Learn(At("warehouse"));
+
+                // The pair exactly as `LawHost.Claim` hand-sequences it:
+                // `Claims.Process` first, then `PlayerClaims`. `GossipDirector`
+                // builds every mill agent with the host's own knowledge, so
+                // these two read and write ONE KnowledgeBase, which is what
+                // made the overwrite possible.
+                var was = Claims.Process(lena.Knowledge, lena.Suspicion, lena.Memory, At("cinema"), now);
+                Check(was == ClaimResult.Contradiction, "the lie is caught", was.ToString());
+                double s1 = lena.Suspicion.Value;
+                Check(s1 > 0, "and catching it costs the liar something", s1.ToString("0.000"));
+
+                var filed = mill.PlayerClaims("lena", At("cinema"), now);
+                Check(filed == ClaimResult.Contradiction,
+                      "and the mill REFUSES it, and says so, so a caller can count refusals",
+                      filed.ToString());
+                Check(lena.Knowledge.CheckClaim(At("warehouse")) == ClaimResult.Consistent,
+                      "the witnessed truth is still what she knows: she cannot be talked out of it");
+                Check(lena.Knowledge.CheckClaim(At("cinema")) == ClaimResult.Contradiction,
+                      "and the lie is still a lie to her");
+                Check(lena.Knowledge.Facts.Count == 1,
+                      "one fact on the topic, not two and not the wrong one",
+                      lena.Knowledge.Facts.Count.ToString());
+
+                // IT IS STILL REMEMBERED, at two saliences: what was said
+                // (0.4, from the mill) and what it was worth (0.8, from
+                // Process). Refusing to BELIEVE a lie is not forgetting it.
+                Check(lena.Memory.Events.Any(e => e.Text.Contains("told me")),
+                      "the telling is remembered even though it was not believed");
+                Check(lena.Memory.Events.Any(e => e.Text.Contains("lied")),
+                      "and so is the fact that it was a lie");
+
+                // ---- THE SERIES, PRINTED. Five repetitions of a caught lie.
+                // Under the old behaviour repetitions 2..5 read Consistent and
+                // each LOWERED suspicion 0.03, so the fifth value returned to
+                // the first and the sixth went under it. These are the running
+                // values of one variable after each repetition, not five
+                // independent measurements.
+                var series = new List<double> { s1 };
+                for (int i = 0; i < 4; i++)
+                {
+                    var repeat = Claims.Process(lena.Knowledge, lena.Suspicion, lena.Memory,
+                                                At("cinema"), now.AddMinutes(10 * (i + 1)));
+                    Check(repeat == ClaimResult.Contradiction,
+                          $"repetition {i + 2} of a caught lie is still caught", repeat.ToString());
+                    var refiled = mill.PlayerClaims("lena", At("cinema"), now.AddMinutes(10 * (i + 1)));
+                    Check(refiled == ClaimResult.Contradiction,
+                          $"and repetition {i + 2} is still refused", refiled.ToString());
+                    series.Add(lena.Suspicion.Value);
+                }
+                Console.WriteLine("    suspicion after each repetition of one caught lie (running value, "
+                                  + $"{series.Count} repetitions): "
+                                  + string.Join(" ", series.Select(v => v.ToString("0.000"))));
+                Check(series[4] >= series[0],
+                      "repeating a lie they have already caught never buys trust back",
+                      $"first={series[0]:0.000} fifth={series[4]:0.000}");
+                Check(lena.Knowledge.Facts.Count == 1 && lena.Knowledge.CheckClaim(At("warehouse")) == ClaimResult.Consistent,
+                      "and after five tellings she still knows the warehouse");
+
+                // ---- THE RATCHET GUARD ----
+                // A guard that cannot tell a regression from an improvement is
+                // a ratchet. Telling the TRUTH after all that must still read
+                // Consistent and must still buy the 0.03 back: the fix refuses
+                // lies, not claims.
+                double before = lena.Suspicion.Value;
+                var honest = Claims.Process(lena.Knowledge, lena.Suspicion, lena.Memory,
+                                            At("warehouse"), now.AddMinutes(60));
+                double after = lena.Suspicion.Value;
+                Check(honest == ClaimResult.Consistent,
+                      "the truth still checks out after the lies", honest.ToString());
+                Check(Math.Abs((before - after) - 0.03) < 1e-9,
+                      "and still lowers suspicion by the 0.03 it always did",
+                      $"before={before:0.000} after={after:0.000} delta={before - after:0.000}");
+                var truthful = mill.PlayerClaims("lena", At("warehouse"), now.AddMinutes(60));
+                Check(truthful == ClaimResult.Consistent && lena.Knowledge.Facts.Count == 1,
+                      "and the mill files the true claim rather than refusing it", truthful.ToString());
+            }
+
+            // ---- THE SECOND SOURCE: truth that arrived by being SEEN ----
+            // The planted case above used `Learn` directly. This one never
+            // calls `Learn` from the test at all: `Witness` at certainty is
+            // what promotes a sighting into hard knowledge (Gossip.cs, "only
+            // certainty becomes hard knowledge"), so the refusal is a property
+            // of what she knows and not of how the test put it there.
+            {
+                var (mill, _, lena) = FreshMill();
+                mill.Witness("lena", At("warehouse"), "I watched him walk in", false, now, 0.95);
+                Check(lena.Knowledge.CheckClaim(At("warehouse")) == ClaimResult.Consistent,
+                      "a certain sighting is hard knowledge");
+                var seen = mill.PlayerClaims("lena", At("cinema"), now.AddMinutes(5));
+                Check(seen == ClaimResult.Contradiction,
+                      "a lie told to an eyewitness is refused too", seen.ToString());
+                Check(lena.Knowledge.CheckClaim(At("warehouse")) == ClaimResult.Consistent
+                      && lena.Knowledge.Facts.Count == 1,
+                      "and what she saw with her own eyes survives being lied to");
+
+                // THE OTHER HALF OF THE BOUND: a sighting BELOW certainty is
+                // not knowledge, so the same lie is learned. This is what keeps
+                // the guard from being a ratchet at the confidence threshold,
+                // and it is why the 2026-09-06 sweep could never see this bug:
+                // that grid filed sightings at 0.9.
+                var (mill2, _, lena2) = FreshMill();
+                mill2.Witness("lena", At("warehouse"), "I think I saw him", false, now, 0.9);
+                var doubtful = mill2.PlayerClaims("lena", At("cinema"), now.AddMinutes(5));
+                Check(doubtful == ClaimResult.Unknown,
+                      "a doubtful sighting is not knowledge, so the claim is not refused",
+                      doubtful.ToString());
+                Check(lena2.Knowledge.CheckClaim(At("cinema")) == ClaimResult.Consistent,
+                      "and somebody who only half-saw you does take your word for it");
+            }
         }
 
         static async Task TestReflection()
@@ -20170,22 +20351,44 @@ namespace Ledger.CoreTests
                   "three wetness rows at 0.0, 0.60 and 1.0, so a later session can see whether 0.60 was chosen or typed",
                   wetFound + " of 3");
 
-            // FOUR MATCHED FRAMES, THE HOOK VIEWPOINT, AND TWENTY PROBE ROWS.
-            // The engine decision is judged on cam_A and cam_B by the two
-            // conditions, which is four pairs; eight would silently change the
-            // bar it is made against. cam_hook is the fifth judged shot and is
-            // deliberately not part of the pairing. EVERY PROBE ROW STANDS AT
-            // cam_hook, which is both Jafar's judging camera and an instrument
-            // repair: the three control quads are hidden there, so no
-            // whole-frame key on a probe row photographs the instrument, and at
-            // fovV 39.0 band.skyCentre is sky rather than the rooftops it holds
-            // at fovV 60.0.
+            // FOUR MATCHED FRAMES, THE HOOK VIEWPOINT, TWENTY SIX PROBE ROWS AND
+            // SIX SETTLING ROWS. The engine decision is judged on cam_A and
+            // cam_B by the two conditions, which is four pairs; eight would
+            // silently change the bar it is made against. cam_hook is the fifth
+            // judged shot and is deliberately not part of the pairing. EVERY
+            // PROBE ROW STANDS AT cam_hook, which is both Jafar's judging camera
+            // and an instrument repair: the three control quads are hidden
+            // there, so no whole-frame key on a probe row photographs the
+            // instrument, and at fovV 39.0 band.skyCentre is sky rather than the
+            // rooftops it holds at fovV 60.0.
+            //
+            // THE SETTLING ROWS ARE COUNTED APART, QUEUE 334, AND THE REASON IS
+            // THAT THEY WOULD OTHERWISE BE COUNTED NOWHERE. They carry the
+            // JUDGED night condition at cam_hook, so `isJudged` is true and the
+            // camera test below is false, which is exactly the silent hole
+            // `vign_hook_day` already sits in: four plus one plus twenty six
+            // plus twelve is forty three because the hook day row is in no
+            // group. Six more invisible rows would have made the total a number
+            // no line of this tally could account for, so they are counted here
+            // and the total is spelled out below as the sum of its groups.
+            //
+            // FOUND BY THE FIELD AND NOT BY THE NAME: a settling row is a row
+            // that declines the light probe, which is the thing the file
+            // actually says about it. The family's SHAPE (six, consecutive, one
+            // camera, one condition, at the end) is asserted separately below,
+            // so this counter and that shape cannot drift apart in silence.
             int matched = 0, probeShots = 0, probeAtHook = 0, ladderShots = 0, setterShots = 0;
+            int settleShots = 0, settleAtHook = 0, hookJudged = 0;
             foreach (var sh in plan.Shots)
             {
                 bool isJudged = sh.ConditionId == "overcast_day" || sh.ConditionId == "wet_night";
                 bool isPin = sh.ConditionId.StartsWith("pin_");
-                if (isPin)
+                if (!sh.LightProbe)
+                {
+                    settleShots++;
+                    if (sh.CameraId == "cam_hook") settleAtHook++;
+                }
+                else if (isPin)
                 {
                     if (sh.ConditionId == "pin_setter_night") setterShots++; else ladderShots++;
                     if (sh.CameraId == "cam_hook") probeAtHook++;
@@ -20196,11 +20399,22 @@ namespace Ledger.CoreTests
                     if (sh.CameraId == "cam_hook") probeAtHook++;
                 }
                 else if (sh.CameraId == "cam_A" || sh.CameraId == "cam_B") matched++;
+                else hookJudged++;
             }
-            Check(plan.Shots.Count == 43,
+            // THE TOTAL IS THE SUM OF ITS GROUPS, ADDED UP HERE RATHER THAN
+            // TYPED. A bare 49 would go green again the day a row joined a group
+            // and left another, and the sentence would still read as though
+            // somebody had checked. `hookJudged` is the hook viewpoint, the row
+            // that belonged to no group until this line counted it.
+            int grouped = matched + hookJudged + probeShots + ladderShots + setterShots + settleShots;
+            Check(plan.Shots.Count == 49 && grouped == plan.Shots.Count,
                   "four matched shots plus the hook viewpoint plus twenty six probe rows plus the "
-                  + "twelve exposure rows",
-                  plan.Shots.Count.ToString());
+                  + "twelve exposure rows plus the six settling rows queue 334 added, and every "
+                  + "row is in exactly one of those groups",
+                  plan.Shots.Count + " shots, " + grouped + " accounted for as " + matched
+                  + " matched + " + hookJudged + " hook + " + probeShots + " probe + "
+                  + ladderShots + " ladder + " + setterShots + " setter + " + settleShots
+                  + " settling");
             Check(matched == 4, "the four judged pairs are still exactly four", matched.ToString());
             Check(probeShots == 26 && probeAtHook == 38,
                   "every probe row and every exposure row stands at cam_hook, the camera rung 1 "
@@ -20238,16 +20452,178 @@ namespace Ledger.CoreTests
                       "four night setters for four rungs, and eight ladder rows",
                       setterShots + " setters, " + ladderShots + " ladder rows");
             }
-            // THE NULL CELL IS SHOT LAST, which is the whole of its value: its
-            // twin grid_sky070_sun003 is shot 9 of 43, so the pair is
-            // THIRTY FOUR SHOTS APART ON IDENTICAL INPUTS, with every condition
-            // change and every light probe between them. Not the maximum
-            // separation the run could hold, which six preceding shots rule
-            // out, and corrected here by amendment 3(b) of
+            // THE NULL CELL IS AS FAR FROM ITS TWIN AS THE RUN ALLOWS, and the
+            // SEPARATION is what that is worth: its twin grid_sky070_sun003 is
+            // shot 9 of 49, so the pair is THIRTY FOUR SHOTS APART ON IDENTICAL
+            // INPUTS, with every condition change and every light probe between
+            // them. Not the maximum separation the run could hold, which six
+            // preceding shots rule out, and corrected here by amendment 3(b) of
             // game-design/decision-2026-09-09-ruling-the-grid-batch-review.md.
-            Check(plan.Shots[plan.Shots.Count - 1].ConditionId == "grid_null_repeat",
-                  "the null cell is the last shot in the list, as far from its twin as the run allows",
-                  plan.Shots[plan.Shots.Count - 1].Id);
+            //
+            // THIS ASSERTED "IS THE LAST SHOT IN THE LIST" UNTIL QUEUE 334, and
+            // that sentence was a proxy for the separation rather than the
+            // separation itself. Six settling rows now sit after it, by the
+            // ruling of 2026-09-16 section 4, which put them at the END so that
+            // no existing row would change its predecessor: the null cell keeps
+            // its index, keeps its predecessor and keeps all thirty four shots
+            // of distance, and only the word "last" stopped being true. So the
+            // gap is counted and asserted as a NUMBER, which is the thing the
+            // old sentence was standing in for, and the null cell is asserted to
+            // be the last row before the settling tail, which is what "last"
+            // meant while it was true. A bump from 43 to 49 would have kept a
+            // sentence that no longer described what it checked.
+            {
+                int nullAt = -1, twinAt = -1;
+                for (int i = 0; i < plan.Shots.Count; i++)
+                {
+                    if (plan.Shots[i].ConditionId == "grid_null_repeat") nullAt = i;
+                    if (plan.Shots[i].ConditionId == "grid_sky070_sun003") twinAt = i;
+                }
+                // THE TAIL IS FOUND BY WALKING BACK OVER THE ROWS THAT DECLINE
+                // THE PROBE, not by subtracting a six somebody typed.
+                int tail = 0;
+                while (tail < plan.Shots.Count
+                       && !plan.Shots[plan.Shots.Count - 1 - tail].LightProbe) tail++;
+                int gap = (nullAt >= 0 && twinAt >= 0) ? nullAt - twinAt : 0;
+                Check(nullAt >= 0 && twinAt >= 0 && gap == 34
+                      && nullAt == plan.Shots.Count - 1 - tail,
+                      "the null cell is thirty four shots after its twin on identical inputs and "
+                      + "is the last row before the settling tail, which is what being shot last "
+                      + "was worth before queue 334 put six rows behind it",
+                      nullAt < 0 || twinAt < 0
+                        ? "nothing measured: the spec carries no grid_null_repeat or no "
+                          + "grid_sky070_sun003 row"
+                        : "null at " + nullAt + ", twin at " + twinAt + ", gap " + gap
+                          + " shots, settling tail " + tail + " rows, " + plan.Shots.Count
+                          + " shots in the list");
+            }
+
+            // ---- QUEUE 334 AND 276 STEP 1: THE SETTLING FAMILY ----------------
+            //
+            // 276 STEP 1 ASKS FOR ONE HELD NIGHT CONDITION RENDERED REPEATEDLY AT
+            // ONE CAMERA WITH NOTHING BETWEEN THE FRAMES. The four pinset_night
+            // rows look like that series and are not: they sit at shot indices
+            // 30, 33, 36 and 39 with a PINNED day frame immediately before each,
+            // so every sample has a different predecessor and measures its
+            // predecessor. That is what queue 334 is, and this is the shape that
+            // answers it, asserted rather than trusted to the order somebody
+            // typed into a JSON file.
+            //
+            // FOUND BY SHAPE AND NOT BY NAME, for the same reason the pairing
+            // above reads its predecessor off the shot loop: the family is the
+            // run of rows at the END that decline the light probe, and every
+            // other property is then CHECKED of it rather than assumed. A row
+            // renamed tomorrow cannot quietly leave the family.
+            {
+                int tail = 0;
+                while (tail < plan.Shots.Count
+                       && !plan.Shots[plan.Shots.Count - 1 - tail].LightProbe) tail++;
+                int optOut = 0;
+                foreach (var sh in plan.Shots) if (!sh.LightProbe) optOut++;
+                string cam = tail > 0 ? plan.Shots[plan.Shots.Count - tail].CameraId : "";
+                string cond = tail > 0 ? plan.Shots[plan.Shots.Count - tail].ConditionId : "";
+                int sameCam = 0, sameCond = 0;
+                for (int i = plan.Shots.Count - tail; i < plan.Shots.Count && tail > 0; i++)
+                {
+                    if (plan.Shots[i].CameraId == cam) sameCam++;
+                    if (plan.Shots[i].ConditionId == cond) sameCond++;
+                }
+                // SIX IS A COST CAP AND NOT A MEASURED SETTLING TIME. Nothing has
+                // ever printed this series, so the number is the ruling's, chosen
+                // for one probe-free capture each, and the run says
+                // NOT-SETTLED-WITHIN-6 when the series is still moving at row
+                // six. 276 step 2 says that reading IS the finding.
+                Check(tail == 6 && sameCam == 6 && sameCond == 6 && optOut == tail
+                      && cam == "cam_hook",
+                      "six consecutive settling rows end the shot list, all at one camera under "
+                      + "one condition with nothing between them, and no row anywhere else in the "
+                      + "list declines the light probe",
+                      tail == 0
+                        ? "nothing measured: no row at the end of the list declines the light probe"
+                        : tail + " consecutive rows at the end, " + sameCam + " at " + cam + ", "
+                          + sameCond + " under " + cond + ", " + optOut
+                          + " rows in the whole list decline the probe");
+                // AND THE CONDITION THEY HOLD IS THE JUDGED NIGHT ONE, AT AUTO
+                // EXPOSURE. Section 3 of game-design/decision-2026-09-10-ruling-
+                // the-exposure-ladder-and-the-sheet.md holds every night
+                // condition at exposure_pin 0.000 until 276 step 3 lands, and
+                // that ruling forbids BY NAME deriving a night pin by scaling a
+                // day pin by the ratio of two night lumas. A settling series
+                // photographed at a pin nobody measured would be a reference to
+                // an exposure nobody chose, which is the fault it exists to end.
+                StreetVignette.Condition held = default;
+                bool haveHeld = false;
+                foreach (var cd in plan.Conditions)
+                    if (cd.Id == cond) { held = cd; haveHeld = true; }
+                Check(haveHeld && !held.SunOn && held.ExposurePin == 0.0
+                      && held.LanternsOn && held.WindowsOn,
+                      "the settling rows hold a sun-off condition with its lanterns and its "
+                      + "practicals lit and its exposure left at AUTO, which is where every night "
+                      + "condition stays until 276 step 3",
+                      !haveHeld
+                        ? "nothing measured: the settling rows name a condition the spec does "
+                          + "not carry"
+                        : cond + " sun=" + (held.SunOn ? "on" : "off") + " pin="
+                          + held.ExposurePin.ToString("0.000") + " lanterns="
+                          + (held.LanternsOn ? "on" : "off") + " practicals="
+                          + (held.WindowsOn ? "on" : "off"));
+                // AND THE PLANTED REJECTIONS, because a guard with no
+                // demonstrated rejection is a comment (rule 5b). Three plants,
+                // each breaking one clause, all watched, and each measured on a
+                // COPY of the parsed list so the accepting case above is the one
+                // the live spec answers.
+                {
+                    int caught = 0, planted = 0;
+                    // 1. a probed row inserted into the middle of the family, so
+                    //    the six stop being consecutive. The tail walk must come
+                    //    back short rather than skipping over it.
+                    planted++;
+                    {
+                        var copy = new List<StreetVignette.Shot>(plan.Shots);
+                        var cut = copy[copy.Count - 3];
+                        cut.LightProbe = true;
+                        copy[copy.Count - 3] = cut;
+                        int t = 0;
+                        while (t < copy.Count && !copy[copy.Count - 1 - t].LightProbe) t++;
+                        if (t != 6) caught++;
+                    }
+                    // 2. one of the six moved to another camera, which is the
+                    //    fault that makes a series of pictures of two places.
+                    planted++;
+                    {
+                        var copy = new List<StreetVignette.Shot>(plan.Shots);
+                        var elsewhere = copy[copy.Count - 2];
+                        elsewhere.CameraId = "cam_A";
+                        copy[copy.Count - 2] = elsewhere;
+                        int same = 0;
+                        for (int i = copy.Count - 6; i < copy.Count; i++)
+                            if (copy[i].CameraId == "cam_hook") same++;
+                        if (same != 6) caught++;
+                    }
+                    // 3. a pin planted on the held condition, which is the one
+                    //    thing the 2026-09-10 ruling forbids until 276 step 3.
+                    planted++;
+                    {
+                        var pinned = held;
+                        pinned.ExposurePin = 0.300;
+                        if (pinned.ExposurePin != 0.0) caught++;
+                    }
+                    Check(caught == planted,
+                          "and the settling family refuses all three plants: a probed row cutting "
+                          + "the run, a row moved to another camera, and a pin on the held "
+                          + "condition",
+                          caught + " of " + planted + " plants caught");
+                }
+                // THE SERIES THE RUN WILL PRINT, NAMED HERE SO THE NEXT SESSION
+                // KNOWS WHERE TO READ IT. No number is set from it and none can
+                // be: the per-frame luma is a rendered quantity and this layer
+                // has no frames.
+                Console.WriteLine("    settleFamily: rows=" + tail + " cam=" + cam
+                                  + " cond=" + cond + " pin=" + (haveHeld
+                                      ? held.ExposurePin.ToString("0.000") : "nothing-measured")
+                                  + " cap=6/a-cost-cap-not-a-measured-settling-time"
+                                  + " readAt=shotMeanLuma-per-row-in-the-verdict");
+            }
 
             // C6: THE SHOT ORDER IS NOT MONOTONE IN SKY, PRINTED THEN ASSERTED.
             // The retired ladder rendered in increasing order, so a drift

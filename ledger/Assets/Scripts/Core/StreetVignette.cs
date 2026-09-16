@@ -163,6 +163,25 @@ namespace Ledger.Core
         public struct Shot
         {
             public string Id, CameraId, ConditionId;
+            /// QUEUE 334, 2026-09-16. WHETHER THIS ROW IS OFFERED TO THE LIGHT
+            /// PROBE AT ALL, decided PER SHOT rather than per condition.
+            ///
+            /// The probe toggles every lantern and every practical off and on
+            /// again and photographs each half, which is eight captures a row
+            /// at the sizes this rig shoots. A settling series asks whether one
+            /// held condition stops moving when NOTHING is touched between
+            /// frames, so a probe pass inside it would be the one thing the
+            /// measurement forbids as well as the cost it cannot afford.
+            ///
+            /// PER SHOT AND NOT PER CONDITION, because the settling rows carry
+            /// the JUDGED night condition: the same condition is probed at the
+            /// rows the lantern is measured on and skipped at these six, and a
+            /// flag on the condition could not say that.
+            ///
+            /// REQUIRED IN THE FILE, like every other field this reader takes:
+            /// an optional flag defaulting to true reads the same whether the
+            /// writer chose to probe the row or forgot the key.
+            public bool LightProbe;
         }
 
         /// ONE SHOP INTERIOR CARD AND THE BAY IT STANDS IN. Recorded by the
@@ -1867,7 +1886,14 @@ namespace Ledger.Core
                 var o = MiniJson.AsObject(sh);
                 plan.Shots.Add(new Shot
                 {
-                    Id = Str(o, "id"), CameraId = Str(o, "camera"), ConditionId = Str(o, "condition")
+                    Id = Str(o, "id"), CameraId = Str(o, "camera"), ConditionId = Str(o, "condition"),
+                    // QUEUE 334. REQUIRED ON THE SAME TERMS AS EVERY OTHER
+                    // FIELD, AND READ THROUGH `OnOff` RATHER THAN THROUGH
+                    // `Str(...) == "on"`. The conditions above use the bare
+                    // comparison and a typed "ON" would read as off in
+                    // silence there; a new field does not inherit that, so
+                    // OnOff accepts the two words and throws on a third.
+                    LightProbe = OnOff(o, "light_probe")
                 });
             }
             var lan = Obj(Obj(root, "lighting"), "lantern");
@@ -1931,6 +1957,20 @@ namespace Ledger.Core
             var v = MiniJson.GetString(o, k);
             if (v == null) throw new KeyNotFoundException(k);
             return v;
+        }
+
+        /// AN "on"/"off" FLAG, AND A THIRD WORD IS AN ERROR RATHER THAN AN
+        /// "off". Queue 334. The scene file carries no JSON booleans at all:
+        /// every flag in it is one of those two words, so a new flag uses the
+        /// same two words and not a `true`. What it does not copy is the
+        /// silent half of `Str(o, "sun") == "on"`, which turns every typo into
+        /// the off case with no reader the wiser.
+        static bool OnOff(Dictionary<string, object> o, string k)
+        {
+            string v = Str(o, k);
+            if (v == "on") return true;
+            if (v == "off") return false;
+            throw new KeyNotFoundException(k + " must be \"on\" or \"off\", not \"" + v + "\"");
         }
 
         static double Num(Dictionary<string, object> o, string k)

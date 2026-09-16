@@ -3774,6 +3774,13 @@ FABLE_MODEL = "fable"
 #: an unrecognised agent is not evidence that the game got built.
 GAME_AGENTS = frozenset((
     "systems-builder", "content-wrangler", "engine-specialist"))
+#: THE CAPTION THAT RIDES INSIDE `gameShareDay`'s OWN VALUE, because that
+#: number is a COUNT OF ROLES printed as a count of game work and a reader
+#: meets the limitation here or not at all. ONE definition, used by the emit
+#: and by the two selftest rungs that pin it, so the caption and the
+#: assertion about it cannot drift apart. Whitespace-free, and joined with
+#: `..` rather than `/` so it cannot read as another term of the ratio.
+GAME_SHARE_BASIS = "by-role-not-by-work"
 # THE ARTIFACT HALF, added 25 Aug after a SPAWN ROW certified an unreviewed
 # batch for the SECOND time. CLAUDE.md named this hole in the words "the spawn
 # log is an attendance register, not a review record", listed two candidate
@@ -5180,13 +5187,24 @@ def _cadence_read(repo):
             slot = day_counts.setdefault(day, [0, 0, 0])
             slot[0] += 1 if is_fable else 0
             slot[1] += 1
-            # THE THIRD COLUMN: how many of the day's spawns BUILT THE GAME,
-            # as opposed to measuring, reviewing or auditing it. Measured 26
-            # Aug after the owner asked why a night cost so much: 25 Aug ran
-            # 110 spawns of which 39 were instrument-builder and 23 were the
-            # director — 78 of 110, 71%, were the project working on itself.
-            # That is the number the fable share could not show, because it
-            # asks a different question: WHICH MODEL, not WHICH WORK.
+            # THE THIRD COLUMN: a COUNT of the day's spawns whose ROLE is in
+            # GAME_AGENTS. THAT IS A PROXY FOR BUILDING THE GAME AND NOT A
+            # READING OF WHAT ANY SPAWN TOUCHED, and the log cannot do better:
+            # .claude/agent-log.tsv is five columns (when, agent, model,
+            # reason, agentId) and none of them names a file. So an
+            # engine-specialist repairing an instrument counts here as game
+            # work, and an instrument-builder adding a gameplay readback does
+            # not. Reported twice, queue 111 on 6 Sep and queue 344 on 16 Sep.
+            # Classifying by what a spawn TOUCHED needs a sixth column that
+            # nothing writes today, so the limitation is PRINTED where the
+            # number is read instead, inside the value (GAME_SHARE_BASIS).
+            # Measured 26 Aug after the owner asked why a night cost so much:
+            # 25 Aug ran 110 spawns of which 39 were instrument-builder and 23
+            # were the director, so 78 of 110, 71%, were the project working
+            # on itself BY THIS SAME PROXY. That is the number the fable share
+            # could not show, because it asks a different question: WHICH
+            # MODEL, not WHICH WORK. This one asks WHICH ROLE, which is not
+            # WHICH WORK either, and now says so on the line it prints.
             slot[2] += 1 if agent in GAME_AGENTS else 0
             # PER-DAY TIER AND CLASS, keyed by the same day string as `slot`,
             # so the day window is one window and not two.
@@ -5339,7 +5357,12 @@ def _cadence_spend(r):
         # are one reading of one window, so they are captured together and
         # printed together; splitting them across two lines is the fault
         # `verdict-read.py` exists to catch one layer down.
-        mix = "%d/%d@%s" % (r["day_game"], r["day_rows"], r["day_iso"])
+        # THE ROLE PROXY, CAPTIONED IN ITS OWN VALUE: a COUNT of that day's
+        # spawns whose ROLE is in GAME_AGENTS, over that same day's rows. The
+        # caption rides inside the value because a reader who greps the number
+        # out of the footer must not be able to get the number without it.
+        mix = "%d/%d@%s..%s" % (r["day_game"], r["day_rows"], r["day_iso"],
+                                GAME_SHARE_BASIS)
     else:
         day = mix = NOTHING_MEASURED
     who = "/".join(r["fable_agents"]) if r["fable_agents"] else "none"
@@ -5348,9 +5371,16 @@ def _cadence_spend(r):
             "fableAgents=%s agentFilesRead=%d — COUNT of studio-director rows "
             "over ALL spawn rows since that same reference commit / SHARE over "
             "the newest UTC day present in the log / CUMULATIVE share over "
-            "every log row / of that same day, how many spawns BUILT THE GAME "
-            "rather than measuring or reviewing it (25 Aug read 32/110, so 71%% "
-            "was the project working on itself)"
+            "every log row / of that same day, a COUNT of spawns whose ROLE "
+            "is in GAME_AGENTS over that day's spawns, which is a ROLE PROXY "
+            "for game work and NOT a reading of what a spawn touched: an "
+            "engine-specialist repairing an instrument counts here as game "
+            "work, an instrument-builder adding a gameplay readback does not, "
+            "and the spawn log has no column naming a file, so this proxy's "
+            "error cannot be measured from it (25 Aug read 32/110 BY ROLE, so "
+            "71%% of that day was the project working on itself by the same "
+            "proxy, and 5 Sep read 12/27 by role on a day queue item 111 "
+            "counted the work at 1, which is the size of error this admits)"
             % (spawns, day, all_share, mix, who, r["agent_files"]))
     # THE WORDS, for each way this can measure nothing. Values alone are
     # greppable; a person reading the footer needs the sentence.
@@ -7187,9 +7217,11 @@ def _cadence_selftest():
     # off the same window and the same denominator. A game share that merely
     # mirrored the fable share would pass a looser fixture and tell nobody
     # anything: 25 Aug was 13% fable and 29% game, which is why both exist.
-    say("gameShareDay=0/1@2023-11-15" in s1["summary"],
-        "MEASURE the game share reads 0/1 where the fable share reads 1/1 — "
-        "same day, same denominator, opposite answer", s1["summary"])
+    say("gameShareDay=0/1@2023-11-15..%s" % GAME_SHARE_BASIS in s1["summary"],
+        "MEASURE the game share reads 0/1 where the fable share reads 1/1, "
+        "same day, same denominator, opposite answer, and the value carries "
+        "the ROLE-PROXY caption that says which of the two it counted",
+        s1["summary"])
 
     # AND THE ACCEPTING CASE FOR IT: a day whose spawns DID build the game must
     # not read as self-measurement. This is the half that goes unrun, and here
@@ -7252,9 +7284,14 @@ def _cadence_selftest():
         and "fableShareDay=%s" % NOTHING_MEASURED in s4["summary"]
         and "gameShareDay=%s" % NOTHING_MEASURED in s4["summary"]
         and "fableShareAll=%s" % NOTHING_MEASURED in s4["summary"]
-        and "the agent log is ABSENT, so nothing was measured" in s4["summary"],
+        and "the agent log is ABSENT, so nothing was measured" in s4["summary"]
+        # AND NO BASIS CAPTION ON A NUMBER THAT DOES NOT EXIST. A caption
+        # describes a reading; printed beside `nothing-measured` it dresses an
+        # absence as one, which is the exact failure rule 3b exists for.
+        and GAME_SHARE_BASIS not in s4["summary"],
         "NOTHING MEASURED: an ABSENT log prints the words in all three windows, "
-        "never a zero", s4["summary"])
+        "never a zero, and carries no role-proxy caption because there is no "
+        "reading to caption", s4["summary"])
 
     d = _cadence_fixture(work, "s5-header-only", 5, [], agents=ONE_FABLE)
     s5 = _cadence_read(d)

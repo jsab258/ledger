@@ -672,6 +672,57 @@ namespace Ledger.PerceptionGolden
                 Key(sb, "knowledge", "sameTopicOther",
                     Bit(home.SameTopic(new Fact("player", "owes_d1", "forty"))));
             }
+            {   // claims: a caught claim does not become what they know.
+                //
+                // THROUGH THE REAL `GossipMill.PlayerClaims`, not through
+                // `Learn`. The rows above pin `Learn`'s replace-on-topic rule,
+                // which is CORRECT and must not move: people update. These rows
+                // pin the one caller that knows a fact arrived by being TOLD,
+                // and therefore that a lie the listener has already caught is
+                // remembered and never learned.
+                //
+                // NOT ANSWERABLE BY THE PORT YET, and that is a fact about the
+                // table rather than a fault in it. `Gossip.h` lists
+                // `PlayerClaims` under "OUT OF SCOPE AND NOT HERE", so
+                // `CoreGolden.h` produces no `claims` scenario and every row
+                // here reads UNKNOWN to `ue-probe/tests/core-port-test.cpp`,
+                // which asserts `TotalUnknown == 0`. Measured on the committed
+                // table before these rows existed: 2517 checks, 0 failures over
+                // 2498 rows, 0 unanswered. So the four rows below cost four
+                // unanswered rows until the reader is taught to skip an
+                // unported scenario by name and print the count it skipped.
+                // That is the remaining half of this change and it lives in
+                // ue-probe, which this batch does not touch.
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Agent("n1", "the barmaid", "day"));
+                var told = new Fact("player", "location_d2_evening", "home");
+                var truth = new Fact("player", "location_d2_evening", "warehouse");
+                var lie = new Fact("player", "location_d2_evening", "cinema");
+
+                // ACCEPTING FIRST: nobody can contradict this, so it is learned.
+                Key(sb, "claims", "uncaughtVerdict",
+                    ((int)mill.PlayerClaims("n1", told, new GameTime(2, 21, 0))).ToString(Inv));
+                Key(sb, "claims", "uncaughtLearned",
+                    ((int)mill.Get("n1").Knowledge.CheckClaim(told)).ToString(Inv));
+
+                // REJECTING: she saw the warehouse at certainty, so she knows.
+                var seen = new GossipMill(new SocialGraph());
+                seen.Add(Agent("n1", "the barmaid", "day"));
+                seen.Witness("n1", truth, "I watched him walk in", false, new GameTime(2, 21, 0), 0.95);
+                Key(sb, "claims", "caughtVerdict",
+                    ((int)seen.PlayerClaims("n1", lie, new GameTime(2, 22, 0))).ToString(Inv));
+                Key(sb, "claims", "caughtKeepsTruth",
+                    ((int)seen.Get("n1").Knowledge.CheckClaim(truth)).ToString(Inv));
+                Key(sb, "claims", "countAfterCaught",
+                    seen.Get("n1").Knowledge.Facts.Count.ToString(Inv));
+                // Telling it again changes nothing: the verdict is the same on
+                // the repeat, which is the property the old code destroyed by
+                // making repetition 2 onward read Consistent.
+                Key(sb, "claims", "caughtVerdictRepeat",
+                    ((int)seen.PlayerClaims("n1", lie, new GameTime(2, 23, 0))).ToString(Inv));
+                Key(sb, "claims", "memCountAfterCaught",
+                    seen.Get("n1").Memory.Events.Count.ToString(Inv));
+            }
             {   // summaries: the leak guard on a real mill.
                 var mill = new GossipMill(new SocialGraph());
                 mill.Add(Agent("w1", "the shopkeeper", "day"));

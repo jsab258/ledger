@@ -65,3 +65,21 @@ status: READY 2026-09-16, filed so the wrong series is not adopted as the right 
   statistic (last-wins). Six is a cost cap and announces when it bites:
   NOT-SETTLED-WITHIN-6 is the finding 276 step 2 names, not a failure.
   Structural (a golden): full review at landing, same batch.
+
+  OPEN AT 08:04Z, rule 6: the light_probe boolean is written into
+  vignette-pieces.json and read by nothing in ue-probe/ (VignetteSpec.h 288
+  and 526 to 533, VignetteShot.cpp 2790 to 2795), and the settle done-line
+  key is not in the tree. The rows are landed; the reader and the key are
+  not. No carrying run until ShouldProbeShot reads the flag. The 08:04Z
+  ruling section 8 has the evidence.
+
+  RE-CHECKED BY THE RESIDENT rather than taken on the ruling's word, because
+  the resident had already reported this flag as landed: `struct Shot` at
+  VignetteSpec.h:288 is `{ std::string Id, CameraId, ConditionId; }` and
+  carries no flag; `grep -rn "S\.LightProbe" ue-probe/Source/` returns
+  nothing; ShouldProbeShot returns
+  `(C->LanternsOn && ...) || (C->WindowsOn && ...)`, which reads the
+  CONDITION and never the row. light_probe appears 49 times in the golden
+  the rig loads and 0 times in anything that reads it. And wet_night has
+  lanterns on, so all six settle rows WOULD be probed, which is the one
+  thing a settling series forbids.

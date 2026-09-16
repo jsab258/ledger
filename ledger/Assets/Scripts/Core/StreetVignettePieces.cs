@@ -506,7 +506,14 @@ namespace Ledger.Core
                 sb.Append('{');
                 sb.Append(Ks("id", s.Id)).Append(',');
                 sb.Append(Ks("camera", s.CameraId)).Append(',');
-                sb.Append(Ks("condition", s.ConditionId));
+                sb.Append(Ks("condition", s.ConditionId)).Append(',');
+                // QUEUE 334: WHETHER THE LIGHT PROBE IS OFFERED THIS ROW. A
+                // real JSON boolean here and the two words in the scene file,
+                // which is what the condition flags above already do: the
+                // Unreal reader requires a boolean and fails the parse without
+                // one, so a shot written without it stops the run rather than
+                // inheriting a probe pass nobody asked for.
+                sb.Append(Kb("light_probe", s.LightProbe));
                 sb.Append('}');
                 sb.Append(i + 1 < plan.Shots.Count ? ",\n" : "\n");
             }

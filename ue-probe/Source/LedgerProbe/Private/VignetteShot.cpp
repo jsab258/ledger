@@ -544,7 +544,26 @@ namespace
 	// every comparison and tally happens in the header where g++ runs them.
 	LedgerFrame::LightFloor GFloor;                    // the shot in flight
 	std::vector<LedgerFrame::LightFloor> GFloors;      // one per probed shot
+	// QUEUE 329: WAS THIS SHOT'S OWN REFERENCE FRAME BLANK. Read off
+	// FrameStats::Measure in MeasureShot, which is the one place this module
+	// measures a shot frame, and carried here so the probe pass never
+	// differences anything against a frame that failed to render.
+	bool GRefBlank = false;
+	// QUEUE 329: the whole-run count of probe frames and the blank ones among
+	// them, cumulative, control frames included.
+	LedgerFrame::LightProbeFrames GProbeFrames;
 	FString GToneLine = TEXT("tonemapRead=NOT-REACHED");
+
+	// ---- QUEUE 325: WHAT THE CAPTURE HAD DONE WHEN THE SHUTTER FIRED -----
+	//
+	// Per-capture, last-wins, overwritten by every capture including the
+	// probe's: the shot line reads them for its own capture, which is the
+	// one that just landed when MeasureShot runs.
+	int32  GWarmTicksAtAsk   = 0;     // ticks the Warm phase actually ran
+	int32  GTimedAtAsk       = 0;     // timed samples held when the shutter fired
+	double GAskStarted       = 0.0;   // when the capture was requested
+	double GSecondsToSettle  = -1.0;  // ... to SizeSettled; negative means none
+	bool   GCaptureSettled   = false;
 
 	// ---- the rig's own determinism (the shot-order exposure fault) -------
 	//
@@ -2594,7 +2613,14 @@ namespace
 			GProbed, GEligible, GFloors, GSkippedOff, GSkippedBudget, GProbeNoFile,
 			GRestoreMismatch, GShotsProbed, (int)GSpec.Shots.size(),
 			kLightProbeBudgetSeconds, GProbeSpent,
-			kWarmFrames + kTimedFrames, GControls).c_str())));
+			kWarmFrames + kTimedFrames, GControls,
+			// QUEUE 329: THE PROBE'S OWN FRAME TALLY, WHICH THIS CALL DID NOT
+			// PASS. The parameter is defaulted, so the omission compiled and
+			// printed lightProbesBlank=nothing-measured on a run that decoded
+			// 48 probe frames and found nine of them blank. A false nothing
+			// measured is worse than a missing key: it reads as an absence
+			// somebody checked.
+			GProbeFrames).c_str())));
 		// A1(c) AND CONDITION C5: DID EVERY CELL READ BACK WHAT IT ASKED FOR.
 		// A whole-run count over the shots whose components answered, beside
 		// the per-sample shotCellAgrees word each shot line carries.
@@ -2842,7 +2868,11 @@ namespace
 	{
 		return LedgerVignette::ShotCamSegment(GShotCam)
 		     + " shotCaptureVia=" + GCaptureVia
-		     + " shotCaptureViaStat=per-sample/the-path-is-adopted-run-wide-once-candidate-A-fails-once";
+		     + " shotCaptureViaStat=per-sample/the-path-is-adopted-run-wide-once-candidate-A-fails-once"
+		     + " " + LedgerFrame::CaptureTimingSegment(
+		         (int)GWarmTicksAtAsk, (int)kWarmFrames,
+		         (int)GTimedAtAsk, (int)kTimedFrames,
+		         GSecondsToSettle, GCaptureSettled);
 	}
 
 	// WHAT EXPOSURE THIS FRAME WAS ASKED TO HOLD AND WHAT THE COMPONENT SAID,
@@ -2910,6 +2940,10 @@ namespace
 		// RETURN. A row whose frame never landed still asked for an exposure
 		// and still read one back, and leaving it out of the denominator would
 		// turn a run that lost frames into a run that held every pin.
+		// PESSIMISTIC UNTIL THE FRAME IS MEASURED, so a shot whose file never
+		// landed cannot leave the PREVIOUS shot's answer standing under this
+		// shot's name. Set for real below, where the frame is measured.
+		GRefBlank = true;
 		bool bAfterNight = false;
 		if (!GRepeating)
 		{
@@ -2971,6 +3005,11 @@ namespace
 		const LedgerFrame::FrameStats St =
 			LedgerFrame::Measure((const unsigned char*)Bgra.GetData(), W, H);
 		if (St.Blank) { ++GBlank; } else { ++GWrote; }
+		// QUEUE 329: THIS SHOT'S REFERENCE FRAME IS THE ON HALF OF EVERY
+		// DIFFERENCE ITS PROBE PASS IS ABOUT TO TAKE, so its structural
+		// blankness decides whether any of them is a measurement at all. Read
+		// here, where the frame is measured, and never re-derived.
+		GRefBlank = St.Blank;
 		// THE PIXEL STATISTICS RIDE ON THE SAME LINE AS THE SHOT'S OWN KEYS,
 		// through the tested formatter, so the frame and the numbers about it
 		// cannot be separated by a grep.
@@ -3203,7 +3242,10 @@ namespace
 	// comes from LedgerVignette::ExposurePinWord, which is this tree's one
 	// implementation of that idea, and is handed across rather than re-decided.
 	void EmitLightLine(const Shot& S, int32 Seq, const char* Status,
-	                   const LedgerFrame::LightDelta& D, const std::string& Note)
+	                   const LedgerFrame::LightDelta& D, const std::string& Note,
+	                   int Read = -1,
+	                   const LedgerFrame::FrameStats& ProbePx = LedgerFrame::FrameStats(),
+	                   bool bProbeDecoded = false)
 	{
 		const std::string Id = (Seq < 0) ? std::string("control_no_toggle") : ProbeId(Seq);
 		const char* Kind = (Seq < 0) ? "control" : ProbeKind(Seq);
@@ -3215,7 +3257,8 @@ namespace
 		GLightLines.push_back(LedgerFrame::LightDeltaLine(
 			Id, Kind, Seq + 1, ProbeTargetCount(), S.Id, S.CameraId, S.ConditionId,
 			Status, D, Note)
-			+ " " + LedgerFrame::LightFloorSegment(GFloor, D, Seq < 0)
+			+ " " + LedgerFrame::LightFloorSegment(GFloor, D, Seq < 0, Read)
+			+ " " + LedgerFrame::LightProbeFrameSegment(ProbePx, bProbeDecoded)
 			+ " " + LedgerFrame::LightPinSegment(Pin));
 	}
 
@@ -3313,9 +3356,29 @@ namespace
 			              "probe-and-reference-differ-in-size-or-the-reference-is-gone");
 			return;
 		}
-		const LedgerFrame::LightDelta D = LedgerFrame::MeasureLightDelta(
-			(const unsigned char*)GRefBgra.GetData(), (const unsigned char*)Bgra.GetData(),
-			W, H, kProbeGridCols, kProbeGridRows);
+		// QUEUE 329: THE PROBE FRAME IS MEASURED BEFORE IT IS DIFFERENCED,
+		// and a structurally blank one is NEVER handed to MeasureLightDelta.
+		// A frame that failed to render is black, and against a good
+		// reference a black frame makes every pixel "rise": run 48 scored
+		// eight of those as YES, the largest contributions on the file. The
+		// test is FrameStats' structural rule and not a value: cam_A writes
+		// its blanks at 0.00075 and the pinset camera writes its at 0.00152,
+		// so a filter on either number misses the other camera's.
+		const LedgerFrame::FrameStats PS =
+			LedgerFrame::Measure((const unsigned char*)Bgra.GetData(), W, H);
+		++GProbeFrames.Decoded;
+		if (PS.Blank) { ++GProbeFrames.Blank; }
+		// AND THE REFERENCE HALF COUNTS TOO. If the shot's own frame came
+		// back blank there is nothing to difference against, whatever this
+		// frame is, so no pair of that shot is a measurement.
+		const bool bNoPair = PS.Blank || GRefBlank;
+		LedgerFrame::LightDelta D;
+		if (!bNoPair)
+		{
+			D = LedgerFrame::MeasureLightDelta(
+				(const unsigned char*)GRefBgra.GetData(), (const unsigned char*)Bgra.GetData(),
+				W, H, kProbeGridCols, kProbeGridRows);
+		}
 		// QUEUE 326: THE CONTROL IS THE SHOT'S FLOOR AND IT IS PROBED FIRST,
 		// at sequence -1, so by the time any light of this shot lands the
 		// thing it has to beat is already in hand. REACHED THE FRAME is no
@@ -3324,14 +3387,77 @@ namespace
 		// while toggling nothing. The comparison is LightFloorAddLight's.
 		if (GProbeSeq < 0)
 		{
+			// A BLANK CONTROL AND A BLANK REFERENCE ARE TWO DIFFERENT
+			// FAULTS AND THE FLOOR LINE SAYS WHICH. Run 48 had one of each:
+			// pinset_night_2 lost the control's re-render and
+			// pinset_night_1 lost the shot frame itself.
+			if (PS.Blank)
+			{
+				GFloor.NoControlWhy = "blank-control-frame";
+				EmitLightLine(S, GProbeSeq, "BLANK-PROBE-FRAME", D,
+				              "the-controls-own-re-render-came-back-structurally-blank",
+				              LedgerFrame::LightReadBlankProbeFrame, PS, true);
+				return;
+			}
+			if (GRefBlank)
+			{
+				GFloor.NoControlWhy = "blank-reference-frame";
+				EmitLightLine(S, GProbeSeq, "BLANK-SHOT", D,
+				              "this-shots-own-reference-frame-came-back-structurally-blank",
+				              LedgerFrame::LightReadBlankShot, PS, true);
+				return;
+			}
 			LedgerFrame::LightFloorSetControl(GFloor, D);
+			EmitLightLine(S, GProbeSeq, "MEASURED", D, "none",
+			              LedgerFrame::LightReadMeasured, PS, true);
+			return;
 		}
-		else
-		{
-			++GProbed;
-			LedgerFrame::LightFloorAddLight(GFloor, ProbeId(GProbeSeq), D);
-		}
-		EmitLightLine(S, GProbeSeq, "MEASURED", D, "none");
+		++GProbed;
+		const int Read = LedgerFrame::LightFloorAddLight(
+			GFloor, ProbeId(GProbeSeq), ProbeKind(GProbeSeq), D, PS.Blank);
+		EmitLightLine(S, GProbeSeq, LedgerFrame::LightReadWord(Read), D, "none",
+		              Read, PS, true);
+	}
+
+	// ---- QUEUE 337: HOLD THE TWO EYE-ADAPTATION SPEEDS FOR THIS PASS -----
+	//
+	// WHAT IT FIXES. The pass re-enters the Warm phase after every toggle
+	// with the exposure rate snapped to 10000 (the per-shot write above), so
+	// every OFF frame is photographed after the loop has fully re-adapted to
+	// a scene with one light fewer. Under AUTO the difference is then the
+	// light PLUS the loop's answer to it, and run 48 is what that looks
+	// like: seven lights whose OFF frame came back brighter across 831241 to
+	// 921600 pixels of 921600, and 0 lanterns measured of 24.
+	//
+	// WHAT IT IS NOT. It pins NO exposure VALUE. The adapted value is a
+	// render-thread quantity this process never reads, the 2026-09-10 ruling
+	// forbids deriving a night pin, and queue 276's settling series has not
+	// run. A DIFFERENTIAL needs only the two frames at ONE value, whatever
+	// that value turns out to be, so only the two RATES are written and the
+	// per-shot write at the camera placement restores the snap on the next
+	// shot. `exposure_pin` is untouched and no determinism gate reads this.
+	//
+	// ASKED BESIDE READ, ON THIS SHOT'S FLOOR LINE. A component that clamps
+	// the value says so on the line rather than in a gap nobody can
+	// attribute, and an engine that treats zero as instant leaves the
+	// control gaps where they are: both outcomes are readable.
+	void HoldExposureSpeedsForProbe()
+	{
+		GFloor.bHoldAsked    = true;
+		GFloor.HoldAskedUp   = 0.0;
+		GFloor.HoldAskedDown = 0.0;
+		if (GCam == nullptr) { return; }
+		UCameraComponent* CC = GCam->GetCameraComponent();
+		if (CC == nullptr) { return; }
+		FPostProcessSettings& PPW = CC->PostProcessSettings;
+		PPW.bOverride_AutoExposureSpeedUp   = true;
+		PPW.AutoExposureSpeedUp             = 0.0f;
+		PPW.bOverride_AutoExposureSpeedDown = true;
+		PPW.AutoExposureSpeedDown           = 0.0f;
+		const FPostProcessSettings& PP = CC->PostProcessSettings;
+		GFloor.bHoldRead   = true;
+		GFloor.HoldReadUp   = (double)PP.AutoExposureSpeedUp;
+		GFloor.HoldReadDown = (double)PP.AutoExposureSpeedDown;
 	}
 
 	bool StartLightProbe(const Shot& S)
@@ -3346,8 +3472,13 @@ namespace
 		GFloor.ShotId      = S.Id;
 		GFloor.CameraId    = S.CameraId;
 		GFloor.ConditionId = S.ConditionId;
+		// THE HOLD IS WRITTEN HERE AND NOWHERE ELSE, which is after the
+		// reference frame is on disk (MeasureShot has run) and before the
+		// control's re-render (BeginNextProbe below asks for it).
+		HoldExposureSpeedsForProbe();
 		if (GRefBgra.Num() == 0 || GRefShotId != S.Id)
 		{
+			GFloor.NoControlWhy = "the-reference-frame-did-not-decode";
 			EmitLightLine(S, -1, "NO-REFERENCE", LedgerFrame::LightDelta(),
 			              "the-reference-frame-did-not-decode/nothing-to-difference-against");
 			// A SHOT THAT TRIED AND HAD NOTHING TO DIFFERENCE AGAINST IS IN
@@ -4608,6 +4739,9 @@ namespace
 			// shader variants, which is a real cost and not the one a
 			// comparison is about.
 			if (GPhaseTicks < kWarmFrames) { return true; }
+			// QUEUE 325: WHAT THIS CAPTURE ACTUALLY WAITED FOR, recorded at
+			// the moment the phase ends rather than assumed from the constant.
+			GWarmTicksAtAsk = GPhaseTicks;
 			GPhase = EPhase::Timed;
 			GPhaseStart = Now; GPhaseTicks = 0;
 			return true;
@@ -4630,6 +4764,14 @@ namespace
 			                      : (GRepeating ? RepeatPngPath() : ShotPngPath(S));
 			IFileManager::Get().Delete(*GAskedPath, false, true, true);
 			GSizeTracker = -1;
+			// QUEUE 325: THE SHUTTER'S OWN CLOCK STARTS HERE, and the two
+			// series counts are what this capture had when it fired. Per
+			// capture, overwritten by the next one, read by the line that
+			// describes the frame this one produced.
+			GTimedAtAsk      = (int32)GFrameMs.size();
+			GAskStarted      = Now;
+			GSecondsToSettle = -1.0;
+			GCaptureSettled  = false;
 			if (!GUseHighRes)
 			{
 				// CANDIDATE A, AND AN ABSOLUTE PATH ON PURPOSE: a relative
@@ -4655,6 +4797,11 @@ namespace
 			{
 				if (SizeSettled(GAskedPath, GSizeTracker))
 				{
+					// QUEUE 325: STOPPED BEFORE THE FRAME IS MEASURED, so the
+					// number on the line is the wait and not the wait plus
+					// whatever measuring it cost.
+					GSecondsToSettle = Now - GAskStarted;
+					GCaptureSettled  = true;
 					AfterFrame(true);
 					GPhaseStart = Now; GPhaseTicks = 0;
 					return true;
@@ -4667,6 +4814,8 @@ namespace
 					FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()), Count);
 				if (!Newest.IsEmpty() && SizeSettled(Newest, GSizeTracker))
 				{
+					GSecondsToSettle = Now - GAskStarted;
+					GCaptureSettled  = true;
 					// ONE NAME FOR THE FILE THE STEP COLLECTS, whatever
 					// produced it: HighResShot picks its own filename under
 					// Saved and the step should not have to know which
