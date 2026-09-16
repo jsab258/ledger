@@ -9,6 +9,104 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-16 06:10Z: RUN 48 READ. THE FRAMES ARRIVED AND THE LAMPS DO NOT LIGHT
+
+His reading came in unprompted in answer to the brief's first line: 54 and 57,
+Fable governing, 28 points of headroom, and HE TAPPED THE BRIEF READABLE, which
+is the first tap ever recorded. He also said to keep going on the visual slice
+without coming back, and to put two things in tomorrow's brief rather than as
+messages: whether the night frames survived staging, and the spawns by tier.
+
+THE STAGING FIX WORKED, WHICH IS THE FIRST ANSWER HE ASKED FOR. 43 named, 43
+present, 43 tracked, 0 missing, stagedPngLeavesAbsent=0, and the waiver expired
+by ITSELF because run 48's verdict carries a different sha. Four frames that
+had been rendered and discarded on every run since they entered the spec are in
+the repository.
+
+AND THE BLANK MOVED: run 47 blanked pinset_night_2 and _3; run 48 blanked
+pinset_night_1 and only that one. Same condition, same camera. Not
+deterministic, so it is a timing or streaming race and not the 2K textures
+causing it outright. Queue 325 updated.
+
+QUEUE 329 IS QUANTIFIED AND LIVE, AND A SECOND FAULT SITS BESIDE IT.
+lightsAboveFloor reads 17/28 on its first real run. EIGHT of the seventeen are
+blank-frame artifacts (queue 329); SIX MORE are void because their shot's own
+no-toggle control disagrees with itself by 0.16498 while certifying smaller
+surpluses, which is queue 332, filed this morning. THREE SURVIVE BOTH. They
+are pinset_night_4's three window practicals and not one lantern. So the
+honest reading of run 48 is 3 of 28, and 17/28 must not be quoted.
+
+  The five-to-eight correction is worth keeping: the first count filtered on
+  the literal 0.00152, and camA_night writes its blanks at 0.00075. Matching a
+  VALUE where the test is a THRESHOLD lost three reads. The threshold now has
+  a printed gap under it (no value in the 48-line series lies between 0.00152
+  and 0.02392).
+
+  The floor DID catch pinset_night_2's blank CONTROL and made that shot
+  NO-READ, so the design is right and only incomplete.
+
+THE LAMPS DO NOT LIGHT, AND THIS IS THE DUSK FRAME'S REAL BLOCKER. I opened
+ue-pinset_night_3.png and measured it: ZERO pixels in the whole frame are both
+bright (luma over 120) and warm (R minus B over 20), which is what a lit lamp
+is. The brightest pixel is the SKY at luma 181, neutral. The warmest thing is
+dark brick. Sky band 78.1 against ground 12.8.
+
+EXPOSURE IS NOT THE CAUSE, AND THAT WAS MY DIAGNOSIS UNTIL A BUILDER REFUSED
+IT AND I CHECKED. A tonemap is monotone: it cannot make a fixture darker than
+the sky behind it come out brighter than it. The cause is in the source, read
+in the code rather than guessed. VignetteShot.cpp:1310 to 1326 is the whole of
+what a piece's emissive flag does: it spawns a point light 0.05 m under the
+piece and nothing more. SurfaceBind.h and tools/ue/make_base_material.py
+contain ZERO hits for emissive, EmissiveColor or selfillum, so the lamp head
+renders through the ordinary metal surface. The four lanterns are the file's
+only emissive pieces, 4 of 610, each shape=box surface=metal asset=None. The
+lamps are dark boxes with invisible lights under them. Queue 333.
+
+  THE GLOW MECHANISM ITSELF WORKS, which is what makes this a content fault
+  rather than a renderer one: vign_camA_night carries a lit window practical
+  at (1045,170) to (1051,173), 23 pixels, peak R minus B of 130 at rgb
+  131/108/1, with soft falloff around it. A warm source in this street renders
+  as a warm source. The lantern just has nothing to glow with.
+
+  EXPOSURE IS STILL OWED, for the OTHER half. All six lantern-lit rows read
+  shotExposurePin=AUTO, and four of their six no-toggle controls disagree with
+  themselves. That is what makes the night frames unreadable and it is queue
+  332 and 334, not a lamp fix.
+
+  AND THE FOUR pinset_night ROWS ARE NOT QUEUE 276's SETTLING SERIES, which I
+  nearly adopted them as. They sit at shot indices 30, 33, 36, 39 with a
+  PINNED day frame immediately before each one. Four renders each preceded by
+  a different pinned exposure measure their predecessors. Queue 334.
+
+AND THERE IS NO FIGURE, AND THE PROBE CANNOT RENDER ONE TODAY. Of the spec's
+610 pieces, a search for figure, person, man, woman, ped, human, char and
+silhouette returns 7 hits and ALL SEVEN ARE FALSE POSITIVES (dropped kerbs
+matching "ped", a manhole matching "man"). The read-only investigation came
+back with the shape of the gap:
+
+  NO SKELETAL MESH PATH EXISTS. Grepping every .h and .cpp under
+  ue-probe/Source for SkeletalMesh, USkeletalMesh, FBX, AnimSequence and Bone
+  returns zero hits anywhere. VignetteShot.cpp's LoadShape, LoadPropMesh and
+  SpawnPiece are all typed to UStaticMesh and AStaticMeshActor.
+  tools/ue/import_prop_meshes.py imports GLB by checking the glTF magic bytes;
+  it cannot read an FBX. LedgerCharacter.h says in its own words that the
+  probe ships no body.
+
+  NO TOKEN IS NEEDED, WHICH IS THE ONE ANSWER THAT MATTERED. The 91 files
+  under ledger/Assets/Characters already include 18 full Mixamo bodies and
+  about 65 clips on the same rig, and tools/mixamo-pick/README.md says Jafar's
+  bearer token is needed only to fetch NEW ones. The blocker is pipeline, not
+  acquisition, and nothing here asks him for anything.
+
+  THE CHEAP ROUTE IS DISHONEST AND IS NOT BEING TAKEN. 20 of the 610 pieces
+  are decals, and one more pointing at a photograph would need no new C++ and
+  no importer. But SurfaceBind.h calls a decal card "the piece's own picture,
+  opaque", and a grep of it and make_base_material.py for Masked, Opacity,
+  Translucent and AlphaChannel returns zero hits in either. A decal is always
+  a hard-edged opaque RECTANGLE, never a silhouette. On the frame Jafar judges
+  the whole project by, that is a sandwich board, and it casts a rectangular
+  shadow.
+
 ## 2026-09-16 01:15Z: RUN 47 READ. WETNESS REACHES THE FRAME; TWO NIGHT SHOTS DO NOT
 
 bf6fc61a rendered c7387972. Section 10 of the 22:25Z ruling was written before
