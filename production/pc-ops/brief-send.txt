@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 2c28f18 @1789485002
+# LEDGER one daily-brief send - 9a18573 @1789533002
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,12 +15,13 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=2c28f18e01b852f1cd689c1cb50f1f3249e9fddd briefCheckoutPcHeadSha=63d30fbb7343a90b7f893297e73c299aef80d9f3 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=5 briefCheckoutBehindSecByCommitTime=-7989 briefCheckoutPcHeadCommitIso=2026-09-15T09:51:29Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/63d30fbb73 briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=9a185738264d28c8e76a74eba8acc64437ee9b59 briefCheckoutPcHeadSha=9a185738264d28c8e76a74eba8acc64437ee9b59 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-16T04:29:28Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/9a18573826 briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-briefStatus=EXITED briefWaitedSec=3 briefExitCode=0
-briefStream=brief-raw.txt briefLines=2
-17:10:04    brief: ALREADY SENT production/briefs/2026-09-15.md (messageId=99), so nothing was sent this pass
-17:10:04  brief-send done: briefDay=2026-09-15 briefSent=0/1 briefAlready=1/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=947 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
+briefStatus=EXITED briefWaitedSec=6 briefExitCode=0
+briefStream=brief-raw.txt briefLines=3
+06:30:05    brief sent: production/briefs/2026-09-16.md chars=950 buttons=2 messageId=103 photoRef=production/d1-probe/ue-vign_hook_day.png photoState=carried photoSizes=90x51/320x180/800x450/1280x720
+06:30:05  brief-send done: briefDay=2026-09-16 briefSent=1/1 briefAlready=0/1 briefRefused=0/1 briefChecked=yes briefButtons=2 briefChars=950 messageId=103 records=1 briefPhotoCarried=1/1 briefPhoto=carried briefPhotoCapOverBy=0 clause=none
+06:30:07    inbox: pushed 1 file(s) as a15881b to pc-inbox
 briefStream=brief-raw.txt.err briefLines=0
