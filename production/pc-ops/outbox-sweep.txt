@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - 79c1121 @1789589918
+# LEDGER one outbox sweep - aae88a1 @1789618798
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,13 +12,12 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 sweepCheckoutPcHeadSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
-sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-16T20:18:16Z
-sweepCheckoutWaitedSec=5/90 sweepCheckoutPolls=2 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/8de4d07ebb,5s/79c1121ca1 sweepCheckoutSeriesShown=2/2
+sweepCheckoutRunSha=aae88a1321157826756fe0b3fec1e0ea6832e50f sweepCheckoutPcHeadSha=aae88a1321157826756fe0b3fec1e0ea6832e50f sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-17T04:19:35Z
+sweepCheckoutWaitedSec=36/90 sweepCheckoutPolls=8 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/3e2ea497c0,36s/aae88a1321 sweepCheckoutSeriesShown=2/2
 sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-sweepStatus=EXITED sweepWaitedSec=6 sweepExitCode=0
-sweepStream=sweep-raw.txt sweepLines=3
-22:18:45    outbox: sent production/outbox/2026-09-16-the-figure-frame.answer.md kind=answer AS-CAPTIONED-PHOTO photoRef=game-design/sim-shots/figure_run53_camA_before_after.png chars=698 messageId=111 photoSizes=90x33/320x118/800x294/1280x470/2440x896 outboundLatencySec=29 receipt=production/outbound/2026-09-16-the-figure-frame.answer.receipt.txt
-22:18:45  outbox done: outboxFiles=39 sent=0 captionedSent=1 captionedClipsSent=0 refused=0 unsent=0 alreadySent=38 held=0 sendFailed=0 receiptRefused=0 recordsWritten=1 latencySamples=1/1 outboundLatencySecAtWorst=29
-22:18:48    inbox: pushed 1 file(s) as d38c1ae to pc-inbox
+sweepStatus=EXITED sweepWaitedSec=3 sweepExitCode=0
+sweepStream=sweep-raw.txt sweepLines=2
+06:20:36  outbox done: outboxFiles=39 sent=0 captionedSent=0 captionedClipsSent=0 refused=0 unsent=0 alreadySent=39 held=0 sendFailed=0 receiptRefused=0 recordsWritten=0 latencySamples=0/0 outboundLatencySecAtWorst=nothing-measured
+06:20:36  nothing measured: all 39 file(s) in production/outbox already carry a receipt, so no message was checked or sent this pass.
 sweepStream=sweep-raw.txt.err sweepLines=0

@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 79c1121 @1789589931
+# LEDGER one daily-brief send - aae88a1 @1789618839
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,12 +15,14 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 briefCheckoutPcHeadSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-16T20:18:16Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/79c1121ca1 briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=aae88a1321157826756fe0b3fec1e0ea6832e50f briefCheckoutPcHeadSha=aae88a1321157826756fe0b3fec1e0ea6832e50f briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-17T04:19:35Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/aae88a1321 briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-briefStatus=EXITED briefWaitedSec=3 briefExitCode=0
-briefStream=brief-raw.txt briefLines=2
-22:18:52    brief: ALREADY SENT production/briefs/2026-09-16.md (messageId=103), so nothing was sent this pass
-22:18:52  brief-send done: briefDay=2026-09-16 briefSent=0/1 briefAlready=1/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=950 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
+briefStatus=EXITED briefWaitedSec=27 briefExitCode=0
+briefStream=brief-raw.txt briefLines=4
+06:20:40    brief: NO PICTURE ON THIS MESSAGE (none-named): no picture is named for this day: production/briefs/2026-09-17.photo.txt is not on this disk. It still goes with its two buttons, because the buttons are the only measure of this channel.
+06:21:02    brief sent: production/briefs/2026-09-17.md chars=971 buttons=2 messageId=112 photoRef=none photoState=none-named photoSizes=nothing-measured
+06:21:02  brief-send done: briefDay=2026-09-17 briefSent=1/1 briefAlready=0/1 briefRefused=0/1 briefChecked=yes briefButtons=2 briefChars=971 messageId=112 records=1 briefPhotoCarried=0/1 briefPhoto=none-named briefPhotoCapOverBy=0 clause=none
+06:21:04    inbox: pushed 1 file(s) as b790bc2 to pc-inbox
 briefStream=brief-raw.txt.err briefLines=0

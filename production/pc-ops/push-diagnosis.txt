@@ -1,17 +1,18 @@
-# LEDGER push diagnosis - 79c1121 @1789589916
+# LEDGER push diagnosis - aae88a1 @1789618796
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=c05e50330c85b171ea1f65341b52862c3ee3ebcc
-localTipRef=c05e50330c85b171ea1f65341b52862c3ee3ebcc
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=d38c1aeb28700918b2c4bc6b7dd294c6976c65a3
+localTipRef=d38c1aeb28700918b2c4bc6b7dd294c6976c65a3
 onDisk_production_inbox=4
-onDisk_production_outbound=576
+onDisk_production_outbound=577
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=82 newestShown=16/16 (+66 older not shown)
+receiptsOnDisk=83 newestShown=16/16 (+67 older not shown)
+receipt file=production/outbox/2026-09-16-the-figure-frame.answer.md messageId=111 sent=2026-09-16T20:18:45+00:00
 receipt file=production/outbound/2026-09-16T153011Z-reply-110.receipt.txt messageId=110 sent=2026-09-16T15:30:11+00:00
 receipt file=production/outbound/2026-09-16T141239Z-reply-108.receipt.txt messageId=108 sent=2026-09-16T14:12:39+00:00
 receipt file=production/outbox/2026-09-16-your-four-items-one-is-yours-to-call-part2.answer.md messageId=106 sent=2026-09-16T13:17:28+00:00
@@ -27,5 +28,4 @@ receipt file=production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.m
 receipt file=production/briefs/2026-09-14.md messageId=95 sent=2026-09-14T19:09:03+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md messageId=94 sent=2026-09-14T19:08:52+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-the-frame-itself.brief.md messageId=96 sent=2026-09-14T19:44:26+00:00
-receipt file=production/outbox/2026-09-14-the-street-then-after-the-brief.brief.md messageId=93 sent=2026-09-14T19:08:52+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent

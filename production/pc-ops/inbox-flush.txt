@@ -1,4 +1,4 @@
-# LEDGER one inbox flush - 79c1121 @1789589936
+# LEDGER one inbox flush - aae88a1 @1789618868
 # Line 1 names the commit this was run on. This step PUSHES the
 # return half: his messages and the bot's own receipts, onto
 # pc-inbox. It sends nothing and loads no credentials. The return
@@ -12,7 +12,7 @@
 # read ok= and detail= below, and pcInboxHeadShort in the verify step,
 # before calling it fixed. Last measurement: HUNG at 150s, 12 waiting.
 flushPython=C:\Users\Jafar\miniconda3\python.exe
-flushRepoHead=79c1121c
+flushRepoHead=aae88a13
 # QUEUE 189 GATE, and the two shas below are DIFFERENT QUESTIONS.
 # flushCheckoutRunSha is the commit CI was started FOR. flushCheckoutPcHeadSha is the
 # commit HIS CHECKOUT was AT when this step read it. Line 1 of this
@@ -21,12 +21,12 @@ flushRepoHead=79c1121c
 # commits its own evidence, so flushCheckoutAheadCommits above 0 is normal.
 # flushCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-flushCheckoutRunSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 flushCheckoutPcHeadSha=79c1121ca10db95aae78e5c45cb0b68cb96de454 flushCheckoutContains=yes flushCheckoutOutcome=contains flushCheckoutDecision=send
-flushCheckoutBehindCommits=0 flushCheckoutAheadCommits=0 flushCheckoutBehindSecByCommitTime=0 flushCheckoutPcHeadCommitIso=2026-09-16T20:18:16Z
-flushCheckoutWaitedSec=0/30 flushCheckoutPolls=1 flushCheckoutPollSec=5 flushCheckoutSeries=0s/79c1121ca1 flushCheckoutSeriesShown=1/1
+flushCheckoutRunSha=aae88a1321157826756fe0b3fec1e0ea6832e50f flushCheckoutPcHeadSha=aae88a1321157826756fe0b3fec1e0ea6832e50f flushCheckoutContains=yes flushCheckoutOutcome=contains flushCheckoutDecision=send
+flushCheckoutBehindCommits=0 flushCheckoutAheadCommits=0 flushCheckoutBehindSecByCommitTime=0 flushCheckoutPcHeadCommitIso=2026-09-17T04:19:35Z
+flushCheckoutWaitedSec=0/30 flushCheckoutPolls=1 flushCheckoutPollSec=5 flushCheckoutSeries=0s/aae88a1321 flushCheckoutSeriesShown=1/1
 flushCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
 flushStatus=EXITED flushWaitedSec=3 flushExitCode=0
 flushStream=flush-raw.txt flushLines=2
-22:18:57  flush: waiting=0 tip=d38c1ae
-22:18:57  flush done: pushed=0/0 waiting=0 tracked=581, the branch already carries every file on this disk
+06:21:09  flush: waiting=0 tip=b790bc2
+06:21:09  flush done: pushed=0/0 waiting=0 tracked=582, the branch already carries every file on this disk
 flushStream=flush-raw.txt.err flushLines=0
