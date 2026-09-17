@@ -44,6 +44,22 @@ that means "I could not find out" reading as a zero that means "fine". So:
     the formatting law binds what this program WRITES. The source is never
     touched.
 
+THE TWO PROBE CHANNELS, BOTH READ SINCE 2026-09-17 (queue 382). This page read
+production/d1-probe/ue-verdict.txt and nothing else from the probe, and that
+file is the CORE PERCEPTION probe: 301 bytes, perceptionRows and probeTest, not
+one occurrence of the word figure. Every visual result of the last fortnight
+sits in production/d1-probe/ue-vignette-verdict.txt, which had no source here at
+all, so the page showed one probe and was blind to the other and fifty three
+runs reached Jafar only because a session read the raw file by hand. read_vignette()
+is the second reading: the commit it measured plus six rows (scene, capture,
+figure, lanterns, sky, wetness), each read off a line the program can name, with
+three outcomes kept apart - measured, MEASURED NOTHING (the probe's own
+sceneStatus=NOTHING-EMITTED placeholder, which renders as the words and never as
+a zero), and no verdict at all. Neither probe file stands in for the other and
+neither is copied anywhere: game-design/sim-shots/ belongs to the Unity sim, and
+two pipelines writing one directory is how a run carries another run's evidence
+under its own name.
+
 THE SINGLE WRITE PATH. write_artifact() is the only function in this file that
 writes anything, and it refuses any filename outside the four it knows. The
 selftest proves that statically (an AST walk over this file: every write call
@@ -150,6 +166,11 @@ def _load(path, name):
 _capsay = _load(REPO / "tools" / "capsay.py", "capsay")
 _gates = _load(REPO / "tools" / "gates.py", "ledger_gates")
 _vread = _load(REPO / "tools" / "verdict-read.py", "ledger_verdict_read")
+# THE "DID THIS VIGNETTE RUN CAPTURE ANYTHING AT ALL" MARKERS, which
+# tools/verdict-shot-files.py already owns as NO_CAPTURE. Imported rather than
+# retyped for the same reason NO_SIM is: the day the probe changes that
+# placeholder's wording, one file moves and both readers follow it.
+_vshot = _load(REPO / "tools" / "verdict-shot-files.py", "ledger_verdict_shot")
 
 REUSED = []
 if _capsay:
@@ -162,6 +183,14 @@ if _gates:
     REUSED.append("tools/gates.py gate_verdict(),NO_SIM")
 if _vread:
     REUSED.append("tools/verdict-read.py run_stamp_of_text()")
+NO_CAPTURE = (tuple(_vshot.NO_CAPTURE) if _vshot else
+              ("captureStatus=NOTHING-MEASURED", "NOTHING MEASURED"))
+if _vshot:
+    REUSED.append("tools/verdict-shot-files.py NO_CAPTURE")
+# The probe's own word for a scene that was never built, printed by the
+# workflow beside the NO_CAPTURE markers. A verdict can stop at either, and
+# both mean the same thing to a reader: no frame was attempted on this commit.
+NO_SCENE = "NOTHING-EMITTED"
 
 NOT_APPLICABLE = "not yet applicable"
 
@@ -407,6 +436,56 @@ def parse_table_rows(text, want_cols):
     return rows[1:] if rows else []
 
 
+VIGN_LEAD = re.compile(r"^([A-Za-z][A-Za-z0-9]*)=")
+
+
+def vignette_body(text):
+    """(line number, leading key, line) for every line of a verdict that is
+    not a comment and not blank.
+
+    THE HEADER OF THIS VERDICT IS PROSE THAT CONTAINS key=value TOKENS, and
+    that is measured rather than feared: the live file's comment lines carry
+    six of them, including skyWrites=N/of=M and cellAgree=N/of=M, whose values
+    are literal placeholders and not numbers. A reader that grepped the whole
+    file would hand N/of=M back as a measurement. Comment lines are dropped
+    here, and every value is read off a line this function can NAME.
+
+    NOT tools/map.py's read_key(), which was read before this was written: that
+    one is LAST-WINS over the whole file, comments included, and it is right for
+    what it does. This panel needs the opposite rule (exactly once, or no value
+    at all) plus the line a value came off, so these are two ideas rather than
+    two copies of one.
+    """
+    rows = []
+    for n, line in enumerate((text or "").splitlines(), 1):
+        s = line.strip()
+        if not s or s.startswith("#"):
+            continue
+        m = VIGN_LEAD.match(s)
+        rows.append((n, m.group(1) if m else s.split()[0], s))
+    return rows
+
+
+def whole_run_key(body, key):
+    """(value, line number, that line's leading key, hit count) for a key that
+    must occur EXACTLY ONCE in the body of a verdict.
+
+    A WHOLE-RUN NUMBER AND A PER-SHOT NUMBER LOOK IDENTICAL IN A GREP. This
+    file carries figureSilShown= on 49 shot lines and figureShownShots= once;
+    reading the first hit of a repeated key would silently hand one shot's
+    moment back as the run's. So more than one hit returns NO VALUE and the
+    hit count, and the panel prints that as a refusal rather than as a number.
+    Zero hits returns the same shape with a count of 0, so absent and repeated
+    are told apart by the caller.
+    """
+    rx = re.compile(r"(?<![A-Za-z0-9])" + re.escape(key) + r"=(\S+)")
+    hits = [(m.group(1), n, lead) for n, lead, line in body
+            for m in [rx.search(line)] if m]
+    if len(hits) == 1:
+        return hits[0][0], hits[0][1], hits[0][2], 1
+    return None, None, None, len(hits)
+
+
 # ------------------------------------------------------------------ sources
 # EVERY PATH THIS PROGRAM READS, IN ONE PLACE, so the derivations block can
 # print what it wanted and what it found, and so a moved file shows up as an
@@ -435,6 +514,15 @@ SOURCES = {
     "brief": "production/briefs/latest.md",
     "verdict_sim": "game-design/sim-shots/verdict.txt",
     "verdict_ue": "production/d1-probe/ue-verdict.txt",
+    # THE VISUAL PROBE'S OWN VERDICT, ADDED 2026-09-17 FOR QUEUE 382, and it
+    # is a SECOND FILE rather than more of the first. ue-verdict.txt is the
+    # CORE PERCEPTION probe: 301 bytes, perceptionRows/probeTest, and zero
+    # occurrences of the word figure. Every visual result of the last
+    # fortnight (the figure, the lanterns, the sky, the wetness) is in this
+    # one, and until today this page had no source for it at all: it showed
+    # one probe and was blind to the other. Neither may stand in for the
+    # other and neither is a newer copy of the other.
+    "verdict_vignette": "production/d1-probe/ue-vignette-verdict.txt",
     "verification": "ledger-v2/studio-v2/verification.md",
     "logs": "production/logs",
 }
@@ -866,6 +954,263 @@ def read_gate_pills(repo):
         out["overflow"] = cap(rest, keep=1)
         out["pills"] = out["pills"][:GATE_KEEP]
     return out
+
+
+# THE VIGNETTE PANEL'S ROWS, NAMED ONCE AND ALWAYS ALL SIX. A never-ran verdict
+# and an absent verdict produce the same six rows as a measured one, saying why
+# each is unavailable: a reader must not have to tell a failed run from a good
+# one by which rows went missing.
+#
+# THE SERIES THAT SET THE SHAPE, read 2026-09-17 by replaying this reader over
+# EVERY version of the verdict in this checkout's history: 34 versions walked,
+# and only 1 of them (61e46c4, run 53, today's) fills all six rows. 3 of 34 are
+# the probe's own NOTHING-EMITTED placeholder, the most recent of them landing
+# 26 minutes before run 53. The other 30 are real runs missing a key this panel
+# asks for, because the probe grew them over the fortnight, counted over those
+# same 34: figure= on 1, lanternsMeasured= on 4 and lightsAboveFloor= on 5 (all
+# from 2026-09-16), wetnessBindValue= on 6 (from 2026-09-16), skyHdriBoundAs= on
+# 17 (from 2026-09-09). So the unavailable path is
+# the COMMON path here and not the edge case, which is why it names the missing
+# keys and the lines it walked rather than degrading into a blank or a zero.
+VIGNETTE_TITLE = "UE vignette probe"
+VIGNETTE_ROWS = ("scene", "capture", "figure", "lanterns", "sky", "wetness")
+
+
+def _vlabel(name):
+    return "vignette " + name
+
+
+def read_vignette(repo):
+    """THE VISUAL PROBE'S OWN READING. Queue 382, 2026-09-17.
+
+    WHY IT IS HERE. This page already read production/d1-probe/ue-verdict.txt,
+    which is the CORE PERCEPTION probe: 301 bytes, perceptionRows and
+    probeTest, and not one occurrence of the word figure. Every visual result
+    of the last fortnight is in ue-vignette-verdict.txt, which had no source
+    here at all, so the page showed one probe and was blind to the other and
+    fifty three runs reached Jafar only because a session read the raw file and
+    composed a picture by hand.
+
+    THREE OUTCOMES, KEPT APART. A run that MEASURED (six rows carrying numbers
+    and their denominators); a run that MEASURED NOTHING (the workflow writes
+    sceneStatus=NOTHING-EMITTED, captureStatus=NOTHING-MEASURED and the
+    sentence "no frame was attempted on this commit and no older one is carried
+    forward", and every row then says that rather than printing a zero); and NO
+    VERDICT AT ALL (nothing has ever written one here). A bad result and no
+    result are different facts and this function never flattens them.
+
+    THE COMMIT IS PART OF THE READING IN ALL THREE. Line 1 names the commit the
+    probe measured, and a row without it cannot be told from a stale one.
+    """
+    s = [SOURCES["verdict_vignette"]]
+    text = read(src(repo, "verdict_vignette"))
+    if text is None:
+        why = ("%s does not exist in this checkout, so no vignette run has "
+               "ever written a verdict here: nothing measured, which is not a "
+               "zero and not a pass" % SOURCES["verdict_vignette"])
+        return {"commit": Reading.unavailable("vignette commit", why, s),
+                "rows": [Reading.unavailable(_vlabel(n), why, s)
+                         for n in VIGNETTE_ROWS],
+                "notes": ["%s %s: %s" % (VIGNETTE_TITLE, NOT_APPLICABLE, why)],
+                "measured": False}
+
+    sha, stamp = verdict_header(text)
+    when = (datetime.datetime.fromtimestamp(
+                stamp, datetime.timezone.utc).strftime("%Y-%m-%dT%H:%MZ")
+            if stamp else "no-stamp-on-line-1")
+    body = vignette_body(text)
+    comments = len(text.splitlines()) - len(body)
+    commit = Reading.measured(
+        "vignette commit", "%s@%s" % (sha, when),
+        "line 1 of %s, which names the commit the probe MEASURED and the epoch "
+        "it wrote at. One header per file, so this is that run's own commit and "
+        "never a newest-of across runs" % SOURCES["verdict_vignette"],
+        s, "1 header line, above %d body line(s) and %d comment line(s)"
+        % (len(body), comments))
+    notes = ["%s: commit %s, written %s, read from %s (%d body line(s), %d "
+             "comment line(s) skipped). This is the VISUAL probe. %s in the "
+             "gate strip above is the CORE PERCEPTION probe, a different file "
+             "with different keys, and neither stands in for the other."
+             % (VIGNETTE_TITLE, sha, when, SOURCES["verdict_vignette"],
+                len(body), comments, SOURCES["verdict_ue"])]
+
+    # THE NEVER-RAN CASE, TESTED BEFORE ANY KEY IS READ. Either marker is
+    # enough: the workflow writes the scene one when the build published no
+    # binary and the capture one when no frame was attempted.
+    stopped = [m for m in NO_CAPTURE if m in text]
+    if whole_run_key(body, "sceneStatus")[0] == NO_SCENE:
+        stopped.insert(0, "sceneStatus=" + NO_SCENE)
+    if stopped:
+        sentence = plain(next((l for _, _, l in body
+                               if "NOTHING MEASURED" in l), ""))
+        why = ("THIS RUN MEASURED NOTHING. %s carries %s on commit %s (%s)%s. "
+               "No row below carries a number, because a run that measured "
+               "nothing and a run that measured a bad result are different "
+               "facts, and no older run is carried forward under this commit's "
+               "name" % (SOURCES["verdict_vignette"], ", ".join(stopped), sha,
+                         when, '; its own words: "%s"' % sentence
+                         if sentence else ""))
+        notes.append("%s %s: %s" % (VIGNETTE_TITLE, NOT_APPLICABLE, why))
+        return {"commit": commit,
+                "rows": [Reading.unavailable(_vlabel(n), why, s)
+                         for n in VIGNETTE_ROWS],
+                "notes": notes, "measured": False}
+
+    def keys(*names):
+        """({key: (value, line, lead)}, refusal sentence or None)."""
+        got, gone = {}, []
+        for k in names:
+            v, n, lead, hits = whole_run_key(body, k)
+            if v is None:
+                gone.append("%s=%s" % (k, "absent" if not hits else
+                                       "on-%d-lines/per-shot-not-run-total"
+                                       % hits))
+            else:
+                got[k] = (v, n, lead)
+        if not gone:
+            return got, None
+        return got, ("%d of %d key(s) could not be read as a WHOLE-RUN key "
+                     "over the %d body line(s) of %s: %s. A key found on more "
+                     "than one line is a per-shot key and is refused here "
+                     "rather than handed back as a run total"
+                     % (len(gone), len(names), len(body),
+                        SOURCES["verdict_vignette"], cap(gone, keep=4, sep=", ")))
+
+    def val(got, k):
+        return got[k][0]
+
+    def at(got, k):
+        return "line %d, whose leading key is %s" % (got[k][1], got[k][2])
+
+    def opt(k):
+        """A key this panel quotes but does not depend on."""
+        v = whole_run_key(body, k)[0]
+        return v if v is not None else "key-absent-in-this-verdict"
+
+    def over(token):
+        """The denominator half of an n/m token as the verdict writes it."""
+        parts = token.split("/")
+        return parts[-1] if len(parts) > 1 else token
+
+    def mk(name, names, build):
+        got, gone = keys(*names)
+        if gone:
+            return Reading.unavailable(_vlabel(name), gone, s)
+        value, derivation, den = build(got)
+        return Reading.measured(_vlabel(name), value, derivation, s, den)
+
+    def _scene(got):
+        pieces = val(got, "piecesEmitted")
+        return ("%s/pieces=%s" % (val(got, "sceneStatus"), pieces),
+                "sceneStatus and piecesEmitted off %s: the run's CUMULATIVE "
+                "emission, pieces built into the level over the pieces the "
+                "shared scene spec named. Not a peak and not a per-shot count. "
+                "sceneNote=%s" % (at(got, "sceneStatus"), opt("sceneNote")),
+                "%s piece(s) named by the scene spec this run read"
+                % over(pieces))
+
+    def _capture(got):
+        wrote = val(got, "shotsWrote")
+        return ("%s/wrote=%s/blank=%s/noFile=%s"
+                % (val(got, "captureStatus"), wrote, val(got, "shotsBlank"),
+                   val(got, "shotsNoFile")),
+                "the capture tally off %s: shots WRITTEN, shots that came back "
+                "BLANK and shots with NO FILE, each over the shots this run "
+                "offered, cumulative for the run. The three are printed apart "
+                "because a blank frame, a missing frame and a frame never "
+                "attempted are three different faults" % at(got, "captureStatus"),
+                "%s shot(s) offered by this run" % over(wrote))
+
+    def _figure(got):
+        shown = val(got, "figureShownShots")
+        a = re.match(r"(\d+)", shown)
+        b = re.search(r"hidden=(\d+)", shown)
+        total = int(a.group(1)) + int(b.group(1)) if a and b else None
+        return ("%s/why=%s/heightCm=%s/footGapCm=%s/footwayMarginM=%s/shown=%s"
+                % (val(got, "figure"), val(got, "figureWhy"),
+                   val(got, "figureMeshHeightCm"), val(got, "figureFootGapCm"),
+                   val(got, "figureFootwayMarginM"), shown),
+                "the figure block off %s, one figure per run, last-wins. "
+                "figure= is the pose state READ BACK after the pose evaluated "
+                "and figureMeshHeightCm is the engine's own reading off the "
+                "imported asset, never the height the import asked for. The "
+                "placement is BOTH HALVES on purpose: the gap to the footway "
+                "surface AND the margin to the nearest footway edge, because a "
+                "zero gap over no footway is not a placement. shown counts the "
+                "shots the figure was visible in" % at(got, "figure"),
+                "1 figure in the scene%s" % ("" if total is None else
+                                             ", across %d shot(s) (%s)"
+                                             % (total, shown)))
+
+    def _lanterns(got):
+        placed, measured = (val(got, "lanternsPlaced"),
+                            val(got, "lanternsMeasured"))
+        floor = opt("lightsAboveFloor")
+        return ("placed=%s..measured=%s" % (placed, measured),
+                "TWO QUESTIONS IN ONE ROW, because one of them once answered "
+                "for the other: lanternsPlaced counts the lantern actors the "
+                "scene created (%s), lanternsMeasured counts the lanterns whose "
+                "light the probe could separate from its own control (%s). This "
+                "verdict's header records a run reading four of four placed "
+                "while both night frames were black. %s"
+                % (at(got, "lanternsPlaced"), at(got, "lanternsMeasured"),
+                   "The measured half is a NOTHING-MEASURED zero rather than a "
+                   "dark lantern: lightsAboveFloor=%s" % floor
+                   if floor.startswith("nothing-measured")
+                   else "lightsAboveFloor=%s" % floor),
+                "%s lantern(s) the scene asked for; %s lantern probe(s) "
+                "attempted" % (over(placed), over(measured)))
+
+    def _sky(got):
+        bound = val(got, "skyHdriBoundAs").split("/")
+        return ("boundAs=%s/skyIntensity=%s/sunIntensity=%s"
+                % (bound[0], val(got, "skyIntensityRead"),
+                   val(got, "sunIntensityRead")),
+                "skyHdriBoundAs names WHAT THE SKY BOUND TO: the approved "
+                "photograph on an unlit dome, or NOTHING and the reason. "
+                "Segment 1 of the %d in that token is printed here and the "
+                "whole token is on %s. The two intensities are READ BACK off "
+                "the components after the last condition was applied, one per "
+                "run, last-wins, never the value that was asked for"
+                % (len(bound), at(got, "skyHdriBoundAs")),
+                "1 sky binding and 2 component read-back(s) for the run")
+
+    def _wetness(got):
+        wet, was_set = (val(got, "wetnessSurfacesWet"),
+                        val(got, "wetnessSurfacesSet"))
+        shots = val(got, "wetnessShotsAtValue")
+        return ("bind=%s/surfacesWet=%s/surfacesSet=%s/shotsAtValue=%s"
+                % (val(got, "wetnessBindValue"), wet, was_set, shots),
+                "the wetness block off %s: bind is ONE SEED PER RUN and is "
+                "neither a peak nor a median; surfacesWet counts the surfaces "
+                "the walk actually darkened over the surfaces it set; "
+                "shotsAtValue counts the shots rendered at that wetness over "
+                "the shots offered" % at(got, "wetnessBindValue"),
+                "%s surface(s) set of %s the file asked for, %s shot(s) offered"
+                % (over(wet), over(was_set), over(shots)))
+
+    rows = [
+        mk("scene", ("sceneStatus", "piecesEmitted"), _scene),
+        mk("capture", ("captureStatus", "shotsWrote", "shotsBlank",
+                       "shotsNoFile"), _capture),
+        mk("figure", ("figure", "figureWhy", "figureMeshHeightCm",
+                      "figureFootGapCm", "figureFootwayMarginM",
+                      "figureShownShots"), _figure),
+        mk("lanterns", ("lanternsPlaced", "lanternsMeasured"), _lanterns),
+        mk("sky", ("skyHdriBoundAs", "skyIntensityRead", "sunIntensityRead"),
+           _sky),
+        mk("wetness", ("wetnessBindValue", "wetnessSurfacesSet",
+                       "wetnessSurfacesWet", "wetnessShotsAtValue"), _wetness),
+    ]
+    gone = [r.label for r in rows if not r.available]
+    if gone:
+        notes.append("%d of the %d row(s) below could not be read: %s. The "
+                     "verdict exists and named a commit, so this is a key the "
+                     "probe did not emit on that run, or one that MOVED, or a "
+                     "run that stopped after the header. It is not an absent "
+                     "channel and it is not a zero"
+                     % (len(gone), len(rows), cap(gone, keep=4, sep=", ")))
+    return {"commit": commit, "rows": rows, "notes": notes, "measured": True}
 
 
 def read_throughput(repo, today):
@@ -1425,6 +1770,7 @@ def build_model(repo, now, checkout=None):
         "inflight": read_inflight(repo, today),
         "budget": read_budget(repo),
         "gates": read_gate_pills(repo),
+        "vignette": read_vignette(repo),
         "throughput": read_throughput(repo, today),
         "judge": read_judge(repo),
         "extras": read_extras(repo),
@@ -1439,6 +1785,11 @@ def all_readings(model):
            model["throughput"], model["judge"], model["checkout"]]
     out += model["queue"]["cards"]
     out += [model["budget"][k] for k in ("monthly", "oneoff", "spend", "usage")]
+    # THE VIGNETTE ROWS ARE READINGS LIKE ANY OTHER, so they land in the
+    # derivations table and in the live document's readings list rather than
+    # only in their own panel: one computation, three renderings, and the
+    # selftest's drift check then holds them to the same rule as the rest.
+    out += [model["vignette"]["commit"]] + model["vignette"]["rows"]
     out += model["extras"]
     return out
 
@@ -1657,6 +2008,21 @@ def render_html(model):
     if gates["overflow"]:
         a('<p class="why">(+ not shown) %s</p>' % esc(gates["overflow"]))
 
+    # 7b. THE VIGNETTE PROBE, QUEUE 382. The provenance goes above the rows for
+    # the same reason it goes above the pills: this is a photograph of ONE
+    # commit, and "as of X" has to be read before "the figure is standing".
+    # Rows rather than cards, because each value is a compound key=value
+    # reading with no spaces in it, which no 26px number can carry.
+    vign = model["vignette"]
+    a("<h2>%s</h2>" % esc(VIGNETTE_TITLE))
+    for note in vign["notes"]:
+        a('<p class="why">%s</p>' % esc(note))
+    for r in [vign["commit"]] + vign["rows"]:
+        a('<div class="row%s"><div class="nm">%s</div><div class="st">%s</div>'
+          '<div class="why">%s</div></div>' % (
+              "" if r.available else " na", esc(r.label), esc(r.text),
+              esc(r.note)))
+
     # 8. two metric cards
     a("<h2>Verification</h2>")
     a('<div class="cards">%s%s</div>' % (card_html(model["throughput"]),
@@ -1768,6 +2134,19 @@ def render_status(model):
     if gates["overflow"]:
         a("")
         a("(+ not shown) %s" % gates["overflow"])
+    a("")
+    # QUEUE 382. The same six rows and the same commit as the HTML, off the
+    # same model: neither artifact reads a source of its own, so they cannot
+    # disagree about which run this is.
+    vign = model["vignette"]
+    a("## %s" % VIGNETTE_TITLE)
+    a("")
+    for note in vign["notes"]:
+        a("- %s" % note)
+        a("")
+    for r in [vign["commit"]] + vign["rows"]:
+        a("- **%s**: %s" % (r.label, r.text))
+        a("  (%s)" % r.note)
     a("")
     a("## Verification")
     a("")
@@ -2783,6 +3162,49 @@ def selftest(repo=None):                                         # noqa: C901
        "plain())", dash not in page and dash not in status)
     ok("the page says nothing-measured where a source is missing",
        NOTHING in page and NOTHING in status)
+
+    # THE VIGNETTE PANEL, QUEUE 382, AND THE LIVE TREE IS ITS ACCEPTING
+    # FIXTURE. Today's verdict carries figure=STANDING, which is the fact that
+    # reached no channel Jafar reads for fifty three runs. A checker that
+    # cannot read the real file is the validator nothing survives, so the
+    # accepting case runs first and every rejecting fixture in section B is
+    # synthetic: none of them names a file in this repository.
+    v = live["vignette"]
+    vrows = [v["commit"]] + v["rows"]
+    ok("ACCEPTING: the vignette panel reads the live verdict (%d row(s) and "
+       "the commit, %d unavailable)"
+       % (len(v["rows"]), sum(1 for r in vrows if not r.available)),
+       v["measured"] and all(r.available for r in vrows),
+       ["%s: %s" % (r.label, r.reason) for r in vrows if not r.available])
+    fig = next((r for r in v["rows"] if r.label == _vlabel("figure")), None)
+    ok("ACCEPTING: the figure reading is ON THE PAGE (%s)"
+       % (fig.text if fig else "no figure row at all"),
+       bool(fig) and fig.available and "STANDING" in fig.text
+       and "heightCm=" in fig.text and fig.text in status and fig.text in page,
+       fig.text if fig else None)
+    lant = next((r for r in v["rows"] if r.label == _vlabel("lanterns")), None)
+    ok("the lantern row is ONE PAIRED READING, placed beside measured, rather "
+       "than two keys whose relationship a reader must remember (%s)"
+       % (lant.text if lant else "no row"),
+       bool(lant) and ".." in lant.text and "placed=" in lant.text
+       and "measured=" in lant.text, lant.text if lant else None)
+    ok("every vignette reading carries a denominator",
+       all(r.denominator for r in vrows),
+       [r.label for r in vrows if not r.denominator])
+    ok("THE COMMIT THE RUN MEASURED IS PART OF THE READING (%s)"
+       % v["commit"].text,
+       bool(re.match(r"^[0-9a-f]{7,40}@", v["commit"].text))
+       and v["commit"].text in status, v["commit"].text)
+    spaced = ["%s=%s" % (r.label, r.text) for r in vrows if " " in str(r.text)]
+    ok("no vignette value carries a space, so no key=value reader truncates "
+       "one silently", not spaced, spaced)
+    ok("the panel reads the VIGNETTE verdict and never the core probe's file, "
+       "which carries no figure key at all",
+       all(SOURCES["verdict_vignette"] in r.sources for r in vrows)
+       and SOURCES["verdict_ue"] not in
+       [x for r in vrows for x in r.sources], [r.sources for r in vrows[:1]])
+    ok("both artifacts carry the panel, in both renderings",
+       VIGNETTE_TITLE in page and VIGNETTE_TITLE in status)
     faults = page_faults(page)
     ok("the page survives the structural checks (balanced tags, viewport, "
        "refresh, nothing fixed over the content, no sideways scroll, a script "
@@ -2815,6 +3237,91 @@ def selftest(repo=None):                                         # noqa: C901
        bstatus.count(NOT_APPLICABLE) >= 8, bstatus.count(NOT_APPLICABLE))
     ok("and the gate strip is empty rather than green",
        not blank["gates"]["pills"], blank["gates"]["pills"])
+
+    # THE VIGNETTE PANEL'S REJECTING FIXTURES, QUEUE 382. All synthetic, all in
+    # temp trees, none of them naming a file in this repository: a rejecting
+    # fixture pinned to a real asset is one that breaks the day somebody does
+    # the work the panel asks for.
+    def vign_fixture(tag, text=None):
+        d = pathlib.Path(tempfile.mkdtemp(prefix="dash-vign-" + tag + "-"))
+        if text is not None:
+            p = d / SOURCES["verdict_vignette"]
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(text, encoding="utf-8")
+        return d, read_vignette(d)
+
+    _, absent_v = vign_fixture("absent")
+    arows = [absent_v["commit"]] + absent_v["rows"]
+    ok("REJECTING: no verdict at all makes all %d vignette reading(s) "
+       "unavailable, the commit included" % len(arows),
+       not absent_v["measured"] and not any(r.available for r in arows),
+       [r.label for r in arows if r.available])
+    ok("and every one of them says nothing-measured rather than 0",
+       all(NOTHING in r.text for r in arows)
+       and not any(str(r.value) == "0" for r in arows),
+       [r.text for r in arows[:2]])
+
+    # THE WORKFLOW'S OWN NEVER-RAN PLACEHOLDER, retyped here as a fixture: this
+    # is what ledger-probe-unreal.yml writes when the build published no binary.
+    never_dir, never = vign_fixture("never", (
+        "# UE vignette shot deadbee @1789000000\n"
+        "# Line 1 names the commit this was measured on.\n\n"
+        "sceneStatus=NOTHING-EMITTED piecesEmitted=0/0 "
+        "sceneNote=build-step-published-no-binary\n"
+        "captureStatus=NOTHING-MEASURED shotsWrote=0/0 shotsBlank=0/0 "
+        "shotsNoFile=0/0\n"
+        "NOTHING MEASURED - no frame was attempted on this commit and no older "
+        "one is carried forward.\n"
+        "shotReached=end\n"))
+    ok("REJECTING: a run that MEASURED NOTHING leaves every row unavailable, "
+       "never a zero and never a pass",
+       not never["measured"] and not any(r.available for r in never["rows"])
+       and all(NOTHING in r.text for r in never["rows"]),
+       [r.text for r in never["rows"]])
+    ok("and it STILL NAMES THE COMMIT it failed on, so nothing can read it as "
+       "a stale row (%s)" % never["commit"].text,
+       never["commit"].available and never["commit"].text.startswith("deadbee@"),
+       never["commit"].text)
+    ok("and the panel carries the verdict's own sentence, not a paraphrase",
+       any("no frame was attempted on this commit" in n for n in never["notes"]),
+       never["notes"][-1][:200])
+    nstatus = render_status(build_model(never_dir, now))
+    npanel = nstatus.split("## " + VIGNETTE_TITLE, 1)[-1]
+    ok("and STATUS.md then carries the words and NOT the previous run's keys",
+       NOTHING in npanel and "figure=" not in npanel
+       and "piecesEmitted=0/0" not in npanel and "wrote=0/0" not in npanel,
+       [l for l in npanel.splitlines() if "=0/0" in l or "figure=" in l][:3])
+
+    _, bald = vign_fixture("keys", (
+        "# UE vignette shot c0ffee1 @1789000001\n"
+        "# a header, and below it a key that exists in no verdict anywhere\n\n"
+        "syntheticKeyThatExistsNowhere=1\n"
+        "shotReached=end\n"))
+    ok("REJECTING: a verdict whose keys are missing names them and the lines "
+       "it walked, rather than rendering a clean panel",
+       not any(r.available for r in bald["rows"])
+       and all("WHOLE-RUN key" in (r.reason or "")
+               and "body line(s)" in (r.reason or "") for r in bald["rows"]),
+       [r.reason for r in bald["rows"][:1]])
+    ok("and the commit is still read off the header that IS there (%s)"
+       % bald["commit"].text, bald["commit"].available
+       and bald["commit"].text.startswith("c0ffee1@"), bald["commit"].text)
+
+    # THE TRAP THIS PARSER EXISTS FOR: a per-shot key read as a run total. Both
+    # directions, because a guard that refuses every key is not a guard.
+    twice = vignette_body("# a comment naming lanternsPlaced=9/9 in prose\n"
+                          "sceneStatus=WHOLE piecesEmitted=3/3\n"
+                          "shot one piecesEmitted=1/3\n")
+    ok("REJECTING: a key on two lines is a PER-SHOT key and is refused as a "
+       "run total, never handed back as one",
+       whole_run_key(twice, "piecesEmitted") == (None, None, None, 2),
+       whole_run_key(twice, "piecesEmitted"))
+    ok("and a key found exactly once IS read, so the guard is not simply "
+       "refusing everything", whole_run_key(twice, "sceneStatus")[0] == "WHOLE",
+       whole_run_key(twice, "sceneStatus"))
+    ok("and a key named only in the header PROSE is never read as a "
+       "measurement", whole_run_key(twice, "lanternsPlaced")
+       == (None, None, None, 0), whole_run_key(twice, "lanternsPlaced"))
 
     out = pathlib.Path(tempfile.mkdtemp(prefix="dash-out-"))
     write_artifact(out / HTML_NAME, render_html(blank))
