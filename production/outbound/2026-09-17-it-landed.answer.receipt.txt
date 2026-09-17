@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-17-it-landed.answer.md
+kind: answer
+fileCommit: d102e8abeea59f93f09fbff9dbab62eeb8d27d36
+fileCommitEpoch: 1789623675
+sent: 2026-09-17T05:41:45+00:00
+sentEpoch: 1789623705
+messageId: 113
+chars: 721
+outboundLatencySec: 30
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
