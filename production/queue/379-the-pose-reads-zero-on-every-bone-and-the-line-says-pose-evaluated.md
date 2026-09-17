@@ -12,6 +12,20 @@ spec: RUN 53, THE FIRST RUN THAT EVER PUT A FIGURE IN QUAY STREET, AND THE
   That is the bind pose, which the code is supposed to DESTROY the actor for,
   and instead it reported `pose-evaluated` and let it stand.
 
+  CORRECTED 2026-09-17, AND THE CORRECTION IS THE RESIDENT'S OWN READING
+  RATHER THAN A CHANGE IN THE WORLD. The delta was NOT exactly zero. The
+  same line carries `figurePoseTicks=1/8` and `figurePoseLatched=yes`, and
+  the old rule latched only on a STRICTLY POSITIVE delta, so it cannot have
+  been zero: it was composition noise, under 0.0005 cm as printed, the derived floor being 2.4e-5, rounded away by the
+  three decimal places the number printed at. The conclusion survives and the
+  reasoning does not: the figure WAS in its bind pose, because the pose check
+  ran in the same core-ticker tick as the build, before the world had ticked
+  the component, so it read the seed. THE DISCONFIRMING EVIDENCE WAS PRINTED
+  BESIDE THE NUMBER AND WENT UNREAD, which is the whole of the fault.
+  The instrument's premise that equality with the bind pose is exact is also
+  retired: two float compositions of the same skeleton do not agree exactly.
+
+
   SO THE FIGURE IN RUN 53 IS ALMOST CERTAINLY A T-POSE. The engine-specialist's
   own hand-back named this exact outcome in advance: the readback assumes a
   STOPPED single-node instance still evaluates at its set time, recalled at

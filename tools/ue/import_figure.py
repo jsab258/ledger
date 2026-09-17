@@ -194,6 +194,42 @@ MAX_CAM_DISTANCE_M = 20.0
 # 3. AND IT STANDS ON THE FOOTWAY, on the camera's own side, so that the
 #    ground under it is the ground the camera stands on and the lit pool
 #    behind it is along the footway rather than across the carriageway.
+#
+# 4. AND SOMETHING MUST BE ABLE TO SEE IT. QUEUE 379. Run 53 chose x=17.5 on
+#    the backlight term alone and stood the figure behind the telephone
+#    kiosk: 461 of the 5460 pixels inside its own projected box differed
+#    from the same rectangle before the figure existed, 8 per cent of its
+#    own bounds. The search had no term for whether anything was in the way,
+#    so it could not see the kiosk. This is that term, and the numbers below
+#    are what it reads.
+#
+#    IT IS A MAXIMAND AND NOT A GATE, WHICH IS MEASURED RATHER THAN
+#    PREFERRED: of the 25 admissible candidates on the east footway centre
+#    line, ZERO are fully clear. The shop awning at x=12 has its underside
+#    at 1.628 m and clips the head of everything beyond it, and the public
+#    bin at x=8 clips the near shin of everything before it. A constraint
+#    demanding a clear body would have chosen nothing at all, so the search
+#    MAXIMISES what is visible and the backlight ratio decides between
+#    positions that are equally visible. That order is a decision and it is
+#    named here: Jafar's sentence is that a person is standing in the
+#    street, and a silhouette nobody can see is not one.
+#
+#    THE BODY IS A NOMINAL STANDING ADULT BOX and not the asset. The asset's
+#    height is measured, twice, and printed (figureHeightCm); this box is
+#    the thing the rays are cast at, 0.60 m across and 1.70 m tall, which is
+#    wider than a posed adult and so reads a little MORE occlusion than the
+#    body will suffer. Every number it produces is the first value of a
+#    series and says so.
+BODY_BOX_W_M = 0.60
+BODY_BOX_H_M = 1.70
+# THE SAMPLE GRID, AND ITS DENOMINATOR IS PRINTED EVERYWHERE THE COUNT IS.
+# 5 columns across the body by 9 levels up it, from 5 to 95 per cent of the
+# height, is 45 rays. This is a SAMPLED PROXY for the fraction of the figure
+# the camera can see and it is not a pixel measurement: FigureNow in
+# VignetteShot.cpp measures the pixels, and this exists to choose a position
+# before any frame exists.
+OCCLUSION_RAY_COLS = 5
+OCCLUSION_RAY_ROWS = 9
 
 
 def deg(rad):
@@ -254,6 +290,173 @@ def silhouette_ratio(back, front):
     return b / f
 
 
+def _chosen_blocker(place):
+    """WHAT IS MOST IN THE WAY AT THE CHOSEN POSITION, named, so a placement
+    that is 43 of 45 clear says WHICH prop takes the other two."""
+    if place is None:
+        return "nothing-measured"
+    _c, _t, name, count = clear_reading(place[0], place[1])
+    return "%s:%d" % (name, count)
+
+
+def _pieces_path():
+    return os.path.join(repo_root(), "production", "specs",
+                        "vignette-pieces.json")
+
+
+def _piece_box(p):
+    """ONE PIECE AS AN AXIS-ALIGNED WORLD BOX, in the file's own frame
+    (x along the street, y up, z across, sizes FULL and the position the
+    CENTRE), which is the frame every number in this file is already in.
+
+    A yaw of 90 or 270 swaps the two horizontal sizes exactly; any other
+    non-zero yaw gives the AABB of the rotated footprint, which is LARGER
+    than the piece. Pitch and roll are ignored for the same reason and with
+    the same sign: this over-reads occlusion rather than under-reading it,
+    and an over-read costs a position, while an under-read costs a frame
+    nobody can see a person in.
+    """
+    yaw = float(p.get("yaw_deg") or 0.0) % 180.0
+    sx, sz = float(p["sx_m"]), float(p["sz_m"])
+    if abs(yaw - 90.0) < 1e-9:
+        sx, sz = sz, sx
+    elif yaw > 1e-9:
+        c, sn = abs(math.cos(math.radians(yaw))), abs(math.sin(math.radians(yaw)))
+        sx, sz = sx * c + sz * sn, sx * sn + sz * c
+    x, y, z = float(p["x_m"]), float(p["y_m"]), float(p["z_m"])
+    sy = float(p["sy_m"])
+    return (x - sx / 2.0, x + sx / 2.0,
+            y - sy / 2.0, y + sy / 2.0,
+            z - sz / 2.0, z + sz / 2.0)
+
+
+_OCCLUDERS = None
+
+
+def occluders():
+    """EVERY PIECE OF THE SCENE, AS BOXES, OUT OF THE ONE JSON THE SCENE IS
+    BUILT FROM. Returns (boxes, note); boxes is a list of (name, aabb) and
+    the note names the file, the count and what was skipped.
+
+    NOTHING IS EXCLUDED BY NAME. The kerbs, the ground planes and the
+    shopfronts are all in the list, because a term that only knows about the
+    obstacles somebody remembered is the term run 53 already had. Decals are
+    the one omission and they are counted out loud: they are zero-thickness
+    cards lying ON surfaces that are themselves in the list, so counting
+    them would count the same obstruction twice and would let a stain on a
+    wall block a ray.
+
+    A missing file is not an empty scene: it returns no boxes and a note
+    that says nothing was measured, and every reading downstream then prints
+    the words rather than a plausible zero.
+    """
+    global _OCCLUDERS
+    if _OCCLUDERS is not None:
+        return _OCCLUDERS
+    path = _pieces_path()
+    if not os.path.exists(path):
+        _OCCLUDERS = ([], "nothing-measured/no-vignette-pieces.json-at/"
+                          + path.replace(" ", "_"))
+        return _OCCLUDERS
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            doc = json.load(f)
+        pieces = doc.get("pieces") or []
+    except (ValueError, OSError) as exc:
+        _OCCLUDERS = ([], "nothing-measured/unreadable/%s"
+                          % str(exc)[:60].replace(" ", "_"))
+        return _OCCLUDERS
+    boxes, decals = [], 0
+    for p in pieces:
+        if p.get("shape") == "decal":
+            decals += 1
+            continue
+        boxes.append((str(p.get("name", "unnamed")), _piece_box(p)))
+    _OCCLUDERS = (boxes, "vignette-pieces.json/boxes=%d/decalsSkipped=%d/of=%d"
+                         % (len(boxes), decals, len(pieces)))
+    return _OCCLUDERS
+
+
+def _ray_hits_box(o, d, b):
+    """The slab test, over the SEGMENT from the eye to the sample point
+    (t in 0..1) and not over an infinite ray: a box behind the body is not
+    in front of it."""
+    lo, hi = 0.0, 1.0
+    for i in range(3):
+        a, bb = b[2 * i], b[2 * i + 1]
+        if abs(d[i]) < 1e-12:
+            if o[i] < a or o[i] > bb:
+                return False
+            continue
+        t1, t2 = (a - o[i]) / d[i], (bb - o[i]) / d[i]
+        if t1 > t2:
+            t1, t2 = t2, t1
+        lo, hi = max(lo, t1), min(hi, t2)
+        if lo > hi:
+            return False
+    return True
+
+
+_CLEAR_CACHE = {}
+
+
+def clear_reading(fx, fz, cam_x=CAM_A_X_M, cam_z=CAM_A_Z_M,
+                  cam_eye_m=CAM_A_EYE_M):
+    """HOW MUCH OF A BODY AT (fx, fz) CAM_A CAN ACTUALLY SEE, as a count of
+    unblocked sample rays over the count cast.
+
+    Returns (clear, total, worst_name, worst_count). clear is None and total
+    is 0 when there is no scene to test against, which prints the words
+    nothing measured rather than a clear body nobody looked at.
+
+    IT IS CAM_A'S READING AND SAYS SO. The other two terms of this search are
+    cam_A's as well (the distance band is cam_A's field of view and BEHIND is
+    behind as cam_A sees it), so a fourth term taken from a different camera
+    would be a different question answered in the same tuple.
+    """
+    key = (round(fx, 4), round(fz, 4), round(cam_x, 4), round(cam_z, 4),
+           round(cam_eye_m, 4))
+    if key in _CLEAR_CACHE:
+        return _CLEAR_CACHE[key]
+    boxes, _note = occluders()
+    if not boxes:
+        out = (None, 0, "nothing-measured", 0)
+        _CLEAR_CACHE[key] = out
+        return out
+    # ONLY WHAT LIES BETWEEN THEM CAN BE IN THE WAY. A box entirely behind
+    # the camera or entirely beyond the body cannot be crossed by a segment
+    # that runs from one to the other, and dropping those is exact rather
+    # than approximate: x increases monotonically along the segment.
+    x0, x1 = (cam_x, fx) if cam_x <= fx else (fx, cam_x)
+    near = [b for b in boxes if b[1][1] >= x0 and b[1][0] <= x1]
+    o = (cam_x, cam_eye_m, cam_z)
+    foot = footway_top_m()
+    clear, worst = 0, {}
+    total = OCCLUSION_RAY_COLS * OCCLUSION_RAY_ROWS
+    for i in range(OCCLUSION_RAY_COLS):
+        z = fz + BODY_BOX_W_M * (i / (OCCLUSION_RAY_COLS - 1.0) - 0.5)
+        for j in range(OCCLUSION_RAY_ROWS):
+            y = foot + BODY_BOX_H_M * (0.05 + 0.90 * j
+                                       / (OCCLUSION_RAY_ROWS - 1.0))
+            d = (fx - o[0], y - o[1], z - o[2])
+            blocker = None
+            for name, box in near:
+                if _ray_hits_box(o, d, box):
+                    blocker = name
+                    break
+            if blocker is None:
+                clear += 1
+            else:
+                worst[blocker] = worst.get(blocker, 0) + 1
+    if worst:
+        name, count = max(worst.items(), key=lambda kv: (kv[1], kv[0]))
+    else:
+        name, count = "none", 0
+    out = (clear, total, name, count)
+    _CLEAR_CACHE[key] = out
+    return out
+
+
 def figure_height_px(dist_m, height_m, frame_h=720,
                      fov_v_deg=CAM_A_FOV_V_DEG):
     """How tall a figure of height_m stands in the frame at dist_m, in
@@ -277,7 +480,10 @@ def placement_series(z=EAST_FOOTWAY_MID_Z_M, lo=6.0, hi=32.0, step=0.5):
     the C++ and the derivation cannot drift apart in silence.
 
     A row is (x, ratio, cam distance, dominant back lamp elevation,
-    admissible, why-not). Admissible is the three constraints above.
+    admissible, why-not, clear rays, rays cast, worst blocker). Admissible
+    is the three constraints above; the last three are the fourth term,
+    which is a MAXIMAND and not part of admissible, because no admissible
+    candidate on this line is fully clear and a gate would choose nothing.
     """
     rows = []
     n = int(round((hi - lo) / step))
@@ -297,29 +503,62 @@ def placement_series(z=EAST_FOOTWAY_MID_Z_M, lo=6.0, hi=32.0, step=0.5):
             why.append("too-far-from-the-camera")
         if ratio is None:
             why.append("no-lamp-at-all")
+        clear, cast, blocker, blocked = clear_reading(x, z)
         rows.append((round(x, 3),
                      None if ratio is None else round(ratio, 4),
                      round(d, 4),
                      None if dom is None else round(dom[3], 3),
                      not why,
-                     "/".join(why) if why else "admissible"))
+                     "/".join(why) if why else "admissible",
+                     clear, cast,
+                     "%s:%d" % (blocker, blocked)))
     return rows
 
 
-def chosen_placement(rows=None):
-    """The one position, and it is the argmax of the series above.
+def placement_key(row):
+    """THE ORDER THE SEARCH CHOOSES IN, as one named function, so the rule
+    can be exercised on rows nobody measured and so there is exactly one
+    place it is written down.
 
-    Returns (x, z, ratio, cam distance, elevation) or None when NOTHING is
-    admissible, which is a real answer and not a crash: a street whose lamps
-    moved could have no silhouette position at all, and this must say so
-    rather than return the least bad one.
+    (clear rays, backlight ratio, nearer camera), lexicographically, largest
+    first. Visibility outranks the silhouette: run 53 put a figure with the
+    best backlight score on the street with 4 of its 45 rays reaching the
+    camera, and a person nobody can see is not the thing being built. Among
+    equally visible positions the backlight ratio still decides, which is
+    the term this file was written for and it still does work: at 40 of 45
+    clear there are eight tied positions and the ratio separates them.
+
+    A row whose occlusion could not be read sorts as -1, which ties every
+    such row and leaves the ratio deciding: the old behaviour exactly, under
+    a note that says nothing was measured.
+    """
+    clear = -1 if row[6] is None else row[6]
+    return (clear, row[1], -row[2])
+
+
+def chosen_placement(rows=None):
+    """The one position, and it is the argmax of the series above under
+    placement_key.
+
+    Returns (x, z, ratio, cam distance, elevation, clear rays, rays cast) or
+    None when NOTHING is admissible, which is a real answer and not a crash:
+    a street whose lamps moved could have no silhouette position at all, and
+    this must say so rather than return the least bad one.
+
+    THE ANSWER SITS EXACTLY ON THE NEAR DISTANCE BOUND and that is said out
+    loud rather than left for a reader to notice: x=10.0 is 6.00 m from
+    cam_A and MIN_CAM_DISTANCE_M is 6.0, so the bound is load-bearing for
+    this choice. The window between that bound and the awning that clips the
+    head from x=10.5 on is one grid step wide. Move either and the answer
+    moves, which is what the printed series is for.
     """
     rows = placement_series() if rows is None else rows
     ok = [r for r in rows if r[4] and r[1] is not None]
     if not ok:
         return None
-    best = max(ok, key=lambda r: (r[1], -r[2]))
-    return (best[0], EAST_FOOTWAY_MID_Z_M, best[1], best[2], best[3])
+    best = max(ok, key=placement_key)
+    return (best[0], EAST_FOOTWAY_MID_Z_M, best[1], best[2], best[3],
+            best[6], best[7])
 
 
 def footway_top_m():
@@ -508,10 +747,13 @@ def figure_line(status, readings):
     if place is None:
         placement = "NONE-ADMISSIBLE/no-position-meets-the-three-constraints"
     else:
+        clear = ("nothing-measured" if place[5] is None
+                 else "%d/of=%d" % (place[5], place[6]))
         placement = ("x=%.2f/z=%.2f/footwayTopM=%.3f/camDistM=%.2f"
                      "/backlightRatio=%.2f/backlightElevDeg=%.1f"
+                     "/clearRays=%s/worstBlocker=%s"
                      % (place[0], place[1], footway_top_m(), place[3],
-                        place[2], place[4]))
+                        place[2], place[4], clear, _chosen_blocker(place)))
     return (
         "figureImportStatus=%s figureImportReturn=%d "
         "figureBody=%s figureClip=%s "
@@ -528,6 +770,10 @@ def figure_line(status, readings):
         "figureAnimSkeleton=%s figureMeshSkeleton=%s figureSkeletonsMatch=%s "
         "figurePoseFraction=%.3f figurePoseTimeS=%s "
         "figurePlacement=%s "
+        "figurePlacementStat=clear-rays-are-a-45-ray-SAMPLE-of-what-cam_A-can-see-of-a-nominal-body-box"
+        "/not-a-pixel-measurement/the-pixels-are-figureSil-on-the-shot-line "
+        "figurePlacementOrder=clear-rays-THEN-backlight-ratio-THEN-nearer-camera"
+        "/visibility-outranks-the-silhouette/queue-379 "
         "figurePlacementBound=NONE-YET/every-number-here-is-the-first-value-of-a-series "
         "figureScalePolicy=1/never-scaled/a-wrong-height-is-a-wrong-import "
         "figureImportVia=%s figureSaved=%s figureUassetBytes=%s "
@@ -807,11 +1053,16 @@ def measure_only():
     print("")
     print("placement series over the east footway centre line, z=%.2f, "
           "x from 6.0 to 32.0 by 0.5:" % EAST_FOOTWAY_MID_Z_M)
-    print("  %6s %10s %8s %9s  %s" % ("x", "ratio", "camDist", "backElev", "why"))
+    print("  %6s %10s %8s %9s %11s  %s"
+          % ("x", "ratio", "camDist", "backElev", "clear/cast", "why"))
     for row in placement_series():
-        print("  %6.2f %10s %8.2f %9s  %s"
+        print("  %6.2f %10s %8.2f %9s %11s  %s"
               % (row[0], "inf" if row[1] == float("inf") else row[1],
-                 row[2], row[3], row[5]))
+                 row[2], row[3],
+                 "nothing-measured" if row[6] is None
+                 else "%d/%d %s" % (row[6], row[7], row[8]),
+                 row[5]))
+    print("occluders: %s" % (occluders()[1],))
     place = chosen_placement()
     print("chosen=%s" % (place,))
     print("figureHeightPx at the chosen distance, for a 1.70 m figure: %.1f"
@@ -966,9 +1217,30 @@ def selftest():
         ok("its backlight is behind rather than overhead",
            place[4] is not None and place[4] <= MAX_BACKLIGHT_ELEVATION_DEG,
            place[4])
-        ok("more light reaches it from behind than from in front, which is "
-           "the silhouette stated as geometry",
-           place[2] > 1.0, place[2])
+        # THIS CHECK USED TO READ place[2] > 1.0, AND QUEUE 379 RETIRED IT.
+        # It was true of a position standing behind a telephone kiosk, which
+        # is the fault: a silhouette ratio above 1 says the light is behind
+        # the body and says nothing at all about whether the body is behind
+        # something else. The two claims that replace it are the measured
+        # reason the fourth term is a maximand and the order the search
+        # actually chooses in, and the ratio at the chosen position is
+        # REPORTED on figurePlacement rather than asserted here. It is 0.237:
+        # the first chosen position that is front-lit, and figureSil on the
+        # shot line is the instrument that judges that, on pixels.
+        ok("no admissible position is both fully clear and backlit, which "
+           "is the measured reason a clear body is not a constraint",
+           not [r for r in rows
+                if r[4] and r[6] is not None and r[6] == r[7]
+                and (r[1] or 0.0) > 1.0],
+           "fullyClear=%d of admissible=%d"
+           % (len([r for r in rows if r[4] and r[6] is not None
+                   and r[6] == r[7]]),
+              len([r for r in rows if r[4]])))
+        ok("and the chosen position is the best backlit of the most visible "
+           "ones, which is the order the search states",
+           place[2] == max(r[1] for r in rows
+                           if r[4] and r[1] is not None and r[6] == place[5]),
+           place[2])
         ok("and it is inside the distance band the frame can hold",
            MIN_CAM_DISTANCE_M <= place[3] <= MAX_CAM_DISTANCE_M, place[3])
     # THE REJECTING FIXTURE FOR THE SEARCH: a figure standing at a lamp's
@@ -990,10 +1262,18 @@ def selftest():
        "degrees, and is never counted as a backlight",
        len(_at_foot) == 1 and _at_foot[0][1] == 0.0 and _at_foot[0][3] == 90.0
        and _at_foot[0] in _f, _at_foot)
-    ok("so standing at a lamp's foot scores far below the chosen position",
+    # THE 0.25 MARGIN THIS CHECK CARRIED WAS A PROPERTY OF THE OLD CHOSEN
+    # RATIO (2.62) AND NOT OF THIS FIXTURE, and with visibility outranking
+    # the ratio it is arithmetically unavailable. It is replaced by the two
+    # facts it was standing in for, both of them checked: the lamp's foot
+    # scores lower on the backlight term, and the series refuses x=8 outright
+    # on the distance band, so it can never be chosen whatever it scores.
+    ok("so standing at a lamp's foot scores below the chosen position on "
+       "the backlight term, and the series refuses x=8 on distance anyway",
        place is not None
        and silhouette_ratio(_b, _f) is not None
-       and silhouette_ratio(_b, _f) < place[2] * 0.25,
+       and silhouette_ratio(_b, _f) < place[2]
+       and not [r for r in rows if abs(r[0] - 8.0) < 1e-9 and r[4]],
        "%s vs %s" % (silhouette_ratio(_b, _f), None if not place else place[2]))
     ok("and the search never chooses a position at a lamp's own foot",
        place is None or all(abs(place[0] - lx) > 1.0
@@ -1003,6 +1283,68 @@ def selftest():
     ok("a figure standing on the camera reads as no direction at all "
        "rather than as a position",
        backlight_reading(CAM_A_X_M, CAM_A_Z_M) == ([], [], None))
+
+    # -- F2. THE FOURTH TERM: IS ANYTHING IN THE WAY ----------------------
+    # ACCEPTING CASE FIRST, and the live scene is the fixture: the same JSON
+    # the street is built from, read by the same function the search uses.
+    _boxes, _note = occluders()
+    ok("the scene the occlusion term tests against was read at all",
+       len(_boxes) > 100 and "nothing-measured" not in _note, _note)
+    ok("and it counts what it left out rather than dropping it silently",
+       "decalsSkipped=" in _note, _note)
+    _cast = OCCLUSION_RAY_COLS * OCCLUSION_RAY_ROWS
+    ok("every row carries a clear count over the rays cast, denominator "
+       "included",
+       all(r[6] is not None and r[7] == _cast for r in rows),
+       "%d of %d rows" % (len([r for r in rows if r[6] is not None]),
+                          len(rows)))
+    if place:
+        ok("the chosen position is the most visible admissible position",
+           place[5] == max(r[6] for r in rows if r[4]),
+           "%s of %s" % (place[5], max(r[6] for r in rows if r[4])))
+    # THE REJECTING FIXTURE IS RUN 53 ITSELF. x=17.5 has the best backlight
+    # ratio of any admissible candidate and 4 of its 45 rays reach cam_A,
+    # which is the frame Jafar could not see a person in. The search has to
+    # refuse it ON THE NUMBERS, and the ratio-only argmax it was chosen by
+    # has to still choose it, or this is not the fault being tested.
+    _r53 = [r for r in rows if abs(r[0] - 17.5) < 1e-9]
+    ok("the position run 53 chose is still in the series", len(_r53) == 1)
+    if _r53 and place:
+        _r53 = _r53[0]
+        ok("run 53's position is admissible on the three old constraints, "
+           "so nothing but the fourth term can refuse it", _r53[4], _r53[5])
+        ok("and it has the best backlight ratio of any admissible row, "
+           "which is why the old search chose it",
+           _r53[1] == max(r[1] for r in rows if r[4] and r[1] is not None),
+           _r53[1])
+        ok("and under a tenth of it reaches the camera",
+           _r53[6] * 10 < _r53[7], "%d/%d %s" % (_r53[6], _r53[7], _r53[8]))
+        ok("the ratio-only argmax run 53 used still chooses it, so this "
+           "fixture plants the real fault",
+           max([r for r in rows if r[4] and r[1] is not None],
+               key=lambda r: (r[1], -r[2]))[0] == _r53[0])
+        ok("and the search with the fourth term refuses it, by more than "
+           "half the rays cast",
+           place[0] != _r53[0] and (place[5] - _r53[6]) * 2 > _r53[7],
+           "%s clear=%s vs %s clear=%s"
+           % (place[0], place[5], _r53[0], _r53[6]))
+    # AND THE ORDER ITSELF, ON ROWS NOBODY MEASURED, both ways round, because
+    # a comparator exercised only on the one series it was written against is
+    # a comparator nobody has tested.
+    _hi = (10.0, 1.0, 6.0, 20.0, True, "admissible", 40, 45, "none:0")
+    _lo = (20.0, 9.9, 9.0, 20.0, True, "admissible", 4, 45, "kiosk:30")
+    ok("a far better backlight never outranks a body the camera cannot see",
+       max([_lo, _hi], key=placement_key) is _hi)
+    _tie_near = (11.0, 0.5, 7.0, 20.0, True, "admissible", 40, 45, "awn:5")
+    _tie_far = (15.0, 1.3, 11.0, 20.0, True, "admissible", 40, 45, "awn:5")
+    ok("and between two equally visible positions the backlight ratio still "
+       "decides, so the term this file was written for still does work",
+       max([_tie_near, _tie_far], key=placement_key) is _tie_far)
+    _unread = (11.0, 0.5, 7.0, 20.0, True, "admissible", None, 0,
+               "nothing-measured:0")
+    ok("a row whose occlusion could not be read sorts below one that was, "
+       "rather than winning on a zero",
+       max([_unread, _lo], key=placement_key) is _lo)
 
     # -- G. THE C++ CARRIES WHAT THIS FILE DERIVED ------------------------
     cpp_file = _cpp_path()

@@ -1802,3 +1802,45 @@ ONE THING A DESTROYED VERDICT MUST NOT BE BELIEVED ON ITS OWN: the pose
 readback assumes a STOPPED single-node instance still evaluates at its set
 time. If that is wrong the build succeeds, prints figurePoseMaxBoneDeltaCm=0.000
 and destroys a perfectly good figure. Read the still before accepting it.
+
+RUN 54, dispatched 2026-09-17. THE FIGURE STANDS AND MOVES INTO VIEW. Two
+faults from run 53, ruled and landed.
+THE POSE: run 53's figure was in its bind pose, and the reason the studio first
+gave was WRONG. The delta did not read exactly zero. figurePoseTicks=1/8 and
+figurePoseLatched=yes sit on the same line as 0.000, under an old rule that
+latched only on a strictly positive delta, so it was composition noise rounded
+away by three decimals. The premise that equality with the bind pose is exact
+is retired: two float compositions of one skeleton never agree exactly. The
+real cause is that the check ran in the same core-ticker tick as the build,
+before the world had ticked the component, so it read the seed.
+RefreshBoneTransforms is now forced at build and the 8-tick retry budget is
+reachable because the decision rule is what stopped it running. Stop() is KEPT,
+so the frame stays deterministic.
+WHAT TO READ FIRST ON THE DONE LINE: figurePoseMaxBoneDeltaCm at FOUR decimals
+beside figurePoseMovedAtCm=0.0010, which is the printed resolution of the
+number it judges and not a tuned bound. figurePoseEval names which path
+evaluated. figurePoseTicks=n/8: n=1 means the forced call worked, n>1 means the
+retry carried it. If it comes back DESTROYED with bind-pose, the known next
+lever is adding TickAnimation(0.0f,false) above the refresh, and nothing else.
+THE PLACEMENT MOVED 17.5 TO 10.0 AND IT COSTS THE SILHOUETTE. The search gained
+an occlusion term: 45 rays from the camera against every non-decal piece. At
+17.5 only 4 of 45 reach, because the TELEPHONE KIOSK takes 33 and an A-board
+takes 4 more; that is the geometric twin of the pixel reading that 8 per cent
+of its own box changed. At 10.0, 43 of 45 reach and it renders about 173 px of
+720 instead of 77. Its backlight ratio is 0.237, so THE FIGURE IS NOW FRONT-LIT
+and this is the first chosen position that is not a silhouette. The director
+ruled visibility outranks the silhouette FOR THE FIRST FRAME HE GETS, and the
+lit-versus-silhouette call stays his, on the frame.
+A SECOND OCCLUDER NOBODY HAD NAMED: prop_awning_02_0 at x=12 has its underside
+at 1.628 m against cam_A's 1.6 m eye, so it clips the HEAD of every candidate
+beyond x=10.4. That is why the answer is near rather than far.
+ZERO of the 25 admissible candidates are fully clear, measured, so the
+occlusion term had to be a maximand and not a constraint; a constraint would
+have returned nothing and broken the placement.
+THE DONE LINE GREW AGAIN: literal measured at 1417 characters, 70 of them the
+25 specifier tokens, 1347 fixed. Buffer is 3072. figureSegTruncated must be
+ABSENT; if it appears, 3072 is also too small and the number says by how much.
+STILL TRUE: open every night still BEFORE any figure key. The 31 day rows must
+be unchanged. figureSil does NOT judge this frame, because queue 380 is it
+printing yes on six empty boxes; the judges are the still, the before/after
+difference inside the projected box, projH against 173, and the pose word.

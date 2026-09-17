@@ -76,7 +76,13 @@ placement readback missing and nobody would have known the keys existed.
 - **Queue 379, the pose.** `figurePoseMaxBoneDeltaCm=0.000/overBones=65` beside
   `figureWhy=pose-evaluated`. Those cannot both be true: the test needs no
   threshold precisely because a figure that never evaluated reads delta exactly
-  0 on every bone. It read exactly 0 on all 65. So the figure is a T-POSE, and
+  0 on every bone. It read 0.000 on all 65 AND THAT WAS A ROUNDED POSITIVE,
+  not a zero: `figurePoseTicks=1/8` and `figurePoseLatched=yes` sit on the same
+  line, and the old rule latched only on a strictly positive delta. The figure
+  IS in its bind pose, for a different reason (the check ran before the world
+  ticked the component, so it read the seed), and the premise that equality with
+  the bind pose is exact is retired. Corrected 2026-09-17. So the figure is a
+  T-POSE, and
   the destroy decision that exists for that case did not fire. The
   engine-specialist predicted this exact failure at 0.8 confidence before the
   run; what happened is that fault with the opposite ending.
@@ -94,7 +100,9 @@ in 461 of 5460 pixels by more than 2/255, largest channel difference 168. The
 before/after/difference picture is
 `game-design/sim-shots/figure_run53_camA_before_after.png` and it shows a
 NARROW VERTICAL SLIVER where run 51 had bright sky. The figure is almost
-entirely occluded by a crate and only the part blocking a sky gap is visible.
+entirely occluded (41 of 45 sample rays blocked on the series; the
+blocker's name is a list-order label until Q-E) and only the part blocking a
+sky gap is visible.
 `projH=77.63` against the 76.7 px predicted before the run, which is the
 placement arithmetic confirmed.
 
