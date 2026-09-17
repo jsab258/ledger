@@ -638,8 +638,53 @@ STATUS_IMPORTED = "IMPORTED"
 STATUS_NO_SOURCES = "NO-SOURCES"
 STATUS_NO_MESH = "NO-SKELETAL-MESH"
 STATUS_NO_SKIN = "MESH-BUT-NO-SKIN"
+STATUS_SKIN_UNMEASURED = "MESH-SKIN-NOT-MEASURED"
 STATUS_NO_ANIM = "MESH-BUT-NO-ANIM"
 STATUS_NOT_SAVED = "NOT-SAVED"
+# THE WORD FOR A RAISE THAT GOT PAST EVERY _try. It is already the word in
+# this channel: make_base_material.py's except clause writes
+# figureImportStatus=RAISED when this script's main() throws. Defining it
+# HERE, in the layer --selftest runs in, means the raise still produces a
+# WHOLE figure line (paths, placement, source height, the lot) instead of the
+# two-key stub that clause can manage, and means one word is spelt in one
+# place instead of two.
+STATUS_RAISED = "RAISED"
+
+# ---- THE SKIN IS THREE OUTCOMES AND NOT TWO -------------------------------
+#
+# RUN 54 IS WHY THIS FUNCTION EXISTS. Every vertex-count route this script
+# knew raised on UE 5.8 ('SkeletalMesh' object has no attribute
+# 'get_num_vertices', and the same for get_num_lod_vertices), _try caught
+# both and returned None, figureSkinVerts printed the words nothing-measured
+# HONESTLY, and then the status line turned that None into MESH-BUT-NO-SKIN,
+# which is a claim that the skin is ABSENT derived from a count that never
+# happened. The same run measured 65 bones, a matching skeleton, one material
+# slot and bounds 166.50 cm tall off the same asset: nothing in it said the
+# skin was missing.
+#
+# CLAUDE.md rule 3b, in one function: a zero needs a denominator, and a
+# never-ran case prints the words. A FAILED MEASUREMENT IS NOT EVIDENCE OF
+# ABSENCE, so the three outcomes are three words and they never collapse into
+# two.
+SKIN_PRESENT = "MEASURED-PRESENT"
+SKIN_ABSENT = "MEASURED-ABSENT"
+SKIN_UNMEASURED = "NOT-MEASURED"
+
+
+def skin_reading(skin_verts):
+    """Which of the three the skin vertex count is, as one word.
+
+    A bool is refused explicitly: isinstance(True, int) is True in Python,
+    and a True arriving here would read as one vertex and then as a present
+    skin, which is a plausible string standing in for a reading nobody took.
+    A negative count is a reading no engine should give and is therefore not
+    trusted as a zero either: it is NOT-MEASURED.
+    """
+    if isinstance(skin_verts, bool) or not isinstance(skin_verts, int):
+        return SKIN_UNMEASURED
+    if skin_verts < 0:
+        return SKIN_UNMEASURED
+    return SKIN_PRESENT if skin_verts > 0 else SKIN_ABSENT
 
 
 def import_status(sources, mesh_loaded, skin_verts, bones, anim_loaded,
@@ -647,14 +692,26 @@ def import_status(sources, mesh_loaded, skin_verts, bones, anim_loaded,
     """The one word, and every clause in it is a thing the C++ then has to
     cope with rather than a thing this script would like to be true.
 
-    MESH-BUT-NO-SKIN IS ITS OWN WORD BECAUSE THE C++ DESTROYS THE ACTOR ON
-    IT. A skeletal mesh asset that imported with zero skinned vertices is a
-    skeleton with nothing on it: it renders as nothing, or worse, as a
-    default shape, and the sky dome rule (VignetteShot.cpp, BuildSkyDome)
-    says an object that cannot be dressed is destroyed rather than left
-    standing while the verdict says it is absent.
+    MESH-BUT-NO-SKIN MEANS A COUNT WAS TAKEN AND IT WAS ZERO. A skeletal
+    mesh asset that imported with zero skinned vertices is a skeleton with
+    nothing on it: it renders as nothing, or worse, as a default shape, and
+    an object that cannot be dressed is worth its own word.
 
-    MESH-BUT-NO-ANIM is the T-pose case and it is separated for the same
+    MESH-SKIN-NOT-MEASURED MEANS NO COUNT WAS TAKEN AT ALL, and it is a
+    different fact about the script rather than about the asset. It sits
+    LAST, after the anim and the save, on purpose: a MEASURED fault
+    (no anim, not saved) still wins the line, because the word should name
+    the thing somebody can act on, and a missing reading only gets the line
+    when everything that WAS measured passed.
+
+    NOTHING IN THE ENGINE READS THIS WORD, checked rather than assumed on
+    2026-09-17: VignetteShot.cpp builds its own GFigureState from its own
+    proxy (GetRefSkeleton().GetNum(), GetMaterials().Num(), GetBounds()) and
+    never parses ue-figure.txt, and no gate, workflow step or test greps for
+    MESH-BUT-NO-SKIN. The sentence that used to stand here, that the C++
+    destroys the actor on this word, was a comment and not a check.
+
+    MESH-BUT-NO-ANIM is the T-pose case and it is separated for its own
     reason: a bind-pose mannequin standing in Quay Street is worse than no
     figure, because it looks plausible.
     """
@@ -664,12 +721,15 @@ def import_status(sources, mesh_loaded, skin_verts, bones, anim_loaded,
         return STATUS_NO_MESH
     if not (isinstance(bones, int) and bones > 0):
         return STATUS_NO_MESH
-    if not (isinstance(skin_verts, int) and skin_verts > 0):
+    skin = skin_reading(skin_verts)
+    if skin == SKIN_ABSENT:
         return STATUS_NO_SKIN
     if not anim_loaded or not (isinstance(anim_frames, int) and anim_frames > 0):
         return STATUS_NO_ANIM
     if not saved:
         return STATUS_NOT_SAVED
+    if skin == SKIN_UNMEASURED:
+        return STATUS_SKIN_UNMEASURED
     return STATUS_IMPORTED
 
 
@@ -677,7 +737,15 @@ def import_return(status):
     """0 only for the word that means a skinned adult body and a real clip
     are both saved uassets. The verdict travels in the FILE as
     figureImportReturn; the editor process's exit code is the editor's, which
-    is the pair run 19 of the material generator could not explain."""
+    is the pair run 19 of the material generator could not explain.
+
+    MESH-SKIN-NOT-MEASURED RETURNS 2, and that is a deliberate choice rather
+    than an oversight: 0 means PROVEN, and an import whose skin nobody could
+    count is not proven. It is NOT the same claim as a fault, and the line
+    keeps the two apart under figureSkin= (MEASURED-ABSENT against
+    NOT-MEASURED) so that a reader of the return code alone can never read a
+    missing reading as a broken asset.
+    """
     return 0 if status == STATUS_IMPORTED else 2
 
 
@@ -685,6 +753,55 @@ def flat(value):
     """No spaces in any value, ever: every reader of these files splits on
     whitespace and truncates silently."""
     return str(value).replace(" ", "~")
+
+
+NOTE_CAP = 600
+
+
+def note_of(report, cap=NOTE_CAP):
+    """The report as ONE value, capped, AND THE CAP ANNOUNCES WHEN IT BIT.
+
+    The cap was a bare [:600] until 2026-09-17 and it bit in silence, which
+    is the one thing .claude/rules/instruments.md forbids of a cap: run 54's
+    note ran to within a few characters of it while carrying the only
+    description of the fault that run had. A truncated note that does not say
+    it was truncated reads as a complete account of what happened.
+    """
+    if not report:
+        return "none"
+    whole = "/".join(str(x) for x in report)
+    if len(whole) <= cap:
+        return whole
+    room = max(0, cap - 40)
+    kept = whole[:room]
+    dropped = len(whole) - len(kept)
+    return "%s..(+%d~chars~not~shown/of=%d)" % (kept, dropped, len(whole))
+
+
+def raised_line(exc, readings=None):
+    """A WHOLE FIGURE LINE FOR A RAISE THAT GOT PAST EVERY _try.
+
+    THE POINT IS THAT A FAULT IN THIS SCRIPT CANNOT COST THE RUN ITS
+    EVIDENCE. Before this, a raise anywhere in run_in_unreal() outside a
+    _try propagated into make_base_material.py, whose except clause could
+    write two keys and a truncated message; the placement, the two heights,
+    the asset paths and the body's name all went with it, and the next run
+    had to rediscover them.
+
+    It returns the same (line, manifest) pair run_in_unreal does, so the
+    caller cannot tell the two apart and cannot forget to write one of them.
+    """
+    r = dict(readings or {})
+    prior = r.get("note")
+    r["note"] = note_of([x for x in (prior, "RAISED/%s/%s"
+                                     % (type(exc).__name__, str(exc)[:200]))
+                         if x and x != "none"])
+    return figure_line(STATUS_RAISED, r), {
+        "schema": "ledger.figure-import/1",
+        "measuredBy": "editor",
+        "raised": "%s: %s" % (type(exc).__name__, exc),
+        "readings": r,
+    }
 
 
 def num(v, fmt="%.4f"):
@@ -714,8 +831,19 @@ def figure_line(status, readings):
                            measurement.
       figureBones          bones in the imported skeleton. Zero is not a
                            skeleton and the status word says so.
-      figureSkinVerts      vertices the skin came through with. Zero means
-                           the C++ destroys the actor.
+      figureSkinVerts      vertices the skin came through with, or the WORD
+                           nothing-measured when no route answered.
+      figureSkin           WHICH OF THE THREE THAT WAS: MEASURED-PRESENT,
+                           MEASURED-ABSENT or NOT-MEASURED. The count and
+                           this word are a pair on purpose, because
+                           nothing-measured and 0 are the two readings run 54
+                           collapsed into one claim.
+      figureSkinVia        which readback answered, or none-of-N. A fallback
+                           that works silently is a fallback nobody knows
+                           they depend on, and every name in that ladder is
+                           a GUESS at this engine's bindings until a run
+                           names the one that answered.
+      figureLodsVia        the same, for the LOD count.
       figureHeightCm       THE NUMBER THIS SCRIPT EXISTS FOR, read off the
                            asset the importer made, in centimetres, which is
                            the engine's own unit.
@@ -759,7 +887,11 @@ def figure_line(status, readings):
         "figureBody=%s figureClip=%s "
         "figureD18=%s/adult/measuredHeightCm=%s/no-child-bodies-exist-in-this-set "
         "figureMeshPath=%s figureAnimPath=%s "
-        "figureBones=%s figureSkinVerts=%s figureMaterials=%s figureLods=%s "
+        "figureBones=%s figureSkinVerts=%s figureSkin=%s figureSkinVia=%s "
+        "figureSkinStat=one-count-and-the-word-for-it"
+        "/MEASURED-PRESENT..MEASURED-ABSENT..NOT-MEASURED"
+        "/a-count-that-raised-is-NOT-MEASURED-and-is-never-MEASURED-ABSENT/run-54 "
+        "figureMaterials=%s figureLods=%s figureLodsVia=%s "
         "figureHeightCm=%s figureSourceCm=%s figureHeightRatio=%s figureHeight=%s "
         "figureHeightStat=engine-bounds-full-size-on-the-up-axis"
         "/over-the-same-height-measured-off-the-FBX-vertex-arrays-in-the-container "
@@ -785,8 +917,11 @@ def figure_line(status, readings):
            mesh_object_path(), anim_object_path(),
            num(r.get("bones"), "%d") if r.get("bones") is not None else "nothing-measured",
            num(r.get("skinVerts"), "%d") if r.get("skinVerts") is not None else "nothing-measured",
+           skin_reading(r.get("skinVerts")),
+           flat(r.get("skinVia", "nothing-measured")),
            num(r.get("materials"), "%d") if r.get("materials") is not None else "nothing-measured",
            num(r.get("lods"), "%d") if r.get("lods") is not None else "nothing-measured",
+           flat(r.get("lodsVia", "nothing-measured")),
            num(r.get("heightCm"), "%.2f"), num(r.get("sourceHeightCm"), "%.2f"),
            num(ratio, "%.4f"), hv,
            flat(r.get("boundsCm", "nothing-measured")),
@@ -1176,8 +1311,55 @@ def selftest():
     # -- D. THE STATUS WORD. ACCEPTING CASE FIRST -------------------------
     ok("a skinned body and a real clip is IMPORTED",
        import_status(2, True, 15000, 65, True, 120, True) == STATUS_IMPORTED)
-    ok("no skin is its own word, because the C++ destroys the actor on it",
+    ok("a MEASURED zero is its own word: a skeleton with nothing on it",
        import_status(2, True, 0, 65, True, 120, True) == STATUS_NO_SKIN)
+
+    # -- D2. THE RUN 54 FIXTURE: A COUNT THAT NEVER HAPPENED --------------
+    #
+    # THE ACCEPTING CASE IS THE ONE THIS SECTION EXISTS FOR and it is a real
+    # run's numbers, not an invention: run 54 imported seven assets, read 65
+    # bones, a matching skeleton, one material slot and bounds 166.50 cm
+    # tall, and every vertex-count route raised on this engine. The line then
+    # said MESH-BUT-NO-SKIN, which is a claim that the skin is ABSENT taken
+    # from a count that never ran. A failed measurement is not evidence of
+    # absence, and this is the check that says so.
+    ok("a skin count that could not be taken is NOT the word for an absent "
+       "skin, which is the run 54 fault",
+       import_status(2, True, None, 65, True, 120, True) != STATUS_NO_SKIN,
+       import_status(2, True, None, 65, True, 120, True))
+    ok("it is the word that says no count was taken",
+       import_status(2, True, None, 65, True, 120, True)
+       == STATUS_SKIN_UNMEASURED)
+    ok("and it is not IMPORTED either, because IMPORTED means proven",
+       import_status(2, True, None, 65, True, 120, True) != STATUS_IMPORTED)
+    ok("the three outcomes are three different words and never two",
+       len({STATUS_NO_SKIN, STATUS_SKIN_UNMEASURED, STATUS_IMPORTED}) == 3)
+    # THE THREE-WAY READING ITSELF, every branch, accepting case first.
+    ok("a positive count reads as a measured present skin",
+       skin_reading(15000) == SKIN_PRESENT)
+    ok("a zero reads as a measured ABSENT skin, so the absent case is still "
+       "reachable and this is not a ratchet",
+       skin_reading(0) == SKIN_ABSENT)
+    ok("no reading at all reads as NOT-MEASURED",
+       skin_reading(None) == SKIN_UNMEASURED)
+    ok("and so does a reading of the wrong type, however plausible",
+       skin_reading("15000") == SKIN_UNMEASURED
+       and skin_reading(1.5e4) == SKIN_UNMEASURED, skin_reading("15000"))
+    ok("a True is never one vertex, which Python would otherwise allow",
+       skin_reading(True) == SKIN_UNMEASURED
+       and skin_reading(False) == SKIN_UNMEASURED)
+    ok("a negative count is not trusted as a zero",
+       skin_reading(-1) == SKIN_UNMEASURED)
+    # AND A MEASURED FAULT STILL OUTRANKS A MISSING READING, which is the
+    # order the status function states: the word names the thing somebody can
+    # act on.
+    ok("a missing anim still wins the line over an unmeasured skin",
+       import_status(2, True, None, 65, False, 0, True) == STATUS_NO_ANIM)
+    ok("and so does an unsaved asset",
+       import_status(2, True, None, 65, True, 120, False) == STATUS_NOT_SAVED)
+    ok("but a MEASURED absent skin outranks both, because it is a fact "
+       "about the asset rather than about this script",
+       import_status(2, True, 0, 65, False, 0, False) == STATUS_NO_SKIN)
     ok("no anim is its own word, because a T-pose is not a person",
        import_status(2, True, 15000, 65, False, 0, True) == STATUS_NO_ANIM)
     ok("an anim that loaded with no frames is the same word as no anim",
@@ -1192,7 +1374,8 @@ def selftest():
        import_return(STATUS_IMPORTED) == 0
        and all(import_return(w) == 2 for w in
                (STATUS_NO_SOURCES, STATUS_NO_MESH, STATUS_NO_SKIN,
-                STATUS_NO_ANIM, STATUS_NOT_SAVED)))
+                STATUS_NO_ANIM, STATUS_NOT_SAVED, STATUS_SKIN_UNMEASURED,
+                STATUS_RAISED)))
 
     # -- E. THE POSE TIME --------------------------------------------------
     ok("the pose time is the fraction of a measured duration",
@@ -1446,9 +1629,78 @@ def selftest():
        and "figureHeightCm=nothing-measured" in empty
        and "figureHeight=nothing-measured" in empty, empty)
     ok("and it returns non-zero", "figureImportReturn=2" in empty, empty)
-    ok("a mesh with no skin says the word the C++ acts on",
+    ok("a mesh whose skin was counted at zero says the absent word",
        "figureImportStatus=MESH-BUT-NO-SKIN"
        in figure_line(STATUS_NO_SKIN, good))
+
+    # -- H2. THE LINE KEEPS THE THREE OUTCOMES APART ----------------------
+    ok("a counted skin prints the count AND the word for it",
+       "figureSkinVerts=15000" in line and "figureSkin=MEASURED-PRESENT" in line,
+       line)
+    zero_skin = dict(good, skinVerts=0)
+    zline = figure_line(import_status(2, True, 0, 65, True, 120, True), zero_skin)
+    ok("a skin counted at zero prints a zero and the MEASURED-ABSENT word, "
+       "so the absent case is reachable on the line and not only in a status",
+       "figureSkinVerts=0 " in zline and "figureSkin=MEASURED-ABSENT" in zline,
+       zline)
+    # RUN 54'S OWN READINGS, WHICH ARE THE REJECTING FIXTURE FOR THE CLAIM
+    # THE OLD LINE MADE. Every number here was read off the run's committed
+    # evidence (production/d1-probe/ue-build.txt), not invented.
+    run54 = dict(good, skinVerts=None, lods=None, materials=1,
+                 heightCm=166.50, skinVia="none-of-6/lodIndex=0/lodCountVia=none-of-4",
+                 lodsVia="none-of-4", importVia="AssetImportTask/made=7")
+    r54 = figure_line(import_status(2, True, None, 65, True, 120, True), run54)
+    ok("run 54's readings no longer produce a claim that the skin is absent",
+       "MESH-BUT-NO-SKIN" not in r54, r54)
+    ok("they produce the word that says no count was taken",
+       "figureImportStatus=MESH-SKIN-NOT-MEASURED" in r54, r54)
+    ok("the count itself still prints the words rather than a zero",
+       "figureSkinVerts=nothing-measured" in r54 and "figureSkin=NOT-MEASURED"
+       in r54, r54)
+    ok("and the line names which readbacks were tried and that none "
+       "answered, so the next run knows what to change",
+       "figureSkinVia=none-of-6" in r54 and "figureLodsVia=none-of-4" in r54,
+       r54)
+    ok("everything run 54 DID measure still reaches the line beside it",
+       "figureBones=65" in r54 and "figureMaterials=1" in r54
+       and "figureHeightCm=166.50" in r54
+       and "figureSkeletonsMatch=yes" in r54, r54)
+    ok("no value on the run 54 line carries a space either",
+       all("=" not in tok or " " not in tok for tok in r54.split(" ")), r54)
+
+    # -- H3. THE NOTE'S CAP ANNOUNCES WHEN IT BITES -----------------------
+    ok("a short report is carried whole and says nothing about a cap",
+       note_of(["a", "b"]) == "a/b", note_of(["a", "b"]))
+    ok("an empty report is the word none and not an empty value",
+       note_of([]) == "none")
+    _long = note_of(["x" * 50] * 40)
+    ok("a report past the cap is cut AND SAYS SO, with how much went and "
+       "how much there was",
+       len(_long) <= NOTE_CAP and "not~shown" in _long and "of=" in _long,
+       _long[-60:])
+    ok("the announcement carries no space, so the line stays parseable",
+       " " not in _long)
+
+    # -- H4. A RAISE STILL PRODUCES A WHOLE LINE --------------------------
+    # C OF THE BRIEF, AS A CHECK: a fault in this script must not cost the
+    # run its evidence, and the accepting case is that everything measurable
+    # before the raise is still on the line.
+    rl, rman = raised_line(RuntimeError("the importer said no"),
+                           {"bones": 65, "sourceHeightCm": 166.2})
+    ok("a raise is a figure line like any other, with the status word for it",
+       "figureImportStatus=RAISED" in rl and "figureImportReturn=2" in rl, rl)
+    ok("and it carries what was measured before the raise rather than "
+       "starting from nothing",
+       "figureBones=65" in rl and "figureSourceCm=166.20" in rl, rl)
+    ok("and the placement and the paths, which are derived here and need no "
+       "engine at all",
+       mesh_object_path() in rl and "figurePlacement=x=" in rl, rl)
+    ok("the exception's own words are on the line with no spaces in them",
+       "RAISED/RuntimeError/the~importer~said~no" in rl, rl)
+    ok("no value on a raised line carries a space",
+       all("=" not in tok or " " not in tok for tok in rl.split(" ")), rl)
+    ok("and the manifest says it raised", rman.get("raised", "").startswith(
+        "RuntimeError"), rman.get("raised"))
 
     # -- I. THE NAME CONTRACT ---------------------------------------------
     ok("the mesh object path is the package path plus the object name",
@@ -1607,15 +1859,85 @@ def run_in_unreal():
         report.append("bones-via=%s" % via)
         skeleton = _prop(mesh, "skeleton", report)
         r["meshSkeleton"] = "none" if skeleton is None else str(skeleton.get_name())
+        # ---- THE LOD COUNT FIRST, BECAUSE THE VERTEX COUNT NEEDS AN INDEX --
+        #
+        # RUN 54 MEASURED THE WHOLE OF THIS LADDER'S PROBLEM, and the
+        # measurement is why the order below is what it is. On UE 5.8 the
+        # three METHOD names this script had all raised with "object has no
+        # attribute": get_num_vertices, get_num_lod_vertices, get_num_lods.
+        # In the same run get_number_of_sampled_keys raised on AnimSequence
+        # and the EDITOR PROPERTY number_of_sampled_keys answered. That is
+        # the pattern, and it is a reading rather than a guess: on this
+        # engine the properties answer where the wrapper methods do not. So
+        # every ladder here leads with a property read.
+        #
+        # EVERY NAME BELOW IS A GUESS AT A BINDING AND NONE OF THEM IS
+        # CHECKED. _try wraps each one, so a name that does not exist costs
+        # one note line and the word nothing-measured, never a raise and
+        # never a negative finding. The run names the one that answered, in
+        # figureSkinVia, which is the only way any of this becomes known.
+        lods, lvia = _try([
+            # 1. the property route, which is the one run 54's evidence
+            #    points at. LODInfo is the UPROPERTY on USkeletalMesh.
+            ("lod_info.len", lambda: len(mesh.get_editor_property("lod_info"))),
+            # 2. the UE5 editor subsystem.
+            ("SkeletalMeshEditorSubsystem.get_lod_count",
+             lambda: unreal.get_editor_subsystem(
+                 unreal.SkeletalMeshEditorSubsystem
+             ).get_lod_count(mesh)),
+            # 3. the UE4-era scripting library, kept because a deprecated
+            #    name that still answers is a reading and a free one.
+            ("EditorSkeletalMeshLibrary.get_lod_count",
+             lambda: unreal.EditorSkeletalMeshLibrary
+             .get_lod_count(mesh)),
+            # 4. THE ROUTE RUN 54 REFUTED, kept last and named as refuted so
+            #    that a future engine adding it shows up as a via rather
+            #    than as a silent change.
+            ("get_num_lods-refuted-in-run-54", lambda: mesh.get_num_lods()),
+        ], report, accept=lambda v: isinstance(v, int) and v >= 0)
+        r["lods"] = lods
+        r["lodsVia"] = lvia
+        # ---- AND THE SKIN, WHICH IS THE READING RUN 54 LOST ---------------
+        #
+        # LOD 0 IS THE INDEX AND THE LOD COUNT IS PRINTED BESIDE IT, because
+        # asking LOD 0 of a mesh with no LODs is how a count raises on an
+        # INDEX rather than on a NAME, and those two failures read
+        # identically in a note. figureSkinVia carries both, so the next run
+        # can tell them apart without guessing.
+        lod_ix = 0
         verts, vvia = _try([
-            ("get_num_vertices0", lambda: mesh.get_num_vertices(0)),
-            ("get_num_lod_vertices", lambda: mesh.get_num_lod_vertices(0)),
+            # 1. the UE5 editor subsystem, which is where the UE4 scripting
+            #    library's mesh functions were moved.
+            ("SkeletalMeshEditorSubsystem.get_num_verts",
+             lambda: int(unreal.get_editor_subsystem(
+                 unreal.SkeletalMeshEditorSubsystem
+             ).get_num_verts(mesh, lod_ix))),
+            # 2. the UE4-era library of the same function.
+            ("EditorSkeletalMeshLibrary.get_num_verts",
+             lambda: int(unreal.EditorSkeletalMeshLibrary
+                         .get_num_verts(mesh, lod_ix))),
+            # 3. THE ASSET REGISTRY, which is the only route here that does
+            #    not depend on a Python binding existing at all: the tag is
+            #    written by the asset itself when it is saved. Two spellings,
+            #    because the tag name is not checked either.
+            ("assetdata.tag.VertexCount",
+             lambda: int(str(unreal.EditorAssetLibrary
+                             .find_asset_data(mesh_object_path())
+                             .get_tag_value("VertexCount")))),
+            ("assetdata.tag.Vertices",
+             lambda: int(str(unreal.EditorAssetLibrary
+                             .find_asset_data(mesh_object_path())
+                             .get_tag_value("Vertices")))),
+            # 4. THE TWO ROUTES RUN 54 REFUTED, last and named as refuted.
+            ("get_num_vertices-refuted-in-run-54",
+             lambda: mesh.get_num_vertices(lod_ix)),
+            ("get_num_lod_vertices-refuted-in-run-54",
+             lambda: mesh.get_num_lod_vertices(lod_ix)),
         ], report, accept=lambda v: isinstance(v, int) and v >= 0)
         r["skinVerts"] = verts
-        report.append("verts-via=%s" % vvia)
-        lods, _lv = _try([("get_num_lods", lambda: mesh.get_num_lods())], report,
-                         accept=lambda v: isinstance(v, int) and v >= 0)
-        r["lods"] = lods
+        r["skinVia"] = "%s/lodIndex=%d/lodCountVia=%s" % (vvia, lod_ix, lvia)
+        # THE WORD, BESIDE THE COUNT, AT THE MOMENT THE COUNT WAS TAKEN.
+        report.append("skin=%s/via=%s" % (skin_reading(verts), vvia))
         mats = _prop(mesh, "materials", report)
         r["materials"] = None if mats is None else len(mats)
         # THE HEIGHT, OFF THE ASSET, IN THE ENGINE'S OWN UNITS.
@@ -1689,7 +2011,7 @@ def run_in_unreal():
         r["uassetBytes"] = os.path.getsize(p) if os.path.exists(p) else 0
     except Exception:
         r["uassetBytes"] = None
-    r["note"] = "/".join(report)[:600] if report else "none"
+    r["note"] = note_of(report)
     status = import_status(sources, mesh is not None, r.get("skinVerts"),
                            r.get("bones"), anim is not None,
                            r.get("animFrames"), len(saved) == 2)
@@ -1771,10 +2093,48 @@ def main():
         print("import_figure: NOTHING MEASURED, no unreal module. "
               "Use --selftest or --measure outside the editor.")
         return 1
-    line, man = run_in_unreal()
-    _write(line, man)
-    m = re.search(r"figureImportReturn=(\d+)", line)
-    return int(m.group(1)) if m else 2
+    # ---- NOTHING IN HERE MAY REACH THE CALLER ---------------------------
+    #
+    # THE CALLER IS make_base_material.py, INSIDE THE ONE EDITOR PROCESS THE
+    # BUILD STEP STARTS, and the previous specialist named that arrangement's
+    # cost in writing: a failure here takes that run's material work with it.
+    # This is the half of that cost an exception can cause, and it is closed:
+    # every raise becomes a WHOLE figure line and a return code, and the
+    # caller sees an ordinary return.
+    #
+    # BaseException AND NOT Exception, deliberately and for this file's own
+    # stated reason: inside the editor this runs on an embedded interpreter
+    # that is not exiting anything, so a SystemExit raised by any library
+    # under here is not a request to end a process, it is a bug that would
+    # end the EDITOR'S process. KeyboardInterrupt is in the same position.
+    #
+    # THE HALF THIS CANNOT CLOSE IS NAMED RATHER THAN IMPLIED: a hard crash
+    # in native importer code is not an exception and no except clause in
+    # Python reaches it. Only a separate editor process would, and that is a
+    # workflow step, which tools/workflow-size.py says this workflow has no
+    # room for. It is not attempted here.
+    try:
+        line, man = run_in_unreal()
+    except BaseException as exc:  # noqa: BLE001
+        line, man = raised_line(exc)
+        try:
+            import traceback
+            traceback.print_exc()
+        except BaseException:
+            pass
+    # THE WRITE IS INSIDE THE GUARD TOO. _write already catches per file,
+    # but a raise from anything else in it would propagate into the caller
+    # and cost the material run the thing this whole block exists to stop.
+    try:
+        _write(line, man)
+    except BaseException as exc:  # noqa: BLE001
+        print("import_figure: could not write the line (%s: %s)"
+              % (type(exc).__name__, exc))
+    try:
+        m = re.search(r"figureImportReturn=(\d+)", line)
+        return int(m.group(1)) if m else 2
+    except BaseException:  # noqa: BLE001
+        return 2
 
 
 if __name__ == "__main__":
