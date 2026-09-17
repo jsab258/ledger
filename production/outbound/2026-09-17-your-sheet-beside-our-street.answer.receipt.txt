@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-17-your-sheet-beside-our-street.answer.md
+kind: answer
+photoRef: game-design/sim-shots/hook_sheet_vs_street_2026-09-17.jpg
+fileCommit: 8c30333aa3d6d10d444a105c885b7ac0f2882567
+fileCommitEpoch: 1789643875
+sent: 2026-09-17T11:18:51+00:00
+sentEpoch: 1789643931
+messageId: 115
+chars: 1004
+photoSizes: 90x30/320x105/800x262/1280x420/2089x686
+photoSizeCount: 5
+outboundLatencySec: 56
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
