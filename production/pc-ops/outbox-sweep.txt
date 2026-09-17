@@ -1,4 +1,4 @@
-# LEDGER one outbox sweep - cab70a8 @1789624660
+# LEDGER one outbox sweep - 8c30333 @1789643899
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-outbox once, which is the same
 # pass the bot's own loop makes. Streamed, so a timeout still leaves
@@ -12,13 +12,13 @@ sweepPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so sweepCheckoutAheadCommits above 0 is normal.
 # sweepCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-sweepCheckoutRunSha=cab70a848422d9e44790bc659d8a2fbf61d6c297 sweepCheckoutPcHeadSha=cab70a848422d9e44790bc659d8a2fbf61d6c297 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
-sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-17T05:57:19Z
-sweepCheckoutWaitedSec=15/90 sweepCheckoutPolls=4 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/6658d37fe5,15s/cab70a8484 sweepCheckoutSeriesShown=2/2
+sweepCheckoutRunSha=8c30333aa3d6d10d444a105c885b7ac0f2882567 sweepCheckoutPcHeadSha=8c30333aa3d6d10d444a105c885b7ac0f2882567 sweepCheckoutContains=yes sweepCheckoutOutcome=contains sweepCheckoutDecision=send
+sweepCheckoutBehindCommits=0 sweepCheckoutAheadCommits=0 sweepCheckoutBehindSecByCommitTime=0 sweepCheckoutPcHeadCommitIso=2026-09-17T11:17:55Z
+sweepCheckoutWaitedSec=31/90 sweepCheckoutPolls=7 sweepCheckoutPollSec=5 sweepCheckoutSeries=0s/e07526666c,31s/8c30333aa3 sweepCheckoutSeriesShown=2/2
 sweepCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-sweepStatus=EXITED sweepWaitedSec=9 sweepExitCode=0
+sweepStatus=EXITED sweepWaitedSec=12 sweepExitCode=0
 sweepStream=sweep-raw.txt sweepLines=3
-07:58:03    outbox: sent production/outbox/2026-09-17-the-figure-is-in-it.answer.md kind=answer AS-CAPTIONED-PHOTO photoRef=production/d1-probe/ue-vign_camA_night.png chars=728 messageId=114 photoSizes=90x51/320x180/800x450/1280x720 outboundLatencySec=45 receipt=production/outbound/2026-09-17-the-figure-is-in-it.answer.receipt.txt
-07:58:03  outbox done: outboxFiles=41 sent=0 captionedSent=1 captionedClipsSent=0 refused=0 unsent=0 alreadySent=40 held=0 sendFailed=0 receiptRefused=0 recordsWritten=1 latencySamples=1/1 outboundLatencySecAtWorst=45
-07:58:06    inbox: pushed 1 file(s) as b1d178c to pc-inbox
+13:19:00    outbox: sent production/outbox/2026-09-17-your-sheet-beside-our-street.answer.md kind=answer AS-CAPTIONED-PHOTO photoRef=game-design/sim-shots/hook_sheet_vs_street_2026-09-17.jpg chars=1004 messageId=115 photoSizes=90x30/320x105/800x262/1280x420/2089x686 outboundLatencySec=56 receipt=production/outbound/2026-09-17-your-sheet-beside-our-street.answer.receipt.txt
+13:19:00  outbox done: outboxFiles=42 sent=0 captionedSent=1 captionedClipsSent=0 refused=0 unsent=0 alreadySent=41 held=0 sendFailed=0 receiptRefused=0 recordsWritten=1 latencySamples=1/1 outboundLatencySecAtWorst=56
+13:19:03    inbox: pushed 1 file(s) as c5bb5b0 to pc-inbox
 sweepStream=sweep-raw.txt.err sweepLines=0
