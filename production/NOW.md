@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-16 13:20Z, when the in-flight section was corrected: it had named three agents that finished an hour earlier.
+STATUS: LIVE. Verified 2026-09-17 12:2xZ, when the day's section was written: the newest section before it was 2026-09-16 20:0xZ, so a fresh session would have opened on run 53 and known nothing of run 54, the comparison, or the blocker.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -8,6 +8,67 @@ session would otherwise duplicate, abandon, or wait for forever.
 
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
+
+## 2026-09-17 12:2xZ CLOSE: THE COMPARISON IS DELIVERED. THE NIGHT CAPTURE IS THE BLOCKER, AND IT IS THE RIG, NOT THE STREET
+
+HIS LAST INSTRUCTION, and it is the one that governs Monday: "Spend them on
+one thing: the street rendered from the Hook sheet's viewpoint, put beside the
+sheet, with your plain judgement of how far apart they are and what accounts
+for it. Without the figure if the figure is not ready. That comparison is what
+the whole week was for and it has never been made. Then stop. The figure fix
+waits for the reset." Before that, four times: "Nothing filed starts before the
+reset."
+
+DO NOT RESUME BY DISPATCHING A RUN. Read the two paragraphs below first.
+
+THE COMPARISON IS MADE AND IS NOW IN HIS HAND.
+game-design/sim-shots/hook_sheet_vs_street_2026-09-17.jpg puts the lower panel
+of OUR OWN sheet (production/art/compare/hook-2026-09-09-pass2/hook_pass2.png)
+beside the built street at the same viewpoint, one scale, neither cropped to
+flatter the other. THE JUDGEMENT: the gap is DRESSING, not people. Our sheet
+has one walker and a parked car, so the first judgement, which said the gap was
+inhabitation at nine or ten people, was wrong and was made against the OUTSIDE
+sheet that ladder rung 1 had already retired. He caught that himself. The hard
+half is good: brickwork, kerb, channel and gully, pavement, fog depth, camera
+feel. What is missing is shopfronts, windows, colour and weather, which is
+queue 195 showing up visually.
+
+IT TOOK TWO SENDS AND THE SECOND ONE IS THE MECHANISM TO REMEMBER.
+tools/runner/outbox.py sweep SKIPS ANY FILE WHOSE RECEIPT ALREADY EXISTS
+(executor.py:421). Rewriting a message in place after it has sent makes it
+unsendable for ever. The corrected body went out under a NEW STEM,
+production/outbox/2026-09-17-the-right-sheet.answer.md, at 66101ede. Also: his
+PC sent the first one from a stale checkout, so the correction that was already
+on the remote did not go. That is queue 382 and 383, both filed.
+
+THE BLOCKER, AND IT MOVED TODAY. Queue 384. The night frame is black, and as of
+12:2xZ the cause is NOT the figure, NOT the materials, NOT a leaked exposure
+pin and NOT the lights. Run 54's twelve control lines say the NIGHT CAPTURE
+LANDS AT AN ARBITRARY EXPOSURE: a control photographs its own shot twice with
+nothing toggled, and ten of twelve disagree with themselves by 0.20 to 0.46 of
+whole-frame mean luma, three of them in the BRIGHT direction. The same camera
+photographs the same street with the same figure at 0.46449 on one shot and
+0.00637 on another. The figure reads exactly as bright as whatever the frame
+landed at, monotonically, across all eleven shots that carry a figure record.
+The rig's own determinism check never saw this because it photographs a DAY
+frame (rigRepeatOf=vign_camA_day, rigMeanLumaDelta=-0.0017). The full reading,
+with denominators, is at the foot of queue 384; the figure-at-6.00m hypothesis
+that item named as the first thing to test is WITHDRAWN there.
+
+WHAT THAT MEANS FOR EVERY NIGHT STILL ALREADY COMMITTED: on these numbers they
+are not comparable to each other, and no night-to-night brightness claim made
+this week should be trusted until the capture converges. Nothing has been
+changed on that account; it is written here so it is not re-derived.
+
+WHAT IS DONE AND NEEDS NO REDOING: the figure imports, spawns, and poses (87.0230 cm
+of bone movement against a 0.0010 bound, latched on the first tick); it stands
+in Quay Street at the measured place and size (projH 175.65 against 173
+predicted); the day frames are stable. Runs 52, 53 and 54 are spent: 52 died on
+one include, 53 gave a T-pose behind a kiosk, 54 posed correctly into a black
+frame.
+
+FILED TODAY, NONE STARTED, per his order: 372 to 384. The cost items (369, 370,
+371), the red team (364 to 367) and the rest wait for the reset.
 
 ## 2026-09-16 CLOSE: JAFAR STOPPED THIS THREAD. TOMORROW IS THE VISUAL SLICE ONLY
 
