@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-17-what-a-facade-costs.answer.md
+kind: answer
+fileCommit: 00213c6896246331f1d3d2f70baccfc5cb79786f
+fileCommitEpoch: 1789651221
+sent: 2026-09-17T13:20:45+00:00
+sentEpoch: 1789651245
+messageId: 117
+chars: 1454
+outboundLatencySec: 24
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
