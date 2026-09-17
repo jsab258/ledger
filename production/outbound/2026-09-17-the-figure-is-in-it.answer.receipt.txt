@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-17-the-figure-is-in-it.answer.md
+kind: answer
+photoRef: production/d1-probe/ue-vign_camA_night.png
+fileCommit: 4cfa748096f6f62c5c50d3b5c203b1d8bcbe5c79
+fileCommitEpoch: 1789624632
+sent: 2026-09-17T05:57:57+00:00
+sentEpoch: 1789624677
+messageId: 114
+chars: 728
+photoSizes: 90x51/320x180/800x450/1280x720
+photoSizeCount: 4
+outboundLatencySec: 45
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
