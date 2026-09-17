@@ -1,11 +1,11 @@
-Your sheet left, ours right, same viewpoint. It is not close.
+Our sheet left, the built street right, same viewpoint. Closer than I first said, and I had it wrong.
 
-The gap is inhabitation, not fidelity. Yours has nine or ten people, a car, vans, a man in a white coat serving fish. Ours has nobody and nothing that moves. That alone outweighs the rest, and it made this worth doing before more weeks on surfaces.
+I first put ours beside the outside sheet, which the ladder replaced as the reference. Against our own, the gap is not that ours is empty: yours has one walker and a parked car, not a crowd.
 
-Your road mirrors the shopfronts its whole length, ours is dry, the biggest single loss, because a wet British street is mostly reflection; your shopfronts are businesses, lettered, lit, curtained, stocked, ours blank; your warm interior light gives depth, ours none; yours ends in a hill of houses fading into mist, ours in a tree line, nothing behind; ours reads too wide.
+The gap is dressing. Yours is a run of painted shopfronts, cream, green, blue, oxblood, each with its own frontage, sash windows, goods behind glass, lettering, chimneys, slate. Ours is one blank block with awnings and railings. Yours is warm brick and saturated paint; ours is grey and cold. Yours ends in a hill of houses, ours in a tree line. Yours is wet with crisp yellow lines; ours reads dry. Ours is still too wide.
 
-What is good, and it is the hard half: brickwork, kerb, channel and gully, pavement, fog depth, camera feel. The bones match; what is missing is dressing, wetness, light and people.
+What is good, the hard half: brickwork, kerb, channel and gully, pavement, fog depth, camera feel. The bones match. What is missing is shopfronts, windows, colour and weather.
 
-No figure in this frame: not ready, and its fix waits for the reset, as you ruled.
+No figure in this frame: not ready, and its fix waits for the reset.
 
 [the console](https://jsab258.github.io/ledger/)
