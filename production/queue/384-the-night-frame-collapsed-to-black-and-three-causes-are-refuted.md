@@ -95,3 +95,39 @@ status: READY 2026-09-17, filed at the budget ceiling, NOT started.
   unexamined here: whether the night stills already committed under
   game-design/sim-shots/ are comparable to each other at all, which on these
   numbers they are not. FILED, NOT STARTED, per his standing order.
+
+  RUN 53 HAS THE SAME FAULT, SO IT PREDATES THE FIGURE RAISE ENTIRELY, read
+  2026-09-17 13:1xZ out of 4696d113 and compared against 341ea3b2 key by key.
+
+  TWELVE CONTROLS IN EACH RUN, THE SAME TWELVE SHOTS. Run 53: 4 agree within
+  0.005, 8 disagree, worst 0.45541. Run 54: 2 agree, 10 disagree, worst 0.45548.
+  So this item's opening sentence, that run 54's night frame collapsed, is a
+  reading of ONE SHOT in a run whose whole night pass was already unstable, and
+  run 53 was unstable too while it was being called the good run.
+
+  WHICH SHOT PHOTOGRAPHS STABLY IS NOT A PROPERTY OF THE SHOT. Of the twelve in
+  both runs, ONE (settle_night_4) is stable in both. Four change class between
+  the runs: pinset_night_2 and settle_night_3 and settle_night_6 are stable in
+  53 and not in 54, settle_night_2 the other way. A fault that moves between
+  runs on identical shots is a race, not a scene property, and no amount of
+  looking at the street will find it.
+
+  AND THE STREET IS PROVABLY UNCHANGED BETWEEN THE RUNS. vign_camA_night's
+  control photographs its OFF frame at 0.31688 in run 53 and 0.31692 in run 54,
+  the same picture to four decimals. Only the ON frame moved, 0.11054 to
+  0.00222. Whatever the figure raise did, it did not darken this scene: run 54
+  renders it at 0.3169 in its own off-frame.
+
+  WHAT THIS RETIRES. The comparison at the top of this item, meanLuma 0.60
+  against run 53's 28.26 or 43.6, is not a like-for-like reading and neither
+  number should be quoted again: 43.6 is run 49's sky floor (queue 361), and run
+  53's camA_night figure reads coreMeanLuma=25.6 ringMeanLuma=42.6, which is a
+  figure-ring statistic and not a frame mean. The budget file carried the same
+  false pair in its 2026-09-17c note and is corrected under D43.
+
+  THE ACCEPTANCE LINE ABOVE IS NOW WRONG IN ITS FIRST HALF. "A night frame at a
+  brightness in the bracket run 51 and run 53 sat in" cannot be the test, because
+  run 53's own bracket was the race's output. The test is the CONTROL: twelve
+  controls agreeing with themselves within some bound read off a printed series,
+  before any night brightness is compared to any other. Still filed, still not
+  started.
