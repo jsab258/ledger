@@ -9,6 +9,41 @@ session would otherwise duplicate, abandon, or wait for forever.
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
 
+## 2026-09-17 13:1xZ HIS RULING ON THE PAIR: THE DEFERRAL IS OVER, FACADES ARE THE BLOCKER, EXPOSURE COMES FIRST
+
+HE LOOKED AT THE COMPARISON AND RULED. Recorded in full as D28 Amendment A1;
+the parts that change what happens next:
+
+1. D28's deferral of geometry and unique buildings is LIFTED, by him. "Presentation
+   is now good enough that geometry and facades are the blocker." What landed he
+   names as real: wet road, grade, overcast light, materials at close range.
+   What is missing he names as buildings with faces, shopfronts, windows, doors,
+   signage, roofs, chimneys, and two hundred metres of depth. "Ours is a corridor
+   of blank walls with fog at thirty metres doing double duty as sky and as a
+   cover for there being nothing beyond."
+2. THE NIGHT EXPOSURE FAULT COMES BEFORE THE FIGURE. His reason: "a figure
+   cannot be judged in a frame whose exposure is random." Queue 384 is therefore
+   ahead of the figure fix, and D44's studio discretion does not apply to it.
+3. "Nothing starts before the reset." Unchanged, fourth and fifth time.
+4. A QUESTION ANSWERED IN THE SAME RUN, per rule 13: what a single authored
+   building facade costs, end to end. THE ANSWER IS THAT IT CANNOT BE MEASURED,
+   and the three facts are these, each checked rather than recalled. No facade
+   has ever been authored here: 39 GLBs exist in the tree and the nearest four
+   to a building are a fascia cornice, a console bracket and two chimney pots,
+   with no wall, window, door, shopfront or roof among them. production/throughput.md
+   prices the IMPORT of a piece, zero sessions and about 0.35 minutes of runner
+   time marginal, and says in its own words that it does not price the MAKING.
+   And the spawn log cannot attribute a window of spend to one item, which is
+   queue 370. What would produce it is his own batch rule of 2026-09-16 pointed
+   at facades instead of props, with a clean window and the spawn-log column in
+   place BEFORE it opens.
+
+ITEM 1 OF D28's OWN LIST WAS NEVER CLOSED and nobody had noticed until his
+ordering made it matter: "Fix the exposure fault so the same camera and
+conditions give the same picture" is step one of the visual slice, still open,
+now measured. That is the same thing as his ordering, arrived at from the other
+end.
+
 ## 2026-09-17 12:2xZ CLOSE: THE COMPARISON IS DELIVERED. THE NIGHT CAPTURE IS THE BLOCKER, AND IT IS THE RIG, NOT THE STREET
 
 HIS LAST INSTRUCTION, and it is the one that governs Monday: "Spend them on

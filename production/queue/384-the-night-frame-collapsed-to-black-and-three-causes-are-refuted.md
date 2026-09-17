@@ -131,3 +131,10 @@ status: READY 2026-09-17, filed at the budget ceiling, NOT started.
   controls agreeing with themselves within some bound read off a printed series,
   before any night brightness is compared to any other. Still filed, still not
   started.
+
+  ORDERED AHEAD OF THE FIGURE BY JAFAR, 2026-09-17 13:1xZ: "The night exposure
+  fault comes before the figure, since a figure cannot be judged in a frame
+  whose exposure is random." So this item is not the studio's to reorder under
+  D44. It is also item 1 of D28's own list, "fix the exposure fault so the same
+  camera and conditions give the same picture", which has been open since
+  2026-09-14 and was never closed. Still not started, per the same message.
