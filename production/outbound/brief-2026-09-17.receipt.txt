@@ -1,0 +1,15 @@
+receipt: sent
+file: production/briefs/2026-09-17.md
+kind: brief
+fileCommit: aae88a1321157826756fe0b3fec1e0ea6832e50f
+fileCommitEpoch: 1789618775
+sent: 2026-09-17T04:21:02+00:00
+sentEpoch: 1789618862
+messageId: 112
+chars: 971
+outboundLatencySec: 87
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+buttons: 2/2
+photoNote: the picture did not ride this message (none-named): no picture is named for this day: production/briefs/2026-09-17.photo.txt is not on this disk
+note: one sample of one message, not a rate.
