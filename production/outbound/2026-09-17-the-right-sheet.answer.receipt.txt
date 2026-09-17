@@ -1,0 +1,16 @@
+receipt: sent-with-photo
+file: production/outbox/2026-09-17-the-right-sheet.answer.md
+kind: answer
+photoRef: game-design/sim-shots/hook_sheet_vs_street_2026-09-17.jpg
+fileCommit: 66101ede1a6f41c06638df3d0b0045b977db83ec
+fileCommitEpoch: 1789647378
+sent: 2026-09-17T12:16:41+00:00
+sentEpoch: 1789647401
+messageId: 116
+chars: 899
+photoSizes: 90x28/320x98/800x246/1280x394/2230x686
+photoSizeCount: 5
+outboundLatencySec: 23
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
