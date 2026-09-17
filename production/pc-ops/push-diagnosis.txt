@@ -1,17 +1,18 @@
-# LEDGER push diagnosis - d102e8a @1789623696
+# LEDGER push diagnosis - cab70a8 @1789624658
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=b790bc26e36316abc7b0489df18d5aa8e535fa54
-localTipRef=b790bc26e36316abc7b0489df18d5aa8e535fa54
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=90a3178b53f2ea011c2611f159ccd26c4a694f86
+localTipRef=90a3178b53f2ea011c2611f159ccd26c4a694f86
 onDisk_production_inbox=4
-onDisk_production_outbound=578
+onDisk_production_outbound=579
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=84 newestShown=16/16 (+68 older not shown)
+receiptsOnDisk=85 newestShown=16/16 (+69 older not shown)
+receipt file=production/outbox/2026-09-17-it-landed.answer.md messageId=113 sent=2026-09-17T05:41:45+00:00
 receipt file=production/briefs/2026-09-17.md messageId=112 sent=2026-09-17T04:21:02+00:00
 receipt file=production/outbox/2026-09-16-the-figure-frame.answer.md messageId=111 sent=2026-09-16T20:18:45+00:00
 receipt file=production/outbound/2026-09-16T153011Z-reply-110.receipt.txt messageId=110 sent=2026-09-16T15:30:11+00:00
@@ -27,5 +28,4 @@ receipt file=production/briefs/2026-09-15.md messageId=99 sent=2026-09-15T03:34:
 receipt file=production/outbox/2026-09-14-the-street-then-your-sky-strike-one-sentence.answer.md messageId=98 sent=2026-09-14T22:23:03+00:00
 receipt file=production/outbox/2026-09-14-the-street-then-your-sky-on-it.brief.md messageId=97 sent=2026-09-14T21:41:23+00:00
 receipt file=production/briefs/2026-09-14.md messageId=95 sent=2026-09-14T19:09:03+00:00
-receipt file=production/outbox/2026-09-14-the-street-then-one-call-for-you.brief.md messageId=94 sent=2026-09-14T19:08:52+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent
