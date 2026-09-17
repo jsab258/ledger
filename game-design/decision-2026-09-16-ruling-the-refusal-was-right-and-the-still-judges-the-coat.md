@@ -144,6 +144,15 @@ condition settle ticks: `ApplyCondition` at :6122 is re-entered every tick
 for `kSettleAfterCondition = 0.5` seconds (:142, :6128), and calls
 `DriveFigure` (:2379) which calls the check (:5198).
 
+CORRECTION 2026-09-17, applied not ruled per D43: the line above rests on a
+premise that measurement refuted. A delta of exactly zero is not reachable:
+the check composes its own reference pose in float while the engine composes
+its own, so a bind pose reads as composition noise of under 0.0005 cm as printed, the derived floor being 2.4e-5. Run
+53's 0.000 was a rounded positive, proven by figurePoseLatched=yes beside it
+under a rule that latched only on a strictly positive delta. The rule is now
+a printed-resolution bound and the cited line numbers have moved.
+
+
 THE ASYMMETRY STANDS, on three grounds. (1) The sky dome's fault was a
 success word over a wrong object: a 2 km sphere standing while the verdict
 said fine. Here the word is not a success word and `figureWhy` names the

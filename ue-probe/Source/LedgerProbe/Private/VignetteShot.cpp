@@ -458,23 +458,48 @@ namespace
 	// picture), and the figure must be between 6 and 20 m from cam_A so it
 	// has pixels and still stands inside the frame.
 	//
-	// WHAT THE SERIES SAID, run in this container on 2026-09-16 and printed
-	// whole into ue-figure.json by every run of the script:
-	//     x=10.0 ratio=0.24   x=14.0 ratio=0.95   x=17.0 ratio=2.31
-	//     x=17.5 ratio=2.62  <- the maximum
-	//     x=18.0 ratio=0.46   (the west lamp at x=18 passes from behind the
-	//                          figure to in front of it, and the ratio falls
-	//                          off a cliff: that discontinuity is why this
-	//                          is a search and not a midpoint)
-	// At x=17.5 the lamps at x=18 west and x=28 east are both behind the
-	// figure, the one at x=8 east is 9.5 m in front of it, the dominant
-	// backlight sits 28.7 degrees above the torso, and the figure stands
-	// 13.5 m from cam_A, where a 1.66 m body is about 77 px of the 720.
+	// AND SINCE QUEUE 379 IT SCORES WHAT IS IN THE WAY, WHICH IS WHY THIS
+	// NUMBER MOVED FROM 17.5 TO 10.0. The search that chose 17.5 had no
+	// term for occlusion at all, and 17.5 stands one metre behind the
+	// telephone kiosk: in run 53's own frame, 461 of the 5460 pixels inside
+	// the figure's projected box differed from the same rectangle before the
+	// figure existed, 8 per cent of its own bounds. The new term casts 45
+	// rays from cam_A's eye at a nominal 0.60 by 1.70 m standing body box
+	// and counts how many reach it, over every non-decal piece of
+	// vignette-pieces.json as an axis-aligned box. It is a MAXIMAND AND NOT
+	// A GATE, and that is measured rather than preferred: of the 25
+	// admissible candidates on this line NOT ONE is fully clear, so a gate
+	// would have chosen nothing. The order is clear rays, THEN the backlight
+	// ratio, THEN the nearer camera.
 	//
-	// NOTHING HERE IS TUNED TO A FRAME. No frame with a figure in it has
-	// been rendered at the time these were written. figurePlacementBound on
-	// the import line says NONE-YET in as many words.
-	const double kFigureXM = 17.5;
+	// WHAT THE SERIES SAID, re-run in this container on 2026-09-17 and
+	// printed whole by --measure on every run of the script:
+	//     x=10.0 ratio=0.24 clear=43/45  <- the maximum, this constant
+	//     x=10.5 ratio=0.28 clear=39/45
+	//     x=15.0 ratio=1.31 clear=40/45  (the awning at x=12 hangs at 1.63 m
+	//                          and takes the HEAD of everything beyond it)
+	//     x=17.5 ratio=2.62 clear=4/45   (run 53's choice: the best ratio in
+	//                          the series, and the kiosk takes 33 of its 45)
+	// At x=10.0 the figure stands 6.00 m from cam_A, where a 1.66 m body is
+	// about 173 px of the 720 rather than the 77 px it had at 17.5, the
+	// lamps at x=18 west and x=28 east are behind it, the one at x=8 east is
+	// 2 m in FRONT of it, and the dominant backlight sits 20.2 degrees above
+	// the torso. THIS IS THE FIRST CHOSEN POSITION THAT IS FRONT-LIT: the
+	// ratio 0.24 says four times as much lamp light reaches it from the
+	// camera's side as from beyond it, and that is the trade the order
+	// above makes deliberately. figureSil on the shot line is the
+	// instrument that judges it, on pixels, and it has not judged it yet.
+	//
+	// AND IT SITS EXACTLY ON THE NEAR DISTANCE BOUND. 6.00 m against a bound
+	// of 6.0: the window between that bound and the awning is one grid step
+	// wide, so this answer moves if either moves. Said here rather than left
+	// for a reader to notice.
+	//
+	// NOTHING HERE IS TUNED TO A FRAME. No frame with a figure standing
+	// where the camera can see it has been rendered at the time these were
+	// written. figurePlacementBound on the import line says NONE-YET in as
+	// many words.
+	const double kFigureXM = 10.0;
 	// THE EAST FOOTWAY'S CENTRE LINE, which is also cam_A's own z, so the
 	// figure stands on the camera's axis with the lit ground beyond it
 	// directly behind.
@@ -498,6 +523,27 @@ namespace
 	// BUDGET and not a measured threshold, and it announces itself: the
 	// ticks used and the budget both print as figurePoseTicks.
 	const int32 kFigurePoseTickBudget = 8;
+	// AND THE READING AT WHICH THE WORD CHANGES, WHICH IS THE RESOLUTION OF
+	// THE PRINTED NUMBER AND NOT A TUNED BOUND. QUEUE 379 is what put it
+	// here. The old rule was `delta > 0.0` under a comment saying equality
+	// with the bind pose is EXACT, and that comment was wrong: the reference
+	// pose this compares against is composed here, bone by bone, in float,
+	// while the engine composes its own, so two figures standing in the same
+	// bind pose differ by composition noise. Run 53 read a hair above zero
+	// on the tick after the spawn, latched pose-evaluated on it, and printed
+	// figurePoseMaxBoneDeltaCm=0.000 beside the word: a number and a word
+	// that contradict each other, which is worse than either answer alone.
+	//   THE NOISE FLOOR, DERIVED RATHER THAN TRIED: float carries about
+	//   1.19e-7 of relative precision, and the furthest bone from the root
+	//   is under 200 cm away, so composition noise is of order 2.4e-5 cm.
+	//   This rule sits at 1e-3 cm, some forty times above that floor and
+	//   five decades below the tens of centimetres an idle clip moves a
+	//   wrist from a T pose. It is also EXACTLY the resolution the delta is
+	//   printed at, which is the property that matters: a reading that
+	//   prints as 0.0000 can never carry the word pose-evaluated, and the
+	//   rule is printed beside the number so any reader can apply it to the
+	//   digits on the line and get the word that is on the line.
+	const double kFigurePoseMovedCm = 0.0010;
 
 	// ---- queue 059: what it takes to ask whether a light reached a pixel --
 	//
@@ -725,9 +771,10 @@ namespace
 	int32  GFigureHidden     = 0;       // shots it was hidden for
 	// THE POSE READBACK. MaxBoneDeltaCm is the largest distance between a
 	// bone's component-space location and the same bone's location in the
-	// REFERENCE pose: a figure that fell back to the bind pose reads exactly
-	// 0 on every bone, which is why the test is equality and needs no
-	// measured threshold. -1 means nothing was read at all.
+	// REFERENCE pose: a figure that fell back to the bind pose reads under
+	// kFigurePoseMovedCm, which is composition noise and not exactly
+	// 0 on every bone (queue 379: the old equality test was unreachable
+	// and latched on the noise). -1 means nothing was read at all.
 	double GFigurePoseMaxDeltaCm = -1.0;
 	int32  GFigurePoseBonesRead  = 0;
 	int32  GFigurePoseTicks      = 0;
@@ -5080,6 +5127,48 @@ namespace
 		// answered, and the pair printed so a refusal cannot read as a set.
 		GFigurePoseSetS = Want;
 		GFigurePoseGotS = (double)GFigureComp->GetPosition();
+		// ---- AND THE POSE IS EVALUATED HERE, NOT HOPED FOR ---------------
+		// RUN 53 IS WHY, AND ITS OWN LINE NAMES THE MOMENT:
+		// figurePoseTicks=1/8 with a delta at the noise floor. SetPosition
+		// writes a time into the single-node instance and nothing else; the
+		// component's space transforms are SEEDED from the reference pose
+		// when the mesh is set and only become a pose when the component
+		// evaluates, which is a world tick away. DriveFigure calls
+		// FigurePoseCheck in the same core-ticker tick as this build, so the
+		// first readback was always of the seed. The retry budget existed
+		// for exactly this and never got to run, because the seed read a
+		// hair above zero and the old rule counted that as movement.
+		//   Stop() STAYS, and this is what makes the frame deterministic
+		// rather than a clip playing from the top on every tick: bPlaying
+		// false, play rate 0 and a delta time of 0 on the tick below all say
+		// the same thing, so the evaluated pose is the one SetPosition asked
+		// for and the same frame renders every run.
+		//   RefreshBoneTransforms() evaluates the anim instance into the
+		// component space transforms that PoseDeltaFromRefCm reads, and a
+		// null tick function is what keeps it synchronous: the parallel path
+		// is taken only when a real tick function is passed, so the pose is
+		// readable on the next line rather than a frame later.
+		//   ONE CALL AND NOT THE USUAL TWO, DELIBERATELY. The recipe this
+		// comes from is TickAnimation(0, false) followed by
+		// RefreshBoneTransforms(), which is the pair the engine's own
+		// InitAnim runs. TickAnimation is left out because this container
+		// cannot compile a line of this file and the two failures are not
+		// symmetric: if that call is not public here the build produces NO
+		// BINARY AT ALL and the run measures nothing, while a weaker
+		// evaluation still has two ways to come good. For a single-node
+		// instance that is stopped, at play rate 0, ticked with dt 0, the
+		// call would move nothing anyway: the evaluation reads CurrentTime,
+		// which SetPosition already wrote and GetPosition already confirmed.
+		//   AND IT IS NOT THE ONLY PATH. FigurePoseCheck retries for
+		// kFigurePoseTickBudget condition ticks, and a world tick falls
+		// between every two of them, so the component's own tick evaluates
+		// the pose even if this line does nothing: the budget is the
+		// backstop and figurePoseTicks prints which tick the verdict came
+		// from. Run 53 latched on tick 1 of 8 and never used it.
+		//   UNVERIFIABLE UNTIL CI: this call does not compile in this
+		// container. If it is refused the run publishes no binary, which
+		// reads on the verdict as NO PLAYER LOG.
+		GFigureComp->RefreshBoneTransforms();
 		// ---- WHERE IT STANDS, FROM THE MEASUREMENT AND NOT FROM A GUESS --
 		// The actor's origin is wherever the importer put it, so the actor
 		// is placed by the mesh's own bounds MINIMUM rather than by assuming
@@ -5147,11 +5236,13 @@ namespace
 		const double D = PoseDeltaFromRefCm(GFigureComp, Bones);
 		GFigurePoseBonesRead = Bones;
 		GFigurePoseMaxDeltaCm = D;
-		if (D > 0.0)
+		if (D >= kFigurePoseMovedCm)
 		{
-			// THE ANIMATION EVALUATED. Equality with the bind pose is exact,
-			// so any positive number here is a pose the clip produced and no
-			// measured threshold is needed to say so.
+			// THE ANIMATION EVALUATED. The rule is the resolution the number
+			// prints at, so anything that prints as 0.0000 fails this test;
+			// the one band where word and digits differ is the half-step
+			// under the bound, 0.00095..0.00099, which prints 0.0010 and IS
+			// a bind pose. It falls through to the bind-pose ending below.
 			GFigurePoseLatched = true;
 			GFigureState = "STANDING";
 			GFigureWhy = "pose-evaluated";
@@ -5170,12 +5261,17 @@ namespace
 		}
 		// MEASURABLY THE BIND POSE. This is the sky dome's case exactly: an
 		// object that could not be dressed does not get to stand in the
-		// frame while the verdict says it is fine.
+		// frame while the verdict says it is fine. The cost of this rule is
+		// named rather than hidden: if the forced evaluation above is
+		// refused by the engine, this destroys the figure and the frame is
+		// an empty street. That is the honest ending and it is diagnosable
+		// from the line; a T-posed mannequin standing under a green word is
+		// neither.
 		if (GFigure != nullptr) { GFigure->Destroy(); GFigure = nullptr; }
 		GFigureComp = nullptr;
 		GFigureVisibleNow = false;
 		GFigureState = "DESTROYED";
-		GFigureWhy = "bind-pose/every-bone-at-exactly-the-reference-pose";
+		GFigureWhy = "bind-pose/every-bone-within-composition-noise-of-the-reference-pose";
 	}
 
 	// THE ONE OWNER OF THE FIGURE'S EXISTENCE AND VISIBILITY, called from
@@ -5221,7 +5317,14 @@ namespace
 		std::string PoseDelta = "nothing-measured";
 		if (GFigurePoseMaxDeltaCm >= 0.0)
 		{
-			std::snprintf(Tmp, sizeof(Tmp), "%.3f", GFigurePoseMaxDeltaCm);
+			// FOUR PLACES, NOT THREE, AND THAT IS THE WHOLE POINT: the
+			// number is printed at exactly the resolution the word is
+			// decided at (kFigurePoseMovedCm), so a reader can apply the
+			// rule to the digits and get the word beside them, except in
+			// the half-step under the bound, where the digits round up and
+			// the word is right. At three
+			// places run 53 printed 0.000 next to pose-evaluated.
+			std::snprintf(Tmp, sizeof(Tmp), "%.4f", GFigurePoseMaxDeltaCm);
 			PoseDelta = Tmp;
 		}
 		std::string FootGap = "nothing-measured";
@@ -5230,24 +5333,26 @@ namespace
 			std::snprintf(Tmp, sizeof(Tmp), "%.3f", GFigureFootGapCm);
 			FootGap = Tmp;
 		}
-		// THE BUFFER IS 2048 AND NOT 900, AND THE 900 WAS SILENTLY EATING
-		// SEVEN KEYS. MEASURED IN THIS CONTAINER, not recalled: the format
-		// literal below is 1156 characters on its own, 66 of them the 24
-		// specifier tokens, so 1090 characters print before one value is
-		// substituted - already over a 900 buffer with every value empty.
-		// Rendered: 1334 for STANDING/pose-evaluated, 1371 for the bind-pose
-		// DESTROYED case, 1444 for the longest NOTHING/why.
+		// THE BUFFER IS 3072, AND IT WAS 2048, AND BEFORE THAT A 900 THAT
+		// WAS SILENTLY EATING SEVEN KEYS. RE-MEASURED IN THIS CONTAINER ON
+		// 2026-09-17, not recalled and not copied: the format literal below
+		// measures 1417 characters on its own, 70 of them the 25 specifier
+		// tokens, so 1347 characters print before one value is substituted. Rendered: about
+		// 1555 for the ordinary STANDING/pose-evaluated line, and a worst
+		// case of about 1850 with GFigureWhy at its W[160] bound and
+		// GFigureShoulderAxis at its S[160].
 		// std::snprintf does not overflow, it TRUNCATES, so at 900 this
 		// line stopped mid-word at 899 characters and the last seven keys -
 		// figureAtM, figureYawDeg, figureShoulders, figurePlacementBound,
 		// figureScale, figureShownShots and figureScopedTo - never reached the
 		// verdict at all: the whole placement readback and both shot tallies.
-		// The worst case is about 1644 (GFigureWhy is bounded by W[160] and
-		// GFigureShoulderAxis by S[160]), so 2048 carries it with headroom.
+		// 2048 would still carry today's worst case, by 198 characters; this
+		// line has grown twice now (queue 372 and queue 379), 198 is a
+		// paragraph, and the next key to be added is the one that finds out.
 		// CONFIDENT BECAUSE NO ENGINE API IS INVOLVED: a stack array size and
 		// a return value of std::snprintf, both standard C++, both checkable
 		// here, which is why this is changed rather than flagged.
-		char B[2048];
+		char B[3072];
 		const int Need = std::snprintf(B, sizeof(B),
 			" figure=%s figureWhy=%s"
 			" figureBody=Michelle.fbx/michelle/ADULT/D18-no-children-anywhere"
@@ -5258,8 +5363,12 @@ namespace
 			"/ue-figure.txt-carries-it-beside-the-FBXs-own-measured-height"
 			" figurePoseSet=%.4f/got=%.4f/same=%s"
 			" figurePoseMaxBoneDeltaCm=%s/overBones=%d"
+			" figurePoseMovedAtCm=%.4f/is-the-printed-resolution-of-the-number-beside-it"
+			"/not-a-tuned-bound/derived-floor-2.4e-5-cm"
+			"/run-53-bind-pose-printed-under-0.0005/queue-379"
+			" figurePoseEval=forced-at-build/RefreshBoneTransforms/then-retried-per-condition-tick"
 			" figurePoseStat=at-worst-over-bones/component-space-distance-from-the-REFERENCE-pose"
-			"/exactly-zero-is-the-bind-pose-and-needs-no-threshold"
+			"/below-figurePoseMovedAtCm-IS-the-bind-pose-and-the-word-says-so"
 			" figurePoseTicks=%d/%d figurePoseLatched=%s"
 			" figureActorZCm=%.2f figureFootGapCm=%s figureFootwayMarginM=%.2f"
 			" figurePlacementStat=gap-to-the-footway-surface-AND-the-margin-to-the-nearest-footway-edge"
@@ -5278,6 +5387,7 @@ namespace
 			 && FMath::Abs(GFigurePoseSetS - GFigurePoseGotS) < 1e-4) ? "yes" : "NO",
 			PoseDelta.c_str(),
 			GFigurePoseBonesRead,
+			kFigurePoseMovedCm,
 			GFigurePoseTicks, (int32)kFigurePoseTickBudget,
 			GFigurePoseLatched ? "yes" : "no",
 			GFigureActorZCm,
