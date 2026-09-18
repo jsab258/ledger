@@ -329,3 +329,28 @@ path is the next day a brief is written on his machine.
   sample of one message, not a rate". So the brief was committed and on his
   phone about a minute later, once a run of the step came round.
 
+
+  LARGELY DISCHARGED BY MEASUREMENT, 2026-09-18 04:1xZ, under D43. This item's
+  two central claims were both true when written and are both false now, and
+  they are corrected rather than deleted so the item's own history reads.
+
+  "THE BRIEF FILE PATH HAS DELIVERED TWICE" is now SIX, and four of them
+  consecutive: receipts exist for the 9th, 10th, 14th, 15th, 16th and 17th,
+  counted by name in production/outbound/ and agreeing with producer-day's
+  briefsSentEver=6. The title of this item is therefore stale and the number in
+  it should not be quoted again.
+
+  "NOTHING IN THE TREE INVOKES --send-brief" is FALSE as of today: the
+  supervisor task installed by .github/workflows/ledger-install-supervisor-task.yml
+  starts it at line 683, and that caller is what the four consecutive
+  deliveries are. The grep in the spec above was accurate on 2026-09-14 and the
+  caller landed after it.
+
+  WHAT ACTUALLY REMAINS is one orphan and nothing else: production/briefs/2026-09-12.md
+  was written, has a photo sidecar, and has no receipt of any kind to this day.
+  It predates the caller, so no future run will pick it up; sending it needs the
+  one-shot command the spec already names, run from his PC. The acceptance line
+  above is MET for the general case and open only for that single day.
+
+  NOT STARTED, and the correction is not a start: his standing order of
+  2026-09-17 holds and this stays filed.
