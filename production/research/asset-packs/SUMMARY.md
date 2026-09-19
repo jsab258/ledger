@@ -1,3 +1,8 @@
+> **PARTLY OVERTURNED, 2026-09-19.** The recommendation to buy clothing is
+> refuted. `production/research/clothing-pipeline/DELIVERY.md` reads the bill of
+> materials row `F2_period_wardrobe` as "no purchase involved" and shows that D2
+> plus D16 had already selected MetaHuman. Everything else here stands.
+
 # Asset packs: what they cost and what buying actually saves
 
 Research topic 16. The short answer is that for the street we are building,
