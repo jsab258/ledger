@@ -1,3 +1,9 @@
+> **REASON CORRECTED, 2026-09-19.** The verdict, no and not now, stands. The
+> reason given, that the free route is closed by licence, is corrected by
+> `RECHECK.md` beside this file: MediaPipe and MMPose are Apache 2.0, so our own
+> footage run through an Apache-2.0 estimator is unencumbered end to end. The
+> closure is labour rather than licence.
+
 # Motion capture on no budget: is it worth doing?
 
 Research topic 8. You asked me to say plainly whether it is worth doing at all.
