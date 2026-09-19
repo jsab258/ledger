@@ -1,3 +1,11 @@
+> **ONE CLAIM OVERTURNED, 2026-09-19.** This delivery states "there is no
+> simulation radius in this project". That is refuted by
+> `production/research/precomputed-day/DELIVERY.md` part 3: the mechanism exists
+> in `Core/Population.cs` under the names `Lod` and `Band`, with `ApplyBand` in
+> `Game/PopulationHost.cs` deciding who is drawn and who is in the gossip mill.
+> The grep behind the original claim did not cover the project's own vocabulary.
+> The rest of this delivery stands.
+
 # Four games that tried something like this and got hurt
 
 Research topic 21. Topic 18 looked at small teams that finished. This is the
