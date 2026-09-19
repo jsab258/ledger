@@ -1,3 +1,12 @@
+> **PARTLY OVERTURNED, 2026-09-19.** Three findings are refuted. That Mixamo
+> bodies are fused and cannot be re-dressed: see
+> `production/research/clothing-assembly-line/SUMMARY.md`, where 14 of the 18
+> carry separate garment items and all share one skeleton. That custom garments
+> must be weighted to `metahuman_base_skel`, and that Jafar should open
+> MetaHuman Creator to inspect the wardrobe: see `RECHECK.md` beside this file,
+> where Epic's own documentation says clothing does not have to be skinned and
+> one unnamed outfit ships rather than a wardrobe. Everything else here stands.
+
 # We do not have to buy clothes, and my earlier answer was wrong
 
 Research topic 31. You asked whether we can make period clothing ourselves or
