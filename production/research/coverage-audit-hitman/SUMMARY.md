@@ -1,3 +1,9 @@
+> **ONE ASK NARROWED.** `production/research/coverage-audit-rdr2/DELIVERY.md`
+> section 3 corrects this delivery's ASK about showing the player who can see
+> them: half of it is already decided in `Core/Observation.cs`, where
+> `NeitherKnows` deliberately gives the player nothing. Read that section
+> alongside this file.
+
 # What Hitman has that we do not
 
 Coverage audit, game 2 of 5. Hitman is the closest thing to our shape that
