@@ -1,3 +1,11 @@
+> **PARTLY OVERTURNED, 2026-09-19.** The recommendation to move to Chatterbox
+> Turbo is refuted by `RECHECK.md` beside this file: Turbo and Nano accept
+> `exaggeration` and ignore it, and that control is why the engine was chosen on
+> 2026-07-28. The claim that the chunk decode is unmeasured was already
+> corrected by `production/research/hardware-floor/DELIVERY.md`, which found
+> 0.454s per second of audio already in `speed-report.txt`. The architecture
+> finding and the margin arithmetic stand.
+
 # Live speech: the problem we were about to solve is already solved
 
 Research topic 1. The question was whether the voice experiment we wrote in
