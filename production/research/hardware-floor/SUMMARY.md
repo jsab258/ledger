@@ -1,3 +1,9 @@
+> **PARTLY OVERTURNED, 2026-09-19.** The reading of arXiv 2511.10277, that a
+> fixed-persona model under one gigabyte is a researched position, is refuted by
+> `RECHECK.md` beside this file: the paper's 130 MB model scores 16 percent on
+> factuality and its own authors do not recommend it for dialogue. The 12 GB
+> floor and the three-consumer arithmetic are not moved.
+
 # The hardware floor: a number, at last
 
 Research topic 2. This has been an open question since the respec and nothing
