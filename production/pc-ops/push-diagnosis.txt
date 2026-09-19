@@ -1,17 +1,18 @@
-# LEDGER push diagnosis - 54966f0 @1789705368
+# LEDGER push diagnosis - da929c5 @1789791489
 # Line 1 names the commit this was read on. READ ONLY: nothing here
 # writes to his checkout, pushes, or prints any credential value.
 diagRepo=C:\Users\Jafar\ledger-migrate diagRepoExists=True
-lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=bb3586c5b70799b5bb4d686c395a190b64b1d2bf
-localTipRef=bb3586c5b70799b5bb4d686c395a190b64b1d2bf
+lsRemoteExit=0 lsRemoteSec=0.5 lsRemoteSha=b9eb7cd78b827dac3a1b1975bbf83ce3910c51c9
+localTipRef=b9eb7cd78b827dac3a1b1975bbf83ce3910c51c9
 onDisk_production_inbox=4
-onDisk_production_outbound=583
+onDisk_production_outbound=584
 onDisk_production_rulings=-1
 remoteHostPath=m/jsab258/ledger.git
 credentialHelper=manager
 pushDryRunExit=0
 pushDryRunSaid=Everything~up-to-date
-receiptsOnDisk=89 newestShown=16/16 (+73 older not shown)
+receiptsOnDisk=90 newestShown=16/16 (+74 older not shown)
+receipt file=production/briefs/2026-09-18.md messageId=118 sent=2026-09-18T04:22:57+00:00
 receipt file=production/outbox/2026-09-17-what-a-facade-costs.answer.md messageId=117 sent=2026-09-17T13:20:45+00:00
 receipt file=production/outbox/2026-09-17-the-right-sheet.answer.md messageId=116 sent=2026-09-17T12:16:41+00:00
 receipt file=production/outbox/2026-09-17-your-sheet-beside-our-street.answer.md messageId=115 sent=2026-09-17T11:18:51+00:00
@@ -27,5 +28,4 @@ receipt file=production/briefs/2026-09-16.md messageId=103 sent=2026-09-16T04:30
 receipt file=production/outbound/2026-09-16T050232Z-reply-104.receipt.txt messageId=104 sent=2026-09-16T05:02:32+00:00
 receipt file=production/outbox/2026-09-15-your-desktop-stopped-taking-work.unprompted.md messageId=102 sent=2026-09-15T07:41:27+00:00
 receipt file=production/outbound/2026-09-15T044719Z-reply-101.receipt.txt messageId=101 sent=2026-09-15T04:47:20+00:00
-receipt file=production/outbound/2026-09-15T044719Z-reply-100.receipt.txt messageId=100 sent=2026-09-15T04:47:19+00:00
 diagNote=reads-plus-one-push-dry-run/no-ref-was-updated-and-nothing-was-sent
