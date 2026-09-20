@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-17 12:2xZ, when the day's section was written: the newest section before it was 2026-09-16 20:0xZ, so a fresh session would have opened on run 53 and known nothing of run 54, the comparison, or the blocker.
+STATUS: LIVE. Verified 2026-09-20 04:0xZ at the daily wake: the newest section before it was 2026-09-17 13:1xZ, so a fresh session would have opened knowing nothing of the playtest runbook he dictated on the 19th, the evidence it is still owed, or the channel's own unanswered meter ask at 01:13:40Z.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -8,6 +8,43 @@ session would otherwise duplicate, abandon, or wait for forever.
 
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
+
+## 2026-09-19 TO 2026-09-20: A HELD STUDIO, ONE DICTATED DOCUMENT, AND A METER THREE DAYS OLD
+
+NOTHING WAS STARTED AND THAT IS THE ORDER BEING KEPT, not a stall. His
+standing instruction since 2026-09-17, given five times, is that nothing filed
+starts before the reset. No builder ran, no run was dispatched, nothing
+rendered. Queue 384, the night exposure race, stays first in his order and
+unstarted; the figure stays behind it.
+
+THE ONE THING THAT LANDED IS HIS OWN TEXT. On 2026-09-19 he dictated the
+friends playtest runbook and authorised the write over the ceiling himself, as
+documentation that spends almost nothing, wanting it on disk before Monday. It
+is at `production/playtest/RUNBOOK.md`, verbatim: 19 lines, 342 words, his
+punctuation, no em-dash, no italic. "It is mine, not yours to rewrite." No
+agent and no director touched it. Queue 387 sits beside it, LANDED for the
+runbook and NOT started for the rest. Commit 42babfd1.
+
+THE EVIDENCE HE NAMED FOR IT IS NOT HERE. He called the research lane's
+meridian-test-administration delivery its evidence. `git grep -il` found 0 hits
+over 5994 tracked files before 387 was staged, and a whole-tree pass over 6545
+files found exactly 1, queue 387 itself. So a later reader who greps and finds
+one hit has found the note; two means the delivery landed. The runbook stands
+on his authorship alone until then.
+
+THE CHANNEL ASKED HIM FOR THE METER AND HE HAS NOT ANSWERED. At 2026-09-20
+01:13:40Z the bot on his PC restarted and sent its two chrome messages,
+receipts 120 and 121, identified by length rather than guessed: 236 chars is
+OPENING exactly, and 224 is BUDGET_Q formatted with NUMERIC_PLACEHOLDER
+(198 - 2 + 28). Zero inbound messages came with them; the pc-inbox commit says
+so in its own subject. Commit bd426c23.
+
+THE METER IS THE WHOLE BLOCKER. Newest row 2026-09-17c, takenAt
+2026-09-17T07:24:56Z, 78 total and 77 Fable against the ceiling of 85. That is
+about sixty nine hours old at this writing, far past the ten hour rule, so the
+day is unmeasured and the studio is inbox only: no builders, no dispatches, no
+renders. Three morning briefs have now asked for the reading. The tap streak
+is 1 of 7 consecutive readable, last tapped 2026-09-16.
 
 ## 2026-09-17 13:1xZ HIS RULING ON THE PAIR: THE DEFERRAL IS OVER, FACADES ARE THE BLOCKER, EXPOSURE COMES FIRST
 
