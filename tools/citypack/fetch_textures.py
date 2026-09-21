@@ -63,10 +63,13 @@ HERE = pathlib.Path(__file__).resolve().parent
 
 API = "https://ambientcg.com/api/v2/full_json"
 
-# The twelve logical surfaces `AssetLibrary` asks for, and what each one is in
-# the language of a texture library. Search terms rather than asset ids on
-# purpose: an id I typed from memory is an id that is wrong, and the whole point
-# of the inventory pass is that the catalogue tells us what exists.
+# The twelve logical surfaces the pack OWES `AssetLibrary`, and what each one
+# is in the language of a texture library. Search terms rather than asset ids
+# on purpose: an id I typed from memory is an id that is wrong, and the whole
+# point of the inventory pass is that the catalogue tells us what exists.
+# (`AssetLibrary` declares more names than these: `interior` and
+# `paint_yellow` are painted from the tint and want no pack file at all, and
+# `setts` is optional until a pick lands, see `OPTIONAL_SURFACES` below.)
 SURFACES = {
     "asphalt":    ["Asphalt"],
     "sidewalk":   ["PavingStones", "Concrete"],
@@ -91,6 +94,34 @@ SURFACES = {
     "roof_b":       ["RoofingTiles"],
     "concrete_b":   ["Concrete"],
 }
+
+# A SURFACE THE PACK MAY HOLD AND IS NOT REQUIRED TO, WHICH IS A DIFFERENT
+# CONTRACT FROM THE LIST ABOVE AND THEREFORE A DIFFERENT LIST.
+#
+# Every name in `SURFACES` is one `validate()` demands a choice for, and
+# `fetch()` refuses to start on a failed validate, so putting a surface
+# nobody has picked yet up there would stop the whole download for eleven
+# surfaces that are fine. Leaving it out altogether is the other failure and
+# the quieter one: `fetch()` filters `choices.json` by membership, so a pick
+# committed under a name this file does not know is dropped without a word
+# and the pack comes back exactly as it went in.
+#
+# So: known enough to be fetched, not required to be chosen.
+#
+# `setts` is the first entry. The logical name and the category are COPIED
+# from `shortlist-candidates.json`, which already shortlists 148
+# `PavingStones` ids under that name, rather than chosen again here; the
+# constant the world asks for is `AssetLibrary.Setts` and the three names
+# have to be the same string or the file lands where nothing looks for it.
+OPTIONAL_SURFACES = {
+    "setts": ["PavingStones"],
+}
+
+# EVERYTHING THE PACK CAN HOLD, required and optional together, for the three
+# places that ask "is this a surface at all" rather than "is this surface
+# owed": the fetch's membership filter, the inventory's search terms, and
+# `--measure-pack`'s default list.
+FETCHABLE = dict(SURFACES, **OPTIONAL_SURFACES)
 
 # The DEFAULT when choices.json is silent; the committed choices carry the
 # real decision. The pack started at 1K on the argument that fog and palette
@@ -318,7 +349,7 @@ def inventory():
     It stays because a search that disagrees with the catalogue is itself worth
     seeing, and it is cheap. But `candidates.json` is a record of what the
     search SAID, not of what the library HOLDS, and the file says so."""
-    wanted = sorted({t for terms in SURFACES.values() for t in terms})
+    wanted = sorted({t for terms in FETCHABLE.values() for t in terms})
     out = {"resolution": RESOLUTION,
            "_": "WHAT THE SEARCH ENDPOINT SAID, which has disagreed with the "
                 "library three times. catalogue.json is the evidence; this is "
@@ -447,22 +478,48 @@ def validate():
     cat = {a["id"]: a.get("sizes", [])
            for a in json.loads(path.read_text(encoding="utf-8")).get("assets", [])}
     want = choices.get("resolution", RESOLUTION)
-    bad = []
-    for surface, aid in sorted(choices.get("surfaces", {}).items()):
-        if aid not in cat:
+    chosen = choices.get("surfaces", {})
+    bad, bad_names = [], set()
+    for surface, aid in sorted(chosen.items()):
+        # A CHOICE UNDER A NAME NO LIST KNOWS IS THE SILENT ONE, and it is the
+        # failure this whole optional/required split exists around: `fetch()`
+        # filters by membership, so `cobbles` or `setts_01` in this file would
+        # download nothing, fail nothing, and leave the pack exactly as it was.
+        # Caught here instead, where it costs a second.
+        if surface not in FETCHABLE:
+            bad.append(f"{surface}: no list here knows that name, so --fetch "
+                       "would drop it without a word")
+            bad_names.add(surface)
+        elif aid not in cat:
             bad.append(f"{surface}: {aid} is not in the catalogue")
+            bad_names.add(surface)
         elif want not in cat[aid]:
             bad.append(f"{surface}: {aid} does not publish {want} ({cat[aid]})")
+            bad_names.add(surface)
         else:
             print(f"  ok  {surface:<12} {aid}")
     for b in bad:
         print("  FAIL " + b)
-    missing = [s for s in SURFACES if s not in choices.get("surfaces", {})]
+    missing = [s for s in SURFACES if s not in chosen]
     if missing:
         bad.append("no choice for: " + ", ".join(missing))
         print("  FAIL no choice for: " + ", ".join(missing))
-    print(f"{len(choices.get('surfaces', {})) - len(bad)}/{len(SURFACES)} surfaces "
-          "chosen, existing, and available at the wanted size")
+    # THE OPTIONAL HALF, PRINTED WITH ITS OWN DENOMINATOR. Absence here is not
+    # a failure, and saying nothing about it is how "nobody has picked one
+    # yet" and "the pick landed under a name this file does not know" come to
+    # read the same on a green run.
+    for s in sorted(OPTIONAL_SURFACES):
+        if s not in chosen:
+            print(f"  --  {s:<12} optional, no choice in choices.json yet")
+    ok_required = sum(1 for s in SURFACES if s in chosen and s not in bad_names)
+    ok_optional = sum(1 for s in OPTIONAL_SURFACES
+                      if s in chosen and s not in bad_names)
+    # COUNTED OVER THE LIST EACH NUMBER BELONGS TO. This line used to divide
+    # every chosen surface by the required list, so one optional pick would
+    # have printed 18/17.
+    print(f"{ok_required}/{len(SURFACES)} required surface(s) chosen, existing, "
+          "and available at the wanted size")
+    print(f"{ok_optional}/{len(OPTIONAL_SURFACES)} optional surface(s) chosen")
     return 1 if bad else 0
 
 
@@ -498,7 +555,7 @@ def fetch():
 
     wanted = {logical: aid
               for logical, aid in sorted(choices.get("surfaces", {}).items())
-              if logical in SURFACES}
+              if logical in FETCHABLE}
 
     # THE LINKS FIRST, ALL OF THEM, BEFORE ANY DOWNLOAD. A catalogue pulled
     # after this change already carries `link` per asset, in which case this
@@ -828,7 +885,7 @@ def measure_pack_cmd(names):
     the two printouts are "the new pack, printed beside the old". NO BOUND
     IS SET here and this prints no verdict key — a sourcing aid, not a gate,
     matching queue 300's own framing."""
-    names = list(names) or list(SURFACES)
+    names = list(names) or list(FETCHABLE)
     print(f"{'file':<14} {'lumMean':>8} {'lumSD':>7} {'chromaSpread':>13}")
     found = 0
     for logical in names:

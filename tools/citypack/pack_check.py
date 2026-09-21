@@ -22,11 +22,33 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parent.parent.parent
 PACK = ROOT / "ledger" / "Assets" / "StreamingAssets" / "CityPack"
 
-# Exactly the names `AssetLibrary` declares as public constants. Kept as a
+# The names `AssetLibrary` declares that the pack OWES it a file for. Kept as a
 # literal list rather than parsed out of the C#, because a parser that silently
 # matches nothing would make this check pass by finding no work to do.
+#
+# It is no longer every constant in that file and the word "exactly" came out
+# of this sentence when it stopped being true: `interior` and `paint_yellow`
+# are painted from the SurfaceSpec tint and want no pack file at all, and
+# `setts` is below, in the half that is allowed to be absent.
 SURFACES = ["asphalt", "sidewalk", "kerb", "brick_red", "brick_grey", "plaster",
             "concrete", "wood", "roof", "metal", "glass", "window"]
+
+# A LOGICAL SURFACE THE PACK MAY HOLD AND IS NOT REQUIRED TO, which is the
+# same contract `fetch_textures.OPTIONAL_SURFACES` carries and the half of
+# it this file is responsible for.
+#
+# `setts` (AssetLibrary.Setts) is a real surface with no photograph yet: the
+# shortlist has 148 candidates and the pick is made by eye. REQUIRING it
+# would turn this check red on every tree until that pick lands, which is
+# exactly what the "no pack yet" branch below refuses to do on the argument
+# that a check going red for work that has not started teaches people to
+# ignore it. Leaving it out of the file altogether is the other failure: the
+# texture would arrive and nothing here would ever open it.
+#
+# So it is checked by the SAME code as a required surface whenever a file is
+# there, and its absence prints a line with a denominator rather than
+# nothing at all.
+OPTIONAL = ["setts"]
 
 # The variants are OPTIONAL by design: the game asks for `brick_red` and takes
 # `brick_red_b` only if it is there, so a fetch that lands eleven of twelve
@@ -69,6 +91,76 @@ def dimensions(path):
     return None
 
 
+def inspect(logical, textures, found, sizes):
+    """Everything this check knows how to ask of ONE texture, asked the same
+    way of a required surface and of an optional one.
+
+    ONE IMPLEMENTATION ON PURPOSE. The optional half below runs the same
+    power-of-two, sane-size, non-empty and companion-map rules as the twelve,
+    and the shape this project keeps finding wrong is one idea with two
+    copies where the copy nobody looks at is missing a line."""
+    hit = None
+    for ext in EXTS:
+        p = textures / (logical + ext)
+        if p.exists():
+            hit = p
+            break
+    if hit is None:
+        check(False, f"{logical} — a texture the game will find", "no file")
+        return
+    found[logical] = hit
+    # AN EMPTY FILE IS A FILE. The voice pipeline shipped a run that
+    # produced zero-byte output and reported success.
+    if hit.stat().st_size < 4096:
+        check(False, f"{logical} — file has content", f"{hit.stat().st_size} bytes")
+        return
+    dim = dimensions(hit)
+    if dim is None:
+        check(False, f"{logical} — decodes as PNG or JPEG", "unreadable header")
+        return
+    w, h = dim
+    sizes.append((logical, w, h, hit.stat().st_size))
+    # BOTH SIDES POWER-OF-TWO. This asked for SQUARE, and the first real
+    # pack failed it twice: `kerb` and `brick_red` arrived 1024x512.
+    #
+    # The instinct was right and the rule was wrong. A non-square texture
+    # tiles perfectly well; what breaks is that `AssetLibrary` applied one
+    # tiling factor to both axes, so a 2:1 image got twice the texel density
+    # across as up — a stretched photograph, which is what the rule was
+    # groping at. That is fixed where it belongs, in `Core/TextureFit`,
+    # which splits the correction across the axes so texels come out square
+    # AND the surface still reads at its authored size. Fourteen CoreTests
+    # hold it there.
+    #
+    # So square is not a requirement any more, and rejecting it would throw
+    # away most of a CC0 library over an assumption the renderer has stopped
+    # making. What must still hold is that each side is a power of two: the
+    # mip chain halves cleanly and the correction's square root stays exact.
+    # 1024x768 would pass a square-or-not test and fail this one, correctly.
+    check(w and (w & (w - 1)) == 0, f"{logical} — width power-of-two", f"{w}")
+    check(h and (h & (h - 1)) == 0, f"{logical} — height power-of-two", f"{h}")
+    check(256 <= w <= 2048, f"{logical} — a sane size", f"{w}px")
+
+    # THE COMPANION NORMAL MAP, WHEN ONE SHIPS. The walk above takes
+    # LOGICAL names, so `asphalt_n.jpg` was invisible to every check
+    # here — present or corrupt, it read the same. Same shape rules
+    # as the albedo; absence is fine (the surface simply renders
+    # without relief), a broken one is not.
+    for suffix in ("_n", "_r"):
+        for ext2 in EXTS:
+            pn = textures / (logical + suffix + ext2)
+            if not pn.exists():
+                continue
+            nd = dimensions(pn)
+            if nd is None:
+                check(False, f"{logical}{suffix} — decodes as PNG or JPEG", "unreadable header")
+                break
+            nw, nh = nd
+            check(nw and (nw & (nw - 1)) == 0, f"{logical}{suffix} — width power-of-two", f"{nw}")
+            check(nh and (nh & (nh - 1)) == 0, f"{logical}{suffix} — height power-of-two", f"{nh}")
+            break
+
+
 def audit(pack=None):
     pack = pack or PACK
     textures = pack / "textures"
@@ -82,66 +174,23 @@ def audit(pack=None):
 
     found, sizes = {}, []
     for logical in SURFACES:
-        hit = None
-        for ext in EXTS:
-            p = textures / (logical + ext)
-            if p.exists():
-                hit = p
-                break
-        if hit is None:
-            check(False, f"{logical} — a texture the game will find", "no file")
-            continue
-        found[logical] = hit
-        # AN EMPTY FILE IS A FILE. The voice pipeline shipped a run that
-        # produced zero-byte output and reported success.
-        if hit.stat().st_size < 4096:
-            check(False, f"{logical} — file has content", f"{hit.stat().st_size} bytes")
-            continue
-        dim = dimensions(hit)
-        if dim is None:
-            check(False, f"{logical} — decodes as PNG or JPEG", "unreadable header")
-            continue
-        w, h = dim
-        sizes.append((logical, w, h, hit.stat().st_size))
-        # BOTH SIDES POWER-OF-TWO. This asked for SQUARE, and the first real
-        # pack failed it twice: `kerb` and `brick_red` arrived 1024x512.
-        #
-        # The instinct was right and the rule was wrong. A non-square texture
-        # tiles perfectly well; what breaks is that `AssetLibrary` applied one
-        # tiling factor to both axes, so a 2:1 image got twice the texel density
-        # across as up — a stretched photograph, which is what the rule was
-        # groping at. That is fixed where it belongs, in `Core/TextureFit`,
-        # which splits the correction across the axes so texels come out square
-        # AND the surface still reads at its authored size. Fourteen CoreTests
-        # hold it there.
-        #
-        # So square is not a requirement any more, and rejecting it would throw
-        # away most of a CC0 library over an assumption the renderer has stopped
-        # making. What must still hold is that each side is a power of two: the
-        # mip chain halves cleanly and the correction's square root stays exact.
-        # 1024x768 would pass a square-or-not test and fail this one, correctly.
-        check(w and (w & (w - 1)) == 0, f"{logical} — width power-of-two", f"{w}")
-        check(h and (h & (h - 1)) == 0, f"{logical} — height power-of-two", f"{h}")
-        check(256 <= w <= 2048, f"{logical} — a sane size", f"{w}px")
+        inspect(logical, textures, found, sizes)
 
-        # THE COMPANION NORMAL MAP, WHEN ONE SHIPS. The loop above walks
-        # LOGICAL names, so `asphalt_n.jpg` was invisible to every check
-        # here — present or corrupt, it read the same. Same shape rules
-        # as the albedo; absence is fine (the surface simply renders
-        # without relief), a broken one is not.
-        for suffix in ("_n", "_r"):
-            for ext2 in EXTS:
-                pn = textures / (logical + suffix + ext2)
-                if not pn.exists():
-                    continue
-                nd = dimensions(pn)
-                if nd is None:
-                    check(False, f"{logical}{suffix} — decodes as PNG or JPEG", "unreadable header")
-                    break
-                nw, nh = nd
-                check(nw and (nw & (nw - 1)) == 0, f"{logical}{suffix} — width power-of-two", f"{nw}")
-                check(nh and (nh & (nh - 1)) == 0, f"{logical}{suffix} — height power-of-two", f"{nh}")
-                break
+    # THE OPTIONAL HALF. Present means checked exactly as the twelve are;
+    # absent means a line that says so with its denominator, never silence,
+    # because a surface nobody has picked and a surface whose file went
+    # missing must not read the same.
+    optional_present = 0
+    for logical in OPTIONAL:
+        if not any((textures / (logical + ext)).exists() for ext in EXTS):
+            print(f"  --   {logical} — optional, no file in the pack yet; "
+                  "the pick has not landed and the game falls back to "
+                  "procedural")
+            continue
+        inspect(logical, textures, found, sizes)
+        optional_present += 1
+    print(f"  --   {optional_present}/{len(OPTIONAL)} optional surface(s) "
+          "present in the pack")
 
     if sizes:
         print()
@@ -149,9 +198,13 @@ def audit(pack=None):
             print(f"    {logical:<12} {w}x{h}  {n // 1024} KiB")
         print()
 
-    check(len(found) == len(SURFACES),
-          f"every one of the {len(SURFACES)} surfaces AssetLibrary asks for is present",
-          f"{len(found)} present, missing: "
+    # COUNTED OVER THE REQUIRED LIST ALONE. `found` also carries whatever
+    # optional surfaces turned up, so comparing its whole length against
+    # `SURFACES` would go red the day a setts photograph lands.
+    required_present = sum(1 for s in SURFACES if s in found)
+    check(required_present == len(SURFACES),
+          f"every one of the {len(SURFACES)} surfaces the pack owes AssetLibrary is present",
+          f"{required_present} present, missing: "
           + ", ".join(s for s in SURFACES if s not in found))
 
     # AND WHERE EVERY FILE CAME FROM. A pack with no provenance cannot be
@@ -260,6 +313,31 @@ def selftest():
         (pack / "ATTRIBUTION.json").write_text(json.dumps(
             {"surfaces": {s: {} for s in SURFACES}}))
         expect("an attribution with no licence is caught", lambda: audit(pack))
+
+        # THE OPTIONAL HALF, WATCHED BOTH WAYS, ACCEPTING CASE FIRST. A list
+        # nothing walks is the hole `OPTIONAL` exists to close, and a list
+        # that only ever says no is the other half of the same fault.
+        writeall()
+        (tex / "setts.png").write_bytes(png(1024, 1024))
+        (pack / "ATTRIBUTION.json").write_text(json.dumps(
+            {"surfaces": {s: {"licence": "CC0 1.0 Universal"}
+                          for s in SURFACES + OPTIONAL}}))
+        expect_pass("an optional surface that landed well-formed passes",
+                    lambda: audit(pack))
+
+        # AND THE CONDITION IT ASSERTS CAN HAPPEN, planted: the same file at a
+        # size the mip chain cannot halve is refused exactly as a required
+        # surface would be, which is what proves the optional walk runs the
+        # same rules rather than a softer copy of them.
+        (tex / "setts.png").write_bytes(png(1000, 1000))
+        expect("a broken optional surface is caught", lambda: audit(pack))
+
+        # Absence is not a failure. That is the whole reason this name is in
+        # `OPTIONAL` and not in `SURFACES`, and it is the case a tree without
+        # the fetch is in today.
+        (tex / "setts.png").unlink()
+        expect_pass("an optional surface that has not landed is not a failure",
+                    lambda: audit(pack))
 
         writeall()
         _fails = []
