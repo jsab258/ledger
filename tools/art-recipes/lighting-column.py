@@ -6,7 +6,14 @@ at scale." Read the ruling in full before touching this file:
 game-design/decision-2026-09-21-ruling-the-lamp-column-is-authored-and-it-is-the-authoring-lines-first-test.md
 
     blender --background --factory-startup --python tools/art-recipes/lighting-column.py \
-        -- --out DIR --root <workspace>
+        -- --out DIR --root <workspace> --commission <name> --run-sha <sha> \
+           --studio-sha <sha>
+
+THAT LINE IS THE LANE'S, NOT THIS FILE'S IDEA OF IT: it is what
+.github/workflows/ledger-art-blender-preview.yml executes on the self-hosted
+runner. Written here for a reader only; the selftest DERIVES it from the
+workflow and from run-recipe.py rather than from this docstring, because this
+paragraph is a comment and comments decay. See lane_contract().
 
 WHICH SOURCES GOVERN THE FORM, AND WHY THIS DIFFERS FROM THE FIRST BRIEF. A
 correction arrived mid-task, from Jafar, subordinating his own reply to the
@@ -119,6 +126,20 @@ RECIPE_STEM = os.path.splitext(os.path.basename(os.path.abspath(__file__)))[0]
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPEC_REL = "production/specs/vignette-scene.json"
 PIECES_REL = "production/specs/vignette-pieces.json"
+
+#: THE LANE'S ARGUMENT CONTRACT LIVES IN THE LANE, NOT HERE. These two files
+#: are the only places the Blender invocation is written down, and the
+#: selftest reads the flag list OUT OF THEM at test time rather than holding a
+#: retyped copy: a hardcoded list is the snapshot fault (queue 416) and goes
+#: stale the next time the lane changes. See lane_contract() and the
+#: `lane/` checks in selftest(). Paths are relative to the STUDIO checkout
+#: (this file's own ROOT), not to --root, which on the runner is the
+#: workspace above the studio checkout and holds no .github.
+LANE_WORKFLOW_REL = ".github/workflows/ledger-art-blender-preview.yml"
+LANE_WRAPPER_REL = "tools/art-recipes/run-recipe.py"
+#: Characters a commission name may not contain, same set and same reason as
+#: mickeys-blockout.py: the name reaches a path and a branch ref.
+ID_BAD = set(' \t/\\:*?"<>|=')
 
 AUTHORED_RES = (1600, 1100)
 ENGINE_CANDIDATES = ("BLENDER_EEVEE_NEXT", "BLENDER_EEVEE", "CYCLES")
@@ -825,7 +846,7 @@ def done_line(plan, opts, built, frames, status, seconds):
     extent = "%.3f/%.3f/%.3f" % (hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2])
     wmin_surf, wmin_val = plan["wear_min"][0], plan["wear_min"][1]["coverage"]
     return (
-        "%s done: status=%s runSha=%s studioSha=%s "
+        "%s done: status=%s commission=%s runSha=%s studioSha=%s "
         "specSha256=%s specPath=%s "
         "crossCheckAgree=%d/%d "
         "objectsPlanned=%d objectsBuilt=%s manifoldParts=%d/%d "
@@ -835,7 +856,8 @@ def done_line(plan, opts, built, frames, status, seconds):
         "previewsWrote=%s "
         "engineAsked=%s engineUsed=%s res=%dx%d "
         "outDir=%s root=%s elapsedSeconds=%.1f"
-        % (RECIPE_STEM, status, opts["run_sha"], opts["studio_sha"],
+        % (RECIPE_STEM, status, opts["commission"], opts["run_sha"],
+           opts["studio_sha"],
            plan["params"]["_sha256"][:16],
            os.path.relpath(plan["params"]["_path"], opts["root"]).replace(" ", "~"),
            plan["checks_agree"], plan["checks_total"],
@@ -857,8 +879,8 @@ def done_line(plan, opts, built, frames, status, seconds):
 def verdict_text(plan, opts, built, frames, status, seconds, now=None):
     stamp = int(now if now is not None else time.time())
     lines = [
-        "artPreviewVerdict=1 commit=%s recipe=%s status=%s at=%d"
-        % (opts["run_sha"], RECIPE_STEM, status, stamp),
+        "artPreviewVerdict=1 commit=%s commission=%s recipe=%s status=%s at=%d"
+        % (opts["run_sha"], opts["commission"], RECIPE_STEM, status, stamp),
         "",
         "The authoring line's first test (Jafar, 2026-09-21). Read this file",
         "instead of the job log. A run that measured nothing says NO RUN.",
@@ -881,18 +903,21 @@ def verdict_text(plan, opts, built, frames, status, seconds, now=None):
 
 def refusal_verdict(opts, reason, now=None):
     stamp = int(now if now is not None else time.time())
-    return ("artPreviewVerdict=1 commit=%s recipe=%s status=NO-RUN at=%d\n\n"
+    return ("artPreviewVerdict=1 commit=%s commission=%s recipe=%s "
+            "status=NO-RUN at=%d\n\n"
             "NO RUN - the recipe refused before any frame was rendered.\n"
             "%s refused: status=NO-RUN reason=%s root=%s outDir=%s "
             "previewsWrote=0/0-shots-reached nothing measured\n"
-            % (opts["run_sha"], RECIPE_STEM, stamp, RECIPE_STEM, reason,
-               opts["root"].replace(" ", "~"), (opts["out"] or "none").replace(" ", "~")))
+            % (opts["run_sha"], opts["commission"], RECIPE_STEM, stamp,
+               RECIPE_STEM, reason, opts["root"].replace(" ", "~"),
+               (opts["out"] or "none").replace(" ", "~")))
 
 
 def receipt_dict(plan, opts, built, frames, status, seconds):
     return {
         "schema": "ledger.art-preview.receipt/1",
         "status": status, "recipe": RECIPE_STEM,
+        "commission": opts["commission"],
         "run_sha": opts["run_sha"], "studio_sha": opts["studio_sha"],
         "blender_version": built["blender_version"] if built else "not-run",
         "spec_sha256": plan["params"]["_sha256"],
@@ -917,7 +942,8 @@ def parse_args(argv):
         args = args[1:] if args and args[0].endswith(".py") else args
     out = {"out": "", "root": ROOT, "spec": SPEC_REL, "res": AUTHORED_RES,
            "engine": "AUTO", "samples": 0, "run_sha": "not-passed",
-           "studio_sha": "not-passed", "blend": True, "dry_run": False,
+           "studio_sha": "not-passed", "commission": "not-passed",
+           "blend": True, "dry_run": False,
            "selftest": False, "plan": False, "error": ""}
     i = 0
 
@@ -946,6 +972,29 @@ def parse_args(argv):
             if v is None:
                 break
             out["spec"] = v
+            i += 2
+        elif a == "--commission":
+            # THE LANE ALWAYS PASSES THIS AND THIS RECIPE READS NO COMMISSION
+            # DATA, which are both true at once and neither is a reason to
+            # ignore it. The workflow renders into
+            # production/art/<commission>/previews and commits to
+            # art/<commission>, so the name is this run's PUBLICATION
+            # IDENTITY; it is validated exactly as mickeys-blockout.py
+            # validates it (it reaches a path and a branch ref) and recorded on
+            # line 1 of the verdict, in the done line and in the receipt,
+            # beside the same key the workflow's own NO-RUN verdicts carry.
+            # What it does NOT do here, unlike mickeys-blockout.py, is locate
+            # input files: this recipe's input is production/specs/, which is
+            # commission-independent. Recorded, not used to read: that is the
+            # whole difference, and it is written down rather than left as a
+            # silent no-op.
+            v = need(a)
+            if v is None:
+                break
+            if not v or set(v) & ID_BAD or ".." in v:
+                out["error"] = "commission-is-not-a-plain-name/" + v.replace(" ", "~")
+                break
+            out["commission"] = v
             i += 2
         elif a == "--run-sha":
             v = need(a)
@@ -1011,6 +1060,119 @@ def parse_args(argv):
     if not out["error"] and not out["out"] and not out["dry_run"] and not out["selftest"]:
         out["error"] = "missing-flag/--out"
     return out
+
+
+def _lane_flags_from_tokens(tokens):
+    """Tokens after a bare `--`, paired into (flag, takes-a-value).
+
+    A token starting with `--` is a flag; the token after it is its VALUE
+    SLOT unless that token is itself a flag. That is the whole grammar the
+    lane uses, and reading it this way means a flag ADDED to the lane later
+    arrives here on its own, which a retyped list cannot do.
+    """
+    flags = []
+    i = 0
+    while i < len(tokens):
+        token = tokens[i]
+        if not token.startswith("--"):
+            i += 1
+            continue
+        takes_value = i + 1 < len(tokens) and not tokens[i + 1].startswith("--")
+        flags.append((token, takes_value))
+        i += 2 if takes_value else 1
+    return flags
+
+
+def lane_contract(root=None):
+    """THE ARGUMENT CONTRACT, READ OUT OF THE LANE AT TEST TIME.
+
+    Run 35649856734 failed because this recipe's selftest tested the flags
+    the AUTHOR chose and the lane sends a different set: 48/48 green, and the
+    first real invocation died on `unknown-flag/--commission`. A list of flag
+    names retyped into the test would have gone stale exactly the same way
+    (queue 416's snapshot fault), so the list is DERIVED from the two files
+    that are the lane:
+
+        .github/workflows/ledger-art-blender-preview.yml   the Blender
+            invocation the self-hosted runner executes, read as text and
+            tokenised after its bare `--`.
+        tools/art-recipes/run-recipe.py   the wrapper any human or job uses,
+            asked for its argv by CALLING build_argv() rather than reading it.
+
+    Returns (flags, sources). `flags` is an ordered, deduplicated list of
+    (flag, takes-a-value) merged across the sources; `sources` is one
+    (name, status, relpath) per source TRIED, so a source that could not be
+    read is a named zero rather than a shorter list. Both counts are printed
+    by selftest(): a contract derived from nothing must never read as a
+    contract that passed.
+
+    Searched relative to this file's own ROOT rather than --root: on the
+    runner --root is the workspace ABOVE the studio checkout and holds no
+    .github, while this file always sits inside the studio checkout.
+    """
+    base = root or ROOT
+    sources = []
+    flags = []
+
+    workflow = os.path.join(base, LANE_WORKFLOW_REL)
+    matched = []
+    try:
+        with open(workflow, encoding="utf-8") as handle:
+            for number, line in enumerate(handle, 1):
+                tokens = line.split()
+                if "--python" not in tokens:
+                    continue
+                rest = tokens[tokens.index("--python"):]
+                if "--" not in rest:
+                    continue
+                found = _lane_flags_from_tokens(rest[rest.index("--") + 1:])
+                if found:
+                    matched.append((number, found))
+    except OSError as exc:
+        sources.append(("workflow", "unreadable/" + type(exc).__name__,
+                        LANE_WORKFLOW_REL))
+    else:
+        if matched:
+            for _, found in matched:
+                flags.extend(found)
+            sources.append(("workflow",
+                            "read/" + "+".join("L%d" % n for n, _ in matched),
+                            LANE_WORKFLOW_REL))
+        else:
+            sources.append(("workflow", "no-blender-invocation-line-matched",
+                            LANE_WORKFLOW_REL))
+
+    wrapper = os.path.join(base, LANE_WRAPPER_REL)
+    try:
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("lane_wrapper_probe_9xz",
+                                                      wrapper)
+        if spec is None or spec.loader is None:
+            raise ImportError("no-loader-for-" + LANE_WRAPPER_REL)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        argv = list(module.build_argv("blender", "recipe.py", "OUTDIR"))
+        found = (_lane_flags_from_tokens(argv[argv.index("--") + 1:])
+                 if "--" in argv else [])
+    except Exception as exc:  # an unreadable wrapper is a finding, not a crash
+        sources.append(("run-recipe", "unreadable/" + type(exc).__name__,
+                        LANE_WRAPPER_REL))
+    else:
+        if found:
+            flags.extend(found)
+            sources.append(("run-recipe", "read/build_argv", LANE_WRAPPER_REL))
+        else:
+            sources.append(("run-recipe", "build_argv-emitted-no-flags",
+                            LANE_WRAPPER_REL))
+
+    merged, seen = [], {}
+    for flag, takes_value in flags:
+        if flag in seen:
+            seen[flag][1] = seen[flag][1] or takes_value
+        else:
+            seen[flag] = [flag, takes_value]
+            merged.append(seen[flag])
+    return [(flag, takes) for flag, takes in merged], sources
 
 
 # ---------------------------------------------------------------------------
@@ -1131,7 +1293,129 @@ def selftest(root):
     check("args/dry-run-needs-no-out",
           parse_args(["x.py", "--", "--dry-run"])["error"] == "")
 
+    # --- THE LANE'S OWN CONTRACT, derived rather than retyped. This block is
+    # the one that would have caught run 35649856734: every check above tests
+    # a flag this file's author chose, and the lane sends --commission. See
+    # lane_contract() for where the list comes from and why it is read at test
+    # time. The accepting fixture is the live lane (the workflow and the
+    # wrapper as they stand in this checkout); the rejecting fixture is
+    # synthetic, a flag name that exists in no lane, below. ---
+    lane, lane_sources = lane_contract(root)
+    for name, status, rel in lane_sources:
+        check("lane/source-read/%s" % name, status.startswith("read"),
+              "%s status=%s" % (rel, status))
+    sources_read = sum(1 for _, s, _ in lane_sources if s.startswith("read"))
+    check("lane/contract-derived-at-all", len(lane) > 0,
+          "flagsDerived=0 sourcesRead=%d/%d-named nothing measured"
+          % (sources_read, len(lane_sources)))
+    # A VALUE THAT IS VALID FOR A NAME-SHAPED FLAG AND FOR NOTHING ELSE. The
+    # assertion below is about RECOGNITION, not about value shapes: a lane
+    # flag that takes a typed value (a --res the lane does not send today)
+    # would refuse this placeholder BY SHAPE, which is a different and
+    # non-failing fact, counted separately and printed. Only
+    # `unknown-flag/<flag>` is the fault this catches.
+    probe = "lane-probe"
+    # Prefixed with --out because a probe missing it refuses with
+    # `missing-flag/--out`, an error about the probe rather than about the
+    # flag under test. --out is itself in the derived list; if it ever left
+    # the lane this prefix would only make the probe stricter, never laxer.
+    recognised, shape_refused = 0, []
+    for flag, takes_value in lane:
+        argv = ["x.py", "--", "--out", probe, flag] + ([probe] if takes_value else [])
+        err = parse_args(argv)["error"]
+        ok = err != "unknown-flag/" + flag
+        check("lane/flag-recognised/%s" % flag, ok, err or "accepted")
+        recognised += 1 if ok else 0
+        if ok and err:
+            shape_refused.append("%s..%s" % (flag, err))
+    whole = ["x.py", "--"]
+    for flag, takes_value in lane:
+        whole.append(flag)
+        if takes_value:
+            whole.append(probe)
+    whole_err = parse_args(whole)["error"]
+    check("lane/whole-invocation-line-carries-no-unknown-flag",
+          not whole_err.startswith("unknown-flag/"), whole_err or "accepted")
+    # THE PRINTED SERIES, so a green run says how much it looked at. Zero
+    # derived flags print "nothing measured" and the check above is already
+    # red: a contract derived from nothing must never read as one that passed.
+    print("%s laneContract: sourcesRead=%d/%d-named flagsDerived=%d "
+          "flagsRecognised=%d/%d-derived valueShapeRefused=%d/%d-derived "
+          "wholeLine=%s flags=%s %s%s"
+          % (RECIPE_STEM, sources_read, len(lane_sources), len(lane),
+             recognised, len(lane), len(shape_refused), len(lane),
+             (whole_err or "accepted").replace(" ", "~"),
+             "/".join(f for f, _ in lane) or "none",
+             " ".join("source/%s=%s..%s" % (n, r.replace(" ", "~"), s)
+                      for n, s, r in lane_sources),
+             "" if lane else " nothing measured"))
+    if shape_refused:
+        print("%s laneContractNote: valueShapeRefused=%d/%d-derived flags=%s "
+              "(recognised but the name-shaped probe value was refused, which "
+              "is not an unknown flag)"
+              % (RECIPE_STEM, len(shape_refused), len(lane),
+                 "/".join(shape_refused)))
+
+    # --- WHAT A REFUSAL LEAVES BEHIND. Run 35649856734's second fault: the
+    # BAD-ARGS refusal fired before --out was established and wrote nothing at
+    # all, so a contract mismatch produced total silence and the only evidence
+    # was one line in a job log. main() is driven here for real, in a
+    # temporary directory, and the FILE ON DISK is what is asserted, not the
+    # code path. ---
+    import contextlib
+    import io
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        out_dir = os.path.join(td, "previews")
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            code = main(["x.py", "--", "--out", out_dir, "--root", root,
+                         "--commission", "atlas-01", "--run-sha", "deadbee",
+                         "--not-a-lane-flag-9xz"])
+        said = buf.getvalue()
+        path = os.path.join(out_dir, RECIPE_STEM + "-verdict.txt")
+        wrote = os.path.exists(path)
+        text = open(path, encoding="utf-8").read() if wrote else ""
+        check("refusal/bad-args-exits-2", code == 2, "exit=%s" % code)
+        check("refusal/bad-args-writes-a-verdict-file-when---out-parsed",
+              wrote and len(text) > 0,
+              "path=%s bytes=%d" % (path, len(text)))
+        check("refusal/bad-args-verdict-line-1-is-the-lane-format",
+              text.split("\n")[0].startswith("artPreviewVerdict=1 ")
+              and "status=NO-RUN" in text.split("\n")[0],
+              text.split("\n")[0] or "empty-file")
+        check("refusal/bad-args-verdict-names-the-rejected-flag",
+              "--not-a-lane-flag-9xz" in text, text[:120] or "empty-file")
+        # The workflow's gate greps this key out of the committed file
+        # (ledger-art-blender-preview.yml, "Gate on what was measured"), so a
+        # refusal verdict without it is a file the gate cannot read.
+        check("refusal/bad-args-verdict-carries-previewsWrote-for-the-gate",
+              "previewsWrote=0/0-shots-reached" in text
+              and "nothing measured" in text, text[:120] or "empty-file")
+        check("refusal/bad-args-stdout-names-the-path-and-the-byte-count",
+              "verdict: path=" in said and "bytes=%d" % len(text) in said,
+              said.strip().replace("\n", " | ") or "silent")
+    # AND THE OTHER HALF, which is a different fact: with no usable --out
+    # nothing CAN be written, and the recipe has to say so in those words
+    # rather than fall silent, because "could not" and "chose not to" are not
+    # the same finding.
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        code = main(["x.py", "--", "--root", root, "--not-a-lane-flag-9xz"])
+    said = buf.getvalue()
+    check("refusal/no-out-dir-exits-2", code == 2, "exit=%s" % code)
+    check("refusal/no-out-dir-says-it-could-not-write-a-verdict",
+          "could not write a verdict" in said
+          and "verdictWritten=0/1-expected" in said,
+          said.strip().replace("\n", " | ") or "silent")
+
     # --- rejecting fixtures: synthetic, exist nowhere in this repo ---
+    # THE LANE CHECK'S OWN REJECTING CASE: a flag no lane sends must still be
+    # refused by name, so the recognition assertion above cannot be satisfied
+    # by a parser that accepts everything.
+    check("reject/lane-shaped-flag-that-exists-in-no-lane",
+          parse_args(["x.py", "--", "--out", "o", "--not-a-lane-flag-9xz",
+                      "v"])["error"] == "unknown-flag/--not-a-lane-flag-9xz")
     check("reject/missing-spec-file",
           load_lighting_spec(root, "production/specs/does-not-exist-9xz.json")[1]
           .startswith("no-spec-file/"))
@@ -1419,8 +1703,30 @@ def main(argv):
     started = time.time()
     opts = parse_args(argv)
     if opts["error"]:
+        # A BAD-ARGS REFUSAL LEAVES THE SAME RECORD EVERY OTHER REFUSAL
+        # LEAVES, WHEN IT CAN. Measured on run 35649856734 (job 106499292604,
+        # 2026-09-21, the first real Blender run): this recipe refused
+        # `unknown-flag/--commission` during argument parsing, which is BEFORE
+        # the output directory was established, so it wrote no PNG, no verdict
+        # and staged nothing, and the only evidence of the whole run was one
+        # line in a job log. The workflow's gate caught the silence correctly
+        # (artGateStatus=NO-VERDICT) and published nothing false, but a refusal
+        # whose own record does not survive is the fault being fixed here.
+        #
+        # --out IS KNOWN THE MOMENT IT PARSES, and the lane passes it first, so
+        # a flag rejected later in the line still has a directory to write to.
+        # The two outcomes are printed as DIFFERENT FACTS: a verdict written
+        # (path and bytes) versus could not write a verdict (and why), never a
+        # silence that reads like a choice.
         print("%s refused: status=BAD-ARGS reason=%s nothing measured"
               % (RECIPE_STEM, opts["error"]))
+        if opts["out"]:
+            _write_refusal(opts, "BAD-ARGS/" + opts["error"])
+        else:
+            print("%s note: verdictWritten=0/1-expected "
+                  "reason=no-out-dir-parsed/--out-absent-or-valueless "
+                  "(could not write a verdict here, which is not the same "
+                  "fact as chose not to) nothing measured" % RECIPE_STEM)
         return 2
     opts["root"] = os.path.abspath(opts["root"])
 
@@ -1555,15 +1861,32 @@ def _write_verdict(plan, opts, built, frames, status, seconds, out_dir):
 
 
 def _write_refusal(opts, reason):
+    """The refusal's own record, written wherever --out reached.
+
+    Returns True when the file is on disk. The failure branch says COULD NOT
+    WRITE A VERDICT in those words, because a reader who finds no file needs
+    to tell a refused write from a refusal that never tried: the second is a
+    decision, the first is a broken output directory.
+    """
     out_dir = os.path.abspath(opts["out"])
+    path = os.path.join(out_dir, RECIPE_STEM + "-verdict.txt")
+    text = refusal_verdict(opts, reason)
     try:
         os.makedirs(out_dir, exist_ok=True)
-        path = os.path.join(out_dir, RECIPE_STEM + "-verdict.txt")
         with open(path, "w", encoding="utf-8") as handle:
-            handle.write(refusal_verdict(opts, reason))
-        print("%s verdict: path=%s status=NO-RUN" % (RECIPE_STEM, path.replace(" ", "~")))
+            handle.write(text)
+        size = os.path.getsize(path)
     except OSError as exc:
-        print("%s note: verdictNotWritten=%s" % (RECIPE_STEM, type(exc).__name__))
+        print("%s note: verdictWritten=0/1-expected "
+              "reason=out-dir-unusable/%s outDir=%s "
+              "(could not write a verdict here, which is not the same fact as "
+              "chose not to) nothing measured"
+              % (RECIPE_STEM, type(exc).__name__, out_dir.replace(" ", "~")))
+        return False
+    print("%s verdict: path=%s bytes=%d lines=%d status=NO-RUN cause=%s"
+          % (RECIPE_STEM, path.replace(" ", "~"), size, text.count("\n"),
+             reason.replace(" ", "~")))
+    return True
 
 
 if __name__ == "__main__" or bpy is not None:
