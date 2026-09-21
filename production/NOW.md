@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-21 16:2xZ, after run 56 landed: the card is out of the hero frame and the figure stands alone in it.
+STATUS: LIVE. Verified 2026-09-21 19:1xZ, after the setts landed IN the pack and his terrace-fronts ruling was recorded.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -8,6 +8,149 @@ session would otherwise duplicate, abandon, or wait for forever.
 
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
+
+## 2026-09-21 19:1xZ HIS SECOND RULING OF THE EVENING, THE SETTS IN THE PACK, AND TWO THINGS THE STUDIO TOLD HIM THAT WERE NOT TRUE
+
+READ THIS SECTION BEFORE THE 12:2xZ ONE BELOW. That section is this morning
+and it is still true about the week's shape; this one is tonight and it
+changes what is in front.
+
+HIS RULING, VERBATIM, arriving about 18:30Z: "Claimed: City Sample.. No free
+British terrace kit exists on Fab. The good ones cost eighteen to a hundred and
+fifty francs, and I am not buying. So the terrace fronts are authored: in
+Blender from the atlas plans, under the grime rule, the way Mickey's blockout
+was, dressed in free scanned materials. Everything else comes from the free
+libraries and the kits we already hold, including the British lamps. Go."
+
+Full record, with what it decides and what it amends:
+`game-design/decision-2026-09-21-ruling-the-terrace-fronts-are-authored-and-everything-else-comes-from-what-we-hold.md`.
+It AMENDS the kit-first ruling rather than replacing it: he did the shopping
+himself, found no free terrace kit, and the gap is now marked MISSING by the
+only person who can mark it, so it goes to the authoring line. Kit first still
+holds for everything that is not a terrace front.
+
+### DONE AND VERIFIED, not reported
+
+THE SETTS ARE IN THE PACK. `setts.jpg`, `setts_n.jpg`, `setts_r.jpg` at
+2048x2048, landed by citypack-fetch run 2 at commit 1cebc0b6, which CONTAINS
+2b346b13 by ancestry rather than by branch movement. The pick is
+PavingStones115B, chosen from 155 of 155 downloaded at 1K by cutting the
+2102x5566 contact sheet into four bands of five rows and looking at every one
+at full 256px tile. Shipped 2K measures 120.4/41.5/7.4 against the 1K
+candidate's 120.4/40.6/7.3: mean and chroma identical, variance slightly higher
+at the larger size, which is what downsampling predicts, so the file in the
+pack IS the candidate that was picked. `pack_check` reads "pack ok";
+ATTRIBUTION.json names PavingStones115B.
+
+NOT THE RANK LEADER, AND THE REASON IS THE REFERENCE. 115C leads on variation
+at lumSD 42.2 and was refused: its baked near-white against near-black
+alternation sits further from the Hook sheet's own roadway, which is dark and
+low contrast under water with the joints barely readable, and a texture that
+arrives that contrasty leaves the authored grime layer nothing to do. It passes
+the "must not read as the shipped pavement" test on a NUMBER: chromaSpread 7.3
+against sidewalk's 21.1, and sidewalk.jpg IS PavingStones067 out of the same
+category.
+
+THE THREE BEST OF 155 WERE THREE OF THE SEVEN THE FILTER HAD BEEN DROPPING.
+115A, 115B and 115C publish only as lettered variants; the candidate list ran
+001 to 151 with gaps at 115, 125 and 126 because the id filter could not match
+a letter suffix, while the prose beside it claimed the category whole. Widened
+148 to 155 hours before the run.
+
+THE SHORTLIST GUARD WAS BROKEN BY THE WORK IT EXISTED TO ENABLE, and that is
+why the sheet was late. `--selftest` pinned three constants off kerb.jpg which
+the shortlist route itself then replaced twenty minutes later. Worse, the
+synthetic half wrote its expectation as `round(LUMA_R * 255, 1)`, the constant
+under test compared against itself, so it passed for any weight: a red
+instrument that was also blind. Rebuilt as a differential against a pure-python
+reference on the live files, plus four synthetic images pinning the Rec. 709
+triple and the population SD. IT THEN EXTENDED ITSELF THE SAME DAY: reads
+18/18 now where it read 17/18 this morning, zero edits. Queue 416 files the
+class and is NOT to be chased.
+
+QUEUE 403 LANDED, the batch unit and the rejection count, with the series
+printed and NO BOUND read off it (`batchesPriced=0/of=5`). It found that
+`build-dashboard.py` collects any four-cell pipe row and sums by ISO week, so a
+batch written as a table row would have inflated the verified-piece count in
+silence; the rows are blocks for that reason.
+
+THE TERRACE FRONT SPEC STATION LANDED: `production/specs/terrace-fronts.md`,
+644 lines, canon-gate clean, every number tagged MEASURED / DERIVED / CHOSEN /
+PRECEDENT at point of use. Nothing marked MISSING, with the denominator stated
+(14 facade elements against 17 held textures, 4 procedural surfaces and the
+decal library, all 14 resolved). It caught a LIVE CANON VIOLATION on the way:
+the only source for west_north_bay1 named it a Bookmaker with race sheets, and
+D17 and canon.md both put gambling out ENTIRELY with no carve-out, so it was
+renamed and corrected on sight.
+
+### TWO THINGS THE STUDIO TOLD HIM THAT WERE NOT TRUE
+
+Both are in `ledger-v2/studio-v2/learning.md` as L37 and L38, and both reached
+his phone as messageId 125.
+
+1. It said a builder was wiring setts when NONE HAD BEEN SPAWNED. Checked at
+   17:04Z: the only spawn since 16:40Z was a finished content-wrangler and
+   `grep -c Setts AssetLibrary.cs` returned 0.
+2. It said the British kit lamps were unwired and that `MakeLamp` builds its
+   own geometry. Both false: 71316fa1 wired all six forms on 2026-08-25 and the
+   landed verdict counts `kitBy=[lamp:354/354/0/0refused`.
+
+THE CLASS IS WHAT MATTERS. A claim about the studio's OWN ACTIONS is worse than
+a misread measurement, because every number here he can re-derive from the tree
+and "a builder is running" he cannot. L38's general form is the transferable
+half: A STALE DOC HEADER RE-ISSUES FINISHED WORK AS A NEW DISPATCH, and it is
+worse than a stale comment because a comment sits beside the code that refutes
+it while a survey sits in a folder nobody diffs. `kit-survey.md` still said
+"nothing in this report is wired" a month after its own dispatch landed. Its
+banner is corrected so it cannot do it a third time.
+
+### THIS CONTAINER CANNOT SEND, AND A COLD SESSION MUST NOT REDISCOVER THIS THE HARD WAY
+
+Tonight's rollback took `tools/runner/config.local`, which is gitignored
+because it holds his token and chat id and which the studio must never hold.
+`telegram-bot.py --send-outbox` now prints "CANNOT START: config.local not
+found". THE WORKING PATH IS HIS PC: the supervisor scheduled task sweeps the
+committed outbox, starts at logon and restarts on failure. messageId 125 went
+that way, 32 seconds from file commit to send, proved by
+`production/pc-ops/outbox-sweep.txt` reading `sent=1 refused=0 sendFailed=0`
+with `sweepCheckoutContains=yes`. If the channel ever looks silent: RUN THE
+ENTRY POINT AND READ IT, do not propose a mechanism.
+
+### WHAT IS IN FLIGHT AND WHAT IS NEXT
+
+IN FLIGHT: queue 370, the spawn-log column, with an instrument-builder. It is
+the LAST unmet precondition queue 389 names for the facade; 403 was the other
+and it landed.
+
+NEXT, once 370 lands: the terrace front AUTHOR station. D53 POINT 5 GOVERNS AND
+IS NOT OPTIONAL: the facade is authored with its wear as a SEPARABLE LAYER so
+coverage can be printed, it prints `wearCoverage` with its batch, it is the
+FIRST POINT IN THE SERIES, and THE FLOOR IS NOT TO BE INVENTED. Batch
+`b005-terrace-front-01` is open in `production/throughput.md` with its BEFORE
+reading at 18:42:08Z; the AFTER reading is owed when it resolves and a rejected
+attempt must show in `attemptsRejected` rather than as silence.
+
+WAITING ON HIM: the lamp column card, `production/decision-queue.md` under
+WAITING, deadline 2026-09-23, default KEEP THE BLOCKOUT. The kit lamp columns
+are 0.37m SQUARE in section against the vignette's 0.114m ROUND shaft, the real
+diameter of a British lighting column, so a kit lamp in the photoreal frame is
+a post 3.2 times too fat. His instruction is already satisfied in the Unity
+town; a photoreal round tapered column is held by nothing in the tree.
+
+OPEN AND UNSETTLED: City Sample is CLAIMED but its licence is unread, and the
+allowlist admits "Fab purchases under the Fab Standard License" which a free
+claim is not, so nothing from it ships until that is settled. The `.uasset`
+blind spot at `tools/attribution-check.py:381` must land in the SAME change as
+the first kit import, which City Sample would be.
+
+FILED AND NOT CHASED under rule 11: queue 416 (guards pinned to a snapshot of
+the live tree; `guard-tester` has never once been selected in the whole agent
+log) and queue 417 (setts tiling is Vector2(8,8) copied from sidewalk, the two
+stones are visibly not the same size, the catalogue holds no physical dimension
+and ambientCG is unreachable from here).
+
+BUDGET: 13/17 at 16:2xZ, row 2026-09-21b, Fable governs, 68 to the ceiling.
+`production/budget.md` is the authority.
 
 ## 2026-09-21 12:2xZ THE RESET, HIS ORDER FOR THE WEEK, AND WHAT IS MOVING
 
