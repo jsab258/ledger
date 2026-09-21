@@ -87,6 +87,66 @@ Two consequences follow, and both are implemented, not just described:
      ratios above 1.0 as a property of the formula. Both the authored and
      naive figures are still printed every run (lcNeck), now informational
      rather than gating: see NECK_ARC_RADIUS_RATIO.
+  2B. REVISED AGAIN, 2026-09-21, SAME DAY: the 0.6-ratio render above landed
+     and was compared against the sheet by BOUNDING BOX, not only by the
+     row-count read point 2 already used, and refused. The sheet's own
+     fixture, re-traced independently this pass (crop x233-285 y745-800,
+     same luminance-threshold-vs-sky method, PLUS the small isolated dark
+     patch at y751-752 counted in as the ridge-top bump/photocell rather
+     than noise, since it is dark and contiguous with the curve two rows
+     below it, not scattered): 25 px wide by 11 px tall, y751-761 x237-261,
+     ASPECT 2.27:1, FLAT AND WIDE (SHEET_REF["assembly_bbox_aspect"]). The
+     0.6-ratio render's own neck+lantern envelope read far closer to
+     SQUARE. This is not a tuning miss, it is a CLOSED-FORM property of a
+     single circular arc: a quarter turn (vertical tangent to horizontal
+     tangent) has a local bounding box of exactly radius_m by radius_m, for
+     ANY radius, because the same R sets both the sideways reach
+     (R(1-cos90)=R) and the rise (R sin90=R) of that turn. The shipped arc
+     swept PAST 90 degrees (131.81) to reach outreach_m sideways at all
+     (point 2 above), so its own bend still read close to square rather
+     than flat: the extra sweep buys width but keeps costing height on the
+     way back down. NO SINGLE RADIUS FIXES THIS: aspect-at-the-bend is a
+     property of using only curvature to cover the reach, not of which
+     curvature.
+     THE FIX is a family the earlier closed-form search (single arcs and
+     opposite-curvature arc pairs, point 2 above) never included: a literal
+     STRAIGHT segment, zero curvature, which covers reach WITHOUT costing
+     any turning angle. neck_bracket() (below neck_arc(), which is KEPT,
+     UNCHANGED and UNUSED BY THE SHIPPED PATH as of this revision, for its
+     own closed-form coverage and selftest) splits the neck into a TIGHT
+     quarter circle corner, fixed at exactly 90 degrees so the level arm
+     that follows is tangent-continuous with it (no kink at that joint),
+     then a LEVEL straight arm to outreach_m, then the same short vertical
+     dropper as before into the pinned mount. This decouples "how tight is
+     the corner" from "how much reach is covered": NECK_CORNER_RADIUS_RATIO
+     can be small (tight, matching the sheet's compact read) while the arm
+     alone, free of any height cost because a level line costs no height by
+     definition, carries whatever reach the corner did not.
+     THE DROPPER IS STILL UNAVOIDABLE, for the same reason as point 2's own
+     proof: the arm's height is mh + radius_m, always ABOVE mh for a
+     positive radius, and the pinned mount sits BELOW mh. A member reaching
+     the mount with NO vertical segment anywhere, while ALSO starting
+     tangent-vertical at the shaft top, is still impossible (the same
+     sin(sweep)>=0-for-sweep-under-180 argument, now applied to the arm's
+     constant height rather than an arc's varying one). What IS achieved is
+     a LEVEL ARM, the member that actually reads as the fixture's reach,
+     arriving at zero degrees from horizontal; the lantern hangs LEVEL
+     beneath the arm's own short end on a dropper of length radius_m +
+     lantern_height_m/2. That is the brief's own words for this shape ("a
+     flat wide lantern hanging level beneath the arm's end"), not a
+     workaround for them.
+     NECK_CORNER_RADIUS_RATIO=0.28 is chosen so the printed assembly aspect
+     (lcAssembly, from assembly_bbox()) lands near 2.27, not read off the
+     photo: the sheet's own 25x11 reading is explicitly LOW-TO-MODERATE
+     CONFIDENCE (SHEET_REF["confidence"]) and, measured a second way this
+     same pass (9 rows instead of 11, from a stricter widen-threshold that
+     excludes the ridge-top bump), the SAME crop gives 2.78, a 20%+ swing
+     from a one-row difference at this resolution.
+     ASSEMBLY_ASPECT_TOLERANCE_PCT=25 is set from that observed swing, not
+     assumed. lcAssembly is PRINTED every run, per D41 (2026-09-08): this
+     is visual work, ungated; the studio compares the rendered frame
+     against the sheet and iterates, and no selftest check asserts
+     proximity to 2.27.
   3. A wall fixture seen on the same sheet, a dark conical bracket lamp with
      a wire cage guard under the Harbour Office eaves, is a DIFFERENT, real
      asset the street will need. It is named here and NOT built: see the
@@ -242,6 +302,13 @@ NECK_DIAMETER_RATIO = 0.8
 #: not invented precision), so 0.6 is a labelled choice bounded by the
 #: dropper-elimination requirement above, not a value read off the photo.
 NECK_ARC_RADIUS_RATIO = 0.6
+#: KEPT FOR neck_arc() ONLY, which is itself kept for its own closed-form
+#: properties and selftest coverage (module docstring point 2B) and is
+#: UNUSED BY THE SHIPPED PATH as of 2026-09-21 (same day, second revision):
+#: neck_curve() calls neck_bracket() (near NECK_CORNER_RADIUS_RATIO) instead.
+#: Left in place, unchanged, rather than deleted, because deleting a
+#: working, still-true, still-tested closed-form utility to shrink a diff is
+#: not this file's own convention anywhere else in it.
 
 #: THE SHEET MEASUREMENT ITSELF, taken this session, NOT recomputed at run
 #: time (this script does not open images; see plan_lines()'s lcSheetRef
@@ -275,9 +342,54 @@ SHEET_REF = {
     "measured_at": "2026-09-21",
     "curve_vertical_fraction": "~8px/~450px-visible-pole~(~1.8pct),compact,top-concentrated",
     "head_width_to_height": "~23px:7px~is~3.3to1~at~widest~traced~row~(y756,x238-261)",
+    # SECOND, INDEPENDENT RE-TRACE, same session, same crop, same method, of
+    # the FULL fixture's own bounding box rather than only the widest row:
+    # rows y751-761 (the isolated 2-row dark patch at y751-752, the
+    # ridge-top bump/photocell, counted in because it is dark and
+    # contiguous with the curve two rows below it, not scattered), x237-261.
+    # 25 px wide, 11 px tall. Sensitivity checked, not assumed: a stricter
+    # widen-threshold that excludes the 2-row bump gives 9 rows and 2.78:1
+    # instead of 11 rows and 2.27:1, a 20%+ swing from one row of difference
+    # at this resolution, which is why ASSEMBLY_ASPECT_TOLERANCE_PCT below
+    # is 25, not a smaller number chosen to look precise.
+    "assembly_bbox_aspect": "25px:11px~is~2.27to1~(y751-761~x237-261,~flat~and~wide)",
     "dropper_visible": "no/widens-and-returns-to-plain-pole-width-within~7~rows",
     "confidence": "low-to-moderate/pole~is~2-3px~wide~at~native~res,~near~the~image's~own~floor",
 }
+
+#: THE SHIPPED CORNER RADIUS, 2026-09-21 (same day, second revision): see
+#: module docstring point 2B and neck_bracket()'s own docstring for the
+#: construction this feeds (a fixed 90-degree corner, then a level arm,
+#: then a dropper) and why it replaces NECK_ARC_RADIUS_RATIO's single
+#: continuous arc as what ships. R = ratio * outreach_m = 0.28 * 0.5 =
+#: 0.14 m: a tight corner (smaller than the old 0.6-ratio's 0.30 m radius),
+#: chosen so assembly_bbox()'s printed aspect lands near the sheet's own
+#: 2.27:1 (SHEET_REF["assembly_bbox_aspect"]), not read off the photo
+#: directly: no dimensioned drawing of the reference exists to read a
+#: radius from (rule 8), so this is a labelled choice bounded by that
+#: target and by external_dropper_m staying under lantern_width_m (checked
+#: every run by selftest, the same requirement NECK_ARC_RADIUS_RATIO's own
+#: comment named for the earlier construction), not a value the sheet
+#: itself yields.
+NECK_CORNER_RADIUS_RATIO = 0.28
+
+#: THE TARGET AND ITS TOLERANCE, printed every run (lcAssembly) beside the
+#: achieved aspect so the comparison is in the verdict, not only in a
+#: report: SHEET_REF["assembly_bbox_aspect"]'s own figure, 2.27, and a
+#: tolerance MEASURED from this session's own re-trace sensitivity, not
+#: assumed: reading the same crop with a stricter widen-threshold (9 rows,
+#: excluding the small ridge-top bump) instead of 11 gives 2.78, a 20.5
+#: percent swing from ONE row of difference at 11 px tall, which is near
+#: the image's own resolution floor (SHEET_REF["confidence"]). 25 is chosen
+#: to comfortably cover that observed swing rather than to look precise.
+#: Per D41 (2026-09-08): this is VISUAL, UNGATED work; the studio compares
+#: the rendered frame against the sheet and iterates. NOTHING in selftest
+#: asserts assembly_aspect is within this tolerance: it is printed, not
+#: gated, exactly the demotion the module docstring's point 2 already
+#: applied to the naive-quarter-circle comparison, and for the same reason
+#: (a gate whose baseline was never the reference is worse than no gate).
+ASSEMBLY_SHEET_TARGET_ASPECT = 2.27
+ASSEMBLY_ASPECT_TOLERANCE_PCT = 25.0
 
 #: The lantern's total height (spec lantern.height_m) is split between a
 #: plain housing body and a shallow pitched canopy on top, so the OVERALL
@@ -634,20 +746,114 @@ def neck_arc(params, radius_ratio=NECK_ARC_RADIUS_RATIO):
     }
 
 
-def neck_curve(params, arc_segments=NECK_TUBE_SEGMENTS, radius_ratio=NECK_ARC_RADIUS_RATIO):
-    """neck_arc()'s dict, plus "points" (arc_segments+1 facets along the
-    circle, then the dropper's far end) and "total_length_m" (arc portion
-    plus dropper, the whole tube's length)."""
-    neck = neck_arc(params, radius_ratio)
-    radius, sweep, mh, reach = (neck["radius_m"], neck["sweep_rad"],
-                                neck["mh"], neck["reach"])
-    points = []
-    for i in range(arc_segments + 1):
-        t = sweep * i / float(arc_segments)
-        points.append([radius * (1.0 - math.cos(t)), 0.0, mh + radius * math.sin(t)])
-    points.append([reach, 0.0, neck["lantern_z"]])
+def neck_bracket(params, radius_ratio=NECK_CORNER_RADIUS_RATIO, corner_segments=9):
+    """A dict describing the neck's TIGHT CORNER (a true quarter circle,
+    constant curvature, fixed at exactly 90 degrees so the LEVEL ARM that
+    follows is tangent-continuous with it: no visible kink at that joint),
+    the level arm itself, and the DROPPER that carries the arm's end down
+    to the exact spec-pinned lantern mount. REPLACES neck_arc() (kept
+    above, unused by the shipped path) as what ships, 2026-09-21 (same day,
+    second revision): see the module docstring's point 2B for why, and
+    NECK_CORNER_RADIUS_RATIO's own comment for the chosen radius.
+
+    CLOSED FORM. The corner never needs to be solved for (unlike
+    neck_arc()'s, whose sweep is wherever the circle first reaches
+    outreach_m sideways): it is fixed at pi/2 by construction, so the
+    endpoint algebra is direct rather than inverse trigonometry:
+
+        R = radius_ratio * outreach_m                        (corner radius)
+        corner: (0, mh) -> (R, mh+R), tangent rotates smoothly from
+            vertical to horizontal over the fixed sweep of pi/2
+        arm_length_m = outreach_m - R                         (must be > 0)
+        arm: level at z = mh+R, from x=R to x=outreach_m
+        dropper_length_m = (mh+R) - lantern_z = R + lantern_height_m/2
+        curvature = 1/R on the corner, exactly 0 on the arm and the dropper
+
+    radius_ratio must keep R strictly inside (0, outreach_m) or the arm has
+    non-positive length; refused with ValueError rather than silently
+    clamped, so a future edit to this ratio fails loudly instead of quietly
+    shipping a shape that stopped reaching outreach_m (selftest exercises
+    both the accepting case, the shipped ratio, and a planted rejecting
+    case: reject/neck-bracket-refuses-radius-ratio-at-least-one).
+    """
+    mh = params["mounting_height_m"]
+    reach = params["outreach_m"]
+    lantern_z = mh - params["lantern_height_m"] * 0.5
+    radius = radius_ratio * reach
+    if not (0.0 < radius < reach):
+        raise ValueError(
+            "neck_bracket: radius_ratio=%.4f gives corner radius_m=%.4f, "
+            "not inside (0, outreach_m=%.4f); the arm would have "
+            "non-positive length" % (radius_ratio, radius, reach))
+    corner_points = []
+    for i in range(corner_segments + 1):
+        t = (math.pi / 2.0) * i / float(corner_segments)
+        corner_points.append([radius * (1.0 - math.cos(t)), 0.0,
+                              mh + radius * math.sin(t)])
+    arm_end_point = (reach, 0.0, mh + radius)
+    arm_length = reach - radius
+    dropper_length = (mh + radius) - lantern_z
+    tangent_at_arm_end = (1.0, 0.0, 0.0)     # exact: the arm is level, by
+                                              # construction, not measured
+    dropper_dir = (0.0, 0.0, -1.0)
+    joint_cos = max(-1.0, min(1.0, sum(a * b for a, b in
+                                       zip(tangent_at_arm_end, dropper_dir))))
+    return {
+        "radius_m": radius, "radius_ratio": radius_ratio,
+        "corner_sweep_deg": 90.0,
+        "corner_points": corner_points,
+        "arc_portion_length_m": radius * (math.pi / 2.0),
+        "curvature_per_m": 1.0 / radius,
+        "arm_end_point": arm_end_point, "arm_length_m": arm_length,
+        # "dropper_start_point" is read by build_parts() (wear_lantern_drip),
+        # plan_lines() (externalDropper_m) and selftest() (the same check):
+        # the point the final straight vertical drop into the mount begins,
+        # exactly what neck_arc()'s own "arc_end_point" meant when that
+        # function's arc fed the dropper directly with no arm between them.
+        "dropper_start_point": arm_end_point,
+        "dropper_length_m": dropper_length,
+        "joint_angle_deg": math.degrees(math.acos(joint_cos)),
+        "mh": mh, "reach": reach, "lantern_z": lantern_z,
+    }
+
+
+def assembly_bbox(params, neck):
+    """(width_m, height_m): the HEAD ASSEMBLY's own local X-Z envelope,
+    CLOSED FORM from the same params and neck dict every other printed
+    number here already trusts, not a second, independent source:
+
+        width_m  = outreach_m + lantern_length_m/2   (shaft top, x=0, to the
+                    roof's own outer edge, which overhangs the housing)
+        height_m = neck["radius_m"] + lantern_height_m   (the corner/arm's
+                    own peak, mh+radius_m, down to the lantern's bottom,
+                    mh-lantern_height_m)
+
+    Printed every run (lcAssembly) beside SHEET_REF["assembly_bbox_aspect"]
+    and ASSEMBLY_SHEET_TARGET_ASPECT so the comparison is in the verdict.
+    EXCLUDES the neck tube's own few-centimetre radius at the x=0 end (the
+    neck is ~0.09 m across against a ~0.5-0.8 m assembly; folding it in
+    would move the printed aspect by a few percent, not change the
+    finding) and is a DIRECTIONAL figure, not a dimensioned one, for the
+    same reason SHEET_REF's own confidence is rated low-to-moderate: see
+    ASSEMBLY_ASPECT_TOLERANCE_PCT.
+    """
+    width = params["outreach_m"] + params["lantern_length_m"] / 2.0
+    height = neck["radius_m"] + params["lantern_height_m"]
+    return width, height
+
+
+def neck_curve(params, radius_ratio=NECK_CORNER_RADIUS_RATIO, corner_segments=9):
+    """neck_bracket()'s dict, plus "points" (the corner's own samples, then
+    the arm's end, then the dropper's far end: one continuous list for
+    _tube_verts) and "total_length_m" (corner arc length, plus arm length,
+    plus dropper length: the whole tube's length)."""
+    neck = neck_bracket(params, radius_ratio, corner_segments)
+    points = [list(p) for p in neck["corner_points"]]
+    points.append(list(neck["arm_end_point"]))
+    points.append([neck["reach"], 0.0, neck["lantern_z"]])
     neck["points"] = points
-    neck["total_length_m"] = neck["arc_portion_length_m"] + neck["dropper_length_m"]
+    neck["total_length_m"] = (neck["arc_portion_length_m"] + neck["arm_length_m"]
+                              + neck["dropper_length_m"])
     return neck
 
 
@@ -865,9 +1071,11 @@ def build_parts(params):
                   "verts": v, "faces": f,
                   "area_m2": math.pi * params["neck_diameter_m"] * neck["total_length_m"],
                   "wear_of": "neck",
-                  "note": "one continuous swept tube, radius_m=%.4f sweep_deg=%.2f "
-                          "plus a %.4f m dropper, total_length_m=%.4f"
-                          % (neck["radius_m"], neck["sweep_deg"],
+                  "note": "one continuous swept tube: a %.4f m radius quarter-"
+                          "circle corner (fixed 90 degree sweep), then a "
+                          "%.4f m level arm, then a %.4f m dropper, "
+                          "total_length_m=%.4f"
+                          % (neck["radius_m"], neck["arm_length_m"],
                              neck["dropper_length_m"], neck["total_length_m"])})
 
     lz0 = mh - lh   # bottom of the whole lantern assembly (box centred at mh - lh/2)
@@ -948,7 +1156,7 @@ def build_parts(params):
     dr_l = min(WEAR["lantern_drip"]["length_m"], neck["dropper_length_m"] * 0.9)
     dr_w = WEAR["lantern_drip"]["width_ratio_of_neck_d"] * params["neck_diameter_m"]
     dr_r = params["neck_diameter_m"] / 2.0 + WEAR_STANDOFF_M
-    drip_z = (neck["arc_end_point"][2] + neck["lantern_z"]) / 2.0   # dropper midpoint
+    drip_z = (neck["dropper_start_point"][2] + neck["lantern_z"]) / 2.0   # dropper midpoint
     v, f = _box_verts(reach + dr_r, 0, drip_z, WEAR_STANDOFF_M * 2, dr_w, dr_l)
     parts.append({"id": "wear_lantern_drip", "kind": "box", "material": "grime",
                   "verts": v, "faces": f, "area_m2": dr_w * dr_l, "wear_of": "neck",
@@ -1003,6 +1211,7 @@ def build_plan(root, opts):
     naive_len, naive_curv = naive_quarter_circle(params)
     lo = [min(min(v[k] for v in p["verts"]) for p in parts) for k in range(3)]
     hi = [max(max(v[k] for v in p["verts"]) for p in parts) for k in range(3)]
+    assembly_width_m, assembly_height_m = assembly_bbox(params, neck)
     return {
         "params": params, "pieces": pieces, "checks": checks,
         "checks_agree": agree, "checks_total": total_checks,
@@ -1013,6 +1222,9 @@ def build_plan(root, opts):
         "naive_arc_length_m": naive_len, "naive_curvature_per_m": naive_curv,
         "bounds_lo": lo, "bounds_hi": hi,
         "objects_planned": len(parts),
+        "assembly_width_m": assembly_width_m, "assembly_height_m": assembly_height_m,
+        "assembly_aspect": (assembly_width_m / assembly_height_m
+                            if assembly_height_m > 0 else 0.0),
     }, ""
 
 
@@ -1027,18 +1239,20 @@ def plan_lines(plan):
                      % (label, spec_v, piece_v, abs(spec_v - piece_v),
                         "yes" if ok else "no"))
     neck = plan["neck"]
-    external_dropper_m = neck["arc_end_point"][2] - plan["params"]["mounting_height_m"]
+    external_dropper_m = (neck["dropper_start_point"][2]
+                          - plan["params"]["mounting_height_m"])
     lines.append(
-        "lcNeck radius_m=%.4f radiusRatio=%.2f sweep_deg=%.2f "
-        "arcPortion_m=%.4f dropperLength_m=%.4f externalDropper_m=%.4f "
+        "lcNeck cornerRadius_m=%.4f cornerRadiusRatio=%.2f cornerSweep_deg=%.2f "
+        "armLength_m=%.4f dropperLength_m=%.4f externalDropper_m=%.4f "
         "jointAngle_deg=%.2f "
-        "authoredArcTotal_m=%.4f naiveQuarterArc_m=%.4f "
-        "arcLongerThanNaive=%s arcRatio=%.4f "
-        "authoredCurvature_perM=%.4f naiveQuarterCurvature_perM=%.4f "
+        "authoredTotalLength_m=%.4f naiveQuarterArc_m=%.4f "
+        "totalLongerThanNaive=%s totalRatio=%.4f "
+        "cornerCurvature_perM=%.4f naiveQuarterCurvature_perM=%.4f "
         "shallowerThanNaive=%s curvatureRatio=%.4f "
-        "naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling"
-        % (neck["radius_m"], neck["radius_ratio"], neck["sweep_deg"],
-           neck["arc_portion_length_m"], neck["dropper_length_m"], external_dropper_m,
+        "naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling "
+        "constructionPer=2026-09-21-corner-arm-dropper-revision"
+        % (neck["radius_m"], neck["radius_ratio"], neck["corner_sweep_deg"],
+           neck["arm_length_m"], neck["dropper_length_m"], external_dropper_m,
            neck["joint_angle_deg"],
            plan["neck_arc_length_m"], plan["naive_arc_length_m"],
            "yes" if plan["neck_arc_length_m"] > plan["naive_arc_length_m"] else "no",
@@ -1066,6 +1280,25 @@ def plan_lines(plan):
            SHEET_REF["measured_at"], SHEET_REF["curve_vertical_fraction"],
            SHEET_REF["head_width_to_height"], SHEET_REF["dropper_visible"],
            SHEET_REF["confidence"]))
+    # THE ACHIEVED-VS-SHEET COMPARISON ITSELF, printed so it is in the
+    # verdict and not only in a report nobody archives beside it (Jafar,
+    # 2026-09-21, on the 0.6-ratio render: "print the achieved aspect every
+    # run beside the sheet's figure"). UNGATED per D41 (2026-09-08): visual
+    # work, the studio compares the frame against the sheet and iterates;
+    # no selftest check asserts withinTolerance=yes.
+    delta_pct = (100.0 * (plan["assembly_aspect"] - ASSEMBLY_SHEET_TARGET_ASPECT)
+                / ASSEMBLY_SHEET_TARGET_ASPECT)
+    within_tol = abs(delta_pct) <= ASSEMBLY_ASPECT_TOLERANCE_PCT
+    lines.append(
+        "lcAssembly widthM=%.4f heightM=%.4f aspect=%.3f "
+        "sheetTargetAspect=%.2f sheetTargetSource=%s "
+        "deltaPct=%.1f toleranceAppliedPct=%.0f withinTolerance=%s "
+        "toleranceBasis=own-remeasure-2026-09-21-9to11px-row-swing-2.27to2.78 "
+        "gate=none/D41-ungated-visual-comparison"
+        % (plan["assembly_width_m"], plan["assembly_height_m"],
+           plan["assembly_aspect"], ASSEMBLY_SHEET_TARGET_ASPECT,
+           SHEET_REF["source"], delta_pct, ASSEMBLY_ASPECT_TOLERANCE_PCT,
+           "yes" if within_tol else "no"))
     for p in plan["parts"]:
         lines.append(
             "lcPart id=%s kind=%s material=%s verts=%d faces=%d area_m2=%.5f "
@@ -1511,24 +1744,73 @@ def selftest(root):
         # z = mounting_height_m, where the "tab" the first render showed
         # actually reads) must stay shorter than the lantern's own width, so
         # any residual straight stub reads as subordinate to the fitting it
-        # feeds into rather than as a separate rod. NECK_ARC_RADIUS_RATIO's
-        # own comment explains why this is the requirement the shipped ratio
-        # is chosen to clear, not an arbitrary bound.
-        external_dropper_m = neck["arc_end_point"][2] - params["mounting_height_m"]
+        # feeds into rather than as a separate rod. Since the 2026-09-21
+        # corner+arm+dropper revision this is exactly the corner's own
+        # radius_m (the arm sits level at mh+radius_m, so the whole external
+        # run above the housing IS the corner's radius); NECK_CORNER_RADIUS_
+        # RATIO's own comment explains why this is a requirement the shipped
+        # ratio is chosen to clear, not an arbitrary bound.
+        external_dropper_m = (neck["dropper_start_point"][2]
+                              - params["mounting_height_m"])
         check("accept/external-dropper-shorter-than-lantern-width",
               0.0 <= external_dropper_m < params["lantern_width_m"],
               "%.4f m vs lantern_width_m=%.4f m"
               % (external_dropper_m, params["lantern_width_m"]))
         # CONSTANT CURVATURE, VERIFIED ON THE ACTUAL SAMPLED POINTS rather
         # than trusted from the formula that generated them: every point on
-        # the arc portion (all but the appended dropper point) must sit at
-        # exactly radius_m from the arc's own centre (radius_m, mounting_height_m).
+        # the CORNER (the arm and dropper are straight, zero curvature, and
+        # do not lie on this circle at all except at the corner's own last
+        # point, which is also the arm's first) must sit at exactly
+        # radius_m from the corner's own centre (radius_m, mounting_height_m).
         cx, cz, R = neck["radius_m"], params["mounting_height_m"], neck["radius_m"]
-        arc_pts = neck["points"][:-1]   # last point is the dropper's far end
-        radii = [math.hypot(p[0] - cx, p[2] - cz) for p in arc_pts]
-        check("accept/neck-arc-points-lie-on-one-circle-of-the-authored-radius",
+        radii = [math.hypot(p[0] - cx, p[2] - cz) for p in neck["corner_points"]]
+        check("accept/neck-corner-points-lie-on-one-circle-of-the-authored-radius",
               all(abs(r - R) < 1e-6 for r in radii),
               "maxDeviation=%.8f over %d points" % (max(abs(r - R) for r in radii), len(radii)))
+        # THE ARM IS LEVEL AND THE DROPPER IS VERTICAL, verified on the
+        # actual sampled points rather than assumed from the construction:
+        # this is the claim the sheet comparison (module docstring point
+        # 2B, lcAssembly) rests on, so it is checked here, not only implied
+        # by neck_bracket()'s own math.
+        corner_end_z = neck["corner_points"][-1][2]
+        check("accept/neck-arm-is-level",
+              abs(neck["arm_end_point"][2] - corner_end_z) < 1e-9,
+              "armEnd.z=%.6f vs corner's own last sample.z=%.6f"
+              % (neck["arm_end_point"][2], corner_end_z))
+        check("accept/neck-dropper-is-vertical",
+              abs(neck["points"][-1][0] - neck["arm_end_point"][0]) < 1e-9,
+              "dropperEnd.x=%.6f vs armEnd.x=%.6f"
+              % (neck["points"][-1][0], neck["arm_end_point"][0]))
+        check("accept/neck-joint-is-a-right-angle-arm-to-dropper",
+              abs(neck["joint_angle_deg"] - 90.0) < 1e-6,
+              "%.6f" % neck["joint_angle_deg"])
+        # THE ASSEMBLY ASPECT ITSELF IS PRINTED, NOT GATED (D41, 2026-09-08:
+        # visual work, ungated, the studio compares and iterates), so only
+        # its ARITHMETIC is checked here, not its proximity to the sheet.
+        aw, ah = assembly_bbox(params, neck)
+        check("accept/assembly-width-is-reach-plus-half-lantern-length",
+              abs(aw - (params["outreach_m"] + params["lantern_length_m"] / 2.0))
+              < 1e-9)
+        check("accept/assembly-height-is-corner-radius-plus-lantern-height",
+              abs(ah - (neck["radius_m"] + params["lantern_height_m"])) < 1e-9)
+        # THE GUARD ON radius_ratio, TESTED ON BOTH THE CASE IT SHOULD PASS
+        # AND A PLANTED CASE IT MUST REFUSE (instruments.md 5b): a ratio
+        # that puts the corner radius at or past outreach_m, where the arm's
+        # length would be zero or negative, must raise.
+        try:
+            neck_bracket(params, radius_ratio=NECK_CORNER_RADIUS_RATIO)
+            guard_accepts_shipped = True
+        except ValueError:
+            guard_accepts_shipped = False
+        check("accept/neck-bracket-accepts-the-shipped-radius-ratio",
+              guard_accepts_shipped)
+        try:
+            neck_bracket(params, radius_ratio=1.2)
+            guard_rejected_oversized = False
+        except ValueError:
+            guard_rejected_oversized = True
+        check("reject/neck-bracket-refuses-radius-ratio-at-least-one",
+              guard_rejected_oversized)
 
         # THE CLOSED-FORM PROOF, exercised over a RANGE of radius ratios that
         # does NOT include the shipped value (0.6, since 2026-09-21): this
