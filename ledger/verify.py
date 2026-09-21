@@ -834,6 +834,65 @@ def throughput_batches():
                      got.get("batchesCountingRejections", "?")))
 
 
+def spawn_cost_column():
+    """WHAT A SESSION TOUCHED, and the denominators that reading cannot
+    answer for. Queue 370, Jafar 2026-09-16: "The split cannot be computed at
+    all until the spawn log records what a session touched, not just who ran
+    and why. Add the column before claiming the ratio again, or stop printing
+    the number." `gameShareDay` below took the second branch and still does;
+    `tools/spawn-cost.py` is the first, and this gate is what keeps it honest.
+
+    WHY IT IS GATED HERE. Until today `tools/spawn-cost.py --selftest` was
+    reachable from nothing a person runs before committing, which is queue
+    416's fault one file along: a guard with one chance a week to speak.
+
+    WHAT IT GATES: the selftest, accepting case FIRST, whose accepting
+    fixtures are the two live logs and whose rejecting fixtures are synthetic
+    ids that exist in neither.
+
+    WHAT IT REPORTS RATHER THAN GATES: the coverage counts. `--work-split`
+    exits 2 while no session carries an answerable `wrote` value, and that is
+    a young column, not a fault; gating on it would fail a commit for the
+    passage of time. The counts ride the done line so that how PARTIAL the
+    column is is read at the instant somebody commits, never reconstructed.
+
+    THE ONE HAZARD, NAMED: the selftest's accepting fixtures are live files,
+    so truncating or rotating either log turns this red for a reason that is
+    not a code change. That is the trade the project has already taken for
+    `throughput_batches` and for the same reason: a fixture nothing writes to
+    stops describing the thing it guards."""
+    tool = ROOT.parent / "tools" / "spawn-cost.py"
+    code, out = run(["python3", str(tool), "--selftest"])
+    m = re.search(r"spawn-cost --selftest: \w+\. (\d+) passed, (\d+) failed",
+                  out)
+    if not m:
+        return False, "SPAWNCOST: selftest did not report"
+    if m.group(2) != "0":
+        bad = [l.strip() for l in out.splitlines()
+               if l.strip().startswith("FAIL")]
+        return False, "SPAWNCOST: " + _cap(bad, strip=5, width=91,
+                                           tail="selftest failed")
+    wcode, rep = run(["python3", str(tool), "--work-split"])
+    if wcode not in (0, 2):
+        bad = [l.strip() for l in rep.splitlines() if l.strip()]
+        return False, "SPAWNCOST: " + _cap(bad, strip=0, width=91,
+                                           tail="work-split refused")
+
+    def _tok(k):
+        # THE WORDS, NEVER A ZERO: a key absent from the reading means the
+        # reading did not get that far, which is a different fact from 0.
+        mm = re.search(r"\b%s=(\S+)" % re.escape(k), rep)
+        return mm.group(1) if mm else NOTHING_MEASURED
+    # Every value below is a COUNT over the whole log, cumulative, and every
+    # one that is a numerator carries its own denominator in the token.
+    return True, ("%s spawn-cost selftest checks, wroteColumn answerable=%s "
+                  "unanswerable=%s spawnRowsCumulative=%s "
+                  "spawnIdsWithNoStopRow=%s"
+                  % (m.group(1), _tok("answerable"), _tok("unanswerable"),
+                     _tok("spawnRowsCumulative"),
+                     _tok("spawnIdsWithNoStopRow")))
+
+
 def decal_ink():
     """What each decal set lays down — the instrument, not a verdict on it.
 
@@ -8826,7 +8885,7 @@ def main():
                ue_material_selftest,
                ue_prop_import_selftest, sky_tools_selftest,
                propview, meshgen_suite, ref_bench,
-               decal_ink, throughput_batches,
+               decal_ink, throughput_batches, spawn_cost_column,
                frame_drift, verdict_keys, verdict_format, verdict_dupkeys,
                verdict_emit_dupkeys, vignette_shot_files,
                runs_map_to_commits, gate_detail_ceiling,

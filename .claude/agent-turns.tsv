@@ -346,3 +346,4 @@ when	agent	tier	turns	alines	agentId	wrote	fileToolsOfAll
 2026-09-21T18:48:27Z	instrument-builder	opus	47	101	aad985f372b963533	tools:4	4/56
 2026-09-21T18:58:06Z	producer	fable	13	49	aa0f2624cbad0180b	production/outbox:1	1/35
 2026-09-21T19:03:03Z	world-designer	sonnet	84	188	ab232b11f8ed3aba4	production/specs:1	1/111
+2026-09-21T19:35:23Z	instrument-builder	opus	80	149	a029f1d7776c4adf1	tools:26,ledger:2	28/92

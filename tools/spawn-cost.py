@@ -71,6 +71,17 @@ the rows it could not answer for beside the rows it could. 325 rows on this
 machine predate the column and read `pre-column` for ever: nothing rewrites a
 row, and the transcripts behind them went with their containers.
 
+AND THE SPLIT CARRIES A SECOND DENOMINATOR, because the four buckets above
+are buckets of STOP-log rows and queue 370's sentence names the SPAWN log. A
+spawn that never reached SubagentStop wrote no row here at all: it is in no
+bucket, on no side, and invisible to `sessions=`. `--work-split` therefore
+prints the spawn census beside its own reading, both directions
+(`spawnIdsWithNoStopRow`, `stopIdsWithNoSpawnRow`), and splits the second at
+the first id the spawn log ever carried, so a structural gap that can only
+hold still cannot be read as a hook failing now. Measured 2026-09-21:
+747 spawn rows, 217 carrying an id, 145 distinct ids, 11 with no stop row,
+and 163 of this file's 297 sessions predating the id column entirely.
+
 EXIT CODES, distinct per outcome. 0 a reading was printed. 1 the log or the
 directory could not be read. 2 nothing measured: no rows, no transcripts, or
 (--work-split) a session set whose `wrote` column answered for nobody, which
@@ -962,6 +973,48 @@ def selftest():
     ok("GAME_AGENTS is read from ledger/verify.py and not copied here: one "
        "definition of the withdrawn proxy",
        ga_live and "systems-builder" in ga_live, (ga_src, sorted(ga_live or [])))
+    # THE LIVE SPAWN LOG IS THE ACCEPTING FIXTURE for the coverage half.
+    # SHAPE, NEVER TODAY'S COUNTS: every number below moves on the next
+    # spawn, so what is asserted is that they NEST. Pinning 747 here would
+    # make the next agent that runs turn this selftest red for working.
+    cen_live = spawn_census()
+    ok("the LIVE spawn log is walked once and nests: rows=%s "
+       "rowsCarryingAnId=%s distinctIds=%s, ids <= rowsWithId <= rows"
+       % (cen_live and cen_live["rows"], cen_live and cen_live["rowsWithId"],
+          cen_live and len(cen_live["roles"])),
+       cen_live and cen_live["rows"] > 0
+       and len(cen_live["roles"]) <= cen_live["rowsWithId"]
+       and cen_live["rowsWithId"] <= cen_live["rows"],
+       cen_live)
+    ok("and `_roles` is that same walk and not a second one, so the join and "
+       "the denominator can never disagree",
+       _roles() == (cen_live or {}).get("roles"),
+       (len(_roles()), len((cen_live or {}).get("roles") or {})))
+    wl_live = work_split(live_rows or [], (cen_live or {}).get("roles") or {},
+                         ga_live, cen_live)
+    ok("the LIVE coverage pair is consistent in BOTH directions: "
+       "noStopRow=%s of %s spawn id(s), noSpawnRow=%s of %s session(s)"
+       % (wl_live["noStopRow"], wl_live["spawnIds"], wl_live["noSpawnRow"],
+          wl_live["walked"]),
+       0 <= wl_live["noStopRow"] <= wl_live["spawnIds"]
+       and 0 <= wl_live["noSpawnRow"] <= wl_live["walked"],
+       (wl_live["noStopRow"], wl_live["spawnIds"], wl_live["noSpawnRow"],
+        wl_live["walked"]))
+    ok("and the LIVE structural boundary is read off the file rather than "
+       "pinned: firstIdAt=%s, and its two halves add back to the total"
+       % wl_live["firstIdAt"],
+       wl_live["firstIdAt"]
+       and wl_live["noSpawnRowPreId"] + wl_live["noSpawnRowSince"]
+       == wl_live["noSpawnRow"],
+       (wl_live["firstIdAt"], wl_live["noSpawnRowPreId"],
+        wl_live["noSpawnRowSince"], wl_live["noSpawnRow"]))
+    ok("and the four stop-log buckets still add to the sessions walked, so "
+       "the fifth (noStopRow) was added BESIDE that arithmetic and not "
+       "inside it",
+       wl_live["answerable"] + wl_live["preColumn"]
+       + wl_live["transcriptGone"] + wl_live["noToolCall"]
+       + wl_live["noFileWrite"] == wl_live["walked"],
+       (wl_live["answerable"], wl_live["preColumn"], wl_live["walked"]))
 
     print("\n  E370, THE CASES A PARTIAL COLUMN WOULD READ AS A COMPLETE "
           "ONE (rejecting fixtures, synthetic):\n")
@@ -1058,6 +1111,104 @@ def selftest():
        (w["walked"], w["answerable"], w["preColumn"], w["noFileWrite"])
        == (2, 1, 1, 0),
        (w["walked"], w["answerable"], w["preColumn"], w["noFileWrite"]))
+    # PLANTED, THE FIFTH BUCKET: a spawn that never reached SubagentStop is
+    # in NONE of the four above, so it is counted against the spawn log's own
+    # census. The two ghosts are synthetic ids that exist in no live file, so
+    # doing the work this tool prompts can never break this fixture.
+    scensus = sroot / ".claude" / "agent-log.tsv"
+    scensus.parent.mkdir(parents=True, exist_ok=True)
+    scensus.write_text(
+        "when\tagent\tmodel\treason\tagentId\n"
+        # A row from before the agentId column: two columns, joinable to
+        # nothing, and it must still be COUNTED in rowsCumulative.
+        "2026-08-24T16:54:19Z\tgeneral-purpose\n"
+        "2026-09-21T00:00:00Z\tsystems-builder\topus\tdefault\tnew370\n"
+        "2026-09-21T00:00:01Z\tplanner\topus\tdefault\tzzz-ghost370a\n"
+        "2026-09-21T00:00:02Z\tplanner\topus\tdefault\tzzz-ghost370b\n",
+        encoding="utf-8")
+    cen = spawn_census(sroot)
+    ok("PLANTED: the spawn census counts a row that carries NO id rather "
+       "than dropping it: rows=4 rowsWithId=3 distinctIds=3",
+       (cen["rows"], cen["rowsWithId"], len(cen["roles"])) == (4, 3, 3),
+       (cen["rows"], cen["rowsWithId"], len(cen["roles"])))
+    wc = work_split(mixed, cen["roles"], frozenset(("systems-builder",)), cen)
+    ok("PLANTED, THE FIFTH BUCKET: 2 spawn id(s) of 3 never reached "
+       "SubagentStop and are in NO bucket of the four, and 1 session of 2 "
+       "here has no spawn row -- both directions counted",
+       (wc["noStopRow"], wc["spawnIds"], wc["noSpawnRow"], wc["walked"])
+       == (2, 3, 1, 2),
+       (wc["noStopRow"], wc["spawnIds"], wc["noSpawnRow"], wc["walked"]))
+    import contextlib as _ctx
+    import io as _io
+    _buf = _io.StringIO()
+    with _ctx.redirect_stdout(_buf):
+        report_work_split(wc, "fixture", "fixture")
+    _out = _buf.getvalue()
+    # EXACT WHITESPACE TOKENS, not substrings. The substring form of this
+    # assertion passed while the line ended `spawnIdsWithNoStopRow=2/3:` and
+    # ledger/verify.py's reader took the colon as part of the number.
+    _toks = set(_out.split())
+    ok("and the REPORT says so in tokens a grep can take WHOLE, each beside "
+       "its own denominator and none carrying punctuation",
+       {"spawnRowsCumulative=4", "rowsCarryingAnId=3/4",
+        "distinctSpawnIds=3", "spawnIdsWithNoStopRow=2/3",
+        "stopIdsWithNoSpawnRow=1/2"} <= _toks,
+       [t for t in sorted(_toks) if t.startswith(("spawn", "stop", "rows",
+                                                  "distinct"))][:6])
+    ok("and no coverage value carries a space, because every reader of a "
+       "key=value line splits on whitespace",
+       all(" " not in tok.split("=", 1)[1]
+           for line in _out.splitlines() for tok in line.split()
+           if tok.startswith(("spawnRowsCumulative=", "rowsCarryingAnId=",
+                              "distinctSpawnIds=", "spawnIdsWithNoStopRow=",
+                              "stopIdsWithNoSpawnRow="))),
+       [l for l in _out.splitlines() if "spawnRowsCumulative" in l])
+    ok("PLANTED: the 1 session with no spawn row is dated BEFORE the first "
+       "id the spawn log ever carried, so it reads structural and not as a "
+       "hook failing now",
+       (wc["firstIdAt"], wc["noSpawnRowPreId"], wc["noSpawnRowSince"])
+       == ("2026-09-21T00:00:00Z", 1, 0),
+       (wc["firstIdAt"], wc["noSpawnRowPreId"], wc["noSpawnRowSince"]))
+    # PLANTED, THE ALARM: a stop row NEWER than that instant whose id the
+    # spawn log never recorded. This is the start hook missing a spawn, and
+    # it must not be able to hide inside the structural count.
+    missed = list(mixed) + [dict(mixed[1], agentId="zzz-missed370",
+                                 when="2026-09-21T02:00:00Z")]
+    wm = work_split(missed, cen["roles"], frozenset(("systems-builder",)),
+                    cen)
+    ok("PLANTED, THE ALARM: a stop row newer than the first recorded id and "
+       "absent from the spawn log counts as sinceThatInstant=1, never "
+       "folded into the structural half",
+       (wm["noSpawnRow"], wm["noSpawnRowPreId"], wm["noSpawnRowSince"])
+       == (2, 1, 1),
+       (wm["noSpawnRow"], wm["noSpawnRowPreId"], wm["noSpawnRowSince"]))
+    # A SPAWN LOG THAT EXISTS AND CARRIES NO ID AT ALL: the boundary cannot
+    # be computed, so the line says so instead of printing 0 of 0.
+    _buf3 = _io.StringIO()
+    _cen0 = {"rows": 1, "rowsWithId": 0, "roles": {}, "firstIdAt": None}
+    with _ctx.redirect_stdout(_buf3):
+        report_work_split(work_split(mixed, {}, None, _cen0), "fixture",
+                          "fixture")
+    ok("a spawn log carrying NO id at all cannot say which sessions could "
+       "have joined, and prints the words rather than 0",
+       "%s: no spawn row carries an id" % NOTHING_MEASURED in _buf3.getvalue(),
+       [l for l in _buf3.getvalue().splitlines() if "COULD have joined" in l])
+    _buf2 = _io.StringIO()
+    with _ctx.redirect_stdout(_buf2):
+        report_work_split(work_split(mixed, {}, None, None), "fixture",
+                          "fixture")
+    ok("NEVER-RAN FOR THE COVERAGE HALF: an unreadable spawn log prints the "
+       "words and NOT a zero, because 'saw all of it' and 'could not look' "
+       "must never share a number",
+       "%s: the spawn log could not be read" % NOTHING_MEASURED
+       in _buf2.getvalue()
+       and "spawnIdsWithNoStopRow" not in _buf2.getvalue(),
+       [l for l in _buf2.getvalue().splitlines() if "SPAWN LOG" in l
+        or NOTHING_MEASURED in l][:3])
+    ok("and a missing spawn log is None and never an empty census, so no "
+       "caller can read it as a log with nothing in it",
+       spawn_census(sroot / "no-such-root-370") is None,
+       spawn_census(sroot / "no-such-root-370"))
     drift = header_drift(slog)
     ok("and the stale header ANNOUNCES ITSELF rather than being rewritten "
        "under a live log", drift and drift[0] == 6 and drift[1] == 8, drift)
@@ -1117,20 +1268,55 @@ def selftest():
     return 0 if not failed else 3
 
 
-def _spawn_rows(root=None):
-    """How many rows the SubagentStart log carries, for the coverage pair."""
+def spawn_census(root=None):
+    """ONE walker over `.claude/agent-log.tsv`, three products.
+
+    A second walker over one file is the copy nobody fixes when the first is
+    fixed, so `_spawn_rows` and `_roles` both come off this one.
+
+    Returns None when the file is absent (the caller prints the words), else:
+      rows        CUMULATIVE rows under the header. This is the SPAWN CENSUS:
+                  one row per SubagentStart, resumes included, which is the
+                  denominator queue 370's sentence is about.
+      rowsWithId  how many of those carry an agentId at all. The column was
+                  added after the log started, so the remainder is permanent
+                  and can be joined to nothing, ever.
+      roles       agentId -> role name, LAST-WINS per id (a resumed spawn
+                  writes a second row under the same id).
+      firstIdAt   the EARLIEST `when` on a row that carries an id, or None.
+                  Not decoration: it is the instant before which no stop row
+                  can possibly be joined, so it separates a structural gap
+                  from a hook that is failing now. Measured rather than
+                  pinned, because the day the column started is a fact of
+                  the file and not of this program.
+    """
     p = pathlib.Path(root or REPO) / ".claude" / "agent-log.tsv"
-    if not p.exists():
+    try:
+        text = p.read_text(encoding="utf-8", errors="replace")
+    except OSError:
         return None
-    n = 0
-    for i, line in enumerate(p.read_text(encoding="utf-8",
-                                         errors="replace").splitlines()):
+    rows, with_id, roles, first_id_at = 0, 0, {}, None
+    for i, line in enumerate(text.splitlines()):
         if not line.strip():
             continue
-        if i == 0 and line.split("\t")[0].strip() == "when":
+        cols = line.split("\t")
+        if i == 0 and cols[0].strip() == "when":
             continue
-        n += 1
-    return n
+        rows += 1
+        if len(cols) >= 5 and cols[4].strip():
+            with_id += 1
+            roles[cols[4].strip()] = cols[1].strip()
+            when = cols[0].strip()
+            if when and (first_id_at is None or when < first_id_at):
+                first_id_at = when
+    return {"rows": rows, "rowsWithId": with_id, "roles": roles,
+            "firstIdAt": first_id_at}
+
+
+def _spawn_rows(root=None):
+    """How many rows the SubagentStart log carries, for the coverage pair."""
+    c = spawn_census(root)
+    return None if c is None else c["rows"]
 
 
 # -------------------------------------------- E4: declared vs ran (a join)
@@ -1490,22 +1676,12 @@ def _roles(repo=None):
 
     THE JOIN THAT MAKES THE LADDER POSSIBLE. `agent-log.tsv` is the only file
     that knows WHO a spawn was; the transcript does not carry `agent_type`
-    (see `series`). Both rungs therefore read the same session set."""
-    p = pathlib.Path(repo or REPO) / ".claude" / "agent-log.tsv"
-    out = {}
-    try:
-        text = p.read_text(encoding="utf-8", errors="replace")
-    except OSError:
-        return out
-    for i, line in enumerate(text.splitlines()):
-        if not line.strip():
-            continue
-        cols = line.split("\t")
-        if i == 0 and cols[0].strip() == "when":
-            continue
-        if len(cols) >= 5 and cols[4].strip():
-            out[cols[4].strip()] = cols[1].strip()
-    return out
+    (see `series`). Both rungs therefore read the same session set.
+
+    One walker, in `spawn_census`: this map and the coverage denominators are
+    two products of the same read, taken at the same instant."""
+    c = spawn_census(repo)
+    return {} if c is None else c["roles"]
 
 
 def _game_agents():
@@ -1520,7 +1696,7 @@ def _game_agents():
         return None, NOTHING_MEASURED
 
 
-def work_split(sessions, roles, game_agents):
+def work_split(sessions, roles, game_agents, census=None):
     """The split, and every bucket it CANNOT answer, counted beside it.
 
     `sessions` is [{"agentId", "agent", "wrote"}]; LAST-WINS PER agentId, the
@@ -1536,6 +1712,15 @@ def work_split(sessions, roles, game_agents):
                     worked through the shell, or only read. NOT "built
                     nothing", and the `fileToolsOfAll` pair beside it is what
                     separates those.
+
+    AND A FIFTH THE FOUR ABOVE CANNOT SEE, which is why `census` exists.
+    Those four are buckets of THIS file's rows, so their denominator is the
+    stop log. A spawn that never reached SubagentStop wrote no row here at
+    all: it is in no bucket, on no side, and invisible to `walked`. Queue
+    370's sentence names the SPAWN log, so the spawn log's own census is
+    passed in and `noStopRow` is counted against it. Measured on this
+    machine 2026-09-21: 11 of 145 joinable spawn ids, and 530 of 747 spawn
+    rows carry no id to join with in the first place.
     """
     last = {}
     for r in sessions:
@@ -1549,7 +1734,12 @@ def work_split(sessions, roles, game_agents):
            "sides": {SIDE_GAME: 0, SIDE_STUDIO: 0, "both": 0,
                      SIDE_UNKNOWN: 0},
            "roleGame": 0, "roleStudio": 0, "roleUnknown": 0,
-           "cross": {}, "crossBoth": 0}
+           "cross": {}, "crossBoth": 0,
+           # THE SPAWN LOG'S OWN DENOMINATORS, None when it could not be read
+           # so the reader gets the words and not a zero.
+           "spawnRows": None, "spawnRowsWithId": None, "spawnIds": None,
+           "noStopRow": None, "noSpawnRow": None, "firstIdAt": None,
+           "noSpawnRowPreId": None, "noSpawnRowSince": None}
     for aid, r in last.items():
         v = (r.get("wrote") or "").strip()
         if v == PRE_COLUMN or not v:
@@ -1595,6 +1785,27 @@ def work_split(sessions, roles, game_agents):
             out["cross"][(role_side, file_side)] = \
                 out["cross"].get((role_side, file_side), 0) + 1
             out["crossBoth"] += 1
+    if census:
+        # THE PAIRED READING, both directions, from the same two files in the
+        # same run: how much of the spawn census this reading could see, and
+        # how much of this reading the spawn census never heard of.
+        spawn_ids = set(census["roles"])
+        out["spawnRows"] = census["rows"]
+        out["spawnRowsWithId"] = census["rowsWithId"]
+        out["spawnIds"] = len(spawn_ids)
+        out["noStopRow"] = len(spawn_ids - set(last))
+        out["noSpawnRow"] = len(set(last) - spawn_ids)
+        # AND SPLIT THAT SECOND NUMBER, because one total hides two facts.
+        # A stop row older than the first id the spawn log ever recorded
+        # COULD NEVER have joined; one newer than it means the start hook
+        # missed a spawn that the stop hook saw, which is a live fault. The
+        # boundary is read off the file, never pinned.
+        out["firstIdAt"] = census.get("firstIdAt")
+        if out["firstIdAt"]:
+            out["noSpawnRowPreId"] = sum(
+                1 for aid in set(last) - spawn_ids
+                if (last[aid].get("when") or "") < out["firstIdAt"])
+            out["noSpawnRowSince"] = out["noSpawnRow"] - out["noSpawnRowPreId"]
     return out
 
 
@@ -1613,7 +1824,13 @@ def report_work_split(d, source, game_src, header_note=None):
               "take (a builder does not edit a live log): %s"
               % (header_note[0], header_note[1], header_note[2]))
     if not d["walked"]:
-        print("  %s: 0 session(s) to read" % NOTHING_MEASURED)
+        # The zero ships the other file's denominator: "no stop rows" beside
+        # "N spawns happened" is a broken hook, and "no stop rows" beside "no
+        # spawns" is a quiet week. One line must tell them apart.
+        print("  %s: 0 session(s) to read, against spawnRowsCumulative=%s"
+              % (NOTHING_MEASURED,
+                 NOTHING_MEASURED if d["spawnRows"] is None
+                 else d["spawnRows"]))
         return 2
     n = d["walked"]
     unans = (d["preColumn"] + d["transcriptGone"] + d["noToolCall"]
@@ -1631,6 +1848,48 @@ def report_work_split(d, source, game_src, header_note=None):
           "write is not recoverable from a transcript (measured 2026-09-21, "
           "6% precision over 348 candidate targets), so those sessions "
           "worked through the shell or only read")
+    # COVERAGE AGAINST THE SPAWN LOG: a SECOND denominator, and the one queue
+    # 370's sentence names. The four buckets above are buckets of stop-log
+    # rows, so a spawn that never reached SubagentStop is in none of them.
+    print("  COVERAGE AGAINST THE SPAWN LOG ITSELF (.claude/agent-log.tsv), "
+          "a DIFFERENT denominator from `sessions` above:")
+    if d["spawnRows"] is None:
+        print("    %s: the spawn log could not be read, so how much of the "
+              "spawn census this split saw is unknown -- NOT zero" %
+              NOTHING_MEASURED)
+    else:
+        # CUMULATIVE over the file; ids are DISTINCT, last-wins per id.
+        print("    spawnRowsCumulative=%d rowsCarryingAnId=%d/%d "
+              "distinctSpawnIds=%d"
+              % (d["spawnRows"], d["spawnRowsWithId"], d["spawnRows"],
+                 d["spawnIds"]))
+        print("      a spawn row with no id predates the agentId column and "
+              "can be joined to nothing, ever: it is neither answerable nor "
+              "unanswerable above, it is unreachable")
+        # NO PUNCTUATION TOUCHING A VALUE. The first draft ended these two
+        # tokens with a colon and `verify.py`'s reader took `11/145:` as the
+        # number: every reader here splits on whitespace, so the prose starts
+        # after a space or it is part of the value.
+        print("    spawnIdsWithNoStopRow=%d/%d -- spawned, never reached "
+              "SubagentStop, so in NO bucket above and on NO side below"
+              % (d["noStopRow"], d["spawnIds"] or 0))
+        print("    stopIdsWithNoSpawnRow=%d/%d -- the other direction, this "
+              "reading sees sessions the spawn log never recorded an id for"
+              % (d["noSpawnRow"], n))
+        if d["noSpawnRowPreId"] is None:
+            print("      of those, how many COULD have joined is %s: no spawn "
+                  "row carries an id, so there is no instant to compare "
+                  "against" % NOTHING_MEASURED)
+        else:
+            # ONE TOTAL, TWO FACTS. The pre-id half is structural and can
+            # only hold still; the `since` half is the start hook missing a
+            # spawn the stop hook saw, and it is the one worth an alarm.
+            print("      splitAtFirstIdInSpawnLog=%s "
+                  "predatingThatInstant=%d/%d (structural, can only hold "
+                  "still) sinceThatInstant=%d/%d (the start hook missed a "
+                  "spawn the stop hook saw)"
+                  % (d["firstIdAt"], d["noSpawnRowPreId"], d["noSpawnRow"],
+                     d["noSpawnRowSince"], d["noSpawnRow"]))
     if d["hiddenAreas"]:
         print("    the per-row cap BIT: +%d area(s) carrying %d write "
               "call(s) were collapsed into +Nmore cells, are counted in no "
@@ -1679,7 +1938,7 @@ def report_work_split(d, source, game_src, header_note=None):
                 print("    roleSays=%-6s wroteIn=%-12s %4d  %s"
                       % (role_side, file_side, c, mark))
     agree = sum(c for (rs, fs), c in d["cross"].items() if rs == fs)
-    print("    agree=%d/%d disagree=%d/%d: THE PROXY ERROR, measured rather "
+    print("    agree=%d/%d disagree=%d/%d -- THE PROXY ERROR, measured rather "
           "than estimated. Queue 370 put its size at \"32/110\" and "
           "\"12/27 where the answer was 1\" from two hand tallies; this is "
           "the same quantity counted." % (agree, d["crossBoth"],
@@ -1734,7 +1993,8 @@ def main():
     ap.add_argument("--work-split", action="store_true",
                     help="the studio-versus-game split from the `wrote` "
                          "column, printed WITH the count of rows it could "
-                         "not answer for (queue 370)")
+                         "not answer for AND with the spawn census it could "
+                         "not see at all (queue 370)")
     ap.add_argument("--routing-drift", action="store_true",
                     help="declared (definition) vs ran (turns log), joined "
                          "on agentId -- see routing_drift()")
@@ -1750,7 +2010,8 @@ def main():
         return 0
     if args.work_split:
         ga, ga_src = _game_agents()
-        roles = _roles()
+        census = spawn_census()
+        roles = {} if census is None else census["roles"]
         if args.transcripts:
             sess = sessions_from_transcripts(args.transcripts)
             src = "transcripts:" + str(args.transcripts)
@@ -1764,8 +2025,8 @@ def main():
             sess = rows
             src = str(args.log or log_path())
             note = header_drift(src)
-        return report_work_split(work_split(sess, roles, ga), src, ga_src,
-                                 note)
+        return report_work_split(work_split(sess, roles, ga, census), src,
+                                 ga_src, note)
     if args.transcripts:
         return series(args.transcripts, args.limit)
     if args.routing_drift:
