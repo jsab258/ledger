@@ -387,12 +387,41 @@ block is opened for the terrace front rather than for the superseded item.
 
 ### BATCH b006-lighting-column-01
 
+TWO ATTEMPTS, BOTH REJECTED AT VERIFY, and they are recorded rather than
+absorbed because that is what this unit exists for. A ledger counting only
+successes would price this asset at one clean attempt and understate the
+method's real cost by two thirds.
+
+ATTEMPT 1, rejected by the lane's own gate, run 35649856734. The recipe
+refused its own lane's arguments: status=BAD-ARGS
+reason=unknown-flag/--commission, blenderExit=2, nothing rendered. Its 48 of
+48 selftest could not see it, because the test asserted the flags the AUTHOR
+chose rather than the flags the LANE SENDS. Fixed by deriving the contract
+from the workflow and the wrapper at test time; selftest 48 to 66.
+
+ATTEMPT 2, rejected by a named judge, the director, against the Hook sheet.
+Committed at fbba39e1 on art/atlas-01. THE RENDER SUCCEEDED: status=RAN
+objectsBuilt=10/10-planned previewsWrote=4/4 engineUsed=BLENDER_EEVEE_NEXT
+crossCheckAgree=10/10 manifoldParts=10/10. THE SILHOUETTE IS WRONG. The arc is
+tighter and starts higher than the reference, reading as a shepherd's crook
+rather than a swan neck; the head is too bulky; it hangs on a visible dropper
+with an unexplained tab where the reference terminates the curve directly in
+the canopy; the base collar is too prominent; and no wear reads at all despite
+a coverage figure of 0.450 on the base.
+
+THE NUMBER THAT PASSED IS THE FINDING. authoredCurvature_perM=1.3333 beat a
+naive quarter circle at 2.0000 and was recorded as shallower, while the picture
+shows it TIGHTER than the sheet. THE QUARTER CIRCLE WAS NEVER THE REFERENCE, so
+passing it proved nothing about the only comparison that matters. Measuring
+shallower and reading right are different claims, which this asset's own
+authoring builder warned of in its method verdict before any frame existed.
+
 batch: batchId=b006-lighting-column-01 line=art-lighting-column status=OPEN
   opened=2026-09-21T20:02:52Z closed=not-yet
 unit: deliverables=1/fixed-at-open/list=production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
   deliverableUnit=lighting-column-blender-asset
-attempts: attemptsMade=1-cumulative attemptsRejected=0/of=1-attempts
-  rejectedAtStation=none/of=1-attempts
+attempts: attemptsMade=2-cumulative attemptsRejected=2/of=2-attempts
+  rejectedAtStation=VERIFY/of=2-attempts
 before: meterTakenAt=2026-09-21T19:2xZ meterTotalPct=17 meterFablePct=19
   meterSource=production/budget.md#row-2026-09-21c
   sessionsTakenAt=2026-09-21T19:41:50Z
