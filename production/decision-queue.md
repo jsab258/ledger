@@ -35,76 +35,43 @@ Ruled by Jafar 2026-09-09: the studio takes every decision that has a
 recommendation and a default. A card appears below only when the studio has
 looked and CANNOT form one, at most one a week, and it carries buttons.
 
-### BLOCKING: the Epic login is already done and the claiming still needs your hands, so will you claim the kit tonight?
-CLASS: BLOCKING
-added 2026-09-21, from your ruling of this evening, kit first, author second
+### The photoreal frame's lamp column: the kit's is the wrong shape, so author it or keep the stand-in
+CLASS: DECISION
+added 2026-09-21, from your ruling of this evening, "including the British lamps"
 
-You asked whether the assets can be had without you. The access can: the
-launcher on the build machine has been signed in since the engine went in at
-the start of September, and Fab is built into the editor rather than a plugin
-to add. The claiming cannot: there is no scripted way to claim Fab content, it
-is a click-through in the editor or the launcher, and the one unofficial
-command-line tool still needs a live login of yours, so it removes nothing. A
-few minutes of your clicking tonight is the fastest true path.
+Your instruction is already satisfied in the built town: commit 71316fa1 wired
+all six kit lamp forms on 2026-08-25 and the landed run counts 354 placed of
+354 offered, cast swan necks on old streets and square sodium heads on newer
+roads, off a district lookup. Nothing there needs you.
 
-One thing nobody has seen: whether the Fab window on that machine shows you
-signed in without asking. It very probably does, because the launcher and the
-editor share one session on that account, but no one has looked at that
-screen, so step three is a check and not a promise.
+THE PHOTOREAL FRAME IS THE PROBLEM AND IT IS A MEASUREMENT, not a taste call.
+The three kit lamp columns are 0.37 m SQUARE in section, read off the FBX
+vertex data. The vignette's own lighting column shaft is 0.114 m ROUND, the
+real diameter of a British lighting column. Putting a kit lamp in the judged
+slice trades a dimensionally correct round column for a four-sided one 3.2
+times too fat, in the one frame whose whole purpose is to survive comparison
+with GTA6 and KCD2. The kit forms are right for the kit-built town and wrong
+for the vignette. What the vignette has instead is a correct-dimension
+blockout, five primitives per column, four columns. A photoreal 5 m round
+tapered column is held by nothing in this tree and by no kit in it.
 
-THE STEPS, in order:
+A. AUTHOR IT, the same answer you gave tonight for the terrace fronts: Blender,
+   from the vignette's own dimensions, under the grime rule. Hours, not days,
+   and far smaller than a terrace front. Nothing is bought.
+B. KEEP THE BLOCKOUT and revisit once the street is assembled, on the argument
+   that a 0.114 m column at street distance may read fine and the terrace
+   fronts are the bigger hole.
+C. FETCH ONE, which needs a free CC0 source nobody has found yet and which the
+   allowlist would have to admit.
 
-1. On the build machine, open the engine, or the Epic launcher.
-2. Open Fab: in the editor, the Window menu, then Fab; or the Fab button at
-   the bottom of the content drawer; or the launcher's own Fab tab.
-3. Confirm it shows you signed in. If it asks for a password instead, stop
-   there and tell us: that changes the plan, and nothing should be claimed
-   until it is understood.
-4. If it shows you signed in, claim these, free only, buying nothing:
-   - City Sample, Epic's large sample project. Free, and also on the editor's
-     own home panel. If it already shows in your library from the day the
-     engine went in, it is done.
-   - A British or European terrace or townhouse kit. Search Fab for terrace,
-     townhouse, British, Victorian: brick fronts, sash windows, panelled
-     doors, cast drainpipes. This is the one that matters most and the one
-     most likely to disappoint. Tell us what you actually see rather than
-     claiming the first result; your own ruling warned that these kits are
-     generic rather than British, and whether a British one exists decides
-     whether the biggest gap can be filled from kit at all.
-   - Brick and stone surfaces beyond that, only if something is clearly
-     better than what we already hold free.
-5. Tell us what got claimed, by name.
-
-NOT ON THE LIST, and why. Setts and cobbles: the street has none of any kind,
-and the free surface library we already use, no account and no login, has a
-category for exactly that, so that gap gets filled tonight without you touching
-anything. Lamps: correctly British swan-neck street lamps were found a month
-ago in a free kit we already hold, and the street still builds its own from
-scratch; that is placing on our side, not claiming on yours.
-
-WHILE THE CLAIM SCREEN IS UP, a ten-second glance: City Sample is a whole
-sample project rather than an ordinary asset, and sample projects have
-sometimes carried their own licence. The licence text shows at the moment of
-claiming; note whether it reads as the standard Fab licence or something
-separate. Nothing from it goes into the game until that is known, because the
-licence list is law.
-
-- A. Tonight: the check, then the claims if it shows you signed in.
-  Steps one to three now, the list after, and a message naming what got
-  claimed.
-- B. Tonight the check only: steps one to three, then tell us what it shows.
-  The claims wait for another evening.
-- C. Not this week: the studio goes on with what needs no account.
-  The terrace fronts stay a gap until you claim.
-
-RECOMMENDATION A. Steps one to three cost two minutes and settle the one
-unknown; the claims are worth doing on the same screen once it shows you
-signed in, and the facade from kit waits on them.
-DEFAULT C if unruled by 2026-09-23: the street takes its setts and stone from
-the free library that needs no account, the lamps we already hold get placed,
-and the terrace fronts stay a gap until you claim.
-DEADLINE: 2026-09-23. Nothing decays while it waits: the launcher stays signed
-in, and only the facade from kit stands still.
+RECOMMENDATION: A. It is the answer you already gave tonight for the same shape
+of gap, and it reuses the route you just approved.
+DEFAULT B if unruled by 2026-09-23: the blockout stays, nothing is bought, and
+the column is revisited when the street stands beside the Hook sheet.
+DEADLINE: 2026-09-23. Nothing decays while it waits.
+WHY THIS IS YOURS AND NOT THE STUDIO'S: it amends your own instruction of this
+evening for one frame, and authoring an asset you did not ask for is the thing
+the studio must not decide by doing.
 
 Where the studio stands: https://jsab258.github.io/ledger/
 
