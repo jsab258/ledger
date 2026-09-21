@@ -35,46 +35,6 @@ Ruled by Jafar 2026-09-09: the studio takes every decision that has a
 recommendation and a default. A card appears below only when the studio has
 looked and CANNOT form one, at most one a week, and it carries buttons.
 
-### The photoreal frame's lamp column: the kit's is the wrong shape, so author it or keep the stand-in
-CLASS: DECISION
-added 2026-09-21, from your ruling of this evening, "including the British lamps"
-
-Your instruction is already satisfied in the built town: commit 71316fa1 wired
-all six kit lamp forms on 2026-08-25 and the landed run counts 354 placed of
-354 offered, cast swan necks on old streets and square sodium heads on newer
-roads, off a district lookup. Nothing there needs you.
-
-THE PHOTOREAL FRAME IS THE PROBLEM AND IT IS A MEASUREMENT, not a taste call.
-The three kit lamp columns are 0.37 m SQUARE in section, read off the FBX
-vertex data. The vignette's own lighting column shaft is 0.114 m ROUND, the
-real diameter of a British lighting column. Putting a kit lamp in the judged
-slice trades a dimensionally correct round column for a four-sided one 3.2
-times too fat, in the one frame whose whole purpose is to survive comparison
-with GTA6 and KCD2. The kit forms are right for the kit-built town and wrong
-for the vignette. What the vignette has instead is a correct-dimension
-blockout, five primitives per column, four columns. A photoreal 5 m round
-tapered column is held by nothing in this tree and by no kit in it.
-
-A. AUTHOR IT, the same answer you gave tonight for the terrace fronts: Blender,
-   from the vignette's own dimensions, under the grime rule. Hours, not days,
-   and far smaller than a terrace front. Nothing is bought.
-B. KEEP THE BLOCKOUT and revisit once the street is assembled, on the argument
-   that a 0.114 m column at street distance may read fine and the terrace
-   fronts are the bigger hole.
-C. FETCH ONE, which needs a free CC0 source nobody has found yet and which the
-   allowlist would have to admit.
-
-RECOMMENDATION: A. It is the answer you already gave tonight for the same shape
-of gap, and it reuses the route you just approved.
-DEFAULT B if unruled by 2026-09-23: the blockout stays, nothing is bought, and
-the column is revisited when the street stands beside the Hook sheet.
-DEADLINE: 2026-09-23. Nothing decays while it waits.
-WHY THIS IS YOURS AND NOT THE STUDIO'S: it amends your own instruction of this
-evening for one frame, and authoring an asset you did not ask for is the thing
-the studio must not decide by doing.
-
-Where the studio stands: https://jsab258.github.io/ledger/
-
 ### LEDGER's own repository: three things only you can do
 CLASS: DECISION
 added 2026-09-10, from ruling 2 of the cleanup batch, plan at
