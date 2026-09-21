@@ -1,0 +1,13 @@
+receipt: sent
+file: production/outbox/2026-09-21-two-things-not-true-and-the-lamp-column.unprompted.md
+kind: unprompted
+fileCommit: e5449fa678732dbc441b60e15e142d58ea91b675
+fileCommitEpoch: 1790017609
+sent: 2026-09-21T19:07:21+00:00
+sentEpoch: 1790017641
+messageId: 125
+chars: 740
+outboundLatencySec: 32
+outboundLatencySecFrom: fileCommitInstant
+outboundLatencySecTo: sendInstant
+note: one sample of one message, not a rate.
