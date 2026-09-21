@@ -385,6 +385,73 @@ block exists for, in his own words, "both meters read before and after, the
 BATCH as the throughput ledger's unit, and REJECTED ATTEMPTS COUNTED". So this
 block is opened for the terrace front rather than for the superseded item.
 
+### BATCH b006-lighting-column-01
+
+batch: batchId=b006-lighting-column-01 line=art-lighting-column status=OPEN
+  opened=2026-09-21T20:02:52Z closed=not-yet
+unit: deliverables=1/fixed-at-open/list=production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
+  deliverableUnit=lighting-column-blender-asset
+attempts: attemptsMade=1-cumulative attemptsRejected=0/of=1-attempts
+  rejectedAtStation=none/of=1-attempts
+before: meterTakenAt=2026-09-21T19:2xZ meterTotalPct=17 meterFablePct=19
+  meterSource=production/budget.md#row-2026-09-21c
+  sessionsTakenAt=2026-09-21T19:41:50Z
+  sessionsCumulative=750/src=.claude/agent-log.tsv sha=87bcd46d
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=4/of=4-authored-surfaces wearCoverageMin=0.000000/lantern
+
+QUEUE 403'S SMALLER, FASTER BATCH AHEAD OF THE FACADE, exactly as his ruling
+named it: the pilot whose purpose is to price the authoring method, priced
+before the terrace fronts spend a week on the same question. THE BEFORE
+READING IS TAKEN FROM TWO DIFFERENT INSTANTS, THE SAME SHAPE b005 ABOVE USES
+AND FOR THE SAME REASON: the meter (17 total, 19 Fable) is row 2026-09-21c of
+production/budget.md, read at about 19:2xZ alongside his ruling on the lamp
+column card, because that is the freshest reading this container can quote
+and nothing here can read a fresher one. The session count (750 spawn rows
+in .claude/agent-log.tsv, one header line making 751 total, counted rather
+than assumed) and sha (87bcd46d) were read at 19:41:50Z, after the spec and
+research had been read but before the recipe file existed on disk. THE TWO
+ARE ABOUT TWENTY MINUTES APART AND THE KEYS SAY SO RATHER THAN AVERAGING INTO
+A FALSE INSTANT.
+
+ONE ATTEMPT, ZERO REJECTED, AND THAT IS A MEASURED CLAIM AND NOT A CLEAN
+STORY TOLD AFTERWARDS. The first drafted neck geometry (a cubic Bezier
+between the same two spec-pinned endpoints) printed
+`shallowerThanNaive=no` the first time `--plan` ran: its peak curvature
+measured HIGHER than the naive quarter circle despite reading as gentler,
+because a Bezier's curvature is not constant and spikes where two unaligned
+tangents are reconciled. That is not counted as a REJECTED attempt under this
+ledger's own definition, because nothing external (a station gate, a named
+judge) refused it: it was caught by this same file's own printed numbers
+before anything was shipped, and rebuilt as a true circular arc (constant
+curvature, so the comparison is closed-form) inside the same attempt. Filed
+in full at production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
+because it is the argument for the method as much as the asset is.
+
+WHAT THIS ROW CANNOT PRICE YET, named rather than guessed. `machine` reads
+nothing-measured because there is no runner: Blender is not installed in this
+container, so no minute of render time has been spent on this pilot at all,
+only the pure-Python arithmetic and the selftest (48 of 48, against the live
+spec files as the accepting fixture). `after` reads nothing-measured across
+the board because station 3 VERIFY needs a real Blender run this session
+cannot supply; the batch stays OPEN, not VERIFIED, and by this ledger's own
+rule an OPEN batch counts zero pieces until it crosses station 4, the same as
+b002 and b004 above.
+
+THE WEAR READING IS REAL, NOT A PLACEHOLDER, AND ITS DENOMINATOR IS FOUR
+SURFACES: base, shaft, neck and lantern, each carrying a printed
+`wearCoverage` fraction (`tools/art-recipes/lighting-column.py -- --plan`).
+Three carry nonzero wear (rain running down the shaft, road spray at the
+base, staining below the lantern), matching the three zones D53's point 5
+and this task's brief both name and no more. The lantern housing carries none
+in this pilot, by an authored choice this run can separate from a clean
+surface (D53 point 2's distinction), which is why `wearCoverageMin` names it
+at 0.000000 rather than printing `nothing-measured`.
+
 ### The instrument, and what it refuses
 
 `tools/throughput-check.py` reads this section and refuses: a bare zero with no

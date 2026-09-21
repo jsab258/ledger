@@ -64,9 +64,18 @@ Fab if you want to compare, but do not wait on it."
 
 - THE BLOCKOUT IT REPLACES IS ALREADY DIMENSIONALLY RIGHT, which is why this is
   a finish job and not a design job. `production/specs/vignette-pieces.json`
-  carries 21 `E1_lighting_column` references: `lantern0..3` at x = 8, 18, 28,
-  38 m and four columns of five pieces, `column{0..3}_base`, `_shaft` (4.7 m),
-  `_neck0/1/2` (three pitched cylinders on a quarter circle), built by
+  carries 20 `E1_lighting_column` PIECES, four columns of five:
+  `column{0..3}_base`, `_shaft` (4.7 m), `_neck0/1/2` (three pitched cylinders
+  on a quarter circle), plus 4 `E2_sodium_lantern_head` pieces, `lantern0..3`
+  at x = 8, 18, 28, 38 m. CORRECTED UNDER D43 AND THE FALSE FIGURE IS NAMED:
+  this said "21 `E1_lighting_column` references: `lantern0..3` ... and four
+  columns of five pieces", wrong twice over. 21 is how many times the STRING
+  occurs in the file, not how many pieces carry that bom, and the lanterns are
+  not E1 at all but a separate bill-of-materials line. Counted by grepping the
+  quoted `"bom"` field rather than the bare string, which is exactly what
+  produced the original error. Found by the builder this ruling commissioned,
+  doing what its brief told it to do and verifying the summary instead of
+  trusting it. Built by
   `ledger/Assets/Scripts/Core/StreetVignette.cs:1176 Columns()`. The shaft is
   0.114 m round, the real diameter of a British lighting column.
 - THE KIT LAMPS STAY OUT OF THIS FRAME and the measurement is why: the three
