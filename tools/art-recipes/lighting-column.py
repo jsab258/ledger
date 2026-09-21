@@ -32,11 +32,22 @@ report, and both are cited at the exact formal choice they govern below:
     HOOK SHEET: production/art/atlas-01/concepts/hook.png on
       origin/art/atlas-01, the street panel, foreground column, viewed
       directly and cropped to 3x and again to 8x for the head. It is SLENDER
-      and DARK (painted steel, not the thicker paler concrete), carries a
-      LONG SHALLOW GENTLE swan-neck arc (not a tight quarter circle), a
-      SMALL FLAT SHALLOW CANOPY head aimed down the street (not a bowl, not
-      a box), lit warm amber, with NO ornament: no fluting, no ladder bar,
-      no scroll, no finial.
+      and DARK (painted steel, not the thicker paler concrete), a SMALL FLAT
+      SHALLOW CANOPY head aimed down the street (not a bowl, not a box), lit
+      warm amber, with NO ornament: no fluting, no ladder bar, no scroll, no
+      finial. CORRECTED 2026-09-21, and the false phrase is named rather than
+      quietly dropped: this entry used to say the arc was "LONG SHALLOW
+      GENTLE... not a tight quarter circle". A pixel-level crop-and-measure
+      of the same sheet this session (SHEET_REF below; method: threshold the
+      column's own silhouette against the sky and trace it row by row) found
+      the opposite: the curve resolves in well under 10 vertical pixels
+      against some 450 pixels of dead-straight pole, i.e. COMPACT and
+      TOP-CONCENTRATED. The first render, built to the old phrase's naive
+      quarter-circle-BEATING radius, is exactly what read wrong against the
+      sheet: see point 2. The old phrase was written from a description of
+      the sheet, not from cropping and measuring it, which is the fault
+      rule 4 and this role's own standing instruction both name; this
+      correction is the accepting case for why that instruction exists.
 
 Two consequences follow, and both are implemented, not just described:
   1. The column body is dark painted steel throughout. No concrete variant is
@@ -46,24 +57,71 @@ Two consequences follow, and both are implemented, not just described:
      4.7 m at 0.114 m round: production/specs/vignette-pieces.json, read
      below rather than retyped, and cross-checked against it every run so
      the authored mesh and the blockout cannot drift (see cross_check()).
-     What DOES move is the ARC SHAPE between those two fixed points. The
-     naive reading of the blockout's own comment ("three pitched cylinders
-     on a quarter circle") is a quarter circle of radius = outreach_m. The
-     authored neck instead sweeps a TRUE circular arc of a LARGER radius
-     (constant, and therefore strictly lower, curvature throughout) that
-     starts tangent-vertical at the shaft top and runs into a short straight
-     dropper down to the exact spec-pinned lantern mount. Because curvature
-     is constant along a true circle, "shallower than the naive quarter
-     circle" is a closed-form fact of geometry for ANY radius bigger than
-     outreach_m, not an artifact of one shipped number: see neck_arc()'s
-     docstring for the proof, and the selftest checks it over a range of
-     radii, not only the one shipped here. Both the authored and naive
-     figures are printed every run so the difference is visible rather than
-     asserted.
+     What DOES move is the ARC SHAPE between those two fixed points, and it
+     has moved TWICE now: first (2026-09-08) to a naive-quarter-circle-
+     beating radius of 1.5x outreach_m, which the first real Blender render
+     showed as "a near-straight shaft that hooks over sharply in a small
+     radius at the very top... reads as a shepherd's crook, not a swan
+     neck"; then (2026-09-21, this revision) to 0.6x outreach_m, chosen
+     against the corrected sheet reading above and against a CLOSED-FORM
+     FINDING that the first fix attempt's own working uncovered: because the
+     lantern mount (locally y = 4.9 m) sits BELOW the shaft top (y = 5.0 m),
+     any curve leaving the shaft tangent-vertically and reaching the mount
+     is forced through a large total turning angle (roughly 120 to 200
+     degrees, checked numerically over a wide sweep of single-arc and
+     opposite-curvature two-arc constructions during this revision, not
+     shipped as code because it changes no output here, only the honest
+     menu of shapes) REGARDLESS of how many arcs build it or which way they
+     curve. So "long and gradual" was never reachable from these pinned
+     endpoints; what IS reachable, and what 0.6 is chosen for, is a curve
+     whose EXTERNAL DROPPER (the straight rod that would otherwise show
+     above the lantern housing, see neck_arc()'s own docstring) is short
+     enough to read as subordinate to the fitting rather than as a separate
+     part. Because curvature is constant along a true circle, "shallower
+     than the naive quarter circle" is a closed-form fact of geometry for
+     ANY radius bigger than outreach_m, and 0.6 is smaller than that, on
+     purpose: see NECK_ARC_RADIUS_RATIO's own comment for the full trade-off
+     (a bigger radius reads gentler but makes the external dropper LONGER,
+     never shorter, given these endpoints) and neck_arc()'s docstring for
+     the general proof, which the selftest still checks over a range of
+     ratios above 1.0 as a property of the formula. Both the authored and
+     naive figures are still printed every run (lcNeck), now informational
+     rather than gating: see NECK_ARC_RADIUS_RATIO.
   3. A wall fixture seen on the same sheet, a dark conical bracket lamp with
      a wire cage guard under the Harbour Office eaves, is a DIFFERENT, real
      asset the street will need. It is named here and NOT built: see the
      queue item this recipe ships beside.
+  4. THE LANTERN HEAD AND THE BASE ALSO MOVED, 2026-09-21, against the same
+     corrected sheet reading. The first render's housing read as "a chunky
+     slab, visibly too deep and too bulky" and its base as "a chunky sleeve
+     slipped over the shaft": see LANTERN_BODY_FRACTION,
+     LANTERN_BODY_INSET_RATIO and build_parts()'s base construction for what
+     changed and why. Neither the lantern's overall length_m/width_m/
+     height_m nor the base's own diameter_m/height_m moved: those are
+     spec-pinned and cross-checked exactly as before, only how each fills
+     its own pinned envelope did.
+
+WHAT A PRINTED COMPARISON AGAINST THE SHEET CAN AND CANNOT BE, a finding of
+this 2026-09-21 revision and not only a disclaimer. This file CAN and DOES
+print a comparison against the sheet (SHEET_REF, emitted every run as
+lcSheetRef): a dated, sourced, one-time pixel measurement, checked into this
+file the same way a spec value is. What it CANNOT do is RECOMPUTE that
+comparison at run time the way cross_check() recomputes agreement with
+vignette-pieces.json: this script has no image-reading dependency and does
+not open production/art/atlas-01/concepts/hook.png, so SHEET_REF is a
+constant, not a function of anything measured this run. That means a future
+edit to the sheet, or a better crop, or a second pair of eyes, cannot be
+caught automatically the way a drifted spec value is caught by cross_check;
+it can only be caught by someone re-cropping the sheet and re-editing
+SHEET_REF, exactly as happened to the phrase this revision corrects in point
+2 above. SILHOUETTE ITSELF IS A DIFFERENT CLAIM AGAIN, one this file cannot
+settle at all: mesh_check() proves a part is a valid closed manifold, never
+that it reads as the right SHAPE from a camera, and no arrangement of
+printed numbers substitutes for looking at a rendered frame or, failing
+that, at a scale-matched drawing of the planned geometry next to the sheet
+crop, the way this revision's own working did before choosing
+NECK_ARC_RADIUS_RATIO. `--plan` proves the geometry is what the numbers say
+it is; it does not prove the numbers are the right shape.
 
 WHAT IS ALREADY DIMENSIONALLY RIGHT, READ FROM THE SPEC AND NOT RETYPED.
 `production/specs/vignette-scene.json`'s `lighting.column` and
@@ -162,20 +220,85 @@ NECK_RADIAL_SEGMENTS = 8        # octagonal cross section, reads round at range
 NECK_DIAMETER_RATIO = 0.8
 
 #: NOT IN EITHER SPEC FILE, see the module docstring's point 2. R = ratio *
-#: outreach_m. 1.5 is a clean, clearly labelled choice giving a comfortable
-#: margin on both the length and curvature comparisons (arc length +18
-#: percent over the arc portion alone and +120 percent once the dropper is
-#: counted; curvature -33 percent) rather than a value that only barely
-#: clears them; the exact figures are computed and printed every run, not
-#: quoted from this comment.
-NECK_ARC_RADIUS_RATIO = 1.5
+#: outreach_m. REVISED 2026-09-21, first-render iteration: 1.5 shipped a
+#: shape the first real Blender frame showed wrong against the Hook sheet
+#: (production/art/atlas-01/concepts/hook.png on origin/art/atlas-01,
+#: cropped x185-320 y700-1000 and re-measured pixel by pixel this session:
+#: the reference's own curve resolves in under 10 vertical pixels against
+#: roughly 450 px of dead-straight visible pole, i.e. COMPACT and
+#: top-concentrated, not the long gradual sweep it was first read as). 0.6
+#: is the smallest ratio that keeps the neck's EXTERNAL dropper (the part
+#: that would show as a separate straight rod above the lantern housing,
+#: neck_arc()'s radius_m * sin(sweep_rad)) under lantern_width_m, printed
+#: and checked every run by selftest rather than asserted here; see
+#: neck_arc()'s docstring for why no ratio, and no pair of arcs of opposite
+#: curvature, can make this join gentle given the pinned endpoints. Below
+#: 1.0 the arc is no longer shallower than the naive quarter circle, and
+#: that comparison is INFORMATIONAL ONLY as of this revision, per Jafar's
+#: 2026-09-21 ruling on the first render: "the quarter circle was never the
+#: reference... pick the radius ratio from the sheet, and print the new
+#: comparison against the sheet rather than against a quarter circle." The
+#: sheet itself does not yield a dimensioned radius (rule 8: an admitted gap,
+#: not invented precision), so 0.6 is a labelled choice bounded by the
+#: dropper-elimination requirement above, not a value read off the photo.
+NECK_ARC_RADIUS_RATIO = 0.6
+
+#: THE SHEET MEASUREMENT ITSELF, taken this session, NOT recomputed at run
+#: time (this script does not open images; see plan_lines()'s lcSheetRef
+#: comment for why that is named rather than papered over). The brief's own
+#: crop box was production/art/atlas-01/concepts/hook.png on
+#: origin/art/atlas-01, x185-320 y700-1000; the pixel trace that produced
+#: the figures below used a narrower sub-window of that same box (x220-280,
+#: to isolate the column from the Harbour Office chimney at its left edge)
+#: and a luminance threshold against the sky's own ~200-210 baseline in that
+#: photo. CONFIDENCE IS LOW-TO-MODERATE AND SAID SO: the column is 2 to 3
+#: pixels wide at the sheet's native resolution, so this is close to the
+#: image's own resolution floor and the figures are directional, not
+#: dimensioned (rule 8). What the trace found, run row by row from y700 to
+#: y1300: the pole is dead straight (x238-240, +/-1px) for roughly 450
+#: rows, and everything that is not plain pole width (the curve, the head,
+#: the small ridge-top bump) resolves inside about 8 ROWS at the very top,
+#: y751 to y759, widening from the pole's own width out to x261 at its
+#: widest (y756) before returning to plain pole width by y759. That is
+#: COMPACT and TOP-CONCENTRATED: it does not resolve a curve beginning
+#: "two thirds up the shaft", and it does not resolve any separately
+#: readable straight segment between the curve and the head. Both readings
+#: fed directly into this file's choices: NECK_ARC_RADIUS_RATIO above is
+#: chosen for a short, compact transition rather than a long gradual one,
+#: and LANTERN_BODY_FRACTION below is chosen against the ~3.3:1
+#: width-to-height read at the widest traced row, not against a "long lazy
+#: sweep" the sheet's own pixels do not show at this crop.
+SHEET_REF = {
+    "source": "production/art/atlas-01/concepts/hook.png@origin/art/atlas-01",
+    "crop_px": "185,700,320,1000/tracedSubWindow-220,690,280,800",
+    "method": "luminance-threshold~silhouette~trace~vs~sky~baseline~~200-210",
+    "measured_at": "2026-09-21",
+    "curve_vertical_fraction": "~8px/~450px-visible-pole~(~1.8pct),compact,top-concentrated",
+    "head_width_to_height": "~23px:7px~is~3.3to1~at~widest~traced~row~(y756,x238-261)",
+    "dropper_visible": "no/widens-and-returns-to-plain-pole-width-within~7~rows",
+    "confidence": "low-to-moderate/pole~is~2-3px~wide~at~native~res,~near~the~image's~own~floor",
+}
 
 #: The lantern's total height (spec lantern.height_m) is split between a
 #: plain housing body and a shallow pitched canopy on top, so the OVERALL
 #: bounding box still matches the spec box exactly; only the split between
 #: "body" and "roof" is authored and it is named here rather than folded
-#: silently into a derived number.
-LANTERN_BODY_FRACTION = 0.7
+#: silently into a derived number. REVISED 2026-09-21: the first render
+#: showed the housing as "a chunky slab, visibly too deep and too bulky",
+#: against a Hook sheet reference measured this session as a shallow,
+#: elongated head, roughly 3:1 wide-to-tall at the widest visible row of its
+#: own silhouette (production/art/atlas-01/concepts/hook.png, same crop as
+#: above). 0.7 gave a tall vertical-walled body with a token 0.06 m roof;
+#: 0.4 gives most of the height to the sloped canopy instead, which is the
+#: element the sheet actually shows.
+LANTERN_BODY_FRACTION = 0.4
+#: NEW 2026-09-21, same iteration. The body housing is authored NARROWER
+#: than the roof/canopy above it, so the canopy overhangs the housing on
+#: every side, exactly as a cobra-head fitting's hood oversails its lamp
+#: chamber. Purely a proportion choice (no dimensioned source), kept modest
+#: so the lens (0.8 x ll, 0.7 x lw) still sits inside the narrowed body with
+#: margin: see build_parts().
+LANTERN_BODY_INSET_RATIO = 0.82
 
 #: Wear proportions, all expressed as fractions of an already spec-derived
 #: dimension so they scale if the spec ever does. D53 point 5: wear is
@@ -183,10 +306,33 @@ LANTERN_BODY_FRACTION = 0.7
 #: THE FLOOR HAS NO NUMBER, so nothing here claims to be a bound, only a
 #: reading. Exactly the three zones the brief names and no more: rain running
 #: down the shaft, road spray at the bottom, staining below the lantern.
+#:
+#: WIDTHS REVISED 2026-09-21. road_spray and lantern_drip were fractions of
+#: the local CIRCUMFERENCE (0.5x and, via a 2.4x neck-diameter multiplier,
+#: over 2x a diameter): a flat standoff box that wide is wider than the
+#: cylinder it sits on, so it cannot lie flush against the curve and instead
+#: stands proud of the round silhouette as its own straight-edged shape.
+#: Measured in the first render: this is what read as "a separate vertical
+#: tab sticking up" beside the neck and as a visible fin beside the base,
+#: not as staining. Both are now fractions of the local DIAMETER, capped
+#: at 0.6 of it, so the flat chord stays within the round profile's own
+#: projected width from most angles. rain_streak was already a diameter
+#: fraction (0.35, i.e. already under 1) and is unchanged.
+#:
+#: road_spray's HEIGHT ALSO REVISED, same session, for a DIFFERENT reason:
+#: the base became a taper (see build_parts()'s base construction) so its
+#: true radius shrinks with height, and a flat panel positioned at one fixed
+#: radius drifts away from the true surface the further up the taper it
+#: reaches. 0.9 (covering almost the whole base height) would drift by
+#: several centimetres at its own top edge; 0.35 keeps the patch low, where
+#: the taper has only just started, so a single interpolated radius (taken
+#: at the patch's own vertical centre, see build_parts()) stays close to
+#: flush along its whole height. Physically apt anyway: road spray is
+#: heaviest right at ground level.
 WEAR = {
     "rain_streak": {"width_ratio_of_shaft_d": 0.35, "height_ratio_of_shaft_h": 0.85},
-    "road_spray": {"height_ratio_of_base_h": 0.9, "width_ratio_of_base_circumference": 0.5},
-    "lantern_drip": {"length_m": 0.16, "width_ratio_of_neck_d": 2.4},
+    "road_spray": {"height_ratio_of_base_h": 0.35, "width_ratio_of_base_d": 0.55},
+    "lantern_drip": {"length_m": 0.16, "width_ratio_of_neck_d": 0.55},
 }
 #: Grime sits proud of the clean surface by this many metres so it never
 #: z-fights the surface it dirties; small next to every dimension it touches.
@@ -200,9 +346,21 @@ WEAR_STANDOFF_M = 0.0015
 #: sheet's "slender and dark... near-black or very dark grey against the
 #: sky"; grime is a desaturated brownish-black buildup colour, since no wear
 #: texture is held and none is fetched (nothing is purchased).
+#: grime's RGB REVISED 2026-09-21: the first render's wear boxes were both a
+#: shape bug (see WEAR above) AND, independently, close enough to steel_dark
+#: in raw value that even the correctly-shaped patches would read as barely
+#: distinct at this object's on-screen size. This is a JUDGEMENT CALL, not a
+#: sheet measurement: the sheet is not resolved enough at this crop to show
+#: grime on a lamp column at all, and none is claimed from it. Brightened
+#: roughly 60 percent over the previous value while keeping the same warm,
+#: desaturated, brownish-black hue (still far darker than any clean painted
+#: surface in the scene), so the two materials separate under the same
+#: overcast lighting the base crop was read against rather than only in a
+#: swatch. Roughness (0.90 vs steel's 0.42) is unchanged; that contrast was
+#: never in question.
 MATERIALS = (
     ("steel_dark", (0.021, 0.021, 0.024), 0.42),
-    ("grime", (0.048, 0.038, 0.032), 0.90),
+    ("grime", (0.078, 0.061, 0.048), 0.90),
 )
 #: The lens is emissive and carries the spec's own sodium colour rather than
 #: an authored guess. linear_srgb is used because Blender's node sockets
@@ -422,10 +580,36 @@ def neck_arc(params, radius_ratio=NECK_ARC_RADIUS_RATIO):
 
     For any radius_ratio > 1: R > outreach_m, so curvature = 1/R is STRICTLY
     LESS than the naive quarter circle's 1/outreach_m, always. sweep stays
-    under 90 degrees for every radius_ratio the selftest exercises (1.05
-    through 4.0), so the arc gets longer as R grows over that whole range;
-    arc_length is printed every run rather than assumed monotonic beyond
-    what is tested.
+    under 90 degrees for every radius_ratio the selftest exercises in that
+    range (1.05 through 4.0), so the arc gets longer as R grows over that
+    whole range; arc_length is printed every run rather than assumed
+    monotonic beyond what is tested. NONE OF THIS IS THE SHIPPED REGIME as
+    of 2026-09-21: NECK_ARC_RADIUS_RATIO is 0.6, below 1, and sweep at 0.6
+    is 131.81 degrees, well past the range above. The mathematical property
+    above is still checked (it is a true, general fact about this formula,
+    and the selftest still exercises it, now clearly labelled as informing
+    the formula's behaviour rather than the shipped ratio), but it is not
+    why 0.6 was chosen.
+
+    THE TRADE-OFF THAT DECIDES THE SHIPPED RATIO, proved rather than
+    tuned by eye. Because the lantern mount (lantern_z) sits BELOW mh (the
+    shaft top) by a fixed amount independent of radius_ratio, arc_end_z
+    ALWAYS ends up above lantern_z once sweep passes 0, so the dropper's
+    EXTERNAL portion (the part that would show above the lantern housing's
+    own top, at z = mh, i.e. arc_end_z - mh = R * sin(sweep)) is unavoidable
+    for any single circular arc. Differentiate the trade-off rather than
+    merely observe it: for radius_ratio in (0.5, 1] this external length
+    GROWS MONOTONICALLY with radius_ratio (from exactly 0 at 0.5, the
+    smallest radius that still reaches outreach_m at all, up through
+    naive_curv's own 0.5 m at radius_ratio 1.0, to 0.7071 m at the
+    2026-09-08 draft's 1.5), so a GENTLER curve (bigger R, lower curvature)
+    ALWAYS makes the visible straight dropper LONGER, never shorter, given
+    these pinned endpoints; there is no radius that is both gentle and
+    dropper-free. 0.6 is chosen near the short end of that range: see
+    NECK_ARC_RADIUS_RATIO's own comment for the exact bound it is chosen to
+    clear (external dropper under lantern_width_m) and the module
+    docstring's point 2 for the sheet reading that motivated preferring a
+    short dropper over a shallow curve once both could not be had together.
     """
     mh = params["mounting_height_m"]
     reach = params["outreach_m"]
@@ -508,15 +692,23 @@ def _wedge_verts(cx, cy, z0, sx, sy, rise):
     return v, f
 
 
-def _cyl_verts(cx, cy, z0, z1, radius, segments):
-    """Capped cylinder, axis along Z, centred on (cx,cy). Two rings plus an
-    n-gon fan cap at each end; radius is uniform (the spec gives one
-    diameter, so no taper is authored)."""
+def _cyl_verts(cx, cy, z0, z1, radius, segments, radius1=None):
+    """Capped cylinder OR FRUSTUM, axis along Z, centred on (cx,cy). Two
+    rings plus an n-gon fan cap at each end. `radius` is the ring at z0;
+    `radius1` (default: same as radius, an ordinary cylinder, which is what
+    every call site shipped before 2026-09-21 used and what the shaft and
+    photocell still use) is the ring at z1. A tapered ring pair is still two
+    PLANAR n-gons joined by PLANAR quads (a frustum face is a trapezoid, not
+    a warped quad, for the same reason a cone's polygonal approximation
+    always is), so mesh_check()'s Newell-normal and edge-sharing proof below
+    needs no special case for this: it is exercised on both a taper and a
+    true cylinder by selftest's mesh/* fuzz checks."""
+    r1 = radius if radius1 is None else radius1
     bottom = [[cx + radius * math.cos(2 * math.pi * i / segments),
                cy + radius * math.sin(2 * math.pi * i / segments), z0]
               for i in range(segments)]
-    top = [[cx + radius * math.cos(2 * math.pi * i / segments),
-            cy + radius * math.sin(2 * math.pi * i / segments), z1]
+    top = [[cx + r1 * math.cos(2 * math.pi * i / segments),
+            cy + r1 * math.sin(2 * math.pi * i / segments), z1]
            for i in range(segments)]
     v = bottom + top
     f = []
@@ -644,11 +836,21 @@ def build_parts(params):
                   params["lantern_height_m"])
     lbh, lrr = params["lantern_body_height_m"], params["lantern_roof_rise_m"]
 
-    v, f = _cyl_verts(0, 0, 0.0, bh, bd / 2.0, CYLINDER_RADIAL_SEGMENTS)
-    parts.append({"id": "base", "kind": "cyl", "material": "steel_dark",
+    # TAPERED 2026-09-21, replacing a uniform cylinder. The first render's
+    # flush step from a 0.2 m base to the 0.114 m shaft read as "a chunky
+    # sleeve slipped over the shaft" against the Hook sheet, which shows no
+    # visible collar at this camera distance. base_diameter_m still names
+    # the WIDEST point (the foot, matching what cross_check compares it
+    # against); the top of the taper meets shaft_diameter_m exactly, so
+    # there is no step at the base/shaft joint at all.
+    base_r0, base_r1 = bd / 2.0, sd / 2.0
+    base_slant_m = math.hypot(base_r0 - base_r1, bh)
+    v, f = _cyl_verts(0, 0, 0.0, bh, base_r0, CYLINDER_RADIAL_SEGMENTS, radius1=base_r1)
+    parts.append({"id": "base", "kind": "frustum", "material": "steel_dark",
                   "verts": v, "faces": f,
-                  "area_m2": math.pi * bd * bh, "wear_of": "base",
-                  "note": "base_diameter_m/base_height_m, column.surface=%s"
+                  "area_m2": math.pi * (base_r0 + base_r1) * base_slant_m, "wear_of": "base",
+                  "note": "base_diameter_m at the foot tapering to shaft_diameter_m "
+                          "at the top, no step at the shaft joint, column.surface=%s"
                           % params["column_surface"]})
 
     v, f = _cyl_verts(0, 0, bh, mh, sd / 2.0, CYLINDER_RADIAL_SEGMENTS)
@@ -669,13 +871,21 @@ def build_parts(params):
                              neck["dropper_length_m"], neck["total_length_m"])})
 
     lz0 = mh - lh   # bottom of the whole lantern assembly (box centred at mh - lh/2)
-    v, f = _box_verts(reach, 0, lz0 + lbh / 2.0, ll, lw, lbh)
+    # NARROWED 2026-09-21: the housing is authored at LANTERN_BODY_INSET_RATIO
+    # of the full ll x lw envelope, so the roof/canopy (still full size, see
+    # below) overhangs it on every side, the way a cobra-head fitting's hood
+    # oversails its lamp chamber. The OVERALL lantern envelope used by
+    # cross_check is unaffected: cross_check compares spec-derived scalars
+    # against the blockout's own box, never this mesh's individual parts.
+    lbl, lbw = ll * LANTERN_BODY_INSET_RATIO, lw * LANTERN_BODY_INSET_RATIO
+    v, f = _box_verts(reach, 0, lz0 + lbh / 2.0, lbl, lbw, lbh)
     parts.append({"id": "lantern_body", "kind": "box", "material": "steel_dark",
                   "verts": v, "faces": f,
-                  "area_m2": 2 * (ll + lw) * lbh + ll * lw, "wear_of": "lantern",
-                  "note": "housing; length_m/width_m unchanged, height split "
-                          "body=%.4f roof=%.4f of lantern_height_m=%.4f"
-                          % (lbh, lrr, lh)})
+                  "area_m2": 2 * (lbl + lbw) * lbh + lbl * lbw, "wear_of": "lantern",
+                  "note": "housing inset to %.2fx of length_m/width_m so the roof "
+                          "overhangs it, height split body=%.4f roof=%.4f of "
+                          "lantern_height_m=%.4f"
+                          % (LANTERN_BODY_INSET_RATIO, lbh, lrr, lh)})
 
     lens_l, lens_w, lens_h = ll * 0.8, lw * 0.7, 0.02
     v, f = _box_verts(reach, 0, lz0 + lens_h / 2.0, lens_l, lens_w, lens_h)
@@ -696,7 +906,14 @@ def build_parts(params):
     photocell_r, photocell_h = 0.02, 0.025
     v, f = _cyl_verts(reach, 0, lz0 + lh, lz0 + lh + photocell_h, photocell_r, 10)
     parts.append({"id": "photocell", "kind": "cyl", "material": "steel_dark",
-                  "verts": v, "faces": f, "area_m2": 0.0, "wear_of": None,
+                  "verts": v, "faces": f,
+                  # FIXED 2026-09-21: this printed area_m2=0.00000 every run, which
+                  # the brief read (correctly) as suspicious for a 20-vertex,
+                  # 12-face part. It was not a geometry problem: the literal was
+                  # never computed, unlike every other part's area (compare base,
+                  # shaft, neck above, each its own formula). Lateral surface only,
+                  # matching the convention those use (no end caps counted).
+                  "area_m2": 2 * math.pi * photocell_r * photocell_h, "wear_of": None,
                   "note": "small functional dusk-to-dawn sensor housing, read "
                           "off the sheet's small ridge-top bump; NOT a finial, "
                           "which the ruling forbids: a finial is decorative, "
@@ -712,10 +929,16 @@ def build_parts(params):
                   "note": "rain running down the shaft from the neck attachment, "
                           "on the outreach-facing (weather) side"})
 
-    circumference = math.pi * bd
-    sp_w = WEAR["road_spray"]["width_ratio_of_base_circumference"] * circumference
+    sp_w = WEAR["road_spray"]["width_ratio_of_base_d"] * bd
     sp_h = WEAR["road_spray"]["height_ratio_of_base_h"] * bh
-    sp_r = bd / 2.0 + WEAR_STANDOFF_M
+    # THE BASE IS A TAPER (bd/2 at the foot, sd/2 at the top), so its true
+    # radius at the patch's own mid-height is a linear blend between the two,
+    # not the foot radius used before the base was tapered: using the foot
+    # radius unchanged here would leave this patch floating clear of the
+    # surface the further up the (now-narrowing) taper it reached.
+    sp_z_frac = (sp_h / 2.0) / bh if bh > 0 else 0.0
+    sp_base_r = (bd / 2.0) + sp_z_frac * ((sd / 2.0) - (bd / 2.0))
+    sp_r = sp_base_r + WEAR_STANDOFF_M
     v, f = _box_verts(sp_r, 0, sp_h / 2.0, WEAR_STANDOFF_M * 2, sp_w, sp_h)
     parts.append({"id": "wear_road_spray", "kind": "box", "material": "grime",
                   "verts": v, "faces": f, "area_m2": sp_w * sp_h, "wear_of": "base",
@@ -804,21 +1027,45 @@ def plan_lines(plan):
                      % (label, spec_v, piece_v, abs(spec_v - piece_v),
                         "yes" if ok else "no"))
     neck = plan["neck"]
+    external_dropper_m = neck["arc_end_point"][2] - plan["params"]["mounting_height_m"]
     lines.append(
         "lcNeck radius_m=%.4f radiusRatio=%.2f sweep_deg=%.2f "
-        "arcPortion_m=%.4f dropperLength_m=%.4f jointAngle_deg=%.2f "
+        "arcPortion_m=%.4f dropperLength_m=%.4f externalDropper_m=%.4f "
+        "jointAngle_deg=%.2f "
         "authoredArcTotal_m=%.4f naiveQuarterArc_m=%.4f "
         "arcLongerThanNaive=%s arcRatio=%.4f "
         "authoredCurvature_perM=%.4f naiveQuarterCurvature_perM=%.4f "
-        "shallowerThanNaive=%s curvatureRatio=%.4f"
+        "shallowerThanNaive=%s curvatureRatio=%.4f "
+        "naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling"
         % (neck["radius_m"], neck["radius_ratio"], neck["sweep_deg"],
-           neck["arc_portion_length_m"], neck["dropper_length_m"], neck["joint_angle_deg"],
+           neck["arc_portion_length_m"], neck["dropper_length_m"], external_dropper_m,
+           neck["joint_angle_deg"],
            plan["neck_arc_length_m"], plan["naive_arc_length_m"],
            "yes" if plan["neck_arc_length_m"] > plan["naive_arc_length_m"] else "no",
            plan["neck_arc_length_m"] / plan["naive_arc_length_m"],
            plan["neck_peak_curvature_per_m"], plan["naive_curvature_per_m"],
            "yes" if plan["neck_peak_curvature_per_m"] < plan["naive_curvature_per_m"] else "no",
            plan["neck_peak_curvature_per_m"] / plan["naive_curvature_per_m"]))
+    # THE COMPARISON AGAINST THE SHEET ITSELF, replacing the naive quarter
+    # circle as the thing this run reports itself against, per the brief
+    # this revision answers: "print the new comparison against the sheet
+    # rather than against a quarter circle." THIS LINE IS A STATIC, DATED,
+    # SOURCED RECORD OF A ONE-TIME VISUAL MEASUREMENT, not a live recomputation:
+    # this script cannot open a PNG concept sheet and measure it at run time,
+    # and does not pretend to (see the module docstring's "what a printed
+    # comparison against the sheet can and cannot be"). The figures below are
+    # SHEET_REF_* constants, defined once, near NECK_ARC_RADIUS_RATIO, with
+    # their own provenance; printing them here keeps the comparison in the
+    # one file a reader of a run already has open, instead of only in a
+    # report nobody archives beside the verdict.
+    lines.append(
+        "lcSheetRef source=%s cropPx=%s method=%s measuredAt=%s "
+        "curveVerticalFraction_ofVisiblePole~=%s headWidthToHeight~=%s "
+        "dropperVisibleOnSheet=%s confidence=%s"
+        % (SHEET_REF["source"], SHEET_REF["crop_px"], SHEET_REF["method"],
+           SHEET_REF["measured_at"], SHEET_REF["curve_vertical_fraction"],
+           SHEET_REF["head_width_to_height"], SHEET_REF["dropper_visible"],
+           SHEET_REF["confidence"]))
     for p in plan["parts"]:
         lines.append(
             "lcPart id=%s kind=%s material=%s verts=%d faces=%d area_m2=%.5f "
@@ -1239,29 +1486,65 @@ def selftest(root):
 
         neck = neck_curve(params)
         naive_len, naive_curv = naive_quarter_circle(params)
-        check("accept/authored-neck-longer-than-naive-quarter-circle",
-              neck["total_length_m"] > naive_len,
-              "%.4f vs %.4f" % (neck["total_length_m"], naive_len))
-        check("accept/authored-neck-shallower-than-naive-quarter-circle",
-              neck["curvature_per_m"] < naive_curv,
-              "%.4f vs %.4f" % (neck["curvature_per_m"], naive_curv))
+        # "shallower/longer than the naive quarter circle" ARE NO LONGER
+        # GATES, as of the 2026-09-21 iteration: Jafar's ruling on the first
+        # render read that baseline as never having been the reference, and
+        # passing it as having proved nothing about the sheet. Both figures
+        # are still computed and printed every run (see lcNeck in
+        # plan_lines()), now as labelled, informational numbers only. The
+        # length comparison happens to still hold at the shipped ratio
+        # (checked below, not asserted here) but that is a fact about this
+        # one ratio, not a requirement the file enforces.
+        check("accept/naive-quarter-circle-comparison-is-computed-not-asserted",
+              naive_len > 0.0 and naive_curv > 0.0,
+              "len=%.4f curv=%.4f, informational only, see module docstring "
+              "point 2" % (naive_len, naive_curv))
         check("accept/neck-starts-exactly-at-shaft-top",
               neck["points"][0] == [0.0, 0.0, params["mounting_height_m"]])
         check("accept/neck-ends-exactly-at-spec-lantern-mount",
               abs(neck["points"][-1][0] - params["outreach_m"]) < 1e-9 and
               abs(neck["points"][-1][2] - (params["mounting_height_m"]
                                            - params["lantern_height_m"] * 0.5)) < 1e-9)
+        # THE GATE THAT REPLACES IT, tied to a spec-derived scale rather than
+        # to a baseline the sheet never supported: the EXTERNAL dropper (the
+        # part of the straight run above the lantern housing's own top,
+        # z = mounting_height_m, where the "tab" the first render showed
+        # actually reads) must stay shorter than the lantern's own width, so
+        # any residual straight stub reads as subordinate to the fitting it
+        # feeds into rather than as a separate rod. NECK_ARC_RADIUS_RATIO's
+        # own comment explains why this is the requirement the shipped ratio
+        # is chosen to clear, not an arbitrary bound.
+        external_dropper_m = neck["arc_end_point"][2] - params["mounting_height_m"]
+        check("accept/external-dropper-shorter-than-lantern-width",
+              0.0 <= external_dropper_m < params["lantern_width_m"],
+              "%.4f m vs lantern_width_m=%.4f m"
+              % (external_dropper_m, params["lantern_width_m"]))
+        # CONSTANT CURVATURE, VERIFIED ON THE ACTUAL SAMPLED POINTS rather
+        # than trusted from the formula that generated them: every point on
+        # the arc portion (all but the appended dropper point) must sit at
+        # exactly radius_m from the arc's own centre (radius_m, mounting_height_m).
+        cx, cz, R = neck["radius_m"], params["mounting_height_m"], neck["radius_m"]
+        arc_pts = neck["points"][:-1]   # last point is the dropper's far end
+        radii = [math.hypot(p[0] - cx, p[2] - cz) for p in arc_pts]
+        check("accept/neck-arc-points-lie-on-one-circle-of-the-authored-radius",
+              all(abs(r - R) < 1e-6 for r in radii),
+              "maxDeviation=%.8f over %d points" % (max(abs(r - R) for r in radii), len(radii)))
 
-        # THE CLOSED-FORM PROOF, exercised over a RANGE the shipped
-        # NECK_ARC_RADIUS_RATIO (1.5) sits inside, not only at that one
-        # value: this is the check that would have caught the earlier
-        # Bezier draft's failure before it was ever printed.
+        # THE CLOSED-FORM PROOF, exercised over a RANGE of radius ratios that
+        # does NOT include the shipped value (0.6, since 2026-09-21): this
+        # checks a general, still-true property of neck_arc()'s formula for
+        # ratio > 1 (this is the check that would have caught the earlier
+        # Bezier draft's failure before it was ever printed, and it still
+        # would if the formula regressed), not a claim about what ships. The
+        # shipped ratio's own behaviour is checked above instead.
         all_shallower = all(neck_arc(params, k)["curvature_per_m"] < naive_curv
                             for k in (1.05, 1.2, 1.5, 2.0, 3.0, 4.0))
-        check("accept/shallower-holds-for-every-radius-ratio-above-one", all_shallower)
+        check("accept/formula-is-shallower-than-naive-for-every-ratio-above-one-tested",
+              all_shallower)
         sweeps_under_90 = all(neck_arc(params, k)["sweep_deg"] < 90.0
                               for k in (1.05, 1.2, 1.5, 2.0, 3.0, 4.0))
-        check("accept/sweep-stays-under-90-degrees-over-tested-ratios", sweeps_under_90)
+        check("accept/formula-sweep-stays-under-90-degrees-for-every-ratio-above-one-tested",
+              sweeps_under_90)
 
         plan, plan_err = build_plan(root, {"spec": SPEC_REL})
         check("accept/build-plan-succeeds", not plan_err, plan_err)
