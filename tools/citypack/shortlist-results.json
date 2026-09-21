@@ -1,1661 +1,1093 @@
 {
  "resolution": "1K-JPG",
  "surfaces": {
-  "concrete": {
-   "current": {
-    "width": 2048,
-    "height": 2048,
-    "lumMean": 107.2,
-    "lumSD": 9.3,
-    "chromaSpread": 6.8,
-    "file": "concrete.jpg"
-   },
+  "setts": {
+   "current": null,
    "candidates": {
-    "Concrete001": {
+    "PavingStones001": {
      "width": 1024,
-     "height": 715,
-     "lumMean": 154.9,
-     "lumSD": 17.2,
-     "chromaSpread": 38.5
+     "height": 912,
+     "lumMean": 124.8,
+     "lumSD": 18.6,
+     "chromaSpread": 3.5
     },
-    "Concrete002": {
-     "width": 1024,
-     "height": 596,
-     "lumMean": 155.4,
-     "lumSD": 10.4,
-     "chromaSpread": 1.8
-    },
-    "Concrete003": {
+    "PavingStones002": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 146.1,
-     "lumSD": 16.2,
-     "chromaSpread": 7.9
+     "lumMean": 118.3,
+     "lumSD": 16.3,
+     "chromaSpread": 4.1
     },
-    "Concrete004": {
+    "PavingStones003": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 157.7,
+     "lumMean": 98.5,
      "lumSD": 9.8,
-     "chromaSpread": 9.0
+     "chromaSpread": 31.4
     },
-    "Concrete005": {
+    "PavingStones004": {
+     "width": 858,
+     "height": 1024,
+     "lumMean": 93.6,
+     "lumSD": 8.7,
+     "chromaSpread": 6.9
+    },
+    "PavingStones005": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 135.6,
-     "lumSD": 13.5,
-     "chromaSpread": 12.0
+     "lumMean": 138.3,
+     "lumSD": 18.0,
+     "chromaSpread": 8.6
     },
-    "Concrete006": {
+    "PavingStones006": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 134.9,
-     "lumSD": 5.1,
-     "chromaSpread": 0.0
+     "lumMean": 142.6,
+     "lumSD": 19.5,
+     "chromaSpread": 5.1
     },
-    "Concrete007": {
+    "PavingStones007": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 123.0,
-     "lumSD": 7.5,
-     "chromaSpread": 2.5
+     "lumMean": 133.1,
+     "lumSD": 17.6,
+     "chromaSpread": 28.1
     },
-    "Concrete008": {
+    "PavingStones008": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 160.6,
-     "lumSD": 8.5,
+     "lumMean": 151.7,
+     "lumSD": 16.0,
+     "chromaSpread": 36.4
+    },
+    "PavingStones009": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 125.0,
+     "lumSD": 20.7,
+     "chromaSpread": 30.8
+    },
+    "PavingStones010": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 125.4,
+     "lumSD": 39.0,
+     "chromaSpread": 29.5
+    },
+    "PavingStones011": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 129.2,
+     "lumSD": 21.1,
+     "chromaSpread": 14.4
+    },
+    "PavingStones012": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 147.1,
+     "lumSD": 24.2,
+     "chromaSpread": 36.0
+    },
+    "PavingStones013": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 136.1,
+     "lumSD": 12.3,
+     "chromaSpread": 8.7
+    },
+    "PavingStones014": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 155.0,
+     "lumSD": 23.9,
      "chromaSpread": 0.7
     },
-    "Concrete009": {
+    "PavingStones015": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 139.1,
-     "lumSD": 9.6,
-     "chromaSpread": 0.8
+     "lumMean": 141.1,
+     "lumSD": 16.9,
+     "chromaSpread": 3.4
     },
-    "Concrete010": {
+    "PavingStones016": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 138.6,
-     "lumSD": 10.4,
-     "chromaSpread": 0.8
+     "lumMean": 130.6,
+     "lumSD": 15.0,
+     "chromaSpread": 15.9
     },
-    "Concrete011": {
+    "PavingStones017": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 125.8,
-     "lumSD": 28.3,
-     "chromaSpread": 22.2
+     "lumMean": 150.5,
+     "lumSD": 12.9,
+     "chromaSpread": 5.8
     },
-    "Concrete012": {
+    "PavingStones018": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 128.4,
-     "lumSD": 9.6,
-     "chromaSpread": 24.6
+     "lumMean": 150.5,
+     "lumSD": 16.1,
+     "chromaSpread": 10.9
     },
-    "Concrete013": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 179.6,
-     "lumSD": 8.3,
-     "chromaSpread": 3.7
-    },
-    "Concrete014": {
+    "PavingStones019": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 108.4,
-     "lumSD": 8.8,
-     "chromaSpread": 6.8
+     "lumMean": 137.7,
+     "lumSD": 11.0,
+     "chromaSpread": 2.9
     },
-    "Concrete015": {
+    "PavingStones020": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 98.4,
-     "lumSD": 4.9,
-     "chromaSpread": 7.1
+     "lumMean": 127.3,
+     "lumSD": 5.6,
+     "chromaSpread": 11.1
     },
-    "Concrete016": {
+    "PavingStones021": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 130.0,
-     "lumSD": 6.4,
-     "chromaSpread": 9.0
+     "lumMean": 127.7,
+     "lumSD": 11.4,
+     "chromaSpread": 46.9
     },
-    "Concrete018": {
+    "PavingStones022": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 171.1,
-     "lumSD": 26.0,
-     "chromaSpread": 28.2
+     "lumMean": 125.5,
+     "lumSD": 3.3,
+     "chromaSpread": 30.7
     },
-    "Concrete019": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 123.1,
-     "lumSD": 15.5,
-     "chromaSpread": 6.6
-    },
-    "Concrete020": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 124.6,
-     "lumSD": 8.8,
-     "chromaSpread": 6.2
-    },
-    "Concrete021": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 137.5,
-     "lumSD": 21.8,
-     "chromaSpread": 13.4
-    },
-    "Concrete022": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 117.7,
-     "lumSD": 10.5,
-     "chromaSpread": 6.7
-    },
-    "Concrete023": {
+    "PavingStones023": {
      "width": 1024,
      "height": 1024,
      "lumMean": 130.7,
-     "lumSD": 13.1,
-     "chromaSpread": 2.5
+     "lumSD": 8.7,
+     "chromaSpread": 12.6
     },
-    "Concrete024": {
+    "PavingStones024": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 134.6,
-     "lumSD": 5.6,
-     "chromaSpread": 5.9
+     "lumMean": 117.8,
+     "lumSD": 15.5,
+     "chromaSpread": 3.0
     },
-    "Concrete025": {
+    "PavingStones025": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 181.9,
-     "lumSD": 27.8,
-     "chromaSpread": 5.5
+     "lumMean": 110.1,
+     "lumSD": 18.5,
+     "chromaSpread": 7.8
     },
-    "Concrete026": {
+    "PavingStones026": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 145.2,
-     "lumSD": 34.3,
+     "lumMean": 107.1,
+     "lumSD": 8.9,
+     "chromaSpread": 48.5
+    },
+    "PavingStones027": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.0,
+     "lumSD": 35.4,
      "chromaSpread": 25.6
     },
-    "Concrete027": {
+    "PavingStones028": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 96.5,
-     "lumSD": 7.7,
-     "chromaSpread": 7.1
+     "lumMean": 122.2,
+     "lumSD": 19.5,
+     "chromaSpread": 28.7
     },
-    "Concrete028": {
+    "PavingStones029": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 101.2,
-     "lumSD": 7.7,
-     "chromaSpread": 7.9
-    },
-    "Concrete029": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 100.9,
-     "lumSD": 7.0,
-     "chromaSpread": 7.4
-    },
-    "Concrete030": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 96.4,
-     "lumSD": 7.1,
-     "chromaSpread": 7.4
-    },
-    "Concrete031": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 96.8,
-     "lumSD": 8.5,
-     "chromaSpread": 7.9
-    },
-    "Concrete032": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 76.7,
-     "lumSD": 7.0,
-     "chromaSpread": 13.6
-    },
-    "Concrete033": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 76.1,
-     "lumSD": 6.8,
-     "chromaSpread": 14.0
-    },
-    "Concrete035": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 130.5,
-     "lumSD": 18.5,
-     "chromaSpread": 13.4
-    },
-    "Concrete036": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 147.7,
-     "lumSD": 13.5,
-     "chromaSpread": 15.9
-    },
-    "Concrete037": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 149.3,
-     "lumSD": 21.1,
-     "chromaSpread": 16.3
-    },
-    "Concrete038": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 154.7,
-     "lumSD": 21.6,
-     "chromaSpread": 71.2
-    },
-    "Concrete039": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 139.3,
-     "lumSD": 15.4,
-     "chromaSpread": 40.7
-    },
-    "Concrete040": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 121.9,
-     "lumSD": 15.5,
-     "chromaSpread": 31.6
-    },
-    "Concrete041A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 81.1,
-     "lumSD": 6.0,
-     "chromaSpread": 7.5
-    },
-    "Concrete041B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 80.5,
-     "lumSD": 7.5,
-     "chromaSpread": 8.9
-    },
-    "Concrete041C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 82.7,
-     "lumSD": 12.2,
-     "chromaSpread": 15.0
-    },
-    "Concrete041D": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 82.6,
-     "lumSD": 17.3,
-     "chromaSpread": 23.6
-    },
-    "Concrete042B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 92.7,
-     "lumSD": 8.7,
-     "chromaSpread": 9.0
-    },
-    "Concrete042C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 86.8,
-     "lumSD": 14.6,
-     "chromaSpread": 16.1
-    },
-    "Concrete042D": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 80.7,
-     "lumSD": 17.6,
-     "chromaSpread": 23.6
-    },
-    "Concrete043A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 68.3,
-     "lumSD": 6.4,
-     "chromaSpread": 9.5
-    },
-    "Concrete043B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 68.9,
-     "lumSD": 7.9,
-     "chromaSpread": 10.3
-    },
-    "Concrete043C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 78.1,
-     "lumSD": 12.7,
-     "chromaSpread": 15.4
-    },
-    "Concrete043D": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 81.0,
-     "lumSD": 15.2,
-     "chromaSpread": 19.6
-    },
-    "Concrete044A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 81.5,
-     "lumSD": 5.9,
-     "chromaSpread": 7.6
-    },
-    "Concrete044B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 82.8,
-     "lumSD": 7.6,
-     "chromaSpread": 8.0
-    },
-    "Concrete044C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 87.3,
-     "lumSD": 9.9,
-     "chromaSpread": 9.3
-    },
-    "Concrete044D": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 96.8,
-     "lumSD": 10.8,
-     "chromaSpread": 11.5
-    },
-    "Concrete045": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 202.9,
-     "lumSD": 11.1,
-     "chromaSpread": 30.5
-    },
-    "Concrete046": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 204.0,
-     "lumSD": 8.2,
-     "chromaSpread": 20.9
-    },
-    "Concrete047A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 135.9,
-     "lumSD": 15.3,
-     "chromaSpread": 29.3
-    },
-    "Concrete047B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 132.0,
-     "lumSD": 18.3,
-     "chromaSpread": 33.8
-    },
-    "Concrete048": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 152.9,
-     "lumSD": 7.2,
-     "chromaSpread": 27.1
-    }
-   }
-  },
-  "kerb": {
-   "current": {
-    "width": 2048,
-    "height": 1024,
-    "lumMean": 184.3,
-    "lumSD": 6.6,
-    "chromaSpread": 0.0,
-    "file": "kerb.jpg"
-   },
-   "candidates": {
-    "Rock001": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 115.2,
-     "lumSD": 24.5,
-     "chromaSpread": 8.7
-    },
-    "Rock002": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 84.3,
-     "lumSD": 7.8,
-     "chromaSpread": 1.7
-    },
-    "Rock003": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 134.9,
-     "lumSD": 19.4,
-     "chromaSpread": 34.8
-    },
-    "Rock004": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 184.9,
-     "lumSD": 14.3,
-     "chromaSpread": 41.2
-    },
-    "Rock005": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 114.7,
-     "lumSD": 15.3,
-     "chromaSpread": 6.4
-    },
-    "Rock006": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 55.5,
-     "lumSD": 18.5,
-     "chromaSpread": 6.3
-    },
-    "Rock007": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 73.1,
-     "lumSD": 22.2,
-     "chromaSpread": 8.3
-    },
-    "Rock008": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 69.9,
-     "lumSD": 22.6,
-     "chromaSpread": 10.8
-    },
-    "Rock009": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 73.4,
-     "lumSD": 19.1,
-     "chromaSpread": 35.5
-    },
-    "Rock010": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 77.5,
-     "lumSD": 11.8,
-     "chromaSpread": 4.7
-    },
-    "Rock011": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 76.0,
-     "lumSD": 11.4,
-     "chromaSpread": 9.4
-    },
-    "Rock012": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 33.7,
-     "lumSD": 13.8,
-     "chromaSpread": 4.2
-    },
-    "Rock013": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 65.3,
-     "lumSD": 13.0,
-     "chromaSpread": 5.3
-    },
-    "Rock014": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 58.9,
-     "lumSD": 11.8,
-     "chromaSpread": 2.1
-    },
-    "Rock015": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 80.0,
-     "lumSD": 12.5,
-     "chromaSpread": 11.4
-    },
-    "Rock016": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 73.8,
-     "lumSD": 12.1,
-     "chromaSpread": 2.4
-    },
-    "Rock017": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 185.8,
-     "lumSD": 15.1,
-     "chromaSpread": 8.2
-    },
-    "Rock018": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 186.6,
-     "lumSD": 11.9,
+     "lumMean": 121.0,
+     "lumSD": 10.1,
      "chromaSpread": 7.2
     },
-    "Rock019": {
+    "PavingStones030": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 181.8,
-     "lumSD": 18.6,
-     "chromaSpread": 9.3
-    },
-    "Rock020": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 77.9,
-     "lumSD": 18.2,
-     "chromaSpread": 9.5
-    },
-    "Rock021": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 168.4,
-     "lumSD": 10.9,
-     "chromaSpread": 21.8
-    },
-    "Rock022": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 98.9,
-     "lumSD": 20.8,
-     "chromaSpread": 3.3
-    },
-    "Rock023": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 139.3,
-     "lumSD": 23.2,
-     "chromaSpread": 4.0
-    },
-    "Rock024": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 133.5,
-     "lumSD": 16.9,
-     "chromaSpread": 9.3
-    },
-    "Rock025": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 169.7,
-     "lumSD": 17.0,
-     "chromaSpread": 4.4
-    },
-    "Rock026": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 159.6,
-     "lumSD": 41.9,
-     "chromaSpread": 5.2
-    },
-    "Rock027": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 132.3,
-     "lumSD": 25.2,
-     "chromaSpread": 3.5
-    },
-    "Rock028": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 76.4,
-     "lumSD": 23.6,
-     "chromaSpread": 11.8
-    },
-    "Rock029": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 89.8,
-     "lumSD": 15.2,
-     "chromaSpread": 66.8
-    },
-    "Rock030": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 76.7,
-     "lumSD": 17.8,
-     "chromaSpread": 9.9
-    },
-    "Rock031": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 45.8,
-     "lumSD": 24.4,
-     "chromaSpread": 3.2
-    },
-    "Rock032": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 87.6,
-     "lumSD": 15.8,
-     "chromaSpread": 3.8
-    },
-    "Rock033": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 32.3,
-     "lumSD": 26.9,
-     "chromaSpread": 8.2
-    },
-    "Rock034": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 79.1,
-     "lumSD": 22.5,
-     "chromaSpread": 10.9
-    },
-    "Rock035": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 24.1,
-     "lumSD": 16.0,
-     "chromaSpread": 14.2
-    },
-    "Rock036": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 89.7,
-     "lumSD": 21.8,
-     "chromaSpread": 31.4
-    },
-    "Rock037": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 32.0,
-     "lumSD": 26.7,
-     "chromaSpread": 6.9
-    },
-    "Rock038": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 104.5,
-     "lumSD": 30.4,
-     "chromaSpread": 21.6
-    },
-    "Rock039": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 105.0,
-     "lumSD": 15.8,
-     "chromaSpread": 27.9
-    },
-    "Rock040": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 176.1,
-     "lumSD": 24.7,
-     "chromaSpread": 34.3
-    },
-    "Rock041": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 104.1,
-     "lumSD": 12.7,
-     "chromaSpread": 19.9
-    },
-    "Rock042L": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 147.8,
-     "lumSD": 20.4,
-     "chromaSpread": 29.0
-    },
-    "Rock042S": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 148.4,
-     "lumSD": 22.4,
-     "chromaSpread": 29.3
-    },
-    "Rock043L": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 139.3,
-     "lumSD": 26.8,
-     "chromaSpread": 10.6
-    },
-    "Rock043S": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 139.9,
-     "lumSD": 33.9,
-     "chromaSpread": 11.7
-    },
-    "Rock044": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 138.2,
-     "lumSD": 27.2,
-     "chromaSpread": 31.5
-    },
-    "Rock045": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 135.3,
-     "lumSD": 25.8,
-     "chromaSpread": 21.3
-    },
-    "Rock046L": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 141.0,
-     "lumSD": 47.3,
-     "chromaSpread": 21.8
-    },
-    "Rock046S": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 139.3,
-     "lumSD": 48.9,
-     "chromaSpread": 22.3
-    },
-    "Rock047": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 112.7,
-     "lumSD": 31.0,
-     "chromaSpread": 25.1
-    },
-    "Rock048": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 136.0,
-     "lumSD": 35.7,
-     "chromaSpread": 7.3
-    },
-    "Rock049": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 94.6,
-     "lumSD": 21.4,
-     "chromaSpread": 28.2
-    },
-    "Rock050": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 88.8,
-     "lumSD": 19.0,
-     "chromaSpread": 3.5
-    },
-    "Rock051": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 113.8,
-     "lumSD": 24.1,
-     "chromaSpread": 20.2
-    },
-    "Rock052": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 143.7,
-     "lumSD": 12.6,
-     "chromaSpread": 51.5
-    },
-    "Rock053": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 92.8,
-     "lumSD": 14.2,
-     "chromaSpread": 34.8
-    },
-    "Rock054": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 153.7,
-     "lumSD": 5.5,
-     "chromaSpread": 66.8
-    },
-    "Rock055": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 126.9,
-     "lumSD": 22.9,
-     "chromaSpread": 108.4
-    },
-    "Rock056": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 115.6,
-     "lumSD": 22.2,
-     "chromaSpread": 96.1
-    },
-    "Rock057": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 118.2,
-     "lumSD": 31.1,
-     "chromaSpread": 67.7
-    },
-    "Rock058": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 83.7,
-     "lumSD": 11.7,
-     "chromaSpread": 14.5
-    },
-    "Rock059": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 87.1,
-     "lumSD": 7.6,
-     "chromaSpread": 18.6
-    },
-    "Rock060": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 91.9,
-     "lumSD": 11.0,
-     "chromaSpread": 9.2
-    },
-    "Rock061": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 81.8,
-     "lumSD": 10.0,
-     "chromaSpread": 19.1
-    },
-    "Rock062": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 79.7,
-     "lumSD": 10.0,
-     "chromaSpread": 13.5
-    },
-    "Rock063": {
-     "width": 1024,
-     "height": 512,
-     "lumMean": 116.8,
-     "lumSD": 32.0,
-     "chromaSpread": 82.2
-    },
-    "Rock064": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 108.1,
-     "lumSD": 23.6,
-     "chromaSpread": 46.0
-    }
-   }
-  },
-  "metal": {
-   "current": {
-    "width": 2048,
-    "height": 2048,
-    "lumMean": 134.8,
-    "lumSD": 4.6,
-    "chromaSpread": 22.5,
-    "file": "metal.jpg"
-   },
-   "candidates": {
-    "Metal001": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 156.1,
-     "lumSD": 12.4,
-     "chromaSpread": 6.1
-    },
-    "Metal002": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 152.4,
-     "lumSD": 13.6,
-     "chromaSpread": 5.3
-    },
-    "Metal003": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 154.6,
-     "lumSD": 11.7,
-     "chromaSpread": 5.6
-    },
-    "Metal004": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 189.2,
-     "lumSD": 15.1,
-     "chromaSpread": 7.7
-    },
-    "Metal005": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 118.8,
-     "lumSD": 21.2,
-     "chromaSpread": 5.3
-    },
-    "Metal006": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 152.6,
-     "lumSD": 10.7,
-     "chromaSpread": 7.0
-    },
-    "Metal007": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 155.8,
-     "lumSD": 10.7,
-     "chromaSpread": 117.7
-    },
-    "Metal008": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 137.1,
-     "lumSD": 11.9,
-     "chromaSpread": 69.0
-    },
-    "Metal009": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 148.3,
-     "lumSD": 4.9,
-     "chromaSpread": 5.8
-    },
-    "Metal010": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 138.2,
-     "lumSD": 10.3,
-     "chromaSpread": 13.9
-    },
-    "Metal011": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 159.9,
-     "lumSD": 5.3,
-     "chromaSpread": 9.0
-    },
-    "Metal012": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 220.0,
-     "lumSD": 3.7,
-     "chromaSpread": 15.1
-    },
-    "Metal013": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 106.2,
-     "lumSD": 16.3,
-     "chromaSpread": 24.7
-    },
-    "Metal014": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 204.3,
-     "lumSD": 16.6,
-     "chromaSpread": 20.6
-    },
-    "Metal015": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 113.4,
-     "lumSD": 8.9,
-     "chromaSpread": 17.2
-    },
-    "Metal016": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 219.2,
-     "lumSD": 21.2,
-     "chromaSpread": 5.4
-    },
-    "Metal017": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 126.1,
-     "lumSD": 12.4,
-     "chromaSpread": 35.2
-    },
-    "Metal018": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 103.1,
-     "lumSD": 14.3,
-     "chromaSpread": 28.2
-    },
-    "Metal019": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 115.6,
-     "lumSD": 10.4,
-     "chromaSpread": 15.6
-    },
-    "Metal020": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 149.0,
-     "lumSD": 25.6,
-     "chromaSpread": 12.4
-    },
-    "Metal021": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 95.9,
-     "lumSD": 13.4,
-     "chromaSpread": 15.6
-    },
-    "Metal022": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 89.8,
-     "lumSD": 26.7,
-     "chromaSpread": 29.8
-    },
-    "Metal023": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 94.9,
-     "lumSD": 22.9,
-     "chromaSpread": 26.9
-    },
-    "Metal024": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 121.7,
-     "lumSD": 14.8,
-     "chromaSpread": 3.7
-    },
-    "Metal025": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 67.6,
-     "lumSD": 11.6,
-     "chromaSpread": 29.4
-    },
-    "Metal026": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 95.6,
-     "lumSD": 22.7,
-     "chromaSpread": 22.7
-    },
-    "Metal027": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 45.6,
-     "lumSD": 3.9,
-     "chromaSpread": 7.7
-    },
-    "Metal028": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 31.9,
-     "lumSD": 4.4,
-     "chromaSpread": 4.4
-    },
-    "Metal029": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 33.0,
-     "lumSD": 4.9,
-     "chromaSpread": 4.4
-    },
-    "Metal030": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 84.3,
-     "lumSD": 1.0,
-     "chromaSpread": 11.0
-    },
-    "Metal031": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 84.7,
-     "lumSD": 1.4,
-     "chromaSpread": 10.9
-    },
-    "Metal033": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 83.6,
-     "lumSD": 1.6,
-     "chromaSpread": 18.0
-    },
-    "Metal034": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 175.2,
-     "lumSD": 0.5,
-     "chromaSpread": 219.9
-    },
-    "Metal035": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 122.3,
-     "lumSD": 1.4,
-     "chromaSpread": 116.6
-    },
-    "Metal036": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 70.3,
-     "lumSD": 3.4,
-     "chromaSpread": 8.1
-    },
-    "Metal037": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 115.8,
+     "lumMean": 127.1,
      "lumSD": 12.1,
-     "chromaSpread": 2.8
+     "chromaSpread": 34.0
     },
-    "Metal038": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 97.1,
-     "lumSD": 4.1,
-     "chromaSpread": 2.6
-    },
-    "Metal039": {
+    "PavingStones031": {
      "width": 1024,
      "height": 1024,
      "lumMean": 126.6,
-     "lumSD": 13.7,
-     "chromaSpread": 2.8
+     "lumSD": 13.0,
+     "chromaSpread": 31.0
     },
-    "Metal040": {
+    "PavingStones032": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 109.9,
-     "lumSD": 19.7,
+     "lumMean": 121.6,
+     "lumSD": 26.2,
+     "chromaSpread": 23.3
+    },
+    "PavingStones033": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 109.0,
+     "lumSD": 31.0,
+     "chromaSpread": 11.4
+    },
+    "PavingStones034": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 148.6,
+     "lumSD": 18.0,
+     "chromaSpread": 9.7
+    },
+    "PavingStones035": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 147.4,
+     "lumSD": 17.1,
+     "chromaSpread": 3.9
+    },
+    "PavingStones036": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 146.1,
+     "lumSD": 18.4,
+     "chromaSpread": 23.1
+    },
+    "PavingStones037": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 169.8,
+     "lumSD": 15.1,
+     "chromaSpread": 1.3
+    },
+    "PavingStones038": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 147.2,
+     "lumSD": 9.8,
+     "chromaSpread": 6.6
+    },
+    "PavingStones039": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 110.7,
+     "lumSD": 21.6,
+     "chromaSpread": 15.0
+    },
+    "PavingStones040": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 136.1,
+     "lumSD": 17.6,
+     "chromaSpread": 30.0
+    },
+    "PavingStones041": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 137.8,
+     "lumSD": 18.2,
+     "chromaSpread": 15.3
+    },
+    "PavingStones042": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 155.6,
+     "lumSD": 21.0,
+     "chromaSpread": 9.8
+    },
+    "PavingStones043": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 143.8,
+     "lumSD": 14.1,
+     "chromaSpread": 14.9
+    },
+    "PavingStones044": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 157.8,
+     "lumSD": 17.2,
+     "chromaSpread": 25.8
+    },
+    "PavingStones045": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 118.6,
+     "lumSD": 22.3,
+     "chromaSpread": 17.9
+    },
+    "PavingStones046": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.9,
+     "lumSD": 14.0,
+     "chromaSpread": 5.3
+    },
+    "PavingStones047": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.1,
+     "lumSD": 40.4,
+     "chromaSpread": 9.1
+    },
+    "PavingStones048": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 109.7,
+     "lumSD": 40.2,
+     "chromaSpread": 9.6
+    },
+    "PavingStones049": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 87.4,
+     "lumSD": 31.0,
+     "chromaSpread": 5.3
+    },
+    "PavingStones050": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 90.8,
+     "lumSD": 32.6,
+     "chromaSpread": 16.2
+    },
+    "PavingStones051": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 117.8,
+     "lumSD": 30.2,
+     "chromaSpread": 6.4
+    },
+    "PavingStones052": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 179.1,
+     "lumSD": 6.9,
+     "chromaSpread": 30.8
+    },
+    "PavingStones053": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 158.7,
+     "lumSD": 32.9,
+     "chromaSpread": 37.8
+    },
+    "PavingStones054": {
+     "width": 683,
+     "height": 1024,
+     "lumMean": 128.8,
+     "lumSD": 24.4,
+     "chromaSpread": 37.9
+    },
+    "PavingStones055": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 179.0,
+     "lumSD": 17.4,
+     "chromaSpread": 24.3
+    },
+    "PavingStones056": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.6,
+     "lumSD": 20.5,
+     "chromaSpread": 62.6
+    },
+    "PavingStones057": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 105.6,
+     "lumSD": 17.5,
+     "chromaSpread": 6.7
+    },
+    "PavingStones058": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 145.4,
+     "lumSD": 44.8,
+     "chromaSpread": 8.6
+    },
+    "PavingStones059": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 167.2,
+     "lumSD": 39.9,
+     "chromaSpread": 9.7
+    },
+    "PavingStones060": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 118.9,
+     "lumSD": 35.1,
+     "chromaSpread": 7.4
+    },
+    "PavingStones061": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 150.1,
+     "lumSD": 44.7,
+     "chromaSpread": 8.9
+    },
+    "PavingStones062": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 133.8,
+     "lumSD": 42.9,
+     "chromaSpread": 8.1
+    },
+    "PavingStones063": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 145.3,
+     "lumSD": 44.8,
+     "chromaSpread": 8.6
+    },
+    "PavingStones064": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 125.5,
+     "lumSD": 39.3,
+     "chromaSpread": 7.7
+    },
+    "PavingStones065": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 146.6,
+     "lumSD": 42.0,
+     "chromaSpread": 25.7
+    },
+    "PavingStones066": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 160.4,
+     "lumSD": 41.1,
+     "chromaSpread": 16.2
+    },
+    "PavingStones067": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.9,
+     "lumSD": 23.7,
+     "chromaSpread": 21.0
+    },
+    "PavingStones068": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 129.5,
+     "lumSD": 29.2,
+     "chromaSpread": 12.8
+    },
+    "PavingStones069": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 145.4,
+     "lumSD": 14.5,
+     "chromaSpread": 32.2
+    },
+    "PavingStones070": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 137.5,
+     "lumSD": 28.6,
+     "chromaSpread": 13.7
+    },
+    "PavingStones071": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 120.3,
+     "lumSD": 19.5,
      "chromaSpread": 5.8
     },
-    "Metal041A": {
+    "PavingStones072": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 185.4,
-     "lumSD": 2.8,
+     "lumMean": 104.7,
+     "lumSD": 16.1,
+     "chromaSpread": 5.7
+    },
+    "PavingStones073": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 105.7,
+     "lumSD": 18.3,
+     "chromaSpread": 5.8
+    },
+    "PavingStones074": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 104.2,
+     "lumSD": 16.8,
+     "chromaSpread": 5.8
+    },
+    "PavingStones075": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 102.8,
+     "lumSD": 18.2,
+     "chromaSpread": 6.4
+    },
+    "PavingStones076": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 106.1,
+     "lumSD": 17.7,
+     "chromaSpread": 6.1
+    },
+    "PavingStones077": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 108.6,
+     "lumSD": 18.5,
+     "chromaSpread": 5.7
+    },
+    "PavingStones078": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 110.6,
+     "lumSD": 19.2,
+     "chromaSpread": 5.8
+    },
+    "PavingStones079": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 52.9,
+     "lumSD": 12.3,
+     "chromaSpread": 4.6
+    },
+    "PavingStones080": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 54.0,
+     "lumSD": 12.9,
      "chromaSpread": 4.7
     },
-    "Metal041B": {
+    "PavingStones081": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 141.8,
+     "lumMean": 128.8,
+     "lumSD": 20.4,
+     "chromaSpread": 5.7
+    },
+    "PavingStones082": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 105.4,
+     "lumSD": 21.7,
+     "chromaSpread": 7.4
+    },
+    "PavingStones083": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 105.0,
+     "lumSD": 20.9,
+     "chromaSpread": 7.4
+    },
+    "PavingStones084": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 61.8,
+     "lumSD": 20.9,
+     "chromaSpread": 32.1
+    },
+    "PavingStones085": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 63.1,
+     "lumSD": 17.2,
+     "chromaSpread": 30.6
+    },
+    "PavingStones086": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 56.7,
+     "lumSD": 15.7,
+     "chromaSpread": 24.3
+    },
+    "PavingStones087": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 62.6,
+     "lumSD": 14.4,
+     "chromaSpread": 6.2
+    },
+    "PavingStones088": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 64.5,
+     "lumSD": 18.4,
+     "chromaSpread": 16.9
+    },
+    "PavingStones089": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 44.3,
+     "lumSD": 15.5,
+     "chromaSpread": 11.0
+    },
+    "PavingStones090": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 73.3,
+     "lumSD": 15.3,
+     "chromaSpread": 17.1
+    },
+    "PavingStones091": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 87.3,
      "lumSD": 32.8,
-     "chromaSpread": 24.9
+     "chromaSpread": 5.5
     },
-    "Metal041C": {
+    "PavingStones092": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 73.4,
-     "lumSD": 23.1,
-     "chromaSpread": 72.2
+     "lumMean": 143.4,
+     "lumSD": 16.1,
+     "chromaSpread": 23.2
     },
-    "Metal042A": {
+    "PavingStones093": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 215.1,
-     "lumSD": 3.1,
-     "chromaSpread": 97.8
+     "lumMean": 134.6,
+     "lumSD": 10.4,
+     "chromaSpread": 11.6
     },
-    "Metal042B": {
+    "PavingStones094": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 176.0,
-     "lumSD": 16.9,
-     "chromaSpread": 72.7
+     "lumMean": 133.3,
+     "lumSD": 9.3,
+     "chromaSpread": 12.6
     },
-    "Metal043A": {
+    "PavingStones095": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 204.7,
-     "lumSD": 4.0,
-     "chromaSpread": 55.9
+     "lumMean": 128.5,
+     "lumSD": 8.8,
+     "chromaSpread": 14.5
     },
-    "Metal043B": {
+    "PavingStones096": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 129.9,
+     "lumSD": 8.8,
+     "chromaSpread": 13.4
+    },
+    "PavingStones097": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 128.7,
+     "lumSD": 7.5,
+     "chromaSpread": 13.9
+    },
+    "PavingStones098": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 83.8,
+     "lumSD": 15.7,
+     "chromaSpread": 0.5
+    },
+    "PavingStones099": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 136.4,
+     "lumSD": 14.6,
+     "chromaSpread": 7.0
+    },
+    "PavingStones100": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 154.1,
+     "lumSD": 35.4,
+     "chromaSpread": 8.7
+    },
+    "PavingStones101": {
      "width": 1024,
      "height": 1024,
      "lumMean": 135.2,
-     "lumSD": 30.9,
-     "chromaSpread": 30.6
+     "lumSD": 52.8,
+     "chromaSpread": 8.0
     },
-    "Metal044A": {
+    "PavingStones102": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 236.7,
-     "lumSD": 3.6,
-     "chromaSpread": 5.9
+     "lumMean": 161.7,
+     "lumSD": 38.4,
+     "chromaSpread": 9.3
     },
-    "Metal044B": {
+    "PavingStones103": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 235.2,
-     "lumSD": 12.1,
-     "chromaSpread": 4.1
+     "lumMean": 159.5,
+     "lumSD": 34.9,
+     "chromaSpread": 9.5
     },
-    "Metal045A": {
+    "PavingStones104": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 193.3,
-     "lumSD": 4.0,
-     "chromaSpread": 20.0
+     "lumMean": 133.5,
+     "lumSD": 54.2,
+     "chromaSpread": 9.0
     },
-    "Metal045B": {
+    "PavingStones105": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 193.2,
-     "lumSD": 5.3,
-     "chromaSpread": 20.1
+     "lumMean": 148.8,
+     "lumSD": 9.4,
+     "chromaSpread": 9.8
     },
-    "Metal046A": {
+    "PavingStones106": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 92.5,
-     "lumSD": 4.0,
-     "chromaSpread": 2.0
+     "lumMean": 117.7,
+     "lumSD": 40.7,
+     "chromaSpread": 7.9
     },
-    "Metal046B": {
+    "PavingStones107": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 62.8,
-     "lumSD": 8.6,
-     "chromaSpread": 0.3
+     "lumMean": 140.9,
+     "lumSD": 27.1,
+     "chromaSpread": 12.0
     },
-    "Metal047A": {
+    "PavingStones108": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 144.4,
-     "lumSD": 2.9,
-     "chromaSpread": 110.4
+     "lumMean": 154.1,
+     "lumSD": 27.7,
+     "chromaSpread": 12.4
     },
-    "Metal047B": {
+    "PavingStones109": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 85.1,
-     "lumSD": 17.4,
-     "chromaSpread": 40.3
+     "lumMean": 141.3,
+     "lumSD": 18.1,
+     "chromaSpread": 4.3
     },
-    "Metal048A": {
+    "PavingStones110": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 121.5,
+     "lumSD": 6.2,
+     "chromaSpread": 7.0
+    },
+    "PavingStones111": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 125.8,
+     "lumSD": 16.7,
+     "chromaSpread": 5.1
+    },
+    "PavingStones112": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 227.8,
-     "lumSD": 1.6,
-     "chromaSpread": 97.8
+     "lumMean": 126.1,
+     "lumSD": 19.3,
+     "chromaSpread": 7.6
     },
-    "Metal048B": {
+    "PavingStones113": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 225.1,
-     "lumSD": 4.6,
-     "chromaSpread": 97.1
+     "lumMean": 129.4,
+     "lumSD": 18.5,
+     "chromaSpread": 45.2
     },
-    "Metal048C": {
+    "PavingStones114": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 223.1,
-     "lumSD": 8.4,
-     "chromaSpread": 96.3
+     "lumMean": 129.4,
+     "lumSD": 14.5,
+     "chromaSpread": 57.9
     },
-    "Metal049A": {
+    "PavingStones115A": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 250.7,
-     "lumSD": 1.6,
-     "chromaSpread": 5.7
+     "lumMean": 130.1,
+     "lumSD": 30.3,
+     "chromaSpread": 8.1
     },
-    "Metal049B": {
+    "PavingStones115B": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 246.7,
-     "lumSD": 5.3,
-     "chromaSpread": 5.5
+     "lumMean": 120.4,
+     "lumSD": 40.6,
+     "chromaSpread": 7.3
     },
-    "Metal049C": {
+    "PavingStones115C": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 247.3,
-     "lumSD": 3.1,
-     "chromaSpread": 5.8
+     "lumMean": 106.3,
+     "lumSD": 42.2,
+     "chromaSpread": 6.2
     },
-    "Metal050A": {
+    "PavingStones116": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 247.9,
-     "lumSD": 1.7,
-     "chromaSpread": 1.9
+     "lumMean": 134.4,
+     "lumSD": 22.9,
+     "chromaSpread": 33.1
     },
-    "Metal050B": {
+    "PavingStones117": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 246.4,
-     "lumSD": 2.2,
-     "chromaSpread": 1.9
+     "lumMean": 127.1,
+     "lumSD": 17.0,
+     "chromaSpread": 8.9
     },
-    "Metal050C": {
+    "PavingStones118": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 245.7,
-     "lumSD": 2.4,
-     "chromaSpread": 1.6
+     "lumMean": 118.4,
+     "lumSD": 19.9,
+     "chromaSpread": 53.3
     },
-    "Metal051A": {
+    "PavingStones119": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 248.1,
-     "lumSD": 1.8,
-     "chromaSpread": 1.9
+     "lumMean": 123.6,
+     "lumSD": 25.4,
+     "chromaSpread": 19.2
     },
-    "Metal051B": {
+    "PavingStones120": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 248.2,
-     "lumSD": 4.3,
-     "chromaSpread": 1.6
+     "lumMean": 132.7,
+     "lumSD": 17.3,
+     "chromaSpread": 32.8
     },
-    "Metal051C": {
+    "PavingStones121": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 141.8,
+     "lumSD": 18.6,
+     "chromaSpread": 23.8
+    },
+    "PavingStones122": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 99.5,
+     "lumSD": 20.5,
+     "chromaSpread": 30.7
+    },
+    "PavingStones123": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 242.5,
-     "lumSD": 10.8,
-     "chromaSpread": 1.2
+     "lumMean": 114.0,
+     "lumSD": 9.1,
+     "chromaSpread": 52.4
     },
-    "Metal052A": {
+    "PavingStones124": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 198.4,
-     "lumSD": 2.7,
-     "chromaSpread": 4.8
+     "lumMean": 123.0,
+     "lumSD": 20.3,
+     "chromaSpread": 44.0
     },
-    "Metal052B": {
+    "PavingStones125A": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 194.8,
-     "lumSD": 6.8,
-     "chromaSpread": 4.5
+     "lumMean": 155.0,
+     "lumSD": 12.6,
+     "chromaSpread": 18.2
     },
-    "Metal052C": {
+    "PavingStones125B": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 191.5,
-     "lumSD": 10.0,
-     "chromaSpread": 3.5
+     "lumMean": 155.0,
+     "lumSD": 12.4,
+     "chromaSpread": 18.2
     },
-    "Metal053A": {
+    "PavingStones126A": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 197.6,
-     "lumSD": 2.9,
-     "chromaSpread": 4.7
+     "lumMean": 155.2,
+     "lumSD": 12.6,
+     "chromaSpread": 18.2
     },
-    "Metal053B": {
+    "PavingStones126B": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 181.9,
-     "lumSD": 24.8,
-     "chromaSpread": 13.5
+     "lumMean": 155.2,
+     "lumSD": 12.4,
+     "chromaSpread": 18.2
     },
-    "Metal053C": {
+    "PavingStones127": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 80.9,
+     "lumSD": 12.6,
+     "chromaSpread": 4.9
+    },
+    "PavingStones128": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 155.0,
+     "lumSD": 22.1,
+     "chromaSpread": 18.2
+    },
+    "PavingStones129": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 113.6,
+     "lumSD": 33.7,
+     "chromaSpread": 16.1
+    },
+    "PavingStones130": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 142.3,
+     "lumSD": 16.9,
+     "chromaSpread": 33.3
+    },
+    "PavingStones131": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 152.9,
+     "lumSD": 23.8,
+     "chromaSpread": 38.3
+    },
+    "PavingStones132": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 162.3,
+     "lumSD": 29.6,
+     "chromaSpread": 34.4
+    },
+    "PavingStones133": {
+     "width": 1024,
+     "height": 1024,
+     "lumMean": 162.3,
+     "lumSD": 29.6,
+     "chromaSpread": 34.4
+    },
+    "PavingStones134": {
      "width": 1024,
      "height": 1024,
      "lumMean": 140.2,
-     "lumSD": 34.7,
-     "chromaSpread": 49.8
+     "lumSD": 19.8,
+     "chromaSpread": 30.0
     },
-    "Metal054A": {
+    "PavingStones135": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 195.4,
-     "lumSD": 7.6,
-     "chromaSpread": 4.6
+     "lumMean": 131.6,
+     "lumSD": 16.6,
+     "chromaSpread": 58.3
     },
-    "Metal054B": {
+    "PavingStones136": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 175.3,
-     "lumSD": 22.2,
-     "chromaSpread": 20.0
+     "lumMean": 150.6,
+     "lumSD": 11.6,
+     "chromaSpread": 46.8
     },
-    "Metal054C": {
+    "PavingStones137": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 115.2,
-     "lumSD": 20.3,
-     "chromaSpread": 74.6
-    },
-    "Metal055A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 190.0,
-     "lumSD": 8.7,
-     "chromaSpread": 2.5
-    },
-    "Metal055B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 186.5,
-     "lumSD": 17.0,
-     "chromaSpread": 5.5
-    },
-    "Metal055C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 117.1,
-     "lumSD": 30.6,
-     "chromaSpread": 67.3
-    },
-    "Metal056A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 184.6,
-     "lumSD": 15.3,
-     "chromaSpread": 11.2
-    },
-    "Metal056B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 171.4,
-     "lumSD": 23.9,
-     "chromaSpread": 22.1
-    },
-    "Metal056C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 113.2,
-     "lumSD": 26.1,
-     "chromaSpread": 63.5
-    },
-    "Metal057A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 216.6,
-     "lumSD": 1.7,
-     "chromaSpread": 57.8
-    },
-    "Metal057B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 216.1,
-     "lumSD": 1.8,
-     "chromaSpread": 57.8
-    },
-    "Metal057C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 211.4,
-     "lumSD": 7.7,
-     "chromaSpread": 57.2
-    },
-    "Metal058A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 211.5,
-     "lumSD": 6.1,
+     "lumMean": 116.6,
+     "lumSD": 10.6,
      "chromaSpread": 57.5
     },
-    "Metal058B": {
-     "width": 1024,
+    "PavingStones138": {
+     "width": 512,
      "height": 1024,
-     "lumMean": 199.2,
-     "lumSD": 9.3,
-     "chromaSpread": 33.0
+     "lumMean": 143.5,
+     "lumSD": 29.6,
+     "chromaSpread": 41.2
     },
-    "Metal058C": {
+    "PavingStones139": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 173.3,
-     "lumSD": 14.5,
-     "chromaSpread": 43.1
+     "lumMean": 139.0,
+     "lumSD": 23.3,
+     "chromaSpread": 73.1
     },
-    "Metal059A": {
+    "PavingStones140": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 187.9,
-     "lumSD": 2.3,
-     "chromaSpread": 17.0
+     "lumMean": 110.4,
+     "lumSD": 43.0,
+     "chromaSpread": 63.0
     },
-    "Metal059B": {
+    "PavingStones141": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 183.5,
-     "lumSD": 12.2,
-     "chromaSpread": 17.1
+     "lumMean": 121.3,
+     "lumSD": 26.0,
+     "chromaSpread": 57.0
     },
-    "Metal059C": {
+    "PavingStones142": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 176.4,
-     "lumSD": 21.8,
-     "chromaSpread": 17.5
+     "lumMean": 117.9,
+     "lumSD": 36.3,
+     "chromaSpread": 33.1
     },
-    "Metal060A": {
+    "PavingStones143": {
      "width": 1024,
-     "height": 1024,
-     "lumMean": 204.9,
-     "lumSD": 2.3,
-     "chromaSpread": 21.0
+     "height": 512,
+     "lumMean": 143.4,
+     "lumSD": 28.1,
+     "chromaSpread": 34.8
     },
-    "Metal060B": {
+    "PavingStones144": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 178.4,
-     "lumSD": 7.7,
-     "chromaSpread": 23.0
-    },
-    "Metal060C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 171.2,
-     "lumSD": 11.0,
-     "chromaSpread": 24.3
-    },
-    "Metal061A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 204.1,
-     "lumSD": 3.2,
-     "chromaSpread": 5.0
-    },
-    "Metal061B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 193.7,
-     "lumSD": 4.7,
-     "chromaSpread": 2.8
-    },
-    "Metal061C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 174.0,
-     "lumSD": 10.7,
-     "chromaSpread": 11.4
-    },
-    "Metal062A": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 209.5,
-     "lumSD": 4.2,
-     "chromaSpread": 13.0
-    },
-    "Metal062B": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 206.2,
-     "lumSD": 6.5,
-     "chromaSpread": 13.3
-    },
-    "Metal062C": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 186.7,
-     "lumSD": 36.6,
+     "lumMean": 153.5,
+     "lumSD": 31.4,
      "chromaSpread": 15.2
     },
-    "Metal063": {
+    "PavingStones145": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 109.5,
-     "lumSD": 6.9,
-     "chromaSpread": 6.0
-    }
-   }
-  },
-  "plaster": {
-   "current": {
-    "width": 2048,
-    "height": 2048,
-    "lumMean": 211.7,
-    "lumSD": 5.8,
-    "chromaSpread": 7.2,
-    "file": "plaster.jpg"
-   },
-   "candidates": {
-    "Plaster003": {
-     "width": 1024,
-     "height": 1024,
-     "lumMean": 212.1,
-     "lumSD": 18.0,
-     "chromaSpread": 6.7
+     "lumMean": 129.7,
+     "lumSD": 29.8,
+     "chromaSpread": 57.2
     },
-    "Plaster004": {
+    "PavingStones146": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 154.0,
-     "lumSD": 8.8,
-     "chromaSpread": 5.0
+     "lumMean": 178.2,
+     "lumSD": 31.9,
+     "chromaSpread": 40.6
     },
-    "Plaster005": {
+    "PavingStones147": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 165.3,
-     "lumSD": 7.0,
-     "chromaSpread": 4.8
+     "lumMean": 135.2,
+     "lumSD": 16.1,
+     "chromaSpread": 16.0
     },
-    "Plaster006": {
+    "PavingStones148": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 167.8,
-     "lumSD": 7.6,
-     "chromaSpread": 5.5
+     "lumMean": 108.3,
+     "lumSD": 27.2,
+     "chromaSpread": 24.8
     },
-    "Plaster007": {
+    "PavingStones149": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 141.2,
+     "lumSD": 38.3,
+     "chromaSpread": 31.9
+    },
+    "PavingStones150": {
+     "width": 1024,
+     "height": 512,
+     "lumMean": 114.3,
+     "lumSD": 15.2,
+     "chromaSpread": 31.1
+    },
+    "PavingStones151": {
      "width": 1024,
      "height": 1024,
-     "lumMean": 189.5,
-     "lumSD": 12.1,
-     "chromaSpread": 9.1
+     "lumMean": 111.0,
+     "lumSD": 28.4,
+     "chromaSpread": 19.8
     }
    }
   }

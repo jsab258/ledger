@@ -1,2084 +1,1403 @@
 {
  "note": "Sources for every CANDIDATE tile this shortlist pass actually wrote to disk. Nothing under tools/citypack/shortlist/ is shipped or read by AssetLibrary; THIRD-PARTY.md is the human-readable copy and both must agree.",
  "resolution": "1K-JPG",
- "candidatesWritten": 230,
+ "candidatesWritten": 155,
  "surfaces": {
-  "concrete": {
-   "Concrete001": {
-    "assetId": "Concrete001",
+  "setts": {
+   "PavingStones001": {
+    "assetId": "PavingStones001",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete001",
+    "url": "https://ambientcg.com/view?id=PavingStones001",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete001_1K-JPG.zip",
-    "file": "concrete/Concrete001.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones001_1K-JPG.zip",
+    "file": "setts/PavingStones001.jpg"
    },
-   "Concrete002": {
-    "assetId": "Concrete002",
+   "PavingStones002": {
+    "assetId": "PavingStones002",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete002",
+    "url": "https://ambientcg.com/view?id=PavingStones002",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete002_1K-JPG.zip",
-    "file": "concrete/Concrete002.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones002_1K-JPG.zip",
+    "file": "setts/PavingStones002.jpg"
    },
-   "Concrete003": {
-    "assetId": "Concrete003",
+   "PavingStones003": {
+    "assetId": "PavingStones003",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete003",
+    "url": "https://ambientcg.com/view?id=PavingStones003",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete003_1K-JPG.zip",
-    "file": "concrete/Concrete003.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones003_1K-JPG.zip",
+    "file": "setts/PavingStones003.jpg"
    },
-   "Concrete004": {
-    "assetId": "Concrete004",
+   "PavingStones004": {
+    "assetId": "PavingStones004",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete004",
+    "url": "https://ambientcg.com/view?id=PavingStones004",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete004_1K-JPG.zip",
-    "file": "concrete/Concrete004.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones004_1K-JPG.zip",
+    "file": "setts/PavingStones004.jpg"
    },
-   "Concrete005": {
-    "assetId": "Concrete005",
+   "PavingStones005": {
+    "assetId": "PavingStones005",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete005",
+    "url": "https://ambientcg.com/view?id=PavingStones005",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete005_1K-JPG.zip",
-    "file": "concrete/Concrete005.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones005_1K-JPG.zip",
+    "file": "setts/PavingStones005.jpg"
    },
-   "Concrete006": {
-    "assetId": "Concrete006",
+   "PavingStones006": {
+    "assetId": "PavingStones006",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete006",
+    "url": "https://ambientcg.com/view?id=PavingStones006",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete006_1K-JPG.zip",
-    "file": "concrete/Concrete006.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones006_1K-JPG.zip",
+    "file": "setts/PavingStones006.jpg"
    },
-   "Concrete007": {
-    "assetId": "Concrete007",
+   "PavingStones007": {
+    "assetId": "PavingStones007",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete007",
+    "url": "https://ambientcg.com/view?id=PavingStones007",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete007_1K-JPG.zip",
-    "file": "concrete/Concrete007.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones007_1K-JPG.zip",
+    "file": "setts/PavingStones007.jpg"
    },
-   "Concrete008": {
-    "assetId": "Concrete008",
+   "PavingStones008": {
+    "assetId": "PavingStones008",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete008",
+    "url": "https://ambientcg.com/view?id=PavingStones008",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete008_1K-JPG.zip",
-    "file": "concrete/Concrete008.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones008_1K-JPG.zip",
+    "file": "setts/PavingStones008.jpg"
    },
-   "Concrete009": {
-    "assetId": "Concrete009",
+   "PavingStones009": {
+    "assetId": "PavingStones009",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete009",
+    "url": "https://ambientcg.com/view?id=PavingStones009",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete009_1K-JPG.zip",
-    "file": "concrete/Concrete009.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones009_1K-JPG.zip",
+    "file": "setts/PavingStones009.jpg"
    },
-   "Concrete010": {
-    "assetId": "Concrete010",
+   "PavingStones010": {
+    "assetId": "PavingStones010",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete010",
+    "url": "https://ambientcg.com/view?id=PavingStones010",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete010_1K-JPG.zip",
-    "file": "concrete/Concrete010.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones010_1K-JPG.zip",
+    "file": "setts/PavingStones010.jpg"
    },
-   "Concrete011": {
-    "assetId": "Concrete011",
+   "PavingStones011": {
+    "assetId": "PavingStones011",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete011",
+    "url": "https://ambientcg.com/view?id=PavingStones011",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete011_1K-JPG.zip",
-    "file": "concrete/Concrete011.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones011_1K-JPG.zip",
+    "file": "setts/PavingStones011.jpg"
    },
-   "Concrete012": {
-    "assetId": "Concrete012",
+   "PavingStones012": {
+    "assetId": "PavingStones012",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete012",
+    "url": "https://ambientcg.com/view?id=PavingStones012",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete012_1K-JPG.zip",
-    "file": "concrete/Concrete012.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones012_1K-JPG.zip",
+    "file": "setts/PavingStones012.jpg"
    },
-   "Concrete013": {
-    "assetId": "Concrete013",
+   "PavingStones013": {
+    "assetId": "PavingStones013",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete013",
+    "url": "https://ambientcg.com/view?id=PavingStones013",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete013_1K-JPG.zip",
-    "file": "concrete/Concrete013.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones013_1K-JPG.zip",
+    "file": "setts/PavingStones013.jpg"
    },
-   "Concrete014": {
-    "assetId": "Concrete014",
+   "PavingStones014": {
+    "assetId": "PavingStones014",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete014",
+    "url": "https://ambientcg.com/view?id=PavingStones014",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete014_1K-JPG.zip",
-    "file": "concrete/Concrete014.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones014_1K-JPG.zip",
+    "file": "setts/PavingStones014.jpg"
    },
-   "Concrete015": {
-    "assetId": "Concrete015",
+   "PavingStones015": {
+    "assetId": "PavingStones015",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete015",
+    "url": "https://ambientcg.com/view?id=PavingStones015",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete015_1K-JPG.zip",
-    "file": "concrete/Concrete015.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones015_1K-JPG.zip",
+    "file": "setts/PavingStones015.jpg"
    },
-   "Concrete016": {
-    "assetId": "Concrete016",
+   "PavingStones016": {
+    "assetId": "PavingStones016",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete016",
+    "url": "https://ambientcg.com/view?id=PavingStones016",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete016_1K-JPG.zip",
-    "file": "concrete/Concrete016.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones016_1K-JPG.zip",
+    "file": "setts/PavingStones016.jpg"
    },
-   "Concrete018": {
-    "assetId": "Concrete018",
+   "PavingStones017": {
+    "assetId": "PavingStones017",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete018",
+    "url": "https://ambientcg.com/view?id=PavingStones017",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete018_1K-JPG.zip",
-    "file": "concrete/Concrete018.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones017_1K-JPG.zip",
+    "file": "setts/PavingStones017.jpg"
    },
-   "Concrete019": {
-    "assetId": "Concrete019",
+   "PavingStones018": {
+    "assetId": "PavingStones018",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete019",
+    "url": "https://ambientcg.com/view?id=PavingStones018",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete019_1K-JPG.zip",
-    "file": "concrete/Concrete019.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones018_1K-JPG.zip",
+    "file": "setts/PavingStones018.jpg"
    },
-   "Concrete020": {
-    "assetId": "Concrete020",
+   "PavingStones019": {
+    "assetId": "PavingStones019",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete020",
+    "url": "https://ambientcg.com/view?id=PavingStones019",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete020_1K-JPG.zip",
-    "file": "concrete/Concrete020.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones019_1K-JPG.zip",
+    "file": "setts/PavingStones019.jpg"
    },
-   "Concrete021": {
-    "assetId": "Concrete021",
+   "PavingStones020": {
+    "assetId": "PavingStones020",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete021",
+    "url": "https://ambientcg.com/view?id=PavingStones020",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete021_1K-JPG.zip",
-    "file": "concrete/Concrete021.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones020_1K-JPG.zip",
+    "file": "setts/PavingStones020.jpg"
    },
-   "Concrete022": {
-    "assetId": "Concrete022",
+   "PavingStones021": {
+    "assetId": "PavingStones021",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete022",
+    "url": "https://ambientcg.com/view?id=PavingStones021",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete022_1K-JPG.zip",
-    "file": "concrete/Concrete022.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones021_1K-JPG.zip",
+    "file": "setts/PavingStones021.jpg"
    },
-   "Concrete023": {
-    "assetId": "Concrete023",
+   "PavingStones022": {
+    "assetId": "PavingStones022",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete023",
+    "url": "https://ambientcg.com/view?id=PavingStones022",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete023_1K-JPG.zip",
-    "file": "concrete/Concrete023.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones022_1K-JPG.zip",
+    "file": "setts/PavingStones022.jpg"
    },
-   "Concrete024": {
-    "assetId": "Concrete024",
+   "PavingStones023": {
+    "assetId": "PavingStones023",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete024",
+    "url": "https://ambientcg.com/view?id=PavingStones023",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete024_1K-JPG.zip",
-    "file": "concrete/Concrete024.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones023_1K-JPG.zip",
+    "file": "setts/PavingStones023.jpg"
    },
-   "Concrete025": {
-    "assetId": "Concrete025",
+   "PavingStones024": {
+    "assetId": "PavingStones024",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete025",
+    "url": "https://ambientcg.com/view?id=PavingStones024",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete025_1K-JPG.zip",
-    "file": "concrete/Concrete025.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones024_1K-JPG.zip",
+    "file": "setts/PavingStones024.jpg"
    },
-   "Concrete026": {
-    "assetId": "Concrete026",
+   "PavingStones025": {
+    "assetId": "PavingStones025",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete026",
+    "url": "https://ambientcg.com/view?id=PavingStones025",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete026_1K-JPG.zip",
-    "file": "concrete/Concrete026.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones025_1K-JPG.zip",
+    "file": "setts/PavingStones025.jpg"
    },
-   "Concrete027": {
-    "assetId": "Concrete027",
+   "PavingStones026": {
+    "assetId": "PavingStones026",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete027",
+    "url": "https://ambientcg.com/view?id=PavingStones026",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete027_1K-JPG.zip",
-    "file": "concrete/Concrete027.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones026_1K-JPG.zip",
+    "file": "setts/PavingStones026.jpg"
    },
-   "Concrete028": {
-    "assetId": "Concrete028",
+   "PavingStones027": {
+    "assetId": "PavingStones027",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete028",
+    "url": "https://ambientcg.com/view?id=PavingStones027",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete028_1K-JPG.zip",
-    "file": "concrete/Concrete028.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones027_1K-JPG.zip",
+    "file": "setts/PavingStones027.jpg"
    },
-   "Concrete029": {
-    "assetId": "Concrete029",
+   "PavingStones028": {
+    "assetId": "PavingStones028",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete029",
+    "url": "https://ambientcg.com/view?id=PavingStones028",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete029_1K-JPG.zip",
-    "file": "concrete/Concrete029.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones028_1K-JPG.zip",
+    "file": "setts/PavingStones028.jpg"
    },
-   "Concrete030": {
-    "assetId": "Concrete030",
+   "PavingStones029": {
+    "assetId": "PavingStones029",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete030",
+    "url": "https://ambientcg.com/view?id=PavingStones029",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete030_1K-JPG.zip",
-    "file": "concrete/Concrete030.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones029_1K-JPG.zip",
+    "file": "setts/PavingStones029.jpg"
    },
-   "Concrete031": {
-    "assetId": "Concrete031",
+   "PavingStones030": {
+    "assetId": "PavingStones030",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete031",
+    "url": "https://ambientcg.com/view?id=PavingStones030",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete031_1K-JPG.zip",
-    "file": "concrete/Concrete031.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones030_1K-JPG.zip",
+    "file": "setts/PavingStones030.jpg"
    },
-   "Concrete032": {
-    "assetId": "Concrete032",
+   "PavingStones031": {
+    "assetId": "PavingStones031",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete032",
+    "url": "https://ambientcg.com/view?id=PavingStones031",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete032_1K-JPG.zip",
-    "file": "concrete/Concrete032.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones031_1K-JPG.zip",
+    "file": "setts/PavingStones031.jpg"
    },
-   "Concrete033": {
-    "assetId": "Concrete033",
+   "PavingStones032": {
+    "assetId": "PavingStones032",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete033",
+    "url": "https://ambientcg.com/view?id=PavingStones032",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete033_1K-JPG.zip",
-    "file": "concrete/Concrete033.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones032_1K-JPG.zip",
+    "file": "setts/PavingStones032.jpg"
    },
-   "Concrete035": {
-    "assetId": "Concrete035",
+   "PavingStones033": {
+    "assetId": "PavingStones033",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete035",
+    "url": "https://ambientcg.com/view?id=PavingStones033",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete035_1K-JPG.zip",
-    "file": "concrete/Concrete035.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones033_1K-JPG.zip",
+    "file": "setts/PavingStones033.jpg"
    },
-   "Concrete036": {
-    "assetId": "Concrete036",
+   "PavingStones034": {
+    "assetId": "PavingStones034",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete036",
+    "url": "https://ambientcg.com/view?id=PavingStones034",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete036_1K-JPG.zip",
-    "file": "concrete/Concrete036.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones034_1K-JPG.zip",
+    "file": "setts/PavingStones034.jpg"
    },
-   "Concrete037": {
-    "assetId": "Concrete037",
+   "PavingStones035": {
+    "assetId": "PavingStones035",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete037",
+    "url": "https://ambientcg.com/view?id=PavingStones035",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete037_1K-JPG.zip",
-    "file": "concrete/Concrete037.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones035_1K-JPG.zip",
+    "file": "setts/PavingStones035.jpg"
    },
-   "Concrete038": {
-    "assetId": "Concrete038",
+   "PavingStones036": {
+    "assetId": "PavingStones036",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete038",
+    "url": "https://ambientcg.com/view?id=PavingStones036",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete038_1K-JPG.zip",
-    "file": "concrete/Concrete038.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones036_1K-JPG.zip",
+    "file": "setts/PavingStones036.jpg"
    },
-   "Concrete039": {
-    "assetId": "Concrete039",
+   "PavingStones037": {
+    "assetId": "PavingStones037",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete039",
+    "url": "https://ambientcg.com/view?id=PavingStones037",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete039_1K-JPG.zip",
-    "file": "concrete/Concrete039.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones037_1K-JPG.zip",
+    "file": "setts/PavingStones037.jpg"
    },
-   "Concrete040": {
-    "assetId": "Concrete040",
+   "PavingStones038": {
+    "assetId": "PavingStones038",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete040",
+    "url": "https://ambientcg.com/view?id=PavingStones038",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete040_1K-JPG.zip",
-    "file": "concrete/Concrete040.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones038_1K-JPG.zip",
+    "file": "setts/PavingStones038.jpg"
    },
-   "Concrete041A": {
-    "assetId": "Concrete041A",
+   "PavingStones039": {
+    "assetId": "PavingStones039",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete041A",
+    "url": "https://ambientcg.com/view?id=PavingStones039",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete041A_1K-JPG.zip",
-    "file": "concrete/Concrete041A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones039_1K-JPG.zip",
+    "file": "setts/PavingStones039.jpg"
    },
-   "Concrete041B": {
-    "assetId": "Concrete041B",
+   "PavingStones040": {
+    "assetId": "PavingStones040",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete041B",
+    "url": "https://ambientcg.com/view?id=PavingStones040",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete041B_1K-JPG.zip",
-    "file": "concrete/Concrete041B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones040_1K-JPG.zip",
+    "file": "setts/PavingStones040.jpg"
    },
-   "Concrete041C": {
-    "assetId": "Concrete041C",
+   "PavingStones041": {
+    "assetId": "PavingStones041",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete041C",
+    "url": "https://ambientcg.com/view?id=PavingStones041",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete041C_1K-JPG.zip",
-    "file": "concrete/Concrete041C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones041_1K-JPG.zip",
+    "file": "setts/PavingStones041.jpg"
    },
-   "Concrete041D": {
-    "assetId": "Concrete041D",
+   "PavingStones042": {
+    "assetId": "PavingStones042",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete041D",
+    "url": "https://ambientcg.com/view?id=PavingStones042",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete041D_1K-JPG.zip",
-    "file": "concrete/Concrete041D.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones042_1K-JPG.zip",
+    "file": "setts/PavingStones042.jpg"
    },
-   "Concrete042B": {
-    "assetId": "Concrete042B",
+   "PavingStones043": {
+    "assetId": "PavingStones043",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete042B",
+    "url": "https://ambientcg.com/view?id=PavingStones043",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete042B_1K-JPG.zip",
-    "file": "concrete/Concrete042B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones043_1K-JPG.zip",
+    "file": "setts/PavingStones043.jpg"
    },
-   "Concrete042C": {
-    "assetId": "Concrete042C",
+   "PavingStones044": {
+    "assetId": "PavingStones044",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete042C",
+    "url": "https://ambientcg.com/view?id=PavingStones044",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete042C_1K-JPG.zip",
-    "file": "concrete/Concrete042C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones044_1K-JPG.zip",
+    "file": "setts/PavingStones044.jpg"
    },
-   "Concrete042D": {
-    "assetId": "Concrete042D",
+   "PavingStones045": {
+    "assetId": "PavingStones045",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete042D",
+    "url": "https://ambientcg.com/view?id=PavingStones045",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete042D_1K-JPG.zip",
-    "file": "concrete/Concrete042D.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones045_1K-JPG.zip",
+    "file": "setts/PavingStones045.jpg"
    },
-   "Concrete043A": {
-    "assetId": "Concrete043A",
+   "PavingStones046": {
+    "assetId": "PavingStones046",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete043A",
+    "url": "https://ambientcg.com/view?id=PavingStones046",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete043A_1K-JPG.zip",
-    "file": "concrete/Concrete043A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones046_1K-JPG.zip",
+    "file": "setts/PavingStones046.jpg"
    },
-   "Concrete043B": {
-    "assetId": "Concrete043B",
+   "PavingStones047": {
+    "assetId": "PavingStones047",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete043B",
+    "url": "https://ambientcg.com/view?id=PavingStones047",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete043B_1K-JPG.zip",
-    "file": "concrete/Concrete043B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones047_1K-JPG.zip",
+    "file": "setts/PavingStones047.jpg"
    },
-   "Concrete043C": {
-    "assetId": "Concrete043C",
+   "PavingStones048": {
+    "assetId": "PavingStones048",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete043C",
+    "url": "https://ambientcg.com/view?id=PavingStones048",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete043C_1K-JPG.zip",
-    "file": "concrete/Concrete043C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones048_1K-JPG.zip",
+    "file": "setts/PavingStones048.jpg"
    },
-   "Concrete043D": {
-    "assetId": "Concrete043D",
+   "PavingStones049": {
+    "assetId": "PavingStones049",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete043D",
+    "url": "https://ambientcg.com/view?id=PavingStones049",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete043D_1K-JPG.zip",
-    "file": "concrete/Concrete043D.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones049_1K-JPG.zip",
+    "file": "setts/PavingStones049.jpg"
    },
-   "Concrete044A": {
-    "assetId": "Concrete044A",
+   "PavingStones050": {
+    "assetId": "PavingStones050",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete044A",
+    "url": "https://ambientcg.com/view?id=PavingStones050",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete044A_1K-JPG.zip",
-    "file": "concrete/Concrete044A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones050_1K-JPG.zip",
+    "file": "setts/PavingStones050.jpg"
    },
-   "Concrete044B": {
-    "assetId": "Concrete044B",
+   "PavingStones051": {
+    "assetId": "PavingStones051",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete044B",
+    "url": "https://ambientcg.com/view?id=PavingStones051",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete044B_1K-JPG.zip",
-    "file": "concrete/Concrete044B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones051_1K-JPG.zip",
+    "file": "setts/PavingStones051.jpg"
    },
-   "Concrete044C": {
-    "assetId": "Concrete044C",
+   "PavingStones052": {
+    "assetId": "PavingStones052",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete044C",
+    "url": "https://ambientcg.com/view?id=PavingStones052",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete044C_1K-JPG.zip",
-    "file": "concrete/Concrete044C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones052_1K-JPG.zip",
+    "file": "setts/PavingStones052.jpg"
    },
-   "Concrete044D": {
-    "assetId": "Concrete044D",
+   "PavingStones053": {
+    "assetId": "PavingStones053",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete044D",
+    "url": "https://ambientcg.com/view?id=PavingStones053",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete044D_1K-JPG.zip",
-    "file": "concrete/Concrete044D.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones053_1K-JPG.zip",
+    "file": "setts/PavingStones053.jpg"
    },
-   "Concrete045": {
-    "assetId": "Concrete045",
+   "PavingStones054": {
+    "assetId": "PavingStones054",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete045",
+    "url": "https://ambientcg.com/view?id=PavingStones054",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete045_1K-JPG.zip",
-    "file": "concrete/Concrete045.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones054_1K-JPG.zip",
+    "file": "setts/PavingStones054.jpg"
    },
-   "Concrete046": {
-    "assetId": "Concrete046",
+   "PavingStones055": {
+    "assetId": "PavingStones055",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete046",
+    "url": "https://ambientcg.com/view?id=PavingStones055",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete046_1K-JPG.zip",
-    "file": "concrete/Concrete046.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones055_1K-JPG.zip",
+    "file": "setts/PavingStones055.jpg"
    },
-   "Concrete047A": {
-    "assetId": "Concrete047A",
+   "PavingStones056": {
+    "assetId": "PavingStones056",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete047A",
+    "url": "https://ambientcg.com/view?id=PavingStones056",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete047A_1K-JPG.zip",
-    "file": "concrete/Concrete047A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones056_1K-JPG.zip",
+    "file": "setts/PavingStones056.jpg"
    },
-   "Concrete047B": {
-    "assetId": "Concrete047B",
+   "PavingStones057": {
+    "assetId": "PavingStones057",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete047B",
+    "url": "https://ambientcg.com/view?id=PavingStones057",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete047B_1K-JPG.zip",
-    "file": "concrete/Concrete047B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones057_1K-JPG.zip",
+    "file": "setts/PavingStones057.jpg"
    },
-   "Concrete048": {
-    "assetId": "Concrete048",
+   "PavingStones058": {
+    "assetId": "PavingStones058",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Concrete048",
+    "url": "https://ambientcg.com/view?id=PavingStones058",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Concrete048_1K-JPG.zip",
-    "file": "concrete/Concrete048.jpg"
-   }
-  },
-  "kerb": {
-   "Rock001": {
-    "assetId": "Rock001",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock001",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock001_1K-JPG.zip",
-    "file": "kerb/Rock001.jpg"
-   },
-   "Rock002": {
-    "assetId": "Rock002",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock002",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock002_1K-JPG.zip",
-    "file": "kerb/Rock002.jpg"
-   },
-   "Rock003": {
-    "assetId": "Rock003",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock003",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock003_1K-JPG.zip",
-    "file": "kerb/Rock003.jpg"
-   },
-   "Rock004": {
-    "assetId": "Rock004",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock004",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock004_1K-JPG.zip",
-    "file": "kerb/Rock004.jpg"
-   },
-   "Rock005": {
-    "assetId": "Rock005",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock005",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock005_1K-JPG.zip",
-    "file": "kerb/Rock005.jpg"
-   },
-   "Rock006": {
-    "assetId": "Rock006",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock006",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock006_1K-JPG.zip",
-    "file": "kerb/Rock006.jpg"
-   },
-   "Rock007": {
-    "assetId": "Rock007",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock007",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock007_1K-JPG.zip",
-    "file": "kerb/Rock007.jpg"
-   },
-   "Rock008": {
-    "assetId": "Rock008",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock008",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock008_1K-JPG.zip",
-    "file": "kerb/Rock008.jpg"
-   },
-   "Rock009": {
-    "assetId": "Rock009",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock009",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock009_1K-JPG.zip",
-    "file": "kerb/Rock009.jpg"
-   },
-   "Rock010": {
-    "assetId": "Rock010",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock010",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock010_1K-JPG.zip",
-    "file": "kerb/Rock010.jpg"
-   },
-   "Rock011": {
-    "assetId": "Rock011",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock011",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock011_1K-JPG.zip",
-    "file": "kerb/Rock011.jpg"
-   },
-   "Rock012": {
-    "assetId": "Rock012",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock012",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock012_1K-JPG.zip",
-    "file": "kerb/Rock012.jpg"
-   },
-   "Rock013": {
-    "assetId": "Rock013",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock013",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock013_1K-JPG.zip",
-    "file": "kerb/Rock013.jpg"
-   },
-   "Rock014": {
-    "assetId": "Rock014",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock014",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock014_1K-JPG.zip",
-    "file": "kerb/Rock014.jpg"
-   },
-   "Rock015": {
-    "assetId": "Rock015",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock015",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock015_1K-JPG.zip",
-    "file": "kerb/Rock015.jpg"
-   },
-   "Rock016": {
-    "assetId": "Rock016",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock016",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock016_1K-JPG.zip",
-    "file": "kerb/Rock016.jpg"
-   },
-   "Rock017": {
-    "assetId": "Rock017",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock017",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock017_1K-JPG.zip",
-    "file": "kerb/Rock017.jpg"
-   },
-   "Rock018": {
-    "assetId": "Rock018",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock018",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock018_1K-JPG.zip",
-    "file": "kerb/Rock018.jpg"
-   },
-   "Rock019": {
-    "assetId": "Rock019",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock019",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock019_1K-JPG.zip",
-    "file": "kerb/Rock019.jpg"
-   },
-   "Rock020": {
-    "assetId": "Rock020",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock020",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock020_1K-JPG.zip",
-    "file": "kerb/Rock020.jpg"
-   },
-   "Rock021": {
-    "assetId": "Rock021",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock021",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock021_1K-JPG.zip",
-    "file": "kerb/Rock021.jpg"
-   },
-   "Rock022": {
-    "assetId": "Rock022",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock022",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock022_1K-JPG.zip",
-    "file": "kerb/Rock022.jpg"
-   },
-   "Rock023": {
-    "assetId": "Rock023",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock023",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock023_1K-JPG.zip",
-    "file": "kerb/Rock023.jpg"
-   },
-   "Rock024": {
-    "assetId": "Rock024",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock024",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock024_1K-JPG.zip",
-    "file": "kerb/Rock024.jpg"
-   },
-   "Rock025": {
-    "assetId": "Rock025",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock025",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock025_1K-JPG.zip",
-    "file": "kerb/Rock025.jpg"
-   },
-   "Rock026": {
-    "assetId": "Rock026",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock026",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock026_1K-JPG.zip",
-    "file": "kerb/Rock026.jpg"
-   },
-   "Rock027": {
-    "assetId": "Rock027",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock027",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock027_1K-JPG.zip",
-    "file": "kerb/Rock027.jpg"
-   },
-   "Rock028": {
-    "assetId": "Rock028",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock028",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock028_1K-JPG.zip",
-    "file": "kerb/Rock028.jpg"
-   },
-   "Rock029": {
-    "assetId": "Rock029",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock029",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock029_1K-JPG.zip",
-    "file": "kerb/Rock029.jpg"
-   },
-   "Rock030": {
-    "assetId": "Rock030",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock030",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock030_1K-JPG.zip",
-    "file": "kerb/Rock030.jpg"
-   },
-   "Rock031": {
-    "assetId": "Rock031",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock031",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock031_1K-JPG.zip",
-    "file": "kerb/Rock031.jpg"
-   },
-   "Rock032": {
-    "assetId": "Rock032",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock032",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock032_1K-JPG.zip",
-    "file": "kerb/Rock032.jpg"
-   },
-   "Rock033": {
-    "assetId": "Rock033",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock033",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock033_1K-JPG.zip",
-    "file": "kerb/Rock033.jpg"
-   },
-   "Rock034": {
-    "assetId": "Rock034",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock034",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock034_1K-JPG.zip",
-    "file": "kerb/Rock034.jpg"
-   },
-   "Rock035": {
-    "assetId": "Rock035",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock035",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock035_1K-JPG.zip",
-    "file": "kerb/Rock035.jpg"
-   },
-   "Rock036": {
-    "assetId": "Rock036",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock036",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock036_1K-JPG.zip",
-    "file": "kerb/Rock036.jpg"
-   },
-   "Rock037": {
-    "assetId": "Rock037",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock037",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock037_1K-JPG.zip",
-    "file": "kerb/Rock037.jpg"
-   },
-   "Rock038": {
-    "assetId": "Rock038",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock038",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock038_1K-JPG.zip",
-    "file": "kerb/Rock038.jpg"
-   },
-   "Rock039": {
-    "assetId": "Rock039",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock039",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock039_1K-JPG.zip",
-    "file": "kerb/Rock039.jpg"
-   },
-   "Rock040": {
-    "assetId": "Rock040",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock040",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock040_1K-JPG.zip",
-    "file": "kerb/Rock040.jpg"
-   },
-   "Rock041": {
-    "assetId": "Rock041",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock041",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock041_1K-JPG.zip",
-    "file": "kerb/Rock041.jpg"
-   },
-   "Rock042L": {
-    "assetId": "Rock042L",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock042L",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock042L_1K-JPG.zip",
-    "file": "kerb/Rock042L.jpg"
-   },
-   "Rock042S": {
-    "assetId": "Rock042S",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock042S",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock042S_1K-JPG.zip",
-    "file": "kerb/Rock042S.jpg"
-   },
-   "Rock043L": {
-    "assetId": "Rock043L",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock043L",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock043L_1K-JPG.zip",
-    "file": "kerb/Rock043L.jpg"
-   },
-   "Rock043S": {
-    "assetId": "Rock043S",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock043S",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock043S_1K-JPG.zip",
-    "file": "kerb/Rock043S.jpg"
-   },
-   "Rock044": {
-    "assetId": "Rock044",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock044",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock044_1K-JPG.zip",
-    "file": "kerb/Rock044.jpg"
-   },
-   "Rock045": {
-    "assetId": "Rock045",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock045",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock045_1K-JPG.zip",
-    "file": "kerb/Rock045.jpg"
-   },
-   "Rock046L": {
-    "assetId": "Rock046L",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock046L",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock046L_1K-JPG.zip",
-    "file": "kerb/Rock046L.jpg"
-   },
-   "Rock046S": {
-    "assetId": "Rock046S",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock046S",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock046S_1K-JPG.zip",
-    "file": "kerb/Rock046S.jpg"
-   },
-   "Rock047": {
-    "assetId": "Rock047",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock047",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock047_1K-JPG.zip",
-    "file": "kerb/Rock047.jpg"
-   },
-   "Rock048": {
-    "assetId": "Rock048",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock048",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock048_1K-JPG.zip",
-    "file": "kerb/Rock048.jpg"
-   },
-   "Rock049": {
-    "assetId": "Rock049",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock049",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock049_1K-JPG.zip",
-    "file": "kerb/Rock049.jpg"
-   },
-   "Rock050": {
-    "assetId": "Rock050",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock050",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock050_1K-JPG.zip",
-    "file": "kerb/Rock050.jpg"
-   },
-   "Rock051": {
-    "assetId": "Rock051",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock051",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock051_1K-JPG.zip",
-    "file": "kerb/Rock051.jpg"
-   },
-   "Rock052": {
-    "assetId": "Rock052",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock052",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock052_1K-JPG.zip",
-    "file": "kerb/Rock052.jpg"
-   },
-   "Rock053": {
-    "assetId": "Rock053",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock053",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock053_1K-JPG.zip",
-    "file": "kerb/Rock053.jpg"
-   },
-   "Rock054": {
-    "assetId": "Rock054",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock054",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock054_1K-JPG.zip",
-    "file": "kerb/Rock054.jpg"
-   },
-   "Rock055": {
-    "assetId": "Rock055",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock055",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock055_1K-JPG.zip",
-    "file": "kerb/Rock055.jpg"
-   },
-   "Rock056": {
-    "assetId": "Rock056",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock056",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock056_1K-JPG.zip",
-    "file": "kerb/Rock056.jpg"
-   },
-   "Rock057": {
-    "assetId": "Rock057",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock057",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock057_1K-JPG.zip",
-    "file": "kerb/Rock057.jpg"
-   },
-   "Rock058": {
-    "assetId": "Rock058",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock058",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock058_1K-JPG.zip",
-    "file": "kerb/Rock058.jpg"
-   },
-   "Rock059": {
-    "assetId": "Rock059",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock059",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock059_1K-JPG.zip",
-    "file": "kerb/Rock059.jpg"
-   },
-   "Rock060": {
-    "assetId": "Rock060",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock060",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock060_1K-JPG.zip",
-    "file": "kerb/Rock060.jpg"
-   },
-   "Rock061": {
-    "assetId": "Rock061",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock061",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock061_1K-JPG.zip",
-    "file": "kerb/Rock061.jpg"
-   },
-   "Rock062": {
-    "assetId": "Rock062",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock062",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock062_1K-JPG.zip",
-    "file": "kerb/Rock062.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones058_1K-JPG.zip",
+    "file": "setts/PavingStones058.jpg"
    },
-   "Rock063": {
-    "assetId": "Rock063",
+   "PavingStones059": {
+    "assetId": "PavingStones059",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock063",
+    "url": "https://ambientcg.com/view?id=PavingStones059",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock063_1K-JPG.zip",
-    "file": "kerb/Rock063.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones059_1K-JPG.zip",
+    "file": "setts/PavingStones059.jpg"
    },
-   "Rock064": {
-    "assetId": "Rock064",
+   "PavingStones060": {
+    "assetId": "PavingStones060",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Rock064",
+    "url": "https://ambientcg.com/view?id=PavingStones060",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Rock064_1K-JPG.zip",
-    "file": "kerb/Rock064.jpg"
-   }
-  },
-  "metal": {
-   "Metal001": {
-    "assetId": "Metal001",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal001",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal001_1K-JPG.zip",
-    "file": "metal/Metal001.jpg"
-   },
-   "Metal002": {
-    "assetId": "Metal002",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal002",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal002_1K-JPG.zip",
-    "file": "metal/Metal002.jpg"
-   },
-   "Metal003": {
-    "assetId": "Metal003",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal003",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal003_1K-JPG.zip",
-    "file": "metal/Metal003.jpg"
-   },
-   "Metal004": {
-    "assetId": "Metal004",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal004",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal004_1K-JPG.zip",
-    "file": "metal/Metal004.jpg"
-   },
-   "Metal005": {
-    "assetId": "Metal005",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal005",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal005_1K-JPG.zip",
-    "file": "metal/Metal005.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones060_1K-JPG.zip",
+    "file": "setts/PavingStones060.jpg"
    },
-   "Metal006": {
-    "assetId": "Metal006",
+   "PavingStones061": {
+    "assetId": "PavingStones061",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal006",
+    "url": "https://ambientcg.com/view?id=PavingStones061",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal006_1K-JPG.zip",
-    "file": "metal/Metal006.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones061_1K-JPG.zip",
+    "file": "setts/PavingStones061.jpg"
    },
-   "Metal007": {
-    "assetId": "Metal007",
+   "PavingStones062": {
+    "assetId": "PavingStones062",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal007",
+    "url": "https://ambientcg.com/view?id=PavingStones062",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal007_1K-JPG.zip",
-    "file": "metal/Metal007.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones062_1K-JPG.zip",
+    "file": "setts/PavingStones062.jpg"
    },
-   "Metal008": {
-    "assetId": "Metal008",
+   "PavingStones063": {
+    "assetId": "PavingStones063",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal008",
+    "url": "https://ambientcg.com/view?id=PavingStones063",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal008_1K-JPG.zip",
-    "file": "metal/Metal008.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones063_1K-JPG.zip",
+    "file": "setts/PavingStones063.jpg"
    },
-   "Metal009": {
-    "assetId": "Metal009",
+   "PavingStones064": {
+    "assetId": "PavingStones064",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal009",
+    "url": "https://ambientcg.com/view?id=PavingStones064",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal009_1K-JPG.zip",
-    "file": "metal/Metal009.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones064_1K-JPG.zip",
+    "file": "setts/PavingStones064.jpg"
    },
-   "Metal010": {
-    "assetId": "Metal010",
+   "PavingStones065": {
+    "assetId": "PavingStones065",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal010",
+    "url": "https://ambientcg.com/view?id=PavingStones065",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal010_1K-JPG.zip",
-    "file": "metal/Metal010.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones065_1K-JPG.zip",
+    "file": "setts/PavingStones065.jpg"
    },
-   "Metal011": {
-    "assetId": "Metal011",
+   "PavingStones066": {
+    "assetId": "PavingStones066",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal011",
+    "url": "https://ambientcg.com/view?id=PavingStones066",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal011_1K-JPG.zip",
-    "file": "metal/Metal011.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones066_1K-JPG.zip",
+    "file": "setts/PavingStones066.jpg"
    },
-   "Metal012": {
-    "assetId": "Metal012",
+   "PavingStones067": {
+    "assetId": "PavingStones067",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal012",
+    "url": "https://ambientcg.com/view?id=PavingStones067",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal012_1K-JPG.zip",
-    "file": "metal/Metal012.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones067_1K-JPG.zip",
+    "file": "setts/PavingStones067.jpg"
    },
-   "Metal013": {
-    "assetId": "Metal013",
+   "PavingStones068": {
+    "assetId": "PavingStones068",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal013",
+    "url": "https://ambientcg.com/view?id=PavingStones068",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal013_1K-JPG.zip",
-    "file": "metal/Metal013.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones068_1K-JPG.zip",
+    "file": "setts/PavingStones068.jpg"
    },
-   "Metal014": {
-    "assetId": "Metal014",
+   "PavingStones069": {
+    "assetId": "PavingStones069",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal014",
+    "url": "https://ambientcg.com/view?id=PavingStones069",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal014_1K-JPG.zip",
-    "file": "metal/Metal014.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones069_1K-JPG.zip",
+    "file": "setts/PavingStones069.jpg"
    },
-   "Metal015": {
-    "assetId": "Metal015",
+   "PavingStones070": {
+    "assetId": "PavingStones070",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal015",
+    "url": "https://ambientcg.com/view?id=PavingStones070",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal015_1K-JPG.zip",
-    "file": "metal/Metal015.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones070_1K-JPG.zip",
+    "file": "setts/PavingStones070.jpg"
    },
-   "Metal016": {
-    "assetId": "Metal016",
+   "PavingStones071": {
+    "assetId": "PavingStones071",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal016",
+    "url": "https://ambientcg.com/view?id=PavingStones071",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal016_1K-JPG.zip",
-    "file": "metal/Metal016.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones071_1K-JPG.zip",
+    "file": "setts/PavingStones071.jpg"
    },
-   "Metal017": {
-    "assetId": "Metal017",
+   "PavingStones072": {
+    "assetId": "PavingStones072",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal017",
+    "url": "https://ambientcg.com/view?id=PavingStones072",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal017_1K-JPG.zip",
-    "file": "metal/Metal017.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones072_1K-JPG.zip",
+    "file": "setts/PavingStones072.jpg"
    },
-   "Metal018": {
-    "assetId": "Metal018",
+   "PavingStones073": {
+    "assetId": "PavingStones073",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal018",
+    "url": "https://ambientcg.com/view?id=PavingStones073",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal018_1K-JPG.zip",
-    "file": "metal/Metal018.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones073_1K-JPG.zip",
+    "file": "setts/PavingStones073.jpg"
    },
-   "Metal019": {
-    "assetId": "Metal019",
+   "PavingStones074": {
+    "assetId": "PavingStones074",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal019",
+    "url": "https://ambientcg.com/view?id=PavingStones074",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal019_1K-JPG.zip",
-    "file": "metal/Metal019.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones074_1K-JPG.zip",
+    "file": "setts/PavingStones074.jpg"
    },
-   "Metal020": {
-    "assetId": "Metal020",
+   "PavingStones075": {
+    "assetId": "PavingStones075",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal020",
+    "url": "https://ambientcg.com/view?id=PavingStones075",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal020_1K-JPG.zip",
-    "file": "metal/Metal020.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones075_1K-JPG.zip",
+    "file": "setts/PavingStones075.jpg"
    },
-   "Metal021": {
-    "assetId": "Metal021",
+   "PavingStones076": {
+    "assetId": "PavingStones076",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal021",
+    "url": "https://ambientcg.com/view?id=PavingStones076",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal021_1K-JPG.zip",
-    "file": "metal/Metal021.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones076_1K-JPG.zip",
+    "file": "setts/PavingStones076.jpg"
    },
-   "Metal022": {
-    "assetId": "Metal022",
+   "PavingStones077": {
+    "assetId": "PavingStones077",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal022",
+    "url": "https://ambientcg.com/view?id=PavingStones077",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal022_1K-JPG.zip",
-    "file": "metal/Metal022.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones077_1K-JPG.zip",
+    "file": "setts/PavingStones077.jpg"
    },
-   "Metal023": {
-    "assetId": "Metal023",
+   "PavingStones078": {
+    "assetId": "PavingStones078",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal023",
+    "url": "https://ambientcg.com/view?id=PavingStones078",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal023_1K-JPG.zip",
-    "file": "metal/Metal023.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones078_1K-JPG.zip",
+    "file": "setts/PavingStones078.jpg"
    },
-   "Metal024": {
-    "assetId": "Metal024",
+   "PavingStones079": {
+    "assetId": "PavingStones079",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal024",
+    "url": "https://ambientcg.com/view?id=PavingStones079",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal024_1K-JPG.zip",
-    "file": "metal/Metal024.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones079_1K-JPG.zip",
+    "file": "setts/PavingStones079.jpg"
    },
-   "Metal025": {
-    "assetId": "Metal025",
+   "PavingStones080": {
+    "assetId": "PavingStones080",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal025",
+    "url": "https://ambientcg.com/view?id=PavingStones080",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal025_1K-JPG.zip",
-    "file": "metal/Metal025.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones080_1K-JPG.zip",
+    "file": "setts/PavingStones080.jpg"
    },
-   "Metal026": {
-    "assetId": "Metal026",
+   "PavingStones081": {
+    "assetId": "PavingStones081",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal026",
+    "url": "https://ambientcg.com/view?id=PavingStones081",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal026_1K-JPG.zip",
-    "file": "metal/Metal026.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones081_1K-JPG.zip",
+    "file": "setts/PavingStones081.jpg"
    },
-   "Metal027": {
-    "assetId": "Metal027",
+   "PavingStones082": {
+    "assetId": "PavingStones082",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal027",
+    "url": "https://ambientcg.com/view?id=PavingStones082",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal027_1K-JPG.zip",
-    "file": "metal/Metal027.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones082_1K-JPG.zip",
+    "file": "setts/PavingStones082.jpg"
    },
-   "Metal028": {
-    "assetId": "Metal028",
+   "PavingStones083": {
+    "assetId": "PavingStones083",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal028",
+    "url": "https://ambientcg.com/view?id=PavingStones083",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal028_1K-JPG.zip",
-    "file": "metal/Metal028.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones083_1K-JPG.zip",
+    "file": "setts/PavingStones083.jpg"
    },
-   "Metal029": {
-    "assetId": "Metal029",
+   "PavingStones084": {
+    "assetId": "PavingStones084",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal029",
+    "url": "https://ambientcg.com/view?id=PavingStones084",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal029_1K-JPG.zip",
-    "file": "metal/Metal029.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones084_1K-JPG.zip",
+    "file": "setts/PavingStones084.jpg"
    },
-   "Metal030": {
-    "assetId": "Metal030",
+   "PavingStones085": {
+    "assetId": "PavingStones085",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal030",
+    "url": "https://ambientcg.com/view?id=PavingStones085",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal030_1K-JPG.zip",
-    "file": "metal/Metal030.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones085_1K-JPG.zip",
+    "file": "setts/PavingStones085.jpg"
    },
-   "Metal031": {
-    "assetId": "Metal031",
+   "PavingStones086": {
+    "assetId": "PavingStones086",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal031",
+    "url": "https://ambientcg.com/view?id=PavingStones086",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal031_1K-JPG.zip",
-    "file": "metal/Metal031.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones086_1K-JPG.zip",
+    "file": "setts/PavingStones086.jpg"
    },
-   "Metal033": {
-    "assetId": "Metal033",
+   "PavingStones087": {
+    "assetId": "PavingStones087",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal033",
+    "url": "https://ambientcg.com/view?id=PavingStones087",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal033_1K-JPG.zip",
-    "file": "metal/Metal033.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones087_1K-JPG.zip",
+    "file": "setts/PavingStones087.jpg"
    },
-   "Metal034": {
-    "assetId": "Metal034",
+   "PavingStones088": {
+    "assetId": "PavingStones088",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal034",
+    "url": "https://ambientcg.com/view?id=PavingStones088",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal034_1K-JPG.zip",
-    "file": "metal/Metal034.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones088_1K-JPG.zip",
+    "file": "setts/PavingStones088.jpg"
    },
-   "Metal035": {
-    "assetId": "Metal035",
+   "PavingStones089": {
+    "assetId": "PavingStones089",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal035",
+    "url": "https://ambientcg.com/view?id=PavingStones089",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal035_1K-JPG.zip",
-    "file": "metal/Metal035.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones089_1K-JPG.zip",
+    "file": "setts/PavingStones089.jpg"
    },
-   "Metal036": {
-    "assetId": "Metal036",
+   "PavingStones090": {
+    "assetId": "PavingStones090",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal036",
+    "url": "https://ambientcg.com/view?id=PavingStones090",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal036_1K-JPG.zip",
-    "file": "metal/Metal036.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones090_1K-JPG.zip",
+    "file": "setts/PavingStones090.jpg"
    },
-   "Metal037": {
-    "assetId": "Metal037",
+   "PavingStones091": {
+    "assetId": "PavingStones091",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal037",
+    "url": "https://ambientcg.com/view?id=PavingStones091",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal037_1K-JPG.zip",
-    "file": "metal/Metal037.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones091_1K-JPG.zip",
+    "file": "setts/PavingStones091.jpg"
    },
-   "Metal038": {
-    "assetId": "Metal038",
+   "PavingStones092": {
+    "assetId": "PavingStones092",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal038",
+    "url": "https://ambientcg.com/view?id=PavingStones092",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal038_1K-JPG.zip",
-    "file": "metal/Metal038.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones092_1K-JPG.zip",
+    "file": "setts/PavingStones092.jpg"
    },
-   "Metal039": {
-    "assetId": "Metal039",
+   "PavingStones093": {
+    "assetId": "PavingStones093",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal039",
+    "url": "https://ambientcg.com/view?id=PavingStones093",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal039_1K-JPG.zip",
-    "file": "metal/Metal039.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones093_1K-JPG.zip",
+    "file": "setts/PavingStones093.jpg"
    },
-   "Metal040": {
-    "assetId": "Metal040",
+   "PavingStones094": {
+    "assetId": "PavingStones094",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal040",
+    "url": "https://ambientcg.com/view?id=PavingStones094",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal040_1K-JPG.zip",
-    "file": "metal/Metal040.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones094_1K-JPG.zip",
+    "file": "setts/PavingStones094.jpg"
    },
-   "Metal041A": {
-    "assetId": "Metal041A",
+   "PavingStones095": {
+    "assetId": "PavingStones095",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal041A",
+    "url": "https://ambientcg.com/view?id=PavingStones095",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal041A_1K-JPG.zip",
-    "file": "metal/Metal041A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones095_1K-JPG.zip",
+    "file": "setts/PavingStones095.jpg"
    },
-   "Metal041B": {
-    "assetId": "Metal041B",
+   "PavingStones096": {
+    "assetId": "PavingStones096",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal041B",
+    "url": "https://ambientcg.com/view?id=PavingStones096",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal041B_1K-JPG.zip",
-    "file": "metal/Metal041B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones096_1K-JPG.zip",
+    "file": "setts/PavingStones096.jpg"
    },
-   "Metal041C": {
-    "assetId": "Metal041C",
+   "PavingStones097": {
+    "assetId": "PavingStones097",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal041C",
+    "url": "https://ambientcg.com/view?id=PavingStones097",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal041C_1K-JPG.zip",
-    "file": "metal/Metal041C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones097_1K-JPG.zip",
+    "file": "setts/PavingStones097.jpg"
    },
-   "Metal042A": {
-    "assetId": "Metal042A",
+   "PavingStones098": {
+    "assetId": "PavingStones098",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal042A",
+    "url": "https://ambientcg.com/view?id=PavingStones098",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal042A_1K-JPG.zip",
-    "file": "metal/Metal042A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones098_1K-JPG.zip",
+    "file": "setts/PavingStones098.jpg"
    },
-   "Metal042B": {
-    "assetId": "Metal042B",
+   "PavingStones099": {
+    "assetId": "PavingStones099",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal042B",
+    "url": "https://ambientcg.com/view?id=PavingStones099",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal042B_1K-JPG.zip",
-    "file": "metal/Metal042B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones099_1K-JPG.zip",
+    "file": "setts/PavingStones099.jpg"
    },
-   "Metal043A": {
-    "assetId": "Metal043A",
+   "PavingStones100": {
+    "assetId": "PavingStones100",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal043A",
+    "url": "https://ambientcg.com/view?id=PavingStones100",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal043A_1K-JPG.zip",
-    "file": "metal/Metal043A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones100_1K-JPG.zip",
+    "file": "setts/PavingStones100.jpg"
    },
-   "Metal043B": {
-    "assetId": "Metal043B",
+   "PavingStones101": {
+    "assetId": "PavingStones101",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal043B",
+    "url": "https://ambientcg.com/view?id=PavingStones101",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal043B_1K-JPG.zip",
-    "file": "metal/Metal043B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones101_1K-JPG.zip",
+    "file": "setts/PavingStones101.jpg"
    },
-   "Metal044A": {
-    "assetId": "Metal044A",
+   "PavingStones102": {
+    "assetId": "PavingStones102",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal044A",
+    "url": "https://ambientcg.com/view?id=PavingStones102",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal044A_1K-JPG.zip",
-    "file": "metal/Metal044A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones102_1K-JPG.zip",
+    "file": "setts/PavingStones102.jpg"
    },
-   "Metal044B": {
-    "assetId": "Metal044B",
+   "PavingStones103": {
+    "assetId": "PavingStones103",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal044B",
+    "url": "https://ambientcg.com/view?id=PavingStones103",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal044B_1K-JPG.zip",
-    "file": "metal/Metal044B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones103_1K-JPG.zip",
+    "file": "setts/PavingStones103.jpg"
    },
-   "Metal045A": {
-    "assetId": "Metal045A",
+   "PavingStones104": {
+    "assetId": "PavingStones104",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal045A",
+    "url": "https://ambientcg.com/view?id=PavingStones104",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal045A_1K-JPG.zip",
-    "file": "metal/Metal045A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones104_1K-JPG.zip",
+    "file": "setts/PavingStones104.jpg"
    },
-   "Metal045B": {
-    "assetId": "Metal045B",
+   "PavingStones105": {
+    "assetId": "PavingStones105",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal045B",
+    "url": "https://ambientcg.com/view?id=PavingStones105",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal045B_1K-JPG.zip",
-    "file": "metal/Metal045B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones105_1K-JPG.zip",
+    "file": "setts/PavingStones105.jpg"
    },
-   "Metal046A": {
-    "assetId": "Metal046A",
+   "PavingStones106": {
+    "assetId": "PavingStones106",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal046A",
+    "url": "https://ambientcg.com/view?id=PavingStones106",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal046A_1K-JPG.zip",
-    "file": "metal/Metal046A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones106_1K-JPG.zip",
+    "file": "setts/PavingStones106.jpg"
    },
-   "Metal046B": {
-    "assetId": "Metal046B",
+   "PavingStones107": {
+    "assetId": "PavingStones107",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal046B",
+    "url": "https://ambientcg.com/view?id=PavingStones107",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal046B_1K-JPG.zip",
-    "file": "metal/Metal046B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones107_1K-JPG.zip",
+    "file": "setts/PavingStones107.jpg"
    },
-   "Metal047A": {
-    "assetId": "Metal047A",
+   "PavingStones108": {
+    "assetId": "PavingStones108",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal047A",
+    "url": "https://ambientcg.com/view?id=PavingStones108",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal047A_1K-JPG.zip",
-    "file": "metal/Metal047A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones108_1K-JPG.zip",
+    "file": "setts/PavingStones108.jpg"
    },
-   "Metal047B": {
-    "assetId": "Metal047B",
+   "PavingStones109": {
+    "assetId": "PavingStones109",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal047B",
+    "url": "https://ambientcg.com/view?id=PavingStones109",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal047B_1K-JPG.zip",
-    "file": "metal/Metal047B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones109_1K-JPG.zip",
+    "file": "setts/PavingStones109.jpg"
    },
-   "Metal048A": {
-    "assetId": "Metal048A",
+   "PavingStones110": {
+    "assetId": "PavingStones110",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal048A",
+    "url": "https://ambientcg.com/view?id=PavingStones110",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal048A_1K-JPG.zip",
-    "file": "metal/Metal048A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones110_1K-JPG.zip",
+    "file": "setts/PavingStones110.jpg"
    },
-   "Metal048B": {
-    "assetId": "Metal048B",
+   "PavingStones111": {
+    "assetId": "PavingStones111",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal048B",
+    "url": "https://ambientcg.com/view?id=PavingStones111",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal048B_1K-JPG.zip",
-    "file": "metal/Metal048B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones111_1K-JPG.zip",
+    "file": "setts/PavingStones111.jpg"
    },
-   "Metal048C": {
-    "assetId": "Metal048C",
+   "PavingStones112": {
+    "assetId": "PavingStones112",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal048C",
+    "url": "https://ambientcg.com/view?id=PavingStones112",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal048C_1K-JPG.zip",
-    "file": "metal/Metal048C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones112_1K-JPG.zip",
+    "file": "setts/PavingStones112.jpg"
    },
-   "Metal049A": {
-    "assetId": "Metal049A",
+   "PavingStones113": {
+    "assetId": "PavingStones113",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal049A",
+    "url": "https://ambientcg.com/view?id=PavingStones113",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal049A_1K-JPG.zip",
-    "file": "metal/Metal049A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones113_1K-JPG.zip",
+    "file": "setts/PavingStones113.jpg"
    },
-   "Metal049B": {
-    "assetId": "Metal049B",
+   "PavingStones114": {
+    "assetId": "PavingStones114",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal049B",
+    "url": "https://ambientcg.com/view?id=PavingStones114",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal049B_1K-JPG.zip",
-    "file": "metal/Metal049B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones114_1K-JPG.zip",
+    "file": "setts/PavingStones114.jpg"
    },
-   "Metal049C": {
-    "assetId": "Metal049C",
+   "PavingStones115A": {
+    "assetId": "PavingStones115A",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal049C",
+    "url": "https://ambientcg.com/view?id=PavingStones115A",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal049C_1K-JPG.zip",
-    "file": "metal/Metal049C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones115A_1K-JPG.zip",
+    "file": "setts/PavingStones115A.jpg"
    },
-   "Metal050A": {
-    "assetId": "Metal050A",
+   "PavingStones115B": {
+    "assetId": "PavingStones115B",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal050A",
+    "url": "https://ambientcg.com/view?id=PavingStones115B",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal050A_1K-JPG.zip",
-    "file": "metal/Metal050A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones115B_1K-JPG.zip",
+    "file": "setts/PavingStones115B.jpg"
    },
-   "Metal050B": {
-    "assetId": "Metal050B",
+   "PavingStones115C": {
+    "assetId": "PavingStones115C",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal050B",
+    "url": "https://ambientcg.com/view?id=PavingStones115C",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal050B_1K-JPG.zip",
-    "file": "metal/Metal050B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones115C_1K-JPG.zip",
+    "file": "setts/PavingStones115C.jpg"
    },
-   "Metal050C": {
-    "assetId": "Metal050C",
+   "PavingStones116": {
+    "assetId": "PavingStones116",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal050C",
+    "url": "https://ambientcg.com/view?id=PavingStones116",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal050C_1K-JPG.zip",
-    "file": "metal/Metal050C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones116_1K-JPG.zip",
+    "file": "setts/PavingStones116.jpg"
    },
-   "Metal051A": {
-    "assetId": "Metal051A",
+   "PavingStones117": {
+    "assetId": "PavingStones117",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal051A",
+    "url": "https://ambientcg.com/view?id=PavingStones117",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal051A_1K-JPG.zip",
-    "file": "metal/Metal051A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones117_1K-JPG.zip",
+    "file": "setts/PavingStones117.jpg"
    },
-   "Metal051B": {
-    "assetId": "Metal051B",
+   "PavingStones118": {
+    "assetId": "PavingStones118",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal051B",
+    "url": "https://ambientcg.com/view?id=PavingStones118",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal051B_1K-JPG.zip",
-    "file": "metal/Metal051B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones118_1K-JPG.zip",
+    "file": "setts/PavingStones118.jpg"
    },
-   "Metal051C": {
-    "assetId": "Metal051C",
+   "PavingStones119": {
+    "assetId": "PavingStones119",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal051C",
+    "url": "https://ambientcg.com/view?id=PavingStones119",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal051C_1K-JPG.zip",
-    "file": "metal/Metal051C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones119_1K-JPG.zip",
+    "file": "setts/PavingStones119.jpg"
    },
-   "Metal052A": {
-    "assetId": "Metal052A",
+   "PavingStones120": {
+    "assetId": "PavingStones120",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal052A",
+    "url": "https://ambientcg.com/view?id=PavingStones120",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal052A_1K-JPG.zip",
-    "file": "metal/Metal052A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones120_1K-JPG.zip",
+    "file": "setts/PavingStones120.jpg"
    },
-   "Metal052B": {
-    "assetId": "Metal052B",
+   "PavingStones121": {
+    "assetId": "PavingStones121",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal052B",
+    "url": "https://ambientcg.com/view?id=PavingStones121",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal052B_1K-JPG.zip",
-    "file": "metal/Metal052B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones121_1K-JPG.zip",
+    "file": "setts/PavingStones121.jpg"
    },
-   "Metal052C": {
-    "assetId": "Metal052C",
+   "PavingStones122": {
+    "assetId": "PavingStones122",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal052C",
+    "url": "https://ambientcg.com/view?id=PavingStones122",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal052C_1K-JPG.zip",
-    "file": "metal/Metal052C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones122_1K-JPG.zip",
+    "file": "setts/PavingStones122.jpg"
    },
-   "Metal053A": {
-    "assetId": "Metal053A",
+   "PavingStones123": {
+    "assetId": "PavingStones123",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal053A",
+    "url": "https://ambientcg.com/view?id=PavingStones123",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal053A_1K-JPG.zip",
-    "file": "metal/Metal053A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones123_1K-JPG.zip",
+    "file": "setts/PavingStones123.jpg"
    },
-   "Metal053B": {
-    "assetId": "Metal053B",
+   "PavingStones124": {
+    "assetId": "PavingStones124",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal053B",
+    "url": "https://ambientcg.com/view?id=PavingStones124",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal053B_1K-JPG.zip",
-    "file": "metal/Metal053B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones124_1K-JPG.zip",
+    "file": "setts/PavingStones124.jpg"
    },
-   "Metal053C": {
-    "assetId": "Metal053C",
+   "PavingStones125A": {
+    "assetId": "PavingStones125A",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal053C",
+    "url": "https://ambientcg.com/view?id=PavingStones125A",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal053C_1K-JPG.zip",
-    "file": "metal/Metal053C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones125A_1K-JPG.zip",
+    "file": "setts/PavingStones125A.jpg"
    },
-   "Metal054A": {
-    "assetId": "Metal054A",
+   "PavingStones125B": {
+    "assetId": "PavingStones125B",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal054A",
+    "url": "https://ambientcg.com/view?id=PavingStones125B",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal054A_1K-JPG.zip",
-    "file": "metal/Metal054A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones125B_1K-JPG.zip",
+    "file": "setts/PavingStones125B.jpg"
    },
-   "Metal054B": {
-    "assetId": "Metal054B",
+   "PavingStones126A": {
+    "assetId": "PavingStones126A",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal054B",
+    "url": "https://ambientcg.com/view?id=PavingStones126A",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal054B_1K-JPG.zip",
-    "file": "metal/Metal054B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones126A_1K-JPG.zip",
+    "file": "setts/PavingStones126A.jpg"
    },
-   "Metal054C": {
-    "assetId": "Metal054C",
+   "PavingStones126B": {
+    "assetId": "PavingStones126B",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal054C",
+    "url": "https://ambientcg.com/view?id=PavingStones126B",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal054C_1K-JPG.zip",
-    "file": "metal/Metal054C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones126B_1K-JPG.zip",
+    "file": "setts/PavingStones126B.jpg"
    },
-   "Metal055A": {
-    "assetId": "Metal055A",
+   "PavingStones127": {
+    "assetId": "PavingStones127",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal055A",
+    "url": "https://ambientcg.com/view?id=PavingStones127",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal055A_1K-JPG.zip",
-    "file": "metal/Metal055A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones127_1K-JPG.zip",
+    "file": "setts/PavingStones127.jpg"
    },
-   "Metal055B": {
-    "assetId": "Metal055B",
+   "PavingStones128": {
+    "assetId": "PavingStones128",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal055B",
+    "url": "https://ambientcg.com/view?id=PavingStones128",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal055B_1K-JPG.zip",
-    "file": "metal/Metal055B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones128_1K-JPG.zip",
+    "file": "setts/PavingStones128.jpg"
    },
-   "Metal055C": {
-    "assetId": "Metal055C",
+   "PavingStones129": {
+    "assetId": "PavingStones129",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal055C",
+    "url": "https://ambientcg.com/view?id=PavingStones129",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal055C_1K-JPG.zip",
-    "file": "metal/Metal055C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones129_1K-JPG.zip",
+    "file": "setts/PavingStones129.jpg"
    },
-   "Metal056A": {
-    "assetId": "Metal056A",
+   "PavingStones130": {
+    "assetId": "PavingStones130",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal056A",
+    "url": "https://ambientcg.com/view?id=PavingStones130",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal056A_1K-JPG.zip",
-    "file": "metal/Metal056A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones130_1K-JPG.zip",
+    "file": "setts/PavingStones130.jpg"
    },
-   "Metal056B": {
-    "assetId": "Metal056B",
+   "PavingStones131": {
+    "assetId": "PavingStones131",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal056B",
+    "url": "https://ambientcg.com/view?id=PavingStones131",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal056B_1K-JPG.zip",
-    "file": "metal/Metal056B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones131_1K-JPG.zip",
+    "file": "setts/PavingStones131.jpg"
    },
-   "Metal056C": {
-    "assetId": "Metal056C",
+   "PavingStones132": {
+    "assetId": "PavingStones132",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal056C",
+    "url": "https://ambientcg.com/view?id=PavingStones132",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal056C_1K-JPG.zip",
-    "file": "metal/Metal056C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones132_1K-JPG.zip",
+    "file": "setts/PavingStones132.jpg"
    },
-   "Metal057A": {
-    "assetId": "Metal057A",
+   "PavingStones133": {
+    "assetId": "PavingStones133",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal057A",
+    "url": "https://ambientcg.com/view?id=PavingStones133",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal057A_1K-JPG.zip",
-    "file": "metal/Metal057A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones133_1K-JPG.zip",
+    "file": "setts/PavingStones133.jpg"
    },
-   "Metal057B": {
-    "assetId": "Metal057B",
+   "PavingStones134": {
+    "assetId": "PavingStones134",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal057B",
+    "url": "https://ambientcg.com/view?id=PavingStones134",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal057B_1K-JPG.zip",
-    "file": "metal/Metal057B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones134_1K-JPG.zip",
+    "file": "setts/PavingStones134.jpg"
    },
-   "Metal057C": {
-    "assetId": "Metal057C",
+   "PavingStones135": {
+    "assetId": "PavingStones135",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal057C",
+    "url": "https://ambientcg.com/view?id=PavingStones135",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal057C_1K-JPG.zip",
-    "file": "metal/Metal057C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones135_1K-JPG.zip",
+    "file": "setts/PavingStones135.jpg"
    },
-   "Metal058A": {
-    "assetId": "Metal058A",
+   "PavingStones136": {
+    "assetId": "PavingStones136",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal058A",
+    "url": "https://ambientcg.com/view?id=PavingStones136",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal058A_1K-JPG.zip",
-    "file": "metal/Metal058A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones136_1K-JPG.zip",
+    "file": "setts/PavingStones136.jpg"
    },
-   "Metal058B": {
-    "assetId": "Metal058B",
+   "PavingStones137": {
+    "assetId": "PavingStones137",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal058B",
+    "url": "https://ambientcg.com/view?id=PavingStones137",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal058B_1K-JPG.zip",
-    "file": "metal/Metal058B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones137_1K-JPG.zip",
+    "file": "setts/PavingStones137.jpg"
    },
-   "Metal058C": {
-    "assetId": "Metal058C",
+   "PavingStones138": {
+    "assetId": "PavingStones138",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal058C",
+    "url": "https://ambientcg.com/view?id=PavingStones138",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal058C_1K-JPG.zip",
-    "file": "metal/Metal058C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones138_1K-JPG.zip",
+    "file": "setts/PavingStones138.jpg"
    },
-   "Metal059A": {
-    "assetId": "Metal059A",
+   "PavingStones139": {
+    "assetId": "PavingStones139",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal059A",
+    "url": "https://ambientcg.com/view?id=PavingStones139",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal059A_1K-JPG.zip",
-    "file": "metal/Metal059A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones139_1K-JPG.zip",
+    "file": "setts/PavingStones139.jpg"
    },
-   "Metal059B": {
-    "assetId": "Metal059B",
+   "PavingStones140": {
+    "assetId": "PavingStones140",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal059B",
+    "url": "https://ambientcg.com/view?id=PavingStones140",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal059B_1K-JPG.zip",
-    "file": "metal/Metal059B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones140_1K-JPG.zip",
+    "file": "setts/PavingStones140.jpg"
    },
-   "Metal059C": {
-    "assetId": "Metal059C",
+   "PavingStones141": {
+    "assetId": "PavingStones141",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal059C",
+    "url": "https://ambientcg.com/view?id=PavingStones141",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal059C_1K-JPG.zip",
-    "file": "metal/Metal059C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones141_1K-JPG.zip",
+    "file": "setts/PavingStones141.jpg"
    },
-   "Metal060A": {
-    "assetId": "Metal060A",
+   "PavingStones142": {
+    "assetId": "PavingStones142",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal060A",
+    "url": "https://ambientcg.com/view?id=PavingStones142",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal060A_1K-JPG.zip",
-    "file": "metal/Metal060A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones142_1K-JPG.zip",
+    "file": "setts/PavingStones142.jpg"
    },
-   "Metal060B": {
-    "assetId": "Metal060B",
+   "PavingStones143": {
+    "assetId": "PavingStones143",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal060B",
+    "url": "https://ambientcg.com/view?id=PavingStones143",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal060B_1K-JPG.zip",
-    "file": "metal/Metal060B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones143_1K-JPG.zip",
+    "file": "setts/PavingStones143.jpg"
    },
-   "Metal060C": {
-    "assetId": "Metal060C",
+   "PavingStones144": {
+    "assetId": "PavingStones144",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal060C",
+    "url": "https://ambientcg.com/view?id=PavingStones144",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal060C_1K-JPG.zip",
-    "file": "metal/Metal060C.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones144_1K-JPG.zip",
+    "file": "setts/PavingStones144.jpg"
    },
-   "Metal061A": {
-    "assetId": "Metal061A",
+   "PavingStones145": {
+    "assetId": "PavingStones145",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal061A",
+    "url": "https://ambientcg.com/view?id=PavingStones145",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal061A_1K-JPG.zip",
-    "file": "metal/Metal061A.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones145_1K-JPG.zip",
+    "file": "setts/PavingStones145.jpg"
    },
-   "Metal061B": {
-    "assetId": "Metal061B",
+   "PavingStones146": {
+    "assetId": "PavingStones146",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal061B",
+    "url": "https://ambientcg.com/view?id=PavingStones146",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal061B_1K-JPG.zip",
-    "file": "metal/Metal061B.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones146_1K-JPG.zip",
+    "file": "setts/PavingStones146.jpg"
    },
-   "Metal061C": {
-    "assetId": "Metal061C",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal061C",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal061C_1K-JPG.zip",
-    "file": "metal/Metal061C.jpg"
-   },
-   "Metal062A": {
-    "assetId": "Metal062A",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal062A",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal062A_1K-JPG.zip",
-    "file": "metal/Metal062A.jpg"
-   },
-   "Metal062B": {
-    "assetId": "Metal062B",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal062B",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal062B_1K-JPG.zip",
-    "file": "metal/Metal062B.jpg"
-   },
-   "Metal062C": {
-    "assetId": "Metal062C",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal062C",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal062C_1K-JPG.zip",
-    "file": "metal/Metal062C.jpg"
-   },
-   "Metal063": {
-    "assetId": "Metal063",
-    "source": "ambientCG",
-    "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Metal063",
-    "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Metal063_1K-JPG.zip",
-    "file": "metal/Metal063.jpg"
-   }
-  },
-  "plaster": {
-   "Plaster003": {
-    "assetId": "Plaster003",
+   "PavingStones147": {
+    "assetId": "PavingStones147",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Plaster003",
+    "url": "https://ambientcg.com/view?id=PavingStones147",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Plaster003_1K-JPG.zip",
-    "file": "plaster/Plaster003.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones147_1K-JPG.zip",
+    "file": "setts/PavingStones147.jpg"
    },
-   "Plaster004": {
-    "assetId": "Plaster004",
+   "PavingStones148": {
+    "assetId": "PavingStones148",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Plaster004",
+    "url": "https://ambientcg.com/view?id=PavingStones148",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Plaster004_1K-JPG.zip",
-    "file": "plaster/Plaster004.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones148_1K-JPG.zip",
+    "file": "setts/PavingStones148.jpg"
    },
-   "Plaster005": {
-    "assetId": "Plaster005",
+   "PavingStones149": {
+    "assetId": "PavingStones149",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Plaster005",
+    "url": "https://ambientcg.com/view?id=PavingStones149",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Plaster005_1K-JPG.zip",
-    "file": "plaster/Plaster005.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones149_1K-JPG.zip",
+    "file": "setts/PavingStones149.jpg"
    },
-   "Plaster006": {
-    "assetId": "Plaster006",
+   "PavingStones150": {
+    "assetId": "PavingStones150",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Plaster006",
+    "url": "https://ambientcg.com/view?id=PavingStones150",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Plaster006_1K-JPG.zip",
-    "file": "plaster/Plaster006.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones150_1K-JPG.zip",
+    "file": "setts/PavingStones150.jpg"
    },
-   "Plaster007": {
-    "assetId": "Plaster007",
+   "PavingStones151": {
+    "assetId": "PavingStones151",
     "source": "ambientCG",
     "licence": "CC0 1.0 Universal",
-    "url": "https://ambientcg.com/view?id=Plaster007",
+    "url": "https://ambientcg.com/view?id=PavingStones151",
     "resolution": "1K-JPG",
-    "downloadLink": "https://ambientcg.com/get?file=Plaster007_1K-JPG.zip",
-    "file": "plaster/Plaster007.jpg"
+    "downloadLink": "https://ambientcg.com/get?file=PavingStones151_1K-JPG.zip",
+    "file": "setts/PavingStones151.jpg"
    }
   }
  }
