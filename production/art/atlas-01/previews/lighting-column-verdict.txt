@@ -1,4 +1,4 @@
-artPreviewVerdict=1 commit=fbba39e1 commission=atlas-01 recipe=lighting-column status=RAN at=1790031391
+artPreviewVerdict=1 commit=6f738008 commission=atlas-01 recipe=lighting-column status=RAN at=1790034540
 
 The authoring line's first test (Jafar, 2026-09-21). Read this file
 instead of the job log. A run that measured nothing says NO RUN.
@@ -13,11 +13,12 @@ lcCheck field=lantern_height_m specValue=0.200000 pieceValue=0.200000 diff=0.000
 lcCheck field=lantern_width_m specValue=0.300000 pieceValue=0.300000 diff=0.000000 agree=yes
 lcCheck field=outreach_m specValue=0.500000 pieceValue=0.500000 diff=0.000000 agree=yes
 lcCheck field=lantern_mount_absolute_y_m specValue=4.965000 pieceValue=4.965000 diff=0.000000 agree=yes
-lcNeck radius_m=0.3000 radiusRatio=0.60 sweep_deg=131.81 arcPortion_m=0.6902 dropperLength_m=0.3236 externalDropper_m=0.2236 jointAngle_deg=48.19 authoredArcTotal_m=1.0138 naiveQuarterArc_m=0.7854 arcLongerThanNaive=yes arcRatio=1.2908 authoredCurvature_perM=3.3333 naiveQuarterCurvature_perM=2.0000 shallowerThanNaive=no curvatureRatio=1.6667 naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling
+lcNeck cornerRadius_m=0.1400 cornerRadiusRatio=0.28 cornerSweep_deg=90.00 armLength_m=0.3600 dropperLength_m=0.2400 externalDropper_m=0.1400 jointAngle_deg=90.00 authoredTotalLength_m=0.8199 naiveQuarterArc_m=0.7854 totalLongerThanNaive=yes totalRatio=1.0439 cornerCurvature_perM=7.1429 naiveQuarterCurvature_perM=2.0000 shallowerThanNaive=no curvatureRatio=3.5714 naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling constructionPer=2026-09-21-corner-arm-dropper-revision
 lcSheetRef source=production/art/atlas-01/concepts/hook.png@origin/art/atlas-01 cropPx=185,700,320,1000/tracedSubWindow-220,690,280,800 method=luminance-threshold~silhouette~trace~vs~sky~baseline~~200-210 measuredAt=2026-09-21 curveVerticalFraction_ofVisiblePole~=~8px/~450px-visible-pole~(~1.8pct),compact,top-concentrated headWidthToHeight~=~23px:7px~is~3.3to1~at~widest~traced~row~(y756,x238-261) dropperVisibleOnSheet=no/widens-and-returns-to-plain-pole-width-within~7~rows confidence=low-to-moderate/pole~is~2-3px~wide~at~native~res,~near~the~image's~own~floor
+lcAssembly widthM=0.7750 heightM=0.3400 aspect=2.279 sheetTargetAspect=2.27 sheetTargetSource=production/art/atlas-01/concepts/hook.png@origin/art/atlas-01 deltaPct=0.4 toleranceAppliedPct=25 withinTolerance=yes toleranceBasis=own-remeasure-2026-09-21-9to11px-row-swing-2.27to2.78 gate=none/D41-ungated-visual-comparison
 lcPart id=base kind=frustum material=steel_dark verts=32 faces=18 area_m2=0.14948 wearOf=base manifold=yes badEdges=0 degenerateFaces=0 note=base_diameter_m~at~the~foot~tapering~to~shaft_diameter_m~at~the~top,~no~step~at~the~shaft~joint,~column.surface=metal
 lcPart id=shaft kind=cyl material=steel_dark verts=32 faces=18 area_m2=1.68327 wearOf=shaft manifold=yes badEdges=0 degenerateFaces=0 note=shaft_diameter_m~uniform,~no~taper~authored
-lcPart id=neck kind=tube material=steel_dark verts=96 faces=90 area_m2=0.29046 wearOf=neck manifold=yes badEdges=0 degenerateFaces=0 note=one~continuous~swept~tube,~radius_m=0.3000~sweep_deg=131.81~plus~a~0.3236~m~dropper,~total_length_m=1.0138
+lcPart id=neck kind=tube material=steel_dark verts=96 faces=90 area_m2=0.23492 wearOf=neck manifold=yes badEdges=0 degenerateFaces=0 note=one~continuous~swept~tube:~a~0.1400~m~radius~quarter-circle~corner~(fixed~90~degree~sweep),~then~a~0.3600~m~level~arm,~then~a~0.2400~m~dropp
 lcPart id=lantern_body kind=box material=steel_dark verts=8 faces=6 area_m2=0.22247 wearOf=lantern manifold=yes badEdges=0 degenerateFaces=0 note=housing~inset~to~0.82x~of~length_m/width_m~so~the~roof~overhangs~it,~height~split~body=0.0800~roof=0.1200~of~lantern_height_m=0.2000
 lcPart id=lantern_lens kind=box material=lens_amber verts=8 faces=6 area_m2=0.09240 wearOf=none manifold=yes badEdges=0 degenerateFaces=0 note=recessed~diffuser,~flush~with~the~housing~underside,~inset~so~the~OVERALL~bounding~box~is~unchanged
 lcPart id=lantern_roof kind=wedge material=steel_dark verts=6 faces=5 area_m2=0.21130 wearOf=lantern manifold=yes badEdges=0 degenerateFaces=0 note=shallow~ridge~canopy,~NOT~a~bowl~and~NOT~a~plain~box,~per~the~Hook~sheet;~ridge~along~the~length~axis
@@ -27,15 +28,15 @@ lcPart id=wear_road_spray kind=box material=grime verts=8 faces=6 area_m2=0.0115
 lcPart id=wear_lantern_drip kind=box material=grime verts=8 faces=6 area_m2=0.00803 wearOf=neck manifold=yes badEdges=0 degenerateFaces=0 note=staining~below~the~lantern,~centred~on~the~dropper~between~the~arc~and~the~housing,~from~drips~off~the~fitting
 lcWear surface=base cleanArea_m2=0.14948 wearArea_m2=0.01155 wearCoverage=0.077267
 lcWear surface=lantern cleanArea_m2=0.43377 wearArea_m2=0.00000 wearCoverage=0.000000
-lcWear surface=neck cleanArea_m2=0.29046 wearArea_m2=0.00803 wearCoverage=0.027631
+lcWear surface=neck cleanArea_m2=0.23492 wearArea_m2=0.00803 wearCoverage=0.034164
 lcWear surface=shaft cleanArea_m2=1.68327 wearArea_m2=0.15940 wearCoverage=0.094697
-lcFrame idx=1/4 id=hero_full condition=overcast_day png=lighting-column-overcast_day-hero_full.png bytes=2222886 engine=BLENDER_EEVEE_NEXT renderSeconds=2.2
-lcFrame idx=2/4 id=head_detail condition=overcast_day png=lighting-column-overcast_day-head_detail.png bytes=2046021 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
-lcFrame idx=3/4 id=hero_full condition=wet_night png=lighting-column-wet_night-hero_full.png bytes=1798266 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
-lcFrame idx=4/4 id=head_detail condition=wet_night png=lighting-column-wet_night-head_detail.png bytes=1701439 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
+lcFrame idx=1/4 id=hero_full condition=overcast_day png=lighting-column-overcast_day-hero_full.png bytes=2223320 engine=BLENDER_EEVEE_NEXT renderSeconds=2.3
+lcFrame idx=2/4 id=head_detail condition=overcast_day png=lighting-column-overcast_day-head_detail.png bytes=2030894 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
+lcFrame idx=3/4 id=hero_full condition=wet_night png=lighting-column-wet_night-hero_full.png bytes=1798554 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
+lcFrame idx=4/4 id=head_detail condition=wet_night png=lighting-column-wet_night-head_detail.png bytes=1699801 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
 lcNote sceneReset=dataApi/removed=3/3-objects
 lcNote world/overcast_day=hdri=ledger/Assets/Resources/Sky/polyhaven/belfast_open_field_2k.hdr
 lcNote world/wet_night=hdri=ledger/Assets/Resources/Sky/polyhaven/kloppenheim_04_2k.hdr
-lighting-column done: status=RAN commission=atlas-01 runSha=fbba39e1 studioSha=5958d31 specSha256=7a57663a0983afee specPath=production\specs\vignette-scene.json crossCheckAgree=10/10 objectsPlanned=10 objectsBuilt=10/10-planned manifoldParts=10/10 neckArcLonger=yes neckShallower=no wearCoverageMin=0.000000/lantern wearCoverageTotal=0.069995 boundsExtent_m=0.875/0.300/5.345 previewsWrote=4/4 engineAsked=AUTO engineUsed=BLENDER_EEVEE_NEXT res=1600x1100 outDir=C:\actions-runner-ledger\_work\ledger\ledger\production\art\atlas-01\previews root=C:\actions-runner-ledger\_work\ledger\ledger elapsedSeconds=3.3
+lighting-column done: status=RAN commission=atlas-01 runSha=6f738008 studioSha=595484b specSha256=7a57663a0983afee specPath=production\specs\vignette-scene.json crossCheckAgree=10/10 objectsPlanned=10 objectsBuilt=10/10-planned manifoldParts=10/10 neckArcLonger=yes neckShallower=no wearCoverageMin=0.000000/lantern wearCoverageTotal=0.071549 boundsExtent_m=0.875/0.300/5.186 previewsWrote=4/4 engineAsked=AUTO engineUsed=BLENDER_EEVEE_NEXT res=1600x1100 outDir=C:\actions-runner-ledger\_work\ledger\ledger\production\art\atlas-01\previews root=C:\actions-runner-ledger\_work\ledger\ledger elapsedSeconds=3.3
 artQueueStatus=CLEAR artQueueWaitedSec=2 artQueueCapSec=720 artQueueCapBit=no/cap-not-reached artQueuePolls=1/25-max artQueuePollSec=30 artQueueBusyAtLast=0/5-workflows-checked artQueueUnknownAtLast=0/5-workflows-checked artQueueProved=yes
 artQueueSeries=p1:t0s:busy=0/5:none/0-in-progress:unk=0/5 artQueueSeriesPolls=1/1-recorded
