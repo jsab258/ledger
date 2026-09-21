@@ -13,8 +13,19 @@ listed under "Where each piece went", which is a reading at the instant of
 each commit and says so.
 
 The budget row is `production/budget.md`, row 2026-09-21. With the same
-message the session model was switched to the Fable tier, so the resident's
-own turns spend the Fable meter from here.
+message the session model was switched to the Fable tier by a /model command.
+
+CORRECTED 2026-09-21 UNDER D43, AND THE FALSE SENTENCE IS LEFT VISIBLE RATHER
+THAN DELETED. This paragraph ended "so the resident's own turns spend the
+Fable meter from here". That was an inference from the command and not a
+reading of the seat. The seat, read at 12:29:49Z: configured_model is
+claude-fable-5-1 while session_context.model, last_served_model and
+user_switched_model all read claude-opus-5, so the turns of that window were
+SERVED by the Opus tier whatever the switch asked for. Which meter either
+tier spends is not readable in this container at all, which is the budget
+file's standing condition. The budget row carries the full reading; this
+correction was applied to `production/NOW.md` in the same pass, where the
+same sentence had been copied.
 
 ## Where each piece went, a reading at each commit and not a promise
 

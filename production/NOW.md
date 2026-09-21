@@ -14,8 +14,14 @@ looks like a live state.
 THE METER IS READ AND THE STUDIO IS UNLOCKED. His message, arriving between
 11:19Z and 12:10Z: total 0, Fable 0, ceiling 85 on the higher meter, standing.
 Row 2026-09-21 in `production/budget.md`. The four-day hold ends with it. The
-session model was switched to Fable with the same message, so the resident's
-own turns now spend the Fable meter.
+session model was switched to Fable with the same message BY A /model
+COMMAND, AND THAT IS NOT THE SAME FACT AS WHICH TIER SERVES THE TURN. This
+sentence ended "so the resident's own turns now spend the Fable meter" until
+2026-09-21; corrected under D43, false text left visible. The seat read at
+12:29:49Z gives configured_model=claude-fable-5-1 with
+session_context.model, last_served_model and user_switched_model all
+claude-opus-5. Which meter either tier spends is not readable from this
+container at all. Full reading: `production/budget.md` row 2026-09-21.
 
 HIS ORDER IS ON DISK VERBATIM, 3,529 words, at
 `game-design/decision-2026-09-21-the-week-after-the-reset-five-measurements-and-eleven-rulings.md`.
