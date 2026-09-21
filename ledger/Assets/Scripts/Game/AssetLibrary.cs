@@ -29,6 +29,23 @@ namespace Ledger.Game
         public const string Asphalt  = "asphalt";
         public const string Sidewalk = "sidewalk";
         public const string Kerb     = "kerb";
+        /// DRESSED GRANITE SETTS, rectangular and British: the surface a yard
+        /// mouth, a back lane or a quayside apron keeps long after the road
+        /// beside it went to tarmac. NOT rounded Mediterranean cobbles; that
+        /// distinction is being settled by eye on the shortlist contact sheet
+        /// and canon.md is what it is being settled against.
+        ///
+        /// NOT `ProceduralOnly`, deliberately. The pack answers for this
+        /// surface the moment `setts.jpg` lands, and the Unreal probe binds a
+        /// pack file BY NAME with no C++ change (`SurfaceBind.h`, the section
+        /// on the four names the pack cannot answer for). A ProceduralOnly
+        /// surface would instead owe that header a second copy of the tint,
+        /// which is the two-copy table `tools/surface-tint-check.py` exists to
+        /// guard. Until the file lands, Unity falls back to the slab pattern
+        /// below; on the Unreal side a piece wearing this surface counts as
+        /// `NoBind` and renders unpainted, which is why placing one before the
+        /// fetch has landed is a decision and not a detail.
+        public const string Setts    = "setts";
         public const string BrickRed = "brick_red";
         public const string BrickGrey= "brick_grey";
         public const string Plaster  = "plaster";
@@ -1570,6 +1587,35 @@ namespace Ledger.Game
                 case AssetLibrary.Asphalt:  s = Make(new Color(0.16f,0.17f,0.20f), 0.18f, 0f, new Vector2(6,6),  "noise"); break;
                 case AssetLibrary.Sidewalk: s = Make(new Color(0.42f,0.44f,0.48f), 0.10f, 0f, new Vector2(8,8),  "slab");  break;
                 case AssetLibrary.Kerb:     s = Make(new Color(0.46f,0.47f,0.49f), 0.12f, 0f, new Vector2(2,2),  "noise"); break;
+                // SETTS, AND EVERY NUMBER ON THIS LINE IS COPIED RATHER THAN
+                // CHOSEN, because nothing in this repository has measured a
+                // sett. The tint and the smoothness are the kerb's: the same
+                // dressed stone family in the same palette, and a second
+                // opinion about one stone would put two greys in this project
+                // (the rule `PaintYellow` states for the town's yellow). The
+                // tiling is the sidewalk's, for the reason
+                // `vignette-scene.json`'s `surface_tiling.note` gives:
+                // metres-per-repeat is a measurement nobody has taken for ANY
+                // surface here, and a paving photograph and a sett photograph
+                // cover a comparable patch of ground. What replaces all three
+                // is the pack file's own series:
+                // `tools/citypack/fetch_textures.py --measure-pack setts`
+                // prints its luma and chroma once the fetch lands, as it
+                // already does for kerb.jpg at lumMean 184.3.
+                //
+                // `slab` IS A STAND-IN AND READS AS PAVING SLABS, NOT SETTS: a
+                // sett course is a finer, staggered bond, and a generator for
+                // it would be new Game-layer code that cannot be run in this
+                // container, so it is named as a next rung rather than written
+                // blind. The procedural path only shows while the pack has no
+                // `setts.jpg` at all.
+                //
+                // NOT IN `WetSurfaces`, and that is not an oversight: that
+                // array is copied into `SurfaceBind.h` as a four-name table
+                // that `surface_tint_agreement` in `ledger/verify.py` refuses
+                // to see disagree, so rain landing on setts is a both-engines
+                // change with its own denominators to move.
+                case AssetLibrary.Setts:    s = Make(new Color(0.46f,0.47f,0.49f), 0.12f, 0f, new Vector2(8,8),  "slab");  break;
                 case AssetLibrary.BrickRed: s = Make(new Color(0.40f,0.26f,0.24f), 0.08f, 0f, new Vector2(3,4),  "brick"); break;
                 case AssetLibrary.BrickGrey:s = Make(new Color(0.35f,0.36f,0.39f), 0.08f, 0f, new Vector2(3,4),  "brick"); break;
                 case AssetLibrary.Plaster:  s = Make(new Color(0.50f,0.50f,0.50f), 0.06f, 0f, new Vector2(2,3),  "noise"); break;
