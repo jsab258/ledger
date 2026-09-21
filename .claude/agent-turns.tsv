@@ -330,3 +330,7 @@ when	agent	tier	turns	alines	agentId	wrote	fileToolsOfAll
 2026-09-21T13:06:55Z	instrument-builder	opus	68	131	a47011faddb1f2162	ledger/Soak:30	30/74
 2026-09-21T13:08:07Z	studio-director	fable	12	116	a5acc4faefff0e487	ledger-v2/respec:13,game-design:2,production:2,ledger-v2:1,production/queue:1	19/93
 2026-09-21T13:25:40Z	studio-director	fable	20	171	a5acc4faefff0e487	ledger-v2/respec:17,game-design:3,production:3,ledger-v2:1,production/queue:1	25/133
+2026-09-21T14:28:54Z	engine-specialist	opus	35	91	a3371dd697ef6f5eb	no-file-write	0/44
+2026-09-21T14:47:39Z	studio-director	fable	12	88	ab8a9217eda535ae0	game-design:1	1/65
+2026-09-21T15:03:21Z	instrument-builder	opus	48	128	a7a9a95bd58f4efc7	no-file-write	0/56
+2026-09-21T15:13:57Z	studio-director	fable	18	110	ab8a9217eda535ae0	game-design:2	2/76

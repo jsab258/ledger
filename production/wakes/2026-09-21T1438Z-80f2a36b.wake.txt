@@ -2,8 +2,8 @@ id: 80f2a36b
 due: 2026-09-21T14:38:00Z
 armedAt: 2026-09-21T14:18:52Z
 armedBy: resident/223-the-four-surfaces-between-him-and-a-judgeable-frame
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-21T14:49:27Z
 capBitAt: -
 
 An engine-specialist is on queue 223, the four surfaces that spoil the figure frame. Run 55 closed the exposure fault (queue 384 LANDED at 2490b864) and the frame is legible, but a four-quadrant colour card sits across the figure's torso and its legs render flat yellow: surfacesAbsent=card/interior/multiply/paint_yellow, surfacesResolved=12/16, identical to runs 53 and 54. REVIEW ITS DIFF AGAINST THE TREE, do not trust the report. The first thing to check is whether it answered queue 227's denominator question BEFORE fixing anything, because if surfacesAsked=16 counts blend modes as surfaces then 12/16 is the wrong fraction and the honest shortfall may be two rather than four. Then verify, commit, push, and dispatch a run so the frame can be opened. THE FIGURE IS NEXT IN HIS ORDER AND IT IS NOW ONE FIX AWAY. Do not touch the settle loop, kSettleMeanLumaBound or MeasureRigRepeat: they landed this morning and run 55 proves them. Budget was 0/0 at 12:1xZ, so the ten-hour rule passes until about 22:1xZ; re-read production/budget.md before spending.

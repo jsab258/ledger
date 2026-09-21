@@ -56,3 +56,7 @@ status: READY 2026-09-16, found by an artifact-reader and re-measured by the
   that frame for exactly this reason.
 
   UNDER D45 a tool that measures the game: a test, no review.
+
+  2026-09-21: from the next run the quads stand in front of cam_B; this
+  item's acceptance is unchanged and reads its pixels from whichever frame
+  quadOn names.

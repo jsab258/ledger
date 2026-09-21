@@ -26,6 +26,11 @@ status: READY 2026-09-09 22:05Z. A gate denominator that counts the wrong
   pieces examined, with surfaceStatus=PROCEDURAL printed for exactly interior
   and paint_yellow.
 
+  RULED 2026-09-21 (game-design/decision-2026-09-21-ruling-the-shortfall-is-zero-the-recount-is-not-a-repair-and-the-card-leaves-the-hero-frame.md):
+  lands amended; the keys keep their names, the line carries
+  surfacePopulationChanged, and run 55 measured piecesUnpainted=10/610,
+  not 30.
+
   IT NEEDS A RULING BEFORE IT LANDS, because changing what a gate counts
   changes a conclusion: it turns a standing 12/16 fault into a mismeasurement.
   Escalation is mechanical here and is not a judgement call.

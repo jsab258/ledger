@@ -58,3 +58,8 @@ status: READY 2026-09-09 21:15Z, REWRITTEN 22:05Z. THE FIRST VERSION OF THIS
   surfacesAbsent=card/interior/multiply/paint_yellow, character for character
   what the PC printed. The ruler is understood, so these readings are about the
   pack and not about the instrument.
+
+  RUN 55, 2026-09-21: piecesPainted=600/610 piecesUnpainted=10/610, all ten
+  the multiply decals hidden fail-closed for want of a modulate decal
+  material. The thirty above was true of the run it described. Closes at 0,
+  which now depends on that material alone; ruled 2026-09-21.

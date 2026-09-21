@@ -10,10 +10,13 @@ spec: RUN 54's NIGHT FRAME IS BLACK AND NOTHING ELSE CAN PROCEED UNTIL IT IS
 
   1. NOT THE MATERIALS. `materialsStatus=PARTIAL` with
      `surfacesResolved=12/16` and the same four absent surfaces (card,
-     interior, multiply, paint_yellow) in run 53 AND run 54. RUN 53 WAS NEVER
-     WHOLE. The resident claimed the figure import's raise degraded the
-     material step and committed that claim in 3aa06483; it is false and the
-     correction is in this item and in the record.
+     interior, multiply, paint_yellow) in run 53 AND run 54. (The "four
+     absent" is the pre-227 population: two are decal blend modes and two are
+     procedural by design; the correction at the foot of this item,
+     2026-09-21.) RUN 53 WAS NEVER WHOLE. The resident claimed the figure
+     import's raise degraded the material step and committed that claim in
+     3aa06483; it is false and the correction is in this item and in the
+     record.
   2. NOT A LEAKED EXPOSURE PIN. `shotExposurePin=AUTO` on the camA_night line
      in both runs, so no override carried over from an earlier shot.
   3. NOT A BRIGHT FIGURE PULLING AUTO-EXPOSURE DOWN. That was the resident's
@@ -291,7 +294,56 @@ status: LANDED 2026-09-21 at run 55 (commit 2490b864). The cause is named by a p
   and its legs render flat yellow. `surfacesAbsent=card/interior/multiply/
   paint_yellow` with `surfacesResolved=12/16`, IDENTICAL to run 54 and run 53.
   The colour card IS the unresolved `card` surface and the yellow IS
-  `paint_yellow`. That is queue 223, READY since 2026-09-09 and never started,
+  `paint_yellow`.
+
+  CORRECTED 2026-09-21 14:4xZ UNDER D43, AND THE CORRECTION IS THE RESIDENT'S OWN
+  ERROR. The two sentences above are FALSE and are left visible because a
+  deleted claim cannot be audited.
+
+  THE COLOUR CARD IS NOT THE `card` SURFACE. It is queue 123's COLOUR CONTROL
+  QUAD, an instrument deliberately placed, and run 55's own verdict says so:
+  `controlQuad=colour`,
+  `controlQuadColours=texel0.red.255.0.0/texel1.green.0.255.0/texel2.blue.0.0.255/texel3.yellow.255.255.0`,
+  `controlQuadHidden=47/49`,
+  `controlQuadVisibility=hidden-for-every-shot-whose-camera-is-not-the-one-they-were-placed-from`,
+  `controlQuadsRule=the-colour-quad-answers-the-texture-path/the-two-tile-quads-answer-the-scalar-path`.
+  It sits 3.51 m from cam_A and is visible on exactly the two shots whose camera
+  IS cam_A, one of which is the hero night frame. It is proof that a texture
+  override reaches the sampler, standing in front of the figure.
+
+  AND `card` IS PAINTED, not absent: `paintRoutes=pack.580/tint.10/decal-card.10/
+  decal-multiply.0` with `piecesPainted=600/610`. The 10 unpainted are
+  `decal-needs-a-stain-material.10` and they are FAIL-CLOSED rather than pasted,
+  `decalQuadsHidden=10/20`, on the recorded reasoning that pasting the grime
+  opaque would make the count green and the picture worse.
+
+  THE YELLOW LEGS ARE NOT `paint_yellow` EITHER. paint_yellow is ROAD PAINT and
+  it IS rendering: the yellow kerb line along the footway. THE PROJECT ALREADY
+  KNEW THIS AND THE RESIDENT CONTRADICTED ITS OWN RECORD WITHOUT READING IT:
+  `production/queue/226-*.md:38` and `production/NOW.md:3018` both say
+  paint_yellow is ProceduralOnly by design. The figure's legs are the FIGURE'S
+  OWN material, which nothing measures: the build page prints
+  `figureImportStatus=IMPORTED figureMaterials=1` (ue-build.txt:14) and no
+  texture key at all, so whether that one material's textures bound is
+  unmeasured, and the embedded texture count is unprinted (corrected
+  2026-09-21 by the ruling of that date). So the legs are UNANSWERABLE today
+  rather than answered, and that is a new item.
+
+  THE REAL SURFACE FIGURE IS ZERO MISSING, NOT FOUR. `surfacesAsked=16` counts
+  distinct NAMES, and the done line called every non-resolved row absent. Run
+  55's own per-surface lines classify all sixteen: 12 RESOLVED, 2 PROCEDURAL by
+  design (interior, paint_yellow), 2 DECAL BLEND MODES that are not surfaces
+  (card, multiply). Fourteen library surfaces asked, twelve resolve, zero
+  genuinely unresolved.
+
+  HOW THE ERROR WAS MADE, because it is the useful half: the resident OPENED the
+  frame, which was right, saw a colour card and yellow, and reached for the
+  nearest key that carried those two words. `surfacesAbsent=card/.../paint_yellow`
+  matched the picture and the resident stopped there. CLAUDE.md rule 4 says
+  looking is strong evidence that something is wrong and WEAK EVIDENCE OF WHAT OR
+  WHY, and that the quantity is printed before acting. The quantity here was
+  `controlQuad=` and `paintRoutes=`, both on the same page, and neither was read.
+ That is queue 223, READY since 2026-09-09 and never started,
   and it is now the only thing between Jafar and a judgeable figure frame.
 
   THIS ITEM'S ORIGINAL QUESTION IS ANSWERED AND THE ITEM IS DONE. What remains

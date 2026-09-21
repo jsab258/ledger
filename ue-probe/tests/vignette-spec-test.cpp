@@ -2335,7 +2335,18 @@ int main(int argc, char** argv)
 		B.Surface = "concrete"; B.Pieces = 150; B.PiecesAssigned = 150; B.MapFound[0] = true;
 		LedgerSurface::Bound C;
 		C.Surface = "card"; C.Pieces = 10;
+		// QUEUE 227: THE THREE OUTCOMES A LIBRARY SURFACE CAN HAVE ARE ALL IN
+		// THE FIXTURE, because a population split that only ever sees resolved
+		// surfaces cannot tell PROCEDURAL from ABSENT. paint_yellow is
+		// procedural by design and brick_blue is a name that exists nowhere,
+		// which is the only genuine fault of the three and the one that has to
+		// keep this line below ALL.
+		LedgerSurface::Bound P;
+		P.Surface = "paint_yellow"; P.Pieces = 4;
+		LedgerSurface::Bound X;
+		X.Surface = "brick_blue"; X.Pieces = 3;
 		All.push_back(A); All.push_back(B); All.push_back(C);
+		All.push_back(P); All.push_back(X);
 		std::vector<std::string> Tried;
 		Tried.push_back("C:/staged/LedgerProbe/CityPackTextures");
 		Tried.push_back("C:/staged/LedgerProbe/Binaries/Win64/CityPackTextures");
@@ -2343,18 +2354,72 @@ int main(int argc, char** argv)
 			All, "/Game/Ledger/M_LedgerSurface", true, "C:/pack/textures", 51, Tried,
 			593, 4, 152, 2.0);
 		std::printf("    %s\n", D.c_str());
-		Check(D.find("surfacesResolved=2/3") != std::string::npos,
-		      "the resolved count ships over what the street asked for");
-		Check(D.find("surfacesAbsent=card") != std::string::npos,
-		      "and the absent ones are NAMED on the run's own line, not only per surface");
+		Check(D.find("surfacesResolved=2/4") != std::string::npos,
+		      "the resolved count ships over the LIBRARY surfaces the street asked "
+		      "for, and the blend mode is not one of them");
+		Check(D.find("surfacesAbsent=brick_blue") != std::string::npos
+		      && D.find("surfacesAbsentCount=1/4") != std::string::npos,
+		      "and absent means no pack file AND no spec entry, named on the run's "
+		      "own line with the population it is counted over");
+		Check(D.find("surfacesProcedural=1/4") != std::string::npos
+		      && D.find("surfacesProceduralNames=paint_yellow") != std::string::npos
+		      && D.find("surfacesAccountedFor=3/4") != std::string::npos,
+		      "a surface the Unity host paints from the spec tint is counted as "
+		      "accounted for and NAMED, never as a missing file");
+		Check(D.find("decalBlendsAsked=1") != std::string::npos
+		      && D.find("decalBlendNames=card") != std::string::npos,
+		      "the decal blend modes are counted and named apart, because "
+		      "card.png is a file that by design can never exist");
 		Check(D.find("mapsFound=4/9") != std::string::npos,
-		      "the map count ships over three maps per surface asked");
+		      "the map count ships over three maps per library surface whose "
+		      "albedo is expected from the pack, and a procedural surface asks "
+		      "for none");
 		Check(D.find("piecesTextured=152/593") != std::string::npos,
 		      "the textured pieces ship over every piece in the file");
 		Check(D.find("materialsStatus=PARTIAL") != std::string::npos,
 		      "two of three resolved is PARTIAL and says so");
 		Check(NoSpacePastPrefix(D, "materialsStatus="),
 		      "every value on the materials line is space-free");
+		// THE ACCEPTING CASE, WHICH IS WHAT QUEUE 227 IS ABOUT AND WHAT
+		// NOTHING WATCHED BEFORE: every library surface accounted for, with
+		// two blend modes still in the vector, reads ALL. Under the old
+		// denominator this exact input read PARTIAL and named two blend modes
+		// as missing files, and the only way to green it was to write
+		// card.png and multiply.png into the pack.
+		std::vector<LedgerSurface::Bound> Clean;
+		Clean.push_back(A); Clean.push_back(B); Clean.push_back(C); Clean.push_back(P);
+		LedgerSurface::Bound M2;
+		M2.Surface = "multiply"; M2.Pieces = 10;
+		Clean.push_back(M2);
+		const std::string CleanLine = LedgerSurface::MaterialsDoneLine(
+			Clean, "/Game/Ledger/M_LedgerSurface", true, "C:/pack/textures", 51, Tried,
+			593, 4, 152, 2.0);
+		std::printf("    %s\n", CleanLine.c_str());
+		Check(CleanLine.find("materialsStatus=ALL") != std::string::npos
+		      && CleanLine.find("surfacesAsked=3") != std::string::npos
+		      && CleanLine.find("surfacesAccountedFor=3/3") != std::string::npos
+		      && CleanLine.find("surfacesAbsent=none") != std::string::npos
+		      && CleanLine.find("surfacesAbsentCount=0/3") != std::string::npos,
+		      "two resolved and one procedural, with two blend modes beside them, "
+		      "is ALL and a zero that ships its denominator");
+		Check(CleanLine.find("decalBlendsAsked=2") != std::string::npos
+		      && CleanLine.find("decalBlendNames=card/multiply") != std::string::npos,
+		      "and the blend modes are still counted and named, so ALL cannot be "
+		      "read as a run that never saw them");
+		Check(CleanLine.find("materialsStatusMeans=ALL-is-every-library-surface-"
+		                     "accounted-for") != std::string::npos,
+		      "ALL says on its own line what it now means, because the word kept "
+		      "its name while its test changed");
+		Check(CleanLine.find("surfacePopulationChanged=queue-227/") != std::string::npos
+		      && CleanLine.find("is-a-recount-and-not-a-repair") != std::string::npos,
+		      "and the line says on its own key that PARTIAL to ALL over the same "
+		      "pack is a recount, ruled 2026-09-21");
+		Check(EveryTokenIsKeyValue(CleanLine.substr(CleanLine.find("surfacesAccountedFor="))),
+		      "and every key the population segment adds is one space-free token "
+		      "with one equals");
+		Check(CleanLine.find("surfacePopulationCut=") == std::string::npos,
+		      "the population segment's 900-char cap did not bite on the longest "
+		      "case this fixture can produce");
 		// A BASE MATERIAL THAT NEVER LOADED DOMINATES, because sixteen
 		// resolved textures bound to nothing is not a partial success.
 		const std::string NoBase = LedgerSurface::MaterialsDoneLine(
@@ -2515,7 +2580,11 @@ int main(int argc, char** argv)
 		R1.Read.bResourceValid = true; R1.Read.bCompIsMid = true;
 		R1.Read.bTexSame = false;    // candidate B, as it would land
 		R2 = R1; R2.Surface = "brick_red";
-		Absent.Surface = "card"; Absent.Pieces = 10; Absent.Status = "ABSENT";
+		// A LIBRARY NAME AND NOT `card`, QUEUE 227: the readback denominator
+		// is now the library population, so a blend mode here would make the
+		// never-asked case print 0/0 and a clean zero is the one reading this
+		// check exists to prevent.
+		Absent.Surface = "brick_blue"; Absent.Pieces = 10; Absent.Status = "ABSENT";
 		All.push_back(R1); All.push_back(R2); All.push_back(Absent);
 		std::vector<std::string> Tried;
 		Tried.push_back("C:/staged/LedgerProbe/CityPackTextures");
@@ -4321,30 +4390,38 @@ int main(int argc, char** argv)
 	// against them is a check against a measurement.
 	//
 	// AND THE HALF NOBODY WOULD THINK TO ASK FOR: the three material control
-	// quads are placed 3.5 m in front of the FIRST shot's camera, which is
-	// cam_A and not this one, so nothing in their placement knows this
-	// camera exists. A frame with colour swatches standing in the road is
-	// not a frame anybody can judge a street by, so where they land in THIS
-	// camera's frame is measured here rather than discovered in the still.
+	// quads are placed 3.5 m in front of LedgerSurface::ControlCameraId(),
+	// cam_B since the 2026-09-21 ruling and not this camera, so nothing in
+	// their placement knows this camera exists. A frame with colour swatches
+	// standing in the road is not a frame anybody can judge a street by, so
+	// where they land in THIS camera's frame is measured here rather than
+	// discovered in the still.
 	{
 		const LedgerVignette::Camera* Hook = 0;
-		// AND THE CAMERA THE QUADS ARE PLACED FROM, looked up again here
-		// rather than borrowed from the block above, because it is the FIRST
-		// SHOT'S camera by definition and this block must keep saying so even
-		// if the shot order changes.
+		// AND THE CAMERA THE QUADS ARE PLACED FROM, looked up by the SAME rule
+		// the engine reads, LedgerSurface::ControlCameraId(), so this block
+		// cannot drift from the placement it claims to measure.
 		const LedgerVignette::Camera* QuadCam = 0;
 		for (size_t I = 0; I < S.Cameras.size(); ++I)
 		{
 			if (S.Cameras[I].Id == "cam_hook") { Hook = &S.Cameras[I]; }
-			if (!S.Shots.empty() && S.Cameras[I].Id == S.Shots[0].CameraId)
+			if (S.Cameras[I].Id == LedgerSurface::ControlCameraId())
 			{
 				QuadCam = &S.Cameras[I];
 			}
 		}
+		Check(QuadCam != 0,
+		      "the committed spec carries the camera ControlCameraId names, "
+		      "which is the accepting case for the rule the engine reads");
+		Check(!S.Shots.empty()
+		      && std::string(LedgerSurface::ControlCameraId()) != S.Shots[0].CameraId
+		      && std::string(LedgerSurface::ControlCameraId()) != "cam_hook",
+		      "and the controls stand in front of neither the first shot's camera "
+		      "(the figure's frame) nor cam_hook (the sheet's), ruled 2026-09-21");
 		if (Hook == 0 || QuadCam == 0)
 		{
 			std::printf("    cam_hook: nothing measured, the committed spec carries no "
-			            "camera of that id or no camera for its first shot\n");
+			            "camera of that id or no camera named by ControlCameraId\n");
 		}
 		else
 		{

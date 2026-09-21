@@ -6173,16 +6173,16 @@ namespace
 		return Tex;
 	}
 
-	// THE CONTROLS STAND IN FRONT OF THE CAMERA THE FIRST SHOT USES, read out
-	// of the file rather than named here, so a spec whose first shot moves
-	// takes its controls with it. Which camera answered is printed on every
-	// quad line.
+	// THE CONTROLS STAND IN FRONT OF LedgerSurface::ControlCameraId(), ruled
+	// 2026-09-21 and spelled once in SurfaceBind.h. A spec carrying no camera
+	// of that id falls back to its first camera, and which camera answered is
+	// printed on every quad line.
 	const Camera* ControlCamera()
 	{
 		if (GSpec.Cameras.empty()) { return nullptr; }
-		for (size_t I = 0; I < GSpec.Cameras.size() && !GSpec.Shots.empty(); ++I)
+		for (size_t I = 0; I < GSpec.Cameras.size(); ++I)
 		{
-			if (GSpec.Cameras[I].Id == GSpec.Shots[0].CameraId) { return &GSpec.Cameras[I]; }
+			if (GSpec.Cameras[I].Id == LedgerSurface::ControlCameraId()) { return &GSpec.Cameras[I]; }
 		}
 		return &GSpec.Cameras[0];
 	}

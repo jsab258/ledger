@@ -96,3 +96,7 @@ was wrong.
   and the quads are built in code, which is why ruling out the 10 pieces
   tagged surface card was correct and led nowhere.
 
+  RULED 2026-09-21: the controls move to cam_B by
+  LedgerSurface::ControlCameraId(); closes on the first landed run whose
+  vign_camA_night line reads shotWholeFrameIncludesControlQuads=no and whose
+  still, opened, carries no card and no swatch.
