@@ -141,6 +141,16 @@
    "normal": "roof_b_n.jpg",
    "roughness": "roof_b_r.jpg"
   },
+  "setts": {
+   "assetId": "PavingStones115B",
+   "source": "ambientCG",
+   "licence": "CC0 1.0 Universal",
+   "url": "https://ambientcg.com/view?id=PavingStones115B",
+   "resolution": "2K-JPG",
+   "file": "setts.jpg",
+   "normal": "setts_n.jpg",
+   "roughness": "setts_r.jpg"
+  },
   "sidewalk": {
    "assetId": "PavingStones067",
    "source": "ambientCG",
