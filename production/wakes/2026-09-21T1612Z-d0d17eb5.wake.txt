@@ -2,8 +2,8 @@ id: d0d17eb5
 due: 2026-09-21T16:12:00Z
 armedAt: 2026-09-21T15:50:16Z
 armedBy: resident/run-56-in-flight-the-engine-half-and-a-human-look
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-21T16:17:21Z
 capBitAt: -
 
 RUN 56 IS IN FLIGHT, dispatched at 39aa643247eef0d444fe8f378818e315d375f81e. Sha captured BEFORE the push, per ci.md. WATCH BY ANCESTRY: a landed run whose commit CONTAINS 39aa6432, never by branch movement or run name. READ IN THIS ORDER. (1) quadOn must read cam_B/1280x720 with quadDistM=3.51 and quadCornersInFrame=4/4; if it still reads cam_A the engine did not follow the tested rule and NOTHING ELSE IN THE RUN SHOULD BE READ. (2) the verdict HEADER must name the control camera; until run 55 it printed a false line into every verdict. (3) controlQuadIntrusion must read centres-in-frame/hidden-by-the-rule-alone with centres=3/3 edges=3/3, which is HONEST and not a fault. (4) THE HUMAN LOOK, which is a CONDITION OF THE CAM_B RULING and cannot be discharged by a key: open game-design/sim-shots or production/d1-probe ue-vign_hook_day.png AT THE THREE CENTRES 537/391, 532/392, 528/393 and write the result beside a NAMED BOX, never the words 'by eye'. A square at any of the three is a GUARD FAILURE and stops the run being read for anything else. (5) the done line predicted 14/12/2/2/0 with mapsFound=36/36 and piecesPainted UNCHANGED at 600/610; if pieces moved, something was fixed that nobody meant to fix. (6) surfacePopulationCut must be ABSENT, predicted 1147 against a 1200 buffer. (7) the 45 cam_hook frames bit-identical day or within 0.005 night of run 55; the cam_A pair loses its quads and its luma move is NOT predicted, report it as a reading never as a pass. THEN, AND ONLY AFTER IT LANDS, run verdict-keys --learn. THEN THE FIGURE, which is next in Jafar's order and is now the thing in front: with the card gone from cam_A, the hero frame is the first one where the figure stands alone. Queue 411 is the item for why its legs read yellow and nothing measures it. Budget 0/0 at 12:1xZ, ten-hour rule passes until about 22:1xZ; re-read production/budget.md before spending.
