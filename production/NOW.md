@@ -45,6 +45,56 @@ opens on his order and not on a cold read. The builders are spawned in the
 turn after it and their spawn rows are in `.claude/agent-log.tsv`; a later
 edit of this section names them.
 
+FIRST WAVE, 12:35Z TO 13:0xZ: SIX BUILDERS OUT, TWO BACK, NOTHING COMMITTED.
+The tree holds live builder work and `ledger/.verify-footer` is DELETED, so no
+commit is possible until it is quiet and green. Back and verified against the
+tree by the resident:
+
+- D18 IN THE ANIMATION LIBRARY (slice item 1) IS DONE IN THE TREE. 71 clip
+  files examined, 5 touched alcohol or tobacco, GAMBLING 0 OF 71. Removed: the
+  drinking clip, the bartending clip, the rejected sitting-drinking clip.
+  Renamed `sit_drink` to `sit_wait`. `drink` is DELETED not renamed, because of
+  1,547 distinct catalogue names zero contain tea, cup, mug, sip or coffee, so
+  a renamed slot would have no candidate but the clip the rule forbids. The
+  smoking clip STAYS REJECTED and the reason is measured, not assumed: it was
+  never a content screen, it was `motion_ok`, hips travelling 0.68 m against a
+  0.50 m bound for a standing slot. The `smoke` slot is kept live and
+  `NpcWalker` now asks for it at the doorway that used to ask for `drink`, so a
+  re-pick from the harvest lights it up with no further wiring.
+  `tools/content-gate.py` gains SITE 6, walking the library by clip name AND
+  slot name, both, because a title-only check passes `sit_drink__Sitting` and a
+  slot-only check passes `work_counter__Bartending` and BOTH OF THOSE SHIPPED.
+  Selftest 102 ok from 88, accepting case first. It runs in verify and the line
+  that proves it is `ledger/verify.py:1829`, which fails the run if the done
+  line carries no `clipsExamined=`, read and confirmed by the resident.
+- THE WEEK'S QUEUE IS FILED, 389 to 403, fifteen items. `queue-check` PASSES
+  at 391 items, 197 ready, 10 blocked, 11 done. The facade (389) is BLOCKED on
+  370, on 403 and on the grime rule's D-record, none of which has landed.
+
+APPLIED BY THE RESIDENT UNDER D43, NOT RULED: canon.md and D18 both said the
+content rule is "enforced at five sites" and the animation library is a sixth.
+Both now say six and both name why the sixth exists: the five earlier sites all
+read TEXT, and a clip is a file name. This changes a COUNT and no rule, which
+is what D43 covers; it is reported to him in the next brief rather than ruled.
+
+THREE OPEN THREADS THE RESIDENT OWNS, none of them a builder's to take:
+1. `director_cadence` is RED and it is not a fault: "DIRECTOR RAN BUT DID NOT
+   RULE", `rulingRowsUnruled=1/1 rulingUnruledNewest=2026-09-21T12:38:32Z`.
+   That is the studio-director spawned at 12:38:32Z, still writing D47 onward.
+   ITS STAMPED RULING IS WHAT CLEARS THE COMMIT, so the batch waits on it.
+2. `game-design/sim-shots/clips.tsv` still carries `drink`, `sit_drink` and
+   `work_counter`, and the committed `clips.jpg` beside it RENDERS THE TWO
+   REMOVED CLIPS AS TILES. Both are CI evidence written by the sim run, not
+   inputs: `ClipSheet.cs` writes the tsv from the file names and
+   `tools/sim-shots-commit.sh` commits the pair together, so hand-editing one
+   would relabel tiles in the other. THE FIX IS TO FOLD `clips=1` INTO THE NEXT
+   UE-PROBE DISPATCH, which is coming anyway for the exposure fix, per ci.md's
+   rule that changes batch per dispatch.
+3. Two C# edits (`CharacterPrefab.cs`, `NpcWalker.cs`) cannot be proved here:
+   the Game layer compiles locally but a Unity API error is invisible until CI.
+   The keys that answer it on the next run are `CharacterAudit importerRan/clips`
+   (expect 41, was 44) and the ClipSheet slot count (expect 62, was 64).
+
 HIS SECOND MESSAGE OF THE SAME DAY, about 12:3xZ, RULES THE CRIME AND COMBAT
 AUDIT and is on disk verbatim at
 `game-design/decision-2026-09-21-the-crime-and-combat-audit-ruled-eight-verbs-and-the-endings-hold.md`.

@@ -22,7 +22,7 @@ in image and in speech, and it extends D17 rather than replacing it.
 - **Religion present as part of life**, never mocked, never a mechanic.
 - **Police corruptible as individuals, never as a thesis.**
 
-## Where it is enforced, all five
+## Where it is enforced, all six
 
 1. canon.md, as a rule.
 2. Every image spec's content clause.
@@ -31,6 +31,13 @@ in image and in speech, and it extends D17 rather than replacing it.
    site that is code rather than text: a crowd that samples ages cannot be
    allowed to sample a child.
 5. The brand bible.
+6. **The animation library**, added 2026-09-21, walked by CLIP NAME and SLOT
+   NAME by the same gate. It was five until a drinking clip and a bartending
+   clip were found live under D17, and the reason nobody caught them is the
+   reason this site exists: the five above all read TEXT, and a clip is a
+   file name. The two halves are both needed, measured on the day: a
+   title-only check passes `sit_drink__Sitting` and a slot-only check passes
+   `work_counter__Bartending`, and both of those shipped.
 
 And: run the gate over everything existing and report what it catches.
 

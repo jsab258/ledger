@@ -1908,18 +1908,25 @@ namespace LedgerFrame
 	// repeat prints the words rather than a zero difference, because "no
 	// repeat" and "no difference" are the two readings this key exists to
 	// keep apart.
+	// QUEUE 384: THE FAMILY RIDES THE LINE, because "the rig repeated itself"
+	// and "the rig repeated a DAY frame" are different facts and only the
+	// second one is what every run in the record actually checked. It is
+	// defaulted so that a caller which does not know the family prints the
+	// word `unnamed` rather than claiming a family it did not read.
 	inline std::string RigDeterminismLine(const std::string& RepeatOfShotId,
 	                                      int ShotsBetween, int ShotsAsked,
 	                                      const std::string& Status,
-	                                      const RepeatDiff& D)
+	                                      const RepeatDiff& D,
+	                                      const std::string& Family = std::string("unnamed"))
 	{
-		char Buf[1200];
+		char Buf[1300];
+		const char* Fam = Family.empty() ? "unnamed" : Family.c_str();
 		const bool bMeasured = (Status == "MEASURED") && D.Comparable && D.Pixels > 0;
 		if (!bMeasured)
 		{
 			std::snprintf(Buf, sizeof(Buf),
 				"rigDeterminism=NOTHING-MEASURED rigRepeatStatus=%s rigRepeatOf=%s "
-				"rigRepeatAfterShots=%d/%d "
+				"rigRepeatFamily=%s rigRepeatAfterShots=%d/%d "
 				"rigDiffPixels=nothing-measured rigDiffPct=nothing-measured "
 				"rigMaxAbsChannelDiff=nothing-measured "
 				"rigMeanLumaFirst=nothing-measured rigMeanLumaRepeat=nothing-measured "
@@ -1931,7 +1938,7 @@ namespace LedgerFrame
 				"comparison-of-the-rig-and-not-of-the-street",
 				(Status.empty() ? "NOT-RUN" : Status.c_str()),
 				(RepeatOfShotId.empty() ? "none" : RepeatOfShotId.c_str()),
-				ShotsBetween, ShotsAsked);
+				Fam, ShotsBetween, ShotsAsked);
 			return std::string(Buf);
 		}
 		char Ratio[48];
@@ -1949,7 +1956,7 @@ namespace LedgerFrame
 		}
 		std::snprintf(Buf, sizeof(Buf),
 			"rigDeterminism=%s rigRepeatStatus=MEASURED rigRepeatOf=%s "
-			"rigRepeatAfterShots=%d/%d "
+			"rigRepeatFamily=%s rigRepeatAfterShots=%d/%d "
 			"rigDiffPixels=%lld/%lld rigDiffPct=%.2f rigMaxAbsChannelDiff=%d/255 "
 			"rigMeanLumaFirst=%.4f rigMeanLumaRepeat=%.4f rigMeanLumaDelta=%+.4f "
 			"rigMeanLumaRatio=%s "
@@ -1962,9 +1969,337 @@ namespace LedgerFrame
 			"comparison-of-the-rig-and-not-of-the-street",
 			D.DiffPixels == 0 ? "IDENTICAL" : "DIFFERS",
 			(RepeatOfShotId.empty() ? "none" : RepeatOfShotId.c_str()),
-			ShotsBetween, ShotsAsked,
+			Fam, ShotsBetween, ShotsAsked,
 			D.DiffPixels, D.Pixels, Pct(D.DiffPixels, D.Pixels), D.MaxAbsChannel,
 			D.MeanLumaFirst, D.MeanLumaRepeat, D.MeanLumaDelta, Ratio);
+		return std::string(Buf);
+	}
+}
+
+// ============================================================================
+// QUEUE 384: THE SHUTTER FIRES WHILE EYE ADAPTATION IS STILL MOVING, AND
+// STANDING STILL BECOMES A CONDITION INSTEAD OF A HOPE.
+//
+// THE READING THAT NAMES THE FAULT, off run 54's own committed verdict
+// (d900f0d) and nothing else. Every night shot is photographed ONCE for the
+// file and then EIGHT more times by the light probe, and those eight run with
+// AutoExposureSpeedUp/Down held at 0 by HoldExposureSpeedsForProbe while the
+// committed take is photographed with them at 10000:
+//   96 FROZEN TAKES over 12 night shots, 8 per shot. PEAK within-shot spread
+//   0.00036 of whole-frame mean luma (pinset_night_3), MEDIAN 0.00021, and no
+//   shot over 0.0004. The rig repeats itself to four decimals when nothing is
+//   adapting, thirty seconds and eight condition toggles apart.
+//   12 LIVE TAKES, one per shot, each read against its own shot's frozen
+//   takes: 0.00282 and 0.00405 for two of them, then 0.20487, 0.22890,
+//   0.26184, 0.27706, 0.27771, 0.27805, 0.27926, 0.28791, 0.31470, 0.45548
+//   for the other ten. NOTHING falls between 0.00405 and 0.20487.
+// So the one frame the run commits is the only frame in the run taken with
+// eye adaptation LIVE; it is taken on a fixed count of 32 frames after the
+// condition is re-applied; and nothing anywhere asks whether the picture has
+// stopped moving. That is the race queue 384 could not name by elimination,
+// and it is why which shot photographs stably moves between runs.
+//
+// WHERE THE BOUND COMES FROM, WHICH IS A PRINTED SERIES AND NOT A GUESS
+// (rule 2). The two clusters above are fifty times apart and the gap between
+// them is EMPTY. kSettleMeanLumaBound sits above every converged residual
+// this project has ever printed (PEAK 0.00405, over the TWO CONVERGED PAIRS
+// among the twelve where one take is live and one is frozen; the other ten
+// were faults, so the peak's denominator is 2 and not 12) and 41 times below the smallest fault
+// ever printed (0.20487). Run 53's control series separates in the same
+// place: queue 384 reads four pairs agreeing within 0.005 and eight past
+// 0.18. THE NUMBER IS A PEAK OF OBSERVED CONVERGED RESIDUALS, rounded up to
+// the next half decade, and it is neither a median nor a target.
+//
+// IT IS A STOPPING RULE AND NOT A GATE. Nothing exits non-zero on it, no
+// existing bound moved for it, and the whole per-shot series is printed so
+// the next run re-derives the number from live-against-live pairs, which is
+// the one comparison this project has never printed. When that series lands,
+// this constant comes down to it.
+//
+// WHAT THE CAP COSTS, MEASURED. Run 54 took 145 captures (49 shots and 96
+// probe frames) in captureSeconds=70.10, which is 0.48 s per capture as a
+// mean over that run. Three extra takes on every one of 49 shots is 70 s at
+// that rate, against a 17 to 33 minute build. The cap announces itself as
+// CAP-BIT on the shot's own line and in the run tally.
+namespace LedgerFrame
+{
+	const double kSettleMeanLumaBound = 0.005;
+	const int    kSettleTakesMax      = 4;
+
+	struct SettleTakes
+	{
+		// WHOLE-FRAME MEAN LUMA OF EVERY TAKE OF ONE SHOT, IN ORDER, and the
+		// committed file is the LAST of them. A take that produced no
+		// decodable frame appends NOTHING and sets NoFile: a take that was
+		// never photographed is not a take that agreed, and appending a zero
+		// for it would read as a frame that went black.
+		std::vector<double> Means;
+		bool NoFile;
+		SettleTakes() : NoFile(false) {}
+	};
+
+	inline bool SettleHasDelta(const SettleTakes& S)
+	{
+		return S.Means.size() >= 2;
+	}
+
+	// LAST MINUS THE TAKE BEFORE IT, signed, so a frame that brightened
+	// between takes is positive. One take has no delta and says so through
+	// SettleHasDelta rather than through a zero.
+	inline double SettleLastDelta(const SettleTakes& S)
+	{
+		if (!SettleHasDelta(S)) { return 0.0; }
+		return S.Means[S.Means.size() - 1] - S.Means[S.Means.size() - 2];
+	}
+
+	inline double SettleAbsLastDelta(const SettleTakes& S)
+	{
+		return std::fabs(SettleLastDelta(S));
+	}
+
+	inline bool SettleAgreed(const SettleTakes& S, double Bound)
+	{
+		return SettleHasDelta(S) && !S.NoFile && SettleAbsLastDelta(S) <= Bound;
+	}
+
+	// THE WHOLE DECISION, IN ONE PLACE WHERE g++ RUNS IT. The capture loop
+	// supplies takes and asks this; it decides nothing itself.
+	inline bool SettleWantsAnotherTake(const SettleTakes& S, double Bound, int Cap)
+	{
+		if (S.NoFile) { return false; }              // asking again cannot mend a missing file
+		if (S.Means.empty()) { return false; }       // nothing photographed, nothing to settle
+		if ((int)S.Means.size() >= Cap) { return false; }
+		return !SettleAgreed(S, Bound);
+	}
+
+	inline const char* SettleWord(const SettleTakes& S, double Bound, int Cap)
+	{
+		if (S.NoFile)           { return "NO-FILE"; }
+		if (S.Means.empty())    { return "NOTHING-MEASURED"; }
+		if (SettleAgreed(S, Bound)) { return "SETTLED"; }
+		if ((int)S.Means.size() >= Cap) { return "CAP-BIT"; }
+		return "STILL-MOVING";
+	}
+
+	// THE SERIES ITSELF, JOINED WITHOUT SPACES. Four takes at most, so there
+	// is nothing to elide and no cap to announce inside the value; the cap on
+	// TAKES announces itself in the status word.
+	inline std::string SettleSeriesText(const SettleTakes& S)
+	{
+		if (S.Means.empty()) { return std::string("nothing-measured"); }
+		std::string Out;
+		char Buf[32];
+		for (size_t I = 0; I < S.Means.size(); ++I)
+		{
+			if (I > 0) { Out += ".."; }
+			std::snprintf(Buf, sizeof(Buf), "%.5f", S.Means[I]);
+			Out += Buf;
+		}
+		return Out;
+	}
+
+	// PER-SAMPLE KEYS, FOR THE SHOT LINE. They describe the frame that shot
+	// committed and no other moment.
+	// THE PREFIX IS THE CALLER'S, because the determinism repeat takes the
+	// same decision on the same arithmetic and its keys may not collide with
+	// a shot line's: a grep for shotSettleStatus must never pick up a frame
+	// nothing committed.
+	inline std::string SettleKeys(const SettleTakes& S, double Bound, int Cap,
+	                              const char* Prefix = "shot")
+	{
+		const char* Pre = (Prefix == 0 || Prefix[0] == 0) ? "shot" : Prefix;
+		char Delta[64];
+		if (SettleHasDelta(S))
+		{
+			std::snprintf(Delta, sizeof(Delta), "%+.5f", SettleLastDelta(S));
+		}
+		else
+		{
+			std::snprintf(Delta, sizeof(Delta),
+			              "nothing-measured/one-take-has-nothing-to-agree-with");
+		}
+		char Buf[1100];
+		std::snprintf(Buf, sizeof(Buf),
+			"%sSettleStatus=%s %sSettleTakes=%d/of=%d %sSettleDelta=%s "
+			"%sSettleBound=%.5f %sSettleSeries=%s "
+			"%sSettleStat=whole-frame-mean-luma-of-EVERY-take-of-THIS-shot-in-order/"
+			"the-committed-file-is-the-LAST-of-them/"
+			"the-delta-is-that-take-minus-the-one-before-it "
+			"%sSettleRule=queue-384/the-shutter-fires-when-two-successive-takes-agree-"
+			"within-the-bound-or-when-the-cap-bites-and-says-CAP-BIT/"
+			"the-bound-is-the-PEAK-converged-residual-run-54-printed-0.00405-rounded-up/"
+			"it-is-a-stopping-rule-and-no-gate-reads-it",
+			Pre, SettleWord(S, Bound, Cap), Pre, (int)S.Means.size(), Cap, Pre, Delta,
+			Pre, Bound, Pre, SettleSeriesText(S).c_str(), Pre, Pre);
+		return std::string(Buf);
+	}
+
+	// ---- AND THE WHOLE-RUN HALF, WHICH IS A DIFFERENT MOMENT -------------
+	//
+	// Per instrument rules: whole-run numbers on the done line, per-sample
+	// numbers on the sample line, never both under one key. Shots is the
+	// denominator every count here prints over, and it counts shots that
+	// REACHED THE SHUTTER, not shots the file asked for: a shot that never
+	// got that far never took a settle decision.
+	struct SettleRoll
+	{
+		int         Shots;
+		int         Settled;
+		int         CapBit;
+		int         NoFile;
+		int         TakesTotal;
+		double      WorstAbsDelta;   // PEAK over the shots below, not a median
+		std::string WorstShot;
+		int         WorstTakes;      // the take count of the shot at that peak
+		SettleRoll() : Shots(0), Settled(0), CapBit(0), NoFile(0), TakesTotal(0),
+		               WorstAbsDelta(0.0), WorstTakes(0) {}
+	};
+
+	inline void SettleRollAdd(SettleRoll& R, const std::string& ShotId,
+	                          const SettleTakes& S, double Bound, int Cap)
+	{
+		++R.Shots;
+		R.TakesTotal += (int)S.Means.size();
+		const std::string Word(SettleWord(S, Bound, Cap));
+		if (Word == "SETTLED")      { ++R.Settled; }
+		else if (Word == "NO-FILE") { ++R.NoFile; }
+		else if (Word == "CAP-BIT") { ++R.CapBit; }
+		// THE WORST IS CAPTURED WITH ITS OWN SHOT AND ITS OWN TAKE COUNT, at
+		// the instant it peaks, so the reader never has to guess which shot
+		// the number belongs to.
+		if (SettleHasDelta(S) && SettleAbsLastDelta(S) > R.WorstAbsDelta)
+		{
+			R.WorstAbsDelta = SettleAbsLastDelta(S);
+			R.WorstShot     = ShotId;
+			R.WorstTakes    = (int)S.Means.size();
+		}
+	}
+
+	inline std::string SettleRollLine(const SettleRoll& R, double Bound, int Cap)
+	{
+		char Buf[1100];
+		if (R.Shots == 0)
+		{
+			std::snprintf(Buf, sizeof(Buf),
+				"settleStatus=NOTHING-MEASURED settleSettled=nothing-measured "
+				"settleCapBit=nothing-measured settleNoFile=nothing-measured "
+				"settleTakes=0/of=0shots settleTakesMax=%d settleBound=%.5f "
+				"settleWorstLastDelta=nothing-measured settleWorstShot=none "
+				"settleStat=one-entry-per-shot-that-reached-the-shutter/"
+				"no-shot-reached-it-so-nothing-was-measured "
+				"settleRule=queue-384/two-successive-takes-within-the-bound-or-CAP-BIT",
+				Cap, Bound);
+			return std::string(Buf);
+		}
+		char Worst[64];
+		if (R.WorstShot.empty())
+		{
+			std::snprintf(Worst, sizeof(Worst), "nothing-measured");
+		}
+		else
+		{
+			std::snprintf(Worst, sizeof(Worst), "%.5f", R.WorstAbsDelta);
+		}
+		const char* Status = (R.Settled == R.Shots) ? "ALL-SETTLED"
+		                   : (R.NoFile > 0 ? "PARTIAL-NO-FILE" : "PARTIAL-CAP-BIT");
+		std::snprintf(Buf, sizeof(Buf),
+			"settleStatus=%s settleSettled=%d/of=%d settleCapBit=%d/of=%d "
+			"settleNoFile=%d/of=%d settleTakes=%d/of=%dshots settleTakesMax=%d "
+			"settleBound=%.5f settleWorstLastDelta=%s settleWorstShot=%s "
+			"settleWorstTakes=%d/of=%d "
+			"settleStat=one-entry-per-shot-that-reached-the-shutter/"
+			"settleWorstLastDelta-is-the-PEAK-absolute-last-delta-over-those-shots-"
+			"and-settleWorstShot-is-the-shot-it-peaked-on/"
+			"settleTakes-is-CUMULATIVE-over-the-run-and-its-floor-is-one-per-shot "
+			"settleRule=queue-384/two-successive-takes-within-the-bound-or-CAP-BIT/"
+			"a-CAP-BIT-shot-is-a-frame-nobody-may-compare-to-another-frame",
+			Status, R.Settled, R.Shots, R.CapBit, R.Shots, R.NoFile, R.Shots,
+			R.TakesTotal, R.Shots, Cap, Bound, Worst,
+			(R.WorstShot.empty() ? "none" : R.WorstShot.c_str()),
+			R.WorstTakes, Cap);
+		return std::string(Buf);
+	}
+
+	// ---- QUEUE 384 ITEM 3: THE DETERMINISM CHECK NOW REPEATS MORE THAN ONE
+	// SHOT, AND THE RUN LINE SAYS WHICH AND HOW MANY AGREED -----------------
+	//
+	// WHY. Until this run the rig repeated shot 1 and nothing else, and shot 1
+	// is a DAY frame (rigRepeatOf=vign_camA_day at every run in the record).
+	// The night pass, off by up to 270 times the day frame's drift, was never
+	// looked at, and that is why the fault stood for a week. A fix without
+	// this would leave the blind spot exactly where it was.
+	//
+	// IDENTICAL KEEPS ITS ZERO EPSILON. rigRepeatsIdentical counts pairs with
+	// no differing pixel at all, which is the claim the original check makes
+	// and the only claim a same-picture statement may rest on.
+	// rigRepeatsWithinBound counts pairs whose whole-frame mean luma delta is
+	// inside kSettleMeanLumaBound, AND IT IS THAT NUMBER USED TWICE rather
+	// than a second measurement: it is the capture loop's stopping rule read
+	// back against the run's own repeats, so a repeat outside it says the
+	// capture loop's bound did not hold over a whole run.
+	struct RepeatRoll
+	{
+		int         Asked;        // repeats this run intended to take
+		int         Measured;     // of those, how many produced a comparable pair
+		int         Identical;    // of the measured, pairs with zero differing pixels
+		int         WithinBound;  // of the measured, pairs inside the bound on mean luma
+		double      WorstAbsDelta;
+		std::string WorstShot;
+		std::string Shots;        // id/family for each repeat, joined with ..
+		RepeatRoll() : Asked(0), Measured(0), Identical(0), WithinBound(0),
+		               WorstAbsDelta(0.0) {}
+	};
+
+	inline void RepeatRollAdd(RepeatRoll& R, const std::string& ShotId,
+	                          const std::string& Family, const std::string& Status,
+	                          const RepeatDiff& D, double Bound)
+	{
+		++R.Asked;
+		if (!R.Shots.empty()) { R.Shots += ".."; }
+		R.Shots += (ShotId.empty() ? std::string("none") : ShotId);
+		R.Shots += "/";
+		R.Shots += (Family.empty() ? std::string("unnamed") : Family);
+		const bool bMeasured = (Status == "MEASURED") && D.Comparable && D.Pixels > 0;
+		if (!bMeasured) { return; }
+		++R.Measured;
+		if (D.DiffPixels == 0) { ++R.Identical; }
+		const double Abs = std::fabs(D.MeanLumaDelta);
+		if (Abs <= Bound) { ++R.WithinBound; }
+		if (Abs > R.WorstAbsDelta) { R.WorstAbsDelta = Abs; R.WorstShot = ShotId; }
+	}
+
+	inline std::string RigRepeatsLine(const RepeatRoll& R, double Bound)
+	{
+		char Buf[1300];
+		if (R.Measured == 0)
+		{
+			std::snprintf(Buf, sizeof(Buf),
+				"rigRepeats=0/of=%d rigRepeatsShots=%s "
+				"rigRepeatsIdentical=nothing-measured rigRepeatsWithinBound=nothing-measured "
+				"rigRepeatsBound=%.5f rigRepeatsWorstMeanLumaDelta=nothing-measured "
+				"rigRepeatsWorstShot=none "
+				"rigRepeatsStat=one-repeat-per-shot-named-above/"
+				"no-repeat-produced-a-comparable-pair-so-nothing-was-measured "
+				"rigRepeatsRule=queue-384/the-day-frame-alone-could-not-see-the-night-fault/"
+				"a-run-that-repeats-no-night-shot-has-not-checked-the-night-path",
+				R.Asked, (R.Shots.empty() ? "none" : R.Shots.c_str()), Bound);
+			return std::string(Buf);
+		}
+		std::snprintf(Buf, sizeof(Buf),
+			"rigRepeats=%d/of=%d rigRepeatsShots=%s "
+			"rigRepeatsIdentical=%d/of=%d rigRepeatsWithinBound=%d/of=%d "
+			"rigRepeatsBound=%.5f rigRepeatsWorstMeanLumaDelta=%.5f rigRepeatsWorstShot=%s "
+			"rigRepeatsStat=one-repeat-per-shot-named-above/"
+			"identical-is-ZERO-differing-pixels-and-carries-no-epsilon/"
+			"withinBound-is-the-capture-loops-own-stopping-number-read-back-over-the-run-"
+			"and-is-that-one-number-used-twice-not-a-second-measurement/"
+			"worst-is-the-PEAK-absolute-mean-luma-delta-with-the-shot-it-peaked-on "
+			"rigRepeatsRule=queue-384/the-day-frame-alone-could-not-see-the-night-fault/"
+			"a-run-that-repeats-no-night-shot-has-not-checked-the-night-path",
+			R.Measured, R.Asked, (R.Shots.empty() ? "none" : R.Shots.c_str()),
+			R.Identical, R.Measured, R.WithinBound, R.Measured,
+			Bound, R.WorstAbsDelta,
+			(R.WorstShot.empty() ? "none" : R.WorstShot.c_str()));
 		return std::string(Buf);
 	}
 }

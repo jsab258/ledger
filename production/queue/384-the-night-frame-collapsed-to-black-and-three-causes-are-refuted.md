@@ -138,3 +138,98 @@ status: READY 2026-09-17, filed at the budget ceiling, NOT started.
   D44. It is also item 1 of D28's own list, "fix the exposure fault so the same
   camera and conditions give the same picture", which has been open since
   2026-09-14 and was never closed. Still not started, per the same message.
+
+  THE CAUSE IS FOUND AND IT IS NAMED BY A PRINTED READING, 2026-09-21, which
+  is the half this item's acceptance line was still owed. THE COMMITTED FRAME
+  IS THE ONLY FRAME IN THE RUN PHOTOGRAPHED WITH EYE ADAPTATION LIVE.
+  `HoldExposureSpeedsForProbe` at VignetteShot.cpp:4430 sets
+  AutoExposureSpeedUp and AutoExposureSpeedDown to 0.0f for the whole light
+  probe pass, READ AND CONFIRMED IN THE CODE BY THE RESIDENT. So each night
+  shot is photographed once for the file with the speeds at 10000, and then
+  eight more times with them frozen.
+
+  THE TWO POPULATIONS, off run 54's own committed verdict at d900f0d:
+  96 FROZEN takes (12 night shots x 8), within-shot spread PEAK 0.00036 and
+  MEDIAN 0.00021, no shot over 0.0004, and four of the twelve repeating to
+  five decimals exactly. 12 LIVE takes, one per shot: 0.00282, 0.00405, then
+  0.20487 through 0.45548. NOTHING FALLS BETWEEN 0.00405 AND 0.20487, a gap
+  of a factor of 50.
+
+  So the rig repeats itself to four decimals across eight takes and thirty
+  seconds when nothing is adapting, and only the frame with adaptation live
+  lands anywhere. THAT ALSO ANSWERS WHAT THIS ITEM COULD NOT: why a shot
+  changes class between runs. Each shot inherits whatever exposure the
+  previous shot's probe pass froze, is then disturbed by its own condition
+  re-apply and sky-epoch bump, and is photographed 32 frames later, mid
+  flight. The two shots that agreed both agreed AT THE TOP (0.4645 and 0.4658
+  against 0.4617): they are the two that started already converged.
+
+  IT IS EXPOSURE AND NOT LIGHTING, by a reading rather than by elimination:
+  darkerThanSkyMedianPct=100.0000 on both the bright and the dark frames, and
+  sky, ground and figure all scale together.
+
+  THE FIX, IN THE TREE AND NOT YET RUN: convergence is a CONDITION. The
+  capture re-takes until two successive takes agree within
+  kSettleMeanLumaBound, cap kSettleTakesMax, and the committed file is the
+  LAST take. A re-take returns to Warm and NOT to ApplyShot, so the condition
+  is not re-applied and the sky epoch is not bumped: take two is a take of the
+  same settled scene rather than a new disturbance of it. Arithmetic, decision
+  and every string are in FrameStats.h where g++ runs them; VignetteShot.cpp
+  supplies live state only. The resident compiled and ran
+  ue-probe/tests/frame-stats-test.cpp independently: 267 check(s), 0 failures.
+
+  THE BOUND IS 0.005 AND IT IS A PEAK, NOT A MEDIAN AND NOT A TARGET. It is
+  the largest converged residual this project has ever printed (0.00405),
+  rounded up to the next half decade, and it sits in an empty gap below the
+  smallest fault ever printed (0.20487). Run 53 separates in the same place.
+  Nothing exits non-zero on it: grepped, no .py, .yml or .sh reads any settle
+  key, so it is a reading and not a gate. NO EXISTING BOUND WAS LOOSENED; the
+  determinism check keeps its zero epsilon for IDENTICAL.
+
+  WHAT IS STILL OWED AND ONLY A RUN CAN BUY IT: a LIVE-against-LIVE series at
+  night. Every pair in the record has one frozen half. The loop prints
+  shotSettleSeries for all 49 shots, which IS that series, and the constant
+  comes down to it once it lands.
+
+  THE DETERMINISM CHECK NOW REPEATS TWO SHOTS, the first of the run and the
+  first whose condition reads sun OFF, the family read off Condition::SunOn
+  and never off a shot's name. A target with no frame behind it prints
+  NO-SUCH-SHOT or NO-FIRST-FRAME with its family, so a run that photographed
+  no night shot cannot read as a run that checked the night path.
+
+  RULED BY THE RESIDENT, 2026-09-21, ON THE ONE RESIDUAL RISK THE BUILDER
+  RAISED. A re-take rewrites the shot's PNG, so a re-take that produces no
+  file where the first take did makes the shot read NO-FILE and the step exit
+  non-zero, where today it would commit a random frame. The builder offered
+  about four lines of backup-and-restore insurance. IT IS DECLINED. A loud
+  NO-FILE is the better failure: this project's own rule is that a run which
+  measured nothing must say so, and committing a random frame is precisely the
+  silent wrong answer this whole item exists to stop. The insurance would also
+  add untestable code to the one layer that cannot compile in the container,
+  against evidence that the risk is small (run 54 landed 145 of 145 captures,
+  with the 25 second ceiling and the HighResShot fallback already in place).
+
+  THE ACCEPTANCE LINE, REWRITTEN BY THE RESIDENT, replacing the first half
+  this item already marked wrong: the twelve `light control_no_toggle` deltas
+  collapse from the 0.20..0.46 band to under kSettleMeanLumaBound, and
+  `rigRepeatsShots` names a NIGHT shot. Until a run prints both, this is a fix
+  in the tree and not a fixed fault.
+
+  STATUS: the fix is IN THE TREE, UNCOMMITTED AND UNDISPATCHED. Every engine
+  side edit is unverifiable until CI, which the builder says plainly.
+
+  A SEPARATE FINDING, FILED AND NOT CHASED, per CLAUDE.md rule 11. THE DAY
+  PATH IS NOT CLEAN EITHER, IT IS ONLY SMALL. Run 54 reads
+  rigDeterminism=DIFFERS rigDiffPixels=677980/921600 which is 73.57 percent of
+  the frame, rigMaxAbsChannelDiff=43/255, rigMeanLumaDelta=-0.0017. The day
+  check has been reading as fine because its NUMBER is small, which is not the
+  same as identical, and the check's own rule says any nonzero here means a
+  cross-shot comparison is partly a comparison of the rig. Filed here; it does
+  not generate its own work in this session.
+
+  AND A CONCLUSION THAT REACHES BACKWARDS, recorded because it changes what
+  the archive is worth: the night stills already committed under
+  game-design/sim-shots/ ARE NOT COMPARABLE TO EACH OTHER, and no fix here
+  makes an old file comparable. Every night judgement made before this lands
+  was made against a moving target, which is what Jafar said on 2026-09-17
+  when he ordered this ahead of the figure.

@@ -1,0 +1,9 @@
+id: 655defce
+due: 2026-09-21T13:04:00Z
+armedAt: 2026-09-21T12:39:00Z
+armedBy: resident/first-wave-on-the-slice-and-the-register
+blocks: 1
+dischargedAt: 2026-09-21T13:09:42Z
+capBitAt: -
+
+Review the first wave: D18 in the animation library, the night exposure fault, the scale soak at 50 and 200, the week's queue items, and the register records D47 onward. Read each diff, do not trust any report over the tree, run verify, commit what is sound and send back what is not. Then dispatch the ue-probe run carrying the exposure fix and the frame instrument. His order: nothing starts that is not the slice, the measurements, the art lane, the rulings, or the marked checkpoint work.

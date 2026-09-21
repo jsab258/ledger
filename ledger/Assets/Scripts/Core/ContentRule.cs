@@ -6,8 +6,8 @@ namespace Ledger.Core
     /// D18, THE CONTENT RULE, AT THE ONE ENFORCEMENT SITE THAT IS CODE.
     ///
     /// canon.md, section "The content rule (D18, permanent)", and
-    /// ledger-v2/respec/decision-register/D18-content-rule.md. Four of the
-    /// five enforcement sites are text and a person can read them. This one
+    /// ledger-v2/respec/decision-register/D18-content-rule.md. Five of the
+    /// six enforcement sites are text and a person can read them. This one
     /// is a GENERATOR, and D18 names the difference in as many words: a
     /// crowd that samples ages cannot be allowed to sample a child. A text
     /// site can be reviewed; a generator has to be UNABLE to produce the

@@ -48,6 +48,16 @@ members (low volume, highest quality bar, much of it pre-generatable), and
 either commodity-cheap or local for everything else. Ambient barks get the
 premium treatment ONCE, offline, because they are finite.
 
+D48, 2026-09-21: THE TIERED SHAPE ABOVE IS RULED OUT WHERE IT TIERS BY
+PERSON. Jafar: "No resident speaks through a worse model than another because
+of who they are." Premium voices for the named cast and a cheaper or local
+engine for everyone else is a tier by person and does not stand; tiering, if
+any, follows the interaction (a passing remark cheap for anyone, a real
+conversation good for anyone), chosen only when the small-model test and the
+cost per hour exist. The paragraph stays as the record of what was proposed.
+Record:
+ledger-v2/respec/decision-register/D48-no-resident-speaks-through-a-worse-model-because-of-who-they-are.md
+
 ### 1b. What actually makes TTS sound "obviously AI"
 
 Not the timbre — modern models are fine there. The tells are:
@@ -346,6 +356,15 @@ once. It does not touch live dialogue, and on an NVIDIA card it would be
 roughly ten times faster anyway.
 
 ### 1i. DECIDED — chatterbox, on the strength of the direction test
+
+D51, 2026-09-21: THE PREMISE OF THIS DECISION DOES NOT TRANSFER TO THE
+SUCCESSOR. This section chose chatterbox on the direction test, which the
+exaggeration control passed. Jafar's ruling of 2026-09-21: the turbo model
+drops that control ("its own code defaults it to zero and ignores it"), so
+the 28 July reasoning does not carry to it; Chatterbox-Nano (110M) is
+evaluated ahead of turbo, on the direction axis first (queue 296, amended).
+The decision itself, chatterbox for the bank, stands. Record:
+ledger-v2/respec/decision-register/D51-the-speech-engines-upgrade-path-is-not-the-upgrade-path.md
 
 Jafar's listening verdicts on chatterbox, 2026-07-28:
 

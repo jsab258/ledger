@@ -109,7 +109,10 @@ namespace Ledger.EditorTools
         static readonly string[] ActivitySlots =
         {
             "talk", "argue", "greet", "phone_box", "lean_wall", "lean",
-            "smoke", "drink", "sit", "carry", "carry_bag", "work_counter",
+            // NO `drink` STATE. The slot was deleted from the harvest list
+            // on 2026-09-21 under D17, which puts alcohol out of this work
+            // entirely, and the clip that filled it left the tree with it.
+            "smoke", "sit", "carry", "carry_bag", "work_counter",
             "idle_bored", "look_around",
             // THE REACTION SET (queue: "wiring, not sourcing"). Clips on
             // disk since 18 August; `NpcWalker.React` is the consumer, so
@@ -791,7 +794,7 @@ namespace Ledger.EditorTools
                 // THE ACTIVITY STATES (town-plan T3, "visible purpose").
                 //
                 // Jafar's harvest landed argue, phone_box, lean_wall, carry,
-                // carry_bag, drink, smoke, sit, talk and greet, and NOTHING
+                // carry_bag, smoke, sit, talk and greet, and NOTHING
                 // LOADED ANY OF THEM — clips on disk with no consumer, which
                 // is rule 6 in its purest form. These states give them one.
                 //

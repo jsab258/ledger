@@ -84,3 +84,88 @@ status: READY 2026-09-16, ruled by Jafar in his own words. The negative half is
   UNDER D45 this is the game and not a tool that measures it: the soak is the
   instrument, but what it would establish is a property of the simulation, so
   a landing that changes the design gets a director.
+
+  ANSWERED 2026-09-21, RUN IN THE CONTAINER END TO END AT 7, 50, 200, AND
+  BEYOND THE ASK AT 300 AND 500. One binary, one process, one clock, because a
+  rung compared across runs is a different photograph. The 7-rung reproduces
+  the previous reading bit for bit (1261 events, bytesPerEventAtWorst=229,
+  rate 0.361), which is the accepting case for the knob itself.
+
+  WHAT A SYNTHETIC RESIDENT IS, stated because the number is worthless without
+  it and the run prints it on every line carrying a population: the seven are
+  authored and untouched, and EVERY RESIDENT ABOVE SEVEN IS A COPY OF ONE OF
+  THE SEVEN WITH A VARIED SEED. Varied: the id, three traits jittered up to
+  0.15, and who they are tied to at what weight. NOT varied: behaviour,
+  circle, vocabulary, schedule, economy. The graph takes the authored eleven
+  ties plus random pairs up to the AUTHORED MEAN DEGREE of 3.14, measured off
+  the authored street rather than chosen. So this BOUNDS THE MACHINERY AND
+  SAYS NOTHING ABOUT CONTENT.
+
+  COST IS NOT THE PROBLEM, and that is the half everybody expected to be the
+  answer. secPerDayPerRun across five rungs: 0.0003, 0.0008, 0.0013, 0.0026,
+  0.0030, which fits about 0.4 ms per in-game day plus about 5.5 microseconds
+  per resident per in-game day. NOTHING IS SUPERLINEAR. At 500 residents and
+  500 in-game days, run twice: 1.5 s and about 1.2 MB of world state.
+  Determinism held at every rung (identical per-day digests), no invariant
+  broke on any of 499 closed days at any population, and no resident's
+  remembered count ever fell.
+
+  REACH IS THE THING THAT FALLS OVER, AND IT IS THE ONLY THING. Residents who
+  ever remembered anything: 7/7, then 17/50, 15/200, 20/300, 15/500. THE COUNT
+  IS FLAT AT 15 TO 22 ACROSS EVERY POPULATION AND EVERY SEED; the FRACTION
+  collapses 1.000, 0.340, 0.075, 0.067, 0.030. At 200, 185 memory stores were
+  EMPTY after 499 days; at 500, 485 were.
+
+  THE MECHANISM IS PRINTED AND IS NOT EMERGENT: `deepestHopEver=2` in 2187
+  hops at 200 residents, and 2 at every rung (3 once, on seed 2). The
+  rememberers are the witness's two-hop neighbourhood, which at mean degree
+  3.14 is 7, 22, 21, 29 and 20 people at the five populations. TALK REACHES A
+  NEIGHBOURHOOD, AND A NEIGHBOURHOOD IS A CONSTANT OF THE MEAN DEGREE, NOT OF
+  THE TOWN.
+
+  THE CAUTION THE RUN PRINTS ITSELF, and it is instruments.md's rule about two
+  numbers from one variable: THE WALL CLOCK AND THE REACH ARE ONE FINDING
+  TWICE. The tick is cheap at 200 because 185 of them carry nothing, so the
+  per-hour cost is a walk over everybody and real work over almost nobody. THE
+  1.33 SECONDS IS NOT HEADROOM FOR A BUSY TOWN and must never be quoted as it.
+  The mean rate falls 15.7x from 7 to 200 residents (0.361 to 0.023) while the
+  rate among residents who hear anything at all barely moves (0.361, 0.344,
+  0.311, 0.345, 0.401), and those two are not independent readings: the first
+  is the second times remembered/agents. Both now print on one line with their
+  denominators for exactly that reason.
+
+  WHAT IT SUPPORTS: the Core's gossip and memory machinery runs 500 residents
+  for 500 in-game days twice without breaking determinism, an invariant or
+  permanence. Population is not a performance or a memory problem at this
+  scale on this hardware.
+
+  WHAT IT DOES NOT SUPPORT, two reasons that must not be merged: (1) above
+  seven every resident is a copy with a varied seed, so this bounds machinery,
+  not content or social variety; (2) "who all remember" is NOT APPROACHED and
+  this instrument cannot approach it, because the synthetic residents have no
+  lives of their own and the only thing anyone can remember is one player
+  sighting entering through one witness. 15 of 200 remembering is a
+  measurement of ONE SOURCE'S REACH, not of whether 200 residents can each
+  hold their own memory stream.
+
+  NAMED GAP, NOT BUILT: to measure "500 residents who all remember" the soak
+  needs per-resident stimulus, and that is the run in which the snapshot cost
+  per tick stops being free. Until it exists the cost numbers hold only for a
+  town where about twenty people carry talk.
+
+  CORRECTS A READING OF THE QUEUE 115 PROJECTION: `xMeasuredMean` inflates as
+  coverage collapses (15.5x at 7 residents, 239.6x at 200), so that multiple
+  is NOT COMPARABLE ACROSS POPULATIONS and must be read with the coverage now
+  printed beside it.
+
+  NO CORE BUG FOUND and the Core was not changed (`git status
+  ledger/Assets/Scripts/Core/` empty). Two faults in the SOAK were found by
+  running the never-ran case and fixed: an empty-series index that crashed
+  `--days 1`, and a zero-days guard that printed `eventsPerNpcPerDay=Infinity`
+  and `NaNMB`. Both now print NOTHING MEASURED with all three denominators.
+
+  THE DONE LINE NOW CARRIES WHAT IT SUPPORTS, which is queue 116's other half
+  and is what makes the instrument honest without a document beside it. THE
+  REMAINING HALF OF 116 IS NOT DONE: the grep for citations elsewhere, with
+  the count found and the count changed printed. That is a documents job and
+  the brief scoped this spawn to the measurement.

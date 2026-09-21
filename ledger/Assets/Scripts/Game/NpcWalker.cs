@@ -1443,11 +1443,19 @@ namespace Ledger.Game
             // were states built into every controller that no writer had
             // ever asked for. The letter stall is where the town's one
             // outdoor line stands — WorldBuilder puts the box there — so
-            // somebody stopped at the stall is sometimes ON it; and the pub
-            // door is where people drink standing up.
+            // somebody stopped at the stall is sometimes ON it.
+            //
+            // `drink` IS GONE FROM THIS LINE AND FROM THE PROJECT, 2026-09-21.
+            // It read "the pub door is where people drink standing up", which
+            // D17 forbids outright and D19 made obsolete on top: the door
+            // people stand outside is a minicab office's. What a person does
+            // there is smoke, which D18 keeps, or lean. The smoke slice is
+            // asked for even though the harvest hole means it is refused
+            // today, exactly as the corner case below does it: when the clip
+            // lands, this doorway lights up with no further wiring.
             if (best.Id == "letter_stall" && (h & 3) == 0) return "phone_box";
             if (best.Id == "bar_door")
-                return (h & 3) == 0 ? "drink"
+                return (h & 3) == 0 ? "smoke"
                      : (h & 3) == 1 ? "lean_wall" : null;
             switch (best.Kind)
             {

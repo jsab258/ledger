@@ -47,10 +47,32 @@
 #       }
 #     ]
 #
+# WHY `wrote` IS A COLUMN HERE AND NOT A THIRD FILE (queue 370, 2026-09-21).
+# The reasoning above that split tier and turns off `.claude/agent-log.tsv`
+# was about ROWS: a stop row in a start log doubles a census. It does not
+# transfer to a COLUMN, which adds no rows to anything. Three facts decided
+# it instead:
+#   1. The fact does not EXIST at SubagentStart. A spawn has touched nothing
+#      when it begins, so the column could never live on agent-log.tsv.
+#   2. It comes off the SAME single read of the SAME transcript that already
+#      yields tier and turns, at the same instant. Splitting it into a third
+#      file would be two moments a later reader joins as one.
+#   3. This file already carries one row per finished spawn keyed by agentId.
+#      A third file would restate when, agent and agentId to say one more
+#      thing about a row that already exists.
+# THE COST, PAID AND GUARDED: every row written before 2026-09-21 carries six
+# columns, so `read_log` keeps `LEGACY_COLUMNS` by name and reads those rows
+# as PRE-COLUMN rather than short. The selftest asserts that against the LIVE
+# log, because a length guard against the new width would silently have turned
+# all 325 of them into unparseable rows and collapsed every reading this tool
+# already gives.
+#
 # Tested both ways by tools/spawn-cost.py --selftest: a real payload appends
-# one row carrying tier and turns; malformed stdin, a payload with no
-# agent_type, and a transcript that is already gone each write no invented
-# number and are counted in their own bucket.
+# one row carrying tier, turns, the areas it wrote in and that value's own
+# denominator; malformed stdin, a payload with no agent_type, a transcript
+# that is already gone, a session that wrote only through the shell and a
+# session that called no tool at all each write no invented number and are
+# counted in their own bucket.
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 python3 "$REPO/tools/spawn-cost.py" --hook >/dev/null 2>&1

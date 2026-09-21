@@ -1770,7 +1770,7 @@ def budget_ceiling_line():
 def content_rule():
     """D18: no alcohol, no gambling, no children, no slurs, over every bank.
 
-    canon.md, "The content rule (D18, permanent)". Site 3 of five is a word
+    canon.md, "The content rule (D18, permanent)". Site 3 of six is a word
     list over dialogue and spoken lines, and D18 asks for it wired here
     rather than beside the tool, because an unwired guard is the fault this
     project has paid for twice this week: `docs_shape` and
@@ -1802,6 +1802,15 @@ def content_rule():
         bad = [l.strip() for l in out.splitlines() if "CLAUSE " in l]
         return False, "D18 CLAUSE DRIFT: " + _cap(bad, strip=7, width=100,
                                                   tail="see content-gate").strip()
+    # SITE 6, THE ANIMATION LIBRARY, ADDED 2026-09-21. Its own code because
+    # an asset finding is not a line of text: the fix is a file leaving the
+    # tree, and routing it through the `rule=` filter below would have printed
+    # it under a heading that invites a rewrite.
+    if code == 6:
+        bad = [l.strip() for l in out.splitlines() if "rule=" in l
+               and "hits=0" not in l]
+        return False, "D17/D18 IN THE ANIMATION LIBRARY: " + _cap(
+            bad, strip=6, width=110, tail="see content-gate").strip()
     if code == 4:
         return False, "D18 STALE BASELINE: a line was rewritten and its entry "
     if code != 0:
@@ -1814,11 +1823,19 @@ def content_rule():
                                      tail="see content-gate").strip()
     nums = re.search(r"hitsBaselined=(\d+).*stringsScanned=(\d+) "
                      r"filesOpened=(\d+)", done)
-    if not nums:
+    # THE LIBRARY'S DENOMINATOR RIDES IN THE FOOTER TOO, because a clean
+    # sixth site and an absent sixth site would otherwise read identically
+    # from the one line anybody actually looks at.
+    clips = re.search(r"clipsExamined=(\d+)", done)
+    if not nums or not clips:
         return False, "content-gate did not report its done line"
+    # `clip file(s)`, NOT `clip name(s)`: 68 is the number of FILES walked
+    # and each one carries two names (slot and title), so the two counts
+    # differ by a factor of two and the footer must say which it is.
     return True, ("D18 clean (%s fixtures, %s string(s) in %s file(s), "
-                  "%s baselined)"
-                  % (fixtures, nums.group(2), nums.group(3), nums.group(1)))
+                  "%s clip file(s), %s baselined)"
+                  % (fixtures, nums.group(2), nums.group(3), clips.group(1),
+                     nums.group(1)))
 
 
 SERVED_MARKER_REL = "production/site-served.txt"

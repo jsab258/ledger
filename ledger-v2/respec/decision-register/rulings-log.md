@@ -83,6 +83,33 @@ Decisions about the game. Cited by number; a number never changes meaning.
 - `D38-the-audits-findings-become-tiles.md` D38: the audit's findings become tiles
 - `D39-the-audits-twenty-recommendations-ordered.md` D39: the audit's twenty recommendations, ordered, none starting before the visual slice lands
 - `D40-the-sky-is-a-photograph-not-an-atmosphere.md` D40: the sky is a photograph and not an atmosphere; his ruling overturns reason 3 of VignetteShot.cpp:163-173 and leaves reasons 1 and 2 standing as work, and his stated reason (clear-sky blue) is recorded as not surviving measurement while the ruling stands
+- `D41-visual-work-is-ungated-and-the-sheet-is-the-judge.md` D41: visual work is ungated and the sheet is the judge (added to the spine 2026-09-21; it was in the date log below only)
+- `D42-sound-is-ungated-and-the-test-is-his-ear.md` D42: sound is ungated and the test is his ear (added to the spine 2026-09-21; date log only before)
+- `D43-document-corrections-are-applied-not-ruled.md` D43: research findings that only correct a document or a number are applied, not ruled (added to the spine 2026-09-21; date log only before)
+- `D44-queue-order-is-the-studios-within-the-ladder.md` D44: queue order is the studio's, within the ladder (added to the spine 2026-09-21; date log only before)
+- `D45-rigour-is-scoped-to-where-a-fault-hides.md` D45: rigour is scoped to where a fault hides (added to the spine 2026-09-21; date log only before)
+- `D46-mixamo-bodies-are-in.md` D46: Mixamo bodies are in, the same way Mixamo animations are; changes the licence allowlist, SHIP-SAFE item 3 (ruled 2026-09-16; ABSENT FROM THIS INDEX until 2026-09-21, found by listing the directory)
+- `D47-the-conversation-pillars-reasoning-is-withdrawn-not-the-pillar.md` D47: the conversation pillar's reasoning is withdrawn, not the pillar; the model never adjudicates, and nothing follows about its size; no hardware floor before the small-model test prints its number
+- `D48-no-resident-speaks-through-a-worse-model-because-of-who-they-are.md` D48: no resident speaks through a worse model than another because of who they are; tiering, if any, follows the interaction
+- `D49-live-content-screening-is-a-pillar-dependency-and-the-first-rung.md` D49: live content screening is a pillar dependency and the conversation pillar's first rung; where the pillar's rungs sit is his card
+- `D50-the-voice-watermark-is-kept.md` D50: the voice watermark is kept; the first question is whether it can be reapplied after the game decodes the audio
+- `D51-the-speech-engines-upgrade-path-is-not-the-upgrade-path.md` D51: Chatterbox-Nano is evaluated ahead of turbo; the 28 July record carries the note that its premise does not transfer (queue 296 amended)
+- `D52-nobody-writes-a-hardware-floor-from-the-hardware-floor-paper.md` D52: nobody writes a hardware floor from the hardware-floor paper; its modular memory measurement transfers
+- `D53-grime-is-the-strategy-and-a-surface-carries-wear-above-a-floor.md` D53: grime is the strategy; a surface carries wear above a floor whose number is a named gap (quantity, printer and order stated; the number set as A1 from the printed series)
+- `D54-there-is-no-metahuman-wardrobe-and-the-clothing-route-is-the-checker-then-a-jacket.md` D54: there is no MetaHuman wardrobe; the clothing route is garment meshes on the shared skeleton, a checker first, then one jacket moved; stage 2, nothing bought
+- `D55-the-animation-route-is-open-an-assembly-line-is-the-question.md` D55: the animation route is open; an assembly line is the question, commissioned at stage 2 after the 3D line has produced something
+- `D56-the-crime-layers-owed-verbs-eight-in-order-the-press-through-a-person-grassing-and-combats-three-gaps.md` D56: the crime layer's owed verbs, eight in his order, the press through a person, grassing, combat's three gaps; all stage 3, none built this week, held by queue 401 and 402 BLOCKED (SUPERSEDES the crime-layer and combat owed entries of his first message of 2026-09-21)
+- `D57-graphify-is-declined.md` D57: Graphify is declined
+- `D58-the-endings-hold-five-no-redemption-path-two-conditions.md` D58: the endings hold, five, written and wired, no redemption path, on two conditions; queue 399 (reachability) and 400 (the pub wording) (SUPERSEDES the "route to going straight" line of his first message of 2026-09-21)
+
+## The spine and the directory, reconciled 2026-09-21
+
+Listed by glob before this batch: 46 D-files, D1 to D46, plus this index and
+`queue-rulings-2026-09.md`, 48 files. The spine above listed D1 to D40; D41 to
+D45 appeared only in the date log below; D46 appeared nowhere in this file.
+The next free number was therefore D47, taken from the directory and not from
+the spine. After this batch: 58 D-files, D1 to D58, and the spine lists all
+58. Re-count it, never quote it.
 
 ## A claim checked, 2026-09-14
 
@@ -387,4 +414,47 @@ cannot find, which is the failure this file exists to stop.
   06:35Z placement stands; light_probe is found written and unread on the
   UE side, 334 stays open on it; per-family floors filed as the next rung
   `game-design/decision-2026-09-16-ruling-the-floor-is-read-in-a-family-that-holds-a-step-and-the-settle-rows-are-outside-it-by-their-own-fields.md`
-
+- **2026-09-16** D46, Mixamo bodies are in, the same way Mixamo animations
+  are: his one-character answer to a card, and the allowlist's SHIP-SAFE
+  item 3 changed in the same batch (this line added 2026-09-21; the record
+  existed and no line did)
+  `ledger-v2/respec/decision-register/D46-mixamo-bodies-are-in.md`
+- **2026-09-21** Jafar's two messages of 2026-09-21, both kept verbatim as
+  LOG files, ruled into D47 to D58 by the director the same day: the first
+  message's eleven rulings are D47 to D57 in his order (conversation pillar
+  D47 to D50, speech and hardware D51 and D52, the look D53, bodies and
+  movement D54 and D55, the crime layer D56, tools D57); the second message
+  REPLACES the first's crime-layer and combat owed entries with D56 and adds
+  D58 (the endings hold). TWO SUPERSESSIONS, marked in the first message's
+  file under "Where each piece went" and here: the paragraph "On the crime
+  layer, owed rather than built" (its owed list and its combat clause) is
+  superseded by D56, and its "route to going straight" by D58. D43
+  corrections applied in the batch: `ledger-v2/open-questions.md` items 1, 3
+  and 7; `game-design/production-plan-audio-art.md` sections 1a (D48) and 1i
+  (D51); `production/queue/296` amended (D51); `production/stages.md` stage 3's
+  Sunday-page sentence; this index's spine (D41 to D46 added). Dictated
+  one-liners for the resident: `game-design/decisions-answered.md` (D51),
+  `game-design/research-mechanics.md:47` (D48),
+  `production/specs/vignette-bill-of-materials.md:467` (D54). Stage 3 entries
+  and the audit's SUMMARY.md link in `production/stages.md`; the list of
+  things owed on `production/sunday.md`
+  `game-design/decision-2026-09-21-the-week-after-the-reset-five-measurements-and-eleven-rulings.md`
+  `game-design/decision-2026-09-21-the-crime-and-combat-audit-ruled-eight-verbs-and-the-endings-hold.md`
+- **2026-09-21** (afternoon) five landings ruled, stamp row 728: the D18
+  animation-library batch lands with canon's "six sites" UPHELD as a D43
+  correction and three stale copies of "five" sent back as one-liners
+  (ContentRule.cs:10, verify.py:1773, brand-verify.py:134), the smoking clip
+  still `.rejected` and filed; the night exposure batch (384) lands, the
+  settle bound 0.005 accepted as a stopping rule over six converged residuals
+  against eighteen faults with its cap announcing itself, the night repeat
+  target confirmed, the resident's refusal of backup-and-restore UPHELD under
+  ci.md, one comment's denominator dictated; the scale soak lands and queue
+  405 is UPHELD on the decision and SPLIT on the measurement, because the hop
+  test is confidence times TIE times 0.8 and the tie series, seed confidence,
+  hop convention and a planted lever series are printed before the card (the
+  soak measured ordinary talk, never a body, over ties resampled from the
+  authored eleven with meetings a coin); queue 370's column lands under D45
+  with the 20.2% proxy disagreement keeping the split unprinted; 389 to 405
+  land with four citations dictated and D50's watermark job still to file;
+  D50, D56 and D58 amended to name 399 to 402
+  `game-design/decision-2026-09-21-ruling-five-landings-the-sixth-site-the-settled-night-frame-and-the-neighbourhood-that-is-not-the-town.md`

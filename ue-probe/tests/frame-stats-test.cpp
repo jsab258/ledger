@@ -1310,6 +1310,222 @@ int main()
 		Check(P.find("rigDeterminism=NOTHING-MEASURED") != std::string::npos
 		      && P.find("rigRepeatStatus=NO-FILE") != std::string::npos,
 		      "a repeat whose file never landed cannot read as IDENTICAL");
+		// QUEUE 384: AND WHICH FAMILY THE REPEATED SHOT STOOD IN, because a
+		// run that repeated only a day frame checked only the day path and
+		// every run in the record until now is one of those.
+		const std::string Day = RigDeterminismLine("vign_camA_day", 49, 49,
+		                                           "MEASURED", Same, "day");
+		const std::string Nite = RigDeterminismLine("vign_camA_night", 49, 49,
+		                                            "MEASURED", Same, "night");
+		Check(Day.find("rigRepeatFamily=day") != std::string::npos
+		      && Nite.find("rigRepeatFamily=night") != std::string::npos
+		      && P.find("rigRepeatFamily=unnamed") != std::string::npos,
+		      "the repeat line names the family it photographed, and a caller that "
+		      "did not read one prints unnamed rather than claiming day");
+		Check(ValuesHaveNoSpaces(Day) && ValuesHaveNoSpaces(Nite),
+		      "and both family lines are space-free");
+	}
+
+	{
+		// ---- QUEUE 384: THE SETTLE LOOP, ACCEPTING CASE FIRST ------------
+		//
+		// Rule 5b. The expensive failure for this guard is not that it lets a
+		// moving frame through; it is that it never agrees, so every shot
+		// spends the whole cap and the run doubles in length for nothing. So
+		// the first fixture is a shot that HAS settled and must be allowed to
+		// stop.
+		SettleTakes Ok;
+		Ok.Means.push_back(0.46449);
+		Ok.Means.push_back(0.46167);            // run 54's settle_night_2, the pair that agreed
+		Check(SettleHasDelta(Ok) && Near(SettleAbsLastDelta(Ok), 0.00282)
+		      && SettleAgreed(Ok, kSettleMeanLumaBound),
+		      "run 54's settle_night_2 pair, 0.00282 apart, reads as agreed");
+		Check(!SettleWantsAnotherTake(Ok, kSettleMeanLumaBound, kSettleTakesMax),
+		      "and a shot that agreed is not asked for another take");
+		const std::string SK = SettleKeys(Ok, kSettleMeanLumaBound, kSettleTakesMax);
+		std::printf("    %s\n", SK.c_str());
+		Check(SK.find("shotSettleStatus=SETTLED") != std::string::npos
+		      && SK.find("shotSettleTakes=2/of=4") != std::string::npos
+		      && SK.find("shotSettleSeries=0.46449..0.46167") != std::string::npos
+		      && SK.find("shotSettleDelta=-0.00282") != std::string::npos,
+		      "and the line says SETTLED with its take count over the cap, the signed "
+		      "delta, and the whole series it decided on");
+		Check(ValuesHaveNoSpaces(SK), "the settle keys are space-free");
+		// AND THE SAME ARITHMETIC UNDER THE REPEAT'S OWN PREFIX, so the rig
+		// repeat can print its settle decision without a grep for a shot
+		// line picking up a frame nothing committed.
+		const std::string RK = SettleKeys(Ok, kSettleMeanLumaBound, kSettleTakesMax,
+		                                  "rigRepeat");
+		Check(RK.find("rigRepeatSettleStatus=SETTLED") != std::string::npos
+		      && RK.find("rigRepeatSettleTakes=2/of=4") != std::string::npos
+		      && RK.find("shotSettle") == std::string::npos,
+		      "the repeat prints the same decision under its own prefix and carries no "
+		      "shot key at all");
+
+		// ---- AND THE FAULT THE LOOP EXISTS TO CATCH, PLANTED FROM THE RUN
+		// THAT PRINTED IT. pinset_night_3 committed a frame at 0.00637 whose
+		// own eight frozen re-takes sat at 0.46185. One more take is exactly
+		// what the old rig never asked for.
+		SettleTakes Moving;
+		Moving.Means.push_back(0.00637);
+		Check(SettleWantsAnotherTake(Moving, kSettleMeanLumaBound, kSettleTakesMax),
+		      "one take is never enough: a single frame has nothing to agree with");
+		Moving.Means.push_back(0.46185);
+		Check(!SettleAgreed(Moving, kSettleMeanLumaBound)
+		      && SettleWantsAnotherTake(Moving, kSettleMeanLumaBound, kSettleTakesMax),
+		      "pinset_night_3's two takes are 0.45548 apart and the loop asks again");
+		Moving.Means.push_back(0.46180);
+		Check(SettleAgreed(Moving, kSettleMeanLumaBound)
+		      && !SettleWantsAnotherTake(Moving, kSettleMeanLumaBound, kSettleTakesMax),
+		      "a third take inside the bound of the second stops the loop");
+		const std::string MK = SettleKeys(Moving, kSettleMeanLumaBound, kSettleTakesMax);
+		std::printf("    %s\n", MK.c_str());
+		Check(MK.find("shotSettleTakes=3/of=4") != std::string::npos
+		      && MK.find("shotSettleSeries=0.00637..0.46185..0.46180") != std::string::npos,
+		      "and the committed frame carries the whole series it took to get there");
+
+		// ---- THE BOUND ITSELF, AGAINST THE SERIES IT WAS READ OFF --------
+		//
+		// Rule 2: the number came from a printed series, so the series is
+		// here and the guard is run against BOTH of its clusters. These are
+		// run 54's twelve night controls, |live take minus its own shot's
+		// first frozen take|, in the order the verdict prints them.
+		{
+			const double Converged[2] = { 0.00282, 0.00405 };
+			const double Fault[10] = { 0.31470, 0.22890, 0.27771, 0.28791, 0.45548,
+			                           0.26184, 0.27805, 0.27706, 0.20487, 0.27926 };
+			int Accepted = 0, Rejected = 0;
+			for (int I = 0; I < 2; ++I)
+			{
+				SettleTakes T; T.Means.push_back(0.5); T.Means.push_back(0.5 + Converged[I]);
+				if (SettleAgreed(T, kSettleMeanLumaBound)) { ++Accepted; }
+			}
+			for (int I = 0; I < 10; ++I)
+			{
+				SettleTakes T; T.Means.push_back(0.5); T.Means.push_back(0.5 - Fault[I]);
+				if (!SettleAgreed(T, kSettleMeanLumaBound)) { ++Rejected; }
+			}
+			Check(Accepted == 2, "both converged pairs run 54 printed clear the bound, 2 of 2");
+			Check(Rejected == 10, "and all ten faults run 54 printed are caught, 10 of 10");
+		}
+
+		// ---- THE CAP BITES AND SAYS SO ----------------------------------
+		SettleTakes Never;
+		Never.Means.push_back(0.00637);
+		Never.Means.push_back(0.18404);
+		Never.Means.push_back(0.26823);
+		Never.Means.push_back(0.46175);
+		Check(!SettleWantsAnotherTake(Never, kSettleMeanLumaBound, kSettleTakesMax),
+		      "a shot that used its whole cap is not asked for a fifth take");
+		const std::string NK = SettleKeys(Never, kSettleMeanLumaBound, kSettleTakesMax);
+		std::printf("    %s\n", NK.c_str());
+		Check(NK.find("shotSettleStatus=CAP-BIT") != std::string::npos
+		      && NK.find("shotSettleTakes=4/of=4") != std::string::npos,
+		      "and the cap announces itself on the shot's own line rather than reading "
+		      "as a settled frame");
+
+		// ---- A TAKE THAT PRODUCED NO FILE IS NOT A TAKE THAT AGREED -----
+		SettleTakes Gone;
+		Gone.Means.push_back(0.46175);
+		Gone.NoFile = true;
+		Check(!SettleAgreed(Gone, kSettleMeanLumaBound)
+		      && !SettleWantsAnotherTake(Gone, kSettleMeanLumaBound, kSettleTakesMax),
+		      "a missing file stops the loop and never reads as agreement");
+		const std::string GK = SettleKeys(Gone, kSettleMeanLumaBound, kSettleTakesMax);
+		Check(GK.find("shotSettleStatus=NO-FILE") != std::string::npos
+		      && GK.find("shotSettleDelta=nothing-measured/") != std::string::npos,
+		      "and one take with nothing beside it prints the words, not a zero delta");
+		Check(ValuesHaveNoSpaces(GK), "the no-file settle keys are space-free");
+		const std::string EK = SettleKeys(SettleTakes(), kSettleMeanLumaBound,
+		                                  kSettleTakesMax);
+		Check(EK.find("shotSettleStatus=NOTHING-MEASURED") != std::string::npos
+		      && EK.find("shotSettleSeries=nothing-measured") != std::string::npos,
+		      "a shot that never reached the shutter says nothing measured");
+
+		// ---- THE RUN TALLY, WHICH IS A DIFFERENT MOMENT -----------------
+		SettleRoll R;
+		SettleRollAdd(R, "vign_camA_day", Ok, kSettleMeanLumaBound, kSettleTakesMax);
+		SettleRollAdd(R, "pinset_night_3", Moving, kSettleMeanLumaBound, kSettleTakesMax);
+		SettleRollAdd(R, "settle_night_5", Never, kSettleMeanLumaBound, kSettleTakesMax);
+		const std::string RL = SettleRollLine(R, kSettleMeanLumaBound, kSettleTakesMax);
+		std::printf("    %s\n", RL.c_str());
+		Check(R.Shots == 3 && R.Settled == 2 && R.CapBit == 1 && R.NoFile == 0
+		      && R.TakesTotal == 9,
+		      "three shots, two settled, one on the cap, and nine takes between them");
+		Check(RL.find("settleSettled=2/of=3") != std::string::npos
+		      && RL.find("settleCapBit=1/of=3") != std::string::npos
+		      && RL.find("settleNoFile=0/of=3") != std::string::npos
+		      && RL.find("settleTakes=9/of=3shots") != std::string::npos,
+		      "and every count on the run line ships its denominator, the zero included");
+		Check(Near(R.WorstAbsDelta, 0.19352) && R.WorstShot == "settle_night_5"
+		      && RL.find("settleWorstShot=settle_night_5") != std::string::npos
+		      && RL.find("settleWorstTakes=4/of=4") != std::string::npos,
+		      "the worst last-delta is a PEAK and it carries the shot and take count it "
+		      "peaked on");
+		Check(RL.find("settleStatus=PARTIAL-CAP-BIT") != std::string::npos,
+		      "a run with a capped shot does not read as all settled");
+		Check(ValuesHaveNoSpaces(RL), "the settle run line is space-free");
+		const std::string ER = SettleRollLine(SettleRoll(), kSettleMeanLumaBound,
+		                                      kSettleTakesMax);
+		Check(ER.find("settleStatus=NOTHING-MEASURED") != std::string::npos
+		      && ER.find("settleSettled=nothing-measured") != std::string::npos,
+		      "and a run where no shot reached the shutter says nothing measured "
+		      "rather than zero settled of zero");
+
+		// ---- THE REPEATS ROLL, ACCEPTING CASE FIRST ---------------------
+		//
+		// The accepting case is a run that repeated a day frame AND a night
+		// frame and found both inside the bound, which is what the fix is
+		// for; the rejecting case is the night repeat run 54 would have
+		// printed if it had taken one.
+		const int W2 = 20, H2 = 20;
+		std::vector<unsigned char> Base = Flat(W2, H2, 100, 100, 100);
+		std::vector<unsigned char> Same2 = Base;
+		std::vector<unsigned char> Nudged = Flat(W2, H2, 100, 101, 100);
+		const RepeatDiff Exact = MeasureRepeat(Base.data(), Same2.data(), W2, H2);
+		const RepeatDiff Close = MeasureRepeat(Base.data(), Nudged.data(), W2, H2);
+		RepeatRoll RR;
+		RepeatRollAdd(RR, "vign_camA_day", "day", "MEASURED", Exact, kSettleMeanLumaBound);
+		RepeatRollAdd(RR, "vign_camA_night", "night", "MEASURED", Close, kSettleMeanLumaBound);
+		const std::string RRL = RigRepeatsLine(RR, kSettleMeanLumaBound);
+		std::printf("    %s\n", RRL.c_str());
+		Check(RR.Asked == 2 && RR.Measured == 2 && RR.Identical == 1 && RR.WithinBound == 2,
+		      "two repeats measured, one of them bit-identical, both inside the bound");
+		Check(RRL.find("rigRepeats=2/of=2") != std::string::npos
+		      && RRL.find("rigRepeatsShots=vign_camA_day/day..vign_camA_night/night")
+		         != std::string::npos
+		      && RRL.find("rigRepeatsIdentical=1/of=2") != std::string::npos
+		      && RRL.find("rigRepeatsWithinBound=2/of=2") != std::string::npos,
+		      "and the run line names WHICH shots it repeated and how many agreed, each "
+		      "count over its own denominator");
+		Check(ValuesHaveNoSpaces(RRL), "the repeats line is space-free");
+		// AND THE NIGHT PAIR THAT MOVED, which is the reading the old
+		// day-only check could not produce. 0.46 against 0.00 is run 54's
+		// pinset_night_3 in miniature.
+		std::vector<unsigned char> Bright = Flat(W2, H2, 200, 200, 200);
+		std::vector<unsigned char> Black = Flat(W2, H2, 2, 2, 2);
+		const RepeatDiff Collapsed = MeasureRepeat(Bright.data(), Black.data(), W2, H2);
+		RepeatRoll RR2;
+		RepeatRollAdd(RR2, "vign_camA_day", "day", "MEASURED", Exact, kSettleMeanLumaBound);
+		RepeatRollAdd(RR2, "pinset_night_3", "night", "MEASURED", Collapsed,
+		              kSettleMeanLumaBound);
+		const std::string RRL2 = RigRepeatsLine(RR2, kSettleMeanLumaBound);
+		std::printf("    %s\n", RRL2.c_str());
+		Check(RR2.WithinBound == 1 && RR2.WorstShot == "pinset_night_3"
+		      && RRL2.find("rigRepeatsWithinBound=1/of=2") != std::string::npos
+		      && RRL2.find("rigRepeatsWorstShot=pinset_night_3") != std::string::npos,
+		      "a night repeat that collapsed is counted out and named, while the day "
+		      "repeat beside it still agrees: the day frame alone could not see it");
+		// AND A RUN THAT ASKED FOR REPEATS AND MEASURED NONE.
+		RepeatRoll RR3;
+		RepeatRollAdd(RR3, "vign_camA_day", "day", "NO-FILE", Exact, kSettleMeanLumaBound);
+		const std::string RRL3 = RigRepeatsLine(RR3, kSettleMeanLumaBound);
+		Check(RRL3.find("rigRepeats=0/of=1") != std::string::npos
+		      && RRL3.find("rigRepeatsIdentical=nothing-measured") != std::string::npos
+		      && RRL3.find("rigRepeatsWorstMeanLumaDelta=nothing-measured") != std::string::npos,
+		      "a run whose repeats never landed prints the words rather than a zero "
+		      "disagreement, and still says how many it asked for");
+		Check(ValuesHaveNoSpaces(RRL3), "and that line is space-free too");
 	}
 
 	// ---- QUEUE 333: THE LAMP ACCEPTANCE INSTRUMENT, PIXEL HALF -----------

@@ -131,7 +131,7 @@ def check_bible(data, minted, window=(1988, 1992)):
     elif cr.get("clause") != clause:
         problems.append(
             "contentRule.clause is missing or has drifted from the gate's "
-            "(%s). D18 makes the brand bible one of the five enforcement "
+            "(%s). D18 makes the brand bible one of the six enforcement "
             "sites, and a site whose copy disagrees with the gate is the "
             "hole." % note)
     for f in ("whatThisMeansForABrand", "kindsRefused"):
