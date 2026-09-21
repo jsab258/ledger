@@ -1073,8 +1073,12 @@ namespace
 		"materialsStatus=NOT-REACHED materialsNote=the-material-pass-never-ran";
 
 	// ---- the control quads, which are this pass's accepting case ---------
-	// One extra plane per control in front of the camera the first shot
-	// uses. They carry no street data and are not pieces: they exist so that
+	// One extra plane per control in front of LedgerSurface::ControlCameraId(),
+	// which is cam_B since 2026-09-21. CORRECTED under D43 on that date: this
+	// said "the camera the first shot uses", which was the rule until the
+	// ruling of the same day moved the controls off the figure's camera. It
+	// survived two greps written to catch exactly this, because it names
+	// neither cam_A nor Shots[0].CameraId and spells the rule in prose. They carry no street data and are not pieces: they exist so that
 	// a frame can show what a WORKING material instance looks like beside
 	// the street that is not showing one.
 	std::vector<LedgerSurface::QuadResult> GQuads;
@@ -1089,11 +1093,12 @@ namespace
 	std::vector<std::string> GQuadLines;
 	// THE CONTROL QUAD ACTORS THEMSELVES, KEPT so that a shot which is not
 	// the one they were placed for can hide them. They are an instrument, and
-	// vignette-spec-test measures one of them reaching column 1274 of
-	// cam_hook's 1280 wide frame, which is an instrument standing in the
-	// picture rung 1 is judged by. The RULE is LedgerSurface::
-	// ControlQuadsVisibleFor and lives in the header the test compiles; this
-	// is only its call site and its tally.
+	// vignette-spec-test measured one of them reaching column 1274 of
+	// cam_hook's 1280 wide frame from cam_A, and all three centres inside
+	// it from cam_B (2026-09-21), which is an instrument standing in the
+	// picture rung 1 is judged by unless this rule hides it. The RULE is
+	// LedgerSurface::ControlQuadsVisibleFor and lives in the header the
+	// test compiles; this is only its call site and its tally.
 	TArray<AStaticMeshActor*> GQuadActors;
 	int   GQuadShotsSeen = 0;     // shots that reached the write, over which the tally is taken
 	int   GQuadHidden = 0;        // of those, how many had the controls hidden
@@ -3211,7 +3216,7 @@ namespace
 		Out.Add(TEXT("#   GAME thread's copy: a value that lands there and never reaches the"));
 		Out.Add(TEXT("#   render proxy still reads back as the same pointer."));
 		Out.Add(TEXT("# PHASE C, THE CONTROL QUADS. Three planes of one size at one distance"));
-		Out.Add(TEXT("#   in front of the first shot's camera, off the same base material,"));
+		Out.Add(TEXT("#   in front of the control camera (cam_B, ruled 2026-09-21), off the same base material,"));
 		Out.Add(TEXT("#   carrying no street data. The first binds a 2x2 texture built in code"));
 		Out.Add(TEXT("#   from four saturated colours, with no file and no decode; the other"));
 		Out.Add(TEXT("#   two bind no texture at all and differ only in their tiling scalars."));

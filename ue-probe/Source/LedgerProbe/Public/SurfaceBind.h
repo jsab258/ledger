@@ -2412,6 +2412,13 @@ namespace LedgerSurface
 	                                            const std::string& ProcNames,
 	                                            int MapsBorrowed)
 	{
+		// THE BUFFER IS A CAP WITH A PRINTED SERIES: run 56 predicted 1147
+		// chars, worst plausible 1173 (two more procedural names), so 1200
+		// leaves 53 and 27. Whoever adds a key here or lengthens a name list
+		// reprints those two numbers beside the change and raises this in the
+		// same edit when the margin is smaller than what they add. A third
+		// procedural surface in the live spec prints surfacePopulationCut on
+		// the done line rather than truncating in silence. Ruled 2026-09-21.
 		char Buf[1200];
 		const int Needed = Asked <= 0
 			? std::snprintf(Buf, sizeof(Buf),
@@ -2644,14 +2651,19 @@ namespace LedgerSurface
 
 	// WHICH SHOTS MAY SEE THE CONTROLS, AND WHY THE ANSWER IS NOT "ALL OF
 	// THEM". The quads are an INSTRUMENT: three swatches standing in the
-	// carriageway that prove a material instance can be told from the street
-	// around it. They are placed 3.5 m in front of the FIRST shot's camera
-	// and nothing in that placement knows any other camera exists, so a
-	// second camera pointed anywhere near the same stretch of road
-	// photographs them. cam_hook, the rung 1 viewpoint, is exactly that
-	// case: vignette-spec-test measures one quad's left edge landing at
-	// column 1274 of a 1280 wide frame, which is an instrument standing in
-	// the picture a person is being asked to judge a street by.
+	// carriageway that prove a material instance can be told from the
+	// street around it.
+	// They are placed 3.5 m in front of ControlCameraId()'s camera (cam_B
+	// since 2026-09-21; the first shot's camera, cam_A, before that) and
+	// nothing in that placement knows any other camera exists, so a second
+	// camera pointed anywhere near the same stretch of road photographs
+	// them. cam_hook, the rung 1 viewpoint, is exactly that case: from cam_A
+	// vignette-spec-test measured one quad's left edge at column 1274 of a
+	// 1280 wide frame; from cam_B it measures all three centres inside it
+	// (about column 530, row 392, 17.5 to 19.4 m ahead). So this rule is the
+	// ONLY thing keeping an instrument out of the picture a person is being
+	// asked to judge a street by, and queue 339's second half is the pixel
+	// proof that it holds.
 	//
 	// So the rule is one line and it lives here, where the test runs, rather
 	// than as a condition buried in the shot loop: the controls are visible
@@ -2705,11 +2717,45 @@ namespace LedgerSurface
 	inline double ControlQuadFirstM()  { return 0.50; }  // first centre off the axis
 
 	// THE ROW SITS TO THE CAMERA'S LEFT, AND THAT IS A DECISION ABOUT THE
-	// EVIDENCE FRAME rather than about the engine. At cam_A the right of the
-	// frame is the shopfront the street is read for and the left is open
-	// carriageway, so the controls stand over the carriageway and leave the
-	// half a reader is judging the street from alone. Negative is left,
-	// because the camera's right is the file's +z after the yaw.
+	// EVIDENCE FRAME rather than about the engine. Negative is left, because
+	// the camera's right is the file's +z after the yaw.
+	//
+	// CORRECTED under D43, 2026-09-21, AND THE JUSTIFICATION IS NOT REPLACED
+	// WITH A NEW ONE. This read "At cam_A the right of the frame is the
+	// shopfront the street is read for and the left is open carriageway, so
+	// the controls stand over the carriageway and leave the half a reader is
+	// judging the street from alone." That reasoning was cam_A's and the
+	// control camera is now LedgerSurface::ControlCameraId(), cam_B.
+	// vignette-scene.json's own note for cam_B: it stands on the WEST footway
+	// at x=21.0, yaw 90, "looking due east across the street at the east
+	// parade". So the old sentence is false on both halves.
+	// WHAT IS LEFT OF CAM_B, AND WHETHER THAT HALF IS ONE A READER JUDGES THE
+	// STREET FROM, IS NOT RE-DERIVED HERE and must not be guessed: the offset
+	// decision stands as made, its old reason is struck, and a new reason is
+	// owed by whoever next measures what cam_B's left half carries.
+	//
+	// DERIVED 2026-09-21 (ruling of that date, section 11.2), FROM PRINTED
+	// NUMBERS AND NOT FROM A LOOK AT cam_B. The offset is two decisions and
+	// they have different reasons now.
+	//   THE SPACING (0.50 m first centre off the axis, 1.00 m pitch) is not
+	//   arbitrary. Run 55's quad lines print the three boxes at x130..261,
+	//   x309..437 and x488..614 on rows 298..422: 126 to 131 px wide, 177 to
+	//   178 px centre to centre, 48 and 51 px of street between them,
+	//   quadCornersInFrame=4/4 on all three at quadDistM=3.51. The row is
+	//   centred on the view axis (ControlQuadPlace below) and cam_B's
+	//   vertical field is the same 60 degrees as cam_A's, so those boxes are
+	//   cam_B's boxes too. Three separate boxes, none overlapping, all
+	//   inside the frame at one distance, is what the readback (queue 339)
+	//   needs, and it is the whole of the spacing's reason.
+	//   THE SIDE (the sign, left) was cam_A's composition reason and has no
+	//   reader to serve on cam_B, where no reading is judged. It is kept
+	//   because moving it moves every printed box for no measured gain. The
+	//   boxes sit on rows 298..422, outside the skyTop band (rows 0..90) and
+	//   the ground band (rows 576..720), so cam_B's band statistics carry no
+	//   quad either way; its whole-frame keys do, and the shot line says so.
+	//   If the control camera ever becomes one a reading is judged from, the
+	//   side needs a measured reason again, and that is the day to re-derive
+	//   it. Nothing about what cam_B's left half carries is asserted here.
 	inline double ControlQuadOffsetM(int I)
 	{
 		return -(ControlQuadFirstM() + ControlQuadPitchM() * (double)I);
