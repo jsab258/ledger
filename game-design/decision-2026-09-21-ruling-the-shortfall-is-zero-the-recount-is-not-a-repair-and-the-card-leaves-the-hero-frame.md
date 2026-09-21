@@ -1,25 +1,29 @@
 # Ruling, 2026-09-21 (14:30Z spawn): the shortfall is zero, the recount is not a repair, and the card leaves the hero frame
 
 STATUS: LOG, 2026-09-21. NOT CURRENT once the batch it rules on has been
-committed with the dictated edits in sections 7 and 10 applied and the first
-landed run whose commit CONTAINS it has been read against sections 8 and 10;
-from then the verdict file, the g++ suite, the queue items and NOW.md are the
-reading copies and this is the record of what was ruled and why.
+committed with the dictated edits in sections 7, 10 and 11 applied and the
+first landed run whose commit CONTAINS it has been read against sections 8
+and 10; from then the verdict file, the g++ suite, the queue items and NOW.md
+are the reading copies and this is the record of what was ruled and why.
 
 Director ruling on the engine-specialist's queue 223 batch standing
 uncommitted in the tree: `ue-probe/Source/LedgerProbe/Public/SurfaceBind.h`
 (+190) and `ue-probe/tests/vignette-spec-test.cpp` (+77), 267 lines, all in
 the g++-compiled layer; and on the three questions the resident put with it.
-Section 10 is the same spawn's addendum after the resident applied sections
-7's items 1 to 17 and reported two findings.
+Section 10 is the same session's addendum after the resident applied section
+7's items 1 to 17 and reported two findings. Section 11 is the same session's
+second addendum after commit 7a7be367 moved the reference past the first
+stamp and edits 21 to 28 plus two D43 corrections were applied.
 
-Author: tier-1 director, stamp at the foot naming row 733 of
-`.claude/agent-log.tsv` (`2026-09-21T14:30:16Z` TAB `studio-director` TAB
-`fable` TAB `default` TAB `ab8a9217eda535ae0`), the newest `studio-director`
-row; line 734 is empty. This director has no shell and wrote no code: every
-file below was READ at the line numbers in section 0, every number is copied
-from a printed line, and the two counts marked "resident's run" (3600 to 3607
-instruments ok; 267 checks) were not re-run here.
+Author: tier-1 director, one session, three spawn rows in
+`.claude/agent-log.tsv` all carrying agent id `ab8a9217eda535ae0`: line 733
+(`2026-09-21T14:30:16Z`), line 735 (`2026-09-21T15:04:02Z`) and line 737
+(`2026-09-21T15:34:14Z`); line 738 is empty. The stamp at the foot names row
+737, the newest, quoted from the log; row 733 was the stamp that closed
+sections 1 to 10 and cleared commit 7a7be367 (section 11.0). This director
+has no shell and wrote no code: every file below was READ at the line numbers
+in section 0, every number is copied from a printed line, and the counts
+marked "resident's run" were not re-run here.
 
 VERDICT IN ONE LINE: the batch LANDS AMENDED, the keys keep their names and
 the line gains one dated key that says the flip from PARTIAL to ALL over the
@@ -73,7 +77,11 @@ frontmatter (model opus, maxTurns 70). `ledger-v2/studio-v2/organization.md`
 1100, 3208 to 3219, 3727 to 3730, 6413 to 6428; grep over ue-probe for
 `controlQuadIntrusion` (test 4520 only) and for `Shots[0].CameraId|first
 shot's camera|FIRST shot's camera|FIRST SHOT'S camera` (the list in 10.1);
-this file's own lines 330 to 570 read back before it was rewritten.
+this file's own lines 330 to 570 read back before it was rewritten. For
+section 11: `.claude/agent-log.tsv` 730 to 738; as applied, test 4256 to
+4273 and 4521 to 4531, VignetteShot.cpp 1072 to 1080 and 6177 to 6194,
+SurfaceBind.h 2714 to 2739 (site 7 as corrected), 2768 to 2796
+(`ControlCameraId`, `ControlQuadPlace` and its axis-centring comment).
 
 ## 1. What kind of change this is, and how much review it needed
 
@@ -871,4 +879,172 @@ It did not read where `GQuadActors` is hidden on the repeat path (named in
 series on cam_B or cam_hook yet). It did not move 3.5 m, 0.7 m, 1200, or any
 number section 7 set. It did not re-run the suite.
 
-<!--RULING spawn=2026-09-21T14:30:16Z-->
+## 11. Second addendum, spawn row 737: the reference moved, two D43 sites, the rename a bare sed would have corrupted, and the ladder that proves the word
+
+### 11.0 Why this file carries a new stamp, and only one
+
+The resident committed the ruled state of sections 1 to 10 as `7a7be367`,
+which moved `director_cadence`'s reference commit past row 733; edits 21 to
+28 and two D43 comment corrections were then applied (123 gated lines of
+123), and the gate is red until a `studio-director` row NEWER than that
+commit is named by a stamp. The harness wrote rows 735 (`2026-09-21T15:04:
+02Z`) and 737 (`2026-09-21T15:34:14Z`) for this same session (same agent id
+as 733), and 737 is newer than `7a7be367` because the message that produced
+it reports the commit as done. So the stamp at the foot names row 737. The
+14:30:16Z stamp that closed sections 1 to 10 is retired from the foot into
+this paragraph, so that this file carries ONE machine-readable stamp, the
+newest, and no parser can read the older one first: it named row 733 and it
+cleared `7a7be367`.
+
+Read as applied (section 0, "For section 11"): test 4259 to 4270 reads
+`CtrlCam` and `S.Cameras[I].Id == LedgerSurface::ControlCameraId()` with the
+`named by ControlCameraId` printf; test 4521 to 4529 prints the three-way
+word with `centres=%d/%d edges=%d/%d`; VignetteShot.cpp 6181 to 6193 is edit
+10 as dictated; SurfaceBind.h 2773 is `ControlCameraId()`; 2714 to 2739 is
+site 7 as the resident described it. The counts are the resident's, confirmed
+by the resident: suite 628 checks, 0 failed; `\bCamA\b` 14 to 0, `CamAYaw` 3
+to 0, `CtrlCam` 0 to 14; `ue-probe instruments ok (3610 checks)`.
+
+### 11.1 Site 6, VignetteShot.cpp 1075 to 1080: NOT an overstep
+
+"One extra plane per control in front of the camera the first shot uses"
+was prose spelling the rule that edit 10 replaced; CLAUDE.md rule 1 says
+changing code changes the comments about it, and D43 says a correction that
+only fixes a document is applied and reported. A comment in a file that does
+not compile locally cannot break a build. The resident replaced the rule
+with `LedgerSurface::ControlCameraId()` and recorded why it survived the
+greps (it names neither `cam_A` nor `Shots[0].CameraId`). RULED: correctly
+applied, and the record of why it survived is the useful half.
+
+### 11.2 Site 7, SurfaceBind.h 2719 to 2735: the strike was right, and the decision gets its reason now, from printed numbers
+
+THE RESIDENT'S JUDGEMENT, UPHELD. The old sentence ("At cam_A the right of
+the frame is the shopfront ... so the controls stand over the carriageway
+and leave the half a reader is judging the street from alone") was false on
+both halves once the control camera became cam_B, and replacing it with a
+cam_B sentence would have asserted what cam_B's left half carries without
+measuring it, which is the fault of the day. Striking the reason and keeping
+the decision was right.
+
+THE TRADE IS NOT THE BEST AVAILABLE, BECAUSE A LIVE REASON EXISTS WITHOUT
+LOOKING AT cam_B. The offset is two decisions with two different reasons now,
+and both can be derived from numbers already printed:
+
+- THE SPACING (`ControlQuadFirstM()` 0.50 m off the axis, `ControlQuadPitchM()`
+  1.00 m centre to centre) is not arbitrary. Run 55's quad lines (verdict 294
+  to 296) print the three boxes at `x130..261`, `x309..437` and `x488..614`
+  on rows `298..422`: 126 to 131 px wide, 177 to 178 px centre to centre, 48
+  and 51 px of street between them, `quadCornersInFrame=4/4` on all three at
+  `quadDistM=3.51`. The row is centred on the view axis (`ControlQuadPlace`'s
+  own comment, 2793 to 2796, and `quadCentrePx=551/360` on line 294), and
+  cam_B's vertical field is the same 60 degrees as cam_A's (spec 849 and
+  862), so those boxes are cam_B's boxes too. Three separate boxes, none
+  overlapping, all inside the frame at one distance, is what the readback
+  (queue 339) needs. That is the whole of the spacing's reason and it holds
+  on any camera with that field.
+- THE SIDE (the sign, left) was cam_A's composition reason and has no reader
+  to serve on cam_B, where no reading is judged (section 3). It is kept
+  because moving it moves every printed box for no measured gain. The boxes
+  sit on rows 298 to 422, outside the skyTop band (rows 0 to 90) and the
+  ground band (rows 576 to 720, line 208's `rectPx`), so cam_B's band
+  statistics carry no quad either way; its whole-frame keys do, and the shot
+  line already says so (`shotWholeFrameIncludesControlQuads=yes/...`).
+- THE CONDITION FOR RE-DERIVING, NAMED: if the control camera ever becomes a
+  camera a reading is judged from, the side needs a measured reason again,
+  and that is the day to measure it. Nothing about what cam_B's left half
+  carries is asserted.
+
+WHO DERIVES: nobody measures cam_B. The derivation is this ruling's, from
+run 55's printed lines and the header's own axis-centring rule, and it is
+dictated as a comment (edit 32) appended after the resident's paragraph,
+which stays as written.
+
+### 11.3 The rename: dictated whole-word, honoured whole-word, and the key it would have eaten
+
+Edit 23 said "every whole-word `CamA`". The builder used `\bCamA\b` and
+verified that `shotCamAskedXYZcm` (test 5100), which carries `CamA` as a
+substring, is intact; the resident confirmed the key. A bare
+`sed s/CamA/CtrlCam/g` would have renamed a verdict KEY in the suite's
+expectations silently, and the first landed run would have failed a check
+whose message named a key nobody changed. Rule 5 in one line, for the
+resident to add to casebook-claims under rule 5 if it judges the line worth
+its length (D43-class, its call): "a rename over a file that spells verdict
+keys is word-bounded and the key list is grepped for the token as a
+substring FIRST; `CamA` inside `shotCamAskedXYZcm`, 2026-09-21".
+
+### 11.4 The four-rung ladder is the evidence for edit 27, and its cap is honest
+
+The builder's ladder, copied: same vantage, four runs, code and spec
+crossed. Rungs 1 and 2: the old word `at-least-one-quad-reaches-the-frame`
+for two different worlds, `centres=3/3` and `centres=0/3`. Rungs 3 and 4:
+the repaired word with its counts, and rung 4 reproduced the 1274 px left
+edge from cam_A, so edits 24 and 26 quote a measurement that ran today and
+not an inherited number. Two of the word's three branches were exercised;
+`none-reaches-the-frame` was not, and the builder did not manufacture a
+rung for it, because 10.2's arithmetic says no position on cam_B produces
+one. RULED: that is rule 5b honoured, not dodged. A branch that cannot be
+exercised on the committed spec is named as unexercised, and it is
+exercised the day edit 30's camera exists, whose acceptance is exactly that
+word with `centres=0/3 edges=0/3`.
+
+### 11.5 The third instance today of an instrument's scope hiding its target, and it was mine
+
+The builder's note, accepted: site 7's `cam_A` and its `controls` sit on
+different lines of one comment, so any line-scoped grep AND-ing the two
+terms cannot see it; a bare `cam_A` over ue-probe returns 20 hits, 2 stale
+about the quads and 18 legitimately about the figure, the player start, band
+statistics and fixtures. With 10.1 (case-sensitive `first shot`, and
+`Shots[0]` grepped in the wrong file) that is three misses by one ruling's
+own greps in one day. The lesson, for the resident to add under rule 1 in
+casebook-claims if it judges it worth its length (D43-class): "a count of
+sites is a count of one grep's matches. Grep each spelling of the rule
+separately (the code token, the prose in every case, the identifiers derived
+from it) over the whole file family, then READ the section the rule lives
+in, because a rule spelled across two lines is invisible to every line
+grep." This ruling's own counts (section 4's four, 10.1's five) were wrong
+by that mechanism, and section 11 says so rather than quietly correcting
+the numbers.
+
+### 11.6 Dictated edit, verbatim
+
+32. `ue-probe/Source/LedgerProbe/Public/SurfaceBind.h`, insert immediately
+    BEFORE line 2736 (`inline double ControlQuadOffsetM(int I)`), after the
+    resident's paragraph ending `...owed by whoever next measures what
+    cam_B's left half carries.`, which stays as written:
+    ```
+    	//
+    	// DERIVED 2026-09-21 (ruling of that date, section 11.2), FROM PRINTED
+    	// NUMBERS AND NOT FROM A LOOK AT cam_B. The offset is two decisions and
+    	// they have different reasons now.
+    	//   THE SPACING (0.50 m first centre off the axis, 1.00 m pitch) is not
+    	//   arbitrary. Run 55's quad lines print the three boxes at x130..261,
+    	//   x309..437 and x488..614 on rows 298..422: 126 to 131 px wide, 177 to
+    	//   178 px centre to centre, 48 and 51 px of street between them,
+    	//   quadCornersInFrame=4/4 on all three at quadDistM=3.51. The row is
+    	//   centred on the view axis (ControlQuadPlace below) and cam_B's
+    	//   vertical field is the same 60 degrees as cam_A's, so those boxes are
+    	//   cam_B's boxes too. Three separate boxes, none overlapping, all
+    	//   inside the frame at one distance, is what the readback (queue 339)
+    	//   needs, and it is the whole of the spacing's reason.
+    	//   THE SIDE (the sign, left) was cam_A's composition reason and has no
+    	//   reader to serve on cam_B, where no reading is judged. It is kept
+    	//   because moving it moves every printed box for no measured gain. The
+    	//   boxes sit on rows 298..422, outside the skyTop band (rows 0..90) and
+    	//   the ground band (rows 576..720), so cam_B's band statistics carry no
+    	//   quad either way; its whole-frame keys do, and the shot line says so.
+    	//   If the control camera ever becomes one a reading is judged from, the
+    	//   side needs a measured reason again, and that is the day to re-derive
+    	//   it. Nothing about what cam_B's left half carries is asserted here.
+    ```
+    A comment: no suite re-run is owed for it; verify runs before the commit
+    as always.
+
+### 11.7 What this addendum did not do
+
+It did not run git, so "737 is newer than 7a7be367" rests on the order of
+events in the resident's message and on the log, not on a commit timestamp
+read by this director. It did not measure cam_B's frame. It did not add the
+two casebook lines itself (D43-class, the resident's call). It did not
+change any number.
+
+<!--RULING spawn=2026-09-21T15:34:14Z-->

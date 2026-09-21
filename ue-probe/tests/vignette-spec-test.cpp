@@ -4256,18 +4256,18 @@ int main(int argc, char** argv)
 	// the camera the committed spec carries, so a camera moved in the file
 	// moves them here and this test says whether they are still in frame.
 	{
-		const LedgerVignette::Camera* CamA = 0;
+		const LedgerVignette::Camera* CtrlCam = 0;
 		for (size_t I = 0; I < S.Cameras.size(); ++I)
 		{
-			if (!S.Shots.empty() && S.Cameras[I].Id == S.Shots[0].CameraId)
+			if (S.Cameras[I].Id == LedgerSurface::ControlCameraId())
 			{
-				CamA = &S.Cameras[I];
+				CtrlCam = &S.Cameras[I];
 			}
 		}
-		if (CamA == 0)
+		if (CtrlCam == 0)
 		{
-			std::printf("    control quads: nothing measured, the spec names no camera "
-			            "for its first shot\n");
+			std::printf("    control quads: nothing measured, the spec carries no camera "
+			            "named by ControlCameraId\n");
 		}
 		else
 		{
@@ -4276,9 +4276,9 @@ int main(int argc, char** argv)
 			int InFrame = 0, Ahead = 0;
 			for (int I = 0; I < LedgerSurface::ControlQuadCount(); ++I)
 			{
-				const LedgerSurface::QuadPlace P = LedgerSurface::ControlQuadPlace(*CamA, I);
+				const LedgerSurface::QuadPlace P = LedgerSurface::ControlQuadPlace(*CtrlCam, I);
 				const LedgerSurface::ScreenBox B =
-					LedgerSurface::ControlQuadBox(*CamA, P, 1280, 720);
+					LedgerSurface::ControlQuadBox(*CtrlCam, P, 1280, 720);
 				std::printf("    quad %-6s at %.2f/%.2f/%.2f m  centre %.0f/%.0f px  "
 				            "box x%.0f..%.0f y%.0f..%.0f  dist %.2f m  inFrame %d/4\n",
 				            P.Id.c_str(), P.XM, P.YM, P.ZM, B.CxPx, B.CyPx,
@@ -4292,19 +4292,20 @@ int main(int argc, char** argv)
 			      "and every corner of every control lands inside 1280x720, which is "
 			      "the whole point of placing them from the camera's own numbers");
 			// THE ROW IS TO THE LEFT, WHICH IS A DECISION ABOUT THE EVIDENCE
-			// FRAME AND IS ASSERTED SO IT CANNOT DRIFT SILENTLY: the right of
-			// cam_A's frame is the shopfront the street is read for.
-			const LedgerSurface::QuadPlace P0 = LedgerSurface::ControlQuadPlace(*CamA, 0);
-			const LedgerSurface::QuadPlace P2 = LedgerSurface::ControlQuadPlace(*CamA, 2);
+			// FRAME AND IS ASSERTED SO IT CANNOT DRIFT SILENTLY: the frame is
+			// cam_B, the control camera since 2026-09-21, which no judged
+			// reading is taken from.
+			const LedgerSurface::QuadPlace P0 = LedgerSurface::ControlQuadPlace(*CtrlCam, 0);
+			const LedgerSurface::QuadPlace P2 = LedgerSurface::ControlQuadPlace(*CtrlCam, 2);
 			const LedgerSurface::ScreenBox B0 =
-				LedgerSurface::ControlQuadBox(*CamA, P0, 1280, 720);
+				LedgerSurface::ControlQuadBox(*CtrlCam, P0, 1280, 720);
 			const LedgerSurface::ScreenBox B2 =
-				LedgerSurface::ControlQuadBox(*CamA, P2, 1280, 720);
+				LedgerSurface::ControlQuadBox(*CtrlCam, P2, 1280, 720);
 			Check(B0.CxPx < 640.0 && B2.CxPx < B0.CxPx,
 			      "the controls sit left of centre and in the order they are numbered");
 			Check(LedgerSurface::ControlQuadTiling(1) != LedgerSurface::ControlQuadTiling(2)
-			      && LedgerSurface::ControlQuadPlace(*CamA, 1).SizeM
-			         == LedgerSurface::ControlQuadPlace(*CamA, 2).SizeM,
+			      && LedgerSurface::ControlQuadPlace(*CtrlCam, 1).SizeM
+			         == LedgerSurface::ControlQuadPlace(*CtrlCam, 2).SizeM,
 			      "the two tile quads differ in their tiling and in NOTHING else, "
 			      "which is what makes the pair readable in one still");
 			Check(LedgerSurface::ControlQuadBindsTexture(0)
@@ -4315,7 +4316,7 @@ int main(int argc, char** argv)
 			// THE ROTATION IS DERIVED FROM THE CAMERA, and a quad facing away
 			// is culled or lit from behind, which is the sign error the decal
 			// quads paid for once already.
-			Check(P0.EnginePitchDeg == 90.0 && P0.EngineYawDeg == CamA->YawDeg,
+			Check(P0.EnginePitchDeg == 90.0 && P0.EngineYawDeg == CtrlCam->YawDeg,
 			      "the plane is pitched a quarter turn so its normal faces the camera, "
 			      "and it carries the camera's yaw so it does at any yaw");
 			// AND THE FOUR COLOURS, WHICH ARE THE WHOLE READING.
@@ -4337,7 +4338,7 @@ int main(int argc, char** argv)
 			R.bTexResource = true; R.bTexReadback = true; R.bCompIsMid = true;
 			R.bRead = true;
 			R.ReadXCm = P0.XCm; R.ReadYCm = P0.YCm; R.ReadZCm = P0.ZCm;
-			const std::string QL = LedgerSurface::ControlQuadLine(*CamA, P0, R, 1280, 720);
+			const std::string QL = LedgerSurface::ControlQuadLine(*CtrlCam, P0, R, 1280, 720);
 			std::printf("    %s\n", QL.c_str());
 			Check(QL.find("controlQuad=colour") == 0,
 			      "the control line names itself first, as the surface lines do");
@@ -4354,7 +4355,7 @@ int main(int argc, char** argv)
 			      "every value on a control line is one space-free token with one equals");
 			LedgerSurface::QuadResult NoRead = R;
 			NoRead.bRead = false;
-			const std::string QN = LedgerSurface::ControlQuadLine(*CamA, P0, NoRead, 1280, 720);
+			const std::string QN = LedgerSurface::ControlQuadLine(*CtrlCam, P0, NoRead, 1280, 720);
 			Check(QN.find("quadReadXYZcm=not-read") != std::string::npos
 			      && QN.find("quadDeltaCm=not-read") != std::string::npos,
 			      "an actor that never answered for its transform says so rather than "
@@ -4473,8 +4474,8 @@ int main(int argc, char** argv)
 				// The quad faces the camera it was placed from, so its own
 				// width runs along THAT camera's right vector and not along
 				// this one's.
-				const double CamAYaw = LedgerSurface::DegToRad(QuadCam->YawDeg);
-				const double Rx = -std::sin(CamAYaw), Rz = std::cos(CamAYaw);
+				const double QuadCamYaw = LedgerSurface::DegToRad(QuadCam->YawDeg);
+				const double Rx = -std::sin(QuadCamYaw), Rz = std::cos(QuadCamYaw);
 				const double Half = LedgerSurface::ControlQuadSizeM() * 0.5;
 				const LedgerSurface::ScreenAt C0 = LedgerSurface::ProjectFilePoint(
 					*Hook, P.XM, P.YM, P.ZM, 1280, 720);
@@ -4517,11 +4518,15 @@ int main(int argc, char** argv)
 			Check(!LedgerSurface::ControlQuadsVisibleFor("", QuadCam->Id)
 			      && !LedgerSurface::ControlQuadsVisibleFor(QuadCam->Id, ""),
 			      "an unnamed camera on either side hides them rather than guessing");
-			std::printf("    cam_hook controlQuadIntrusion=%s "
+			std::printf("    cam_hook controlQuadIntrusion=%s centres=%d/%d edges=%d/%d "
 			            "(this is WHY the rule above exists, and it is measured "
-			            "rather than assumed)\n",
+			            "rather than assumed; since 2026-09-21 the hide rule is the "
+			            "only guard and the word says so)\n",
 			            EdgesIn == 0 ? "none-reaches-the-frame"
-			                         : "at-least-one-quad-reaches-the-frame");
+			            : (CentresIn == 0 ? "edges-only-reach-the-frame"
+			                              : "centres-in-frame/hidden-by-the-rule-alone"),
+			            CentresIn, LedgerSurface::ControlQuadCount(),
+			            EdgesIn, LedgerSurface::ControlQuadCount());
 			const std::string VLine =
 				LedgerSurface::ControlQuadVisibilityLine(5, 1, "vign_hook_day");
 			std::printf("    %s\n", VLine.c_str());
