@@ -1918,3 +1918,72 @@ rigRepeatsWorstShot; rigRepeatFamily on each rigDeterminism line and
 rigRepeatSettle* under each. They are NOT in the key registry yet: `--learn`
 runs AFTER this run lands, never before, because the registry learns from a
 run file and there is no run file carrying these keys until this one exists.
+
+=== RUN 56, 2026-09-21: THE ENGINE HALF OF THE CAMERA RULE, AND THE FIRST
+=== HERO FRAME WITH NOTHING STANDING IN FRONT OF THE FIGURE
+
+WHAT RUN 55 SETTLED AND WHAT THIS RUN IS FOR. Run 55 closed the night exposure
+fault: the rig repeat agrees to 0.00061 on a NIGHT shot and 45 of 49 settle. It
+also produced a legible hero frame WITH A FOUR-QUADRANT COLOUR CARD ACROSS THE
+FIGURE'S TORSO. That card was never a missing texture. It is the colour control
+quad, an instrument we placed, standing 3.51 m in front of cam_A, which is the
+figure's own camera. The controls now stand in front of cam_B.
+
+THE SUITE HALF IS PROVEN AND THE ENGINE HALF IS NOT. That is the whole of what
+this run buys. `LedgerSurface::ControlCameraId()` is read by five sites in the
+suite and one in the engine, and only the suite has been exercised.
+
+READ IN THIS ORDER, AND THE FIRST TWO ARE THE RUN'S OWN ACCEPTANCE:
+
+1. THE QUAD LINES: `quadOn=cam_B/1280x720`, `quadDistM=3.51`,
+   `quadCornersInFrame=4/4`, `quadDeltaCm=0.00`, and
+   `controlQuadHiddenOn` BEGINNING `vign_camA_day;vign_camA_night`. If
+   `quadOn` still reads cam_A the engine did not follow the tested rule and
+   nothing else in this run should be read.
+2. THE VERDICT HEADER must carry "control camera (cam_B, ruled 2026-09-21)".
+   Until run 55 it printed "in front of the first shot's camera" into EVERY
+   verdict, which was false from the moment the rule moved.
+3. THE INTRUSION LINE: `controlQuadIntrusion=centres-in-frame/hidden-by-the-
+   rule-alone centres=3/3 edges=3/3`. THAT IS THE HONEST READING AND NOT A
+   FAULT. The quads now sit geometrically inside cam_hook's frame and are held
+   off it by the hide rule ALONE. The old word could not say this: it read
+   `at-least-one-quad-reaches-the-frame` for both worlds.
+
+THE HUMAN LOOK THAT IS A CONDITION OF THE CAM_B RULING, not optional and not
+replaceable by a key. OPEN `ue-vign_hook_day.png` AT THE THREE PRINTED CENTRES
+537/391, 532/392 AND 528/393, and write the result beside a NAMED BOX rather
+than the words "by eye". A square at any of the three is a GUARD FAILURE and
+stops this run being read for anything else, because the hide rule is now the
+only thing standing between three 40 px squares and every sheet frame.
+
+THE DONE LINE, PREDICTED BEFORE THE RUN: `materialsStatus=ALL surfacesAsked=14
+surfacesResolved=12/14 surfacesAbsent=none mapsFound=36/36 mapsBorrowed=2
+surfacesProcedural=2/14 surfacesAbsentCount=0/14 decalBlendsAsked=2`. NOTHING
+WAS REPAIRED TO PRODUCE THAT: it is a recount, the line says so itself in a
+dated key, and `piecesPainted` MUST BE UNCHANGED at 600/610 with
+`piecesUnpainted=10/610`. If pieces moved, something was fixed that nobody
+meant to fix.
+
+`surfacePopulationCut` MUST BE ABSENT. The segment is predicted at 1147 chars
+against a 1200 buffer, a margin of 53. If it prints, the prediction was wrong
+and the number says by how much.
+
+THE FALSIFIERS, written before the run so they cannot be chosen afterwards:
+  - The 45 cam_hook frames must be bit-identical (day) or within 0.005 (night)
+    of run 55. The quads were already hidden there, so nothing should move.
+  - The cam_A pair LOSES its quads. Its luma WILL move and the amount is NOT
+    predicted: report it as a reading, never as a pass. The quad box was 1.70
+    percent of the frame for one quad of three.
+  - The cam_B pair GAINS them.
+  - If `vign_camA_night` changes brightness beyond the settle bound, something
+    reached the render path that should not have, and the settle work of run 55
+    is the first thing to re-check.
+
+STILL TRUE AND NOT RE-LITIGATED: the four CAP-BIT night shots of run 55 remain
+uncomparable to other frames and say so on their own lines; two of them are
+BISTABLE rather than slow and no cap size fixes those. The D17 and D18 removals
+mean `CharacterAudit` should read 41 clips where it read 44.
+
+AFTER THIS RUN LANDS, AND NOT BEFORE: `verdict-keys --learn`, because the
+registry learns from a run file and no run file carries run 55's or run 56's
+new keys until they exist.
