@@ -1,8 +1,12 @@
 // PHASE C: WHICH SURFACE GOT A TEXTURE, IN A FILE THAT COMPILES WITHOUT
 // UNREAL.
 //
-// WHAT THIS IS FOR. The street's 593 pieces carry sixteen surface names and
-// the shared city pack carries a file per surface. Binding them is engine
+// WHAT THIS IS FOR. The street's pieces carry sixteen surface names, of
+// which FOURTEEN ARE LIBRARY SURFACES and two are decal blend modes, and the
+// shared city pack carries a file for twelve of the fourteen; the other two
+// are painted from the SurfaceSpec tint, as the Unity host paints them.
+// Asking the pack for the other four was queue 227's mismeasurement, not a
+// shortfall in the pack. Binding them is engine
 // work; deciding WHICH FILE a surface asks for, counting what resolved and
 // printing the answer is not, and it lives here for the standing reason: in
 // a project whose top layer does not compile locally, a formatter written
@@ -1514,9 +1518,12 @@ namespace LedgerSurface
 		// pedantry: mapsFound is "this surface's own candidate answered" and
 		// the interior's normal and roughness are the WINDOW's files, bound by
 		// the rule at AssetLibrary.cs:611. Folding them into MapFound would
-		// move mapsFound from 36/48 to 38/48 and change what that number
-		// means without changing its name, which is the quietest way there is
-		// to lose a reading.
+		// move mapsFound from 36/36 to 38/36, a fraction above one, and change
+		// what that number means without changing its name, which is the
+		// quietest way there is to lose a reading. They print on mapsBorrowed.
+		// THE DENOMINATOR WAS 48 UNTIL QUEUE 227 and is now 36: three maps per
+		// library surface whose albedo is expected from the pack, which is
+		// twelve surfaces, not sixteen. Nothing about the pack changed.
 		bool        MapBorrowed[3] = {false, false, false};
 		std::string BorrowedFrom;         // the surface the maps came from
 		// WHICH RULE PAINTED THIS SURFACE, and the tint it was painted with.
@@ -1567,6 +1574,40 @@ namespace LedgerSurface
 	};
 
 	inline bool IsResolved(const Bound& B) { return B.MapFound[0]; }
+
+	// ---- THE POPULATION A SURFACE COUNT IS OVER, QUEUE 227 ---------------
+	//
+	// A DECAL BLEND MODE IS NOT A LIBRARY SURFACE. card and multiply name the
+	// two ways a decal is composited, declared in words at
+	// ledger/Assets/Scripts/Core/StreetVignette.cs:57 and refused at 1651 if
+	// they are anything else; the picture comes from the piece's own asset
+	// field. Counting them in the denominator made surfacesResolved=16/16
+	// reachable ONLY by writing card.png and multiply.png into the pack, and
+	// doing that would paint one shared image across four different shop
+	// fascias and three different interiors. A GREEN THAT REQUIRES SHIPPING
+	// WRONG CONTENT IS A MISMEASUREMENT AND NOT A GATE, so the blend modes are
+	// counted on their own key and the library count is what the surface
+	// numbers divide by.
+	inline int LibrarySurfaceCount(const std::vector<Bound>& All)
+	{
+		int N = 0;
+		for (size_t I = 0; I < All.size(); ++I)
+		{
+			if (!IsDecalBlend(All[I].Surface)) { ++N; }
+		}
+		return N;
+	}
+
+	// A LIBRARY SURFACE IS ACCOUNTED FOR TWO WAYS AND ONLY TWO. Its albedo
+	// came out of the pack, or the Unity host generates it from the
+	// SurfaceSpec tint and this file carries the same literals. Anything else
+	// is ABSENT: no pack file AND no spec entry, which IS a real fault and is
+	// the only thing that should ever hold this status below ALL.
+	inline bool IsProceduralSurface(const Bound& B)
+	{
+		return !IsDecalBlend(B.Surface) && !IsResolved(B)
+		    && ProceduralSurfaceIndex(B.Surface) >= 0;
+	}
 
 	// THE READBACK, PER SURFACE, ON THE SURFACE'S OWN LINE. Per-sample
 	// numbers on the sample line; the run's totals are on the done line
@@ -1636,6 +1677,11 @@ namespace LedgerSurface
 	inline std::string ReadbackDoneSegment(const std::vector<Bound>& All)
 	{
 		int Asked = 0, Tex = 0, Scalar = 0, Res = 0, Comp = 0;
+		// THE DENOMINATOR IS THE LIBRARY POPULATION AND NOT All.size(),
+		// QUEUE 227: a parameter is never set on a decal blend mode, so
+		// counting card and multiply here made 14/16 read as two surfaces
+		// the readback missed when nothing was ever asked of them.
+		const int LibN = LibrarySurfaceCount(All);
 		// THE WETNESS READBACK HAS ITS OWN DENOMINATOR AND NOT THIS ONE.
 		// A surface that is not in WetSurfaces is still asked, so folding it
 		// into Asked would be right; but a run in which the scalar was never
@@ -1670,7 +1716,7 @@ namespace LedgerSurface
 				" midScalarReadback=nothing-measured texResourceValid=nothing-measured"
 				" compMaterialIsMid=nothing-measured"
 				" midReadbackNote=no-surface-reached-an-instance/nothing-was-set-so-nothing-was-read-back",
-				(int)All.size());
+				LibN);
 			return std::string(Buf) + WetTotal;
 		}
 		std::snprintf(Buf, sizeof(Buf),
@@ -1678,7 +1724,7 @@ namespace LedgerSurface
 			" texResourceValid=%d/%d compMaterialIsMid=%d/%d"
 			" midReadbackStat=per-surface/first-instance-of-that-surface/game-thread-copy-not-the-render-proxy"
 			" midReadbackPairRule=both-full-is-candidate-C/scalar-full-and-texture-short-is-B/both-short-is-A",
-			Asked, (int)All.size(), Tex, Asked, Scalar, Asked,
+			Asked, LibN, Tex, Asked, Scalar, Asked,
 			Res, Asked, Comp, Asked);
 		return std::string(Buf) + WetTotal;
 	}
@@ -2340,13 +2386,83 @@ namespace LedgerSurface
 		return Out;
 	}
 
+	// ---- WHAT THE SURFACE NUMBERS ARE OVER, QUEUE 227 -------------------
+	//
+	// THE KEYS ABOVE KEEP THEIR NAMES AND CHANGE THEIR DENOMINATOR, so this
+	// segment exists to say so on the same line rather than leaving a reader
+	// to diff two runs and guess. surfacesAsked went 16 to 14 and
+	// surfacesAbsent went card/interior/multiply/paint_yellow to none, and
+	// NEITHER MOVEMENT IS A REPAIR: nothing about the pack changed. Two of
+	// the four were never surfaces and two of the four are painted from the
+	// spec tint by design, which the per-surface lines have printed as
+	// DECAL-BLEND and PROCEDURAL since queue 223 landed while this line was
+	// still calling all four absent.
+	//
+	// WHAT EACH NUMBER IS A STATISTIC OF: all of them are counts over
+	// DISTINCT SURFACE NAMES in the shared piece file, one row per name, not
+	// per piece. The per-piece counts are piecesPainted and piecesUnpainted
+	// and they live on the paint-route segment.
+	//
+	// A RUN THAT ASKED FOR NO LIBRARY SURFACE PRINTS THE WORDS, because
+	// `0/0 accounted for` reads exactly like a clean pass.
+	inline std::string SurfacePopulationSegment(int Resolved, int Procedural,
+	                                            int AbsentN, int Asked,
+	                                            int Blends,
+	                                            const std::string& BlendNames,
+	                                            const std::string& ProcNames,
+	                                            int MapsBorrowed)
+	{
+		char Buf[1200];
+		const int Needed = Asked <= 0
+			? std::snprintf(Buf, sizeof(Buf),
+				" surfacesAccountedFor=nothing-measured"
+				" surfacesProcedural=nothing-measured"
+				" surfacesProceduralNames=none surfacesAbsentCount=nothing-measured"
+				" decalBlendsAsked=%d decalBlendNames=%s mapsBorrowed=%d"
+				" surfacePopulationNote=no-library-surface-was-asked-for/only-blend-modes-or-nothing-at-all"
+				" surfacePopulationStat=counts-over-distinct-surface-names/not-over-pieces",
+				Blends, BlendNames.empty() ? "none" : BlendNames.c_str(), MapsBorrowed)
+			: std::snprintf(Buf, sizeof(Buf),
+				" surfacesAccountedFor=%d/%d surfacesProcedural=%d/%d"
+				" surfacesProceduralNames=%s surfacesAbsentCount=%d/%d"
+				" decalBlendsAsked=%d decalBlendNames=%s mapsBorrowed=%d"
+				" surfacePopulationStat=counts-over-distinct-surface-names/not-over-pieces"
+				" surfacesAskedOf=library-surfaces-only/blend-modes-are-counted-on-decalBlendsAsked"
+				" mapsAskedOf=3-per-library-surface-whose-albedo-is-expected-from-the-pack"
+				"/a-procedural-surface-asks-the-pack-for-no-albedo-so-its-normal-and-roughness-are-outside-this-denominator-and-print-on-its-own-surface-line"
+				" materialsStatusMeans=ALL-is-every-library-surface-accounted-for"
+				"/resolved-from-the-pack-or-procedural-by-design"
+				"/ABSENT-is-no-pack-file-AND-no-spec-entry-and-IS-a-real-fault"
+				" surfacePopulationChanged=queue-227/through-run-55-surfacesAsked-counted-16-names-with-2-blend-modes-in-it-and-called-the-2-procedural-surfaces-absent/from-run-56-it-counts-14-library-surfaces/PARTIAL-12-of-16-to-ALL-14-of-14-over-the-SAME-pack-is-a-recount-and-not-a-repair"
+				" surfacePopulationRule=queue-227/card-and-multiply-are-decal-blend-modes"
+				"/asking-texRoot-for-card.png-asks-for-a-file-that-by-design-can-never-exist",
+				Resolved + Procedural, Asked, Procedural, Asked,
+				ProcNames.empty() ? "none" : ProcNames.c_str(),
+				AbsentN, Asked, Blends,
+				BlendNames.empty() ? "none" : BlendNames.c_str(), MapsBorrowed);
+		std::string Out(Buf);
+		// THE CAP ANNOUNCES WHEN IT BITES, which is this project's rule: a
+		// segment cut by snprintf loses its trailing keys and reads exactly
+		// like a segment that was never written.
+		if (Needed < 0 || (size_t)Needed >= sizeof(Buf))
+		{
+			Out += " surfacePopulationCut=yes/at-1200-chars";
+		}
+		return Out;
+	}
+
 	// THE WHOLE-RUN LINE FOR THE MATERIAL PASS. Every tally is computed here,
 	// from the same vector the per-surface lines were printed from, so a
 	// total and its lines cannot disagree.
 	//
-	// A PASS THAT BOUND NOTHING SAYS THE WORDS. `surfacesResolved=0/16` with
-	// a base material that never loaded and `0/16` with sixteen missing files
+	// A PASS THAT BOUND NOTHING SAYS THE WORDS. `surfacesResolved=0/14` with
+	// a base material that never loaded and `0/14` with fourteen missing files
 	// are different findings, and materialBase is what separates them.
+	//
+	// THE DENOMINATOR IS FOURTEEN AND NOT SIXTEEN, QUEUE 227. It counts the
+	// LIBRARY surfaces only; card and multiply are decal blend modes and are
+	// counted on decalBlendsAsked. See SurfacePopulationSegment just above for
+	// what moved and why none of the movement is a repair.
 	// TexRootTried is the candidate directories the engine side actually
 	// asked the file system about, in the order it asked. The top layer
 	// supplies membership and order; the joining, the cap and the words are
@@ -2362,26 +2478,66 @@ namespace LedgerSurface
 	                                     int MidsCreated,
 	                                     double MetresPerTile)
 	{
-		int Resolved = 0, Assigned = 0, PiecesUnderResolved = 0, MapsFound = 0, MapsAsked = 0;
-		std::string Absent;
+		int Resolved = 0, Procedural = 0, AbsentN = 0, Blends = 0;
+		int Assigned = 0, PiecesUnderResolved = 0, MapsFound = 0, MapsAsked = 0;
+		int MapsBorrowed = 0;
+		std::string Absent, ProcNames, BlendNames;
 		for (size_t I = 0; I < All.size(); ++I)
 		{
-			MapsAsked += MapCount();
-			for (int M = 0; M < MapCount(); ++M) { if (All[I].MapFound[M]) { ++MapsFound; } }
 			Assigned += All[I].PiecesAssigned;
+			// A BLEND MODE ASKS THE PACK FOR NOTHING, so it enters no surface
+			// tally and no map tally. It is counted, and named, on its own key.
+			if (IsDecalBlend(All[I].Surface))
+			{
+				++Blends;
+				if (!BlendNames.empty()) { BlendNames += "/"; }
+				BlendNames += LedgerVignette::NoSpaces(All[I].Surface);
+				continue;
+			}
 			if (IsResolved(All[I]))
 			{
 				++Resolved;
 				PiecesUnderResolved += All[I].Pieces;
+				MapsAsked += MapCount();
+				for (int M = 0; M < MapCount(); ++M)
+				{
+					if (All[I].MapFound[M]) { ++MapsFound; }
+				}
+			}
+			else if (IsProceduralSurface(All[I]))
+			{
+				// NO PACK FILE FOR THE ALBEDO BY DESIGN. Its normal and roughness
+				// are tried or borrowed and print on its own line; folding three
+				// candidates into MapsAsked for it would put a shortfall in the
+				// denominator that nothing is ever going to fill. Borrowed maps
+				// are counted apart, for the reason MapBorrowed exists.
+				++Procedural;
+				if (!ProcNames.empty()) { ProcNames += "/"; }
+				ProcNames += LedgerVignette::NoSpaces(All[I].Surface);
+				for (int M = 0; M < MapCount(); ++M)
+				{
+					if (All[I].MapBorrowed[M]) { ++MapsBorrowed; }
+				}
 			}
 			else
 			{
+				// NO PACK FILE AND NO SPEC ENTRY. This is the only genuine
+				// fault of the three and it keeps the key it always had.
+				++AbsentN;
 				if (!Absent.empty()) { Absent += "/"; }
 				Absent += LedgerVignette::NoSpaces(All[I].Surface);
+				MapsAsked += MapCount();
+				for (int M = 0; M < MapCount(); ++M)
+				{
+					if (All[I].MapFound[M]) { ++MapsFound; }
+				}
 			}
 		}
 		if (Absent.empty()) { Absent = "none"; }
-		const int Asked = (int)All.size();
+		if (ProcNames.empty()) { ProcNames = "none"; }
+		if (BlendNames.empty()) { BlendNames = "none"; }
+		const int Asked = Resolved + Procedural + AbsentN;   // library surfaces only
+		const int Accounted = Resolved + Procedural;
 		char Buf[1100];
 		const int Needed = std::snprintf(Buf, sizeof(Buf),
 			"materialsStatus=%s materialBase=%s materialBasePath=%s "
@@ -2390,11 +2546,11 @@ namespace LedgerSurface
 			"piecesTextured=%d/%d piecesUnderResolvedSurfaces=%d/%d "
 			"texRoot=%s texRootFiles=%d metresPerTile=%.2f "
 			"tilingModel=two-largest-dimensions/not-per-face-uvs "
-			"materialsStat=counts-over-what-the-shared-file-asked-for",
+			"materialsStat=counts-over-the-LIBRARY-surfaces-the-shared-file-asked-for",
 			Asked == 0 ? "NOTHING-ASKED"
 			           : (!bBaseLoaded ? "NO-BASE-MATERIAL"
-			                           : (Resolved == Asked ? "ALL"
-			                                                : (Resolved == 0 ? "NONE" : "PARTIAL"))),
+			                           : (Accounted == Asked ? "ALL"
+			                                                 : (Accounted == 0 ? "NONE" : "PARTIAL"))),
 			bBaseLoaded ? "loaded" : "MISSING",
 			LedgerVignette::NoSpaces(BaseMaterialPath).c_str(),
 			Asked, Resolved, Asked, Absent.c_str(),
@@ -2422,6 +2578,8 @@ namespace LedgerSurface
 		// SURFACE LINES WERE PRINTED FROM. Appended rather than formatted
 		// into the buffer above for the reason texRootTried is: the buffer is
 		// a cap and a cut line reads as a short one.
+		Line += SurfacePopulationSegment(Resolved, Procedural, AbsentN, Asked,
+		                                 Blends, BlendNames, ProcNames, MapsBorrowed);
 		Line += ReadbackDoneSegment(All);
 		return Line;
 	}
@@ -2580,6 +2738,16 @@ namespace LedgerSurface
 	};
 
 	inline double DegToRad(double D) { return D * 3.14159265358979323846 / 180.0; }
+
+	// WHICH CAMERA THE CONTROLS STAND IN FRONT OF, AND IT IS SPELLED ONCE.
+	// Ruled 2026-09-21: not the figure's camera (cam_A, the night frame he
+	// judges by) and not the sheet's camera (cam_hook, 45 of the 49 shots);
+	// cam_B is the one camera in the committed spec that is neither. Through
+	// run 55 the rule was "the first shot's camera", which stood a four-colour
+	// card across the figure's torso in ue-vign_camA_night.png (queue 313).
+	// VignetteShot.cpp and the g++ suite both read the id from here, and the
+	// engine prints which camera answered on every quad line as quadOn.
+	inline const char* ControlCameraId() { return "cam_B"; }
 
 	inline QuadPlace ControlQuadPlace(const LedgerVignette::Camera& C, int I)
 	{

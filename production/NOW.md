@@ -76,7 +76,71 @@ tiled wall right, lamps lit, fog, and A FIGURE STANDING ON THE FOOTWAY. But a
 FOUR-QUADRANT COLOUR CARD sits across the figure's torso and its legs render
 flat yellow. `surfacesAbsent=card/interior/multiply/paint_yellow`,
 `surfacesResolved=12/16`, IDENTICAL to runs 53 and 54. The card IS the
-unresolved `card` surface; the yellow IS `paint_yellow`. THAT IS QUEUE 223,
+unresolved `card` surface; the yellow IS `paint_yellow`.
+
+CORRECTED 2026-09-21 14:4xZ UNDER D43, AND THE CORRECTION IS THE RESIDENT'S OWN
+ERROR. The two sentences above are FALSE and are left visible because a
+deleted claim cannot be audited.
+
+THE COLOUR CARD IS NOT THE `card` SURFACE. It is queue 123's COLOUR CONTROL
+QUAD, an instrument deliberately placed, and run 55's own verdict says so:
+`controlQuad=colour`,
+`controlQuadColours=texel0.red.255.0.0/texel1.green.0.255.0/texel2.blue.0.0.255/texel3.yellow.255.255.0`,
+`controlQuadHidden=47/49`,
+`controlQuadVisibility=hidden-for-every-shot-whose-camera-is-not-the-one-they-were-placed-from`,
+`controlQuadsRule=the-colour-quad-answers-the-texture-path/the-two-tile-quads-answer-the-scalar-path`.
+It sits 3.51 m from cam_A and is visible on exactly the two shots whose camera
+IS cam_A, one of which is the hero night frame. It is proof that a texture
+override reaches the sampler, standing in front of the figure.
+
+AND `card` IS PAINTED, not absent: `paintRoutes=pack.580/tint.10/decal-card.10/
+decal-multiply.0` with `piecesPainted=600/610`. The 10 unpainted are
+`decal-needs-a-stain-material.10` and they are FAIL-CLOSED rather than pasted,
+`decalQuadsHidden=10/20`, on the recorded reasoning that pasting the grime
+opaque would make the count green and the picture worse.
+
+THE YELLOW LEGS ARE NOT `paint_yellow` EITHER. paint_yellow is ROAD PAINT and
+it IS rendering: the yellow kerb line along the footway. THE PROJECT ALREADY
+KNEW THIS AND THE RESIDENT CONTRADICTED ITS OWN RECORD WITHOUT READING IT:
+`production/queue/226-*.md:38` and `production/NOW.md:3018` both say
+paint_yellow is ProceduralOnly by design. The figure's legs are the FIGURE'S
+OWN material, which nothing measures: the run prints `figureImportStatus=
+IMPORTED` and no figure TEXTURE key at all. So the legs are UNANSWERABLE today
+rather than answered, and that is a new item.
+
+AND THAT PARAGRAPH WAS ITSELF WRONG WHEN FIRST WRITTEN, corrected by the
+director within the hour and re-measured by the resident before this edit. It
+said "ZERO figure material or texture keys, while Michelle.fbx carries four
+embedded textures in a .fbm folder". THREE FALSEHOODS IN ONE CLAUSE:
+`production/d1-probe/ue-build.txt` prints `figureMaterials=1` and
+`figureImportVia=AssetImportTask/made=7`, so there is a material key and it is
+not zero; NO `.fbm` DIRECTORY EXISTS ANYWHERE IN THE TREE (`find` returns
+nothing, and `ledger/Assets/Characters/` holds one file, Michelle.fbx at
+20,974,352 bytes); and the number four is printed nowhere, with no
+`figureTexture*` key existing at all.
+
+THE RESIDENT REPEATED A BUILDER'S DETAIL WITHOUT CHECKING IT, INSIDE A
+CORRECTION ABOUT NOT DOING THAT. That is the finding worth more than the fact.
+What IS true and is the whole of it: the figure imports with one material, and
+NOTHING MEASURES WHETHER ANY TEXTURE BOUND TO IT. The item wants
+`figureTexturesEmbedded=N` measured off the FBX rather than typed, beside
+`figureTexturesBound=n/N`, both arms watched.
+
+THE REAL SURFACE FIGURE IS ZERO MISSING, NOT FOUR. `surfacesAsked=16` counts
+distinct NAMES, and the done line called every non-resolved row absent. Run
+55's own per-surface lines classify all sixteen: 12 RESOLVED, 2 PROCEDURAL by
+design (interior, paint_yellow), 2 DECAL BLEND MODES that are not surfaces
+(card, multiply). Fourteen library surfaces asked, twelve resolve, zero
+genuinely unresolved.
+
+HOW THE ERROR WAS MADE, because it is the useful half: the resident OPENED the
+frame, which was right, saw a colour card and yellow, and reached for the
+nearest key that carried those two words. `surfacesAbsent=card/.../paint_yellow`
+matched the picture and the resident stopped there. CLAUDE.md rule 4 says
+looking is strong evidence that something is wrong and WEAK EVIDENCE OF WHAT OR
+WHY, and that the quantity is printed before acting. The quantity here was
+`controlQuad=` and `paintRoutes=`, both on the same page, and neither was read.
+ THAT IS QUEUE 223,
 READY since 2026-09-09 and never started, and it is now the ONLY thing between
 Jafar and a judgeable figure frame. An engine-specialist is on it as of 14:1xZ,
 briefed to check queue 227's denominator question BEFORE fixing anything and
