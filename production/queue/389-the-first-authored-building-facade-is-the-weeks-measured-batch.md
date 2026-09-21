@@ -51,7 +51,26 @@ acceptance: production/throughput.md carries a facade batch row with a
   a rejected attempt is COUNTED on the ledger rather than left unrecorded,
   whichever way this batch resolves
 max_sessions: 2
-status: BLOCKED 2026-09-21 on queue 370 (spawn-log column, filed, not yet
+status: SUPERSEDED 2026-09-21 by Jafar's evening ruling, kit first and author
+  second, at `game-design/decision-2026-09-21-ruling-kit-first-author-second.md`.
+  THE UNIT CHANGED AND THE ITEM DID NOT SURVIVE IT. This item is one facade
+  AUTHORED from scratch; he replaced it with one ASSEMBLED from kit and dressed
+  as Meridian. His reason, in his own words: "It builds a British street from
+  primitives and generated textures and then spends most of its effort proving
+  every number. Rigour is not a street."
+
+  WHAT SURVIVES INTO THE REPLACEMENT, so the thinking here is not thrown away:
+  both meters read before and after, the BATCH as the throughput ledger's unit,
+  and REJECTED ATTEMPTS COUNTED. He kept all three explicitly, and they are the
+  reason the measurement is worth taking at all.
+
+  WHAT DOES NOT SURVIVE: the authoring itself, and the dependency on the grime
+  rule's floor existing first. Under the new order the base is assembled and
+  only the IDENTITY is authored, so D53's floor governs the dressing pass rather
+  than the whole facade.
+
+  NOT DELETED, per the standing practice that a superseded item keeps its text
+  so a later reader can see what was believed and when. Was: BLOCKED 2026-09-21 on queue 370 (spawn-log column, filed, not yet
   landed as of this writing), queue 403 (throughput batch unit, filed with
   this item) and the grime rule's D-record (D47 to D57, not yet written as
   of this filing). Do not start until all three are confirmed landed, by
