@@ -2,8 +2,8 @@ id: 8a1e67ba
 due: 2026-09-21T17:02:00Z
 armedAt: 2026-09-21T16:40:37Z
 armedBy: resident/the-setts-promise-and-the-lamps-we-already-hold
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-21T17:05:12Z
 capBitAt: -
 
 A PROMISE WAS MADE TO HIM IN WRITING AT 16:3xZ AND IT IS NOW AN OBLIGATION. The answer sent to his phone says of the missing setts: 'that gap gets filled tonight without you touching anything.' A content-wrangler is establishing the source, its licence, whether it needs an account, and the fetch route, and preparing the dispatch. REVIEW ITS WORK AGAINST THE TREE, then dispatch. IF IT TURNS OUT NOT TO BE POSSIBLE, THAT IS A FINDING HE MUST BE TOLD TONIGHT rather than tomorrow, because the promise is already on his phone. THE SECOND THING OWED TONIGHT AND NOT YET STARTED: the lamps. The kit survey of 2026-08-25 found correctly British swan-neck street lamps at measured heights in a CC0 kit ALREADY FETCHED (rows light-curved-cross and light-curved-double), while the bill of materials still reads E1_lighting_column and E2_sodium_lantern_head as GENERATE and StreetVignette.cs:1214 builds its own. Both confirmed by the resident. THAT IS A WIRING GAP NOT A FETCH GAP and the answer to his phone said so, so placing them is ours and is owed. It is assembly, which his ruling puts on the LOWER TIERS. QUEUE 389 IS MARKED SUPERSEDED, done at 16:39Z. STILL OWED AND NOT STARTED: the .uasset blind spot (queue 414's sibling), which attribution-check.py:381 warns about in its own comment and which MUST land in the same change as the first kit import or every imported package is invisible to it. BUDGET 13 total / 17 Fable at 16:2xZ, Fable governs, 68 points to the ceiling of 85; re-read production/budget.md before spending. WHEN A FRAME OF THE ASSEMBLED STREET EXISTS: it goes to him BESIDE the Hook sheet, as a pair, which is what he asked for.
