@@ -17,6 +17,41 @@ what a period a town of this kind actually had.
 2. `ledger-v2/`, and the laws in `ledger-v2/studio-v2/constitution.md`.
 3. `CLAUDE.md`, for how to work.
 
+## The sheet and the research govern the form, and they outrank a reply
+
+RULED BY JAFAR 2026-09-21, IN HIS OWN WORDS: "every authored asset's brief
+names the concept sheet and the research that govern it, and follows them. This
+is the second time a design question was debated that the research and the
+concept art had already answered, and the facades must not be the third."
+
+He ruled it while correcting a brief that had carried HIS OWN general-knowledge
+answer as the binding constraint, and he was explicit about what that is worth
+against the project's own material: "its form comes from the approved in-house
+Hook sheet and the period research, not from my reply, which was general
+knowledge rather than our own research and could contradict it ... if they
+disagree with what I said, they win."
+
+SO, ON EVERY ASSET YOU AUTHOR:
+
+1. NAME THE SHEET AND THE RESEARCH SECTIONS in what you write, by file and by
+   line or heading, before you author a form. The approved sheets are
+   `production/art/atlas-01/concepts/*.png` on `origin/art/atlas-01`; the
+   research on main is `game-design/research/`, and the index of what governs
+   what is the consolidation page.
+2. FOLLOW THEM. Naming without following is worse than neither, because it
+   tells a reader the asset was checked.
+3. LOOK AT THE SHEET, DO NOT RECALL IT. Crop the region at two or three times
+   scale and read it. The lamp form was nearly authored wrong from a summary of
+   a swatch strip rather than the street panel it actually appears in.
+4. IF THE SHEET AND THE RESEARCH DISAGREE WITH EACH OTHER, say so and STOP.
+   That is a director's question and not yours to resolve by picking one.
+5. IF THEY DISAGREE WITH THE BRIEF, INCLUDING A BRIEF QUOTING JAFAR, they win,
+   and you say in your report exactly where the brief was wrong. This is the
+   rule he wrote it for.
+
+Full record:
+`game-design/decision-2026-09-21-ruling-the-sheet-and-the-research-govern-every-authored-asset.md`.
+
 ## Standing constraints, and every one of them is a ruling
 
 - **AUTHORED BREADTH, NOT GENERATED BREADTH.** D14, 2026-09-08: every interior
