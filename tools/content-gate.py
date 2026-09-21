@@ -939,6 +939,167 @@ def clause_audit():
     return rows, problems
 
 
+# ------------------------------------------ site 6: the animation library
+#
+# WHY THIS SITE EXISTS, AND WHAT IT COST TO LEARN. D18 names five enforcement
+# sites and every one of them reads TEXT: this rule, the image specs' content
+# clause, the word list over dialogue, crowd generation and the brand bible.
+# An ASSET is none of those. So on 2026-09-21 the animation library held a
+# live `Drinking` clip in a slot called `drink`, a `Bartending` clip in the
+# counter-work slot, and a slot called `sit_drink`, all of them landed after
+# D17 was ruled, and no gate in the project could see any of it. Jafar found
+# it by reading a file listing. The clips were removed the same day; this is
+# the half that stops it coming back.
+#
+# WHAT IT READS. Both halves of a clip's filename, because the fault used
+# both: `slot__Mixamo Title_<character id>.fbx`. `work_counter__Bartending`
+# is innocent in the slot and guilty in the title; `sit_drink__Sitting` is
+# guilty in the slot and innocent in the title. A check on either half alone
+# would have passed one of the two files that shipped.
+#
+# `.fbx.rejected` IS WALKED TOO. The picker sets a clip aside rather than
+# deleting it (rule 5, after a cancelled CI run destroyed 24 files), so a
+# rejected clip is still a file in the tree. D17 governs what may EXIST here,
+# not what the build imports.
+LIBRARY_DIR = REPO / "ledger" / "Assets" / "Characters"
+
+#: THE VOCABULARY IS A READ OF THE HARVEST, NOT A GUESS, which is the same
+#: standard the picker's own patterns are held to. Every token below was
+#: checked against the 1,547 distinct names in
+#: `ledger/Assets/Characters/_catalogue.txt` and against the 68 clip files in
+#: the library; the counts each one scores are printed by `--report`, so a
+#: token that catches nothing and a token that catches everything both show.
+#:
+#: FALSE POSITIVES ARE NAMED RATHER THAN TUNED AWAY. `Drinking Fountain` is
+#: water and this list would flag it; that is the right side to err on for a
+#: rule that voids decisions, and the answer when it bites is a slot name
+#: that says water, not a hole in the list. `bar` is a word boundary, so
+#: `Wheelbarrow` and `Barbell` do not trip it.
+ASSET_BANNED = (
+    ("alcohol",
+     r"\b(drink|drinks|drinking|drank|drunk|drunken|booze|boozy|beer|lager|"
+     r"ale|stout|cider|wine|whisky|whiskey|vodka|gin|rum|brandy|pint|pints|"
+     r"bar|bars|bartend|bartending|bartender|barman|barmaid|barkeep|pub|"
+     r"tavern|saloon|cocktail|liquor|spirits|booze|keg|cask|brewery|tankard|"
+     r"hangover|toasting|cheers)\b",
+     "D17: alcohol is never shown, served, drunk or spoken of. Pubs may "
+     "exist as places, so a BUILDING name is not this list's business; a "
+     "body raising a vessel is."),
+    ("gambling",
+     r"\b(gambling|gamble|gambler|bet|bets|betting|wager|wagers|card|cards|"
+     r"dice|poker|casino|roulette|bingo|jackpot|bookie|bookmaker|croupier)\b",
+     "D17: gambling is out entirely. Pub games that are not played for money "
+     "stay, so `Darts` and `Dominoes` are deliberately absent from this "
+     "list."),
+)
+
+#: WHAT THIS SITE PERMITS, PROVEN RATHER THAN PROMISED. D18 keeps tobacco in
+#: as many words, and the one clip this whole incident dropped was the
+#: smoking one. These names are an ACCEPTING fixture in the selftest: a list
+#: that crept into flagging them fails there rather than on a re-pick.
+ASSET_PERMITTED = ("smoke", "smoking", "cigarette", "cigar", "pipe", "match",
+                   "lighter")
+
+ASSET_RULES = tuple((rid, re.compile(pat, re.I), why)
+                    for rid, pat, why in ASSET_BANNED)
+
+
+def library_clips(root=None):
+    """[(rel, slot, title, live)] for every clip file under the library.
+
+    A BODY IS NOT A CLIP, and the discriminator is `CharacterImport`'s own:
+    bodies sit directly in `Assets/Characters` and carry no `__`, clips live
+    in the tier folders and are named `slot__Title_<id>.fbx`. Counting the 18
+    bodies as clips would inflate the denominator, which is the failure mode
+    rule 3b is about: a denominator larger than the set examined turns a
+    clean result into a false claim with a number on it.
+    """
+    root = pathlib.Path(root) if root else LIBRARY_DIR
+    out = []
+    if not root.is_dir():
+        return out
+    for p in sorted(root.rglob("*")):
+        if not p.is_file():
+            continue
+        name = p.name
+        live = name.endswith(".fbx")
+        if not live and not name.endswith(".fbx.rejected"):
+            continue
+        stem = name[:-len(".fbx")] if live else name[:-len(".fbx.rejected")]
+        if "__" not in stem:
+            continue
+        slot, title = stem.split("__", 1)
+        # The Mixamo character id is a uuid glued to the title with `_`. It
+        # is hex and hyphens and can never match a word rule, but it is cut
+        # anyway so the title printed in a finding is the title.
+        title = re.sub(r"_[0-9a-f]{8}-[0-9a-f-]+$", "", title)
+        # Repo-relative for a real run, fixture-relative for a synthetic
+        # one: the selftest's library lives in a temp folder and a path that
+        # blew up on it would make the rejecting fixtures unrunnable.
+        try:
+            rel = str(p.relative_to(REPO))
+        except ValueError:
+            rel = str(p.relative_to(root))
+        out.append((rel, slot, title, live))
+    return out
+
+
+def library_scan(root=None):
+    """The site's whole result, denominators included.
+
+    Returns a dict. `hits` is [(rel, half, name, ruleId, why)] where `half`
+    is `slot` or `title`: the two halves are counted apart because they fail
+    apart and the 2026-09-21 incident had one of each.
+    """
+    clips = library_clips(root)
+    hits = []
+    per_rule = {rid: 0 for rid, _p, _w in ASSET_RULES}
+    for rel, slot, title, _live in clips:
+        for half, raw in (("slot", slot), ("title", title)):
+            # `sit_drink` is two words to a word rule, and it has to be: the
+            # slot that shipped was guilty only as a compound.
+            flat = re.sub(r"[^a-z0-9]+", " ", raw.lower()).strip()
+            for rid, pat, why in ASSET_RULES:
+                m = pat.search(flat)
+                if m:
+                    per_rule[rid] += 1
+                    hits.append((rel, half, raw, rid, why, m.group(0)))
+    return {"clips": clips, "hits": hits, "perRule": per_rule,
+            "live": sum(1 for c in clips if c[3]),
+            "rejected": sum(1 for c in clips if not c[3]),
+            "names": len(clips) * 2}
+
+
+def library_lines(res):
+    """The site's block in the report. Prints its denominator when clean,
+    because `no forbidden clip` and `no clip was examined` are the two
+    results this site exists to keep apart."""
+    lib = res["library"]
+    n = len(lib["clips"])
+    out = ["THE ANIMATION LIBRARY, by file name and by slot name (site 6):"]
+    if n == 0:
+        out.append("  " + NOTHING + ": no clip file under %s, so this run "
+                   "cannot tell a clean library from an absent one."
+                   % LIBRARY_DIR.relative_to(REPO))
+        return out
+    out.append("  clipsExamined=%d live=%d rejected=%d namesScanned=%d "
+               "rules=%d permittedByD18=%d"
+               % (n, lib["live"], lib["rejected"], lib["names"],
+                  len(ASSET_RULES), len(ASSET_PERMITTED)))
+    for rid, _p, why in ASSET_RULES:
+        out.append("  rule=%-9s hits=%d  %s" % (rid, lib["perRule"][rid], why))
+    if not lib["hits"]:
+        out.append("  0 forbidden name(s) over %d name(s) in %d clip file(s)"
+                   % (lib["names"], n))
+        return out
+    out.append("  %d FORBIDDEN NAME(S). Removing the file is the fix; a "
+               "rename that leaves the clip in the tree is not." % len(lib["hits"]))
+    out.append("  " + _cap(["%s rule=%s half=%s matched=%s"
+                            % (h[0], h[3], h[1], h[5].replace(" ", "_"))
+                            for h in lib["hits"]]))
+    return out
+
+
 def _cap(items, n=8):
     """A truncation that says it bit. (+N more not shown)."""
     items = list(items)
@@ -1211,6 +1372,8 @@ def done_line(res):
             "over stringsScanned=%d filesOpened=%d filesExempt=%d "
             "declaredAbsent=%d rulesSpeech=%d rulesPrompt=%d slurs=%s "
             "specsClauseIdentical=%d/%d specsCarryClause=%d/%d "
+            "clipsExamined=%d clipsLive=%d clipsRejected=%d "
+            "assetNamesScanned=%d assetHits=%d "
             "distinctTextsNew=%d distinctTextsBaselined=%d baselineStamped=%s"
             % (len(res["fresh"]), len(res["baselined"]), len(res["stale"]),
                s, len(res["opened"]), len(res["exempted"]),
@@ -1221,6 +1384,9 @@ def done_line(res):
                sum(1 for r in res["specs"] if r["promptBearing"]),
                sum(1 for r in res["specs"] if r["carriesD17"]),
                sum(1 for r in res["specs"] if r["promptBearing"]),
+               len(res["library"]["clips"]), res["library"]["live"],
+               res["library"]["rejected"], res["library"]["names"],
+               len(res["library"]["hits"]),
                len({h[6] for h in res["fresh"]}),
                len({h[6] for h in res["baselined"]}),
                BASELINE_STAMPED))
@@ -1230,10 +1396,17 @@ def run_gate():
     rows, opened, missing, exempted, strings = read_corpus()
     fresh, covered, stale = partition(rows, set(BASELINE))
     specs, problems = clause_audit()
+    lib = library_scan()
+    # AN EMPTY LIBRARY IS AN UNMEASURED RUN, NOT A CLEAN ONE. Same treatment
+    # as a corpus glob that matched nothing: it goes in `missing`, which is
+    # what makes the verdict 2 rather than 0.
+    if not lib["clips"]:
+        missing.append("library/" + str(LIBRARY_DIR.relative_to(REPO))
+                       .replace(" ", "_") + "/matched0")
     return {"rows": rows, "opened": opened, "missing": missing,
             "exempted": exempted, "strings": strings, "fresh": fresh,
             "baselined": covered, "stale": stale, "specs": specs,
-            "clauseProblems": problems}
+            "clauseProblems": problems, "library": lib}
 
 
 def verdict(res):
@@ -1241,6 +1414,12 @@ def verdict(res):
         return 2
     if res["clauseProblems"]:
         return 3
+    # 6, NOT 1. An asset finding is not a line of text somebody can rewrite,
+    # so it must not be read as one: the fix is a file leaving the tree and
+    # `--baseline-write` has no business touching it. 5 is already the
+    # selftest's failure code and is left alone.
+    if res["library"]["hits"]:
+        return 6
     if res["fresh"]:
         return 1
     if res["stale"]:
@@ -1259,6 +1438,7 @@ def report(res, full=False):
                "tree. %s for each:" % (len(DECLARED_ABSENT), NOTHING))
     for path, why in DECLARED_ABSENT:
         out.append("  absent=%s stringsExamined=0 why=%s" % (path, why))
+    out.extend(library_lines(res))
     out.append("PER CHANNEL:")
     out.extend(by_channel(res))
     if full:
@@ -1361,6 +1541,16 @@ def series(res):
 ENFORCEABLE = (
     ("alcohol", True, "substance and activity, D17. Pubs stay as places."),
     ("gambling", True, "substance and activity, D17. Pub games stay."),
+    ("asset-names-animation-library", True, "THE SIXTH SITE, added 2026-09-21 "
+     "after a live `Drinking` clip and a `Bartending` clip were found in the "
+     "library with five text gates watching. Every clip file under "
+     "ledger/Assets/Characters is read by SLOT name and by Mixamo TITLE, "
+     "live and .rejected, and the count examined prints on every run."),
+    ("asset-contents", False, "NOT MECHANICAL, AND THE LIMIT IS THE POINT. "
+     "This gate reads NAMES. A file called `sit__Sitting` that contains a "
+     "man raising a glass is invisible here, as it is to every other gate "
+     "in the project; `tools/clip-motion.py` reads hips and travel, and the "
+     "contact sheet is where somebody looks."),
     ("children", True, "by noun and by any stated age under eighteen, D18. "
      "The school building stands; its USE is caught."),
     ("slurs", True, "a closed list, content/rules/slurs-v1.json, D18. "
@@ -1371,7 +1561,8 @@ ENFORCEABLE = (
     ("sexual-content", True, "explicit acts and anatomy. Seaside-postcard "
      "innuendo survives, per canon's Tone section."),
     ("tobacco", False, "PERMITTED by D18. The gate proves it permits it: a "
-     "tobacco line is an accepting fixture in the selftest."),
+     "tobacco line is an accepting fixture in the selftest, and so is a "
+     "`smoke__Smoking` clip file at the library site."),
     ("violence-blood-gore", False, "PERMITTED by D18. Also an accepting "
      "fixture."),
     ("swearing", False, "PERMITTED by D18. Also an accepting fixture."),
@@ -1580,7 +1771,13 @@ def selftest():
                  "channels and its baseline key.")
     empty = {"rows": [], "opened": [], "missing": [], "exempted": [],
              "strings": 0, "fresh": [], "baselined": [], "stale": [],
-             "specs": [], "clauseProblems": []}
+             "specs": [], "clauseProblems": [],
+             # The empty fixture carries an empty library too, so "no clip
+             # was examined" is exercised by the same object that exercises
+             # "no string was read".
+             "library": {"clips": [], "hits": [], "live": 0, "rejected": 0,
+                         "names": 0,
+                         "perRule": {r[0]: 0 for r in ASSET_RULES}}}
     check("a run that read nothing prints the words '%s'" % NOTHING,
           NOTHING in done_line(empty))
     check("a run that read nothing exits 2, never 0", verdict(empty) == 2)
@@ -1605,6 +1802,76 @@ def selftest():
           not scan("brass pump handles along the counter"))
     check("--enforceable claims fewer clauses than it lists",
           0 < len([e for e in ENFORCEABLE if e[1]]) < len(ENFORCEABLE))
+
+    # ---------------------------------------------- site 6, the library
+    #
+    # ACCEPTING CASE FIRST, AND THE ACCEPTING FIXTURE IS THE LIVE LIBRARY.
+    # The standing rule for a tool that checks the project itself: the live
+    # codebase is what must pass, so doing the work this gate prompts can
+    # never break the gate. The rejecting fixtures are synthetic files in a
+    # temp folder naming nothing that exists.
+    lines.append("ACCEPTING HALF C, the live animation library and what D18 "
+                 "keeps. The clips are real; the guilty names below are not.")
+    live = library_scan()
+    check("the live library has clips in it at all, so a clean result here "
+          "is not an empty one (%d clip file(s))" % len(live["clips"]),
+          len(live["clips"]) > 50)
+    check("the live library carries no forbidden name, over %d name(s) in "
+          "%d clip file(s)" % (live["names"], len(live["clips"])),
+          not live["hits"])
+
+    import tempfile
+    with tempfile.TemporaryDirectory() as td:
+        d = pathlib.Path(td)
+        (d / "C").mkdir()
+        keep = d / "C" / "smoke__Smoking_2dee24f8-3b49-48af-b735-c6377509.fbx"
+        keep.write_text("not an fbx, the reader only reads the name")
+        (d / "Adam.fbx").write_text("a body, not a clip")
+        yes = library_scan(d)
+        check("TOBACCO PASSES. `smoke__Smoking` is clean in both halves, "
+              "which is D18 in one fixture", not yes["hits"])
+        check("a body is not a clip: `Adam.fbx` carries no `__` and is not "
+              "counted in the denominator (1 examined, not 2)",
+              len(yes["clips"]) == 1)
+
+        lines.append("REJECTING HALF C, the three shapes the 2026-09-21 "
+                     "incident actually had. Every name here is synthetic.")
+        (d / "C" / "drink__Drinking_2dee24f8-3b49-48af-b735-c6377509.fbx").write_text("x")
+        (d / "D").mkdir()
+        (d / "D" / "sit_drink__Sitting_2dee24f8-3b49-48af-b735-c6377509.fbx").write_text("x")
+        (d / "C" / "work_counter__Bartending_4f5d21e1-4ccc-41f1-b35b-fb2547.fbx").write_text("x")
+        (d / "D" / "idle__Shaking Dice_2dee24f8-3b49-48af-b735-c6377509.fbx").write_text("x")
+        (d / "C" / "lean__Leaning_2dee24f8-3b49-48af-b735-c6377509.fbx.rejected").write_text("x")
+        (d / "C" / "drink__Drinking_2dee24f8-3b49-48af-b735-c6377510.fbx.rejected").write_text("x")
+        no = library_scan(d)
+        halves = {(h[0].split("/")[-1].split("__")[0], h[1]) for h in no["hits"]}
+        check("a guilty TITLE under an innocent slot is caught "
+              "(`work_counter__Bartending`)", ("work_counter", "title") in halves)
+        check("a guilty SLOT under an innocent title is caught "
+              "(`sit_drink__Sitting`), which is the half a title-only check "
+              "would have passed", ("sit_drink", "slot") in halves)
+        check("a clip guilty in both halves is caught twice, once per half "
+              "(`drink__Drinking`)",
+              ("drink", "slot") in halves and ("drink", "title") in halves)
+        check("gambling is caught as well as alcohol (`Shaking Dice`)",
+              any(h[3] == "gambling" for h in no["hits"]))
+        check("a `.fbx.rejected` file is walked, not skipped: setting a "
+              "forbidden clip aside is not removing it",
+              any(h[0].endswith(".rejected") for h in no["hits"]))
+        check("the innocent clip beside them is not flagged, so the rule "
+              "refuses rather than the walker failing (7 clips, 6 clean "
+              "name(s) untouched)",
+              len(no["clips"]) == 7
+              and not any("lean" in h[0].split("/")[-1] for h in no["hits"]))
+        check("the site's own verdict code is 6, not 1: an asset finding is "
+              "not a line of text and cannot be baselined",
+              verdict({"strings": 1, "missing": [], "clauseProblems": [],
+                       "fresh": [], "stale": [], "library": no}) == 6)
+        gone = library_scan(d / "C" / "nope")
+        check("a library with no clip files reads as %s rather than clean"
+              % NOTHING,
+              NOTHING in " ".join(library_lines({"library": gone}))
+              and not gone["clips"])
 
     lines.append("content-gate selftest: %d ok, %d failed, %d fixture(s) total"
                  % (ok, fail, ok + fail))

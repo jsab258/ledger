@@ -872,13 +872,37 @@ namespace
 	// THE FIRST SHOT'S PIXELS, KEPT FOR THE WHOLE RUN so the repeat at the
 	// end has something to be identical to. One frame of BGRA8 at 1280x720
 	// is 3.7 MB and it is held once, not once per shot.
-	TArray64<uint8> GFirstBgra;
-	int32       GFirstW = 0, GFirstH = 0;
-	std::string GFirstShotId;
-	bool        GRepeating = false;   // the repeat pass is in flight
-	bool        GRepeatRan = false;   // and it is taken exactly once
-	std::string GRigLine = LedgerFrame::RigDeterminismLine(
-		std::string(), 0, 0, "NOT-RUN", LedgerFrame::RepeatDiff());
+	// QUEUE 384: TWO TARGETS, NOT ONE, AND THE SECOND IS A NIGHT FRAME.
+	// The check repeated shot 1 and nothing else, shot 1 is a day frame in
+	// every run in the record (rigRepeatOf=vign_camA_day), and the night
+	// pass it never looked at was off by up to 270 times the day frame's
+	// drift for a week. Two frames of BGRA8 at 1280x720 are 7.4 MB, held
+	// once each and not once per shot.
+	struct RepeatTarget
+	{
+		TArray64<uint8> Bgra;
+		int32       W;
+		int32       H;
+		int32       ShotIndex;     // -1 until a shot of this family is photographed
+		std::string ShotId;
+		std::string Family;        // day or night, read off the condition's own sun flag
+		RepeatTarget() : W(0), H(0), ShotIndex(-1), Family("unnamed") {}
+	};
+	const int   kRepeatTargets = 2;   // [0] the first shot, [1] the first NIGHT shot
+	RepeatTarget GRepeatTargets[kRepeatTargets];
+	int32       GRepeatNext = 0;      // the next target to repeat
+	int32       GRepeatAt   = -1;     // the target whose repeat is in flight
+	bool        GRepeating = false;   // a repeat pass is in flight
+	// ONE LINE PER REPEAT, plus the run line that says which shots were
+	// repeated and how many of them agreed, over a denominator.
+	std::vector<std::string> GRigLines;
+	LedgerFrame::RepeatRoll  GRepeatRoll;
+	// QUEUE 384: THE SETTLE SERIES. One for the shot in flight and one for
+	// the repeat in flight, cleared where the shot is prepared. The
+	// arithmetic and the string are FrameStats.h's; these hold live state.
+	LedgerFrame::SettleTakes GSettle;
+	LedgerFrame::SettleTakes GRepeatSettle;
+	LedgerFrame::SettleRoll  GSettleRoll;
 	// ONE PASS IS ONE PHOTOGRAPHED SHOT OR THE REPEAT. The preamble each pass
 	// writes (the control quads' visibility, the sky recapture) is written
 	// once per pass and never per settle tick, and keying it on the PASS
@@ -3204,6 +3228,22 @@ namespace
 		Out.Add(TEXT("#   to carry the pose, last-wins, and tools/frame-shadow-probe.py refused"));
 		Out.Add(TEXT("#   every frame whose camera was not the last one the run placed."));
 		Out.Add(TEXT("# THE RIG LINE, rigDeterminism, IS THIS RUN ASKING WHETHER IT CAN BE"));
+		Out.Add(TEXT("# QUEUE 384: THERE IS NOW ONE rigDeterminism LINE PER REPEATED SHOT, the"));
+		Out.Add(TEXT("#   first shot and the first NIGHT shot, each naming its rigRepeatFamily,"));
+		Out.Add(TEXT("#   and one rigRepeats line saying which shots were repeated and how many"));
+		Out.Add(TEXT("#   agreed over a denominator. rigRepeatsIdentical keeps the zero epsilon;"));
+		Out.Add(TEXT("#   rigRepeatsWithinBound is the capture loop's own stopping number read"));
+		Out.Add(TEXT("#   back over the run, which is that one number used twice and not a"));
+		Out.Add(TEXT("#   second measurement."));
+		Out.Add(TEXT("# QUEUE 384: shotSettle* ON EVERY SHOT LINE, AND ONE settle LINE AT THE"));
+		Out.Add(TEXT("#   FOOT. The shutter no longer fires on a fixed frame count and hopes:"));
+		Out.Add(TEXT("#   it takes the picture again until two successive takes agree within"));
+		Out.Add(TEXT("#   settleBound of whole-frame mean luma, up to settleTakesMax, and the"));
+		Out.Add(TEXT("#   committed file is the LAST take. shotSettleSeries is every take of"));
+		Out.Add(TEXT("#   that shot in order. CAP-BIT is a frame nobody may compare to another"));
+		Out.Add(TEXT("#   frame. The bound is a PEAK of observed converged residuals, read off"));
+		Out.Add(TEXT("#   run 54's twelve night controls (0.00405 worst converged against"));
+		Out.Add(TEXT("#   0.20487 smallest fault), and no gate reads it."));
 		Out.Add(TEXT("#   COMPARED AT ALL. The first shot's camera and condition are"));
 		Out.Add(TEXT("#   photographed again as the last thing the run does, to a scratch file"));
 		Out.Add(TEXT("#   that is not committed, and rigDiffPixels is the count of pixels that"));
@@ -3403,7 +3443,27 @@ namespace
 				LedgerVignette::ExposurePinDoneLine(PinRun).c_str())));
 		}
 		// THE RIG'S OWN DETERMINISM, BESIDE THE PASS SUMMARIES IT QUALIFIES.
-		Out.Add(FString(UTF8_TO_TCHAR(GRigLine.c_str())));
+		// ONE LINE PER REPEAT since queue 384, then the run line that says
+		// which shots were repeated and how many of them agreed. A run that
+		// took none says so through the roll rather than through silence.
+		if (GRigLines.empty())
+		{
+			Out.Add(FString(UTF8_TO_TCHAR(LedgerFrame::RigDeterminismLine(
+				std::string(), 0, (int)GSpec.Shots.size(), "NOT-RUN",
+				LedgerFrame::RepeatDiff()).c_str())));
+		}
+		for (size_t RI = 0; RI < GRigLines.size(); ++RI)
+		{
+			Out.Add(FString(UTF8_TO_TCHAR(GRigLines[RI].c_str())));
+		}
+		Out.Add(FString(UTF8_TO_TCHAR(
+			LedgerFrame::RigRepeatsLine(GRepeatRoll,
+			                            LedgerFrame::kSettleMeanLumaBound).c_str())));
+		// AND WHAT EVERY SHUTTER IN THIS RUN HAD TO DO TO STAND STILL.
+		Out.Add(FString(UTF8_TO_TCHAR(
+			LedgerFrame::SettleRollLine(GSettleRoll,
+			                            LedgerFrame::kSettleMeanLumaBound,
+			                            LedgerFrame::kSettleTakesMax).c_str())));
 		Out.Add(FString(UTF8_TO_TCHAR(DoneLine.c_str())));
 		if (!GArt.empty())
 		{
@@ -3884,6 +3944,15 @@ namespace
 		// through PixelLine, which carries only what is true of THIS frame.
 		Line += " ";
 		Line += LedgerFrame::PixelLine(St);
+		// QUEUE 384: AND HOW MANY TAKES IT TOOK FOR THIS PICTURE TO STOP
+		// MOVING, with the whole series it decided on. Per-sample, on the
+		// sample line: the run half is the settle line at the foot.
+		Line += " ";
+		Line += LedgerFrame::SettleKeys(GSettle, LedgerFrame::kSettleMeanLumaBound,
+		                                LedgerFrame::kSettleTakesMax);
+		LedgerFrame::SettleRollAdd(GSettleRoll, S.Id, GSettle,
+		                           LedgerFrame::kSettleMeanLumaBound,
+		                           LedgerFrame::kSettleTakesMax);
 		// AND WHAT THE TONE MAPPER DID TO THIS FRAME, as counts with their
 		// denominator at both ends. shotMeanLuma=0.5030 sat over a day frame
 		// whose whole ground plane was clipped, because a mean cannot see
@@ -4006,15 +4075,41 @@ namespace
 			NoteLadderRow(S.Id, bAfterNight, !St.Blank && Exp.Measured,
 			              St.MeanLuma, Exp.ClipHiAny, Exp.ClipLoAll, Exp.Pixels);
 		}
-		// ---- THE FIRST SHOT'S PIXELS, KEPT FOR THE REPEAT AT THE END -----
+		// ---- THE PIXELS KEPT FOR THE REPEATS AT THE END ------------------
 		//
 		// A COPY, taken before the light probe may move this buffer out from
-		// under it. Only the first shot is kept, and only once: the repeat
-		// is one difference, not eleven.
-		if (GFirstBgra.Num() == 0 && GShotIndex == 0)
+		// under it. TWO shots are kept since queue 384, each once: the first
+		// shot of the run and the first shot photographed with the sun off,
+		// because a determinism check that only ever repeated a day frame is
+		// how the night exposure fault stood for a week.
 		{
-			GFirstBgra = Bgra;
-			GFirstW = W; GFirstH = H; GFirstShotId = S.Id;
+			// THE FAMILY IS READ OFF THE CONDITION THIS SHOT WAS
+			// PHOTOGRAPHED UNDER, never off the shot's name: `settle_night_5`
+			// is a string and `sun off` is the fact.
+			const Condition* Cond = FindCondition(S.ConditionId);
+			const char* Family = (Cond != nullptr && !Cond->SunOn) ? "night" : "day";
+			const bool bNight = (Cond != nullptr && !Cond->SunOn);
+			if (GRepeatTargets[0].Bgra.Num() == 0 && GShotIndex == 0)
+			{
+				GRepeatTargets[0].Bgra = Bgra;
+				GRepeatTargets[0].W = W; GRepeatTargets[0].H = H;
+				GRepeatTargets[0].ShotIndex = GShotIndex;
+				GRepeatTargets[0].ShotId = S.Id;
+				GRepeatTargets[0].Family = Family;
+			}
+			// AND THE FIRST NIGHT FRAME, which is the half the old check
+			// could not see. It is skipped when the first shot already IS
+			// that frame, because repeating one shot twice would print two
+			// readings of one thing and count them as two.
+			if (bNight && GRepeatTargets[1].Bgra.Num() == 0
+			    && GRepeatTargets[0].ShotIndex != GShotIndex)
+			{
+				GRepeatTargets[1].Bgra = Bgra;
+				GRepeatTargets[1].W = W; GRepeatTargets[1].H = H;
+				GRepeatTargets[1].ShotIndex = GShotIndex;
+				GRepeatTargets[1].ShotId = S.Id;
+				GRepeatTargets[1].Family = "night";
+			}
 		}
 		if (GArt.empty())
 		{
@@ -4067,14 +4162,37 @@ namespace
 	// cross-shot comparison the run supports carries it. The arithmetic and
 	// the string are in FrameStats.h, where g++ runs them before any
 	// dispatch; this supplies the two buffers and a status word.
+	// ONE READING, ONE LINE, ONE ENTRY IN THE ROLL, for whichever target is in
+	// flight. The settle series the repeat took to get here rides the same
+	// line under its own prefix, because a repeat photographed mid-adaptation
+	// would print the race rather than measure the rig.
+	void RecordRepeat(int TargetIndex, const std::string& Status,
+	                  const LedgerFrame::RepeatDiff& D,
+	                  const LedgerFrame::SettleTakes& Takes)
+	{
+		const int OfShots = (int)GSpec.Shots.size();
+		const std::string Family =
+			(TargetIndex == 1) ? std::string("night")
+			                   : GRepeatTargets[TargetIndex < 0 ? 0 : TargetIndex].Family;
+		const std::string Id = GRepeatTargets[TargetIndex < 0 ? 0 : TargetIndex].ShotId;
+		std::string Line = LedgerFrame::RigDeterminismLine(
+			Id, OfShots, OfShots, Status, D, Family);
+		Line += " ";
+		Line += LedgerFrame::SettleKeys(Takes, LedgerFrame::kSettleMeanLumaBound,
+		                                LedgerFrame::kSettleTakesMax, "rigRepeat");
+		GRigLines.push_back(Line);
+		LedgerFrame::RepeatRollAdd(GRepeatRoll, Id, Family, Status, D,
+		                           LedgerFrame::kSettleMeanLumaBound);
+	}
+
 	void MeasureRigRepeat(const FString& PngPath, bool bHaveFile)
 	{
 		LedgerFrame::RepeatDiff D;
-		const int OfShots = (int)GSpec.Shots.size();
+		const int T = (GRepeatAt >= 0 && GRepeatAt < kRepeatTargets) ? GRepeatAt : 0;
+		const RepeatTarget& Tgt = GRepeatTargets[T];
 		if (!bHaveFile)
 		{
-			GRigLine = LedgerFrame::RigDeterminismLine(
-				GFirstShotId, OfShots, OfShots, "NO-FILE", D);
+			RecordRepeat(T, "NO-FILE", D, GRepeatSettle);
 			return;
 		}
 		TArray64<uint8> Bgra;
@@ -4082,29 +4200,25 @@ namespace
 		std::string Note("none");
 		if (!DecodeBgra(PngPath, Bgra, W, H, Note))
 		{
-			GRigLine = LedgerFrame::RigDeterminismLine(
-				GFirstShotId, OfShots, OfShots, "UNDECODABLE", D);
+			RecordRepeat(T, "UNDECODABLE", D, GRepeatSettle);
 			return;
 		}
-		if (GFirstBgra.Num() == 0)
+		if (Tgt.Bgra.Num() == 0)
 		{
-			GRigLine = LedgerFrame::RigDeterminismLine(
-				GFirstShotId, OfShots, OfShots, "NO-FIRST-FRAME", D);
+			RecordRepeat(T, "NO-FIRST-FRAME", D, GRepeatSettle);
 			return;
 		}
-		if (W != GFirstW || H != GFirstH)
+		if (W != Tgt.W || H != Tgt.H)
 		{
 			// TWO SIZES ARE NOT TWO TAKES OF ONE PICTURE, and a difference
 			// taken across them would be arithmetic on unrelated pixels.
-			GRigLine = LedgerFrame::RigDeterminismLine(
-				GFirstShotId, OfShots, OfShots, "SIZE-MISMATCH", D);
+			RecordRepeat(T, "SIZE-MISMATCH", D, GRepeatSettle);
 			return;
 		}
 		D = LedgerFrame::MeasureRepeat(
-			(const unsigned char*)GFirstBgra.GetData(),
+			(const unsigned char*)Tgt.Bgra.GetData(),
 			(const unsigned char*)Bgra.GetData(), W, H);
-		GRigLine = LedgerFrame::RigDeterminismLine(
-			GFirstShotId, OfShots, OfShots, "MEASURED", D);
+		RecordRepeat(T, "MEASURED", D, GRepeatSettle);
 	}
 
 	// QUEUE 326: THE LINE, ITS FLOOR VERDICT AND THE EXPOSURE IT WAS TAKEN
@@ -4367,6 +4481,37 @@ namespace
 		return true;
 	}
 
+	// QUEUE 384: ONE TAKE'S WHOLE-FRAME MEAN LUMA, FOR THE SETTLE DECISION
+	// AND FOR NOTHING ELSE. It pushes no line and moves no tally: the shot's
+	// own statistics stay MeasureShot's, taken on the take that is finally
+	// committed. A take that produced no file or would not decode is not a
+	// take that agreed, so it stops the loop rather than appending a zero
+	// that would read as a frame gone black.
+	void SettleRecordTake(LedgerFrame::SettleTakes& Takes, const FString& PngPath,
+	                      bool bHaveFile)
+	{
+		if (!bHaveFile) { Takes.NoFile = true; return; }
+		TArray64<uint8> Bgra;
+		int32 W = 0, H = 0;
+		std::string Note("none");
+		if (!DecodeBgra(PngPath, Bgra, W, H, Note)) { Takes.NoFile = true; return; }
+		const LedgerFrame::FrameStats PS =
+			LedgerFrame::Measure((const unsigned char*)Bgra.GetData(), W, H);
+		Takes.Means.push_back(PS.MeanLuma);
+	}
+
+	// AND THE ASK ITSELF. Another take is 8 warm ticks and 24 timed ticks and
+	// a second shutter, exactly the interval the probe pass re-takes on, and
+	// it deliberately does NOT re-enter ApplyShot: the condition is not
+	// re-applied, the camera is not re-placed and the sky epoch is not
+	// bumped, so the second take is a take of the SAME settled scene and not
+	// a new disturbance of it.
+	bool WantAnotherTake(LedgerFrame::SettleTakes& Takes)
+	{
+		return LedgerFrame::SettleWantsAnotherTake(
+			Takes, LedgerFrame::kSettleMeanLumaBound, LedgerFrame::kSettleTakesMax);
+	}
+
 	// WHAT HAPPENS WHEN A FRAME LANDS, IN ONE PLACE. The reference path and
 	// the probe path differ only in what they measure, and a second copy of
 	// this would drift the moment either changed.
@@ -4375,6 +4520,15 @@ namespace
 		const Shot& S = GSpec.Shots[GShotIndex];
 		if (GRepeating)
 		{
+			// THE REPEAT SETTLES THE WAY THE SHOT DOES, or the difference it
+			// prints is a draw from the race rather than a reading of the rig.
+			SettleRecordTake(GRepeatSettle, GAskedPath, bHaveFile);
+			if (WantAnotherTake(GRepeatSettle))
+			{
+				GFrameMs.clear();
+				GPhase = EPhase::Warm;
+				return;
+			}
 			// THE REPEAT PUSHES NO SHOT LINE. Its frame is half of a
 			// difference, not evidence, and a twelfth shot line would put a
 			// frame nothing committed into every denominator on the file.
@@ -4408,6 +4562,15 @@ namespace
 			++GShotIndex;
 			++GShotPass;
 			GPhase = EPhase::ApplyShot;
+			return;
+		}
+		// QUEUE 384: THE SHUTTER IS NOT DONE UNTIL TWO TAKES AGREE. The
+		// committed frame is the LAST take, and MeasureShot runs once, on it.
+		SettleRecordTake(GSettle, GAskedPath, bHaveFile);
+		if (WantAnotherTake(GSettle))
+		{
+			GFrameMs.clear();
+			GPhase = EPhase::Warm;
 			return;
 		}
 		MeasureShot(S, GAskedPath, bHaveFile);
@@ -6166,32 +6329,45 @@ namespace
 		{
 			if (GShotIndex >= (int32)GSpec.Shots.size())
 			{
-				// ---- THE DETERMINISM REPEAT, LAST, OF THE FIRST SHOT -----
+				// ---- THE DETERMINISM REPEATS, LAST, ONE PER TARGET -------
 				//
-				// The same camera and the same condition as shot 1, arrived
-				// at from the opposite end of the run: every other shot,
-				// every condition change and every light probe stood between
-				// the two. It writes to a scratch path, pushes no shot line
-				// and moves no tally; the only thing it produces is one
-				// difference, and that difference is what says whether any
-				// cross-shot comparison in this run means anything.
-				if (!GRepeatRan && !GSpec.Shots.empty() && GFirstBgra.Num() > 0)
+				// The same camera and the same condition as the shot being
+				// repeated, arrived at from the opposite end of the run:
+				// every other shot, every condition change and every light
+				// probe stood between the two. Each writes to a scratch
+				// path, pushes no shot line and moves no tally; the only
+				// thing they produce is one difference each, and those
+				// differences are what say whether any cross-shot comparison
+				// in this run means anything. QUEUE 384 MADE IT TWO: the
+				// first shot and the first NIGHT shot, because the day frame
+				// alone read rigMeanLumaDelta=-0.0017 while the night pass
+				// was off by up to 270 times that and nobody was looking.
+				// QUEUE 384: ONE REPEAT PER TARGET, THE DAY FRAME AND THE
+				// NIGHT FRAME, each arrived at from the end of the run. A
+				// target with no frame behind it still prints a line and
+				// still enters the roll, so a run that photographed no night
+				// shot cannot read as a run that checked the night path.
+				while (GRepeatNext < kRepeatTargets)
 				{
-					GRepeatRan  = true;
-					GRepeating  = true;
-					GShotIndex  = 0;
-					++GShotPass;
-					GPhaseStart = Now; GPhaseTicks = 0;
-					return true;
-				}
-				if (!GRepeatRan)
-				{
+					const int32 T = GRepeatNext;
+					++GRepeatNext;
+					if (!GSpec.Shots.empty() && GRepeatTargets[T].ShotIndex >= 0
+					    && GRepeatTargets[T].Bgra.Num() > 0)
+					{
+						GRepeatAt     = T;
+						GRepeating    = true;
+						GRepeatSettle = LedgerFrame::SettleTakes();
+						GShotIndex    = GRepeatTargets[T].ShotIndex;
+						++GShotPass;
+						GPhaseStart = Now; GPhaseTicks = 0;
+						return true;
+					}
 					// NOTHING TO BE IDENTICAL TO IS ITS OWN READING and is
 					// not a zero difference.
-					LedgerFrame::RepeatDiff Nothing;
-					GRigLine = LedgerFrame::RigDeterminismLine(
-						GFirstShotId, GShotIndex, (int)GSpec.Shots.size(),
-						"NO-FIRST-FRAME", Nothing);
+					RecordRepeat(T,
+						GRepeatTargets[T].ShotIndex < 0 ? "NO-SUCH-SHOT"
+						                                : "NO-FIRST-FRAME",
+						LedgerFrame::RepeatDiff(), LedgerFrame::SettleTakes());
 				}
 				FinishNormally();
 				return false;
@@ -6268,6 +6444,10 @@ namespace
 			ApplyCondition(*Cond);
 			PlaceCamera(GameWorld(), *C);
 			GFrameMs.clear();
+			// QUEUE 384: THIS SHOT'S SETTLE SERIES STARTS EMPTY. This phase is
+			// re-entered while the condition settles and never once a take has
+			// been recorded, because the re-take returns to Warm and not here.
+			if (!GRepeating) { GSettle = LedgerFrame::SettleTakes(); }
 			GNote = TEXT("none");
 			GTriedHighResThisShot = false;
 			GSizeTracker = -1;

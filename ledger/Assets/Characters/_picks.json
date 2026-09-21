@@ -278,12 +278,6 @@
     "exact": false,
     "pattern": "^leaning\\b"
   },
-  "drink": {
-    "tier": "C",
-    "found": "Drinking_2dee24f8-3b49-48af-b735-c6377509eaac",
-    "exact": true,
-    "pattern": "^drinking\\b"
-  },
   "smoke": {
     "tier": "C",
     "found": null,
@@ -295,9 +289,15 @@
   },
   "work_counter": {
     "tier": "C",
-    "found": "Bartending_4f5d21e1-4ccc-41f1-b35b-fb2547bd8493",
-    "exact": true,
-    "pattern": "\\bbartending\\b"
+    "found": null,
+    "tried": [
+      "\\bcounter\\b",
+      "\\btyping\\b"
+    ],
+    "setAside": [],
+    "removedByHand": [
+      "Bartending_4f5d21e1-4ccc-41f1-b35b-fb2547bd8493.fbx, removed under D17 on 2026-09-21; no pick has run since, so this slot is empty until the next harvest"
+    ]
   },
   "collapse": {
     "tier": "C",
@@ -403,7 +403,7 @@
     "exact": true,
     "pattern": "^sitting talking\\b"
   },
-  "sit_drink": {
+  "sit_wait": {
     "tier": "D",
     "found": "Sitting_2dee24f8-3b49-48af-b735-c6377509eaac",
     "exact": false,

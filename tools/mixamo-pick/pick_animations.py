@@ -213,11 +213,35 @@ WANTS = [
     # ---- TIER C: life, and the end -------------------------------------
     ("sit",          "C", [r"\bsitting idle\b", r"^sitting\b"]),
     ("lean",         "C", [r"\blean(ing)? against wall\b", r"^leaning\b"]),
-    ("drink",        "C", [r"^drinking\b", r"\bdrink(ing)?\b"]),
+    # THERE IS NO `drink` SLOT AND THERE WILL NOT BE ONE. D17 puts alcohol
+    # out of this work entirely, D18 makes that permanent, and a slot named
+    # for the act is the act, whatever file sits in it: the picker copied
+    # `Drinking` into it and the five content gates all read TEXT, so nothing
+    # in the project could see an asset. Ruled by Jafar 2026-09-21.
+    #
+    # NOT RENAMED, AND THE REASON IS A MEASUREMENT RATHER THAN A TASTE. A
+    # replacement slot would want a man raising a mug of tea, and of the 1,547
+    # distinct names in `_catalogue.txt` NONE contains tea, cup, mug, sip,
+    # coffee or eating: the only vessel-to-mouth names Mixamo has are
+    # `Drinking`, `Sitting Drinking` and `Drinking Fountain`. A slot whose
+    # only candidate is the clip the rule forbids is not a slot, so the entry
+    # goes rather than being given a clean name over the same file.
+    #
+    # `smoke` STAYS. D18 keeps tobacco in as many words, and this slot is
+    # empty for a reason that has nothing to do with content: the harvest file
+    # called `Smoking` travels 0.68m against STILL_MAX of 0.50, so `motion_ok`
+    # set it aside as a standing slot holding a clip that goes somewhere. The
+    # patterns stay live so the next harvest can fill it.
     ("smoke",        "C", [r"^smoking\b", r"\bsmok(e|ing)\b"]),
-    # Tom Novak runs a bar. `Bartending` is a real clip and a far better
-    # answer than the `Typing` the guessed list settled for.
-    ("work_counter", "C", [r"\bbartending\b", r"\bcounter\b", r"\btyping\b"]),
+    # THE COUNTER IS A MINICAB COUNTER. `\bbartending\b` led this list under a
+    # comment reading "Tom Novak runs a bar", which was wrong twice over: D17
+    # bans the trade and D19 made Mickey's a minicab office, so the counter is
+    # a desk with a radio, a book of fares and a telephone on it. `Typing` is
+    # what the slot held before `Bartending` displaced it and is what it falls
+    # back to now. `\bcounter\b` matches no catalogued name today and the
+    # selftest says so on every run; it is kept as the name of the thing the
+    # slot is FOR, not as a live candidate.
+    ("work_counter", "C", [r"\bcounter\b", r"\btyping\b"]),
     ("collapse",     "C", [r"^dying\b", r"\bfalling back death\b"]),
     # THE FALL is an authored beat in this game, so it gets the clip that
     # actually depicts losing your footing rather than a generic drop.
@@ -270,8 +294,16 @@ WANTS = [
                             r"^picking up\b", r"^digging\b"]),
     ("lift",         "D", [r"^lifting object\b", r"^lifting\b"]),
     ("sit_talk",     "D", [r"^sitting talking\b"]),
-    ("sit_drink",    "D", [r"^sitting drinking\b", r"^sitting dazed\b",
-                            r"^sitting\b"]),
+    # `sit_wait`, AND IT WAS CALLED `sit_drink` UNTIL 2026-09-21. The file in
+    # it is `Sitting`, which is innocent; the SLOT name was the D17 breach and
+    # the picker's own report printed it on every run. A man sitting still in
+    # the Hook is waiting: for a fare, for a lift, for somebody to come out.
+    # `^sitting drinking\b` is gone with the rule; `^sitting dazed\b` goes
+    # too because dazed is a man who has been hit, not a man waiting, and a
+    # fallback that answers a different question is how a slot ends up playing
+    # something nobody asked for. `^sitting\b` picks `Sitting` on the
+    # shortest-name tiebreak, which is what it already holds.
+    ("sit_wait",     "D", [r"^sitting\b"]),
 ]
 
 FLAT = re.compile(r"[^a-z0-9]+")
@@ -319,6 +351,10 @@ def content(path, cache):
 #: of all 67 shipped clips, sorted, gives one clean gap and one crowded band:
 #:
 #:     7 jog · 9 get_up · 14 knockdown · 18 sit_drink        <- on the floor
+#:                                          (that slot is `sit_wait` since
+#:                                           2026-09-21 and the 18cm reading
+#:                                           was the `Sitting Drinking` file,
+#:                                           removed under D17)
 #:        ...nothing at all between 18 and 60...
 #:     60 carry_bag · 64 idle_bored · 68 guard_exit · 69 head_no · 72 thinking
 #:     73 turn_right · 74 block_broken · 74 RUN · 76 walk_stop
@@ -337,7 +373,8 @@ FLOOR_CM = 39.0
 
 #: Slots whose posture is unambiguous. Everything absent is unchecked ON
 #: PURPOSE — the sitting slots because the evidence is contradictory
-#: (`sit_drink` reads 18 against `sit_talk` at 94 and nothing says which is
+#: (`sit_wait`, then called `sit_drink`, read 18 against `sit_talk` at 94 and
+#: nothing said which was
 #: right), and `get_up`, `shoved`, `take_hit` and `stagger` because they are
 #: transitions that may legitimately be anywhere.
 POSTURE = {
@@ -356,7 +393,7 @@ POSTURE = {
     "greet": "upright", "wave": "upright", "point": "upright",
     "thinking": "upright", "glance": "upright", "head_no": "upright",
     "laugh": "upright", "yell": "upright", "smoke": "upright",
-    "drink": "upright", "lean": "upright", "lean_wall": "upright",
+    "lean": "upright", "lean_wall": "upright",
     "pockets": "upright", "rummage": "upright", "lift": "upright",
     "carry": "upright", "carry_bag": "upright", "work_counter": "upright",
     "phone_box": "upright", "shake_hands": "upright", "shove": "upright",
@@ -402,9 +439,9 @@ GOES = {"walk", "walk_f", "walk_old", "run", "jog", "back_away", "walk_start",
 #: POSTURE: it must be on the floor AND not walk about on it.
 STAYS = {"idle", "idle_2", "idle_old", "idle_bored", "talk", "argue", "greet",
          "wave", "point", "thinking", "glance", "head_no", "laugh", "yell",
-         "smoke", "drink", "lean", "lean_wall", "pockets", "rummage",
+         "smoke", "lean", "lean_wall", "pockets", "rummage",
          "work_counter", "phone_box", "shake_hands", "sit", "sit_talk",
-         "sit_drink", "block_hold", "block_start", "guard", "lie_still"}
+         "sit_wait", "block_hold", "block_start", "guard", "lie_still"}
 
 
 #: WHICH WAY IT GOES — THE THIRD AXIS, AND THE ONLY ONE NO FILE CAN ANSWER.
@@ -1544,8 +1581,9 @@ def selftest():
     # THOUGHT OF", and it was wrong the day it was written. It asks whether a
     # SLOT matched, and a slot is satisfied by any one of its patterns — so a
     # dead pattern sitting beside a live one is invisible to it. That is how
-    # ten doubled backslashes shipped: `sit_drink` reported `none of 3 patterns
-    # matched` while only two of the three could ever have matched anything,
+    # ten doubled backslashes shipped: `sit_drink` (renamed `sit_wait` on
+    # 2026-09-21) reported `none of 3 patterns matched` while only two of the
+    # three could ever have matched anything,
     # and `block_hold` was down to one live pattern out of five. The widening
     # written to fill those exact holes was inert for the exact slots it was
     # for.

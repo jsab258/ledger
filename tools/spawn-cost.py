@@ -3,6 +3,8 @@
 
     python3 tools/spawn-cost.py --report              # read the turns log
     python3 tools/spawn-cost.py --transcripts DIR     # the series, from disk
+    python3 tools/spawn-cost.py --work-split          # queue 370: what each
+    python3 tools/spawn-cost.py --work-split --transcripts DIR   # session WROTE
     python3 tools/spawn-cost.py --hook                # SubagentStop, stdin JSON
     python3 tools/spawn-cost.py --selftest            # accepting case FIRST
 
@@ -47,9 +49,32 @@ THE TIER AND THE TURNS ARE READ AT THE SAME INSTANT, off one read of one file
 at the moment the subagent stopped. The transcripts live under ~/.claude and
 do not survive the container; the row in the repository does.
 
+    wrote  the repo AREAS the session CHANGED, as area:writeCalls, from the
+           tool_use blocks in that same transcript, off that same read, at
+           that same instant. Queue 370, Jafar 2026-09-16: "The split cannot
+           be computed at all until the spawn log records what a session
+           touched, not just who ran and why." NOT SELF-REPORTED: a column an
+           agent fills in about itself is an attendance register with an extra
+           field, which is the fault being fixed, one layer along.
+    fileToolsOfAll  its denominator, same instant: file-path tool calls out of
+           ALL tool calls. `no-file-write 0/60` is a session that did sixty
+           things through the shell; `no-file-write 0/0` is a session that did
+           nothing, and the pair is the only thing that tells them apart.
+
+WHAT THE COLUMN CANNOT ANSWER, COUNTED AND NEVER GUESSED. 4,178 of 8,069 tool
+calls across the 130 live transcripts are Bash, whose `command` is a shell
+string, not a path field. A redirection-target regex was written and MEASURED
+before being rejected: 326 of the 348 in-repo "paths" it recovered were
+fragments of Python heredocs, a 6% precision. So a shell write is not
+recoverable, a session with none records the words, and every reading prints
+the rows it could not answer for beside the rows it could. 325 rows on this
+machine predate the column and read `pre-column` for ever: nothing rewrites a
+row, and the transcripts behind them went with their containers.
+
 EXIT CODES, distinct per outcome. 0 a reading was printed. 1 the log or the
-directory could not be read. 2 nothing measured: no rows, no transcripts.
-3 the selftest failed. The --hook mode ALWAYS exits 0: a broken audit trail
+directory could not be read. 2 nothing measured: no rows, no transcripts, or
+(--work-split) a session set whose `wrote` column answered for nobody, which
+is a rung printed and not a split computed. 3 the selftest failed. The --hook mode ALWAYS exits 0: a broken audit trail
 must never be able to stop the work it only describes.
 """
 import argparse
@@ -71,7 +96,69 @@ sys.path.insert(0, str(HERE))
 from capsay import cap, NOTHING_MEASURED                          # noqa: E402
 
 TURNS_LOG = ".claude/agent-turns.tsv"
-COLUMNS = ("when", "agent", "tier", "turns", "alines", "agentId")
+# COLUMNS 7 AND 8 ADDED 2026-09-21 for queue 370. The first six are the
+# shape every row written before that date carries; `LEGACY_COLUMNS` is that
+# prefix BY NAME so a pre-370 row is read as a row that PREDATES the column
+# rather than as a malformed one (see `read_log`). A row is never rewritten
+# to acquire them: 325 rows on this machine can never answer, permanently,
+# and a reader that let them vanish from a denominator would be the exact
+# fault queue 370 exists to fix one layer along.
+COLUMNS = ("when", "agent", "tier", "turns", "alines", "agentId",
+           "wrote", "fileToolsOfAll")
+LEGACY_COLUMNS = COLUMNS[:6]
+
+# WHAT A SESSION TOUCHED, DERIVED AND NEVER SELF-REPORTED (queue 370).
+#
+# THE FAULT. `.claude/agent-log.tsv` names WHO ran, so every studio-versus-game
+# reading is a count of ROLE NAMES: an engine-specialist repairing an
+# instrument counts as game work and an instrument-builder adding a gameplay
+# readback does not. Jafar, 2026-09-16: "Add the column before claiming the
+# ratio again, or stop printing the number." The ratio is withdrawn; this is
+# the column.
+#
+# WHO FILLS IT, which is the hard half. NOT the agent. The same transcript
+# `read_transcript` already opens at SubagentStop to derive tier and turns
+# carries every tool call the session made, so the areas it WROTE TO come off
+# the same single read of the same file at the same instant. An agent that
+# lied about its own work would have to lie in its tool calls.
+#
+# WRITES, NOT READS, AND THE MEASUREMENT SAYS WHY. Over the 130 subagent
+# transcripts on this machine (2026-09-21): write paths per session median 1,
+# peak 9; read paths per session median 5, peak 66, and 56 of 130 sessions
+# read in more than four areas because every session opens CLAUDE.md, canon.md
+# and the queue before it does anything. A split built on reads would put
+# every session in every area. `wrote` is named for the statistic it is: the
+# areas a session CHANGED.
+#
+# AND WHAT DEFEATS IT, MEASURED RATHER THAN ASSUMED. 4,178 of 8,069 tool calls
+# in those transcripts are Bash, whose `command` is a shell string and not a
+# path field. A regex that pulls redirection targets out of those strings was
+# written and MEASURED before being rejected: of 348 distinct in-repo "write
+# targets" it recovered, 326 do not exist and are fragments of Python heredocs
+# (`assert s.count(old) == 1`, `new = """...`), a 6% precision that would have
+# injected 326 phantom paths into this instrument. So a shell write is NOT
+# recoverable here and is not guessed at: a session with no file-tool write
+# records the words, and `fileToolsOfAll` ships the denominator beside them so
+# "wrote nothing" can be told from "worked entirely through the shell".
+AREA_DEPTH = 2              # ledger/Assets, tools/runner, production/queue
+# AREAS_KEPT = 8 IS SET FROM THE SERIES THIS TOOL PRINTED, not before it. The
+# first run over the 130 live transcripts with keep=4 reported "the per-row cap
+# BIT: +5 area(s) carrying 8 write call(s)", and the distinct-write-area
+# distribution behind it is median 1, peak 7, with 3 of 130 sessions above 4.
+# A cap below the observed peak bites on ORDINARY sessions, and because a
+# hidden area is counted in no side, a biting cap can silently move a session
+# from `both` to `studio`. 8 clears the measured peak by one and still bounds
+# the cell at roughly 240 characters. The announcement stays either way.
+AREAS_KEPT = 8              # per row; the rest collapse into +Nmore:K
+WROTE_NONE = "no-file-write"     # tool calls seen, none of them a file write
+WROTE_NO_TOOLS = "no-tool-call"  # a spawn that called nothing at all
+PRE_COLUMN = "pre-column"        # the row predates 2026-09-21; unanswerable
+# The tool names whose input carries a LITERAL path field. Read off the 130
+# live transcripts rather than from memory: Bash/Grep/Glob/WebFetch/WebSearch/
+# SubagentHandback were the only other names present, and none of the first
+# three names a file it CHANGED.
+WRITE_TOOLS = ("Edit", "Write", "NotebookEdit", "MultiEdit")
+WRITE_PATH_KEYS = ("file_path", "notebook_path")
 
 # THE TIERS THIS STUDIO DECLARES, read off `.claude/agents/*.md` on
 # 2026-09-03: 11 agents on opus, 2 on fable, 1 on sonnet. A tier in this list
@@ -100,7 +187,91 @@ def tier_of_model(model):
     return "other:" + low.replace(" ", "-")
 
 
-def read_transcript(path):
+def rel_area(path, root=None):
+    """One literal tool-call path -> the repo-relative AREA it sits in, or
+    None when it is outside the repository.
+
+    THE AREA IS THE DIRECTORY, capped at `AREA_DEPTH` segments, never the
+    file. Measured reason: a decision record's own name is 96 characters and
+    `game-design/decision-2026-09-14-ruling-the-prune-is-gone-...md` as an
+    "area" would blow the column open one row at a time. A directory is also
+    the thing a split is actually about.
+
+    `ledger/verify.py` -> `ledger` and `ledger/Assets/Scripts/X.cs` ->
+    `ledger/Assets`, which is the one boundary this project's own
+    `DIRECTOR_WORK` table draws by hand: what is left of `ledger/` after the
+    game project is carved out is the studio's checkers."""
+    p = (path or "").strip()
+    if not p:
+        return None
+    if p.startswith("~"):
+        p = os.path.expanduser(p)
+    base = str(pathlib.Path(root or REPO).resolve())
+    full = os.path.normpath(p if os.path.isabs(p) else os.path.join(base, p))
+    if full != base and not full.startswith(base + os.sep):
+        return None                       # OUTSIDE THE REPO: counted, not area
+    rel = os.path.relpath(full, base)
+    parts = [x for x in rel.split(os.sep) if x not in ("", ".")]
+    # THE FILENAME IS DROPPED FIRST, then the directory is capped. The first
+    # draft of this function capped the FULL path instead, and the live series
+    # it printed carried
+    # `game-design/decision-2026-09-14-ruling-the-prune-is-gone-...md` as an
+    # "area": a 96-character cell, one row at a time, and 68 areas where the
+    # directories number far fewer.
+    parts = parts[:-1]
+    if not parts:
+        return "."                        # a file at the repository root
+    return "/".join(parts[:AREA_DEPTH])
+
+
+def encode_touched(counter, keep=AREAS_KEPT):
+    """{area: writeCalls} -> the column value. CUMULATIVE write CALLS per
+    area, not distinct files: two edits to one file are two calls.
+
+    NO SPACES, because every reader of a key=value or tab channel in this
+    project splits on whitespace. THE CAP ANNOUNCES ITSELF in the value
+    itself, carrying both how many areas it ate and how many calls went with
+    them, so a truncated cell can never read as a complete one."""
+    if not counter:
+        return WROTE_NONE
+    items = sorted(counter.items(), key=lambda kv: (-kv[1], kv[0]))
+    top, rest = items[:keep], items[keep:]
+    v = ",".join("%s:%d" % (a, n) for a, n in top)
+    if rest:
+        v += ",+%dmore:%d" % (len(rest), sum(n for _, n in rest))
+    return v
+
+
+def decode_touched(value):
+    """The column value -> ({area: writeCalls}, hiddenAreas, hiddenCalls).
+
+    A value that is one of the three sentinels decodes to an EMPTY map and is
+    the caller's job to bucket: `{}` from `no-file-write` and `{}` from
+    `pre-column` are the same shape and must never be the same fact."""
+    areas, hidden_a, hidden_c = {}, 0, 0
+    v = (value or "").strip()
+    if not v or v in (WROTE_NONE, WROTE_NO_TOOLS, PRE_COLUMN, NOTHING_MEASURED):
+        return areas, hidden_a, hidden_c
+    for entry in v.split(","):
+        if ":" not in entry:
+            continue
+        name, _, num = entry.rpartition(":")
+        try:
+            n = int(num)
+        except ValueError:
+            continue
+        if name.startswith("+") and name.endswith("more"):
+            try:
+                hidden_a += int(name[1:-4])
+            except ValueError:
+                hidden_a += 1
+            hidden_c += n
+            continue
+        areas[name] = areas.get(name, 0) + n
+    return areas, hidden_a, hidden_c
+
+
+def read_transcript(path, root=None):
     """One transcript, at one instant. Returns the whole reading as a dict.
 
     PURE ARITHMETIC IN THE TESTED LAYER: the hook shim below calls this and
@@ -109,12 +280,20 @@ def read_transcript(path):
     """
     r = {"turns": 0, "alines": 0, "tier": NO_TIER, "families": {},
          "unparsed": 0, "lines": 0, "synthetic": 0, "path": str(path),
-         "synth_text": ""}
+         "synth_text": "",
+         # QUEUE 370, off the SAME read at the SAME instant as tier and turns.
+         "wrote": {}, "toolCalls": 0, "fileTools": 0, "bashCalls": 0,
+         "outsideRepo": 0, "wroteValue": WROTE_NO_TOOLS,
+         "fileToolsValue": "0/0"}
     ids = set()
     try:
         text = pathlib.Path(path).read_text(encoding="utf-8", errors="replace")
     except OSError:
         r["tier"] = NOTHING_MEASURED
+        # A TRANSCRIPT THAT IS NOT THERE MEASURED NOTHING, and must not read
+        # as a session that wrote nothing: those are two different facts.
+        r["wroteValue"] = NOTHING_MEASURED
+        r["fileToolsValue"] = NOTHING_MEASURED
         return r
     for line in text.splitlines():
         if not line.strip():
@@ -149,6 +328,34 @@ def read_transcript(path):
         fam = tier_of_model(model)
         if fam:
             r["families"][fam] = r["families"].get(fam, 0) + 1
+        # THE TOOL CALLS, in the same pass over the same bytes.
+        content = m.get("content")
+        if isinstance(content, list):
+            for blk in content:
+                if not (isinstance(blk, dict)
+                        and blk.get("type") == "tool_use"):
+                    continue
+                r["toolCalls"] += 1
+                name = blk.get("name")
+                inp = blk.get("input")
+                if not isinstance(inp, dict):
+                    inp = {}
+                if name == "Bash":
+                    r["bashCalls"] += 1
+                    continue
+                if name not in WRITE_TOOLS:
+                    continue
+                r["fileTools"] += 1
+                raw = ""
+                for k in WRITE_PATH_KEYS:
+                    if inp.get(k):
+                        raw = inp[k]
+                        break
+                area = rel_area(raw, root)
+                if area is None:
+                    r["outsideRepo"] += 1   # COUNTED, never an invented area
+                    continue
+                r["wrote"][area] = r["wrote"].get(area, 0) + 1
     # turns = distinct API assistant messages. An assistant line with no
     # message.id (older transcripts) still counts as a turn of its own, or a
     # whole run of them would collapse to 0.
@@ -156,6 +363,20 @@ def read_transcript(path):
     if r["families"]:
         modal = max(r["families"].items(), key=lambda kv: kv[1])[0]
         r["tier"] = modal + ("+mixed" if len(r["families"]) > 1 else "")
+    # THE THREE STATES A ZERO WOULD MERGE. A session that called no tool at
+    # all (3 of 130 here: session-limit kills), a session that called tools
+    # and wrote no file (41 of 130: it worked through the shell, or it only
+    # read), and a session that wrote. Merged, the first two read as "built
+    # nothing", which is a finding rather than the absence of one.
+    if not r["toolCalls"]:
+        r["wroteValue"] = WROTE_NO_TOOLS
+    else:
+        r["wroteValue"] = encode_touched(r["wrote"])
+    # THE DENOMINATOR, AT THE SAME INSTANT AS THE NUMERATOR: file-path tool
+    # calls out of ALL tool calls. `no-file-write 0/57` is a session that did
+    # 57 things through the shell; `no-file-write 0/0` is a session that did
+    # nothing. Same cell, different facts, and the pair is what separates them.
+    r["fileToolsValue"] = "%d/%d" % (r["fileTools"], r["toolCalls"])
     return r
 
 
@@ -181,6 +402,30 @@ def append_row(row, root=None):
     return p
 
 
+def header_drift(path):
+    """(namedInHeader, writtenPerRow, theCorrection) when the live log's
+    header names fewer columns than rows now carry, else None.
+
+    WHY THIS PRINTS RATHER THAN FIXES. `append_row` writes the header only
+    when the file is absent, which is what makes this file append-only by
+    construction (rule 5), and the live `.claude/agent-turns.tsv` was created
+    with six columns on 2026-09-03. Every reader here takes columns BY
+    POSITION with a length guard, so the stale header costs no reading; it
+    costs a HUMAN running `head -1`. The same drift was hand-corrected once
+    on `.claude/agent-log.tsv` (2026-09-10, a metadata correction and not a
+    measurement). A builder does not edit a live log, so this names the
+    one-line correction instead of taking it."""
+    try:
+        first = pathlib.Path(path).read_text(
+            encoding="utf-8", errors="replace").splitlines()[0]
+    except (OSError, IndexError):
+        return None
+    got = first.split("\t")
+    if got[0].strip() != "when" or len(got) >= len(COLUMNS):
+        return None
+    return (len(got), len(COLUMNS), "\\t".join(COLUMNS))
+
+
 def read_log(path):
     """(rows, short, unmeasured). THREE BUCKETS, not two, because they are
     three different facts and a reader that merged them would print a clean
@@ -189,7 +434,9 @@ def read_log(path):
       rows        a spawn with a tier and a turn count
       short       a row this reader cannot parse, including the 2-column rows
                   in `.claude/agent-log.tsv` written before this tool existed.
-                  Padding one would invent a turn count.
+                  Padding one would invent a turn count. A row carrying the
+                  SIX pre-2026-09-21 columns is NOT short: it parses, and its
+                  `wrote` reads `pre-column` (queue 370).
       unmeasured  a spawn that WAS recorded and whose transcript was already
                   gone at SubagentStop. It happened; its turns are unknown;
                   it must not sit in a median as a zero.
@@ -205,10 +452,19 @@ def read_log(path):
         cols = line.split("\t")
         if i == 0 and cols[0].strip() == "when":
             continue
-        if len(cols) < len(COLUMNS):
+        if len(cols) < len(LEGACY_COLUMNS):
             short += 1
             continue
         d = dict(zip(COLUMNS, cols))
+        if len(cols) < len(COLUMNS):
+            # A ROW THAT PREDATES THE COLUMN IS NOT A MALFORMED ROW, and it is
+            # not a row that wrote nothing. It is a row this reader can answer
+            # tier and turns for and CANNOT answer "what did it touch" for,
+            # ever: nothing rewrites it, the transcript behind it is gone with
+            # its container. Marked so, counted by every reader below, and
+            # never padded into an invented answer (rule 3b).
+            d["wrote"] = PRE_COLUMN
+            d["fileToolsOfAll"] = PRE_COLUMN
         if d["tier"] == NOTHING_MEASURED or d["turns"] == NOTHING_MEASURED:
             unmeasured += 1
             continue
@@ -324,7 +580,9 @@ def series(directory, limit=0):
                         f.stat().st_mtime).strftime("%Y-%m-%dT%H:%M:%SZ"),
                      "agent": "unknown", "tier": t["tier"],
                      "turns": t["turns"], "alines": t["alines"],
-                     "agentId": f.stem, "why": t["synth_text"]})
+                     "agentId": f.stem, "why": t["synth_text"],
+                     "wrote": t["wroteValue"],
+                     "fileToolsOfAll": t["fileToolsValue"]})
     print("spawn-cost --transcripts: %s" % directory)
     if excluded:
         print("  %d transcript(s) EXCLUDED as not-a-spawn (outside a "
@@ -381,17 +639,19 @@ def hook(stdin_text, root=None, now=None):
         return None, "no agent_type in the payload"
     tpath = d.get("agent_transcript_path") or ""
     if tpath and pathlib.Path(tpath).exists():
-        t = read_transcript(tpath)
+        t = read_transcript(tpath, root)
     else:
         # THE FIELD IS OPTIONAL AND THE FILE MAY BE GONE. Record the spawn
         # with the words, never with a 0 that reads as a spawn that did
         # nothing.
         t = {"turns": NOTHING_MEASURED, "alines": NOTHING_MEASURED,
-             "tier": NOTHING_MEASURED}
+             "tier": NOTHING_MEASURED, "wroteValue": NOTHING_MEASURED,
+             "fileToolsValue": NOTHING_MEASURED}
     when = (now or datetime.datetime.now(datetime.timezone.utc)).strftime(
         "%Y-%m-%dT%H:%M:%SZ")
     row = (when, agent, t["tier"], t["turns"], t["alines"],
-           d.get("agent_id") or "unknown")
+           d.get("agent_id") or "unknown", t["wroteValue"],
+           t["fileToolsValue"])
     append_row(row, root)
     return row, "appended"
 
@@ -436,6 +696,8 @@ def _tmp(text, name="t.jsonl"):
 
 
 def selftest():
+    import atexit
+    import shutil
     passed, failed = 0, []
 
     def ok(name, cond, got=""):
@@ -608,6 +870,245 @@ def selftest():
        "pre-ruling one", dp["buckets"] == [] and dp["disagreeAgents"] == 0,
        (dp["buckets"], dp["disagreeAgents"]))
     shutil.rmtree(proot, ignore_errors=True)
+
+
+    print("\n  E370, WHAT A SESSION TOUCHED. ACCEPTING FIRST, AND THE LIVE "
+          "REPOSITORY IS THE ACCEPTING FIXTURE:\n")
+    # A transcript shaped exactly like the live ones: one assistant message
+    # carrying tool_use blocks. Two edits into the game layer, one write into
+    # the studio layer, one Read and one Bash that are NOT writes.
+    TOUCHED = _jsonl([
+        {"type": "assistant", "message": {"id": "t1", "model": "claude-opus-5",
+         "content": [
+            {"type": "tool_use", "name": "Edit", "input": {
+                "file_path": str(REPO / "ledger/Assets/Scripts/Sim.cs")}},
+            {"type": "tool_use", "name": "Edit", "input": {
+                "file_path": str(REPO / "ledger/Assets/Scripts/Npc.cs")}},
+            {"type": "tool_use", "name": "Write", "input": {
+                "file_path": str(REPO / "tools/made-up.py")}},
+            {"type": "tool_use", "name": "Read", "input": {
+                "file_path": str(REPO / "canon.md")}},
+            {"type": "tool_use", "name": "Bash", "input": {
+                "command": "python3 ledger/verify.py"}}]}},
+    ])
+    tt = read_transcript(_tmp(TOUCHED))
+    ok("a normal transcript yields the AREAS IT WROTE IN, ordered by write "
+       "calls, from the same read that gave tier and turns",
+       tt["wroteValue"] == "ledger/Assets:2,tools:1", tt["wroteValue"])
+    ok("and the denominator rides beside it AT THE SAME INSTANT: 3 file-tool "
+       "calls of 5 tool calls, so `no-file-write 0/57` can never be confused "
+       "with `no-file-write 0/0`",
+       tt["fileToolsValue"] == "3/5", tt["fileToolsValue"])
+    ok("a Read is NOT a write: canon.md was opened and is in no area",
+       "." not in tt["wrote"] and tt["fileTools"] == 3, tt["wrote"])
+    ok("a Bash call is counted in the denominator and names no area: its "
+       "paths are NOT recoverable and are not guessed at",
+       tt["bashCalls"] == 1, tt["bashCalls"])
+    # THE LIVE CODEBASE AS THE ACCEPTING FIXTURE. These four paths exist in
+    # this repository right now; the assertion is pinned to them so that a
+    # reorganisation shows up here rather than silently reclassifying work.
+    live = {"tools/spawn-cost.py": ("tools", SIDE_STUDIO),
+            "ledger/verify.py": ("ledger", SIDE_STUDIO),
+            ".claude/hooks/log-agent.sh": (".claude/hooks", SIDE_STUDIO),
+            "canon.md": (".", SIDE_UNKNOWN)}
+    missing = [f for f in live if not (REPO / f).exists()]
+    ok("the four live files this fixture is pinned to all exist (%d checked)"
+       % len(live), not missing, missing)
+    bad = [(f, rel_area(str(REPO / f)), area_side(rel_area(str(REPO / f))))
+           for f, want in live.items()
+           if (rel_area(str(REPO / f)), area_side(rel_area(str(REPO / f))))
+           != want]
+    ok("and each reads as the area and the side the table claims (the "
+       "filename is dropped, the directory is capped at %d)" % AREA_DEPTH,
+       not bad, bad)
+    ok("a game path under ledger/ is game, and the studio's own checkers "
+       "living under ledger/ are studio: the one boundary this repo draws "
+       "by hand",
+       area_side(rel_area(str(REPO / "ledger/Assets/Scripts/A.cs")))
+       == SIDE_GAME
+       and area_side(rel_area(str(REPO / "ledger/Soak/B.cs"))) == SIDE_STUDIO,
+       (rel_area(str(REPO / "ledger/Assets/Scripts/A.cs")),
+        rel_area(str(REPO / "ledger/Soak/B.cs"))))
+    # THE LIVE TURNS LOG AS THE ACCEPTING FIXTURE, and this one guards the
+    # exact regression adding two columns could have caused: every row on
+    # disk was written with six, and a length guard against the NEW width
+    # would have turned all of them into "short" and collapsed every reading
+    # this tool already gives.
+    live_rows, live_short, live_unmeas = read_log(log_path())
+    ok("the LIVE turns log still parses after the column was added: %s row(s) "
+       "usable, %s short"
+       % (len(live_rows) if live_rows else 0, live_short),
+       live_rows and len(live_rows) > 100 and live_short == 0,
+       (len(live_rows or []), live_short, live_unmeas))
+    # A FIXTURE PINNED TO A LIVE ASSET MUST NOT BREAK WHEN THE WORK IS DONE.
+    # The first draft of this assertion said EVERY live row reads pre-column,
+    # and it went red within the hour: the SubagentStop hook started writing
+    # eight-column rows, which is the instrument WORKING. The invariant that
+    # actually holds for ever is the other way round: the 325 rows that
+    # existed when the column landed on 2026-09-21 can never acquire one and
+    # can never be rewritten, so the pre-column count is a FLOOR that only
+    # holds still.
+    live_pre = [r for r in (live_rows or []) if r["wrote"] == PRE_COLUMN]
+    ok("the 325 live rows that predate the column still read `pre-column` "
+       "and never `no-file-write`: %d found, and that count can only hold "
+       "still because nothing rewrites a row" % len(live_pre),
+       len(live_pre) >= 325, len(live_pre))
+    ok("and no live row carries an EMPTY wrote cell, which would read as an "
+       "area nobody named",
+       live_rows and all((r["wrote"] or "").strip() for r in live_rows),
+       [r["agentId"] for r in (live_rows or [])
+        if not (r["wrote"] or "").strip()][:3])
+    ga_live, ga_src = _game_agents()
+    ok("GAME_AGENTS is read from ledger/verify.py and not copied here: one "
+       "definition of the withdrawn proxy",
+       ga_live and "systems-builder" in ga_live, (ga_src, sorted(ga_live or [])))
+
+    print("\n  E370, THE CASES A PARTIAL COLUMN WOULD READ AS A COMPLETE "
+          "ONE (rejecting fixtures, synthetic):\n")
+    NOWRITE = _jsonl([
+        {"type": "assistant", "message": {"id": "n1", "model": "claude-opus-5",
+         "content": [
+            {"type": "tool_use", "name": "Bash", "input": {
+                "command": "cat > tools/x.py <<'EOF'\nprint(1)\nEOF"}},
+            {"type": "tool_use", "name": "Read", "input": {
+                "file_path": str(REPO / "CLAUDE.md")}}]}},
+    ])
+    tn2 = read_transcript(_tmp(NOWRITE))
+    ok("A PATH WRITTEN THROUGH A SHELL HEREDOC IS NOT RECOVERED AND NOT "
+       "GUESSED: the session reads no-file-write with the pair 0/2 saying "
+       "two tools DID run",
+       (tn2["wroteValue"], tn2["fileToolsValue"]) == (WROTE_NONE, "0/2"),
+       (tn2["wroteValue"], tn2["fileToolsValue"]))
+    NOTOOLS = _jsonl([
+        {"type": "assistant", "message": {"id": "z1", "model": "claude-opus-5",
+         "content": [{"type": "text", "text": "I have nothing to do"}]}},
+    ])
+    tz = read_transcript(_tmp(NOTOOLS))
+    ok("a spawn that called NO tool is no-tool-call with the pair 0/0, never "
+       "no-file-write: a slot spent on nothing is not a session that chose "
+       "to write nothing",
+       (tz["wroteValue"], tz["fileToolsValue"]) == (WROTE_NO_TOOLS, "0/0"),
+       (tz["wroteValue"], tz["fileToolsValue"]))
+    tgone = read_transcript("/nonexistent/agent370.jsonl")
+    ok("a transcript that is GONE reads the words in BOTH cells, never "
+       "no-file-write",
+       (tgone["wroteValue"], tgone["fileToolsValue"])
+       == (NOTHING_MEASURED, NOTHING_MEASURED),
+       (tgone["wroteValue"], tgone["fileToolsValue"]))
+    OUTSIDE = _jsonl([
+        {"type": "assistant", "message": {"id": "o1", "model": "claude-opus-5",
+         "content": [
+            {"type": "tool_use", "name": "Write", "input": {
+                "file_path": "/tmp/scratch/notes.md"}}]}},
+    ])
+    tout = read_transcript(_tmp(OUTSIDE))
+    ok("A PATH OUTSIDE THE REPOSITORY is COUNTED and lands in no area: the "
+       "scratchpad is not work, and inventing an area for it would put "
+       "/tmp on one side of the split",
+       (tout["outsideRepo"], tout["wroteValue"], tout["fileToolsValue"])
+       == (1, WROTE_NONE, "1/1"),
+       (tout["outsideRepo"], tout["wroteValue"], tout["fileToolsValue"]))
+    ok("A SYNTHETIC AREA THAT EXISTS NOWHERE is unclassified, never quietly "
+       "studio: zzz-no-such-area-370 is in no table and must say so",
+       area_side("zzz-no-such-area-370/deep") == SIDE_UNKNOWN,
+       area_side("zzz-no-such-area-370/deep"))
+    many = {("a%02d" % i): (20 - i) for i in range(12)}
+    v = encode_touched(many)
+    back, ha, hc = decode_touched(v)
+    ok("THE CAP ANNOUNCES WHEN IT BITES: 12 areas encode to %d shown plus "
+       "+4more carrying the rest, and it decodes back to the same hidden "
+       "counts" % AREAS_KEPT,
+       ",+4more:" in v and len(back) == AREAS_KEPT and ha == 4
+       and hc == sum(sorted(many.values())[:4]), (v, ha, hc))
+    ok("and the cell carries no space and no tab, because every reader of "
+       "this file splits on one or the other",
+       " " not in v and "\t" not in v, v)
+    ok("an empty area map encodes to the words, never to a blank cell",
+       encode_touched({}) == WROTE_NONE, encode_touched({}))
+    ok("and each sentinel decodes to an EMPTY map so no caller can read one "
+       "as an area (they are bucketed by name, not by shape)",
+       all(decode_touched(x) == ({}, 0, 0)
+           for x in (WROTE_NONE, WROTE_NO_TOOLS, PRE_COLUMN,
+                     NOTHING_MEASURED, "")),
+       [decode_touched(x) for x in (WROTE_NONE, PRE_COLUMN)])
+
+    print("\n  E370, THE PARTIAL COLUMN ITSELF, PLANTED (rule 5b: a run "
+          "where the thing it asserts CAN happen):\n")
+    import tempfile as _tf
+    sroot = pathlib.Path(_tf.mkdtemp(prefix="spawn-cost-370-"))
+    atexit.register(shutil.rmtree, str(sroot), True)
+    slog = sroot / TURNS_LOG
+    slog.parent.mkdir(parents=True, exist_ok=True)
+    slog.write_text(
+        "\t".join(LEGACY_COLUMNS) + "\n"
+        # SIX COLUMNS: a row written before the column existed.
+        + "2026-09-01T00:00:00Z\tplanner\topus\t20\t40\told370\n"
+        # EIGHT: a row that carries it.
+        + "2026-09-21T00:00:00Z\tsystems-builder\topus\t30\t60\tnew370\t"
+          "ledger/Assets:4\t4/9\n",
+        encoding="utf-8")
+    mixed, mshort, _mu = read_log(slog)
+    ok("a six-column row and an eight-column row in ONE file both parse, and "
+       "0 of 2 are short", len(mixed) == 2 and mshort == 0,
+       (len(mixed), mshort))
+    w = work_split(mixed, {}, frozenset(("systems-builder",)))
+    ok("THE PARTIAL COLUMN CANNOT READ AS A COMPLETE ONE: answerable=1 and "
+       "preColumn=1 of 2 walked, and the pre-column row is in NEITHER the "
+       "numerator nor the no-file-write bucket",
+       (w["walked"], w["answerable"], w["preColumn"], w["noFileWrite"])
+       == (2, 1, 1, 0),
+       (w["walked"], w["answerable"], w["preColumn"], w["noFileWrite"]))
+    drift = header_drift(slog)
+    ok("and the stale header ANNOUNCES ITSELF rather than being rewritten "
+       "under a live log", drift and drift[0] == 6 and drift[1] == 8, drift)
+    full = sroot / "full.tsv"
+    full.write_text("\t".join(COLUMNS) + "\n", encoding="utf-8")
+    ok("a header that already names every column announces nothing: a "
+       "notice on a file that is fine trains readers to skip it",
+       header_drift(full) is None, header_drift(full))
+    # PLANTED: the two facts the role proxy CANNOT express, so the ladder's
+    # disagreement count is exercised rather than merely possible.
+    planted = [
+        {"agentId": "p1", "agent": "systems-builder",
+         "wrote": "ledger/Assets:3,tools:2"},          # role game, wrote BOTH
+        {"agentId": "p2", "agent": "systems-builder",
+         "wrote": "tools:5"},                          # role game, wrote studio
+        {"agentId": "p3", "agent": "instrument-builder",
+         "wrote": "ledger/Assets:2"},                  # role studio, wrote game
+        {"agentId": "p4", "agent": "instrument-builder",
+         "wrote": "tools:1"},                          # agrees
+        {"agentId": "p5", "agent": "instrument-builder",
+         "wrote": "zzz-no-such-area-370:1"},           # unclassified
+    ]
+    wp = work_split(planted, {}, frozenset(("systems-builder",)))
+    ok("PLANTED: a session that wrote in BOTH halves is `both`, which one "
+       "role name per row can never say",
+       wp["sides"]["both"] == 1, wp["sides"])
+    ok("PLANTED: role-says-game/wrote-studio and role-says-studio/wrote-game "
+       "are both counted, so the proxy error is a measurement and not an "
+       "assumption",
+       wp["cross"].get((SIDE_GAME, SIDE_STUDIO)) == 1
+       and wp["cross"].get((SIDE_STUDIO, SIDE_GAME)) == 1, wp["cross"])
+    ok("PLANTED: a session whose only area is unclassified is answerable and "
+       "sits on NEITHER side",
+       wp["sides"][SIDE_UNKNOWN] == 1 and wp["answerable"] == 5, wp["sides"])
+    ok("the ladder's two halves add up: agree+disagree equals the sessions "
+       "carrying both a role and an area",
+       sum(wp["cross"].values()) == wp["crossBoth"] == 5,
+       (sum(wp["cross"].values()), wp["crossBoth"]))
+    ok("with NO GAME_AGENTS table readable, rung 1 is refused for every "
+       "session rather than half-answered",
+       work_split(planted, {}, None)["roleUnknown"] == 5,
+       work_split(planted, {}, None)["roleUnknown"])
+    ok("NEVER-RAN: 0 sessions reads as the words and exit 2, never as a "
+       "clean split",
+       report_work_split(work_split([], {}, ga_live), "fixture", "fixture")
+       == 2)
+    ok("and a session set whose column answers for NOBODY also exits 2: a "
+       "rung printed is not a split computed",
+       report_work_split(work_split(
+           [{"agentId": "q1", "agent": "planner", "wrote": PRE_COLUMN}],
+           {}, ga_live), "fixture", "fixture") == 2)
 
     print("\nspawn-cost --selftest: %s. %d passed, %d failed"
           % ("PASS" if not failed else "FAILED", passed, len(failed)))
@@ -935,6 +1436,289 @@ def report_routing_drift(d):
     return 0
 
 
+
+# ------------------------------- E370: the split, computed from the column
+# WHICH SIDE AN AREA IS ON. This table is a JUDGEMENT and it is printed with
+# every reading so that no reader has to take it on trust, because the fault
+# queue 370 exists to fix is exactly a classification nobody could audit.
+#
+# It is a SECOND table and not a reuse of `ledger/verify.py`'s `DIRECTOR_WORK`
+# on purpose, and the reason is the item's own sentence. `DIRECTOR_WORK`
+# answers "does this path need a director review", whose `gated` flag tracks
+# how expensive a wrong answer is, not who the work was for; borrowing it as
+# a game/studio proxy would be a different quantity wearing the name, one
+# layer along. What IS borrowed, because two copies of it would be the fault
+# this project keeps paying for, is `GAME_AGENTS`: the role proxy below is
+# the withdrawn reading and must be read from the one place that defines it.
+GAME_LEDGER_DIRS = frozenset((
+    "Assets", "CoreTests", "PerceptionGolden", "breaks", "Packages",
+    "ProjectSettings"))
+GAME_AREAS = frozenset(("content", "ue-probe", "voice-candidates"))
+STUDIO_AREAS = frozenset((
+    "tools", ".claude", ".github", ".githooks", "production", "ledger-v2",
+    "research", "legacy", "game-design"))
+# `.` (the repository root) IS DELIBERATELY UNCLASSIFIED: CLAUDE.md and
+# canon.md sit there beside dashboard.html and STATUS.md, and calling that
+# directory either side would be the guess this instrument replaces. It lands
+# in `unclassified`, which is printed with its own count.
+SIDE_GAME, SIDE_STUDIO, SIDE_UNKNOWN = "game", "studio", "unclassified"
+
+
+def area_side(area):
+    """One area -> game / studio / unclassified. Longest rule first."""
+    a = (area or "").strip()
+    if not a:
+        return SIDE_UNKNOWN
+    head = a.split("/")[0]
+    if head == "ledger":
+        parts = a.split("/")
+        if len(parts) > 1 and parts[1] in GAME_LEDGER_DIRS:
+            return SIDE_GAME
+        # What is left of ledger/ after the game project is carved out is the
+        # studio's own checkers and benches, which is the carve-out
+        # `DIRECTOR_WORK`'s `ledgertools` entry already draws by hand.
+        return SIDE_STUDIO
+    if head in GAME_AREAS:
+        return SIDE_GAME
+    if head in STUDIO_AREAS:
+        return SIDE_STUDIO
+    return SIDE_UNKNOWN
+
+
+def _roles(repo=None):
+    """agentId -> role name, from `.claude/agent-log.tsv`. LAST-WINS per id.
+
+    THE JOIN THAT MAKES THE LADDER POSSIBLE. `agent-log.tsv` is the only file
+    that knows WHO a spawn was; the transcript does not carry `agent_type`
+    (see `series`). Both rungs therefore read the same session set."""
+    p = pathlib.Path(repo or REPO) / ".claude" / "agent-log.tsv"
+    out = {}
+    try:
+        text = p.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return out
+    for i, line in enumerate(text.splitlines()):
+        if not line.strip():
+            continue
+        cols = line.split("\t")
+        if i == 0 and cols[0].strip() == "when":
+            continue
+        if len(cols) >= 5 and cols[4].strip():
+            out[cols[4].strip()] = cols[1].strip()
+    return out
+
+
+def _game_agents():
+    """(frozenset, source). The ROLE proxy's own table, read from the one
+    place that defines it. On failure the caller prints the words and refuses
+    rung 1 rather than carrying a second copy that could drift."""
+    try:
+        sys.path.insert(0, str(REPO / "ledger"))
+        import verify as _v                                   # noqa: WPS433
+        return frozenset(_v.GAME_AGENTS), "ledger/verify.py:GAME_AGENTS"
+    except Exception:                                          # noqa: BLE001
+        return None, NOTHING_MEASURED
+
+
+def work_split(sessions, roles, game_agents):
+    """The split, and every bucket it CANNOT answer, counted beside it.
+
+    `sessions` is [{"agentId", "agent", "wrote"}]; LAST-WINS PER agentId, the
+    same rule `routing_drift` takes and for the same measured reason (a spawn
+    nudged past `maxTurns` writes several rows for one id).
+
+    THE FOUR UNANSWERABLE BUCKETS ARE FOUR DIFFERENT FACTS and none of them
+    is a zero:
+      preColumn     the row was written before 2026-09-21. Permanent.
+      transcriptGone the transcript was already gone at SubagentStop.
+      noToolCall    the spawn called nothing: a slot spent on nothing.
+      noFileWrite   tool calls were made, none was a file write. The session
+                    worked through the shell, or only read. NOT "built
+                    nothing", and the `fileToolsOfAll` pair beside it is what
+                    separates those.
+    """
+    last = {}
+    for r in sessions:
+        aid = (r.get("agentId") or "").strip()
+        if not aid or aid == "unknown":
+            continue
+        last[aid] = r
+    out = {"walked": len(last), "answerable": 0, "preColumn": 0,
+           "transcriptGone": 0, "noToolCall": 0, "noFileWrite": 0,
+           "areaCalls": {}, "hiddenAreas": 0, "hiddenCalls": 0,
+           "sides": {SIDE_GAME: 0, SIDE_STUDIO: 0, "both": 0,
+                     SIDE_UNKNOWN: 0},
+           "roleGame": 0, "roleStudio": 0, "roleUnknown": 0,
+           "cross": {}, "crossBoth": 0}
+    for aid, r in last.items():
+        v = (r.get("wrote") or "").strip()
+        if v == PRE_COLUMN or not v:
+            out["preColumn"] += 1
+        elif v == NOTHING_MEASURED:
+            out["transcriptGone"] += 1
+        elif v == WROTE_NO_TOOLS:
+            out["noToolCall"] += 1
+        elif v == WROTE_NONE:
+            out["noFileWrite"] += 1
+        areas, ha, hc = decode_touched(v)
+        out["hiddenAreas"] += ha
+        out["hiddenCalls"] += hc
+        side_calls = {SIDE_GAME: 0, SIDE_STUDIO: 0, SIDE_UNKNOWN: 0}
+        for a, n in areas.items():
+            out["areaCalls"][a] = out["areaCalls"].get(a, 0) + n
+            side_calls[area_side(a)] += n
+        file_side = None
+        if areas:
+            out["answerable"] += 1
+            g, st = side_calls[SIDE_GAME], side_calls[SIDE_STUDIO]
+            if g and st:
+                file_side = "both"
+            elif g:
+                file_side = SIDE_GAME
+            elif st:
+                file_side = SIDE_STUDIO
+            else:
+                file_side = SIDE_UNKNOWN
+            out["sides"][file_side] += 1
+        role = roles.get(aid) or r.get("agent") or ""
+        role = role.strip().lower()
+        if game_agents is None or not role or role == "unknown":
+            out["roleUnknown"] += 1
+            role_side = None
+        elif role in game_agents:
+            out["roleGame"] += 1
+            role_side = SIDE_GAME
+        else:
+            out["roleStudio"] += 1
+            role_side = SIDE_STUDIO
+        if role_side and file_side:
+            out["cross"][(role_side, file_side)] = \
+                out["cross"].get((role_side, file_side), 0) + 1
+            out["crossBoth"] += 1
+    return out
+
+
+def report_work_split(d, source, game_src, header_note=None):
+    """Every zero ships its denominator; every cap announces; and the two
+    rungs are printed from the SAME session set in the SAME run, because a
+    rung compared across runs is a different photograph."""
+    print("spawn-cost --work-split: what each session WROTE, derived from "
+          "its own transcript at SubagentStop and never self-reported")
+    print("  source=%s gameAgentsFrom=%s" % (source, game_src))
+    if header_note:
+        print("  HEADER DRIFT: the live log's first line names %d column(s) "
+              "and its rows now carry %d. Every reader here takes columns by "
+              "POSITION, so no reading is wrong; a human running `head -1` "
+              "gets stale names. The one-line correction, for a director to "
+              "take (a builder does not edit a live log): %s"
+              % (header_note[0], header_note[1], header_note[2]))
+    if not d["walked"]:
+        print("  %s: 0 session(s) to read" % NOTHING_MEASURED)
+        return 2
+    n = d["walked"]
+    unans = (d["preColumn"] + d["transcriptGone"] + d["noToolCall"]
+             + d["noFileWrite"])
+    print("  sessions=%d (distinct agentId, LAST-WINS per id)" % n)
+    print("  answerable=%d/%d  unanswerable=%d/%d" % (d["answerable"], n,
+                                                      unans, n))
+    print("    unanswerable, four facts and not one: preColumn=%d "
+          "transcriptGone=%d noToolCall=%d noFileWrite=%d"
+          % (d["preColumn"], d["transcriptGone"], d["noToolCall"],
+             d["noFileWrite"]))
+    print("    preColumn rows can NEVER answer: nothing rewrites a row and "
+          "the transcript behind it went with its container")
+    print("    noFileWrite is NOT a session that built nothing: a shell "
+          "write is not recoverable from a transcript (measured 2026-09-21, "
+          "6% precision over 348 candidate targets), so those sessions "
+          "worked through the shell or only read")
+    if d["hiddenAreas"]:
+        print("    the per-row cap BIT: +%d area(s) carrying %d write "
+              "call(s) were collapsed into +Nmore cells, are counted in no "
+              "area line below, AND ARE COUNTED ON NO SIDE: a biting cap can "
+              "move a session from `both` to one side. AREAS_KEPT=%d was set "
+              "above the measured peak so this clause should stay silent; it "
+              "printing is the signal to re-read the series."
+              % (d["hiddenAreas"], d["hiddenCalls"], AREAS_KEPT))
+    areas = sorted(d["areaCalls"].items(), key=lambda kv: (-kv[1], kv[0]))
+    print("  PER-AREA SERIES, CUMULATIVE write CALLS over the answerable "
+          "sessions (not distinct files: two edits to one file are two):")
+    if not areas:
+        print("    %s: 0 area(s) over %d answerable session(s)"
+              % (NOTHING_MEASURED, d["answerable"]))
+    KEEP = 14
+    for a, c in areas[:KEEP]:
+        print("    %-34s %5d  %s" % (a, c, area_side(a)))
+    if len(areas) > KEEP:
+        print("    (+%d more not shown of %d, carrying %d call(s))"
+              % (len(areas) - KEEP, len(areas),
+                 sum(c for _, c in areas[KEEP:])))
+    print("  RUNG 1, THE ROLE PROXY, which is the reading Jafar WITHDREW on "
+          "2026-09-16 and which is printed here only as the rung to measure "
+          "against: roleGame=%d/%d roleStudio=%d/%d roleUnknown=%d/%d"
+          % (d["roleGame"], n, d["roleStudio"], n, d["roleUnknown"], n))
+    s = d["sides"]
+    a = d["answerable"]
+    print("  RUNG 2, FROM WHAT WAS WRITTEN, over the ANSWERABLE sessions "
+          "only: gameOnly=%d/%d studioOnly=%d/%d both=%d/%d "
+          "unclassified=%d/%d"
+          % (s[SIDE_GAME], a, s[SIDE_STUDIO], a, s["both"], a,
+             s[SIDE_UNKNOWN], a))
+    print("    `both` is a session the role proxy CANNOT express: one name "
+          "per row, and a session that changed the game and the studio in "
+          "one run lands wholly on whichever side its role name sits")
+    print("  THE DIFFERENCE BETWEEN THE RUNGS, same session set, same run, "
+          "over the %d session(s) that carry BOTH a role and a written area:"
+          % d["crossBoth"])
+    if not d["crossBoth"]:
+        print("    %s: no session carries both" % NOTHING_MEASURED)
+    for role_side in (SIDE_GAME, SIDE_STUDIO):
+        for file_side in (SIDE_GAME, SIDE_STUDIO, "both", SIDE_UNKNOWN):
+            c = d["cross"].get((role_side, file_side), 0)
+            if c:
+                mark = "agrees" if role_side == file_side else "DISAGREES"
+                print("    roleSays=%-6s wroteIn=%-12s %4d  %s"
+                      % (role_side, file_side, c, mark))
+    agree = sum(c for (rs, fs), c in d["cross"].items() if rs == fs)
+    print("    agree=%d/%d disagree=%d/%d: THE PROXY ERROR, measured rather "
+          "than estimated. Queue 370 put its size at \"32/110\" and "
+          "\"12/27 where the answer was 1\" from two hand tallies; this is "
+          "the same quantity counted." % (agree, d["crossBoth"],
+                                          d["crossBoth"] - agree,
+                                          d["crossBoth"]))
+    print("  THE RATIO ITSELF IS NOT PRINTED HERE. Jafar withdrew it on "
+          "2026-09-16 and whether it returns, and in what words, is his call "
+          "or a director's at a close-out. This tool prints the counts the "
+          "ratio would be built FROM, each beside what it could not answer.")
+    if not d["answerable"]:
+        # EXIT 2, NOT 0. Rung 1 printed and rung 2 did not: that is a reading
+        # of the proxy, never a split, and the two outcomes must not share an
+        # exit code. This is what a run against the live log returns until
+        # spawns start landing rows that carry the column.
+        print("  NOTHING MEASURED FOR RUNG 2: 0 of %d session(s) carry an "
+              "answerable `wrote` value, so no split was computed. Exit 2."
+              % d["walked"])
+        return 2
+    return 0
+
+
+def sessions_from_transcripts(directory, root=None):
+    """[{agentId, agent, wrote}] read straight off a directory of subagent
+    transcripts: the PRINTER, exactly as `series` is, and the only way to get
+    a reading today because the 325 rows already on disk predate the column
+    and nothing rewrites them."""
+    dd = pathlib.Path(directory)
+    files = [f for f in sorted(dd.rglob("*.jsonl"))
+             if f.parent.name == "subagents"] if dd.is_dir() else []
+    out = []
+    for f in files:
+        t = read_transcript(f, root)
+        aid = f.stem[len("agent-"):] if f.stem.startswith("agent-") else f.stem
+        out.append({"agentId": aid, "agent": "unknown",
+                    "wrote": t["wroteValue"],
+                    "fileToolsOfAll": t["fileToolsValue"]})
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--report", action="store_true")
@@ -947,6 +1731,10 @@ def main():
     ap.add_argument("--hook", action="store_true",
                     help="SubagentStop: read the payload on stdin, append one "
                          "row, and ALWAYS exit 0")
+    ap.add_argument("--work-split", action="store_true",
+                    help="the studio-versus-game split from the `wrote` "
+                         "column, printed WITH the count of rows it could "
+                         "not answer for (queue 370)")
     ap.add_argument("--routing-drift", action="store_true",
                     help="declared (definition) vs ran (turns log), joined "
                          "on agentId -- see routing_drift()")
@@ -960,6 +1748,24 @@ def main():
         except Exception:                                        # noqa: BLE001
             pass
         return 0
+    if args.work_split:
+        ga, ga_src = _game_agents()
+        roles = _roles()
+        if args.transcripts:
+            sess = sessions_from_transcripts(args.transcripts)
+            src = "transcripts:" + str(args.transcripts)
+            note = None
+        else:
+            rows, _s, _u = read_log(args.log or log_path())
+            if rows is None:
+                print("spawn-cost --work-split: %s (no turns log at %s)"
+                      % (NOTHING_MEASURED, args.log or log_path()))
+                return 2
+            sess = rows
+            src = str(args.log or log_path())
+            note = header_drift(src)
+        return report_work_split(work_split(sess, roles, ga), src, ga_src,
+                                 note)
     if args.transcripts:
         return series(args.transcripts, args.limit)
     if args.routing_drift:

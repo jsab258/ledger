@@ -35,7 +35,32 @@ newest commit touching this file, not a plan.
 - The frame instrument: queue 392, riding the slice's dispatches.
 - The art lane, six character concept sheets: queue 393.
 - The eleven rulings: D47 to D57 under `ledger-v2/respec/decision-register/`,
-  indexed in `rulings-log.md`.
+  indexed in `rulings-log.md`. WRITTEN 2026-09-21 by the director, in the
+  working tree for the resident's review and commit, in his order: D47 to D50
+  the conversation pillar, D51 and D52 speech and hardware, D53 the look, D54
+  and D55 bodies and movement, D56 the crime layer, D57 tools. His second
+  message of the same day
+  (`game-design/decision-2026-09-21-the-crime-and-combat-audit-ruled-eight-verbs-and-the-endings-hold.md`)
+  adds D58, the endings hold.
+- SUPERSEDED, 2026-09-21, by his second message of the same day, in his words
+  "Replace the crime layer's entry in the owed record from this week's prompt
+  with the rulings below; the owed record for combat is replaced by the combat
+  ruling": (1) the owed list in the paragraph "On the crime layer, owed rather
+  than built" below is REPLACED by D56 (eight verbs in his order, the press
+  through a person, grassing; turning yourself in waits); (2) its clause
+  "Combat is owed with it as its own layer, not only as violence through the
+  moat: fists, scarce weapons, injury, being outnumbered, running, fighting
+  dirty, and what a street of witnesses does during a fight" is REPLACED by
+  D56's combat section (three gaps in his order: outnumbered, running away as
+  a way out, the police arriving mid-fight); (3) its "how the game ends,
+  including a route to going straight, since the red team found no route back
+  once the town turns" is narrowed by D58: a route back exists, none costs
+  less than half, and no redemption path is added. The docks and business
+  side, and doing time while the town changes, are NOT replaced: they stay
+  owed and unruled. The paragraph itself stays verbatim below because his
+  words are the record. The audit's summary goes to `production/stages.md`
+  under stage 3, linked at the path the consolidation will satisfy and marked
+  not on main.
 - The research corpus cleanup: queue 394. The v1 sweep: queue 395. The three
   conventions: `ledger-v2/studio-v2/operations.md` and queue 396 for the link
   sweep. The map's second board: queue 397, extending D38.

@@ -97,9 +97,14 @@ image and in speech, and it voids decisions already taken.
 - Religion is present as part of life, never mocked, never a mechanic.
 - Police are corruptible as individuals, never as a thesis.
 
-Enforced at five sites: this rule; every image spec's content clause; the
+Enforced at six sites: this rule; every image spec's content clause; the
 word-list gate `tools/content-gate.py` over dialogue and spoken lines; crowd
-generation, which is the one site that is code; and the brand bible. Half of
+generation, which is the one site that is code; the brand bible; and the
+ANIMATION LIBRARY, walked by clip name and slot name by that same gate. The
+sixth was added 2026-09-21 after a drinking clip and a bartending clip were
+found live under D17, having survived because all five earlier sites read
+TEXT and a clip is a file name. This count is a D43 correction applied on
+landing, not a change to the rule itself. Half of
 this rule permits a FACT and forbids the DEPICTION or the REWARD, and no word
 list can read intent: `python3 tools/content-gate.py --enforceable` prints
 which clauses the gate checks and which it does not claim to.

@@ -51,6 +51,48 @@ An empty section is written as empty WITH ITS DENOMINATOR, never omitted. "No
 decisions waiting, of 4 open in the queue" and "nothing applied this week, of 3
 rulings made" are readings. A missing heading is not.
 
+## The list of things owed: a standing list, read into sections 2 and 3 every Sunday
+
+Added 2026-09-21 by the director under D30 ("the Sunday page's list of things
+owed") and D56 (Jafar: "Put it in the stages document under stage 3 and in the
+Sunday page's list of things owed, so it surfaces without me asking"). This
+list does not accumulate by date; it is edited in place when an item is built
+or ruled off, and every Sunday entry reads it. Owed means ruled and not built.
+Each line names its record and its stage so nobody re-derives either.
+
+Owed on 2026-09-21: 7 items, of which 0 are built.
+
+1. THE NARRATIVE (D30, 2026-09-14). Tom Novak's arrival, the three acts, the
+   rivals and the empire roster, all partial; the writing lane opens after the
+   visual slice as a standing lane. Stage 3. Not built.
+2. THE CRIME LAYER'S EIGHT VERBS (D56, 2026-09-21), in his order: order a named
+   man hurt through a named crew member; point a plan at a person, not a
+   building; frame someone; lean on a witness; move or hide a body; sanction
+   your own crew; send men at a rival's property; have someone vouch for you.
+   Stage 3. Not built. "None of it is built this week."
+3. THE PRESS, THROUGH A PERSON, AND GRASSING (D56). The paper is a reporter or
+   an editor who is a resident; no control sets how loud it is. Grassing is in.
+   Turning yourself in waits until the endings are traced. Stage 3. Not built.
+4. COMBAT'S THREE GAPS (D56), in his order: being outnumbered, running away as
+   a way out of a fight, the police arriving while it is still happening.
+   Stage 3 by his words; the phase-4 fists row sits at stage 6 and the tension
+   is his to resolve (reported in D56). Not built.
+5. THE ENDINGS' DESIGN CONDITION (D58): the player sees the cost coming, as
+   Tom's own reading with its reasons (D33). Binds stage 3 and stage 4. Not
+   built. Its checkpoint half, reachability of the two endings left to a hunted
+   player from a hunted state, is the resident's queue item now, and a card to
+   him if either is unreachable.
+6. THE OWED ITEMS OF THE FIRST MESSAGE THAT THE SECOND DID NOT RULE ON: the
+   docks and business side; doing time while the town changes. Owed and
+   unruled (his first message of 2026-09-21, "On the crime layer"). Stage 3.
+7. THE CONVERSATION PILLAR'S FIRST RUNG, live content screening (D49). Recorded
+   under stage 2 until his card places the pillar's rungs. Not built.
+
+Numbers the plan lacks that these records created, for section 3: the wear
+floor (D53: the quantity and the printer are named, the number is a gap until
+the facade's batch prints the series); the small-model number and the cost
+per hour (D47); the watermark reapply result (D50).
+
 ## What arms it
 
 `trig_017Wzurh3D3fV2JiMQj7NS34`, cron `0 8 * * 0`, a FRESH SESSION each firing

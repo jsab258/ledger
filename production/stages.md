@@ -66,6 +66,15 @@ lit, a figure in silhouette. The week of 2026-09-14 is that list (ruling of
 2026-09-14), under his pace rule: "Do not wait for my verdict to move to the
 next; my verdict adjusts, it does not gate."
 
+THE GRIME RULE, D53 (2026-09-21): weather and grime are the strategy (canon),
+and the first authored building facade (queue 389 in the resident's log of that
+day, the week's measured batch under D28's Amendment A1) is authored under it.
+The floor for how much wear a surface carries is A NUMBER NOBODY HAS PRINTED:
+D53 names the quantity (wear coverage, per surface, as a key=value token from
+the material script), the printer, and the order (print the series on the
+facade's batch, then the director sets the floor as D53 A1). No bound exists
+today and none is guessed here.
+
 Rungs of `production/ladder.md` under this stage: 1 (the street matched to the
 Hook sheet, marked `current` on 2026-09-14), 2 (props read as their materials),
 3 (Mickey's frontage on the street, a minicab office by D19).
@@ -135,6 +144,29 @@ town and nowhere to be found; and the inventory's "bodies and faces" tile split
 into faces, body animation, and body language as a moat surface. The register
 decides faces (D2) and nothing yet decides bodies.
 
+D54 AND D55 (2026-09-21) DECIDE ROUTES AT THIS STAGE AND START NOTHING NOW.
+Clothing (D54): there is no MetaHuman wardrobe; the route is garment meshes on
+the shared skeleton, a checker first (one that tells a working coat from a
+ruined one and prints its denominator), then one jacket moved between bodies by
+Blender weight transfer; nothing bought. Animation (D55): the route is OPEN, not
+closed; an animation assembly line in the image line's shape is evaluated here,
+after the 3D line (the MESH station) has produced something, under his caveat
+that it is a third generative line while the second is unproven; every
+estimator or video model enters the licence allowlist by its own record before
+a clip is imported. The sentence above, "nothing yet decides bodies", is read
+with D46 (the source: Mixamo) and D54 (the clothing route); it stands for
+body language and for the movement list.
+
+THE CONVERSATION PILLAR'S FIRST RUNG HANGS HERE UNTIL HIS CARD PLACES IT: live
+content screening (D49, 2026-09-21), a dependency of the pillar and not a ship
+task. Today nothing screens a live reply: `Core/ResponseValidator.cs` checks
+length and staying in character, and the content rule is called only from
+crowd generation and the crowd body pick, both read 2026-09-21. The model behind
+that voice is bound by D47 (its size is a measurement, the small-model test)
+and D48 (no resident speaks through a worse model because of who they are).
+Where the pillar's rungs sit relative to the visual stages is the first of his
+two cards of 2026-09-21; the rung table in `production/ladder.md` is his.
+
 D26'S CONTENTS LAND HERE: footsteps by surface, doors, cloth, breath, rain, room
 tone, the harbour bed. CC0 libraries and the engine's own audio system; no new
 tooling.
@@ -170,6 +202,20 @@ gone green with the consequence spine's terminal state unreachable
 (`game-design/decision-2026-09-05-ruling-build-batch-and-roadmap-fold.md`);
 Jafar reverts it on one word.
 
+A READING AGAINST THAT GATE, 2026-09-21, FROM THE SCALE SOAK (queue 351 with
+116; the finding is queue 405, BLOCKED on his decision): the machinery is cheap
+(500 residents, 500 in-game days, 1.5 s) and the reach is flat: 15 to 22
+residents ever remember anything at 7, 50, 200, 300 and 500, because a rumour
+arrives at confidence times tie times 0.8 and is refused below 0.2, so with the
+authored tie weights it dies at the second transfer. Measured for ORDINARY TALK
+(the soak seeds sightings, never a body) over ties resampled from the authored
+eleven, with meetings a coin and not a schedule. The constants are untouched;
+the tie series and a planted lever series are printed before the question of
+what reach the moat requires goes to him (afternoon ruling of 2026-09-21,
+section 3). The gate above asks for a second and a third NPC within a week,
+which the reading meets; what it does not say is whether the TOWN knows, and
+that is his question.
+
 Phase 2's crime clauses fold here: petty crime verbs; the witness-to-phone-box
 chase. Rule 6 applies with its teeth: the loop is done when something in the
 game calls it and a gate proves the call happened in a landed run, not when
@@ -198,11 +244,74 @@ largest unplanned mass in the game. A writing lane opens AFTER the visual slice,
 as a STANDING LANE like the art line rather than a queue item. The research lane
 is preparing the ground with a topic on how systemic games write authored
 stories that survive emergence, which is the brief that lane starts from. D30
-names a second home for this, the Sunday page's list of things owed. No Sunday
-page exists in this checkout on 2026-09-14: none of the thirteen documents at
-the top of `production/` is one, and `tools/producer-check.py` line 173 records
-that the Sunday summary has no register yet. This paragraph is the record until
-the page exists and inherits it.
+names a second home for this, the Sunday page's list of things owed. CORRECTED
+2026-09-21 under D43: the Sunday page exists since 2026-09-15
+(`production/sunday.md`, created the day it was ruled) and carries the list of
+things owed as a standing section; the sentence that stood here from
+2026-09-14, "No Sunday page exists in this checkout", was true on that date
+and is not now.
+
+THE CRIME LAYER IS RECORDED HERE, AS D56 REQUIRES (Jafar, 2026-09-21, ruling
+on the crime and combat coverage audit). His premise correction, verbatim: "The
+premise was wrong in our favour. The boss half is not thin ... What is missing
+is one act, and it is the one I asked about. There is no verb between deciding
+a man should be hurt and the book recording that he was, and a job's target is
+a building, never a person." OWED, IN HIS ORDER, and the order is part of the
+ruling ("the first two are the missing act and the rest build on them"):
+
+1. Order a named man hurt, through a named crew member.
+2. Point a plan at a person, not a building: a target field for a man, and a
+   resolver.
+3. Frame someone, by steering who the police point at.
+4. Lean on a witness to change what they say.
+5. Move or hide a body.
+6. Sanction your own crew: dock, expel or beat.
+7. Send men at a rival's property rather than his person.
+8. Have someone vouch for you.
+
+Plus: THE PRESS, in, but only through a person, a reporter or an editor who is
+a resident, who remembers and can talk; there is no control that sets how loud
+the paper is (D34: the town has no opinion, only people). GRASSING, in.
+TURNING YOURSELF IN waits until the endings are traced. COMBAT'S THREE GAPS,
+in, in his order: being outnumbered first, then running away as a way out of a
+fight rather than a move inside one, then the police arriving while it is still
+happening. D18 holds throughout, in his words for this batch: ordering a
+beating is in scope and depicting one at length is not; nothing makes drugs a
+player verb; nothing leverages a child. No children anywhere.
+
+NONE OF IT IS BUILT THIS WEEK. His words: "None of it is built this week: it
+belongs to stage 3 and waits behind the visual slice and the measurements."
+Queue 401 (the verbs, the press and grassing) and 402 (the three combat gaps)
+hold it as BLOCKED stage-3 placeholders, filed by the planner on 2026-09-21;
+neither is READY, and the planner re-opens them by stage when this stage's turn
+comes, under the rule in "What the 2026-09-10 closure did". The full wording,
+and what was and was not checked, is D56.
+
+THE AUDIT'S DELIVERY, linked where the consolidation will put it:
+`ledger-v2/research/deliveries/crime-and-combat-coverage/SUMMARY.md`. NOT ON
+MAIN ON 2026-09-21. The delivery sits on the branch
+`research/crime-and-combat-coverage`, unmerged (confirmed on the remote by the
+resident's `git ls-remote --heads origin`, one of 48 research branches, 0
+merged), and not fetched into this checkout (a grep of `.git/` for the branch
+name returned nothing). The research consolidation he ordered the same day
+(queue 394) copies every SUMMARY.md onto main under one folder; that path is
+the one this line expects, and the consolidation either satisfies it or
+corrects this line in the same commit. Until then the link is a promise with a
+named owner, not a file, and nothing here claims the file is present.
+
+THE ENDINGS HOLD, D58 (2026-09-21): five, written and wired
+(`ledger/Assets/Scripts/Core/ActThree.cs`, `enum Ending`: Quiet, Both,
+StraightLife, Kingdom, BurnBoth, read 2026-09-21); a route back exists and none
+costs less than half of what you have; NO REDEMPTION PATH IS ADDED. Two
+conditions. First, checkpoint work now: the two endings left to a hunted
+player are confirmed reachable from a hunted state, QUEUE 399 (READY), and a
+card to him if either is not. Second, a design condition that binds this
+stage and stage 4: the player sees the cost coming as it approaches, through
+D33's surface, Tom's own reading with its reasons; "a cost the player could
+not have seen is a trap; a cost he watched arrive is the game." The endings'
+pub wording is corrected to the minicab office (D19) under D43 in the same
+pass, QUEUE 400 (READY), a builder's change with review because the strings
+are in Core.
 
 ## Stage 4: the player's shell
 
@@ -266,6 +375,11 @@ section). D4 orders combat before driving. D24 sets its budget: LEDGER is not a
 shooter, so fighting gets the smallest budget that keeps it from looking wrong,
 and it may not take budget from perception, memory, gossip or consequence.
 
+READ WITH D56 (2026-09-21): combat's three gaps (outnumbered, running away as a
+way out, the police arriving mid-fight) are placed at STAGE 3 by Jafar's words,
+while this row keeps fists at stage 6. The tension is reported in D56 and is
+his to resolve; nothing in this row moved.
+
 Quality-ladder rows under it: Brand identity's radio and TV strings (the Argus
 headline format, Tideline's ident and sign-off, the Town's chant and tannoy
 line).
@@ -289,7 +403,10 @@ the sixth stage and keep their gates:
   and the engine's own audio; no new tooling.
 - THE WRITING LANE (D30): opens after the visual slice; standing, not a queue
   item; recorded under stage 3.
-- THE RESEARCH LANE: preparing the writing lane's brief (D30).
+- THE RESEARCH LANE: preparing the writing lane's brief (D30). Its crime and
+  combat coverage audit landed on its branch and was ruled on 2026-09-21 (D56,
+  D58); "From here, a question a measurement can answer is not commissioned as
+  research" (Jafar, 2026-09-21).
 - THE SPEND RULE, ruled 2026-09-14: two thirds of every week's spend goes to
   game work, meaning the ladder, the visual slice and the moat; studio, channel,
   gates and process take the rest and wait when the share is gone; judged
@@ -396,3 +513,18 @@ which loses to the ladder on WHERE we are and wins on WHAT a rung is for.
   `roadmap-v2.md` retired as a plan document. Reasons and the edits still owed
   to other lanes are in
   `game-design/decision-2026-09-14-ruling-the-plan-is-two-documents-and-the-phases-fold.md`.
+- 2026-09-21, Jafar: D47 to D58 (the conversation pillar's reasoning, no
+  tiering by person, live screening as the first rung, the watermark, the
+  speech engine's path, no floor from the paper, the grime rule, clothing,
+  animation, the crime layer's verbs and combat's gaps, Graphify, the endings).
+  Director, same day: paragraphs added under stages 1, 2, 3 and 6 above; the
+  Sunday-page sentence under stage 3 corrected under D43; the audit's
+  SUMMARY.md linked under stage 3 at the path the consolidation will satisfy,
+  marked not on main. The stage-3-versus-stage-6 tension on combat is reported
+  in D56, not resolved here.
+- 2026-09-21, afternoon, director: queue 399 to 402 named under stage 3 where
+  the morning text said no item existed (401 and 402 are BLOCKED placeholders,
+  399 and 400 READY checkpoint work); the scale soak's reading added under
+  phase 1's gate, constants untouched, the question his (queue 405; the
+  afternoon ruling
+  `game-design/decision-2026-09-21-ruling-five-landings-the-sixth-site-the-settled-night-frame-and-the-neighbourhood-that-is-not-the-town.md`).
