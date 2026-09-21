@@ -113,3 +113,288 @@ The station-5 step was also SKIPPED for this batch and added afterwards,
 which is worth admitting here rather than only in a lesson: the line has
 five stations and the one that keeps everyone honest is the one easiest
 to forget, because by then the work feels done.
+
+## The BATCH unit, and the attempts nobody kept
+
+ADDED 2026-09-21 for queue 403, from Jafar's order: "the throughput ledger
+takes a batch as its unit and counts rejected attempts, since the industry
+research found nobody measures rework and ours would be the instrument that
+does." Everything above this heading is the PIECE unit and is unchanged by it.
+The piece unit answers "what landed"; it cannot answer "what did it cost",
+because a cost divided by survivors alone prices the wrong thing.
+
+**A batch counts when every deliverable on the list it fixed at station 1
+(SPEC) has passed station 3 (VERIFY) and landed at station 4 (INTEGRATE). A
+batch one deliverable short counts zero, the same way a piece does.**
+
+**An attempt counts as REJECTED when a station's gate or a named judge refuses
+it and the work is not carried into station 4. A rejected attempt counts zero
+pieces and one rejection.** Silence is not a refusal: a batch that nothing has
+refused and nothing has landed is OPEN, and an OPEN batch is not a rejection
+and not a zero.
+
+WHY THE BATCH AND NOT THE PIECE, IN ONE SENTENCE THAT THIS FILE ALREADY
+WROTE: "THE FIRST PIECE COST THE PIPELINE AND THE TWENTY-SECOND COST NOTHING."
+A piece is what a batch produces, so it is a fine unit for counting output and
+a hopeless one for pricing input. The batch is the smallest thing that has a
+start, an end and a bill.
+
+### The three states of a rejection count, which must never collapse into one
+
+    attemptsRejected=0/of=4-attempts          four attempts, none refused
+    attemptsRejected=0/of=0-attempts-so-far   nothing attempted yet
+    attemptsRejected=nothing-measured         NOBODY COUNTED, and it ran
+
+The third is what every batch before today reads, because there was no field
+to write it in while the work happened. Entering a retrospective zero there
+would be an invented measurement with a number on it, which is the exact fault
+rule 3b exists to stop. `tools/throughput-check.py` refuses a bare zero
+anywhere in a batch block for the same reason.
+
+### The block shape, and why it is not a table
+
+Each batch is a block of labelled key=value lines, values carrying no spaces so
+that any reader splitting on whitespace gets the whole value. It is NOT a pipe
+table, and that is measured rather than stylistic:
+`tools/dashboard/build-dashboard.py:425` collects EVERY pipe row of four or
+more cells and `read_throughput` at :1216 sums cell 3 of every row whose first
+cell matches the current ISO week, so a batch written as a table row would be
+added to the dashboard's verified-piece count in silence. The checker refuses a
+pipe row inside this section.
+
+    ### BATCH <id>
+    batch:    batchId line status(OPEN|VERIFIED|REJECTED) opened closed
+    unit:     deliverables(N/fixed-at-open/list=<path>) deliverableUnit
+    attempts: attemptsMade(N-cumulative) attemptsRejected(N/of=M-attempts)
+              rejectedAtStation
+    before:   meterTakenAt meterTotalPct meterFablePct meterSource
+              sessionsTakenAt sessionsCumulative sha
+    after:    the same keys plus cleanWindow(yes|no|not-stated)
+    machine:  runnerMinutes(N.NN/sum-of-timed-steps/over=<coverage>)
+              runnerSteps
+    wear:     wearCoverageN wearCoverageMin(<fraction>/<surface>)
+
+WHAT EACH NUMBER IS A STATISTIC OF, named here once so no row has to guess.
+`attemptsMade` and `attemptsRejected` are CUMULATIVE over the batch's life.
+`sessionsCumulative` is a LAST-WINS reading of the whole `.claude/agent-log.tsv`
+at the instant beside it, and the batch's own session cost is the DIFFERENCE
+between the before and after readings, never either one alone. `meterTotalPct`
+and `meterFablePct` are Jafar's own LAST-WINS readings of his usage page, which
+nothing in this container can read; the ledger quotes the newest row of
+`production/budget.md` and the instant he took it, and that instant is NOT the
+instant the batch opened. `wearCoverageMin` is the MINIMUM over the batch's
+surfaces with the surface named, per D53 point 2, because a median cannot see
+the one clean wall. `runnerMinutes` is a SUM over the steps a verdict times
+and never the job: checkout, editor start and the commit-and-push step are
+outside it and unmeasured, which is the same caveat the cost section above
+already carries, and the value states over how many runs the sum was taken
+because a sum with an unstated coverage is a number waiting to be quoted as a
+total.
+
+TWO INSTANTS, NEVER ONE. The meter reading and the session count are taken at
+different moments by different hands, so they carry `meterTakenAt` and
+`sessionsTakenAt` separately. One `takenAt` standing for both would print two
+moments as one, which is the fault this file records against itself in the
+prop row above.
+
+PRICED IS QUEUE 369'S FOUR CONDITIONS AND NOT THIS FILE'S OPINION: end to end,
+the rejected work counted in, BOTH meters read before AND after, nothing else
+running in the window. `tools/throughput-check.py --series` prints
+`pricedConditionsMet=k/of=4` per batch and names the ones unmet. A batch
+missing any of them is UNPRICED, which is a true state of the world and not a
+failure; the failure would be letting it read as priced.
+
+NO BOUND IS SET HERE. Not on rejections per batch, not on sessions per batch,
+not on minutes. The series has the points printed below and no more, and a
+bound needs a printed series first (rule 2). The printer ships now, the number
+comes when there are runs to read it from.
+
+### What the rows above read as under this unit, which is the test of it
+
+Every existing row of this ledger is keyed to a named package, so each one IS a
+batch and the unit describes them without rewriting a single figure. Four
+batches, and NOT ONE OF THEM IS PRICED: three of the four conditions fail on
+all four, which is the answer to "what does a unit of content cost" as of
+tonight. The number does not exist yet, and now the shape of its absence is
+visible instead of inferred.
+
+### BATCH b001-dialogue-pub-regular-v1
+
+batch: batchId=b001-dialogue-pub-regular-v1 line=dialogue-bank status=VERIFIED
+  opened=2026-W36 closed=2026-W36
+unit: deliverables=1/fixed-after-the-fact/list=production/throughput.md#row-2026-W36-dialogue
+  deliverableUnit=dialogue-bank-of-48-lines
+attempts: attemptsMade=nothing-measured attemptsRejected=nothing-measured
+  rejectedAtStation=nothing-measured
+before: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=nothing-measured wearCoverageMin=nothing-measured
+
+THE ONE THING STILL OPEN ON IT IS A JUDGE, and the batch unit now has somewhere
+to put the answer: the row above says tone is PENDING the D7 judge. If that
+judge refuses the bank, this becomes the ledger's first recorded REJECTION at
+station 3 with a named judge, and the field to record it in exists as of
+tonight. Under the old file it would have left no mark at all.
+
+### BATCH b002-brand-bible-v1
+
+batch: batchId=b002-brand-bible-v1 line=signage-brand status=OPEN
+  opened=2026-W36 closed=not-yet
+unit: deliverables=8/fixed-at-open/list=content/brands/brand-bible-v1.json
+  deliverableUnit=brand-entry
+attempts: attemptsMade=nothing-measured attemptsRejected=nothing-measured
+  rejectedAtStation=nothing-measured
+before: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=nothing-measured wearCoverageMin=nothing-measured
+
+OPEN AND NOT REJECTED, AND THE DISTINCTION IS THE POINT OF THE STATUS. VERIFY
+passed and INTEGRATE did not, so it counts zero pieces by the piece rule and
+zero landed deliverables by the batch rule. Nothing refused it: it has been
+waiting since 2026-W36 as queue 009. A ledger with only two states would have
+had to call this a rejection, and it is not one.
+
+### BATCH b003-prop-pilot-one
+
+batch: batchId=b003-prop-pilot-one line=prop-asset status=VERIFIED
+  opened=2026-W36 closed=2026-09-09
+unit: deliverables=16/fixed-after-the-fact/list=production/throughput.md#row-2026-W36-W37
+  deliverableUnit=glb-mesh-asset
+attempts: attemptsMade=nothing-measured attemptsRejected=nothing-measured
+  rejectedAtStation=nothing-measured
+before: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=nothing-measured wearCoverageMin=nothing-measured
+
+ITS DELIVERABLE LIST WAS RECONSTRUCTED AFTERWARDS AND THAT IS WHY IT IS MARKED
+SO. The pilot grew while it ran, so there is no list fixed at station 1 to
+divide anything by: 16 is `propUassetsOnDisk=16` from run 3, quoted in the row
+above. Counted tonight rather than recalled,
+`ls ue-probe/Content/Ledger/Props/*.uasset` returns 18, because two more landed
+later under other work. A denominator fixed after the fact drifts; that is the
+whole argument for fixing it at station 1, and this is the evidence for it.
+
+ITS RUNNER MINUTES READ nothing-measured AND THE FILE ABOVE HAS THREE
+READINGS, which is not a contradiction. The cost section carries 1.60, 1.60 and
+1.72 minutes for three mesh runs, one earlier run that published nothing, and a
+5 min 42 s wall clock for run 33. Those are PER RUN and on two different
+clocks, over an unknown fraction of the batch's runs. Adding them would produce
+a batch total whose denominator nobody can state, so this field says the words
+rather than a sum, and the terrace front is the first batch that can fill it
+honestly because its runs will be counted from the start.
+
+WHAT THE 22 IS, AND THIS UNIT DOES NOT SETTLE IT. The row above counts 22 and
+queue 355 is open on whether that is 22 pieces or 22 placements from 15 meshes.
+The batch unit counts BATCHES, one here, so it neither inherits nor repairs
+that ambiguity, and nothing in this section may be read as having closed
+queue 355.
+
+### BATCH b004-fascia-package-two
+
+batch: batchId=b004-fascia-package-two line=prop-asset status=OPEN
+  opened=2026-09-09 closed=not-yet
+unit: deliverables=2/fixed-at-open/list=production/art/fascia-01/01-SPEC-fascia-package.md
+  deliverableUnit=glb-mesh-asset
+attempts: attemptsMade=nothing-measured attemptsRejected=nothing-measured
+  rejectedAtStation=nothing-measured
+before: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=nothing-measured wearCoverageMin=nothing-measured
+
+THE ONE BATCH ABOVE WHOSE LIST WAS FIXED AT STATION 1, read rather than
+assumed: `production/art/fascia-01/01-SPEC-fascia-package.md` is dated
+2026-09-09 and names its two assets, `fascia_cornice_01` and
+`fascia_console_01`, before either was authored. It is OPEN because station 4
+has not been measured on the PC, which the row above states in one sentence.
+
+### BATCH b005-terrace-front-01
+
+batch: batchId=b005-terrace-front-01 line=art-terrace-fronts status=OPEN
+  opened=2026-09-21T18:42:08Z closed=not-yet
+unit: deliverables=not-yet-fixed/at=station-1-SPEC
+  deliverableUnit=glb-mesh-asset
+attempts: attemptsMade=0-cumulative attemptsRejected=0/of=0-attempts-so-far
+  rejectedAtStation=none/of=0-attempts-so-far
+before: meterTakenAt=2026-09-21T16:2xZ meterTotalPct=13 meterFablePct=17
+  meterSource=production/budget.md#row-2026-09-21b
+  sessionsTakenAt=2026-09-21T18:42:08Z
+  sessionsCumulative=745/src=.claude/agent-log.tsv sha=0f1b8fa4
+after: meterTakenAt=nothing-measured meterTotalPct=nothing-measured
+  meterFablePct=nothing-measured meterSource=nothing-measured
+  sessionsTakenAt=nothing-measured sessionsCumulative=nothing-measured
+  sha=nothing-measured cleanWindow=not-stated
+machine: runnerMinutes=nothing-measured runnerSteps=nothing-measured
+wear: wearCoverageN=nothing-measured wearCoverageMin=nothing-measured
+
+THIS IS THE BEFORE READING, TAKEN TONIGHT SO THERE IS A BASELINE TO SUBTRACT
+FROM. It is queue 403's last deliverable and the authoring session's first
+input. Its three numbers were read at the two instants beside them and not
+recalled: 745 spawn rows in `.claude/agent-log.tsv` and sha 0f1b8fa4 at
+2026-09-21T18:42:08Z, and 13 and 17 percent from the newest row of
+`production/budget.md`, which Jafar took at about 16:2xZ. THE METER IS TWO AND A
+HALF HOURS OLDER THAN THE SESSION COUNT and the two keys say so rather than
+averaging into a false instant. Nothing in this container can read the usage
+page, which is his standing instruction, so a fresher meter is a thing to ask
+for and never to compute.
+
+WHAT THE NEXT SESSION OWES THIS BLOCK, in order. Fix the deliverable list at
+station 1 SPEC and replace `not-yet-fixed`, because a denominator chosen after
+the work is the fault b003 above is the evidence for. Increment `attemptsMade`
+per attempt and `attemptsRejected` per refusal WITH the station that refused
+and the judge who called it, whichever way the batch resolves. Print
+`wearCoverage` with the batch per D53 point 5, the facade being the first point
+in that series and not a surface judged against a floor that does not exist.
+Ask Jafar for both meters at the close, and ask him whether the window was
+clean, because `cleanWindow` is the one condition of the four that only he can
+answer.
+
+THE SUBJECT CHANGED THIS EVENING AND THE BATCH DID NOT. Queue 389 was one
+facade authored from scratch and is SUPERSEDED by his kit-first ruling and then
+by `game-design/decision-2026-09-21-ruling-the-terrace-fronts-are-authored-and-everything-else-comes-from-what-we-hold.md`:
+the terrace fronts are authored in Blender from the atlas plans, under the
+grime rule, dressed in free scanned materials. He kept all three things this
+block exists for, in his own words, "both meters read before and after, the
+BATCH as the throughput ledger's unit, and REJECTED ATTEMPTS COUNTED". So this
+block is opened for the terrace front rather than for the superseded item.
+
+### The instrument, and what it refuses
+
+`tools/throughput-check.py` reads this section and refuses: a bare zero with no
+denominator, a value with a space in it, a missing reading line, a rejection
+count larger than its attempts, a resolved batch with no close instant or no
+fixed deliverable list, a wear pair half measured, a wear minimum that names no
+surface, a pipe-table row in this section, and any of the three definition
+sentences above being edited away. It prints `--series` with one line per batch
+and a done line carrying every zero's denominator. Its selftest runs the live
+ledger as the accepting case FIRST and every rejecting fixture is synthetic
+(`b9xx`, which exists in no ledger), so doing the work this file asks for can
+never break the tool. That is queue 416's fault class, named so it is not
+repeated here.

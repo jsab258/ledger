@@ -785,6 +785,55 @@ def ref_bench():
     return True, "%s ref-bench checks (%s failed)" % (m.group(1), m.group(2))
 
 
+def throughput_batches():
+    """The throughput ledger's BATCH rows, which price the work including the
+    work that was thrown away.
+
+    WHY IT IS GATED HERE AND NOT LEFT TO A WORKFLOW. Queue 416, found today:
+    `tools/citypack/fetch_textures.py --selftest` sat in one rarely-dispatched
+    workflow and in none of this file's checks, so nobody learned it was broken
+    for six days. A guard reachable from nothing a person runs before
+    committing is a guard with one chance a week to speak. This one runs every
+    commit.
+
+    WHAT IT GATES. `tools/throughput-check.py --selftest` (accepting case
+    first, and the accepting fixture is the live ledger) and then the gate
+    itself over `production/throughput.md`, where a non-zero exit is either a
+    malformed batch block or a ledger with no batch section at all. The second
+    matters as much as the first: the section landing and then being edited
+    away would otherwise read as clean, and rule 3b's whole point is that a
+    clean result and an absent one must not look alike.
+
+    WHAT IT REPORTS RATHER THAN GATES: the done line's counts. How many
+    batches are priced by queue 369's four conditions, and how many count
+    rejections at all, are readings of the project's honesty and not faults to
+    fail a commit over. Today both are small on purpose: four of five batches
+    predate the field and read `nothing-measured` rather than a false zero."""
+    tool = ROOT.parent / "tools" / "throughput-check.py"
+    code, out = run(["python3", str(tool), "--selftest"])
+    m = re.search(r"throughput-check selftest: (\d+) passed, (\d+) failed", out)
+    if not m:
+        return False, "THROUGHPUT: selftest did not report"
+    if m.group(2) != "0":
+        bad = [l.strip() for l in out.splitlines() if l.strip().startswith("FAIL")]
+        return False, "THROUGHPUT: " + _cap(bad, strip=5, width=91,
+                                            tail="selftest failed")
+    code, rep = run(["python3", str(tool)])
+    done = [l for l in rep.splitlines() if l.startswith("throughput done:")]
+    got = dict(tok.split("=", 1) for tok in
+               (done[0].split()[2:] if done else []) if "=" in tok)
+    if code != 0:
+        bad = [l.strip() for l in rep.splitlines() if l.strip() and
+               not l.startswith("throughput done:")]
+        return False, "THROUGHPUT: " + _cap(bad, strip=0, width=91,
+                                            tail="batch ledger refused")
+    return True, ("%s throughput-check selftest checks, batches=%s priced=%s "
+                  "countingRejections=%s"
+                  % (m.group(1), got.get("batchesWalked", "?"),
+                     got.get("batchesPriced", "?"),
+                     got.get("batchesCountingRejections", "?")))
+
+
 def decal_ink():
     """What each decal set lays down — the instrument, not a verdict on it.
 
@@ -8777,7 +8826,7 @@ def main():
                ue_material_selftest,
                ue_prop_import_selftest, sky_tools_selftest,
                propview, meshgen_suite, ref_bench,
-               decal_ink,
+               decal_ink, throughput_batches,
                frame_drift, verdict_keys, verdict_format, verdict_dupkeys,
                verdict_emit_dupkeys, vignette_shot_files,
                runs_map_to_commits, gate_detail_ceiling,

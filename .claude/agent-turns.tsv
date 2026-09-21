@@ -342,3 +342,5 @@ when	agent	tier	turns	alines	agentId	wrote	fileToolsOfAll
 2026-09-21T16:55:28Z	content-wrangler	sonnet	28	72	a21f10e7f379adcde	tools/citypack:2	2/44
 2026-09-21T17:20:53Z	systems-builder	opus	68	136	a0cc89ce425f0c384	ledger/Assets:2,tools/citypack:2	4/78
 2026-09-21T18:24:07Z	instrument-builder	opus	39	82	ad3c521cf526c50cc	tools/citypack:7	7/44
+2026-09-21T18:40:38Z	engine-specialist	opus	38	100	a5e4c0c70a7ae0a26	no-file-write	0/53
+2026-09-21T18:48:27Z	instrument-builder	opus	47	101	aad985f372b963533	tools:4	4/56
