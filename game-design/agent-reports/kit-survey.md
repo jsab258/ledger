@@ -1,6 +1,32 @@
-> **STATUS: LOG, 2026-08-25. NOT CURRENT** once wired.
-> Survey and measurement only; nothing in this report is wired. The next
-> dispatch executes it. Supersede or delete when the placements land.
+> **STATUS: LOG, 2026-08-25. NOT CURRENT: THE LAMPS LANDED THE SAME DAY.**
+> The measurements below are still the files' and still good. The line that
+> said nothing here is wired was true for a few hours and is now false, and
+> leaving it up re-issued the lamp dispatch on 2026-09-21 as work never done.
+>
+> WIRED, AND MEASURED IN A LANDED RUN. All six lamp forms go in through
+> `WorldBuilder.LampModel` / `AimLamp` / `MakeLamp`, with the district
+> lookup this report asked for, by commit 71316fa1 on 2026-08-25, the same
+> day as this survey. `game-design/sim-shots/verdict.txt` at cb4767e prints
+> `kitBy=[lamp:354/354/0/0refused]` and
+> `kitByVariant=[lamp/curved:186/0,lamp/curved_double:4/0,lamp/curved_cross:3/0,`
+> `lamp/square:149/0,lamp/square_double:8/0,lamp/square_cross:4/0]`, with
+> `kitAmounts=[lamp/height:nosum/354/0bad/4.44..4.99..4.99]`: 354 placed of
+> 354 offered, none missed, heights min..median..max in metres against the
+> 4.99 and 4.44 targets this report derived. Placed counts are the whole
+> city, not the per-street ranges the rows below guessed at.
+>
+> NOT FOR THE UNREAL VIGNETTE, and that is a measurement rather than a
+> taste. The lamp columns here are SQUARE in section: the base ring of
+> `light-curved`, `light-curved-double` and `light-square` is four vertices
+> at (+-2.5, +-2.5) units, a 0.37 m square post. The photoreal slice's own
+> `E1_lighting_column` is a 0.114 m ROUND shaft, which is the real diameter
+> of a British lighting column. These forms suit the kit-built city, whose
+> language they already are; swapping them into the judged frame trades a
+> correct round column for a four-sided one three times too fat.
+>
+> The rest of this report below the lamps is UNCHECKED as of 2026-09-21:
+> the lamp rows were the only ones read back against a landed run. Read any
+> other row as a 2026-08-25 measurement plus an unverified verdict.
 
 # Placement plan — city-kit-roads and city-kit-suburban
 

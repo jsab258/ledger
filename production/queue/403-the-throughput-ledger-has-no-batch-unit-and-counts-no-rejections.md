@@ -41,7 +41,37 @@ acceptance: production/throughput.md defines a batch unit for the facade
   unit; and the BEFORE reading queue 389 will quote is present in the file
   at the moment this item closes
 max_sessions: 1
-status: READY 2026-09-21, filed with the visual slice's order. BLOCKS
+status: LANDED 2026-09-21 by the instrument line, uncommitted at the time of
+  writing (the director commits). WHAT LANDED, three files:
+  production/throughput.md gains the BATCH section (the unit sentence, the
+  REJECTED sentence, the block shape, the five batch blocks and the BEFORE
+  reading for the terrace front); tools/throughput-check.py is the checker and
+  the series printer, 23 selftest checks, accepting case first and the
+  accepting fixture is the live ledger; ledger/verify.py gains
+  `throughput_batches` so the guard runs before every commit rather than in a
+  workflow nobody dispatches, which is queue 416's fault class avoided.
+
+  THE FIRST SERIES, printed rather than promised: batchesWalked=5
+  batchesPriced=0/of=5 batchesCountingRejections=1/of=5
+  deliverableListsFixedAtOpen=2/of=5. Four batches predate the field and read
+  `nothing-measured` rather than a retrospective zero. NO BOUND IS SET: the
+  printer ships first.
+
+  TWO PLACES THE SPEC IS STALE OR WRONG, named rather than quietly worked
+  around. (1) It says the batch is "the unit of work one authoring attempt
+  produces". Built deliberately otherwise: a batch is the commission whose
+  deliverable list is fixed at station 1, and attempts live INSIDE it. If one
+  attempt were one batch, a rejected attempt would be its own batch and no row
+  could ever carry the rework, which is the opposite of queue 369's "price a
+  batch, end to end, including work that was rejected". (2) It names queue 389
+  as the consumer of the BEFORE reading; 389 was SUPERSEDED the same evening,
+  first by the kit-first ruling and then by
+  game-design/decision-2026-09-21-ruling-the-terrace-fronts-are-authored-and-everything-else-comes-from-what-we-hold.md.
+  The BEFORE reading is therefore opened as b005-terrace-front-01 for the
+  terrace front, which is what he kept: "both meters read before and after,
+  the BATCH as the throughput ledger's unit, and REJECTED ATTEMPTS COUNTED".
+
+  Was: READY 2026-09-21, filed with the visual slice's order. BLOCKS
   queue 389 (the facade), which may not start authoring until this item
   lands; queue 389's own status line says so. Does not block on anything
   itself and may start this week.
