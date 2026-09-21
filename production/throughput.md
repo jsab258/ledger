@@ -402,12 +402,29 @@ from the workflow and the wrapper at test time; selftest 48 to 66.
 ATTEMPT 2, rejected by a named judge, the director, against the Hook sheet.
 Committed at fbba39e1 on art/atlas-01. THE RENDER SUCCEEDED: status=RAN
 objectsBuilt=10/10-planned previewsWrote=4/4 engineUsed=BLENDER_EEVEE_NEXT
-crossCheckAgree=10/10 manifoldParts=10/10. THE SILHOUETTE IS WRONG. The arc is
-tighter and starts higher than the reference, reading as a shepherd's crook
-rather than a swan neck; the head is too bulky; it hangs on a visible dropper
-with an unexplained tab where the reference terminates the curve directly in
-the canopy; the base collar is too prominent; and no wear reads at all despite
-a coverage figure of 0.450 on the base.
+crossCheckAgree=10/10 manifoldParts=10/10. THE SILHOUETTE IS WRONG, and the
+director's account of WHY was wrong in the opposite direction, corrected here
+under D43 with the false text named. What was written: "the arc is tighter and
+starts higher than the reference, reading as a shepherd's crook rather than a
+swan neck", with the reference described as "a long lazy sweep beginning about
+two thirds up". MEASURED AFTERWARDS ON THE SHEET'S OWN PIXELS, first by the
+builder and then independently by the director: the pole is 3px wide and dead
+straight from y760 downward, and the entire curve, head and ridge bump resolve
+between y752 and y758. SEVEN ROWS. The reference is COMPACT AND
+TOP-CONCENTRATED, not a long sweep, so the description was read off a blurred
+crop instead of measured, which is rule 4 exactly: the picture was strong
+evidence something was wrong and weak evidence of what.
+THE SYMPTOM WAS REAL AND THE CAUSE WAS THE DROPPER, NOT THE ARC. At 26.3 px
+per metre, derived from the 3px pole against the spec's 0.114 m shaft, the
+sheet's transition is about 0.27 m vertically, which implies an arc radius near
+0.30 m and REFUTES the authored 0.75 m. So the render's arc was TOO GRADUAL,
+not too tight; the crook read came from a 0.707 m external dropper hanging the
+head below the curve like a rod. The director's prescription, a gentler arc,
+would have made it WORSE: the builder proved in closed form that with the mount
+pinned below the shaft top, a LARGER radius always LENGTHENS the dropper.
+The other four hold: the head is too bulky; there is a stray tab; the base
+collar is too prominent; and no wear reads at all despite a coverage figure of
+0.450 on the base.
 
 THE NUMBER THAT PASSED IS THE FINDING. authoredCurvature_perM=1.3333 beat a
 naive quarter circle at 2.0000 and was recorded as shallower, while the picture
