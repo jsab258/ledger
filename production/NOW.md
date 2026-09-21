@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-20 04:0xZ at the daily wake: the newest section before it was 2026-09-17 13:1xZ, so a fresh session would have opened knowing nothing of the playtest runbook he dictated on the 19th, the evidence it is still owed, or the channel's own unanswered meter ask at 01:13:40Z.
+STATUS: LIVE. Verified 2026-09-21 12:2xZ, the first commit after his reading and his order for the week; the section below is what is moving now and the sections under it are last week.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -8,6 +8,70 @@ session would otherwise duplicate, abandon, or wait for forever.
 
 Keep it current or delete it. A stale NOW is worse than none, because it
 looks like a live state.
+
+## 2026-09-21 12:2xZ THE RESET, HIS ORDER FOR THE WEEK, AND WHAT IS MOVING
+
+THE METER IS READ AND THE STUDIO IS UNLOCKED. His message, arriving between
+11:19Z and 12:10Z: total 0, Fable 0, ceiling 85 on the higher meter, standing.
+Row 2026-09-21 in `production/budget.md`. The four-day hold ends with it. The
+session model was switched to Fable with the same message, so the resident's
+own turns now spend the Fable meter.
+
+HIS ORDER IS ON DISK VERBATIM, 3,529 words, at
+`game-design/decision-2026-09-21-the-week-after-the-reset-five-measurements-and-eleven-rulings.md`.
+Read that before anything here. Its shape, so a cold session has it in one
+screen: research is finished; six unknowns remain and all are measurements;
+this week takes five. The order of the week, which nothing below reconciles
+because he ordered it so nothing would have to be:
+
+1. THE VISUAL SLICE, the spine, runner first: (1) D18 in the animation
+   library, fifteen minutes; (2) the exposure fault, queue 384, with the
+   determinism check extended to the night shots in the same batch; then the
+   figure; (3) the first authored building facade as the week's measured
+   batch, behind queue 370's column and the throughput ledger's new unit.
+2. THE MEASUREMENTS, in parallel, behind the slice on the runner: the
+   small-model test; the MESH station's first run; the scale soak at 50 then
+   200 (queue 351 with 116 folded in, runs in the container); the frame
+   instrument, riding the slice's own dispatches.
+3. THE ART LANE behind both: six character concept sheets.
+4. Eleven rulings, D47 to D57, recorded as they go; cheap; not the week's work.
+5. Cleanups, two cards, one check: the studio's third, at checkpoints.
+6. If budget remains, queue 250. Then the filed audit and red-team items.
+Cut from the bottom, never from the slice.
+
+WHAT IS MOVING AT THIS WRITING: nothing yet. The first commit is the reading,
+his text, and this section, so that a session that dies in the next hour
+opens on his order and not on a cold read. The builders are spawned in the
+turn after it and their spawn rows are in `.claude/agent-log.tsv`; a later
+edit of this section names them.
+
+HIS SECOND MESSAGE OF THE SAME DAY, about 12:3xZ, RULES THE CRIME AND COMBAT
+AUDIT and is on disk verbatim at
+`game-design/decision-2026-09-21-the-crime-and-combat-audit-ruled-eight-verbs-and-the-endings-hold.md`.
+NONE OF IT IS BUILT THIS WEEK, in his words: it is stage 3 and waits behind
+the slice and the measurements. Eight verbs are ruled in, the press in but
+only through a person, grassing in, three combat gaps in, and the five endings
+HOLD with no redemption path added. TWO THINGS ARE CHECKPOINT WORK NOW and
+only two: confirm the two hunted-player endings are reachable from a hunted
+state (a card to him if either is not), and correct the endings' pub wording
+to the minicab office under D19 and D43. The delivery is on
+`research/crime-and-combat-coverage`, which EXISTS: confirmed by
+`git ls-remote --heads origin`, one of 48 research branches among
+52 heads on the remote, 0 of them merged to main, which is what the consolidation cleanup is for.
+
+A CORRECTION TO HOW THIS CHECKOUT WAS READ ON FRIDAY, applied here under D43.
+Queue 387 recorded that the meridian-test-administration delivery was not in
+this checkout, measured over main's tracked files, and that reading stands.
+What was NOT known then is that the branch exists: a single-branch
+`git fetch origin main` had left `git branch -r` showing 9 branches, and a
+full fetch at 12:3xZ shows 52, among them
+`origin/research/meridian-test-administration`. The delivery is not missing,
+it is unmerged, which is a different fault with a different fix.
+
+STANDING SINCE 2026-09-17 AND UNCHANGED: one brief a day with the frame in
+it, the reading asked as its first line; cards only when the studio cannot
+decide, beyond the two he asked for. Work until the ceiling or a limit; arm
+the resume on either.
 
 ## 2026-09-19 TO 2026-09-20: A HELD STUDIO, ONE DICTATED DOCUMENT, AND A METER THREE DAYS OLD
 
