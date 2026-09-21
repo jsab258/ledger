@@ -1,0 +1,9 @@
+id: 09e3c725
+due: 2026-09-21T14:10:00Z
+armedAt: 2026-09-21T13:48:19Z
+armedBy: resident/run-55-in-flight-read-the-controls-before-any-still
+blocks: 0
+dischargedAt: 2026-09-21T14:15:13Z
+capBitAt: -
+
+RUN 55 IS IN FLIGHT, dispatched at 4421af2bbc61b21308cd578594f0a6a0e4fc3d98 (sha captured BEFORE the runner started, per ci.md). WATCH BY ANCESTRY: is there a landed run whose commit CONTAINS 4421af2b, never by branch movement or run name. Use python3 tools/runner/checkout-contains.py if it fits. READ IN THIS ORDER AND DO NOT SKIP TO THE STILLS: (1) the twelve light control_no_toggle deltas, which must collapse from the 0.20..0.46 band to under 0.005; (2) rigRepeatsShots, which must NAME A NIGHT SHOT, because two day shots means the extension did not take and the blind spot survived the fix; (3) settleCapBit and settleNoFile, each a distinct failure and neither a bad number. THEN open every night still before any figure key, and only then judge the figure. If the controls collapsed, the night frames are comparable to each other for the first time and the figure can be judged; say so to the Producer for the brief. Do NOT run verdict-keys --learn until the run has landed, then do. Budget was 0/0 at 12:1xZ; re-check production/budget.md before spending, and if a new reading has not arrived the ten-hour rule still passes until about 22:1xZ.

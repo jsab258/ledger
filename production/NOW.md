@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-21 12:2xZ, the first commit after his reading and his order for the week; the section below is what is moving now and the sections under it are last week.
+STATUS: LIVE. Verified 2026-09-21 14:1xZ, after run 55 landed and the night exposure fault was closed.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -44,6 +44,50 @@ his text, and this section, so that a session that dies in the next hour
 opens on his order and not on a cold read. The builders are spawned in the
 turn after it and their spawn rows are in `.claude/agent-log.tsv`; a later
 edit of this section names them.
+
+RUN 55 LANDED 13:55Z AT 2490b864 AND THE NIGHT EXPOSURE FAULT IS CLOSED.
+Ancestry confirmed, not assumed: the landed commit's subject names the dispatch
+sha 4421af2b and `git merge-base --is-ancestor` agrees. Queue 384 is LANDED.
+
+WHAT PROVES IT IS THE RIG REPEAT, NOT THE CONTROL.
+`rigRepeatsShots=vign_camA_day/day..vign_camA_night/night`, so a NIGHT shot is
+repeated and the week-old blind spot is closed. `rigRepeatsWithinBound=2/of=2`
+at a worst of 0.00061 on `vign_camA_night`: the same night camera photographed
+at opposite ends of the run now agrees to six ten-thousandths, against a 0.20
+to 0.46 band before. `settleSettled=45/of=49`, `settleNoFile=0/of=49`.
+
+THE ACCEPTANCE THE RESIDENT WROTE INTO THE DISPATCH WAS THE WRONG TEST and is
+corrected rather than dropped. It asked for the twelve control deltas to
+collapse under 0.005; they read 0 OF 12. That is not the fix failing. The
+control's two halves no longer get the same treatment: `AfterFrame`'s
+`if (GRepeating)` branch settles, the `if (GProbing)` branch does not, so a
+control now differences a SETTLED frame against an UNSETTLED one. The probe
+half is itself unstable, moving more than 0.005 on 4 of 12 shots between runs
+and flipping between the recurring values 0.00639 and 0.46178, which is a clamp
+signature. Filed as queue 410.
+
+FOUR NIGHT SHOTS HIT THE CAP, and two of them are BISTABLE rather than slow
+(0.00637..0.18295..0.00637..0.19985). No cap size fixes those. The instrument
+marks all four CAP-BIT and says they may not be compared to another frame.
+
+THE FRAME EXISTS AND IT IS SPOILED BY AN OLDER FAULT. The resident OPENED
+`ue-vign_camA_night.png` rather than reading a key: wet road, brick left, dark
+tiled wall right, lamps lit, fog, and A FIGURE STANDING ON THE FOOTWAY. But a
+FOUR-QUADRANT COLOUR CARD sits across the figure's torso and its legs render
+flat yellow. `surfacesAbsent=card/interior/multiply/paint_yellow`,
+`surfacesResolved=12/16`, IDENTICAL to runs 53 and 54. The card IS the
+unresolved `card` surface; the yellow IS `paint_yellow`. THAT IS QUEUE 223,
+READY since 2026-09-09 and never started, and it is now the ONLY thing between
+Jafar and a judgeable figure frame. An engine-specialist is on it as of 14:1xZ,
+briefed to check queue 227's denominator question BEFORE fixing anything and
+to leave the exposure path alone.
+
+THE HOURLY TRIGGER IS HEALTHY AND WAS NOT AT FAULT, checked against the
+scheduler rather than guessed: `trig_017Ho772fH6Uuysbith7b3CU`, cron `3 * * * *`,
+enabled, bound to this session, last run SUCCEEDED. It fires LATE because it
+delivers into a persistent session that was mid-turn: the 13:03 slot arrived at
+13:18, and at 14:12 the 14:03 slot had not yet been delivered. Nothing in the
+configuration is wrong and there is nothing here to fix.
 
 FIRST WAVE, 12:35Z TO 13:0xZ: SIX BUILDERS OUT, TWO BACK, NOTHING COMMITTED.
 The tree holds live builder work and `ledger/.verify-footer` is DELETED, so no

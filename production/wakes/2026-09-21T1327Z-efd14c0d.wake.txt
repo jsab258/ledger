@@ -2,8 +2,8 @@ id: efd14c0d
 due: 2026-09-21T13:27:00Z
 armedAt: 2026-09-21T13:09:51Z
 armedBy: resident/batch-waits-on-the-directors-stamp
-blocks: 0
-dischargedAt: -
+blocks: 1
+dischargedAt: 2026-09-21T13:48:10Z
 capBitAt: -
 
 The review half of the first wave is DONE: all six diffs read against the tree, the load-bearing claims re-measured by the resident, canon and D18 corrected under D43, queue 384 and 351 updated with their landed results, 404 and 405 filed. WHAT REMAINS IS BLOCKED ON ONE THING: the studio-director is writing a ruling stamped <!--RULING spawn=2026-09-21T12:38:32Z--> over the pending builder work, and director_cadence is RED until it lands, so nothing commits. When it lands: read the ruling, run python3 ledger/verify.py, and if green commit the whole batch staging BY NAME (never git add a directory, per ci.md), paste the footer FROM ledger/.verify-footer, push to main. THEN dispatch the ue-probe run carrying the exposure fix, and fold clips=1 into the same dispatch so clips.tsv and clips.jpg regenerate without the removed clips. Capture the sha BEFORE dispatching and watch by ancestry. If the director sends any builder's work back, that work does NOT land and the rest still can.

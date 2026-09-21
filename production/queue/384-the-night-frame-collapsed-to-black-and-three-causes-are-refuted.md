@@ -32,7 +32,7 @@ acceptance: a night frame at a brightness in the bracket run 51 and run 53 sat
   elimination; and whatever is added prints on the night line so the next
   collapse is diagnosed from the verdict instead of from a crop
 max_sessions: 1
-status: READY 2026-09-17, filed at the budget ceiling, NOT started.
+status: LANDED 2026-09-21 at run 55 (commit 2490b864). The cause is named by a printed reading, the fix is proven by the rig repeat at 0.00061 on a NIGHT shot, and 45 of 49 shots settle. What remains is filed elsewhere: the control instrument, the two bistable shots, and queue 223. Was READY 2026-09-17, filed at the budget ceiling, NOT started.
 
   DO NOT DISPATCH BEFORE THIS IS UNDERSTOOD. A run now buys another black
   frame, and Jafar's standing ask is a frame with a person standing in a lit
@@ -233,3 +233,67 @@ status: READY 2026-09-17, filed at the budget ceiling, NOT started.
   makes an old file comparable. Every night judgement made before this lands
   was made against a moving target, which is what Jafar said on 2026-09-17
   when he ordered this ahead of the figure.
+
+  RUN 55 LANDED 2026-09-21 13:55Z AT COMMIT 2490b864, whose subject names the
+  dispatch sha 4421af2b; ancestry confirmed with `git merge-base --is-ancestor`
+  rather than by branch movement or run name.
+
+  THE FIX WORKS AND THE ACCEPTANCE THAT PROVES IT IS THE RIG REPEAT.
+  `rigRepeatsShots=vign_camA_day/day..vign_camA_night/night`, so a NIGHT shot
+  is repeated and the blind spot is closed. `rigRepeats=2/of=2`,
+  `rigRepeatsWithinBound=2/of=2`, `rigRepeatsWorstMeanLumaDelta=0.00061` on
+  `vign_camA_night`. THE SAME NIGHT CAMERA PHOTOGRAPHED AT OPPOSITE ENDS OF THE
+  RUN NOW AGREES TO SIX TEN-THOUSANDTHS, against a 0.20 to 0.46 band before.
+  `settleSettled=45/of=49`, `settleNoFile=0/of=49`, so the declined
+  backup-and-restore risk did not materialise on a single shot of 49.
+
+  THE ACCEPTANCE THE RESIDENT WROTE INTO THE DISPATCH WAS THE WRONG TEST, and
+  it is corrected here rather than quietly dropped. It said the twelve
+  `light control_no_toggle` deltas must collapse under 0.005. THEY READ 0 OF 12
+  WITHIN BOUND, and that is not a failure of the fix: THE CONTROL'S TWO HALVES
+  NO LONGER GET THE SAME TREATMENT. Read in the code: `AfterFrame`'s
+  `if (GRepeating)` branch calls `SettleRecordTake` and returns to Warm, so the
+  repeat settles; the `if (GProbing)` branch goes straight to `MeasureProbe`
+  with no settle at all. So the control now differences a SETTLED committed
+  frame against an UNSETTLED probe re-render, and its delta measures the gap
+  between two regimes rather than instability.
+
+  THE FROZEN HALVES ARE NOT STABLE EITHER, measured run 54 against run 55 over
+  the same twelve shots: the probe-side (`meanOffFull`) value moved by more
+  than 0.005 on 4 OF 12 SHOTS, three of them by about 0.455, flipping between
+  roughly 0.00639 and 0.46178. Those two numbers recur exactly across shots and
+  runs, which is what a clamp looks like rather than a measurement.
+
+  SO THE CONTROL NEEDS THE SETTLE LOOP ON ITS PROBE HALF, or it needs to stop
+  being called a control. That is filed as its own item; it is NOT a reason to
+  doubt the fix, and the rig repeat is the reading that answers queue 384.
+
+  FOUR SHOTS HIT THE CAP AND ALL FOUR ARE NIGHT SHOTS. `settleCapBit=4/of=49`,
+  `settleTakesMax=4`. Their series, which name two different failures:
+    0.00637..0.18295..0.00637..0.19985   BISTABLE, alternating clamp to mid
+    0.13620..0.05921..0.13383..0.22981   BISTABLE
+    0.46505..0.18407..0.23145..0.27467   DRIFTING DOWN, deltas shrinking
+    0.22965..0.21739..0.20541..0.18929   DRIFTING DOWN, deltas not shrinking
+  A larger cap would probably catch the two drifters and will NEVER catch the
+  two that alternate. The instrument marks all four CAP-BIT and says on their
+  own lines that they may not be compared to another frame, which is the
+  behaviour wanted; what is not yet known is why two shots are bistable.
+
+  WHAT THE FRAME SHOWS, OPENED BY THE RESIDENT RATHER THAN READ OFF A KEY
+  (rule 4). `ue-vign_camA_night.png` is legible for the first time: wet road,
+  brick on the left, dark tiled wall on the right, lamps lit, fog, AND A FIGURE
+  STANDING ON THE FOOTWAY. `ue-pinset_night_3.png` went from 155,155 bytes to
+  1,353,003 bytes, which is what a near-black frame becoming a real image looks
+  like on disk.
+
+  THE FRAME IS SPOILED BY A DIFFERENT AND OLDER FAULT, and the separation of
+  causes is clean: a FOUR-QUADRANT COLOUR CARD sits across the figure's torso
+  and its legs render flat yellow. `surfacesAbsent=card/interior/multiply/
+  paint_yellow` with `surfacesResolved=12/16`, IDENTICAL to run 54 and run 53.
+  The colour card IS the unresolved `card` surface and the yellow IS
+  `paint_yellow`. That is queue 223, READY since 2026-09-09 and never started,
+  and it is now the only thing between Jafar and a judgeable figure frame.
+
+  THIS ITEM'S ORIGINAL QUESTION IS ANSWERED AND THE ITEM IS DONE. What remains
+  belongs to other items: the control's probe half, the two bistable shots, and
+  queue 223's four surfaces.
