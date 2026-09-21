@@ -1844,3 +1844,77 @@ STILL TRUE: open every night still BEFORE any figure key. The 31 day rows must
 be unchanged. figureSil does NOT judge this frame, because queue 380 is it
 printing yes on six empty boxes; the judges are the still, the before/after
 difference inside the projected box, projH against 173, and the pose word.
+
+=== RUN 55, 2026-09-21: THE NIGHT EXPOSURE FIX, AND THE FIRST FRAME THAT MAY
+=== BE COMPARED TO ANOTHER ONE
+
+READ THIS BEFORE ANY FIGURE KEY, AND READ THE CONTROLS BEFORE THE STILLS.
+
+WHAT CHANGED, and it is one thing with two halves. Queue 384's fault is found
+and it is not a lighting fault and not a content fault. THE COMMITTED FRAME WAS
+THE ONLY FRAME IN THE RUN PHOTOGRAPHED WITH EYE ADAPTATION LIVE:
+`HoldExposureSpeedsForProbe` (VignetteShot.cpp:4430) zeroes AutoExposureSpeedUp
+and SpeedDown for the whole light-probe pass, so a night shot was photographed
+ONCE for the file with the speeds at 10000 and then EIGHT more times frozen.
+Run 54's own verdict carries both populations: 96 frozen takes with a PEAK
+within-shot spread of 0.00036, and 12 live takes spread 0.00282 to 0.45548,
+WITH NOTHING IN BETWEEN.
+
+HALF ONE: convergence is now a CONDITION. The capture re-takes until two
+successive takes agree within `kSettleMeanLumaBound` (0.005), capped at
+`kSettleTakesMax` (4), and the committed file is the LAST take. A re-take
+returns to Warm and NOT to ApplyShot, so the condition is not re-applied, the
+camera is not re-placed and the sky epoch is not bumped: take two is a take of
+the same settled scene rather than a fresh disturbance of it.
+
+HALF TWO: the determinism check now repeats TWO shots, the first of the run AND
+the first whose condition reads sun OFF, with the family read off
+`Condition::SunOn` and never off a shot's name. The night path was never
+photographed by this check before, which is why the fault survived a week.
+
+THE ACCEPTANCE, AND IT IS THE CONTROLS AND NOT THE STILLS:
+  1. The twelve `light control_no_toggle` deltas COLLAPSE from the 0.20..0.46
+     band to under 0.005. That is the fix working. Read this FIRST.
+  2. `rigRepeatsShots` NAMES A NIGHT SHOT. If it names two day shots, the
+     extension did not take and the blind spot survived the fix.
+  3. `rigRepeats=2/of=2` with `rigRepeatsIdentical` and `rigRepeatsWithinBound`
+     both printed. IDENTICAL keeps a ZERO epsilon; WithinBound is the capture
+     loop's own stopping number read back, and they are deliberately two
+     readings of different strictness on one line.
+
+WHAT THE RUN BUYS THAT NOTHING HERE HAS: a LIVE-AGAINST-LIVE series at night.
+Every converged pair in the record so far has one FROZEN half, so the 0.005
+bound rests on a denominator of TWO converged residuals against eighteen
+faults. `shotSettleSeries` prints on all 49 shots and IS that series. THE BOUND
+COMES DOWN TO IT AFTERWARDS, in that order, never before.
+
+WATCH FOR, and each is a distinct failure rather than a bad number:
+  `settleCapBit` above 0 means the cap BIT and those frames may not be compared
+  to any other frame; the line says so itself. `settleNoFile` above 0 means a
+  re-take produced no file where the first take did, and that shot exits
+  non-zero rather than committing a random frame: THAT IS THE DESIGNED
+  BEHAVIOUR, ruled 2026-09-21, and backup-and-restore was DECLINED because
+  restoring a previous take under this run's name is exactly what ci.md
+  forbids. `NO-SUCH-SHOT` or `NO-FIRST-FRAME` on a repeat target means a run
+  that photographed no night shot, which must never read as a run that checked
+  the night path.
+
+STILL TRUE FROM RUN 54 AND NOT RE-LITIGATED HERE: open every night still BEFORE
+any figure key; the 31 day rows must be unchanged; `figureSil` does NOT judge
+this frame, because queue 380 is it printing yes on six empty boxes.
+
+ALSO IN THIS COMMIT AND NOT PART OF THIS RUN'S QUESTION: D17 and D18 removals
+in the animation library, so `CharacterAudit` should read 41 clips where it
+read 44, and the ClipSheet slot count 62 where it read 64. Those two are the
+only Unity-side keys that can answer whether the two C# edits compile, which
+nothing in the container could prove.
+
+VERDICT KEYS THIS RUN ADDS: settleStatus, settleSettled, settleCapBit,
+settleNoFile, settleTakes, settleTakesMax, settleBound, settleWorstLastDelta,
+settleWorstShot, settleWorstTakes; shotSettleStatus/Takes/Delta/Bound/Series on
+every shot line; rigRepeats, rigRepeatsShots, rigRepeatsIdentical,
+rigRepeatsWithinBound, rigRepeatsBound, rigRepeatsWorstMeanLumaDelta,
+rigRepeatsWorstShot; rigRepeatFamily on each rigDeterminism line and
+rigRepeatSettle* under each. They are NOT in the key registry yet: `--learn`
+runs AFTER this run lands, never before, because the registry learns from a
+run file and there is no run file carrying these keys until this one exists.
