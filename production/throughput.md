@@ -426,6 +426,33 @@ The other four hold: the head is too bulky; there is a stray tab; the base
 collar is too prominent; and no wear reads at all despite a coverage figure of
 0.450 on the base.
 
+ATTEMPT 3, rejected by the same judge, and the first refusal that is a NUMBER
+rather than a description. Committed at 6f738008 on art/atlas-01, status=RAN
+objectsBuilt=10/10-planned previewsWrote=4/4 crossCheckAgree=10/10
+manifoldParts=10/10. IT FIXED FOUR OF THE FIVE FAULTS and none of them are in
+dispute: the base taper removed the sleeve step, the stray tab is gone, the
+head is slimmer, and the external dropper went 0.707 m to 0.224 m.
+
+WHAT STILL REFUSES IT, traced on both with one threshold method. The SHEET's
+head assembly is 25px wide by 11px tall, aspect 2.27:1, which at the 26.3 px
+per metre scale is 0.95 m by 0.42 m. ATTEMPT 3's is 129px by 139px, aspect
+0.93:1, NEARLY SQUARE. The sheet's assembly is flat and wide and the authored
+one is not.
+
+AND THE SHAPE THREE ATTEMPTS HAVE MISREAD IS NOW LEGIBLE. Blown up, the
+reference is NOT A SWAN NECK: it is a straight pole, a TIGHT SHORT CORNER, a
+SHORT HORIZONTAL ARM, and a FLAT WIDE LANTERN HANGING LEVEL beneath the arm's
+end. An L with a rounded corner. Every attempt so far built a continuous arc
+that rises, turns through a large angle and descends, which spends the
+assembly's height on vertical travel and leaves the lantern TILTED. Attempt 3
+reports sweep_deg=131.81 jointAngle_deg=48.19; a horizontal arm arrives at
+zero.
+
+THE TARGET CARRIES ITS CAVEAT RATHER THAN BURYING IT: the sheet's lamp is 25px
+across and its pole 2 to 3px wide, near the image's own resolution floor, which
+is why lcSheetRef already emits confidence=low-to-moderate. 2.27:1 is a target
+with a stated tolerance, not a precision figure.
+
 THE NUMBER THAT PASSED IS THE FINDING. authoredCurvature_perM=1.3333 beat a
 naive quarter circle at 2.0000 and was recorded as shallower, while the picture
 shows it TIGHTER than the sheet. THE QUARTER CIRCLE WAS NEVER THE REFERENCE, so
@@ -437,8 +464,8 @@ batch: batchId=b006-lighting-column-01 line=art-lighting-column status=OPEN
   opened=2026-09-21T20:02:52Z closed=not-yet
 unit: deliverables=1/fixed-at-open/list=production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
   deliverableUnit=lighting-column-blender-asset
-attempts: attemptsMade=2-cumulative attemptsRejected=2/of=2-attempts
-  rejectedAtStation=VERIFY/of=2-attempts
+attempts: attemptsMade=3-cumulative attemptsRejected=3/of=3-attempts
+  rejectedAtStation=VERIFY/of=3-attempts
 before: meterTakenAt=2026-09-21T19:2xZ meterTotalPct=17 meterFablePct=19
   meterSource=production/budget.md#row-2026-09-21c
   sessionsTakenAt=2026-09-21T19:41:50Z
