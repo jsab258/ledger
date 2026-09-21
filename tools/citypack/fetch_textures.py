@@ -109,10 +109,17 @@ SURFACES = {
 # So: known enough to be fetched, not required to be chosen.
 #
 # `setts` is the first entry. The logical name and the category are COPIED
-# from `shortlist-candidates.json`, which already shortlists 148
-# `PavingStones` ids under that name, rather than chosen again here; the
-# constant the world asks for is `AssetLibrary.Setts` and the three names
-# have to be the same string or the file lands where nothing looks for it.
+# from `shortlist-candidates.json`, which already shortlists `PavingStones`
+# ids under that name, rather than chosen again here; the constant the world
+# asks for is `AssetLibrary.Setts` and the three names have to be the same
+# string or the file lands where nothing looks for it.
+#
+# HOW MANY IDS THAT LIST HOLDS IS DELIBERATELY NOT REPEATED HERE, 2026-09-21.
+# This comment said 148 until today, when the list grew to a different number
+# because the filter that built it could not match a letter suffix; a count
+# copied out of another file goes stale the moment that file moves, which is
+# the same fault as the pinned pack constants `selftest()` was rebuilt to
+# stop carrying. Read the list if you need the number.
 OPTIONAL_SURFACES = {
     "setts": ["PavingStones"],
 }
@@ -213,17 +220,30 @@ def extract_maps(blob):
     return img, norm, rough, name
 
 
-# Rec. 709 luma on sRGB bytes, UNLINEARIZED — this is what "measured over
-# every texel, sRGB bytes" in production/queue/300 means: the JPEG's own
-# decoded bytes, no gamma step. VERIFIED 2026-09-15 against the five numbers
-# queue 300 printed, by re-measuring the committed files with three candidate
-# luma formulas (Rec. 601, Rec. 709, plain average) and keeping the one that
-# reproduced all five exactly: plaster 211.7/5.8/7.2, kerb 184.3/6.6/0.0,
-# metal 134.8/4.6/22.5, concrete 107.2/9.3/6.8, roof_b 49.0/4.4/5.0 — Rec.
-# 709. The other two formulas were off by up to 1.5 on plaster and metal, and
-# would silently compare a shortlist candidate against a different ruler than
-# the one queue 300 was written against. Do not change this tuple without
-# re-running that check (--selftest covers the kerb.jpg half of it).
+# Rec. 709 luma on sRGB bytes, UNLINEARIZED: this is what "measured over
+# every texel, sRGB bytes" in production/queue/300 means, the JPEG's own
+# decoded bytes, no gamma step.
+#
+# CALIBRATED 2026-09-15 AGAINST THE PRE-SWAP PACK, and that pack is HISTORY,
+# not a description of the files on disk now. Three candidate luma formulas
+# (Rec. 601, Rec. 709, plain average) were run over the then-committed files
+# and Rec. 709 was the only one that reproduced all five of the numbers queue
+# 300 had published: plaster 211.7/5.8/7.2, kerb 184.3/6.6/0.0, metal
+# 134.8/4.6/22.5, concrete 107.2/9.3/6.8, roof_b 49.0/4.4/5.0. The other two
+# were off by up to 1.5 on plaster and metal, and would silently compare a
+# shortlist candidate against a different ruler than the one queue 300 was
+# written against.
+#
+# FOUR OF THOSE FIVE SURFACES WERE REPLACED LATER THE SAME DAY by the
+# shortlist picks in choices.json (kerb, metal, concrete, plaster), so four
+# of the five numbers above no longer describe anything: run --measure-pack
+# for what the pack reads today. Only roof_b 49.0/4.4/5.0, which was never
+# swapped, still reproduces exactly, re-measured 2026-09-21.
+#
+# Do not change this tuple without re-running that check. --selftest now pins
+# THE TUPLE rather than the pack: solid red, green and blue print lumMean
+# 54.2/182.4/18.4 under Rec. 709, a triple neither Rec. 601 (76.2/149.7/29.1)
+# nor a plain average (85.0/85.0/85.0) can produce.
 LUMA_R, LUMA_G, LUMA_B = 0.2126, 0.7152, 0.0722
 
 
@@ -900,42 +920,240 @@ def measure_pack_cmd(names):
     return 0
 
 
-def selftest():
-    """ACCEPTING CASE FIRST (instruments.md): the committed pack is real
-    evidence that already exists, so re-measuring kerb.jpg and getting queue
-    300's own published number back is the strongest test available and
-    costs no fixture. REJECTING/EDGE CASE: a synthetic single-colour image
-    built in memory, so the arithmetic is checked against numbers nobody
-    could have reverse-engineered the code from."""
-    ok = True
+# WHAT EACH HALF OF --selftest SEES, AND WHAT IT CANNOT. Rebuilt 2026-09-21
+# after the old accepting case blocked this workflow for six days. That case
+# asserted kerb.jpg == 184.3/6.6/0.0, which is a SNAPSHOT of the live pack
+# and not the live pack: the shortlist route this selftest guards replaced
+# the kerb (Concrete034 -> Rock048) twenty minutes after those constants were
+# written, and from then on step 5 of citypack-shortlist.yml went red and
+# skipped every step below it, so the first run after the swap downloaded
+# zero candidates. instruments.md ends its selftest rule "so doing the work
+# the tool prompts can never break the tool"; a pinned snapshot of the live
+# tree is exactly how that clause gets broken, and updating the three numbers
+# would re-arm it for the next pick.
+#
+#   DIFFERENTIAL HALF, the accepting case, self-deriving: measure_texel_stats
+#   (numpy, vectorised) against _reference_texel_stats (pure python, scalar,
+#   written from the docstring's definitions) over the same crop of the same
+#   live file. Nothing is pinned, so no pick can make it stale. WHAT IT
+#   CANNOT SEE: LUMA_R/G/B, since both sides read those three constants and a
+#   changed weight moves both readings together; and a population/sample SD
+#   swap, which on a 4096-texel crop shifts cropLumSD 37.0 by 0.0045 and so
+#   hides under the tolerance (both measured 2026-09-21).
+#
+#   SYNTHETIC HALF, the rejecting/edge case: literal numbers, pinning exactly
+#   what the differential half is blind to. It is written out rather than
+#   computed, because the old synthetic check wrote its expectation as
+#   round(LUMA_R * 255, 1), which compares the constant under test against
+#   itself and therefore passed for any weight anybody typed.
+#
+#   WHY BOTH. A synthetic solid has lumSD 0.0 BY CONSTRUCTION, so every bug
+#   in the standard-deviation path is invisible to it; real photographic data
+#   at lumSD 37.0 is the only thing here that exercises that path. That is
+#   why the differential half runs on the pack, and why a pack with no file
+#   above lumSD 0 is reported as untested rather than clean.
 
-    kerb = measure_pack_file("kerb")
-    if kerb is None:
-        print("SELFTEST SKIP: no kerb.jpg on disk — nothing to check against")
-    else:
-        want = {"lumMean": 184.3, "lumSD": 6.6, "chromaSpread": 0.0}
-        for k, v in want.items():
-            got = kerb[k]
-            good = abs(got - v) <= 0.15
-            print(f"  {'ok' if good else 'FAIL':<4} accepting: kerb.jpg {k}="
-                  f"{got} (queue 300: {v})")
-            ok = ok and good
+# A CAP ON COST, and it announces itself on every line it prints (crop=WxH@0,0).
+# Pure python over a whole 2K file takes 4.3s (measured 2026-09-21 on
+# kerb.jpg, 4,194,304 texels), so all 17 pack files whole would be over a
+# minute in a gate that runs before anything else; the top-left 64x64 is
+# 4,096 texels and the half costs ~1.5s including the JPEG decodes. The same
+# corner every run, so two runs are comparable.
+SELFTEST_CROP = 64
 
+# Both sides round to 1dp before comparing, so this tolerance admits AT MOST
+# ONE DISPLAY TICK of disagreement and nothing larger. It is not zero because
+# the two implementations sum in different orders (numpy's pairwise summation
+# against python's left fold): over today's 51 properties the largest
+# unrounded disagreement is 3.7e-12, and the closest any value comes to a .x5
+# rounding boundary is 0.0017 (concrete.jpg lumSD 11.851669), so today every
+# pair rounds to the same tick. A future file whose true value lands within
+# 1e-12 of a boundary would round two ways with both implementations correct,
+# and that is the only case this 0.1 exists for. Every fault worth catching
+# is far bigger: chromaSpread as a max instead of a mean, or lumSD read as a
+# peak, move these by whole units.
+SELFTEST_TOL = 0.1
+
+
+def _reference_texel_stats(crop):
+    """The pure-python second opinion for --selftest's differential half,
+    written FROM THE DEFINITIONS in `measure_texel_stats`'s docstring rather
+    than from its code: the mean over every texel; lumSD a POPULATION
+    standard deviation (divide by n, never n-1); chromaSpread the MEAN of
+    per-texel (max channel minus min channel). No numpy here on purpose, so
+    the two paths share only the three luma constants and the pixels.
+
+    `crop` is an already-RGB PIL image. Pixel access is `tobytes()` and NOT
+    `getdata()`, 2026-09-21: getdata is deprecated in Pillow 12 and removed
+    in Pillow 14 (2027-10-15), and citypack-shortlist.yml pip-installs the
+    newest Pillow, so getdata would print a DeprecationWarning into this
+    instrument's own output today and raise inside the gate that blocks the
+    whole workflow later. Checked equal on all 17 committed pack colour maps
+    before choosing it: the triplets tobytes yields are exactly
+    list(crop.getdata())."""
+    raw = crop.tobytes()
+    px = [(raw[i], raw[i + 1], raw[i + 2]) for i in range(0, len(raw), 3)]
+    n = len(px)
+    lums = [LUMA_R * r + LUMA_G * g + LUMA_B * b for r, g, b in px]
+    mean = sum(lums) / n
+    var = sum((x - mean) ** 2 for x in lums) / n     # population, /n not /(n-1)
+    return {
+        "texels": n,
+        "lumMean": round(mean, 1),
+        "lumSD": round(var ** 0.5, 1),
+        "chromaSpread": round(sum(max(t) - min(t) for t in px) / n, 1),
+    }
+
+
+def _selftest_differential():
+    """Measure every pack colour map on disk TWICE, two implementations, and
+    compare. Per-file numbers go on the per-file line, whole-half numbers on
+    the `differential done:` line, never one moment under the other's key."""
     from PIL import Image
-    buf = io.BytesIO()
-    Image.new("RGB", (16, 16), (255, 0, 0)).save(buf, format="PNG")
-    synth = measure_texel_stats(buf.getvalue())
-    want_synth = {"lumMean": round(LUMA_R * 255, 1), "lumSD": 0.0,
-                  "chromaSpread": 255.0}
-    for k, v in want_synth.items():
-        got = synth[k]
-        good = abs(got - v) <= 0.05
-        print(f"  {'ok' if good else 'FAIL':<4} synthetic: solid-red {k}={got} "
-              f"(want {v})")
-        ok = ok and good
+    print("  differential: measure_texel_stats (numpy) against a pure-python "
+          "reference,\n  same live file, printed below as measured/reference")
+    examined = props = mismatched = sd_files = 0
+    # PEAK lumSD over the files examined, carried with the file it came from,
+    # so the done line's coverage number says which file supplied it.
+    sd_peak, sd_peak_file = 0.0, "none"
+    missing = []
+    for logical in FETCHABLE:
+        path = None
+        for ext in (".jpg", ".png"):
+            p = PACK / "textures" / (logical + ext)
+            if p.exists():
+                path = p
+                break
+        if path is None:
+            missing.append(logical)
+            continue
+        im = Image.open(io.BytesIO(path.read_bytes())).convert("RGB")
+        w, h = min(SELFTEST_CROP, im.size[0]), min(SELFTEST_CROP, im.size[1])
+        crop = im.crop((0, 0, w, h))
+        # PNG, not JPEG: a lossless re-encode, so the bytes handed to
+        # measure_texel_stats decode back to the exact texels the reference
+        # reads. A JPEG round trip here would compare two different images.
+        buf = io.BytesIO()
+        crop.save(buf, format="PNG")
+        got = measure_texel_stats(buf.getvalue())
+        ref = _reference_texel_stats(crop)
+        examined += 1
+        if ref["lumSD"] > 0:
+            sd_files += 1
+        if ref["lumSD"] > sd_peak:
+            sd_peak, sd_peak_file = ref["lumSD"], path.name
+        bad, pairs = [], []
+        for k in ("lumMean", "lumSD", "chromaSpread"):
+            props += 1
+            # `crop` PREFIX, NOT THE BARE NAME. --shortlist already prints
+            # `lumMean=` for a WHOLE candidate file (see the two prints in
+            # shortlist()), and these are the top-left 64x64 only: same
+            # statistic, different extent, and a reader greping lumMean=
+            # across this tool's output would silently read two moments as
+            # one. kerb.jpg is 136.1 whole and 129.4 on this corner.
+            key = "crop" + k[0].upper() + k[1:]
+            pairs.append(f"{key}={got[k]}/{ref[k]}")
+            if abs(got[k] - ref[k]) > SELFTEST_TOL:
+                bad.append(key)
+        mismatched += len(bad)
+        print(f"  {'FAIL' if bad else 'ok':<4} differential {path.name} "
+              f"crop={w}x{h}@0,0 texels={ref['texels']} " + " ".join(pairs)
+              + (" mismatched=" + "/".join(bad) if bad else ""))
+    print(f"  differential done: filesExamined={examined}/{len(FETCHABLE)} "
+          f"propsCompared={props} mismatched={mismatched} "
+          f"sdCoverage={sd_files}/{examined} "
+          f"cropLumSDpeak={sd_peak}@{sd_peak_file}"
+          + (" noFileFor=" + "/".join(missing) if missing else ""))
+    if examined == 0:
+        print(f"  FAIL differential: nothing measured, no colour map on disk "
+              f"under any of {len(FETCHABLE)} named surface(s)")
+    elif sd_files == 0:
+        print(f"  FAIL differential: nothing measured on the SD path, "
+              f"0 of {examined} file(s) examined had lumSD above 0")
+    return {"examined": examined, "props": props, "mismatched": mismatched,
+            "sdFiles": sd_files}
 
-    print("SELFTEST PASS" if ok else "SELFTEST FAIL")
-    return 0 if ok else 1
+
+def _selftest_synthetic():
+    """Images built in memory whose three numbers are known by hand, pinning
+    the two things the differential half cannot see: the luma weights, and
+    population-versus-sample SD. Every `want` below is a literal; none is
+    computed from the constants under test."""
+    from PIL import Image
+
+    def stats_of(im):
+        buf = io.BytesIO()
+        im.save(buf, format="PNG")
+        return measure_texel_stats(buf.getvalue())
+
+    checks = []
+    # THE LUMA TRIPLE. 54.2/182.4/18.4 is Rec. 709 and only Rec. 709: Rec. 601
+    # prints 76.2/149.7/29.1 and a plain average prints 85.0/85.0/85.0, so one
+    # primary alone cannot tell the three apart and all three together can.
+    for name, rgb, lum in (("solid-red", (255, 0, 0), 54.2),
+                           ("solid-green", (0, 255, 0), 182.4),
+                           ("solid-blue", (0, 0, 255), 18.4)):
+        got = stats_of(Image.new("RGB", (16, 16), rgb))
+        checks += [(name, "lumMean", got["lumMean"], lum, "Rec.709-weight"),
+                   (name, "lumSD", got["lumSD"], 0.0, "one-colour-has-no-spread"),
+                   (name, "chromaSpread", got["chromaSpread"], 255.0,
+                    "one-channel-full-two-empty")]
+    # THE SD DEFINITION, which nothing else here pins: the population SD of
+    # {0, 255} is exactly half the range, 127.5, and the sample SD (ddof=1) of
+    # the same two texels is 180.3. Two texels is the smallest image where
+    # those two answers are far apart; on the 64x64 crops above the same swap
+    # moves cropLumSD 37.0 by 0.0045 and would pass unseen.
+    pair = Image.new("RGB", (2, 1))
+    pair.putpixel((0, 0), (0, 0, 0))
+    pair.putpixel((1, 0), (255, 255, 255))
+    got = stats_of(pair)
+    checks += [("black+white-pair", "lumMean", got["lumMean"], 127.5,
+                "midpoint-of-0-and-255"),
+               ("black+white-pair", "lumSD", got["lumSD"], 127.5,
+                "population;ddof=1-would-print-180.3"),
+               ("black+white-pair", "chromaSpread", got["chromaSpread"], 0.0,
+                "grey-carries-no-chroma")]
+    bad = 0
+    for name, k, got_v, want, why in checks:
+        # Half a tick: these numbers are exact by construction, so the two
+        # sides must round to the same displayed value.
+        good = abs(got_v - want) <= 0.05
+        bad += 0 if good else 1
+        print(f"  {'ok' if good else 'FAIL':<4} synthetic {name} {k}={got_v} "
+              f"(want {want}, {why})")
+    print(f"  synthetic done: imagesBuilt=4 propsCompared={len(checks)} "
+          f"mismatched={bad}")
+    return {"images": 4, "props": len(checks), "mismatched": bad}
+
+
+def selftest():
+    """`--selftest` - both halves above, no network, no fixture file.
+
+    EXIT CODES ARE DISTINCT PER OUTCOME, so a red step says which kind of red
+    it is without anybody opening the log: 0 both halves ran and agreed; 1 at
+    least one property disagreed, which is a measurement fault; 3 the
+    differential half had nothing to measure (no pack colour map on disk, or
+    none above lumSD 0, so the SD path went untested), which is inconclusive
+    rather than clean and must never read as a pass."""
+    print("citypack --selftest: measure_texel_stats, two halves, no network\n")
+    d = _selftest_differential()
+    print()
+    s = _selftest_synthetic()
+    mismatched = d["mismatched"] + s["mismatched"]
+    props = d["props"] + s["props"]
+    tail = (f"{mismatched} mismatched of {props} prop(s) compared, over "
+            f"{d['examined']} pack file(s) and {s['images']} synthetic "
+            f"image(s)")
+    if mismatched:
+        print(f"\nSELFTEST FAIL: {tail} (differential {d['mismatched']}, "
+              f"synthetic {s['mismatched']})")
+        return 1
+    if d["examined"] == 0 or d["sdFiles"] == 0:
+        print(f"\nSELFTEST FAIL: nothing measured where it counts, so this is "
+              f"not a clean run. {tail}")
+        return 3
+    print(f"\nSELFTEST PASS: {tail}")
+    return 0
 
 
 def main():
@@ -958,8 +1176,11 @@ def main():
                          "chromaSpread for the named logical surfaces (default: "
                          "every surface AssetLibrary asks for); no network")
     ap.add_argument("--selftest", action="store_true",
-                    help="check measure_texel_stats against the committed pack "
-                         "and a synthetic image; no network")
+                    help="check measure_texel_stats twice over: against a "
+                         "pure-python reference on every pack file, and "
+                         "against synthetic images that pin the luma weights; "
+                         "no network; exit 1 is a disagreement, exit 3 is "
+                         "nothing measured")
     args = ap.parse_args()
     if args.catalogue:
         return catalogue()

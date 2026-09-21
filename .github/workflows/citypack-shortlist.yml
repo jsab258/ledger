@@ -63,10 +63,37 @@ jobs:
       # otherwise spend the whole download budget and hand back a contact
       # sheet with a wrong number under every tile, which is a broken
       # instrument showing the wrong world rather than an absent one.
-      # Accepting case is the real committed kerb.jpg reproducing queue 300's
-      # own published number; rejecting/edge case is a synthetic solid-colour
-      # image (instruments.md: selftest ships with the tool, accepting case
-      # first). Failing here skips every step below, including the commit --
+      # REWRITTEN 2026-09-21, AND THE SENTENCE IT REPLACES IS WHY THIS STEP
+      # WENT RED. It read "accepting case is the real committed kerb.jpg
+      # reproducing queue 300's own published number". That pinned three
+      # constants measured off kerb.jpg on 2026-09-15, and kerb.jpg was
+      # DELIBERATELY REPLACED twenty minutes later by this very workflow's
+      # own output (choices.json: Concrete034 to Rock048). The guard was
+      # broken by the work it existed to enable, and run 3 (35629210889) is
+      # the first run since that asked. instruments.md already says the live
+      # codebase is the accepting fixture SO THAT doing the work the tool
+      # prompts can never break the tool; a pinned snapshot is not the live
+      # codebase. Worse, the synthetic half that was supposed to cover the
+      # Rec. 709 calibration wrote its own expectation as
+      # round(LUMA_R * 255, 1), the constant under test compared against
+      # itself, so it passed for any weight anybody typed.
+      #
+      # WHAT IT IS NOW. Accepting case: every pack colour map measured TWICE,
+      # once by the numpy path under test and once by a pure-python reference
+      # written from the definitions, on the same live file, so a pick can
+      # never make it stale. Rejecting/edge case: four synthetic images
+      # pinning the Rec. 709 weights (solid red, green and blue at 54.2,
+      # 182.4 and 18.4, a triple neither Rec. 601 nor a plain average can
+      # produce) and the POPULATION standard deviation (a two-texel pair at
+      # 127.5, where ddof=1 would print 180.3). Neither half alone is the
+      # guard: the differential half cannot see a shared constant, and the
+      # synthetic half cannot see real multi-valued data.
+      #
+      # EXIT 3 MEANS NOTHING WAS MEASURED, distinct from exit 1 for a
+      # disagreement, and it is a FAILURE here on purpose: a pack with no
+      # colour map on disk, or none above lumSD 0, leaves the SD path
+      # untested, and a guard that cannot tell nothing from fine is not a
+      # guard. Failing here skips every step below, including the commit --
       # "caught before the download budget is spent" means nothing happens
       # at all, not just that the pack is spared.
       - name: Selftest the measurement (no network)

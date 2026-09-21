@@ -38,7 +38,12 @@ SURFACES = ["asphalt", "sidewalk", "kerb", "brick_red", "brick_grey", "plaster",
 # it this file is responsible for.
 #
 # `setts` (AssetLibrary.Setts) is a real surface with no photograph yet: the
-# shortlist has 148 candidates and the pick is made by eye. REQUIRING it
+# shortlist carries the PavingStones category and the pick is made by eye.
+# NO COUNT IS REPEATED HERE ON PURPOSE, 2026-09-21: the number this comment
+# used to carry (148) went stale the moment the list was widened to 155, and
+# a pinned copy of a number that lives in another file is the exact fault
+# that took the shortlist selftest down the same day. The list is
+# `shortlist-candidates.json`; read it there. REQUIRING it
 # would turn this check red on every tree until that pick lands, which is
 # exactly what the "no pack yet" branch below refuses to do on the argument
 # that a check going red for work that has not started teaches people to
