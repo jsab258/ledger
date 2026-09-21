@@ -35,6 +35,79 @@ Ruled by Jafar 2026-09-09: the studio takes every decision that has a
 recommendation and a default. A card appears below only when the studio has
 looked and CANNOT form one, at most one a week, and it carries buttons.
 
+### BLOCKING: the Epic login is already done and the claiming still needs your hands, so will you claim the kit tonight?
+CLASS: BLOCKING
+added 2026-09-21, from your ruling of this evening, kit first, author second
+
+You asked whether the assets can be had without you. The access can: the
+launcher on the build machine has been signed in since the engine went in at
+the start of September, and Fab is built into the editor rather than a plugin
+to add. The claiming cannot: there is no scripted way to claim Fab content, it
+is a click-through in the editor or the launcher, and the one unofficial
+command-line tool still needs a live login of yours, so it removes nothing. A
+few minutes of your clicking tonight is the fastest true path.
+
+One thing nobody has seen: whether the Fab window on that machine shows you
+signed in without asking. It very probably does, because the launcher and the
+editor share one session on that account, but no one has looked at that
+screen, so step three is a check and not a promise.
+
+THE STEPS, in order:
+
+1. On the build machine, open the engine, or the Epic launcher.
+2. Open Fab: in the editor, the Window menu, then Fab; or the Fab button at
+   the bottom of the content drawer; or the launcher's own Fab tab.
+3. Confirm it shows you signed in. If it asks for a password instead, stop
+   there and tell us: that changes the plan, and nothing should be claimed
+   until it is understood.
+4. If it shows you signed in, claim these, free only, buying nothing:
+   - City Sample, Epic's large sample project. Free, and also on the editor's
+     own home panel. If it already shows in your library from the day the
+     engine went in, it is done.
+   - A British or European terrace or townhouse kit. Search Fab for terrace,
+     townhouse, British, Victorian: brick fronts, sash windows, panelled
+     doors, cast drainpipes. This is the one that matters most and the one
+     most likely to disappoint. Tell us what you actually see rather than
+     claiming the first result; your own ruling warned that these kits are
+     generic rather than British, and whether a British one exists decides
+     whether the biggest gap can be filled from kit at all.
+   - Brick and stone surfaces beyond that, only if something is clearly
+     better than what we already hold free.
+5. Tell us what got claimed, by name.
+
+NOT ON THE LIST, and why. Setts and cobbles: the street has none of any kind,
+and the free surface library we already use, no account and no login, has a
+category for exactly that, so that gap gets filled tonight without you touching
+anything. Lamps: correctly British swan-neck street lamps were found a month
+ago in a free kit we already hold, and the street still builds its own from
+scratch; that is placing on our side, not claiming on yours.
+
+WHILE THE CLAIM SCREEN IS UP, a ten-second glance: City Sample is a whole
+sample project rather than an ordinary asset, and sample projects have
+sometimes carried their own licence. The licence text shows at the moment of
+claiming; note whether it reads as the standard Fab licence or something
+separate. Nothing from it goes into the game until that is known, because the
+licence list is law.
+
+- A. Tonight: the check, then the claims if it shows you signed in.
+  Steps one to three now, the list after, and a message naming what got
+  claimed.
+- B. Tonight the check only: steps one to three, then tell us what it shows.
+  The claims wait for another evening.
+- C. Not this week: the studio goes on with what needs no account.
+  The terrace fronts stay a gap until you claim.
+
+RECOMMENDATION A. Steps one to three cost two minutes and settle the one
+unknown; the claims are worth doing on the same screen once it shows you
+signed in, and the facade from kit waits on them.
+DEFAULT C if unruled by 2026-09-23: the street takes its setts and stone from
+the free library that needs no account, the lamps we already hold get placed,
+and the terrace fronts stay a gap until you claim.
+DEADLINE: 2026-09-23. Nothing decays while it waits: the launcher stays signed
+in, and only the facade from kit stands still.
+
+Where the studio stands: https://jsab258.github.io/ledger/
+
 ### LEDGER's own repository: three things only you can do
 CLASS: DECISION
 added 2026-09-10, from ruling 2 of the cleanup batch, plan at

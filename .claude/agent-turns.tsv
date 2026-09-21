@@ -337,3 +337,5 @@ when	agent	tier	turns	alines	agentId	wrote	fileToolsOfAll
 2026-09-21T15:29:32Z	instrument-builder	opus	32	89	a0cc6c5cf96348a61	no-file-write	0/38
 2026-09-21T15:42:26Z	studio-director	fable	22	124	ab8a9217eda535ae0	game-design:3	3/83
 2026-09-21T16:23:15Z	content-wrangler	sonnet	25	69	a1e353a0e629f589d	no-file-write	0/44
+2026-09-21T16:32:20Z	producer	fable	10	56	aca7deb0ce8045d50	production:2	2/43
+2026-09-21T16:35:17Z	producer	fable	13	63	aca7deb0ce8045d50	production:2,production/outbox:1	3/45
