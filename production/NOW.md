@@ -1,6 +1,6 @@
 # NOW: what is in flight (read this FIRST, before the queue)
 
-STATUS: LIVE. Verified 2026-09-21 14:1xZ, after run 55 landed and the night exposure fault was closed.
+STATUS: LIVE. Verified 2026-09-21 16:2xZ, after run 56 landed: the card is out of the hero frame and the figure stands alone in it.
 
 A session that resets loses everything not written down. The queue says what
 to do NEXT; this file says what is ALREADY MOVING, which is the thing a fresh
@@ -44,6 +44,54 @@ his text, and this section, so that a session that dies in the next hour
 opens on his order and not on a cold read. The builders are spawned in the
 turn after it and their spawn rows are in `.claude/agent-log.tsv`; a later
 edit of this section names them.
+
+RUN 56 LANDED AT d3529180 AND THE HERO FRAME IS CLEAR. Ancestry confirmed:
+the commit contains the dispatch 39aa6432. THE RESIDENT OPENED BOTH FRAMES.
+
+WHAT THE HERO FRAME SHOWS, `ue-vign_camA_night.png`: a wet street, brick left,
+dark tiled wall right, a lit lamp, fog, and A WOMAN STANDING ON THE FOOTWAY,
+fully visible, nothing in front of her. The four-quadrant card is GONE.
+`quadOn=cam_B/1280x720`, `quadCornersInFrame=4/4`, and `controlQuadHiddenOn`
+begins `vign_camA_day;vign_camA_night`, so the two hero shots hide them.
+
+THE VERDICT HEADER NO LONGER LIES. It reads "in front of the control camera
+(cam_B, ruled 2026-09-21)". Until run 55 it printed "in front of the first
+shot's camera" into EVERY verdict, months after that stopped being true.
+
+THE GUARD HELD AND IT WAS MEASURED, NOT EYEBALLED, which was a condition of
+the cam_B ruling. Three named boxes 51 px square on the three printed centres
+of `ue-vign_hook_day.png` (537/391, 532/392, 528/393): mean RGB about
+(186, 188, 191), CHROMATIC PIXELS 0 OF 2601 in each, max channel spread 7
+against the roughly 255 a quad texel would give. No square, on the camera the
+sheet is judged from.
+
+THE DONE LINE CAME BACK EXACTLY AS PREDICTED and nothing was repaired to do it:
+`materialsStatus=ALL surfacesAsked=14 surfacesResolved=12/14 surfacesAbsent=none
+surfacesAbsentCount=0/14 surfacesProcedural=2/14 mapsFound=36/36`, with
+`piecesPainted=600/610` and `piecesUnpainted=10/610` UNCHANGED, which is the
+key that proves it was a recount. `surfacePopulationCut` did not bite.
+
+ONE FALSIFIER FIRED AND IT IS A REAL FINDING, NOT A FLUKE.
+`rigRepeatsWithinBound=1/of=2`, worst 0.22977 on `vign_camA_night`, against run
+55's 0.00061. The DAY repeat is fine at -0.0002. The night one went 0.3238 to
+0.0940. THE CAUSE IS IN THE SHOT'S OWN SETTLE SERIES:
+`0.14473..0.11980..0.11392..0.32375`, CAP-BIT at 4 of 4. Takes 1 to 3 converge
+to within 0.0009 of the bound, then take four jumps to 0.32375, and the rule
+commits THE LAST TAKE. So the committed hero frame is the outlier, at nearly
+three times the brightness the shot was converging on, which is why it reads as
+dusk rather than night. Filed as queue 413.
+
+WHY THAT SHOT CAP-BIT WHEN IT SETTLED IN RUN 55 IS A QUESTION, NOT AN ANSWER.
+The only change to that frame is that its three control quads, bright patches
+the auto-exposure was metering, moved to cam_B. NOTHING HAS MEASURED THAT and
+two hypotheses about this exact frame have already been refuted this month.
+
+THE LEGS ARE STILL YELLOW AND NO PICTURE CAN SETTLE WHY. The resident measured
+the leg region: hue spread 33.8 degrees, against the road's 32.1 and the brick
+wall's 15.9, and the wall is certainly textured. So the frame is consistent
+with BOTH a bound texture and a flat material under varied light, and settles
+neither. That is exactly why queue 411 asks for `figureTexturesBound=n/N`
+rather than for another look.
 
 RUN 55 LANDED 13:55Z AT 2490b864 AND THE NIGHT EXPOSURE FAULT IS CLOSED.
 Ancestry confirmed, not assumed: the landed commit's subject names the dispatch
