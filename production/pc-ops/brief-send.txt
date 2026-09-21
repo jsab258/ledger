@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - 359fe22 @1790008793
+# LEDGER one daily-brief send - e5449fa @1790017648
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,12 +15,12 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=359fe2270dd062855ccde54529070208bf97a993 briefCheckoutPcHeadSha=359fe2270dd062855ccde54529070208bf97a993 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-21T16:39:21Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/359fe2270d briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=e5449fa678732dbc441b60e15e142d58ea91b675 briefCheckoutPcHeadSha=e5449fa678732dbc441b60e15e142d58ea91b675 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-21T19:06:49Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/e5449fa678 briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
 briefStatus=EXITED briefWaitedSec=3 briefExitCode=0
 briefStream=brief-raw.txt briefLines=2
-18:39:55    brief: ALREADY SENT production/briefs/2026-09-21.md (messageId=123), so nothing was sent this pass
-18:39:55  brief-send done: briefDay=2026-09-21 briefSent=0/1 briefAlready=1/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=894 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
+21:07:29    brief: ALREADY SENT production/briefs/2026-09-21.md (messageId=123), so nothing was sent this pass
+21:07:29  brief-send done: briefDay=2026-09-21 briefSent=0/1 briefAlready=1/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=894 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
 briefStream=brief-raw.txt.err briefLines=0
