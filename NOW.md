@@ -385,6 +385,28 @@ nothing above this line is worked on until the sheet is replaced.
       that were built to the old sheet's tidy timber, starting with the
       parade.
 
+## 8. Stage 3, extended from ROADMAP.md because the list ran short
+
+- [ ] THE ARREST HAS TO BE REACHABLE FROM LIVE PLAY, and it is not.
+      MEASURED 22 September, not assumed: `Reaction.Confront` is the only
+      function in the codebase that produces an arrest outcome, and it has
+      ZERO callers outside Core - all five are in CoreTests.
+      `CoatHost.Arrested`, the Game-layer function that would act on one,
+      has zero callers as well, and `Homicide.cs:61` already says so in its
+      own comment. The end of the story is reachable only from a test.
+      ROADMAP puts this in the stage-3 gate for exactly this reason: "it
+      was added the day the terminal state of the consequence spine was
+      found to have no callers at all, which would have let the gate go
+      green with the end of the story unreachable." It is not a bug in
+      Core; Core is right and nothing calls it.
+- RUMOUR REACH IS FLAT WITH POPULATION, and it is JAFAR'S to decide rather
+  than an item to work. ROADMAP records it measured and unresolved: at 7,
+  50, 200, 300 and 500 residents only 15 to 22 ever remember anything,
+  because a rumour arrives at confidence times tie strength times 0.8 and
+  is refused below 0.2, so with the authored tie weights ordinary talk
+  dies at the second transfer. The constants are untouched. What reach the
+  moat requires is his.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
