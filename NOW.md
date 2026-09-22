@@ -596,8 +596,11 @@ overnight list had only its Overnight section left. Visual first, as ruled.
 - [ ] SEGMENTAL ARCHED HEADS over the terrace's windows, and the dentil course
       under the eaves: the two things every window and roofline on the new
       sheet has and ours do not.
-- [ ] THE KERB against the new sheet: pale grey with a clean arris; ours is
-      dark and rough.
+- [x] THE KERB against the new sheet: pale grey with a clean arris; ours is
+      dark and rough. DONE: its face 38/34/28 -> 77/73/66 against the sheet's
+      96/84/71; still rougher than the sheet's. AND THE ROAD'S RED FLECKS,
+      found beside it: the pack's asphalt has a red aggregate the sheet's
+      road does not; its saturation is quartered, its value unchanged.
 
 ## Where things stand
 

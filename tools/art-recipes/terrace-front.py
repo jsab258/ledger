@@ -185,7 +185,12 @@ MATERIALS = (
     # frame, at two and a half times what we had and warm with it.
     # PASS 2: 93/75/56 after pass 1 against the sheet's 100/83/61.
     ("paving",      (0.245, 0.151, 0.069), 0.62),   # was (0.121, 0.073, 0.042): the new sheet's flags are warm tan
-    ("kerbstone",   (0.105, 0.092, 0.078), 0.58),   # granite, greyer than the flags
+    # THE KERB AGAINST THE NEW SHEET, 22 September. Its kerbs are pale grey
+    # stone with a clean arris - 149/143/140 sRGB where the far kerb is lit,
+    # 96/84/71 on the near one's wet face - and ours came back at 38/34/28 on
+    # the face, a black line down the street. The value is lifted to the
+    # sheet's lit kerb, and the face's own shade does the rest.
+    ("kerbstone",   (0.300, 0.280, 0.255), 0.58),   # was (0.105, 0.092, 0.078): near black on the face
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
     # glazing, the toplight and both doors one near-black tone, so a British
@@ -3889,6 +3894,38 @@ def _tile_pattern(bpy, mats):
           % (TILE_M * 1000, TILE_DARK, TILE_JOINT_M * 1000))
 
 
+#: HOW MUCH OF THE ASPHALT MAP'S OWN COLOUR SURVIVES. See _quiet_the_road.
+ROAD_MAP_SATURATION = 0.25
+
+
+def _quiet_the_road(bpy, mats):
+    """Take the red out of the road's chippings, keep their light and dark.
+
+    22 September, against the new sheet: its carriageway is an even wet
+    grey, and ours carried red flecks all down the near lane - the pack's
+    asphalt photograph has a red aggregate in it. The mean was already right
+    (the palette pass matched the road region to within two levels), so
+    this does not move the value; it drops the map's saturation to a quarter
+    at the Base Color socket, after the wear and the wet, so the flecks keep
+    their brightness and lose their hue.
+    """
+    mat = mats.get("asphalt")
+    if mat is None or not mat.use_nodes:
+        print("tfNote roadQuiet=NOT-APPLIED/no-asphalt")
+        return
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    if bsdf is None or not bsdf.inputs["Base Color"].links:
+        print("tfNote roadQuiet=NOT-APPLIED/no-map")
+        return
+    src = bsdf.inputs["Base Color"].links[0].from_socket
+    hs = nt.nodes.new("ShaderNodeHueSaturation")
+    hs.inputs["Saturation"].default_value = ROAD_MAP_SATURATION
+    nt.links.new(src, hs.inputs["Color"])
+    nt.links.new(hs.outputs["Color"], bsdf.inputs["Base Color"])
+    print("tfNote roadQuiet=saturation-x%.2f/the-red-chippings-go-grey" % ROAD_MAP_SATURATION)
+
+
 def _flag_joints(bpy, mats):
     """Lay flag joints over the footway, between its map and its socket.
 
@@ -4437,6 +4474,7 @@ def build_and_render(args):
         _flag_joints(bpy, mats)
         _tile_pattern(bpy, mats)
         _wetten(mats, 0.9 if night else 0.6)
+        _quiet_the_road(bpy, mats)
         if not night:
             # A SHOP INTERIOR BY DAY IS NOT A SHOP INTERIOR AT NIGHT, and
             # this material was only ever set for the night frame: 1.00,
