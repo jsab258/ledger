@@ -155,13 +155,14 @@ nothing.
       nothing. Each engine uses ITS OWN writer, so a match is the two of
       them agreeing about a file the other never saw. The port could only
       read a save this morning; it can write one now.
-- [ ] AND THE SAME THING IN THE PACKAGED BUILD: written, not yet proven.
-      The probe now saves the mill and both memories, rebuilds the world
-      from the authoring, lays the save back over it and prints what
-      survived - including the hop count, which is what separates the
-      shopkeeper who SAW it from the lad who HEARD it. The verdict check
-      judges that line the moment one arrives. It needs the runner to
-      compile it, and no verdict carries the line yet.
+- [x] AND IT IS PROVEN IN THE PACKAGED BUILD. The verdict from run
+      a1eac56 carries it: the mill saved to 730 bytes, the world rebuilt
+      from the authoring, the save laid back over it, and afterwards the
+      shopkeeper still holds her rumour at confidence 0.94 and HOPS 0 while
+      the lad still holds his at HOPS 1. That pair is the whole claim - she
+      SAW it and he HEARD it, and a restore that handed everyone the same
+      records would have collapsed them into each other. Both memories came
+      back with their events and the markdown round-tripped byte for byte.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.
