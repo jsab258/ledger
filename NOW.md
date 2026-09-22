@@ -399,6 +399,26 @@ nothing above this line is worked on until the sheet is replaced.
       found to have no callers at all, which would have let the gate go
       green with the end of the story unreachable." It is not a bug in
       Core; Core is right and nothing calls it.
+- [ ] RUMOUR REACH: PRINT THE FOUR NUMBERS BEFORE HE RULES, ordered by
+      Jafar 2026-09-22. "I am not turning a constant up until a rumour
+      crosses the town; my instinct is that one act reaching a circle is
+      right, and that town-wide knowledge should come from severity,
+      repetition and the newspaper. The series tells me whether that
+      instinct survives."
+      WHAT TO PRINT: how strong the town's friendships actually are; how
+      confident a witness is at first sight; what counts as one retelling;
+      and then a SERIES showing how reach moves as each is changed ALONE.
+      WHERE THEY LIVE, found 22 September so the next sitting does not
+      rediscover it: one retelling is `Gossip.cs` `HopDecay = 0.8` and
+      `MinConfidenceToShare = 0.2`, with confidence multiplied by tie
+      strength as well, which is the whole of "confidence x tie x 0.8,
+      refused below 0.2". Tie strength is `SocialGraph.Link(a, b, weight)`
+      and the authored weights come from the town builder in
+      `StreetMap.cs`. First-sight confidence comes out of Perception and is
+      the one of the four not yet pinned to a line.
+      NOTHING IS TUNED. The series changes one constant at a time and
+      reports; no constant is left changed.
+
 - RUMOUR REACH IS FLAT WITH POPULATION, and it is JAFAR'S to decide rather
   than an item to work. ROADMAP records it measured and unresolved: at 7,
   50, 200, 300 and 500 residents only 15 to 22 ever remember anything,
