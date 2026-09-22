@@ -6,12 +6,22 @@ them is paused, and a paused studio's archive is still where its rulings live.
 
 Reconciled 2026-09-22 from two registers: the fifty-eight D-records in
 `legacy/studio-v2/respec/decision-register/` and the hundred and eleven dated
-rulings in `legacy/studio-v2/game-design/`. TEN D-RECORDS ARE DELIBERATELY
+rulings in `legacy/studio-v2/game-design/`. TWELVE D-RECORDS ARE DELIBERATELY
 ABSENT because they decide how the STUDIO worked rather than what the game is:
 D6 spend, D7 the verification model, D22 the plan's recorded stages, D32 a
 ruling names its queue item, D38 and D39 the audit's tiles and ordering, and
 D41 to D45, which scoped rigour, ungated visual and sound work, and gave queue
 order to the studio. They are in the archive and they come back with it.
+
+D10 AND D21 LEFT THIS FILE ON 2026-09-22, and both were carrying a line that
+said something they do not say. D10 was written here as "no new engine-level
+dependency without a decision"; D10 froze the SEPARATE framework template
+repository, ruled that it is updated by harvest rather than by continuous
+sync, and says nothing about the engine or its dependencies — the line was an
+obligation nobody had agreed to. D21's "map" is the STUDIO'S COVERAGE MAP, the
+dashboard tiles, not the town: it obliged every ruling to re-type tiles in the
+same batch, and those tiles are retired administration. Neither binds the
+game, so neither is a line here. Both records survive unedited in the archive.
 
 `canon.md` outranks every line here. Where this file and canon disagree, canon
 wins and this file is wrong.
@@ -20,7 +30,6 @@ wins and this file is wrong.
 
 - Unreal, decided after the probe, and it replaced the Unity path. [D16](legacy/studio-v2/respec/decision-register/D16-engine-unreal.md)
 - The probe that settled it, and what it was allowed to spend to answer. [D1](legacy/studio-v2/respec/decision-register/D1-engine-probe.md)
-- The framework is frozen: no new engine-level dependency without a decision. [D10](legacy/studio-v2/respec/decision-register/D10-framework-freeze.md)
 - The speech engine's upgrade path is not the upgrade path, and the difference is the point. [D51](legacy/studio-v2/respec/decision-register/D51-the-speech-engines-upgrade-path-is-not-the-upgrade-path.md)
 - Nobody writes a hardware floor from the hardware-floor paper. [D52](legacy/studio-v2/respec/decision-register/D52-nobody-writes-a-hardware-floor-from-the-hardware-floor-paper.md)
 - Graphify is declined. [D57](legacy/studio-v2/respec/decision-register/D57-graphify-is-declined.md)
@@ -70,7 +79,6 @@ wins and this file is wrong.
 - Mickey's stands on the built street. [D15](legacy/studio-v2/respec/decision-register/D15-mickeys-on-the-built-street.md)
 - Mickey's is a minicab office. [D19](legacy/studio-v2/respec/decision-register/D19-mickeys-is-a-minicab-office.md)
 - A map's design follows the world's size. [D36](legacy/studio-v2/respec/decision-register/D36-a-maps-design-follows-the-worlds-size.md)
-- Map tiles are retyped against the rulings, never inherited. [D21](legacy/studio-v2/respec/decision-register/D21-map-tiles-are-retyped-against-the-rulings.md)
 - Five landings, the sixth site, the settled night frame, and the neighbourhood that is not the town. [2026-09-21](legacy/studio-v2/game-design/decision-2026-09-21-ruling-five-landings-the-sixth-site-the-settled-night-frame-and-the-neighbourhood-that-is-not-the-town.md)
 
 ## What the player is given

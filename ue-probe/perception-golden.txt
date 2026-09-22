@@ -2448,6 +2448,13 @@ Scenario|knowledge|countAfterSecondTopic|2
 Scenario|knowledge|toString|player.location_d2_evening=warehouse
 Scenario|knowledge|sameTopic|1
 Scenario|knowledge|sameTopicOther|0
+Scenario|claims|uncaughtVerdict|0
+Scenario|claims|uncaughtLearned|1
+Scenario|claims|caughtVerdict|2
+Scenario|claims|caughtKeepsTruth|1
+Scenario|claims|countAfterCaught|1
+Scenario|claims|caughtVerdictRepeat|2
+Scenario|claims|memCountAfterCaught|3
 Scenario|summaries|sayingPlayer|2
 Scenario|summaries|sayingNovak|0
 Scenario|summaries|sayingEmpty|0

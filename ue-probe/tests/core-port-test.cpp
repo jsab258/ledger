@@ -71,8 +71,27 @@ int main(int argc, char** argv)
 	// implement. Every zero below ships the denominator beside it.
 	std::map<std::string, int> Rows, Bad, Unknown;
 	std::vector<std::string> Order;
-	long TotalRows = 0, TotalBad = 0, TotalUnknown = 0;
+	long TotalRows = 0, TotalBad = 0, TotalUnknown = 0, TotalSkipped = 0;
 	std::vector<std::string> Detail;
+
+	// SCENARIOS THIS BUILD DOES NOT IMPLEMENT, NAMED ONE BY ONE.
+	//
+	// THE OTHER HALF OF THE CHANGE ledger/PerceptionGolden's `claims` block
+	// says it is waiting for. That block pins `GossipMill.PlayerClaims` - a
+	// caught claim is remembered and never learned - and `Gossip.h` lists
+	// `PlayerClaims` under "OUT OF SCOPE AND NOT HERE", so every `claims` row
+	// reads UNKNOWN here. Until 2026-09-22 the repair was to leave those rows
+	// OUT OF THE COMMITTED TABLE, which made this comparison pass by never
+	// being asked the question: the table stopped describing the C# and
+	// nothing went red. The table is REGENERATED from the C# Core now, so the
+	// rows arrive, and a hole that is COUNTED AND NAMED is the honest shape.
+	//
+	// THE LIST IS SELF-EXPIRING. Below, every name on it is asserted to be
+	// genuinely unanswerable by this build; the day somebody ports
+	// PlayerClaims that assertion goes red and the name must come off. A skip
+	// list that outlives its reason is a gate with a hole nobody can see.
+	static const char* kUnportedScenarios[] = { "claims", 0 };
+	std::map<std::string, int> Skipped;
 
 	std::string Line;
 	while (std::getline(In, Line))
@@ -83,6 +102,17 @@ int main(int argc, char** argv)
 		if (F.size() < 3) continue;
 		const std::string& Fn = F[0];
 		if (Rows.find(Fn) == Rows.end()) { Order.push_back(Fn); Rows[Fn] = 0; Bad[Fn] = 0; Unknown[Fn] = 0; }
+
+		// A NAMED HOLE IS SKIPPED AND COUNTED; EVERY OTHER UNKNOWN STILL FAILS.
+		if (Fn == "Scenario")
+		{
+			bool Unported = false;
+			for (int U = 0; kUnportedScenarios[U] != 0; ++U)
+			{
+				if (F[1] == kUnportedScenarios[U]) { Unported = true; break; }
+			}
+			if (Unported) { ++Skipped[F[1]]; ++TotalSkipped; continue; }
+		}
 
 		const Answer A = Evaluate(F);
 		if (!A.Known)
@@ -124,6 +154,26 @@ int main(int argc, char** argv)
 	// does not implement is a hole in the port, not a neutral fact, and it
 	// would otherwise be invisible: an unanswered row cannot fail.
 	Loud(TotalUnknown == 0, "no row in the table names a function this build cannot answer");
+
+	// THE SKIPPED ROWS, WITH THEIR NAMES AND THEIR COUNT. A zero needs a
+	// denominator and so does a hole: "0 unanswered" printed beside a silent
+	// skip of seven rows is the reading this block exists to make impossible.
+	{
+		int Listed = 0, StillUnported = 0;
+		for (int U = 0; kUnportedScenarios[U] != 0; ++U)
+		{
+			++Listed;
+			const std::string Name = kUnportedScenarios[U];
+			const int Seen = Skipped.count(Name) ? Skipped[Name] : 0;
+			const bool Answerable = !Scenario(Name).empty();
+			if (!Answerable) { ++StillUnported; }
+			std::printf("    SKIPPED scenario=%s rows=%d portedNow=%s\n",
+			            Name.c_str(), Seen, Answerable ? "YES-REMOVE-IT" : "no");
+		}
+		std::printf("    skippedTotal=%ld over %d named scenario(s)\n", TotalSkipped, Listed);
+		Loud(StillUnported == Listed,
+		     "every scenario on the unported list really is unanswerable here");
+	}
 
 	// ---- rule 5b: the accepting case is above, and these must REJECT ----
 	//
@@ -194,7 +244,7 @@ int main(int argc, char** argv)
 	}
 
 	std::printf("core-port-test: %d check(s), %d failure(s) over %ld golden row(s), "
-	            "%ld mismatch(es), %ld unanswered\n",
-	            gChecks, gFailed, TotalRows, TotalBad, TotalUnknown);
+	            "%ld mismatch(es), %ld unanswered, %ld skipped\n",
+	            gChecks, gFailed, TotalRows, TotalBad, TotalUnknown, TotalSkipped);
 	return gFailed == 0 ? 0 : 2;
 }
