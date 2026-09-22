@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -836,7 +836,256 @@ namespace Ledger.PerceptionGolden
                 Key(sb, "save_reload", "loadTwiceEvents", twice.Events.Count.ToString(Inv));
                 Key(sb, "save_reload", "loadTwiceBeliefs", twice.Beliefs.Count.ToString(Inv));
             }
+            EmitGossipRestore(sb);
             EmitObservationFour(sb);
+        }
+
+        /// gossip_restore: A RUMOUR IN FLIGHT SURVIVES A RESTART.
+        ///
+        /// WHY THIS IS A SEPARATE SCENARIO FROM save_reload. A memory's save
+        /// format IS the markdown - SaveCodec's own summary says NPC memories
+        /// persist separately and are not in the save file - so save_reload
+        /// pins a text round trip. A RUMOUR is not in that markdown. It lives
+        /// in the GossipMill, and the mill goes into the save FILE as JSON,
+        /// under "agents", with each agent's loyalty, leash, suspicion,
+        /// suppressed topics, rumours and learned facts. That is a different
+        /// format with a different parser and a different set of ways to
+        /// lose something, and the port had none of it.
+        ///
+        /// WHAT THE ROWS PIN. Not the JSON text - that is MiniJson's business
+        /// and the port is free to read it any way it likes - but the STATE
+        /// THE RESTORE ARRIVES AT: how many rumours came back, with what
+        /// confidence, what hop count, which are indelible, which topics stay
+        /// suppressed, and what the agent's own numbers are. A port that
+        /// reads the same file and lands on a different belief is the failure
+        /// this exists to catch.
+        static void EmitGossipRestore(StringBuilder sb)
+        {
+            var mill = new GossipMill(new SocialGraph());
+            mill.Add(Agent("w1", "the shopkeeper", "day"));
+            mill.Add(Agent("n1", "the barmaid", "night"));
+
+            // A WITNESSED CRIME AND A THING SHE WAS TOLD, which is the pair
+            // the crime encounter turns on: one rumour at certainty from
+            // having seen it, one at a discount from having heard it.
+            mill.Witness("w1", new Fact("player", "broke_window_d2", "yes"),
+                         "I saw him put the window in at the Parade", false,
+                         new GameTime(2, 19, 40), 0.95);
+            mill.Witness("w1", new Fact("player", "owes_money_d1", "yes"),
+                         "they say he is behind with Rita", true,
+                         new GameTime(1, 18, 0), 0.4);
+            mill.Get("w1").Loyalty = 0.375;
+            mill.Get("w1").Leashed = true;
+            mill.Get("w1").Suppressed.Add("player|owes_money_d1");
+
+            var json = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(),
+                                         new PlayerKnowledge(), new SecretsBook(), new BeatBook(),
+                                         mill, new DebtBook(),
+                                         new Dictionary<string, object>());
+
+            // THE RESTART: a mill built fresh from the same authoring, with
+            // none of the play in it, and then the save laid over it. That is
+            // what a restart IS - the front end rebuilds the world and the
+            // codec overlays what happened - so restoring into the SAME mill
+            // would prove nothing at all.
+            var after = new GossipMill(new SocialGraph());
+            after.Add(Agent("w1", "the shopkeeper", "day"));
+            after.Add(Agent("n1", "the barmaid", "night"));
+            Key(sb, "gossip_restore", "rumorsBeforeRestore",
+                after.Get("w1").Rumors.Count.ToString(Inv));
+            SaveCodec.RestoreMillAgents(json, after);
+
+            // THE SAVE'S OWN BYTES ARE A ROW, the same rule save_reload's
+            // junk fixture already follows and for a stronger reason here:
+            // the port cannot CAPTURE, only restore, so the two engines have
+            // to be reading the same text or the comparison proves only that
+            // each agrees with itself. This row is what Capture really wrote.
+            Key(sb, "gossip_restore", "saveFixture", Esc(json));
+
+            var w = after.Get("w1");
+            Key(sb, "gossip_restore", "rumorsAfter", w.Rumors.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "loyalty", D(w.Loyalty));
+            Key(sb, "gossip_restore", "leashed", w.Leashed ? "1" : "0");
+            Key(sb, "gossip_restore", "suppressedCount", w.Suppressed.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "factsAfter", w.Knowledge.Facts.Count.ToString(Inv));
+            for (int i = 0; i < w.Rumors.Count; i++)
+            {
+                var r = w.Rumors[i];
+                var k = i.ToString(Inv);
+                Key(sb, "gossip_restore", "subj" + k, Esc(r.Content.Subject));
+                Key(sb, "gossip_restore", "pred" + k, Esc(r.Content.Predicate));
+                Key(sb, "gossip_restore", "val" + k, Esc(r.Content.Value));
+                Key(sb, "gossip_restore", "conf" + k, D(r.Confidence));
+                Key(sb, "gossip_restore", "hops" + k, r.Hops.ToString(Inv));
+                Key(sb, "gossip_restore", "sensitive" + k, r.Sensitive ? "1" : "0");
+                Key(sb, "gossip_restore", "indelible" + k, r.Indelible ? "1" : "0");
+                Key(sb, "gossip_restore", "summary" + k, Esc(r.Summary));
+                Key(sb, "gossip_restore", "origin" + k, Esc(r.OriginId));
+            }
+
+            // REJECTING HALF, AND IT IS THE HALF SaveChaos FOUND. A rumour
+            // whose subject is missing is not a rumour: `Fact` refuses null
+            // rather than dereferencing it, so the codec drops the record.
+            // An agent id nobody authored is skipped whole. Both are pinned,
+            // because a port that "helpfully" kept a subjectless rumour would
+            // carry a belief about nobody into a conversation.
+            const string Junk =
+                "{\"agents\":["
+                + "{\"id\":\"w1\",\"loyalty\":0.5,\"leashed\":false,\"suspicion\":0,"
+                + "\"suppressed\":[],\"rumors\":["
+                + "{\"pred\":\"p\",\"val\":\"v\",\"conf\":0.5,\"hops\":1},"
+                + "{\"subj\":\"player\",\"pred\":\"kept\",\"val\":\"yes\",\"conf\":0.25,\"hops\":2}"
+                + "],\"facts\":[]},"
+                + "{\"id\":\"nobody_authored_this\",\"loyalty\":0.9,\"rumors\":[]}"
+                + "]}";
+            var junkMill = new GossipMill(new SocialGraph());
+            junkMill.Add(Agent("w1", "the shopkeeper", "day"));
+            SaveCodec.RestoreMillAgents(Junk, junkMill);
+            Key(sb, "gossip_restore", "junkRumors", junkMill.Get("w1").Rumors.Count.ToString(Inv));
+            if (junkMill.Get("w1").Rumors.Count > 0)
+            {
+                Key(sb, "gossip_restore", "junkKeptPred",
+                    Esc(junkMill.Get("w1").Rumors[0].Content.Predicate));
+                Key(sb, "gossip_restore", "junkKeptConf", D(junkMill.Get("w1").Rumors[0].Confidence));
+            }
+            // A SECOND FIXTURE, FOR THE FOUR CASES A TEXT-ONLY READER GETS
+            // WRONG. MiniJson's helpers are stricter than JSON: GetString is
+            // `v as string`, so a null, a number, a bool or a container
+            // answers NULL rather than a rendering of itself, while an EMPTY
+            // string answers ""; and Flag is `v is bool b && b`, so the
+            // number 1 is not true and neither is the string "true". Num,
+            // by contrast, is happy with a quoted number.
+            //
+            // Every record below is here because a reader that asks only
+            // "is there text?" would disagree with the engine about it:
+            //   subj null    - dropped (the word "null" is not a subject)
+            //   subj 5       - dropped (`v as string` on a number is null)
+            //   subj ""      - KEPT, with an empty subject, because "" is a
+            //                  string; this is the one that goes the other
+            //                  way and it is the one most likely to be
+            //                  "tidied" into a drop by a port
+            //   leashed 1    - NOT leashed, sensitive "true" - NOT sensitive,
+            //                  indelible 1 - NOT indelible
+            const string Strict =
+                "{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.25,\"leashed\":1,\"suspi"
+                + "cion\":0,\"suppressed\":[\"kept|topic\"],\"rumors\":[{\"subj\":null,\""
+                + "pred\":\"p\",\"val\":\"v\",\"conf\":0.9,\"hops\":1},{\"subj\":5,\"pred"
+                + "\":\"p\",\"val\":\"v\",\"conf\":0.9,\"hops\":1},{\"subj\":\"\",\"pred"
+                + "\":\"empty\",\"val\":\"v\",\"conf\":0.8,\"hops\":3,\"sensitive\":true}"
+                + ",{\"subj\":\"player\",\"pred\":\"flagged\",\"val\":\"v\",\"conf\":0.7,"
+                + "\"hops\":0,\"indelible\":1,\"sensitive\":\"true\"}],\"facts\":[]}]}";
+            var strictMill = new GossipMill(new SocialGraph());
+            strictMill.Add(Agent("w1", "the shopkeeper", "day"));
+            SaveCodec.RestoreMillAgents(Strict, strictMill);
+            var sm = strictMill.Get("w1");
+            Key(sb, "gossip_restore", "strictFixture", Esc(Strict));
+            Key(sb, "gossip_restore", "strictRumors", sm.Rumors.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "strictLoyalty", D(sm.Loyalty));
+            Key(sb, "gossip_restore", "strictLeashed", sm.Leashed ? "1" : "0");
+            Key(sb, "gossip_restore", "strictSuppressed", sm.Suppressed.Count.ToString(Inv));
+            for (int i = 0; i < sm.Rumors.Count; i++)
+            {
+                var k = i.ToString(Inv);
+                Key(sb, "gossip_restore", "strictPred" + k, Esc(sm.Rumors[i].Content.Predicate));
+                Key(sb, "gossip_restore", "strictSubjLen" + k,
+                    sm.Rumors[i].Content.Subject.Length.ToString(Inv));
+                Key(sb, "gossip_restore", "strictConf" + k, D(sm.Rumors[i].Confidence));
+                Key(sb, "gossip_restore", "strictSensitive" + k, sm.Rumors[i].Sensitive ? "1" : "0");
+                Key(sb, "gossip_restore", "strictIndelible" + k, sm.Rumors[i].Indelible ? "1" : "0");
+            }
+
+            // AND THE FIXTURE ITSELF IS A ROW, the same rule save_reload
+            // already follows: two engines reading the same bytes is the
+            // test, so the bytes are pinned. A hand-edit that stays rejected
+            // on both sides would otherwise change the test silently.
+            Key(sb, "gossip_restore", "junkFixture", Esc(Junk));
+            // EVERY CASE AN INDEPENDENT REVIEWER FOUND, PINNED. Each of
+            // these was a real disagreement between the two engines reading
+            // the same file, and none of them was reachable from the two
+            // fixtures above - which is the whole argument for having had
+            // somebody else attack it.
+            //   duplicate keys  - MiniJson builds a dictionary, so the LAST
+            //                     one wins; the port returned on the first.
+            //   conf true       - Convert.ToDouble(true) is 1.0, and 1 is
+            //                     over MinConfidenceToShare where 0 is not,
+            //                     so the same rumour spread in one engine
+            //                     and sat inert in the other.
+            //   hops "2"        - hops is read with GetInt, not Num, and
+            //                     GetInt wants `v is double`; a quoted
+            //                     number is a string and answers 0.
+            //   hops 1e18       - GetInt SATURATES. The comment on it
+            //                     records why: SaveChaos found twenty-four
+            //                     overflows and every one had flipped sign.
+            //   suppressed      - it is a HashSet in the C#, so a repeat is
+            //                     one topic and not two.
+            //   the escapes     - EscapeString writes \\r, \\b, \\f and
+            //                     \\uXXXX for any control character in a
+            //                     summary, and the port was dropping the
+            //                     backslash and leaving a stray letter in
+            //                     prose a player reads.
+            const string Review =
+                "{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.1,\"loyalty\":0.9,\"supp"
+                + "ressed\":[\"same\",\"same\",\"other\"],\"rumors\":[{\"subj\":\"pla"
+                + "yer\",\"pred\":\"boolconf\",\"val\":\"v\",\"conf\":true,\"hops\":0"
+                + "},{\"subj\":\"player\",\"pred\":\"quotedhops\",\"val\":\"v\",\"con"
+                + "f\":0.5,\"hops\":\"2\"},{\"subj\":\"player\",\"pred\":\"hugehops\""
+                + ",\"val\":\"v\",\"conf\":0.5,\"hops\":1e18},{\"subj\":\"player\",\""
+                + "pred\":\"escapes\",\"val\":\"v\",\"conf\":0.5,\"hops\":0,\"summary"
+                + "\":\"\\r\\n\\t\\b\\f\\\\\\\"\\/\\u0041\"}],\"facts\":[]}]}";
+            var reviewMill = new GossipMill(new SocialGraph());
+            reviewMill.Add(Agent("w1", "the shopkeeper", "day"));
+            SaveCodec.RestoreMillAgents(Review, reviewMill);
+            var rv = reviewMill.Get("w1");
+            Key(sb, "gossip_restore", "reviewFixture", Esc(Review));
+            Key(sb, "gossip_restore", "reviewLoyalty", D(rv.Loyalty));
+            Key(sb, "gossip_restore", "reviewSuppressed", rv.Suppressed.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "reviewRumors", rv.Rumors.Count.ToString(Inv));
+            foreach (var r in rv.Rumors)
+            {
+                var k = r.Content.Predicate;
+                Key(sb, "gossip_restore", "review_" + k + "_conf", D(r.Confidence));
+                Key(sb, "gossip_restore", "review_" + k + "_hops", r.Hops.ToString(Inv));
+            }
+            // THE SUMMARY IS PINNED BY ITS CODE POINTS, not by its text. The
+            // table's own escaping turns a space into a tilde and DROPS a
+            // carriage return, so a row carrying the string would have hidden
+            // the very difference this case exists to catch.
+            var esc = rv.Rumors.FirstOrDefault(r => r.Content.Predicate == "escapes");
+            Key(sb, "gossip_restore", "reviewSummaryLen",
+                (esc == null ? -1 : esc.Summary.Length).ToString(Inv));
+            if (esc != null)
+                for (int i = 0; i < esc.Summary.Length; i++)
+                    Key(sb, "gossip_restore", "reviewSummaryCp" + i.ToString(Inv),
+                        ((int)esc.Summary[i]).ToString(Inv));
+
+            // AND A BROKEN SAVE CHANGES NOTHING AT ALL, which is the one the
+            // reviewer said to fix first. MiniJson throws on the trailing
+            // rubbish, RestoreMillAgents catches it and returns, and the mill
+            // keeps what it had. The port used to clear each agent's rumours
+            // and THEN discover it could not read their replacements.
+            const string Broken =
+                "{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.9,\"rumors\":[{\"subj\":"
+                + "\"player\",\"pred\":\"fromthesave\",\"val\":\"v\",\"conf\":0.9,\"h"
+                + "ops\":0}]}],\"day\":01x}";
+            var keptMill = new GossipMill(new SocialGraph());
+            keptMill.Add(Agent("w1", "the shopkeeper", "day"));
+            keptMill.Witness("w1", new Fact("player", "already_knew", "yes"),
+                             "she knew this before the load", false, new GameTime(1, 9, 0), 0.8);
+            keptMill.Get("w1").Loyalty = 0.42;
+            SaveCodec.RestoreMillAgents(Broken, keptMill);
+            Key(sb, "gossip_restore", "brokenFixture", Esc(Broken));
+            Key(sb, "gossip_restore", "brokenRumors",
+                keptMill.Get("w1").Rumors.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "brokenLoyalty", D(keptMill.Get("w1").Loyalty));
+            Key(sb, "gossip_restore", "brokenKeptPred",
+                keptMill.Get("w1").Rumors.Count > 0
+                    ? Esc(keptMill.Get("w1").Rumors[0].Content.Predicate) : "none");
+
+            // A RESTORE REPLACES RATHER THAN APPENDS, which is the difference
+            // between reloading a save and doubling every rumour in it.
+            SaveCodec.RestoreMillAgents(json, after);
+            Key(sb, "gossip_restore", "restoreTwiceRumors",
+                after.Get("w1").Rumors.Count.ToString(Inv));
         }
 
         // Vantage builder of the CoreTests shape, Program.cs 16030 to 16040.

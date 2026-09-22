@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22156,15 +22156,30 @@ namespace Ledger.CoreTests
                   judged.KeyLine);
         }
 
-        /// HOW MANY SHOP INTERIOR CARDS THE PARADE EMITS, and how many of them
+        /// HOW MANY SHOP INTERIOR CARDS THE STREET EMITS, and how many of them
         /// the scene file asks to be lit. Named constants because they are
         /// claims about the scene the night frame was reasoned about with,
-        /// not tuning values: three of six is a stated art decision (a parade
-        /// with every unit lit is a shopping centre, with none it is a set),
-        /// and the day either number moves the night frame changes and
-        /// somebody should have to say so. Read off the live tree 2 Sep 2026.
-        const int WINDOW_CARDS_EXPECTED = 6;
-        const int WINDOW_LIT_EXPECTED = 3;
+        /// not tuning values: the proportion lit is a stated art decision (a
+        /// parade with every unit lit is a shopping centre, with none it is a
+        /// set), and the day either number moves the night frame changes and
+        /// somebody should have to say so.
+        ///
+        /// SOMEBODY IS SAYING SO. It was six and three, read off the live tree
+        /// on 2 September, when the east parade was the street's only row of
+        /// shops. On 22 September Jafar ruled the NEAR WEST BLOCK into shops -
+        /// the scene spec had made it plain for one stated reason, "because
+        /// cam_B stands here and never photographs it", and that reason lapsed
+        /// the day the hook camera moved onto that pavement. Three more units,
+        /// so nine cards; the scene file's own lit_bays then resolves to five
+        /// of them.
+        ///
+        /// FIVE OF NINE IS STILL THE SAME DECISION, which is the part worth
+        /// writing down: a little over half, so the row reads as a street with
+        /// some shops open and some shut rather than a parade switched on at
+        /// the mains. The night frame gains two lit windows on the near side,
+        /// which is where the camera now stands.
+        const int WINDOW_CARDS_EXPECTED = 9;
+        const int WINDOW_LIT_EXPECTED = 5;
 
         /// PIECES CARRYING TWO NON-ZERO ROTATIONS, read off the live tree
         /// rather than assumed. Kept as a named constant because it is a
