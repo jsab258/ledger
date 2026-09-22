@@ -721,6 +721,37 @@ namespace Golden
 		return R;
 	}
 
+	// SCENARIOS THE PORT DOES NOT IMPLEMENT, NAMED ONCE, HERE, BECAUSE TWO
+	// READERS CONSUME THIS TABLE AND THEY DISAGREED ABOUT THEM.
+	//
+	// ue-probe/tests/core-port-test.cpp fails on a row it cannot answer, and
+	// carried its own copy of this list so the known hole could be skipped and
+	// counted. The IN-ENGINE reader in LedgerProbe.cpp had no list at all: it
+	// lumped every unanswerable row into one `Unknown` total, printed "N
+	// row(s) named a function this build does not implement", and PASSED
+	// ANYWAY, because its verdict only looked at mismatches. So the cheap
+	// check was strict about holes and the expensive one was not, and a real
+	// hole opening in the port would have gone red in one and green in the
+	// other. One list, one meaning, both readers.
+	//
+	// THE LIST IS SELF-EXPIRING. Both readers assert that every name on it is
+	// genuinely unanswerable by this build, so the day somebody ports
+	// PlayerClaims the assertion goes red and the name must come off.
+	inline const char* UnportedScenarios(int Index)
+	{
+		static const char* Names[] = { "claims", 0 };
+		return Names[Index];
+	}
+
+	inline bool IsUnportedScenario(const std::string& Name)
+	{
+		for (int I = 0; UnportedScenarios(I) != 0; ++I)
+		{
+			if (Name == UnportedScenarios(I)) { return true; }
+		}
+		return false;
+	}
+
 	inline const char* ScenarioNames(int Index)
 	{
 		static const char* Names[] = {
