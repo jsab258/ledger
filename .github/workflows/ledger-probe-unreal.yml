@@ -2408,7 +2408,10 @@ jobs:
         if: always()
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NO TOKEN HERE ANY MORE. This step briefly committed and pushed
+          # its own diagnosis, because nobody could read an Actions log; it
+          # prints it now instead. A step that judges a run has no business
+          # holding a write credential.
           GIT_CONFIG_COUNT: "1"
           GIT_CONFIG_KEY_0: safe.directory
           GIT_CONFIG_VALUE_0: "*"
