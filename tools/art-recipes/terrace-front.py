@@ -425,7 +425,18 @@ SURFACE_OF = {
     # orange, and this town is slated. `roof_b` is the slate.
     "slate":        ("roof_b", 0.8),
     "stone":        ("concrete", 0.8),
-    "paint_joinery":("wood", 0.6),
+    # PAINTED JOINERY TAKES PLASTER, NOT TIMBER, and the reason is a clamp
+    # this file already carried. The tint gain is the authored colour over
+    # the map's own average, bounded to 6.0 so a dark map cannot be driven
+    # into blown highlights - and white paint over the wood map needs
+    # 0.672/0.0907 = 7.4 on green and 0.640/0.0519 = 12.3 on blue. Both hit
+    # the ceiling, so the gain came out lopsided and every white sash on the
+    # street rendered CREAM. Widening the clamp would have traded that for
+    # the blown patches it exists to prevent. The real answer is that GLOSS
+    # PAINT DOES NOT SHOW GRAIN: a painted sash is a smooth surface, the
+    # plaster map is the smooth one we hold, and its own average is light
+    # enough that white needs a gain of 1.3.
+    "paint_joinery":("plaster", 0.5),
     "paint_stall":  ("plaster", 1.0),
     "paint_door":   ("wood", 0.6),
     "paint_fascia": ("wood", 1.0),
@@ -1020,7 +1031,7 @@ def _sash(parts, i, a, b, sill_z, head_z, reveal):
          mid + MEETING_RAIL_T * 0.5, head_z - f, "two-over-two/the-upper-sash")
 
 
-def _roof_and_rainwater(parts, p, T, wall, party_wall):
+def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
     """The roof this row has, its downpipe and, where the row carries one, its
     stack. Shared for the same reason the upper floor is."""
     W = p["bay_width_m"]
@@ -1072,10 +1083,62 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall):
     # CHIMNEY STACK, on the party wall, top one metre above the ridge.
     cw, cd = p["chimney_w_m"], p["chimney_d_m"]
     if party_wall:
+        stack_top = p["ridge_m"] + p["chimney_above_ridge_m"]
         _box(parts, "chimney_stack", wall, W - cw / 2.0, W + cw / 2.0,
              D / 2.0 - cd / 2.0, D / 2.0 + cd / 2.0,
-             EAVES, p["ridge_m"] + p["chimney_above_ridge_m"],
+             EAVES, stack_top,
              "a-stack-serves-both-houses-either-side-of-the-wall-it-stands-on")
+        if bay in AERIAL_ON_STACKS:
+            _aerial(parts, bay, W, D / 2.0, stack_top)
+
+
+#: THE TELEVISION AERIAL, AND ITS ELEMENTS ARE DERIVED FROM PHYSICS.
+#:
+#: The scene file works the length out rather than choosing it, and the
+#: working is worth keeping where the geometry is: British television in 1990
+#: is UHF Bands IV and V, 470 to 860 MHz; a half-wave dipole at the 550 MHz
+#: middle of that band is c/(2f) = 299792458/(2 x 550e6) = 0.2725 m. So the
+#: elements of a domestic yagi are about 0.27 m and THE WHOLE COMB IS BARELY
+#: A METRE ACROSS. That is the reason a period British roofline is a forest
+#: of small combs rather than the large dishes that replaced them, and it is
+#: why an aerial drawn at any size that reads comfortably would be wrong.
+#:
+#: ON TWO STACKS, NOT ALL FIVE, and the spec names which: a roofline where
+#: every house has one is as wrong as a roofline where none does.
+#:
+#: THE BOOM POINTS ALONG THE STREET. A yagi points at its transmitter and
+#: every aerial in a real street points the same way, so the direction is a
+#: choice; this one is made so the ELEMENTS run across the street and read as
+#: a comb from the hook camera rather than end-on as a single rod. British
+#: UHF is horizontally polarised, so the elements are horizontal either way.
+AERIAL_ON_STACKS = (1, 3)
+AERIAL_MAST_H, AERIAL_MAST_D = 1.5, 0.038
+AERIAL_BOOM_L, AERIAL_BOOM_D = 1.2, 0.020
+AERIAL_ELEMENTS, AERIAL_ELEMENT_L, AERIAL_ELEMENT_D = 10, 0.27, 0.012
+
+
+def _aerial(parts, bay, cx, cy, stack_top):
+    """One yagi, standing on a stack: a mast, a boom, and the comb."""
+    m = AERIAL_MAST_D / 2.0
+    top = stack_top + AERIAL_MAST_H
+    _box(parts, "aerial_%d_mast" % bay, "steel_dark", cx - m, cx + m,
+         cy - m, cy + m, stack_top, top, "38mm/lashed-to-the-stack")
+    b = AERIAL_BOOM_D / 2.0
+    _box(parts, "aerial_%d_boom" % bay, "steel_dark",
+         cx - AERIAL_BOOM_L / 2.0, cx + AERIAL_BOOM_L / 2.0,
+         cy - b, cy + b, top - b, top + b, "1.2m-along-the-street")
+    e = AERIAL_ELEMENT_D / 2.0
+    half = AERIAL_ELEMENT_L / 2.0
+    # EVENLY SPACED, because the spec gives a count and a boom length and
+    # nothing else. A real yagi's director spacing opens out along the boom;
+    # at this size that is a difference of millimetres on a rod already
+    # thinner than a pixel, so it would be invention rather than accuracy.
+    step = AERIAL_BOOM_L / float(AERIAL_ELEMENTS)
+    for k in range(AERIAL_ELEMENTS):
+        ex = cx - AERIAL_BOOM_L / 2.0 + step * (k + 0.5)
+        _box(parts, "aerial_%d_element_%d" % (bay, k), "steel_dark",
+             ex - e, ex + e, cy - half, cy + half, top - e, top + e,
+             "0.27m/half-wave-at-550MHz")
 
 
 def _lighting_column_module():
@@ -1200,6 +1263,23 @@ def plan_street(root, spec_rel=SPEC_REL):
             r = dict(part)
             r["id"] = "%s_%s" % (block_id, part["id"])
             r["block"] = block_id
+            # THE WEST SIDE IS A REFLECTION, AND A REFLECTION FLIPS LETTERING.
+            # Only y is negated below, so a west frontage faces the street
+            # correctly while its handedness is reversed: a viewer looking at
+            # an EAST face has +x on their right hand, and a viewer looking at
+            # a WEST face has +x on their LEFT. Brick does not care. A painted
+            # fascia does, and the first frame with shops on the near west
+            # block had MICKEY'S reading backwards across it.
+            #
+            # THE ROW STAYS MIRRORED rather than being rebuilt as a rotation.
+            # Turning each block 180 degrees about its own centre would put
+            # its bays back in the right order and move every one of them
+            # along the street, which is a change to where the buildings ARE
+            # for the sake of a change to where an image's left edge is. The
+            # image is the thing that is wrong, so the image is what is
+            # flipped, and only on the side that needs it.
+            if not east:
+                r["decal_flip"] = True
             # ALONG the street first: each block starts where the scene file
             # says it starts, not at zero.
             r["x0"] = part["x0"] + q["start_x_m"]
@@ -1334,8 +1414,15 @@ FIGURE_DEPTH_M = 0.25
 #: serving, two standing - and a parade with nobody on it reads as closed
 #: whatever the shops say. Six here too, on both pavements and at a spread of
 #: distances, because people all at one distance read as a queue.
-FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (33.5, 4.05),
-             (15.0, -4.35), (30.0, -4.15))
+#: MOVED BACK DOWN THE STREET, 22 September. Two of these were placed when
+#: the hook camera stood at x = 40 and they stayed put when it came inside
+#: the row to 33: the west-footway figure at x = 30 ended up THREE METRES
+#: from the lens and the east one at 33.5 was level with it. At that range a
+#: six-box silhouette stops setting scale and starts being the subject - a
+#: grey mannequin filling the corner of the frame the stage is judged on.
+#: The sheet's own nearest figure is four or five metres off and small.
+FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (26.5, 4.05),
+             (15.0, -4.35), (23.0, -4.15))
 
 
 def _road(out, pid, material, x0, x1, half, fall, note=""):
@@ -1375,10 +1462,32 @@ def _figures(out):
         hw, hd = FIGURE_SHOULDER_M / 2.0, FIGURE_DEPTH_M / 2.0
         base = THRESHOLD_ABOVE_CROWN_M
         coat = ("figure_a", "figure_b", "figure_c")[n % 3]
-        _box(out, "figure_%d_legs" % n, "figure", fx - hd, fx + hd,
-             fy - hw * 0.8, fy + hw * 0.8, base, base + 0.86, "to-the-hip")
+        # TWO LEGS WITH DAYLIGHT BETWEEN THEM, AND A NECK. Turning the
+        # shoulders across the view fixed the first fault and left a second
+        # one: a single block from the ground to the shoulders is a post
+        # whichever way it faces. What the eye actually uses to find a person
+        # at twenty-five metres, before it can see a face or a coat, is the
+        # GAP between the legs and the NOTCH at the neck - two pieces of
+        # background showing through in the right places. Both cost one box
+        # each and they are the whole of the read.
+        #
+        # STILL BLOCKS AND NOT A BODY. Six boxes is a silhouette that sets
+        # scale; the bodies are stage 2 and they are Mixamo's, not mine.
+        leg_w = hw * 0.34
+        leg_gap = hw * 0.16
+        for side, sy in (("l", -leg_gap - leg_w), ("r", leg_gap + leg_w)):
+            _box(out, "figure_%d_leg_%s" % (n, side), "figure", fx - hd * 0.8, fx + hd * 0.8,
+                 fy + sy - leg_w, fy + sy + leg_w, base, base + 0.86,
+                 "one-of-two/the-gap-between-them-is-what-reads")
+        # THE TORSO STOPS AT THE SHOULDER and the head sits above a neck
+        # narrower than both, so the outline steps in twice on its way up.
+        neck = head * 0.55
+        shoulder_z = base + top - head - 0.06
         _box(out, "figure_%d_torso" % n, coat, fx - hd, fx + hd,
-             fy - hw, fy + hw, base + 0.86, base + top - head, "shoulders-0.45m")
+             fy - hw, fy + hw, base + 0.86, shoulder_z, "shoulders-0.45m")
+        _box(out, "figure_%d_neck" % n, coat, fx - neck / 2.0, fx + neck / 2.0,
+             fy - neck / 2.0, fy + neck / 2.0, shoulder_z, base + top - head,
+             "the-notch-the-eye-looks-for")
         _box(out, "figure_%d_head" % n, "figure", fx - head / 2.0, fx + head / 2.0,
              fy - head / 2.0, fy + head / 2.0, base + top - head, base + top,
              "crown-at-1.75m/eye-at-the-simulation's-own-1.6")
@@ -1682,7 +1791,7 @@ def plan_parts(p, bay=0, party_wall=True):
     if p["ground_floor"] != "shopfront":
         _plain_ground(parts, p, T, wall, bay)
         _upper_floor(parts, p, T, wall)
-        _roof_and_rainwater(parts, p, T, wall, party_wall)
+        _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
         return parts
 
     # ---- ground floor: the shopfront -------------------------------------
@@ -1870,7 +1979,7 @@ def plan_parts(p, bay=0, party_wall=True):
         sg["paint"] = paint_rgb
 
     _upper_floor(parts, p, T, wall)
-    _roof_and_rainwater(parts, p, T, wall, party_wall)
+    _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
     return parts
 
 
@@ -2160,7 +2269,11 @@ def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
     # own highlights into blown patches, and a very bright one would crush.
     mean = TEXTURE_MEAN.get(surface)
     if tint is not None and mean is not None:
-        gain = [min(6.0, max(0.05, tint[i] / max(1e-4, mean[i]))) for i in range(3)]
+        # THE FLOOR CAME DOWN TO 0.02 at the same time and for the mirror
+        # reason: a deep oxblood over the plaster map wants 0.027 on green
+        # and was being held at 0.05, which quietly desaturated every dark
+        # paint on the street towards grey.
+        gain = [min(6.0, max(0.02, tint[i] / max(1e-4, mean[i]))) for i in range(3)]
         mix = nt.nodes.new("ShaderNodeMix")
         mix.data_type = "RGBA"
         mix.blend_type = "MULTIPLY"
@@ -2177,13 +2290,19 @@ def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
     norm = image("_n", True)
     if norm is not None:
         nmap = nt.nodes.new("ShaderNodeNormalMap")
-        nmap.inputs["Strength"].default_value = 1.0
+        # HALF STRENGTH, BECAUSE FULL READ AS RUBBER. At 1.0 the pack's brick
+        # normal put every perpend and bed joint into deep relief and the
+        # wall came back looking moulded rather than laid - a texture that
+        # announces itself instead of a surface. The approved sheet's brick
+        # is nearly flat at this distance; what carries is its COLOUR and its
+        # coursing, not its depth.
+        nmap.inputs["Strength"].default_value = 0.5
         nt.links.new(norm.outputs["Color"], nmap.inputs["Color"])
         nt.links.new(nmap.outputs["Normal"], bsdf.inputs["Normal"])
     return "%s@%.2fm%s%s" % (surface, tile_m, "+r" if rough else "", "+n" if norm else "")
 
 
-def _decal_material(bpy, root, name, image_name, paint):
+def _decal_material(bpy, root, name, image_name, paint, flip_u=False):
     """One material carrying one sign, fitted once across the piece's face.
 
     GENERATED COORDINATES, NOT A BOX PROJECTION. Generated runs 0 to 1 over
@@ -2191,6 +2310,12 @@ def _decal_material(bpy, root, name, image_name, paint):
     and nowhere else; the box projection every other surface here uses would
     tile it, wrap it round the returns and run it upside down along the
     soffit, which is what lettering must never do.
+
+    flip_u REVERSES THE IMAGE ACROSS THE BOARD, for the west side, which this
+    recipe builds as a reflection of the east. See plan_street: a reflection
+    turns the frontage to face the street and reverses its handedness with
+    it, so lettering laid along +x reads correctly on one side of the road
+    and backwards on the other. One subtract node, on the pieces that need it.
     """
     mat = bpy.data.materials.new(name=name)
     mat.use_nodes = True
@@ -2204,7 +2329,14 @@ def _decal_material(bpy, root, name, image_name, paint):
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     com = nt.nodes.new("ShaderNodeCombineXYZ")
     nt.links.new(coord.outputs["Generated"], sep.inputs["Vector"])
-    nt.links.new(sep.outputs["X"], com.inputs["X"])
+    if flip_u:
+        rev = nt.nodes.new("ShaderNodeMath")
+        rev.operation = "SUBTRACT"
+        rev.inputs[0].default_value = 1.0
+        nt.links.new(sep.outputs["X"], rev.inputs[1])
+        nt.links.new(rev.outputs["Value"], com.inputs["X"])
+    else:
+        nt.links.new(sep.outputs["X"], com.inputs["X"])
     nt.links.new(sep.outputs["Z"], com.inputs["Y"])
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = bpy.data.images.load(path, check_existing=True)
@@ -2642,10 +2774,14 @@ def build_and_render(args):
     for part in parts:
         mat = mats.get(part["material"])
         if part.get("decal"):
-            key = "sign_%s" % part["decal"]
+            # TWO MATERIALS PER SIGN AT MOST, one each way round, because a
+            # single cached one would hand the east row's material to the
+            # west row and put the fault straight back.
+            flip = bool(part.get("decal_flip"))
+            key = "sign_%s%s" % (part["decal"], "_flipped" if flip else "")
             if key not in mats:
                 mats[key], note = _decal_material(bpy, args["root"], key, part["decal"],
-                                                  part.get("paint"))
+                                                  part.get("paint"), flip)
                 signs.append("%s=%s" % (part["decal"], note))
             mat = mats[key]
         elif part.get("paint_name"):
@@ -3157,16 +3293,32 @@ def selftest():
             qrow = plan_row(q)
             qboxes = [b for b in qrow if b.get("kind") != "slope"]
             mats = set(b["material"] for b in qboxes)
-            # NO SHOPFRONT ANYWHERE ON IT. The spec read the built street's
-            # own piece list for a west bay and found no shopfront assembly of
-            # any kind; a plain row built out of the parade's parts with some
-            # switched off would be a house wearing a shop's bones.
-            shoppy = [b["id"] for b in qboxes
-                      if any(k in b["id"] for k in ("pilaster", "stallriser", "fascia",
-                                                    "transom", "toplight", "mullion",
-                                                    "display", "shop_door"))]
-            check("accept/%s-carries-no-shopfront" % other, not shoppy,
-                  ",".join(sorted(set(shoppy))[:4]))
+            # WHICH KIND OF GROUND FLOOR THIS ROW HAS IS THE SPEC'S TO SAY,
+            # and these checks used to assume it. Both west rows were plain
+            # when they were written, so "carries no shopfront" was asserted
+            # for both by name - and on 22 September Jafar ruled west_north
+            # into shops, which failed two checks that were describing the
+            # street rather than testing it. They ask the block now.
+            #
+            # EITHER WAY IT HAS TO BE WHOLEHEARTED. A plain row with a stray
+            # pilaster on it is a house wearing a shop's bones; a shop row
+            # missing its stallriser is a shopfront with a hole where the
+            # kicked board goes. So the same list of parts is required to be
+            # entirely absent or entirely present, never half.
+            SHOP_PARTS = ("pilaster", "stallriser", "fascia", "transom",
+                          "toplight", "mullion", "display", "shop_door")
+            shoppy = set()
+            for b in qboxes:
+                for k in SHOP_PARTS:
+                    if k in b["id"]:
+                        shoppy.add(k)
+            if q["ground_floor"] == "shopfront":
+                missing = [k for k in SHOP_PARTS if k not in shoppy]
+                check("accept/%s-carries-a-whole-shopfront" % other, not missing,
+                      "missing " + ",".join(missing))
+            else:
+                check("accept/%s-carries-no-shopfront" % other, not shoppy,
+                      ",".join(sorted(shoppy)[:4]))
             check("accept/%s-is-the-grey-brick" % other,
                   q["wall_surface"] == "brick_grey", q["wall_surface"])
             # A PARAPET AND A COPING, NOT A RIDGE, AND NO STACK.
@@ -3182,10 +3334,20 @@ def selftest():
             # THE DOOR AND TWO WINDOWS, one of each per bay.
             doors = [b for b in qboxes if b["id"].startswith("side_door_leaf")]
             glass = [b for b in qboxes if b["id"].startswith("gf_glass_")]
-            check("accept/%s-has-one-household-door-per-bay" % other,
-                  len(doors) == q["bays"], "%d for %d" % (len(doors), q["bays"]))
-            check("accept/%s-has-two-ground-floor-windows-per-bay" % other,
-                  len(glass) == q["bays"] * 2, "%d for %d" % (len(glass), q["bays"]))
+            if q["ground_floor"] == "shopfront":
+                # A SHOP ROW HAS SHOP DOORS, not household ones, and its
+                # glazing is the display run rather than a pair of sashes.
+                shopdoors = [b for b in qboxes if b["id"].startswith("shop_door")]
+                disp = [b for b in qboxes if b["id"].startswith("display_glazing")]
+                check("accept/%s-has-a-shop-door-per-bay" % other,
+                      len(shopdoors) >= q["bays"], "%d for %d" % (len(shopdoors), q["bays"]))
+                check("accept/%s-has-a-display-window-per-bay" % other,
+                      len(disp) >= q["bays"], "%d for %d" % (len(disp), q["bays"]))
+            else:
+                check("accept/%s-has-one-household-door-per-bay" % other,
+                      len(doors) == q["bays"], "%d for %d" % (len(doors), q["bays"]))
+                check("accept/%s-has-two-ground-floor-windows-per-bay" % other,
+                      len(glass) == q["bays"] * 2, "%d for %d" % (len(glass), q["bays"]))
             # AND THE UPPER RHYTHM IS THE SAME ON BOTH ROWS, which is the one
             # thing the spec forbids varying: the string-course a viewer's eye
             # follows down the whole street.
@@ -3256,6 +3418,90 @@ def selftest():
                   any(b["material"] == "plate_rear" for b in veh))
             check("accept/and-a-white-front-one",
                   any(b["material"] == "plate_front" for b in veh))
+
+        # ---- LETTERING READS THE RIGHT WAY ROUND ON BOTH SIDES OF THE ROAD.
+        # The west blocks are built as a REFLECTION of the east, which turns
+        # their frontages to face the street and reverses their handedness
+        # with them; the first frame with shops on the near west block had
+        # MICKEY'S painted backwards across it. Nothing in the geometry can
+        # see that - a mirrored box is a box - so the check is on the flag
+        # that decides which way the image is laid.
+        if not serr:
+            signed = [b for b in street if b.get("decal")]
+            check("accept/there-is-lettering-on-the-street", bool(signed),
+                  "%d sign(s)" % len(signed))
+            wrong = [b["id"] for b in signed
+                     if b["id"].startswith("west_") and not b.get("decal_flip")]
+            check("accept/no-west-side-sign-reads-backwards", not wrong,
+                  ",".join(sorted(wrong)[:3]))
+            flipped_east = [b["id"] for b in signed
+                            if b["id"].startswith("east_") and b.get("decal_flip")]
+            check("reject/and-no-east-side-sign-is-flipped-for-no-reason",
+                  not flipped_east, ",".join(sorted(flipped_east)[:3]))
+
+        # ---- THE FIGURES, checked on the two gaps that make them read.
+        if not serr:
+            legs = [b for b in street if b["id"].startswith("figure_0_leg_")]
+            check("accept/a-figure-stands-on-two-legs", len(legs) == 2,
+                  "%d" % len(legs))
+            if len(legs) == 2:
+                a, b_ = sorted(legs, key=lambda q: q["y0"])
+                gap = b_["y0"] - a["y1"]
+                check("accept/and-there-is-daylight-between-them", gap > 0.02,
+                      "%.3f m" % gap)
+            neck = [b for b in street if b["id"] == "figure_0_neck"]
+            head = [b for b in street if b["id"] == "figure_0_head"]
+            torso = [b for b in street if b["id"] == "figure_0_torso"]
+            if neck and head and torso:
+                check("accept/the-neck-is-narrower-than-both-head-and-shoulders",
+                      (neck[0]["y1"] - neck[0]["y0"]) < (head[0]["y1"] - head[0]["y0"])
+                      and (neck[0]["y1"] - neck[0]["y0"]) < (torso[0]["y1"] - torso[0]["y0"]),
+                      "%.3f" % (neck[0]["y1"] - neck[0]["y0"]))
+            # AND THE WHOLE THING IS STILL 1.75 m, which is the only number
+            # here that is not a silhouette choice: eye height 1.6 is
+            # CrimeProbe.h's own kEyeHeightM and the simulation traces
+            # sightlines from it.
+            body = [b for b in street if b["id"].startswith("figure_0_")]
+            if body:
+                tall = max(q["z1"] for q in body) - min(q["z0"] for q in body)
+                check("accept/and-a-person-is-still-1.75m-tall",
+                      abs(tall - (FIGURE_EYE_M + FIGURE_EYE_TO_CROWN_M)) < 1e-6,
+                      "%.4f m" % tall)
+
+        # ---- THE AERIALS, and the one number in them that is derived.
+        # The scene file works the element length out of physics rather than
+        # choosing it: UHF Bands IV and V, a half-wave dipole at the 550 MHz
+        # middle of the band, c/(2f) = 0.2725 m. If a later edit ever rounds
+        # that to "about a third of a metre" the roofline stops being 1990
+        # and nothing else in this file would notice.
+        # BUILT FOR A BAY THAT ACTUALLY CARRIES ONE. The bay these checks
+        # were first written against was bay 0, which has no aerial, so every
+        # one of them skipped and the suite still reported green - which is a
+        # check that exists and tests nothing.
+        aerial_bay = AERIAL_ON_STACKS[0]
+        abox = plan_parts(p, aerial_bay, True)
+        aerials = [b for b in abox if b["id"].startswith("aerial_")]
+        if p["roof_kind"] != "parapet":
+            masts = [b for b in aerials if b["id"].endswith("_mast")]
+            elements = [b for b in aerials if "_element_" in b["id"]]
+            check("accept/the-named-stack-carries-an-aerial", len(masts) == 1,
+                  "bay %d: %d mast(s)" % (aerial_bay, len(masts)))
+            if any(b["id"] == "chimney_stack" for b in abox):
+                if elements:
+                    check("accept/the-comb-has-ten-elements",
+                          len(elements) == AERIAL_ELEMENTS, "%d" % len(elements))
+                    span = max(b["y1"] for b in elements) - min(b["y0"] for b in elements)
+                    check("accept/an-element-is-a-half-wave-at-550MHz",
+                          abs(span - AERIAL_ELEMENT_L) < 1e-6, "%.4f m" % span)
+                    # 299792458 / (2 x 550e6) = 0.272538..., and 0.27 is that
+                    # rounded to the centimetre a jobbing aerial is made to.
+                    check("accept/and-that-is-what-the-physics-says",
+                          abs(AERIAL_ELEMENT_L - 299792458.0 / (2 * 550e6)) < 0.005,
+                          "%.4f" % (299792458.0 / (2 * 550e6)))
+                    top = max(b["z1"] for b in aerials)
+                    stack = [b for b in abox if b["id"] == "chimney_stack"][0]
+                    check("accept/the-aerial-stands-on-the-stack-not-in-it",
+                          top > stack["z1"], "%.3f vs %.3f" % (top, stack["z1"]))
 
         # ---- THE ROAD'S CROWN, which is a DERIVED number and so is checked
         # as one. The scene file gives half_width 3.0 and crossfall 0.025 and

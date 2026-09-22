@@ -79,24 +79,35 @@ nothing.
       was one flat box. 75 mm from crown to channel, derived not typed.
 - [x] WARMTH IS MATCHED: +18.9 against the sheet's +18.5, from +0.7 this
       morning.
-- [ ] COLOUR, THE SATURATION HALF, IS THE LAST BIG ONE AND IT IS CONTENT.
-      9.6% of our pixels carry real colour against the sheet's 25.8%. It
-      is not tone - warmth matches and the parade's brick is within five
-      per cent of the reference - and it is not fixable by tone: AgX trades
-      saturation for brightness, so every lift of the exposure costs colour
-      back. The sheet gets its colour from PAINTED SHOPFRONTS filling the
-      frame. Ours are far off down the right while the near-left third is a
-      PLAIN TERRACE with no shop on it. That is where the missing colour
-      lives and it is a question about what this street is, not how it is lit.
-- [ ] MEAN 106 AGAINST 120 and brightest-five-per-cent 202 against 229.
-      Close, and coupled to the item above by the same trade.
-- [ ] THE FIGURES READ AS BLACK POSTS. On the sheet a figure is a dark
-      silhouette against a LIGHT pavement and reads because its outline is
-      a person; ours are three stacked boxes.
-- [ ] THE ROOFLINE IS PLAIN. The spec fully dimensions a TV aerial -
-      D4_tv_aerial, on stacks 1 and 3, a 1.5 m mast, a 1.2 m boom, ten
-      elements at 0.27 m - and calls it "the skyline marker of the era".
-      None of it is built.
+- [x] THE NEAR WEST BLOCK CARRIES SHOPS, ruled by Jafar and now in canon:
+      east side the six-bay parade, near west block shops by the cab
+      office, far west block plain terraces. The spec's reason for it being
+      plain - "because cam_B stands here and never photographs it" - had
+      lapsed the day the hook camera moved onto that pavement.
+- [x] LETTERING READS THE RIGHT WAY ROUND. The west blocks are built as a
+      REFLECTION of the east, which reverses their handedness with them, so
+      the first frame with shops on the near west had MICKEY'S painted
+      backwards across it. Flipped per side, and checked, because no
+      geometry check can see a mirrored box.
+- [x] THE FIGURES HAVE LEGS AND A NECK, and two of them have moved back
+      down the street: one was standing three metres from the lens.
+- [x] THE JOINERY IS ACTUALLY WHITE. It was rendering CREAM because the
+      tint gain is clamped at 6.0 and white over the wood map needs 12 on
+      blue. Painted joinery takes the plaster map now - gloss paint does
+      not show grain - and the clamp stays where it protects the brick.
+- [x] AERIALS on the two stacks the spec names, elements at the 0.27 m its
+      own physics derives. They read clearly on the skyline.
+- [ ] COLOUR, THE SATURATION HALF, IS STILL THE LAST BIG ONE. 6.7% of our
+      pixels carry real colour against the sheet's 25.8%. Adding shops to
+      the near west did NOT close it and cost warmth (+18.9 to +12.3),
+      because a shopfront replaces warm brick with dark glass. What the
+      sheet has that we do not is a parade of SATURATED PAINT - oxblood,
+      bottle green, deep navy, cream - filling the frame at close range.
+      Ours is mostly the brick between the shops.
+- [ ] THE SHOP GLAZING READS AS BLACK HOLES at this value key. It was
+      tuned when the street was three times darker.
+- [ ] THE ROAD IS A WIDE PALE BAND: right value, no wheel tracks, no
+      standing water, no reflection worth the name near the camera.
 - [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
       into the recipe and the next one does not start from scratch.
 
