@@ -1,0 +1,11 @@
+# crime check 2026-09-22T16:43:34Z
+runSha=a4bfb495fe256b23ad2cb36ac2a744b662d274af needle=a4bfb49 runId=35754325810
+verdictLine1=# UE crime probe a4bfb49 @1790095386
+verdictBytes=23728
+headNow=3e473d99
+crime-verdict selftest FAIL reject/the-witnessed-one-carried-nothing-is-caught: 
+crime-verdict selftest: passed=28/29 failed=1
+selftestStatus=1
+the selftest failed, so the verdict was not judged
+checkStatus=1
+crimeCheckReached=end
