@@ -135,3 +135,6 @@ tools/dashboard/live-dashboard.json
 # publisher always passes one, so CI never produces these; a bare local run
 # writes 92 files beside gallery.html at the repo root.
 gallery-img/
+
+# The crime check prints its diagnosis into the run log; it is not committed.
+production/d1-probe/ue-crime-check.txt
