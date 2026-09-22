@@ -105,6 +105,12 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-23 **Everything the street gained tonight lives in the pictures,
+  not yet in the game.** The game engine builds its street separately, from
+  the scene file, and none of tonight's look is in it: its parade still
+  reads as pale stone, with no arches, pots or glass. Carrying the look
+  across is the next big job, piece by piece. I have started it with the
+  bricks, and it is being tested on the build machine now.
 - 2026-09-22 **The street took the new sheet's details, one at a time, with a
   picture after each:** real bricks in dark joints instead of a pink blur;
   arched brick heads over every window; chimney pots and caps; a black
