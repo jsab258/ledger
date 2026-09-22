@@ -1,0 +1,116 @@
+# What came from the retired sheet, and is suspect until checked
+
+Jafar, 2026-09-22: "Everything derived from the retired sheet is suspect until
+checked, not only what you have found so far. Search for any other value, crop
+or measurement that came from it and list them."
+
+THE RETIRED SHEET is `production/art/atlas-01/concepts/hook.png` on the
+`art/atlas-01` branch, 1024 x 1536, made by Codex. Jafar retired it on
+9 September and it still resolves on that branch, which is how a week of
+comparisons went to it with nothing failing.
+
+This is a list of what it touched, not a list of things that are wrong. Each
+row says what was taken, where it lives, and what it would take to check it.
+
+## 1. The approved sheet's own prompt is Codex's prompt
+
+**This is the deepest one and it was not in the first audit.**
+`tools/imagegen/compare-hook-2026-09-09-pass2.json` records its own source:
+branch `origin/art/atlas-01`, file `production/art/atlas-01/data/concept-prompts.json`,
+key `hook`, 1599 characters, sha256 `53408df5...`, and states that only the
+`not a ...` clauses were moved into the negative channel. **The in-house sheet
+was generated from the retired sheet's prompt, nearly word for word.**
+
+So three of the four contradictions the audit found were COMMANDED rather than
+invented, and the audit's own wording needs that correction:
+
+| the audit said | the prompt actually said |
+| --- | --- |
+| the sheet draws Mickey's as a pub | "Mickey's a SMALL SINGLE 6m-wide two-storey **PUB** ... maroon fascia MICKEY'S". The prompt asked for a pub. D19 made it a minicab office on 14 September, five days later. |
+| not one metal shopfront; no signage on any fascia | "**ONLY TWO PIECES OF LETTERING IN THE WHOLE SHEET** ... every other shopfront fascia is plain unlettered **PAINTED TIMBER**". Both were specified. |
+| a wooded hill closes the view | "inland town gently rising behind" - the rise was asked for; the woods and villas are the model's. |
+| the basin carries canal narrowboats | The prompt said "a commercial cargo basin" and the negative already carried "pleasure marina, yacht, leisure moorings, pontoon". **This one is the model disobeying**, which is why the new prompt NAMES the craft instead of only forbidding the wrong ones. |
+
+**Checked by:** superseded. `tools/imagegen/hook-sheet-2026-09-22.json` is
+written from canon, the town form bible and the evidence ledger, with each
+item's sources named in its own `governed_by`.
+
+## 2. The whole hook camera in the governing scene spec
+
+`production/specs/vignette-scene.json`, camera `cam_hook`:
+
+    x_m 4.0   z_m -2.1   eye_height_m 1.65
+    yaw_deg 11.0   pitch_deg -2.6   fov_vertical_deg 39.0
+
+Its own note says every number was measured off "the LOWER PANEL of
+production/art/atlas-01/concepts/hook.png on branch origin/art/atlas-01", with
+the panel content area given as x 11..1012, y 662..1278 of a 1024 x 1536
+sheet. The note is careful, long and honest about its uncertainties - and all
+of it is about the wrong picture.
+
+**Checked by:** nothing yet. It needs re-deriving from the new sheet, which is
+the first thing Jafar's order puts after approval.
+
+## 3. The hook camera's field of view in the recipe
+
+`tools/art-recipes/terrace-front.py`, `HOOK_FOV_V_DEG = 60.0`. Not derived
+from the retired sheet - derived from NOTHING. It is this recipe's default for
+its elevation and eye cameras and was carried across. The only field ever
+derived for a Hook panel is row 2's 39.0 vertical / 59.7 horizontal, off the
+retired sheet. 60 vertical on our 1.892 frame is 95.1 horizontal.
+
+**Checked by:** nothing yet. Same fix as row 2.
+
+The frame's ASPECT, `HOOK_RES = (1400, 740)`, is clean: 617 x 326 was measured
+on the APPROVED sheet, on 21 September.
+
+## 4. The lighting column's shape
+
+`tools/art-recipes/lighting-column.py`. `SHEET_REF` is already labelled
+RETIRED-REFERENCE, but the GEOMETRY CONSTANTS taken from that crop are not,
+and they are what the mesh is built from:
+
+    SHEET_REF["crop_px"] = "185,700,320,1000/tracedSubWindow-220,690,280,800"
+    curve_vertical_fraction  ~8px / ~450px of visible pole (~1.8 per cent)
+    head_width_to_height     ~23px : 7px = 3.3 : 1
+    assembly_bbox_aspect     25px : 11px = 2.27 : 1
+    NECK_DIAMETER_RATIO      0.8
+    NECK_ARC_RADIUS_RATIO    0.6   - the file says in terms that this was
+                                    picked "from the sheet", from the crop
+                                    x185-320 y700-1000
+
+The file's own note already records that three traces of that crop gave three
+different answers, on a lamp twenty-five pixels wide.
+
+**Checked by:** nothing. The new street panel is 2048 wide, so the same lamp
+is roughly 80 px instead of 25 and can actually be traced.
+
+## 5. The per-asset routing index
+
+`game-design/research/GOVERNS.md`, 17 asset families. Every row cites
+`hook.png` and several say "crop-verified at 3x". All of it was read on the
+retired sheet. Rerouted and marked unverified on 22 September; the CLAIMS are
+still unchecked. Affected rows with a measured claim in them: street lighting
+column, wall bracket lamp, road surface, pavement surface, roof, dustbin,
+shopfront, window, door.
+
+`production/research/README.md` carried the same pointer and is rerouted.
+
+## 6. Smaller inheritances
+
+- `tools/citypack/shortlist-candidates.json` quotes the lighting column's
+  retired-sheet crop note in its own reasoning.
+- `production/art/concept-fairview-2026-09-10/fairview-sheet-2026-09-10.json`
+  binds to `production/art/atlas-01/concepts/fairview.png` - a sibling of the
+  retired Hook sheet, on the same branch, never re-approved.
+- `tools/imagegen/compare-hook-2026-09-09.json` (pass 1) carries the same
+  Codex prompt and the same source record as pass 2.
+
+## What is NOT inherited
+
+The four whole-frame colour numbers (mean, highlights, warmth, colour
+fraction) were measured against the APPROVED sheet on 21 and 22 September, and
+`tools/hook-pair.py` finds its panel by measuring the approved sheet rather
+than by typed coordinates. They are honest measurements of the approved sheet
+- which is itself now superseded, so they are due to be re-taken against the
+new one, but they are not retired-sheet values.
