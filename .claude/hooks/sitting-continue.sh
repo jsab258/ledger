@@ -46,16 +46,6 @@ if [ "${SITTING_GUARD:-on}" = "off" ]; then
     exit 0
 fi
 
-# ALREADY BLOCKED ONCE. The tool's own words for this flag: "check
-# stop_hook_active in the input and return success while it's true".
-case "$PAYLOAD" in
-    *'"stop_hook_active"'*'true'*)
-        echo "sitting-continue: PERMIT reason=stop-hook-already-active | this" \
-             "boundary was already blocked once; blocking it again is a loop."
-        exit 0
-        ;;
-esac
-
 if [ ! -f "$TOOL" ]; then
     echo "sitting-continue: PERMIT-UNASSESSED reason=tool-missing | the clock" \
          "could not run, so no list and no limit were read."
@@ -80,7 +70,13 @@ if [ -z "$PY" ]; then
     exit 0
 fi
 
-LINE="$($PY "$TOOL" 2>/dev/null)"
+# THE PAYLOAD IS NOT RE-TYPED HERE AND IT IS NOT GREPPED HERE. It goes to
+# the tool, which parses it in the layer that has a selftest - the same
+# choice, for the same reason, that the hook this is adapted from made. A
+# hook that greps JSON for stop_hook_active is a hook that is wrong about
+# a message containing a quotation mark, and the message is now something
+# this has to READ rather than ignore. The loop guard moved with it.
+LINE="$(printf '%s' "$PAYLOAD" | $PY "$TOOL" --hook 2>/dev/null)"
 RC=$?
 
 case "$RC" in

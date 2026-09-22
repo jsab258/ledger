@@ -1260,10 +1260,25 @@ def plan_street(root, spec_rel=SPEC_REL):
     what the sheet is actually being compared on - how far the eye carries down
     the road, what the rooflines do against the sky, where the clutter is.
 
-    THE WEST SIDE IS MIRRORED RATHER THAN REBUILT. Its bays are built by the
-    same code at the same origin and then turned about the street's centre
-    line, because a second implementation of a terrace that happened to face
-    the other way is two terraces that drift.
+    THE WEST SIDE IS TURNED RATHER THAN REBUILT. Its bays are built by the
+    same code at the same origin and then rotated a half turn, because a
+    second implementation of a terrace that happened to face the other way is
+    two terraces that drift.
+
+    IT WAS MIRRORED UNTIL 2026-09-22 AND THAT WAS WRONG. Negating y alone
+    turns a frontage to face the street and REVERSES ITS HANDEDNESS with it:
+    a viewer looking at an east face has +x on their right hand, and a viewer
+    looking at a west face has +x on their left. Brick does not care. The
+    first frame with a shopfront on the near west block had MICKEY'S painted
+    backwards across it, and every sign that side ever gained would have
+    been. Jafar's ruling: fix the CONSTRUCTION, not the lettering.
+
+    A HALF TURN ABOUT THE BLOCK'S OWN CENTRE negates x AND y together, which
+    preserves handedness, so lettering reads the right way round on both
+    sides of the road with nothing done to the lettering. The block stays
+    where the scene file puts it because the centre it turns about is its
+    own; what changes is that its bays run the other way along the street,
+    which is what a terrace rotated a half turn actually does.
     """
     out = []
     for block_id in ("east_parade", "west_south", "west_north"):
@@ -1275,27 +1290,19 @@ def plan_street(root, spec_rel=SPEC_REL):
             r = dict(part)
             r["id"] = "%s_%s" % (block_id, part["id"])
             r["block"] = block_id
-            # THE WEST SIDE IS A REFLECTION, AND A REFLECTION FLIPS LETTERING.
-            # Only y is negated below, so a west frontage faces the street
-            # correctly while its handedness is reversed: a viewer looking at
-            # an EAST face has +x on their right hand, and a viewer looking at
-            # a WEST face has +x on their LEFT. Brick does not care. A painted
-            # fascia does, and the first frame with shops on the near west
-            # block had MICKEY'S reading backwards across it.
-            #
-            # THE ROW STAYS MIRRORED rather than being rebuilt as a rotation.
-            # Turning each block 180 degrees about its own centre would put
-            # its bays back in the right order and move every one of them
-            # along the street, which is a change to where the buildings ARE
-            # for the sake of a change to where an image's left edge is. The
-            # image is the thing that is wrong, so the image is what is
-            # flipped, and only on the side that needs it.
-            if not east:
-                r["decal_flip"] = True
             # ALONG the street first: each block starts where the scene file
-            # says it starts, not at zero.
-            r["x0"] = part["x0"] + q["start_x_m"]
-            r["x1"] = part["x1"] + q["start_x_m"]
+            # says it starts, not at zero - and a west block is TURNED end
+            # for end about its own centre as it lands, which is the other
+            # half of the half turn. x is measured back from the block's far
+            # end instead of forward from its near one, so bay 0 finishes at
+            # the far end and the whole run keeps its handedness.
+            run = q["bays"] * q["bay_width_m"]
+            if east:
+                r["x0"] = part["x0"] + q["start_x_m"]
+                r["x1"] = part["x1"] + q["start_x_m"]
+            else:
+                r["x0"] = q["start_x_m"] + run - part["x1"]
+                r["x1"] = q["start_x_m"] + run - part["x0"]
             if part.get("kind") == "slope":
                 ye, yr = part["y_eaves"], part["y_ridge"]
                 r["y_eaves"] = (STREET_FRONTAGE_M + ye) if east else -(STREET_FRONTAGE_M + ye)
@@ -1377,12 +1384,20 @@ def plan_street(root, spec_rel=SPEC_REL):
         if _e2 or q["ground_floor"] != "shopfront":
             continue
         east = q["side"] == "east"
+        run = q["bays"] * q["bay_width_m"]
         for bay in range(q["bays"]):
             # BAY 3 OF A SIX-BAY PARADE IS THE EMPTY UNIT and stays dark; on
             # a shorter block there is no empty unit to skip.
             if q["bays"] == 6 and bay == 3:
                 continue
-            bx = q["start_x_m"] + bay * q["bay_width_m"]
+            # AND THESE TURN WITH THEIR BLOCK. The cards are placed straight
+            # into world coordinates rather than through plan_row, so the
+            # half turn that plan_street applies to a west block has to be
+            # applied to them here too - otherwise bay 0's lit room ends up
+            # behind bay 2's window, which is the sort of fault that looks
+            # like a lighting bug for an hour.
+            bx = (q["start_x_m"] + bay * q["bay_width_m"] if east
+                  else q["start_x_m"] + run - (bay + 1) * q["bay_width_m"])
             # CLOSER TO THE GLASS THAN THE 1.2 m THE BLOCK GIVES, and wider.
             # At 1.2 m back and inset half a metre each side the card was a
             # small bright patch in the middle of a black hole; what a person
@@ -2343,7 +2358,7 @@ def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
     return "%s@%.2fm%s%s" % (surface, tile_m, "+r" if rough else "", "+n" if norm else "")
 
 
-def _decal_material(bpy, root, name, image_name, paint, flip_u=False):
+def _decal_material(bpy, root, name, image_name, paint):
     """One material carrying one sign, fitted once across the piece's face.
 
     GENERATED COORDINATES, NOT A BOX PROJECTION. Generated runs 0 to 1 over
@@ -2352,11 +2367,6 @@ def _decal_material(bpy, root, name, image_name, paint, flip_u=False):
     tile it, wrap it round the returns and run it upside down along the
     soffit, which is what lettering must never do.
 
-    flip_u REVERSES THE IMAGE ACROSS THE BOARD, for the west side, which this
-    recipe builds as a reflection of the east. See plan_street: a reflection
-    turns the frontage to face the street and reverses its handedness with
-    it, so lettering laid along +x reads correctly on one side of the road
-    and backwards on the other. One subtract node, on the pieces that need it.
     """
     mat = bpy.data.materials.new(name=name)
     mat.use_nodes = True
@@ -2370,14 +2380,7 @@ def _decal_material(bpy, root, name, image_name, paint, flip_u=False):
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     com = nt.nodes.new("ShaderNodeCombineXYZ")
     nt.links.new(coord.outputs["Generated"], sep.inputs["Vector"])
-    if flip_u:
-        rev = nt.nodes.new("ShaderNodeMath")
-        rev.operation = "SUBTRACT"
-        rev.inputs[0].default_value = 1.0
-        nt.links.new(sep.outputs["X"], rev.inputs[1])
-        nt.links.new(rev.outputs["Value"], com.inputs["X"])
-    else:
-        nt.links.new(sep.outputs["X"], com.inputs["X"])
+    nt.links.new(sep.outputs["X"], com.inputs["X"])
     nt.links.new(sep.outputs["Z"], com.inputs["Y"])
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = bpy.data.images.load(path, check_existing=True)
@@ -2559,6 +2562,51 @@ def _place_props(bpy, root, mats):
         placed += 1
     print("tfProps placed=%d/%d refused=%d %s"
           % (placed, len(placements), refused, " ".join(notes)))
+
+
+def _face_the_street(bpy, obj, block):
+    """Put a west block's half turn on the OBJECT rather than in its vertices.
+
+    THIS IS THE OTHER HALF OF THE FIX AND WITHOUT IT THE FIRST HALF DOES
+    NOTHING VISIBLE. plan_street turns a west block end for end, which is a
+    proper rotation and puts its bays in the right order - and MICKEY'S still
+    came out backwards, because every texture in this recipe is mapped from
+    OBJECT coordinates and every object was built with world coordinates
+    baked into its vertices. Object and world were the same frame, so the
+    turn was in the numbers and not in the object, and a sign's image still
+    ran along +x on both sides of the road.
+
+    IT HAS TO RUN THE OTHER WAY ON A WEST FACE, and that is a fact about
+    streets rather than about Blender. Somebody reading the east frontage
+    stands facing +y and their right hand is +x; somebody reading the west
+    frontage stands facing -y and their right hand is -x. Text runs from the
+    reader's left to their right, so the same words run in opposite world
+    directions on the two sides. A mapping that always runs along +x is right
+    on one side and mirrored on the other, whatever the geometry does.
+
+    So the object keeps the turn: its mesh is written in a frame that is
+    itself turned, and the object is rotated a half turn to put it back. The
+    world position is identical to the micron - the rotation and the
+    counter-rotation cancel - and Object coordinates now run the way the
+    reader does. Nothing is done to any image, which was Jafar's ruling: fix
+    the construction, not the lettering.
+    """
+    if not block or not block.startswith("west"):
+        return obj
+    lo = [1e18, 1e18]
+    hi = [-1e18, -1e18]
+    for v in obj.data.vertices:
+        for i in range(2):
+            lo[i] = min(lo[i], v.co[i])
+            hi[i] = max(hi[i], v.co[i])
+    cx = (lo[0] + hi[0]) * 0.5
+    cy = (lo[1] + hi[1]) * 0.5
+    for v in obj.data.vertices:
+        v.co[0] = cx - v.co[0]
+        v.co[1] = cy - v.co[1]
+    obj.location = (cx, cy, 0.0)
+    obj.rotation_euler = (0.0, 0.0, math.pi)
+    return obj
 
 
 def _mesh_object(bpy, name, verts, faces, mat):
@@ -2912,14 +2960,14 @@ def build_and_render(args):
     for part in parts:
         mat = mats.get(part["material"])
         if part.get("decal"):
-            # TWO MATERIALS PER SIGN AT MOST, one each way round, because a
-            # single cached one would hand the east row's material to the
-            # west row and put the fault straight back.
-            flip = bool(part.get("decal_flip"))
-            key = "sign_%s%s" % (part["decal"], "_flipped" if flip else "")
+            # ONE MATERIAL PER SIGN. There were briefly two, one each way
+            # round, when the west row was mirrored and its lettering came
+            # out backwards; the row is turned rather than mirrored now, so
+            # both sides read the same image the same way.
+            key = "sign_%s" % part["decal"]
             if key not in mats:
                 mats[key], note = _decal_material(bpy, args["root"], key, part["decal"],
-                                                  part.get("paint"), flip)
+                                                  part.get("paint"))
                 signs.append("%s=%s" % (part["decal"], note))
             mat = mats[key]
         elif part.get("paint_name"):
@@ -2927,9 +2975,11 @@ def build_and_render(args):
         if part.get("kind") == "slope":
             _slope_mesh(bpy, part, mat)
         elif part.get("kind") == "mesh":
-            _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat)
+            _face_the_street(bpy,
+                _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat),
+                part.get("block"))
         else:
-            _box_mesh(bpy, part, mat)
+            _face_the_street(bpy, _box_mesh(bpy, part, mat), part.get("block"))
         built += 1
     if signs:
         print("tfSigns " + " ".join(signs))
@@ -3603,14 +3653,33 @@ def selftest():
             signed = [b for b in street if b.get("decal")]
             check("accept/there-is-lettering-on-the-street", bool(signed),
                   "%d sign(s)" % len(signed))
-            wrong = [b["id"] for b in signed
-                     if b["id"].startswith("west_") and not b.get("decal_flip")]
-            check("accept/no-west-side-sign-reads-backwards", not wrong,
-                  ",".join(sorted(wrong)[:3]))
-            flipped_east = [b["id"] for b in signed
-                            if b["id"].startswith("east_") and b.get("decal_flip")]
-            check("reject/and-no-east-side-sign-is-flipped-for-no-reason",
-                  not flipped_east, ",".join(sorted(flipped_east)[:3]))
+            # THE WEST BLOCKS ARE TURNED, NOT MIRRORED, and this is how a
+            # list of boxes can tell the difference. A half turn negates x
+            # AND y, so the bays of a west block run the OTHER WAY along the
+            # street; a reflection negates y alone and leaves them running
+            # the same way, which is what made MICKEY'S read backwards.
+            # Orientation is not visible in an axis-aligned box, so the
+            # check is on the ORDER, which is the same fact seen from the
+            # side a piece list can see it from.
+            def bay_run(prefix):
+                got = [(int(b["id"].split("bay")[-1]), (b["x0"] + b["x1"]) * 0.5)
+                       for b in street
+                       if b["id"].startswith(prefix) and "fascia_sign_bay" in b["id"]]
+                return [x for _n, x in sorted(got)]
+            east_run = bay_run("east_parade_")
+            west_run = bay_run("west_north_")
+            check("accept/the-parade-bays-run-up-the-street",
+                  len(east_run) >= 2 and east_run == sorted(east_run),
+                  str([round(v, 1) for v in east_run]))
+            check("accept/and-a-turned-block's-bays-run-back-down-it",
+                  len(west_run) >= 2 and west_run == sorted(west_run, reverse=True),
+                  str([round(v, 1) for v in west_run]))
+            # AND NO SIGN IS BEING FLIPPED TO COMPENSATE. The workaround this
+            # replaced set a per-piece flag; if one ever comes back, the
+            # construction has quietly gone wrong again.
+            flipped = [b["id"] for b in street if b.get("decal_flip")]
+            check("reject/no-piece-is-having-its-lettering-flipped",
+                  not flipped, ",".join(sorted(flipped)[:3]))
 
         # ---- THE FIGURES, checked on the two gaps that make them read.
         if not serr:
