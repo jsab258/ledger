@@ -182,6 +182,9 @@ nothing.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.
+      ALL OF THAT IS NOW WRITTEN AND WAITING ON ONE BUILD. The probe saves,
+      rebuilds and reloads; the check judges the result and refuses to call
+      an absent restart line a pass. What is missing is a runner cycle.
 - [x] THE AUTOMATIC CHECK READS THE RESULT NOW. The verdict file has said
       at its own head since it was written that nothing read it, so a run
       whose input path was dead got committed and pushed GREEN. It is read
@@ -192,7 +195,12 @@ nothing.
 - NOTE: the probe already commits two crimes and judges the witness every
   run. What is missing is the SAVE, the RESTART and the RELOAD between
   them, and the unwitnessed control to compare against.
-- [ ] Keep the pair as a regression.
+- [x] THE PAIR IS THE REGRESSION. tools/crime-verdict-check.py runs on
+      every probe run and judges both halves - the witness who filed and
+      the occluded one who did not, the round that passed and the round
+      that did not, and the hop count that separates seeing from hearing.
+      Twenty-four checks of its own, its accepting case the landed verdict
+      and its rejecting cases that same file doctored one value at a time.
 - It touches memory, so its tests and the independent check apply.
 
 ## 3. The 3D generation test on this machine's card
@@ -217,7 +225,22 @@ nothing.
 
 - [ ] A small model behind the conversation interface, scored on a bar that
       counts a well-formed wrong answer as a FAILURE.
-- It gates the hardware floor.
+- IT GATES THE HARDWARE FLOOR, and here is exactly where it stands so the
+  next sitting does not rediscover it:
+  THE MODEL IS ALREADY ON THIS MACHINE. Qwen3-4B-Instruct-2507-Q4_K_M.gguf,
+  2.5 GB, under ~/ledger-imagegen/models - Apache-2.0, already on the
+  allowlist, already attributed, already used here as the image
+  generator's text encoder. Nothing needs buying and nothing needs
+  deciding about licence.
+  WHAT IS MISSING IS A CHAT RUNTIME. That folder holds sd-cli and
+  sd-server and no llama.cpp; the ggml DLLs beside them are the image
+  generator's. So the fetch is one binary, MIT, and it is the only thing
+  between here and an answer.
+  AND THE BAR IS ALREADY ARGUED FOR. production/research/
+  conversation-model-capability read three papers in full and its finding
+  is the item's own premise: constraining a small model to a closed set
+  makes the FORMAT perfect and can make the CHOICE worse. That is why a
+  well-formed wrong answer has to score as a failure.
 
 ## 5. Character concept sheets (stage 2)
 
