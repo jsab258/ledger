@@ -126,7 +126,13 @@ MATERIALS = (
     # frame; the stallriser is lighter still because it catches the sky; and
     # the side door is a different paint from the shop's, because a shop and
     # the flat above it were never painted by the same person on the same day.
-    ("paint_joinery",(0.058, 0.076, 0.064), 0.42),  # the shopfront's painted woodwork
+    # DARKENED WHEN THE SHOPS WERE LIT, and the direction reversed with them.
+    # While the glazing stood for an unlit interior the joinery had to be the
+    # LIGHTER of the two or no frame drew; now the window is lit and sees
+    # through, and a British shopfront's joinery is dark oxblood or bottle
+    # green read against that brightness. Same requirement - the frame
+    # separates from the opening - arrived at from the other side.
+    ("paint_joinery",(0.026, 0.034, 0.029), 0.42),  # the shopfront's painted woodwork
     ("paint_stall", (0.086, 0.104, 0.090), 0.50),   # the kicked board, lighter again
     # THE SIDE DOOR IS A DIFFERENT PAINT, AND THE SECOND ATTEMPT HAD TO MOVE
     # IT. A warm brown was a plausible door colour and it was almost exactly
@@ -140,11 +146,25 @@ MATERIALS = (
     # below holds it there.
     ("paint_door",  (0.012, 0.030, 0.024), 0.42),   # the side door: a different paint
     ("paint_fascia",(0.030, 0.022, 0.030), 0.45),   # the lettered board
-    ("glass",       (0.012, 0.015, 0.017), 0.10),
+    # THE GLASS WAS A BLACK WALL. At 0.012 it absorbed the lit interior behind
+    # it and every shopfront on the row read as a boarded hole, which is the
+    # opposite of what a window does: a window is the one surface on a
+    # frontage you are supposed to see PAST. Lifted, and its transmission
+    # raised below, so the shop behind it carries.
+    ("glass",       (0.055, 0.062, 0.068), 0.08),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     ("slate",       (0.026, 0.028, 0.032), 0.70),
     ("asphalt",     (0.016, 0.016, 0.018), 0.85),   # the carriageway, dark
-    ("figure",      (0.014, 0.014, 0.016), 0.80),   # a person, read as a silhouette
+    # PEOPLE ARE NOT SILHOUETTES IN DAYLIGHT. A silhouette is right for the
+    # dusk frame and wrong for the working one: the sheet's own panel has a
+    # teal jacket, an orange one and a white coat in it, and they are a good
+    # part of what makes that street look inhabited rather than evacuated.
+    # Three muted period tones, assigned round the figures, none of them
+    # bright: 1990 was not a colourful decade outdoors.
+    ("figure",      (0.014, 0.014, 0.016), 0.80),
+    ("figure_a",    (0.020, 0.042, 0.048), 0.75),   # a teal anorak
+    ("figure_b",    (0.086, 0.030, 0.012), 0.75),   # a rust jacket
+    ("figure_c",    (0.055, 0.052, 0.046), 0.75),   # a grey overcoat
     # THE YELLOW IS NOT MINE AND NOT NEW. The scene file carries it as gamma
     # sRGB (0.78, 0.66, 0.18) and says where it came from: the game's own
     # Furniture.cs, which has been painting the town's kerbs since M17.10. A
@@ -301,6 +321,9 @@ SURFACE_OF = {
     "paint_yellow": (None, 0.0),
     "interior_lit": (None, 0.0),
     "figure":       (None, 0.0),
+    "figure_c":     (None, 0.0),
+    "figure_b":     (None, 0.0),
+    "figure_a":     (None, 0.0),
     "grime":        (None, 0.0),
     "lens_amber":   (None, 0.0),
 }
@@ -1004,13 +1027,19 @@ def plan_street(root, spec_rel=SPEC_REL):
     # file and not a choice made here. A card 1.2 m behind the frontage, the
     # depth the shopfront block gives, lit at the file's own colour.
     q, _e2 = load_spec(root, spec_rel, "east_parade")
-    for bay in (0, 2, 5):
+    for bay in (0, 1, 2, 4, 5):
         bx = q["start_x_m"] + bay * q["bay_width_m"]
+        # CLOSER TO THE GLASS THAN THE 1.2 m THE BLOCK GIVES, and wider. At
+        # 1.2 m back and inset half a metre each side the card was a small
+        # bright patch in the middle of a black hole; what a person sees
+        # through a shop window at a glancing angle is the back of the shop
+        # filling it, because the glass is only a metre in front of it and
+        # the window is not a porthole.
         _box(out, "interior_card_%d" % bay, "interior_lit",
-             bx + 0.5, bx + q["bay_width_m"] - 0.5,
-             STREET_FRONTAGE_M + 1.2, STREET_FRONTAGE_M + 1.24,
-             THRESHOLD_ABOVE_CROWN_M + 0.6, THRESHOLD_ABOVE_CROWN_M + 2.6,
-             "the-lit-back-of-the-shop/1.2m-in/window_practicals.lit_bays")
+             bx + 0.35, bx + q["bay_width_m"] - 0.35,
+             STREET_FRONTAGE_M + 0.75, STREET_FRONTAGE_M + 0.79,
+             THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
+             "the-lit-back-of-the-shop/window_practicals.lit_bays-plus-the-two-that-trade")
 
     _figures(out)
     lamps, lerr = lamp_parts(root)
@@ -1051,7 +1080,13 @@ FIGURE_DEPTH_M = 0.25
 #: one well down the row, because ONE figure sets scale where it stands and
 #: TWO set it down the whole length - which is the half that says how far the
 #: eye is actually carrying.
-FIGURE_AT = ((11.5, 4.25), (27.0, 3.85))
+#: TWO WAS ENOUGH TO SET SCALE AND NOT ENOUGH TO BE A STREET. The sheet's own
+#: panel has six people in it - two walking away, one at a counter, one
+#: serving, two standing - and a parade with nobody on it reads as closed
+#: whatever the shops say. Six here too, on both pavements and at a spread of
+#: distances, because people all at one distance read as a queue.
+FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (33.5, 4.05),
+             (15.0, -4.35), (30.0, -4.15))
 
 
 def _figures(out):
@@ -1067,9 +1102,10 @@ def _figures(out):
         # reason for putting one there.
         hw, hd = FIGURE_SHOULDER_M / 2.0, FIGURE_DEPTH_M / 2.0
         base = THRESHOLD_ABOVE_CROWN_M
+        coat = ("figure_a", "figure_b", "figure_c")[n % 3]
         _box(out, "figure_%d_legs" % n, "figure", fx - hd, fx + hd,
              fy - hw * 0.8, fy + hw * 0.8, base, base + 0.86, "to-the-hip")
-        _box(out, "figure_%d_torso" % n, "figure", fx - hd, fx + hd,
+        _box(out, "figure_%d_torso" % n, coat, fx - hd, fx + hd,
              fy - hw, fy + hw, base + 0.86, base + top - head, "shoulders-0.45m")
         _box(out, "figure_%d_head" % n, "figure", fx - head / 2.0, fx + head / 2.0,
              fy - head / 2.0, fy + head / 2.0, base + top - head, base + top,
@@ -1694,6 +1730,11 @@ def _materials(bpy, root=None):
                 bsdf.inputs["Metallic"].default_value = 0.0
                 if "Specular IOR Level" in bsdf.inputs:
                     bsdf.inputs["Specular IOR Level"].default_value = 0.9
+                # SEE THROUGH IT. Shop glass with no transmission is a mirror
+                # with a dark tint, which is what every frontage on this row
+                # was until the interiors went in behind them.
+                if "Transmission Weight" in bsdf.inputs:
+                    bsdf.inputs["Transmission Weight"].default_value = 0.55
         made[name] = mat
         if root is not None:
             surface, tile = SURFACE_OF.get(name, (None, 0.0))
@@ -2051,6 +2092,25 @@ def build_and_render(args):
         scene.view_settings.view_transform = "Filmic"
     scene.view_settings.look = "AgX - Base Contrast" if not night else "None"
     scene.view_settings.exposure = 0.6 if night else -0.55
+    # DEPTH BEYOND THIRTY METRES IS STILL OPEN, and this is what was tried.
+    #
+    # The scene file carries fog_density 0.012 with a max opacity of 0.1 for
+    # overcast_day and 0.022 at 0.45 for wet_night, and they have never been
+    # applied to anything. Haze is the right answer to the gap: the far end of
+    # our street reads as near as the front of it because nothing is between
+    # the eye and it, and the sheet's own town on the hill is pale and soft,
+    # which is most of what says how far away it is.
+    #
+    # A WORLD VOLUME SCATTER RENDERED PURE BLACK, twice: once at the scene
+    # file's own density and again with EEVEE's volumetric range opened to
+    # 120 m, its sample count raised and the density cut to a third. Mean
+    # frame brightness 0.1 out of 255 both times. Not pursued further here,
+    # because a second evening of fighting a renderer's volumetrics buys
+    # nothing the list is asking for - the gap is named in NOW.md and the two
+    # attempts are named here so the next one does not start from scratch.
+    #
+    # WHAT THIS IS NOT: the missing TOWN past the end of the street. That is
+    # stage 6 and nothing here invents it.
     scene.render.engine = "BLENDER_EEVEE_NEXT"
     scene.render.resolution_x, scene.render.resolution_y = AUTHORED_RES
     scene.render.image_settings.file_format = "PNG"
@@ -2242,9 +2302,17 @@ def selftest():
         # frame stops drawing and the slab comes back.
         lum = {name: 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
                for name, c, _r in MATERIALS}
-        darker = [m for m in mats if m != "glass" and lum[m] <= lum["glass"]]
-        check("accept/glass-is-darker-than-every-painted-part-beside-it",
-              not darker, ",".join(sorted(darker)))
+        # THE GLASS USED TO HAVE TO BE THE DARKEST THING HERE, and that check
+        # is gone because its premise is: it stood for an unlit interior, so
+        # the joinery drew the frame against a dark hole. The shops are lit
+        # now and the glass transmits, which is what a window is for. What
+        # still has to be true is that the FRAME separates from the OPENING,
+        # whichever of the two is lighter - a shopfront whose joinery and
+        # glazing sit at the same value has no frame at any distance.
+        gap = abs(lum["paint_joinery"] - lum["glass"])
+        check("accept/the-joinery-separates-from-the-glazing",
+              gap >= 0.2 * max(lum["paint_joinery"], lum["glass"]),
+              "joinery %.4f vs glass %.4f" % (lum["paint_joinery"], lum["glass"]))
         # AND NOTHING ON THE GROUND FLOOR HIDES IN THE WALL. The second
         # attempt failed on exactly this: a side door whose paint sat within
         # a few percent of the brick's own value, so the one opening a person
@@ -2287,6 +2355,19 @@ def selftest():
             for b in side_parts:
                 if a["x0"] < b["x1"] - 1e-9 and a["x1"] > b["x0"] + 1e-9:
                     clashes.append("%s/%s" % (a["id"], b["id"]))
+        # AND EVERY TRADING BAY HAS SOMETHING LIT BEHIND ITS GLASS. A window
+        # you can see through onto nothing is worse than an opaque one: it
+        # reads as a gutted unit. The street builder puts the cards in, so
+        # this is checked there rather than on one bay.
+        street_parts, _serr = plan_street(ROOT)
+        if street_parts:
+            cards = [b for b in street_parts if b["id"].startswith("interior_card_")]
+            check("accept/the-trading-bays-are-lit-from-inside",
+                  len(cards) >= 5, "%d card(s)" % len(cards))
+            check("accept/every-card-sits-behind-its-own-glazing",
+                  all(b["y0"] > STREET_FRONTAGE_M for b in cards),
+                  "one is in front of the frontage")
+
         check("accept/the-two-doors-do-not-overlap-in-x", not clashes,
               ",".join(sorted(set(clashes))))
         # AND THE PRIVATE DOOR IS SET BACK, which is what puts it in shadow and
