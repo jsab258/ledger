@@ -902,6 +902,73 @@ def _upper_floor(parts, p, T, wall):
         _box(parts, "upper_lintel_%d" % i, "stone", cx - sw, cx + sw,
              -0.02, T, head_z, head_z + p["lintel_t_m"],
              "over-the-head/one-course-and-a-half")
+        _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"])
+
+
+#: A BRITISH SASH, IN THE SECTIONS THAT READ AT TWENTY-FIVE METRES.
+#:
+#: THE UPPER WINDOWS HAD NO FRAME AT ALL. Until now each one was a pane of
+#: glass in a hole with a stone sill under it and a stone lintel over it -
+#: nothing white, nothing divided, nothing between the glass and the brick.
+#: On the approved sheet EVERY window is a white grid, and that is not a
+#: detail of the street, it is what the street is made of: white-painted
+#: joinery against red brick, repeated forty times down the row. It is also
+#: where most of our missing highlights were - our brightest five per cent
+#: measured 163 against the sheet's 229, and a frame at 0.68 linear is the
+#: brightest thing a facade has on it.
+#:
+#: THE SECTIONS ARE A JOINER'S, NOT A GUESS. A box sash has an outer frame
+#: about 55 mm on the face, a MEETING RAIL where the two sashes cross that is
+#: the heaviest member at 45 mm, and glazing bars lighter than both at 22 mm.
+#: One meeting rail and one vertical bar per sash is a two-over-two, which is
+#: what a late Victorian terrace flat has - not the six-over-six of a
+#: Georgian front, and not a single undivided pane, which is a replacement
+#: window and forty years early.
+FRAME_T = 0.055
+MEETING_RAIL_T = 0.045
+GLAZING_BAR_T = 0.022
+#: How far the joinery stands in front of the glass. The glass sits at the
+#: reveal and is 20 mm thick, so 30 mm in front of it puts the frame proud of
+#: the pane and still well inside the half-brick reveal - a frame flush with
+#: its own glass casts no shadow and reads as paint on a window.
+SASH_PROUD_M = 0.030
+
+
+def _sash(parts, i, a, b, sill_z, head_z, reveal):
+    """The white frame, its meeting rail and its bars, for one opening."""
+    # ENTIRELY IN FRONT OF THE PANE, and it matters twice. Glazing really is
+    # like this - the pane sits in a rebate BEHIND the face of the frame, so
+    # the frame's back face and the glass's front face meet. And it lets a
+    # frame be told apart from brick by geometry alone: anything whose whole
+    # depth is in front of the glazing plane is joinery, anything crossing it
+    # or behind it is the carcass showing through a hole.
+    y1 = reveal
+    y0 = reveal - SASH_PROUD_M
+    f = FRAME_T
+    # THE OUTER FRAME: two jambs the full height, then the head and the cill
+    # rail between them, so no two pieces occupy the same millimetre.
+    _box(parts, "upper_sash_jamb_l_%d" % i, "paint_joinery", a, a + f, y0, y1,
+         sill_z, head_z, "55mm-on-the-face")
+    _box(parts, "upper_sash_jamb_r_%d" % i, "paint_joinery", b - f, b, y0, y1,
+         sill_z, head_z, "55mm-on-the-face")
+    _box(parts, "upper_sash_head_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+         head_z - f, head_z, "under-the-lintel")
+    _box(parts, "upper_sash_cill_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+         sill_z, sill_z + f, "on-the-stone")
+    # THE MEETING RAIL, at mid height, where the two sashes cross. It is the
+    # heaviest member and it is the one that makes a window read as a SASH
+    # rather than as a picture frame.
+    mid = (sill_z + head_z) * 0.5
+    _box(parts, "upper_sash_meeting_%d" % i, "paint_joinery", a + f, b - f, y0, y1,
+         mid - MEETING_RAIL_T * 0.5, mid + MEETING_RAIL_T * 0.5,
+         "the-heaviest-member/where-the-two-sashes-cross")
+    # ONE VERTICAL BAR IN EACH SASH: a two-over-two.
+    cx = (a + b) * 0.5
+    g = GLAZING_BAR_T * 0.5
+    _box(parts, "upper_sash_bar_lower_%d" % i, "paint_joinery", cx - g, cx + g, y0, y1,
+         sill_z + f, mid - MEETING_RAIL_T * 0.5, "two-over-two/the-lower-sash")
+    _box(parts, "upper_sash_bar_upper_%d" % i, "paint_joinery", cx - g, cx + g, y0, y1,
+         mid + MEETING_RAIL_T * 0.5, head_z - f, "two-over-two/the-upper-sash")
 
 
 def _roof_and_rainwater(parts, p, T, wall, party_wall):
@@ -2574,9 +2641,23 @@ def selftest():
         # the carcass filled the frontage plane behind them, so they showed
         # brick. Any part that is neither glass nor interior and crosses a
         # window's x range inside the window band fails here.
+        # THE JOINERY IN FRONT OF A PANE IS NOT A BLOCKER, and this check
+        # could not tell the two apart until the sashes arrived: it compared
+        # x and z only, so a white frame standing proud of its own glass read
+        # exactly like brick filling the hole behind it. The distinction is
+        # DEPTH and it is taken from the glass itself rather than from a list
+        # of names - a part wholly in front of the glazing plane is joinery,
+        # and anything crossing that plane or sitting behind it is the
+        # carcass showing through. Naming the sash parts instead would have
+        # let the next thing called a sash through unlooked at.
+        glazing_plane = min([b["y0"] for b in boxes if b["material"] == "glass"
+                             and b["z1"] > band_lo + 1e-9 and b["z0"] < band_hi - 1e-9]
+                            or [float("inf")])
         blockers = []
         for b in boxes:
             if b["material"] in ("glass", "interior"):
+                continue
+            if b["y1"] <= glazing_plane + 1e-9:
                 continue
             if b["z1"] <= band_lo + 1e-9 or b["z0"] >= band_hi - 1e-9:
                 continue
@@ -2585,6 +2666,30 @@ def selftest():
                     blockers.append(b["id"])
         check("accept/nothing-solid-stands-behind-an-upper-window",
               not blockers, ",".join(sorted(set(blockers))))
+
+        # AND THE CHECK STILL HAS ITS TEETH. Loosening it to let the sashes
+        # through is exactly the kind of change that quietly turns a check
+        # into a decoration, so the loosened rule is run against a PLANTED
+        # fault: a brick panel at the glazing plane, filling a window, which
+        # is the original fault this check was written for. If the planted
+        # brick passes, the check is no longer checking anything.
+        cxs = list(window_centres(p))
+        if cxs and glazing_plane < float("inf"):
+            planted = {"id": "planted_brick_behind_a_window", "material": p["wall_surface"],
+                       "x0": cxs[0] - hw * 0.5, "x1": cxs[0] + hw * 0.5,
+                       "y0": glazing_plane, "y1": glazing_plane + 0.1,
+                       "z0": band_lo + 0.1, "z1": band_hi - 0.1}
+            caught = (planted["material"] not in ("glass", "interior")
+                      and planted["y1"] > glazing_plane + 1e-9
+                      and planted["z1"] > band_lo + 1e-9 and planted["z0"] < band_hi - 1e-9
+                      and planted["x0"] < cxs[0] + hw - 1e-9
+                      and planted["x1"] > cxs[0] - hw + 1e-9)
+            check("reject/brick-planted-behind-a-window-is-still-caught", caught)
+            # AND A FRAME IN FRONT OF THE SAME PANE IS STILL LET THROUGH.
+            infront = dict(planted, id="planted_frame", material="paint_joinery",
+                           y0=glazing_plane - 0.03, y1=glazing_plane)
+            check("accept/joinery-in-front-of-the-same-pane-is-not-a-blocker",
+                  not (infront["y1"] > glazing_plane + 1e-9))
 
         # THE SECOND ATTEMPT'S OWN CLAIMS, CHECKED. The first one failed by
         # eye and there was nothing in this file that could have said so; a
