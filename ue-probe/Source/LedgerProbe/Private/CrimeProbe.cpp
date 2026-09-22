@@ -205,6 +205,20 @@ namespace
 	// belongs in the field. -1 means the accumulators are off.
 	int    GWatchSlot = -1;
 	double GSeconds[2][2] = { { 0.0, 0.0 }, { 0.0, 0.0 } };
+
+	// THE CONSTABLE, 22 September: a third body, NOT a witness. He is kept out
+	// of GReadings on purpose, so nothing he sees is filed, offered to the mill
+	// or counted by the control; his readings exist only to be handed to the
+	// arrest. He accrues his own watching seconds by the same rule as w1 and
+	// n2, because a constable who never looked long enough has not seen it.
+	// NOT COUNTED IN GBodiesSpawned, whose verdict key reads "/2" and means the
+	// two witnesses; he has his own flag.
+	AActor* GC1Body = nullptr;
+	bool    bC1Spawned = false;
+	double  GC1Seconds[2] = { 0.0, 0.0 };
+	LedgerCrime::Reading       GC1Reading[2];
+	LedgerCrime::ArrestReading GArrest[2];
+	int     GConfrontCalls = 0;
 	int    GWatchTicks[2] = { 0, 0 };
 
 	// ---- the mill --------------------------------------------------------
@@ -723,6 +737,14 @@ namespace
 			const bool bSees = Perception::InSight(R.ActorMetres, R.ActorOffAxisDeg,
 			                                       LedgerCrime::kLightLevel, R.bActorOccluded, 1.4);
 			if (bSees) { GSeconds[GWatchSlot][I] += Delta; }
+		}
+		// AND THE CONSTABLE, by exactly the same test.
+		if (GC1Body != nullptr && GPawn != nullptr)
+		{
+			const LedgerCrime::Reading C = MeasureVantage(World, "c1", "watch", GC1Body, nullptr, 0.0);
+			const bool bSees = Perception::InSight(C.ActorMetres, C.ActorOffAxisDeg,
+			                                       LedgerCrime::kLightLevel, C.bActorOccluded, 1.4);
+			if (bSees) { GC1Seconds[GWatchSlot] += Delta; }
 		}
 	}
 
@@ -1433,6 +1455,13 @@ namespace
 			           "a-second-RUN-would-vary-everything-the-engine-does-not-pin"));
 		}
 
+		// 8d. THE ARREST. ROADMAP's stage-3 gate: "arrest reachable from live
+		// play, its callers outside Core counted and printed rather than
+		// zero". Printed here with its caller's name, the constable's rung and
+		// whether he could see, for crime A and for the control, B.
+		Out.Add(Un(LedgerCrime::ArrestLine(GArrest[0], GArrest[1], GConfrontCalls)
+		         + std::string(" constableBody=") + (bC1Spawned ? "spawned" : "MISSING")));
+
 		// 9. The three combined readings. Each needs both halves.
 		Out.Add(Un("witnessStatus=" + LedgerCrime::WitnessStatus(GReadings)
 		         + " witnessStatusNote=w1-filed-on-A-with-a-rung/w1-empty-on-B-occluded/n2-empty-on-both"
@@ -1516,7 +1545,11 @@ namespace
 	// ---- the props -------------------------------------------------------
 	void PlaceProps(UWorld* World)
 	{
-		GProbePiecesAsked = 1 + 2 + 16 + 2;
+		// + 1 FOR THE CONSTABLE, 22 September. He is spawned through the same
+		// probe-piece path as the two witnesses, so a count that still read 21
+		// would print one piece fewer than was asked for - the independent
+		// check caught it.
+		GProbePiecesAsked = 1 + 2 + 16 + 2 + 1;
 
 		// THE YARD FLOOR FIRST: nothing else in the yard has anything to
 		// stand on. ground_plot_2 ends at x 21 and ground_plot_3 starts at x
@@ -1538,6 +1571,12 @@ namespace
 		GN2Body = SpawnBody(World, TEXT("probe_body_n2"),
 		                    LedgerCrime::kN2X, LedgerCrime::kN2Z, GY);
 		if (GN2Body != nullptr) { ++GBodiesSpawned; }
+
+		if (!GroundYAt(World, LedgerCrime::kC1AX, LedgerCrime::kC1AZ, GY, On)) { GY = 0.1; }
+		GC1Body = SpawnBody(World, TEXT("probe_body_c1"),
+		                    LedgerCrime::kC1AX, LedgerCrime::kC1AZ, GY);
+		bC1Spawned = (GC1Body != nullptr);
+		FaceBody(GC1Body, LedgerCrime::P3(LedgerCrime::kCrimeAX, 0.0, LedgerCrime::kCrimeAZ));
 
 		FaceBody(GW1Body, LedgerCrime::P3(LedgerCrime::kCrimeAX, 0.0, LedgerCrime::kCrimeAZ));
 		// N2 faces +z, up the yard, by the ruling: he is not looking at
@@ -1617,6 +1656,17 @@ namespace
 				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/false, GNow,
 				               R.O.Certainty, /*bIndelible=*/false);
 			}
+		}
+
+		// THE ARREST, ASKED OF THE CONSTABLE, WITH THIS SAME DEED. This is the
+		// call site outside Core that ROADMAP's stage-3 gate counts; the
+		// verdict names it. Only if he was measured - a missing body is an
+		// arrest that was not asked, and the verdict says NOT-RUN rather than
+		// this line inventing one.
+		if (bC1Spawned && GC1Reading[Index].WitnessId == "c1")
+		{
+			GArrest[Index] = LedgerCrime::ArrestFor(GC1Reading[Index], D, GConfrontCalls,
+			                                        "CrimeProbe.cpp/ResolveAndFile");
 		}
 	}
 
@@ -1735,6 +1785,11 @@ namespace
 			                                   GSeconds[0][0]));
 			GReadings.push_back(MeasureVantage(World, "n2", "A", GN2Body, GGlass[0],
 			                                   GSeconds[0][1]));
+			if (GC1Body != nullptr)
+			{
+				GC1Reading[0] = MeasureVantage(World, "c1", "A", GC1Body, GGlass[0], GC1Seconds[0]);
+				GC1Reading[0].Familiarity = LedgerCrime::kConstableFamiliarity;
+			}
 			WriteBreadcrumb(TEXT("vantage-a-measured"));
 			GPhase = ECrimePhase::ShotBeforeA;
 			GPhaseStart = Now;
@@ -1785,6 +1840,8 @@ namespace
 		{
 			MoveBody(World, GW1Body, LedgerCrime::kW1BX, LedgerCrime::kW1BZ);
 			FaceBody(GW1Body, LedgerCrime::P3(LedgerCrime::kCrimeBX, 0.0, LedgerCrime::kCrimeBZ));
+			MoveBody(World, GC1Body, LedgerCrime::kC1BX, LedgerCrime::kC1BZ);
+			FaceBody(GC1Body, LedgerCrime::P3(LedgerCrime::kCrimeBX, 0.0, LedgerCrime::kCrimeBZ));
 			GPhase = ECrimePhase::ApproachB;
 			GPhaseStart = Now;
 			return true;
@@ -1830,6 +1887,11 @@ namespace
 			                                   GSeconds[1][0]));
 			GReadings.push_back(MeasureVantage(World, "n2", "B", GN2Body, GGlass[1],
 			                                   GSeconds[1][1]));
+			if (GC1Body != nullptr)
+			{
+				GC1Reading[1] = MeasureVantage(World, "c1", "B", GC1Body, GGlass[1], GC1Seconds[1]);
+				GC1Reading[1].Familiarity = LedgerCrime::kConstableFamiliarity;
+			}
 			WriteBreadcrumb(TEXT("vantage-b-measured"));
 			GPhase = ECrimePhase::ShotBeforeB;
 			GPhaseStart = Now;
@@ -1850,6 +1912,18 @@ namespace
 			GActTook[1] = GCrime[1].bPieceFound && GCrime[1].bHiddenAfter;
 			ResolveAndFile(1);
 			GWatchSlot = -1;
+			// AND THE CONSTABLE LEAVES. His last question has been asked, and
+			// the overheard beat that follows is filmed facing into the yard
+			// where he stood for B: left there, he would be a third figure a
+			// few metres behind the two witnesses in the frame that is about
+			// them, which changes the run's visible output and puts a
+			// policeman beside two people gossiping - a canon question nobody
+			// asked. Hidden and made intangible the way the broken glass is.
+			if (GC1Body != nullptr)
+			{
+				GC1Body->SetActorHiddenInGame(true);
+				GC1Body->SetActorEnableCollision(false);
+			}
 			WriteBreadcrumb(TEXT("crime-b-committed"));
 			GPhase = ECrimePhase::SeqAfterB;
 			GPhaseStart = Now;

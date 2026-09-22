@@ -46,6 +46,7 @@
 #include "MemoryStore.h"
 #include "Observation.h"
 #include "Perception.h"
+#include "Reaction.h"
 #include "StreetVoice.h"
 #include "Suspicion.h"
 
@@ -190,6 +191,47 @@ namespace LedgerCrime
 	const double kN2X  = 22.5, kN2Z  = -8.9;    // PN, behind the terrace from both
 	const double kOverhearX = 22.5, kOverhearZ = -3.3;   // Y, between the cones
 
+	// THE CONSTABLE, 22 September. ROADMAP's stage-3 gate asks for the arrest
+	// "reachable from live play, its callers outside Core counted and printed
+	// rather than zero"; the Unreal port had no arrest at all, and Core's rule
+	// is "a constable who watched it happen closes". So one stands where he
+	// can watch.
+	//
+	// WHERE, AND EVERY CONSTRAINT IT HAD TO MEET:
+	//   - OUT OF THE PLAYER'S PATH. The pawn walks the EAST footway from the
+	//     start (1.0, 4.0) to crime A (6.87, 3.9); a body in that line stops
+	//     the deed, not the arrest.
+	//   - OUT OF THE SHOPKEEPER'S LINE. w1 stands at (9.0, 4.7) and looks
+	//     south-west at the actor and the window; nothing may stand between.
+	//   - WITHIN RECOGNITION RANGE. Rung 4 is "recognise" and it reaches 25 m
+	//     in daylight; the west footway opposite is about 8 m.
+	// So: the WEST footway, straight across the carriageway from crime A,
+	// facing it.
+	const double kC1AX = 6.0,  kC1AZ = -4.2;
+	// AND FOR CRIME B HE IS IN THE YARD, where the terrace stands between him
+	// and the window - the same arrangement that makes B the unwitnessed
+	// control for w1 and n2. He FACES B there, deliberately: the occlusion has
+	// to be what stops him, not his looking the other way, or the control
+	// proves nothing about seeing. Placed clear of w1 (22.5, -7.5) and n2
+	// (22.5, -8.9) and behind both of them relative to the window, so he sits
+	// in neither of their sightlines.
+	const double kC1BX = 21.6, kC1BZ = -11.0;
+
+	// WHO HE IS TO TOM, AND IT DECIDES WHETHER THE ARREST CAN EVER HAPPEN.
+	// Confront needs rung 4, and IdRung reaches rung 4 only for a witness
+	// whose familiarity is at least Perception::RecognitionFamiliarity, 0.35.
+	// A stranger - kFamiliarity, 0.0, which is what the shopkeeper and the lad
+	// are - tops out at rung 3, a face, however close he stands, and can never
+	// arrest. That is the design's own promise ("the escape hatch is social,
+	// not athletic"), and it means the end of the story rests on who the
+	// policeman is.
+	// RULING PENDING (FOR-JAFAR.md, decision 3). This is the RECOMMENDED
+	// answer, built while he decides: a beat constable who knows the new
+	// owner of the cab office by sight, exactly at the recognition line and
+	// no higher. One number; if he rules "a stranger", it becomes kFamiliarity
+	// and the check below expects NothingToArrest instead.
+	const double kConstableFamiliarity = LedgerCore::Perception::RecognitionFamiliarity;
+
 	// The yard floor (amendment A2): no ground plane exists in x 21..24
 	// between ground_plot_2 and ground_plot_3, and that gap is the only place
 	// a person can stand with a terrace between them and a shop window.
@@ -327,6 +369,12 @@ namespace LedgerCrime
 		std::string VictimBlocker;
 
 		double SecondsWatching;
+		// WHO THIS WITNESS IS TO THE ACTOR. It used to be the one constant
+		// kFamiliarity for everybody, because everybody was a stranger. The
+		// constable is the first reading that is not, so it is a field now,
+		// DEFAULTING TO THAT SAME CONSTANT - the shopkeeper and the lad read
+		// exactly what they read before.
+		double Familiarity;
 		// THE VANTAGE IS CAPTURED BEFORE THE DEED, WITH THE GLASS STANDING,
 		// and the run says so on the line. Once east_parade_glass0 is hidden
 		// with its collision off, a trace from the witness's eye to the
@@ -346,7 +394,8 @@ namespace LedgerCrime
 			  ActorBlocker("none"),
 			  VictimMetres(0.0), VictimOffAxisDeg(0.0), VictimTraceLenCm(0.0), bVictimOccluded(false),
 			  VictimBlocker("none"),
-			  SecondsWatching(0.0), VantageAt("before-the-deed/glass-standing"),
+			  SecondsWatching(0.0), Familiarity(kFamiliarity),
+			  VantageAt("before-the-deed/glass-standing"),
 			  bFiled(false), FiledReason("nothing-measured")
 		{
 		}
@@ -366,7 +415,7 @@ namespace LedgerCrime
 		                                    R.ActorOffAxisDeg, R.bActorOccluded);
 		V.ToVictim  = LedgerCore::Sight::At(R.VictimMetres, kLightLevel,
 		                                    R.VictimOffAxisDeg, R.bVictimOccluded);
-		V.Familiarity     = kFamiliarity;
+		V.Familiarity     = R.Familiarity;
 		V.ActorHasMark    = false;
 		V.FaceToward      = R.FaceToward();
 		V.AmbientFloor    = kAmbientFloor;
@@ -1285,9 +1334,164 @@ namespace LedgerCrime
 	//: still has time to write its evidence.
 	const double kActCeilingSeconds = 6.0;
 
+	// THE ARREST, ASKED OF ONE READING. Resolve the constable's own view of the
+	// deed exactly as a witness's is resolved - same deed, same Observe, same
+	// ladder - and hand what he got to Core's Confront. Nothing here decides
+	// the outcome; Reaction.h does, and the golden table proves Reaction.h.
+	struct ArrestReading
+	{
+		bool        bRan;
+		std::string EventId;
+		int         Rung;
+		bool        bHasActor;
+		bool        bOccluded;
+		std::string Blocker;
+		double      Familiarity;
+		double      SecondsWatching;
+		std::string CallSite;
+		LedgerCore::Reaction::Lawful Outcome;
+		ArrestReading()
+			: bRan(false), EventId("none"), Rung(0), bHasActor(false), bOccluded(false),
+			  Blocker("none"), Familiarity(0.0), SecondsWatching(0.0), CallSite("none"),
+			  Outcome(LedgerCore::Reaction::Lawful::NothingToArrest) {}
+	};
+
+	// THE CALLER NAMES ITSELF. The first version typed "CrimeProbe.cpp/
+	// ResolveAndFile" into the verdict line, so the check's "names its caller"
+	// could never fail on a real run, and a second caller anywhere would have
+	// been counted and credited to the first. The independent check of 22
+	// September found it. The name travels in from the call now.
+	inline ArrestReading ArrestFor(Reading& R, const LedgerCore::Deed& D, int& ConfrontCalls,
+	                               const std::string& CallSite)
+	{
+		ArrestReading A;
+		A.CallSite = CallSite.empty() ? std::string("unnamed") : NoSpaces(CallSite);
+		Resolve(R, D);
+		A.bRan = true;
+		A.EventId = R.EventId;
+		A.Rung = R.O.Rung;
+		A.bHasActor = R.O.Has(LedgerCore::Slot::Actor);
+		A.bOccluded = R.bActorOccluded;
+		A.Blocker = R.ActorBlocker;
+		A.Familiarity = R.Familiarity;
+		A.SecondsWatching = R.SecondsWatching;
+		// THE PLAYER DOES NOT RESIST. The probe's pawn has no way to, and the
+		// resisted branch is proved by the golden table rather than staged.
+		A.Outcome = LedgerCore::Reaction::Confront(&R.O, /*bPlayerResists=*/false);
+		++ConfrontCalls;
+		return A;
+	}
+
+	// WHAT THE CHECK SHOULD EXPECT, from the same two facts the design uses:
+	// could he recognise the man, and could he see him. Written down so that
+	// flipping kConstableFamiliarity to a stranger changes the expectation
+	// with it rather than reddening a run that is behaving as ruled.
+	inline const char* ExpectedArrest(double Familiarity)
+	{
+		return Familiarity >= LedgerCore::Perception::RecognitionFamiliarity
+		       ? "Arrest" : "NothingToArrest";
+	}
+
+	// THE VERDICT LINE. callSite names the live caller, because ROADMAP's
+	// clause is about CALLERS OUTSIDE CORE, and a count with nobody's name on
+	// it is a number anybody could have typed.
+	inline std::string ArrestLine(const ArrestReading& A, const ArrestReading& B,
+	                              int ConfrontCalls)
+	{
+		if (!A.bRan)
+		{
+			return "arrest=NOT-RUN arrestNote=no-constable-reading/"
+			       "the-end-of-the-story-was-not-asked";
+		}
+		return std::string("arrest=RAN")
+			+ " confrontCalls=" + Int(ConfrontCalls)
+			+ " callSite=" + A.CallSite
+			+ " constable=c1"
+			// WHAT WAS RULED AND WHAT THE READING USED, SIDE BY SIDE. A
+			// familiarity that never reached the reading falls back to a
+			// stranger's 0.0 and would read exactly like a stranger RULING;
+			// printing both lets the check tell a decision from a dropped line.
+			+ " constableRuled=" + F2(kConstableFamiliarity)
+			+ " constableFamiliarity=" + F2(A.Familiarity)
+			+ " expectA=" + ExpectedArrest(A.Familiarity)
+			+ " outcomeA=" + LedgerCore::Reaction::Name(A.Outcome)
+			+ " rungA=" + Int(A.Rung)
+			+ " hasActorA=" + (A.bHasActor ? "1" : "0")
+			+ " occludedA=" + (A.bOccluded ? "1" : "0")
+			+ " blockerA=" + NoSpaces(A.Blocker)
+			+ " watchSecondsA=" + F2(A.SecondsWatching)
+			+ " cataloguesCoatA=" + (LedgerCore::Reaction::CataloguesYourCoat(A.Outcome) ? "1" : "0")
+			+ " outcomeB=" + (B.bRan ? LedgerCore::Reaction::Name(B.Outcome) : "NOT-RUN")
+			+ " rungB=" + Int(B.Rung)
+			+ " occludedB=" + (B.bOccluded ? "1" : "0")
+			+ " arrestNote=a-constable-who-knows-him-by-sight-watched-crime-A-from-across-the-road"
+			  "/and-crime-B-from-the-yard-where-the-terrace-stands-between"
+			  "/B-is-the-control-and-must-never-arrest";
+	}
+
 	inline SelftestResult Selftest()
 	{
 		SelftestResult R;
+
+		// A. THE ARREST, ON FIXED READINGS. Built by hand rather than traced,
+		//    because the point is the decision and the tracing is the run's.
+		//    The deed is crime A's own.
+		{
+			const LedgerCore::Deed DA = MakeDeed("crime_a", "player", "east_parade_glass0");
+			auto Seen = [](double Metres, double Fam, bool bOccl, double Secs) {
+				Reading X;
+				X.WitnessId = "c1"; X.EventId = "A";
+				X.ActorMetres = Metres; X.ActorOffAxisDeg = 0.0; X.bActorOccluded = bOccl;
+				X.VictimMetres = Metres; X.VictimOffAxisDeg = 0.0; X.bVictimOccluded = bOccl;
+				X.SecondsWatching = Secs; X.Familiarity = Fam;
+				return X;
+			};
+			int Calls = 0;
+			Reading Known = Seen(8.15, kConstableFamiliarity, false, 1.0);
+			const ArrestReading K = ArrestFor(Known, DA, Calls, "selftest");
+			Expect(R, K.Outcome == LedgerCore::Reaction::Lawful::Arrest,
+			       "a-constable-who-knows-him-and-sees-it-arrests");
+			Expect(R, K.Rung >= 4, "and-he-reaches-the-recognition-rung");
+
+			Reading Stranger = Seen(8.15, kFamiliarity, false, 1.0);
+			const ArrestReading St = ArrestFor(Stranger, DA, Calls, "selftest");
+			Expect(R, St.Outcome == LedgerCore::Reaction::Lawful::NothingToArrest,
+			       "a-stranger-cannot-place-him-however-close");
+			Expect(R, St.Rung < 4, "because-a-stranger-tops-out-below-recognition");
+
+			Reading Close = Seen(1.0, kFamiliarity, false, 1.0);
+			Expect(R, ArrestFor(Close, DA, Calls, "selftest").Outcome ==
+			          LedgerCore::Reaction::Lawful::NothingToArrest,
+			       "not-even-at-arms-length");
+
+			Reading Walled = Seen(8.15, kConstableFamiliarity, true, 1.0);
+			Expect(R, ArrestFor(Walled, DA, Calls, "selftest").Outcome ==
+			          LedgerCore::Reaction::Lawful::NothingToArrest,
+			       "the-control-a-wall-between-them-means-no-arrest");
+
+			Reading Glance = Seen(8.15, kConstableFamiliarity, false, 0.1);
+			Expect(R, ArrestFor(Glance, DA, Calls, "selftest").Outcome ==
+			          LedgerCore::Reaction::Lawful::NothingToArrest,
+			       "a-glance-under-the-notice-time-is-not-a-sighting");
+
+			Reading Far = Seen(30.0, kConstableFamiliarity, false, 1.0);
+			Expect(R, ArrestFor(Far, DA, Calls, "selftest").Outcome ==
+			          LedgerCore::Reaction::Lawful::NothingToArrest,
+			       "past-recognition-range-he-cannot-place-him");
+
+			Expect(R, Calls == 6, "every-question-was-asked-and-counted");
+			Expect(R, std::string(ExpectedArrest(kFamiliarity)) == "NothingToArrest",
+			       "the-expectation-follows-a-stranger-ruling");
+			Expect(R, std::string(ExpectedArrest(kConstableFamiliarity)) == "Arrest",
+			       "and-follows-the-recommended-one");
+			const std::string L = ArrestLine(K, ArrestReading(), Calls);
+			Expect(R, L.find("arrest=RAN") == 0 && L.find("callSite=selftest") != std::string::npos,
+			       "the-line-names-the-caller-it-was-given");
+			Expect(R, ArrestFor(Known, DA, Calls, "").CallSite == "unnamed",
+			       "an-unnamed-caller-is-printed-as-unnamed-not-as-somebody-else");
+			Expect(R, ArrestLine(ArrestReading(), ArrestReading(), 0).find("arrest=NOT-RUN") == 0,
+			       "a-run-that-never-asked-says-so");
+		}
 
 		// 0. THE ACT GATE, BOTH WAYS. Accepting first: one press seen is a
 		//    commit, whatever the clock says. Then the two refusals, which

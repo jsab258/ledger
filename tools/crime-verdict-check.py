@@ -250,6 +250,102 @@ def judge(text, sha=""):
                      % (c.get("seenA"), c.get("rumoursAboutA"),
                         c.get("seenB"), c.get("rumoursAboutB")))
 
+    # ---- the arrest, once the probe carries one -----------------------------
+    # ROADMAP's stage-3 gate: "arrest reachable from live play, its callers
+    # outside Core counted and printed rather than zero". GATED EXACTLY AS
+    # THE CONTROL AND THE RESTART ARE: a verdict from before the constable
+    # existed has no arrest line, and that is a NOTE in capitals rather than a
+    # pass or a failure - the lesson of 22 September, when a selftest whose
+    # fixture was a file CI rewrites went red on the runner and green here.
+    ar = lines_named(text, "arrest")
+    if not ar:
+        notes.append("arrest=NOT-IN-THIS-VERDICT/nothing-measured-about-the-end-of-the-story")
+    else:
+        a = ar[0]
+        if a.get("arrest") != "RAN":
+            faults.append("THE ARREST WAS NOT ASKED (arrest=%s): the end of the story is "
+                          "still unreachable from live play" % a.get("arrest"))
+        else:
+            try:
+                calls = int(a.get("confrontCalls", ""))
+            except ValueError:
+                calls = None
+            if calls is None or calls < 2:
+                faults.append("the arrest was asked %s time(s); it must be asked for the "
+                              "witnessed crime AND the control" % a.get("confrontCalls"))
+            if not a.get("callSite"):
+                faults.append("the arrest line names no caller, and a caller with no "
+                              "name is a count anybody could have typed")
+            if a.get("constableBody") != "spawned":
+                faults.append("the constable's body was %s, so nothing he saw was "
+                              "measured" % a.get("constableBody"))
+            # WHAT A MUST BE IS WORKED OUT HERE, FROM WHO HE IS - never taken
+            # from the verdict's own expectA. The first version believed the
+            # run about itself, and the independent check of 22 September
+            # showed what that lets through: familiarity 0.35 with
+            # expectA=NothingToArrest and outcomeA=NothingToArrest passed, a
+            # run in which a constable who knows him watched it and nobody was
+            # arrested. RecognitionFamiliarity is 0.35 in both engines.
+            try:
+                fam = float(a.get("constableFamiliarity", ""))
+            except ValueError:
+                fam = None
+            # AND THE RULING HAS TO HAVE REACHED THE READING. A familiarity
+            # that was set in the header and dropped on the way to the
+            # constable's reading falls back to a stranger's 0.0, and without
+            # this comparison would pass as if a stranger had been ruled.
+            try:
+                ruled = float(a.get("constableRuled", ""))
+            except ValueError:
+                ruled = None
+            if ruled is None:
+                faults.append("the arrest line does not say what was ruled for the constable "
+                              "(constableRuled=%s)" % a.get("constableRuled"))
+            elif fam is not None and abs(ruled - fam) > 1e-6:
+                faults.append("THE RULING NEVER REACHED THE CONSTABLE: %s was ruled and his "
+                              "reading used %s" % (a.get("constableRuled"), a.get("constableFamiliarity")))
+            if fam is None:
+                faults.append("the arrest line does not say who the constable is to him "
+                              "(constableFamiliarity=%s), so what he should have done "
+                              "cannot be worked out" % a.get("constableFamiliarity"))
+                want = None
+            else:
+                want = "Arrest" if fam >= 0.35 - 1e-9 else "NothingToArrest"
+            if want and a.get("expectA") != want:
+                faults.append("the run's own expectA=%s disagrees with what familiarity %s "
+                              "requires (%s): the probe's arithmetic and this check's have "
+                              "come apart" % (a.get("expectA"), a.get("constableFamiliarity"), want))
+            if want == "NothingToArrest":
+                notes.append("NO ARREST CAN HAPPEN UNDER THIS RULING: the constable is a stranger "
+                             "(familiarity %s), and a stranger cannot place him. The stage-3 "
+                             "gate is not met by this run, by design." % a.get("constableFamiliarity"))
+            got = a.get("outcomeA")
+            if want and got != want:
+                faults.append("crime A: the constable should have answered %s and answered "
+                              "%s (rung %s, can see the actor %s, occluded %s by %s, "
+                              "watched %s s)"
+                              % (want, got, a.get("rungA"), a.get("hasActorA"),
+                                 a.get("occludedA"), a.get("blockerA"),
+                                 a.get("watchSecondsA")))
+            # AND B NEVER ARRESTS, whoever he is: it is the control, and a
+            # constable arresting for a crime he could not see is Core
+            # inventing a sighting.
+            if a.get("outcomeB") != "NothingToArrest":
+                faults.append("THE CONTROL ARRESTED: crime B answered %s, and the "
+                              "constable was behind the terrace for it"
+                              % a.get("outcomeB"))
+            # AND FOR THE RIGHT REASON. B's NothingToArrest proves something
+            # about SEEING only if the terrace is what stopped him - not a
+            # glance too short or a face turned away, which the probe's own
+            # comment says the control must not rely on.
+            if a.get("occludedB") != "1":
+                faults.append("the control answered NothingToArrest without the terrace "
+                              "between them (occludedB=%s), so it proves nothing about "
+                              "seeing" % a.get("occludedB"))
+        notes.append("arrest=%s; A %s (expected %s), B %s; asked %s time(s) from %s"
+                     % (a.get("arrest"), a.get("outcomeA"), a.get("expectA"),
+                        a.get("outcomeB"), a.get("confrontCalls"), a.get("callSite")))
+
     # ---- the restart, once the probe carries one --------------------------
     # GATED ON THE LINE BEING THERE, AND LOUD WHEN IT IS NOT. The probe
     # learned to save, rebuild and reload on 22 September and the verdict
@@ -444,6 +540,55 @@ def selftest():
         ):
             faults, _n = judge(ok_c.replace(old_v, new_v), head_sha(real))
             check("reject/%s-is-caught" % name, bool(faults))
+
+    # THE ARREST'S OWN RULES, on a verdict that carries the line - and ONLY
+    # that line: any arrest line the landed verdict already has is stripped
+    # first, so the fixture is the one being doctored. That is the exact fault
+    # that reddened three probe runs on 22 September, in the control's cases.
+    GOOD_ARREST = ("arrest=RAN confrontCalls=2 callSite=CrimeProbe.cpp/ResolveAndFile "
+                   "constable=c1 constableRuled=0.35 constableFamiliarity=0.35 expectA=Arrest outcomeA=Arrest "
+                   "rungA=4 hasActorA=1 occludedA=0 blockerA=none watchSecondsA=1.20 "
+                   "cataloguesCoatA=1 outcomeB=NothingToArrest rungB=0 occludedB=1 "
+                   "constableBody=spawned")
+    if real:
+        base_a = LF.join(l for l in real.split(LF) if not l.startswith("arrest="))
+        ok_a = base_a.rstrip(chr(10)) + chr(10) + GOOD_ARREST + chr(10)
+        faults, _n = judge(ok_a, head_sha(real))
+        check("accept/a-good-arrest-line-passes", not faults, "; ".join(faults[:2]))
+        stranger = (GOOD_ARREST.replace("constableRuled=0.35", "constableRuled=0.00")
+                    .replace("constableFamiliarity=0.35", "constableFamiliarity=0.00")
+                    .replace("expectA=Arrest", "expectA=NothingToArrest")
+                    .replace("outcomeA=Arrest", "outcomeA=NothingToArrest")
+                    .replace("rungA=4", "rungA=3"))
+        faults, _n = judge(base_a.rstrip(chr(10)) + chr(10) + stranger + chr(10), head_sha(real))
+        check("accept/a-stranger-ruling-that-cannot-arrest-passes", not faults,
+              "; ".join(faults[:2]))
+        for name, old_v, new_v in (
+                ("the-arrest-was-never-asked", "arrest=RAN", "arrest=NOT-RUN"),
+                ("the-control-arrested", "outcomeB=NothingToArrest", "outcomeB=Arrest"),
+                ("a-constable-who-knows-him-let-him-go", "outcomeA=Arrest",
+                 "outcomeA=NothingToArrest"),
+                ("only-one-crime-was-asked-about", "confrontCalls=2", "confrontCalls=1"),
+                ("the-constable-never-spawned", "constableBody=spawned", "constableBody=MISSING"),
+                ("the-caller-has-no-name", "callSite=CrimeProbe.cpp/ResolveAndFile ", ""),
+                # THE INDEPENDENT CHECK'S CASES, 22 September: a run that
+                # agrees with itself about nobody being arrested.
+                ("a-self-consistent-run-where-nobody-was-arrested",
+                 "expectA=Arrest outcomeA=Arrest", "expectA=NothingToArrest outcomeA=NothingToArrest"),
+                ("the-control-was-clean-for-the-wrong-reason", "occludedB=1", "occludedB=0"),
+                ("the-line-hides-who-the-constable-is", "constableFamiliarity=0.35 ", ""),
+                ("the-ruling-was-dropped-before-the-reading",
+                 "constableFamiliarity=0.35 expectA=Arrest outcomeA=Arrest",
+                 "constableFamiliarity=0.00 expectA=NothingToArrest outcomeA=NothingToArrest"),
+        ):
+            faults, _n = judge(base_a.rstrip(chr(10)) + chr(10)
+                               + GOOD_ARREST.replace(old_v, new_v) + chr(10), head_sha(real))
+            check("reject/%s-is-caught" % name, bool(faults))
+        faults, notes = judge(base_a, head_sha(real))
+        check("accept/a-verdict-from-before-the-constable-is-a-note-not-a-fault",
+              not any("ARREST" in f for f in faults)
+              and any(n.startswith("arrest=NOT-IN-THIS-VERDICT") for n in notes),
+              str(notes))
 
     faults, _n = judge("")
     check("reject/an-empty-file-is-refused-not-passed", bool(faults))
