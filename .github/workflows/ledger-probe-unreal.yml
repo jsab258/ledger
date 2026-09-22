@@ -60,6 +60,12 @@ on:
       # would otherwise land with nothing rendering it.
       - 'production/specs/**'
       - 'tools/art-recipes/**'
+      # AND THE SCRIPT THIS WORKFLOW'S OWN SECOND STEP CALLS. It was not
+      # listed, so the day that file went missing nothing re-ran to find out,
+      # and the day it came back the fix could not prove itself either. A
+      # workflow that depends on a file and does not watch it cannot tell you
+      # when that dependency breaks.
+      - 'tools/runner/**'
 
 permissions:
   contents: write
