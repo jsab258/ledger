@@ -1,4 +1,4 @@
-artPreviewVerdict=1 commit=6f738008 commission=atlas-01 recipe=lighting-column status=RAN at=1790034540
+artPreviewVerdict=1 commit=6f77ff59 commission=atlas-01 recipe=lighting-column status=RAN at=1790036195
 
 The authoring line's first test (Jafar, 2026-09-21). Read this file
 instead of the job log. A run that measured nothing says NO RUN.
@@ -30,13 +30,13 @@ lcWear surface=base cleanArea_m2=0.14948 wearArea_m2=0.01155 wearCoverage=0.0772
 lcWear surface=lantern cleanArea_m2=0.43377 wearArea_m2=0.00000 wearCoverage=0.000000
 lcWear surface=neck cleanArea_m2=0.23492 wearArea_m2=0.00803 wearCoverage=0.034164
 lcWear surface=shaft cleanArea_m2=1.68327 wearArea_m2=0.15940 wearCoverage=0.094697
-lcFrame idx=1/4 id=hero_full condition=overcast_day png=lighting-column-overcast_day-hero_full.png bytes=2223320 engine=BLENDER_EEVEE_NEXT renderSeconds=2.3
+lcFrame idx=1/4 id=hero_full condition=overcast_day png=lighting-column-overcast_day-hero_full.png bytes=2223320 engine=BLENDER_EEVEE_NEXT renderSeconds=2.2
 lcFrame idx=2/4 id=head_detail condition=overcast_day png=lighting-column-overcast_day-head_detail.png bytes=2030894 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
-lcFrame idx=3/4 id=hero_full condition=wet_night png=lighting-column-wet_night-hero_full.png bytes=1798554 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
+lcFrame idx=3/4 id=hero_full condition=wet_night png=lighting-column-wet_night-hero_full.png bytes=1798554 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
 lcFrame idx=4/4 id=head_detail condition=wet_night png=lighting-column-wet_night-head_detail.png bytes=1699801 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
 lcNote sceneReset=dataApi/removed=3/3-objects
 lcNote world/overcast_day=hdri=ledger/Assets/Resources/Sky/polyhaven/belfast_open_field_2k.hdr
 lcNote world/wet_night=hdri=ledger/Assets/Resources/Sky/polyhaven/kloppenheim_04_2k.hdr
-lighting-column done: status=RAN commission=atlas-01 runSha=6f738008 studioSha=595484b specSha256=7a57663a0983afee specPath=production\specs\vignette-scene.json crossCheckAgree=10/10 objectsPlanned=10 objectsBuilt=10/10-planned manifoldParts=10/10 neckArcLonger=yes neckShallower=no wearCoverageMin=0.000000/lantern wearCoverageTotal=0.071549 boundsExtent_m=0.875/0.300/5.186 previewsWrote=4/4 engineAsked=AUTO engineUsed=BLENDER_EEVEE_NEXT res=1600x1100 outDir=C:\actions-runner-ledger\_work\ledger\ledger\production\art\atlas-01\previews root=C:\actions-runner-ledger\_work\ledger\ledger elapsedSeconds=3.3
+lighting-column done: status=RAN commission=atlas-01 runSha=6f77ff59 studioSha=b02e918 specSha256=7a57663a0983afee specPath=production\specs\vignette-scene.json crossCheckAgree=10/10 objectsPlanned=10 objectsBuilt=10/10-planned manifoldParts=10/10 neckArcLonger=yes neckShallower=no wearCoverageMin=0.000000/lantern wearCoverageTotal=0.071549 boundsExtent_m=0.875/0.300/5.186 previewsWrote=4/4 engineAsked=AUTO engineUsed=BLENDER_EEVEE_NEXT res=1600x1100 outDir=C:\actions-runner-ledger\_work\ledger\ledger\production\art\atlas-01\previews root=C:\actions-runner-ledger\_work\ledger\ledger elapsedSeconds=3.3
 artQueueStatus=CLEAR artQueueWaitedSec=2 artQueueCapSec=720 artQueueCapBit=no/cap-not-reached artQueuePolls=1/25-max artQueuePollSec=30 artQueueBusyAtLast=0/5-workflows-checked artQueueUnknownAtLast=0/5-workflows-checked artQueueProved=yes
 artQueueSeries=p1:t0s:busy=0/5:none/0-in-progress:unk=0/5 artQueueSeriesPolls=1/1-recorded
