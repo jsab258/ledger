@@ -188,7 +188,14 @@ MATERIALS = (
     # a shopfront, two doors - read as unbroken brickwork and the front came
     # back as a blank box with sills on it. The openings are real; there was
     # simply nothing dark behind them.
-    ("interior",    (0.010, 0.009, 0.009), 0.95),
+    # AN UNLIT ROOM IS NOT A BLACK HOLE. At 0.010 every window on the street
+    # that has no practical behind it - the whole west row, every flat above
+    # the parade - read as a hole punched in the wall rather than a room with
+    # the light off. A room in daylight with no lamp on still has a ceiling, a
+    # back wall and whatever daylight reaches it through its own window, which
+    # is dim but is not nothing. The shops have cards behind them and these
+    # have this, and the difference between the two is the point.
+    ("interior",    (0.038, 0.035, 0.032), 0.95),
 )
 
 #: WHICH SIDE OF ITS OPENING EACH BAY PUTS ITS DOORS ON. The spec names this

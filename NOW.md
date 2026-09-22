@@ -19,26 +19,39 @@ Last updated 2026-09-22, at the end of the second sitting on his PC.
 - [x] The street from the sheet's own viewpoint, with the road between the two
       sides and somebody standing in it. That frame is what the stage is
       judged on and it did not exist before today.
-- [x] LIGHT AND WET, D31's first step. The street renders at dusk now, wet,
-      with the four accepted lamp columns standing in it and their lanterns
-      lit, and two figures in silhouette. That is D31's own tying frame and
-      it did not exist before today.
-- [ ] THE GAPS THE FRAMES SHOW, in the order they matter, D31's own order:
-      1. THE LIGHT IS COMING FROM THE SKY, NOT THE LAMPS. The footway reads
-         almost white against a dark street and the lanterns throw almost no
-         pool. That is the next thing, and it is still step one of the list.
-      2. THE STREET ENDS AT 42 METRES into open field. Depth beyond thirty
-         metres is the named gap and the frame confirms it.
-      3. NO SIGNAGE. Every fascia board on the parade is blank, and a parade
-         with blank boards reads as abandoned. Four fascia decals are already
-         committed and are not reaching the frame.
-      4. NO CLUTTER. No lamp columns in this scene, no bins, no road markings,
-         no double yellow lines - and the lines are already specified, with a
-         colour taken from the game's own code.
-      5. THE YARD GAP between the two west blocks reads as a black void.
-      6. Surfaces are flat colour. Texture is the step after light.
-- [ ] Render the pair from the sheet's viewpoint after each step. That is the
-      test, and it is not optional between steps.
+- [x] LIGHT AND WET, D31's first step, done against the sheet rather than
+      against my own idea of it. The lanterns light the street instead of
+      being sealed inside their own housings; the day is wet, which the scene
+      file had said all along; there is a tone curve.
+- [x] THE PAIR IS OF THE SAME STREET. Ours was the mirror of the reference -
+      wrong pavement AND wrong way along - so nobody could have said which
+      way the gap ran. tools/hook-pair.py builds it now, every step.
+- [x] SURFACES, D31 step two. Brick, slate, setts, tarmac, kerb, timber, off
+      a pack we already hold. The photograph supplies pattern and relief; the
+      project supplies the palette, because the pack's own names do not match
+      its own colours.
+- [x] SIGNAGE. The four signs that were already drawn are on their boards, and
+      the boards are painted from the spec's period list, in waves.
+- [x] Double yellows, lit shop windows you can see into, rooms behind the
+      other windows rather than holes, six people in coats.
+- [ ] THE GAPS THIS PAIR SHOWS, in the order they matter:
+      1. DEPTH BEYOND THIRTY METRES. Still open and the two failed attempts
+         are written into the recipe: a world volume scatter rendered pure
+         black at the scene file's own fog density and again with EEVEE's
+         volumetric range opened out. The next attempt does not start from
+         scratch. The missing TOWN past the end of the street is stage 6 and
+         is not this.
+      2. NO CARS. The sheet has three and they are a quarter of what says
+         1990.
+      3. NO CLUTTER: no bins, no A-boards, no crates, nothing on the
+         pavement. The sheet's fish shop trades onto its own frontage.
+      4. THE UPPER WINDOWS ARE BARE. The spec names a per-bay choice - a
+         closed roller blind, a bare pane, or the lit interior card - and
+         none of it is reaching the street.
+      5. THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
+      6. The figures are on both pavements but barely read at distance.
+- [ ] Render the pair from the sheet's viewpoint after each step, in DAYLIGHT
+      as the sheet is. The dusk frame is a second, occasional check.
 
 ## 2. Rumours surviving a restart (stage 3)
 
@@ -78,5 +91,6 @@ again after five red pushes that never reached it. A crime is committed by a
 key press. A memory survives a save and a reload, and the engine and the test
 bench have been caught disagreeing twice - about NaN, and about how strict the
 two readers of the golden table were. The street stands as authored fronts on
-both sides with a road between them, and it has now been rendered at dusk,
-wet, with its own lamps lit and somebody standing in it.
+both sides with a road between them, textured, wet, painted, lettered and
+lit, with people on it - and it is compared against the sheet from the
+sheet's own viewpoint after every change.
