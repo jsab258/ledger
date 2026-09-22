@@ -85,6 +85,25 @@ trap '' PIPE
 # All three, and their selftests, are in legacy/studio-v2/tools/ with their
 # subjects. legacy/studio-v2/REACTIVATE.md restores them as one step.
 #
+# FOUR SUITES CAME BACK ON 2026-09-22: Soak, SaveChaos, PerceptionGolden and
+# StrangerTest. D16 named five suites, CoreTests included, as the ones that
+# keep running when Unity was archived - "these keep running and are not
+# archived" - and when the studio was paused only CoreTests and the fake-player
+# harness came across into this table. Their PROJECT DIRECTORIES survived the
+# whole time, which is exactly what made the loss invisible: `ledger/Soak/`
+# sitting on disk reads like a suite that runs. A suite nothing invokes is not
+# a suite. They are invoked here, by name, and they cost about a minute between
+# them.
+#
+# PerceptionGolden IS NOT INVOKED DIRECTLY, and that is the second half of the
+# repair. It EMITS the table the C++ port is compared against, and for as long
+# as the comparison read the COMMITTED copy of that table the C# could move and
+# nothing would go red - it had, by seven rows. `port-golden-check.sh`
+# regenerates the table from the Core, fails on drift from the committed copy,
+# and runs the port against the FRESH output. Its selftest is a separate entry
+# for the reason the attribution check is two: "the port disagrees" and "the
+# comparison is broken" are different facts with different fixes.
+#
 # THE REAL TABLE. One check per line: name <TAB> working-dir <TAB> command.
 # Names carry no spaces — every reader of this output splits on whitespace.
 #
@@ -104,6 +123,11 @@ real_table() {
     sky-material-selftest "$REPO"                 "python3 tools/ue/make_sky_material.py --selftest" \
     sky-longlat-selftest  "$REPO"                 "python3 tools/hdr-to-longlat.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
+    soak                  "$REPO"                 "dotnet run --project ledger/Soak -c Release" \
+    save-chaos            "$REPO"                 "dotnet run --project ledger/SaveChaos -c Release" \
+    perception-golden     "$REPO"                 "bash tools/port-golden-check.sh" \
+    perception-golden-selftest "$REPO"            "bash tools/port-golden-check.sh --selftest" \
+    stranger-test         "$REPO"                 "dotnet run --project ledger/StrangerTest -c Release -- --selftest" \
     playtest-fake         "$REPO/ledger/SimHarness" "dotnet run -c Release"
 }
 

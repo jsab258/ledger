@@ -51,6 +51,15 @@ on:
       - 'ue-probe/**'
       - 'tools/ue/**'
       - '.github/workflows/ledger-probe-unreal.yml'
+      # THE SCENE SPECIFICATIONS AND THE BLENDER RECIPES, added 2026-09-22.
+      # The safeguard is meant to catch a change that breaks what stands on
+      # the street, and these two directories ARE that change: the vignette
+      # scene's pieces and dimensions live in production/specs/, and the
+      # geometry that reads them is built by tools/art-recipes/. A lamp
+      # rebuilt from new dimensions, or a scene file that gained a piece,
+      # would otherwise land with nothing rendering it.
+      - 'production/specs/**'
+      - 'tools/art-recipes/**'
 
 permissions:
   contents: write
@@ -212,10 +221,41 @@ jobs:
       # got: the first build compiles engine headers and is dominated by
       # them; the number D1 actually wants is the SECOND one, which is what
       # an edit-build-test cycle really costs.
+      # THE GOLDEN TABLE IS REGENERATED BEFORE THE ENGINE IS ASKED ANYTHING.
+      #
+      # The in-engine golden test reads ue-probe/perception-golden.txt, and
+      # until 2026-09-22 that meant it read a FILE SOMEBODY COMMITTED. On that
+      # date the committed file was seven rows behind the C# Core it claims to
+      # speak for, and no run anywhere had said so, because the only thing
+      # that could have noticed was the comparison being fed the stale file.
+      # A table nobody regenerates is a table that quietly stops describing
+      # the game. This asks ledger/PerceptionGolden for the Core's answer as
+      # it is on THIS commit, and the engine below is tested against that.
+      #
+      # IT DOES NOT FAIL THE RUN ON DRIFT, deliberately: the cheap channel
+      # owns that verdict. `tools/ci-checks.sh` runs the same script without
+      # --accept on every push and goes red naming the rows, which is an
+      # ubuntu minute rather than a build slot on Jafar's PC. Here the only
+      # job is to make sure the engine is answering today's question.
+      - name: Regenerate the golden table from the C# Core
+        if: always()
+        timeout-minutes: 10
+        shell: bash
+        run: bash tools/port-golden-check.sh --accept
+
+      #
+      # NO continue-on-error, FROM 2026-09-22, AND THIS IS THE POINT OF THE
+      # WHOLE SAFEGUARD. It carried `continue-on-error: true` from the days
+      # when this workflow was a PROBE and a failed build was one of the
+      # answers it existed to collect. It is not a probe now; it is the check
+      # that stands between a broken engine build and a push, and a check that
+      # cannot turn the run red is not a check. Every step below still carries
+      # `if: always()`, so a failed build still banks its logs, its material
+      # diagnostics and whatever it managed to render — the evidence survives
+      # and the RUN GOES RED, which is the combination that was missing.
       - name: Build the UE probe target and run the golden test
         id: build
         timeout-minutes: 60
-        continue-on-error: true
         shell: pwsh
         run: |
           $ErrorActionPreference = "Continue"
@@ -2258,3 +2298,50 @@ jobs:
           # The "nothing to commit" case exits 0 earlier and is unaffected, so
           # the accepting path still passes.
           exit 1
+
+      # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
+      #
+      # THE FAULT THIS CLOSES, and it had two halves that only added up
+      # together. The build step carried `continue-on-error: true`, so a
+      # failed build was an amber step and a green job. The step above banks
+      # the evidence and exits 0 whenever it managed to COMMIT something,
+      # which it always does, because "the build failed and here is the log"
+      # is a thing worth committing. So the last word on every run belonged
+      # to the archivist rather than to the build, and a red build reported
+      # green. The first half is fixed by the missing `continue-on-error`
+      # above. This is the second half: the evidence is still banked, always,
+      # and then it is READ, and what it says decides the colour.
+      #
+      # IT READS THE FILE RATHER THAN THE STEP OUTCOME, which is this
+      # project's standing rule — verify a job's EFFECTS and not its exit
+      # code. A step can exit 0 having written `probeTest=FAIL`; the engine's
+      # own answer is in the file and the file is what is asked.
+      - name: The build decides the colour of the run
+        if: always()
+        shell: bash
+        run: |
+          set -u
+          F=production/d1-probe/ue-build.txt
+          if [ ! -f "$F" ]; then
+            echo "buildVerdict=NO-EVIDENCE — the build step wrote nothing to $F."
+            echo "THE UNREAL SAFEGUARD IS RED: nothing was measured on this commit."
+            exit 1
+          fi
+          COLD=$(grep -o 'coldBuildExit=[0-9-]*' "$F" | head -n 1 | cut -d= -f2)
+          [ -z "${COLD:-}" ] && COLD=none
+          REACHED=$(grep -c 'buildReached=end' "$F" || true)
+          if grep -q 'probeTest=FAIL' "$F"; then TEST=FAIL
+          elif grep -q 'probeTest=PASS' "$F"; then TEST=PASS
+          else TEST=none; fi
+          echo "buildVerdict coldBuildExit=$COLD probeTest=$TEST buildReachedEnd=$REACHED"
+          BAD=""
+          [ "$REACHED" = "0" ] && BAD="$BAD build-step-did-not-reach-its-end"
+          [ "$COLD" = "none" ] && BAD="$BAD no-cold-build-exit-recorded"
+          [ "$COLD" != "none" ] && [ "$COLD" != "0" ] && BAD="$BAD cold-build-exit=$COLD"
+          [ "$TEST" != "PASS" ] && BAD="$BAD golden-test=$TEST"
+          if [ -n "$BAD" ]; then
+            echo "THE UNREAL SAFEGUARD IS RED:$BAD"
+            echo "The evidence for this run is committed; read ue-build.txt for why."
+            exit 1
+          fi
+          echo "the engine built and the ported Core answered the C# table — green on its own evidence"
