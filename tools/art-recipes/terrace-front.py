@@ -582,6 +582,56 @@ AUTHORED_RES = (1400, 1100)
 #: 1400 x 740 is 1.892 against the panel's 1.8926.
 HOOK_RES = (1400, 740)
 
+#: AND THE LENS WAS NEVER DERIVED FROM THE APPROVED SHEET AT ALL, which is
+#: the answer to why our frame and the concept art are not the same angle.
+#:
+#: THE ASPECT ABOVE WAS MEASURED ON THE APPROVED SHEET. The FIELD was not:
+#: 60 degrees is this recipe's default for its other cameras and it was
+#: carried across unchanged. Nothing on the approved sheet has ever been
+#: measured to give 60.
+#:
+#: THE ONLY FIELD ANYBODY EVER DERIVED FOR A HOOK PANEL IS CODEX'S.
+#: production/specs/vignette-scene.json derives it at length - "fov_vertical
+#: _deg 39.0: THE ONLY NUMBER HERE THAT NEEDS AN ASSUMPTION" - from two
+#: shopfront boundaries against a 6 m bay, giving 875 px of focal length,
+#: 38.8 degrees vertical and 59.7 HORIZONTAL. Every one of those numbers was
+#: read off the 1024 x 1536 sheet that Jafar RETIRED on 9 September. It is
+#: the same fault as the reference itself, one level further in: the
+#: picture was replaced and the camera derived from it was not.
+#:
+#: WHAT THE DIFFERENCE ACTUALLY IS. 60 vertical on a 1.892 frame is 95.1
+#: degrees HORIZONTAL. The derived panel is 59.7. We are shooting a
+#: thirty-five-degree wider picture than the only measurement there is, and
+#: that is what puts a wall 2.9 m to the left across a third of the frame
+#: where the concept art has open street.
+#:
+#: 33.75 WOULD BE THE SAME HORIZONTAL FIELD ON OUR FRAME, and it was
+#: rendered on 22 September rather than argued about. IT IS NOT ADOPTED, and
+#: the reason is worth more than the number:
+#:
+#:   IT IS NOT A DERIVATION FROM THE APPROVED SHEET EITHER. It is the
+#:   RETIRED sheet's horizontal field carried onto our aspect. Swapping an
+#:   unmeasured number for a borrowed one is not progress.
+#:
+#:   AND IT MOVES THE FOUR NUMBERS THE WRONG WAY. Measured on the same
+#:   build, same street, same light, only the lens changed:
+#:       sheet        mean 119.7  hi 235  warm +18.5  colour 45.7%
+#:       ours at 60      119.5      228        +17.0          39.0%
+#:       ours at 33.75   122.6      219        +11.5          29.2%
+#:   A narrower lens fills the frame with road and sky instead of brick, so
+#:   warmth and colour both fall away from the sheet. THE UNCOMFORTABLE HALF
+#:   OF THAT: the palette work this week was tuned until those numbers
+#:   matched, at a field of view nobody derived - so some of it is
+#:   compensating for the lens rather than describing the street. Changing
+#:   the lens and the palette in the same move would hide which was which.
+#:
+#: THE REAL FIX IS TO DERIVE THE APPROVED SHEET'S OWN FIELD, from its bay
+#: module traced across its street panel, the way
+#: production/specs/vignette-scene.json derived the retired sheet's. That is
+#: a sitting's work and it is Jafar's to schedule; until then this stays at
+#: the value the accepted frames were measured at, and says so.
+HOOK_FOV_V_DEG = 60.0
+
 
 # ---------------------------------------------------------------------------
 # PURE. Everything a selftest can drive with no Blender and no filesystem
@@ -2370,7 +2420,50 @@ def street_cameras():
     # from, and the pair's whole job is to stand beside the sheet. Where the
     # two disagree the sheet wins, because the sheet is the exit test.
     HOOK_PITCH_DEG = -4.0
-    reach = 33.0
+    # WHERE IT STANDS ALONG THE STREET, AND IT MOVED ON 22 SEPTEMBER.
+    #
+    # THE CROSS-STREET POSITION IS SETTLED and is not what this changes: the
+    # long note below argues y = -2.2 against the approved sheet and it
+    # stands. What was never argued is the position ALONG the street. 33.0
+    # was chosen for one reason, in its own words, "inside the row, not past
+    # its end" - and at 33.0 the camera stands 2.9 m from the WEST frontage,
+    # which was a blank wall when the number was picked.
+    #
+    # THEN JAFAR RULED SHOPS ONTO THAT BLOCK. west_north runs x 24 to 42, so
+    # since that ruling the frame has had a lit, lettered shopfront three
+    # metres from the lens taking the LEFT THIRD at a rake nobody can read -
+    # and the approved sheet's left third is open street with one figure on
+    # the far pavement. That is the largest composition gap left against the
+    # sheet and it is not a material or a value; it is where the tripod is.
+    #
+    # THE SERVICE GAP IS WHERE A PHOTOGRAPHER WOULD STAND. The scene file
+    # puts a 3 m gap between west_south (ending 21.0) and west_north
+    # (starting 24.0) and the props file already calls it the yard entrance.
+    # At its middle the nearest west wall is 1.5 m of gap away instead of
+    # 2.9 m of brick, the east parade is still 7.3 m off across the road -
+    # which is the sheet's own "eight to ten metres" - and the street ahead
+    # is 24.5 m instead of 35, which puts the basin sheds where the sheet
+    # puts its far buildings.
+    # AND IT WAS TRIED AT 22.5 AND IT IS WORSE, which is the second position
+    # this camera has been moved to and measured rather than argued about.
+    # In the service gap the NEXT west block, west_south, starts immediately
+    # ahead and its BLANK flank - no shopfront, no lettering, nothing to
+    # read - fills the left HALF instead of the left third, and the skip
+    # stands in the lens. The move was the wrong axis: the near wall is 2.9 m
+    # away because of y, not because of x, so no station along the street
+    # changes it.
+    # WHAT IS ACTUALLY DIFFERENT FROM THE SHEET is the SIDE. The approved
+    # sheet also gives a near building the frame's near third - it is
+    # Mickey's, on the RIGHT. Ours is on the LEFT, because the camera sits
+    # 2.9 m off the WEST frontage and 7.3 m off the east, and looking down
+    # -x the right hand is east. Mirroring that (y = +2.2) is a THIRD
+    # attempt at this camera and is Jafar's to rule on: it is the exit
+    # test's own viewpoint, the long note below argues the present one from
+    # the sheet, and an earlier move to the east FOOTWAY at +3.6 was tried
+    # and rejected for reasons that may or may not survive the 1.4 m.
+    HOOK_X = 33.0
+    HOOK_LOOK_X = 2.0
+    reach = HOOK_X - HOOK_LOOK_X
     drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
     return {
         "hook": {
@@ -2419,9 +2512,9 @@ def street_cameras():
             # building has the ROAD between it and the camera, eight to ten
             # metres of it. Near-right and close are not the same thing, and
             # the far pavement is where the picture is taken from.
-            "loc": (33.0, -2.2, eye),
-            "look": (2.0, -2.2, eye - drop),
-            "fov_v_deg": 60.0,
+            "loc": (HOOK_X, -2.2, eye),
+            "look": (HOOK_LOOK_X, -2.2, eye - drop),
+            "fov_v_deg": HOOK_FOV_V_DEG,
             "res": HOOK_RES,
             "note": "the-sheet's-own-viewpoint/1.6m-just-off-the-west-kerb/"
                     "3-degrees-UP-measured-off-the-approved-sheet-not-cam_A's-4-down/"
