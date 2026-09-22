@@ -103,40 +103,16 @@ nothing.
       texture links, so none of it had ever rendered.
 - [x] THE ROAD IS WET, with the water where the camber sends it: the crown
       drains, the channel mirrors the sky.
-- [ ] COLOUR, AND THE MEASURE IS NOT TO BE TRUSTED ALONE. Taking a tiled
-      photograph off the window panes made the picture better and this
-      number worse, 16.8% to 11.5%, because a repeating dark checker is
-      texture and the measure counts texture. Read it beside the picture,
-      never instead of it. The honest remaining gap is that the sheet's
-      frame is FULLER: its parade is close and ours recedes.
-      The old wording follows, for the arithmetic: 16.8% of our
-      pixels carry real colour against the sheet's 25.8%, up from 2.0% this
-      morning. What is saturated in the reference is the BRICK rather than
-      the paint - there is so much more of it - and ours is now at its
-      value and just under its saturation. The rest is that the sheet's
-      frame is fuller: its parade is close and ours recedes.
-- [x] BRIGHTNESS IS SETTLED, AND NOT AT THE MATCHING NUMBER. Sky at 1.70
-      lands our mean at 120.3 against the sheet's 119.7 - and at that value
-      the brick loses its punch, the glass goes pale grey and the street
-      reads hazy. 1.35 measures 111.6 and looks like a street. That is the
-      second time today a measure moved the right way while the picture
-      moved the wrong way, and both are written into the recipe.
-- [x] THE GLASS STOPPED BEING A TILED PHOTOGRAPH. It carried the pack's
-      glass map box-projected across it, so every window on the street had
-      a repeating dark checker on it, which reads as a grille.
-- [x] AND THE SHOPS HAVE ROOMS. The carcass's dark face stood 75 mm behind
-      the pane and filled the opening, so the lit interior card a metre in
-      had NEVER been visible - which is why two attempts at the glass
-      changed nothing. The spec's interior_card_depth_m of 1.2 is what it
-      was always for.
-- [x] THE WINDOWS ARE WINDOWS, on the fifth attempt and by ASKING rather
-      than guessing. The note left here after four failures said the next
-      attempt should find out what in this EEVEE build refuses the
-      transmission instead of lightening anything again - so it did: the
-      material carries `surface_render_method`, DITHERED by default with
-      BLENDED the alternative, and DITHERED resolves transparency
-      stochastically, which is exactly what returns a dark pane. The window
-      region now reads 68.8 against the sheet's 68.8.
+- [x] COLOUR, AND ALL FOUR NUMBERS TOGETHER. The tone-mapping look and the
+      exposure turned out to be one decision, and the answer changed once
+      everything else was in place: Punchy was right when the street was
+      three times too dark, and with the palette, the road, the glazing and
+      the haze where they belong it is CONTRAST that carries the colour.
+      High Contrast at exposure 0.05 measures mean 123.0, highlights 224.7,
+      warmth +19.3 and 22.6% of pixels carrying real colour, against the
+      sheet's 119.7, 229.3, +18.5 and 25.8%. It was 74.4, 163, +0.7 and
+      2.0% this morning. AND THE PICTURE AGREES, which was checked rather
+      than assumed - twice today it did not.
 - [ ] AND THE FAR END IS STILL SKY. What is beyond our thirty metres is
       nothing, because the TOWN past the street is stage 6. Haze on an
       empty sky is haze on nothing; this softened the street we have.
