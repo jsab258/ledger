@@ -369,7 +369,11 @@ MATERIALS = (
     ("paint_yellow",(0.405, 0.331, 0.079), 0.55),
     # THE CENTRE LINE'S WHITE, weathered as the yellows are: road paint on a
     # working street is a dirty off-white, not the white of a new line.
-    ("paint_white", (0.520, 0.515, 0.490), 0.55),   # was (0.260, 0.180, 0.020)
+    ("paint_white", (0.520, 0.515, 0.490), 0.55),
+    # CHIMNEY POTS, sampled off the new sheet's nearest stack, 22 September:
+    # two terracotta at 126/76/65 and 123/77/62 sRGB, one buff at 196/169/127.
+    ("pot_clay",    (0.203, 0.073, 0.051), 0.80),
+    ("pot_buff",    (0.554, 0.397, 0.212), 0.80),   # was (0.260, 0.180, 0.020)
     # THE VEHICLE. Car paint is the only genuinely SMOOTH surface on this
     # street - everything else is brick, stone, timber or tarmac - and that
     # is most of what makes a car read as one at twenty-five metres: it holds
@@ -587,6 +591,8 @@ SURFACE_OF = {
     "prop_timber":  ("wood", 0.5),
     "paint_yellow": (None, 0.0),
     "paint_white":  (None, 0.0),
+    "pot_clay":     ("plaster", 0.5),
+    "pot_buff":     ("plaster", 0.5),
     # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
     # plaster and timber are the wrong story for a pressed steel panel, and
     # its metal map is machined plate. A car at twenty-five metres is a
@@ -1394,6 +1400,15 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
              D / 2.0 - cd / 2.0, D / 2.0 + cd / 2.0,
              EAVES, stack_top,
              "a-stack-serves-both-houses-either-side-of-the-wall-it-stands-on")
+        # THE OVERSAILING CAP, two courses standing out a brick's width all
+        # round just under the top, which is what throws rain off the stack's
+        # face and what every stack on the new sheet has. Its top is the
+        # stack's own, so the pots stand on the cap and nothing floats.
+        ov = STACK_CAP_OVERSAIL_M
+        _box(parts, "chimney_cap", wall, W - cw / 2.0 - ov, W + cw / 2.0 + ov,
+             D / 2.0 - cd / 2.0 - ov, D / 2.0 + cd / 2.0 + ov,
+             stack_top - STACK_CAP_H_M, stack_top,
+             "oversailing-courses/%.0fmm-proud-all-round" % (ov * 1000))
         if bay in AERIAL_ON_STACKS:
             _aerial(parts, bay, W, D / 2.0, stack_top)
 
@@ -1543,6 +1558,63 @@ def lantern_lights():
     return out
 
 
+#: THE STACK'S CAP AND ITS POTS, 22 September. BOM line D3 has been
+#: MANDATORY and unbuilt: "chimney pots on the stack", and the scene file's
+#: own chimney note says a 0.90 x 0.45 stack is a TWO-FLUE stack - so two
+#: pots, one a flue. The held meshes (roll_top_chimney, weathertop_chimney)
+#: measure 0.67 and 0.95 m across, which is a whole stack and not a pot, so
+#: the pots are built here at a pot's size: a 600 mm roll-top, 280 mm across
+#: at the foot, tapering to 240, with its roll at the top. The new sheet's
+#: nearest stack has two terracotta and one buff; a buff pot is a
+#: replacement, so one in two stacks carries one.
+STACK_CAP_OVERSAIL_M, STACK_CAP_H_M = 0.06, 0.15
+POT_H_M, POT_R_FOOT_M, POT_R_TOP_M, POT_ROLL_R_M, POT_ROLL_H_M = 0.60, 0.14, 0.12, 0.145, 0.06
+POT_SIDES = 8
+
+
+def _pot_mesh(cx, cy, z0, r0, r1, h):
+    """An octagonal frustum, row-local: (verts, faces)."""
+    import math as _m
+    vs, fs = [], []
+    for k in range(POT_SIDES):
+        a = 2.0 * _m.pi * k / POT_SIDES
+        vs.append((cx + r0 * _m.cos(a), cy + r0 * _m.sin(a), z0))
+    for k in range(POT_SIDES):
+        a = 2.0 * _m.pi * k / POT_SIDES
+        vs.append((cx + r1 * _m.cos(a), cy + r1 * _m.sin(a), z0 + h))
+    n = POT_SIDES
+    for k in range(n):
+        fs.append((k, (k + 1) % n, n + (k + 1) % n, n + k))
+    fs.append(tuple(range(n - 1, -1, -1)))
+    fs.append(tuple(range(n, 2 * n)))
+    return vs, fs
+
+
+def plan_pots(p):
+    """Two pots on every stack of a pitched row, in the row's local
+    coordinates, placed by plan_street exactly as the gables are."""
+    if p["roof_kind"] == "parapet":
+        return []
+    W, D = p["bay_width_m"], p["depth_m"]
+    top = p["ridge_m"] + p["chimney_above_ridge_m"]
+    parts = []
+    for b in range(p["bays"] - 1):          # a stack on every party wall
+        sx = (b + 1) * W
+        for k, dx in enumerate((-0.22, 0.22)):
+            mat = "pot_buff" if (b % 2 == 1 and k == 1) else "pot_clay"
+            v, f = _pot_mesh(sx + dx, D / 2.0, top, POT_R_FOOT_M, POT_R_TOP_M,
+                             POT_H_M - POT_ROLL_H_M)
+            parts.append({"id": "chimney_pot_%d_%d" % (b, k), "material": mat,
+                          "kind": "mesh", "verts": v, "faces": f,
+                          "note": "roll-top-pot/%.0fmm/%s" % (POT_H_M * 1000, mat)})
+            v, f = _pot_mesh(sx + dx, D / 2.0, top + POT_H_M - POT_ROLL_H_M,
+                             POT_ROLL_R_M, POT_ROLL_R_M, POT_ROLL_H_M)
+            parts.append({"id": "chimney_pot_%d_%d_roll" % (b, k), "material": mat,
+                          "kind": "mesh", "verts": v, "faces": f,
+                          "note": "the-roll-at-the-pot's-top"})
+    return parts
+
+
 #: HOW THICK A TERRACE'S END WALL IS: one and a half bricks, the ordinary
 #: British gable, and thicker than the party walls inside the row because it
 #: is an outside wall and carries the weather.
@@ -1627,7 +1699,7 @@ def plan_street(root, spec_rel=SPEC_REL):
         if err:
             return None, err
         east = q["side"] == "east"
-        for part in plan_row(q) + plan_end_walls(q):
+        for part in plan_row(q) + plan_end_walls(q) + plan_pots(q):
             r = dict(part)
             r["id"] = "%s_%s" % (block_id, part["id"])
             r["block"] = block_id
