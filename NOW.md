@@ -113,6 +113,17 @@ nothing.
       sheet's 119.7, 229.3, +18.5 and 25.8%. It was 74.4, 163, +0.7 and
       2.0% this morning. AND THE PICTURE AGREES, which was checked rather
       than assumed - twice today it did not.
+- [x] WEATHER AND WEAR, WHICH THE LIST NEVER CARRIED AND THE ROADMAP
+      NAMES. Stage 1, in its own words: "GRIME IS THE STRATEGY, not a
+      finishing pass... a surface carries its wear as a SEPARABLE LAYER,
+      and the floor for how much is a number measured off the first
+      authored facades rather than invented." Ours had none at all. The
+      number: the sheet's brick varies by 46.8 and ours varied by 16.2 -
+      three times too clean, on the surface there is most of. It is two
+      things a real wall does, kept separable: soft patches over a few
+      metres, because rain does not wash a wall evenly, and a darker foot
+      to every wall from splash and rising damp. 22.5 now; the rest of that
+      gap is photographic detail in the map rather than wear on top of it.
 - [ ] AND THE FAR END IS STILL SKY. What is beyond our thirty metres is
       nothing, because the TOWN past the street is stage 6. Haze on an
       empty sky is haze on nothing; this softened the street we have.
