@@ -7,7 +7,7 @@ roadmap.
 
 Last updated 2026-09-22, in the fifth sitting on his PC.
 
-SITTING: started 2026-09-22T20:53:35+02:00, limit 4h
+SITTING: started 2026-09-22T20:53:35+02:00, limit 11.11h
 
 That one line is read by the stop hook, which will not let the turn end while
 items below are unstruck and the six hours have not run out. It is written at
@@ -390,7 +390,7 @@ nothing above this line is worked on until the sheet is replaced.
       ignored at the only setting this model runs at, so every fix has to be
       said as what IS there; and a model handed one SUBJECT isolates it,
       which is how the cab office became a kiosk.
-- [ ] THEN, ONLY ONCE HE APPROVES IT, in his order: derive the lens from the
+- APPROVED 22 SEPTEMBER, and the steps now live in section 9. Then, in his order: derive the lens from the
       new sheet's own geometry and write down how; re-close palette and
       colour against the new sheet at that lens; then rework the shopfronts
       that were built to the old sheet's tidy timber, starting with the
@@ -464,6 +464,42 @@ nothing above this line is worked on until the sheet is replaced.
   is refused below 0.2, so with the authored tie weights ordinary talk
   dies at the second transfer. The constants are untouched. What reach the
   moat requires is his.
+
+## 9. OVERNIGHT, 22 TO 23 SEPTEMBER - Jafar's list, in his order
+
+He went to bed with this list and the ruling "nothing waits for me: any
+decision, take your recommendation, write it in FOR-JAFAR.md, and carry on."
+The sitting runs to 08:00.
+
+THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
+- [x] PASS 4 BECOMES THE REFERENCE at production/reference/hook-sheet.png, the
+      old sheet kept beside it as retired. Not citable on it: the second
+      MICKEY'S sign, the third car. The satellite dish IS citable - the
+      household research records dishes as new and contested in 1990.
+- [ ] DERIVE THE LENS from the new sheet's own geometry, and write down how.
+- [ ] RE-CLOSE PALETTE AND COLOUR against the new sheet at that lens.
+- [ ] THE COMPOSITION, which the new sheet now answers.
+- [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
+
+WHILE THE CARD IS BUSY - the work that does not need it.
+- [ ] THE ARREST FROM LIVE PLAY, proven: the box closes when a probe verdict
+      reads outcomeA=Arrest and outcomeB=NothingToArrest. Ruled (a): a beat
+      constable who knows the new owner by sight. (Section 8's item.)
+- [ ] RUMOUR REACH WRITTEN AS A MORNING DECISION in FOR-JAFAR.md, plain words,
+      with a recommendation. NO CONSTANT CHANGES.
+- [ ] RUMOURS SURVIVING A RESTART, the witnessed and unwitnessed pair: through
+      save, restart and reload in the packaged build, with the automatic
+      check - the control must still hold nothing after the reload.
+- [ ] THE SMALL-MODEL TEST with llama.cpp on Vulkan, when the card is free.
+- [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines, before
+      08:00: what got done, what is waiting on him, what went wrong.
+
+AFTER HIS LIST, stage 3's gate from ROADMAP.md.
+- [ ] A WITNESSED CRIME REACHING A THIRD RESIDENT WITHIN ONE IN-GAME WEEK.
+      Half built: the header's arithmetic and reach line are in and tested;
+      the Unreal half is written and not yet applied. It sits on a knife edge
+      under today's numbers - 0.216 against a 0.2 floor - which is printed,
+      not hidden, and not moved.
 
 ## Where things stand
 
