@@ -250,7 +250,13 @@ MATERIALS = (
     # where a grazing-angle sky reflection contributes least, so most of that
     # value is the surface itself: years of pale chippings polished by tyres,
     # not the black of a road laid last week.
-    ("asphalt",     (0.190, 0.187, 0.178), 0.85),   # the carriageway
+    # THIRD AND LAST PASS ON THE ROAD, and this one is targeted rather than
+    # global. Sampled in the render against the sheet's own carriageway:
+    # ours 109,108,109 against its 150,150,146, both near-neutral, so the
+    # hue was right and the value was 27 per cent short. Raising the whole
+    # frame to close a gap like this is what made the picture worse an hour
+    # ago; raising the ONE surface the measurement names does not.
+    ("asphalt",     (0.360, 0.354, 0.338), 0.85),   # the carriageway
     # PEOPLE ARE NOT SILHOUETTES IN DAYLIGHT. A silhouette is right for the
     # dusk frame and wrong for the working one: the sheet's own panel has a
     # teal jacket, an orange one and a white coat in it, and they are a good
