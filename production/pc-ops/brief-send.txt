@@ -1,4 +1,4 @@
-# LEDGER one daily-brief send - af3abd6 @1790019213
+# LEDGER one daily-brief send - b02e918 @1790036061
 # Line 1 names the commit this was run on. This step SENDS: it runs
 # tools/runner/telegram-bot.py --send-brief once. ONE message: the
 # brief a Producer turn wrote for today, checked here against the
@@ -15,12 +15,14 @@ briefPython=C:\Users\Jafar\miniconda3\python.exe
 # commits its own evidence, so briefCheckoutAheadCommits above 0 is normal.
 # briefCheckoutBehindSecByCommitTime is the run's committer time minus the
 # checkout head's, so positive means his files are older.
-briefCheckoutRunSha=af3abd67008d3ada35eae713479ec3504d58e67f briefCheckoutPcHeadSha=af3abd67008d3ada35eae713479ec3504d58e67f briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
-briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-21T19:32:48Z
-briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/af3abd6700 briefCheckoutSeriesShown=1/1
+briefCheckoutRunSha=b02e918d03e56f6dfbc19e965b9153ca1e685a18 briefCheckoutPcHeadSha=b02e918d03e56f6dfbc19e965b9153ca1e685a18 briefCheckoutContains=yes briefCheckoutOutcome=contains briefCheckoutDecision=send
+briefCheckoutBehindCommits=0 briefCheckoutAheadCommits=0 briefCheckoutBehindSecByCommitTime=0 briefCheckoutPcHeadCommitIso=2026-09-22T00:13:30Z
+briefCheckoutWaitedSec=0/30 briefCheckoutPolls=1 briefCheckoutPollSec=5 briefCheckoutSeries=0s/b02e918d03 briefCheckoutSeriesShown=1/1
 briefCheckoutReason=his-checkout-contains-this-runs-commit/the-files-this-step-reads-are-at-or-ahead-of-the-push
-briefStatus=EXITED briefWaitedSec=3 briefExitCode=0
-briefStream=brief-raw.txt briefLines=2
-21:33:34    brief: ALREADY SENT production/briefs/2026-09-21.md (messageId=123), so nothing was sent this pass
-21:33:34  brief-send done: briefDay=2026-09-21 briefSent=0/1 briefAlready=1/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=894 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
+briefStatus=EXITED briefWaitedSec=3 briefExitCode=6
+briefStream=brief-raw.txt briefLines=4
+02:14:22  brief: no recovery either: 2026-09-21 was already sent (messageId=123), so nothing is owed for it
+02:14:22  brief: NOTHING MEASURED, there is no brief for 2026-09-22 (FileNotFoundError). 16 brief(s) are in the tree, newest 2026-09-21. Nothing was sent.
+02:14:25  brief: BRIEFS WRITTEN AND NEVER SENT: 1 of 11 written since the daily path opened on 2026-09-09 have no receipt of any kind: 2026-09-12. Send one from his PC with `python3 tools/runner/telegram-bot.py --send-brief 2026-09-12`.
+02:14:25  brief-send done: briefDay=2026-09-22 briefSent=0/1 briefAlready=0/1 briefRefused=0/1 briefChecked=no briefButtons=0 briefChars=0 messageId=none records=0 briefPhotoCarried=0/1 briefPhoto=nothing-measured briefPhotoCapOverBy=0 clause=none
 briefStream=brief-raw.txt.err briefLines=0
