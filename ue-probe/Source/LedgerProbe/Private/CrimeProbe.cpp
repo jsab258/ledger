@@ -730,15 +730,6 @@ namespace
 	// breadcrumb and the writers live at the bottom.
 	void WriteBreadcrumb(const TCHAR* Phase);
 
-	// ==== PLANTED BUILD FAILURE, 2026-09-22, REVERTED IN THE NEXT COMMIT ====
-	// The Unreal build step stopped being continue-on-error last sitting, and
-	// the step after it reads the build's own evidence and decides the colour
-	// of the run. Neither had ever been seen doing it on a real failed build,
-	// because the build had not run at all since the studio was paused. This
-	// line does not compile. The run it produces is the evidence.
-	this line does not compile and is meant not to;
-	// ==== END PLANTED FAILURE ====
-
 	// ---- the act, by input -----------------------------------------------
 	//
 	// THE PRESS GOES THROUGH THE PLAYER CONTROLLER, NOT ROUND IT. This is the
