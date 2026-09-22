@@ -331,6 +331,31 @@ nothing above this line is worked on until the sheet is replaced.
       area of the old 617x326 panel), a shopfront study at 1536x1024 because
       no street view at any resolution resolves a frame section, and the
       basin at 1536x1024.
+      PASS 1 IS MADE AND READ. THE BASIN FIXES ITS CONTRADICTION OUTRIGHT -
+      working coastal craft, a stone quay with bollards and chain, brick
+      warehouses, a lattice crane, a lorry at a door, and no narrowboats.
+      Its miss is the inland rise: green fields and white cottages instead
+      of the bible's contour terraces behind retaining walls.
+      THE STREET PANEL IS NOT A CANDIDATE. Mickey's came back a
+      delicatessen with no rank outside; not one metal shopfront appeared
+      although two were asked for. It DID fix signage, the cars, the far
+      end, and legibility - 200 px of shopfront against the old panel's 60.
+      THE SHOPFRONT STUDY SAID WHY: it produced R05's tiled stallriser,
+      fluorescent strip and stacked goods inside a PAINTED TIMBER frame
+      with pilasters. A clause in the middle of a long prompt loses to the
+      subject.
+      PASS 2 IS RUNNING, written from those faults: the cab office is the
+      subject and is described by its contents; the metal front is the
+      nearest bay and is described as an object; lettering is cut to one
+      legible piece, because the model garbled every fascia it was given
+      and the retired prompt's "only two pieces of lettering" clause
+      existed for that; CCTV is in the negative, because two cameras
+      appeared and canon says CCTV is rare.
+      PASS 3 AND THE SIDE-BY-SIDE ARE NEXT SITTING'S. 2048x1088 is
+      nineteen minutes on this card and 1536x1024 is ten, so a pass of the
+      street is not a coffee. The side-by-side needs no new tool:
+      hook-pair.py with the candidate passed as `--ours` produces exactly
+      the old sheet beside the new one.
 - [ ] THEN, ONLY ONCE HE APPROVES IT, in his order: derive the lens from the
       new sheet's own geometry and write down how; re-close palette and
       colour against the new sheet at that lens; then rework the shopfronts
