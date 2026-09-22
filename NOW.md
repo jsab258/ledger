@@ -19,11 +19,14 @@ Last updated 2026-09-22, at the end of the second sitting on his PC.
 - [x] The street from the sheet's own viewpoint, with the road between the two
       sides and somebody standing in it. That frame is what the stage is
       judged on and it did not exist before today.
-- [ ] THE GAPS THE FIRST REAL FRAME SHOWS, in the order the frame says they
-      matter, which is also D31's own order:
-      1. NOTHING IS LIT AND NOTHING IS WET. The sheet's frame is dusk, wet,
-         lamps lit; every surface here is flat overcast grey. D31 puts light
-         and shadow first for this reason.
+- [x] LIGHT AND WET, D31's first step. The street renders at dusk now, wet,
+      with the four accepted lamp columns standing in it and their lanterns
+      lit, and two figures in silhouette. That is D31's own tying frame and
+      it did not exist before today.
+- [ ] THE GAPS THE FRAMES SHOW, in the order they matter, D31's own order:
+      1. THE LIGHT IS COMING FROM THE SKY, NOT THE LAMPS. The footway reads
+         almost white against a dark street and the lanterns throw almost no
+         pool. That is the next thing, and it is still step one of the list.
       2. THE STREET ENDS AT 42 METRES into open field. Depth beyond thirty
          metres is the named gap and the frame confirms it.
       3. NO SIGNAGE. Every fascia board on the parade is blank, and a parade
@@ -74,5 +77,6 @@ The Unreal safeguard is confirmed on a real failed build, and the build runs
 again after five red pushes that never reached it. A crime is committed by a
 key press. A memory survives a save and a reload, and the engine and the test
 bench have been caught disagreeing twice - about NaN, and about how strict the
-two readers of the golden table were. The street now stands as authored
-fronts on both sides with a road between them, flat and unlit.
+two readers of the golden table were. The street stands as authored fronts on
+both sides with a road between them, and it has now been rendered at dusk,
+wet, with its own lamps lit and somebody standing in it.
