@@ -552,7 +552,7 @@ WHILE THE CARD IS BUSY - the work that does not need it.
       33/42. Median 432 ms, 90th percentile 734 ms. Report in
       production/research/conversation-model-capability/SMALL-MODEL-TEST.md;
       the reading is decision 4 in FOR-JAFAR.md.
-- [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines, before
+- [x] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines, before
       08:00: what got done, what is waiting on him, what went wrong.
 
 AFTER HIS LIST, stage 3's gate from ROADMAP.md.
@@ -692,6 +692,6 @@ way it is ruled; the camera waits for him.
 
 1. The new Hook sheet is the reference, and the Blender street is matched to it - lens, colour, composition - then detail by detail: the parade to the 1989 photographs, glass, bricks, arches, pots, flags, nets, rooms behind the shop windows, the street running on to the rise.
 2. Stage 3's gates are proven on the runner: the arrest from live play, rumours surviving save, restart and reload with the unseen crime still holding nothing, and a crime reaching a third resident inside a week.
-3. The two lanes build the street as mirror images (decision 5), and the game engine's street is far behind the look; carrying it over has started with brick at its measured size.
-4. Waiting on Jafar: decision 2 (rumour reach), 4 (the small model: 33 of 42 right, 8 wrong but tidy), 5 (which way round the street is).
+3. The two lanes build the street as mirror images (decision 5), and the game engine's street is far behind the look; carrying it over has started with brick at its measured size, proven on the runner.
+4. Waiting on Jafar: decision 2 (rumour reach), 4 (the small model: 33 of 42 right, 8 wrong but tidy), 5 (which way round the street is), 6 (the game engine's brick colour is his ruled grade).
 5. Set aside after two tries: the wet shine on the flags and the far hillside's crowding; the four shop-room pictures are review=pending.
