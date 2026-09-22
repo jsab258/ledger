@@ -573,6 +573,10 @@ overnight list had only its Overnight section left. Visual first, as ruled.
 - [x] THE CENTRE LINE. On the new sheet, in R09, and named by the scene file
       as the street's next step. Diagram 1008's own dimensions: 2 m marks,
       4 m gaps, 100 mm, on the crown.
+- [x] CHIMNEY POTS AND CAPS. BOM line D3 was MANDATORY and never built: two
+      roll-top pots on every two-flue stack (one buff replacement on every
+      other), and an oversailing cap on each stack, as the new sheet's are.
+      Pot colours sampled off the sheet's nearest stack.
 - [x] THE LIGHTING COLUMN'S SHAPE, the retired sheet's last geometry in the
       street (retired-sheet-inheritance.md, row 4): look for a column on the
       new sheet to trace; if it shows none, the shape stays with R07's
