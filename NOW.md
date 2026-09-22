@@ -162,6 +162,18 @@ nothing.
       THE SAVE'S OWN BYTES ARE ONE OF THE ROWS, because the port cannot
       capture, only restore - a fixture the port wrote itself would prove
       only that the port agrees with the port.
+- [x] THE ROUND TRIP IS PROVEN IN BOTH ENGINES: save, restart, reload, and
+      both rumours come back with their confidence, their hop count, the
+      loyalty, the leash, the suppressed topic and the known fact - while
+      the control, an agent who witnessed nothing, comes back holding
+      nothing. Each engine uses ITS OWN writer, so a match is the two of
+      them agreeing about a file the other never saw. The port could only
+      read a save this morning; it can write one now.
+- [ ] AND THE SAME THING IN THE PACKAGED BUILD, which is what this item
+      actually asks for and is not done. The probe commits the crimes,
+      judges the witness and writes both memories already; what it does not
+      do is save, rebuild the world and reload between them. The pieces it
+      needs now exist on both sides.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.

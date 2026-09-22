@@ -999,6 +999,52 @@ namespace Ledger.PerceptionGolden
             // test, so the bytes are pinned. A hand-edit that stays rejected
             // on both sides would otherwise change the test silently.
             Key(sb, "gossip_restore", "junkFixture", Esc(Junk));
+            // THE WHOLE ROUND TRIP: SAVE, RESTART, RELOAD.
+            //
+            // Everything above pins READING a save. This pins the thing the
+            // list actually asks for - that a rumour in flight survives a
+            // restart - by doing all three steps: capture the mill that has
+            // just been restored, build the world AGAIN from the authoring
+            // with none of the play in it, and lay the capture back over it.
+            //
+            // THE SECOND CAPTURE IS THE TEST. If the writer loses anything
+            // the reader would have kept, the second restore lands somewhere
+            // the first did not, and every row below moves. The port does
+            // the same three steps with its own writer, so a match is the
+            // two engines agreeing about a save one of them wrote and the
+            // other never saw.
+            var reSaved = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(),
+                                            new PlayerKnowledge(), new SecretsBook(), new BeatBook(),
+                                            after, new DebtBook(),
+                                            new Dictionary<string, object>());
+            var restarted = new GossipMill(new SocialGraph());
+            restarted.Add(Agent("w1", "the shopkeeper", "day"));
+            restarted.Add(Agent("n1", "the barmaid", "night"));
+            SaveCodec.RestoreMillAgents(reSaved, restarted);
+            var rs = restarted.Get("w1");
+            Key(sb, "gossip_restore", "rtRumors", rs.Rumors.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "rtLoyalty", D(rs.Loyalty));
+            Key(sb, "gossip_restore", "rtLeashed", rs.Leashed ? "1" : "0");
+            Key(sb, "gossip_restore", "rtSuppressed", rs.Suppressed.Count.ToString(Inv));
+            Key(sb, "gossip_restore", "rtFacts", rs.Knowledge.Facts.Count.ToString(Inv));
+            for (int i = 0; i < rs.Rumors.Count; i++)
+            {
+                var r = rs.Rumors[i];
+                var k = i.ToString(Inv);
+                Key(sb, "gossip_restore", "rtPred" + k, Esc(r.Content.Predicate));
+                Key(sb, "gossip_restore", "rtConf" + k, D(r.Confidence));
+                Key(sb, "gossip_restore", "rtHops" + k, r.Hops.ToString(Inv));
+                Key(sb, "gossip_restore", "rtSensitive" + k, r.Sensitive ? "1" : "0");
+                Key(sb, "gossip_restore", "rtSummary" + k, Esc(r.Summary));
+            }
+            // AND THE CONTROL CAME THROUGH AS A CONTROL. n1 was authored,
+            // never witnessed anything and was saved holding nothing; after
+            // the restart she still holds nothing. A restore that quietly
+            // handed every agent the same rumours would pass every row above
+            // and fail this one.
+            Key(sb, "gossip_restore", "rtControlRumors",
+                restarted.Get("n1").Rumors.Count.ToString(Inv));
+
             // EVERY CASE AN INDEPENDENT REVIEWER FOUND, PINNED. Each of
             // these was a real disagreement between the two engines reading
             // the same file, and none of them was reachable from the two
