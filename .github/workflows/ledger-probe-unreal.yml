@@ -2072,7 +2072,16 @@ jobs:
           # haystack, so a perfectly fresh verdict would be condemned as
           # stale on every single run and the guard would look like it was
           # working. Cut to 7 first, which is what the game was given.
-          SHORT="$(git rev-parse HEAD | cut -c1-7)"
+          # THE RUN'S OWN COMMIT, NOT WHATEVER HEAD IS NOW. Moving this step
+          # after the archivist fixed one fault and created another: the
+          # archivist does a `git pull --rebase` and commits, so by the time
+          # this runs HEAD is the EVIDENCE commit and not the commit the
+          # probe measured. The check then correctly refused its own run's
+          # verdict as stale, which is the check working and the input being
+          # wrong. GITHUB_SHA is the commit the workflow was triggered on
+          # and does not move underneath anybody.
+          SHORT="$(echo "${GITHUB_SHA:-}" | cut -c1-7)"
+          if [ -z "$SHORT" ]; then SHORT="$(git rev-parse HEAD | cut -c1-7)"; fi
           if [ ! -f "$UEVERDICT" ] || ! head -1 "$UEVERDICT" | grep -q "$SHORT"; then
             printf '# UE probe verdict %s @%s\n# Line 1 names the commit this was measured on, as the Unity verdict does.\n\nNO RUN - no verdict carrying this commit was produced; do not read an older file as this run.\nverdictReached=end\n' \
               "$SHORT" "$(date -u +%s)" > "$UEVERDICT"
