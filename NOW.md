@@ -351,6 +351,29 @@ nothing above this line is worked on until the sheet is replaced.
       and the retired prompt's "only two pieces of lettering" clause
       existed for that; CCTV is in the negative, because two cameras
       appeared and canon says CCTV is rare.
+      PASS 2 IS MADE AND IT FIXES BOTH OF ITS CONTRADICTIONS. The cab
+      office is unmistakable - flat aluminium front, a counter with a man
+      at it, a tariff card taped in the glass, a strip light, a grimy
+      patterned tiled stallriser, brick repair patches - which is R05's
+      photograph and D19's ruling in one frontage. The metal shopfront
+      arrived with it.
+      AND IT INTRODUCED TWO OF MINE. The rank came back as THREE LONDON
+      HACKNEY CARRIAGES: canon forbids real car models, a TX is one of the
+      most recognisable vehicles in Britain, and a minicab office has
+      ordinary saloons rather than hackney carriages anyway. The prompt
+      said 'ordinary dark saloon cars' and then said RANK. And MICKEY'S
+      CARS is painted across the fascia in letters a foot high - a trading
+      name canon has never minted.
+      MICKEY'S IS ALSO A CORNER BUILDING AGAIN, with a return elevation,
+      which is the audit's fourth contradiction reproduced by a prompt that
+      never said otherwise. Naming what a thing IS does not stop a model
+      giving it a corner; the party-wall run has to be described.
+      FOUR PROMPT CORRECTIONS ARE WRITTEN DOWN AND NOT APPLIED, because two
+      of them need Jafar: the trading name, the fleet, the furnishing of
+      the anchor interior, and 'every gutter / every wall', which commands
+      the uniformity the bible forbids.
+      THE CANDIDATES ARE BANKED at production/art/compare/hook-2026-09-22/
+      with their manifest and attribution.
       PASS 3 AND THE SIDE-BY-SIDE ARE NEXT SITTING'S. 2048x1088 is
       nineteen minutes on this card and 1536x1024 is ten, so a pass of the
       street is not a coffee. The side-by-side needs no new tool:
@@ -391,7 +414,23 @@ production/reference/retired-sheet-inheritance.md - the whole cam_hook row in
 the governing spec including its 39 degree field, the lighting column's traced
 ratios, GOVERNS.md's seventeen rows, and the prompt itself.
 
-THREE THINGS WAIT ON JAFAR OR ON TIME: his choice between the regenerated
-sheet and the old one; a token, because nobody here can read an Actions log
-and the probe is red for a reason that is not visible from here; and
-llama.cpp Vulkan, which he has already put in the next sitting.
+WHAT WAITS ON JAFAR, and the first one is the big one:
+
+WHICH WAY THE PAIR IS SHOT. The hook camera looks the OPPOSITE WAY from the
+sheet it is defined to reproduce. The approved sheet's prompt says "camera at
+1.6m standing at SOUTH END LOOKING NORTH"; ours stands at the north end and
+looks south. Both put the shops on the right, which is why nothing gave it
+away, but the sheet's far end is the inland rise and ours is the basin. So
+today's backdrop is right for our camera and wrong for the sheet. Either the
+camera turns, which costs this week's composition work and the backdrop, or
+the new sheet is prompted for a south view. Not a thing to settle by picking.
+
+THEN: the trading name and the fleet outside the cab office; and his choice
+between the regenerated sheet and the old one once pass 3 exists.
+
+THE TOKEN ARRIVED and the probe's red is diagnosed and fixed: the check's own
+selftest was failing on the runner because its fixture stopped being the only
+control line in the file. Rotate the token when this is done - it came through
+chat and is in a transcript.
+
+llama.cpp Vulkan is next sitting's, as he ruled.
