@@ -112,8 +112,21 @@ nothing.
 - [ ] MEAN 103 AGAINST 120, and it trades directly against the colour
       above: every lift of the exposure costs saturation in AgX. Measured
       three ways and settled at the colour end on purpose.
-- [ ] THE SHOP GLAZING IS A DARK GRID where the sheet's shows white-framed
-      panes with pale things behind them.
+- [x] THE GLASS STOPPED BEING A TILED PHOTOGRAPH. It carried the pack's
+      glass map box-projected across it, so every window on the street had
+      a repeating dark checker on it, which reads as a grille.
+- [x] AND THE SHOPS HAVE ROOMS. The carcass's dark face stood 75 mm behind
+      the pane and filled the opening, so the lit interior card a metre in
+      had NEVER been visible - which is why two attempts at the glass
+      changed nothing. The spec's interior_card_depth_m of 1.2 is what it
+      was always for.
+- [ ] THE PANE ITSELF IS STILL OPAQUE, at 59 against the sheet's 69, and
+      this is set aside after FOUR attempts rather than two. Tried:
+      lightening it (a lighter panel), the Transmission socket (no change),
+      raytraced refraction per material (no change), and the room (a real
+      fault, fixed, kept). The next attempt starts by finding out what in
+      this EEVEE build refuses the transmission - the render method or the
+      material's blend mode - and not by lightening anything again.
 - [ ] THE DUSK FRAME IS DARKER THAN IT WAS, at mean 6.1. Not obviously
       wrong - the road is a mirror now, so the lanterns streak down it
       rather than laying a pool on it - but less legible as "lamps lit".

@@ -227,7 +227,11 @@ MATERIALS = (
     # opposite of what a window does: a window is the one surface on a
     # frontage you are supposed to see PAST. Lifted, and its transmission
     # raised below, so the shop behind it carries.
-    ("glass",       (0.055, 0.062, 0.068), 0.08),
+    # LIFTED WITH THE REST OF THE STREET. This was set when the whole
+    # picture was three times darker; against the approved sheet a shop
+    # window is not a black hole, it is a dark surface with the sky and the
+    # opposite frontage lying in it.
+    ("glass",       (0.085, 0.092, 0.100), 0.06),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
     # warm where ours was blue. A wet Welsh slate roof under an overcast sky
@@ -447,7 +451,14 @@ SURFACE_OF = {
     "paint_stall":  ("plaster", 1.0),
     "paint_door":   ("wood", 0.6),
     "paint_fascia": ("wood", 1.0),
-    "glass":        ("glass", 1.4),
+    # A PANE OF GLASS IS NOT A PHOTOGRAPH OF ANYTHING, and it had the
+    # pack's glass map box-projected across it at 1.4 m: every shop window
+    # on the street carried a repeating dark checker, which reads as a
+    # grille or a filthy tile and never as glazing. It is the one surface
+    # here with NO texture of its own - what you see in a window is the
+    # street reflected in it and the room behind it, both of which arrive
+    # from the scene now that raytracing is on.
+    "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
     "interior":     (None, 0.0),
@@ -1463,8 +1474,8 @@ FIGURE_DEPTH_M = 0.25
 #: six-box silhouette stops setting scale and starts being the subject - a
 #: grey mannequin filling the corner of the frame the stage is judged on.
 #: The sheet's own nearest figure is four or five metres off and small.
-FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (26.5, 4.05),
-             (15.0, -4.35), (23.0, -4.15))
+FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (23.5, 4.05),
+             (15.0, -4.35), (20.0, -4.15))
 
 
 def _road(out, pid, material, x0, x1, half, fall, note=""):
@@ -1827,8 +1838,31 @@ def plan_parts(p, bay=0, party_wall=True):
     # the INSIDE. Every opening below is a real hole through a one-brick wall
     # onto this; when it filled the frontage in brick the holes had nothing to
     # show and the elevation read as a blank box.
-    _box(parts, "carcass", "interior", 0.0, W, T, D, 0.0, EAVES,
-         "what-a-window-shows/starts-one-brick-back-so-the-openings-are-real")
+    # AND A SHOP HAS A ROOM BEHIND IT, which is the fault two attempts at the
+    # glass could not fix because the glass was never the problem.
+    #
+    # The carcass filled everything from one brick back, so on a shopfront bay
+    # its dark inside face stood SEVENTY-FIVE MILLIMETRES behind the display
+    # glazing and filled the whole opening. The lit interior card, placed a
+    # metre further in, was inside the carcass and had never once been
+    # visible; every shop window on the street was showing the front face of a
+    # solid block. Lightening the glass made a lighter block. Giving the glass
+    # transmission and then raytraced refraction made a block you could see
+    # into by exactly nothing, because what was behind it was still the block.
+    #
+    # THE DEPTH IS THE SPEC'S OWN. shopfront.interior_card_depth_m is 1.2, and
+    # that is what it is FOR: the room between the window and the back wall.
+    # The carcass starts behind it at the ground floor of a shop and stays one
+    # brick back everywhere else, because the flat above has no shop in it.
+    if p["ground_floor"] == "shopfront":
+        shop_depth = 1.2
+        _box(parts, "carcass_shop", "interior", 0.0, W, T + shop_depth, D,
+             0.0, GF, "the-back-wall-of-the-shop/1.2m-of-room-in-front-of-it")
+        _box(parts, "carcass", "interior", 0.0, W, T, D, GF, EAVES,
+             "the-flat-above/one-brick-back-like-any-window")
+    else:
+        _box(parts, "carcass", "interior", 0.0, W, T, D, 0.0, EAVES,
+             "what-a-window-shows/starts-one-brick-back-so-the-openings-are-real")
 
     if p["ground_floor"] != "shopfront":
         _plain_ground(parts, p, T, wall, bay)
@@ -2429,9 +2463,67 @@ def _materials(bpy, root=None):
             bsdf.inputs["Base Color"].default_value = (linear[0], linear[1], linear[2], 1.0)
             bsdf.inputs["Roughness"].default_value = rough
             if name == "glass":
+                # YOU CAN SEE INTO A SHOP, which is the one thing a window
+                # does and the one thing ours did not. It was an opaque dark
+                # panel with a specular sheen: the lit interior card a metre
+                # behind it had nothing to show through, so every frontage
+                # read as a boarded hole with a polish on it. That fault was
+                # found and fixed once before by value alone; it came back
+                # the moment the street got three times brighter around it,
+                # because the pane stayed where it was.
+                #
+                # TRANSMISSION RATHER THAN A LIGHTER COLOUR. Making the glass
+                # paler would have made a paler panel; what a window shows is
+                # the ROOM, and the room is now built and lit for the
+                # condition. IOR 1.52 is soda-lime glass and is not a choice.
+                #
+                # AND IT STILL RENDERS OPAQUE, which is where this stops and
+                # is written down rather than left for the next person to
+                # rediscover. FOUR ATTEMPTS, in order: lighten the glass (a
+                # lighter panel); set the Transmission socket (no change at
+                # all); switch on use_raytrace_refraction for the material
+                # (no change); and finally build the shop a room, which was
+                # a real fault - the carcass's dark face stood 75 mm behind
+                # the pane and filled the opening, so the lit card a metre
+                # in had never once been visible. THAT ONE IS FIXED AND IS
+                # KEPT: the room is correct whether or not you can see into
+                # it, and it is what the spec's interior_card_depth_m of 1.2
+                # was always for.
+                #
+                # WHAT IS STILL WRONG: the pane itself. The window region
+                # measures 59 against the sheet's 69 and reads as a dark
+                # panel rather than glazing. The settings below are right in
+                # intent and this EEVEE build is not honouring them; the
+                # next attempt should start by finding out whether the
+                # render method or the material's blend mode is what refuses
+                # it, rather than by lightening anything again.
                 bsdf.inputs["Metallic"].default_value = 0.0
                 if "Specular IOR Level" in bsdf.inputs:
                     bsdf.inputs["Specular IOR Level"].default_value = 0.9
+                if "IOR" in bsdf.inputs:
+                    bsdf.inputs["IOR"].default_value = 1.52
+                for key in ("Transmission Weight", "Transmission"):
+                    if key in bsdf.inputs:
+                        bsdf.inputs[key].default_value = 0.85
+                        break
+                else:
+                    print("tfNote glass=no-transmission-socket/"
+                          "the-windows-stay-opaque-and-this-is-why")
+                # AND THE MATERIAL HAS TO BE TOLD TO TRACE IT. Setting the
+                # Transmission socket alone changed nothing, which is the
+                # second attempt against this: in EEVEE Next a transmissive
+                # material is still rendered opaque unless raytraced
+                # refraction is switched on FOR THAT MATERIAL. The socket
+                # said "this is glass" and the renderer was never asked to
+                # look through it.
+                for flag in ("use_raytrace_refraction", "use_screen_refraction"):
+                    if hasattr(mat, flag):
+                        setattr(mat, flag, True)
+                        print("tfNote glass=refraction-on/%s" % flag)
+                        break
+                else:
+                    print("tfNote glass=no-refraction-flag-on-this-build/"
+                          "the-windows-stay-opaque-and-this-is-why")
                 # SEE THROUGH IT. Shop glass with no transmission is a mirror
                 # with a dark tint, which is what every frontage on this row
                 # was until the interiors went in behind them.
@@ -3026,8 +3118,23 @@ def build_and_render(args):
             if mat is not None and mat.use_nodes:
                 bsdf = mat.node_tree.nodes.get("Principled BSDF")
                 if bsdf is not None:
+                    # DIMLY EMISSIVE BY DAY, NOT MERELY PALE. The card sits
+                    # in a room that is sealed on five sides, so no light
+                    # from this scene reaches it: an albedo of 0.105 in an
+                    # unlit void renders black, which is what every shop
+                    # window on the street was showing. A real shop at
+                    # midday is lit by its own windows, its own lamps and
+                    # the light down its own back passage, none of which
+                    # this scene has any business modelling - so the card
+                    # carries the result rather than the cause, the same
+                    # way it already does at night and for the same reason.
+                    # A tenth of the night's strength, because a lit shop by
+                    # day is a room you can see into and not a lantern.
                     bsdf.inputs["Base Color"].default_value = (0.105, 0.098, 0.090, 1.0)
                     bsdf.inputs["Roughness"].default_value = 0.92
+                    if "Emission Color" in bsdf.inputs:
+                        bsdf.inputs["Emission Color"].default_value = (0.62, 0.58, 0.52, 1.0)
+                        bsdf.inputs["Emission Strength"].default_value = 0.30
     print("tfNote condition=%s world/%s"
           % (args["condition"] if street else "overcast_day", world_note))
 
