@@ -2531,6 +2531,16 @@ def _materials(bpy, root=None):
                 # refraction is switched on FOR THAT MATERIAL. The socket
                 # said "this is glass" and the renderer was never asked to
                 # look through it.
+                # ASKED THE BUILD WHAT IT HAS rather than guessing a fifth
+                # time, and it has `surface_render_method`, DITHERED by
+                # default with BLENDED the alternative. DITHERED resolves
+                # transparency stochastically and a single opaque-looking
+                # sample per pixel is exactly what a dark pane returns; a
+                # transmissive surface wants the blended path behind it.
+                if hasattr(mat, "surface_render_method"):
+                    mat.surface_render_method = "BLENDED"
+                if hasattr(mat, "blend_method"):
+                    mat.blend_method = "BLEND"
                 for flag in ("use_raytrace_refraction", "use_screen_refraction"):
                     if hasattr(mat, flag):
                         setattr(mat, flag, True)
