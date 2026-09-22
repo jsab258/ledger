@@ -93,7 +93,13 @@ THRESHOLD_ABOVE_CROWN_M = 0.100
 #: for; the Hook sheet governs whether they are right and the eye decides.
 MATERIALS = (
     ("brick_red",   (0.085, 0.040, 0.030), 0.92),
-    ("brick_grey",  (0.055, 0.052, 0.048), 0.92),
+    # LIGHTENED 2026-09-22 after the first render of the plain row, which came
+    # back charcoal. A soot-darkened London stock is GREYER and LIGHTER than a
+    # red brick in daylight, not darker; at the old value the west row read as
+    # a black slab beside the parade and the only thing on it that carried was
+    # the doors. The check below - nothing hides in the wall behind it - now
+    # runs for this row too, which is what stopped the joinery following it up.
+    ("brick_grey",  (0.112, 0.110, 0.105), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
@@ -1103,8 +1109,14 @@ def _ground(bpy, p, mats):
     The street's own widths: 2 m footway each side, 6 m carriageway."""
     W = p["bay_width_m"]
     run = W * p["bays"]
+    # THE FOOTWAY STOPS WELL SHORT OF THE CAMERA. It used to run fourteen
+    # metres out from the frontage, and the elevation camera stands forty-one
+    # metres back to get six bays in frame, so the slab was BETWEEN the two:
+    # seen almost edge-on it drew a grey band across the bottom of every
+    # elevation and hid the shopfronts, which are the thing being judged. Two
+    # metres is the street's own footway width and is all this needs to be.
     part = {"id": "footway", "x0": -W * 1.5, "x1": run + W * 1.5,
-            "y0": -14.0, "y1": 0.0, "z0": -0.12, "z1": 0.0}
+            "y0": -2.0, "y1": 0.0, "z0": -0.12, "z1": 0.0}
     obj = _box_mesh(bpy, part, mats.get("stone"))
     return obj
 
@@ -1522,6 +1534,19 @@ def selftest():
                   "%s vs %s" % (window_centres(q), window_centres(p)))
             check("accept/%s-nothing-below-the-threshold" % other,
                   all(b["z0"] >= -1e-9 for b in qboxes))
+            # AND NOTHING HIDES IN THIS ROW'S WALL EITHER. The parade's check
+            # only ever looked at brick_red; the day brick_grey moved, the
+            # joinery on this row could have walked into it unseen.
+            qlum = {name: 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+                    for name, c, _r in MATERIALS}
+            qwall = qlum[q["wall_surface"]]
+            qgf = [b for b in qboxes if b["z0"] < q["ground_h_m"] - 1e-9 and b["z1"] > 1e-9]
+            qhidden = [m for m in set(b["material"] for b in qgf)
+                       if m not in ("glass",) and m != q["wall_surface"]
+                       and abs(qlum[m] - qwall) < 0.2 * qwall]
+            check("accept/%s-nothing-hides-in-the-grey-brick" % other,
+                  not qhidden,
+                  ",".join("%s(%.4f vs %.4f)" % (m, qlum[m], qwall) for m in sorted(qhidden)))
             check("accept/%s-every-piece-named-once" % other,
                   len(set(b["id"] for b in qrow)) == len(qrow))
 
