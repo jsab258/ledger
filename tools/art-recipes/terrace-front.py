@@ -3273,8 +3273,30 @@ def build_and_render(args):
         scene.view_settings.view_transform = "AgX"
     except TypeError:
         scene.view_settings.view_transform = "Filmic"
-    scene.view_settings.look = "AgX - Punchy" if not night else "None"
-    scene.view_settings.exposure = 0.6 if night else 0.45
+    # THE LOOK AND THE EXPOSURE ARE ONE DECISION, swept together and read
+    # off the frame. Three looks at one exposure, then the best of them at
+    # three exposures, against the sheet's own four numbers:
+    #
+    #   AgX - Punchy        mean 109.0  p95 195.7  warmth +15.0  colour 15.0%
+    #   AgX - High Contrast mean 137.8  p95 233.0  warmth +20.8  colour 19.4%
+    #   ...at exposure 0.05 mean 123.0  p95 224.7  warmth +19.3  colour 22.6%
+    #   THE SHEET           mean 119.7  p95 229.3  warmth +18.5  colour 25.8%
+    #
+    # Punchy was chosen earlier because it was the look that added
+    # saturation, and at the time everything else on the street was too dark
+    # for contrast to be worth anything. With the palette, the road, the
+    # glazing and the haze all where they belong, CONTRAST is what carries
+    # the colour: the high-contrast look lands the highlights the sheet has
+    # and takes saturation with it, and the exposure comes down to put the
+    # mean back where it was.
+    #
+    # AND THE PICTURE AGREES THIS TIME, which had to be checked rather than
+    # assumed - twice today a measure moved the right way while the picture
+    # moved the wrong way, and both are recorded beside the values they
+    # argue about. This one is richer brick, a deeper oxblood and a road
+    # that still reads wet.
+    scene.view_settings.look = "AgX - High Contrast" if not night else "None"
+    scene.view_settings.exposure = 0.6 if night else 0.05
     # DEPTH BEYOND THIRTY METRES IS STILL OPEN, and this is what was tried.
     #
     # The scene file carries fog_density 0.012 with a max opacity of 0.1 for
