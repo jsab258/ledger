@@ -232,6 +232,48 @@ namespace LedgerCrime
 	// and the check below expects NothingToArrest instead.
 	const double kConstableFamiliarity = LedgerCore::Perception::RecognitionFamiliarity;
 
+	// THREE DECIMALS, for a margin that lives in the second one: 0.216 against
+	// 0.2 is the whole finding, and two decimals would print it as 0.22 and
+	// 0.20 and make a sixteen-thousandths margin look like two hundredths.
+	inline std::string F3(double V)
+	{
+		char Buf[64];
+		std::snprintf(Buf, sizeof(Buf), "%.3f", V);
+		return std::string(Buf);
+	}
+
+	// THE THIRD RESIDENT, 22 September. ROADMAP's stage-3 gate: "a witnessed
+	// crime reaching a second and a third resident within one in-game week".
+	// The street had two people, so a rumour could reach a second and never a
+	// third.
+	//
+	// WHO HE IS TO WHOM, AND WHY: tied to the LAD ONLY, and not to the
+	// shopkeeper, so the only road to him is a genuine second retelling -
+	// shopkeeper to lad, lad to him - and hops=2 on his rumour is the proof.
+	// At the STREET'S OWN TIE, kTie, 0.6, from GossipDirector.cs: not a
+	// strength picked to make the gate pass.
+	//
+	// AND IT PASSES BY A WHISKER, which is the finding and is printed rather
+	// than hidden. The shopkeeper files at about 0.94; the lad hears 0.94 x 0.6
+	// x 0.8 = 0.45; this man hears 0.45 x 0.6 x 0.8 = 0.216 against a floor of
+	// 0.2. Any tie under about 0.52 and it never reaches him at all. Rumour
+	// reach is Jafar's to rule on (FOR-JAFAR.md, question 2), and this number
+	// is a piece of that evidence, so it is measured at the value the street
+	// already has and not moved.
+	//
+	// NO BODY UNTIL THEY MEET. He is in the mill from the start, but the
+	// together test measures bodies, so without one he is never with anybody
+	// and cannot overhear rounds 1 or 2 or the overheard beat.
+	const char* const kR3Id = "r3";
+	const char* const kR3Name = "the lad's mate";   // an archetype, not cast
+	const double kR3Tie = kTie;
+	// THEY MEET IN THE YARD, a couple of metres from where the lad stands,
+	// on day 4 at 18:00 - three and a quarter days after the crime at D1
+	// 12:00, inside the week the gate names.
+	const double kR3X = 22.5, kR3Z = -11.4;
+	const int    kRound3Day = 4, kRound3Hour = 18;
+	const int    kCrimeDay = 1,  kCrimeHour = 12;
+
 	// The yard floor (amendment A2): no ground plane exists in x 21..24
 	// between ground_plot_2 and ground_plot_3, and that gap is the only place
 	// a person can stand with a terrace between them and a shop window.
@@ -590,6 +632,65 @@ namespace LedgerCrime
 		     + " contradiction=" + YesNo(R.bContradiction)
 		     + " exposure=" + YesNo(R.bExposure)
 		     + " passedStatus=" + (R.Passed > 0 ? "PASSED" : "NOT-PASSED");
+	}
+
+	// RUMOURS ABOUT EACH CRIME, over any set of agents - the mill that ticked
+	// or the one rebuilt after a restart - by the one rule the control line
+	// already uses: a rumour is about crime B if it names B's glass, about A
+	// if it names A's. HERE, WHERE g++ AND cl RUN IT, rather than written out
+	// twice in CrimeProbe.cpp, because "about B" must mean the same thing
+	// before the restart and after it or the pair compares two definitions.
+	// B's glass is checked first because "glass1" and "glass0" differ only in
+	// the digit and neither contains the other; the order is kept anyway, so
+	// the day a third pane arrives nobody has to re-derive it.
+	inline void CountAboutCrimes(const std::vector<LedgerCore::GossiperPtr>& Ags,
+	                             int& AboutA, int& AboutB)
+	{
+		AboutA = 0;
+		AboutB = 0;
+		for (std::vector<LedgerCore::GossiperPtr>::size_type A = 0; A < Ags.size(); ++A)
+		{
+			if (!Ags[A]) { continue; }
+			for (std::vector<LedgerCore::RumorPtr>::size_type R = 0; R < Ags[A]->Rumors.size(); ++R)
+			{
+				if (!Ags[A]->Rumors[R]) { continue; }
+				const std::string Both = Ags[A]->Rumors[R]->Content.Value + "/"
+				                       + Ags[A]->Rumors[R]->Content.Predicate;
+				if (Both.find("glass1") != std::string::npos) { ++AboutB; }
+				else if (Both.find("glass0") != std::string::npos) { ++AboutA; }
+			}
+		}
+	}
+
+	// WHAT ONE RETELLING WOULD CARRY, by the mill's own rule: confidence x tie
+	// x hop decay, refused below the floor. Printed beside what the mill
+	// actually did, so an agreement is two independent answers and a
+	// disagreement says which one moved.
+	inline double WouldArrive(double ConfidenceIn, double Tie, double HopDecay)
+	{
+		return ConfidenceIn * Tie * HopDecay;
+	}
+
+	// THE REACH LINE: who holds crime A, at how many retellings, and when the
+	// last of them heard it. withinOneWeek is from the crime's own day and
+	// hour to the meeting's, in hours, and a week is 168 of them.
+	inline std::string ReachLine(const RoundReading& R3, int ResidentsHoldingA,
+	                             int CrimeDay, int CrimeHour, int MeetDay, int MeetHour)
+	{
+		const int Hours = (MeetDay - CrimeDay) * 24 + (MeetHour - CrimeHour);
+		const double Would = WouldArrive(R3.ConfidenceIn, R3.Tie, R3.HopDecay);
+		return std::string("reach=A")
+		     + " residentsHolding=" + Int(ResidentsHoldingA)
+		     + " thirdResident=" + (R3.bRan ? (R3.Passed > 0 ? "REACHED" : "NOT-REACHED") : "NOT-RUN")
+		     + " thirdHops=" + Int(R3.Hops)
+		     + " hoursAfterCrime=" + Int(Hours)
+		     + " withinOneWeek=" + YesNo(Hours >= 0 && Hours <= 168)
+		     + " thirdTie=" + F2(R3.Tie)
+		     + " wouldArrive=" + F3(Would)
+		     + " floor=" + F2(R3.MinShare)
+		     + " marginOverFloor=" + (Would - R3.MinShare >= 0.0 ? "+" : "") + F3(Would - R3.MinShare)
+		     + " reachNote=shopkeeper-first-hand/lad-one-retelling/his-mate-two"
+		       "/tied-to-the-lad-only-at-the-street's-own-0.6/nothing-moved-to-make-it-pass";
 	}
 
 	// ---- the bank ---------------------------------------------------------
@@ -1432,6 +1533,66 @@ namespace LedgerCrime
 	inline SelftestResult Selftest()
 	{
 		SelftestResult R;
+
+		// Q. THE RESTART PAIR'S COUNTER. One rumour about A, one about B, one
+		//    about neither, and an empty agent: the counter must tell them
+		//    apart, or "the control still holds nothing after the reload"
+		//    is a count that cannot see the control.
+		{
+			LedgerCore::GossiperPtr G1 = std::make_shared<LedgerCore::Gossiper>(
+				"w1", "the shopkeeper", std::shared_ptr<LedgerCore::MemoryStore>(),
+				std::shared_ptr<LedgerCore::KnowledgeBase>(), "day");
+			LedgerCore::GossiperPtr G2 = std::make_shared<LedgerCore::Gossiper>(
+				"n2", "the lad in the yard", std::shared_ptr<LedgerCore::MemoryStore>(),
+				std::shared_ptr<LedgerCore::KnowledgeBase>(), "day");
+			G1->Rumors.push_back(std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass0")));
+			G2->Rumors.push_back(std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass0")));
+			std::vector<LedgerCore::GossiperPtr> Ags;
+			Ags.push_back(G1);
+			Ags.push_back(G2);
+			Ags.push_back(LedgerCore::GossiperPtr());
+			int A = -1, B = -1;
+			CountAboutCrimes(Ags, A, B);
+			Expect(R, A == 2 && B == 0, "restart-pair-counts-two-about-A-none-about-B");
+			G2->Rumors.push_back(std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass1")));
+			G2->Rumors.push_back(std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "was_seen_on", "quay_street")));
+			CountAboutCrimes(Ags, A, B);
+			Expect(R, A == 2 && B == 1, "restart-pair-sees-a-rumour-about-the-control");
+			std::vector<LedgerCore::GossiperPtr> Empty;
+			CountAboutCrimes(Empty, A, B);
+			Expect(R, A == 0 && B == 0, "restart-pair-an-empty-mill-holds-nothing");
+		}
+
+		// R. THE THIRD RESIDENT'S ARITHMETIC. The street's own numbers, and the
+		//    edge they sit on: 0.45 in at the street's tie clears the floor by
+		//    about 0.016; one tenth weaker and it does not.
+		{
+			const double Lad = WouldArrive(0.94, kTie, 0.8);
+			Expect(R, Lad > 0.44 && Lad < 0.46, "the-lad-hears-it-at-about-0.45");
+			const double Mate = WouldArrive(Lad, kR3Tie, 0.8);
+			Expect(R, Mate >= 0.2, "his-mate-hears-it-over-the-floor-at-the-street's-tie");
+			Expect(R, Mate - 0.2 < 0.03, "and-only-just-which-is-the-finding");
+			Expect(R, WouldArrive(Lad, 0.5, 0.8) < 0.2, "at-a-weaker-tie-it-never-reaches-him");
+			RoundReading R3;
+			R3.bRan = true; R3.Passed = 1; R3.Hops = 2; R3.Tie = kR3Tie;
+			R3.HopDecay = 0.8; R3.MinShare = 0.2; R3.ConfidenceIn = Lad;
+			const std::string L = ReachLine(R3, 3, kCrimeDay, kCrimeHour, kRound3Day, kRound3Hour);
+			Expect(R, L.find("thirdResident=REACHED") != std::string::npos
+			          && L.find("withinOneWeek=yes") != std::string::npos
+			          && L.find("hoursAfterCrime=78") != std::string::npos,
+			       "the-reach-line-says-reached-inside-the-week");
+			Expect(R, L.find("marginOverFloor=+0.0") != std::string::npos,
+			       "and-prints-the-margin-with-its-sign");
+			Expect(R, ReachLine(R3, 3, 1, 12, 9, 12).find("withinOneWeek=no") != std::string::npos,
+			       "eight-days-later-is-outside-the-week");
+			RoundReading None;
+			Expect(R, ReachLine(None, 2, 1, 12, 4, 18).find("thirdResident=NOT-RUN") != std::string::npos,
+			       "a-meeting-that-never-ran-says-so");
+		}
 
 		// A. THE ARREST, ON FIXED READINGS. Built by hand rather than traced,
 		//    because the point is the decision and the tracing is the run's.
