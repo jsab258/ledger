@@ -5,24 +5,45 @@ When an item finishes, strike it and take the next without asking. The list is
 kept current here; when it runs short it is extended from the next part of the
 roadmap.
 
-Last updated 2026-09-22.
+Last updated 2026-09-22, at the end of the second sitting on his PC.
 
 ## 1. Toward the Hook sheet (stage 1)
 
-- [ ] The shopfront's two remaining faults: the two doors where they meet read
-      as one busy patch, and the transom light does not separate from the
-      glazing below it.
-- [ ] The rest of the terrace fronts.
-- [ ] The street's other gaps against the sheet, taking whatever the rendered
-      pair shows is furthest off: depth beyond thirty metres, roofs and
-      chimneys, signage, clutter, the figure.
-- [ ] Render the pair from the sheet's own viewpoint after each step. That is
-      the test, and it is not optional between steps.
+- [x] The shopfront's two faults: the doors where they meet, and the transom
+      light that did not separate from the glazing. Both fixed and both now
+      measured rather than looked at.
+- [x] The rest of the terrace fronts. All three blocks build and render: the
+      six-bay parade with a rhythm rather than one stencil, and the two plain
+      rows, which are a different building rather than the parade with parts
+      switched off.
+- [x] The street from the sheet's own viewpoint, with the road between the two
+      sides and somebody standing in it. That frame is what the stage is
+      judged on and it did not exist before today.
+- [ ] THE GAPS THE FIRST REAL FRAME SHOWS, in the order the frame says they
+      matter, which is also D31's own order:
+      1. NOTHING IS LIT AND NOTHING IS WET. The sheet's frame is dusk, wet,
+         lamps lit; every surface here is flat overcast grey. D31 puts light
+         and shadow first for this reason.
+      2. THE STREET ENDS AT 42 METRES into open field. Depth beyond thirty
+         metres is the named gap and the frame confirms it.
+      3. NO SIGNAGE. Every fascia board on the parade is blank, and a parade
+         with blank boards reads as abandoned. Four fascia decals are already
+         committed and are not reaching the frame.
+      4. NO CLUTTER. No lamp columns in this scene, no bins, no road markings,
+         no double yellow lines - and the lines are already specified, with a
+         colour taken from the game's own code.
+      5. THE YARD GAP between the two west blocks reads as a black void.
+      6. Surfaces are flat colour. Texture is the step after light.
+- [ ] Render the pair from the sheet's viewpoint after each step. That is the
+      test, and it is not optional between steps.
 
 ## 2. Rumours surviving a restart (stage 3)
 
+- [x] Memories survive a save and a reload, held by thirty-eight golden rows
+      against the real C#, with four engine-versus-bench disagreements found
+      and fixed.
 - [ ] The JSON half: the save's own format ported, so a rumour in flight
-      survives a save and a reload the way a memory now does.
+      survives a restart the way a memory now does.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.
@@ -49,8 +70,9 @@ Last updated 2026-09-22.
 
 ## Where things stand
 
-The simulation is real and tested, and a memory now survives being saved and
-reloaded, checked against the C# on thirty-eight golden rows. A crime is
-committed by a key press and proved in a packaged build both ways. The Unreal
-safeguard is confirmed on a real failed build. One terrace front stands with
-its ground floor accepted; the rest of the street is blockout.
+The Unreal safeguard is confirmed on a real failed build, and the build runs
+again after five red pushes that never reached it. A crime is committed by a
+key press. A memory survives a save and a reload, and the engine and the test
+bench have been caught disagreeing twice - about NaN, and about how strict the
+two readers of the golden table were. The street now stands as authored
+fronts on both sides with a road between them, flat and unlit.
