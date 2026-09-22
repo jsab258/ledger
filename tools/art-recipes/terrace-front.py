@@ -378,6 +378,15 @@ MATERIALS = (
     # CHIMNEY POTS, sampled off the new sheet's nearest stack, 22 September:
     # two terracotta at 126/76/65 and 123/77/62 sRGB, one buff at 196/169/127.
     ("pot_clay",    (0.203, 0.073, 0.051), 0.80),
+    # RUBBED BRICK, for the window arches: on the new sheet the arch over
+    # each window reads 123/67/49 against the wall beside it at 115/63/46 -
+    # the same clay, finer and a touch brighter. Scaled off brick_red by that
+    # ratio in linear rather than sampled outright, so the two stay a pair.
+    # ATTEMPT TWO LIFTS IT TO 1.3 OF THE WALL: at the measured 1.15 the ring
+    # vanished into the brick at the hook camera's raking angle, where the
+    # sheet's reads because its radiating joints and the curved sash under
+    # it give it an edge. The sash is built now too; see _segmental_arch.
+    ("brick_rubbed",(0.307, 0.120, 0.074), 0.90),
     ("pot_buff",    (0.554, 0.397, 0.212), 0.80),   # was (0.260, 0.180, 0.020)
     # THE VEHICLE. Car paint is the only genuinely SMOOTH surface on this
     # street - everything else is brick, stone, timber or tarmac - and that
@@ -597,6 +606,7 @@ SURFACE_OF = {
     "paint_yellow": (None, 0.0),
     "paint_white":  (None, 0.0),
     "pot_clay":     ("plaster", 0.5),
+    "brick_rubbed": ("plaster", 0.4),
     "pot_buff":     ("plaster", 0.5),
     # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
     # plaster and timber are the wrong story for a pressed steel panel, and
@@ -1227,9 +1237,86 @@ def _plain_ground(parts, p, T, wall, bay):
              "set-back-one-half-brick/the-same-reveal-the-floor-above-uses")
         _box(parts, "gf_sill_%d" % n, "stone", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - sill_t, sill_z, "the-window's-own-sill")
-        _box(parts, "gf_lintel_%d" % n, "stone", cx - sw, cx + sw,
-             -0.02, T, sill_z + win_h, sill_z + win_h + p["lintel_t_m"],
-             "over-the-head")
+        _segmental_arch(parts, "gf_arch_%d" % n, cx - win_w / 2.0, cx + win_w / 2.0,
+                        sill_z + win_h, "segmental-rubbed-brick-arch/as-upstairs")
+
+
+#: THE WINDOW HEADS ARE SEGMENTAL ARCHES, 22 September, and the lintels they
+#: replace were the retired sheet's. On the approved sheet every terrace
+#: window, upstairs and down, has a shallow arch of rubbed brick over it; ours
+#: had a flat stone lintel. THE OPENING IS UNCHANGED - its width and its head
+#: height are the scene file's geometry, and the arch springs from that head
+#: - what changes is the form over it, which is the sheet's to govern.
+#: A RISE OF ONE-SEVENTH OF THE SPAN is the ordinary Victorian segmental
+#: head; the RING is one brick on end, 215 mm; it stands 12 mm proud of the
+#: wall face so the colour change has an edge to it.
+ARCH_RISE_FRACTION = 1.0 / 7.0
+ARCH_RING_M = 0.215
+ARCH_PROUD_M = 0.012
+ARCH_SEGMENTS = 10
+
+
+def _segmental_arch(parts, pid, a, b, spring_z, note):
+    """An arch ring over the opening a..b, springing at spring_z, bay-local."""
+    span = b - a
+    rise = span * ARCH_RISE_FRACTION
+    R = (span * span / 4.0 + rise * rise) / (2.0 * rise)
+    cx = (a + b) / 2.0
+    cz = spring_z + rise - R
+    th_r = math.atan2(spring_z - cz, b - cx)
+    th_l = math.pi - th_r
+    prof = []
+    # EXTRADOS right to left, then INTRADOS left to right: anticlockwise,
+    # which is the winding _prism needs for its normals to face out.
+    for k in range(ARCH_SEGMENTS + 1):
+        t = th_r + (th_l - th_r) * k / ARCH_SEGMENTS
+        prof.append((cx + (R + ARCH_RING_M) * math.cos(t), cz + (R + ARCH_RING_M) * math.sin(t)))
+    for k in range(ARCH_SEGMENTS + 1):
+        t = th_l + (th_r - th_l) * k / ARCH_SEGMENTS
+        prof.append((cx + R * math.cos(t), cz + R * math.sin(t)))
+    _prism(parts, pid, "brick_rubbed", prof, -ARCH_PROUD_M, 0.0, note)
+    # AND THE WINDOW FOLLOWS THE ARCH, which is attempt two and the reason
+    # the first could not be seen: on the sheet the sash's head is CURVED to
+    # the arch, a white line under the brick with glass inside it, and our
+    # flat-headed sash left brick between itself and the ring. The opening's
+    # rectangle stays the scene file's; the segment above it is glazed and
+    # framed on the wall face, which is what reads from across the street.
+    seg = [(cx + R * math.cos(th_r + (th_l - th_r) * k / ARCH_SEGMENTS),
+            cz + R * math.sin(th_r + (th_l - th_r) * k / ARCH_SEGMENTS))
+           for k in range(ARCH_SEGMENTS + 1)]
+    _prism(parts, pid + "_light", "glass", seg, -0.004, -0.001,
+           "the-arched-head's-glass/over-the-sash")
+    fr = []
+    for k in range(ARCH_SEGMENTS + 1):
+        t = th_r + (th_l - th_r) * k / ARCH_SEGMENTS
+        fr.append((cx + R * math.cos(t), cz + R * math.sin(t)))
+    for k in range(ARCH_SEGMENTS + 1):
+        t = th_l + (th_r - th_l) * k / ARCH_SEGMENTS
+        fr.append((cx + (R - FRAME_T) * math.cos(t), cz + (R - FRAME_T) * math.sin(t)))
+    _prism(parts, pid + "_frame", "paint_joinery", fr, -0.008, -0.004,
+           "the-sash-frame's-curved-head")
+
+
+#: THE DENTIL COURSE, the other thing every roofline on the approved sheet
+#: has and ours did not: a band of brick stepped out under the eaves with a
+#: row of headers standing proud above it, one brick in two. Header ends are
+#: 102.5 mm across and a course is 75 mm, so the dentils are that, 205 mm
+#: apart, and the whole course stands 40 mm proud.
+DENTIL_W_M, DENTIL_H_M, DENTIL_PITCH_M, DENTIL_PROUD_M = 0.1025, 0.075, 0.205, 0.040
+
+
+def _dentil_course(parts, W, eaves, wall):
+    """A projecting band and a row of dentils just under the eaves, bay-local."""
+    band_z0 = eaves - 3.0 * DENTIL_H_M
+    _box(parts, "eaves_band", wall, 0.0, W, -DENTIL_PROUD_M, 0.0, band_z0, band_z0 + DENTIL_H_M,
+         "a-course-stepped-out-under-the-eaves")
+    n = int(W / DENTIL_PITCH_M)
+    off = (W - (n - 1) * DENTIL_PITCH_M - DENTIL_W_M) / 2.0
+    for k in range(n):
+        x0 = off + k * DENTIL_PITCH_M
+        _box(parts, "dentil_%d" % k, wall, x0, x0 + DENTIL_W_M, -DENTIL_PROUD_M, 0.0,
+             band_z0 + DENTIL_H_M, band_z0 + 2.0 * DENTIL_H_M,
+             "a-header-standing-proud/one-in-two")
 
 
 def _upper_floor(parts, p, T, wall):
@@ -1256,6 +1343,7 @@ def _upper_floor(parts, p, T, wall):
          "coursed-brick-from-the-slab-to-the-sills")
     _box(parts, "upper_band_above", wall, 0.0, W, 0.0, T, head_z, EAVES,
          "coursed-brick-from-the-heads-to-the-eaves")
+    _dentil_course(parts, W, EAVES, wall)
 
     edges = [0.0]
     for a, b in opens:
@@ -1276,9 +1364,8 @@ def _upper_floor(parts, p, T, wall):
         _box(parts, "upper_sill_%d" % i, "stone", cx - sw, cx + sw,
              -p["sill_proj_m"], T, sill_z - p["sill_t_m"], sill_z,
              "0.95m-wide/window-plus-50mm-each-side")
-        _box(parts, "upper_lintel_%d" % i, "stone", cx - sw, cx + sw,
-             -0.02, T, head_z, head_z + p["lintel_t_m"],
-             "over-the-head/one-course-and-a-half")
+        _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
+                        "segmental-rubbed-brick-arch/rise-a-seventh-of-the-span")
         _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"])
 
 
@@ -2547,9 +2634,9 @@ def plan_row(p, bays=None):
             q = dict(part)
             q["id"] = "%s_bay%d" % (part["id"], b)
             q["bay"] = b
-            if part.get("kind") == "slope":
-                q["x0"] = part["x0"] + b * W
-                q["x1"] = part["x1"] + b * W
+            if part.get("kind") == "mesh":
+                # A MESH MOVES VERTEX BY VERTEX, the arches since 22 September.
+                q["verts"] = [(x + b * W, y, z) for (x, y, z) in part["verts"]]
             else:
                 q["x0"] = part["x0"] + b * W
                 q["x1"] = part["x1"] + b * W
@@ -4800,7 +4887,7 @@ def selftest():
               len(set(x["id"] for x in parts)) == len(parts),
               "%d ids, %d parts" % (len(set(x["id"] for x in parts)), len(parts)))
         check("accept/something-was-built", len(parts) > 20, "%d" % len(parts))
-        boxes = [x for x in parts if x.get("kind") != "slope"]
+        boxes = [x for x in parts if x.get("kind") not in ("slope", "mesh")]
         check("accept/no-degenerate-box",
               all(b["x1"] > b["x0"] and b["y1"] > b["y0"] and b["z1"] > b["z0"] for b in boxes))
         # NOTHING SINKS BELOW THE THRESHOLD, which is the one fault a square-on
@@ -5014,7 +5101,7 @@ def selftest():
 
         # ---- THE ROW, which is what the sheet is judged against now -------
         row = plan_row(p)
-        rboxes = [b for b in row if b.get("kind") != "slope"]
+        rboxes = [b for b in row if b.get("kind") not in ("slope", "mesh")]
         check("accept/the-row-is-the-spec's-own-bay-count",
               len(set(b["bay"] for b in row)) == p["bays"],
               "%d bay(s) built, spec says %d" % (len(set(b["bay"] for b in row)), p["bays"]))
@@ -5068,7 +5155,7 @@ def selftest():
             if qerr:
                 continue
             qrow = plan_row(q)
-            qboxes = [b for b in qrow if b.get("kind") != "slope"]
+            qboxes = [b for b in qrow if b.get("kind") not in ("slope", "mesh")]
             mats = set(b["material"] for b in qboxes)
             # WHICH KIND OF GROUND FLOOR THIS ROW HAS IS THE SPEC'S TO SAY,
             # and these checks used to assume it. Both west rows were plain

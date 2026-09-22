@@ -593,9 +593,12 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       DONE for all seventeen families: 2 kept, 10 changed, 5 not on the
       sheet. What the new sheet shows that the street lacks becomes the next
       items below.
-- [ ] SEGMENTAL ARCHED HEADS over the terrace's windows, and the dentil course
+- [x] SEGMENTAL ARCHED HEADS over the terrace's windows, and the dentil course
       under the eaves: the two things every window and roofline on the new
-      sheet has and ours do not.
+      sheet has and ours do not. DONE in two attempts: the first ring, at the
+      sheet's measured 1.15 of the wall, vanished at the raking angle; the
+      second curves the sash's head to the arch and glazes the segment, and
+      lifts the ring to 1.3. The openings keep the scene file's dimensions.
 - [x] THE KERB against the new sheet: pale grey with a clean arris; ours is
       dark and rough. DONE: its face 38/34/28 -> 77/73/66 against the sheet's
       96/84/71; still rougher than the sheet's. AND THE ROAD'S RED FLECKS,
