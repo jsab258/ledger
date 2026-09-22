@@ -142,8 +142,18 @@ nothing.
       readable on both sides. D31 asked for dusk, wet, lamps lit and a
       figure in silhouette and it now has all four. The shop rooms did it -
       there was nothing behind the windows to light the street WITH.
-- [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
-      into the recipe and the next one does not start from scratch.
+- [x] DEPTH BEYOND THIRTY METRES, ON THE THIRD ATTEMPT. Not volumetrics -
+      a MIST pass mixed toward the sky in the compositor, chosen because it
+      CANNOT produce the failure the other two did: a post-mix toward a pale
+      colour has no path to black, and the worst it can do is too much haze,
+      which is visible at a glance. Measured off the sheet rather than
+      assumed: its near brick reads saturation 0.442 and its far buildings
+      0.330, so distance costs colour; ours cost none at all and now costs
+      0.407 to 0.205. The far end of the street recedes and the near
+      shopfront is untouched.
+- [ ] AND THE FAR END IS STILL SKY. What is beyond our thirty metres is
+      nothing, because the TOWN past the street is stage 6. Haze on an
+      empty sky is haze on nothing; this softened the street we have.
 
 ## 2. Rumours surviving a restart (stage 3)
 
