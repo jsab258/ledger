@@ -83,6 +83,15 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **How I read "rumours surviving a restart, from clean starts".**
+  The game already runs both crimes in one sitting of the world — one the
+  shopkeeper sees, one nobody can — and then saves, rebuilds the world from
+  scratch and reloads. I took that rebuilt world as the clean start: after
+  the reload, every rumour about the seen crime must be back, and the unseen
+  one must still have nothing. Two separate runs would differ in timing as
+  well as in who saw what, which makes a worse comparison. **Proven on the
+  build machine first time:** two rumours about the seen crime before the
+  save and two after the reload; none about the unseen one, before or after.
 - 2026-09-22 **The parade is reworked to the 1989 photographs, starting with
   Mickey's.** It is now a slim metal front painted the sheet's slate
   blue-grey, over a pale patterned tile, with its name painted across the
