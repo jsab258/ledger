@@ -144,11 +144,29 @@ nothing.
 
 ## Where things stand
 
-The Unreal safeguard is confirmed on a real failed build, and the build runs
-again after five red pushes that never reached it. A crime is committed by a
-key press. A memory survives a save and a reload, and the engine and the test
-bench have been caught disagreeing twice - about NaN, and about how strict the
-two readers of the golden table were. The street stands as authored fronts on
-both sides with a road between them, textured, wet, painted, lettered and
-lit, with people on it - and it is compared against the sheet from the
-sheet's own viewpoint after every change.
+THE REFERENCE WAS WRONG ALL WEEK. Every visual comparison since the 9
+September ruling went to Codex's retired sheet, which still resolves on its
+branch, so nothing errored and nothing warned. The approved sheet is now at
+production/reference/hook-sheet.png and that directory is the only place a
+reference lives - a rule in CLAUDE.md, a refusal in the tool.
+
+READ AGAINST THE RIGHT PICTURE, the street was 38 per cent too dark, grey
+where the reference is warm, and the wrong SHAPE: the sheet's street panel
+is 1.89:1 and we were rendering 1.27:1, which is eleven degrees of
+horizontal field and put our parade a third further off than the
+reference's however the camera moved. It now measures mean 111 against 120
+and warmth +12 to +19 against +18.5, from 74 and +0.7 this morning.
+
+THE STREET GAINED: white sash windows, which it had none of and which are
+what the reference is made of; a crowned road, which the spec had specified
+and nobody had built; fourteen pavement props the spec had already placed
+by name; one invented car; aerials on two stacks; and shops on the near
+west block by Jafar's ruling, now a line in canon.
+
+THE SIMULATION IS WHERE IT WAS. A crime is committed by a key press, a
+memory survives a save and a reload against thirty-eight golden rows, and
+the rumours-across-a-restart half is untouched today.
+
+A STOP HOOK now refuses to let a turn end while the standing list has work
+on it and the sitting has time left. It is the only automation this session
+gets and Jafar named it.
