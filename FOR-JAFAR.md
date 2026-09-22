@@ -83,6 +83,13 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **A seen crime now reaches a third person inside a week**, which
+  is one of stage 3's gates. The shopkeeper tells the lad, and on day 4 the
+  lad tells his mate. It gets there with almost nothing to spare, as the
+  rumour numbers predicted, and nothing was changed to make it pass.
+- 2026-09-22 **At night the lit shops now glow through their windows**, which
+  they barely did before because the glass was not passing light. I turned
+  the night light down so they read as rooms, not light boxes.
 - 2026-09-22 **The shop windows are glass now.** For weeks they rendered as
   dark panels; one wrong setting was switching the see-through off. Mickey's
   and the fish shop now show a warm lit room with fluorescent tubes across

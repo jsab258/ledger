@@ -4322,7 +4322,13 @@ def build_and_render(args):
         b3 = lit.node_tree.nodes.get("Principled BSDF")
         if b3 is not None and "Emission Color" in b3.inputs:
             b3.inputs["Emission Color"].default_value = (1.0, 0.714, 0.344, 1.0)
-            b3.inputs["Emission Strength"].default_value = 2.2 if night else 3.4
+            # 0.7 AT NIGHT, NOT 2.2, since the glass passes nine-tenths of
+            # the room instead of a few per cent: at 2.2 the lit shops came
+            # through as flat cream light-boxes, blown out, where before the
+            # glass was fixed they barely showed at all. A lit shop at night
+            # is the brightest thing on the street after the lamps, and still
+            # a room.
+            b3.inputs["Emission Strength"].default_value = 0.7 if night else 3.4
     if street:
         # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
         # than wet at night and bone dry by day, which is what the first

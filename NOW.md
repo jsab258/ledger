@@ -556,11 +556,14 @@ WHILE THE CARD IS BUSY - the work that does not need it.
       08:00: what got done, what is waiting on him, what went wrong.
 
 AFTER HIS LIST, stage 3's gate from ROADMAP.md.
-- [ ] A WITNESSED CRIME REACHING A THIRD RESIDENT WITHIN ONE IN-GAME WEEK.
-      Half built: the header's arithmetic and reach line are in and tested;
-      the Unreal half is written and not yet applied. It sits on a knife edge
-      under today's numbers - 0.216 against a 0.2 floor - which is printed,
-      not hidden, and not moved.
+- [x] A WITNESSED CRIME REACHING A THIRD RESIDENT WITHIN ONE IN-GAME WEEK.
+      PROVEN on the runner, first time (adfc53d7, green): three residents
+      hold crime A, the lad's mate at two retellings, heard on day 4 at
+      18:00 by his own memory - 78 hours after the crime - at 0.217 against
+      the 0.2 floor, a margin of +0.017 that is printed and not moved. He
+      survives the restart too (1 rumour and 1 memory before and after, two
+      retellings out). The independent check found eight faults in the first
+      version; all fixed before the push.
 
 ## Where things stand
 
