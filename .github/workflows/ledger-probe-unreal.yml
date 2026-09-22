@@ -2273,7 +2273,16 @@ jobs:
           git diff --cached --quiet && { echo "probe result unchanged; nothing to commit"; exit 0; }
           git commit -m "UE machine probe from $(git rev-parse --short HEAD)"
           BR="${GITHUB_REF_NAME}"
-          for i in 1 2 3; do
+          # SIX ATTEMPTS AND A LONGER BACKOFF, from 2026-09-22. Three tries
+          # with a five and a ten second sleep is a fifteen-second window, and
+          # a run whose evidence push lands inside somebody else's push loses
+          # it. That happened on a run where EVERY OTHER STEP PASSED,
+          # including the build and the verdict: the job went red purely
+          # because the archivist could not get a word in, which reads
+          # identically to a broken build in the one place anybody looks. Six
+          # tries at ten seconds a step is two and a half minutes, which is
+          # longer than any push this project makes.
+          for i in 1 2 3 4 5 6; do
             # --autostash, NOT JUST --no-edit. Run 27 lost its whole probe
             # result to this exact line: a build always leaves unstaged
             # changes in the checkout, so a plain `git pull --rebase`
@@ -2290,7 +2299,7 @@ jobs:
             if git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${BR}"; then
               echo "probe result pushed to $BR"; exit 0
             fi
-            sleep $((i * 5))
+            sleep $((i * 10))
           done
           echo "could not push the probe result; it is committed locally on the agent"
           # AND THAT IS A FAILED JOB, NOT A GREEN ONE. Run 18 and run 22 both
