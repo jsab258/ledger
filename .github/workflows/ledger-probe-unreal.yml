@@ -2407,6 +2407,11 @@ jobs:
       - name: Read the crime verdict and judge the run by it
         if: always()
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: "*"
         run: |
           set -u
           # A PYTHON THAT ACTUALLY RUNS, RESOLVED THE WAY EVERYTHING ELSE IN
@@ -2440,8 +2445,48 @@ jobs:
           # not move underneath anybody.
           SHORT="$(echo "${GITHUB_SHA:-}" | cut -c1-7)"
           if [ -z "$SHORT" ]; then SHORT="$(git rev-parse HEAD | cut -c1-7)"; fi
-          "$PY" tools/crime-verdict-check.py --selftest || exit 1
-          "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
+          # AND IT WRITES DOWN WHAT IT SAW, because nobody here can read a
+          # log. Actions logs need an authenticated token and this project
+          # has none on the desk, so a red step is a colour with no reason
+          # attached: today the moving-HEAD fault was found by reasoning
+          # about the code rather than by reading the run, and the run that
+          # carried the fix went red again for a reason still unknown. This
+          # lands the step's own inputs and output IN THE REPOSITORY, where
+          # they can be read without a token. One file, pushed by itself,
+          # and the step still exits on the check's status.
+          OUTF=production/d1-probe/ue-crime-check.txt
+          {
+            echo "# crime check $(date -u +%FT%TZ)"
+            echo "runSha=${GITHUB_SHA:-none} needle=$SHORT runId=${GITHUB_RUN_ID:-none}"
+            echo "verdictLine1=$(head -1 production/d1-probe/ue-crime-verdict.txt 2>/dev/null || echo MISSING)"
+            echo "verdictBytes=$(wc -c < production/d1-probe/ue-crime-verdict.txt 2>/dev/null || echo 0)"
+            echo "headNow=$(git rev-parse --short HEAD)"
+          } > "$OUTF"
+          SELF=0
+          "$PY" tools/crime-verdict-check.py --selftest >> "$OUTF" 2>&1 || SELF=1
+          echo "selftestStatus=$SELF" >> "$OUTF"
+          RC=0
+          if [ "$SELF" = "0" ]; then
+            "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt               --sha "$SHORT" >> "$OUTF" 2>&1 || RC=1
+          else
+            echo "the selftest failed, so the verdict was not judged" >> "$OUTF"
+            RC=1
+          fi
+          echo "checkStatus=$RC" >> "$OUTF"
+          echo "crimeCheckReached=end" >> "$OUTF"
+          cat "$OUTF"
+          # ITS OWN PUSH, and a failure to push is not a failure of the
+          # check: the check's answer is what reddens this run.
+          git add -- "$OUTF" 2>/dev/null || true
+          if ! git diff --cached --quiet 2>/dev/null; then
+            git -c user.name="LEDGER probe" -c user.email="probe@ledger.local"               commit -q -m "crime check from $SHORT" || true
+            for i in 1 2 3; do
+              git pull --rebase --autostash --no-edit origin "${GITHUB_REF_NAME}" >/dev/null 2>&1 ||                 git rebase --abort >/dev/null 2>&1 || true
+              git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"                 "HEAD:${GITHUB_REF_NAME}" >/dev/null 2>&1 && break
+              sleep $((i * 10))
+            done
+          fi
+          exit $RC
 
       # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
       #

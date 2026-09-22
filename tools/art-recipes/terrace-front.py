@@ -208,6 +208,41 @@ MATERIALS = (
     # a deep oxblood, which is what this fallback now is; per-bay paint from
     # FASCIA_PAINT overrides it on every bay that has one.
     ("paint_stall", (0.060, 0.014, 0.018), 0.50),   # the kicked board, the shop's colour
+    # THE METAL REFIT, AND IT IS THE PHOTOGRAPHS OVERRULING THE SHEET.
+    #
+    # There is not ONE metal shopfront on the approved sheet - every frontage
+    # on it is painted timber with small panes, which is a conservation-area
+    # refit and not a 1989 working street. R05's photograph, Princes Avenue
+    # in August 1989, is "METAL SHOPFRONT, FLUORESCENT STRIPS, stacked goods,
+    # PATTERNED TILE STALLRISER"; D01 gives Quay Stores "a plain metal
+    # shopfront" and D06 says "Hook shops receive METAL FRAMES, practical
+    # light fittings and repair patches within older masonry". The rule Jafar
+    # recorded on 22 September decides it: the sheet governs mood, palette
+    # and composition, the photographs govern what things actually looked
+    # like, and where they disagree the photographs win.
+    #
+    # NOT EVERY BAY, because D06 says metal frames AMONG older masonry. A
+    # parade where every front is metal is the same mistake as one where
+    # every front is timber, in the other direction.
+    #
+    # MILL-FINISH SILVER, AND THE CHECK CHOSE IT. The first value was a dark
+    # anodised grey, 0.152/0.156/0.160, which is a real period finish and
+    # came out at luminance 0.1554 against grey brick's 0.1330 - inside the
+    # 0.02 this file refuses, so the new front would have vanished into the
+    # wall it was cut into. That is the fourth time "no painted part hides in
+    # the brick behind it" has caught a colour chosen for being plausible
+    # rather than for being visible.
+    # SILVER IS ALSO THE COMMONER 1989 FRONT. It sits at 0.339, clear of the
+    # brick below it and clear of the white timber beside it at 0.672, so the
+    # refitted bay reads as a THIRD material rather than as a dirty version
+    # of either.
+    ("frame_metal", (0.330, 0.340, 0.352), 0.30),   # mill-finish aluminium
+    # AND THE TILED STALLRISER, which is the other half of what R05 shows. A
+    # tile is glossier than a painted board and darker than the frame above
+    # it; the PATTERN is not built, and that is said out loud rather than
+    # implied - we hold no tile map and inventing one from noise would be a
+    # texture pretending to be evidence.
+    ("tile_stall", (0.044, 0.052, 0.058), 0.18),    # glazed tile, no pattern
     # THE SIDE DOOR IS A DIFFERENT PAINT, AND THE SECOND ATTEMPT HAD TO MOVE
     # IT. A warm brown was a plausible door colour and it was almost exactly
     # brick_red's own value, so the door vanished into the wall it sits in -
@@ -455,6 +490,11 @@ SURFACE_OF = {
     # enough that white needs a gain of 1.3.
     "paint_joinery":("plaster", 0.5),
     "paint_stall":  ("plaster", 1.0),
+    # Both refit surfaces are SMOOTH, so they take the plaster map for its
+    # relief and not the timber one: metal has no grain and neither has a
+    # glazed tile.
+    "frame_metal":  ("plaster", 0.4),
+    "tile_stall":   ("plaster", 0.3),
     "paint_door":   ("wood", 0.6),
     "paint_fascia": ("wood", 1.0),
     # A PANE OF GLASS IS NOT A PHOTOGRAPH OF ANYTHING, and it had the
@@ -515,6 +555,19 @@ SURFACE_OF = {
 #: cream wave running either side of the closed shop is the story the fascia
 #: package already tells - a parade repainted by whoever owned it, with one
 #: unit that nobody did.
+#: WHICH BAYS HAD THEIR FRONTS REPLACED, and it is one of six.
+#:
+#: THE FISH SHOP IS THE ONE, and it is chosen rather than picked. MICKEYS.md
+#: puts the fish shop in the bay north of the cab office, which is bay 1;
+#: R05 and R09 both photograph metal-fronted food shops in 1989; and a wet
+#: fish counter is the trade that most wants a washable front and a
+#: fluorescent strip over it. Bay 0 is the cab office and is Jafar's anchor
+#: interior, bay 3 is the empty unit, and the rest keep their timber.
+#:
+#: IT IS A LIST AND NOT A FLAG so that a second refit is one entry rather
+#: than a second code path, and so the check below can count them.
+SHOPFRONT_REFIT_BAYS = (1,)
+
 FASCIA_PAINT = (
     # LIFTED TO THE SHEET'S OWN VALUES, 22 September. Sampled off its street
     # panel, its green shopfront is 0.065, 0.090, 0.078 linear and ours was
@@ -2163,9 +2216,17 @@ def plan_parts(p, bay=0, party_wall=True):
     # lighter than both. Deriving them from transom_thickness_m rather than
     # typing three numbers means the whole frame stays in proportion if that
     # dimension ever moves.
-    jamb_t = tr_t
-    mull_t = tr_t * 0.75
-    joinery_proj = 0.03
+    # AND A REFITTED BAY IS A DIFFERENT SET OF SECTIONS, not the same
+    # sections painted grey. That is the whole visual difference between a
+    # metal front and a timber one: aluminium carries the same glass on
+    # LESS THAN HALF the section, and it sits nearly flush instead of
+    # standing proud with a moulding on it. A grey timber shopfront would
+    # read as a timber shopfront and the change would be worth nothing.
+    refit = bay in SHOPFRONT_REFIT_BAYS
+    joinery = "frame_metal" if refit else "paint_joinery"
+    jamb_t = tr_t * (0.45 if refit else 1.0)
+    mull_t = tr_t * (0.40 if refit else 0.75)
+    joinery_proj = 0.012 if refit else 0.03
     # THE GLAZED RUN IS THE DISPLAY PLUS THE SHOP DOOR, whichever order this
     # bay puts them in. Written as a span rather than as "from the display to
     # the shop door" because the second form quietly assumes one of the two
@@ -2188,10 +2249,18 @@ def plan_parts(p, bay=0, party_wall=True):
     # caught that the moment the brick moved, which is the second time that
     # check has earned its place.
     stall_name, stall_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
-    stall = _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
-                 "0.6m-of-kicked-board-under-the-glass/paint=" + stall_name)
-    stall["paint"] = stall_rgb
-    stall["paint_name"] = stall_name
+    if refit:
+        # A TILED STALLRISER TAKES NO PAINT, which is why this branch does
+        # not carry the shop's colour down to the kicked board. R05's is
+        # patterned; ours is plain, and the recipe says so rather than
+        # inventing a pattern out of noise and calling it evidence.
+        _box(parts, "stallriser", "tile_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
+             "0.6m-of-glazed-tile-under-the-glass/R05/pattern-not-built")
+    else:
+        stall = _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
+                     "0.6m-of-kicked-board-under-the-glass/paint=" + stall_name)
+        stall["paint"] = stall_rgb
+        stall["paint_name"] = stall_name
     _box(parts, "display_glazing", "glass", disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
          "recessed-so-the-frontage-is-not-one-plane")
 
@@ -2199,11 +2268,11 @@ def plan_parts(p, bay=0, party_wall=True):
     # jambs and a sill rail; the transom below is its head. Without these the
     # glazing is a hole in a wall rather than a window in a shopfront, and at
     # any distance a hole reads as a stain.
-    _box(parts, "display_jamb_left", "paint_joinery", disp_x0, disp_x0 + jamb_t,
+    _box(parts, "display_jamb_left", joinery, disp_x0, disp_x0 + jamb_t,
          -joinery_proj, rec + 0.02, sr_h, tr_h, "the-frame's-left-upright")
-    _box(parts, "display_jamb_right", "paint_joinery", disp_x1 - jamb_t, disp_x1,
+    _box(parts, "display_jamb_right", joinery, disp_x1 - jamb_t, disp_x1,
          -joinery_proj, rec + 0.02, sr_h, tr_h, "the-frame's-right-upright")
-    _box(parts, "display_sill_rail", "paint_joinery", disp_x0, disp_x1,
+    _box(parts, "display_sill_rail", joinery, disp_x0, disp_x1,
          -joinery_proj, rec + 0.02, sr_h, sr_h + tr_t,
          "the-rail-the-glass-sits-on/off-the-stallriser's-top")
 
@@ -4251,6 +4320,47 @@ def selftest():
         if serr:
             check("accept/the-street-plans-with-a-car-in-it", False, serr)
         else:
+            # ---- ONE FRONT IS A METAL REFIT, AND ONLY ONE.
+            refits, timbers = [], []
+            for b in street:
+                if b.get("material") == "frame_metal":
+                    refits.append(b["id"])
+                if "_display_jamb_left_" in b["id"]:
+                    timbers.append(b)
+            check("accept/one-shopfront-is-a-metal-refit", bool(refits),
+                  "%d piece(s)" % len(refits))
+            # AND NOT EVERY ONE, because D06 says metal frames AMONG older
+            # masonry. A parade all in metal is the same mistake the sheet
+            # makes, in the other direction.
+            # THE PIECE IDS CARRY THE BAY ON THE END, not the part name:
+            # east_parade_display_jamb_left_bay1. The first version of these
+            # three checks matched on a suffix that no piece has and passed
+            # by finding nothing on both sides, which is the shape of a check
+            # that cannot fail. Matched on the substring now, and the counts
+            # below are printed so an empty one shows.
+            metal_bays, timber_bays = set(), set()
+            for b in street:
+                if "_display_jamb_left_" not in b["id"]:
+                    continue
+                (metal_bays if b["material"] == "frame_metal" else timber_bays).add(b["id"])
+            check("accept/the-parade-is-mixed-not-all-metal",
+                  bool(metal_bays) and len(timber_bays) > len(metal_bays),
+                  "%d metal / %d timber" % (len(metal_bays), len(timber_bays)))
+            # THE SECTIONS ARE ACTUALLY THINNER, which is the whole visual
+            # difference. A grey timber shopfront reads as a timber
+            # shopfront and the change would be worth nothing.
+            mw = [b["x1"] - b["x0"] for b in street
+                  if "_display_jamb_left_" in b["id"] and b["material"] == "frame_metal"]
+            tw = [b["x1"] - b["x0"] for b in street
+                  if "_display_jamb_left_" in b["id"] and b["material"] != "frame_metal"]
+            check("accept/the-metal-sections-are-under-half-the-timber",
+                  bool(mw) and bool(tw) and max(mw) < min(tw) * 0.6,
+                  "metal %.3f vs timber %.3f" % (max(mw) if mw else -1, min(tw) if tw else -1))
+            # AND ITS STALLRISER IS TILE, NOT THE SHOP'S PAINT.
+            tiles = [b["id"] for b in street if b.get("material") == "tile_stall"]
+            check("accept/the-refitted-bay-has-a-tiled-stallriser", bool(tiles),
+                  "%d" % len(tiles))
+
             # ---- THE BASIN END, and every one of these is a way it
             # could stop being a backdrop and start being a claim.
             back = [b for b in street if b["id"].startswith("backdrop")]

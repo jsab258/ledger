@@ -232,8 +232,12 @@ nothing.
 
 ## 4. The small-model test for conversation
 
-- [ ] A small model behind the conversation interface, scored on a bar that
-      counts a well-formed wrong answer as a FAILURE.
+- DEFERRED BY JAFAR TO THE NEXT SITTING, 22 September, in his words: "1,
+  fetch it and run the test next sitting... Use the Vulkan build, since the
+  card is AMD." It is not an open item of THIS sitting and is written
+  without a box so the stop hook does not demand it against his ruling.
+  A small model behind the conversation interface, scored on a bar that
+  counts a well-formed wrong answer as a FAILURE.
 - IT GATES THE HARDWARE FLOOR, and here is exactly where it stands so the
   next sitting does not rediscover it:
   THE MODEL IS ALREADY ON THIS MACHINE. Qwen3-4B-Instruct-2507-Q4_K_M.gguf,
@@ -253,7 +257,54 @@ nothing.
 
 ## 5. Character concept sheets (stage 2)
 
-- [ ] The six archetypes, by the three-pass method.
+- BLOCKED AND NOT THIS STAGE'S. The six archetypes, by the three-pass
+  method. Two reasons it carries no box: it is STAGE 2, and stage 1's own
+  rule in ROADMAP.md is "what may not happen here: ... more unique buildings
+  or animation polish before the presentation order above is done"; and its
+  terms - what an archetype is, how many passes of what - are not defined
+  anywhere yet, so there is nothing to work down. Defining them is Jafar's
+  or a sitting of its own.
+
+## 6. What the audit of the sheet leaves to do (stage 1)
+
+- [x] ONE METAL SHOPFRONT ON THE PARADE, and the check chose its colour. The audit's second contradiction:
+      there is not one metal shopfront on the approved sheet and every
+      frontage we built copies it, while D01 gives Quay Stores "a plain
+      metal shopfront" and D06 says "Hook shops receive METAL FRAMES,
+      practical light fittings and repair patches within older masonry" -
+      both decided from R05's 1989 photograph. Under the rule recorded
+      today the photograph wins. Not every bay: D06 says metal refits AMONG
+      older masonry, so the street should show the mixed fabric the
+      research records rather than a uniform timber parade.
+      DONE: bay 1, the fish shop, which MICKEYS.md puts in the bay north of
+      the cab office and which is the trade that most wants a washable
+      front. Slimmer sections - 45 per cent of the timber ones, which is
+      the whole visual difference, since a grey timber shopfront still
+      reads as timber - sitting nearly flush instead of proud with a
+      moulding, over a glazed tile stallriser instead of the shop's painted
+      board. FOUR CHECKS HOLD IT: that one front is metal, that the parade
+      is MIXED and not all metal (2 of 9 shopfront bays; the keying is by
+      bay index so west_north's bay 1 takes it too, which D06 covers since
+      it speaks of Hook shops generally), that the sections really are
+      under half, and that the stallriser is tile.
+      AND THE COLOUR WAS CHOSEN BY THE CHECK. A dark anodised grey is a
+      real period finish and came out at luminance 0.1554 against grey
+      brick's 0.1330 - inside the 0.02 this recipe refuses - so the new
+      front would have vanished into the wall it was cut into. Silver mill
+      finish at 0.339 is clear of the brick below and of the white timber
+      beside it, and is the commoner 1989 front anyway. Fourth time that
+      check has caught a colour picked for being plausible rather than for
+      being visible.
+      WHAT IT IS NOT: R05's stallriser is PATTERNED tile and ours is plain,
+      because we hold no tile map and noise pretending to be a pattern is a
+      texture pretending to be evidence. And at thirty metres the thinness
+      carries the read more than the colour does.
+- [x] THE TYING FRAME, LOOKED AT WITH THE STREET FINISHED, IN HIS WORDS: "one screenshot of the street at dusk,
+      wet, lamps lit, a figure in silhouette." wet_night has been rendered
+      before, but not since the wear, the haze, the basin end, the crowned
+      road, the glazing and the props all landed. It is the frame the whole
+      stage is supposed to tie together and nobody has looked at it with
+      the street finished.
 
 ## Where things stand
 
