@@ -26,15 +26,27 @@ swatch. Read the named research line. If your own general knowledge of "what
 this sort of thing usually looks like" disagrees with either, the sheet and
 the research win, not your priors, by the ruling above.
 
-The 8 approved sheets live at `production/art/atlas-01/concepts/<name>.png`
-on the `origin/art/atlas-01` branch, not in a plain checkout of `main`. Fetch
-one with:
+**WHERE `hook.png` MEANS, IN EVERY ROW BELOW:
+`production/reference/hook-sheet.png`.** On `main`, in a plain checkout. Not
+`production/art/atlas-01/concepts/hook.png` - that is Codex's sheet, RETIRED
+on 9 September, and it still resolves on the art branch, which is how a week
+of comparisons went to the wrong picture with nothing failing. This page sent
+all seventeen families there until 22 September. The rows were measured off
+the retired sheet, so **treat every "crop-verified" claim below as unverified
+until it is re-read on the live sheet**; the ones already re-read are marked.
 
-    git show origin/art/atlas-01:production/art/atlas-01/concepts/<name>.png > <name>.png
+AND THE SHEET IS HALF THE REFERENCE. It governs mood, palette and
+composition; the period photographs at `production/reference/photographs.md`
+govern what things actually looked like, and where they disagree the
+photographs win (Jafar 2026-09-22). Before using a row below, check it against
+`production/reference/hook-sheet-audit.md`: **the shopfront, window and door
+rows are affected** - the sheet has no metal shopfront anywhere, and D01/D06
+require one.
 
-The 8 names used below: copper, exchange, fairview, gullwing, hook, ironside,
-mickeys, parade (`mickeys.png` is titled "MICKEY'S / THE HOOK" on the sheet
-itself and shares the Hook district).
+The other seven district sheets (copper, exchange, fairview, gullwing,
+ironside, mickeys, parade) are on the art branch and NONE of them has been
+re-approved as a reference. A row that cites one is citing an unapproved
+picture; it needs a ruling before it is followed.
 
 ## Coverage, counted
 
