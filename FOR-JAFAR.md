@@ -4,6 +4,14 @@ Everything meant for him lives here. Nothing is ever only in a message.
 Ruled 2026-09-22, after "For you:" items went into reports and were lost
 between them.
 
+## Overnight
+
+- **Done, all of your list:** the new sheet is the reference; the lens, colour, composition and parade are matched to it; the arrest works from live play; the rumour numbers are written up for you; rumours survive a save and reload; a crime reaches a third person inside a week; the small model is tested on your card.
+- **Done besides:** the shop windows are glass at last, and the street took the sheet's details one by one - real bricks, arched windows, chimney pots, a gutter, a centre line, a grey kerb, stone flags, the dish, net curtains, rooms behind the shop windows, the street running on to the hill. In the game engine the bricks are now the right size.
+- **Waiting on you:** decision 5 (the pictures and the game engine build the street as mirror images), 6 (the game engine's brick colour is your number), 4 (the small model: four in five right, confidently wrong when wrong), 2 (rumour reach: I recommend leaving it).
+- **Went wrong:** I told you the old prompt had Mickey's on the wrong side, and that was wrong for the game engine; and for an hour I blamed the glass for grey shop windows when it was the room behind them.
+- **Set aside after two tries each:** the wet shine on the pavement, and the crowding of the hillside at the far end.
+
 ## Decisions waiting on me
 
 **6. The game engine's bricks are now the right size, but still the wrong
