@@ -60,6 +60,24 @@ PAPER_MIN = 235
 #: 12 is chosen to be well inside it and well clear of JPEG-style mottle.
 PAPER_MARGIN = 12
 
+#: A POSTER HAS PAPER IN ALL FOUR CORNERS AND A PHOTOGRAPH DOES NOT. From 22
+#: September the approved reference is pass 4 of the regenerated sheet: ONE
+#: full-frame street photograph, 2048 x 1088, with no margins and no panels -
+#: generated as a panel precisely because a poster is what cost the old one
+#: its resolution. The panel search above would find no paper in it and
+#: refuse, which is correct for a poster and wrong for this.
+#: SO THE MODE IS DECIDED BY MEASURING, AND PRINTED. The darkest corner of the
+#: retired poster is cream paper at 231; the darkest corner of pass 4 is
+#: brick. A sheet whose darkest corner is this light or lighter is a poster
+#: and is searched for its street panel; anything darker IS the panel, whole.
+#: Printed as sheetMode on every run, so which one happened is never silent.
+POSTER_PAPER_MIN = 200
+
+
+def sheet_mode(a):
+    """'poster' when all four corners are paper, else 'panel'."""
+    return "poster" if paper_value(a) >= POSTER_PAPER_MIN else "panel"
+
 
 def panel_bands(grey_rows, height, paper_min=PAPER_MIN, min_fraction=PANEL_MIN_FRACTION):
     """[(y0, y1)] for every band of rows that is NOT paper and is tall enough.
@@ -150,18 +168,22 @@ def build(root, ours_path, out_path, scratch, caption=""):
         return err
     sheet = Image.open(sheet_file).convert("RGB")
     a = np.asarray(sheet).astype(int)
+    mode = sheet_mode(a)
     paper = max(1, paper_value(a) - PAPER_MARGIN)
-    rows = a.min(axis=(1, 2)).tolist()
-    bands = panel_bands(rows, sheet.size[1], paper_min=paper)
-    band = street_band(bands)
-    if band is None:
-        return "no-panel-found-in-the-sheet/bands=%d" % len(bands)
-    y0, y1 = band
-    cols = a[y0:y1].min(axis=(0, 2)).tolist()
-    span = ink_columns(cols, paper_min=paper)
-    if span is None:
-        return "the-street-panel-is-all-paper"
-    x0, x1 = span
+    if mode == "panel":
+        x0, y0, x1, y1 = 0, 0, sheet.size[0], sheet.size[1]
+    else:
+        rows = a.min(axis=(1, 2)).tolist()
+        bands = panel_bands(rows, sheet.size[1], paper_min=paper)
+        band = street_band(bands)
+        if band is None:
+            return "no-panel-found-in-the-sheet/bands=%d" % len(bands)
+        y0, y1 = band
+        cols = a[y0:y1].min(axis=(0, 2)).tolist()
+        span = ink_columns(cols, paper_min=paper)
+        if span is None:
+            return "the-street-panel-is-all-paper"
+        x0, x1 = span
     panel = sheet.crop((x0, y0, x1, y1))
 
     ours = Image.open(ours_path).convert("RGB")
@@ -175,9 +197,9 @@ def build(root, ours_path, out_path, scratch, caption=""):
     d.text((6, 10), "THE HOOK SHEET, the bar", fill=(235, 235, 235))
     d.text((obox[0] + 6, 10), "OURS  " + caption, fill=(235, 235, 235))
     canvas.save(out_path)
-    print("hookPair sheet=%s paper=%d sheetPanel=%d,%d..%d,%d ours=%dx%d "
+    print("hookPair sheet=%s sheetMode=%s paper=%d sheetPanel=%d,%d..%d,%d ours=%dx%d "
           "out=%s bytes=%d"
-          % (REFERENCE.replace(chr(92), "/"), paper, x0, y0, x1, y1,
+          % (REFERENCE.replace(chr(92), "/"), mode, paper, x0, y0, x1, y1,
              ours.size[0], ours.size[1],
              os.path.basename(out_path), os.path.getsize(out_path)))
     return ""
@@ -230,6 +252,16 @@ def selftest():
     import numpy as _np
     cream = _np.full((80, 80, 3), 249, dtype=int)
     cream[:, :, 2] = 231
+    # THE MODE, both ways: a page with paper corners is a poster, a street
+    # photograph with brick in a corner is the panel itself.
+    import numpy as _np
+    poster = _np.full((100, 80, 3), 231)
+    check("accept/paper-in-every-corner-is-a-poster", sheet_mode(poster) == "poster",
+          sheet_mode(poster))
+    photo = _np.full((100, 80, 3), 200)
+    photo[:30, :30] = (110, 50, 40)          # brick in the top-left corner
+    check("accept/a-photograph-with-brick-in-a-corner-is-the-panel",
+          sheet_mode(photo) == "panel", sheet_mode(photo))
     check("accept/cream-paper-is-read-as-paper-not-ink", paper_value(cream) == 231,
           str(paper_value(cream)))
     stained = cream.copy()

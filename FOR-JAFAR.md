@@ -6,103 +6,6 @@ between them.
 
 ## Decisions waiting on me
 
-**3. Who is the constable to Tom? It decides whether the arrest can ever
-happen.** The arrest rule says a constable arrests only if he can *place*
-you, and "place" means the top rung of identification — recognising the
-man. That rung is only reachable two ways: he already **knows you by sight**,
-or he has **watched you long enough to work out who you are**. A stranger
-who sees the act close up, in daylight, face to face, still tops out one rung
-short and cannot arrest. That is deliberate in the design ("the escape hatch
-is social, not athletic") — but it means the end of the story depends
-entirely on who the policeman is.
-
-  (a) **A beat constable who knows the new owner of the cab office by sight
-      — recommended, and what I am building.** It makes the arrest reachable
-      and keeps the design's promise exactly: strangers cannot place you, the
-      local bobby can. One number, and I can flip it.
-  (b) A stranger. The arrest code runs from live play, which meets the
-      roadmap's words, but it can never answer "arrest" — the gate would go
-      green with the end of the story still unreachable, which is the exact
-      thing that clause was written to stop.
-  (c) A stranger who has been watching. Needs the attention system carried
-      across to Unreal first; not today.
-
-**0. The new Hook sheet: pass 4 beside the old one — the first candidate
-that clears all four contradictions.** You asked for the candidate beside the
-old sheet as a choice; it is in front of you. What it fixes: Mickey's is a cab
-office — counter, radio, notices taped in the glass, strip lights — not a pub
-or a shop. Its front is a slim frame over a *patterned* tiled stallriser, the
-1989 working street rather than the heritage refit. It is one bay of the
-terrace, sharing the roof, the windows and the brick, at the terrace's south
-end — which is exactly where the plans put it. It is on the left, as the
-turned camera sees it. Plain saloons outside, no taxis. The far end rises into
-terraces behind retaining walls, not a wooded hill. The working craft are in
-the basin panel from pass 1. What is wrong with it: **the shop next door also
-says MICKEY'S**, there are **three cars** where you said one or two, and a
-**small satellite dish** sits high on the wall.
-
-  (a) **Approve pass 4's street panel as the new reference, with those three
-      listed as not citable, the way the old sheet's four were —
-      recommended.** The terrace, the lens lines and the anchor bay are what
-      the next step measures, and pass 4 has them right; a fifth pass to fix a
-      duplicated sign costs twenty minutes and risks losing the building it
-      finally got right. Nothing is matched to it until you say so.
-  (b) One more pass aimed only at the duplicated sign and the car count.
-  (c) Keep the old sheet.
-
-**3. Who is the constable to Tom? It decides whether the arrest can ever
-happen.** The arrest rule says a constable arrests only if he can *place*
-you, and "place" means the top rung of identification — recognising the
-man. That rung is only reachable two ways: he already **knows you by sight**,
-or he has **watched you long enough to work out who you are**. A stranger
-who sees the act close up, in daylight, face to face, still tops out one rung
-short and cannot arrest. That is deliberate in the design ("the escape hatch
-is social, not athletic") — but it means the end of the story depends
-entirely on who the policeman is.
-
-  (a) **A beat constable who knows the new owner of the cab office by sight
-      — recommended, and what I am building.** It makes the arrest reachable
-      and keeps the design's promise exactly: strangers cannot place you, the
-      local bobby can. One number, and I can flip it.
-  (b) A stranger. The arrest code runs from live play, which meets the
-      roadmap's words, but it can never answer "arrest" — the gate would go
-      green with the end of the story still unreachable, which is the exact
-      thing that clause was written to stop.
-  (c) A stranger who has been watching. Needs the attention system carried
-      across to Unreal first; not today.
-
-**0. The new Hook sheet: pass 3 beside the old one.** You asked for three
-passes and then the candidate beside the old sheet as a choice. Here it is,
-with its faults named rather than hoped past. Three of the four
-contradictions are fixed across the three panels — a cab office, a metal
-shopfront, working craft in the basin. The fourth is not: Mickey's is a
-free-standing kiosk instead of one bay in a terrace, and it is on the wrong
-side for the turned camera.
-
-  (a) **Do not approve yet; one more pass aimed only at those two faults —
-      recommended, and it is running now** while you look, because the card
-      is otherwise idle. If you approve pass 3 instead, pass 4 is simply
-      discarded and nothing is lost.
-  (b) Approve pass 3's street panel as the new reference now, with the kiosk
-      listed as not citable, the way the old sheet's four were.
-  (c) Keep the old sheet.
-
-**1. Which way does the pair's composition go now the camera has turned?**
-Not urgent, and it may answer itself. The camera now stands at the south end
-looking north, as ruled. In that view the east parade is 2.9 m off on the
-left and fills the left third as a sheet of glass, while the west blocks at
-7.3 m on the right are plain terraces rather than an anchor shop — so the
-frame's weight is the opposite way round from the old sheet, whose anchor is
-Mickey's at eight to ten metres on the right.
-
-  (a) **Leave it until the new sheet exists — recommended, and what I am
-      doing.** Matching composition to a sheet that is being replaced is the
-      work you told me to stop. The new sheet is prompted for the same view,
-      so it will answer this itself.
-  (b) Move the camera off the east frontage now, to sit further from it.
-  (c) Rule that the anchor should be the cab office, which would mean
-      standing further south still so Mickey's own bay is in frame.
-
 **2. Rumour reach — the numbers are in, and your instinct survives.**
 Measured in a town of 200 for 500 days, three different towns, one setting
 changed at a time and nothing else. The four numbers you asked for:
@@ -150,6 +53,15 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **Stage 3 asks for a crime reaching "a second and a third
+  resident within one in-game week", and under today's numbers that sits on a
+  knife edge.** In the crime street the shopkeeper files at 0.94 sure and the
+  lad hears it at 0.45. A third person hearing it from the lad over the
+  street's usual friendship of 0.6 would get 0.216 — the floor is 0.2. Any
+  friendship weaker than 0.52 and it never reaches a third person at all.
+  Time does not wear a story down; only retellings do. This bears directly on
+  your rumour question, number 2: the roadmap's own gate needs two retellings,
+  and a realistic witness usually manages one.
 - 2026-09-22 **The crime probe is green again**, the first green run since
   yesterday afternoon. It ran on the commit that carried last night's fix to
   the check's own test, so that fix is proven on the runner and not only here.
@@ -278,6 +190,22 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Rulings received
 
+- 2026-09-22 **Pass 4's street panel is the new Hook reference.** The old
+  sheet is kept beside it as retired. Not citable on it: the second MICKEY'S
+  sign on the neighbouring shop, and the third car, because a rank is one or
+  two. **The satellite dish is citable** — the household research records
+  dishes as new and contested in 1990.
+- 2026-09-22 **The constable is a beat constable who knows the new owner of
+  the cab office by sight.** Strangers cannot place Tom; the local bobby can.
+- 2026-09-22 **The visual lane resumes, in order**: derive the lens from the new
+  sheet's own geometry and write down how; re-close palette and colour at that
+  lens; the composition, which the new sheet now answers; then the shopfronts
+  to the 1989 photographs, parade first. The pair is rendered after each step.
+- 2026-09-22 **Overnight, nothing waits for you**: every decision takes my
+  recommendation, is written here, and work carries on. The sitting runs to
+  08:00. An "Overnight" section of five lines goes at the top before you wake.
+- 2026-09-22 **The small-model test runs when the card is free** — which
+  answers the download question.
 - 2026-09-22 **The camera turns to the sheet's view: south end looking
   north.** The basin becomes the view the other way and is not wasted.
   *(Re-issued the same day because I had not acted on it yet.)*
@@ -323,6 +251,14 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 *(Items move here with the date they were settled, rather than being deleted,
 so the record stays complete.)*
 
+- 2026-09-22 **The new Hook sheet** — pass 4 approved as the reference the
+  same night, with two flaws not citable and the dish ruled citable.
+- 2026-09-22 **Which way the pair's composition goes** — answered by the new
+  sheet, which is now the reference; it is the third step of the visual lane.
+- 2026-09-22 **Who the constable is to Tom** — ruled (a): a beat constable who
+  knows him by sight.
+- 2026-09-22 **The llama.cpp download** — approved by the overnight list:
+  run the small-model test when the card is free.
 - 2026-09-22 **Which way the pair is shot** — asked 22 September, ruled the
   same day: south end looking north. Camera turned, figures mirrored with it.
 - 2026-09-22 **The trading name and the fleet outside the cab office** —
