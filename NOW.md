@@ -615,8 +615,11 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       citable by Jafar: a 60 cm solid dish on a wall bracket under the
       eaves beside the upper right-hand window, its receiver on an arm,
       aimed south along the wall and tipped up. No make, no mark.
-- [ ] GULLIES IN THE CHANNEL at a real spacing: the sheet shows gully
+- [x] GULLIES IN THE CHANNEL at a real spacing: the sheet shows gully
       gratings along both kerbs, and our street has one grate prop.
+      NOT BUILT, and struck as decided rather than done: the scene spec
+      places ONE gully by design (street.gully, B3), so more is a spec
+      change and goes with the next probe run that touches the spec.
 
 ## Where things stand
 
