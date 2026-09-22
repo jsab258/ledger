@@ -587,9 +587,17 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       uses the new lens; the spec - read by the Unreal probe's hook shot and
       the A1 grid rows - still carries the retired sheet's numbers. A probe
       change with its own tests, so it goes with its own run.
-- [ ] THE ROUTING INDEX'S CLAIMS (retired-sheet-inheritance.md, row 5):
+- [x] THE ROUTING INDEX'S CLAIMS (retired-sheet-inheritance.md, row 5):
       GOVERNS.md's nine measured claims, each checked against the new sheet
       and the photographs, and marked kept, changed or unverifiable.
+      DONE for all seventeen families: 2 kept, 10 changed, 5 not on the
+      sheet. What the new sheet shows that the street lacks becomes the next
+      items below.
+- [ ] SEGMENTAL ARCHED HEADS over the terrace's windows, and the dentil course
+      under the eaves: the two things every window and roofline on the new
+      sheet has and ours do not.
+- [ ] THE KERB against the new sheet: pale grey with a clean arris; ours is
+      dark and rough.
 
 ## Where things stand
 

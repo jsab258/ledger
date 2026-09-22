@@ -93,6 +93,41 @@ not cover".
 | Pillar box | nothing found in the 8 approved sheets (same 8 checked as above) | `art-direction.md:316` | "800 types, each carrying the reigning monarch's cypher" |
 | Road markings | `copper.png` bottom panel, the double yellow line along the kerb, Weighhouse Lane | `procedural-density.md:554` (§6.4) | "double yellow lines \| 75 mm wide at ≤ 40 mph (100 mm above, 50 mm in sensitive areas); laid ~250 mm from the carriageway edge; the gap between the two lines equals the line width" |
 
+## Re-read on the approved sheet, 22 September
+
+THE TABLE ABOVE WAS READ ON A POSTER THAT NO LONGER GOVERNS. The retired
+sheet had a top panel, a bottom panel, a swatch strip and object studies;
+the approved pass 4 (`production/reference/hook-sheet.png`, approved by
+Jafar on 22 September) is ONE street panel, 2048 x 1088, from the south end
+of Quay Street looking north. So every row's sheet column was re-read on
+that panel, and each is marked KEPT (the claim holds on the new sheet),
+CHANGED (the new sheet says something else, stated), or NOT ON THE SHEET
+(the new panel does not show it, so the research and the photographs govern
+alone). Rows citing `copper.png`, `mickeys.png` or `exchange.png` cite
+unapproved sheets and are re-read on the approved one instead. The research
+column is untouched. Where the sheet and a photograph disagree, the
+photograph wins, as ruled.
+
+| Asset family | On the approved sheet | Verdict |
+|---|---|---|
+| Street lighting column | No column anywhere in the panel; the only vertical on the skyline is a mast on the far hill. | NOT ON THE SHEET. R07's "plain bent-arm lighting" and `art-direction.md`'s swan-neck steel columns govern. |
+| Wall bracket lamp | No bracket lamp; the retired top panel's Harbour Office is not in the new sheet. | NOT ON THE SHEET. |
+| Road surface | Wet, crowned, mid-to-dark grey tarmac, a near mirror down the crown, darker tyre-worn patches, gully gratings in the channel. | CHANGED: the sheet now shows it plainly; no longer "scene only". |
+| Pavement surface | LARGE STONE FLAGS both sides, stretcher-laid, warm tan on the near left and grey on the far right, wet with the sky's sheen in them. | CHANGED to flags, which R09's "slab paving" agrees with. The street's footway is flags since 22 September; its wet sheen is not yet matched (FINDINGS.md, set aside after two attempts). |
+| Kerb | Pale grey stone or concrete kerb with a full upstand, clean arris, both sides. | CHANGED: read on the approved sheet instead of `copper.png`. Ours reads darker and rougher. |
+| Terrace facade | Two-storey red and soot brick party-wall terrace; a DENTIL / corbelled brick course under the eaves; black gutter and downpipes on the party walls; one gable end with a patched render scar; a satellite dish under the eaves (ruled CITABLE by Jafar, 22 September). | CHANGED: read on the approved sheet instead of `mickeys.png`. |
+| Shopfront | MICKEY'S: slim slate blue-grey frame, deep box fascia with a cornice, plain gold capitals, a pale patterned tile stallriser on a dark plinth, fluorescent tubes inside; neighbours painted, one white. | CHANGED, and R05 governs the construction: metal front, fluorescent strips, patterned tile. Built so on the parade 22 September. The retired row's pub fascias are void (D19). |
+| Window | White-painted sliding sashes, 1-over-1 and 2-over-2, under SEGMENTAL rubbed-brick arches, on stone sills, set in reveals. | CHANGED. R06 adds "white replacement glazing" on 1989 terrace houses. Ours have flat heads. |
+| Door | Mickey's door is glazed in the same slate frame as its front; no maroon doors anywhere. | CHANGED; the retired row's "maroon double doors with etched glass" was the pub and is void (D19). |
+| Roof | Dark grey slate, lead flashings at the stacks. | KEPT. |
+| Chimney | Stacks on the party walls with OVERSAILING CAPS and two to three pots each, terracotta with one buff. | CHANGED to the approved sheet; built 22 September (two pots per two-flue stack, per the scene file). |
+| Drainpipe | Black downpipes on the party walls, black gutters along the eaves. | KEPT. |
+| Railings | A short run of low black railings in front of a house, far right. | CHANGED: read on the approved sheet instead of `exchange.png`. |
+| Dustbin | No galvanised dustbin; a yellow box on the railings (a grit bin or similar) and a teal bin on the far left footway. | NOT ON THE SHEET as a dustbin; the research line stands alone. |
+| Telephone box | None. | NOT ON THE SHEET, as before. |
+| Pillar box | None. | NOT ON THE SHEET, as before. |
+| Road markings | Double yellow lines both sides, and a WHITE DASHED CENTRE LINE. | CHANGED: the centre line is new; built 22 September at diagram 1008's 2 m / 4 m / 100 mm. NOTE: the research line says double yellows are 75 mm wide at 40 mph or less; the scene file draws them 100 mm. The scene file is the geometry and is not changed here; the disagreement is recorded. |
+
 ## One word in the research that must not be read across, 2026-09-21
 
 `content-sourcing.md:322` contains the phrase "a Victorian bracket lamp", and
