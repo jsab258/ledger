@@ -90,7 +90,8 @@ int main(int argc, char** argv)
 	// genuinely unanswerable by this build; the day somebody ports
 	// PlayerClaims that assertion goes red and the name must come off. A skip
 	// list that outlives its reason is a gate with a hole nobody can see.
-	static const char* kUnportedScenarios[] = { "claims", 0 };
+	// THE LIST LIVES IN CoreGolden.h NOW, because the in-engine reader needs
+	// the same one and a second copy here is how the two came to disagree.
 	std::map<std::string, int> Skipped;
 
 	std::string Line;
@@ -106,12 +107,7 @@ int main(int argc, char** argv)
 		// A NAMED HOLE IS SKIPPED AND COUNTED; EVERY OTHER UNKNOWN STILL FAILS.
 		if (Fn == "Scenario")
 		{
-			bool Unported = false;
-			for (int U = 0; kUnportedScenarios[U] != 0; ++U)
-			{
-				if (F[1] == kUnportedScenarios[U]) { Unported = true; break; }
-			}
-			if (Unported) { ++Skipped[F[1]]; ++TotalSkipped; continue; }
+			if (IsUnportedScenario(F[1])) { ++Skipped[F[1]]; ++TotalSkipped; continue; }
 		}
 
 		const Answer A = Evaluate(F);
@@ -160,10 +156,10 @@ int main(int argc, char** argv)
 	// skip of seven rows is the reading this block exists to make impossible.
 	{
 		int Listed = 0, StillUnported = 0;
-		for (int U = 0; kUnportedScenarios[U] != 0; ++U)
+		for (int U = 0; UnportedScenarios(U) != 0; ++U)
 		{
 			++Listed;
-			const std::string Name = kUnportedScenarios[U];
+			const std::string Name = UnportedScenarios(U);
 			const int Seen = Skipped.count(Name) ? Skipped[Name] : 0;
 			const bool Answerable = !Scenario(Name).empty();
 			if (!Answerable) { ++StillUnported; }

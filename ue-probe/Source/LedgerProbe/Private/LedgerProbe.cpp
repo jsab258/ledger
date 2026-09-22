@@ -653,7 +653,7 @@ namespace
 		TArray<FString> Lines;
 		Contents.ParseIntoArrayLines(Lines);
 
-		long Rows = 0, Bad = 0, Unknown = 0;
+		long Rows = 0, Bad = 0, Unknown = 0, Skipped = 0;
 		const double Tol = 1e-9;
 		FString Detail;
 
@@ -699,8 +699,28 @@ namespace
 				{
 					Fields.push_back(std::string(TCHAR_TO_UTF8(*F[Ix])));
 				}
+				// A NAMED HOLE IS SKIPPED AND COUNTED; EVERY OTHER UNANSWERED
+				// ROW IS NAMED AND FAILS. This reader used to add both to one
+				// Unknown total and pass regardless, while the container's
+				// reader failed on either - the same table, two strictnesses.
+				if (Fields.size() > 1 && Fn == TEXT("Scenario")
+				    && LedgerCore::Golden::IsUnportedScenario(Fields[1]))
+				{
+					++Skipped; --Rows; continue;
+				}
 				const LedgerCore::Golden::Answer A = LedgerCore::Golden::Evaluate(Fields);
-				if (!A.Known) { ++Unknown; --Rows; continue; }
+				if (!A.Known)
+				{
+					++Unknown; --Rows;
+					// NAMED, NOT JUST COUNTED. "11 row(s) named a function
+					// this build does not implement" cost a whole round trip
+					// to this machine to find out WHICH eleven.
+					if (Unknown <= 10)
+					{
+						Detail += FString::Printf(TEXT("  UNANSWERED %s\n"), *Line);
+					}
+					continue;
+				}
 				const std::string& WantS = Fields[Fields.size() - 1];
 				if (!LedgerCore::Golden::Agrees(A.Got, WantS, Tol))
 				{
@@ -740,8 +760,14 @@ namespace
 			{
 				Result += FString::Printf(TEXT("  note: %ld row(s) named a function this build does not implement\n"), Unknown);
 			}
+			Result += FString::Printf(TEXT("perceptionSkipped=%ld over the unported scenarios named in CoreGolden.h\n"), Skipped);
 			Result += FString::Printf(TEXT("perceptionRows=%ld perceptionMismatches=%ld tolerance=%g\n"), Rows, Bad, Tol);
-			Result += FString::Printf(TEXT("probeTest=%s\n"), Bad == 0 ? TEXT("PASS") : TEXT("FAIL"));
+			// AN UNANSWERED ROW FAILS NOW. It used to be a note beside a PASS,
+			// which meant a hole opening in the port turned the cheap check
+			// red and left this one green - the expensive check, the one that
+			// runs the real engine, being the lenient of the two.
+			Result += FString::Printf(TEXT("probeTest=%s\n"),
+			                          (Bad == 0 && Unknown == 0) ? TEXT("PASS") : TEXT("FAIL"));
 		}
 		FFileHelper::SaveStringToFile(Result, *OutPath);
 	}
