@@ -2836,6 +2836,112 @@ def _night(bpy, root, mats):
     return note
 
 
+#: HOW DIRTY, AND IT IS MEASURED RATHER THAN INVENTED.
+#:
+#: ROADMAP.md, stage 1, in its own words: "GRIME IS THE STRATEGY, not a
+#: finishing pass. Weather and wear are what make this town the town, a
+#: surface carries its wear as a SEPARABLE LAYER, and the floor for how much
+#: is a number measured off the first authored facades rather than invented."
+#:
+#: THE NUMBER IS THE VARIATION OF A WALL. A clean rendered wall is uniform
+#: and a weathered photographed one is not, so the standard deviation of a
+#: patch of brick is a fair proxy for how much wear is on it - and it is a
+#: thing both pictures can be asked. MEASURED 22 September: the approved
+#: sheet's near brick varies by 46.8 and ours varied by 16.2. Three times
+#: too clean, on the surface there is most of.
+#:
+#: WHAT IT IS NOT: a dirt texture painted onto a wall. It is two things a
+#: real wall actually does, kept separable so either can be turned off:
+#:   1. PATCHES. Rain does not wash a wall evenly; a large, soft noise over
+#:      several metres darkens some of it and leaves the rest.
+#:   2. THE BOTTOM METRE AND A HALF. Splash off a pavement, and rising damp
+#:      above it, make the foot of every wall in Britain darker than its
+#:      middle. It is the single most recognisable piece of wear there is
+#:      and it costs one gradient.
+WEAR_PATCH_SCALE = 0.45      # cycles per metre: patches a couple of metres across
+WEAR_PATCH_DEPTH = 0.28      # how dark the dirtiest patch gets, as a multiplier
+WEAR_SPLASH_M = 1.5          # how far up the wall the splash reaches
+WEAR_SPLASH_DEPTH = 0.55     # how dark the very foot of the wall gets
+
+#: Which surfaces weather, and the ground weathers differently from a wall:
+#: a pavement's wear is trodden into it rather than run down it, so it takes
+#: the patches and not the splash.
+WEARS = {"brick_red": True, "brick_grey": True, "paving": False,
+         "kerbstone": False, "slate": True, "stone": True}
+
+
+def _wear(bpy, mats):
+    """A separable wear layer on the surfaces that carry one.
+
+    IT SITS BETWEEN THE MAP AND THE SOCKET, like the wetness does, so the
+    photograph's own variation survives and this multiplies over it. Nothing
+    here replaces a texture; a wall with its wear turned off is exactly the
+    wall that was there before.
+    """
+    notes = []
+    for name, splash in sorted(WEARS.items()):
+        mat = mats.get(name)
+        if mat is None or not mat.use_nodes:
+            continue
+        nt = mat.node_tree
+        bsdf = nt.nodes.get("Principled BSDF")
+        if bsdf is None or not bsdf.inputs["Base Color"].links:
+            continue
+        src = bsdf.inputs["Base Color"].links[0].from_socket
+
+        coord = nt.nodes.new("ShaderNodeTexCoord")
+        noise = nt.nodes.new("ShaderNodeTexNoise")
+        noise.inputs["Scale"].default_value = WEAR_PATCH_SCALE
+        if "Detail" in noise.inputs:
+            noise.inputs["Detail"].default_value = 4.0
+        nt.links.new(coord.outputs["Object"], noise.inputs["Vector"])
+        # THE RAMP IS WHAT MAKES IT PATCHES RATHER THAN FOG. Raw noise is a
+        # smooth grey mush; pushed through a steep ramp it becomes areas
+        # that are dirty and areas that are not, which is what weather
+        # leaves behind.
+        ramp = nt.nodes.new("ShaderNodeValToRGB")
+        ramp.color_ramp.elements[0].position = 0.35
+        ramp.color_ramp.elements[0].color = (WEAR_PATCH_DEPTH,) * 3 + (1.0,)
+        ramp.color_ramp.elements[1].position = 0.62
+        ramp.color_ramp.elements[1].color = (1.0, 1.0, 1.0, 1.0)
+        nt.links.new(noise.outputs["Fac"], ramp.inputs["Fac"])
+        dirt = ramp.outputs["Color"]
+
+        if splash:
+            # THE FOOT OF THE WALL, off the object's own Z, which on these
+            # meshes is height above the road because the geometry is built
+            # in world coordinates. Multiplied into the patches rather than
+            # mixed with them: a wall that is both splashed and unwashed is
+            # dirtier than either.
+            sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+            nt.links.new(coord.outputs["Object"], sep.inputs["Vector"])
+            rise = nt.nodes.new("ShaderNodeMapRange")
+            rise.clamp = True
+            rise.inputs["From Min"].default_value = 0.0
+            rise.inputs["From Max"].default_value = WEAR_SPLASH_M
+            rise.inputs["To Min"].default_value = WEAR_SPLASH_DEPTH
+            rise.inputs["To Max"].default_value = 1.0
+            nt.links.new(sep.outputs["Z"], rise.inputs["Value"])
+            both = nt.nodes.new("ShaderNodeMix")
+            both.data_type = "RGBA"
+            both.blend_type = "MULTIPLY"
+            both.inputs["Factor"].default_value = 1.0
+            nt.links.new(dirt, both.inputs[6])
+            nt.links.new(rise.outputs["Result"], both.inputs[7])
+            dirt = both.outputs[2]
+
+        mix = nt.nodes.new("ShaderNodeMix")
+        mix.data_type = "RGBA"
+        mix.blend_type = "MULTIPLY"
+        mix.inputs["Factor"].default_value = 1.0
+        nt.links.new(src, mix.inputs[6])
+        nt.links.new(dirt, mix.inputs[7])
+        nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
+        notes.append("%s=%s" % (name, "patches+splash" if splash else "patches"))
+    if notes:
+        print("tfWear " + " ".join(notes))
+
+
 def _wetten(mats, wetness):
     """Wet, which on a flat-colour street is roughness and darkness.
 
@@ -3212,6 +3318,10 @@ def build_and_render(args):
         # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
         # than wet at night and bone dry by day, which is what the first
         # frames did and is a third of the way off the sheet on its own.
+        # WEAR BEFORE WET, because a wet wall is a dirty wall with water on
+        # it and not the other way round: the wetness multiplies whatever
+        # base colour it finds, so it has to find one that is already worn.
+        _wear(bpy, mats)
         _wetten(mats, 0.9 if night else 0.6)
         if not night:
             # A SHOP INTERIOR BY DAY IS NOT A SHOP INTERIOR AT NIGHT, and
