@@ -480,7 +480,12 @@ THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
       old sheet kept beside it as retired. Not citable on it: the second
       MICKEY'S sign, the third car. The satellite dish IS citable - the
       household research records dishes as new and contested in 1990.
-- [ ] DERIVE THE LENS from the new sheet's own geometry, and write down how.
+- [x] DERIVE THE LENS from the new sheet's own geometry, and write down how.
+      DONE: production/reference/hook-sheet-lens.md. 46 degrees vertical on
+      the sheet's own 1.882 frame (77 horizontal), camera LEVEL at 1.9 m with
+      the picture shifted, turned 20.4 degrees towards the parade, at x -3.2,
+      y -2.2. Checked by finding our render's vanishing point the same way as
+      the sheet's: 0.732, 0.570 against 0.734, 0.570.
 - [ ] RE-CLOSE PALETTE AND COLOUR against the new sheet at that lens.
 - [ ] THE COMPOSITION, which the new sheet now answers.
 - [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
