@@ -312,7 +312,7 @@ His words: "Stop tuning palette and colour now; every adjustment at an
 unmeasured lens against a flawed sheet is work that will be redone." So
 nothing above this line is worked on until the sheet is replaced.
 
-- [ ] REGENERATE THE HOOK SHEET, through the image lane, from the research
+- [x] REGENERATE THE HOOK SHEET, through the image lane, from the research
       and canon rather than the old prompt, at a resolution where a
       shopfront's detail is evidence and at least four times the current
       panel size. Correcting all four contradictions: Mickey's is a minicab
@@ -379,6 +379,17 @@ nothing above this line is worked on until the sheet is replaced.
       street is not a coffee. The side-by-side needs no new tool:
       hook-pair.py with the candidate passed as `--ours` produces exactly
       the old sheet beside the new one.
+      PASS 4 IS THE CANDIDATE AND IT IS WITH HIM, 22 September, fifth sitting:
+      the first to clear all four contradictions. Mickey's is a cab office,
+      one bay of the terrace at its south end, on the left as the turned
+      camera sees it, with a slim front over a patterned tiled stallriser;
+      plain saloons outside; contour terraces at the far end. Faults: the
+      next shop also says MICKEY'S, three cars not one or two, a satellite
+      dish. Recommended to approve with those listed as not citable.
+      WHAT PASS 4 LEARNED FROM PASS 3: the negative half of the prompt is
+      ignored at the only setting this model runs at, so every fix has to be
+      said as what IS there; and a model handed one SUBJECT isolates it,
+      which is how the cab office became a kiosk.
 - [ ] THEN, ONLY ONCE HE APPROVES IT, in his order: derive the lens from the
       new sheet's own geometry and write down how; re-close palette and
       colour against the new sheet at that lens; then rework the shopfronts
@@ -399,7 +410,20 @@ nothing above this line is worked on until the sheet is replaced.
       found to have no callers at all, which would have let the gate go
       green with the end of the story unreachable." It is not a bug in
       Core; Core is right and nothing calls it.
-- [ ] RUMOUR REACH: PRINT THE FOUR NUMBERS BEFORE HE RULES, ordered by
+      BUILT, 22 September, fifth sitting, and waiting on the probe to prove
+      it live. The rule is carried into the Unreal port (Reaction.h) and 79
+      golden rows prove it answers as the C# does, including the exact line
+      between "cannot place you" and "arrest". A constable stands across the
+      road from crime A and in the yard for crime B, and his own sighting
+      goes through the rule; the verdict prints the outcome, how many times
+      it was asked and by whom. AN INDEPENDENT CHECK found four weaknesses,
+      all fixed before commit - the worst, that the verdict check believed
+      the run about itself. THE BOX CLOSES when a probe verdict reads
+      outcomeA=Arrest and outcomeB=NothingToArrest.
+      WHO THE CONSTABLE IS TO TOM IS JAFAR'S (decision 3): a stranger can
+      never place him, so the arrest can only happen if the policeman knows
+      him by sight. Built with that, one number to change.
+- [x] RUMOUR REACH: PRINT THE FOUR NUMBERS BEFORE HE RULES, ordered by
       Jafar 2026-09-22. "I am not turning a constant up until a rumour
       crosses the town; my instinct is that one act reaching a circle is
       right, and that town-wide knowledge should come from severity,
@@ -425,6 +449,13 @@ nothing above this line is worked on until the sheet is replaced.
       series has to say which caller it is measuring.
       NOTHING IS TUNED. The series changes one constant at a time and
       reports; no constant is left changed.
+      PRINTED, 22 September: `dotnet run --project ledger/Soak -c Release --
+      --reach-series --residents 200`. As shipped, 15 to 22 of 200 ever
+      remember, two or three retellings deep - the witness's circle of about
+      twenty. Filed as severe, the way a body is, 189 to 191 of 200. A
+      realistic witness (0.5 to 0.6 sure) reaches only 5 to 10. Friendship
+      strength is the steepest dial by far. Three towns agree. His instinct
+      survives; the numbers and the choice are in FOR-JAFAR.md.
 
 - RUMOUR REACH IS FLAT WITH POPULATION, and it is JAFAR'S to decide rather
   than an item to work. ROADMAP records it measured and unresolved: at 7,

@@ -102,6 +102,12 @@ namespace Ledger.Soak
             // from one process, one binary, one clock.
             int[] asked = ArgInts(args, "--residents", new[] { AuthoredResidents });
 
+            // THE FOUR NUMBERS, BEFORE JAFAR RULES ON REACH. A measurement and
+            // nothing else: no gate, no constant changed, and it says so.
+            if (args.Contains("--reach-series"))
+                return ReachSeries(asked.Length > 0 && asked[0] > AuthoredResidents ? asked[0] : 200,
+                                   days, seed);
+
             SelfTest();
 
             // THE FIRST RUNG PAYS THE JIT BILL AND THE LADDER READS IT AS
@@ -426,6 +432,144 @@ namespace Ledger.Soak
 
         /// One population's whole-run reading. Whole-run numbers only: the
         /// per-day series stay on `Outcome` and get printed on their own lines.
+        /// THE FOUR NUMBERS JAFAR ASKED FOR, 22 September, before he rules on
+        /// reach: "how strong the town's friendships actually are, how
+        /// confident a witness is at first sight, what counts as one retelling,
+        /// and then a series showing how reach moves as each one is changed
+        /// alone. I am not turning a constant up until a rumour crosses the
+        /// town."
+        ///
+        /// EVERY KNOB DEFAULTS TO WHAT THE GAME DOES, so a run with none turned
+        /// is the run this tool has always made - proved by diffing its output
+        /// before and after this was added, not asserted. NOTHING HERE CHANGES
+        /// A SHIPPED CONSTANT: HopDecay and MinConfidenceToShare are fields on
+        /// the mill INSTANCE this run builds, and the ties are scaled as this
+        /// run links them.
+        sealed class Knobs
+        {
+            /// Multiplies every tie, authored and drawn, as it is linked. The
+            /// graph clamps at 1.0, so scaling past that saturates rather than
+            /// inventing a friendship stronger than total.
+            public double TieScale = 1.0;
+            /// The confidence a witness files at. The soak has always called
+            /// Witness with no confidence, so its default, 1.0 - CERTAIN - is
+            /// what every reach number this tool has printed was measured at.
+            public double FirstSight = 1.0;
+            /// NaN means the mill's own value is left alone.
+            public double HopDecay = double.NaN;
+            public double ShareFloor = double.NaN;
+            /// SEVERITY. The mill already treats a body as indelible - it
+            /// "arrives at the far end of the street exactly as true as it
+            /// left" - so this files the witnessed fact as indelible, which is
+            /// the route severity already has. Not a new rule: the existing one,
+            /// measured.
+            public bool Indelible = false;
+            public string Label = "as-shipped";
+            public static readonly Knobs Shipped = new Knobs();
+        }
+
+        /// THE REACH SERIES, 22 September. Jafar, before ruling: "print the
+        /// numbers the old studio asked for and never produced. How strong the
+        /// town's friendships actually are, how confident a witness is at first
+        /// sight, what counts as one retelling, and then a series showing how
+        /// reach moves as each one is changed alone. I am not turning a
+        /// constant up until a rumour crosses the town; my instinct is that one
+        /// act reaching a circle is right, and that town-wide knowledge should
+        /// come from severity, repetition and the newspaper. The series tells
+        /// me whether that instinct survives."
+        ///
+        /// ONE RUN PER SETTING, same seed, same days, same town: the only thing
+        /// that differs between two rows is the knob the row names. The
+        /// determinism check is the ordinary soak's job and is not repeated.
+        static int ReachSeries(int residents, int days, int seed)
+        {
+            Console.WriteLine($"REACH SERIES - {residents} residents, {days} days, seed {seed}. "
+                              + "A MEASUREMENT: no gate, and no shipped constant is changed.");
+
+            // ---- 1. THE FRIENDSHIPS -------------------------------------------
+            var g0 = new SocialGraph();
+            var street = BuildStreet(g0);
+            var authored = new List<double>();
+            foreach (var a in street.Agents)
+                foreach (var c in g0.Contacts(a.Id))
+                    if (string.CompareOrdinal(a.Id, c) < 0) authored.Add(g0.Tie(a.Id, c));
+            authored.Sort();
+            Console.WriteLine();
+            Console.WriteLine("1. HOW STRONG THE TOWN'S FRIENDSHIPS ACTUALLY ARE");
+            Console.WriteLine($"   the seven authored residents have {authored.Count} ties between them, "
+                              + $"weights {string.Join(" ", authored.Select(w => w.ToString("0.0")))}");
+            Console.WriteLine($"   mean {authored.Average():0.00}, weakest {authored.First():0.0}, "
+                              + $"strongest {authored.Last():0.0}");
+            Console.WriteLine("   everybody above the seven is a copy whose ties are DRAWN FROM THIS SAME BAG, "
+                              + "so this is the whole town's distribution, not a sample of it");
+
+            // ---- 2. FIRST SIGHT ------------------------------------------------
+            Console.WriteLine();
+            Console.WriteLine("2. HOW CONFIDENT A WITNESS IS AT FIRST SIGHT");
+            Console.WriteLine("   the game's own callers, read off the code: a body seen in the open 1.0, "
+                              + "a body seen occluded 0.6, street trouble 0.5, a racket sighting "
+                              + "0.45 to 0.80 by the runner's competence");
+            Console.WriteLine("   THIS SOAK HAS ALWAYS WITNESSED AT 1.0 - CERTAIN - the most favourable case "
+                              + "there is, so every reach figure it has printed is a ceiling");
+
+            // ---- 3. ONE RETELLING ----------------------------------------------
+            var mill0 = new GossipMill(new SocialGraph());
+            Console.WriteLine();
+            Console.WriteLine("3. WHAT COUNTS AS ONE RETELLING");
+            Console.WriteLine($"   a speaker passes a rumour to a friend they are WITH at the time; it arrives at "
+                              + $"confidence x tie x {mill0.HopDecay:0.00} and is refused below "
+                              + $"{mill0.MinConfidenceToShare:0.00}; one hop per round");
+            Console.WriteLine("   A BODY IS EXEMPT: an indelible fact arrives exactly as true as it left, "
+                              + "so severity already has a road across town and ordinary talk does not");
+            Console.WriteLine("   how many retellings a CERTAIN rumour survives along a chain of equal ties:");
+            foreach (var t in new[] { 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0 })
+            {
+                double c = 1.0; int n = 0;
+                while (n < 50)
+                {
+                    double next = c * t * mill0.HopDecay;
+                    if (next < mill0.MinConfidenceToShare) break;
+                    c = next; n++;
+                }
+                Console.WriteLine($"     tie {t:0.0}: {n} retelling(s), last at {c:0.00}");
+            }
+
+            // ---- 4. THE SERIES -------------------------------------------------
+            Console.WriteLine();
+            Console.WriteLine("4. HOW REACH MOVES AS EACH IS CHANGED ALONE");
+            Console.WriteLine("   remembered = residents who ever remembered anything; two-tie-circle = residents "
+                              + "within two ties of the witness on the built graph, the most a two-retelling story could reach");
+            var rows = new List<Knobs> { new Knobs { Label = "as-shipped" } };
+            foreach (var v in new[] { 0.75, 1.25, 1.5, 2.0 })
+                rows.Add(new Knobs { TieScale = v, Label = $"ties x{v:0.00}" });
+            foreach (var v in new[] { 0.5, 0.6, 0.8 })
+                rows.Add(new Knobs { FirstSight = v, Label = $"first-sight {v:0.00}" });
+            foreach (var v in new[] { 0.7, 0.9, 1.0 })
+                rows.Add(new Knobs { HopDecay = v, Label = $"hop-decay {v:0.00}" });
+            foreach (var v in new[] { 0.3, 0.1, 0.05 })
+                rows.Add(new Knobs { ShareFloor = v, Label = $"share-floor {v:0.00}" });
+            // AND SEVERITY, the half of the instinct the four knobs do not
+            // reach: the same witnessing, filed the way a body is filed.
+            rows.Add(new Knobs { Indelible = true, Label = "severe (indelible)" });
+
+            Console.WriteLine($"   {"setting",-20} {"remembered",14} {"two-tie-circle",14} {"max-hops",9}  hops-by-distance(1..5+)");
+            foreach (var k in rows)
+            {
+                var o = Run(days, seed, residents, k);
+                int earshot = o.witnessBall2;
+                Console.WriteLine($"   {k.Label,-20} {o.residentsWithAnyMemory,6}/{o.agents,-7} "
+                                  + $"{earshot,14} "
+                                  + $"{o.maxHopEver,9}  "
+                                  + string.Join(" ", o.hopHistogram.Skip(1)));
+                Console.WriteLine($"reachSeriesRow setting={k.Label.Replace(' ', '_')} residents={o.agents} "
+                                  + $"remembered={o.residentsWithAnyMemory} earshot2={earshot} "
+                                  + $"maxHop={o.maxHopEver} hops={string.Join(",", o.hopHistogram.Skip(1))}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("reachSeries done: a measurement; nothing tuned, nothing gated.");
+            return 0;
+        }
+
         class Rung
         {
             public int residents, synthetic, days, closedDays;
@@ -449,7 +593,10 @@ namespace Ledger.Soak
         /// economy is different — it is a shipped table of suppliers and prices
         /// that the game reads, so `EconomySetup` is compiled in rather than
         /// approximated, exactly as the lab does it.
-        static Outcome Run(int days, int seed, int residents)
+        static Outcome Run(int days, int seed, int residents) =>
+            Run(days, seed, residents, Knobs.Shipped);
+
+        static Outcome Run(int days, int seed, int residents, Knobs k)
         {
             // THE BASELINE FOR THE RETAINED FIGURE, taken after a forced
             // collect and before anything of this run exists, so a previous
@@ -458,7 +605,7 @@ namespace Ledger.Soak
             var o = new Outcome();
             var rng = new Random(seed);
             var camp = new Campaign();
-            var mill = BuildTown(residents, seed, o);
+            var mill = BuildTown(residents, seed, o, k);
             var wallet = new Wallet(250);
             var economy = Ledger.Game.EconomySetup.Build();
             var purses = new PurseBook();
@@ -468,7 +615,7 @@ namespace Ledger.Soak
 
             mill.Witness(WitnessId, new Fact("player", "location_d2_evening", "warehouse"),
                          "the new owner was at the old warehouse the night of the fire",
-                         true, new GameTime(1, 9, 0));
+                         true, new GameTime(1, 9, 0), k.FirstSight, k.Indelible);
 
             var rumours = new List<int>();
             var reasons = new List<int>();
@@ -523,7 +670,7 @@ namespace Ledger.Soak
                 // most convincing wrong answer this tool could give.
                 if (rng.NextDouble() < 0.25)
                     mill.Witness(WitnessId, new Fact("player", "seen_d" + now.Day, "the yard"),
-                                 "somebody was in the yard again", true, now);
+                                 "somebody was in the yard again", true, now, k.FirstSight, k.Indelible);
 
                 string state = State(now, wallet, camp, economy, mill, purses);
                 o.states.Add(state);
@@ -750,10 +897,29 @@ namespace Ledger.Soak
         /// to hold still while the population moves. The degree distribution
         /// that results is printed, isolates included, because an isolate can
         /// never hear anything and that is half of any reach number here.
-        static GossipMill BuildTown(int residents, int seed, Outcome o)
+        static GossipMill BuildTown(int residents, int seed, Outcome o) =>
+            BuildTown(residents, seed, o, Knobs.Shipped);
+
+        static GossipMill BuildTown(int residents, int seed, Outcome o, Knobs k)
         {
             var graph = new SocialGraph();
             var mill = BuildStreet(graph);
+            // THE KNOBS THAT LIVE ON THE MILL, set on this run's instance only.
+            if (!double.IsNaN(k.HopDecay)) mill.HopDecay = k.HopDecay;
+            if (!double.IsNaN(k.ShareFloor)) mill.MinConfidenceToShare = k.ShareFloor;
+            // THE AUTHORED TIES, SCALED BY RE-LINKING. Link overwrites and
+            // clamps, so this is the authored street at k.TieScale strength.
+            // Skipped outright at 1.0, so the shipped run does not even touch
+            // the graph a second time.
+            if (k.TieScale != 1.0)
+            {
+                var authored = new List<(string, string, double)>();
+                foreach (var g in mill.Agents)
+                    foreach (var c in graph.Contacts(g.Id))
+                        if (string.CompareOrdinal(g.Id, c) < 0)
+                            authored.Add((g.Id, c, graph.Tie(g.Id, c)));
+                foreach (var (a, b, w) in authored) graph.Link(a, b, w * k.TieScale);
+            }
             var ids = mill.Agents.Select(g => g.Id).ToList();
 
             // The authored street's own shape, MEASURED off the graph: every
@@ -791,6 +957,8 @@ namespace Ledger.Soak
                 tries++;
                 string a = ids[pop.Next(ids.Count)], b = ids[pop.Next(ids.Count)];
                 if (a == b || graph.Tie(a, b) > 0) continue;
+                // The drawn ties come from the authored bag, which above is
+                // ALREADY scaled when TieScale is turned, so they scale with it.
                 graph.Link(a, b, weights[pop.Next(weights.Count)]);
                 ties++;
             }

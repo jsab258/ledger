@@ -6,6 +6,71 @@ between them.
 
 ## Decisions waiting on me
 
+**3. Who is the constable to Tom? It decides whether the arrest can ever
+happen.** The arrest rule says a constable arrests only if he can *place*
+you, and "place" means the top rung of identification — recognising the
+man. That rung is only reachable two ways: he already **knows you by sight**,
+or he has **watched you long enough to work out who you are**. A stranger
+who sees the act close up, in daylight, face to face, still tops out one rung
+short and cannot arrest. That is deliberate in the design ("the escape hatch
+is social, not athletic") — but it means the end of the story depends
+entirely on who the policeman is.
+
+  (a) **A beat constable who knows the new owner of the cab office by sight
+      — recommended, and what I am building.** It makes the arrest reachable
+      and keeps the design's promise exactly: strangers cannot place you, the
+      local bobby can. One number, and I can flip it.
+  (b) A stranger. The arrest code runs from live play, which meets the
+      roadmap's words, but it can never answer "arrest" — the gate would go
+      green with the end of the story still unreachable, which is the exact
+      thing that clause was written to stop.
+  (c) A stranger who has been watching. Needs the attention system carried
+      across to Unreal first; not today.
+
+**0. The new Hook sheet: pass 4 beside the old one — the first candidate
+that clears all four contradictions.** You asked for the candidate beside the
+old sheet as a choice; it is in front of you. What it fixes: Mickey's is a cab
+office — counter, radio, notices taped in the glass, strip lights — not a pub
+or a shop. Its front is a slim frame over a *patterned* tiled stallriser, the
+1989 working street rather than the heritage refit. It is one bay of the
+terrace, sharing the roof, the windows and the brick, at the terrace's south
+end — which is exactly where the plans put it. It is on the left, as the
+turned camera sees it. Plain saloons outside, no taxis. The far end rises into
+terraces behind retaining walls, not a wooded hill. The working craft are in
+the basin panel from pass 1. What is wrong with it: **the shop next door also
+says MICKEY'S**, there are **three cars** where you said one or two, and a
+**small satellite dish** sits high on the wall.
+
+  (a) **Approve pass 4's street panel as the new reference, with those three
+      listed as not citable, the way the old sheet's four were —
+      recommended.** The terrace, the lens lines and the anchor bay are what
+      the next step measures, and pass 4 has them right; a fifth pass to fix a
+      duplicated sign costs twenty minutes and risks losing the building it
+      finally got right. Nothing is matched to it until you say so.
+  (b) One more pass aimed only at the duplicated sign and the car count.
+  (c) Keep the old sheet.
+
+**3. Who is the constable to Tom? It decides whether the arrest can ever
+happen.** The arrest rule says a constable arrests only if he can *place*
+you, and "place" means the top rung of identification — recognising the
+man. That rung is only reachable two ways: he already **knows you by sight**,
+or he has **watched you long enough to work out who you are**. A stranger
+who sees the act close up, in daylight, face to face, still tops out one rung
+short and cannot arrest. That is deliberate in the design ("the escape hatch
+is social, not athletic") — but it means the end of the story depends
+entirely on who the policeman is.
+
+  (a) **A beat constable who knows the new owner of the cab office by sight
+      — recommended, and what I am building.** It makes the arrest reachable
+      and keeps the design's promise exactly: strangers cannot place you, the
+      local bobby can. One number, and I can flip it.
+  (b) A stranger. The arrest code runs from live play, which meets the
+      roadmap's words, but it can never answer "arrest" — the gate would go
+      green with the end of the story still unreachable, which is the exact
+      thing that clause was written to stop.
+  (c) A stranger who has been watching. Needs the attention system carried
+      across to Unreal first; not today.
+
 **0. The new Hook sheet: pass 3 beside the old one.** You asked for three
 passes and then the candidate beside the old sheet as a choice. Here it is,
 with its faults named rather than hoped past. Three of the four
@@ -38,18 +103,90 @@ Mickey's at eight to ten metres on the right.
   (c) Rule that the anchor should be the cab office, which would mean
       standing further south still so Mickey's own bay is in frame.
 
-**2. Rumour reach — the numbers before the ruling.**
-You asked for four things printed before you rule: how strong the town's
-friendships actually are, how confident a witness is at first sight, what
-counts as one retelling, and a series showing how reach moves as each is
-changed alone. **Not a decision yet — it is work, and it is next.** Recorded
-here so it is not lost: your instinct is that one act reaching a circle is
-right, and that town-wide knowledge should come from severity, repetition and
-the newspaper. All four numbers are now pinned to lines, and the fourth turns
-out to be a distribution rather than a value.
+**2. Rumour reach — the numbers are in, and your instinct survives.**
+Measured in a town of 200 for 500 days, three different towns, one setting
+changed at a time and nothing else. The four numbers you asked for:
+
+- **Friendships**: the seven written residents have 11 friendships, strengths
+  0.3 to 0.8, average 0.54. Everybody else's are drawn from that same bag.
+- **First sight**: the game's own witnesses file at 1.0 for a body seen in
+  the open, 0.6 seen through an obstruction, 0.5 for street trouble, 0.45 to
+  0.8 for a racket sighting. The test town has always witnessed at 1.0 —
+  certain — so every reach figure it ever printed was a best case.
+- **One retelling**: a friend you are actually *with* hears it at your
+  confidence × the friendship × 0.8, and it is dropped under 0.2. A certain
+  story survives one retelling across a weak friendship, two across an
+  average one, three across the strongest. **A body is exempt** — it arrives
+  exactly as true as it left.
+- **The series**:
+
+| changed alone | people who ever remembered, of 200 | furthest it travelled |
+|---|---|---|
+| nothing (as the game is) | 15 to 22 | 2 or 3 retellings |
+| a realistic witness (0.5–0.6 sure) | 5 to 10 | 1 retelling |
+| friendships a quarter stronger | 30 to 69 | 4 |
+| friendships half again as strong | 70 to 128 | 5 or 6 |
+| friendships doubled | 165 to 179 | 6 |
+| no fading at all per retelling | 30 to 69 | 4 |
+| dropped only under 0.05 | 56 to 121 | 5 |
+| **filed as severe, the way a body is** | **189 to 191** | **14 to 17** |
+
+What it says about your instinct: **one act reaching a circle is exactly what
+the game does now** — about the twenty people within two friendships of the
+witness. **Severity already crosses the town**: filed the way a body is filed,
+the same sighting reaches almost everyone. Two things you might not expect:
+a *realistic* witness does not even fill the circle — five to ten people, one
+retelling — because the test town has been flattering it with certainty; and
+friendship strength is by far the steepest dial, so small changes to how
+friendships are written would swing reach a lot. Repetition is present but
+not separated out; the newspaper does not exist yet, so neither is measured.
+
+  (a) **Leave the constants as they are — recommended.** Your instinct is
+      what the game already does: circle for ordinary acts, town for bodies.
+  (b) As (a), but look at why a realistic witness under-fills the circle —
+      if a street-trouble sighting should still reach its twenty people, that
+      is where to look, not at friendships.
+  (c) Raise reach generally. Friendships are the dial, and it is steep.
 
 ## Things you should know
 
+- 2026-09-22 **The crime probe is green again**, the first green run since
+  yesterday afternoon. It ran on the commit that carried last night's fix to
+  the check's own test, so that fix is proven on the runner and not only here.
+- 2026-09-22 **The independent check on the arrest found no blocking fault
+  and four weaknesses, and I am fixing all four before it is committed.** The
+  rule is carried across correctly and the constable's placement holds. The
+  worst weakness: the verdict check believed what the run said about itself,
+  so a run where nobody was arrested could still pass. It will work that out
+  from who the constable is instead. The others: the caller's name was typed
+  rather than reported, a piece count was one short, and the constable stayed
+  in the yard where he would appear in the overheard shot.
+- 2026-09-22 **One of the seventeen quick checks went red after the app
+  restart, and it was not the arrest.** The sky-conversion tool wrote its
+  scratch file to a folder that only exists on Linux; it had been passing
+  here only because the shell before the restart happened to point
+  elsewhere. Fixed properly, not worked around.
+- 2026-09-22 **The arrest rule is carried into the Unreal version and
+  proven** — 79 cases compared against the original, none wrong, including
+  the exact line where it tips from "cannot place you" to "arrest".
+- 2026-09-22 **The arrest is worse than I told you last night.** I counted
+  its callers in the old Unity version of the game, where the rule exists
+  and nothing calls it. The game now ships on Unreal, and the Unreal version
+  has no arrest at all — the rule was never carried across. So the work is:
+  carry the rule over, prove it gives the same answers as the original, and
+  put a constable in the crime street whose own sighting of the act goes
+  through it. That is what I am building while the card renders.
+- 2026-09-22 **I am adding an unnamed constable to the crime street**, "the
+  constable", to make the arrest reachable. The arrest rule is already
+  approved and says "a constable who watched it happen closes", so this puts
+  one where he can watch rather than inventing a character; he gets no name,
+  no history and no lines. Overrule it if a policeman in that street is a
+  canon question.
+- 2026-09-22 **I will not push the arrest while the sheet is rendering.**
+  Anything touching the Unreal project starts the forty-minute probe on this
+  PC, and one 2048-wide image has already died here on memory. Your rule only
+  stops two Unreal builds overlapping; this is me keeping the card free for
+  the image as well.
 - 2026-09-22 **Pass 3 landed before the restart and was not killed.** It
   fixed the cars — ordinary grey saloons now, no hackney carriages — and the
   trading name is gone. The metal shopfront and the tiled stallriser held.

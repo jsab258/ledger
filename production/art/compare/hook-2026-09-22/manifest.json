@@ -1,10 +1,10 @@
 {
   "batch": "hook-sheet-2026-09-22",
-  "written": "2026-09-22T20:07:26",
+  "written": "2026-09-22T21:16:23",
   "status": "INCOMPLETE",
   "run": {
     "sha": "local",
-    "started": "2026-09-22T19:47:16",
+    "started": "2026-09-22T20:56:42",
     "what": "the commit this batch was generated on; 'local' means it was run by hand rather than by CI"
   },
   "generator": {
@@ -47,7 +47,7 @@
   "content_rules": "invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
   "rights": "Model weights Apache-2.0; outputs unrestricted by the model licence. No third-party asset was an input. Prompts name only in-world Meridian businesses. NOTHING SHIPS UNREVIEWED: every image below is review=pending until a human has looked for anything resembling a real mark or a real face.",
   "caps": [
-    "--only: 1 of 6 item(s) selected by name",
+    "--only: 1 of 7 item(s) selected by name",
     "wall-clock cap 480.0 min"
   ],
   "blank_check": {
@@ -64,7 +64,7 @@
   },
   "resume": {
     "what": "recipe = prompt + negative(if it can act) + size + cfg + steps + seed; a match is skipped, a mismatch is made again",
-    "record": "made.json 3 item(s); the previous manifest 0 recorded + 0 reconstructed; 3 item(s) on record in total",
+    "record": "made.json 5 item(s); the previous manifest 0 recorded + 0 reconstructed; 5 item(s) on record in total",
     "kept": 0,
     "prompt_changed": 0,
     "unrecorded": 0
@@ -75,15 +75,15 @@
     "active": 0,
     "inert_at_cfg1": 1
   },
-  "items_in_spec": 6,
+  "items_in_spec": 7,
   "items_selected": 1,
   "selection": {
     "only": [
-      "hook22_street_p2_6"
+      "hook22_street_p4"
     ],
     "limit": null,
     "selected": 1,
-    "of": 6,
+    "of": 7,
     "what": "only = the ids asked for by name; limit = how many pictures this run may GENERATE, which skipped items do not count against"
   },
   "items_attempted": 1,
@@ -95,24 +95,25 @@
     "hook22_street_b",
     "hook22_shopfront",
     "hook22_basin",
+    "hook22_street_p2_6",
     "hook22_street_p2_7"
   ],
   "images": [
     {
-      "id": "hook22_street_p2_6",
+      "id": "hook22_street_p4",
       "kind": "concept",
-      "binds_to": "CANDIDATE FOR THE HOOK SHEET'S STREET PANEL - pass 2 of 3, written from pass 1's faults.",
-      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal pedestrian eye-height concept panel for LEDGER, the fictional British port town Meridian, a wet overcast working weekday in 1990. THE SUBJECT IS A MINICAB OFFICE AND ITS RANK, and it fills the right half of the frame: MICKEY'S CARS, a small ground-floor MINICAB OFFICE in a red brick terrace - a wide plain plate glass window with a HAND-LETTERED CARD taped inside reading MICKEY'S, a bare counter behind the glass with a two-way RADIO SET and a hardbacked FARE BOOK open on it, a wall clock, a strip light, a couple of moulded plastic chairs against the side wall for people waiting, and a plain painted fascia over the window. THREE ORDINARY DARK SALOON CARS WAIT NOSE TO TAIL AT THE KERB DIRECTLY OUTSIDE IT as a taxi rank, one driver leaning on a wing with his arms folded. THE BAY NEAREST THE CAMERA, on the same side and closer, HAS HAD ITS OLD SHOPFRONT TORN OUT AND REPLACED BY A FLAT ALUMINIUM WINDOW UNIT in the cheap commercial manner of the 1980s: a plain rectangular frame of thin dark metal sections set FLAT against the bare brickwork, metal top to bottom and edge to edge, one wide sheet of plate glass divided by two slim metal glazing bars, a matching flat metal door beside it with a long metal push bar, a cold white fluorescent tube burning inside just behind the glass, cardboard boxes and stacked goods pushed against the window from inside, a PATTERNED GLAZED TILE STALLRISER below the glass, and raw new brick repair patches around the opening where the old front was cut away. Behind and beyond them the street runs on: a continuous two-storey red and soot brick party-wall terrace in repeated 6 m bays under a 35 degree slate roof, party-wall chimney stacks, varied roof heights, flat brick arches over tall narrow white two-over-two sash windows upstairs, and further shop bays whose painted fascia boards are too far off and too rain-streaked for their lettering to be read. 6 m wet asphalt carriageway with a crowned camber, a white centre line, double yellow lines both sides, 2 m stone flag pavement each side with a kerb. HEAVILY WORN AND SOOTED: black soot streaks running down the brick under every gutter and beside every cast iron downpipe, a dark splashed metre at the foot of every wall from pavement splash, flaking paint on the joinery, rust stains, patched pointing - uneven and patchy across the fronts. Two or three ordinary working people at different distances in 1990 British clothes, seen from behind or too far off for a face to read. At the far end the ground rises inland into CONTOUR-FOLLOWING BRICK TERRACES STEPPING UP THE SLOPE BEHIND STONE RETAINING WALLS, pale and soft in the haze. Photoreal throughout, photographic material plausibility, soft directionless overcast light under a flat white sky., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
-      "negative": "timber shopfront, painted timber frame, pilasters, console brackets, moulded cornice, shopfront mouldings, pub, public house, inn, tavern, pub sign, hanging sign bracket, gilded lettering, gold leaf, Victorian gin palace, arched pub windows, delicatessen, grocer, greengrocer, bottles in the window, jars, packaged food display, gift shop, antique shop, boutique, conservation area refit, heritage shopfront, restored shopfront, quaint, tourist street, prosperous market town, clean new paint, CCTV camera, security camera, surveillance camera, camera on the wall, many signs, lettering on every fascia, readable shop names, wooded hill, trees on the hill, forest, detached villas, countryside, canal, narrowboat, illustration, stylised illustration, cartoon, painterly, real brand logo, trade mark, real company name, modern tech, computer screen, flat screen, mobile phone, wheeled bin, contemporary car, modern car, HUD, heads-up display, game interface overlay, screenshot",
+      "binds_to": "CANDIDATE FOR THE HOOK SHEET'S STREET PANEL - pass 4, aimed only at pass 3's two remaining faults: Mickey's as one bay of the terrace, and on the left.",
+      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal pedestrian eye-height concept panel for LEDGER, the fictional British port town Meridian, a wet overcast working weekday in 1990. The camera stands 1.6 m high in the carriageway at the SOUTH END of Quay Street, LOOKING NORTH up the street. THE SUBJECT IS THE TERRACE ON THE LEFT: one continuous two-storey red and soot brick party-wall terrace running away from the camera up the left side of the street in repeated 6 m bays, every bay the same height and joined to the next, one unbroken slate roof with party-wall chimney stacks on it, one unbroken building line along the pavement, tall narrow white two-over-two sash windows upstairs under flat brick arches. THE NEAREST BAY OF THAT TERRACE, on the left, is MICKEY'S, a small minicab office, built into the row exactly like its neighbours with the same roof, the same upper windows and the same brick above it, and a shop hard against it on its far side: its old shopfront has been replaced by a flat aluminium window unit of thin dark metal sections set flat against the bare brickwork, a wide sheet of plate glass, a flat metal door with a long push bar, a cold white fluorescent tube behind the glass, a hand-lettered card taped inside the window, a bare counter with a two-way radio set and an open hardbacked fare book on it, a patterned glazed tile stallriser below the glass, raw new brick repair patches around the opening, and one plain painted fascia board over it reading MICKEY'S in plain painted capitals. ONE OR TWO ORDINARY UNMARKED PRIVATE SALOON CARS, plain and second hand, are parked at the kerb directly outside it. The other shop bays further up the terrace have painted fascia boards too far off and too rain-streaked for their lettering to be read. ON THE RIGHT, across the road, the street opens out: a lower terrace of plain brick houses set back behind the far pavement. 6 m wet asphalt carriageway with a crowned camber, a white centre line, double yellow lines along both kerbs, 2 m stone flag pavements with a kerb. Worn where water and hands put it and clean elsewhere: black soot streaks below one leaking gutter, a dark splashed foot to the walls along the busiest stretch of pavement, flaking paint on the older joinery, and a well-kept front among the worn ones. Two or three ordinary working people at different distances in 1990 British clothes, seen from behind or too far off for a face to read. At the far end of the street the ground rises inland into contour-following brick terraces stepping up the slope behind stone retaining walls, pale and soft in the haze. Photoreal throughout, photographic material plausibility, soft directionless overcast light under a flat white sky., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+      "negative": "INERT AT CFG 1.0 AND KEPT ONLY AS A RECORD: pub, hackney carriage, black cab, taxi roof sign, free-standing kiosk, detached building, corner building, CCTV camera, wooded hill, canal, narrowboat, real brand logo, trade mark, modern car, HUD",
       "negative_active": false,
       "negative_note": "RECORDED BUT INERT: at cfg 1.0 sd-cli never evaluates the unconditional branch (resolve_guidance sets use_uncond only when img_cfg != txt_cfg), so this negative prompt was not encoded and changed nothing",
       "seen_on_run": "local",
       "review": "pending",
       "probe": true,
-      "recipe": "f0feeef201c3ce54",
+      "recipe": "5f35b538c5604f10",
       "width": 2048,
       "height": 1088,
-      "seed": 20260926,
+      "seed": 20260928,
       "steps": 8,
       "cfg": 1.0,
       "sampler": "sd-cli model-specific default (not overridden)",
@@ -120,20 +121,20 @@
         "--offload-to-cpu",
         "--diffusion-fa"
       ],
-      "seconds": 1207.1,
+      "seconds": 1179.2,
       "blank_check": {
         "verdict": "varied",
-        "why": "luminance spread 253/255, stdev 66.132, 254 distinct levels over 22345 of 2228224 pixels",
-        "spread": 253,
-        "stdev": 66.132,
-        "distinct": 254,
+        "why": "luminance spread 255/255, stdev 76.298, 256 distinct levels over 22345 of 2228224 pixels",
+        "spread": 255,
+        "stdev": 76.298,
+        "distinct": 256,
         "sampled": 22345,
         "pixels": 2228224
       },
       "status": "OK",
-      "bytes": 5280159,
-      "sha256": "c97210916c00a6c1503810a0c52fa9cefd097ba5ada174960287c15afe71eeb9",
-      "file": "hook22_street_p2_6.png",
+      "bytes": 4834247,
+      "sha256": "2423bffa325e03712656f87e217a4a96216af9cfa253e8f85586952e43e87fc5",
+      "file": "hook22_street_p4.png",
       "made_on_run": "local"
     }
   ],
