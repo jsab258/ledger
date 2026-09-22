@@ -6,6 +6,22 @@ between them.
 
 ## Decisions waiting on me
 
+**0. The new Hook sheet: pass 3 beside the old one.** You asked for three
+passes and then the candidate beside the old sheet as a choice. Here it is,
+with its faults named rather than hoped past. Three of the four
+contradictions are fixed across the three panels — a cab office, a metal
+shopfront, working craft in the basin. The fourth is not: Mickey's is a
+free-standing kiosk instead of one bay in a terrace, and it is on the wrong
+side for the turned camera.
+
+  (a) **Do not approve yet; one more pass aimed only at those two faults —
+      recommended, and it is running now** while you look, because the card
+      is otherwise idle. If you approve pass 3 instead, pass 4 is simply
+      discarded and nothing is lost.
+  (b) Approve pass 3's street panel as the new reference now, with the kiosk
+      listed as not citable, the way the old sheet's four were.
+  (c) Keep the old sheet.
+
 **1. Which way does the pair's composition go now the camera has turned?**
 Not urgent, and it may answer itself. The camera now stands at the south end
 looking north, as ruled. In that view the east parade is 2.9 m off on the
@@ -34,6 +50,33 @@ out to be a distribution rather than a value.
 
 ## Things you should know
 
+- 2026-09-22 **Pass 3 landed before the restart and was not killed.** It
+  fixed the cars — ordinary grey saloons now, no hackney carriages — and the
+  trading name is gone. The metal shopfront and the tiled stallriser held.
+  **And it made Mickey's a free-standing kiosk**: a one-storey brick box with
+  its own roof, standing out in front of the terrace. That is worse than the
+  corner building it was meant to fix.
+- 2026-09-22 **Every fix I put in the "do not draw" half of the prompt did
+  nothing.** The image model ignores that half entirely at the only setting
+  it is measured at, and the lane's own log says so on every item. The
+  hackney carriages, the corner building and the CCTV were all corrected
+  there. Only the positive description does anything, so from pass 4 every
+  correction is written as what IS there.
+- 2026-09-22 **Pass 3's prompt still carried three things you had ruled
+  out**, because it was launched before your rulings arrived: THREE cars
+  rather than one or two, the wall clock, and the waiting chairs. All three
+  come out in pass 4.
+- 2026-09-22 **The new prompts had Mickey's on the wrong side, inherited from
+  Codex.** The retired prompt says "on RIGHT/east" while looking north — but
+  in our street, looking north, east is on the LEFT, which I proved with a
+  render when the camera turned. Passes 1 to 3 all put Mickey's on the right,
+  and passes 2 and 3 had dropped the viewpoint altogether. Canon's own
+  reading of the sheet already says "a shop close on the near left". Pass 4
+  says south end, looking north, Mickey's on the left.
+- 2026-09-22 **The small-model test is due this sitting** by your earlier
+  ruling, and tonight's instruction did not name it. It needs the graphics
+  card, which the sheet is using, so I have put it after the arrest and the
+  rumour numbers rather than dropping it.
 - 2026-09-22 **"How confident a witness is at first sight" has no single
   answer**, which changes the shape of your rumour question. The mill's
   entry point defaults to certain, and only 0.95 or above becomes hard
@@ -146,7 +189,10 @@ so the record stays complete.)*
 - 2026-09-22 **Which way the pair is shot** — asked 22 September, ruled the
   same day: south end looking north. Camera turned, figures mirrored with it.
 - 2026-09-22 **The trading name and the fleet outside the cab office** —
-  asked and ruled the same day. Both applied to pass 3.
+  asked and ruled the same day. *Corrected 22 September, fifth sitting:* this
+  line said "both applied to pass 3", and that was untrue for the fleet. Pass
+  3 was already running when you ruled "one or two", and its prompt still
+  said three. The name was applied; the fleet goes into pass 4.
 - 2026-09-22 **A token to read the Actions log** — asked and given the same
   day. Used, the red diagnosed, and the self-pushing diagnostic removed.
 - 2026-09-22 **Whether to revert the metal fish shop** — asked and ruled the

@@ -1,0 +1,51 @@
+LEDGER - image generation, machine report
+============================================================
+written   2026-09-22 20:56:07 local
+host      ?
+os        ?  (?)
+cpu       ?  x? cores
+ram       0.0 GB
+free disk 0.0 GB on ?
+python    3.12.8
+probe     machine.json missing at None  (probe version 1 - PRE-DATES THE MULTI-ADAPTER FIX)
+
+GPUs   0 found via unrecorded source
+  NONE FOUND - either there is no display adapter or the probe failed.
+  Those two look identical from here, which is why this line says both.
+  and NO SOURCE LOG - this probe did not record where it looked,
+  so NONE FOUND here carries no denominator and proves nothing.
+
+vulkan drivers registered: ?
+vulkan status:             not reported by this probe
+vulkan loader dll:         not reported by this probe
+directml dll present:      ?
+
+PLAN CHOSEN FROM THE ABOVE
+------------------------------------------------------------
+  vendor        none
+  vram          0.0 GB  (known: False)
+  backend       cpu   fallback chain cpu
+  model         Z-Image-Turbo Q4_K  (Apache-2.0)
+  flags         --offload-to-cpu --diffusion-fa
+  download      6.7 GB one time
+  free disk ok  None  (need 20 GB)
+  BATCH CAPPED  first 2 items only - see reasons
+
+  why:
+    - no VRAM figure from any source - treating as unknown
+    - the probe found NO display adapter at all - CPU only, and this will be slow
+    - quantisation Q4_K: CPU run - quant is a RAM question, not a VRAM one
+    - CPU mode: batch CAPPED AT THE FIRST 2 ITEMS at half size. That is a proof the wiring works, not the batch - the remaining 10 are listed in the manifest as not attempted
+
+  next rung (model):   FLUX.1-schnell (Apache-2.0, 12B + T5-XXL, ~10GB more download) is the named next rung if Z-Image's lettering is not good enough. stable-diffusion.cpp runs both; the switch is one field. It is Apache-2.0 and UNGATED - see the VAE comment above, where the opposite was asserted and is retracted.
+  next rung (runtime): win-rocm-7.14.0-x64 (189 MB, same release) is the named next rung for an AMD card if Vulkan is slow or wrong - not wired, not measured, conditional on what this probe reports.
+
+RUN
+------------------------------------------------------------
+  DRY RUN - nothing downloaded. First command would be:
+    sd-cli.exe --diffusion-model z_image_turbo-Q4_K.gguf --vae ae.safetensors --llm Qwen3-4B-Instruct-2507-Q4_K_M.gguf -p "the view filling the frame edge to edge, Use case: historical-scene. One photoreal pedestrian eye-height concept panel for LEDGER, the fictional Briti..." --cfg-scale 1.0 --steps 8 -W 2048 -H 1088 --offload-to-cpu --diffusion-fa
+    model would be fetched from the first of 6 candidates: https://huggingface.co/leejet/Z-Image-Turbo-GGUF/resolve/main/z_image_turbo-Q4_K.gguf
+
+SENDING BACK
+------------------------------------------------------------
+  NOT WIRED: this run had no sender, so NOTHING was pushed. Zip the pictures folder named above and send it, and send this file. (If you are reading this in the repository, the sender is wired and this line cannot appear.)
