@@ -104,6 +104,14 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **The street took the new sheet's details, one at a time, with a
+  picture after each:** real bricks in dark joints instead of a pink blur;
+  arched brick heads over every window; chimney pots and caps; a black
+  gutter along the eaves; a dashed white centre line; a pale grey kerb; stone
+  flags that look like separate stones; the satellite dish on Mickey's; a
+  repair patch on the gable; rain streaks from the wall heads. Two things
+  had their two tries and are set aside: the wet shine on the pavement, and
+  the hillside at the far end.
 - 2026-09-22 **Correction:** my note that the old prompt had Mickey's on the
   wrong side was wrong for the game itself; it was right about the game
   engine, and the Blender pictures are the mirror (decision 5).

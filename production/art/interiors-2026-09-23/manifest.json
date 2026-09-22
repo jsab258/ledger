@@ -1,0 +1,268 @@
+{
+  "batch": "interiors-2026-09-23",
+  "written": "2026-09-22T23:42:10",
+  "status": "DONE",
+  "run": {
+    "sha": "local",
+    "started": "2026-09-22T23:34:48",
+    "what": "the commit this batch was generated on; 'local' means it was run by hand rather than by CI"
+  },
+  "generator": {
+    "tool": "stable-diffusion.cpp",
+    "tool_licence": "MIT",
+    "tool_release": "master-827-97d2990",
+    "backend": "vulkan",
+    "exe": "C:\\Users\\Jafar\\ledger-imagegen\\runtime-vulkan\\sd-cli.exe"
+  },
+  "model": {
+    "name": "Z-Image-Turbo",
+    "upstream": "Tongyi-MAI/Z-Image-Turbo",
+    "licence": "Apache-2.0",
+    "licence_note": "Apache-2.0 model weights; outputs unrestricted. No account, no terms to accept, no purchase.",
+    "params": "6B DiT + Qwen3-4B text encoder",
+    "steps": 8,
+    "cfg": 1.0,
+    "quant": "Q4_K",
+    "file": "z_image_turbo-Q4_K.gguf"
+  },
+  "text_encoder": {
+    "file": "Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+    "licence": "Apache-2.0 (Qwen3, Alibaba)"
+  },
+  "vae": {
+    "file": "ae.safetensors",
+    "licence": "Apache-2.0 (Z-Image / FLUX.1 autoencoder)"
+  },
+  "machine_plan": {
+    "vendor": "amd",
+    "vram_gb": 9.98,
+    "vram_known": true,
+    "backend": "vulkan",
+    "quant": "Q4_K",
+    "flags": [
+      "--offload-to-cpu",
+      "--diffusion-fa"
+    ]
+  },
+  "content_rules": "invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+  "rights": "Model weights Apache-2.0; outputs unrestricted by the model licence. No third-party asset was an input. Prompts name only in-world Meridian businesses. NOTHING SHIPS UNREVIEWED: every image below is review=pending until a human has looked for anything resembling a real mark or a real face.",
+  "caps": [
+    "wall-clock cap 480.0 min"
+  ],
+  "blank_check": {
+    "what": "every written PNG is decoded and its luminance measured; a uniform image is the known Vulkan failure (leejet/stable-diffusion.cpp#1031: blank PNG, exit success)",
+    "bound": "blank when spread <= 2/255 AND stdev <= 1.0, or alpha is 0 everywhere sampled",
+    "checked": 4,
+    "blank": 0,
+    "undecodable": 0,
+    "rechecked": 0,
+    "remade": 0,
+    "remade_blank": 0,
+    "remade_unrecorded": 0,
+    "remade_recipe_changed": 0
+  },
+  "resume": {
+    "what": "recipe = prompt + negative(if it can act) + size + cfg + steps + seed; a match is skipped, a mismatch is made again",
+    "record": "the previous manifest 0 recorded + 0 reconstructed; 0 item(s) on record in total",
+    "kept": 0,
+    "prompt_changed": 0,
+    "unrecorded": 0
+  },
+  "negatives": {
+    "what": "--negative-prompt is passed whenever an item has one; it only ACTS when cfg != 1.0, because sd-cli evaluates the unconditional branch only then",
+    "carried": 4,
+    "active": 0,
+    "inert_at_cfg1": 4
+  },
+  "items_in_spec": 4,
+  "items_selected": 4,
+  "selection": {
+    "only": null,
+    "limit": null,
+    "selected": 4,
+    "of": 4,
+    "what": "only = the ids asked for by name; limit = how many pictures this run may GENERATE, which skipped items do not count against"
+  },
+  "items_attempted": 4,
+  "items_written": 4,
+  "items_failed": 0,
+  "items_skipped": 0,
+  "not_attempted": [],
+  "images": [
+    {
+      "id": "int23_fish",
+      "kind": "concept",
+      "binds_to": "THE LIT CARD BEHIND east_parade bay 1 (the fish market)'s window, a texture on glass",
+      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal photograph, straight on and level, of the back of a small British wet fish shop's interior in 1990, as a customer standing at the window sees it: a white glazed tile back wall, a long refrigerated display counter across the frame with whole fish and fillets laid on crushed ice in stainless steel trays, small white price tickets on plastic spikes, white enamel weighing scales on the counter, a stainless sink and hose behind, a cold white fluorescent tube burning on the ceiling, a wet tiled floor. Photoreal throughout, photographic material plausibility, a real shop interior photographed on an ordinary weekday, the shop floor empty of people., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+      "negative": "people, faces, street, pavement, shop window frame, exterior, sky, illustration, cartoon, painterly, real brand logo, trade mark, real company name",
+      "negative_active": false,
+      "negative_note": "RECORDED BUT INERT: at cfg 1.0 sd-cli never evaluates the unconditional branch (resolve_guidance sets use_uncond only when img_cfg != txt_cfg), so this negative prompt was not encoded and changed nothing",
+      "seen_on_run": "local",
+      "review": "pending",
+      "probe": true,
+      "recipe": "9e7b16ae12a90116",
+      "width": 1152,
+      "height": 512,
+      "seed": 20260931,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "sd-cli model-specific default (not overridden)",
+      "flags": [
+        "--offload-to-cpu",
+        "--diffusion-fa"
+      ],
+      "seconds": 113.0,
+      "blank_check": {
+        "verdict": "varied",
+        "why": "luminance spread 254/255, stdev 70.285, 255 distinct levels over 23793 of 589824 pixels",
+        "spread": 254,
+        "stdev": 70.285,
+        "distinct": 255,
+        "sampled": 23793,
+        "pixels": 589824
+      },
+      "status": "OK",
+      "bytes": 1116248,
+      "sha256": "e10e20c7a0104bc95712ad4ed86d25db13fc98cb62a59f4cefae7d235e20d113",
+      "file": "int23_fish.png",
+      "made_on_run": "local"
+    },
+    {
+      "id": "int23_pawn",
+      "kind": "concept",
+      "binds_to": "THE LIT CARD BEHIND east_parade bay 2 (Rita's Pawn)'s window, a texture on glass",
+      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal photograph, straight on and level, of the back of a small British pawnbroker's shop interior in 1990, as a customer standing at the window sees it: lit glass display cabinets of second-hand wristwatches, rings and old cameras, wooden shelves of portable radios and cassette recorders, an acoustic guitar hanging on the wall, a brass balance on a glass-topped wooden counter, a rolled-up steel grille above the counter, warm tungsten light, patterned lino on the floor. Photoreal throughout, photographic material plausibility, a real shop interior photographed on an ordinary weekday, the shop floor empty of people., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+      "negative": "people, faces, street, pavement, shop window frame, exterior, sky, illustration, cartoon, painterly, real brand logo, trade mark, real company name",
+      "negative_active": false,
+      "negative_note": "RECORDED BUT INERT: at cfg 1.0 sd-cli never evaluates the unconditional branch (resolve_guidance sets use_uncond only when img_cfg != txt_cfg), so this negative prompt was not encoded and changed nothing",
+      "seen_on_run": "local",
+      "review": "pending",
+      "probe": true,
+      "recipe": "9c74a2f22d4c5194",
+      "width": 1152,
+      "height": 512,
+      "seed": 20260932,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "sd-cli model-specific default (not overridden)",
+      "flags": [
+        "--offload-to-cpu",
+        "--diffusion-fa"
+      ],
+      "seconds": 109.3,
+      "blank_check": {
+        "verdict": "varied",
+        "why": "luminance spread 255/255, stdev 61.379, 256 distinct levels over 23793 of 589824 pixels",
+        "spread": 255,
+        "stdev": 61.379,
+        "distinct": 256,
+        "sampled": 23793,
+        "pixels": 589824
+      },
+      "status": "OK",
+      "bytes": 1230226,
+      "sha256": "77ca291631084b514ba17d4e8449ca941aee77ff0b633f1c36e8f0e9525a73fb",
+      "file": "int23_pawn.png",
+      "made_on_run": "local"
+    },
+    {
+      "id": "int23_laundry",
+      "kind": "concept",
+      "binds_to": "THE LIT CARD BEHIND east_parade bay 4 (the steam laundry)'s window, a texture on glass",
+      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal photograph, straight on and level, of the back of a small British launderette interior in 1990, as a customer standing at the window sees it: a row of white front-loading washing machines along a pale tiled back wall, stainless steel tumble dryers stacked above them, a long wooden bench, a folding table with a plastic laundry basket, a wall-mounted soap powder dispenser, a cold white fluorescent tube burning on the ceiling, a speckled lino floor. Photoreal throughout, photographic material plausibility, a real shop interior photographed on an ordinary weekday, the shop floor empty of people., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+      "negative": "people, faces, street, pavement, shop window frame, exterior, sky, illustration, cartoon, painterly, real brand logo, trade mark, real company name",
+      "negative_active": false,
+      "negative_note": "RECORDED BUT INERT: at cfg 1.0 sd-cli never evaluates the unconditional branch (resolve_guidance sets use_uncond only when img_cfg != txt_cfg), so this negative prompt was not encoded and changed nothing",
+      "seen_on_run": "local",
+      "review": "pending",
+      "probe": true,
+      "recipe": "bf10480579f4a996",
+      "width": 1152,
+      "height": 512,
+      "seed": 20260933,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "sd-cli model-specific default (not overridden)",
+      "flags": [
+        "--offload-to-cpu",
+        "--diffusion-fa"
+      ],
+      "seconds": 108.7,
+      "blank_check": {
+        "verdict": "varied",
+        "why": "luminance spread 255/255, stdev 63.284, 256 distinct levels over 23793 of 589824 pixels",
+        "spread": 255,
+        "stdev": 63.284,
+        "distinct": 256,
+        "sampled": 23793,
+        "pixels": 589824
+      },
+      "status": "OK",
+      "bytes": 1277039,
+      "sha256": "46aa71275182cb8988687bebc653b928042bff8713c8248a66eefd171790d292",
+      "file": "int23_laundry.png",
+      "made_on_run": "local"
+    },
+    {
+      "id": "int23_grocer",
+      "kind": "concept",
+      "binds_to": "THE LIT CARD BEHIND east_parade bay 5 (the grocer)'s window, a texture on glass",
+      "prompt": "the view filling the frame edge to edge, Use case: historical-scene. One photoreal photograph, straight on and level, of the back of a small British corner grocer's shop interior in 1990, as a customer standing at the window sees it: tall shelves of tins, jars and packets with plain generic labels, wooden crates of potatoes, onions and apples stacked on the floor, a wooden counter with an old mechanical cash register and a set of scales, a cold white fluorescent tube burning on the ceiling, worn lino on the floor. Photoreal throughout, photographic material plausibility, a real shop interior photographed on an ordinary weekday, the shop floor empty of people., invented fictional shop name only, no real company names, no real brand logos, no trade marks, no real person, no recognisable faces, no celebrity likeness, no alcohol and no gambling anywhere in frame, nothing poured or consumed, no games of chance, nobody under eighteen and no school in use, nothing sexual",
+      "negative": "people, faces, street, pavement, shop window frame, exterior, sky, illustration, cartoon, painterly, real brand logo, trade mark, real company name",
+      "negative_active": false,
+      "negative_note": "RECORDED BUT INERT: at cfg 1.0 sd-cli never evaluates the unconditional branch (resolve_guidance sets use_uncond only when img_cfg != txt_cfg), so this negative prompt was not encoded and changed nothing",
+      "seen_on_run": "local",
+      "review": "pending",
+      "probe": true,
+      "recipe": "3d9eafe68dc96055",
+      "width": 1152,
+      "height": 512,
+      "seed": 20260934,
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "sd-cli model-specific default (not overridden)",
+      "flags": [
+        "--offload-to-cpu",
+        "--diffusion-fa"
+      ],
+      "seconds": 108.5,
+      "blank_check": {
+        "verdict": "varied",
+        "why": "luminance spread 255/255, stdev 72.578, 256 distinct levels over 23793 of 589824 pixels",
+        "spread": 255,
+        "stdev": 72.578,
+        "distinct": 256,
+        "sampled": 23793,
+        "pixels": 589824
+      },
+      "status": "OK",
+      "bytes": 1273094,
+      "sha256": "1b89e22fa6d5ca1b9a06bf649c67af0d645517cdaf79bc9a4f8307ffb8081b8f",
+      "file": "int23_grocer.png",
+      "made_on_run": "local"
+    }
+  ],
+  "downloads": [
+    {
+      "file": "z_image_turbo-Q4_K.gguf",
+      "bytes": 3864250304,
+      "url": "already on disk",
+      "licence": "Apache-2.0",
+      "sha256": "244527f44f1c16ba13eeb3ca9467e8926760d597357dd3f5e77a6dcf5fc76ca1 (first 64MB only)"
+    },
+    {
+      "file": "Qwen3-4B-Instruct-2507-Q4_K_M.gguf",
+      "bytes": 2497281120,
+      "url": "already on disk",
+      "licence": "Apache-2.0 (Qwen3, Alibaba)",
+      "sha256": "97428507a1be5ffd4064a2acdc1d132b47db90cab28a3ca7758a1138774578a9 (first 64MB only)"
+    },
+    {
+      "file": "ae.safetensors",
+      "bytes": 335304388,
+      "url": "already on disk",
+      "licence": "Apache-2.0 (Z-Image / FLUX.1 autoencoder)",
+      "sha256": "39e440a13a5f2fa7decb5289644e4af2db44e083bef720c252edd5a8447659a0 (first 64MB only)"
+    }
+  ]
+}
