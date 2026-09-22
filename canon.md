@@ -28,6 +28,10 @@ canon lines it changes, and canon cites the record at those lines.
   them would break the bill of materials, the golden rows and every verdict key
   that has ever named a piece, for nothing. Canon and the atlas agree: one
   street, Quay Street, the Hook, the player's minicab office on it.
+- QUAY STREET'S THREE SIDES, ruled by Jafar 2026-09-22 so nobody has to ask again:
+  the east side is the six-bay parade; the NEAR WEST BLOCK, by the cab office,
+  carries shops; the FAR WEST BLOCK is plain terraces. The approved Hook sheet
+  shows a shop close on the near left with the street opening out beyond it.
 - MICKEY'S IS A MINICAB OFFICE (D19, decided 2026-09-14, supersedes
   D15's pub; D15's siting on Quay Street stands). Its information room
   is the business: a book of every fare, a radio nobody can help
