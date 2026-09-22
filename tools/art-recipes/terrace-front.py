@@ -309,7 +309,7 @@ MATERIALS = (
     # picture was three times darker; against the approved sheet a shop
     # window is not a black hole, it is a dark surface with the sky and the
     # opposite frontage lying in it.
-    ("glass",       (0.085, 0.092, 0.100), 0.06),
+    ("glass",       (0.085, 0.092, 0.100), 0.0),   # 0.06 until 23 September: polished float glass has none
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
     # warm where ours was blue. A wet Welsh slate roof under an overcast sky
@@ -5220,8 +5220,8 @@ def build_and_render(args):
         # had already been switched on, so every render printed "raytracing
         # unavailable" while raytracing was on, at the build's defaults.
         #
-        # AND IT STAYS AT THE VALUES IT ACTUALLY HAD, 0.5 and half
-        # resolution, which are this build's defaults. The palette was
+        # THE ROUGHNESS CEILING STAYS AT THE 0.5 IT ACTUALLY HAD, this
+        # build's default (the resolution moved; see below). The palette was
         # re-closed against the new sheet at those values the same night;
         # the 1.0 the old line meant to ask for brightens the wet footway
         # by about seventeen levels and would reopen that work. Written out
@@ -5231,8 +5231,13 @@ def build_and_render(args):
             opts.trace_max_roughness = 0.5
         else:
             opts.screen_trace_max_roughness = 0.5
-        opts.resolution_scale = "2"
-        print("tfNote raytracing=on/max-roughness-0.5/half-resolution")
+        # FULL RESOLUTION, 23 September, once the shop windows had rooms in
+        # them: at half resolution the refraction blurred each room to a
+        # smear. Measured before and after, the frame's regions do not move
+        # (whole 118.4 -> 118.3, road 183, footway 96), so the palette stays
+        # closed; only the detail through the glass sharpens.
+        opts.resolution_scale = "1"
+        print("tfNote raytracing=on/max-roughness-0.5/full-resolution")
     except (AttributeError, TypeError) as exc:
         # SAID OUT LOUD RATHER THAN SILENTLY FLAT, the same rule the world
         # and the HDRI already follow here: a street that is not reflecting
