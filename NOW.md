@@ -206,11 +206,12 @@ nothing.
       about the character pipeline rather than on money, a decision D2 and
       D16 took on 10 September: MetaHuman, free under a million in revenue,
       already on the allowlist, and its clothing arrives fitted and rigged.
-- [ ] SO THE QUESTION IS STAGE 2's, NOT STAGE 1's, and it is worth asking
-      properly when stage 2 starts: whether image-to-3D is wanted for
-      CHARACTER heads or props later, on a card with ten gigabytes. Until
-      then it gates nothing and a sitting spent on AMD PyTorch buys nothing
-      that is on the list.
+- MOVED TO STAGE 2, UNSCHEDULED, and Jafar corrected what it is for:
+  THE CASE WAS NEVER HEADS, IT IS VOLUME. Hundreds of distinct props once
+  the street becomes a town. So it comes back when MAKING PROPS ONE AT A
+  TIME BECOMES THE BOTTLENECK - which is a thing that will be obvious when
+  it happens - and not merely when stage 2 starts. Until then it gates
+  nothing.
 
 ## 4. The small-model test for conversation
 
