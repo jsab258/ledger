@@ -5959,7 +5959,13 @@ namespace
 				Mid->SetTextureParameterValue(
 					FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(M))), Tex);
 			}
-			const LedgerSurface::Tiling T = LedgerSurface::TilingFor(Pc, kMetresPerTile);
+			// THE FILE'S METRES PER TILE FOR THIS SURFACE, 23 September, with
+			// kMetresPerTile only where the file says nothing: brick is 0.55 m
+			// of wall a tile, measured off its courses, and at the old single
+			// 2 m convention the parade's bricks were drawn three and a half
+			// times their size and read as blocks of stone.
+			const LedgerSurface::Tiling T = LedgerSurface::TilingFor(
+				Pc, LedgerVignette::MetresPerTileFor(GSpec, Pc.Surface, kMetresPerTile));
 			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), (float)T.U);
 			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), (float)T.V);
 			// THE ALBEDO GRADE, QUEUE 299, AND THE ARITHMETIC IS NOT HERE.
@@ -6132,6 +6138,7 @@ namespace
 			TCHAR_TO_UTF8(*GTexRoot), GTexRootFiles, GTexRootTried,
 			(int)GSpec.Pieces.size(),
 			GTexturesImported, GMidsCreated, kMetresPerTile)
+			+ LedgerVignette::TilingSegment(GSpec)
 			+ LedgerSurface::PaintRouteSegment(GPaint)
 			+ LedgerSurface::WetnessDoneSegment(GBinds, GWetness);
 		GDecalsLine = LedgerSurface::DecalsDoneLine(

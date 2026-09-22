@@ -822,8 +822,8 @@
       "asphalt": 3.0,
       "sidewalk": 3.0,
       "kerb": 1.5,
-      "brick_red": 3.5,
-      "brick_grey": 3.5,
+      "brick_red": 0.55,
+      "brick_grey": 0.55,
       "concrete": 3.0,
       "roof": 2.0,
       "metal": 1.0,
@@ -833,7 +833,7 @@
       "interior": 3.0,
       "plaster": 1.0
     },
-    "note": "trade_standard is the wrong word for these and so is derived: they are COPIED from the convention already running in ledger/Assets/Scripts/Game/WorldBuilder.cs, which tiles ground at 3 m and walls at 3.5 m. Copied rather than re-guessed so the vignette does not become a second opinion about the same question. THE RIGHT VALUE IS A MEASUREMENT NOBODY HAS TAKEN: each ambientCG set covers a stated physical area and none of those areas has been read into this repository. That is the named next step, and until it is taken every number here is a placeholder that looks like a decision. Aspect correction is NOT here: it belongs to the texture, and Ledger.Core.TextureFit.Isotropic does it from the bound texture's own pixel dimensions in both engines."
+    "note": "trade_standard is the wrong word for these and so is derived: they are COPIED from the convention already running in ledger/Assets/Scripts/Game/WorldBuilder.cs, which tiles ground at 3 m and walls at 3.5 m. Copied rather than re-guessed so the vignette does not become a second opinion about the same question. THE RIGHT VALUE IS A MEASUREMENT NOBODY HAS TAKEN: each ambientCG set covers a stated physical area and none of those areas has been read into this repository. That is the named next step, and until it is taken every number here is a placeholder that looks like a decision. Aspect correction is NOT here: it belongs to the texture, and Ledger.Core.TextureFit.Isotropic does it from the bound texture's own pixel dimensions in both engines. BRICK IS MEASURED NOW, 23 September, and it is the first: a British course is 75 mm with its bed joint and the pack's brick maps carry about seven courses, so one tile is 0.55 m of wall - the figure tools/art-recipes/terrace-front.py was set from on 22 September, after its first pass read bricks a quarter of a metre tall. At 3.5 m the same map drew bricks six times their size and the Unreal parade read as blocks of stone. The other figures are still the WorldBuilder convention."
   },
 
   "cameras": [

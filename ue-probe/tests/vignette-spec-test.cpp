@@ -6795,6 +6795,31 @@ int main(int argc, char** argv)
 		      Bad == 0 ? std::string() : ("first bare token: " + BadOne));
 	}
 
+	// ---- SURFACE TILING, 23 September ------------------------------------
+	// The file has always carried surface_tiling and this reader ignored it;
+	// now it reads it, so the committed file's brick has to come back at the
+	// measured 0.55 m, a surface the table does not name has to take the
+	// file's default, and a file with no table has to keep the caller's
+	// convention - which is how every piece list before this one rendered.
+	{
+		std::printf("   %s\n", LedgerVignette::TilingSegment(S).c_str());
+		Check(S.TilingM.count("brick_red") == 1
+		      && std::fabs(S.TilingM["brick_red"] - 0.55) < 1e-9
+		      && std::fabs(S.TilingM["brick_grey"] - 0.55) < 1e-9,
+		      "the committed piece list's brick tiles at the measured 0.55 m, and this reader sees it");
+		Check(std::fabs(LedgerVignette::MetresPerTileFor(S, "brick_red", 2.0) - 0.55) < 1e-9,
+		      "a named surface takes the file's figure, not the 2 m convention");
+		Check(S.TilingDefaultM > 0.0
+		      && std::fabs(LedgerVignette::MetresPerTileFor(S, "no_such_surface", 2.0) - S.TilingDefaultM) < 1e-9,
+		      "a surface the table does not name takes the file's default");
+		LedgerVignette::Spec Empty;
+		Check(std::fabs(LedgerVignette::MetresPerTileFor(Empty, "brick_red", 2.0) - 2.0) < 1e-9,
+		      "a file with no table keeps the caller's convention, as every older one rendered");
+		Check(LedgerVignette::TilingSegment(S).find("tilingFromFile=yes") != std::string::npos
+		      && LedgerVignette::TilingSegment(Empty).find("tilingFromFile=no") != std::string::npos,
+		      "the materials line says whether the tiling came from the file");
+	}
+
 	std::printf("%s: %d of %d check(s) failed\n",
 	            gFailed == 0 ? "PASS" : "FAIL", gFailed, gChecks);
 	return gFailed == 0 ? 0 : 1;
