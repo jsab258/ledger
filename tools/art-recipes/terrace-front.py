@@ -634,6 +634,10 @@ AUTHORED_RES = (1400, 1100)
 #:
 #: 1400 x 740 is 1.892 against the panel's 1.8926.
 HOOK_RES = (1400, 740)
+#: THE NEW SHEET'S SHAPE, 22 September: pass 4 is 2048 x 1088, an aspect of
+#: 1.882; 1400 x 744 is 1.8817. The retired poster's panel was 1.8926, which is
+#: why the line above was 740.
+HOOK_RES = (1400, 744)
 
 #: AND THE LENS WAS NEVER DERIVED FROM THE APPROVED SHEET AT ALL, which is
 #: the answer to why our frame and the concept art are not the same angle.
@@ -684,6 +688,30 @@ HOOK_RES = (1400, 740)
 #: a sitting's work and it is Jafar's to schedule; until then this stays at
 #: the value the accepted frames were measured at, and says so.
 HOOK_FOV_V_DEG = 60.0
+#: AND NOW IT IS DERIVED, 22 September, from the NEW sheet's own geometry:
+#: production/reference/hook-sheet-lens.md is the how. 46 degrees vertical on
+#: the sheet's 1.882 frame, 77 horizontal, the middle of the 42.5 to 50 range
+#: that the real objects in the sheet agree on (Mickey's front as one 6 m bay;
+#: the nearest parked car as a 1990 saloon). The sheet's window rhythm implies
+#: 26 degrees and was not used: the model drew three windows over Mickey's bay
+#: where our street has two, so that spacing is decoration and not a module.
+HOOK_FOV_V_DEG = 46.0
+#: THE CAMERA IS LEVEL AND THE PICTURE IS SHIFTED. The sheet's verticals do not
+#: lean (three downpipes, -0.6, +1.7 and -1.2 degrees - both ways, which is the
+#: model's hand), yet its horizon sits at row 620 of 1088, 0.570 of the way
+#: down. A level camera with a lens shifted up is how an architectural
+#: photograph puts the horizon low and keeps its walls straight; tipping the
+#: camera would make every wall lean.
+#: THE SHIFT IS A FRACTION OF THE HEIGHT HERE, AND THAT WAS MEASURED. The first
+#: render took Blender's shift as a fraction of the frame's larger side and
+#: passed 0.070 x 744 / 1400: the horizon then landed at 0.537 of the height,
+#: exactly half way to the 0.570 it was sent to. With sensor_fit VERTICAL the
+#: shift is in units of the fitted side, the height, so it is 0.070 as it is.
+#: Checked by running production/reference/hook-sheet-lens-vp.py on the render
+#: and comparing its vanishing point with the sheet's, not by eye.
+HOOK_HORIZON_FROM_TOP = 620.0 / 1088.0
+HOOK_EYE_M = 1.9          # three people in the sheet, read as 1.75 m adults
+HOOK_YAW_LEFT_DEG = 20.4  # the street's vanishing point is 478 px right of centre
 
 
 # ---------------------------------------------------------------------------
@@ -2579,8 +2607,26 @@ def street_cameras():
     HOOK_X = 9.0
     HOOK_LOOK_X = 40.0
     HOOK_Y = 2.2
+    # AND WHERE THE NEW SHEET PUTS IT, 22 September (hook-sheet-lens.md,
+    # steps 7 and 8). ACROSS: 7.3 m from the east frontage, off the
+    # frontage's own ground line through the vanishing point - y = -2.2,
+    # which is where the old hook camera stood across the street. ALONG:
+    # x = -3.2, just south of the terrace's end on the quay apron, placed so
+    # Mickey's south pilaster lands at 0.146 of the width as it does on the
+    # sheet; its north pilaster then lands at 0.383 against the sheet's 0.396.
+    HOOK_X = -3.2
+    HOOK_Y = -2.2
+    # LEVEL, and turned towards the parade: the look point is at eye height,
+    # HOOK_YAW_LEFT_DEG to the left of straight up the street (+x), which in
+    # this street's axes is towards +y, the east side.
+    _yaw = math.radians(HOOK_YAW_LEFT_DEG)
+    HOOK_LOOK_X = HOOK_X + 30.0 * math.cos(_yaw)
+    HOOK_LOOK_Y = HOOK_Y + 30.0 * math.sin(_yaw)
     reach = HOOK_X - HOOK_LOOK_X
-    drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
+    drop = 0.0
+    # ITS OWN EYE HEIGHT, not the shared `eye`, which the across camera
+    # below also reads and which stays at cam_A's 1.6.
+    hook_eye = THRESHOLD_ABOVE_CROWN_M + HOOK_EYE_M
     return {
         "hook": {
             # THE CAMERA STANDS ON THE PARADE'S OWN PAVEMENT, which is
@@ -2628,9 +2674,11 @@ def street_cameras():
             # building has the ROAD between it and the camera, eight to ten
             # metres of it. Near-right and close are not the same thing, and
             # the far pavement is where the picture is taken from.
-            "loc": (HOOK_X, HOOK_Y, eye),
-            "look": (HOOK_LOOK_X, HOOK_Y, eye - drop),
+            "loc": (HOOK_X, HOOK_Y, hook_eye),
+            "look": (HOOK_LOOK_X, HOOK_LOOK_Y, hook_eye - drop),
             "fov_v_deg": HOOK_FOV_V_DEG,
+            # the horizon below centre by shifting, not by tipping
+            "shift_y": HOOK_HORIZON_FROM_TOP - 0.5,
             "res": HOOK_RES,
             "note": "the-sheet's-own-viewpoint/south-end-looking-NORTH-per-Jafar-2026-09-22/"
                     "3-degrees-UP-measured-off-the-approved-sheet-not-cam_A's-4-down/"
@@ -3609,6 +3657,11 @@ def _camera(bpy, name, spec):
     tx, ty, tz = spec["look"]
     cam.location = (lx, ly, lz)
     cam.rotation_euler = look_at_euler((lx, ly, lz), (tx, ty, tz))
+    # A LENS SHIFT, when the camera asks for one: the picture moves and the
+    # camera does not tip, so verticals stay vertical. Positive moves the
+    # frame up, which puts the horizon lower in it.
+    if "shift_y" in spec:
+        cam_data.shift_y = float(spec["shift_y"])
     return cam
 
 

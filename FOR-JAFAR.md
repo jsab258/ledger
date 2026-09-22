@@ -53,6 +53,14 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **The camera's lens is derived from the new sheet and our
+  street now vanishes where the sheet does.** About 46 degrees tall on the
+  sheet's frame, the camera level at about 1.9 m and turned 20 degrees towards
+  the parade — the sheet was drawn from a tall man's eye height, not the 1.6 m
+  the prompt asked for. Three "known lengths" in the sheet disagreed; the real
+  objects (Mickey's front, a parked car) agreed with each other and the
+  decoration (the window rhythm) did not, so the real objects set it. Checked
+  by finding our render's vanishing point the same way as the sheet's.
 - 2026-09-22 **The arrest happens in live play now, and the run is green.**
   First try on the runner: the constable watched the first crime for two and a
   half seconds from across the road, recognised Tom and arrested him; for the
