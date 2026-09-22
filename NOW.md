@@ -621,6 +621,12 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       places ONE gully by design (street.gully, B3), so more is a spec
       change and goes with the next probe run that touches the spec.
 
+- [x] EVERY FLAG ITS OWN STONE: the footway read as a boarded floor (the
+      concrete map's streaks at a raking angle) with lines drawn on it. Two
+      attempts: a per-flag tone from the joints' own Brick texture, then the
+      plaster map's undirected mottle under it. Its value did not move
+      (111/95/77 -> 112/97/78).
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
