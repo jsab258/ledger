@@ -129,28 +129,14 @@ nothing.
       had NEVER been visible - which is why two attempts at the glass
       changed nothing. The spec's interior_card_depth_m of 1.2 is what it
       was always for.
-- [ ] THE PANE ITSELF IS STILL OPAQUE, at 59 against the sheet's 69, and
-      this is set aside after FOUR attempts rather than two. Tried:
-      lightening it (a lighter panel), the Transmission socket (no change),
-      raytraced refraction per material (no change), and the room (a real
-      fault, fixed, kept). The next attempt starts by finding out what in
-      this EEVEE build refuses the transmission - the render method or the
-      material's blend mode - and not by lightening anything again.
-- [x] THE DUSK FRAME CAME BACK, and better than it was: mean 6.1 to 21.0,
-      with the lit shop rooms throwing light out onto a wet road that
-      mirrors it in long streaks, the lanterns lit, and the lettering
-      readable on both sides. D31 asked for dusk, wet, lamps lit and a
-      figure in silhouette and it now has all four. The shop rooms did it -
-      there was nothing behind the windows to light the street WITH.
-- [x] DEPTH BEYOND THIRTY METRES, ON THE THIRD ATTEMPT. Not volumetrics -
-      a MIST pass mixed toward the sky in the compositor, chosen because it
-      CANNOT produce the failure the other two did: a post-mix toward a pale
-      colour has no path to black, and the worst it can do is too much haze,
-      which is visible at a glance. Measured off the sheet rather than
-      assumed: its near brick reads saturation 0.442 and its far buildings
-      0.330, so distance costs colour; ours cost none at all and now costs
-      0.407 to 0.205. The far end of the street recedes and the near
-      shopfront is untouched.
+- [x] THE WINDOWS ARE WINDOWS, on the fifth attempt and by ASKING rather
+      than guessing. The note left here after four failures said the next
+      attempt should find out what in this EEVEE build refuses the
+      transmission instead of lightening anything again - so it did: the
+      material carries `surface_render_method`, DITHERED by default with
+      BLENDED the alternative, and DITHERED resolves transparency
+      stochastically, which is exactly what returns a dark pane. The window
+      region now reads 68.8 against the sheet's 68.8.
 - [ ] AND THE FAR END IS STILL SKY. What is beyond our thirty metres is
       nothing, because the TOWN past the street is stage 6. Haze on an
       empty sky is haze on nothing; this softened the street we have.
