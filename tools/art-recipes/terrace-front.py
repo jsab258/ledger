@@ -406,6 +406,7 @@ MATERIALS = (
     ("car_bluegrey",(0.070, 0.085, 0.105), 0.30),
     ("car_glass",   (0.010, 0.011, 0.014), 0.10),   # darker than shop glass
     ("tyre",        (0.008, 0.008, 0.008), 0.88),
+    ("car_trim",    (0.018, 0.018, 0.019), 0.55),   # moulded black plastic
     # THE YELLOW REAR PLATE IS THE STRONGEST PERIOD-BRITISH TELL IN THE FRAME
     # and it costs one box. White front, yellow rear has been the law here
     # since 1973, and it is a fact about British roads rather than a brand -
@@ -623,6 +624,7 @@ SURFACE_OF = {
     "car_dark":     (None, 0.0),
     "car_glass":    (None, 0.0),
     "tyre":         (None, 0.0),
+    "car_trim":     (None, 0.0),
     "plate_rear":   (None, 0.0),
     "plate_front":  (None, 0.0),
     "lamp_red":     (None, 0.0),
@@ -2626,6 +2628,22 @@ def _vehicles(out):
         # THE TAIL: two lamps at the outer corners and the yellow plate
         # between them, which is the whole of what a British car of this
         # period says about itself from behind.
+        # BUMPERS AND HUBS, 22 September: the pair's two saloons read as toy
+        # blocks, and the sheet's cars are what a 1980s saloon is - a black
+        # moulded bumper across each end at the height a bumper sits, and a
+        # pale pressed-steel hub in each wheel.
+        place(((L - 0.02, 0.36), (L + 0.06, 0.36), (L + 0.06, 0.52), (L - 0.02, 0.52)),
+              -half - 0.01, half + 0.01, "veh%d_bumper_rear" % n, "car_trim",
+              "moulded-black-bumper")
+        place(((-0.06, 0.36), (0.02, 0.36), (0.02, 0.52), (-0.06, 0.52)),
+              -half - 0.01, half + 0.01, "veh%d_bumper_front" % n, "car_trim",
+              "moulded-black-bumper")
+        for w, ax in enumerate((0.80, L - 0.78)):
+            for side, sy in (("n", half - 0.09 + WHEEL_W / 2.0), ("f", -half + 0.09 - WHEEL_W / 2.0)):
+                off = 0.004 if side == "n" else -0.004
+                place(_wheel_profile(ax, WHEEL_D / 2.0, WHEEL_D * 0.55),
+                      min(sy, sy + off), max(sy, sy + off) + 0.003,
+                      "veh%d_hub_%d%s" % (n, w, side), "frame_metal", "the-hub")
         for side, sy in (("n", half - 0.30), ("f", -half + 0.30)):
             place(((L - 0.05, 0.62), (L + 0.01, 0.62), (L + 0.01, 0.88), (L - 0.05, 0.88)),
                   sy - 0.11, sy + 0.11, "veh%d_lamp_%s" % (n, side), "lamp_red",
@@ -5684,10 +5702,11 @@ def selftest():
                   "%d piece(s)/%.2fm" % (len(crane), BACKDROP_CRANE_T))
 
             veh = [b for b in street if b["id"].startswith("veh0_")]
-            # ELEVEN: a body, a glasshouse, a roof cap, four wheels, two
-            # tail lamps and two plates. Counted rather than guessed at,
-            # because the first version of this check guessed twelve.
-            check("accept/the-street-has-a-car-in-it", len(veh) == 11,
+            # SEVENTEEN: a body, a glasshouse, a roof cap, four wheels, two
+            # tail lamps and two plates - eleven, counted rather than guessed
+            # at, because the first version of this check guessed twelve -
+            # and since 22 September two bumpers and four hubs.
+            check("accept/the-street-has-a-car-in-it", len(veh) == 17,
                   "%d piece(s)" % len(veh))
             body = [b for b in veh if b["id"] == "veh0_body"]
             check("accept/the-car-has-a-body", len(body) == 1)
