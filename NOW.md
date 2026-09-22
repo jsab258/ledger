@@ -125,6 +125,10 @@ nothing.
 - [x] Memories survive a save and a reload, held by thirty-eight golden rows
       against the real C#, with four engine-versus-bench disagreements found
       and fixed.
+- [x] AND AN INDEPENDENT CHECK BROKE IT NINE WAYS, none of them reachable
+      from the fixtures I had written. The worst: a corrupt save was a
+      harmless no-op in Unity and silently destroyed gossip state in
+      Unreal. Every one is fixed and pinned by a row.
 - [x] THE JSON HALF IS PORTED. A memory's save format is the markdown, and
       both engines already read it; a RUMOUR is not in that markdown - it
       lives in the mill and goes into the save FILE as JSON under "agents",
@@ -139,8 +143,16 @@ nothing.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.
-- [ ] The automatic check that reads the result, so a run where the key press
-      silently stops working goes red.
+- [x] THE AUTOMATIC CHECK READS THE RESULT NOW. The verdict file has said
+      at its own head since it was written that nothing read it, so a run
+      whose input path was dead got committed and pushed GREEN. It is read
+      on every probe run and it reads the PAIRS, not the positive halves:
+      a witness filed it AND an occluded one filed nothing; the rumour
+      passed when the two stood together AND did not when they were apart.
+      It also refuses a verdict measured on another commit.
+- NOTE: the probe already commits two crimes and judges the witness every
+  run. What is missing is the SAVE, the RESTART and the RELOAD between
+  them, and the unwitnessed control to compare against.
 - [ ] Keep the pair as a regression.
 - It touches memory, so its tests and the independent check apply.
 
