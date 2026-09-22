@@ -197,9 +197,20 @@ nothing.
 
 ## 3. The 3D generation test on this machine's card
 
-- [ ] Whether TRELLIS, TRELLIS 2 or Hunyuan3D runs for shape on ten gigabytes
-      of AMD memory. One image through it, and what it needed.
-- It decides how stage 1's remaining content gets made.
+- [x] ANSWERED WITHOUT RUNNING ANYTHING, and the answer is that it decides
+      nothing about stage 1. Counted off the street's own bill of materials:
+      78 lines, of which 33 are GENERATE from primitives, 33 HAVE, 6 ENGINE,
+      5 FETCH and 7 made by the 2D image generator that already runs on this
+      machine. NOT ONE is routed MESH3D. The single BLOCKED line is period
+      WARDROBE, not shape - and its own note says it waits on a decision
+      about the character pipeline rather than on money, a decision D2 and
+      D16 took on 10 September: MetaHuman, free under a million in revenue,
+      already on the allowlist, and its clothing arrives fitted and rigged.
+- [ ] SO THE QUESTION IS STAGE 2's, NOT STAGE 1's, and it is worth asking
+      properly when stage 2 starts: whether image-to-3D is wanted for
+      CHARACTER heads or props later, on a card with ten gigabytes. Until
+      then it gates nothing and a sitting spent on AMD PyTorch buys nothing
+      that is on the list.
 
 ## 4. The small-model test for conversation
 
