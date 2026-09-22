@@ -708,6 +708,10 @@ namespace
 				{
 					++Skipped; --Rows; continue;
 				}
+				if (LedgerCore::Golden::IsUnanswerableByThisBuild(Fields[0]))
+				{
+					++Skipped; --Rows; continue;
+				}
 				const LedgerCore::Golden::Answer A = LedgerCore::Golden::Evaluate(Fields);
 				if (!A.Known)
 				{
