@@ -115,9 +115,12 @@ nothing.
       the paint - there is so much more of it - and ours is now at its
       value and just under its saturation. The rest is that the sheet's
       frame is fuller: its parade is close and ours recedes.
-- [ ] MEAN 103 AGAINST 120, and it trades directly against the colour
-      above: every lift of the exposure costs saturation in AgX. Measured
-      three ways and settled at the colour end on purpose.
+- [x] BRIGHTNESS IS SETTLED, AND NOT AT THE MATCHING NUMBER. Sky at 1.70
+      lands our mean at 120.3 against the sheet's 119.7 - and at that value
+      the brick loses its punch, the glass goes pale grey and the street
+      reads hazy. 1.35 measures 111.6 and looks like a street. That is the
+      second time today a measure moved the right way while the picture
+      moved the wrong way, and both are written into the recipe.
 - [x] THE GLASS STOPPED BEING A TILED PHOTOGRAPH. It carried the pack's
       glass map box-projected across it, so every window on the street had
       a repeating dark checker on it, which reads as a grille.

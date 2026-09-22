@@ -2974,6 +2974,22 @@ def _world(bpy, root):
             # sky, so a sky set a half-stop too bright does not brighten the
             # sky, it bleaches the ground.
             bg.inputs["Strength"].default_value = 1.35
+            # 1.35 AND NOT 1.70, WHICH IS THE VALUE THAT MATCHES THE NUMBER.
+            #
+            # Swept at 1.35, 1.70 and 2.10 and read off the frame each time.
+            # The sheet's street panel has a mean of 119.7; 1.70 lands at
+            # 120.3, which is as close as a render choice gets. AND THE
+            # PICTURE IS WORSE AT IT: the brick loses its punch, the shop
+            # glass goes to a pale grey panel and the whole street reads
+            # hazy, like a photograph taken through a window. 1.35 measures
+            # 111.6 and looks like a street.
+            #
+            # THIS IS THE SECOND TIME IN ONE SITTING that a measure went the
+            # right way while the picture went the wrong way - the first was
+            # the saturation figure going UP when the windows carried a tiled
+            # photograph nobody wanted. Both are worth remembering together,
+            # because the arithmetic is the only part of this that can be
+            # automated and it is not the part that decides.
             return "hdri=%s skyStrength=0.7/the-scene-file's-own" % hdr.replace(" ", "~")
         except RuntimeError:
             pass
