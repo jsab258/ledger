@@ -414,8 +414,15 @@ nothing above this line is worked on until the sheet is replaced.
       strength as well, which is the whole of "confidence x tie x 0.8,
       refused below 0.2". Tie strength is `SocialGraph.Link(a, b, weight)`
       and the authored weights come from the town builder in
-      `StreetMap.cs`. First-sight confidence comes out of Perception and is
-      the one of the four not yet pinned to a line.
+      `StreetMap.cs`. FIRST-SIGHT CONFIDENCE IS PINNED TOO, and it is not one
+      number. The mill's `Witness(...)` DEFAULTS to 1.0, certain, and only
+      0.95 or above becomes hard knowledge rather than a rumour - but the
+      real callers pass much less: a body is `Violence.BodyConfidence`,
+      which is 1.0 in the open and 0.6 occluded; street trouble is a flat
+      0.5; a racket sighting is `0.45 + 0.35 * (1 - competence)`, so 0.45
+      to 0.80 depending on who was running it. So "how confident a witness
+      is at first sight" has a DISTRIBUTION rather than a value, and the
+      series has to say which caller it is measuring.
       NOTHING IS TUNED. The series changes one constant at a time and
       reports; no constant is left changed.
 
