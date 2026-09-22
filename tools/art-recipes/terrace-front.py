@@ -1918,6 +1918,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _backdrop(out)
     # AND THE OTHER END, since the camera turned to face it.
     _north_rise(out)
+    _north_approach(out)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
     _repair_patches(out)
@@ -2403,6 +2404,63 @@ def _repair_patches(out):
         out.append({"id": "repair_patch_%d" % k, "material": "render_patch", "kind": "mesh",
                     "verts": front + back, "faces": faces,
                     "note": "D06/repair-patches-within-older-masonry/made-good-by-hand"})
+
+
+#: THE STREET CARRIES ON TO THE RISE, 23 September. Between the road's end at
+#: x = 44 and the rise's first tier at 110 there was nothing, and from the
+#: hook camera the sky map's green field showed through under the hill: a
+#: field in the middle of a port town, at the exact point of the frame the
+#: sheet puts its vanishing street - Quay Street running on uphill between
+#: terraces toward the market, which canon puts north. A BACKDROP, NAMED AS
+#: ONE (backdrop_rise_approach_*): the road and its footways carry on, and
+#: two terraces of plain houses line them, each house its own width and
+#: height, slate roofs along the street, dark windows two to a floor. No
+#: door anyone can reach, nothing in the stage's street. Stage 6 builds the
+#: town and deletes this.
+APPROACH_X = (44.0, 108.0)
+
+
+def _north_approach(out):
+    """The road, the footways and two backdrop terraces from x 44 to 108."""
+    import random
+    rnd = random.Random(20260923)          # fixed: the same street every render
+    x0, x1 = APPROACH_X
+    _box(out, "backdrop_rise_approach_road", "asphalt", x0, x1, -3.0, 3.0, -0.30, 0.0,
+         "the-road-carries-on")
+    for sgn, side in ((1.0, "e"), (-1.0, "w")):
+        a, b = sgn * 3.0, sgn * STREET_FRONTAGE_M
+        _box(out, "backdrop_rise_approach_footway_%s" % side, "paving", x0, x1,
+             min(a, b), max(a, b), -0.30, THRESHOLD_ABOVE_CROWN_M, "and-its-footway")
+        x = x0 + rnd.uniform(1.0, 3.0)
+        n = 0
+        while x < x1 - 4.0:
+            w = rnd.uniform(5.0, 7.0)
+            xe = min(x + w, x1)
+            h = rnd.uniform(5.4, 6.6)
+            r = rnd.random()
+            wall = "render_cream" if r < 0.2 else ("brick_red" if r < 0.75 else "brick_grey")
+            f, back = sgn * STREET_FRONTAGE_M, sgn * (STREET_FRONTAGE_M + 8.0)
+            _box(out, "backdrop_rise_approach_%s%d" % (side, n), wall, x, xe,
+                 min(f, back), max(f, back), 0.0, h, "a-house/%.1fm/%s" % (xe - x, wall))
+            ridge = sgn * (STREET_FRONTAGE_M + 4.0)
+            out.append({"id": "backdrop_rise_approach_%s%d_roof" % (side, n), "material": "slate",
+                        "kind": "slope", "x0": x - 0.05, "x1": xe + 0.05,
+                        "y_eaves": f - sgn * 0.25, "y_ridge": ridge,
+                        "z_eaves": h, "z_ridge": h + 2.6, "note": "its-roof-along-the-street"})
+            # DARK WINDOWS, two to a floor, on the street face.
+            face = f - sgn * 0.03
+            for fz in (1.0, 3.6):
+                for k in (0.28, 0.72):
+                    cx = x + (xe - x) * k
+                    _box(out, "backdrop_rise_approach_%s%d_win%d%d" % (side, n, int(fz), int(k * 100)),
+                         "car_glass", cx - 0.45, cx + 0.45, min(face, f), max(face, f),
+                         fz, min(fz + 1.4, h - 0.3), "a-window")
+            if rnd.random() < 0.7:
+                _box(out, "backdrop_rise_approach_%s%d_stack" % (side, n), "brick_red",
+                     xe - 0.45, xe + 0.45, ridge - 0.25, ridge + 0.25, h + 1.8, h + 3.6,
+                     "a-stack-on-the-party-wall")
+            n += 1
+            x = xe + (rnd.uniform(1.5, 3.0) if rnd.random() < 0.15 else 0.0)
 
 
 def _north_rise(out):
