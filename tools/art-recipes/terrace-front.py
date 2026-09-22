@@ -1,18 +1,25 @@
 #!/usr/bin/env python3
 """ONE TERRACE FRONT, AUTHORED FROM ITS WRITTEN DIMENSIONS.
 
-STATUS: PLACEHOLDER, 2026-09-22, and the mark is deliberate. The upper
-storey is accepted - two recessed sashes on their stone sills and lintels,
-coursed brick between, the fascia band, the eaves and the slate - but THE
-GROUND FLOOR READS AS ONE UNDIFFERENTIATED DARK SLAB: the stallriser, the
-display glazing, the toplight and both doors are all near-black and the same
-value, so a British shopfront's four parts do not separate at any distance
-and neither door is findable. Two attempts against the Hook sheet, both
-rendered and looked at, and it is not a dimension problem - every number
-below agrees with the emitted street to the micron. It is VALUE AND FRAME:
-the parts need their own tones and the glazing needs mullions and a frame
-before the front can be judged against the sheet at all. Stopped here per
-the two-attempt rule rather than carried on.
+STATUS: ACCEPTED, 2026-09-22, after two more attempts against the Hook sheet.
+The ground floor was a PLACEHOLDER until today and the note said why: the
+stallriser, the display glazing, the toplight and both doors were all the same
+near-black value and the glazing had no frame, so a British shopfront's four
+parts did not separate at any distance and neither door was findable. They
+separate now. The glazing has jambs, a sill rail and two mullions dividing it
+into three lights; the transom runs across the glass and the shop door as one
+line; the stallriser is lighter because it catches the sky; the shop door
+carries the shopfront's own joinery and the side door a different paint.
+
+WHAT THE SECOND ATTEMPT GOT WRONG, because it is the useful half: the first
+replacement side door was a blue-green that looked nothing like brick and had
+a luminance of 0.0483 against the brick's 0.0488. The same door hiding in the
+same wall, wearing a different hue. Hue does not carry at distance; value
+does, and this file now checks it rather than trusting an eye.
+
+STILL NOT RIGHT, and named rather than left to be found: the shop door and the
+side door sit side by side and read as one busy patch, and the toplight above
+the transom does not separate from the glazing below it.
 
 The first authored Meridian facade: a single `east_parade` bay - the
 shopfront row - built as an elevation and stood on the street.
@@ -80,9 +87,34 @@ MATERIALS = (
     ("brick_red",   (0.085, 0.040, 0.030), 0.92),
     ("brick_grey",  (0.055, 0.052, 0.048), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
-    ("paint_dark",  (0.020, 0.030, 0.026), 0.55),   # shopfront joinery, doors
+    # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
+    # whole of the second attempt. The first one gave the stallriser, the
+    # glazing, the toplight and both doors one near-black tone, so a British
+    # shopfront's four parts did not separate at any distance and neither door
+    # could be found. Nothing about the DIMENSIONS was wrong - they agree with
+    # the built street to the micron - so the repair is value and frame.
+    #
+    # THE ORDER MATTERS MORE THAN THE HUES. Glass is the darkest thing on the
+    # elevation because what it shows is an unlit interior; the painted
+    # joinery around it is several times lighter, which is what draws the
+    # frame; the stallriser is lighter still because it catches the sky; and
+    # the side door is a different paint from the shop's, because a shop and
+    # the flat above it were never painted by the same person on the same day.
+    ("paint_joinery",(0.058, 0.076, 0.064), 0.42),  # the shopfront's painted woodwork
+    ("paint_stall", (0.086, 0.104, 0.090), 0.50),   # the kicked board, lighter again
+    # THE SIDE DOOR IS A DIFFERENT PAINT, AND THE SECOND ATTEMPT HAD TO MOVE
+    # IT. A warm brown was a plausible door colour and it was almost exactly
+    # brick_red's own value, so the door vanished into the wall it sits in -
+    # the same failure as the first attempt, one part along. It is a dark
+    # dark green now, and the FIRST dark green was rejected by this file's own
+    # new check: a blue-green that looked nothing like brick had a luminance
+    # of 0.0483 against the brick's 0.0488, which is the same door hiding in
+    # the same wall wearing a different hue. Hue is not what carries at
+    # distance; value is. This one sits at half the brick's, and the check
+    # below holds it there.
+    ("paint_door",  (0.012, 0.030, 0.024), 0.42),   # the side door: a different paint
     ("paint_fascia",(0.030, 0.022, 0.030), 0.45),   # the lettered board
-    ("glass",       (0.035, 0.040, 0.042), 0.12),
+    ("glass",       (0.012, 0.015, 0.017), 0.10),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     ("slate",       (0.026, 0.028, 0.032), 0.70),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
@@ -366,13 +398,48 @@ def plan_parts(p):
     fb = p["fascia_bottom_m"]
     fp = p["fascia_proj_m"]
 
+    # THE JOINERY SECTION, DERIVED FROM THE TRANSOM'S OWN THICKNESS. A
+    # shopfront's frame is one set of sections: the transom is the heaviest
+    # member the spec dimensions, the jambs match it, and a mullion is
+    # lighter than both. Deriving them from transom_thickness_m rather than
+    # typing three numbers means the whole frame stays in proportion if that
+    # dimension ever moves.
+    jamb_t = tr_t
+    mull_t = tr_t * 0.75
+    joinery_proj = 0.03
+
     # STALLRISER under the display run only. It stops at the shop door, which
     # is what a door is: a hole to the pavement.
-    _box(parts, "stallriser", "paint_dark", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
-         "0.6m-of-kicked-board-under-the-glass/projects-proud-of-the-glazing-line")
+    _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
+         "0.6m-of-kicked-board-under-the-glass/lighter-because-it-catches-the-sky")
     _box(parts, "display_glazing", "glass", disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
          "recessed-so-the-frontage-is-not-one-plane")
-    _box(parts, "transom_bar", "paint_dark", disp_x0, shop_x1, -0.02, 0.02, tr_h, tr_h + tr_t,
+
+    # THE FRAME ROUND THE GLASS, which the first attempt had none of. Two
+    # jambs and a sill rail; the transom below is its head. Without these the
+    # glazing is a hole in a wall rather than a window in a shopfront, and at
+    # any distance a hole reads as a stain.
+    _box(parts, "display_jamb_left", "paint_joinery", disp_x0, disp_x0 + jamb_t,
+         -joinery_proj, rec + 0.02, sr_h, tr_h, "the-frame's-left-upright")
+    _box(parts, "display_jamb_right", "paint_joinery", disp_x1 - jamb_t, disp_x1,
+         -joinery_proj, rec + 0.02, sr_h, tr_h, "the-frame's-right-upright")
+    _box(parts, "display_sill_rail", "paint_joinery", disp_x0, disp_x1,
+         -joinery_proj, rec + 0.02, sr_h, sr_h + tr_t,
+         "the-rail-the-glass-sits-on/off-the-stallriser's-top")
+
+    # MULLIONS. A 3.56 m run of unbroken plate is not a 1990 British shop; it
+    # is a 2010 one. Three lights, so two mullions, at the thirds of the
+    # GLAZED opening rather than of the bay, because the frame divides what it
+    # encloses.
+    inner0, inner1 = disp_x0 + jamb_t, disp_x1 - jamb_t
+    for M in (1, 2):
+        cx = inner0 + (inner1 - inner0) * (M / 3.0)
+        _box(parts, "display_mullion_%d" % M, "paint_joinery",
+             cx - mull_t / 2.0, cx + mull_t / 2.0, -joinery_proj, rec + 0.02, sr_h, tr_h,
+             "three-lights-not-one-sheet/at-the-thirds-of-the-opening-it-divides")
+
+    _box(parts, "transom_bar", "paint_joinery", disp_x0, shop_x1, -joinery_proj, rec + 0.02,
+         tr_h, tr_h + tr_t,
          "the-bar-runs-across-the-glazing-AND-the-shop-door/one-line-across-the-opening")
     # TOPLIGHT: from the transom to the fascia line less its own frame. The
     # spec gives "roughly 2.82" as DERIVED; it is derived here instead of
@@ -380,21 +447,57 @@ def plan_parts(p):
     top_z1 = fb - p["brick_course_m"] * 0.5
     _box(parts, "toplight", "glass", disp_x0, shop_x1, rec, rec + 0.02, tr_h + tr_t, top_z1,
          "the-light-above-the-transom/derived-top=fascia_bottom-minus-half-a-course")
+    # THE TOPLIGHT IS DIVIDED ON THE SAME LINES as the glazing below it, which
+    # is what makes a frontage read as one piece of joinery rather than two
+    # unrelated holes. The shop door's own edge is a division too, so it takes
+    # a bar of its own.
+    for M in (1, 2):
+        cx = inner0 + (inner1 - inner0) * (M / 3.0)
+        _box(parts, "toplight_mullion_%d" % M, "paint_joinery",
+             cx - mull_t / 2.0, cx + mull_t / 2.0, -joinery_proj, rec + 0.02,
+             tr_h + tr_t, top_z1, "on-the-same-line-as-the-mullion-below-it")
+    _box(parts, "toplight_bar_over_door", "paint_joinery",
+         shop_x0 - mull_t / 2.0, shop_x0 + mull_t / 2.0, -joinery_proj, rec + 0.02,
+         tr_h + tr_t, top_z1, "the-division-over-the-shop-door's-own-edge")
 
     # SHOP DOOR, brick spandrel above it to the fascia.
-    _box(parts, "shop_door_leaf", "paint_dark", shop_x0, shop_x1, 0.02, 0.06,
+    _box(parts, "shop_door_leaf", "paint_joinery", shop_x0, shop_x1, 0.02, 0.06,
          0.0, p["shop_glazed_from_m"],
          "solid-below-the-glazed-light")
-    _box(parts, "shop_door_light", "glass", shop_x0, shop_x1, 0.03, 0.05,
-         p["shop_glazed_from_m"], p["shop_door_h_m"],
-         "the-glazed-upper-light")
+    _box(parts, "shop_door_light", "glass", shop_x0 + jamb_t, shop_x1 - jamb_t, 0.03, 0.05,
+         p["shop_glazed_from_m"], p["shop_door_h_m"] - jamb_t,
+         "the-glazed-upper-light/inside-its-own-stiles-and-rail")
+    # THE DOOR'S OWN FRAME, so it is findable. A door the same value as the
+    # glass beside it is a door nobody can see, which is what the first
+    # attempt's frame said in one line.
+    for Name, X0, X1 in (("shop_door_stile_left", shop_x0, shop_x0 + jamb_t),
+                         ("shop_door_stile_right", shop_x1 - jamb_t, shop_x1)):
+        _box(parts, Name, "paint_joinery", X0, X1, -joinery_proj, 0.06,
+             0.0, p["shop_door_h_m"], "the-door's-own-upright")
+    _box(parts, "shop_door_mid_rail", "paint_joinery", shop_x0, shop_x1,
+         -joinery_proj, 0.06, p["shop_glazed_from_m"] - jamb_t, p["shop_glazed_from_m"],
+         "the-rail-under-the-glass/where-a-hand-pushes")
+    _box(parts, "shop_door_head_rail", "paint_joinery", shop_x0, shop_x1,
+         -joinery_proj, 0.06, p["shop_door_h_m"] - jamb_t, p["shop_door_h_m"],
+         "the-rail-over-the-glass")
     _box(parts, "shop_door_spandrel", wall, shop_x0, shop_x1, 0.0, T,
          p["shop_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
 
     # SIDE DOOR: the flat above. Its own spandrel, and a letterplate.
-    _box(parts, "side_door_leaf", "paint_dark", side_x0, side_x1, 0.02, 0.06,
+    _box(parts, "side_door_leaf", "paint_door", side_x0, side_x1, 0.02, 0.06,
          0.0, p["side_door_h_m"],
          "1981x838mm/the-standard-British-external-door/imperial-because-the-country-was")
+    # A CASING ROUND IT, in the shopfront's joinery rather than the door's own
+    # paint, because the frame belongs to the building and the leaf belongs to
+    # whoever lives behind it.
+    for Name, X0, X1 in (("side_door_casing_left", side_x0 - jamb_t, side_x0),
+                         ("side_door_casing_right", side_x1, side_x1 + jamb_t)):
+        if X1 > X0:
+            _box(parts, Name, "paint_joinery", X0, X1, -joinery_proj, 0.06,
+                 0.0, p["side_door_h_m"] + jamb_t, "the-casing's-upright")
+    _box(parts, "side_door_casing_head", "paint_joinery",
+         side_x0 - jamb_t, side_x1 + jamb_t, -joinery_proj, 0.06,
+         p["side_door_h_m"], p["side_door_h_m"] + jamb_t, "the-casing's-head")
     lp_w, lp_h = p["letterplate_w_m"], p["letterplate_h_m"]
     lp_cx = (side_x0 + side_x1) * 0.5
     _box(parts, "letterplate", "lead", lp_cx - lp_w / 2.0, lp_cx + lp_w / 2.0,
@@ -762,10 +865,10 @@ def build_and_render(args):
             wrote += 1
 
     agree = sum(1 for _, _, _, a in checks if a)
-    print("tfStatus=PLACEHOLDER/upper-storey-accepted/ground-floor-reads-as-one-dark-slab "
-          "whatIsWrong=stallriser-glazing-toplight-and-both-doors-are-all-the-same-near-black-value-"
-          "and-the-glazing-has-no-frame-or-mullions notADimensionProblem=crossCheckAgree-is-5/5 "
-          "attempts=2/2 stoppedPer=two-attempt-rule")
+    print("tfStatus=ACCEPTED/the-shopfront's-four-parts-separate "
+          "whatIsStillWrong=the-two-doors-read-as-one-busy-patch-and-the-toplight-does-not-"
+          "separate-from-the-glazing-below-it attemptsThisSitting=2/2 "
+          "theFixWasValueAndFrame=not-dimensions/crossCheckAgree-is-5/5")
     print("terrace-front done: status=RAN bay=east_parade partsBuilt=%d/%d "
           "crossCheckAgree=%d/%d previewsWrote=%d/%d res=%dx%d outDir=%s"
           % (built, len(parts), agree, len(checks), wrote, len(FRAMES),
@@ -907,6 +1010,60 @@ def selftest():
                     blockers.append(b["id"])
         check("accept/nothing-solid-stands-behind-an-upper-window",
               not blockers, ",".join(sorted(set(blockers))))
+
+        # THE SECOND ATTEMPT'S OWN CLAIMS, CHECKED. The first one failed by
+        # eye and there was nothing in this file that could have said so; a
+        # look is not repeatable and the next edit would have had to be
+        # judged by eye again from scratch. These do not make the front
+        # GOOD - D41 keeps that ungated and the sheet decides - but they
+        # hold the three properties the failure was made of.
+        gf = [b for b in boxes if b["z0"] < p["ground_h_m"] - 1e-9
+              and b["z1"] > 1e-9 and b["x0"] >= p["pilaster_w_m"] - 1e-9]
+        mats = set(b["material"] for b in gf)
+        check("accept/the-shopfront-is-not-one-material",
+              len(mats) >= 4, "materials=%s" % ",".join(sorted(mats)))
+        # GLASS IS THE DARKEST THING ON IT, which is the ordering the whole
+        # read depends on: if the joinery ever goes darker than the glass the
+        # frame stops drawing and the slab comes back.
+        lum = {name: 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+               for name, c, _r in MATERIALS}
+        darker = [m for m in mats if m != "glass" and lum[m] <= lum["glass"]]
+        check("accept/glass-is-darker-than-every-painted-part-beside-it",
+              not darker, ",".join(sorted(darker)))
+        # AND NOTHING ON THE GROUND FLOOR HIDES IN THE WALL. The second
+        # attempt failed on exactly this: a side door whose paint sat within
+        # a few percent of the brick's own value, so the one opening a person
+        # walks through was invisible from across the street. A fifth of a
+        # stop between any painted part and the wall it is set into, measured
+        # rather than eyeballed.
+        wall_l = lum[p["wall_surface"]]
+        hidden = [m for m in mats
+                  if m not in ("glass",) and m != p["wall_surface"]
+                  and abs(lum[m] - wall_l) < 0.2 * wall_l]
+        check("accept/no-painted-part-hides-in-the-brick-behind-it",
+              not hidden,
+              ",".join("%s(%.4f vs wall %.4f)" % (m, lum[m], wall_l) for m in sorted(hidden)))
+        mullions = [b for b in boxes if "mullion" in b["id"]]
+        check("accept/the-display-run-is-divided-not-one-sheet",
+              len(mullions) >= 2, "%d mullion(s)" % len(mullions))
+        jambs = [b for b in boxes if b["id"].startswith("display_jamb_")]
+        check("accept/the-glazing-has-a-frame", len(jambs) == 2,
+              "%d jamb(s)" % len(jambs))
+        if len(jambs) == 2 and mullions:
+            lo = max(j["x1"] for j in jambs if j["x0"] < 1.0)
+            hi = min(j["x0"] for j in jambs if j["x0"] > 1.0)
+            outside = [m["id"] for m in mullions
+                       if m["id"].startswith("display_")
+                       and (m["x0"] < lo - 1e-9 or m["x1"] > hi + 1e-9)]
+            check("accept/every-mullion-stands-inside-the-frame-it-divides",
+                  not outside, ",".join(outside))
+        # AND BOTH DOORS ARE FINDABLE, which is the half the one-line note
+        # named: a door the same value as the glass beside it is not a door.
+        for door in ("shop_door", "side_door"):
+            framing = [b for b in boxes
+                       if b["id"].startswith(door) and b["material"] == "paint_joinery"]
+            check("accept/%s-carries-its-own-framing" % door.replace("_", "-"),
+                  len(framing) >= 2, "%d piece(s)" % len(framing))
 
         checks = cross_check(p, ROOT)
         got = [c for c in checks if c[2] is not None]

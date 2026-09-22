@@ -351,7 +351,17 @@ def gate(paths):
     exempt_bitten = []
     for path in paths:
         p = pathlib.Path(path)
-        rel = str(p.resolve()).replace(str(REPO) + "/", "")
+        # FORWARD SLASHES BEFORE THE PREFIX TEST, 2026-09-22. EXEMPT is
+        # written with "/" and a resolved path on Windows carries "\\", so
+        # every exemption silently missed on Jafar's PC: canon.md screened
+        # itself, and the judge's rejecting fixtures - which contain canon
+        # violations BY CONSTRUCTION, because without them D7's clause cannot
+        # be measured - reported sixteen findings that are the fixtures doing
+        # their job. It passed in CI the whole time, because Linux uses "/".
+        # The same shape as the Core suite's own line-ending fixture, found
+        # the same day: a check that runs on one of the two machines this
+        # project uses is a check the other cannot be asked to run.
+        rel = str(p.resolve()).replace("\\", "/").replace(str(REPO).replace("\\", "/") + "/", "")
         if any(rel.startswith(e) for e in EXEMPT):
             exempt_bitten.append(rel)
             continue
