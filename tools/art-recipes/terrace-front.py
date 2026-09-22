@@ -17,9 +17,17 @@ a luminance of 0.0483 against the brick's 0.0488. The same door hiding in the
 same wall, wearing a different hue. Hue does not carry at distance; value
 does, and this file now checks it rather than trusting an eye.
 
-STILL NOT RIGHT, and named rather than left to be found: the shop door and the
-side door sit side by side and read as one busy patch, and the toplight above
-the transom does not separate from the glazing below it.
+BOTH OF THE FAULTS IT WAS LEFT WITH ARE FIXED, 2026-09-22. The two doors read
+as one busy patch because the side door's casing was built OUTSIDE the door's
+own width, which put its left upright exactly where the shop door's right
+stile already stood - two pieces of joinery in the same strip of wall, at the
+one point on the elevation where a person has to tell two doors apart. The
+casing sits inside its own opening now and the leaf is recessed half a brick,
+so the private door is in shadow and reads as a way in rather than as more
+shopfront. The toplight did not separate from the glazing because it had a bar
+under it and nothing over it, which is not a band; a head rail closes it
+against the fascia, and the transom sits twice as proud as the rest of the
+joinery because it is the one horizontal that has to carry across a street.
 
 The first authored Meridian facade: a single `east_parade` bay - the
 shopfront row - built as an elevation and stood on the street.
@@ -438,8 +446,13 @@ def plan_parts(p):
              cx - mull_t / 2.0, cx + mull_t / 2.0, -joinery_proj, rec + 0.02, sr_h, tr_h,
              "three-lights-not-one-sheet/at-the-thirds-of-the-opening-it-divides")
 
-    _box(parts, "transom_bar", "paint_joinery", disp_x0, shop_x1, -joinery_proj, rec + 0.02,
-         tr_h, tr_h + tr_t,
+    # PROUDER THAN THE REST OF THE JOINERY, deliberately: the transom is the
+    # heaviest member of a shopfront and the one horizontal that has to read
+    # from across a street. At the same projection as the mullions it was a
+    # colour change and not an edge, and a colour change does not survive
+    # distance or an overcast sky.
+    _box(parts, "transom_bar", "paint_joinery", disp_x0, shop_x1,
+         -joinery_proj * 2.0, rec + 0.02, tr_h, tr_h + tr_t,
          "the-bar-runs-across-the-glazing-AND-the-shop-door/one-line-across-the-opening")
     # TOPLIGHT: from the transom to the fascia line less its own frame. The
     # spec gives "roughly 2.82" as DERIVED; it is derived here instead of
@@ -459,6 +472,14 @@ def plan_parts(p):
     _box(parts, "toplight_bar_over_door", "paint_joinery",
          shop_x0 - mull_t / 2.0, shop_x0 + mull_t / 2.0, -joinery_proj, rec + 0.02,
          tr_h + tr_t, top_z1, "the-division-over-the-shop-door's-own-edge")
+    # THE HEAD RAIL, which the toplight had none of, and which is why it did
+    # not separate from the glazing below it: a band of glass with a bar under
+    # it and nothing over it is not a band, it is the top of the window below.
+    # The rail closes it against the fascia and gives the whole frontage a
+    # second horizontal, which is what a shopfront's joinery actually does.
+    _box(parts, "toplight_head_rail", "paint_joinery", disp_x0, shop_x1,
+         -joinery_proj, rec + 0.02, top_z1, top_z1 + tr_t,
+         "closes-the-toplight-against-the-board/the-frontage's-second-horizontal")
 
     # SHOP DOOR, brick spandrel above it to the fascia.
     _box(parts, "shop_door_leaf", "paint_joinery", shop_x0, shop_x1, 0.02, 0.06,
@@ -484,24 +505,35 @@ def plan_parts(p):
          p["shop_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
 
     # SIDE DOOR: the flat above. Its own spandrel, and a letterplate.
-    _box(parts, "side_door_leaf", "paint_door", side_x0, side_x1, 0.02, 0.06,
+    # THE LEAF SITS INSIDE ITS OWN CASING AND SET BACK INTO THE WALL. Both
+    # halves fix the fault the last render showed: the two doors read as one
+    # busy patch. The casing used to be built OUTSIDE the door's own width,
+    # which put its left upright exactly where the shop door's right stile
+    # already was - two pieces of joinery in the same place, at the one point
+    # on the elevation where a person needs to tell two doors apart. And the
+    # leaf sat flush with the shop door's, so nothing but colour separated
+    # them. It is recessed by the same half-brick the upper windows use, which
+    # puts it in shadow and makes the private door read as a way in rather
+    # than as more shopfront.
+    _box(parts, "side_door_leaf", "paint_door",
+         side_x0 + jamb_t, side_x1 - jamb_t, rec, rec + 0.04,
          0.0, p["side_door_h_m"],
          "1981x838mm/the-standard-British-external-door/imperial-because-the-country-was")
     # A CASING ROUND IT, in the shopfront's joinery rather than the door's own
     # paint, because the frame belongs to the building and the leaf belongs to
     # whoever lives behind it.
-    for Name, X0, X1 in (("side_door_casing_left", side_x0 - jamb_t, side_x0),
-                         ("side_door_casing_right", side_x1, side_x1 + jamb_t)):
-        if X1 > X0:
-            _box(parts, Name, "paint_joinery", X0, X1, -joinery_proj, 0.06,
-                 0.0, p["side_door_h_m"] + jamb_t, "the-casing's-upright")
+    for Name, X0, X1 in (("side_door_casing_left", side_x0, side_x0 + jamb_t),
+                         ("side_door_casing_right", side_x1 - jamb_t, side_x1)):
+        _box(parts, Name, "paint_joinery", X0, X1, -0.01, rec + 0.04,
+             0.0, p["side_door_h_m"] + jamb_t,
+             "the-casing's-upright/inside-the-door's-own-width-so-it-cannot-stand-on-the-shop-door")
     _box(parts, "side_door_casing_head", "paint_joinery",
-         side_x0 - jamb_t, side_x1 + jamb_t, -joinery_proj, 0.06,
+         side_x0, side_x1, -0.01, rec + 0.04,
          p["side_door_h_m"], p["side_door_h_m"] + jamb_t, "the-casing's-head")
     lp_w, lp_h = p["letterplate_w_m"], p["letterplate_h_m"]
     lp_cx = (side_x0 + side_x1) * 0.5
     _box(parts, "letterplate", "lead", lp_cx - lp_w / 2.0, lp_cx + lp_w / 2.0,
-         0.005, 0.025, p["letterplate_at_m"], p["letterplate_at_m"] + lp_h,
+         rec - 0.015, rec, p["letterplate_at_m"], p["letterplate_at_m"] + lp_h,
          "the-one-detail-that-says-somebody-lives-above-the-shop")
     _box(parts, "side_door_spandrel", wall, side_x0, side_x1, 0.0, T,
          p["side_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
@@ -1057,6 +1089,43 @@ def selftest():
                        and (m["x0"] < lo - 1e-9 or m["x1"] > hi + 1e-9)]
             check("accept/every-mullion-stands-inside-the-frame-it-divides",
                   not outside, ",".join(outside))
+        # THE TWO DOORS DO NOT STAND ON EACH OTHER. The fault the last render
+        # showed was two pieces of joinery occupying the same strip of x at
+        # the one point on the elevation where a person has to tell two doors
+        # apart. Measured on the parts rather than looked at.
+        shop_parts = [b for b in boxes if b["id"].startswith("shop_door")]
+        side_parts = [b for b in boxes if b["id"].startswith("side_door")
+                      or b["id"] == "letterplate"]
+        clashes = []
+        for a in shop_parts:
+            for b in side_parts:
+                if a["x0"] < b["x1"] - 1e-9 and a["x1"] > b["x0"] + 1e-9:
+                    clashes.append("%s/%s" % (a["id"], b["id"]))
+        check("accept/the-two-doors-do-not-overlap-in-x", not clashes,
+              ",".join(sorted(set(clashes))))
+        # AND THE PRIVATE DOOR IS SET BACK, which is what puts it in shadow and
+        # stops it reading as more shopfront.
+        leaf = [b for b in boxes if b["id"] == "side_door_leaf"]
+        shop_leaf = [b for b in boxes if b["id"] == "shop_door_leaf"]
+        if leaf and shop_leaf:
+            check("accept/the-private-door-sits-deeper-than-the-shop-door",
+                  leaf[0]["y0"] > shop_leaf[0]["y0"] + 1e-9,
+                  "side y0=%.4f shop y0=%.4f" % (leaf[0]["y0"], shop_leaf[0]["y0"]))
+        # THE TOPLIGHT IS A BAND, bounded top and bottom by joinery. Without a
+        # rail over it, it is not a band at all; it is the top of the window
+        # below it, which is exactly how the last render read.
+        top = [b for b in boxes if b["id"] == "toplight"]
+        if top:
+            z0, z1 = top[0]["z0"], top[0]["z1"]
+            under = [b for b in boxes if b["material"] == "paint_joinery"
+                     and abs(b["z1"] - z0) < 1e-6]
+            over = [b for b in boxes if b["material"] == "paint_joinery"
+                    and abs(b["z0"] - z1) < 1e-6]
+            check("accept/the-toplight-is-closed-below-by-a-bar", bool(under),
+                  "nothing ends at z=%.4f" % z0)
+            check("accept/the-toplight-is-closed-above-by-a-rail", bool(over),
+                  "nothing starts at z=%.4f" % z1)
+
         # AND BOTH DOORS ARE FINDABLE, which is the half the one-line note
         # named: a door the same value as the glass beside it is not a door.
         for door in ("shop_door", "side_door"):
