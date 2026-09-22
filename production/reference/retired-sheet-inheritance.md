@@ -107,6 +107,11 @@ shopfront, window, door.
 
 `production/research/README.md` carried the same pointer and is rerouted.
 
+**Checked by:** 22 September. All seventeen rows re-read on the approved
+sheet, in a new section of GOVERNS.md: 2 kept, 10 changed, 5 not on the
+sheet. The original table is left as it was, as the record of what was
+claimed.
+
 ## 6. Smaller inheritances
 
 - `tools/citypack/shortlist-candidates.json` quotes the lighting column's
