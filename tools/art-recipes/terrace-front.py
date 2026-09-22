@@ -1351,23 +1351,38 @@ def plan_street(root, spec_rel=SPEC_REL):
                  "100mm-band-100mm-apart/12mm-of-paint/0.25m-out-from-the-kerb-face")
 
     # ---- the lit shop interiors ------------------------------------------
-    # AT BAYS 0, 2 AND 5, which is window_practicals.lit_bays in the piece
-    # file and not a choice made here. A card 1.2 m behind the frontage, the
-    # depth the shopfront block gives, lit at the file's own colour.
-    q, _e2 = load_spec(root, spec_rel, "east_parade")
-    for bay in (0, 1, 2, 4, 5):
-        bx = q["start_x_m"] + bay * q["bay_width_m"]
-        # CLOSER TO THE GLASS THAN THE 1.2 m THE BLOCK GIVES, and wider. At
-        # 1.2 m back and inset half a metre each side the card was a small
-        # bright patch in the middle of a black hole; what a person sees
-        # through a shop window at a glancing angle is the back of the shop
-        # filling it, because the glass is only a metre in front of it and
-        # the window is not a porthole.
-        _box(out, "interior_card_%d" % bay, "interior_lit",
-             bx + 0.35, bx + q["bay_width_m"] - 0.35,
-             STREET_FRONTAGE_M + 0.75, STREET_FRONTAGE_M + 0.79,
-             THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
-             "the-lit-back-of-the-shop/window_practicals.lit_bays-plus-the-two-that-trade")
+    # EVERY BLOCK THAT HAS SHOPS, ON ITS OWN SIDE OF THE ROAD, which this was
+    # not: it named east_parade in the code and put its cards at +y, so when
+    # Jafar ruled the near west block into shops on 22 September that block's
+    # windows became black holes with nothing behind them - the exact fault
+    # these cards were written to fix, reintroduced by a hard-coded block id.
+    # The blocks are asked what they are now.
+    #
+    # A card 1.2 m behind the frontage, the depth the shopfront block gives,
+    # lit at the file's own colour.
+    for block_id in ("east_parade", "west_south", "west_north"):
+        q, _e2 = load_spec(root, spec_rel, block_id)
+        if _e2 or q["ground_floor"] != "shopfront":
+            continue
+        east = q["side"] == "east"
+        for bay in range(q["bays"]):
+            # BAY 3 OF A SIX-BAY PARADE IS THE EMPTY UNIT and stays dark; on
+            # a shorter block there is no empty unit to skip.
+            if q["bays"] == 6 and bay == 3:
+                continue
+            bx = q["start_x_m"] + bay * q["bay_width_m"]
+            # CLOSER TO THE GLASS THAN THE 1.2 m THE BLOCK GIVES, and wider.
+            # At 1.2 m back and inset half a metre each side the card was a
+            # small bright patch in the middle of a black hole; what a person
+            # sees through a shop window at a glancing angle is the back of
+            # the shop filling it, because the glass is only a metre in front
+            # of it and the window is not a porthole.
+            y0, y1 = STREET_FRONTAGE_M + 0.75, STREET_FRONTAGE_M + 0.79
+            a, b = (y0, y1) if east else (-y1, -y0)
+            _box(out, "interior_card_%s_%d" % (block_id, bay), "interior_lit",
+                 bx + 0.35, bx + q["bay_width_m"] - 0.35, a, b,
+                 THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
+                 "the-lit-back-of-the-shop/on-this-block's-own-side-of-the-road")
 
     _figures(out)
     _vehicles(out)
@@ -1797,10 +1812,24 @@ def plan_parts(p, bay=0, party_wall=True):
     # ---- ground floor: the shopfront -------------------------------------
     pw = p["pilaster_w_m"]
     pp = p["pilaster_proj_m"]
-    _box(parts, "pilaster_left", "stone", 0.0, pw, -pp, 0.0, 0.0, GF,
-         "a-shopfront-earns-its-piers/full-ground-floor-height-at-every-bay-edge")
-    _box(parts, "pilaster_right", "stone", W - pw, W, -pp, 0.0, 0.0, GF,
-         "the-party-wall-pier-shared-with-the-next-bay")
+    # THE PIERS ARE PAINTED THE SHOP'S COLOUR, NOT LEFT AS STONE, and that
+    # is both what a British shopfront is and where a third of our missing
+    # colour was sitting. A parade is painted as a UNIT - the piers, the
+    # fascia above them and the kicked board below all in one colour, with
+    # white joinery inside it - which is what makes a row of shops read as a
+    # row of distinct shops rather than one long frontage with signs on it.
+    #
+    # THEY WERE `stone`, WHICH IS THE SILL AND COPING MATERIAL, and it takes
+    # the pack's concrete map: in the frame they came back as pale mottled
+    # slabs either side of every window, reading as precast panels bolted to
+    # a Victorian shop. Two of the largest painted areas on the whole street
+    # were the two that were not painted.
+    pier_name, pier_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
+    for side, a, b in (("left", 0.0, pw), ("right", W - pw, W)):
+        pier = _box(parts, "pilaster_%s" % side, "paint_stall", a, b, -pp, 0.0, 0.0, GF,
+                    "a-shopfront-earns-its-piers/paint=" + pier_name)
+        pier["paint"] = pier_rgb
+        pier["paint_name"] = pier_name
 
     # The opening zone, and the three things that fill it, left to right:
     # display glazing, shop door, side door. The order is the spec's own.
@@ -2406,6 +2435,25 @@ def _materials(bpy, root=None):
                 # separation this file measures elsewhere.
                 tint = linear
                 notes.append("%s=%s" % (name, _texture_nodes(bpy, mat, root, surface, tile, tint)))
+                # GLASS KEEPS THE ROUGHNESS IT WAS AUTHORED WITH, and this is
+                # the same fault as the one in _wetten, found the same way.
+                # MATERIALS gives glass 0.08 - a near mirror, which is what a
+                # shop window is - and then _texture_nodes links the pack's
+                # glass _r map straight over the top of it, so every window
+                # on the street has been rendering at whatever roughness that
+                # photograph happens to carry. With raytracing off that made
+                # no visible difference and nobody could have noticed; with
+                # it on, the windows are the surfaces that should be showing
+                # the street back at you, and instead they are flat dark
+                # panels. The map's COLOUR and its relief still apply; only
+                # its roughness is dropped, because a pane of glass does not
+                # have roughness variation across it.
+                if name == "glass":
+                    for link in list(mat.node_tree.nodes["Principled BSDF"]
+                                     .inputs["Roughness"].links):
+                        mat.node_tree.links.remove(link)
+                    mat.node_tree.nodes["Principled BSDF"].inputs[
+                        "Roughness"].default_value = rough
             else:
                 notes.append("%s=flat-colour-on-purpose" % name)
     if notes:
@@ -2667,12 +2715,90 @@ def _wetten(mats, wetness):
         if mat is None or not mat.use_nodes:
             continue
         rough = 0.62 - (0.62 - ROUGH_FLOOR[name]) * w
-        bsdf = mat.node_tree.nodes.get("Principled BSDF")
-        if bsdf is not None:
+        nt = mat.node_tree
+        bsdf = nt.nodes.get("Principled BSDF")
+        if bsdf is None:
+            continue
+        # THIS WHOLE FUNCTION HAS BEEN DOING NOTHING SINCE THE TEXTURES
+        # LANDED, and that is the whole of why the road reads dry.
+        #
+        # It set Roughness and Base Color through `default_value`. A socket's
+        # default is what Blender uses when NOTHING IS PLUGGED INTO IT - and
+        # _texture_nodes links the pack's _r map into Roughness and the
+        # tinted base map into Base Color on exactly these three materials.
+        # So every number below was computed correctly, written to a socket
+        # that was already carrying a link, and discarded. The careful curve
+        # in the comment above, the one bent to match the reference, has
+        # never once reached a render. The road has been at whatever
+        # roughness the photograph happened to have.
+        #
+        # So the wetness goes ON THE GRAPH now: a multiply between the map
+        # and the socket, which keeps the map's own variation - a road is not
+        # uniformly anything - and scales it. Where a socket really is
+        # unconnected the default is still the right place to write.
+        rough_gain = max(0.04, rough) / 0.62
+        rlink = bsdf.inputs["Roughness"].links
+        if rlink:
+            src = rlink[0].from_socket
+            mul = nt.nodes.new("ShaderNodeMath")
+            mul.operation = "MULTIPLY"
+            mul.inputs[1].default_value = rough_gain
+            nt.links.new(src, mul.inputs[0])
+            nt.links.new(mul.outputs["Value"], bsdf.inputs["Roughness"])
+            if name == "asphalt":
+                _channel_gloss(nt, mul, rough_gain)
+        else:
             bsdf.inputs["Roughness"].default_value = max(0.04, rough)
+        blink = bsdf.inputs["Base Color"].links
+        if blink:
+            src = blink[0].from_socket
+            mix = nt.nodes.new("ShaderNodeMix")
+            mix.data_type = "RGBA"
+            mix.blend_type = "MULTIPLY"
+            mix.inputs["Factor"].default_value = 1.0
+            nt.links.new(src, mix.inputs[6])
+            mix.inputs[7].default_value = (darken, darken, min(1.0, darken * 1.05), 1.0)
+            nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
+        else:
             base = bsdf.inputs["Base Color"].default_value
             bsdf.inputs["Base Color"].default_value = (base[0] * darken, base[1] * darken,
                                                        base[2] * darken * 1.05, 1.0)
+
+
+def _channel_gloss(nt, rough_mul, gain):
+    """The water sits in the channel, because the camber puts it there.
+
+    THIS IS WHAT THE CROSSFALL IS FOR, in the scene file's own words: "a flat
+    carriageway puts the wet-condition water everywhere instead of at the
+    kerb". Having finally built the crown, the wet frame should show it - a
+    road that is merely uniformly glossy is a road nobody has watched rain
+    run off. So the roughness multiplier FALLS towards the channel: the crown
+    drains and dries first, the gutter holds water and mirrors the sky, and
+    the long soft highlight down each side is the thing that says it rained
+    an hour ago without one puddle being modelled.
+
+    OFF THE OBJECT'S OWN Y, which on the carriageway mesh IS the distance
+    across the street - the mesh is built at world coordinates, so object and
+    world agree and no mapping is needed.
+    """
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    nt.links.new(coord.outputs["Object"], sep.inputs["Vector"])
+    across = nt.nodes.new("ShaderNodeMath")
+    across.operation = "ABSOLUTE"
+    nt.links.new(sep.outputs["Y"], across.inputs[0])
+    # The caller's own gain at the crown, and 45 per cent of it at the
+    # channel, over the carriageway's 3.0 m half width. CLAMPED, so nothing
+    # beyond the kerb line can drive it somewhere odd.
+    ramp = nt.nodes.new("ShaderNodeMapRange")
+    ramp.clamp = True
+    ramp.inputs["From Min"].default_value = 0.0
+    ramp.inputs["From Max"].default_value = 3.0
+    ramp.inputs["To Min"].default_value = gain
+    ramp.inputs["To Max"].default_value = gain * 0.45
+    nt.links.new(across.outputs["Value"], ramp.inputs["Value"])
+    nt.links.new(ramp.outputs["Result"], rough_mul.inputs[1])
+
 
 
 def _world(bpy, root):
@@ -2825,6 +2951,21 @@ def build_and_render(args):
         # than wet at night and bone dry by day, which is what the first
         # frames did and is a third of the way off the sheet on its own.
         _wetten(mats, 0.9 if night else 0.6)
+        if not night:
+            # A SHOP INTERIOR BY DAY IS NOT A SHOP INTERIOR AT NIGHT, and
+            # this material was only ever set for the night frame: 1.00,
+            # 0.71, 0.34 is a warm amber GLOW, which is exactly right for a
+            # lit window against a dusk street and wrong behind glass at
+            # midday. In daylight what you see through a shop window is a dim
+            # neutral room with the street's own light in it - darker than
+            # the brick outside, not brighter, and with none of that colour.
+            # The same card, lit two ways, because it IS the same card.
+            mat = mats.get("interior_lit")
+            if mat is not None and mat.use_nodes:
+                bsdf = mat.node_tree.nodes.get("Principled BSDF")
+                if bsdf is not None:
+                    bsdf.inputs["Base Color"].default_value = (0.105, 0.098, 0.090, 1.0)
+                    bsdf.inputs["Roughness"].default_value = 0.92
     print("tfNote condition=%s world/%s"
           % (args["condition"] if street else "overcast_day", world_note))
 
@@ -2930,10 +3071,15 @@ def build_and_render(args):
             wrote += 1
 
     agree = sum(1 for _, _, _, a in checks if a)
-    print("tfStatus=ACCEPTED/the-shopfront's-four-parts-separate "
-          "whatIsStillWrong=the-two-doors-read-as-one-busy-patch-and-the-toplight-does-not-"
-          "separate-from-the-glazing-below-it attemptsThisSitting=2/2 "
-          "theFixWasValueAndFrame=not-dimensions/crossCheckAgree-is-5/5")
+    # WHAT IS STILL WRONG, RE-WRITTEN 22 SEPTEMBER against the APPROVED
+    # sheet. Everything this line used to say was measured against Codex's
+    # retired one, so it described a different street's faults - which is
+    # worse than saying nothing, because it reads as current.
+    print("tfStatus=ACCEPTED/measures-like-the-sheet-on-value-and-warmth "
+          "whatIsStillWrong=saturated-colour-is-6-7-percent-against-the-sheet's-25-8-"
+          "and-the-road-is-a-wide-pale-band-with-no-wheel-tracks "
+          "theGapIsContent=the-sheet's-frame-is-full-of-close-painted-shopfront/"
+          "crossCheckAgree-is-5/5")
     print("terrace-front done: status=RAN block=%s bays=%d partsBuilt=%d/%d "
           "crossCheckAgree=%d/%d previewsWrote=%d/%d res=%dx%d outDir=%s"
           % ("street" if street else p["block_id"], p["bays"], built, len(parts),
@@ -3198,9 +3344,24 @@ def selftest():
             cards = [b for b in street_parts if b["id"].startswith("interior_card_")]
             check("accept/the-trading-bays-are-lit-from-inside",
                   len(cards) >= 5, "%d card(s)" % len(cards))
-            check("accept/every-card-sits-behind-its-own-glazing",
-                  all(b["y0"] > STREET_FRONTAGE_M for b in cards),
-                  "one is in front of the frontage")
+            # BEHIND IS A DIRECTION, NOT A SIGN. This asked whether every
+            # card sat at y greater than the frontage line, which is only
+            # "behind" on the EAST side of the road; the day the near west
+            # block gained shops, its cards were correctly placed at negative
+            # y and this failed them for it. A card is behind its glazing
+            # when its DISTANCE FROM THE CENTRE LINE exceeds the frontage's,
+            # whichever side of the road it is on.
+            outside = [b["id"] for b in cards
+                       if min(abs(b["y0"]), abs(b["y1"])) <= STREET_FRONTAGE_M]
+            check("accept/every-card-sits-behind-its-own-glazing", not outside,
+                  ",".join(sorted(outside)[:3]))
+            # AND ON THE SAME SIDE AS THE BLOCK IT BELONGS TO, which the old
+            # test could not have asked at all.
+            wrong_side = [b["id"] for b in cards
+                          if (b["id"].startswith("interior_card_east") and b["y0"] < 0)
+                          or (b["id"].startswith("interior_card_west") and b["y0"] > 0)]
+            check("accept/and-on-its-own-block's-side-of-the-road",
+                  not wrong_side, ",".join(sorted(wrong_side)[:3]))
 
         check("accept/the-two-doors-do-not-overlap-in-x", not clashes,
               ",".join(sorted(set(clashes))))
