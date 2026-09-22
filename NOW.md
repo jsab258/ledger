@@ -677,13 +677,16 @@ Started 23 September under decision 5's recommendation (a) - the game
 engine's way round is the true one - because materials carry over whichever
 way it is ruled; the camera waits for him.
 
-- [ ] BRICK AT ITS MEASURED SIZE IN THE GAME ENGINE. Unreal tiled every
+- [x] BRICK AT ITS MEASURED SIZE IN THE GAME ENGINE. Unreal tiled every
       surface at one 2 m convention and ignored the file's own table, so its
       parade's bricks came out three and a half times their size and read
       as pale blocks of stone. It reads the table now, and the table's brick
       is the measured 0.55 m (was the 3.5 m placeholder). Proven when a
       probe run prints tilingFromFile=yes brickRedM=0.55 and its frame shows
-      coursed brick.
+      coursed brick. PROVEN first time (65d89fd8, green): the verdict prints
+      exactly that and the west wall is fine coursed brick. The parade is
+      still pale, because the pack's brick_red picture is a sandy fawn under
+      the grade Jafar ruled on 15 September - decision 6, not touched.
 
 ## Where things stand
 
