@@ -627,6 +627,13 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       plaster map's undirected mottle under it. Its value did not move
       (111/95/77 -> 112/97/78).
 
+- [x] THE BRICKS THEMSELVES: the widest surface gap left - the sheet's wall
+      is individual bricks, bright and soot-dark, in dark joints; ours was a
+      soft pink mush from the pack's low-contrast photograph. Real bricks
+      now (215 x 65 mm, 10 mm joints, stretcher bond), each drawing a tone
+      from the sheet's measured range, the pack map kept as staining. Two
+      attempts: the second darkened the joints and warmed the faces.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
