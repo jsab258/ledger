@@ -1443,6 +1443,10 @@ def _sash(parts, i, a, b, sill_z, head_z, reveal):
          mid + MEETING_RAIL_T * 0.5, head_z - f, "two-over-two/the-upper-sash")
 
 
+#: A 115 mm HALF-ROUND GUTTER, the ordinary cast-iron size on a terrace.
+GUTTER_W_M, GUTTER_H_M = 0.115, 0.075
+
+
 def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
     """The roof this row has, its downpipe and, where the row carries one, its
     stack. Shared for the same reason the upper floor is."""
@@ -1472,8 +1476,16 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
         return parts
 
     ov = p["eaves_overhang_m"]
-    _box(parts, "eaves_course", "stone", -ov * 0.5, W + ov * 0.5, -ov, T,
+    # THE EAVES ARE THE WALL'S, AND THE LINE ALONG THEM IS A BLACK GUTTER,
+    # 22 September. This course was pale stone and read, along the whole
+    # row, as a concrete coping; on the new sheet the roofline is slates
+    # over a dentil course with a black cast-iron gutter along its edge, and
+    # nothing pale at all.
+    _box(parts, "eaves_course", wall, -ov * 0.5, W + ov * 0.5, -ov, T,
          EAVES, EAVES + 0.09, "the-line-the-roof-starts-from")
+    _box(parts, "gutter", "lead", -ov * 0.5, W + ov * 0.5, -ov - GUTTER_W_M, -ov,
+         EAVES - 0.03, EAVES - 0.03 + GUTTER_H_M,
+         "a-115mm-half-round-cast-iron-gutter/black")
     parts.append({"id": "roof_front", "material": "slate", "kind": "slope",
                   "x0": -ov * 0.5, "x1": W + ov * 0.5,
                   "y_eaves": -ov, "y_ridge": D / 2.0,
