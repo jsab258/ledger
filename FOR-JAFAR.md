@@ -6,6 +6,27 @@ between them.
 
 ## Decisions waiting on me
 
+**5. The picture-making side and the game engine build Quay Street as mirror
+images of each other.** Stand at the south end looking up the street: in the
+game engine (Unreal, the one that ships), Mickey's is on your right; in the
+picture-making side (Blender), and in the old Unity build, it is on your
+left. The approved sheet was made to match the Blender pictures, so it shows
+the street the other way round from how the game will. The research drawing
+of Mickey's agrees with the game engine. Nothing is broken today: the
+materials, windows and colours carry over either way. But it decides which
+way round the street really is.
+
+  (a) **The game engine's way is the true one — recommended.** Keep the
+      approved sheet, and compare against it flipped when the look moves
+      into the game engine. No new sheet, and no rebuild.
+  (b) As (a), but also rebuild the picture-making side the game's way round,
+      and make a new sheet with Mickey's on the right for your approval.
+  (c) Make the game engine match the pictures instead. Not recommended: it
+      changes how every measurement in the game engine is taken.
+
+  Meanwhile: nothing changes. Moving the game engine's hook camera to the
+  new sheet waits on this, because which way it turns depends on it.
+
 **4. The small model on your card gets the router right four times in five —
 and when it is wrong, it is confidently wrong.** The router is the part that
 turns what you type into an action: is he paying her off, threatening her,
@@ -83,6 +104,9 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **Correction:** my note that the old prompt had Mickey's on the
+  wrong side was wrong for the game itself; it was right about the game
+  engine, and the Blender pictures are the mirror (decision 5).
 - 2026-09-22 **A seen crime now reaches a third person inside a week**, which
   is one of stage 3's gates. The shopkeeper tells the lad, and on day 4 the
   lad tells his mate. It gets there with almost nothing to spare, as the
