@@ -495,7 +495,21 @@ THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
       100/83/62; road paint faded to the sheet's cream. The sky is brighter
       to the camera than to the street, so the wet road did not brighten
       with it. The far parade (sat 0.16 against 0.24) is composition.
-- [ ] THE COMPOSITION, which the new sheet now answers.
+- [x] THE COMPOSITION, which the new sheet now answers.
+      DONE: brick gable ends on every block (the terrace simply stopped, and
+      the turned camera looked into its end building); the pavement turns
+      the corner; the rank - two plain saloons at the east kerb just beyond
+      Mickey's, tails to the camera, as the sheet has them; large stone
+      FLAGS on the footway, where it had setts - the sheet and R09 agree;
+      darker slate; and the far end closed by the inland rise, contour
+      terraces behind retaining walls to the bible's 45 m crest.
+      THE RISE HAD ITS TWO ATTEMPTS and is set aside as it stands: attempt
+      one was a crowd of warehouses, attempt two reads as a hillside of
+      houses but denser and more regular than the sheet's.
+      NOT CHANGED, AND WHY: our terrace is taller than the sheet's (eaves
+      6.2 m against about 5 to 5.5) - the spec is the geometry and the sheet
+      is the look; the sheet's road bends where ours is straight, the same;
+      the people are blocks, which is stage 2's; the west side is canon.
 - [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
 
 WHILE THE CARD IS BUSY - the work that does not need it.
