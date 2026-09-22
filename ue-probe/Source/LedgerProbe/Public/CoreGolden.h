@@ -747,6 +747,41 @@ namespace Golden
 
 		Put(R, "junkFixture", Escape(Junk));
 
+		// THE WHOLE ROUND TRIP: SAVE, RESTART, RELOAD - with THIS engine's
+		// writer. Everything above pins reading a save the C# wrote; this
+		// pins writing one and reading it back, which is what a restart
+		// actually is and what the probe needs before it can perform one.
+		//
+		// A MATCH HERE IS THE TWO ENGINES AGREEING ABOUT A FILE ONE OF THEM
+		// NEVER SAW. The C# captures with its own codec and restores with
+		// its own; this captures with CaptureMillAgents and restores with
+		// RestoreMillAgents; if either writer loses something the other
+		// keeps, the rows below part company.
+		const std::string ReSaved = Save::CaptureMillAgents(Mill);
+		GossipMill Restarted(std::make_shared<SocialGraph>());
+		Restarted.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		Restarted.Add(std::make_shared<Gossiper>("n1", "the barmaid",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "night"));
+		Save::RestoreMillAgents(ReSaved, Restarted);
+		GossiperPtr RS = Restarted.Get("w1");
+		Put(R, "rtRumors", FromInt((long long)RS->Rumors.size()));
+		Put(R, "rtLoyalty", FromDouble(RS->Loyalty));
+		Put(R, "rtLeashed", FromBool(RS->Leashed));
+		Put(R, "rtSuppressed", FromInt((long long)RS->Suppressed.size()));
+		Put(R, "rtFacts", FromInt(RS->Knowledge ? (long long)RS->Knowledge->Facts.size() : 0));
+		for (std::vector<RumorPtr>::size_type I = 0; I < RS->Rumors.size(); ++I)
+		{
+			const std::string K = FromInt((long long)I);
+			Put(R, "rtPred" + K, Escape(RS->Rumors[I]->Content.Predicate));
+			Put(R, "rtConf" + K, FromDouble(RS->Rumors[I]->Confidence));
+			Put(R, "rtHops" + K, FromInt((long long)RS->Rumors[I]->Hops));
+			Put(R, "rtSensitive" + K, FromBool(RS->Rumors[I]->Sensitive));
+			Put(R, "rtSummary" + K, Escape(RS->Rumors[I]->Summary));
+		}
+		// AND THE CONTROL CAME THROUGH AS A CONTROL.
+		Put(R, "rtControlRumors", FromInt((long long)Restarted.Get("n1")->Rumors.size()));
+
 		// THE SAME CASES AND THE SAME BYTES. See the C# side for what each
 		// record is for; every one of them was a real disagreement between
 		// the two engines reading the same file, found by somebody who had

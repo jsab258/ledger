@@ -39,6 +39,7 @@
 #pragma once
 
 #include <clocale>
+#include <cstdio>
 #include <cstdlib>
 #include <string>
 #include <vector>
@@ -611,6 +612,137 @@ namespace Save
 		if (!WellFormed(S, I, 1)) { return false; }
 		I = SkipWs(S, I);
 		return I >= S.size();
+	}
+
+	// ---- WRITING ONE -------------------------------------------------------
+	//
+	// WHY THE PORT NEEDS A WRITER AT ALL. Reading a save proved the port and
+	// the engine agree about a file the C# wrote. It does not let the probe
+	// perform a RESTART: for that the probe has to save what it has, build
+	// the world again from the authoring, and lay the save back over it -
+	// and the middle of those three is the only one it could already do.
+	//
+	// AGENTS ONLY, AND IT SAYS SO. The C#'s Capture writes the whole save -
+	// version, clock, wallet, campaign, secrets, beats, debts - and the port
+	// has none of those and has no business inventing them. What it writes is
+	// the "agents" array inside a root that carries nothing else, which is
+	// exactly the part RestoreMillAgents reads and exactly the part a rumour
+	// lives in. A file this writes is NOT a save the game can load, and
+	// calling it one would be the kind of half-truth this project keeps
+	// finding in its own old notes.
+	//
+	// THE KEY ORDER AND THE NUMBER FORMAT ARE THE C#'s, not a choice. The
+	// same reader has to take either file without noticing which engine
+	// wrote it, and a reader is a thing that gets rewritten; a format that
+	// only works because both ends happen to agree today is a format that
+	// breaks the day one end is tidied.
+	inline void EscapeInto(std::string& Out, const std::string& S)
+	{
+		for (std::string::size_type I = 0; I < S.size(); ++I)
+		{
+			const unsigned char C = (unsigned char)S[I];
+			if      (C == '"')  { Out += "\\\""; }
+			else if (C == '\\') { Out += "\\\\"; }
+			else if (C == '/')  { Out += "\\/"; }
+			else if (C == '\b') { Out += "\\b"; }
+			else if (C == '\f') { Out += "\\f"; }
+			else if (C == '\n') { Out += "\\n"; }
+			else if (C == '\r') { Out += "\\r"; }
+			else if (C == '\t') { Out += "\\t"; }
+			else if (C < 0x20)
+			{
+				static const char* Hex = "0123456789abcdef";
+				Out += "\\u00";
+				Out += Hex[(C >> 4) & 0xF];
+				Out += Hex[C & 0xF];
+			}
+			else { Out += (char)C; }
+		}
+	}
+
+	inline void QuotedInto(std::string& Out, const std::string& S)
+	{
+		Out += '"';
+		EscapeInto(Out, S);
+		Out += '"';
+	}
+
+	/// The mill's agents as the JSON the C#'s own codec writes for them.
+	inline std::string CaptureMillAgents(const GossipMill& Mill)
+	{
+		std::string Out = "{\"agents\":[";
+		const std::vector<GossiperPtr>& Agents = Mill.Agents();
+		for (std::vector<GossiperPtr>::size_type I = 0; I < Agents.size(); ++I)
+		{
+			const GossiperPtr& G = Agents[I];
+			if (!G) { continue; }
+			if (I) { Out += ','; }
+			Out += "{\"id\":";
+			QuotedInto(Out, G->Id);
+			Out += ",\"loyalty\":" + ShortestRoundTrip(G->Loyalty);
+			Out += ",\"leashed\":";
+			Out += G->Leashed ? "true" : "false";
+			// SUSPICION IS WRITTEN AS ZERO AND THAT IS NOT A MEASUREMENT.
+			// SuspicionTracker is out of scope in this port, so there is no
+			// value here to write; the key is present because the C#'s
+			// reader expects the shape, and zero is what an unported field
+			// honestly holds. A save this writes must never be mistaken for
+			// one that carries a suspicion this build never tracked.
+			Out += ",\"suspicion\":0";
+			Out += ",\"suppressed\":[";
+			for (std::vector<std::string>::size_type T = 0; T < G->Suppressed.size(); ++T)
+			{
+				if (T) { Out += ','; }
+				QuotedInto(Out, G->Suppressed[T]);
+			}
+			Out += "],\"rumors\":[";
+			for (std::vector<RumorPtr>::size_type Rn = 0; Rn < G->Rumors.size(); ++Rn)
+			{
+				const RumorPtr& Rm = G->Rumors[Rn];
+				if (!Rm) { continue; }
+				if (Rn) { Out += ','; }
+				Out += "{\"subj\":";
+				QuotedInto(Out, Rm->Content.Subject);
+				Out += ",\"pred\":";
+				QuotedInto(Out, Rm->Content.Predicate);
+				Out += ",\"val\":";
+				QuotedInto(Out, Rm->Content.Value);
+				Out += ",\"origin\":";
+				QuotedInto(Out, Rm->OriginId);
+				Out += ",\"summary\":";
+				QuotedInto(Out, Rm->Summary);
+				Out += ",\"conf\":" + ShortestRoundTrip(Rm->Confidence);
+				Out += ",\"hops\":";
+				{
+					char Buf[32];
+					std::sprintf(Buf, "%d", Rm->Hops);
+					Out += Buf;
+				}
+				Out += ",\"sensitive\":";
+				Out += Rm->Sensitive ? "true" : "false";
+				Out += ",\"indelible\":";
+				Out += Rm->Indelible ? "true" : "false";
+				Out += '}';
+			}
+			Out += "],\"facts\":[";
+			if (G->Knowledge)
+			{
+				for (std::vector<Fact>::size_type F = 0; F < G->Knowledge->Facts.size(); ++F)
+				{
+					if (F) { Out += ','; }
+					Out += "{\"subj\":";
+					QuotedInto(Out, G->Knowledge->Facts[F].Subject);
+					Out += ",\"pred\":";
+					QuotedInto(Out, G->Knowledge->Facts[F].Predicate);
+					Out += ",\"val\":";
+					QuotedInto(Out, G->Knowledge->Facts[F].Value);
+					Out += '}';
+				}
+			}
+			Out += "]}";
+		}
+		Out += "]}";
+		return Out;
 	}
 
 	inline void RestoreMillAgents(const std::string& Json, GossipMill& Mill)
