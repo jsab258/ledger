@@ -124,7 +124,14 @@ MATERIALS = (
     # where it found it. The ratios are applied per channel and the loop runs
     # again - which is the same loop the texture means already use, and the
     # only honest way to set a number that passes through a tone curve.
-    ("brick_red",   (0.300, 0.116, 0.074), 0.92),
+    # AND MORE SATURATED, which is a separate measurement from brighter and
+    # is the one that was left. Sampled in the RENDER, our brick came out at
+    # saturation 0.45 - sitting exactly on the boundary this file uses to
+    # count "a pixel carrying real colour" - while the sheet's is 0.57,
+    # comfortably over it. That is most of the remaining colour gap and it is
+    # not the shopfronts: the saturated thing in the reference is the BRICK,
+    # because there is so much more of it than there is of any paint.
+    ("brick_red",   (0.300, 0.100, 0.055), 0.92),
     # LIGHTENED 2026-09-22 after the first render of the plain row, which came
     # back charcoal. A soot-darkened London stock is GREYER and LIGHTER than a
     # red brick in daylight, not darker; at the old value the west row read as
@@ -143,7 +150,7 @@ MATERIALS = (
     # wall fills a third of the picture and at 0.313 red it took our warmth
     # PAST the reference: +22.3 against its +18.5. The correction that was
     # right when the wall was a quarter of a squarer frame is wrong now.
-    ("brick_grey",  (0.268, 0.116, 0.080), 0.92),
+    ("brick_grey",  (0.268, 0.100, 0.062), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
@@ -492,12 +499,17 @@ SURFACE_OF = {
 #: package already tells - a parade repainted by whoever owned it, with one
 #: unit that nobody did.
 FASCIA_PAINT = (
-    ("oxblood",    (0.078, 0.012, 0.014)),
-    ("oxblood",    (0.078, 0.012, 0.014)),
+    # LIFTED TO THE SHEET'S OWN VALUES, 22 September. Sampled off its street
+    # panel, its green shopfront is 0.065, 0.090, 0.078 linear and ours was
+    # 0.010, 0.030, 0.019 - FIVE TIMES darker, which is not a bottle green,
+    # it is a black door. Period shop paint was dark; it was not unlit. The
+    # oxblood comes up with it for the same reason and by the same amount.
+    ("oxblood",    (0.105, 0.020, 0.024)),
+    ("oxblood",    (0.105, 0.020, 0.024)),
     ("cream",      (0.520, 0.430, 0.270)),
     ("bare_timber",(0.021, 0.014, 0.010)),
     ("cream",      (0.520, 0.430, 0.270)),
-    ("bottle_green",(0.010, 0.030, 0.019)),
+    ("bottle_green",(0.060, 0.085, 0.072)),
 )
 
 #: THE FOUR SIGNS ARE ALREADY DRAWN AND COMMITTED, at
