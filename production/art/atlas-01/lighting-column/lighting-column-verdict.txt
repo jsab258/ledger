@@ -1,0 +1,40 @@
+artPreviewVerdict=1 commit=31683752 commission=lamp-attempt-6-spigot recipe=lighting-column status=RAN at=1790066886
+
+The authoring line's first test (Jafar, 2026-09-21). Read this file
+instead of the job log. A run that measured nothing says NO RUN.
+
+lcCheck field=base_diameter_m specValue=0.200000 pieceValue=0.200000 diff=0.000000 agree=yes
+lcCheck field=base_height_m specValue=0.300000 pieceValue=0.300000 diff=0.000000 agree=yes
+lcCheck field=shaft_diameter_m specValue=0.114000 pieceValue=0.114000 diff=0.000000 agree=yes
+lcCheck field=shaft_height_m specValue=4.700000 pieceValue=4.700000 diff=0.000000 agree=yes
+lcCheck field=neck_diameter_m specValue=0.091200 pieceValue=0.091200 diff=0.000000 agree=yes
+lcCheck field=lantern_length_m specValue=0.550000 pieceValue=0.550000 diff=0.000000 agree=yes
+lcCheck field=lantern_height_m specValue=0.200000 pieceValue=0.200000 diff=0.000000 agree=yes
+lcCheck field=lantern_width_m specValue=0.300000 pieceValue=0.300000 diff=0.000000 agree=yes
+lcCheck field=outreach_m specValue=0.500000 pieceValue=0.500000 diff=0.000000 agree=yes
+lcCheck field=lantern_mount_absolute_y_m specValue=4.965000 pieceValue=4.965000 diff=0.000000 agree=yes
+lcNeck bendRadius_m=0.0912 bendRadiusInTubeDiameters=1.00 bendSweep_deg=132.97 rakingLimb_m=0.0979 concealedStub_m=0.1000 externalDropper_m=0.0000 jointAngle_deg=47.03 authoredTotalLength_m=0.4096 naiveQuarterArc_m=0.7854 totalLongerThanNaive=no totalRatio=0.5215 cornerCurvature_perM=10.9649 naiveQuarterCurvature_perM=2.0000 shallowerThanNaive=no curvatureRatio=5.4825 naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling constructionPer=2026-09-22-kink-and-raking-limb
+lcSheetRef source=production/art/atlas-01/concepts/hook.png@origin/art/atlas-01 cropPx=185,700,320,1000/tracedSubWindow-220,690,280,800 method=luminance-threshold~silhouette~trace~vs~sky~baseline~~200-210 measuredAt=2026-09-21 curveVerticalFraction_ofVisiblePole~=~8px/~450px-visible-pole~(~1.8pct),compact,top-concentrated headWidthToHeight~=~23px:7px~is~3.3to1~at~widest~traced~row~(y756,x238-261) dropperVisibleOnSheet=no/widens-and-returns-to-plain-pole-width-within~7~rows confidence=low-to-moderate/pole~is~2-3px~wide~at~native~res,~near~the~image's~own~floor
+lcAssembly widthM=0.7750 heightM=0.2912 aspect=2.661 widthInPoleDiameters=6.80 heightInPoleDiameters=2.55 sheetReadsPoleDiametersWide=6.0 sheetReadsPoleDiametersTall=2.0 sheetTarget=none/dropped-2026-09-22-it-would-not-hold-still gate=none/D41-ungated-visual-comparison-the-eye-decides
+lcPart id=base kind=frustum material=steel_dark verts=32 faces=18 area_m2=0.14948 wearOf=base manifold=yes badEdges=0 degenerateFaces=0 note=base_diameter_m~at~the~foot~tapering~to~shaft_diameter_m~at~the~top,~no~step~at~the~shaft~joint,~column.surface=metal
+lcPart id=shaft kind=cyl material=steel_dark verts=32 faces=18 area_m2=1.68327 wearOf=shaft manifold=yes badEdges=0 degenerateFaces=0 note=shaft_diameter_m~uniform,~no~taper~authored
+lcPart id=neck kind=tube material=steel_dark verts=120 faces=114 area_m2=0.11734 wearOf=neck manifold=yes badEdges=0 degenerateFaces=0 note=one~continuous~swept~tube:~a~0.0912~m~radius~quarter-circle~corner~(fixed~90~degree~sweep),~then~a~0.0979~m~level~arm,~then~a~0.1000~m~dropp
+lcPart id=lantern_body kind=box material=steel_dark verts=8 faces=6 area_m2=0.22247 wearOf=lantern manifold=yes badEdges=0 degenerateFaces=0 note=housing~inset~to~0.82x~of~length_m/width_m~so~the~roof~overhangs~it,~height~split~body=0.0800~roof=0.1200~of~lantern_height_m=0.2000
+lcPart id=lantern_lens kind=box material=lens_amber verts=8 faces=6 area_m2=0.09240 wearOf=none manifold=yes badEdges=0 degenerateFaces=0 note=recessed~diffuser,~flush~with~the~housing~underside,~inset~so~the~OVERALL~bounding~box~is~unchanged
+lcPart id=lantern_roof kind=wedge material=steel_dark verts=6 faces=5 area_m2=0.21130 wearOf=lantern manifold=yes badEdges=0 degenerateFaces=0 note=shallow~ridge~canopy,~NOT~a~bowl~and~NOT~a~plain~box,~per~the~Hook~sheet;~ridge~along~the~length~axis
+lcPart id=photocell kind=cyl material=steel_dark verts=20 faces=12 area_m2=0.00314 wearOf=none manifold=yes badEdges=0 degenerateFaces=0 note=small~functional~dusk-to-dawn~sensor~housing,~read~off~the~sheet's~small~ridge-top~bump;~NOT~a~finial,~which~the~ruling~forbids:~a~finial~is
+lcPart id=wear_rain_streak kind=box material=grime verts=8 faces=6 area_m2=0.15940 wearOf=shaft manifold=yes badEdges=0 degenerateFaces=0 note=rain~running~down~the~shaft~from~the~neck~attachment,~on~the~outreach-facing~(weather)~side
+lcPart id=wear_road_spray kind=box material=grime verts=8 faces=6 area_m2=0.01155 wearOf=base manifold=yes badEdges=0 degenerateFaces=0 note=road~spray~thrown~up~at~the~base,~contained~within~base_height_m,~no~cross-surface~overlap~with~the~shaft
+lcPart id=wear_lantern_drip kind=box material=grime verts=8 faces=6 area_m2=0.00451 wearOf=neck manifold=yes badEdges=0 degenerateFaces=0 note=staining~below~the~lantern,~centred~on~the~dropper~between~the~arc~and~the~housing,~from~drips~off~the~fitting
+lcWear surface=base cleanArea_m2=0.14948 wearArea_m2=0.01155 wearCoverage=0.077267
+lcWear surface=lantern cleanArea_m2=0.43377 wearArea_m2=0.00000 wearCoverage=0.000000
+lcWear surface=neck cleanArea_m2=0.11734 wearArea_m2=0.00451 wearCoverage=0.038472
+lcWear surface=shaft cleanArea_m2=1.68327 wearArea_m2=0.15940 wearCoverage=0.094697
+lcFrame idx=1/4 id=hero_full condition=overcast_day png=lighting-column-overcast_day-hero_full.png bytes=2221633 engine=BLENDER_EEVEE_NEXT renderSeconds=2.5
+lcFrame idx=2/4 id=head_detail condition=overcast_day png=lighting-column-overcast_day-head_detail.png bytes=2043929 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
+lcFrame idx=3/4 id=hero_full condition=wet_night png=lighting-column-wet_night-hero_full.png bytes=1797845 engine=BLENDER_EEVEE_NEXT renderSeconds=0.4
+lcFrame idx=4/4 id=head_detail condition=wet_night png=lighting-column-wet_night-head_detail.png bytes=1691844 engine=BLENDER_EEVEE_NEXT renderSeconds=0.3
+lcNote sceneReset=dataApi/removed=3/3-objects
+lcNote world/overcast_day=hdri=ledger/Assets/Resources/Sky/polyhaven/belfast_open_field_2k.hdr
+lcNote world/wet_night=hdri=ledger/Assets/Resources/Sky/polyhaven/kloppenheim_04_2k.hdr
+lighting-column done: status=RAN commission=lamp-attempt-6-spigot runSha=31683752 studioSha=31683752 specSha256=fd67a41a666b7e7e specPath=production\specs\vignette-scene.json crossCheckAgree=10/10 objectsPlanned=10 objectsBuilt=10/10-planned manifoldParts=10/10 neckArcLonger=no neckShallower=no wearCoverageMin=0.000000/lantern wearCoverageTotal=0.073605 boundsExtent_m=0.875/0.300/5.137 previewsWrote=4/4 engineAsked=AUTO engineUsed=BLENDER_EEVEE_NEXT res=1600x1100 outDir=C:/Users/Jafar/AppData/Local/Temp/claude/C--Users-Jafar-ledger-local/7ec707fe-fd41-4a40-ac4f-b7fc4cc91e3b/scratchpad/a6 root=C:\Users\Jafar\ledger-local elapsedSeconds=3.7
