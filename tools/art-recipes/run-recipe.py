@@ -31,6 +31,7 @@ recipe run against the real piece file. The render itself is UNCOVERED, and the
 first real run on the Windows runner is the first time those lines execute.
 """
 import contextlib
+import glob
 import io
 import json
 import os
@@ -55,6 +56,18 @@ NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 #: are LAST so they can never change the runner's answer. $BLENDER overrides
 #: everything, which is how a runner with an unusual install is told once.
 BLENDER_CANDIDATES = (
+    # THIS MACHINE'S OWN INSTALL, and it is first because it is the one
+    # that renders. Blender is not under Program Files on Jafar's PC: it is
+    # unpacked under C:\LedgerTools alongside the pinned python, which is where
+    # this project keeps the tools it did not install system-wide. This list
+    # held only the two Program Files paths, so every local render refused
+    # with NO-BLENDER until somebody set $BLENDER by hand - which is a thing
+    # you have to already know, and the refusal did not say it.
+    #
+    # THE VERSION IS A GLOB rather than a number. Pinning 4.5.13 here would
+    # move the same failure to the day the machine is updated, and the
+    # refusal would read exactly the same.
+    r"C:\LedgerTools\blender\*\blender-*-windows-x64\blender.exe",
     r"%ProgramFiles%\Blender Foundation\Blender 4.2\blender.exe",
     r"%ProgramFiles%\Blender Foundation\Blender 4.1\blender.exe",
     "blender",
@@ -131,7 +144,14 @@ def blender_candidates(env=None):
         out.append(override)
     program_files = env.get("ProgramFiles", r"C:\Program Files")
     for c in BLENDER_CANDIDATES:
-        out.append(c.replace("%ProgramFiles%", program_files))
+        c = c.replace("%ProgramFiles%", program_files)
+        if "*" in c:
+            # A GLOB IS EXPANDED HERE, NEWEST FIRST, so a machine carrying two
+            # versions renders with the later one. Sorted rather than left to
+            # the filesystem's order, which is not an order.
+            out.extend(sorted(glob.glob(c), reverse=True))
+            continue
+        out.append(c)
     return out
 
 
@@ -371,11 +391,21 @@ def _selftest(root=ROOT):
         probe=lambda c: False)
     check("accept/an-installed-blender-is-found-by-path",
           chosen.endswith(r"Blender 4.1\blender.exe"), chosen)
-    check("accept/and-4.2-was-tried-before-4.1", len(tried) == 2, tried)
+    # COUNTED BY POSITION, NOT BY TOTAL, and that is the repair. Both of
+    # these asserted a LENGTH - "two tried", "three tried" - which quietly
+    # encoded how many candidates the list happened to hold, so adding this
+    # machine's own install at the front failed two checks that have nothing
+    # to do with it. What they are actually about is ORDER: 4.2 before 4.1,
+    # and a PATH blender reached only after every full path has been tried.
+    check("accept/and-4.2-was-tried-before-4.1",
+          tried.index([c for c in tried if "Blender 4.2" in c][0])
+          < tried.index(chosen), tried)
     chosen2, tried2 = find_blender(cands, exists=lambda p: False,
                                    probe=lambda c: c == "blender")
     check("accept/a-blender-on-PATH-is-found-by-probing-it",
-          chosen2 == "blender" and len(tried2) == 3, (chosen2, tried2))
+          chosen2 == "blender" and tried2[-1] == "blender", (chosen2, tried2))
+    check("accept/and-every-full-path-was-tried-before-falling-back-to-PATH",
+          all(c != "blender" for c in tried2[:-1]), tried2)
     check("accept/$BLENDER-overrides-and-is-tried-first",
           blender_candidates({"BLENDER": "/x/b"})[0] == "/x/b")
 

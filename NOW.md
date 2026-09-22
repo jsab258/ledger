@@ -46,39 +46,43 @@ nothing.
       branch, so nothing ever failed. The approved in-house sheet is now at
       production/reference/hook-sheet.png and that is the only place a
       reference lives; the pair tool refuses when it is missing.
-- [ ] THE GAPS THE RIGHT PAIR SHOWS, re-cut 22 September against the
-      approved sheet, in the order they matter. The first three are worth
-      more than everything below them put together:
-      1. THE FRAME IS POINTED AT THE WRONG THING. A blank windowless gable
-         takes the left third of our picture and the road takes most of the
-         rest; the parade is a sliver down the right edge. The sheet puts
-         shopfronts across two-thirds of the frame with the near corner
-         building large and detailed. Every piece of dressing built this
-         week is sitting in 8 per cent of the image.
-      2. VALUE. Ours is mean 74 against the sheet's 120 and its brightest
-         five per cent is 163 against 229. Nothing in our frame is bright.
-      3. COLOUR. Ours is grey - red, green and blue within 0.8 of a level
-         of each other - against a sheet that is warm (R-B +18.5) and a
-         quarter saturated. Two parts to it: the brick must come back to
-         WARM RED, reversing a lightening made against the wrong sheet, and
-         the shopfronts must be a PARADE OF DIFFERENT PAINTED COLOURS -
-         cream, green, blue, oxblood, side by side - which is the single
-         loudest thing in the reference.
-      4. WHITE JOINERY. The sheet's character is white-painted sash windows
-         and white shopfront frames against red brick, everywhere. Ours are
-         dark. This is most of where the missing highlights are.
-      5. THE YELLOWS ARE RIGHT AND TOO LOUD. The approved sheet does carry
-         double yellows, so they stay; ours are the brightest thing in the
-         frame where the sheet's are worn and nearly lost.
-      6. NO CARS. The sheet has one parked well up the street, not three.
-      7. NO CLUTTER on the pavement.
-      8. THE UPPER WINDOWS ARE BARE: the spec's per-bay roller blind, bare
-         pane or lit interior card is not reaching the street.
-      9. THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
-     10. DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
-         into the recipe and the next one does not start from scratch.
-- [ ] Render the pair from the sheet's viewpoint after each step, in DAYLIGHT
-      as the sheet is. The dusk frame is a second, occasional check.
+- [x] VALUE. Ours measured mean 74 against the sheet's 120 this morning and
+      measures 118.6 now. Three passes: the palette read off the sheet, then
+      corrected against our OWN render per channel, because a value that
+      passes through AgX does not stay where it was put.
+- [x] COLOUR, the warmth half. +0.7 against the sheet's +18.5 this morning,
+      +17.0 now. The brick is warm red on both rows; the plain row's
+      neutrality was most of the deficit, since it takes the left third.
+- [x] WHITE JOINERY. Every upper window now carries a two-over-two box sash
+      in a joiner's sections. There was no frame at all before - a pane in a
+      hole with a stone sill - and it is what the street is made of.
+- [x] THE YELLOWS, halved. Right to be there, wrong to be the loudest thing.
+- [x] ONE CAR, invented from class-average numbers rather than fetched,
+      because canon forbids a recognisable real one.
+- [x] THE WET ROAD ACTUALLY REFLECTS. EEVEE ships with raytracing off, so
+      nothing in this street reflected anything and the roughness curve had
+      nothing to work with.
+- [ ] THE FRAME IS HALF FIXED. Sky is 24% against the sheet's 21%, the
+      camera stands inside the row instead of a metre past its end, and it
+      looks three degrees UP rather than four down. What is still wrong:
+      the near-left is a BLANK FLANK with no shopfront on it and it takes
+      the left third, where the sheet's near-left is a shop; and the parade
+      is small and far where the sheet's near building is close and large.
+- [ ] COLOUR, the saturation half. 9.5% of our pixels carry real colour
+      against the sheet's 25.8%. It is not a material fault - the parade's
+      brick now measures within five per cent of the reference - it is that
+      the sheet's frame is FULL of close painted shopfront and ours is
+      mostly road, sky and a blank wall. It follows the frame item above.
+- [ ] THE ROAD READS DRY AND WIDE. Right value now, but flat: no wheel
+      tracks, no standing water, no reflection worth the name near the
+      camera.
+- [ ] THE FIGURES READ AS BLACK POSTS, not people, at this distance.
+- [ ] NO CLUTTER on the pavement. The scene spec already places bins,
+      crates, an A-board, a skip, pallets, bollards and cones BY NAME with
+      measured dimensions - 36 placements of meshes we already hold.
+- [ ] THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
+- [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
+      into the recipe and the next one does not start from scratch.
 
 ## 2. Rumours surviving a restart (stage 3)
 
