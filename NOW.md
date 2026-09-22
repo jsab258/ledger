@@ -510,14 +510,29 @@ THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
       6.2 m against about 5 to 5.5) - the spec is the geometry and the sheet
       is the look; the sheet's road bends where ours is straight, the same;
       the people are blocks, which is stage 2's; the west side is canon.
-- [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
+- [x] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
+      DONE for the parade. Mickey's is R05's metal front and patterned tile
+      in the sheet's slate blue-grey, its name signwritten in plain capitals
+      (PT Sans, lettered by the 2D maker, refused unless canon mints it);
+      the fish shop's frame is metal all through, not metal jambs round white
+      timber bars; the empty unit is whitened and has a TO LET board. FOUND
+      ON THE WAY: the recipe put the parade's signs on EVERY shop block, so
+      the street had two MICKEY'S across the road from each other - the very
+      fault ruled uncitable on the sheet - and pasted three signs as whole
+      shopfront photographs, ignoring the spec's crops. Both fixed from the
+      spec. Measured on the front, sheet against ours: frame 57/72/86 vs
+      52/64/75, tile 158/151/132 vs 132/126/112. STILL OPEN: the windows
+      render opaque (the known EEVEE fault), which is now the largest
+      difference on the cab office; and the game's own scene file still
+      names the pub board, to move with the next push that runs the probe.
 
 WHILE THE CARD IS BUSY - the work that does not need it.
 - [x] THE ARREST FROM LIVE PLAY, proven: the box closes when a probe verdict
       reads outcomeA=Arrest and outcomeB=NothingToArrest. Ruled (a): a beat
       constable who knows the new owner by sight. (Section 8's item.)
-- [ ] RUMOUR REACH WRITTEN AS A MORNING DECISION in FOR-JAFAR.md, plain words,
-      with a recommendation. NO CONSTANT CHANGES.
+- [x] RUMOUR REACH WRITTEN AS A MORNING DECISION in FOR-JAFAR.md, plain words,
+      with a recommendation. NO CONSTANT CHANGES. It is decision 2 there,
+      the series table in it, recommendation (a) leave the numbers.
 - [ ] RUMOURS SURVIVING A RESTART, the witnessed and unwitnessed pair: through
       save, restart and reload in the packaged build, with the automatic
       check - the control must still hold nothing after the reload.

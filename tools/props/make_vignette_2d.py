@@ -17,6 +17,14 @@ and no name is invented here to unblock it.
   E10_street_name_plate    plate_<name>.png x3       MANDATORY
   B4_gutter_water          gutter_water.png          DRESSING
   C12_net_curtain          net_curtain_a/b.png       DRESSING
+  C6_fascia_lettering      fascia_mickeys_plain.png  the cab office's own board
+  C6_letting_board         board_to_let.png          the empty unit's board
+
+THE LAST TWO ARE LETTERING, and they are here rather than in the image lane
+for the same reason the plates are: a sign is a measured board with a canon
+word on it, and the diffusion model spells. Added 22 September, when the
+shopfronts were reworked to the 1989 photographs - see make_fascia and
+make_letting_board.
 
 THE SCALE IS 1 MILLIMETRE PER PIXEL AND EVERY DIMENSION BELOW IS IN
 MILLIMETRES, because the BOM states A5 in millimetres ("two 100 mm bands, gap
@@ -101,6 +109,32 @@ def canon_districts(canon=CANON):
     return [n for n in names if 2 < len(n) < 24]
 
 
+def canon_minted(canon=CANON):
+    """The names canon.md's "Minted:" line mints, as canon writes them.
+
+    THE LINE WRAPS AND CARRIES GLOSSES, "Mickey's (the minicab office; a pub
+    until D19), the Tivoli (cinema), Meridian Harbour Board, Meridian\n
+    Ferry. The brand bible still owes: ...", so the brackets go first, then
+    the sentence ends at its full stop, then it is split on commas. A leading
+    "the" is canon's grammar and not part of a name.
+    """
+    text = canon.read_text(encoding="utf-8")
+    if "- Minted:" not in text:
+        return []
+    tail = text.split("- Minted:", 1)[1]
+    tail = re.sub(r"\([^)]*\)", "", tail)
+    tail = " ".join(tail.split())
+    tail = tail.split(". ", 1)[0].rstrip(".")
+    names = []
+    for n in tail.split(","):
+        n = n.strip()
+        if n.lower().startswith("the "):
+            n = n[4:]
+        if n:
+            names.append(n)
+    return names
+
+
 def _rng(tag):
     """A named stream per image, so adding one image cannot change another."""
     return np.random.default_rng(
@@ -132,6 +166,90 @@ def _fbm(w, h, rng, octaves=4, cells=4):
         total += amp
         amp *= 0.5
     return out / total
+
+
+# ---------------------------------------------------------------------------
+# C6. The cab office's fascia: its name in plain capitals on its own paint.
+# ---------------------------------------------------------------------------
+#: THE BOARD IS THE FACE OF THE FASCIA THE RECIPE BUILDS, 5650 x 460 mm - the
+#: 6.0 m band less half a pier each end, less 45 mm top and bottom - so the
+#: image lands at 1 mm a pixel with no stretch.
+FASCIA_BOARD_MM = (5650, 460)
+#: THE PAINT AND THE LETTERING, sampled off the approved Hook sheet's own
+#: MICKEY'S on 22 September: the fascia measures 66, 79, 90 sRGB, a slate
+#: blue-grey, and its letters 178, 159, 116 at their brightest fifth - a dull
+#: gold, which is what signwriter's gold looks like after a year of rain.
+#: The sheet governs palette; that is all these two numbers are.
+FASCIA_PAINT_SRGB = (66, 79, 90)
+FASCIA_INK_SRGB = (196, 174, 122)
+#: CAP HEIGHT, 240 mm on a 460 mm board: the sheet's letters fill a little
+#: over half the fascia's height, and a sign is read from across the road.
+FASCIA_CAP_MM = 240
+
+
+def make_fascia(name, rng, minted=None):
+    """A painted fascia with a canon name signwritten across it.
+
+    PLAIN CAPITALS, NOT A PUB'S SERIF BOARD. The board this replaces was the
+    image lane's, made against the retired sheet when Mickey's was still a
+    pub, and it was a maroon signboard with gilt serifs and a border - the
+    look of a pub. The approved sheet paints the name straight onto the
+    fascia in plain sans capitals, which is what a minicab office's front
+    looked like in 1989. The name is REFUSED unless canon mints it.
+    """
+    minted = canon_minted() if minted is None else minted
+    if name not in minted:
+        raise ValueError(
+            f"'{name}' is not a name canon.md mints. Canon mints "
+            f"{len(minted)}: {', '.join(minted) or 'none'}. A name is not "
+            "invented here to unblock a picture; canon.md outranks this tool.")
+    w, h = FASCIA_BOARD_MM[0] * MM, FASCIA_BOARD_MM[1] * MM
+    img = Image.new("RGB", (w, h), FASCIA_PAINT_SRGB)
+    d = ImageDraw.Draw(img)
+    # PT Sans caps are 0.70 of the em, so the em is the cap height over that.
+    font = ImageFont.truetype(str(FONT), int(FASCIA_CAP_MM * MM / 0.70))
+    text = name.upper().replace("'", "\u2019")
+    # A SIGNWRITER'S WEIGHT, drawn as a stroke of the same paint: the face
+    # is PT Sans Regular and a fascia letter is heavier than a book's.
+    d.text((w // 2, h // 2), text, font=font, fill=FASCIA_INK_SRGB,
+           anchor="mm", stroke_width=5 * MM, stroke_fill=FASCIA_INK_SRGB)
+    a = np.asarray(img).astype(np.float32) / 255.0
+    dirt = _fbm(w, h, rng, octaves=5, cells=6)[..., None]
+    # RAIN RUNS DOWN A FASCIA AND COLLECTS AT ITS FOOT, so the bottom is
+    # a little darker than the top, on top of the ordinary mottle.
+    fall = np.linspace(1.0, 0.86, h)[:, None, None]
+    a = np.clip(a * (0.86 + 0.20 * dirt) * fall, 0, 1)
+    return Image.fromarray((a * 255).astype(np.uint8), "RGB")
+
+
+# ---------------------------------------------------------------------------
+# C6. The empty unit's letting board.
+# ---------------------------------------------------------------------------
+#: A FLAT BOARD FIXED TO THE FASCIA, 900 x 450 mm, which is R05's
+#: "neighbouring letting board" on the 1989 Princes Avenue parade.
+LETTING_BOARD_MM = (900, 450)
+
+
+def make_letting_board(rng):
+    """TO LET, and nothing else.
+
+    NO AGENT AND NO TELEPHONE NUMBER, on purpose. A real letting board
+    carries both, and both would be minted here: canon mints no estate agent,
+    and any number printed on a board is somebody's. So the board says what
+    it is and leaves the rest white, which is also how a board looks from
+    across a street once the small print is too small to read.
+    """
+    w, h = LETTING_BOARD_MM[0] * MM, LETTING_BOARD_MM[1] * MM
+    img = Image.new("RGB", (w, h), (236, 234, 226))
+    d = ImageDraw.Draw(img)
+    d.rectangle([0, 0, w - 1, h - 1], outline=(150, 32, 36), width=22 * MM)
+    font = ImageFont.truetype(str(FONT), int(150 * MM / 0.70))
+    d.text((w // 2, h // 2), "TO LET", font=font, fill=(150, 32, 36),
+           anchor="mm", stroke_width=4 * MM, stroke_fill=(150, 32, 36))
+    a = np.asarray(img).astype(np.float32) / 255.0
+    dirt = _fbm(w, h, rng, octaves=5, cells=4)[..., None]
+    a = np.clip(a * (0.84 + 0.22 * dirt), 0, 1)
+    return Image.fromarray((a * 255).astype(np.uint8), "RGB")
 
 
 # ---------------------------------------------------------------------------
@@ -304,6 +422,13 @@ def build(dest=DEST, streets=None, districts=None):
             ("net_curtain_b.png", "C12_net_curtain",
              lambda: net_curtain(_rng("C12b"), 17.0, 0.35),
              "1024x1024mm, 17mm weave pitch, nearly flat")]
+    jobs.append(("fascia_mickeys_plain.png", "C6_fascia_lettering",
+                 lambda: make_fascia("Mickey's", _rng("C6mickeys")),
+                 "5650x460mm fascia face, canon name in plain capitals, "
+                 "paint and ink sampled off the approved Hook sheet"))
+    jobs.append(("board_to_let.png", "C6_letting_board",
+                 lambda: make_letting_board(_rng("C6let")),
+                 "900x450mm letting board, no agent and no number minted"))
     for s in streets:
         slug = s.lower().replace(" ", "_")
         jobs.append((f"plate_{slug}.png", "E10_street_name_plate",
@@ -352,8 +477,8 @@ def build(dest=DEST, streets=None, districts=None):
                           "name not minted there is refused, so no name is "
                           "invented to unblock a picture"},
         "content_rules": "no real person, no real trade mark, in-world only; "
-                         "these five carry no lettering except canon street "
-                         "and district names",
+                         "the only lettering is canon street and district "
+                         "names, the canon name Mickey's, and the words TO LET",
         "scale": "1 pixel = 1 millimetre in every file here",
         "blank_check": {
             "by": "tools/imagegen/imagegen.py png_stats + blank_verdict, "
@@ -426,6 +551,18 @@ def selftest():
         print(f"\nREJECT: a uniform 64x64 image -> {v}")
         if v != "blank":
             print("  FAIL: the blank check cannot see a blank image"); bad = 1
+
+        # REJECTING 3: a shop name canon does not mint.
+        try:
+            make_fascia("Acme Cars", _rng("x"))
+            print("\nREJECT: an unminted shop name -> ACCEPTED")
+            print("  FAIL: a name not in canon must be refused"); bad = 1
+        except ValueError as e:
+            print(f"\nREJECT: an unminted shop name -> refused ({e})")
+        minted = canon_minted()
+        print(f"ACCEPT: canon.md mints {minted}")
+        if "Mickey's" not in minted:
+            print("  FAIL: Mickey's must read as minted"); bad = 1
 
         # REJECTING 2: a street name canon does not mint.
         try:

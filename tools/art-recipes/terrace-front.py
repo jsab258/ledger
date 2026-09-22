@@ -257,6 +257,30 @@ MATERIALS = (
     # implied - we hold no tile map and inventing one from noise would be a
     # texture pretending to be evidence.
     ("tile_stall", (0.044, 0.052, 0.058), 0.18),    # glazed tile, no pattern
+    # THE CAB OFFICE'S FRONT, 22 September, the shopfronts step, and it is
+    # the one place on the parade where the sheet and the photographs say
+    # the same thing. R05 is "metal shopfront... PATTERNED TILE STALLRISER";
+    # the approved sheet's MICKEY'S is a slim frame painted slate blue-grey
+    # over a pale patterned tile. So: R05's construction in the sheet's
+    # colours. The frame measures 57-75, 72-84, 86-92 sRGB across its pier,
+    # its fascia and its door, and this is the middle of that in linear; the
+    # tile measures 158, 151, 132 over its pattern, so its GROUND is paler
+    # than that and the pattern takes it down to the measured mean.
+    #
+    # FINISHED FROM THE MEASUREMENT, after two attempts. Rendered, the first
+    # values came back well under the sheet on the same front - the pier
+    # 46/56/65 against 57/72/86, the tile 113/107/92 against 158/151/132 -
+    # because a pier and a stallriser stand in their own recess's shade.
+    # Raised by the measured gap, the frame only by a quarter: at the full
+    # gap its luminance walks into the brick's, and on the sheet the two are
+    # told apart by hue AND by value, the frame about two-thirds the brick's.
+    ("frame_painted", (0.0625, 0.0875, 0.119), 0.35), # powder-coated slate
+    ("tile_patterned", (0.620, 0.570, 0.430), 0.20), # glazed, a pattern on it
+    # AND THE EMPTY UNIT'S GLASS IS WHITENED, which is what was done to an
+    # empty shop's window in 1989 - a wash of whiting on the inside so the
+    # bare room does not show - and it is the other half of R05's "letting
+    # board". Pale, matt, and not glass at all to the eye.
+    ("glass_whitened", (0.420, 0.415, 0.385), 0.85),
     # THE SIDE DOOR IS A DIFFERENT PAINT, AND THE SECOND ATTEMPT HAD TO MOVE
     # IT. A warm brown was a plausible door colour and it was almost exactly
     # brick_red's own value, so the door vanished into the wall it sits in -
@@ -536,6 +560,9 @@ SURFACE_OF = {
     # glazed tile.
     "frame_metal":  ("plaster", 0.4),
     "tile_stall":   ("plaster", 0.3),
+    "frame_painted": ("plaster", 0.4),
+    "tile_patterned": ("plaster", 0.3),
+    "glass_whitened": ("plaster", 0.6),
     "paint_door":   ("wood", 0.6),
     "paint_fascia": ("wood", 1.0),
     # A PANE OF GLASS IS NOT A PHOTOGRAPH OF ANYTHING, and it had the
@@ -607,7 +634,47 @@ SURFACE_OF = {
 #:
 #: IT IS A LIST AND NOT A FLAG so that a second refit is one entry rather
 #: than a second code path, and so the check below can count them.
-SHOPFRONT_REFIT_BAYS = (1,)
+#:
+#: KEYED BY BLOCK AND BAY NOW, 22 September, and it was keyed by bay alone.
+#: A bare bay number applied to EVERY shop block, so west_north's bay 1
+#: became a metal front by accident of its index. It is kept as one - D06
+#: says metal frames among older masonry, and that bay is across the road
+#: from the fish shop - but it is written down here as a choice rather than
+#: left as a side effect.
+#:
+#: THE CAB OFFICE IS THE SECOND REFIT, and the sheet and the photographs
+#: agree on it: R05's metal front and patterned tile, in the approved
+#: sheet's slate blue-grey, with the fascia and the piers in the same paint
+#: because a front is painted as a unit. "frame" is the section material,
+#: "stall" the stallriser's, "paint" the piers' and fascia's where the refit
+#: repainted them too.
+SHOPFRONT_REFITS = {
+    ("east_parade", 0): {"frame": "frame_painted", "stall": "tile_patterned",
+                         "paint": ("slate_blue", (0.0625, 0.0875, 0.119))},
+    ("east_parade", 1): {"frame": "frame_metal", "stall": "tile_stall"},
+    ("west_north", 1):  {"frame": "frame_metal", "stall": "tile_stall"},
+}
+#: The two section materials a refit can be in, for the checks.
+REFIT_FRAMES = ("frame_metal", "frame_painted")
+#: And every material a shopfront's joinery can be in.
+JOINERY_MATERIALS = ("paint_joinery",) + REFIT_FRAMES
+
+#: THE EMPTY UNIT, whitened and to let. R05's parade has "a neighbouring
+#: letting board"; the spec already made bay 3 the unit nobody trades from.
+EMPTY_UNIT = ("east_parade", 3)
+#: THE TWO BOARDS THIS PROJECT LETTERED ITSELF, in PT Sans, by
+#: tools/props/make_vignette_2d.py - root-relative paths, not image-lane ids.
+LETTERED = "production/assets/vignette/decals2d"
+LETTING_BOARD = LETTERED + "/board_to_let"
+LETTING_BOARD_M = (0.90, 0.45)
+#: AND THE CAB OFFICE'S NAME. The spec's decal for east_parade_fascia0 is
+#: still the image lane's maroon signboard - gilt serifs and a border, a
+#: pub's board, made against the retired sheet when Mickey's was a pub. The
+#: approved sheet signwrites the name across the fascia in plain capitals,
+#: so the recipe lays that instead. THE SPEC IS NOT CHANGED HERE: the Unreal
+#: probe stages the generated directory and nothing else, so moving the
+#: spec's id is a probe change and waits for one.
+SIGN_OVERRIDE = {("east_parade", 0): LETTERED + "/fascia_mickeys_plain"}
 
 FASCIA_PAINT = (
     # LIFTED TO THE SHEET'S OWN VALUES, 22 September. Sampled off its street
@@ -632,20 +699,22 @@ FASCIA_PAINT = (
     ("bottle_green",(0.060, 0.085, 0.072)),
 )
 
-#: THE FOUR SIGNS ARE ALREADY DRAWN AND COMMITTED, at
-#: ledger/Assets/StreamingAssets/Decals/generated, and the spec settles which
-#: bay each belongs to - including the one genuine disagreement it found
-#: between the atlas proposal and the landed files, where THE LANDED ASSET
-#: WINS. Rita's Pawn and the Steam Laundry stay where the real texture is.
-#: Bays 3 and 5 carry no lettering: 3 is the empty unit, 5 is the grocer whose
-#: bay is the lit, unlettered one.
-DECAL_DIR = "ledger/Assets/StreamingAssets/Decals/generated"
-FASCIA_SIGN = {
-    0: "fascia_mickeys",
-    1: "fascia_fish_market",
-    2: "fascia_ritas_pawn",
-    4: "fascia_steam_laundry",
-}
+#: THE SIGNS ARE READ FROM THE SPEC'S OWN DECALS NOW, 22 September, and the
+#: dict that stood here was wrong in two ways the spec was not.
+#:
+#: IT WAS KEYED BY BAY ALONE, so every shop block got the parade's signs:
+#: west_north carried a second MICKEY'S, a second fish market and a second
+#: Rita's across the road from the first. That is the fault Jafar ruled
+#: uncitable on the sheet itself - "the second MICKEY'S sign on the
+#: neighbouring shop" - built into our own street. The spec anchors each
+#: sign to ONE piece, east_parade_fascia<N>, and west_north has none.
+#:
+#: AND IT PASTED THE WHOLE IMAGE. Three of the four generated signs are
+#: photographs of a whole shopfront, and the spec carries a uv crop for each
+#: - "pasting all of it on a fascia band would put a photograph of a street
+#: on a street" - which the recipe never read. It reads it now, and each sign
+#: goes on at the spec's own width.
+DECAL_DIR = "ledger/Assets/StreamingAssets/Decals"
 
 #: The two frames. ELEVATION IS THE ONE THAT JUDGES THE FRONT - square to the
 #: frontage with the roofline in, which is cam_B's own description in the
@@ -879,6 +948,20 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
         if bl is None or bl <= 0:
             return None, "spec-carries-no-brick-length-to-read-a-wall-thickness-from"
         p["wall_t_m"] = bl
+        # THE SIGNS ON THIS BLOCK, and only this block's.
+        signs = {}
+        pre = "%s_fascia" % block_id
+        for d in (raw.get("decals") or {}).get("items") or []:
+            on = str(d.get("on", ""))
+            if d.get("bom") != "C6_fascia_lettering" or not on.startswith(pre):
+                continue
+            if not on[len(pre):].isdigit():
+                continue
+            signs[int(on[len(pre):])] = {
+                "id": str(d["id"]), "uv": d.get("uv"),
+                "width_m": float(d["width_m"]), "height_m": float(d["height_m"]),
+                "dx_m": float(d.get("dx_m", 0.0))}
+        p["fascia_signs"] = signs
     except (KeyError, TypeError, ValueError, IndexError) as exc:
         return None, "spec-field-refused/%s" % str(exc).replace(" ", "~")[:80]
 
@@ -2438,8 +2521,21 @@ def plan_parts(p, bay=0, party_wall=True):
     # slabs either side of every window, reading as precast panels bolted to
     # a Victorian shop. Two of the largest painted areas on the whole street
     # were the two that were not painted.
+    here = (p.get("block_id"), bay)
+    refit_of = SHOPFRONT_REFITS.get(here)
     pier_name, pier_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
+    if refit_of and "paint" in refit_of:
+        pier_name, pier_rgb = refit_of["paint"]
     for side, a, b in (("left", 0.0, pw), ("right", W - pw, W)):
+        if refit_of and "paint" in refit_of:
+            # A REFIT THAT REPAINTED ITS FRONT CLADS ITS PIERS IN THE FRAME'S
+            # OWN SMOOTH FINISH. Attempt one gave them the painted-board
+            # material in the refit's colour, and its wood grain at slate
+            # blue rendered as rough dressed stone either side of a smooth
+            # metal front.
+            _box(parts, "pilaster_%s" % side, refit_of["frame"], a, b, -pp, 0.0, 0.0, GF,
+                 "the-refit-clads-its-piers/" + refit_of["frame"])
+            continue
         pier = _box(parts, "pilaster_%s" % side, "paint_stall", a, b, -pp, 0.0, 0.0, GF,
                     "a-shopfront-earns-its-piers/paint=" + pier_name)
         pier["paint"] = pier_rgb
@@ -2482,8 +2578,8 @@ def plan_parts(p, bay=0, party_wall=True):
     # LESS THAN HALF the section, and it sits nearly flush instead of
     # standing proud with a moulding on it. A grey timber shopfront would
     # read as a timber shopfront and the change would be worth nothing.
-    refit = bay in SHOPFRONT_REFIT_BAYS
-    joinery = "frame_metal" if refit else "paint_joinery"
+    refit = refit_of is not None
+    joinery = refit_of["frame"] if refit else "paint_joinery"
     jamb_t = tr_t * (0.45 if refit else 1.0)
     mull_t = tr_t * (0.40 if refit else 0.75)
     joinery_proj = 0.012 if refit else 0.03
@@ -2509,20 +2605,32 @@ def plan_parts(p, bay=0, party_wall=True):
     # caught that the moment the brick moved, which is the second time that
     # check has earned its place.
     stall_name, stall_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
-    if refit:
+    if refit and refit_of["stall"] == "tile_patterned":
+        # THE PATTERNED TILE, over a plinth of dark tile, which is how the
+        # approved sheet's MICKEY'S is built and what R05 names. The pattern
+        # is a plain geometric one - see _tile_pattern - and not a copy of
+        # anything: a photograph says the tile was patterned, not which.
+        plinth = 0.12
+        _box(parts, "stall_plinth", "tile_stall", disp_x0, disp_x1, -sr_p - 0.004, 0.0,
+             0.0, plinth, "a-course-of-dark-tile-at-the-foot/the-sheet's-and-R05's")
+        _box(parts, "stallriser", "tile_patterned", disp_x0, disp_x1, -sr_p, 0.0, plinth, sr_h,
+             "patterned-glazed-tile-under-the-glass/R05")
+    elif refit:
         # A TILED STALLRISER TAKES NO PAINT, which is why this branch does
         # not carry the shop's colour down to the kicked board. R05's is
-        # patterned; ours is plain, and the recipe says so rather than
-        # inventing a pattern out of noise and calling it evidence.
-        _box(parts, "stallriser", "tile_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
-             "0.6m-of-glazed-tile-under-the-glass/R05/pattern-not-built")
+        # patterned; this one is plain, and the recipe says so.
+        _box(parts, "stallriser", refit_of["stall"], disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
+             "0.6m-of-glazed-tile-under-the-glass/R05/plain")
     else:
         stall = _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
                      "0.6m-of-kicked-board-under-the-glass/paint=" + stall_name)
         stall["paint"] = stall_rgb
         stall["paint_name"] = stall_name
-    _box(parts, "display_glazing", "glass", disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
-         "recessed-so-the-frontage-is-not-one-plane")
+    empty = here == EMPTY_UNIT
+    _box(parts, "display_glazing", "glass_whitened" if empty else "glass",
+         disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
+         "whitened-from-inside/nobody-trades-here" if empty
+         else "recessed-so-the-frontage-is-not-one-plane")
 
     # THE FRAME ROUND THE GLASS, which the first attempt had none of. Two
     # jambs and a sill rail; the transom below is its head. Without these the
@@ -2536,6 +2644,11 @@ def plan_parts(p, bay=0, party_wall=True):
          -joinery_proj, rec + 0.02, sr_h, sr_h + tr_t,
          "the-rail-the-glass-sits-on/off-the-stallriser's-top")
 
+    # EVERY MEMBER OF A REFIT IS IN THE REFIT'S SECTION, 22 September. The
+    # fish shop's jambs and sill were metal and its mullions, transom, door
+    # and toplight bars stayed white timber - a metal frame with a timber
+    # frame inside it, which no shopfitter ever built. On a timber bay
+    # `joinery` IS paint_joinery, so nothing there moves.
     # MULLIONS. A 3.56 m run of unbroken plate is not a 1990 British shop; it
     # is a 2010 one. Three lights, so two mullions, at the thirds of the
     # GLAZED opening rather than of the bay, because the frame divides what it
@@ -2543,7 +2656,7 @@ def plan_parts(p, bay=0, party_wall=True):
     inner0, inner1 = disp_x0 + jamb_t, disp_x1 - jamb_t
     for M in (1, 2):
         cx = inner0 + (inner1 - inner0) * (M / 3.0)
-        _box(parts, "display_mullion_%d" % M, "paint_joinery",
+        _box(parts, "display_mullion_%d" % M, joinery,
              cx - mull_t / 2.0, cx + mull_t / 2.0, -joinery_proj, rec + 0.02, sr_h, tr_h,
              "three-lights-not-one-sheet/at-the-thirds-of-the-opening-it-divides")
 
@@ -2552,7 +2665,7 @@ def plan_parts(p, bay=0, party_wall=True):
     # from across a street. At the same projection as the mullions it was a
     # colour change and not an edge, and a colour change does not survive
     # distance or an overcast sky.
-    _box(parts, "transom_bar", "paint_joinery", glazed_x0, glazed_x1,
+    _box(parts, "transom_bar", joinery, glazed_x0, glazed_x1,
          -joinery_proj * 2.0, rec + 0.02, tr_h, tr_h + tr_t,
          "the-bar-runs-across-the-glazing-AND-the-shop-door/one-line-across-the-opening")
     # TOPLIGHT: from the transom to the fascia line less its own frame. The
@@ -2567,10 +2680,10 @@ def plan_parts(p, bay=0, party_wall=True):
     # a bar of its own.
     for M in (1, 2):
         cx = inner0 + (inner1 - inner0) * (M / 3.0)
-        _box(parts, "toplight_mullion_%d" % M, "paint_joinery",
+        _box(parts, "toplight_mullion_%d" % M, joinery,
              cx - mull_t / 2.0, cx + mull_t / 2.0, -joinery_proj, rec + 0.02,
              tr_h + tr_t, top_z1, "on-the-same-line-as-the-mullion-below-it")
-    _box(parts, "toplight_bar_over_door", "paint_joinery",
+    _box(parts, "toplight_bar_over_door", joinery,
          shop_x0 - mull_t / 2.0, shop_x0 + mull_t / 2.0, -joinery_proj, rec + 0.02,
          tr_h + tr_t, top_z1, "the-division-over-the-shop-door's-own-edge")
     # THE HEAD RAIL, which the toplight had none of, and which is why it did
@@ -2578,12 +2691,12 @@ def plan_parts(p, bay=0, party_wall=True):
     # it and nothing over it is not a band, it is the top of the window below.
     # The rail closes it against the fascia and gives the whole frontage a
     # second horizontal, which is what a shopfront's joinery actually does.
-    _box(parts, "toplight_head_rail", "paint_joinery", glazed_x0, glazed_x1,
+    _box(parts, "toplight_head_rail", joinery, glazed_x0, glazed_x1,
          -joinery_proj, rec + 0.02, top_z1, top_z1 + tr_t,
          "closes-the-toplight-against-the-board/the-frontage's-second-horizontal")
 
     # SHOP DOOR, brick spandrel above it to the fascia.
-    _box(parts, "shop_door_leaf", "paint_joinery", shop_x0, shop_x1, 0.02, 0.06,
+    _box(parts, "shop_door_leaf", joinery, shop_x0, shop_x1, 0.02, 0.06,
          0.0, p["shop_glazed_from_m"],
          "solid-below-the-glazed-light")
     _box(parts, "shop_door_light", "glass", shop_x0 + jamb_t, shop_x1 - jamb_t, 0.03, 0.05,
@@ -2594,15 +2707,18 @@ def plan_parts(p, bay=0, party_wall=True):
     # attempt's frame said in one line.
     for Name, X0, X1 in (("shop_door_stile_left", shop_x0, shop_x0 + jamb_t),
                          ("shop_door_stile_right", shop_x1 - jamb_t, shop_x1)):
-        _box(parts, Name, "paint_joinery", X0, X1, -joinery_proj, 0.06,
+        _box(parts, Name, joinery, X0, X1, -joinery_proj, 0.06,
              0.0, p["shop_door_h_m"], "the-door's-own-upright")
-    _box(parts, "shop_door_mid_rail", "paint_joinery", shop_x0, shop_x1,
+    _box(parts, "shop_door_mid_rail", joinery, shop_x0, shop_x1,
          -joinery_proj, 0.06, p["shop_glazed_from_m"] - jamb_t, p["shop_glazed_from_m"],
          "the-rail-under-the-glass/where-a-hand-pushes")
-    _box(parts, "shop_door_head_rail", "paint_joinery", shop_x0, shop_x1,
+    _box(parts, "shop_door_head_rail", joinery, shop_x0, shop_x1,
          -joinery_proj, 0.06, p["shop_door_h_m"] - jamb_t, p["shop_door_h_m"],
          "the-rail-over-the-glass")
-    _box(parts, "shop_door_spandrel", wall, shop_x0, shop_x1, 0.0, T,
+    # ON A REFIT THE PANEL OVER THE DOOR IS THE FRAME'S, not brick: the
+    # refit replaced the whole front up to the fascia, which is why attempt
+    # one's cab office had a patch of brick hanging over its own door.
+    _box(parts, "shop_door_spandrel", joinery if refit else wall, shop_x0, shop_x1, 0.0, T,
          p["shop_door_h_m"], fb, "brick-between-the-door-head-and-the-board")
 
     if has_side_door:
@@ -2619,23 +2735,46 @@ def plan_parts(p, bay=0, party_wall=True):
     # what the already-authored cornice and consoles sit on and it must not
     # move: production/art/fascia-01/.
     paint_name, paint_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
+    if refit_of and "paint" in refit_of:
+        paint_name, paint_rgb = refit_of["paint"]
     band = _box(parts, "fascia_band", "paint_fascia", 0.0, W, -fp, 0.0, fb, GF,
                 "top-IS-the-first-floor-slab/the-committed-cornice-sits-on-this/"
                 "paint=" + paint_name)
     band["paint"] = paint_rgb
     band["paint_name"] = paint_name
-    sign = FASCIA_SIGN.get(bay % 6)
-    if sign:
-        # THE SIGN IS ITS OWN THIN PIECE ON THE FACE OF THE BOARD rather than
-        # a texture on the board, because the board is one box and its face,
-        # its returns and its underside are all the same surface to a box
-        # projection - the lettering would have wrapped round the ends and run
-        # upside down along the soffit.
+    # THE SIGN IS ITS OWN THIN PIECE ON THE FACE OF THE BOARD rather than
+    # a texture on the board, because the board is one box and its face,
+    # its returns and its underside are all the same surface to a box
+    # projection - the lettering would have wrapped round the ends and run
+    # upside down along the soffit.
+    sign = p.get("fascia_signs", {}).get(bay)
+    override = SIGN_OVERRIDE.get(here)
+    if override:
+        # SIGNWRITTEN ACROSS THE WHOLE FACE, the board's own paint and all.
         sg = _box(parts, "fascia_sign", "paint_fascia",
                   pw * 0.5, W - pw * 0.5, -fp - 0.012, -fp,
-                  fb + 0.045, GF - 0.045, "the-lettering/" + sign)
-        sg["decal"] = sign
-        sg["paint"] = paint_rgb
+                  fb + 0.045, GF - 0.045, "the-lettering/" + override)
+        sg["decal"] = override
+    elif sign:
+        # AT THE SPEC'S WIDTH AND HEIGHT, centred on the bay plus its dx, and
+        # showing only the spec's crop of the picture.
+        cx, hw = W / 2.0 + sign["dx_m"], sign["width_m"] / 2.0
+        h = min(sign["height_m"], GF - fb)
+        z0 = fb + (GF - fb - h) / 2.0
+        sg = _box(parts, "fascia_sign", "paint_fascia",
+                  max(0.0, cx - hw), min(W, cx + hw), -fp - 0.012, -fp,
+                  z0, z0 + h, "the-lettering/" + sign["id"])
+        sg["decal"] = sign["id"]
+        if sign.get("uv"):
+            sg["decal_uv"] = [float(v) for v in sign["uv"]]
+    if empty:
+        # THE LETTING BOARD, fixed to the middle of the fascia.
+        bw, bh = LETTING_BOARD_M
+        zc = (fb + GF) / 2.0
+        lb = _box(parts, "letting_board", "paint_fascia",
+                  W / 2.0 - bw / 2.0, W / 2.0 + bw / 2.0, -fp - 0.03, -fp - 0.01,
+                  zc - bh / 2.0, zc + bh / 2.0, "TO-LET/R05's-neighbouring-letting-board")
+        lb["decal"] = LETTING_BOARD
 
     _upper_floor(parts, p, T, wall)
     _roof_and_rainwater(parts, p, T, wall, party_wall, bay)
@@ -3064,7 +3203,16 @@ def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
     return "%s@%.2fm%s%s" % (surface, tile_m, "+r" if rough else "", "+n" if norm else "")
 
 
-def _decal_material(bpy, root, name, image_name, paint):
+def _decal_path(root, image_name):
+    """Where a sign's picture is. An id under the lettered directory is a
+    path from the repository root; anything else is a spec id, which is a
+    path under StreamingAssets/Decals as the spec's own blend_kinds says."""
+    if image_name.startswith("production/"):
+        return os.path.join(root, image_name + ".png")
+    return os.path.join(root, DECAL_DIR, image_name + ".png")
+
+
+def _decal_material(bpy, root, name, image_name, paint, uv=None):
     """One material carrying one sign, fitted once across the piece's face.
 
     GENERATED COORDINATES, NOT A BOX PROJECTION. Generated runs 0 to 1 over
@@ -3078,7 +3226,7 @@ def _decal_material(bpy, root, name, image_name, paint):
     mat.use_nodes = True
     nt = mat.node_tree
     bsdf = nt.nodes.get("Principled BSDF")
-    path = os.path.join(root, DECAL_DIR, image_name + ".png")
+    path = _decal_path(root, image_name)
     if bsdf is None or not os.path.exists(path):
         return mat, "missing/%s" % image_name
     bsdf.inputs["Roughness"].default_value = 0.42
@@ -3091,9 +3239,19 @@ def _decal_material(bpy, root, name, image_name, paint):
     tex = nt.nodes.new("ShaderNodeTexImage")
     tex.image = bpy.data.images.load(path, check_existing=True)
     tex.extension = "EXTEND"
-    nt.links.new(com.outputs["Vector"], tex.inputs["Vector"])
+    if uv:
+        # THE SPEC'S CROP, [u0, v0, u1, v1] with v from the bottom, which is
+        # Blender's own image convention: the face's 0..1 lands on u0..u1.
+        u0, v0, u1, v1 = uv
+        mp = nt.nodes.new("ShaderNodeMapping")
+        mp.inputs["Scale"].default_value = (u1 - u0, v1 - v0, 1.0)
+        mp.inputs["Location"].default_value = (u0, v0, 0.0)
+        nt.links.new(com.outputs["Vector"], mp.inputs["Vector"])
+        nt.links.new(mp.outputs["Vector"], tex.inputs["Vector"])
+    else:
+        nt.links.new(com.outputs["Vector"], tex.inputs["Vector"])
     nt.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
-    return mat, "%s@fitted" % image_name
+    return mat, "%s@%s" % (image_name, "cropped" if uv else "fitted")
 
 
 def _paint_variant(bpy, mats, name, rgb):
@@ -3532,6 +3690,62 @@ WEARS = {"brick_red": True, "brick_grey": True, "paving": False,
 #: 10 mm that reads dark because it holds dirt and water.
 FLAG_W_M, FLAG_H_M, FLAG_JOINT_M = 0.90, 0.60, 0.012
 FLAG_JOINT_DARK = 0.45
+
+
+#: THE STALLRISER TILE: 150 mm squares with 3 mm joints, each square
+#: quartered light and dark. A plain geometric pattern and nothing more - R05
+#: establishes that the tile was patterned, not which pattern, and the sheet
+#: shows a busy pale field at a distance where no motif can be read.
+#: 0.72 AND NOT 0.55, attempt two: at 0.55 the quarters rendered as a hard
+#: black-and-white checkerboard, where the sheet's tile reads as one busy
+#: pale field.
+TILE_M, TILE_JOINT_M, TILE_DARK = 0.15, 0.003, 0.72
+
+
+def _tile_pattern(bpy, mats):
+    """Lay a quartered pattern and its joints over the patterned tile."""
+    mat = mats.get("tile_patterned")
+    if mat is None or not mat.use_nodes:
+        print("tfNote tilePattern=NOT-APPLIED/no-material")
+        return
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    if bsdf is None or not bsdf.inputs["Base Color"].links:
+        print("tfNote tilePattern=NOT-APPLIED/no-map-to-lay-it-over")
+        return
+    src = bsdf.inputs["Base Color"].links[0].from_socket
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    chk = nt.nodes.new("ShaderNodeTexChecker")
+    chk.inputs["Scale"].default_value = 1.0 / (TILE_M / 2.0)
+    chk.inputs["Color1"].default_value = (1.0, 1.0, 1.0, 1.0)
+    chk.inputs["Color2"].default_value = (TILE_DARK, TILE_DARK, TILE_DARK * 0.9, 1.0)
+    brick = nt.nodes.new("ShaderNodeTexBrick")
+    brick.offset = 0.0
+    brick.inputs["Scale"].default_value = 1.0
+    brick.inputs["Mortar Size"].default_value = TILE_JOINT_M
+    brick.inputs["Brick Width"].default_value = TILE_M
+    brick.inputs["Row Height"].default_value = TILE_M
+    ramp = nt.nodes.new("ShaderNodeMapRange")
+    ramp.inputs["To Min"].default_value = 1.0
+    ramp.inputs["To Max"].default_value = 0.6
+    nt.links.new(coord.outputs["Object"], chk.inputs["Vector"])
+    nt.links.new(coord.outputs["Object"], brick.inputs["Vector"])
+    nt.links.new(brick.outputs["Fac"], ramp.inputs["Value"])
+    m1 = nt.nodes.new("ShaderNodeMix")
+    m1.data_type = "RGBA"
+    m1.blend_type = "MULTIPLY"
+    m1.inputs["Factor"].default_value = 1.0
+    nt.links.new(src, m1.inputs[6])
+    nt.links.new(chk.outputs["Color"], m1.inputs[7])
+    m2 = nt.nodes.new("ShaderNodeMix")
+    m2.data_type = "RGBA"
+    m2.blend_type = "MULTIPLY"
+    m2.inputs["Factor"].default_value = 1.0
+    nt.links.new(m1.outputs[2], m2.inputs[6])
+    nt.links.new(ramp.outputs["Result"], m2.inputs[7])
+    nt.links.new(m2.outputs[2], bsdf.inputs["Base Color"])
+    print("tfNote tilePattern=%.0fmm-quartered-x%.2f/joint-%.0fmm"
+          % (TILE_M * 1000, TILE_DARK, TILE_JOINT_M * 1000))
 
 
 def _flag_joints(bpy, mats):
@@ -4016,7 +4230,7 @@ def build_and_render(args):
             key = "sign_%s" % part["decal"]
             if key not in mats:
                 mats[key], note = _decal_material(bpy, args["root"], key, part["decal"],
-                                                  part.get("paint"))
+                                                  part.get("paint"), part.get("decal_uv"))
                 signs.append("%s=%s" % (part["decal"], note))
             mat = mats[key]
         elif part.get("paint_name"):
@@ -4068,6 +4282,7 @@ def build_and_render(args):
         # THE JOINTS BEFORE THE WATER, like the wear: a wet flag is a jointed
         # flag with water on it.
         _flag_joints(bpy, mats)
+        _tile_pattern(bpy, mats)
         _wetten(mats, 0.9 if night else 0.6)
         if not night:
             # A SHOP INTERIOR BY DAY IS NOT A SHOP INTERIOR AT NIGHT, and
@@ -4563,9 +4778,11 @@ def selftest():
         top = [b for b in boxes if b["id"] == "toplight"]
         if top:
             z0, z1 = top[0]["z0"], top[0]["z1"]
-            under = [b for b in boxes if b["material"] == "paint_joinery"
+            # ANY JOINERY, a refit's metal as much as painted timber: bay 0
+            # is the cab office and has been a refit since 22 September.
+            under = [b for b in boxes if b["material"] in JOINERY_MATERIALS
                      and abs(b["z1"] - z0) < 1e-6]
-            over = [b for b in boxes if b["material"] == "paint_joinery"
+            over = [b for b in boxes if b["material"] in JOINERY_MATERIALS
                     and abs(b["z0"] - z1) < 1e-6]
             check("accept/the-toplight-is-closed-below-by-a-bar", bool(under),
                   "nothing ends at z=%.4f" % z0)
@@ -4576,7 +4793,7 @@ def selftest():
         # named: a door the same value as the glass beside it is not a door.
         for door in ("shop_door", "side_door"):
             framing = [b for b in boxes
-                       if b["id"].startswith(door) and b["material"] == "paint_joinery"]
+                       if b["id"].startswith(door) and b["material"] in JOINERY_MATERIALS]
             check("accept/%s-carries-its-own-framing" % door.replace("_", "-"),
                   len(framing) >= 2, "%d piece(s)" % len(framing))
 
@@ -4732,7 +4949,7 @@ def selftest():
             # ---- ONE FRONT IS A METAL REFIT, AND ONLY ONE.
             refits, timbers = [], []
             for b in street:
-                if b.get("material") == "frame_metal":
+                if b.get("material") in REFIT_FRAMES:
                     refits.append(b["id"])
                 if "_display_jamb_left_" in b["id"]:
                     timbers.append(b)
@@ -4751,7 +4968,7 @@ def selftest():
             for b in street:
                 if "_display_jamb_left_" not in b["id"]:
                     continue
-                (metal_bays if b["material"] == "frame_metal" else timber_bays).add(b["id"])
+                (metal_bays if b["material"] in REFIT_FRAMES else timber_bays).add(b["id"])
             check("accept/the-parade-is-mixed-not-all-metal",
                   bool(metal_bays) and len(timber_bays) > len(metal_bays),
                   "%d metal / %d timber" % (len(metal_bays), len(timber_bays)))
@@ -4759,9 +4976,9 @@ def selftest():
             # difference. A grey timber shopfront reads as a timber
             # shopfront and the change would be worth nothing.
             mw = [b["x1"] - b["x0"] for b in street
-                  if "_display_jamb_left_" in b["id"] and b["material"] == "frame_metal"]
+                  if "_display_jamb_left_" in b["id"] and b["material"] in REFIT_FRAMES]
             tw = [b["x1"] - b["x0"] for b in street
-                  if "_display_jamb_left_" in b["id"] and b["material"] != "frame_metal"]
+                  if "_display_jamb_left_" in b["id"] and b["material"] not in REFIT_FRAMES]
             check("accept/the-metal-sections-are-under-half-the-timber",
                   bool(mw) and bool(tw) and max(mw) < min(tw) * 0.6,
                   "metal %.3f vs timber %.3f" % (max(mw) if mw else -1, min(tw) if tw else -1))
@@ -4769,6 +4986,45 @@ def selftest():
             tiles = [b["id"] for b in street if b.get("material") == "tile_stall"]
             check("accept/the-refitted-bay-has-a-tiled-stallriser", bool(tiles),
                   "%d" % len(tiles))
+            # ---- THE PARADE, REWORKED TO THE 1989 PHOTOGRAPHS.
+            byid = {b["id"]: b for b in street}
+            j0 = byid.get("east_parade_display_jamb_left_bay0", {})
+            check("accept/the-cab-office-is-a-slate-painted-metal-front",
+                  j0.get("material") == "frame_painted", str(j0.get("material")))
+            white_in_refit = [b["id"] for b in street
+                              if b.get("material") == "paint_joinery"
+                              and any(b["id"].startswith(k[0] + "_") and b["id"].endswith("_bay%d" % k[1])
+                                      for k in SHOPFRONT_REFITS)
+                              and ("mullion" in b["id"] or "transom" in b["id"]
+                                   or "toplight" in b["id"] or "shop_door" in b["id"])]
+            check("reject/no-refit-has-white-timber-inside-its-metal-frame",
+                  not white_in_refit, ",".join(white_in_refit[:3]))
+            check("accept/the-cab-office's-stallriser-is-patterned-tile-on-a-dark-plinth",
+                  byid.get("east_parade_stallriser_bay0", {}).get("material") == "tile_patterned"
+                  and byid.get("east_parade_stall_plinth_bay0", {}).get("material") == "tile_stall",
+                  str(byid.get("east_parade_stallriser_bay0", {}).get("material")))
+            # ONE MICKEY'S, and it is the plain one.
+            mick = [b["id"] for b in street if "mickeys" in str(b.get("decal", ""))]
+            check("accept/there-is-one-mickey's-on-the-street", len(mick) == 1, ",".join(mick))
+            check("accept/and-it-is-signwritten-not-the-pub's-board",
+                  bool(mick) and byid[mick[0]]["decal"].endswith("fascia_mickeys_plain"),
+                  byid[mick[0]]["decal"] if mick else "none")
+            west_signs = [b["id"] for b in street
+                          if b["id"].startswith("west_") and "fascia_sign" in b["id"]]
+            check("reject/no-sign-is-repeated-across-the-road", not west_signs,
+                  ",".join(west_signs[:3]))
+            cropped = [b["id"] for b in street if b.get("decal_uv")]
+            check("accept/the-spec's-crops-are-read", len(cropped) == 3,
+                  "%d cropped" % len(cropped))
+            g3 = byid.get("east_parade_display_glazing_bay3", {})
+            check("accept/the-empty-unit-is-whitened-and-to-let",
+                  g3.get("material") == "glass_whitened"
+                  and "east_parade_letting_board_bay3" in byid,
+                  str(g3.get("material")))
+            missing = [b["decal"] for b in street if b.get("decal")
+                       and not os.path.exists(_decal_path(ROOT, b["decal"]))]
+            check("accept/every-sign-has-its-picture-on-disk", not missing,
+                  ",".join(sorted(set(missing))[:3]))
 
             # ---- THE BASIN END, and every one of these is a way it
             # could stop being a backdrop and start being a claim.
@@ -4912,7 +5168,7 @@ def selftest():
             def bay_run(prefix):
                 got = [(int(b["id"].split("bay")[-1]), (b["x0"] + b["x1"]) * 0.5)
                        for b in street
-                       if b["id"].startswith(prefix) and "fascia_sign_bay" in b["id"]]
+                       if b["id"].startswith(prefix) and "fascia_band_bay" in b["id"]]
                 return [x for _n, x in sorted(got)]
             east_run = bay_run("east_parade_")
             west_run = bay_run("west_north_")

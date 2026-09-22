@@ -53,6 +53,24 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **The parade is reworked to the 1989 photographs, starting with
+  Mickey's.** It is now a slim metal front painted the sheet's slate
+  blue-grey, over a pale patterned tile, with its name painted across the
+  fascia in plain gold capitals instead of the old pub-style maroon board.
+  The fish shop's frame is metal all the way through, and the empty shop has
+  whitened windows and a TO LET board, as the 1989 parade photograph has.
+  The biggest difference left on Mickey's is that its window still renders
+  as a dark panel rather than glass you can see into.
+- 2026-09-22 **Our own street had the fault you ruled out on the sheet: two
+  MICKEY'S signs.** The recipe put the parade's signs on every row of shops,
+  so the shops across the road carried a second Mickey's, a second fish
+  market and a second Rita's. Three of the signs were also whole photographs
+  of a shopfront squashed onto the board. Both fixed; the shops across the
+  road are now unlettered.
+- 2026-09-22 The game's own scene file still names the old pub-style board for
+  Mickey's; only the picture-making side has the new one. I will move the
+  game's side over with the next change that runs the Unreal check, rather
+  than start a forty-minute run for one sign.
 - 2026-09-22 **The camera's lens is derived from the new sheet and our
   street now vanishes where the sheet does.** About 46 degrees tall on the
   sheet's frame, the camera level at about 1.9 m and turned 20 degrees towards

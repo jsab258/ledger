@@ -14,12 +14,12 @@
   "district_legend": "the Hook",
   "rule": "street names come from canon.md at run time and any name not minted there is refused, so no name is invented to unblock a picture"
  },
- "content_rules": "no real person, no real trade mark, in-world only; these five carry no lettering except canon street and district names",
+ "content_rules": "no real person, no real trade mark, in-world only; the only lettering is canon street and district names, the canon name Mickey's, and the words TO LET",
  "scale": "1 pixel = 1 millimetre in every file here",
  "blank_check": {
   "by": "tools/imagegen/imagegen.py png_stats + blank_verdict, imported rather than reimplemented",
   "bound": "blank when spread <= 2/255 AND stdev <= 1.0, or alpha 0 everywhere sampled",
-  "checked": 8,
+  "checked": 10,
   "blank": 0,
   "unknown": 0
  },
@@ -96,6 +96,25 @@
    "measured": "900x260 colourType=2",
    "blankCheck": "varied",
    "why": "luminance spread 221/255, stdev 67.083, 176 distinct levels over 26100 of 234000 pixels"
+  },
+  {
+   "file": "fascia_mickeys_plain.png",
+   "bom": "C6_fascia_lettering",
+   "note": "5650x460mm fascia face, canon name in plain capitals, paint and ink sampled off the approved Hook sheet",
+   "bytes": 163536,
+   "measured": "5650x460 colourType=2",
+   "blankCheck": "varied",
+   "why": "luminance spread 106/255, stdev 19.469, 67 distinct levels over 21588 of 2599000 pixels"
+  },
+  {
+   "file": "board_to_let.png",
+   "bom": "C6_letting_board",
+   "note": "900x450mm letting board, no agent and no number minted",
+   "bytes": 93289,
+   "measured": "900x450 colourType=2",
+   "blankCheck": "varied",
+   "why": "luminance spread 177/255, stdev 68.257, 88 distinct levels over 25425 of 405000 pixels"
   }
- ]
+ ],
+ "added": "2026-09-22: fascia_mickeys_plain.png and board_to_let.png, written by the same tool at the same seed; the files already here were NOT rewritten, because a regeneration on this PC differs from the committed plates by font rendering alone and churning eight accepted files for two new ones is noise"
 }
