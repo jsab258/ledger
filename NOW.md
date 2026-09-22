@@ -665,6 +665,12 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       behind every upstairs pane, alternated, lit as daylight on them by day
       and nearly dark at night; set from the measurement to 161-164.
 
+- [x] THE STREET CARRIES ON TO THE RISE: between the road's end at 44 m and
+      the rise at 110 the sky map's green field showed through - a field in
+      a port town, where the sheet has its vanishing street. The road, its
+      footways and two backdrop terraces now run on to the hill, named as
+      backdrop, for stage 6 to replace.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
