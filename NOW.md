@@ -1,34 +1,56 @@
 # NOW
 
-Where the game stands, 2026-09-22, at the end of the second sitting on his PC.
+THE STANDING LIST, in priority order, drawn from ROADMAP.md. Work down it.
+When an item finishes, strike it and take the next without asking. The list is
+kept current here; when it runs short it is extended from the next part of the
+roadmap.
 
-1. THE SAFEGUARD IS REAL NOW, AND WATCHED. The Unreal build had not run once
-   since the studio was paused: the workflow's second step called a script
-   that went to the archive with it, so five pushes in a row failed there and
-   skipped the build. The script is back, the probe watches it, and a green
-   run takes nine minutes. Then a line that does not compile was pushed ON
-   PURPOSE: the build failed, the verdict step failed, the run went red. A
-   push runs the checks and a failed build fails the run, both seen rather
-   than assumed.
-2. A MEMORY SURVIVES BEING SAVED AND RELOADED. The save format is the memory
-   markdown, and the C++ port had only the writing half. Reading is ported
-   and held by thirty-eight golden rows against the real C#. An outside
-   reader compiled both engines and ran 45 identical inputs through them, and
-   found four disagreements nothing would have caught - a space before a
-   timestamp, NaN as an importance, the smallest integer as a day, and a
-   non-breaking space after a heading. All four fixed.
-3. RUMOURS IN FLIGHT DO NOT SURVIVE A RESTART YET, and that is the next
-   piece. It needs the save's own JSON ported, which is its own few hours.
-   Until it lands there is no witnessed-and-control pair and no regression
-   from one, and nothing automated reads the crime verdict, so a run with a
-   dead input path would still push green.
-4. THE TERRACE'S GROUND FLOOR IS ACCEPTED. Two attempts, both looked at. The
-   shopfront's four parts separate: three glazed lights with mullions, a
-   frame, a transom across glass and door alike, a lighter stallriser, and a
-   side door in its own paint. Still busy where the two doors meet, and the
-   toplight does not separate from the glazing under it.
-5. THREE CHECKS COULD ONLY PASS ON A MACHINE THAT NEVER BUILDS. Found in one
-   afternoon and all fixed: the Core suite cut a fixture by a bare newline,
-   the canon gate matched its exemptions with the wrong slash so canon.md
-   screened itself, and the attribution sweep walked the Unreal build's own
-   ignored output. All three were green in CI the whole time.
+Last updated 2026-09-22.
+
+## 1. Toward the Hook sheet (stage 1)
+
+- [ ] The shopfront's two remaining faults: the two doors where they meet read
+      as one busy patch, and the transom light does not separate from the
+      glazing below it.
+- [ ] The rest of the terrace fronts.
+- [ ] The street's other gaps against the sheet, taking whatever the rendered
+      pair shows is furthest off: depth beyond thirty metres, roofs and
+      chimneys, signage, clutter, the figure.
+- [ ] Render the pair from the sheet's own viewpoint after each step. That is
+      the test, and it is not optional between steps.
+
+## 2. Rumours surviving a restart (stage 3)
+
+- [ ] The JSON half: the save's own format ported, so a rumour in flight
+      survives a save and a reload the way a memory now does.
+- [ ] The witnessed run and the unwitnessed control, from equivalent clean
+      starts, in the packaged build, with a save, a restart and a reload in
+      between, and the control producing no mention.
+- [ ] The automatic check that reads the result, so a run where the key press
+      silently stops working goes red.
+- [ ] Keep the pair as a regression.
+- It touches memory, so its tests and the independent check apply.
+
+## 3. The 3D generation test on this machine's card
+
+- [ ] Whether TRELLIS, TRELLIS 2 or Hunyuan3D runs for shape on ten gigabytes
+      of AMD memory. One image through it, and what it needed.
+- It decides how stage 1's remaining content gets made.
+
+## 4. The small-model test for conversation
+
+- [ ] A small model behind the conversation interface, scored on a bar that
+      counts a well-formed wrong answer as a FAILURE.
+- It gates the hardware floor.
+
+## 5. Character concept sheets (stage 2)
+
+- [ ] The six archetypes, by the three-pass method.
+
+## Where things stand
+
+The simulation is real and tested, and a memory now survives being saved and
+reloaded, checked against the C# on thirty-eight golden rows. A crime is
+committed by a key press and proved in a packaged build both ways. The Unreal
+safeguard is confirmed on a real failed build. One terrace front stands with
+its ground floor accepted; the rest of the street is blockout.
