@@ -4174,6 +4174,145 @@ def _flag_joints(bpy, mats):
           % (FLAG_W_M, FLAG_H_M, FLAG_JOINT_M * 1000, FLAG_JOINT_DARK))
 
 
+#: THE BRICKS THEMSELVES, 22 September. The biggest surface on the frame is
+#: the near terrace's brick, and side by side with the new sheet it was the
+#: widest gap left on the street: the sheet's wall is individual bricks -
+#: bright orange ones, dark soot-burnt ones, everything between, in dark
+#: joints - and ours was a soft pinkish mush with a faint pattern in it,
+#: because the pack's brick photograph is low in contrast at this range.
+#: MEASURED off the sheet's near gable, its bricks run from 64/35/27 at the
+#: fifth percentile through 95/51/36 at the median to 118/65/46 at the
+#: eighty-fifth - in linear, about 0.45 to 1.6 times the median. So each
+#: brick draws a tone from that range, the joints are dark, and the whole
+#: averages to 1.0 so the wall's measured value does not move. The pack's
+#: map stays underneath as large-scale staining only.
+#: A BRICK IS 215 x 65 mm with a 10 mm joint, laid in stretcher bond.
+BRICK_W_M, BRICK_H_M, BRICK_JOINT_M = 0.225, 0.075, 0.010
+#: The tone a brick draws, as (position, multiplier): a uniform random
+#: position through these stops averages to 1.0.
+BRICK_TONES = ((0.0, 0.45), (0.2, 0.70), (0.5, 1.00), (0.8, 1.30), (1.0, 1.60))
+#: ATTEMPT TWO: the joints DARK, as the sheet's are - soot in lime mortar -
+#: where 0.80 left them the colour of the bricks and the wall read soft; the
+#: bricks lifted by 1.07 to pay for the darker joints' share of the wall;
+#: and the bricks' own colour pushed toward orange by (1.10, 0.96, 0.90),
+#: because the sheet's median brick is 95/51/36, red nearly twice green, and
+#: ours came back pink-grey at 1.4.
+BRICK_JOINT_TONE = 0.45
+BRICK_FACE_LIFT = 1.07
+BRICK_FACE_HUE = (1.10, 0.96, 0.90)
+#: How much of the pack map's own light and dark survives, as staining.
+BRICK_STAIN = 0.35
+
+
+def _brick_courses(bpy, mats):
+    """Lay real bricks over the brick materials' base colour."""
+    done = []
+    for name in ("brick_red", "brick_grey"):
+        mat = mats.get(name)
+        if mat is None or not mat.use_nodes:
+            continue
+        nt = mat.node_tree
+        bsdf = nt.nodes.get("Principled BSDF")
+        if bsdf is None or not bsdf.inputs["Base Color"].links:
+            continue
+        src = bsdf.inputs["Base Color"].links[0].from_socket
+        # A WALL FACES y OR x, and a Brick texture is two-dimensional: it
+        # lays its pattern on its input's x and y. So the face's own normal
+        # picks (x, z) for a wall facing the street and (y, z) for an end wall.
+        coord = nt.nodes.new("ShaderNodeTexCoord")
+        geo = nt.nodes.new("ShaderNodeNewGeometry")
+        sp = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(coord.outputs["Object"], sp.inputs["Vector"])
+        sn = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(geo.outputs["Normal"], sn.inputs["Vector"])
+        onx, ony = nt.nodes.new("ShaderNodeMath"), nt.nodes.new("ShaderNodeMath")
+        onx.operation = ony.operation = "ABSOLUTE"
+        nt.links.new(sn.outputs["X"], onx.inputs[0])
+        nt.links.new(sn.outputs["Y"], ony.inputs[0])
+        pick = nt.nodes.new("ShaderNodeMath")
+        pick.operation = "GREATER_THAN"
+        nt.links.new(ony.outputs["Value"], pick.inputs[0])
+        nt.links.new(onx.outputs["Value"], pick.inputs[1])
+        along_x = nt.nodes.new("ShaderNodeCombineXYZ")
+        nt.links.new(sp.outputs["X"], along_x.inputs["X"])
+        nt.links.new(sp.outputs["Z"], along_x.inputs["Y"])
+        along_y = nt.nodes.new("ShaderNodeCombineXYZ")
+        nt.links.new(sp.outputs["Y"], along_y.inputs["X"])
+        nt.links.new(sp.outputs["Z"], along_y.inputs["Y"])
+        vec = nt.nodes.new("ShaderNodeMix")
+        vec.data_type = "VECTOR"
+        nt.links.new(pick.outputs["Value"], vec.inputs["Factor"])
+        nt.links.new(along_y.outputs["Vector"], vec.inputs[4])
+        nt.links.new(along_x.outputs["Vector"], vec.inputs[5])
+        brick = nt.nodes.new("ShaderNodeTexBrick")
+        brick.offset = 0.5
+        brick.offset_frequency = 2
+        brick.inputs["Scale"].default_value = 1.0
+        brick.inputs["Mortar Size"].default_value = BRICK_JOINT_M
+        brick.inputs["Brick Width"].default_value = BRICK_W_M
+        brick.inputs["Row Height"].default_value = BRICK_H_M
+        brick.inputs["Color1"].default_value = (0.0, 0.0, 0.0, 1.0)
+        brick.inputs["Color2"].default_value = (1.0, 1.0, 1.0, 1.0)
+        brick.inputs["Mortar"].default_value = (0.0, 0.0, 0.0, 1.0)
+        nt.links.new(vec.outputs[1], brick.inputs["Vector"])
+        # EACH BRICK'S TONE: the brick's own random grey through the stops.
+        bw = nt.nodes.new("ShaderNodeRGBToBW")
+        nt.links.new(brick.outputs["Color"], bw.inputs["Color"])
+        ramp = nt.nodes.new("ShaderNodeValToRGB")
+        els = ramp.color_ramp.elements
+        while len(els) > 1:
+            els.remove(els[-1])
+        els[0].position = BRICK_TONES[0][0]
+        els[0].color = (BRICK_TONES[0][1],) * 3 + (1.0,)
+        for pos, val in BRICK_TONES[1:]:
+            e = els.new(pos)
+            e.color = (val, val, val, 1.0)
+        nt.links.new(bw.outputs["Val"], ramp.inputs["Fac"])
+        face = nt.nodes.new("ShaderNodeMix")
+        face.data_type = "RGBA"
+        face.blend_type = "MULTIPLY"
+        face.inputs["Factor"].default_value = 1.0
+        nt.links.new(ramp.outputs["Color"], face.inputs[6])
+        face.inputs[7].default_value = tuple(BRICK_FACE_LIFT * h for h in BRICK_FACE_HUE) + (1.0,)
+        # THE JOINT, where the Brick texture's Fac is 1.
+        joint = nt.nodes.new("ShaderNodeMix")
+        joint.data_type = "RGBA"
+        nt.links.new(brick.outputs["Fac"], joint.inputs["Factor"])
+        nt.links.new(face.outputs[2], joint.inputs[6])
+        joint.inputs[7].default_value = (BRICK_JOINT_TONE,) * 3 + (1.0,)
+        # THE PACK MAP AS STAINING: its own light and dark, pulled toward
+        # its mean, times the bricks. The map arrives tinted, so its grey
+        # over the tint's grey is its variation about 1.0.
+        mbw = nt.nodes.new("ShaderNodeRGBToBW")
+        nt.links.new(src, mbw.inputs["Color"])
+        lin = [c for c in dict((n_, c_) for n_, c_, _r in MATERIALS)[name]]
+        tint_lum = 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2]
+        stain = nt.nodes.new("ShaderNodeMapRange")
+        stain.inputs["From Min"].default_value = 0.0
+        stain.inputs["From Max"].default_value = 2.0 * tint_lum
+        stain.inputs["To Min"].default_value = 1.0 - BRICK_STAIN
+        stain.inputs["To Max"].default_value = 1.0 + BRICK_STAIN
+        nt.links.new(mbw.outputs["Val"], stain.inputs["Value"])
+        base = nt.nodes.new("ShaderNodeMix")
+        base.data_type = "RGBA"
+        base.blend_type = "MULTIPLY"
+        base.inputs["Factor"].default_value = 1.0
+        base.inputs[6].default_value = (lin[0], lin[1], lin[2], 1.0)
+        nt.links.new(joint.outputs[2], base.inputs[7])
+        final = nt.nodes.new("ShaderNodeMix")
+        final.data_type = "RGBA"
+        final.blend_type = "MULTIPLY"
+        final.inputs["Factor"].default_value = 1.0
+        nt.links.new(base.outputs[2], final.inputs[6])
+        nt.links.new(stain.outputs["Result"], final.inputs[7])
+        nt.links.new(final.outputs[2], bsdf.inputs["Base Color"])
+        done.append(name)
+    print("tfNote bricks=%s/%.0fx%.0fmm+%.0fmm-joint/stretcher-bond/tones-%.2f-to-%.2f"
+          % ("+".join(done) or "NONE", BRICK_W_M * 1000 - BRICK_JOINT_M * 1000,
+             BRICK_H_M * 1000 - BRICK_JOINT_M * 1000, BRICK_JOINT_M * 1000,
+             BRICK_TONES[0][1], BRICK_TONES[-1][1]))
+
+
 def _wear(bpy, mats):
     """A separable wear layer on the surfaces that carry one.
 
@@ -4671,6 +4810,9 @@ def build_and_render(args):
         # WEAR BEFORE WET, because a wet wall is a dirty wall with water on
         # it and not the other way round: the wetness multiplies whatever
         # base colour it finds, so it has to find one that is already worn.
+        # THE BRICKS BEFORE THE WEAR, like the flag joints: a sooted wall is
+        # a wall of bricks with soot on it.
+        _brick_courses(bpy, mats)
         _wear(bpy, mats)
         # THE JOINTS BEFORE THE WATER, like the wear: a wet flag is a jointed
         # flag with water on it.
