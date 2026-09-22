@@ -1244,9 +1244,83 @@ namespace LedgerCrime
 		}
 	}
 
+	// ---- the act gate ----------------------------------------------------
+	//
+	// WHAT IT DECIDES. The crime used to happen because the clock said so:
+	// the phase machine reached CommitA and committed. Under the ruling that
+	// the encounter must be something a PLAYER DOES, it happens because a key
+	// was pressed, and this decides whether that has happened yet.
+	//
+	// THERE IS NO SCRIPTED FALLBACK, and that is the whole point. A gate that
+	// commits the deed anyway when no input arrived would report a player-
+	// committed crime on a run where the input path was broken, which is the
+	// exact reading this change exists to make impossible. When the ceiling
+	// passes with no press seen, the answer is GiveUp, the deed does not
+	// happen, and the verdict says so.
+	enum class ActVerdict { Wait, Commit, GiveUp };
+
+	inline ActVerdict DecideAct(int RequestsSeen, double SecondsWaited,
+	                            double CeilingSeconds)
+	{
+		if (RequestsSeen > 0) { return ActVerdict::Commit; }
+		if (SecondsWaited <= CeilingSeconds) { return ActVerdict::Wait; }
+		return ActVerdict::GiveUp;
+	}
+
+	inline const char* ActVerdictName(ActVerdict V)
+	{
+		switch (V)
+		{
+		case ActVerdict::Commit: return "commit";
+		case ActVerdict::Wait:   return "wait";
+		default:                 return "gave-up-no-input";
+		}
+	}
+
+	//: SIX SECONDS, and it is a ceiling rather than a wait. The press is sent
+	//: on the phase's first tick and the binding fires inside the controller's
+	//: own next input pass, so a working path answers within a frame or two.
+	//: Six is long enough that a stalled first frame is not read as a broken
+	//: input path, and short enough that a broken one is named while the run
+	//: still has time to write its evidence.
+	const double kActCeilingSeconds = 6.0;
+
 	inline SelftestResult Selftest()
 	{
 		SelftestResult R;
+
+		// 0. THE ACT GATE, BOTH WAYS. Accepting first: one press seen is a
+		//    commit, whatever the clock says. Then the two refusals, which
+		//    are the half that matters: no press inside the ceiling keeps
+		//    waiting, and no press past it gives up rather than committing.
+		Expect(R, DecideAct(1, 0.0, kActCeilingSeconds) == ActVerdict::Commit,
+		       "one-press-commits");
+		Expect(R, DecideAct(3, 99.0, kActCeilingSeconds) == ActVerdict::Commit,
+		       "a-press-commits-even-past-the-ceiling");
+		Expect(R, DecideAct(0, 0.0, kActCeilingSeconds) == ActVerdict::Wait,
+		       "no-press-inside-the-ceiling-waits");
+		Expect(R, DecideAct(0, kActCeilingSeconds, kActCeilingSeconds) == ActVerdict::Wait,
+		       "the-ceiling-itself-is-still-a-wait");
+		Expect(R, DecideAct(0, kActCeilingSeconds + 0.001, kActCeilingSeconds)
+		       == ActVerdict::GiveUp,
+		       "no-press-past-the-ceiling-gives-up-and-does-not-commit");
+		Expect(R, std::string(ActVerdictName(ActVerdict::GiveUp)) == "gave-up-no-input",
+		       "the-give-up-names-itself");
+
+		//    AND THE SHIPPED CEILING ITSELF, which the six cases above do not
+		//    touch: every one of them passes a ceiling in as its own fixture,
+		//    so the constant was pinned by nothing. Measured by an outside
+		//    reader on 2026-09-22: setting it to 0.0 makes every run give up
+		//    before its first tick can see anything - the act disabled
+		//    entirely, no crime ever - with all six still green; setting it
+		//    to 1e9 turns a broken input path into a hang instead of a named
+		//    failure. Both now fail here.
+		Expect(R, kActCeilingSeconds >= 1.0,
+		       "the-shipped-ceiling-is-not-zero-which-would-disable-the-act");
+		Expect(R, kActCeilingSeconds <= 30.0,
+		       "the-shipped-ceiling-still-names-a-broken-path-rather-than-hanging");
+		Expect(R, DecideAct(0, 0.0, kActCeilingSeconds) == ActVerdict::Wait,
+		       "and-a-first-tick-at-the-shipped-ceiling-still-waits");
 
 		// 1. THE ACCEPTING CASE: W1 at P1 watching the deed at C_A, on the
 		//    ruling's own geometry. Rung 3, four slots, label full,

@@ -64,6 +64,11 @@ void ALedgerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 	// this project has no DefaultInput.ini to read it from.
 	PlayerInputComponent->BindAxisKey(EKeys::MouseX, this, &ALedgerCharacter::LookYaw);
 	PlayerInputComponent->BindAxisKey(EKeys::MouseY, this, &ALedgerCharacter::LookPitch);
+	// ACT, ON E. BindKey rather than an axis: an act is an event and not a
+	// held amount, and IE_Pressed means the edge, so a key held down is one
+	// request and not one per frame. Bound the same way as the other five,
+	// straight to a hardware FKey, for the reason the header gives.
+	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerCharacter::RequestAct);
 }
 
 void ALedgerCharacter::MoveForward(float Value)  { AddMovementInput(GetActorForwardVector(),  Value); }
@@ -72,3 +77,11 @@ void ALedgerCharacter::MoveRight(float Value)    { AddMovementInput(GetActorRigh
 void ALedgerCharacter::MoveLeft(float Value)     { AddMovementInput(GetActorRightVector(),   -Value); }
 void ALedgerCharacter::LookYaw(float Value)      { AddControllerYawInput(Value); }
 void ALedgerCharacter::LookPitch(float Value)    { AddControllerPitchInput(-Value); }
+void ALedgerCharacter::RequestAct()              { ++ActRequests; }
+
+int32 ALedgerCharacter::ConsumeActRequests()
+{
+	const int32 Seen = ActRequests;
+	ActRequests = 0;
+	return Seen;
+}
