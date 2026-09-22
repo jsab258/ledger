@@ -638,6 +638,12 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       as a concrete coping; the sheet's roofline ends in a black cast-iron
       gutter. The course is brick now, with a 115 mm black gutter along it.
 
+- [x] REPAIR PATCHES IN OLDER MASONRY, D06's own phrase and on the new sheet's
+      near gable: a hand-made cement patch on the parade's south end wall,
+      and one on its front where a sign came down over the empty unit.
+- [x] THE RANK'S SALOONS get bumpers and hubs; their body shape is still the
+      stand-in's and is left for the car's own modelling pass.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
