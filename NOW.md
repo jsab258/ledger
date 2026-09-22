@@ -533,9 +533,16 @@ WHILE THE CARD IS BUSY - the work that does not need it.
 - [x] RUMOUR REACH WRITTEN AS A MORNING DECISION in FOR-JAFAR.md, plain words,
       with a recommendation. NO CONSTANT CHANGES. It is decision 2 there,
       the series table in it, recommendation (a) leave the numbers.
-- [ ] RUMOURS SURVIVING A RESTART, the witnessed and unwitnessed pair: through
+- [x] RUMOURS SURVIVING A RESTART, the witnessed and unwitnessed pair: through
       save, restart and reload in the packaged build, with the automatic
       check - the control must still hold nothing after the reload.
+      PROVEN on the runner, first time (adfacb3d, green): rumours about the
+      seen crime 2 before the save and 2 after the reload, about the unseen
+      one 0 and 0; the shopkeeper back first-hand, the lad one retelling
+      out, his memory text identical. The check fails the run on any loss
+      or any rumour about the control, and its restart fixture is now
+      isolated the way the others are. Read as one run with two crimes and
+      the rebuilt world as the clean start - said in FOR-JAFAR.md.
 - [x] THE SMALL-MODEL TEST with llama.cpp on Vulkan, when the card is free.
       DONE: the intent router's own prompt and validator on Qwen3-4B Q4_K_M,
       llama.cpp b11111 Vulkan, 42 lines with one right answer each. Right

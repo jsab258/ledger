@@ -3348,10 +3348,25 @@ def _materials(bpy, root=None):
                 # look through it.
                 # ASKED THE BUILD WHAT IT HAS rather than guessing a fifth
                 # time, and it has `surface_render_method`, DITHERED by
-                # default with BLENDED the alternative. DITHERED resolves
-                # transparency stochastically and a single opaque-looking
-                # sample per pixel is exactly what a dark pane returns; a
-                # transmissive surface wants the blended path behind it.
+                # default with BLENDED the alternative.
+                #
+                # SET ASIDE, 22 September, after attempts five and six, and
+                # this is where the next person starts. The EEVEE Next manual
+                # says BLENDED is "incompatible with ... raytracing", so this
+                # setting switches off the refraction the flag below asks
+                # for. Attempt five set DITHERED and SLAB thickness as the
+                # manual says: the pane went BLACK (27 against 48), because
+                # transmitted light is tinted by Base Color and the table's
+                # glass is 0.085. Attempt six cleared the tint to 0.9: the
+                # pane went an even pale grey (103) - and the same at IOR 1.0,
+                # where there is no reflection at all - so what the refraction
+                # reaches is the WORLD PROBE, not the lit room 0.75 m behind
+                # the pane. Tuning a tint until that grey measures right would
+                # be the wrong picture at the right number. So the street
+                # keeps the dark pane it had, and the next attempt tests
+                # whether EEVEE Next's refraction can see an emissive card
+                # behind a pane at all, in a two-object scene, before this
+                # file is touched again.
                 if hasattr(mat, "surface_render_method"):
                     mat.surface_render_method = "BLENDED"
                 if hasattr(mat, "blend_method"):
@@ -4435,8 +4450,25 @@ def build_and_render(args):
     # reflection supplies the rest.
     try:
         scene.eevee.use_raytracing = True
-        scene.eevee.ray_tracing_options.screen_trace_max_roughness = 1.0
-        scene.eevee.ray_tracing_options.resolution_scale = "1"
+        # THE NAME MOVED, and the note below was a lie for as long as it did.
+        # This build calls it trace_max_roughness; asking for the old
+        # screen_trace_max_roughness raised AttributeError AFTER raytracing
+        # had already been switched on, so every render printed "raytracing
+        # unavailable" while raytracing was on, at the build's defaults.
+        #
+        # AND IT STAYS AT THE VALUES IT ACTUALLY HAD, 0.5 and half
+        # resolution, which are this build's defaults. The palette was
+        # re-closed against the new sheet at those values the same night;
+        # the 1.0 the old line meant to ask for brightens the wet footway
+        # by about seventeen levels and would reopen that work. Written out
+        # so the numbers are the recipe's, not the build's.
+        opts = scene.eevee.ray_tracing_options
+        if hasattr(opts, "trace_max_roughness"):
+            opts.trace_max_roughness = 0.5
+        else:
+            opts.screen_trace_max_roughness = 0.5
+        opts.resolution_scale = "2"
+        print("tfNote raytracing=on/max-roughness-0.5/half-resolution")
     except (AttributeError, TypeError) as exc:
         # SAID OUT LOUD RATHER THAN SILENTLY FLAT, the same rule the world
         # and the HDRI already follow here: a street that is not reflecting
