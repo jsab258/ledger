@@ -293,6 +293,41 @@ SURFACE_OF = {
     "lens_amber":   (None, 0.0),
 }
 
+#: THE FASCIA PALETTE, from the spec's own list: oxblood, bottle green, deep
+#: navy, cream or stone, and bare soot-darkened timber. The spec is explicit
+#: about how they are used - "never one colour per bay at random: a real
+#: parade was repainted in waves by whoever owned it, not rainbow-striped" -
+#: so the assignment below runs in waves: two oxblood together, then navy,
+#: then a green pair, then the one bare board.
+#:
+#: BAY 3 IS BARE TIMBER ON PURPOSE. The fascia package already records it as
+#: the one bay with NO lettering and an awning instead, its right-hand console
+#: "clipped off and never put back... the parade's empty unit". A row where
+#: every shop is trading is a row nobody believes.
+FASCIA_PAINT = (
+    ("oxblood",    (0.078, 0.012, 0.014)),
+    ("oxblood",    (0.078, 0.012, 0.014)),
+    ("deep_navy",  (0.013, 0.018, 0.042)),
+    ("bare_timber",(0.021, 0.014, 0.010)),
+    ("bottle_green",(0.010, 0.030, 0.019)),
+    ("bottle_green",(0.010, 0.030, 0.019)),
+)
+
+#: THE FOUR SIGNS ARE ALREADY DRAWN AND COMMITTED, at
+#: ledger/Assets/StreamingAssets/Decals/generated, and the spec settles which
+#: bay each belongs to - including the one genuine disagreement it found
+#: between the atlas proposal and the landed files, where THE LANDED ASSET
+#: WINS. Rita's Pawn and the Steam Laundry stay where the real texture is.
+#: Bays 3 and 5 carry no lettering: 3 is the empty unit, 5 is the grocer whose
+#: bay is the lit, unlettered one.
+DECAL_DIR = "ledger/Assets/StreamingAssets/Decals/generated"
+FASCIA_SIGN = {
+    0: "fascia_mickeys",
+    1: "fascia_fish_market",
+    2: "fascia_ritas_pawn",
+    4: "fascia_steam_laundry",
+}
+
 #: The two frames. ELEVATION IS THE ONE THAT JUDGES THE FRONT - square to the
 #: frontage with the roofline in, which is cam_B's own description in the
 #: scene file - and EYE is the one that says whether it belongs on a street,
@@ -1241,8 +1276,24 @@ def plan_parts(p, bay=0, party_wall=True):
     # FASCIA BAND, the full bay width, top AT the first-floor slab. This is
     # what the already-authored cornice and consoles sit on and it must not
     # move: production/art/fascia-01/.
-    _box(parts, "fascia_band", "paint_fascia", 0.0, W, -fp, 0.0, fb, GF,
-         "top-IS-the-first-floor-slab/the-committed-cornice-sits-on-this")
+    paint_name, paint_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
+    band = _box(parts, "fascia_band", "paint_fascia", 0.0, W, -fp, 0.0, fb, GF,
+                "top-IS-the-first-floor-slab/the-committed-cornice-sits-on-this/"
+                "paint=" + paint_name)
+    band["paint"] = paint_rgb
+    band["paint_name"] = paint_name
+    sign = FASCIA_SIGN.get(bay % 6)
+    if sign:
+        # THE SIGN IS ITS OWN THIN PIECE ON THE FACE OF THE BOARD rather than
+        # a texture on the board, because the board is one box and its face,
+        # its returns and its underside are all the same surface to a box
+        # projection - the lettering would have wrapped round the ends and run
+        # upside down along the soffit.
+        sg = _box(parts, "fascia_sign", "paint_fascia",
+                  pw * 0.5, W - pw * 0.5, -fp - 0.012, -fp,
+                  fb + 0.045, GF - 0.045, "the-lettering/" + sign)
+        sg["decal"] = sign
+        sg["paint"] = paint_rgb
 
     _upper_floor(parts, p, T, wall)
     _roof_and_rainwater(parts, p, T, wall, party_wall)
@@ -1518,6 +1569,65 @@ def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
         nt.links.new(norm.outputs["Color"], nmap.inputs["Color"])
         nt.links.new(nmap.outputs["Normal"], bsdf.inputs["Normal"])
     return "%s@%.2fm%s%s" % (surface, tile_m, "+r" if rough else "", "+n" if norm else "")
+
+
+def _decal_material(bpy, root, name, image_name, paint):
+    """One material carrying one sign, fitted once across the piece's face.
+
+    GENERATED COORDINATES, NOT A BOX PROJECTION. Generated runs 0 to 1 over
+    the object's own bounding box, so the image lands once across the board
+    and nowhere else; the box projection every other surface here uses would
+    tile it, wrap it round the returns and run it upside down along the
+    soffit, which is what lettering must never do.
+    """
+    mat = bpy.data.materials.new(name=name)
+    mat.use_nodes = True
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    path = os.path.join(root, DECAL_DIR, image_name + ".png")
+    if bsdf is None or not os.path.exists(path):
+        return mat, "missing/%s" % image_name
+    bsdf.inputs["Roughness"].default_value = 0.42
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    com = nt.nodes.new("ShaderNodeCombineXYZ")
+    nt.links.new(coord.outputs["Generated"], sep.inputs["Vector"])
+    nt.links.new(sep.outputs["X"], com.inputs["X"])
+    nt.links.new(sep.outputs["Z"], com.inputs["Y"])
+    tex = nt.nodes.new("ShaderNodeTexImage")
+    tex.image = bpy.data.images.load(path, check_existing=True)
+    tex.extension = "EXTEND"
+    nt.links.new(com.outputs["Vector"], tex.inputs["Vector"])
+    nt.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    return mat, "%s@fitted" % image_name
+
+
+def _paint_variant(bpy, mats, name, rgb):
+    """A copy of the fascia material in this bay's own paint. One material per
+    colour, not per bay: six bays share three colours and a material per bay
+    would be three copies nobody needs."""
+    key = "fascia_%s" % name
+    if key in mats:
+        return mats[key]
+    src = mats.get("paint_fascia")
+    mat = src.copy() if src is not None else bpy.data.materials.new(key)
+    mat.name = key
+    bsdf = mat.node_tree.nodes.get("Principled BSDF") if mat.use_nodes else None
+    if bsdf is not None:
+        # The wood grain is already on this material; only the multiplier that
+        # carries the colour moves.
+        for node in mat.node_tree.nodes:
+            if node.type == "MIX" and node.blend_type == "MULTIPLY":
+                mean = TEXTURE_MEAN.get("wood", (0.15, 0.09, 0.05))
+                node.inputs[7].default_value = (
+                    min(6.0, rgb[0] / max(1e-4, mean[0])),
+                    min(6.0, rgb[1] / max(1e-4, mean[1])),
+                    min(6.0, rgb[2] / max(1e-4, mean[2])), 1.0)
+                break
+        else:
+            bsdf.inputs["Base Color"].default_value = (rgb[0], rgb[1], rgb[2], 1.0)
+    mats[key] = mat
+    return mat
 
 
 def _materials(bpy, root=None):
@@ -1806,9 +1916,19 @@ def build_and_render(args):
     print("tfNote sceneReset=dataApi/removed=%d-objects" % removed)
 
     mats = _materials(bpy, args["root"])
+    signs = []
     built = 0
     for part in parts:
         mat = mats.get(part["material"])
+        if part.get("decal"):
+            key = "sign_%s" % part["decal"]
+            if key not in mats:
+                mats[key], note = _decal_material(bpy, args["root"], key, part["decal"],
+                                                  part.get("paint"))
+                signs.append("%s=%s" % (part["decal"], note))
+            mat = mats[key]
+        elif part.get("paint_name"):
+            mat = _paint_variant(bpy, mats, part["paint_name"], part["paint"])
         if part.get("kind") == "slope":
             _slope_mesh(bpy, part, mat)
         elif part.get("kind") == "mesh":
@@ -1816,6 +1936,8 @@ def build_and_render(args):
         else:
             _box_mesh(bpy, part, mat)
         built += 1
+    if signs:
+        print("tfSigns " + " ".join(signs))
     if not street:
         _ground(bpy, p, mats)
     night = street and args["condition"] == "wet_night"
