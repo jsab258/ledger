@@ -1,11 +1,22 @@
 // THE PLAYER'S BODY IN THE STREET.
 //
 // Queue 138 item 1: "a character I can control in the textured street,
-// with a camera." Two verbs only, walk and look, so this class carries
-// two axes of movement and two axes of mouse look and nothing else: no
-// jump, no crouch, no interact. Built from the engine's own Character,
-// CharacterMovementComponent, SpringArmComponent and CameraComponent
-// rather than anything bespoke, per the brief.
+// with a camera." Two verbs at first, walk and look. A THIRD ARRIVED
+// 2026-09-22, and it is the smallest one that turns the crime encounter
+// from a demonstration into something a player does: ACT, on E, which
+// records a request and nothing else. No jump, no crouch, no general
+// interact.
+//
+// THE CHARACTER DECIDES NOTHING. It counts presses. What an act MEANS -
+// whether there is a window in front of the player, whether anybody saw
+// it, what the town does about it - belongs to the crime layer, which
+// polls ConsumeActRequests. Keeping the verb this thin is what lets the
+// same press mean different things in different places later without the
+// body having to know about any of them.
+//
+// Built from the engine's own Character, CharacterMovementComponent,
+// SpringArmComponent and CameraComponent rather than anything bespoke, per
+// the brief.
 //
 // NO CONTENT ASSET ANYWHERE HERE. This project ships no hand-made
 // uasset, and there is no Mixamo body in ue-probe yet, so this capsule
@@ -46,6 +57,12 @@ class ALedgerCharacter : public ACharacter
 public:
 	ALedgerCharacter();
 
+	// HOW MANY TIMES THE PLAYER ASKED TO ACT SINCE THIS WAS LAST READ, and
+	// reading it clears the count. A counter rather than a bool because two
+	// presses in one frame are two requests and a bool would silently be
+	// one; the caller can then say how many it saw, which is a denominator.
+	int32 ConsumeActRequests();
+
 protected:
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
@@ -65,4 +82,7 @@ private:
 	void MoveLeft(float Value);
 	void LookYaw(float Value);
 	void LookPitch(float Value);
+	void RequestAct();
+
+	int32 ActRequests = 0;
 };

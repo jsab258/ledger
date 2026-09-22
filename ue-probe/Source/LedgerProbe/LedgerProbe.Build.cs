@@ -22,7 +22,22 @@ public class LedgerProbe : ModuleRules
 		// transitive public dependency, but this project cannot compile
 		// locally to prove that, so it is named explicitly rather than
 		// trusted through a chain nobody here can see.
-		PrivateDependencyModuleNames.AddRange(new string[] { "ImageWrapper", "InputCore" });
+		//
+		// ApplicationCore NAMES THE DEFAULT INPUT DEVICE, added 2026-09-22
+		// with the act. The crime is committed by a key press now, and the
+		// crime probe sends that press through the player controller's own
+		// InputKey, which wants the FInputDeviceId the platform considers
+		// default. IPlatformInputDeviceMapper is that answer and it lives
+		// here. The alternative was to type the device's internal id as 0
+		// and hope, which is the kind of guess this project's whole method
+		// exists to avoid - and it would have failed silently, as a press
+		// that arrives nowhere, which is the one failure shape the act gate
+		// cannot tell from a broken binding.
+		//
+		// WHAT IT COSTS, measured on this machine the same day rather than
+		// estimated: a cold build, cook and package of this project is 4.3
+		// minutes and a warm one is under a minute, both with this module in.
+		PrivateDependencyModuleNames.AddRange(new string[] { "ImageWrapper", "InputCore", "ApplicationCore" });
 		// EXCEPTIONS OFF, AND THIS WAS PRE-RULED BEFORE THE BUILD THAT
 		// NEEDED IT. A director reading the Core port on 2026-09-08 found
 		// that Suspicion.h throws and CoreGolden.h compiles a try/catch into

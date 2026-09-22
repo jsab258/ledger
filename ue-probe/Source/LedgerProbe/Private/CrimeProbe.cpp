@@ -86,6 +86,13 @@
 #include "GameFramework/PlayerController.h"
 #include "IImageWrapper.h"
 #include "IImageWrapperModule.h"
+// THE INPUT PATH, FOR THE ACT. LedgerCharacter is the pawn that owns the
+// binding; InputKeyEventArgs and the device mapper are what a key press is
+// made of once Slate has finished with it, which is the shape the player
+// controller's own InputKey takes.
+#include "LedgerCharacter.h"
+#include "InputKeyEventArgs.h"
+#include "GenericPlatform/GenericPlatformInputDeviceMapper.h"
 
 #include <string>
 #include <vector>
@@ -125,9 +132,9 @@ namespace
 		WaitWorld, WaitPawn, SettleAfterSpawn, PlaceProps,
 		ShotStart,
 		ApproachA, PlaceForA, SettleA, MeasureA, ShotBeforeA, SeqBeforeA,
-		CommitA, SeqAfterA, ShotAfterA, Round1,
+		AwaitActA, CommitA, SeqAfterA, ShotAfterA, Round1,
 		MoveW1ToYard, ApproachB, PlaceForB, SettleB, MeasureB, ShotBeforeB,
-		SeqBeforeB, CommitB, SeqAfterB, ShotAfterB, Round2,
+		SeqBeforeB, AwaitActB, CommitB, SeqAfterB, ShotAfterB, Round2,
 		MoveToOverhear, SettleOverhear, OverheardHold, ShotOverheard,
 		Done
 	};
@@ -139,6 +146,26 @@ namespace
 	double      GLastTick   = 0.0;
 	int32       GTicks      = 0;
 	FString     GFinishReason = TEXT("process-completed-normally");
+
+	// ---- the act, and what is known about how it arrived -----------------
+	//
+	// FOUR SEPARATE FACTS, PER CRIME, because an outside reader found that
+	// collapsing any two of them lets the evidence say something that is not
+	// so: where the press was delivered, how many times the character's own
+	// binding fired, whether the deed was therefore attempted, and whether
+	// the deed actually took. Every one of these is an array because a
+	// whole-run global printed on a per-crime row reads as that crime's
+	// answer while carrying the other one's.
+	int32 GActPressesSent[2] = { 0, 0 };
+	int32 GActRequestsSeen[2] = { 0, 0 };
+	int32 GActStaleDropped[2] = { 0, 0 };
+	// WHERE THE PRESS GOT TO, not whether a pointer was non-null. The three
+	// answers are different failures with different fixes.
+	const TCHAR* GActPressLanded[2] = { TEXT("not-attempted"), TEXT("not-attempted") };
+	bool  GActGaveUp[2] = { false, false };
+	bool  GActAttempted[2] = { false, false };
+	bool  GActTook[2] = { false, false };
+	const TCHAR* GActPawnClass[2] = { TEXT("not-asked"), TEXT("not-asked") };
 
 	APawn*  GPawn = nullptr;
 	AActor* GW1Body = nullptr;
@@ -698,6 +725,115 @@ namespace
 		}
 	}
 
+	// Declared here and defined with the other writers below, the same shape
+	// WriteSeqKeys already uses in this file: the act phase needs to leave a
+	// breadcrumb and the writers live at the bottom.
+	void WriteBreadcrumb(const TCHAR* Phase);
+
+	// ---- the act, by input -----------------------------------------------
+	//
+	// THE PRESS GOES THROUGH THE PLAYER CONTROLLER, NOT ROUND IT. This is the
+	// same call the engine makes when Slate hands it a keyboard event, so the
+	// binding that fires is the binding a human's E fires, on the same pawn,
+	// through the same input component. Nothing here reaches into
+	// ALedgerCharacter to set a flag: if the binding is wrong, or the pawn is
+	// not the player's, or input is not being processed at all, this returns
+	// nothing and the run says so instead of committing a deed anyway.
+	//
+	// PRESSED THEN RELEASED, both sent. A press with no release leaves the key
+	// latched down in the input stack, which is a state no human ever leaves
+	// behind and which would quietly change what a later frame sees.
+	// WHAT IT RETURNS IS WHERE THE PRESS GOT TO. It used to return true the
+	// moment a player controller pointer was non-null, which made
+	// keyRouted=yes mean "there is a controller" while reading as "the press
+	// entered the input system": a press that never reaches UPlayerInput
+	// then points the reader at the character's binding, one layer too far
+	// down. The engine's own InputKey return value is not the answer either -
+	// for a project with no action mappings it returns false on a perfectly
+	// successful press - so what is reported is the last thing this code can
+	// honestly know, which is that a UPlayerInput existed to receive it.
+	const TCHAR* PressActKey(UWorld* World)
+	{
+		APlayerController* PC = (World != nullptr) ? World->GetFirstPlayerController() : nullptr;
+		if (PC == nullptr) { return TEXT("no-player-controller"); }
+		if (PC->PlayerInput == nullptr) { return TEXT("no-player-input"); }
+		const FInputDeviceId Device = IPlatformInputDeviceMapper::Get().GetDefaultInputDevice();
+		const uint64 Stamp = FPlatformTime::Cycles64();
+		FInputKeyEventArgs Pressed(nullptr, Device, EKeys::E, IE_Pressed, Stamp);
+		PC->InputKey(Pressed);
+		// RELEASED TOO, always. A press with no release leaves the key latched
+		// in the input stack, a state no human leaves behind.
+		FInputKeyEventArgs Released(nullptr, Device, EKeys::E, IE_Released, Stamp);
+		PC->InputKey(Released);
+		return TEXT("player-input");
+	}
+
+	int32 TakeActRequests(int Index)
+	{
+		ALedgerCharacter* Body = Cast<ALedgerCharacter>(GPawn);
+		if (Body == nullptr)
+		{
+			GActPawnClass[Index] = (GPawn != nullptr) ? TEXT("not-a-LedgerCharacter") : TEXT("no-pawn");
+			return 0;
+		}
+		GActPawnClass[Index] = TEXT("LedgerCharacter");
+		return Body->ConsumeActRequests();
+	}
+
+	// WAIT, COMMIT, OR GIVE UP, and the choice belongs to LedgerCrime's own
+	// gate so the container binary runs it before any dispatch. There is no
+	// fourth branch in which the deed happens without a press.
+	// THE VERDICT ROUTES THE PHASE, and that is the whole of the gate. It used
+	// to route to the commit phase either way and let a second `if` inside
+	// that phase decide whether to go through with it - one idea with two
+	// implementations, the second of which lives in this file, which no test
+	// in the repository compiles. Deleting that second `if` would have
+	// restored the scripted crime with every check still green, which an
+	// outside reader demonstrated. There is one decision now, it is
+	// DecideAct, it lives in the header the container binary runs, and a
+	// give-up never reaches the commit phase at all.
+	//
+	// STALE PRESSES ARE DROPPED ON ENTRY, AND COUNTED. ConsumeActRequests
+	// clears the character's counter, and nothing else calls it, so a press
+	// that arrived during any earlier phase - or one this phase gave up on -
+	// sat in that counter waiting to be credited to the NEXT crime, on its
+	// first tick, before that crime's own press could possibly have been
+	// processed. The verdict would have read identically to a run where the
+	// press genuinely worked. Whatever is in the counter when this phase
+	// opens belongs to no crime, so it is discarded and the count is printed.
+	bool RunAwaitActPhase(UWorld* World, int Index, ECrimePhase CommitPhase,
+	                      ECrimePhase SkipPhase, double Now)
+	{
+		if (GActPressesSent[Index] == 0 && GActStaleDropped[Index] == 0)
+		{
+			GActStaleDropped[Index] = TakeActRequests(Index);
+			GActPressLanded[Index] = PressActKey(World);
+			// COUNTED ONLY WHEN IT WENT SOMEWHERE. pressesSent=1 beside a
+			// press that was never sent is the same lie one layer along.
+			if (FCString::Strcmp(GActPressLanded[Index], TEXT("player-input")) == 0)
+			{
+				++GActPressesSent[Index];
+			}
+		}
+		GActRequestsSeen[Index] += TakeActRequests(Index);
+		const LedgerCrime::ActVerdict V = LedgerCrime::DecideAct(
+			GActRequestsSeen[Index], Now - GPhaseStart, LedgerCrime::kActCeilingSeconds);
+		if (V == LedgerCrime::ActVerdict::Wait) { return true; }
+		if (V == LedgerCrime::ActVerdict::GiveUp)
+		{
+			GActGaveUp[Index] = true;
+			GWatchSlot = -1;
+			WriteBreadcrumb(Index == 0 ? TEXT("act-a-never-arrived") : TEXT("act-b-never-arrived"));
+			GPhase = SkipPhase;
+			GPhaseStart = Now;
+			return true;
+		}
+		GActAttempted[Index] = true;
+		GPhase = CommitPhase;
+		GPhaseStart = Now;
+		return true;
+	}
+
 	// ---- the deed --------------------------------------------------------
 	void CommitDeed(UWorld* World, int Index)
 	{
@@ -944,6 +1080,39 @@ namespace
 		                        *CrimeSha(), (long long)FDateTime::UtcNow().ToUnixTimestamp()));
 		Out.Add(TEXT("# Line 1 names the commit this was measured on, as the Unity verdict does."));
 		Out.Add(TEXT("# Ruling 2026-09-08, the crime, the witness and the overheard consequence."));
+		Out.Add(TEXT("# THE ACT: crimeAct= lines say how the deed arrived, as FOUR separate facts,"));
+		Out.Add(TEXT("#   because collapsing any two of them lets this file say something untrue."));
+		Out.Add(TEXT("#   pressLanded is how far the injected press got - a controller, a"));
+		Out.Add(TEXT("#   UPlayerInput to receive it, or neither - and NOT whether anything fired."));
+		Out.Add(TEXT("#   requestsSeen is how many times ALedgerCharacter's own E binding actually"));
+		Out.Add(TEXT("#   fired. attempted is whether the deed was therefore begun. took is whether"));
+		Out.Add(TEXT("#   the window is really gone, read back off the actor after the fact."));
+		Out.Add(TEXT("#   staleDropped is presses found waiting when the phase opened and discarded"));
+		Out.Add(TEXT("#   as belonging to no crime; a non-zero there on a healthy run is a bug."));
+		Out.Add(TEXT("#   THERE IS NO BRANCH THAT ATTEMPTS THE DEED WITHOUT A PRESS: the await"));
+		Out.Add(TEXT("#   phase routes a give-up straight past the commit phase. So attempted=yes"));
+		Out.Add(TEXT("#   is evidence that a key press caused it."));
+		Out.Add(TEXT("#   WHAT IS NOT TRUE YET, said here rather than left to be assumed: no"));
+		Out.Add(TEXT("#   automated check anywhere reads these lines, so a run in which the input"));
+		Out.Add(TEXT("#   path was dead is committed and pushed GREEN. A human reading this file is"));
+		Out.Add(TEXT("#   the only thing that catches it today."));
+		for (int I = 0; I < 2; ++I)
+		{
+			Out.Add(FString::Printf(
+				TEXT("crimeAct id=%s pressesSent=%d pressLanded=%s staleDropped=%d ")
+				TEXT("requestsSeen=%d gaveUp=%s attempted=%s took=%s pawnClass=%s ")
+				TEXT("ceilingSeconds=%.1f"),
+				I == 0 ? TEXT("A") : TEXT("B"),
+				GActPressesSent[I],
+				GActPressLanded[I],
+				GActStaleDropped[I],
+				GActRequestsSeen[I],
+				GActGaveUp[I] ? TEXT("yes") : TEXT("no"),
+				GActAttempted[I] ? TEXT("yes") : TEXT("no"),
+				GActTook[I] ? TEXT("yes") : TEXT("no"),
+				GActPawnClass[I],
+				LedgerCrime::kActCeilingSeconds));
+		}
 		Out.Add(TEXT("#   launchStatus is added by the workflow step from this file's presence, its"));
 		Out.Add(TEXT("#   last crimePhaseReached and the process's exit code, because only something"));
 		Out.Add(TEXT("#   watching from outside can tell a hang from a crash from a clean exit."));
@@ -1364,11 +1533,20 @@ namespace
 			return RunShotPhase(TEXT("before_crime_a"), TEXT("ue-crime_01_before_crime_a.png"),
 			                    ECrimePhase::SeqBeforeA, Now);
 		case ECrimePhase::SeqBeforeA:
-			return RunForcedSeqPhase(ECrimePhase::CommitA, Now);
+			return RunForcedSeqPhase(ECrimePhase::AwaitActA, Now);
+		case ECrimePhase::AwaitActA:
+			// NO PRESS, NO DEED, and the routing is where that is enforced:
+			// a give-up goes to SeqAfterA and this phase is never entered.
+			return RunAwaitActPhase(World, 0, ECrimePhase::CommitA,
+			                        ECrimePhase::SeqAfterA, Now);
 		case ECrimePhase::CommitA:
 		{
 			GBeat = "deed_a";
 			CommitDeed(World, 0);
+			// READ OFF THE DEED, NOT OFF THE DECISION. Setting this before
+			// CommitDeed meant a run where the window was not in the street
+			// still reported the act as having happened.
+			GActTook[0] = GCrime[0].bPieceFound && GCrime[0].bHiddenAfter;
 			ResolveAndFile(0);
 			GWatchSlot = -1;
 			WriteBreadcrumb(TEXT("crime-a-committed"));
@@ -1450,11 +1628,15 @@ namespace
 			return RunShotPhase(TEXT("before_crime_b"), TEXT("ue-crime_03_before_crime_b.png"),
 			                    ECrimePhase::SeqBeforeB, Now);
 		case ECrimePhase::SeqBeforeB:
-			return RunForcedSeqPhase(ECrimePhase::CommitB, Now);
+			return RunForcedSeqPhase(ECrimePhase::AwaitActB, Now);
+		case ECrimePhase::AwaitActB:
+			return RunAwaitActPhase(World, 1, ECrimePhase::CommitB,
+			                        ECrimePhase::SeqAfterB, Now);
 		case ECrimePhase::CommitB:
 		{
 			GBeat = "deed_b";
 			CommitDeed(World, 1);
+			GActTook[1] = GCrime[1].bPieceFound && GCrime[1].bHiddenAfter;
 			ResolveAndFile(1);
 			GWatchSlot = -1;
 			WriteBreadcrumb(TEXT("crime-b-committed"));
