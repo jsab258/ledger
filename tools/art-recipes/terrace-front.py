@@ -131,6 +131,8 @@ MATERIALS = (
     ("glass",       (0.012, 0.015, 0.017), 0.10),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     ("slate",       (0.026, 0.028, 0.032), 0.70),
+    ("asphalt",     (0.030, 0.030, 0.031), 0.85),   # the carriageway
+    ("figure",      (0.014, 0.014, 0.016), 0.80),   # a person, read as a silhouette
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
     # why that has a material of its own. The carcass behind the elevation was
     # brick_red and filled the frontage plane, so every opening - two sashes,
@@ -163,6 +165,13 @@ BAY_DOORS_ON = ("left", "left", "right", "left", "right", "right")
 #: yard, which frees 0.838 m for display glazing. It is the only bay whose
 #: opening zone is not the fixed 5.3 m.
 BAY_WITHOUT_SIDE_DOOR = 5
+
+#: THE STREET'S OWN CROSS-SECTION, MEASURED from the scene file's `street`
+#: block: a 6.0 m carriageway in two 3.0 m lanes, a 2.0 m footway each side,
+#: and a 125 mm kerb upstand. The frontage line is 5.125 m from the centre,
+#: which is the atlas's own `street_anchor` datum. Read rather than typed,
+#: like everything else here.
+STREET_FRONTAGE_M = 5.125
 
 #: The two frames. ELEVATION IS THE ONE THAT JUDGES THE FRONT - square to the
 #: frontage with the roofline in, which is cam_B's own description in the
@@ -244,6 +253,7 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
             "start_x_m":        float(block["start_x_m"]),
             "bays":             int(block["bays"]),
             "block_id":         str(block["id"]),
+            "side":             str(block["side"]),
             "wall_surface":     str(block["wall_surface"]),
             "ground_floor":     str(block["ground_floor"]),
             "roof_kind":        str(roof["kind"]),
@@ -650,6 +660,126 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall):
              "a-stack-serves-both-houses-either-side-of-the-wall-it-stands-on")
 
 
+def plan_street(root, spec_rel=SPEC_REL):
+    """(parts, error). Every block the scene file names, on its own side of
+    the road, with the road between them.
+
+    THIS IS THE FRAME THE STAGE IS JUDGED BY. The bar for stage 1 is a frame of
+    the built street FROM THE HOOK SHEET'S OWN VIEWPOINT standing beside the
+    sheet, and a viewpoint is a place in a street rather than a place in front
+    of one building. A row rendered on its own proves the row; it cannot show
+    what the sheet is actually being compared on - how far the eye carries down
+    the road, what the rooflines do against the sky, where the clutter is.
+
+    THE WEST SIDE IS MIRRORED RATHER THAN REBUILT. Its bays are built by the
+    same code at the same origin and then turned about the street's centre
+    line, because a second implementation of a terrace that happened to face
+    the other way is two terraces that drift.
+    """
+    out = []
+    for block_id in ("east_parade", "west_south", "west_north"):
+        q, err = load_spec(root, spec_rel, block_id)
+        if err:
+            return None, err
+        east = q["side"] == "east"
+        for part in plan_row(q):
+            r = dict(part)
+            r["id"] = "%s_%s" % (block_id, part["id"])
+            r["block"] = block_id
+            # ALONG the street first: each block starts where the scene file
+            # says it starts, not at zero.
+            r["x0"] = part["x0"] + q["start_x_m"]
+            r["x1"] = part["x1"] + q["start_x_m"]
+            if part.get("kind") == "slope":
+                ye, yr = part["y_eaves"], part["y_ridge"]
+                r["y_eaves"] = (STREET_FRONTAGE_M + ye) if east else -(STREET_FRONTAGE_M + ye)
+                r["y_ridge"] = (STREET_FRONTAGE_M + yr) if east else -(STREET_FRONTAGE_M + yr)
+            else:
+                a = STREET_FRONTAGE_M + part["y0"]
+                b = STREET_FRONTAGE_M + part["y1"]
+                r["y0"], r["y1"] = (a, b) if east else (-b, -a)
+            # THE FRONTS STAND ON THE FOOTWAY, not on the road crown. The
+            # spec's own conversion: street absolute = local + 0.100 m, the
+            # built street's footway-above-crown offset at the frontage line.
+            # Every bay is authored in local coordinates and integration adds
+            # this, which is exactly what this is.
+            for k in ("z0", "z1", "z_eaves", "z_ridge"):
+                if k in r:
+                    r[k] = r[k] + THRESHOLD_ABOVE_CROWN_M
+            out.append(r)
+
+    # ---- the road between them, MEASURED from the street block -----------
+    q, _e = load_spec(root, spec_rel, "east_parade")
+    half = 3.0          # carriageway half width
+    kerb_w, kerb_up = 0.125, 0.125
+    foot = 2.0
+    x0, x1 = -2.0, 44.0
+    _box(out, "carriageway", "asphalt", x0, x1, -half, half, -0.30, 0.0,
+         "two-3.0m-lanes/the-common-British-two-way-residential-carriageway")
+    for sgn, name in ((1.0, "east"), (-1.0, "west")):
+        a, b = sgn * half, sgn * (half + kerb_w)
+        _box(out, "kerb_%s" % name, "stone", x0, x1, min(a, b), max(a, b),
+             -0.30, kerb_up, "125mm-face/the-standard-British-upstand")
+        c, d = sgn * (half + kerb_w), sgn * STREET_FRONTAGE_M
+        _box(out, "footway_%s" % name, "stone", x0, x1, min(c, d), max(c, d),
+             -0.30, THRESHOLD_ABOVE_CROWN_M, "2.0m/the-normal-British-footway")
+    _figures(out)
+    return out, ""
+
+
+#: WHERE A PERSON STANDS, and why there is one at all.
+#:
+#: NOTHING IN THE FRAME SET SCALE. The first render of the street from the
+#: sheet's own viewpoint came back reading like a model rather than a place,
+#: and the reason is that there was no object in it whose size a person
+#: already knows. A door is 1.981 m and a kerb is 125 mm, but neither of those
+#: is a thing the eye measures against; a human body is the only one that is.
+#:
+#: AND D31'S OWN TYING FRAME ASKS FOR ONE IN SO MANY WORDS: "one screenshot of
+#: the street at dusk, wet, lamps lit, A FIGURE IN SILHOUETTE". The frame the
+#: whole stage is judged by has a person in it, and until now nothing this
+#: recipe drew could have been that frame.
+#:
+#: THE DIMENSIONS ARE THE PROJECT'S OWN. Eye height 1.6 m is
+#: CrimeProbe.h's kEyeHeightM, the value the simulation traces sightlines
+#: from; a standing body is that plus the distance from eye to crown, which
+#: is taken as 0.15 m, so 1.75 m overall. Shoulders 0.45 m, which is the
+#: ordinary British doorway's 0.838 m leaf comfortably admitting one person.
+#: BLOCKS, NOT A BODY: this is a silhouette to set scale, not a character.
+#: The bodies are stage 2 and they are Mixamo's, not mine.
+FIGURE_EYE_M = 1.6
+FIGURE_EYE_TO_CROWN_M = 0.15
+FIGURE_SHOULDER_M = 0.45
+FIGURE_DEPTH_M = 0.25
+#: (x along the street, y across it). Both on the east footway, one near and
+#: one well down the row, because ONE figure sets scale where it stands and
+#: TWO set it down the whole length - which is the half that says how far the
+#: eye is actually carrying.
+FIGURE_AT = ((11.5, 4.25), (27.0, 3.85))
+
+
+def _figures(out):
+    """A person, twice, as blocks. See FIGURE_AT for why they are here."""
+    top = FIGURE_EYE_M + FIGURE_EYE_TO_CROWN_M
+    head = 0.23
+    for n, (fx, fy) in enumerate(FIGURE_AT):
+        # SHOULDERS ACROSS THE VIEW, NOT ALONG IT. The first pair were built
+        # with their 0.45 m shoulders spanning x - along the street - and the
+        # sheet's viewpoint looks ALONG the street, so the camera saw the
+        # 0.25 m side of each and they read as two dark posts. A figure that
+        # does not read as a person sets no scale at all, which was the whole
+        # reason for putting one there.
+        hw, hd = FIGURE_SHOULDER_M / 2.0, FIGURE_DEPTH_M / 2.0
+        base = THRESHOLD_ABOVE_CROWN_M
+        _box(out, "figure_%d_legs" % n, "figure", fx - hd, fx + hd,
+             fy - hw * 0.8, fy + hw * 0.8, base, base + 0.86, "to-the-hip")
+        _box(out, "figure_%d_torso" % n, "figure", fx - hd, fx + hd,
+             fy - hw, fy + hw, base + 0.86, base + top - head, "shoulders-0.45m")
+        _box(out, "figure_%d_head" % n, "figure", fx - head / 2.0, fx + head / 2.0,
+             fy - head / 2.0, fy + head / 2.0, base + top - head, base + top,
+             "crown-at-1.75m/eye-at-the-simulation's-own-1.6")
+
+
 def plan_row(p, bays=None):
     """Every bay of the row, offset and named, as one list.
 
@@ -975,6 +1105,38 @@ def euler_direction(euler):
             -math.cos(rx))
 
 
+def street_cameras():
+    """The sheet's own viewpoint, and one across the road.
+
+    cam_A, MEASURED from the scene file: on the east footway 4.0 m along and
+    4.0 m across, eye 1.6 m above the FOOTWAY rather than above the road
+    crown, looking along the street at a 4 degree downward pitch with a 60
+    degree vertical field. The scene file's own note derives that pitch: at a
+    60 degree field, p degrees down puts the horizon at frame row
+    0.5 - tan(p)/(2 tan 30), so 4.0 puts it at 0.439, just above the middle,
+    which is where every British street reference in the research puts it.
+    THAT IS THE FRAME STAGE 1 IS JUDGED ON and it is not one of mine.
+    """
+    eye = THRESHOLD_ABOVE_CROWN_M + 1.6
+    reach = 38.0
+    drop = reach * math.tan(math.radians(4.0))
+    return {
+        "hook": {
+            "loc": (4.0, 4.0, eye),
+            "look": (4.0 + reach, 4.0, eye - drop),
+            "fov_v_deg": 60.0,
+            "note": "cam_A/the-sheet's-own-viewpoint/1.6m-on-the-east-footway/4-degrees-down",
+        },
+        "across": {
+            # cam_B: from the far kerb, square to the frontage, roofline in.
+            "loc": (21.0, -4.0, eye),
+            "look": (21.0, 5.125, eye + 2.2),
+            "fov_v_deg": 60.0,
+            "note": "cam_B/from-the-far-kerb-square-to-the-frontage-roofline-in-frame",
+        },
+    }
+
+
 def plan_lines(p, parts, checks):
     lines = []
     for field, authored, emitted, agree in checks:
@@ -1137,11 +1299,23 @@ def _camera(bpy, name, spec):
 
 def build_and_render(args):
     bpy = _bpy()
-    p, err = load_spec(args["root"], args["spec"], args["block"])
+    street = (args["block"] == "street")
+    # THE STREET IS A DIFFERENT SUBJECT, not a bigger row: three blocks, the
+    # road between them, and the cameras the scene file itself names. The
+    # per-block cross-check still runs on the parade, because the numbers it
+    # compares are the row's rather than the street's.
+    p, err = load_spec(args["root"], args["spec"],
+                       "east_parade" if street else args["block"])
     if err:
         print("terrace-front refused: status=NO-SPEC reason=%s nothing measured" % err)
         return 3
-    parts = plan_row(p)
+    if street:
+        parts, serr = plan_street(args["root"], args["spec"])
+        if serr:
+            print("terrace-front refused: status=NO-SPEC reason=%s nothing measured" % serr)
+            return 3
+    else:
+        parts = plan_row(p)
     checks = cross_check(p, args["root"])
 
     for line in plan_lines(p, parts, checks):
@@ -1164,7 +1338,8 @@ def build_and_render(args):
         else:
             _box_mesh(bpy, part, mat)
         built += 1
-    _ground(bpy, p, mats)
+    if not street:
+        _ground(bpy, p, mats)
     world_note = _world(bpy, args["root"])
     print("tfNote world/%s" % world_note)
 
@@ -1180,12 +1355,13 @@ def build_and_render(args):
     scene.render.resolution_x, scene.render.resolution_y = AUTHORED_RES
     scene.render.image_settings.file_format = "PNG"
 
-    cams = frame_cameras(p)
+    cams = street_cameras() if street else frame_cameras(p)
     wrote = 0
-    for name in FRAMES:
+    for name in (tuple(cams.keys()) if street else FRAMES):
         cam = _camera(bpy, "cam_" + name, cams[name])
         scene.camera = cam
-        out = os.path.join(args["out"], "terrace-front-%s-%s.png" % (p["block_id"], name))
+        out = os.path.join(args["out"],
+                           "terrace-front-%s-%s.png" % ("street" if street else p["block_id"], name))
         scene.render.filepath = out
         bpy.ops.render.render(write_still=True)
         size = os.path.getsize(out) if os.path.exists(out) else 0
@@ -1202,7 +1378,8 @@ def build_and_render(args):
           "theFixWasValueAndFrame=not-dimensions/crossCheckAgree-is-5/5")
     print("terrace-front done: status=RAN block=%s bays=%d partsBuilt=%d/%d "
           "crossCheckAgree=%d/%d previewsWrote=%d/%d res=%dx%d outDir=%s"
-          % (p["block_id"], p["bays"], built, len(parts), agree, len(checks), wrote, len(FRAMES),
+          % ("street" if street else p["block_id"], p["bays"], built, len(parts),
+             agree, len(checks), wrote, len(cams),
              AUTHORED_RES[0], AUTHORED_RES[1], args["out"]))
     return 0 if wrote == len(FRAMES) else 1
 
