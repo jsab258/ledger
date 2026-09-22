@@ -103,7 +103,13 @@ nothing.
       texture links, so none of it had ever rendered.
 - [x] THE ROAD IS WET, with the water where the camber sends it: the crown
       drains, the channel mirrors the sky.
-- [ ] COLOUR, THE SATURATION HALF, IS STILL THE LAST ONE. 16.8% of our
+- [ ] COLOUR, AND THE MEASURE IS NOT TO BE TRUSTED ALONE. Taking a tiled
+      photograph off the window panes made the picture better and this
+      number worse, 16.8% to 11.5%, because a repeating dark checker is
+      texture and the measure counts texture. Read it beside the picture,
+      never instead of it. The honest remaining gap is that the sheet's
+      frame is FULLER: its parade is close and ours recedes.
+      The old wording follows, for the arithmetic: 16.8% of our
       pixels carry real colour against the sheet's 25.8%, up from 2.0% this
       morning. What is saturated in the reference is the BRICK rather than
       the paint - there is so much more of it - and ours is now at its
@@ -127,9 +133,12 @@ nothing.
       fault, fixed, kept). The next attempt starts by finding out what in
       this EEVEE build refuses the transmission - the render method or the
       material's blend mode - and not by lightening anything again.
-- [ ] THE DUSK FRAME IS DARKER THAN IT WAS, at mean 6.1. Not obviously
-      wrong - the road is a mirror now, so the lanterns streak down it
-      rather than laying a pool on it - but less legible as "lamps lit".
+- [x] THE DUSK FRAME CAME BACK, and better than it was: mean 6.1 to 21.0,
+      with the lit shop rooms throwing light out onto a wet road that
+      mirrors it in long streaks, the lanterns lit, and the lettering
+      readable on both sides. D31 asked for dusk, wet, lamps lit and a
+      figure in silhouette and it now has all four. The shop rooms did it -
+      there was nothing behind the windows to light the street WITH.
 - [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
       into the recipe and the next one does not start from scratch.
 
