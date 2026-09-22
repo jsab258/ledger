@@ -35,6 +35,31 @@ Ruled by Jafar 2026-09-09: the studio takes every decision that has a
 recommendation and a default. A card appears below only when the studio has
 looked and CANNOT form one, at most one a week, and it carries buttons.
 
+### The lamp column: the sheet's lamp is too small to judge it by, so a fifth attempt, or the terrace fronts now?
+CLASS: DECISION
+added 2026-09-22, from your ruling of last evening, "A. Author it", after four attempts
+
+[The authoring line works end to end](https://github.com/jsab258/ledger/actions/runs/35669115224): the lamp's Blender recipe written here, rendered on your PC, [four frames back](https://github.com/jsab258/ledger/tree/art/atlas-01/production/art/atlas-01/previews) and measured. What it has not produced is a lamp the studio can call right, and after four attempts the fault is the ruler, not the recipe. [The Hook sheet's street lamp is tiny on the page](https://github.com/jsab258/ledger/blob/art/atlas-01/production/art/atlas-01/concepts/hook.png): trace its head three times and you get three different proportions, and two of the four attempts were spent chasing one of them. [The measurement is filed](https://github.com/jsab258/ledger/blob/main/production/queue/421-the-hook-sheets-lamp-is-too-small-to-settle-the-silhouette-it-is-being-used-to-judge.md).
+
+What the sheet does settle: a straight pole, a kink at the top, the lantern hanging off it, never an arch. [Every render so far is an arch](https://github.com/jsab258/ledger/blob/main/production/throughput.md#batch-b006-lighting-column-01), and the latest is a little too wide and about half again too tall. That much goes into whatever comes next.
+
+The sheet is your approved art, so the choice is yours:
+
+- A. A bigger picture of the same lamp from the sheet's source, large enough to measure. Then a fifth attempt has a real target.
+- B. A period photograph we are licensed to use as the shape reference; the sheet keeps tone and dressing.
+- C. Rule that the sheet governs character only, kink not arch, lantern hanging off the pole, photocell on the ridge, and the proportions come from the real dimensions already written down. The lamp is finished on the next attempt.
+- D. Stop here. The pilot has answered its question; the terrace fronts start now with kink-not-arch and the small-reference caveat written into their brief.
+
+RECOMMENDATION, the studio's: C or D. The line is proven; what remains is an argument with a ruler that cannot settle it.
+DEFAULT D if unruled: the terrace fronts start with the constraint written in, the one choice that spends nothing while waiting.
+DEADLINE: 2026-09-23. Nothing decays while it waits.
+
+Your badges: [three of the four lamp runs showed red on your PC while delivering perfectly good frames](https://github.com/jsab258/ledger/blob/main/production/throughput.md#batch-b006-lighting-column-01); the check was fooled by a recipe overwriting its own pictures. Fixed and tested last night, and the next run is on its way to show green.
+
+Budget: [your last reading](https://github.com/jsab258/ledger/blob/main/production/budget.md) came with last evening's ruling, 17 total and 19 Fable, 66 points of room under the 85 ceiling. An evening's work has happened since, so until a fresh pair arrives today is unmeasured and the studio holds. Put the reading with your answer.
+
+Where the studio stands: https://jsab258.github.io/ledger/
+
 ### LEDGER's own repository: three things only you can do
 CLASS: DECISION
 added 2026-09-10, from ruling 2 of the cleanup batch, plan at

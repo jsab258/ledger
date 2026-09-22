@@ -659,15 +659,36 @@ jobs:
           Write-Host "artBlenderChosen=$($blender -replace ' ','~') artBlenderPickedBy=$pickedBy exesFound=$($ordered.Count) rootsWithExe=$rootsWithExe/$($bases.Count)-roots-examined rootsPresent=$rootsPresent/$($bases.Count)-roots-examined artBlenderOnPath=$pathNote artBlenderVersion=$($ver -replace ' ','~')"
           $before = @(Get-ChildItem $outDir -Filter *.png -ErrorAction SilentlyContinue).Count
           $mineBefore = @(Get-ChildItem $outDir -Filter "$name-*.png" -ErrorAction SilentlyContinue).Count
+          # THE INSTANT THE RENDER STARTED, because the gate below asks whether
+          # THIS run wrote the frames and a count cannot answer that. One second
+          # of slack absorbs clock granularity; no previous run can fall inside
+          # it, since the nearest one is an hour away.
+          $t0 = (Get-Date).AddSeconds(-1)
           & $blender --background --factory-startup --python $recipe -- --out $outDir --root $ws --commission $commission --run-sha $artSha --studio-sha $studioSha
           $code = $LASTEXITCODE
           $after = @(Get-ChildItem $outDir -Filter *.png -ErrorAction SilentlyContinue).Count
-          $mineAfter = @(Get-ChildItem $outDir -Filter "$name-*.png" -ErrorAction SilentlyContinue).Count
-          # TWO COUNTS, AND THE GATE READS THE NARROW ONE. This directory already
+          $minePngs = @(Get-ChildItem $outDir -Filter "$name-*.png" -ErrorAction SilentlyContinue)
+          $mineAfter = $minePngs.Count
+          $mineFresh = @($minePngs | Where-Object { $_.LastWriteTime -ge $t0 }).Count
+          # THREE COUNTS, AND THE GATE READS THE THIRD. This directory already
           # holds sixty-odd PNGs from the commission's SVG renders, so the total
-          # delta answers "did anything appear" while the recipe-prefixed delta
-          # answers "did THIS recipe draw", which is the question.
-          Write-Host "artPreviewStatus=RAN recipeAsked=$name blenderExit=$code previewsBefore=$before previewsAfter=$after previewsNew=$($after - $before) recipePngsBefore=$mineBefore recipePngsAfter=$mineAfter recipePngsNew=$($mineAfter - $mineBefore)"
+          # delta answers "did anything appear" and the recipe-prefixed delta
+          # answers "did a NEW file of this recipe's appear". Neither answers
+          # the question, which is "did THIS run draw"; recipePngsFresh does.
+          #
+          # WHY THE DELTA WAS THE WRONG QUESTION, measured 2026-09-21 and not
+          # reasoned about. The gate was `$mineAfter -le $mineBefore`, so it
+          # passed only while the COUNT ROSE. A recipe overwrites its own four
+          # frames, so the count rises once, on the recipe's first ever run, and
+          # never again. Proven from the art branch rather than from this file:
+          # 0 lighting-column PNGs at 11d6cf51 (the parent of the first such
+          # run, which PASSED) and 4 at each of fbba39e1, 6f738008 and 6f77ff59
+          # (the three later runs, every one of which FAILED here while writing
+          # a complete verdict reading status=RAN previewsWrote=4/4). Two good
+          # renders were published under a red run and a third would have been.
+          # A freshness test passes on both cases: 4 fresh on a first run, 4
+          # fresh on a re-render, 0 fresh when Blender drew nothing.
+          Write-Host "artPreviewStatus=RAN recipeAsked=$name blenderExit=$code previewsBefore=$before previewsAfter=$after previewsNew=$($after - $before) recipePngsBefore=$mineBefore recipePngsAfter=$mineAfter recipePngsNew=$($mineAfter - $mineBefore) recipePngsFresh=$mineFresh/$mineAfter-recipe-pngs-on-disk gateReads=recipePngsFresh"
           # APPENDED, NEVER CREATED, and the difference is the gate's. The
           # recipe writes this file; the gate below reads an ABSENT or empty one
           # as NO-VERDICT, which is a real failure it must keep being able to
@@ -683,7 +704,7 @@ jobs:
             Write-Host "artVerdictMissing=yes reason=recipe-wrote-no-verdict-file"
             Write-Host "artQueueEvidenceInVerdict=no/0-of-2-appended reason=no-verdict-file-to-append-to"
           }
-          if ($code -ne 0 -or $mineAfter -le $mineBefore) { exit 1 }
+          if ($code -ne 0 -or $mineFresh -lt 1) { exit 1 }
 
       - name: Commit the previews to the art branch
         id: commit

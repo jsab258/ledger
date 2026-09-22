@@ -460,12 +460,54 @@ passing it proved nothing about the only comparison that matters. Measuring
 shallower and reading right are different claims, which this asset's own
 authoring builder warned of in its method verdict before any frame existed.
 
+ATTEMPT 4 IS OPEN, NOT REJECTED, AND THE DISTINCTION IS THE WHOLE ENTRY. Run
+35669115224 on studio sha 595484b6, committed at 6f77ff59 on art/atlas-01. The
+render RAN: status=RAN objectsBuilt=10/10-planned previewsWrote=4/4
+crossCheckAgree=10/10 manifoldParts=10/10 elapsedSeconds=3.3. No gate refused
+it and no named judge has refused it, so it is not counted in
+attemptsRejected; silence is not a refusal and OPEN is the third state.
+
+THE RUN WENT RED AND THE RENDER WAS FINE, which is a lane fault and is fixed in
+the same commit as this entry. The render step passed only while the COUNT of
+this recipe's PNGs ROSE (`$mineAfter -le $mineBefore` exits 1), and a recipe
+overwrites its own four frames, so the count can rise exactly once, on a
+recipe's first ever run. Proven from the art branch and not from the step:
+0 lighting-column PNGs at 11d6cf51, the parent of the first such run, WHICH
+PASSED; 4 at each of fbba39e1, 6f738008 and 6f77ff59, the three later runs,
+EVERY ONE OF WHICH WENT RED while publishing a complete verdict. The gate now
+counts frames whose write time is at or after the instant Blender started, and
+that test was run on both halves before it shipped: 5 cases, accepting first,
+the re-render case passing where the old condition fails.
+
+WHAT THE FRAMES SHOW, MEASURED BEFORE IT WAS DESCRIBED. Attempt 4 is materially
+closer: its silhouette's top row is y=121 against attempt 3's y=100, so the
+arch is 21px lower in the same camera, and the corner plus level arm replaced
+the round sweep. It is still not the sheet, and the mismatch is structural
+rather than a tuning error. Traced at 4 sigma below a measured sky baseline,
+THE SHEET'S LAMP ENCLOSES NO SKY: 0 of 39 dark rows split into more than one
+segment, over 48 rows examined, window x230..276 which nothing touches. Both
+renders enclose sky, attempt 4 in 105 of 139 dark rows and attempt 3 in 126 of
+160. The sheet is a KINK with the lantern hanging off it; both renders are
+ARCHES with a bare arm and a dropper under them.
+
+AND THE TARGET ASPECT MOVES WITH THE THRESHOLD, WHICH IS WHY THIS ATTEMPT IS
+NOT BEING TUNED AGAIN BLIND. Same sheet, same crop, three traces: 25x11px
+(2.27:1) from the authoring builder, 23x7px (3.3:1) recorded on the recipe's own
+lcSheetRef line, and 24x8px (3.0:1) from the director's 4 sigma trace tonight.
+The head is 8 rows tall at 4 sigma and 11 at a looser cut, a 37 percent swing in
+the denominator from where the cut falls. Attempt 4 achieves 2.279 against a
+target that is anywhere between 2.27 and 3.3 depending on the ruler. NORMALISED
+BY THE ONE LENGTH BOTH IMAGES PIN, the 0.114 m shaft, the sheet's head and neck
+are 6.0 pole-diameters wide and 2.0 tall; attempt 4 is 6.80 and 2.98. The width
+is 13 percent over and the height 49 percent over, and neither figure is worth
+tuning against until the reference can resolve it.
+
 batch: batchId=b006-lighting-column-01 line=art-lighting-column status=OPEN
   opened=2026-09-21T20:02:52Z closed=not-yet
 unit: deliverables=1/fixed-at-open/list=production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
   deliverableUnit=lighting-column-blender-asset
-attempts: attemptsMade=3-cumulative attemptsRejected=3/of=3-attempts
-  rejectedAtStation=VERIFY/of=3-attempts
+attempts: attemptsMade=4-cumulative attemptsRejected=3/of=4-attempts
+  rejectedAtStation=3-VERIFY/of=4-attempts
 before: meterTakenAt=2026-09-21T19:2xZ meterTotalPct=17 meterFablePct=19
   meterSource=production/budget.md#row-2026-09-21c
   sessionsTakenAt=2026-09-21T19:41:50Z
