@@ -97,17 +97,26 @@ nothing.
       not show grain - and the clamp stays where it protects the brick.
 - [x] AERIALS on the two stacks the spec names, elements at the 0.27 m its
       own physics derives. They read clearly on the skyline.
-- [ ] COLOUR, THE SATURATION HALF, IS STILL THE LAST BIG ONE. 6.7% of our
-      pixels carry real colour against the sheet's 25.8%. Adding shops to
-      the near west did NOT close it and cost warmth (+18.9 to +12.3),
-      because a shopfront replaces warm brick with dark glass. What the
-      sheet has that we do not is a parade of SATURATED PAINT - oxblood,
-      bottle green, deep navy, cream - filling the frame at close range.
-      Ours is mostly the brick between the shops.
-- [ ] THE SHOP GLAZING READS AS BLACK HOLES at this value key. It was
-      tuned when the street was three times darker.
-- [ ] THE ROAD IS A WIDE PALE BAND: right value, no wheel tracks, no
-      standing water, no reflection worth the name near the camera.
+- [x] THE PIERS ARE PAINTED and the wetness reaches the render. Two of the
+      largest painted areas on every bay were `stone` taking the concrete
+      map; and _wetten had been writing to sockets that already carried
+      texture links, so none of it had ever rendered.
+- [x] THE ROAD IS WET, with the water where the camber sends it: the crown
+      drains, the channel mirrors the sky.
+- [ ] COLOUR, THE SATURATION HALF, IS STILL THE LAST ONE. 16.8% of our
+      pixels carry real colour against the sheet's 25.8%, up from 2.0% this
+      morning. What is saturated in the reference is the BRICK rather than
+      the paint - there is so much more of it - and ours is now at its
+      value and just under its saturation. The rest is that the sheet's
+      frame is fuller: its parade is close and ours recedes.
+- [ ] MEAN 103 AGAINST 120, and it trades directly against the colour
+      above: every lift of the exposure costs saturation in AgX. Measured
+      three ways and settled at the colour end on purpose.
+- [ ] THE SHOP GLAZING IS A DARK GRID where the sheet's shows white-framed
+      panes with pale things behind them.
+- [ ] THE DUSK FRAME IS DARKER THAN IT WAS, at mean 6.1. Not obviously
+      wrong - the road is a mirror now, so the lanterns streak down it
+      rather than laying a pool on it - but less legible as "lamps lit".
 - [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
       into the recipe and the next one does not start from scratch.
 
