@@ -1997,10 +1997,14 @@ def plan_street(root, spec_rel=SPEC_REL):
             # of it and the window is not a porthole.
             y0, y1 = STREET_FRONTAGE_M + 0.75, STREET_FRONTAGE_M + 0.79
             a, b = (y0, y1) if east else (-y1, -y0)
-            _box(out, "interior_card_%s_%d" % (block_id, bay), "interior_lit",
-                 bx + 0.35, bx + q["bay_width_m"] - 0.35, a, b,
-                 THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
-                 "the-lit-back-of-the-shop/on-this-block's-own-side-of-the-road")
+            card = _box(out, "interior_card_%s_%d" % (block_id, bay), "interior_lit",
+                        bx + 0.35, bx + q["bay_width_m"] - 0.35, a, b,
+                        THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
+                        "the-lit-back-of-the-shop/on-this-block's-own-side-of-the-road")
+            pic = INTERIOR_PICTURE.get((block_id, bay))
+            if pic:
+                card["decal"], card["decal_uv"] = pic[0], list(pic[1])
+                card["decal_emit"] = True
             # TWO TUBES ACROSS THE CEILING OF A REFITTED SHOP, a metre and a
             # half each, 38 mm - the T12 tube of the period - 0.35 m in from
             # the glass, where a shop hangs them to light its window. Only the
@@ -2283,6 +2287,28 @@ def _rod(out, pid, material, p0, p1, w, note=""):
         faces.append((i, j, 4 + j, 4 + i))
     out.append({"id": pid, "material": material, "kind": "mesh",
                 "verts": verts, "faces": faces, "note": note})
+
+
+#: THE ROOM BEHIND EACH TRADING WINDOW, 23 September: pictures from the image
+#: lane (tools/imagegen/interiors-2026-09-23.json) laid on the lit card, as
+#: D14's texture on glass for a window nobody enters. MICKEY'S IS NOT HERE,
+#: on purpose: its interior is D14's to design, and Jafar took the waiting
+#: chairs and the clock out of the sheet's prompt for exactly that reason.
+INTERIORS = "production/art/interiors-2026-09-23"
+#: (picture, crop). THE CROP IS READ OFF EACH PICTURE BY EYE, as the scene
+#: file's own crops are - [u0, v0, u1, v1], v from the bottom - because the
+#: model drew each room inside a shop window with a strip of pavement below
+#: it, and a window frame hung behind our window frame is two frames.
+INTERIOR_PICTURE = {
+    ("east_parade", 1): (INTERIORS + "/int23_fish", (0.05, 0.12, 0.95, 0.92)),
+    ("east_parade", 2): (INTERIORS + "/int23_pawn", (0.06, 0.20, 0.64, 0.92)),
+    ("east_parade", 4): (INTERIORS + "/int23_laundry", (0.03, 0.10, 0.73, 0.98)),
+    ("east_parade", 5): (INTERIORS + "/int23_grocer", (0.11, 0.22, 0.89, 0.93)),
+}
+#: How brightly a pictured room glows, by day and at night. By day it stands
+#: where the plain card stood, about the sheet's own window value; at night
+#: it is the lit shop the plain card was, and a room rather than a lightbox.
+CARD_EMIT_DAY, CARD_EMIT_NIGHT = 0.40, 1.60
 
 
 def _dish(out):
@@ -3590,7 +3616,7 @@ def _decal_path(root, image_name):
     return os.path.join(root, DECAL_DIR, image_name + ".png")
 
 
-def _decal_material(bpy, root, name, image_name, paint, uv=None):
+def _decal_material(bpy, root, name, image_name, paint, uv=None, emit=False):
     """One material carrying one sign, fitted once across the piece's face.
 
     GENERATED COORDINATES, NOT A BOX PROJECTION. Generated runs 0 to 1 over
@@ -3629,6 +3655,12 @@ def _decal_material(bpy, root, name, image_name, paint, uv=None):
     else:
         nt.links.new(com.outputs["Vector"], tex.inputs["Vector"])
     nt.links.new(tex.outputs["Color"], bsdf.inputs["Base Color"])
+    if emit and "Emission Color" in bsdf.inputs:
+        # A PICTURED ROOM GLOWS: it stands in a room sealed on five sides,
+        # like the plain card, so it carries its own light. The strength is
+        # set with the rest of the lighting, once day or night is known.
+        nt.links.new(tex.outputs["Color"], bsdf.inputs["Emission Color"])
+        bsdf.inputs["Emission Strength"].default_value = CARD_EMIT_DAY
     return mat, "%s@%s" % (image_name, "cropped" if uv else "fitted")
 
 
@@ -4865,10 +4897,11 @@ def build_and_render(args):
             # round, when the west row was mirrored and its lettering came
             # out backwards; the row is turned rather than mirrored now, so
             # both sides read the same image the same way.
-            key = "sign_%s" % part["decal"]
+            key = ("card_%s" if part.get("decal_emit") else "sign_%s") % part["decal"]
             if key not in mats:
                 mats[key], note = _decal_material(bpy, args["root"], key, part["decal"],
-                                                  part.get("paint"), part.get("decal_uv"))
+                                                  part.get("paint"), part.get("decal_uv"),
+                                                  emit=bool(part.get("decal_emit")))
                 signs.append("%s=%s" % (part["decal"], note))
             mat = mats[key]
         elif part.get("paint_name"):
@@ -4921,6 +4954,12 @@ def build_and_render(args):
             # is the brightest thing on the street after the lamps, and still
             # a room.
             b3.inputs["Emission Strength"].default_value = 0.7 if night else 3.4
+    for key, cm in mats.items():
+        if key.startswith("card_") and cm is not None and cm.use_nodes:
+            bc = cm.node_tree.nodes.get("Principled BSDF")
+            if bc is not None and "Emission Strength" in bc.inputs:
+                bc.inputs["Emission Strength"].default_value = (
+                    CARD_EMIT_NIGHT if night else CARD_EMIT_DAY)
     if street:
         # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
         # than wet at night and bone dry by day, which is what the first
@@ -5691,7 +5730,7 @@ def selftest():
                           if b["id"].startswith("west_") and "fascia_sign" in b["id"]]
             check("reject/no-sign-is-repeated-across-the-road", not west_signs,
                   ",".join(west_signs[:3]))
-            cropped = [b["id"] for b in street if b.get("decal_uv")]
+            cropped = [b["id"] for b in street if b.get("decal_uv") and "fascia_sign" in b["id"]]
             check("accept/the-spec's-crops-are-read", len(cropped) == 3,
                   "%d cropped" % len(cropped))
             g3 = byid.get("east_parade_display_glazing_bay3", {})

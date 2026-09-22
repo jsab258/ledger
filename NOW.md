@@ -649,6 +649,16 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       Subtle at the hook camera's range; the layer is separable and its
       three numbers are named for tuning.
 
+- [x] THE LIT ROOMS BEHIND THE PARADE'S WINDOWS: the four trading bays that
+      are not the anchor get a picture of their own room on the card behind
+      the glass (D14's "texture on glass" for a window nobody enters). The
+      image lane is making them (tools/imagegen/interiors-2026-09-23.json).
+      Mickey's gets none, on purpose: its interior is D14's to design.
+      DONE: fish counter, pawn cabinets, launderette, grocer, each cropped
+      clear of the shopfront the model drew round it; all four are
+      review=pending until a person has looked. Two have a figure in them,
+      one facing out - generic, and at twenty metres a few pixels.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It

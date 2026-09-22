@@ -1,0 +1,15 @@
+LEDGER imagegen - progress
+==========================================================
+batch     interiors-2026-09-23
+status    DONE
+updated   2026-09-22 23:42:10 local
+elapsed   7 min
+done      4 written, 0 already there, 0 failed, of 4 in the batch
+still to do  0
+
+  [made]    int23_fish                 1152x512  113s
+  [made]    int23_pawn                 1152x512  109s
+  [made]    int23_laundry              1152x512  109s
+  [made]    int23_grocer               1152x512  108s
+
+Every image is review=pending until a human has looked at it.

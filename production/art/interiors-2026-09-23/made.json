@@ -1,0 +1,34 @@
+{
+  "_what": "The resume record: what is on disk and which recipe made it. Delete this file to have everything made again, or delete one PNG to have just that one made again.",
+  "written": "2026-09-22T23:42:10",
+  "items": {
+    "int23_fish": {
+      "recipe": "9e7b16ae12a90116",
+      "seed": 20260931,
+      "file": "int23_fish.png",
+      "when": "2026-09-22T23:36:41",
+      "from": "made by this run"
+    },
+    "int23_pawn": {
+      "recipe": "9c74a2f22d4c5194",
+      "seed": 20260932,
+      "file": "int23_pawn.png",
+      "when": "2026-09-22T23:38:31",
+      "from": "made by this run"
+    },
+    "int23_laundry": {
+      "recipe": "bf10480579f4a996",
+      "seed": 20260933,
+      "file": "int23_laundry.png",
+      "when": "2026-09-22T23:40:20",
+      "from": "made by this run"
+    },
+    "int23_grocer": {
+      "recipe": "3d9eafe68dc96055",
+      "seed": 20260934,
+      "file": "int23_grocer.png",
+      "when": "2026-09-22T23:42:10",
+      "from": "made by this run"
+    }
+  }
+}
