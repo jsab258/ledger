@@ -110,3 +110,5 @@ that changed canon are dated files in `legacy/studio-v2/game-design/`, and
 `canon.md` itself names which ruling set each fact. The corpus gate that keeps
 content inside canon, `tools/canon-gate.py --corpus`, is still live and still
 runs on push.
+
+- 2026-09-22 THE ONE PIECE OF AUTOMATION THIS SESSION GETS, and an exception Jafar made by name to "do not build anything whose purpose is to enforce this session's own behaviour". A stop hook reads the standing list in NOW.md and the sitting's own start time and limit, written there as a `SITTING:` line, and refuses to let a turn end while items are unfinished and the limit has not passed. Nothing else: no wake queue, no records, no counters, nothing written anywhere. It fails open on every unexpected outcome and says which one, because a guard that jams shut is a session nobody can end. `tools/sitting-clock.py` holds the decision and its selftest; `.claude/hooks/sitting-continue.sh` is the boundary.

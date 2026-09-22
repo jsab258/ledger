@@ -5,7 +5,14 @@ When an item finishes, strike it and take the next without asking. The list is
 kept current here; when it runs short it is extended from the next part of the
 roadmap.
 
-Last updated 2026-09-22, at the end of the second sitting on his PC.
+Last updated 2026-09-22, in the fourth sitting on his PC.
+
+SITTING: started 2026-09-22T14:30:00+02:00, limit 6h
+
+That one line is read by the stop hook, which will not let the turn end while
+items below are unstruck and the six hours have not run out. It is written at
+the start of every sitting; without it the hook permits and says it measured
+nothing.
 
 ## 1. Toward the Hook sheet (stage 1)
 

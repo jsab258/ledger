@@ -10,5 +10,19 @@
       "Bash(dotnet test *)",
       "Bash(dotnet --version)"
     ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/sitting-continue.sh",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
   }
 }
