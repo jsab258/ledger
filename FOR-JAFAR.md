@@ -53,6 +53,11 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **The arrest happens in live play now, and the run is green.**
+  First try on the runner: the constable watched the first crime for two and a
+  half seconds from across the road, recognised Tom and arrested him; for the
+  second, with the terrace between them, he saw nothing and did nothing. The
+  end of the story is reachable from the game, not only from a test.
 - 2026-09-22 **Stage 3 asks for a crime reaching "a second and a third
   resident within one in-game week", and under today's numbers that sits on a
   knife edge.** In the crime street the shopkeeper files at 0.94 sure and the
