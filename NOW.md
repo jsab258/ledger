@@ -169,11 +169,13 @@ nothing.
       nothing. Each engine uses ITS OWN writer, so a match is the two of
       them agreeing about a file the other never saw. The port could only
       read a save this morning; it can write one now.
-- [ ] AND THE SAME THING IN THE PACKAGED BUILD, which is what this item
-      actually asks for and is not done. The probe commits the crimes,
-      judges the witness and writes both memories already; what it does not
-      do is save, rebuild the world and reload between them. The pieces it
-      needs now exist on both sides.
+- [ ] AND THE SAME THING IN THE PACKAGED BUILD: written, not yet proven.
+      The probe now saves the mill and both memories, rebuilds the world
+      from the authoring, lays the save back over it and prints what
+      survived - including the hop count, which is what separates the
+      shopkeeper who SAW it from the lad who HEARD it. The verdict check
+      judges that line the moment one arrives. It needs the runner to
+      compile it, and no verdict carries the line yet.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.

@@ -215,6 +215,60 @@ def judge(text, sha=""):
         faults.append("the player heard nothing (overheardStatus=%s)"
                       % over[0].get("overheardStatus"))
 
+    # ---- the restart, once the probe carries one --------------------------
+    # GATED ON THE LINE BEING THERE, AND LOUD WHEN IT IS NOT. The probe
+    # learned to save, rebuild and reload on 22 September and the verdict
+    # committed before that build has no restart line. Treating its absence
+    # as a pass would be the quiet kind of nothing-measured this file exists
+    # to refuse, so it is a NOTE that says so in capitals - and the moment a
+    # verdict carries the line, every rule below bites.
+    rt = lines_named(text, "restart")
+    if not rt:
+        notes.append("restart=NOT-IN-THIS-VERDICT/nothing-measured-about-surviving-a-restart")
+    else:
+        r = rt[0]
+        if r.get("restart") != "RAN":
+            faults.append("the restart did not run (restart=%s)" % r.get("restart"))
+        else:
+            def num(k):
+                try:
+                    return int(r.get(k, ""))
+                except ValueError:
+                    return None
+            w1b, w1a = num("w1RumoursBefore"), num("w1RumoursAfter")
+            n2b, n2a = num("n2RumoursBefore"), num("n2RumoursAfter")
+            if w1a is None or w1b is None or w1a != w1b:
+                faults.append("the witness lost rumours across the restart (%s before, %s after)"
+                              % (r.get("w1RumoursBefore"), r.get("w1RumoursAfter")))
+            elif w1a < 1:
+                faults.append("the witness held no rumour to survive the restart")
+            if n2a is None or n2b is None or n2a != n2b:
+                faults.append("the lad in the yard lost rumours across the restart "
+                              "(%s before, %s after)"
+                              % (r.get("n2RumoursBefore"), r.get("n2RumoursAfter")))
+            mb, ma = num("w1MemoryBefore"), num("w1MemoryAfter")
+            if mb is None or ma is None or mb != ma:
+                faults.append("the witness's memory changed across the restart "
+                              "(%s events before, %s after)"
+                              % (r.get("w1MemoryBefore"), r.get("w1MemoryAfter")))
+            if r.get("memoryTextStable") != "yes":
+                faults.append("the memory markdown did not come back the same "
+                              "(memoryTextStable=%s)" % r.get("memoryTextStable"))
+            # THE CONTROL, AND IT IS THE HOP COUNT THAT CARRIES IT. The
+            # shopkeeper SAW it and comes back first-hand; the lad HEARD it
+            # and comes back one hop out. A restore that handed every agent
+            # the same records keeps every count above correct and collapses
+            # these two into each other.
+            wh, nh = num("w1HopsAfter"), num("n2HopsAfter")
+            if wh is not None and wh != 0:
+                faults.append("the witness who SAW it came back %s hops out, not first-hand" % wh)
+            if nh is not None and nh < 1:
+                faults.append("the lad who HEARD it came back first-hand - the restore "
+                              "handed him the witness's own observation")
+            notes.append("restart=w1 %s->%s rumours, hops %s; n2 %s->%s, hops %s"
+                         % (r.get("w1RumoursBefore"), r.get("w1RumoursAfter"), r.get("w1HopsAfter"),
+                            r.get("n2RumoursBefore"), r.get("n2RumoursAfter"), r.get("n2HopsAfter")))
+
     # ---- and the memories reached the disk ---------------------------------
     mem = lines_named(text, "memoryFiles")
     if mem:
@@ -298,6 +352,30 @@ def selftest():
         # A VERDICT FROM ANOTHER COMMIT IS NOT THIS RUN'S ANSWER.
         faults, _n = judge(real, "0000000")
         check("reject/a-stale-verdict-is-refused", bool(faults))
+
+    # THE RESTART RULES, on a verdict that carries the line. The landed one
+    # does not yet, so these are driven from a minimal fixture - and the
+    # ACCEPTING case is included so the rejecting ones are known to be
+    # rejecting something a good line would pass.
+    GOOD_RT = ("restart=RAN w1RumoursBefore=1 w1RumoursAfter=1 n2RumoursBefore=1 "
+               "n2RumoursAfter=1 w1MemoryBefore=1 w1MemoryAfter=1 w1HopsAfter=0 "
+               "n2HopsAfter=1 memoryTextStable=yes")
+    if real:
+        ok_text = real.rstrip(chr(10)) + chr(10) + GOOD_RT + chr(10)
+        faults, _n = judge(ok_text, head_sha(real))
+        check("accept/a-good-restart-line-passes", not faults, "; ".join(faults[:2]))
+        for name, old_v, new_v in (
+                ("the-witness-lost-a-rumour", "w1RumoursAfter=1", "w1RumoursAfter=0"),
+                ("the-lad-lost-a-rumour", "n2RumoursAfter=1", "n2RumoursAfter=0"),
+                ("the-memory-changed", "w1MemoryAfter=1", "w1MemoryAfter=2"),
+                ("the-markdown-did-not-round-trip",
+                 "memoryTextStable=yes", "memoryTextStable=no"),
+                ("the-restart-never-ran", "restart=RAN", "restart=NOT-RUN"),
+                ("everyone-came-back-first-hand", "n2HopsAfter=1", "n2HopsAfter=0"),
+                ("the-eyewitness-came-back-second-hand", "w1HopsAfter=0", "w1HopsAfter=1"),
+        ):
+            faults, _n = judge(ok_text.replace(old_v, new_v), head_sha(real))
+            check("reject/%s-is-caught" % name, bool(faults))
 
     faults, _n = judge("")
     check("reject/an-empty-file-is-refused-not-passed", bool(faults))
