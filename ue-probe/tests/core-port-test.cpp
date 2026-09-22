@@ -109,6 +109,15 @@ int main(int argc, char** argv)
 		{
 			if (IsUnportedScenario(F[1])) { ++Skipped[F[1]]; ++TotalSkipped; continue; }
 		}
+		// AND THE ROWS THIS BUILD CANNOT ANSWER BECAUSE OF ITS COMPILE FLAGS.
+		// This binary HAS exceptions, so the call below is false here and all
+		// four FactNull rows are answered; it is the engine's build that
+		// cannot. Asked anyway, from the one definition, so the two readers
+		// cannot drift about what a hole is.
+		if (IsUnanswerableByThisBuild(Fn))
+		{
+			++Skipped[Fn]; ++TotalSkipped; continue;
+		}
 
 		const Answer A = Evaluate(F);
 		if (!A.Known)

@@ -22,6 +22,8 @@
 
 #include "CoreMinimal.h"
 
+#include <cstring>
+
 namespace LedgerCore
 {
 	// From Feel.cs: the pace constants Perception reads through Locomotion.
@@ -30,8 +32,46 @@ namespace LedgerCore
 	constexpr double WalkSpeed = 4.0;
 	constexpr double RunSpeed  = 7.0;
 
-	inline double Clamp01(double V) { return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V); }
-	inline double Clamp(double V, double Lo, double Hi) { return V < Lo ? Lo : (V > Hi ? Hi : V); }
+	// NaN BY ITS BITS, AND THE CLAMPS THAT HAVE TO KNOW ABOUT IT.
+	//
+	// C# Math.Clamp(NaN, 0, 1) RETURNS NaN: every comparison against NaN is
+	// false, so the value falls through unchanged. This port's clamps are
+	// written the same way and are identical on paper. They are not identical
+	// in the engine. Unreal compiles this module with fast floating point, and
+	// the compiler is then free to emit the pair as SSE min/max instructions,
+	// whose defined behaviour on a NaN operand is to return the OTHER one. So
+	// the engine's clamp turned NaN into 0.0 while every machine the tests run
+	// on kept it, and the golden table's NaN row came back "0.00" against the
+	// C#'s "NaN".
+	//
+	// IT WAS NOT FOUND BY READING. It was found by a real build, twice: first
+	// as a mismatch in FormatTwoDecimals, and then again after that formatter
+	// was fixed, because the value had already been destroyed one call
+	// earlier. A test for NaN written in arithmetic is a test the optimiser
+	// may delete; the bits are the only form that survives.
+	//
+	// WHERE NaN COMES FROM ON THIS PATH, so the branch is not mysterious: the
+	// memory markdown is the save format and people are invited to edit it,
+	// C# double.TryParse accepts "NaN", and Math.Clamp keeps it, so the C#
+	// engine itself writes "(NaN|heard)" into a file and reads it back.
+	inline bool IsNaNBits(double V)
+	{
+		unsigned long long Bits = 0ULL;
+		std::memcpy(&Bits, &V, sizeof(Bits));
+		return ((Bits >> 52) & 0x7FFULL) == 0x7FFULL && (Bits & 0xFFFFFFFFFFFFFULL) != 0ULL;
+	}
+
+	inline double Clamp01(double V)
+	{
+		if (IsNaNBits(V)) { return V; }
+		return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V);
+	}
+
+	inline double Clamp(double V, double Lo, double Hi)
+	{
+		if (IsNaNBits(V)) { return V; }
+		return V < Lo ? Lo : (V > Hi ? Hi : V);
+	}
 
 	struct Perception
 	{

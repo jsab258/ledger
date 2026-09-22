@@ -743,6 +743,30 @@ namespace Golden
 		return Names[Index];
 	}
 
+	// AND THE ROWS THIS BUILD CANNOT ANSWER BECAUSE OF HOW IT IS COMPILED.
+	//
+	// FactNull's four rows need exceptions, and the Unreal module compiles
+	// with them OFF - ruled in advance, in LedgerProbe.Build.cs, which says
+	// what it costs: "the four FactNull rows stop being answered and count as
+	// Unknown, which the run says in words". The container's binaries have
+	// exceptions, so they answer all four; the engine cannot. That is a
+	// difference between BUILDS of the same port rather than a hole in it,
+	// which is why it is keyed to the compile flag and not to a name list.
+	//
+	// IT WAS TOLERATED SILENTLY UNTIL 2026-09-22, because the in-engine reader
+	// counted unanswered rows and passed anyway. Now that an unanswered row
+	// fails, the four have to be named here or the engine can never be green.
+	// Named and counted is the honest shape; counted and ignored was not.
+	inline bool IsUnanswerableByThisBuild(const std::string& Fn)
+	{
+#if defined(LEDGER_CORE_NO_EXCEPTIONS) && LEDGER_CORE_NO_EXCEPTIONS
+		return Fn == "FactNull";
+#else
+		(void)Fn;
+		return false;
+#endif
+	}
+
 	inline bool IsUnportedScenario(const std::string& Name)
 	{
 		for (int I = 0; UnportedScenarios(I) != 0; ++I)

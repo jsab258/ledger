@@ -155,17 +155,6 @@ namespace LedgerCore
 	// doubles, which is the same buffer .NET builds, and the golden table
 	// carries both rows so the rule is a thing the table checked rather than
 	// a thing this comment claims.
-	// NaN BY ITS BITS, because every arithmetic test for it is a test the
-	// optimiser may delete. See FormatTwoDecimals for what that cost.
-	inline bool IsNaNBits(double V)
-	{
-		unsigned long long Bits = 0ULL;
-		std::memcpy(&Bits, &V, sizeof(Bits));
-		const unsigned long long Exponent = (Bits >> 52) & 0x7FFULL;
-		const unsigned long long Fraction = Bits & 0xFFFFFFFFFFFFFULL;
-		return Exponent == 0x7FFULL && Fraction != 0ULL;
-	}
-
 	inline std::string FormatTwoDecimals(double V)
 	{
 		// THE THREE VALUES THAT ARE NOT NUMBERS, and they reach here for real
