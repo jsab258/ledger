@@ -43,6 +43,7 @@
 #include "MemoryStore.h"
 #include "Observation.h"
 #include "Perception.h"
+#include "Reaction.h"
 #include "Suspicion.h"
 
 #include <cstdio>
@@ -1151,6 +1152,46 @@ namespace Golden
 		{
 			A.Known = true;
 			A.Got = FromInt(Perception::IdRung(D(F[1]), D(F[2]), D(F[3]), B(F[4]), B(F[5])));
+		}
+		// THE ARREST, answered from Reaction.h. The outcome is compared as its
+		// NAME, exactly, because a string answer with one character wrong is a
+		// failure and an enum's integer order is nobody's promise.
+		else if (Fn == "Confront" && F.size() >= 5)
+		{
+			A.Known = true;
+			const bool bResists = B(F[3]);
+			if (F[1] == "null")
+			{
+				A.Got = Reaction::Name(Reaction::Confront(nullptr, bResists));
+			}
+			else
+			{
+				Observation View;
+				View.Slots = (Slot)std::atoi(F[1].c_str());
+				View.Rung = std::atoi(F[2].c_str());
+				A.Got = Reaction::Name(Reaction::Confront(&View, bResists));
+			}
+		}
+		else if ((Fn == "CataloguesYourCoat" || Fn == "IsPublicEvent") && F.size() >= 3)
+		{
+			Reaction::Lawful O = Reaction::Lawful::NothingToArrest;
+			bool bNamed = true;
+			if (F[1] == "Arrest") { O = Reaction::Lawful::Arrest; }
+			else if (F[1] == "ResistedArrest") { O = Reaction::Lawful::ResistedArrest; }
+			else if (F[1] != "NothingToArrest") { bNamed = false; }
+			// AN OUTCOME THE PORT DOES NOT HAVE IS A MISMATCH, NOT A SKIP. If
+			// the C# grows a fourth outcome, the table must say the port is
+			// behind rather than quietly answering for a value it never saw.
+			A.Known = true;
+			A.Got = bNamed ? FromBool(Fn == "CataloguesYourCoat"
+			                             ? Reaction::CataloguesYourCoat(O)
+			                             : Reaction::IsPublicEvent(O))
+			               : std::string("unknown-outcome/") + F[1];
+		}
+		else if (Fn == "ReactionConst" && F.size() >= 3)
+		{
+			A.Known = (F[1] == "ResistPressure");
+			if (A.Known) { A.Got = FromDouble(Reaction::ResistPressure); }
 		}
 		else if (Fn == "SymmetryPredictsSeen" && F.size() >= 7)
 		{

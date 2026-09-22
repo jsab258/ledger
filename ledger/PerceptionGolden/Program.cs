@@ -146,6 +146,46 @@ namespace Ledger.PerceptionGolden
             sb.Append(string.Join("|", parts)).Append('\n');
         }
 
+        /// THE ARREST, 22 September. ROADMAP's stage-3 gate: "arrest reachable
+        /// from live play, its callers outside Core counted and printed rather
+        /// than zero". The Unreal port had no arrest at all, so these rows are
+        /// what make a port of it checkable rather than merely written.
+        ///
+        /// EVERY INPUT CONFRONT READS, exhaustively where it is small: the slot
+        /// set (five of them, including one without the Actor slot and one with
+        /// every slot, so "Has(Actor)" is tested among other flags and not only
+        /// alone), every rung from 0 to 6 across the boundary at 4, both
+        /// answers to "does the player resist", and the constable who saw
+        /// nothing at all. Then the two predicates over every outcome, and the
+        /// one constant.
+        static void EmitArrest(StringBuilder sb)
+        {
+            var slotSets = new[] { Slot.None, Slot.Actor, Slot.Act | Slot.Victim,
+                                   Slot.Act | Slot.Actor | Slot.Victim,
+                                   Slot.Precursor | Slot.Draw | Slot.Act | Slot.Victim
+                                   | Slot.Actor | Slot.Flight | Slot.Aftermath };
+            foreach (var slots in slotSets)
+                for (int rung = 0; rung <= 6; rung++)
+                    foreach (var resists in new[] { false, true })
+                    {
+                        var view = new Observation { Slots = slots, Rung = rung };
+                        Row(sb, "Confront", ((int)slots).ToString(Inv), rung.ToString(Inv),
+                            Bit(resists), Reaction.Confront(view, resists).ToString());
+                    }
+            foreach (var resists in new[] { false, true })
+                Row(sb, "Confront", "null", "0", Bit(resists),
+                    Reaction.Confront(null, resists).ToString());
+
+            foreach (Reaction.Lawful outcome in Enum.GetValues(typeof(Reaction.Lawful)))
+            {
+                Row(sb, "CataloguesYourCoat", outcome.ToString(),
+                    Bit(Reaction.CataloguesYourCoat(outcome)));
+                Row(sb, "IsPublicEvent", outcome.ToString(),
+                    Bit(Reaction.IsPublicEvent(outcome)));
+            }
+            Row(sb, "ReactionConst", "ResistPressure", D(Reaction.ResistPressure));
+        }
+
         static void EmitCrimeSlice(StringBuilder sb)
         {
             // ---- Perception, the hearing half -------------------------
@@ -281,6 +321,7 @@ namespace Ledger.PerceptionGolden
             foreach (var c in sayCases)
                 Row(sb, "SaysWord", Esc(c[0]), Esc(c[1]), Bit(GossipMill.SaysWord(c[0], c[1])));
 
+            EmitArrest(sb);
             EmitScenarios(sb);
         }
 
