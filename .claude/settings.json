@@ -1,9 +1,4 @@
 {
-  "effortLevel": "xhigh",
-  "env": {
-    "CLAUDE_EFFORT": "max",
-    "MAX_THINKING_TOKENS": "31999"
-  },
   "permissions": {
     "allow": [
       "Bash(git fetch *)",
@@ -12,76 +7,8 @@
       "Bash(git push -u origin main*)",
       "Bash(dotnet run *)",
       "Bash(dotnet build *)",
-      "Bash(dotnet --version)",
-      "mcp__github__actions_list",
-      "mcp__github__get_job_logs",
-      "mcp__github__actions_get",
-      "mcp__github__actions_run_trigger",
-      "mcp__Claude_Code_Remote__send_later",
-      "mcp__Claude_Code_Remote__delete_trigger",
-      "mcp__Claude_Code_Remote__update_trigger"
-    ]
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "QUEUE_FILE=game-design/queue.md bash .claude/hooks/session-start.sh",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "VERIFY_FOOTER=ledger/.verify-footer bash .claude/hooks/verify-gate.sh",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "SubagentStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "AGENT_LOG=.claude/agent-log.tsv bash .claude/hooks/log-agent.sh",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "SubagentStop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash .claude/hooks/log-agent-stop.sh",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "WAKE_DIR=production/wakes bash .claude/hooks/wake-drain.sh",
-            "timeout": 15
-          }
-        ]
-      }
+      "Bash(dotnet test *)",
+      "Bash(dotnet --version)"
     ]
   }
 }

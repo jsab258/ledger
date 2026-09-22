@@ -241,7 +241,14 @@ OURS = {
     # CityPack pixels, both attributed on the other side of this file,
     # and a licensing row that understates what is in a picture is the
     # one kind of decayed claim this check exists to prevent.
-    "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run",
+    # MOVED 2026-09-22 when the studio was paused: this directory went to
+    # legacy/studio-v2/production/d1-probe with the rest of the dispatch
+    # machinery. The 65 renders under it are unchanged and are still ours;
+    # only the path moved, so the key moved with it rather than the row
+    # being deleted. Deleting it would have let 65 asset files fall out of
+    # the sweep's denominator silently, which is the failure this row exists
+    # to prevent.
+    "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
 }
 
 # File types that are content rather than code. A directory holding only text
