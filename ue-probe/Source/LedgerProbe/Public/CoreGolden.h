@@ -608,6 +608,98 @@ namespace Golden
 		Put(R, "rumors", FromInt((long long)Mill.Get("w1")->Rumors.size()));
 	}
 
+	// THE SAVE, AND IT IS THE MARKDOWN. Every row here answers one the C#
+	// emits in PerceptionGolden's own save_reload block; the two are written
+	// from the same fixtures on purpose, because a round trip proved against
+	// a fixture the port chose would prove only that the port agrees with
+	// itself.
+	inline void ScenarioSaveReload(Readings& R)
+	{
+		MemoryStore Before("w1");
+		Before.Beliefs.push_back("the man in the coat is not to be trusted");
+		Before.Beliefs.push_back("the Parade is quiet after six");
+		Before.Append(MemoryEvent(GameTime(2, 19, 40), "observation", 0.62,
+		                          "I saw him put the window in at the Parade"));
+		Before.Append(MemoryEvent(GameTime(2, 19, 45), "heard", 0.36096,
+		                          "the shopkeeper says his face is known if not his name"));
+		Before.Append(MemoryEvent(GameTime(3, 8, 5), "reflection", 0.125,
+		                          "  two lines\nbecome one  "));
+
+		MemoryStore After("w1");
+		After.LoadFrom(Before.ToMarkdown());
+
+		Put(R, "eventsAfter", FromInt((long long)After.Events.size()));
+		Put(R, "beliefsAfter", FromInt((long long)After.Beliefs.size()));
+		Put(R, "belief0", After.Beliefs.empty() ? std::string("none")
+		                                        : Escape(After.Beliefs[0]));
+		Put(R, "line0", LineOf(After, 0));
+		Put(R, "line1", LineOf(After, 1));
+		Put(R, "line2", LineOf(After, 2));
+		// THE ROUND TRIP IS NOT LOSSLESS AND THESE TWO ROWS SAY SO. ToLine
+		// renders importance at two decimals, so 0.36096 goes to the file as
+		// 0.36 and comes back as 0.36. That is the engine's behaviour, not a
+		// defect to repair here, and a port that "fixed" it would disagree
+		// with the C# on a rumour's confidence and nobody would see it.
+		Put(R, "importanceBefore", Before.Events.size() > 1
+		        ? FromDouble(Before.Events[1].Importance) : std::string("none"));
+		Put(R, "importanceAfter", After.Events.size() > 1
+		        ? FromDouble(After.Events[1].Importance) : std::string("none"));
+		Put(R, "markdownIsStable", FromBool(After.ToMarkdown() == Before.ToMarkdown()));
+		Put(R, "day0", After.Events.empty() ? std::string("none")
+		                                    : FromInt(After.Events[0].Time.Day));
+		Put(R, "hour0", After.Events.empty() ? std::string("none")
+		                                     : FromInt(After.Events[0].Time.Hour));
+		Put(R, "minute0", After.Events.empty() ? std::string("none")
+		                                       : FromInt(After.Events[0].Time.Minute));
+		Put(R, "text2", After.Events.size() > 2 ? Escape(After.Events[2].Text)
+		                                        : std::string("none"));
+
+		// REJECTING HALF: A FILE WITH RUBBISH IN IT STILL LOADS.
+		const std::string JunkFixtureText =
+			std::string("# Memory: w1\n\n## Beliefs" "\xC2\xA0" "\n")
+			+ "- kept\n"
+			+ "   - indented belief\n"
+			+ "not a belief line\n"
+			+ "\n## Events \n"
+			+ "- [D2 19:40] (0.62|observation) kept one\n"
+			+ "this is not an event line\n"
+			+ "- [D2 19:41 (0.62|observation) no closing bracket\n"
+			+ "- [D2 19:42] 0.62|observation) no opening paren\n"
+			+ "- [D2 19:43] (0.62|observation no closing paren\n"
+			+ "- [DX 19:44] (0.62|observation) bad time\n"
+			+ "- [D2 19:45] (notanumber|observation) bad importance\n"
+			+ "- [D2 19:46] (0.62|observation|extra) too many fields\n"
+			+ "- [D2 19:48] :) (0.62|observation) smiley\n"
+			+ "x [D2 19:49] (0.62|observation) no dash-bracket prefix\n"
+			+ "- [ D2 19:50] (0.62|observation) space before the D\n"
+			+ "- [D2 19:51] (NaN|heard) not a number but the C# takes it\n"
+			+ "- [D-2147483648 0:0] (0.5|heard) the smallest int there is\n"
+			+ "- [D2 19:47] (0.62|observation) kept two\n";
+		MemoryStore Junk("w1");
+		Junk.LoadFrom(JunkFixtureText);
+		Put(R, "junkEvents", FromInt((long long)Junk.Events.size()));
+		Put(R, "junkBeliefs", FromInt((long long)Junk.Beliefs.size()));
+		for (std::vector<MemoryEvent>::size_type I = 0; I < Junk.Events.size(); ++I)
+		{
+			Put(R, "junkKept" + FromInt((long long)I), Escape(Junk.Events[I].Text));
+			Put(R, "junkLine" + FromInt((long long)I), Escape(Junk.Events[I].ToLine()));
+		}
+		for (std::vector<std::string>::size_type I = 0; I < Junk.Beliefs.size(); ++I)
+		{
+			Put(R, "junkBelief" + FromInt((long long)I), Escape(Junk.Beliefs[I]));
+		}
+		// THE FIXTURE ITSELF IS A ROW, for the reason the C# block states: two
+		// fixtures that drift apart while both stay green are two different
+		// tests wearing one name.
+		Put(R, "junkFixture", Escape(JunkFixtureText));
+
+		MemoryStore Twice("w1");
+		Twice.LoadFrom(Before.ToMarkdown());
+		Twice.LoadFrom(Before.ToMarkdown());
+		Put(R, "loadTwiceEvents", FromInt((long long)Twice.Events.size()));
+		Put(R, "loadTwiceBeliefs", FromInt((long long)Twice.Beliefs.size()));
+	}
+
 	inline Readings Scenario(const std::string& Name)
 	{
 		Readings R;
@@ -625,6 +717,7 @@ namespace Golden
 		else if (Name == "observation_four")      ScenarioObservationFour(R);
 		else if (Name == "knowledge")             ScenarioKnowledge(R);
 		else if (Name == "summaries")             ScenarioSummaries(R);
+		else if (Name == "save_reload")           ScenarioSaveReload(R);
 		return R;
 	}
 
@@ -634,7 +727,8 @@ namespace Golden
 			"mem_basic", "mem_permanent", "gossip_crime", "gossip_dropped",
 			"gossip_contradiction", "gossip_exposure", "gossip_suppressed",
 			"gossip_leashed", "gossip_indelible", "gossip_indelible_floor",
-			"witness_upgrade", "observation_four", "knowledge", "summaries", 0
+			"witness_upgrade", "observation_four", "knowledge", "summaries",
+			"save_reload", 0
 		};
 		return Names[Index];
 	}
