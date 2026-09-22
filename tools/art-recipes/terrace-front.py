@@ -2953,6 +2953,73 @@ def _channel_gloss(nt, rough_mul, gain):
 
 
 
+def _mist(bpy, scene, night):
+    """The mist pass, mixed toward the sky. See the caller for why not fog.
+
+    IT SAYS WHAT IT DID, EITHER WAY. A build whose view layer has no mist
+    pass, or whose compositor will not take these nodes, leaves the street
+    exactly as flat as it was - and a flat street that looks deliberate is
+    the thing this recipe keeps refusing elsewhere, so it prints the reason.
+    """
+    try:
+        view = scene.view_layers[0]
+    except (IndexError, AttributeError):
+        print("tfNote mist=no-view-layer/the-far-end-stays-as-near-as-the-near-end")
+        return
+    if not hasattr(view, "use_pass_mist"):
+        print("tfNote mist=no-mist-pass-on-this-build/"
+              "the-far-end-stays-as-near-as-the-near-end")
+        return
+    view.use_pass_mist = True
+
+    # WHERE THE HAZE STARTS AND STOPS, off the street's own length. The
+    # blocks occupy 3 to 39 m and the camera stands at 33, so the far end of
+    # the parade is about 30 m away: haze that begins at 8 m and is fully in
+    # by 55 leaves the near shopfront clean, softens the middle distance and
+    # has somewhere left to go for the town when stage 6 builds one.
+    world = scene.world
+    if world is not None and hasattr(world, "mist_settings"):
+        world.mist_settings.use_mist = True
+        world.mist_settings.start = 8.0
+        world.mist_settings.depth = 55.0
+        world.mist_settings.falloff = "QUADRATIC"
+        world.mist_settings.intensity = 0.0
+
+    # A THIRD BY DAY AND MORE BY NIGHT, because the scene file's own figures
+    # keep that ratio - 0.1 against 0.45 - even though neither number is
+    # used as written. The RATIO is the part of the spec that survives a
+    # unit nobody can convert.
+    ceiling = 0.55 if night else 0.33
+    # AND THE COLOUR IT MIXES TOWARD IS THE SKY'S, because that is what
+    # aerial perspective IS: distant things take the colour of the air in
+    # front of them, which is the sky seen end-on.
+    haze = (0.55, 0.57, 0.60, 1.0) if not night else (0.06, 0.07, 0.10, 1.0)
+
+    scene.use_nodes = True
+    nt = scene.node_tree
+    for node in list(nt.nodes):
+        nt.nodes.remove(node)
+    rl = nt.nodes.new("CompositorNodeRLayers")
+    comp = nt.nodes.new("CompositorNodeComposite")
+    if "Mist" not in rl.outputs:
+        nt.links.new(rl.outputs["Image"], comp.inputs["Image"])
+        print("tfNote mist=pass-not-emitted-by-this-engine/"
+              "the-far-end-stays-as-near-as-the-near-end")
+        return
+    gain = nt.nodes.new("CompositorNodeMath")
+    gain.operation = "MULTIPLY"
+    gain.inputs[1].default_value = ceiling
+    nt.links.new(rl.outputs["Mist"], gain.inputs[0])
+    mix = nt.nodes.new("CompositorNodeMixRGB")
+    mix.blend_type = "MIX"
+    mix.inputs[2].default_value = haze
+    nt.links.new(gain.outputs["Value"], mix.inputs[0])
+    nt.links.new(rl.outputs["Image"], mix.inputs[1])
+    nt.links.new(mix.outputs["Image"], comp.inputs["Image"])
+    print("tfNote mist=on/start=8.0m/depth=55.0m/quadratic/ceiling=%.2f/"
+          "mixed-toward-the-sky-in-the-compositor/not-volumetrics" % ceiling)
+
+
 def _world(bpy, root):
     """Overcast, from the held HDRI where it is there, and a flat sky where it
     is not - announced either way, never silently flat."""
@@ -3192,16 +3259,45 @@ def build_and_render(args):
     # the eye and it, and the sheet's own town on the hill is pale and soft,
     # which is most of what says how far away it is.
     #
-    # A WORLD VOLUME SCATTER RENDERED PURE BLACK, twice: once at the scene
-    # file's own density and again with EEVEE's volumetric range opened to
-    # 120 m, its sample count raised and the density cut to a third. Mean
-    # frame brightness 0.1 out of 255 both times. Not pursued further here,
-    # because a second evening of fighting a renderer's volumetrics buys
-    # nothing the list is asking for - the gap is named in NOW.md and the two
-    # attempts are named here so the next one does not start from scratch.
+    # DEPTH BEYOND THIRTY METRES, ATTEMPT THREE, and it does not start from
+    # scratch.
+    #
+    # THE TWO THAT FAILED, kept because they are the reason this one is
+    # shaped differently: a world VOLUME SCATTER, once at the scene file's
+    # own density and again with EEVEE's volumetric range opened to 120 m,
+    # its sample count raised and its density cut to a third. Mean frame
+    # brightness 0.1 out of 255 both times - a black picture, not a hazy
+    # one. Fighting a renderer's volumetrics a third time would have been
+    # the same evening again.
+    #
+    # SO THIS IS NOT VOLUMETRICS AT ALL. It is a MIST pass mixed toward the
+    # sky in the compositor, and the reason to prefer it is not that it is
+    # easier: it is that it CANNOT produce the failure the other two did. A
+    # post-mix toward a pale colour has no path to black. The worst it can
+    # do is too much or too little haze, both of which are visible at a
+    # glance and adjustable by one number.
+    #
+    # WHAT IT IS FOR, MEASURED OFF THE SHEET rather than assumed. On the
+    # approved sheet the near brick reads mean 69.5 at saturation 0.442 and
+    # the far buildings read mean 100.0 at saturation 0.330: distance makes
+    # things PALER and LESS COLOURED, which is aerial perspective and is
+    # most of what says how far the eye is carrying. Ours had none at all -
+    # near and far brick came back at the same saturation, because nothing
+    # stood between the camera and the far end.
+    #
+    # THE OPACITY IS A RENDER CHOICE AND IS NAMED AS ONE. The scene file
+    # gives overcast_day a fog_max_opacity of 0.1, and that is a Unity
+    # figure with no defined conversion - the same thing this file already
+    # says about sky_intensity and about the lantern's watts. 0.1 of a mix
+    # is not visible; what matches the sheet's own falloff is nearer a
+    # third, so a third is what it takes, said out loud rather than
+    # smuggled in as the spec's number.
     #
     # WHAT THIS IS NOT: the missing TOWN past the end of the street. That is
-    # stage 6 and nothing here invents it.
+    # stage 6 and nothing here invents it. Our far end is still SKY rather
+    # than a hill with houses on it, and haze on an empty sky is haze on
+    # nothing; this softens the street we have.
+    _mist(bpy, scene, night)
     scene.render.engine = "BLENDER_EEVEE_NEXT"
     # RAYTRACING ON, AND IT IS THE REASON OUR WET STREET WAS NOT WET.
     #
