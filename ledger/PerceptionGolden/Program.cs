@@ -737,6 +737,105 @@ namespace Ledger.PerceptionGolden
                 Key(sb, "summaries", "sayingEmpty", mill.SummariesSaying("").ToString(Inv));
                 Key(sb, "summaries", "rumors", mill.Get("w1").Rumors.Count.ToString(Inv));
             }
+            {   // save_reload: a memory survives being written and read back.
+                //
+                // WHY THIS SCENARIO EXISTS. The crime encounter has to prove
+                // that what a witness knows survives a save, a restart and a
+                // reload. In this engine THE SAVE FORMAT IS THE MARKDOWN:
+                // SaveCodec's own summary says NPC memories persist separately
+                // as markdown and are not in the save file, and MemoryStore
+                // writes that markdown with ToMarkdown and reads the very same
+                // text back with LoadFrom. So the round trip pinned here IS
+                // the save, and the C++ port - which had no LoadFrom at all,
+                // because _filePath was always null there - must answer every
+                // row below the same way.
+                var before = new MemoryStore("w1");
+                before.Beliefs.Add("the man in the coat is not to be trusted");
+                before.Beliefs.Add("the Parade is quiet after six");
+                before.Append(new MemoryEvent(new GameTime(2, 19, 40), "observation", 0.62,
+                                              "I saw him put the window in at the Parade"));
+                before.Append(new MemoryEvent(new GameTime(2, 19, 45), "heard", 0.36096,
+                                              "the shopkeeper says his face is known if not his name"));
+                before.Append(new MemoryEvent(new GameTime(3, 8, 5), "reflection", 0.125,
+                                              "  two lines\nbecome one  "));
+
+                var after = new MemoryStore("w1");
+                after.LoadFrom(before.ToMarkdown());
+
+                Key(sb, "save_reload", "eventsAfter", after.Events.Count.ToString(Inv));
+                Key(sb, "save_reload", "beliefsAfter", after.Beliefs.Count.ToString(Inv));
+                Key(sb, "save_reload", "belief0", Esc(after.Beliefs[0]));
+                Key(sb, "save_reload", "line0", Esc(after.Events[0].ToLine()));
+                Key(sb, "save_reload", "line1", Esc(after.Events[1].ToLine()));
+                Key(sb, "save_reload", "line2", Esc(after.Events[2].ToLine()));
+                // THE ROUND TRIP IS NOT LOSSLESS AND THIS IS THE ROW THAT SAYS
+                // SO. ToLine renders importance at two decimals, so 0.36096
+                // goes to disk as 0.36 and comes back as 0.36. That is the
+                // engine's own behaviour rather than a defect to be fixed
+                // here, and pinning it is what stops a port "improving" it
+                // into a disagreement nobody would see until the two engines
+                // differed on a rumour's confidence.
+                Key(sb, "save_reload", "importanceBefore", D(before.Events[1].Importance));
+                Key(sb, "save_reload", "importanceAfter", D(after.Events[1].Importance));
+                Key(sb, "save_reload", "markdownIsStable",
+                    after.ToMarkdown() == before.ToMarkdown() ? "1" : "0");
+                // The clock survives the text.
+                Key(sb, "save_reload", "day0", after.Events[0].Time.Day.ToString(Inv));
+                Key(sb, "save_reload", "hour0", after.Events[0].Time.Hour.ToString(Inv));
+                Key(sb, "save_reload", "minute0", after.Events[0].Time.Minute.ToString(Inv));
+                Key(sb, "save_reload", "text2", Esc(after.Events[2].Text));
+
+                // REJECTING HALF: A FILE WITH RUBBISH IN IT STILL LOADS.
+                // A reload that throws on one malformed line loses the whole
+                // memory, which on this path means a witness who saw the crime
+                // forgets it because somebody hand-edited a file. Every bad
+                // line below is skipped and the two good ones survive.
+                var JunkFixtureText =
+                    "# Memory: w1\n\n## Beliefs\u00a0\n"
+                    + "- kept\n"
+                    + "   - indented belief\n"
+                    + "not a belief line\n"
+                    + "\n## Events \n"
+                    + "- [D2 19:40] (0.62|observation) kept one\n"
+                    + "this is not an event line\n"
+                    + "- [D2 19:41 (0.62|observation) no closing bracket\n"
+                    + "- [D2 19:42] 0.62|observation) no opening paren\n"
+                    + "- [D2 19:43] (0.62|observation no closing paren\n"
+                    + "- [DX 19:44] (0.62|observation) bad time\n"
+                    + "- [D2 19:45] (notanumber|observation) bad importance\n"
+                    + "- [D2 19:46] (0.62|observation|extra) too many fields\n"
+                    + "- [D2 19:48] :) (0.62|observation) smiley\n"
+                    + "x [D2 19:49] (0.62|observation) no dash-bracket prefix\n"
+                    + "- [ D2 19:50] (0.62|observation) space before the D\n"
+                    + "- [D2 19:51] (NaN|heard) not a number but the C# takes it\n"
+                    + "- [D-2147483648 0:0] (0.5|heard) the smallest int there is\n"
+                    + "- [D2 19:47] (0.62|observation) kept two\n";
+                var junk = new MemoryStore("w1");
+                junk.LoadFrom(JunkFixtureText);
+                Key(sb, "save_reload", "junkEvents", junk.Events.Count.ToString(Inv));
+                Key(sb, "save_reload", "junkBeliefs", junk.Beliefs.Count.ToString(Inv));
+                for (int i = 0; i < junk.Events.Count; i++)
+                    Key(sb, "save_reload", "junkKept" + i.ToString(Inv), Esc(junk.Events[i].Text));
+                for (int i = 0; i < junk.Events.Count; i++)
+                    Key(sb, "save_reload", "junkLine" + i.ToString(Inv), Esc(junk.Events[i].ToLine()));
+                for (int i = 0; i < junk.Beliefs.Count; i++)
+                    Key(sb, "save_reload", "junkBelief" + i.ToString(Inv), Esc(junk.Beliefs[i]));
+                // THE FIXTURE ITSELF IS A ROW. Both engines build this markdown
+                // from the same list of lines, and an outside reader pointed out
+                // that a hand-edit to a line which stays REJECTED on both sides
+                // would change the test without changing any reading - the two
+                // blocks could stop being the same test while staying green.
+                // Emitting the bytes makes that impossible: if the fixtures
+                // drift, this row mismatches before any behaviour does.
+                Key(sb, "save_reload", "junkFixture", Esc(JunkFixtureText));
+                // AND A RELOAD REPLACES RATHER THAN APPENDS, which is the
+                // difference between restoring a save and doubling it.
+                var twice = new MemoryStore("w1");
+                twice.LoadFrom(before.ToMarkdown());
+                twice.LoadFrom(before.ToMarkdown());
+                Key(sb, "save_reload", "loadTwiceEvents", twice.Events.Count.ToString(Inv));
+                Key(sb, "save_reload", "loadTwiceBeliefs", twice.Beliefs.Count.ToString(Inv));
+            }
             EmitObservationFour(sb);
         }
 

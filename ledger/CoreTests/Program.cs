@@ -21108,7 +21108,16 @@ namespace Ledger.CoreTests
             // is precisely the fault queue 205 repairs, because the
             // 3.0f it would fall back on was tuned against three fills
             // that no longer exist.
-            var live = File.ReadAllText(path);
+            // NORMALISED TO LF FIRST, 2026-09-22. The two Replace calls below
+            // cut a line out of the live file by matching ",\n", and this
+            // repository is checked out with core.autocrlf on Windows, so on
+            // Jafar's PC the bytes are ",\r\n", nothing is removed, and the
+            // whole Core suite fails on a fixture that never got built. It
+            // passed in CI the entire time, because the Linux checkout is LF:
+            // a test that can only run on one of the two machines the project
+            // uses is a test the other machine cannot be asked to run, and
+            // CLAUDE.md now asks for exactly that before a memory change.
+            var live = File.ReadAllText(path).Replace("\r\n", "\n");
             var noSun = live.Replace("\"sun_intensity\": 3.0,\n", "");
             Check(noSun.Length < live.Length,
                   "the rejecting fixture actually removed something, so the check below is not vacuous",
