@@ -565,6 +565,22 @@ AFTER HIS LIST, stage 3's gate from ROADMAP.md.
       retellings out). The independent check found eight faults in the first
       version; all fixed before the push.
 
+## 10. AFTER HIS LIST: stage 1 continued, the Hook match leading
+
+Extended from ROADMAP.md's stage 1 at 23:00 on 22 September, when the
+overnight list had only its Overnight section left. Visual first, as ruled.
+
+- [x] THE CENTRE LINE. On the new sheet, in R09, and named by the scene file
+      as the street's next step. Diagram 1008's own dimensions: 2 m marks,
+      4 m gaps, 100 mm, on the crown.
+- [ ] THE LIGHTING COLUMN'S SHAPE, the retired sheet's last geometry in the
+      street (retired-sheet-inheritance.md, row 4): look for a column on the
+      new sheet to trace; if it shows none, the shape stays with R07's
+      "plain bent-arm lighting" and the retired constants are marked so.
+- [ ] THE ROUTING INDEX'S CLAIMS (retired-sheet-inheritance.md, row 5):
+      GOVERNS.md's nine measured claims, each checked against the new sheet
+      and the photographs, and marked kept, changed or unverifiable.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It

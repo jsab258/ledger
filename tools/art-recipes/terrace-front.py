@@ -366,7 +366,10 @@ MATERIALS = (
     # 219/206/170 where ours read 179/156/91, an ochre stripe. Road paint
     # weathers pale long before it goes, and on a wet overcast road it reads
     # as a cream line. Scaled by the linear ratio of the two, per channel.
-    ("paint_yellow",(0.405, 0.331, 0.079), 0.55),   # was (0.260, 0.180, 0.020)
+    ("paint_yellow",(0.405, 0.331, 0.079), 0.55),
+    # THE CENTRE LINE'S WHITE, weathered as the yellows are: road paint on a
+    # working street is a dirty off-white, not the white of a new line.
+    ("paint_white", (0.520, 0.515, 0.490), 0.55),   # was (0.260, 0.180, 0.020)
     # THE VEHICLE. Car paint is the only genuinely SMOOTH surface on this
     # street - everything else is brick, stone, timber or tarmac - and that
     # is most of what makes a car read as one at twenty-five metres: it holds
@@ -583,6 +586,7 @@ SURFACE_OF = {
     "interior":     (None, 0.0),
     "prop_timber":  ("wood", 0.5),
     "paint_yellow": (None, 0.0),
+    "paint_white":  (None, 0.0),
     # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
     # plaster and timber are the wrong story for a pressed steel panel, and
     # its metal map is machined plate. A car at twenty-five metres is a
@@ -1742,6 +1746,25 @@ def plan_street(root, spec_rel=SPEC_REL):
             _box(out, "yellow_%s_%d" % (side, n), "paint_yellow", -2.0, 44.0,
                  min(a, b), max(a, b), 0.0, 0.012,
                  "100mm-band-100mm-apart/12mm-of-paint/0.25m-out-from-the-kerb-face")
+
+    # ---- the centre line, 22 September -----------------------------------
+    # THE NEW SHEET HAS ONE AND SO DOES R09 ("carriageway markings"), and the
+    # scene file already named it as this street's next step (A6, "a centre
+    # line ... a RUN along a path"). THE DIMENSIONS ARE THE REGULATION'S, not
+    # the sheet's: diagram 1008, the centre line for roads at 40 mph or less
+    # - 2 m marks, 4 m gaps, 100 mm wide on a two-lane road of 5.5 m or more,
+    # which a 6 m carriageway is. Read from the Traffic Signs Manual, Chapter
+    # 5, table 4-1; the 1990 figures are ASSUMED the same, which is written
+    # here rather than implied. 12 mm of paint on the crown, which stands
+    # `fall` above the channel.
+    CL_MARK, CL_GAP, CL_W = 2.0, 4.0, 0.10
+    xm, k = x0, 0
+    while xm + CL_MARK <= x1 + 1e-9:
+        _box(out, "centre_line_%d" % k, "paint_white", xm, xm + CL_MARK,
+             -CL_W / 2.0, CL_W / 2.0, fall - 0.004, fall + 0.008,
+             "diagram-1008/2m-mark-4m-gap/100mm/on-the-crown")
+        xm += CL_MARK + CL_GAP
+        k += 1
 
     # ---- the lit shop interiors ------------------------------------------
     # EVERY BLOCK THAT HAS SHOPS, ON ITS OWN SIDE OF THE ROAD, which this was
