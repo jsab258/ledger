@@ -564,7 +564,12 @@ SURFACE_OF = {
     # weigh. The pack holds no flag map (its `sidewalk` is mossy cobbles), so
     # the concrete map gives the stone its mottle and _flag_joints lays the
     # joints over it at a real flag's size.
-    "paving":       ("concrete", 1.2),
+    # AND THE PLASTER MAP, NOT THE CONCRETE, attempt two of the flags' stone:
+    # the concrete map has long streaks in it that read, at the footway's
+    # raking angle, as the boards of a wooden floor. The plaster map's
+    # mottle has no direction, and the flags' own tones and joints carry
+    # the structure.
+    "paving":       ("plaster", 1.2),
     "kerbstone":    ("kerb", 0.6),
     # roof_b, NOT roof: `roof` is terracotta pantile and averages a strong
     # orange, and this town is slated. `roof_b` is the slate.
@@ -4011,6 +4016,11 @@ WEARS = {"brick_red": True, "brick_grey": True, "paving": False,
 #: 10 mm that reads dark because it holds dirt and water.
 FLAG_W_M, FLAG_H_M, FLAG_JOINT_M = 0.90, 0.60, 0.012
 FLAG_JOINT_DARK = 0.45
+#: The two tones a flag is mixed between: one a little lifted, one a little
+#: cooler and darker. Their mean is 1.0 in every channel but blue's, which
+#: the greyer flags pull a touch toward the sheet's cooler far footway.
+FLAG_TONE_A = (1.16, 1.13, 1.08)
+FLAG_TONE_B = (0.84, 0.87, 0.93)
 
 
 #: THE STALLRISER TILE: 150 mm squares with 3 mm joints, each square
@@ -4141,8 +4151,26 @@ def _flag_joints(bpy, mats):
     mix.inputs["Factor"].default_value = 1.0
     nt.links.new(src, mix.inputs[6])
     nt.links.new(ramp.outputs["Result"], mix.inputs[7])
-    nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
-    print("tfNote flags=%.2fx%.2fm/stretcher-bond/joint-%.0fmm-at-x%.2f"
+    # AND EVERY FLAG ITS OWN STONE, 22 September. On the new sheet no two
+    # neighbouring flags are the same tone - some warmer, some greyer, the
+    # odd one a replacement - and that is most of what makes a footway read
+    # as laid stone rather than as one continuous surface with lines drawn
+    # on it, which is what ours did (the concrete map's streaks read as a
+    # boarded floor). The same Brick texture's per-brick colour does it:
+    # each flag takes a random mix between a slightly lifted and a slightly
+    # cooler, darker tone, averaging to 1.0 so the footway's measured value
+    # does not move.
+    brick.inputs["Color1"].default_value = FLAG_TONE_A + (1.0,)
+    brick.inputs["Color2"].default_value = FLAG_TONE_B + (1.0,)
+    brick.inputs["Mortar"].default_value = (1.0, 1.0, 1.0, 1.0)
+    tone = nt.nodes.new("ShaderNodeMix")
+    tone.data_type = "RGBA"
+    tone.blend_type = "MULTIPLY"
+    tone.inputs["Factor"].default_value = 1.0
+    nt.links.new(mix.outputs[2], tone.inputs[6])
+    nt.links.new(brick.outputs["Color"], tone.inputs[7])
+    nt.links.new(tone.outputs[2], bsdf.inputs["Base Color"])
+    print("tfNote flags=%.2fx%.2fm/stretcher-bond/joint-%.0fmm-at-x%.2f/per-flag-tone"
           % (FLAG_W_M, FLAG_H_M, FLAG_JOINT_M * 1000, FLAG_JOINT_DARK))
 
 
