@@ -295,7 +295,13 @@ def selftest():
     returning a plausible grey."""
     fails = []
     checks = 0
-    tmp = os.environ.get("TMPDIR", "/tmp")
+    # THE PLATFORM'S OWN SCRATCH DIRECTORY, not a typed "/tmp". That default
+    # only exists for Python on Linux; native Windows Python resolves it to a
+    # C:	mp that is not there, so this selftest passed or failed on this PC
+    # depending on whether the shell it was launched from happened to export
+    # TMPDIR - and after an app restart on 22 September, it did not.
+    import tempfile
+    tmp = tempfile.gettempdir()
 
     def eq(name, got, want, tol=0.0):
         nonlocal checks
