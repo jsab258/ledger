@@ -91,15 +91,42 @@ THRESHOLD_ABOVE_CROWN_M = 0.100
 #: file in this repository carries a triple for it. They are a low-chroma
 #: London-stock red and a soot-grey, which is what the period research asks
 #: for; the Hook sheet governs whether they are right and the eye decides.
+#: THE WHOLE PALETTE WAS SET AGAINST THE WRONG SHEET, and this is the
+#: correction. Every value below marked with a MEASURED line was re-read on
+#: 22 September off production/reference/hook-sheet.png - the approved
+#: in-house sheet - by taking the median of a region of its street panel and
+#: converting the display sRGB to linear. The numbers the recipe had were
+#: judged against Codex's retired sheet, which is a DARK, streaming, noir
+#: street; the approved one is flat overcast daylight, much higher key, and
+#: warm where ours is grey. Ours measured mean 74 against its 120, brightest
+#: five per cent 163 against 229, and warmth (R minus B) +0.7 against +18.5.
+#:
+#: A DISPLAY VALUE IS NOT AN ALBEDO and these are used as a first pass, not
+#: as a claim. Under the flat overcast sky this scene lights with, a diffuse
+#: surface renders at roughly its albedo, so the sheet's linear value is a
+#: fair starting albedo; what settles each one is sampling OUR OWN render and
+#: correcting, which is the loop the texture means already use. What is not
+#: in doubt is the SIZE of the gap - three times on the brick, eight on the
+#: slate, twenty-eight on the joinery - and no amount of tone mapping
+#: accounts for twenty-eight.
 MATERIALS = (
-    ("brick_red",   (0.085, 0.040, 0.030), 0.92),
+    # MEASURED: sheet 0.266, 0.078, 0.045, warmth +0.221. Ours was 0.085,
+    # 0.040, 0.030 - three times too dark and a quarter of the warmth. The
+    # LIGHTENING TOWARDS GREY made last sitting is reversed here: "a
+    # soot-darkened London stock is greyer and lighter than a red brick" is
+    # sound about a soot-darkened stock and the approved sheet's parade is
+    # not one. It is warm red brick and it is the warmest thing in the frame.
+    ("brick_red",   (0.230, 0.075, 0.046), 0.92),
     # LIGHTENED 2026-09-22 after the first render of the plain row, which came
     # back charcoal. A soot-darkened London stock is GREYER and LIGHTER than a
     # red brick in daylight, not darker; at the old value the west row read as
     # a black slab beside the parade and the only thing on it that carried was
     # the doors. The check below - nothing hides in the wall behind it - now
     # runs for this row too, which is what stopped the joinery following it up.
-    ("brick_grey",  (0.112, 0.110, 0.105), 0.92),
+    # The plain rows: a lighter, warmer stock than the parade's, because on
+    # the sheet the buildings away from the near corner are pale render and
+    # light brick rather than anything sooted.
+    ("brick_grey",  (0.150, 0.118, 0.095), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
@@ -111,8 +138,16 @@ MATERIALS = (
     # nearly black, because water fills the pores and what you then see is a
     # mirror of whatever is above it. The Hook sheet's own street panel is the
     # reference and its pavement is among the darkest things in the frame.
-    ("paving",      (0.048, 0.047, 0.045), 0.62),   # the footway
-    ("kerbstone",   (0.062, 0.060, 0.056), 0.58),   # the kerb, a shade lighter
+    # MEASURED: sheet 0.122, 0.080, 0.054, warmth +0.068 - a WARM BUFF
+    # stone, not a grey one. THIS REVERSES THE SECOND DECISION MADE AGAINST
+    # CODEX'S SHEET. The note that stood here said "a dry British footway is
+    # a mid grey and a WET one is nearly black... the Hook sheet's own street
+    # panel is the reference and its pavement is among the darkest things in
+    # the frame". The reasoning was fine and the sheet was the wrong one: on
+    # the approved sheet the pavement is among the LIGHTER things in the
+    # frame, at two and a half times what we had and warm with it.
+    ("paving",      (0.115, 0.082, 0.058), 0.62),   # the footway
+    ("kerbstone",   (0.105, 0.092, 0.078), 0.58),   # granite, greyer than the flags
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
     # glazing, the toplight and both doors one near-black tone, so a British
@@ -132,8 +167,23 @@ MATERIALS = (
     # through, and a British shopfront's joinery is dark oxblood or bottle
     # green read against that brightness. Same requirement - the frame
     # separates from the opening - arrived at from the other side.
-    ("paint_joinery",(0.026, 0.034, 0.029), 0.42),  # the shopfront's painted woodwork
-    ("paint_stall", (0.086, 0.104, 0.090), 0.50),   # the kicked board, lighter again
+    # MEASURED, AND THE BIGGEST SINGLE ERROR ON THE STREET: the sheet's sash
+    # bars and shopfront frames read 0.73 to 0.76 linear and ours was 0.026.
+    # TWENTY-EIGHT TIMES. White-painted joinery against red brick is the
+    # approved sheet's whole character - every window on it is a white grid -
+    # and we had near-black woodwork, which is most of the reason our frame
+    # has no highlights in it at all (brightest five per cent 163 against
+    # 229). It is not a subtlety; it is the thing the street is made of.
+    ("paint_joinery",(0.680, 0.672, 0.640), 0.42),  # WHITE, as the sheet is
+    # A DARK PAINTED BOARD, not a pale one, and the check above forced it.
+    # This was 0.086, 0.104, 0.090 - "lighter because it catches the sky",
+    # which is a judgement made against Codex's sheet. With the brick raised
+    # to its measured value the two came within seven thousandths of each
+    # other and the stallriser vanished into the wall. On the approved sheet
+    # the kicked board is the SHOP'S OWN COLOUR and the commonest of them is
+    # a deep oxblood, which is what this fallback now is; per-bay paint from
+    # FASCIA_PAINT overrides it on every bay that has one.
+    ("paint_stall", (0.060, 0.014, 0.018), 0.50),   # the kicked board, the shop's colour
     # THE SIDE DOOR IS A DIFFERENT PAINT, AND THE SECOND ATTEMPT HAD TO MOVE
     # IT. A warm brown was a plausible door colour and it was almost exactly
     # brick_red's own value, so the door vanished into the wall it sits in -
@@ -144,7 +194,9 @@ MATERIALS = (
     # the same wall wearing a different hue. Hue is not what carries at
     # distance; value is. This one sits at half the brick's, and the check
     # below holds it there.
-    ("paint_door",  (0.012, 0.030, 0.024), 0.42),   # the side door: a different paint
+    # The doors stay dark - on the sheet they are a deep teal and a deep red
+    # inside white surrounds - but not as dark as they were.
+    ("paint_door",  (0.030, 0.055, 0.048), 0.42),   # the side door: a different paint
     ("paint_fascia",(0.030, 0.022, 0.030), 0.45),   # the lettered board
     # THE GLASS WAS A BLACK WALL. At 0.012 it absorbed the lit interior behind
     # it and every shopfront on the row read as a boarded hole, which is the
@@ -153,8 +205,17 @@ MATERIALS = (
     # raised below, so the shop behind it carries.
     ("glass",       (0.055, 0.062, 0.068), 0.08),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
-    ("slate",       (0.026, 0.028, 0.032), 0.70),
-    ("asphalt",     (0.016, 0.016, 0.018), 0.85),   # the carriageway, dark
+    # MEASURED: sheet 0.220, 0.202, 0.195 - EIGHT TIMES what we had, and
+    # warm where ours was blue. A wet Welsh slate roof under an overcast sky
+    # is a mid grey that mirrors the sky, not a black one; ours read as a
+    # hole in the roofline.
+    ("slate",       (0.150, 0.140, 0.135), 0.70),
+    # The sheet's wet road reads 0.292 linear, but almost all of that is the
+    # SKY IN IT rather than the tarmac: a wet road is a mirror. So this is
+    # raised only to where a damp British carriageway actually sits and the
+    # rest is left to the reflection, which is what _wetten is for. Ours at
+    # 0.016, then darkened again for wetness, was reading as fresh tar.
+    ("asphalt",     (0.055, 0.054, 0.052), 0.85),   # the carriageway
     # PEOPLE ARE NOT SILHOUETTES IN DAYLIGHT. A silhouette is right for the
     # dusk frame and wrong for the working one: the sheet's own panel has a
     # teal jacket, an orange one and a white coat in it, and they are a good
@@ -171,7 +232,26 @@ MATERIALS = (
     # second opinion about the same yellow would put two yellows in one
     # project. Converted to linear here because that is what a Blender socket
     # holds, and nothing else about it is decided here.
-    ("paint_yellow",(0.571, 0.393, 0.027), 0.55),
+    # WORN, NOT FRESH. The approved sheet does carry double yellows, so they
+    # stay - but on it they are faded and nearly lost against the tarmac,
+    # while ours were the single brightest thing in the picture. Halved.
+    ("paint_yellow",(0.260, 0.180, 0.020), 0.55),
+    # THE VEHICLE. Car paint is the only genuinely SMOOTH surface on this
+    # street - everything else is brick, stone, timber or tarmac - and that
+    # is most of what makes a car read as one at twenty-five metres: it holds
+    # a highlight where nothing around it does. Dark, because the approved
+    # sheet's is dark.
+    ("car_dark",    (0.022, 0.024, 0.032), 0.26),
+    ("car_glass",   (0.010, 0.011, 0.014), 0.10),   # darker than shop glass
+    ("tyre",        (0.008, 0.008, 0.008), 0.88),
+    # THE YELLOW REAR PLATE IS THE STRONGEST PERIOD-BRITISH TELL IN THE FRAME
+    # and it costs one box. White front, yellow rear has been the law here
+    # since 1973, and it is a fact about British roads rather than a brand -
+    # so it carries none of the canon risk the bill of materials flags
+    # against a real car SHAPE.
+    ("plate_rear",  (0.480, 0.380, 0.035), 0.50),
+    ("plate_front", (0.560, 0.560, 0.540), 0.50),
+    ("lamp_red",    (0.160, 0.012, 0.010), 0.22),
     # The lit shop interior, emissive. Its colour and its strength are the
     # piece file's own window_practicals: gamma (1, 0.86, 0.62) at 1.6.
     ("interior_lit",(1.000, 0.714, 0.344), 0.90),
@@ -326,6 +406,16 @@ SURFACE_OF = {
     "steel_dark":   ("metal", 0.35),
     "interior":     (None, 0.0),
     "paint_yellow": (None, 0.0),
+    # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
+    # plaster and timber are the wrong story for a pressed steel panel, and
+    # its metal map is machined plate. A car at twenty-five metres is a
+    # shape, a value and a highlight.
+    "car_dark":     (None, 0.0),
+    "car_glass":    (None, 0.0),
+    "tyre":         (None, 0.0),
+    "plate_rear":   (None, 0.0),
+    "plate_front":  (None, 0.0),
+    "lamp_red":     (None, 0.0),
     "interior_lit": (None, 0.0),
     "figure":       (None, 0.0),
     "figure_c":     (None, 0.0),
@@ -346,12 +436,27 @@ SURFACE_OF = {
 #: the one bay with NO lettering and an awning instead, its right-hand console
 #: "clipped off and never put back... the parade's empty unit". A row where
 #: every shop is trading is a row nobody believes.
+#: CREAM WAS MISSING AND IT IS HALF THE PARADE. The spec's own list is
+#: "oxblood, bottle green, deep navy, CREAM OR STONE, and bare soot-darkened
+#: timber", and the first five bays were built from the four dark ones only -
+#: so every shopfront on the row was darker than the brick behind it and the
+#: parade read as one long shadow. The approved sheet has TWO pale fronts in
+#: five, and its cream one measures 0.630, 0.530, 0.325 linear: not an
+#: accent, one of the brightest things in the picture. Pulled back a little
+#: from the measurement because ours catches more sky than a shop under an
+#: awning does.
+#:
+#: STILL IN WAVES, which is the rule that matters here: two oxblood together,
+#: then cream, then the bare unit, then cream again, then the green. The
+#: cream wave running either side of the closed shop is the story the fascia
+#: package already tells - a parade repainted by whoever owned it, with one
+#: unit that nobody did.
 FASCIA_PAINT = (
     ("oxblood",    (0.078, 0.012, 0.014)),
     ("oxblood",    (0.078, 0.012, 0.014)),
-    ("deep_navy",  (0.013, 0.018, 0.042)),
+    ("cream",      (0.520, 0.430, 0.270)),
     ("bare_timber",(0.021, 0.014, 0.010)),
-    ("bottle_green",(0.010, 0.030, 0.019)),
+    ("cream",      (0.520, 0.430, 0.270)),
     ("bottle_green",(0.010, 0.030, 0.019)),
 )
 
@@ -1049,6 +1154,7 @@ def plan_street(root, spec_rel=SPEC_REL):
              "the-lit-back-of-the-shop/window_practicals.lit_bays-plus-the-two-that-trade")
 
     _figures(out)
+    _vehicles(out)
     lamps, lerr = lamp_parts(root)
     if lerr:
         # A STREET WITH NO LAMPS IN IT SAYS SO. The night frame is the one the
@@ -1117,6 +1223,146 @@ def _figures(out):
         _box(out, "figure_%d_head" % n, "figure", fx - head / 2.0, fx + head / 2.0,
              fy - head / 2.0, fy + head / 2.0, base + top - head, base + top,
              "crown-at-1.75m/eye-at-the-simulation's-own-1.6")
+
+
+#: WHY THERE IS A CAR AT ALL, AND WHY IT IS NOT A REAL ONE.
+#:
+#: THE APPROVED SHEET HAS ONE, and exactly one: a dark car parked well up the
+#: street on the left, small in the frame, with the road empty in front of
+#: it. AN EARLIER READING OF THIS PUT THREE AT THE KERB IN THE FOREGROUND
+#: and that was taken off Codex's retired sheet, which is a different street
+#: with a different amount of traffic in it. One, far off, is what the
+#: reference actually shows and it is also the cheaper thing to build.
+#:
+#: THE BILL OF MATERIALS ROUTES F4_parked_vehicle AS *FETCH*, and this recipe
+#: does not follow it. Its own note is the reason: "Largest quality risk on
+#: the list if included... canon also forbids real car models, so a
+#: recognisable real shape is a canon violation as well as a bar risk", and
+#: its certainty is NEEDS-CHECKING rather than HELD. What is held - the
+#: Kenney car kit and the OGA vehicles - is flat-colormap low-poly and
+#: several of them are American types, off the photoreal bar twice over. So
+#: this goes the way E1_lighting_column and E4_pillar_box already went on
+#: this street: the held mesh is wrong, so the thing is EMITTED from numbers.
+#: An invented shape cannot be a recognisable real car, so the canon problem
+#: is solved by construction rather than by inspection.
+#:
+#: THE NUMBERS ARE CLASS AVERAGES, NOT ONE MODEL'S. A 1990 British family
+#: hatchback runs 3.9 to 4.3 m long, 1.60 to 1.70 wide and 1.38 to 1.45 tall
+#: on a 2.5 m wheelbase, with 13-inch rims and 175/70 tyres giving a 0.578 m
+#: wheel. Sitting in the middle of that class is exactly what canon asks
+#: for: the shape is right for the period and belongs to nobody.
+#:
+#: THE PROFILE IS DRAWN FROM THE NOSE, (x back from the nose, z off the
+#: road), anticlockwise, and extruded across the car. The BODY and the
+#: GLASSHOUSE are separate extrusions at different widths, which is the one
+#: piece of shape that matters at this distance: a real car's glass is set in
+#: from its flanks, so the eye reads body, then a darker narrower band, then
+#: roof. Extrude one full-width profile instead and you get a wedge.
+CAR_L, CAR_W, CAR_GLASS_W = 4.12, 1.64, 1.46
+WHEEL_D, WHEEL_W = 0.578, 0.175
+#: 520 x 111 mm, the British plate since 1973.
+PLATE_W, PLATE_H = 0.520, 0.111
+
+HATCH_BODY = ((0.15, 0.30), (CAR_L - 0.15, 0.30), (CAR_L, 0.42), (CAR_L, 0.98),
+              (CAR_L - 0.08, 1.04), (1.05, 0.98), (1.00, 0.90), (0.12, 0.86),
+              (0.0, 0.70), (0.0, 0.44))
+HATCH_GLASS = ((1.06, 0.96), (CAR_L - 0.10, 0.96), (CAR_L - 0.58, 1.42),
+               (1.64, 1.42))
+CAR_ROOF_Z = 1.42
+
+#: (x of the car's centre, y of it, facing, paint). FACING IS +1 FOR NOSE
+#: TOWARDS THE CAMERA, which stands at x = 35.
+#:
+#: WHERE IT STANDS IS THE KERB AND NOT A CHOICE. The carriageway is 3.0 m
+#: each side of the centre, so a 1.64 m car parked a hand's width off the
+#: kerb face has its centre at 3.0 - 0.22 - 0.82 = 1.96 m. At x = 8 it is
+#: twenty-seven metres off, which is where the sheet's is.
+VEHICLE_AT = (
+    (8.0, -1.96, 1, "car_dark"),
+)
+
+
+def _prism(out, pid, material, profile, y0, y1, note=""):
+    """A closed (x, z) outline extruded across the street, as one mesh.
+
+    THE OUTLINE IS GIVEN NOSE-FIRST AND ANTICLOCKWISE, and both cap windings
+    below depend on that: the y0 cap keeps the order and the y1 cap reverses
+    it, which is what puts every normal outwards. A car with inverted normals
+    is not obviously wrong in a flat preview and is very obviously wrong the
+    moment anything specular lands on it.
+    """
+    n = len(profile)
+    verts = [(x, y0, z) for (x, z) in profile] + [(x, y1, z) for (x, z) in profile]
+    faces = [tuple(range(n)), tuple(reversed(range(n, 2 * n)))]
+    for i in range(n):
+        j = (i + 1) % n
+        faces.append((i, n + i, n + j, j))
+    out.append({"id": pid, "material": material, "kind": "mesh",
+                "verts": verts, "faces": faces, "note": note})
+
+
+def _wheel_profile(cx, cz, d):
+    """An octagon standing in for a wheel.
+
+    EIGHT SIDES RATHER THAN A BOX, and rather than thirty-two. A box wheel
+    reads as a box at any distance because its corners catch the light in a
+    way no tyre does; past about eight sides nothing is gained at
+    twenty-five metres and every extra one is paid for four times.
+    """
+    r = d / 2.0
+    return tuple((cx + r * math.cos(math.radians(22.5 + 45.0 * k)),
+                  cz + r * math.sin(math.radians(22.5 + 45.0 * k)))
+                 for k in range(8))
+
+
+def _vehicles(out):
+    """One at the kerb. See VEHICLE_AT for why it is there and why it is
+    nobody's car."""
+    L, half, gw = CAR_L, CAR_W / 2.0, CAR_GLASS_W / 2.0
+    for n, (cx, cy, facing, paint) in enumerate(VEHICLE_AT):
+
+        def place(profile, y0, y1, pid, material, note=""):
+            # NOSE-AT-ZERO INTO WORLD, and the reversal is not decoration.
+            # The outline is drawn from the nose and the car's own frame has
+            # the nose at +L/2, so x is reflected; a reflection alone would
+            # turn every face inside out, and reversing the point order
+            # restores the winding. Facing then turns the car with a proper
+            # 180-degree yaw - x AND y both negated - rather than mirroring
+            # it, because a mirrored car is one with its normals inverted
+            # and its driver on the wrong side.
+            local = tuple(reversed([(L / 2.0 - px, pz) for (px, pz) in profile]))
+            world = tuple((cx + facing * lx, lz) for (lx, lz) in local)
+            a, b = cy + facing * y0, cy + facing * y1
+            _prism(out, pid, material, world, min(a, b), max(a, b), note)
+
+        place(HATCH_BODY, -half, half, "veh%d_body" % n, paint,
+              "class-average-hatchback/not-a-model")
+        place(HATCH_GLASS, -gw, gw, "veh%d_glass" % n, "car_glass",
+              "set-in-from-the-flanks/body-then-glass-then-roof")
+        # THE ROOF CAP IS THE PALE BAND OVER THE DARK ONE. Without it the
+        # glasshouse runs into the sky and the car loses its lid.
+        place(((HATCH_GLASS[3][0], CAR_ROOF_Z), (HATCH_GLASS[2][0], CAR_ROOF_Z),
+               (HATCH_GLASS[2][0], CAR_ROOF_Z + 0.03), (HATCH_GLASS[3][0], CAR_ROOF_Z + 0.03)),
+              -gw - 0.02, gw + 0.02, "veh%d_roof" % n, paint, "the-lid")
+        for w, ax in enumerate((0.80, L - 0.78)):
+            for side, sy in (("n", half - 0.09), ("f", -half + 0.09)):
+                place(_wheel_profile(ax, WHEEL_D / 2.0, WHEEL_D),
+                      sy - WHEEL_W / 2.0, sy + WHEEL_W / 2.0,
+                      "veh%d_wheel_%d%s" % (n, w, side), "tyre", "13-inch-and-175/70")
+        # THE TAIL: two lamps at the outer corners and the yellow plate
+        # between them, which is the whole of what a British car of this
+        # period says about itself from behind.
+        for side, sy in (("n", half - 0.30), ("f", -half + 0.30)):
+            place(((L - 0.05, 0.62), (L + 0.01, 0.62), (L + 0.01, 0.88), (L - 0.05, 0.88)),
+                  sy - 0.11, sy + 0.11, "veh%d_lamp_%s" % (n, side), "lamp_red",
+                  "the-cluster-at-the-corner")
+        place(((L - 0.01, 0.46), (L + 0.02, 0.46), (L + 0.02, 0.46 + PLATE_H),
+               (L - 0.01, 0.46 + PLATE_H)),
+              -PLATE_W / 2.0, PLATE_W / 2.0, "veh%d_plate_rear" % n, "plate_rear",
+              "520x111/yellow-behind-and-white-in-front-since-1973")
+        place(((-0.02, 0.46), (0.01, 0.46), (0.01, 0.46 + PLATE_H), (-0.02, 0.46 + PLATE_H)),
+              -PLATE_W / 2.0, PLATE_W / 2.0, "veh%d_plate_front" % n, "plate_front",
+              "the-white-half-of-the-same-law")
 
 
 def plan_row(p, bays=None):
@@ -1258,8 +1504,21 @@ def plan_parts(p, bay=0, party_wall=True):
 
     # STALLRISER under the display run only. It stops at the shop door, which
     # is what a door is: a hole to the pavement.
-    _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
-         "0.6m-of-kicked-board-under-the-glass/lighter-because-it-catches-the-sky")
+    # THE STALLRISER IS THE SHOP'S OWN COLOUR, not a generic board, and that
+    # is what makes a parade a parade. On the approved sheet each shop is
+    # painted ONE colour from its fascia down through its pilasters to the
+    # kicked board, with WHITE joinery inside it - so the eye reads a row of
+    # distinct shops rather than one long frontage. Ours had every stallriser
+    # the same pale green-grey, which with the brick lifted to its measured
+    # value put it within seven thousandths of the wall behind it: the
+    # recipe's own "no painted part hides in the brick behind it" check
+    # caught that the moment the brick moved, which is the second time that
+    # check has earned its place.
+    stall_name, stall_rgb = FASCIA_PAINT[bay % len(FASCIA_PAINT)]
+    stall = _box(parts, "stallriser", "paint_stall", disp_x0, disp_x1, -sr_p, 0.0, 0.0, sr_h,
+                 "0.6m-of-kicked-board-under-the-glass/paint=" + stall_name)
+    stall["paint"] = stall_rgb
+    stall["paint_name"] = stall_name
     _box(parts, "display_glazing", "glass", disp_x0, disp_x1, rec, rec + 0.02, sr_h, tr_h,
          "recessed-so-the-frontage-is-not-one-plane")
 
@@ -1473,8 +1732,23 @@ def street_cameras():
     THAT IS THE FRAME STAGE 1 IS JUDGED ON and it is not one of mine.
     """
     eye = THRESHOLD_ABOVE_CROWN_M + 1.6
-    reach = 38.0
-    drop = reach * math.tan(math.radians(4.0))
+    # MEASURED OFF THE APPROVED SHEET, 22 September, and it is the opposite
+    # sign to what was here. cam_A's four degrees DOWN put our horizon 0.439
+    # of the way down the frame and gave the picture to the road; the sheet's
+    # own street panel puts its horizon at 0.55 - measured twice, off the
+    # figure on its left pavement whose eyes the horizon crosses, and off the
+    # share of the frame that is sky, 21.3 per cent against our 8.9. At a
+    # sixty degree vertical field the row is 0.5 - tan(p)/(2 tan 30), so 0.55
+    # is three degrees UP. Seven degrees of swing, and it is the difference
+    # between a photograph of a road and a photograph of a street.
+    #
+    # THE SCENE FILE'S cam_A IS NOT WRONG AND IS NOT WHAT THIS IS. cam_A is a
+    # camera the spec names; the hook camera is the one the PAIR is shot
+    # from, and the pair's whole job is to stand beside the sheet. Where the
+    # two disagree the sheet wins, because the sheet is the exit test.
+    HOOK_PITCH_DEG = -3.0
+    reach = 33.0
+    drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
     return {
         "hook": {
             # THE SHEET'S VIEWPOINT IS ON THE FAR PAVEMENT, NOT THE PARADE'S.
@@ -1513,7 +1787,16 @@ def street_cameras():
             # sheet's is nearer a metre and a half, which is also simply
             # where a person walks - nobody walks with their shoulder on the
             # brick.
-            "loc": (40.0, -3.6, eye),
+            # AND IT STANDS INSIDE THE ROW, WHICH IT NEVER ACTUALLY DID.
+            # The note above says "inside the street, not past the end of
+            # it" and then put the camera at x = 40 - and the blocks occupy
+            # 3.0 to 39.0, so it was standing a metre PAST the west row's
+            # end, looking at the blank gable its own note complains about.
+            # That gable was a third of the picture. Five metres back inside
+            # the row and the near-left is what the sheet's near-left is: a
+            # frontage seen at a sharp angle, with its windows and its
+            # doorway running away down the frame.
+            "loc": (35.0, -3.6, eye),
             "look": (2.0, -3.6, eye - drop),
             "fov_v_deg": 60.0,
             "note": "the-sheet's-own-viewpoint/1.6m-on-the-far-footway/4-degrees-down/"
@@ -1912,7 +2195,17 @@ def _wetten(mats, wetness):
     # then changes little, so the curve is bent to match what the reference
     # actually looks like at the figure the spec gives.
     w = wetness ** 0.55
-    darken = 1.0 - 0.52 * w
+    # DAMP, NOT STREAMING, and that is another thing the wrong sheet got
+    # wrong. Codex's street was running with water and everything in it was
+    # near-black, so the ground was darkened by more than half on top of
+    # albedos that were already three times too low - which is how our road
+    # ended up eighteen times darker than the reference's. The approved sheet
+    # is a flat overcast day after rain: its road reads 0.292 linear and its
+    # pavement 0.122, both LIGHTER than their dry albedo would suggest,
+    # because what a wet surface mostly shows is the sky. The GLOSS does that
+    # work and the roughness curve below is unchanged; only the darkening,
+    # which was fighting it, comes back.
+    darken = 1.0 - 0.28 * w
     for name in ("asphalt", "paving", "kerbstone"):
         mat = mats.get(name)
         if mat is None or not mat.use_nodes:
@@ -2519,6 +2812,52 @@ def selftest():
                   ",".join("%s(%.4f vs %.4f)" % (m, qlum[m], qwall) for m in sorted(qhidden)))
             check("accept/%s-every-piece-named-once" % other,
                   len(set(b["id"] for b in qrow)) == len(qrow))
+
+        # ---- THE CAR, and it is checked by its BOX rather than looked at.
+        # A profile extruded the wrong way round, or a facing that mirrors
+        # instead of yawing, does not look obviously wrong in a wireframe and
+        # is very obvious the moment light lands on it. Its measured extent
+        # is the thing that catches both: if the body does not come out
+        # 4.12 long, 1.64 across and standing on the road, something in the
+        # reflect-and-reverse above is wrong.
+        street, serr = plan_street(ROOT)
+        if serr:
+            check("accept/the-street-plans-with-a-car-in-it", False, serr)
+        else:
+            veh = [b for b in street if b["id"].startswith("veh0_")]
+            # ELEVEN: a body, a glasshouse, a roof cap, four wheels, two
+            # tail lamps and two plates. Counted rather than guessed at,
+            # because the first version of this check guessed twelve.
+            check("accept/the-street-has-a-car-in-it", len(veh) == 11,
+                  "%d piece(s)" % len(veh))
+            body = [b for b in veh if b["id"] == "veh0_body"]
+            check("accept/the-car-has-a-body", len(body) == 1)
+            if body:
+                vs = body[0]["verts"]
+                xs = [v[0] for v in vs]; ys = [v[1] for v in vs]; zs = [v[2] for v in vs]
+                check("accept/the-car-is-4.12m-long",
+                      abs((max(xs) - min(xs)) - CAR_L) < 0.01,
+                      "%.3f" % (max(xs) - min(xs)))
+                check("accept/the-car-is-1.64m-across",
+                      abs((max(ys) - min(ys)) - CAR_W) < 0.01,
+                      "%.3f" % (max(ys) - min(ys)))
+                # ON THE ROAD, NOT IN THE PAVEMENT AND NOT IN THE WALL. The
+                # carriageway is 3.0 m each side of the centre.
+                check("accept/the-car-is-on-the-carriageway",
+                      max(abs(min(ys)), abs(max(ys))) < 3.0,
+                      "%.3f..%.3f" % (min(ys), max(ys)))
+                check("accept/the-car-stands-on-the-road-not-in-it",
+                      min(zs) > 0.2 and max(zs) < 1.2,
+                      "%.3f..%.3f" % (min(zs), max(zs)))
+            wheels = [b for b in veh if "wheel" in b["id"]]
+            check("accept/the-car-has-four-wheels", len(wheels) == 4,
+                  "%d" % len(wheels))
+            # THE YELLOW PLATE, which is the period tell and the one part
+            # whose ABSENCE would not be noticed in a frame this small.
+            check("accept/the-car-carries-a-yellow-rear-plate",
+                  any(b["material"] == "plate_rear" for b in veh))
+            check("accept/and-a-white-front-one",
+                  any(b["material"] == "plate_front" for b in veh))
 
         checks = cross_check(p, ROOT)
         got = [c for c in checks if c[2] is not None]
