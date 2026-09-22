@@ -152,6 +152,7 @@ real_table() {
     attribution-selftest  "$REPO"                 "$PY tools/attribution-check.py --selftest" \
     canon-gate            "$REPO"                 "$PY tools/canon-gate.py --corpus" \
     canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
+    crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \
     sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
     sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \

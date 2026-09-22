@@ -1939,6 +1939,34 @@ jobs:
       # samples every 0.4 s, so the words sit on about seven frames, which
       # is 1.4 s of reading at 200 ms and 0.84 s at 120. Nothing gates on
       # this number and Jafar can move it on feel.
+      # SOMETHING FINALLY READS THE CRIME VERDICT.
+      #
+      # The verdict file has carried this sentence at its head since it was
+      # written: "no automated check anywhere reads these lines, so a run in
+      # which the input path was dead is committed and pushed GREEN. A human
+      # reading this file is the only thing that catches it today." That was
+      # true until now. The probe measures the crime in detail and nothing
+      # read what it measured, so the one failure that matters most - the key
+      # press silently stops working and the deed never happens - landed
+      # green and waited to be found by somebody scrolling a text file.
+      #
+      # IT READS THE PAIR, NOT THE POSITIVE HALF. A witness filed it AND an
+      # occluded one filed nothing; the rumour passed when the two stood
+      # together AND did not when they were nineteen metres apart. A
+      # perception change that makes everybody a witness passes every "did
+      # the witness see it" check ever written and fails this one.
+      #
+      # AND IT CHECKS THE FILE IS THIS RUN'S. A check that reads last week's
+      # verdict and reports green is worse than no check at all.
+      - name: Read the crime verdict and judge the run by it
+        if: always()
+        shell: bash
+        run: |
+          set -u
+          SHORT="$(git rev-parse HEAD | cut -c1-7)"
+          python tools/crime-verdict-check.py --selftest || exit 1
+          python tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
+
       - name: Stitch the crime sequence into a captioned clip
         id: crimeclip
         if: always()
