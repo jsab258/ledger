@@ -51,15 +51,28 @@ on:
       - 'ue-probe/**'
       - 'tools/ue/**'
       - '.github/workflows/ledger-probe-unreal.yml'
-      # THE SCENE SPECIFICATIONS AND THE BLENDER RECIPES, added 2026-09-22.
-      # The safeguard is meant to catch a change that breaks what stands on
-      # the street, and these two directories ARE that change: the vignette
-      # scene's pieces and dimensions live in production/specs/, and the
-      # geometry that reads them is built by tools/art-recipes/. A lamp
-      # rebuilt from new dimensions, or a scene file that gained a piece,
-      # would otherwise land with nothing rendering it.
+      # THE SCENE SPECIFICATIONS, added 2026-09-22. The safeguard is meant
+      # to catch a change that breaks what stands on the street, and the
+      # vignette scene's pieces and dimensions live here: a scene file that
+      # gained a piece would otherwise land with nothing rendering it.
       - 'production/specs/**'
-      - 'tools/art-recipes/**'
+      #
+      # AND THE BLENDER RECIPES ARE NOT HERE ANY MORE. `tools/art-recipes/**`
+      # was on this list from the same day and Jafar took it off on the
+      # evening of 2026-09-22, having watched what it cost: every push of a
+      # visual sitting touches a recipe, so every push started a forty-minute
+      # Unreal editor build, and under the PC rule as it then stood the next
+      # six-second Blender render waited for it. Most of a sitting went on
+      # that. His ruling, in his words: run the probe on the pushes that
+      # touch the Unreal project or the scene, and let the cheap checks carry
+      # every other push.
+      #
+      # THE ARGUMENT FOR KEEPING IT IS NOT WRONG, JUST OUTWEIGHED: a recipe
+      # builds the geometry the scene describes, so a recipe change CAN break
+      # what the probe renders. It is caught the next time anything under
+      # ue-probe or production/specs moves, and by the pair rendered here by
+      # hand after every visual change, which is a picture a person looks at
+      # rather than a job nobody reads.
       # AND THE SCRIPT THIS WORKFLOW'S OWN SECOND STEP CALLS. It was not
       # listed, so the day that file went missing nothing re-ran to find out,
       # and the day it came back the fix could not prove itself either. A

@@ -125,8 +125,17 @@ nothing.
 - [x] Memories survive a save and a reload, held by thirty-eight golden rows
       against the real C#, with four engine-versus-bench disagreements found
       and fixed.
-- [ ] The JSON half: the save's own format ported, so a rumour in flight
-      survives a restart the way a memory now does.
+- [x] THE JSON HALF IS PORTED. A memory's save format is the markdown, and
+      both engines already read it; a RUMOUR is not in that markdown - it
+      lives in the mill and goes into the save FILE as JSON under "agents",
+      a different format with a different parser, and the port could not
+      read a save at all. It can now, and thirty golden rows pin the state
+      the restore arrives at: how many rumours came back, at what
+      confidence and hop count, which topics stay suppressed, and the
+      agent's own numbers. Zero mismatches against the real C#.
+      THE SAVE'S OWN BYTES ARE ONE OF THE ROWS, because the port cannot
+      capture, only restore - a fixture the port wrote itself would prove
+      only that the port agrees with the port.
 - [ ] The witnessed run and the unwitnessed control, from equivalent clean
       starts, in the packaged build, with a save, a restart and a reload in
       between, and the control producing no mention.
