@@ -305,7 +305,7 @@ NECK_ARC_RADIUS_RATIO = 0.6
 #: KEPT FOR neck_arc() ONLY, which is itself kept for its own closed-form
 #: properties and selftest coverage (module docstring point 2B) and is
 #: UNUSED BY THE SHIPPED PATH as of 2026-09-21 (same day, second revision):
-#: neck_curve() calls neck_bracket() (near NECK_CORNER_RADIUS_RATIO) instead.
+#: neck_curve() calls neck_bracket() (near NECK_BEND_RADIUS_DIAMETERS) instead.
 #: Left in place, unchanged, rather than deleted, because deleting a
 #: working, still-true, still-tested closed-form utility to shrink a diff is
 #: not this file's own convention anywhere else in it.
@@ -357,39 +357,55 @@ SHEET_REF = {
     "confidence": "low-to-moderate/pole~is~2-3px~wide~at~native~res,~near~the~image's~own~floor",
 }
 
-#: THE SHIPPED CORNER RADIUS, 2026-09-21 (same day, second revision): see
-#: module docstring point 2B and neck_bracket()'s own docstring for the
-#: construction this feeds (a fixed 90-degree corner, then a level arm,
-#: then a dropper) and why it replaces NECK_ARC_RADIUS_RATIO's single
-#: continuous arc as what ships. R = ratio * outreach_m = 0.28 * 0.5 =
-#: 0.14 m: a tight corner (smaller than the old 0.6-ratio's 0.30 m radius),
-#: chosen so assembly_bbox()'s printed aspect lands near the sheet's own
-#: 2.27:1 (SHEET_REF["assembly_bbox_aspect"]), not read off the photo
-#: directly: no dimensioned drawing of the reference exists to read a
-#: radius from (rule 8), so this is a labelled choice bounded by that
-#: target and by external_dropper_m staying under lantern_width_m (checked
-#: every run by selftest, the same requirement NECK_ARC_RADIUS_RATIO's own
-#: comment named for the earlier construction), not a value the sheet
-#: itself yields.
-NECK_CORNER_RADIUS_RATIO = 0.28
+#: THE BEND RADIUS, IN THE TUBE'S OWN DIAMETERS, 2026-09-22.
+#:
+#: IT IS NO LONGER A FRACTION OF THE OUTREACH AND NO LONGER CHOSEN TO HIT A
+#: NUMBER TRACED OFF A PHOTOGRAPH. The previous radius was picked so the
+#: printed assembly aspect would land near 2.27:1, a figure read off the
+#: Hook sheet's own pixels; three traces of the same crop gave 2.27, 3.0 and
+#: 3.3 depending where the threshold fell, so the target could not hold
+#: still and a shape chosen to hit it was chosen to hit noise. The target
+#: and its tolerance are gone from this file with it.
+#:
+#: WHAT REPLACES IT IS A WRITTEN DIMENSION. The neck is a 0.0912 m steel
+#: tube (shaft_diameter_m * NECK_DIAMETER_RATIO, both from the spec), and a
+#: bend in it is specified in its own diameters: R = 1.0 * 0.0912 m.
+#:
+#: ONE DIAMETER RATHER THAN THE 1.5 THIS REVISION FIRST RENDERED, and the
+#: reason is geometry rather than taste. The bend has to hand the limb to
+#: the lantern's SPIGOT CORNER, which sits lantern_length_m/2 = 0.275 m
+#: back from the outreach, 0.225 m from the column's own axis. A bend that
+#: comes over the top and back down to the same height spans 2R
+#: horizontally, so any radius above 0.1125 m overshoots that corner and
+#: the tube has to cross the lantern's roof to reach it, with daylight
+#: under the crossing: an arch again, only smaller. The 1.5-diameter render
+#: is exactly that, and it is why this is the second attempt. At one
+#: diameter the bend spans 0.1824 m, lands short of the corner, and a
+#: 0.1 m raking limb closes the rest.
+#:
+#: THE NUMBER COMES FROM THE TUBE AND THE BOUND COMES FROM THE LANTERN, and
+#: both are in the spec, so there is nothing here to re-trace.
+#:
+#: THE GUARD IS GEOMETRIC, NOT AESTHETIC: see neck_bracket(), where no
+#: tangent leaving the bend reaches the spigot once 2R passes it.
+NECK_BEND_RADIUS_DIAMETERS = 1.0
 
-#: THE TARGET AND ITS TOLERANCE, printed every run (lcAssembly) beside the
-#: achieved aspect so the comparison is in the verdict, not only in a
-#: report: SHEET_REF["assembly_bbox_aspect"]'s own figure, 2.27, and a
-#: tolerance MEASURED from this session's own re-trace sensitivity, not
-#: assumed: reading the same crop with a stricter widen-threshold (9 rows,
-#: excluding the small ridge-top bump) instead of 11 gives 2.78, a 20.5
-#: percent swing from ONE row of difference at 11 px tall, which is near
-#: the image's own resolution floor (SHEET_REF["confidence"]). 25 is chosen
-#: to comfortably cover that observed swing rather than to look precise.
-#: Per D41 (2026-09-08): this is VISUAL, UNGATED work; the studio compares
-#: the rendered frame against the sheet and iterates. NOTHING in selftest
-#: asserts assembly_aspect is within this tolerance: it is printed, not
-#: gated, exactly the demotion the module docstring's point 2 already
-#: applied to the naive-quarter-circle comparison, and for the same reason
-#: (a gate whose baseline was never the reference is worse than no gate).
-ASSEMBLY_SHEET_TARGET_ASPECT = 2.27
-ASSEMBLY_ASPECT_TOLERANCE_PCT = 25.0
+#: THE SHEET-DERIVED ASPECT TARGET AND ITS TOLERANCE ARE GONE, 2026-09-22,
+#: by Jafar's instruction to finish this column from its WRITTEN DIMENSIONS.
+#: They were ASSEMBLY_SHEET_TARGET_ASPECT = 2.27 and a 25 percent tolerance
+#: around it, and the reason they had a 25 percent tolerance is the reason
+#: they are gone: the sheet's lamp is 25 pixels wide on a 4-pixel pole, and
+#: three traces of the same crop give 2.27, 3.0 and 3.3 depending where the
+#: threshold falls. A target that moves by a third under its own reader is
+#: not a target, and a shape authored to hit it is authored to hit noise.
+#:
+#: WHAT SURVIVES ANY THRESHOLD, and is therefore still printed, is the head
+#: measured in POLE DIAMETERS, the one length both images pin (canon's
+#: 0.114 m shaft). The sheet reads about 6.0 wide and 2.0 tall that way.
+#: Printed as a number beside the authored one, with NO verdict attached:
+#: the eye decides, which is what D41 said in the first place.
+ASSEMBLY_SHEET_POLE_DIAMETERS_WIDE = 6.0
+ASSEMBLY_SHEET_POLE_DIAMETERS_TALL = 2.0
 
 #: The lantern's total height (spec lantern.height_m) is split between a
 #: plain housing body and a shallow pitched canopy on top, so the OVERALL
@@ -746,74 +762,109 @@ def neck_arc(params, radius_ratio=NECK_ARC_RADIUS_RATIO):
     }
 
 
-def neck_bracket(params, radius_ratio=NECK_CORNER_RADIUS_RATIO, corner_segments=9):
-    """A dict describing the neck's TIGHT CORNER (a true quarter circle,
-    constant curvature, fixed at exactly 90 degrees so the LEVEL ARM that
-    follows is tangent-continuous with it: no visible kink at that joint),
-    the level arm itself, and the DROPPER that carries the arm's end down
-    to the exact spec-pinned lantern mount. REPLACES neck_arc() (kept
-    above, unused by the shipped path) as what ships, 2026-09-21 (same day,
-    second revision): see the module docstring's point 2B for why, and
-    NECK_CORNER_RADIUS_RATIO's own comment for the chosen radius.
+def neck_bracket(params, radius_diameters=NECK_BEND_RADIUS_DIAMETERS,
+                 corner_segments=12):
+    """A dict describing the neck as a KINK: one tight bend at the top of
+    the pole, swept PAST horizontal, and a single straight RAKING LIMB that
+    leaves the bend tangentially and lands on the lantern's own top face.
+    No level arm. No external dropper.
 
-    CLOSED FORM. The corner never needs to be solved for (unlike
-    neck_arc()'s, whose sweep is wherever the circle first reaches
-    outreach_m sideways): it is fixed at pi/2 by construction, so the
-    endpoint algebra is direct rather than inverse trigonometry:
+    WHY THIS SHAPE, 2026-09-22. The two previous constructions - a single
+    continuous arc, then a 90-degree corner with a level arm and a vertical
+    dropper under it - both rendered as ARCHES: a bare horizontal run held
+    up above the lantern with daylight between the two, and a rod coming
+    down at the far end. The Hook sheet's lamp encloses no sky at all in 39
+    traced rows; it is a bend at the top of the pole with the lantern
+    hanging off it. An arch and a kink are different objects, and no radius
+    turns one into the other while a level arm sits between them.
 
-        R = radius_ratio * outreach_m                        (corner radius)
-        corner: (0, mh) -> (R, mh+R), tangent rotates smoothly from
-            vertical to horizontal over the fixed sweep of pi/2
-        arm_length_m = outreach_m - R                         (must be > 0)
-        arm: level at z = mh+R, from x=R to x=outreach_m
-        dropper_length_m = (mh+R) - lantern_z = R + lantern_height_m/2
-        curvature = 1/R on the corner, exactly 0 on the arm and the dropper
+    CLOSED FORM, and the sweep is now solved rather than fixed at 90. The
+    bend must hand the limb over pointing at the lantern, so its sweep is
+    wherever the tangent aims at the landing point:
 
-    radius_ratio must keep R strictly inside (0, outreach_m) or the arm has
-    non-positive length; refused with ValueError rather than silently
-    clamped, so a future edit to this ratio fails loudly instead of quietly
-    shipping a shape that stopped reaching outreach_m (selftest exercises
-    both the accepting case, the shipped ratio, and a planted rejecting
-    case: reject/neck-bracket-refuses-radius-ratio-at-least-one).
+        R      = radius_diameters * neck_diameter_m       (from the tube)
+        bend   : (0, mh) -> centre (R, mh), P(t) = (R(1-cos t), mh+R sin t),
+                 tangent (sin t, cos t); t > pi/2 carries it over the top
+                 and back down, which is what makes this a kink
+        land   : (outreach_m, lantern_top_z), the lantern's own roof line
+        sweep  : A cos t + B sin t = -R, with A = outreach_m - R and
+                 B = mh - lantern_top_z, solved as
+                 t = atan2(B, A) + acos(-R / hypot(A, B))
+        limb   : straight, tangent-continuous with the bend, zero curvature
+        stub   : the last 0.1 m into the spec-pinned mount, entirely inside
+                 the housing; nothing of it is visible, which is the whole
+                 difference from the dropper it replaces
+
+    THE SPEC-PINNED POINTS DO NOT MOVE: the bend still starts at
+    mounting_height_m on the column's own axis and the lantern still hangs
+    from lantern_z. What moved is the shape between them.
+
+    R must stay under outreach_m / 2 or no tangent from the bend reaches
+    the landing point (the acos argument leaves [-1, 1]); refused with
+    ValueError rather than silently clamped, so a future edit fails loudly
+    instead of quietly shipping a neck that stopped reaching the lantern.
     """
     mh = params["mounting_height_m"]
     reach = params["outreach_m"]
     lantern_z = mh - params["lantern_height_m"] * 0.5
-    radius = radius_ratio * reach
-    if not (0.0 < radius < reach):
+    lantern_top_z = lantern_z + params["lantern_height_m"] * 0.5
+    # THE SPIGOT CORNER: where a real lantern takes its neck, at the BACK
+    # of the housing rather than under its middle. The lantern then
+    # projects outward from the bend the way the Hook sheet's does, and the
+    # silhouette runs pole - bend - limb - roof with nothing between them.
+    spigot_x = reach - params["lantern_length_m"] * 0.5
+    radius = radius_diameters * params["neck_diameter_m"]
+    a = spigot_x - radius
+    b = mh - lantern_top_z
+    span = math.hypot(a, b)
+    if not (0.0 < radius < span):
         raise ValueError(
-            "neck_bracket: radius_ratio=%.4f gives corner radius_m=%.4f, "
-            "not inside (0, outreach_m=%.4f); the arm would have "
-            "non-positive length" % (radius_ratio, radius, reach))
+            "neck_bracket: radius_diameters=%.4f gives bend radius_m=%.4f, "
+            "which no tangent from the bend can carry to the lantern's "
+            "spigot corner at x=%.4f m; the reachable bound is %.4f m"
+            % (radius_diameters, radius, spigot_x, span))
+    sweep = math.atan2(b, a) + math.acos(-radius / span)
     corner_points = []
     for i in range(corner_segments + 1):
-        t = (math.pi / 2.0) * i / float(corner_segments)
+        t = sweep * i / float(corner_segments)
         corner_points.append([radius * (1.0 - math.cos(t)), 0.0,
                               mh + radius * math.sin(t)])
-    arm_end_point = (reach, 0.0, mh + radius)
-    arm_length = reach - radius
-    dropper_length = (mh + radius) - lantern_z
-    tangent_at_arm_end = (1.0, 0.0, 0.0)     # exact: the arm is level, by
-                                              # construction, not measured
-    dropper_dir = (0.0, 0.0, -1.0)
-    joint_cos = max(-1.0, min(1.0, sum(a * b for a, b in
-                                       zip(tangent_at_arm_end, dropper_dir))))
+    bend_end = corner_points[-1]
+    limb_end_point = (spigot_x, 0.0, lantern_top_z)
+    limb_length = math.hypot(limb_end_point[0] - bend_end[0],
+                             limb_end_point[2] - bend_end[2])
+    stub_length = lantern_top_z - lantern_z
+    limb_dir = ((limb_end_point[0] - bend_end[0]) / limb_length,
+                0.0,
+                (limb_end_point[2] - bend_end[2]) / limb_length)
+    # THE BEND'S TANGENT WHERE IT HANDS OVER, ANALYTIC RATHER THAN A CHORD.
+    # The sampled polyline's last chord is half a segment off the true
+    # tangent, which at 12 segments over a 112-degree sweep is nearly five
+    # degrees: checking the limb against THAT would be checking the
+    # sampling rate, not the construction. This is the value the sweep was
+    # solved to make equal to limb_dir, and selftest compares the two.
+    bend_end_tangent = (math.sin(sweep), 0.0, math.cos(sweep))
+    stub_dir = (0.0, 0.0, -1.0)
+    joint_cos = max(-1.0, min(1.0, sum(x * y for x, y in
+                                       zip(limb_dir, stub_dir))))
     return {
-        "radius_m": radius, "radius_ratio": radius_ratio,
-        "corner_sweep_deg": 90.0,
+        "radius_m": radius, "radius_ratio": radius_diameters,
+        "corner_sweep_deg": math.degrees(sweep),
         "corner_points": corner_points,
-        "arc_portion_length_m": radius * (math.pi / 2.0),
+        "arc_portion_length_m": radius * sweep,
         "curvature_per_m": 1.0 / radius,
-        "arm_end_point": arm_end_point, "arm_length_m": arm_length,
-        # "dropper_start_point" is read by build_parts() (wear_lantern_drip),
-        # plan_lines() (externalDropper_m) and selftest() (the same check):
-        # the point the final straight vertical drop into the mount begins,
-        # exactly what neck_arc()'s own "arc_end_point" meant when that
-        # function's arc fed the dropper directly with no arm between them.
-        "dropper_start_point": arm_end_point,
-        "dropper_length_m": dropper_length,
+        # THE KEY NAMES SURVIVE THE SHAPE CHANGE so build_parts(),
+        # plan_lines() and selftest() keep reading one dict: "arm" is now
+        # the raking limb and "dropper" is the concealed stub. What the
+        # names used to promise - level, and visible - is checked against
+        # the new construction in selftest rather than assumed here.
+        "arm_end_point": limb_end_point, "arm_length_m": limb_length,
+        "arm_direction": limb_dir, "bend_end_tangent": bend_end_tangent,
+        "dropper_start_point": limb_end_point,
+        "dropper_length_m": stub_length,
         "joint_angle_deg": math.degrees(math.acos(joint_cos)),
         "mh": mh, "reach": reach, "lantern_z": lantern_z,
+        "lantern_top_z": lantern_top_z, "spigot_x": spigot_x,
     }
 
 
@@ -824,25 +875,28 @@ def assembly_bbox(params, neck):
 
         width_m  = outreach_m + lantern_length_m/2   (shaft top, x=0, to the
                     roof's own outer edge, which overhangs the housing)
-        height_m = neck["radius_m"] + lantern_height_m   (the corner/arm's
-                    own peak, mh+radius_m, down to the lantern's bottom,
-                    mh-lantern_height_m)
+        height_m = neck["radius_m"] + lantern_height_m   (the bend's own
+                    crest, mh+radius_m, which the sweep still passes
+                    through on its way over, down to the lantern's
+                    bottom, mh-lantern_height_m)
 
     Printed every run (lcAssembly) beside SHEET_REF["assembly_bbox_aspect"]
-    and ASSEMBLY_SHEET_TARGET_ASPECT so the comparison is in the verdict.
+    and, in pole diameters, the sheet's own reading, so the comparison is
+    in the verdict rather than only in a report.
     EXCLUDES the neck tube's own few-centimetre radius at the x=0 end (the
     neck is ~0.09 m across against a ~0.5-0.8 m assembly; folding it in
     would move the printed aspect by a few percent, not change the
     finding) and is a DIRECTIONAL figure, not a dimensioned one, for the
     same reason SHEET_REF's own confidence is rated low-to-moderate: see
-    ASSEMBLY_ASPECT_TOLERANCE_PCT.
+    ASSEMBLY_SHEET_POLE_DIAMETERS_WIDE, and the note beside it on why the
+    aspect target that used to live there was dropped.
     """
     width = params["outreach_m"] + params["lantern_length_m"] / 2.0
     height = neck["radius_m"] + params["lantern_height_m"]
     return width, height
 
 
-def neck_curve(params, radius_ratio=NECK_CORNER_RADIUS_RATIO, corner_segments=9):
+def neck_curve(params, radius_ratio=NECK_BEND_RADIUS_DIAMETERS, corner_segments=12):
     """neck_bracket()'s dict, plus "points" (the corner's own samples, then
     the arm's end, then the dropper's far end: one continuous list for
     _tube_verts) and "total_length_m" (corner arc length, plus arm length,
@@ -850,7 +904,8 @@ def neck_curve(params, radius_ratio=NECK_CORNER_RADIUS_RATIO, corner_segments=9)
     neck = neck_bracket(params, radius_ratio, corner_segments)
     points = [list(p) for p in neck["corner_points"]]
     points.append(list(neck["arm_end_point"]))
-    points.append([neck["reach"], 0.0, neck["lantern_z"]])
+    points.append([neck["spigot_x"], 0.0, neck["lantern_z"]])
+    # the last point is inside the housing at the spigot, seen by nobody
     neck["points"] = points
     neck["total_length_m"] = (neck["arc_portion_length_m"] + neck["arm_length_m"]
                               + neck["dropper_length_m"])
@@ -1242,15 +1297,15 @@ def plan_lines(plan):
     external_dropper_m = (neck["dropper_start_point"][2]
                           - plan["params"]["mounting_height_m"])
     lines.append(
-        "lcNeck cornerRadius_m=%.4f cornerRadiusRatio=%.2f cornerSweep_deg=%.2f "
-        "armLength_m=%.4f dropperLength_m=%.4f externalDropper_m=%.4f "
+        "lcNeck bendRadius_m=%.4f bendRadiusInTubeDiameters=%.2f bendSweep_deg=%.2f "
+        "rakingLimb_m=%.4f concealedStub_m=%.4f externalDropper_m=%.4f "
         "jointAngle_deg=%.2f "
         "authoredTotalLength_m=%.4f naiveQuarterArc_m=%.4f "
         "totalLongerThanNaive=%s totalRatio=%.4f "
         "cornerCurvature_perM=%.4f naiveQuarterCurvature_perM=%.4f "
         "shallowerThanNaive=%s curvatureRatio=%.4f "
         "naiveComparisonIsInformationalOnlyPer=2026-09-21-ruling "
-        "constructionPer=2026-09-21-corner-arm-dropper-revision"
+        "constructionPer=2026-09-22-kink-and-raking-limb"
         % (neck["radius_m"], neck["radius_ratio"], neck["corner_sweep_deg"],
            neck["arm_length_m"], neck["dropper_length_m"], external_dropper_m,
            neck["joint_angle_deg"],
@@ -1286,19 +1341,17 @@ def plan_lines(plan):
     # run beside the sheet's figure"). UNGATED per D41 (2026-09-08): visual
     # work, the studio compares the frame against the sheet and iterates;
     # no selftest check asserts withinTolerance=yes.
-    delta_pct = (100.0 * (plan["assembly_aspect"] - ASSEMBLY_SHEET_TARGET_ASPECT)
-                / ASSEMBLY_SHEET_TARGET_ASPECT)
-    within_tol = abs(delta_pct) <= ASSEMBLY_ASPECT_TOLERANCE_PCT
+    pole_d = plan["params"]["shaft_diameter_m"]
     lines.append(
         "lcAssembly widthM=%.4f heightM=%.4f aspect=%.3f "
-        "sheetTargetAspect=%.2f sheetTargetSource=%s "
-        "deltaPct=%.1f toleranceAppliedPct=%.0f withinTolerance=%s "
-        "toleranceBasis=own-remeasure-2026-09-21-9to11px-row-swing-2.27to2.78 "
-        "gate=none/D41-ungated-visual-comparison"
+        "widthInPoleDiameters=%.2f heightInPoleDiameters=%.2f "
+        "sheetReadsPoleDiametersWide=%.1f sheetReadsPoleDiametersTall=%.1f "
+        "sheetTarget=none/dropped-2026-09-22-it-would-not-hold-still "
+        "gate=none/D41-ungated-visual-comparison-the-eye-decides"
         % (plan["assembly_width_m"], plan["assembly_height_m"],
-           plan["assembly_aspect"], ASSEMBLY_SHEET_TARGET_ASPECT,
-           SHEET_REF["source"], delta_pct, ASSEMBLY_ASPECT_TOLERANCE_PCT,
-           "yes" if within_tol else "no"))
+           plan["assembly_aspect"],
+           plan["assembly_width_m"] / pole_d, plan["assembly_height_m"] / pole_d,
+           ASSEMBLY_SHEET_POLE_DIAMETERS_WIDE, ASSEMBLY_SHEET_POLE_DIAMETERS_TALL))
     for p in plan["parts"]:
         lines.append(
             "lcPart id=%s kind=%s material=%s verts=%d faces=%d area_m2=%.5f "
@@ -1734,10 +1787,29 @@ def selftest(root):
               "point 2" % (naive_len, naive_curv))
         check("accept/neck-starts-exactly-at-shaft-top",
               neck["points"][0] == [0.0, 0.0, params["mounting_height_m"]])
-        check("accept/neck-ends-exactly-at-spec-lantern-mount",
-              abs(neck["points"][-1][0] - params["outreach_m"]) < 1e-9 and
+        # THE NECK ENDS AT THE SPEC-PINNED MOUNT HEIGHT, INSIDE THE LANTERN.
+        #
+        # REWRITTEN 2026-09-22, and the change is narrow enough to say
+        # exactly. It used to require the neck's last point to be at
+        # outreach_m as well - under the lantern's MIDDLE - which is what
+        # forced a dropper down the middle of the housing and, above it, a
+        # level arm to carry the tube out there. A real lantern takes its
+        # neck at the back, so the tube now ends at the spigot corner. The
+        # HEIGHT is unchanged and still checked to the micron, because that
+        # is the number the spec pins and the blockout shares; what is no
+        # longer asserted is the x, and in its place the end is required to
+        # be INSIDE the lantern's own footprint, which is what stops the
+        # tube ending in mid-air the day somebody edits the landing.
+        lantern_near_x = params["outreach_m"] - params["lantern_length_m"] * 0.5
+        lantern_far_x = params["outreach_m"] + params["lantern_length_m"] * 0.5
+        check("accept/neck-ends-at-the-spec-mount-height",
               abs(neck["points"][-1][2] - (params["mounting_height_m"]
-                                           - params["lantern_height_m"] * 0.5)) < 1e-9)
+                                           - params["lantern_height_m"] * 0.5)) < 1e-9,
+              "end.z=%.9f" % neck["points"][-1][2])
+        check("accept/neck-ends-inside-the-lantern-footprint",
+              lantern_near_x - 1e-9 <= neck["points"][-1][0] <= lantern_far_x + 1e-9,
+              "end.x=%.4f in [%.4f, %.4f]"
+              % (neck["points"][-1][0], lantern_near_x, lantern_far_x))
         # THE GATE THAT REPLACES IT, tied to a spec-derived scale rather than
         # to a baseline the sheet never supported: the EXTERNAL dropper (the
         # part of the straight run above the lantern housing's own top,
@@ -1750,12 +1822,20 @@ def selftest(root):
         # run above the housing IS the corner's radius); NECK_CORNER_RADIUS_
         # RATIO's own comment explains why this is a requirement the shipped
         # ratio is chosen to clear, not an arbitrary bound.
+        # THERE IS NO EXTERNAL DROPPER AT ALL, 2026-09-22, and this check
+        # is the bound rather than a looser one it used to be. The old
+        # requirement was "shorter than the lantern is wide", which a
+        # 0.14 m visible rod comfortably satisfied while reading exactly
+        # as the thing the Hook sheet does not show. The limb now lands on
+        # the lantern's own roof line, so the run above the housing is
+        # zero: the only straight tube below the bend is the concealed
+        # stub inside it. Measured on the sampled geometry, not asserted
+        # from the construction.
         external_dropper_m = (neck["dropper_start_point"][2]
                               - params["mounting_height_m"])
-        check("accept/external-dropper-shorter-than-lantern-width",
-              0.0 <= external_dropper_m < params["lantern_width_m"],
-              "%.4f m vs lantern_width_m=%.4f m"
-              % (external_dropper_m, params["lantern_width_m"]))
+        check("accept/no-external-dropper-above-the-housing",
+              abs(external_dropper_m) < 1e-9,
+              "%.9f m above mounting_height_m" % external_dropper_m)
         # CONSTANT CURVATURE, VERIFIED ON THE ACTUAL SAMPLED POINTS rather
         # than trusted from the formula that generated them: every point on
         # the CORNER (the arm and dropper are straight, zero curvature, and
@@ -1773,17 +1853,36 @@ def selftest(root):
         # 2B, lcAssembly) rests on, so it is checked here, not only implied
         # by neck_bracket()'s own math.
         corner_end_z = neck["corner_points"][-1][2]
-        check("accept/neck-arm-is-level",
-              abs(neck["arm_end_point"][2] - corner_end_z) < 1e-9,
-              "armEnd.z=%.6f vs corner's own last sample.z=%.6f"
+        # THE LIMB RAKES DOWN AND IS TANGENT TO THE BEND. Both replace
+        # "the arm is level", which is the property that made the old neck
+        # an arch: a level run has to be held up above the lantern and the
+        # daylight under it is the arch. Checked on the sampled points, so
+        # a regression in the sweep solution shows here rather than in a
+        # frame nobody looks at twice.
+        check("accept/neck-limb-rakes-down-from-the-bend",
+              neck["arm_end_point"][2] < corner_end_z - 1e-9,
+              "limbEnd.z=%.6f vs bend's own last sample.z=%.6f"
               % (neck["arm_end_point"][2], corner_end_z))
-        check("accept/neck-dropper-is-vertical",
+        tangent = neck["bend_end_tangent"]
+        limb = neck["arm_direction"]
+        cross = abs(tangent[0] * limb[2] - tangent[2] * limb[0])
+        check("accept/neck-limb-leaves-the-bend-tangentially",
+              cross < 1e-9,
+              "sin(angle between the bend's own tangent and the limb)=%.12f" % cross)
+        check("accept/neck-limb-lands-on-the-lantern-roof-line",
+              abs(neck["arm_end_point"][2] - neck["lantern_top_z"]) < 1e-9,
+              "limbEnd.z=%.6f vs lantern_top_z=%.6f"
+              % (neck["arm_end_point"][2], neck["lantern_top_z"]))
+        check("accept/neck-stub-into-the-mount-is-vertical",
               abs(neck["points"][-1][0] - neck["arm_end_point"][0]) < 1e-9,
-              "dropperEnd.x=%.6f vs armEnd.x=%.6f"
+              "stubEnd.x=%.6f vs limbEnd.x=%.6f"
               % (neck["points"][-1][0], neck["arm_end_point"][0]))
-        check("accept/neck-joint-is-a-right-angle-arm-to-dropper",
-              abs(neck["joint_angle_deg"] - 90.0) < 1e-6,
-              "%.6f" % neck["joint_angle_deg"])
+        # AND THE TURN INTO THE STUB IS GENTLER THAN THE RIGHT ANGLE THE
+        # LEVEL ARM FORCED. It is not zero - the stub is vertical and the
+        # limb is not - but it is inside the housing where nothing sees it.
+        check("accept/neck-joint-is-gentler-than-a-right-angle",
+              0.0 < neck["joint_angle_deg"] < 90.0,
+              "%.4f degrees" % neck["joint_angle_deg"])
         # THE ASSEMBLY ASPECT ITSELF IS PRINTED, NOT GATED (D41, 2026-09-08:
         # visual work, ungated, the studio compares and iterates), so only
         # its ARITHMETIC is checked here, not its proximity to the sheet.
@@ -1791,25 +1890,25 @@ def selftest(root):
         check("accept/assembly-width-is-reach-plus-half-lantern-length",
               abs(aw - (params["outreach_m"] + params["lantern_length_m"] / 2.0))
               < 1e-9)
-        check("accept/assembly-height-is-corner-radius-plus-lantern-height",
+        check("accept/assembly-height-is-bend-radius-plus-lantern-height",
               abs(ah - (neck["radius_m"] + params["lantern_height_m"])) < 1e-9)
-        # THE GUARD ON radius_ratio, TESTED ON BOTH THE CASE IT SHOULD PASS
-        # AND A PLANTED CASE IT MUST REFUSE (instruments.md 5b): a ratio
-        # that puts the corner radius at or past outreach_m, where the arm's
-        # length would be zero or negative, must raise.
+        # THE BEND RADIUS IS IN TUBE DIAMETERS NOW, and its guard is
+        # geometric: past outreach_m/2 no tangent leaving the bend can
+        # reach the lantern at all. Both halves tested (instruments.md 5b),
+        # the shipped value and a planted oversized one.
         try:
-            neck_bracket(params, radius_ratio=NECK_CORNER_RADIUS_RATIO)
+            neck_bracket(params, radius_diameters=NECK_BEND_RADIUS_DIAMETERS)
             guard_accepts_shipped = True
         except ValueError:
             guard_accepts_shipped = False
-        check("accept/neck-bracket-accepts-the-shipped-radius-ratio",
+        check("accept/neck-bracket-accepts-the-shipped-bend-radius",
               guard_accepts_shipped)
         try:
-            neck_bracket(params, radius_ratio=1.2)
+            neck_bracket(params, radius_diameters=4.0)
             guard_rejected_oversized = False
         except ValueError:
             guard_rejected_oversized = True
-        check("reject/neck-bracket-refuses-radius-ratio-at-least-one",
+        check("reject/neck-bracket-refuses-a-bend-the-limb-cannot-leave",
               guard_rejected_oversized)
 
         # THE CLOSED-FORM PROOF, exercised over a RANGE of radius ratios that
