@@ -644,6 +644,11 @@ overnight list had only its Overnight section left. Visual first, as ruled.
 - [x] THE RANK'S SALOONS get bumpers and hubs; their body shape is still the
       stand-in's and is left for the car's own modelling pass.
 
+- [x] GRIME FOLLOWS WATER PATHS, the town form bible's rule: rain streaks down
+      from each wall head, in the wear layer, gone by the first-floor sills.
+      Subtle at the hook camera's range; the layer is separable and its
+      three numbers are named for tuning.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
