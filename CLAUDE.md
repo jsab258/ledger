@@ -9,12 +9,14 @@ What governs: canon.md for the world and the content rules; DECISIONS.md for wha
 - He is not a programmer. Plain words, short, the way you would explain it to someone standing next to you.
 - No file paths, commit hashes, flags, variable names or tool output unless he asks for them.
 - When a piece of work is finished, tell him in three lines: what changed; what it looks like, with the picture; what you would do next.
-- If a decision is needed, ONE question with your recommendation in it.
+- ANYTHING HE HAS TO DECIDE COMES AS A MULTIPLE-CHOICE QUESTION with your recommendation marked, never as a sentence inside a longer reply.
+- ANYTHING HE HAS TO KNOW OR DO GOES AT THE VERY TOP OF THE REPLY, in one line, before anything else: a stopped service, a step only he can take on the PC, a change of plan, a result that changes what comes next. If it is not at the top or in a question, he will not see it, and that is your fault and not his.
 - If you got something wrong, one sentence, then move on.
 
 ## How to work
 
 - The next visible outcome is named in NOW.md. Work toward it and nothing else.
+- THE HOOK MATCH LEADS. Ruled by Jafar 2026-09-22, explicitly and as a change of order: visual work toward the Hook sheet comes FIRST in a sitting, and the crime, the simulation and the memory work follow it. A sitting that spends its hours on the machinery and reaches the look last is a sitting that never reaches the look.
 - Visual work is edit, render, look, iterate, here, in minutes. Commit accepted work with its frame. An asset gets two attempts against its reference before it is finished from dimensions or set aside with a note. References are dimensioned drawings where they exist; a concept sheet governs look, not geometry.
 - Core work, anything under the simulation or its port, keeps its tests. A change to perception, memory or gossip runs CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, and adds a regression test. The C++ port must still match the C# golden table, and the table is REGENERATED from the C# Core for that comparison rather than read as committed — a table nobody regenerates is a table that quietly stops describing the game.
 - A change to perception, memory or gossip also gets ONE INDEPENDENT CHECK before it is committed: a subagent that has not seen your reasoning is handed the change, its test, canon and the intended behaviour IN PLAIN WORDS, and told to break it. The intended behaviour travels with it because a wrong change can pass an equally wrong test. Simulation only, never visual work.
