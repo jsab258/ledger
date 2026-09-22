@@ -14,7 +14,8 @@ left. The approved sheet was made to match the Blender pictures, so it shows
 the street the other way round from how the game will. The research drawing
 of Mickey's agrees with the game engine. Nothing is broken today: the
 materials, windows and colours carry over either way. But it decides which
-way round the street really is.
+way round the street really is. A side-by-side picture of the two, labelled,
+is saved with tonight's street comparisons.
 
   (a) **The game engine's way is the true one — recommended.** Keep the
       approved sheet, and compare against it flipped when the look moves
