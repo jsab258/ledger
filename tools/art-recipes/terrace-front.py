@@ -145,6 +145,16 @@ MATERIALS = (
     ("slate",       (0.026, 0.028, 0.032), 0.70),
     ("asphalt",     (0.016, 0.016, 0.018), 0.85),   # the carriageway, dark
     ("figure",      (0.014, 0.014, 0.016), 0.80),   # a person, read as a silhouette
+    # THE YELLOW IS NOT MINE AND NOT NEW. The scene file carries it as gamma
+    # sRGB (0.78, 0.66, 0.18) and says where it came from: the game's own
+    # Furniture.cs, which has been painting the town's kerbs since M17.10. A
+    # second opinion about the same yellow would put two yellows in one
+    # project. Converted to linear here because that is what a Blender socket
+    # holds, and nothing else about it is decided here.
+    ("paint_yellow",(0.571, 0.393, 0.027), 0.55),
+    # The lit shop interior, emissive. Its colour and its strength are the
+    # piece file's own window_practicals: gamma (1, 0.86, 0.62) at 1.6.
+    ("interior_lit",(1.000, 0.714, 0.344), 0.90),
     # THE LAMP'S OWN THREE, copied from tools/art-recipes/lighting-column.py's
     # MATERIALS rather than chosen again here, so the column in the street is
     # the column that was accepted. lens_amber is the spec's own sodium
@@ -288,6 +298,8 @@ SURFACE_OF = {
     "lead":         ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
     "interior":     (None, 0.0),
+    "paint_yellow": (None, 0.0),
+    "interior_lit": (None, 0.0),
     "figure":       (None, 0.0),
     "grime":        (None, 0.0),
     "lens_amber":   (None, 0.0),
@@ -974,6 +986,32 @@ def plan_street(root, spec_rel=SPEC_REL):
         c, d = sgn * (half + kerb_w), sgn * STREET_FRONTAGE_M
         _box(out, "footway_%s" % name, "paving", x0, x1, min(c, d), max(c, d),
              -0.30, THRESHOLD_ABOVE_CROWN_M, "2.0m/the-normal-British-footway")
+    # ---- the double yellow lines, MEASURED off the emitted piece list -----
+    # Two 0.1 m bands 0.1 m apart, 12 mm of paint, running the street's whole
+    # length at 2.5 and 2.7 m from the centre - which is 0.25 m out from the
+    # kerb face, the figure the scene file gives. Read from the pieces rather
+    # than re-derived, because the built street already has them and a second
+    # arithmetic would be a second street.
+    for sgn, side in ((1.0, "east"), (-1.0, "west")):
+        for n, across in enumerate((2.5, 2.7)):
+            a, b = sgn * across, sgn * (across + 0.1)
+            _box(out, "yellow_%s_%d" % (side, n), "paint_yellow", -2.0, 44.0,
+                 min(a, b), max(a, b), 0.0, 0.012,
+                 "100mm-band-100mm-apart/12mm-of-paint/0.25m-out-from-the-kerb-face")
+
+    # ---- the lit shop interiors ------------------------------------------
+    # AT BAYS 0, 2 AND 5, which is window_practicals.lit_bays in the piece
+    # file and not a choice made here. A card 1.2 m behind the frontage, the
+    # depth the shopfront block gives, lit at the file's own colour.
+    q, _e2 = load_spec(root, spec_rel, "east_parade")
+    for bay in (0, 2, 5):
+        bx = q["start_x_m"] + bay * q["bay_width_m"]
+        _box(out, "interior_card_%d" % bay, "interior_lit",
+             bx + 0.5, bx + q["bay_width_m"] - 0.5,
+             STREET_FRONTAGE_M + 1.2, STREET_FRONTAGE_M + 1.24,
+             THRESHOLD_ABOVE_CROWN_M + 0.6, THRESHOLD_ABOVE_CROWN_M + 2.6,
+             "the-lit-back-of-the-shop/1.2m-in/window_practicals.lit_bays")
+
     _figures(out)
     lamps, lerr = lamp_parts(root)
     if lerr:
@@ -1420,8 +1458,20 @@ def street_cameras():
             # flank wall. Turned to look back down the street, which puts them
             # there and costs nothing: the street is symmetrical about its own
             # length and the parade runs its whole length either way.
-            "loc": (4.0 + reach, -4.3, eye),
-            "look": (4.0, -4.3, eye - drop),
+            # INSIDE THE STREET, NOT PAST THE END OF IT. At x = 42 the camera
+            # stood level with the last bay of the west row and the whole left
+            # third of the frame was that row's blank gable end - no window,
+            # no door, nothing. The sheet's near-left is a FRONTAGE seen at a
+            # sharp angle, with its windows and its doorway running away. Two
+            # metres back inside the row puts ours there too.
+            #
+            # AND 0.7 m FURTHER OUT FROM THE WALL. At 0.825 m from the
+            # frontage the near wall filled a third of the picture; the
+            # sheet's is nearer a metre and a half, which is also simply
+            # where a person walks - nobody walks with their shoulder on the
+            # brick.
+            "loc": (40.0, -3.6, eye),
+            "look": (2.0, -3.6, eye - drop),
             "fov_v_deg": 60.0,
             "note": "the-sheet's-own-viewpoint/1.6m-on-the-far-footway/4-degrees-down/"
                     "cam_A's-height-field-and-pitch-from-the-side-the-sheet-stands-on",
@@ -1749,6 +1799,12 @@ def _night(bpy, root, mats):
             bsdf.inputs["Emission Color"].default_value = (0.780, 0.360, 0.040, 1.0)
             bsdf.inputs["Emission Strength"].default_value = 3.0
 
+    lit = mats.get("interior_lit")
+    if lit is not None and lit.use_nodes:
+        b2 = lit.node_tree.nodes.get("Principled BSDF")
+        if b2 is not None and "Emission Color" in b2.inputs:
+            b2.inputs["Emission Color"].default_value = (1.0, 0.714, 0.344, 1.0)
+            b2.inputs["Emission Strength"].default_value = 2.2
     for n, (lx, ly, lz) in enumerate(lantern_lights()):
         data = bpy.data.lights.new("lantern%d" % n, type="POINT")
         # 2200 W IS A RENDER CHOICE AND NOT A LAMP SPECIFICATION. A 1990
@@ -1945,6 +2001,19 @@ def build_and_render(args):
         world_note = _night(bpy, args["root"], mats)
     else:
         world_note = _world(bpy, args["root"])
+    # THE SHOP WINDOWS ARE LIT IN BOTH CONDITIONS, and that is a departure
+    # from the scene file with a reason. It marks window_practicals "off" for
+    # overcast_day - but the Hook sheet's own street panel is overcast
+    # DAYLIGHT and every trading shop in it glows warm from inside, which is
+    # what a British shop with the lights on looks like against a grey sky and
+    # is most of what makes that row read as OPEN rather than shuttered.
+    # Recorded here rather than changed in the spec, because the spec is his.
+    lit = mats.get("interior_lit")
+    if lit is not None and lit.use_nodes:
+        b3 = lit.node_tree.nodes.get("Principled BSDF")
+        if b3 is not None and "Emission Color" in b3.inputs:
+            b3.inputs["Emission Color"].default_value = (1.0, 0.714, 0.344, 1.0)
+            b3.inputs["Emission Strength"].default_value = 2.2 if night else 3.4
     if street:
         # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
         # than wet at night and bone dry by day, which is what the first
