@@ -207,6 +207,92 @@ LAMP_AT = ((8.0, 3.725), (18.0, -3.725), (28.0, 3.725), (38.0, -3.725))
 #: silhouette.
 CONDITIONS = ("overcast_day", "wet_night")
 
+#: THE TEXTURE PACK, AND WHICH OF OUR MATERIALS TAKES WHICH SURFACE.
+#:
+#: WE ALREADY HOLD THESE. ledger/Assets/StreamingAssets/CityPack/textures
+#: carries eighteen surfaces with a base, a roughness and a normal map each,
+#: named for the very surfaces the scene file names - brick_red, brick_grey,
+#: asphalt, sidewalk, kerb, roof, concrete, glass, wood, metal, setts. They
+#: are ambientCG, CC0, and ambientCG is on the licence allowlist. Nothing is
+#: fetched here and nothing new is attributed.
+#:
+#: TILE METRES IS THE ONE NUMBER THAT MATTERS and it is per surface, because
+#: a texture tiled at the wrong size is worse than no texture: brick at half
+#: scale reads as tile and at double scale as blockwork, and either tells the
+#: eye the wrong thing about how big the building is. Set from what the
+#: surface IS - a brick course is 75 mm, so 1.5 m of wall is twenty courses,
+#: which is what one of these maps holds.
+TEXTURE_DIR = "ledger/Assets/StreamingAssets/CityPack/textures"
+
+#: WHAT EACH MAP'S AVERAGE COLOUR ACTUALLY IS, in linear sRGB, MEASURED off
+#: the committed files on 2026-09-22 and written down rather than assumed.
+#:
+#: WHY THIS TABLE EXISTS AT ALL: THE PACK'S NAMES DO NOT MATCH ITS COLOURS.
+#: `brick_red` averages a sandy fawn and `brick_grey` averages a pinkish
+#: brown, so taking each map's own colour put the RED parade in pale
+#: sandstone and the GREY west row in red brick - the two rows swapped, and
+#: thirteen percent apart in value, which is inside the bound this file's own
+#: check refuses for a painted part against its wall. `roof` is terracotta
+#: pantile and this town is slated; `roof_b` is the slate.
+#:
+#: SO THE PHOTOGRAPH SUPPLIES PATTERN, RELIEF AND ROUGHNESS, AND THE PROJECT
+#: SUPPLIES THE PALETTE. Each map is multiplied by the authored colour divided
+#: by its own measured average, which lands the rendered surface on the colour
+#: this file authored while keeping every brick edge, every joint and every
+#: streak the photograph has. It is the one way to have both, and the
+#: alternative - taking the pack's hues - loses the period palette, the value
+#: separation the checks enforce, and the distinction between the two rows.
+TEXTURE_MEAN = {
+    "asphalt": (0.0602, 0.0577, 0.0571),
+    "brick_grey": (0.2435, 0.1951, 0.1777),
+    "brick_red": (0.2717, 0.2317, 0.1599),
+    "concrete": (0.2384, 0.2312, 0.1923),
+    "glass": (0.0659, 0.0798, 0.0929),
+    "kerb": (0.2614, 0.2617, 0.2402),
+    "metal": (0.1972, 0.1862, 0.1853),
+    "plaster": (0.5225, 0.5166, 0.4732),
+    "roof_b": (0.0315, 0.0304, 0.0364),
+    "setts": (0.2127, 0.2139, 0.2342),
+    "sidewalk": (0.1728, 0.1611, 0.1114),
+    "wood": (0.1483, 0.0907, 0.0519),
+}
+#: THE TILE FIGURES WERE ALL ABOUT THREE TIMES TOO LARGE on the first pass and
+#: the pair said so in one look: the near wall's bricks read about 0.25 m on
+#: the course against a real 0.075 m, which makes a two-storey terrace look
+#: like a garden wall seen from a foot away. A texture at the wrong scale is
+#: worse than no texture, because it does not just fail to say what the
+#: surface is - it says the wrong thing about how big the building is.
+#:
+#: SET FROM THE COURSE, NOT BY EYE. A British brick course is 75 mm including
+#: its bed joint, these maps carry roughly seven courses, so 0.55 m of wall is
+#: one tile. The ground surfaces follow the same rule from their own units: a
+#: sett is about 100 mm and these hold seven or eight of them.
+SURFACE_OF = {
+    "brick_red":    ("brick_red", 0.55),
+    "brick_grey":   ("brick_grey", 0.55),
+    "asphalt":      ("asphalt", 2.0),
+    # SETTS RATHER THAN THE PACK'S `sidewalk`, which is a mossy green and
+    # turned the whole footway the colour of a canal bank. The sheet's
+    # pavement is grey stone.
+    "paving":       ("setts", 0.8),
+    "kerbstone":    ("kerb", 0.6),
+    # roof_b, NOT roof: `roof` is terracotta pantile and averages a strong
+    # orange, and this town is slated. `roof_b` is the slate.
+    "slate":        ("roof_b", 0.8),
+    "stone":        ("concrete", 0.8),
+    "paint_joinery":("wood", 0.6),
+    "paint_stall":  ("plaster", 1.0),
+    "paint_door":   ("wood", 0.6),
+    "paint_fascia": ("wood", 1.0),
+    "glass":        ("glass", 1.4),
+    "lead":         ("metal", 0.35),
+    "steel_dark":   ("metal", 0.35),
+    "interior":     (None, 0.0),
+    "figure":       (None, 0.0),
+    "grime":        (None, 0.0),
+    "lens_amber":   (None, 0.0),
+}
+
 #: The two frames. ELEVATION IS THE ONE THAT JUDGES THE FRONT - square to the
 #: frontage with the roofline in, which is cam_B's own description in the
 #: scene file - and EYE is the one that says whether it belongs on a street,
@@ -1359,8 +1445,84 @@ def _bpy():
     return bpy
 
 
-def _materials(bpy):
+def _texture_nodes(bpy, mat, root, surface, tile_m, tint):
+    """Base, roughness and normal maps on one material, box-projected.
+
+    NO UVs ANYWHERE IN THIS RECIPE, deliberately. Every piece here is built
+    from raw verts and faces with no texture coordinates at all, and unwrapping
+    four hundred boxes would be four hundred chances to unwrap one of them
+    wrong. Box projection off OBJECT coordinates needs none: the texture is
+    laid in the world, so a brick course runs level across a wall and carries
+    on across the next piece of the same wall, which is what coursed brick
+    does and what a per-object unwrap would break at every seam.
+
+    THE TINT IS A MULTIPLY, NOT A REPLACEMENT. The painted parts - the fascia,
+    the joinery, the doors - take the wood map for its GRAIN and their own
+    authored colour over the top, because the pack has one timber and this
+    street has a period palette. The brick and the ground take their map as it
+    comes; tinting brick would be inventing a brick nobody photographed.
+    """
+    path = os.path.join(root, TEXTURE_DIR, surface + ".jpg")
+    if not os.path.exists(path):
+        return "missing/%s" % surface
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    if bsdf is None:
+        return "no-bsdf"
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    mapping = nt.nodes.new("ShaderNodeMapping")
+    mapping.inputs["Scale"].default_value = (1.0 / tile_m, 1.0 / tile_m, 1.0 / tile_m)
+    nt.links.new(coord.outputs["Object"], mapping.inputs["Vector"])
+
+    def image(suffix, non_color):
+        p = os.path.join(root, TEXTURE_DIR, surface + suffix + ".jpg")
+        if not os.path.exists(p):
+            return None
+        node = nt.nodes.new("ShaderNodeTexImage")
+        node.image = bpy.data.images.load(p, check_existing=True)
+        node.projection = "BOX"
+        node.projection_blend = 0.25
+        node.extension = "REPEAT"
+        if non_color:
+            node.image.colorspace_settings.name = "Non-Color"
+        nt.links.new(mapping.outputs["Vector"], node.inputs["Vector"])
+        return node
+
+    base = image("", False)
+    if base is None:
+        return "missing/%s" % surface
+    # THE MULTIPLIER IS THE AUTHORED COLOUR OVER THE MAP'S OWN AVERAGE, so
+    # what comes out averages the colour this file authored. Bounded at both
+    # ends: a very dark map would otherwise need an enormous gain and turn its
+    # own highlights into blown patches, and a very bright one would crush.
+    mean = TEXTURE_MEAN.get(surface)
+    if tint is not None and mean is not None:
+        gain = [min(6.0, max(0.05, tint[i] / max(1e-4, mean[i]))) for i in range(3)]
+        mix = nt.nodes.new("ShaderNodeMix")
+        mix.data_type = "RGBA"
+        mix.blend_type = "MULTIPLY"
+        mix.inputs["Factor"].default_value = 1.0
+        nt.links.new(base.outputs["Color"], mix.inputs[6])
+        mix.inputs[7].default_value = (gain[0], gain[1], gain[2], 1.0)
+        nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
+    else:
+        nt.links.new(base.outputs["Color"], bsdf.inputs["Base Color"])
+
+    rough = image("_r", True)
+    if rough is not None:
+        nt.links.new(rough.outputs["Color"], bsdf.inputs["Roughness"])
+    norm = image("_n", True)
+    if norm is not None:
+        nmap = nt.nodes.new("ShaderNodeNormalMap")
+        nmap.inputs["Strength"].default_value = 1.0
+        nt.links.new(norm.outputs["Color"], nmap.inputs["Color"])
+        nt.links.new(nmap.outputs["Normal"], bsdf.inputs["Normal"])
+    return "%s@%.2fm%s%s" % (surface, tile_m, "+r" if rough else "", "+n" if norm else "")
+
+
+def _materials(bpy, root=None):
     made = {}
+    notes = []
     for name, linear, rough in MATERIALS:
         mat = bpy.data.materials.new(name=name)
         mat.use_nodes = True
@@ -1373,6 +1535,22 @@ def _materials(bpy):
                 if "Specular IOR Level" in bsdf.inputs:
                     bsdf.inputs["Specular IOR Level"].default_value = 0.9
         made[name] = mat
+        if root is not None:
+            surface, tile = SURFACE_OF.get(name, (None, 0.0))
+            if surface:
+                # EVERY TEXTURED SURFACE KEEPS ITS AUTHORED COLOUR. It used
+                # to be only the painted ones, on the reasoning that tinting
+                # brick invents a brick nobody photographed - which was right
+                # in principle and wrong here, because the pack's brick_red is
+                # a sandy fawn and its brick_grey is pinker than that. Taking
+                # their own hues swapped the two rows and collapsed the value
+                # separation this file measures elsewhere.
+                tint = linear
+                notes.append("%s=%s" % (name, _texture_nodes(bpy, mat, root, surface, tile, tint)))
+            else:
+                notes.append("%s=flat-colour-on-purpose" % name)
+    if notes:
+        print("tfSurfaces " + " ".join(notes))
     return made
 
 
@@ -1627,7 +1805,7 @@ def build_and_render(args):
         removed += 1
     print("tfNote sceneReset=dataApi/removed=%d-objects" % removed)
 
-    mats = _materials(bpy)
+    mats = _materials(bpy, args["root"])
     built = 0
     for part in parts:
         mat = mats.get(part["material"])
