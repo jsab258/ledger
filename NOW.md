@@ -398,7 +398,7 @@ nothing above this line is worked on until the sheet is replaced.
 
 ## 8. Stage 3, extended from ROADMAP.md because the list ran short
 
-- [ ] THE ARREST HAS TO BE REACHABLE FROM LIVE PLAY, and it is not.
+- [x] THE ARREST HAS TO BE REACHABLE FROM LIVE PLAY - AND IT IS, proven 22 September.
       MEASURED 22 September, not assumed: `Reaction.Confront` is the only
       function in the codebase that produces an arrest outcome, and it has
       ZERO callers outside Core - all five are in CoreTests.
@@ -420,6 +420,10 @@ nothing above this line is worked on until the sheet is replaced.
       all fixed before commit - the worst, that the verdict check believed
       the run about itself. THE BOX CLOSES when a probe verdict reads
       outcomeA=Arrest and outcomeB=NothingToArrest.
+      CLOSED. Probe run 35774194198 on 647c1ac, green, first try: the
+      constable watched crime A for 2.5 s from across the road, reached rung 4
+      and ARRESTED; for crime B, behind the terrace, rung 0, occluded, NO
+      ARREST. Asked twice, caller named, ruled 0.35 and used 0.35.
       WHO THE CONSTABLE IS TO TOM IS JAFAR'S (decision 3): a stranger can
       never place him, so the arrest can only happen if the policeman knows
       him by sight. Built with that, one number to change.
@@ -482,7 +486,7 @@ THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
 - [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
 
 WHILE THE CARD IS BUSY - the work that does not need it.
-- [ ] THE ARREST FROM LIVE PLAY, proven: the box closes when a probe verdict
+- [x] THE ARREST FROM LIVE PLAY, proven: the box closes when a probe verdict
       reads outcomeA=Arrest and outcomeB=NothingToArrest. Ruled (a): a beat
       constable who knows the new owner by sight. (Section 8's item.)
 - [ ] RUMOUR REACH WRITTEN AS A MORNING DECISION in FOR-JAFAR.md, plain words,
