@@ -33,6 +33,20 @@ the newspaper.
 
 ## Things you should know
 
+- 2026-09-22 **FOR-JAFAR.md exists and is populated from this sitting** -
+  decisions waiting on you, things you should know, rulings received with
+  their dates, and a Resolved section. The three rulings you had to give twice
+  are in it, each marked as re-issued, because that is the record you asked
+  for and it is not flattering to me.
+- 2026-09-22 **The hook has a third job, and CLAUDE.md says so** rather than
+  being quietly amended: it said "two jobs and no more", it says three now,
+  and three is the ceiling unless you raise it. The third refuses a turn whose
+  `For you:` says anything not already in this file. It compares normalised
+  words rather than bytes, because a message wraps and a file wraps
+  differently, and it fails open when the file is missing.
+- 2026-09-22 **It caught my own message on its first live turn** - the two
+  lines above were in the report and not in the file, which is exactly the
+  failure it was built for.
 - 2026-09-22 **The six-hour ceiling passed.** I have carried on because you
   kept directing work, and I would rather say so than quietly run over. Stop
   me whenever.
