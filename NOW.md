@@ -306,6 +306,37 @@ nothing.
       stage is supposed to tie together and nobody has looked at it with
       the street finished.
 
+## 7. THE ORDER JAFAR SET ON 22 SEPTEMBER, AND IT REPLACES THE ONE ABOVE
+
+His words: "Stop tuning palette and colour now; every adjustment at an
+unmeasured lens against a flawed sheet is work that will be redone." So
+nothing above this line is worked on until the sheet is replaced.
+
+- [ ] REGENERATE THE HOOK SHEET, through the image lane, from the research
+      and canon rather than the old prompt, at a resolution where a
+      shopfront's detail is evidence and at least four times the current
+      panel size. Correcting all four contradictions: Mickey's is a minicab
+      office with a rank outside (D19); the shopfronts are the 1989 working
+      street, metal frames and practical lights and repair patches in older
+      masonry (D01, D06, R05), not the conservation-area refit; the basin
+      carries working coastal craft, not canal narrowboats (D04, R08); and
+      Mickey's and the fish shop are separate six-metre bays in a party-wall
+      run (MICKEYS.md). The invented wooded hill goes; if the view closes on
+      anything it is the bible's contour-following terraces. Shops carry
+      signage from the period list. THREE PASSES, and the candidate goes to
+      him beside the old one as a choice.
+      The spec is `tools/imagegen/hook-sheet-2026-09-22.json`, written from
+      canon and the bible with every item's sources in its own `governed_by`.
+      Panels rather than a poster: street 2048x1088 (3.3x linear, 11x the
+      area of the old 617x326 panel), a shopfront study at 1536x1024 because
+      no street view at any resolution resolves a frame section, and the
+      basin at 1536x1024.
+- [ ] THEN, ONLY ONCE HE APPROVES IT, in his order: derive the lens from the
+      new sheet's own geometry and write down how; re-close palette and
+      colour against the new sheet at that lens; then rework the shopfronts
+      that were built to the old sheet's tidy timber, starting with the
+      parade.
+
 ## Where things stand
 
 THE REFERENCE WAS WRONG ALL WEEK, and that is the finding the sitting turns
