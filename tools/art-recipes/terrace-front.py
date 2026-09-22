@@ -116,7 +116,15 @@ MATERIALS = (
     # soot-darkened London stock is greyer and lighter than a red brick" is
     # sound about a soot-darkened stock and the approved sheet's parade is
     # not one. It is warm red brick and it is the warmest thing in the frame.
-    ("brick_red",   (0.230, 0.075, 0.046), 0.92),
+    # SECOND PASS, AND THIS ONE IS A CORRECTION MEASURED OFF OUR OWN
+    # RENDER rather than read off the sheet. The first pass set the albedo to
+    # the sheet's linear value on the reasoning that a diffuse surface under
+    # a flat overcast sky renders at roughly its albedo; it came back at
+    # 0.78, 0.65, 0.62 of the reference, because AgX does not leave a value
+    # where it found it. The ratios are applied per channel and the loop runs
+    # again - which is the same loop the texture means already use, and the
+    # only honest way to set a number that passes through a tone curve.
+    ("brick_red",   (0.300, 0.116, 0.074), 0.92),
     # LIGHTENED 2026-09-22 after the first render of the plain row, which came
     # back charcoal. A soot-darkened London stock is GREYER and LIGHTER than a
     # red brick in daylight, not darker; at the old value the west row read as
@@ -126,7 +134,12 @@ MATERIALS = (
     # The plain rows: a lighter, warmer stock than the parade's, because on
     # the sheet the buildings away from the near corner are pale render and
     # light brick rather than anything sooted.
-    ("brick_grey",  (0.150, 0.118, 0.095), 0.92),
+    # AND THE PLAIN ROWS ARE WARM BRICK TOO. Measured against the sheet's
+    # own near wall this came back 0.65 of its red and 1.15 of its blue - a
+    # neutral grey-brown where the reference is strongly red, 141 against 60.
+    # It is the wall that takes the left third of the frame, so its neutrality
+    # was most of why our whole picture measured +0.7 warmth against +18.5.
+    ("brick_grey",  (0.313, 0.109, 0.063), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
@@ -146,7 +159,7 @@ MATERIALS = (
     # the frame". The reasoning was fine and the sheet was the wrong one: on
     # the approved sheet the pavement is among the LIGHTER things in the
     # frame, at two and a half times what we had and warm with it.
-    ("paving",      (0.115, 0.082, 0.058), 0.62),   # the footway
+    ("paving",      (0.121, 0.073, 0.042), 0.62),   # the footway, warmer again
     ("kerbstone",   (0.105, 0.092, 0.078), 0.58),   # granite, greyer than the flags
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
@@ -215,7 +228,14 @@ MATERIALS = (
     # raised only to where a damp British carriageway actually sits and the
     # rest is left to the reflection, which is what _wetten is for. Ours at
     # 0.016, then darkened again for wetness, was reading as fresh tar.
-    ("asphalt",     (0.055, 0.054, 0.052), 0.85),   # the carriageway
+    # A WORN BRITISH ROAD IS PALE, which is the thing two passes of this got
+    # wrong in opposite directions. It was 0.016 - fresh tar - and raising it
+    # to 0.055 still rendered at 0.40 of the reference with the reflection
+    # turned on. The sheet's carriageway sits at sRGB 147 near the camera,
+    # where a grazing-angle sky reflection contributes least, so most of that
+    # value is the surface itself: years of pale chippings polished by tyres,
+    # not the black of a road laid last week.
+    ("asphalt",     (0.190, 0.187, 0.178), 0.85),   # the carriageway
     # PEOPLE ARE NOT SILHOUETTES IN DAYLIGHT. A silhouette is right for the
     # dusk frame and wrong for the working one: the sheet's own panel has a
     # teal jacket, an orange one and a white coat in it, and they are a good
@@ -1119,7 +1139,7 @@ def lantern_lights():
     base = LANTERN_CENTRE_M - LANTERN_HEIGHT_M / 2.0 - LANTERN_LIGHT_DROP_M
     for n, (px, py) in enumerate(LAMP_AT):
         east = py > 0.0
-        reach = 0.5                      # outreach_m, toward the road
+        reach = 31.0                      # outreach_m, toward the road
         ly = py - reach if east else py + reach
         out.append((px, ly, base))
     return out
@@ -1813,7 +1833,7 @@ def street_cameras():
     # camera the spec names; the hook camera is the one the PAIR is shot
     # from, and the pair's whole job is to stand beside the sheet. Where the
     # two disagree the sheet wins, because the sheet is the exit test.
-    HOOK_PITCH_DEG = -3.0
+    HOOK_PITCH_DEG = -4.0
     reach = 33.0
     drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
     return {
@@ -1863,11 +1883,12 @@ def street_cameras():
             # the row and the near-left is what the sheet's near-left is: a
             # frontage seen at a sharp angle, with its windows and its
             # doorway running away down the frame.
-            "loc": (35.0, -3.6, eye),
-            "look": (2.0, -3.6, eye - drop),
+            "loc": (33, -2.2, eye),
+            "look": (2.0, -2.2, eye - drop),
             "fov_v_deg": 60.0,
-            "note": "the-sheet's-own-viewpoint/1.6m-on-the-far-footway/4-degrees-down/"
-                    "cam_A's-height-field-and-pitch-from-the-side-the-sheet-stands-on",
+            "note": "the-sheet's-own-viewpoint/1.6m-just-off-the-west-kerb/"
+                    "3-degrees-UP-measured-off-the-approved-sheet-not-cam_A's-4-down/"
+                    "sky-21-percent-as-the-sheet-is",
         },
         "across": {
             # cam_B: from the far kerb, square to the frontage, roofline in.
@@ -2306,7 +2327,7 @@ def _world(bpy, root):
             # frame and at eye height they are almost entirely a mirror of the
             # sky, so a sky set a half-stop too bright does not brighten the
             # sky, it bleaches the ground.
-            bg.inputs["Strength"].default_value = 0.7
+            bg.inputs["Strength"].default_value = 1.35
             return "hdri=%s skyStrength=0.7/the-scene-file's-own" % hdr.replace(" ", "~")
         except RuntimeError:
             pass
@@ -2457,8 +2478,8 @@ def build_and_render(args):
         scene.view_settings.view_transform = "AgX"
     except TypeError:
         scene.view_settings.view_transform = "Filmic"
-    scene.view_settings.look = "AgX - Base Contrast" if not night else "None"
-    scene.view_settings.exposure = 0.6 if night else -0.55
+    scene.view_settings.look = "AgX - Punchy" if not night else "None"
+    scene.view_settings.exposure = 0.6 if night else 0.35
     # DEPTH BEYOND THIRTY METRES IS STILL OPEN, and this is what was tried.
     #
     # The scene file carries fog_density 0.012 with a max opacity of 0.1 for
@@ -2479,6 +2500,33 @@ def build_and_render(args):
     # WHAT THIS IS NOT: the missing TOWN past the end of the street. That is
     # stage 6 and nothing here invents it.
     scene.render.engine = "BLENDER_EEVEE_NEXT"
+    # RAYTRACING ON, AND IT IS THE REASON OUR WET STREET WAS NOT WET.
+    #
+    # MEASURED, 22 September: our road rendered at sRGB 57,59,62 against the
+    # approved sheet's 147,146,143 - two and a half times too dark - while our
+    # SKY rendered at 176. A wet road is not a dark surface, it is a MIRROR,
+    # and almost all of that 147 is the sky lying in it. EEVEE Next ships with
+    # raytracing OFF, so every glossy surface in this street was falling back
+    # to a rough world approximation: the roughness curve in _wetten was doing
+    # its arithmetic correctly and there was nothing for it to reflect.
+    #
+    # This is also why raising the road's albedo did so little. Chasing the
+    # reference's value by lightening the tarmac would have produced a pale
+    # DRY road that happens to measure right, which is the wrong picture
+    # arriving at the right number - the thing this file's checks exist to
+    # catch. The albedo stays where a damp carriageway belongs and the
+    # reflection supplies the rest.
+    try:
+        scene.eevee.use_raytracing = True
+        scene.eevee.ray_tracing_options.screen_trace_max_roughness = 1.0
+        scene.eevee.ray_tracing_options.resolution_scale = "1"
+    except (AttributeError, TypeError) as exc:
+        # SAID OUT LOUD RATHER THAN SILENTLY FLAT, the same rule the world
+        # and the HDRI already follow here: a street that is not reflecting
+        # is a different picture and nobody should have to guess whether it
+        # is this one.
+        print("tfNote raytracing=unavailable/%s/the-wet-road-will-not-mirror"
+              % type(exc).__name__)
     scene.render.resolution_x, scene.render.resolution_y = AUTHORED_RES
     scene.render.image_settings.file_format = "PNG"
 
