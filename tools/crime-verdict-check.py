@@ -320,6 +320,9 @@ def judge(text, sha=""):
 # ---------------------------------------------------------------------------
 
 
+LF = chr(10)
+
+
 def selftest():
     passed = failed = 0
 
@@ -416,7 +419,21 @@ def selftest():
     GOOD_CTL = ("control=RAN controlCrime=B seenA=1 seenB=0 "
                 "rumoursAboutA=1 rumoursAboutB=0")
     if real:
-        ok_c = real.rstrip(chr(10)) + chr(10) + GOOD_CTL + chr(10)
+        # THE FIXTURE MUST BE THE ONLY CONTROL LINE IN THE FILE, and it was
+        # not. This appended GOOD_CTL to the landed verdict and doctored it
+        # one value at a time - which worked exactly as long as the landed
+        # verdict had NO control line of its own. On 22 September the probe
+        # started emitting one, so every runner copy carried two: the real
+        # line and the fixture. judge reads the first it finds, which is the
+        # real one, so doctoring the fixture changed nothing it looked at and
+        # `reject/the-witnessed-one-carried-nothing-is-caught` stopped being
+        # able to fail-and-be-caught. It failed on the runner and passed here,
+        # because the local copy of the verdict predated the control line.
+        # THAT ONE FAILING CASE REDDENED EVERY PROBE RUN, because the workflow
+        # runs `--selftest || exit 1` before it judges anything: three runs
+        # went red with a perfectly good verdict sitting beside them.
+        base = LF.join(l for l in real.split(LF) if not l.startswith("control="))
+        ok_c = base.rstrip(chr(10)) + chr(10) + GOOD_CTL + chr(10)
         faults, _n = judge(ok_c, head_sha(real))
         check("accept/a-good-control-line-passes", not faults, "; ".join(faults[:2]))
         for name, old_v, new_v in (
