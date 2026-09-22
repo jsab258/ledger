@@ -137,6 +137,7 @@ namespace
 		MoveW1ToYard, ApproachB, PlaceForB, SettleB, MeasureB, ShotBeforeB,
 		SeqBeforeB, AwaitActB, CommitB, SeqAfterB, ShotAfterB, Round2,
 		MoveToOverhear, SettleOverhear, OverheardHold, ShotOverheard,
+		MeetThird,
 		Done
 	};
 
@@ -226,6 +227,12 @@ namespace
 	std::shared_ptr<SocialGraph> GGraph;
 	std::shared_ptr<GossipMill>  GMill;
 	GossiperPtr GW1, GN2;
+	// THE THIRD RESIDENT, 22 September: in the mill from the start, tied to
+	// the lad only, and WITHOUT A BODY until the meeting - the together test
+	// measures bodies, so until then he is with nobody and hears nothing.
+	GossiperPtr GR3;
+	AActor* GR3Body = nullptr;
+	LedgerCrime::RoundReading GRound3;
 
 	// ---- the shot in flight, one at a time -------------------------------
 	bool    GShotInFlight        = false;
@@ -784,12 +791,18 @@ namespace
 		// somebody saw and about the one nobody could, counted over the mill
 		// that ticked and again over the one rebuilt from the authoring.
 		int  AboutABefore, AboutAAfter, AboutBBefore, AboutBAfter;
+		// THE THIRD RESIDENT'S OWN RECORD, found missing by the independent
+		// check: his rumour was counted in the pair but his MEMORY was never
+		// saved or reloaded, and nothing said he came back two retellings out.
+		bool bR3;
+		int  R3Before, R3After, R3MemBefore, R3MemAfter, R3HopsAfter;
 		RestartReading()
 			: bRan(false), SavedBytes(0), W1Before(0), W1After(0), N2Before(0), N2After(0),
 			  W1MemBefore(0), W1MemAfter(0), N2MemBefore(0), N2MemAfter(0),
 			  W1ConfBefore(0.0), W1ConfAfter(0.0), W1HopsAfter(0), N2HopsAfter(0),
 			  bMemoryTextSame(false),
-			  AboutABefore(0), AboutAAfter(0), AboutBBefore(0), AboutBAfter(0) {}
+			  AboutABefore(0), AboutAAfter(0), AboutBBefore(0), AboutBAfter(0),
+			  bR3(false), R3Before(0), R3After(0), R3MemBefore(0), R3MemAfter(0), R3HopsAfter(0) {}
 	};
 
 	static double BestConfidence(const GossiperPtr& G)
@@ -835,6 +848,13 @@ namespace
 		const std::string MillJson = Save::CaptureMillAgents(*GMill);
 		const std::string W1Md = GW1->Memory ? GW1->Memory->ToMarkdown() : std::string();
 		const std::string N2Md = GN2->Memory ? GN2->Memory->ToMarkdown() : std::string();
+		const std::string R3Md = (GR3 && GR3->Memory) ? GR3->Memory->ToMarkdown() : std::string();
+		if (GR3)
+		{
+			Out.bR3 = true;
+			Out.R3Before = (int)GR3->Rumors.size();
+			Out.R3MemBefore = GR3->Memory ? (int)GR3->Memory->Events.size() : 0;
+		}
 		Out.SavedBytes = (int)MillJson.size();
 		SaveBoth(TEXT("ue-crime-save-agents.json"), Un(MillJson));
 
@@ -848,11 +868,32 @@ namespace
 			std::make_shared<MemoryStore>("n2"), std::shared_ptr<KnowledgeBase>(), "day");
 		Fresh.Add(F1);
 		Fresh.Add(F2);
+		// AND THE THIRD RESIDENT, because he is authoring too: tied to the
+		// lad only, as at the start. Without him the rebuilt world has nobody
+		// to lay his saved record on, RestoreMillAgents skips it, and the
+		// pair's count of rumours about A falls by one across the restart for
+		// a reason that has nothing to do with the save.
+		GossiperPtr F3;
+		if (GR3)
+		{
+			Graph->Link("n2", LedgerCrime::kR3Id, LedgerCrime::kR3Tie);
+			F3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, LedgerCrime::kR3Name,
+				std::make_shared<MemoryStore>(LedgerCrime::kR3Id),
+				std::shared_ptr<KnowledgeBase>(), "day");
+			Fresh.Add(F3);
+		}
 
 		// THE RELOAD.
 		Save::RestoreMillAgents(MillJson, Fresh);
 		if (F1->Memory) { F1->Memory->LoadFrom(W1Md); }
 		if (F2->Memory) { F2->Memory->LoadFrom(N2Md); }
+		if (F3 && F3->Memory) { F3->Memory->LoadFrom(R3Md); }
+		if (F3)
+		{
+			Out.R3After = (int)F3->Rumors.size();
+			Out.R3MemAfter = F3->Memory ? (int)F3->Memory->Events.size() : 0;
+			Out.R3HopsAfter = BestHops(F3);
+		}
 
 		Out.W1After = (int)Fresh.Get("w1")->Rumors.size();
 		Out.N2After = (int)Fresh.Get("n2")->Rumors.size();
@@ -1085,8 +1126,10 @@ namespace
 	{
 		double PairMetres(const std::string& A, const std::string& B) const
 		{
-			AActor* PA = (A == "w1") ? GW1Body : ((A == "n2") ? GN2Body : nullptr);
-			AActor* PB = (B == "w1") ? GW1Body : ((B == "n2") ? GN2Body : nullptr);
+			AActor* PA = (A == "w1") ? GW1Body : ((A == "n2") ? GN2Body
+			           : ((A == LedgerCrime::kR3Id) ? GR3Body : nullptr));
+			AActor* PB = (B == "w1") ? GW1Body : ((B == "n2") ? GN2Body
+			           : ((B == LedgerCrime::kR3Id) ? GR3Body : nullptr));
 			if (PA == nullptr || PB == nullptr) { return -1.0; }
 			return (double)FVector::Dist(PA->GetActorLocation(), PB->GetActorLocation()) / 100.0;
 		}
@@ -1152,6 +1195,59 @@ namespace
 		if (Out.Passed > 0 && GN2 && GN2->Memory && !GN2->Memory->Events.empty())
 		{
 			Out.HeardImportance = GN2->Memory->Events[GN2->Memory->Events.size() - 1].Importance;
+		}
+		Out.bRan = true;
+	}
+
+	// THE SECOND RETELLING: the lad to his mate, a few days later. The same
+	// shape as RunGossipRound and deliberately NOT that function: rounds 1
+	// and 2 are the rule-5b pair the verdict judges and the overheard beat
+	// composes from, and neither may be touched by a third round. This one
+	// never sets GCarried.
+	void RunRound3(LedgerCrime::RoundReading& Out)
+	{
+		Out.Round = 3;
+		Out.SpeakerId = "n2";
+		Out.ListenerId = LedgerCrime::kR3Id;
+		Out.PairMetres = PairMetresNow("n2", LedgerCrime::kR3Id);
+		Out.bTogether = Out.PairMetres >= 0.0 && Out.PairMetres <= LedgerCrime::kTalkRangeM;
+		Out.Tie = GMill ? GMill->Tie("n2", LedgerCrime::kR3Id) : 0.0;
+		Out.HopDecay = GMill ? GMill->HopDecay : 0.0;
+		Out.MinShare = GMill ? GMill->MinConfidenceToShare : 0.0;
+		if (GN2)
+		{
+			Out.RumoursHeld = (int)GN2->Rumors.size();
+			// CRIME A ONLY, after the independent check: the strongest telling
+			// of ANY story would describe a different rumour the day the lad
+			// carries two.
+			for (std::vector<RumorPtr>::size_type I = 0; I < GN2->Rumors.size(); ++I)
+			{
+				if (LedgerCrime::IsAboutCrimeA(GN2->Rumors[I])
+				    && GN2->Rumors[I]->Confidence > Out.ConfidenceIn)
+				{
+					Out.ConfidenceIn = GN2->Rumors[I]->Confidence;
+				}
+			}
+		}
+		if (!GMill) { Out.bRan = false; return; }
+		const std::vector<GossipEvent> Events =
+			GMill->Tick(GNow, GossipMill::TogetherFn(TogetherByDistance()));
+		for (std::vector<GossipEvent>::size_type I = 0; I < Events.size(); ++I)
+		{
+			if (Events[I].FromId != "n2" || Events[I].ToId != LedgerCrime::kR3Id) { continue; }
+			if (!LedgerCrime::IsAboutCrimeA(Events[I].RumorRef)) { continue; }
+			++Out.Passed;
+			if (Events[I].RumorRef)
+			{
+				Out.ConfidencePassed = Events[I].RumorRef->Confidence;
+				Out.Hops = Events[I].RumorRef->Hops;
+			}
+			Out.bContradiction = Events[I].Contradiction;
+			Out.bExposure = Events[I].Exposure;
+		}
+		if (Out.Passed > 0 && GR3 && GR3->Memory && !GR3->Memory->Events.empty())
+		{
+			Out.HeardImportance = GR3->Memory->Events[GR3->Memory->Events.size() - 1].Importance;
 		}
 		Out.bRan = true;
 	}
@@ -1352,6 +1448,28 @@ namespace
 		// 6. The two rounds.
 		Out.Add(Un(LedgerCrime::GossipRoundLine(GRound1)));
 		Out.Add(Un(LedgerCrime::GossipRoundLine(GRound2)));
+		// THE SECOND RETELLING AND WHAT IT ADDS UP TO. Holding counts the
+		// PEOPLE who hold a rumour naming crime A's glass, not the rumours,
+		// because the gate is about residents reached.
+		{
+			const int HoldingA = GMill ? LedgerCrime::ResidentsHoldingA(GMill->Agents()) : 0;
+			Out.Add(Un(LedgerCrime::GossipRoundLine(GRound3)));
+			// WHEN HE HEARD IT, OFF HIS OWN MEMORY: the last "heard" event.
+			int HeardDay = -1, HeardHour = -1;
+			if (GR3 && GR3->Memory)
+			{
+				const std::vector<MemoryEvent>& Ev = GR3->Memory->Events;
+				for (std::vector<MemoryEvent>::size_type I = 0; I < Ev.size(); ++I)
+				{
+					if (Ev[I].Kind != "heard") { continue; }
+					HeardDay = Ev[I].Time.Day;
+					HeardHour = Ev[I].Time.Hour;
+				}
+			}
+			Out.Add(Un(LedgerCrime::ReachLine(GRound3, HoldingA, GR3Body != nullptr,
+			                                  LedgerCrime::kCrimeDay, LedgerCrime::kCrimeHour,
+			                                  HeardDay, HeardHour)));
+		}
 
 		// 7. The overheard beat, and the prose on its own line under it.
 		Out.Add(Un(LedgerCrime::OverheardLine(GOverheard)));
@@ -1400,6 +1518,13 @@ namespace
 				         + " rumoursAboutAAfter=" + LedgerCrime::Int(RT.AboutAAfter)
 				         + " rumoursAboutBBefore=" + LedgerCrime::Int(RT.AboutBBefore)
 				         + " rumoursAboutBAfter=" + LedgerCrime::Int(RT.AboutBAfter)
+				         + (RT.bR3
+				            ? " r3RumoursBefore=" + LedgerCrime::Int(RT.R3Before)
+				              + " r3RumoursAfter=" + LedgerCrime::Int(RT.R3After)
+				              + " r3MemoryBefore=" + LedgerCrime::Int(RT.R3MemBefore)
+				              + " r3MemoryAfter=" + LedgerCrime::Int(RT.R3MemAfter)
+				              + " r3HopsAfter=" + LedgerCrime::Int(RT.R3HopsAfter)
+				            : std::string(" r3=not-in-this-run"))
 				         + " restartNote=the-world-is-rebuilt-from-the-authoring-and-the-save-"
 				           "laid-over-it/never-restored-into-the-mill-that-already-holds-them"));
 			}
@@ -1450,6 +1575,8 @@ namespace
 				LedgerCrime::CountAboutCrimes(GMill->Agents(), RumoursA, RumoursB);
 			}
 			Out.Add(Un("control=RAN controlCrime=B controlWhy=both-agents-occluded-by-west_south_bay2"
+			           " controlCountedOver=" + LedgerCrime::Int(GMill ? (int)GMill->Agents().size() : 0)
+			         + "-agents-at-the-end-of-the-run/the-third-resident-included"
 			           " seenA=" + LedgerCrime::Int(SeenA)
 			         + " seenB=" + LedgerCrime::Int(SeenB)
 			         + " rumoursAboutA=" + LedgerCrime::Int(RumoursA)
@@ -1553,7 +1680,9 @@ namespace
 		// probe-piece path as the two witnesses, so a count that still read 21
 		// would print one piece fewer than was asked for - the independent
 		// check caught it.
-		GProbePiecesAsked = 1 + 2 + 16 + 2 + 1;
+		// + 1 MORE FOR THE THIRD RESIDENT, the same day: his body is a
+		// probe piece too, spawned late, at the meeting.
+		GProbePiecesAsked = 1 + 2 + 16 + 2 + 1 + 1;
 
 		// THE YARD FLOOR FIRST: nothing else in the yard has anything to
 		// stand on. ground_plot_2 ends at x 21 and ground_plot_3 starts at x
@@ -2031,7 +2160,30 @@ namespace
 		}
 		case ECrimePhase::ShotOverheard:
 			return RunShotPhase(TEXT("overheard"), TEXT("ue-crime_05_overheard.png"),
-			                    ECrimePhase::Done, Now);
+			                    ECrimePhase::MeetThird, Now);
+		case ECrimePhase::MeetThird:
+		{
+			// THE LAD MEETS HIS MATE IN THE YARD ON DAY 4 AT SIX. His body
+			// arrives now and not before, so nothing earlier in the run could
+			// have reached him. GNow is moved for this one Tick - the heard
+			// memory is stamped with the day it happened - and put back, so
+			// nothing else in the verdict reads a clock that moved under it.
+			{
+				double GY = 0.0;
+				std::string On;
+				if (!GroundYAt(World, LedgerCrime::kR3X, LedgerCrime::kR3Z, GY, On)) { GY = 0.1; }
+				GR3Body = SpawnBody(World, TEXT("probe_body_r3"),
+				                    LedgerCrime::kR3X, LedgerCrime::kR3Z, GY);
+				const GameTime Was = GNow;
+				GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 0);
+				RunRound3(GRound3);
+				GNow = Was;
+				WriteBreadcrumb(TEXT("third-resident-met"));
+			}
+			GPhase = ECrimePhase::Done;
+			GPhaseStart = Now;
+			return true;
+		}
 		case ECrimePhase::Done:
 		default:
 			Finish();
@@ -2065,6 +2217,13 @@ namespace LedgerCrimeProbe
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GW1);
 		GMill->Add(GN2);
+		// THE LAD'S MATE: tied to him and to nobody else, at the street's own
+		// tie, so the only way the crime can reach him is a second retelling.
+		GGraph->Link("n2", LedgerCrime::kR3Id, LedgerCrime::kR3Tie);
+		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, LedgerCrime::kR3Name,
+		                                 std::shared_ptr<MemoryStore>(),
+		                                 std::shared_ptr<KnowledgeBase>(), "day");
+		GMill->Add(GR3);
 
 		WriteBreadcrumb(TEXT("start-called"));
 		GTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&Tick), 0.0f);

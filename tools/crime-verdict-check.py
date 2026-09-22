@@ -207,6 +207,110 @@ def judge(text, sha=""):
             faults.append("round 2: two people standing together passed nothing "
                           "(passedStatus=%s)" % rounds["2"].get("passedStatus"))
 
+    # ---- the header's own selftest, run again on the machine ----------------
+    # The verdict has always printed it and nothing ever read it: a failing
+    # in-game selftest now fails the run (independent check, 22 September).
+    st = lines_named(text, "crimeSelftestChecks")
+    if st:
+        failed = st[0].get("crimeSelftestFailed", "")
+        if not failed.startswith("0/"):
+            faults.append("the crime selftest failed on the machine (crimeSelftestFailed=%s, "
+                          "first: %s)" % (failed, st[0].get("crimeSelftestFirstFailure")))
+
+    # ---- the third resident: ROADMAP's stage-3 reach gate ------------------
+    # "A witnessed crime reaching a second and a third resident within one
+    # in-game week." GATED LIKE THE RESTART: a verdict from before the third
+    # resident existed has no reach line, and that is a NOTE in capitals.
+    #
+    # WHAT IS A FAULT AND WHAT IS A FINDING. The mill's own rule says what one
+    # retelling carries - confidence x tie x hop decay, dropped under the
+    # floor - and the line prints that arithmetic beside what the mill did.
+    # If they DISAGREE, the build is wrong and it is a fault. If they agree
+    # that it does not reach him, the gate is not met at today's numbers:
+    # that is a measurement for Jafar, not a broken build, and it is a note.
+    rch = lines_named(text, "reach")
+    if not rch:
+        notes.append("reach=NOT-IN-THIS-VERDICT/no-third-resident-measured")
+    else:
+        rr = rch[0]
+        def rnum(k, cast=float):
+            try:
+                return cast(rr.get(k, ""))
+            except ValueError:
+                return None
+        third = rr.get("thirdResident")
+        would, floor = rnum("wouldArrive"), rnum("floor")
+        margin = rr.get("marginOverFloor", "")
+        # THE SIGN OF THE UNROUNDED MARGIN DECIDES, not the two printed
+        # numbers: wouldArrive is printed to three places and the floor to
+        # two, so a true 0.1996 prints as 0.200 and would read as clearing
+        # a floor the mill correctly refused it at. The margin is worked
+        # before rounding and printed with its sign.
+        should = margin.startswith("+")
+        # AN UNREADABLE LINE IS A FAULT, not an honest miss (independent
+        # check, finding 5): with wouldArrive missing, "should" used to come
+        # out False and a NOT-REACHED became a note.
+        if would is None or floor is None or would != would or margin[:1] not in ("+", "-"):
+            faults.append("the reach line's arithmetic is unreadable (wouldArrive=%s floor=%s "
+                          "marginOverFloor=%s)" % (rr.get("wouldArrive"), rr.get("floor"), margin))
+        # THE STREET'S OWN NUMBERS, read off round 2 of the same run rather
+        # than typed here: the mate is tied at the tie the shopkeeper and the
+        # lad have, against the floor the mill used for them (finding 4).
+        r2 = rounds.get("2", {})
+        if rr.get("thirdTie") != r2.get("tie"):
+            faults.append("the mate is tied at %s, not the street's own %s from round 2"
+                          % (rr.get("thirdTie"), r2.get("tie")))
+        if rr.get("floor") != r2.get("minShare"):
+            faults.append("the reach floor %s is not the floor round 2 ran at (%s)"
+                          % (rr.get("floor"), r2.get("minShare")))
+        # THE WEEK IS RECOMPUTED FROM THE HOURS, never taken from the flag
+        # beside them (finding 3), and the hours come off his memory.
+        try:
+            hours = int(rr.get("hoursAfterCrime", ""))
+        except ValueError:
+            hours = None
+        week_ok = hours is not None and 0 <= hours <= 168
+        if rr.get("withinOneWeek") != ("yes" if week_ok else "no"):
+            faults.append("withinOneWeek=%s disagrees with hoursAfterCrime=%s"
+                          % (rr.get("withinOneWeek"), rr.get("hoursAfterCrime")))
+        # A MATE WHO NEVER APPEARED, OR WAS NOT WITH THE LAD, IS SAID SO
+        # (finding 7), before anything reads it as the mill disagreeing.
+        if rr.get("thirdBody") != "spawned":
+            faults.append("the mate never appeared (thirdBody=%s)" % rr.get("thirdBody"))
+        elif rr.get("thirdTogether") != "yes" and third != "NOT-RUN":
+            faults.append("the mate and the lad met %s m apart, not together"
+                          % rr.get("thirdPairMetres"))
+        if third == "NOT-RUN":
+            faults.append("the third resident's meeting never ran (thirdResident=NOT-RUN)")
+        elif third == "REACHED":
+            if rnum("thirdHops", int) != 2:
+                faults.append("the third resident was reached at %s hops, not by a second "
+                              "retelling (2) - he was tied to somebody he should not be"
+                              % rr.get("thirdHops"))
+            holding = rnum("residentsHolding", int)
+            if holding is None or holding < 3:
+                faults.append("the third resident was reached but only %s resident(s) hold "
+                              "crime A" % rr.get("residentsHolding"))
+            if not week_ok:
+                faults.append("reached, but not within one in-game week (hoursAfterCrime=%s)"
+                              % rr.get("hoursAfterCrime"))
+            if not should:
+                faults.append("the third resident was reached although the mill's own rule "
+                              "says %s is under the floor %s" % (rr.get("wouldArrive"), rr.get("floor")))
+        elif third == "NOT-REACHED":
+            if should:
+                faults.append("the mill's own rule says %s clears the floor %s and the third "
+                              "resident was not reached - the mill and its arithmetic disagree"
+                              % (rr.get("wouldArrive"), rr.get("floor")))
+            else:
+                notes.append("REACH GATE NOT MET AT TODAY'S NUMBERS: %s under the floor %s"
+                             % (rr.get("wouldArrive"), rr.get("floor")))
+        else:
+            faults.append("the reach line says thirdResident=%s" % third)
+        notes.append("reach=third %s, %s resident(s) hold A, %s hours after, margin %s"
+                     % (third, rr.get("residentsHolding"), rr.get("hoursAfterCrime"),
+                        rr.get("marginOverFloor")))
+
     # ---- the consequence the player hears ---------------------------------
     over = lines_named(text, "overheardStatus")
     if not over:
@@ -419,6 +523,19 @@ def judge(text, sha=""):
                 if bb is None or bb != 0:
                     faults.append("the unwitnessed control held a rumour before the save "
                                   "(rumoursAboutBBefore=%s)" % r.get("rumoursAboutBBefore"))
+                # THE MATE'S OWN RECORD, once the run has a mate.
+                if "r3RumoursAfter" in r:
+                    r3b, r3a = num("r3RumoursBefore"), num("r3RumoursAfter")
+                    m3b, m3a = num("r3MemoryBefore"), num("r3MemoryAfter")
+                    if r3a is None or r3b is None or r3a != r3b:
+                        faults.append("the lad's mate lost rumours across the restart (%s before, "
+                                      "%s after)" % (r.get("r3RumoursBefore"), r.get("r3RumoursAfter")))
+                    if m3a is None or m3b is None or m3a != m3b:
+                        faults.append("the lad's mate's memory changed across the restart (%s "
+                                      "before, %s after)" % (r.get("r3MemoryBefore"), r.get("r3MemoryAfter")))
+                    h3 = num("r3HopsAfter")
+                    if r3a and h3 != 2:
+                        faults.append("the lad's mate came back %s retellings out, not 2" % h3)
                 notes.append("restartPair=A %s->%s, B %s->%s"
                              % (r.get("rumoursAboutABefore"), r.get("rumoursAboutAAfter"),
                                 r.get("rumoursAboutBBefore"), r.get("rumoursAboutBAfter")))
@@ -551,6 +668,50 @@ def selftest():
         ):
             faults, _n = judge(ok_text.replace(old_v, new_v), head_sha(real))
             check("reject/%s-is-caught" % name, bool(faults))
+
+    # THE REACH RULES, on a fixture that is the ONLY reach line.
+    GOOD_REACH = ("reach=A residentsHolding=3 thirdResident=REACHED thirdBody=spawned "
+                  "thirdTogether=yes thirdPairMetres=2.5 thirdHops=2 heardAt=D4-18h "
+                  "hoursAfterCrime=78 withinOneWeek=yes thirdTie=0.60 wouldArrive=0.217 "
+                  "floor=0.20 marginOverFloor=+0.017")
+    if real:
+        base_r = LF.join(l for l in real.split(LF) if not l.startswith("reach="))
+        ok_r = base_r.rstrip(chr(10)) + chr(10) + GOOD_REACH + chr(10)
+        faults, _n = judge(ok_r, head_sha(real))
+        check("accept/a-good-reach-line-passes", not faults, "; ".join(faults[:2]))
+        for name, old_v, new_v in (
+                ("reached-at-one-hop", "thirdHops=2", "thirdHops=1"),
+                ("reached-outside-the-week", "withinOneWeek=yes", "withinOneWeek=no"),
+                ("the-mill-disagrees-with-its-rule", "thirdResident=REACHED", "thirdResident=NOT-REACHED"),
+                ("the-meeting-never-ran", "thirdResident=REACHED", "thirdResident=NOT-RUN"),
+                ("only-two-hold-it", "residentsHolding=3", "residentsHolding=2"),
+                ("the-week-flag-lies", "hoursAfterCrime=78", "hoursAfterCrime=500"),
+                ("tied-stronger-than-the-street", "thirdTie=0.60", "thirdTie=1.00"),
+                ("a-lower-floor", "floor=0.20", "floor=0.10"),
+                ("an-unreadable-margin", "marginOverFloor=+0.017", "marginOverFloor=nan"),
+                ("the-mate-never-appeared", "thirdBody=spawned", "thirdBody=MISSING"),
+                ("they-met-apart", "thirdTogether=yes", "thirdTogether=no"),
+        ):
+            faults, _n = judge(ok_r.replace(old_v, new_v), head_sha(real))
+            check("reject/%s-is-caught" % name, bool(faults))
+        # AND THE HONEST MISS IS NOT A FAULT: under the floor, not reached.
+        miss = (GOOD_REACH.replace("thirdResident=REACHED", "thirdResident=NOT-REACHED")
+                .replace("wouldArrive=0.217", "wouldArrive=0.180")
+                .replace("marginOverFloor=+0.017", "marginOverFloor=-0.020")
+                .replace("residentsHolding=3", "residentsHolding=2")
+                .replace("heardAt=D4-18h", "heardAt=none")
+                .replace("hoursAfterCrime=78", "hoursAfterCrime=none")
+                .replace("withinOneWeek=yes", "withinOneWeek=no"))
+        faults, notes_m = judge(base_r.rstrip(chr(10)) + chr(10) + miss + chr(10), head_sha(real))
+        check("accept/a-miss-the-arithmetic-predicts-is-a-finding-not-a-fault",
+              not faults, "; ".join(faults[:2]))
+        # AND THE ROUNDING EDGE (finding 6): printed 0.200 against 0.20 with
+        # a NEGATIVE margin is a correct refusal, not a disagreement.
+        edge = miss.replace("wouldArrive=0.180", "wouldArrive=0.200").replace(
+            "marginOverFloor=-0.020", "marginOverFloor=-0.000")
+        faults, _n = judge(base_r.rstrip(chr(10)) + chr(10) + edge + chr(10), head_sha(real))
+        check("accept/a-refusal-just-under-the-floor-is-not-a-disagreement",
+              not faults, "; ".join(faults[:2]))
 
     # THE CONTROL'S OWN RULES, on a verdict that carries the line.
     GOOD_CTL = ("control=RAN controlCrime=B seenA=1 seenB=0 "

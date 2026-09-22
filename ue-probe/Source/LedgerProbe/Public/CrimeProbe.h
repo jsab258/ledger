@@ -643,6 +643,20 @@ namespace LedgerCrime
 	// B's glass is checked first because "glass1" and "glass0" differ only in
 	// the digit and neither contains the other; the order is kept anyway, so
 	// the day a third pane arrives nobody has to re-derive it.
+	inline bool IsAboutCrimeB(const LedgerCore::RumorPtr& R)
+	{
+		if (!R) { return false; }
+		const std::string Both = R->Content.Value + "/" + R->Content.Predicate;
+		return Both.find("glass1") != std::string::npos;
+	}
+
+	inline bool IsAboutCrimeA(const LedgerCore::RumorPtr& R)
+	{
+		if (!R || IsAboutCrimeB(R)) { return false; }
+		const std::string Both = R->Content.Value + "/" + R->Content.Predicate;
+		return Both.find("glass0") != std::string::npos;
+	}
+
 	inline void CountAboutCrimes(const std::vector<LedgerCore::GossiperPtr>& Ags,
 	                             int& AboutA, int& AboutB)
 	{
@@ -653,13 +667,27 @@ namespace LedgerCrime
 			if (!Ags[A]) { continue; }
 			for (std::vector<LedgerCore::RumorPtr>::size_type R = 0; R < Ags[A]->Rumors.size(); ++R)
 			{
-				if (!Ags[A]->Rumors[R]) { continue; }
-				const std::string Both = Ags[A]->Rumors[R]->Content.Value + "/"
-				                       + Ags[A]->Rumors[R]->Content.Predicate;
-				if (Both.find("glass1") != std::string::npos) { ++AboutB; }
-				else if (Both.find("glass0") != std::string::npos) { ++AboutA; }
+				if (IsAboutCrimeB(Ags[A]->Rumors[R])) { ++AboutB; }
+				else if (IsAboutCrimeA(Ags[A]->Rumors[R])) { ++AboutA; }
 			}
 		}
+	}
+
+	// THE PEOPLE WHO HOLD CRIME A, not the rumours: the stage-3 gate is about
+	// residents reached, and one person holding two tellings is one resident.
+	// Counted agent by agent through CountAboutCrimes, so "about A" is the
+	// same rule here as on the control line and across the restart.
+	inline int ResidentsHoldingA(const std::vector<LedgerCore::GossiperPtr>& Ags)
+	{
+		int Holding = 0;
+		for (std::vector<LedgerCore::GossiperPtr>::size_type I = 0; I < Ags.size(); ++I)
+		{
+			std::vector<LedgerCore::GossiperPtr> One(1, Ags[I]);
+			int A = 0, B = 0;
+			CountAboutCrimes(One, A, B);
+			if (A > 0) { ++Holding; }
+		}
+		return Holding;
 	}
 
 	// WHAT ONE RETELLING WOULD CARRY, by the mill's own rule: confidence x tie
@@ -673,18 +701,32 @@ namespace LedgerCrime
 
 	// THE REACH LINE: who holds crime A, at how many retellings, and when the
 	// last of them heard it. withinOneWeek is from the crime's own day and
-	// hour to the meeting's, in hours, and a week is 168 of them.
-	inline std::string ReachLine(const RoundReading& R3, int ResidentsHoldingA,
-	                             int CrimeDay, int CrimeHour, int MeetDay, int MeetHour)
+	// hour to the moment HIS MEMORY SAYS he heard it, in hours, and a week is
+	// 168 of them.
+	//
+	// MEASURED, NOT TYPED, after the independent check (22 September): the
+	// first version worked the hours out of the two constants that SET the
+	// meeting, so deleting the clock change would have printed the same 78.
+	// The heard time now comes off the mate's own memory, and a mate with no
+	// heard memory prints hoursAfterCrime=none. THE BODY AND THE DISTANCE are
+	// printed too, so a meeting that never happened says so instead of
+	// reading as the mill disagreeing with its own arithmetic.
+	inline std::string ReachLine(const RoundReading& R3, int ResidentsHoldingA, bool bThirdBody,
+	                             int CrimeDay, int CrimeHour, int HeardDay, int HeardHour)
 	{
-		const int Hours = (MeetDay - CrimeDay) * 24 + (MeetHour - CrimeHour);
+		const bool bHeard = HeardDay >= 0;
+		const int Hours = bHeard ? (HeardDay - CrimeDay) * 24 + (HeardHour - CrimeHour) : -1;
 		const double Would = WouldArrive(R3.ConfidenceIn, R3.Tie, R3.HopDecay);
 		return std::string("reach=A")
 		     + " residentsHolding=" + Int(ResidentsHoldingA)
 		     + " thirdResident=" + (R3.bRan ? (R3.Passed > 0 ? "REACHED" : "NOT-REACHED") : "NOT-RUN")
+		     + " thirdBody=" + (bThirdBody ? "spawned" : "MISSING")
+		     + " thirdTogether=" + YesNo(R3.bTogether)
+		     + " thirdPairMetres=" + F1(R3.PairMetres)
 		     + " thirdHops=" + Int(R3.Hops)
-		     + " hoursAfterCrime=" + Int(Hours)
-		     + " withinOneWeek=" + YesNo(Hours >= 0 && Hours <= 168)
+		     + " heardAt=" + (bHeard ? ("D" + Int(HeardDay) + "-" + Int(HeardHour) + "h") : std::string("none"))
+		     + " hoursAfterCrime=" + (bHeard ? Int(Hours) : std::string("none"))
+		     + " withinOneWeek=" + YesNo(bHeard && Hours >= 0 && Hours <= 168)
 		     + " thirdTie=" + F2(R3.Tie)
 		     + " wouldArrive=" + F3(Would)
 		     + " floor=" + F2(R3.MinShare)
@@ -1565,6 +1607,12 @@ namespace LedgerCrime
 			std::vector<LedgerCore::GossiperPtr> Empty;
 			CountAboutCrimes(Empty, A, B);
 			Expect(R, A == 0 && B == 0, "restart-pair-an-empty-mill-holds-nothing");
+			// RESIDENTS, NOT RUMOURS: w1 holds one about A, n2 holds one about
+			// A plus two others, the null holds nothing - two residents.
+			Expect(R, ResidentsHoldingA(Ags) == 2, "reach-counts-people-not-rumours");
+			G1->Rumors.push_back(std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass0")));
+			Expect(R, ResidentsHoldingA(Ags) == 2, "reach-two-tellings-are-still-one-person");
 		}
 
 		// R. THE THIRD RESIDENT'S ARITHMETIC. The street's own numbers, and the
@@ -1580,18 +1628,41 @@ namespace LedgerCrime
 			RoundReading R3;
 			R3.bRan = true; R3.Passed = 1; R3.Hops = 2; R3.Tie = kR3Tie;
 			R3.HopDecay = 0.8; R3.MinShare = 0.2; R3.ConfidenceIn = Lad;
-			const std::string L = ReachLine(R3, 3, kCrimeDay, kCrimeHour, kRound3Day, kRound3Hour);
+			R3.bTogether = true; R3.PairMetres = 2.5;
+			const std::string L = ReachLine(R3, 3, true, kCrimeDay, kCrimeHour, kRound3Day, kRound3Hour);
 			Expect(R, L.find("thirdResident=REACHED") != std::string::npos
 			          && L.find("withinOneWeek=yes") != std::string::npos
-			          && L.find("hoursAfterCrime=78") != std::string::npos,
+			          && L.find("hoursAfterCrime=78") != std::string::npos
+			          && L.find("heardAt=D4-18h") != std::string::npos,
 			       "the-reach-line-says-reached-inside-the-week");
 			Expect(R, L.find("marginOverFloor=+0.0") != std::string::npos,
 			       "and-prints-the-margin-with-its-sign");
-			Expect(R, ReachLine(R3, 3, 1, 12, 9, 12).find("withinOneWeek=no") != std::string::npos,
+			Expect(R, L.find("thirdBody=spawned") != std::string::npos
+			          && L.find("thirdTogether=yes") != std::string::npos,
+			       "and-says-he-was-there-and-with-the-lad");
+			Expect(R, ReachLine(R3, 3, true, 1, 12, 9, 12).find("withinOneWeek=no") != std::string::npos,
 			       "eight-days-later-is-outside-the-week");
+			Expect(R, ReachLine(R3, 3, true, 1, 12, -1, -1).find("hoursAfterCrime=none") != std::string::npos
+			          && ReachLine(R3, 3, true, 1, 12, -1, -1).find("withinOneWeek=no") != std::string::npos,
+			       "no-heard-memory-is-no-time-and-not-within-the-week");
+			Expect(R, ReachLine(R3, 3, false, 1, 12, 4, 18).find("thirdBody=MISSING") != std::string::npos,
+			       "a-mate-who-never-appeared-says-so");
 			RoundReading None;
-			Expect(R, ReachLine(None, 2, 1, 12, 4, 18).find("thirdResident=NOT-RUN") != std::string::npos,
+			Expect(R, ReachLine(None, 2, false, 1, 12, -1, -1).find("thirdResident=NOT-RUN") != std::string::npos,
 			       "a-meeting-that-never-ran-says-so");
+			// THE PREDICATES THE ROUND FILTERS ON: A's glass, B's glass, and
+			// a rumour about something else, which is about neither.
+			LedgerCore::RumorPtr OnA = std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass0"));
+			LedgerCore::RumorPtr OnB = std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "broke_a_window", "east_parade_glass1"));
+			LedgerCore::RumorPtr Other = std::make_shared<LedgerCore::Rumor>(
+				LedgerCore::Fact("player", "was_seen_on", "quay_street"));
+			Expect(R, IsAboutCrimeA(OnA) && !IsAboutCrimeB(OnA)
+			          && IsAboutCrimeB(OnB) && !IsAboutCrimeA(OnB)
+			          && !IsAboutCrimeA(Other) && !IsAboutCrimeB(Other)
+			          && !IsAboutCrimeA(LedgerCore::RumorPtr()),
+			       "about-A-and-about-B-are-told-apart-rumour-by-rumour");
 		}
 
 		// A. THE ARREST, ON FIXED READINGS. Built by hand rather than traced,
