@@ -111,17 +111,49 @@ trap '' PIPE
 # two commands, because "the licence audit failed" and "the licence auditor is
 # broken" are different facts with different fixes, and one step could not say
 # which had happened.
+# THE PYTHON THAT ACTUALLY RUNS, RESOLVED ONCE, RATHER THAN THE FIRST NAME
+# THAT ANSWERS.
+#
+# EIGHT OF THE SIXTEEN CHECKS BELOW HAD NEVER RUN ON JAFAR'S PC and nothing
+# said so. They invoke `python3`, and on Windows `python3` is the MICROSOFT
+# STORE APP EXECUTION ALIAS: a stub that prints "Python was not found; run
+# without arguments to install from the Microsoft Store" and exits. Every one
+# of them came back failed with a single line of output that looks like an
+# installation problem, in a suite whose whole purpose is to be run before a
+# commit - so the shape check, the attribution audit, the canon gate and both
+# sky checks were simply never run here, while passing in CI, where the
+# runner's PATH has a real python3 on it.
+#
+# THE SAME ALIAS HAS NOW BITTEN THREE TIMES IN ONE DAY: this, the stop hook
+# (which would have permitted every stop, silently, forever) and the Blender
+# render driver (which refused with NO-BLENDER). It answers to its name, it
+# exits without an error anybody notices, and it is on PATH ahead of the real
+# interpreter. So the rule here is the rule the hook already uses: a
+# candidate has to EVALUATE SOMETHING before it is believed.
+PY=""
+for _cand in python3 python py; do
+  if [ "$("$_cand" -c 'print(7*6)' 2>/dev/null)" = "42" ]; then PY="$_cand"; break; fi
+done
+if [ -z "$PY" ]; then
+  echo "ci-checks refused: NO WORKING PYTHON. None of python3, python or py" \
+       "could evaluate anything on this machine. Eight of the sixteen checks" \
+       "below are python, so this is not a clean run with a few skips - it is" \
+       "half the suite unmeasured, and it says so rather than reporting it."
+  exit 3
+fi
+echo "ci-checks python=$PY"
+
 real_table() {
   printf '%s\t%s\t%s\n' \
     reach-check           "$REPO"                 "bash tools/reach-check.sh" \
-    shape-check           "$REPO"                 "python3 tools/shape-check.py" \
-    shape-check-selftest  "$REPO"                 "python3 tools/shape-check.py --selftest" \
-    attribution           "$REPO"                 "python3 tools/attribution-check.py" \
-    attribution-selftest  "$REPO"                 "python3 tools/attribution-check.py --selftest" \
-    canon-gate            "$REPO"                 "python3 tools/canon-gate.py --corpus" \
-    canon-gate-selftest   "$REPO"                 "python3 tools/canon-gate.py --selftest" \
-    sky-material-selftest "$REPO"                 "python3 tools/ue/make_sky_material.py --selftest" \
-    sky-longlat-selftest  "$REPO"                 "python3 tools/hdr-to-longlat.py --selftest" \
+    shape-check           "$REPO"                 "$PY tools/shape-check.py" \
+    shape-check-selftest  "$REPO"                 "$PY tools/shape-check.py --selftest" \
+    attribution           "$REPO"                 "$PY tools/attribution-check.py" \
+    attribution-selftest  "$REPO"                 "$PY tools/attribution-check.py --selftest" \
+    canon-gate            "$REPO"                 "$PY tools/canon-gate.py --corpus" \
+    canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
+    sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
+    sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     soak                  "$REPO"                 "dotnet run --project ledger/Soak -c Release" \
     save-chaos            "$REPO"                 "dotnet run --project ledger/SaveChaos -c Release" \

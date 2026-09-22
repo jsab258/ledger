@@ -39,6 +39,7 @@
 
 #include "GameTime.h"
 #include "Gossip.h"
+#include "SaveCodec.h"
 #include "MemoryStore.h"
 #include "Observation.h"
 #include "Perception.h"
@@ -608,6 +609,219 @@ namespace Golden
 		Put(R, "rumors", FromInt((long long)Mill.Get("w1")->Rumors.size()));
 	}
 
+	// THE RUMOUR HALF OF THE SAVE, AND IT IS JSON RATHER THAN MARKDOWN.
+	//
+	// ScenarioSaveReload above pins a MEMORY surviving a save, and the save
+	// format there is the markdown, because the C#'s own summary says NPC
+	// memories persist separately and are not in the save file. A RUMOUR is
+	// not in that markdown. It lives in the GossipMill and the mill goes into
+	// the save FILE, under "agents", as JSON - a different format, a
+	// different parser, and a different set of ways to lose something. Until
+	// this scenario existed the port could not read a save at all.
+	//
+	// THE BYTES ARE THE C#'s, NOT MINE, and that is the whole point of the
+	// saveFixture row below. The port cannot CAPTURE - there is no writer
+	// here and there does not need to be - so if it restored from a fixture
+	// it had written itself the comparison would prove only that the port
+	// agrees with the port. This literal is what SaveCodec.Capture really
+	// wrote, emitted by the C# as its own row, so the two engines are
+	// demonstrably reading the same text before either of them reads it.
+	inline void ScenarioGossipRestore(Readings& R)
+	{
+		static const std::string Fixture =
+			"{\"version\":2,\"day\":3,\"hour\":9,\"minute\":0,\"clean\":0,\"dirty\":0"
+			  ",\"washed\":0,\"patience\":1,\"exposedStreak\":0,\"jobsDone\":0,\"job"
+			  "sMissed\":0,\"missedNights\":[],\"doneNights\":[],\"daysClosed\":0,"
+			  "\"verdict\":\"Ongoing\",\"verdictReason\":\"\",\"openMode\":false,\"out"
+			  "fitCutOff\":false,\"fallPending\":false,\"falls\":0,\"extra\":{},\"k"
+			  "nowledge\":[],\"secrets\":[],\"beats\":[],\"debts\":[],\"discredited"
+			  "\":[],\"agents\":[{\"id\":\"w1\",\"loyalty\":0.375,\"leashed\":true,\"su"
+			  "spicion\":0,\"suppressed\":[\"player|owes_money_d1\"],\"rumors\":[{"
+			  "\"subj\":\"player\",\"pred\":\"broke_window_d2\",\"val\":\"yes\",\"origin"
+			  "\":\"w1\",\"summary\":\"I saw him put the window in at the Parade\""
+			  ",\"conf\":0.95,\"hops\":0,\"sensitive\":false,\"indelible\":false},{"
+			  "\"subj\":\"player\",\"pred\":\"owes_money_d1\",\"val\":\"yes\",\"origin\":"
+			  "\"w1\",\"summary\":\"they say he is behind with Rita\",\"conf\":0.4,"
+			  "\"hops\":0,\"sensitive\":true,\"indelible\":false}],\"facts\":[{\"sub"
+			  "j\":\"player\",\"pred\":\"broke_window_d2\",\"val\":\"yes\"}]},{\"id\":\"n"
+			  "1\",\"loyalty\":0.5,\"leashed\":false,\"suspicion\":0,\"suppressed\":"
+			  "[],\"rumors\":[],\"facts\":[]}]}";
+
+		// THE RESTART, MODELLED HONESTLY: a mill built from the authoring
+		// with none of the play in it, and the save laid over the top. That
+		// is what a restart is. Restoring into the mill that already holds
+		// the rumours would prove nothing whatever.
+		GossipMill Mill(std::make_shared<SocialGraph>());
+		Mill.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		Mill.Add(std::make_shared<Gossiper>("n1", "the barmaid",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "night"));
+		Put(R, "rumorsBeforeRestore", FromInt((long long)Mill.Get("w1")->Rumors.size()));
+		Put(R, "saveFixture", Escape(Fixture));
+
+		Save::RestoreMillAgents(Fixture, Mill);
+
+		GossiperPtr W = Mill.Get("w1");
+		Put(R, "rumorsAfter", FromInt((long long)W->Rumors.size()));
+		Put(R, "loyalty", FromDouble(W->Loyalty));
+		Put(R, "leashed", FromBool(W->Leashed));
+		Put(R, "suppressedCount", FromInt((long long)W->Suppressed.size()));
+		Put(R, "factsAfter", FromInt(W->Knowledge ? (long long)W->Knowledge->Facts.size() : 0));
+		for (std::vector<RumorPtr>::size_type I = 0; I < W->Rumors.size(); ++I)
+		{
+			const RumorPtr& Rm = W->Rumors[I];
+			const std::string K = FromInt((long long)I);
+			Put(R, "subj" + K, Escape(Rm->Content.Subject));
+			Put(R, "pred" + K, Escape(Rm->Content.Predicate));
+			Put(R, "val" + K, Escape(Rm->Content.Value));
+			Put(R, "conf" + K, FromDouble(Rm->Confidence));
+			Put(R, "hops" + K, FromInt((long long)Rm->Hops));
+			Put(R, "sensitive" + K, FromBool(Rm->Sensitive));
+			Put(R, "indelible" + K, FromBool(Rm->Indelible));
+			Put(R, "summary" + K, Escape(Rm->Summary));
+			Put(R, "origin" + K, Escape(Rm->OriginId));
+		}
+
+		// REJECTING HALF, AND IT IS THE HALF SaveChaos FOUND FROM THE OTHER
+		// END. A rumour record with no "subj" is dropped whole, because a
+		// fact with no subject is not a fact - the C# cannot build one from a
+		// null and refuses; in C++ a std::string cannot BE null, so the
+		// missing key has to be caught in the codec or the refusal would
+		// vanish in translation and a belief about nobody would walk into a
+		// conversation. An agent id this build never authored is skipped
+		// rather than invented.
+		static const std::string Junk =
+			"{\"agents\":["
+			"{\"id\":\"w1\",\"loyalty\":0.5,\"leashed\":false,\"suspicion\":0,"
+			"\"suppressed\":[],\"rumors\":["
+			"{\"pred\":\"p\",\"val\":\"v\",\"conf\":0.5,\"hops\":1},"
+			"{\"subj\":\"player\",\"pred\":\"kept\",\"val\":\"yes\",\"conf\":0.25,\"hops\":2}"
+			"],\"facts\":[]},"
+			"{\"id\":\"nobody_authored_this\",\"loyalty\":0.9,\"rumors\":[]}"
+			"]}";
+		GossipMill JunkMill(std::make_shared<SocialGraph>());
+		JunkMill.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		Save::RestoreMillAgents(Junk, JunkMill);
+		GossiperPtr J = JunkMill.Get("w1");
+		Put(R, "junkRumors", FromInt((long long)J->Rumors.size()));
+		if (!J->Rumors.empty())
+		{
+			Put(R, "junkKeptPred", Escape(J->Rumors[0]->Content.Predicate));
+			Put(R, "junkKeptConf", FromDouble(J->Rumors[0]->Confidence));
+		}
+		// THE SAME FOUR CASES, AND THE SAME BYTES. See the C# side for why
+		// each record is here; the short version is that MiniJson's helpers
+		// are stricter than JSON and a reader that asks only "is there
+		// text?" disagrees with the engine about all four.
+		static const std::string Strict =
+			"{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.25,\"leashed\""
+			  ":1,\"suspicion\":0,\"suppressed\":[\"kept|topic\"],\"rumors"
+			  "\":[{\"subj\":null,\"pred\":\"p\",\"val\":\"v\",\"conf\":0.9"
+			  ",\"hops\":1},{\"subj\":5,\"pred\":\"p\",\"val\":\"v\",\"conf"
+			  "\":0.9,\"hops\":1},{\"subj\":\"\",\"pred\":\"empty\",\"val\""
+			  ":\"v\",\"conf\":0.8,\"hops\":3,\"sensitive\":true},{\"subj\""
+			  ":\"player\",\"pred\":\"flagged\",\"val\":\"v\",\"conf\":0.7,"
+			  "\"hops\":0,\"indelible\":1,\"sensitive\":\"true\"}],\"facts"
+			  "\":[]}]}";
+		GossipMill StrictMill(std::make_shared<SocialGraph>());
+		StrictMill.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		Save::RestoreMillAgents(Strict, StrictMill);
+		GossiperPtr SM = StrictMill.Get("w1");
+		Put(R, "strictFixture", Escape(Strict));
+		Put(R, "strictRumors", FromInt((long long)SM->Rumors.size()));
+		Put(R, "strictLoyalty", FromDouble(SM->Loyalty));
+		Put(R, "strictLeashed", FromBool(SM->Leashed));
+		Put(R, "strictSuppressed", FromInt((long long)SM->Suppressed.size()));
+		for (std::vector<RumorPtr>::size_type I = 0; I < SM->Rumors.size(); ++I)
+		{
+			const std::string K = FromInt((long long)I);
+			Put(R, "strictPred" + K, Escape(SM->Rumors[I]->Content.Predicate));
+			Put(R, "strictSubjLen" + K,
+				FromInt((long long)SM->Rumors[I]->Content.Subject.size()));
+			Put(R, "strictConf" + K, FromDouble(SM->Rumors[I]->Confidence));
+			Put(R, "strictSensitive" + K, FromBool(SM->Rumors[I]->Sensitive));
+			Put(R, "strictIndelible" + K, FromBool(SM->Rumors[I]->Indelible));
+		}
+
+		Put(R, "junkFixture", Escape(Junk));
+
+		// THE SAME CASES AND THE SAME BYTES. See the C# side for what each
+		// record is for; every one of them was a real disagreement between
+		// the two engines reading the same file, found by somebody who had
+		// not seen how this was written.
+		static const std::string Review =
+			"{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.1,\"loyalty\":0."
+			  "9,\"suppressed\":[\"same\",\"same\",\"other\"],\"rumors\":"
+			  "[{\"subj\":\"player\",\"pred\":\"boolconf\",\"val\":\"v\","
+			  "\"conf\":true,\"hops\":0},{\"subj\":\"player\",\"pred\":\""
+			  "quotedhops\",\"val\":\"v\",\"conf\":0.5,\"hops\":\"2\"},{"
+			  "\"subj\":\"player\",\"pred\":\"hugehops\",\"val\":\"v\",\""
+			  "conf\":0.5,\"hops\":1e18},{\"subj\":\"player\",\"pred\":\""
+			  "escapes\",\"val\":\"v\",\"conf\":0.5,\"hops\":0,\"summary"
+			  "\":\"\\r\\n\\t\\b\\f\\\\\\\"\\/\\u0041\"}],\"facts\":[]}]}";
+		GossipMill ReviewMill(std::make_shared<SocialGraph>());
+		ReviewMill.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		Save::RestoreMillAgents(Review, ReviewMill);
+		GossiperPtr RV = ReviewMill.Get("w1");
+		Put(R, "reviewFixture", Escape(Review));
+		Put(R, "reviewLoyalty", FromDouble(RV->Loyalty));
+		Put(R, "reviewSuppressed", FromInt((long long)RV->Suppressed.size()));
+		Put(R, "reviewRumors", FromInt((long long)RV->Rumors.size()));
+		for (std::vector<RumorPtr>::size_type I = 0; I < RV->Rumors.size(); ++I)
+		{
+			const std::string K = RV->Rumors[I]->Content.Predicate;
+			Put(R, "review_" + K + "_conf", FromDouble(RV->Rumors[I]->Confidence));
+			Put(R, "review_" + K + "_hops", FromInt((long long)RV->Rumors[I]->Hops));
+		}
+		// BY CODE POINT, because the table's escaping drops a carriage
+		// return and would have hidden the difference this pins.
+		{
+			RumorPtr Esc;
+			for (std::vector<RumorPtr>::size_type I = 0; I < RV->Rumors.size(); ++I)
+			{
+				if (RV->Rumors[I]->Content.Predicate == "escapes") { Esc = RV->Rumors[I]; }
+			}
+			Put(R, "reviewSummaryLen",
+				FromInt(Esc ? (long long)Esc->Summary.size() : -1));
+			if (Esc)
+			{
+				for (std::string::size_type I = 0; I < Esc->Summary.size(); ++I)
+				{
+					Put(R, "reviewSummaryCp" + FromInt((long long)I),
+						FromInt((long long)(unsigned char)Esc->Summary[I]));
+				}
+			}
+		}
+
+		// AND A BROKEN SAVE CHANGES NOTHING AT ALL.
+		static const std::string Broken =
+			"{\"agents\":[{\"id\":\"w1\",\"loyalty\":0.9,\"rumors\":[{"
+			  "\"subj\":\"player\",\"pred\":\"fromthesave\",\"val\":\"v\""
+			  ",\"conf\":0.9,\"hops\":0}]}],\"day\":01x}";
+		GossipMill KeptMill(std::make_shared<SocialGraph>());
+		KeptMill.Add(std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>(), "day"));
+		KeptMill.Witness("w1", Fact("player", "already_knew", "yes"),
+		                 "she knew this before the load", false, GameTime(1, 9, 0), 0.8);
+		KeptMill.Get("w1")->Loyalty = 0.42;
+		Save::RestoreMillAgents(Broken, KeptMill);
+		Put(R, "brokenFixture", Escape(Broken));
+		Put(R, "brokenRumors", FromInt((long long)KeptMill.Get("w1")->Rumors.size()));
+		Put(R, "brokenLoyalty", FromDouble(KeptMill.Get("w1")->Loyalty));
+		Put(R, "brokenKeptPred", KeptMill.Get("w1")->Rumors.empty()
+			? std::string("none")
+			: Escape(KeptMill.Get("w1")->Rumors[0]->Content.Predicate));
+
+		// A RESTORE REPLACES RATHER THAN APPENDS, which is the difference
+		// between reloading a save and doubling every rumour in it - and
+		// reloading is a thing a player does.
+		Save::RestoreMillAgents(Fixture, Mill);
+		Put(R, "restoreTwiceRumors", FromInt((long long)Mill.Get("w1")->Rumors.size()));
+	}
+
 	// THE SAVE, AND IT IS THE MARKDOWN. Every row here answers one the C#
 	// emits in PerceptionGolden's own save_reload block; the two are written
 	// from the same fixtures on purpose, because a round trip proved against
@@ -718,6 +932,7 @@ namespace Golden
 		else if (Name == "knowledge")             ScenarioKnowledge(R);
 		else if (Name == "summaries")             ScenarioSummaries(R);
 		else if (Name == "save_reload")           ScenarioSaveReload(R);
+		else if (Name == "gossip_restore")        ScenarioGossipRestore(R);
 		return R;
 	}
 
@@ -783,7 +998,7 @@ namespace Golden
 			"gossip_contradiction", "gossip_exposure", "gossip_suppressed",
 			"gossip_leashed", "gossip_indelible", "gossip_indelible_floor",
 			"witness_upgrade", "observation_four", "knowledge", "summaries",
-			"save_reload", 0
+			"save_reload", "gossip_restore", 0
 		};
 		return Names[Index];
 	}
