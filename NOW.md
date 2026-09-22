@@ -536,7 +536,15 @@ WHILE THE CARD IS BUSY - the work that does not need it.
 - [ ] RUMOURS SURVIVING A RESTART, the witnessed and unwitnessed pair: through
       save, restart and reload in the packaged build, with the automatic
       check - the control must still hold nothing after the reload.
-- [ ] THE SMALL-MODEL TEST with llama.cpp on Vulkan, when the card is free.
+- [x] THE SMALL-MODEL TEST with llama.cpp on Vulkan, when the card is free.
+      DONE: the intent router's own prompt and validator on Qwen3-4B Q4_K_M,
+      llama.cpp b11111 Vulkan, 42 lines with one right answer each. Right
+      33/42 (lexical path alone 18/42); WELL FORMED AND WRONG 8/42 - all
+      three command lines obeyed, all three novel attempts missed, a paid
+      tip for information routed to pay_off. JSON-constrained mode: the same
+      33/42. Median 432 ms, 90th percentile 734 ms. Report in
+      production/research/conversation-model-capability/SMALL-MODEL-TEST.md;
+      the reading is decision 4 in FOR-JAFAR.md.
 - [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines, before
       08:00: what got done, what is waiting on him, what went wrong.
 
