@@ -118,24 +118,54 @@ ENTRY POINT AND READ IT, do not propose a mechanism.
 
 ### WHAT IS IN FLIGHT AND WHAT IS NEXT
 
-IN FLIGHT: queue 370, the spawn-log column, with an instrument-builder. It is
-the LAST unmet precondition queue 389 names for the facade; 403 was the other
-and it landed.
+LANDED 23:49Z AND READ: THE LAMP COLUMN'S FOURTH RENDER, run 35669115224 on
+sha 595484b6, committed at 6f77ff59 on art/atlas-01. `status=RAN
+objectsBuilt=10/10-planned previewsWrote=4/4 crossCheckAgree=10/10
+manifoldParts=10/10 elapsedSeconds=3.3`. Recorded in batch
+`b006-lighting-column-01` as attempt 4 OPEN, not rejected: no gate refused it
+and no named judge has, and silence is not a refusal.
 
-NEXT, once 370 lands: the terrace front AUTHOR station. D53 POINT 5 GOVERNS AND
+THE RUN WENT RED AND THE RENDER WAS FINE. Lane fault, fixed in the same commit.
+The render step passed only while the COUNT of a recipe's PNGs rose, and a
+recipe overwrites its own four frames, so the count can rise exactly once per
+recipe ever. Proven from the art branch and not from the step: 0
+lighting-column PNGs at 11d6cf51, the parent of the first such run, WHICH
+PASSED, and 4 at each of the three later runs, EVERY ONE OF WHICH WENT RED
+while publishing a complete verdict. The gate now counts frames written at or
+after the instant Blender started; 5 cases tested in pwsh here, accepting first,
+the re-render case passing where the old condition fails. A dispatch went out
+to prove it green on his PC.
+
+THE SILHOUETTE IS BLOCKED ON THE REFERENCE, NOT ON THE RECIPE, and that is
+queue 421. The Hook sheet's lamp is 25px wide on a 4px pole; three traces of
+the same crop give 2.27:1, 3.3:1 and 3.0:1, because the head is 8 rows tall at
+4 sigma below sky and 11 at a looser cut. Attempt 4 was authored to hit 2.279
+against that. What the sheet DOES settle is threshold-robust: 0 of 39 traced
+rows enclose sky, so it is a KINK with the lantern hanging off it, never an
+arch; both renders are arches, attempt 4 enclosing sky in 105 of 139 dark rows
+against attempt 3's 126 of 160. Normalised by canon's 0.114 m shaft, the sheet
+is 6.0 pole-diameters wide and 2.0 tall against attempt 4's 6.80 and 2.98.
+
+WAITING ON HIM: a card under WAITING in `production/decision-queue.md`, written
+by the Producer tonight, deadline 2026-09-23, default D. Four options: raise the
+reference's resolution, find a period photograph on the allowlist, rule that the
+sheet governs character only and the spec governs proportion, or stop and start
+the facades with the constraint written into their brief. The studio's
+recommendation is C or D. DO NOT SPEND A FIFTH ROUND TRIP ON THE LAMP BEFORE HE
+ANSWERS: tuning against a ruler with a 37 percent swing is what the last two
+cost.
+
+NEXT, and it does not wait on the lamp: the terrace front AUTHOR station. Both
+preconditions queue 389 names have landed, 403 and 370. D53 POINT 5 GOVERNS AND
 IS NOT OPTIONAL: the facade is authored with its wear as a SEPARABLE LAYER so
 coverage can be printed, it prints `wearCoverage` with its batch, it is the
 FIRST POINT IN THE SERIES, and THE FLOOR IS NOT TO BE INVENTED. Batch
 `b005-terrace-front-01` is open in `production/throughput.md` with its BEFORE
 reading at 18:42:08Z; the AFTER reading is owed when it resolves and a rejected
-attempt must show in `attemptsRejected` rather than as silence.
-
-WAITING ON HIM: the lamp column card, `production/decision-queue.md` under
-WAITING, deadline 2026-09-23, default KEEP THE BLOCKOUT. The kit lamp columns
-are 0.37m SQUARE in section against the vignette's 0.114m ROUND shaft, the real
-diameter of a British lighting column, so a kit lamp in the photoreal frame is
-a post 3.2 times too fat. His instruction is already satisfied in the Unity
-town; a photoreal round tapered column is held by nothing in the tree.
+attempt must show in `attemptsRejected` rather than as silence. The spec is
+`production/specs/terrace-fronts.md`, 644 lines, canon-gate clean, and under
+his 2026-09-21 rule the brief NAMES the sheet and the research that govern it:
+`game-design/research/GOVERNS.md` is the index that makes that possible.
 
 OPEN AND UNSETTLED: City Sample is CLAIMED but its licence is unread, and the
 allowlist admits "Fab purchases under the Fab Standard License" which a free
