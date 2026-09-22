@@ -229,29 +229,32 @@ nothing.
 
 ## Where things stand
 
-THE REFERENCE WAS WRONG ALL WEEK. Every visual comparison since the 9
-September ruling went to Codex's retired sheet, which still resolves on its
-branch, so nothing errored and nothing warned. The approved sheet is now at
-production/reference/hook-sheet.png and that directory is the only place a
-reference lives - a rule in CLAUDE.md, a refusal in the tool.
+THE REFERENCE WAS WRONG ALL WEEK, and that is the finding the sitting turns
+on. Every visual comparison since the 9 September ruling went to Codex's
+retired sheet, which STILL RESOLVES on its branch, so nothing errored and
+nothing warned. References now live in production/reference/ and nowhere
+else, and the pair tool refuses rather than falling back.
 
-READ AGAINST THE RIGHT PICTURE, the street was 38 per cent too dark, grey
-where the reference is warm, and the wrong SHAPE: the sheet's street panel
-is 1.89:1 and we were rendering 1.27:1, which is eleven degrees of
-horizontal field and put our parade a third further off than the
-reference's however the camera moved. It now measures mean 111 against 120
-and warmth +12 to +19 against +18.5, from 74 and +0.7 this morning.
+READ AGAINST THE RIGHT PICTURE the street measures, against the sheet's own
+four numbers: mean 119.8 against 119.7, highlights 225 against 229, warmth
++19.3 against +18.5, and 21.6 per cent of pixels carrying real colour
+against 25.8. This morning those read 74.4, 163, +0.7 and 2.0.
 
-THE STREET GAINED: white sash windows, which it had none of and which are
-what the reference is made of; a crowned road, which the spec had specified
-and nobody had built; fourteen pavement props the spec had already placed
-by name; one invented car; aerials on two stacks; and shops on the near
-west block by Jafar's ruling, now a line in canon.
+WHAT THE STREET GAINED: white sash windows it had none of; shops with rooms
+behind their glass, which lit the dusk frame as a side effect; a crowned
+road; fourteen pavement props the spec had already placed by name; one
+invented car; aerials; shops on the near west block by Jafar's ruling, now
+in canon; depth beyond thirty metres on the third attempt; and weather and
+wear, which the roadmap calls the strategy and the street had none of.
 
-THE SIMULATION IS WHERE IT WAS. A crime is committed by a key press, a
-memory survives a save and a reload against thirty-eight golden rows, and
-the rumours-across-a-restart half is untouched today.
+THE SIMULATION GAINED A SAVE. The port could not read one this morning; it
+reads and writes one now, an independent check broke it nine ways and every
+one is fixed and pinned, and in the PACKAGED BUILD a rumour survives a save,
+a restart and a reload - the witness who SAW it coming back first-hand and
+the one who HEARD it one hop out. Something finally reads the crime verdict,
+and it reads the negative halves.
 
-A STOP HOOK now refuses to let a turn end while the standing list has work
-on it and the sitting has time left. It is the only automation this session
-gets and Jafar named it.
+THREE THINGS WAIT ON JAFAR OR ON TIME: llama.cpp Vulkan next sitting for the
+hardware floor; the town past the end of the street, which is stage 6; and
+the six character sheets, which are stage 2 and whose terms are not defined
+anywhere yet.
