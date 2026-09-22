@@ -378,6 +378,9 @@ MATERIALS = (
     # CHIMNEY POTS, sampled off the new sheet's nearest stack, 22 September:
     # two terracotta at 126/76/65 and 123/77/62 sRGB, one buff at 196/169/127.
     ("pot_clay",    (0.203, 0.073, 0.051), 0.80),
+    # A DISH IS PALE GREY PRESSED STEEL, and it is the palest thing on the
+    # upper wall, which is why the sheet's reads at all at that size.
+    ("dish_grey",   (0.420, 0.425, 0.420), 0.45),
     # RUBBED BRICK, for the window arches: on the new sheet the arch over
     # each window reads 123/67/49 against the wall beside it at 115/63/46 -
     # the same clay, finer and a touch brighter. Scaled off brick_red by that
@@ -1880,6 +1883,8 @@ def plan_street(root, spec_rel=SPEC_REL):
     _backdrop(out)
     # AND THE OTHER END, since the camera turned to face it.
     _north_rise(out)
+    # THE DISH, on the cab office, where the approved sheet has it.
+    _dish(out)
     # THE PAVEMENT TURNS THE CORNER at each block's south end. The footways
     # stop at the frontage line, and past a terrace's gable there was no
     # ground at all: from the turned camera the sky map's green field showed
@@ -2210,6 +2215,89 @@ RISE_TIER_STEP_Z = 9.0
 RISE_ROW_DEPTH = 8.0
 RISE_SETBACK = 3.0
 RISE_Y_SPAN = (-120.0, 60.0)
+
+
+#: THE SATELLITE DISH, 22 September. On the approved sheet a small dish sits
+#: high on the wall of the cab office, under the eaves beside the upper
+#: right-hand window, and Jafar ruled it CITABLE the same night: "the
+#: household research records dishes as new and contested in 1990". A 1990
+#: domestic dish is about 60 cm across, solid, on a wall bracket with its
+#: receiver held out on an arm in front of it. It is AIMED rather than
+#: placed: the satellites a British dish looked at in 1990 sit low in the
+#: southern sky to the south-east, so on a front wall it looks along the
+#: wall to the south, tipped up about 25 degrees. No make and no mark.
+DISH_D_M, DISH_DEPTH_M, DISH_STANDOFF_M, DISH_SIDES = 0.60, 0.07, 0.35, 12
+DISH_AT = (8.35, 5.60)          # street x and height, on east_parade bay 0
+DISH_AIM = (-0.85, -0.30, 0.43)  # along the wall to the south, out, and up
+
+
+def _norm(v):
+    L = math.sqrt(sum(c * c for c in v))
+    return tuple(c / L for c in v)
+
+
+def _cross(a, b):
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def _rod(out, pid, material, p0, p1, w, note=""):
+    """A square-section rod between two points, as one mesh."""
+    d = _norm(tuple(b - a for a, b in zip(p0, p1)))
+    up = (0.0, 0.0, 1.0) if abs(d[2]) < 0.9 else (1.0, 0.0, 0.0)
+    u = _norm(_cross(d, up))
+    v = _cross(d, u)
+    h = w / 2.0
+    corners = [(+h, +h), (-h, +h), (-h, -h), (+h, -h)]
+    verts = []
+    for p in (p0, p1):
+        for a, b in corners:
+            verts.append(tuple(p[i] + a * u[i] + b * v[i] for i in range(3)))
+    faces = [(0, 1, 2, 3), (7, 6, 5, 4)]
+    for i in range(4):
+        j = (i + 1) % 4
+        faces.append((i, j, 4 + j, 4 + i))
+    out.append({"id": pid, "material": material, "kind": "mesh",
+                "verts": verts, "faces": faces, "note": note})
+
+
+def _dish(out):
+    """The dish, its wall bracket and its receiver arm, in street coordinates."""
+    x, z = DISH_AT
+    wall_y = STREET_FRONTAGE_M
+    c = (x, wall_y - DISH_STANDOFF_M, z)
+    n = _norm(DISH_AIM)
+    u = _norm(_cross(n, (0.0, 0.0, 1.0)))
+    v = _cross(n, u)
+    r = DISH_D_M / 2.0
+    ring_front, ring_back = [], []
+    for k in range(DISH_SIDES):
+        t = 2.0 * math.pi * k / DISH_SIDES
+        e = tuple(c[i] + r * (math.cos(t) * u[i] + math.sin(t) * v[i]) for i in range(3))
+        ring_front.append(e)
+        # THE BOWL: the rim stands forward of the centre by the dish's depth,
+        # so the back ring is the rim pulled back along the aim.
+        ring_back.append(tuple(e[i] - DISH_DEPTH_M * n[i] for i in range(3)))
+    back_c = tuple(c[i] - DISH_DEPTH_M * 0.4 * n[i] for i in range(3))
+    verts = ring_front + ring_back + [c, back_c]
+    m = DISH_SIDES
+    faces = []
+    for k in range(m):
+        j = (k + 1) % m
+        faces.append((2 * m, j, k))               # the bowl's face, rim to centre
+        faces.append((k, j, m + j, m + k))        # the rim's thickness
+        faces.append((2 * m + 1, m + k, m + j))   # the back
+    out.append({"id": "satellite_dish", "material": "dish_grey", "kind": "mesh",
+                "verts": verts, "faces": faces,
+                "note": "60cm-solid-dish/1990/ruled-citable-by-Jafar-22-September"})
+    # THE BRACKET off the wall to the back of the dish, and the ARM that
+    # holds the receiver out in front of it.
+    _rod(out, "satellite_dish_bracket", "steel_dark",
+         (x, wall_y, z - 0.05), back_c, 0.04, "the-wall-bracket")
+    lnb = tuple(c[i] + 0.42 * n[i] - 0.18 * v[i] for i in range(3))
+    _rod(out, "satellite_dish_arm", "steel_dark",
+         tuple(c[i] - 0.25 * v[i] for i in range(3)), lnb, 0.02, "the-receiver-arm")
+    _rod(out, "satellite_dish_receiver", "dish_grey",
+         lnb, tuple(lnb[i] - 0.10 * n[i] for i in range(3)), 0.06, "the-receiver")
 
 
 def _north_rise(out):

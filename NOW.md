@@ -609,6 +609,15 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       found beside it: the pack's asphalt has a red aggregate the sheet's
       road does not; its saturation is quartered, its value unchanged.
 
+## 11. Stage 1 continued, from the re-read of the routing index
+
+- [x] THE SATELLITE DISH the approved sheet has on the cab office, ruled
+      citable by Jafar: a 60 cm solid dish on a wall bracket under the
+      eaves beside the upper right-hand window, its receiver on an arm,
+      aimed south along the wall and tipped up. No make, no mark.
+- [ ] GULLIES IN THE CHANNEL at a real spacing: the sheet shows gully
+      gratings along both kerbs, and our street has one grate prop.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
