@@ -133,6 +133,13 @@ MATERIALS = (
     ("slate",       (0.026, 0.028, 0.032), 0.70),
     ("asphalt",     (0.030, 0.030, 0.031), 0.85),   # the carriageway
     ("figure",      (0.014, 0.014, 0.016), 0.80),   # a person, read as a silhouette
+    # THE LAMP'S OWN THREE, copied from tools/art-recipes/lighting-column.py's
+    # MATERIALS rather than chosen again here, so the column in the street is
+    # the column that was accepted. lens_amber is the spec's own sodium
+    # colour and is emissive at night.
+    ("steel_dark",  (0.021, 0.021, 0.024), 0.42),
+    ("grime",       (0.078, 0.061, 0.048), 0.90),
+    ("lens_amber",  (0.780, 0.360, 0.040), 0.20),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
     # why that has a material of its own. The carcass behind the elevation was
     # brick_red and filled the frontage plane, so every opening - two sashes,
@@ -172,6 +179,21 @@ BAY_WITHOUT_SIDE_DOOR = 5
 #: which is the atlas's own `street_anchor` datum. Read rather than typed,
 #: like everything else here.
 STREET_FRONTAGE_M = 5.125
+
+#: WHERE THE LAMP COLUMNS STAND, MEASURED from the emitted piece list rather
+#: than re-derived from the spacing rule: four columns at 8, 18, 28 and 38 m,
+#: staggered side to side, set 0.6 m back from the kerb. The piece file is the
+#: street as built and this recipe places its fronts around the same lamps.
+LAMP_AT = ((8.0, 3.725), (18.0, -3.725), (28.0, 3.725), (38.0, -3.725))
+
+#: The two conditions the scene file names, and the only two this recipe
+#: renders. MEASURED: `conditions` in production/specs/vignette-scene.json.
+#: overcast_day is the DEFAULT British frame rather than a side case - the
+#: research counts 1403 sunshine hours against about 4400 daylight, which is
+#: under a third with the sun out - and wet_night is D31's own tying frame,
+#: the one the whole stage is judged on: dusk, wet, lamps lit, a figure in
+#: silhouette.
+CONDITIONS = ("overcast_day", "wet_night")
 
 #: The two frames. ELEVATION IS THE ONE THAT JUDGES THE FRONT - square to the
 #: frontage with the roofline in, which is cam_B's own description in the
@@ -660,6 +682,83 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall):
              "a-stack-serves-both-houses-either-side-of-the-wall-it-stands-on")
 
 
+def _lighting_column_module():
+    """The authored lamp column, imported rather than reimplemented.
+
+    THE COLUMN IS ALREADY AUTHORED AND ACCEPTED - the kink at the top of the
+    pole with the lantern hanging off its back corner, finished from its
+    written dimensions over six attempts - and it lives in
+    tools/art-recipes/lighting-column.py. Building a second one here so the
+    street could have lamps in it would be the two-implementations trap with
+    the one asset this project has actually finished.
+
+    IT NEEDS NO NEW MESH CODE EITHER: that recipe's parts already carry their
+    own verts and faces, because it builds them with pure functions and hands
+    them to Blender separately. So this takes the geometry as it is, turns it
+    to face the road, and places it.
+    """
+    import importlib.util
+    # THE RECIPE RUNS ITSELF WHEN BLENDER LOADS IT, which is what makes it a
+    # recipe; this says "I am importing you, do not run". Set and cleared
+    # around the import so nothing else in the process inherits it.
+    os.environ["LEDGER_RECIPE_IMPORT"] = "1"
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "lighting-column.py")
+    spec = importlib.util.spec_from_file_location("ledger_lighting_column", path)
+    if spec is None or spec.loader is None:
+        return None
+    mod = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(mod)
+    finally:
+        os.environ.pop("LEDGER_RECIPE_IMPORT", None)
+    return mod
+
+
+def lamp_parts(root):
+    """(parts, error). Every lamp column in the street, placed and turned.
+
+    THE TURN. The column is authored with its outreach along its own +x; in
+    the street the lantern has to reach over the ROAD, which is across. So a
+    column on the east side is turned a quarter turn one way and one on the
+    west side the other, which is also why the two sides' lanterns hang toward
+    each other rather than both the same way.
+    """
+    lc = _lighting_column_module()
+    if lc is None:
+        return [], "lighting-column-recipe-not-importable"
+    params, err = lc.load_lighting_spec(root)
+    if err:
+        return [], "lighting-column-spec/%s" % err
+    built = lc.build_parts(params)
+    out = []
+    for n, (px, py) in enumerate(LAMP_AT):
+        east = py > 0.0
+        for part in built:
+            verts = []
+            for (vx, vy, vz) in part["verts"]:
+                # east: local +x -> street -y (over the road). west: the other way.
+                wx = px + (vy if east else -vy)
+                wy = py + (-vx if east else vx)
+                verts.append((wx, wy, vz))
+            out.append({"id": "lamp%d_%s" % (n, part["id"]),
+                        "material": part["material"], "kind": "mesh",
+                        "verts": verts, "faces": part["faces"],
+                        "lamp": n, "lamp_at": (px, py)})
+    return out, ""
+
+
+def lantern_lights():
+    """Where a point light goes when the lamps are lit: under the centre of
+    each lantern, which is the placement rule the piece file itself states."""
+    out = []
+    for n, (px, py) in enumerate(LAMP_AT):
+        east = py > 0.0
+        reach = 0.5                      # outreach_m, toward the road
+        ly = py - reach if east else py + reach
+        out.append((px, ly, 4.965 - 0.05))
+    return out
+
+
 def plan_street(root, spec_rel=SPEC_REL):
     """(parts, error). Every block the scene file names, on its own side of
     the road, with the road between them.
@@ -724,6 +823,13 @@ def plan_street(root, spec_rel=SPEC_REL):
         _box(out, "footway_%s" % name, "stone", x0, x1, min(c, d), max(c, d),
              -0.30, THRESHOLD_ABOVE_CROWN_M, "2.0m/the-normal-British-footway")
     _figures(out)
+    lamps, lerr = lamp_parts(root)
+    if lerr:
+        # A STREET WITH NO LAMPS IN IT SAYS SO. The night frame is the one the
+        # stage is judged on and it is nothing without them, so this refuses
+        # rather than quietly rendering an unlit street that looks deliberate.
+        return None, lerr
+    out.extend(lamps)
     return out, ""
 
 
@@ -1169,7 +1275,14 @@ def plan_lines(p, parts, checks):
            "yes" if abs((p["window_sill_m"] / p["brick_course_m"])
                         - round(p["window_sill_m"] / p["brick_course_m"])) < 1e-6 else "no"))
     for part in parts:
-        if part.get("kind") == "slope":
+        if part.get("kind") == "mesh":
+            # A PART THAT ARRIVED WITH ITS OWN GEOMETRY has no box to print, so
+            # it prints what it does have: how much of it there is. The lamp
+            # columns come in this way, from the recipe that authored them.
+            lines.append("tfPart id=%s material=%s kind=mesh verts=%d faces=%d"
+                         % (part["id"], part["material"],
+                            len(part["verts"]), len(part["faces"])))
+        elif part.get("kind") == "slope":
             lines.append("tfPart id=%s material=%s kind=slope note=%s"
                          % (part["id"], part["material"], part["note"]))
         else:
@@ -1240,6 +1353,82 @@ def _slope_mesh(bpy, part, mat):
     f = [(0, 1, 2, 3), (7, 6, 5, 4), (0, 4, 5, 1),
          (1, 5, 6, 2), (2, 6, 7, 3), (3, 7, 4, 0)]
     return _mesh_object(bpy, part["id"], v, f, mat)
+
+
+def _night(bpy, root, mats):
+    """D31's own tying frame: dusk, wet, lamps lit.
+
+    THE CONDITION IS THE SCENE FILE'S, not mine. wet_night names its own HDRI,
+    its sun and sky intensities and its wetness; those are applied here as
+    order-of-magnitude proxies to Blender's own strengths rather than as a
+    claimed unit conversion, which is the same thing lighting-column.py says
+    about its own use of them and for the same reason: the numbers are Unity
+    light units and no conversion is defined.
+
+    THE LENS IS EMISSIVE AND THE LIGHT SITS UNDER IT. Both, because one
+    without the other is either a lamp that glows and lights nothing or a
+    street lit by nothing visible. The placement - 0.05 m below the centre of
+    each lantern - is the piece file's own rule.
+    """
+    world = bpy.data.worlds.new("terrace_night")
+    bpy.context.scene.world = world
+    world.use_nodes = True
+    bg = world.node_tree.nodes.get("Background")
+    hdr = os.path.join(root, "ledger/Assets/Resources/Sky/polyhaven/kloppenheim_04_2k.hdr")
+    note = "hdri=NOT-FOUND/flat-dusk-instead"
+    if os.path.exists(hdr) and bg is not None:
+        env = world.node_tree.nodes.new("ShaderNodeTexEnvironment")
+        try:
+            env.image = bpy.data.images.load(hdr)
+            world.node_tree.links.new(env.outputs["Color"], bg.inputs["Color"])
+            bg.inputs["Strength"].default_value = 0.35
+            note = "hdri=%s" % hdr.replace(" ", "~")
+        except RuntimeError:
+            pass
+    if note.startswith("hdri=NOT") and bg is not None:
+        bg.inputs["Color"].default_value = (0.020, 0.024, 0.035, 1.0)
+        bg.inputs["Strength"].default_value = 1.0
+
+    # THE LENS GLOWS. Emission on the one material that is a light source.
+    lens = mats.get("lens_amber")
+    if lens is not None and lens.use_nodes:
+        bsdf = lens.node_tree.nodes.get("Principled BSDF")
+        if bsdf is not None and "Emission Color" in bsdf.inputs:
+            bsdf.inputs["Emission Color"].default_value = (0.780, 0.360, 0.040, 1.0)
+            bsdf.inputs["Emission Strength"].default_value = 3.0
+
+    for n, (lx, ly, lz) in enumerate(lantern_lights()):
+        data = bpy.data.lights.new("lantern%d" % n, type="POINT")
+        data.energy = 900.0
+        data.color = (1.0, 0.62, 0.20)
+        data.shadow_soft_size = 0.18
+        obj = bpy.data.objects.new("lantern%d" % n, data)
+        bpy.context.scene.collection.objects.link(obj)
+        obj.location = (lx, ly, lz)
+    return note
+
+
+def _wetten(mats):
+    """Wet, which on a flat-colour street is roughness and nothing else.
+
+    NOT A CLAIM ABOUT WATER. wet_night carries wetness 0.6 in the scene file
+    and what that buys in a real material graph is a darker, glossier surface;
+    with no texture in this recipe yet, the honest version of it is to drop
+    the roughness of the things rain actually sits on - the road, the footway,
+    the kerb - and leave everything else alone. It is the cheapest thing on
+    D31's list that changes the frame, and it is step 3 of that list, so it
+    belongs with the light rather than after it.
+    """
+    for name in ("asphalt", "stone"):
+        mat = mats.get(name)
+        if mat is None or not mat.use_nodes:
+            continue
+        bsdf = mat.node_tree.nodes.get("Principled BSDF")
+        if bsdf is not None:
+            bsdf.inputs["Roughness"].default_value = 0.16
+            base = bsdf.inputs["Base Color"].default_value
+            bsdf.inputs["Base Color"].default_value = (base[0] * 0.55, base[1] * 0.55,
+                                                       base[2] * 0.58, 1.0)
 
 
 def _world(bpy, root):
@@ -1335,20 +1524,32 @@ def build_and_render(args):
         mat = mats.get(part["material"])
         if part.get("kind") == "slope":
             _slope_mesh(bpy, part, mat)
+        elif part.get("kind") == "mesh":
+            _mesh_object(bpy, part["id"], part["verts"], part["faces"], mat)
         else:
             _box_mesh(bpy, part, mat)
         built += 1
     if not street:
         _ground(bpy, p, mats)
-    world_note = _world(bpy, args["root"])
-    print("tfNote world/%s" % world_note)
+    night = street and args["condition"] == "wet_night"
+    if night:
+        world_note = _night(bpy, args["root"], mats)
+        _wetten(mats)
+    else:
+        world_note = _world(bpy, args["root"])
+    print("tfNote condition=%s world/%s"
+          % (args["condition"] if street else "overcast_day", world_note))
 
     sun_data = bpy.data.lights.new("sun", type="SUN")
-    sun_data.energy = 2.2
+    # THE SUN IS ALMOST OUT AT DUSK AND LOW. The scene file's wet_night keeps a
+    # sun rather than removing it, which is right: a British dusk is not black,
+    # it is a low sky with no direct light worth naming.
+    sun_data.energy = 0.10 if night else 2.2
     sun_data.angle = math.radians(8.0)
     sun = bpy.data.objects.new("sun", sun_data)
     bpy.context.scene.collection.objects.link(sun)
-    sun.rotation_euler = (math.radians(54.0), 0.0, math.radians(200.0))
+    sun.rotation_euler = ((math.radians(80.0) if night else math.radians(54.0)),
+                          0.0, math.radians(200.0))
 
     scene = bpy.context.scene
     scene.render.engine = "BLENDER_EEVEE_NEXT"
@@ -1361,7 +1562,9 @@ def build_and_render(args):
         cam = _camera(bpy, "cam_" + name, cams[name])
         scene.camera = cam
         out = os.path.join(args["out"],
-                           "terrace-front-%s-%s.png" % ("street" if street else p["block_id"], name))
+                           "terrace-front-%s-%s-%s.png"
+                           % ("street" if street else p["block_id"],
+                              args["condition"] if street else "overcast_day", name))
         scene.render.filepath = out
         bpy.ops.render.render(write_still=True)
         size = os.path.getsize(out) if os.path.exists(out) else 0
@@ -1394,6 +1597,7 @@ def parse_args(argv):
     elif args and args[0].endswith(".py"):
         args = args[1:]
     out = {"out": "", "root": ROOT, "spec": SPEC_REL, "block": "east_parade",
+           "condition": "overcast_day",
            "plan": False, "selftest": False, "error": ""}
     i = 0
     while i < len(args):
@@ -1406,6 +1610,8 @@ def parse_args(argv):
             out["spec"] = args[i + 1]; i += 2
         elif a == "--block" and i + 1 < len(args):
             out["block"] = args[i + 1]; i += 2
+        elif a == "--condition" and i + 1 < len(args):
+            out["condition"] = args[i + 1]; i += 2
         elif a == "--plan":
             out["plan"] = True; i += 1
         elif a == "--selftest":
