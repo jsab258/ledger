@@ -6,6 +6,22 @@ between them.
 
 ## Decisions waiting on me
 
+**6. The game engine's bricks are now the right size, but still the wrong
+colour, and the colour is your number.** They were drawn about three and a
+half times too big, and that is fixed and proven on the build machine. But
+the brick picture the game engine uses is a pale sandy one, and on 15
+September you set how strongly the game engine tints every surface - "about
+0.85 of what landed", yours to re-read. Making its bricks the sheet's red
+means tinting brick on its own, which moves that.
+
+  (a) **Let me tint brick, and only brick, in the game engine to the colour
+      the pictures were matched to on the sheet — recommended.** Your 0.85
+      stays as it is for everything else.
+  (b) Leave the game engine's colour alone until the whole look moves across.
+  (c) Re-read your 0.85 first, as you said you would when wetness landed.
+
+  Meanwhile: I have not touched it.
+
 **5. The picture-making side and the game engine build Quay Street as mirror
 images of each other.** Stand at the south end looking up the street: in the
 game engine (Unreal, the one that ships), Mickey's is on your right; in the
@@ -105,6 +121,9 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-23 **In the game engine the bricks are the right size now** (the
+  first piece of the look carried across, proven on the build machine). The
+  parade there still reads pale; that is decision 6.
 - 2026-09-23 **Everything the street gained tonight lives in the pictures,
   not yet in the game.** The game engine builds its street separately, from
   the scene file, and none of tonight's look is in it: its parade still
