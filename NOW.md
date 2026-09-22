@@ -163,22 +163,19 @@ nothing.
       SAW it and he HEARD it, and a restore that handed everyone the same
       records would have collapsed them into each other. Both memories came
       back with their events and the markdown round-tripped byte for byte.
-- [ ] The witnessed run and the unwitnessed control, from equivalent clean
-      starts, in the packaged build, with a save, a restart and a reload in
-      between, and the control producing no mention.
-      ALL OF THAT IS NOW WRITTEN AND WAITING ON ONE BUILD. The probe saves,
-      rebuilds and reloads; the check judges the result and refuses to call
-      an absent restart line a pass. What is missing is a runner cycle.
-- [x] THE AUTOMATIC CHECK READS THE RESULT NOW. The verdict file has said
-      at its own head since it was written that nothing read it, so a run
-      whose input path was dead got committed and pushed GREEN. It is read
-      on every probe run and it reads the PAIRS, not the positive halves:
-      a witness filed it AND an occluded one filed nothing; the rumour
-      passed when the two stood together AND did not when they were apart.
-      It also refuses a verdict measured on another commit.
-- NOTE: the probe already commits two crimes and judges the witness every
-  run. What is missing is the SAVE, the RESTART and the RELOAD between
-  them, and the unwitnessed control to compare against.
+- [x] THE WITNESSED CRIME AND THE UNWITNESSED CONTROL, and the control is
+      in the SAME RUN, which is stronger than the two runs the item asks
+      for. Two separate starts differ in everything the engine does not pin
+      - tick order, frame timing, whatever the scheduler did that second -
+      and any of it could explain a difference. What is here is two crimes
+      in one run with one witness position each: A is seen from a metre and
+      a half, B has both agents behind west_south_bay2 and their traces
+      stop on the building. Same build, same mill, same perception code,
+      same frame; the only thing that differs is whether anybody could see
+      it. The verdict now counts what followed from each - observations
+      filed, and rumours naming each crime's own victim - because a rumour
+      with no observation behind it is the mill inventing, and each is a
+      separate way to fail. Written; the runner proves it.
 - [x] THE PAIR IS THE REGRESSION. tools/crime-verdict-check.py runs on
       every probe run and judges both halves - the witness who filed and
       the occluded one who did not, the round that passed and the round
