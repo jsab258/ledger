@@ -1375,6 +1375,14 @@ def plan_street(root, spec_rel=SPEC_REL):
     fall = half * crossfall
     _road(out, "carriageway", "asphalt", x0, x1, half, fall,
           "two-3.0m-lanes/crowned-1-in-40/%.3fm-above-the-channel" % fall)
+    # THE FAR END IS THE BASIN END. See _backdrop: the road stops at x0 and
+    # everything past it was sky. The road's own x0 is handed over rather
+    # than typed a second time, so a street that is ever lengthened takes
+    # its backdrop with it.
+    if abs(x0 - BACKDROP_ROAD_END) > 1e-9:
+        raise AssertionError("the road moved and the backdrop did not: "
+                             "x0=%r BACKDROP_ROAD_END=%r" % (x0, BACKDROP_ROAD_END))
+    _backdrop(out)
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
         _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
@@ -1491,6 +1499,173 @@ FIGURE_DEPTH_M = 0.25
 #: The sheet's own nearest figure is four or five metres off and small.
 FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (23.5, 4.05),
              (15.0, -4.35), (20.0, -4.15))
+
+
+#: THE FAR END, AND IT IS THE BASIN END.
+#:
+#: WHAT THE LIST ASKS, in its own words: "AND THE FAR END IS STILL SKY. What
+#: is beyond our thirty metres is nothing, because the TOWN past the street is
+#: stage 6." The haze landed on the third attempt and softened the street we
+#: have; it could not soften what was not there. A wall of sky closing a
+#: street is the single loudest thing left in the frame.
+#:
+#: THIS IS NOT THE TOWN AND IT IS NOT AN INVENTION. Three sources, read
+#: rather than remembered:
+#:   - the scene file's own axis note: "x: along the street. 0 at the south
+#:     end, +x north." The hook camera stands at x=33 and looks at x=2, so it
+#:     is looking SOUTH.
+#:   - the town form bible, morphology rule 1: "Quay Street links an OLD
+#:     BASIN to the market", and rule 4: "Hook: working stone quay and
+#:     enclosed basin". The market is uphill NORTH, behind the camera.
+#:   - MICKEYS.md, which routes the deliveries "from the BASIN APPROACH,
+#:     through the south terrace-end passage".
+#: The one thing the world already says is at this end of this street is the
+#: basin. Nothing here decides anything stage 6 has to decide.
+#:
+#: IT IS A BACKDROP AND IT SAYS SO IN ITS PIECE NAMES. No door, no window, no
+#: threshold, no interior, nothing anyone can walk to. Masses at range, in
+#: the haze, to stop the view ending in sky. Stage 6 deletes it and loses
+#: nothing.
+#:
+#: AND IT IS THE FIRST TEST OF THE RULE RECORDED TODAY - the sheet governs
+#: mood, palette and composition, the photographs govern what things actually
+#: looked like, and WHERE THEY DISAGREE THE PHOTOGRAPHS WIN. They disagree
+#: here, which is why this is worth saying out loud:
+#:   THE SHEET closes both its panels with a wooded hillside and detached
+#:   houses loose among trees. production/reference/hook-sheet-audit.md lists
+#:   that as invented: the bible expresses the inland rise with
+#:   "contour-following terraces, retaining walls and stair shortcuts", and
+#:   in any case that rise is NORTH, behind this camera.
+#:   THE PHOTOGRAPH, R08, of the working water: "working craft and
+#:   liquid-cargo barge, WAREHOUSES ON PILES, a DISTANT CRANE/BRIDGE and
+#:   chain-edged quay."
+#: So: sheds with their gable ends to the street, and a crane. Not a hill.
+#:
+#: NO WATER. A basin with no water in it is a dodge and is named as one. The
+#: reason is the two volumetric attempts this file already records: a
+#: material whose failure mode is a black plane, at the exact spot the eye
+#: goes, is the wrong thing to attempt with two hours left. The quay apron
+#: runs out of frame and the sheds stand beyond it; what is between them is
+#: not asserted. When water is built it is built deliberately.
+#:
+#: WHERE THE NUMBERS COME FROM. The road ends at x=-2.0 (BACKDROP_ROAD_END,
+#: read off the road's own x0, not typed twice). The camera stands at 33, so
+#: the sheds at x=-38..-52 are 71 to 85 m away, and the mist reaches its
+#: ceiling at 8+55=63 m: they are fully hazed, which is the point of them.
+#: Their heights, 6.0 to 11.5 m, are the bible's "varied roof heights" and
+#: subtend 4 to 8 degrees at that range, which fills the gap between the two
+#: eaves lines without towering over them.
+BACKDROP_ROAD_END = -2.0      # where the built street's carriageway stops
+BACKDROP_APRON_X = 14.0       # metres of quay apron beyond it
+BACKDROP_APRON_HALF_Y = 12.0  # the apron is wider than the street: it is a quay
+
+#: (y0, y1, x_far, x_near, eaves_m, ridge_rise_m, wall)
+#: Six sheds, each standing at its own distance so the far bank is not one
+#: flat wall, and each with its GABLE END to the street - which is what a
+#: dock shed looks like end-on and is the readable silhouette at 80 m.
+#: ATTEMPT TWO, AND THE FIRST ONE IS WHY. Rendered, looked at, and two
+#: things were wrong at a glance rather than in a number:
+#:   THE 11.5 m SHED STOOD DEAD CENTRE IN THE GAP and read as a grain silo -
+#:   one featureless slab taller than everything either side of it, exactly
+#:   where the eye goes.
+#:   AND THE CEILING IS THE STREET'S OWN RIDGE, 9.00 m, read off the spec by
+#:   the selftest rather than typed here. The first correction set the EAVES
+#:   below it and forgot that a roof goes on top, which put two ridges at
+#:   9.5 and 10.6 - taller than the street they are seen through, which is a
+#:   tower block at the end of a Victorian street. The check caught it; the
+#:   heights below are what it takes to satisfy it, which is the difference
+#:   between finishing an asset from its dimensions and adjusting it by eye.
+#:   AND THE ROW WAS ONE RANGE. Six masses at one distance is a painted
+#:   flat, not depth, which is the fault this was built to fix. There are
+#:   two ranges now: the near bank at 37 to 52 m out from the road end and a
+#:   BACK RANK 14 m behind it, lower, so the haze separates them from each
+#:   other as well as from the street. Aerial perspective needs two things
+#:   at two distances or it has nothing to be a difference between.
+BACKDROP_SHEDS = (
+    (-24.0, -14.0, -50.0, -40.0, 6.4, 1.6, "brick_grey"),
+    (-14.0, -6.5, -47.0, -38.0, 6.8, 1.7, "brick_red"),
+    (-6.5, 1.0, -52.0, -41.0, 6.2, 1.5, "brick_grey"),
+    (1.0, 9.0, -46.0, -37.0, 6.9, 1.9, "brick_red"),
+    (9.0, 18.0, -51.0, -42.0, 6.0, 1.7, "brick_grey"),
+    (18.0, 26.0, -48.0, -39.0, 7.1, 1.8, "brick_red"),
+    # THE BACK RANK, 14 m further out and lower, seen over and between the
+    # near bank. Wider and fewer, because a thing at 95 m that is not simple
+    # is a thing nobody can read.
+    (-20.0, -3.0, -68.0, -60.0, 5.4, 1.4, "brick_grey"),
+    (-3.0, 12.0, -70.0, -61.0, 6.8, 1.6, "brick_grey"),
+    (12.0, 28.0, -66.0, -59.0, 4.8, 1.3, "brick_red"),
+)
+
+#: THE CRANE, and it is one crane. R08 has "a distant crane/bridge" singular
+#: and a forest of them would be a different port. A column and a jib, in
+#: silhouette, standing behind the sheds so it reads against sky.
+#:
+#: ATTEMPT ONE WAS A WEDGE. 17 m tall, a 13 m jib and members 1.7 m thick,
+#: which at 90 m came back as a solid arrowhead the size of a building - the
+#: single loudest object in the frame, and not recognisably a crane. THE
+#: FAULT WAS THICKNESS, not height: a dockside crane is mostly air, and a
+#: silhouette that is mostly air reads as a machine while the same outline
+#: filled in reads as a monument. The members are 0.5 m now, which is what
+#: they would actually be, and the column and the jib are two separate thin
+#: pieces rather than one closed outline with a shoulder between them.
+#: It also stands further out and OFF the street's axis, so it is something
+#: glimpsed past the sheds rather than a thing placed in the middle of the
+#: view.
+BACKDROP_CRANE_X = -74.0
+BACKDROP_CRANE_Y = -9.0
+BACKDROP_CRANE_H = 14.0
+BACKDROP_CRANE_REACH = 11.0
+BACKDROP_CRANE_T = 0.50       # how thick a member is: a crane is mostly air
+
+
+def _backdrop(out):
+    """The basin end: a quay apron, six sheds gable-on, one crane.
+
+    EVERY PIECE IS NAMED backdrop_*, so a search for what is real on this
+    street and what is only stopping the sky can be answered by the piece
+    list rather than by reading this comment.
+    """
+    x_end = BACKDROP_ROAD_END
+    # THE QUAY APRON. The street runs out onto it and it leaves frame; it is
+    # the only part of this that is at human range, so it is the only part
+    # that gets the street's own surface rather than a mass.
+    _box(out, "backdrop_quay_apron", "stone",
+         x_end - BACKDROP_APRON_X, x_end,
+         -BACKDROP_APRON_HALF_Y, BACKDROP_APRON_HALF_Y, -0.30, 0.0,
+         "the-street-runs-out-onto-a-quay/not-a-void/"
+         "wider-than-the-street-because-a-quay-is")
+
+    for n, (y0, y1, xf, xn, eaves, rise, wall) in enumerate(BACKDROP_SHEDS):
+        _box(out, "backdrop_shed%d" % n, wall, xf, xn, y0, y1, -0.30, eaves,
+             "%.1fm-to-the-eaves/gable-end-to-the-street" % eaves)
+        # TWO SLOPES MAKE THE GABLE, ridge along x, which puts the triangle
+        # facing the camera. The same two-slope roof the terrace uses.
+        ymid = (y0 + y1) / 2.0
+        for side, ye in (("south", y0), ("north", y1)):
+            out.append({"id": "backdrop_shed%d_roof_%s" % (n, side),
+                        "material": "slate", "kind": "slope",
+                        "x0": xf, "x1": xn,
+                        "y_eaves": ye, "y_ridge": ymid,
+                        "z_eaves": eaves, "z_ridge": eaves + rise,
+                        "note": "%.1fm-rise-to-the-ridge" % rise})
+
+    # THE CRANE: a thin column and a thin jib, as two pieces, so the sky
+    # shows between them. See the constants for what attempt one got wrong.
+    cx, ch = BACKDROP_CRANE_X, BACKDROP_CRANE_H
+    reach, t = BACKDROP_CRANE_REACH, BACKDROP_CRANE_T
+    _prism(out, "backdrop_crane_column", "slate",
+           ((cx - t, 0.0), (cx + t, 0.0), (cx + t, ch), (cx - t, ch)),
+           BACKDROP_CRANE_Y - t, BACKDROP_CRANE_Y + t,
+           "R08-a-distant-crane/one-of-them-not-a-forest")
+    # The jib rises toward the water at about one in three, which is where a
+    # luffing jib sits at rest, and its foot overlaps the column top so the
+    # two read as joined rather than as a post and a stick.
+    rise = reach * 0.34
+    _prism(out, "backdrop_crane_jib", "slate",
+           ((cx - t, ch - t * 2.0), (cx + reach, ch + rise - t * 1.2),
+            (cx + reach, ch + rise), (cx - t, ch)),
+           BACKDROP_CRANE_Y - t * 0.8, BACKDROP_CRANE_Y + t * 0.8,
+           "one-in-three/a-luffing-jib-at-rest/%.2fm-members" % t)
 
 
 def _road(out, pid, material, x0, x1, half, fall, note=""):
@@ -3983,6 +4158,69 @@ def selftest():
         if serr:
             check("accept/the-street-plans-with-a-car-in-it", False, serr)
         else:
+            # ---- THE BASIN END, and every one of these is a way it
+            # could stop being a backdrop and start being a claim.
+            back = [b for b in street if b["id"].startswith("backdrop")]
+            check("accept/the-far-end-is-not-sky", len(back) >= 20,
+                  "%d piece(s)" % len(back))
+            # IT IS SOUTH OF THE STREET AND ENTIRELY BEHIND IT. The blocks
+            # occupy x 3.0 to 42.0 and the road stops at -2.0; anything here
+            # that reached past -2.0 would be standing IN the built street.
+            def _xs(b):
+                if b.get("kind") == "mesh":
+                    return [v[0] for v in b["verts"]]
+                return [b["x0"], b["x1"]]
+            intruders = [b["id"] for b in back if max(_xs(b)) > BACKDROP_ROAD_END + 1e-9]
+            check("accept/the-backdrop-never-reaches-the-street",
+                  not intruders, ",".join(intruders[:4]))
+            # AND IT IS FAR ENOUGH AWAY TO BE HAZED. The mist reaches its
+            # ceiling at start+depth = 63 m from the camera at x=33, which is
+            # x = -30: a shed nearer than that would come back sharp and
+            # read as a building on this street rather than as the far side
+            # of a basin.
+            sheds = [b for b in back if "shed" in b["id"]]
+            near = [b["id"] for b in sheds if max(_xs(b)) > -30.0]
+            check("accept/every-shed-is-inside-the-haze", not near,
+                  ",".join(near[:4]))
+            # NOTHING ON IT IS APPROACHABLE. A door, a window, a sill or a
+            # shopfront in here would be a promise the player cannot keep.
+            promises = [b["id"] for b in back
+                        if any(w in b["id"] for w in
+                               ("door", "window", "sash", "sill", "shop",
+                                "fascia", "stallriser"))]
+            check("accept/nothing-in-the-backdrop-can-be-walked-to",
+                  not promises, ",".join(promises[:4]))
+            # IT DOES NOT TOWER OVER THE STREET. The terrace's own ridge is
+            # about 8.2 m and the backdrop reads THROUGH the gap between the
+            # two roofs; a mass taller than the street reads as a tower block
+            # at the end of a Victorian street, which is what attempt one did
+            # with an 11.5 m shed standing dead centre.
+            def _zs(b):
+                if b.get("kind") == "mesh":
+                    return [v[2] for v in b["verts"]]
+                if b.get("kind") == "slope":
+                    return [b["z_eaves"], b["z_ridge"]]
+                return [b["z0"], b["z1"]]
+            # THE CEILING IS THE STREET'S OWN RIDGE, asked of the spec.
+            # Typing 9.0 here would be a second street.
+            ceiling = p["ridge_m"] + THRESHOLD_ABOVE_CROWN_M
+            tall = ["%s@%.1f" % (b["id"], max(_zs(b))) for b in sheds
+                    if max(_zs(b)) > ceiling + 1e-9]
+            check("accept/no-shed-towers-over-the-street", not tall,
+                  "ceiling=%.2f %s" % (ceiling, ",".join(tall[:4])))
+            # TWO RANGES, NOT ONE. Six masses at one distance is a painted
+            # flat; the haze needs two depths to be a difference between.
+            fronts = sorted(set(round(max(_xs(b)), 1) for b in sheds))
+            check("accept/the-sheds-stand-at-two-ranges",
+                  len(fronts) >= 2 and (max(fronts) - min(fronts)) > 10.0,
+                  "%r" % (fronts,))
+            # AND THE CRANE IS MOSTLY AIR. Attempt one was 1.7 m thick and
+            # came back as a solid wedge the size of a building.
+            crane = [b for b in back if "crane" in b["id"]]
+            check("accept/the-crane-is-two-thin-pieces",
+                  len(crane) == 2 and BACKDROP_CRANE_T <= 0.6,
+                  "%d piece(s)/%.2fm" % (len(crane), BACKDROP_CRANE_T))
+
             veh = [b for b in street if b["id"].startswith("veh0_")]
             # ELEVEN: a body, a glasshouse, a roof cap, four wheels, two
             # tail lamps and two plates. Counted rather than guessed at,

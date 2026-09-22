@@ -124,9 +124,37 @@ nothing.
       metres, because rain does not wash a wall evenly, and a darker foot
       to every wall from splash and rising damp. 22.5 now; the rest of that
       gap is photographic detail in the map rather than wear on top of it.
-- [ ] AND THE FAR END IS STILL SKY. What is beyond our thirty metres is
-      nothing, because the TOWN past the street is stage 6. Haze on an
-      empty sky is haze on nothing; this softened the street we have.
+- [x] THE FAR END IS THE BASIN END, and the world had already said so. The
+      scene file: "0 at the south end, +x north". The hook camera stands at
+      33 and looks at 2, so it looks SOUTH. The town form bible: "Quay
+      Street links an OLD BASIN to the market", the market uphill north,
+      behind the camera. MICKEYS.md routes the pub's deliveries "from the
+      basin approach". So the one thing already at this end of this street
+      is the basin, and nothing here decides anything stage 6 decides: a
+      quay apron the road runs out onto, nine dock sheds gable-on at two
+      ranges, one crane. No door, no window, nothing anyone can walk to,
+      every piece named backdrop_*.
+      THE MEASURE IT WAS FOR, which could not be taken at all before,
+      because the far end was sky. On the sheet the near brick reads mean
+      57.3 at saturation 0.535 and the far buildings mean 136.0 at 0.146 -
+      distance makes things paler and greyer, which is most of what says
+      how far the eye is carrying. Ours now reads 72.6/0.416 near and
+      148.2/0.063 far: a falloff of 75.6 and 0.353 against the sheet's
+      78.7 and 0.389.
+      AND IT IS THE FIRST TEST OF TODAY'S RULE. The sheet closes both its
+      views with a WOODED HILLSIDE; R08's photograph of the working water
+      is "warehouses on piles, a distant crane/bridge and chain-edged
+      quay". Where they disagree the photograph wins, so: sheds and a
+      crane, not a hill.
+      TWO ATTEMPTS AND THEN THE DIMENSIONS. Attempt one put a 1.7 m-thick
+      crane in the middle of the view, which came back a solid wedge the
+      size of a building, and an 11.5 m shed dead centre that read as a
+      grain silo. Attempt two thinned the crane to 0.5 m in two pieces and
+      moved it off axis, and split the row into two ranges. What finished
+      it was neither attempt but a CHECK: no mass may stand taller than the
+      street's own ridge, which the selftest asks the spec for rather than
+      typing, and which caught three ridges over it that the eye had
+      passed.
 
 ## 2. Rumours surviving a restart (stage 3)
 
