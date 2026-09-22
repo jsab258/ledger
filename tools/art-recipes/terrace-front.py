@@ -131,7 +131,20 @@ MATERIALS = (
     # comfortably over it. That is most of the remaining colour gap and it is
     # not the shopfronts: the saturated thing in the reference is the BRICK,
     # because there is so much more of it than there is of any paint.
-    ("brick_red",   (0.300, 0.100, 0.055), 0.92),
+#: RE-CLOSED AGAINST THE NEW SHEET, 22 September, at the derived lens. Every
+#: value this table carried was tuned against the RETIRED sheet or its
+#: predecessor, and Jafar stopped palette work until the new one existed. It
+#: does now. The gaps were measured REGION BY REGION, sheet against ours, not
+#: on the whole frame, because the two frames still differ in composition and
+#: a whole-frame mean would have tuned the road to make up for an end wall:
+#:   sky       244 246 248 against 228 230 233   ours too grey
+#:   road      149 150 154 against 185 186 189   ours far too bright
+#:   pavement  100  83  61 against  78  66  53   ours too dark and too cold
+#:   brick     112  81  72 against 125  84  71   ours too red
+#:   far parade sat 0.24 against 0.14            ours washed out by haze
+#: Each change below names the gap it is for. The scale factors are the
+#: linear ratios those sRGB gaps imply, (sheet/ours) ^ 2.2 per channel.
+    ("brick_red",   (0.236, 0.092, 0.057), 0.92),   # was (0.300, 0.100, 0.055): too red
     # LIGHTENED 2026-09-22 after the first render of the plain row, which came
     # back charcoal. A soot-darkened London stock is GREYER and LIGHTER than a
     # red brick in daylight, not darker; at the old value the west row read as
@@ -150,7 +163,7 @@ MATERIALS = (
     # wall fills a third of the picture and at 0.313 red it took our warmth
     # PAST the reference: +22.3 against its +18.5. The correction that was
     # right when the wall was a quarter of a squarer frame is wrong now.
-    ("brick_grey",  (0.268, 0.100, 0.062), 0.92),
+    ("brick_grey",  (0.210, 0.092, 0.064), 0.92),   # was (0.268, 0.100, 0.062), same ratio
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
@@ -170,7 +183,8 @@ MATERIALS = (
     # the frame". The reasoning was fine and the sheet was the wrong one: on
     # the approved sheet the pavement is among the LIGHTER things in the
     # frame, at two and a half times what we had and warm with it.
-    ("paving",      (0.121, 0.073, 0.042), 0.62),   # the footway, warmer again
+    # PASS 2: 93/75/56 after pass 1 against the sheet's 100/83/61.
+    ("paving",      (0.245, 0.151, 0.069), 0.62),   # was (0.121, 0.073, 0.042): the new sheet's flags are warm tan
     ("kerbstone",   (0.105, 0.092, 0.078), 0.58),   # granite, greyer than the flags
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
@@ -291,7 +305,11 @@ MATERIALS = (
     # hue was right and the value was 27 per cent short. Raising the whole
     # frame to close a gap like this is what made the picture worse an hour
     # ago; raising the ONE surface the measurement names does not.
-    ("asphalt",     (0.360, 0.354, 0.338), 0.85),   # the carriageway
+    # PASS 2: pass 1's 0.216 brought the road from 185 to 165 against the
+    # sheet's 149 - a 0.6 cut in albedo bought only 0.78 in radiance, because
+    # a wet road is mostly reflected sky. Another 0.58: 0.125 is about what
+    # weathered asphalt measures dry, and it is wet.
+    ("asphalt",     (0.125, 0.123, 0.118), 0.85),   # was (0.360, 0.354, 0.338): the new sheet's road is mid-grey, not silver
     # PEOPLE ARE NOT SILHOUETTES IN DAYLIGHT. A silhouette is right for the
     # dusk frame and wrong for the working one: the sheet's own panel has a
     # teal jacket, an orange one and a white coat in it, and they are a good
@@ -315,7 +333,11 @@ MATERIALS = (
     # WORN, NOT FRESH. The approved sheet does carry double yellows, so they
     # stay - but on it they are faded and nearly lost against the tarmac,
     # while ours were the single brightest thing in the picture. Halved.
-    ("paint_yellow",(0.260, 0.180, 0.020), 0.55),
+    # WORN PAINT IS CREAM, and the new sheet says so: its double yellows read
+    # 219/206/170 where ours read 179/156/91, an ochre stripe. Road paint
+    # weathers pale long before it goes, and on a wet overcast road it reads
+    # as a cream line. Scaled by the linear ratio of the two, per channel.
+    ("paint_yellow",(0.405, 0.331, 0.079), 0.55),   # was (0.260, 0.180, 0.020)
     # THE VEHICLE. Car paint is the only genuinely SMOOTH surface on this
     # street - everything else is brick, stone, timber or tarmac - and that
     # is most of what makes a car read as one at twenty-five metres: it holds
@@ -710,6 +732,9 @@ HOOK_FOV_V_DEG = 46.0
 #: Checked by running production/reference/hook-sheet-lens-vp.py on the render
 #: and comparing its vanishing point with the sheet's, not by eye.
 HOOK_HORIZON_FROM_TOP = 620.0 / 1088.0
+
+#: HOW MUCH BRIGHTER THE SKY IS TO THE CAMERA THAN TO THE STREET. See _world.
+SKY_AS_SEEN_GAIN = 1.4
 HOOK_EYE_M = 1.9          # three people in the sheet, read as 1.75 m adults
 HOOK_YAW_LEFT_DEG = 20.4  # the street's vanishing point is 478 px right of centre
 
@@ -3552,7 +3577,11 @@ def _mist(bpy, scene, night):
     # keep that ratio - 0.1 against 0.45 - even though neither number is
     # used as written. The RATIO is the part of the spec that survives a
     # unit nobody can convert.
-    ceiling = 0.55 if night else 0.33
+    # 0.20 BY DAY, from 0.33, against the new sheet: its far parade keeps a
+    # saturation of 0.24 at twenty to thirty-five metres and ours came back
+    # at 0.14 - the haze was taking the colour out of the middle distance
+    # the sheet keeps.
+    ceiling = 0.55 if night else 0.20
     # AND THE COLOUR IT MIXES TOWARD IS THE SKY'S, because that is what
     # aerial perspective IS: distant things take the colour of the air in
     # front of them, which is the sky seen end-on.
@@ -3604,6 +3633,31 @@ def _world(bpy, root):
             # sky, so a sky set a half-stop too bright does not brighten the
             # sky, it bleaches the ground.
             bg.inputs["Strength"].default_value = 1.35
+            # AND THE SKY AS THE CAMERA SEES IT IS BRIGHTER THAN THE SKY AS
+            # A LIGHT, 22 September. The new sheet's sky reads 244 to 248,
+            # nearly white; ours read 228 to 233. Raising the world's
+            # strength would also brighten the wet road, which mirrors the
+            # sky and was already the brightest gap in the frame. So the
+            # camera's own rays see a stronger sky and every other ray -
+            # the reflections, the lighting - sees 1.35 as before. That is
+            # how an overcast sky photographs: blown in the frame, soft on
+            # the ground.
+            try:
+                lp = nt.nodes.new("ShaderNodeLightPath")
+                bg_cam = nt.nodes.new("ShaderNodeBackground")
+                bg_cam.inputs["Strength"].default_value = 1.35 * SKY_AS_SEEN_GAIN
+                nt.links.new(env.outputs["Color"], bg_cam.inputs["Color"])
+                mix = nt.nodes.new("ShaderNodeMixShader")
+                out = nt.nodes.get("World Output")
+                nt.links.new(lp.outputs["Is Camera Ray"], mix.inputs["Fac"])
+                nt.links.new(bg.outputs["Background"], mix.inputs[1])
+                nt.links.new(bg_cam.outputs["Background"], mix.inputs[2])
+                nt.links.new(mix.outputs["Shader"], out.inputs["Surface"])
+                print("tfNote skyAsSeen=x%.2f/camera-rays-only/reflections-and-light-unchanged"
+                      % SKY_AS_SEEN_GAIN)
+            except (KeyError, AttributeError, RuntimeError) as exc:
+                print("tfNote skyAsSeen=NOT-APPLIED/%s/the-sky-stays-as-grey-as-it-was"
+                      % type(exc).__name__)
             # 1.35 AND NOT 1.70, WHICH IS THE VALUE THAT MATCHES THE NUMBER.
             #
             # Swept at 1.35, 1.70 and 2.10 and read off the frame each time.

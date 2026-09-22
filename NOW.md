@@ -486,7 +486,15 @@ THE VISUAL LANE, now the sheet is approved - the pair rendered after each step.
       the picture shifted, turned 20.4 degrees towards the parade, at x -3.2,
       y -2.2. Checked by finding our render's vanishing point the same way as
       the sheet's: 0.732, 0.570 against 0.734, 0.570.
-- [ ] RE-CLOSE PALETTE AND COLOUR against the new sheet at that lens.
+- [x] RE-CLOSE PALETTE AND COLOUR against the new sheet at that lens.
+      DONE, measured region by region rather than on the whole frame,
+      because the frames still differ in composition. Sheet against ours
+      after: sky 244-248 / 239-244; brick 112/81/72 / 111/80/71; road
+      149/150/154 / 145/147/151, and its texture variation now matches (31
+      against 31) because the silver sheen is gone; pavement 100/83/61 /
+      100/83/62; road paint faded to the sheet's cream. The sky is brighter
+      to the camera than to the street, so the wet road did not brighten
+      with it. The far parade (sat 0.16 against 0.24) is composition.
 - [ ] THE COMPOSITION, which the new sheet now answers.
 - [ ] THE SHOPFRONTS to the 1989 photographs, starting with the parade.
 
