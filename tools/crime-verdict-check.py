@@ -396,6 +396,32 @@ def judge(text, sha=""):
             if nh is not None and nh < 1:
                 faults.append("the lad who HEARD it came back first-hand - the restore "
                               "handed him the witness's own observation")
+            # THE PAIR ACROSS THE RESTART, 22 September: the crime somebody
+            # saw must come back with every rumour it had, and the crime
+            # nobody could see must still have none - the control holding
+            # nothing AFTER the reload, which is what the list asks. Gated on
+            # the fields being there, loud when they are not, like the line.
+            if "rumoursAboutBAfter" not in r:
+                notes.append("restartPair=NOT-IN-THIS-VERDICT/the-control-was-not-"
+                             "counted-after-the-reload")
+            else:
+                ab, aa = num("rumoursAboutABefore"), num("rumoursAboutAAfter")
+                bb, ba = num("rumoursAboutBBefore"), num("rumoursAboutBAfter")
+                if aa is None or ab is None or aa != ab:
+                    faults.append("the witnessed crime's rumours did not all survive the "
+                                  "restart (%s before, %s after)"
+                                  % (r.get("rumoursAboutABefore"), r.get("rumoursAboutAAfter")))
+                elif aa < 1:
+                    faults.append("there was no rumour about the witnessed crime to survive")
+                if ba is None or ba != 0:
+                    faults.append("the unwitnessed control holds a rumour after the reload "
+                                  "(rumoursAboutBAfter=%s)" % r.get("rumoursAboutBAfter"))
+                if bb is None or bb != 0:
+                    faults.append("the unwitnessed control held a rumour before the save "
+                                  "(rumoursAboutBBefore=%s)" % r.get("rumoursAboutBBefore"))
+                notes.append("restartPair=A %s->%s, B %s->%s"
+                             % (r.get("rumoursAboutABefore"), r.get("rumoursAboutAAfter"),
+                                r.get("rumoursAboutBBefore"), r.get("rumoursAboutBAfter")))
             notes.append("restart=w1 %s->%s rumours, hops %s; n2 %s->%s, hops %s"
                          % (r.get("w1RumoursBefore"), r.get("w1RumoursAfter"), r.get("w1HopsAfter"),
                             r.get("n2RumoursBefore"), r.get("n2RumoursAfter"), r.get("n2HopsAfter")))
@@ -493,9 +519,18 @@ def selftest():
     # rejecting something a good line would pass.
     GOOD_RT = ("restart=RAN w1RumoursBefore=1 w1RumoursAfter=1 n2RumoursBefore=1 "
                "n2RumoursAfter=1 w1MemoryBefore=1 w1MemoryAfter=1 w1HopsAfter=0 "
-               "n2HopsAfter=1 memoryTextStable=yes")
+               "n2HopsAfter=1 memoryTextStable=yes rumoursAboutABefore=2 "
+               "rumoursAboutAAfter=2 rumoursAboutBBefore=0 rumoursAboutBAfter=0")
     if real:
-        ok_text = real.rstrip(chr(10)) + chr(10) + GOOD_RT + chr(10)
+        # THE FIXTURE IS THE ONLY RESTART LINE, the same isolation the control
+        # and the arrest already have. The landed verdict carries a restart
+        # line of its own and judge reads the FIRST; these cases passed only
+        # because str.replace doctored the real line too, whose values
+        # happened to match. A field the real line lacks - the pair, until a
+        # probe run carries it - would have been doctored in the fixture alone
+        # and never looked at.
+        base_rt = LF.join(l for l in real.split(LF) if not l.startswith("restart="))
+        ok_text = base_rt.rstrip(chr(10)) + chr(10) + GOOD_RT + chr(10)
         faults, _n = judge(ok_text, head_sha(real))
         check("accept/a-good-restart-line-passes", not faults, "; ".join(faults[:2]))
         for name, old_v, new_v in (
@@ -507,6 +542,12 @@ def selftest():
                 ("the-restart-never-ran", "restart=RAN", "restart=NOT-RUN"),
                 ("everyone-came-back-first-hand", "n2HopsAfter=1", "n2HopsAfter=0"),
                 ("the-eyewitness-came-back-second-hand", "w1HopsAfter=0", "w1HopsAfter=1"),
+                ("the-control-gained-a-rumour-across-the-restart",
+                 "rumoursAboutBAfter=0", "rumoursAboutBAfter=1"),
+                ("the-witnessed-crime-lost-a-rumour-across-the-restart",
+                 "rumoursAboutAAfter=2", "rumoursAboutAAfter=1"),
+                ("nothing-about-the-witnessed-crime-survived",
+                 "rumoursAboutAAfter=2", "rumoursAboutAAfter=0"),
         ):
             faults, _n = judge(ok_text.replace(old_v, new_v), head_sha(real))
             check("reject/%s-is-caught" % name, bool(faults))

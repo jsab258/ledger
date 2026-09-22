@@ -780,11 +780,16 @@ namespace
 		double W1ConfBefore, W1ConfAfter;
 		int  W1HopsAfter, N2HopsAfter;
 		bool bMemoryTextSame;
+		// THE PAIR ACROSS THE RESTART, 22 September: rumours about the crime
+		// somebody saw and about the one nobody could, counted over the mill
+		// that ticked and again over the one rebuilt from the authoring.
+		int  AboutABefore, AboutAAfter, AboutBBefore, AboutBAfter;
 		RestartReading()
 			: bRan(false), SavedBytes(0), W1Before(0), W1After(0), N2Before(0), N2After(0),
 			  W1MemBefore(0), W1MemAfter(0), N2MemBefore(0), N2MemAfter(0),
 			  W1ConfBefore(0.0), W1ConfAfter(0.0), W1HopsAfter(0), N2HopsAfter(0),
-			  bMemoryTextSame(false) {}
+			  bMemoryTextSame(false),
+			  AboutABefore(0), AboutAAfter(0), AboutBBefore(0), AboutBAfter(0) {}
 	};
 
 	static double BestConfidence(const GossiperPtr& G)
@@ -822,6 +827,7 @@ namespace
 		Out.W1MemBefore = GW1->Memory ? (int)GW1->Memory->Events.size() : 0;
 		Out.N2MemBefore = GN2->Memory ? (int)GN2->Memory->Events.size() : 0;
 		Out.W1ConfBefore = BestConfidence(GW1);
+		LedgerCrime::CountAboutCrimes(GMill->Agents(), Out.AboutABefore, Out.AboutBBefore);
 
 		// THE SAVE. The mill goes out as the JSON the C# codec writes for it;
 		// the memories go out as the markdown they already go out as, which
@@ -855,6 +861,10 @@ namespace
 		Out.W1ConfAfter = BestConfidence(Fresh.Get("w1"));
 		Out.W1HopsAfter = BestHops(Fresh.Get("w1"));
 		Out.N2HopsAfter = BestHops(Fresh.Get("n2"));
+		// AND THE PAIR, over the REBUILT mill: the witnessed crime must come
+		// back, and the one nobody saw must still have nothing about it. A
+		// restore that invented a record, or dropped one, shows here.
+		LedgerCrime::CountAboutCrimes(Fresh.Agents(), Out.AboutAAfter, Out.AboutBAfter);
 		// THE MARKDOWN IS STABLE ACROSS THE TRIP, which is the memory half's
 		// own version of the same question and is already a golden row.
 		Out.bMemoryTextSame = F1->Memory && (F1->Memory->ToMarkdown() == W1Md);
@@ -1386,6 +1396,10 @@ namespace
 				         + " w1HopsAfter=" + LedgerCrime::Int(RT.W1HopsAfter)
 				         + " n2HopsAfter=" + LedgerCrime::Int(RT.N2HopsAfter)
 				         + " memoryTextStable=" + std::string(RT.bMemoryTextSame ? "yes" : "no")
+				         + " rumoursAboutABefore=" + LedgerCrime::Int(RT.AboutABefore)
+				         + " rumoursAboutAAfter=" + LedgerCrime::Int(RT.AboutAAfter)
+				         + " rumoursAboutBBefore=" + LedgerCrime::Int(RT.AboutBBefore)
+				         + " rumoursAboutBAfter=" + LedgerCrime::Int(RT.AboutBAfter)
 				         + " restartNote=the-world-is-rebuilt-from-the-authoring-and-the-save-"
 				           "laid-over-it/never-restored-into-the-mill-that-already-holds-them"));
 			}
@@ -1427,23 +1441,13 @@ namespace
 			// RUMOURS ABOUT EACH CRIME, over every agent in the mill. The
 			// predicate a witnessed break carries names the deed, so a
 			// rumour about the control would have to name crime B's victim.
+			// COUNTED BY THE HEADER'S CountAboutCrimes, the same rule the
+			// restart line counts by after the reload, so the two lines
+			// cannot disagree about what "about B" means.
 			int RumoursA = 0, RumoursB = 0;
 			if (GMill)
 			{
-				const std::vector<GossiperPtr>& Ags = GMill->Agents();
-				for (std::vector<GossiperPtr>::size_type A = 0; A < Ags.size(); ++A)
-				{
-					if (!Ags[A]) { continue; }
-					for (std::vector<RumorPtr>::size_type R = 0; R < Ags[A]->Rumors.size(); ++R)
-					{
-						if (!Ags[A]->Rumors[R]) { continue; }
-						const std::string& V = Ags[A]->Rumors[R]->Content.Value;
-						const std::string& Pd = Ags[A]->Rumors[R]->Content.Predicate;
-						const std::string Both = V + "/" + Pd;
-						if (Both.find("glass1") != std::string::npos) { ++RumoursB; }
-						else if (Both.find("glass0") != std::string::npos) { ++RumoursA; }
-					}
-				}
+				LedgerCrime::CountAboutCrimes(GMill->Agents(), RumoursA, RumoursB);
 			}
 			Out.Add(Un("control=RAN controlCrime=B controlWhy=both-agents-occluded-by-west_south_bay2"
 			           " seenA=" + LedgerCrime::Int(SeenA)
