@@ -5,8 +5,39 @@ on the research, then approved by eye, and nobody had ever checked the IMAGE
 against the research or canon. Everything on the street has been matched to it
 for a week.
 
+CORRECTED THE SAME DAY, and the correction matters more than the audit.
+**The approved sheet's prompt is Codex's retired prompt**, translated:
+`tools/imagegen/compare-hook-2026-09-09-pass2.json` records its source as
+`origin/art/atlas-01` `concept-prompts.json` key `hook`, 1599 characters,
+sha256 `53408df5`, and states that only the `not a ...` clauses were moved
+into the negative channel. So the lists below are right about WHAT is on the
+sheet and wrong about WHY, in three places:
+
+- **Mickey's as a pub was COMMANDED.** The prompt says "Mickey's a SMALL
+  SINGLE 6m-wide two-storey **PUB** ... maroon fascia MICKEY'S". D19 made it
+  a minicab office five days later. The sheet obeyed a prompt that predated
+  the ruling.
+- **The timber-only shopfronts and the missing signage were COMMANDED, and
+  by the same sentence:** "ONLY TWO PIECES OF LETTERING IN THE WHOLE SHEET
+  ... every other shopfront fascia is plain unlettered **PAINTED TIMBER**."
+  List 3's second entry and list 2's last entry are one specification, not
+  two failures.
+- **The inland rise was asked for**, as "inland town gently rising behind";
+  the woods and the villas are the model's own.
+
+**Only the narrowboats were the model disobeying.** The prompt already said
+"a commercial cargo basin" and its negative already carried "pleasure marina,
+yacht, leisure moorings, pontoon", and it drew canal boats anyway - which is
+why the replacement prompt NAMES the craft rather than only forbidding the
+wrong ones.
+
+The full inheritance from the retired sheet is
+`production/reference/retired-sheet-inheritance.md`. This sheet is being
+replaced: Jafar ordered it regenerated on 22 September, before anything else
+is matched to it.
+
 WHAT IT IS AND IS NOT. `hook-sheet.png` is the approved reference and stays
-the approved reference. It governs MOOD, PALETTE and COMPOSITION, which is
+the approved reference until the replacement is approved. It governs MOOD, PALETTE and COMPOSITION, which is
 what it was approved for and what it is good at. It does NOT govern what
 things looked like: it was made by an image model, and the three lists below
 are what happened when it was asked to invent the parts the prompt did not
