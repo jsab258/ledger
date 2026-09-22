@@ -103,6 +103,20 @@ ue-probe/Intermediate/
 ue-probe/Saved/
 ue-probe/DerivedDataCache/
 ue-probe/Packaged/
+# UBT writes cooker and editor file-open-order logs here on every package, and
+# a local build on this PC put two of them in a commit on 2026-09-22 before
+# anybody noticed. They are build output, not a source of anything.
+ue-probe/Build/
+# AND THE TWO INPUT FILES A PACKAGED RUN IS STAGED WITH. The crime run copies
+# them beside the binary from their real homes in production/specs/ and
+# content/dialogue/; a copy landing back in the tree is a second source of
+# truth for a file the whole street is built from.
+/vignette-pieces.json
+/crime-witness-v1.json
+ue-probe/vignette-pieces.json
+ue-probe/crime-witness-v1.json
+ue-probe/Content/vignette-pieces.json
+ue-probe/Content/crime-witness-v1.json
 ue-probe/Saved/
 ue-probe/Intermediate/
 ue-probe/Binaries/
