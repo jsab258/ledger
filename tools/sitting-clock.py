@@ -124,7 +124,118 @@ def opener_ok(message):
                    % (head[:48], OPENER))
 
 
-def decide(text, now, message=None):
+#: THE FILE THAT IS THE CHANNEL, and the hook's third job. Ruled by Jafar on
+#: 22 September: "Every 'For you:' item goes into that file in the same turn it
+#: is written, before it goes into a message. Nothing is ever only in a
+#: message." The rule existed for about four minutes before it needed a hook,
+#: which is the same story as the other two jobs.
+FOR_JAFAR_MD = "FOR-JAFAR.md"
+
+#: HOW MUCH OF AN ITEM HAS TO BE IN THE FILE. Not the whole line: a message
+#: wraps and a file wraps differently, and demanding a byte-for-byte match
+#: would fail on a line break and teach nobody anything. WHAT IS COMPARED is
+#: the normalised WORDS - lowercased, markdown and punctuation stripped,
+#: whitespace collapsed - and the test is whether a run of this many
+#: consecutive words from the item appears anywhere in the normalised file.
+#: EIGHT, because a run of eight words that matches by accident is not a run
+#: that matches by accident, and because an item shorter than eight words has
+#: to match whole, which is the right answer for a short one.
+FOR_JAFAR_RUN = 8
+
+
+def _words(text):
+    """Normalise to a list of comparable words.
+
+    EVERYTHING THAT IS FORMATTING GOES: asterisks, backticks, underscores,
+    brackets, dashes used as bullets, and every run of punctuation. What is
+    left is what the sentence SAYS, which is the only thing worth comparing
+    across a message and a file that wrap differently.
+    """
+    out = []
+    word = []
+    for ch in text.lower():
+        if ch.isalnum():
+            word.append(ch)
+        else:
+            if word:
+                out.append("".join(word))
+                word = []
+    if word:
+        out.append("".join(word))
+    return out
+
+
+def for_you_items(message):
+    """The lines of the For you: block, as written.
+
+    THE BLOCK IS THE OPENER LINE AND THE BULLETS UNDER IT, and it ends at the
+    first blank line that is followed by something which is not a bullet -
+    which is how the report below it starts. A one-line `For you: nothing` has
+    no items at all, and that is the commonest correct case.
+    """
+    if not message:
+        return []
+    lines = message.replace(chr(13) + chr(10), chr(10)).split(chr(10))
+    i = 0
+    while i < len(lines) and not lines[i].strip():
+        i += 1
+    if i >= len(lines):
+        return []
+    items = []
+    head = lines[i].strip()
+    rest = head[len(OPENER):].strip() if head.startswith(OPENER) else ""
+    if rest and _words(rest) != ["nothing"]:
+        items.append(rest)
+    i += 1
+    for line in lines[i:]:
+        t = line.strip()
+        if t.startswith("- ") or t.startswith("* "):
+            items.append(t[2:].strip())
+        elif t and not items:
+            continue
+        elif t and items and (line.startswith("  ") or line.startswith("\t")):
+            items[-1] = items[-1] + " " + t
+        elif not t:
+            continue
+        else:
+            break
+    return [x for x in items if _words(x) and _words(x) != ["nothing"]]
+
+
+def in_for_jafar(message, file_text):
+    """(ok, reason). Every item in the block is already in the file.
+
+    FAILS OPEN ON A MISSING FILE, like everything else here: a repository
+    without FOR-JAFAR.md is one where this rule has not landed yet, and a hook
+    that refuses to let anybody work until a file exists is a hook that gets
+    switched off.
+    """
+    if file_text is None:
+        return True, "no %s to check against" % FOR_JAFAR_MD
+    items = for_you_items(message)
+    if not items:
+        return True, "nothing in the block to check"
+    haystack = _words(file_text)
+    joined = " " + " ".join(haystack) + " "
+    missing = []
+    for item in items:
+        w = _words(item)
+        n = min(FOR_JAFAR_RUN, len(w))
+        found = False
+        for k in range(0, len(w) - n + 1):
+            if " " + " ".join(w[k:k + n]) + " " in joined:
+                found = True
+                break
+        if not found:
+            missing.append(" ".join(w[:12]))
+    if not missing:
+        return True, "all %d item(s) are in %s" % (len(items), FOR_JAFAR_MD)
+    return False, ("%d 'For you:' item(s) are not in %s: %s. Put them in the "
+                   "file first - nothing is ever only in a message."
+                   % (len(missing), FOR_JAFAR_MD, "; ".join(m + "..." for m in missing[:3])))
+
+
+def decide(text, now, message=None, for_jafar=None):
     """(verdict, reason). The whole decision, pure, so the selftest drives the
     same code the hook runs.
 
@@ -134,6 +245,14 @@ def decide(text, now, message=None):
     hours ran out" is not a reason to commit it one last time.
     """
     ok, why = opener_ok(message)
+    if ok is False:
+        return BLOCK, why
+
+    # AND THE BLOCK ONLY REPEATS THE FILE, asked second and before the clock
+    # for the same reason the opener is asked first: a sitting whose hours are
+    # up still has to leave the record complete, and "the time ran out" is not
+    # a reason to let an item exist only in a transcript.
+    ok, why = in_for_jafar(message, for_jafar)
     if ok is False:
         return BLOCK, why
 
@@ -176,6 +295,54 @@ def selftest():
     good = "For you: nothing\n\nThe street is rendered."
 
     # THE BLOCKING CASE FIRST, because it is the one this exists for.
+    # ---- THE THIRD JOB: the block only repeats the file --------------------
+    FJ = ("# For Jafar\n\n## Things you should know\n\n"
+          "- 2026-09-22 The arrest is reachable from a test and from nothing "
+          "else, counted rather than assumed.\n"
+          "- 2026-09-22 The six hour ceiling passed and I carried on because "
+          "you kept directing work.\n")
+    said = ("For you:\n- The arrest is reachable from a test and from nothing "
+            "else, counted rather than assumed.\n\nThe street is rendered.")
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9), said, FJ)
+    check("accept/an-item-that-is-in-the-file-passes", v == PERMIT, r)
+
+    unsaid = ("For you:\n- The runner lost a whole evening to a driver "
+              "nobody has ever mentioned before now.\n\nDone.")
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9), unsaid, FJ)
+    check("reject/an-item-that-is-not-in-the-file-blocks", v == BLOCK, r)
+    check("reject/and-it-says-which-one", "not in FOR-JAFAR.md" in r, r)
+
+    # NOTHING IS ALWAYS FINE, and it is the commonest correct case.
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
+                  "For you: nothing\n\nDone.", FJ)
+    check("accept/for-you-nothing-needs-no-file-entry", v == PERMIT, r)
+
+    # WRAPPING MUST NOT MATTER. The same sentence, broken differently and
+    # wearing markdown, is the same sentence.
+    wrapped = ("For you:\n- **The arrest** is reachable from a test\n"
+               "  and from *nothing else*, counted rather than assumed.\n\nDone.")
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9), wrapped, FJ)
+    check("accept/wrapping-and-markdown-do-not-matter", v == PERMIT, r)
+
+    # AND A MISSING FILE FAILS OPEN rather than stopping all work.
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9), unsaid, None)
+    check("accept/a-missing-file-fails-open", v == PERMIT, r)
+
+    # THE OPENER IS STILL ASKED FIRST, even with a file that would fail.
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
+                  "No opener here at all.", FJ)
+    check("reject/the-opener-still-comes-first", v == BLOCK and "open" in r, r)
+
+    # A SHORT ITEM MATCHES WHOLE, because a run of eight words of a five-word
+    # item is five words, and it must not pass by being too short to compare.
+    short_fj = "# For Jafar\n- The probe is red.\n"
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
+                  "For you:\n- The probe is red.\n\nDone.", short_fj)
+    check("accept/a-short-item-matches-whole", v == PERMIT, r)
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
+                  "For you:\n- The probe is green.\n\nDone.", short_fj)
+    check("reject/a-short-item-that-differs-is-caught", v == BLOCK, r)
+
     v, r = decide(head + two_open, t0 + datetime.timedelta(hours=1), good)
     check("accept/open-list-inside-the-limit-blocks", v == BLOCK, r)
     check("accept/and-the-reason-says-what-to-do", "next item" in r, r)
@@ -264,6 +431,17 @@ def main(argv):
         print("%s %s is unreadable (%s)" % (UNASSESSED, NOW_MD, type(exc).__name__))
         return 0
 
+    # FOR-JAFAR.md, AND ITS ABSENCE IS NOT A REFUSAL. Read as None when it is
+    # not there, which in_for_jafar treats as "this rule has not landed here
+    # yet" and passes. A hook that stops all work until a file exists is a
+    # hook somebody switches off.
+    for_jafar = None
+    try:
+        with open(os.path.join(root, FOR_JAFAR_MD), "r", encoding="utf-8") as fh:
+            for_jafar = fh.read()
+    except OSError:
+        for_jafar = None
+
     # THE PAYLOAD IS PARSED HERE, in the layer that has a selftest, rather
     # than in four lines of bash beside it - the same reasoning the hook this
     # is adapted from gave for the same choice. A hook that greps JSON is a
@@ -286,7 +464,8 @@ def main(argv):
             print("%s the Stop payload did not parse as JSON" % UNASSESSED)
             return 0
 
-    verdict, reason = decide(text, datetime.datetime.now(datetime.timezone.utc), message)
+    verdict, reason = decide(text, datetime.datetime.now(datetime.timezone.utc),
+                             message, for_jafar)
     print("%s %s" % (verdict, reason))
     return 2 if verdict == BLOCK else 0
 

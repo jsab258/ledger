@@ -1600,8 +1600,15 @@ FIGURE_DEPTH_M = 0.25
 #: six-box silhouette stops setting scale and starts being the subject - a
 #: grey mannequin filling the corner of the frame the stage is judged on.
 #: The sheet's own nearest figure is four or five metres off and small.
-FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (23.5, 4.05),
-             (15.0, -4.35), (20.0, -4.15))
+#: MIRRORED WITH THE CAMERA, 22 September. These were spread for a station at
+#: x = 33 looking SOUTH; the camera now stands at x = 9 looking NORTH, and the
+#: nearest of them ended up two and a half metres from the lens - the exact
+#: fault the note above records and moved them to fix, reintroduced by moving
+#: the camera instead of them. Reflected about the street's own mid-point,
+#: x -> 45 - x, which keeps the spread and the two pavements and puts them all
+#: AHEAD: 9 to 26 m out, which is where the sheet's own people stand.
+FIGURE_AT = ((33.5, 4.25), (18.0, 3.85), (26.0, 4.35), (21.5, 4.05),
+             (30.0, -4.35), (25.0, -4.15))
 
 
 #: THE FAR END, AND IT IS THE BASIN END.
@@ -2530,8 +2537,48 @@ def street_cameras():
     # test's own viewpoint, the long note below argues the present one from
     # the sheet, and an earlier move to the east FOOTWAY at +3.6 was tried
     # and rejected for reasons that may or may not survive the 1.4 m.
-    HOOK_X = 33.0
-    HOOK_LOOK_X = 2.0
+    # TURNED TO THE SHEET'S VIEW, RULED BY JAFAR 2026-09-22, and this is the
+    # largest single correction the pair has had.
+    #
+    # THE CAMERA LOOKED THE OPPOSITE WAY FROM THE PICTURE IT REPRODUCES. The
+    # approved sheet's own prompt says it in one clause: "BOTTOM: camera at
+    # 1.6m standing at SOUTH END LOOKING NORTH along Quay Street." This stood
+    # at x=33 of a street running 3 to 42 and looked at x=2 - the north end,
+    # looking south. Both arrangements put a frontage on the right, which is
+    # exactly why nothing ever caught it; but they are opposite ends with
+    # opposite far distances. The sheet's far end is the inland rise. Ours
+    # was the basin.
+    #
+    # HIS RULING, in his words: "Turn the camera to the sheet's view: south
+    # end looking north. The sheet is what the street is built to and the
+    # pair is the exit test, so a camera pointing the other way has been
+    # measuring against a picture of somewhere else all week. Regenerating
+    # the sheet to match us would be the tail wagging the dog. The basin is
+    # not wasted; it becomes the view the other way."
+    #
+    # SIX METRES INSIDE THE SOUTH END, which is the old station's own rule
+    # mirrored: it stood six metres inside the north end for the reason its
+    # note gives, that a camera past the row's end photographs a gable. The
+    # blocks run 3 to 42, so 9.0 is six metres in, and 40.0 is two metres
+    # inside the far end.
+    #
+    # AND IT CROSSES THE ROAD, because the handedness goes with the turn. The
+    # spec's axes: +x north, east at +y. A camera looking north has its right
+    # hand at -y, so EAST IS ON THE LEFT and west on the right - the exact
+    # reverse of before. Standing at y = -2.2 would put a wall 2.9 m from the
+    # lens on the RIGHT and repeat the fault the old station had on the left.
+    # At y = +2.2 the east parade is 2.9 m off on the left and the west
+    # blocks are 7.3 m off on the right, which is canon's own reading of the
+    # sheet: "a shop close on the near left with the street opening out
+    # beyond it."
+    #
+    # WHAT THIS COSTS, said plainly: the basin end built today is now BEHIND
+    # the camera, so the far end of this frame is sky again - at the other
+    # end, where the inland rise belongs and nothing is built. That is a new
+    # item, not a regression, and the basin is still the view the other way.
+    HOOK_X = 9.0
+    HOOK_LOOK_X = 40.0
+    HOOK_Y = 2.2
     reach = HOOK_X - HOOK_LOOK_X
     drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
     return {
@@ -2581,11 +2628,11 @@ def street_cameras():
             # building has the ROAD between it and the camera, eight to ten
             # metres of it. Near-right and close are not the same thing, and
             # the far pavement is where the picture is taken from.
-            "loc": (HOOK_X, -2.2, eye),
-            "look": (HOOK_LOOK_X, -2.2, eye - drop),
+            "loc": (HOOK_X, HOOK_Y, eye),
+            "look": (HOOK_LOOK_X, HOOK_Y, eye - drop),
             "fov_v_deg": HOOK_FOV_V_DEG,
             "res": HOOK_RES,
-            "note": "the-sheet's-own-viewpoint/1.6m-just-off-the-west-kerb/"
+            "note": "the-sheet's-own-viewpoint/south-end-looking-NORTH-per-Jafar-2026-09-22/"
                     "3-degrees-UP-measured-off-the-approved-sheet-not-cam_A's-4-down/"
                     "sky-21-percent-as-the-sheet-is",
         },

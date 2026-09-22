@@ -1,0 +1,124 @@
+# For Jafar
+
+Everything meant for him lives here. Nothing is ever only in a message.
+Ruled 2026-09-22, after "For you:" items went into reports and were lost
+between them.
+
+## Decisions waiting on me
+
+**1. Which way does the pair's composition go now the camera has turned?**
+Not urgent, and it may answer itself. The camera now stands at the south end
+looking north, as ruled. In that view the east parade is 2.9 m off on the
+left and fills the left third as a sheet of glass, while the west blocks at
+7.3 m on the right are plain terraces rather than an anchor shop — so the
+frame's weight is the opposite way round from the old sheet, whose anchor is
+Mickey's at eight to ten metres on the right.
+
+  (a) **Leave it until the new sheet exists — recommended, and what I am
+      doing.** Matching composition to a sheet that is being replaced is the
+      work you told me to stop. The new sheet is prompted for the same view,
+      so it will answer this itself.
+  (b) Move the camera off the east frontage now, to sit further from it.
+  (c) Rule that the anchor should be the cab office, which would mean
+      standing further south still so Mickey's own bay is in frame.
+
+**2. Rumour reach — the numbers before the ruling.**
+You asked for four things printed before you rule: how strong the town's
+friendships actually are, how confident a witness is at first sight, what
+counts as one retelling, and a series showing how reach moves as each is
+changed alone. **Not a decision yet — it is work, and it is next.** Recorded
+here so it is not lost: your instinct is that one act reaching a circle is
+right, and that town-wide knowledge should come from severity, repetition and
+the newspaper.
+
+## Things you should know
+
+- 2026-09-22 **The six-hour ceiling passed.** I have carried on because you
+  kept directing work, and I would rather say so than quietly run over. Stop
+  me whenever.
+- 2026-09-22 **The arrest is reachable from a test and from nothing else.**
+  Counted, not assumed: the only function that produces an arrest outcome has
+  five callers and all five are in the test suite. The Game-layer function
+  that would act on one has none, and the code already says so in a comment.
+  Now first on the stage 3 list by your ruling.
+- 2026-09-22 **The approved sheet's prompt is Codex's retired prompt**,
+  translated, with only the "not a…" clauses moved into the negative. So the
+  pub, the timber-only shopfronts and the missing signage were *commanded*,
+  not invented. Only the narrowboats were the model disobeying.
+- 2026-09-22 **Everything derived from the retired sheet is listed** in
+  `production/reference/retired-sheet-inheritance.md` — the prompt, the whole
+  `cam_hook` row in the governing spec including its 39° field, the lighting
+  column's traced ratios, and seventeen rows of the per-asset index.
+- 2026-09-22 **The probe's red was the check's own selftest**, not the thing
+  being checked. Its fixture stopped being the only control line in the file
+  once the probe started emitting one. Fixed and proved both ways. It only
+  gets exercised on a push that touches the Unreal project or the scene, which
+  is your own trigger rule working as intended.
+- 2026-09-22 **Pass 2 of the new sheet fixed both its contradictions** — the
+  cab office and the metal shopfront are unmistakable — **and introduced two
+  of mine**: three London hackney carriages, and MICKEY'S CARS a foot high.
+  Both now corrected in pass 3 under your rulings.
+- 2026-09-22 **No period photograph can be kept in `production/reference/`.**
+  Every one is photographer copyright or all-rights-reserved or NC/ND, and the
+  research says they are "linked rather than redistributed". The second
+  reference is a page of links.
+- 2026-09-22 **Rotate the token when you are done with it** — it came through
+  chat and is in a transcript. You have said you will.
+- 2026-09-22 **I killed one nineteen-minute generation myself** by piping it
+  to `head`, which closed the pipe under it. About twenty minutes lost.
+
+## Rulings received
+
+- 2026-09-22 **The camera turns to the sheet's view: south end looking
+  north.** The basin becomes the view the other way and is not wasted.
+  *(Re-issued the same day because I had not acted on it yet.)*
+- 2026-09-22 **No trading name.** The fascia reads MICKEY'S, which canon
+  already letters on that bay. Nothing is minted in an image spec.
+  *(Re-issued the same day.)*
+- 2026-09-22 **No fleet size.** A rank outside, one or two plain unmarked
+  second-hand saloons, no recognisable real model, hackney carriages in the
+  negative. *(Re-issued the same day.)*
+- 2026-09-22 **The arrest is first on the stage 3 list** — the end of the
+  consequence chain being reachable only from a test is the single most
+  important thing wrong with the game right now.
+- 2026-09-22 **Rumour reach: print the numbers before I rule.** No constant is
+  turned up until a rumour crosses the town.
+- 2026-09-22 **Keep the fish shop.** Built from the photographs, which outrank
+  the sheet, so it is the one frontage already right.
+- 2026-09-22 **The sheet is regenerated before anything else is matched to
+  it**, and palette and colour work stops until it exists.
+- 2026-09-22 **Photographs are links only.** Nothing copyrighted enters the
+  repository.
+- 2026-09-22 **The sheet governs mood, palette and composition; the
+  photographs govern what things actually looked like; where they disagree,
+  the photographs win.**
+- 2026-09-22 **Everything from the retired sheet is suspect until checked**,
+  and is listed before anything relies on it.
+- 2026-09-22 **Every message begins with `For you:`**, and from today every
+  item in it is in this file first.
+- 2026-09-22 **The PC rule is narrowed**: two Unreal builds must not overlap,
+  and nothing else waits on CI.
+- 2026-09-22 **The full probe runs only on pushes touching the Unreal project
+  or the scene.**
+- 2026-09-22 **Quay Street's three sides**: east is the six-bay parade, the
+  near west block carries shops, the far west block is plain terraces.
+- 2026-09-22 **The west side is built as a reflection** — fix the
+  construction, not the lettering.
+- 2026-09-22 **Image-to-3D moves to stage 2, unscheduled**, and comes back
+  when making props one at a time becomes the bottleneck, not when stage 2
+  starts.
+- 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
+
+## Resolved
+
+*(Items move here with the date they were settled, rather than being deleted,
+so the record stays complete.)*
+
+- 2026-09-22 **Which way the pair is shot** — asked 22 September, ruled the
+  same day: south end looking north. Camera turned, figures mirrored with it.
+- 2026-09-22 **The trading name and the fleet outside the cab office** —
+  asked and ruled the same day. Both applied to pass 3.
+- 2026-09-22 **A token to read the Actions log** — asked and given the same
+  day. Used, the red diagnosed, and the self-pushing diagnostic removed.
+- 2026-09-22 **Whether to revert the metal fish shop** — asked and ruled the
+  same day: keep it.
