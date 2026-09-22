@@ -48,8 +48,13 @@ the panel content area given as x 11..1012, y 662..1278 of a 1024 x 1536
 sheet. The note is careful, long and honest about its uncertainties - and all
 of it is about the wrong picture.
 
-**Checked by:** nothing yet. It needs re-deriving from the new sheet, which is
-the first thing Jafar's order puts after approval.
+**Checked by:** HALF DONE, 22 September. The lens WAS re-derived from the
+new sheet - `production/reference/hook-sheet-lens.md` - and the Blender
+recipe's hook camera uses it (46 degrees vertical, level at 1.9 m, a lens
+shift putting the horizon at 0.570, turned 20.4 degrees). The SCENE SPEC's
+`cam_hook` above still carries the retired numbers, and it is what the
+Unreal probe's hook shot and the A1 grid rows read, so moving it is a probe
+change with its own tests; it is on NOW.md's list as its own item.
 
 ## 3. The hook camera's field of view in the recipe
 
@@ -59,7 +64,8 @@ its elevation and eye cameras and was carried across. The only field ever
 derived for a Hook panel is row 2's 39.0 vertical / 59.7 horizontal, off the
 retired sheet. 60 vertical on our 1.892 frame is 95.1 horizontal.
 
-**Checked by:** nothing yet. Same fix as row 2.
+**Checked by:** 22 September. `HOOK_FOV_V_DEG` is 46.0, derived from the new
+sheet's own geometry - `production/reference/hook-sheet-lens.md` says how.
 
 The frame's ASPECT, `HOOK_RES = (1400, 740)`, is clean: 617 x 326 was measured
 on the APPROVED sheet, on 21 September.
@@ -82,8 +88,13 @@ and they are what the mesh is built from:
 The file's own note already records that three traces of that crop gave three
 different answers, on a lamp twenty-five pixels wide.
 
-**Checked by:** nothing. The new street panel is 2048 wide, so the same lamp
-is roughly 80 px instead of 25 and can actually be traced.
+**Checked by:** 22 September, and there is nothing to trace. The approved
+pass 4 street panel shows NO street lighting column anywhere in it - the only
+vertical on its skyline is a mast on the far hill. So the retired crop's
+constants cannot be re-measured against the new sheet; they stay in the file,
+labelled as the retired sheet's, and the column's SHAPE is governed by R07's
+1989 photograph, "plain bent-arm lighting" (`photographs.md`), which the
+column already is. Its dimensions were always written ones, not traced.
 
 ## 5. The per-asset routing index
 

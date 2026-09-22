@@ -573,10 +573,16 @@ overnight list had only its Overnight section left. Visual first, as ruled.
 - [x] THE CENTRE LINE. On the new sheet, in R09, and named by the scene file
       as the street's next step. Diagram 1008's own dimensions: 2 m marks,
       4 m gaps, 100 mm, on the crown.
-- [ ] THE LIGHTING COLUMN'S SHAPE, the retired sheet's last geometry in the
+- [x] THE LIGHTING COLUMN'S SHAPE, the retired sheet's last geometry in the
       street (retired-sheet-inheritance.md, row 4): look for a column on the
       new sheet to trace; if it shows none, the shape stays with R07's
       "plain bent-arm lighting" and the retired constants are marked so.
+      DONE: the new sheet shows NO column; marked so in the recipe and the
+      inheritance list, whose rows 2 and 3 are brought up to date too.
+- [ ] THE SCENE SPEC'S cam_hook FOLLOWS THE DERIVED LENS. The Blender recipe
+      uses the new lens; the spec - read by the Unreal probe's hook shot and
+      the A1 grid rows - still carries the retired sheet's numbers. A probe
+      change with its own tests, so it goes with its own run.
 - [ ] THE ROUTING INDEX'S CLAIMS (retired-sheet-inheritance.md, row 5):
       GOVERNS.md's nine measured claims, each checked against the new sheet
       and the photographs, and marked kept, changed or unverifiable.

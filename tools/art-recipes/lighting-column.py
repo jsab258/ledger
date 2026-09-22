@@ -344,9 +344,15 @@ NECK_ARC_RADIUS_RATIO = 0.6
 #: comparison, so what is stale is the comparison and not the lamp. It is
 #: flagged for re-measure against production/reference/hook-sheet.png, which
 #: is now the only place a reference lives.
+#:
+#: AND IT CANNOT BE, 22 September: the approved pass 4 street panel shows no
+#: street lighting column at all. The constants here stay as the retired
+#: sheet's, labelled so, and the column's shape is governed by R07's 1989
+#: photograph - "plain bent-arm lighting" - which it already is. See
+#: production/reference/retired-sheet-inheritance.md, row 4.
 SHEET_REF = {
     "source": "RETIRED-REFERENCE/codex-hook-sheet/superseded-2026-09-09/"
-              "re-measure-against-production/reference/hook-sheet.png",
+              "the-approved-sheet-shows-no-column/R07-governs-the-shape",
     "crop_px": "185,700,320,1000/tracedSubWindow-220,690,280,800",
     "method": "luminance-threshold~silhouette~trace~vs~sky~baseline~~200-210",
     "measured_at": "2026-09-21",
