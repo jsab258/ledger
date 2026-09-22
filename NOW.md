@@ -41,22 +41,42 @@ nothing.
       the boards are painted from the spec's period list, in waves.
 - [x] Double yellows, lit shop windows you can see into, rooms behind the
       other windows rather than holes, six people in coats.
-- [ ] THE GAPS THIS PAIR SHOWS, in the order they matter:
-      1. DEPTH BEYOND THIRTY METRES. Still open and the two failed attempts
-         are written into the recipe: a world volume scatter rendered pure
-         black at the scene file's own fog density and again with EEVEE's
-         volumetric range opened out. The next attempt does not start from
-         scratch. The missing TOWN past the end of the street is stage 6 and
-         is not this.
-      2. NO CARS. The sheet has three and they are a quarter of what says
-         1990.
-      3. NO CLUTTER: no bins, no A-boards, no crates, nothing on the
-         pavement. The sheet's fish shop trades onto its own frontage.
-      4. THE UPPER WINDOWS ARE BARE. The spec names a per-bay choice - a
-         closed roller blind, a bare pane, or the lit interior card - and
-         none of it is reaching the street.
-      5. THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
-      6. The figures are on both pavements but barely read at distance.
+- [x] THE REFERENCE ITSELF WAS WRONG, and it is fixed. Every comparison
+      this week went to Codex's retired sheet, which still resolves on its
+      branch, so nothing ever failed. The approved in-house sheet is now at
+      production/reference/hook-sheet.png and that is the only place a
+      reference lives; the pair tool refuses when it is missing.
+- [ ] THE GAPS THE RIGHT PAIR SHOWS, re-cut 22 September against the
+      approved sheet, in the order they matter. The first three are worth
+      more than everything below them put together:
+      1. THE FRAME IS POINTED AT THE WRONG THING. A blank windowless gable
+         takes the left third of our picture and the road takes most of the
+         rest; the parade is a sliver down the right edge. The sheet puts
+         shopfronts across two-thirds of the frame with the near corner
+         building large and detailed. Every piece of dressing built this
+         week is sitting in 8 per cent of the image.
+      2. VALUE. Ours is mean 74 against the sheet's 120 and its brightest
+         five per cent is 163 against 229. Nothing in our frame is bright.
+      3. COLOUR. Ours is grey - red, green and blue within 0.8 of a level
+         of each other - against a sheet that is warm (R-B +18.5) and a
+         quarter saturated. Two parts to it: the brick must come back to
+         WARM RED, reversing a lightening made against the wrong sheet, and
+         the shopfronts must be a PARADE OF DIFFERENT PAINTED COLOURS -
+         cream, green, blue, oxblood, side by side - which is the single
+         loudest thing in the reference.
+      4. WHITE JOINERY. The sheet's character is white-painted sash windows
+         and white shopfront frames against red brick, everywhere. Ours are
+         dark. This is most of where the missing highlights are.
+      5. THE YELLOWS ARE RIGHT AND TOO LOUD. The approved sheet does carry
+         double yellows, so they stay; ours are the brightest thing in the
+         frame where the sheet's are worn and nearly lost.
+      6. NO CARS. The sheet has one parked well up the street, not three.
+      7. NO CLUTTER on the pavement.
+      8. THE UPPER WINDOWS ARE BARE: the spec's per-bay roller blind, bare
+         pane or lit interior card is not reaching the street.
+      9. THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
+     10. DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
+         into the recipe and the next one does not start from scratch.
 - [ ] Render the pair from the sheet's viewpoint after each step, in DAYLIGHT
       as the sheet is. The dusk frame is a second, occasional check.
 

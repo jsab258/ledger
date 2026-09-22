@@ -256,6 +256,8 @@ OURS = {
     # sweep went red naming them. Moving a key is right when a directory
     # moves and wrong when a live copy of it remains: both carry frames, so
     # both are rows.
+    # THE ONE PLACE A REFERENCE LIVES, added 2026-09-22 with the rule.
+    "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png is this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) on Jafar's machine, no fetched asset as an input",
     "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
 }

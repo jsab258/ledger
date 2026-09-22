@@ -12,21 +12,31 @@ the sheet is, and the dusk frame is a second, occasional check rather than the
 working comparison. A comparison performed by eye from two files in two
 directories is a comparison nobody repeats the same way twice.
 
+WHICH SHEET, AND THE WEEK THIS GOT WRONG. Jafar's ruling of 9 September made
+the IN-HOUSE Hook sheet the reference and retired Codex's. This tool was still
+hard-wired to Codex's file, production/art/atlas-01/concepts/hook.png on the
+art branch - and that file is STILL THERE, which is exactly why nothing ever
+failed and why a week of comparisons went to the wrong picture in silence. A
+reference that resolves is not the same as a reference that governs.
+
+SO THERE IS NOW ONE PLACE A REFERENCE LIVES, production/reference/, and this
+reads from it and from nowhere else. No branch, no git show, no second copy to
+drift: if the sheet is not at that path the tool refuses and says so, which is
+the behaviour that would have caught this on day one.
+
 WHICH PANEL. The sheet is a poster: a title, a harbour panel, a STREET panel,
-a strip of material swatches, a footer. The street panel is the one our
-viewpoint is a viewpoint of, and it is found by measurement rather than by
-typed pixel coordinates, because the sheet is a file on an art branch that
-somebody may re-export at another size. The paper is near-white and every
-panel is not, so the bands are found by scanning for rows that are entirely
-paper, and the street panel is the LAST band tall enough to be a photograph.
+a strip of material swatches, a footer of object studies. The street panel is
+the one our viewpoint is a viewpoint of, and it is found by measurement rather
+than by typed pixel coordinates, because somebody may re-export the sheet at
+another size. The paper is plain and every panel is not, so the bands are
+found by scanning for rows that are entirely paper, and the street panel is
+the LAST band tall enough to be a photograph.
 """
 import os
 import sys
 
-#: THE SHEET ITSELF LIVES ON THE ART BRANCH, not on main, so it is read out of
-#: git rather than from a path. Named here once.
-SHEET_REF = "origin/art/atlas-01"
-SHEET_PATH = "production/art/atlas-01/concepts/hook.png"
+#: THE ONE REFERENCE PATH. Relative to the repository root.
+REFERENCE = os.path.join("production", "reference", "hook-sheet.png")
 
 #: A band has to be at least this tall a fraction of the sheet to count as a
 #: photograph rather than a swatch strip or a rule. MEASURED on the committed
@@ -34,9 +44,21 @@ SHEET_PATH = "production/art/atlas-01/concepts/hook.png"
 #: strip is 0.11, so anything over a fifth is a panel and nothing else is.
 PANEL_MIN_FRACTION = 0.20
 
-#: How white the paper is. MEASURED on the committed sheet: its margins sit
-#: above 240 in every channel and the lightest sky inside a panel is under 230.
+#: How light the paper is, as a MINIMUM CHANNEL value, and it is DERIVED per
+#: sheet rather than typed. The retired sheet was printed on near-white and
+#: this one is on cream: measured at the four corners, the approved sheet's
+#: paper is (249, 245, 231), so its minimum channel is 231 and the old typed
+#: 235 would have called the whole page ink and found one band covering
+#: everything. A constant measured off one sheet is a constant that silently
+#: stops describing the next one, which is the same failure as the sheet path
+#: itself. This is the fallback only, for a sheet whose corners cannot be read.
 PAPER_MIN = 235
+
+#: How far below the paper's own value a row has to sit to count as ink.
+#: The gaps between this sheet's panels read as clean paper and the panels'
+#: lightest rows (overcast sky) sit far below, so there is a wide margin here;
+#: 12 is chosen to be well inside it and well clear of JPEG-style mottle.
+PAPER_MARGIN = 12
 
 
 def panel_bands(grey_rows, height, paper_min=PAPER_MIN, min_fraction=PANEL_MIN_FRACTION):
@@ -96,15 +118,26 @@ def layout(sheet_wh, ours_wh, gutter=24, label=34):
 # ---------------------------------------------------------------------------
 
 
+def paper_value(a, pad=25):
+    """The sheet's own paper, as a minimum channel value, from its corners.
+
+    FOUR CORNERS AND THE LOWEST OF THEM. A sheet with one stained corner or
+    one panel bled to an edge should not be able to talk this up into the
+    picture; taking the darkest corner errs towards calling something paper,
+    which loses a little margin at the edge of a panel and never swallows the
+    page.
+    """
+    h, w = a.shape[0], a.shape[1]
+    p = min(pad, h // 4, w // 4)
+    corners = (a[:p, :p], a[:p, -p:], a[-p:, :p], a[-p:, -p:])
+    return min(int(c.min()) for c in corners)
+
+
 def _read_sheet(root, scratch):
-    """The sheet's bytes, out of the art branch."""
-    import subprocess
-    dest = os.path.join(scratch, "hook-sheet.png")
-    with open(dest, "wb") as fh:
-        p = subprocess.run(["git", "show", "%s:%s" % (SHEET_REF, SHEET_PATH)],
-                           cwd=root, stdout=fh)
-    if p.returncode != 0 or not os.path.exists(dest) or os.path.getsize(dest) == 0:
-        return None, "sheet-not-on-%s" % SHEET_REF.replace("/", "~")
+    """The approved sheet, from the one place references live."""
+    dest = os.path.join(root, REFERENCE)
+    if not os.path.exists(dest) or os.path.getsize(dest) == 0:
+        return None, "no-sheet-at-%s" % REFERENCE.replace(chr(92), "/")
     return dest, ""
 
 
@@ -117,14 +150,15 @@ def build(root, ours_path, out_path, scratch, caption=""):
         return err
     sheet = Image.open(sheet_file).convert("RGB")
     a = np.asarray(sheet).astype(int)
+    paper = max(1, paper_value(a) - PAPER_MARGIN)
     rows = a.min(axis=(1, 2)).tolist()
-    bands = panel_bands(rows, sheet.size[1])
+    bands = panel_bands(rows, sheet.size[1], paper_min=paper)
     band = street_band(bands)
     if band is None:
         return "no-panel-found-in-the-sheet/bands=%d" % len(bands)
     y0, y1 = band
     cols = a[y0:y1].min(axis=(0, 2)).tolist()
-    span = ink_columns(cols)
+    span = ink_columns(cols, paper_min=paper)
     if span is None:
         return "the-street-panel-is-all-paper"
     x0, x1 = span
@@ -141,8 +175,10 @@ def build(root, ours_path, out_path, scratch, caption=""):
     d.text((6, 10), "THE HOOK SHEET, the bar", fill=(235, 235, 235))
     d.text((obox[0] + 6, 10), "OURS  " + caption, fill=(235, 235, 235))
     canvas.save(out_path)
-    print("hookPair sheetPanel=%d,%d..%d,%d ours=%dx%d out=%s bytes=%d"
-          % (x0, y0, x1, y1, ours.size[0], ours.size[1],
+    print("hookPair sheet=%s paper=%d sheetPanel=%d,%d..%d,%d ours=%dx%d "
+          "out=%s bytes=%d"
+          % (REFERENCE.replace(chr(92), "/"), paper, x0, y0, x1, y1,
+             ours.size[0], ours.size[1],
              os.path.basename(out_path), os.path.getsize(out_path)))
     return ""
 
@@ -187,6 +223,26 @@ def selftest():
           str(ink_columns([255, 255, 40, 40, 40, 255])))
     check("reject/an-all-paper-band-has-no-columns",
           ink_columns([255, 255, 255]) is None)
+
+    # THE PAPER IS DERIVED, and cream paper is the case that broke the typed
+    # constant: the approved sheet's corners are (249, 245, 231), so its
+    # minimum channel is 231 and a fixed 235 called the entire page ink.
+    import numpy as _np
+    cream = _np.full((80, 80, 3), 249, dtype=int)
+    cream[:, :, 2] = 231
+    check("accept/cream-paper-is-read-as-paper-not-ink", paper_value(cream) == 231,
+          str(paper_value(cream)))
+    stained = cream.copy()
+    stained[:20, :20] = 180
+    check("accept/the-darkest-corner-wins", paper_value(stained) == 180,
+          str(paper_value(stained)))
+
+    # AND THE ONE REFERENCE IS WHERE IT IS SUPPOSED TO BE. This is the check
+    # whose absence cost a week: the old tool read a path that still resolved
+    # and never said which sheet it had.
+    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    check("accept/the-approved-sheet-is-at-the-one-reference-path",
+          os.path.exists(os.path.join(_root, REFERENCE)), REFERENCE)
 
     # BOTH PANELS COME OUT THE SAME HEIGHT, which is the whole point: two
     # pictures at two sizes are not a comparison.
