@@ -659,6 +659,12 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       review=pending until a person has looked. Two have a figure in them,
       one facing out - generic, and at twenty metres a few pixels.
 
+- [x] NET CURTAINS UPSTAIRS: the sheet's upstairs windows are pale - white
+      frames over white nets, 157 - and ours looked through clear glass into
+      an unlit flat at 100 to 107. The held net pictures (C12) now hang
+      behind every upstairs pane, alternated, lit as daylight on them by day
+      and nearly dark at night; set from the measurement to 161-164.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
