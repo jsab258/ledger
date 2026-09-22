@@ -225,7 +225,7 @@ OURS = {
     # under the same production/art tree, so a delivered PNG would be
     # classified as ours by a row that only ever meant the previews. The
     # value says so; narrowing the path rule is queue 153.
-    "production/art": "Blender previews only, under production/art/*/previews: renders of this project's own piece list by a recipe under tools/art-recipes, greys from the recipe plus the CC0 base meshes attributed in ledger/Assets/Props/base-mesh/THIRD-PARTY.md; a DELIVERY under the same commission is somebody's and is not covered by this row",
+    "production/art": "renders by a recipe under tools/art-recipes of this project's own piece list - the previews under production/art/*/previews and the accepted frames a recipe commits beside its asset - renders of this project's own piece list by a recipe under tools/art-recipes, greys from the recipe plus the CC0 base meshes attributed in ledger/Assets/Props/base-mesh/THIRD-PARTY.md; a DELIVERY under the same commission is somebody's and is not covered by this row",
     # The Unreal probe's own frames, added 3 Sep 2026 when run 17 rendered the
     # street for the first time and this check went red naming five PNGs. The
     # same category as sim-shots and for a stronger reason: Phase B is
@@ -248,6 +248,15 @@ OURS = {
     # being deleted. Deleting it would have let 65 asset files fall out of
     # the sweep's denominator silently, which is the failure this row exists
     # to prevent.
+    # AND THE LIVE PATH IS BACK, 2026-09-22, because the archive move above
+    # took the row with it and left the RUNNING probe with none. The probe
+    # still writes to production/d1-probe and still commits its frames every
+    # run; the day it ran green for the first time since the pause it pushed
+    # a dozen PNGs into a directory this file no longer knew about and the
+    # sweep went red naming them. Moving a key is right when a directory
+    # moves and wrong when a live copy of it remains: both carry frames, so
+    # both are rows.
+    "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
 }
 
@@ -417,7 +426,19 @@ NOT_ASSET_SUFFIXES = {
 # vendored runtime DLL, and is a machine-local artefact rather than repository
 # content.
 SKIP_FRAGMENTS = ("/.git/", "/node_modules/", "/.venv", "/obj/", "/bin/",
-                  "/Library/", "/__pycache__/", "/.onnx-cache/")
+                  "/Library/", "/__pycache__/", "/.onnx-cache/",
+                  # THE UNREAL BUILD'S OWN OUTPUT, added 2026-09-22 for the
+                  # same reason /obj/ and /bin/ are already here. All of it is
+                  # in .gitignore, so none of it exists in CI and this sweep
+                  # never saw it there - but the moment a build runs on
+                  # Jafar's PC it leaves tens of thousands of .bin, .obj, .exe
+                  # and .rsp files under ue-probe/, and the check went red
+                  # naming build artefacts as unattributed assets. A check
+                  # that only passes on a machine which has never built is a
+                  # check the machine that builds cannot be asked to run.
+                  "/ue-probe/Intermediate/", "/ue-probe/Binaries/",
+                  "/ue-probe/Saved/", "/ue-probe/Packaged/",
+                  "/ue-probe/Build/", "/ue-probe/DerivedDataCache/")
 
 _fails = []
 
