@@ -160,7 +160,25 @@ recommendation is C or D. DO NOT SPEND A FIFTH ROUND TRIP ON THE LAMP BEFORE HE
 ANSWERS: tuning against a ruler with a 37 percent swing is what the last two
 cost.
 
-NEXT, and it does not wait on the lamp: the terrace front AUTHOR station. Both
+NEXT, AND IT IS ON HOLD UNTIL HE ANSWERS, WHICH CORRECTS WHAT THIS SECTION
+SAID AN HOUR AGO: the terrace front AUTHOR station. It was written here as
+not waiting on the lamp, and that was wrong in a way worth naming rather than
+quietly editing. STARTING THE FACADE TONIGHT IS TAKING OPTION D, because D is
+exactly "stop on the lamp and start the terrace fronts now". Three of the
+card's four options spend another round trip on the lamp first, so beginning
+the facade would settle his card by doing, which is what rule 11 forbids.
+Everything below stands and is ready the moment he answers; nothing about it
+needs doing first.
+
+THE SECOND REASON TO HOLD IS THE BUDGET AND IT IS INDEPENDENT OF THE CARD. The
+newest reading is his own 17 and 19 at about 19:2xZ, and a full evening has run
+since: four renders read, a lane fault found and fixed and proved, a Producer
+turn, two commits. A reading describes the moment it was taken, so by
+production/budget.md's own condition the day is UNMEASURED and the studio
+prefers stopping. The 01:03Z tick should do the INBOX HALF and nothing else
+until a fresh pair of numbers arrives.
+
+THE TERRACE FRONT AUTHOR STATION, ready and not started. Both
 preconditions queue 389 names have landed, 403 and 370. D53 POINT 5 GOVERNS AND
 IS NOT OPTIONAL: the facade is authored with its wear as a SEPARABLE LAYER so
 coverage can be printed, it prints `wearCoverage` with its batch, it is the
