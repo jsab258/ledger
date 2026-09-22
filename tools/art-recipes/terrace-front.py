@@ -521,9 +521,18 @@ FASCIA_PAINT = (
     # 0.010, 0.030, 0.019 - FIVE TIMES darker, which is not a bottle green,
     # it is a black door. Period shop paint was dark; it was not unlit. The
     # oxblood comes up with it for the same reason and by the same amount.
-    ("oxblood",    (0.105, 0.020, 0.024)),
-    ("oxblood",    (0.105, 0.020, 0.024)),
+    #
+    # AND THE ORDER MOVED BY ONE, which is composition rather than palette.
+    # On the approved sheet the NEAREST shop is the richest thing in the
+    # frame - deep oxblood, filling the right third - and ours was cream,
+    # which put the palest mass in the picture exactly where the reference
+    # puts its darkest. The west block is built as a half turn so its bays
+    # arrive in reverse and its nearest is index 2; rotating the wave by one
+    # puts oxblood there. Still in waves: two oxblood together, the bare
+    # unit, cream either side of it, then the green.
     ("cream",      (0.520, 0.430, 0.270)),
+    ("oxblood",    (0.105, 0.020, 0.024)),
+    ("oxblood",    (0.105, 0.020, 0.024)),
     ("bare_timber",(0.021, 0.014, 0.010)),
     ("cream",      (0.520, 0.430, 0.270)),
     ("bottle_green",(0.060, 0.085, 0.072)),
