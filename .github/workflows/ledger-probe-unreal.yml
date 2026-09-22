@@ -1963,9 +1963,26 @@ jobs:
         shell: bash
         run: |
           set -u
+          # A PYTHON THAT ACTUALLY RUNS, RESOLVED THE WAY EVERYTHING ELSE IN
+          # THIS REPOSITORY NOW RESOLVES IT. This step called `python` by
+          # name on its first run and went red because the runner has
+          # `python3`; the machine it was written on has the reverse, where
+          # `python3` is the Microsoft Store alias that prints "Python was
+          # not found" and exits. That alias has now cost this project four
+          # separate failures in one day, so nothing here trusts a name: a
+          # candidate has to EVALUATE something before it is believed.
+          PY=""
+          for c in python3 python py; do
+            if [ "$("$c" -c 'print(7*6)' 2>/dev/null)" = "42" ]; then PY="$c"; break; fi
+          done
+          if [ -z "$PY" ]; then
+            echo "no working python on this runner - the crime verdict was not read,"                  "so nothing measured whether the deed came from a key press."
+            exit 1
+          fi
+          echo "crime-verdict python=$PY"
           SHORT="$(git rev-parse HEAD | cut -c1-7)"
-          python tools/crime-verdict-check.py --selftest || exit 1
-          python tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
+          "$PY" tools/crime-verdict-check.py --selftest || exit 1
+          "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
 
       - name: Stitch the crime sequence into a captioned clip
         id: crimeclip
