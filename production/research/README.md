@@ -23,14 +23,25 @@ attempts at the lighting column were spent tuning to a proportion traced off a
 sheet whose lamp is twenty-five pixels wide, and three traces of the same crop
 gave three different answers.
 
-## The approved concept sheets
+## The approved concept sheet
 
-They live on the `art/atlas-01` branch under
-`production/art/atlas-01/concepts/`, not on `main`. Read one with
+THE HOOK SHEET IS `production/reference/hook-sheet.png` AND NOTHING ELSE. It
+is on `main`, in a plain checkout, and it is the visual bar for stage 1.
 
-    git show origin/art/atlas-01:production/art/atlas-01/concepts/<name>.png
+DO NOT OPEN `production/art/atlas-01/concepts/hook.png`. That is Codex's
+sheet, RETIRED by Jafar's ruling of 9 September - and it still resolves on the
+art branch, which is exactly how a week of comparisons went to the wrong
+picture with nothing failing. This page used to route every brief to it. The
+other seven district sheets have not been re-approved and none of them is a
+reference; if a brief needs one, it needs a ruling first.
 
-`hook.png` is the visual bar for phase A and is the sheet most briefs cite.
+AND THE SHEET IS ONLY HALF THE REFERENCE. It governs mood, palette and
+composition. What things actually looked like is governed by the period
+photographs at `production/reference/photographs.md`, and where the two
+disagree the photographs win (Jafar 2026-09-22). The sheet was checked against
+the research and canon on 22 September: `production/reference/hook-sheet-audit.md`
+lists what it gets right, what it invented, and the four things on it that
+contradict a ruling and are no longer citable.
 
 ## The research itself
 

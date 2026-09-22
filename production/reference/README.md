@@ -24,6 +24,22 @@ our street from that panel's own viewpoint, beside it, in daylight as it is.
 `tools/hook-pair.py` finds the panel by measuring the sheet rather than by
 typed pixel coordinates, so a re-export at another size still works.
 
+## The second reference, and why it is a page of links
+
+`photographs.md` is the other half. THE SHEET GOVERNS MOOD, PALETTE AND
+COMPOSITION; THE PHOTOGRAPHS GOVERN WHAT THINGS ACTUALLY LOOKED LIKE; WHERE
+THEY DISAGREE, THE PHOTOGRAPHS WIN (Jafar 2026-09-22). It holds no images:
+every period photograph the research cites is under photographer copyright
+with no open reuse licence established, the research's own `RIGHTS.md` says
+they are "linked rather than redistributed", and the allowlist fails anything
+untagged. So it links them and says what each one establishes.
+
+`hook-sheet-audit.md` is the check nobody had done: the sheet against the
+research and canon, sorted into what it gets right, what the image model
+invented, and the four things that contradict a ruling and are no longer
+citable - the pub, the timber-only shopfronts, the narrowboats, and the
+free-standing corner building.
+
 ## Adding one
 
 Copy the approved file in, add a row above saying what it is and where it came
