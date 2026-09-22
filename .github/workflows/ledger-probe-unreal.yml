@@ -2295,7 +2295,48 @@ jobs:
             # and restores it, so the pull actually succeeds when the
             # branch moved under a dirty checkout. Do not simplify this
             # back to --no-edit alone.
-            git pull --rebase --autostash --no-edit origin "$BR" || git rebase --abort || true
+            # THE REBASE IS WHERE THIS WAS LOSING, and it was losing to
+            # ANOTHER PROBE RUN rather than to a human. Run 35725661822 went
+            # red here on 22 September with every other step green, and the
+            # reason is that three probe runs were in flight at once: each
+            # one rewrites the SAME tracked evidence files - ue-machine.txt,
+            # ue-verdict.txt, ue-shot-verdict.txt, ue-vignette-verdict.txt
+            # and the frames - so when the second one rebases onto the
+            # first's commit the two versions CONFLICT. The line then ran
+            # `git rebase --abort || true`, threw the rebase away, and pushed
+            # a commit still parented on the old tip; that is rejected as
+            # behind, six times, at which point the job goes red having
+            # measured everything correctly and banked none of it.
+            #
+            # A CONFLICT HERE HAS A RIGHT ANSWER AND IT IS ALWAYS OURS. Every
+            # file in production/d1-probe is THIS run's measurement of THIS
+            # commit, written by the steps above and guarded by the sha
+            # checks that replace any file not carrying this commit's own
+            # short sha. The other side of the conflict is a different run's
+            # measurement of a different commit, which has already landed and
+            # which nothing here wants to keep. So the conflict is resolved
+            # by taking the replayed side and the rebase is CONTINUED, rather
+            # than abandoned - and only a conflict OUTSIDE that directory,
+            # which this step never creates, still aborts.
+            if ! git pull --rebase --autostash --no-edit origin "$BR"; then
+              CONF="$(git diff --name-only --diff-filter=U || true)"
+              OUTSIDE="$(printf '%s\n' "$CONF" | grep -v '^production/d1-probe/' | grep -v '^$' || true)"
+              if [ -n "$CONF" ] && [ -z "$OUTSIDE" ]; then
+                # --theirs IS OURS HERE, and the inversion is real: mid-rebase
+                # "ours" is the upstream being replayed ONTO and "theirs" is
+                # the commit being replayed, which is this run's evidence.
+                printf '%s\n' "$CONF" | while read -r f; do
+                  [ -n "$f" ] || continue
+                  git checkout --theirs -- "$f" 2>/dev/null || git rm -q -- "$f" 2>/dev/null || true
+                  git add -A -- "$f" 2>/dev/null || true
+                done
+                echo "probe evidence conflicted with another run; kept this run's files"
+                GIT_EDITOR=true git rebase --continue || git rebase --abort || true
+              else
+                [ -n "$OUTSIDE" ] && echo "conflict outside production/d1-probe, not resolving: $OUTSIDE"
+                git rebase --abort || true
+              fi
+            fi
             if git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${BR}"; then
               echo "probe result pushed to $BR"; exit 0
             fi
