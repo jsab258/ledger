@@ -335,8 +335,18 @@ NECK_ARC_RADIUS_RATIO = 0.6
 #: and LANTERN_BODY_FRACTION below is chosen against the ~3.3:1
 #: width-to-height read at the widest traced row, not against a "long lazy
 #: sweep" the sheet's own pixels do not show at this crop.
+#: MEASURED AGAINST A SHEET THAT HAS SINCE BEEN RETIRED, and said here rather
+#: than quietly left to look current. Every number in this block was read off
+#: CODEX'S hook sheet; Jafar's ruling of 9 September made the in-house sheet
+#: the reference and retired that one, and this file was never repointed. The
+#: COLUMN ITSELF is accepted work and its geometry comes from written
+#: dimensions, not from this block - what this block does is print a
+#: comparison, so what is stale is the comparison and not the lamp. It is
+#: flagged for re-measure against production/reference/hook-sheet.png, which
+#: is now the only place a reference lives.
 SHEET_REF = {
-    "source": "production/art/atlas-01/concepts/hook.png@origin/art/atlas-01",
+    "source": "RETIRED-REFERENCE/codex-hook-sheet/superseded-2026-09-09/"
+              "re-measure-against-production/reference/hook-sheet.png",
     "crop_px": "185,700,320,1000/tracedSubWindow-220,690,280,800",
     "method": "luminance-threshold~silhouette~trace~vs~sky~baseline~~200-210",
     "measured_at": "2026-09-21",
