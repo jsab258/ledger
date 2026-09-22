@@ -101,6 +101,18 @@ MATERIALS = (
     # runs for this row too, which is what stopped the joinery following it up.
     ("brick_grey",  (0.112, 0.110, 0.105), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
+    # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
+    # material with the sills was why the first night frame came back with a
+    # near-white pavement. Wetting the road meant wetting every sill and
+    # coping on the street; darkening the pavement would have darkened them
+    # too. They are different surfaces in life and they are different here.
+    #
+    # AND PAVING IS DARK. A dry British footway is a mid grey and a WET one is
+    # nearly black, because water fills the pores and what you then see is a
+    # mirror of whatever is above it. The Hook sheet's own street panel is the
+    # reference and its pavement is among the darkest things in the frame.
+    ("paving",      (0.048, 0.047, 0.045), 0.62),   # the footway
+    ("kerbstone",   (0.062, 0.060, 0.056), 0.58),   # the kerb, a shade lighter
     # THE SHOPFRONT'S PARTS EACH HAVE THEIR OWN VALUE NOW, and that is the
     # whole of the second attempt. The first one gave the stallriser, the
     # glazing, the toplight and both doors one near-black tone, so a British
@@ -131,7 +143,7 @@ MATERIALS = (
     ("glass",       (0.012, 0.015, 0.017), 0.10),
     ("lead",        (0.030, 0.030, 0.032), 0.60),   # downpipe
     ("slate",       (0.026, 0.028, 0.032), 0.70),
-    ("asphalt",     (0.030, 0.030, 0.031), 0.85),   # the carriageway
+    ("asphalt",     (0.016, 0.016, 0.018), 0.85),   # the carriageway, dark
     ("figure",      (0.014, 0.014, 0.016), 0.80),   # a person, read as a silhouette
     # THE LAMP'S OWN THREE, copied from tools/art-recipes/lighting-column.py's
     # MATERIALS rather than chosen again here, so the column in the street is
@@ -747,15 +759,34 @@ def lamp_parts(root):
     return out, ""
 
 
+#: The lantern's own numbers, MEASURED from the emitted piece list: its centre
+#: sits at 4.965 m above the road crown and it is 0.200 m deep, so its
+#: underside - where the lens is and where light actually leaves it - is at
+#: 4.865 m.
+LANTERN_CENTRE_M = 4.965
+LANTERN_HEIGHT_M = 0.200
+LANTERN_LIGHT_DROP_M = 0.05
+
+
 def lantern_lights():
-    """Where a point light goes when the lamps are lit: under the centre of
-    each lantern, which is the placement rule the piece file itself states."""
+    """Where a point light goes when the lamps are lit: below the lantern's
+    UNDERSIDE, which is where its lens is.
+
+    IT WAS INSIDE THE HOUSING, and that is why two rounds of raising the
+    lantern power changed nothing. The piece file's rule is "one point light
+    0.05 m below the centre of each EMISSIVE PIECE", and the emissive piece is
+    the lens on the lantern's underside - not the lantern. Read as the
+    lantern's centre, it put the light 0.05 m below 4.965, which is 0.10 m
+    inside a 0.20 m deep opaque steel housing. The lamps were lit and sealed:
+    six thousand watts shining into the inside of a box.
+    """
     out = []
+    base = LANTERN_CENTRE_M - LANTERN_HEIGHT_M / 2.0 - LANTERN_LIGHT_DROP_M
     for n, (px, py) in enumerate(LAMP_AT):
         east = py > 0.0
         reach = 0.5                      # outreach_m, toward the road
         ly = py - reach if east else py + reach
-        out.append((px, ly, 4.965 - 0.05))
+        out.append((px, ly, base))
     return out
 
 
@@ -817,10 +848,10 @@ def plan_street(root, spec_rel=SPEC_REL):
          "two-3.0m-lanes/the-common-British-two-way-residential-carriageway")
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
-        _box(out, "kerb_%s" % name, "stone", x0, x1, min(a, b), max(a, b),
+        _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
              -0.30, kerb_up, "125mm-face/the-standard-British-upstand")
         c, d = sgn * (half + kerb_w), sgn * STREET_FRONTAGE_M
-        _box(out, "footway_%s" % name, "stone", x0, x1, min(c, d), max(c, d),
+        _box(out, "footway_%s" % name, "paving", x0, x1, min(c, d), max(c, d),
              -0.30, THRESHOLD_ABOVE_CROWN_M, "2.0m/the-normal-British-footway")
     _figures(out)
     lamps, lerr = lamp_parts(root)
@@ -1228,10 +1259,35 @@ def street_cameras():
     drop = reach * math.tan(math.radians(4.0))
     return {
         "hook": {
-            "loc": (4.0, 4.0, eye),
-            "look": (4.0 + reach, 4.0, eye - drop),
+            # THE SHEET'S VIEWPOINT IS ON THE FAR PAVEMENT, NOT THE PARADE'S.
+            #
+            # cam_A, as the scene file writes it, stands on the EAST footway -
+            # the shops' own pavement - 0.875 m back from the kerb. Put the
+            # street beside the sheet and that is the mirror of the reference:
+            # the sheet's near wall on the left is a blank flank end a metre
+            # away and its shopfronts are eight to ten metres off on the
+            # RIGHT, running away down the frame. Ours had the parade a metre
+            # from the lens on the left, filling half the picture with one
+            # bay, and the plain row where the sheet puts its shops.
+            #
+            # Nobody could have said which way that gap ran, because the two
+            # pictures were not of the same thing. The eye height, the field
+            # and the four degree pitch are cam_A's and are unchanged; what
+            # moved is which side of the road it stands on, and it moved to
+            # match the picture this pair exists to be compared against.
+            # AND IT LOOKS DOWN THE STREET THE OTHER WAY, for the same reason.
+            # Standing on the far pavement was half of it; with the camera
+            # looking along +x the parade still came out on the LEFT, because
+            # a camera looking that way has the east side on its left hand.
+            # The sheet's shops are on the RIGHT, running away from a near
+            # flank wall. Turned to look back down the street, which puts them
+            # there and costs nothing: the street is symmetrical about its own
+            # length and the parade runs its whole length either way.
+            "loc": (4.0 + reach, -4.3, eye),
+            "look": (4.0, -4.3, eye - drop),
             "fov_v_deg": 60.0,
-            "note": "cam_A/the-sheet's-own-viewpoint/1.6m-on-the-east-footway/4-degrees-down",
+            "note": "the-sheet's-own-viewpoint/1.6m-on-the-far-footway/4-degrees-down/"
+                    "cam_A's-height-field-and-pitch-from-the-side-the-sheet-stands-on",
         },
         "across": {
             # cam_B: from the far kerb, square to the frontage, roofline in.
@@ -1381,8 +1437,16 @@ def _night(bpy, root, mats):
         try:
             env.image = bpy.data.images.load(hdr)
             world.node_tree.links.new(env.outputs["Color"], bg.inputs["Color"])
-            bg.inputs["Strength"].default_value = 0.35
-            note = "hdri=%s" % hdr.replace(" ", "~")
+            # THE SKY IS NOT THE LIGHT SOURCE AT NIGHT. The scene file gives
+            # wet_night sky_intensity 0.35, and applying that as a Blender
+            # background strength lit the whole street off the sky dome: the
+            # pavement came back near-white and the lanterns threw no pool
+            # anybody could see. It is a Unity light unit with no defined
+            # conversion, which this file already says, so what it buys here
+            # is a RENDER CHOICE and is named as one. 0.06 leaves the sky
+            # readable behind the roofline and hands the street to the lamps.
+            bg.inputs["Strength"].default_value = 0.06
+            note = "hdri=%s skyStrength=0.06/render-choice-not-a-conversion" % hdr.replace(" ", "~")
         except RuntimeError:
             pass
     if note.startswith("hdri=NOT") and bg is not None:
@@ -1399,7 +1463,15 @@ def _night(bpy, root, mats):
 
     for n, (lx, ly, lz) in enumerate(lantern_lights()):
         data = bpy.data.lights.new("lantern%d" % n, type="POINT")
-        data.energy = 900.0
+        # 2200 W IS A RENDER CHOICE AND NOT A LAMP SPECIFICATION. A 1990
+        # British street ran 70 W low-pressure sodium at roughly 8000 lumens,
+        # but a Blender point light's power is radiometric and the conversion
+        # is not defined, so this is set by what the frame needs: at 900 and
+        # again at 3500 W the
+        # lanterns were visible and lit nothing, which is the worst of both.
+        # The COLOUR is not a choice - it is the spec's own sodium amber,
+        # the same triple lighting-column.py makes its lens from.
+        data.energy = 2200.0
         data.color = (1.0, 0.62, 0.20)
         data.shadow_soft_size = 0.18
         obj = bpy.data.objects.new("lantern%d" % n, data)
@@ -1408,27 +1480,58 @@ def _night(bpy, root, mats):
     return note
 
 
-def _wetten(mats):
-    """Wet, which on a flat-colour street is roughness and nothing else.
+def _wetten(mats, wetness):
+    """Wet, which on a flat-colour street is roughness and darkness.
 
-    NOT A CLAIM ABOUT WATER. wet_night carries wetness 0.6 in the scene file
-    and what that buys in a real material graph is a darker, glossier surface;
-    with no texture in this recipe yet, the honest version of it is to drop
-    the roughness of the things rain actually sits on - the road, the footway,
-    the kerb - and leave everything else alone. It is the cheapest thing on
-    D31's list that changes the frame, and it is step 3 of that list, so it
-    belongs with the light rather than after it.
+    NOT A CLAIM ABOUT WATER. With no texture in this recipe yet, the honest
+    version of a wetness figure is: drop the roughness of the things rain
+    actually sits on and darken them, because water fills the pores and what
+    you see is then partly a mirror of whatever is above. Everything else is
+    left alone - a wall does not get wetter than a pavement in the same rain,
+    it just looks it less.
+
+    BOTH CONDITIONS ARE WET AND THAT WAS THE MISS. overcast_day carries
+    wetness 0.6 in the scene file and the first day frames were rendered bone
+    dry, which is a third of the way off the sheet on its own: the Hook
+    sheet's street panel is OVERCAST DAYLIGHT and its road and pavement are
+    wet and reflective throughout. wet_night carries 0.9. The figure is passed
+    in now instead of being assumed.
     """
-    for name in ("asphalt", "stone"):
+    # A ROAD AND A PAVEMENT DO NOT GET WET THE SAME WAY. Tarmac sheets over
+    # and becomes close to a mirror; a paving slab holds water in its own
+    # texture and stays broken up, which is why a wet pavement reads as DARK
+    # rather than as bright. Made the same, the footway turned into a mirror
+    # of the sky, a lantern's light glanced off it to somewhere the camera was
+    # not, and the pool nobody could find was not missing - it was specular
+    # and pointed the wrong way.
+    # MEASURED OFF THE SHEET RATHER THAN CHOSEN. Its street panel has the ROAD
+    # as a near mirror with the shopfronts legible upside down in it, and its
+    # PAVEMENT as a dull wet grey with no reflection worth the name - two
+    # different surfaces in the same rain, which is what paving slabs and
+    # sheet tarmac actually do. At 0.30 the footway was behaving like the
+    # road, and since the two of them fill the bottom third of the frame the
+    # whole picture read pale.
+    ROUGH_FLOOR = {"asphalt": 0.05, "paving": 0.46, "kerbstone": 0.40}
+    # NOT A STRAIGHT LINE, and the pair is why. At a linear map, the scene
+    # file's daytime wetness of 0.6 left the road at roughness 0.28 - damp,
+    # not wet - while the sheet's own street panel is a near mirror with the
+    # shopfronts reading upside down in it. Water does not arrive in
+    # proportion to a number; a surface goes from dry to reflective early and
+    # then changes little, so the curve is bent to match what the reference
+    # actually looks like at the figure the spec gives.
+    w = wetness ** 0.55
+    darken = 1.0 - 0.52 * w
+    for name in ("asphalt", "paving", "kerbstone"):
         mat = mats.get(name)
         if mat is None or not mat.use_nodes:
             continue
+        rough = 0.62 - (0.62 - ROUGH_FLOOR[name]) * w
         bsdf = mat.node_tree.nodes.get("Principled BSDF")
         if bsdf is not None:
-            bsdf.inputs["Roughness"].default_value = 0.16
+            bsdf.inputs["Roughness"].default_value = max(0.04, rough)
             base = bsdf.inputs["Base Color"].default_value
-            bsdf.inputs["Base Color"].default_value = (base[0] * 0.55, base[1] * 0.55,
-                                                       base[2] * 0.58, 1.0)
+            bsdf.inputs["Base Color"].default_value = (base[0] * darken, base[1] * darken,
+                                                       base[2] * darken * 1.05, 1.0)
 
 
 def _world(bpy, root):
@@ -1445,8 +1548,14 @@ def _world(bpy, root):
         try:
             env.image = bpy.data.images.load(hdr)
             nt.links.new(env.outputs["Color"], bg.inputs["Color"])
-            bg.inputs["Strength"].default_value = 1.0
-            return "hdri=%s" % hdr.replace(" ", "~")
+            # 0.7 IS THE SCENE FILE'S OWN sky_intensity for overcast_day, and
+            # it was 1.0 here for no reason anybody wrote down. The pair is
+            # what made it matter: the road and the footway are a third of the
+            # frame and at eye height they are almost entirely a mirror of the
+            # sky, so a sky set a half-stop too bright does not brighten the
+            # sky, it bleaches the ground.
+            bg.inputs["Strength"].default_value = 0.7
+            return "hdri=%s skyStrength=0.7/the-scene-file's-own" % hdr.replace(" ", "~")
         except RuntimeError:
             pass
     if bg is not None:
@@ -1534,24 +1643,45 @@ def build_and_render(args):
     night = street and args["condition"] == "wet_night"
     if night:
         world_note = _night(bpy, args["root"], mats)
-        _wetten(mats)
     else:
         world_note = _world(bpy, args["root"])
+    if street:
+        # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
+        # than wet at night and bone dry by day, which is what the first
+        # frames did and is a third of the way off the sheet on its own.
+        _wetten(mats, 0.9 if night else 0.6)
     print("tfNote condition=%s world/%s"
           % (args["condition"] if street else "overcast_day", world_note))
 
-    sun_data = bpy.data.lights.new("sun", type="SUN")
-    # THE SUN IS ALMOST OUT AT DUSK AND LOW. The scene file's wet_night keeps a
-    # sun rather than removing it, which is right: a British dusk is not black,
-    # it is a low sky with no direct light worth naming.
-    sun_data.energy = 0.10 if night else 2.2
-    sun_data.angle = math.radians(8.0)
-    sun = bpy.data.objects.new("sun", sun_data)
-    bpy.context.scene.collection.objects.link(sun)
-    sun.rotation_euler = ((math.radians(80.0) if night else math.radians(54.0)),
-                          0.0, math.radians(200.0))
+    # NO SUN AT NIGHT, AND THAT IS THE SCENE FILE'S OWN WORD. wet_night reads
+    # `"sun": "off", "sun_intensity": 0.0`, and the first night frame had one
+    # at 0.10 anyway - which, with the sky dome behind it, is why the light in
+    # that frame was arriving from above rather than from the lamps. Read
+    # rather than assumed, and the spec was right.
+    if not night:
+        sun_data = bpy.data.lights.new("sun", type="SUN")
+        sun_data.energy = 2.2
+        sun_data.angle = math.radians(8.0)
+        sun = bpy.data.objects.new("sun", sun_data)
+        bpy.context.scene.collection.objects.link(sun)
+        sun.rotation_euler = (math.radians(54.0), 0.0, math.radians(200.0))
 
     scene = bpy.context.scene
+    # THE VIEW TRANSFORM, WHICH THE FIRST PAIR SAID WAS MISSING IN ONE LOOK.
+    # Our sky came back a flat blown white beside the sheet's soft grey cloud,
+    # and a blown sky is not a lighting problem - it is the absence of any
+    # tone curve at all. Blender's Standard transform clips everything over
+    # 1.0; AgX rolls the highlights off the way a camera does, which is what
+    # the sheet is a photograph of. The exposure is the scene file's own
+    # exposure_pin for the condition, applied as a stop offset - a render
+    # choice, like every other use of those numbers here, because they are
+    # Unity units with no defined conversion.
+    try:
+        scene.view_settings.view_transform = "AgX"
+    except TypeError:
+        scene.view_settings.view_transform = "Filmic"
+    scene.view_settings.look = "AgX - Base Contrast" if not night else "None"
+    scene.view_settings.exposure = 0.6 if night else -0.55
     scene.render.engine = "BLENDER_EEVEE_NEXT"
     scene.render.resolution_x, scene.render.resolution_y = AUTHORED_RES
     scene.render.image_settings.file_format = "PNG"
