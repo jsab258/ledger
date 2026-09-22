@@ -286,7 +286,12 @@ MATERIALS = (
     # warm where ours was blue. A wet Welsh slate roof under an overcast sky
     # is a mid grey that mirrors the sky, not a black one; ours read as a
     # hole in the roofline.
-    ("slate",       (0.150, 0.140, 0.135), 0.70),
+    # DARKER, 22 September, against the new sheet: its slate reads 61/58/61
+    # on the near parade and about 117/112/107 on the hill, and ours came back
+    # pale - a roof faces the bright overcast sky, so a mid-dark albedo reads
+    # light. Wet Welsh slate is close to black. From the hook camera the
+    # street's own roofs barely show; this is mostly the hill's.
+    ("slate",       (0.060, 0.058, 0.062), 0.70),   # was (0.150, 0.140, 0.135)
     # The sheet's wet road reads 0.292 linear, but almost all of that is the
     # SKY IN IT rather than the tarmac: a wet road is a mirror. So this is
     # raised only to where a damp British carriageway actually sits and the
@@ -343,7 +348,14 @@ MATERIALS = (
     # is most of what makes a car read as one at twenty-five metres: it holds
     # a highlight where nothing around it does. Dark, because the approved
     # sheet's is dark.
+    # CREAM RENDER, the pale houses among the brick on the new sheet's hill.
+    # Read off the sheet at about 200/185/150; in linear, this.
+    ("render_cream",(0.550, 0.480, 0.280), 0.80),
     ("car_dark",    (0.022, 0.024, 0.032), 0.26),
+    # THE SHEET'S SECOND CAR, a faded blue-grey saloon of the kind every
+    # street had in 1990. A second paint so the rank is two cars and not one
+    # car twice.
+    ("car_bluegrey",(0.070, 0.085, 0.105), 0.30),
     ("car_glass",   (0.010, 0.011, 0.014), 0.10),   # darker than shop glass
     ("tyre",        (0.008, 0.008, 0.008), 0.88),
     # THE YELLOW REAR PLATE IS THE STRONGEST PERIOD-BRITISH TELL IN THE FRAME
@@ -493,7 +505,13 @@ SURFACE_OF = {
     # SETTS RATHER THAN THE PACK'S `sidewalk`, which is a mossy green and
     # turned the whole footway the colour of a canal bank. The sheet's
     # pavement is grey stone.
-    "paving":       ("setts", 0.8),
+    # FLAGS, NOT SETTS, 22 September. The new sheet's footway is large stone
+    # flags, and so is R09's 1989 photograph - "slab paving" - which settles
+    # it: where the sheet and the photographs agree there is nothing to
+    # weigh. The pack holds no flag map (its `sidewalk` is mossy cobbles), so
+    # the concrete map gives the stone its mottle and _flag_joints lays the
+    # joints over it at a real flag's size.
+    "paving":       ("concrete", 1.2),
     "kerbstone":    ("kerb", 0.6),
     # roof_b, NOT roof: `roof` is terracotta pantile and averages a strong
     # orange, and this town is slated. `roof_b` is the slate.
@@ -511,6 +529,7 @@ SURFACE_OF = {
     # plaster map is the smooth one we hold, and its own average is light
     # enough that white needs a gain of 1.3.
     "paint_joinery":("plaster", 0.5),
+    "render_cream": ("plaster", 1.0),
     "paint_stall":  ("plaster", 1.0),
     # Both refit surfaces are SMOOTH, so they take the plaster map for its
     # relief and not the timber one: metal has no grain and neither has a
@@ -1431,6 +1450,53 @@ def lantern_lights():
     return out
 
 
+#: HOW THICK A TERRACE'S END WALL IS: one and a half bricks, the ordinary
+#: British gable, and thicker than the party walls inside the row because it
+#: is an outside wall and carries the weather.
+END_WALL_T = 0.34
+
+
+def plan_end_walls(p):
+    """The two ends of a row, in the row's own local coordinates.
+
+    WHY THIS EXISTS, 22 September. The row simply STOPPED: its first and last
+    bays were open at their outer sides, so a camera looking along the street
+    from past the end saw straight into the end building - the carcass boxes
+    in the interior material, a flat dark slab. The new Hook sheet shows brick
+    there, and every terrace in Britain ends in a gable. It went unseen for as
+    long as the camera stood inside the row; turning it to the sheet's view,
+    from the south end, put the terrace's end in the near left of the frame.
+
+    Built in LOCAL coordinates - x along the row from 0 to its run, y back
+    from the frontage, z up - so plan_street places them exactly as it places
+    the bays, the west blocks' half turn included.
+    """
+    W, D = p["bay_width_m"], p["depth_m"]
+    run = W * p["bays"]
+    wall = p["wall_surface"]
+    t = END_WALL_T
+    if p["roof_kind"] == "parapet":
+        top = p["eaves_m"] + p["parapet_h_m"]
+    else:
+        top = p["eaves_m"]
+    parts = []
+    for name, x0, x1 in (("south", -t, 0.0), ("north", run, run + t)):
+        parts.append({"id": "end_wall_%s" % name, "material": wall,
+                      "x0": x0, "x1": x1, "y0": 0.0, "y1": D, "z0": 0.0, "z1": top,
+                      "note": "the-row's-end/one-and-a-half-bricks/an-outside-wall"})
+        if p["roof_kind"] != "parapet":
+            # THE GABLE: the triangle between the two eaves and the ridge,
+            # the ridge at the middle of the depth as the roof builds it.
+            E, R, mid = p["eaves_m"], p["eaves_m"] + p["ridge_rise_m"], D / 2.0
+            verts = [(x0, 0.0, E), (x0, D, E), (x0, mid, R),
+                     (x1, 0.0, E), (x1, D, E), (x1, mid, R)]
+            faces = [(0, 2, 1), (3, 4, 5), (0, 1, 4, 3), (1, 2, 5, 4), (2, 0, 3, 5)]
+            parts.append({"id": "gable_%s" % name, "material": wall, "kind": "mesh",
+                          "verts": verts, "faces": faces,
+                          "note": "the-gable/eaves-to-ridge/%.1fm-rise" % p["ridge_rise_m"]})
+    return parts
+
+
 def plan_street(root, spec_rel=SPEC_REL):
     """(parts, error). Every block the scene file names, on its own side of
     the road, with the road between them.
@@ -1468,10 +1534,26 @@ def plan_street(root, spec_rel=SPEC_REL):
         if err:
             return None, err
         east = q["side"] == "east"
-        for part in plan_row(q):
+        for part in plan_row(q) + plan_end_walls(q):
             r = dict(part)
             r["id"] = "%s_%s" % (block_id, part["id"])
             r["block"] = block_id
+            run = q["bays"] * q["bay_width_m"]
+            # A MESH IS PLACED VERTEX BY VERTEX, by the same rule as a box:
+            # along from the block's start (turned end for end on the west),
+            # back from the frontage (negated on the west), up from the
+            # footway. Only the end walls' gables arrive here as meshes.
+            if part.get("kind") == "mesh":
+                vs = []
+                for (x, y, z) in part["verts"]:
+                    X = (x + q["start_x_m"]) if east else (q["start_x_m"] + run - x)
+                    Y = (STREET_FRONTAGE_M + y) if east else -(STREET_FRONTAGE_M + y)
+                    vs.append((X, Y, z + THRESHOLD_ABOVE_CROWN_M))
+                # The half turn negates x and y together, which is a rotation
+                # and not a reflection, so the faces still face outwards.
+                r["verts"] = vs
+                out.append(r)
+                continue
             # ALONG the street first: each block starts where the scene file
             # says it starts, not at zero - and a west block is TURNED end
             # for end about its own centre as it lands, which is the other
@@ -1539,6 +1621,19 @@ def plan_street(root, spec_rel=SPEC_REL):
         raise AssertionError("the road moved and the backdrop did not: "
                              "x0=%r BACKDROP_ROAD_END=%r" % (x0, BACKDROP_ROAD_END))
     _backdrop(out)
+    # AND THE OTHER END, since the camera turned to face it.
+    _north_rise(out)
+    # THE PAVEMENT TURNS THE CORNER at each block's south end. The footways
+    # stop at the frontage line, and past a terrace's gable there was no
+    # ground at all: from the turned camera the sky map's green field showed
+    # through beside the end wall. Flags from the road's own end at x = -2 up
+    # to the gable at x = 3, the full depth of the block behind the frontage,
+    # on both sides.
+    for sgn, side in ((1.0, "east"), (-1.0, "west")):
+        a, b = sgn * STREET_FRONTAGE_M, sgn * (STREET_FRONTAGE_M + 8.6)
+        _box(out, "corner_footway_%s" % side, "paving", BACKDROP_ROAD_END, 3.0,
+             min(a, b), max(a, b), -0.30, THRESHOLD_ABOVE_CROWN_M,
+             "the-pavement-turns-the-corner-at-the-gable")
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
         _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
@@ -1781,6 +1876,96 @@ BACKDROP_CRANE_REACH = 11.0
 BACKDROP_CRANE_T = 0.50       # how thick a member is: a crane is mostly air
 
 
+#: THE NORTH END, AND IT IS THE INLAND RISE. 22 September, the composition
+#: step of the visual lane.
+#:
+#: WHY NOW. The camera was turned to the new sheet's view, south end looking
+#: north, and the far end of the frame became the other end of Quay Street.
+#: The sheet closes that view with a hillside of terraces stepping up behind
+#: retaining walls. The town form bible says the same thing in its own words -
+#: "flat low harbour ground, then a deliberate inland rise... CONTOUR-FOLLOWING
+#: TERRACES, RETAINING WALLS and stair shortcuts express the rise" - and the
+#: market is uphill NORTH, which is the way the camera now looks. So the sheet
+#: and the bible agree, which is the first time on this street they have.
+#:
+#: A BACKDROP, NAMED AS ONE, like the basin end: masses at range, no door, no
+#: window anyone can reach, every piece backdrop_rise_*. Stage 6 builds the
+#: town and deletes this.
+#:
+#: THE NUMBERS. Five tiers, each a retaining wall with a row of houses on it,
+#: 25 m apart going north from x = 70 and 5.5 m higher each time - a rise of
+#: about one in four and a half, climbing to 22 m at the top row. The bible's
+#: crest is 45 m, further off than this frame reaches. Each row runs ACROSS
+#: the view, along the contour, and is broken into houses of their own widths
+#: and heights with passages between, because a single wall at any range reads
+#: as a wall and not a street.
+RISE_TIERS = 5
+#: ATTEMPT TWO, AND THE FIRST IS WHY. Attempt one put five rows of long blank
+#: brick boxes at 70 to 170 m, 5.5 m a tier: rendered beside the sheet they
+#: read as a crowd of warehouses filling the end of the street. The sheet's is
+#: a HILLSIDE - further off, steep enough that each tier's pale retaining wall
+#: shows above the roofs in front of it, houses of their own widths, dark
+#: slate roofs, cream render among the brick, windows, and sky above it all.
+#: So: 110 m out, 9 m a tier - which lands the top row at 36 m and its roofs
+#: at the bible's own 45 m crest - houses set back from each wall's edge so
+#: the wall's face shows, one house to a piece, render on about a third.
+RISE_FIRST_X = 110.0
+RISE_TIER_STEP_X = 24.0
+RISE_TIER_STEP_Z = 9.0
+RISE_ROW_DEPTH = 8.0
+RISE_SETBACK = 3.0
+RISE_Y_SPAN = (-120.0, 60.0)
+
+
+def _north_rise(out):
+    """The inland rise: retaining walls and contour terraces, tier on tier."""
+    import random
+    rnd = random.Random(20260922)       # fixed: the same hill every render
+    for t in range(RISE_TIERS):
+        x0 = RISE_FIRST_X + t * RISE_TIER_STEP_X
+        zb = t * RISE_TIER_STEP_Z
+        # THE RETAINING WALL holding this tier up above the one in front,
+        # in the stone the quay is built of, running the whole contour.
+        if zb > 0.0:
+            _box(out, "backdrop_rise_wall_%d" % t, "stone",
+                 x0 - 1.2, x0, RISE_Y_SPAN[0], RISE_Y_SPAN[1], zb - RISE_TIER_STEP_Z, zb,
+                 "retaining-wall/%.1fm/the-bible's-own-device" % RISE_TIER_STEP_Z)
+        xa = x0 + RISE_SETBACK
+        xb = xa + RISE_ROW_DEPTH
+        xm = (xa + xb) / 2.0
+        y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
+        n = 0
+        while y < RISE_Y_SPAN[1]:
+            w = rnd.uniform(5.5, 9.0)              # one house
+            h = rnd.uniform(5.0, 6.6)              # to its eaves
+            rise = rnd.uniform(2.6, 3.6)           # a steeper roof, darker to the eye
+            y1 = min(y + w, RISE_Y_SPAN[1])
+            r = rnd.random()
+            wall = "render_cream" if r < 0.34 else ("brick_red" if r < 0.80 else "brick_grey")
+            _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
+                   ((xb, zb), (xb, zb + h), (xa, zb + h), (xa, zb)), y, y1,
+                   "house/%.1fm-wide/%.1fm-eaves/%s" % (y1 - y, h, wall))
+            _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), "slate",
+                   ((xb + 0.3, zb + h), (xm, zb + h + rise), (xa - 0.3, zb + h)), y, y1,
+                   "slate/%.1fm-rise" % rise)
+            # WINDOWS, one dark band a floor across the house's face. At a
+            # hundred metres a window is two or three pixels, and a band of
+            # them is what says house rather than shed.
+            for fz in (1.1, 3.6):
+                if zb + fz + 1.3 < zb + h:
+                    _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "glass",
+                         xa - 0.05, xa, y + 0.8, y1 - 0.8, zb + fz, zb + fz + 1.3,
+                         "a-floor-of-windows")
+            # a stack on most of them
+            if rnd.random() < 0.7:
+                cy = y + (y1 - y) * rnd.uniform(0.2, 0.8)
+                _box(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red",
+                     xm - 0.35, xm + 0.35, cy - 0.45, cy + 0.45,
+                     zb + h + rise - 0.6, zb + h + rise + 1.1, "a-stack")
+            n += 1
+            y = y1 + rnd.uniform(0.3, 2.5)         # a passage, a stair, a gap
+
+
 def _backdrop(out):
     """The basin end: a quay apron, six sheds gable-on, one crane.
 
@@ -1953,6 +2138,21 @@ CAR_ROOF_Z = 1.42
 #: twenty-seven metres off, which is where the sheet's is.
 VEHICLE_AT = (
     (8.0, -1.96, 1, "car_dark"),
+)
+#: MOVED, 22 September, to the rank the new sheet shows. The camera now
+#: stands at the south end looking north, and the sheet parks its cars at the
+#: EAST kerb just beyond Mickey's front - the rank outside the cab office -
+#: seen from behind, nose north, with the traffic. Jafar's ruling of the same
+#: day: "a rank outside, one or two plain unmarked second-hand saloons", and
+#: the sheet's third car is not citable. So TWO, and the sheet's two: a dark
+#: one and a paler blue-grey one behind it, a car's length and a gap apart.
+#: They stand at bay 1, x 9 to 15, and not across Mickey's own window, which
+#: the sheet keeps clear. y = +1.96 is the east kerb by the same arithmetic
+#: as above. facing +1 is now nose AWAY from the camera, so its tail - lamps
+#: and the yellow plate - is what faces it, as on the sheet.
+VEHICLE_AT = (
+    (11.0, 1.96, 1, "car_dark"),
+    (15.9, 1.96, 1, "car_bluegrey"),
 )
 
 
@@ -3327,6 +3527,58 @@ WEARS = {"brick_red": True, "brick_grey": True, "paving": False,
          "kerbstone": False, "slate": True, "stone": True}
 
 
+#: A FLAG'S SIZE, the common British 900 x 600 mm slab, laid in stretcher
+#: bond - each row half a slab along from the last - with a joint of about
+#: 10 mm that reads dark because it holds dirt and water.
+FLAG_W_M, FLAG_H_M, FLAG_JOINT_M = 0.90, 0.60, 0.012
+FLAG_JOINT_DARK = 0.45
+
+
+def _flag_joints(bpy, mats):
+    """Lay flag joints over the footway, between its map and its socket.
+
+    THE SAME PLACE THE WEAR SITS, and for the same reason: it multiplies over
+    what the map already gives, so the stone keeps its own mottle and the
+    joints are a separable layer. Mapped from OBJECT coordinates, which on the
+    footway meshes are street metres, so a flag is 0.9 m wherever it lies.
+    """
+    mat = mats.get("paving")
+    if mat is None or not mat.use_nodes:
+        print("tfNote flags=NOT-APPLIED/no-paving-material")
+        return
+    nt = mat.node_tree
+    bsdf = nt.nodes.get("Principled BSDF")
+    if bsdf is None or not bsdf.inputs["Base Color"].links:
+        print("tfNote flags=NOT-APPLIED/the-footway-has-no-map-to-lay-them-over")
+        return
+    src = bsdf.inputs["Base Color"].links[0].from_socket
+    coord = nt.nodes.new("ShaderNodeTexCoord")
+    brick = nt.nodes.new("ShaderNodeTexBrick")
+    brick.offset = 0.5
+    brick.offset_frequency = 2
+    brick.inputs["Scale"].default_value = 1.0
+    brick.inputs["Mortar Size"].default_value = FLAG_JOINT_M
+    brick.inputs["Brick Width"].default_value = FLAG_W_M
+    brick.inputs["Row Height"].default_value = FLAG_H_M
+    # the joint's Fac is 1 and the stone's 0: map that to a multiplier
+    ramp = nt.nodes.new("ShaderNodeMapRange")
+    ramp.inputs["From Min"].default_value = 0.0
+    ramp.inputs["From Max"].default_value = 1.0
+    ramp.inputs["To Min"].default_value = 1.0
+    ramp.inputs["To Max"].default_value = FLAG_JOINT_DARK
+    nt.links.new(coord.outputs["Object"], brick.inputs["Vector"])
+    nt.links.new(brick.outputs["Fac"], ramp.inputs["Value"])
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    mix.blend_type = "MULTIPLY"
+    mix.inputs["Factor"].default_value = 1.0
+    nt.links.new(src, mix.inputs[6])
+    nt.links.new(ramp.outputs["Result"], mix.inputs[7])
+    nt.links.new(mix.outputs[2], bsdf.inputs["Base Color"])
+    print("tfNote flags=%.2fx%.2fm/stretcher-bond/joint-%.0fmm-at-x%.2f"
+          % (FLAG_W_M, FLAG_H_M, FLAG_JOINT_M * 1000, FLAG_JOINT_DARK))
+
+
 def _wear(bpy, mats):
     """A separable wear layer on the surfaces that carry one.
 
@@ -3813,6 +4065,9 @@ def build_and_render(args):
         # it and not the other way round: the wetness multiplies whatever
         # base colour it finds, so it has to find one that is already worn.
         _wear(bpy, mats)
+        # THE JOINTS BEFORE THE WATER, like the wear: a wet flag is a jointed
+        # flag with water on it.
+        _flag_joints(bpy, mats)
         _wetten(mats, 0.9 if night else 0.6)
         if not night:
             # A SHOP INTERIOR BY DAY IS NOT A SHOP INTERIOR AT NIGHT, and
@@ -4517,7 +4772,29 @@ def selftest():
 
             # ---- THE BASIN END, and every one of these is a way it
             # could stop being a backdrop and start being a claim.
-            back = [b for b in street if b["id"].startswith("backdrop")]
+            # TWO ENDS NOW, 22 September: the basin to the south, and the
+            # inland rise to the north since the camera turned to face it.
+            # These checks are the BASIN's; the rise has its own below.
+            rise = [b for b in street if b["id"].startswith("backdrop_rise")]
+            back = [b for b in street if b["id"].startswith("backdrop")
+                    and not b["id"].startswith("backdrop_rise")]
+            def _xs_any(b):
+                if b.get("kind") == "mesh":
+                    return [v[0] for v in b["verts"]]
+                return [b["x0"], b["x1"]]
+            # THE RISE IS ENTIRELY NORTH OF THE STREET, past the road's far
+            # end at x = 44, so nothing of it stands in the built street.
+            check("accept/the-rise-is-built", len(rise) >= 20, "%d piece(s)" % len(rise))
+            north_intruders = [b["id"] for b in rise if min(_xs_any(b)) < 44.0]
+            check("accept/the-rise-never-reaches-the-street", not north_intruders,
+                  ",".join(north_intruders[:4]))
+            # AND IT CLIMBS: every tier stands higher than the one in front,
+            # which is what makes it a rise and not a wall of houses.
+            walls = sorted((b for b in rise if "_wall_" in b["id"]), key=lambda b: b["x0"])
+            check("accept/the-rise-climbs-tier-on-tier",
+                  len(walls) >= 3 and all(walls[i + 1]["z1"] > walls[i]["z1"]
+                                          for i in range(len(walls) - 1)),
+                  "%d retaining walls" % len(walls))
             check("accept/the-far-end-is-not-sky", len(back) >= 20,
                   "%d piece(s)" % len(back))
             # IT IS SOUTH OF THE STREET AND ENTIRELY BEHIND IT. The blocks
