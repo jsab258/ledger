@@ -634,6 +634,10 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       from the sheet's measured range, the pack map kept as staining. Two
       attempts: the second darkened the joints and warmed the faces.
 
+- [x] THE ROOFLINE'S EDGE: a pale stone eaves course read down the whole row
+      as a concrete coping; the sheet's roofline ends in a black cast-iron
+      gutter. The course is brick now, with a 115 mm black gutter along it.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
