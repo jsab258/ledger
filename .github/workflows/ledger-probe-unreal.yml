@@ -1939,51 +1939,6 @@ jobs:
       # samples every 0.4 s, so the words sit on about seven frames, which
       # is 1.4 s of reading at 200 ms and 0.84 s at 120. Nothing gates on
       # this number and Jafar can move it on feel.
-      # SOMETHING FINALLY READS THE CRIME VERDICT.
-      #
-      # The verdict file has carried this sentence at its head since it was
-      # written: "no automated check anywhere reads these lines, so a run in
-      # which the input path was dead is committed and pushed GREEN. A human
-      # reading this file is the only thing that catches it today." That was
-      # true until now. The probe measures the crime in detail and nothing
-      # read what it measured, so the one failure that matters most - the key
-      # press silently stops working and the deed never happens - landed
-      # green and waited to be found by somebody scrolling a text file.
-      #
-      # IT READS THE PAIR, NOT THE POSITIVE HALF. A witness filed it AND an
-      # occluded one filed nothing; the rumour passed when the two stood
-      # together AND did not when they were nineteen metres apart. A
-      # perception change that makes everybody a witness passes every "did
-      # the witness see it" check ever written and fails this one.
-      #
-      # AND IT CHECKS THE FILE IS THIS RUN'S. A check that reads last week's
-      # verdict and reports green is worse than no check at all.
-      - name: Read the crime verdict and judge the run by it
-        if: always()
-        shell: bash
-        run: |
-          set -u
-          # A PYTHON THAT ACTUALLY RUNS, RESOLVED THE WAY EVERYTHING ELSE IN
-          # THIS REPOSITORY NOW RESOLVES IT. This step called `python` by
-          # name on its first run and went red because the runner has
-          # `python3`; the machine it was written on has the reverse, where
-          # `python3` is the Microsoft Store alias that prints "Python was
-          # not found" and exits. That alias has now cost this project four
-          # separate failures in one day, so nothing here trusts a name: a
-          # candidate has to EVALUATE something before it is believed.
-          PY=""
-          for c in python3 python py; do
-            if [ "$("$c" -c 'print(7*6)' 2>/dev/null)" = "42" ]; then PY="$c"; break; fi
-          done
-          if [ -z "$PY" ]; then
-            echo "no working python on this runner - the crime verdict was not read,"                  "so nothing measured whether the deed came from a key press."
-            exit 1
-          fi
-          echo "crime-verdict python=$PY"
-          SHORT="$(git rev-parse HEAD | cut -c1-7)"
-          "$PY" tools/crime-verdict-check.py --selftest || exit 1
-          "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
-
       - name: Stitch the crime sequence into a captioned clip
         id: crimeclip
         if: always()
@@ -2412,6 +2367,59 @@ jobs:
           # The "nothing to commit" case exits 0 earlier and is unaffected, so
           # the accepting path still passes.
           exit 1
+
+      # AND IT RUNS AFTER THE ARCHIVIST, which is the second thing this
+      # step got wrong. Sitting between the crime and the commit, a fault it
+      # found took the EVIDENCE down with it: the run went red, the verdict
+      # never reached the repository, and there was no way to read what the
+      # fault had been. That is the exact shape the build's own colour step
+      # below was written to avoid - bank everything, THEN judge it - and
+      # this now follows it. A red crime still reddens the run; it no longer
+      # costs the file that says why.
+      # SOMETHING FINALLY READS THE CRIME VERDICT.
+      #
+      # The verdict file has carried this sentence at its head since it was
+      # written: "no automated check anywhere reads these lines, so a run in
+      # which the input path was dead is committed and pushed GREEN. A human
+      # reading this file is the only thing that catches it today." That was
+      # true until now. The probe measures the crime in detail and nothing
+      # read what it measured, so the one failure that matters most - the key
+      # press silently stops working and the deed never happens - landed
+      # green and waited to be found by somebody scrolling a text file.
+      #
+      # IT READS THE PAIR, NOT THE POSITIVE HALF. A witness filed it AND an
+      # occluded one filed nothing; the rumour passed when the two stood
+      # together AND did not when they were nineteen metres apart. A
+      # perception change that makes everybody a witness passes every "did
+      # the witness see it" check ever written and fails this one.
+      #
+      # AND IT CHECKS THE FILE IS THIS RUN'S. A check that reads last week's
+      # verdict and reports green is worse than no check at all.
+      - name: Read the crime verdict and judge the run by it
+        if: always()
+        shell: bash
+        run: |
+          set -u
+          # A PYTHON THAT ACTUALLY RUNS, RESOLVED THE WAY EVERYTHING ELSE IN
+          # THIS REPOSITORY NOW RESOLVES IT. This step called `python` by
+          # name on its first run and went red because the runner has
+          # `python3`; the machine it was written on has the reverse, where
+          # `python3` is the Microsoft Store alias that prints "Python was
+          # not found" and exits. That alias has now cost this project four
+          # separate failures in one day, so nothing here trusts a name: a
+          # candidate has to EVALUATE something before it is believed.
+          PY=""
+          for c in python3 python py; do
+            if [ "$("$c" -c 'print(7*6)' 2>/dev/null)" = "42" ]; then PY="$c"; break; fi
+          done
+          if [ -z "$PY" ]; then
+            echo "no working python on this runner - the crime verdict was not read,"                  "so nothing measured whether the deed came from a key press."
+            exit 1
+          fi
+          echo "crime-verdict python=$PY"
+          SHORT="$(git rev-parse HEAD | cut -c1-7)"
+          "$PY" tools/crime-verdict-check.py --selftest || exit 1
+          "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
 
       # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
       #
