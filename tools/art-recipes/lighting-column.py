@@ -2553,5 +2553,17 @@ def _write_refusal(opts, reason):
     return True
 
 
-if __name__ == "__main__" or bpy is not None:
+# THE `or bpy is not None` CLAUSE HAS A NAMED ESCAPE NOW, 2026-09-22.
+#
+# It exists so this file runs when Blender executes it, and it does that job.
+# But it also fires on an IMPORT inside Blender, which is how the street
+# recipe now gets this column: terrace-front.py imports this module so the
+# street can stand the ACCEPTED lamp in itself rather than building a second
+# one. Without the escape, importing it ran its main(), which parsed the
+# street recipe's own arguments, refused `--block`, and exited the whole
+# process before a single frame was drawn.
+#
+# An environment variable rather than a flag, because the importer cannot
+# reach this file's argument parsing - it is not passing arguments at all.
+if (__name__ == "__main__" or bpy is not None)         and not os.environ.get("LEDGER_RECIPE_IMPORT"):
     sys.exit(main(sys.argv))
