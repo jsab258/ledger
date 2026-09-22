@@ -1382,6 +1382,17 @@ def _upper_floor(parts, p, T, wall):
         _segmental_arch(parts, "upper_arch_%d" % i, a, b, head_z,
                         "segmental-rubbed-brick-arch/rise-a-seventh-of-the-span")
         _sash(parts, i, a, b, sill_z, head_z, p["reveal_m"])
+        # NET CURTAINS behind the upstairs glass, 22 September. On the new
+        # sheet every upstairs window is PALE - white frames over white nets,
+        # 157 against our 100 to 107 - and ours looked straight through
+        # clear glass into an unlit flat. The research names nets as the
+        # per-house signature of a 1990 terrace, and the held net pictures
+        # (BOM C12, DRESSING) are the two gathered weaves, alternated.
+        net = _box(parts, "upper_net_%d" % i, "interior_lit", a, b,
+                   p["reveal_m"] + 0.05, p["reveal_m"] + 0.06, sill_z, head_z,
+                   "net-curtain/C12/behind-the-glass")
+        net["decal"] = NET_CURTAINS[i % len(NET_CURTAINS)]
+        net["decal_emit"] = "net"
 
 
 #: A BRITISH SASH, IN THE SECTIONS THAT READ AT TWENTY-FIVE METRES.
@@ -2004,7 +2015,7 @@ def plan_street(root, spec_rel=SPEC_REL):
             pic = INTERIOR_PICTURE.get((block_id, bay))
             if pic:
                 card["decal"], card["decal_uv"] = pic[0], list(pic[1])
-                card["decal_emit"] = True
+                card["decal_emit"] = "room"
             # TWO TUBES ACROSS THE CEILING OF A REFITTED SHOP, a metre and a
             # half each, 38 mm - the T12 tube of the period - 0.35 m in from
             # the glass, where a shop hangs them to light its window. Only the
@@ -2309,6 +2320,12 @@ INTERIOR_PICTURE = {
 #: where the plain card stood, about the sheet's own window value; at night
 #: it is the lit shop the plain card was, and a room rather than a lightbox.
 CARD_EMIT_DAY, CARD_EMIT_NIGHT = 0.40, 1.60
+#: AND A NET CURTAIN'S, which stands for daylight falling on it through the
+#: glass: bright enough by day to bring the sheet's pale upstairs windows,
+#: nearly dark at night, when most front bedrooms are.
+NET_EMIT_DAY, NET_EMIT_NIGHT = 0.30, 0.05
+NET_CURTAINS = ("production/assets/vignette/decals2d/net_curtain_a",
+                "production/assets/vignette/decals2d/net_curtain_b")
 
 
 def _dish(out):
@@ -4958,8 +4975,12 @@ def build_and_render(args):
         if key.startswith("card_") and cm is not None and cm.use_nodes:
             bc = cm.node_tree.nodes.get("Principled BSDF")
             if bc is not None and "Emission Strength" in bc.inputs:
-                bc.inputs["Emission Strength"].default_value = (
-                    CARD_EMIT_NIGHT if night else CARD_EMIT_DAY)
+                if "net_curtain" in key:
+                    bc.inputs["Emission Strength"].default_value = (
+                        NET_EMIT_NIGHT if night else NET_EMIT_DAY)
+                else:
+                    bc.inputs["Emission Strength"].default_value = (
+                        CARD_EMIT_NIGHT if night else CARD_EMIT_DAY)
     if street:
         # THE SCENE FILE'S OWN WETNESS FOR THE CONDITION ASKED FOR, rather
         # than wet at night and bone dry by day, which is what the first
@@ -5347,6 +5368,11 @@ def selftest():
         blockers = []
         for b in boxes:
             if b["material"] in ("glass", "interior"):
+                continue
+            # A NET CURTAIN IS MEANT TO BE THERE, and it is the one thing
+            # behind an upper window that is: named by what it is for, not by
+            # its id, so brick called a curtain would still be caught.
+            if b.get("decal_emit") == "net":
                 continue
             if b["y1"] <= glazing_plane + 1e-9:
                 continue
