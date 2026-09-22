@@ -18,13 +18,22 @@ spec: MEASURED 2026-09-22 at 02:04Z, by reading the diff rather than assuming
     02:03  STAMP ONLY
     03:03  real   queue walk 420 files to 421, unclassified tail 193 to 194
     04:03  STAMP ONLY
+    05:04  STAMP ONLY
 
-  TWO STAMP-ONLY RERUNS OF FOUR EXAMINED. The first version of this paragraph
+  AND THE SERIES IS NOT RANDOM, WHICH IS WORTH MORE THAN ANOTHER ROW. Every
+  run that carried real movement is an hour in which something landed in the
+  tree, and every stamp-only run is an hour in which nothing did. So the churn
+  rate is not a property of the generator alone: it is the idle rate of the
+  studio, and on a quiet night it goes to every run. STOP EXTENDING THIS TABLE
+  HOURLY. The pattern is stated, and the next reader needs the shape, not a
+  longer list of clock readings.
+
+  THREE STAMP-ONLY RERUNS OF FIVE EXAMINED. The first version of this paragraph
   said one of one, which was true when written and is superseded rather than
   deleted, because a denominator that grows is the reading and not an
   embarrassment. The fault is not that the page regenerates: it is that a run
   which measured no change is indistinguishable on disk from one that did, and
-  half the runs in this series measured no change.
+  most of the runs in this series measured no change.
 
   WHY IT COSTS ANYTHING AT ALL. The Stop hook asks for a clean tree, so every
   stamp-only rerun produces a commit whose entire content is a clock reading.
