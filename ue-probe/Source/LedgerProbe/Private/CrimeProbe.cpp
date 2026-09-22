@@ -68,6 +68,7 @@
 #include "Misc/Paths.h"
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
+#include "SaveCodec.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
 #include "HAL/FileManager.h"
@@ -728,6 +729,116 @@ namespace
 	// Declared here and defined with the other writers below, the same shape
 	// WriteSeqKeys already uses in this file: the act phase needs to leave a
 	// breadcrumb and the writers live at the bottom.
+	// SAVE, RESTART, RELOAD - INSIDE THE PACKAGED BUILD.
+	//
+	// WHY IT IS HERE AND NOT IN A TEST. The golden table already proves the
+	// two engines agree about a save, and a test bench can prove a round
+	// trip all day. What it cannot prove is that the rumour THIS RUN'S
+	// CRIME PRODUCED, carried by the mill that actually ticked, written by
+	// the engine the game ships in, survives the world being rebuilt. That
+	// is the claim the list makes and it can only be made here.
+	//
+	// THE RESTART IS HONEST ABOUT WHAT A RESTART IS: the world is built
+	// again from the AUTHORING - the same two people, the same tie, no play
+	// in them - and the save is laid over it. Restoring into the mill that
+	// already holds the rumours would prove nothing whatever, and is the
+	// easy mistake to make here because that mill is right there.
+	//
+	// THE CONTROL IS THE LAD IN THE YARD. He heard the rumour from the
+	// shopkeeper, so after a restart he must still have it; what he must
+	// NOT have is the shopkeeper's OWN first-hand observation. A restore
+	// that handed every agent the same records would pass every count and
+	// fail that. Both are printed.
+	struct RestartReading
+	{
+		bool bRan;
+		int  SavedBytes;
+		int  W1Before, W1After, N2Before, N2After;      // rumours
+		int  W1MemBefore, W1MemAfter, N2MemBefore, N2MemAfter;  // memory events
+		double W1ConfBefore, W1ConfAfter;
+		int  W1HopsAfter, N2HopsAfter;
+		bool bMemoryTextSame;
+		RestartReading()
+			: bRan(false), SavedBytes(0), W1Before(0), W1After(0), N2Before(0), N2After(0),
+			  W1MemBefore(0), W1MemAfter(0), N2MemBefore(0), N2MemAfter(0),
+			  W1ConfBefore(0.0), W1ConfAfter(0.0), W1HopsAfter(0), N2HopsAfter(0),
+			  bMemoryTextSame(false) {}
+	};
+
+	static double BestConfidence(const GossiperPtr& G)
+	{
+		double Best = 0.0;
+		if (!G) { return Best; }
+		for (std::vector<RumorPtr>::size_type I = 0; I < G->Rumors.size(); ++I)
+		{
+			if (G->Rumors[I] && G->Rumors[I]->Confidence > Best) { Best = G->Rumors[I]->Confidence; }
+		}
+		return Best;
+	}
+
+	static int BestHops(const GossiperPtr& G)
+	{
+		double Best = -1.0;
+		int Hops = 0;
+		if (!G) { return Hops; }
+		for (std::vector<RumorPtr>::size_type I = 0; I < G->Rumors.size(); ++I)
+		{
+			if (G->Rumors[I] && G->Rumors[I]->Confidence > Best)
+			{
+				Best = G->Rumors[I]->Confidence;
+				Hops = G->Rumors[I]->Hops;
+			}
+		}
+		return Hops;
+	}
+
+	void RunRestartRoundTrip(RestartReading& Out)
+	{
+		if (!GMill || !GW1 || !GN2) { return; }
+		Out.W1Before = (int)GW1->Rumors.size();
+		Out.N2Before = (int)GN2->Rumors.size();
+		Out.W1MemBefore = GW1->Memory ? (int)GW1->Memory->Events.size() : 0;
+		Out.N2MemBefore = GN2->Memory ? (int)GN2->Memory->Events.size() : 0;
+		Out.W1ConfBefore = BestConfidence(GW1);
+
+		// THE SAVE. The mill goes out as the JSON the C# codec writes for it;
+		// the memories go out as the markdown they already go out as, which
+		// is their save format and always was.
+		const std::string MillJson = Save::CaptureMillAgents(*GMill);
+		const std::string W1Md = GW1->Memory ? GW1->Memory->ToMarkdown() : std::string();
+		const std::string N2Md = GN2->Memory ? GN2->Memory->ToMarkdown() : std::string();
+		Out.SavedBytes = (int)MillJson.size();
+		SaveBoth(TEXT("ue-crime-save-agents.json"), Un(MillJson));
+
+		// THE RESTART: the same authoring, none of the play.
+		std::shared_ptr<SocialGraph> Graph = std::make_shared<SocialGraph>();
+		Graph->Link("w1", "n2", LedgerCrime::kTie);
+		GossipMill Fresh(Graph);
+		GossiperPtr F1 = std::make_shared<Gossiper>("w1", "the shopkeeper",
+			std::make_shared<MemoryStore>("w1"), std::shared_ptr<KnowledgeBase>(), "day");
+		GossiperPtr F2 = std::make_shared<Gossiper>("n2", "the lad in the yard",
+			std::make_shared<MemoryStore>("n2"), std::shared_ptr<KnowledgeBase>(), "day");
+		Fresh.Add(F1);
+		Fresh.Add(F2);
+
+		// THE RELOAD.
+		Save::RestoreMillAgents(MillJson, Fresh);
+		if (F1->Memory) { F1->Memory->LoadFrom(W1Md); }
+		if (F2->Memory) { F2->Memory->LoadFrom(N2Md); }
+
+		Out.W1After = (int)Fresh.Get("w1")->Rumors.size();
+		Out.N2After = (int)Fresh.Get("n2")->Rumors.size();
+		Out.W1MemAfter = F1->Memory ? (int)F1->Memory->Events.size() : 0;
+		Out.N2MemAfter = F2->Memory ? (int)F2->Memory->Events.size() : 0;
+		Out.W1ConfAfter = BestConfidence(Fresh.Get("w1"));
+		Out.W1HopsAfter = BestHops(Fresh.Get("w1"));
+		Out.N2HopsAfter = BestHops(Fresh.Get("n2"));
+		// THE MARKDOWN IS STABLE ACROSS THE TRIP, which is the memory half's
+		// own version of the same question and is already a golden row.
+		Out.bMemoryTextSame = F1->Memory && (F1->Memory->ToMarkdown() == W1Md);
+		Out.bRan = true;
+	}
+
 	void WriteBreadcrumb(const TCHAR* Phase);
 
 	// ---- the act, by input -----------------------------------------------
@@ -1221,6 +1332,42 @@ namespace
 		         + " memoryN2Events=" + LedgerCrime::Int(N2Events)
 		         + " memoryFiles=" + LedgerCrime::Int(WriteMemoryFiles()) + "/2"
 		           " memoryFilePrefix=ue-crime-memory-"));
+
+		// 8b. THE RESTART. Everything above is one run of the world; this is
+		// that run saved, the world built again from the authoring, and the
+		// save laid back over it. hopsAfter is the part worth reading twice:
+		// the shopkeeper saw it first-hand and comes back at 0 hops, the lad
+		// heard it and comes back at 1, so a restore that handed everyone
+		// the same records shows up here and nowhere else.
+		{
+			RestartReading RT;
+			RunRestartRoundTrip(RT);
+			if (!RT.bRan)
+			{
+				Out.Add(TEXT("restart=NOT-RUN restartNote=no-mill-or-no-agents/"
+				             "nothing-measured-about-surviving-a-restart"));
+			}
+			else
+			{
+				Out.Add(Un("restart=RAN savedBytes=" + LedgerCrime::Int(RT.SavedBytes)
+				         + " saveLeaf=ue-crime-save-agents.json"
+				           " w1RumoursBefore=" + LedgerCrime::Int(RT.W1Before)
+				         + " w1RumoursAfter=" + LedgerCrime::Int(RT.W1After)
+				         + " n2RumoursBefore=" + LedgerCrime::Int(RT.N2Before)
+				         + " n2RumoursAfter=" + LedgerCrime::Int(RT.N2After)
+				         + " w1MemoryBefore=" + LedgerCrime::Int(RT.W1MemBefore)
+				         + " w1MemoryAfter=" + LedgerCrime::Int(RT.W1MemAfter)
+				         + " n2MemoryBefore=" + LedgerCrime::Int(RT.N2MemBefore)
+				         + " n2MemoryAfter=" + LedgerCrime::Int(RT.N2MemAfter)
+				         + " w1ConfidenceBefore=" + LedgerCrime::F2(RT.W1ConfBefore)
+				         + " w1ConfidenceAfter=" + LedgerCrime::F2(RT.W1ConfAfter)
+				         + " w1HopsAfter=" + LedgerCrime::Int(RT.W1HopsAfter)
+				         + " n2HopsAfter=" + LedgerCrime::Int(RT.N2HopsAfter)
+				         + " memoryTextStable=" + std::string(RT.bMemoryTextSame ? "yes" : "no")
+				         + " restartNote=the-world-is-rebuilt-from-the-authoring-and-the-save-"
+				           "laid-over-it/never-restored-into-the-mill-that-already-holds-them"));
+			}
+		}
 
 		// 9. The three combined readings. Each needs both halves.
 		Out.Add(Un("witnessStatus=" + LedgerCrime::WitnessStatus(GReadings)
