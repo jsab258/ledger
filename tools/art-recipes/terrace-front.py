@@ -393,6 +393,11 @@ MATERIALS = (
     # The lit shop interior, emissive. Its colour and its strength are the
     # piece file's own window_practicals: gamma (1, 0.86, 0.62) at 1.6.
     ("interior_lit",(1.000, 0.714, 0.344), 0.90),
+    # R05's "FLUORESCENT STRIPS", 22 September: the 1989 photograph's metal
+    # shopfront is lit by bare tubes, and so is the approved sheet's MICKEY'S.
+    # A tube is the brightest thing in a shop window by day, which is most of
+    # why a lit shop reads as open against an overcast street.
+    ("tube_lit",    (0.900, 0.940, 1.000), 0.50),
     # THE LAMP'S OWN THREE, copied from tools/art-recipes/lighting-column.py's
     # MATERIALS rather than chosen again here, so the column in the street is
     # the column that was accepted. lens_amber is the spec's own sodium
@@ -589,6 +594,7 @@ SURFACE_OF = {
     "plate_front":  (None, 0.0),
     "lamp_red":     (None, 0.0),
     "interior_lit": (None, 0.0),
+    "tube_lit":     (None, 0.0),
     "figure":       (None, 0.0),
     "figure_c":     (None, 0.0),
     "figure_b":     (None, 0.0),
@@ -1778,6 +1784,25 @@ def plan_street(root, spec_rel=SPEC_REL):
                  bx + 0.35, bx + q["bay_width_m"] - 0.35, a, b,
                  THRESHOLD_ABOVE_CROWN_M + 0.55, THRESHOLD_ABOVE_CROWN_M + 2.95,
                  "the-lit-back-of-the-shop/on-this-block's-own-side-of-the-road")
+            # TWO TUBES ACROSS THE CEILING OF A REFITTED SHOP, a metre and a
+            # half each, 38 mm - the T12 tube of the period - 0.35 m in from
+            # the glass, where a shop hangs them to light its window. Only the
+            # refits: a timber front's shop is lit however it is lit, and R05
+            # photographs the tubes with the metal.
+            # 2.30 m UP, just under the transom, and attempt one is why: at
+            # 2.85 m they sat exactly behind the fascia, whose underside is at
+            # 2.85, and could not be seen from anywhere on the street. A 1980s
+            # refit hung its ceiling at the transom line, which is also where
+            # the sheet's strips show - in the top of the display glass.
+            if (block_id, bay) in SHOPFRONT_REFITS:
+                ty0, ty1 = STREET_FRONTAGE_M + 0.33, STREET_FRONTAGE_M + 0.37
+                ta, tb = (ty0, ty1) if east else (-ty1, -ty0)
+                tz = THRESHOLD_ABOVE_CROWN_M + 2.30
+                for k, frac in enumerate((0.3, 0.7)):
+                    cx = bx + q["bay_width_m"] * frac
+                    _box(out, "tube_%s_%d_%d" % (block_id, bay, k), "tube_lit",
+                         cx - 0.75, cx + 0.75, ta, tb, tz, tz + 0.038,
+                         "a-T12-fluorescent-tube/R05's-strips")
 
     _figures(out)
     _vehicles(out)
@@ -3350,27 +3375,32 @@ def _materials(bpy, root=None):
                 # time, and it has `surface_render_method`, DITHERED by
                 # default with BLENDED the alternative.
                 #
-                # SET ASIDE, 22 September, after attempts five and six, and
-                # this is where the next person starts. The EEVEE Next manual
-                # says BLENDED is "incompatible with ... raytracing", so this
-                # setting switches off the refraction the flag below asks
-                # for. Attempt five set DITHERED and SLAB thickness as the
-                # manual says: the pane went BLACK (27 against 48), because
-                # transmitted light is tinted by Base Color and the table's
-                # glass is 0.085. Attempt six cleared the tint to 0.9: the
-                # pane went an even pale grey (103) - and the same at IOR 1.0,
-                # where there is no reflection at all - so what the refraction
-                # reaches is the WORLD PROBE, not the lit room 0.75 m behind
-                # the pane. Tuning a tint until that grey measures right would
-                # be the wrong picture at the right number. So the street
-                # keeps the dark pane it had, and the next attempt tests
-                # whether EEVEE Next's refraction can see an emissive card
-                # behind a pane at all, in a two-object scene, before this
-                # file is touched again.
+                # DITHERED AND CLEAR, and the windows are windows. 22
+                # September, in three steps, the last of which corrected the
+                # second.
+                #   1. The EEVEE Next manual: BLENDED is "incompatible with
+                #      ... raytracing", so the BLENDED this used to set
+                #      switched off the refraction the flag below asks for.
+                #      DITHERED and SLAB thickness, as the manual says.
+                #   2. That made the pane BLACK, because transmitted light is
+                #      tinted by Base Color and the table's glass is 0.085.
+                #      Clear glass passes about nine-tenths, so it is 0.9 here.
+                #   3. That made it an even pale grey, and for a while that
+                #      read as the refraction reaching only the world probe.
+                #      IT WAS NOT. A two-object test (a pane in front of a lit
+                #      card) showed DITHERED refraction seeing the card, and a
+                #      street render with the glass removed showed the room
+                #      itself is that grey: the daytime card was a flat
+                #      neutral 0.62/0.58/0.52, so looking through clear glass
+                #      at it looked like frosted glass. The room is fixed
+                #      where the room is set, below, not by tinting the pane.
+                # THE TABLE KEEPS 0.085 because the recipe's own frame-against-
+                # glazing check reads it as what an opening reads as from
+                # across a street; the colour a pane passes is set here.
                 if hasattr(mat, "surface_render_method"):
-                    mat.surface_render_method = "BLENDED"
-                if hasattr(mat, "blend_method"):
-                    mat.blend_method = "BLEND"
+                    mat.surface_render_method = "DITHERED"
+                if hasattr(mat, "thickness_mode"):
+                    mat.thickness_mode = "SLAB"
                 for flag in ("use_raytrace_refraction", "use_screen_refraction"):
                     if hasattr(mat, flag):
                         setattr(mat, flag, True)
@@ -3383,7 +3413,8 @@ def _materials(bpy, root=None):
                 # with a dark tint, which is what every frontage on this row
                 # was until the interiors went in behind them.
                 if "Transmission Weight" in bsdf.inputs:
-                    bsdf.inputs["Transmission Weight"].default_value = 0.55
+                    bsdf.inputs["Transmission Weight"].default_value = 1.0
+                bsdf.inputs["Base Color"].default_value = (0.90, 0.91, 0.92, 1.0)
         made[name] = mat
         if root is not None:
             surface, tile = SURFACE_OF.get(name, (None, 0.0))
@@ -4280,6 +4311,12 @@ def build_and_render(args):
     # what a British shop with the lights on looks like against a grey sky and
     # is most of what makes that row read as OPEN rather than shuttered.
     # Recorded here rather than changed in the spec, because the spec is his.
+    tube = mats.get("tube_lit")
+    if tube is not None and tube.use_nodes:
+        bt = tube.node_tree.nodes.get("Principled BSDF")
+        if bt is not None and "Emission Color" in bt.inputs:
+            bt.inputs["Emission Color"].default_value = (0.90, 0.94, 1.00, 1.0)
+            bt.inputs["Emission Strength"].default_value = 12.0
     lit = mats.get("interior_lit")
     if lit is not None and lit.use_nodes:
         b3 = lit.node_tree.nodes.get("Principled BSDF")
@@ -4327,8 +4364,15 @@ def build_and_render(args):
                     bsdf.inputs["Base Color"].default_value = (0.105, 0.098, 0.090, 1.0)
                     bsdf.inputs["Roughness"].default_value = 0.92
                     if "Emission Color" in bsdf.inputs:
-                        bsdf.inputs["Emission Color"].default_value = (0.62, 0.58, 0.52, 1.0)
-                        bsdf.inputs["Emission Strength"].default_value = 0.30
+                        # WARMER AND DIMMER, 22 September, once the glass
+                        # let it be seen: at 0.62/0.58/0.52 x 0.30 it came
+                        # through clear glass at 119/116/112, a pale neutral
+                        # that read as frosted glass. The sheet's MICKEY'S
+                        # interior measures 66/60/51 away from its strips -
+                        # darker than the brick and warm - so the card goes
+                        # there, and the tubes carry the brightness.
+                        bsdf.inputs["Emission Color"].default_value = (0.66, 0.57, 0.44, 1.0)
+                        bsdf.inputs["Emission Strength"].default_value = 0.14
     print("tfNote condition=%s world/%s"
           % (args["condition"] if street else "overcast_day", world_note))
 

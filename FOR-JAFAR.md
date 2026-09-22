@@ -83,6 +83,11 @@ not separated out; the newspaper does not exist yet, so neither is measured.
 
 ## Things you should know
 
+- 2026-09-22 **The shop windows are glass now.** For weeks they rendered as
+  dark panels; one wrong setting was switching the see-through off. Mickey's
+  and the fish shop now show a warm lit room with fluorescent tubes across
+  the top of the window, the way the 1989 parade photograph has them. What
+  is behind the glass is still a plain lit wall, not a furnished room.
 - 2026-09-22 **How I read "rumours surviving a restart, from clean starts".**
   The game already runs both crimes in one sitting of the world — one the
   shopkeeper sees, one nobody can — and then saves, rebuilds the world from
