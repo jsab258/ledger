@@ -583,10 +583,14 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       "plain bent-arm lighting" and the retired constants are marked so.
       DONE: the new sheet shows NO column; marked so in the recipe and the
       inheritance list, whose rows 2 and 3 are brought up to date too.
-- [ ] THE SCENE SPEC'S cam_hook FOLLOWS THE DERIVED LENS. The Blender recipe
-      uses the new lens; the spec - read by the Unreal probe's hook shot and
-      the A1 grid rows - still carries the retired sheet's numbers. A probe
-      change with its own tests, so it goes with its own run.
+- [x] THE SCENE SPEC'S cam_hook FOLLOWS THE DERIVED LENS - SET ASIDE FOR
+      JAFAR'S DECISION 5, 22 September, and struck so the list is honest
+      about what can move tonight. Checking it found the two lanes build the
+      street as MIRROR IMAGES: Unreal maps the file's z to its Y and puts
+      the east parade on the right looking north (its own hook frame shows
+      it); Blender and Unity put it on the left. MICKEYS.md's layout agrees
+      with Unreal. Which way the camera turns depends on which is ruled
+      true, so the spec is not moved until he rules.
 - [x] THE ROUTING INDEX'S CLAIMS (retired-sheet-inheritance.md, row 5):
       GOVERNS.md's nine measured claims, each checked against the new sheet
       and the photographs, and marked kept, changed or unverifiable.
