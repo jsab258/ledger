@@ -4076,6 +4076,9 @@ WEAR_PATCH_SCALE = 0.45      # cycles per metre: patches a couple of metres acro
 WEAR_PATCH_DEPTH = 0.28      # how dark the dirtiest patch gets, as a multiplier
 WEAR_SPLASH_M = 1.5          # how far up the wall the splash reaches
 WEAR_SPLASH_DEPTH = 0.55     # how dark the very foot of the wall gets
+STREAK_ACROSS, STREAK_DOWN = 6.0, 0.35   # cycles per metre: fine across, long down
+STREAK_DEPTH = 0.70          # how dark the darkest streak gets, as a multiplier
+STREAK_FROM_Z, STREAK_FULL_Z = 3.6, 6.4  # nothing below the sills, full at the wall head
 
 #: Which surfaces weather, and the ground weathers differently from a wall:
 #: a pavement's wear is trodden into it rather than run down it, so it takes
@@ -4445,6 +4448,48 @@ def _wear(bpy, mats):
             nt.links.new(dirt, both.inputs[6])
             nt.links.new(rise.outputs["Result"], both.inputs[7])
             dirt = both.outputs[2]
+
+            # AND THE WATER PATHS DOWN FROM THE TOP, 22 September. "Grime
+            # follows water paths" is the town form bible's own rule, and the
+            # new sheet's near gable is dark at its head and streaked below
+            # it, where rain off the verge and the gutter's overflow runs down
+            # the brick. A noise stretched tall - fine across, long down -
+            # through a ramp gives streaks, and they are strongest near the
+            # wall head and gone by the first floor's sills.
+            smap = nt.nodes.new("ShaderNodeMapping")
+            smap.inputs["Scale"].default_value = (STREAK_ACROSS, STREAK_ACROSS, STREAK_DOWN)
+            nt.links.new(coord.outputs["Object"], smap.inputs["Vector"])
+            snoise = nt.nodes.new("ShaderNodeTexNoise")
+            snoise.inputs["Scale"].default_value = 1.0
+            if "Detail" in snoise.inputs:
+                snoise.inputs["Detail"].default_value = 2.0
+            nt.links.new(smap.outputs["Vector"], snoise.inputs["Vector"])
+            sramp = nt.nodes.new("ShaderNodeMapRange")
+            sramp.clamp = True
+            sramp.inputs["From Min"].default_value = 0.40
+            sramp.inputs["From Max"].default_value = 0.62
+            sramp.inputs["To Min"].default_value = STREAK_DEPTH
+            sramp.inputs["To Max"].default_value = 1.0
+            nt.links.new(snoise.outputs["Fac"], sramp.inputs["Value"])
+            head = nt.nodes.new("ShaderNodeMapRange")
+            head.clamp = True
+            head.inputs["From Min"].default_value = STREAK_FROM_Z
+            head.inputs["From Max"].default_value = STREAK_FULL_Z
+            head.inputs["To Min"].default_value = 0.0
+            head.inputs["To Max"].default_value = 1.0
+            nt.links.new(sep.outputs["Z"], head.inputs["Value"])
+            streak = nt.nodes.new("ShaderNodeMix")
+            streak.data_type = "FLOAT"
+            nt.links.new(head.outputs["Result"], streak.inputs["Factor"])
+            streak.inputs[2].default_value = 1.0
+            nt.links.new(sramp.outputs["Result"], streak.inputs[3])
+            wet = nt.nodes.new("ShaderNodeMix")
+            wet.data_type = "RGBA"
+            wet.blend_type = "MULTIPLY"
+            wet.inputs["Factor"].default_value = 1.0
+            nt.links.new(dirt, wet.inputs[6])
+            nt.links.new(streak.outputs[0], wet.inputs[7])
+            dirt = wet.outputs[2]
 
         mix = nt.nodes.new("ShaderNodeMix")
         mix.data_type = "RGBA"
