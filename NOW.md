@@ -339,32 +339,34 @@ nothing above this line is worked on until the sheet is replaced.
 
 ## Where things stand
 
-THE REFERENCE WAS WRONG ALL WEEK, and that is the finding the sitting turns
-on. Every visual comparison since the 9 September ruling went to Codex's
-retired sheet, which STILL RESOLVES on its branch, so nothing errored and
-nothing warned. References now live in production/reference/ and nowhere
-else, and the pair tool refuses rather than falling back.
+THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
+had never been checked against the research or canon; checked now, four things
+on it contradict a ruling - Mickey's drawn as a pub against D19, not one metal
+shopfront against D01/D06/R05, canal narrowboats in a coastal port against
+D04/R08, and Mickey's sharing a corner building with the fish shop against
+MICKEYS.md. Three of the four were COMMANDED: the approved sheet's prompt is
+Codex's retired prompt, translated, and it asked for a pub and for unlettered
+painted timber fronts.
 
-READ AGAINST THE RIGHT PICTURE the street measures, against the sheet's own
-four numbers: mean 119.8 against 119.7, highlights 225 against 229, warmth
-+19.3 against +18.5, and 21.6 per cent of pixels carrying real colour
-against 25.8. This morning those read 74.4, 163, +0.7 and 2.0.
+JAFAR STOPPED THE PALETTE WORK AND SET A NEW ORDER: regenerate the sheet
+first, from the research and canon, at a resolution where a shopfront is
+evidence; then derive the lens from it; then re-close colour; then rework the
+shopfronts. Pass 1 of three is generating as this was written.
 
-WHAT THE STREET GAINED: white sash windows it had none of; shops with rooms
-behind their glass, which lit the dusk frame as a side effect; a crowned
-road; fourteen pavement props the spec had already placed by name; one
-invented car; aerials; shops on the near west block by Jafar's ruling, now
-in canon; depth beyond thirty metres on the third attempt; and weather and
-wear, which the roadmap calls the strategy and the street had none of.
+WHAT THE STREET GAINED TODAY ANYWAY: the far end, which was sky and is now the
+basin end the world already said was there - a quay apron, nine dock sheds
+gable-on at two ranges and a crane, giving the aerial falloff the sheet has
+and we had none of (75.6 and 0.353 against its 78.7 and 0.389). One metal
+shopfront on the fish bay, whose colour the recipe's own check chose after the
+plausible one came within 0.02 of the brick. And the tying frame, looked at
+for the first time with everything in place.
 
-THE SIMULATION GAINED A SAVE. The port could not read one this morning; it
-reads and writes one now, an independent check broke it nine ways and every
-one is fixed and pinned, and in the PACKAGED BUILD a rumour survives a save,
-a restart and a reload - the witness who SAW it coming back first-hand and
-the one who HEARD it one hop out. Something finally reads the crime verdict,
-and it reads the negative halves.
+WHAT IS SUSPECT: everything derived from the retired sheet, listed in
+production/reference/retired-sheet-inheritance.md - the whole cam_hook row in
+the governing spec including its 39 degree field, the lighting column's traced
+ratios, GOVERNS.md's seventeen rows, and the prompt itself.
 
-THREE THINGS WAIT ON JAFAR OR ON TIME: llama.cpp Vulkan next sitting for the
-hardware floor; the town past the end of the street, which is stage 6; and
-the six character sheets, which are stage 2 and whose terms are not defined
-anywhere yet.
+THREE THINGS WAIT ON JAFAR OR ON TIME: his choice between the regenerated
+sheet and the old one; a token, because nobody here can read an Actions log
+and the probe is red for a reason that is not visible from here; and
+llama.cpp Vulkan, which he has already put in the next sitting.
