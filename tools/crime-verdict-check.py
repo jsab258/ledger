@@ -215,6 +215,41 @@ def judge(text, sha=""):
         faults.append("the player heard nothing (overheardStatus=%s)"
                       % over[0].get("overheardStatus"))
 
+    # ---- the unwitnessed control ------------------------------------------
+    # GATED THE SAME WAY AS THE RESTART: absent means not measured and says
+    # so, present means judged. The control is crime B, which happens in the
+    # same run as crime A with both agents behind a building - same build,
+    # same mill, same perception code, same frame, and the only thing that
+    # differs is whether anybody could see it.
+    ctl = lines_named(text, "control")
+    if not ctl:
+        notes.append("control=NOT-IN-THIS-VERDICT/nothing-measured-about-the-crime-nobody-saw")
+    else:
+        c = ctl[0]
+        def cnum(k):
+            try:
+                return int(c.get(k, ""))
+            except ValueError:
+                return None
+        sa, sb = cnum("seenA"), cnum("seenB")
+        ra, rb = cnum("rumoursAboutA"), cnum("rumoursAboutB")
+        if sa is None or sa < 1:
+            faults.append("the WITNESSED crime was seen by nobody (seenA=%s) - there is "
+                          "no positive half to compare the control against"
+                          % c.get("seenA"))
+        if sb is None or sb != 0:
+            faults.append("THE CONTROL WAS SEEN: %s observation(s) filed on a crime both "
+                          "agents were behind a building for" % c.get("seenB"))
+        if rb is None or rb != 0:
+            faults.append("THE CONTROL PRODUCED A RUMOUR: %s about a crime nobody "
+                          "witnessed, which is the mill inventing" % c.get("rumoursAboutB"))
+        if ra is None or ra < 1:
+            faults.append("the witnessed crime produced no rumour (rumoursAboutA=%s), so "
+                          "the control proving nothing proves nothing" % c.get("rumoursAboutA"))
+        notes.append("control=A seen by %s and carried by %s; B seen by %s and carried by %s"
+                     % (c.get("seenA"), c.get("rumoursAboutA"),
+                        c.get("seenB"), c.get("rumoursAboutB")))
+
     # ---- the restart, once the probe carries one --------------------------
     # GATED ON THE LINE BEING THERE, AND LOUD WHEN IT IS NOT. The probe
     # learned to save, rebuild and reload on 22 September and the verdict
@@ -375,6 +410,22 @@ def selftest():
                 ("the-eyewitness-came-back-second-hand", "w1HopsAfter=0", "w1HopsAfter=1"),
         ):
             faults, _n = judge(ok_text.replace(old_v, new_v), head_sha(real))
+            check("reject/%s-is-caught" % name, bool(faults))
+
+    # THE CONTROL'S OWN RULES, on a verdict that carries the line.
+    GOOD_CTL = ("control=RAN controlCrime=B seenA=1 seenB=0 "
+                "rumoursAboutA=1 rumoursAboutB=0")
+    if real:
+        ok_c = real.rstrip(chr(10)) + chr(10) + GOOD_CTL + chr(10)
+        faults, _n = judge(ok_c, head_sha(real))
+        check("accept/a-good-control-line-passes", not faults, "; ".join(faults[:2]))
+        for name, old_v, new_v in (
+                ("the-control-was-seen", "seenB=0", "seenB=2"),
+                ("the-control-produced-a-rumour", "rumoursAboutB=0", "rumoursAboutB=1"),
+                ("nobody-saw-the-witnessed-one", "seenA=1", "seenA=0"),
+                ("the-witnessed-one-carried-nothing", "rumoursAboutA=1", "rumoursAboutA=0"),
+        ):
+            faults, _n = judge(ok_c.replace(old_v, new_v), head_sha(real))
             check("reject/%s-is-caught" % name, bool(faults))
 
     faults, _n = judge("")

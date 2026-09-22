@@ -1369,6 +1369,70 @@ namespace
 			}
 		}
 
+		// 8c. THE UNWITNESSED CONTROL, AND IT IS ALREADY IN THIS RUN.
+		//
+		// The list asks for "the witnessed run and the unwitnessed control,
+		// from equivalent clean starts... and the control producing no
+		// mention". TWO RUNS WOULD BE A WEAKER TEST THAN THIS ONE. Two
+		// separate starts differ in everything the engine does not pin -
+		// tick order, frame timing, whatever the scheduler did that second -
+		// and any of it could explain a difference. What is here instead is
+		// two crimes in ONE run, with one witness position each:
+		//
+		//   CRIME A is seen. w1 stands a metre and a half away with a clear
+		//   line to the actor and the victim, and files an observation.
+		//   CRIME B is not. Both agents are behind west_south_bay2, the
+		//   traces stop on the building, and neither files anything.
+		//
+		// Same build, same mill, same perception code, same frame. The only
+		// thing that differs is whether anybody could see it, which is the
+		// only thing a control is supposed to vary.
+		//
+		// WHAT MUST FOLLOW FROM THE ONE NOBODY SAW: nothing. No observation
+		// filed, so no rumour about it, so nothing said about it. Each of
+		// those is a separate fact and a separate way to fail - a rumour
+		// with no observation behind it is a mill inventing, and a line
+		// mentioning a crime no rumour carries is a voice inventing - so
+		// each is counted rather than inferred from the one before it.
+		{
+			int SeenA = 0, SeenB = 0;
+			for (std::vector<LedgerCrime::Reading>::size_type I = 0; I < GReadings.size(); ++I)
+			{
+				if (!GReadings[I].bFiled) { continue; }
+				if (GReadings[I].EventId == "A") { ++SeenA; }
+				else if (GReadings[I].EventId == "B") { ++SeenB; }
+			}
+			// RUMOURS ABOUT EACH CRIME, over every agent in the mill. The
+			// predicate a witnessed break carries names the deed, so a
+			// rumour about the control would have to name crime B's victim.
+			int RumoursA = 0, RumoursB = 0;
+			if (GMill)
+			{
+				const std::vector<GossiperPtr>& Ags = GMill->Agents();
+				for (std::vector<GossiperPtr>::size_type A = 0; A < Ags.size(); ++A)
+				{
+					if (!Ags[A]) { continue; }
+					for (std::vector<RumorPtr>::size_type R = 0; R < Ags[A]->Rumors.size(); ++R)
+					{
+						if (!Ags[A]->Rumors[R]) { continue; }
+						const std::string& V = Ags[A]->Rumors[R]->Content.Value;
+						const std::string& Pd = Ags[A]->Rumors[R]->Content.Predicate;
+						const std::string Both = V + "/" + Pd;
+						if (Both.find("glass1") != std::string::npos) { ++RumoursB; }
+						else if (Both.find("glass0") != std::string::npos) { ++RumoursA; }
+					}
+				}
+			}
+			Out.Add(Un("control=RAN controlCrime=B controlWhy=both-agents-occluded-by-west_south_bay2"
+			           " seenA=" + LedgerCrime::Int(SeenA)
+			         + " seenB=" + LedgerCrime::Int(SeenB)
+			         + " rumoursAboutA=" + LedgerCrime::Int(RumoursA)
+			         + " rumoursAboutB=" + LedgerCrime::Int(RumoursB)
+			         + " controlNote=one-run-two-crimes-one-witness-position-each/"
+			           "the-only-thing-that-differs-is-whether-anybody-could-see-it/"
+			           "a-second-RUN-would-vary-everything-the-engine-does-not-pin"));
+		}
+
 		// 9. The three combined readings. Each needs both halves.
 		Out.Add(Un("witnessStatus=" + LedgerCrime::WitnessStatus(GReadings)
 		         + " witnessStatusNote=w1-filed-on-A-with-a-rung/w1-empty-on-B-occluded/n2-empty-on-both"
