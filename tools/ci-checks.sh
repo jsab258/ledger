@@ -68,6 +68,23 @@ cleanup() { rm -rf "$LOGDIR"; }
 trap cleanup EXIT
 trap '' PIPE
 
+# THREE CHECKS LEFT THIS TABLE ON 2026-09-22, when the studio was paused, and
+# they left because their SUBJECTS were archived rather than because anyone
+# decided they were wrong:
+#
+#   docs-check       read game-design/ and production/queue/ for the document
+#                    law and the queue's three states. The queue is archived
+#                    and the document law went with the old CLAUDE.md.
+#   canon-register   read ledger-v2/respec/decision-register/, now archived.
+#                    Canon itself is still gated: canon-gate --corpus stays
+#                    below and is the check that matters for the game.
+#   goal-block       compared the goal block at the top of CLAUDE.md against
+#                    ledger-v2/respec/vision-pillars-v2.md. The new CLAUDE.md
+#                    carries no goal block, so the check has nothing to compare.
+#
+# All three, and their selftests, are in legacy/studio-v2/tools/ with their
+# subjects. legacy/studio-v2/REACTIVATE.md restores them as one step.
+#
 # THE REAL TABLE. One check per line: name <TAB> working-dir <TAB> command.
 # Names carry no spaces — every reader of this output splits on whitespace.
 #
@@ -78,17 +95,12 @@ trap '' PIPE
 real_table() {
   printf '%s\t%s\t%s\n' \
     reach-check           "$REPO"                 "bash tools/reach-check.sh" \
-    docs-check            "$REPO"                 "python3 tools/docs-check.py" \
     shape-check           "$REPO"                 "python3 tools/shape-check.py" \
     shape-check-selftest  "$REPO"                 "python3 tools/shape-check.py --selftest" \
     attribution           "$REPO"                 "python3 tools/attribution-check.py" \
     attribution-selftest  "$REPO"                 "python3 tools/attribution-check.py --selftest" \
-    canon-register        "$REPO"                 "python3 tools/canon-register-check.py" \
-    canon-register-selftest "$REPO"               "python3 tools/canon-register-check.py --selftest" \
     canon-gate            "$REPO"                 "python3 tools/canon-gate.py --corpus" \
     canon-gate-selftest   "$REPO"                 "python3 tools/canon-gate.py --selftest" \
-    goal-block            "$REPO"                 "python3 tools/goal-block-check.py" \
-    goal-block-selftest   "$REPO"                 "python3 tools/goal-block-check.py --selftest" \
     sky-material-selftest "$REPO"                 "python3 tools/ue/make_sky_material.py --selftest" \
     sky-longlat-selftest  "$REPO"                 "python3 tools/hdr-to-longlat.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \

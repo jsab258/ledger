@@ -41,8 +41,16 @@ name: LEDGER Unreal probe
 on:
   workflow_dispatch:
   push:
+    # ON PUSH, NOT ON A SENTINEL FILE, from 2026-09-22 when the studio was
+    # paused. This used to fire only when a push touched
+    # production/d1-probe/DISPATCH, a file whose whole job was to ask the
+    # runner for a build; that dispatch machinery is archived under
+    # legacy/studio-v2/. Jafar's order: the Unreal build is kept as a
+    # safeguard and now runs on push, like the Core tests.
     paths:
-      - 'production/d1-probe/DISPATCH'
+      - 'ue-probe/**'
+      - 'tools/ue/**'
+      - '.github/workflows/ledger-probe-unreal.yml'
 
 permissions:
   contents: write

@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - "ledger/**"
-      - "game-design/**"          # docs-check runs here, so docs must trigger it
       - "tools/*.py"
       - "tools/*.sh"              # ci-checks.sh and reach-check.sh ARE the job now
       - "THIRD-PARTY.md"
