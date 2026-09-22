@@ -381,6 +381,10 @@ MATERIALS = (
     # A DISH IS PALE GREY PRESSED STEEL, and it is the palest thing on the
     # upper wall, which is why the sheet's reads at all at that size.
     ("dish_grey",   (0.420, 0.425, 0.420), 0.45),
+    # A CEMENT REPAIR PATCH on old brick, sampled off the new sheet's near
+    # gable at 175/141/93 and pulled back a little from the orange its light
+    # puts in it.
+    ("render_patch",(0.380, 0.285, 0.160), 0.85),
     # RUBBED BRICK, for the window arches: on the new sheet the arch over
     # each window reads 123/67/49 against the wall beside it at 115/63/46 -
     # the same clay, finer and a touch brighter. Scaled off brick_red by that
@@ -616,6 +620,7 @@ SURFACE_OF = {
     "paint_white":  (None, 0.0),
     "pot_clay":     ("plaster", 0.5),
     "brick_rubbed": ("plaster", 0.4),
+    "render_patch": ("plaster", 0.3),
     "pot_buff":     ("plaster", 0.5),
     # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
     # plaster and timber are the wrong story for a pressed steel panel, and
@@ -1904,6 +1909,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_rise(out)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
+    _repair_patches(out)
     # THE PAVEMENT TURNS THE CORNER at each block's south end. The footways
     # stop at the frontage line, and past a terrace's gable there was no
     # ground at all: from the turned camera the sky map's green field showed
@@ -2317,6 +2323,43 @@ def _dish(out):
          tuple(c[i] - 0.25 * v[i] for i in range(3)), lnb, 0.02, "the-receiver-arm")
     _rod(out, "satellite_dish_receiver", "dish_grey",
          lnb, tuple(lnb[i] - 0.10 * n[i] for i in range(3)), 0.06, "the-receiver")
+
+
+#: REPAIR PATCHES IN OLDER MASONRY, which is D06's own phrase for the Hook -
+#: "metal frames, practical light fittings and REPAIR PATCHES within older
+#: masonry" - and which the new sheet shows on its near gable: a rough
+#: cement patch where something was taken off the wall and made good.
+#: (face_x, y centre, z centre, half-width, half-height), on the south end
+#: wall of the parade, the one the hook camera faces, and one on the
+#: parade's front above the empty unit, where a sign was taken down.
+REPAIR_PATCHES = ((2.66, 6.7, 4.05, 0.36, 0.30, "x"),
+                  (24.0, 5.125, 4.45, 0.30, 0.22, "y"))
+
+
+def _repair_patches(out):
+    """Irregular cement patches, 6 mm proud of the brick they mend."""
+    for k, (f, c1, cz, hw, hh, axis) in enumerate(REPAIR_PATCHES):
+        # AN IRREGULAR OUTLINE, because a patch is made good by hand: eight
+        # points on an ellipse, each pushed in or out by a fixed amount.
+        wob = (1.0, 0.82, 1.08, 0.9, 0.97, 1.12, 0.85, 1.03)
+        ring = []
+        for i, w in enumerate(wob):
+            t = 2.0 * math.pi * i / len(wob)
+            ring.append((c1 + hw * w * math.cos(t), cz + hh * w * math.sin(t)))
+        n = len(ring)
+        if axis == "x":
+            front = [(f - 0.006, u, z) for (u, z) in ring]
+            back = [(f, u, z) for (u, z) in ring]
+        else:
+            front = [(u, f - 0.006, z) for (u, z) in ring]
+            back = [(u, f, z) for (u, z) in ring]
+        faces = [tuple(range(n)), tuple(range(2 * n - 1, n - 1, -1))]
+        for i in range(n):
+            j = (i + 1) % n
+            faces.append((i, n + i, n + j, j))
+        out.append({"id": "repair_patch_%d" % k, "material": "render_patch", "kind": "mesh",
+                    "verts": front + back, "faces": faces,
+                    "note": "D06/repair-patches-within-older-masonry/made-good-by-hand"})
 
 
 def _north_rise(out):
