@@ -2,7 +2,7 @@
 
 One session, on Jafar's PC, building a game. The studio that ran before is archived under legacy/studio-v2/ and can be reactivated from its REACTIVATE.md.
 
-What governs: canon.md for the world and the content rules; DECISIONS.md for what is already decided; production/research/README.md for which research and which concept sheet govern each thing's look; the licence allowlist is law. If any of these is unclear, ask Jafar; otherwise do not ask.
+What governs: canon.md for the world and the content rules; ROADMAP.md for the six stages and what each one means; DECISIONS.md for what is already decided; production/research/README.md for which research and which concept sheet govern each thing's look; the licence allowlist is law. If any of these is unclear, ask Jafar; otherwise do not ask.
 
 ## How to talk to Jafar
 
@@ -13,10 +13,22 @@ What governs: canon.md for the world and the content rules; DECISIONS.md for wha
 - ANYTHING HE HAS TO KNOW OR DO GOES AT THE VERY TOP OF THE REPLY, in one line, before anything else: a stopped service, a step only he can take on the PC, a change of plan, a result that changes what comes next. If it is not at the top or in a question, he will not see it, and that is your fault and not his.
 - If you got something wrong, one sentence, then move on.
 
+## How a sitting runs
+
+- NOW.md CARRIES A STANDING LIST, in priority order, drawn from ROADMAP.md. It is the work, and it is not a queue, a register or a dashboard: one ordered list of the next things, kept current as items finish.
+- WHEN AN ITEM IS DONE, TAKE THE NEXT ONE WITHOUT ASKING. A sitting ends at the time limit or when the list is empty, NEVER because one piece of work finished. Finishing something is not a reason to stop and report; it is a reason to write it down and start the next.
+- If he opens a sitting without naming a time limit, THE LIMIT IS FOUR HOURS.
+- WHEN THE LIST RUNS SHORT, EXTEND IT from the next part of ROADMAP.md rather than asking what is next.
+- THE HOOK MATCH LEADS. Ruled 2026-09-22, explicitly and as a change of order: visual work toward the Hook sheet comes FIRST in a sitting, and the crime, the simulation and the memory work follow it. A sitting that spends its hours on machinery and reaches the look last is a sitting that never reaches the look.
+
+## What to ask, and what to decide
+
+- ASK HIM ONLY ABOUT CANON, SCOPE OR MONEY. Nothing else is his to answer.
+- EVERYTHING ELSE: take your own recommendation, put it at the top of the next report in one line so he can overrule it, and carry on. Do not stop and wait for an answer you could have given yourself.
+
 ## How to work
 
-- The next visible outcome is named in NOW.md. Work toward it and nothing else.
-- THE HOOK MATCH LEADS. Ruled by Jafar 2026-09-22, explicitly and as a change of order: visual work toward the Hook sheet comes FIRST in a sitting, and the crime, the simulation and the memory work follow it. A sitting that spends its hours on the machinery and reaches the look last is a sitting that never reaches the look.
+- Work through the standing list in NOW.md in order.
 - Visual work is edit, render, look, iterate, here, in minutes. Commit accepted work with its frame. An asset gets two attempts against its reference before it is finished from dimensions or set aside with a note. References are dimensioned drawings where they exist; a concept sheet governs look, not geometry.
 - Core work, anything under the simulation or its port, keeps its tests. A change to perception, memory or gossip runs CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, and adds a regression test. The C++ port must still match the C# golden table, and the table is REGENERATED from the C# Core for that comparison rather than read as committed — a table nobody regenerates is a table that quietly stops describing the game.
 - A change to perception, memory or gossip also gets ONE INDEPENDENT CHECK before it is committed: a subagent that has not seen your reasoning is handed the change, its test, canon and the intended behaviour IN PLAIN WORDS, and told to break it. The intended behaviour travels with it because a wrong change can pass an equally wrong test. Simulation only, never visual work.
