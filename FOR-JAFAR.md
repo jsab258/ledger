@@ -29,10 +29,25 @@ counts as one retelling, and a series showing how reach moves as each is
 changed alone. **Not a decision yet — it is work, and it is next.** Recorded
 here so it is not lost: your instinct is that one act reaching a circle is
 right, and that town-wide knowledge should come from severity, repetition and
-the newspaper.
+the newspaper. All four numbers are now pinned to lines, and the fourth turns
+out to be a distribution rather than a value.
 
 ## Things you should know
 
+- 2026-09-22 **"How confident a witness is at first sight" has no single
+  answer**, which changes the shape of your rumour question. The mill's
+  entry point defaults to certain, and only 0.95 or above becomes hard
+  knowledge rather than a rumour — but the real callers pass much less: a body
+  is 1.0 in the open and 0.6 when the view was occluded; street trouble is a
+  flat 0.5; a racket sighting is 0.45 to 0.80 depending on how competent the
+  man running it was. So the series has to say which kind of witnessing it is
+  measuring rather than quoting one number and calling it the town's.
+- 2026-09-22 **All four of the rumour numbers are pinned to lines**, so the
+  next sitting starts from them instead of searching: one retelling is a hop
+  decay of 0.8 with a share floor of 0.2 and confidence multiplied by tie
+  strength as well; tie strength is set when two people are linked, and the
+  authored weights come from the town builder; first sight is the
+  distribution above.
 - 2026-09-22 **FOR-JAFAR.md exists and is populated from this sitting** -
   decisions waiting on you, things you should know, rulings received with
   their dates, and a Resolved section. The three rulings you had to give twice
