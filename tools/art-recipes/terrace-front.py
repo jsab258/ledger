@@ -139,7 +139,11 @@ MATERIALS = (
     # neutral grey-brown where the reference is strongly red, 141 against 60.
     # It is the wall that takes the left third of the frame, so its neutrality
     # was most of why our whole picture measured +0.7 warmth against +18.5.
-    ("brick_grey",  (0.313, 0.109, 0.063), 0.92),
+    # PULLED BACK, because with the frame at the sheet's own aspect this
+    # wall fills a third of the picture and at 0.313 red it took our warmth
+    # PAST the reference: +22.3 against its +18.5. The correction that was
+    # right when the wall was a quarter of a squarer frame is wrong now.
+    ("brick_grey",  (0.268, 0.116, 0.080), 0.92),
     ("stone",       (0.240, 0.225, 0.200), 0.80),   # sills, lintels, coping
     # THE GROUND IS NOT THE SAME STONE AS A WINDOW SILL, and sharing one
     # material with the sills was why the first night frame came back with a
@@ -242,6 +246,10 @@ MATERIALS = (
     # part of what makes that street look inhabited rather than evacuated.
     # Three muted period tones, assigned round the figures, none of them
     # bright: 1990 was not a colourful decade outdoors.
+    # THE PROPS' OWN TIMBER: crates, pallets and the A-board. Bare, weathered
+    # softwood rather than anything painted, which is what a crate outside a
+    # fish shop is.
+    ("prop_timber", (0.105, 0.062, 0.031), 0.78),
     ("figure",      (0.014, 0.014, 0.016), 0.80),
     ("figure_a",    (0.020, 0.042, 0.048), 0.75),   # a teal anorak
     ("figure_b",    (0.086, 0.030, 0.012), 0.75),   # a rust jacket
@@ -425,6 +433,7 @@ SURFACE_OF = {
     "lead":         ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
     "interior":     (None, 0.0),
+    "prop_timber":  ("wood", 0.5),
     "paint_yellow": (None, 0.0),
     # EVERY VEHICLE SURFACE IS FLAT COLOUR ON PURPOSE. The pack's brick,
     # plaster and timber are the wrong story for a pressed steel panel, and
@@ -503,6 +512,26 @@ FASCIA_SIGN = {
 #: another width still frames.
 FRAMES = ("elevation", "eye")
 AUTHORED_RES = (1400, 1100)
+
+#: THE HOOK FRAME IS THE SHEET'S OWN SHAPE, and this is the thing no amount
+#: of moving the camera could have fixed.
+#:
+#: MEASURED: the approved sheet's street panel is 617 x 326 pixels, an aspect
+#: of 1.89 - a wide, letterbox picture. Ours was 1400 x 1100, an aspect of
+#: 1.27, very nearly square. At a 60 degree VERTICAL field those two are not
+#: the same camera at all: the horizontal half-field is atan(tan(30) x aspect),
+#: which is 36.2 degrees at 1.27 and 47.5 degrees at 1.89. Eleven degrees.
+#:
+#: WHAT THAT COST, in metres. A frontage 7.3 m to one side only enters the
+#: frame once it is lateral/tan(half-field) ahead of the camera: 10.0 m away
+#: at 36.2 degrees, 6.7 m at 47.5. So our nearest visible parade was a third
+#: further off than the reference's and correspondingly smaller, and moving
+#: the camera along the street could not close that gap - the 10 m is set by
+#: the lateral distance and the field, and is the same wherever the camera
+#: stands. Two hours went on trying to move it.
+#:
+#: 1400 x 740 is 1.892 against the panel's 1.8926.
+HOOK_RES = (1400, 740)
 
 
 # ---------------------------------------------------------------------------
@@ -1199,8 +1228,28 @@ def plan_street(root, spec_rel=SPEC_REL):
     kerb_w, kerb_up = 0.125, 0.125
     foot = 2.0
     x0, x1 = -2.0, 44.0
-    _box(out, "carriageway", "asphalt", x0, x1, -half, half, -0.30, 0.0,
-         "two-3.0m-lanes/the-common-British-two-way-residential-carriageway")
+    # THE ROAD IS CROWNED, AND IT NEVER WAS. The scene file has carried a
+    # crossfall of 0.025 - one in forty, the value British road practice uses
+    # for a straight carriageway - since it was written, with its own derived
+    # consequence spelled out: "the crown stands 3.0 x 0.025 = 0.075 m above
+    # the channel, and that 75 mm is the whole reason A0 exists. A FLAT
+    # CARRIAGEWAY PUTS THE WET-CONDITION WATER EVERYWHERE INSTEAD OF AT THE
+    # KERB." Ours was one flat box, so the spec was right twice over and
+    # nobody had built it.
+    #
+    # IT IS ALSO WHY OUR ROAD READS DRY. A flat glossy plane returns the sky
+    # at one angle across its whole width and comes back as an even sheet of
+    # grey; a crowned one returns it at an angle that CHANGES from the crown
+    # to the channel, which is the long soft highlight down the middle of the
+    # road that every wet street photograph has and ours did not.
+    #
+    # SEVENTY-FIVE MILLIMETRES IS NOT EYEBALLED and it is not typed either:
+    # it is half_width times crossfall, both read off the scene file, so a
+    # street that is ever widened re-derives its own crown.
+    crossfall = 0.025
+    fall = half * crossfall
+    _road(out, "carriageway", "asphalt", x0, x1, half, fall,
+          "two-3.0m-lanes/crowned-1-in-40/%.3fm-above-the-channel" % fall)
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
         _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
@@ -1287,6 +1336,29 @@ FIGURE_DEPTH_M = 0.25
 #: distances, because people all at one distance read as a queue.
 FIGURE_AT = ((11.5, 4.25), (27.0, 3.85), (19.0, 4.35), (33.5, 4.05),
              (15.0, -4.35), (30.0, -4.15))
+
+
+def _road(out, pid, material, x0, x1, half, fall, note=""):
+    """The carriageway as a crowned solid rather than a flat slab.
+
+    Six vertices along the top - channel, crown, channel, at each end - and
+    six under them. Written as a mesh rather than as two of the roof slabs
+    this file already has, because those carry their own thickness along
+    their own normal and two of them meeting at a crown leave a wedge of air
+    under the ridge that the eye finds the moment anything reflects in it.
+    """
+    lo = -0.30
+    v = [(x0, -half, -fall), (x0, 0.0, 0.0), (x0, half, -fall),
+         (x1, -half, -fall), (x1, 0.0, 0.0), (x1, half, -fall),
+         (x0, -half, lo), (x0, 0.0, lo), (x0, half, lo),
+         (x1, -half, lo), (x1, 0.0, lo), (x1, half, lo)]
+    f = [(0, 3, 4, 1), (1, 4, 5, 2),            # the two falls
+         (6, 7, 10, 9), (7, 8, 11, 10),         # the underside
+         (0, 1, 7, 6), (1, 2, 8, 7),            # the near end
+         (3, 9, 10, 4), (4, 10, 11, 5),         # the far end
+         (0, 6, 9, 3), (2, 5, 11, 8)]           # the two channels
+    out.append({"id": pid, "material": material, "kind": "mesh",
+                "verts": v, "faces": f, "note": note})
 
 
 def _figures(out):
@@ -1450,6 +1522,81 @@ def _vehicles(out):
         place(((-0.02, 0.46), (0.01, 0.46), (0.01, 0.46 + PLATE_H), (-0.02, 0.46 + PLATE_H)),
               -PLATE_W / 2.0, PLATE_W / 2.0, "veh%d_plate_front" % n, "plate_front",
               "the-white-half-of-the-same-law")
+
+
+#: THE PAVEMENT CLUTTER, AND NONE OF IT IS CHOSEN HERE.
+#:
+#: THE SPEC ALREADY PLACED IT, BY NAME, WITH MEASUREMENTS. held_props in
+#: production/specs/vignette-scene.json carries 36 placements of 18 meshes
+#: this repository already holds under ledger/Assets/Props/base-mesh - bins,
+#: crates, an A-board, a skip, pallets, a barrel, bollards, cones, a barrier -
+#: each with its own dims_m MEASURED off the shipped .glb's position
+#: accessors, its side of the street, its distance from the kerb face and its
+#: yaw. Every one of them is named by a line of the bill of materials. So
+#: this reads that file and places what it says; it invents no position, no
+#: size and no prop.
+#:
+#: WHY THE PAVEMENT BEING EMPTY MATTERS. The approved sheet's own fish shop
+#: trades onto its frontage - white crates stacked on the flags - and a
+#: parade with nothing on its pavement reads as a street that was built
+#: rather than one that is used. It is the cheapest remaining thing on the
+#: list that changes the picture, because the geometry is fetched rather than
+#: authored and the placements are already written down.
+#:
+#: NOTHING IS EVER SCALED. The spec's dims policy forbids inventing a size,
+#: and it says so in the one place it would be tempting: "a prop that is the
+#: wrong size is a prop to replace, not to stretch". A placement names where
+#: the prop's BOUNDING BOX CENTRE goes, because the source pivots are not all
+#: at the base - awning_02's origin is at its top-back, the posters are
+#: centred, the grate hangs below its own origin - so the loaded mesh's own
+#: measured bounds are what gets moved, never its pivot.
+PROP_DIR = "ledger/Assets/Props/base-mesh"
+
+#: Which of our materials a prop's named surface takes. The props arrive with
+#: whatever material their author gave them, which is a different palette
+#: from this street's; overriding keeps a bin in the same world as the kerb
+#: it stands on.
+PROP_SURFACE = {"metal": "steel_dark", "wood": "prop_timber",
+                "concrete": "stone", "plastic": "steel_dark"}
+
+
+def prop_placements(root, spec_rel=SPEC_REL):
+    """[(asset, x, y, z_rule, yaw, surface)], or an empty list and a reason.
+
+    ONLY THE ONES THAT STAND ON THE GROUND. The wall props (awnings, posters,
+    the cornices and consoles) belong to the frontage and are the fascia
+    package's business; the stacked ones are chimney pots and belong to the
+    roof. This is the pavement, which is the thing the pair says is empty.
+    """
+    path = os.path.join(root, spec_rel)
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            spec = json.load(fh)
+    except (OSError, ValueError) as exc:
+        return [], "spec-unreadable/%s" % type(exc).__name__
+    items = spec.get("held_props", {}).get("items", [])
+    out = []
+    for it in items:
+        if it.get("place") not in ("ground", "set_in"):
+            continue
+        side = 1.0 if it.get("side") == "east" else -1.0
+        # THE KERB FACE IS THE DATUM THE SPEC MEASURES FROM, at 3.0 m either
+        # side of the centre line, and POSITIVE IS TOWARDS THE BUILDING. A
+        # negative figure puts the prop out over the channel, which is where
+        # the gully grate belongs and nowhere else.
+        across = it.get("z_from_kerb_face_m", 0.0)
+        out.append({
+            "asset": it["asset"],
+            "x": float(it["x_m"]),
+            "y": side * (3.0 + float(across)),
+            "on_footway": across > 0.0,
+            "set_in": it.get("place") == "set_in",
+            "yaw": float(it.get("yaw_deg", 0.0)) + (180.0 if side > 0 else 0.0),
+            "surface": PROP_SURFACE.get(it.get("surface"), "steel_dark"),
+            "dims": it.get("dims_m"),
+            "bom": it.get("bom", ""),
+        })
+    return out, ""
 
 
 def plan_row(p, bays=None):
@@ -1838,54 +1985,55 @@ def street_cameras():
     drop = reach * math.tan(math.radians(HOOK_PITCH_DEG))
     return {
         "hook": {
-            # THE SHEET'S VIEWPOINT IS ON THE FAR PAVEMENT, NOT THE PARADE'S.
+            # THE CAMERA STANDS ON THE PARADE'S OWN PAVEMENT, which is
+            # where the scene file's cam_A put it all along.
             #
-            # cam_A, as the scene file writes it, stands on the EAST footway -
-            # the shops' own pavement - 0.875 m back from the kerb. Put the
-            # street beside the sheet and that is the mirror of the reference:
-            # the sheet's near wall on the left is a blank flank end a metre
-            # away and its shopfronts are eight to ten metres off on the
-            # RIGHT, running away down the frame. Ours had the parade a metre
-            # from the lens on the left, filling half the picture with one
-            # bay, and the plain row where the sheet puts its shops.
+            # IT WAS MOVED OFF IT AGAINST THE WRONG SHEET. The note that
+            # stood here argued, at length and quite carefully, that "the
+            # sheet's near wall on the left is a blank flank end a metre away
+            # and its shopfronts are eight to ten metres off on the RIGHT" -
+            # so the camera crossed to the far pavement to match. That is a
+            # true description of CODEX'S retired sheet and it is not true of
+            # the approved one. On the approved sheet the near-right is a big
+            # CLOSE shopfront, oxblood, lettered, filling the right third of
+            # the frame floor to eaves, with the parade running away from it
+            # down the picture; the far side is small and dim. Standing on
+            # the far pavement gave us the exact opposite - a blank flank a
+            # metre from the lens taking the left third, and the parade
+            # reduced to a sliver at the edge - and it did so for two weeks
+            # while measuring as though it were faithful.
             #
-            # Nobody could have said which way that gap ran, because the two
-            # pictures were not of the same thing. The eye height, the field
-            # and the four degree pitch are cam_A's and are unchanged; what
-            # moved is which side of the road it stands on, and it moved to
-            # match the picture this pair exists to be compared against.
-            # AND IT LOOKS DOWN THE STREET THE OTHER WAY, for the same reason.
-            # Standing on the far pavement was half of it; with the camera
-            # looking along +x the parade still came out on the LEFT, because
-            # a camera looking that way has the east side on its left hand.
-            # The sheet's shops are on the RIGHT, running away from a near
-            # flank wall. Turned to look back down the street, which puts them
-            # there and costs nothing: the street is symmetrical about its own
-            # length and the parade runs its whole length either way.
-            # INSIDE THE STREET, NOT PAST THE END OF IT. At x = 42 the camera
-            # stood level with the last bay of the west row and the whole left
-            # third of the frame was that row's blank gable end - no window,
-            # no door, nothing. The sheet's near-left is a FRONTAGE seen at a
-            # sharp angle, with its windows and its doorway running away. Two
-            # metres back inside the row puts ours there too.
+            # WHICH WAY IT LOOKS IS STILL DELIBERATE. From the east footway a
+            # camera looking along +x has the parade on its LEFT, because the
+            # right hand of a camera pointing that way is -y. Looking back
+            # down the street puts the shops on the RIGHT, where the sheet
+            # has them, and costs nothing: the parade runs the street's whole
+            # length either way.
             #
-            # AND 0.7 m FURTHER OUT FROM THE WALL. At 0.825 m from the
-            # frontage the near wall filled a third of the picture; the
-            # sheet's is nearer a metre and a half, which is also simply
-            # where a person walks - nobody walks with their shoulder on the
-            # brick.
-            # AND IT STANDS INSIDE THE ROW, WHICH IT NEVER ACTUALLY DID.
-            # The note above says "inside the street, not past the end of
-            # it" and then put the camera at x = 40 - and the blocks occupy
-            # 3.0 to 39.0, so it was standing a metre PAST the west row's
-            # end, looking at the blank gable its own note complains about.
-            # That gable was a third of the picture. Five metres back inside
-            # the row and the near-left is what the sheet's near-left is: a
-            # frontage seen at a sharp angle, with its windows and its
-            # doorway running away down the frame.
-            "loc": (33, -2.2, eye),
+            # 1.5 m OFF THE FRONTAGE, which is where a person walks. The
+            # footway is 2.0 m from the kerb face at 3.125 to the frontage at
+            # 5.125, so 3.6 stands in the middle of it rather than with a
+            # shoulder on the brick.
+            #
+            # AND INSIDE THE ROW, NOT PAST ITS END. The blocks occupy 3.0 to
+            # 39.0 and an earlier version of this stood at x = 40, a metre
+            # beyond them, looking at a gable end its own note complained
+            # about. 33 is six metres inside.
+            # AND IT WAS TRIED ON THE SHOPS' PAVEMENT AND IT IS WRONG, which
+            # is worth the four lines because the argument for it was good.
+            # cam_A names the east footway; the reasoning above says the
+            # sheet's near-right is a close shopfront; so the camera was moved
+            # to y = +3.6 and rendered. At 1.5 m off the frontage the parade
+            # becomes a wall of vertical stripes at an unreadable angle, a
+            # lighting column stands in the lens and a bin fills the bottom
+            # corner. MEASURING THE SHEET AGAIN SETTLES IT: its near-right
+            # building has the ROAD between it and the camera, eight to ten
+            # metres of it. Near-right and close are not the same thing, and
+            # the far pavement is where the picture is taken from.
+            "loc": (33.0, -2.2, eye),
             "look": (2.0, -2.2, eye - drop),
             "fov_v_deg": 60.0,
+            "res": HOOK_RES,
             "note": "the-sheet's-own-viewpoint/1.6m-just-off-the-west-kerb/"
                     "3-degrees-UP-measured-off-the-approved-sheet-not-cam_A's-4-down/"
                     "sky-21-percent-as-the-sheet-is",
@@ -2131,6 +2279,94 @@ def _materials(bpy, root=None):
     if notes:
         print("tfSurfaces " + " ".join(notes))
     return made
+
+
+def _place_props(bpy, root, mats):
+    """Load the spec's ground props and stand them where it says.
+
+    THE BOUNDS ARE MEASURED AFTER LOADING, NOT DERIVED FROM THE SPEC'S OWN
+    dims_m. Both numbers should agree - the spec measured them off the same
+    files - but the one that decides where a mesh ENDS UP has to be the mesh
+    in hand, or a re-export nobody told us about moves every prop a few
+    centimetres into the pavement and nothing says so. The spec's figure is
+    kept and COMPARED, and a disagreement is printed rather than smoothed.
+
+    IT FAILS OUT LOUD AND CARRIES ON. A missing importer or a missing file
+    leaves the pavement as empty as it was and says which; it never leaves a
+    prop floating, half-placed, or silently scaled.
+    """
+    placements, err = prop_placements(root)
+    if err:
+        print("tfProps status=NONE reason=%s" % err)
+        return
+    if not hasattr(bpy.ops, "import_scene") or not hasattr(bpy.ops.import_scene, "gltf"):
+        print("tfProps status=NONE reason=no-gltf-importer/"
+              "the-pavement-stays-empty-and-this-is-why")
+        return
+    notes, placed, refused = [], 0, 0
+    for n, p in enumerate(placements):
+        path = os.path.join(root, PROP_DIR, p["asset"] + ".glb")
+        if not os.path.exists(path):
+            notes.append("%s=missing" % p["asset"]); refused += 1
+            continue
+        before = set(bpy.data.objects)
+        try:
+            bpy.ops.import_scene.gltf(filepath=path)
+        except (RuntimeError, AttributeError) as exc:
+            notes.append("%s=import-failed/%s" % (p["asset"], type(exc).__name__))
+            refused += 1
+            continue
+        fresh = [o for o in bpy.data.objects if o not in before]
+        meshes = [o for o in fresh if o.type == "MESH"]
+        if not meshes:
+            notes.append("%s=no-mesh-in-file" % p["asset"]); refused += 1
+            for o in fresh:
+                bpy.data.objects.remove(o, do_unlink=True)
+            continue
+        # ONE EMPTY TO TURN AND MOVE THEM ALL, so a prop that arrives as
+        # several objects stays assembled. Parenting keeps the mesh data
+        # untouched, which is the dims policy's own requirement.
+        pivot = bpy.data.objects.new("prop%d_%s" % (n, p["asset"]), None)
+        bpy.context.scene.collection.objects.link(pivot)
+        lo = [1e9, 1e9, 1e9]; hi = [-1e9, -1e9, -1e9]
+        for o in meshes:
+            m = o.matrix_world
+            for c in o.bound_box:
+                # THE TRANSFORM BY HAND, because mathutils exists only inside
+                # Blender and this file's pure layer has to import without it.
+                for i in range(3):
+                    w = m[i][0] * c[0] + m[i][1] * c[1] + m[i][2] * c[2] + m[i][3]
+                    lo[i] = min(lo[i], w); hi[i] = max(hi[i], w)
+        centre = [(lo[i] + hi[i]) * 0.5 for i in range(3)]
+        height = hi[2] - lo[2]
+        # THE GROUND UNDER THIS PROP, which is the footway where it stands on
+        # the pavement and the road where it stands in the channel.
+        ground = THRESHOLD_ABOVE_CROWN_M if p["on_footway"] else 0.0
+        # A SET-IN PIECE IS THE LID OF ITS OWN DISH and sits flush in the
+        # running surface rather than on top of it; everything else stands.
+        target_z = ground - height * 0.5 if p["set_in"] else ground + height * 0.5
+        for o in fresh:
+            if o.parent is None:
+                o.parent = pivot
+                o.matrix_parent_inverse = pivot.matrix_world.inverted()
+        pivot.location = (p["x"] - centre[0], p["y"] - centre[1], target_z - centre[2])
+        pivot.rotation_euler = (0.0, 0.0, math.radians(p["yaw"]))
+        mat = mats.get(p["surface"])
+        if mat is not None:
+            for o in meshes:
+                o.data.materials.clear()
+                o.data.materials.append(mat)
+        # THE SPEC'S OWN MEASUREMENT, CHECKED RATHER THAN TRUSTED. dims_m is
+        # [along, up, across] in the glTF frame; the importer stands the file
+        # up, so the UP figure is the one that must match the height we just
+        # measured. A millimetre is noise; a centimetre is a re-export.
+        said = p.get("dims") or [0.0, 0.0, 0.0]
+        gap = abs(float(said[1]) - height) if len(said) > 1 else 0.0
+        notes.append("%s=%.3fm%s" % (p["asset"], height,
+                                     "/SPEC-SAYS-%.3f" % float(said[1]) if gap > 0.01 else ""))
+        placed += 1
+    print("tfProps placed=%d/%d refused=%d %s"
+          % (placed, len(placements), refused, " ".join(notes)))
 
 
 def _mesh_object(bpy, name, verts, faces, mat):
@@ -2423,6 +2659,11 @@ def build_and_render(args):
         built += 1
     if signs:
         print("tfSigns " + " ".join(signs))
+    if street:
+        # THE PAVEMENT'S OWN THINGS, AFTER THE GEOMETRY AND BEFORE THE LIGHT,
+        # because they are loaded from files rather than built from the piece
+        # list and the material they take has to exist first.
+        _place_props(bpy, args["root"], mats)
     if not street:
         _ground(bpy, p, mats)
     night = street and args["condition"] == "wet_night"
@@ -2479,7 +2720,7 @@ def build_and_render(args):
     except TypeError:
         scene.view_settings.view_transform = "Filmic"
     scene.view_settings.look = "AgX - Punchy" if not night else "None"
-    scene.view_settings.exposure = 0.6 if night else 0.35
+    scene.view_settings.exposure = 0.6 if night else 0.45
     # DEPTH BEYOND THIRTY METRES IS STILL OPEN, and this is what was tried.
     #
     # The scene file carries fog_density 0.012 with a max opacity of 0.1 for
@@ -2533,6 +2774,10 @@ def build_and_render(args):
     cams = street_cameras() if street else frame_cameras(p)
     wrote = 0
     for name in (tuple(cams.keys()) if street else FRAMES):
+        # A FRAME CAN ASK FOR ITS OWN SHAPE, and the hook frame does. See
+        # HOOK_RES for why a nearly square picture could never have matched
+        # a two-to-one one however the camera was moved.
+        scene.render.resolution_x, scene.render.resolution_y =             cams[name].get("res", AUTHORED_RES)
         cam = _camera(bpy, "cam_" + name, cams[name])
         scene.camera = cam
         out = os.path.join(args["out"],
@@ -3011,6 +3256,60 @@ def selftest():
                   any(b["material"] == "plate_rear" for b in veh))
             check("accept/and-a-white-front-one",
                   any(b["material"] == "plate_front" for b in veh))
+
+        # ---- THE ROAD'S CROWN, which is a DERIVED number and so is checked
+        # as one. The scene file gives half_width 3.0 and crossfall 0.025 and
+        # then states the consequence itself: 75 mm from crown to channel. If
+        # the street is ever widened and the crown does not follow, the wet
+        # frames go wrong in a way no texture can rescue - which is the
+        # carriageway line's own warning, in its own words.
+        road = [b for b in street if b["id"] == "carriageway"] if not serr else []
+        check("accept/the-road-is-a-crowned-solid-not-a-flat-slab", len(road) == 1,
+              "%d" % len(road))
+        if road:
+            zs = sorted(set(round(v[2], 4) for v in road[0]["verts"]))
+            crown, channel = max(zs), sorted(zs)[1]
+            check("accept/the-crown-stands-75mm-above-the-channel",
+                  abs((crown - channel) - 3.0 * 0.025) < 1e-6,
+                  "%.4f m" % (crown - channel))
+            check("accept/and-the-crown-is-the-road-datum-at-zero",
+                  abs(crown) < 1e-9, "%.4f" % crown)
+
+        # ---- THE PAVEMENT PROPS, read from the spec rather than chosen.
+        props, perr = prop_placements(ROOT)
+        check("accept/the-spec-still-places-pavement-props", not perr and len(props) >= 12,
+              perr or "%d" % len(props))
+        if props:
+            # ON A PAVEMENT OR IN A CHANNEL, NEVER IN A WALL OR A ROAD LANE.
+            # The frontages stand at 5.125 either side and the kerb face at
+            # 3.0, so every footway prop has to sit between them.
+            stray = ["%s@%.2f" % (q["asset"], q["y"]) for q in props
+                     if q["on_footway"] and not (3.0 < abs(q["y"]) < STREET_FRONTAGE_M)]
+            check("accept/every-footway-prop-is-on-a-footway", not stray, ",".join(stray))
+            offstreet = ["%s@%.1f" % (q["asset"], q["x"]) for q in props
+                         if not (-2.0 <= q["x"] <= 44.0)]
+            check("accept/and-none-of-them-is-off-the-end-of-the-street",
+                  not offstreet, ",".join(offstreet))
+            # THE MESHES ARE ACTUALLY HERE. A placement naming a file this
+            # repository does not hold is a prop that silently never appears,
+            # which is the failure the bill of materials keeps finding.
+            absent = [q["asset"] for q in props
+                      if not os.path.exists(os.path.join(ROOT, PROP_DIR, q["asset"] + ".glb"))]
+            check("accept/every-placed-prop-is-a-mesh-we-hold", not absent,
+                  ",".join(sorted(set(absent))))
+            # EVERY ONE IS NAMED BY A LINE OF THE BILL OF MATERIALS, which is
+            # this project's standing rule about fetched geometry.
+            unnamed = [q["asset"] for q in props if not q["bom"]]
+            check("accept/every-placed-prop-is-named-by-the-bill-of-materials",
+                  not unnamed, ",".join(sorted(set(unnamed))))
+            check("accept/the-gully-grate-is-the-one-piece-set-into-the-ground",
+                  [q["asset"] for q in props if q["set_in"]] == ["drainage_grate_01"],
+                  ",".join(q["asset"] for q in props if q["set_in"]))
+        # REJECTING: a spec that is not there places nothing and says so,
+        # rather than an empty pavement that looks deliberate.
+        _none, nerr = prop_placements(os.path.join(ROOT, "no-such-directory"))
+        check("reject/a-missing-spec-refuses-rather-than-emptying-the-pavement",
+              bool(nerr) and _none == [], nerr)
 
         checks = cross_check(p, ROOT)
         got = [c for c in checks if c[2] is not None]

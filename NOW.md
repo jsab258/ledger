@@ -62,25 +62,41 @@ nothing.
 - [x] THE WET ROAD ACTUALLY REFLECTS. EEVEE ships with raytracing off, so
       nothing in this street reflected anything and the roughness curve had
       nothing to work with.
-- [ ] THE FRAME IS HALF FIXED. Sky is 24% against the sheet's 21%, the
-      camera stands inside the row instead of a metre past its end, and it
-      looks three degrees UP rather than four down. What is still wrong:
-      the near-left is a BLANK FLANK with no shopfront on it and it takes
-      the left third, where the sheet's near-left is a shop; and the parade
-      is small and far where the sheet's near building is close and large.
-- [ ] COLOUR, the saturation half. 9.5% of our pixels carry real colour
-      against the sheet's 25.8%. It is not a material fault - the parade's
-      brick now measures within five per cent of the reference - it is that
-      the sheet's frame is FULL of close painted shopfront and ours is
-      mostly road, sky and a blank wall. It follows the frame item above.
-- [ ] THE ROAD READS DRY AND WIDE. Right value now, but flat: no wheel
-      tracks, no standing water, no reflection worth the name near the
-      camera.
-- [ ] THE FIGURES READ AS BLACK POSTS, not people, at this distance.
-- [ ] NO CLUTTER on the pavement. The scene spec already places bins,
-      crates, an A-board, a skip, pallets, bollards and cones BY NAME with
-      measured dimensions - 36 placements of meshes we already hold.
-- [ ] THE ROOFLINE IS PLAIN: no aerials, and the stacks read thin.
+- [x] THE FRAME IS THE SHEET'S OWN SHAPE, and that was the structural one.
+      The sheet's street panel is 617x326, an aspect of 1.89; ours was
+      1400x1100, 1.27, very nearly square. At a 60 degree vertical field
+      that is a horizontal half-field of 47.5 degrees against 36.2, and it
+      decides how far down the street the parade has to be before it enters
+      the frame at all: 6.7 m against 10.0. No amount of moving the camera
+      could close that, and two hours went on trying to.
+- [x] THE PAVEMENT IS USED. Fourteen props - bins, crates, a skip, pallets,
+      a barrel, bollards, cones, a barrier, an A-board, the gully grate -
+      loaded from meshes we already hold and placed where the scene spec
+      already said, every measured height agreeing with the spec's own.
+- [x] THE ROAD IS CROWNED. The scene file has carried a 1-in-40 crossfall
+      since it was written, with its own warning that a flat carriageway
+      puts the wet-condition water everywhere instead of at the kerb. It
+      was one flat box. 75 mm from crown to channel, derived not typed.
+- [x] WARMTH IS MATCHED: +18.9 against the sheet's +18.5, from +0.7 this
+      morning.
+- [ ] COLOUR, THE SATURATION HALF, IS THE LAST BIG ONE AND IT IS CONTENT.
+      9.6% of our pixels carry real colour against the sheet's 25.8%. It
+      is not tone - warmth matches and the parade's brick is within five
+      per cent of the reference - and it is not fixable by tone: AgX trades
+      saturation for brightness, so every lift of the exposure costs colour
+      back. The sheet gets its colour from PAINTED SHOPFRONTS filling the
+      frame. Ours are far off down the right while the near-left third is a
+      PLAIN TERRACE with no shop on it. That is where the missing colour
+      lives and it is a question about what this street is, not how it is lit.
+- [ ] MEAN 106 AGAINST 120 and brightest-five-per-cent 202 against 229.
+      Close, and coupled to the item above by the same trade.
+- [ ] THE FIGURES READ AS BLACK POSTS. On the sheet a figure is a dark
+      silhouette against a LIGHT pavement and reads because its outline is
+      a person; ours are three stacked boxes.
+- [ ] THE ROOFLINE IS PLAIN. The spec fully dimensions a TV aerial -
+      D4_tv_aerial, on stacks 1 and 3, a 1.5 m mast, a 1.2 m boom, ten
+      elements at 0.27 m - and calls it "the skyline marker of the era".
+      None of it is built.
 - [ ] DEPTH BEYOND THIRTY METRES, parked. Two failed attempts are written
       into the recipe and the next one does not start from scratch.
 
