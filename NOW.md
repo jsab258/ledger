@@ -687,50 +687,8 @@ way it is ruled; the camera waits for him.
 
 ## Where things stand
 
-THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
-had never been checked against the research or canon; checked now, four things
-on it contradict a ruling - Mickey's drawn as a pub against D19, not one metal
-shopfront against D01/D06/R05, canal narrowboats in a coastal port against
-D04/R08, and Mickey's sharing a corner building with the fish shop against
-MICKEYS.md. Three of the four were COMMANDED: the approved sheet's prompt is
-Codex's retired prompt, translated, and it asked for a pub and for unlettered
-painted timber fronts.
-
-JAFAR STOPPED THE PALETTE WORK AND SET A NEW ORDER: regenerate the sheet
-first, from the research and canon, at a resolution where a shopfront is
-evidence; then derive the lens from it; then re-close colour; then rework the
-shopfronts. Pass 1 of three is generating as this was written.
-
-WHAT THE STREET GAINED TODAY ANYWAY: the far end, which was sky and is now the
-basin end the world already said was there - a quay apron, nine dock sheds
-gable-on at two ranges and a crane, giving the aerial falloff the sheet has
-and we had none of (75.6 and 0.353 against its 78.7 and 0.389). One metal
-shopfront on the fish bay, whose colour the recipe's own check chose after the
-plausible one came within 0.02 of the brick. And the tying frame, looked at
-for the first time with everything in place.
-
-WHAT IS SUSPECT: everything derived from the retired sheet, listed in
-production/reference/retired-sheet-inheritance.md - the whole cam_hook row in
-the governing spec including its 39 degree field, the lighting column's traced
-ratios, GOVERNS.md's seventeen rows, and the prompt itself.
-
-WHAT WAITS ON JAFAR, and the first one is the big one:
-
-WHICH WAY THE PAIR IS SHOT. The hook camera looks the OPPOSITE WAY from the
-sheet it is defined to reproduce. The approved sheet's prompt says "camera at
-1.6m standing at SOUTH END LOOKING NORTH"; ours stands at the north end and
-looks south. Both put the shops on the right, which is why nothing gave it
-away, but the sheet's far end is the inland rise and ours is the basin. So
-today's backdrop is right for our camera and wrong for the sheet. Either the
-camera turns, which costs this week's composition work and the backdrop, or
-the new sheet is prompted for a south view. Not a thing to settle by picking.
-
-THEN: the trading name and the fleet outside the cab office; and his choice
-between the regenerated sheet and the old one once pass 3 exists.
-
-THE TOKEN ARRIVED and the probe's red is diagnosed and fixed: the check's own
-selftest was failing on the runner because its fixture stopped being the only
-control line in the file. Rotate the token when this is done - it came through
-chat and is in a transcript.
-
-llama.cpp Vulkan is next sitting's, as he ruled.
+1. The new Hook sheet is the reference, and the Blender street is matched to it - lens, colour, composition - then detail by detail: the parade to the 1989 photographs, glass, bricks, arches, pots, flags, nets, rooms behind the shop windows, the street running on to the rise.
+2. Stage 3's gates are proven on the runner: the arrest from live play, rumours surviving save, restart and reload with the unseen crime still holding nothing, and a crime reaching a third resident inside a week.
+3. The two lanes build the street as mirror images (decision 5), and the game engine's street is far behind the look; carrying it over has started with brick at its measured size.
+4. Waiting on Jafar: decision 2 (rumour reach), 4 (the small model: 33 of 42 right, 8 wrong but tidy), 5 (which way round the street is).
+5. Set aside after two tries: the wet shine on the flags and the far hillside's crowding; the four shop-room pictures are review=pending.
