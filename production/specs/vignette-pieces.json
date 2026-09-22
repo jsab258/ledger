@@ -15,7 +15,7 @@
 "window_practicals":{"colour_space":"gamma-sRGB","r":1,"g":0.86,"b":0.62,"shop_intensity":1.6,"shop_range_m":7,"flat_intensity":0.8,"flat_range_m":5,"shop_cards":9,"flat_cards":0,"lit_bays":[0,2,5],"lit_names":["east_parade_interior0","east_parade_interior2","east_parade_interior5","west_north_interior0","west_north_interior2"],"flat_lit_names":[],"placement":"one-point-light-0.4m-above-the-centre-of-each-lit_names-piece/shadows-off"},
 "decals":{"strength_ground":0.8,"strength_wall":0.7,"blend":"card=opaque-picture/multiply=darkens-what-is-under-it","crop":"in-the-asset-string-after-a-#/u0,v0,u1,v1/v-from-the-bottom"},
 "sun":{"elevation_deg":36,"azimuth_deg":205},
-"surface_tiling":{"default_m":3,"per_surface_m":{"asphalt":3,"brick_grey":3.5,"brick_red":3.5,"concrete":3,"glass":3,"interior":3,"kerb":1.5,"metal":1,"plaster":1,"roof":2,"sidewalk":3,"window":1,"wood":1.5}},
+"surface_tiling":{"default_m":3,"per_surface_m":{"asphalt":3,"brick_grey":0.55,"brick_red":0.55,"concrete":3,"glass":3,"interior":3,"kerb":1.5,"metal":1,"plaster":1,"roof":2,"sidewalk":3,"window":1,"wood":1.5}},
 "cameras":[
 {"id":"cam_A","x_m":4,"z_m":4,"eye_height_above_ground_m":1.6,"ground_found":true,"ground_y_m":0.071875,"ground_edge":"east_footway","yaw_deg":0,"pitch_deg":4,"fov_vertical_deg":60},
 {"id":"cam_B","x_m":21,"z_m":-4,"eye_height_above_ground_m":1.6,"ground_found":true,"ground_y_m":0.071875,"ground_edge":"west_footway","yaw_deg":90,"pitch_deg":-3,"fov_vertical_deg":60},

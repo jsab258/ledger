@@ -324,11 +324,45 @@ namespace LedgerVignette
 		// the run and the condition the number was read off. OPTIONAL, and a
 		// file that does not declare it prints the words rather than a blank.
 		std::string ExposurePinProvenance;
+		// THE FILE'S OWN METRES PER TILE, per surface, 23 September. The
+		// piece list has always carried surface_tiling and this reader
+		// ignored it, so every surface in Unreal tiled at one 2 m convention
+		// while Unity read the table: two engines, two answers to one
+		// question the file exists to settle. 0 means the file did not say.
+		double TilingDefaultM;
+		std::map<std::string, double> TilingM;
 		Spec() : HeaderPieces(0), HeaderMultiRotation(-1),
 		         SunElevationDeg(0), SunAzimuthDeg(0),
 		         AheadOfRun("none"), AheadPiecesThen(0),
-		         ExposurePinProvenance("nothing-declared") {}
+		         ExposurePinProvenance("nothing-declared"), TilingDefaultM(0.0) {}
 	};
+
+	// HOW MANY METRES ONE TILE COVERS FOR THIS SURFACE: the file's per-surface
+	// figure, else its default, else the caller's convention - so a piece
+	// list from before the table still renders as it did.
+	inline double MetresPerTileFor(const Spec& S, const std::string& Surface, double Convention)
+	{
+		std::map<std::string, double>::const_iterator It = S.TilingM.find(Surface);
+		if (It != S.TilingM.end() && It->second > 0.0) { return It->second; }
+		if (S.TilingDefaultM > 0.0) { return S.TilingDefaultM; }
+		return Convention;
+	}
+
+	// WHERE THE TILING CAME FROM, on the materials line: whether the file
+	// carried a table, its default, and the brick figures, which are the ones
+	// the parade's look turns on. metresPerTile on the same line is the
+	// convention used only where the file is silent.
+	inline std::string TilingSegment(const Spec& S)
+	{
+		char Buf[160];
+		std::map<std::string, double>::const_iterator R = S.TilingM.find("brick_red");
+		std::map<std::string, double>::const_iterator G = S.TilingM.find("brick_grey");
+		std::snprintf(Buf, sizeof(Buf),
+		              " tilingFromFile=%s tilingDefaultM=%.2f tilingSurfaces=%d brickRedM=%.2f brickGreyM=%.2f",
+		              S.TilingM.empty() ? "no" : "yes", S.TilingDefaultM, (int)S.TilingM.size(),
+		              R == S.TilingM.end() ? 0.0 : R->second, G == S.TilingM.end() ? 0.0 : G->second);
+		return std::string(Buf);
+	}
 
 	// THE SCHEMA THIS READER UNDERSTANDS. A consumer that does not
 	// recognise the string REFUSES rather than guesses, which is the same
@@ -417,6 +451,25 @@ namespace LedgerVignette
 			if (Prov->Type == T_STR && !Prov->Str.empty())
 			{
 				Out.ExposurePinProvenance = NoSpaces(Prov->Str);
+			}
+		}
+		// SURFACE TILING, fail-soft like the provenance: a file without it
+		// renders at the caller's convention, as every file did until now.
+		if (const Value* Til = Root.Find("surface_tiling"))
+		{
+			if (const Value* Def = Til->Find("default_m"))
+			{
+				if (Def->Type == T_NUM) { Out.TilingDefaultM = Def->Num; }
+			}
+			if (const Value* Per = Til->Find("per_surface_m"))
+			{
+				for (size_t I = 0; I < Per->Obj.size(); ++I)
+				{
+					if (Per->Obj[I].second.Type == T_NUM)
+					{
+						Out.TilingM[Per->Obj[I].first] = Per->Obj[I].second.Num;
+					}
+				}
 			}
 		}
 		const Value* Ahead = Root.Find("ahead_of_unity_run");

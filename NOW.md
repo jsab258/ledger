@@ -671,6 +671,20 @@ overnight list had only its Overnight section left. Visual first, as ruled.
       footways and two backdrop terraces now run on to the hill, named as
       backdrop, for stage 6 to replace.
 
+## 12. The look into the game engine, starting where it cannot wait
+
+Started 23 September under decision 5's recommendation (a) - the game
+engine's way round is the true one - because materials carry over whichever
+way it is ruled; the camera waits for him.
+
+- [ ] BRICK AT ITS MEASURED SIZE IN THE GAME ENGINE. Unreal tiled every
+      surface at one 2 m convention and ignored the file's own table, so its
+      parade's bricks came out three and a half times their size and read
+      as pale blocks of stone. It reads the table now, and the table's brick
+      is the measured 0.55 m (was the 3.5 m placeholder). Proven when a
+      probe run prints tilingFromFile=yes brickRedM=0.55 and its frame shows
+      coursed brick.
+
 ## Where things stand
 
 THE SHEET ITSELF WAS THE PROBLEM, and that is what the sitting turns on. It
