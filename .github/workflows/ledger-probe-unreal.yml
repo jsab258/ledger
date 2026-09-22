@@ -2426,7 +2426,20 @@ jobs:
             exit 1
           fi
           echo "crime-verdict python=$PY"
-          SHORT="$(git rev-parse HEAD | cut -c1-7)"
+          # THE RUN'S OWN COMMIT, NOT WHATEVER HEAD IS NOW - and this is the
+          # SECOND time that sentence has had to be written today. The fix
+          # went into the archivist step above on 22 September and was never
+          # carried down here, six hundred lines below it, so this check has
+          # refused every verdict since: it runs AFTER the archivist, the
+          # archivist does `git pull --rebase` and commits, and by the time
+          # this line runs HEAD is the EVIDENCE commit. Run 35748354203 and
+          # run 35749678500 both went red here with a perfectly good crime
+          # verdict sitting in the repository, because the check was handed
+          # the wrong needle and correctly said it could not find it.
+          # GITHUB_SHA is the commit the workflow was triggered on and does
+          # not move underneath anybody.
+          SHORT="$(echo "${GITHUB_SHA:-}" | cut -c1-7)"
+          if [ -z "$SHORT" ]; then SHORT="$(git rev-parse HEAD | cut -c1-7)"; fi
           "$PY" tools/crime-verdict-check.py --selftest || exit 1
           "$PY" tools/crime-verdict-check.py production/d1-probe/ue-crime-verdict.txt --sha "$SHORT"
 
