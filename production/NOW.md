@@ -136,6 +136,11 @@ after the instant Blender started; 5 cases tested in pwsh here, accepting first,
 the re-render case passing where the old condition fails. A dispatch went out
 to prove it green on his PC.
 
+THE LANE IS GREEN AGAIN AND IT WAS PROVED, NOT ASSUMED: run 35671062947 on
+b02e918d, every step green including the gate, on a re-render with four of the
+recipe's PNGs already on disk. Its frames are pixel-identical to attempt 4's,
+0 of 1,760,000 differing, so the badge changed and the picture did not.
+
 THE SILHOUETTE IS BLOCKED ON THE REFERENCE, NOT ON THE RECIPE, and that is
 queue 421. The Hook sheet's lamp is 25px wide on a 4px pole; three traces of
 the same crop give 2.27:1, 3.3:1 and 3.0:1, because the head is 8 rows tall at

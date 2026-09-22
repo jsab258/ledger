@@ -502,6 +502,14 @@ are 6.0 pole-diameters wide and 2.0 tall; attempt 4 is 6.80 and 2.98. The width
 is 13 percent over and the height 49 percent over, and neither figure is worth
 tuning against until the reference can resolve it.
 
+THE LANE FIX IS PROVEN ON THE MACHINE AND NOT ONLY IN A FIXTURE. Run
+35671062947 on studio sha b02e918d, committed at a8850829: every step green
+including the gate, on a RE-RENDER with four of this recipe's PNGs already on
+disk, which is the exact case that went red four times. The frames it wrote are
+PIXEL-IDENTICAL to attempt 4's, 0 of 1,760,000 pixels differing in either
+overcast shot at a maxChannelDelta of 0/255, so this run changed the badge and
+nothing else. The geometry question is untouched and still Jafar's.
+
 batch: batchId=b006-lighting-column-01 line=art-lighting-column status=OPEN
   opened=2026-09-21T20:02:52Z closed=not-yet
 unit: deliverables=1/fixed-at-open/list=production/queue/419-the-lighting-column-is-authored-and-unrun-blender-is-the-next-station.md
