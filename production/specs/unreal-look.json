@@ -32,9 +32,9 @@
       2.0
     ],
     "paving": [
-      0.77,
-      0.62,
-      0.45
+      0.72,
+      0.56,
+      0.3
     ],
     "interior_lit": [
       0.05,
@@ -49,10 +49,8 @@
   "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
   "glass_opacity": 0.25,
   "glass_roughness": 0.05,
-  "wet_floor": {
-    "paving": 0.25
-  },
-  "wet_floor_note": "A wet surface's roughness floor in this engine by base material, where tuning moves it off the recipe's (road 0.05, paving 0.46, kerb 0.40). The approved sheet's flags reflect the shopfront; the recipe's 0.46 was set against an older sheet whose flags were dull.",
+  "wet_floor": {},
+  "wet_floor_note": "23 September, after two tries in Unreal and the recipe's own two in Blender: the flags take the recipe's wet roughness and no floor of their own. 0.25 mirrored the sky and read 1.6-2.5x the sheet and blue; 0.40 still 1.05/1.15/1.37. The sheet's shine is the shopfront reflected close to the wall, which a lower roughness does not give. SET ASIDE. The paving gain cooled to 0.72/0.56/0.30 instead: the near footway 1.04/1.04/1.17 of the sheet.",
   "street_in_play": true,
   "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step.",
   "fog_cap_gain_day": 3.0,

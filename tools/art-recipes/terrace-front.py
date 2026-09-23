@@ -620,7 +620,7 @@ SURFACE_OF = {
     # Both refit surfaces are SMOOTH, so they take the plaster map for its
     # relief and not the timber one: metal has no grain and neither has a
     # glazed tile.
-    "frame_metal":  ("plaster", 0.4),
+    "frame_metal":  (None, 0.0),    # flat, 23 September, as the paint: the plaster read as stucco in Unreal
     # GLAZED, so flat as gloss paint is (23 September): the plaster relief
     # read in Unreal as a speckled granite plinth under Mickey's tiles.
     "tile_stall":   (None, 0.0),

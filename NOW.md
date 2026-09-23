@@ -710,7 +710,7 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 - [x] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped: tools/hook-pair.py
       flips the sheet by default from 23 September (--sheet-as-drawn for a
       Blender sketch).
-- [ ] THE LOOK, DEVELOPED IN UNREAL against the sheet from its viewpoint -
+- [x] THE LOOK, DEVELOPED IN UNREAL against the sheet from its viewpoint -
       ruled 23 September as a change of lanes: Blender is for shapes and
       layout only, and its numbers are targets, reached again here. The
       materials from the same textures (bricks in their joints, flags, tile,
@@ -740,8 +740,16 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       it out (52c13834; PROVEN on the runner, f94939c2: cam_A night 16.6,
       all six hook dusk takes 23.1, none black). The cars turned to face the camera, in the
       sheet's paints (412c0e33). The playable street holds the day's
-      exposure (d97e12b5, not compiled here). NEXT: the footway, then the
-      final day pair from a run with all of it.
+      exposure (d97e12b5, proven). The footway: the wet floor SET ASIDE
+      after two tries, the tint cooled instead. DONE 23 Sep, the final day
+      pair production/art/compare/hook-unreal-2026-09-23/pair-03-day.png,
+      ours/sheet in linear: sky 1.04/1.02/1.01, brick 1.11/1.13/1.00, road
+      0.96/0.97/0.90, footway 1.04/1.04/1.17, far end 1.00/1.02/0.94, shop
+      0.91/1.04/1.00. Whole frame against the NEW sheet (re-taken, as the
+      retired-sheet list asked): mean 118.7 v 130.9 (our left third is the
+      tall west block where the sheet has sky - decision 8), highlights
+      247.8 v 248.5, warmth +16.2 v +14.4, colour 44% v 36%. What differs
+      now is shape (the west side) and people (stage 2).
 - [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
       the same way. DONE: the far hillside thinned with grass and 64 trees
       (08b0db2e, proven in Unreal); the street bends away at a terrace that
