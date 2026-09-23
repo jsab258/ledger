@@ -1224,8 +1224,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. Presentable is met on all five, my judgement put to Jafar: heads turn (frame) and the street's sound is positional (a recording, quiet at 40 m); the PS5 corner's first half is reported; its content half is approved and its four scanned surfaces are held (Poly Haven CC0), and the Nano test's downloads are approved.
-2. The plan is ROADMAP.md's sorted checklist (966 items, G0-G12, J01-J03), counted and guarded by tools/stage-check.py; 12 items are done with their evidence linked, and the count heads FOR-JAFAR.md.
-3. The slice has a player that stands and walks over the shoulder (frames), people solid under -LedgerSlice (its frames due), a fixed-step clock proven frame-rate independent, the cast readable in the engine, and the talk helper answering in character offline and on the paid model.
-4. Broken or unproven: the navigation mesh was not made (its log lines ride the next slice walk); the walkers are written and stashed; the AI tester's launcher is written and not yet run, its hands (a paid computer-use model) waiting on Jafar.
-5. Next, in Jafar's order: the PS5 corner's content half, now approved (CC0 scanned materials, one MetaHuman after his Epic sign-in, beside his Kingdom Come Deliverance 2 frame) and the Nano listening test; then the slice - the navigation mesh, the walkers with the extras' bodies, talking in the game, the scripted loop run, and the first AI tester run with Claude's computer control.
+1. Overnight 23-24 Sep: the PS5 corner answered (scans help brick and paint, now street-wide; the gap to KCD2 is shape and set dressing); navigation works; Nano timed on the card (80 fps at 3440x1440 half-res with it running; Nano 1.3 s per s of speech then); MH_Test assembled, in the corner, with a retargeted idle.
+2. Stage 1 at 16 of 47 (stage-check); tonight's visual steps in the queue: whole-street bevels and sooty brick (landed), stains as decals (staging fixed), the hill's fifth try, two crates and a bin; the per-run performance check (capture wait fixed).
+3. Tomorrow's measurement sitting is ready and not started: production/sittings/2026-09-24-three-facades.md, tools/facade-drawing.py, tools/facade-pair.py, production/specs/facade-shots.json (twelve frames proven).
+4. Waiting on Jafar: dressing MH_Test (a/b), where MetaHuman files live, the three voice decisions, what 60 fps at his monitor allows. C: is 98% full (19.7 GB).
+5. Next: judge the queued frames (hill, stains, idle, clutter, perf) and tick what they earn; then stage 1 on - A22.06 edges, A22.11 dirt, A23.16 distance, A08.07 hair (the MetaHuman's).
