@@ -1088,6 +1088,14 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       sitting that changed the slice, findings to FOR-JAFAR worst first,
       bugs onto the checklist. The slice is not done until the scripted run
       passes and the tester has played it once with nothing serious open.
+      THE SCRIPTED LOOP'S SHAPE (J01, planned 23 Sep): the crime probe's run
+      already walks, commits the crime by a key press, has it seen and has
+      it retold to someone who did not see it; the loop run is that run
+      under -LedgerSlice with one beat added before the crime - the player
+      walks to the fish market's pavement at noon and says a line to Sam
+      through the helper (offline on the build machine, so the brush-off
+      proves the path without a paid call) - and its verdict names each of
+      the five beats with its evidence.
 - [x] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
       research/baseline-features onto main. DONE 23 Sep (e1e81fed).
 - [ ] THE CHECKLIST FOLDED, SORTED AS JAFAR RULED (23 Sep, evening; the hold
