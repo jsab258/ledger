@@ -2999,6 +2999,20 @@ def _north_rise(out):
         # next wall: what shows between the houses now there are gaps.
         _box(out, "backdrop_rise_ground_%d" % t, "grass", x0, x0 + RISE_TIER_STEP_X,
              RISE_Y_SPAN[0], RISE_Y_SPAN[1], zb - 0.3, zb, "the-tier's-own-ground")
+        # TREES ALONG THE TIER'S FRONT EDGE, 24 September (attempt five, its
+        # second pass): in Unreal the stepped terraces read as real housing but
+        # the hill became a wall of it, the garden trees hidden behind the
+        # tier in front. The sheet's hillside has green among its houses, so
+        # each tier carries clumps along its front, between its wall's edge
+        # and its houses, where a slope's gardens and verges are.
+        if t > 0:
+            ty = RISE_Y_SPAN[0] + rnd.uniform(0.0, 8.0)
+            while ty < RISE_Y_SPAN[1] - 2.0:
+                if rnd.random() < 0.55:
+                    r = rnd.uniform(2.4, 4.2)
+                    _tree(out, "backdrop_rise_%d_front_tree_%d" % (t, int(ty)),
+                          rnd.uniform(x0 + 0.8, x0 + RISE_SETBACK - 0.3), ty, zb, r * 2.6, rnd)
+                ty += rnd.uniform(5.0, 12.0)
         y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
         n = 0
         row_a, row_b = xa, xb
