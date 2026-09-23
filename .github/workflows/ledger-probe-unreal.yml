@@ -1434,7 +1434,13 @@ jobs:
             }
           }
 
+          # THE WALK IS HEARD, 23 September: the engine silences a game whose
+          # window does not have focus (BaseEngine.ini, UnfocusedVolumeMultiplier
+          # 0.0), and an off-screen run never has it, so its first recording
+          # was 8 s of silence. Raised for these runs only; a player's game
+          # still falls quiet when they switch away.
           $walkArgs = @("-LedgerWalk", "-LedgerCommit=$sha", "-RenderOffScreen",
+                        "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0",
                         "-ResX=960", "-ResY=540", "-windowed",
                         "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
           $t0 = Get-Date
@@ -1737,6 +1743,7 @@ jobs:
             }
           }
           $sliceArgs = @("-LedgerWalk", "-LedgerSlice", "-LedgerCommit=$($env:SHOT_SHA)", "-RenderOffScreen",
+                         "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0",
                          "-ResX=960", "-ResY=540", "-windowed",
                          "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
           $p = Start-Process -FilePath $exe -ArgumentList $sliceArgs -PassThru -NoNewWindow `
