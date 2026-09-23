@@ -27,6 +27,7 @@
 //       ue-probe/Source/LedgerProbe/Private/Perception.cpp
 //   /tmp/core-port-test ue-probe/perception-golden.txt
 #include "CoreGolden.h"
+#include "FixedClock.h"
 
 #include <cstdio>
 #include <fstream>
@@ -246,6 +247,42 @@ int main(int argc, char** argv)
 		}
 		std::printf("    scenarios=%d empty=%d/%d\n", Named, Empty, Named);
 		Loud(Named > 0 && Empty == 0, "every named scenario builds and reads back");
+	}
+
+	{
+		// THE SIMULATION RUNS THE SAME AT ANY FRAME RATE (Jafar, 23 September,
+		// the slice's definition of done). A toy world stepped by the fixed
+		// clock - a position integrated with a speed that depends on the
+		// position, so any difference in step length or count shows - fed
+		// ten seconds at 60, 20 and 144 frames a second and a stuttering
+		// mixture, must end in the same state to the last bit.
+		struct Toy { double X = 0.0, V = 1.0; void Step(double Dt) { V += (3.0 - X) * 0.5 * Dt; X += V * Dt; } };
+		auto RunAt = [](const std::vector<double>& Frames, LedgerSim::FixedClock& C) {
+			Toy T;
+			for (double F : Frames) { for (int I = C.Advance(F); I > 0; --I) { T.Step(C.StepSeconds); } }
+			return T;
+		};
+		auto Even = [](double Fps) { return std::vector<double>((size_t)(10.0 * Fps), 1.0 / Fps); };
+		std::vector<double> Stutter;
+		for (int I = 0; I < 400; ++I) { Stutter.push_back(I % 7 == 0 ? 0.061 : (I % 3 == 0 ? 0.004 : 0.0213)); }
+		double Sum = 0.0;
+		for (double F : Stutter) { Sum += F; }
+		Stutter.push_back(10.0 - Sum > 0.0 ? 10.0 - Sum : 0.0);
+		LedgerSim::FixedClock C60(0.1), C20(0.1), C144(0.1), CSt(0.1, 1000);
+		const Toy A = RunAt(Even(60.0), C60), B = RunAt(Even(20.0), C20), D = RunAt(Even(144.0), C144), E = RunAt(Stutter, CSt);
+		std::printf("    fixedClock steps=%lld/%lld/%lld/%lld x=%.17g/%.17g/%.17g/%.17g\n",
+		            C60.StepsTaken, C20.StepsTaken, C144.StepsTaken, CSt.StepsTaken, A.X, B.X, D.X, E.X);
+		Loud(C60.StepsTaken == 100 && C20.StepsTaken == 100 && C144.StepsTaken == 100 && CSt.StepsTaken == 100,
+		     "ten seconds is a hundred fixed steps at 60, 20 and 144 frames a second and through a stutter");
+		Loud(A.X == B.X && A.X == D.X && A.X == E.X && A.V == B.V && A.V == D.V && A.V == E.V,
+		     "and the world after them is the same to the last bit whatever the frame rate");
+		LedgerSim::FixedClock H(0.1, 8);
+		const int Hitch = H.Advance(5.0);
+		Loud(Hitch == 8 && H.StepsDropped == 42 && H.Alpha() < 1.0,
+		     "a five-second hitch runs at most eight steps and counts the forty-two it dropped");
+		LedgerSim::FixedClock Z(0.1);
+		Loud(Z.Advance(0.0) == 0 && Z.Advance(-1.0) == 0 && Z.Accumulated == 0.0,
+		     "a zero or negative frame steps nothing and loses nothing");
 	}
 
 	std::printf("core-port-test: %d check(s), %d failure(s) over %ld golden row(s), "
