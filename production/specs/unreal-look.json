@@ -2,8 +2,18 @@
   "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
   "sky_seen_gain": 1.0,
   "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street. The dome's luminance is sky_intensity times this; the sky light still lights at sky_intensity. 1.0 was the probe's constant.",
-  "street_glow_gain": 0.10,
+  "street_glow_gain": 0.1,
   "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
-  "fog_day_colour": [0.55, 0.58, 0.62],
-  "fog_height_falloff": 0.02
+  "fog_day_colour": [
+    0.55,
+    0.58,
+    0.62
+  ],
+  "fog_height_falloff": 0.02,
+  "wet_film_from": 0.5,
+  "wet_film_from_note": "From this wetness the road, the paving and the kerb lose their relief map: the pack's relief is strong and scattered every reflection a wet road shows (23 September, found by rendering the road without it: it mirrored the facades and the sky as the sheet's does). The day is 0.6 and the night 0.9, so both are films of water; 2.0 would mean never.",
+  "picture_room_gain": 1.0,
+  "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
+  "glass_see_through": true,
+  "glass_see_through_note": "The display glass is left out, because the base material cannot be see-through and an opaque pane hid the lit rooms behind it. The verdict line says so."
 }

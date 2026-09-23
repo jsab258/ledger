@@ -996,6 +996,11 @@ namespace
 	// and the wet were last driven for, so a settling condition that
 	// re-enters ApplyCondition every tick writes them once.
 	TArray<UMaterialInstanceDynamic*> GStreetMids;
+	// EACH MESH'S OWN RELIEF MAP, kept so a condition dry enough to show it
+	// can put it back, and the flat one a film of water leaves.
+	TArray<UTexture2D*> GStreetNormals;
+	UTexture2D* GStreetFlatNormal = nullptr;
+	int32 GStreetGlassHidden = 0, GStreetFilm = 0;
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -1593,6 +1598,11 @@ namespace
 #endif
 			GStreetActors[(int32)I] = A;
 			++GStreetLoaded;
+			if (GLook.bGlassSeeThrough && Rw.Base == "glass")
+			{
+				A->SetActorHiddenInGame(true);
+				++GStreetGlassHidden;
+			}
 		}
 		if (GStreetLoaded == 0)
 		{
@@ -1624,11 +1634,14 @@ namespace
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
 			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetDrawn, (int)GStreetGlowing, (int)GStreetWet,
 			GLook.GlowGain);
-		char LookBuf[200];
+		char LookBuf[360];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/4 lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f",
+			" lookFrom=%s lookRead=%d/7 lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookWetFilmFrom=%.2f lookRoomGain=%.2f streetFilm=%d streetGlassHidden=%d/see-through-%s",
 			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.SkySeenGain,
-			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff);
+			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
+			GLook.WetFilmFrom, GLook.RoomGain, (int)GStreetFilm, (int)GStreetGlassHidden,
+			GLook.bGlassSeeThrough ? "yes/no-translucent-material" : "no");
 		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
@@ -5901,11 +5914,17 @@ namespace
 			// THE PALETTE OVER THE PHOTOGRAPH, as Blender lays it: authored
 			// colour over the map's own average. White on flat paint and on
 			// pictures, whose colour is already the texel.
-			const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
-			                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
+			LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
+			                                : LedgerStreet::Grade{1.0, 1.0, 1.0};
+			if (Rw.Emit == "room" && Albedo != nullptr && !Rw.Decal.empty())
+			{
+				Gr.R *= GLook.RoomGain; Gr.G *= GLook.RoomGain; Gr.B *= GLook.RoomGain;
+			}
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
 			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+			if (GStreetNormals.Num() < GStreetActors.Num()) { GStreetNormals.SetNumZeroed(GStreetActors.Num()); }
+			GStreetNormals[I] = NormalMap;
 			if (GStreetMids.Num() < GStreetActors.Num()) { GStreetMids.SetNumZeroed(GStreetActors.Num()); }
 			GStreetMids[I] = Mid;
 			for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot)
@@ -5925,7 +5944,7 @@ namespace
 	{
 		if (GStreetMids.Num() == 0 || GStreetLookFor == C.Id) { return; }
 		GStreetLookFor = C.Id;
-		GStreetGlowing = 0; GStreetWet = 0;
+		GStreetGlowing = 0; GStreetWet = 0; GStreetFilm = 0;
 		for (int32 I = 0; I < GStreetMids.Num() && I < (int32)GStreet.Rows.size(); ++I)
 		{
 			UMaterialInstanceDynamic* Mid = GStreetMids[I];
@@ -5952,6 +5971,21 @@ namespace
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
 					(float)LedgerStreet::WetnessParamFor(Rw.Base, C.Wetness));
 				++GStreetWet;
+				// A FILM OF WATER HAS NO RELIEF: from the look file's wetness
+				// on, the ground's relief map is swapped for a flat one, and
+				// put back for a drier condition.
+				UTexture2D* Own = I < GStreetNormals.Num() ? GStreetNormals[I] : nullptr;
+				if (Own != nullptr)
+				{
+					if (GStreetFlatNormal == nullptr)
+					{
+						GStreetFlatNormal = MakeFlatTexture(128, 128, 255, false, TEXT("street-flat-normal"));
+					}
+					const bool bFilm = C.Wetness >= GLook.WetFilmFrom;
+					Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
+					                              bFilm && GStreetFlatNormal != nullptr ? GStreetFlatNormal : Own);
+					if (bFilm) { ++GStreetFilm; }
+				}
 			}
 		}
 	}
