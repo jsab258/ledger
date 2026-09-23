@@ -115,6 +115,8 @@
 #include "GameFramework/PlayerController.h"
 #include "IImageWrapper.h"
 #include "IImageWrapperModule.h"
+#include "AudioDevice.h"
+#include "AudioMixerBlueprintLibrary.h"
 
 #include <string>
 #include <vector>
@@ -338,6 +340,15 @@ namespace
 	bool bPawnFound = false, bClearWalked = false, bTeleported = false, bBlockedWalked = false;
 	FString GFinishReason = TEXT("process-completed-normally");
 	bool GWallFound = false;
+
+	// ---- THE WALK'S SOUND, RECORDED, 23 September ----------------------
+	// Presentable's "sound is positional" needs evidence a person can check:
+	// the engine's own recorder takes the master output from the pawn's
+	// arrival to the end of the walk, and the file is committed beside the
+	// frames. Whether this machine has an audio device at all is said, since
+	// a runner without one records silence and that must not read as sound.
+	bool bAudioDevice = false, bAudioRecording = false, bAudioStopped = false;
+	const TCHAR* kAudioLeaf = TEXT("ue-walk-audio");
 
 	// ---- the grate aim: one camera, reused by both grate frames --------
 	AActor*       GGrateActor = nullptr;
@@ -1433,6 +1444,11 @@ namespace
 			LedgerVignetteShot::ControlQuadsSpawnedCount() == 0 ? TEXT("ABSENT") : TEXT("PRESENT")));
 
 		Out.Add(FString::Printf(
+			TEXT("walkAudioDevice=%s walkAudioRecorded=%s walkAudioFile=%s.wav/written-after-this-line-see-the-workflow's-walkAudioCollected"),
+			bAudioDevice ? TEXT("yes") : TEXT("NONE/a-recording-would-be-silence"),
+			bAudioStopped ? TEXT("yes/pawn-arrival-to-end-of-walk") : (bAudioRecording ? TEXT("started-not-stopped") : TEXT("no")),
+			kAudioLeaf));
+		Out.Add(FString::Printf(
 			TEXT("walkFramesRequested=%d/%d walkFramesWrote=%d/%d"),
 			GShotsAttempted, kTotalShots, GShotsWrote, kTotalShots));
 		if (GShotLines.empty())
@@ -1496,8 +1512,26 @@ namespace
 	void Finish()
 	{
 		GPhase = EWalkPhase::Done;
+		UWorld* World = GameWorld();
+		if (bAudioRecording && World != nullptr)
+		{
+			UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
+			                                                 kAudioLeaf, FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
+			bAudioStopped = true;
+		}
 		WriteFinalVerdict();
-		FPlatformMisc::RequestExit(false);
+		if (!bAudioStopped)
+		{
+			FPlatformMisc::RequestExit(false);
+			return;
+		}
+		// THE WAV IS WRITTEN ASYNCHRONOUSLY, so the process stays up three
+		// seconds for it rather than exiting under the writer.
+		FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateLambda([](float)
+		{
+			FPlatformMisc::RequestExit(false);
+			return false;
+		}), 3.0f);
 	}
 
 	bool Tick(float)
@@ -1537,6 +1571,12 @@ namespace
 			}
 			GPawn = P;
 			bPawnFound = true;
+			bAudioDevice = World->GetAudioDevice().IsValid();
+			if (bAudioDevice)
+			{
+				UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 60.0f);
+				bAudioRecording = true;
+			}
 			WriteBreadcrumb(TEXT("pawn-found"));
 			GPhase = EWalkPhase::SettleAfterSpawn;
 			GPhaseStart = Now;

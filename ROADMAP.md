@@ -278,13 +278,13 @@ Stage state: OPEN
 | A22.04 | Texture scale consistent with real object size | floor | open |  |
 | A22.05 | Materials distinguishable as wood, metal, glass, cloth and stone | floor | open |  |
 | A22.06 | Object edges that do not all look infinitely sharp | floor | open |  |
-| A22.07 | Buildings and props visibly grounded rather than floating | floor | open |  |
+| A22.07 | Buildings and props visibly grounded rather than floating | floor | done | grounded, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A22.08 | Believable joins between walls, floors, roofs and terrain | floor | open |  |
 | A22.09 | No conspicuous flickering between overlapping surfaces | floor | open |  |
 | A22.10 | Variation that disguises obvious repeated components | floor | open |  |
 | A22.11 | Wear and dirt consistent with use and exposure | floor | open |  |
 | A22.12 | Furnishing and clutter consistent with a place's function | floor | open |  |
-| A22.13 | Signs and labels that are readable when they matter | floor | open |  |
+| A22.13 | Signs and labels that are readable when they matter | floor | done | MICKEY'S, RITA'S, FISH MARKET read at the Hook view, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A22.14 | Period and setting consistency in conspicuous objects | floor | open |  |
 | A22.15 | Objects that remain recognisable across lighting conditions | floor | open |  |
 | A22.16 | Detail changes with distance that do not cause conspicuous shape popping | floor | open |  |
@@ -304,7 +304,7 @@ Stage state: OPEN
 | A23.15 | Consistent colour and brightness across gameplay and cutscenes | floor | open |  |
 | A23.16 | Distant scenery integrated with sky and atmosphere | floor | open |  |
 | A23.17 | Important targets remaining distinguishable amid visual effects | floor | open |  |
-| A24.05 | Wet surfaces looking different from dry ones | floor | open |  |
+| A24.05 | Wet surfaces looking different from dry ones | floor | done | standing water in puddles and gutters, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A41.14 | Film grain, chromatic aberration and similar presentation controls where used | floor | open |  |
 | A48.07 | No large visible objects appearing suddenly at short range | floor | open |  |
 | P3 | Post-processing chain | floor (my call) | open |  |

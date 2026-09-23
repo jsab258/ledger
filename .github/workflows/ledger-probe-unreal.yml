@@ -1510,6 +1510,21 @@ jobs:
               if (-not (Test-Path $dest)) { Copy-Item $f.FullName $dest -Force; $copied++ }
             }
           }
+          # THE WALK'S SOUND, 23 September: the engine's recording of the
+          # master output over the walk, for presentable's positional sound.
+          # Always this run's or none, never last run's.
+          Remove-Item "production/d1-probe/ue-walk-audio.wav" -Force -ErrorAction SilentlyContinue
+          $audioFound = "no"
+          foreach ($d in $frameDirs) {
+            if (-not $d -or -not (Test-Path $d)) { continue }
+            $w = Join-Path $d "ue-walk-audio.wav"
+            if (Test-Path $w) {
+              Copy-Item $w "production/d1-probe/ue-walk-audio.wav" -Force
+              $audioFound = "yes/bytes=$((Get-Item $w).Length)"
+              break
+            }
+          }
+          Add-Content $out "walkAudioCollected=$audioFound"
           $collectedValue = if ($found -gt 0) { "$copied/$found" } else { "nothing-measured/0-frame-files-found" }
           Add-Content $out ("walkFramesCollected=$collectedValue " +
             "walkFramesCollectedStat=copied-over-files-this-step-FOUND/never-over-how-many-the-probe-asked-for/see-walkFramesRequested-on-the-probes-own-line " +
@@ -2254,6 +2269,7 @@ jobs:
           # its absence rather than leaving the last one to be
           # committed as this run's.
           git add -A -- 'production/d1-probe/ue-walk.gif' 2>/dev/null || true
+          git add -A -- 'production/d1-probe/ue-walk-audio.wav' 2>/dev/null || true
           # THE CRIME, THE WITNESS AND THE OVERHEARD CONSEQUENCE (ruling
           # 2026-09-08), THE SAME TWO RULES A FOURTH TIME. The crime verdict
           # is a TRACKED file, so a run that never reached the crime step,

@@ -286,7 +286,7 @@ OURS = {
     # both are rows.
     # THE ONE PLACE A REFERENCE LIVES, added 2026-09-22 with the rule.
     "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png (pass 4 of the 22 September regeneration, approved that night) and hook-sheet-2026-09-09-retired.png (the sheet it replaced) are both this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) through stable-diffusion.cpp (MIT) on Jafar's machine, no fetched asset as an input",
-    "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived",
+    "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived; and the walk's sound, recorded by the engine from the street's own ambience and the crowd voices this file attributes separately",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
 }
 
