@@ -4,7 +4,7 @@ Measured, not estimated: 24 real calls through `ledger/TalkHelper`, the slice's
 conversation run beside the game - the real ConversationEngine, the canon
 cards, the output guard - to the slice's three talkers at noon on the fish
 market's pavement, eight lines each, one continuing conversation per person
-(`cost-session-lines-2026-09-23.jsonl` in, `cost-session-2026-09-23.jsonl`
+(`cost-session-lines-2026-09-23.json` in, `cost-session-2026-09-23.json`
 out). Prices are the game's own table (ledger/Assets/Scripts/Core/LlmClient.cs):
 Haiku 4.5 $1/$5 per million tokens in/out for the ambient tier (Rocco, Sam),
 Sonnet 5 $3/$15 for the core tier (Lena).
