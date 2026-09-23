@@ -19,67 +19,11 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-23 **May I download what the Nano test and the PS5 corner need?** Downloads need your yes.
-  - For Nano, all from Resemble AI's own pages, free for any use (MIT licence): their newest voice package (a few MB) and the Nano model files: 870 MB, 1,056 MB, 6 MB and under 2 MB of settings. About 1.9 GB in all, kept outside the project, never committed.
-  - For the corner: free CC0 scanned materials from Poly Haven and ambientCG (brick, wet stone flags, road, painted wood), about 0.5 GB.
-  - The MetaHuman needs **you** signed in to your Epic account inside Unreal, once. I can't sign in for you.
-  - **(a) Yes to all of it (my recommendation).** (b) Nano only; the corner makes do with the materials we have and no MetaHuman. (c) Neither for now.
-  - Meanwhile I carry on with presentable, which needs none of it.
-- 2026-09-23 **Which picture should the PS5 corner stand beside?** The reference folder holds five GTA V street frames, a game made for the PS3 and re-released on the PS5. Nothing in it is a native PS5 game, so it's a lower bar than your words set.
-  - (a) The overcast GTA V morning, the closest match to our weather. I'll say in the report that it's a PS3-era bar.
-  - **(b) You drop in a frame from a native PS5 game you like, and I use that (my recommendation, changed 23 September).** Canon says "GTA V PS3 is retired as a reference bar", which I found after recommending (a). I won't download game screenshots myself; they're someone else's copyright.
-  - Meanwhile the GTA V frame stands in, labelled as a retired bar, until yours arrives.
-- 2026-09-23 **Making faint knowledge show (your decision 7 a): how loud should it be?** Three independent checks found the plain version overdoes it. Once the paper names Tom, the whole town holds the story and everyone near him would remark. His own staff, who stand near him all day, would remark every 45 seconds for an hour. And anyone who has heard now watches him, so they also make sharper witnesses of his next crime. I've built (a), committed and tested; each of the other two is a small change.
-  - **(a) Each person remarks once per story and afterwards just watches him longer. The paper counts, so after a front page the whole street looks and a few say something (my recommendation).**
-  - (b) Only people who heard it by word of mouth show it; the paper makes the town know without anyone acting on it.
-  - (c) They remark whenever they pass, as the first version did.
-  - Meanwhile (a) stands. A remark only counts once Tom can actually hear it, and the coat keeps people who have only heard to a glance.
-- 2026-09-23 **When the connection drops or is slow, what does the player get?** Conversation needs the paid model online.
-  - **(a) The street keeps its authored voice: barks, remarks and overheard talk still play, since they're written and pre-voiced. A typed line gets a short, in-character brush-off ("Not now, love. Busy.") and a small sign that the line is down. Free conversation comes back when the connection does. On a slow line, the character covers the wait (see the next question) and gives up with a brush-off after about eight seconds (my recommendation).**
-  - (b) No connection means no conversation at all, said plainly at launch; the rest of the game plays.
-  - (c) A small local model steps in offline. It's a large download, the lines are weaker, and the router test found small models go wrong without it showing.
-  - Meanwhile nothing is built for this; it lands with the slice's talking.
-- 2026-09-23 **The pause while a line is being made: how is it covered, and how do subtitles stay true?** Today the voice needs longer than the line lasts.
-  - **(a) The character does something a person does while thinking. A breath, a glance away, a short filler in their own pre-recorded voice ("Mm.", "Well...", "Now then."), picked by their mood, while the line is made. The subtitle appears only with the audio it belongs to, built from the exact words sent to the voice, so the two can't disagree (my recommendation).**
-  - (b) Show the words at once and let the voice follow.
-  - (c) Accept the wait with a small "thinking" mark.
-  - Meanwhile nothing is built; it lands with the slice's voices.
-- 2026-09-23 **The minute after something happens in the street: how does the town settle?** The plan covers who saw it and who remembers, not how the street calms down.
-  - **(a) A settling that follows rules. People near it look and some gather; within a couple of game minutes most drift back to their routines. Those who saw it keep talking about it, quieter, for about an hour. The street's unease (heat) is what fades it, so a bad night stays uneasy longer (my recommendation).**
-  - (b) Everything snaps back once the player leaves the area.
-  - (c) The street stays disturbed until the next day.
-  - Meanwhile nothing is built; it lands with the slice's crime.
-
-- 2026-09-23 **Three areas of the checklist your sort didn't name: which kind are they?** Picking up and using things (29 items: doors, objects, prompts). The optional extras (13: photo mode, credits, what happens after the ending). The work of making the game (34: voice casting, testing, the store page, age rating).
-  - **(a) All three are floor, in where the research placed them. Picking things up is part of the controls, and the other two are what shipping any game takes (my recommendation).**
-  - (b) Picking things up is floor; the extras and the making are set aside until ship-prep.
-  - (c) You sort them item by item.
-  - Meanwhile (a): they're on the checklist marked "floor (my call)", so they're easy to find and change. Separately, 16 items the research itself ruled out stay out with its reasons, all of them things that don't apply here (gyro aiming, lock-on, a first-person view, usable mirrors, multiplayer voice chat and so on). The one you might want back is HDR display settings.
-
-- 2026-09-23 **The slice's talking and voices: rewrite them in the game engine, or run the existing code beside it?** The conversation engine, the router, the content rule and the voice runner all exist and are tested, in C#, in the old Unity game.
-  - **(a) Run them beside the game as a small helper program the game talks to, on this PC (my recommendation).** About 1 to 2 sittings each instead of 2 to 3, and the tested code stays the tested code. The cost: the shipped game carries a second program, and a crash in it has to be caught and the line covered.
-  - (b) Rewrite them inside the game engine in C++. It's one program, but it's slower to build and it's a second copy of code that must be kept agreeing with the first, as the simulation's port is.
-  - Meanwhile (a), when the slice reaches talking; nothing is built for it yet.
-
-- 2026-09-23 **Bodies for the slice's walking cast.** The slice needs Rocco, Lena, Sam and the rest walking their day. The stock Mixamo characters we hold that look like real people are already the street's six extras (and one is the player's stand-in). The rest are cartoons (a cigar-chomping caricature, an Elvis, a granny in curlers) or modern sportswear, which is wrong for 1990.
-  - **(a) The six realistic extras become the slice's cast, Rocco, Lena and Sam first, and the street's extras are drawn from the cast's quieter hours (my recommendation).** Nothing new to download.
-  - (b) Wait for the clothing route (D54: the checker, then a jacket) to dress period bodies before anyone walks.
-  - (c) Buy or download period characters. That's money or a download, so it's yours to say.
-  - Meanwhile (a), when the walkers are built; the navigation they walk on is being built now.
-
-- 2026-09-23 **The AI tester's hands: how does it look at the screen and press keys?** Unreal already provides the rest. Its test launcher (Gauntlet) starts the packaged game, stops it at a time limit, and collects the log, any crash and a verdict. Nothing in Unreal can look at the screen and press keys from outside, so that part has to be an AI with computer control, working on your desktop.
-  - **(a) Claude's computer control through the paid API, run from a short script at the end of a sitting that changed the slice, while you're away from the PC (my recommendation).** It costs API time per run, a figure I'll measure on the first run. While it plays it owns the mouse and keyboard, and the PC mustn't be locked or asleep.
-  - (b) A free local vision model doing the same. No cost, but much weaker at noticing what's wrong.
-  - (c) No AI tester for now; you or friends find the breakages.
-  - Meanwhile nothing is built. It couldn't run at the end of this sitting, because it doesn't exist yet.
-
-- 2026-09-23 **Has Tom been to the Hook before? (canon)** Asked who he was, Rocco said he'd seen Tom "a few times over the years". Canon doesn't say either way, and the talkers need to know.
-  - **(a) Never. He's a stranger to all of them, known only as Mickey's nephew by name, which fits a man arriving with one suitcase and the town's names for him running from "the new owner" to "Toma" (my recommendation).**
-  - (b) He visited as a boy, and the old hands half-remember him.
-  - Meanwhile (a): the three talkers' cards now say they've never met him, and Rocco now answers "You're the nephew. Right. Mickey mentioned you now and then."
+Nothing waiting. Everything below was answered on 23 September and is in Resolved.
 
 ## Things you should know
 
+- 2026-09-23 **Waiting on your hands:** the Kingdom Come Deliverance 2 frame for the PS5 corner, and your Epic sign-in inside Unreal, once, for the MetaHuman.
 - 2026-09-23 **The street's sound is proven positional, with a recording you can play.** The distant traffic is heard from the south end of the street, and when the walk turns its view, the sound swings from the middle to the right. That's presentable's last item, done. It's very quiet at that distance, so its level wants tuning; nobody spoke in the eight seconds recorded.
 - 2026-09-23 **The navigation mesh the walkers need wasn't made on its first try.** Unreal set up its navigation system but built no mesh around the slice's player. The next run will record the engine's own reasons, and it's the first thing to fix before walkers. Nothing else is affected.
 - 2026-09-23 **The slice's player walks.** The first frames are in: a body in the street seen over the shoulder, walking down the parade's pavement, and Elizabeth turning her head to him as he passes. One bug is already visible: he walks straight through her, because the street's people have nothing solid to them yet. It's on the checklist.
@@ -141,6 +85,8 @@ between them.
 
 ## Rulings received
 
+- 2026-09-23 **All eleven waiting decisions answered, as recommended**, and the PS5 picture as (b): a frame from Kingdom Come Deliverance 2, an overcast town street, because that game is your stated bar; you'll send the screenshot. So: the downloads go ahead; faint knowledge remarks once per story, then watches; a dropped or slow connection gets the authored street and an in-character brush-off; the pause is covered by a person-like filler, with subtitles only alongside their audio; the minute after an event settles by rules the street's unease fades; the three unnamed areas are floor; talking runs beside the game; the six realistic extras become the slice's cast; the AI tester's hands are Claude's computer control through the paid API; and Tom has never been to the Hook (canon).
+- 2026-09-23 **Two changes to reporting**, now in the project rules. "For you:" shows only what's new since the last message, or "nothing new"; the full list lives here and in the sitting's final message. And the stop hook now holds only this checkout, so sessions in other folders aren't held to this list.
 - 2026-09-23 **An AI tester joins the slice.** Regression stays: the tests, the checks on every push, and the scripted runs in the packaged game, plus one scripted run through the slice's whole loop. Exploratory testing is new: an agent that plays the packaged game by looking at the screen and pressing keys, finds what's broken and writes it up worst first here, with every bug going onto the checklist. It can't judge fun or life; that's the Meridian Test with people. The slice isn't done until both have passed. Recorded in the roadmap and on the checklist, and I'm first finding out what Unreal already provides for this.
 - 2026-09-23 **The checklist, sorted, becomes the plan.** Floor items (what any decent game needs) are in where the research placed them. Ours (how the town notices you, stealth, trespass and the law, the town's layout) are in where the plan has them. Genre items are ruled by your twelve decisions, now G1 to G12 in the decisions file, with G0 for multiplayer being out. An item that's out stays on the list marked out, with what rules it out.
 - 2026-09-23 **Four rules make the checklist hold**, now in the project rules. The list refills only from the current stage's checklist. An item leaves a stage only as done, moved or out, each with a reason. Done needs a frame, a test or a recording linked in its row. A stage can't be marked finished while anything in it is open; one check enforces this on every push.
@@ -247,6 +193,65 @@ between them.
 
 ## Resolved
 
+- 2026-09-23 **Answered the same evening: (a) on all, the PS5 picture (b) with Kingdom Come Deliverance 2.** The questions as they were put:
+  - 2026-09-23 **May I download what the Nano test and the PS5 corner need?** Downloads need your yes.
+    - For Nano, all from Resemble AI's own pages, free for any use (MIT licence): their newest voice package (a few MB) and the Nano model files: 870 MB, 1,056 MB, 6 MB and under 2 MB of settings. About 1.9 GB in all, kept outside the project, never committed.
+    - For the corner: free CC0 scanned materials from Poly Haven and ambientCG (brick, wet stone flags, road, painted wood), about 0.5 GB.
+    - The MetaHuman needs **you** signed in to your Epic account inside Unreal, once. I can't sign in for you.
+    - **(a) Yes to all of it (my recommendation).** (b) Nano only; the corner makes do with the materials we have and no MetaHuman. (c) Neither for now.
+    - Meanwhile I carry on with presentable, which needs none of it.
+  - 2026-09-23 **Which picture should the PS5 corner stand beside?** The reference folder holds five GTA V street frames, a game made for the PS3 and re-released on the PS5. Nothing in it is a native PS5 game, so it's a lower bar than your words set.
+    - (a) The overcast GTA V morning, the closest match to our weather. I'll say in the report that it's a PS3-era bar.
+    - **(b) You drop in a frame from a native PS5 game you like, and I use that (my recommendation, changed 23 September).** Canon says "GTA V PS3 is retired as a reference bar", which I found after recommending (a). I won't download game screenshots myself; they're someone else's copyright.
+    - Meanwhile the GTA V frame stands in, labelled as a retired bar, until yours arrives.
+  - 2026-09-23 **Making faint knowledge show (your decision 7 a): how loud should it be?** Three independent checks found the plain version overdoes it. Once the paper names Tom, the whole town holds the story and everyone near him would remark. His own staff, who stand near him all day, would remark every 45 seconds for an hour. And anyone who has heard now watches him, so they also make sharper witnesses of his next crime. I've built (a), committed and tested; each of the other two is a small change.
+    - **(a) Each person remarks once per story and afterwards just watches him longer. The paper counts, so after a front page the whole street looks and a few say something (my recommendation).**
+    - (b) Only people who heard it by word of mouth show it; the paper makes the town know without anyone acting on it.
+    - (c) They remark whenever they pass, as the first version did.
+    - Meanwhile (a) stands. A remark only counts once Tom can actually hear it, and the coat keeps people who have only heard to a glance.
+  - 2026-09-23 **When the connection drops or is slow, what does the player get?** Conversation needs the paid model online.
+    - **(a) The street keeps its authored voice: barks, remarks and overheard talk still play, since they're written and pre-voiced. A typed line gets a short, in-character brush-off ("Not now, love. Busy.") and a small sign that the line is down. Free conversation comes back when the connection does. On a slow line, the character covers the wait (see the next question) and gives up with a brush-off after about eight seconds (my recommendation).**
+    - (b) No connection means no conversation at all, said plainly at launch; the rest of the game plays.
+    - (c) A small local model steps in offline. It's a large download, the lines are weaker, and the router test found small models go wrong without it showing.
+    - Meanwhile nothing is built for this; it lands with the slice's talking.
+  - 2026-09-23 **The pause while a line is being made: how is it covered, and how do subtitles stay true?** Today the voice needs longer than the line lasts.
+    - **(a) The character does something a person does while thinking. A breath, a glance away, a short filler in their own pre-recorded voice ("Mm.", "Well...", "Now then."), picked by their mood, while the line is made. The subtitle appears only with the audio it belongs to, built from the exact words sent to the voice, so the two can't disagree (my recommendation).**
+    - (b) Show the words at once and let the voice follow.
+    - (c) Accept the wait with a small "thinking" mark.
+    - Meanwhile nothing is built; it lands with the slice's voices.
+  - 2026-09-23 **The minute after something happens in the street: how does the town settle?** The plan covers who saw it and who remembers, not how the street calms down.
+    - **(a) A settling that follows rules. People near it look and some gather; within a couple of game minutes most drift back to their routines. Those who saw it keep talking about it, quieter, for about an hour. The street's unease (heat) is what fades it, so a bad night stays uneasy longer (my recommendation).**
+    - (b) Everything snaps back once the player leaves the area.
+    - (c) The street stays disturbed until the next day.
+    - Meanwhile nothing is built; it lands with the slice's crime.
+
+  - 2026-09-23 **Three areas of the checklist your sort didn't name: which kind are they?** Picking up and using things (29 items: doors, objects, prompts). The optional extras (13: photo mode, credits, what happens after the ending). The work of making the game (34: voice casting, testing, the store page, age rating).
+    - **(a) All three are floor, in where the research placed them. Picking things up is part of the controls, and the other two are what shipping any game takes (my recommendation).**
+    - (b) Picking things up is floor; the extras and the making are set aside until ship-prep.
+    - (c) You sort them item by item.
+    - Meanwhile (a): they're on the checklist marked "floor (my call)", so they're easy to find and change. Separately, 16 items the research itself ruled out stay out with its reasons, all of them things that don't apply here (gyro aiming, lock-on, a first-person view, usable mirrors, multiplayer voice chat and so on). The one you might want back is HDR display settings.
+
+  - 2026-09-23 **The slice's talking and voices: rewrite them in the game engine, or run the existing code beside it?** The conversation engine, the router, the content rule and the voice runner all exist and are tested, in C#, in the old Unity game.
+    - **(a) Run them beside the game as a small helper program the game talks to, on this PC (my recommendation).** About 1 to 2 sittings each instead of 2 to 3, and the tested code stays the tested code. The cost: the shipped game carries a second program, and a crash in it has to be caught and the line covered.
+    - (b) Rewrite them inside the game engine in C++. It's one program, but it's slower to build and it's a second copy of code that must be kept agreeing with the first, as the simulation's port is.
+    - Meanwhile (a), when the slice reaches talking; nothing is built for it yet.
+
+  - 2026-09-23 **Bodies for the slice's walking cast.** The slice needs Rocco, Lena, Sam and the rest walking their day. The stock Mixamo characters we hold that look like real people are already the street's six extras (and one is the player's stand-in). The rest are cartoons (a cigar-chomping caricature, an Elvis, a granny in curlers) or modern sportswear, which is wrong for 1990.
+    - **(a) The six realistic extras become the slice's cast, Rocco, Lena and Sam first, and the street's extras are drawn from the cast's quieter hours (my recommendation).** Nothing new to download.
+    - (b) Wait for the clothing route (D54: the checker, then a jacket) to dress period bodies before anyone walks.
+    - (c) Buy or download period characters. That's money or a download, so it's yours to say.
+    - Meanwhile (a), when the walkers are built; the navigation they walk on is being built now.
+
+  - 2026-09-23 **The AI tester's hands: how does it look at the screen and press keys?** Unreal already provides the rest. Its test launcher (Gauntlet) starts the packaged game, stops it at a time limit, and collects the log, any crash and a verdict. Nothing in Unreal can look at the screen and press keys from outside, so that part has to be an AI with computer control, working on your desktop.
+    - **(a) Claude's computer control through the paid API, run from a short script at the end of a sitting that changed the slice, while you're away from the PC (my recommendation).** It costs API time per run, a figure I'll measure on the first run. While it plays it owns the mouse and keyboard, and the PC mustn't be locked or asleep.
+    - (b) A free local vision model doing the same. No cost, but much weaker at noticing what's wrong.
+    - (c) No AI tester for now; you or friends find the breakages.
+    - Meanwhile nothing is built. It couldn't run at the end of this sitting, because it doesn't exist yet.
+
+  - 2026-09-23 **Has Tom been to the Hook before? (canon)** Asked who he was, Rocco said he'd seen Tom "a few times over the years". Canon doesn't say either way, and the talkers need to know.
+    - **(a) Never. He's a stranger to all of them, known only as Mickey's nephew by name, which fits a man arriving with one suitcase and the town's names for him running from "the new owner" to "Toma" (my recommendation).**
+    - (b) He visited as a boy, and the old hands half-remember him.
+    - Meanwhile (a): the three talkers' cards now say they've never met him, and Rocco now answers "You're the nephew. Right. Mickey mentioned you now and then."
 - 2026-09-23 **Presentable is met, by my judgement against your checklist** (overtaken the same evening: you reopened it for heads that turn and positional sound, both now built), and you can overrule it. Real cars, lamps, kiosk, pillar box and bins; six people standing in the street; light with depth (the bounced light was switched on); and standing water in puddles and gutters. Two things fall short of the sheet: the road is still lighter and less glassy, and the hillside is better (real trees, staggered houses) but still simple. The picture is the latest pair beside the sheet.
 - 2026-09-23 **Hold the checklist fold** (lifted the same evening, with your sort) until you send which of its items this game actually wants. Nothing goes into the roadmap from it meanwhile. I'm still bringing the other research branch onto main as it stands, folding nothing from it, and carrying on with everything else.
 - 2026-09-23 **Decision 8, canon's words about the west side** - ruled (a): canon now says the shop block is across from the north half of the parade and the block across from Mickey's is plain terraces; nothing rebuilt. The question as it was put:

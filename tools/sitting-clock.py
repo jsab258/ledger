@@ -72,6 +72,31 @@ PERMIT = "PERMIT"
 BLOCK = "BLOCK"
 UNASSESSED = "PERMIT-UNASSESSED"
 
+#: AN EMPTY BLOCK, in either wording. Jafar, 23 September: "For you:" shows
+#: only what is new since the last message, or "nothing new"; the full list
+#: lives in FOR-JAFAR.md and the sitting's final message.
+EMPTY = (["nothing"], ["nothing", "new"])
+
+#: THE BUILDER'S OWN CHECKOUT, marked by an untracked file only this checkout
+#: carries (Jafar, 23 September: a research session in its own folder read
+#: the same rules and was held to this list). A clone or a worktree elsewhere
+#: has no marker and is not held; nor is a session started in another folder.
+BUILDER_MARKER = os.path.join(".claude", "builder-checkout")
+
+
+def in_builder_checkout(root, cwd):
+    """(ok, reason). This hook acts only for a session in the builder's own
+    checkout: the marker must be in the root it reads, and the session's
+    folder, when the payload names it, must be that root."""
+    if not os.path.isfile(os.path.join(root, BUILDER_MARKER)):
+        return False, "not the builder's checkout (no .claude/builder-checkout here)"
+    if cwd:
+        a = os.path.normcase(os.path.realpath(cwd))
+        b = os.path.normcase(os.path.realpath(root))
+        if a != b:
+            return False, "the session is in another folder (%s), not the builder's checkout" % cwd
+    return True, "the builder's checkout"
+
 
 def open_items(text):
     """How many unfinished items the standing list has."""
@@ -189,7 +214,7 @@ def for_you_items(message):
     items = []
     head = lines[i].strip()
     rest = head[len(OPENER):].strip() if head.startswith(OPENER) else ""
-    if rest and _words(rest) != ["nothing"]:
+    if rest and _words(rest) not in EMPTY:
         items.append(rest)
     i += 1
     for line in lines[i:]:
@@ -204,7 +229,7 @@ def for_you_items(message):
             continue
         else:
             break
-    return [x for x in items if _words(x) and _words(x) != ["nothing"]]
+    return [x for x in items if _words(x) and _words(x) not in EMPTY]
 
 
 def in_for_jafar(message, file_text):
@@ -433,6 +458,27 @@ def selftest():
     check("accept/prose-about-boxes-is-not-an-item",
           open_items("the list uses - [ ] for an open item\n") == 0)
 
+    # "NOTHING NEW" IS AN EMPTY BLOCK, as "nothing" is (Jafar, 23 September).
+    v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
+                  "For you: nothing new" + chr(10) + chr(10) + "Done.", FJ)
+    check("accept/for-you-nothing-new-needs-no-file-entry", v == PERMIT, r)
+
+    # ONLY THE BUILDER'S CHECKOUT IS HELD TO THE LIST.
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        ok, why = in_builder_checkout(tmp, None)
+        check("accept/no-marker-is-not-the-builder", not ok, why)
+        os.makedirs(os.path.join(tmp, ".claude"))
+        open(os.path.join(tmp, BUILDER_MARKER), "w").close()
+        ok, why = in_builder_checkout(tmp, tmp)
+        check("reject/the-builder-in-its-own-root-is-held", ok, why)
+        other = os.path.join(tmp, "elsewhere")
+        os.makedirs(other)
+        ok, why = in_builder_checkout(tmp, other)
+        check("accept/a-session-in-another-folder-is-not-held", not ok, why)
+        ok, why = in_builder_checkout(tmp, None)
+        check("reject/no-cwd-in-the-payload-still-holds-the-marked-root", ok, why)
+
     print("sitting-clock selftest: passed=%d/%d failed=%d"
           % (passed, passed + failed, failed))
     return 0 if failed == 0 else 4
@@ -477,6 +523,10 @@ def main(argv):
                 got = payload.get("last_assistant_message")
                 if isinstance(got, str):
                     message = got
+                here, why = in_builder_checkout(root, payload.get("cwd"))
+                if not here:
+                    print("%s %s, so this list does not hold it" % (PERMIT, why))
+                    return 0
         except ValueError:
             # A payload that will not parse is an instrument fault, not a
             # verdict about the turn.
