@@ -30,7 +30,7 @@ between them.
 - 2026-09-24 **MH_Test stands in the corner, in grey underwear, bald, arms out in the default pose.** That's how he left MetaHuman Creator: no clothes or hair were chosen, and he has no idle animation yet. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.
-  - Meanwhile he stays in the corner frames only, and the idle animation, which means borrowing the street people's standing motion, is next on my list.
+  - Meanwhile he stays in the corner frames only. He now has an idle: Elizabeth's standing motion, carried onto his body by the engine's retargeting in four seconds. Its frame is in the queue.
 - 2026-09-24 **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
   - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
   - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
