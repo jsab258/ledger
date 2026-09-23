@@ -1744,6 +1744,7 @@ jobs:
           }
           $sliceArgs = @("-LedgerWalk", "-LedgerSlice", "-LedgerCommit=$($env:SHOT_SHA)", "-RenderOffScreen",
                          "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0",
+                         '-LogCmds="LogNavigation Verbose"',
                          "-ResX=960", "-ResY=540", "-windowed",
                          "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
           $p = Start-Process -FilePath $exe -ArgumentList $sliceArgs -PassThru -NoNewWindow `
