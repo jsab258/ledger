@@ -958,6 +958,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             old cards in the Unity files stay as the legacy build has them.
       - [ ] TALKING: walk up, press a key, type a line; the router (fixed
             today) and the paid conversation model answer; a line on screen.
+            WITH THE CONTENT RULE IN THE CONVERSATION: offered a drink, Sam
+            went for one and named two unminted pubs (FINDINGS 23 Sep), so the
+            engine's prompt needs D18 and its replies the gate's rules.
       - [ ] THEIR VOICES: the speech graphs on the card through onnxruntime
             DirectML, as the Unity player had them, one cast voice each.
       - [ ] THE CRIME BY HAND: the automated beat's window, broken by the
