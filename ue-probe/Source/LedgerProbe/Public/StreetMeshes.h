@@ -506,6 +506,125 @@ namespace LedgerStreet
 		return true;
 	}
 
+	// THE SLICE'S CAST, 23 September: production/specs/quay-cast.json - the
+	// places in street metres, each person's day as (hour it starts, place),
+	// and the ties between them - for the walkers the slice puts on the
+	// street. "off" is off the street.
+	struct CastPlace
+	{
+		std::string Id;
+		double X, Z;
+		CastPlace() : X(0.0), Z(0.0) {}
+	};
+
+	struct CastPerson
+	{
+		std::string Id, Voice;
+		std::vector<std::pair<int, std::string> > Routine;
+	};
+
+	struct CastTie
+	{
+		std::string A, B;
+		double Weight;
+		CastTie() : Weight(0.0) {}
+	};
+
+	struct Cast
+	{
+		std::vector<CastPlace> Places;
+		std::vector<CastPerson> People;
+		std::vector<CastTie> Ties;
+		double TalkRangeM;
+		Cast() : TalkRangeM(0.0) {}
+	};
+
+	inline bool ParseCast(const std::string& Text, Cast& Out, std::string& Err)
+	{
+		using namespace LedgerVignette;
+		Out = Cast();
+		Err.clear();
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = "cast-file-unreadable"; return false; }
+		Out.TalkRangeM = NumOr(Root, "talk_range_m", 0.0);
+		const Value* Pl = Root.Find("places");
+		if (Pl == 0 || Pl->Type != T_OBJ) { Err = "cast-file-has-no-places"; return false; }
+		for (size_t I = 0; I < Pl->Obj.size(); ++I)
+		{
+			const Value& V = Pl->Obj[I].second;
+			if (V.Type != T_OBJ || V.Find("x_m") == 0 || V.Find("z_m") == 0) { continue; }
+			CastPlace C;
+			C.Id = Pl->Obj[I].first;
+			C.X = NumOr(V, "x_m", 0.0);
+			C.Z = NumOr(V, "z_m", 0.0);
+			Out.Places.push_back(C);
+		}
+		const Value* Pe = Root.Find("people");
+		if (Pe == 0 || Pe->Type != T_ARR) { Err = "cast-file-has-no-people"; return false; }
+		for (size_t I = 0; I < Pe->Arr.size(); ++I)
+		{
+			const Value& V = Pe->Arr[I];
+			if (V.Type != T_OBJ) { continue; }
+			CastPerson P;
+			P.Id = StrOr(V, "id");
+			P.Voice = StrOr(V, "voice");
+			const Value* Ro = V.Find("routine");
+			if (P.Id.empty() || Ro == 0 || Ro->Type != T_ARR) { continue; }
+			for (size_t J = 0; J < Ro->Arr.size(); ++J)
+			{
+				const Value& E = Ro->Arr[J];
+				if (E.Type == T_ARR && E.Arr.size() >= 2 && E.Arr[0].Type == T_NUM && E.Arr[1].Type == T_STR)
+				{
+					P.Routine.push_back(std::make_pair((int)E.Arr[0].Num, E.Arr[1].Str));
+				}
+			}
+			if (!P.Routine.empty()) { Out.People.push_back(P); }
+		}
+		const Value* Ti = Root.Find("ties");
+		if (Ti != 0 && Ti->Type == T_ARR)
+		{
+			for (size_t I = 0; I < Ti->Arr.size(); ++I)
+			{
+				const Value& E = Ti->Arr[I];
+				if (E.Type == T_ARR && E.Arr.size() >= 3 && E.Arr[0].Type == T_STR && E.Arr[1].Type == T_STR
+				    && E.Arr[2].Type == T_NUM)
+				{
+					CastTie T;
+					T.A = E.Arr[0].Str;
+					T.B = E.Arr[1].Str;
+					T.Weight = E.Arr[2].Num;
+					Out.Ties.push_back(T);
+				}
+			}
+		}
+		if (Out.People.empty()) { Err = "cast-file-names-nobody"; return false; }
+		return true;
+	}
+
+	// WHERE SOMEONE IS AT AN HOUR: the routine's latest entry starting at or
+	// before it, "off" before the first.
+	inline std::string PlaceAt(const CastPerson& P, int Hour)
+	{
+		std::string At = "off";
+		int Best = -1;
+		for (size_t I = 0; I < P.Routine.size(); ++I)
+		{
+			if (P.Routine[I].first <= Hour && P.Routine[I].first > Best)
+			{
+				Best = P.Routine[I].first;
+				At = P.Routine[I].second;
+			}
+		}
+		return At;
+	}
+
+	inline const CastPlace* FindCastPlace(const Cast& C, const std::string& Id)
+	{
+		for (size_t I = 0; I < C.Places.size(); ++I) { if (C.Places[I].Id == Id) { return &C.Places[I]; } }
+		return 0;
+	}
+
 	// THE ASSET A CLIP BECAME in tools/ue/import_sounds.py: "crowd_m1/461561fe.wav"
 	// is /Game/Ledger/Sounds/Voice/crowd_m1/461561fe.
 	inline std::string VoiceAssetPath(const std::string& Clip)
