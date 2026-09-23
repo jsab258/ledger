@@ -621,7 +621,9 @@ SURFACE_OF = {
     # relief and not the timber one: metal has no grain and neither has a
     # glazed tile.
     "frame_metal":  ("plaster", 0.4),
-    "tile_stall":   ("plaster", 0.3),
+    # GLAZED, so flat as gloss paint is (23 September): the plaster relief
+    # read in Unreal as a speckled granite plinth under Mickey's tiles.
+    "tile_stall":   (None, 0.0),
     "frame_painted": (None, 0.0),
     "tile_patterned": ("plaster", 0.3),
     "glass_whitened": ("plaster", 0.6),
