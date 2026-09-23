@@ -323,6 +323,81 @@ namespace Ledger.PerceptionGolden
 
             EmitArrest(sb);
             EmitScenarios(sb);
+            EmitSchedule(sb);
+        }
+
+        /// THE SCHEDULE, 23 September: who in the crowd is out of doors at a
+        /// given day and hour, and where on their walk between home and work
+        /// (Population.OutdoorsAt, OutdoorPosition, IsRestDay, TripHours). The
+        /// Unreal port had no schedules, and ROADMAP's stage 3 names them.
+        ///
+        /// WHAT THE ROWS REACH, and why these inputs: the hashes are 32-bit
+        /// wraparound arithmetic, so the indices run from 0 to int.MaxValue,
+        /// where every multiply overflows; days run negative, across both rest
+        /// days and past a week; hours run from -1 to 25, so the wrap into the
+        /// day is asked at both ends; and the homes and works include negative
+        /// coordinates and a resident whose home IS their work. Every row is
+        /// asked for every combination, indoors included, so a port that put
+        /// somebody on the street who should be inside is a mismatch.
+        static void EmitSchedule(StringBuilder sb)
+        {
+            var people = new[]
+            {
+                new Resident { Index = 0, HomeX = 0, HomeZ = 0, WorkX = 0, WorkZ = 0 },
+                new Resident { Index = 1, HomeX = 12, HomeZ = -40, WorkX = 250, WorkZ = 90 },
+                new Resident { Index = 7, HomeX = -300, HomeZ = 55, WorkX = 42, WorkZ = -18 },
+                new Resident { Index = 100, HomeX = 1000, HomeZ = 1000, WorkX = -1000, WorkZ = -1000 },
+                new Resident { Index = 699, HomeX = 5, HomeZ = 5, WorkX = 5, WorkZ = 5 },
+                new Resident { Index = 2999, HomeX = 17, HomeZ = 3, WorkX = -60, WorkZ = 210 },
+                new Resident { Index = 123456789, HomeX = -7, HomeZ = 11, WorkX = 13, WorkZ = -2 },
+                new Resident { Index = int.MaxValue, HomeX = 400, HomeZ = -250, WorkX = -120, WorkZ = 330 },
+                // Not produced by the generator, but representable, and the
+                // hash must treat it as the C# does (the independent check).
+                new Resident { Index = -5, HomeX = -2500, HomeZ = 4800, WorkX = 3100, WorkZ = -4999 },
+            };
+            // EVERY DAY OF THE WEEK, which the first table did not reach: its
+            // days reduced to Monday, Tuesday, Friday and the weekend, so a
+            // port that took Thursday for a rest day passed (the independent
+            // check of 23 September).
+            var days = new[] { -8, -1, 0, 1, 2, 3, 4, 5, 6, 7, 13, 40 };
+            foreach (var r in people)
+            {
+                string who = string.Join("|", r.Index.ToString(Inv), r.HomeX.ToString(Inv),
+                    r.HomeZ.ToString(Inv), r.WorkX.ToString(Inv), r.WorkZ.ToString(Inv));
+                foreach (var day in days)
+                    for (int hour = -1; hour <= 25; hour++)
+                    {
+                        string when = day.ToString(Inv) + "|" + hour.ToString(Inv);
+                        Row(sb, "OutdoorsAt", who, when, Bit(Population.OutdoorsAt(r, day, hour)));
+                        bool outside = Population.OutdoorPosition(r, day, hour, out var x, out var z);
+                        Row(sb, "OutdoorPositionX", who, when, outside ? D(x) : "indoors");
+                        Row(sb, "OutdoorPositionZ", who, when, outside ? D(z) : "indoors");
+                    }
+            }
+            // THE CHANCE BANDS, PINNED BY NUMBERS: sixty people at every hour
+            // of every day of the week, whether each is out. A band's chance
+            // moved by a hundredth (the check moved the rest-day 16:00-18:59
+            // band from 0.17 to 0.16 and the first table passed) now lands on
+            // a person whose roll falls between the two, in all likelihood.
+            // WHAT IS DELIBERATELY NOT HERE: a home and work so far apart that
+            // their difference overflows an int. The port wraps it as the C#
+            // does (Schedule.h Sub, and the check agreed bit for bit), but the
+            // shipping build compiles with fast floating point, which differs
+            // from the C# in the last bit once positions pass about three
+            // million metres - beyond this table's 1e-9 bound, so the
+            // in-engine check would fail on arithmetic the game never meets.
+            for (int index = 1000; index < 1060; index++)
+            {
+                var r = new Resident { Index = index };
+                for (int day = 0; day < 7; day++)
+                    for (int hour = 0; hour < 24; hour++)
+                        Row(sb, "OutdoorsAt", string.Join("|", index.ToString(Inv), "0", "0", "0", "0"),
+                            day.ToString(Inv) + "|" + hour.ToString(Inv),
+                            Bit(Population.OutdoorsAt(r, day, hour)));
+            }
+            for (int day = -15; day <= 15; day++)
+                Row(sb, "IsRestDay", day.ToString(Inv), Bit(Population.IsRestDay(day)));
+            Row(sb, "ScheduleConst", "TripHours", Population.TripHours.ToString(Inv));
         }
 
         // Resolve's arguments, in the order the table writes them. This list
