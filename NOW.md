@@ -730,7 +730,8 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       flags' shine as a setting (paving floor 0.25: it OVERSHOT on the
       runner, footway 1.6-2.5x the sheet and blue with sky - retune on the
       local build once the queue drains). The far end's haze: fog colour
-      and a day cap x3 in the look file (749c7551, to verify). The kerb
+      and a day cap x3 in the look file (749c7551, PROVEN on the runner:
+      far end 120/109/102 against the sheet's 120/108/104). The kerb
       at its scene-file height and drawn as precast blocks, the paint and
       gullies on the cambered road (5237668a). The night's exposure held
       at 0.1, because the lit rooms behind the see-through glass blacked
