@@ -57,7 +57,9 @@ plain houses.
 
 ## Things you should know
 
-- 2026-09-23 **The crime's broken window shows again**, with its glass on the pavement in front of it, where before the shards fell somewhere else and the pane stayed whole.
+- 2026-09-23 **The game engine's street matches the sheet region by region**: sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent. What differs now is the left side's shape (decision 8) and people (stage 2).
+- 2026-09-23 **Two things set aside after two tries each**: the wet shine on the flags (in both engines; the sheet's shine is the shopfront reflected, not a smoother stone) and a drawn road surface (the road keeps its photograph).
+- 2026-09-23 **The crime's broken window shows again**, with its glass on the pavement in front of it and the brick on the shop floor inside, where before the shards fell somewhere else and the pane stayed whole.
 - 2026-09-23 **The crowd's daily schedules now run in the game engine**, who is out when and where, proven against the original row by row; an independent check tried to break it and could not.
 - 2026-09-23 **I moved 40 notes to Resolved, unchanged**: yesterday's and last night's, which your morning message answered. Today's are one line each, as the rule says; the detail is in the commits.
 - 2026-09-23 **The painted woodwork is smooth gloss colour instead of rough render**, Mickey's stall riser is Victorian relief tile, and the flags are each their own stone.
