@@ -302,7 +302,7 @@ Stage state: OPEN
 | A09.01 | Idle breathing and small posture changes | floor | open |  |
 | A09.02 | Idle variation rather than a conspicuous repeating loop | floor | open |  |
 | A09.24 | No identical synchronised idle motion across a crowd | floor | done | six people, each started at its own phase of its loop (street-people.json), no two in step, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
-| A21.01 | Human-scale doors, stairs, furniture and streets | ours | open |  |
+| A21.01 | Human-scale doors, stairs, furniture and streets | ours | done | measured on a straight-on Unreal frame at 100 px a metre, 24 Sep: the side door stands 1981 mm (the British standard door, found within 4 mm), the shop door 900 mm wide, the stallriser 600 mm, the fascia's underside 2850 mm; the carriageway is 6 m and each footway 2 m in the scene file: [pair](production/art/compare/stage1-2026-09-24/pair-mickeys-bay-measured.png) |
 | A21.05 | Readable routes through ordinary environments | ours | open |  |
 | A21.06 | Landmarks that help orientation | ours | open |  |
 | A21.07 | Visually distinct areas rather than indistinguishable repeated streets | ours | open |  |

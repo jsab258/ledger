@@ -6131,6 +6131,11 @@ def _street_emit(key, lettered, night):
 #: recipe's frame, before the export's reflection: x along the street, y east.
 BEVEL_CORNER_X = (2.0, 10.0)
 BEVEL_CORNER_Y = (2.9, 5.6)
+#: AND NOW THE WHOLE STREET, 24 September: stage 1's checklist item A22.06,
+#: "object edges that do not all look infinitely sharp", done as the corner
+#: was - every piece shorter than 12 m, the same 6 mm in two steps - so the
+#: region above is kept only to say where it started.
+BEVEL_WHOLE_STREET = True
 BEVEL_WIDTH_M = 0.006
 BEVEL_SKIP = ("glass", "standing_water", "sign_", "card_", "interior")  # prefix: both waters
 
@@ -6150,29 +6155,41 @@ def _bevel_corner(bpy):
         for c in obj.bound_box:
             w = M @ __import__("mathutils").Vector(c)
             xs.append(w.x); ys.append(w.y)
-        if max(xs) < BEVEL_CORNER_X[0] or min(xs) > BEVEL_CORNER_X[1]:
+        if not BEVEL_WHOLE_STREET and (max(xs) < BEVEL_CORNER_X[0] or min(xs) > BEVEL_CORNER_X[1]):
             continue
-        if max(ys) < BEVEL_CORNER_Y[0] or min(ys) > BEVEL_CORNER_Y[1]:
+        if not BEVEL_WHOLE_STREET and (max(ys) < BEVEL_CORNER_Y[0] or min(ys) > BEVEL_CORNER_Y[1]):
             continue
         # NOTHING LONGER THAN THE CORNER: a whole terrace's wall or the
         # footway's one long slab gains nothing from a bevel along 40 m.
         if max(xs) - min(xs) > 12.0:
             continue
-        targets.append(obj)
-    before = sum(len(o.data.polygons) for o in targets)
-    for obj in targets:
+        # NOR ANYTHING SMALLER THAN A HAND across its longest side, once the
+        # whole street is in: 174 dentils a block and the like, where 6 mm is
+        # invisible from the pavement and the faces are not (the first
+        # whole-street export was 183,003 faces and 26.5 MB for them).
+        zs_ = [(M @ __import__("mathutils").Vector(c)).z for c in obj.bound_box]
+        if BEVEL_WHOLE_STREET and max(max(xs) - min(xs), max(ys) - min(ys), max(zs_) - min(zs_)) < 0.25:
+            continue
+        in_corner = not (max(xs) < BEVEL_CORNER_X[0] or min(xs) > BEVEL_CORNER_X[1]
+                         or max(ys) < BEVEL_CORNER_Y[0] or min(ys) > BEVEL_CORNER_Y[1])
+        targets.append((obj, in_corner))
+    before = sum(len(o.data.polygons) for o, _ in targets)
+    for obj, in_corner in targets:
         mod = obj.modifiers.new("corner_bevel", "BEVEL")
         mod.width = BEVEL_WIDTH_M
-        mod.segments = 2
+        # TWO STEPS AT THE CORNER, ONE ELSEWHERE: the camera stands a metre
+        # from Mickey's front and a single chamfer is what the rest of the
+        # street is seen at.
+        mod.segments = 2 if in_corner else 1
         mod.limit_method = "ANGLE"
         mod.angle_limit = _m.radians(30.0)
     dg = bpy.context.evaluated_depsgraph_get()
     dg.update()
-    for obj in targets:
+    for obj, _ in targets:
         me = bpy.data.meshes.new_from_object(obj.evaluated_get(dg))
         obj.modifiers.clear()
         obj.data = me
-    after = sum(len(o.data.polygons) for o in targets)
+    after = sum(len(o.data.polygons) for o, _ in targets)
     return "cornerBevel=objects-%d/faces-%d-to-%d/width-%.3fm" % (len(targets), before, after, BEVEL_WIDTH_M)
 
 
