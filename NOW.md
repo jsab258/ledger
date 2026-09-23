@@ -1033,8 +1033,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             spring-arm camera, a stand-in body (tom-player.glb: stand, walk,
             run in one file) through the engine's sequence players and
             two-way blends by ground speed. The probe's verdict says whether
-            the body and its three clips load (sliceBody, sliceClips). Not done
-            until a frame of it walking: next, a slice walk run in the probe.
+            the body and its three clips load (sliceBody, sliceClips): YES,
+            3/3 on the runner (ed246110). Not done until a frame of it walking,
+            from the slice walk run in the probe (833f38b2).
       - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
             mesh around the player is pushed (7cc4767b, its path to Mickey's
             rank in the slice walk's verdict). The walker itself is written
