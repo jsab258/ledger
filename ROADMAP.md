@@ -434,7 +434,7 @@ Stage state: OPEN
 | A12.08 | Objects settling instead of vibrating indefinitely | floor | open |  |
 | A12.09 | No explosive physics response from mild contact | floor | open |  |
 | A12.10 | Fast objects that do not pass through obvious barriers | floor | open |  |
-| A12.11 | Characters not pushing through one another without explanation | floor | open |  |
+| A12.11 | Characters not pushing through one another without explanation | floor | open | FOUND 23 Sep: the slice's player walks straight through Elizabeth, since the street's people have no collision (production/art/compare/slice-2026-09-23/player-walks-5f93abd7.png) |
 | A12.12 | A workable solution to being blocked by a friendly character | floor | open |  |
 | A12.13 | Moving machinery carrying or blocking objects consistently | floor | open |  |
 | A12.14 | Appropriate friction on visibly different surfaces where it matters | floor | open |  |
