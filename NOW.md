@@ -766,7 +766,13 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 - [ ] ITS OWN COLLISION: the crime probe's sight lines are physics traces,
       so this means re-proving the crime verdict and keeping the glass out
       of the visibility channel (FINDINGS 23 Sep). Not before the day's
-      pair is settled.
+      pair is settled. SCOPED 23 Sep and it is a sitting of its own: the
+      street is one mesh per material across the whole street, so simple
+      collision is useless and it needs complex-as-simple set at import;
+      the crime's traces are simple-collision ECC_Visibility, so every
+      sighting moves; the glass must ignore visibility and block pawns; the
+      replaced scene pieces lose their collision; the crime verdict is
+      re-proven on the runner at ten minutes a try. Told to Jafar.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
