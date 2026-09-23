@@ -19,6 +19,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-23 **May I download what timing Nano on the card needs?** You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
+  - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
+  - (b) No; Nano stays on the processor, which leaves the card to the game.
+  - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
 - 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
   - **(a) Yes (my recommendation).** The cheapest real test of whether a better ready-made model does the router's job.
   - (b) Only the two smallest.
