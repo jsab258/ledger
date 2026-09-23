@@ -47,10 +47,16 @@ def anim_path(stem):
     return "%s/%s/A_%s" % (PACKAGE_ROOT, stem, stem)
 
 
-def people_line(asked, made, seconds, notes):
+def people_line(asked, made, seconds, notes, sizes=None):
+    # peopleSizes, 23 September: each person's height in centimetres as the
+    # imported mesh has it, and how many skeletal meshes the importer made of
+    # the file. Five people imported "5/5" and stood nowhere to be seen, and
+    # the line could not say whether they were 2 cm tall or a belt apiece.
     return ("peopleImportStatus=%s peopleImported=%d/%d peopleImportSeconds=%.1f peopleImportNote=%s"
+            " peopleSizes=%s"
             % ("OK" if asked and made == asked else ("NOTHING" if not asked else "PARTIAL"),
-               made, asked, seconds, ("/".join(notes) or "none").replace(" ", "~")[:200]))
+               made, asked, seconds, ("/".join(notes) or "none").replace(" ", "~")[:200],
+               ("/".join(sizes or []) or "none").replace(" ", "~")[:300]))
 
 
 def selftest():
@@ -71,6 +77,7 @@ def selftest():
     ok("and the animation", anim_path("joe-pockets") == "/Game/Ledger/People/joe-pockets/A_joe-pockets")
     ok("the line carries its denominator", "peopleImported=4/5" in people_line(5, 4, 1.0, ["x"]))
     ok("nothing asked says NOTHING, not OK", people_line(0, 0, 0.0, []).startswith("peopleImportStatus=NOTHING"))
+    ok("the sizes ride the line", "peopleSizes=joe:178cm:1mesh" in people_line(1, 1, 1.0, [], ["joe:178cm:1mesh"]))
     print("import_people selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 
@@ -84,6 +91,7 @@ def main():
     notes = []
     found = stems(root)
     made = 0
+    sizes = []
     for stem in found:
         dest = "%s/%s" % (PACKAGE_ROOT, stem)
         try:
@@ -99,8 +107,17 @@ def main():
             task.set_editor_property("save", True)
             unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
             mesh = anim = None
+            meshes = 0
+            tall = -1.0
             for p in lib.list_assets(dest, recursive=True, include_folder=False):
                 a = lib.load_asset(p)
+                if isinstance(a, unreal.SkeletalMesh):
+                    meshes += 1
+                    try:
+                        ext = a.get_bounds().box_extent
+                        tall = max(tall, 2.0 * float(ext.z))
+                    except Exception:
+                        pass
                 if isinstance(a, unreal.SkeletalMesh) and mesh is None:
                     mesh = p
                 elif isinstance(a, unreal.AnimSequence):
@@ -108,6 +125,7 @@ def main():
                     # loop is the clip; a one-frame pose is not.
                     if anim is None or a.get_play_length() > lib.load_asset(anim).get_play_length():
                         anim = p
+            sizes.append("%s:%dcm:%dmesh" % (stem.split("-")[0], int(round(tall)), meshes))
             if mesh is None or anim is None:
                 notes.append("%s-%s" % (stem, "no-mesh" if mesh is None else "no-anim"))
                 continue
@@ -122,7 +140,7 @@ def main():
                 notes.append("%s-rename-did-not-take" % stem)
         except Exception as e:
             notes.append("%s-raised-%s" % (stem, str(e).splitlines()[0][:60] if str(e) else "?"))
-    line = people_line(len(found), made, time.time() - t0, notes)
+    line = people_line(len(found), made, time.time() - t0, notes, sizes)
     with open(out, "a", encoding="utf-8") as fh:
         fh.write(line + "\n")
     print("import_people: " + line)
