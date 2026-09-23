@@ -454,10 +454,15 @@ MATERIALS = (
     # pillar box's red, gloss-painted cast iron; galvanised steel for the
     # dustbins; the kiosk's anodised frame and its dark fascia band.
     ("pillarbox_red", (0.380, 0.012, 0.012), 0.32),
-    # STANDING WATER (_standing_water): dark, because what a puddle shows of
-    # itself is the wet ground under it, and nearly mirror-smooth, because
-    # still water is; its brightness is what it reflects.
-    ("standing_water", (0.016, 0.017, 0.019), 0.03),
+    # STANDING WATER (_standing_water): the wet ground under it, darker than
+    # the damp ground round it, and nearly mirror-smooth, because still water
+    # is. NOT BLACK: the first try was 0.016 and every puddle came out a black
+    # hole in the game engine, because at a standing eye's angle calm water
+    # reflects only five to fifteen per cent of what it faces, and what it
+    # faces is brick. Water over asphalt on the road and in the gutters, water
+    # over the flags on the footway, each about 0.6 of its ground.
+    ("standing_water", (0.050, 0.050, 0.052), 0.05),
+    ("standing_water_flags", (0.075, 0.056, 0.043), 0.05),
     ("galvanised",  (0.300, 0.310, 0.320), 0.48),
     ("kiosk_frame", (0.340, 0.345, 0.350), 0.35),
     ("kiosk_band",  (0.018, 0.024, 0.045), 0.40),
@@ -655,6 +660,7 @@ SURFACE_OF = {
     "steel_dark":   ("metal", 0.35),
     "pillarbox_red": (None, 0.0),
     "standing_water": (None, 0.0),
+    "standing_water_flags": (None, 0.0),
     "galvanised":   (None, 0.0),
     "kiosk_frame":  (None, 0.0),
     "kiosk_band":   (None, 0.0),
@@ -2714,7 +2720,7 @@ def _water_obstacles(root):
     return feet
 
 
-def _water_sheet(out, pid, cx, cy, rx, ry, ground, seed, sides=16):
+def _water_sheet(out, pid, cx, cy, rx, ry, ground, seed, sides=16, material="standing_water"):
     """A puddle: an irregular closed outline round (cx, cy), each vertex WATER_LIFT_M
     over the ground's own height there, fanned from its centre."""
     import random
@@ -2727,7 +2733,7 @@ def _water_sheet(out, pid, cx, cy, rx, ry, ground, seed, sides=16):
         x, y = cx + rx * wob * math.cos(a), cy + ry * wob * math.sin(a)
         vs.append((x, y, ground(y) + WATER_LIFT_M))
     fs = [(0, 1 + k, 1 + (k + 1) % sides) for k in range(sides)]
-    out.append({"id": pid, "material": "standing_water", "kind": "mesh", "verts": vs, "faces": fs,
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": vs, "faces": fs,
                 "note": "standing-water"})
 
 
@@ -2744,7 +2750,8 @@ def _standing_water(out, root=None):
         for shift in (0.0, 0.8, -0.8, 1.6, -1.6):
             x = cx + shift
             if clear(x - rx * 1.34, x + rx * 1.34, cy - ry * 1.34, cy + ry * 1.34):
-                _water_sheet(out, "water_puddle_%d" % k, x, cy, rx, ry, ground, 2309 + k)
+                _water_sheet(out, "water_puddle_%d" % k, x, cy, rx, ry, ground, 2309 + k,
+                             material="standing_water_flags" if ground is footway_z else "standing_water")
                 made += 1
                 placed = True
                 break
@@ -6120,7 +6127,7 @@ def _street_emit(key, lettered, night):
 BEVEL_CORNER_X = (2.0, 10.0)
 BEVEL_CORNER_Y = (2.9, 5.6)
 BEVEL_WIDTH_M = 0.006
-BEVEL_SKIP = ("glass", "standing_water", "sign_", "card_", "interior")
+BEVEL_SKIP = ("glass", "standing_water", "sign_", "card_", "interior")  # prefix: both waters
 
 
 def _bevel_corner(bpy):

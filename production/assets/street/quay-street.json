@@ -2054,11 +2054,11 @@
    "material": "standing_water",
    "base_material": "standing_water",
    "linear_rgb": [
-    0.016,
-    0.017,
-    0.019
+    0.05,
+    0.05,
+    0.052
    ],
-   "roughness": 0.03,
+   "roughness": 0.05,
    "surface_map": null,
    "tile_m": 0.0,
    "decal": null,
@@ -2069,7 +2069,29 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 231
+   "faces": 71
+  },
+  {
+   "mesh": "street_standing_water_flags",
+   "material": "standing_water_flags",
+   "base_material": "standing_water_flags",
+   "linear_rgb": [
+    0.075,
+    0.056,
+    0.043
+   ],
+   "roughness": 0.05,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 160
   },
   {
    "mesh": "street_steel_dark",
