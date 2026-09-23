@@ -6918,7 +6918,10 @@ int main(int argc, char** argv)
 			if (Rw.Mesh == "street_brick_red") { Brick = &Rw; }
 		}
 		std::printf("    street look: textured=%d whole=%d glowing=%d\n", Textured, TexturedWhole, Glowing);
-		Check(Textured >= 20 && TexturedWhole == Textured,
+		// FIFTEEN, NOT TWENTY, since 23 September: gloss paint (the joinery,
+		// the fascias, the frames, the doors, the stallriser) is a flat colour
+		// by decision, so five surfaces left the photographs on purpose.
+		Check(Textured >= 15 && TexturedWhole == Textured,
 		      "every textured street surface carries its photograph's average and its tile size");
 		Check(Glowing >= 6, "the tubes, the lit rooms, the pictured rooms and the nets carry a glow");
 		Check(Brick != nullptr && std::fabs(LedgerStreet::TilesPerMetre(*Brick) - 1.0 / 0.55) < 1e-9,
