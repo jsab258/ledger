@@ -292,6 +292,15 @@ holds and has to be corrected or widened.
 | **Where** | `ledger/Assets/Sky/polyhaven/`, four 2k `.hdr` files |
 | **What** | one sky per photographed hour: overcast noon (shot near Belfast), industrial sunset, overcast night glow, misty morning — reference and, where V6 chooses, ambient source |
 
+## Scanned materials — Poly Haven, CC0
+
+| | |
+|---|---|
+| **Source** | **Poly Haven** (https://polyhaven.com), 2k JPG maps from dl.polyhaven.org via api.polyhaven.com/files, downloaded 23 September on Jafar's yes for the PS5 corner |
+| **Licence** | CC0 1.0 Universal — polyhaven.com/license |
+| **Where** | `production/assets/scanned/polyhaven/<asset>/`: `brick_4` (a warm red stretcher-bond brick, the Hook sheet's nearest) and `brick_wall_001` (a darker variegated brick, the alternate); diffuse, DirectX normal, roughness and ambient occlusion each |
+| **What** | the corner's scanned brick, for the "best free scanned materials" half of the PS5 experiment |
+
 ## What this project made itself
 
 | | |

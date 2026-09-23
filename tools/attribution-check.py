@@ -179,6 +179,9 @@ WATCHED = {
     # `vignette` is caught by the stray sweep rather than absorbed silently.
     "production/assets/vignette/surfaces": "vignette-surfaces",
     "ledger/Assets/Resources/Sky": "Poly Haven",
+    # THE PS5 CORNER'S SCANNED MATERIALS, 23 September, downloaded on Jafar's
+    # yes: Poly Haven textures, CC0, 2k maps, one folder per material.
+    "production/assets/scanned": "Scanned materials — Poly Haven",
     # NOT AN ASSET DROP: the visual bar's reference frames. Five GTA V
     # screenshots supplied by Jafar, committed byte-exact after the project
     # spent three days with its visual target existing only as a prose
