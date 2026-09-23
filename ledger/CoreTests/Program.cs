@@ -4106,6 +4106,25 @@ namespace Ledger.CoreTests
             var missingArg = IntentRouter.Validate("{\"kind\":\"verb\",\"verb\":\"set_cut\"}", ctx);
             Check(missingArg.Kind == IntentKind.Narrative, "a verb missing a required argument is not half-executed");
 
+            // A NUMBER IS A VALUE, 23 September: the paid router sent the right
+            // amount as a JSON number and was refused as if it had sent none.
+            // It is matched against the same closed set, so 999 is still out.
+            var money = new IntentContext { SpeakingTo = "Lena", Scene = "the pub, after close" };
+            money.Verbs.Add(new VerbSpec("pay_off", "pay them to keep quiet").WithArg("amount", "120", "240"));
+            var numeric = IntentRouter.Validate(
+                "{\"kind\":\"verb\",\"verb\":\"pay_off\",\"args\":{\"amount\":240}}", money);
+            Check(numeric.Kind == IntentKind.Mechanical && numeric.Arg("amount") == "240",
+                "an amount sent as a number is read, and canonicalised to the set's own text");
+            var numericOut = IntentRouter.Validate(
+                "{\"kind\":\"verb\",\"verb\":\"pay_off\",\"args\":{\"amount\":999}}", money);
+            var numericHalf = IntentRouter.Validate(
+                "{\"kind\":\"verb\",\"verb\":\"pay_off\",\"args\":{\"amount\":240.5}}", money);
+            var numericList = IntentRouter.Validate(
+                "{\"kind\":\"verb\",\"verb\":\"pay_off\",\"args\":{\"amount\":[240]}}", money);
+            Check(numericOut.Kind == IntentKind.Narrative && numericHalf.Kind == IntentKind.Narrative
+                  && numericList.Kind == IntentKind.Narrative,
+                "and a number outside the set, a fraction, or a list is still refused");
+
             var extraArg = IntentRouter.Validate(
                 "{\"kind\":\"verb\",\"verb\":\"set_cut\",\"args\":{\"policy\":\"fair\",\"amount\":\"9999\"}}", ctx);
             Check(extraArg.Kind == IntentKind.Narrative, "an undeclared argument is treated as confusion, not extra credit");
