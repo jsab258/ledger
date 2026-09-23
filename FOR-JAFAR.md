@@ -57,6 +57,14 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **Giving the new street its own walls to bump into is bigger
+  than it looked, and I have left it for a sitting of its own.** Today the
+  playable street shows the Blender buildings but you walk against the old
+  street's invisible walls, which are nearly the same shape. Swapping them
+  means the crime's witnesses see along new lines, the see-through glass
+  must not block their view, and every sighting has to be proven again on
+  the build machine, ten minutes a try. That will not fit in what is left
+  today, so the rest of today goes to the next list item instead.
 - 2026-09-23 **The two parked cars were facing the wrong way, and are
   turned round.** The sheet's cars show their fronts, and so would a
   British street: on the right-hand kerb the traffic comes toward you and
