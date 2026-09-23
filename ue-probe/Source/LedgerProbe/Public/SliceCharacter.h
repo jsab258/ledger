@@ -16,6 +16,7 @@
 
 class USpringArmComponent;
 class UCameraComponent;
+class UNavigationInvokerComponent;
 
 UCLASS()
 class ALedgerSliceCharacter : public ACharacter
@@ -54,4 +55,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UCameraComponent> Camera;
+
+	// THE NAVIGATION MESH IS BUILT AROUND THE PLAYER (and, later, the
+	// walkers): the street is made at run time, so its mesh is too.
+	UPROPERTY(VisibleAnywhere)
+	TObjectPtr<UNavigationInvokerComponent> NavInvoker;
 };

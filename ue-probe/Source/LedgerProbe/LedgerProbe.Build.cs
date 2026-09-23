@@ -56,6 +56,9 @@ public class LedgerProbe : ModuleRules
 		// AudioMixer, 23 September: the engine's own output recorder, so the
 		// walk's sound is committed as a recording anyone can listen to.
 		PrivateDependencyModuleNames.Add("AudioMixer");
+		// NavigationSystem, 23 September: the slice's navigation mesh, built
+		// at run time around invokers, and the path query that proves it.
+		PrivateDependencyModuleNames.Add("NavigationSystem");
 		// EXCEPTIONS OFF, AND THIS WAS PRE-RULED BEFORE THE BUILD THAT
 		// NEEDED IT. A director reading the Core port on 2026-09-08 found
 		// that Suspicion.h throws and CoreGolden.h compiles a try/catch into
