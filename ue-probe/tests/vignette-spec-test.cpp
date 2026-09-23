@@ -6886,8 +6886,14 @@ int main(int argc, char** argv)
 		std::printf("    street stands in for %d of %d pieces, keeps %d\n", Gone, (int)S.Pieces.size(), Kept);
 		Check(Gone > 300 && KeptTerrace == 0,
 		      "the street stands in for every terrace piece of the scene file");
-		Check(GoneFurniture == 0 && Kept > 100,
-		      "and keeps the lamps, the kiosk and the pillar box, which it does not build");
+		// TURNED ROUND 23 September: the street BUILDS them now - the
+		// lighting-column recipe's swan-neck lamps and the kiosk, pillar box
+		// and dustbins to the scene file's own dimensions (the presentable
+		// checklist) - so it stands in for them. Twenty-two pieces: four
+		// columns of four, four lanterns, the kiosk's eleven, the pillar box's
+		// four, the dustbins' four, less none. What it still keeps is the rest.
+		Check(GoneFurniture >= 30 && Kept > 100,
+		      "and stands in for the lamps, the kiosk and the pillar box, which it now builds");
 		Check(LedgerStreet::Replaced(Sc.Replaced, "prop_roll_top_chimney_0", "mesh", "roll_top_chimney")
 		      && !LedgerStreet::Replaced(Sc.Replaced, "prop_skip_0", "mesh", "skip")
 		      && LedgerStreet::Replaced(Sc.Replaced, "decal_anything", "decal", ""),

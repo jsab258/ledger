@@ -11,7 +11,12 @@
    "ground_",
    "kerb",
    "yellow_",
-   "gully_"
+   "gully_",
+   "column",
+   "lantern",
+   "kiosk",
+   "pillarbox",
+   "dustbin"
   ],
   "piece_shapes": [
    "decal"
@@ -510,6 +515,28 @@
    "faces": 108
   },
   {
+   "mesh": "street_galvanised",
+   "material": "galvanised",
+   "base_material": "galvanised",
+   "linear_rgb": [
+    0.3,
+    0.31,
+    0.32
+   ],
+   "roughness": 0.48,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 450
+  },
+  {
    "mesh": "street_glass_eg_bay0",
    "material": "glass_eg_bay0",
    "base_material": "glass",
@@ -595,7 +622,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 18
+   "faces": 42
   },
   {
    "mesh": "street_glass_eg_bay3",
@@ -1394,6 +1421,28 @@
    "faces": 36
   },
   {
+   "mesh": "street_grime",
+   "material": "grime",
+   "base_material": "grime",
+   "linear_rgb": [
+    0.078,
+    0.061,
+    0.048
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 72
+  },
+  {
    "mesh": "street_interior",
    "material": "interior",
    "base_material": "interior",
@@ -1467,6 +1516,50 @@
    "faces": 24
   },
   {
+   "mesh": "street_kiosk_band",
+   "material": "kiosk_band",
+   "base_material": "kiosk_band",
+   "linear_rgb": [
+    0.018,
+    0.024,
+    0.045
+   ],
+   "roughness": 0.4,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_kiosk_frame",
+   "material": "kiosk_frame",
+   "base_material": "kiosk_frame",
+   "linear_rgb": [
+    0.34,
+    0.345,
+    0.35
+   ],
+   "roughness": 0.35,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 134
+  },
+  {
    "mesh": "street_lead",
    "material": "lead",
    "base_material": "lead",
@@ -1491,6 +1584,28 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 156
+  },
+  {
+   "mesh": "street_lens_amber",
+   "material": "lens_amber",
+   "base_material": "lens_amber",
+   "linear_rgb": [
+    0.78,
+    0.36,
+    0.04
+   ],
+   "roughness": 0.2,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.0,
+   "emit_night": 8.0,
+   "faces": 24
   },
   {
    "mesh": "street_paint_door",
@@ -1556,7 +1671,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 48
+   "faces": 54
   },
   {
    "mesh": "street_paint_yellow",
@@ -1608,6 +1723,28 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 42
+  },
+  {
+   "mesh": "street_pillarbox_red",
+   "material": "pillarbox_red",
+   "base_material": "pillarbox_red",
+   "linear_rgb": [
+    0.38,
+    0.012,
+    0.012
+   ],
+   "roughness": 0.32,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 173
   },
   {
    "mesh": "street_pot_buff",
@@ -1888,7 +2025,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 186
+   "faces": 928
   },
   {
    "mesh": "street_stone",
@@ -1914,7 +2051,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 246
+   "faces": 252
   },
   {
    "mesh": "street_tile_patterned",
