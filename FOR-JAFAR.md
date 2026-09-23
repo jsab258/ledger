@@ -23,7 +23,8 @@ Nothing waiting. Everything below was answered on 23 September and is in Resolve
 
 ## Things you should know
 
-- 2026-09-23 **Waiting on your hands:** the Kingdom Come Deliverance 2 frame for the PS5 corner, and your Epic sign-in inside Unreal, once, for the MetaHuman.
+- 2026-09-23 **Your two Kingdom Come: Deliverance II frames are in**, kept with the other references. Beside our corner the gap reads plainly: every surface there has texture and wear, the street is thick with carts, barrels and market stalls, and the light is direct sun with hard shadow. Both frames are sunny, not overcast, so I'll compare surfaces, wear and clutter against them, not the light. The four scanned surfaces for the corner (brick, flags, road, paint) are downloaded and go on next.
+- 2026-09-23 **Waiting on your hands:** your Epic sign-in inside Unreal, once, for the MetaHuman.
 - 2026-09-23 **The street's sound is proven positional, with a recording you can play.** The distant traffic is heard from the south end of the street, and when the walk turns its view, the sound swings from the middle to the right. That's presentable's last item, done. It's very quiet at that distance, so its level wants tuning; nobody spoke in the eight seconds recorded.
 - 2026-09-23 **The navigation mesh the walkers need wasn't made on its first try.** Unreal set up its navigation system but built no mesh around the slice's player. The next run will record the engine's own reasons, and it's the first thing to fix before walkers. Nothing else is affected.
 - 2026-09-23 **The slice's player walks.** The first frames are in: a body in the street seen over the shoulder, walking down the parade's pavement, and Elizabeth turning her head to him as he passes. One bug is already visible: he walks straight through her, because the street's people have nothing solid to them yet. It's on the checklist.
