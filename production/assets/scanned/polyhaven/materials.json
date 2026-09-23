@@ -4,14 +4,15 @@
     {
       "surface": "brick",
       "asset": "brick_4",
-      "covers_m": 0.5,
+      "covers_m": 1.05,
       "authors": "Rob Tuytel",
       "why": "warm red stretcher bond, the sheet's nearest of twenty",
       "gain_to_sheet_rgb": [
         0.68,
         0.46,
         0.41
-      ]
+      ],
+      "covers_note": "MEASURED 24 September from the map itself: 14 courses a tile, at a British 75 mm course is 1.05 m. The 0.5 first used put the bricks at half size."
     },
     {
       "surface": "brick_alternate",
@@ -28,14 +29,15 @@
     {
       "surface": "footway",
       "asset": "concrete_pavement_02",
-      "covers_m": 1.8,
+      "covers_m": 3.6,
       "authors": "Charlotte Baglioni",
-      "why": "square concrete flags, three a side at 600 mm",
+      "why": "square concrete flags, six a side at 600 mm",
       "gain_to_sheet_rgb": [
         0.61,
         0.52,
         0.4
-      ]
+      ],
+      "covers_note": "MEASURED 24 September from the map itself: six flags a side, at 600 mm is 3.6 m. The 1.8 first used counted three a side and put the flags at half size."
     },
     {
       "surface": "road",

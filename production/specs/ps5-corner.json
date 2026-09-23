@@ -352,7 +352,7 @@
         "production/assets/scanned/polyhaven/brick_4/brick_4_nor_dx_2k.jpg",
         "production/assets/scanned/polyhaven/brick_4/brick_4_rough_2k.jpg"
       ],
-      "covers_m": 0.5,
+      "covers_m": 1.05,
       "match_rgb": [
         0.479,
         0.298,
@@ -368,7 +368,7 @@
         "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_nor_dx_2k.jpg",
         "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_rough_2k.jpg"
       ],
-      "covers_m": 1.8,
+      "covers_m": 3.6,
       "match_rgb": [
         0.539,
         0.404,

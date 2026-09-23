@@ -21,14 +21,13 @@ FOR-JAFAR.md. Check free memory before anything heavy; MetaHuman Creator only
 with 10 GB free; never end another session's processes. Before he wakes,
 FOR-JAFAR.md opens with "Overnight", five lines.
 
-- [x] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
+- [ ] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
       paint (production/assets/scanned/polyhaven, true scale and the sheet's
       gain in materials.json) on the corner, beside the Kingdom Come frames.
-      DONE 24 Sep (production/d1-probe/ue-corner_scanned.png,
-      production/d1-probe/ue-hook_scanned.png): brick and paint better, road
-      the same, flags worse (small pavers), no measurable cost; the gap to
-      KCD2 is shape and set dressing, not surfaces. Flags go back to drawn
-      with the next probe push.
+      First run (3b658691): no measurable cost, paint mottled, road the same;
+      the gap to KCD2 is shape and set dressing. BUT brick and flags went on
+      at HALF SIZE (covers_m misread; measured from the maps: brick 1.05 m,
+      flags 3.6 m). Re-running at true size; judge that frame, then done.
 - [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
       engine's own navigation log in the slice walk's verdict. 3b658691's
       agent alone left navData=none (no bounds volume); e934f1e7 spawns one
