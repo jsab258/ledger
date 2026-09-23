@@ -67,6 +67,12 @@ between them.
   - (c) Buy or download period characters. That's money or a download, so it's yours to say.
   - Meanwhile (a), when the walkers are built; the navigation they walk on is being built now.
 
+- 2026-09-23 **The AI tester's hands: how does it look at the screen and press keys?** Unreal already provides the rest. Its test launcher (Gauntlet) starts the packaged game, stops it at a time limit, and collects the log, any crash and a verdict. Nothing in Unreal can look at the screen and press keys from outside, so that part has to be an AI with computer control, working on your desktop.
+  - **(a) Claude's computer control through the paid API, run from a short script at the end of a sitting that changed the slice, while you're away from the PC (my recommendation).** It costs API time per run, a figure I'll measure on the first run. While it plays it owns the mouse and keyboard, and the PC mustn't be locked or asleep.
+  - (b) A free local vision model doing the same. No cost, but much weaker at noticing what's wrong.
+  - (c) No AI tester for now; you or friends find the breakages.
+  - Meanwhile nothing is built. It couldn't run at the end of this sitting, because it doesn't exist yet.
+
 ## Things you should know
 
 - 2026-09-23 **People turn their heads to look at you now.** Walk within five metres in front of someone and their head eases round to your eyes, using Unreal's own look-at, and eases back when you leave. The picture is Elizabeth before and after. The street also makes sound: a distant traffic hum from the far end, and each of the six people says a line now and then from where they stand. That's confirmed placed and playing. A recording of the walk is on its way, so you can hear it change as you move.
