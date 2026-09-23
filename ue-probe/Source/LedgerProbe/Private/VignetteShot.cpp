@@ -1330,7 +1330,7 @@ namespace
 	// in it". Its class and its place come from the corner file's
 	// "metahuman" entry; it is shown in the corner's own shots and hidden in
 	// every other, so the street's comparison frames do not move.
-	std::string GMhClass;
+	std::string GMhClass, GMhIdle;
 	double GMhX = 0.0, GMhY = 0.12, GMhZ = 0.0, GMhFaceDeg = 0.0;
 	TWeakObjectPtr<AActor> GMhActor;
 	std::string GMhNote = "not-asked";
@@ -1444,6 +1444,7 @@ namespace
 				GMhY = LedgerStreet::NumOr(*Mh, "y_m", 0.12);
 				GMhZ = LedgerStreet::NumOr(*Mh, "z_m", 0.0);
 				GMhFaceDeg = LedgerStreet::NumOr(*Mh, "yaw_deg", 0.0);
+				GMhIdle = LedgerStreet::StrOr(*Mh, "idle");
 				GMhNote = GMhClass.empty() ? "no-class-named" : "asked";
 			}
 		}
@@ -2018,6 +2019,28 @@ namespace
 		A->SetActorHiddenInGame(true);
 		GMhActor = A;
 		GMhNote = "placed";
+		// ITS IDLE, 24 September: a street person's own idle retargeted onto
+		// its body (tools/ue/retarget_metahuman_idle.py), played on whichever
+		// of its skeletal meshes shares that clip's skeleton - the body.
+		if (!GMhIdle.empty())
+		{
+			UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, UTF8_TO_TCHAR(GMhIdle.c_str()));
+			int32 Playing = 0;
+			if (Idle != nullptr)
+			{
+				TArray<USkeletalMeshComponent*> Parts;
+				A->GetComponents(Parts);
+				for (USkeletalMeshComponent* C : Parts)
+				{
+					USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+					if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
+					C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+					C->PlayAnimation(Idle, true);
+					++Playing;
+				}
+			}
+			GMhNote = Idle == nullptr ? "placed/idle-not-found" : (Playing > 0 ? "placed/idle-playing" : "placed/idle-matched-no-skeleton");
+		}
 	}
 
 	// THE PARKED CARS, 23 September, for the presentable checklist: real-
