@@ -951,6 +951,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             Lena is "bookkeeper of the Hook Street pub" (LenaSetup.cs), where
             canon since D19 has Mickey's a minicab office on Quay Street. Each
             slice character's card rewritten to canon before they speak.
+            THE THREE TALKERS DONE 23 Sep: production/cast/cards/{rocco,lena,
+            sam}.md - Mickey's the minicab office on Quay Street (D19), no
+            drink, gambling or children (D18), 0 hits on the content gate's
+            own rules; everything else about each person kept as written. The
+            old cards in the Unity files stay as the legacy build has them.
       - [ ] TALKING: walk up, press a key, type a line; the router (fixed
             today) and the paid conversation model answer; a line on screen.
       - [ ] THEIR VOICES: the speech graphs on the card through onnxruntime
