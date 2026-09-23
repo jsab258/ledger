@@ -1181,7 +1181,7 @@ jobs:
           $decDests = 0
           $decNote = "generated-directory-not-in-this-checkout"
           if (Test-Path $decSrc) {
-            $decNote = "staged/ambientcg-sets-not-staged-because-no-stain-material-exists-yet"
+            $decNote = "staged/with-one-stain-picture-per-ambientcg-set"
             $decFiles = @(Get-ChildItem $decSrc -File -Filter "*.png" -ErrorAction SilentlyContinue)
             $decAsked = $decFiles.Count
             foreach ($d in @($proj, $binDir)) {
@@ -1198,6 +1198,16 @@ jobs:
               $landed = @(Get-ChildItem $dest -File -ErrorAction SilentlyContinue).Count
               $decStaged += $landed
               $decDests++
+              # AND THE STAINS, 24 September, now M_LedgerGrime can draw them:
+              # one picture per ambientCG set (<set>/<set>.png, RGBA), which is
+              # what SpawnStain loads - not the sets' other 288 MB of maps.
+              foreach ($sd in @(Get-ChildItem "ledger/Assets/StreamingAssets/Decals/ambientcg" -Directory -ErrorAction SilentlyContinue)) {
+                $one = Join-Path $sd.FullName ($sd.Name + ".png")
+                if (-not (Test-Path $one)) { continue }
+                $sdest = Join-Path $d ("LedgerDecals\ambientcg\" + $sd.Name)
+                New-Item -ItemType Directory -Force -Path $sdest | Out-Null
+                Copy-Item $one (Join-Path $sdest ($sd.Name + ".png")) -Force -ErrorAction SilentlyContinue
+              }
             }
             if ($decDests -eq 0) { $decNote = "nothing-staged-neither-destination-directory-exists" }
             elseif ($decAsked -eq 0) { $decNote = "nothing-staged-the-generated-directory-is-empty" }
