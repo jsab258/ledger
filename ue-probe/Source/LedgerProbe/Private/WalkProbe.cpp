@@ -117,6 +117,8 @@
 #include "IImageWrapperModule.h"
 #include "AudioDevice.h"
 #include "AudioMixerBlueprintLibrary.h"
+#include "NavigationSystem.h"
+#include "NavigationPath.h"
 
 #include <string>
 #include <vector>
@@ -1447,6 +1449,32 @@ namespace
 			LedgerVignetteShot::ControlQuadsSpawnedCount(), LedgerSurface::ControlQuadCount(),
 			LedgerVignetteShot::ControlQuadsSpawnedCount() == 0 ? TEXT("ABSENT") : TEXT("PRESENT")));
 
+		// THE NAVIGATION MESH, 23 September, for the slice's walkers: whether
+		// the engine made one around the player, and a path from where the
+		// walk ended to Mickey's cab rank (7.5, 3.8 m in the cast file). The
+		// probe's own pawn carries no invoker, so its walk says none.
+		{
+			UWorld* NavWorld = GameWorld();
+			UNavigationSystemV1* Nav = NavWorld != nullptr ? FNavigationSystem::GetCurrent<UNavigationSystemV1>(NavWorld) : nullptr;
+			const bool bNavData = Nav != nullptr && Nav->GetDefaultNavDataInstance(FNavigationSystem::DontCreate) != nullptr;
+			int32 Points = 0;
+			double LengthCm = 0.0;
+			bool bPartial = false;
+			if (bNavData && GPawn != nullptr)
+			{
+				const FVector Rank(750.0, 380.0, 10.0);
+				if (UNavigationPath* Path = UNavigationSystemV1::FindPathToLocationSynchronously(NavWorld, GPawn->GetActorLocation(), Rank))
+				{
+					Points = Path->PathPoints.Num();
+					LengthCm = Path->GetPathLength();
+					bPartial = Path->IsPartial();
+				}
+			}
+			Out.Add(FString::Printf(
+				TEXT("navSystem=%s navData=%s navPathToRankPoints=%d navPathToRankCm=%.0f navPathPartial=%s"),
+				Nav != nullptr ? TEXT("yes") : TEXT("NONE"), bNavData ? TEXT("yes") : TEXT("none"),
+				Points, LengthCm, bPartial ? TEXT("yes") : TEXT("no")));
+		}
 		Out.Add(FString::Printf(
 			TEXT("walkAudioDevice=%s walkAudioRecorded=%s walkAudioFile=%s.wav/written-after-this-line-see-the-workflow's-walkAudioCollected"),
 			bAudioDevice ? TEXT("yes") : TEXT("NONE/a-recording-would-be-silence"),

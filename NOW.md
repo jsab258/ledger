@@ -1060,8 +1060,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. The look is in the game engine and matched to the flipped sheet region by region (sky, brick, road, pavement, far end, shop within about 10 to 17 per cent), with the haze, a proper kerb, the cars turned, smooth paint, relief tile and the night held; the pictures are pair-03-day and ue-hook-dusk-02.
-2. Stage 3 on the shipping engine now has schedules: the crowd's day ported, 21,550 golden rows agreeing inside the engine, and an independent check that could not break it.
-3. The playable street is the Blender street with its own walls: the crime and the walk proven on it on the runner, the broken window and the brick on the shop floor showing again.
-4. Waiting on Jafar: decision 7 (rumour reach), decision 8 (canon's west-side wording), and whether the day's fog cap stays his.
-5. Next: the west side after decision 8; the cars' glass and flanks when the town needs them; the old furniture's look, a two-engine change. Set aside after two tries: the flags' wet shine and a drawn asphalt.
+1. Presentable: cars, props, light, wet, people and turning heads are proven on the runner (pair-06, heads-2026-09-23); the street's sound is placed and playing, its walk recording is the last evidence.
+2. The plan is ROADMAP.md's sorted checklist (963 items plus J01-J03, G0-G12 in DECISIONS.md), counted by tools/stage-check.py at the top of FOR-JAFAR.md; nine items done with evidence linked.
+3. The slice has begun on Unreal's framework: a player that stands, walks and runs (-LedgerSlice, stand-in body), a fixed-step clock proven frame-rate independent, and the cast readable in the engine; its walk frames come from the probe.
+4. The PS5 corner's first half is reported (features barely change the picture, 2.6x the cost); its content half and the Nano test wait on Jafar's yes to the downloads.
+5. Next: the slice's walkers (navigation, AI, their bodies), then talking by the helper route if Jafar agrees; the AI tester's shape from the research into what Unreal provides.

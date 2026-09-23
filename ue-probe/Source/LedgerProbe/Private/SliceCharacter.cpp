@@ -11,6 +11,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "InputCoreTypes.h"
+#include "NavigationInvokerComponent.h"
 
 const TCHAR* ALedgerSliceCharacter::MeshPath()
 {
@@ -49,6 +50,9 @@ ALedgerSliceCharacter::ALedgerSliceCharacter()
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(Boom, USpringArmComponent::SocketName);
 	Camera->bUsePawnControlRotation = false;
+
+	NavInvoker = CreateDefaultSubobject<UNavigationInvokerComponent>(TEXT("NavInvoker"));
+	NavInvoker->SetGenerationRadii(3000.0f, 5000.0f);
 
 	// A PERSON FROM BLENDER FACES +Y and stands on its origin: turned to the
 	// character's +X and lowered to the capsule's foot.
