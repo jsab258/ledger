@@ -1636,10 +1636,11 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/10 lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/13 lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, (int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposureBias,
+			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
 			(int)GStreetFilm, (int)GStreetGlassHidden,
@@ -2483,7 +2484,8 @@ namespace
 	{
 		++GSkyLumDrive.Calls;
 		const double Want = LedgerVignette::SkyDomeLuminance(
-			C.SkyIntensity, (double)kSkyLuminanceGain * GLook.SkySeenGain);
+			C.SkyIntensity, (double)kSkyLuminanceGain
+			                * (C.SunOn ? GLook.SkySeenGain : GLook.SkySeenGainNight));
 		if (!LedgerVignette::SkyLumNeeded(GSkyLumDrive, Want))
 		{
 			++GSkyLumDrive.Skipped;
@@ -2715,7 +2717,8 @@ namespace
 				// OFF THE CONDITION, NOT OFF A CONSTANT KEYED ON SunOn. The
 				// ladder's control row is a DAY condition with the sky at
 				// 0.35, which the old pair of constants could not say.
-				SC->SetIntensity((float)(C.SkyIntensity * GLook.SkyLightGain));
+				SC->SetIntensity((float)(C.SkyIntensity
+				                         * (C.SunOn ? GLook.SkyLightGain : GLook.SkyLightGainNight)));
 				// RECAPTURED EXPLICITLY ON THE CHANGE. Real-time capture
 				// refreshes on its own, but a shot is photographed a fixed
 				// number of frames after the condition changes and a sky
@@ -3132,6 +3135,12 @@ namespace
 				PPW.bOverride_AutoExposureMaxBrightness = PinWrite.bOverride;
 				PPW.AutoExposureMinBrightness           = (float)PinWrite.Min;
 				PPW.AutoExposureMaxBrightness           = (float)PinWrite.Max;
+				// THE NIGHT'S BIAS, in stops, from the look file: an unpinned
+				// night is left to the automatic exposure, which lifts a dark
+				// street to middle grey, and a dusk frame is darker than that.
+				// Written on every shot, zero by day, so no shot inherits it.
+				PPW.bOverride_AutoExposureBias = !GExposurePinFamilySunOn;
+				PPW.AutoExposureBias = GExposurePinFamilySunOn ? 0.0f : (float)GLook.NightExposureBias;
 				const FPostProcessSettings& PP = CC->PostProcessSettings;
 				// ASKED BESIDE READ, PER SHOT, THE WAY THE LIGHT AIM LINE
 				// DOES IT. A value that lands on the game thread and never
