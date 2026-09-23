@@ -902,7 +902,7 @@ namespace
 		}
 		// THE ENGINE'S OWN BOUNDS, AFTER SCALE AND ROTATION, NOT THE FILE'S
 		// NUMBERS A SECOND TIME. The same read the blocked-walk plant makes.
-		const FBox   Box  = GGrateActor->GetComponentsBoundingBox();
+		const FBox   Box  = GGrateActor->GetComponentsBoundingBox(true);
 		const FVector C   = Box.GetCenter();
 		const double TopZ = (double)Box.Max.Z;
 		const FVector AimAt((float)C.X, (float)C.Y, (float)TopZ);
@@ -1188,7 +1188,7 @@ namespace
 				VpW, VpH, GotLoc.X, GotLoc.Y, GotLoc.Z, GotRot.Pitch, GotRot.Yaw);
 			return;
 		}
-		const FBox    Box  = GGrateActor->GetComponentsBoundingBox();
+		const FBox    Box  = GGrateActor->GetComponentsBoundingBox(true);
 		const FVector C    = Box.GetCenter();
 		const double  TopZ = (double)Box.Max.Z;
 
@@ -1597,7 +1597,7 @@ namespace
 			GWallFound = true;
 			// THE ENGINE'S OWN BOUNDS, MEASURED AFTER SCALE AND ROTATION,
 			// NOT THE FILE'S NUMBERS A SECOND TIME (rule 4).
-			const FBox WallBox = Wall->GetComponentsBoundingBox();
+			const FBox WallBox = Wall->GetComponentsBoundingBox(true);
 			const FVector Cur = GPawn->GetActorLocation();
 			const double TargetY = (double)WallBox.Min.Y - kApproachClearanceCm;
 			const double TargetX = (double)WallBox.GetCenter().X;

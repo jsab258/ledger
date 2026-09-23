@@ -718,7 +718,10 @@ namespace
 			R.VictimBlocker = "no-window-asked-for";
 			return R;
 		}
-		const FVector VictimUE = Glass->GetComponentsBoundingBox().GetCenter();
+		// With non-colliding parts (23 September): when the street's own
+		// walls are on, the scene file's pane never collides, and the
+		// default bounds would put the victim at the origin.
+		const FVector VictimUE = Glass->GetComponentsBoundingBox(true).GetCenter();
 		R.VictimAt = ToStreet(VictimUE);
 		R.VictimMetres = LedgerCrime::Metres(R.EyeAt, R.VictimAt);
 		R.VictimOffAxisDeg = LedgerCrime::OffAxisDeg(R.EyeAt, R.WitnessYawDeg, R.VictimAt);
