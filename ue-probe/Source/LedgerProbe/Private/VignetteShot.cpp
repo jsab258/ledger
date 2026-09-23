@@ -1278,9 +1278,27 @@ namespace
 	{
 		using namespace LedgerVignette;
 		GCornerSets.clear();
-		const FString Path = FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("ps5-corner.json"));
+		// FOUND WHERE THE STREET'S OWN FILES ARE (FindStreetSidecar's three
+		// depths from the project and the binary), and beside the scene file
+		// last: the runner stages the scene file next to the game, not the
+		// repository's specs, so "beside the scene file" alone found nothing
+		// on the first run (cornerNote=no-corner-file, dae5538c).
+		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
+		TArray<FString> Cands;
+		Cands.Add(AbsProject(TEXT("../production/specs/ps5-corner.json")));
+		Cands.Add(AbsProject(TEXT("../../../../production/specs/ps5-corner.json")));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+			ExeDir, TEXT("../../../../../../production/specs/ps5-corner.json"))));
+		Cands.Add(FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("ps5-corner.json")));
 		FString Contents;
-		if (!FFileHelper::LoadFileToString(Contents, *Path)) { GCornerNote = "no-corner-file"; return; }
+		bool bFound = false;
+		for (int32 I = 0; I < Cands.Num() && !bFound; ++I)
+		{
+			FString C = Cands[I];
+			FPaths::CollapseRelativeDirectories(C);
+			bFound = FPaths::FileExists(C) && FFileHelper::LoadFileToString(Contents, *C);
+		}
+		if (!bFound) { GCornerNote = "no-corner-file"; return; }
 		Reader R(std::string(TCHAR_TO_UTF8(*Contents)));
 		Value Root;
 		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { GCornerNote = "corner-file-unreadable"; return; }
