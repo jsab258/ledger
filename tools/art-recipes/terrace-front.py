@@ -447,6 +447,13 @@ MATERIALS = (
     # the column that was accepted. lens_amber is the spec's own sodium
     # colour and is emissive at night.
     ("steel_dark",  (0.021, 0.021, 0.024), 0.42),
+    # THE STREET FURNITURE'S OWN, 23 September (_street_furniture): the
+    # pillar box's red, gloss-painted cast iron; galvanised steel for the
+    # dustbins; the kiosk's anodised frame and its dark fascia band.
+    ("pillarbox_red", (0.380, 0.012, 0.012), 0.32),
+    ("galvanised",  (0.300, 0.310, 0.320), 0.48),
+    ("kiosk_frame", (0.340, 0.345, 0.350), 0.35),
+    ("kiosk_band",  (0.018, 0.024, 0.045), 0.40),
     ("grime",       (0.078, 0.061, 0.048), 0.90),
     ("lens_amber",  (0.780, 0.360, 0.040), 0.20),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
@@ -639,6 +646,10 @@ SURFACE_OF = {
     "glass":        (None, 0.0),
     "lead":         ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
+    "pillarbox_red": (None, 0.0),
+    "galvanised":   (None, 0.0),
+    "kiosk_frame":  (None, 0.0),
+    "kiosk_band":   (None, 0.0),
     "interior":     (None, 0.0),
     "prop_timber":  ("wood", 0.5),
     "paint_yellow": (None, 0.0),
@@ -1952,6 +1963,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_rise(out)
     _north_approach(out)
     _pavement_dressing(out)
+    _street_furniture(out, root)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
     _repair_patches(out)
@@ -2499,6 +2511,145 @@ PAVEMENT_COVERS = ((6.4, 3.9),)                  # (x, y) centres, on the east f
 #: grate shot) sits 8 mm under this street's channel, so it showed in no
 #: frame; this one is flush with the channel the Blender road actually has.
 CHANNEL_GULLIES = (4.0, 12.0, 20.0, 31.0)        # x along the east channel
+
+
+def _cylinder_part(out, pid, material, cx, cy, z0, z1, r0, r1=None, sides=24, note=""):
+    """A closed cylinder or frustum standing on z0, as one mesh part."""
+    r1 = r0 if r1 is None else r1
+    vs, fs = [], []
+    for k in range(sides):
+        a = 2.0 * math.pi * k / sides
+        vs.append((cx + r0 * math.cos(a), cy + r0 * math.sin(a), z0))
+    for k in range(sides):
+        a = 2.0 * math.pi * k / sides
+        vs.append((cx + r1 * math.cos(a), cy + r1 * math.sin(a), z1))
+    fs.append(tuple(range(sides - 1, -1, -1)))
+    fs.append(tuple(range(sides, 2 * sides)))
+    for k in range(sides):
+        j = (k + 1) % sides
+        fs.append((k, j, sides + j, sides + k))
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": vs, "faces": fs, "note": note})
+
+
+def _dome_part(out, pid, material, cx, cy, z0, r, h, sides=24, rings=5, note=""):
+    """A shallow dome on z0: a pillar box's top, a dustbin's lid."""
+    vs, fs = [], []
+    for ring in range(rings + 1):
+        t = ring / float(rings)
+        rr = r * math.cos(t * math.pi / 2.0)
+        zz = z0 + h * math.sin(t * math.pi / 2.0)
+        for k in range(sides):
+            a = 2.0 * math.pi * k / sides
+            vs.append((cx + rr * math.cos(a), cy + rr * math.sin(a), zz))
+    for ring in range(rings):
+        for k in range(sides):
+            j = (k + 1) % sides
+            a0, a1 = ring * sides + k, ring * sides + j
+            b0, b1 = (ring + 1) * sides + k, (ring + 1) * sides + j
+            fs.append((a0, a1, b1, b0))
+    fs.append(tuple(range(sides - 1, -1, -1)))
+    out.append({"id": pid, "material": material, "kind": "mesh", "verts": vs, "faces": fs, "note": note})
+
+
+#: THE STREET FURNITURE THE SCENE FILE STOOD AS BOXES AND CYLINDERS, built to
+#: its own dimensions, 23 September, for the presentable checklist ("nothing
+#: in frame is a placeholder"). Each is read from the scene file's pieces -
+#: the kiosk's plinth, posts and cornice, the pillar box's body, cap and dome,
+#: the dustbins - so it stands where they stood, at their sizes, and the
+#: pieces it replaces go (STREET_REPLACES_PREFIXES). In the recipe's frame:
+#: x along the street, y across it (the scene file's z), z the height.
+def _street_furniture(out, root=None):
+    import json
+    try:
+        with open(os.path.join(root or ROOT, PIECES_REL), encoding="utf-8") as fh:
+            pieces = {p["name"]: p for p in json.load(fh)["pieces"]}
+    except (OSError, ValueError, KeyError):
+        return "no-pieces"
+
+    def at(name):
+        p = pieces.get(name)
+        return None if p is None else (p["x_m"], p["z_m"], p["y_m"], p["sx_m"], p["sy_m"], p["sz_m"])
+    built = []
+    # THE KIOSK: an anodised frame with rounded corner posts, three glass
+    # sides and a glass door each crossed by a mid-rail, a phone on the back,
+    # a dark fascia band under a shallow cap.
+    k = at("kiosk_plinth")
+    if k is not None:
+        cx, cy = k[0], k[1]
+        half = k[3] / 2.0
+        z0 = k[2] + k[4] / 2.0
+        top = z0 + 2.02
+        _box(out, "furn_kiosk_plinth", "stone", cx - half, cx + half, cy - half, cy + half,
+             k[2] - k[4] / 2.0, z0, "the-kiosk's-plinth")
+        for n, (sx, sy) in enumerate(((-1, -1), (-1, 1), (1, -1), (1, 1))):
+            _cylinder_part(out, "furn_kiosk_post%d" % n, "kiosk_frame",
+                           cx + sx * (half - 0.05), cy + sy * (half - 0.05), z0, top, 0.05, sides=12)
+        pane = half - 0.09
+        for n, (ax, ay) in enumerate(((1, 0), (-1, 0), (0, 1), (0, -1))):
+            if ax:
+                x0, x1 = cx + ax * (half - 0.03) - 0.006, cx + ax * (half - 0.03) + 0.006
+                y0, y1 = cy - pane, cy + pane
+            else:
+                x0, x1 = cx - pane, cx + pane
+                y0, y1 = cy + ay * (half - 0.03) - 0.006, cy + ay * (half - 0.03) + 0.006
+            _box(out, "furn_kiosk_pane%d" % n, "glass", x0, x1, y0, y1, z0 + 0.12, top - 0.10,
+                 "a-glass-side")
+            # THE RAILS: a kick plate at the foot, a rail at waist height, a head rail.
+            for m, (za, zb) in enumerate(((z0, z0 + 0.12), (z0 + 0.95, z0 + 1.00), (top - 0.10, top))):
+                _box(out, "furn_kiosk_rail%d_%d" % (n, m), "kiosk_frame",
+                     min(x0, x1) - (0.012 if not ax else 0.004), max(x0, x1) + (0.012 if not ax else 0.004),
+                     min(y0, y1) - (0.012 if ax else 0.004), max(y0, y1) + (0.012 if ax else 0.004),
+                     za, zb, "a-rail")
+        _box(out, "furn_kiosk_phone", "steel_dark", cx - 0.14, cx + 0.14, cy + half - 0.18,
+             cy + half - 0.08, z0 + 1.15, z0 + 1.55, "the-phone-on-the-back-panel")
+        _box(out, "furn_kiosk_band", "kiosk_band", cx - half - 0.035, cx + half + 0.035,
+             cy - half - 0.035, cy + half + 0.035, top, top + 0.16, "the-fascia-band")
+        _box(out, "furn_kiosk_cap", "kiosk_frame", cx - half - 0.06, cx + half + 0.06,
+             cy - half - 0.06, cy + half + 0.06, top + 0.16, top + 0.22, "the-cap")
+        built.append("kiosk")
+    # THE PILLAR BOX: a Type A in red cast iron on a black foot, a lip round
+    # its cap and a dome over it, the slot facing the road.
+    b = at("pillarbox_body")
+    if b is not None:
+        cx, cy = b[0], b[1]
+        r = b[3] / 2.0
+        z0 = b[2] - b[4] / 2.0
+        z1 = b[2] + b[4] / 2.0
+        _cylinder_part(out, "furn_pillar_foot", "steel_dark", cx, cy, z0, z0 + 0.09, r + 0.012, r + 0.012)
+        _cylinder_part(out, "furn_pillar_body", "pillarbox_red", cx, cy, z0 + 0.09, z1, r)
+        cap = at("pillarbox_cap")
+        cr = (cap[3] / 2.0) if cap else r + 0.03
+        _cylinder_part(out, "furn_pillar_cap", "pillarbox_red", cx, cy, z1, z1 + 0.10, cr, cr - 0.01)
+        _dome_part(out, "furn_pillar_dome", "pillarbox_red", cx, cy, z1 + 0.10, cr - 0.03, 0.15)
+        road = -1.0 if cy > 0 else 1.0
+        _box(out, "furn_pillar_slot", "steel_dark", cx - 0.16, cx + 0.16,
+             min(cy + road * (r - 0.004), cy + road * (r + 0.012)),
+             max(cy + road * (r - 0.004), cy + road * (r + 0.012)),
+             z1 - 0.24, z1 - 0.195, "the-aperture-facing-the-road")
+        _box(out, "furn_pillar_plate", "paint_white", cx - 0.08, cx + 0.08,
+             min(cy + road * (r - 0.002), cy + road * (r + 0.008)),
+             max(cy + road * (r - 0.002), cy + road * (r + 0.008)),
+             z1 - 0.44, z1 - 0.33, "the-collection-plate")
+        built.append("pillarbox")
+    # THE DUSTBINS: galvanised, three ribs, a domed lid with a handle.
+    for n in range(8):
+        d = at("dustbin%d" % n)
+        if d is None:
+            continue
+        cx, cy = d[0], d[1]
+        r = d[3] / 2.0
+        z0 = d[2] - d[4] / 2.0
+        z1 = d[2] + d[4] / 2.0
+        _cylinder_part(out, "furn_bin%d_body" % n, "galvanised", cx, cy, z0, z1, r * 0.94, r)
+        for m, zr in enumerate((0.18, 0.42, 0.66)):
+            zz = z0 + zr * (z1 - z0)
+            _cylinder_part(out, "furn_bin%d_rib%d" % (n, m), "galvanised", cx, cy, zz, zz + 0.022,
+                           r * (0.94 + 0.06 * zr) + 0.01, sides=24)
+        _dome_part(out, "furn_bin%d_lid" % n, "galvanised", cx, cy, z1, r + 0.02, 0.06)
+        _box(out, "furn_bin%d_handle" % n, "steel_dark", cx - 0.06, cx + 0.06, cy - 0.012, cy + 0.012,
+             z1 + 0.06, z1 + 0.085, "the-lid-handle")
+        built.append("dustbin%d" % n)
+    return "built/" + ",".join(built)
 
 
 def _pavement_dressing(out):
@@ -5684,7 +5835,11 @@ def parse_args(argv):
 #: AND THE CARS, 23 September: Unreal takes a real-looking car built by
 #: tools/art-recipes/car-model.py and placed from production/specs/
 #: street-vehicles.json; this recipe's extruded cars stay for its own renders.
-STREET_GLB_SKIP = ("lamp", "figure", "veh")
+#: AND THE LAMPS CROSS, 23 September: the lighting-column recipe's accepted
+#: swan-neck column in place of the scene file's cylinders and lantern box,
+#: for the presentable checklist ("nothing in frame is a placeholder"). The
+#: probe's lantern lights are their own actors and stay where they were.
+STREET_GLB_SKIP = ("figure", "veh")
 #: Where tools/props/make_street_surfaces.py writes the drawn surfaces.
 STREET_SURFACES_REL = os.path.join("production", "assets", "street", "surfaces")
 
@@ -5738,7 +5893,8 @@ def _street_mesh_name(key, decal):
 #: lines, the signs and everything fixed to a frontage or a roof; it does
 #: not build the lamp columns, the kiosk, the pillar box, the railing, the
 #: bins, the litter or the ground props, so those stay the scene file's.
-STREET_REPLACES_PREFIXES = ("east_", "west_", "ground_", "kerb", "yellow_", "gully_")
+STREET_REPLACES_PREFIXES = ("east_", "west_", "ground_", "kerb", "yellow_", "gully_",
+                            "column", "lantern", "kiosk", "pillarbox", "dustbin")
 STREET_REPLACES_SHAPES = ("decal",)
 
 
@@ -5769,6 +5925,10 @@ def _street_emit(key, lettered, night):
     at night, the pictured rooms and nets their CARD_ and NET_ figures)."""
     if key == "tube_lit":
         return 12.0
+    # THE SODIUM LANTERN'S LENS, 23 September, now the column crosses: dark by
+    # day, lit at night, as a street lamp is.
+    if key == "lens_amber":
+        return 8.0 if night else 0.0
     if key == "interior_lit":
         return 0.7 if night else 3.4
     if key.startswith("card_"):
