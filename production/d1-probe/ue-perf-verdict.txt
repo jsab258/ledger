@@ -1,0 +1,2 @@
+slicePerf=uw-half status=NO-FRAMES
+slicePerfResolution=3440x1440
