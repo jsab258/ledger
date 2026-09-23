@@ -749,9 +749,13 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       Blender's wear - rain streaks from the wall heads, weathering patches -
       is material nodes that did not cross; draw it into maps as the bricks
       were, and lay it in Unreal as its own layer.
-- [ ] THE NEW STREET IN THE PLAYABLE GAME: the walk and the crime still run
-      on the scene file's street because the Blender street has no
-      collision; give it collision and move them onto it.
+- [x] THE NEW STREET IN THE PLAYABLE GAME, THE LOOK OF IT (bdb84eb1): the
+      walk, the crime and a plain launch show the Blender street over the
+      scene file's collision, which is kept, so nothing they measure moves.
+- [ ] ITS OWN COLLISION: the crime probe's sight lines are physics traces,
+      so this means re-proving the crime verdict and keeping the glass out
+      of the visibility channel (FINDINGS 23 Sep). Not before the day's
+      pair is settled.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
