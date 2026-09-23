@@ -1,4 +1,4 @@
-# UE crime sequence keys 6a84ba1 @1790188724
+# UE crime sequence keys 3b65869 @1790196961
 # One line per sequence frame. tools/clip-from-frames.py --frame-keys reads
 #   this and burns the bank's text for lineId on frames whose heard is yes.
 frame=ue-crimeseq_000.png beat=approach_a speaker=none lineId=none lineText=none lineTextSource=none/this-frame-carries-no-words lineTextEscape=spaces-are-~ heard=no
@@ -17,7 +17,7 @@ frame=ue-crimeseq_012.png beat=at_window_b speaker=none lineId=none lineText=non
 frame=ue-crimeseq_013.png beat=at_window_b speaker=none lineId=none lineText=none lineTextSource=none/this-frame-carries-no-words lineTextEscape=spaces-are-~ heard=no
 frame=ue-crimeseq_014.png beat=deed_b speaker=none lineId=none lineText=none lineTextSource=none/this-frame-carries-no-words lineTextEscape=spaces-are-~ heard=no
 frame=ue-crimeseq_015.png beat=deed_b speaker=none lineId=none lineText=none lineTextSource=none/this-frame-carries-no-words lineTextEscape=spaces-are-~ heard=no
-frame=ue-crimeseq_016.png beat=overheard speaker=w1 lineId=cw-ws-r3-02 lineText=You~hear~all~sorts.~The~man~that~did~the~window~looked~straight~in~at~the~shop~before~he~ran,~and~his~face~is~known~if~not~his~name,~apparently. lineTextSource=composed/StreetVoice.Exchange-around-the-carried-summary lineTextEscape=spaces-are-~ heard=yes
+frame=ue-crimeseq_016.png beat=deed_b speaker=none lineId=none lineText=none lineTextSource=none/this-frame-carries-no-words lineTextEscape=spaces-are-~ heard=no
 frame=ue-crimeseq_017.png beat=overheard speaker=w1 lineId=cw-ws-r3-02 lineText=You~hear~all~sorts.~The~man~that~did~the~window~looked~straight~in~at~the~shop~before~he~ran,~and~his~face~is~known~if~not~his~name,~apparently. lineTextSource=composed/StreetVoice.Exchange-around-the-carried-summary lineTextEscape=spaces-are-~ heard=yes
 frame=ue-crimeseq_018.png beat=overheard speaker=w1 lineId=cw-ws-r3-02 lineText=You~hear~all~sorts.~The~man~that~did~the~window~looked~straight~in~at~the~shop~before~he~ran,~and~his~face~is~known~if~not~his~name,~apparently. lineTextSource=composed/StreetVoice.Exchange-around-the-carried-summary lineTextEscape=spaces-are-~ heard=yes
 frame=ue-crimeseq_019.png beat=overheard speaker=w1 lineId=cw-ws-r3-02 lineText=You~hear~all~sorts.~The~man~that~did~the~window~looked~straight~in~at~the~shop~before~he~ran,~and~his~face~is~known~if~not~his~name,~apparently. lineTextSource=composed/StreetVoice.Exchange-around-the-carried-summary lineTextEscape=spaces-are-~ heard=yes
