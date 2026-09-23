@@ -61,7 +61,7 @@ plain houses.
 - 2026-09-23 **The crowd's daily schedules now run in the game engine**, who is out when and where, proven against the original row by row; an independent check tried to break it and could not.
 - 2026-09-23 **I moved 40 notes to Resolved, unchanged**: yesterday's and last night's, which your morning message answered. Today's are one line each, as the rule says; the detail is in the commits.
 - 2026-09-23 **The painted woodwork is smooth gloss colour instead of rough render**, Mickey's stall riser is Victorian relief tile, and the flags are each their own stone.
-- 2026-09-23 **The street's own walls to bump into are started, switched off**: they are built in and can be turned on, and stay off until a crime run on them holds; finishing it is a sitting of its own.
+- 2026-09-23 **The street's own walls to bump into are switched on**: you walk against the new buildings now, not the old street's invisible ones, and the crime still plays out exactly as before, its witnesses seeing and not seeing what they did.
 - 2026-09-23 **The two parked cars faced the wrong way and are turned round**, as British cars on that kerb park, with headlamps, in the sheet's navy and blue-grey.
 - 2026-09-23 **The shop windows have see-through glass, and the playable game shows the new street** over the old street's invisible walls; the crime plays out exactly as before.
 - 2026-09-23 **Some night pictures came out black because of the see-through glass**; the night's brightness is now held where a healthy dusk sits, proven on the build machine.
