@@ -1,4 +1,4 @@
-# UE material step evidence, sha 9c60900bab10c9d5eafb43af28c511885aa208b9
+# UE material step evidence, sha f94939c202c38a208b6c2461ce6b9145083e4432
 # Section 1: what the script measured inside the editor.
 # LEDGER material step, /Game/Ledger/M_LedgerSurface
 # compression_settings readback for BaseColorMap: leaf=DEFAULT via=enum-identity srgb=True str=<TextureCompressionSettings.TC_DEFAULT: 0> repr=<TextureCompressionSettings.TC_DEFAULT: 0>
@@ -29,128 +29,128 @@
 
 # Section 2: the LAST 120 lines of the editor process stdout,
 # which is where a process exit code is explained. Cap announced.
-# material.log holds 375 line(s)
-(+255 earlier line(s) not shown)
-[2026.09.23-09.16.23:401][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_tyre
-[2026.09.23-09.16.23:508][  0]LogStaticMesh: Display: Building static mesh street_brick_rubbed (Required Memory Estimate: 3.939302 MB)...
-[2026.09.23-09.16.23:508][  0]LogStaticMesh: Display: Building static mesh street_car_bluegrey (Required Memory Estimate: 0.083647 MB)...
-[2026.09.23-09.16.23:509][  0]LogStaticMesh: Display: Building static mesh street_car_dark (Required Memory Estimate: 0.08362 MB)...
-[2026.09.23-09.16.23:510][  0]LogStaticMesh: Display: Building static mesh street_car_glass (Required Memory Estimate: 0.9682 MB)...
-[2026.09.23-09.16.23:511][  0]LogStaticMesh: Display: Building static mesh street_car_trim (Required Memory Estimate: 0.084942 MB)...
-[2026.09.23-09.16.23:522][  0]LogStaticMesh: Display: Building static mesh street_frame_metal (Required Memory Estimate: 0.973847 MB)...
-[2026.09.23-09.16.23:531][  0]LogStaticMesh: Display: Building static mesh street_kerbstone (Required Memory Estimate: 0.04655 MB)...
-[2026.09.23-09.16.23:534][  0]LogStaticMesh: Display: Building static mesh street_lamp_red (Required Memory Estimate: 0.084942 MB)...
-[2026.09.23-09.16.23:540][  0]LogStaticMesh: Display: Building static mesh street_paint_yellow (Required Memory Estimate: 0.084969 MB)...
-[2026.09.23-09.16.23:543][  0]LogStaticMesh: Display: Building static mesh street_paving (Required Memory Estimate: 0.14254 MB)...
-[2026.09.23-09.16.23:544][  0]LogStaticMesh: Display: Building static mesh street_plate_front (Required Memory Estimate: 0.046563 MB)...
-[2026.09.23-09.16.23:547][  0]LogStaticMesh: Display: Building static mesh street_plate_rear (Required Memory Estimate: 0.046556 MB)...
-[2026.09.23-09.16.23:553][  0]LogStaticMesh: Display: Building static mesh street_steel_dark (Required Memory Estimate: 0.584219 MB)...
-[2026.09.23-09.16.23:557][  0]LogStaticMesh: Display: Building static mesh street_tyre (Required Memory Estimate: 0.359367 MB)...
-[2026.09.23-09.16.23:774][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...uction/assets/street/quay-street.glb]
-[2026.09.23-09.16.24:660][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
-[2026.09.23-09.16.24:660][  0]LogInit: Display: 
-[2026.09.23-09.16.24:660][  0]LogInit: Display: Warning/Error Summary (Unique only)
-[2026.09.23-09.16.24:660][  0]LogInit: Display: -----------------------------------
-[2026.09.23-09.16.24:660][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
-[2026.09.23-09.16.24:660][  0]LogInit: Display: LogOutputDevice: Error: 
-[2026.09.23-09.16.24:661][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
-[2026.09.23-09.16.24:661][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
-[2026.09.23-09.16.24:661][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
-[2026.09.23-09.16.24:661][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
-[2026.09.23-09.16.24:661][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd305e0595 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb6dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2ff55de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
-[2026.09.23-09.16.24:662][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00000262b1bb66a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
-[2026.09.23-09.16.24:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd4e077b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.23-09.16.24:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd4e3f1992 UnrealEditor-CoreUObject.dll!UnknownFunction []
-[2026.09.23-09.16.24:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd76d5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:663][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd7723d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd77212c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd763937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf0e91263 python311.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf0e948df python311.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf0e960b2 python311.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf0ef56bf python311.dll!UnknownFunction []
-[2026.09.23-09.16.24:664][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf0ef70bf python311.dll!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd76bf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd76eb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd76bfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd76d83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6164071bb UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:665][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6163fc289 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:666][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6163fc5ba UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:666][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff616401256 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:666][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff616415c74 UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:666][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff61641838a UnrealEditor-Cmd.exe!UnknownFunction []
-[2026.09.23-09.16.24:667][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7652cd87 KERNEL32.DLL!UnknownFunction []
-[2026.09.23-09.16.24:667][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7766caec ntdll.dll!UnknownFunction []
-[2026.09.23-09.16.24:667][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
-[2026.09.23-09.16.24:667][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
-[2026.09.23-09.16.24:668][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
-[2026.09.23-09.16.24:668][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
-[2026.09.23-09.16.24:668][  0]LogInit: Display: LogOutputDevice: Warning: 
+# material.log holds 361 line(s)
+(+241 earlier line(s) not shown)
+[2026.09.23-09.24.08:925][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_pot_clay
+[2026.09.23-09.24.08:929][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_cream
+[2026.09.23-09.24.08:932][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_patch
+[2026.09.23-09.24.08:937][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_sign_fascia_fish_market
+[2026.09.23-09.24.08:941][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_sign_fascia_ritas_pawn
+[2026.09.23-09.24.08:944][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_sign_fascia_steam_laundry
+[2026.09.23-09.24.08:946][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_sign_board_to_let
+[2026.09.23-09.24.08:948][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_sign_fascia_mickeys_plain
+[2026.09.23-09.24.08:954][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_slate
+[2026.09.23-09.24.08:959][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_steel_dark
+[2026.09.23-09.24.08:964][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_stone
+[2026.09.23-09.24.08:969][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_tile_patterned
+[2026.09.23-09.24.08:972][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_tile_stall
+[2026.09.23-09.24.08:975][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_tube_lit
+[2026.09.23-09.24.08:978][  0]LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_tyre
+[2026.09.23-09.24.09:171][  0]LogInterchangeEngine: Display: Interchange import completed [C:/actions-runner-le...uction/assets/street/quay-street.glb]
+[2026.09.23-09.24.10:198][  0]LogPythonScriptCommandlet: Display: Python script executed successfully
+[2026.09.23-09.24.10:199][  0]LogInit: Display: 
+[2026.09.23-09.24.10:199][  0]LogInit: Display: Warning/Error Summary (Unique only)
+[2026.09.23-09.24.10:199][  0]LogInit: Display: -----------------------------------
+[2026.09.23-09.24.10:199][  0]LogInit: Display: LogOutputDevice: Error: === Handled ensure: ===
+[2026.09.23-09.24.10:199][  0]LogInit: Display: LogOutputDevice: Error: 
+[2026.09.23-09.24.10:200][  0]LogInit: Display: LogOutputDevice: Error: Ensure condition failed: false  [File:D:\build\++UE5\Sync\Engine\Source\Editor\UnrealEd\Private\ObjectTools.cpp] [Line: 4045] 
+[2026.09.23-09.24.10:200][  0]LogInit: Display: LogOutputDevice: Error: 					Failed to unload all packages during ForceDeleteObjects - 
+[2026.09.23-09.24.10:200][  0]LogInit: Display: LogOutputDevice: Error: 					these packages are likely corrupt. Consider restarting the 
+[2026.09.23-09.24.10:200][  0]LogInit: Display: LogOutputDevice: Error: 					editor, noting which assets remain and then deleting them 
+[2026.09.23-09.24.10:200][  0]LogInit: Display: LogOutputDevice: Error: 					from the file system manually: 
+[2026.09.23-09.24.10:201][  0]LogInit: Display: LogOutputDevice: Error: /Game/Ledger/M_LedgerControlTwin
+[2026.09.23-09.24.10:201][  0]LogInit: Display: LogOutputDevice: Error: Stack: 
+[2026.09.23-09.24.10:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd305e0595 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.23-09.24.10:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2fbb6dd6 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.23-09.24.10:201][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd2ff55de5 UnrealEditor-UnrealEd.dll!UnknownFunction []
+[2026.09.23-09.24.10:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00000268b6ab66a5 UnrealEditor-EditorScriptingUtilities.dll!UnknownFunction []
+[2026.09.23-09.24.10:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd4e077b2c UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.23-09.24.10:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffd4e3f1992 UnrealEditor-CoreUObject.dll!UnknownFunction []
+[2026.09.23-09.24.10:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd87d5223 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:202][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd8823d1e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd88212c2 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd873937e UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf1641263 python311.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf16448df python311.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf16460b2 python311.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf16a56bf python311.dll!UnknownFunction []
+[2026.09.23-09.24.10:203][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcf16a70bf python311.dll!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd87bf678 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd87eb270 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd87bfc88 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffcd87d83f0 UnrealEditor-PythonScriptPlugin.dll!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6164071bb UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:204][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6163fc289 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff6163fc5ba UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff616401256 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:205][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff616415c74 UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:206][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ff61641838a UnrealEditor-Cmd.exe!UnknownFunction []
+[2026.09.23-09.24.10:206][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7652cd87 KERNEL32.DLL!UnknownFunction []
+[2026.09.23-09.24.10:206][  0]LogInit: Display: LogOutputDevice: Error: [Callstack] 0x00007ffe7766caec ntdll.dll!UnknownFunction []
+[2026.09.23-09.24.10:206][  0]LogInit: Display: LogObjectTools: Warning: Detected inconsistencies between reference gathering algorithms. Switching 'Editor.UseLegacyGetReferencersForDeletion' on for the remainder of this editor session.
+[2026.09.23-09.24.10:207][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultNormal.uasset: Error opening file.
+[2026.09.23-09.24.10:207][  0]LogInit: Display: LogLinker: Warning: [AssetLog] C:\actions-runner-ledger\_work\ledger\ledger\ue-probe\Content\Ledger\T_LedgerDefaultRough.uasset: Error opening file.
+[2026.09.23-09.24.10:207][  0]LogInit: Display: LogObjectTools: Warning: ForceDeleteObject failed to delete M_LedgerControlTwin, this package is now potentially corrupt
+[2026.09.23-09.24.10:207][  0]LogInit: Display: LogOutputDevice: Warning: 
 
 Script Stack (1 frames) :
 /Script/EditorScriptingUtilities.EditorAssetLibrary.DeleteAsset
 
-[2026.09.23-09.16.24:668][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
-[2026.09.23-09.16.24:668][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'SK_michelle', SkeletalMesh] No smoothing group information was found for this mesh 'Mesh' in the FBX file. Please make sure to enable the 'Export Smoothing Groups' option in the FBX Exporter before exporting the file.
-[2026.09.23-09.16.24:669][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/B/idle_2__Standing Idle 01_2dee24f8-3b49-48af-b735-c6377509eaac.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
-[2026.09.23-09.16.24:669][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_asphalt
-[2026.09.23-09.16.24:669][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey
-[2026.09.23-09.16.24:669][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red
-[2026.09.23-09.16.24:670][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed
-[2026.09.23-09.16.24:670][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_bluegrey
-[2026.09.23-09.16.24:670][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_dark
-[2026.09.23-09.16.24:670][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_glass
-[2026.09.23-09.16.24:670][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_trim
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_fish
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_grocer
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_laundry
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_pawn
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b
-[2026.09.23-09.16.24:671][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_dish_grey
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_bare_timber
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_bottle_green
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_cream
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_oxblood
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_slate_blue
-[2026.09.23-09.16.24:672][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_foliage
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_frame_metal
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_frame_painted
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_glass
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_glass_whitened
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_grass
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_interior
-[2026.09.23-09.16.24:673][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_interior_lit
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_kerbstone
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_lamp_red
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_lead
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_door
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_joinery
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_white
-[2026.09.23-09.16.24:674][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_yellow
-[2026.09.23-09.16.24:675][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paving
-[2026.09.23-09.16.24:675][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_plate_front
-[2026.09.23-09.16.24:675][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_plate_rear
-[2026.09.23-09.16.24:675][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_pot_buff
-[2026.09.23-09.16.24:675][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_pot_clay
-[2026.09.23-09.16.24:676][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_cream
-[2026.09.23-09.16.24:676][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_patch
-[2026.09.23-09.16.24:676][  0]LogInit: Display: NOTE: Only first 50 warnings displayed.
-[2026.09.23-09.16.24:676][  0]LogInit: Display: 
-[2026.09.23-09.16.24:676][  0]LogInit: Display: Failure - 38 error(s), 62 warning(s)
-[2026.09.23-09.16.24:676][  0]LogInit: Display: 
+[2026.09.23-09.24.10:208][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
+[2026.09.23-09.24.10:208][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/Michelle.fbx : 'SK_michelle', SkeletalMesh] No smoothing group information was found for this mesh 'Mesh' in the FBX file. Please make sure to enable the 'Export Smoothing Groups' option in the FBX Exporter before exporting the file.
+[2026.09.23-09.24.10:208][  0]LogInit: Display: LogInterchangeEngine: Warning: [C:/actions-runner-ledger/_work/ledger/ledger/ledger/Assets/Characters/B/idle_2__Standing Idle 01_2dee24f8-3b49-48af-b735-c6377509eaac.fbx : 'Hips_Skeleton', Skeleton] Imported skeleton has some invalid bind poses. Skeletal mesh skinning has been rebind using the time zero pose.
+[2026.09.23-09.24.10:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_asphalt
+[2026.09.23-09.24.10:208][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_grey
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_red
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_brick_rubbed
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_bluegrey
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_dark
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_glass
+[2026.09.23-09.24.10:209][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_car_trim
+[2026.09.23-09.24.10:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_fish
+[2026.09.23-09.24.10:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_grocer
+[2026.09.23-09.24.10:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_laundry
+[2026.09.23-09.24.10:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_int23_pawn
+[2026.09.23-09.24.10:210][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_a
+[2026.09.23-09.24.10:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_card_net_curtain_b
+[2026.09.23-09.24.10:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_dish_grey
+[2026.09.23-09.24.10:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_bare_timber
+[2026.09.23-09.24.10:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_bottle_green
+[2026.09.23-09.24.10:211][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_cream
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_oxblood
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_fascia_slate_blue
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_foliage
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_frame_metal
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_frame_painted
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_glass
+[2026.09.23-09.24.10:212][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_glass_whitened
+[2026.09.23-09.24.10:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_grass
+[2026.09.23-09.24.10:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_interior
+[2026.09.23-09.24.10:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_interior_lit
+[2026.09.23-09.24.10:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_kerbstone
+[2026.09.23-09.24.10:213][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_lamp_red
+[2026.09.23-09.24.10:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_lead
+[2026.09.23-09.24.10:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_door
+[2026.09.23-09.24.10:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_joinery
+[2026.09.23-09.24.10:214][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_white
+[2026.09.23-09.24.10:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paint_yellow
+[2026.09.23-09.24.10:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_paving
+[2026.09.23-09.24.10:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_plate_front
+[2026.09.23-09.24.10:215][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_plate_rear
+[2026.09.23-09.24.10:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_pot_buff
+[2026.09.23-09.24.10:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_pot_clay
+[2026.09.23-09.24.10:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_cream
+[2026.09.23-09.24.10:216][  0]LogInit: Display: LogInterchangeImport: Warning: glTF Mesh Import Warning message: Mesh has primitives with no materials assigned: street_render_patch
+[2026.09.23-09.24.10:217][  0]LogInit: Display: NOTE: Only first 50 warnings displayed.
+[2026.09.23-09.24.10:217][  0]LogInit: Display: 
+[2026.09.23-09.24.10:217][  0]LogInit: Display: Failure - 38 error(s), 62 warning(s)
+[2026.09.23-09.24.10:217][  0]LogInit: Display: 
 
-Execution of commandlet took:  7.42 seconds, PeakPhysMemoryMB=2030 MB, PeakVirtMemoryMB=2012 MB
-[2026.09.23-09.16.24:793][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
-[2026.09.23-09.16.24:793][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
-[2026.09.23-09.16.25:031][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
-[2026.09.23-09.16.25:084][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
+Execution of commandlet took:  8.48 seconds, PeakPhysMemoryMB=2041 MB, PeakVirtMemoryMB=2005 MB
+[2026.09.23-09.24.10:350][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles (PostWrite): 0 .ref files found, 0 referenced binaries
+[2026.09.23-09.24.10:351][  0]LogAssetRegistry: Display: CleanupOrphanedCacheFiles: 0 total binaries, 0 referenced (kept), 0 old-style pre-migration (kept), 0 orphans deleted, 0 orphans locked (kept)
+[2026.09.23-09.24.10:589][  0]LogShaderCompilers: Display: Exiting ShaderCompilingThread
+[2026.09.23-09.24.10:643][  0]LogSourceControl: Display: Uncontrolled Changelist persistency file saved ../../../../../../actions-runner-ledger/_work/ledger/ledger/ue-probe/Saved/SourceControl/UncontrolledChangelists.json
 
 # Section 3: the editor process stderr, first 60 lines.
 # material.err holds 0 line(s)
