@@ -1,0 +1,2937 @@
+[
+ {
+  "id": "H001",
+  "moment": "M01",
+  "kind": "talk",
+  "text": "Morning. You look like you slept in that chair.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H002",
+  "moment": "M01",
+  "kind": "talk",
+  "text": "Was Mickey always in this early, or is it just you?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H003",
+  "moment": "M01",
+  "kind": "talk",
+  "text": "that radio's been hissing all night, has Lena had a look at it",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H004",
+  "moment": "M01",
+  "kind": "talk",
+  "text": "Cold enough in here to hang meat.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H005",
+  "moment": "M01",
+  "kind": "verb's words, not the verb",
+  "text": "What sort of cut did Mickey used to give you lot, out of interest?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H006",
+  "moment": "M01",
+  "kind": "oblique verb",
+  "text": "You've carried this place since Mickey went. From Friday your envelope gets fatter.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "generous"
+   }
+  }
+ },
+ {
+  "id": "H007",
+  "moment": "M01",
+  "kind": "oblique verb",
+  "text": "Right, that's me. Hold the fort.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H008",
+  "moment": "M01",
+  "kind": "plain verb",
+  "text": "I'm setting your cut to fair, Rocco, same as the rest of the crew.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "fair"
+   }
+  }
+ },
+ {
+  "id": "H009",
+  "moment": "M01",
+  "kind": "argument",
+  "text": "Office takes a bit extra off the top of yours from now on. Quietly, mind. It won't show on the sheet.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "skim"
+   }
+  }
+ },
+ {
+  "id": "H010",
+  "moment": "M01",
+  "kind": "novel",
+  "text": "Give me the keys, I'll do the early airport run myself.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H011",
+  "moment": "M02",
+  "kind": "talk",
+  "text": "Smells like the whole North Sea in here. Busy morning?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H012",
+  "moment": "M02",
+  "kind": "talk",
+  "text": "How long's your family had this pitch, then?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H013",
+  "moment": "M02",
+  "kind": "talk",
+  "text": "You know Rocco? Drives for us at Mickey's.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H014",
+  "moment": "M02",
+  "kind": "talk",
+  "text": "gulls are bold today, one nearly had my hat",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H015",
+  "moment": "M02",
+  "kind": "verb's words, not the verb",
+  "text": "Honestly, I've never paid anybody off in my life. Never needed to.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H016",
+  "moment": "M02",
+  "kind": "plain verb",
+  "text": "I'll give you ninety quid to stop telling people I torched that van.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H017",
+  "moment": "M02",
+  "kind": "oblique verb",
+  "text": "Lovely steady hands for gutting. You'd want to keep them that way, so the van story stops with you.",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H018",
+  "moment": "M02",
+  "kind": "oblique verb",
+  "text": "Funny, I heard the van's owner lit it himself for the insurance. Mention that to your customers, eh?",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H019",
+  "moment": "M02",
+  "kind": "oblique verb",
+  "text": "Couple of folded notes under your scales there. Let's say you've gone off the subject of that van.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H020",
+  "moment": "M02",
+  "kind": "novel",
+  "text": "Here, give us that crate, I'll carry it out to your van for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H021",
+  "moment": "M03",
+  "kind": "talk",
+  "text": "How long did you work for Mickey, all told?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H022",
+  "moment": "M03",
+  "kind": "talk",
+  "text": "Your handwriting's neater than his, I'll give you that.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H023",
+  "moment": "M03",
+  "kind": "talk",
+  "text": "morning lena. kettle's not on then",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H024",
+  "moment": "M03",
+  "kind": "talk",
+  "text": "Did Mickey do all this bookkeeping by hand, every night?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H025",
+  "moment": "M03",
+  "kind": "verb's words, not the verb",
+  "text": "Is it true Mickey used to write off debts for anyone with a sob story?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H026",
+  "moment": "M03",
+  "kind": "plain verb",
+  "text": "You owe the book sixty quid, Lena. I need it back today.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H027",
+  "moment": "M03",
+  "kind": "oblique verb",
+  "text": "Sixty against your name in here. I'd like it squared before the weekend, if you can.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H028",
+  "moment": "M03",
+  "kind": "oblique verb",
+  "text": "Tear out your page. Mickey would've wanted it, and so do I.",
+  "want": {
+   "kind": "verb",
+   "verb": "forgive_debt"
+  }
+ },
+ {
+  "id": "H029",
+  "moment": "M03",
+  "kind": "oblique verb",
+  "text": "That sixty you owe? Gone. You've earned it ten times over.",
+  "want": {
+   "kind": "verb",
+   "verb": "forgive_debt"
+  }
+ },
+ {
+  "id": "H030",
+  "moment": "M03",
+  "kind": "novel",
+  "text": "Pass me the ledger, I'm locking it in the safe tonight.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H031",
+  "moment": "M04",
+  "kind": "talk",
+  "text": "Is it always this dead on a wet Tuesday?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H032",
+  "moment": "M04",
+  "kind": "talk",
+  "text": "That nearside wiper's going to give up any minute.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H033",
+  "moment": "M04",
+  "kind": "talk",
+  "text": "how long you been driving for Mickey's",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H034",
+  "moment": "M04",
+  "kind": "talk",
+  "text": "Rocco reckons you know every back street in the Hook.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H035",
+  "moment": "M04",
+  "kind": "verb's words, not the verb",
+  "text": "Mickey never walked away from a driver in trouble, did he?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H036",
+  "moment": "M04",
+  "kind": "plain verb",
+  "text": "You owe the book forty-five quid. Pay up.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H037",
+  "moment": "M04",
+  "kind": "oblique verb",
+  "text": "Forty-five, wasn't it? I'll take it out of tonight's fares if that's easier on you.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H038",
+  "moment": "M04",
+  "kind": "oblique verb",
+  "text": "Whatever you've been saying about me in the back of that cab, it stops now, or you'll not be driving anything.",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H039",
+  "moment": "M04",
+  "kind": "oblique verb",
+  "text": "Right, I'm getting out of this rain. Mind how you go.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H040",
+  "moment": "M04",
+  "kind": "novel",
+  "text": "Give us your keys, I'll swap that wiper blade for you now.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H041",
+  "moment": "M05",
+  "kind": "talk",
+  "text": "Evening, Sam. You're out late.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H042",
+  "moment": "M05",
+  "kind": "talk",
+  "text": "Quiet street tonight. Where's everyone got to?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H043",
+  "moment": "M05",
+  "kind": "talk",
+  "text": "you still living above the chemist?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H044",
+  "moment": "M05",
+  "kind": "talk",
+  "text": "Rocco says you used to knock about with the Parade lot, back in the day.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H045",
+  "moment": "M05",
+  "kind": "verb's words, not the verb",
+  "text": "Somebody told me you used to inform for the Old Bill. That true?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H046",
+  "moment": "M05",
+  "kind": "plain verb",
+  "text": "What did you see the night of the break-in, Sam?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the break-in"
+   }
+  }
+ },
+ {
+  "id": "H047",
+  "moment": "M05",
+  "kind": "oblique verb",
+  "text": "That van that went up. You were out here that night, so what did your eyes tell you?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the van"
+   }
+  }
+ },
+ {
+  "id": "H048",
+  "moment": "M05",
+  "kind": "oblique verb",
+  "text": "Time somebody put Danny Ro's name in front of the law. I'll see to it tonight.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Danny Ro"
+   }
+  }
+ },
+ {
+  "id": "H049",
+  "moment": "M05",
+  "kind": "argument",
+  "text": "Not Danny. It's Sera Kest the coppers need to hear about, and they'll hear it from me.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Sera Kest"
+   }
+  }
+ },
+ {
+  "id": "H050",
+  "moment": "M05",
+  "kind": "novel",
+  "text": "Here, have my scarf, you're shivering.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H051",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "Morning, Ada. Mind if I sit?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H052",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "Is the tea always this strong in here?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H053",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "How's Noor getting on at the paper?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H054",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "You've known this street longer than most. Has it changed much?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H055",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "sam says you knew mickey before any of us",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H056",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "Rain's meant to clear by dinner, apparently.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H057",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "What did you do before all this, Ada?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H058",
+  "moment": "M06",
+  "kind": "talk",
+  "text": "I still can't find my way round the Hook without a map.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H059",
+  "moment": "M06",
+  "kind": "novel",
+  "text": "Let me settle your bill today, and Sam's while I'm at it.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H060",
+  "moment": "M06",
+  "kind": "novel",
+  "text": "Hold still, I'll wedge a matchbox under that wobbly table leg.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H061",
+  "moment": "M07",
+  "kind": "talk",
+  "text": "Busy morning in the harbour office?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H062",
+  "moment": "M07",
+  "kind": "talk",
+  "text": "Is it always this cold in here, or is the heating off?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H063",
+  "moment": "M07",
+  "kind": "talk",
+  "text": "What time does the Rotterdam boat usually come in?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H064",
+  "moment": "M07",
+  "kind": "talk",
+  "text": "you've got a good view of the water from that counter",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H065",
+  "moment": "M07",
+  "kind": "verb's words, not the verb",
+  "text": "Do folk round here get paid off often? I'm still learning how things work.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H066",
+  "moment": "M07",
+  "kind": "plain verb",
+  "text": "I'll pay you a hundred and fifty quid to stop talking about me. Deal?",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H067",
+  "moment": "M07",
+  "kind": "oblique verb",
+  "text": "Funny how nobody's ever checked your overtime sheets against the gate log. I have.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H068",
+  "moment": "M07",
+  "kind": "oblique verb",
+  "text": "Envelope under this timetable's yours. Find something else to talk about.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H069",
+  "moment": "M07",
+  "kind": "oblique verb",
+  "text": "Right, that's me. I'll let you get back to your forms.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H070",
+  "moment": "M07",
+  "kind": "novel",
+  "text": "Shift over, I'll help you carry those files through to the back.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H071",
+  "moment": "M08",
+  "kind": "talk",
+  "text": "Bit parky out here, isn't it?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H072",
+  "moment": "M08",
+  "kind": "talk",
+  "text": "How's your back holding up these days?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H073",
+  "moment": "M08",
+  "kind": "talk",
+  "text": "Who left this skip full of old tyres, any idea?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H074",
+  "moment": "M08",
+  "kind": "talk",
+  "text": "lena says you've been doing doubles all week",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H075",
+  "moment": "M08",
+  "kind": "verb's words, not the verb",
+  "text": "Everybody's got a theory about the fire. I'm sick of hearing them.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H076",
+  "moment": "M08",
+  "kind": "plain verb",
+  "text": "What did you see at the fire, Rocco?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the fire"
+   }
+  }
+ },
+ {
+  "id": "H077",
+  "moment": "M08",
+  "kind": "oblique verb",
+  "text": "You were round the warehouse Thursday night. Tell me what you clocked.",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the warehouse"
+   }
+  }
+ },
+ {
+  "id": "H078",
+  "moment": "M08",
+  "kind": "oblique verb",
+  "text": "Your share's been all over the place. From now on you get what's fair, same as the others.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "fair"
+   }
+  }
+ },
+ {
+  "id": "H079",
+  "moment": "M08",
+  "kind": "argument",
+  "text": "The office is skimming yours from now on, Rocco. Take it up with me if you don't like it.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "skim"
+   }
+  }
+ },
+ {
+  "id": "H080",
+  "moment": "M08",
+  "kind": "novel",
+  "text": "Hold the torch while I get this padlock off the gate.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H081",
+  "moment": "M09",
+  "kind": "talk",
+  "text": "Grey one this morning, Father.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H082",
+  "moment": "M09",
+  "kind": "talk",
+  "text": "Is the roof still letting the rain in?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H083",
+  "moment": "M09",
+  "kind": "talk",
+  "text": "June says you've been here thirty years. That right?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H084",
+  "moment": "M09",
+  "kind": "talk",
+  "text": "do you get many in on a weekday",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H085",
+  "moment": "M09",
+  "kind": "verb's words, not the verb",
+  "text": "I didn't see much at the funeral myself. I was stood right at the back.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H086",
+  "moment": "M09",
+  "kind": "plain verb",
+  "text": "What did you see at the break-in, Father?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the break-in"
+   }
+  }
+ },
+ {
+  "id": "H087",
+  "moment": "M09",
+  "kind": "oblique verb",
+  "text": "You were at the front for Mickey's service. Notice anyone there who shouldn't have been?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the funeral"
+   }
+  }
+ },
+ {
+  "id": "H088",
+  "moment": "M09",
+  "kind": "oblique verb",
+  "text": "The night they forced your vestry door, did you catch sight of anyone?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the break-in"
+   }
+  }
+ },
+ {
+  "id": "H089",
+  "moment": "M09",
+  "kind": "argument",
+  "text": "Not the break-in. The funeral. What did you see there?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the funeral"
+   }
+  }
+ },
+ {
+  "id": "H090",
+  "moment": "M09",
+  "kind": "novel",
+  "text": "Here, let me carry those hymn books in for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H091",
+  "moment": "M10",
+  "kind": "talk",
+  "text": "Morning. Quiet on the parade today.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H092",
+  "moment": "M10",
+  "kind": "talk",
+  "text": "How long have you had the shop?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H093",
+  "moment": "M10",
+  "kind": "talk",
+  "text": "Noor says the Gazette's selling out by nine these days.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H094",
+  "moment": "M10",
+  "kind": "talk",
+  "text": "your sign's faded something rotten",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H095",
+  "moment": "M10",
+  "kind": "verb's words, not the verb",
+  "text": "Mickey used to let debts ride for months, didn't he? Soft touch.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H096",
+  "moment": "M10",
+  "kind": "plain verb",
+  "text": "You owe Mickey's book a hundred and twenty. I'm here to collect it.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H097",
+  "moment": "M10",
+  "kind": "oblique verb",
+  "text": "That hundred and twenty in the book? Wipe it. Call it a fresh start between us.",
+  "want": {
+   "kind": "verb",
+   "verb": "forgive_debt"
+  }
+ },
+ {
+  "id": "H098",
+  "moment": "M10",
+  "kind": "oblique verb",
+  "text": "Eighty quid, folded in this Gazette. Take it, and the talk about me stops at your counter.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H099",
+  "moment": "M10",
+  "kind": "oblique verb",
+  "text": "Lot of glass in this shop front. You'll want to stop discussing me with your customers.",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H100",
+  "moment": "M10",
+  "kind": "novel",
+  "text": "Give us that bundle, I'll get your papers onto the rack for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H101",
+  "moment": "M11",
+  "kind": "talk",
+  "text": "Those things'll see you off before any villain does, you know.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H102",
+  "moment": "M11",
+  "kind": "talk",
+  "text": "you lot ever actually go home, or do you sleep in there?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H103",
+  "moment": "M11",
+  "kind": "talk",
+  "text": "How long have you been working the Hook, then?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H104",
+  "moment": "M11",
+  "kind": "talk",
+  "text": "Mickey used to say you were the only straight copper in Meridian. Was he right?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H105",
+  "moment": "M11",
+  "kind": "verb's words, not the verb",
+  "text": "Half the street thinks I've come down here to give you names. I haven't. Just walking past.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H106",
+  "moment": "M11",
+  "kind": "oblique verb",
+  "text": "You might want to look at what comes off Sera Kest's boats after midnight. That's all I'm saying.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Sera Kest"
+   }
+  }
+ },
+ {
+  "id": "H107",
+  "moment": "M11",
+  "kind": "oblique verb",
+  "text": "Enjoy your smoke, Detective. I'll leave you to it.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H108",
+  "moment": "M11",
+  "kind": "plain verb",
+  "text": "I want to inform on Aldous Vane. He's been taking backhanders on the harbour contracts.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Aldous Vane"
+   }
+  }
+ },
+ {
+  "id": "H109",
+  "moment": "M11",
+  "kind": "argument",
+  "text": "Not Kest, not Vane. It's Danny Ro you want for the break-in. You didn't get it from me.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Danny Ro"
+   }
+  }
+ },
+ {
+  "id": "H110",
+  "moment": "M11",
+  "kind": "novel",
+  "text": "Here, that lighter's had it. Let me give you a light off mine.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H111",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "You always keep the engine running, or is that just for me?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H112",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "So what does a man like you actually do all day?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H113",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "Mickey never once mentioned you. Funny, that.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H114",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "Nice motor. Company car, is it?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H115",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "What's Sera Kest to you, then? Friend or business?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H116",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "heard you know everyone worth knowing in this town",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H117",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "Rain's coming in off the harbour again. Typical Meridian.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H118",
+  "moment": "M12",
+  "kind": "talk",
+  "text": "Danny Ro seems to think he runs the Parade now. Does he?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H119",
+  "moment": "M12",
+  "kind": "novel",
+  "text": "Budge over, I'm getting in out of the rain.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H120",
+  "moment": "M12",
+  "kind": "novel",
+  "text": "I pass him the envelope of Mickey's old papers. Tell me what these mean.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H121",
+  "moment": "M13",
+  "kind": "talk",
+  "text": "Nice view from up here. You can see half the Hook.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H122",
+  "moment": "M13",
+  "kind": "talk",
+  "text": "How long have you been running the Parade, then?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H123",
+  "moment": "M13",
+  "kind": "talk",
+  "text": "Rocco says you used to wash cabs for Mickey. That true?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H124",
+  "moment": "M13",
+  "kind": "talk",
+  "text": "Your lads always this chatty, Danny?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H125",
+  "moment": "M13",
+  "kind": "verb's words, not the verb",
+  "text": "Nobody's threatening anybody, Danny. Tell your mates to calm down.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H126",
+  "moment": "M13",
+  "kind": "oblique verb",
+  "text": "just between us, Danny, keep your lot off my rank or they'll be picking their teeth up off this concrete",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "quiet"
+   }
+  }
+ },
+ {
+  "id": "H127",
+  "moment": "M13",
+  "kind": "oblique verb",
+  "text": "Right, that's me. Enjoy the view, lads.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H128",
+  "moment": "M13",
+  "kind": "plain verb",
+  "text": "I'm walking out of here, Danny. We're finished talking.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H129",
+  "moment": "M13",
+  "kind": "argument",
+  "text": "OI, DANNY! ANY OF YOUR RATS TOUCH MY CABS AGAIN AND I'LL PUT THE LOT OF YOU IN HOSPITAL!",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "loud"
+   }
+  }
+ },
+ {
+  "id": "H130",
+  "moment": "M13",
+  "kind": "novel",
+  "text": "I chuck him the keys to Mickey's old Granada. Call it a peace offering.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H131",
+  "moment": "M14",
+  "kind": "talk",
+  "text": "Early start for you, then? Those crates look a weight.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H132",
+  "moment": "M14",
+  "kind": "talk",
+  "text": "How long've you worked Copper Row?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H133",
+  "moment": "M14",
+  "kind": "talk",
+  "text": "Sam says you know everybody on this street by their first name.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H134",
+  "moment": "M14",
+  "kind": "talk",
+  "text": "bloody freezing this morning isnt it",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H135",
+  "moment": "M14",
+  "kind": "verb's words, not the verb",
+  "text": "Everyone keeps going on at me about that lorry. It's doing my head in.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H136",
+  "moment": "M14",
+  "kind": "oblique verb",
+  "text": "Heard there was a bit of a scrap round here last night. Catch any of it?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the fight"
+   }
+  }
+ },
+ {
+  "id": "H137",
+  "moment": "M14",
+  "kind": "oblique verb",
+  "text": "There's a fifty in it for you if last night slips your mind.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off",
+   "args": {
+    "amount": "50"
+   }
+  }
+ },
+ {
+  "id": "H138",
+  "moment": "M14",
+  "kind": "plain verb",
+  "text": "What did you see of that lorry last night?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the lorry"
+   }
+  }
+ },
+ {
+  "id": "H139",
+  "moment": "M14",
+  "kind": "argument",
+  "text": "That's a hundred, all in tenners. Your eyes were shut last night, weren't they?",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off",
+   "args": {
+    "amount": "100"
+   }
+  }
+ },
+ {
+  "id": "H140",
+  "moment": "M14",
+  "kind": "novel",
+  "text": "Let me grab the other end of that crate for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H141",
+  "moment": "M15",
+  "kind": "talk",
+  "text": "He never threw a thing away, did he?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H142",
+  "moment": "M15",
+  "kind": "talk",
+  "text": "How are you holding up, June?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H143",
+  "moment": "M15",
+  "kind": "talk",
+  "text": "Father Emil did a lovely service, I thought. Mickey would've pretended to hate it.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H144",
+  "moment": "M15",
+  "kind": "talk",
+  "text": "Is that Mickey in the photo on the mantel? He looks about twenty.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H145",
+  "moment": "M15",
+  "kind": "verb's words, not the verb",
+  "text": "I won't ask you about his last week, June. Not today.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H146",
+  "moment": "M15",
+  "kind": "oblique verb",
+  "text": "Was he himself, those last few days before it happened?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "Mickey's last week"
+   }
+  }
+ },
+ {
+  "id": "H147",
+  "moment": "M15",
+  "kind": "oblique verb",
+  "text": "I'll let you get on with the packing. Take care of yourself, June.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H148",
+  "moment": "M15",
+  "kind": "plain verb",
+  "text": "What do you know about the letter Mickey left?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the letter"
+   }
+  }
+ },
+ {
+  "id": "H149",
+  "moment": "M15",
+  "kind": "argument",
+  "text": "Forget the letter for now. What was he doing in his last week?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "Mickey's last week"
+   }
+  }
+ },
+ {
+  "id": "H150",
+  "moment": "M15",
+  "kind": "novel",
+  "text": "Here, I'll carry these boxes down to the van for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H151",
+  "moment": "M16",
+  "kind": "talk",
+  "text": "Long day. You always the last one out?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H152",
+  "moment": "M16",
+  "kind": "talk",
+  "text": "How many years did you keep the books for Mickey?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H153",
+  "moment": "M16",
+  "kind": "talk",
+  "text": "Rocco reckons Tuesday nights are getting busier. You seeing that?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H154",
+  "moment": "M16",
+  "kind": "talk",
+  "text": "your handwriting's a lot neater than mine ever was",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H155",
+  "moment": "M16",
+  "kind": "verb's words, not the verb",
+  "text": "Mickey never grassed on his own drivers, did he?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H156",
+  "moment": "M16",
+  "kind": "oblique verb",
+  "text": "The lads have earned it this month. Put a bit extra in each of those envelopes.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "generous"
+   }
+  }
+ },
+ {
+  "id": "H157",
+  "moment": "M16",
+  "kind": "oblique verb",
+  "text": "Somebody ought to let the station know what Sam's been doing on the side, and it's going to be me.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Sam"
+   }
+  }
+ },
+ {
+  "id": "H158",
+  "moment": "M16",
+  "kind": "plain verb",
+  "text": "I'm going to the police about Rocco. They can have him.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Rocco"
+   }
+  }
+ },
+ {
+  "id": "H159",
+  "moment": "M16",
+  "kind": "argument",
+  "text": "Take a bit off the top of every envelope before they go out. The book needs it more than they do.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "skim"
+   }
+  }
+ },
+ {
+  "id": "H160",
+  "moment": "M16",
+  "kind": "novel",
+  "text": "I'll drop the envelopes round to the lads myself on my way home.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H161",
+  "moment": "M17",
+  "kind": "talk",
+  "text": "Busy one this morning, love. Is it always like this?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H162",
+  "moment": "M17",
+  "kind": "talk",
+  "text": "Been running this place long?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H163",
+  "moment": "M17",
+  "kind": "talk",
+  "text": "Is Ada about today? Haven't seen her since the funeral.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H164",
+  "moment": "M17",
+  "kind": "talk",
+  "text": "Noor still come in for her breakfast of a morning?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H165",
+  "moment": "M17",
+  "kind": "verb's words, not the verb",
+  "text": "Don't look so nervous, love. I'm not here to pay anybody off.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H166",
+  "moment": "M17",
+  "kind": "oblique verb",
+  "text": "Funny, I heard it was one of Kest's lot that did that van, not me. Pass it on.",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H167",
+  "moment": "M17",
+  "kind": "oblique verb",
+  "text": "Put this towards a new urn, and maybe let that story about me go cold.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H168",
+  "moment": "M17",
+  "kind": "oblique verb",
+  "text": "You know who really had it in for that van's owner? His own brother-in-law. Worth mentioning to the queue.",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H169",
+  "moment": "M17",
+  "kind": "plain verb",
+  "text": "I'll pay you to stop repeating what you heard about me. Sixty do it?",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off"
+  }
+ },
+ {
+  "id": "H170",
+  "moment": "M17",
+  "kind": "novel",
+  "text": "Here, I'll clear those back tables for you while you're rushed off your feet.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H171",
+  "moment": "M18",
+  "kind": "talk",
+  "text": "Nice office. Bit cold for my taste.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H172",
+  "moment": "M18",
+  "kind": "talk",
+  "text": "How long has your lot had the docks, then?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H173",
+  "moment": "M18",
+  "kind": "talk",
+  "text": "Danny Ro talks about you like you're the weather. Always there, never nice.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H174",
+  "moment": "M18",
+  "kind": "talk",
+  "text": "what's aldous vane to you anyway",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H175",
+  "moment": "M18",
+  "kind": "verb's words, not the verb",
+  "text": "I didn't come here to threaten you, Sera. I came to talk business.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H176",
+  "moment": "M18",
+  "kind": "oblique verb",
+  "text": "I know about the Thursday boat, Sera. So let's be reasonable about the rank, shall we?",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H177",
+  "moment": "M18",
+  "kind": "oblique verb",
+  "text": "Right, that's me. Don't get up.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H178",
+  "moment": "M18",
+  "kind": "plain verb",
+  "text": "I know your secret, and I'm going to use it against you.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H179",
+  "moment": "M18",
+  "kind": "argument",
+  "text": "Just between the two of us, Sera, lay a finger on my drivers and you'll be fishing yourself out of the harbour.",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "quiet"
+   }
+  }
+ },
+ {
+  "id": "H180",
+  "moment": "M18",
+  "kind": "novel",
+  "text": "I'm switching that heater on, it's freezing in here.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H181",
+  "moment": "M19",
+  "kind": "talk",
+  "text": "Do you ever actually go home, Noor?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H182",
+  "moment": "M19",
+  "kind": "talk",
+  "text": "How's the paper doing these days? Still selling?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H183",
+  "moment": "M19",
+  "kind": "talk",
+  "text": "Mara Ellis reckons you're the only honest reporter left in Meridian.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H184",
+  "moment": "M19",
+  "kind": "talk",
+  "text": "thats a lot of proofs. deadline tonight?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H185",
+  "moment": "M19",
+  "kind": "verb's words, not the verb",
+  "text": "Everybody in the Hook wants to talk about that fire. I'm sick of hearing about it.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H186",
+  "moment": "M19",
+  "kind": "oblique verb",
+  "text": "Between us, the word on the quay is that van was an insurance job. Might be worth a paragraph.",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H187",
+  "moment": "M19",
+  "kind": "oblique verb",
+  "text": "You were down there when the warehouse went up, weren't you? Go on, what was it like?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the fire"
+   }
+  }
+ },
+ {
+  "id": "H188",
+  "moment": "M19",
+  "kind": "plain verb",
+  "text": "I need a different story going round about that van. Help me plant some doubt.",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H189",
+  "moment": "M19",
+  "kind": "argument",
+  "text": "Not the fire, I mean the council vote. What did you see in that chamber?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the council vote"
+   }
+  }
+ },
+ {
+  "id": "H190",
+  "moment": "M19",
+  "kind": "novel",
+  "text": "I'll run these proofs down to the print room for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H191",
+  "moment": "M20",
+  "kind": "talk",
+  "text": "Lovely roses. You do those yourself?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H192",
+  "moment": "M20",
+  "kind": "talk",
+  "text": "Rocco says you used to drive for Mickey, back in the day.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H193",
+  "moment": "M20",
+  "kind": "talk",
+  "text": "Cold out here. How's the back these days?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H194",
+  "moment": "M20",
+  "kind": "talk",
+  "text": "terrible about the bus fares going up again, isn't it",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H195",
+  "moment": "M20",
+  "kind": "verb's words, not the verb",
+  "text": "Don't panic, I'm not here about what you owe. Just saying hello.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H196",
+  "moment": "M20",
+  "kind": "oblique verb",
+  "text": "You know why I'm on your step. Two hundred, and I'll be on my way.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H197",
+  "moment": "M20",
+  "kind": "oblique verb",
+  "text": "Mickey's gone, and so's your page in his book. Consider yourself square.",
+  "want": {
+   "kind": "verb",
+   "verb": "forgive_debt"
+  }
+ },
+ {
+  "id": "H198",
+  "moment": "M20",
+  "kind": "plain verb",
+  "text": "I've come to collect the two hundred you owe Mickey's.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H199",
+  "moment": "M20",
+  "kind": "argument",
+  "text": "LET THE WHOLE STREET HEAR IT: CROSS ME AGAIN AND YOU WON'T WALK RIGHT FOR A MONTH.",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "loud"
+   }
+  }
+ },
+ {
+  "id": "H200",
+  "moment": "M20",
+  "kind": "novel",
+  "text": "Here, let me fix that gate for you, it's hanging off its hinge.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H201",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "Afternoon, Elias. Mind if I sit? My feet are finished.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H202",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "How long's this place been shut up, then?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H203",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "You knew Mickey long?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H204",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "seen noor about today?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H205",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "Cold enough to crack the paint on this bench.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H206",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "What do you do with yourself all day, sitting out here?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H207",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "They say the council want to flog the building. You heard anything?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H208",
+  "moment": "M21",
+  "kind": "talk",
+  "text": "Funny old street. Quieter than I expected, this end.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H209",
+  "moment": "M21",
+  "kind": "novel",
+  "text": "Here, have my scarf round your neck, you're shivering.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H210",
+  "moment": "M21",
+  "kind": "novel",
+  "text": "Come on, I'll run you home in the cab before it gets dark.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H211",
+  "moment": "M22",
+  "kind": "talk",
+  "text": "Long meeting. Do they always drone on like that?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H212",
+  "moment": "M22",
+  "kind": "talk",
+  "text": "Mara Ellis had plenty to say tonight, didn't she?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H213",
+  "moment": "M22",
+  "kind": "talk",
+  "text": "How long have you sat on the council, Mr Vane?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H214",
+  "moment": "M22",
+  "kind": "talk",
+  "text": "nice room this. smells of polish and old men's coats",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H215",
+  "moment": "M22",
+  "kind": "verb's words, not the verb",
+  "text": "Honestly, what I know about council business would fit on the back of a bus ticket.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H216",
+  "moment": "M22",
+  "kind": "plain verb",
+  "text": "I know what you did, Vane, and I'll use it against you if you don't help me.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H217",
+  "moment": "M22",
+  "kind": "oblique verb",
+  "text": "Shame if the committee found out where the money for your extension really came from, Aldous.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H218",
+  "moment": "M22",
+  "kind": "oblique verb",
+  "text": "I've read the letters from the harbour contractor, Mr Vane. I think you'll vote the way I ask.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H219",
+  "moment": "M22",
+  "kind": "oblique verb",
+  "text": "I'll let you get home, councillor. Evening.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H220",
+  "moment": "M22",
+  "kind": "novel",
+  "text": "Give me those files, I'll carry them down to your car for you.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H221",
+  "moment": "M23",
+  "kind": "talk",
+  "text": "Cold one. How long you been driving for the market?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H222",
+  "moment": "M23",
+  "kind": "talk",
+  "text": "Smells like it's been a good week for mackerel.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H223",
+  "moment": "M23",
+  "kind": "talk",
+  "text": "You on your own today, or is Rocco about somewhere?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H224",
+  "moment": "M23",
+  "kind": "talk",
+  "text": "nice van. bedford, is it?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H225",
+  "moment": "M23",
+  "kind": "verb's words, not the verb",
+  "text": "Don't look so worried, I'm not here to lean on anyone. Just cutting through to the market.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H226",
+  "moment": "M23",
+  "kind": "plain verb",
+  "text": "Tell me what you saw on that boat.",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the boat"
+   }
+  }
+ },
+ {
+  "id": "H227",
+  "moment": "M23",
+  "kind": "oblique verb",
+  "text": "A hundred and sixty quid says your memory of Tuesday has gone a bit foggy. Deal?",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off",
+   "args": {
+    "amount": "160"
+   }
+  }
+ },
+ {
+  "id": "H228",
+  "moment": "M23",
+  "kind": "oblique verb",
+  "text": "Just between you and me, nice and quiet: one more word about what you saw and you'll regret it.",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "quiet"
+   }
+  }
+ },
+ {
+  "id": "H229",
+  "moment": "M23",
+  "kind": "argument",
+  "text": "OI! EVERYONE ON THIS BAY CAN HEAR IT! YOU OPEN YOUR MOUTH AGAIN AND I'LL BREAK YOUR BLOODY ARMS!",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "loud"
+   }
+  }
+ },
+ {
+  "id": "H230",
+  "moment": "M23",
+  "kind": "novel",
+  "text": "Here, let me help you get these boxes into the back of the van.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H231",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "Anything on that radio worth hearing, Rocco?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H232",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "Where's Lena got to tonight?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H233",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "Is Sam on the late shift or has he knocked off?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H234",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "How long have you been sat behind this desk?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H235",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "that radios been crackling since i walked in",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H236",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "Busy night, or is it just the rain keeping folk in?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H237",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "What was Mickey like to work for, honestly?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H238",
+  "moment": "M24",
+  "kind": "talk",
+  "text": "Does anyone ever actually ring for a cab from the phone box outside?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H239",
+  "moment": "M24",
+  "kind": "novel",
+  "text": "Pass us the screwdriver, I'll have a go at fixing that aerial.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H240",
+  "moment": "M24",
+  "kind": "novel",
+  "text": "I'll take the next fare myself. You put your feet up.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H241",
+  "moment": "M25",
+  "kind": "talk",
+  "text": "How long's your family had this shop?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H242",
+  "moment": "M25",
+  "kind": "talk",
+  "text": "Lena says you're one of the old faces round here.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H243",
+  "moment": "M25",
+  "kind": "talk",
+  "text": "busy spring? everyone seems to be painting their front doors",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H244",
+  "moment": "M25",
+  "kind": "verb's words, not the verb",
+  "text": "Relax, I'm not here about the money today. Just passing.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H245",
+  "moment": "M25",
+  "kind": "plain verb",
+  "text": "You owe the book seventy-five quid. I'm here to collect it.",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H246",
+  "moment": "M25",
+  "kind": "oblique verb",
+  "text": "Lena tells me there's a small matter of seventy-five outstanding. Shall we settle it now?",
+  "want": {
+   "kind": "verb",
+   "verb": "collect_debt"
+  }
+ },
+ {
+  "id": "H247",
+  "moment": "M25",
+  "kind": "oblique verb",
+  "text": "Whatever you saw Rocco do last week, you didn't see it. Be a pity about all this glass.",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H248",
+  "moment": "M25",
+  "kind": "oblique verb",
+  "text": "I'll leave you to your customers. Ta-ra.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H249",
+  "moment": "M25",
+  "kind": "novel",
+  "text": "I'll take a tin of that green paint and a box of nails, please.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H250",
+  "moment": "M26",
+  "kind": "talk",
+  "text": "Quiet one tonight, Sam. You all right?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H251",
+  "moment": "M26",
+  "kind": "talk",
+  "text": "Heard from Lena at all today?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H252",
+  "moment": "M26",
+  "kind": "talk",
+  "text": "How long you been driving for Mickey's?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H253",
+  "moment": "M26",
+  "kind": "talk",
+  "text": "these chairs were old when mickey bought them weren't they",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H254",
+  "moment": "M26",
+  "kind": "verb's words, not the verb",
+  "text": "Honestly, I'm sick to death of hearing about that fight.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H255",
+  "moment": "M26",
+  "kind": "plain verb",
+  "text": "What did you see of that stranger who came in here?",
+  "want": {
+   "kind": "verb",
+   "verb": "ask_about",
+   "args": {
+    "topic": "the stranger"
+   }
+  }
+ },
+ {
+  "id": "H256",
+  "moment": "M26",
+  "kind": "oblique verb",
+  "text": "You've carried this place, Sam. From now on you keep a bigger share of your fares.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "generous"
+   }
+  }
+ },
+ {
+  "id": "H257",
+  "moment": "M26",
+  "kind": "oblique verb",
+  "text": "I'm away home, Sam. Don't let the phone bite.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H258",
+  "moment": "M26",
+  "kind": "argument",
+  "text": "The office is taking an extra slice off your fares from now on. Sorry, times are tight.",
+  "want": {
+   "kind": "verb",
+   "verb": "set_cut",
+   "args": {
+    "policy": "skim"
+   }
+  }
+ },
+ {
+  "id": "H259",
+  "moment": "M26",
+  "kind": "novel",
+  "text": "Sit there, I'll make you a cup of tea. You look done in.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H260",
+  "moment": "M27",
+  "kind": "talk",
+  "text": "Has the number twelve been through yet?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H261",
+  "moment": "M27",
+  "kind": "talk",
+  "text": "Freezing in this shelter. The wind comes straight off the harbour.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H262",
+  "moment": "M27",
+  "kind": "talk",
+  "text": "You lived round here long?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H263",
+  "moment": "M27",
+  "kind": "talk",
+  "text": "Seen Noor lately? She used to get this bus.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H264",
+  "moment": "M27",
+  "kind": "verb's words, not the verb",
+  "text": "I doubt the bus'll come before dark, to be honest.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H265",
+  "moment": "M27",
+  "kind": "plain verb",
+  "text": "Keep what you saw to yourself, or you'll regret it. I mean that.",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H266",
+  "moment": "M27",
+  "kind": "oblique verb",
+  "text": "Lot of people on this road talk. Lot of them end up wishing they hadn't. You're not one of them, are you?",
+  "want": {
+   "kind": "verb",
+   "verb": "lean_on"
+  }
+ },
+ {
+  "id": "H267",
+  "moment": "M27",
+  "kind": "oblique verb",
+  "text": "Funny, I heard it wasn't Rocco at all that night. Word is he was across town the whole time.",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H268",
+  "moment": "M27",
+  "kind": "oblique verb",
+  "text": "between us, the story going round has it backwards. ask yourself who gains from blaming Rocco",
+  "want": {
+   "kind": "verb",
+   "verb": "plant_doubt"
+  }
+ },
+ {
+  "id": "H269",
+  "moment": "M27",
+  "kind": "novel",
+  "text": "Here, take my umbrella, I'm only going round the corner.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H270",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "How are you holding up, Lena?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H271",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "Good turnout. More than I expected for Mickey.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H272",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "Father Emil said some good words, didn't he?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H273",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "Who's June? She keeps looking over here.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H274",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "Did Mickey ever talk about me?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H275",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "i didnt really know him, which feels wrong standing here",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H276",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "Those sandwiches have seen better days.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H277",
+  "moment": "M28",
+  "kind": "talk",
+  "text": "What happens to the office now, do you reckon?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H278",
+  "moment": "M28",
+  "kind": "novel",
+  "text": "Let me fetch you a cup of tea and a slice of that cake.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H279",
+  "moment": "M28",
+  "kind": "novel",
+  "text": "I'll help stack these chairs so June can get off home.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H280",
+  "moment": "M29",
+  "kind": "talk",
+  "text": "Bit grim down here. Who did the painting on the walls?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H281",
+  "moment": "M29",
+  "kind": "talk",
+  "text": "You waiting for someone, or do you just like the view?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H282",
+  "moment": "M29",
+  "kind": "talk",
+  "text": "Cold place to stand about all day.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H283",
+  "moment": "M29",
+  "kind": "talk",
+  "text": "what's the parade like after dark these days",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H284",
+  "moment": "M29",
+  "kind": "verb's words, not the verb",
+  "text": "Danny Ro? Never met the man. Is he as mad as they say?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H285",
+  "moment": "M29",
+  "kind": "plain verb",
+  "text": "Forty quid to keep your mouth shut about seeing me here.",
+  "want": {
+   "kind": "verb",
+   "verb": "pay_off",
+   "args": {
+    "amount": "40"
+   }
+  }
+ },
+ {
+  "id": "H286",
+  "moment": "M29",
+  "kind": "oblique verb",
+  "text": "Nice and quiet now, just you and me. Breathe a word about tonight and you'll wish you hadn't.",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "quiet"
+   }
+  }
+ },
+ {
+  "id": "H287",
+  "moment": "M29",
+  "kind": "oblique verb",
+  "text": "Danny Ro's had his run. I'm going to have a word with a detective I know about him.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Danny Ro"
+   }
+  }
+ },
+ {
+  "id": "H288",
+  "moment": "M29",
+  "kind": "argument",
+  "text": "OI! I'M SAYING THIS SO THE WHOLE UNDERPASS HEARS IT - YOU TALK AND YOU'RE FINISHED!",
+  "want": {
+   "kind": "verb",
+   "verb": "threaten",
+   "args": {
+    "tone": "loud"
+   }
+  }
+ },
+ {
+  "id": "H289",
+  "moment": "M29",
+  "kind": "novel",
+  "text": "Hold still, let me have a look at that cut on your hand.",
+  "want": {
+   "kind": "novel"
+  }
+ },
+ {
+  "id": "H290",
+  "moment": "M30",
+  "kind": "talk",
+  "text": "What's the film? I can't make head nor tail of it.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H291",
+  "moment": "M30",
+  "kind": "talk",
+  "text": "Do you always do business during the pictures?",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H292",
+  "moment": "M30",
+  "kind": "talk",
+  "text": "Sera Kest said I'd find you back here.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H293",
+  "moment": "M30",
+  "kind": "talk",
+  "text": "these seats are murder on the back",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H294",
+  "moment": "M30",
+  "kind": "verb's words, not the verb",
+  "text": "Nobody ever informs on anybody in the Hook, do they? Funny place.",
+  "want": {
+   "kind": "speech"
+  }
+ },
+ {
+  "id": "H295",
+  "moment": "M30",
+  "kind": "plain verb",
+  "text": "I'm going to tell the police what Sera Kest has been up to.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Sera Kest"
+   }
+  }
+ },
+ {
+  "id": "H296",
+  "moment": "M30",
+  "kind": "oblique verb",
+  "text": "That little business with the kiosk takings. I know about it, and I think you'll help me now.",
+  "want": {
+   "kind": "verb",
+   "verb": "use_hook"
+  }
+ },
+ {
+  "id": "H297",
+  "moment": "M30",
+  "kind": "oblique verb",
+  "text": "Enjoy the rest of the film. I'll see myself out.",
+  "want": {
+   "kind": "verb",
+   "verb": "leave"
+  }
+ },
+ {
+  "id": "H298",
+  "moment": "M30",
+  "kind": "argument",
+  "text": "Councillor Vane's name is going to a detective sergeant I know. All of it, the lot.",
+  "want": {
+   "kind": "verb",
+   "verb": "inform",
+   "args": {
+    "who": "Aldous Vane"
+   }
+  }
+ },
+ {
+  "id": "H299",
+  "moment": "M30",
+  "kind": "novel",
+  "text": "Here, I brought you a choc ice from the kiosk. Go on, take it.",
+  "want": {
+   "kind": "novel"
+  }
+ }
+]
