@@ -785,7 +785,7 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       one retelling at most, friends rarely meet, and hearers hold it too
       faintly for the reaction ladder to show it. Put to him as decision 7.
 
-- [ ] SCHEDULES ON THE SHIPPING ENGINE (ROADMAP stage 3: "perception,
+- [x] SCHEDULES ON THE SHIPPING ENGINE (ROADMAP stage 3: "perception,
       memory, gossip, schedules and save on the shipping engine"), extended
       here 23 September because the list ran short. The Unreal port has
       perception, memory, gossip, reaction and save; it has no schedules.
@@ -799,6 +799,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       where each character goes in the stage-1 street. ROADMAP puts that
       in stage 2 ("residents on schedules"), so it is not this item: the
       machinery is stage 3 and is what this item ports.
+      DONE 23 Sep: Schedule.h, 21,554 golden rows, 0 mismatches; the
+      independent check held and widened the rows (Wednesday and Thursday,
+      a negative index, the chance bands pinned by sixty people an hour).
 
 ## Where things stand
 
