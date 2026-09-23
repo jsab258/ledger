@@ -6930,8 +6930,8 @@ int main(int argc, char** argv)
 			}
 		}
 		Check(Drawn == 4 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
-		      && std::fabs(Brick->DrawnW - 1.8) < 1e-9,
-		      "the two bricks, the flags and the stallriser tile are drawn, the parade's at 1.8 m a copy");
+		      && std::fabs(Brick->DrawnW - 7.2) < 1e-9,
+		      "the two bricks, the flags and the stallriser tile are drawn, the parade's a whole wall high, 7.2 m a copy");
 		if (Brick != nullptr)
 		{
 			const LedgerStreet::Grade Gb = LedgerStreet::PaletteOverPhoto(*Brick);
@@ -6958,8 +6958,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 16 && Lk.bFromFile,
-			      "the committed look file parses and supplies all sixteen settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 17 && Lk.bFromFile,
+			      "the committed look file parses and supplies all seventeen settings", LErr);
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
 			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,

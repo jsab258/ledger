@@ -52,5 +52,7 @@
   "wet_floor": {
     "paving": 0.25
   },
-  "wet_floor_note": "A wet surface's roughness floor in this engine by base material, where tuning moves it off the recipe's (road 0.05, paving 0.46, kerb 0.40). The approved sheet's flags reflect the shopfront; the recipe's 0.46 was set against an older sheet whose flags were dull."
+  "wet_floor_note": "A wet surface's roughness floor in this engine by base material, where tuning moves it off the recipe's (road 0.05, paving 0.46, kerb 0.40). The approved sheet's flags reflect the shopfront; the recipe's 0.46 was set against an older sheet whose flags were dull.",
+  "street_in_play": true,
+  "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step."
 }

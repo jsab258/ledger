@@ -307,13 +307,18 @@ namespace LedgerStreet
 		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
 		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
 		std::vector<std::pair<std::string, double> > WetFloors;
-		int    Read;             // how many of the sixteen the file supplied
+		// THE BLENDER STREET IN THE PLAYABLE GAME TOO (the walk, the crime,
+		// a plain launch): shown in place of the scene file's own pieces,
+		// which stay as the collision - hidden, not removed - so walking,
+		// blocking and every sight line behave exactly as they did.
+		bool   bStreetInPlay;
+		int    Read;             // how many of the seventeen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
-		         Read(0), bFromFile(false) {}
+		         bStreetInPlay(false), Read(0), bFromFile(false) {}
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
@@ -378,6 +383,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("street_in_play");
+		if (V != 0 && V->Type == T_BOOL) { Out.bStreetInPlay = V->Bool; ++Out.Read; }
 		V = Root.Find("wet_floor");
 		if (V != 0 && V->Type == T_OBJ)
 		{

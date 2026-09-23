@@ -1545,7 +1545,7 @@ namespace
 	// east side at +Y, which the import step reads back off Mickey's sign.
 	// The replaced pieces are HIDDEN, not destroyed, so every count, reading
 	// and verdict key about the scene file's street is what it was.
-	void SpawnStreet(UWorld* World)
+	void SpawnStreet(UWorld* World, bool bInteractive)
 	{
 		GStreetTried.clear();
 		const FString Path = FindStreetSidecar(GStreetTried);
@@ -1571,6 +1571,14 @@ namespace
 				GLookNote = LookErr + "/constants";
 			}
 			else { GLookNote = "file"; }
+		}
+		// THE PLAYABLE STREET ONLY WHEN THE LOOK FILE SAYS SO. Its pieces'
+		// collision is the scene file's either way: the replaced pieces are
+		// hidden below, which leaves their collision on.
+		if (bInteractive && !GLook.bStreetInPlay)
+		{
+			GStreetNote = "not-in-play/the-scene-file-street-stands-for-the-walk-and-the-crime";
+			return;
 		}
 		GStreetActors.SetNumZeroed((int32)GStreet.Rows.size());
 		std::string Missing;
@@ -1648,10 +1656,11 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/16 lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/17 lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, (int)GLook.WetFloors.size(),
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read,
+			GLook.bStreetInPlay ? "yes/scene-file-collision-kept" : "no", (int)GLook.WetFloors.size(),
 			GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
@@ -1934,7 +1943,7 @@ namespace
 
 		// THE STREET FROM BLENDER, in the automation's frames only: the walk
 		// and the crime need the scene file's collision, which this has none of.
-		if (!bInteractive) { SpawnStreet(World); }
+		SpawnStreet(World, bInteractive);
 
 		// H4: A POINT LIGHT UNDER EVERY EMISSIVE PIECE, which is what the
 		// file's lantern block says in as many words: one point light 0.05 m
