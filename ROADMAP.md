@@ -506,8 +506,8 @@ Stage state: OPEN
 | A26.22 | Pedestrians responding to approaching vehicles | genre G4 | open | in by G4 |
 | A26.23 | Passengers remaining correctly seated during movement | genre G4 | open | in by G4 |
 | A26.24 | A vehicle remaining where it was left under the game's persistence rules | genre G4 | open | in by G4 |
-| A28.01 | Sounds coming from the direction of their source | floor | open |  |
-| A28.02 | Sound direction changing correctly as the player turns | floor | open |  |
+| A28.01 | Sounds coming from the direction of their source | floor | done | the traffic bed heard from the north bend with the engine's spatialisation, 23 Sep: [recording](production/art/compare/sound-2026-09-23/walk-audio-0c836a44.wav), [levels](production/art/compare/sound-2026-09-23/walk-audio-0c836a44-levels.txt) |
+| A28.02 | Sound direction changing correctly as the player turns | floor | done | the walk turns its view at 7 s and the bed swings from -0.06 to +0.40 in balance, 23 Sep: [recording](production/art/compare/sound-2026-09-23/walk-audio-0c836a44.wav), [levels](production/art/compare/sound-2026-09-23/walk-audio-0c836a44-levels.txt) |
 | A28.03 | Moving sources carrying their sounds with them | floor | open |  |
 | A28.04 | Distant sources sounding quieter than nearby sources | floor | open |  |
 | A28.05 | Distant sources losing appropriate detail | floor | open |  |
