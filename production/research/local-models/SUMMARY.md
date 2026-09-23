@@ -5,9 +5,7 @@ DELIVERY.md beside this file. Written 23 September.
 
 ## For you
 
-Normally these would go in FOR-JAFAR.md. The brief said this topic writes only
-in its own folder, so they are here, and they need copying across when the
-branch is merged.
+These are also in FOR-JAFAR.md on the main line, added on 23 September.
 
 **Decisions waiting on you**
 
@@ -66,7 +64,8 @@ The larger version of our model is a little better at choosing and worse at
 recognising "this is just talk", which is where we lose most lines. It needs
 about 5.5 GB. Even with the voice off the card, that doesn't fit your 10 GB card
 beside the street; it would just fit a 12 GB one. And the only voice that
-claims to run on the processor is Resemble's small "Nano", which can't do moods.
+can run on the processor is Resemble's small "Nano", which can't do moods, and
+on your PC it took 7 to 9 seconds to say 3.5 seconds of speech, too slow.
 
 **3. Better asking, same model.** The best-supported gain without any training.
 At the moment the model sees the same three worked examples every time. Picking
