@@ -701,7 +701,14 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       route, the MIRROR FIXED AT THAT CROSSING (a reflection of the whole
       street, lettering kept readable), imported and placed in the Unreal
       probe's world, and an Unreal frame from the sheet's viewpoint.
-- [ ] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped.
+      DONE BUT FOR ONE CLEAN FRAME: exported (526aaa9f), imported 52/52 on
+      the runner, the sign read back where it belongs, placed, the old boxes
+      hidden. The first frame (run 35826967785) showed Nanite's simplified
+      stand-in and the default pawn's grey ball; both fixed (5496c803), run
+      35828190155 is the proof.
+- [x] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped: tools/hook-pair.py
+      flips the sheet by default from 23 September (--sheet-as-drawn for a
+      Blender sketch).
 - [ ] THE LOOK, DEVELOPED IN UNREAL against the sheet from its viewpoint -
       ruled 23 September as a change of lanes: Blender is for shapes and
       layout only, and its numbers are targets, reached again here. The
@@ -711,7 +718,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       DEPTH with Unreal's own fog and atmosphere.
 - [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
       the same way.
-- [ ] DECISION 4: the same 42 router lines on the paid model, five pence.
+- [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
+      three of the misses were the checker refusing a numeric amount; fixed,
+      40/42. About 9 US cents for both runs (4cfda29c).
 - [ ] DECISION 2: why a realistic witness under-fills the circle, and whether
       five to ten people is too few for the town to visibly know someone
       within thirty minutes. No constant changes; a finding for Jafar.
