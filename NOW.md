@@ -21,23 +21,26 @@ FOR-JAFAR.md. Check free memory before anything heavy; MetaHuman Creator only
 with 10 GB free; never end another session's processes. Before he wakes,
 FOR-JAFAR.md opens with "Overnight", five lines.
 
-- [ ] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
-      paint (production/assets/scanned/polyhaven, true scale and the sheet's
-      gain in materials.json) on the corner, beside the Kingdom Come frames.
-      First run (3b658691): no measurable cost, paint mottled, road the same;
-      the gap to KCD2 is shape and set dressing. BUT brick and flags went on
-      at HALF SIZE (covers_m misread; measured from the maps: brick 1.05 m,
-      flags 3.6 m). Re-running at true size; judge that frame, then done.
+- [x] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
+      paint on the corner, beside the Kingdom Come frames. DONE 24 Sep at true
+      size (fdf8fbf9, production/d1-probe/ue-corner_scanned.png): brick and
+      paint clearly more real, flags lose their joints (dropped), road no
+      change, no cost (24.2 vs 25.0 ms). Brick and paint now worn everywhere
+      (c92efa23). The gap to KCD2 is shape and set dressing, not surfaces.
 - [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
       engine's own navigation log in the slice walk's verdict. 3b658691's
       agent alone left navData=none (no bounds volume); e934f1e7 spawned one
       and got navData=yes, but the bounds registered as a point (size given
       after the volume registered). Fixed locally (UpdateBounds + tell the
       nav system again); goes out with the next probe push.
-- [ ] 3. THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
+- [ ] 3. [WAITING ON JAFAR: one click, Download Texture Sources, steps in
+      FOR-JAFAR] THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
       character and into the corner without his hands, or exact steps for
       the morning. The face's project settings are mine to switch on.
-- [ ] 4. NANO ON THE CARD WITH THE GAME RUNNING (download approved).
+- [x] 4. NANO ON THE CARD WITH THE GAME RUNNING (download approved). DONE
+      24 Sep (production/research/nano-listening-test/card-timing-2026-09-24.md):
+      slice at 3440x1440 half-res 85 fps, 80 with Nano; Nano 0.9-1.0 s of work
+      per s of speech alone, 1.3 with the game; game 3.5 GB + Nano 2.1 GB.
 - [ ] 5. THEN DOWN THE PRESENTABLE CHECKLIST.
 - [ ] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
       23 Sep: 60 at his monitor, 3440x1440, never below 30, voice running):

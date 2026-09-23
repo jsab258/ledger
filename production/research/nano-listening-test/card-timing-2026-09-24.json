@@ -1,0 +1,63 @@
+{
+ "A-720p": {
+  "frames": 2100,
+  "frame_median_ms": 8.36,
+  "frame_p95_ms": 8.98,
+  "frame_p99_ms": 9.36,
+  "gpu_median_ms": 7.43,
+  "fps_median": 119.6,
+  "over_16_7ms": 0,
+  "over_33_3ms": 0,
+  "gpu_mem_used_mb": 3005,
+  "gpu_mem_budget_mb": 9427
+ },
+ "B-uw-half": {
+  "frames": 2100,
+  "frame_median_ms": 11.8,
+  "frame_p95_ms": 12.44,
+  "frame_p99_ms": 12.9,
+  "gpu_median_ms": 10.86,
+  "fps_median": 84.8,
+  "over_16_7ms": 0,
+  "over_33_3ms": 0,
+  "gpu_mem_used_mb": 3535,
+  "gpu_mem_budget_mb": 9427
+ },
+ "C-uw-half-nano": {
+  "frames": 2100,
+  "frame_median_ms": 12.46,
+  "frame_p95_ms": 14.07,
+  "frame_p99_ms": 15.85,
+  "gpu_median_ms": 10.96,
+  "fps_median": 80.3,
+  "over_16_7ms": 6,
+  "over_33_3ms": 0,
+  "gpu_mem_used_mb": 3535,
+  "gpu_mem_budget_mb": 9427
+ },
+ "run1-C-uw-half-nano": {
+  "frames": 2100,
+  "frame_median_ms": 12.54,
+  "frame_p95_ms": 14.23,
+  "frame_p99_ms": 15.99,
+  "gpu_median_ms": 10.99,
+  "fps_median": 79.7,
+  "over_16_7ms": 11,
+  "over_33_3ms": 0,
+  "gpu_mem_used_mb": 3537,
+  "gpu_mem_budget_mb": 9427
+ },
+ "D-alone-nano": {
+  "label": "D-alone",
+  "lines": 20,
+  "work_s": 73.55,
+  "speech_s": 70.52,
+  "rtf_overall": 1.043,
+  "rtf_median": 0.955,
+  "rtf_worst": 1.816,
+  "load_s": 9.0
+ },
+ "C-uw-half-nano-gpu": {
+  "9720": 3
+ }
+}

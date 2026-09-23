@@ -7,7 +7,7 @@ between them.
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
-- stage 1: 8 of 47 done, 0 moved, 0 out, 39 open
+- stage 1: 9 of 47 done, 0 moved, 0 out, 38 open
 - stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
@@ -19,11 +19,15 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **The MetaHuman needs one click from you: "Download Texture Sources" in MetaHuman Creator.** Everything else about assembling it runs without you; I proved that tonight in a scratch copy that needs no code built. It stopped on one thing: MH_Test's skin textures have to be fetched from Epic's MetaHuman service under your Epic account. That's a download I don't make without your yes.
+  - **(a) You click it in the morning, about two minutes (my recommendation).** Steps: 1. Double-click `C:\LedgerTools\mh-assemble\MHAssemble.uproject`. It's a small copy that opens straight into Unreal, with nothing to build. 2. In the Content Browser at the bottom, double-click MH_Test; MetaHuman Creator opens. 3. In its toolbar at the top, just right of the rig buttons, click **Download Texture Sources \*** (the star means it's needed). 4. Wait for the progress to finish; the skin turns sharper. 5. Press Ctrl+S, then close Unreal. 6. Tell me "textures done", and I'll assemble it, put it in the corner and send you the frame.
+  - (b) Say yes to the download, and next time I'll request it by script myself.
+  - Meanwhile the code that stands it in the corner is written and waits for it. Nothing else is held up.
 - 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list**, which another session is working through in this folder right now. Taking items from that list there would collide with it.
   - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
   - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
   - Meanwhile it has stopped.
-- 2026-09-24 **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. On the card, the ordinary street takes 19 ms a frame at 1280 by 720; the corner at the highest settings takes 36 ms, which is 28 a second.
+- 2026-09-24 **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. Measured tonight on a quiet card: the ordinary slice runs at 120 frames a second at 1280 by 720. At your full size, drawn at half and upscaled, it runs at 85, or 80 with the voice. My earlier figures of 19 and 36 ms were taken while another job was using the card. The corner at its highest settings takes 25 ms at 1280 by 720, which it couldn't afford at full size.
   - **(a) The picture fills your 3440 by 1440 screen, but is drawn at about half that each way and upscaled with Unreal's own upscaler, which is how current games reach 60 on this class of card (my recommendation).**
   - (b) Drawn at the full 3440 by 1440, which on today's numbers means cutting most of what the corner has.
   - Meanwhile I measure both ways: the probe's usual 1280 by 720, plus your screen size drawn at half and upscaled.
@@ -42,7 +46,6 @@ between them.
 - 2026-09-24 **Four voices are outside your 31 July cloning permission:** Aldous, Danny, June and Zlata, cast on 14 August. Your 31 July yes named "the nineteen".
   - **(a) One line from you extending it to all 23 (my recommendation);** their paperwork (credit, casting record, voice manifest) I'll bring up to date regardless.
   - (b) Re-cast those four from the nineteen already cleared.
-- 2026-09-23 **The MetaHuman waits while the research session's model server holds its memory (about 1.5 hours).** Opening MH_Test to assemble it needs 10 GB free. Everything else can go ahead meanwhile: the scanned surfaces onto the corner and the slice's navigation fix (both builds, once you've closed the editor), plus your picks on the listening page and your answer on Nano on the card.
 - 2026-09-23 **Gemma 4 E4B is out of the running**: about 4 seconds a line on your card, and most of its answers don't come back in the form the game reads. Qwen3.5 4B scores 235 of 299, between today's model (216) and Ministral 3 3B (237; 251 with the wording changes).
 - 2026-09-23 **MetaHuman Creator wants 10 GB of free memory to open a rigged face, and the PC had 6.8.** The biggest user is a local language model server (llama-server, about 7 GB), which the research session is running for its model tests. Unreal itself holds about 3.7 GB, and the build machine is idle.
 - 2026-09-23 **Your Epic sign-in worked, confirmed:** MH_Test came back rigged from Epic's service, and its rig state reads Joints and Blend Shapes. (I had called it done a step early, while the bar still read 0 per cent.) Two things remain before a MetaHuman is fully usable. The MetaHuman Creator Core Data needs installing beside the engine, which is your hands in the Epic Games Launcher. And two character settings in the project need switching on, one click on "Enable Missing".
@@ -120,6 +123,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **Nano on the card, with the game running at your screen size: the game holds 80 frames a second, and Nano becomes slower than talk.** The slice at 3440 by 1440, drawn at half size and upscaled, runs at 85 a second on its own and 80 with Nano speaking alongside. Its slowest frames are around 62, nowhere near 30, so the performance target holds today. That's the ordinary street with the player standing still, though, not the corner at its highest settings. Nano alone on the card does about 0.9 to 1.0 seconds of work per second of speech. With the game running that rises to about 1.3, so a three-second line takes about four seconds before any of it plays. On the processor alone it was about 1.9. Memory: the game takes 3.5 GB of the card and Nano 2.1 GB, which leaves about 3.7 GB for anything else local. One part of Nano can't run on your card, because AMD's driver lacks a kind of maths it needs, so that step runs on the processor. I used Nano's built-in voice, not a cast voice.
 - 2026-09-24 **The stop hook now holds only my session, not every session working in this folder.** The local-models session works in the same folder as me, so it was held to my list all night. The hook now checks which session is stopping, and I name mine at the start of each sitting. That's a narrowing of its reach, not a new job; the rule in the project instructions says so.
 - 2026-09-24 **Your C: drive is 98% full: 22 GB free of 931.** The biggest things that are ours: this project's history (13 GB), the probe's local build files (7.7 GB, which a build makes again), an older copy of the project (6.9 GB) and temporary files (4.6 GB). I've deleted nothing. Tonight I watch the free space, and heavy jobs stop if it drops under 10 GB. When you're up, a clear-out of what rebuilds itself would give back about 12 GB.
 - 2026-09-23 **The action-picking comparison is done and on main.** With worked examples, today's free model nearly matches the paid one at picking actions: 274 of 299 against 259. Leaving out the arguable lines, it gets 248 of 264 against 252, with 14 tidy-but-wrong against 10. It doesn't match on typed orders (it obeys 28 of 39, the paid model 16), and it takes about 1.5 seconds a line (measured while Unreal shared the card). The full table is in production/research/local-models/RESULTS.md.
@@ -743,6 +747,7 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 (resolved: memory was free by 23:35 and the assembly ran; what it needs now is above) 2026-09-23 **The MetaHuman waits while the research session's model server holds its memory (about 1.5 hours).** Opening MH_Test to assemble it needs 10 GB free. Everything else can go ahead meanwhile: the scanned surfaces onto the corner and the slice's navigation fix (both builds, once you've closed the editor), plus your picks on the listening page and your answer on Nano on the card.
 - 2026-09-23 **The paid key question, settled by you: run it here with the game's own key.** Done. The question as it was put:
 - 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
   - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
