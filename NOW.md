@@ -1004,7 +1004,7 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
   - The three set aside on 23 Sep (painted asphalt, the pavement's wet
     shine, the crowded hillside) are tried again, each with a new idea, ONLY
     if they stand between the frame and the checklist.
-- [ ] ONE SHORT PS5 EXPERIMENT, one sitting at most (ROADMAP.md item 2): the
+- [x] ONE SHORT PS5 EXPERIMENT, one sitting at most (ROADMAP.md item 2): the
       features on and off, one corner at its best with one MetaHuman, beside a
       PS5-era reference, its cost on the card with the voice's share, and the
       plain-words answer in FOR-JAFAR.md.
@@ -1022,7 +1022,13 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       to tint the shopfront's navy over - Poly Haven's painted timber is all
       planking). NEXT: onto the corner, then the MetaHuman after Jafar's Epic
       sign-in, then the pair beside his Kingdom Come Deliverance 2 frame.
-- [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
+      DONE 24 Sep: the content half judged at true size (brick and paint
+      better and now everywhere, flags dropped, no cost), MH_Test standing in
+      the corner (production/art/compare/ps5-corner-2026-09-24/), the pair
+      beside KCD2 shown to him, the voice's share on the card measured
+      (card-timing-2026-09-24.md). The answer in FOR-JAFAR: the gap is shape
+      and set dressing, not the card and not surfaces.
+- [x] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
       ten lines, three cast voices, each by the engine we use now and by
       Nano, played to him BLIND in pairs so he picks without knowing which is
       which. Nano has no exaggeration control, so its paralinguistic tags go
@@ -1045,6 +1051,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       collection "picks"); which side is Nano is in
       C:/LedgerTools/chatterbox-nano/listening-key-2026-09-23.json, outside
       the project so Jafar cannot see it before he picks.
+      DONE: his picks 7 for today's engine, 2 for Nano, one can't tell
+      (FINDINGS 23 Sep); the card run 24 Sep, with the game running
+      (production/research/nano-listening-test/card-timing-2026-09-24.md).
 - [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
@@ -1203,7 +1212,7 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       the five beats with its evidence.
 - [x] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
       research/baseline-features onto main. DONE 23 Sep (e1e81fed).
-- [ ] THE CHECKLIST FOLDED, SORTED AS JAFAR RULED (23 Sep, evening; the hold
+- [x] THE CHECKLIST FOLDED, SORTED AS JAFAR RULED (23 Sep, evening; the hold
       of 18:16 lifted): the twelve genre decisions in DECISIONS.md (G0-G12);
       MASTER-CHECKLIST.md and the baseline research's six additions folded
       into ROADMAP.md per stage, floor / ours / genre, outs kept with their
