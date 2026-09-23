@@ -25,23 +25,76 @@
       "camera": "cam_corner",
       "condition": "overcast_day",
       "cvars": [
-        ["sg.ViewDistanceQuality", "4"],
-        ["sg.AntiAliasingQuality", "4"],
-        ["sg.ShadowQuality", "4"],
-        ["sg.GlobalIlluminationQuality", "4"],
-        ["sg.ReflectionQuality", "4"],
-        ["sg.PostProcessQuality", "4"],
-        ["sg.TextureQuality", "4"],
-        ["sg.EffectsQuality", "4"],
-        ["sg.FoliageQuality", "4"],
-        ["sg.ShadingQuality", "4"],
-        ["r.Shadow.Virtual.Enable", "1"],
-        ["r.VolumetricFog", "1"],
-        ["r.ContactShadows", "1"],
-        ["r.Lumen.Reflections.DownsampleFactor", "1"],
-        ["r.ScreenPercentage", "100"]
+        [
+          "sg.ViewDistanceQuality",
+          "4"
+        ],
+        [
+          "sg.AntiAliasingQuality",
+          "4"
+        ],
+        [
+          "sg.ShadowQuality",
+          "4"
+        ],
+        [
+          "sg.GlobalIlluminationQuality",
+          "4"
+        ],
+        [
+          "sg.ReflectionQuality",
+          "4"
+        ],
+        [
+          "sg.PostProcessQuality",
+          "4"
+        ],
+        [
+          "sg.TextureQuality",
+          "4"
+        ],
+        [
+          "sg.EffectsQuality",
+          "4"
+        ],
+        [
+          "sg.FoliageQuality",
+          "4"
+        ],
+        [
+          "sg.ShadingQuality",
+          "4"
+        ],
+        [
+          "r.Shadow.Virtual.Enable",
+          "1"
+        ],
+        [
+          "r.VolumetricFog",
+          "1"
+        ],
+        [
+          "r.ContactShadows",
+          "1"
+        ],
+        [
+          "r.Lumen.Reflections.DownsampleFactor",
+          "1"
+        ],
+        [
+          "r.ScreenPercentage",
+          "100"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing",
+          "1"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing.LightingMode",
+          "2"
+        ]
       ],
-      "note": "Every feature that can be switched on while the game runs: the engine's own top quality level (cinematic, 4) in every group, virtual shadow maps, volumetric fog, contact shadows, full-resolution Lumen reflections. Nanite and hardware ray tracing cannot be switched on at run time - the first is built into the meshes at import, the second into the shaders at startup - and are the build changes this experiment names rather than makes."
+      "note": "Every feature that can be switched on while the game runs: the engine's own top quality level (cinematic, 4) in every group, virtual shadow maps, volumetric fog, contact shadows, full-resolution Lumen reflections. Hardware ray tracing is compiled in (the project's startup setting, from 23 September) and switched on here for Lumen, with hit lighting for its reflections (LightingMode 2): mirror-true reflections in the wet. Nanite is built into the meshes at import, not switched at run time."
     }
   ]
 }
