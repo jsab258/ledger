@@ -854,7 +854,7 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       street_collision on. PROVEN 948557c9: brick=1/1 for both crimes,
       crimeNote none, with the street's own walls.
 
-- [ ] THE PARKED CARS' SHAPE, extended 23 Sep from the pair: turned and
+- [x] THE PARKED CARS' SHAPE, extended 23 Sep from the pair: turned and
       repainted today, they still read as boxes beside the sheet's rounded
       saloons - a flat bonnet, a vertical nose, a flat roof. A rounder side
       profile built in Blender and brought across (they collide now, so the
@@ -863,7 +863,10 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       hook camera's three-quarter view it barely shows: the box is the
       glasshouse, one dark block, and the flat sides. Those are next (a
       glasshouse that narrows to the roof, a crease along the flanks). The
-      crime and the walk held on it.
+      crime and the walk held on it. AND THE GLASSHOUSE TAPERED (ec4820d6),
+      proven on the runner with the crime and walk still REAL: production/
+      art/compare/hook-unreal-2026-09-23/cars-02-shape.png. Further, when
+      the town needs it: lighter, more reflective glass, a crease on the flanks.
 - [ ] THE SCENE FILE'S FURNITURE IN THE TUNED LOOK: the lamp columns, the
       kiosk, the skip, the bins and the pallets still wear the texture
       pack's photographs and read rough beside the Blender street (the
@@ -885,4 +888,4 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 2. Stage 3 on the shipping engine now has schedules: the crowd's day ported, 21,550 golden rows agreeing inside the engine, and an independent check that could not break it.
 3. The playable street is the Blender street with its own walls: the crime and the walk proven on it on the runner, the broken window and the brick on the shop floor showing again.
 4. Waiting on Jafar: decision 7 (rumour reach), decision 8 (canon's west-side wording), and whether the day's fog cap stays his.
-5. Next: the west side after decision 8; the cars (the glasshouse tapered at the close, ec4820d6, to be looked at); the old furniture's look, a two-engine change. Set aside after two tries: the flags' wet shine and a drawn asphalt.
+5. Next: the west side after decision 8; the cars' glass and flanks when the town needs them; the old furniture's look, a two-engine change. Set aside after two tries: the flags' wet shine and a drawn asphalt.

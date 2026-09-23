@@ -64,7 +64,7 @@ plain houses.
 - 2026-09-23 **I moved 40 notes to Resolved, unchanged**: yesterday's and last night's, which your morning message answered. Today's are one line each, as the rule says; the detail is in the commits.
 - 2026-09-23 **The painted woodwork is smooth gloss colour instead of rough render**, Mickey's stall riser is Victorian relief tile, and the flags are each their own stone.
 - 2026-09-23 **The street's own walls to bump into are switched on**: you walk against the new buildings now, not the old street's invisible ones, and the crime still plays out exactly as before, its witnesses seeing and not seeing what they did.
-- 2026-09-23 **The two parked cars faced the wrong way and are turned round**, as British cars on that kerb park, with headlamps, in the sheet's navy and blue-grey.
+- 2026-09-23 **The two parked cars faced the wrong way and are turned round**, as British cars on that kerb park, with headlamps, in the sheet's navy and blue-grey, and their shape is rounder, the glass narrowing to the roof.
 - 2026-09-23 **The shop windows have see-through glass, and the playable game shows the new street** over the old street's invisible walls; the crime plays out exactly as before.
 - 2026-09-23 **Some night pictures came out black because of the see-through glass**; the night's brightness is now held where a healthy dusk sits, proven on the build machine.
 - 2026-09-23 **The kerb stood 200 mm and the yellow lines were 75 mm ribs; both fixed**, the kerb drawn as 915 mm precast blocks, proven on the build machine.
