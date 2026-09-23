@@ -739,7 +739,7 @@ namespace Ledger.Game
             // a camera placed at a fixed y would stand at a different height
             // on each side of the street and the two frames would not be
             // matched at all.
-            plan.GroundAt(cam.X, cam.Z, out double groundY, out string edge);
+            plan.CameraGround(cam, out double groundY, out string edge);
             var eye = new Vector3((float)cam.X, (float)(groundY + cam.EyeHeightM), (float)cam.Z);
             _cam.transform.position = eye;
             _cam.transform.rotation = Quaternion.Euler((float)cam.PitchDeg,

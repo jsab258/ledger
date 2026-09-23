@@ -4992,6 +4992,10 @@ def build_and_render(args):
         built += 1
     if signs:
         print("tfSigns " + " ".join(signs))
+    if street and args.get("export_glb"):
+        # THE CROSSING. Geometry only, and nothing after this line runs: the
+        # light, the wet, the wear and the grade are Unreal's to develop now.
+        return _export_street(bpy, args, parts)
     if street:
         # THE PAVEMENT'S OWN THINGS, AFTER THE GEOMETRY AND BEFORE THE LIGHT,
         # because they are loaded from files rather than built from the piece
@@ -5298,7 +5302,7 @@ def parse_args(argv):
     elif args and args[0].endswith(".py"):
         args = args[1:]
     out = {"out": "", "root": ROOT, "spec": SPEC_REL, "block": "east_parade",
-           "condition": "overcast_day",
+           "condition": "overcast_day", "export_glb": "",
            "plan": False, "selftest": False, "error": ""}
     i = 0
     while i < len(args):
@@ -5315,6 +5319,8 @@ def parse_args(argv):
             out["condition"] = args[i + 1]; i += 2
         elif a == "--plan":
             out["plan"] = True; i += 1
+        elif a == "--export-glb" and i + 1 < len(args):
+            out["export_glb"] = args[i + 1]; i += 2
         elif a == "--selftest":
             out["selftest"] = True; i += 1
         # THE LANE PASSES THESE AND THIS RECIPE READS NO COMMISSION, so they
@@ -5327,6 +5333,227 @@ def parse_args(argv):
             out["error"] = "unknown-flag/%s" % a.replace(" ", "~")
             break
     return out
+
+
+#: THE STREET CROSSES INTO UNREAL HERE, 23 September, and this is the only
+#: place it does. Jafar's ruling of the morning: Blender is for shapes and
+#: layout, all look-development happens in Unreal, and "the mirror is fixed
+#: once, at the point where Blender work crosses into Unreal, so every asset
+#: arrives the right way round and nothing downstream has to remember it."
+#:
+#: THE MIRROR. This recipe builds Quay Street with east at +y in a
+#: right-handed, z-up world, so looking north the parade is on the LEFT -
+#: the mirror of the street the scene file, the research drawings and the
+#: Unreal probe describe, where it is on the right. Every building is
+#: mirrored with it, down to which side of Mickey's the private door is. So
+#: the fix is ONE REFLECTION OF THE WHOLE STREET, y to -y, which puts every
+#: building and every door where the drawings have them; the face winding is
+#: reversed with it so the faces still face out. The glTF exporter and
+#: Unreal's importer between them preserve how a model looks, so what
+#: arrives in Unreal is the reflected street: east at +Y, on the right.
+#:
+#: AND THE LETTERING IS NOT REFLECTED. A reflection reverses text, so every
+#: lettered face - the signs, the letting board, the pictured rooms and the
+#: nets - takes UVs worked out AFTER the reflection, running from the
+#: reader's left to the reader's right in the reflected street. Everything
+#: else takes UVs in METRES by the face's own axis, so a material in Unreal
+#: tiles by a world size and not by a box's proportions.
+#:
+#: WHAT DOES NOT CROSS: the lamps and the held props, which Unreal already
+#: places from the scene file by its own mesh route, and the stand-in
+#: people, which are stage 2's. And no material data: each mesh carries its
+#: material's NAME, and the sidecar says what that material was here - its
+#: colour, its map, its tile - as a TARGET for Unreal, not a result.
+STREET_GLB_SKIP = ("lamp", "figure")
+
+
+def _newell(pts):
+    import mathutils
+    n = mathutils.Vector((0.0, 0.0, 0.0))
+    for i in range(len(pts)):
+        a, b = pts[i], pts[(i + 1) % len(pts)]
+        n.x += (a.y - b.y) * (a.z + b.z)
+        n.y += (a.z - b.z) * (a.x + b.x)
+        n.z += (a.x - b.x) * (a.y + b.y)
+    return n.normalized() if n.length > 1e-12 else n
+
+
+def _street_mesh_name(key, decal):
+    """A NAME UNREAL CAN MAKE AN ASSET OF, and one Blender will not cut short.
+
+    Letters, digits and underscores, since the importer derives asset names
+    from it; and a lettered mesh is named by its PICTURE, not the picture's
+    whole path, because Blender stops a name at 63 characters and the first
+    export cut Mickey's sign to "..._fascia_mickeys_", which no sidecar row
+    then matched."""
+    if decal and key.startswith(("sign_", "card_")):
+        key = key.split("_", 1)[0] + "_" + decal.replace("\\", "/").rsplit("/", 1)[-1]
+    return "street_" + "".join(c if c.isalnum() else "_" for c in key)
+
+
+#: WHAT OF THE SCENE FILE'S OWN PIECES THIS STREET STANDS IN FOR, written
+#: into the sidecar so Unreal reads it rather than keeping a second copy.
+#: The recipe builds the terraces, the pavements, the kerbs, the yellow
+#: lines, the signs and everything fixed to a frontage or a roof; it does
+#: not build the lamp columns, the kiosk, the pillar box, the railing, the
+#: bins, the litter or the ground props, so those stay the scene file's.
+STREET_REPLACES_PREFIXES = ("east_", "west_", "ground_", "kerb", "yellow_", "gully_")
+STREET_REPLACES_SHAPES = ("decal",)
+
+
+def _street_replaces(args):
+    """The sidecar's replaces_in_unreal block, the held props read off the
+    scene file: every one that is not stood on the ground is the frontage's
+    or the roof's, and the recipe built its own."""
+    import json
+    assets = []
+    try:
+        with open(os.path.join(args["root"], args.get("spec") or SPEC_REL), encoding="utf-8") as fh:
+            spec = json.load(fh)
+        for it in spec.get("held_props", {}).get("items", []):
+            if it.get("place") not in ("ground", "set_in") and it.get("asset") not in assets:
+                assets.append(it.get("asset"))
+    except (OSError, ValueError):
+        assets = []
+    return {"piece_name_prefixes": list(STREET_REPLACES_PREFIXES),
+            "piece_shapes": list(STREET_REPLACES_SHAPES),
+            "held_prop_assets": sorted(a for a in assets if a),
+            "why": "the recipe builds these itself; lamps, kiosk, pillar box, railing, "
+                   "bins, litter and ground props are the scene file's and stay"}
+
+
+def _export_street(bpy, args, parts):
+    """Export the street's geometry, mirrored, one mesh per material, and a sidecar."""
+    import json
+    import mathutils
+    by_id = {p["id"]: p for p in parts}
+    table = {n: (rgb, rough) for n, rgb, rough in MATERIALS}
+    groups = {}
+    info = {}
+    skipped = 0
+    # THE TRANSFORMS BROUGHT UP TO DATE FIRST. The west blocks are turned
+    # half round by their object's rotation, and Blender does not work out
+    # an object's world matrix until something asks the scene to; the first
+    # export read them unturned and stood a west-side room box across the
+    # road, 20 cm in front of the hook camera.
+    bpy.context.view_layer.update()
+    for obj in list(bpy.context.scene.objects):
+        if obj.type != "MESH":
+            continue
+        if obj.name.startswith(STREET_GLB_SKIP):
+            skipped += 1
+            continue
+        mat = obj.data.materials[0] if len(obj.data.materials) else None
+        key = mat.name if mat is not None else "none"
+        part = by_id.get(obj.name, {})
+        M = obj.matrix_world
+        world = [M @ v.co for v in obj.data.vertices]
+        # THE REFLECTION, y to -y, and nothing else moves.
+        world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
+        lettered = key.startswith(("sign_", "card_"))
+        crop = part.get("decal_uv")
+        g = groups.setdefault(key, {"verts": [], "faces": [], "uvs": []})
+        if key not in info:
+            base = part.get("material", key)
+            rgb, rough = table.get(base, (None, None))
+            surf = SURFACE_OF.get(base, (None, 0.0))
+            info[key] = {
+                "mesh": _street_mesh_name(key, part.get("decal")),
+                "material": key, "base_material": base,
+                "linear_rgb": list(part["paint"]) if part.get("paint") and not lettered
+                              else (list(rgb) if rgb else None),
+                "roughness": rough,
+                "surface_map": surf[0], "tile_m": surf[1],
+                "decal": part.get("decal"), "decal_uv": crop,
+                "decal_emit": part.get("decal_emit") or None,
+                "faces": 0,
+            }
+        for poly in obj.data.polygons:
+            idx = list(poly.vertices)[::-1]          # the winding reversed with the reflection
+            pts = [world[i] for i in idx]
+            n = _newell(pts)
+            uvs = []
+            if lettered and abs(n.z) < 0.7:
+                # THE READER'S RIGHT, in the reflected street: looking at the
+                # face means looking along -n, and right is forward x up.
+                fwd = -n
+                right = fwd.cross(mathutils.Vector((0.0, 0.0, 1.0))).normalized()
+                rs = [p.dot(right) for p in world]
+                zs = [p.z for p in world]
+                r0, r1, z0, z1 = min(rs), max(rs), min(zs), max(zs)
+                for p in pts:
+                    u = (p.dot(right) - r0) / max(1e-9, r1 - r0)
+                    v = (p.z - z0) / max(1e-9, z1 - z0)
+                    if crop:
+                        u = crop[0] + u * (crop[2] - crop[0])
+                        v = crop[1] + v * (crop[3] - crop[1])
+                    uvs.append((u, v))
+            else:
+                ax, ay, az = abs(n.x), abs(n.y), abs(n.z)
+                for p in pts:
+                    if az >= ax and az >= ay:
+                        uvs.append((p.x, p.y))
+                    elif ax >= ay:
+                        uvs.append((p.y, p.z))
+                    else:
+                        uvs.append((p.x, p.z))
+            base_i = len(g["verts"])
+            g["verts"].extend((p.x, p.y, p.z) for p in pts)
+            g["faces"].append(tuple(range(base_i, base_i + len(pts))))
+            g["uvs"].extend(uvs)
+            info[key]["faces"] += 1
+    names = [i["mesh"] for i in info.values()]
+    if len(set(names)) != len(names) or max(len(n) for n in names) > 60:
+        print("tfExport status=REFUSED reason=mesh-names-collide-or-exceed-60/%s" % names)
+        return 1
+    # THE EXPORT SCENE: one object per material, and nothing else in it.
+    for obj in list(bpy.data.objects):
+        bpy.data.objects.remove(obj, do_unlink=True)
+    made = []
+    for key, g in sorted(groups.items()):
+        name = info[key]["mesh"]
+        mesh = bpy.data.meshes.new(name)
+        mesh.from_pydata(g["verts"], [], g["faces"])
+        uv = mesh.uv_layers.new(name="UVMap")
+        for li, loop in enumerate(mesh.loops):
+            uv.data[li].uv = g["uvs"][loop.vertex_index]
+        mesh.validate()
+        mesh.update()
+        mat = bpy.data.materials.get(key) or bpy.data.materials.new(key)
+        mesh.materials.append(mat)
+        obj = bpy.data.objects.new(name, mesh)
+        bpy.context.scene.collection.objects.link(obj)
+        made.append(name)
+    out = os.path.join(args["root"], args["export_glb"])
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    bpy.ops.export_scene.gltf(filepath=out, export_format="GLB", export_materials="PLACEHOLDER",
+                              export_yup=True, export_texcoords=True, export_normals=True,
+                              export_cameras=False, export_animations=False, export_extras=False)
+    side = os.path.splitext(out)[0] + ".json"
+    with open(side, "w", encoding="utf-8") as fh:
+        json.dump({
+            "what": "Quay Street's geometry, exported by tools/art-recipes/terrace-front.py "
+                    "--export-glb for Unreal's mesh route. One mesh per material; each mesh "
+                    "carries its material's name, and the rows below say what that material "
+                    "was in Blender - a TARGET for Unreal's look-development, not a result "
+                    "(Jafar, 23 September).",
+            "mirror": "REFLECTED y to -y AT EXPORT, faces re-wound: the Blender recipe builds "
+                      "the mirror of the street the scene file and Unreal describe, and this "
+                      "is the one place that is fixed. East arrives at Unreal +Y.",
+            "uvs": "metres by each face's own axis, except lettered faces (sign_, card_), "
+                   "whose UVs run reader's-left to reader's-right after the reflection, "
+                   "cropped by decal_uv",
+            "not_exported": "lamps and held props (Unreal places them from the scene file), "
+                            "stand-in people (stage 2)",
+            "units": "metres in Blender, z up; the glTF is y up",
+            "replaces_in_unreal": _street_replaces(args),
+            "meshes": [info[k] for k in sorted(groups)],
+        }, fh, indent=1)
+    size = os.path.getsize(out) if os.path.exists(out) else 0
+    print("tfExport glb=%s bytes=%d meshes=%d faces=%d skipped=%d mirror=y-reflected sidecar=%s"
+          % (args["export_glb"], size, len(made), sum(i["faces"] for i in info.values()),
+             skipped, os.path.basename(side)))
+    return 0 if size > 0 else 1
 
 
 def selftest():

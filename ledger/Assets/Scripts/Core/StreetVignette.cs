@@ -118,6 +118,16 @@ namespace Ledger.Core
         {
             public string Id;
             public double X, Z, EyeHeightM, YawDeg, PitchDeg, FovDeg;
+            /// GROUND THE CAMERA STANDS ON THAT THIS FILE DOES NOT BUILD, 23
+            /// September. The hook camera moved to the approved sheet's
+            /// viewpoint on the quay apron, south of where this street starts,
+            /// and GroundAt rightly finds nothing there. Rather than let the
+            /// eye height sit on an unstated zero, the camera says what it
+            /// stands on and at what height, and the pieces file prints the
+            /// reason as its ground edge. Absent, nothing changes.
+            public bool HasDeclaredGround;
+            public double DeclaredGroundY;
+            public string DeclaredGroundWhy;
         }
 
         /// A LIGHTING CONDITION, AND SINCE 2026-09-09 THE TWO INTENSITIES
@@ -359,6 +369,17 @@ namespace Ledger.Core
             /// actually built and compares; that comparison is the whole
             /// point, so this must never be derived FROM the geometry or the
             /// instrument would be measuring itself.
+            /// THE GROUND UNDER A CAMERA: this street's own where there is
+            /// any, else the ground the camera declares, named as declared.
+            public bool CameraGround(ShotVantage c, out double y, out string edge)
+            {
+                if (GroundAt(c.X, c.Z, out y, out edge)) return true;
+                if (!c.HasDeclaredGround) return false;
+                y = c.DeclaredGroundY;
+                edge = "declared/" + c.DeclaredGroundWhy;
+                return true;
+            }
+
             public bool GroundAt(double x, double z, out double y, out string edge)
             {
                 y = 0; edge = "none";
@@ -1846,11 +1867,18 @@ namespace Ledger.Core
             foreach (var c in MiniJson.GetList(root, "cameras"))
             {
                 var o = MiniJson.AsObject(c);
+                var declared = MiniJson.GetObject(o, "declared_ground");
                 plan.Cameras.Add(new ShotVantage
                 {
                     Id = Str(o, "id"), X = Num(o, "x_m"), Z = Num(o, "z_m"),
                     EyeHeightM = Num(o, "eye_height_m"), YawDeg = Num(o, "yaw_deg"),
-                    PitchDeg = Num(o, "pitch_deg"), FovDeg = Num(o, "fov_vertical_deg")
+                    PitchDeg = Num(o, "pitch_deg"), FovDeg = Num(o, "fov_vertical_deg"),
+                    // A DECLARATION IS WHOLE OR REFUSED: a height with no
+                    // reason, or a reason with no height, throws like any
+                    // other missing key rather than defaulting to zero.
+                    HasDeclaredGround = declared != null,
+                    DeclaredGroundY = declared != null ? Num(declared, "y_m") : 0.0,
+                    DeclaredGroundWhy = declared != null ? Str(declared, "why") : null
                 });
             }
             foreach (var c in MiniJson.GetList(root, "conditions"))

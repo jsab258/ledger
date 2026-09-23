@@ -20996,6 +20996,32 @@ namespace Ledger.CoreTests
                   "a decal anchored to a piece that does not exist is refused BY NAME",
                   moved.Error ?? "(no error raised)");
 
+            // ---- 23 SEPTEMBER: A CAMERA OFF THE STREET STATES ITS GROUND --
+            //
+            // The hook camera moved to the approved sheet's viewpoint on the
+            // quay apron, where this street builds nothing. Its ground is the
+            // one it declares, printed as declared; a camera off the street
+            // that declares nothing still reads as standing on nothing.
+            {
+                var hook = plan.Cameras.Find(c => c.Id == "cam_hook");
+                bool found = plan.CameraGround(hook, out double hy, out string hedge);
+                Check(!plan.GroundAt(hook.X, hook.Z, out double _, out string _)
+                      && found && hy == 0.0 && hedge == "declared/quay_apron_at_crown_level",
+                      "the hook camera stands off the built street on ground it declares, named as declared",
+                      found + " y=" + hy + " edge=" + hedge);
+                var bare = hook;
+                bare.HasDeclaredGround = false;
+                Check(!plan.CameraGround(bare, out double _, out string bareEdge) && bareEdge == "none",
+                      "and the same camera declaring nothing stands on nothing, rather than on a silent zero",
+                      bareEdge);
+                var half = StreetVignette.Read(scene.Replace(
+                    "\"declared_ground\": {\"y_m\": 0.0, \"why\": \"quay_apron_at_crown_level\"}",
+                    "\"declared_ground\": {\"y_m\": 0.0}"));
+                Check(half.Error != null && half.Error.Contains("why"),
+                      "a declared ground with no reason is refused rather than read",
+                      half.Error ?? "(no error raised)");
+            }
+
             // ---- QUEUE 162: THE set_in PROP LIES IN THE SURFACE IT DRAINS --
             //
             // THE HALF OF A PLACEMENT METRIC THAT ASKS WHETHER THE DATUM IS

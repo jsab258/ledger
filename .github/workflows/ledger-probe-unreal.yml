@@ -56,6 +56,10 @@ on:
       # vignette scene's pieces and dimensions live here: a scene file that
       # gained a piece would otherwise land with nothing rendering it.
       - 'production/specs/**'
+      # THE STREET'S GEOMETRY FROM BLENDER, added 23 September when the look
+      # moved into Unreal. A new export is a new street in every probe frame,
+      # so it builds; the recipe that writes it still does not.
+      - 'production/assets/street/**'
       #
       # AND THE BLENDER RECIPES ARE NOT HERE ANY MORE. `tools/art-recipes/**`
       # was on this list from the same day and Jafar took it off on the

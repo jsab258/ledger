@@ -4031,6 +4031,26 @@ if __name__ == "__main__":
                 _f.write("figureImportStatus=RAISED figureImportReturn=2 "
                          "figureNote=%s\n"
                          % str(_fig_err).replace(" ", "~")[:160])
+    # ---- AND THE STREET FROM BLENDER, 23 September, FOR THE SAME REASON ----
+    # tools/ue/import_street.py: the street's geometry becomes static meshes
+    # in the editor run this step already starts, and appends its own line to
+    # ue-material.txt. A fault there prints as a street key and never as a
+    # missing material or figure.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_street
+            import_street.main()
+        except Exception as _street_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("streetImportStatus=RAISED streetImportNote=%s\n"
+                         % str(_street_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "

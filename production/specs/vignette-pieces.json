@@ -19,7 +19,7 @@
 "cameras":[
 {"id":"cam_A","x_m":4,"z_m":4,"eye_height_above_ground_m":1.6,"ground_found":true,"ground_y_m":0.071875,"ground_edge":"east_footway","yaw_deg":0,"pitch_deg":4,"fov_vertical_deg":60},
 {"id":"cam_B","x_m":21,"z_m":-4,"eye_height_above_ground_m":1.6,"ground_found":true,"ground_y_m":0.071875,"ground_edge":"west_footway","yaw_deg":90,"pitch_deg":-3,"fov_vertical_deg":60},
-{"id":"cam_hook","x_m":4,"z_m":-2.1,"eye_height_above_ground_m":1.65,"ground_found":true,"ground_y_m":-0.0525,"ground_edge":"west_carriageway","yaw_deg":11,"pitch_deg":-2.6,"fov_vertical_deg":39}
+{"id":"cam_hook","x_m":-3.2,"z_m":-2.2,"eye_height_above_ground_m":2,"ground_found":true,"ground_y_m":0,"ground_edge":"declared/quay_apron_at_crown_level","yaw_deg":20.4,"pitch_deg":-3.4,"fov_vertical_deg":46}
 ],
 "conditions":[
 {"id":"overcast_day","hdri":"Sky/polyhaven/belfast_open_field_2k","sun":true,"lanterns":false,"window_practicals":false,"wetness":0.6,"fog_density":0.012,"sun_intensity":3,"sky_intensity":0.7,"fog_max_opacity":0.1,"exposure_pin":0.3},
