@@ -2,7 +2,15 @@
 """THE PAIR: our street beside the Hook sheet's own street, side by side.
 
     python3 tools/hook-pair.py --ours FRAME.png --out PAIR.png
+    python3 tools/hook-pair.py --ours FRAME.png --out PAIR.png --sheet-as-drawn
     python3 tools/hook-pair.py --selftest
+
+THE SHEET IS SHOWN FLIPPED, from 23 September. Jafar's decision 5: the game
+engine's way round is the true street - Mickey's on the right looking north,
+as the research drawings have it - and the approved sheet was drawn the other
+way round, from the Blender pictures, so it is compared FLIPPED. The pair is
+an Unreal frame beside the flipped sheet from now on. --sheet-as-drawn shows it
+unflipped, for a Blender sketch, which is still the mirror.
 
 WHY THIS IS A TOOL AND NOT A HABIT. Stage 1's exit test is one a person
 performs: a frame of the built street FROM THE SHEET'S OWN VIEWPOINT stands
@@ -159,7 +167,14 @@ def _read_sheet(root, scratch):
     return dest, ""
 
 
-def build(root, ours_path, out_path, scratch, caption=""):
+def flip_for_true_street(panel, as_drawn=False):
+    """The sheet's panel the way round the true street is: mirrored left to
+    right, unless it is being set beside a Blender sketch."""
+    from PIL import Image
+    return panel if as_drawn else panel.transpose(Image.FLIP_LEFT_RIGHT)
+
+
+def build(root, ours_path, out_path, scratch, caption="", as_drawn=False):
     from PIL import Image, ImageDraw
     import numpy as np
 
@@ -184,7 +199,7 @@ def build(root, ours_path, out_path, scratch, caption=""):
         if span is None:
             return "the-street-panel-is-all-paper"
         x0, x1 = span
-    panel = sheet.crop((x0, y0, x1, y1))
+    panel = flip_for_true_street(sheet.crop((x0, y0, x1, y1)), as_drawn)
 
     ours = Image.open(ours_path).convert("RGB")
     cw, ch, sbox, obox = layout(panel.size, ours.size)
@@ -194,12 +209,13 @@ def build(root, ours_path, out_path, scratch, caption=""):
     canvas.paste(ours.resize((obox[2] - obox[0], obox[3] - obox[1]), Image.LANCZOS),
                  (obox[0], obox[1]))
     d = ImageDraw.Draw(canvas)
-    d.text((6, 10), "THE HOOK SHEET, the bar", fill=(235, 235, 235))
+    d.text((6, 10), "THE HOOK SHEET, the bar" + (", as drawn (the mirror)" if as_drawn
+                     else ", flipped to the true street (decision 5)"), fill=(235, 235, 235))
     d.text((obox[0] + 6, 10), "OURS  " + caption, fill=(235, 235, 235))
     canvas.save(out_path)
-    print("hookPair sheet=%s sheetMode=%s paper=%d sheetPanel=%d,%d..%d,%d ours=%dx%d "
+    print("hookPair sheet=%s sheetMode=%s sheetFlipped=%s paper=%d sheetPanel=%d,%d..%d,%d ours=%dx%d "
           "out=%s bytes=%d"
-          % (REFERENCE.replace(chr(92), "/"), mode, paper, x0, y0, x1, y1,
+          % (REFERENCE.replace(chr(92), "/"), mode, "no" if as_drawn else "yes", paper, x0, y0, x1, y1,
              ours.size[0], ours.size[1],
              os.path.basename(out_path), os.path.getsize(out_path)))
     return ""
@@ -288,6 +304,16 @@ def selftest():
     check("accept/they-do-not-overlap", obox[0] >= sbox[2], "%d vs %d" % (obox[0], sbox[2]))
     check("accept/the-canvas-holds-both", cw >= obox[2] and ch >= obox[3])
 
+    # THE FLIP, both ways: the true street's sheet is the drawn one mirrored,
+    # and --sheet-as-drawn leaves it alone.
+    from PIL import Image as _Image
+    _p = _Image.new("RGB", (4, 2), (0, 0, 0))
+    _p.putpixel((0, 0), (255, 0, 0))
+    check("accept/the-sheet-is-flipped-for-the-true-street",
+          flip_for_true_street(_p).getpixel((3, 0)) == (255, 0, 0))
+    check("accept/and-left-as-drawn-when-asked",
+          flip_for_true_street(_p, as_drawn=True).getpixel((0, 0)) == (255, 0, 0))
+
     print("hook-pair selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 0 if failed == 0 else 4
 
@@ -295,10 +321,15 @@ def selftest():
 def main(argv):
     args = argv[1:]
     out = {"ours": "", "out": "", "caption": "", "scratch": os.environ.get("TEMP", ".")}
+    as_drawn = False
     i = 0
     while i < len(args):
         if args[i] == "--selftest":
             return selftest()
+        if args[i] == "--sheet-as-drawn":
+            as_drawn = True
+            i += 1
+            continue
         if args[i] in ("--ours", "--out", "--caption", "--scratch") and i + 1 < len(args):
             out[args[i][2:]] = args[i + 1]
             i += 2
@@ -309,7 +340,7 @@ def main(argv):
         print("hook-pair refused: --ours and --out are both required, nothing measured")
         return 2
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    err = build(root, out["ours"], out["out"], out["scratch"], out["caption"])
+    err = build(root, out["ours"], out["out"], out["scratch"], out["caption"], as_drawn)
     if err:
         print("hook-pair refused: %s nothing measured" % err)
         return 3

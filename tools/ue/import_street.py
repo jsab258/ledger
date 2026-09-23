@@ -108,6 +108,17 @@ def selftest():
     return 1 if failed else 0
 
 
+def _nanite_off(unreal, sub, mesh):
+    """Switch Nanite off on one mesh and say whether it READ BACK off."""
+    ns = mesh.get_editor_property("nanite_settings")
+    ns.enabled = False
+    try:
+        sub.set_nanite_settings(mesh, ns, apply_changes=True)
+    except Exception:
+        mesh.set_editor_property("nanite_settings", ns)
+    return not mesh.get_editor_property("nanite_settings").enabled
+
+
 def main():
     import unreal
     t0 = time.time()
@@ -115,7 +126,7 @@ def main():
     glb = os.path.join(root, GLB_REL)
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     note = []
-    asked = found = 0
+    asked = found = nanite_off = 0
     sign = "NOT-READ"
     status = "NOTHING"
     try:
@@ -137,20 +148,33 @@ def main():
             task.set_editor_property("replace_existing", True)
             task.set_editor_property("save", True)
             unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
+            sub = unreal.get_editor_subsystem(unreal.StaticMeshEditorSubsystem)
             for n in names:
                 m = lib.load_asset(object_path(n)) if lib.does_asset_exist(object_path(n)) else None
                 if m is None:
                     note.append("missing/" + n)
                     continue
                 found += 1
+                # NANITE OFF, 23 September, and read back. The importer turns
+                # it on, and the first street frame drew the SIMPLIFIED
+                # fallback it keeps beside a Nanite mesh (relative error 1.0):
+                # big triangles across the windows, and the parade's brick
+                # fronts dropped so the dark room boxes behind showed through.
+                # These meshes are a few thousand faces each; the full mesh
+                # is what should draw.
+                if _nanite_off(unreal, sub, m):
+                    nanite_off += 1
+                    lib.save_asset(object_path(n), False)
                 if n == SIGN_MESH:
                     b = m.get_bounds()
                     sign = sign_verdict((b.origin.x, b.origin.y, b.origin.z))
-            status = "OK" if found == asked and sign == "AGREES" else "PARTIAL"
+            status = ("OK" if found == asked and sign == "AGREES" and nanite_off == found
+                      else "PARTIAL")
     except Exception as e:
         status = "RAISED"
         note.append(str(e).split("\n")[0][:100])
     line = street_line(status, asked, found, sign, time.time() - t0, "/".join(note[:3]))
+    line += " streetImportNaniteOff=%d/%d" % (nanite_off, found)
     with open(out, "a", encoding="utf-8") as fh:
         fh.write(line + "\n")
     print("import_street: " + line)

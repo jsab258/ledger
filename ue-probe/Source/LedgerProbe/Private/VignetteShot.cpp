@@ -112,6 +112,7 @@
 #include "Components/SkyLightComponent.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "GameFramework/PlayerController.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerStart.h"
 #include "Camera/CameraActor.h"
 #include "Camera/CameraComponent.h"
@@ -2961,6 +2962,21 @@ namespace
 		else
 		{
 			GCam->SetActorLocationAndRotation(Want, WantRot);
+		}
+		// THE DEFAULT PAWN IS A GREY BALL, 23 September. The automation runs
+		// on ADefaultPawn (LedgerGameMode.cpp), whose mesh is a 70 cm sphere
+		// in the engine's checker material, standing where the player starts
+		// at the street's south end. The retired hook camera stood past it and
+		// never saw it; the approved sheet's camera stands 3.2 m south of the
+		// terrace and looked straight at it, floating in front of Mickey's in
+		// every frame of the first run. It is HIDDEN, not removed, so the
+		// actor count the timing comparison has always carried is unchanged.
+		if (APlayerController* PC = World->GetFirstPlayerController())
+		{
+			if (APawn* Pawn = PC->GetPawn())
+			{
+				Pawn->SetActorHiddenInGame(true);
+			}
 		}
 		if (GCam != nullptr)
 		{
