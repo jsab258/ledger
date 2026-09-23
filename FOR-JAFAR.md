@@ -36,6 +36,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **In the slice, the street's people are solid now.** The player slides round Elizabeth instead of walking through her. The build machine's own test walk is unchanged, and its results still hold.
 - 2026-09-23 **The blind listening test is ready for you:** https://claude.ai/artifact/KcjhMNZeMSJrDCBbSsEh3X. Ten lines from Rocco, Lena and Sam, each spoken by today's voice engine and by Nano, with the sides hidden and shuffled. Play both, pick the one you'd rather hear, and your picks save as you go. Headphones help.
 - 2026-09-23 **Local models research is done, on its own branch** (research/local-models). The half that picks the action can probably go local; the cheapest routes are better asking (worked examples picked to match each line) and a better ready-made model, both tested on our own lines; a larger model doesn't fit your card beside the street; training comes last. The half that writes the spoken line stays paid. The brief said to write only in that topic's folder; I added these items here anyway, because nothing is ever only in a message.
 
