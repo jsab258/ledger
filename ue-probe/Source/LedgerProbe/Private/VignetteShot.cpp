@@ -1299,7 +1299,12 @@ namespace
 			bFound = FPaths::FileExists(C) && FFileHelper::LoadFileToString(Contents, *C);
 		}
 		if (!bFound) { GCornerNote = "no-corner-file"; return; }
-		Reader R(std::string(TCHAR_TO_UTF8(*Contents)));
+		// THE TEXT OUTLIVES THE READER: Reader keeps a reference to the string
+		// it is given, and the first version handed it a temporary that died
+		// at once, so it read freed memory (cornerNote=corner-file-unreadable,
+		// 2d89bbcb).
+		const std::string Text(TCHAR_TO_UTF8(*Contents));
+		Reader R(Text);
 		Value Root;
 		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { GCornerNote = "corner-file-unreadable"; return; }
 		int32 Cams = 0, Shots = 0;
