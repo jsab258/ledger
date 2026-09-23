@@ -896,7 +896,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
         lamp columns, the railing, the skip, the bins, the pallets...), then
         real-looking models for each, no car a recognisable real model.
   - [ ] THE LIGHT IS NOT FLAT AND THE STREET IS WET AS THE SHEET IS.
-  - [ ] A HANDFUL OF PEOPLE STAND OR WALK IN THE STREET, even idling.
+  - [x] A HANDFUL OF PEOPLE STAND OR WALK IN THE STREET, even idling.
+        DONE 23 Sep (cdbf7049): five Mixamo people idling, 176-178 cm, one
+        mesh each; two in front of the fish market, others on the west side.
   - The three set aside on 23 Sep (painted asphalt, the pavement's wet
     shine, the crowded hillside) are tried again, each with a new idea, ONLY
     if they stand between the frame and the checklist.
@@ -927,6 +929,28 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       in use on this card, with the game, the voice and everything else
       running as a player would have them - the first honest reading of
       whether this machine runs the game as designed.
+      WHAT THE UNREAL GAME HAS AND LACKS, read 23 Sep 16:05. HAS: the
+      playable street with its own walls, a walking character, the crime as
+      an automated beat (a witness sees it, a friend who did not overhears
+      it retold, the rumour survives save and restart), the core port
+      (perception, memory, gossip, reaction, schedules, save), the retelling
+      composer (StreetVoice.h), five Mixamo people idling. LACKS, in the
+      order the slice needs them:
+      - [ ] THE CAST IN QUAY STREET: who the slice's two or three people are
+            (canon.md), where each stands at each hour, their ties - routines
+            WRITTEN so tied friends share a place (the 55-of-80 fault is the
+            Unity city's hand-placed routines; Quay Street has none yet). A
+            data file the port's Schedule reads.
+      - [ ] TALKING: walk up, press a key, type a line; the router (fixed
+            today) and the paid conversation model answer; a line on screen.
+      - [ ] THEIR VOICES: the speech graphs on the card through onnxruntime
+            DirectML, as the Unity player had them, one cast voice each.
+      - [ ] THE CRIME BY HAND: the automated beat's window, broken by the
+            player, seen by whoever the port's perception says.
+      - [ ] DECISION 7 (a): a hearer's faint knowledge shows - a longer look,
+            a remark, a changed manner - at the certainty hearers hold.
+      - [ ] REACH MEASURED AGAIN on the new routines; no constant touched.
+      - [ ] THE CARD READING while a character speaks.
 - Then alternate sittings, polish and moat.
 
 ## Where things stand
