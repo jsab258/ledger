@@ -863,9 +863,14 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       kiosk, the skip, the bins and the pallets still wear the texture
       pack's photographs and read rough beside the Blender street (the
       columns as grey stucco, the kiosk's glass a grid). Gloss-painted cast
-      iron is a flat colour, as the joinery now is.
+      iron is a flat colour, as the joinery now is. NOTE, read 23 Sep:
+      those pieces are painted through LedgerSurface, which mirrors Unity's
+      AssetLibrary on purpose (one surface, one input in both engines, the
+      scene file's own warning), so a flat "metal" is a change on both
+      engines, or an Unreal-only override for scene pieces in the look file.
 - [ ] THE CRIME SAVE'S SIZE, runner against local (FINDINGS 23 Sep): commit
       the runner's save beside its verdict so the difference can be read.
+      The workflow keeps it from 583206dc; then diff it against a local one.
 
 ## Where things stand
 
