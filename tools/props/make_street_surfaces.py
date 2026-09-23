@@ -252,6 +252,18 @@ def flags(tf):
     return img, normal_from_height(h, 3.0), r, (tw, th)
 
 
+#: MICKEY'S STALLRISER AS THE SHEET HAS IT, 23 September: cream majolica
+#: with a raised four-petal flower on every tile, olive-brown in its
+#: outlines, and a ring where the corners of four tiles meet - the Victorian
+#: relief tile of a thousand British shopfronts. It was a flat two-tone
+#: checker, which in Unreal read as a chessboard. Drawn per 150 mm tile, so
+#: the recipe's TILE_M still sets the size; the petals and the ring are
+#: raised in the normal map, as glaze over relief is.
+TILE_PETAL_AT, TILE_PETAL_AX, TILE_PETAL_AY = 0.20, 0.17, 0.085
+TILE_RING_R, TILE_RING_W = 0.15, 0.08
+TILE_MOTIF_DARK = (0.50, 0.50, 0.40)
+
+
 def tiles(tf):
     import numpy as np
     n, tw = PX // 2, 2 * tf.TILE_M
@@ -259,16 +271,33 @@ def tiles(tf):
     Y, X = np.meshgrid(ys, ys, indexing="ij")
     fx, fy = np.mod(X, tf.TILE_M), np.mod(Y, tf.TILE_M)
     jm = (fx < tf.TILE_JOINT_M) | (fy < tf.TILE_JOINT_M)
-    quarter = ((fx < tf.TILE_M / 2) ^ (fy < tf.TILE_M / 2))
+    u, v = fx / tf.TILE_M - 0.5, fy / tf.TILE_M - 0.5
+    petal = np.zeros_like(u); outline = np.zeros_like(u)
+    for k in range(4):
+        a = k * np.pi / 2.0
+        px = u * np.cos(a) + v * np.sin(a) - TILE_PETAL_AT
+        py = -u * np.sin(a) + v * np.cos(a)
+        e = (px / TILE_PETAL_AX) ** 2 + (py / TILE_PETAL_AY) ** 2
+        petal = np.maximum(petal, np.clip((1.0 - e) / 0.35, 0.0, 1.0))
+        outline = np.maximum(outline, np.exp(-((e - 0.9) / 0.32) ** 2))
+    # THE CORNER RING: the four corners of neighbouring tiles make one
+    # circle, so the pattern runs across the joints as a real one does.
+    cu, cv = 0.5 - np.abs(u), 0.5 - np.abs(v)
+    rr = np.sqrt(cu * cu + cv * cv)
+    ring = np.exp(-((rr - TILE_RING_R) / TILE_RING_W) ** 2)
+    heart = np.clip((0.08 - np.sqrt(u * u + v * v)) / 0.02, 0.0, 1.0)
+    rosette = np.clip((0.09 - rr) / 0.02, 0.0, 1.0)
+    motif = np.clip(np.maximum(np.maximum(np.maximum(outline, ring), heart), rosette * 0.8), 0.0, 1.0)
     base, rough = authored(tf, "tile_patterned")
     img = np.zeros((n, n, 3))
     for c in range(3):
-        v = np.where(jm, 0.55, np.where(quarter, tf.TILE_DARK, 1.0))
-        img[..., c] = base[c] * v
+        face = (1.0 - (1.0 - TILE_MOTIF_DARK[c]) * motif) * (1.0 - 0.15 * petal)
+        img[..., c] = base[c] * np.where(jm, 0.55, face)
     dist = np.minimum(np.minimum(fx, tf.TILE_M - fx), np.minimum(fy, tf.TILE_M - fy))
     h = np.clip((dist - tf.TILE_JOINT_M * 0.5) / (1.5 * tw / n), 0.0, 1.0)
+    h = h * (0.6 + 0.25 * petal + 0.15 * ring)
     r = np.where(jm, min(1.0, rough + 0.2), rough) * np.ones((n, n))
-    return img, normal_from_height(h, 2.0), r, (tw, tw)
+    return img, normal_from_height(h, 3.0), r, (tw, tw)
 
 
 #: THE KERB AS ITS OWN CONCRETE, 23 September. In Unreal the kerb took the
