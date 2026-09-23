@@ -5,7 +5,7 @@ When an item finishes, strike it and take the next without asking. The list is
 kept current here; when it runs short it is extended from the next part of the
 roadmap.
 
-Last updated 2026-09-22, in the fifth sitting on his PC.
+Last updated 2026-09-23, in the sixth sitting on his PC.
 
 SITTING: started 2026-09-23T14:41:05+02:00, limit 6h
 
@@ -1027,6 +1027,14 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             two-way blends by ground speed. The probe's verdict says whether
             the body and its three clips load (sliceBody, sliceClips). Not done
             until a frame of it walking: next, a slice walk run in the probe.
+      - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
+            mesh around the player is pushed (7cc4767b, its path to Mickey's
+            rank in the slice walk's verdict). The walker itself is written
+            and STASHED, not built ("WIP the slice's walkers": the engine's AI
+            controller, MoveTo over the mesh, RVO avoidance, the locomotion
+            instance). It needs AIModule, bodies with walk clips (put to
+            Jafar: the six realistic extras become the cast), a spawner off
+            quay-cast.json and the fixed clock driving the hours.
       BUILT ON UNREAL'S STANDARD GAME FRAMEWORK (Jafar 23 Sep 18:00): a
       player character with a body and animation, people with AI who walk
       and avoid you (navigation mesh, AI controllers), the engine's own
