@@ -19,10 +19,6 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
-  - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
-  - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
-  - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
 - 2026-09-23 **The MetaHuman waits while the research session's model server holds its memory (about 1.5 hours).** Opening MH_Test to assemble it needs 10 GB free. Everything else can go ahead meanwhile: the scanned surfaces onto the corner and the slice's navigation fix (both builds, once you've closed the editor), plus your picks on the listening page and your answer on Nano on the card.
 - 2026-09-23 **Gemma 4 E4B is out of the running**: about 4 seconds a line on your card, and most of its answers don't come back in the form the game reads. Qwen3.5 4B scores 235 of 299, between today's model (216) and Ministral 3 3B (237; 251 with the wording changes).
 - 2026-09-23 **MetaHuman Creator wants 10 GB of free memory to open a rigged face, and the PC had 6.8.** The biggest user is a local language model server (llama-server, about 7 GB), which the research session is running for its model tests. Unreal itself holds about 3.7 GB, and the build machine is idle.
@@ -212,12 +208,19 @@ between them.
 
 ## Resolved
 
+- 2026-09-23 **The paid key question, settled by you: run it here with the game's own key.** Done. The question as it was put:
+- 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
+  - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
+  - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
+  - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
 - 2026-09-23 **May I download what timing Nano on the card needs?** (answered yes, 23 September, night) You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
   - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
   - (b) No; Nano stays on the processor, which leaves the card to the game.
   - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
 ## Things you should know
 
+- 2026-09-24 **What an hour of talk costs, measured from 24 real calls: about half a US cent a line.** That's 16, 31 or 63 US cents an hour for a player who types 30, 60 or 120 lines. A 30-hour playthrough at 60 lines an hour is about US$9 per player, paid by whoever pays the model bill: about a third of a US$30 price before the platform's cut. Lena (the stronger model) costs three times Rocco or Sam per line. Most of the cost is resending each character's card and the conversation so far with every line, and the obvious first saving (prompt caching) isn't switched on yet. The write-up is with the talk research.
+- 2026-09-23 **The paid model on the 299 fresh lines, run on this PC with the game's key: 259 (87%)**, 38 tidy-but-wrong, and it obeyed 16 of the 39 typed orders. Far below its 41 of 42 on the old lines, so the fresh test is much harder. The best free result so far, Ministral 3 3B with the wording changes, is 251. **The spend went over:** about 30p here, plus about 30p the GitHub run spent before its step that saves results failed, so about 60p against the 35p you approved. I couldn't read that run's log (no GitHub token on this PC, and the log returns 403), only its step list.
 - 2026-09-23 night **Your listening picks came through: you preferred today's voice engine in 7 of the 10 pairs, Nano in 2, and couldn't tell on 1.** Nano is about four times faster on the processor but, to your ear, worse. One caveat: Nano happened to sit on side A in 8 of the 10 pairs, so if you tended to prefer the second one you heard, that leans against it. It still gets timed on the card tonight, as you asked.
 - 2026-09-23 **Local models, answered (a) on all three.** The questions as they were put:
 - 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
