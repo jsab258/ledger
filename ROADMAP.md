@@ -80,6 +80,30 @@ with the way of looking that should have caught it. FOLDED THE SAME EVENING,
 SORTED AS HE RULED (floor, ours, and the genre by G0 to G12 in DECISIONS.md):
 "The checklist, per stage", at the end of this file.
 
+ADDED 23 SEPTEMBER, EVENING, TO THE SLICE (item 3) AND ITS DEFINITION OF
+DONE: TWO KINDS OF TESTING, WHICH NEED DIFFERENT TESTERS. (viii) REGRESSION,
+which exists and stays - the Core's suites, the checks on every push, the
+scripted runs in the packaged game such as the crime check - answers whether
+what worked yesterday still works; when the slice exists it gains ONE
+SCRIPTED RUN THROUGH THE SLICE'S WHOLE LOOP (walk the street, talk to
+someone, commit the crime, be seen, hear about it later) in the packaged
+build, checked automatically, so the loop cannot silently break. (ix)
+EXPLORATORY, which does not exist yet: AN AI TESTER that plays the packaged
+game on this PC as a person would, by looking at the screen and pressing
+keys, never by calling into the code; it tries things, gets stuck, tries to
+break things, and writes up bugs, dead ends, things that did not respond,
+places it could not get out of and anything that looked wrong. BEFORE
+ANYTHING IS BUILT FOR IT, what Unreal already provides for driving a
+packaged game from outside and for automated play is found out and used.
+It runs once at the end of every sitting that changed the slice, or when
+Jafar asks; its findings go into FOR-JAFAR.md as a short list, worst first,
+and every bug goes onto the checklist. WHAT IT CANNOT JUDGE: whether the
+game is fun or the town feels alive. That is the Meridian Test, and it
+needs people (production/playtest/RUNBOOK.md). The AI tester's job is that
+when a person sits down, nothing broken wastes their time. THE SLICE IS NOT
+DONE until the scripted run passes and the AI tester has played it once
+with nothing serious left open.
+
 ### The presentable checklist - polish toward it stops when all five hold
 
 - **Nothing in frame is a placeholder.** Cars and props are real-looking
@@ -254,7 +278,8 @@ a stage cannot be FINISHED while an item in it is open, which
 
 Ids are the research's: A<section>.<n> for the master list (the sections:
 1 Launching and reaching the game; 2 Title screen and menu navigation; 3 Input fundamentals; 4 Onboarding and the first minute; 5 Camera behaviour; 6 Walking, running and turning; 7 Jumping, climbing and water traversal, where supported; 8 Character appearance; 9 Body animation and physical contact; 10 Looking, expressions and social presentation; 11 Object interaction; 12 Collision and object physics; 13 Ordinary civilian behaviour; 14 Enemy awareness and decision-making, where combat or stealth exists; 15 Stealth, trespass and law, where included; 16 Companions and friendly allies, where included; 17 Combat fundamentals; 18 Melee combat, where included; 19 Ranged weapons and thrown objects, where included; 20 Health, injury, death and retry; 21 World layout and navigation through space; 22 Environment art and object appearance; 23 Lighting and rendering; 24 Weather, water and environmental effects, where applicable; 25 Ambient life and world continuity; 26 Road vehicles and traffic, where included; 27 Other transport and mounts, where included; 28 Spatial sound; 29 Foley and event sound; 30 Voice, music and the final audio mix; 31 Dialogue and conversations; 32 Cutscenes and cinematic transitions; 33 Missions, objectives and activities; 34 HUD and moment-to-moment feedback; 35 Maps, journals and navigation aids, where provided; 36 Inventory, equipment and loot, where included; 37 Shops, economy and crafting, where included; 38 Progression, customisation and difficulty, where included; 39 Saving, loading and persistence; 40 Pausing, interruption and quitting; 41 Graphics and display settings; 42 Audio and control settings; 43 Accessibility: text and visual information; 44 Accessibility: hearing and speech; 45 Accessibility: motor control and interaction; 46 Accessibility: cognition, difficulty and comfort; 47 Localisation and text handling; 48 Performance and technical stability; 49 Platform integration and account handling; 50 Multiplayer and cooperative play, only if included; 51 Optional presentation and long-term conveniences; 52 From my own checklist, and not in the independent list),
-letters with a number for its section 52, B<n> for the baseline research's.
+letters with a number for its section 52, B<n> for the baseline research's,
+J<n> for what Jafar adds himself.
 
 ### Stage 1: one street that looks right
 
@@ -661,6 +686,9 @@ Stage state: OPEN
 | A15.17 | Clear consequences of fines, arrest or confiscation | ours | open |  |
 | A15.18 | A usable return to ordinary play after punishment or escape | ours | open |  |
 | A15.19 | No punishment for an action the controls misleadingly presented as harmless | ours | open |  |
+| J01 | A scripted run through the slice's whole loop - walk the street, talk to someone, commit the crime, be seen, hear about it later - in the packaged build, checked automatically on every push | jafar 23 Sep | open | part of the slice's definition of done (ROADMAP item viii) |
+| J02 | An exploratory AI tester that plays the packaged game by looking at the screen and pressing keys, built on what Unreal already provides for driving a packaged game, run at the end of each sitting that changed the slice; findings to FOR-JAFAR worst first, bugs onto this checklist | jafar 23 Sep | open | part of the slice's definition of done (ROADMAP item ix); it cannot judge fun or life, which is the Meridian Test with people |
+| J03 | The AI tester has played the slice once with nothing serious left open | jafar 23 Sep | open | the slice's last condition (ROADMAP item ix) |
 | A17.14 | Feedback for victory, escape or failure | genre G3 | open | in by G3 |
 | A20.03 | Low-health warning without making the game unreadable | floor | open |  |
 | A20.05 | Healing resource consumption that matches the action | floor | open |  |

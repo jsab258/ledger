@@ -1034,7 +1034,18 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       the test harness and its checks keep running against the new build.
       Honest estimate 12 to 18 sittings (FOR-JAFAR).
       AND IN ITS DEFINITION OF DONE (Jafar 23 Sep 18:00): the simulation runs
-      the same regardless of frame rate.
+      the same regardless of frame rate. THE CLOCK DONE 23 Sep (3c3155e6):
+      FixedClock hands the simulation whole fixed steps; ten seconds at 60,
+      20, 144 fps and a stutter end identical to the last bit (port test).
+      The slice's simulation must be driven by it when it is written.
+      AND (Jafar 23 Sep, evening; checklist J01-J03): a scripted run through
+      the slice's whole loop in the packaged build, checked on every push;
+      and an exploratory AI TESTER that plays the packaged game by screen and
+      keys - FIRST find what Unreal provides for driving a packaged game from
+      outside (research running 23 Sep) and use it - run at the end of each
+      sitting that changed the slice, findings to FOR-JAFAR worst first,
+      bugs onto the checklist. The slice is not done until the scripted run
+      passes and the tester has played it once with nothing serious open.
 - [x] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
       research/baseline-features onto main. DONE 23 Sep (e1e81fed).
 - [ ] THE CHECKLIST FOLDED, SORTED AS JAFAR RULED (23 Sep, evening; the hold

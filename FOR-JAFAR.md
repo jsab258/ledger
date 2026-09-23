@@ -9,7 +9,7 @@ between them.
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 3 of 47 done, 0 moved, 0 out, 44 open
 - stage 2: 3 of 247 done, 0 moved, 0 out, 244 open
-- stage 3: 3 of 139 done, 0 moved, 2 out, 134 open
+- stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
 - stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
 - stage 6: 0 of 82 done, 0 moved, 12 out, 70 open
@@ -120,6 +120,7 @@ between them.
 
 ## Rulings received
 
+- 2026-09-23 **An AI tester joins the slice.** Regression stays: the tests, the checks on every push, and the scripted runs in the packaged game, plus one scripted run through the slice's whole loop. Exploratory testing is new: an agent that plays the packaged game by looking at the screen and pressing keys, finds what's broken and writes it up worst first here, with every bug going onto the checklist. It can't judge fun or life; that's the Meridian Test with people. The slice isn't done until both have passed. Recorded in the roadmap and on the checklist, and I'm first finding out what Unreal already provides for this.
 - 2026-09-23 **The checklist, sorted, becomes the plan.** Floor items (what any decent game needs) are in where the research placed them. Ours (how the town notices you, stealth, trespass and the law, the town's layout) are in where the plan has them. Genre items are ruled by your twelve decisions, now G1 to G12 in the decisions file, with G0 for multiplayer being out. An item that's out stays on the list marked out, with what rules it out.
 - 2026-09-23 **Four rules make the checklist hold**, now in the project rules. The list refills only from the current stage's checklist. An item leaves a stage only as done, moved or out, each with a reason. Done needs a frame, a test or a recording linked in its row. A stage can't be marked finished while anything in it is open; one check enforces this on every push.
 - 2026-09-23 **A count per stage** (done, moved, out, open) goes at the top of this file and in every sitting's last message. It's written by the check, never typed.
