@@ -44,6 +44,7 @@
 #include "Observation.h"
 #include "Perception.h"
 #include "Reaction.h"
+#include "Schedule.h"
 #include "Suspicion.h"
 
 #include <cstdio>
@@ -1192,6 +1193,38 @@ namespace Golden
 		{
 			A.Known = (F[1] == "ResistPressure");
 			if (A.Known) { A.Got = FromDouble(Reaction::ResistPressure); }
+		}
+		// THE SCHEDULE, answered from Schedule.h. A resident is its index,
+		// home and work (fields 1 to 5), then the day and the hour. Indoors is
+		// a word and not a zero, so a port that put somebody outside at the
+		// origin is a mismatch rather than a coincidence.
+		else if ((Fn == "OutdoorsAt" || Fn == "OutdoorPositionX" || Fn == "OutdoorPositionZ")
+		         && F.size() >= 9)
+		{
+			Schedule::Resident R;
+			R.Index = I(F[1]); R.HomeX = I(F[2]); R.HomeZ = I(F[3]);
+			R.WorkX = I(F[4]); R.WorkZ = I(F[5]);
+			const int Day = I(F[6]), Hour = I(F[7]);
+			A.Known = true;
+			if (Fn == "OutdoorsAt")
+			{
+				A.Got = FromBool(Schedule::OutdoorsAt(R, Day, Hour));
+			}
+			else
+			{
+				double X = 0.0, Z = 0.0;
+				const bool bOut = Schedule::OutdoorPosition(R, Day, Hour, X, Z);
+				A.Got = bOut ? FromDouble(Fn == "OutdoorPositionX" ? X : Z) : std::string("indoors");
+			}
+		}
+		else if (Fn == "IsRestDay" && F.size() >= 3)
+		{
+			A.Known = true; A.Got = FromBool(Schedule::IsRestDay(I(F[1])));
+		}
+		else if (Fn == "ScheduleConst" && F.size() >= 3)
+		{
+			A.Known = (F[1] == "TripHours");
+			if (A.Known) { A.Got = FromInt(Schedule::TripHours); }
 		}
 		else if (Fn == "SymmetryPredictsSeen" && F.size() >= 7)
 		{
