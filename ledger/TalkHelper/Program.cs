@@ -53,6 +53,7 @@ static class Program
         readonly Dictionary<string, ConversationEngine> _engines = new Dictionary<string, ConversationEngine>();
         readonly ILlmClient _llm;
         readonly CostTracker _cost = new CostTracker();
+        public CostTracker Cost => _cost;
         readonly TimeSpan _patience;
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
@@ -159,6 +160,15 @@ static class Program
             Console.Out.WriteLine(await helper.Answer(line));
             Console.Out.Flush();
         }
+        // WHAT THE SESSION COST, when the game closes the helper's input: the
+        // calls, the tokens by model and the dollars at the game's own price
+        // table - the measure Jafar asked for of an hour of play (23 September).
+        Console.Out.WriteLine(JsonSerializer.Serialize(new
+        {
+            cost = helper.Cost.Report(),
+            usd = helper.Cost.EstimateUsd(),
+            calls = helper.Cost.TotalCalls,
+        }, Plain));
         return 0;
     }
 
