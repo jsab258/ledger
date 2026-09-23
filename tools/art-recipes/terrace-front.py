@@ -387,6 +387,9 @@ MATERIALS = (
     # rather than as paint.
     ("grass",       (0.060, 0.072, 0.036), 0.95),
     ("foliage",     (0.028, 0.042, 0.020), 0.90),
+    # A darker, bluer green for the other half of the rise's trees, so a
+    # hillside of them is not one colour (_tree, 23 September).
+    ("foliage_dark", (0.016, 0.027, 0.016), 0.90),
     # A CEMENT REPAIR PATCH on old brick, sampled off the new sheet's near
     # gable at 175/141/93 and pulled back a little from the orange its light
     # puts in it.
@@ -679,6 +682,7 @@ SURFACE_OF = {
     "tube_lit":     (None, 0.0),
     "grass":        (None, 0.0),
     "foliage":      (None, 0.0),
+    "foliage_dark": (None, 0.0),
     "figure":       (None, 0.0),
     "figure_c":     (None, 0.0),
     "figure_b":     (None, 0.0),
@@ -2946,6 +2950,28 @@ def _canopy(out, pid, material, cx, cy, cz, r, rnd):
                 "verts": verts, "faces": faces, "note": "a-tree/%.1fm" % r})
 
 
+def _tree(out, pid, cx, cy, ground, height, rnd):
+    """A broadleaf tree: a trunk and a crown of five to eight lumps round a
+    centre, each lump its own irregular ball, so the silhouette is a crown and
+    not a ball. THE RISE'S FOURTH TRY, 23 September, and the first about the
+    trees: three tries on the houses' density and spacing left every tree a
+    single sphere, and in the game engine a hillside of spheres is a model
+    railway whatever the houses do."""
+    trunk = height * 0.42
+    _box(out, pid + "_trunk", "prop_timber", cx - 0.14, cx + 0.14, cy - 0.14, cy + 0.14,
+         ground, ground + trunk, "a-trunk")
+    crown_z = ground + height * 0.64
+    big = height * 0.30
+    colour = "foliage" if rnd.random() < 0.5 else "foliage_dark"
+    lumps = rnd.randint(5, 8)
+    _canopy(out, pid + "_c", colour, cx, cy, crown_z, big * 0.85, rnd)
+    for k in range(lumps):
+        a = rnd.uniform(0.0, 2.0 * math.pi)
+        d = big * rnd.uniform(0.45, 0.85)
+        _canopy(out, "%s_l%d" % (pid, k), colour, cx + d * math.cos(a), cy + d * math.sin(a),
+                crown_z + big * rnd.uniform(-0.35, 0.45), big * rnd.uniform(0.45, 0.68), rnd)
+
+
 def _north_rise(out):
     """The inland rise: retaining walls and contour terraces, tier on tier."""
     import random
@@ -2968,7 +2994,15 @@ def _north_rise(out):
              RISE_Y_SPAN[0], RISE_Y_SPAN[1], zb - 0.3, zb, "the-tier's-own-ground")
         y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
         n = 0
+        row_a, row_b = xa, xb
         while y < RISE_Y_SPAN[1]:
+            # NOT ON ONE LINE: each house stands forward or back of its
+            # neighbours by up to a metre and a half, as houses built one at
+            # a time on a slope do, so a tier is not a ruled edge (the fourth
+            # try, 23 September).
+            step = rnd.uniform(-1.0, 1.5)
+            xa, xb = row_a + step, row_b + step
+            xm = (xa + xb) / 2.0
             w = rnd.uniform(5.5, 9.0)              # one house
             h = rnd.uniform(5.0, 6.6)              # to its eaves
             rise = rnd.uniform(2.6, 3.6)           # a steeper roof, darker to the eye
@@ -2985,7 +3019,9 @@ def _north_rise(out):
             # hundred metres a window is two or three pixels, and a band of
             # them is what says house rather than shed.
             for fz in (1.1, 3.6):
-                if zb + fz + 1.3 < zb + h:
+                # a house squeezed against the end of the span may be too
+                # narrow for a band of windows; it keeps its blank wall
+                if zb + fz + 1.3 < zb + h and y1 - y > 2.0:
                     _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "glass",
                          xa - 0.05, xa, y + 0.8, y1 - 0.8, zb + fz, zb + fz + 1.3,
                          "a-floor-of-windows")
@@ -3008,9 +3044,8 @@ def _north_rise(out):
                 ty = y1 + 1.5
                 while ty < y1 + gap - 1.5 and k < 3:
                     r = rnd.uniform(2.2, 4.0)
-                    _canopy(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k), "foliage",
-                            rnd.uniform(xa - 1.0, xb + 4.0), ty + r * 0.8, zb + r * 0.9 + 1.2,
-                            r, rnd)
+                    _tree(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k),
+                          rnd.uniform(xa - 1.0, xb + 4.0), ty + r * 0.8, zb, r * 2.6, rnd)
                     ty += r * 1.6
                     k += 1
                 y = y1 + gap
