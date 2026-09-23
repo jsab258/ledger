@@ -146,10 +146,29 @@ def main():
     for fc in list(act.fcurves):
         if fc.data_path.endswith(".location"):
             act.fcurves.remove(fc)
+    # AND THE POSITION THOSE KEYS LEFT BEHIND: a bone with no curve keeps the
+    # last value one set, and the hips kept theirs in centimetres - the first
+    # export in metres stood every person 2 m back and 0.4 m in the air.
+    for pb in body_arm.pose.bones:
+        pb.location = (0.0, 0.0, 0.0)
     for ob in bpy.data.objects:
         ob.select_set(ob in body)
     bpy.context.view_layer.objects.active = body_arm
     bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
+    # ONE MESH, NOT NINE. A Mixamo body is its parts - body, hair, belt,
+    # shoes, eyelashes - each its own skinned mesh, and Unreal's importer
+    # makes a skeletal mesh of each; the import took the first it found, which
+    # could be a belt. Joined here, the file holds one skinned mesh with all
+    # the materials, and a person is one thing on both sides.
+    parts = [ob for ob in body if ob.type == "MESH"]
+    joined = len(parts)
+    if len(parts) > 1:
+        keep = [ob for ob in body if ob.type != "MESH"]
+        for ob in bpy.data.objects:
+            ob.select_set(ob in parts)
+        bpy.context.view_layer.objects.active = parts[0]
+        bpy.ops.object.join()
+        body = keep + [bpy.context.view_layer.objects.active]
     f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
     # A CALM STRETCH OF A CLIP, when the whole of it is not: the old-man idle
     # coughs and stretches its head back in the middle and stands quietly at
@@ -197,8 +216,8 @@ def main():
                               export_frame_range=True, export_anim_slide_to_zero=True,
                               export_image_format="JPEG")
     size = os.path.getsize(o["out"]) if os.path.exists(o["out"]) else 0
-    print("personExport out=%s bytes=%d bones=%d clipBonesShared=%d/%d frames=%d-%d texturesShrunk=%d"
-          % (o["out"], size, len(names), shared, len(driven), int(f0), int(f1), shrunk))
+    print("personExport out=%s bytes=%d bones=%d clipBonesShared=%d/%d frames=%d-%d texturesShrunk=%d partsJoined=%d"
+          % (o["out"], size, len(names), shared, len(driven), int(f0), int(f1), shrunk, joined))
     return 0
 
 
