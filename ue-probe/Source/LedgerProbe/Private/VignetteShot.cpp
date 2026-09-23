@@ -115,6 +115,8 @@
 // has no header of its own, which is the one include here nothing in this
 // container can check.
 #include "Engine/SkyLight.h"
+#include "Engine/DecalActor.h"
+#include "Components/DecalComponent.h"
 #include "Components/SkyLightComponent.h"
 #include "Components/SkyAtmosphereComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -1333,6 +1335,8 @@ namespace
 	TWeakObjectPtr<AActor> GMhActor;
 	std::string GMhNote = "not-asked";
 	int32 GMhShown = 0;
+	// How many of the scene's multiply stains stood as deferred decals (SpawnStain).
+	int32 GStainsStood = 0;
 
 	void AppendShotsFile(const TCHAR* FileName, int32& Cams, int32& Shots, bool& bAnyFound)
 	{
@@ -2294,9 +2298,10 @@ namespace
 		char CornerBuf[320];
 		std::snprintf(CornerBuf, sizeof(CornerBuf),
 		              " cornerCvarsApplied=%d cornerCvarsMissing=%d scanSurfaces=%d scanRows=%d scanMaps=%d scanShots=%d"
-		              " orthoShots=%d bareShots=%d bareHides=%d metahumanShown=%d",
+		              " orthoShots=%d bareShots=%d bareHides=%d metahumanShown=%d stainsStood=%d",
 		              (int)GCornerApplied, (int)GCornerMissing, (int)GScan.size(), (int)GScanRows, (int)GScanMaps,
-		              (int)GScanShots, (int)GOrthoShots, (int)GBareShotsRun, (int)GBareHide.Num(), (int)GMhShown);
+		              (int)GScanShots, (int)GOrthoShots, (int)GBareShotsRun, (int)GBareHide.Num(), (int)GMhShown,
+		              (int)GStainsStood);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
 		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf + SliceBuf
@@ -6828,6 +6833,73 @@ namespace
 		GStreetLookFor.clear();
 	}
 
+	// ONE STAIN, 24 September: the multiply decal's image, loaded from its set
+	// directory as the Unity host's DecalLayer.LoadSet did (<root>/<id>/<name>.png,
+	// RGBA, the alpha its mask), stood as a deferred decal where the scene
+	// file's quad was. The quad is the engine's plane - local X by Y, normal
+	// on +Z facing out of the surface - so the decal projects along the
+	// quad's -Z, spans its X and Y, and reaches 10 cm either side of it.
+	// Strength is the scene file's: 0.8 on the ground, 0.7 on a wall
+	// (decals.strength_ground and strength_wall, copied from the Unity host).
+	UMaterialInterface* GGrimeMaterial = nullptr;
+
+	bool SpawnStain(UWorld* World, AActor* Quad, const std::string& Id, LedgerSurface::DecalResult& D)
+	{
+		if (World == nullptr || Quad == nullptr || GDecalRoot.IsEmpty())
+		{
+			D.Note = "no-world-or-no-decal-root";
+			return false;
+		}
+		if (GGrimeMaterial == nullptr)
+		{
+			GGrimeMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/Ledger/M_LedgerGrime.M_LedgerGrime"));
+		}
+		if (GGrimeMaterial == nullptr)
+		{
+			D.Note = "no-grime-material/was-make_grime_material.py-run";
+			return false;
+		}
+		const std::string Leaf = Id.substr(Id.find_last_of('/') + 1);
+		const FString Full = GDecalRoot / FString(UTF8_TO_TCHAR((Id + "/" + Leaf + ".png").c_str()));
+		int32 FW = 0, FH = 0;
+		FString LoadedAs = TEXT("no-png-at-that-path-under-the-decal-root");
+		UTexture2D* Pic = IFileManager::Get().FileSize(*Full) > 0 ? ImportTexture(Full, true, FW, FH, LoadedAs) : nullptr;
+		D.LoadedAs = std::string(TCHAR_TO_UTF8(*LoadedAs));
+		D.FullW = FW; D.FullH = FH;
+		if (Pic == nullptr)
+		{
+			D.Note = "stain-image-did-not-load/" + D.LoadedAs;
+			return false;
+		}
+		const FTransform T = Quad->GetActorTransform();
+		const FVector U = T.TransformVector(FVector(100.0, 0.0, 0.0));
+		const FVector V = T.TransformVector(FVector(0.0, 100.0, 0.0));
+		const FVector N = T.TransformVectorNoScale(FVector(0.0, 0.0, 1.0)).GetSafeNormal();
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ADecalActor* Stain = World->SpawnActor<ADecalActor>(ADecalActor::StaticClass(), Quad->GetActorLocation(),
+			FRotationMatrix::MakeFromXZ(-N, V).Rotator(), Params);
+		if (Stain == nullptr || Stain->GetDecal() == nullptr)
+		{
+			D.Note = "decal-spawn-refused";
+			return false;
+		}
+		Stain->GetDecal()->DecalSize = FVector(10.0, U.Size() * 0.5, V.Size() * 0.5);
+		UMaterialInstanceDynamic* M = UMaterialInstanceDynamic::Create(GGrimeMaterial, Stain);
+		if (M == nullptr)
+		{
+			D.Note = "grime-instance-refused";
+			Stain->Destroy();
+			return false;
+		}
+		M->SetTextureParameterValue(FName(TEXT("GrimeTex")), Pic);
+		M->SetScalarParameterValue(FName(TEXT("GrimeStrength")), FMath::Abs(N.Z) > 0.7 ? 0.8f : 0.7f);
+		Stain->SetDecalMaterial(M);
+		++GStainsStood;
+		D.Note = "stood-as-a-deferred-decal/M_LedgerGrime";
+		return true;
+	}
+
 	void BindSurfaces()
 	{
 		// THE WETNESS, DECIDED BEFORE THE FIRST INSTANCE IS MADE, because an
@@ -7094,17 +7166,22 @@ namespace
 				D.bCropAsked = A.bCropped;
 				if (Route == LedgerSurface::Paint_DecalMultiply)
 				{
-					// A STAIN NEEDS A MODULATE MATERIAL AND THIS BUILD HAS ONE
-					// OPAQUE BASE. Blend mode is a property of a MATERIAL and
-					// not of an instance, so no parameter on M_LedgerSurface
-					// can turn an opaque card into something that only ever
-					// darkens what is under it. Pasting the grime opaque would
-					// make the count green and the picture worse, which is
-					// exactly what this item forbids.
-					D.Note = "needs-a-modulate-or-deferred-decal-material/"
-					         "make_base_material.py-ships-one-opaque-base";
-					D.bHidden = true;
+					// A STAIN IS A DEFERRED DECAL, 24 September: the quad stays
+					// hidden and a decal stands where it was, projecting into
+					// the surface under it with M_LedgerGrime
+					// (tools/ue/make_grime_material.py, whose docstring says
+					// why black at the right opacity IS the multiply). Without
+					// that material the stain stays hidden, as before.
 					(*Found)->SetActorHiddenInGame(true);
+					if (SpawnStain((*Found)->GetWorld(), *Found, A.Id, D))
+					{
+						D.bLoaded = true;
+						D.bPainted = true;
+						++GPaint.DecalMultiply;
+						GDecalResults.push_back(D);
+						continue;
+					}
+					D.bHidden = true;
 					++GPaint.DecalNoStainMaterial;
 					++GPaint.Hidden;
 					GDecalResults.push_back(D);
