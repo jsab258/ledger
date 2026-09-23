@@ -73,12 +73,12 @@ plain houses.
   scattered every reflection. A wet road now loses that relief, as water
   filling the pores does, and shows the facades and sky upside down in it
   as the sheet's does.
-- 2026-09-23 **One build-machine run went red, and the next may too; the
-  cause is fixed.** I pushed changes back to back, and two runs both tried to
-  save the same regenerated game-engine material files; the save step only
-  knew how to settle that for pictures. Nothing was wrong with the game. The
-  step now settles those files too. One run already queued before the fix
-  may still go red the same way; the one after it carries the fix.
+- 2026-09-23 **Two build-machine runs went red, both before a fix; the runs
+  since are green.** I pushed changes back to back, and two runs both tried
+  to save the same regenerated game-engine material files; the save step
+  only knew how to settle that for pictures. Nothing was wrong with the
+  game. The step now settles those files too; the one run already queued
+  before the fix went red the same way, and the one after it was green.
 - 2026-09-23 **The walls in the game engine now get Blender's drawn bricks.**
   The texture pack's "brick" photograph read as random stone, and Blender
   had stopped using it yesterday: it draws its bricks from numbers (size,
