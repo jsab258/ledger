@@ -19,10 +19,6 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-24 **The MetaHuman needs one click from you: "Download Texture Sources" in MetaHuman Creator.** Everything else about assembling it runs without you; I proved that tonight in a scratch copy that needs no code built. It stopped on one thing: MH_Test's skin textures have to be fetched from Epic's MetaHuman service under your Epic account. That's a download I don't make without your yes.
-  - **(a) You click it in the morning, about two minutes (my recommendation).** Steps: 1. Double-click `C:\LedgerTools\mh-assemble\MHAssemble.uproject`. It's a small copy that opens straight into Unreal, with nothing to build. 2. In the Content Browser at the bottom, double-click MH_Test; MetaHuman Creator opens. 3. In its toolbar at the top, just right of the rig buttons, click **Download Texture Sources \*** (the star means it's needed). 4. Wait for the progress to finish; the skin turns sharper. 5. Press Ctrl+S, then close Unreal. 6. Tell me "textures done", and I'll assemble it, put it in the corner and send you the frame.
-  - (b) Say yes to the download, and next time I'll request it by script myself.
-  - Meanwhile the code that stands it in the corner is written and waits for it. Nothing else is held up.
 - 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list**, which another session is working through in this folder right now. Taking items from that list there would collide with it.
   - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
   - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
@@ -123,6 +119,8 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **Your standing yes for Unreal downloads is recorded.** I've limited it to downloads from Epic's own services, and I'll name each one here as it happens.
+- 2026-09-24 **You said yes to downloading MH_Test's textures; I'm requesting them by script now.** If Epic wants a sign-in the script can't give, I'll say so here, with the clicks.
 - 2026-09-24 **The stop hook misread my progress answer to you.** It took the report's bullet points for 'For you' items and skipped the real item above them. It now reads the lines directly under 'For you:' and stops where the report starts.
 - 2026-09-24 **Nano on the card, with the game running at your screen size: the game holds 80 frames a second, and Nano becomes slower than talk.** The slice at 3440 by 1440, drawn at half size and upscaled, runs at 85 a second on its own and 80 with Nano speaking alongside. Its slowest frames are around 62, nowhere near 30, so the performance target holds today. That's the ordinary street with the player standing still, though, not the corner at its highest settings. Nano alone on the card does about 0.9 to 1.0 seconds of work per second of speech. With the game running that rises to about 1.3, so a three-second line takes about four seconds before any of it plays. On the processor alone it was about 1.9. Memory: the game takes 3.5 GB of the card and Nano 2.1 GB, which leaves about 3.7 GB for anything else local. One part of Nano can't run on your card, because AMD's driver lacks a kind of maths it needs, so that step runs on the processor. I used Nano's built-in voice, not a cast voice.
 - 2026-09-24 **The stop hook now holds only my session, not every session working in this folder.** The local-models session works in the same folder as me, so it was held to my list all night. The hook now checks which session is stopping, and I name mine at the start of each sitting. That's a narrowing of its reach, not a new job; the rule in the project instructions says so.
@@ -637,6 +635,8 @@ so the record stays complete.)*
 
 ## Rulings received
 
+- 2026-09-24 **"If you need to download anything for UE just do it."** Taken as: downloads for Unreal from Epic's own services (the engine, its plugins, MetaHuman textures and assets) go ahead without asking. Each one is still named here with where it came from and its size. Anything that isn't Unreal, or isn't from Epic, still asks.
+- 2026-09-24 **Yes to downloading MH_Test's textures from Epic's MetaHuman service**, given in chat just before midnight. It asked why I asked: I don't download anything under his account without his say-so each time, and that's my own rule, not the project's.
 - 2026-09-23 night **Four rulings**, now in the decisions file and the roadmap. PC only, Windows; consoles are a later, low-priority question. 60 frames a second at your monitor's resolution on this card, never below 30, with the voice running; every visual choice answers to it, and the slice measures against it. The nineteen cast voices' permissions checked, voice by voice, before anything more is recorded with them. And the cost of an hour of play on the paid model, measured from real calls in the slice. Also yes to the Nano download for timing it on the card.
 - 2026-09-23 **Local models: (a) on all three, and the line-writing half reopened.** Download the four models; spend the 35p on 300 fresh lines; if training is ever reached, a large free model on this PC is the teacher. In order: the fair rerun, the fresh lines, then the models. And line-writing is online by default, not by conclusion: once the slice measures what the game and the voice use, and the voice's double-size export is fixed, the best local writers that fit get a blind test against the paid model's lines, judged by you. The branch comes onto main when the action-picking comparison is done.
 
@@ -748,6 +748,10 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 (resolved 24 Sep: he said yes to the download; I request it by script) **The MetaHuman needs one click from you: "Download Texture Sources" in MetaHuman Creator.** Everything else about assembling it runs without you; I proved that tonight in a scratch copy that needs no code built. It stopped on one thing: MH_Test's skin textures have to be fetched from Epic's MetaHuman service under your Epic account. That's a download I don't make without your yes.
+  - **(a) You click it in the morning, about two minutes (my recommendation).** Steps: 1. Double-click `C:\LedgerTools\mh-assemble\MHAssemble.uproject`. It's a small copy that opens straight into Unreal, with nothing to build. 2. In the Content Browser at the bottom, double-click MH_Test; MetaHuman Creator opens. 3. In its toolbar at the top, just right of the rig buttons, click **Download Texture Sources \*** (the star means it's needed). 4. Wait for the progress to finish; the skin turns sharper. 5. Press Ctrl+S, then close Unreal. 6. Tell me "textures done", and I'll assemble it, put it in the corner and send you the frame.
+  - (b) Say yes to the download, and next time I'll request it by script myself.
+  - Meanwhile the code that stands it in the corner is written and waits for it. Nothing else is held up.
 - 2026-09-24 (resolved: memory was free by 23:35 and the assembly ran; what it needs now is above) 2026-09-23 **The MetaHuman waits while the research session's model server holds its memory (about 1.5 hours).** Opening MH_Test to assemble it needs 10 GB free. Everything else can go ahead meanwhile: the scanned surfaces onto the corner and the slice's navigation fix (both builds, once you've closed the editor), plus your picks on the listening page and your answer on Nano on the card.
 - 2026-09-23 **The paid key question, settled by you: run it here with the game's own key.** Done. The question as it was put:
 - 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.

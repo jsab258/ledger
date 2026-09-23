@@ -217,4 +217,4 @@ runs on push.
 - THE CAST'S VOICES ARE CHECKED BEFORE ANYTHING MORE IS RECORDED WITH THEM (checked 24 September: there are 23, not nineteen, all VCTK, all conditional; production/research/tts-licensing-and-consent/VOICE-PERMISSIONS-2026-09-24.md): for all nineteen, where each reference clip came from and whether there is consent to clone it, against the TTS licensing research on main; the answer voice by voice in FOR-JAFAR.md, with anything not clean flagged.
 - THE COST OF CONVERSATION IS MEASURED: what one hour of play costs on the paid model, from real calls in the slice, beside what that would mean for a released game, in FOR-JAFAR.md.
 - YES TO THE DOWNLOADS FOR NANO ON THE CARD (the DirectML add-on and the older library it needs, in their own environment), so it can be timed with the game running.
-
+- 2026-09-24 Jafar, in chat: "if you need to download anything for UE just do it". Downloads for Unreal from Epic's own services go ahead without asking; each is named in FOR-JAFAR with its source and size; anything else still asks.
