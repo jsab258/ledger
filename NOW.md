@@ -1119,8 +1119,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. Presentable: cars, props, light, wet, people and turning heads are proven on the runner (pair-06, heads-2026-09-23); the street's sound is placed and playing, its walk recording is the last evidence.
-2. The plan is ROADMAP.md's sorted checklist (963 items plus J01-J03, G0-G12 in DECISIONS.md), counted by tools/stage-check.py at the top of FOR-JAFAR.md; nine items done with evidence linked.
-3. The slice has begun on Unreal's framework: a player that stands, walks and runs (-LedgerSlice, stand-in body), a fixed-step clock proven frame-rate independent, and the cast readable in the engine; its walk frames come from the probe.
-4. The PS5 corner's first half is reported (features barely change the picture, 2.6x the cost); its content half and the Nano test wait on Jafar's yes to the downloads.
-5. Next: the slice's walkers (navigation, AI, their bodies), then talking by the helper route if Jafar agrees; the AI tester's shape from the research into what Unreal provides.
+1. Presentable is met on all five, my judgement put to Jafar: heads turn (frame) and the street's sound is positional (a recording, quiet at 40 m); the PS5 corner's first half is reported, its content half and the Nano test wait on his yes to downloads.
+2. The plan is ROADMAP.md's sorted checklist (966 items, G0-G12, J01-J03), counted and guarded by tools/stage-check.py; 12 items are done with their evidence linked, and the count heads FOR-JAFAR.md.
+3. The slice has a player that stands and walks over the shoulder (frames), people solid under -LedgerSlice (its frames due), a fixed-step clock proven frame-rate independent, the cast readable in the engine, and the talk helper answering in character offline and on the paid model.
+4. Broken or unproven: the navigation mesh was not made (its log lines ride the next slice walk); the walkers are written and stashed; the AI tester's launcher is written and not yet run, its hands (a paid computer-use model) waiting on Jafar.
+5. Next, in order: the navigation mesh, then the walkers with the talkers' bodies, then talking in the game (a key, a box, the reply on screen), the scripted loop run, and the first AI tester run.
