@@ -21,9 +21,36 @@ between them.
   - (b) Only people who heard it by word of mouth show it; the paper makes the town know without anyone acting on it.
   - (c) They remark whenever they pass, as the first version did.
   - Meanwhile (a) stands. A remark only counts once Tom can actually hear it, and the coat keeps people who have only heard to a glance.
+- 2026-09-23 **When the connection drops or is slow, what does the player get?** Conversation needs the paid model online.
+  - **(a) The street keeps its authored voice: barks, remarks and overheard talk still play, since they're written and pre-voiced. A typed line gets a short, in-character brush-off ("Not now, love. Busy.") and a small sign that the line is down. Free conversation comes back when the connection does. On a slow line, the character covers the wait (see the next question) and gives up with a brush-off after about eight seconds (my recommendation).**
+  - (b) No connection means no conversation at all, said plainly at launch; the rest of the game plays.
+  - (c) A small local model steps in offline. It's a large download, the lines are weaker, and the router test found small models go wrong without it showing.
+  - Meanwhile nothing is built for this; it lands with the slice's talking.
+- 2026-09-23 **The pause while a line is being made: how is it covered, and how do subtitles stay true?** Today the voice needs longer than the line lasts.
+  - **(a) The character does something a person does while thinking. A breath, a glance away, a short filler in their own pre-recorded voice ("Mm.", "Well...", "Now then."), picked by their mood, while the line is made. The subtitle appears only with the audio it belongs to, built from the exact words sent to the voice, so the two can't disagree (my recommendation).**
+  - (b) Show the words at once and let the voice follow.
+  - (c) Accept the wait with a small "thinking" mark.
+  - Meanwhile nothing is built; it lands with the slice's voices.
+- 2026-09-23 **The minute after something happens in the street: how does the town settle?** The plan covers who saw it and who remembers, not how the street calms down.
+  - **(a) A settling that follows rules. People near it look and some gather; within a couple of game minutes most drift back to their routines. Those who saw it keep talking about it, quieter, for about an hour. The street's unease (heat) is what fades it, so a bad night stays uneasy longer (my recommendation).**
+  - (b) Everything snaps back once the player leaves the area.
+  - (c) The street stays disturbed until the next day.
+  - Meanwhile nothing is built; it lands with the slice's crime.
 
 ## Things you should know
 
+- 2026-09-23 **The slice, re-estimated honestly: about 12 to 18 sittings, not one.** Measured against what the Unreal side has today: a street, a camera on a capsule with no body, the simulation's rules ported and checked, idle people who never move, no sound, no AI, no navigation, and none of Unreal's animation, AI or interface modules even linked. On Unreal's standard framework, roughly, in sittings:
+  - a player with a body and animation, 1 to 2;
+  - people who walk their routines on a navigation mesh and step round you, 2 to 3;
+  - heads that turn and positional sound, 1 (now in presentable);
+  - typing to someone and getting an answer, 2 to 3, or 1 to 2 if the existing C# conversation code runs beside the game rather than being rewritten in C++;
+  - their voices in the game, 1 to 3 (the same choice again);
+  - the crime done by hand and seen, 1 to 2;
+  - hearing it later from someone who didn't see it, 1;
+  - a simple interface, subtitles and pause, 1;
+  - a simulation that runs the same at any frame rate, half a sitting;
+  - the card reading and a build you can play, 1.
+  The "runs beside the game" route is the cheaper one and my recommendation. It's architecture, so I'll put it to you as a decision when the slice starts.
 - 2026-09-23 **Presentable is met, by my judgement against your checklist**, and you can overrule it. Real cars, lamps, kiosk, pillar box and bins; six people standing in the street; light with depth (the bounced light was switched on); and standing water in puddles and gutters. Two things fall short of the sheet: the road is still lighter and less glassy, and the hillside is better (real trees, staggered houses) but still simple. The picture is the latest pair beside the sheet.
 - 2026-09-23 **The newer graphics mode changed nothing you can see**, but having ray tracing available cost 3.6 ms a frame even unused, so it's now off for the street and on only for the PS5 corner's "everything on" shots.
 - 2026-09-23 **Rocco, Lena and Sam now have canon-true character cards** for the slice (a minicab office, no drink, betting or children), and on the paid model all three call Mickey's a minicab office. But offered "a drink after you close up", Sam happily went for one and named two pubs nobody has invented. The conversation engine carries no content rule of its own, so I'm adding it.
@@ -60,6 +87,13 @@ between them.
 
 ## Rulings received
 
+- 2026-09-23 **Six more additions, inside the same order (presentable, then the PS5 corner, then the slice; checkpoint work only between visual items)**:
+  1. Heads that turn toward you and sound that comes from its source go into presentable, using what Unreal provides.
+  2. The slice is built on Unreal's standard game framework (a character with a body, AI people who walk and avoid you, the engine's sound, a simple interface), not grown out of the probe, which stays as the test harness. Re-estimate it honestly here.
+  3. The master feature checklist (957 items) is folded into the roadmap as per-stage items, and the list refills from it; research/baseline-features comes onto main and is folded in too.
+  4. Three design questions go here as decisions: offline or slow connection, the generation pause, the minute after an event.
+  5. A frame-rate-independent simulation joins the slice's definition of done.
+  6. The checklist's blind spots are a floor, and anything new you find playing other games goes on it with the way of looking that should have caught it.
 - 2026-09-23 **Three additions, after presentable and the PS5 corner and before or in the slice**: a blind listening test of Chatterbox Nano against our voice engine (ten lines, three cast voices, its speed on processor and card with the game running, watermark kept); the router fixed so a typed line can never pose as a system instruction, with injection cases in its tests; and the card's frame time and graphics memory while a character speaks, as part of the slice's definition of done.
 - 2026-09-23 **A change of plan: targets in order.** First presentable (the checklist in the roadmap: nothing in frame a placeholder, light not flat and the street wet, a handful of people), then one short PS5 experiment on one corner, then a slice you can play for ten to fifteen minutes, then sittings alternating polish and moat. The Hook sheet is the still-frame target for stage 1, not the game's quality bar; the aim stays D8, judged in motion.
 - 2026-09-23 **Decision 7: (a)**, make faint knowledge show, and fix the routines so friends actually meet; then measure reach again. Neither touches a constant. It lands in the playable slice.
