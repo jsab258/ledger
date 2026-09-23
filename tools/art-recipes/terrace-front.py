@@ -381,6 +381,12 @@ MATERIALS = (
     # A DISH IS PALE GREY PRESSED STEEL, and it is the palest thing on the
     # upper wall, which is why the sheet's reads at all at that size.
     ("dish_grey",   (0.420, 0.425, 0.420), 0.45),
+    # THE HILL'S OWN GROUND AND ITS TREES, 23 September: a muted wet grass on
+    # each tier's platform and a dark summer green for the canopies, both
+    # low and cool so that at a hundred metres in haze they read as hillside
+    # rather than as paint.
+    ("grass",       (0.060, 0.072, 0.036), 0.95),
+    ("foliage",     (0.028, 0.042, 0.020), 0.90),
     # A CEMENT REPAIR PATCH on old brick, sampled off the new sheet's near
     # gable at 175/141/93 and pulled back a little from the orange its light
     # puts in it.
@@ -635,6 +641,8 @@ SURFACE_OF = {
     "lamp_red":     (None, 0.0),
     "interior_lit": (None, 0.0),
     "tube_lit":     (None, 0.0),
+    "grass":        (None, 0.0),
+    "foliage":      (None, 0.0),
     "figure":       (None, 0.0),
     "figure_c":     (None, 0.0),
     "figure_b":     (None, 0.0),
@@ -2463,6 +2471,39 @@ def _north_approach(out):
             x = xe + (rnd.uniform(1.5, 3.0) if rnd.random() < 0.15 else 0.0)
 
 
+def _canopy(out, pid, material, cx, cy, cz, r, rnd):
+    """A tree's crown: a once-subdivided icosahedron, each point pushed in or
+    out a little so no two are the same ball, a touch squashed. Wound
+    outwards like every other mesh here."""
+    import math
+    t = (1.0 + math.sqrt(5.0)) / 2.0
+    v = [(-1, t, 0), (1, t, 0), (-1, -t, 0), (1, -t, 0), (0, -1, t), (0, 1, t),
+         (0, -1, -t), (0, 1, -t), (t, 0, -1), (t, 0, 1), (-t, 0, -1), (-t, 0, 1)]
+    f = [(0, 11, 5), (0, 5, 1), (0, 1, 7), (0, 7, 10), (0, 10, 11), (1, 5, 9), (5, 11, 4),
+         (11, 10, 2), (10, 7, 6), (7, 1, 8), (3, 9, 4), (3, 4, 2), (3, 2, 6), (3, 6, 8),
+         (3, 8, 9), (4, 9, 5), (2, 4, 11), (6, 2, 10), (8, 6, 7), (9, 8, 1)]
+    v = [tuple(c / math.sqrt(x * x + y * y + z * z) for c in (x, y, z)) for (x, y, z) in v]
+    mid = {}
+    def midpoint(a, b):
+        key = (min(a, b), max(a, b))
+        if key not in mid:
+            p = [(v[a][i] + v[b][i]) / 2.0 for i in range(3)]
+            ln = math.sqrt(sum(c * c for c in p))
+            v.append(tuple(c / ln for c in p))
+            mid[key] = len(v) - 1
+        return mid[key]
+    faces = []
+    for a, b, c in f:
+        ab, bc, ca = midpoint(a, b), midpoint(b, c), midpoint(c, a)
+        faces += [(a, ab, ca), (b, bc, ab), (c, ca, bc), (ab, bc, ca)]
+    verts = []
+    for (x, y, z) in v:
+        k = r * rnd.uniform(0.82, 1.12)
+        verts.append((cx + x * k, cy + y * k, cz + z * k * 0.85))
+    out.append({"id": pid, "material": material, "kind": "mesh",
+                "verts": verts, "faces": faces, "note": "a-tree/%.1fm" % r})
+
+
 def _north_rise(out):
     """The inland rise: retaining walls and contour terraces, tier on tier."""
     import random
@@ -2479,6 +2520,10 @@ def _north_rise(out):
         xa = x0 + RISE_SETBACK
         xb = xa + RISE_ROW_DEPTH
         xm = (xa + xb) / 2.0
+        # THE TIER'S OWN GROUND, grass, from this wall's edge back to the
+        # next wall: what shows between the houses now there are gaps.
+        _box(out, "backdrop_rise_ground_%d" % t, "grass", x0, x0 + RISE_TIER_STEP_X,
+             RISE_Y_SPAN[0], RISE_Y_SPAN[1], zb - 0.3, zb, "the-tier's-own-ground")
         y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
         n = 0
         while y < RISE_Y_SPAN[1]:
@@ -2509,7 +2554,26 @@ def _north_rise(out):
                      xm - 0.35, xm + 0.35, cy - 0.45, cy + 0.45,
                      zb + h + rise - 0.6, zb + h + rise + 1.1, "a-stack")
             n += 1
-            y = y1 + rnd.uniform(0.3, 2.5)         # a passage, a stair, a gap
+            # ATTEMPT THREE, 23 September, in the new lane: the rows were
+            # nearly continuous (gaps of 0.3 to 2.5 m) and in the game engine,
+            # with its haze turned down to the sheet's, the hill read as one
+            # wall of houses. The sheet's hillside has space between them,
+            # grass and trees. So two gaps in five are a garden or a plot,
+            # and a garden has trees in it.
+            if rnd.random() < 0.4:
+                gap = rnd.uniform(6.0, 16.0)
+                k = 0
+                ty = y1 + 1.5
+                while ty < y1 + gap - 1.5 and k < 3:
+                    r = rnd.uniform(2.2, 4.0)
+                    _canopy(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k), "foliage",
+                            rnd.uniform(xa - 1.0, xb + 4.0), ty + r * 0.8, zb + r * 0.9 + 1.2,
+                            r, rnd)
+                    ty += r * 1.6
+                    k += 1
+                y = y1 + gap
+            else:
+                y = y1 + rnd.uniform(0.5, 3.0)     # a passage, a stair
 
 
 def _backdrop(out):
