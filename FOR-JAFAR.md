@@ -31,7 +31,7 @@ between them.
   - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
   - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
   - Meanwhile I'm doing (a).
-- 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list**, which another session is working through in this folder right now. Taking items from that list there would collide with it.
+- 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list** (the builder's note, 24 Sep: since 00:15 the hook holds only the builder's own session, so this one no longer arises; the choice of its next steps is still yours), which another session is working through in this folder right now. Taking items from that list there would collide with it.
   - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
   - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
   - Meanwhile it has stopped.
