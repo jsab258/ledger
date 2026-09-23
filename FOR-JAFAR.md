@@ -39,6 +39,22 @@ it.** Thirty minutes of play is two and a half game days.
   Meanwhile: nothing changes; the full write-up is in game-design, and the
   look work in the game engine carries on.
 
+**8. Canon's words about the west side now point at the wrong block.** Your
+ruling of 22 September put shops on the west block that had been left plain
+"because cam_B stands here", which is the block across from the north half
+of the parade, and that is how the street is built. Canon records it as "the
+NEAR west block, by the cab office". With the camera now at the south end,
+the block near the camera and across from the cab office is the other one,
+plain houses.
+
+  (a) **Reword canon to say where the shop block is: across from the north
+      half of the parade; the block across from Mickey's is plain houses —
+      recommended.** Nothing is rebuilt.
+  (b) Move the shops to the block across from Mickey's, as the words say,
+      and make the north block plain.
+
+  Meanwhile: the street stays as built and canon is not touched.
+
 ## Things you should know
 
 - 2026-09-23 **One build-machine run went red, and the next may too; the
