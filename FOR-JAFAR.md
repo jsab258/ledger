@@ -36,6 +36,7 @@ Nothing waiting.
 
 ## Rulings received
 
+- 2026-09-23 **Three additions, after presentable and the PS5 corner and before or in the slice**: a blind listening test of Chatterbox Nano against our voice engine (ten lines, three cast voices, its speed on processor and card with the game running, watermark kept); the router fixed so a typed line can never pose as a system instruction, with injection cases in its tests; and the card's frame time and graphics memory while a character speaks, as part of the slice's definition of done.
 - 2026-09-23 **A change of plan: targets in order.** First presentable (the checklist in the roadmap: nothing in frame a placeholder, light not flat and the street wet, a handful of people), then one short PS5 experiment on one corner, then a slice you can play for ten to fifteen minutes, then sittings alternating polish and moat. The Hook sheet is the still-frame target for stage 1, not the game's quality bar; the aim stays D8, judged in motion.
 - 2026-09-23 **Decision 7: (a)**, make faint knowledge show, and fix the routines so friends actually meet; then measure reach again. Neither touches a constant. It lands in the playable slice.
 - 2026-09-23 **Decision 8: (a)**, reword canon to say where the shop block actually is. Done the same sitting.
