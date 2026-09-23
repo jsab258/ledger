@@ -108,6 +108,12 @@ namespace Ledger.Soak
                 return ReachSeries(asked.Length > 0 && asked[0] > AuthoredResidents ? asked[0] : 200,
                                    days, seed);
 
+            // DECISION 2, 23 September: the same town, ONE sighting, on a
+            // clock. A measurement and nothing else; see ReachClock.
+            if (args.Contains("--reach-clock"))
+                return ReachClock(asked.Length > 0 && asked[0] > AuthoredResidents ? asked[0] : 200,
+                                  seed, ArgInt(args, "--trials", 100));
+
             SelfTest();
 
             // THE FIRST RUNG PAYS THE JIT BILL AND THE LADDER READS IT AS
@@ -567,6 +573,204 @@ namespace Ledger.Soak
             }
             Console.WriteLine();
             Console.WriteLine("reachSeries done: a measurement; nothing tuned, nothing gated.");
+            return 0;
+        }
+
+        /// DECISION 2, ruled by Jafar 23 September: "a realistic witness
+        /// reaches five to ten people in one retelling ... find out why it
+        /// under-fills the circle, and whether that is too few for the town to
+        /// visibly know someone within thirty minutes. Do not change a
+        /// constant."
+        ///
+        /// WHAT DIFFERS FROM THE REACH SERIES, and why each difference is the
+        /// question rather than a new instrument. The series witnesses AGAIN on
+        /// a quarter of all days for 500 days and counts anybody who ever heard
+        /// any of it, so its 5-10 is a union over about 125 sightings with the
+        /// meetings saturated. This files ONE sighting and reads the count on a
+        /// clock, because "within thirty minutes" is a time and the series has
+        /// no clock in it. Thirty real minutes is 60 game hours at the game's
+        /// 2 game minutes a real second (GameController.MinutesPerRealSecond).
+        ///
+        /// THE MEETINGS ARE A DIMENSION, not a constant. The series' coin (10%
+        /// a tied pair an hour, one round an hour) is one row; the game's own
+        /// cadence (a round every 6 game minutes, GossipDirector) is several,
+        /// because how often two friends stand within six metres is a property
+        /// of schedules this tool does not have. ALWAYS TOGETHER is the row
+        /// where only the confidence arithmetic can stop a story.
+        ///
+        /// NOTHING IS CHANGED: the town is BuildTown's, the mill is the shipped
+        /// mill, and the only inputs are the witness, the first-sight
+        /// confidence the game's own callers use, and when people meet.
+        static int ReachClock(int residents, int seed, int trials)
+        {
+            Console.WriteLine($"REACH CLOCK - {residents} residents, seed {seed}, {trials} trials a row. "
+                              + "ONE sighting, no repeats. A MEASUREMENT: no gate, no shipped constant changed.");
+            var probe = new Outcome();
+            var town0 = BuildTown(residents, seed, probe, Knobs.Shipped);
+            var ids = town0.Agents.Select(a => a.Id).ToList();
+            double decay = town0.HopDecay, floor = town0.MinConfidenceToShare, half = town0.RumorHalfLifeHours;
+
+            // The graph as the run will see it, read through the mill's own Tie.
+            var contacts = new Dictionary<string, List<(string id, double w)>>();
+            double maxTie = 0;
+            var allTies = new List<double>();
+            foreach (var a in ids)
+            {
+                var row = new List<(string, double)>();
+                foreach (var b in ids)
+                {
+                    double w = town0.Tie(a, b);
+                    if (w <= 0) continue;
+                    row.Add((b, w));
+                    if (w > maxTie) maxTie = w;
+                    if (string.CompareOrdinal(a, b) < 0) allTies.Add(w);
+                }
+                contacts[a] = row;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("1. THE ARITHMETIC OF ONE AND TWO RETELLINGS (no meetings involved)");
+            Console.WriteLine($"   town: {allTies.Count} ties, mean {allTies.Average():0.00}; witness {WitnessId} has "
+                              + $"{contacts[WitnessId].Count} friends, {probe.witnessBall2 - 1} people within two ties");
+            Console.WriteLine($"   {WitnessId}'s friends by tie: "
+                              + string.Join(" ", contacts[WitnessId].OrderByDescending(t => t.w).Select(t => t.w.ToString("0.0"))));
+            foreach (var c0 in new[] { 0.5, 0.55, 0.6, 1.0 })
+            {
+                double hop1Tie = floor / (c0 * decay);
+                double hop2Product = floor / (c0 * decay * decay);
+                int townHop1 = allTies.Count(w => w >= hop1Tie - 1e-12);
+                // Every two-step path in the town whose product clears hop 2 at the
+                // instant of the sighting, the most favourable moment there is.
+                int paths2 = 0, paths2Any = 0;
+                foreach (var mid in ids)
+                    foreach (var (x, w1) in contacts[mid])
+                        foreach (var (y, w2) in contacts[mid])
+                        {
+                            if (string.CompareOrdinal(x, y) >= 0) continue;
+                            paths2Any++;
+                            if (w1 * w2 >= hop2Product - 1e-12) paths2++;
+                        }
+                var windows = contacts[WitnessId].OrderByDescending(t => t.w).Select(t =>
+                {
+                    double arrive = c0 * t.w * decay;
+                    if (arrive < floor - 1e-12) return $"{t.w:0.0}:refused";
+                    // Age halves the teller's copy every RumorHalfLifeHours, so the
+                    // window closes when c0 * 0.5^(h/half) * tie * decay < floor.
+                    double hours = half * Math.Log(arrive / floor, 2);
+                    return $"{t.w:0.0}:{hours:0}h";
+                });
+                Console.WriteLine($"   first sight {c0:0.00}: hop 1 needs a tie >= {hop1Tie:0.000} "
+                                  + $"({townHop1}/{allTies.Count} of the town's ties); hop 2 needs a tie PRODUCT >= {hop2Product:0.000} "
+                                  + $"({paths2}/{paths2Any} two-step paths clear it at the instant of the sighting)");
+                Console.WriteLine($"      {WitnessId}'s friends, tie:how long the witness's own copy stays good enough to pass it: "
+                                  + string.Join(" ", windows));
+            }
+
+            // Symmetric per-pair hashes, taken once: a pair's meetings must not
+            // depend on which of the two is speaking.
+            var pairKey = new Dictionary<(string, string), ulong>();
+            foreach (var a in ids)
+                foreach (var (b, _) in contacts[a])
+                {
+                    string x = string.CompareOrdinal(a, b) < 0 ? a : b, y = x == a ? b : a;
+                    ulong h = 1469598103934665603UL;
+                    foreach (char ch in x + "|" + y) { h ^= ch; h *= 1099511628211UL; }
+                    pairKey[(a, b)] = h;
+                }
+
+            int[] marks = { 1, 2, 3, 6, 12, 24, 36, 48, 60, 72, 96, 168 };
+            const int horizonHours = 168;
+            // (label, minutes a round, kind, parameter): kind 0 = coin per call,
+            // 1 = per-pair per-round chance, 2 = per-pair daily block of hours,
+            // 3 = always.
+            var models = new List<(string label, int step, int kind, double p)>
+            {
+                ("soak: 10% coin/pair/hour, 1 round/h", 60, 0, 0.10),
+                ("game 6-min rounds, pair meets 2% of rounds", 6, 1, 0.02),
+                ("game 6-min rounds, pair meets 10% of rounds", 6, 1, 0.10),
+                ("game 6-min rounds, pair shares 1h a day", 6, 2, 1),
+                ("game 6-min rounds, pair shares 3h a day", 6, 2, 3),
+                ("always together (arithmetic only)", 6, 3, 0),
+            };
+
+            Console.WriteLine();
+            Console.WriteLine("2. THE CLOCK: people other than the witness who have heard it, after N game hours");
+            Console.WriteLine("   30 real minutes of play = 60 game hours (2 game minutes a real second). "
+                              + "Mean over trials; each trial draws the hour of the sighting and the meetings.");
+            foreach (var who in new[] { WitnessId, "anyone" })
+                foreach (var c0 in new[] { 0.5, 0.55, 0.6, 1.0 })
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"   witness {who}, first sight {c0:0.00}");
+                    Console.WriteLine($"   {"meetings",-44}" + string.Join("", marks.Select(m => $"{m + "h",6}"))
+                                      + "   p10-p90@60h  deepest");
+                    foreach (var md in models)
+                    {
+                        var sums = new double[marks.Length];
+                        var at60 = new List<int>();
+                        int deepest = 0;
+                        for (int t = 0; t < trials; t++)
+                        {
+                            var trng = new Random(unchecked(seed * 7919 + t * 104729 + (int)(c0 * 1000) * 31
+                                                            + md.kind * 17 + (int)(md.p * 1000)));
+                            var mill = BuildTown(residents, seed, new Outcome(), Knobs.Shipped);
+                            string witness = who == "anyone" ? ids[trng.Next(ids.Count)] : who;
+                            var t0 = new GameTime(1, trng.Next(24), 0);
+                            ulong trialMix = (ulong)trng.Next() * 0x9E3779B97F4A7C15UL;
+                            var coin = new Random(trng.Next());
+                            long round = 0;
+                            int hourOfDay = t0.Hour;
+                            Func<string, string, bool> together = (a, b) =>
+                            {
+                                if (md.kind == 3) return true;
+                                if (md.kind == 0) return coin.NextDouble() < md.p;
+                                ulong h = pairKey[(a, b)] ^ trialMix;
+                                if (md.kind == 1) h ^= (ulong)round * 0xC2B2AE3D27D4EB4FUL;
+                                h ^= h >> 33; h *= 0xff51afd7ed558ccdUL; h ^= h >> 33;
+                                h *= 0xc4ceb9fe1a85ec53UL; h ^= h >> 33;
+                                if (md.kind == 1) return (h >> 11) * (1.0 / (1UL << 53)) < md.p;
+                                int start = (int)(h % 24);
+                                return ((hourOfDay - start + 24) % 24) < (int)md.p;
+                            };
+
+                            mill.Age(t0);
+                            mill.Witness(witness, new Fact("player", "seen_once", "the yard"),
+                                         "somebody was in the yard", true, t0, c0);
+                            var firstHeard = new Dictionary<string, int>();
+                            for (int m = md.step; m <= horizonHours * 60; m += md.step)
+                            {
+                                var now = t0.AddMinutes(m);
+                                hourOfDay = now.Hour;
+                                round++;
+                                if (m % 60 == 0) mill.Age(now);
+                                foreach (var e in mill.Tick(now, together))
+                                {
+                                    if (e.ToId != witness && !firstHeard.ContainsKey(e.ToId)) firstHeard[e.ToId] = m;
+                                    if (e.Rumor.Hops > deepest) deepest = e.Rumor.Hops;
+                                }
+                                // Nothing can ever pass again once no holder is sure
+                                // enough to clear the floor over the strongest tie:
+                                // confidence only falls and nobody sees it twice.
+                                if (m % 60 == 0 && !mill.Agents.Any(g => g.Rumors.Any(r =>
+                                        r.Confidence * maxTie * decay >= floor - 1e-12)))
+                                    break;
+                            }
+                            for (int i = 0; i < marks.Length; i++)
+                                sums[i] += firstHeard.Values.Count(v => v <= marks[i] * 60);
+                            at60.Add(firstHeard.Values.Count(v => v <= 60 * 60));
+                        }
+                        at60.Sort();
+                        int p10 = at60[(int)(0.1 * (at60.Count - 1))], p90 = at60[(int)(0.9 * (at60.Count - 1))];
+                        Console.WriteLine($"   {md.label,-44}" + string.Join("", sums.Select(s => $"{s / trials,6:0.0}"))
+                                          + $"   {p10,4}-{p90,-4}    {deepest}");
+                        Console.WriteLine($"reachClockRow witness={who} firstSight={c0:0.00} "
+                                          + $"meetings={md.label.Replace(' ', '_')} "
+                                          + string.Join(" ", marks.Select((m, i) => $"h{m}={sums[i] / trials:0.00}"))
+                                          + $" p10at60={p10} p90at60={p90} deepestHop={deepest}");
+                    }
+                }
+            Console.WriteLine();
+            Console.WriteLine("reachClock done: a measurement; nothing tuned, nothing gated.");
             return 0;
         }
 
