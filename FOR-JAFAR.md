@@ -57,6 +57,11 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The walls in the game engine are weathered now**, as
+  Blender's were: soft dirty patches, a darker band at the foot where rain
+  splashes, and streaks running down from the wall heads, drawn into the
+  brick pictures from Blender's own numbers. The pavement takes the patches
+  only. The brick colour was retuned so the parade still matches the sheet.
 - 2026-09-23 **The dusk frame exists in the game engine**: the street at
   dusk, wet, lamps lit, from the sheet's viewpoint, the one the roadmap says
   ties stage 1 together. There is no night sheet, so I tuned it by eye: the
