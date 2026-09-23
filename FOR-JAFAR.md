@@ -27,6 +27,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **MH_Test stands in the corner, in grey underwear, bald, arms out in the default pose.** That's how he left MetaHuman Creator: no clothes or hair were chosen, and he has no idle animation yet. The face and skin read as a real person beside the street's other people.
+  - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
+  - (b) I pick plain 1990 clothes and a haircut by script.
+  - Meanwhile he stays in the corner frames only, and the idle animation, which means borrowing the street people's standing motion, is next on my list.
 - 2026-09-24 **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
   - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
   - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
@@ -131,6 +135,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **I turned one build red that wasn't broken.** The step I added to copy the MetaHuman's files reports "files copied" with a code the build machine reads as failure. Everything in the build had passed, and the MetaHuman is standing in the corner frames. The copy now has its own step that can't do that.
 - 2026-09-24 **The hill at the end of the street is rebuilt, its fifth try.** Beside the sheet it read as stadium seating: rows of separate little boxes with round trees. Now it's terraces stepping up the slope a house at a time, with gardens and trees between. It looks right in Blender; its Unreal frame comes in behind the other builds.
 - 2026-09-24 **The street's dirt was switched off in Unreal all along, and the next builds switch it on.** The spec lays ten stains: water streaks down the parade, moss at the foot of the far row, broken tarmac, manholes and a sticker. Unreal hid every one, because nobody had made a material that can darken what's under it. There's one now, made by script, and the stains go on as real decals. It's a first step toward the dirt the Kingdom Come comparison showed missing, not the whole of it.
 - 2026-09-24 **Two more changes to the street's look, going out in the next build.** First, every edge in the street gets the small rounding Mickey's corner already had, so sills, pilasters and kerbs catch a line of light instead of ending knife-sharp. That takes it from 53,000 to 102,000 faces, which is nothing for the card. Second, the plain rows opposite get a scanned sooty brick, in keeping with the spec's "soot-blackened terrace". Tell me if either reads wrong in the frame.

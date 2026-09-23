@@ -283,6 +283,30 @@ jobs:
       # `if: always()`, so a failed build still banks its logs, its material
       # diagnostics and whatever it managed to render — the evidence survives
       # and the RUN GOES RED, which is the combination that was missing.
+      - name: Copy the corner's MetaHuman into the probe's content
+        continue-on-error: true
+        timeout-minutes: 5
+        shell: pwsh
+        run: |
+          # THE CORNER'S METAHUMAN, 24 September. MH_Test is assembled on this
+          # PC by tools/ue/assemble_metahuman.py, in the full editor, into a
+          # scratch project outside the repository: 203 MB of assets, and the
+          # character itself is 138 MB, over GitHub's file limit. So it is
+          # copied into the probe's content before the build, and the cook
+          # takes it with /Game/Ledger. Its own step, and it ends on exit 0 by
+          # name: robocopy's "files copied" is exit code 1, and inside the
+          # build step it turned the whole run red (80ec4b58) though every
+          # part of the build had passed.
+          $mhSrc = "C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans"
+          $mhDst = Join-Path $PWD "ue-probe\Content\Ledger\MetaHumans"
+          if (Test-Path $mhSrc) {
+            robocopy $mhSrc $mhDst /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+            Write-Host "metahumanCopied=$(@(Get-ChildItem $mhDst -Recurse -File -ErrorAction SilentlyContinue).Count)-files"
+          } else {
+            Write-Host "metahumanCopied=NO-SOURCE/$($mhSrc -replace ' ','~')"
+          }
+          exit 0
+
       - name: Build the UE probe target and run the golden test
         id: build
         timeout-minutes: 60
@@ -374,22 +398,6 @@ jobs:
           # tools/ue/make_base_material.py; the ordering and the editor-module
           # build are explained in ue-probe/Config/DefaultGame.ini beside the
           # cook directory. Failing here cannot stop the cook.
-          #
-          # THE CORNER'S METAHUMAN, 24 September. MH_Test is assembled on this
-          # PC by tools/ue/assemble_metahuman.py, in the full editor, into a
-          # scratch project outside the repository: 203 MB of assets, and the
-          # character itself is 138 MB, over GitHub's file limit. So the build
-          # copies the assembled folder into the probe's content here, before
-          # the editor run and the cook, and the cook takes it with /Game/Ledger.
-          # No folder: the line says so and the corner says class-not-found.
-          $mhSrc = "C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans"
-          $mhDst = Join-Path $PWD "ue-probe\Content\Ledger\MetaHumans"
-          if (Test-Path $mhSrc) {
-            robocopy $mhSrc $mhDst /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
-            $L += "metahumanCopied=$(@(Get-ChildItem $mhDst -Recurse -File -ErrorAction SilentlyContinue).Count)-files"
-          } else {
-            $L += "metahumanCopied=NO-SOURCE/$($mhSrc -replace ' ','~')"
-          }
           $edCmd = Join-Path $ue "Engine\Binaries\Win64\UnrealEditor-Cmd.exe"
           $matPy = Join-Path $PWD "tools\ue\make_base_material.py"
           $matOut = Join-Path $PWD "ue-probe\ue-material.txt"
