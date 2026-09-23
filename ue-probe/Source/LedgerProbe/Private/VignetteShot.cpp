@@ -1000,7 +1000,11 @@ namespace
 	// can put it back, and the flat one a film of water leaves.
 	TArray<UTexture2D*> GStreetNormals;
 	UTexture2D* GStreetFlatNormal = nullptr;
-	int32 GStreetGlassHidden = 0, GStreetFilm = 0;
+	int32 GStreetGlassHidden = 0, GStreetFilm = 0, GStreetGlassWorn = 0;
+	// THE SEE-THROUGH GLASS, made by tools/ue/make_glass_material.py in the
+	// same editor run as the base material. Null when the build lacks it,
+	// and the glass is then left out as before.
+	UMaterialInterface* GGlassMaterial = nullptr;
 	TMap<FString, UTexture2D*> GStreetTex;
 	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
@@ -1600,8 +1604,16 @@ namespace
 			++GStreetLoaded;
 			if (GLook.bGlassSeeThrough && Rw.Base == "glass")
 			{
-				A->SetActorHiddenInGame(true);
-				++GStreetGlassHidden;
+				if (GGlassMaterial == nullptr)
+				{
+					GGlassMaterial = LoadObject<UMaterialInterface>(
+						nullptr, TEXT("/Game/Ledger/M_LedgerGlass.M_LedgerGlass"));
+				}
+				if (GGlassMaterial == nullptr)
+				{
+					A->SetActorHiddenInGame(true);
+					++GStreetGlassHidden;
+				}
 			}
 		}
 		if (GStreetLoaded == 0)
@@ -1636,14 +1648,14 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/13 lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/15 lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
-			" streetFilm=%d streetGlassHidden=%d/see-through-%s",
+			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
 			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
-			(int)GStreetFilm, (int)GStreetGlassHidden,
+			(int)GStreetFilm, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
 			GLook.bGlassSeeThrough ? "yes/no-translucent-material" : "no");
 		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
@@ -5810,6 +5822,24 @@ namespace
 			UStaticMeshComponent* Comp = A->GetStaticMeshComponent();
 			if (Comp == nullptr) { continue; }
 			const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+			// THE SHOP GLASS, SEE-THROUGH: its own material, its colour as the
+			// tint the room is seen through, and the look file's opacity and
+			// roughness. Nothing else on this row applies to it.
+			if (GLook.bGlassSeeThrough && Rw.Base == "glass" && GGlassMaterial != nullptr)
+			{
+				UMaterialInstanceDynamic* G = UMaterialInstanceDynamic::Create(GGlassMaterial, A);
+				if (G != nullptr)
+				{
+					G->SetVectorParameterValue(FName(TEXT("GlassTint")),
+						FLinearColor((float)Rw.R, (float)Rw.G, (float)Rw.B, 1.0f));
+					G->SetScalarParameterValue(FName(TEXT("GlassOpacity")), (float)GLook.GlassOpacity);
+					G->SetScalarParameterValue(FName(TEXT("GlassRoughness")), (float)GLook.GlassRoughness);
+					for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot) { Comp->SetMaterial(Slot, G); }
+					++GStreetGlassWorn;
+					++GStreetPainted;
+					continue;
+				}
+			}
 			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(GBaseMaterial, A);
 			if (Mid == nullptr) { continue; }
 			UTexture2D* Albedo = nullptr;
