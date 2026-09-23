@@ -8,8 +8,8 @@ between them.
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 3 of 47 done, 0 moved, 0 out, 44 open
-- stage 2: 2 of 247 done, 0 moved, 0 out, 245 open
-- stage 3: 0 of 139 done, 0 moved, 2 out, 137 open
+- stage 2: 3 of 247 done, 0 moved, 0 out, 244 open
+- stage 3: 3 of 139 done, 0 moved, 2 out, 134 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
 - stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
 - stage 6: 0 of 82 done, 0 moved, 12 out, 70 open

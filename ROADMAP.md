@@ -400,7 +400,7 @@ Stage state: OPEN
 | A11.08 | Feedback when an interaction succeeds | floor (my call) | open |  |
 | A11.12 | Doors whose visible movement agrees with their blocking state | floor (my call) | open |  |
 | A12.01 | Solid ground everywhere that appears walkable | floor | open |  |
-| A12.02 | Solid walls where walls are visibly present | floor | open |  |
+| A12.02 | Solid walls where walls are visibly present | floor | done | the walk into the parade wall stops (collisionBlockedStatus=STOPPED, east_parade_bay0) every run: [walk verdict](production/d1-probe/ue-walk-verdict.txt), [frame](production/d1-probe/ue-walk_04_after_blocked.png) |
 | A12.03 | Collision shapes that broadly match visible objects | floor | open |  |
 | A12.04 | Doorways that admit a character who visibly fits | floor | open |  |
 | A12.05 | Small loose objects that do not act like immovable roadblocks | floor | open |  |
@@ -620,12 +620,12 @@ Stage state: OPEN
 | A13.20 | A way for panic to resolve once danger passes | floor | open |  |
 | A13.21 | People who do not immediately resume cheerful chatter beside an ongoing emergency | floor | open |  |
 | A14.01 | Enemies detecting the player through understandable senses | ours | open |  |
-| A14.02 | Solid cover preventing direct sight where expected | ours | open |  |
+| A14.02 | Solid cover preventing direct sight where expected | ours | done | crime B is occluded from the witness by the wall and he files nothing: [crime verdict](production/d1-probe/ue-crime-verdict.txt) |
 | A14.03 | A readable transition from unaware to suspicious to engaged | ours | open |  |
 | A14.04 | Reactions to relevant sounds | ours | open |  |
 | A14.05 | Investigation of a sound's location rather than magical knowledge of the player | ours | open |  |
 | A14.06 | Search focused on the last plausible known position | ours | open |  |
-| A14.07 | A distinction between seeing the player and being told about them | ours | open |  |
+| A14.07 | A distinction between seeing the player and being told about them | ours | done | the friend who did not see hears it retold at confidence 0.45, one hop, as a told story and not a sighting: [crime verdict](production/d1-probe/ue-crime-verdict.txt), [frame](production/d1-probe/ue-crime_05_overheard.png) |
 | A14.08 | Communication of an alert through visible or audible behaviour | ours | open |  |
 | A14.09 | Enemy movement that uses the actual available routes | ours | open |  |
 | A14.10 | Replanning when doors, vehicles or other obstacles move | ours | open |  |
@@ -649,7 +649,7 @@ Stage state: OPEN
 | A15.05 | Readable boundaries for restricted areas | ours | open |  |
 | A15.06 | A warning or understandable transition before punishment where appropriate | ours | open |  |
 | A15.07 | Distinction between suspicious behaviour and an openly hostile act | ours | open |  |
-| A15.08 | Witness reactions that depend on whether they could observe the event | ours | open |  |
+| A15.08 | Witness reactions that depend on whether they could observe the event | ours | done | the witness files crime A and is blind to B behind the wall; the passer-by sees neither, in the shipping engine every run: [crime verdict](production/d1-probe/ue-crime-verdict.txt) |
 | A15.09 | A visible or audible reporting process if reporting matters | ours | open |  |
 | A15.10 | A chance to respond before an alert spreads, where promised by the design | ours | open |  |
 | A15.11 | Law response proportionate to the apparent offence | ours | open |  |
