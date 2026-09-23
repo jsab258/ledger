@@ -963,6 +963,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       stripped. The text model stays the paid online one (decision 4).
       DOWNLOADS APPROVED 23 Sep evening; the render and page scripts wait in
       the scratchpad (nano-test/render_nano.py, page/index.template.html).
+      FETCHED to C:/LedgerTools/chatterbox-nano: Resemble's GitHub source
+      (master has nano=True; PyPI 0.1.7 does not) in src-master, and the
+      ResembleAI/chatterbox-nano weights (MIT) in weights. Run with
+      NANO_PKG=.../src-master/src NANO_WEIGHTS=.../weights in the current
+      voice engine's Python.
 - [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
