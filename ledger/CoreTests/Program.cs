@@ -2224,6 +2224,46 @@ namespace Ledger.CoreTests
                 "the deflection names the character (case-insensitive match)");
             Check(ResponseValidator.Validate("", "Ada").Contains("changes the subject"),
                 "an empty reply deflects rather than showing nothing");
+
+            // THE CONTENT RULE IN CONVERSATION, D18, 23 September. Offered a
+            // drink, the paid model's Sam went for one and named two pubs
+            // nobody had minted. The model's reply is the one text nobody
+            // writes or reviews, so the prompt carries the rule and the reply
+            // check stands behind it on the content gate's own rules.
+            Check(ContentWords.Speech.Length > 0, "the gate's speech rules reached the Core",
+                ContentWords.Speech.Length + " rules");
+            string[] clean =
+            {
+                "Tea, maybe.", "Seen the van again. Thursday, same as last Thursday.",
+                "Nobody's asking you to like it, son.", "I'll take a smoke on the step if you're offering.",
+                "You're kidding me.", "It's a bitter wind off the quay tonight.", "Don't be childish.",
+                "Round the back, by the yard gate.",
+            };
+            foreach (var line in clean)
+                Check(ContentRule.SpeechBreaks(line) == null, "ordinary talk breaks no rule", line + " -> " + ContentRule.SpeechBreaks(line));
+            (string line, string kind)[] dirty =
+            {
+                ("Fancy a pint after we close?", "alcohol"), ("He'd had a bet on the dogs again.", "gambling"),
+                ("My kids are at my mother's.", "children"), ("The pools came up for him, lucky sod.", "gambling"),
+                ("I'd want it from somebody sober.", "alcohol"), ("Whisky, neat.", "alcohol"),
+            };
+            foreach (var (line, kind) in dirty)
+            {
+                var hit = ContentRule.SpeechBreaks(line);
+                Check(hit != null && hit.StartsWith(kind + "/"), "and a line that breaks the rule is caught, by the right rule",
+                    line + " -> " + (hit ?? "nothing"));
+            }
+            var refused = ResponseValidator.Validate("So listen, I could do a pint. The Feathers is warm this time of day.", "Sam");
+            Check(!refused.Contains("pint") && refused.Contains("changes the subject"),
+                "a reply that speaks of drink is not said; it becomes the deflection", refused);
+            var kept = ResponseValidator.Validate("Tea, maybe. I'm not really closing up.", "Sam");
+            Check(kept.Contains("Tea"), "and an ordinary reply is said as written", kept);
+            var cardD18 = CharacterCard.Parse("# Sam\nid: sam\ntier: ambient\n\n## Summary\nWalks Quay Street.\n");
+            var promptD18 = new ConversationEngine(null, cardD18, new MemoryStore("sam"), new KnowledgeBase(),
+                new SuspicionTracker(), null).BuildSystemPrompt("Fancy a drink?", new GameTime(1, 15, 0), "");
+            Check(promptD18.Contains("nobody drinks alcohol, gambles or bets, and there are no children")
+                  && promptD18.Contains("Never invent a place or a business"),
+                "and the model is told the rule before it answers");
             var longReply = string.Concat(Enumerable.Repeat("A short sentence here. ", 80));
             var cut = ResponseValidator.Validate(longReply, "Sam");
             Check(cut.Length <= ResponseValidator.MaxChars && cut.EndsWith("."),

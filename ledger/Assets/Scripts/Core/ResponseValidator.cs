@@ -52,6 +52,12 @@ namespace Ledger.Core
             // that went wrong.
             if (ReadsAsNarration(reply, characterName, alsoCalled)) return Deflect(characterName);
 
+            // THE CONTENT RULE, D18, 23 September: a reply that speaks of drink,
+            // betting or children is not said. The prompt forbids it; this is
+            // what stands behind the prompt, on the gate's own rules
+            // (ContentRule.SpeechBreaks).
+            if (ContentRule.SpeechBreaks(reply) != null) return Deflect(characterName);
+
             // LAYER 2 — SHAPE, on the one text in this game that nobody wrote
             // and nobody reviewed.
             //

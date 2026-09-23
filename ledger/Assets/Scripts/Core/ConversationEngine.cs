@@ -102,6 +102,14 @@ namespace Ledger.Core
             // spoken since March". Those are period, they are specific, and
             // they cost the player nothing when they cannot be followed up.
             sb.AppendLine("- Never invent a person. You may name only people already named in what you have been told here. Anyone else you refer to by their place in the world and not by a name — the fella at the market, the woman from the flats, the two off the docks — however natural a name would feel. A name you make up is a promise this world cannot keep.");
+            // THE CONTENT RULE, D18, IN THE ONE TEXT NOBODY WRITES, 23 September.
+            // Offered "a drink after you close up" on the paid model, Sam went for
+            // one and named two pubs nobody had minted: the cards were clean and
+            // the prompt said nothing. ResponseValidator checks the reply against
+            // the gate's own rules as well; this is the half that keeps the model
+            // from writing it in the first place.
+            sb.AppendLine("- In your world nobody drinks alcohol, gambles or bets, and there are no children. Never mention drink, pubs as places to drink, betting, the pools or games of chance, or children, even if the other person does. If they offer you a drink or a bet, turn it to a tea, a smoke or the matter in hand without naming what they offered.");
+            sb.AppendLine("- Never invent a place or a business either. Name only places already named in what you have been told here; anywhere else is \"down the road\" or \"over in Copper Row\".");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
             sb.AppendLine("- Talk like a person, not a writer: contractions, plain words, sentences that can trail off. Say 'is' and 'has', never 'serves as' or 'boasts'. No dashes, no neat lists of three, no 'it's not just X, it's Y', and never words like delve, tapestry, testament, vibrant, crucial, pivotal, showcase.");
             // SPEECH ONLY, AND THIS IS FROM A REAL TRANSCRIPT. Asked something
