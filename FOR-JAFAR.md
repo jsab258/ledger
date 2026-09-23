@@ -75,6 +75,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The navigation mesh the walkers need wasn't made on its first try.** Unreal set up its navigation system but built no mesh around the slice's player. The next run will record the engine's own reasons, and it's the first thing to fix before walkers. Nothing else is affected.
 - 2026-09-23 **The slice's player walks.** The first frames are in: a body in the street seen over the shoulder, walking down the parade's pavement, and Elizabeth turning her head to him as he passes. One bug is already visible: he walks straight through her, because the street's people have nothing solid to them yet. It's on the checklist.
 - 2026-09-23 **Rocco, Lena and Sam answer in character through the helper**, the "run it beside the game" route I recommended, built while you decide. Each reply took 1.4 to 2.2 seconds on the paid model. Asked about evenings, Sam named no pub. Rocco said he'd seen Tom "a few times over the years", which may not fit a nephew arriving with a suitcase; that's for the cards. The game half, a key to talk and a box to type in, is next.
 - 2026-09-23 **The walk's first sound recording was silent.** Unreal mutes a game whose window isn't in front, and the build machine's game never is. The test runs now keep their sound; your own game still goes quiet when you switch away, as most games do. The next recording is the proof.
