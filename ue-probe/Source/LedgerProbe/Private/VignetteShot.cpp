@@ -93,6 +93,7 @@
 #include "Animation/AnimSequence.h"
 #include "Animation/AnimSingleNodeInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 // ANIMATION/, NOT ENGINE/, and run 52 is what proves it: `fatal error C1083:
 // Cannot open include file: 'Engine/SkeletalMeshActor.h'`, which cost a whole
 // round trip and published no binary at all. ASkeletalMeshActor lives beside
@@ -1471,6 +1472,28 @@ namespace
 	// head bone found on the first, how many found one, and how many fell
 	// back to the plain loop.
 	TArray<TWeakObjectPtr<ULedgerPersonAnim>> GPersonAnims;
+	// PEOPLE YOU CANNOT WALK THROUGH, 23 September, in the slice only: the
+	// slice's first frames showed its player passing straight through
+	// Elizabeth. A capsule on each person blocks bodies and never sight (the
+	// crime's sightings are the port's, as with the cars). Only under
+	// -LedgerSlice, because the probe's own walk passes 35 cm from her on
+	// the line its "open footway" judgement was proven on.
+	int32 GPeopleSolid = 0;
+	void MakeSolid(ASkeletalMeshActor* A)
+	{
+		if (A == nullptr || A->GetRootComponent() == nullptr) { return; }
+		UCapsuleComponent* Body = NewObject<UCapsuleComponent>(A);
+		if (Body == nullptr) { return; }
+		Body->SetupAttachment(A->GetRootComponent());
+		Body->RegisterComponent();
+		Body->SetCapsuleSize(30.0f, 88.0f);
+		Body->SetRelativeLocation(FVector(0.0, 0.0, 88.0));
+		Body->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		Body->SetCollisionResponseToAllChannels(ECR_Block);
+		Body->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+		Body->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+		++GPeopleSolid;
+	}
 	std::string GHeadBone;
 	int32 GHeadsFound = 0, GHeadsFallback = 0;
 	// THE STREET'S SOUND, 23 September: beds and voices placed, clips found,
@@ -1975,6 +1998,7 @@ namespace
 					GHeadBone = TCHAR_TO_UTF8(*Look->HeadBone.ToString());
 				}
 				if (!Look->HeadBone.IsNone()) { ++GHeadsFound; }
+				if (bInteractive && FParse::Param(FCommandLine::Get(), TEXT("LedgerSlice"))) { MakeSolid(A); }
 				GPeopleByGlb.Add(Stem, A);
 				++GPeopleSpawned;
 				continue;
@@ -2104,9 +2128,9 @@ namespace
 		}
 		char HeadsBuf[200];
 		std::snprintf(HeadsBuf, sizeof(HeadsBuf),
-			" headsFound=%d/%d headBone=%s headsFallback=%d headsLooking=%d headsTurnedThisRun=%d/over-half-way",
+			" headsFound=%d/%d headBone=%s headsFallback=%d headsLooking=%d headsTurnedThisRun=%d/over-half-way peopleSolid=%d",
 			(int)GHeadsFound, (int)GPersonAnims.Num(), GHeadBone.empty() ? "none" : LedgerVignette::NoSpaces(GHeadBone).c_str(),
-			(int)GHeadsFallback, (int)Looking, (int)Looked);
+			(int)GHeadsFallback, (int)Looking, (int)Looked, (int)GPeopleSolid);
 		// THE SLICE'S PLAYER BODY, 23 September: loaded by the same names the
 		// slice's character loads, so a failed import shows here before
 		// anyone plays it.
