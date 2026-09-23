@@ -372,16 +372,20 @@ namespace LedgerStreet
 		Person() : X(0.0), Z(0.0), Y(0.0), FaceDeg(0.0), Phase(0.0) {}
 	};
 
-	inline bool ParsePeople(const std::string& Text, std::vector<Person>& Out, std::string& Err)
+	// ONE READER FOR ANYTHING PLACED BY A GLB NAME AND STREET METRES: the
+	// people (key "people") and the parked cars (key "vehicles", in
+	// production/specs/street-vehicles.json, 23 September).
+	inline bool ParsePlaced(const std::string& Text, const char* Key, std::vector<Person>& Out,
+	                        std::string& Err)
 	{
 		using namespace LedgerVignette;
 		Out.clear();
 		Err.clear();
 		Reader R(Text);
 		Value Root;
-		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = "people-file-unreadable"; return false; }
-		const Value* L = Root.Find("people");
-		if (L == 0 || L->Type != T_ARR) { Err = "people-file-has-no-people-list"; return false; }
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = std::string(Key) + "-file-unreadable"; return false; }
+		const Value* L = Root.Find(Key);
+		if (L == 0 || L->Type != T_ARR) { Err = std::string(Key) + "-file-has-no-list"; return false; }
 		for (size_t I = 0; I < L->Arr.size(); ++I)
 		{
 			const Value& P = L->Arr[I];
@@ -402,6 +406,16 @@ namespace LedgerStreet
 			Out.push_back(Q);
 		}
 		return true;
+	}
+
+	inline bool ParsePeople(const std::string& Text, std::vector<Person>& Out, std::string& Err)
+	{
+		return ParsePlaced(Text, "people", Out, Err);
+	}
+
+	inline bool ParseVehicles(const std::string& Text, std::vector<Person>& Out, std::string& Err)
+	{
+		return ParsePlaced(Text, "vehicles", Out, Err);
 	}
 
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)

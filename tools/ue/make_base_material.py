@@ -4088,6 +4088,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("peopleImportStatus=RAISED peopleImportNote=%s\n"
                          % str(_people_err).replace(" ", "~")[:160])
+    # ---- AND THE PARKED CARS, 23 September, FOR THE SAME REASON ------------
+    # tools/ue/import_vehicles.py: each production/assets/vehicles/*.glb, a
+    # car built by tools/art-recipes/car-model.py, becomes one static mesh.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_vehicles
+            import_vehicles.main()
+        except Exception as _veh_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("vehiclesImportStatus=RAISED vehiclesImportNote=%s\n"
+                         % str(_veh_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "
