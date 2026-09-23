@@ -85,7 +85,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 1620
+   "faces": 1596
   },
   {
    "mesh": "street_brick_red",
@@ -114,7 +114,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 2104
+   "faces": 2086
   },
   {
    "mesh": "street_brick_rubbed",
@@ -468,7 +468,29 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 5120
+   "faces": 20320
+  },
+  {
+   "mesh": "street_foliage_dark",
+   "material": "foliage_dark",
+   "base_material": "foliage_dark",
+   "linear_rgb": [
+    0.016,
+    0.027,
+    0.016
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 12480
   },
   {
    "mesh": "street_frame_metal",
@@ -600,7 +622,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 42
+   "faces": 24
   },
   {
    "mesh": "street_glass_eg_bay2",
@@ -754,7 +776,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 42
+   "faces": 24
   },
   {
    "mesh": "street_glass_eu_bay2",
@@ -798,7 +820,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 72
+   "faces": 36
   },
   {
    "mesh": "street_glass_eu_bay26",
@@ -820,7 +842,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 60
+   "faces": 36
   },
   {
    "mesh": "street_glass_eu_bay3",
@@ -864,7 +886,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 36
+   "faces": 48
   },
   {
    "mesh": "street_glass_eu_bay34",
@@ -886,7 +908,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 60
+   "faces": 72
   },
   {
    "mesh": "street_glass_eu_bay4",
@@ -996,7 +1018,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 48
+   "faces": 54
   },
   {
    "mesh": "street_glass_wg_bay2",
@@ -1198,7 +1220,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 48
+   "faces": 54
   },
   {
    "mesh": "street_glass_wu_bay2",
@@ -1242,7 +1264,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 132
+   "faces": 108
   },
   {
    "mesh": "street_glass_wu_bay26",
@@ -1264,7 +1286,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 120
+   "faces": 144
   },
   {
    "mesh": "street_glass_wu_bay3",
@@ -1308,7 +1330,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 108
+   "faces": 120
   },
   {
    "mesh": "street_glass_wu_bay34",
@@ -1799,6 +1821,32 @@
    "faces": 160
   },
   {
+   "mesh": "street_prop_timber",
+   "material": "prop_timber",
+   "base_material": "prop_timber",
+   "linear_rgb": [
+    0.105,
+    0.062,
+    0.031
+   ],
+   "roughness": 0.78,
+   "surface_map": "wood",
+   "tile_m": 0.5,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 336
+  },
+  {
    "mesh": "street_render_cream",
    "material": "render_cream",
    "base_material": "render_cream",
@@ -1822,7 +1870,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 138
+   "faces": 156
   },
   {
    "mesh": "street_render_patch",
@@ -1999,7 +2047,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 630
+   "faces": 625
   },
   {
    "mesh": "street_standing_water",
