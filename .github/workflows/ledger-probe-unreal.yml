@@ -1689,7 +1689,11 @@ jobs:
         run: |
           $ErrorActionPreference = "Continue"
           $out = "production/d1-probe/ue-crime-verdict.txt"
-          $sideLeaves = @("ue-crimeseq-keys.txt", "ue-crime-memory-w1.md", "ue-crime-memory-n2.md")
+          # THE SAVE TOO, 23 September: it is 951 bytes on a local run and
+          # 1092 here with the same rumours in it (FINDINGS), and nothing
+          # can say why while only its size leaves the machine.
+          $sideLeaves = @("ue-crimeseq-keys.txt", "ue-crime-memory-w1.md", "ue-crime-memory-n2.md",
+                          "ue-crime-save-agents.json")
           New-Item -ItemType Directory -Force -Path "production/d1-probe" | Out-Null
           $sha = $env:SHOT_SHA
           if (-not $sha) {
@@ -1777,7 +1781,7 @@ jobs:
           foreach ($c in $vCands) { Remove-Item $c -Force -ErrorAction SilentlyContinue }
           foreach ($d in $dirs) {
             foreach ($pat in @("ue-crime_*.png", "ue-crimeseq_*.png", "ue-crimeseq-keys.txt",
-                               "ue-crime-memory-*.md")) {
+                               "ue-crime-memory-*.md", "ue-crime-save-agents.json")) {
               Get-ChildItem $d -Filter $pat -ErrorAction SilentlyContinue |
                 Remove-Item -Force -ErrorAction SilentlyContinue
             }
@@ -1880,8 +1884,8 @@ jobs:
               if ((Test-Path $src) -and (-not (Test-Path $dest))) { Copy-Item $src $dest -Force; $side++ }
             }
           }
-          Add-Content $out ("crimeFramesCollected=$frames/6 crimeSideFilesCollected=$side/3 " +
-            "crimeSideFiles=ue-crimeseq-keys.txt/ue-crime-memory-w1.md/ue-crime-memory-n2.md " +
+          Add-Content $out ("crimeFramesCollected=$frames/6 crimeSideFilesCollected=$side/$($sideLeaves.Count) " +
+            "crimeSideFiles=$($sideLeaves -join '/') " +
             "crimeCollectedFromDirs=$($dirs.Count)/3 " +
             "crimeCollectedStat=count-of-distinct-names-copied-into-the-repository-this-run")
 
@@ -2264,6 +2268,7 @@ jobs:
           git add -A -- production/d1-probe/ue-crimeseq-keys.txt 2>/dev/null || true
           git add -A -- production/d1-probe/ue-crime-memory-w1.md 2>/dev/null || true
           git add -A -- production/d1-probe/ue-crime-memory-n2.md 2>/dev/null || true
+          git add -A -- production/d1-probe/ue-crime-save-agents.json 2>/dev/null || true
           # THE SIX MILESTONE FRAMES, by NAME PREFIX and never by directory,
           # with -A for the same reason. The sequence frames are NOT staged:
           # they exist to be stitched, and thirty-two stills per run is a
