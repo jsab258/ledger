@@ -733,9 +733,12 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       and a day cap x3 in the look file (749c7551, PROVEN on the runner:
       far end 120/109/102 against the sheet's 120/108/104). The kerb
       at its scene-file height and drawn as precast blocks, the paint and
-      gullies on the cambered road (5237668a). The night's exposure held
+      gullies on the cambered road (5237668a, proven 9c60900b). Gloss paint
+      and glazed tile flat; Mickey's stallriser as Victorian relief tile; the
+      flags each their own stone. The night's exposure held
       at 0.1, because the lit rooms behind the see-through glass blacked
-      it out (52c13834). The cars turned to face the camera, in the
+      it out (52c13834; PROVEN on the runner, f94939c2: cam_A night 16.6,
+      all six hook dusk takes 23.1, none black). The cars turned to face the camera, in the
       sheet's paints (412c0e33). The playable street holds the day's
       exposure (d97e12b5, not compiled here). NEXT: the footway, then the
       final day pair from a run with all of it.
