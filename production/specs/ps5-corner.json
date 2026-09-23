@@ -26,6 +26,10 @@
       "condition": "overcast_day",
       "cvars": [
         [
+          "r.RayTracing.Enable",
+          "1"
+        ],
+        [
           "sg.ViewDistanceQuality",
           "4"
         ],
@@ -101,6 +105,10 @@
       "camera": "cam_hook",
       "condition": "overcast_day",
       "cvars": [
+        [
+          "r.RayTracing.Enable",
+          "1"
+        ],
         [
           "sg.ViewDistanceQuality",
           "4"
