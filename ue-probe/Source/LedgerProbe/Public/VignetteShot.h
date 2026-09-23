@@ -123,6 +123,14 @@ namespace LedgerVignetteShot
 	// (after scale and rotation), never the file's numbers a second time.
 	AActor* FindStreetPiece(const FString& Name);
 
+	// THE BROKEN PANE IN THE BLENDER STREET, 23 September. Hides every
+	// street glass mesh (one per bay and floor since that day) whose bounds
+	// meet Box grown by 20 cm, and turns its collision off, as the crime
+	// does to the scene file's pane. Returns how many it hid; 0 when the
+	// Blender street is not in play. Nothing a witness perceives changes:
+	// the Blender glass never blocked a sight line.
+	int32 HideStreetGlassNear(const FBox& Box);
+
 	// THE CRIME PROBE'S TWO, ruling of 2026-09-08 sections 2 and 4. See
 	// VignetteShot.cpp for what each does and why the probe's pieces are
 	// kept in a map of their own.

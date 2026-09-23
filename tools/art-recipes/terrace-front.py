@@ -5633,6 +5633,25 @@ def _newell(pts):
     return n.normalized() if n.length > 1e-12 else n
 
 
+#: THE GLASS CROSSES ONE MESH PER BAY AND FLOOR, 23 September. One mesh
+#: per material made every pane in the street one object, and the crime
+#: breaks ONE window: Unreal hid the scene file's pane, which the Blender
+#: street had already hidden, and the Blender glass stayed whole. Split by
+#: side, by ground floor or upper, and by the 6 m bay from x = 3, where every
+#: block's bays start or fall, so the probe can hide the bay it broke.
+GLASS_BAY_M, GLASS_BAY_FROM_M, GLASS_GROUND_BELOW_M = 6.0, 3.0, 3.0
+
+
+def _glass_key(xs, ys, zs):
+    """The mesh a glass object joins, from its centre in the recipe's own
+    frame (east is +y here, before the export's reflection)."""
+    import math as _m
+    cx, cy, cz = sum(xs) / len(xs), sum(ys) / len(ys), sum(zs) / len(zs)
+    bay = int(_m.floor((cx - GLASS_BAY_FROM_M) / GLASS_BAY_M))
+    return "glass_%s%s_bay%s" % ("e" if cy > 0 else "w", "g" if cz < GLASS_GROUND_BELOW_M else "u",
+                                 ("m%d" % -bay) if bay < 0 else "%d" % bay)
+
+
 def _street_mesh_name(key, decal):
     """A NAME UNREAL CAN MAKE AN ASSET OF, and one Blender will not cut short.
 
@@ -5723,16 +5742,19 @@ def _export_street(bpy, args, parts):
             continue
         mat = obj.data.materials[0] if len(obj.data.materials) else None
         key = mat.name if mat is not None else "none"
+        mat_key = key
         part = by_id.get(obj.name, {})
         M = obj.matrix_world
         world = [M @ v.co for v in obj.data.vertices]
+        if key == "glass" and world:
+            key = _glass_key([p.x for p in world], [p.y for p in world], [p.z for p in world])
         # THE REFLECTION, y to -y, and nothing else moves.
         world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
         lettered = key.startswith(("sign_", "card_"))
         crop = part.get("decal_uv")
         g = groups.setdefault(key, {"verts": [], "faces": [], "uvs": []})
         if key not in info:
-            base = part.get("material", key)
+            base = part.get("material", mat_key)
             rgb, rough = table.get(base, (None, None))
             surf = SURFACE_OF.get(base, (None, 0.0))
             info[key] = {

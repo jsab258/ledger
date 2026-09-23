@@ -1045,6 +1045,10 @@ namespace
 		Glass->SetActorEnableCollision(false);
 		C.bHiddenAfter = Glass->IsHidden();
 		C.bCollisionAfter = Glass->GetActorEnableCollision();
+		// AND THE PANE THE PLAYER ACTUALLY SEES, when the Blender street is
+		// in play: its glass is one mesh per bay and floor, and the one that
+		// meets this pane goes too, or the window the crime broke stays whole.
+		C.StreetPanes = LedgerVignetteShot::HideStreetGlassNear(Glass->GetComponentsBoundingBox());
 
 		// The glass's own bounds give the window foot; the shards are laid on
 		// the footway in front of it and each one sits on the ground a
