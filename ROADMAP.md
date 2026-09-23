@@ -309,7 +309,7 @@ Stage state: OPEN
 | A22.01 | Complete visible surfaces without holes or missing faces | floor | done | no holes or missing faces anywhere in the Hook view in Unreal, both terraces, roofs, road and kerbs, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.02 | Appropriate detail at normal viewing distance | floor | open |  |
 | A22.03 | Textures that do not stretch conspicuously | floor | open |  |
-| A22.04 | Texture scale consistent with real object size | floor | open |  |
+| A22.04 | Texture scale consistent with real object size | floor | done | measured, not eyeballed, 24 Sep: the brick map carries 96 courses over its 7.2 m (75 mm, a British course) and reads about 7.5 px a course beside the 0.55 m fascia at 100 px a metre in the Hook view; the flags map carries six courses of 900 x 600 mm flags, four to a course, over its 3.6 m: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.05 | Materials distinguishable as wood, metal, glass, cloth and stone | floor | open |  |
 | A22.06 | Object edges that do not all look infinitely sharp | floor | open |  |
 | A22.07 | Buildings and props visibly grounded rather than floating | floor | done | grounded, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
