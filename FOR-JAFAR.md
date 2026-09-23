@@ -57,7 +57,7 @@ plain houses.
 
 ## Things you should know
 
-- 2026-09-23 **Since the new street went into the playable game, the crime's broken window no longer shows**: the Blender street's glass is one piece for every pane, so it stays whole; the crime itself still plays out. Fixing it means cutting the panes apart; it is on the list.
+- 2026-09-23 **The crime's broken window shows again**, with its glass on the pavement in front of it, where before the shards fell somewhere else and the pane stayed whole.
 - 2026-09-23 **The crowd's daily schedules now run in the game engine**, who is out when and where, proven against the original row by row; an independent check tried to break it and could not.
 - 2026-09-23 **I moved 40 notes to Resolved, unchanged**: yesterday's and last night's, which your morning message answered. Today's are one line each, as the rule says; the detail is in the commits.
 - 2026-09-23 **The painted woodwork is smooth gloss colour instead of rough render**, Mickey's stall riser is Victorian relief tile, and the flags are each their own stone.
@@ -171,6 +171,7 @@ plain houses.
 
 ## Resolved
 
+- 2026-09-23 **The crime's broken window no longer showed** once the new street went into play - resolved the same day: the glass cut one piece per shop, and the crime hides the one it breaks.
 - 2026-09-23 **Delivered and answered**: the notes below, from the sittings of 22 September and the night after, moved here unchanged when his morning message of 23 September answered them.
 - 2026-09-23 **In the game engine the bricks are the right size now** (the
   first piece of the look carried across, proven on the build machine). The

@@ -795,11 +795,16 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       reconcile the drain grate - the scene file's sits 8 mm under the
       Blender road's channel, so the walk cannot see it and no frame shows
       it (a Blender gully at x 12, or the grate set to the Blender road).
-- [ ] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
+- [x] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
       went into play the Blender glass, one mesh for every pane, stayed
       whole). The glass exported one mesh per bay and floor and the crime
       hides the one it broke (c9dcb09a). To prove on the runner: the crime
       line's streetPanesHidden and the after-crime frames.
+      PROVEN 2757bf09: streetPanesHidden=1 for each crime, and the shards
+      and brick now land under the window (8/8, 1/1, crimeNote none - the
+      long-standing "no ground under the brick point" was the same empty
+      bounds). Frame: production/art/compare/hook-unreal-2026-09-23/
+      crime-window-01.png.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
