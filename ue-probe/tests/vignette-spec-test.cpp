@@ -6924,7 +6924,8 @@ int main(int argc, char** argv)
 		Check(Brick != nullptr && std::fabs(LedgerStreet::TilesPerMetre(*Brick) - 1.0 / 0.55) < 1e-9,
 		      "brick tiles at the measured 0.55 m in the metre UVs, 1.82 copies a metre");
 		// AND THE DRAWN SURFACES WIN OVER THE PHOTOGRAPH where the recipe
-		// draws one: both bricks, the flags and the tile, each with a size.
+		// draws one: both bricks, the flags, the tile and the kerb (23
+		// September: its photograph read as broken stone), each with a size.
 		int Drawn = 0;
 		for (size_t I = 0; I < Sc.Rows.size(); ++I)
 		{
@@ -6937,9 +6938,9 @@ int main(int argc, char** argv)
 				Check(DOk, "a drawn surface the sidecar names is on disk", Rw.DrawnMap);
 			}
 		}
-		Check(Drawn == 4 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
+		Check(Drawn == 5 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
 		      && std::fabs(Brick->DrawnW - 7.2) < 1e-9,
-		      "the two bricks, the flags and the stallriser tile are drawn, the parade's a whole wall high, 7.2 m a copy");
+		      "the two bricks, the flags, the stallriser tile and the kerb are drawn, the parade's a whole wall high, 7.2 m a copy");
 		if (Brick != nullptr)
 		{
 			const LedgerStreet::Grade Gb = LedgerStreet::PaletteOverPhoto(*Brick);
@@ -6966,8 +6967,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 18 && Lk.bFromFile,
-			      "the committed look file parses and supplies all eighteen settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 19 && Lk.bFromFile,
+			      "the committed look file parses and supplies all nineteen settings", LErr);
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
 			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,
