@@ -2,7 +2,7 @@
   "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
   "sky_seen_gain": 15.0,
   "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street: the sheet's sky is white over a dark street. Tuned 23 September against the sheet at the approved lens with the probe's own frame measured by region; 1.0 was the probe's constant.",
-  "street_glow_gain": 0.1,
+  "street_glow_gain": 0.02,
   "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
   "fog_day_colour": [
     0.55,
@@ -12,7 +12,7 @@
   "fog_height_falloff": 0.02,
   "wet_film_from": 0.5,
   "wet_film_from_note": "From this wetness the road, the paving and the kerb lose their relief map: the pack's relief is strong and scattered every reflection a wet road shows (23 September, found by rendering the road without it: it mirrored the facades and the sky as the sheet's does). The day is 0.6 and the night 0.9, so both are films of water; 2.0 would mean never.",
-  "picture_room_gain": 1.0,
+  "picture_room_gain": 8.0,
   "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
   "glass_see_through": true,
   "glass_see_through_note": "The display glass is left out, because the base material cannot be see-through and an opaque pane hid the lit rooms behind it. The verdict line says so.",
@@ -22,12 +22,22 @@
   "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
   "surface_gain": {
     "brick_red": [
-      0.65,
-      0.45,
-      0.35
+      0.86,
+      0.86,
+      0.68
+    ],
+    "paving": [
+      0.55,
+      0.48,
+      0.4
+    ],
+    "interior_lit": [
+      0.05,
+      0.05,
+      0.05
     ]
   },
-  "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. brick_red: Blender's red came back pink-grey under this sky light; this lands the parade's median on the sheet's 76/45/35 (measured 72/45/38).",
+  "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. Retuned 23 September on the build that wears the drawn surfaces (which already carry Blender's colour): brick_red lands the parade's median at 79/46/32 against the sheet's 76/45/35; paving takes the drawn flags from 152/138/119 toward the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain), taken down because with the glass left out the lit back wall read as a cream panel eleven times the sheet's window.",
   "sky_seen_gain_night": 1.0,
   "sky_light_gain_night": 1.0,
   "night_exposure_bias": 0.0,
