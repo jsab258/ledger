@@ -22,14 +22,14 @@
   "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
   "surface_gain": {
     "brick_red": [
-      1.75,
-      1.8,
-      1.65
+      2.19,
+      2.25,
+      2.06
     ],
     "brick_grey": [
-      2.0,
-      2.0,
-      2.0
+      2.5,
+      2.5,
+      2.5
     ],
     "paving": [
       0.72,
@@ -42,7 +42,7 @@
       0.05
     ]
   },
-  "surface_gain_note": "Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
+  "surface_gain_note": "RAISED A QUARTER FOR BOTH BRICKS 23 September, when Lumen went on: the bounced light's occlusion darkened every wall by about a fifth against the frame before it (parade upper wall 0.79, west terrace 0.76-0.81, Mickey's 0.83, the sky unchanged at 1.00), and the walls had been matched to the sheet before it; the pavements were left darker, which is nearer the sheet's wet flags. Before that: Per-surface colour in this engine, by base material, over the drawn surface's own colour. Retuned 23 September again once the drawn bricks and flags carry Blender's wear (patches, the splash at the foot, streaks from the wall head, about 0.6 of the clean wall on average): brick_red lands the parade's upper wall at 78/46/33 against the sheet's 76/45/35; paving at 126/112/98 against the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain).",
   "sky_seen_gain_night": 0.15,
   "sky_light_gain_night": 1.0,
   "night_exposure_bias": -1.0,

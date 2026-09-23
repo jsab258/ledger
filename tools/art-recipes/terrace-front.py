@@ -451,6 +451,10 @@ MATERIALS = (
     # pillar box's red, gloss-painted cast iron; galvanised steel for the
     # dustbins; the kiosk's anodised frame and its dark fascia band.
     ("pillarbox_red", (0.380, 0.012, 0.012), 0.32),
+    # STANDING WATER (_standing_water): dark, because what a puddle shows of
+    # itself is the wet ground under it, and nearly mirror-smooth, because
+    # still water is; its brightness is what it reflects.
+    ("standing_water", (0.016, 0.017, 0.019), 0.03),
     ("galvanised",  (0.300, 0.310, 0.320), 0.48),
     ("kiosk_frame", (0.340, 0.345, 0.350), 0.35),
     ("kiosk_band",  (0.018, 0.024, 0.045), 0.40),
@@ -647,6 +651,7 @@ SURFACE_OF = {
     "lead":         ("metal", 0.35),
     "steel_dark":   ("metal", 0.35),
     "pillarbox_red": (None, 0.0),
+    "standing_water": (None, 0.0),
     "galvanised":   (None, 0.0),
     "kiosk_frame":  (None, 0.0),
     "kiosk_band":   (None, 0.0),
@@ -1964,6 +1969,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_approach(out)
     _pavement_dressing(out)
     _street_furniture(out, root)
+    _standing_water(out, root)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
     _repair_patches(out)
@@ -2650,6 +2656,134 @@ def _street_furniture(out, root=None):
              z1 + 0.06, z1 + 0.085, "the-lid-handle")
         built.append("dustbin%d" % n)
     return "built/" + ",".join(built)
+
+
+#: THE STANDING WATER, 23 September: the third try at the wet shine, and a
+#: new idea rather than a third roughness. Two tries in Blender and two in
+#: Unreal lowered the whole footway's roughness and got a sky-blue sheet;
+#: the sheet's wet is not a smoother stone but WATER LYING IN PLACES - dark
+#: patches that mirror what stands beside them, a wet line down each gutter,
+#: a pool where the road dips at the channel - on a surface that is
+#: otherwise only damp. So the water is built, where the falls put it: the
+#: footway drains 1 in 40 to the kerb, so its puddles lie along the kerb
+#: edge; the carriageway drains to the channel, so the gutters hold a strip
+#: and the road a pool or two beside them. Each is a thin sheet 4 mm over
+#: the surface, following its fall, in a dark, nearly mirror-smooth
+#: material that Unreal's reflections (Lumen, from today) fill with the
+#: shopfronts and the sky. Nothing is placed on anything that stands on the
+#: pavement: every puddle is tested against the scene file's furniture and
+#: props and the people's spots, and moved on or dropped.
+#: (x, y, half-length, half-width) in this recipe's frame; y east positive.
+FOOTWAY_PUDDLES = (
+    (2.5, -3.55, 0.60, 0.28), (7.5, -3.45, 0.45, 0.22), (13.0, -3.90, 0.65, 0.30),
+    (19.3, -3.50, 0.50, 0.22), (26.0, -3.45, 0.40, 0.20), (4.8, -4.60, 0.35, 0.18),
+    (1.5, 3.50, 0.55, 0.25), (5.2, 3.45, 0.40, 0.20), (9.1, 3.60, 0.45, 0.22),
+    (17.0, 3.45, 0.50, 0.22), (24.0, 3.50, 0.45, 0.20),
+)
+ROAD_PUDDLES = ((6.0, -2.35, 0.75, 0.22), (16.5, -2.45, 0.55, 0.18), (4.0, 2.40, 0.70, 0.20))
+#: The gutter's wet strip, from the kerb face inward, and where it runs.
+CHANNEL_WATER_W_M = 0.17
+CHANNEL_WATER_X = (-3.0, 42.0)
+WATER_LIFT_M = 0.004
+
+
+def _water_obstacles(root):
+    """Footprints (x0, x1, y0, y1) of what stands on the ground, in this frame:
+    the scene file's furniture and props, and the people's spots."""
+    import json
+    feet = []
+    try:
+        with open(os.path.join(root or ROOT, PIECES_REL), encoding="utf-8") as fh:
+            for p in json.load(fh)["pieces"]:
+                if p["name"].startswith(("kiosk", "pillarbox", "dustbin", "column", "prop_", "rail_")):
+                    hx, hy = p["sx_m"] / 2.0 + 0.10, p["sz_m"] / 2.0 + 0.10
+                    feet.append((p["x_m"] - hx, p["x_m"] + hx, p["z_m"] - hy, p["z_m"] + hy))
+    except (OSError, ValueError, KeyError):
+        pass
+    try:
+        with open(os.path.join(root or ROOT, "production", "specs", "street-people.json"),
+                  encoding="utf-8") as fh:
+            for q in json.load(fh)["people"]:
+                feet.append((q["x_m"] - 0.5, q["x_m"] + 0.5, q["z_m"] - 0.5, q["z_m"] + 0.5))
+    except (OSError, ValueError, KeyError):
+        pass
+    return feet
+
+
+def _water_sheet(out, pid, cx, cy, rx, ry, ground, seed, sides=16):
+    """A puddle: an irregular closed outline round (cx, cy), each vertex WATER_LIFT_M
+    over the ground's own height there, fanned from its centre."""
+    import random
+    rnd = random.Random(seed)
+    p1, p2 = rnd.uniform(0.0, 6.283), rnd.uniform(0.0, 6.283)
+    vs = [(cx, cy, ground(cy) + WATER_LIFT_M)]
+    for k in range(sides):
+        a = 2.0 * math.pi * k / sides
+        wob = 1.0 + 0.22 * math.sin(2.0 * a + p1) + 0.12 * math.sin(3.0 * a + p2)
+        x, y = cx + rx * wob * math.cos(a), cy + ry * wob * math.sin(a)
+        vs.append((x, y, ground(y) + WATER_LIFT_M))
+    fs = [(0, 1 + k, 1 + (k + 1) % sides) for k in range(sides)]
+    out.append({"id": pid, "material": "standing_water", "kind": "mesh", "verts": vs, "faces": fs,
+                "note": "standing-water"})
+
+
+def _standing_water(out, root=None):
+    """The puddles, the gutters' strips and the road's pools. Returns a note."""
+    feet = _water_obstacles(root)
+
+    def clear(x0, x1, y0, y1):
+        return not any(x0 < f[1] and f[0] < x1 and y0 < f[3] and f[2] < y1 for f in feet)
+    made = dropped = 0
+    for k, (cx, cy, rx, ry) in enumerate(FOOTWAY_PUDDLES + ROAD_PUDDLES):
+        ground = footway_z if abs(cy) > ROAD_HALF_M else road_z
+        placed = False
+        for shift in (0.0, 0.8, -0.8, 1.6, -1.6):
+            x = cx + shift
+            if clear(x - rx * 1.34, x + rx * 1.34, cy - ry * 1.34, cy + ry * 1.34):
+                _water_sheet(out, "water_puddle_%d" % k, x, cy, rx, ry, ground, 2309 + k)
+                made += 1
+                placed = True
+                break
+        if not placed:
+            dropped += 1
+    # THE GUTTERS: a strip along each kerb face, broken where the water has run
+    # off or a grate takes it, and never over a grate.
+    import random
+    rnd = random.Random(230923)
+    grates = [(g - 0.40, g + 0.40) for g in CHANNEL_GULLIES]
+    strips = 0
+    for side in (-1.0, 1.0):
+        x = CHANNEL_WATER_X[0] + rnd.uniform(0.0, 1.5)
+        while x < CHANNEL_WATER_X[1]:
+            x1 = min(x + rnd.uniform(1.5, 5.0), CHANNEL_WATER_X[1])
+            pieces = [(x, x1)]
+            for g0, g1 in grates:
+                kept = []
+                for a, b in pieces:
+                    if b <= g0 or a >= g1:
+                        kept.append((a, b))
+                        continue
+                    if a < g0:
+                        kept.append((a, g0))
+                    if b > g1:
+                        kept.append((g1, b))
+                pieces = kept
+            for a, b in pieces:
+                if b - a <= 0.3:
+                    continue
+                ya, yb = side * (ROAD_HALF_M - CHANNEL_WATER_W_M), side * (ROAD_HALF_M - 0.004)
+                za, zb = road_z(ya) + WATER_LIFT_M, road_z(yb) + WATER_LIFT_M
+                vs = [(a, ya, za), (b, ya, za), (b, yb, zb), (a, yb, zb)]
+                # FACING UP ON BOTH SIDES: anticlockwise seen from above, so
+                # the west strip, whose outer edge is at the smaller y, turns
+                # its order round.
+                out.append({"id": "water_gutter_%d_%d" % (int(side > 0), strips), "material": "standing_water",
+                            "kind": "mesh", "verts": vs,
+                            "faces": [(0, 1, 2, 3)] if side > 0 else [(0, 3, 2, 1)],
+                            "note": "the-gutter's-wet-strip"})
+                strips += 1
+            x = x1 + rnd.uniform(0.5, 3.0)
+    return "puddles=%d dropped=%d gutterStrips=%d" % (made, dropped, strips)
 
 
 def _pavement_dressing(out):
