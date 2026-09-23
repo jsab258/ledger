@@ -329,6 +329,15 @@ our own work or goes quiet about somebody else's.
 5. `tools/attribution-check.py` runs in CI and fails on an asset directory with
    no entry here.
 
+## Visual reference frames — Warhorse Studios
+
+`production/reference/kcd2-town-arcades.jpg` and `kcd2-town-fountain.jpg` are
+screenshots of Kingdom Come: Deliverance II (Warhorse Studios, 2025),
+supplied by the project owner on 23 September as the bar for the PS5 corner.
+They are internal development references for comparison only: not assets,
+not shipped with any build, not redistributed, and no content derived from
+them is generated into the game.
+
 ## Visual reference frames — Rockstar Games
 
 `game-design/reference/` holds five screenshots of Grand Theft Auto V
