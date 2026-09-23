@@ -789,7 +789,13 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       Core/Population.cs (699 lines: who is outdoors where at a given day
       and hour, work and home hours) ported to the module with a golden
       table regenerated from the C# Core, as the others were, and the
-      independent check. The named cast's routines next, in the same way.
+      independent check. The named cast's routines next - BUT THEY ARE NOT
+      A PORT: they are hand-placed in GameController.cs in the Unity
+      prototype's city (Rocco at the docks at 7, near the bar at 12, home
+      at 19), not in Quay Street, so carrying them across means deciding
+      where each character goes in the stage-1 street. ROADMAP puts that
+      in stage 2 ("residents on schedules"), so it is not this item: the
+      machinery is stage 3 and is what this item ports.
 
 ## Where things stand
 

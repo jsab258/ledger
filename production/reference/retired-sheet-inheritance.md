@@ -55,6 +55,10 @@ shift putting the horizon at 0.570, turned 20.4 degrees). The SCENE SPEC's
 `cam_hook` above still carries the retired numbers, and it is what the
 Unreal probe's hook shot and the A1 grid rows read, so moving it is a probe
 change with its own tests; it is on NOW.md's list as its own item.
+DONE 23 September: `cam_hook` in the scene spec is the new sheet's lens
+(x -3.2, z -2.2, eye 2.0 on the quay apron, which it declares as its ground,
+46 degrees vertical), with the tests that tie rows to it moved with it; see
+DECISIONS.md of that day. Unreal has no lens shift, so it looks up a little.
 
 ## 3. The hook camera's field of view in the recipe
 
@@ -121,6 +125,14 @@ claimed.
   retired Hook sheet, on the same branch, never re-approved.
 - `tools/imagegen/compare-hook-2026-09-09.json` (pass 1) carries the same
   Codex prompt and the same source record as pass 2.
+
+- FOUND AND FIXED 23 September: the parked cars' facing. The recipe's note
+  said "seen from behind, nose north, with the traffic, as on the sheet",
+  and the new sheet's cars show their FRONTS - as a British street does on
+  the kerb to the right of a camera looking up it. Whether it came from the
+  retired sheet or from the mirrored street Blender draws, it crossed into
+  the true street the wrong way round. Turned in tools/art-recipes/
+  terrace-front.py VEHICLE_AT (facing -1), with headlamps.
 
 ## What is NOT inherited
 
