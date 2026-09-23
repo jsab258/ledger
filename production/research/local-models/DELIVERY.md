@@ -170,9 +170,13 @@ never measured since) and the voice at about 5 GB.
   it on the processor and no reason to think it keeps up. The only Chatterbox
   that claims to run on a processor is Nano, on the maker's own figure
   (live-speech-architecture RECHECK), and Nano ignores the mood control the
-  engine was chosen for. So route 2 needs a ruling that the voice may lose its
-  moods - the listening test already waiting on Jafar's download yes is where
-  that would be decided - and the street's memory measured.
+  engine was chosen for. MEASURED HERE since, reported in FOR-JAFAR on 23
+  September: Nano on this PC's processor, with the build machine busy beside
+  it, took about 7 to 9 seconds to make 3.5 seconds of speech, SLOWER than real
+  time, and today's engine on the processor 21 to 36 seconds a line. So on this
+  PC the voice cannot leave the card and still speak in time. Route 2 needs
+  that to change, a ruling that the voice may lose its moods, and the street's
+  memory measured.
 
 DERIVED, speed: about half the 4B's writing speed, so a routed line in roughly
 0.8 to 0.9 s, close to the paid model's 985 ms median.
