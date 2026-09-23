@@ -51,7 +51,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 16
+   "faces": 22
   },
   {
    "mesh": "street_brick_grey",
@@ -109,7 +109,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 2182
+   "faces": 2104
   },
   {
    "mesh": "street_brick_rubbed",
@@ -201,7 +201,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 444
+   "faces": 300
   },
   {
    "mesh": "street_car_trim",
@@ -671,7 +671,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 30
+   "faces": 36
   },
   {
    "mesh": "street_interior",
@@ -914,7 +914,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 36
+   "faces": 42
   },
   {
    "mesh": "street_plate_front",
@@ -1036,7 +1036,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 120
+   "faces": 138
   },
   {
    "mesh": "street_render_patch",
@@ -1233,7 +1233,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 670
+   "faces": 630
   },
   {
    "mesh": "street_steel_dark",

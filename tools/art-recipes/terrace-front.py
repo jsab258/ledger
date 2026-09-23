@@ -2424,51 +2424,119 @@ def _repair_patches(out):
 #: two terraces of plain houses line them, each house its own width and
 #: height, slate roofs along the street, dark windows two to a floor. No
 #: door anyone can reach, nothing in the stage's street. Stage 6 builds the
-#: town and deletes this.
-APPROACH_X = (44.0, 108.0)
+#: town and deletes this. (It ran straight on to x = 108 until 23 September;
+#: see the bend below.)
+
+
+def _house_row_facing_south(out, prefix, xa, xb, y0, y1, zb, rnd, trees=False):
+    """A row of houses whose fronts face down the street (-x), each its own
+    width and height, slate roofs with the ridge across, dark windows two to
+    a floor, a stack on most. The rise's own house, shared."""
+    xm = (xa + xb) / 2.0
+    y = y0
+    n = 0
+    while y < y1 - 3.0:
+        w = rnd.uniform(5.0, 7.5)
+        h = rnd.uniform(5.2, 6.4)
+        rise = rnd.uniform(2.4, 3.2)
+        ye = min(y + w, y1)
+        r = rnd.random()
+        wall = "render_cream" if r < 0.25 else ("brick_red" if r < 0.8 else "brick_grey")
+        _prism(out, "%s%d" % (prefix, n), wall,
+               ((xb, zb), (xb, zb + h), (xa, zb + h), (xa, zb)), y, ye,
+               "house/%.1fm-wide/%.1fm-eaves/%s" % (ye - y, h, wall))
+        _prism(out, "%s%d_roof" % (prefix, n), "slate",
+               ((xb + 0.3, zb + h), (xm, zb + h + rise), (xa - 0.3, zb + h)), y, ye,
+               "slate/%.1fm-rise" % rise)
+        for fz in (1.0, 3.5):
+            for k in (0.3, 0.7):
+                cy = y + (ye - y) * k
+                _box(out, "%s%d_win%d%d" % (prefix, n, int(fz), int(k * 10)), "car_glass",
+                     xa - 0.05, xa, cy - 0.45, cy + 0.45, zb + fz, zb + fz + 1.3, "a-window")
+        if rnd.random() < 0.7:
+            cy = y + (ye - y) * rnd.uniform(0.2, 0.8)
+            _box(out, "%s%d_stack" % (prefix, n), "brick_red",
+                 xm - 0.35, xm + 0.35, cy - 0.45, cy + 0.45,
+                 zb + h + rise - 0.6, zb + h + rise + 1.1, "a-stack")
+        n += 1
+        y = ye
+
+
+#: THE STREET BENDS WEST AT A TERRACE THAT CLOSES THE VIEW, 23 September. The
+#: first backdrop ran the street straight on for sixty metres between two
+#: rows to the foot of the rise, and in the game engine that read as a long
+#: corridor with a wall of houses at its end. The sheet's street does not run
+#: on: at fifty or sixty metres it bends away to the left behind the houses,
+#: a row of two-storey terraces faces straight down it across the end, and
+#: the hill climbs above that row. So: the street carries on to APPROACH_BEND_X,
+#: turns west along APPROACH_BEND_Y, and a terrace across the end at
+#: APPROACH_CROSS_X faces the camera; the east row runs to the corner and the
+#: west row stops where the bend opens. Still a BACKDROP, named as one, with
+#: no door anyone can reach; stage 6 builds the town and deletes it.
+APPROACH_X = (44.0, 58.0)
+APPROACH_BEND_X = (50.0, 56.0)       # the westward road's own width, along x
+APPROACH_CROSS_X = (58.0, 66.0)      # the terrace across the end, front to back
+APPROACH_CROSS_Y = (-42.0, 18.0)     # and how far it runs across the view
 
 
 def _north_approach(out):
-    """The road, the footways and two backdrop terraces from x 44 to 108."""
+    """The road to the bend, the bend west, and the terrace across the end."""
     import random
     rnd = random.Random(20260923)          # fixed: the same street every render
     x0, x1 = APPROACH_X
-    _box(out, "backdrop_rise_approach_road", "asphalt", x0, x1, -3.0, 3.0, -0.30, 0.0,
-         "the-road-carries-on")
-    for sgn, side in ((1.0, "e"), (-1.0, "w")):
-        a, b = sgn * 3.0, sgn * STREET_FRONTAGE_M
-        _box(out, "backdrop_rise_approach_footway_%s" % side, "paving", x0, x1,
-             min(a, b), max(a, b), -0.30, THRESHOLD_ABOVE_CROWN_M, "and-its-footway")
-        x = x0 + rnd.uniform(1.0, 3.0)
-        n = 0
-        while x < x1 - 4.0:
-            w = rnd.uniform(5.0, 7.0)
-            xe = min(x + w, x1)
-            h = rnd.uniform(5.4, 6.6)
-            r = rnd.random()
-            wall = "render_cream" if r < 0.2 else ("brick_red" if r < 0.75 else "brick_grey")
-            f, back = sgn * STREET_FRONTAGE_M, sgn * (STREET_FRONTAGE_M + 8.0)
-            _box(out, "backdrop_rise_approach_%s%d" % (side, n), wall, x, xe,
-                 min(f, back), max(f, back), 0.0, h, "a-house/%.1fm/%s" % (xe - x, wall))
-            ridge = sgn * (STREET_FRONTAGE_M + 4.0)
-            out.append({"id": "backdrop_rise_approach_%s%d_roof" % (side, n), "material": "slate",
-                        "kind": "slope", "x0": x - 0.05, "x1": xe + 0.05,
-                        "y_eaves": f - sgn * 0.25, "y_ridge": ridge,
-                        "z_eaves": h, "z_ridge": h + 2.6, "note": "its-roof-along-the-street"})
-            # DARK WINDOWS, two to a floor, on the street face.
-            face = f - sgn * 0.03
-            for fz in (1.0, 3.6):
-                for k in (0.28, 0.72):
-                    cx = x + (xe - x) * k
-                    _box(out, "backdrop_rise_approach_%s%d_win%d%d" % (side, n, int(fz), int(k * 100)),
-                         "car_glass", cx - 0.45, cx + 0.45, min(face, f), max(face, f),
-                         fz, min(fz + 1.4, h - 0.3), "a-window")
-            if rnd.random() < 0.7:
-                _box(out, "backdrop_rise_approach_%s%d_stack" % (side, n), "brick_red",
-                     xe - 0.45, xe + 0.45, ridge - 0.25, ridge + 0.25, h + 1.8, h + 3.6,
-                     "a-stack-on-the-party-wall")
-            n += 1
-            x = xe + (rnd.uniform(1.5, 3.0) if rnd.random() < 0.15 else 0.0)
+    bx0, bx1 = APPROACH_BEND_X
+    cx0, cx1 = APPROACH_CROSS_X
+    f = STREET_FRONTAGE_M
+    # THE ROAD ON TO THE CORNER, and the road away west in front of the cross
+    # terrace, with the footway along that terrace's front.
+    _box(out, "backdrop_rise_approach_road", "asphalt", x0, bx1, -3.0, 3.0, -0.30, 0.0,
+         "the-road-carries-on-to-the-bend")
+    _box(out, "backdrop_rise_approach_bend", "asphalt", bx0, bx1, APPROACH_CROSS_Y[0], -3.0,
+         -0.30, 0.0, "and-bends-away-west")
+    _box(out, "backdrop_rise_approach_footway_e", "paving", x0, cx0, 3.0, f, -0.30,
+         THRESHOLD_ABOVE_CROWN_M, "the-east-footway-to-the-corner")
+    _box(out, "backdrop_rise_approach_footway_w", "paving", x0, bx0, -f, -3.0, -0.30,
+         THRESHOLD_ABOVE_CROWN_M, "the-west-footway-to-where-the-bend-opens")
+    _box(out, "backdrop_rise_approach_footway_n", "paving", bx1, cx0, APPROACH_CROSS_Y[0],
+         f, -0.30, THRESHOLD_ABOVE_CROWN_M, "the-footway-along-the-terrace-across-the-end")
+    # THE EAST ROW, to the corner, fronts on the street.
+    x = x0 + rnd.uniform(0.5, 1.5)
+    n = 0
+    while x < cx0 - 3.0:
+        w = rnd.uniform(5.0, 7.0)
+        xe = min(x + w, cx0)
+        h = rnd.uniform(5.4, 6.6)
+        r = rnd.random()
+        wall = "render_cream" if r < 0.2 else ("brick_red" if r < 0.75 else "brick_grey")
+        back = f + 8.0
+        _box(out, "backdrop_rise_approach_e%d" % n, wall, x, xe, f, back, 0.0, h,
+             "a-house/%.1fm/%s" % (xe - x, wall))
+        ridge = f + 4.0
+        out.append({"id": "backdrop_rise_approach_e%d_roof" % n, "material": "slate",
+                    "kind": "slope", "x0": x - 0.05, "x1": xe + 0.05,
+                    "y_eaves": f - 0.25, "y_ridge": ridge,
+                    "z_eaves": h, "z_ridge": h + 2.6, "note": "its-roof-along-the-street"})
+        for fz in (1.0, 3.6):
+            for k in (0.28, 0.72):
+                cxw = x + (xe - x) * k
+                _box(out, "backdrop_rise_approach_e%d_win%d%d" % (n, int(fz), int(k * 100)),
+                     "car_glass", cxw - 0.45, cxw + 0.45, f - 0.03, f, fz,
+                     min(fz + 1.4, h - 0.3), "a-window")
+        n += 1
+        x = xe
+    # THE WEST CORNER HOUSE, where the bend opens, its gable to the bend.
+    _box(out, "backdrop_rise_approach_w0", "brick_red", x0 + 0.5, bx0 - 0.5, -f - 8.0, -f,
+         0.0, 5.8, "the-corner-house-before-the-bend")
+    out.append({"id": "backdrop_rise_approach_w0_roof", "material": "slate",
+                "kind": "slope", "x0": x0 + 0.45, "x1": bx0 - 0.45,
+                "y_eaves": -f + 0.25, "y_ridge": -f - 4.0,
+                "z_eaves": 5.8, "z_ridge": 8.4, "note": "its-roof-along-the-street"})
+    # THE TERRACE ACROSS THE END, facing down the street.
+    _house_row_facing_south(out, "backdrop_rise_approach_x", cx0, cx1,
+                            APPROACH_CROSS_Y[0], APPROACH_CROSS_Y[1], 0.0, rnd)
+    # AND GROUND BEHIND IT to the foot of the rise, so no gap shows sky.
+    _box(out, "backdrop_rise_approach_yards", "grass", cx1, RISE_FIRST_X - 1.2,
+         RISE_Y_SPAN[0], RISE_Y_SPAN[1], -0.3, 0.0, "yards-and-plots-behind-the-terrace")
 
 
 def _canopy(out, pid, material, cx, cy, cz, r, rnd):
