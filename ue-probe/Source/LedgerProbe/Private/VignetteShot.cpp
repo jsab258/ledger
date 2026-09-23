@@ -7236,6 +7236,23 @@ namespace LedgerVignetteShot
 		return FString(UTF8_TO_TCHAR(SceneLineWithSky().c_str()));
 	}
 
+	int32 HideStreetGlassNear(const FBox& Box)
+	{
+		if (!Box.IsValid) { return 0; }
+		const FBox Grown = Box.ExpandBy(20.0);
+		int32 Hidden = 0;
+		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr || GStreet.Rows[(size_t)I].Base != "glass") { continue; }
+			if (!A->GetComponentsBoundingBox().Intersect(Grown)) { continue; }
+			A->SetActorHiddenInGame(true);
+			A->SetActorEnableCollision(false);
+			++Hidden;
+		}
+		return Hidden;
+	}
+
 	int32 ControlQuadsSpawnedCount()
 	{
 		return (int32)GQuads.size();

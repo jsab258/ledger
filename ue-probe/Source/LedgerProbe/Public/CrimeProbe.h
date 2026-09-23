@@ -551,12 +551,14 @@ namespace LedgerCrime
 		bool   bPieceFound;
 		bool   bHiddenBefore, bHiddenAfter, bCollisionAfter;
 		int    Shards, ShardsAsked, Bricks, BricksAsked;
+		// The Blender street's panes hidden with it, -1 when never asked.
+		int    StreetPanes;
 		std::string WhyNot;
 
 		CrimeReading()
 			: ActorYawDeg(0.0), bPieceFound(false), bHiddenBefore(false), bHiddenAfter(false),
 			  bCollisionAfter(true), Shards(0), ShardsAsked(kShardsPerCrime), Bricks(0),
-			  BricksAsked(1), WhyNot("none")
+			  BricksAsked(1), StreetPanes(-1), WhyNot("none")
 		{
 		}
 	};
@@ -575,6 +577,7 @@ namespace LedgerCrime
 		     + " glassHiddenBefore=" + YesNo(C.bHiddenBefore)
 		     + " glassHiddenAfter=" + YesNo(C.bHiddenAfter)
 		     + " glassCollisionAfter=" + (C.bCollisionAfter ? "on" : "off")
+		     + " streetPanesHidden=" + (C.StreetPanes < 0 ? std::string("not-asked") : Int(C.StreetPanes))
 		     + " shards=" + Int(C.Shards) + "/" + Int(C.ShardsAsked)
 		     + " brick=" + Int(C.Bricks) + "/" + Int(C.BricksAsked)
 		     + " crimeStatus=" + (bOk ? "COMMITTED" : "NOT-COMMITTED")
