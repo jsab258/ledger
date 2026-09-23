@@ -297,7 +297,7 @@ Stage state: OPEN
 | id | feature | kind | status | evidence or reason |
 |---|---|---|---|---|
 | A08.07 | Hair that behaves plausibly under the game's lighting | floor | open |  |
-| A08.08 | Skin, fabric, leather and metal that look different | floor | open |  |
+| A08.08 | Skin, fabric, leather and metal that look different | floor | done | in one frame of the corner, 24 Sep: the MetaHuman's skin with its pores and sheen, the knitted jumper and denim beside him, patent shoes, the car's painted metal and the lamp post's iron each read as what they are: [frame](production/art/compare/ps5-corner-2026-09-24/corner-metahuman-first.png) |
 | A08.15 | Detail changes with distance that do not transform identity | floor | open |  |
 | A09.01 | Idle breathing and small posture changes | floor | open |  |
 | A09.02 | Idle variation rather than a conspicuous repeating loop | floor | open |  |
