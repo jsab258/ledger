@@ -141,3 +141,6 @@ production/d1-probe/ue-crime-check.txt
 
 # The AI tester's runs: logs and crash dumps, kept on this PC; findings go to FOR-JAFAR.md.
 production/playtest/ai-tester/
+
+# THE BUILDER'S OWN CHECKOUT: the stop hook acts only where this untracked file is.
+.claude/builder-checkout

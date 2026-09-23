@@ -192,3 +192,17 @@ runs on push.
 - 2026-09-23 THE NAVIGATION MESH IS BUILT AT RUN TIME AND ONLY AROUND INVOKERS (my decision): the street is made at run time, so its mesh is dynamic; the slice's player (and later its walkers) carry an invoker, the probe's shots, walk and crime carry none and spend nothing on it.
 - 2026-09-23 THE SIMULATION STEPS ON A FIXED CLOCK (my decision under Jafar's ruling that it run the same at any frame rate): LedgerSim::FixedClock, 0.1 s steps, at most eight a frame with the dropped ones counted; nothing in the simulation reads a frame's length.
 - 2026-09-23 THE STREET'S PEOPLE ARE SOLID IN THE SLICE AND NOT IN THE PROBE'S WALK AND CRIME (my decision): a capsule blocking bodies and never sight under -LedgerSlice; the probe's proven lines (the walk's open footway 35 cm from Elizabeth, the crime's sightings) are left as they were proven, until the walk's line is moved in a change of its own.
+
+## Jafar's answers, 23 September, evening (all as recommended unless said)
+
+- DECISION 7 (a) STANDS: a hearer who knows remarks once per story, then watches Tom longer; the paper counts.
+- A DROPPED OR SLOW CONNECTION: the authored street carries on (barks, remarks, overheard talk); a typed line gets a short in-character brush-off and a small sign the line is down; a slow line is covered and abandoned for the brush-off after about eight seconds.
+- THE GENERATION PAUSE: the character does something a person does while thinking - a breath, a glance, a short filler in their own pre-recorded voice picked by mood; the subtitle appears only with the audio it belongs to, built from the exact words sent to the voice.
+- THE MINUTE AFTER: a settling by rules - near people look and some gather, most drift back within a couple of game minutes, witnesses keep talking quieter for about an hour, and the street's unease (heat) fades it.
+- THE THREE UNNAMED AREAS ARE FLOOR: object interaction, optional presentation, making the game.
+- THE SLICE'S TALKING RUNS BESIDE THE GAME: the tested C# engine as a helper program the game talks to (ledger/TalkHelper), not rewritten in C++.
+- THE SIX REALISTIC EXTRAS BECOME THE SLICE'S CAST, Rocco, Lena and Sam first.
+- THE AI TESTER'S HANDS: Claude's computer control through the paid API, run at the end of a sitting that changed the slice, while Jafar is away from the PC.
+- THE DOWNLOADS GO AHEAD: Chatterbox Nano's package and weights (MIT) for the listening test; CC0 scanned materials from Poly Haven and ambientCG for the PS5 corner; the MetaHuman needs Jafar's Epic sign-in, once.
+- THE PS5 CORNER STANDS BESIDE KINGDOM COME DELIVERANCE 2, an overcast town street, "since that game is my stated bar"; Jafar supplies the frame.
+- CANON: TOM HAS NEVER BEEN TO THE HOOK. He is a stranger to everyone there, known only as Mickey's nephew by name (also in canon.md).

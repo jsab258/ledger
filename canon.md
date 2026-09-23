@@ -67,7 +67,8 @@ canon lines it changes, and canon cites the record at those lines.
 ## Premise and cast (baseline pending OPEN 2)
 - Player: Tom Novak, arriving with one suitcase and a letter. His uncle Mickey
   has died and left him Mickey's, a minicab office in the Hook (D19), plus a half-dead criminal
-  outfit and a book of uncollectable debts.
+  outfit and a book of uncollectable debts. Tom has never been to the Hook: he is a stranger
+  to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).
 - Inherited loyalists: Rocco (old muscle), Lena (older bookkeeper).
 - Three rival organisations: the old-money machine (corruption and lawyers, head
   Aldous Vane), the dockside syndicate (muscle and smuggling, head Sera Kest, called

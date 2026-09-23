@@ -943,7 +943,10 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       FIRST HALF DONE 23 Sep (877eb312): every feature on changes 2.4 per cent
       of the corner for 2.6x the frame time (9.2 -> 24.3 ms); the gap is
       content and craft. The content half (scanned materials, one MetaHuman)
-      waits on Jafar's yes to the downloads.
+      is APPROVED (Jafar 23 Sep evening: yes to the downloads; the MetaHuman
+      needs his Epic sign-in once), and the reference is now a KINGDOM COME
+      DELIVERANCE 2 overcast town street, his stated bar, frame to come from
+      him.
 - [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
       ten lines, three cast voices, each by the engine we use now and by
       Nano, played to him BLIND in pairs so he picks without knowing which is
@@ -951,6 +954,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       where a line needs feeling. Its speed measured on the processor alone
       and on the card, WITH THE GAME RUNNING. Its watermark kept, not
       stripped. The text model stays the paid online one (decision 4).
+      DOWNLOADS APPROVED 23 Sep evening; the render and page scripts wait in
+      the scratchpad (nano-test/render_nano.py, page/index.template.html).
 - [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
