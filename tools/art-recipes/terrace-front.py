@@ -606,19 +606,27 @@ SURFACE_OF = {
     # PAINT DOES NOT SHOW GRAIN: a painted sash is a smooth surface, the
     # plaster map is the smooth one we hold, and its own average is light
     # enough that white needs a gain of 1.3.
-    "paint_joinery":("plaster", 0.5),
+    #
+    # AND THEN NO MAP AT ALL, 23 September, in Unreal against the sheet: the
+    # plaster map's relief, which was smooth enough in Blender, reads in
+    # Unreal as a rough stucco on every sash, fascia, pilaster and door,
+    # where the sheet's are gloss-painted timber. The conclusion above, taken
+    # one step further: gloss paint is a flat colour and a highlight, as the
+    # car panels already are. Tried both ways on the runner's build:
+    # production/art/compare/hook-unreal-2026-09-23/paint-01.png.
+    "paint_joinery":(None, 0.0),
     "render_cream": ("plaster", 1.0),
-    "paint_stall":  ("plaster", 1.0),
+    "paint_stall":  (None, 0.0),
     # Both refit surfaces are SMOOTH, so they take the plaster map for its
     # relief and not the timber one: metal has no grain and neither has a
     # glazed tile.
     "frame_metal":  ("plaster", 0.4),
     "tile_stall":   ("plaster", 0.3),
-    "frame_painted": ("plaster", 0.4),
+    "frame_painted": (None, 0.0),
     "tile_patterned": ("plaster", 0.3),
     "glass_whitened": ("plaster", 0.6),
-    "paint_door":   ("wood", 0.6),
-    "paint_fascia": ("wood", 1.0),
+    "paint_door":   (None, 0.0),
+    "paint_fascia": (None, 0.0),
     # A PANE OF GLASS IS NOT A PHOTOGRAPH OF ANYTHING, and it had the
     # pack's glass map box-projected across it at 1.4 m: every shop window
     # on the street carried a repeating dark checker, which reads as a

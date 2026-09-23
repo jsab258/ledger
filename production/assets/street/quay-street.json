@@ -409,16 +409,12 @@
     0.01
    ],
    "roughness": 0.5,
-   "surface_map": "plaster",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -435,16 +431,12 @@
     0.072
    ],
    "roughness": 0.5,
-   "surface_map": "plaster",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -461,16 +453,12 @@
     0.27
    ],
    "roughness": 0.5,
-   "surface_map": "plaster",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -487,16 +475,12 @@
     0.024
    ],
    "roughness": 0.5,
-   "surface_map": "plaster",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -513,16 +497,12 @@
     0.119
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -587,16 +567,12 @@
     0.119
    ],
    "roughness": 0.35,
-   "surface_map": "plaster",
-   "tile_m": 0.4,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -826,16 +802,12 @@
     0.048
    ],
    "roughness": 0.42,
-   "surface_map": "wood",
-   "tile_m": 0.6,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -852,16 +824,12 @@
     0.64
    ],
    "roughness": 0.42,
-   "surface_map": "plaster",
-   "tile_m": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -1099,8 +1067,8 @@
     0.03
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": "generated/fascia_fish_market",
    "decal_uv": [
     0.035,
@@ -1109,11 +1077,7 @@
     0.675
    ],
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -1130,8 +1094,8 @@
     0.03
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": "generated/fascia_ritas_pawn",
    "decal_uv": [
     0.04,
@@ -1140,11 +1104,7 @@
     0.7
    ],
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -1161,8 +1121,8 @@
     0.03
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": "generated/fascia_steam_laundry",
    "decal_uv": [
     0.07,
@@ -1171,11 +1131,7 @@
     0.435
    ],
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -1192,16 +1148,12 @@
     0.03
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": "production/assets/vignette/decals2d/board_to_let",
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
@@ -1218,16 +1170,12 @@
     0.03
    ],
    "roughness": 0.45,
-   "surface_map": "wood",
-   "tile_m": 1.0,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": "production/assets/vignette/decals2d/fascia_mickeys_plain",
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.1483,
-    0.0907,
-    0.0519
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
