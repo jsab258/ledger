@@ -1770,6 +1770,11 @@ jobs:
           if (Test-Path "slicewalk-run.log") {
             Select-String -Path "slicewalk-run.log" -Pattern "LogNavigation|RecastNavMesh|NavMesh" |
               Select-Object -First 25 | ForEach-Object { Add-Content $out ("# nav-log " + $_.Line.Trim()) }
+            # And the lines that say whether the bounds went in and the build
+            # ran (24 September), wherever they fall after the first 25.
+            Select-String -Path "slicewalk-run.log" -Pattern "bounds|Build total|Build started|NavigationData|Warning.*Nav|Error.*Nav" |
+              Where-Object { $_.Line -match "Navigation" } |
+              Select-Object -First 15 | ForEach-Object { Add-Content $out ("# nav-build " + $_.Line.Trim()) }
           }
           Write-Host (Get-Content $out -Raw)
           exit 0

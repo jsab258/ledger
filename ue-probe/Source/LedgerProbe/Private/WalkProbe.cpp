@@ -119,6 +119,7 @@
 #include "AudioMixerBlueprintLibrary.h"
 #include "NavigationSystem.h"
 #include "NavigationPath.h"
+#include "SliceCharacter.h"
 
 #include <string>
 #include <vector>
@@ -1470,10 +1471,15 @@ namespace
 					bPartial = Path->IsPartial();
 				}
 			}
+			// The slice's player marks the street walkable and builds the mesh
+			// itself; the probe's own pawn does neither, so its walk says n/a.
+			const ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn);
 			Out.Add(FString::Printf(
-				TEXT("navSystem=%s navData=%s navPathToRankPoints=%d navPathToRankCm=%.0f navPathPartial=%s"),
+				TEXT("navSystem=%s navData=%s navPathToRankPoints=%d navPathToRankCm=%.0f navPathPartial=%s navBounds=%s navBuilt=%s"),
 				Nav != nullptr ? TEXT("yes") : TEXT("NONE"), bNavData ? TEXT("yes") : TEXT("none"),
-				Points, LengthCm, bPartial ? TEXT("yes") : TEXT("no")));
+				Points, LengthCm, bPartial ? TEXT("yes") : TEXT("no"),
+				Slice == nullptr ? TEXT("n/a") : (Slice->bNavBounds ? TEXT("yes") : TEXT("NO")),
+				Slice == nullptr ? TEXT("n/a") : (Slice->bNavBuilt ? TEXT("yes") : TEXT("NO"))));
 		}
 		Out.Add(FString::Printf(
 			TEXT("walkAudioDevice=%s walkAudioRecorded=%s walkAudioFile=%s.wav/written-after-this-line-see-the-workflow's-walkAudioCollected"),
