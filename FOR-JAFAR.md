@@ -57,6 +57,12 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The far end of the street now looks like the sheet's.** Beyond
+  the built street the road used to run straight on to a solid wall of
+  houses. Now, as on the sheet, it bends away to the left at a row of houses
+  that faces straight down it, and the hillside above has gaps, grass and
+  trees between its houses. All of it is backdrop, built in Blender and
+  brought across; the pictures are in today's comparisons as the runs land.
 - 2026-09-23 **The game engine's daylight is retuned against the sheet, and
   it moved numbers in the scene file.** Measured region by region against
   the flipped sheet, the frame was 4 to 12 times too bright everywhere but
