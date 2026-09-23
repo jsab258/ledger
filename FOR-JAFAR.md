@@ -4,6 +4,19 @@ Everything meant for him lives here. Nothing is ever only in a message.
 Ruled 2026-09-22, after "For you:" items went into reports and were lost
 between them.
 
+## The plan at a glance
+
+<!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
+- stage 1: 0 of 47 done, 0 moved, 0 out, 47 open
+- stage 2: 0 of 247 done, 0 moved, 0 out, 247 open
+- stage 3: 0 of 139 done, 0 moved, 2 out, 137 open
+- stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
+- stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
+- stage 6: 0 of 82 done, 0 moved, 12 out, 70 open
+- ship-prep: 0 of 59 done, 0 moved, 16 out, 43 open
+- not staged: 0 of 74 done, 0 moved, 74 out, 0 open
+<!-- /stage-count -->
+
 ## Decisions waiting on me
 
 - 2026-09-23 **May I download what the Nano test and the PS5 corner need?** Downloads need your yes.
@@ -13,9 +26,9 @@ between them.
   - **(a) Yes to all of it (my recommendation).** (b) Nano only; the corner makes do with the materials we have and no MetaHuman. (c) Neither for now.
   - Meanwhile I carry on with presentable, which needs none of it.
 - 2026-09-23 **Which picture should the PS5 corner stand beside?** The reference folder holds five GTA V street frames, a game made for the PS3 and re-released on the PS5. Nothing in it is a native PS5 game, so it's a lower bar than your words set.
-  - **(a) The overcast GTA V morning, the closest match to our weather (my recommendation).** I'll say in the report that it's a PS3-era bar.
-  - (b) You drop in a frame from a native PS5 game you like, and I use that. I won't download game screenshots myself; they're someone else's copyright.
-  - Meanwhile I use (a).
+  - (a) The overcast GTA V morning, the closest match to our weather. I'll say in the report that it's a PS3-era bar.
+  - **(b) You drop in a frame from a native PS5 game you like, and I use that (my recommendation, changed 23 September).** Canon says "GTA V PS3 is retired as a reference bar", which I found after recommending (a). I won't download game screenshots myself; they're someone else's copyright.
+  - Meanwhile the GTA V frame stands in, labelled as a retired bar, until yours arrives.
 - 2026-09-23 **Making faint knowledge show (your decision 7 a): how loud should it be?** Three independent checks found the plain version overdoes it. Once the paper names Tom, the whole town holds the story and everyone near him would remark. His own staff, who stand near him all day, would remark every 45 seconds for an hour. And anyone who has heard now watches him, so they also make sharper witnesses of his next crime. I've built (a), committed and tested; each of the other two is a small change.
   - **(a) Each person remarks once per story and afterwards just watches him longer. The paper counts, so after a front page the whole street looks and a few say something (my recommendation).**
   - (b) Only people who heard it by word of mouth show it; the paper makes the town know without anyone acting on it.
@@ -37,8 +50,20 @@ between them.
   - (c) The street stays disturbed until the next day.
   - Meanwhile nothing is built; it lands with the slice's crime.
 
+- 2026-09-23 **Three areas of the checklist your sort didn't name: which kind are they?** Picking up and using things (29 items: doors, objects, prompts). The optional extras (13: photo mode, credits, what happens after the ending). The work of making the game (34: voice casting, testing, the store page, age rating).
+  - **(a) All three are floor, in where the research placed them. Picking things up is part of the controls, and the other two are what shipping any game takes (my recommendation).**
+  - (b) Picking things up is floor; the extras and the making are set aside until ship-prep.
+  - (c) You sort them item by item.
+  - Meanwhile (a): they're on the checklist marked "floor (my call)", so they're easy to find and change. Separately, 16 items the research itself ruled out stay out with its reasons, all of them things that don't apply here (gyro aiming, lock-on, a first-person view, usable mirrors, multiplayer voice chat and so on). The one you might want back is HDR display settings.
+
+- 2026-09-23 **The slice's talking and voices: rewrite them in the game engine, or run the existing code beside it?** The conversation engine, the router, the content rule and the voice runner all exist and are tested, in C#, in the old Unity game.
+  - **(a) Run them beside the game as a small helper program the game talks to, on this PC (my recommendation).** About 1 to 2 sittings each instead of 2 to 3, and the tested code stays the tested code. The cost: the shipped game carries a second program, and a crash in it has to be caught and the line covered.
+  - (b) Rewrite them inside the game engine in C++. It's one program, but it's slower to build and it's a second copy of code that must be kept agreeing with the first, as the simulation's port is.
+  - Meanwhile (a), when the slice reaches talking; nothing is built for it yet.
+
 ## Things you should know
 
+- 2026-09-23 **The checklist is folded into the roadmap, sorted as you ruled: 963 items.** That's the 957 plus six the other research found missing: dialogue ducking the mix, wind and rain sound, camera smoothing, people using doors, people queueing and giving way, and puddles that ripple and splash. 113 are out, each with what rules it out. Nothing is marked done yet, because done needs a picture, a test or a recording linked in its row, and I haven't linked any. Stage 1's items come first. Of the genre items, 13 were close calls: I kept 12 in and ruled the jump out (your G1 names kerbs, low walls and fences, not a jump). All 13 are marked "unsure" in their rows.
 - 2026-09-23 **The PS5 experiment, first half: switching every Unreal feature on hardly changes the picture.** The picture is our corner as the street runs beside the same corner with everything on, and I've put the GTA V frame next to them for you to see (not committed, since it's their picture).
   - **What was switched on:** sharp shadows, ray-traced bounced light and reflections, volumetric fog, contact shadows, every quality setting at its highest, full resolution.
   - **What it changed:** only 2.4 per cent of the picture changes noticeably: the car's bonnet reflects properly, the road under it too, the puddle a little. It costs 2.6 times the frame time: 9.2 ms becomes 24.3 ms at 1280x720 (the Hook view: 8.9 becomes 20.8).
@@ -93,7 +118,10 @@ between them.
 
 ## Rulings received
 
-- 2026-09-23 **Hold the checklist fold** until you send which of its items this game actually wants. Nothing goes into the roadmap from it meanwhile. I'm still bringing the other research branch onto main as it stands, folding nothing from it, and carrying on with everything else.
+- 2026-09-23 **The checklist, sorted, becomes the plan.** Floor items (what any decent game needs) are in where the research placed them. Ours (how the town notices you, stealth, trespass and the law, the town's layout) are in where the plan has them. Genre items are ruled by your twelve decisions, now G1 to G12 in the decisions file, with G0 for multiplayer being out. An item that's out stays on the list marked out, with what rules it out.
+- 2026-09-23 **Four rules make the checklist hold**, now in the project rules. The list refills only from the current stage's checklist. An item leaves a stage only as done, moved or out, each with a reason. Done needs a frame, a test or a recording linked in its row. A stage can't be marked finished while anything in it is open; one check enforces this on every push.
+- 2026-09-23 **A count per stage** (done, moved, out, open) goes at the top of this file and in every sitting's last message. It's written by the check, never typed.
+- 2026-09-23 **The hold on the checklist is lifted**; your sort arrived the same evening.
 - 2026-09-23 **Six more additions, inside the same order (presentable, then the PS5 corner, then the slice; checkpoint work only between visual items)**:
   1. Heads that turn toward you and sound that comes from its source go into presentable, using what Unreal provides.
   2. The slice is built on Unreal's standard game framework (a character with a body, AI people who walk and avoid you, the engine's sound, a simple interface), not grown out of the probe, which stays as the test harness. Re-estimate it honestly here.
@@ -195,6 +223,7 @@ between them.
 
 ## Resolved
 
+- 2026-09-23 **Hold the checklist fold** (lifted the same evening, with your sort) until you send which of its items this game actually wants. Nothing goes into the roadmap from it meanwhile. I'm still bringing the other research branch onto main as it stands, folding nothing from it, and carrying on with everything else.
 - 2026-09-23 **Decision 8, canon's words about the west side** - ruled (a): canon now says the shop block is across from the north half of the parade and the block across from Mickey's is plain terraces; nothing rebuilt. The question as it was put:
 
 **8. Canon's words about the west side now point at the wrong block.** Your

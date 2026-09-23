@@ -89,6 +89,38 @@ wins and this file is wrong.
 - The ledger is the notebook, not a corkboard. [D37](legacy/studio-v2/respec/decision-register/D37-the-ledger-is-the-notebook-not-a-corkboard.md)
 - Combat before driving. [D4](legacy/studio-v2/respec/decision-register/D4-combat-before-driving.md)
 
+## The genre, and what the checklist is for (Jafar, 23 September)
+
+THE CHECKLIST IS SORTED BEFORE IT IS PLAN. Nobody had decided the game wants
+all 957 items of the master feature checklist; the research placed each in a
+stage by its own judgement. Every item is one of three kinds. FLOOR, in by
+default, where the research placed it: launching, menus, controls, onboarding,
+camera, walking and turning, how people look and move including head-turning,
+collision, ordinary civilian behaviour, health and retry, environment art,
+lighting, weather, ambient life, positional sound, foley, voice and the mix,
+dialogue, feedback on screen, saving, pausing, all settings, all accessibility,
+performance and platform. OURS, in, where the plan has them, because they are
+the moat: how the town notices you, stealth, trespass and the law, and the
+town's layout. GENRE, ruled item by item by the twelve lines below. An item
+that is out stays on the checklist marked out, with the line that rules it
+out, so nothing leaves silently. The checklist is ROADMAP.md's, per stage.
+
+- G1 JUMPING, CLIMBING, SWIMMING: Tom steps onto kerbs and climbs low walls and fences, since escapes matter in a crime game; no parkour; falling into the basin means swimming to a ladder, nothing more.
+- G2 COMPANIONS: Rocco and Lena are crew who act on Tom's orders, as the crime layer designs, not followers who trail behind him. Following-companion items are out.
+- G3 COMBAT, as D4 already rules: fists and improvised weapons in full; firearms rare, as events, not a shooter. Most ranged-weapon items are out.
+- G4 VEHICLES AND TRAFFIC: moving traffic, and the firm's cars driven by others, are in the street now, because a street with no traffic feels dead. Tom driving waits for the region, as D4 says.
+- G5 BOATS AND BUSES: moving scenery on a timetable, not something Tom rides, for now.
+- G6 CUTSCENES: a handful of short, skippable moments for the big beats, such as the arrival with the suitcase. No long cinematics.
+- G7 MISSIONS AND OBJECTIVES: jobs and consequences, with a light note in the Ledger of what Tom is doing. No waypoint missions.
+- G8 MAPS AND JOURNALS, as already ruled (D20, D37): no minimap, a paper map, the Ledger notebook.
+- G9 INVENTORY AND LOOT, as already ruled: coat and pockets, plus storage at the cab office. Bodies leave evidence, not loot.
+- G10 SHOPS, ECONOMY AND CRAFTING: buying, selling and fencing are in. Crafting is out.
+- G11 PROGRESSION AND DIFFICULTY, as already ruled (D11): no stats. Difficulty exists only as accessibility assists, not a hard mode.
+- G12 LOCALISATION: English only for now, with all text kept out of the code so it is possible later.
+- G0 MULTIPLAYER stays out.
+- 2026-09-23 THE THREE AREAS THE SORT DID NOT NAME ARE FLOOR (my decision, put to Jafar): object interaction, optional presentation (photo mode, credits, the post-ending state) and making the game (casting, QA, store, rating), in where the research placed them and marked `floor (my call)`.
+- 2026-09-23 THE CLOSE CALLS IN THE GENRE SORT (my decision, marked `unsure` in their rows): twelve kept in as the rulings allow, and the jump ruled OUT under G1, since G1 names stepping onto kerbs and climbing low walls and fences and no jump.
+
 ## Bodies, movement and sound
 
 - Mixamo bodies are in. [D46](legacy/studio-v2/respec/decision-register/D46-mixamo-bodies-are-in.md)

@@ -15,7 +15,8 @@ What governs: canon.md for the world and the content rules; ROADMAP.md for the s
 - `FOR-JAFAR.md` AT THE ROOT IS THE CHANNEL, AND A MESSAGE ONLY REPEATS IT. Ruled 2026-09-22, because `For you:` items were getting lost between reports and he was scrolling a transcript to find them. FOUR SECTIONS: **Decisions waiting on me**, each a multiple-choice question with the recommendation marked and what you are doing meanwhile; **Things you should know**, one line each, newest first; **Rulings received**, one line each with the date, so he can see what landed; and **Resolved** at the bottom.
 - EVERY `For you:` ITEM GOES INTO THAT FILE IN THE SAME TURN IT IS WRITTEN, BEFORE IT GOES INTO A MESSAGE. NOTHING IS EVER ONLY IN A MESSAGE. During a sitting `For you:` stays exactly as it is - first line, every message, `nothing` when empty - but it only ever repeats what the file already says.
 - WHEN SOMETHING IS RESOLVED IT MOVES TO `Resolved` WITH THE DATE rather than being deleted, so the record is complete.
-- AT THE END OF A SITTING, THE LAST MESSAGE IS THE FILE'S TOP TWO SECTIONS, VERBATIM, AND NOTHING ELSE.
+- AT THE END OF A SITTING, THE LAST MESSAGE IS THE FILE'S STAGE COUNT AND ITS TOP TWO SECTIONS, VERBATIM, AND NOTHING ELSE.
+- THE STAGE COUNT, AT THE TOP OF `FOR-JAFAR.md` AND IN EVERY SITTING'S LAST MESSAGE (Jafar 2026-09-23), so he sees the plan at a glance: one line per stage, done, moved, out and open, such as "stage 1: 38 of 47 done, 4 moved, 5 out, 5 open". It is written by `tools/stage-check.py --write-count`, never typed.
 - FINDINGS.md IS YOUR NOTEBOOK, NOT A CHANNEL TO HIM. A finding that needs him is also in `For you:`. Writing it down is not telling him.
 - WHY THE OLD RULE FAILED, kept because the next version of this will fail the same way if nobody remembers. It said "anything he has to know goes at the very top, in one line". It left the deciding to you, and on 22 September two things he needed — that the PC rule was costing most of the sitting, and that every sign on one side of the street was painted backwards — went into the middle and the bottom of a long report. He found both by accident. A list that is always there, even when it says `nothing`, cannot be quietly skipped.
 - If you got something wrong, one sentence, then move on.
@@ -27,6 +28,17 @@ What governs: canon.md for the world and the content rules; ROADMAP.md for the s
 - If he opens a sitting without naming a time limit, THE LIMIT IS FOUR HOURS.
 - WHEN THE LIST RUNS SHORT, EXTEND IT from the next part of ROADMAP.md rather than asking what is next.
 - THE HOOK MATCH LEADS. Ruled 2026-09-22, explicitly and as a change of order: visual work toward the Hook sheet comes FIRST in a sitting, and the crime, the simulation and the memory work follow it. A sitting that spends its hours on machinery and reaches the look last is a sitting that never reaches the look.
+
+## The checklist, and the four rules that make it hold (Jafar 2026-09-23)
+
+The plan is ROADMAP.md's per-stage checklist: the master feature checklist, sorted into floor, ours and genre, with the genre ruled by G0 to G12 in DECISIONS.md.
+
+1. THE STANDING LIST REFILLS ONLY FROM THE CURRENT STAGE'S CHECKLIST, NEVER FROM YOUR OWN IDEAS. Something you think is missing goes to him as a proposed checklist item, not onto the list.
+2. AN ITEM LEAVES A STAGE ONLY AS DONE, MOVED TO A LATER STAGE WITH A REASON, OR RULED OUT WITH A REASON. Nothing is dropped.
+3. DONE NEEDS EVIDENCE: a frame, a test or a recording, linked in the item's row. An item without evidence is not done, and the count reads it as open.
+4. A STAGE CANNOT BE DECLARED FINISHED WHILE ANY ITEM IN IT IS OPEN. Enforced mechanically, and this is the one check that does it: `tools/stage-check.py`, run with the cheap checks on every push, counts open items per stage and fails while any stage marked `FINISHED` has one. It is a check on the plan, ordered by him, not a record of this session; it keeps no history.
+
+When he finds something new while playing another game, it goes on the checklist with a note saying which way of looking should have caught it. The blind spots are a floor.
 
 ## What to ask, and what to decide
 
