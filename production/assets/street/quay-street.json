@@ -541,16 +541,12 @@
     0.352
    ],
    "roughness": 0.3,
-   "surface_map": "plaster",
-   "tile_m": 0.4,
+   "surface_map": null,
+   "tile_m": 0.0,
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
-   "texture_mean": [
-    0.5225,
-    0.5166,
-    0.4732
-   ],
+   "texture_mean": null,
    "drawn_map": null,
    "drawn_tile_m": null,
    "emit_day": null,
