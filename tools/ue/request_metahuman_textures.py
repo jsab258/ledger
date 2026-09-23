@@ -1,6 +1,6 @@
-"""Fetch a MetaHuman Character's texture sources from Epic's service, then assemble it.
+"""Fetch a MetaHuman Character's texture sources from Epic's service and save them into it.
 
-    UnrealEditor.exe <project> -ExecutePythonScript="tools/ue/request_metahuman_textures.py"
+    UnrealEditor.exe <project>      with Content/Python/init_unreal.py exec'ing this file
 
 WHY IT EXISTS, 24 September. tools/ue/assemble_metahuman.py ran MH_Test as far
 as "The Character is missing textures, use Download Texture Sources to create
@@ -8,12 +8,15 @@ them before assembling". That button is the editor subsystem's
 RequestTextureSources, a request to Epic's MetaHuman service under Jafar's Epic
 account, and he said yes to it in chat ("yes, download the textures").
 
-IT RUNS IN THE FULL EDITOR, NOT AS A COMMANDLET: the request is answered over
-the network while the editor ticks, and a commandlet does not tick while a
-script runs. So this asks, then returns; a tick callback checks every few
-seconds whether the character can now be built, builds it with the Optimized
-pipeline (the same call and settings as assemble_metahuman.py), saves, writes
-one line to ue-material.txt in the project folder, and closes the editor. It
+IT RUNS IN THE FULL EDITOR, NOT AS A COMMANDLET, AND AS THE PROJECT'S
+START-UP SCRIPT (Content/Python/init_unreal.py calling this), NOT BY
+-ExecutePythonScript: the request is answered over the network while the
+editor ticks, a commandlet does not tick while a script runs, and
+-ExecutePythonScript closes the editor the moment its script returns, which
+cut the first download off. So this asks, then returns; a tick callback checks
+every few seconds whether the character can now be built, saves it with its
+textures, writes one line to ue-material.txt in the project folder, and closes
+the editor. Assembling is then assemble_metahuman.py's, as a commandlet. It
 gives up after TIMEOUT_S and says so rather than waiting for ever.
 """
 import os
@@ -59,16 +62,15 @@ def _tick(delta):
     sub, ch = _state["sub"], _state["ch"]
     try:
         if sub.can_build_meta_human(ch, True):
-            p = unreal.MetaHumanCharacterEditorBuildParameters()
-            p.set_editor_property("pipeline_type", unreal.MetaHumanDefaultPipelineType.OPTIMIZED)
-            p.set_editor_property("pipeline_quality", unreal.MetaHumanQualityLevel.HIGH)
-            p.set_editor_property("absolute_build_path", BUILD_ROOT)
+            # NOT RE-ENTERED: saving pumps the editor's ticks, and the first
+            # run (24 September) came back into this callback from inside its
+            # own save six times, then crashed in the build. The callback goes
+            # before anything that can tick, and assembling is left to
+            # assemble_metahuman.py as a commandlet, which does not tick.
+            unreal.unregister_slate_post_tick_callback(_state["handle"])
+            _state["handle"] = None
             unreal.EditorAssetLibrary.save_loaded_asset(ch, only_if_is_dirty=False)
-            sub.build_meta_human(ch, p)
-            unreal.EditorAssetLibrary.save_directory(BUILD_ROOT, only_if_is_dirty=False, recursive=True)
-            made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT, recursive=True, include_folder=False)
-            _finish("BUILT" if made else "BUILT-NOTHING", "%d assets in %s; %s" % (
-                len(made), BUILD_ROOT, ",".join(a.split("/")[-1] for a in made if "BP_" in a)[:120] or "no-blueprint"))
+            _finish("TEXTURES-IN", "texture sources downloaded and saved into %s; assemble with assemble_metahuman.py" % CHARACTER)
             return
     except Exception as e:
         _finish("ERROR", repr(e))
@@ -87,6 +89,9 @@ def main():
         _finish("NOT-EDITABLE", "no subsystem, or try_add_object_to_edit refused")
         return
     _state["sub"], _state["ch"] = sub, ch
+    if sub.can_build_meta_human(ch, True):
+        _finish("ALREADY-IN", "the character already has its texture sources")
+        return
     sub.request_texture_sources(ch, unreal.MetaHumanCharacterTextureRequestParams())
     _state["asked"] = True
     _write("ASKED", "request_texture_sources sent; waiting while the editor ticks")
