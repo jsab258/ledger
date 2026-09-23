@@ -1,0 +1,40 @@
+{
+  "what": "Jafar's blind listening test, 23 September: ten lines, three cast voices, each rendered by the engine we use now (Chatterbox, whose exaggeration dial carries the feeling) and by Chatterbox Nano (which has no dial, so its paralinguistic tags carry the feeling where a line needs one). Both clone from the same picked clip (game-design/picked-clips). Played to him in pairs, the order of each pair drawn at random and kept apart from the page, so he picks without knowing which is which.",
+  "voices": {
+    "rocco": "game-design/picked-clips/rocco.p227.mp3",
+    "lena": "game-design/picked-clips/lena.p228.mp3",
+    "sam": "game-design/picked-clips/sam.p241.mp3"
+  },
+  "lines": [
+    {"id": "01", "voice": "rocco", "feeling": "flat, a report", "exaggeration": 0.40,
+     "text": "Seen the van again. Thursday, same as last Thursday.",
+     "nano": "Seen the van again. Thursday, same as last Thursday."},
+    {"id": "02", "voice": "rocco", "feeling": "low menace", "exaggeration": 0.35,
+     "text": "Nobody's asking you to like it, son. Just be there at six.",
+     "nano": "Nobody's asking you to like it, son. Just be there at six."},
+    {"id": "03", "voice": "rocco", "feeling": "dry amusement", "exaggeration": 0.60,
+     "text": "Your uncle said the same thing. Once.",
+     "nano": "[chuckle] Your uncle said the same thing. Once."},
+    {"id": "04", "voice": "lena", "feeling": "tired", "exaggeration": 0.30,
+     "text": "The book doesn't balance, Tom. It hasn't balanced since March.",
+     "nano": "[sigh] The book doesn't balance, Tom. It hasn't balanced since March."},
+    {"id": "05", "voice": "lena", "feeling": "warm", "exaggeration": 0.45,
+     "text": "You look like him, you know. Round the eyes.",
+     "nano": "You look like him, you know. Round the eyes."},
+    {"id": "06", "voice": "lena", "feeling": "frightened, urgent", "exaggeration": 0.85,
+     "text": "Put the lights off. Now. There's someone at the yard gate.",
+     "nano": "[gasp] Put the lights off. Now. There's someone at the yard gate."},
+    {"id": "07", "voice": "sam", "feeling": "cheerful", "exaggeration": 0.65,
+     "text": "Get away, that's never a tenner's worth of cod.",
+     "nano": "[laugh] Get away, that's never a tenner's worth of cod."},
+    {"id": "08", "voice": "sam", "feeling": "gossiping", "exaggeration": 0.55,
+     "text": "Did you hear about the window at Rita's? Half the street's talking.",
+     "nano": "Did you hear about the window at Rita's? Half the street's talking."},
+    {"id": "09", "voice": "sam", "feeling": "wary", "exaggeration": 0.40,
+     "text": "I didn't see anything. I was in the back, gutting.",
+     "nano": "I didn't see anything. [cough] I was in the back, gutting."},
+    {"id": "10", "voice": "rocco", "feeling": "angry, urgent", "exaggeration": 0.85,
+     "text": "Get in the car. Don't argue, just get in the car!",
+     "nano": "Get in the car. Don't argue, just get in the car!"}
+  ]
+}
