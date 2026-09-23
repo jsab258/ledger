@@ -312,13 +312,18 @@ namespace LedgerStreet
 		// which stay as the collision - hidden, not removed - so walking,
 		// blocking and every sight line behave exactly as they did.
 		bool   bStreetInPlay;
-		int    Read;             // how many of the seventeen the file supplied
+		// THE DAY'S FOG CAP IN THIS ENGINE, a multiplier on the scene file's
+		// fog_max_opacity by day only: the file's 0.100 is in the names of
+		// its fog-series rows and was ruled for another street, and the far
+		// end's depth against the sheet wants more haze than it allows.
+		double FogCapGainDay;
+		int    Read;             // how many of the eighteen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
-		         bStreetInPlay(false), Read(0), bFromFile(false) {}
+		         bStreetInPlay(false), FogCapGainDay(1.0), Read(0), bFromFile(false) {}
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
@@ -383,6 +388,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("fog_cap_gain_day");
+		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogCapGainDay = V->Num; ++Out.Read; }
 		V = Root.Find("street_in_play");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetInPlay = V->Bool; ++Out.Read; }
 		V = Root.Find("wet_floor");

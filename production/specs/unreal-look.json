@@ -5,9 +5,9 @@
   "street_glow_gain": 0.02,
   "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
   "fog_day_colour": [
-    0.55,
-    0.58,
-    0.62
+    1.6,
+    1.62,
+    1.7
   ],
   "fog_height_falloff": 0.02,
   "wet_film_from": 0.5,
@@ -54,5 +54,7 @@
   },
   "wet_floor_note": "A wet surface's roughness floor in this engine by base material, where tuning moves it off the recipe's (road 0.05, paving 0.46, kerb 0.40). The approved sheet's flags reflect the shopfront; the recipe's 0.46 was set against an older sheet whose flags were dull.",
   "street_in_play": true,
-  "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step."
+  "street_in_play_note": "The Blender street is shown in the playable game too - the walk, the crime, a plain launch - in place of the scene file's own terrace, ground and sign pieces, which are hidden and keep their collision, so walking, blocking and every sight line behave exactly as before. The Blender street's own collision is a later step.",
+  "fog_cap_gain_day": 3.0,
+  "fog_note": "THE FAR END'S DEPTH, tuned 23 September against the sheet with the street's new bend and hillside: the day's fog allowed three times the scene file's cap (0.100 -> 0.300; the file's number is in the names of its fog-series rows and was ruled for another street), and a light fog colour, since at the day's exposure the old 0.55 grey read as a darkening. The far end measures 120/109/101 against the sheet's 120/108/104."
 }
