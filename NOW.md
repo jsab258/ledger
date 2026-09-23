@@ -820,6 +820,8 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       DONE 23 Sep: Schedule.h, 21,554 golden rows, 0 mismatches; the
       independent check held and widened the rows (Wednesday and Thursday,
       a negative index, the chance bands pinned by sixty people an hour).
+      AND IN THE SHIPPING ENGINE (e2127659): perceptionRows=21550,
+      mismatches 0, under the Game target's own floating point.
 
 ## Where things stand
 
