@@ -58,8 +58,14 @@ namespace LedgerStreet
 		// BLENDER'S GLOW, day and night, a target in Blender's units; below
 		// zero means the surface does not glow.
 		double      EmitDay, EmitNight;
+		// A DRAWN SURFACE, repository-relative without its .png, and the
+		// width and height one copy covers. It already carries the authored
+		// colour, so it is graded by one, and it wins over the photograph.
+		std::string DrawnMap;
+		double      DrawnW, DrawnH;
 		Row() : bHasRgb(false), R(0), G(0), B(0), Roughness(-1.0), TileM(0.0),
-		        bHasMean(false), MeanR(0), MeanG(0), MeanB(0), EmitDay(-1.0), EmitNight(-1.0) {}
+		        bHasMean(false), MeanR(0), MeanG(0), MeanB(0), EmitDay(-1.0), EmitNight(-1.0),
+		        DrawnW(0.0), DrawnH(0.0) {}
 	};
 
 	// HOW MANY COPIES OF THE PHOTOGRAPH PER METRE, or 0 when there is no
@@ -161,6 +167,14 @@ namespace LedgerStreet
 				Rw.bHasMean = true;
 				Rw.MeanR = Mean->Arr[0].Num; Rw.MeanG = Mean->Arr[1].Num; Rw.MeanB = Mean->Arr[2].Num;
 			}
+			Rw.DrawnMap = StrOr(M, "drawn_map");
+			const Value* Dt = M.Find("drawn_tile_m");
+			if (Dt != 0 && Dt->Type == T_ARR && Dt->Arr.size() >= 2
+			    && Dt->Arr[0].Type == T_NUM && Dt->Arr[1].Type == T_NUM)
+			{
+				Rw.DrawnW = Dt->Arr[0].Num; Rw.DrawnH = Dt->Arr[1].Num;
+			}
+			if (Rw.DrawnW <= 1e-6 || Rw.DrawnH <= 1e-6) { Rw.DrawnMap.clear(); }
 			const Value* Ed = M.Find("emit_day");
 			if (Ed != 0 && Ed->Type == T_NUM) { Rw.EmitDay = Ed->Num; }
 			const Value* En = M.Find("emit_night");

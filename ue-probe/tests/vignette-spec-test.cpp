@@ -6910,6 +6910,23 @@ int main(int argc, char** argv)
 		Check(Glowing >= 6, "the tubes, the lit rooms, the pictured rooms and the nets carry a glow");
 		Check(Brick != nullptr && std::fabs(LedgerStreet::TilesPerMetre(*Brick) - 1.0 / 0.55) < 1e-9,
 		      "brick tiles at the measured 0.55 m in the metre UVs, 1.82 copies a metre");
+		// AND THE DRAWN SURFACES WIN OVER THE PHOTOGRAPH where the recipe
+		// draws one: both bricks, the flags and the tile, each with a size.
+		int Drawn = 0;
+		for (size_t I = 0; I < Sc.Rows.size(); ++I)
+		{
+			const LedgerStreet::Row& Rw = Sc.Rows[I];
+			if (!Rw.DrawnMap.empty() && Rw.DrawnW > 0.0 && Rw.DrawnH > 0.0)
+			{
+				++Drawn;
+				bool DOk = false;
+				Slurp((Rw.DrawnMap + ".png").c_str(), DOk);
+				Check(DOk, "a drawn surface the sidecar names is on disk", Rw.DrawnMap);
+			}
+		}
+		Check(Drawn == 4 && Brick != nullptr && Brick->DrawnMap == "production/assets/street/surfaces/brick_red"
+		      && std::fabs(Brick->DrawnW - 1.8) < 1e-9,
+		      "the two bricks, the flags and the stallriser tile are drawn, the parade's at 1.8 m a copy");
 		if (Brick != nullptr)
 		{
 			const LedgerStreet::Grade Gb = LedgerStreet::PaletteOverPhoto(*Brick);

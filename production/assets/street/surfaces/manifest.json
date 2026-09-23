@@ -1,0 +1,65 @@
+{
+ "what": "Seamless drawn surfaces for the Unreal street, made by tools/props/make_street_surfaces.py from the numbers in tools/art-recipes/terrace-front.py. Every pixel is computed; nothing is fetched. tile_m is the width and height one copy covers.",
+ "surfaces": {
+  "brick_red": {
+   "tile_m": [
+    1.8,
+    1.8
+   ],
+   "px": [
+    1024,
+    1024
+   ],
+   "mean_linear": [
+    0.2528,
+    0.0869,
+    0.0508
+   ]
+  },
+  "brick_grey": {
+   "tile_m": [
+    1.8,
+    1.8
+   ],
+   "px": [
+    1024,
+    1024
+   ],
+   "mean_linear": [
+    0.2058,
+    0.0796,
+    0.0522
+   ]
+  },
+  "paving": {
+   "tile_m": [
+    3.6,
+    3.6
+   ],
+   "px": [
+    1024,
+    1024
+   ],
+   "mean_linear": [
+    0.2304,
+    0.1432,
+    0.0667
+   ]
+  },
+  "tile_patterned": {
+   "tile_m": [
+    0.3,
+    0.3
+   ],
+   "px": [
+    512,
+    512
+   ],
+   "mean_linear": [
+    0.5258,
+    0.4834,
+    0.3647
+   ]
+  }
+ }
+}

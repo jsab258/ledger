@@ -47,6 +47,8 @@
     0.0577,
     0.0571
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 16
@@ -70,6 +72,11 @@
     0.2435,
     0.1951,
     0.1777
+   ],
+   "drawn_map": "production/assets/street/surfaces/brick_grey",
+   "drawn_tile_m": [
+    1.8,
+    1.8
    ],
    "emit_day": null,
    "emit_night": null,
@@ -95,6 +102,11 @@
     0.2317,
     0.1599
    ],
+   "drawn_map": "production/assets/street/surfaces/brick_red",
+   "drawn_tile_m": [
+    1.8,
+    1.8
+   ],
    "emit_day": null,
    "emit_night": null,
    "faces": 2338
@@ -119,6 +131,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 720
@@ -139,6 +153,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 18
@@ -159,6 +175,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 18
@@ -179,6 +197,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 444
@@ -199,6 +219,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 24
@@ -224,6 +246,8 @@
    ],
    "decal_emit": "room",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.4,
    "emit_night": 1.6,
    "faces": 6
@@ -249,6 +273,8 @@
    ],
    "decal_emit": "room",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.4,
    "emit_night": 1.6,
    "faces": 6
@@ -274,6 +300,8 @@
    ],
    "decal_emit": "room",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.4,
    "emit_night": 1.6,
    "faces": 6
@@ -299,6 +327,8 @@
    ],
    "decal_emit": "room",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.4,
    "emit_night": 1.6,
    "faces": 6
@@ -319,6 +349,8 @@
    "decal_uv": null,
    "decal_emit": "net",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.3,
    "emit_night": 0.05,
    "faces": 72
@@ -339,6 +371,8 @@
    "decal_uv": null,
    "decal_emit": "net",
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 0.3,
    "emit_night": 0.05,
    "faces": 72
@@ -359,6 +393,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 42
@@ -383,6 +419,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 24
@@ -407,6 +445,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 24
@@ -431,6 +471,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 48
@@ -455,6 +497,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 84
@@ -479,6 +523,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -503,6 +549,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 272
@@ -527,6 +575,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 108
@@ -547,6 +597,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 1950
@@ -571,6 +623,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -591,6 +645,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 126
@@ -611,6 +667,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 3.4,
    "emit_night": 0.7,
    "faces": 24
@@ -635,6 +693,8 @@
     0.2617,
     0.2402
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 12
@@ -655,6 +715,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 24
@@ -679,6 +741,8 @@
     0.1862,
     0.1853
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 156
@@ -703,6 +767,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 66
@@ -727,6 +793,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 2466
@@ -747,6 +815,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 48
@@ -767,6 +837,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 24
@@ -791,6 +863,11 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": "production/assets/street/surfaces/paving",
+   "drawn_tile_m": [
+    3.6,
+    3.6
+   ],
    "emit_day": null,
    "emit_night": null,
    "faces": 36
@@ -811,6 +888,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 12
@@ -831,6 +910,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 12
@@ -855,6 +936,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 40
@@ -879,6 +962,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 160
@@ -903,6 +988,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 198
@@ -927,6 +1014,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 20
@@ -956,6 +1045,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -985,6 +1076,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -1014,6 +1107,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -1038,6 +1133,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -1062,6 +1159,8 @@
     0.0907,
     0.0519
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 6
@@ -1086,6 +1185,8 @@
     0.0304,
     0.0364
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 810
@@ -1110,6 +1211,8 @@
     0.1862,
     0.1853
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 156
@@ -1134,6 +1237,8 @@
     0.2312,
     0.1923
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 246
@@ -1157,6 +1262,11 @@
     0.5225,
     0.5166,
     0.4732
+   ],
+   "drawn_map": "production/assets/street/surfaces/tile_patterned",
+   "drawn_tile_m": [
+    0.3,
+    0.3
    ],
    "emit_day": null,
    "emit_night": null,
@@ -1182,6 +1292,8 @@
     0.5166,
     0.4732
    ],
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 18
@@ -1202,6 +1314,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": 12.0,
    "emit_night": 12.0,
    "faces": 36
@@ -1222,6 +1336,8 @@
    "decal_uv": null,
    "decal_emit": null,
    "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
    "faces": 80
