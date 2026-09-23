@@ -1703,6 +1703,185 @@ namespace Ledger.CoreTests
                   && StreetVoice.GazeMetres(StanceKind.Watches) > StreetVoice.GazeMetres(StanceKind.Notices),
                 "and the more they care the further off they pick you out");
 
+            // KNOWING SHOWS, Jafar's decision 7 (a), 23 September. A retold
+            // story arrives at 0.2 to 0.38, which the ladder's arithmetic
+            // alone turned into nothing (0.2 -> Indifferent) or a glance
+            // (0.38 -> Notices): the handful who had heard were invisible.
+            // Ruled: "a hearer who knows even a little looks at Tom longer,
+            // remarks on it, treats him differently", touching no constant.
+            //
+            // FIRST, THE LADDER ITSELF, PINNED ON BOTH SIDES OF EVERY RUNG, so
+            // the floor can never be used to hide a moved threshold (an
+            // independent check moved two and nothing noticed). Suspicion alone
+            // gives pressure 0.55*s; above that, suspicion 1 plus a story t
+            // gives 0.55 + 0.45*t.
+            (double s, double t, StanceKind want)[] rungs =
+            {
+                (0.21, 0.0, StanceKind.Indifferent), (0.22, 0.0, StanceKind.Notices),
+                (0.47, 0.0, StanceKind.Notices),     (0.48, 0.0, StanceKind.Watches),
+                (0.76, 0.0, StanceKind.Watches),     (0.77, 0.0, StanceKind.Comments),
+                (1.0, 0.06, StanceKind.Comments),    (1.0, 0.07, StanceKind.Avoids),
+                (1.0, 0.37, StanceKind.Avoids),      (1.0, 0.38, StanceKind.Refuses),
+                (1.0, 0.68, StanceKind.Refuses),     (1.0, 0.69, StanceKind.Confronts),
+            };
+            foreach (var (s, t, want) in rungs)
+            {
+                var got = StreetVoice.Stance(s, 0.5, t, false, false);
+                Check(got == want, "the ladder's rungs stand where they stood", $"s={s:0.00} t={t:0.00} -> {got}, want {want}");
+            }
+            Check(StreetVoice.Stance(0.5, 0.5, 0.0, false, wearingCoat: true) == StanceKind.Notices
+                  && StreetVoice.Stance(0.5, 0.5, 0.0, false, false) == StanceKind.Watches,
+                "the coat still buys its 0.12 of distance from the ladder");
+            Check(StreetVoice.Stance(0.77, 0.5, 0.0, leashed: true, wearingCoat: false) == StanceKind.Watches,
+                "a leashed mouth at the speaking rung watches instead");
+            // AND THE LADDER'S OTHER NUMBERS, each at a point where a wrong
+            // value would land on a different rung (the second independent
+            // check changed each and nothing noticed).
+            Check(StreetVoice.Stance(0.5455, 0.5, 0.0, false, true) == StanceKind.Notices
+                  && StreetVoice.Stance(0.4910, 0.5, 0.0, false, true) == StanceKind.Notices,
+                "the coat takes exactly its 0.12: 0.300 falls to a glance, 0.270 does not fall to nothing");
+            Check(StreetVoice.Stance(1.0, 0.5, 0.3111, false, true) == StanceKind.Comments
+                  && StreetVoice.Stance(1.0, 0.5, 0.3556, false, true) == StanceKind.Avoids,
+                "and only below 0.7: at 0.69 the coat still helps, at 0.71 it does not");
+            Check(StreetVoice.Stance(1.0, 0.5, 0.7, leashed: false, wearingCoat: false) == StanceKind.Confronts
+                  && StreetVoice.Stance(1.0, 0.5, 0.7, leashed: true, wearingCoat: false) == StanceKind.Refuses,
+                "a leashed mouth never confronts");
+            Check(StreetVoice.Stance(1.0, 1.0, 0.1111, false, false) == StanceKind.Notices,
+                "a devoted friend takes 0.35 off a 0.60 pressure");
+            Check(StreetVoice.Stance(1.0, 1.0, 0.7778, false, false) == StanceKind.Refuses,
+                "and only 0.4 of that once it is near certain (0.90)");
+
+            // THE STORY THAT SHOWS: the player's night, not bought or scared
+            // quiet, still strong enough to pass on (the mill's own share floor).
+            double shareFloor = new GossipMill(new SocialGraph()).MinConfidenceToShare;
+            Gossiper Holder(string id, double confidence, bool sensitive, string subject = "player",
+                            bool suppressed = false, bool indelible = false)
+            {
+                var h = new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+                var r = new Rumor
+                {
+                    Content = new Fact(subject, "night_walk", "seen"), OriginId = "ada",
+                    Summary = "he keeps hours nobody keeps", Confidence = confidence,
+                    Sensitive = sensitive, Indelible = indelible,
+                };
+                h.Rumors.Add(r);
+                if (suppressed) h.Suppressed.Add(r.TopicKey);
+                return h;
+            }
+            Check(StreetVoice.StoryThatShows(Holder("a", 0.3, true), shareFloor) != null,
+                "a retold story of his night shows");
+            Check(StreetVoice.StoryThatShows(Holder("b", shareFloor, true), shareFloor) != null,
+                "down to exactly the certainty at which they would pass it on");
+            Check(StreetVoice.StoryThatShows(Holder("c", shareFloor - 0.01, true), shareFloor) == null,
+                "and not below it: a fading story cools out of their manner");
+            Check(StreetVoice.StoryThatShows(Holder("d", 0.3, false), shareFloor) == null,
+                "the street's vague talk does not show - it reaches most of a district, and a handful would become a crowd");
+            Check(StreetVoice.StoryThatShows(Holder("e", 0.9, true, suppressed: true), shareFloor) == null,
+                "a story they were paid or scared into keeping quiet does not show");
+            Check(StreetVoice.StoryThatShows(Holder("f", 0.9, true, suppressed: true, indelible: true), shareFloor) != null,
+                "unless it is the kind no money buys back");
+            Check(StreetVoice.StoryThatShows(Holder("g", 0.9, true, subject: "rocco"), shareFloor) == null,
+                "a story about somebody else is not about you");
+            Check(StreetVoice.StoryThatShows(null, shareFloor) == null, "nobody holds nothing");
+            var twoStories = Holder("i", 0.3, true);
+            var stronger = new Rumor { Content = new Fact("player", "yard_visit", "seen"), OriginId = "ada",
+                Summary = "he was in the yard", Confidence = 0.6, Sensitive = true };
+            twoStories.Rumors.Add(stronger);
+            Check(StreetVoice.StoryThatShows(twoStories, shareFloor) == stronger,
+                "of two stories that show, the stronger is the one that shows");
+            Check(StreetVoice.StoryThatShows(Holder("j", 0.3, true), 0.5) == null
+                  && StreetVoice.StoryThatShows(Holder("k", 0.3, true), 0.25) != null,
+                "and the floor is the mill's, whatever the mill says it is");
+            var leashedHolder = Holder("l", 0.3, true);
+            leashedHolder.Leashed = true;
+            Check(StreetVoice.StoryThatShows(leashedHolder, shareFloor) != null,
+                "a leashed hearer still holds the story; the leash decides what they do with it");
+
+            // THE FLOOR, where a story shows.
+            foreach (var faint in new[] { 0.2, 0.3, 0.38 })
+            {
+                var st = StreetVoice.Stance(0.0, 0.5, faint, false, false, knowsSomething: true);
+                Check(st == StanceKind.Comments,
+                    "a hearer who knows even a little remarks on it", $"{faint:0.00} -> {st}");
+                Check(StreetVoice.GazeMetres(st) > StreetVoice.GazeMetres(StanceKind.Notices),
+                    "and picks you out from further off than a passer-by's glance", $"{faint:0.00} -> {st}");
+                Check(StreetVoice.Stance(0.0, 0.5, faint, false, false) < StanceKind.Watches,
+                    "where the ladder alone had them glance at most", $"{faint:0.00}");
+            }
+            Check(StreetVoice.Stance(0.0, 0.5, 0.3, leashed: true, wearingCoat: false, knowsSomething: true) == StanceKind.Watches,
+                "a leashed hearer watches you without a word");
+            Check(StreetVoice.Stance(0.0, 0.5, 0.3, leashed: false, wearingCoat: true, knowsSomething: true) == StanceKind.Notices
+                  && StreetVoice.GazeMetres(StanceKind.Notices)
+                     < StreetVoice.GazeMetres(StreetVoice.Stance(0.0, 0.5, 0.3, false, false, knowsSomething: true)),
+                "and in the coat they only glance, from nearer, unsure it is you");
+            Check(StreetVoice.Stance(0.0, 0.5, 0.3, leashed: true, wearingCoat: true, knowsSomething: true) == StanceKind.Notices,
+                "leashed and unsure, a glance");
+            // ONCE PER STORY, THEN THE LOOK (option (a), 23 September).
+            Check(StreetVoice.Stance(0.5, 0.5, 0.3, false, false, knowsSomething: true) == StanceKind.Comments
+                  && StreetVoice.Stance(0.5, 0.5, 0.3, false, false, knowsSomething: true, remarkedAlready: true) == StanceKind.Watches,
+                "somebody who has heard remarks once, then watches you instead");
+            Check(StreetVoice.Stance(0.0, 0.5, 0.3, false, false, knowsSomething: true, remarkedAlready: true) == StanceKind.Watches,
+                "and the look lasts even for a faint hearer who has had their say");
+            // THE RECORD OF WHO HAS HAD THEIR SAY (RemarkLedger), which the
+            // game and the study harness both keep: a third independent check
+            // found the first version used up the one remark when the player
+            // could not hear it, and on a "Door's shut." from higher up.
+            var said7 = new RemarkLedger();
+            var story7 = Holder("m", 0.3, true).Rumors[0];
+            Check(!said7.Record("m", story7, StanceKind.Comments, heard: false) && !said7.HasRemarked("m", story7),
+                "a remark the player could not make out is not their one remark");
+            Check(!said7.Record("m", story7, StanceKind.Refuses, heard: true) && !said7.HasRemarked("m", story7),
+                "nor is a line from further up the ladder");
+            Check(said7.Record("m", story7, StanceKind.Comments, heard: true) && said7.HasRemarked("m", story7),
+                "a heard remark at the floor's rung is");
+            Check(!said7.Record("m", story7, StanceKind.Comments, heard: true) && said7.Count == 1,
+                "and it is recorded once");
+            Check(!said7.HasRemarked("n", story7), "somebody else has not had their say because this person has");
+            var informA = new Rumor { Content = new Fact("player", "informer", "rocco"), Confidence = 0.5, Sensitive = true };
+            var informB = new Rumor { Content = new Fact("player", "informer", "joey"), Confidence = 0.5, Sensitive = true };
+            said7.Record("m", informA, StanceKind.Comments, heard: true);
+            Check(said7.HasRemarked("m", informA) && !said7.HasRemarked("m", informB),
+                "informing on one person and on another are two stories");
+            Check(!said7.HasRemarked("m", null) && !said7.Record("m", null, StanceKind.Comments, true),
+                "no story, no record");
+            // A FLOOR AND NOTHING ELSE, over a grid: with a story that shows,
+            // the stance is the ladder's own raised to the floor, exactly.
+            int gridBad = 0, gridN = 0, gazeBad = 0;
+            string firstBad = "", firstGaze = "";
+            foreach (var s in new[] { 0.0, 0.2, 0.5, 0.8, 1.0 })
+                foreach (var loy in new[] { 0.1, 0.5, 0.95 })
+                    foreach (var t in new[] { 0.0, 0.2, 0.3, 0.7, 1.0 })
+                        foreach (var leash in new[] { false, true })
+                            foreach (var coat in new[] { false, true })
+                                foreach (var hadSay in new[] { false, true })
+                                {
+                                    gridN++;
+                                    var ladder = StreetVoice.Stance(s, loy, t, leash, coat);
+                                    var floor = coat ? StanceKind.Notices
+                                              : leash || hadSay ? StanceKind.Watches : StanceKind.Comments;
+                                    var want = ladder < floor ? floor : ladder;
+                                    var got = StreetVoice.Stance(s, loy, t, leash, coat, knowsSomething: true, remarkedAlready: hadSay);
+                                    if (got != want) { gridBad++; if (firstBad == "") firstBad = $"s={s} loy={loy} t={t} leash={leash} coat={coat} said={hadSay}: {got} want {want}"; }
+                                    if (hadSay && StreetVoice.GazeMetres(got) < StreetVoice.GazeMetres(ladder)) { gazeBad++; if (firstGaze == "") firstGaze = $"s={s} loy={loy} t={t} leash={leash} coat={coat}"; }
+                                }
+            Check(gridBad == 0, "a floor only: nobody is lowered and nobody above it moves", $"{gridBad}/{gridN} {firstBad}");
+            Check(gazeBad == 0, "and once they have had their say, knowing never shortens how far off they pick you out",
+                $"{gazeBad} {firstGaze}");
+            var friend7 = StreetVoice.Stance(0.6, 0.95, 0.6, false, false, knowsSomething: true);
+            var stranger7 = StreetVoice.Stance(0.6, 0.2, 0.6, false, false, knowsSomething: true);
+            Check(friend7 == StanceKind.Comments && stranger7 == StanceKind.Avoids,
+                "a fond friend who has heard asks you about it where a stranger crosses the street",
+                $"{friend7} vs {stranger7}");
+
+            // AND WHAT THEY SAY comes from the story that shows.
+            var holder = Holder("h", 0.3, true);
+            var shows = StreetVoice.StoryThatShows(holder, shareFloor);
+            var faintStance = StreetVoice.Stance(0.0, 0.5, shows.Confidence, false, false, knowsSomething: true);
+            var faintLine = StreetVoice.Recognition(holder, shows, faintStance, seed: 3);
+            Check(faintLine != null && faintLine.AboutPlayer && faintLine.Source == shows,
+                "and what the faint hearer says is about you, from the story they hold",
+                faintLine != null ? faintLine.Text : "no line");
+
             // AMBIENT LIFE: the city talking about itself, which is what makes
             // it feel older than the player.
             var dear = StreetVoice.Ambient(teller, hearer, now, prosperity: 0.5, priceLevel: 1.3,

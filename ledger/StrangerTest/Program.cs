@@ -182,6 +182,9 @@ namespace Ledger.StrangerTest
         internal class World
         {
             public GossipMill Mill;
+            /// Who has already remarked on which story, kept as GossipDirector
+            /// keeps it (decision 7 a: once per story, then the look).
+            public readonly RemarkLedger Remarks = new RemarkLedger();
             public Person Lena, Rocco, Ada, Sam;
         }
 
@@ -668,13 +671,21 @@ namespace Ledger.StrangerTest
                     .Where(r => r.Content.Subject == "player")
                     .OrderByDescending(r => r.Confidence).FirstOrDefault();
                 double strongest = about != null ? about.Confidence : 0.0;
+                // AS THE LIVE DIRECTOR DOES IT since decision 7 (a): a story
+                // that shows puts them on the floor, once per story.
+                var shows = StreetVoice.StoryThatShows(p.G, w.Mill.MinConfidenceToShare);
                 var stance = StreetVoice.Stance(p.Suspicion.Value, p.G.Loyalty, strongest,
-                    leashed: false, wearingCoat: false);
+                    leashed: false, wearingCoat: false, knowsSomething: shows != null,
+                    remarkedAlready: w.Remarks.HasRemarked(p.Name, shows));
+                if (shows != null) about = shows;
                 said.Suspicion = p.Suspicion.Value;
                 said.Strongest = strongest;
                 said.Stance = stance;
                 said.Hops = about != null ? about.Hops : -1;
                 line = StreetVoice.Recognition(p.G, about, stance, seed);
+                // Heard by construction here: the harness's player is always in
+                // earshot of a Passing line.
+                if (shows != null) w.Remarks.Record(p.Name, shows, stance, heard: line != null);
                 // NULL IS THE LADDER DECLINING TO SPEAK, and it is the one
                 // thing this session does that the live game does not: below
                 // Comments, `GossipDirector.TickStances` stays silent and this

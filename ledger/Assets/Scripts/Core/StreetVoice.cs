@@ -71,6 +71,41 @@ namespace Ledger.Core
         public bool Composed;
     }
 
+    /// WHO HAS ALREADY REMARKED TO THE PLAYER ON WHICH STORY, decision 7 (a),
+    /// 23 September: a story that shows is remarked on once, then only
+    /// watched. In Core so the rule is tested here and the game and the study
+    /// harness keep it the same way. A remark counts only when it was the
+    /// story's own - said at Comments, the floor's rung, not a "Door's shut."
+    /// from further up the ladder - and HEARD: the game says a line at the far
+    /// edge of its 7 m range, where the player often cannot make out the
+    /// words, and an unheard remark must not use up the only one. The key
+    /// carries the story's value as well as its topic, so informing on one
+    /// person and on another are two stories.
+    public sealed class RemarkLedger
+    {
+        readonly HashSet<string> _said = new HashSet<string>();
+
+        public static string KeyFor(string personId, Rumor r) =>
+            r == null || r.Content == null ? null
+            : (personId ?? "") + "|" + r.Content.Subject + "." + r.Content.Predicate + "=" + (r.Content.Value ?? "");
+
+        public bool HasRemarked(string personId, Rumor r)
+        {
+            var k = KeyFor(personId, r);
+            return k != null && _said.Contains(k);
+        }
+
+        /// True when this remark is now recorded.
+        public bool Record(string personId, Rumor r, StanceKind saidAt, bool heard)
+        {
+            if (!heard || saidAt != StanceKind.Comments) return false;
+            var k = KeyFor(personId, r);
+            return k != null && _said.Add(k);
+        }
+
+        public int Count => _said.Count;
+    }
+
     public static class StreetVoice
     {
         // ---- the reaction ladder (M15.2) ----
@@ -87,7 +122,8 @@ namespace Ledger.Core
         /// bad about you asks you about it rather than crossing the street,
         /// which is what makes friendship mechanically worth having.
         public static StanceKind Stance(double suspicion, double loyalty,
-            double strongestAboutPlayer, bool leashed, bool wearingCoat)
+            double strongestAboutPlayer, bool leashed, bool wearingCoat, bool knowsSomething = false,
+            bool remarkedAlready = false)
         {
             // A leash is a mouth held shut, not a mind changed: they still
             // watch, they simply do not speak.
@@ -100,6 +136,67 @@ namespace Ledger.Core
             if (wearingCoat && pressure < 0.7) pressure -= 0.12;
             pressure = Clamp01(pressure);
 
+            var rung = Rung(pressure, leashed);
+            // KNOWING SHOWS, Jafar's decision 7 (a), 23 September. A hearer
+            // holds a retold story at 0.2 to 0.38, which the arithmetic above
+            // turns into a pressure of 0.09 to 0.17 - a glance at most, the
+            // same glance any passer-by gives - so the handful who had heard
+            // were invisible. Ruled: "a hearer who knows even a little looks
+            // at Tom longer, remarks on it, treats him differently", touching
+            // no constant. So a person who holds a story that SHOWS (see
+            // StoryThatShows: the player's night life, not bought or scared
+            // quiet, still strong enough to pass on) stands on a floor under
+            // the ladder rather than a number on it. ONCE PER STORY, THEN THE
+            // LOOK (Jafar's option (a), recommended and carried while he
+            // decides, 23 September): until they have remarked on it the
+            // floor is Comments, the rung that says something; afterwards it
+            // is Watches, the look that lasts and reaches furthest short of
+            // avoiding him (GazeMetres 14 against Comments' 12) - so knowing
+            // never shortens how far off they pick him out for long, and his
+            // own staff do not remark every time he passes. Leashed, they
+            // watch without a word; in the coat they only glance, unsure it
+            // is him. A floor only - a stronger story or real suspicion climbs
+            // past it as before - and only when the caller says so, so every
+            // caller that does not ask gets the ladder exactly as it stood.
+            if (knowsSomething)
+            {
+                var floor = wearingCoat ? StanceKind.Notices
+                          : leashed || remarkedAlready ? StanceKind.Watches
+                          : StanceKind.Comments;
+                if (rung < floor) rung = floor;
+            }
+            return rung;
+        }
+
+        /// THE STORY A PERSON HOLDS THAT SHOWS IN HOW THEY TREAT THE PLAYER,
+        /// or null: decision 7 (a)'s "knows even a little", made exact by what
+        /// the mill already means. It is about the player and SENSITIVE (his
+        /// night life - the crime - rather than the neighbourhood's vague talk,
+        /// which reaches most of a district and would turn a handful into a
+        /// crowd); it is not a topic they have been paid or scared into keeping
+        /// quiet about (Gossiper.Suppressed, which the mill already honours when
+        /// they talk); and it is still at or above the mill's own share floor,
+        /// the certainty at which they would pass it on, so a story visibly
+        /// cools out of their manner as it fades rather than lingering down to
+        /// the tidy-up threshold. The floor is the caller's mill's
+        /// MinConfidenceToShare, so no number is introduced here.
+        public static Rumor StoryThatShows(Gossiper g, double shareFloor)
+        {
+            if (g == null) return null;
+            Rumor best = null;
+            foreach (var r in g.Rumors)
+            {
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !r.Sensitive) continue;
+                if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
+                if (!(r.Confidence >= shareFloor)) continue;
+                if (best == null || r.Confidence > best.Confidence) best = r;
+            }
+            return best;
+        }
+
+        /// The ladder's rungs by pressure, as they have stood since M15.2.
+        static StanceKind Rung(double pressure, bool leashed)
+        {
             if (pressure >= 0.86 && !leashed) return StanceKind.Confronts;
             if (pressure >= 0.72) return StanceKind.Refuses;
             if (pressure >= 0.58) return StanceKind.Avoids;
