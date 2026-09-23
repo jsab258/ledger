@@ -873,9 +873,11 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       AssetLibrary on purpose (one surface, one input in both engines, the
       scene file's own warning), so a flat "metal" is a change on both
       engines, or an Unreal-only override for scene pieces in the look file.
-- [ ] THE CRIME SAVE'S SIZE, runner against local (FINDINGS 23 Sep): commit
+- [x] THE CRIME SAVE'S SIZE, runner against local (FINDINGS 23 Sep): commit
       the runner's save beside its verdict so the difference can be read.
       The workflow keeps it from 583206dc; then diff it against a local one.
+      SETTLED: only the rumours' spoken summary differs - the local copy is
+      staged without the line bank (FINDINGS).
 
 ## Where things stand
 
