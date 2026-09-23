@@ -6179,6 +6179,10 @@ def _bevel_corner(bpy):
         # footway's one long slab gains nothing from a bevel along 40 m.
         if max(xs) - min(xs) > 12.0:
             continue
+        # NOR THE BACKDROP: a hill a hundred metres off gains nothing from a
+        # 6 mm edge, and its tree clumps doubled the export (24 September).
+        if obj.name.startswith("backdrop"):
+            continue
         # NOR ANYTHING SMALLER THAN A HAND across its longest side, once the
         # whole street is in: 174 dentils a block and the like, where 6 mm is
         # invisible from the pavement and the faces are not (the first
