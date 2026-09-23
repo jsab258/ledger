@@ -17,14 +17,15 @@
     {
       "surface": "brick_alternate",
       "asset": "brick_wall_001",
-      "covers_m": 3.0,
+      "covers_m": 1.05,
       "authors": "Rob Tuytel, Dimitrios Savva",
       "why": "darker variegated brick, for the plain rows if the parade's red reads too uniform",
       "gain_to_sheet_rgb": [
         1.02,
         0.69,
         0.54
-      ]
+      ],
+      "covers_note": "MEASURED 24 September from the map itself: 14 courses a tile, at a British 75 mm course is 1.05 m. The 3.0 first recorded would have put the bricks at nearly three times their size."
     },
     {
       "surface": "footway",

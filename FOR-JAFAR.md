@@ -7,7 +7,7 @@ between them.
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
-- stage 1: 9 of 47 done, 0 moved, 0 out, 38 open
+- stage 1: 10 of 47 done, 0 moved, 0 out, 37 open
 - stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
@@ -123,6 +123,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **Two more changes to the street's look, going out in the next build.** First, every edge in the street gets the small rounding Mickey's corner already had, so sills, pilasters and kerbs catch a line of light instead of ending knife-sharp. That takes it from 53,000 to 102,000 faces, which is nothing for the card. Second, the plain rows opposite get a scanned sooty brick, in keeping with the spec's "soot-blackened terrace". Tell me if either reads wrong in the frame.
 - 2026-09-24 **MH_Test is assembled into a usable character, and the next build stands it in the corner.** Its textures came from Epic in 12 seconds on your yes. The assembly took three tries: a one-shot job without the editor's normal loop crashes in Epic's texture baking, so it runs in the full editor, which opens and closes on its own. The result is 46 assets, body, face, eyes and teeth, built for games rather than film.
 - 2026-09-24 **The slice's navigation works: the walking mesh is made, and a path to the cab rank is found.** It took three fixes. First the walker's size, then a marked walkable area over the street, then telling the engine that area's real size, which it had first read as a single point.
 - 2026-09-24 **Tomorrow's facade sitting is ready and not started.** The drawings, the straight-on Unreal frames of every bay, and the tool that lays one over the other and measures every edge all work. To prove the tools I tried them once on Mickey's bay as it stands, without changing anything: 17 of 19 edges came out within 5 cm.
