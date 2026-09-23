@@ -1254,9 +1254,12 @@ int main(int argc, char** argv)
 	            S.Windows.ColourSpace.c_str(), (int)S.Windows.LitNames.size(),
 	            S.Windows.ShopCards, (int)S.Windows.FlatLitNames.size(),
 	            S.Windows.FlatCards, S.Windows.ShopIntensity);
-	Check((int)S.Windows.LitNames.size() == 3 && S.Windows.ShopCards == 6,
-	      "the file lights three of the six shop interiors and this reader sees the names",
-	      "the practicals block did not read back as three of six");
+	// FIVE OF NINE FROM 22 SEPTEMBER, for the same ruling: the west block's
+	// shops added three cards and two of them are lit. It said three of six
+	// until 23 September and failed on every run in between.
+	Check((int)S.Windows.LitNames.size() == 5 && S.Windows.ShopCards == 9,
+	      "the file lights five of the nine shop interiors and this reader sees the names",
+	      "the practicals block did not read back as five of nine");
 	Check(S.Windows.FlatLitNames.empty() && S.Windows.FlatCards == 0,
 	      "the flat practicals light nothing today and the reader carries the empty list rather than a default");
 	// EVERY NAME THE FILE ASKS TO BE LIT MUST NAME A PIECE. A name that
@@ -2656,8 +2659,13 @@ int main(int argc, char** argv)
 		Check(None == 0,
 		      "no piece in the committed street is left with no rule to paint it, "
 		      "which is the whole of queue 223");
-		Check(Tint == 10,
-		      "the tint route covers the six interiors and the four yellow bands");
+		// NINE INTERIORS FROM 22 SEPTEMBER, when Jafar ruled shops onto the
+		// west block across from the parade's north half: its three shops
+		// brought three more interior cards, so the tint route is nine
+		// interiors and the four yellow bands. It said six until 23 September
+		// and failed on every run in between.
+		Check(Tint == 13,
+		      "the tint route covers the nine interiors and the four yellow bands");
 		Check(Card == 10 && Multiply == 10,
 		      "the twenty decals split ten opaque cards and ten stains");
 		// AND THE REJECTING CASE, PLANTED: a library surface the pack does not
