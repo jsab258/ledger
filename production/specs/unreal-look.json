@@ -22,9 +22,9 @@
   "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
   "surface_gain": {
     "brick_red": [
-      1.9,
-      2.0,
-      1.7
+      1.75,
+      1.8,
+      1.65
     ],
     "brick_grey": [
       2.0,
