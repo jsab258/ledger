@@ -1296,6 +1296,8 @@ namespace
 	// WHAT THE PLAYABLE STREET'S EXPOSURE WAS SET TO, printed with the
 	// street's segment so the walk and crime verdicts say it.
 	std::string GPlayExposure = "not-interactive";
+	// WHAT THE STREET'S OWN COLLISION DID, printed with the street segment.
+	int32 GStreetColliding = 0, GStreetSightThrough = 0, GStreetOldWallsOff = 0;
 
 	UWorld* GameWorld()
 	{
@@ -1608,6 +1610,22 @@ namespace
 				C->SetStaticMesh(M);
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				C->SetCastShadow(true);
+				// ITS OWN WALLS, only in play and only when the look file
+				// says so. Glass a person can see through - the shop panes
+				// and the cars' - blocks a body and not an eye, so a
+				// witness's trace passes it as their sight would.
+				if (bInteractive && GLook.bStreetCollision)
+				{
+					C->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+					C->SetCollisionResponseToAllChannels(ECR_Block);
+					if (Rw.Base == "glass" || Rw.Base == "car_glass")
+					{
+						C->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+						C->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+						++GStreetSightThrough;
+					}
+					++GStreetColliding;
+				}
 			}
 #if WITH_EDITOR
 			A->SetActorLabel(UTF8_TO_TCHAR(Rw.Mesh.c_str()));
@@ -1642,6 +1660,11 @@ namespace
 			{
 				(*Found)->SetActorHiddenInGame(true);
 				++GStreetHidden;
+				if (bInteractive && GLook.bStreetCollision)
+				{
+					(*Found)->SetActorEnableCollision(false);
+					++GStreetOldWallsOff;
+				}
 			}
 		}
 		GStreetNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
@@ -1660,7 +1683,7 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[480];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/19 lookNightPin=%.3f lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/20 lookNightPin=%.3f lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
 			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposurePin, GLook.FogCapGainDay,
@@ -1671,7 +1694,12 @@ namespace
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
 			(int)GStreetFilm, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
 			!GLook.bGlassSeeThrough ? "no" : (GGlassMaterial != nullptr ? "yes/M_LedgerGlass" : "yes/no-translucent-material-in-this-build/left-out"));
-		return std::string(Buf) + LookBuf + " playExposure=" + GPlayExposure
+		char CollBuf[160];
+		std::snprintf(CollBuf, sizeof(CollBuf),
+			" streetCollision=%s/colliding-%d/sight-through-%d/old-walls-off-%d",
+			GLook.bStreetCollision ? "own" : "scene-file", (int)GStreetColliding,
+			(int)GStreetSightThrough, (int)GStreetOldWallsOff);
+		return std::string(Buf) + LookBuf + CollBuf + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)

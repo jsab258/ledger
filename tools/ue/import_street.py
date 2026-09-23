@@ -108,6 +108,22 @@ def selftest():
     return 1 if failed else 0
 
 
+def _complex_as_simple(unreal, mesh):
+    """Collide with the mesh's own triangles, 23 September, and say whether
+    it READ BACK. The street is exported one mesh per material across the
+    whole street, so a simple collision - a box or hull round each mesh -
+    would be one shape the size of the town. The crime's sight lines are
+    simple-collision traces, and complex-as-simple is what lets them, and a
+    walking pawn, meet these meshes' real faces. Whether the game uses it is
+    the look file's street_collision; this only makes it possible."""
+    bs = mesh.get_editor_property("body_setup")
+    if bs is None:
+        return False
+    want = unreal.CollisionTraceFlag.CTF_USE_COMPLEX_AS_SIMPLE
+    bs.set_editor_property("collision_trace_flag", want)
+    return bs.get_editor_property("collision_trace_flag") == want
+
+
 def _nanite_off(unreal, sub, mesh):
     """Switch Nanite off on one mesh and say whether it READ BACK off."""
     ns = mesh.get_editor_property("nanite_settings")
@@ -126,7 +142,7 @@ def main():
     glb = os.path.join(root, GLB_REL)
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     note = []
-    asked = found = nanite_off = 0
+    asked = found = nanite_off = complex_ok = 0
     sign = "NOT-READ"
     status = "NOTHING"
     try:
@@ -164,7 +180,12 @@ def main():
                 # is what should draw.
                 if _nanite_off(unreal, sub, m):
                     nanite_off += 1
-                    lib.save_asset(object_path(n), False)
+                try:
+                    if _complex_as_simple(unreal, m):
+                        complex_ok += 1
+                except Exception as e:
+                    note.append("complex/" + str(e).splitlines()[0][:60] if str(e) else "complex/raised")
+                lib.save_asset(object_path(n), False)
                 if n == SIGN_MESH:
                     b = m.get_bounds()
                     sign = sign_verdict((b.origin.x, b.origin.y, b.origin.z))
@@ -175,6 +196,7 @@ def main():
         note.append(str(e).split("\n")[0][:100])
     line = street_line(status, asked, found, sign, time.time() - t0, "/".join(note[:3]))
     line += " streetImportNaniteOff=%d/%d" % (nanite_off, found)
+    line += " streetImportComplexAsSimple=%d/%d" % (complex_ok, found)
     with open(out, "a", encoding="utf-8") as fh:
         fh.write(line + "\n")
     print("import_street: " + line)
