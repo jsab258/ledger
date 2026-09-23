@@ -57,6 +57,22 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The game engine's daylight is retuned against the sheet, and
+  it moved numbers in the scene file.** Measured region by region against
+  the flipped sheet, the frame was 4 to 12 times too bright everywhere but
+  the sky. Now: brick 0.96 of the sheet, road 0.94, far end 0.91, shop
+  windows 0.89, sky 1.03. To get there the day's exposure went from 0.3 to
+  2.0 and its fog from 0.012 to 0.004 on every day row of the scene file
+  (the old test rows must match the day, so 27 rows moved together); the
+  sun, the sky light, how bright the sky looks and the parade's red live in
+  a new settings file for the game engine only. Your 0.85 now touches only
+  what is left of the old street there (lamps, kiosk, pillar box, bins); the
+  street itself carries Blender's colours with a per-surface correction.
+- 2026-09-23 **The wet road now mirrors the street.** It never reflected
+  anything, wet or dry: the texture pack's road relief was so bumpy it
+  scattered every reflection. A wet road now loses that relief, as water
+  filling the pores does, and shows the facades and sky upside down in it
+  as the sheet's does.
 - 2026-09-23 **One build-machine run went red, and the next may too; the
   cause is fixed.** I pushed changes back to back, and two runs both tried to
   save the same regenerated game-engine material files; the save step only
