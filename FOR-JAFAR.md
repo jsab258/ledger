@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The rebuilt hill in Unreal read as real terraced housing, but as a solid wall of it, so it has had a second pass.** The trees were hidden behind the tiers, so each tier now has clumps of trees along its front, which in Blender gives green among the houses as on the sheet. The Unreal frame is in the queue.
 - 2026-09-24 **The new performance check caught nothing on its first run.** It read the frame file the moment it appeared, which is when the game starts writing it, not when it finishes. It now waits for the game to finish and close itself.
 - 2026-09-24 **A first bit of clutter:** two crates out in front of the fish market's window, clear of its doors, and a litter bin on the far shops' pavement. It's a small step toward the lived-in look Kingdom Come has and our street doesn't, using props we already had.
 - 2026-09-24 **The dirt needs one more build.** The material that draws the stains is made and works, but the stain pictures themselves were never copied beside the game. That was on purpose, until the material existed. They're copied now, and the build after the hill's will show them.
