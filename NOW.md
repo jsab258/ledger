@@ -34,9 +34,12 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       after the volume registered). DONE 24 Sep (4b72442c,
       production/d1-probe/ue-slicewalk-verdict.txt): navData=yes, a path to
       the rank of 4 points, 270 cm, not partial.
-- [ ] 3. THE METAHUMAN: textures fetched on his yes, ASSEMBLED 24 Sep 00:17
+- [x] 3. THE METAHUMAN: textures fetched on his yes, ASSEMBLED 24 Sep 00:17
       (46 assets, Optimized/High, full editor), copied in by the workflow,
-      standing in the corner from the next probe run - judge that frame.
+      STANDING IN THE CORNER (80ec4b58: metahumanNote=placed;
+      production/art/compare/ps5-corner-2026-09-24/corner-metahuman-first.png).
+      In default underwear, no hair, arms out: clothes and hair put to him;
+      an idle retargeted from the street people's is the next step.
       Was: MH_Test assembled into a usable
       character and into the corner without his hands, or exact steps for
       the morning. The face's project settings are mine to switch on.
