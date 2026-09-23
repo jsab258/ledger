@@ -890,12 +890,22 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 ROADMAP.md "The order from 23 September" is the governing text; this is the
 work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
-- [ ] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
-  - [ ] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
+- [x] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
+      MET 23 Sep, my judgement, put to Jafar (FOR-JAFAR): production/art/
+      compare/hook-unreal-2026-09-23/pair-06-presentable.png (06f8eda4).
+  - [x] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
         hook frame is a shape rather than a model (the cars, the kiosk, the
         lamp columns, the railing, the skip, the bins, the pallets...), then
         real-looking models for each, no car a recognisable real model.
-  - [ ] THE LIGHT IS NOT FLAT AND THE STREET IS WET AS THE SHEET IS.
+        DONE: two generic hatchbacks, the swan-neck lamps, a glass kiosk, a
+        Type A pillar box, galvanised bins, the held props (real meshes), the
+        rise's trees as crowns (its fourth try) and dark windows. Still
+        simple: the rise's houses; the props' single flat colours.
+  - [x] THE LIGHT IS NOT FLAT AND THE STREET IS WET AS THE SHEET IS.
+        DONE: Lumen on (it had never been), brick restored a quarter; standing
+        water built where the falls put it (the wet shine's third try, a new
+        idea) in its ground's colour. Still short: the road reads lighter and
+        less glassy than the sheet's.
   - [x] A HANDFUL OF PEOPLE STAND OR WALK IN THE STREET, even idling.
         DONE 23 Sep (cdbf7049): five Mixamo people idling, 176-178 cm, one
         mesh each; two in front of the fish market, others on the west side.
