@@ -317,13 +317,20 @@ namespace LedgerStreet
 		// its fog-series rows and was ruled for another street, and the far
 		// end's depth against the sheet wants more haze than it allows.
 		double FogCapGainDay;
-		int    Read;             // how many of the eighteen the file supplied
+		// THE NIGHT'S EXPOSURE, HELD, for a night row that asks the scene
+		// file for no pin. Left automatic, the lit rooms seen through the
+		// see-through glass throw the meter: a frame beside a shop window
+		// read as bright as noon and came out black (cam_A, 23 September).
+		// Held at what a healthy dusk frame's automatic exposure settles to.
+		double NightExposurePin;
+		int    Read;             // how many of the nineteen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
-		         bStreetInPlay(false), FogCapGainDay(1.0), Read(0), bFromFile(false) {}
+		         bStreetInPlay(false), FogCapGainDay(1.0), NightExposurePin(0.0),
+		         Read(0), bFromFile(false) {}
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
@@ -388,6 +395,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("night_exposure_pin");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.NightExposurePin = V->Num; ++Out.Read; }
 		V = Root.Find("fog_cap_gain_day");
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogCapGainDay = V->Num; ++Out.Read; }
 		V = Root.Find("street_in_play");

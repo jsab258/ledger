@@ -57,6 +57,15 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **Some night test pictures from the game engine were coming
+  out black, and it was the new see-through glass.** At night the camera
+  sets its own brightness, and the lit shop rooms seen through the glass
+  threw it: beside Mickey's window it judged the scene as bright as noon
+  and turned everything to black. The hook camera's dusk frame was mostly
+  spared, but not always. The night's brightness is now held at the level a
+  healthy dusk frame already settles to, so the dusk looks as it did and
+  cannot black out. The same fault could black out the playable game at
+  night; it plays by day for now.
 - 2026-09-23 **The kerb and the yellow lines were built wrong, and are
   fixed.** When the road was given its camber yesterday, nothing at its
   edge followed it down: the kerb stood 200 mm instead of 125, and the

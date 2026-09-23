@@ -1654,12 +1654,12 @@ namespace
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
 			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetDrawn, (int)GStreetGlowing, (int)GStreetWet,
 			GLook.GlowGain);
-		char LookBuf[420];
+		char LookBuf[480];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/18 lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/19 lookNightPin=%.3f lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.FogCapGainDay,
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposurePin, GLook.FogCapGainDay,
 			GLook.bStreetInPlay ? "yes/scene-file-collision-kept" : "no", (int)GLook.WetFloors.size(),
 			GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
@@ -2615,6 +2615,14 @@ namespace
 		// writes the override flags FALSE and restores the captured clamp
 		// values, 2026-09-14; see the LEAK block at the write site.
 		GExposurePinNow = C.ExposurePin;
+		// A NIGHT ROW ASKING FOR NOTHING IS HELD AT THE LOOK FILE'S NIGHT PIN,
+		// 23 September. Rows that ask for a pin - the rungs, the pin setter -
+		// keep their own; only the automatic night is replaced, because the
+		// lit rooms behind the see-through glass throw its meter to black.
+		if (!C.SunOn && C.ExposurePin <= 0.0 && GLook.NightExposurePin > 0.0)
+		{
+			GExposurePinNow = GLook.NightExposurePin;
+		}
 		// THE SKY THIS CONDITION NAMES, ON THE DOME. Write-on-change: a
 		// condition naming the photograph already up costs nothing, and a day
 		// photograph left over a night street is the failure this prevents.
