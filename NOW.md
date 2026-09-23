@@ -27,12 +27,13 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       paint clearly more real, flags lose their joints (dropped), road no
       change, no cost (24.2 vs 25.0 ms). Brick and paint now worn everywhere
       (c92efa23). The gap to KCD2 is shape and set dressing, not surfaces.
-- [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
+- [x] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
       engine's own navigation log in the slice walk's verdict. 3b658691's
       agent alone left navData=none (no bounds volume); e934f1e7 spawned one
       and got navData=yes, but the bounds registered as a point (size given
-      after the volume registered). Fixed locally (UpdateBounds + tell the
-      nav system again); goes out with the next probe push.
+      after the volume registered). DONE 24 Sep (4b72442c,
+      production/d1-probe/ue-slicewalk-verdict.txt): navData=yes, a path to
+      the rank of 4 points, 270 cm, not partial.
 - [ ] 3. [WAITING ON JAFAR: one click, Download Texture Sources, steps in
       FOR-JAFAR] THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
       character and into the corner without his hands, or exact steps for
@@ -55,13 +56,13 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       slice, beside what it means for a released game. DONE 24 Sep: 24 real
       calls, half a US cent a line, 16-63 US cents an hour, about US$9 per
       30-hour player (production/research/talk-helper/cost-of-an-hour-*.md).
-- [ ] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
+- [x] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
       facades ready to build end to end in Unreal, dimensioned drawing to
       accepted pair, and nothing else. He starts it with a meter reading.
       Plan: production/sittings/2026-09-24-three-facades.md. Drawing and pair
       tools built and committed (15cec6b6); the Unreal elevation shots
-      (production/specs/facade-shots.json + ortho/bare in VignetteShot) are
-      written, uncommitted, going out with the next probe push.
+      proven (4b72442c, twelve frames); the pair tried once on Mickey's bay,
+      17 of 19 edges within 5 cm. READY; not started.
 - [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines: done,
       waiting on him, anything that went wrong.
 

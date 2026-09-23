@@ -19,8 +19,9 @@ the east side runs right to left.
 
 THE MEASURING. Each vertical edge of the bay's ground-floor chain, and each
 level, is looked for on the frame within 20 cm of where the drawing puts it:
-the strongest change of brightness across the edge, averaged along the part of
-the edge the drawing says is there. The offset is reported in millimetres and
+the change of brightness across the edge nearest where the drawing puts it,
+among those at least 40% as strong as the strongest, averaged along the part
+that makes the edge. The offset is reported in millimetres and
 the edge passes at 50 mm or under. Edges the frame shows no change at are
 reported as NOT-FOUND, never as passes.
 
@@ -49,11 +50,19 @@ def frame_px(d, bay, width_m, centre_z, fw, fh, x, z):
     s = fw / width_m
     xc = (bay + 0.5) * d["bay_width_m"]
     sign = -1.0 if d["mirror"] else 1.0
-    return (fw / 2.0 + sign * (x - xc) * s, fh / 2.0 - (z - centre_z) * s)
+    # THE BLOCK STANDS ON THE FOOTWAY, NOT ON THE ROAD: the recipe's levels
+    # are from its own datum (datumM on its tfBay line, 0.1 m above the
+    # crown), and the camera's height is from the crown. The first pair
+    # (24 September) read every level about 100 mm low for want of this.
+    zw = z + d["bay"].get("datumM", 0.0)
+    return (fw / 2.0 + sign * (x - xc) * s, fh / 2.0 - (zw - centre_z) * s)
 
 
 def bay_edges(fd, d, bay):
-    """The bay's ground-floor x edges, each with the z span it runs over, and its levels."""
+    """The bay's ground-floor x edges, each with the z span it runs over, and
+    its levels, each with the x span of the part that makes it - a level is
+    measured along that part only, because a sill, a fascia or an eaves has a
+    moulding a few centimetres away that a whole-width search mistakes for it."""
     ids = ("pilaster", "shop_door_leaf", "side_door_leaf", "display_glazing", "gf_pier", "front_door")
     xs = {}
     for p in d["parts"]:
@@ -63,7 +72,29 @@ def bay_edges(fd, d, bay):
         for x in p["x"]:
             lo, hi = xs.get(round(x, 3), (p["z"][0], p["z"][1]))
             xs[round(x, 3)] = (min(lo, p["z"][0]), max(hi, p["z"][1]))
-    return sorted(xs.items()), d["z_levels"]
+    zs = {}
+    for p in d["parts"]:
+        if not p["id"].endswith("_bay%d" % bay) or p["y"][0] > 0.5:
+            continue
+        for z in p["z"]:
+            k = round(z, 3)
+            if any(abs(k - L) < 1e-6 for L in d["z_levels"]):
+                w = p["x"][1] - p["x"][0]
+                if k not in zs or w > zs[k][1] - zs[k][0]:
+                    zs[k] = (p["x"][0], p["x"][1])
+    levels = [(z, zs.get(round(z, 3))) for z in d["z_levels"]]
+    return sorted(xs.items()), levels
+
+
+def nearest_peak(prof, want):
+    """The index of the change nearest where the drawing wants it, among those
+    at least 40% as strong as the strongest in the window: a sill has two
+    edges 75 mm apart and a fascia a moulding above it, and the strongest of a
+    pair is often the other one."""
+    top = max(prof)
+    peaks = [i for i in range(len(prof))
+             if prof[i] >= 0.4 * top and (i == 0 or prof[i] >= prof[i - 1]) and (i == len(prof) - 1 or prof[i] >= prof[i + 1])]
+    return min(peaks, key=lambda i: abs(i + 0.5 - want)) if peaks else int(max(range(len(prof)), key=lambda i: prof[i]))
 
 
 def measure(gray, d, bay, width_m, centre_z, x_edges, levels):
@@ -85,12 +116,13 @@ def measure(gray, d, bay, width_m, centre_z, x_edges, levels):
         prof = gx[r0:r1, c0:c1].mean(axis=0)
         if prof.max() < 4.0:
             out.append(("x", x, None)); continue
-        k = int(prof.argmax())
+        k = nearest_peak(list(prof), px - c0)
         out.append(("x", x, abs((c0 + k + 0.5) - px) / s * 1000.0))
-    for z in levels:
+    for z, span in levels:
         _, pz = frame_px(d, bay, width_m, centre_z, fw, fh, 0.0, z)
-        a, _ = frame_px(d, bay, width_m, centre_z, fw, fh, bay * d["bay_width_m"] + 0.2, z)
-        b, _ = frame_px(d, bay, width_m, centre_z, fw, fh, (bay + 1) * d["bay_width_m"] - 0.2, z)
+        x0, x1 = span if span else (bay * d["bay_width_m"] + 0.2, (bay + 1) * d["bay_width_m"] - 0.2)
+        a, _ = frame_px(d, bay, width_m, centre_z, fw, fh, x0 + 0.05, z)
+        b, _ = frame_px(d, bay, width_m, centre_z, fw, fh, x1 - 0.05, z)
         c0, c1 = int(max(0, min(a, b))), int(min(fw - 1, max(a, b)))
         r0, r1 = int(pz) - win, int(pz) + win
         if r0 < 0 or r1 >= fh - 1 or c1 - c0 < 4:
@@ -98,7 +130,7 @@ def measure(gray, d, bay, width_m, centre_z, x_edges, levels):
         prof = gz[r0:r1, c0:c1].mean(axis=1)
         if prof.max() < 4.0:
             out.append(("z", z, None)); continue
-        k = int(prof.argmax())
+        k = nearest_peak(list(prof), pz - r0)
         out.append(("z", z, abs((r0 + k + 0.5) - pz) / s * 1000.0))
     return out
 
@@ -129,9 +161,10 @@ def pair(block, bay, frame_path, width_m, centre_z, out_png, plan_text=None, fd=
     for x, (z0, z1) in x_edges:
         p0 = frame_px(d, bay, width_m, centre_z, fw, fh, x, z0); p1 = frame_px(d, bay, width_m, centre_z, fw, fh, x, z1)
         g.line([p0, p1], fill=(255, 40, 40) if ("x", x) in bad else (0, 230, 255), width=1)
-    for z in levels:
-        a = frame_px(d, bay, width_m, centre_z, fw, fh, bay * d["bay_width_m"], z)
-        b = frame_px(d, bay, width_m, centre_z, fw, fh, (bay + 1) * d["bay_width_m"], z)
+    for z, span in levels:
+        x0, x1 = span if span else (bay * d["bay_width_m"], (bay + 1) * d["bay_width_m"])
+        a = frame_px(d, bay, width_m, centre_z, fw, fh, x0, z)
+        b = frame_px(d, bay, width_m, centre_z, fw, fh, x1, z)
         g.line([a, b], fill=(0, 230, 255), width=1)
     o = Image.new("RGB", (fw, fh * 2 + 8), (18, 18, 20))
     o.paste(dr, (0, 0)); o.paste(over, (0, fh + 8))
