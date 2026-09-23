@@ -39,6 +39,17 @@ def stems(root):
                   for p in glob.glob(os.path.join(root, PEOPLE_REL, "*.glb")))
 
 
+def extra_anim_path(stem, label):
+    """A further clip on the same body (person-export.py --also): A_<stem>__<label>."""
+    return "%s/%s/A_%s__%s" % (PACKAGE_ROOT, stem, stem, label)
+
+
+def clip_label(asset_name):
+    """The label person-export.py gave a further clip, or None for the main one."""
+    leaf = asset_name.split("/")[-1].split(".")[0]
+    return leaf.rsplit("__", 1)[1] if "__" in leaf else None
+
+
 def mesh_path(stem):
     return "%s/%s/SK_%s" % (PACKAGE_ROOT, stem, stem)
 
@@ -75,6 +86,9 @@ def selftest():
     ok("the mesh is named where the probe loads it",
        mesh_path("joe-pockets") == "/Game/Ledger/People/joe-pockets/SK_joe-pockets")
     ok("and the animation", anim_path("joe-pockets") == "/Game/Ledger/People/joe-pockets/A_joe-pockets")
+    ok("and a further clip by its label",
+       extra_anim_path("tom-player", "walk") == "/Game/Ledger/People/tom-player/A_tom-player__walk"
+       and clip_label("AS_tom-player__walk") == "walk" and clip_label("A_joe-pockets") is None)
     ok("the line carries its denominator", "peopleImported=4/5" in people_line(5, 4, 1.0, ["x"]))
     ok("nothing asked says NOTHING, not OK", people_line(0, 0, 0.0, []).startswith("peopleImportStatus=NOTHING"))
     ok("the sizes ride the line", "peopleSizes=joe:178cm:1mesh" in people_line(1, 1, 1.0, [], ["joe:178cm:1mesh"]))
@@ -107,6 +121,7 @@ def main():
             task.set_editor_property("save", True)
             unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
             mesh = anim = None
+            extras = []
             meshes = 0
             tall = -1.0
             for p in lib.list_assets(dest, recursive=True, include_folder=False):
@@ -120,6 +135,10 @@ def main():
                         pass
                 if isinstance(a, unreal.SkeletalMesh) and mesh is None:
                     mesh = p
+                elif isinstance(a, unreal.AnimSequence) and clip_label(p):
+                    # A FURTHER CLIP ON THE SAME BODY (--also), 23 September:
+                    # the slice's player stands, walks and runs.
+                    extras.append(p)
                 elif isinstance(a, unreal.AnimSequence):
                     # THE LONGEST, if the importer made more than one: the
                     # loop is the clip; a one-frame pose is not.
@@ -133,6 +152,12 @@ def main():
                 lib.rename_asset(mesh.split(".")[0], mesh_path(stem))
             if anim.split(".")[0] != anim_path(stem):
                 lib.rename_asset(anim.split(".")[0], anim_path(stem))
+            for p in extras:
+                want = extra_anim_path(stem, clip_label(p))
+                if p.split(".")[0] != want and not lib.does_asset_exist(want):
+                    lib.rename_asset(p.split(".")[0], want)
+            if extras:
+                sizes.append("%s-clips:%d" % (stem.split("-")[0], 1 + len(extras)))
             if lib.does_asset_exist(mesh_path(stem)) and lib.does_asset_exist(anim_path(stem)):
                 lib.save_directory(dest)
                 made += 1

@@ -1014,6 +1014,13 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,
             against 29 of 40 in the prototype's city.
       - [ ] THE CARD READING while a character speaks.
+      - [ ] A PLAYER WITH A BODY AND ANIMATION, on Unreal's Character:
+            WRITTEN 23 Sep - ALedgerSliceCharacter (-LedgerSlice), third-person
+            spring-arm camera, a stand-in body (tom-player.glb: stand, walk,
+            run in one file) through the engine's sequence players and
+            two-way blends by ground speed. The probe's verdict says whether
+            the body and its three clips load (sliceBody, sliceClips). Not done
+            until a frame of it walking: next, a slice walk run in the probe.
       BUILT ON UNREAL'S STANDARD GAME FRAMEWORK (Jafar 23 Sep 18:00): a
       player character with a body and animation, people with AI who walk
       and avoid you (navigation mesh, AI controllers), the engine's own

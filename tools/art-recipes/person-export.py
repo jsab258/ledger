@@ -207,6 +207,11 @@ def main():
     # both ends, so --from and --to export only the quiet part as the loop.
     if o["from"] and o["to"] and o["from"] < o["to"]:
         f0, f1 = max(f0, o["from"]), min(f1, o["to"])
+        # WITH MORE CLIPS the file keeps each action's own range, so the calm
+        # stretch is set on the main action itself rather than the scene.
+        if extra and hasattr(act, "use_frame_range"):
+            act.use_frame_range = True
+            act.frame_start, act.frame_end = f0, f1
     # ONE ANIMATION IN THE FILE: the clip's own action goes with its skeleton.
     for other in list(bpy.data.actions):
         if other != act and other not in extra:
