@@ -1,0 +1,47 @@
+name: Router, paid model on the held-out lines
+
+# The paid router's score on the frozen held-out router test
+# (production/research/local-models/heldout), ruled by Jafar 2026-09-23: about
+# 35p, once. It runs only when this file changes or by hand, and it commits its
+# reports back to the branch it ran on, so nothing has to be downloaded.
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/local-models]
+    paths:
+      - ".github/workflows/router-paid-heldout.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  paid-heldout:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: The held-out lines and the typed orders, on the paid router as shipped
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "ANTHROPIC_API_KEY secret not set; nothing sent."; exit 1; fi
+          H=production/research/local-models/heldout
+          R=production/research/local-models/runs
+          dotnet build -c Release ledger/RouterFloor
+          dotnet run -c Release --no-build --project ledger/RouterFloor -- --anthropic --set heldout \
+            --moments $H/moments.json --lines $H/lines.json \
+            --out $R/paid_heldout.md --tsv $R/paid_heldout.tsv
+          dotnet run -c Release --no-build --project ledger/RouterFloor -- --anthropic --set heldout \
+            --moments $H/moments.json --lines $H/commands.json \
+            --out $R/paid_commands.md --tsv $R/paid_commands.tsv
+
+      - name: Commit the reports back
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add production/research/local-models/runs/paid_*
+          git commit -m "The paid router on the held-out lines and the typed orders (router-paid-heldout)"
+          git push
