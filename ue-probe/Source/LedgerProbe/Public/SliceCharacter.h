@@ -12,6 +12,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Engine/TimerHandle.h"
 #include "SliceCharacter.generated.h"
 
 class USpringArmComponent;
@@ -40,6 +41,11 @@ public:
 	bool bBodyLoaded = false;
 	int32 ClipsLoaded = 0;
 
+	// THE STREET'S WALKABLE AREA, for the probe's verdict: whether the bounds
+	// went in, and whether the engine built a mesh inside them.
+	bool bNavBounds = false;
+	bool bNavBuilt = false;
+
 private:
 	void MoveForward(float Value);
 	void MoveBackward(float Value);
@@ -49,6 +55,10 @@ private:
 	void LookPitch(float Value);
 	void RunPressed();
 	void RunReleased();
+	void MarkStreetWalkable();
+	void BuildStreetNavigation();
+
+	FTimerHandle NavBuildTimer;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USpringArmComponent> Boom;

@@ -12,6 +12,11 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "InputCoreTypes.h"
 #include "NavigationInvokerComponent.h"
+#include "NavigationSystem.h"
+#include "NavMesh/NavMeshBoundsVolume.h"
+#include "Components/BrushComponent.h"
+#include "PhysicsEngine/BodySetup.h"
+#include "TimerManager.h"
 
 const TCHAR* ALedgerSliceCharacter::MeshPath()
 {
@@ -62,6 +67,7 @@ ALedgerSliceCharacter::ALedgerSliceCharacter()
 void ALedgerSliceCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	MarkStreetWalkable();
 	USkeletalMesh* Body = LoadObject<USkeletalMesh>(nullptr, MeshPath());
 	UAnimSequenceBase* Clips[3] = { nullptr, nullptr, nullptr };
 	for (int32 I = 0; I < 3; ++I)
@@ -115,3 +121,41 @@ void ALedgerSliceCharacter::LookYaw(float Value) { AddControllerYawInput(Value);
 void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Value); }
 void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed = RunSpeedCm; }
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
+
+// THE STREET IS MARKED AS SOMEWHERE A PATH MAY RUN, 24 September. The second
+// run (3b658691) had the agent declared and still built no mesh: the engine
+// builds navigation only inside a bounds volume, and invokers only say WHERE
+// inside those bounds to build (NavigationSystem.cpp,
+// IsThereAnywhereToBuildNavigation, which counts volumes and never invokers).
+// The street is made at run time, so its volume is too: a box over the road,
+// both pavements and a little past each end, given its size through a box in
+// its body setup because a packaged game cannot build a brush.
+void ALedgerSliceCharacter::MarkStreetWalkable()
+{
+	UWorld* World = GetWorld();
+	if (World == nullptr || FNavigationSystem::GetCurrent<UNavigationSystemV1>(World) == nullptr) { return; }
+	// The street runs along +X for 42 m; its frontages stand at 5.125 m
+	// either side, so 12 m either side takes both pavements and the doorways.
+	const FTransform Where(FVector(2100.0, 0.0, 150.0));
+	ANavMeshBoundsVolume* Bounds = World->SpawnActorDeferred<ANavMeshBoundsVolume>(
+		ANavMeshBoundsVolume::StaticClass(), Where, nullptr, nullptr, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+	if (Bounds == nullptr || Bounds->GetBrushComponent() == nullptr) { return; }
+	UBodySetup* Box = NewObject<UBodySetup>(Bounds->GetBrushComponent());
+	Box->AggGeom.BoxElems.Add(FKBoxElem(5400.0f, 2400.0f, 900.0f));
+	Bounds->GetBrushComponent()->BrushBodySetup = Box;
+	Bounds->FinishSpawning(Where);
+	bNavBounds = Bounds->GetComponentsBoundingBox(true).IsValid != 0;
+	// The bounds reach the navigation system on its next tick, so the build
+	// waits half a second rather than racing it.
+	GetWorldTimerManager().SetTimer(NavBuildTimer, this, &ALedgerSliceCharacter::BuildStreetNavigation, 0.5f, false);
+}
+
+void ALedgerSliceCharacter::BuildStreetNavigation()
+{
+	UNavigationSystemV1* Nav = FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld());
+	if (Nav == nullptr) { return; }
+	// Build() spawns the missing mesh for the declared agent, registers it and
+	// builds the tiles around the invokers, and blocks until they are done.
+	Nav->Build();
+	bNavBuilt = Nav->GetDefaultNavDataInstance(FNavigationSystem::DontCreate) != nullptr;
+}
