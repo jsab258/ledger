@@ -5422,6 +5422,21 @@ def _street_replaces(args):
                    "bins, litter and ground props are the scene file's and stay"}
 
 
+def _street_emit(key, lettered, night):
+    """The emission strength this recipe gives a material, or None. Mirrors
+    the lighting pass's own numbers (tubes 12, lit rooms 3.4 by day and 0.7
+    at night, the pictured rooms and nets their CARD_ and NET_ figures)."""
+    if key == "tube_lit":
+        return 12.0
+    if key == "interior_lit":
+        return 0.7 if night else 3.4
+    if key.startswith("card_"):
+        if "net_curtain" in key:
+            return NET_EMIT_NIGHT if night else NET_EMIT_DAY
+        return CARD_EMIT_NIGHT if night else CARD_EMIT_DAY
+    return None
+
+
 def _export_street(bpy, args, parts):
     """Export the street's geometry, mirrored, one mesh per material, and a sidecar."""
     import json
@@ -5466,6 +5481,15 @@ def _export_street(bpy, args, parts):
                 "surface_map": surf[0], "tile_m": surf[1],
                 "decal": part.get("decal"), "decal_uv": crop,
                 "decal_emit": part.get("decal_emit") or None,
+                # WHAT THE PHOTOGRAPH'S OWN AVERAGE IS, so Unreal can do what
+                # this file does: the map supplies pattern and relief, and the
+                # colour is the authored one divided by this.
+                "texture_mean": list(TEXTURE_MEAN[surf[0]]) if surf[0] in TEXTURE_MEAN else None,
+                # AND HOW BRIGHTLY IT GLOWS HERE, day and night, as TARGETS:
+                # Blender's emission strengths, which Unreal's own units do
+                # not share, so the Unreal side scales them by one named gain.
+                "emit_day": _street_emit(key, lettered, False),
+                "emit_night": _street_emit(key, lettered, True),
                 "faces": 0,
             }
         for poly in obj.data.polygons:

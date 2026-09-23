@@ -46,8 +46,48 @@ namespace LedgerStreet
 		double      Roughness;     // -1 when the sidecar did not say
 		std::string Decal;         // "" or the picture, repository-relative or under the decal root
 		std::string Emit;          // "" or room/net
-		Row() : bHasRgb(false), R(0), G(0), B(0), Roughness(-1.0) {}
+		// THE PHOTOGRAPH THIS SURFACE WEARS, and how many metres of wall one
+		// copy of it covers: the export's UVs are in metres, so the tiling
+		// is one over this. "" and 0 for a flat-painted surface.
+		std::string SurfaceMap;
+		double      TileM;
+		// THE PHOTOGRAPH'S OWN AVERAGE, linear, so the authored colour can be
+		// laid over its pattern the way Blender lays it.
+		bool        bHasMean;
+		double      MeanR, MeanG, MeanB;
+		// BLENDER'S GLOW, day and night, a target in Blender's units; below
+		// zero means the surface does not glow.
+		double      EmitDay, EmitNight;
+		Row() : bHasRgb(false), R(0), G(0), B(0), Roughness(-1.0), TileM(0.0),
+		        bHasMean(false), MeanR(0), MeanG(0), MeanB(0), EmitDay(-1.0), EmitNight(-1.0) {}
 	};
+
+	// HOW MANY COPIES OF THE PHOTOGRAPH PER METRE, or 0 when there is no
+	// photograph or no size to tile it at.
+	inline double TilesPerMetre(const Row& Rw)
+	{
+		return (!Rw.SurfaceMap.empty() && Rw.TileM > 1e-6) ? 1.0 / Rw.TileM : 0.0;
+	}
+
+	// THE COLOUR LAID OVER THE PHOTOGRAPH: the authored colour over the map's
+	// own average, per channel, capped at 6 as the recipe caps it. White when
+	// either half is missing, which leaves the photograph's own colour.
+	struct Grade { double R, G, B; };
+	inline Grade PaletteOverPhoto(const Row& Rw)
+	{
+		Grade Gr = {1.0, 1.0, 1.0};
+		if (!Rw.bHasRgb || !Rw.bHasMean) { return Gr; }
+		const double In[3] = {Rw.R, Rw.G, Rw.B};
+		const double Mn[3] = {Rw.MeanR, Rw.MeanG, Rw.MeanB};
+		double Out[3];
+		for (int I = 0; I < 3; ++I)
+		{
+			const double V = Mn[I] > 1e-4 ? In[I] / Mn[I] : 1.0;
+			Out[I] = V < 0.0 ? 0.0 : (V > 6.0 ? 6.0 : V);
+		}
+		Gr.R = Out[0]; Gr.G = Out[1]; Gr.B = Out[2];
+		return Gr;
+	}
 
 	struct Replaces
 	{
@@ -111,6 +151,20 @@ namespace LedgerStreet
 			}
 			const Value* Ro = M.Find("roughness");
 			if (Ro != 0 && Ro->Type == T_NUM) { Rw.Roughness = Ro->Num; }
+			Rw.SurfaceMap = StrOr(M, "surface_map");
+			const Value* Tm = M.Find("tile_m");
+			if (Tm != 0 && Tm->Type == T_NUM) { Rw.TileM = Tm->Num; }
+			const Value* Mean = M.Find("texture_mean");
+			if (Mean != 0 && Mean->Type == T_ARR && Mean->Arr.size() >= 3
+			    && Mean->Arr[0].Type == T_NUM && Mean->Arr[1].Type == T_NUM && Mean->Arr[2].Type == T_NUM)
+			{
+				Rw.bHasMean = true;
+				Rw.MeanR = Mean->Arr[0].Num; Rw.MeanG = Mean->Arr[1].Num; Rw.MeanB = Mean->Arr[2].Num;
+			}
+			const Value* Ed = M.Find("emit_day");
+			if (Ed != 0 && Ed->Type == T_NUM) { Rw.EmitDay = Ed->Num; }
+			const Value* En = M.Find("emit_night");
+			if (En != 0 && En->Type == T_NUM) { Rw.EmitNight = En->Num; }
 			Out.Rows.push_back(Rw);
 		}
 		if (Out.Rows.empty()) { Err = "sidecar-meshes-list-is-empty"; return false; }
@@ -147,6 +201,42 @@ namespace LedgerStreet
 			}
 		}
 		return false;
+	}
+
+	// ---- WET, AS BLENDER WETS IT ---------------------------------------------
+	// tools/art-recipes/terrace-front.py _wetten: only the road, the paving and
+	// the kerb take water; the figure is bent (w ^ 0.55, "a surface goes from
+	// dry to reflective early and then changes little"); each is darkened by
+	// 0.28 of that and its roughness pulled from 0.62 towards ITS OWN floor -
+	// the road near a mirror (0.05), the flags dull (0.46), the kerb 0.40.
+	// M_LedgerSurface has one Wetness scalar that pulls roughness towards one
+	// floor of 0.08, so each surface's share of that pull is how far its own
+	// floor is from dry over how far 0.08 is: the same end roughness, carried
+	// by the one parameter the material has.
+	inline double WetCurve(double W)
+	{
+		const double C = W < 0.0 ? 0.0 : (W > 1.0 ? 1.0 : W);
+		return std::pow(C, 0.55);
+	}
+	inline double WetFloorOf(const std::string& Base)
+	{
+		if (Base == "asphalt") { return 0.05; }
+		if (Base == "paving") { return 0.46; }
+		if (Base == "kerbstone") { return 0.40; }
+		return -1.0;
+	}
+	inline bool TakesWater(const std::string& Base) { return WetFloorOf(Base) >= 0.0; }
+	inline double WetnessParamFor(const std::string& Base, double W)
+	{
+		const double Floor = WetFloorOf(Base);
+		if (Floor < 0.0) { return 0.0; }
+		const double Share = (0.62 - Floor) / (0.62 - 0.08);
+		const double V = WetCurve(W) * Share;
+		return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V);
+	}
+	inline double WetDarken(const std::string& Base, double W)
+	{
+		return TakesWater(Base) ? 1.0 - 0.28 * WetCurve(W) : 1.0;
 	}
 
 	// LINEAR TO AN sRGB BYTE, because the flat albedo texture is sampled as
