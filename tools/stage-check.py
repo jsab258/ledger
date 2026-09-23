@@ -50,6 +50,19 @@ def has_evidence(cell):
     return bool(re.search(r"\]\([^)]+\)|[\w./-]+\.(png|gif|jpg|webp|mp4|wav|txt|md|cs|cpp|h|py|json|tsv)\b", cell))
 
 
+LINK = re.compile(r"\]\(([^)]+)\)")
+
+
+def missing_links(cell, root):
+    """The linked files of a row that are not in the repository. A link to
+    nothing is not evidence, so a done row whose every link is missing counts
+    as open. Web links are taken as given."""
+    if root is None:
+        return []
+    return [t for t in LINK.findall(cell)
+            if "://" not in t and not os.path.exists(os.path.join(root, t.split("#")[0]))]
+
+
 def parse(text):
     """{stage label: {"state": str, "rows": [(id, status, last cell)]}} in file order."""
     stages = {}
@@ -95,7 +108,7 @@ def stage_label(heading):
     return heading.lower()
 
 
-def count(stages, order):
+def count(stages, order, root=None):
     out = []
     problems = []
     for st in order:
@@ -114,6 +127,14 @@ def count(stages, order):
                 n["open"] += 1
                 problems.append("%s: %s is marked done with no evidence linked; counted open" % (st, rid))
                 continue
+            if status == "done":
+                links = LINK.findall(last)
+                gone = missing_links(last, root)
+                if links and len(gone) == len(links):
+                    n["open"] += 1
+                    problems.append("%s: %s links evidence that is not in the repository (%s); counted open"
+                                    % (st, rid, ", ".join(gone)))
+                    continue
             if status in ("out", "moved") and not last.strip():
                 problems.append("%s: %s is %s with no reason" % (st, rid, status))
             if status == "moved":
@@ -158,7 +179,7 @@ def run(root, write):
     if not order:
         print("stage-check: NOTHING-MEASURED - ROADMAP.md has no '%s' section" % SECTION)
         return 1
-    counts, problems = count(stages, order)
+    counts, problems = count(stages, order, root)
     for st, total, n, state in counts:
         print("  " + count_line(st, total, n) + ("  [FINISHED]" if state == "FINISHED" else ""))
     for p in problems[:40]:
@@ -230,6 +251,16 @@ def selftest():
     s, o = parse((FIXTURE % ("OPEN", "open", "")).replace("| D | d | floor | open | from stage 1 |\n", ""))
     c, p = count(s, o)
     ok("a moved item its target does not carry is malformed", any("does not carry" in x for x in p))
+    s, o = parse(FIXTURE % ("OPEN", "done", "[frame](no/such/frame.png)"))
+    c, p = count(s, o, repo_root())
+    # (Row A's x.png is not in the repository either, so with the root given
+    # it counts open too; each case below is read on row B alone.)
+    ok("done linking a file that is not there counts as open",
+       any("B links evidence that is not in the repository (no/such/frame.png)" in x for x in p), str(p))
+    s, o = parse(FIXTURE % ("OPEN", "done", "[rules](CLAUDE.md)"))
+    c, p = count(s, o, repo_root())
+    ok("done linking a file that is there counts as done",
+       c[0][2]["done"] == 1 and not any(": B " in x for x in p), str(c[0][2]))
     print("stage-check selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 
