@@ -38,10 +38,14 @@
     ]
   },
   "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. Retuned 23 September on the build that wears the drawn surfaces (which already carry Blender's colour): brick_red lands the parade's median at 79/46/32 against the sheet's 76/45/35; paving takes the drawn flags from 152/138/119 toward the sheet's wet 122/106/87; interior_lit is the flat back wall and the pictured rooms (their own gain is picture_room_gain), taken down because with the glass left out the lit back wall read as a cream panel eleven times the sheet's window.",
-  "sky_seen_gain_night": 1.0,
+  "sky_seen_gain_night": 0.15,
   "sky_light_gain_night": 1.0,
-  "night_exposure_bias": 0.0,
-  "night_note": "The three day gains are the day's only, tuned against a daylight sheet; the night keeps the scene file's own sky until the dusk frame is tuned, and night_exposure_bias (stops) darkens the night's automatic exposure.",
+  "night_exposure_bias": -1.0,
+  "night_note": "The three day gains are the day's only. The night's own, tuned 23 September by eye for the roadmap's dusk frame (the street at dusk, wet, lamps lit, a figure in silhouette) - there is no night reference sheet: the night sky photograph at 0.15 of its brightness, so the terraces stand dark against an evening sky instead of a white one, the sky light as the file has it, and the automatic exposure biased down one stop.",
   "glass_opacity": 0.25,
-  "glass_roughness": 0.05
+  "glass_roughness": 0.05,
+  "wet_floor": {
+    "paving": 0.25
+  },
+  "wet_floor_note": "A wet surface's roughness floor in this engine by base material, where tuning moves it off the recipe's (road 0.05, paving 0.46, kerb 0.40). The approved sheet's flags reflect the shopfront; the recipe's 0.46 was set against an older sheet whose flags were dull."
 }

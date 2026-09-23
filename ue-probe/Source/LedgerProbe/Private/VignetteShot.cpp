@@ -1648,10 +1648,11 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/15 lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/16 lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.NightExposureBias,
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, (int)GLook.WetFloors.size(),
+			GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
@@ -6015,7 +6016,8 @@ namespace
 				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 					FLinearColor((float)(Gr.R * D * Sg.R), (float)(Gr.G * D * Sg.G), (float)(Gr.B * D * Sg.B), 1.0f));
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
-					(float)LedgerStreet::WetnessParamFor(Rw.Base, C.Wetness));
+					(float)LedgerStreet::WetnessParamFor(Rw.Base, C.Wetness,
+					                                     LedgerStreet::WetFloorOverride(GLook, Rw.Base)));
 				++GStreetWet;
 				// A FILM OF WATER HAS NO RELIEF: from the look file's wetness
 				// on, the ground's relief map is swapped for a flat one, and

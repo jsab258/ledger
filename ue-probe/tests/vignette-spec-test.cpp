@@ -6945,6 +6945,9 @@ int main(int argc, char** argv)
 		      && std::fabs(LedgerStreet::WetnessParamFor("paving", 1.0) - 0.16 / 0.54) < 1e-9
 		      && LedgerStreet::WetnessParamFor("brick_red", 0.9) == 0.0,
 		      "the road can reach its floor, the paving only its own share, a wall none");
+		Check(std::fabs(LedgerStreet::WetnessParamFor("paving", 1.0, 0.20) - 0.42 / 0.54) < 1e-9
+		      && LedgerStreet::WetnessParamFor("brick_red", 1.0, 0.20) == 0.0,
+		      "the look file's wet floor moves a wet surface's shine and gives a wall none");
 		Check(std::fabs(LedgerStreet::WetDarken("paving", 0.6) - (1.0 - 0.28 * std::pow(0.6, 0.55))) < 1e-9
 		      && LedgerStreet::WetDarken("slate", 0.6) == 1.0 && LedgerStreet::WetDarken("asphalt", 0.0) == 1.0,
 		      "wet ground darkens by the recipe's 0.28 of the bent figure; dry ground and walls do not");
@@ -6955,8 +6958,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 15 && Lk.bFromFile,
-			      "the committed look file parses and supplies all fifteen settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 16 && Lk.bFromFile,
+			      "the committed look file parses and supplies all sixteen settings", LErr);
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
 			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,

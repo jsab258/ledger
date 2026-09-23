@@ -723,12 +723,16 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       of the runner's build renders one frame in 10 s); the daylight tuned
       by region against the flipped sheet (af82976a: brick 0.96, road 0.94,
       far 0.91, shop 0.89, sky 1.03); the wet road mirrors once the pack's
-      relief is dropped for a film of water (f1b7a7f8). LEFT: re-measure on
-      the build with drawn surfaces (footway was 1.3), the shop rooms behind
-      the now see-through glass, the glow gain, the three sign crops.
+      relief is dropped for a film of water (f1b7a7f8). Then on the drawn
+      surfaces (9529017d): brick 1.04, road 0.95, footway 1.1, far 0.98,
+      shop 0.94, sky 1.03 - pair-02. The three sign crops fixed (2e172174);
+      see-through glass as its own material (1e7a0d8e, awaiting its run);
+      the wet flags' shine as a setting (paving floor 0.25, to verify).
 - [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
-      the same way. STARTED: the far hillside thinned with grass and 64
-      trees (08b0db2e). NEXT: whatever the tuned pair shows is still missing
+      the same way. DONE: the far hillside thinned with grass and 64 trees
+      (08b0db2e, proven in Unreal); the street bends away at a terrace that
+      closes the view, as the sheet's does (f96bcbb6); a utility cover and
+      gully grates (pending push). NEXT: whatever the tuned pair shows is still missing
       in shape (the sheet's near west side is lower and set back - waits on
       decision 8's canon wording).
 - [ ] THE DUSK FRAME the roadmap names as what ties stage 1 together: the
