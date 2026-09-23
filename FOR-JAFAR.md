@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The dirt needs one more build.** The material that draws the stains is made and works, but the stain pictures themselves were never copied beside the game. That was on purpose, until the material existed. They're copied now, and the build after the hill's will show them.
 - 2026-09-24 **I turned one build red that wasn't broken.** The step I added to copy the MetaHuman's files reports "files copied" with a code the build machine reads as failure. Everything in the build had passed, and the MetaHuman is standing in the corner frames. The copy now has its own step that can't do that.
 - 2026-09-24 **The hill at the end of the street is rebuilt, its fifth try.** Beside the sheet it read as stadium seating: rows of separate little boxes with round trees. Now it's terraces stepping up the slope a house at a time, with gardens and trees between. It looks right in Blender; its Unreal frame comes in behind the other builds.
 - 2026-09-24 **The street's dirt was switched off in Unreal all along, and the next builds switch it on.** The spec lays ten stains: water streaks down the parade, moss at the foot of the far row, broken tarmac, manholes and a sticker. Unreal hid every one, because nobody had made a material that can darken what's under it. There's one now, made by script, and the stains go on as real decals. It's a first step toward the dirt the Kingdom Come comparison showed missing, not the whole of it.
