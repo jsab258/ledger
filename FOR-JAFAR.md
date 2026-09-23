@@ -219,6 +219,13 @@ None open. Four were ruled on the morning of 23 September; see Resolved.
 
 ## Rulings received
 
+- 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
+  look-development happens in Unreal, against the sheet.** Lighting, surface
+  response, wetness, grade and depth do not cross over, so finishing them in
+  Blender is doing them twice. The last two days' Blender numbers are
+  targets and lessons, reached again in Unreal. The street moves in first;
+  the far end's depth is done with Unreal's own fog and atmosphere; new
+  shapes are built in Blender and brought across the same way.
 - 2026-09-23 **Decision 5: (a).** Unreal's way round is the true one - it
   agrees with the research drawings. The mirror is fixed ONCE, where Blender
   work crosses into Unreal, so every asset arrives the right way round and
