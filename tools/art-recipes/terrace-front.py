@@ -2462,7 +2462,10 @@ def _repair_patches(out):
 #: the scene file's one. Flush with what they sit in, so nothing trips a
 #: walker; dressing only, nothing a system reads.
 PAVEMENT_COVERS = ((6.4, 3.9),)                  # (x, y) centres, on the east footway
-CHANNEL_GULLIES = (4.0, 20.0, 31.0)              # x along the east channel
+#: AND AT 12, 23 September: the scene file's own grate there (the walk's
+#: grate shot) sits 8 mm under this street's channel, so it showed in no
+#: frame; this one is flush with the channel the Blender road actually has.
+CHANNEL_GULLIES = (4.0, 12.0, 20.0, 31.0)        # x along the east channel
 
 
 def _pavement_dressing(out):
