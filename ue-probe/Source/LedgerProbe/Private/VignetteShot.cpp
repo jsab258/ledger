@@ -54,6 +54,7 @@
 #include "FrameStats.h"
 #include "SurfaceBind.h"
 #include "StreetMeshes.h"
+#include "StreetSounds.h"
 
 #include "CoreMinimal.h"
 #include "UObject/UnrealType.h"
@@ -97,6 +98,7 @@
 // StaticMeshActor.h in Engine/Classes/Engine/, and the three Animation/
 // includes above were already right when this one was wrong.
 #include "Animation/SkeletalMeshActor.h"
+#include "Sound/SoundWave.h"
 #include "Engine/PointLight.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
@@ -1160,6 +1162,7 @@ namespace
 	void BindSurfaces();
 	void SpawnPeople(UWorld* World, bool bInteractive);
 	void SpawnVehicles(UWorld* World, bool bInteractive);
+	void SpawnSounds(UWorld* World, bool bInteractive);
 	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
 	// PaintStreet, called from ApplyCondition above it.
 	void ReDriveStreetLook(const Condition& C);
@@ -1460,6 +1463,13 @@ namespace
 	int32 GVehiclesAsked = 0, GVehiclesSpawned = 0;
 	std::string GVehiclesNote = "not-built";
 	const double kVehicleYawOffsetDeg = -180.0;
+	// EACH PERSON'S ACTOR BY ITS GLB, so a voice can ride on them.
+	TMap<FString, TWeakObjectPtr<ASkeletalMeshActor>> GPeopleByGlb;
+	// THE STREET'S SOUND, 23 September: beds and voices placed, clips found,
+	// and whether they play (only in the playable street).
+	int32 GSoundBeds = 0, GSoundVoices = 0, GSoundClips = 0, GSoundAsked = 0;
+	bool bGSoundPlaying = false;
+	std::string GSoundNote = "not-built";
 
 	UWorld* GameWorld()
 	{
@@ -1832,6 +1842,7 @@ namespace
 		GStreetNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 		SpawnPeople(World, bInteractive);
 		SpawnVehicles(World, bInteractive);
+		SpawnSounds(World, bInteractive);
 	}
 
 	// THE PARKED CARS, 23 September, for the presentable checklist: real-
@@ -1951,9 +1962,73 @@ namespace
 				C->Stop();
 				C->SetPosition(At0, false);
 			}
+			GPeopleByGlb.Add(Stem, A);
 			++GPeopleSpawned;
 		}
 		GPeopleNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
+	}
+
+	// THE STREET'S SOUND, 23 September, for the presentable checklist: "sound is
+	// positional". Unreal's own audio components with the engine's attenuation,
+	// a bed at its place and a voice riding on each person, so direction and
+	// loudness follow the listener. Placed in every run so the automation's
+	// verdict proves the clips load; PLAYED only in the playable street, since
+	// the shots have no ears.
+	void SpawnSounds(UWorld* World, bool bInteractive)
+	{
+		if (World == nullptr) { GSoundNote = "no-world"; return; }
+		const FString Path = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/street-sounds.json"));
+		FString Text;
+		if (!FFileHelper::LoadFileToString(Text, *Path)) { GSoundNote = "no-sounds-file"; return; }
+		const std::string Utf8(TCHAR_TO_UTF8(*Text));
+		LedgerStreet::Sounds Snd;
+		std::string Err;
+		if (!LedgerStreet::ParseSounds(Utf8, Snd, Err)) { GSoundNote = Err; return; }
+		GSoundAsked = (int32)(Snd.Beds.size() + Snd.Voices.size());
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		ALedgerStreetSounds* S = World->SpawnActor<ALedgerStreetSounds>(
+			ALedgerStreetSounds::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator, Params);
+		if (S == nullptr) { GSoundNote = "actor-spawn-failed"; return; }
+		std::string Missing;
+		for (size_t I = 0; I < Snd.Beds.size(); ++I)
+		{
+			const LedgerStreet::SoundBed& B = Snd.Beds[I];
+			const FString Name = UTF8_TO_TCHAR(B.Wav.c_str());
+			const FString Asset = FString::Printf(TEXT("/Game/Ledger/Sounds/Ambience/%s.%s"), *Name, *Name);
+			USoundWave* W = LoadObject<USoundWave>(nullptr, *Asset);
+			if (W == nullptr) { Missing += "/" + B.Wav + "-asset"; continue; }
+			const FVector At((float)(B.X * 100.0), (float)(B.Z * 100.0), (float)(B.Y * 100.0));
+			if (S->AddAmbience(W, At, (float)(B.InnerM * 100.0), (float)(B.FalloffM * 100.0), (float)B.Volume)) { ++GSoundBeds; }
+		}
+		for (size_t I = 0; I < Snd.Voices.size(); ++I)
+		{
+			const LedgerStreet::SoundVoice& V = Snd.Voices[I];
+			TWeakObjectPtr<ASkeletalMeshActor>* Who = GPeopleByGlb.Find(FString(UTF8_TO_TCHAR(V.Person.c_str())));
+			if (Who == nullptr || !Who->IsValid()) { Missing += "/" + V.Person + "-not-placed"; continue; }
+			TArray<USoundWave*> Clips;
+			for (size_t J = 0; J < V.Clips.size(); ++J)
+			{
+				const std::string Asset = LedgerStreet::VoiceAssetPath(V.Clips[J]);
+				USoundWave* W = Asset.empty() ? nullptr : LoadObject<USoundWave>(nullptr, UTF8_TO_TCHAR(Asset.c_str()));
+				if (W == nullptr) { Missing += "/" + V.Clips[J] + "-asset"; continue; }
+				Clips.Add(W);
+			}
+			if (Clips.Num() == 0) { continue; }
+			if (S->AddVoice((*Who)->GetRootComponent(), Clips, (float)(Snd.VoiceInnerM * 100.0),
+			                (float)(Snd.VoiceFalloffM * 100.0), (float)Snd.EveryMinS, (float)Snd.EveryMaxS))
+			{
+				++GSoundVoices;
+				GSoundClips += Clips.Num();
+			}
+		}
+		if (bInteractive && (GSoundBeds + GSoundVoices) > 0)
+		{
+			S->StartPlaying();
+			bGSoundPlaying = S->bPlaying;
+		}
+		if (Missing.size() > 160) { Missing = Missing.substr(0, 160) + "/..."; }
+		GSoundNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 	}
 
 	std::string StreetSegmentNow()
@@ -1989,11 +2064,17 @@ namespace
 		std::snprintf(PeopleBuf, sizeof(PeopleBuf), " peopleSpawned=%d/%d", (int)GPeopleSpawned, (int)GPeopleAsked);
 		char CarsBuf[64];
 		std::snprintf(CarsBuf, sizeof(CarsBuf), " vehiclesSpawned=%d/%d", (int)GVehiclesSpawned, (int)GVehiclesAsked);
+		char SoundsBuf[160];
+		std::snprintf(SoundsBuf, sizeof(SoundsBuf),
+			" soundsPlaced=%d/%d soundBeds=%d soundVoices=%d soundClips=%d soundPlaying=%s",
+			(int)(GSoundBeds + GSoundVoices), (int)GSoundAsked, (int)GSoundBeds, (int)GSoundVoices, (int)GSoundClips,
+			bGSoundPlaying ? "yes" : "no/shots-have-no-ears");
 		char CornerBuf[96];
 		std::snprintf(CornerBuf, sizeof(CornerBuf), " cornerCvarsApplied=%d cornerCvarsMissing=%d",
 		              (int)GCornerApplied, (int)GCornerMissing);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
+		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote)
 		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)

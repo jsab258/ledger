@@ -4106,6 +4106,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("vehiclesImportStatus=RAISED vehiclesImportNote=%s\n"
                          % str(_veh_err).replace(" ", "~")[:160])
+    # ---- AND THE STREET'S SOUNDS, 23 September, FOR THE SAME REASON --------
+    # tools/ue/import_sounds.py: every clip production/specs/street-sounds.json
+    # names becomes a SoundWave the probe places with Unreal's attenuation.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_sounds
+            import_sounds.main()
+        except Exception as _snd_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("soundsImportStatus=RAISED soundsImportNote=%s\n"
+                         % str(_snd_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "
