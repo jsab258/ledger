@@ -774,7 +774,7 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 - [x] THE NEW STREET IN THE PLAYABLE GAME, THE LOOK OF IT (bdb84eb1): the
       walk, the crime and a plain launch show the Blender street over the
       scene file's collision, which is kept, so nothing they measure moves.
-- [ ] ITS OWN COLLISION: the crime probe's sight lines are physics traces,
+- [x] ITS OWN COLLISION: the crime probe's sight lines are physics traces,
       so this means re-proving the crime verdict and keeping the glass out
       of the visibility channel (FINDINGS 23 Sep). Not before the day's
       pair is settled. SCOPED 23 Sep and it is a sitting of its own: the
@@ -799,6 +799,13 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       50 mm kerb recess and a 30 mm channel dish for its grate
       (street.gully) and the Blender kerb and road have neither. Build
       them at x 12, then the switch.
+      DONE 23 Sep: the kerb dropped over the gully (0971769d), and on that
+      build, locally, with the switch on: the walk's wall test REAL at 101
+      cm and its grate shot AIMED 5/5; the crime's witnesses, gossip,
+      overheard line and restart all as before, victim 2.15 m, one pane
+      broken per crime. street_collision TRUE. Left: the brick thrown
+      through the window finds no shop floor (brick=0/1, as it was every
+      run until today).
 - [x] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
       went into play the Blender glass, one mesh for every pane, stayed
       whole). The glass exported one mesh per bay and floor and the crime
