@@ -1083,7 +1083,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             under -LedgerSlice each person carries a capsule that blocks
             bodies and not sight (peopleSolid in the verdict); the probe's walk
             and crime keep people you pass through, so their proven lines hold.
-            The slice walk's next frames show whether the player now stops.
+            PROVEN 23 Sep (5d394e2b): peopleSolid=6 in the slice, 0 in the
+            probe's walk (its judgements unchanged); the slice's scripted walk
+            now slides round Elizabeth, ending at y 370.5 instead of 400.
       - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
             mesh around the player is pushed (7cc4767b, its path to Mickey's
             rank in the slice walk's verdict). FIRST RESULT: navSystem=yes,
