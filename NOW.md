@@ -845,6 +845,12 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       AND IN THE SHIPPING ENGINE (e2127659): perceptionRows=21550,
       mismatches 0, under the Game target's own floating point.
 
+- [ ] THE CRIME'S BRICK ON THE SHOP FLOOR, extended 23 Sep from the
+      collision item: the Blender street never built the ground behind its
+      frontages, so with its own walls the brick found nothing. The plots'
+      floors built (948557c9). To prove on the runner: brick=1/1 with
+      street_collision on.
+
 ## Where things stand
 
 1. The look is in the game engine and measured against the flipped sheet from its viewpoint - sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent - with the haze, a proper kerb, the cars turned, smooth paint, relief tile and the night held; the pair is pair-03-day, the dusk ue-hook-dusk-02.
