@@ -2346,7 +2346,15 @@ jobs:
             # which this step never creates, still aborts.
             if ! git pull --rebase --autostash --no-edit origin "$BR"; then
               CONF="$(git diff --name-only --diff-filter=U || true)"
-              OUTSIDE="$(printf '%s\n' "$CONF" | grep -v '^production/d1-probe/' | grep -v '^$' || true)"
+              # AND THE BASE MATERIAL AND ITS DEFAULT TEXTURES, added 23
+              # September after run 35828553228 went red the same way: they
+              # are staged below by name, remade by make_base_material.py in
+              # EVERY run, so two back-to-back runs both carry a copy and the
+              # replayed one is this run's, exactly as the evidence is. Only
+              # those three names: any other asset still aborts.
+              OUTSIDE="$(printf '%s\n' "$CONF" | grep -v '^production/d1-probe/' \
+                | grep -v -E '^ue-probe/Content/Ledger/(M_LedgerSurface|T_LedgerDefault[A-Za-z]*)\.uasset$' \
+                | grep -v '^$' || true)"
               if [ -n "$CONF" ] && [ -z "$OUTSIDE" ]; then
                 # --theirs IS OURS HERE, and the inversion is real: mid-rebase
                 # "ours" is the upstream being replayed ONTO and "theirs" is
