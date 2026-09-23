@@ -1,0 +1,106 @@
+{
+  "what": "THE STREET'S SOUND, 23 September, for Jafar's presentable checklist: 'sound is positional: a voice or a noise comes from where its source is and changes as you move' - the street had no sound at all. Each source is an Unreal audio component with the engine's own attenuation (spatialised, falling off with distance), placed where its source is. The people say their pre-voiced street-life lines (ledger/Assets/StreamingAssets/Audio/Voice, the crowd voices, VCTK-derived and content-gate clean, none naming the pub) now and then, from where they stand; a distant-traffic bed, generated from noise by this file's author (production/assets/sounds), comes from the bend at the north end.",
+  "ambience": [
+    {
+      "wav": "traffic-distant",
+      "x_m": 46.0,
+      "z_m": 0.0,
+      "y_m": 1.0,
+      "inner_m": 6.0,
+      "falloff_m": 70.0,
+      "volume": 0.7
+    }
+  ],
+  "voice_inner_m": 1.5,
+  "voice_falloff_m": 16.0,
+  "voice_every_s": [
+    18.0,
+    40.0
+  ],
+  "voices": [
+    {
+      "person": "joe-pockets",
+      "voice": "crowd_m1",
+      "clips": [
+        "crowd_m1/461561fe.wav",
+        "crowd_m1/4b9db9f9.wav",
+        "crowd_m1/822a5ea1.wav"
+      ],
+      "lines": [
+        "Even the market's thin.",
+        "Half these shutters weren't down last year.",
+        "I'll give it till the spring and then I don't know."
+      ]
+    },
+    {
+      "person": "david-pockets",
+      "voice": "crowd_m2",
+      "clips": [
+        "crowd_m2/92cc5255.wav",
+        "crowd_m2/b94e6514.wav",
+        "crowd_m2/bdcbbb9b.wav"
+      ],
+      "lines": [
+        "I've had four people in since I opened.",
+        "It's gone quiet in a way that doesn't feel temporary.",
+        "Nobody's got it to spend, that's the truth of it."
+      ]
+    },
+    {
+      "person": "leonard-idle",
+      "voice": "crowd_m3",
+      "clips": [
+        "crowd_m3/953daf64.wav",
+        "crowd_m3/ebfc772e.wav",
+        "crowd_m3/8b40c7c8.wav"
+      ],
+      "lines": [
+        "There's no work at the docks. None.",
+        "Third quiet week. I've started counting them.",
+        "Can't lift with it. Can't do the work either."
+      ]
+    },
+    {
+      "person": "martha-idle",
+      "voice": "crowd_f1",
+      "clips": [
+        "crowd_f1/2295289d.wav",
+        "crowd_f1/e91bbda9.wav",
+        "crowd_f1/c16288f0.wav"
+      ],
+      "lines": [
+        "Doctor wants money I haven't got.",
+        "It was nothing. A week ago it was nothing.",
+        "It's worse in the cold. It's always worse in the cold."
+      ]
+    },
+    {
+      "person": "kate-idle",
+      "voice": "crowd_f2",
+      "clips": [
+        "crowd_f2/709679c9.wav",
+        "crowd_f2/b06575d5.wav",
+        "crowd_f2/46e3fbfa.wav"
+      ],
+      "lines": [
+        "It's not the price. It's that they say it like it's normal.",
+        "My rent's the same, my wages are the same, and yet.",
+        "Somebody's making that money. It's not us."
+      ]
+    },
+    {
+      "person": "elizabeth-idle",
+      "voice": "crowd_f3",
+      "clips": [
+        "crowd_f3/de87b64c.wav",
+        "crowd_f3/56364260.wav",
+        "crowd_f3/92bcc5d7.wav"
+      ],
+      "lines": [
+        "Cold gets in at this hour.",
+        "Quiet, isn't it. Properly quiet.",
+        "Cold one."
+      ]
+    }
+  ]
+}

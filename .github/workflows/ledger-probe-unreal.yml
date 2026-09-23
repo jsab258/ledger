@@ -65,6 +65,8 @@ on:
       # is a new frame in the same way a new street export is.
       - 'production/assets/people/**'
       - 'production/assets/vehicles/**'
+      # AND THE STREET'S SOUNDS, 23 September (tools/ue/import_sounds.py).
+      - 'production/assets/sounds/**'
       #
       # AND THE BLENDER RECIPES ARE NOT HERE ANY MORE. `tools/art-recipes/**`
       # was on this list from the same day and Jafar took it off on the

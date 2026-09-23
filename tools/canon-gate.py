@@ -61,6 +61,13 @@ MODERNITY = {
 #: the decisions that made it, and this tool.
 EXEMPT = ("canon.md", "ledger-v2/", "legacy/", "tools/canon-gate.py",
           "production/queue/README.md", ".claude/agents/",
+          # THE CONTENT RULE'S WORD LIST IN THE GAME, 23 September: generated
+          # by tools/content-gate.py --emit-core from D18's list, so it names
+          # the banned words in order to refuse them ('street walkers' read
+          # as the crisps brand and turned the core tests red). It is the law
+          # itself, as canon.md is; --emit-core --check keeps it equal to the
+          # list, so nothing else can hide in it.
+          "ledger/Assets/Scripts/Core/ContentWords.cs",
           # THE JUDGE'S REJECTING FIXTURES. Sample 2 contains canon
           # violations BY CONSTRUCTION: without them D7's zero-false-passes
           # clause cannot be measured at all. A gate that refused its own

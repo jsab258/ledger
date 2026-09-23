@@ -418,6 +418,107 @@ namespace LedgerStreet
 		return ParsePlaced(Text, "vehicles", Out, Err);
 	}
 
+	// THE STREET'S SOUND, 23 September: production/specs/street-sounds.json.
+	// Beds at a place in street metres; voices riding on a person, named by the
+	// person's glb, each with its pre-voiced clips (voice/leaf.wav).
+	struct SoundBed
+	{
+		std::string Wav;
+		double X, Z, Y, InnerM, FalloffM, Volume;
+		SoundBed() : X(0.0), Z(0.0), Y(1.0), InnerM(4.0), FalloffM(40.0), Volume(1.0) {}
+	};
+
+	struct SoundVoice
+	{
+		std::string Person;
+		std::vector<std::string> Clips;
+	};
+
+	struct Sounds
+	{
+		std::vector<SoundBed> Beds;
+		std::vector<SoundVoice> Voices;
+		double VoiceInnerM, VoiceFalloffM, EveryMinS, EveryMaxS;
+		Sounds() : VoiceInnerM(1.5), VoiceFalloffM(16.0), EveryMinS(18.0), EveryMaxS(40.0) {}
+	};
+
+	inline double NumOr(const LedgerVignette::Value& V, const char* Key, double Or)
+	{
+		const LedgerVignette::Value* N = V.Find(Key);
+		return (N != 0 && N->Type == LedgerVignette::T_NUM) ? N->Num : Or;
+	}
+
+	inline bool ParseSounds(const std::string& Text, Sounds& Out, std::string& Err)
+	{
+		using namespace LedgerVignette;
+		Out = Sounds();
+		Err.clear();
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = "sounds-file-unreadable"; return false; }
+		Out.VoiceInnerM = NumOr(Root, "voice_inner_m", Out.VoiceInnerM);
+		Out.VoiceFalloffM = NumOr(Root, "voice_falloff_m", Out.VoiceFalloffM);
+		const Value* E = Root.Find("voice_every_s");
+		if (E != 0 && E->Type == T_ARR && E->Arr.size() >= 2 && E->Arr[0].Type == T_NUM && E->Arr[1].Type == T_NUM
+		    && E->Arr[0].Num > 0.0 && E->Arr[1].Num >= E->Arr[0].Num)
+		{
+			Out.EveryMinS = E->Arr[0].Num;
+			Out.EveryMaxS = E->Arr[1].Num;
+		}
+		const Value* B = Root.Find("ambience");
+		if (B != 0 && B->Type == T_ARR)
+		{
+			for (size_t I = 0; I < B->Arr.size(); ++I)
+			{
+				const Value& A = B->Arr[I];
+				if (A.Type != T_OBJ) { continue; }
+				SoundBed S;
+				S.Wav = StrOr(A, "wav");
+				if (S.Wav.empty() || A.Find("x_m") == 0 || A.Find("z_m") == 0) { continue; }
+				S.X = NumOr(A, "x_m", 0.0);
+				S.Z = NumOr(A, "z_m", 0.0);
+				S.Y = NumOr(A, "y_m", S.Y);
+				S.InnerM = NumOr(A, "inner_m", S.InnerM);
+				S.FalloffM = NumOr(A, "falloff_m", S.FalloffM);
+				S.Volume = NumOr(A, "volume", S.Volume);
+				Out.Beds.push_back(S);
+			}
+		}
+		const Value* V = Root.Find("voices");
+		if (V != 0 && V->Type == T_ARR)
+		{
+			for (size_t I = 0; I < V->Arr.size(); ++I)
+			{
+				const Value& P = V->Arr[I];
+				if (P.Type != T_OBJ) { continue; }
+				SoundVoice S;
+				S.Person = StrOr(P, "person");
+				const Value* C = P.Find("clips");
+				if (S.Person.empty() || C == 0 || C->Type != T_ARR) { continue; }
+				for (size_t J = 0; J < C->Arr.size(); ++J)
+				{
+					if (C->Arr[J].Type == T_STR && !C->Arr[J].Str.empty()) { S.Clips.push_back(C->Arr[J].Str); }
+				}
+				if (!S.Clips.empty()) { Out.Voices.push_back(S); }
+			}
+		}
+		if (Out.Beds.empty() && Out.Voices.empty()) { Err = "sounds-file-names-nothing"; return false; }
+		return true;
+	}
+
+	// THE ASSET A CLIP BECAME in tools/ue/import_sounds.py: "crowd_m1/461561fe.wav"
+	// is /Game/Ledger/Sounds/Voice/crowd_m1/461561fe.
+	inline std::string VoiceAssetPath(const std::string& Clip)
+	{
+		const size_t Slash = Clip.find('/');
+		if (Slash == std::string::npos || Slash == 0 || Slash + 1 >= Clip.size()) { return std::string(); }
+		std::string Leaf = Clip.substr(Slash + 1);
+		const size_t Dot = Leaf.rfind('.');
+		if (Dot != std::string::npos) { Leaf = Leaf.substr(0, Dot); }
+		if (Leaf.empty()) { return std::string(); }
+		return "/Game/Ledger/Sounds/Voice/" + Clip.substr(0, Slash) + "/" + Leaf + "." + Leaf;
+	}
+
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
 	{
 		using namespace LedgerVignette;

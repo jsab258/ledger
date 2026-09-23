@@ -7011,6 +7011,46 @@ int main(int argc, char** argv)
 				}
 				Check(bCars && !Cars.empty() && CarsOnDisk == (int)Cars.size(),
 				      "the parked cars parse and each has its glb", PErr);
+				// THE STREET'S SOUND, 23 September: every voice rides on a person
+				// the people file places, every clip and bed is on disk, and each
+				// clip names the asset the importer makes of it.
+				bool SOk = false;
+				const std::string SText = Slurp("production/specs/street-sounds.json", SOk);
+				LedgerStreet::Sounds Snd;
+				const bool bSnd = SOk && LedgerStreet::ParseSounds(SText, Snd, PErr);
+				int Riding = 0, ClipsOnDisk = 0, Clips = 0, BedsOnDisk = 0;
+				for (size_t I = 0; I < Snd.Voices.size(); ++I)
+				{
+					for (size_t J = 0; J < People.size(); ++J)
+					{
+						if (People[J].Glb == Snd.Voices[I].Person) { ++Riding; break; }
+					}
+					for (size_t J = 0; J < Snd.Voices[I].Clips.size(); ++J)
+					{
+						++Clips;
+						bool COk = false;
+						Slurp(("ledger/Assets/StreamingAssets/Audio/Voice/" + Snd.Voices[I].Clips[J]).c_str(), COk);
+						if (COk && !LedgerStreet::VoiceAssetPath(Snd.Voices[I].Clips[J]).empty()) { ++ClipsOnDisk; }
+					}
+				}
+				for (size_t I = 0; I < Snd.Beds.size(); ++I)
+				{
+					bool BOk = false;
+					Slurp(("production/assets/sounds/" + Snd.Beds[I].Wav + ".wav").c_str(), BOk);
+					if (BOk) { ++BedsOnDisk; }
+				}
+				Check(bSnd && !Snd.Beds.empty() && BedsOnDisk == (int)Snd.Beds.size()
+				      && Snd.Voices.size() >= 3 && Riding == (int)Snd.Voices.size()
+				      && Clips > 0 && ClipsOnDisk == Clips
+				      && Snd.VoiceFalloffM > Snd.VoiceInnerM && Snd.EveryMaxS >= Snd.EveryMinS,
+				      "the street's sounds parse, each voice rides on a placed person and every clip is on disk", PErr);
+				Check(LedgerStreet::VoiceAssetPath("crowd_m1/461561fe.wav")
+				          == "/Game/Ledger/Sounds/Voice/crowd_m1/461561fe.461561fe"
+				      && LedgerStreet::VoiceAssetPath("noslash.wav").empty(),
+				      "a clip names the asset the importer makes of it");
+				LedgerStreet::Sounds NoSnd;
+				Check(!LedgerStreet::ParseSounds("{\"voices\": []}", NoSnd, PErr),
+				      "a sound file that names nothing is refused, not read as silence", PErr);
 			}
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
