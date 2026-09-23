@@ -6926,6 +6926,24 @@ int main(int argc, char** argv)
 		Check(std::fabs(LedgerStreet::WetDarken("paving", 0.6) - (1.0 - 0.28 * std::pow(0.6, 0.55))) < 1e-9
 		      && LedgerStreet::WetDarken("slate", 0.6) == 1.0 && LedgerStreet::WetDarken("asphalt", 0.0) == 1.0,
 		      "wet ground darkens by the recipe's 0.28 of the bent figure; dry ground and walls do not");
+		// THE LOOK FILE: the committed one parses and supplies all four;
+		// a file missing a key keeps that constant; a broken file says so.
+		{
+			bool LOk = false;
+			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
+			LedgerStreet::Look Lk;
+			std::string LErr;
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 4 && Lk.bFromFile,
+			      "the committed look file parses and supplies all four settings", LErr);
+			LedgerStreet::Look Part;
+			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
+			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,
+			      "a key the file leaves out keeps the probe's old constant");
+			LedgerStreet::Look Broken;
+			Check(!LedgerStreet::ParseLook("not json", Broken, LErr) && !Broken.bFromFile
+			      && Broken.SkySeenGain == 1.0,
+			      "a broken look file is refused and the constants stand");
+		}
 		LedgerStreet::Row Plain;
 		const LedgerStreet::Grade Gp = LedgerStreet::PaletteOverPhoto(Plain);
 		Check(Gp.R == 1.0 && Gp.G == 1.0 && Gp.B == 1.0 && LedgerStreet::TilesPerMetre(Plain) == 0.0,

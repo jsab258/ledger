@@ -1,0 +1,9 @@
+{
+  "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
+  "sky_seen_gain": 1.0,
+  "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street. The dome's luminance is sky_intensity times this; the sky light still lights at sky_intensity. 1.0 was the probe's constant.",
+  "street_glow_gain": 0.10,
+  "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
+  "fog_day_colour": [0.55, 0.58, 0.62],
+  "fog_height_falloff": 0.02
+}
