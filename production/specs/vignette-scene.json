@@ -624,7 +624,10 @@
         "side": "east", "x_m": 38.825, "place": "wall", "wall_block": "east_parade",
         "wall_centre_m": 3.125, "yaw_deg": 0,
         "note": "Pilaster centre x=38.825."
-      }
+      },
+      {"bom": "E14_dock_clutter", "asset": "wooden_crate_01", "dims_m": [0.8804, 1.0447, 0.9244], "surface": "wood", "side": "east", "x_m": 12.3, "place": "ground", "z_from_kerb_face_m": 1.35, "yaw_deg": 0, "note": "DRESSING, 24 September: the fish market's stock out in front of its window, as the photographs' 'stacked goods' outside a shop (R05) and Kingdom Come's lived-in street both have and ours did not. Clear of both doors: the side door and the shop door stand at 9.39 to 11.09 m."},
+      {"bom": "E14_dock_clutter", "asset": "wooden_crate_01", "dims_m": [0.8804, 1.0447, 0.9244], "surface": "wood", "side": "east", "x_m": 13.25, "place": "ground", "z_from_kerb_face_m": 1.3, "yaw_deg": 12, "note": "Its second crate, turned 12 degrees so the pair reads as set down, not as a shelf."},
+      {"bom": "E6_public_bins", "asset": "swing_bin", "dims_m": [0.33, 0.7123, 0.32], "surface": "metal", "side": "west", "x_m": 33.0, "place": "ground", "z_from_kerb_face_m": 0.65, "yaw_deg": 0, "note": "DRESSING, 24 September: the west shops' own bin, one per shop group as the east parade's two are; the west pavement had none since the row became shops (Jafar 22 September)."}
     ],
     "not_placed": [
       { "asset": "awning_01", "bom": "E18_shop_awnings", "why": "The bill of materials names awning_02 explicitly and gives the measurement: 20 triangles and one LOD rung against awning_02's 644 and three." },
