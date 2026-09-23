@@ -998,7 +998,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             cheap checks; first lines on the paid model 1.4-2.2 s
             (production/research/talk-helper/first-lines-2026-09-23.md). The
             game half - start it, a key to talk, a box to type, the reply on
-            screen - is next.
+            screen - is next. SHIPPING IT, tried 23 Sep: dotnet publish
+            -r win-x64 --self-contained -p:PublishSingleFile=true makes one
+            68 MB TalkHelper.exe that runs with no .NET installed and answers
+            offline with the brush-off; the package must carry it and
+            production/cast/cards beside the game (--cards).
             WITH THE CONTENT RULE IN THE CONVERSATION: offered a drink, Sam
             went for one and named two unminted pubs (FINDINGS 23 Sep), so the
             engine's prompt needs D18 and its replies the gate's rules.
