@@ -1,4 +1,4 @@
-# UE probe shot 55ee12f @1790157852
+# UE probe shot c9dcb09 @1790158307
 # Line 1 names the commit this was measured on, as the Unity verdict does.
 # shotMeanLuma: mean over EVERY pixel of the committed file, 0 to 1,
 #   luma=(0.299R+0.587G+0.114B)/255, the same weights the Unity sim uses.
