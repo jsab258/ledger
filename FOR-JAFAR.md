@@ -19,6 +19,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **Tomorrow's facade sitting: build its three missing tools tonight, or let the meter count them?** The plan is written, in a new sittings folder: the parade, then west north, then west south, each from drawing to accepted pair. But no dimensioned drawings of the facades exist, only numbers in the street's spec, and three tools are missing: one that draws a facade from those numbers, an Unreal shot that looks straight at one block, and a pair that lays the drawing over the frame.
+  - **(a) I build the three tools tonight, after tonight's list, so tomorrow's meter measures only the facades (my recommendation).** They get built once for every facade in the town, so counting them in tomorrow's number would make one facade look dearer than it is.
+  - (b) Leave them, and the meter counts them too.
+  - Meanwhile I'm doing (a), last, once your five items are done or waiting.
 - 2026-09-24 **The voices' consent: write to Edinburgh, or accept the risk on the record?** All 23 cast voices come from the University of Edinburgh's VCTK recordings. The licence allows commercial use and cloning with credit, but says outright that it doesn't cover the speakers' personal rights, and nothing published says the volunteers agreed to being cloned for a game. The corpus is titled "for CSTR Voice Cloning Toolkit", so they very likely did.
   - **(a) Write to CSTR at Edinburgh and ask whether VCTK's consent covers a cloned character voice in a commercial game (my recommendation).** It's one email, yours to send; I've drafted nothing yet, and can.
   - (b) Accept the inference as a stated risk, on the record, and carry on.
