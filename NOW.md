@@ -717,8 +717,25 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       glass and the rooms behind it); lighting, surface response, wetness,
       grade and colour in one pass, his 0.85 re-read then; and the FAR END'S
       DEPTH with Unreal's own fog and atmosphere.
+      PROGRESS 23 Sep: textures from the pack, then Blender's DRAWN bricks,
+      flags and tile as seamless images (8d45d0fc); the look's settings in
+      production/specs/unreal-look.json so tuning is a file edit (a local copy
+      of the runner's build renders one frame in 10 s); the daylight tuned
+      by region against the flipped sheet (af82976a: brick 0.96, road 0.94,
+      far 0.91, shop 0.89, sky 1.03); the wet road mirrors once the pack's
+      relief is dropped for a film of water (f1b7a7f8). LEFT: re-measure on
+      the build with drawn surfaces (footway was 1.3), the shop rooms behind
+      the now see-through glass, the glow gain, the three sign crops.
 - [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
-      the same way.
+      the same way. STARTED: the far hillside thinned with grass and 64
+      trees (08b0db2e). NEXT: whatever the tuned pair shows is still missing
+      in shape (the sheet's near west side is lower and set back - waits on
+      decision 8's canon wording).
+- [ ] THE DUSK FRAME the roadmap names as what ties stage 1 together: the
+      street at dusk, wet, lamps lit, a figure in silhouette - wet_night
+      tuned in Unreal the way the day was, from the sheet's viewpoint.
+- [ ] DENSITY OF CLUTTER against the sheet (stage 1's fourth step): what
+      stands on the sheet's pavements and ours does not.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
