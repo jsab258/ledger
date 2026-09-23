@@ -57,6 +57,13 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The two parked cars were facing the wrong way, and are
+  turned round.** The sheet's cars show their fronts, and so would a
+  British street: on the right-hand kerb the traffic comes toward you and
+  cars park with it. Ours showed their tails, a leftover from the retired
+  sheet or the mirrored Blender street. They face the camera now, with
+  headlamps, and are painted navy and pale blue-grey off the sheet's two cars
+  instead of charcoal.
 - 2026-09-23 **The shop windows in the game engine have see-through glass
   now**, a second material made for it, so you see into the lit shops
   through a faint pane instead of an empty frame. **And the playable game

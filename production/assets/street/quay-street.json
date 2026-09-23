@@ -142,9 +142,9 @@
    "material": "car_bluegrey",
    "base_material": "car_bluegrey",
    "linear_rgb": [
-    0.07,
-    0.085,
-    0.105
+    0.2,
+    0.23,
+    0.28
    ],
    "roughness": 0.3,
    "surface_map": null,
@@ -164,9 +164,9 @@
    "material": "car_dark",
    "base_material": "car_dark",
    "linear_rgb": [
-    0.022,
-    0.024,
-    0.032
+    0.035,
+    0.042,
+    0.075
    ],
    "roughness": 0.26,
    "surface_map": null,
@@ -745,6 +745,28 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 12
+  },
+  {
+   "mesh": "street_lamp_clear",
+   "material": "lamp_clear",
+   "base_material": "lamp_clear",
+   "linear_rgb": [
+    0.42,
+    0.42,
+    0.4
+   ],
+   "roughness": 0.12,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": null,
+   "emit_night": null,
+   "faces": 24
   },
   {
    "mesh": "street_lamp_red",

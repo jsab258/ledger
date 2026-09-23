@@ -409,11 +409,17 @@ MATERIALS = (
     # CREAM RENDER, the pale houses among the brick on the new sheet's hill.
     # Read off the sheet at about 200/185/150; in linear, this.
     ("render_cream",(0.550, 0.480, 0.280), 0.80),
-    ("car_dark",    (0.022, 0.024, 0.032), 0.26),
+    # NAVY, 23 September, off the approved sheet's nearest car, whose door
+    # reads 70/71/80 in sRGB where ours was a charcoal block; set in Unreal
+    # against it.
+    ("car_dark",    (0.035, 0.042, 0.075), 0.26),
     # THE SHEET'S SECOND CAR, a faded blue-grey saloon of the kind every
     # street had in 1990. A second paint so the rank is two cars and not one
     # car twice.
-    ("car_bluegrey",(0.070, 0.085, 0.105), 0.30),
+    # AND LIGHTER, the same day and the same way: the sheet's second car is a
+    # pale metallic blue-grey, 85/94/109 on its door and near white on its
+    # bonnet where it holds the sky.
+    ("car_bluegrey",(0.200, 0.230, 0.280), 0.30),
     ("car_glass",   (0.010, 0.011, 0.014), 0.10),   # darker than shop glass
     ("tyre",        (0.008, 0.008, 0.008), 0.88),
     ("car_trim",    (0.018, 0.018, 0.019), 0.55),   # moulded black plastic
@@ -425,6 +431,9 @@ MATERIALS = (
     ("plate_rear",  (0.480, 0.380, 0.035), 0.50),
     ("plate_front", (0.560, 0.560, 0.540), 0.50),
     ("lamp_red",    (0.160, 0.012, 0.010), 0.22),
+    # HEADLAMPS, now the cars face the camera: clear glass over a silvered
+    # reflector, which by day reads as a pale grey lozenge.
+    ("lamp_clear",  (0.420, 0.420, 0.400), 0.12),
     # The lit shop interior, emissive. Its colour and its strength are the
     # piece file's own window_practicals: gamma (1, 0.86, 0.62) at 1.6.
     ("interior_lit",(1.000, 0.714, 0.344), 0.90),
@@ -639,6 +648,7 @@ SURFACE_OF = {
     "plate_rear":   (None, 0.0),
     "plate_front":  (None, 0.0),
     "lamp_red":     (None, 0.0),
+    "lamp_clear":   (None, 0.0),
     "interior_lit": (None, 0.0),
     "tube_lit":     (None, 0.0),
     "grass":        (None, 0.0),
@@ -2914,9 +2924,17 @@ VEHICLE_AT = (
 #: the sheet keeps clear. y = +1.96 is the east kerb by the same arithmetic
 #: as above. facing +1 is now nose AWAY from the camera, so its tail - lamps
 #: and the yellow plate - is what faces it, as on the sheet.
+#:
+#: TURNED ROUND, 23 September. The approved sheet's cars show their FRONTS -
+#: headlamps, grilles, a white plate - and so does a British street: on the
+#: kerb to the right of a camera looking up the street, the traffic comes
+#: toward it, and a car parks with the traffic. "Seen from behind, nose north,
+#: with the traffic" above was true of the retired sheet, or of the mirrored
+#: street Blender draws, and it came across into the true street facing the
+#: wrong way. facing -1 is nose toward the camera at the south end.
 VEHICLE_AT = (
-    (11.0, 1.96, 1, "car_dark"),
-    (15.9, 1.96, 1, "car_bluegrey"),
+    (11.0, 1.96, -1, "car_dark"),
+    (15.9, 1.96, -1, "car_bluegrey"),
 )
 
 
@@ -3013,6 +3031,10 @@ def _vehicles(out):
             place(((L - 0.05, 0.62), (L + 0.01, 0.62), (L + 0.01, 0.88), (L - 0.05, 0.88)),
                   sy - 0.11, sy + 0.11, "veh%d_lamp_%s" % (n, side), "lamp_red",
                   "the-cluster-at-the-corner")
+        for side, sy in (("n", half - 0.30), ("f", -half + 0.30)):
+            place(((-0.02, 0.55), (0.01, 0.55), (0.01, 0.67), (-0.02, 0.67)),
+                  sy - 0.14, sy + 0.14, "veh%d_headlamp_%s" % (n, side), "lamp_clear",
+                  "a-rectangular-headlamp-at-each-corner-of-the-nose")
         place(((L - 0.01, 0.46), (L + 0.02, 0.46), (L + 0.02, 0.46 + PLATE_H),
                (L - 0.01, 0.46 + PLATE_H)),
               -PLATE_W / 2.0, PLATE_W / 2.0, "veh%d_plate_rear" % n, "plate_rear",
@@ -6409,8 +6431,9 @@ def selftest():
             # SEVENTEEN: a body, a glasshouse, a roof cap, four wheels, two
             # tail lamps and two plates - eleven, counted rather than guessed
             # at, because the first version of this check guessed twelve -
-            # and since 22 September two bumpers and four hubs.
-            check("accept/the-street-has-a-car-in-it", len(veh) == 17,
+            # and since 22 September two bumpers and four hubs; since 23
+            # September two headlamps, now the car faces the camera.
+            check("accept/the-street-has-a-car-in-it", len(veh) == 19,
                   "%d piece(s)" % len(veh))
             body = [b for b in veh if b["id"] == "veh0_body"]
             check("accept/the-car-has-a-body", len(body) == 1)
