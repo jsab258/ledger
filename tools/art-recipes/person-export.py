@@ -136,6 +136,20 @@ def main():
     # the slot the body stays in its T-pose and no animation is exported.
     if hasattr(act, "slots") and len(act.slots) and hasattr(body_arm.animation_data, "action_slot"):
         body_arm.animation_data.action_slot = act.slots[0]
+    # THE SKELETON IN METRES, ITS OWN TURN AND SCALE APPLIED. A Mixamo body
+    # arrives with its skeleton at 1:100 and a quarter turn, bones in
+    # centimetres, and Unreal's importer drops that scale on a skinned mesh:
+    # the first five came in 1.7 cm tall (23 September). Applied here, the
+    # file is in metres with nothing to drop. The hips' travel goes too,
+    # since its keys are in the old centimetres; in place, as these clips
+    # are, only a little bob is lost.
+    for fc in list(act.fcurves):
+        if fc.data_path.endswith(".location"):
+            act.fcurves.remove(fc)
+    for ob in bpy.data.objects:
+        ob.select_set(ob in body)
+    bpy.context.view_layer.objects.active = body_arm
+    bpy.ops.object.transform_apply(location=False, rotation=True, scale=True)
     f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
     # A CALM STRETCH OF A CLIP, when the whole of it is not: the old-man idle
     # coughs and stretches its head back in the middle and stands quietly at
