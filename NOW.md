@@ -31,8 +31,11 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       the morning. The face's project settings are mine to switch on.
 - [ ] 4. NANO ON THE CARD WITH THE GAME RUNNING (download approved).
 - [ ] 5. THEN DOWN THE PRESENTABLE CHECKLIST.
-- [ ] THE NINETEEN CAST VOICES' PERMISSIONS, voice by voice in FOR-JAFAR,
+- [x] THE NINETEEN CAST VOICES' PERMISSIONS, voice by voice in FOR-JAFAR,
       against the TTS licensing research, before anything more is recorded.
+      DONE 24 Sep: 23 voices, all VCTK, all conditional (credit, consent,
+      the allowlist's wording; four also need his permission); the credit
+      corrected in THIRD-PARTY.md; three decisions put to him.
 - [ ] THE COST OF AN HOUR OF PLAY on the paid model, from real calls in the
       slice, beside what it means for a released game.
 - [ ] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
