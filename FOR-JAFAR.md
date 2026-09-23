@@ -57,6 +57,15 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The shop windows in the game engine have see-through glass
+  now**, a second material made for it, so you see into the lit shops
+  through a faint pane instead of an empty frame. **And the playable game
+  shows the new street**: the walk and the crime run through the Blender
+  street, over the old street's invisible walls, so nothing anyone can bump
+  into or see past has moved. The crime still plays out exactly as before:
+  the witness sees it, the overheard line arrives. It plays brighter and
+  paler than the tuned frame, because the playable game sets its own
+  brightness; that is for the tuning pass.
 - 2026-09-23 **Some night test pictures from the game engine were coming
   out black, and it was the new see-through glass.** At night the camera
   sets its own brightness, and the lit shop rooms seen through the glass
@@ -109,10 +118,6 @@ plain houses.
   a new settings file for the game engine only. Your 0.85 now touches only
   what is left of the old street there (lamps, kiosk, pillar box, bins); the
   street itself carries Blender's colours with a per-surface correction.
-- 2026-09-23 **The shop windows have no glass in the game engine for now.**
-  Its base material cannot be see-through, and a solid pane hid the lit
-  rooms behind it; with the glass left out you see into Mickey's and the
-  other shops. Proper glass needs a second, see-through material: later.
 - 2026-09-23 **The wet road now mirrors the street.** It never reflected
   anything, wet or dry: the texture pack's road relief was so bumpy it
   scattered every reflection. A wet road now loses that relief, as water
@@ -449,6 +454,8 @@ plain houses.
 
 ## Resolved
 
+- 2026-09-23 **The shop windows had no glass in the game engine** — resolved
+  the same day: a second, see-through material, proven on the build machine.
 - 2026-09-23 **The three shop signs that showed only the tops of their
   letters** (Rita's, the fish market, the steam laundry) are re-cropped to
   their lettering, each board at its own picture's proportions. Resolved the
