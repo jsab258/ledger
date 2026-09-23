@@ -2965,6 +2965,7 @@ HATCH_BODY = ((0.15, 0.30), (CAR_L - 0.15, 0.30), (CAR_L - 0.04, 0.34), (CAR_L, 
 HATCH_GLASS = ((1.06, 0.96), (CAR_L - 0.10, 0.96), (CAR_L - 0.58, 1.42),
                (1.64, 1.42))
 CAR_ROOF_Z = 1.42
+CAR_TUMBLEHOME_M = 0.10
 
 #: (x of the car's centre, y of it, facing, paint). FACING IS +1 FOR NOSE
 #: TOWARDS THE CAMERA, which stands at x = 35.
@@ -3001,7 +3002,7 @@ VEHICLE_AT = (
 )
 
 
-def _prism(out, pid, material, profile, y0, y1, note=""):
+def _prism(out, pid, material, profile, y0, y1, note="", insets=None):
     """A closed (x, z) outline extruded across the street, as one mesh.
 
     THE OUTLINE IS GIVEN NOSE-FIRST AND ANTICLOCKWISE, and both cap windings
@@ -3011,7 +3012,12 @@ def _prism(out, pid, material, profile, y0, y1, note=""):
     moment anything specular lands on it.
     """
     n = len(profile)
-    verts = [(x, y0, z) for (x, z) in profile] + [(x, y1, z) for (x, z) in profile]
+    # AN INSET PER OUTLINE POINT draws both caps in by that much, which is
+    # how a glasshouse narrows to its roof (23 September); none, a straight
+    # extrusion as before. The topology is the same, so are the windings.
+    ins = list(insets) if insets else [0.0] * n
+    verts = ([(x, y0 + ins[k], z) for k, (x, z) in enumerate(profile)]
+             + [(x, y1 - ins[k], z) for k, (x, z) in enumerate(profile)])
     faces = [tuple(range(n)), tuple(reversed(range(n, 2 * n)))]
     for i in range(n):
         j = (i + 1) % n
@@ -3043,7 +3049,7 @@ def _vehicles(out):
         # metres out; the tyres stood in the air by that much.
         dz = road_z(cy)
 
-        def place(profile, y0, y1, pid, material, note=""):
+        def place(profile, y0, y1, pid, material, note="", insets=None):
             # NOSE-AT-ZERO INTO WORLD, and the reversal is not decoration.
             # The outline is drawn from the nose and the car's own frame has
             # the nose at +L/2, so x is reflected; a reflection alone would
@@ -3053,19 +3059,24 @@ def _vehicles(out):
             # it, because a mirrored car is one with its normals inverted
             # and its driver on the wrong side.
             local = tuple(reversed([(L / 2.0 - px, pz) for (px, pz) in profile]))
+            ins = tuple(reversed(list(insets))) if insets else None
             world = tuple((cx + facing * lx, lz + dz) for (lx, lz) in local)
             a, b = cy + facing * y0, cy + facing * y1
-            _prism(out, pid, material, world, min(a, b), max(a, b), note)
+            _prism(out, pid, material, world, min(a, b), max(a, b), note, ins)
 
         place(HATCH_BODY, -half, half, "veh%d_body" % n, paint,
               "class-average-hatchback/not-a-model")
+        # THE GLASSHOUSE NARROWS TO ITS ROOF, 23 September: straight up it
+        # was one dark block the width of the body, and that - more than the
+        # outline - is what made the car a box from the hook camera.
         place(HATCH_GLASS, -gw, gw, "veh%d_glass" % n, "car_glass",
-              "set-in-from-the-flanks/body-then-glass-then-roof")
+              "set-in-from-the-flanks/body-then-glass-then-roof/narrowing-to-the-roof",
+              [0.0 if pz < CAR_ROOF_Z - 0.1 else CAR_TUMBLEHOME_M for (_px, pz) in HATCH_GLASS])
         # THE ROOF CAP IS THE PALE BAND OVER THE DARK ONE. Without it the
         # glasshouse runs into the sky and the car loses its lid.
         place(((HATCH_GLASS[3][0], CAR_ROOF_Z), (HATCH_GLASS[2][0], CAR_ROOF_Z),
                (HATCH_GLASS[2][0], CAR_ROOF_Z + 0.03), (HATCH_GLASS[3][0], CAR_ROOF_Z + 0.03)),
-              -gw - 0.02, gw + 0.02, "veh%d_roof" % n, paint, "the-lid")
+              -gw - 0.02 + CAR_TUMBLEHOME_M, gw + 0.02 - CAR_TUMBLEHOME_M, "veh%d_roof" % n, paint, "the-lid")
         for w, ax in enumerate((0.80, L - 0.78)):
             for side, sy in (("n", half - 0.09), ("f", -half + 0.09)):
                 place(_wheel_profile(ax, WHEEL_D / 2.0, WHEEL_D),
