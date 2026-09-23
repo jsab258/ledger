@@ -1039,7 +1039,12 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             shoulder, Elizabeth turns her head to it -
             production/art/compare/slice-2026-09-23/player-walks-5f93abd7.png.
             FOUND: the player walks straight through Elizabeth, since the
-            street's people have no collision (checklist A12.11).
+            street's people have no collision (checklist A12.11). THE FIX IS A
+            CAPSULE ON EACH PERSON IN PLAY blocking bodies and never sight
+            (as the cars do) - but Elizabeth at (6.2, 4.35) stands 35 cm off
+            the probe walk's accepting line (y 4.0 m, 4.0 -> 7.2 m), so the
+            walk's "open footway" case must move or she must, in the same
+            change, or the probe's walk goes red.
       - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
             mesh around the player is pushed (7cc4767b, its path to Mickey's
             rank in the slice walk's verdict). The walker itself is written
