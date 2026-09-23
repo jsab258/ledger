@@ -90,6 +90,62 @@ def periodic_noise(n, cells, seed):
     return (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy
 
 
+def periodic_noise_xy(n, cells_x, cells_y, seed):
+    """Smooth value noise that wraps, with different cell counts across and
+    down, so it can be stretched tall as a streak is."""
+    import numpy as np
+    rng = np.random.RandomState(seed)
+    lat = rng.rand(cells_y, cells_x)
+
+    def axis(cells):
+        t = np.arange(n) * cells / float(n)
+        i0 = np.floor(t).astype(int)
+        f = t - i0
+        return i0, (i0 + 1) % cells, f * f * (3 - 2 * f)
+    y0, y1, fy = axis(cells_y)
+    x0, x1, fx = axis(cells_x)
+    a = lat[np.ix_(y0, x0)]; b = lat[np.ix_(y0, x1)]
+    c = lat[np.ix_(y1, x0)]; d = lat[np.ix_(y1, x1)]
+    fy = fy[:, None]; fx = fx[None, :]
+    return (a * (1 - fx) + b * fx) * (1 - fy) + (c * (1 - fx) + d * fx) * fy
+
+
+def blender_fac(v):
+    """Value noise is spread 0..1 where Blender's noise Fac sits mostly in
+    0.3..0.7; pulled toward the middle so the recipe's own ramp positions
+    mean what they meant there."""
+    return 0.5 + (v - 0.5) * 0.55
+
+
+def ramp(v, lo, hi, a, b):
+    import numpy as np
+    t = np.clip((v - lo) / (hi - lo), 0.0, 1.0)
+    return a + (b - a) * t
+
+
+def wall_wear(tf, n, tile_w, tile_h, salt, splash=True):
+    """THE RECIPE'S WEAR, as one multiplier over the wall, rows running UP
+    from the foot (the last row is z = 0): patches through the recipe's ramp,
+    the splash up the foot of the wall, and rain streaks from the wall head
+    that fade in above the sills. Height is real because the street's wall
+    UVs are metres of height."""
+    import numpy as np
+    cells = max(1, int(round(tf.WEAR_PATCH_SCALE * tile_w)))
+    patch = ramp(blender_fac(periodic_noise_xy(n, cells, cells, SEED + salt)),
+                 0.35, 0.62, tf.WEAR_PATCH_DEPTH, 1.0)
+    if not splash:
+        return patch
+    z = (n - 1 - np.arange(n)[:, None] + 0.5) * tile_h / n
+    foot = ramp(z, 0.0, tf.WEAR_SPLASH_M, tf.WEAR_SPLASH_DEPTH, 1.0)
+    sx = max(1, int(round(tf.STREAK_ACROSS * tile_w)))
+    sy = max(1, int(round(tf.STREAK_DOWN * tile_h)))
+    streaks = ramp(blender_fac(periodic_noise_xy(n, sx, sy, SEED + salt + 5)),
+                   0.40, 0.62, tf.STREAK_DEPTH, 1.0)
+    head = ramp(z, tf.STREAK_FROM_Z, tf.STREAK_FULL_Z, 0.0, 1.0)
+    streak = 1.0 + (streaks - 1.0) * head
+    return patch * foot * streak
+
+
 def bond(n, tile_w, tile_h, unit_w, unit_h, joint):
     """Stretcher bond over a tile: (cell index i, row j, in-joint mask, height).
 
@@ -134,19 +190,30 @@ def to_srgb8(lin):
     return np.clip(s * 255.0 + 0.5, 0, 255).astype(np.uint8)
 
 
-def brick(tf, name, salt):
+#: THE BRICK TILE IS A WHOLE WALL HIGH, 23 September, because the wear on it
+#: is: the splash at the foot and the streaks from the wall head depend on
+#: height, and the street's wall UVs are metres of height, so a tile 7.2 m
+#: tall lays them where they belong on a wall up to its eaves. 32 bricks by
+#: 96 courses at 2048 px: a brick is 64 px long, its joint just under 3.
+BRICK_TILE = (32, 96)
+BRICK_PX = 2048
+
+
+def brick(tf, name, salt, n=None, worn=True):
     import numpy as np
-    per_row, rows = 8, 24
+    n = n or BRICK_PX
+    per_row, rows = BRICK_TILE
     tw, th = per_row * tf.BRICK_W_M, rows * tf.BRICK_H_M
-    i, j, jm, h = bond(PX, tw, th, tf.BRICK_W_M, tf.BRICK_H_M, tf.BRICK_JOINT_M)
+    i, j, jm, h = bond(n, tw, th, tf.BRICK_W_M, tf.BRICK_H_M, tf.BRICK_JOINT_M)
+    wear = wall_wear(tf, n, tw, th, salt, splash=tf.WEARS.get(name, False)) if worn else 1.0
     tone = tone_through(tf.BRICK_TONES, hash01(i, j % rows, salt))
     base, rough = authored(tf, name)
-    stain = 1.0 + tf.BRICK_STAIN * (periodic_noise(PX, 6, SEED + salt) * 2.0 - 1.0) * 0.6
-    img = np.zeros((PX, PX, 3))
+    stain = 1.0 + tf.BRICK_STAIN * (periodic_noise(n, 24, SEED + salt) * 2.0 - 1.0) * 0.6
+    img = np.zeros((n, n, 3))
     for c in range(3):
         face = tone * tf.BRICK_FACE_LIFT * tf.BRICK_FACE_HUE[c]
         v = np.where(jm, tf.BRICK_JOINT_TONE, face)
-        img[..., c] = base[c] * v * stain
+        img[..., c] = base[c] * v * stain * wear
     r = np.where(jm, min(1.0, rough + 0.08), rough) * (0.96 + 0.08 * hash01(i, j % rows, salt + 7))
     return img, normal_from_height(h, 6.0), r, (tw, th)
 
@@ -159,11 +226,14 @@ def flags(tf):
     mix = hash01(i, j % rows, 31)
     base, rough = authored(tf, "paving")
     grain = 1.0 + 0.10 * (periodic_noise(PX, 64, SEED + 3) * 2.0 - 1.0)
+    # THE PAVEMENT TAKES THE PATCHES AND NOT THE SPLASH, as the recipe says:
+    # a pavement's wear is trodden in, not run down it.
+    worn = wall_wear(tf, PX, tw, th, 41, splash=False)
     img = np.zeros((PX, PX, 3))
     for c in range(3):
         t = tf.FLAG_TONE_A[c] * mix + tf.FLAG_TONE_B[c] * (1.0 - mix)
         v = np.where(jm, tf.FLAG_JOINT_DARK, t * grain)
-        img[..., c] = base[c] * v
+        img[..., c] = base[c] * v * worn
     r = np.where(jm, min(1.0, rough + 0.1), rough) * np.ones((PX, PX))
     return img, normal_from_height(h, 3.0), r, (tw, th)
 
@@ -237,25 +307,38 @@ def selftest():
             print("FAILED - %s : %s" % (name, detail))
 
     tf = recipe()
-    img, nrm, r, tile = brick(tf, "brick_red", 11)
+    # THE BOND AND ITS RELIEF on a clean wall at the size it is drawn, so the
+    # wear cannot be mistaken for joints; the wear on its own below.
+    img, nrm, r, tile = brick(tf, "brick_red", 11, worn=False)
+    worn_img, _wn, _wr, _wt = brick(tf, "brick_red", 11)
     ok("the brick tile is a whole number of bricks and courses",
        abs(tile[0] / tf.BRICK_W_M - round(tile[0] / tf.BRICK_W_M)) < 1e-9
        and abs(tile[1] / (2 * tf.BRICK_H_M) - round(tile[1] / (2 * tf.BRICK_H_M))) < 1e-9, tile)
     # SEAMLESS: the last column and the first are one brick where they meet,
     # so their difference is no bigger than the difference between two
     # neighbouring columns inside the tile.
-    edge = np.abs(img[:, -1] - img[:, 0]).mean()
-    inner = np.abs(img[:, PX // 2] - img[:, PX // 2 - 1]).mean()
+    edge = np.abs(worn_img[:, -1] - worn_img[:, 0]).mean()
+    inner = np.abs(worn_img[:, BRICK_PX // 2] - worn_img[:, BRICK_PX // 2 - 1]).mean()
     ok("the tile wraps across its left and right edges without a seam", edge <= inner * 1.5 + 1e-6,
        "edge %.4f inner %.4f" % (edge, inner))
-    edge_v = np.abs(img[-1] - img[0]).mean()
-    inner_v = np.abs(img[PX // 2] - img[PX // 2 - 1]).mean()
-    ok("and across its top and bottom", edge_v <= inner_v * 1.5 + 1e-6,
+    # NOT ACROSS TOP AND BOTTOM ANY MORE, and on purpose: the tile is a whole
+    # wall high, its foot splashed and its head streaked, and no wall on the
+    # street is taller than it. What is checked instead is that the wear is
+    # where the recipe puts it.
+    nb = worn_img.shape[0]
+    foot = worn_img[-nb // 20:, :, 0].mean()
+    middle = worn_img[nb // 2 - nb // 20: nb // 2 + nb // 20, :, 0].mean()
+    ok("the foot of the wall is darker than its middle, the recipe's splash",
+       foot < middle * 0.9, "foot %.4f middle %.4f" % (foot, middle))
+    fi_, _n, _r, _t = flags(tf)
+    edge_v = np.abs(fi_[-1] - fi_[0]).mean()
+    inner_v = np.abs(fi_[PX // 2] - fi_[PX // 2 - 1]).mean()
+    ok("the flags wrap across their top and bottom", edge_v <= inner_v * 1.5 + 1e-6,
        "edge %.4f inner %.4f" % (edge_v, inner_v))
     base, _r = authored(tf, "brick_red")
     m = img[..., 0].mean() / base[0]
-    ok("the wall averages near its authored colour, as the recipe's tones are built to",
-       0.75 < m < 1.25, "%.3f" % m)
+    ok("the wall averages near its authored colour less its wear, as the recipe's tones are built to",
+       0.55 < m < 1.25, "%.3f" % m)
     joints = (img[..., 0] < base[0] * 0.5).mean()
     ok("the joints are there and dark, about a sixth of the wall", 0.08 < joints < 0.35, "%.3f" % joints)
     ok("the normal map is mostly flat and bends at the joints",
