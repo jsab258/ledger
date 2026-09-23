@@ -41,6 +41,18 @@ it.** Thirty minutes of play is two and a half game days.
 
 ## Things you should know
 
+- 2026-09-23 **One build-machine run went red, and the next may too; the
+  cause is fixed.** I pushed changes back to back, and two runs both tried to
+  save the same regenerated game-engine material files; the save step only
+  knew how to settle that for pictures. Nothing was wrong with the game. The
+  step now settles those files too. One run already queued before the fix
+  may still go red the same way; the one after it carries the fix.
+- 2026-09-23 **The walls in the game engine now get Blender's drawn bricks.**
+  The texture pack's "brick" photograph read as random stone, and Blender
+  had stopped using it yesterday: it draws its bricks from numbers (size,
+  bond, dark joints, each brick's tone). I draw the same numbers into
+  seamless pictures for the game engine: both bricks, the pavement flags and
+  Mickey's tile.
 - 2026-09-23 **The paid router test cost about 7p, not 5p.** The first run
   found a fault in the game's own checker, I fixed it and ran the 42 lines
   again to prove the fix. Both runs together: about 9 US cents.
