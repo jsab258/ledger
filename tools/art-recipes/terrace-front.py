@@ -2952,9 +2952,16 @@ WHEEL_D, WHEEL_W = 0.578, 0.175
 #: 520 x 111 mm, the British plate since 1973.
 PLATE_W, PLATE_H = 0.520, 0.111
 
-HATCH_BODY = ((0.15, 0.30), (CAR_L - 0.15, 0.30), (CAR_L, 0.42), (CAR_L, 0.98),
-              (CAR_L - 0.08, 1.04), (1.05, 0.98), (1.00, 0.90), (0.12, 0.86),
-              (0.0, 0.70), (0.0, 0.44))
+#: ROUNDER, 23 September: beside the sheet's saloons the body read as a box
+#: - a vertical nose, a flat bonnet, square tail corners. The same outline
+#: with its corners eased: a chin under the nose, the nose sloping back into
+#: a bonnet that falls toward it, and the tail's corners turned. Length,
+#: height and the belt line are unchanged, so the glass and the roof, which
+#: hang off them, do not move.
+HATCH_BODY = ((0.15, 0.30), (CAR_L - 0.15, 0.30), (CAR_L - 0.04, 0.34), (CAR_L, 0.44),
+              (CAR_L, 0.95), (CAR_L - 0.03, 1.01), (CAR_L - 0.10, 1.04), (1.05, 0.98),
+              (1.00, 0.90), (0.60, 0.865), (0.20, 0.81), (0.07, 0.765), (0.015, 0.69),
+              (0.0, 0.52), (0.04, 0.38))
 HATCH_GLASS = ((1.06, 0.96), (CAR_L - 0.10, 0.96), (CAR_L - 0.58, 1.42),
                (1.64, 1.42))
 CAR_ROOF_Z = 1.42

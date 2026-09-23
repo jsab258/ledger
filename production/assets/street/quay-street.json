@@ -157,7 +157,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 18
+   "faces": 23
   },
   {
    "mesh": "street_car_dark",
@@ -179,7 +179,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 18
+   "faces": 23
   },
   {
    "mesh": "street_car_glass",
