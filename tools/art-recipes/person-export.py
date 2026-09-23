@@ -27,10 +27,12 @@ import sys
 def args():
     a = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     out = {"body": "", "clip": "", "out": "", "tex": 1024, "preview": "", "frame": 60,
-           "from": 0, "to": 0}
+           "from": 0, "to": 0, "also": []}
     i = 0
     while i < len(a):
-        if a[i] in ("--body", "--clip", "--out", "--preview") and i + 1 < len(a):
+        if a[i] == "--also" and i + 1 < len(a) and "=" in a[i + 1]:
+            out["also"].append(tuple(a[i + 1].split("=", 1))); i += 2
+        elif a[i] in ("--body", "--clip", "--out", "--preview") and i + 1 < len(a):
             out[a[i][2:]] = a[i + 1]; i += 2
         elif a[i] in ("--tex", "--frame", "--from", "--to") and i + 1 < len(a):
             out[a[i][2:]] = int(a[i + 1]); i += 2
@@ -169,6 +171,36 @@ def main():
         bpy.context.view_layer.objects.active = parts[0]
         bpy.ops.object.join()
         body = keep + [bpy.context.view_layer.objects.active]
+    # MORE CLIPS ON THE SAME BODY, 23 September, for the slice's player: a
+    # body that stands, walks and runs is one skeleton with three actions,
+    # not three people. Each --also name=path clip is adopted exactly as the
+    # main one was - the body's bone names, rotations only - and named
+    # <out>__<name>; each keeps its own length in the file.
+    extra = []
+    for label, path in o["also"]:
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.fbx(filepath=path, automatic_bone_orientation=False)
+        got = [ob for ob in bpy.data.objects if ob not in before]
+        arms = [ob for ob in got if ob.type == "ARMATURE"]
+        a2 = arms[0].animation_data.action if arms and arms[0].animation_data else None
+        for ob in got:
+            bpy.data.objects.remove(ob, do_unlink=True)
+        if a2 is None:
+            print("person-export: --also %s has no action; left out" % label)
+            continue
+        for fc in list(a2.fcurves):
+            if fc.data_path.endswith(".location") or fc.data_path.endswith(".scale"):
+                a2.fcurves.remove(fc)
+        for fc in a2.fcurves:
+            p = fc.data_path
+            if p.startswith('pose.bones["'):
+                old = p.split('"')[1]
+                new = full.get(old.split(":")[-1])
+                if new and new != old:
+                    fc.data_path = p.replace('"%s"' % old, '"%s"' % new, 1)
+        a2.name = act.name + "__" + label
+        a2.use_fake_user = True
+        extra.append(a2)
     f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
     # A CALM STRETCH OF A CLIP, when the whole of it is not: the old-man idle
     # coughs and stretches its head back in the middle and stands quietly at
@@ -177,7 +209,7 @@ def main():
         f0, f1 = max(f0, o["from"]), min(f1, o["to"])
     # ONE ANIMATION IN THE FILE: the clip's own action goes with its skeleton.
     for other in list(bpy.data.actions):
-        if other != act:
+        if other != act and other not in extra:
             bpy.data.actions.remove(other)
     bpy.context.scene.frame_start, bpy.context.scene.frame_end = int(f0), int(f1)
     # CLOTH AND SKIN ARE NOT METAL. The FBX importer turns Mixamo's
@@ -213,11 +245,11 @@ def main():
     bpy.ops.export_scene.gltf(filepath=os.path.abspath(o["out"]), export_format="GLB",
                               use_selection=True, export_skins=True, export_animations=True,
                               export_animation_mode="ACTIONS", export_yup=True,
-                              export_frame_range=True, export_anim_slide_to_zero=True,
+                              export_frame_range=not extra, export_anim_slide_to_zero=True,
                               export_image_format="JPEG")
     size = os.path.getsize(o["out"]) if os.path.exists(o["out"]) else 0
-    print("personExport out=%s bytes=%d bones=%d clipBonesShared=%d/%d frames=%d-%d texturesShrunk=%d partsJoined=%d"
-          % (o["out"], size, len(names), shared, len(driven), int(f0), int(f1), shrunk, joined))
+    print("personExport out=%s bytes=%d bones=%d clipBonesShared=%d/%d frames=%d-%d texturesShrunk=%d partsJoined=%d clips=%d"
+          % (o["out"], size, len(names), shared, len(driven), int(f0), int(f1), shrunk, joined, 1 + len(extra)))
     return 0
 
 
