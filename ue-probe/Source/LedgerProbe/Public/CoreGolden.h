@@ -45,6 +45,7 @@
 #include "Perception.h"
 #include "Reaction.h"
 #include "Schedule.h"
+#include "StreetVoice.h"
 #include "Suspicion.h"
 
 #include <cstdio>
@@ -1193,6 +1194,97 @@ namespace Golden
 		{
 			A.Known = (F[1] == "ResistPressure");
 			if (A.Known) { A.Got = FromDouble(Reaction::ResistPressure); }
+		}
+		// THE REACTION LADDER AND DECISION 7 (a), answered from StreetVoice.h
+		// (PerceptionGolden EmitStance, 23 September). A stance is compared as
+		// its NAME, as the arrest's outcome is.
+		else if (Fn == "Stance" && F.size() >= 9)
+		{
+			A.Known = true;
+			A.Got = StreetVoice::StanceName(StreetVoice::Stance(D(F[1]), D(F[2]), D(F[3]),
+				B(F[4]), B(F[5]), B(F[6]), B(F[7])));
+		}
+		else if ((Fn == "GazeMetres" || Fn == "RemarkRecord") && F.size() >= 3)
+		{
+			StreetVoice::StanceKind K = StreetVoice::StanceKind::Indifferent;
+			bool bNamed = false;
+			for (int V = 0; V <= 6 && !bNamed; ++V)
+			{
+				if (F[1] == StreetVoice::StanceName((StreetVoice::StanceKind)V)) { K = (StreetVoice::StanceKind)V; bNamed = true; }
+			}
+			A.Known = true;
+			if (!bNamed) { A.Got = std::string("unknown-stance/") + F[1]; }
+			else if (Fn == "GazeMetres") { A.Got = FromDouble(StreetVoice::GazeMetres(K)); }
+			else if (F.size() >= 4)
+			{
+				StreetVoice::RemarkLedger L;
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+				const bool bRecorded = L.Record("m", R, K, B(F[2]));
+				A.Got = FromBool(bRecorded) + FromBool(L.HasRemarked("m", R));
+			}
+			else { A.Got = "row-too-short"; }
+		}
+		else if (Fn == "RemarkRecordTwice" && F.size() >= 4)
+		{
+			StreetVoice::RemarkLedger L;
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+			const bool bFirst = L.Record("m", R, StreetVoice::StanceKind::Comments, B(F[2]));
+			const bool bSecond = L.Record("m", R, StreetVoice::StanceKind::Comments, B(F[2]));
+			A.Known = true;
+			A.Got = FromBool(bFirst) + FromBool(bSecond);
+		}
+		else if (Fn == "StoryThatShows" && F.size() >= 4)
+		{
+			// THE HOLDER, BUILT FROM ITS ROW: each rumour as
+			// subject:predicate:value:confidence:sensitive:indelible:suppressed.
+			Gossiper G("h", "h", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			std::vector<RumorPtr> Order;
+			if (F[2] != "none")
+			{
+				std::string::size_type Start = 0;
+				while (Start <= F[2].size())
+				{
+					std::string::size_type End = F[2].find(';', Start);
+					if (End == std::string::npos) End = F[2].size();
+					const std::string Enc = F[2].substr(Start, End - Start);
+					std::vector<std::string> P;
+					std::string::size_type A0 = 0;
+					for (;;)
+					{
+						std::string::size_type C = Enc.find(':', A0);
+						P.push_back(Enc.substr(A0, C == std::string::npos ? std::string::npos : C - A0));
+						if (C == std::string::npos) break;
+						A0 = C + 1;
+					}
+					if (P.size() >= 7)
+					{
+						RumorPtr R = std::make_shared<Rumor>(Fact(P[0], P[1], P[2]));
+						R->Confidence = D(P[3]); R->Sensitive = B(P[4]); R->Indelible = B(P[5]);
+						G.Rumors.push_back(R);
+						Order.push_back(R);
+						if (B(P[6])) G.Suppressed.push_back(R->TopicKey());
+					}
+					Start = End + 1;
+				}
+			}
+			const RumorPtr Shows = StreetVoice::StoryThatShows(G, D(F[1]));
+			long long Index = -1;
+			for (std::vector<RumorPtr>::size_type Q = 0; Q < Order.size(); ++Q)
+			{
+				if (Order[Q] == Shows) Index = (long long)Q;
+			}
+			A.Known = true;
+			A.Got = FromInt(Index);
+		}
+		else if (Fn == "RemarkKey" && F.size() >= 6)
+		{
+			const std::string Person = F[1] == "none" ? std::string() : F[1];
+			const std::string Value = F[4] == "none" ? std::string() : F[4];
+			RumorPtr R = std::make_shared<Rumor>(Fact(F[2], F[3], Value));
+			std::string K = StreetVoice::RemarkLedger::KeyFor(Person, R);
+			for (std::string::size_type Q = 0; Q < K.size(); ++Q) { if (K[Q] == '|') K[Q] = '#'; }
+			A.Known = true;
+			A.Got = K;
 		}
 		// THE SCHEDULE, answered from Schedule.h. A resident is its index,
 		// home and work (fields 1 to 5), then the day and the hour. Indoors is

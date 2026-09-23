@@ -22,10 +22,11 @@
 // proper noun.
 //
 // SCOPE, queue 147: SpokenLine 43 to 72; Exchange 131 to 296; Pick, Answer,
-// Hash, Trim, Cap. OUT OF SCOPE AND NOT HERE, so a reader can tell a missing
-// member from a forgotten one: StanceKind, Stance, GazeMetres, Recognition,
-// Ambient, ChatterLevel, AmbientEverySeconds, Clamp01 (LedgerCore::Clamp in
-// Perception.h is the same arithmetic and is already ported).
+// Hash, Trim, Cap; and since 23 September StanceKind, Stance, GazeMetres,
+// StoryThatShows and RemarkLedger (the section at the end). OUT OF SCOPE AND
+// NOT HERE, so a reader can tell a missing member from a forgotten one:
+// Recognition, Ambient, ChatterLevel, AmbientEverySeconds, Clamp01
+// (LedgerCore::Clamp01 in Perception.h is the same arithmetic).
 //
 // THE DEVIATIONS FROM THE C#, NAMED, in the shape the eight of
 // game-design/decision-2026-09-08-the-core-port-and-its-eight-deviations.md
@@ -85,6 +86,7 @@
 
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
 
+#include <set>
 #include <string>
 #include <vector>
 
@@ -551,5 +553,117 @@ namespace LedgerCore
 		{
 			return Exchange(R, From, To, Seed, 0);
 		}
+
+		// ---- THE REACTION LADDER AND DECISION 7 (a), ported 23 September ----
+		//
+		// TRANSLITERATION of StreetVoice.cs Stance, the private Rung, GazeMetres
+		// and StoryThatShows, and of RemarkLedger, for the playable slice: a
+		// hearer's faint knowledge shows in how they treat the player, once per
+		// story and then the look. Every answer is checked against rows the C#
+		// emitted (PerceptionGolden EmitStance): 9,856 stance cells over both
+		// sides of every rung, the coat's 0.12 and 0.7, the loyalty weights and
+		// the leash; the gazes; twelve story holders; the remark keys and the
+		// recording rule. The arithmetic is in the C#'s order, operation for
+		// operation, because a reordered sum is a different double.
+
+		enum class StanceKind { Indifferent = 0, Notices = 1, Watches = 2, Comments = 3,
+		                        Avoids = 4, Refuses = 5, Confronts = 6 };
+
+		inline const char* StanceName(StanceKind K)
+		{
+			switch (K)
+			{
+				case StanceKind::Indifferent: return "Indifferent";
+				case StanceKind::Notices:     return "Notices";
+				case StanceKind::Watches:     return "Watches";
+				case StanceKind::Comments:    return "Comments";
+				case StanceKind::Avoids:      return "Avoids";
+				case StanceKind::Refuses:     return "Refuses";
+				case StanceKind::Confronts:   return "Confronts";
+			}
+			return "unknown";
+		}
+
+		// StreetVoice.cs's own Clamp01 is `v < 0 ? 0 : v > 1 ? 1 : v`, which
+		// is LedgerCore::Clamp01 (Perception.h) for every value but NaN, and
+		// both pass NaN through.
+		inline StanceKind Rung(double Pressure, bool bLeashed)
+		{
+			if (Pressure >= 0.86 && !bLeashed) return StanceKind::Confronts;
+			if (Pressure >= 0.72) return StanceKind::Refuses;
+			if (Pressure >= 0.58) return StanceKind::Avoids;
+			if (Pressure >= 0.42) return bLeashed ? StanceKind::Watches : StanceKind::Comments;
+			if (Pressure >= 0.26) return StanceKind::Watches;
+			if (Pressure >= 0.12) return StanceKind::Notices;
+			return StanceKind::Indifferent;
+		}
+
+		inline StanceKind Stance(double Suspicion, double Loyalty, double StrongestAboutPlayer,
+		                         bool bLeashed, bool bWearingCoat, bool bKnowsSomething = false,
+		                         bool bRemarkedAlready = false)
+		{
+			double Pressure = Clamp01(0.55 * Clamp01(Suspicion) + 0.45 * Clamp01(StrongestAboutPlayer));
+			Pressure -= 0.35 * Clamp01(Loyalty - 0.5) * 2.0 * (Pressure < 0.85 ? 1.0 : 0.4);
+			if (bWearingCoat && Pressure < 0.7) Pressure -= 0.12;
+			Pressure = Clamp01(Pressure);
+			StanceKind R = Rung(Pressure, bLeashed);
+			if (bKnowsSomething)
+			{
+				const StanceKind Floor = bWearingCoat ? StanceKind::Notices
+				                       : (bLeashed || bRemarkedAlready) ? StanceKind::Watches
+				                       : StanceKind::Comments;
+				if ((int)R < (int)Floor) R = Floor;
+			}
+			return R;
+		}
+
+		inline double GazeMetres(StanceKind K)
+		{
+			return (int)K <= (int)StanceKind::Indifferent ? 0
+			     : K == StanceKind::Notices ? 6
+			     : K == StanceKind::Watches ? 14
+			     : K == StanceKind::Comments ? 12
+			     : K == StanceKind::Avoids ? 18
+			     : 22;
+		}
+
+		inline RumorPtr StoryThatShows(const Gossiper& G, double ShareFloor)
+		{
+			RumorPtr Best;
+			for (std::vector<RumorPtr>::size_type I = 0; I < G.Rumors.size(); ++I)
+			{
+				const RumorPtr& R = G.Rumors[I];
+				if (!R || R->Content.Subject != "player" || !R->Sensitive) continue;
+				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
+				if (!(R->Confidence >= ShareFloor)) continue;
+				if (!Best || R->Confidence > Best->Confidence) Best = R;
+			}
+			return Best;
+		}
+
+		/// RemarkLedger: who has had their say on which story. An empty key is
+		/// the C#'s null (no story).
+		class RemarkLedger
+		{
+			std::set<std::string> Said;
+		public:
+			static std::string KeyFor(const std::string& PersonId, const RumorPtr& R)
+			{
+				if (!R) return std::string();
+				return PersonId + "|" + R->Content.Subject + "." + R->Content.Predicate + "=" + R->Content.Value;
+			}
+			bool HasRemarked(const std::string& PersonId, const RumorPtr& R) const
+			{
+				const std::string K = KeyFor(PersonId, R);
+				return !K.empty() && Said.count(K) > 0;
+			}
+			bool Record(const std::string& PersonId, const RumorPtr& R, StanceKind SaidAt, bool bHeard)
+			{
+				if (!bHeard || SaidAt != StanceKind::Comments) return false;
+				const std::string K = KeyFor(PersonId, R);
+				return !K.empty() && Said.insert(K).second;
+			}
+			std::size_t Count() const { return Said.size(); }
+		};
 	}
 }
