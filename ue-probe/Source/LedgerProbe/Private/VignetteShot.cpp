@@ -56,6 +56,7 @@
 #include "StreetMeshes.h"
 #include "StreetSounds.h"
 #include "PersonAnim.h"
+#include "SliceCharacter.h"
 
 #include "CoreMinimal.h"
 #include "UObject/UnrealType.h"
@@ -2106,6 +2107,18 @@ namespace
 			" headsFound=%d/%d headBone=%s headsFallback=%d headsLooking=%d headsTurnedThisRun=%d/over-half-way",
 			(int)GHeadsFound, (int)GPersonAnims.Num(), GHeadBone.empty() ? "none" : LedgerVignette::NoSpaces(GHeadBone).c_str(),
 			(int)GHeadsFallback, (int)Looking, (int)Looked);
+		// THE SLICE'S PLAYER BODY, 23 September: loaded by the same names the
+		// slice's character loads, so a failed import shows here before
+		// anyone plays it.
+		int32 SliceClips = 0;
+		for (int32 I = 0; I < 3; ++I)
+		{
+			if (LoadObject<UAnimSequenceBase>(nullptr, ALedgerSliceCharacter::ClipPath(I)) != nullptr) { ++SliceClips; }
+		}
+		const bool bSliceBody = LoadObject<USkeletalMesh>(nullptr, ALedgerSliceCharacter::MeshPath()) != nullptr;
+		char SliceBuf[96];
+		std::snprintf(SliceBuf, sizeof(SliceBuf), " sliceBody=%s sliceClips=%d/3",
+		              bSliceBody ? "yes" : "NOT-FOUND", (int)SliceClips);
 		char SoundsBuf[160];
 		std::snprintf(SoundsBuf, sizeof(SoundsBuf),
 			" soundsPlaced=%d/%d soundBeds=%d soundVoices=%d soundClips=%d soundPlaying=%s",
@@ -2116,7 +2129,7 @@ namespace
 		              (int)GCornerApplied, (int)GCornerMissing);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
-		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf
+		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf + SliceBuf
 		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)

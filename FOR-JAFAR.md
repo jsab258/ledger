@@ -63,6 +63,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The slice's player has a stand-in body**: a Mixamo man in a grey tracksuit who stands, walks and runs, seen from behind the shoulder. Tom's look isn't settled anywhere I can find, and period clothes come with the clothing route. Say if you'd rather he waited for a proper body.
 - 2026-09-23 **The checklist is folded into the roadmap, sorted as you ruled: 963 items.** That's the 957 plus six the other research found missing: dialogue ducking the mix, wind and rain sound, camera smoothing, people using doors, people queueing and giving way, and puddles that ripple and splash. 113 are out, each with what rules it out. Nothing is marked done yet, because done needs a picture, a test or a recording linked in its row, and I haven't linked any. Stage 1's items come first. Of the genre items, 13 were close calls: I kept 12 in and ruled the jump out (your G1 names kerbs, low walls and fences, not a jump). All 13 are marked "unsure" in their rows.
 - 2026-09-23 **The PS5 experiment, first half: switching every Unreal feature on hardly changes the picture.** The picture is our corner as the street runs beside the same corner with everything on, and I've put the GTA V frame next to them for you to see (not committed, since it's their picture).
   - **What was switched on:** sharp shadows, ray-traced bounced light and reflections, volumetric fog, contact shadows, every quality setting at its highest, full resolution.

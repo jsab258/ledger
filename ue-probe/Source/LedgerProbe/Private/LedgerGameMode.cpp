@@ -1,6 +1,7 @@
 #include "LedgerGameMode.h"
 
 #include "LedgerCharacter.h"
+#include "SliceCharacter.h"
 #include "VignetteShot.h"
 
 #include "GameFramework/DefaultPawn.h"
@@ -49,5 +50,12 @@ void ALedgerGameMode::InitGame(const FString& MapName, const FString& Options,
 	// started when InitGame runs. See VignetteShot.cpp's
 	// BuildInteractiveStreet for what it builds and how it lights and
 	// starts the player.
+	// THE SLICE, 23 September: the same street with the slice's player - a
+	// body that stands, walks and runs, on Unreal's framework - instead of
+	// the probe's camera on a capsule, which the walk and crime probes keep.
+	if (FParse::Param(FCommandLine::Get(), TEXT("LedgerSlice")))
+	{
+		DefaultPawnClass = ALedgerSliceCharacter::StaticClass();
+	}
 	LedgerVignetteShot::BuildInteractiveStreet(GetWorld());
 }
