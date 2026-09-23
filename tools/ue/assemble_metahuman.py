@@ -1,7 +1,8 @@
 """Assemble a MetaHuman Character into a usable character, in the editor, with no hands.
 
-    UnrealEditor-Cmd.exe ue-probe/LedgerProbe.uproject -run=pythonscript \
-        -script="tools/ue/assemble_metahuman.py" -unattended -nosplash
+    UnrealEditor.exe <project>    with Content/Python/init_unreal.py calling main_after_idle()
+    UnrealEditor-Cmd.exe <project> -run=pythonscript -script="tools/ue/assemble_metahuman.py"
+        (the commandlet form reaches the texture baking and crashes there)
     python3 tools/ue/assemble_metahuman.py --selftest     # runs without Unreal
 
 WHY IT EXISTS, 24 September. Jafar's order for the PS5 corner: "one MetaHuman
@@ -115,18 +116,32 @@ def main():
         sub.remove_object_to_edit(ch)
 
 
+def main_after_idle(seconds=20.0):
+    """THE FULL EDITOR'S WAY, 24 September. As a commandlet the build got
+    through the face and body meshes and then crashed in the Optimized
+    pipeline's texture baking (TextureGraph), with and without
+    -AllowCommandletRendering: the baking runs on the editor's own loop, which
+    a commandlet does not turn. So in the full editor this waits until the
+    editor has been up and idle for a while, builds once from a tick, as the
+    Assemble button does, and closes the editor. Called from the project's
+    start-up script, since -ExecutePythonScript closes the editor as soon as
+    its script returns."""
+    import unreal
+    state = {"t0": time.time(), "h": None}
+
+    def tick(delta):
+        if time.time() - state["t0"] < seconds:
+            return
+        unreal.unregister_slate_post_tick_callback(state["h"])
+        try:
+            main()
+        finally:
+            unreal.SystemLibrary.quit_editor()
+
+    state["h"] = unreal.register_slate_post_tick_callback(tick)
+
+
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    try:
-        main()
-    finally:
-        # RUN IN THE FULL EDITOR (-ExecutePythonScript), the editor stays up
-        # after the script unless it is told to go; as a commandlet it exits
-        # on its own and this does nothing.
-        try:
-            import unreal
-            if "executepythonscript" in unreal.SystemLibrary.get_command_line().lower():
-                unreal.SystemLibrary.quit_editor()
-        except Exception:
-            pass
+    main()

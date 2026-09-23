@@ -374,6 +374,22 @@ jobs:
           # tools/ue/make_base_material.py; the ordering and the editor-module
           # build are explained in ue-probe/Config/DefaultGame.ini beside the
           # cook directory. Failing here cannot stop the cook.
+          #
+          # THE CORNER'S METAHUMAN, 24 September. MH_Test is assembled on this
+          # PC by tools/ue/assemble_metahuman.py, in the full editor, into a
+          # scratch project outside the repository: 203 MB of assets, and the
+          # character itself is 138 MB, over GitHub's file limit. So the build
+          # copies the assembled folder into the probe's content here, before
+          # the editor run and the cook, and the cook takes it with /Game/Ledger.
+          # No folder: the line says so and the corner says class-not-found.
+          $mhSrc = "C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans"
+          $mhDst = Join-Path $PWD "ue-probe\Content\Ledger\MetaHumans"
+          if (Test-Path $mhSrc) {
+            robocopy $mhSrc $mhDst /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+            $L += "metahumanCopied=$(@(Get-ChildItem $mhDst -Recurse -File -ErrorAction SilentlyContinue).Count)-files"
+          } else {
+            $L += "metahumanCopied=NO-SOURCE/$($mhSrc -replace ' ','~')"
+          }
           $edCmd = Join-Path $ue "Engine\Binaries\Win64\UnrealEditor-Cmd.exe"
           $matPy = Join-Path $PWD "tools\ue\make_base_material.py"
           $matOut = Join-Path $PWD "ue-probe\ue-material.txt"
