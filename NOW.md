@@ -1050,7 +1050,9 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       the slice's whole loop in the packaged build, checked on every push;
       and an exploratory AI TESTER that plays the packaged game by screen and
       keys - FIRST find what Unreal provides for driving a packaged game from
-      outside (research running 23 Sep) and use it - run at the end of each
+      outside (DONE 23 Sep: production/research/ai-tester/WHAT-UNREAL-PROVIDES.md -
+      Gauntlet RunUnreal launches and supervises, a computer-use agent looks
+      and presses; its hands put to Jafar, money) and use it - run at the end of each
       sitting that changed the slice, findings to FOR-JAFAR worst first,
       bugs onto the checklist. The slice is not done until the scripted run
       passes and the tester has played it once with nothing serious open.
