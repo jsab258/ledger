@@ -972,7 +972,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       probe build (production/research/nano-listening-test/
       cpu-speed-2026-09-23.txt); clips in the scratchpad (nano-test/nano).
       Still to do: the card run (the voice environment lacks
-      torch_directml), and the blind page.
+      torch_directml). THE BLIND PAGE IS PUBLISHED 23 Sep:
+      https://claude.ai/artifact/KcjhMNZeMSJrDCBbSsEh3X (picks in its db,
+      collection "picks"); which side is Nano is in
+      C:/LedgerTools/chatterbox-nano/listening-key-2026-09-23.json, outside
+      the project so Jafar cannot see it before he picks.
 - [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
