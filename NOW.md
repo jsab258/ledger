@@ -941,6 +941,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             WRITTEN so tied friends share a place (the 55-of-80 fault is the
             Unity city's hand-placed routines; Quay Street has none yet). A
             data file the port's Schedule reads.
+      - [ ] THEIR CARDS BROUGHT TO CANON: the conversation model speaks
+            from each character's card, and the cards are the Unity era's -
+            Lena is "bookkeeper of the Hook Street pub" (LenaSetup.cs), where
+            canon since D19 has Mickey's a minicab office on Quay Street. Each
+            slice character's card rewritten to canon before they speak.
       - [ ] TALKING: walk up, press a key, type a line; the router (fixed
             today) and the paid conversation model answer; a line on screen.
       - [ ] THEIR VOICES: the speech graphs on the card through onnxruntime
