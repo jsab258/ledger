@@ -73,15 +73,28 @@ recommendation in FOR-JAFAR.md is to build them before the meter starts:
       `python tools/facade-drawing.py --block <block> --out <dir>` draws the
       recipe's own plan of the spec, as seen from the street, in millimetres
       (built 24 Sep; the three drawings came out of it on the first night).
-- [ ] an orthographic elevation shot per bay in the Unreal probe:
+- [x] an orthographic elevation shot per bay in the Unreal probe:
       `production/specs/facade-shots.json`, twelve shots, one per bay, 100 px
-      a metre, people and cars hidden. Written 24 Sep; proven only when a
-      probe run has made the twelve frames.
+      a metre, people and cars hidden. PROVEN 24 Sep: the probe run for
+      4b72442c made all twelve (`production/d1-probe/ue-facade_*.png`).
+      The lamp posts on the pavement still stand in front of some bays.
 - [x] the pair: `python tools/facade-pair.py --block <block> --bay <i> --frame
       <frame> --width-m 12.8 --centre-z-m 3.55 --out <pair>` puts the drawing
       over the frame and measures every drawn edge on it in millimetres,
       50 mm or under to pass (built 24 Sep; its self-test pairs a drawing with
       itself and catches a 120 mm shift).
+
+## The tools, tried once before the meter (24 Sep, just after midnight)
+
+The pair was run on Mickey's bay as it stands tonight, only to prove the
+tools. Nothing was changed on the facade. 17 of the 19 edges it could find
+were within 5 cm, most within 1 cm. The two that were not are the transom bar
+and its toplight rail: the strip lights behind the glass are the nearest strong
+edge, and by eye the bar lines up. So an edge the pair marks red is LOOKED AT
+on the pair before it is called wrong. Two things were fixed on the way: the
+footway's 0.1 m above the road, which put every level about 100 mm out; and
+taking the nearest strong edge rather than the strongest, since a sill has two
+edges 75 mm apart.
 
 ## Log (filled in during the sitting)
 

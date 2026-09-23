@@ -119,6 +119,8 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The slice's navigation works: the walking mesh is made, and a path to the cab rank is found.** It took three fixes. First the walker's size, then a marked walkable area over the street, then telling the engine that area's real size, which it had first read as a single point.
+- 2026-09-24 **Tomorrow's facade sitting is ready and not started.** The drawings, the straight-on Unreal frames of every bay, and the tool that lays one over the other and measures every edge all work. To prove the tools I tried them once on Mickey's bay as it stands, without changing anything: 17 of 19 edges came out within 5 cm.
 - 2026-09-24 **Your standing yes for Unreal downloads is recorded.** I've limited it to downloads from Epic's own services, and I'll name each one here as it happens.
 - 2026-09-24 **You said yes to downloading MH_Test's textures; I'm requesting them by script now.** If Epic wants a sign-in the script can't give, I'll say so here, with the clicks.
 - 2026-09-24 **The stop hook misread my progress answer to you.** It took the report's bullet points for 'For you' items and skipped the real item above them. It now reads the lines directly under 'For you:' and stops where the report starts.
