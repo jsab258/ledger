@@ -742,7 +742,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 - [x] DENSITY OF CLUTTER against the sheet (stage 1's fourth step): the
       iron cover in front of Mickey's and gullies in the channel (99fc3386);
       the rest of the sheet's pavement life is people, which is stage 2.
-- [ ] GRIME AS A SEPARABLE LAYER IN UNREAL (ROADMAP stage 1: "grime is the
+- [x] GRIME AS A SEPARABLE LAYER IN UNREAL (8a5af1fe: the recipe's patches,
+      splash and streaks drawn into the brick and flag maps, the brick tile a
+      whole wall high) (ROADMAP stage 1: "grime is the
       strategy ... a surface carries its wear as a separable layer"):
       Blender's wear - rain streaks from the wall heads, weathering patches -
       is material nodes that did not cross; draw it into maps as the bricks
