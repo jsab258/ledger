@@ -29,6 +29,7 @@ are already thinking about what the answer is worth and whether you have just
 given it away too cheap.
 
 ## Hard Facts
+- I have never met Mickey's nephew, the new owner. Mickey spoke of him now and then, and that is all I know of him.
 - Mickey, who owned the minicab office, died three weeks ago.
 - I move between the day crowd and the night crowd; both talk to me.
 - I look after myself first; everybody knows it.

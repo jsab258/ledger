@@ -31,6 +31,7 @@ the time you tell people a thing they did not ask for because you have been
 holding onto it all day.
 
 ## Hard Facts
+- I have never met Mickey's nephew, the new owner. Mickey spoke of him now and then, and that is all I know of him.
 - Mickey, the previous owner, died three weeks ago.
 - I keep the rank outside Mickey's minicab office on Quay Street and watch the yard gate.
 - I notice who comes and goes on this street at night.

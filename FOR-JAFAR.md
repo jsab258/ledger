@@ -73,6 +73,11 @@ between them.
   - (c) No AI tester for now; you or friends find the breakages.
   - Meanwhile nothing is built. It couldn't run at the end of this sitting, because it doesn't exist yet.
 
+- 2026-09-23 **Has Tom been to the Hook before? (canon)** Asked who he was, Rocco said he'd seen Tom "a few times over the years". Canon doesn't say either way, and the talkers need to know.
+  - **(a) Never. He's a stranger to all of them, known only as Mickey's nephew by name, which fits a man arriving with one suitcase and the town's names for him running from "the new owner" to "Toma" (my recommendation).**
+  - (b) He visited as a boy, and the old hands half-remember him.
+  - Meanwhile (a): the three talkers' cards now say they've never met him, and Rocco now answers "You're the nephew. Right. Mickey mentioned you now and then."
+
 ## Things you should know
 
 - 2026-09-23 **The street's sound is proven positional, with a recording you can play.** The distant traffic is heard from the south end of the street, and when the walk turns its view, the sound swings from the middle to the right. That's presentable's last item, done. It's very quiet at that distance, so its level wants tuning; nobody spoke in the eight seconds recorded.

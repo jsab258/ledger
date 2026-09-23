@@ -17,3 +17,12 @@ rule is in the engine's instructions and its reply check since this morning).
 Rocco claims to have seen Tom "a few times over the years", which canon may
 not allow for a nephew arriving with a suitcase; a finding for the cards, not
 the helper.
+
+## Rocco again, after the cards learned Tom is a stranger (same evening)
+
+The three talkers' cards now carry "I have never met Mickey's nephew, the new
+owner. Mickey spoke of him now and then, and that is all I know of him" - on
+the recommendation put to Jafar that Tom has never been to the Hook, while
+that canon question waits. The same line to Rocco, 1374 ms:
+
+> You're the nephew. Right. Mickey mentioned you now and then. I'm Rocco, I keep the rank out front and the yard gate.
