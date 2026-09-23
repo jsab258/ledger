@@ -789,6 +789,12 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       street's own walls in play, glass out of sight lines, the replaced
       pieces' collision off. NEXT: a crime run with it on, locally on the
       runner's build, and only if the verdict holds does it go true.
+      TRIED LOCALLY 23 Sep: the crime HOLDS on its own walls (FINDINGS);
+      the probes' bounds fixed so replaced pieces cannot empty them. BEFORE
+      IT GOES TRUE: re-check the walk's wall test on ec06df58's build, and
+      reconcile the drain grate - the scene file's sits 8 mm under the
+      Blender road's channel, so the walk cannot see it and no frame shows
+      it (a Blender gully at x 12, or the grate set to the Blender road).
 - [ ] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
       went into play the Blender glass, one mesh for every pane, stayed
       whole). The glass exported one mesh per bay and floor and the crime
