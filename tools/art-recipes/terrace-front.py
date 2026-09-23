@@ -1910,6 +1910,7 @@ def plan_street(root, spec_rel=SPEC_REL):
 
     # ---- the road between them, MEASURED from the street block -----------
     q, _e = load_spec(root, spec_rel, "east_parade")
+    gully = _street_gully(root, spec_rel)
     half = ROAD_HALF_M  # carriageway half width
     kerb_w = KERB_W_M
     foot = 2.0
@@ -1967,8 +1968,29 @@ def plan_street(root, spec_rel=SPEC_REL):
              "the-pavement-turns-the-corner-at-the-gable")
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
-        _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
-             -0.30, kerb_top_z(), "125mm-face-above-the-channel/the-standard-British-upstand")
+        # THE KERB DROPS OVER THE GULLY, as the scene file cuts it (street.
+        # gully: its side, centre, grate size and recess depth), 23 September.
+        # This kerb was one unbroken box, and with the street colliding the
+        # walk's rays to the grate crossed its top corner where the scene
+        # file's kerb is recessed (FINDINGS). The same three pieces the scene
+        # file makes: the run up to the grate, the dropped length over it,
+        # and the run on.
+        gx0 = gx1 = None
+        if gully and gully.get("side") == name:
+            half_g = float(gully["grate_size_m"]) / 2.0
+            gx0 = float(gully["centre_x_m"]) - half_g
+            gx1 = float(gully["centre_x_m"]) + half_g
+        if gx0 is None:
+            _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
+                 -0.30, kerb_top_z(), "125mm-face-above-the-channel/the-standard-British-upstand")
+        else:
+            _box(out, "kerb_%s" % name, "kerbstone", x0, gx0, min(a, b), max(a, b),
+                 -0.30, kerb_top_z(), "125mm-face-above-the-channel/the-standard-British-upstand")
+            _box(out, "kerb_%s_gully_recess" % name, "kerbstone", gx0, gx1, min(a, b), max(a, b),
+                 -0.30, kerb_top_z() - float(gully["recess_depth_m"]),
+                 "the-kerb-top-drops-over-the-grate/the-scene-file's-B3-gully-recess")
+            _box(out, "kerb_%s_on" % name, "kerbstone", gx1, x1, min(a, b), max(a, b),
+                 -0.30, kerb_top_z(), "125mm-face-above-the-channel/the-standard-British-upstand")
         c, d = sgn * (half + kerb_w), sgn * STREET_FRONTAGE_M
         _falling_slab(out, "footway_%s" % name, "paving", x0, x1, c, d,
                       footway_z(c), footway_z(d),
@@ -2785,6 +2807,16 @@ def footway_z(y):
     frontage, where it lands on the threshold."""
     back = ROAD_HALF_M + KERB_W_M
     return kerb_top_z() + max(0.0, min(abs(y), STREET_FRONTAGE_M) - back) * FOOTWAY_CROSSFALL
+
+
+def _street_gully(root, spec_rel):
+    """The scene file's gully recess (street.gully), or None."""
+    import json
+    try:
+        with open(os.path.join(root, spec_rel), encoding="utf-8") as fh:
+            return json.load(fh).get("street", {}).get("gully")
+    except (OSError, ValueError):
+        return None
 
 
 def _falling_slab(out, pid, material, x0, x1, ya, yb, za, zb, note=""):
@@ -6631,6 +6663,14 @@ def selftest():
             check("accept/the-kerb-stands-125mm-above-its-channel",
                   kerb is not None and abs(kerb["z1"] - road_z(3.0) - 0.125) < 1e-6,
                   "%.4f" % (kerb["z1"] - road_z(3.0)) if kerb else "no kerb_east")
+            rec = by.get("kerb_east_gully_recess")
+            g = _street_gully(ROOT, SPEC_REL) or {}
+            check("accept/the-kerb-drops-over-the-gully-as-the-scene-file-cuts-it",
+                  rec is not None and g.get("side") == "east"
+                  and abs((rec["x0"] + rec["x1"]) / 2.0 - float(g["centre_x_m"])) < 1e-9
+                  and abs((rec["x1"] - rec["x0"]) - float(g["grate_size_m"])) < 1e-9
+                  and abs(rec["z1"] - (kerb["z1"] - float(g["recess_depth_m"]))) < 1e-9,
+                  "%r" % (rec,) if rec else "no recess")
             fw = by.get("footway_east")
             if fw is not None and fw.get("kind") == "mesh":
                 tops = [v for v in fw["verts"] if v[2] > -0.29]
