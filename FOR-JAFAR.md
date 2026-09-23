@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **A first bit of clutter:** two crates out in front of the fish market's window, clear of its doors, and a litter bin on the far shops' pavement. It's a small step toward the lived-in look Kingdom Come has and our street doesn't, using props we already had.
 - 2026-09-24 **The dirt needs one more build.** The material that draws the stains is made and works, but the stain pictures themselves were never copied beside the game. That was on purpose, until the material existed. They're copied now, and the build after the hill's will show them.
 - 2026-09-24 **I turned one build red that wasn't broken.** The step I added to copy the MetaHuman's files reports "files copied" with a code the build machine reads as failure. Everything in the build had passed, and the MetaHuman is standing in the corner frames. The copy now has its own step that can't do that.
 - 2026-09-24 **The hill at the end of the street is rebuilt, its fifth try.** Beside the sheet it read as stadium seating: rows of separate little boxes with round trees. Now it's terraces stepping up the slope a house at a time, with gardens and trees between. It looks right in Blender; its Unreal frame comes in behind the other builds.
