@@ -304,11 +304,11 @@ Stage state: OPEN
 | A09.24 | No identical synchronised idle motion across a crowd | floor | done | six people, each started at its own phase of its loop (street-people.json), no two in step, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A21.01 | Human-scale doors, stairs, furniture and streets | ours | done | measured on a straight-on Unreal frame at 100 px a metre, 24 Sep: the side door stands 1981 mm (the British standard door, found within 4 mm), the shop door 900 mm wide, the stallriser 600 mm, the fascia's underside 2850 mm; the carriageway is 6 m and each footway 2 m in the scene file: [pair](production/art/compare/stage1-2026-09-24/pair-mickeys-bay-measured.png) |
 | A21.05 | Readable routes through ordinary environments | ours | open |  |
-| A21.06 | Landmarks that help orientation | ours | open |  |
+| A21.06 | Landmarks that help orientation | ours | done | the lettered fronts (MICKEY'S, FISH MARKET, RITA'S, the laundry), the red post box and phone box, and the hill that closes the north end tell which way you face and where you are, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A21.07 | Visually distinct areas rather than indistinguishable repeated streets | ours | open |  |
 | A22.01 | Complete visible surfaces without holes or missing faces | floor | done | no holes or missing faces anywhere in the Hook view in Unreal, both terraces, roofs, road and kerbs, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.02 | Appropriate detail at normal viewing distance | floor | open |  |
-| A22.03 | Textures that do not stretch conspicuously | floor | open |  |
+| A22.03 | Textures that do not stretch conspicuously | floor | done | on straight-on Unreal frames at 100 px a metre, brick, render, slate, paint and paving keep one scale across every wall, pier, fascia and roof, with no smear along a long face, 24 Sep: [parade](production/art/compare/stage1-2026-09-24/facade-east-parade-bay0.png), [plain row](production/art/compare/stage1-2026-09-24/facade-west-south-bay0.png) |
 | A22.04 | Texture scale consistent with real object size | floor | done | measured, not eyeballed, 24 Sep: the brick map carries 96 courses over its 7.2 m (75 mm, a British course) and reads about 7.5 px a course beside the 0.55 m fascia at 100 px a metre in the Hook view; the flags map carries six courses of 900 x 600 mm flags, four to a course, over its 3.6 m: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.05 | Materials distinguishable as wood, metal, glass, cloth and stone | floor | open |  |
 | A22.06 | Object edges that do not all look infinitely sharp | floor | open |  |
@@ -319,7 +319,7 @@ Stage state: OPEN
 | A22.11 | Wear and dirt consistent with use and exposure | floor | open |  |
 | A22.12 | Furnishing and clutter consistent with a place's function | floor | open |  |
 | A22.13 | Signs and labels that are readable when they matter | floor | done | MICKEY'S, RITA'S, FISH MARKET read at the Hook view, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
-| A22.14 | Period and setting consistency in conspicuous objects | floor | open |  |
+| A22.14 | Period and setting consistency in conspicuous objects | floor | done | nothing conspicuous in the Hook view is out of 1990: invented period saloons, a red post box and phone box, a 60 cm dish (ruled citable), lettered fascias, sash windows, period clothes; no phone, screen or modern car, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.15 | Objects that remain recognisable across lighting conditions | floor | done | the car, the woman, the lamp post, the shopfronts and the signs all read by day and by night from the same camera, 24 Sep: [day](production/art/compare/stage1-2026-09-24/camA-day.png), [night](production/art/compare/stage1-2026-09-24/camA-night.png) |
 | A22.16 | Detail changes with distance that do not cause conspicuous shape popping | floor | open |  |
 | A22.17 | Interior dressing that survives viewing from both directions | floor | open |  |
@@ -327,12 +327,12 @@ Stage state: OPEN
 | A23.02 | Shadows connecting people and objects to their surroundings | floor | open |  |
 | A23.03 | Shadows that broadly follow moving characters and lights | floor | open |  |
 | A23.04 | No major light leaking through solid walls | floor | done | at night the lit shops light their own windows and nothing else; no glow through brick or at wall joins, 24 Sep: [night A](production/art/compare/stage1-2026-09-24/camA-night.png), [night B](production/art/compare/stage1-2026-09-24/camB-night.png) |
-| A23.05 | Indoor light levels that differ plausibly from outdoors | floor | open |  |
+| A23.05 | Indoor light levels that differ plausibly from outdoors | floor | done | by night the shops are lit rooms in a dark street and by day their rooms sit a little under the daylight, as the sheet's windows do, 24 Sep: [night](production/art/compare/stage1-2026-09-24/camA-night.png), [day](production/art/compare/stage1-2026-09-24/camA-day.png) |
 | A23.06 | Exposure changes that do not blind the player during ordinary transitions | floor | open |  |
 | A23.07 | Dark areas that remain playable under the intended rules | floor | open |  |
 | A23.09 | Switchable lights whose appearance and illumination change together | floor | open |  |
 | A23.10 | Reflections that broadly agree with the environment | floor | open |  |
-| A23.12 | Glass that behaves consistently as transparent, reflective or obscured | floor | open |  |
+| A23.12 | Glass that behaves consistently as transparent, reflective or obscured | floor | done | each kind keeps its behaviour: shop glass shows the room through a sheen; house windows are dark panes behind white sashes, some netted; car glass is dark and reflective, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A23.13 | Stable image edges without distracting shimmer | floor | open |  |
 | A23.14 | Motion rendering without severe ghost trails | floor | open |  |
 | A23.15 | Consistent colour and brightness across gameplay and cutscenes | floor | open |  |
