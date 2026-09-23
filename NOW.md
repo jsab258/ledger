@@ -30,8 +30,10 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       flags 3.6 m). Re-running at true size; judge that frame, then done.
 - [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
       engine's own navigation log in the slice walk's verdict. 3b658691's
-      agent alone left navData=none (no bounds volume); e934f1e7 spawns one
-      over the street and calls Build. Waiting on its run.
+      agent alone left navData=none (no bounds volume); e934f1e7 spawned one
+      and got navData=yes, but the bounds registered as a point (size given
+      after the volume registered). Fixed locally (UpdateBounds + tell the
+      nav system again); goes out with the next probe push.
 - [ ] 3. THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
       character and into the corner without his hands, or exact steps for
       the morning. The face's project settings are mine to switch on.
@@ -53,6 +55,10 @@ FOR-JAFAR.md opens with "Overnight", five lines.
 - [ ] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
       facades ready to build end to end in Unreal, dimensioned drawing to
       accepted pair, and nothing else. He starts it with a meter reading.
+      Plan: production/sittings/2026-09-24-three-facades.md. Drawing and pair
+      tools built and committed (15cec6b6); the Unreal elevation shots
+      (production/specs/facade-shots.json + ortho/bare in VignetteShot) are
+      written, uncommitted, going out with the next probe push.
 - [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines: done,
       waiting on him, anything that went wrong.
 
