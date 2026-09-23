@@ -5,6 +5,14 @@ public class LedgerProbe : ModuleRules
 	public LedgerProbe(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+		// PRECISE FLOATING POINT, 23 September. Unreal builds a Game target
+		// with /fp:fast by default, which lets the compiler regroup
+		// arithmetic; an independent check of the reaction ladder's port found
+		// the packaged game computing ((0.35*c)*2.0)*0.4 as c*(0.7*0.4) and
+		// answering Confronts where the C# answers Refuses (12 in 841,183
+		// random inputs). The ported Core must give the C#'s answer, so the
+		// module is built precise, as the golden check already compiles it.
+		FPSemantics = FPSemanticsMode.Precise;
 		// A game module's minimum. Every dependency beyond these is time
 		// added to every cycle this project exists to measure.
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine" });

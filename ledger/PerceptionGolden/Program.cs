@@ -186,6 +186,127 @@ namespace Ledger.PerceptionGolden
             Row(sb, "ReactionConst", "ResistPressure", D(Reaction.ResistPressure));
         }
 
+        /// THE REACTION LADDER AND DECISION 7 (a), 23 September: StreetVoice's
+        /// Stance, GazeMetres, StoryThatShows and RemarkLedger, which the slice
+        /// needs in the shipping engine. The grid carries both sides of every
+        /// rung threshold, the coat's 0.12 and 0.7, the loyalty weights and the
+        /// leash, with and without a story that shows and a remark already had.
+        /// A story case is written out in its row - each rumour as
+        /// subject:predicate:value:confidence:sensitive:indelible:suppressed,
+        /// joined by ';' - so the port builds the same holder from the row.
+        static void EmitStance(StringBuilder sb)
+        {
+            var sus = new[] { 0.0, 0.21, 0.22, 0.47, 0.48, 0.4910, 0.5, 0.5455, 0.76, 0.77, 1.0 };
+            var loys = new[] { 0.1, 0.5, 0.95, 1.0 };
+            var ts = new[] { 0.0, 0.06, 0.07, 0.2, 0.3, 0.3111, 0.3556, 0.37, 0.38, 0.68, 0.69, 0.7, 0.7778, 1.0 };
+            foreach (var s in sus)
+                foreach (var loy in loys)
+                    foreach (var t in ts)
+                        foreach (var leash in new[] { false, true })
+                            foreach (var coat in new[] { false, true })
+                                foreach (var knows in new[] { false, true })
+                                    foreach (var had in new[] { false, true })
+                                        Row(sb, "Stance", D(s), D(loy), D(t), Bit(leash), Bit(coat), Bit(knows), Bit(had),
+                                            StreetVoice.Stance(s, loy, t, leash, coat, knows, had).ToString());
+            // ON EACH THRESHOLD AND ONE ROUNDING STEP EITHER SIDE, which the grid
+            // alone never reached (an independent check planted '>' for '>='
+            // at 0.12 and 0.42 and the grid passed it): suspicion alone for the
+            // low rungs, suspicion 1 and a story for the high ones, and the
+            // loyalty damping's 0.85 switch.
+            foreach (var th in new[] { 0.12, 0.26, 0.42 })
+            {
+                double s0 = th / 0.55;
+                foreach (var s in new[] { Math.BitDecrement(s0), s0, Math.BitIncrement(s0) })
+                    foreach (var knows in new[] { false, true })
+                        Row(sb, "Stance", D(s), D(0.5), D(0.0), "0", "0", Bit(knows), "0",
+                            StreetVoice.Stance(s, 0.5, 0.0, false, false, knows, false).ToString());
+            }
+            foreach (var th in new[] { 0.58, 0.72, 0.85, 0.86 })
+            {
+                double t0 = (th - 0.55) / 0.45;
+                foreach (var t in new[] { Math.BitDecrement(t0), t0, Math.BitIncrement(t0) })
+                    foreach (var loy in new[] { 0.5, 0.6825868618354421 })
+                        foreach (var leash in new[] { false, true })
+                            Row(sb, "Stance", D(1.0), D(loy), D(t), Bit(leash), "0", "0", "0",
+                                StreetVoice.Stance(1.0, loy, t, leash, false).ToString());
+            }
+            // the coat's 0.7, from a pressure a step either side of it
+            foreach (var t in new[] { Math.BitDecrement((0.7 - 0.55) / 0.45), (0.7 - 0.55) / 0.45, Math.BitIncrement((0.7 - 0.55) / 0.45) })
+                Row(sb, "Stance", D(1.0), D(0.5), D(t), "0", "1", "0", "0",
+                    StreetVoice.Stance(1.0, 0.5, t, false, true).ToString());
+            // THE REGRESSION ROW: the case /fp:fast turned from Refuses to Confronts.
+            Row(sb, "Stance", D(0.9765076510350786), D(0.6825868618354421), D(0.8312113627658453), "0", "0", "0", "0",
+                StreetVoice.Stance(0.9765076510350786, 0.6825868618354421, 0.8312113627658453, false, false).ToString());
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                Row(sb, "GazeMetres", k.ToString(), D(StreetVoice.GazeMetres(k)));
+
+            string[][] cases =
+            {
+                new[] { "0.2", "player:night_walk:seen:0.3:1:0:0" },
+                new[] { "0.2", "player:night_walk:seen:0.2:1:0:0" },
+                new[] { "0.2", "player:night_walk:seen:0.19:1:0:0" },
+                new[] { "0.2", "player:night_walk:seen:0.3:0:0:0" },
+                new[] { "0.2", "player:night_walk:seen:0.9:1:0:1" },
+                new[] { "0.2", "player:night_walk:seen:0.9:1:1:1" },
+                new[] { "0.2", "rocco:night_walk:seen:0.9:1:0:0" },
+                new[] { "0.2", "player:night_walk:seen:0.3:1:0:0;player:yard_visit:seen:0.6:1:0:0" },
+                new[] { "0.2", "player:yard_visit:seen:0.6:0:0:0;player:night_walk:seen:0.3:1:0:0" },
+                new[] { "0.5", "player:night_walk:seen:0.3:1:0:0" },
+                new[] { "0.25", "player:night_walk:seen:0.3:1:0:0" },
+                new[] { "0.2", "" },
+                // ties keep the first; the stronger first; a suppressed stronger
+                // story leaving the weaker to show
+                new[] { "0.2", "player:night_walk:seen:0.4:1:0:0;player:yard_visit:seen:0.4:1:0:0" },
+                new[] { "0.2", "player:yard_visit:seen:0.6:1:0:0;player:night_walk:seen:0.3:1:0:0" },
+                new[] { "0.2", "player:yard_visit:seen:0.8:1:0:1;player:night_walk:seen:0.3:1:0:0" },
+            };
+            foreach (var c in cases)
+            {
+                var g = new Gossiper("h", "h", new MemoryStore("h"), new KnowledgeBase(), new SuspicionTracker());
+                foreach (var enc in c[1].Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var f = enc.Split(':');
+                    var r = new Rumor
+                    {
+                        Content = new Fact(f[0], f[1], f[2]), OriginId = "o", Summary = "s",
+                        Confidence = double.Parse(f[3], Inv), Sensitive = f[4] == "1", Indelible = f[5] == "1",
+                    };
+                    g.Rumors.Add(r);
+                    if (f[6] == "1") g.Suppressed.Add(r.TopicKey);
+                }
+                var shows = StreetVoice.StoryThatShows(g, double.Parse(c[0], Inv));
+                Row(sb, "StoryThatShows", c[0], c[1] == "" ? "none" : c[1],
+                    (shows == null ? -1 : g.Rumors.IndexOf(shows)).ToString(Inv));
+            }
+
+            foreach (var (person, subj, pred, val) in new[] {
+                ("m", "player", "informer", "rocco"), ("m", "player", "informer", "joey"),
+                ("n", "player", "night_walk", "seen"), ("", "player", "killed", "") })
+            {
+                var r = new Rumor { Content = new Fact(subj, pred, val) };
+                // THE KEY CARRIES THE TABLE'S OWN SEPARATOR, so '|' is written '#'.
+                Row(sb, "RemarkKey", person == "" ? "none" : person, subj, pred, val == "" ? "none" : val,
+                    RemarkLedger.KeyFor(person, r).Replace('|', '#'));
+            }
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var heard in new[] { false, true })
+                {
+                    var led = new RemarkLedger();
+                    var r = new Rumor { Content = new Fact("player", "night_walk", "seen") };
+                    var recorded = led.Record("m", r, k, heard);
+                    // recorded, then whether it now reads as had: two bits, one answer
+                    Row(sb, "RemarkRecord", k.ToString(), Bit(heard), Bit(recorded) + Bit(led.HasRemarked("m", r)));
+                }
+            {
+                // ONCE: the same heard remark recorded twice records once.
+                var led = new RemarkLedger();
+                var r = new Rumor { Content = new Fact("player", "night_walk", "seen") };
+                bool first = led.Record("m", r, StanceKind.Comments, true);
+                bool second = led.Record("m", r, StanceKind.Comments, true);
+                Row(sb, "RemarkRecordTwice", "Comments", "1", Bit(first) + Bit(second));
+            }
+        }
+
         static void EmitCrimeSlice(StringBuilder sb)
         {
             // ---- Perception, the hearing half -------------------------
@@ -322,6 +443,7 @@ namespace Ledger.PerceptionGolden
                 Row(sb, "SaysWord", Esc(c[0]), Esc(c[1]), Bit(GossipMill.SaysWord(c[0], c[1])));
 
             EmitArrest(sb);
+            EmitStance(sb);
             EmitScenarios(sb);
             EmitSchedule(sb);
         }
