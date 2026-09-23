@@ -1048,12 +1048,17 @@ namespace
 		// AND THE PANE THE PLAYER ACTUALLY SEES, when the Blender street is
 		// in play: its glass is one mesh per bay and floor, and the one that
 		// meets this pane goes too, or the window the crime broke stays whole.
-		C.StreetPanes = LedgerVignetteShot::HideStreetGlassNear(Glass->GetComponentsBoundingBox());
+		// The pane's bounds WITH its non-colliding parts: its collision went
+		// off two lines up, and the default bounds would be empty.
+		C.StreetPanes = LedgerVignetteShot::HideStreetGlassNear(Glass->GetComponentsBoundingBox(true));
 
 		// The glass's own bounds give the window foot; the shards are laid on
 		// the footway in front of it and each one sits on the ground a
 		// downward trace found, never on a typed height.
-		const FBox GlassBox = Glass->GetComponentsBoundingBox();
+		// WITH NON-COLLIDING PARTS, 23 September: the pane's collision is off
+		// by now, and the engine's default bounds leave out components that
+		// do not collide, so this box was empty and its centre the origin.
+		const FBox GlassBox = Glass->GetComponentsBoundingBox(true);
 		const LedgerCrime::P3 Centre = ToStreet(GlassBox.GetCenter());
 		for (int I = 0; I < LedgerCrime::ShardOffsetCount(); ++I)
 		{
