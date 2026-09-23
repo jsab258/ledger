@@ -7245,7 +7245,11 @@ namespace LedgerVignetteShot
 		{
 			AStaticMeshActor* A = GStreetActors[I];
 			if (A == nullptr || GStreet.Rows[(size_t)I].Base != "glass") { continue; }
-			if (!A->GetComponentsBoundingBox().Intersect(Grown)) { continue; }
+			// NON-COLLIDING INCLUDED: the street's glass has no collision
+			// unless street_collision is on, and the engine's default
+			// bounds leave out every component that does not collide - the
+			// first run of this hid nothing, streetPanesHidden=0.
+			if (!A->GetComponentsBoundingBox(true).Intersect(Grown)) { continue; }
 			A->SetActorHiddenInGame(true);
 			A->SetActorEnableCollision(false);
 			++Hidden;
