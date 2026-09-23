@@ -1656,10 +1656,10 @@ namespace
 			GLook.GlowGain);
 		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/17 lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookFrom=%s lookRead=%d/18 lookFogCapGainDay=%.2f lookStreetInPlay=%s lookWetFloors=%d lookNightBias=%.2f lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
 			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
 			" streetFilm=%d streetGlassHidden=%d streetGlassWorn=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read,
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.FogCapGainDay,
 			GLook.bStreetInPlay ? "yes/scene-file-collision-kept" : "no", (int)GLook.WetFloors.size(),
 			GLook.NightExposureBias,
 			(int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
@@ -2699,7 +2699,8 @@ namespace
 				// off the component after the last condition applied
 				// (SkySegmentNow, last-wins), with nothing asked beside it;
 				// the per-shot read beside the ask is queue 287.
-				F->SetFogMaxOpacity(bWhole ? (float)C.FogMaxOpacity : 1.0f);
+				F->SetFogMaxOpacity(bWhole ? (float)FMath::Min(1.0,
+					C.FogMaxOpacity * (C.SunOn ? GLook.FogCapGainDay : 1.0)) : 1.0f);
 			}
 		}
 		// ---- THE SKY, WRITTEN ON CHANGE AND NOT PER TICK ---------------

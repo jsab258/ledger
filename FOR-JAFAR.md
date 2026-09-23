@@ -57,6 +57,12 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The game engine's day allows three times the fog you ruled
+  on 14 September** (your cap 0.100 becomes 0.300 there, by a multiplier in
+  its own settings; the scene file's number is untouched). With the street's
+  new bend and hillside, the far end measured darker and sharper than the
+  sheet's haze; now it measures 120/109/101 against the sheet's 120/108/104.
+  Say if the cap should stay yours.
 - 2026-09-23 **The walls in the game engine are weathered now**, as
   Blender's were: soft dirty patches, a darker band at the foot where rain
   splashes, and streaks running down from the wall heads, drawn into the
