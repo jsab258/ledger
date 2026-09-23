@@ -1,0 +1,29 @@
+[
+ {
+  "id": "H316",
+  "moment": "M08",
+  "kind": "command",
+  "text": "second choice on the list please, the warehouse one",
+  "intended": {
+   "kind": "speech"
+  },
+  "label1": {
+   "kind": "speech"
+  },
+  "label2": {
+   "kind": "ambiguous",
+   "readings": [
+    {
+     "kind": "speech"
+    },
+    {
+     "kind": "verb",
+     "verb": "ask_about",
+     "args": {
+      "topic": "the warehouse"
+     }
+    }
+   ]
+  }
+ }
+]

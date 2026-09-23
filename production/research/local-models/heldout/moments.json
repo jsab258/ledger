@@ -1,0 +1,126 @@
+{
+  "about": "Thirty moments for the held-out router test, 2026-09-23. Verbs are the game's own catalogue (IntentBridge, CoreTests, RouterFloor); cast and places from canon.md; the content rule (D18) holds: no drink, betting or children. Each moment is what the router would be told: who the player speaks to, the scene, the verbs on offer with their closed arguments, and the people it knows by name.",
+  "moments": [
+    { "id": "M01", "speakingTo": "Rocco", "scene": "the back room at Mickey's, the minicab office, early morning", "knownPeople": ["Rocco", "Lena"],
+      "verbs": [
+        { "id": "set_cut", "say": "change what a crew member keeps", "args": { "policy": ["fair", "generous", "skim"] }, "lexical": ["set their cut", "change their cut"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M02", "speakingTo": "a fish-market trader", "scene": "the fish market on Quay Street, midday; the trader has been telling people you torched a van", "knownPeople": ["Rocco", "Sera Kest"],
+      "verbs": [
+        { "id": "pay_off", "say": "pay them to stop repeating it", "detail": "about £90; you have £260", "lexical": ["pay them off", "buy their silence"] },
+        { "id": "lean_on", "say": "frighten them into keeping it to themselves", "lexical": ["lean on them", "scare them"] },
+        { "id": "plant_doubt", "say": "put a counter-story about into the street", "lexical": ["plant doubt", "muddy the water"] } ] },
+    { "id": "M03", "speakingTo": "Lena", "scene": "Mickey's office, the ledger open on the desk", "knownPeople": ["Lena", "Rocco", "Danny Ro"],
+      "verbs": [
+        { "id": "collect_debt", "say": "ask them for the money they owe", "detail": "£60 outstanding", "lexical": ["collect the debt", "ask for my money"] },
+        { "id": "forgive_debt", "say": "cancel what they owe, in front of them", "detail": "£60 written off", "lexical": ["forgive the debt", "write it off"] } ] },
+    { "id": "M04", "speakingTo": "a driver on the rank", "scene": "the minicab rank outside Mickey's, raining", "knownPeople": ["Rocco", "Sam"],
+      "verbs": [
+        { "id": "collect_debt", "say": "ask them for the money they owe", "detail": "£45 outstanding", "lexical": ["collect the debt", "call in the debt"] },
+        { "id": "lean_on", "say": "frighten them into keeping it to themselves", "lexical": ["lean on him", "scare him"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M05", "speakingTo": "Sam", "scene": "Quay Street pavement, late evening", "knownPeople": ["Sam", "Rocco", "Danny Ro", "Sera Kest"],
+      "verbs": [
+        { "id": "inform", "say": "tell the police what somebody has been doing", "detail": "they will know you were in there", "args": { "who": ["Danny Ro", "Sera Kest"] }, "lexical": ["inform on", "grass on"] },
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the break-in", "the van"] }, "lexical": ["ask what they saw"] } ] },
+    { "id": "M06", "speakingTo": "Ada", "scene": "the café on Quay Street, a quiet table at the back", "knownPeople": ["Ada", "Sam", "Noor"],
+      "verbs": [] },
+    { "id": "M07", "speakingTo": "a dock clerk", "scene": "the harbour office, the clerk behind the counter; he has been talking about you", "knownPeople": ["Sera Kest", "Aldous Vane"],
+      "verbs": [
+        { "id": "use_hook", "say": "use what you know about them against them", "detail": "you hold something serious", "lexical": ["use what i know", "hold it over them"] },
+        { "id": "pay_off", "say": "pay them to stop repeating it", "detail": "about £150; you have £400", "lexical": ["pay them off"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M08", "speakingTo": "Rocco", "scene": "the yard behind Mickey's, after dark", "knownPeople": ["Rocco", "Lena", "Danny Ro"],
+      "verbs": [
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the fire", "the warehouse"] }, "lexical": ["ask what they saw"] },
+        { "id": "set_cut", "say": "change what a crew member keeps", "args": { "policy": ["fair", "generous", "skim"] }, "lexical": ["change their cut"] } ] },
+    { "id": "M09", "speakingTo": "Father Emil", "scene": "the church steps on a grey morning", "knownPeople": ["Father Emil", "June"],
+      "verbs": [
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the funeral", "the break-in"] }, "lexical": ["ask what they saw"] } ] },
+    { "id": "M10", "speakingTo": "a newsagent", "scene": "the newsagent's on the parade; he owes Mickey's book and has been spreading talk", "knownPeople": ["Rocco", "Noor"],
+      "verbs": [
+        { "id": "collect_debt", "say": "ask them for the money they owe", "detail": "£120 outstanding", "lexical": ["collect the debt"] },
+        { "id": "forgive_debt", "say": "cancel what they owe, in front of them", "detail": "£120 written off", "lexical": ["wipe the slate"] },
+        { "id": "pay_off", "say": "pay them to stop repeating it", "detail": "about £80; you have £200", "lexical": ["buy his silence"] },
+        { "id": "lean_on", "say": "frighten them into keeping it to themselves", "lexical": ["lean on him"] } ] },
+    { "id": "M11", "speakingTo": "Mara Ellis", "scene": "outside the police station, the detective lighting a cigarette", "knownPeople": ["Mara Ellis", "Danny Ro", "Sera Kest", "Aldous Vane"],
+      "verbs": [
+        { "id": "inform", "say": "tell the police what somebody has been doing", "detail": "they will know you were in there", "args": { "who": ["Danny Ro", "Sera Kest", "Aldous Vane"] }, "lexical": ["inform on", "give the police a name"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M12", "speakingTo": "the Fixer", "scene": "a parked car on the harbour road, engine running", "knownPeople": ["the Fixer", "Sera Kest", "Danny Ro"],
+      "verbs": [] },
+    { "id": "M13", "speakingTo": "Danny Ro", "scene": "the multi-storey car park by the Parade, his crew watching", "knownPeople": ["Danny Ro", "Rocco"],
+      "verbs": [
+        { "id": "threaten", "say": "lean on them", "detail": "his crew are watching", "args": { "tone": ["quiet", "loud"] }, "lexical": ["threaten him"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M14", "speakingTo": "a market porter", "scene": "Copper Row, the porter stacking crates; he saw something last night", "knownPeople": ["Sam", "Sera Kest"],
+      "verbs": [
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the lorry", "the fight"] }, "lexical": ["ask what they saw"] },
+        { "id": "pay_off", "say": "pay them to keep quiet", "args": { "amount": ["50", "100"] }, "lexical": ["pay him off"] } ] },
+    { "id": "M15", "speakingTo": "June", "scene": "Mickey's flat above the office, boxes half packed", "knownPeople": ["June", "Lena", "Father Emil"],
+      "verbs": [
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["Mickey's last week", "the letter"] }, "lexical": ["ask what they saw"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M16", "speakingTo": "Lena", "scene": "the office after closing, the crew's envelopes on the desk", "knownPeople": ["Lena", "Rocco", "Sam"],
+      "verbs": [
+        { "id": "set_cut", "say": "change what a crew member keeps", "args": { "policy": ["fair", "generous", "skim"] }, "lexical": ["set their cut"] },
+        { "id": "inform", "say": "tell the police what somebody has been doing", "detail": "they will know you were in there", "args": { "who": ["Rocco", "Sam"] }, "lexical": ["grass on"] } ] },
+    { "id": "M17", "speakingTo": "a cafe owner", "scene": "the café counter, morning rush; she heard the story about you", "knownPeople": ["Ada", "Noor"],
+      "verbs": [
+        { "id": "plant_doubt", "say": "put a counter-story about into the street", "lexical": ["start a different story"] },
+        { "id": "pay_off", "say": "pay them to stop repeating it", "detail": "about £60; you have £90", "lexical": ["pay her off"] } ] },
+    { "id": "M18", "speakingTo": "Sera Kest", "scene": "the syndicate's warehouse office on the docks", "knownPeople": ["Sera Kest", "Danny Ro", "Aldous Vane"],
+      "verbs": [
+        { "id": "threaten", "say": "lean on them", "detail": "she has men in the next room", "args": { "tone": ["quiet", "loud"] }, "lexical": ["threaten her"] },
+        { "id": "use_hook", "say": "use what you know about them against them", "detail": "you hold something small", "lexical": ["hold it over her"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M19", "speakingTo": "Noor", "scene": "the newspaper office, her desk under a pile of proofs", "knownPeople": ["Noor", "Mara Ellis", "Aldous Vane"],
+      "verbs": [
+        { "id": "plant_doubt", "say": "put a counter-story about into the street", "lexical": ["muddy the waters"] },
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the council vote", "the fire"] }, "lexical": ["ask what they saw"] } ] },
+    { "id": "M20", "speakingTo": "a debtor", "scene": "his doorstep on a terrace off Quay Street", "knownPeople": ["Rocco", "Lena"],
+      "verbs": [
+        { "id": "collect_debt", "say": "ask them for the money they owe", "detail": "£200 outstanding", "lexical": ["collect the debt", "want my money"] },
+        { "id": "forgive_debt", "say": "cancel what they owe, in front of them", "detail": "£200 written off", "lexical": ["tear out the page"] },
+        { "id": "threaten", "say": "lean on them", "detail": "his neighbours can hear", "args": { "tone": ["quiet", "loud"] }, "lexical": ["threaten him"] } ] },
+    { "id": "M21", "speakingTo": "Elias", "scene": "the bench outside the closed school, late afternoon", "knownPeople": ["Elias", "Noor"],
+      "verbs": [] },
+    { "id": "M22", "speakingTo": "Aldous Vane", "scene": "a council committee room, after the meeting", "knownPeople": ["Aldous Vane", "Mara Ellis"],
+      "verbs": [
+        { "id": "use_hook", "say": "use what you know about them against them", "detail": "you hold something serious", "lexical": ["remind them what i know"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M23", "speakingTo": "a van driver", "scene": "the loading bay behind the fish market; he has been telling people what he saw", "knownPeople": ["Sera Kest", "Rocco"],
+      "verbs": [
+        { "id": "pay_off", "say": "pay them to keep quiet", "args": { "amount": ["80", "160"] }, "lexical": ["pay him off"] },
+        { "id": "threaten", "say": "lean on them", "detail": "he is nervous", "args": { "tone": ["quiet", "loud"] }, "lexical": ["threaten him"] },
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the crates", "the boat"] }, "lexical": ["ask what they saw"] } ] },
+    { "id": "M24", "speakingTo": "Rocco", "scene": "the front office at Mickey's, the radio crackling", "knownPeople": ["Rocco", "Lena", "Sam"],
+      "verbs": [] },
+    { "id": "M25", "speakingTo": "a shopkeeper", "scene": "the hardware shop on the parade; he owes the book and knows it", "knownPeople": ["Lena", "Rocco"],
+      "verbs": [
+        { "id": "collect_debt", "say": "ask them for the money they owe", "detail": "£75 outstanding", "lexical": ["collect what they owe"] },
+        { "id": "lean_on", "say": "frighten them into keeping it to themselves", "lexical": ["put the frighteners"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M26", "speakingTo": "Sam", "scene": "the minicab office waiting room, a quiet night", "knownPeople": ["Sam", "Lena", "Danny Ro"],
+      "verbs": [
+        { "id": "ask_about", "say": "ask what they saw", "args": { "topic": ["the fight", "the stranger"] }, "lexical": ["ask what they saw"] },
+        { "id": "set_cut", "say": "change what a crew member keeps", "args": { "policy": ["fair", "generous", "skim"] }, "lexical": ["change their cut"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] },
+    { "id": "M27", "speakingTo": "a bus-stop gossip", "scene": "the bus shelter on the harbour road, three people waiting", "knownPeople": ["Rocco", "Noor"],
+      "verbs": [
+        { "id": "plant_doubt", "say": "put a counter-story about into the street", "lexical": ["plant doubt"] },
+        { "id": "lean_on", "say": "frighten them into keeping it to themselves", "lexical": ["scare them"] } ] },
+    { "id": "M28", "speakingTo": "Lena", "scene": "Mickey's funeral tea in the church hall", "knownPeople": ["Lena", "June", "Father Emil"],
+      "verbs": [] },
+    { "id": "M29", "speakingTo": "a Parade Rats lookout", "scene": "the underpass by the Parade, graffiti on the walls", "knownPeople": ["Danny Ro", "Rocco"],
+      "verbs": [
+        { "id": "threaten", "say": "lean on them", "detail": "he is alone", "args": { "tone": ["quiet", "loud"] }, "lexical": ["threaten him"] },
+        { "id": "pay_off", "say": "pay them to keep quiet", "args": { "amount": ["40", "80"] }, "lexical": ["pay him off"] },
+        { "id": "inform", "say": "tell the police what somebody has been doing", "detail": "they will know you were in there", "args": { "who": ["Danny Ro"] }, "lexical": ["grass on"] } ] },
+    { "id": "M30", "speakingTo": "the Fixer", "scene": "the back of the Tivoli cinema during the matinee", "knownPeople": ["the Fixer", "Aldous Vane", "Sera Kest", "Danny Ro"],
+      "verbs": [
+        { "id": "use_hook", "say": "use what you know about them against them", "detail": "you hold something small", "lexical": ["use what you know"] },
+        { "id": "inform", "say": "tell the police what somebody has been doing", "detail": "they will know you were in there", "args": { "who": ["Aldous Vane", "Sera Kest", "Danny Ro"] }, "lexical": ["inform on"] },
+        { "id": "leave", "say": "walk away", "lexical": ["walk away"] } ] }
+  ]
+}
