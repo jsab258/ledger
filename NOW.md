@@ -14,6 +14,33 @@ items below are unstruck and the six hours have not run out. It is written at
 the start of every sitting; without it the hook permits and says it measured
 nothing.
 
+## TONIGHT, 23-24 September, overnight - Jafar's order
+
+Nothing waits for him: every decision is my recommendation, written in
+FOR-JAFAR.md. Check free memory before anything heavy; MetaHuman Creator only
+with 10 GB free; never end another session's processes. Before he wakes,
+FOR-JAFAR.md opens with "Overnight", five lines.
+
+- [ ] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
+      paint (production/assets/scanned/polyhaven, true scale and the sheet's
+      gain in materials.json) on the corner, beside the Kingdom Come frames.
+- [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
+      engine's own navigation log in the slice walk's verdict.
+- [ ] 3. THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
+      character and into the corner without his hands, or exact steps for
+      the morning. The face's project settings are mine to switch on.
+- [ ] 4. NANO ON THE CARD WITH THE GAME RUNNING (download approved).
+- [ ] 5. THEN DOWN THE PRESENTABLE CHECKLIST.
+- [ ] THE NINETEEN CAST VOICES' PERMISSIONS, voice by voice in FOR-JAFAR,
+      against the TTS licensing research, before anything more is recorded.
+- [ ] THE COST OF AN HOUR OF PLAY on the paid model, from real calls in the
+      slice, beside what it means for a released game.
+- [ ] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
+      facades ready to build end to end in Unreal, dimensioned drawing to
+      accepted pair, and nothing else. He starts it with a meter reading.
+- [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines: done,
+      waiting on him, anything that went wrong.
+
 ## 1. Toward the Hook sheet (stage 1)
 
 - [x] The shopfront's two faults: the doors where they meet, and the transom
