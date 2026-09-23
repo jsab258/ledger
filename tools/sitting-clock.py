@@ -216,6 +216,10 @@ def for_you_items(message):
     rest = head[len(OPENER):].strip() if head.startswith(OPENER) else ""
     if rest and _words(rest) not in EMPTY:
         items.append(rest)
+    # "FOR YOU: NOTHING NEW" CLOSES THE BLOCK ON ITS OWN LINE. Without this,
+    # the bullets of the reply below it were read as items (23 September).
+    if rest and _words(rest) in EMPTY:
+        return []
     i += 1
     for line in lines[i:]:
         t = line.strip()
@@ -462,6 +466,10 @@ def selftest():
     v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9),
                   "For you: nothing new" + chr(10) + chr(10) + "Done.", FJ)
     check("accept/for-you-nothing-new-needs-no-file-entry", v == PERMIT, r)
+    body = ("For you: nothing new" + chr(10) + chr(10) + "The answer:" + chr(10)
+            + "- a bullet in the reply, not an item" + chr(10))
+    check("accept/bullets-under-nothing-new-are-the-reply-not-items", for_you_items(body) == [],
+          str(for_you_items(body)))
 
     # ONLY THE BUILDER'S CHECKOUT IS HELD TO THE LIST.
     import tempfile
