@@ -240,10 +240,14 @@ namespace LedgerStreet
 		return -1.0;
 	}
 	inline bool TakesWater(const std::string& Base) { return WetFloorOf(Base) >= 0.0; }
-	inline double WetnessParamFor(const std::string& Base, double W)
+	// FloorOverride, when zero or more, replaces the recipe's floor for a
+	// surface that takes water - the look file's wet_floor, because the
+	// approved sheet's flags are shinier than the one Blender was tuned to.
+	inline double WetnessParamFor(const std::string& Base, double W, double FloorOverride = -1.0)
 	{
-		const double Floor = WetFloorOf(Base);
+		double Floor = WetFloorOf(Base);
 		if (Floor < 0.0) { return 0.0; }
+		if (FloorOverride >= 0.0) { Floor = FloorOverride; }
 		const double Share = (0.62 - Floor) / (0.62 - 0.08);
 		const double V = WetCurve(W) * Share;
 		return V < 0.0 ? 0.0 : (V > 1.0 ? 1.0 : V);
@@ -300,7 +304,10 @@ namespace LedgerStreet
 		// of a window is glass and how much is the room, and how smooth.
 		double GlassOpacity;
 		double GlassRoughness;
-		int    Read;             // how many of the fifteen the file supplied
+		// A WET SURFACE'S ROUGHNESS FLOOR IN THIS ENGINE, by base material,
+		// where it differs from the recipe's (road 0.05, paving 0.46, kerb 0.40).
+		std::vector<std::pair<std::string, double> > WetFloors;
+		int    Read;             // how many of the sixteen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
@@ -318,6 +325,16 @@ namespace LedgerStreet
 		}
 		Grade White = {1.0, 1.0, 1.0};
 		return White;
+	}
+
+	// THE LOOK FILE'S WET FLOOR FOR ONE SURFACE, or -1 for the recipe's own.
+	inline double WetFloorOverride(const Look& Lk, const std::string& Base)
+	{
+		for (size_t I = 0; I < Lk.WetFloors.size(); ++I)
+		{
+			if (Lk.WetFloors[I].first == Base) { return Lk.WetFloors[I].second; }
+		}
+		return -1.0;
 	}
 
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
@@ -361,6 +378,18 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("wet_floor");
+		if (V != 0 && V->Type == T_OBJ)
+		{
+			for (size_t I = 0; I < V->Obj.size(); ++I)
+			{
+				if (V->Obj[I].second.Type == T_NUM && V->Obj[I].second.Num >= 0.0)
+				{
+					Out.WetFloors.push_back(std::make_pair(V->Obj[I].first, V->Obj[I].second.Num));
+				}
+			}
+			++Out.Read;
+		}
 		V = Root.Find("surface_gain");
 		if (V != 0 && V->Type == T_OBJ)
 		{

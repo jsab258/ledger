@@ -1927,6 +1927,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     # AND THE OTHER END, since the camera turned to face it.
     _north_rise(out)
     _north_approach(out)
+    _pavement_dressing(out)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
     _repair_patches(out)
@@ -2426,6 +2427,30 @@ def _repair_patches(out):
 #: door anyone can reach, nothing in the stage's street. Stage 6 builds the
 #: town and deletes this. (It ran straight on to x = 108 until 23 September;
 #: see the bend below.)
+
+
+#: WHAT THE SHEET HAS SET INTO ITS PAVEMENT AND CHANNEL, 23 September: an iron
+#: utility cover in a red-brown surround on the flags in front of the cab
+#: office's window, and gully grates along the kerb at intervals rather than
+#: the scene file's one. Flush with what they sit in, so nothing trips a
+#: walker; dressing only, nothing a system reads.
+PAVEMENT_COVERS = ((6.4, 3.9),)                  # (x, y) centres, on the east footway
+CHANNEL_GULLIES = (4.0, 20.0, 31.0)              # x along the east channel
+
+
+def _pavement_dressing(out):
+    """The utility cover and the extra gully grates, flush."""
+    top = THRESHOLD_ABOVE_CROWN_M
+    for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
+        _box(out, "dressing_cover_surround_%d" % k, "brick_rubbed",
+             cx - 0.45, cx + 0.45, cy - 0.36, cy + 0.36, top - 0.02, top + 0.004,
+             "a-red-brown-surround")
+        _box(out, "dressing_cover_%d" % k, "steel_dark",
+             cx - 0.33, cx + 0.33, cy - 0.25, cy + 0.25, top - 0.02, top + 0.006,
+             "an-iron-utility-cover")
+    for k, gx in enumerate(CHANNEL_GULLIES):
+        _box(out, "dressing_gully_%d" % k, "steel_dark",
+             gx - 0.22, gx + 0.22, 2.78, 2.98, -0.03, 0.004, "a-gully-grate-in-the-channel")
 
 
 def _house_row_facing_south(out, prefix, xa, xb, y0, y1, zb, rnd, trees=False):
