@@ -1479,7 +1479,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 126
+   "faces": 138
   },
   {
    "mesh": "street_interior_lit",

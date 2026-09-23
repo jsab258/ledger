@@ -1955,6 +1955,17 @@ def plan_street(root, spec_rel=SPEC_REL):
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
     _repair_patches(out)
+    # THE PLOTS' FLOORS, 23 September. The scene file's ground_plot pieces
+    # are the ground behind each frontage - the shop floor a brick thrown
+    # through the window lands on (CrimeProbe.h kBrickInsideZ: "on the shop
+    # floor (ground_plot_1 spans z 5.125 to 13.125)"). This street replaces
+    # them and never built its own, so with its own walls in play there was
+    # no floor behind any window. At the threshold, the depth of a block.
+    for sgn, side in ((1.0, "east"), (-1.0, "west")):
+        a, b = sgn * STREET_FRONTAGE_M, sgn * (STREET_FRONTAGE_M + 8.6)
+        _box(out, "plot_floor_%s" % side, "interior", 3.0, x1,
+             min(a, b), max(a, b), -0.30, THRESHOLD_ABOVE_CROWN_M,
+             "the-ground-behind-the-frontage/the-shop-floor")
     # THE PAVEMENT TURNS THE CORNER at each block's south end. The footways
     # stop at the frontage line, and past a terrace's gable there was no
     # ground at all: from the turned camera the sky map's green field showed
