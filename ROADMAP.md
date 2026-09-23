@@ -384,10 +384,10 @@ Stage state: OPEN
 | A09.22 | Hair, clothing and attachments that follow body movement | floor | open |  |
 | A09.23 | No sudden default pose while an animation loads | floor | open |  |
 | A10.01 | NPCs turning their eyes toward someone addressing them | floor | open |  |
-| A10.02 | NPCs turning their head toward an approaching player when appropriate | floor | open |  |
+| A10.02 | NPCs turning their head toward an approaching player when appropriate | floor | done | the engine's Look At on the head, within 5 m and in front; 6 of 6 heads found, 3 turned in the walk, 23 Sep: [frame](production/art/compare/heads-2026-09-23/elizabeth-before-after.png) |
 | A10.03 | The torso turning when the player moves beyond a comfortable head angle | floor | open |  |
 | A10.04 | Limits that prevent impossible head and neck rotation | floor | open |  |
-| A10.05 | Gaze directed at the player's face rather than their feet or empty space | floor | open |  |
+| A10.05 | Gaze directed at the player's face rather than their feet or empty space | floor | done | aimed at the camera's eye, not the feet, 23 Sep: [frame](production/art/compare/heads-2026-09-23/elizabeth-before-after.png) |
 | A10.06 | Eye contact that occasionally breaks | floor | open |  |
 | A10.07 | Blinking rather than a permanent stare | floor | open |  |
 | A10.08 | Facial expression that broadly fits the line being spoken | floor | open |  |

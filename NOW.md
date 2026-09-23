@@ -894,18 +894,24 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       MET 23 Sep on the first three, my judgement, put to Jafar (FOR-JAFAR):
       production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png
       (06f8eda4). REOPENED 23 Sep 18:00 by Jafar for two more:
-  - [ ] PEOPLE TURN THEIR HEAD TO LOOK AT YOU when you move near them or talk
+  - [x] PEOPLE TURN THEIR HEAD TO LOOK AT YOU when you move near them or talk
         to them - Unreal's own look-at (the engine's LookAt anim node or
         Control Rig), not our own.
         WRITTEN 23 Sep (b9696974): the engine's Look At node on the head bone
         in a native animation instance, fading in within 5 m and in front.
-        Not done until the runner's verdict shows heads found and turned.
+        DONE on the runner (5aacba21): 6 of 6 heads found (mixamorig7_Head),
+        3 turned past half-way in the walk and 2 in the crime, none in the
+        held shots; Elizabeth turns to the camera in the crime's first frame:
+        production/art/compare/heads-2026-09-23/elizabeth-before-after.png.
+        Talking to them is the slice's, when there is talking.
   - [ ] SOUND IS POSITIONAL: a voice or a noise comes from where its source
         is and changes as you move - Unreal's own audio (spatialised audio
         components, attenuation); the street has no sound at all today.
         WRITTEN 23 Sep (09aeaf7f): a traffic bed at the north bend and a
-        voice on each of the six people, engine attenuation. Not done until
-        the runner's verdict shows the sounds placed.
+        voice on each of the six people, engine attenuation. PLACED on the
+        runner (41d34e24): 7 of 7 sources, 18 clips and the bed imported,
+        playing in the walk. Not done until the walk's recording (21b4f1e2)
+        shows it heard.
   - [x] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
         hook frame is a shape rather than a model (the cars, the kiosk, the
         lamp columns, the railing, the skip, the bins, the pallets...), then
