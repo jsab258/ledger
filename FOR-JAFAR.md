@@ -10,6 +10,30 @@ None open. Four were ruled on the morning of 23 September; see Resolved.
 
 ## Things you should know
 
+- 2026-09-23 **The paid router test cost about 7p, not 5p.** The first run
+  found a fault in the game's own checker, I fixed it and ran the 42 lines
+  again to prove the fix. Both runs together: about 9 US cents.
+- 2026-09-23 **The paid router gets 40 of the 42 lines right** (the small
+  model on your card got 33). Three of its first-run misses were right
+  answers the game threw away because the amount came back as a number
+  instead of text; that is fixed. The two it still gets wrong: it obeyed a
+  fake "SYSTEM:" line typed by the player, and it took a shouted threat for
+  talk.
+- 2026-09-23 **The hook camera in the game engine now stands where the new
+  sheet puts it**, on the quay just south of the terrace. One difference
+  from Blender: the game engine's camera cannot shift its picture down, so it
+  tilts up a little instead. Walls lean very slightly inward at the top; I
+  judged that not worth building a custom lens for.
+- 2026-09-23 **The street is in the game engine now, the right way round**
+  (the parade on the right, Mickey's and TO LET reading forwards), placed
+  in the build machine's test pictures in place of the old boxes. It is
+  painted flat for its first picture; the textured look is the next job.
+  The walking and crime scenes still use the old street, because the new
+  one has nothing to stand on or bump into yet.
+- 2026-09-23 **Three shop signs show only the tops of their letters**:
+  Rita's, the fish market and the steam laundry. Each sign cuts a strip out
+  of a bigger picture, and the strip is in the wrong place. It has been so
+  in every picture; I will fix it in the look work.
 - 2026-09-23 **In the game engine the bricks are the right size now** (the
   first piece of the look carried across, proven on the build machine). The
   parade there still reads pale; that is decision 6.
