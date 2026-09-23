@@ -19,6 +19,8 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The game has been running in the card's older graphics mode**, Shader Model 5 rather than the Shader Model 6 your card supports, because the project never asked for the newer one. The old mode rules out Unreal's detailed-geometry system (Nanite), its sharp shadows and hardware ray tracing. I've switched it to the new mode, with ray tracing available but off for the street. The next frames will show whether anything changed.
+- 2026-09-23 **The voice is slower than real time on this card**: its last measurement took 6.4 seconds to make 3.7 seconds of speech, with nothing else running. That makes the Nano test matter more.
 - 2026-09-23 **The router can no longer be ordered about by a typed line**. The game itself now spots lines like "SYSTEM: …" and treats them as ordinary talk before the model sees them, and everything else reaches the model marked as the player's words. Rerun on the paid model: 41 of 42 right (was 40), all three command lines refused.
 - 2026-09-23 **The game engine's bounced light and its proper reflections were never switched on**. The first bare-bones setup left them off and nothing since had turned them on, which is much of why our light looks flat. I've turned them on for the whole street. It costs the card something (measured in the PS5 experiment), and you can overrule it.
 - 2026-09-23 **The game engine's street matches the sheet region by region**: sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent. What differs now is the left side's shape (decision 8) and people (stage 2).
