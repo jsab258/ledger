@@ -784,6 +784,16 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       sighting moves; the glass must ignore visibility and block pawns; the
       replaced scene pieces lose their collision; the crime verdict is
       re-proven on the runner at ten minutes a try. Told to Jafar.
+      STARTED 23 Sep, switched off (55ee12f8): complex-as-simple set at
+      import and read back; look-file street_collision (false) turns on the
+      street's own walls in play, glass out of sight lines, the replaced
+      pieces' collision off. NEXT: a crime run with it on, locally on the
+      runner's build, and only if the verdict holds does it go true.
+- [ ] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
+      went into play the Blender glass, one mesh for every pane, stayed
+      whole). The glass exported one mesh per bay and floor and the crime
+      hides the one it broke (c9dcb09a). To prove on the runner: the crime
+      line's streetPanesHidden and the after-crime frames.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
