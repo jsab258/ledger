@@ -292,7 +292,7 @@ Stage state: OPEN
 | A08.15 | Detail changes with distance that do not transform identity | floor | open |  |
 | A09.01 | Idle breathing and small posture changes | floor | open |  |
 | A09.02 | Idle variation rather than a conspicuous repeating loop | floor | open |  |
-| A09.24 | No identical synchronised idle motion across a crowd | floor | open |  |
+| A09.24 | No identical synchronised idle motion across a crowd | floor | done | six people, each started at its own phase of its loop (street-people.json), no two in step, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A21.01 | Human-scale doors, stairs, furniture and streets | ours | open |  |
 | A21.05 | Readable routes through ordinary environments | ours | open |  |
 | A21.06 | Landmarks that help orientation | ours | open |  |
