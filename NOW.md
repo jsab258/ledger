@@ -825,8 +825,8 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 
 ## Where things stand
 
-1. The new Hook sheet is the reference, and the Blender street is matched to it - lens, colour, composition - then detail by detail: the parade to the 1989 photographs, glass, bricks, arches, pots, flags, nets, rooms behind the shop windows, the street running on to the rise.
-2. Stage 3's gates are proven on the runner: the arrest from live play, rumours surviving save, restart and reload with the unseen crime still holding nothing, and a crime reaching a third resident inside a week.
-3. The two lanes build the street as mirror images (decision 5), and the game engine's street is far behind the look; carrying it over has started with brick at its measured size, proven on the runner.
-4. Waiting on Jafar: decision 2 (rumour reach), 4 (the small model: 33 of 42 right, 8 wrong but tidy), 5 (which way round the street is), 6 (the game engine's brick colour is his ruled grade).
-5. Set aside after two tries: the wet shine on the flags and the far hillside's crowding; the four shop-room pictures are review=pending.
+1. The look is in the game engine and measured against the flipped sheet from its viewpoint - sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent - with the haze, a proper kerb, the cars turned, smooth paint, relief tile and the night held; the pair is pair-03-day, the dusk ue-hook-dusk-02.
+2. Stage 3 on the shipping engine now has schedules as well: the crowd's day ported, 21,550 golden rows agreeing inside the engine, an independent check that could not break it.
+3. The playable street shows the Blender street; its own walls are built in and switched off until a crime run on them holds, and the crime's broken window is being made to show again.
+4. Waiting on Jafar: decision 7 (rumour reach) and 8 (canon's west-side wording), and whether the day's fog cap stays his.
+5. Set aside after two tries: the wet flags' shine (in both engines) and a drawn asphalt; what differs from the sheet now is the west side's shape and people (stage 2).
