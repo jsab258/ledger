@@ -105,10 +105,6 @@ plain houses.
   painted flat for its first picture; the textured look is the next job.
   The walking and crime scenes still use the old street, because the new
   one has nothing to stand on or bump into yet.
-- 2026-09-23 **Three shop signs show only the tops of their letters**:
-  Rita's, the fish market and the steam laundry. Each sign cuts a strip out
-  of a bigger picture, and the strip is in the wrong place. It has been so
-  in every picture; I will fix it in the look work.
 - 2026-09-23 **In the game engine the bricks are the right size now** (the
   first piece of the look carried across, proven on the build machine). The
   parade there still reads pale; that is decision 6.
@@ -408,6 +404,10 @@ plain houses.
 
 ## Resolved
 
+- 2026-09-23 **The three shop signs that showed only the tops of their
+  letters** (Rita's, the fish market, the steam laundry) are re-cropped to
+  their lettering, each board at its own picture's proportions. Resolved the
+  same day.
 *(Items move here with the date they were settled, rather than being deleted,
 so the record stays complete.)*
 
