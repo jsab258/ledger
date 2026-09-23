@@ -232,15 +232,27 @@ def for_you_items(message):
     if rest and _words(rest) in EMPTY:
         return []
     i += 1
+    # A PLAIN LINE DIRECTLY UNDER THE OPENER IS AN ITEM TOO ("the items, one
+    # to a line"), and a blank line followed by prose ends the block. Before
+    # 24 September a plain item was skipped and the report's own bullets,
+    # further down, were read as the block instead.
+    seen_blank = False
+    all_bullets = True
     for line in lines[i:]:
         t = line.strip()
-        if t.startswith("- ") or t.startswith("* "):
-            items.append(t[2:].strip())
-        elif t and not items:
+        if not t:
+            seen_blank = True
             continue
-        elif t and items and (line.startswith("  ") or line.startswith("\t")):
+        if t.startswith("- ") or t.startswith("* "):
+            if seen_blank and items and not all_bullets:
+                break
+            items.append(t[2:].strip())
+        elif items and not seen_blank and (line.startswith("  ") or line.startswith("\t")):
             items[-1] = items[-1] + " " + t
-        elif not t:
+        elif not seen_blank:
+            items.append(t)
+            all_bullets = False
+        elif not items:
             continue
         else:
             break
@@ -481,6 +493,10 @@ def selftest():
             + "- a bullet in the reply, not an item" + chr(10))
     check("accept/bullets-under-nothing-new-are-the-reply-not-items", for_you_items(body) == [],
           str(for_you_items(body)))
+    body = ("For you:" + chr(10) + "A plain item, one to a line." + chr(10) + chr(10)
+            + "The report starts here." + chr(10) + "- a bullet of the report" + chr(10))
+    check("accept/a-plain-item-is-read-and-the-report-bullets-are-not",
+          for_you_items(body) == ["A plain item, one to a line."], str(for_you_items(body)))
 
     # ONLY THE BUILDER'S CHECKOUT IS HELD TO THE LIST.
     import tempfile
