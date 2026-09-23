@@ -1,599 +1,937 @@
-# Feature coverage: what the plan holds, and what it does not
+# The master checklist: 957 features, and the 462 neither list had
 
-STATUS: SPEC (research delivery). Branch `research/feature-coverage`. The
-commission is [BRIEF.md](./BRIEF.md) beside this file, written before the work
-began. The one-page reading is [SUMMARY.md](./SUMMARY.md).
+STATUS: SPEC (research delivery). Branch `research/feature-coverage`. THIS
+REPLACES the earlier DELIVERY.md of this topic, whose 179-item checklist is
+carried inside the master list below rather than deleted. The commission is
+[BRIEF.md](./BRIEF.md); the one-page reading is [SUMMARY.md](./SUMMARY.md); the
+independent list this was compared against is
+[astra-list.md](./astra-list.md), 923 items, written by a different model
+without sight of mine.
 
-This audits THE PLAN, not the build. Its predecessor,
-[baseline-features](../baseline-features/SUMMARY.md), audited the build and
-found that on the Unreal side the floor had not been laid. The question here is
-different: is each feature WRITTEN DOWN somewhere, so it cannot be forgotten.
-An entry typed `absent` in the systems inventory counts as IN THE PLAN. It is
-written down with a phase against it. That is the whole test.
-
-## 0. The answer, in numbers
+## 0. The numbers
 
 | | count | of |
 |---|---|---|
-| Expected features merged from the four lenses | **179** | |
-| In the plan | **90** | 179 |
-| Partly in the plan | **42** | 179 |
-| Absent from the plan | **47** | 179 |
-| Of the 89 not properly held, noticed inside thirty minutes | **65** | 89 |
-| Ruled out by D24 | **0** | 179 |
+| Expectations in the independent list | **923** | |
+| In my checklist AND in the plan | 172 | 923 |
+| In my checklist, absent from the plan | 116 | 923 |
+| IN THE PLAN, absent from my checklist | **99** | 923 |
+| Ruled out for this game by its own decisions | 74 | 923 |
+| **In neither: the blind spots** | **462** | 923 |
 
-Plan sources searched: **73 files**. `ROADMAP.md`, `canon.md`, `DECISIONS.md`,
-`legacy/studio-v2/production/systems-inventory.json` (111 systems), and 69
-research files, being the 66 under `production/research/` on `main` plus the
-three files of the baseline-features delivery, which is still on its own branch.
+My checklist covered **288 of 923**. Half the list was
+invisible to it.
 
-## 1. Four things about the plan that have to be said before the checklist
+The master checklist below merges both lists at the level of specific features:
+923 from the independent list plus **34** of my own that it does
+not contain, so **957 rows**, each with its stage in `ROADMAP.md`
+or the decision that rules it out.
 
-**1. D24 rules nothing out.** The brief offered "or that D24 rules it out" as a
-verdict. It was never available. D24's own words: "That is a spend rule, not a
-ban. Driving, fighting and trade may exist and must not look broken; they may
-not take budget from the four things that are the game." Of the 179 items here,
-D24 rules out zero and caps the budget of about six (firearms, driving and
-traffic, trade, swimming, combat depth, the region). Every absent item below
-therefore carries a stage, not an exemption.
+## 1. What the comparison actually says
 
-**2. The inventory's phase numbers do not point at ROADMAP's stages.** The
-inventory says `phase names a row in ledger-v2/respec/roadmap-v2.md`. That file
-is now `legacy/studio-v2/respec/roadmap-v2.md` and its phases R and 0 to 6 are
-not `ROADMAP.md`'s six stages, which Jafar ruled on 2026-09-14 and which were
-brought back to the root on 2026-09-22. Every stage in the tables below is
-ROADMAP's, assigned here; where it disagrees with an inventory phase, say so and
-the inventory is the stale one.
+**One list of 179 against one list of 923 is not a difference of opinion about
+scope. It is a difference of ALTITUDE.** Almost every row of mine turns out to
+be a heading with between two and twenty behaviours inside it. `Interaction
+prompts` is twenty-four items in the other list. `Title screen with Continue,
+New Game, Load, Settings, Quit` is twenty. `Positional sound from its source`
+is fifteen.
 
-**3. "Around two hundred systems" is 111.** The inventory holds 111 entries in
-five areas: 30 exists, 41 partial, 36 absent, 4 ruled-out. Forty-two of them are
-in the area `what the player touches`. The figure matters because the gap this
-commission is about is not a gap in a two-hundred-row list; it is a gap in a
-111-row list whose rows are often one word wide.
+That is the same failure this whole exercise exists to find. The head turn and
+positional sound went missing because they were inside `bodies and faces` and
+`sound in the Unreal build`. My own delivery said so, and then produced 179
+rows at exactly the altitude it had just diagnosed.
 
-**4. The two features found by accident are STILL not in the plan.** Neither
-`head turn` nor `positional sound` nor `look`, `gaze`, `spatial` or `bump`
-appears in the name of any of the 111 systems, in `ROADMAP.md`, in `canon.md` or
-in `DECISIONS.md`. Both live in exactly one place: the baseline-features
-delivery, on a branch that has not been merged. The audit that found them has
-not yet put them anywhere a future session would read.
+**The second finding is the one I did not expect: 99 items the plan
+holds are absent from MY list.** They are concentrated in stealth and the law
+(13), world layout (10), enemy awareness (6), lighting (6) and environment art
+(5). Four lenses built from credits, engine modules, a generic first session
+and compliance checklists produce a generic game. They under-read the parts
+that are this game's actual subject, which the plan has been writing down for
+weeks.
 
-## 2. How each lens was built, and what it cost
+**The third: the independent list had the sources mine could not reach.** Its
+own header cites the Steam controller documentation and the Xbox accessibility
+guidelines, both refused by this environment's proxy. Its accessibility and
+platform sections are the ones where my blind-spot count is highest, and that
+is not a coincidence.
 
-Claim labels: CITED (from a source read this session), CITED-SUMMARY (from a
-source describing another source), DERIVED (constructed from a cited structure),
-ASSUMED (general knowledge, marked so it can be rejected), HOLE (wanted and not
-obtained).
+## 2. The blind spots, grouped by area
 
-### Lens 1: who builds it
+462 expectations that are in neither my checklist nor the plan nor ruled
+out. Each group names the lens of mine that should have caught it and why it
+did not. The five failure modes, in the order of how much damage they did:
 
-ASKED FOR: the full credits of GTA V, Red Dead Redemption 2 and Kingdom Come
-Deliverance 2, and every department in them.
+- **F1** granularity: my row was the heading, and the behaviours lived inside it (31 of 51 areas)
+- **F3** imagined happy path: I walked a session that worked, so what goes wrong was never in the walk (4 of 51 areas)
+- **F4** wrong altitude: a module list names a capability, never the ways it fails (5 of 51 areas)
+- **F2** source refused: the lens ran on a reconstruction, which yields categories rather than checkpoints (7 of 51 areas)
+- **F5** outside my frame: no construction I used would ever have produced the subject (4 of 51 areas)
 
-WHAT HAPPENED: `www.mobygames.com`, the credits database, is refused by this
-environment's proxy, as are `www.giantbomb.com`, `store.steampowered.com` and
-`www.igdb.com`. No credits roll was reachable. HOLE, and it is the weakest
-half of this delivery's sourcing after lens 4.
+### Launching and reaching the game  (11 of 18)
 
-WHAT WAS BUILT INSTEAD, by construction rather than by recall:
+Should have been caught by **lens 3, moment by moment**. Mode **F3**. My walk began at the title screen. Everything before it, and everything that can go wrong on the way, was never in the walk.
 
-- The discipline list in Wikipedia's `Video game development`, CITED: producer,
-  publisher, designer (with writer), artist (2D and 3D), programmer, level
-  designer, sound engineer, tester, and the programmer's own ten sub-disciplines
-  named in that article: physics, AI, graphics, sound, gameplay, scripting, UI,
-  input processing, network communications and game tools.
-- Three independent craft taxonomies the industry votes on, CITED: the BAFTA
-  Games Awards 2025 categories (Animation, Artistic Achievement, Audio
-  Achievement, Game Design, Music, Narrative, Performer in a Leading Role,
-  Performer in a Supporting Role, Technical Achievement); the Game Developers
-  Choice Awards craft categories (Audio, Design, Narrative, Technology, Visual
-  Art, Innovation); and the D.I.C.E. craft categories (Story, Character, Audio
-  Design, Game Direction, Game Design, Animation, Art Direction, Technical,
-  Original Music Composition).
-- The development sections of the three games' own articles, CITED: Rockstar
-  co-opting all its studios into one 1,600-person team for RDR2, recording
-  sessions from 2013, three kinds of score (narrative, interactive,
-  environmental), 110 musicians, a companion app.
+- `A01.01` A working launch from the installed shortcut or platform library (stage 4)
+- `A01.02` A visible response while the application starts (stage 4)
+- `A01.03` Startup that does not require unrelated windows or manual commands (stage 4)
+- `A01.06` Startup on the intended monitor (stage 4)
+- `A01.07` Initial sound at a reasonable volume (stage 4)
+- `A01.11` A readable explanation of required account or permission requests (stage 4)
+- `A01.12` Offline access to offline content where supported (stage 4)
+- `A01.13` A usable response to unavailable online services (stage 4)
+- `A01.15` An explanation when required content is still installing (stage 4)
+- `A01.16` An actionable error when the game cannot start (stage 4)
+- `A01.18` Skippable repeated introductory logos where permitted (stage 4)
 
-The mapping from department to player-facing feature is DERIVED.
+### Title screen and menu navigation  (15 of 20)
 
-### Lens 2: what runs every frame
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. I wrote the title screen as ONE row naming five buttons. Twenty behaviours live inside those five words.
 
-ASKED FOR: Unreal's own module list and the standard texts on engine
-architecture.
+- `A02.03` Protection against replacing an existing playthrough with "New Game" (stage 4)
+- `A02.04` A visible selected menu item (stage 4)
+- `A02.05` Menu navigation in a predictable order (stage 4)
+- `A02.06` Consistent confirm and back controls (stage 4)
+- `A02.07` A reliable way back from every screen (stage 4)
+- `A02.09` Clickable areas that match their visible buttons (stage 4)
+- `A02.10` Scroll-wheel support for scrolling lists (stage 4)
+- `A02.12` Selection that remains visible while a list scrolls (stage 4)
+- `A02.13` Useful explanations for disabled options (stage 4)
+- `A02.14` Confirmation before destructive actions (stage 4)
+- `A02.15` Dialogues that capture input without activating buttons behind them (stage 4)
+- `A02.16` Menus that remember position when returning from a detail screen (stage 4)
+- `A02.17` Text entry that works with the current device (stage 4)
+- `A02.18` An on-screen keyboard when physical typing is unavailable (stage 4)
+- `A02.20` Protection against repeated clicks starting the same operation twice (stage 4)
 
-WHAT HAPPENED: this one worked, and better than the previous delivery managed.
-baseline-features reported that Epic's site would not give up page bodies. It
-does: the body of a documentation page is a JSON document inside the
-`serverApp-state` blob, under a key whose `b` object carries `blocks`, and for
-the API reference the whole page is one `markdown` block under `content_html`.
-That is a correction to a limit stated in a delivered document, and it is how
-the list below was read.
+### Input fundamentals  (15 of 24)
 
-CITED, from `dev.epicgames.com/documentation/en-us/unreal-engine/API`, the
-Unreal Engine C++ API Reference, read this session: **1,869 modules** in four
-categories. Developer 109, Editor 139, **Runtime 246**, Plugins 1,375. Epic's
-own words for the Runtime category: "contains functionality necessary to run
-Unreal Engine. These modules are compiled for every type of build configuration
-and build target." That is the list of what runs every frame, from the engine
-rather than from memory.
+Should have been caught by **lens 2, what runs every frame**. Mode **F4**. The module list gave me InputCore, EnhancedInput and CommonInput, so I wrote down input, prompts and remapping. A module list names a capability; it never names the ways that capability goes wrong.
 
-The 246 runtime modules and the 1,375 plugin modules were grouped into the
-eighteen families below. The grouping is DERIVED; every module name in it is
-CITED.
+- `A03.03` Consistent controls across equivalent situations (stage 4)
+- `A03.05` Prompts that update after rebinding (stage 4)
+- `A03.08` No duplicate action from one physical button press (stage 4)
+- `A03.10` Clear feedback when an action requires holding (stage 4)
+- `A03.11` Reasonable tolerance for slightly early action presses (stage 4)
+- `A03.12` Predictable handling of conflicting simultaneous inputs (stage 4)
+- `A03.13` Movement that stops when the movement input stops (stage 4)
+- `A03.14` No stuck movement after opening a menu or changing focus (stage 4)
+- `A03.15` No attack caused by the same click that dismisses a menu (stage 4)
+- `A03.16` No unexpected action from an input held through a loading screen (stage 4)
+- `A03.17` Analogue movement speed on supported sticks (stage 4)
+- `A03.18` Equal intended movement speed in straight and diagonal directions (stage 4)
+- `A03.22` Safe reconnection without restarting the game (stage 4)
+- `A03.23` Input handling independent of frame rate (stage 4)
+- `A03.24` Clear control ownership when several controllers are connected (stage 4)
 
-| family | modules it was built from |
+### Onboarding and the first minute  (13 of 16)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F3**. My walk had the player learning. It did not have the player forgetting, mistiming, experimenting early, or replaying.
+
+- `A04.01` An unmistakable transition from watching to controlling (stage 4)
+- `A04.02` A starting camera aimed at something useful (stage 4)
+- `A04.03` A safe opportunity to test movement (stage 4)
+- `A04.04` A safe opportunity to test the camera (stage 4)
+- `A04.08` Instructions using the player's actual bindings (stage 4)
+- `A04.09` Time to read an instruction before it disappears (stage 4)
+- `A04.10` Confirmation that a tutorial action succeeded (stage 4)
+- `A04.11` A way to recover instructions dismissed accidentally (stage 4)
+- `A04.12` Tutorials that cope with an action performed early (stage 4)
+- `A04.13` Tutorials that stop repeating after understanding is demonstrated (stage 4)
+- `A04.14` A way to revisit controls and basic rules (stage 4)
+- `A04.15` A way to skip familiar instruction without breaking progression (stage 4)
+- `A04.16` An opening that permits ordinary experimentation without trapping the player (stage 4)
+
+### Camera behaviour  (12 of 24)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. Six camera rows for a subsystem whose failure modes are what a player actually meets: stairs, corners, foliage, recentering, cuts.
+
+- `A05.07` Camera recovery after an obstruction clears (stage 2)
+- `A05.08` Smooth handling of poles, foliage and other small obstructions (stage 2)
+- `A05.09` Character fading or another solution when the camera gets too close (stage 2)
+- `A05.11` A usable view while ascending and descending stairs (stage 5)
+- `A05.12` A usable view while climbing or hanging (stage 3)
+- `A05.13` Camera behaviour that does not repeatedly fight manual input (stage 2)
+- `A05.14` Predictable recentering, if provided (stage 2)
+- `A05.16` Appropriate framing when crouching or going prone (stage 2)
+- `A05.17` Aiming that follows the intended sightline (stage 6)
+- `A05.21` Camera recovery after a cutscene without disorienting rotation (stage 2)
+- `A05.23` Stable horizon and manageable camera motion (stage 2)
+- `A05.24` A sensible relationship between camera direction and movement after a camera cut (stage 2)
+
+### Walking, running and turning  (9 of 21)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. Locomotion was four rows. Astra has twenty-one, and the extra seventeen are all collision and gait, which is where a third-person game feels wrong.
+
+- `A06.07` Backward movement with an appropriate gait (stage 2)
+- `A06.08` Sideways movement with an appropriate gait (stage 2)
+- `A06.10` Consistent movement relative to the camera or facing convention (stage 2)
+- `A06.12` Reliable movement up and down ordinary stairs (stage 2)
+- `A06.13` Sensible behaviour on slopes (stage 2)
+- `A06.14` Clear limits on slopes too steep to climb (stage 2)
+- `A06.17` A crouched collision shape that actually fits under lower obstacles (stage 2)
+- `A06.18` Prevention of standing through a ceiling (stage 2)
+- `A06.19` Movement that follows moving platforms (stage 2)
+
+### Jumping, climbing and water traversal, where supported  (10 of 20)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. I wrote jump, vault and climb as one row and marked it absent. One row cannot say what climbing has to do.
+
+- `A07.04` A landing animation appropriate to the fall (stage 3)
+- `A07.05` Fall damage that follows understandable rules (stage 3)
+- `A07.06` A clear distinction between a safe drop and a dangerous fall (stage 3)
+- `A07.10` Prevention of climbing into blocked space (stage 3)
+- `A07.11` A way to cancel or drop from a climb (stage 3)
+- `A07.12` Ladder entry from plausible positions (stage 3)
+- `A07.13` Ladder exit without falling or becoming stuck (stage 3)
+- `A07.14` Consistent behaviour at climbable and non-climbable lookalikes (stage 3)
+- `A07.18` Readable breath or drowning rules if diving is possible (stage 3)
+- `A07.19` Water camera and sound changes when submerged (stage 3)
+
+### Character appearance  (5 of 17)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. The character art department gave me bodies, faces, clothing, skin and hair. It did not give me hands, mouths, holsters, gaps or cross-context consistency.
+
+- `A08.04` Believable hands and fingers (stage 2)
+- `A08.06` A mouth interior that survives ordinary close-ups (stage 2)
+- `A08.10` Held items attached to the correct hand and orientation (stage 2)
+- `A08.12` No major body or clothing gaps during ordinary poses (stage 2)
+- `A08.14` Consistent appearance across gameplay, menus and cutscenes (stage 2)
+
+### Body animation and physical contact  (11 of 24)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Animation gave me idle, foot planting, look-at, bumping and ragdoll. Everything between those, which is most of what animation IS, fell through.
+
+- `A09.06` Stride length that matches travel speed (stage 2)
+- `A09.07` Body lean during acceleration and turning (stage 2)
+- `A09.09` Upper-body actions that coexist with leg movement (stage 2)
+- `A09.11` Hands that meet handles, rails and other contact points (stage 2)
+- `A09.12` Finger poses that fit held objects (stage 2)
+- `A09.13` Two-handed objects held by both hands (stage 2)
+- `A09.16` Animation appropriate to the character's current weapon or burden (stage 2)
+- `A09.18` Interruptions that leave the body in a valid pose (stage 2)
+- `A09.19` Recovery from knockdown that connects to the final fallen position (stage 6)
+- `A09.21` Bodies that rest on the ground rather than hover (stage 2)
+- `A09.23` No sudden default pose while an animation loads (stage 2)
+
+### Looking, expressions and social presentation  (8 of 14)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. THIS IS THE SECTION THE ACCIDENT CAME FROM. I had head turn and lip sync as two rows. Astra has fourteen, and eight of them are still nowhere.
+
+- `A10.03` The torso turning when the player moves beyond a comfortable head angle (stage 2)
+- `A10.04` Limits that prevent impossible head and neck rotation (stage 2)
+- `A10.06` Eye contact that occasionally breaks (stage 2)
+- `A10.07` Blinking rather than a permanent stare (stage 2)
+- `A10.09` Listener reactions while another person speaks (stage 2)
+- `A10.10` Gestures that fit the conversation rather than random arm waving (stage 2)
+- `A10.11` People orienting toward a shared point of interest (stage 2)
+- `A10.14` A return to ordinary activity after the player leaves (stage 2)
+
+### Object interaction  (14 of 24)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. Interaction was one row, `interaction prompts`. Every rule about what a prompt points at, when it fails, and how it cancels was inside that row.
+
+- `A11.02` A stable current interaction target (stage 3)
+- `A11.04` Interaction range that matches apparent reach (stage 3)
+- `A11.05` No interaction through an intervening solid wall (stage 3)
+- `A11.06` Appropriate priority when talk, loot and open share a button (stage 3)
+- `A11.07` A clear description of the action before committing (stage 3)
+- `A11.09` Feedback explaining why an interaction is unavailable (stage 3)
+- `A11.10` Progress indication for prolonged interactions (stage 3)
+- `A11.11` Predictable cancellation of prolonged interactions (stage 3)
+- `A11.13` Door handling that does not trap the player inside the door (stage 3)
+- `A11.14` Sensible behaviour when a door's path is obstructed (stage 3)
+- `A11.20` Return from inspection to the previous position and context (stage 3)
+- `A11.21` Controls for switches, terminals and similar devices that produce a visible result (stage 3)
+- `A11.22` Occupied objects that cannot be used by two characters simultaneously (stage 3)
+- `A11.24` An interaction ending cleanly if its object is destroyed or removed (stage 3)
+
+### Collision and object physics  (11 of 18)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F4**. Chaos and PhysicsCore told me physics produces pushable objects. They did not tell me what a physics system owes a player: stable settling, sane mass, no launched bottles.
+
+- `A12.01` Solid ground everywhere that appears walkable (stage 2)
+- `A12.02` Solid walls where walls are visibly present (stage 2)
+- `A12.04` Doorways that admit a character who visibly fits (stage 2)
+- `A12.08` Objects settling instead of vibrating indefinitely (stage 2)
+- `A12.09` No explosive physics response from mild contact (stage 2)
+- `A12.10` Fast objects that do not pass through obvious barriers (stage 2)
+- `A12.12` A workable solution to being blocked by a friendly character (stage 2)
+- `A12.13` Moving machinery carrying or blocking objects consistently (stage 2)
+- `A12.14` Appropriate friction on visibly different surfaces where it matters (stage 2)
+- `A12.15` Physical reactions accompanied by matching sound (stage 2)
+- `A12.18` Stable interaction between bodies, props and uneven ground (stage 2)
+
+### Ordinary civilian behaviour  (13 of 26)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. I had eight rows for the whole of civilian behaviour in a game whose entire subject is civilians.
+
+- `A13.06` A response to repeatedly blocking someone's route (stage 2)
+- `A13.07` Navigation through doorways without permanent jams (stage 2)
+- `A13.08` Use of stairs rather than walking through their geometry (stage 2)
+- `A13.12` People taking turns rather than all speaking simultaneously (stage 2)
+- `A13.17` Fleeing or taking cover from danger (stage 3)
+- `A13.18` Escape routes that lead away from danger (stage 3)
+- `A13.20` A way for panic to resolve once danger passes (stage 3)
+- `A13.21` People who do not immediately resume cheerful chatter beside an ongoing emergency (stage 3)
+- `A13.22` Consistency between a person's current behaviour and dialogue (stage 2)
+- `A13.23` Appropriate response when spoken to during another activity (stage 2)
+- `A13.24` Some continuity when briefly looking away and back (stage 2)
+- `A13.25` No obvious appearance or disappearance directly in view (stage 2)
+- `A13.26` A reasonable solution when an NPC's intended route becomes blocked (stage 2)
+
+### Enemy awareness and decision-making, where combat or stealth exists  (15 of 23)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. AIModule, StateTree and the perception model gave me reaction to noise and police response. Search, alert propagation, repositioning and disengagement were inside those two rows.
+
+- `A14.06` Search focused on the last plausible known position (stage 3)
+- `A14.09` Enemy movement that uses the actual available routes (stage 3)
+- `A14.10` Replanning when doors, vehicles or other obstacles move (stage 3)
+- `A14.11` Enemies able to negotiate ordinary stairs and doorways (stage 3)
+- `A14.12` Combat positioning that avoids all enemies occupying one point (stage 3)
+- `A14.13` Enemies using appropriate engagement distance (stage 3)
+- `A14.14` Enemies not firing continuously into an obvious obstruction (stage 3)
+- `A14.15` Appropriate retreat, advance or repositioning (stage 3)
+- `A14.16` A response to being flanked (stage 3)
+- `A14.17` A response to allies being injured or killed (stage 3)
+- `A14.18` Believable limits on accuracy and reaction speed (stage 3)
+- `A14.19` Clear reasons when an enemy cannot be damaged or interrupted (stage 3)
+- `A14.20` A sensible end to searching or combat (stage 3)
+- `A14.22` No pursuit through impossible or inaccessible routes (stage 3)
+- `A14.23` No permanent lock into combat after every threat is gone (stage 3)
+
+### Stealth, trespass and law, where included  (3 of 19)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Three rows, where the plan itself already has sixteen of these. My lenses were generic-game lenses and under-read this game's own subject.
+
+- `A15.06` A warning or understandable transition before punishment where appropriate (stage 3)
+- `A15.14` Searches that do not continuously know the hidden player's exact location (stage 3)
+- `A15.19` No punishment for an action the controls misleadingly presented as harmless (stage 3)
+
+### Companions and friendly allies, where included  (12 of 14)
+
+Should have been caught by **lens 1, who builds it**. Mode **F5**. No lens of mine asked who walks beside the player. Departments, engine modules, a first session and a compliance checklist can all be built without ever mentioning a companion.
+
+- `A16.01` Following at a useful distance (stage 6)
+- `A16.02` Keeping up without repeatedly falling far behind (stage 6)
+- `A16.03` Slowing down or waiting appropriately during guided travel (stage 6)
+- `A16.04` Yielding when blocking a doorway or corridor (stage 6)
+- `A16.05` Navigating the same ordinary obstacles as the player (stage 6)
+- `A16.06` Sensible recovery when separated (stage 6)
+- `A16.07` Entering and leaving vehicles appropriately (stage 6)
+- `A16.09` A clear response to friendly fire (stage 6)
+- `A16.11` Dialogue that survives walking, stopping and temporary interruption (stage 6)
+- `A16.12` No repeated dialogue announcing an event that has already happened (stage 6)
+- `A16.13` Clear downed, dead or unavailable states (stage 6)
+- `A16.14` A companion's presence and equipment surviving save and load (stage 6)
+
+### Combat fundamentals  (7 of 15)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Combat was seven rows for the whole layer, and they named the verbs rather than the feedback.
+
+- `A17.01` A clear distinction between exploration and combat readiness (stage 6)
+- `A17.06` Reactions showing where damage came from (stage 6)
+- `A17.09` A comprehensible relationship between commitment and cancellation (stage 6)
+- `A17.10` Reliable switching between available combat actions (stage 6)
+- `A17.12` Consistent interaction between attacks and scenery (stage 6)
+- `A17.13` A clear end to the encounter (stage 6)
+- `A17.15` Camera and effects that leave the important action visible (stage 6)
+
+### Melee combat, where included  (5 of 14)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Melee is the layer this game actually gets, and I gave it three rows.
+
+- `A18.04` Directional movement that does not slide the attacker implausibly into position (stage 6)
+- `A18.05` Readable attack recovery (stage 6)
+- `A18.07` Clear distinction between blockable and unblockable attacks (stage 6)
+- `A18.09` Parry timing with readable success and failure, if present (stage 6)
+- `A18.11` Knockback or stagger appropriate to the attack (stage 6)
+
+### Ranged weapons and thrown objects, where included  (13 of 24)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Firearms are rare events here, which made me write three rows and stop. Rare is not absent, and an event needs its feedback.
+
+- `A19.04` Recoil that is visible and reflected in subsequent aim (stage 6)
+- `A19.05` Muzzle flash or another appropriate firing cue (stage 6)
+- `A19.07` Impacts at the actual hit location (stage 6)
+- `A19.08` Different impact responses for flesh, wood, metal and stone (stage 6)
+- `A19.10` Ammunition counts that agree with shots fired (stage 6)
+- `A19.11` Distinct empty-weapon feedback (stage 6)
+- `A19.12` Reloading with correct ammunition transfer (stage 6)
+- `A19.13` Reload animation that matches the weapon (stage 6)
+- `A19.15` Weapon switching without duplicated or missing weapons (stage 6)
+- `A19.18` Controller aiming assistance appropriate to the design (stage 6)
+- `A19.20` A visible aiming or trajectory cue for throws where precision is expected (stage 6)
+- `A19.21` Thrown objects leaving from a plausible position (stage 6)
+- `A19.24` Weapon behaviour near walls that does not visibly put the barrel through everything (stage 6)
+
+### Health, injury, death and retry  (6 of 16)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. Death and retry were two rows. What a player meets after dying is a whole flow.
+
+- `A20.03` Low-health warning without making the game unreadable (stage 3)
+- `A20.05` Healing resource consumption that matches the action (stage 3)
+- `A20.06` Clear status effects and their duration or removal conditions (stage 3)
+- `A20.09` Some indication of the cause of defeat (stage 3)
+- `A20.12` Consistent reset of enemies, resources and objectives on retry (stage 3)
+- `A20.13` No respawn inside an active unavoidable hazard (stage 3)
+
+### World layout and navigation through space  (7 of 18)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Level design was not one of my department rows at all; world layout arrived only as `interiors` and `the town`.
+
+- `A21.04` Clear distinction between reachable scenery and background scenery (stage 5)
+- `A21.08` Consistent visual language for climbable, breakable and inaccessible objects (stage 5)
+- `A21.09` Boundaries communicated by believable obstacles or explicit rules (stage 5)
+- `A21.10` A usable response to leaving the intended play area (stage 5)
+- `A21.14` Travel distances appropriate to available movement options (stage 5)
+- `A21.15` A way back from ordinary exploratory detours (stage 5)
+- `A21.16` Consistency between visible danger and actual traversal rules (stage 5)
+
+### Environment art and object appearance  (8 of 17)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Environment art gave me materials, grime and LOD. It did not give me the faults a player sees: stretching, flicker, floating, repetition.
+
+- `A22.01` Complete visible surfaces without holes or missing faces (stage 1)
+- `A22.03` Textures that do not stretch conspicuously (stage 1)
+- `A22.04` Texture scale consistent with real object size (stage 1)
+- `A22.06` Object edges that do not all look infinitely sharp (stage 1)
+- `A22.08` Believable joins between walls, floors, roofs and terrain (stage 1)
+- `A22.09` No conspicuous flickering between overlapping surfaces (stage 1)
+- `A22.15` Objects that remain recognisable across lighting conditions (stage 1)
+- `A22.17` Interior dressing that survives viewing from both directions (stage 1)
+
+### Lighting and rendering  (4 of 17)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F4**. The renderer's module list gave me lighting, GI, post-processing and anti-aliasing. It did not give me light leaks, exposure transitions or glass.
+
+- `A23.04` No major light leaking through solid walls (stage 1)
+- `A23.14` Motion rendering without severe ghost trails (stage 1)
+- `A23.15` Consistent colour and brightness across gameplay and cutscenes (stage 1)
+- `A23.17` Important targets remaining distinguishable amid visual effects (stage 1)
+
+### Weather, water and environmental effects, where applicable  (10 of 18)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F4**. Niagara and Water told me effects and water exist. The rules that make them read as real, rain under a roof, effects that stop with their source, were not in the module names.
+
+- `A24.02` Hanging fabric and similar objects responding to the environment (stage 2)
+- `A24.03` Rain that does not visibly fall through ordinary roofs (stage 2)
+- `A24.09` Ripples or splashes when entering water (stage 2)
+- `A24.10` Wakes from moving boats or swimmers (stage 2)
+- `A24.11` Fire giving appropriate light, movement and sound (stage 2)
+- `A24.13` Surface-specific debris from impacts (stage 2)
+- `A24.15` Footprints or tracks where a visibly impressionable surface invites them (stage 2)
+- `A24.16` Effects ending when their source ends (stage 2)
+- `A24.17` Effects staying attached to moving sources (stage 2)
+- `A24.18` Weather and time changes that do not visibly reset at ordinary area boundaries (stage 2)
+
+### Ambient life and world continuity  (6 of 16)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Ambient life was one row. Continuity, the harder half, was not a row at all.
+
+- `A25.06` Continuity when leaving a small area and immediately returning (stage 2)
+- `A25.08` Clear rules for replenishing loot or respawning enemies (stage 2)
+- `A25.09` Events that do not visibly restart every time the player crosses a nearby boundary (stage 2)
+- `A25.12` Safe handling of time skips with active missions or followers (stage 2)
+- `A25.13` Ambient events that allow interruption and recovery (stage 2)
+- `A25.16` No immediate repopulation directly in front of the player after a disturbance (stage 2)
+
+### Road vehicles and traffic, where included  (19 of 24)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. I wrote traffic and parked vehicles as street dressing and let D24 cap the rest. Mickey's is a MINICAB OFFICE, so driving is closer to this game than the spend rule suggests.
+
+- `A26.02` Entry animation that fits the door and seat (ship-prep)
+- `A26.03` Sensible entry when one side is obstructed (ship-prep)
+- `A26.05` Acceleration and braking appropriate to the vehicle (ship-prep)
+- `A26.06` Steering that remains manageable across speeds (ship-prep)
+- `A26.07` Reverse controls that are clear and usable (ship-prep)
+- `A26.08` Wheels rotating at a plausible rate (ship-prep)
+- `A26.09` Front wheels turning with steering where appropriate (ship-prep)
+- `A26.10` Suspension responding to road irregularities (ship-prep)
+- `A26.11` Tyre contact that broadly matches the ground (ship-prep)
+- `A26.12` Engine sound responding to speed and load (ship-prep)
+- `A26.13` Skid and collision sounds responding to the actual event (ship-prep)
+- `A26.14` Brake lights, headlights and reversing lights where the vehicle has them (ship-prep)
+- `A26.15` A usable driving camera and rearward view (ship-prep)
+- `A26.16` A way to leave the vehicle safely (ship-prep)
+- `A26.17` Exiting that avoids placing the player inside walls or traffic (ship-prep)
+- `A26.21` Traffic responding to obstructions and collisions (stage 2)
+- `A26.22` Pedestrians responding to approaching vehicles (stage 2)
+- `A26.23` Passengers remaining correctly seated during movement (ship-prep)
+- `A26.24` A vehicle remaining where it was left under the game's persistence rules (stage 2)
+
+### Other transport and mounts, where included  (4 of 12)
+
+Should have been caught by **lens 1, who builds it**. Mode **F5**. A port town has boats and a ferry in canon, and no lens of mine produced water transport.
+
+- `A27.08` Boat steering, acceleration and stopping appropriate to water travel (ship-prep)
+- `A27.09` Boarding and leaving without falling through the vessel (ship-prep)
+- `A27.10` Movement that remains stable on a moving deck (ship-prep)
+- `A27.12` Carried equipment and companions surviving transport transitions (ship-prep)
+
+### Spatial sound  (10 of 15)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. THIS IS THE SECOND SECTION THE ACCIDENT CAME FROM. I had five rows. Astra has fifteen, and ten of them are nowhere.
+
+- `A28.03` Moving sources carrying their sounds with them (stage 2)
+- `A28.05` Distant sources losing appropriate detail (stage 2)
+- `A28.07` Openings providing a plausible route for sound (stage 2)
+- `A28.09` Larger and smaller rooms sounding different where conspicuous (stage 2)
+- `A28.10` Smooth acoustic transitions at room boundaries (stage 2)
+- `A28.11` Large sources sounding spatially broad rather than like tiny points (stage 2)
+- `A28.12` Above and below having useful audible distinction where supported (stage 2)
+- `A28.13` A sensible listening position when the camera moves away from the character (stage 2)
+- `A28.14` No distant conversation playing at intimate, full-volume closeness (stage 2)
+- `A28.15` No obvious snapping between left and right as a source passes nearby (stage 2)
+
+### Foley and event sound  (14 of 18)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Foley was one row, footsteps. Audio departments do the other seventeen.
+
+- `A29.03` Footstep cadence changing with movement speed (stage 2)
+- `A29.04` Appropriate landing sound (stage 2)
+- `A29.07` Doors sounding when they move and latch (stage 2)
+- `A29.08` Pickups and item handling providing subtle confirmation (stage 2)
+- `A29.09` Collision sounds appropriate to the materials involved (stage 2)
+- `A29.10` Breakage sounds matching the object (stage 2)
+- `A29.11` Weapon handling, firing and reloading sounds aligned with actions (stage 2)
+- `A29.12` Damage and pain sounds fitting the affected character (stage 2)
+- `A29.13` Machines sounding active only while operating (stage 2)
+- `A29.14` Splash sounds matching water contact (stage 2)
+- `A29.15` Variation that prevents repeated actions sounding mechanically identical (stage 2)
+- `A29.16` No double-triggered sound for a single event (stage 2)
+- `A29.17` No continued footsteps after the character stops (stage 2)
+- `A29.18` Sound events occurring when the action happens rather than noticeably late (stage 2)
+
+### Voice, music and the final audio mix  (7 of 16)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. The mix was three rows. Everything about loudness, clipping, loops and state was inside them.
+
+- `A30.05` No clipping or harsh overload during loud events (stage 2)
+- `A30.06` No audible clicks at the start or end of loops (stage 2)
+- `A30.08` Combat music starting and ending with the encounter (stage 6)
+- `A30.11` Avoidance of conspicuously short musical loops (stage 3)
+- `A30.13` No dialogue continuing from a dead or departed speaker without explanation (stage 2)
+- `A30.14` Audio pausing, resuming and loading consistently with the game state (stage 2)
+- `A30.15` Consistent presentation across headphones and supported speaker layouts (stage 2)
+
+### Dialogue and conversations  (8 of 18)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Conversation is this game's pillar and I gave it seven rows, all about the surface rather than the flow.
+
+- `A31.02` Acknowledgement when the player initiates speech (stage 2)
+- `A31.03` Conversational distance and facing that look plausible (stage 2)
+- `A31.08` Choice selection that does not accidentally confirm during menu navigation (stage 2)
+- `A31.09` A predictable response to walking away (stage 2)
+- `A31.10` A predictable response to combat interrupting speech (stage 2)
+- `A31.16` Subtitles matching the actual spoken line (stage 2)
+- `A31.17` Appropriate pauses and turn-taking (stage 2)
+- `A31.18` No conspicuous silence while a character appears to be waiting for a missing line (stage 2)
+
+### Cutscenes and cinematic transitions  (8 of 13)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Cinematics gave me a camera and a skip. The state handling around a scene, which is where they break, did not arrive.
+
+- `A32.03` Characters and props arriving in the correct positions (stage 4)
+- `A32.04` Player equipment and appearance carried into scenes where appropriate (stage 4)
+- `A32.08` Protection against accidentally skipping an entire scene (stage 4)
+- `A32.09` Subtitles that survive cinematic framing and letterboxing (stage 4)
+- `A32.10` Gameplay resuming in a sensible position and facing (stage 4)
+- `A32.11` No damage or enemy activity during a scene that denies player control unless deliberately communicated (stage 4)
+- `A32.12` Correct state changes even when a scene is skipped (stage 4)
+- `A32.13` No prolonged loading hidden behind a frozen character or black screen without feedback (stage 4)
+
+### Missions, objectives and activities  (15 of 21)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Mission design was not a department row, so objectives arrived only through the thirty-minute walk, which sees a task start and finish and nothing in between.
+
+- `A33.03` Clear distinction between mandatory and optional tasks (stage 4)
+- `A33.04` Objective progress updating after relevant actions (stage 4)
+- `A33.05` Completion acknowledged rather than silently recorded (stage 4)
+- `A33.07` Failure conditions communicated before they matter where possible (stage 4)
+- `A33.08` A clear response to leaving an active mission area (stage 4)
+- `A33.09` Tasks that survive doing valid steps in an unexpected order (stage 4)
+- `A33.10` Recognition of an item already owned when it is requested (stage 4)
+- `A33.12` Protection against permanently losing an indispensable quest item (stage 4)
+- `A33.13` Required interactions remaining usable despite ordinary world changes (stage 4)
+- `A33.14` A way to restart or recover a broken activity (stage 4)
+- `A33.15` Clear communication of time limits (stage 4)
+- `A33.16` Dialogue and markers agreeing on the destination (stage 4)
+- `A33.17` Markers resolving to reachable interaction points (stage 4)
+- `A33.19` Completed objectives not continuing to issue obsolete instructions (stage 4)
+- `A33.20` A reason to explore beyond the main route (stage 4)
+
+### HUD and moment-to-moment feedback  (11 of 16)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F1**. UMG and CommonUI gave me the HUD and prompts as two rows. Every rule about what a HUD owes in a busy moment was inside them.
+
+- `A34.02` Ammunition or resource information readable before an action fails (stage 4)
+- `A34.04` Feedback when an action is on cooldown or otherwise unavailable (stage 4)
+- `A34.06` Aiming indicators visible against varied backgrounds (stage 4)
+- `A34.07` Damage direction or an equivalent way to locate unseen danger (stage 6)
+- `A34.09` Status-effect indicators that explain their meaning (stage 4)
+- `A34.10` Notifications that remain long enough to read (stage 4)
+- `A34.11` Notification handling that does not bury urgent information (stage 4)
+- `A34.12` No overlapping subtitles, prompts and objective text (stage 4)
+- `A34.13` Appropriate removal or reduction of HUD during noninteractive scenes (stage 4)
+- `A34.14` A clear indication when the world continues running behind a menu (stage 4)
+- `A34.15` UI values that match actual gameplay state (stage 4)
+
+### Maps, journals and navigation aids, where provided  (11 of 20)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. The map was one row, and D20 rules out a minimap, which let me stop thinking about navigation altogether.
+
+- `A35.03` A clear indication of facing or travel direction (stage 4)
+- `A35.04` Useful map scale and zoom (stage 4)
+- `A35.05` Panning with the current input device (stage 4)
+- `A35.06` Legible labels and distinguishable icons (stage 4)
+- `A35.07` A legend or explanation for unfamiliar symbols (stage 4)
+- `A35.08` Selection of overlapping icons (stage 4)
+- `A35.09` A way to place and remove a personal waypoint (stage 4)
+- `A35.11` Recalculation after leaving a suggested route (stage 4)
+- `A35.12` Height or floor distinction where a flat marker would mislead (stage 4)
+- `A35.13` Clear distinction between discovered and undiscovered places (stage 4)
+- `A35.14` Clear distinction between completed and incomplete activities (stage 4)
+
+### Inventory, equipment and loot, where included  (13 of 21)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. Inventory was one row. It is a screen with twenty rules.
+
+- `A36.02` Pickup feedback identifying what was acquired (stage 4)
+- `A36.05` Sorting or filtering sufficient for the expected inventory size (stage 4)
+- `A36.06` Consistent stacking of identical items (stage 4)
+- `A36.07` Quantity selection for moving or discarding stacks (stage 4)
+- `A36.10` Equipment restrictions explained before selection (stage 4)
+- `A36.12` Quick access to frequently used items (stage 4)
+- `A36.13` Consistent consumption of single-use items (stage 4)
+- `A36.14` A clear capacity or weight rule if capacity is limited (stage 4)
+- `A36.15` Feedback when a pickup fails because the inventory is full (stage 4)
+- `A36.17` Protection against accidental destruction of valuable items (stage 4)
+- `A36.19` Containers retaining sensible contents after being opened (stage 4)
+- `A36.20` Inventory state surviving death and reload according to the stated rules (stage 4)
+- `A36.21` Menus remaining usable while quantities change (stage 4)
+
+### Shops, economy and crafting, where included  (6 of 16)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F1**. Buy and sell was one row in a game with rackets, debts and a book of fares.
+
+- `A37.04` Preview of the actual transaction quantity and total (stage 6)
+- `A37.05` Insufficient-funds feedback that explains the shortfall (stage 6)
+- `A37.06` Transactions occurring once per confirmed purchase (stage 6)
+- `A37.08` Recovery from accidental sale where a buyback system is provided (stage 6)
+- `A37.09` Shop stock and availability behaving consistently (stage 6)
+- `A37.16` No unexplained loss of money or materials when an operation is cancelled (stage 6)
+
+### Progression, customisation and difficulty, where included  (5 of 15)
+
+Should have been caught by **lens 1, who builds it**. Mode **F1**. Progression was one row and standing is the game's real progression, so the row was too generic to carry it.
+
+- `A38.03` Explanation of what an upgrade actually changes (stage 4)
+- `A38.04` Clear prerequisites and costs (stage 4)
+- `A38.05` Immediate application of purchased abilities (stage 4)
+- `A38.06` Instruction for newly unlocked actions (stage 4)
+- `A38.12` Appropriate acknowledgement when difficulty is changed (stage 4)
+
+### Saving, loading and persistence  (13 of 28)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F3**. My walk saved once and reloaded once. It never had a save fail, a save collide, or a save be interrupted.
+
+- `A39.01` A clear explanation of when progress is saved (stage 4)
+- `A39.05` Clear reasons when saving is temporarily unavailable (stage 4)
+- `A39.06` A clear distinction between checkpoint, autosave and manual save (stage 4)
+- `A39.08` Confirmation before overwriting or deleting a save (stage 4)
+- `A39.09` Separate playthroughs or profiles not silently overwriting each other (stage 4)
+- `A39.15` Timers and temporary effects restored according to clear rules (stage 4)
+- `A39.16` No duplicated rewards or consumed items after reloading (stage 4)
+- `A39.17` No loading into an unavoidable death loop (stage 4)
+- `A39.21` Clear compatibility handling after updates or missing downloadable content (stage 4)
+- `A39.22` Offline saves retained when reconnecting (stage 4)
+- `A39.25` Machine-specific graphics settings not making another machine unusable (stage 4)
+- `A39.27` Control withheld until the loaded world is ready (stage 4)
+- `A39.28` A sensible return to title or another save after load failure (stage 4)
+
+### Pausing, interruption and quitting  (8 of 14)
+
+Should have been caught by **lens 3, moment by moment**. Mode **F3**. Quitting was in my walk. Losing focus, sleeping the machine and closing the process were not.
+
+- `A40.02` A clear distinction between menus that pause and menus that do not (stage 4)
+- `A40.04` Resuming without a queued accidental attack or movement (stage 4)
+- `A40.05` Sensible behaviour when the application loses focus (stage 4)
+- `A40.06` Safe recovery after system sleep or suspend (stage 4)
+- `A40.09` A warning when quitting would lose unsaved progress (stage 4)
+- `A40.10` Quitting that waits for an active save or clearly explains why it cannot yet finish (stage 4)
+- `A40.11` No indefinitely hanging process after closing the game (stage 4)
+- `A40.12` No continued game audio after exit (stage 4)
+
+### Graphics and display settings  (7 of 22)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F1**. Display settings were four rows. The screen has twenty-two, and the plan names three.
+
+- `A41.03` Monitor selection on supported PC setups (stage 4)
+- `A41.04` Refresh-rate handling that uses the chosen display correctly (stage 4)
+- `A41.09` Texture quality appropriate to available graphics memory (stage 4)
+- `A41.16` Clear distinction between rendered frame rate and generated-frame options where offered (stage 4)
+- `A41.18` Correct aspect-ratio handling without stretched people or clipped HUD (stage 4)
+- `A41.19` Preview or explanation of what a graphics setting changes (stage 4)
+- `A41.21` Clear indication when a setting requires restarting (stage 4)
+
+### Audio and control settings  (10 of 20)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. The two guideline sites that enumerate these are refused by this environment, so this lens ran on a reconstruction and produced categories, not checkpoints.
+
+- `A42.02` Volume changes audible while adjusting them (stage 4)
+- `A42.04` Speaker and headphone presentation choices where relevant (stage 4)
+- `A42.05` A reduced dynamic-range option for quiet listening (stage 4)
+- `A42.08` Rebinding of menu actions where necessary for accessibility (stage 4)
+- `A42.10` A way to restore default bindings (stage 4)
+- `A42.11` Independent horizontal and vertical sensitivity where useful (stage 4)
+- `A42.12` Separate aiming and general camera sensitivity (stage 4)
+- `A42.15` Stick and trigger response options where supported (stage 4)
+- `A42.17` Adjustable vibration and haptic intensity (stage 4)
+- `A42.19` Controls explained without requiring memorisation of a diagram (stage 4)
+
+### Accessibility: text and visual information  (7 of 16)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Same refusal. I built accessibility from three barrier classes and six strategies, which produces headings; the guidelines produce testable lines.
+
+- `A43.03` Text reflow without clipping after enlargement (stage 4)
+- `A43.09` Optional emphasis for interactable objects where needed (stage 4)
+- `A43.10` A way to distinguish important objects from visual clutter (stage 4)
+- `A43.13` Narrated or otherwise accessible error and confirmation messages (stage 4)
+- `A43.14` Accessible reading of essential documents and clues (stage 4)
+- `A43.15` UI focus that remains visible and inside the active dialogue (stage 4)
+- `A43.16` Gameplay information that remains legible after changing display size or resolution (stage 4)
+
+### Accessibility: hearing and speech  (3 of 11)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Same refusal, and this is the section where a missing line is a player who cannot play.
+
+- `A44.02` Subtitles available before the opening scene (stage 4)
+- `A44.06` Sufficient subtitle display time (stage 4)
+- `A44.10` Alternatives to required speech input where voice commands exist (stage 4)
+
+### Accessibility: motor control and interaction  (6 of 12)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Same refusal. Motor accessibility is the area where my reconstruction was thinnest.
+
+- `A45.04` Alternatives to difficult simultaneous button combinations (stage 4)
+- `A45.07` Menu operation without precise pointer placement (stage 4)
+- `A45.08` Adjustable cursor or menu-navigation speed (stage 4)
+- `A45.09` Assistance for sustained steering, aiming or camera control where offered (stage 4)
+- `A45.10` A way to pause without demanding the same dexterity as combat (stage 4)
+- `A45.11` Support for compatible alternative controllers (stage 4)
+
+### Accessibility: cognition, difficulty and comfort  (5 of 14)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Same refusal. Comfort and cognition arrived as four rows and needed fourteen.
+
+- `A46.03` Adjustable or pausable reading time (stage 4)
+- `A46.04` Clear indication of what changed after a menu action (stage 4)
+- `A46.07` Optional navigation assistance where the world is difficult to parse (stage 4)
+- `A46.09` Control over camera recentering where it causes discomfort (stage 4)
+- `A46.12` Control over repetitive UI pulsing and notifications (stage 4)
+
+### Localisation and text handling  (5 of 12)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Localisation came from the engine's Localization module and a cert instinct, neither of which enumerates text handling.
+
+- `A47.05` Appropriate line breaks and reading direction (ship-prep)
+- `A47.07` Localised button and keyboard instructions that match the actual controls (ship-prep)
+- `A47.08` User-entered names preserving supported accents and characters (ship-prep)
+- `A47.11` No exposed placeholder keys or internal labels (ship-prep)
+- `A47.12` Language changes that apply predictably and explain any restart requirement (ship-prep)
+
+### Performance and technical stability  (10 of 20)
+
+Should have been caught by **lens 2, what runs every frame**. Mode **F4**. The module list gave me frame budget, streaming and significance. Stability under change, which is what these twenty items are, has no module.
+
+- `A48.03` No major hitch at the first use of an ordinary effect or weapon (stage 2)
+- `A48.06` Textures resolving before their absence becomes conspicuous (stage 2)
+- `A48.09` Menus that remain responsive when the world is busy (stage 2)
+- `A48.12` Stable behaviour when changing graphics settings (stage 2)
+- `A48.13` Stable behaviour when changing audio or input devices (stage 2)
+- `A48.14` Correct recovery after task switching (stage 2)
+- `A48.15` No simulation speed changes caused by frame-rate changes (stage 2)
+- `A48.18` Error messages that explain the problem in player language (stage 2)
+- `A48.19` No routine need to restart the game to restore basic controls or interactions (stage 2)
+- `A48.20` Updates that preserve existing progress and settings where promised (stage 2)
+
+### Platform integration and account handling  (7 of 14)
+
+Should have been caught by **lens 4, what the industry checks**. Mode **F2**. Platform certification was the half of lens 4 whose sources are entirely blocked here; I wrote achievements and cloud save and stopped.
+
+- `A49.01` Correct association between the signed-in player and their saves (ship-prep)
+- `A49.02` A clear response when an account signs out (ship-prep)
+- `A49.03` Controller ownership changing safely with the active user (ship-prep)
+- `A49.04` Platform overlays opening and closing without breaking control (ship-prep)
+- `A49.05` Screenshots and capture shortcuts working normally (ship-prep)
+- `A49.09` Missing content explained without silently damaging saves (ship-prep)
+- `A49.12` System sleep and resume behaving predictably (ship-prep)
+
+### Optional presentation and long-term conveniences  (7 of 13)
+
+Should have been caught by **lens 1, who builds it**. Mode **F5**. Marketing capture and community were department rows, so I got photo mode and credits and nothing about what a player does after the ending.
+
+- `A51.02` Photo controls that do not accidentally trigger gameplay actions (ship-prep)
+- `A51.04` Captures saved somewhere discoverable (ship-prep)
+- `A51.05` A streamer-friendly music option where licensed music would obstruct sharing (ship-prep)
+- `A51.06` Rewatchable tutorials, cinematics or records where the game provides an archive (ship-prep)
+- `A51.08` Credits that can be paused, scrolled or exited (ship-prep)
+- `A51.11` Clear rules for replay, chapter selection or New Game Plus where offered (ship-prep)
+- `A51.12` A way to distinguish completed content from remaining content (ship-prep)
+
+## 3. What the plan holds and my checklist missed
+
+99 items. They matter because they are the reverse error: not a gap in
+the plan, a gap in the instrument I used to audit it. The largest groups:
+
+**Stealth, trespass and law, where included** (13)
+- `A15.03` Consistent effects of lighting if darkness is a stealth mechanic. Held at: INV the lit window as an information carrier
+- `A15.04` Sound generation that matches movement and actions. Held at: INV perception, the hearing model
+- `A15.05` Readable boundaries for restricted areas. Held at: INV doors and who gets in
+- `A15.07` Distinction between suspicious behaviour and an openly hostile act. Held at: INV suspicion and heat
+- `A15.08` Witness reactions that depend on whether they could observe the event. Held at: INV witnesses and what they caught
+- `A15.09` A visible or audible reporting process if reporting matters. Held at: INV the law and the police
+- `A15.10` A chance to respond before an alert spreads, where promised by the design. Held at: INV the gap between the act and the discovery
+- `A15.11` Law response proportionate to the apparent offence. Held at: INV the law and the police
+- `A15.12` An understandable wanted or pursuit state. Held at: INV the what-they-know HUD for wanted states
+- `A15.15` Consistent treatment of disguises or changed appearance if supported. Held at: INV disguise
+- `A15.16` Distinction between surrender, escape and renewed aggression. Held at: RES failure-after-arrest
+- `A15.17` Clear consequences of fines, arrest or confiscation. Held at: RES failure-after-arrest
+- `A15.18` A usable return to ordinary play after punishment or escape. Held at: RES failure-after-arrest
+
+**World layout and navigation through space** (10)
+- `A21.01` Human-scale doors, stairs, furniture and streets. Held at: RES atlas-01, dimensioned layouts; INV the town layout
+- `A21.02` Plausible connections between adjacent spaces. Held at: RES atlas-01 MICKEYS
+- `A21.03` Exteriors and interiors that broadly agree in position and size. Held at: RES atlas-01
+- `A21.05` Readable routes through ordinary environments. Held at: INV the town layout, street network
+- `A21.06` Landmarks that help orientation. Held at: RES atlas-01; CANON seven districts
+- `A21.07` Visually distinct areas rather than indistinguishable repeated streets. Held at: CANON seven districts
+- `A21.12` Alternative routes where exploration is presented as open-ended. Held at: RES atlas-01, the yard with two escapes
+- `A21.13` Useful destinations rather than scenery alone. Held at: CANON venues and districts
+- `A21.17` Clear access rules for closed buildings or locked regions. Held at: INV doors and who gets in
+- `A21.18` Indoor layouts that permit both navigation and intended encounters. Held at: RES atlas-01 MICKEYS
+
+**Enemy awareness and decision-making, where combat or stealth exists** (6)
+- `A14.02` Solid cover preventing direct sight where expected. Held at: INV perception
+- `A14.03` A readable transition from unaware to suspicious to engaged. Held at: INV suspicion and heat; RES detection-legibility
+- `A14.05` Investigation of a sound's location rather than magical knowledge of the player. Held at: INV the law and the police, patrol focus
+- `A14.07` A distinction between seeing the player and being told about them. Held at: CANON gossip; INV witnesses and what they caught
+- `A14.08` Communication of an alert through visible or audible behaviour. Held at: INV the law and the police, denouncing and informers
+- `A14.21` No immediate forgetting of a fight merely because the player steps around a corner. Held at: CANON permanent per-NPC memory
+
+**Lighting and rendering** (6)
+- `A23.05` Indoor light levels that differ plausibly from outdoors. Held at: DEC 2026-09-23 the day's exposure and fog
+- `A23.06` Exposure changes that do not blind the player during ordinary transitions. Held at: DEC 2026-09-23 the night row held at 0.1
+- `A23.07` Dark areas that remain playable under the intended rules. Held at: INV light and the time of day, a measured night floor
+- `A23.09` Switchable lights whose appearance and illumination change together. Held at: INV light and the time of day, lamps that toggle
+- `A23.12` Glass that behaves consistently as transparent, reflective or obscured. Held at: DEC 2026-09-23 lit rooms behind see-through glass
+- `A23.16` Distant scenery integrated with sky and atmosphere. Held at: RES photoreal-on-a-budget, the sky
+
+**Environment art and object appearance** (5)
+- `A22.07` Buildings and props visibly grounded rather than floating. Held at: RES placement metric, foot-gap to the datum
+- `A22.10` Variation that disguises obvious repeated components. Held at: INV props and dressing, 791 items placed by rule
+- `A22.12` Furnishing and clutter consistent with a place's function. Held at: ROADMAP stage 5, a designed layout with chosen contents
+- `A22.13` Signs and labels that are readable when they matter. Held at: INV brands and signage, 153 pieces of world text
+- `A22.14` Period and setting consistency in conspicuous objects. Held at: CANON era, enforced by tools/canon-gate.py
+
+**Ordinary civilian behaviour** (4)
+- `A13.10` Hands and props matching the activity being performed. Held at: INV ambient street life, a man fixing a van
+- `A13.15` Reactions to a visibly drawn weapon where the setting warrants it. Held at: INV the four-rung concealment model
+- `A13.16` Different reactions to harmless proximity and actual violence. Held at: CANON the moat, seven perceivable slots
+- `A13.19` A response to an injured or dead person. Held at: INV the gap between the act and the discovery
+
+**Voice, music and the final audio mix** (4)
+- `A30.02` Consistent dialogue loudness across speakers. Held at: INV audio mix, a per-bus voice budget
+- `A30.04` Speech fitting the speaker's emotional situation. Held at: RES live-speech-architecture
+- `A30.10` Appropriate silence and contrast rather than constant maximum intensity. Held at: INV SFX, spare and diegetic by choice
+- `A30.16` Radio or other in-world music sounding attached to its source. Held at: CANON Mickey's radio; INV radio and TV
+
+**Dialogue and conversations** (4)
+- `A31.07` A distinction between asking for information and making a consequential commitment. Held at: RES holding-information
+- `A31.12` Conversation state that does not repeat completed introductions endlessly. Held at: CANON permanent memory; what the town calls you
+- `A31.13` Dialogue that acknowledges relevant completed actions. Held at: CANON the moat
+- `A31.14` Dialogue that does not refer to absent or dead characters as visibly present. Held at: CANON permanent memory
+
+**Missions, objectives and activities** (4)
+- `A33.06` Rewards actually delivered and explained. Held at: INV crime jobs and takings, payout
+- `A33.11` A solution when a required character is absent, dead or obstructed. Held at: CANON killing is permanent; RES authored-stories-in-simulation
+- `A33.18` Sensible handling of multiple simultaneous missions. Held at: INV crime jobs and takings
+- `A33.21` Activity variety appropriate to the game's promised scope. Held at: ROADMAP stage 6, the hours-of-content reading
+
+**Character appearance** (3)
+- `A08.02` Consistent scale between characters and their surroundings. Held at: INV bodies and faces, heights 1.58 to 1.91
+- `A08.11` Holstered gear occupying a plausible place on the body. Held at: INV the four-rung concealment model
+- `A08.16` Visible wetness, dirt or injury where the presentation promises it. Held at: INV blood on the player
+
+**Inventory, equipment and loot, where included** (3)
+- `A36.04` Clear distinction between usable, equippable, valuable and quest items. Held at: INV object provenance across five origins
+- `A36.08` A clear equipped state. Held at: INV the four-rung concealment model
+- `A36.11` Immediate gameplay and visual effects from equipping. Held at: INV disguise
+
+## 4. The master checklist
+
+**It is the file beside this one: [MASTER-CHECKLIST.md](./MASTER-CHECKLIST.md).**
+957 rows, every one a specific feature and never a heading, grouped by area,
+each with where it stands (`both`, `plan`, `mine`, `blind`, `out`) and its stage
+in `ROADMAP.md`. It is a separate file for one reason, stated plainly: the only
+way this session can write to the repository is one tool call per file, and the
+merged checklist plus this analysis in a single document is larger than one call
+can carry. Nothing was cut to make them fit.
+
+## 5. The per-stage index
+
+Item ids only, for folding into `ROADMAP.md`. Counts exclude the rows ruled
+out.
+
+| stage | items |
 |---|---|
-| Rendering | Renderer, RenderCore, RHI, RHICore, D3D12RHI, VulkanRHI, OpenGLDrv, MaterialShaderQualitySettings, SynthBenchmark, ImageCore, ImageWrapper, OpenColorIOWrapper |
-| Animation | AnimationCore, AnimGraphRuntime, SkeletalMeshDescription, Constraints, ControlRig, IKRig, FullBodyIK, PBIK, PoseSearch, BlendStack, MotionWarping, ContextualAnimation, Chooser, AnimationBudgetAllocator, AnimationSharing, Mover, Locomotor, MLDeformerFramework |
-| Faces and people | MetaHumanCharacter, MetaHumanGenerator, MetaHumanCrowd, MetaHumanSpeech2Face, SpeechAnimationSolver, FacialAnimation, RigLogicModule, DNACalibModule, HairStrandsCore, ChaosCloth, ChaosClothAsset, SkeletalMerging, CustomizableObject |
-| Physics | Chaos, ChaosCore, ChaosSolverEngine, PhysicsCore, PhysicsControl, ChaosVehiclesEngine, GeometryCollectionEngine, FieldSystemEngine, Buoyancy, CableComponent, DynamicWind |
-| Audio | AudioMixer, AudioMixerCore, AudioExtensions, SignalProcessing, SoundFieldRendering, Spatialization, AudioGameplayVolume, AudioModulation, MetasoundEngine, MetasoundStandardNodes, SoundScape, SoundUtilities, SteamAudio, ResonanceAudio, MicrosoftSpatialSound, SubtitlesAndClosedCaptions, Voice, VoiceChat, AudioSynesthesia, AudioInsights |
-| AI and navigation | AIModule, NavigationSystem, Navmesh, NavCorridor, ZoneGraph, ZoneGraphAnnotations, SmartObjectsModule, StateTreeModule, GameplayBehaviorsModule, HTNPlanner, MassEntity, MassAIBehavior, MassCrowd, MassNavigation, MassMovement, MassLOD, MassRepresentation, EnvironmentQueryEditor, GameplayTasks, LearningAgents |
-| Input | InputCore, InputDevice, EnhancedInput, CommonInput, RawInput, GameInputBase, SteamController, StylusInput, ApplicationCore |
-| Camera | GameplayCameras, EngineCameras, CinematicCamera, CineCameraRigs, CameraShakePreviewer, LensComponent |
-| Interface | Slate, SlateCore, UMG, CommonUI, AdvancedWidgets, ModelViewViewModel, UIFramework, WidgetCarousel, GameMenuBuilder, SlateIMInGame, ScreenReader, SlateScreenReader, TextToSpeech |
-| Save and serialization | Serialization, Json, JsonUtilities, SaveGameNetworkReplayStreaming, LevelStreamingPersistence, SandboxFile, PlainProps |
-| Streaming and loading | PakFile, IoStoreOnDemandCore, StreamingFile, StreamingPauseRendering, AssetRegistry, InstallBundleManager, BuildPatchServices, ChunkDownloader, MoviePlayer, PreLoadScreen, CinematicPrestreaming, FastGeoStreaming, WorldPartitionHLODUtilities |
-| Localisation | Localization, LocalizationService, LocalizableMessage, PortableObjectFileDataSource, Text3D |
-| Platform services | CoreOnline, OnlineSubsystem, OnlineSubsystemSteam, OnlineServicesInterface, HTTP, Sockets, Networking, XMPP, LauncherPlatform, PlatformDLC, PlatformCrypto, GooglePAD |
-| Effects | Niagara, NiagaraCore, NiagaraFluids, NiagaraShader, SurfaceEffects, GeometryCache |
-| World and time | DaySequence, SunPosition, CelestialVault, Water, WaterAdvanced, Landscape, Landmass, Foliage, ProceduralVegetation, PCG, VirtualHeightfieldMesh, GeoReferencing, InstancedActors |
-| Media | Media, MediaAssets, MediaUtils, MediaPlate, ElectraPlayerRuntime, ElectraSubtitles, WebMMedia, BinkMediaPlayer, AVEncoder, WebBrowser |
-| Telemetry and crash | CrashReportCore, Analytics, AnalyticsET, StudioTelemetry, RuntimeTelemetry, HardwareSurvey, PerfCounters, MemoryUsageQueries, Instrumentation, TraceLog |
-| Scale and budget | SignificanceManager, AnimationBudgetAllocator, MassLOD, WorldMetricsCore, Reflex, AutomatedPerfTesting |
+| stage 1 | 47 |
+| stage 2 | 230 |
+| stage 3 | 139 |
+| stage 4 | 291 |
+| stage 5 | 24 |
+| stage 6 | 82 |
+| ship-prep | 70 |
+| ruled out | 74 |
 
-Note three modules by name, because they are the answer to items the plan does
-not hold: `SubtitlesAndClosedCaptions`, `ScreenReader` and `TextToSpeech` ship
-with the engine. So does `Spatialization`. The absences below are not
-engine absences.
+**stage 1** (47): A08.07, A08.08, A08.15, A09.01, A09.02, A09.24, A21.01, A21.05, A21.06, A21.07, A22.01, A22.02, A22.03, A22.04, A22.05, A22.06, A22.07, A22.08, A22.09, A22.10, A22.11, A22.12, A22.13, A22.14, A22.15, A22.16, A22.17, A23.01, A23.02, A23.03, A23.04, A23.05, A23.06, A23.07, A23.09, A23.10, A23.12, A23.13, A23.14, A23.15, A23.16, A23.17, A24.05, A41.14, A48.07, P3, V6
 
-### Lens 3: moment by moment
+**stage 2** (230): A05.01, A05.02, A05.04, A05.05, A05.06, A05.07, A05.08, A05.09, A05.13, A05.14, A05.15, A05.16, A05.21, A05.23, A05.24, A06.01, A06.02, A06.03, A06.04, A06.05, A06.06, A06.07, A06.08, A06.09, A06.10, A06.11, A06.12, A06.13, A06.14, A06.15, A06.16, A06.17, A06.18, A06.19, A06.20, A06.21, A08.01, A08.02, A08.03, A08.04, A08.05, A08.06, A08.09, A08.10, A08.11, A08.12, A08.13, A08.14, A08.16, A09.03, A09.04, A09.05, A09.06, A09.07, A09.08, A09.09, A09.10, A09.11, A09.12, A09.13, A09.14, A09.15, A09.16, A09.18, A09.21, A09.22, A09.23, A10.01, A10.02, A10.03, A10.04, A10.05, A10.06, A10.07, A10.08, A10.09, A10.10, A10.11, A10.12, A10.13, A10.14, A11.08, A11.12, A12.01, A12.02, A12.03, A12.04, A12.05, A12.06, A12.07, A12.08, A12.09, A12.10, A12.11, A12.12, A12.13, A12.14, A12.15, A12.16, A12.17, A12.18, A13.01, A13.02, A13.03, A13.04, A13.05, A13.06, A13.07, A13.08, A13.09, A13.10, A13.12, A13.13, A13.22, A13.23, A13.24, A13.25, A13.26, A20.07, A23.08, A24.01, A24.02, A24.03, A24.04, A24.06, A24.07, A24.09, A24.10, A24.11, A24.12, A24.13, A24.15, A24.16, A24.17, A24.18, A25.01, A25.02, A25.03, A25.04, A25.05, A25.06, A25.07, A25.08, A25.09, A25.10, A25.12, A25.13, A25.14, A25.15, A25.16, A26.20, A26.21, A26.22, A26.24, A28.01, A28.02, A28.03, A28.04, A28.05, A28.06, A28.07, A28.08, A28.09, A28.10, A28.11, A28.12, A28.13, A28.14, A28.15, A29.01, A29.02, A29.03, A29.04, A29.05, A29.06, A29.07, A29.08, A29.09, A29.10, A29.11, A29.12, A29.13, A29.14, A29.15, A29.16, A29.17, A29.18, A30.01, A30.02, A30.04, A30.05, A30.06, A30.10, A30.12, A30.13, A30.14, A30.15, A31.02, A31.03, A31.04, A31.06, A31.07, A31.08, A31.09, A31.10, A31.15, A31.16, A31.17, A31.18, A32.02, A32.05, A44.05, A48.01, A48.02, A48.03, A48.06, A48.08, A48.09, A48.11, A48.12, A48.13, A48.14, A48.15, A48.18, A48.19, A48.20, H9, N7, V1, V2
 
-ASKED FOR: the first thirty minutes of a modern open-world game, second by
-second, from launching it to quitting it.
+**stage 3** (139): A05.12, A07.01, A07.02, A07.03, A07.04, A07.05, A07.06, A07.07, A07.08, A07.09, A07.10, A07.11, A07.12, A07.13, A07.14, A07.15, A07.16, A07.17, A07.18, A07.19, A11.02, A11.04, A11.05, A11.06, A11.07, A11.09, A11.10, A11.11, A11.13, A11.14, A11.15, A11.16, A11.17, A11.18, A11.19, A11.20, A11.21, A11.22, A11.23, A11.24, A13.11, A13.14, A13.15, A13.16, A13.17, A13.18, A13.19, A13.20, A13.21, A14.01, A14.02, A14.03, A14.04, A14.05, A14.06, A14.07, A14.08, A14.09, A14.10, A14.11, A14.12, A14.13, A14.14, A14.15, A14.16, A14.17, A14.18, A14.19, A14.20, A14.21, A14.22, A14.23, A15.01, A15.02, A15.03, A15.04, A15.05, A15.06, A15.07, A15.08, A15.09, A15.10, A15.11, A15.12, A15.13, A15.14, A15.15, A15.16, A15.17, A15.18, A15.19, A17.14, A20.03, A20.05, A20.06, A20.08, A20.09, A20.10, A20.12, A20.13, A20.14, A20.15, A24.08, A24.14, A25.11, A30.03, A30.07, A30.09, A30.11, A31.01, A31.05, A31.12, A31.13, A31.14, A33.06, A33.11, A34.03, A36.04, A36.16, A36.18, A38.02, A38.07, A38.14, A38.15, A39.04, A39.10, A39.11, A39.12, A39.13, A39.14, A39.18, A39.20, A48.16, A51.09, A51.10, K7, V3, V8, V9
 
-WHAT IT IS: a walkthrough constructed from the fixed order every PC game of this
-kind imposes, which is DERIVED, with four documented anchors, CITED from
-Wikipedia's `Loading screen`, `Saved game`, `HUD (video games)` and
-`Video game development`. I did not play a game to write it and could not have:
-this environment has no game and no GPU. It is marked DERIVED throughout and it
-is the lens most open to challenge. Its value is not authority; it is ORDER. It
-is the only lens that produces a clock, and the clock is what ranks the list.
+**stage 4** (291): A01.01, A01.02, A01.03, A01.04, A01.05, A01.06, A01.07, A01.09, A01.10, A01.11, A01.12, A01.13, A01.15, A01.16, A01.17, A01.18, A02.01, A02.02, A02.03, A02.04, A02.05, A02.06, A02.07, A02.08, A02.09, A02.10, A02.11, A02.12, A02.13, A02.14, A02.15, A02.16, A02.17, A02.18, A02.20, A03.01, A03.02, A03.03, A03.04, A03.05, A03.06, A03.08, A03.09, A03.10, A03.11, A03.12, A03.13, A03.14, A03.15, A03.16, A03.17, A03.18, A03.19, A03.20, A03.22, A03.23, A03.24, A04.01, A04.02, A04.03, A04.04, A04.05, A04.06, A04.07, A04.08, A04.09, A04.10, A04.11, A04.12, A04.13, A04.14, A04.15, A04.16, A05.03, A05.22, A11.01, A11.03, A20.11, A20.16, A31.11, A32.01, A32.03, A32.04, A32.06, A32.07, A32.08, A32.09, A32.10, A32.11, A32.12, A32.13, A33.01, A33.02, A33.03, A33.04, A33.05, A33.07, A33.08, A33.09, A33.10, A33.12, A33.13, A33.14, A33.15, A33.16, A33.17, A33.18, A33.19, A33.20, A34.02, A34.04, A34.05, A34.06, A34.09, A34.10, A34.11, A34.12, A34.13, A34.14, A34.15, A34.16, A35.01, A35.02, A35.03, A35.04, A35.05, A35.06, A35.07, A35.08, A35.09, A35.11, A35.12, A35.13, A35.14, A35.15, A35.16, A35.17, A36.01, A36.02, A36.03, A36.05, A36.06, A36.07, A36.08, A36.10, A36.11, A36.12, A36.13, A36.14, A36.15, A36.17, A36.19, A36.20, A36.21, A38.01, A38.03, A38.04, A38.05, A38.06, A38.11, A38.12, A39.01, A39.02, A39.03, A39.05, A39.06, A39.07, A39.08, A39.09, A39.15, A39.16, A39.17, A39.19, A39.21, A39.22, A39.25, A39.27, A39.28, A40.01, A40.02, A40.03, A40.04, A40.05, A40.06, A40.07, A40.08, A40.09, A40.10, A40.11, A40.12, A40.13, A40.14, A41.01, A41.02, A41.03, A41.04, A41.05, A41.06, A41.07, A41.08, A41.09, A41.10, A41.11, A41.13, A41.15, A41.16, A41.17, A41.18, A41.19, A41.20, A41.21, A41.22, A42.01, A42.02, A42.03, A42.04, A42.05, A42.07, A42.08, A42.09, A42.10, A42.11, A42.12, A42.13, A42.14, A42.15, A42.16, A42.17, A42.19, A43.01, A43.02, A43.03, A43.04, A43.05, A43.06, A43.07, A43.09, A43.10, A43.11, A43.12, A43.13, A43.14, A43.15, A43.16, A44.01, A44.02, A44.03, A44.04, A44.06, A44.07, A44.08, A44.09, A44.10, A45.01, A45.02, A45.03, A45.04, A45.05, A45.07, A45.08, A45.09, A45.10, A45.11, A46.01, A46.02, A46.03, A46.04, A46.05, A46.06, A46.07, A46.08, A46.09, A46.10, A46.11, A46.12, A46.13, A46.14, A49.10, A49.11, A49.14, A51.03, A51.07, A51.13, A1, A2, D1, E4, F2, F7, O6, V10
 
-The walk: launcher and splash, legal and logo screens, a first-run hardware
-detection and a default preset, the title screen with Continue and New Game,
-the settings screens (display, audio, controls, language, accessibility), a
-content and photosensitivity warning, a difficulty or mode choice, the loading
-screen, the opening scene with its subtitles and its skip, the handover of
-control, the first walk with its footsteps and its ambience and the people who
-move out of the way, the first prompt and the first interaction, the first
-objective and how the player learns it, the first conversation, the first
-failure, the weather changing, the pause, the map, the save, a settings change
-mid-session, the quit, and the relaunch that has to put everything back.
+**stage 5** (24): A01.14, A02.19, A05.10, A05.11, A21.02, A21.03, A21.04, A21.08, A21.09, A21.10, A21.11, A21.12, A21.13, A21.14, A21.15, A21.16, A21.17, A21.18, A39.26, A48.04, A48.05, A48.10, J9, U5
 
-### Lens 4: what the industry already checks
+**stage 6** (82): A05.17, A09.17, A09.19, A09.20, A16.01, A16.02, A16.03, A16.04, A16.05, A16.06, A16.07, A16.08, A16.09, A16.10, A16.11, A16.12, A16.13, A16.14, A17.01, A17.02, A17.03, A17.04, A17.06, A17.07, A17.08, A17.09, A17.10, A17.11, A17.12, A17.13, A17.15, A18.01, A18.02, A18.03, A18.04, A18.05, A18.06, A18.07, A18.08, A18.09, A18.11, A18.13, A18.14, A19.01, A19.03, A19.04, A19.05, A19.06, A19.07, A19.08, A19.10, A19.11, A19.12, A19.13, A19.15, A19.16, A19.18, A19.20, A19.21, A19.23, A19.24, A20.01, A20.02, A20.04, A27.11, A30.08, A30.16, A33.21, A34.01, A34.07, A37.01, A37.02, A37.03, A37.04, A37.05, A37.06, A37.07, A37.08, A37.09, A37.16, V4, V7
 
-ASKED FOR: the Xbox Accessibility Guidelines and the Game Accessibility
-Guidelines, plus platform certification requirements.
+**ship-prep** (70): A01.08, A03.21, A26.01, A26.02, A26.03, A26.04, A26.05, A26.06, A26.07, A26.08, A26.09, A26.10, A26.11, A26.12, A26.13, A26.14, A26.15, A26.16, A26.17, A26.23, A27.07, A27.08, A27.09, A27.10, A27.12, A39.23, A39.24, A42.06, A47.01, A47.02, A47.03, A47.04, A47.05, A47.06, A47.07, A47.08, A47.09, A47.10, A47.11, A47.12, A48.17, A49.01, A49.02, A49.03, A49.04, A49.05, A49.06, A49.07, A49.09, A49.12, A51.01, A51.02, A51.04, A51.05, A51.06, A51.08, A51.11, A51.12, A4, Q5, R11, S5, T1, T4, T5, T6, T7, U3, U4, V5
 
-WHAT HAPPENED, and it should be read before any number from this lens is used:
-**both named sources are refused by this environment's proxy.**
-`gameaccessibilityguidelines.com` and `learn.microsoft.com` (which hosts the
-Xbox Accessibility Guidelines) both fail to connect, as do
-`partner.steamgames.com`, `developer.playstation.com`, `accessible.games`,
-`caniplaythat.com`, `www.w3.org` and `web.archive.org`. Wikipedia has no article
-on Lotcheck or on console certification. NO CERTIFICATION CHECKLIST AND NO
-ACCESSIBILITY GUIDELINE WAS READ THIS SESSION. That is a HOLE and it is
-the largest one in this delivery.
+## 6. Method, and what it cannot tell you
 
-WHAT WAS BUILT INSTEAD: Wikipedia's `Game accessibility`, CITED, which gives the
-structure rather than the checklist. Its three barrier classes (sensory, motor,
-cognitive) and six strategies (enhance stimuli, replace stimuli, replace input,
-reduce input, reduce stimuli, reduce time constraints) are the frame; the
-individual items in section R below are DERIVED from that frame and are ASSUMED
-where they name a specific affordance. The same article carries three CITED
-facts worth having: the CVAA has applied to games released since 1 January 2019
-and covers in-game communication and the interface used to reach it; The Last of
-Us Part II shipped over sixty accessibility settings and won the first
-Innovation in Accessibility award; and the ESA's Accessibility Games Initiative
-(2025) defines **24 tags** for product labelling. Those 24 tags are exactly the
-checklist this lens wanted. THEIR CONTENTS WERE NOT OBTAINED. Anybody with an
-unblocked browser can close this hole in ten minutes, and should.
+**How each of the 923 was judged.** For each item I decided two things by
+reading: does one of my 179 rows name the same behaviour such that a builder
+working from my row would produce it, and does the plan name it. The first test
+is deliberately strict. A row of mine that names the AREA does not count as
+covering a behaviour inside it, because treating a heading as coverage is the
+exact error being measured.
 
-## 3. How the comparison was made
+**The plan side is the same corpus as before**: `ROADMAP.md`, `canon.md`,
+`DECISIONS.md`, the 111-row systems inventory and 69 research files, 73 files in
+all. Where an item is marked as held by the plan, the table names the entry.
 
-A term search over the 73 plan files, one regular expression per item, run twice
-with the expressions tightened between runs after the first pass produced false
-positives ("equity" matching `quit`, photo captions matching `caption`,
-"schedule resolution" matching `resolution`, `gdcvault.com` matching `vault`).
+**What it cannot tell you.** The 923 judgements are mine alone and were not
+re-checked by a second pass, so a wrong one shows up as a feature quietly
+marked covered. I would expect the error to run in the direction of too much
+coverage rather than too little: it is easier to read one of my headings as
+covering an item than to notice it does not. Treat the blind-spot count as a
+floor.
 
-The instrument carries two controls, both run on every pass, because a search
-that finds nothing and a search that is broken look identical: `gossip`, which
-must hit, returned 52 hits across 4 of the 5 sources; a nonce token that exists
-nowhere returned 0 in all 5. It also has a known limit: it reads line by line,
-so a feature named across a line break is invisible to it.
+**The stage assignments are mine**, from a default per area with 81 overrides.
+They are a proposal for the local session to fold in, not a ruling.
 
-NO VERDICT BELOW WAS SET BY A COUNT. Every hit was read, and several verdicts
-moved on reading: save integrity went from absent to partly because the
-inventory's save entry names a quarantine and a SaveChaos harness that no search
-term of mine would have found; the objective row stayed absent because the word
-`objective` genuinely appears zero times in all 73 files, which I disbelieved
-and checked separately.
-
-## 4. The checklist
-
-**Plan**: **Y** in the plan, named in its own right with a home. **P** partly:
-named only inside a coarser entry, or only in a research delivery with no place
-in ROADMAP or the inventory. **N** absent: nothing in the 73 files names it.
-
-**Lenses**: 1 who builds it, 2 what runs every frame, 3 moment by moment, 4 what
-the industry already checks.
-
-**Notice**: minutes into a first session before a player would register it
-missing. `later` means a player would not notice inside a session; it still
-matters to somebody.
-
-### 4.1 Boot and the first screens
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| A1 | Splash and logo screens, legal notices | 1,3,4 | **N** | nothing in ROADMAP, canon, DECISIONS or the 111 inventory entries names a boot sequence | stage 4 | 0 min |
-| A2 | First-run hardware detection and default quality preset | 2,3 | **N** | no first-run detection anywhere; the hardware floor tile is the minimum machine, not a detector | stage 4 | 1 min |
-| A3 | Title screen with Continue, New Game, Load, Settings, Quit | 2,3 | **Y** | inventory `menus` (exists, ph6) and `new game` (exists, ph6); ROADMAP stage 4 | stage 4 |  |
-| A4 | Build version visible to the player | 1,3,4 | **N** | no version string named anywhere in the plan | past the sixth stage | 1 min |
-| A5 | Loading screen with progress, and no infinite load | 2,3,4 | **Y** | inventory `loading and streaming` (partial, ph5) | stage 5 |  |
-| A6 | Quit confirmation and a clean exit | 3,4 | **P** | inside the coarse `menus` tile; no line says a quit confirmation exists | stage 4 | 30 min |
-| A7 | Continue from the last save on relaunch | 3 | **Y** | inventory `new game`: "New game and Continue are both on the front screen" | stage 4 |  |
-| A8 | Photosensitivity and content warnings at boot | 1,4 | **N** | canon's content rule is a taste rule, not a player-facing warning screen | stage 4 | 0 min |
-| A9 | Credits and third-party attributions | 1,4 | **Y** | inventory `credits and attributions` (partial, ph6); DECISIONS names THIRD-PARTY.md | stage 4 |  |
-
-### 4.2 Settings
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| B1 | Display settings: resolution, window mode, vsync, frame cap | 2,3 | **P** | inventory `graphics settings` names two sliders, a preset and render scale; resolution, window mode, vsync and a frame cap are not named | stage 4 | 1 min |
-| B2 | Brightness or gamma calibration | 2,3,4 | **P** | named only in the baseline-features delivery's settings row | stage 4 | 2 min |
-| B3 | Graphics quality options and presets | 2,3 | **Y** | inventory `graphics settings including the local-LLM toggle` (partial, ph6) | stage 4 |  |
-| B4 | Upscaling or resolution scale | 2 | **P** | render scale 100/75/55 is named; no temporal upscaler is | stage 4 | 2 min |
-| B5 | Audio sliders per category and output device | 2,3,4 | **P** | inventory `audio mix` (exists) is the bus model, not a settings surface; sliders named only in baseline-features | stage 4 | 2 min |
-| B6 | Subtitle options: size, background, speaker names | 2,3,4 | **P** | inventory `subtitles` (exists) carries a 0/1/2 setting and `accessibility` a text scale; size, background and speaker name are not named | stage 4 | 12 min |
-| B7 | Control remapping for keyboard and gamepad | 2,3,4 | **Y** | inventory `controls`: nine rebindable actions, and `accessibility` names pad remapping as the gap | stage 4 |  |
-| B8 | Sensitivity, invert axes, dead zones | 2,3 | **P** | named only in the baseline-features settings row | stage 4 | 2 min |
-| B9 | Language selection, text and speech separately | 2,3,4 | **Y** | inventory `text localisation` (absent, ph6) | past the sixth stage |  |
-| B10 | Apply and revert countdown for display changes | 3 | **N** | nothing names how a display change is applied or reverted | stage 4 | 1 min |
-| B11 | Settings persist across sessions | 3,4 | **Y** | inventory `settings`: "defaults survive a round trip" | stage 4 |  |
-| B12 | Field of view control | 2,3,4 | **P** | named only in the baseline-features camera row | stage 4 | 3 min |
-| B13 | Camera shake, motion blur and depth of field toggles | 2,4 | **P** | `accessibility` names reduced motion as a gap; motion blur and depth of field toggles are not named | stage 4 | 3 min |
-| B14 | Difficulty or assist options | 3,4 | **N** | no difficulty or assist option anywhere in the plan; whether this game has one is undecided | stage 4 | 1 min |
-| B15 | HUD customisation or HUD off | 3,4 | **N** | the HUD tile does not say the HUD can be turned off or changed | stage 4 | 20 min |
-
-### 4.3 Save and persistence
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| C1 | Manual save with named slots | 2,3 | **Y** | inventory `save and load` (exists, ph1): codec in Core, slots and quarantine in Game | stage 3 |  |
-| C2 | Autosave with a visible indicator | 2,3,4 | **P** | inventory `failure states and autosave policy` has the policy; no indicator that a save is being written | stage 4 | 15 min |
-| C3 | Save integrity: no corruption, storage-full handling | 2,4 | **P** | quarantine and the SaveChaos harness cover corruption; a full disk is not named | stage 4 | later |
-| C4 | Load menu with timestamps, thumbnails and playtime | 3 | **N** | no load menu contents named: no timestamp, thumbnail or playtime | stage 4 | later |
-| C5 | Cloud save | 2,4 | **N** | cloud save appears nowhere | past the sixth stage | later |
-| C6 | World state surviving a save and reload | 2,3 | **Y** | canon's moat line on permanent memory; inventory `consequence persistence` | stage 3 |  |
-
-### 4.4 Input
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| D1 | Keyboard and mouse | 2,3 | **Y** | inventory `controls` (exists, ph2) | stage 4 |  |
-| D2 | Gamepad support and hot-swap | 2,3,4 | **Y** | inventory `gamepad` (absent, ph6): written down, unbuilt | stage 4 |  |
-| D3 | Button prompts that match the device in hand | 2,3,4 | **N** | no device-aware prompt glyphs named; no prompt of any kind is named in the plan | stage 4 | 2 min |
-| D4 | Controller disconnect pauses the game | 4 | **N** | controller disconnect is not named | past the sixth stage | later |
-| D5 | Hold versus toggle for held inputs | 4 | **N** | hold versus toggle is not named | stage 4 | 6 min |
-| D6 | Input latency inside a budget | 1,2 | **N** | the frame budget tile is frame time; the conversation latency budget is speech. Input latency is neither | stage 4 | 1 min |
-
-### 4.5 Camera
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| E1 | Camera that does not pass through walls | 2,3 | **Y** | inventory `camera` (exists, ph2): third person, spring rig; baseline-features read the collision test on in the Unreal build | stage 2 |  |
-| E2 | Camera smoothing and framing | 2,3 | **Y** | inventory `camera`: the spring rig IS the smoothing, though baseline-features found no lag set in Unreal | stage 2 |  |
-| E3 | Camera behaviour in tight interiors | 2,3 | **N** | no line anywhere on what the camera does in a room the size of Mickey's front office | stage 5 | 25 min |
-| E4 | Look sensitivity and acceleration | 2,3 | **P** | named only in the baseline-features settings row | stage 4 | 2 min |
-| E5 | Photo mode | 1,2 | **Y** | inventory `photo mode` (absent, ph6) | past the sixth stage |  |
-| E6 | Cinematic camera for conversation and cutscene | 1,2,3 | **Y** | inventory `dialogue staging` (absent, ph2) | stage 2 |  |
-
-### 4.6 Interface
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| F1 | Interaction prompts | 2,3 | **P** | named only in baseline-features; the words prompt and press-to appear nowhere in ROADMAP, canon, DECISIONS or the inventory | stage 4 | 3 min |
-| F2 | Objective or quest log | 1,3 | **P** | the Ledger is named and D37 rules it a notebook; a quest log or task list is named nowhere, which may be deliberate | stage 4 | 8 min |
-| F3 | Map and compass | 3 | **Y** | inventory `map and minimap` (absent, ph3); ROADMAP and D20 rule the minimap out | stage 4 |  |
-| F4 | Feedback when something happens | 3,4 | **Y** | inventory `HUD` (exists, ph2): clock, money, slot and the toast channel | stage 2 |  |
-| F5 | Menus navigable by gamepad as well as mouse | 2,4 | **N** | menu navigation by pad is not named; the gamepad tile is about play, not menus | stage 4 | 1 min |
-| F6 | Text scaling and safe area | 2,4 | **P** | text scale 80 to 150 is named; safe area is not | stage 4 | 12 min |
-| F7 | Screen reader or menu narration | 2,4 | **N** | no screen reader and no menu narration; `accessibility` names an audio-description pass as missing, which is a different thing | stage 4 | 1 min |
-| F8 | Inventory screen | 3 | **Y** | inventory `inventory` (partial, ph4) | stage 4 |  |
-| F9 | A pause that actually pauses | 3,4 | **Y** | inventory `pause` (exists, ph6) | stage 4 |  |
-
-### 4.7 Movement and the player's body
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| G1 | Walk, run and sprint with exertion | 2,3 | **Y** | inventory `sprinting and exertion outside a fight` (absent, ph2) | stage 2 |  |
-| G2 | A visible player body and its shadow | 1,3 | **P** | `bodies and faces` covers residents; the player's own body and shadow are named only in baseline-features | stage 2 | 0 min |
-| G3 | Turning on the spot, acceleration, stopping | 2,3 | **P** | named only in baseline-features; `bodies and faces` cites MotionMatch.cs with no caller | stage 2 | 2 min |
-| G4 | Feet planted on stairs and slopes | 2,3 | **Y** | inventory `bodies and faces` cites Game/FootIk.cs as evidence | stage 2 |  |
-| G5 | Collision with props and not getting stuck | 2,3 | **P** | named only in baseline-features | stage 2 | 4 min |
-| G6 | Jump, vault and climb, or a decision not to | 3 | **N** | jump, vault, climb and mantle appear nowhere, although `burglary and lockpicking` implies getting in somehow | stage 3 | 2 min |
-| G7 | Crouch and sneak | 3 | **P** | the four-rung concealment model and `disguise` exist; crouch and sneak as movement verbs are not named | stage 3 | 6 min |
-| G8 | Swimming and water entry | 2,3 | **Y** | inventory `swimming` (absent, ph3) | stage 3 |  |
-
-### 4.8 Animation, and how a person reads
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| H1 | Idle variety and fidgets | 1,3 | **Y** | ROADMAP's presentable checklist: "a handful of people stand or walk in the street, even if they only idle" | stage 1 |  |
-| H2 | Head and eye look-at toward the player | 1,2,3 | **P** | THE FEATURE THAT STARTED THIS COMMISSION. Named only in the baseline-features delivery, which is on its own branch. No inventory entry name contains head, look or gaze | stage 2 | 2 min |
-| H3 | Facial animation and lip sync | 1,2,3 | **Y** | ROADMAP stage 2: "a face that moves and a voice" | stage 2 |  |
-| H4 | Reaction when bumped or shoved | 1,3 | **P** | named only in baseline-features; no inventory entry name contains bump | stage 2 | 5 min |
-| H5 | Sitting, leaning, working poses at objects | 1,2,3 | **Y** | inventory `ambient street life beyond the crowd` (absent, ph2): deliveries, a shopkeeper sweeping, washing on a line | stage 2 |  |
-| H6 | Ragdoll and physical hit reactions | 1,2 | **P** | `combat` and `injury and healing` are named; ragdoll and physical hit reactions are not | stage 6 | later |
-| H7 | Cloth and hair movement | 1,2 | **N** | ROADMAP stage 2 rules clothing to be garment meshes on a shared skeleton; no cloth or hair movement is named anywhere | stage 2 | 6 min |
-| H8 | Varied bodies, faces and clothing | 1,3 | **Y** | ROADMAP stage 2: varied bodies; inventory `bodies and faces` | stage 2 |  |
-| H9 | Animation budget at crowd scale | 2 | **N** | the frame budget tile is the whole frame; no per-character animation budget or significance scheme is named | stage 2 | later |
-
-### 4.9 Sound
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| I1 | Positional sound from its source | 2,3 | **P** | THE SECOND FEATURE THAT STARTED THIS COMMISSION. `sound in the Unreal build` (absent, ph2) is the tile it would live in; positional sound is named only in baseline-features | stage 2 | 0 min |
-| I2 | Distance falloff | 2,3 | **P** | same tile; falloff named only in baseline-features | stage 2 | 1 min |
-| I3 | Occlusion and muffling through walls | 2,3 | **P** | the moat's hearing model carries WallAttenuation = 22 dB; nothing says the PLAYER hears the muffling | stage 2 | 6 min |
-| I4 | Reverb that depends on the space | 2,3 | **Y** | inventory `ambient beds and room tone` (partial, ph2) | stage 2 |  |
-| I5 | Footsteps that change with the surface | 1,2,3 | **Y** | inventory `foley` (partial, ph2) | stage 2 |  |
-| I6 | Ambient beds and background life | 1,2,3 | **Y** | ROADMAP stage 2: "foley and an ambient bed" | stage 2 |  |
-| I7 | Weather and water sound | 1,2,3 | **P** | covered only by the coarse foley and ambient tiles; weather and water sound are not named separately in a port town | stage 2 | 2 min |
-| I8 | Dialogue ducking and a dynamic mix | 1,2,3 | **P** | inventory `audio mix` (exists) has buses and a per-bus voice budget; ducking under dialogue is not named | stage 2 | 10 min |
-| I9 | Music that responds to the game | 1,2,3 | **Y** | inventory `music` (partial, ph3) | stage 3 |  |
-| I10 | Voice acting and casting consistency | 1,3 | **Y** | ROADMAP stage 3: people "who answer in their own cast voices"; inventory `voices` | stage 3 |  |
-| I11 | Captions for non-speech sound | 2,4 | **Y** | inventory `subtitles`: setting 2 is speech and sounds | stage 2 |  |
-| I12 | Mono audio output | 4 | **N** | mono output appears nowhere | stage 4 | 1 min |
-| I13 | Visual indicator of off-screen sound | 4 | **N** | no visual indicator of a sound the player cannot see, in a game whose whole subject is who heard what | stage 4 | 8 min |
-
-### 4.10 The world
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| J1 | Time of day | 2,3 | **Y** | inventory `light and the time of day` (exists, ph2) | stage 2 |  |
-| J2 | Weather, and what it changes | 1,2,3 | **Y** | inventory `weather and wet streets` (partial, ph2) | stage 2 |  |
-| J3 | Wet surfaces and puddles | 1,2 | **Y** | ROADMAP stage 1's order names wetness; D53 grime is the strategy | stage 1 |  |
-| J4 | Street lighting at night | 2,3 | **Y** | inventory `street lighting at night` (absent, ph2) | stage 2 |  |
-| J5 | Props that move when pushed | 2,3 | **N** | nothing in the plan says an object moves when the player walks into it | stage 2 | 3 min |
-| J6 | Foliage and wind | 2,3 | **P** | asset-coverage records that no vegetation of any kind exists; no plan entry names foliage or wind | stage 2 | 2 min |
-| J7 | Water and tide | 2 | **Y** | inventory `the tide and the water` (absent, ph3) | stage 3 |  |
-| J8 | Doors that open, and people using them | 2,3 | **Y** | inventory `doors and who gets in` (exists, ph2) | stage 2 |  |
-| J9 | Interiors that can be entered | 1,3 | **Y** | ROADMAP stage 5; inventory `interiors you can enter` (absent, ph2) | stage 5 |  |
-| J10 | Traffic and parked vehicles | 1,3 | **Y** | inventory `traffic and vehicles` (exists) and `parked vehicles as street dressing` (absent, ph2) | stage 2 |  |
-| J11 | Clutter that can be interacted with or broken | 2 | **P** | ROADMAP names density of clutter as a LOOK; nothing says a bin or a crate can be touched | stage 2 | 5 min |
-| J12 | Litter, decals, wear and grime | 1 | **Y** | ROADMAP and D53: grime is the strategy, a surface carries its wear | stage 1 |  |
-
-### 4.11 People
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| K1 | People on daily routines | 1,3 | **Y** | inventory `daily routines` (exists, ph1); canon: gossip spreads through schedule intersections | stage 2 |  |
-| K2 | Crowd density and variety | 1,2,3 | **Y** | inventory `the crowd you see` (partial, ph2) | stage 2 |  |
-| K3 | People avoiding the player and each other | 2,3 | **P** | named only in baseline-features; the sim keeps gaps between walkers, but nothing says a walker gives way to the PLAYER | stage 2 | 1 min |
-| K4 | Reaction to noise, to a fight, to a gun | 2,3 | **Y** | ROADMAP stage 6: a gunshot producing a measured town-wide perception event; perception exists | stage 3 |  |
-| K5 | People talking among themselves | 1,3 | **Y** | ROADMAP stage 3: "a line overheard"; inventory `the town's own voice` (exists) | stage 3 |  |
-| K6 | People reacting to weather and time | 1,3 | **N** | weather changes what people can SEE and HEAR in the perception model. Nothing says it changes what they DO | stage 2 | 5 min |
-| K7 | Police and authority response | 1,3 | **Y** | inventory `the law and the police` (partial, ph1) | stage 3 |  |
-| K8 | Animals and birds | 1,3 | **N** | no bird, no animal, no dog anywhere in the plan. Every gull in the corpus is the Gullwing district | stage 2 | 2 min |
-
-### 4.12 Verbs
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| L1 | Pick up, examine, use | 3 | **P** | `object provenance across five origins` makes an object a thing with a history; pick up, examine and use as verbs are not named | stage 3 | 4 min |
-| L2 | Search a container, a room or a body | 3 | **Y** | inventory `searching a room, a container or a body` (absent, ph2) | stage 3 |  |
-| L3 | Talk to a person | 3 | **Y** | canon's moat: live LLM conversations with per-character memory | stage 3 |  |
-| L4 | Open, close, lock, unlock, lockpick | 3 | **Y** | inventory `burglary and lockpicking` (absent, ph2) | stage 3 |  |
-| L5 | Steal and pickpocket | 3 | **Y** | inventory `pickpocketing` (absent, ph2) | stage 3 |  |
-| L6 | Sit, rest, sleep to pass time | 3 | **Y** | inventory `sleep as a way to cross a day` (absent, ph2) and `sleep and the day boundary` (absent, ph3) | stage 3 |  |
-| L7 | Buy and sell | 3 | **Y** | inventory `economy and trading` (partial, ph3); ROADMAP stage 6 names economy and cash | stage 6 |  |
-
-### 4.13 Combat and harm
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| M1 | Melee with hit feedback | 1,3 | **Y** | ROADMAP stage 6: melee combat, improvised weapons; inventory `combat` (partial, ph4) | stage 6 |  |
-| M2 | Blocking, dodging, being outnumbered | 1,3 | **Y** | ROADMAP names being outnumbered as one of combat's three gaps, and names the tension between stage 3 and stage 6 | stage 6 |  |
-| M3 | Firearms and their rarity | 1,3 | **Y** | ROADMAP stage 6: scarce firearms as events | stage 6 |  |
-| M4 | Damage, health, healing, injury | 1,3 | **Y** | inventory `injury and healing` (partial, ph4) | stage 6 |  |
-| M5 | Death, failure and reload | 2,3 | **Y** | inventory `failure states and autosave policy` (partial, ph1) | stage 3 |  |
-| M6 | Fleeing and pursuit | 1,3 | **Y** | ROADMAP: running away as a way out, placed at stage 3 by Jafar's words | stage 3 |  |
-| M7 | Hit reactions, blood and gore | 1,2 | **Y** | canon D18: violence stays, including blood and light gore; inventory `blood on the player` | stage 6 |  |
-
-### 4.14 Story and speech
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| N1 | Opening cinematic or arrival | 1,3 | **P** | canon has Tom arriving with one suitcase and a letter; no opening scene, cinematic or arrival sequence is named | stage 4 | 2 min |
-| N2 | Dialogue interface with choices | 1,3 | **Y** | inventory `spoken conversation` (partial, ph2), evidence DialogueUI.cs | stage 2 |  |
-| N3 | Subtitles with speaker names | 3,4 | **N** | the subtitles tile carries no speaker name, in a game where who said it is the whole point | stage 4 | 10 min |
-| N4 | Barks and ambient lines | 1,3 | **Y** | inventory `dialogue banks` (partial, ph2) and the bark generator | stage 2 |  |
-| N5 | Cutscene skip and pause during a cutscene | 3,4 | **N** | no cutscene skip and no pause inside a scene is named | stage 4 | 3 min |
-| N6 | Branching consequence in the story | 1,3 | **Y** | D58 holds the endings at five; canon's three acts | stage 3 |  |
-| N7 | Live spoken conversation with memory | 1,3 | **Y** | canon's moat: live LLM conversations with per-character memory and local voice | stage 2 |  |
-
-### 4.15 What the player is told
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| O1 | Tutorial and the first hour | 1,3 | **Y** | ROADMAP stage 4: the first hour; inventory `first hour and tutorial` (partial, ph3) | stage 4 |  |
-| O2 | Objectives, and knowing what to do next | 3,4 | **P** | teaching-in-thirty-minutes covers onboarding. The word objective appears NOWHERE in ROADMAP, canon, DECISIONS or the inventory | stage 4 | 5 min |
-| O3 | A notebook the player reads back | 1,3 | **Y** | ROADMAP stage 4 and D37: the Ledger is a notebook, not a corkboard | stage 4 |  |
-| O4 | Reminder of the objective after time away | 4 | **N** | nothing says how a player who comes back after a week learns what they were doing | stage 4 | later |
-| O5 | Progression and unlocks | 1,3 | **Y** | D11 player progression; ROADMAP stage 4: the first hour introduces the player's progression | stage 4 |  |
-| O6 | Statistics and a session summary | 3 | **N** | no statistics screen and no session summary | stage 4 | 30 min |
-
-### 4.16 The image
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| P1 | Dynamic lighting and shadows | 1,2,3 | **Y** | ROADMAP stage 1's order: light and shadow first | stage 1 |  |
-| P2 | Global illumination and reflections | 2 | **Y** | ROADMAP's PS5 experiment names light that bounces and reflects | stage 1 |  |
-| P3 | Post-processing chain | 1,2 | **Y** | ROADMAP's PS5 experiment names the post-processing | stage 1 |  |
-| P4 | Materials that read as real surfaces | 1,2 | **Y** | ROADMAP stage 1: surfaces after light; the best free scanned materials | stage 1 |  |
-| P5 | Detail that appears without popping | 2,3 | **P** | ROADMAP names detailed geometry and the research names Nanite; no line says detail must arrive without popping | stage 1 | 4 min |
-| P6 | Anti-aliasing and image stability | 2 | **N** | no anti-aliasing, no image stability, no shimmer, on a wet street at night which is where it shows | stage 1 | 0 min |
-| P7 | Character rendering: skin, eyes, hair | 1,2 | **Y** | ROADMAP's PS5 corner names one MetaHuman standing in it | stage 1 |  |
-| P8 | Effects: rain, smoke, breath, blood | 1,2 | **P** | Weather.cs makes rain and the plan names it; smoke, breath and blood spray as effects are named nowhere | stage 2 | 3 min |
-
-### 4.17 Performance and scale
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| Q1 | Frame budget on the target machine | 1,2,3 | **Y** | inventory `the frame budget` (partial, ph2); ROADMAP measures frame time on this card | stage 2 |  |
-| Q2 | Streaming without hitching | 2,3 | **Y** | inventory `loading and streaming` (partial, ph5) | stage 5 |  |
-| Q3 | Budget management at crowd scale | 2 | **P** | the frame budget tile is the whole frame; no scheme for what gets cheaper as the crowd grows | stage 2 | later |
-| Q4 | Memory budget and long-session stability | 2,4 | **Y** | ROADMAP: graphics memory on this card while a character speaks | stage 2 |  |
-| Q5 | Minimum specification and the hardware floor | 1,4 | **Y** | inventory `the hardware floor` (absent, ph6); D52 says nobody writes one from the paper | past the sixth stage |  |
-
-### 4.18 Accessibility
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| R1 | Subtitle presentation options | 4 | **P** | baseline-features names subtitle size and background; the plan carries a text scale only | stage 4 | 12 min |
-| R2 | Colourblind modes, and not colour alone | 4 | **Y** | inventory `accessibility`: colourblind-safe hues, shipped | stage 4 |  |
-| R3 | Text size and high contrast | 4 | **P** | text scale 80 to 150 is named; high contrast is not | stage 4 | 12 min |
-| R4 | Full remapping, one-handed play | 4 | **P** | `accessibility` names pad remapping as the gap; one-handed play is named nowhere | stage 4 | 1 min |
-| R5 | No button mashing, hold alternatives | 4 | **N** | no rule against a held or repeated input | stage 4 | later |
-| R6 | Difficulty and assist options | 4 | **N** | no assist mode, no skippable encounter | stage 4 | later |
-| R7 | Motion sickness options | 4 | **P** | `accessibility` names reduced motion as missing; head bob, FOV and camera shake are not named | stage 4 | 3 min |
-| R8 | Screen reader for menus | 2,4 | **N** | no screen reader for menus | stage 4 | 1 min |
-| R9 | Photosensitivity safety | 4 | **N** | no photosensitivity guidance and no flash limit | stage 4 | 0 min |
-| R10 | Adjustable timing, no forced timed input | 4 | **N** | nothing says a timed input may not be required, in a game with a live conversation that runs in real time | stage 4 | later |
-| R11 | Accessibility information before purchase | 1,4 | **N** | no accessibility labelling of the kind a store page now carries | past the sixth stage | later |
-
-### 4.19 Localisation
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| S1 | All player-visible text localisable | 1,2,4 | **Y** | inventory `text localisation` (absent, ph6) | past the sixth stage |  |
-| S2 | Font fallback and text expansion | 1,2 | **N** | no font fallback and no text expansion allowance, for a game whose UI is built from code | past the sixth stage | later |
-| S3 | Localised audio, or a subtitles-only policy | 1,4 | **N** | no policy on whether the synthesised voices are ever anything but English | past the sixth stage | later |
-| S4 | Date, time and number formats | 2 | **N** | the clock and calendar are displayed; no locale format is named | past the sixth stage | 8 min |
-| S5 | Content variation by locale | 1,4 | **N** | no locale content variation, although canon's content rule already excludes most of what triggers one | past the sixth stage | later |
-
-### 4.20 Platform and release
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| T1 | A store page, a build and patching | 1,2,4 | **P** | asset-coverage ASKS whether a store page ever needs to exist; no plan line answers | past the sixth stage | later |
-| T2 | Achievements | 2,4 | **N** | achievements appear nowhere | past the sixth stage | later |
-| T3 | Cloud save and cross-device | 2,4 | **N** | cloud save appears nowhere | past the sixth stage | later |
-| T4 | Age rating submission | 1,4 | **N** | no age rating and no submission, although canon's content rule is most of the answer to one | past the sixth stage | later |
-| T5 | EULA and third-party licence attributions | 1,4 | **Y** | DECISIONS: the licence allowlist is law, and THIRD-PARTY.md carries the attributions | past the sixth stage |  |
-| T6 | Anti-cheat or DRM decision | 1 | **N** | no anti-cheat or DRM decision, in a single-player PC game where the answer is probably none | past the sixth stage | later |
-| T7 | Platform terminology and button naming | 4 | **N** | no platform terminology or button naming rule | past the sixth stage | later |
-
-### 4.21 Telemetry, support and after release
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| U1 | Crash reporting | 1,2 | **N** | no crash reporting, for a game that runs a local model beside a renderer | past the sixth stage | later |
-| U2 | Opt-in analytics and a privacy notice | 1,2,4 | **N** | no analytics and NO PRIVACY NOTICE, while D4 keeps the text model on a paid online service that the player's typed lines reach | stage 4 | 12 min |
-| U3 | A way for the player to report a problem | 1,3 | **Y** | inventory `feedback path` (absent, ph6) | past the sixth stage |  |
-| U4 | Patch notes and a post-launch plan | 1 | **N** | no patch notes and no post-launch plan | past the sixth stage | later |
-| U5 | Playtesting with people outside the team | 1 | **Y** | ROADMAP stages 5 and 6 read the Meridian Test off a session; meridian-test-administration is a whole delivery | stage 5 |  |
-
-### 4.22 The departments' own deliverables
-
-| id | feature | lenses | plan | where the plan holds it, or why not | stage | notice |
-|---|---|---|---|---|---|---|
-| V1 | Voice casting and direction | 1 | **Y** | inventory `voices` (partial, ph2); asset-coverage on what is missing | stage 2 |  |
-| V2 | Motion capture and performance | 1 | **Y** | markerless-mocap is a delivery with a verdict; DECISIONS names Mixamo on Jafar's account | stage 2 |  |
-| V3 | Music composition and licensing | 1 | **Y** | inventory `music` (partial, ph3) and the licence allowlist | stage 3 |  |
-| V4 | Brand and legal clearance | 1 | **Y** | canon: every brand is fictional, and the brand bible still owes six names | stage 6 |  |
-| V5 | Marketing capture: trailers and screenshots | 1 | **P** | asset-coverage asks whether key art and a store page need to exist; nothing answers | past the sixth stage | later |
-| V6 | Art direction and a style bible | 1 | **Y** | canon's visual target; the in-house Hook sheet is the stage 1 bar | stage 1 |  |
-| V7 | Writing at volume, and editing it | 1 | **Y** | ROADMAP stage 6: the writing at full length; holding-a-large-script is a delivery | stage 6 |  |
-| V8 | QA: functional, compliance and localisation testing | 1 | **Y** | inventory `the verify suite` (exists); ROADMAP stage 3 names the test suite | stage 3 |  |
-| V9 | Build and release engineering | 1 | **Y** | inventory `the evidence channel` (exists); the CI rules are a studio document | stage 3 |  |
-| V10 | A credits screen naming everyone | 1,4 | **Y** | inventory `credits and attributions` (partial, ph6) | stage 4 |  |
-
-## 5. Which lens found what the others missed
-
-No item was found by all four lenses. 28 items were found by three, 100 by two,
-and **51 by one lens alone**. The sole-lens items are the whole point of the
-exercise: they are where the other three are blind.
-
-| lens | items it touched | absent from the plan | partly | found by this lens ALONE | of those, absent |
-|---|---|---|---|---|---|
-| 1: who builds it | 79 | 16 | 11 | 13 | 2 |
-| 2: what runs every frame | 89 | 18 | 29 | 8 | 3 |
-| 3: moment by moment | 108 | 16 | 28 | 15 | 4 |
-| 4: what the industry checks | 59 | 29 | 15 | 15 | 10 |
-
-**Lens 4 is the one that earned its place.** It found 15 items nobody else
-found, and 10 of those 15 are absent from the plan against 1 that is in it. No
-other lens comes near that ratio. Its subjects are the ones a studio with no
-publisher and no compliance department never meets: what happens when a pad is
-unplugged, whether a sound the player cannot see has a visual form, whether
-anything may require a fast repeated press, whether a menu can be read aloud,
-whether the screen may flash. It is also the lens whose sources this environment
-could not reach, so it is simultaneously the most productive and the worst
-sourced. Both facts should travel together.
-
-**Lens 1 confirms rather than discovers.** It found 13 items alone and 10 of
-them are already in the plan: casting, mocap, music, clearance, art direction,
-writing at volume, QA, build engineering, playtesting. That is what a studio
-that has been running for a month already knows it does. Its two absences, a DRM
-decision and a post-launch plan, are both ship-prep. Lens 1 would probably have
-done better with the credits rolls it was supposed to have.
-
-**Lens 3 produces the clock.** Nine of its 15 sole items are in the plan, but it
-is the only lens that says WHEN a gap is met, and every ranking in the summary
-is its ordering. It is also the lens that noticed that the plan has a Ledger and
-a first hour and no statement anywhere of how a player knows what to do next.
-
-**Lens 2 is narrow and deep.** Only 8 sole items, but they are the ones nobody
-without engine knowledge would write down: image stability on a wet street, what
-gets cheaper as the crowd grows, an animation budget, a date format.
-
-## 6. What all four lenses are blind to
-
-Worth saying plainly, because a checklist built this way could quietly become
-the plan. Not one of the four lenses would have produced:
-
-- the seven perceivable slots every act exposes
-- the five-rung identification ladder, and that recognition is gated by
-  relationship rather than by distance and light
-- permanent per-NPC memory that is never wiped
-- gossip travelling through schedule intersections
-- a deterministic Core that decides every outcome the player feels, with the
-  language model classifying and never adjudicating
-
-Four lenses built from credits, engines, a first session and compliance
-checklists find what every game has. They cannot find what only this game has.
-The moat is in `canon.md` and it is safe from this document; the point of the
-document is that the floor underneath it is not.
-
-## 7. What could not be established
-
-1. **The two named accessibility guidelines and every certification document.**
-   Refused by the proxy. Section R is DERIVED from a structure, not read off a
-   checklist, and its item list is certainly incomplete. The ESA's 24 labelling
-   tags are the cheapest thing to fetch next and would replace most of section
-   R.
-2. **Any full credits roll.** MobyGames, GiantBomb, IGDB and the Steam store are
-   all refused. Lens 1's department list is a reconstruction from four cited
-   taxonomies rather than from the thing the brief asked for.
-3. **Whether a stage assignment is right.** Every stage in the tables is mine.
-   ROADMAP's six stages are Jafar's; the mapping of an absent feature onto one
-   is a judgement, and stage 4, the player's shell, carries most of the weight
-   because most of what is missing is shell.
-4. **Anything about the build.** This delivery never opened the engine or ran
-   anything. Where it says a feature is in the plan, that is all it says. The
-   build's state is baseline-features' subject and the inventory's.
+**Ruled out means a record rules it out**, not that it seemed unlikely. The 74
+rows carry the decision: D24 for the spend rule, D18 for content, D20 for the
+minimap, D33 for what the player may see, canon for single player and for the
+era. Multiplayer is 25 of the 74.
