@@ -102,6 +102,7 @@
 #include "Engine/DirectionalLight.h"
 #include "Components/DirectionalLightComponent.h"
 #include "Engine/ExponentialHeightFog.h"
+#include "Engine/PostProcessVolume.h"
 #include "Components/ExponentialHeightFogComponent.h"
 // QUEUE 186: THE SKY. ASkyLight is the ambient and the reflection source;
 // ASkyAtmosphere is the visible sky it captures. ASkyAtmosphere is declared
@@ -1292,6 +1293,9 @@ namespace
 	// second call today, but a guard here costs one bool and stops the
 	// street from ever being spawned twice if that ever changes.
 	bool GInteractiveBuilt = false;
+	// WHAT THE PLAYABLE STREET'S EXPOSURE WAS SET TO, printed with the
+	// street's segment so the walk and crime verdicts say it.
+	std::string GPlayExposure = "not-interactive";
 
 	UWorld* GameWorld()
 	{
@@ -1667,7 +1671,8 @@ namespace
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
 			(int)GStreetFilm, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
 			!GLook.bGlassSeeThrough ? "no" : (GGlassMaterial != nullptr ? "yes/M_LedgerGlass" : "yes/no-translucent-material-in-this-build/left-out"));
-		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
+		return std::string(Buf) + LookBuf + " playExposure=" + GPlayExposure
+		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
 		                         : std::string(TCHAR_TO_UTF8(*NoSp(GStreetFrom))));
@@ -7117,6 +7122,33 @@ namespace LedgerVignetteShot
 			UE_LOG(LogTemp, Error,
 			       TEXT("LedgerProbe interactive street: the shared file named no condition at all"));
 		}
+
+		// AND THE DAY'S EXPOSURE, 23 September. ApplyCondition hands the
+		// condition's pin to PlaceCamera, which writes it onto the
+		// automation's own camera, and a person has no such camera: the
+		// player's view metered itself and the playable street came out
+		// pale beside the tuned frame. An unbound post-process volume
+		// carries the same clamp to whatever camera is looking, which in
+		// this path is only ever the player's.
+		if (GExposurePinNow > 0.0)
+		{
+			APostProcessVolume* PPV = World->SpawnActor<APostProcessVolume>(
+				APostProcessVolume::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator);
+			if (PPV != nullptr)
+			{
+				PPV->bUnbound = true;
+				FPostProcessSettings& S = PPV->Settings;
+				S.bOverride_AutoExposureMinBrightness = true;
+				S.bOverride_AutoExposureMaxBrightness = true;
+				S.AutoExposureMinBrightness = (float)GExposurePinNow;
+				S.AutoExposureMaxBrightness = (float)GExposurePinNow;
+				char EB[64];
+				std::snprintf(EB, sizeof(EB), "held-%.4f/unbound-volume", GExposurePinNow);
+				GPlayExposure = EB;
+			}
+			else { GPlayExposure = "VOLUME-SPAWN-FAILED/automatic"; }
+		}
+		else { GPlayExposure = "automatic/the-day-asks-no-pin"; }
 
 		// PLACE THE PLAYER. cam_A is the shared file's own first camera and
 		// the position the automation photographs from a human eye height
