@@ -794,7 +794,11 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       IT GOES TRUE: re-check the walk's wall test on ec06df58's build, and
       reconcile the drain grate - the scene file's sits 8 mm under the
       Blender road's channel, so the walk cannot see it and no frame shows
-      it (a Blender gully at x 12, or the grate set to the Blender road).
+      it. A Blender gully at x 12 now shows in the frames (f7058482); the
+      CAUSE of the refused shot is found (FINDINGS): the scene file cuts a
+      50 mm kerb recess and a 30 mm channel dish for its grate
+      (street.gully) and the Blender kerb and road have neither. Build
+      them at x 12, then the switch.
 - [x] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
       went into play the Blender glass, one mesh for every pane, stayed
       whole). The glass exported one mesh per bay and floor and the crime
