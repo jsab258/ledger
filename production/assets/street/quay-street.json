@@ -56,7 +56,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 62
+   "faces": 22
   },
   {
    "mesh": "street_brick_grey",
@@ -85,7 +85,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 3774
+   "faces": 3174
   },
   {
    "mesh": "street_brick_red",
@@ -114,7 +114,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 7037
+   "faces": 4057
   },
   {
    "mesh": "street_brick_rubbed",
@@ -162,7 +162,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 7280
+   "faces": 1680
   },
   {
    "mesh": "street_card_int23_fish",
@@ -468,7 +468,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 60656
+   "faces": 35680
   },
   {
    "mesh": "street_foliage_dark",
@@ -490,7 +490,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 36971
+   "faces": 21840
   },
   {
    "mesh": "street_frame_metal",
@@ -1480,7 +1480,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 150
+   "faces": 110
   },
   {
    "mesh": "street_pillarbox_red",
@@ -1580,7 +1580,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 2548
+   "faces": 588
   },
   {
    "mesh": "street_render_cream",
@@ -1606,7 +1606,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 1352
+   "faces": 312
   },
   {
    "mesh": "street_render_patch",
@@ -1783,7 +1783,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 3486
+   "faces": 1136
   },
   {
    "mesh": "street_standing_water",
@@ -1879,7 +1879,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 1128
+   "faces": 1048
   },
   {
    "mesh": "street_tile_patterned",
