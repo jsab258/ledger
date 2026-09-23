@@ -315,7 +315,7 @@ Stage state: OPEN
 | A22.07 | Buildings and props visibly grounded rather than floating | floor | done | grounded, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A22.08 | Believable joins between walls, floors, roofs and terrain | floor | open |  |
 | A22.09 | No conspicuous flickering between overlapping surfaces | floor | open |  |
-| A22.10 | Variation that disguises obvious repeated components | floor | open |  |
+| A22.10 | Variation that disguises obvious repeated components | floor | done | the six-bay parade is six different fronts (Mickey's, the fish market, Rita's, the laundry, a letting board, an empty unit), each with its own paint, sign and door; the brick map repeats only every 7.2 m and no repeat reads in the Hook view, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.11 | Wear and dirt consistent with use and exposure | floor | open |  |
 | A22.12 | Furnishing and clutter consistent with a place's function | floor | open |  |
 | A22.13 | Signs and labels that are readable when they matter | floor | done | MICKEY'S, RITA'S, FISH MARKET read at the Hook view, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
