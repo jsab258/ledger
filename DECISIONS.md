@@ -214,7 +214,7 @@ runs on push.
 
 - PLATFORM: PC ONLY, WINDOWS. Consoles are a later, low-priority question.
 - THE PERFORMANCE TARGET: 60 frames a second at Jafar's monitor's resolution on this card (the RX 6700), never below 30, with the voice running. It constrains every visual choice from now on, and the slice measures against it.
-- THE CAST'S VOICES ARE CHECKED BEFORE ANYTHING MORE IS RECORDED WITH THEM: for all nineteen, where each reference clip came from and whether there is consent to clone it, against the TTS licensing research on main; the answer voice by voice in FOR-JAFAR.md, with anything not clean flagged.
+- THE CAST'S VOICES ARE CHECKED BEFORE ANYTHING MORE IS RECORDED WITH THEM (checked 24 September: there are 23, not nineteen, all VCTK, all conditional; production/research/tts-licensing-and-consent/VOICE-PERMISSIONS-2026-09-24.md): for all nineteen, where each reference clip came from and whether there is consent to clone it, against the TTS licensing research on main; the answer voice by voice in FOR-JAFAR.md, with anything not clean flagged.
 - THE COST OF CONVERSATION IS MEASURED: what one hour of play costs on the paid model, from real calls in the slice, beside what that would mean for a released game, in FOR-JAFAR.md.
 - YES TO THE DOWNLOADS FOR NANO ON THE CARD (the DirectML add-on and the older library it needs, in their own environment), so it can be timed with the game running.
 

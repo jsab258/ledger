@@ -16,16 +16,28 @@ one. **If you add assets, add a row. The build fails otherwise.**
 
 | | |
 |---|---|
-| **What** | Reference recordings for all 19 cast voices |
-| **Source** | **CVSTR VCTK Corpus** (Centre for Speech Technology Research, University of Edinburgh) |
-| **Licence** | Creative Commons Attribution 4.0 International (CC BY 4.0) |
+| **What** | Reference recordings for all 23 cast voices (19 cast 31 July, four more 14 August) |
+| **Source** | **CSTR VCTK Corpus** version 0.92 (Centre for Speech Technology Research, University of Edinburgh), by Junichi Yamagishi, Christophe Veaux and Kirsten MacDonald; https://doi.org/10.7488/ds/2645 |
+| **Licence** | Creative Commons Attribution 4.0 International (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/ |
 | **Where in the repo** | `game-design/picked-clips/` (the references), `voice-candidates/` (the listening pass), `ledger/Assets/StreamingAssets/Audio/Voice/` (the synthesised bark bank, 5 Aug), `game-design/voice-live/` (lines spoken by the live model), `game-design/voice-conds/` (the precomputed conditioning, 1 Sep) |
-| **Speakers used** | p227 p228 p231 p238 p241 p244 p245 p249 p256 p263 p265 p266 p272 p273 p276 p282 p287 p288 p292 |
+| **Speakers used** | p225 p226 p227 p228 p231 p233 p238 p241 p244 p245 p249 p254 p256 p263 p265 p266 p272 p273 p276 p282 p287 p288 p292 (p225, p226, p233 and p254 added 24 September: June, Aldous, Zlata and Danny, cast 14 August and missing from this row) |
 
 **Required attribution text, to appear in the shipped credits:**
 
-> Voice reference recordings derived from the CSTR VCTK Corpus (Centre for
-> Speech Technology Research, University of Edinburgh), used under CC BY 4.0.
+> Character voices synthesised from reference recordings in the CSTR VCTK
+> Corpus (version 0.92) by Junichi Yamagishi, Christophe Veaux and Kirsten
+> MacDonald, Centre for Speech Technology Research, University of Edinburgh
+> (https://doi.org/10.7488/ds/2645), used under CC BY 4.0
+> (https://creativecommons.org/licenses/by/4.0/). The recordings were modified:
+> they were used to condition a voice-cloning model, not reproduced.
+
+CORRECTED 24 SEPTEMBER, from the voice audit
+(`production/research/tts-licensing-and-consent/VOICE-PERMISSIONS-2026-09-24.md`):
+the group's name was misspelt, four of the 23 speakers were missing, and CC BY
+4.0 section 3(a) asks for the creators, the licence's link, the source's link
+and a note of modification, none of which the old text carried. No credits
+screen shows it yet; the shipped credits must. The speakers are credited by
+number only: the corpus's terms forbid trying to identify them.
 
 **Why this corpus and no other.** The project's standing rule is that voices may
 only come from corpora whose contributors donated their voices to build speech
