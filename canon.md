@@ -29,9 +29,13 @@ canon lines it changes, and canon cites the record at those lines.
   that has ever named a piece, for nothing. Canon and the atlas agree: one
   street, Quay Street, the Hook, the player's minicab office on it.
 - QUAY STREET'S THREE SIDES, ruled by Jafar 2026-09-22 so nobody has to ask again:
-  the east side is the six-bay parade; the NEAR WEST BLOCK, by the cab office,
-  carries shops; the FAR WEST BLOCK is plain terraces. The approved Hook sheet
-  shows a shop close on the near left with the street opening out beyond it.
+  the east side is the six-bay parade; the WEST BLOCK ACROSS FROM THE NORTH HALF
+  OF THE PARADE carries shops; the WEST BLOCK ACROSS FROM MICKEY'S, at the
+  quay end of the street, is plain terraces. REWORDED 2026-09-23 by Jafar's
+  decision 8 (a), to say where the shop block actually is; nothing was
+  rebuilt. The words of 22 September called the shop block "the near west
+  block, by the cab office", which pointed at the other block once the hook
+  camera moved to the quay end.
 - MICKEY'S IS A MINICAB OFFICE (D19, decided 2026-09-14, supersedes
   D15's pub; D15's siting on Quay Street stands). Its information room
   is the business: a book of every fare, a radio nobody can help

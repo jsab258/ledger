@@ -750,7 +750,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       tall west block where the sheet has sky - decision 8), highlights
       247.8 v 248.5, warmth +16.2 v +14.4, colour 44% v 36%. What differs
       now is shape (the west side) and people (stage 2).
-- [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
+- [x] NEW SHAPES THE SHEET STILL NEEDS (SUPERSEDED 23 Sep afternoon by the
+      new order: the west side's shape is not on the presentable checklist,
+      and decision 8 was ruled (a), canon reworded, nothing rebuilt), built in Blender and brought across
       the same way. DONE: the far hillside thinned with grass and 64 trees
       (08b0db2e, proven in Unreal); the street bends away at a terrace that
       closes the view, as the sheet's does (f96bcbb6); a utility cover and
@@ -867,7 +869,8 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       proven on the runner with the crime and walk still REAL: production/
       art/compare/hook-unreal-2026-09-23/cars-02-shape.png. Further, when
       the town needs it: lighter, more reflective glass, a crease on the flanks.
-- [ ] THE SCENE FILE'S FURNITURE IN THE TUNED LOOK: the lamp columns, the
+- [x] THE SCENE FILE'S FURNITURE IN THE TUNED LOOK (MOVED 23 Sep afternoon
+      into PRESENTABLE, section 14: a placeholder in frame is on the checklist): the lamp columns, the
       kiosk, the skip, the bins and the pallets still wear the texture
       pack's photographs and read rough beside the Blender street (the
       columns as grey stucco, the kiosk's glass a grid). Gloss-painted cast
@@ -881,6 +884,30 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       The workflow keeps it from 583206dc; then diff it against a local one.
       SETTLED: only the rumours' spoken summary differs - the local copy is
       staged without the line bank (FINDINGS).
+
+## 14. FROM 23 SEPTEMBER AFTERNOON - Jafar's order, targets in order
+
+ROADMAP.md "The order from 23 September" is the governing text; this is the
+work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
+
+- [ ] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
+  - [ ] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
+        hook frame is a shape rather than a model (the cars, the kiosk, the
+        lamp columns, the railing, the skip, the bins, the pallets...), then
+        real-looking models for each, no car a recognisable real model.
+  - [ ] THE LIGHT IS NOT FLAT AND THE STREET IS WET AS THE SHEET IS.
+  - [ ] A HANDFUL OF PEOPLE STAND OR WALK IN THE STREET, even idling.
+  - The three set aside on 23 Sep (painted asphalt, the pavement's wet
+    shine, the crowded hillside) are tried again, each with a new idea, ONLY
+    if they stand between the frame and the checklist.
+- [ ] ONE SHORT PS5 EXPERIMENT, one sitting at most (ROADMAP.md item 2): the
+      features on and off, one corner at its best with one MetaHuman, beside a
+      PS5-era reference, its cost on the card with the voice's share, and the
+      plain-words answer in FOR-JAFAR.md.
+- [ ] A SLICE YOU CAN PLAY, ten to fifteen minutes (ROADMAP.md item 3), with
+      decision 7 (a) and the routines fixed so friends meet, reach measured
+      again, no constant touched.
+- Then alternate sittings, polish and moat.
 
 ## Where things stand
 

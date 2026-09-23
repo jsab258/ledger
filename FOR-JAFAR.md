@@ -6,54 +6,7 @@ between them.
 
 ## Decisions waiting on me
 
-**7. Rumour reach, what you asked me to find (decision 2): the town does not
-visibly know within thirty minutes, and more people knowing would not fix
-it.** Thirty minutes of play is two and a half game days.
-
-- **Why a realistic witness under-fills the circle:** a story can only be
-  retold once. Each retelling multiplies how sure it is by the friendship and
-  by 0.8, and anything under 0.2 is dropped, so a half-sure witness reaches
-  only their stronger friends and nobody beyond. On top of that, in the real
-  street friends rarely stand near each other: 55 of the 80 friendships
-  between named characters never meet in their daily routines. A typical
-  witness reaches one or two people, most reach nobody, and it is all over
-  within one game day (twelve real minutes).
-- **Why it is not visible:** those who hear it hold it at 0.2 to 0.38 sure,
-  and a character only gives you a lingering look at 0.58 and only says
-  something at 0.93. So the most a hearer does is glance at you, the same
-  glance any passer-by gives. What a player can actually see in thirty
-  minutes is the street's mood: the word "murmuring", characters mentioning
-  it, and lower takings the next day.
-
-  (a) **Make knowing show: let a hearer's faint knowledge change how they act
-      toward you (a look that lingers, a remark like "heard something about
-      you"), so the handful who know become visible — recommended.** Reach stays
-      a small circle, as your instinct says; the circle just stops being
-      invisible.
-  (b) Let stories travel further: witnesses surer at first sight, or weaker
-      fading per retelling, so the circle fills (still mostly invisible
-      without (a)).
-  (c) Change neither; the street's mood is the visible sign, and the circle
-      is found by asking around.
-
-  Meanwhile: nothing changes; the full write-up is in game-design, and the
-  look work in the game engine carries on.
-
-**8. Canon's words about the west side now point at the wrong block.** Your
-ruling of 22 September put shops on the west block that had been left plain
-"because cam_B stands here", which is the block across from the north half
-of the parade, and that is how the street is built. Canon records it as "the
-NEAR west block, by the cab office". With the camera now at the south end,
-the block near the camera and across from the cab office is the other one,
-plain houses.
-
-  (a) **Reword canon to say where the shop block is: across from the north
-      half of the parade; the block across from Mickey's is plain houses —
-      recommended.** Nothing is rebuilt.
-  (b) Move the shops to the block across from Mickey's, as the words say,
-      and make the north block plain.
-
-  Meanwhile: the street stays as built and canon is not touched.
+Nothing waiting.
 
 ## Things you should know
 
@@ -83,6 +36,9 @@ plain houses.
 
 ## Rulings received
 
+- 2026-09-23 **A change of plan: targets in order.** First presentable (the checklist in the roadmap: nothing in frame a placeholder, light not flat and the street wet, a handful of people), then one short PS5 experiment on one corner, then a slice you can play for ten to fifteen minutes, then sittings alternating polish and moat. The Hook sheet is the still-frame target for stage 1, not the game's quality bar; the aim stays D8, judged in motion.
+- 2026-09-23 **Decision 7: (a)**, make faint knowledge show, and fix the routines so friends actually meet; then measure reach again. Neither touches a constant. It lands in the playable slice.
+- 2026-09-23 **Decision 8: (a)**, reword canon to say where the shop block actually is. Done the same sitting.
 - 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
   look-development happens in Unreal, against the sheet.** Lighting, surface
   response, wetness, grade and depth do not cross over, so finishing them in
@@ -172,6 +128,59 @@ plain houses.
 - 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
 
 ## Resolved
+
+- 2026-09-23 **Decision 8, canon's words about the west side** - ruled (a): canon now says the shop block is across from the north half of the parade and the block across from Mickey's is plain terraces; nothing rebuilt. The question as it was put:
+
+**8. Canon's words about the west side now point at the wrong block.** Your
+ruling of 22 September put shops on the west block that had been left plain
+"because cam_B stands here", which is the block across from the north half
+of the parade, and that is how the street is built. Canon records it as "the
+NEAR west block, by the cab office". With the camera now at the south end,
+the block near the camera and across from the cab office is the other one,
+plain houses.
+
+  (a) **Reword canon to say where the shop block is: across from the north
+      half of the parade; the block across from Mickey's is plain houses —
+      recommended.** Nothing is rebuilt.
+  (b) Move the shops to the block across from Mickey's, as the words say,
+      and make the north block plain.
+
+  Meanwhile: the street stays as built and canon is not touched.
+
+- 2026-09-23 **Decision 7, rumour reach** - ruled (a), with the routines fixed so friends meet; it lands in the playable slice. The question as it was put:
+
+**7. Rumour reach, what you asked me to find (decision 2): the town does not
+visibly know within thirty minutes, and more people knowing would not fix
+it.** Thirty minutes of play is two and a half game days.
+
+- **Why a realistic witness under-fills the circle:** a story can only be
+  retold once. Each retelling multiplies how sure it is by the friendship and
+  by 0.8, and anything under 0.2 is dropped, so a half-sure witness reaches
+  only their stronger friends and nobody beyond. On top of that, in the real
+  street friends rarely stand near each other: 55 of the 80 friendships
+  between named characters never meet in their daily routines. A typical
+  witness reaches one or two people, most reach nobody, and it is all over
+  within one game day (twelve real minutes).
+- **Why it is not visible:** those who hear it hold it at 0.2 to 0.38 sure,
+  and a character only gives you a lingering look at 0.58 and only says
+  something at 0.93. So the most a hearer does is glance at you, the same
+  glance any passer-by gives. What a player can actually see in thirty
+  minutes is the street's mood: the word "murmuring", characters mentioning
+  it, and lower takings the next day.
+
+  (a) **Make knowing show: let a hearer's faint knowledge change how they act
+      toward you (a look that lingers, a remark like "heard something about
+      you"), so the handful who know become visible — recommended.** Reach stays
+      a small circle, as your instinct says; the circle just stops being
+      invisible.
+  (b) Let stories travel further: witnesses surer at first sight, or weaker
+      fading per retelling, so the circle fills (still mostly invisible
+      without (a)).
+  (c) Change neither; the street's mood is the visible sign, and the circle
+      is found by asking around.
+
+  Meanwhile: nothing changes; the full write-up is in game-design, and the
+  look work in the game engine carries on.
 
 - 2026-09-23 **The crime's broken window no longer showed** once the new street went into play - resolved the same day: the glass cut one piece per shop, and the crime hides the one it breaks.
 - 2026-09-23 **Delivered and answered**: the notes below, from the sittings of 22 September and the night after, moved here unchanged when his morning message of 23 September answered them.

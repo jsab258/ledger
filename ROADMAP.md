@@ -16,6 +16,55 @@ wrong. A stage is a SCHEDULE, not a reduction of the pillars: everything the
 pillars promise is still promised, and the stages only say in what order it
 arrives.
 
+## The order from 23 September, ruled by Jafar
+
+A change of plan, made explicitly: TARGETS IN ORDER, instead of chasing the
+Hook sheet to the end. The stages below still say what each part of the game
+means; this says what the sittings work on next, and when each target stops.
+
+1. **PRESENTABLE.** Not PS5, just not ugly. It STOPS when the checklist below
+   is met, and nothing finer is done toward it. The pair is worked toward the
+   checklist and no further. The three things set aside on 23 September - the
+   painted asphalt, the pavement's wet shine, the crowded hillside - are tried
+   again, each with a new idea, ONLY if they stand between the frame and the
+   checklist.
+2. **ONE SHORT PS5 EXPERIMENT, one sitting at most, then back to the list.**
+   Say plainly which of Unreal's big features the street uses and which are
+   off (light that bounces and reflects, very detailed geometry, the
+   post-processing, anything else a modern game relies on). Take one small
+   corner - a shopfront and the pavement in front of it - and make it as good
+   as the tools we have allow: every engine feature on, the best free scanned
+   materials, detailed geometry, one MetaHuman standing in it. Render it
+   beside a PS5-era reference frame from game-design/reference/, measure what
+   it costs the card with the voice's share taken into account, and tell
+   Jafar in FOR-JAFAR.md: how close the corner gets, what stood between it and
+   PS5, which gaps are skill, which content and which the card, and what it
+   would take to bring the whole street to that corner's level.
+3. **A SLICE YOU CAN PLAY, ten to fifteen minutes in the game**: walk the
+   street, talk to two or three people who answer in their own cast voices,
+   commit the crime, get seen, and later hear about it from someone who did
+   not see it. The first thing Jafar will test himself. Decision 7 lands here:
+   (a) make faint knowledge show - a hearer who knows even a little looks at
+   Tom longer, remarks on it, treats him differently - and fix the routines so
+   friends actually meet (55 of 80 friendships never do, which is a fault in
+   the routines, not a dial). Then measure reach again. Neither change touches
+   a constant.
+4. **AFTER THE SLICE, ALTERNATE**: one sitting of polish, one of moat, so
+   neither falls behind.
+
+### The presentable checklist - polish toward it stops when all three hold
+
+- **Nothing in frame is a placeholder.** Cars and props are real-looking
+  models rather than shapes, and no car is a recognisable real model.
+- **The light is not flat, and the street is wet as the sheet is.**
+- **A handful of people stand or walk in the street**, even if they only idle.
+
+### What the Hook sheet is, and what it is not
+
+The Hook sheet is the stage 1 target FOR A STILL FRAME. It is not the game's
+quality bar. The aim stays D8: the visual quality of a high-end 2026 game in a
+small place, JUDGED IN MOTION, not in one picture.
+
 ## The six stages
 
 | stage | the milestone, his words | how it is judged |
