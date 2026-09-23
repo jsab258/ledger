@@ -49,6 +49,17 @@ means; this says what the sittings work on next, and when each target stops.
    friends actually meet (55 of 80 friendships never do, which is a fault in
    the routines, not a dial). Then measure reach again. Neither change touches
    a constant.
+   ADDED THE SAME DAY, after the PS5 corner and before or as part of the
+   slice: (i) a blind listening test of Chatterbox Nano against the voice
+   engine we use now - ten lines, three cast voices, paired, Nano's
+   paralinguistic tags where a line needs feeling, its speed on the processor
+   alone and on the card with the game running, its watermark kept, the text
+   model staying the paid online one (decision 4); (ii) the router made so a
+   typed line can never pose as a system instruction, with that case and the
+   other injection lines in its tests; and (iii), in the slice's definition of
+   done, the frame time and graphics memory on this card while a character
+   speaks, with everything running as a player would have it - the first
+   honest reading of whether this machine runs the game as designed.
 4. **AFTER THE SLICE, ALTERNATE**: one sitting of polish, one of moat, so
    neither falls behind.
 

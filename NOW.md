@@ -904,9 +904,25 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       features on and off, one corner at its best with one MetaHuman, beside a
       PS5-era reference, its cost on the card with the voice's share, and the
       plain-words answer in FOR-JAFAR.md.
+- [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
+      ten lines, three cast voices, each by the engine we use now and by
+      Nano, played to him BLIND in pairs so he picks without knowing which is
+      which. Nano has no exaggeration control, so its paralinguistic tags go
+      where a line needs feeling. Its speed measured on the processor alone
+      and on the card, WITH THE GAME RUNNING. Its watermark kept, not
+      stripped. The text model stays the paid online one (decision 4).
+- [ ] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
+      typed line can never pose as a system instruction - even the paid model
+      obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
+      and the other injection lines added to the router's tests so it stays
+      fixed.
 - [ ] A SLICE YOU CAN PLAY, ten to fifteen minutes (ROADMAP.md item 3), with
       decision 7 (a) and the routines fixed so friends meet, reach measured
-      again, no constant touched.
+      again, no constant touched. PART OF ITS DEFINITION OF DONE (Jafar 23
+      Sep): while a character speaks, the frame time and the graphics memory
+      in use on this card, with the game, the voice and everything else
+      running as a player would have them - the first honest reading of
+      whether this machine runs the game as designed.
 - Then alternate sittings, polish and moat.
 
 ## Where things stand
