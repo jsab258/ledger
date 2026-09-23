@@ -239,6 +239,47 @@ namespace LedgerStreet
 		return TakesWater(Base) ? 1.0 - 0.28 * WetCurve(W) : 1.0;
 	}
 
+	// ---- THE LOOK'S OWN SETTINGS, production/specs/unreal-look.json ---------
+	// The few numbers the look is tuned by that were constants in the probe,
+	// read at run time so the tuning pass against the sheet is a file edit
+	// and a frame rather than a build. FAIL-SOFT: a missing file or key keeps
+	// the constant the probe has always used, and the line says which.
+	struct Look
+	{
+		double SkySeenGain;      // the sky dome as SEEN, over the sky intensity that lights
+		double GlowGain;         // Blender's glow strengths into this engine's emissive
+		double FogDayR, FogDayG, FogDayB;   // the day fog's colour
+		double FogFalloff;       // how fast the fog thins with height
+		int    Read;             // how many of the four the file supplied
+		bool   bFromFile;
+		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
+		         FogFalloff(0.02), Read(0), bFromFile(false) {}
+	};
+
+	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
+	{
+		using namespace LedgerVignette;
+		Out = Look();
+		Err.clear();
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = "look-file-unreadable"; return false; }
+		Out.bFromFile = true;
+		const Value* V = Root.Find("sky_seen_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.SkySeenGain = V->Num; ++Out.Read; }
+		V = Root.Find("street_glow_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.GlowGain = V->Num; ++Out.Read; }
+		V = Root.Find("fog_day_colour");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM
+		    && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)
+		{
+			Out.FogDayR = V->Arr[0].Num; Out.FogDayG = V->Arr[1].Num; Out.FogDayB = V->Arr[2].Num; ++Out.Read;
+		}
+		V = Root.Find("fog_height_falloff");
+		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogFalloff = V->Num; ++Out.Read; }
+		return true;
+	}
+
 	// LINEAR TO AN sRGB BYTE, because the flat albedo texture is sampled as
 	// sRGB like every albedo map and the sidecar's colours are linear.
 	inline int SrgbByte(double Linear)

@@ -1004,6 +1004,11 @@ namespace
 	// value of a series and never measured: the two engines do not share a
 	// unit, and this is the one number that converts them. Printed.
 	const float kStreetGlowGain = 0.10f;
+	// THE LOOK FILE, read once beside the street's sidecar. Its defaults are
+	// the constants above and kSkyLuminanceGain, so a run without it renders
+	// as the probe always has.
+	LedgerStreet::Look GLook;
+	std::string GLookNote = "not-read";
 	std::string GDecalsLine =
 		"decalsStatus=NOT-REACHED decalsPainted=nothing-measured"
 		" decalsNote=the-material-pass-never-ran";
@@ -1547,6 +1552,17 @@ namespace
 		GStreetFrom = Path;
 		GStreetRepoRoot = FPaths::Combine(FPaths::GetPath(Path), TEXT("../../.."));
 		FPaths::CollapseRelativeDirectories(GStreetRepoRoot);
+		{
+			const FString LookPath = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/unreal-look.json"));
+			FString LookText;
+			std::string LookErr;
+			if (!FFileHelper::LoadFileToString(LookText, *LookPath)) { GLookNote = "no-file/constants"; }
+			else if (!LedgerStreet::ParseLook(std::string(TCHAR_TO_UTF8(*LookText)), GLook, LookErr))
+			{
+				GLookNote = LookErr + "/constants";
+			}
+			else { GLookNote = "file"; }
+		}
 		GStreetActors.SetNumZeroed((int32)GStreet.Rows.size());
 		std::string Missing;
 		for (size_t I = 0; I < GStreet.Rows.size(); ++I)
@@ -1607,8 +1623,13 @@ namespace
 			(int)GStreetHidden, (int)GSpec.Pieces.size(), (int)GStreetPainted,
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
 			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetGlowing, (int)GStreetWet,
-			(double)kStreetGlowGain);
-		return std::string(Buf) + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
+			GLook.GlowGain);
+		char LookBuf[200];
+		std::snprintf(LookBuf, sizeof(LookBuf),
+			" lookFrom=%s lookRead=%d/4 lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f",
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.SkySeenGain,
+			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff);
+		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
 		                         : std::string(TCHAR_TO_UTF8(*NoSp(GStreetFrom))));
@@ -2447,7 +2468,7 @@ namespace
 	{
 		++GSkyLumDrive.Calls;
 		const double Want = LedgerVignette::SkyDomeLuminance(
-			C.SkyIntensity, (double)kSkyLuminanceGain);
+			C.SkyIntensity, (double)kSkyLuminanceGain * GLook.SkySeenGain);
 		if (!LedgerVignette::SkyLumNeeded(GSkyLumDrive, Want))
 		{
 			++GSkyLumDrive.Skipped;
@@ -2619,9 +2640,10 @@ namespace
 			        GFog->FindComponentByClass<UExponentialHeightFogComponent>())
 			{
 				F->SetFogDensity((float)C.FogDensity * kFogDensityGain);
-				F->SetFogInscatteringColor(C.SunOn ? FLinearColor(0.55f, 0.58f, 0.62f, 1.0f)
+				F->SetFogInscatteringColor(C.SunOn ? FLinearColor((float)GLook.FogDayR, (float)GLook.FogDayG,
+				                                                  (float)GLook.FogDayB, 1.0f)
 				                                   : FLinearColor(0.06f, 0.05f, 0.05f, 1.0f));
-				F->SetFogHeightFalloff(0.02f);
+				F->SetFogHeightFalloff((float)GLook.FogFalloff);
 				// AND THE FOG STOPS OWNING THE FAR FIELD, which is the
 				// measurement that started this: with nothing behind it the
 				// fog saturates at the far plane and IS the sky in every
@@ -5884,7 +5906,7 @@ namespace
 			const double Glow = C.SunOn ? Rw.EmitDay : Rw.EmitNight;
 			if (Glow >= 0.0 && Rw.Decal.empty() && Rw.bHasRgb)
 			{
-				const float K = (float)Glow * kStreetGlowGain;
+				const float K = (float)(Glow * GLook.GlowGain);
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
 					FLinearColor((float)Rw.R * K, (float)Rw.G * K, (float)Rw.B * K, 1.0f));
 				++GStreetGlowing;
