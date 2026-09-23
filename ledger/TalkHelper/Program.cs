@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -42,6 +43,10 @@ static class Program
         "Can't stop. Another time.",
     };
 
+    // THE REPLY AS WRITTEN: apostrophes and accents stay themselves rather
+    // than escape codes, so a log or a transcript reads as the line was said.
+    static readonly JsonSerializerOptions Plain = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+
     sealed class Helper
     {
         public readonly Dictionary<string, CharacterCard> Cards = new Dictionary<string, CharacterCard>();
@@ -71,15 +76,15 @@ static class Program
             }
             catch (Exception)
             {
-                return JsonSerializer.Serialize(new { error = "bad-line" });
+                return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
             if (!Cards.TryGetValue(to, out var card))
-                return JsonSerializer.Serialize(new { id, to, error = "no-card" });
+                return JsonSerializer.Serialize(new { id, to, error = "no-card" }, Plain);
 
             var sw = Stopwatch.StartNew();
             string brush = BrushOffs[Math.Abs(id) % BrushOffs.Length];
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, reply = brush, ms = 0L, offline = true, timedOut = false });
+                return JsonSerializer.Serialize(new { id, to, reply = brush, ms = 0L, offline = true, timedOut = false }, Plain);
 
             if (!_engines.TryGetValue(to, out var engine))
             {
@@ -111,7 +116,7 @@ static class Program
                     reply = brush;
                 }
             }
-            return JsonSerializer.Serialize(new { id, to, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut });
+            return JsonSerializer.Serialize(new { id, to, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut }, Plain);
         }
     }
 
@@ -145,7 +150,7 @@ static class Program
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
         var helper = new Helper(string.IsNullOrEmpty(key) ? null : new AnthropicClient(key), TimeSpan.FromSeconds(8));
         LoadCards(helper, CardsDir(args));
-        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online }));
+        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online }, Plain));
         Console.Out.Flush();
         string line;
         while ((line = Console.In.ReadLine()) != null)
