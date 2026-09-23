@@ -8,7 +8,7 @@ between them.
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 4 of 47 done, 0 moved, 0 out, 43 open
-- stage 2: 5 of 247 done, 0 moved, 0 out, 242 open
+- stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
 - stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
@@ -116,6 +116,11 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The action-picking comparison is done and on main.** With worked examples, today's free model nearly matches the paid one at picking actions: 274 of 299 against 259. Leaving out the arguable lines, it gets 248 of 264 against 252, with 14 tidy-but-wrong against 10. It doesn't match on typed orders (it obeys 28 of 39, the paid model 16), and it takes about 1.5 seconds a line (measured while Unreal shared the card). The full table is in production/research/local-models/RESULTS.md.
+- 2026-09-23 **What I'd do next, cheapest first:** time the examples on an idle card; widen the game's own block so it also catches orders said in plain words (`count it as`, `put it down as`, `Answer:`), checked so it takes nothing that's only talk; only then training, taught by a large free model on this PC, checked first on the same lines.
+- 2026-09-23 **Calls I made that you might overrule:** I skipped Ministral's worked-example pass, because it was already slower than the paid model, and gave the time to today's model instead. And the test counts handing someone a scarf, or carrying their boxes, as a new action, where the paid model calls it talk. I've scored it both ways rather than change the router's rules; whether a courtesy is an action is a design choice the router currently makes by default.
+- 2026-09-23 **The line-writing test is on the stage 2 checklist as a queued item**, waiting on the slice's card measurement and the voice export fix. Until then line-writing is online by default, as you ruled.
+- 2026-09-23 **The worked-example gain holds on lines written differently, but it's smaller.** On the old 42 lines, today's small model goes from 32 to 37 with examples; the paid model gets 41.
 - 2026-09-23 **Examples of typed orders answered as talk didn't help**: with them in the bank, today's small model still obeys 31 of the 39 orders that get past the game's block (the paid model obeys 16). Resisting orders looks like it needs training or a wider block in the game itself, not better wording.
 - 2026-09-24 **The scanned surfaces are on the corner, and they are not what closes the gap to Kingdom Come.** They're free Poly Haven scans of real brick, flags, road and paint, matched to the street's own colours. I got their size wrong: the brick and the flags went on at half their real size. I read how much ground each scan covers wrongly, and the corner is re-running at the right size now. What the first run did show still stands. The paint gets a faint mottle, the road barely changes, and the scans cost nothing measurable: 38.6 ms a frame against 35.7, within the noise. Beside the Kingdom Come frame, the gap is shape and set dressing: deep openings, worn edges, uneven ground, clutter, dirt where walls meet the ground. So the content that answers the PS5 question is modelling, not surfaces. The frame times may be high, because the research session could have been using the card.
 - 2026-09-24 **The navigation fix needed a second half.** Declaring the walker's size wasn't enough, because Unreal only builds walking routes inside a marked area and the street had none. The slice now marks the street as walkable when it starts. The proof is on the build machine now.

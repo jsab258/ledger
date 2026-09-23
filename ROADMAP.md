@@ -597,6 +597,7 @@ Stage state: OPEN
 | B04 | People opening, using and closing doors on their routes | floor | open | from the baseline research |
 | B05 | People queueing, waiting their turn and giving way to one another | floor | open | from the baseline research |
 | B06 | Puddles that ripple in rain and splash underfoot | floor | open | from the baseline research |
+| L01 | Local line-writing, judged blind: the best local writers that fit what the card has left write the same lines as the paid model, shown to Jafar without saying which is which | ours | open | queued, waiting on the slice's measurement of the card memory the game and the voice use, and on the voice's double-size export being fixed (Jafar 2026-09-23); until then line-writing is online by default, not by conclusion; production/research/local-models |
 
 ### Stage 3: one street that knows me
 
