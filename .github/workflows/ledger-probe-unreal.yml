@@ -1844,15 +1844,20 @@ jobs:
           $gameDir = Split-Path (Split-Path (Split-Path $exe -Parent) -Parent) -Parent
           $csvDir = Join-Path $gameDir "Saved\Profiling\CSV"
           Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
+          # THE GAME ENDS ITSELF WHEN THE CAPTURE IS DONE (-ExitAfterCsvProfiling),
+          # and the step waits for that, 24 September: the first run of this
+          # step read the CSV the moment it appeared, which is when the capture
+          # BEGINS writing it, stopped the game a few frames in, and reported
+          # NO-FRAMES.
           $a = @("-LedgerSlice", "-RenderOffScreen", "-ResX=3440", "-ResY=1440", "-windowed", "-ForceRes",
                  "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=50,t.MaxFPS=0,r.VSync=0",
-                 "-ExecCmds=`"csvprofile frames=1800`"")
+                 "-ExecCmds=`"csvprofile frames=1800`"", "-ExitAfterCsvProfiling")
           $p = Start-Process -FilePath $exe -ArgumentList $a -PassThru -NoNewWindow `
                -RedirectStandardOutput "sliceperf-run.log" -RedirectStandardError "sliceperf-run.err"
           $t = 0
-          while (-not (Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue) -and $t -lt 180) { Start-Sleep 2; $t += 2 }
-          Start-Sleep 3
-          Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+          while (-not $p.HasExited -and $t -lt 180) { Start-Sleep 2; $t += 2 }
+          if (-not $p.HasExited) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue }
+          Start-Sleep 2
           $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Select-Object -First 1
           $py = $null
           foreach ($cand in @("python3", "python", "C:\LedgerTools\python312\python.exe")) {
