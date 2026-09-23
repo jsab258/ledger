@@ -991,6 +991,19 @@ namespace
 	std::vector<std::string> GStreetTried;
 	int32 GStreetLoaded = 0, GStreetHidden = 0, GStreetPainted = 0;
 	int32 GStreetPictures = 0, GStreetPicturesAsked = 0;
+	// THE LOOK, MOVED ACROSS, 23 September: one instance per street mesh,
+	// the pack's photographs each decoded once, and the condition the glow
+	// and the wet were last driven for, so a settling condition that
+	// re-enters ApplyCondition every tick writes them once.
+	TArray<UMaterialInstanceDynamic*> GStreetMids;
+	TMap<FString, UTexture2D*> GStreetTex;
+	int32 GStreetTextured = 0, GStreetTexAsked = 0;
+	std::string GStreetLookFor;
+	int32 GStreetGlowing = 0, GStreetWet = 0;
+	// BLENDER'S GLOW STRENGTHS IN THIS ENGINE'S UNITLESS EMISSIVE, the first
+	// value of a series and never measured: the two engines do not share a
+	// unit, and this is the one number that converts them. Printed.
+	const float kStreetGlowGain = 0.10f;
 	std::string GDecalsLine =
 		"decalsStatus=NOT-REACHED decalsPainted=nothing-measured"
 		" decalsNote=the-material-pass-never-ran";
@@ -1130,6 +1143,9 @@ namespace
 	// above them, and the pack import needs DecodeBgra's neighbours to be in
 	// scope.
 	void BindSurfaces();
+	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
+	// PaintStreet, called from ApplyCondition above it.
+	void ReDriveStreetLook(const Condition& C);
 	// QUEUE 186. Defined beside the texture search it borrows its candidate
 	// list from; declared here because BuildScene calls it.
 	void LookForNamedHdri();
@@ -1583,12 +1599,15 @@ namespace
 
 	std::string StreetSegmentNow()
 	{
-		char Buf[256];
+		char Buf[420];
 		std::snprintf(Buf, sizeof(Buf),
-			"streetStatus=%s streetMeshes=%d/%d streetHidden=%d/%d streetPainted=%d streetPictures=%d/%d",
+			"streetStatus=%s streetMeshes=%d/%d streetHidden=%d/%d streetPainted=%d streetPictures=%d/%d"
+			" streetTextured=%d/%d streetGlowing=%d streetWet=%d streetGlowGain=%.2f/unitless/first-value-of-a-series",
 			GStreetLoaded > 0 ? "PLACED" : "NONE", (int)GStreetLoaded, (int)GStreet.Rows.size(),
 			(int)GStreetHidden, (int)GSpec.Pieces.size(), (int)GStreetPainted,
-			(int)GStreetPictures, (int)GStreetPicturesAsked);
+			(int)GStreetPictures, (int)GStreetPicturesAsked,
+			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetGlowing, (int)GStreetWet,
+			(double)kStreetGlowGain);
 		return std::string(Buf) + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
@@ -2676,6 +2695,7 @@ namespace
 		// its tick in a piece loop. The order has no other meaning; a
 		// material parameter and a light are not read by each other.
 		ReDriveWetness(C);
+		ReDriveStreetLook(C);
 	}
 
 	// ---- AMENDMENT A1: FOUR FLAGS, READ OFF THE LIVE OBJECTS -------------
@@ -5747,6 +5767,9 @@ namespace
 			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(GBaseMaterial, A);
 			if (Mid == nullptr) { continue; }
 			UTexture2D* Albedo = nullptr;
+			UTexture2D* NormalMap = nullptr;
+			UTexture2D* RoughMap = nullptr;
+			bool bPhoto = false;
 			double Rough = Rw.Roughness >= 0.0 ? Rw.Roughness : 0.8;
 			if (!Rw.Decal.empty())
 			{
@@ -5770,6 +5793,31 @@ namespace
 				}
 				if (Albedo != nullptr) { ++GStreetPictures; Rough = 0.42; }
 			}
+			// THE PHOTOGRAPH, where the surface wears one and nothing lettered
+			// is on it: the pack's own three maps, from the root the scene
+			// file's surfaces already staged, each decoded once for the run.
+			if (Albedo == nullptr && !Rw.SurfaceMap.empty() && !GTexRoot.IsEmpty())
+			{
+				++GStreetTexAsked;
+				UTexture2D* Got[3] = {nullptr, nullptr, nullptr};
+				for (int32 M = 0; M < 3; ++M)
+				{
+					const FString File = GTexRoot / FString(UTF8_TO_TCHAR(
+						(Rw.SurfaceMap + LedgerSurface::MapSuffix(M) + ".jpg").c_str()));
+					if (UTexture2D** Hit = GStreetTex.Find(File)) { Got[M] = *Hit; continue; }
+					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
+					int32 FW = 0, FH = 0;
+					FString LoadedAs;
+					Got[M] = ImportTexture(File, M == 0, FW, FH, LoadedAs);
+					GStreetTex.Add(File, Got[M]);
+				}
+				if (Got[0] != nullptr)
+				{
+					Albedo = Got[0]; NormalMap = Got[1]; RoughMap = Got[2];
+					bPhoto = true;
+					++GStreetTextured;
+				}
+			}
 			if (Albedo == nullptr)
 			{
 				Albedo = Rw.bHasRgb
@@ -5777,26 +5825,82 @@ namespace
 					                  LedgerStreet::SrgbByte(Rw.B), true, TEXT("street-flat"))
 					: MakeFlatTexture(128, 128, 128, true, TEXT("street-flat-grey"));
 			}
-			const int32 RB = LedgerStreet::LinearByte(Rough);
-			UTexture2D* RoughTex = MakeFlatTexture(RB, RB, RB, false, TEXT("street-rough"));
+			UTexture2D* RoughTex = RoughMap;
+			if (RoughTex == nullptr)
+			{
+				const int32 RB = LedgerStreet::LinearByte(Rough);
+				RoughTex = MakeFlatTexture(RB, RB, RB, false, TEXT("street-rough"));
+			}
 			if (Albedo != nullptr)
 			{
 				Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))), Albedo);
+			}
+			if (NormalMap != nullptr)
+			{
+				Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))), NormalMap);
 			}
 			if (RoughTex != nullptr)
 			{
 				Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(2))), RoughTex);
 			}
-			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), 1.0f);
-			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), 1.0f);
+			// TILED BY THE METRE: the export's UVs are metres, so a copy of
+			// the photograph every TileM metres is 1/TileM copies per unit.
+			const float Tiles = bPhoto ? (float)LedgerStreet::TilesPerMetre(Rw) : 1.0f;
+			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), Tiles > 0.0f ? Tiles : 1.0f);
+			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), Tiles > 0.0f ? Tiles : 1.0f);
+			// THE PALETTE OVER THE PHOTOGRAPH, as Blender lays it: authored
+			// colour over the map's own average. White on flat paint and on
+			// pictures, whose colour is already the texel.
+			const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
+			                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
-			                             FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
 			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+			if (GStreetMids.Num() < GStreetActors.Num()) { GStreetMids.SetNumZeroed(GStreetActors.Num()); }
+			GStreetMids[I] = Mid;
 			for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot)
 			{
 				Comp->SetMaterial(Slot, Mid);
 			}
 			++GStreetPainted;
+		}
+	}
+
+	// THE GLOW AND THE WET, PER CONDITION, as Blender drives them: the tubes
+	// and the lit rooms glow at Blender's day or night strength times one
+	// gain; the road, the paving and the kerb take the condition's water by
+	// the recipe's rule (StreetMeshes.h), darkening through the same grade
+	// the palette rides on. Written once per condition, not per settle tick.
+	void ReDriveStreetLook(const Condition& C)
+	{
+		if (GStreetMids.Num() == 0 || GStreetLookFor == C.Id) { return; }
+		GStreetLookFor = C.Id;
+		GStreetGlowing = 0; GStreetWet = 0;
+		for (int32 I = 0; I < GStreetMids.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			UMaterialInstanceDynamic* Mid = GStreetMids[I];
+			if (Mid == nullptr) { continue; }
+			const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+			const double Glow = C.SunOn ? Rw.EmitDay : Rw.EmitNight;
+			if (Glow >= 0.0 && Rw.Decal.empty() && Rw.bHasRgb)
+			{
+				const float K = (float)Glow * kStreetGlowGain;
+				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
+					FLinearColor((float)Rw.R * K, (float)Rw.G * K, (float)Rw.B * K, 1.0f));
+				++GStreetGlowing;
+			}
+			if (LedgerStreet::TakesWater(Rw.Base))
+			{
+				const bool bPhoto = !Rw.SurfaceMap.empty();
+				const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
+				                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
+				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);
+				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
+					FLinearColor((float)(Gr.R * D), (float)(Gr.G * D), (float)(Gr.B * D), 1.0f));
+				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
+					(float)LedgerStreet::WetnessParamFor(Rw.Base, C.Wetness));
+				++GStreetWet;
+			}
 		}
 	}
 

@@ -6888,6 +6888,48 @@ int main(int argc, char** argv)
 		LedgerStreet::Sidecar Bad;
 		Check(!LedgerStreet::ParseSidecar("{\"meshes\": []}", Bad, SErr) && !SErr.empty(),
 		      "an empty sidecar is refused with a reason", SErr);
+
+		// THE LOOK'S FIRST STEP: every textured surface can be laid the way
+		// Blender lays it - photograph, size, and the palette over it.
+		int Textured = 0, TexturedWhole = 0, Glowing = 0;
+		const LedgerStreet::Row* Brick = nullptr;
+		for (size_t I = 0; I < Sc.Rows.size(); ++I)
+		{
+			const LedgerStreet::Row& Rw = Sc.Rows[I];
+			if (!Rw.SurfaceMap.empty())
+			{
+				++Textured;
+				if (Rw.bHasMean && LedgerStreet::TilesPerMetre(Rw) > 0.0) { ++TexturedWhole; }
+			}
+			if (Rw.EmitDay >= 0.0) { ++Glowing; }
+			if (Rw.Mesh == "street_brick_red") { Brick = &Rw; }
+		}
+		std::printf("    street look: textured=%d whole=%d glowing=%d\n", Textured, TexturedWhole, Glowing);
+		Check(Textured >= 20 && TexturedWhole == Textured,
+		      "every textured street surface carries its photograph's average and its tile size");
+		Check(Glowing >= 6, "the tubes, the lit rooms, the pictured rooms and the nets carry a glow");
+		Check(Brick != nullptr && std::fabs(LedgerStreet::TilesPerMetre(*Brick) - 1.0 / 0.55) < 1e-9,
+		      "brick tiles at the measured 0.55 m in the metre UVs, 1.82 copies a metre");
+		if (Brick != nullptr)
+		{
+			const LedgerStreet::Grade Gb = LedgerStreet::PaletteOverPhoto(*Brick);
+			Check(Gb.R > Gb.G && Gb.G > Gb.B && std::fabs(Gb.R * Brick->MeanR - Brick->R) < 1e-9,
+			      "the parade's red lands on the sandy photograph as a red, and exactly the authored red");
+		}
+		// WET AS BLENDER WETS IT: the road reaches its near-mirror floor at
+		// the day's 0.6 on the one material scalar, the flags stay dull, and
+		// a wall takes no water at all.
+		Check(LedgerStreet::WetnessParamFor("asphalt", 1.0) == 1.0
+		      && std::fabs(LedgerStreet::WetnessParamFor("paving", 1.0) - 0.16 / 0.54) < 1e-9
+		      && LedgerStreet::WetnessParamFor("brick_red", 0.9) == 0.0,
+		      "the road can reach its floor, the paving only its own share, a wall none");
+		Check(std::fabs(LedgerStreet::WetDarken("paving", 0.6) - (1.0 - 0.28 * std::pow(0.6, 0.55))) < 1e-9
+		      && LedgerStreet::WetDarken("slate", 0.6) == 1.0 && LedgerStreet::WetDarken("asphalt", 0.0) == 1.0,
+		      "wet ground darkens by the recipe's 0.28 of the bent figure; dry ground and walls do not");
+		LedgerStreet::Row Plain;
+		const LedgerStreet::Grade Gp = LedgerStreet::PaletteOverPhoto(Plain);
+		Check(Gp.R == 1.0 && Gp.G == 1.0 && Gp.B == 1.0 && LedgerStreet::TilesPerMetre(Plain) == 0.0,
+		      "a surface with no photograph gets no grade and no tiling");
 	}
 
 	std::printf("%s: %d of %d check(s) failed\n",

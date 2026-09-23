@@ -42,6 +42,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.0602,
+    0.0577,
+    0.0571
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 16
   },
   {
@@ -59,6 +66,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.2435,
+    0.1951,
+    0.1777
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 1644
   },
   {
@@ -76,6 +90,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.2717,
+    0.2317,
+    0.1599
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 2338
   },
   {
@@ -93,6 +114,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 720
   },
   {
@@ -110,6 +138,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 18
   },
   {
@@ -127,6 +158,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 18
   },
   {
@@ -144,6 +178,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 444
   },
   {
@@ -161,6 +198,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 24
   },
   {
@@ -183,6 +223,9 @@
     0.92
    ],
    "decal_emit": "room",
+   "texture_mean": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
    "faces": 6
   },
   {
@@ -205,6 +248,9 @@
     0.93
    ],
    "decal_emit": "room",
+   "texture_mean": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
    "faces": 6
   },
   {
@@ -227,6 +273,9 @@
     0.98
    ],
    "decal_emit": "room",
+   "texture_mean": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
    "faces": 6
   },
   {
@@ -249,6 +298,9 @@
     0.92
    ],
    "decal_emit": "room",
+   "texture_mean": null,
+   "emit_day": 0.4,
+   "emit_night": 1.6,
    "faces": 6
   },
   {
@@ -266,6 +318,9 @@
    "decal": "production/assets/vignette/decals2d/net_curtain_a",
    "decal_uv": null,
    "decal_emit": "net",
+   "texture_mean": null,
+   "emit_day": 0.3,
+   "emit_night": 0.05,
    "faces": 72
   },
   {
@@ -283,6 +338,9 @@
    "decal": "production/assets/vignette/decals2d/net_curtain_b",
    "decal_uv": null,
    "decal_emit": "net",
+   "texture_mean": null,
+   "emit_day": 0.3,
+   "emit_night": 0.05,
    "faces": 72
   },
   {
@@ -300,6 +358,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 42
   },
   {
@@ -317,6 +378,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 24
   },
   {
@@ -334,6 +402,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 24
   },
   {
@@ -351,6 +426,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 48
   },
   {
@@ -368,6 +450,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 84
   },
   {
@@ -385,6 +474,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -402,6 +498,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 272
   },
   {
@@ -419,6 +522,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 108
   },
   {
@@ -436,6 +546,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 1950
   },
   {
@@ -453,6 +566,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -470,6 +590,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 126
   },
   {
@@ -487,6 +610,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": 3.4,
+   "emit_night": 0.7,
    "faces": 24
   },
   {
@@ -504,6 +630,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.2614,
+    0.2617,
+    0.2402
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 12
   },
   {
@@ -521,6 +654,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 24
   },
   {
@@ -538,6 +674,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1972,
+    0.1862,
+    0.1853
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 156
   },
   {
@@ -555,6 +698,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 66
   },
   {
@@ -572,6 +722,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 2466
   },
   {
@@ -589,6 +746,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 48
   },
   {
@@ -606,6 +766,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 24
   },
   {
@@ -623,6 +786,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 36
   },
   {
@@ -640,6 +810,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 12
   },
   {
@@ -657,6 +830,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 12
   },
   {
@@ -674,6 +850,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 40
   },
   {
@@ -691,6 +874,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 160
   },
   {
@@ -708,6 +898,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 198
   },
   {
@@ -725,6 +922,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 20
   },
   {
@@ -747,6 +951,13 @@
     0.8477
    ],
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -769,6 +980,13 @@
     0.8047
    ],
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -791,6 +1009,13 @@
     0.834
    ],
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -808,6 +1033,13 @@
    "decal": "production/assets/vignette/decals2d/board_to_let",
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -825,6 +1057,13 @@
    "decal": "production/assets/vignette/decals2d/fascia_mickeys_plain",
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1483,
+    0.0907,
+    0.0519
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -842,6 +1081,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.0315,
+    0.0304,
+    0.0364
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 810
   },
   {
@@ -859,6 +1105,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.1972,
+    0.1862,
+    0.1853
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 156
   },
   {
@@ -876,6 +1129,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.2384,
+    0.2312,
+    0.1923
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 246
   },
   {
@@ -893,6 +1153,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 6
   },
   {
@@ -910,6 +1177,13 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": [
+    0.5225,
+    0.5166,
+    0.4732
+   ],
+   "emit_day": null,
+   "emit_night": null,
    "faces": 18
   },
   {
@@ -927,6 +1201,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": 12.0,
+   "emit_night": 12.0,
    "faces": 36
   },
   {
@@ -944,6 +1221,9 @@
    "decal": null,
    "decal_uv": null,
    "decal_emit": null,
+   "texture_mean": null,
+   "emit_day": null,
+   "emit_night": null,
    "faces": 80
   }
  ]
