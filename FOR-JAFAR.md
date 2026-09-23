@@ -57,6 +57,12 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The dusk frame exists in the game engine**: the street at
+  dusk, wet, lamps lit, from the sheet's viewpoint, the one the roadmap says
+  ties stage 1 together. There is no night sheet, so I tuned it by eye: the
+  terraces dark against an evening sky, the lamps and Mickey's lit window
+  mirrored in the wet road. The stand-in figure by the lamp reads nearly as
+  a silhouette. Say if the dusk should be lighter or bluer.
 - 2026-09-23 **The far end of the street now looks like the sheet's.** Beyond
   the built street the road used to run straight on to a solid wall of
   houses. Now, as on the sheet, it bends away to the left at a row of houses
