@@ -218,12 +218,24 @@ def brick(tf, name, salt, n=None, worn=True):
     return img, normal_from_height(h, 6.0), r, (tw, th)
 
 
+#: THE FLAGS AGAINST THE SHEET IN UNREAL, 23 September. The sheet's York
+#: flags are each their own stone - grey-buff, pinkish, brown - with joints
+#: dark with wet and dirt; ours read as one even tan with faint joints. So
+#: in this lane only: the recipe's two tones pulled further apart, a hue per
+#: flag between pinker and greyer, and the joint darker. Each is symmetric
+#: about the recipe's own mean, so the tuned paving gain still holds.
+FLAG_SPREAD = 1.8
+FLAG_HUE = (0.10, 0.0, -0.12)
+FLAG_JOINT_WET = 0.65
+
+
 def flags(tf):
     import numpy as np
     per_row, rows = 4, 6
     tw, th = per_row * tf.FLAG_W_M, rows * tf.FLAG_H_M
     i, j, jm, h = bond(PX, tw, th, tf.FLAG_W_M, tf.FLAG_H_M, tf.FLAG_JOINT_M)
     mix = hash01(i, j % rows, 31)
+    hue = hash01(i, j % rows, 37) * 2.0 - 1.0
     base, rough = authored(tf, "paving")
     grain = 1.0 + 0.10 * (periodic_noise(PX, 64, SEED + 3) * 2.0 - 1.0)
     # THE PAVEMENT TAKES THE PATCHES AND NOT THE SPLASH, as the recipe says:
@@ -232,7 +244,9 @@ def flags(tf):
     img = np.zeros((PX, PX, 3))
     for c in range(3):
         t = tf.FLAG_TONE_A[c] * mix + tf.FLAG_TONE_B[c] * (1.0 - mix)
-        v = np.where(jm, tf.FLAG_JOINT_DARK, t * grain)
+        t = 1.0 + (t - 1.0) * FLAG_SPREAD
+        t = t * (1.0 + FLAG_HUE[c] * hue)
+        v = np.where(jm, tf.FLAG_JOINT_DARK * FLAG_JOINT_WET, t * grain)
         img[..., c] = base[c] * v * worn
     r = np.where(jm, min(1.0, rough + 0.1), rough) * np.ones((PX, PX))
     return img, normal_from_height(h, 3.0), r, (tw, th)
