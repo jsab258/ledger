@@ -12,6 +12,10 @@ between them.
   - The MetaHuman needs **you** signed in to your Epic account inside Unreal, once. I can't sign in for you.
   - **(a) Yes to all of it (my recommendation).** (b) Nano only; the corner makes do with the materials we have and no MetaHuman. (c) Neither for now.
   - Meanwhile I carry on with presentable, which needs none of it.
+- 2026-09-23 **Which picture should the PS5 corner stand beside?** The reference folder holds five GTA V street frames, a game made for the PS3 and re-released on the PS5. Nothing in it is a native PS5 game, so it's a lower bar than your words set.
+  - **(a) The overcast GTA V morning, the closest match to our weather (my recommendation).** I'll say in the report that it's a PS3-era bar.
+  - (b) You drop in a frame from a native PS5 game you like, and I use that. I won't download game screenshots myself; they're someone else's copyright.
+  - Meanwhile I use (a).
 
 ## Things you should know
 
