@@ -61,6 +61,12 @@ between them.
   - (b) Rewrite them inside the game engine in C++. It's one program, but it's slower to build and it's a second copy of code that must be kept agreeing with the first, as the simulation's port is.
   - Meanwhile (a), when the slice reaches talking; nothing is built for it yet.
 
+- 2026-09-23 **Bodies for the slice's walking cast.** The slice needs Rocco, Lena, Sam and the rest walking their day. The stock Mixamo characters we hold that look like real people are already the street's six extras (and one is the player's stand-in). The rest are cartoons (a cigar-chomping caricature, an Elvis, a granny in curlers) or modern sportswear, which is wrong for 1990.
+  - **(a) The six realistic extras become the slice's cast, Rocco, Lena and Sam first, and the street's extras are drawn from the cast's quieter hours (my recommendation).** Nothing new to download.
+  - (b) Wait for the clothing route (D54: the checker, then a jacket) to dress period bodies before anyone walks.
+  - (c) Buy or download period characters. That's money or a download, so it's yours to say.
+  - Meanwhile (a), when the walkers are built; the navigation they walk on is being built now.
+
 ## Things you should know
 
 - 2026-09-23 **People turn their heads to look at you now.** Walk within five metres in front of someone and their head eases round to your eyes, using Unreal's own look-at, and eases back when you leave. The picture is Elizabeth before and after. The street also makes sound: a distant traffic hum from the far end, and each of the six people says a line now and then from where they stand. That's confirmed placed and playing. A recording of the walk is on its way, so you can hear it change as you move.
