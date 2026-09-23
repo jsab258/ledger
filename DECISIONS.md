@@ -207,3 +207,14 @@ runs on push.
 - THE PS5 CORNER STANDS BESIDE KINGDOM COME DELIVERANCE 2, an overcast town street, "since that game is my stated bar"; Jafar supplies the frame.
 - CANON: TOM HAS NEVER BEEN TO THE HOOK. He is a stranger to everyone there, known only as Mickey's nephew by name (also in canon.md).
 - 2026-09-23 THE PS5 CORNER'S SCANNED MATERIALS (my decision, from Poly Haven's CC0 library, looked at against the Hook sheet): brick_4 (warm red stretcher bond; brick_wall_001 the darker alternate), concrete_pavement_02 (square flags), asphalt_01 (coarse grey road), painted_concrete_02 (smooth worn paint to tint the shopfront over, since the library's painted timber is all planking); 2k maps in production/assets/scanned/polyhaven.
+
+- 2026-09-23 LOCAL MODELS, ruled by Jafar: (a) on all three - the four router candidates are downloaded (Ministral 3 3B, Qwen3.5 4B, Gemma 4 E4B, Qwen3 1.7B; all Apache 2.0); the paid router runs 300 fresh held-out lines for about 35p; any training uses a large free model on this PC as teacher, never the paid model's answers (Anthropic's Usage Policy). Order: fair rerun, fresh lines, models. LINE-WRITING IS ONLINE BY DEFAULT, NOT BY CONCLUSION: once the slice measures the game's and the voice's card memory and the voice's double-size export is fixed, the local writers that fit are tested blind against the paid model's lines, judged by Jafar.
+
+## Jafar's rulings, 23 September, night
+
+- PLATFORM: PC ONLY, WINDOWS. Consoles are a later, low-priority question.
+- THE PERFORMANCE TARGET: 60 frames a second at Jafar's monitor's resolution on this card (the RX 6700), never below 30, with the voice running. It constrains every visual choice from now on, and the slice measures against it.
+- THE CAST'S VOICES ARE CHECKED BEFORE ANYTHING MORE IS RECORDED WITH THEM: for all nineteen, where each reference clip came from and whether there is consent to clone it, against the TTS licensing research on main; the answer voice by voice in FOR-JAFAR.md, with anything not clean flagged.
+- THE COST OF CONVERSATION IS MEASURED: what one hour of play costs on the paid model, from real calls in the slice, beside what that would mean for a released game, in FOR-JAFAR.md.
+- YES TO THE DOWNLOADS FOR NANO ON THE CARD (the DirectML add-on and the older library it needs, in their own environment), so it can be timed with the game running.
+

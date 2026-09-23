@@ -23,12 +23,6 @@ between them.
   - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
   - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
   - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
-- 2026-09-23 **May I download what timing Nano on the card needs?** You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
-  - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
-  - (b) No; Nano stays on the processor, which leaves the card to the game.
-  - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
-## Things you should know
-
 - 2026-09-23 **The MetaHuman waits while the research session's model server holds its memory (about 1.5 hours).** Opening MH_Test to assemble it needs 10 GB free. Everything else can go ahead meanwhile: the scanned surfaces onto the corner and the slice's navigation fix (both builds, once you've closed the editor), plus your picks on the listening page and your answer on Nano on the card.
 - 2026-09-23 **Gemma 4 E4B is out of the running**: about 4 seconds a line on your card, and most of its answers don't come back in the form the game reads. Qwen3.5 4B scores 235 of 299, between today's model (216) and Ministral 3 3B (237; 251 with the wording changes).
 - 2026-09-23 **MetaHuman Creator wants 10 GB of free memory to open a rigged face, and the PC had 6.8.** The biggest user is a local language model server (llama-server, about 7 GB), which the research session is running for its model tests. Unreal itself holds about 3.7 GB, and the build machine is idle.
@@ -107,6 +101,7 @@ between them.
 
 ## Rulings received
 
+- 2026-09-23 night **Four rulings**, now in the decisions file and the roadmap. PC only, Windows; consoles are a later, low-priority question. 60 frames a second at your monitor's resolution on this card, never below 30, with the voice running; every visual choice answers to it, and the slice measures against it. The nineteen cast voices' permissions checked, voice by voice, before anything more is recorded with them. And the cost of an hour of play on the paid model, measured from real calls in the slice. Also yes to the Nano download for timing it on the card.
 - 2026-09-23 **Local models: (a) on all three, and the line-writing half reopened.** Download the four models; spend the 35p on 300 fresh lines; if training is ever reached, a large free model on this PC is the teacher. In order: the fair rerun, the fresh lines, then the models. And line-writing is online by default, not by conclusion: once the slice measures what the game and the voice use, and the voice's double-size export is fixed, the best local writers that fit get a blind test against the paid model's lines, judged by you. The branch comes onto main when the action-picking comparison is done.
 
 - 2026-09-23 **All eleven waiting decisions answered, as recommended**, and the PS5 picture as (b): a frame from Kingdom Come Deliverance 2, an overcast town street, because that game is your stated bar; you'll send the screenshot. So: the downloads go ahead; faint knowledge remarks once per story, then watches; a dropped or slow connection gets the authored street and an in-character brush-off; the pause is covered by a person-like filler, with subtitles only alongside their audio; the minute after an event settles by rules the street's unease fades; the three unnamed areas are floor; talking runs beside the game; the six realistic extras become the slice's cast; the AI tester's hands are Claude's computer control through the paid API; and Tom has never been to the Hook (canon).
@@ -217,6 +212,13 @@ between them.
 
 ## Resolved
 
+- 2026-09-23 **May I download what timing Nano on the card needs?** (answered yes, 23 September, night) You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
+  - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
+  - (b) No; Nano stays on the processor, which leaves the card to the game.
+  - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
+## Things you should know
+
+- 2026-09-23 night **Your listening picks came through: you preferred today's voice engine in 7 of the 10 pairs, Nano in 2, and couldn't tell on 1.** Nano is about four times faster on the processor but, to your ear, worse. One caveat: Nano happened to sit on side A in 8 of the 10 pairs, so if you tended to prefer the second one you heard, that leans against it. It still gets timed on the card tonight, as you asked.
 - 2026-09-23 **Local models, answered (a) on all three.** The questions as they were put:
 - 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
   - **(a) Yes (my recommendation).** The cheapest real test of whether a better ready-made model does the router's job.

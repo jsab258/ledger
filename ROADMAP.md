@@ -121,6 +121,15 @@ The Hook sheet is the stage 1 target FOR A STILL FRAME. It is not the game's
 quality bar. The aim stays D8: the visual quality of a high-end 2026 game in a
 small place, JUDGED IN MOTION, not in one picture.
 
+## Two rulings that bound every stage (Jafar, 23 September, night)
+
+- **PLATFORM: PC only, Windows.** Consoles are a later, low-priority question.
+- **PERFORMANCE: 60 frames a second at Jafar's monitor's resolution on this
+  card (RX 6700), never below 30, with the voice running.** Every visual choice
+  answers to it from now on, and the playable slice is measured against it as
+  part of its definition of done, beside the frame time and graphics memory
+  while a character speaks.
+
 ## The six stages
 
 | stage | the milestone, his words | how it is judged |
