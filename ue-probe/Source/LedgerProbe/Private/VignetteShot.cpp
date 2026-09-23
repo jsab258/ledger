@@ -55,6 +55,7 @@
 #include "SurfaceBind.h"
 #include "StreetMeshes.h"
 #include "StreetSounds.h"
+#include "PersonAnim.h"
 
 #include "CoreMinimal.h"
 #include "UObject/UnrealType.h"
@@ -1465,6 +1466,12 @@ namespace
 	const double kVehicleYawOffsetDeg = -180.0;
 	// EACH PERSON'S ACTOR BY ITS GLB, so a voice can ride on them.
 	TMap<FString, TWeakObjectPtr<ASkeletalMeshActor>> GPeopleByGlb;
+	// HEADS THAT TURN, 23 September: each person's animation instance, the
+	// head bone found on the first, how many found one, and how many fell
+	// back to the plain loop.
+	TArray<TWeakObjectPtr<ULedgerPersonAnim>> GPersonAnims;
+	std::string GHeadBone;
+	int32 GHeadsFound = 0, GHeadsFallback = 0;
 	// THE STREET'S SOUND, 23 September: beds and voices placed, clips found,
 	// and whether they play (only in the playable street).
 	int32 GSoundBeds = 0, GSoundVoices = 0, GSoundClips = 0, GSoundAsked = 0;
@@ -1948,9 +1955,32 @@ namespace
 			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			C->SetCastShadow(true);
 			C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+			const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
+			// HEADS THAT TURN, 23 September: the loop and Unreal's own Look At
+			// node in a native animation instance (PersonAnim.h). The shots
+			// hold the loop and never look; the playable street plays it and
+			// looks at the player. If the instance cannot be made, the old
+			// single-animation path below stands and the verdict says so.
+			C->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+			C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
+			ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance());
+			if (Look != nullptr)
+			{
+				Look->Setup(Anim, At0, bInteractive ? 1.0f : 0.0f, bInteractive);
+				C->InitAnim(true);
+				GPersonAnims.Add(Look);
+				if (GHeadBone.empty() && !Look->HeadBone.IsNone())
+				{
+					GHeadBone = TCHAR_TO_UTF8(*Look->HeadBone.ToString());
+				}
+				if (!Look->HeadBone.IsNone()) { ++GHeadsFound; }
+				GPeopleByGlb.Add(Stem, A);
+				++GPeopleSpawned;
+				continue;
+			}
+			++GHeadsFallback;
 			C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
 			C->SetAnimation(Anim);
-			const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
 			if (bInteractive)
 			{
 				C->Play(true);
@@ -2064,6 +2094,18 @@ namespace
 		std::snprintf(PeopleBuf, sizeof(PeopleBuf), " peopleSpawned=%d/%d", (int)GPeopleSpawned, (int)GPeopleAsked);
 		char CarsBuf[64];
 		std::snprintf(CarsBuf, sizeof(CarsBuf), " vehiclesSpawned=%d/%d", (int)GVehiclesSpawned, (int)GVehiclesAsked);
+		int32 Looked = 0, Looking = 0;
+		for (const TWeakObjectPtr<ULedgerPersonAnim>& W : GPersonAnims)
+		{
+			if (!W.IsValid()) { continue; }
+			if (W->bLook) { ++Looking; }
+			if (W->PeakAlpha > 0.5f) { ++Looked; }
+		}
+		char HeadsBuf[200];
+		std::snprintf(HeadsBuf, sizeof(HeadsBuf),
+			" headsFound=%d/%d headBone=%s headsFallback=%d headsLooking=%d headsTurnedThisRun=%d/over-half-way",
+			(int)GHeadsFound, (int)GPersonAnims.Num(), GHeadBone.empty() ? "none" : LedgerVignette::NoSpaces(GHeadBone).c_str(),
+			(int)GHeadsFallback, (int)Looking, (int)Looked);
 		char SoundsBuf[160];
 		std::snprintf(SoundsBuf, sizeof(SoundsBuf),
 			" soundsPlaced=%d/%d soundBeds=%d soundVoices=%d soundClips=%d soundPlaying=%s",
@@ -2074,7 +2116,7 @@ namespace
 		              (int)GCornerApplied, (int)GCornerMissing);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
-		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote)
+		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf
 		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)

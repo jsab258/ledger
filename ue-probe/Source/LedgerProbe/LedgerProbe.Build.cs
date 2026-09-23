@@ -46,6 +46,13 @@ public class LedgerProbe : ModuleRules
 		// estimated: a cold build, cook and package of this project is 4.3
 		// minutes and a warm one is under a minute, both with this module in.
 		PrivateDependencyModuleNames.AddRange(new string[] { "ImageWrapper", "InputCore", "ApplicationCore" });
+		// AnimGraphRuntime AND AnimationCore, 23 September, for the heads that
+		// turn toward the player (Jafar: "use what Unreal provides"). The
+		// turn is the engine's own Look At node (FAnimNode_LookAt, in
+		// AnimGraphRuntime) with its aim solver and axis type (AnimationCore),
+		// run in a native animation instance because this project makes no
+		// Blueprint assets.
+		PrivateDependencyModuleNames.AddRange(new string[] { "AnimGraphRuntime", "AnimationCore" });
 		// EXCEPTIONS OFF, AND THIS WAS PRE-RULED BEFORE THE BUILD THAT
 		// NEEDED IT. A director reading the Core port on 2026-09-08 found
 		// that Suspicion.h throws and CoreGolden.h compiles a try/catch into
