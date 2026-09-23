@@ -950,8 +950,10 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       nearest warm red stretcher bond; brick_wall_001, a darker alternate) in
       production/assets/scanned/polyhaven; and the footway and road the
       same evening (concrete_pavement_02, square flags; asphalt_01, coarse
-      grey); still to choose: the painted wood; then onto the corner, then
-      the MetaHuman.
+      grey); and the paint (painted_concrete_02, smooth and lightly worn,
+      to tint the shopfront's navy over - Poly Haven's painted timber is all
+      planking). NEXT: onto the corner, then the MetaHuman after Jafar's Epic
+      sign-in, then the pair beside his Kingdom Come Deliverance 2 frame.
 - [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
       ten lines, three cast voices, each by the engine we use now and by
       Nano, played to him BLIND in pairs so he picks without knowing which is
