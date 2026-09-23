@@ -57,119 +57,119 @@ plain houses.
 
 ## Things you should know
 
-- 2026-09-23 **Giving the new street its own walls to bump into is bigger
-  than it looked, and I have left it for a sitting of its own.** Today the
-  playable street shows the Blender buildings but you walk against the old
-  street's invisible walls, which are nearly the same shape. Swapping them
-  means the crime's witnesses see along new lines, the see-through glass
-  must not block their view, and every sighting has to be proven again on
-  the build machine, ten minutes a try. That will not fit in what is left
-  today, so the rest of today goes to the next list item instead.
-- 2026-09-23 **The two parked cars were facing the wrong way, and are
-  turned round.** The sheet's cars show their fronts, and so would a
-  British street: on the right-hand kerb the traffic comes toward you and
-  cars park with it. Ours showed their tails, a leftover from the retired
-  sheet or the mirrored Blender street. They face the camera now, with
-  headlamps, and are painted navy and pale blue-grey off the sheet's two cars
-  instead of charcoal.
-- 2026-09-23 **The shop windows in the game engine have see-through glass
-  now**, a second material made for it, so you see into the lit shops
-  through a faint pane instead of an empty frame. **And the playable game
-  shows the new street**: the walk and the crime run through the Blender
-  street, over the old street's invisible walls, so nothing anyone can bump
-  into or see past has moved. The crime still plays out exactly as before:
-  the witness sees it, the overheard line arrives. It plays brighter and
-  paler than the tuned frame, because the playable game sets its own
-  brightness; that is for the tuning pass.
-- 2026-09-23 **Some night test pictures from the game engine were coming
-  out black, and it was the new see-through glass.** At night the camera
-  sets its own brightness, and the lit shop rooms seen through the glass
-  threw it: beside Mickey's window it judged the scene as bright as noon
-  and turned everything to black. The hook camera's dusk frame was mostly
-  spared, but not always. The night's brightness is now held at the level a
-  healthy dusk frame already settles to, so the dusk looks as it did and
-  cannot black out. The same fault could black out the playable game at
-  night; it plays by day for now.
-- 2026-09-23 **The kerb and the yellow lines were built wrong, and are
-  fixed.** When the road was given its camber yesterday, nothing at its
-  edge followed it down: the kerb stood 200 mm instead of 125, and the
-  yellow lines stood as ribs 75 mm tall instead of paint. In the game engine
-  the kerb also wore a rough broken-stone photograph and read as a concrete
-  ramp beside the sheet's neat kerb. It is now drawn as precast concrete
-  blocks, 915 mm each, as the scene file says, and a check stops the heights
-  going wrong again.
-- 2026-09-23 **The game engine's day allows three times the fog you ruled
-  on 14 September** (your cap 0.100 becomes 0.300 there, by a multiplier in
-  its own settings; the scene file's number is untouched). With the street's
-  new bend and hillside, the far end measured darker and sharper than the
-  sheet's haze; now it measures 120/109/101 against the sheet's 120/108/104.
-  Say if the cap should stay yours.
-- 2026-09-23 **The walls in the game engine are weathered now**, as
-  Blender's were: soft dirty patches, a darker band at the foot where rain
-  splashes, and streaks running down from the wall heads, drawn into the
-  brick pictures from Blender's own numbers. The pavement takes the patches
-  only. The brick colour was retuned so the parade still matches the sheet.
-- 2026-09-23 **The dusk frame exists in the game engine**: the street at
-  dusk, wet, lamps lit, from the sheet's viewpoint, the one the roadmap says
-  ties stage 1 together. There is no night sheet, so I tuned it by eye: the
-  terraces dark against an evening sky, the lamps and Mickey's lit window
-  mirrored in the wet road. The stand-in figure by the lamp reads nearly as
-  a silhouette. Say if the dusk should be lighter or bluer.
-- 2026-09-23 **The far end of the street now looks like the sheet's.** Beyond
-  the built street the road used to run straight on to a solid wall of
-  houses. Now, as on the sheet, it bends away to the left at a row of houses
-  that faces straight down it, and the hillside above has gaps, grass and
-  trees between its houses. All of it is backdrop, built in Blender and
-  brought across; the pictures are in today's comparisons as the runs land.
-- 2026-09-23 **The game engine's daylight is retuned against the sheet, and
-  it moved numbers in the scene file.** Measured region by region against
-  the flipped sheet, the frame was 4 to 12 times too bright everywhere but
-  the sky. Now, on the drawn bricks and flags: brick 1.04 of the sheet, road
-  0.95, far end 0.98, shop window 0.94, pavement 1.1, sky 1.03 (the pair is
-  in today's Unreal comparisons, pair-02). To get there the day's exposure went from 0.3 to
-  2.0 and its fog from 0.012 to 0.004 on every day row of the scene file
-  (the old test rows must match the day, so 27 rows moved together); the
-  sun, the sky light, how bright the sky looks and the parade's red live in
-  a new settings file for the game engine only. Your 0.85 now touches only
-  what is left of the old street there (lamps, kiosk, pillar box, bins); the
-  street itself carries Blender's colours with a per-surface correction.
-- 2026-09-23 **The wet road now mirrors the street.** It never reflected
-  anything, wet or dry: the texture pack's road relief was so bumpy it
-  scattered every reflection. A wet road now loses that relief, as water
-  filling the pores does, and shows the facades and sky upside down in it
-  as the sheet's does.
-- 2026-09-23 **Two build-machine runs went red, both before a fix; the runs
-  since are green.** I pushed changes back to back, and two runs both tried
-  to save the same regenerated game-engine material files; the save step
-  only knew how to settle that for pictures. Nothing was wrong with the
-  game. The step now settles those files too; the one run already queued
-  before the fix went red the same way, and the one after it was green.
-- 2026-09-23 **The walls in the game engine now get Blender's drawn bricks.**
-  The texture pack's "brick" photograph read as random stone, and Blender
-  had stopped using it yesterday: it draws its bricks from numbers (size,
-  bond, dark joints, each brick's tone). I draw the same numbers into
-  seamless pictures for the game engine: both bricks, the pavement flags and
-  Mickey's tile.
-- 2026-09-23 **The paid router test cost about 7p, not 5p.** The first run
-  found a fault in the game's own checker, I fixed it and ran the 42 lines
-  again to prove the fix. Both runs together: about 9 US cents.
-- 2026-09-23 **The paid router gets 40 of the 42 lines right** (the small
-  model on your card got 33). Three of its first-run misses were right
-  answers the game threw away because the amount came back as a number
-  instead of text; that is fixed. The two it still gets wrong: it obeyed a
-  fake "SYSTEM:" line typed by the player, and it took a shouted threat for
-  talk.
-- 2026-09-23 **The hook camera in the game engine now stands where the new
-  sheet puts it**, on the quay just south of the terrace. One difference
-  from Blender: the game engine's camera cannot shift its picture down, so it
-  tilts up a little instead. Walls lean very slightly inward at the top; I
-  judged that not worth building a custom lens for.
-- 2026-09-23 **The street is in the game engine now, the right way round**
-  (the parade on the right, Mickey's and TO LET reading forwards), placed
-  in the build machine's test pictures in place of the old boxes. It is
-  painted flat for its first picture; the textured look is the next job.
-  The walking and crime scenes still use the old street, because the new
-  one has nothing to stand on or bump into yet.
+- 2026-09-23 **I moved 40 notes to Resolved, unchanged**: yesterday's and last night's, which your morning message answered. Today's are one line each, as the rule says; the detail is in the commits.
+- 2026-09-23 **The painted woodwork is smooth gloss colour instead of rough render**, Mickey's stall riser is Victorian relief tile, and the flags are each their own stone.
+- 2026-09-23 **The street's own walls to bump into are a sitting of their own**: every sighting in the crime would have to be proven again, and that will not fit today.
+- 2026-09-23 **The two parked cars faced the wrong way and are turned round**, as British cars on that kerb park, with headlamps, in the sheet's navy and blue-grey.
+- 2026-09-23 **The shop windows have see-through glass, and the playable game shows the new street** over the old street's invisible walls; the crime plays out exactly as before.
+- 2026-09-23 **Some night pictures came out black because of the see-through glass**; the night's brightness is now held where a healthy dusk sits, proven on the build machine.
+- 2026-09-23 **The kerb stood 200 mm and the yellow lines were 75 mm ribs; both fixed**, the kerb drawn as 915 mm precast blocks, proven on the build machine.
+- 2026-09-23 **The game engine's day allows three times the fog you ruled on 14 September** (0.100 becomes 0.300 there only), for the sheet's haze at the far end: 120/109/102 against 120/108/104. Say if the cap should stay yours.
+- 2026-09-23 **The walls in the game engine are weathered**, from Blender's own numbers: soft patches, a damp foot, rain streaks from the wall heads.
+- 2026-09-23 **The dusk frame exists in the game engine**, tuned by eye because there is no night sheet; say if it should be lighter or bluer.
+- 2026-09-23 **The far end looks like the sheet's**: the road bends away at a row of houses facing down it, and the hillside has gaps, grass and trees.
+- 2026-09-23 **The game engine's daylight is tuned against the sheet, and it moved the scene file**: the day's exposure 0.3 to 2.0 and fog 0.012 to 0.004 on every day row; your 0.85 now touches only what is left of the old street.
+- 2026-09-23 **The wet road mirrors the street**, now a wet road drops the texture pack's bumpy relief.
+- 2026-09-23 **Two build-machine runs went red before a fix to how runs save shared files**; every run since is green.
+- 2026-09-23 **The walls wear Blender's drawn bricks** in the game engine, and the flags and Mickey's tile are drawn the same way.
+- 2026-09-23 **The paid router test cost about 7p, not the 5p you authorised**: the second run proved a fix to the game's own checker (about 9 US cents in all).
+- 2026-09-23 **The paid router gets 40 of the 42 lines right** (your card's small model got 33); it still obeys a fake "SYSTEM:" line and took a shouted threat for talk.
+- 2026-09-23 **The hook camera in the game engine stands where the new sheet puts it**; it tilts up a little because the engine cannot shift its picture.
+- 2026-09-23 **The street is in the game engine, the right way round**, in place of the old boxes.
+
+## Rulings received
+
+- 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
+  look-development happens in Unreal, against the sheet.** Lighting, surface
+  response, wetness, grade and depth do not cross over, so finishing them in
+  Blender is doing them twice. The last two days' Blender numbers are
+  targets and lessons, reached again in Unreal. The street moves in first;
+  the far end's depth is done with Unreal's own fog and atmosphere; new
+  shapes are built in Blender and brought across the same way.
+- 2026-09-23 **Decision 5: (a).** Unreal's way round is the true one - it
+  agrees with the research drawings. The mirror is fixed ONCE, where Blender
+  work crosses into Unreal, so every asset arrives the right way round and
+  nothing downstream has to remember it; compare against the sheet flipped
+  until then.
+- 2026-09-23 **Decision 6: (b), not my recommendation.** No tinting one
+  material in Unreal while the rest keeps the old look: the whole look moves
+  across, then Unreal is tuned against the sheet in one pass, and the 0.85 is
+  re-read then.
+- 2026-09-23 **Decision 4: (a).** The router stays on the paid model; run the
+  same 42 lines on it for the five pence; an offline router needs a model
+  trained for the job.
+- 2026-09-23 **Decision 2: (b), not my recommendation.** A realistic witness
+  reaching five to ten people in one retelling is the witness players will
+  produce. Find out why it under-fills the circle, and whether that is too few
+  for the town to visibly know someone within thirty minutes. No constant
+  changes; bring back what is found.
+- 2026-09-23 **The day's order:** move the look into Unreal first - the
+  street's geometry through the mesh route with the mirror fixed at that
+  crossing, the materials rebuilt from the same textures, then lighting, grade
+  and colour tuned until the Unreal frame from the sheet's viewpoint matches
+  the sheet. The pair is an Unreal frame beside the sheet from now on; Blender
+  stays the sketchpad. Then the rest of the list.
+- 2026-09-23 **The stop hook refuses an empty list with time left** until it
+  has been refilled from ROADMAP.md. Six-hour sitting today.
+- 2026-09-22 **Pass 4's street panel is the new Hook reference.** The old
+  sheet is kept beside it as retired. Not citable on it: the second MICKEY'S
+  sign on the neighbouring shop, and the third car, because a rank is one or
+  two. **The satellite dish is citable** — the household research records
+  dishes as new and contested in 1990.
+- 2026-09-22 **The constable is a beat constable who knows the new owner of
+  the cab office by sight.** Strangers cannot place Tom; the local bobby can.
+- 2026-09-22 **The visual lane resumes, in order**: derive the lens from the new
+  sheet's own geometry and write down how; re-close palette and colour at that
+  lens; the composition, which the new sheet now answers; then the shopfronts
+  to the 1989 photographs, parade first. The pair is rendered after each step.
+- 2026-09-22 **Overnight, nothing waits for you**: every decision takes my
+  recommendation, is written here, and work carries on. The sitting runs to
+  08:00. An "Overnight" section of five lines goes at the top before you wake.
+- 2026-09-22 **The small-model test runs when the card is free** — which
+  answers the download question.
+- 2026-09-22 **The camera turns to the sheet's view: south end looking
+  north.** The basin becomes the view the other way and is not wasted.
+  *(Re-issued the same day because I had not acted on it yet.)*
+- 2026-09-22 **No trading name.** The fascia reads MICKEY'S, which canon
+  already letters on that bay. Nothing is minted in an image spec.
+  *(Re-issued the same day.)*
+- 2026-09-22 **No fleet size.** A rank outside, one or two plain unmarked
+  second-hand saloons, no recognisable real model, hackney carriages in the
+  negative. *(Re-issued the same day.)*
+- 2026-09-22 **The arrest is first on the stage 3 list** — the end of the
+  consequence chain being reachable only from a test is the single most
+  important thing wrong with the game right now.
+- 2026-09-22 **Rumour reach: print the numbers before I rule.** No constant is
+  turned up until a rumour crosses the town.
+- 2026-09-22 **Keep the fish shop.** Built from the photographs, which outrank
+  the sheet, so it is the one frontage already right.
+- 2026-09-22 **The sheet is regenerated before anything else is matched to
+  it**, and palette and colour work stops until it exists.
+- 2026-09-22 **Photographs are links only.** Nothing copyrighted enters the
+  repository.
+- 2026-09-22 **The sheet governs mood, palette and composition; the
+  photographs govern what things actually looked like; where they disagree,
+  the photographs win.**
+- 2026-09-22 **Everything from the retired sheet is suspect until checked**,
+  and is listed before anything relies on it.
+- 2026-09-22 **Every message begins with `For you:`**, and from today every
+  item in it is in this file first.
+- 2026-09-22 **The PC rule is narrowed**: two Unreal builds must not overlap,
+  and nothing else waits on CI.
+- 2026-09-22 **The full probe runs only on pushes touching the Unreal project
+  or the scene.**
+- 2026-09-22 **Quay Street's three sides**: east is the six-bay parade, the
+  near west block carries shops, the far west block is plain terraces.
+- 2026-09-22 **The west side is built as a reflection** — fix the
+  construction, not the lettering.
+- 2026-09-22 **Image-to-3D moves to stage 2, unscheduled**, and comes back
+  when making props one at a time becomes the bottleneck, not when stage 2
+  starts.
+- 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
+
+## Resolved
+
+- 2026-09-23 **Delivered and answered**: the notes below, from the sittings of 22 September and the night after, moved here unchanged when his morning message of 23 September answered them.
 - 2026-09-23 **In the game engine the bricks are the right size now** (the
   first piece of the look carried across, proven on the build machine). The
   parade there still reads pale; that is decision 6.
@@ -376,98 +376,6 @@ plain houses.
   chat and is in a transcript. You have said you will.
 - 2026-09-22 **I killed one nineteen-minute generation myself** by piping it
   to `head`, which closed the pipe under it. About twenty minutes lost.
-
-## Rulings received
-
-- 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
-  look-development happens in Unreal, against the sheet.** Lighting, surface
-  response, wetness, grade and depth do not cross over, so finishing them in
-  Blender is doing them twice. The last two days' Blender numbers are
-  targets and lessons, reached again in Unreal. The street moves in first;
-  the far end's depth is done with Unreal's own fog and atmosphere; new
-  shapes are built in Blender and brought across the same way.
-- 2026-09-23 **Decision 5: (a).** Unreal's way round is the true one - it
-  agrees with the research drawings. The mirror is fixed ONCE, where Blender
-  work crosses into Unreal, so every asset arrives the right way round and
-  nothing downstream has to remember it; compare against the sheet flipped
-  until then.
-- 2026-09-23 **Decision 6: (b), not my recommendation.** No tinting one
-  material in Unreal while the rest keeps the old look: the whole look moves
-  across, then Unreal is tuned against the sheet in one pass, and the 0.85 is
-  re-read then.
-- 2026-09-23 **Decision 4: (a).** The router stays on the paid model; run the
-  same 42 lines on it for the five pence; an offline router needs a model
-  trained for the job.
-- 2026-09-23 **Decision 2: (b), not my recommendation.** A realistic witness
-  reaching five to ten people in one retelling is the witness players will
-  produce. Find out why it under-fills the circle, and whether that is too few
-  for the town to visibly know someone within thirty minutes. No constant
-  changes; bring back what is found.
-- 2026-09-23 **The day's order:** move the look into Unreal first - the
-  street's geometry through the mesh route with the mirror fixed at that
-  crossing, the materials rebuilt from the same textures, then lighting, grade
-  and colour tuned until the Unreal frame from the sheet's viewpoint matches
-  the sheet. The pair is an Unreal frame beside the sheet from now on; Blender
-  stays the sketchpad. Then the rest of the list.
-- 2026-09-23 **The stop hook refuses an empty list with time left** until it
-  has been refilled from ROADMAP.md. Six-hour sitting today.
-- 2026-09-22 **Pass 4's street panel is the new Hook reference.** The old
-  sheet is kept beside it as retired. Not citable on it: the second MICKEY'S
-  sign on the neighbouring shop, and the third car, because a rank is one or
-  two. **The satellite dish is citable** — the household research records
-  dishes as new and contested in 1990.
-- 2026-09-22 **The constable is a beat constable who knows the new owner of
-  the cab office by sight.** Strangers cannot place Tom; the local bobby can.
-- 2026-09-22 **The visual lane resumes, in order**: derive the lens from the new
-  sheet's own geometry and write down how; re-close palette and colour at that
-  lens; the composition, which the new sheet now answers; then the shopfronts
-  to the 1989 photographs, parade first. The pair is rendered after each step.
-- 2026-09-22 **Overnight, nothing waits for you**: every decision takes my
-  recommendation, is written here, and work carries on. The sitting runs to
-  08:00. An "Overnight" section of five lines goes at the top before you wake.
-- 2026-09-22 **The small-model test runs when the card is free** — which
-  answers the download question.
-- 2026-09-22 **The camera turns to the sheet's view: south end looking
-  north.** The basin becomes the view the other way and is not wasted.
-  *(Re-issued the same day because I had not acted on it yet.)*
-- 2026-09-22 **No trading name.** The fascia reads MICKEY'S, which canon
-  already letters on that bay. Nothing is minted in an image spec.
-  *(Re-issued the same day.)*
-- 2026-09-22 **No fleet size.** A rank outside, one or two plain unmarked
-  second-hand saloons, no recognisable real model, hackney carriages in the
-  negative. *(Re-issued the same day.)*
-- 2026-09-22 **The arrest is first on the stage 3 list** — the end of the
-  consequence chain being reachable only from a test is the single most
-  important thing wrong with the game right now.
-- 2026-09-22 **Rumour reach: print the numbers before I rule.** No constant is
-  turned up until a rumour crosses the town.
-- 2026-09-22 **Keep the fish shop.** Built from the photographs, which outrank
-  the sheet, so it is the one frontage already right.
-- 2026-09-22 **The sheet is regenerated before anything else is matched to
-  it**, and palette and colour work stops until it exists.
-- 2026-09-22 **Photographs are links only.** Nothing copyrighted enters the
-  repository.
-- 2026-09-22 **The sheet governs mood, palette and composition; the
-  photographs govern what things actually looked like; where they disagree,
-  the photographs win.**
-- 2026-09-22 **Everything from the retired sheet is suspect until checked**,
-  and is listed before anything relies on it.
-- 2026-09-22 **Every message begins with `For you:`**, and from today every
-  item in it is in this file first.
-- 2026-09-22 **The PC rule is narrowed**: two Unreal builds must not overlap,
-  and nothing else waits on CI.
-- 2026-09-22 **The full probe runs only on pushes touching the Unreal project
-  or the scene.**
-- 2026-09-22 **Quay Street's three sides**: east is the six-bay parade, the
-  near west block carries shops, the far west block is plain terraces.
-- 2026-09-22 **The west side is built as a reflection** — fix the
-  construction, not the lettering.
-- 2026-09-22 **Image-to-3D moves to stage 2, unscheduled**, and comes back
-  when making props one at a time becomes the bottleneck, not when stage 2
-  starts.
-- 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
-
-## Resolved
 
 - 2026-09-23 **The shop windows had no glass in the game engine** — resolved
   the same day: a second, see-through material, proven on the build machine.
