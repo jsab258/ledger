@@ -19,6 +19,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
+  - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
+  - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
+  - Meanwhile I'm doing (a).
 - 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list**, which another session is working through in this folder right now. Taking items from that list there would collide with it.
   - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
   - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
@@ -119,6 +123,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **MH_Test is assembled into a usable character, and the next build stands it in the corner.** Its textures came from Epic in 12 seconds on your yes. The assembly took three tries: a one-shot job without the editor's normal loop crashes in Epic's texture baking, so it runs in the full editor, which opens and closes on its own. The result is 46 assets, body, face, eyes and teeth, built for games rather than film.
 - 2026-09-24 **The slice's navigation works: the walking mesh is made, and a path to the cab rank is found.** It took three fixes. First the walker's size, then a marked walkable area over the street, then telling the engine that area's real size, which it had first read as a single point.
 - 2026-09-24 **Tomorrow's facade sitting is ready and not started.** The drawings, the straight-on Unreal frames of every bay, and the tool that lays one over the other and measures every edge all work. To prove the tools I tried them once on Mickey's bay as it stands, without changing anything: 17 of 19 edges came out within 5 cm.
 - 2026-09-24 **Your standing yes for Unreal downloads is recorded.** I've limited it to downloads from Epic's own services, and I'll name each one here as it happens.

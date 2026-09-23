@@ -144,3 +144,10 @@ production/playtest/ai-tester/
 
 # THE BUILDER'S OWN CHECKOUT: the stop hook acts only where this untracked file is.
 .claude/builder-checkout
+
+# THE METAHUMAN STAYS OUT OF GIT (24 September): assembled on this PC outside
+# the repository and copied in by the probe workflow; the character asset is
+# 138 MB, over the file limit.
+ue-probe/Content/Ledger/MetaHumans/
+ue-probe/Content/MH_Test.uasset
+ue-probe/Config/DefaultInput.ini

@@ -413,5 +413,13 @@
     }
   ],
   "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",
-  "scanned_judged": "24 September, at true size (fdf8fbf9): the scanned brick and the scanned paint look clearly more real than the drawn ones - real bricks and recessed mortar, a painted surface with wear - so they are worn everywhere (always), in play and in every shot. The scanned flags lost their joints and stopped reading as flags, so the pavement keeps its drawn flags and the scan is dropped. The road scan changed nothing and stays in the scanned shots only. None of them costs frame time: 24.2 ms against 25.0 in a clean run."
+  "scanned_judged": "24 September, at true size (fdf8fbf9): the scanned brick and the scanned paint look clearly more real than the drawn ones - real bricks and recessed mortar, a painted surface with wear - so they are worn everywhere (always), in play and in every shot. The scanned flags lost their joints and stopped reading as flags, so the pavement keeps its drawn flags and the scan is dropped. The road scan changed nothing and stays in the scanned shots only. None of them costs frame time: 24.2 ms against 25.0 in a clean run.",
+  "metahuman": {
+    "class": "/Game/Ledger/MetaHumans/MH_Test/BP_MH_Test.BP_MH_Test_C",
+    "x_m": 4.6,
+    "y_m": 0.08,
+    "z_m": 4.1,
+    "yaw_deg": 115.0,
+    "why": "Jafar's 'one MetaHuman standing in it', 24 September: MH_Test, made by him in MetaHuman Creator, textures from Epic's service on his yes, assembled with the Optimized pipeline at High by tools/ue/assemble_metahuman.py. On the footway 1.6 m nearer the camera than Elizabeth, facing it. yaw_deg is Unreal's, and a MetaHuman faces its actor's +Y, so facing bearing 205 is 205 - 90 = 115. Shown only in the corner_ shots."
+  }
 }
