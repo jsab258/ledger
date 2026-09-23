@@ -45,6 +45,15 @@
       "phase": 0.1,
       "why": "further up the west pavement, facing down the street toward the camera",
       "y_m": 0.0869
+    },
+    {
+      "glb": "elizabeth-idle",
+      "x_m": 6.2,
+      "z_m": 4.35,
+      "face_deg": 205,
+      "phase": 0.45,
+      "why": "at Mickey's window, turned toward the street's south end: the person in the PS5 corner until a MetaHuman can be made, and near Mickey's front in the hook frame, where the sheet has people too",
+      "y_m": 0.0806
     }
   ]
 }
