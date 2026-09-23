@@ -6,7 +6,38 @@ between them.
 
 ## Decisions waiting on me
 
-None open. Four were ruled on the morning of 23 September; see Resolved.
+**7. Rumour reach, what you asked me to find (decision 2): the town does not
+visibly know within thirty minutes, and more people knowing would not fix
+it.** Thirty minutes of play is two and a half game days.
+
+- **Why a realistic witness under-fills the circle:** a story can only be
+  retold once. Each retelling multiplies how sure it is by the friendship and
+  by 0.8, and anything under 0.2 is dropped, so a half-sure witness reaches
+  only their stronger friends and nobody beyond. On top of that, in the real
+  street friends rarely stand near each other: 55 of the 80 friendships
+  between named characters never meet in their daily routines. A typical
+  witness reaches one or two people, most reach nobody, and it is all over
+  within one game day (twelve real minutes).
+- **Why it is not visible:** those who hear it hold it at 0.2 to 0.38 sure,
+  and a character only gives you a lingering look at 0.58 and only says
+  something at 0.93. So the most a hearer does is glance at you, the same
+  glance any passer-by gives. What a player can actually see in thirty
+  minutes is the street's mood: the word "murmuring", characters mentioning
+  it, and lower takings the next day.
+
+  (a) **Make knowing show: let a hearer's faint knowledge change how they act
+      toward you (a look that lingers, a remark like "heard something about
+      you"), so the handful who know become visible — recommended.** Reach stays
+      a small circle, as your instinct says; the circle just stops being
+      invisible.
+  (b) Let stories travel further: witnesses surer at first sight, or weaker
+      fading per retelling, so the circle fills (still mostly invisible
+      without (a)).
+  (c) Change neither; the street's mood is the visible sign, and the circle
+      is found by asking around.
+
+  Meanwhile: nothing changes; the full write-up is in game-design, and the
+  look work in the game engine carries on.
 
 ## Things you should know
 

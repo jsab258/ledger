@@ -697,7 +697,7 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 
 - [x] THE HOOK REFUSES AN EMPTY LIST WITH TIME LEFT until it is refilled from
       ROADMAP.md (selftest 39/39, and it blocks on the live file).
-- [ ] THE GEOMETRY CROSSES: the Blender street exported through the mesh
+- [x] THE GEOMETRY CROSSES: the Blender street exported through the mesh
       route, the MIRROR FIXED AT THAT CROSSING (a reflection of the whole
       street, lettering kept readable), imported and placed in the Unreal
       probe's world, and an Unreal frame from the sheet's viewpoint.
@@ -705,7 +705,8 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       the runner, the sign read back where it belongs, placed, the old boxes
       hidden. The first frame (run 35826967785) showed Nanite's simplified
       stand-in and the default pawn's grey ball; both fixed (5496c803), run
-      35828190155 is the proof.
+      35828190155 is the proof, and it is clean: the pair is
+      production/art/compare/hook-unreal-2026-09-23/pair-01-flat.png.
 - [x] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped: tools/hook-pair.py
       flips the sheet by default from 23 September (--sheet-as-drawn for a
       Blender sketch).
@@ -721,9 +722,11 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
-- [ ] DECISION 2: why a realistic witness under-fills the circle, and whether
+- [x] DECISION 2: why a realistic witness under-fills the circle, and whether
       five to ten people is too few for the town to visibly know someone
-      within thirty minutes. No constant changes; a finding for Jafar.
+      within thirty minutes. Found (game-design/rumour-reach-2026-09-23.md):
+      one retelling at most, friends rarely meet, and hearers hold it too
+      faintly for the reaction ladder to show it. Put to him as decision 7.
 
 ## Where things stand
 
