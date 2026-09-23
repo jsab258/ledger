@@ -4069,6 +4069,25 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("streetImportStatus=RAISED streetImportNote=%s\n"
                          % str(_street_err).replace(" ", "~")[:160])
+    # ---- AND THE STREET'S PEOPLE, 23 September, FOR THE SAME REASON --------
+    # tools/ue/import_people.py: each production/assets/people/*.glb becomes
+    # a skeletal mesh and its animation, for the presentable checklist's
+    # handful of people. Its own line; a fault there prints as a people key.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import import_people
+            import_people.main()
+        except Exception as _people_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("peopleImportStatus=RAISED peopleImportNote=%s\n"
+                         % str(_people_err).replace(" ", "~")[:160])
     if _inside_unreal():
         print("make_base_material: returning %d without sys.exit "
               "(inside the editor; the verdict is materialScriptReturn in "

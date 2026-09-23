@@ -1,0 +1,50 @@
+{
+  "what": "The handful of people in the street, for Jafar's presentable checklist (ROADMAP.md, 23 September): 'a handful of people stand or walk in the street, even if they only idle'. Each is a glb in production/assets/people made by tools/art-recipes/person-export.py from a Mixamo body and clip already held (D46), imported by tools/ue/import_people.py and placed by the Unreal probe. Street metres as the scene file gives them: x along the street, z across (east is +), y the ground height, the footway's own at that z. face_deg is the direction the person faces, as a yaw in Unreal (0 up the street, 90 toward the east side). phase is where in its loop each starts, so the idles do not move in step. They are seen and not simulated: no collision, no perception, nothing a system reads.",
+  "people": [
+    {
+      "glb": "joe-pockets",
+      "x_m": 11.0,
+      "z_m": 4.45,
+      "face_deg": 10,
+      "phase": 0.15,
+      "why": "one of a pair talking on the parade's pavement, as the sheet's two men are, his back half to the camera",
+      "y_m": 0.0831
+    },
+    {
+      "glb": "david-pockets",
+      "x_m": 12.25,
+      "z_m": 4.3,
+      "face_deg": 190,
+      "phase": 0.55,
+      "why": "the other of the pair, facing him and the camera",
+      "y_m": 0.0794
+    },
+    {
+      "glb": "martha-idle",
+      "x_m": 19.6,
+      "z_m": 4.6,
+      "face_deg": -90,
+      "phase": 0.3,
+      "why": "standing by a shop window, looking out into the street",
+      "y_m": 0.0869
+    },
+    {
+      "glb": "leonard-idle",
+      "x_m": 15.5,
+      "z_m": -4.3,
+      "face_deg": 90,
+      "phase": 0.7,
+      "why": "across the road on the plain terrace's pavement, facing the parade",
+      "y_m": 0.0794
+    },
+    {
+      "glb": "kate-idle",
+      "x_m": 27.0,
+      "z_m": -4.6,
+      "face_deg": 180,
+      "phase": 0.1,
+      "why": "further up the west pavement, facing down the street toward the camera",
+      "y_m": 0.0869
+    }
+  ]
+}

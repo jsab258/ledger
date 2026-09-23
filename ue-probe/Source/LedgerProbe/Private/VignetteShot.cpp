@@ -1158,6 +1158,7 @@ namespace
 	// above them, and the pack import needs DecodeBgra's neighbours to be in
 	// scope.
 	void BindSurfaces();
+	void SpawnPeople(UWorld* World, bool bInteractive);
 	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
 	// PaintStreet, called from ApplyCondition above it.
 	void ReDriveStreetLook(const Condition& C);
@@ -1298,6 +1299,12 @@ namespace
 	std::string GPlayExposure = "not-interactive";
 	// WHAT THE STREET'S OWN COLLISION DID, printed with the street segment.
 	int32 GStreetColliding = 0, GStreetSightThrough = 0, GStreetOldWallsOff = 0;
+	// THE PEOPLE, 23 September: asked (the file's rows) and spawned.
+	int32 GPeopleAsked = 0, GPeopleSpawned = 0;
+	std::string GPeopleNote = "not-built";
+	// A glb from Blender faces +Y in this engine at yaw 0 (Blender's -Y, the
+	// street export's own axis rule), so a person facing yaw F is turned F-90.
+	const double kPersonYawOffsetDeg = -90.0;
 
 	UWorld* GameWorld()
 	{
@@ -1668,6 +1675,73 @@ namespace
 			}
 		}
 		GStreetNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
+		SpawnPeople(World, bInteractive);
+	}
+
+	// THE HANDFUL OF PEOPLE, 23 September, for the presentable checklist.
+	// Seen and not simulated: no collision, no perception, nothing a system
+	// reads. In the automation's shots each is HELD at its phase of its loop,
+	// as the figure is, so a frame repeats; in play each loops.
+	void SpawnPeople(UWorld* World, bool bInteractive)
+	{
+		if (World == nullptr) { GPeopleNote = "no-world"; return; }
+		const FString Path = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/street-people.json"));
+		FString Text;
+		if (!FFileHelper::LoadFileToString(Text, *Path)) { GPeopleNote = "no-people-file"; return; }
+		std::vector<LedgerStreet::Person> People;
+		std::string Err;
+		if (!LedgerStreet::ParsePeople(std::string(TCHAR_TO_UTF8(*Text)), People, Err))
+		{
+			GPeopleNote = Err;
+			return;
+		}
+		GPeopleAsked = (int32)People.size();
+		std::string Missing;
+		for (size_t I = 0; I < People.size(); ++I)
+		{
+			const LedgerStreet::Person& P = People[I];
+			const FString Stem = UTF8_TO_TCHAR(P.Glb.c_str());
+			const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/People/%s/SK_%s.SK_%s"), *Stem, *Stem, *Stem);
+			const FString AnimPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s.A_%s"), *Stem, *Stem, *Stem);
+			USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *MeshPath);
+			UAnimSequence* Anim = LoadObject<UAnimSequence>(nullptr, *AnimPath);
+			if (Mesh == nullptr || Anim == nullptr)
+			{
+				Missing += "/" + P.Glb + (Mesh == nullptr ? "-mesh" : "-anim");
+				continue;
+			}
+			FActorSpawnParameters Params;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			const FVector At((float)(P.X * 100.0), (float)(P.Z * 100.0), (float)(P.Y * 100.0));
+			const FRotator Rot(0.0f, (float)(P.FaceDeg + kPersonYawOffsetDeg), 0.0f);
+			ASkeletalMeshActor* A = World->SpawnActor<ASkeletalMeshActor>(
+				ASkeletalMeshActor::StaticClass(), At, Rot, Params);
+			if (A == nullptr) { Missing += "/" + P.Glb + "-spawn"; continue; }
+			MakeMovable(A);
+			USkeletalMeshComponent* C = A->GetSkeletalMeshComponent();
+			if (C == nullptr) { A->Destroy(); Missing += "/" + P.Glb + "-component"; continue; }
+			C->SetMobility(EComponentMobility::Movable);
+			C->SetSkeletalMeshAsset(Mesh);
+			C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			C->SetCastShadow(true);
+			C->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+			C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+			C->SetAnimation(Anim);
+			const float At0 = (float)(P.Phase * (double)Anim->GetPlayLength());
+			if (bInteractive)
+			{
+				C->Play(true);
+				C->SetPosition(At0, false);
+			}
+			else
+			{
+				C->SetPlayRate(0.0f);
+				C->Stop();
+				C->SetPosition(At0, false);
+			}
+			++GPeopleSpawned;
+		}
+		GPeopleNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 	}
 
 	std::string StreetSegmentNow()
@@ -1699,7 +1773,10 @@ namespace
 			" streetCollision=%s/colliding-%d/sight-through-%d/old-walls-off-%d",
 			GLook.bStreetCollision ? "own" : "scene-file", (int)GStreetColliding,
 			(int)GStreetSightThrough, (int)GStreetOldWallsOff);
-		return std::string(Buf) + LookBuf + CollBuf + " playExposure=" + GPlayExposure
+		char PeopleBuf[64];
+		std::snprintf(PeopleBuf, sizeof(PeopleBuf), " peopleSpawned=%d/%d", (int)GPeopleSpawned, (int)GPeopleAsked);
+		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
+		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)

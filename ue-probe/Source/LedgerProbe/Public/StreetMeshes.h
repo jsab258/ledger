@@ -361,6 +361,49 @@ namespace LedgerStreet
 		return -1.0;
 	}
 
+	// THE PEOPLE IN THE STREET, 23 September: production/specs/street-people.json,
+	// for the presentable checklist's "a handful of people stand or walk in the
+	// street". Street metres as the scene file gives them; FaceDeg the Unreal
+	// yaw the person faces; Phase where in its loop each one starts.
+	struct Person
+	{
+		std::string Glb;
+		double X, Z, Y, FaceDeg, Phase;
+		Person() : X(0.0), Z(0.0), Y(0.0), FaceDeg(0.0), Phase(0.0) {}
+	};
+
+	inline bool ParsePeople(const std::string& Text, std::vector<Person>& Out, std::string& Err)
+	{
+		using namespace LedgerVignette;
+		Out.clear();
+		Err.clear();
+		Reader R(Text);
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { Err = "people-file-unreadable"; return false; }
+		const Value* L = Root.Find("people");
+		if (L == 0 || L->Type != T_ARR) { Err = "people-file-has-no-people-list"; return false; }
+		for (size_t I = 0; I < L->Arr.size(); ++I)
+		{
+			const Value& P = L->Arr[I];
+			if (P.Type != T_OBJ) { continue; }
+			Person Q;
+			Q.Glb = StrOr(P, "glb");
+			const Value* X = P.Find("x_m");
+			const Value* Z = P.Find("z_m");
+			if (Q.Glb.empty() || X == 0 || Z == 0 || X->Type != T_NUM || Z->Type != T_NUM) { continue; }
+			Q.X = X->Num;
+			Q.Z = Z->Num;
+			const Value* Y = P.Find("y_m");
+			if (Y != 0 && Y->Type == T_NUM) { Q.Y = Y->Num; }
+			const Value* F = P.Find("face_deg");
+			if (F != 0 && F->Type == T_NUM) { Q.FaceDeg = F->Num; }
+			const Value* Ph = P.Find("phase");
+			if (Ph != 0 && Ph->Type == T_NUM && Ph->Num >= 0.0 && Ph->Num <= 1.0) { Q.Phase = Ph->Num; }
+			Out.push_back(Q);
+		}
+		return true;
+	}
+
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
 	{
 		using namespace LedgerVignette;
