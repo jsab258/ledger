@@ -8,7 +8,7 @@ between them.
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 4 of 47 done, 0 moved, 0 out, 43 open
-- stage 2: 3 of 247 done, 0 moved, 0 out, 244 open
+- stage 2: 5 of 247 done, 0 moved, 0 out, 242 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
 - stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
@@ -75,6 +75,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The street's sound is proven positional, with a recording you can play.** The distant traffic is heard from the south end of the street, and when the walk turns its view, the sound swings from the middle to the right. That's presentable's last item, done. It's very quiet at that distance, so its level wants tuning; nobody spoke in the eight seconds recorded.
 - 2026-09-23 **The navigation mesh the walkers need wasn't made on its first try.** Unreal set up its navigation system but built no mesh around the slice's player. The next run will record the engine's own reasons, and it's the first thing to fix before walkers. Nothing else is affected.
 - 2026-09-23 **The slice's player walks.** The first frames are in: a body in the street seen over the shoulder, walking down the parade's pavement, and Elizabeth turning her head to him as he passes. One bug is already visible: he walks straight through her, because the street's people have nothing solid to them yet. It's on the checklist.
 - 2026-09-23 **Rocco, Lena and Sam answer in character through the helper**, the "run it beside the game" route I recommended, built while you decide. Each reply took 1.4 to 2.2 seconds on the paid model. Asked about evenings, Sam named no pub. Rocco said he'd seen Tom "a few times over the years", which may not fit a nephew arriving with a suitcase; that's for the cards. The game half, a key to talk and a box to type in, is next.

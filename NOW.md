@@ -890,7 +890,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 ROADMAP.md "The order from 23 September" is the governing text; this is the
 work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
-- [ ] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
+- [x] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
+      ALL FIVE MET 23 Sep evening, my judgement, put to Jafar: the heads and
+      the sound proven on the runner with a frame and a recording.
       MET 23 Sep on the first three, my judgement, put to Jafar (FOR-JAFAR):
       production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png
       (06f8eda4). REOPENED 23 Sep 18:00 by Jafar for two more:
@@ -904,14 +906,17 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
         held shots; Elizabeth turns to the camera in the crime's first frame:
         production/art/compare/heads-2026-09-23/elizabeth-before-after.png.
         Talking to them is the slice's, when there is talking.
-  - [ ] SOUND IS POSITIONAL: a voice or a noise comes from where its source
+  - [x] SOUND IS POSITIONAL: a voice or a noise comes from where its source
         is and changes as you move - Unreal's own audio (spatialised audio
         components, attenuation); the street has no sound at all today.
         WRITTEN 23 Sep (09aeaf7f): a traffic bed at the north bend and a
         voice on each of the six people, engine attenuation. PLACED on the
         runner (41d34e24): 7 of 7 sources, 18 clips and the bed imported,
-        playing in the walk. Not done until the walk's recording (21b4f1e2)
-        shows it heard.
+        playing in the walk. DONE with its recording (0c836a44, after the
+        engine's mute-out-of-focus was lifted for the test runs): the bed is
+        heard from the south end and swings right as the walk turns -
+        production/art/compare/sound-2026-09-23. It is QUIET there (-55 to
+        -66 dB at 40 m): the level is a tuning job, not a presence one.
   - [x] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
         hook frame is a shape rather than a model (the cars, the kiosk, the
         lamp columns, the railing, the skip, the bins, the pallets...), then
