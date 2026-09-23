@@ -69,9 +69,19 @@ for the Hook sheet.
 NOT ready, and all three are fixed costs rather than per-facade ones, so the
 recommendation in FOR-JAFAR.md is to build them before the meter starts:
 
-- [ ] a tool that turns the spec's numbers into a dimensioned elevation drawing;
-- [ ] an orthographic elevation shot per block in the Unreal probe;
-- [ ] the pair tool's second mode: a drawing beside a frame, dimensions overlaid.
+- [x] a tool that turns the spec's numbers into a dimensioned elevation drawing:
+      `python tools/facade-drawing.py --block <block> --out <dir>` draws the
+      recipe's own plan of the spec, as seen from the street, in millimetres
+      (built 24 Sep; the three drawings came out of it on the first night).
+- [ ] an orthographic elevation shot per bay in the Unreal probe:
+      `production/specs/facade-shots.json`, twelve shots, one per bay, 100 px
+      a metre, people and cars hidden. Written 24 Sep; proven only when a
+      probe run has made the twelve frames.
+- [x] the pair: `python tools/facade-pair.py --block <block> --bay <i> --frame
+      <frame> --width-m 12.8 --centre-z-m 3.55 --out <pair>` puts the drawing
+      over the frame and measures every drawn edge on it in millimetres,
+      50 mm or under to pass (built 24 Sep; its self-test pairs a drawing with
+      itself and catches a 120 mm shift).
 
 ## Log (filled in during the sitting)
 

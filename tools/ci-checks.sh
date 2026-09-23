@@ -158,7 +158,7 @@ real_table() {
     talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \
     sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
-    sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
+    sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest"     facade-drawing-selftest "$REPO"               "$PY tools/facade-drawing.py --selftest" \
     core-tests            "$REPO"                 "dotnet run --project ledger/CoreTests -c Release" \
     soak                  "$REPO"                 "dotnet run --project ledger/Soak -c Release" \
     save-chaos            "$REPO"                 "dotnet run --project ledger/SaveChaos -c Release" \
