@@ -6,7 +6,12 @@ between them.
 
 ## Decisions waiting on me
 
-Nothing waiting.
+- 2026-09-23 **May I download what the Nano test and the PS5 corner need?** Downloads need your yes.
+  - For Nano, all from Resemble AI's own pages, free for any use (MIT licence): their newest voice package (a few MB) and the Nano model files: 870 MB, 1,056 MB, 6 MB and under 2 MB of settings. About 1.9 GB in all, kept outside the project, never committed.
+  - For the corner: free CC0 scanned materials from Poly Haven and ambientCG (brick, wet stone flags, road, painted wood), about 0.5 GB.
+  - The MetaHuman needs **you** signed in to your Epic account inside Unreal, once. I can't sign in for you.
+  - **(a) Yes to all of it (my recommendation).** (b) Nano only; the corner makes do with the materials we have and no MetaHuman. (c) Neither for now.
+  - Meanwhile I carry on with presentable, which needs none of it.
 
 ## Things you should know
 
