@@ -3418,6 +3418,36 @@ namespace
 					*CVarIntOrAbsent(TEXT("r.DynamicGlobalIlluminationMethod")),
 					*CVarIntOrAbsent(TEXT("r.SkyLight.RealTimeReflectionCapture")),
 					*CVarIntOrAbsent(TEXT("r.SkyAtmosphere")));
+				// ---- THE ENGINE'S BIG FEATURES, ON OR OFF, 23 September -----
+				//
+				// Jafar's PS5 experiment begins "say plainly which of Unreal's
+				// big features the street is using and which are off". Read
+				// here rather than recalled from a settings page, for the same
+				// reason as the four above: this build answers for itself.
+				// Nanite and virtual shadows, the anti-aliasing and upscaling,
+				// hardware ray tracing and Lumen's use of it, volumetric fog,
+				// MegaLights, Substrate materials, and the post-processing
+				// defaults a new project turns on.
+				GToneLine += FString::Printf(
+					TEXT(" cvarNanite=%s cvarVirtualShadows=%s cvarAntiAliasing=%s cvarScreenPercentage=%s ")
+					TEXT("cvarRayTracing=%s cvarLumenHardwareRT=%s cvarMeshDistanceFields=%s cvarVolumetricFog=%s ")
+					TEXT("cvarMegaLights=%s cvarSubstrate=%s cvarDefaultMotionBlur=%s cvarDefaultBloom=%s ")
+					TEXT("cvarDefaultAmbientOcclusion=%s cvarDefaultAutoExposureOn=%s cvarContactShadows=%s"),
+					*CVarIntOrAbsent(TEXT("r.Nanite")),
+					*CVarIntOrAbsent(TEXT("r.Shadow.Virtual.Enable")),
+					*CVarIntOrAbsent(TEXT("r.AntiAliasingMethod")),
+					*CVarIntOrAbsent(TEXT("r.ScreenPercentage")),
+					*CVarIntOrAbsent(TEXT("r.RayTracing")),
+					*CVarIntOrAbsent(TEXT("r.Lumen.HardwareRayTracing")),
+					*CVarIntOrAbsent(TEXT("r.GenerateMeshDistanceFields")),
+					*CVarIntOrAbsent(TEXT("r.VolumetricFog")),
+					*CVarIntOrAbsent(TEXT("r.MegaLights.Enable")),
+					*CVarIntOrAbsent(TEXT("r.Substrate")),
+					*CVarIntOrAbsent(TEXT("r.DefaultFeature.MotionBlur")),
+					*CVarIntOrAbsent(TEXT("r.DefaultFeature.Bloom")),
+					*CVarIntOrAbsent(TEXT("r.DefaultFeature.AmbientOcclusion")),
+					*CVarIntOrAbsent(TEXT("r.DefaultFeature.AutoExposure")),
+					*CVarIntOrAbsent(TEXT("r.ContactShadows")));
 			}
 		}
 		FVector GotLoc = FVector::ZeroVector;
