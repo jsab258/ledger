@@ -1028,14 +1028,18 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,
             against 29 of 40 in the prototype's city.
       - [ ] THE CARD READING while a character speaks.
-      - [ ] A PLAYER WITH A BODY AND ANIMATION, on Unreal's Character:
+      - [x] A PLAYER WITH A BODY AND ANIMATION, on Unreal's Character:
             WRITTEN 23 Sep - ALedgerSliceCharacter (-LedgerSlice), third-person
             spring-arm camera, a stand-in body (tom-player.glb: stand, walk,
             run in one file) through the engine's sequence players and
             two-way blends by ground speed. The probe's verdict says whether
             the body and its three clips load (sliceBody, sliceClips): YES,
-            3/3 on the runner (ed246110). Not done until a frame of it walking,
-            from the slice walk run in the probe (833f38b2).
+            3/3 on the runner (ed246110). DONE with its frames (5f93abd7): the
+            body stands, walks down the parade's pavement seen over the
+            shoulder, Elizabeth turns her head to it -
+            production/art/compare/slice-2026-09-23/player-walks-5f93abd7.png.
+            FOUND: the player walks straight through Elizabeth, since the
+            street's people have no collision (checklist A12.11).
       - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
             mesh around the player is pushed (7cc4767b, its path to Mickey's
             rank in the slice walk's verdict). The walker itself is written
