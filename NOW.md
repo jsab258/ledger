@@ -858,7 +858,12 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       repainted today, they still read as boxes beside the sheet's rounded
       saloons - a flat bonnet, a vertical nose, a flat roof. A rounder side
       profile built in Blender and brought across (they collide now, so the
-      crime and the walk are re-read after).
+      crime and the walk are re-read after). FIRST STEP 23 Sep (59263bc5):
+      the side outline eased - nose, bonnet, tail corners - and from the
+      hook camera's three-quarter view it barely shows: the box is the
+      glasshouse, one dark block, and the flat sides. Those are next (a
+      glasshouse that narrows to the roof, a crease along the flanks). The
+      crime and the walk held on it.
 - [ ] THE SCENE FILE'S FURNITURE IN THE TUNED LOOK: the lamp columns, the
       kiosk, the skip, the bins and the pallets still wear the texture
       pack's photographs and read rough beside the Blender street (the
