@@ -323,13 +323,20 @@ namespace LedgerStreet
 		// read as bright as noon and came out black (cam_A, 23 September).
 		// Held at what a healthy dusk frame's automatic exposure settles to.
 		double NightExposurePin;
-		int    Read;             // how many of the nineteen the file supplied
+		// THE STREET'S OWN WALLS IN PLAY, 23 September, off until a run
+		// proves the crime holds on them. On: the Blender street collides
+		// with its own triangles (complex-as-simple, set at import), the
+		// see-through glass stays out of every sight line, and the scene
+		// file's pieces it replaces lose their collision.
+		bool   bStreetCollision;
+		int    Read;             // how many of the twenty the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
 		         bStreetInPlay(false), FogCapGainDay(1.0), NightExposurePin(0.0),
+		         bStreetCollision(false),
 		         Read(0), bFromFile(false) {}
 	};
 
@@ -395,6 +402,8 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
 		V = Root.Find("glass_roughness");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
+		V = Root.Find("street_collision");
+		if (V != 0 && V->Type == T_BOOL) { Out.bStreetCollision = V->Bool; ++Out.Read; }
 		V = Root.Find("night_exposure_pin");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.NightExposurePin = V->Num; ++Out.Read; }
 		V = Root.Find("fog_cap_gain_day");
