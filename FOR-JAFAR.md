@@ -7,7 +7,7 @@ between them.
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
-- stage 1: 7 of 47 done, 0 moved, 0 out, 40 open
+- stage 1: 8 of 47 done, 0 moved, 0 out, 39 open
 - stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
