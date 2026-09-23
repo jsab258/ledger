@@ -2042,7 +2042,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 180
+   "faces": 186
   },
   {
    "mesh": "street_stone",
