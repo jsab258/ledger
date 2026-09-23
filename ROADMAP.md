@@ -306,7 +306,7 @@ Stage state: OPEN
 | A21.05 | Readable routes through ordinary environments | ours | open |  |
 | A21.06 | Landmarks that help orientation | ours | open |  |
 | A21.07 | Visually distinct areas rather than indistinguishable repeated streets | ours | open |  |
-| A22.01 | Complete visible surfaces without holes or missing faces | floor | open |  |
+| A22.01 | Complete visible surfaces without holes or missing faces | floor | done | no holes or missing faces anywhere in the Hook view in Unreal, both terraces, roofs, road and kerbs, 24 Sep: [frame](production/art/compare/stage1-2026-09-24/hook-max.png) |
 | A22.02 | Appropriate detail at normal viewing distance | floor | open |  |
 | A22.03 | Textures that do not stretch conspicuously | floor | open |  |
 | A22.04 | Texture scale consistent with real object size | floor | open |  |
@@ -320,13 +320,13 @@ Stage state: OPEN
 | A22.12 | Furnishing and clutter consistent with a place's function | floor | open |  |
 | A22.13 | Signs and labels that are readable when they matter | floor | done | MICKEY'S, RITA'S, FISH MARKET read at the Hook view, 23 Sep: [frame](production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png) |
 | A22.14 | Period and setting consistency in conspicuous objects | floor | open |  |
-| A22.15 | Objects that remain recognisable across lighting conditions | floor | open |  |
+| A22.15 | Objects that remain recognisable across lighting conditions | floor | done | the car, the woman, the lamp post, the shopfronts and the signs all read by day and by night from the same camera, 24 Sep: [day](production/art/compare/stage1-2026-09-24/camA-day.png), [night](production/art/compare/stage1-2026-09-24/camA-night.png) |
 | A22.16 | Detail changes with distance that do not cause conspicuous shape popping | floor | open |  |
 | A22.17 | Interior dressing that survives viewing from both directions | floor | open |  |
 | A23.01 | Lighting that establishes readable shapes and space | floor | open |  |
 | A23.02 | Shadows connecting people and objects to their surroundings | floor | open |  |
 | A23.03 | Shadows that broadly follow moving characters and lights | floor | open |  |
-| A23.04 | No major light leaking through solid walls | floor | open |  |
+| A23.04 | No major light leaking through solid walls | floor | done | at night the lit shops light their own windows and nothing else; no glow through brick or at wall joins, 24 Sep: [night A](production/art/compare/stage1-2026-09-24/camA-night.png), [night B](production/art/compare/stage1-2026-09-24/camB-night.png) |
 | A23.05 | Indoor light levels that differ plausibly from outdoors | floor | open |  |
 | A23.06 | Exposure changes that do not blind the player during ordinary transitions | floor | open |  |
 | A23.07 | Dark areas that remain playable under the intended rules | floor | open |  |

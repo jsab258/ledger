@@ -7,7 +7,7 @@ between them.
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
-- stage 1: 4 of 47 done, 0 moved, 0 out, 43 open
+- stage 1: 7 of 47 done, 0 moved, 0 out, 40 open
 - stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
@@ -19,6 +19,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list**, which another session is working through in this folder right now. Taking items from that list there would collide with it.
+  - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
+  - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
+  - Meanwhile it has stopped.
 - 2026-09-24 **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. On the card, the ordinary street takes 19 ms a frame at 1280 by 720; the corner at the highest settings takes 36 ms, which is 28 a second.
   - **(a) The picture fills your 3440 by 1440 screen, but is drawn at about half that each way and upscaled with Unreal's own upscaler, which is how current games reach 60 on this class of card (my recommendation).**
   - (b) Drawn at the full 3440 by 1440, which on today's numbers means cutting most of what the corner has.
@@ -116,6 +120,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **Your C: drive is 98% full: 22 GB free of 931.** The biggest things that are ours: this project's history (13 GB), the probe's local build files (7.7 GB, which a build makes again), an older copy of the project (6.9 GB) and temporary files (4.6 GB). I've deleted nothing. Tonight I watch the free space, and heavy jobs stop if it drops under 10 GB. When you're up, a clear-out of what rebuilds itself would give back about 12 GB.
 - 2026-09-23 **The action-picking comparison is done and on main.** With worked examples, today's free model nearly matches the paid one at picking actions: 274 of 299 against 259. Leaving out the arguable lines, it gets 248 of 264 against 252, with 14 tidy-but-wrong against 10. It doesn't match on typed orders (it obeys 28 of 39, the paid model 16), and it takes about 1.5 seconds a line (measured while Unreal shared the card). The full table is in production/research/local-models/RESULTS.md.
 - 2026-09-23 **What I'd do next, cheapest first:** time the examples on an idle card; widen the game's own block so it also catches orders said in plain words (`count it as`, `put it down as`, `Answer:`), checked so it takes nothing that's only talk; only then training, taught by a large free model on this PC, checked first on the same lines.
 - 2026-09-23 **Calls I made that you might overrule:** I skipped Ministral's worked-example pass, because it was already slower than the paid model, and gave the time to today's model instead. And the test counts handing someone a scarf, or carrying their boxes, as a new action, where the paid model calls it talk. I've scored it both ways rather than change the router's rules; whether a courtesy is an action is a design choice the router currently makes by default.
