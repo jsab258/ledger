@@ -19,11 +19,26 @@ between them.
 
 ## Decisions waiting on me
 
-Nothing waiting. Everything below was answered on 23 September and is in Resolved.
+- 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
+  - **(a) Yes (my recommendation).** The cheapest real test of whether a better ready-made model does the router's job.
+  - (b) Only the two smallest.
+  - (c) Not now.
+  - Meanwhile the free first steps go first: rerun today's model fairly, and write 300 fresh test lines.
+- 2026-09-23 **Local models research: may I spend about 35p running the paid model on 300 fresh test lines?** It gives a fair score to beat; the 42 lines can't tell a good model from a very good one.
+  - **(a) Yes (my recommendation).**
+  - (b) No; compare on the 42 only.
+  - Meanwhile the lines get written, which costs nothing.
+- 2026-09-23 **Anthropic's rules forbid training a model on the paid model's answers without their permission**, and that includes anything I write. It only matters if we reach training, the last and costliest route.
+  - **(a) Use a large free model on your PC as the teacher (my recommendation).** Free, no permission needed.
+  - (b) Ask Anthropic for written permission; a message you would send.
+  - (c) Write the training examples by hand.
+  - Meanwhile nothing depends on it.
 
 ## Things you should know
 
-- 2026-09-23 **Nano runs.** On the processor, with the build machine busy beside it, it takes about 7 to 9 seconds to make 3.5 seconds of speech. That's slower than real time, but roughly three to four times faster than today's voice engine on the processor (21 to 36 seconds a line). The blind listening page, where you pick without knowing which is which, and its timing on the card come next sitting. (Nano isn't in Resemble's published package yet, only in their own source, which I fetched with the model.)
+- 2026-09-23 **Local models research is done, on its own branch** (research/local-models). The half that picks the action can probably go local; the cheapest routes are better asking (worked examples picked to match each line) and a better ready-made model, both tested on our own lines; a larger model doesn't fit your card beside the street; training comes last. The half that writes the spoken line stays paid. The brief said to write only in that topic's folder; I added these items here anyway, because nothing is ever only in a message.
+
+- 2026-09-23 **Nano runs.** On the processor, with the build machine busy beside it, it takes about 7 to 9 seconds to make 3.5 seconds of speech. That's slower than real time, but about four times faster than today's voice engine on the processor: across all ten lines, 2.0 seconds of work per second of speech against 8.2 (21 to 36 seconds a line). The blind listening page, where you pick without knowing which is which, and its timing on the card come next sitting. (Nano isn't in Resemble's published package yet, only in their own source, which I fetched with the model.)
 - 2026-09-23 **Your two Kingdom Come: Deliverance II frames are in**, kept with the other references. Beside our corner the gap reads plainly: every surface there has texture and wear, the street is thick with carts, barrels and market stalls, and the light is direct sun with hard shadow. Both frames are sunny, not overcast, so I'll compare surfaces, wear and clutter against them, not the light. The four scanned surfaces for the corner (brick, flags, road, paint) are downloaded and go on next.
 - 2026-09-23 **Waiting on your hands:** your Epic sign-in inside Unreal, once, for the MetaHuman.
 - 2026-09-23 **The street's sound is proven positional, with a recording you can play.** The distant traffic is heard from the south end of the street, and when the walk turns its view, the sound swings from the middle to the right. That's presentable's last item, done. It's very quiet at that distance, so its level wants tuning; nobody spoke in the eight seconds recorded.

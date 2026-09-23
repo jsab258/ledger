@@ -1,0 +1,25 @@
+# Chatterbox Nano on the processor, 23 September (ten lines, three cast voices, seed 20260923, watermark kept)
+# The build machine was running a probe build beside it, so these are contended times.
+nano loaded 5.5s device=cpu
+nano id=01 voice=rocco device=cpu work=8.9s speech=3.3s rtf=2.70
+nano id=02 voice=rocco device=cpu work=6.7s speech=3.5s rtf=1.94
+nano id=03 voice=rocco device=cpu work=6.3s speech=3.2s rtf=2.01
+nano id=04 voice=lena device=cpu work=7.5s speech=4.4s rtf=1.73
+nano id=05 voice=lena device=cpu work=5.6s speech=3.0s rtf=1.84
+nano id=06 voice=lena device=cpu work=8.8s speech=4.3s rtf=2.04
+nano id=07 voice=sam device=cpu work=6.9s speech=3.5s rtf=1.97
+nano id=08 voice=sam device=cpu work=7.0s speech=3.8s rtf=1.82
+nano id=09 voice=sam device=cpu work=6.2s speech=3.4s rtf=1.83
+nano id=10 voice=rocco device=cpu work=5.8s speech=3.2s rtf=1.85
+
+# Today's engine on the processor, the same ten lines, for comparison (render_current.py):
+current id=01 voice=rocco work=33.1s speech=3.5s rtf=9.51
+current id=02 voice=rocco work=36.3s speech=4.1s rtf=8.82
+current id=03 voice=rocco work=21.8s speech=2.2s rtf=9.92
+current id=04 voice=lena work=33.9s speech=4.1s rtf=8.23
+current id=05 voice=lena work=27.1s speech=3.4s rtf=8.06
+current id=06 voice=lena work=26.0s speech=3.8s rtf=6.77
+current id=07 voice=sam work=21.1s speech=2.9s rtf=7.32
+current id=08 voice=sam work=22.8s speech=3.2s rtf=7.13
+current id=09 voice=sam work=31.1s speech=4.3s rtf=7.19
+current id=10 voice=rocco work=25.2s speech=2.9s rtf=8.74

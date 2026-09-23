@@ -967,7 +967,12 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       (master has nano=True; PyPI 0.1.7 does not) in src-master, and the
       ResembleAI/chatterbox-nano weights (MIT) in weights. Run with
       NANO_PKG=.../src-master/src NANO_WEIGHTS=.../weights in the current
-      voice engine's Python.
+      voice engine's Python. RENDERED ON THE PROCESSOR 23 Sep: all ten lines,
+      2.0 s of work per second of speech (today's engine 8.2), contended by a
+      probe build (production/research/nano-listening-test/
+      cpu-speed-2026-09-23.txt); clips in the scratchpad (nano-test/nano).
+      Still to do: the card run (the voice environment lacks
+      torch_directml), and the blind page.
 - [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
