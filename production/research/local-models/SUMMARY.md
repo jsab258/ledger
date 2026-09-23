@@ -1,4 +1,4 @@
-# Can the game talk without the paid model? The part that picks actions probably can, and training should come last
+# Can the game talk without the paid model? Measured: with worked examples a free model nearly matches it at picking actions, but not at refusing typed orders
 
 The research topic on local models. The full write-up with every source is
 DELIVERY.md beside this file. Written 23 September.
@@ -8,13 +8,11 @@ DELIVERY.md beside this file. Written 23 September.
 You said yes to all three questions, and the experiment ran on your card the
 same evening. The full table is in RESULTS.md beside this file.
 
-- **No free model on your card picks actions as well as the paid one yet.** On
-  299 fresh test lines the paid model gets 259 right. The best free model gets
-  251 with better wording, and today's model gets 216 as it ships. Leave out the
-  lines where the test itself is arguable (explained below), and the paid model
-  gets 252 of 264 with 10 tidy-but-wrong answers. The best free model gets 235,
-  with 27 tidy-but-wrong. Those are the answers the game would carry out without
-  noticing they're wrong.
+- **As they come, no free model on your card picks actions as well as the paid
+  one.** On 299 fresh test lines the paid model gets 259 right. The best
+  ready-made free model gets 237 (Ministral 3 3B), and today's model 216. Tidy-
+  but-wrong answers are the ones the game would carry out without noticing:
+  the paid model gives 38, the free models 55 or more.
 - **The old 42 lines flattered everyone.** The paid model's 41 of 42 becomes
   87% on fresh lines, and today's model's 32 becomes 72%.
 - **Better wording helps, but it trades against safety.** The changes that lift
@@ -22,7 +20,14 @@ same evening. The full table is in RESULTS.md beside this file.
   game's own block.
 - **Every free model obeys most of those orders.** The paid model obeys 16 of
   39. The free ones obey 25 or more.
-- **Worked examples picked per line: EXAMPLES.**
+- **Worked examples are the one big lever.** Show today's model the six example
+  lines nearest what the player typed, with their answers, and it gets 274 of
+  299. That's above the paid model's 259, with fewer tidy-but-wrong answers (23
+  against 38). Leaving out the arguable lines, it's 248 of 264 against 252,
+  so nearly level. Two costs: about 1.5 seconds a line, measured while an Unreal
+  job shared the card, and it still obeys 28 of the 39 orders. On the old 42
+  lines, written differently, the gain is smaller: 36 or 37 against the paid
+  model's 41.
 - **Gemma 4 is out**: about four seconds a line, and most answers unreadable.
 - **Speed and memory are fine.** Today's model answers in a third of a second
   and uses 3 GB of the card.
@@ -30,11 +35,14 @@ same evening. The full table is in RESULTS.md beside this file.
   carrying their boxes, "just talk", where the test's writers called it a new
   action. The game's rules support either reading.
 
-**So the cheap routes don't reach the paid model.** Training is now the only
-route with evidence it could close the gap. By your ruling, its teacher is a
-large free model on this PC, and its first step is checking that teacher on the
-same 299 lines. The line-writing half is untouched, as you ruled. It waits on
-the slice's card measurement and is queued on the checklist.
+**So the cheap routes nearly reach the paid model on ordinary lines, but not on
+ typed orders, and not yet in time.** Next, cheapest first: time the examples on
+ an idle card; widen the game's own block to catch orders said in plain words;
+ and only then training, which by your ruling is taught by a large free model on
+ this PC, checked first on these same lines. The line-writing half is untouched,
+ as you ruled. It waits on the slice's card measurement and is queued on the
+ checklist.
+
 ## What the research predicted, before measuring
 
 You asked for four routes, cheapest that works. Here is how they come out.
