@@ -36,8 +36,10 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       DONE 24 Sep: 23 voices, all VCTK, all conditional (credit, consent,
       the allowlist's wording; four also need his permission); the credit
       corrected in THIRD-PARTY.md; three decisions put to him.
-- [ ] THE COST OF AN HOUR OF PLAY on the paid model, from real calls in the
-      slice, beside what it means for a released game.
+- [x] THE COST OF AN HOUR OF PLAY on the paid model, from real calls in the
+      slice, beside what it means for a released game. DONE 24 Sep: 24 real
+      calls, half a US cent a line, 16-63 US cents an hour, about US$9 per
+      30-hour player (production/research/talk-helper/cost-of-an-hour-*.md).
 - [ ] PREPARE, DO NOT START, TOMORROW'S MEASUREMENT SITTING: three terrace
       facades ready to build end to end in Unreal, dimensioned drawing to
       accepted pair, and nothing else. He starts it with a meter reading.
