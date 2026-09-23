@@ -7051,6 +7051,59 @@ int main(int argc, char** argv)
 				LedgerStreet::Sounds NoSnd;
 				Check(!LedgerStreet::ParseSounds("{\"voices\": []}", NoSnd, PErr),
 				      "a sound file that names nothing is refused, not read as silence", PErr);
+				// THE SLICE'S CAST, 23 September: every routine names a place
+				// the file places (or "off"), and every tie's two people share
+				// a place for at least one hour - the property the file was
+				// written for (friends meet), read here by the reader the
+				// walkers will use.
+				bool COk = false;
+				const std::string CText = Slurp("production/specs/quay-cast.json", COk);
+				LedgerStreet::Cast Cast;
+				const bool bCast = COk && LedgerStreet::ParseCast(CText, Cast, PErr);
+				int Unplaced = 0, TiesMeet = 0;
+				for (size_t I = 0; I < Cast.People.size(); ++I)
+				{
+					for (size_t J = 0; J < Cast.People[I].Routine.size(); ++J)
+					{
+						const std::string& At = Cast.People[I].Routine[J].second;
+						if (At != "off" && LedgerStreet::FindCastPlace(Cast, At) == 0) { ++Unplaced; }
+					}
+				}
+				for (size_t T = 0; T < Cast.Ties.size(); ++T)
+				{
+					const LedgerStreet::CastPerson* PA = 0;
+					const LedgerStreet::CastPerson* PB = 0;
+					for (size_t I = 0; I < Cast.People.size(); ++I)
+					{
+						if (Cast.People[I].Id == Cast.Ties[T].A) { PA = &Cast.People[I]; }
+						if (Cast.People[I].Id == Cast.Ties[T].B) { PB = &Cast.People[I]; }
+					}
+					// MEETING IS BEING WITHIN TALKING RANGE, as the gossip
+					// director counts it, not standing on the same spot: the
+					// fish market's counter and its pavement are 3.3 m apart.
+					for (int H = 0; PA != 0 && PB != 0 && H < 24; ++H)
+					{
+						const LedgerStreet::CastPlace* XA = LedgerStreet::FindCastPlace(Cast, LedgerStreet::PlaceAt(*PA, H));
+						const LedgerStreet::CastPlace* XB = LedgerStreet::FindCastPlace(Cast, LedgerStreet::PlaceAt(*PB, H));
+						if (XA != 0 && XB != 0
+						    && std::sqrt((XA->X - XB->X) * (XA->X - XB->X) + (XA->Z - XB->Z) * (XA->Z - XB->Z)) <= Cast.TalkRangeM)
+						{
+							++TiesMeet;
+							break;
+						}
+					}
+				}
+				Check(bCast && Cast.People.size() == 10 && Cast.Places.size() == 9 && Cast.Ties.size() == 20
+				      && Unplaced == 0 && TiesMeet == 20 && Cast.TalkRangeM > 0.0,
+				      "the slice's cast parses: ten people, nine places, every routine placed, all twenty ties meet", PErr);
+				const LedgerStreet::CastPerson* Rocco = 0;
+				for (size_t I = 0; I < Cast.People.size(); ++I) { if (Cast.People[I].Id == "rocco") { Rocco = &Cast.People[I]; } }
+				Check(Rocco != 0 && LedgerStreet::PlaceAt(*Rocco, 3) == "off" && LedgerStreet::PlaceAt(*Rocco, 8) == "mickeys_rank"
+				      && LedgerStreet::PlaceAt(*Rocco, 12) == "fish_front" && LedgerStreet::PlaceAt(*Rocco, 23) == "off",
+				      "where someone is at an hour is the routine's latest entry at or before it");
+				LedgerStreet::Cast NoCast;
+				Check(!LedgerStreet::ParseCast("{\"places\": {}, \"people\": []}", NoCast, PErr),
+				      "a cast file that names nobody is refused", PErr);
 			}
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
