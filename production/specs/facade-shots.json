@@ -1,0 +1,201 @@
+{
+  "what": "THE FACADE ELEVATIONS, 24 September, for Jafar's measurement sitting: one orthographic frame per bay, square to the frontage from the middle of the road, the people and cars hidden, so each bay can be paired with its dimensioned drawing (tools/facade-drawing.py) and every drawn edge measured on it (tools/facade-pair.py). Read by the probe alongside ps5-corner.json, same schema, plus ortho_width_m on a camera and bare on a shot.",
+  "pair_command": "python tools/facade-pair.py --block <block> --bay <i> --frame production/d1-probe/ue-facade_<block>_bay<i>.png --width-m 12.8 --centre-z-m 3.55 --out <pair.png>",
+  "geometry_note": "ortho_width_m 12.8 at 1280x720 is 100 px a metre and a frame 7.2 m tall, centred at 3.55 m: the pavement to just above the eaves. The camera stands 1 m into the road from the crown towards the facade and looks square at it; an orthographic camera draws nothing behind it, so the other side of the street is not in the way. Lamp posts on the pavement still are.",
+  "cameras": [
+    {
+      "id": "cam_facade_east_parade_bay0",
+      "x_m": 6.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_east_parade_bay1",
+      "x_m": 12.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_east_parade_bay2",
+      "x_m": 18.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_east_parade_bay3",
+      "x_m": 24.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_east_parade_bay4",
+      "x_m": 30.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_east_parade_bay5",
+      "x_m": 36.0,
+      "z_m": 1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 90.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_south_bay0",
+      "x_m": 6.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_south_bay1",
+      "x_m": 12.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_south_bay2",
+      "x_m": 18.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_north_bay0",
+      "x_m": 27.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_north_bay1",
+      "x_m": 33.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    },
+    {
+      "id": "cam_facade_west_north_bay2",
+      "x_m": 39.0,
+      "z_m": -1.0,
+      "eye_height_m": 3.55,
+      "yaw_deg": 270.0,
+      "pitch_deg": 0.0,
+      "fov_vertical_deg": 50.0,
+      "ortho_width_m": 12.8
+    }
+  ],
+  "shots": [
+    {
+      "id": "facade_east_parade_bay0",
+      "camera": "cam_facade_east_parade_bay0",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_east_parade_bay1",
+      "camera": "cam_facade_east_parade_bay1",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_east_parade_bay2",
+      "camera": "cam_facade_east_parade_bay2",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_east_parade_bay3",
+      "camera": "cam_facade_east_parade_bay3",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_east_parade_bay4",
+      "camera": "cam_facade_east_parade_bay4",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_east_parade_bay5",
+      "camera": "cam_facade_east_parade_bay5",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_south_bay0",
+      "camera": "cam_facade_west_south_bay0",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_south_bay1",
+      "camera": "cam_facade_west_south_bay1",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_south_bay2",
+      "camera": "cam_facade_west_south_bay2",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_north_bay0",
+      "camera": "cam_facade_west_north_bay0",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_north_bay1",
+      "camera": "cam_facade_west_north_bay1",
+      "condition": "overcast_day",
+      "bare": true
+    },
+    {
+      "id": "facade_west_north_bay2",
+      "camera": "cam_facade_west_north_bay2",
+      "condition": "overcast_day",
+      "bare": true
+    }
+  ]
+}

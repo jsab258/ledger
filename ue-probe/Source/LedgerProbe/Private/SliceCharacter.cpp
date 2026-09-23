@@ -144,7 +144,17 @@ void ALedgerSliceCharacter::MarkStreetWalkable()
 	Box->AggGeom.BoxElems.Add(FKBoxElem(5400.0f, 2400.0f, 900.0f));
 	Bounds->GetBrushComponent()->BrushBodySetup = Box;
 	Bounds->FinishSpawning(Where);
-	bNavBounds = Bounds->GetComponentsBoundingBox(true).IsValid != 0;
+	// THE SIZE IS TOLD AGAIN AFTER SPAWNING, 24 September: the first run of
+	// this (e934f1e7) logged the bounds as a point, Min = Max = the centre,
+	// because the volume's components register while it spawns, before the
+	// box is read, and the navigation system took the empty size then.
+	Bounds->GetBrushComponent()->UpdateBounds();
+	if (UNavigationSystemV1* Nav = FNavigationSystem::GetCurrent<UNavigationSystemV1>(World))
+	{
+		Nav->OnNavigationBoundsUpdated(Bounds);
+	}
+	const FBox Area = Bounds->GetComponentsBoundingBox(true);
+	bNavBounds = Area.IsValid != 0 && Area.GetSize().X > 100.0;
 	// The bounds reach the navigation system on its next tick, so the build
 	// waits half a second rather than racing it.
 	GetWorldTimerManager().SetTimer(NavBuildTimer, this, &ALedgerSliceCharacter::BuildStreetNavigation, 0.5f, false);

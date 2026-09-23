@@ -118,4 +118,15 @@ def main():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    main()
+    try:
+        main()
+    finally:
+        # RUN IN THE FULL EDITOR (-ExecutePythonScript), the editor stays up
+        # after the script unless it is told to go; as a commandlet it exits
+        # on its own and this does nothing.
+        try:
+            import unreal
+            if "executepythonscript" in unreal.SystemLibrary.get_command_line().lower():
+                unreal.SystemLibrary.quit_editor()
+        except Exception:
+            pass
