@@ -1,0 +1,582 @@
+{
+ "about": "Fifteen moments for the router's worked-example bank, 2026-09-23. Written apart from the held-out test: other places in Meridian, other townspeople, other amounts and topics; same verb ids, same 'say' wording and same argument names. B05 and B09 offer no verbs.",
+ "moments": [
+  {
+   "id": "B01",
+   "speakingTo": "a laundrette owner",
+   "scene": "the laundrette on Weighhouse Lane in Copper Row, the dryers turning; she has been telling customers you smashed the chip shop window",
+   "knownPeople": [
+    "Lena",
+    "Sam"
+   ],
+   "verbs": [
+    {
+     "id": "pay_off",
+     "say": "pay them to stop repeating it",
+     "detail": "about £70; you have £150",
+     "lexical": [
+      "pay her off",
+      "buy her silence"
+     ]
+    },
+    {
+     "id": "plant_doubt",
+     "say": "put a counter-story about into the street",
+     "lexical": [
+      "plant doubt",
+      "put another story about"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B02",
+   "speakingTo": "a scrap dealer",
+   "scene": "the scrapyard on Tannery Row in Ironside; he owes Mickey's book and has been mouthing off about the new owner",
+   "knownPeople": [
+    "Rocco",
+    "Lena"
+   ],
+   "verbs": [
+    {
+     "id": "collect_debt",
+     "say": "ask them for the money they owe",
+     "detail": "£140 outstanding",
+     "lexical": [
+      "collect the debt",
+      "ask for the money"
+     ]
+    },
+    {
+     "id": "forgive_debt",
+     "say": "cancel what they owe, in front of them",
+     "detail": "£140 written off",
+     "lexical": [
+      "forgive the debt",
+      "let it go"
+     ]
+    },
+    {
+     "id": "threaten",
+     "say": "lean on them",
+     "detail": "his two yard hands are within earshot",
+     "args": {
+      "tone": [
+       "quiet",
+       "loud"
+      ]
+     },
+     "lexical": [
+      "threaten him"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B03",
+   "speakingTo": "Rocco",
+   "scene": "the lock-up garage on Weighhouse Lane, Rocco under the bonnet of a cab",
+   "knownPeople": [
+    "Rocco",
+    "Lena",
+    "Sam"
+   ],
+   "verbs": [
+    {
+     "id": "set_cut",
+     "say": "change what a crew member keeps",
+     "args": {
+      "policy": [
+       "fair",
+       "generous",
+       "skim"
+      ]
+     },
+     "lexical": [
+      "set his cut",
+      "change his share"
+     ]
+    },
+    {
+     "id": "ask_about",
+     "say": "ask what they saw",
+     "args": {
+      "topic": [
+       "the smashed windscreen",
+       "the missing takings"
+      ]
+     },
+     "lexical": [
+      "ask what he saw"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B04",
+   "speakingTo": "Mara Ellis",
+   "scene": "a shelter on the Gullwing seafront, wind off the sea",
+   "knownPeople": [
+    "Mara Ellis",
+    "Sera Kest",
+    "the Fixer"
+   ],
+   "verbs": [
+    {
+     "id": "inform",
+     "say": "tell the police what somebody has been doing",
+     "detail": "they will know you were in there",
+     "args": {
+      "who": [
+       "Sera Kest",
+       "the Fixer"
+      ]
+     },
+     "lexical": [
+      "inform on",
+      "give her a name"
+     ]
+    },
+    {
+     "id": "ask_about",
+     "say": "ask what they saw",
+     "args": {
+      "topic": [
+       "the burnt-out car",
+       "the man in the harbour"
+      ]
+     },
+     "lexical": [
+      "ask what she saw"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B05",
+   "speakingTo": "Noor",
+   "scene": "the end of the Gullwing pier out of season, the kiosks shuttered",
+   "knownPeople": [
+    "Noor",
+    "Mara Ellis"
+   ],
+   "verbs": []
+  },
+  {
+   "id": "B06",
+   "speakingTo": "a boarding-house landlady",
+   "scene": "a guest house on the Gullwing front, net curtains and a bell on the door; she has been telling her guests you roughed up a lodger",
+   "knownPeople": [
+    "Rocco",
+    "Ada"
+   ],
+   "verbs": [
+    {
+     "id": "pay_off",
+     "say": "pay them to keep quiet",
+     "args": {
+      "amount": [
+       "30",
+       "60"
+      ]
+     },
+     "lexical": [
+      "pay her off"
+     ]
+    },
+    {
+     "id": "lean_on",
+     "say": "frighten them into keeping it to themselves",
+     "lexical": [
+      "lean on her",
+      "scare her"
+     ]
+    },
+    {
+     "id": "plant_doubt",
+     "say": "put a counter-story about into the street",
+     "lexical": [
+      "plant doubt"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B07",
+   "speakingTo": "a police constable",
+   "scene": "the police box on the Gullwing front in the rain; you know he takes envelopes from Danny Ro's crew",
+   "knownPeople": [
+    "Danny Ro",
+    "Aldous Vane",
+    "Mara Ellis"
+   ],
+   "verbs": [
+    {
+     "id": "use_hook",
+     "say": "use what you know about them against them",
+     "detail": "you hold something serious",
+     "lexical": [
+      "use what i know",
+      "hold it over him"
+     ]
+    },
+    {
+     "id": "threaten",
+     "say": "lean on them",
+     "detail": "a couple are walking past",
+     "args": {
+      "tone": [
+       "quiet",
+       "loud"
+      ]
+     },
+     "lexical": [
+      "threaten him"
+     ]
+    },
+    {
+     "id": "inform",
+     "say": "tell the police what somebody has been doing",
+     "detail": "they will know you were in there",
+     "args": {
+      "who": [
+       "Danny Ro",
+       "Aldous Vane"
+      ]
+     },
+     "lexical": [
+      "inform on",
+      "give the police a name"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B08",
+   "speakingTo": "a solicitor's clerk",
+   "scene": "the marble lobby of a law firm in the Exchange; he has been telling people you forged Mickey's will",
+   "knownPeople": [
+    "Aldous Vane",
+    "Mara Ellis"
+   ],
+   "verbs": [
+    {
+     "id": "use_hook",
+     "say": "use what you know about them against them",
+     "detail": "you hold something serious",
+     "lexical": [
+      "remind him what i know"
+     ]
+    },
+    {
+     "id": "pay_off",
+     "say": "pay them to stop repeating it",
+     "detail": "about £250; you have £300",
+     "lexical": [
+      "pay him off"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B09",
+   "speakingTo": "June",
+   "scene": "an allotment in Fairview, June turning over a bed with a fork",
+   "knownPeople": [
+    "June",
+    "Father Emil",
+    "Lena"
+   ],
+   "verbs": []
+  },
+  {
+   "id": "B10",
+   "speakingTo": "Lena",
+   "scene": "the queue in the bank in the Exchange, Lena paying in the week's takings",
+   "knownPeople": [
+    "Lena",
+    "Rocco"
+   ],
+   "verbs": [
+    {
+     "id": "ask_about",
+     "say": "ask what they saw",
+     "args": {
+      "topic": [
+       "Mickey's safe",
+       "the bank manager"
+      ]
+     },
+     "lexical": [
+      "ask what she saw"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B11",
+   "speakingTo": "a crane driver",
+   "scene": "the foot of a crane on the Ironside docks at the lunch break; he owes Mickey's book, saw something one night, and has been talking about it in the canteen",
+   "knownPeople": [
+    "Sera Kest",
+    "Rocco"
+   ],
+   "verbs": [
+    {
+     "id": "ask_about",
+     "say": "ask what they saw",
+     "args": {
+      "topic": [
+       "the container",
+       "the night watchman"
+      ]
+     },
+     "lexical": [
+      "ask what he saw"
+     ]
+    },
+    {
+     "id": "collect_debt",
+     "say": "ask them for the money they owe",
+     "detail": "£35 outstanding",
+     "lexical": [
+      "collect the debt"
+     ]
+    },
+    {
+     "id": "lean_on",
+     "say": "frighten them into keeping it to themselves",
+     "lexical": [
+      "put the frighteners on him"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B12",
+   "speakingTo": "a retired postman",
+   "scene": "his front garden in Fairview, clipping the hedge; he has been telling the street you were at the fire",
+   "knownPeople": [
+    "Noor",
+    "Elias"
+   ],
+   "verbs": [
+    {
+     "id": "plant_doubt",
+     "say": "put a counter-story about into the street",
+     "lexical": [
+      "muddy the water"
+     ]
+    },
+    {
+     "id": "lean_on",
+     "say": "frighten them into keeping it to themselves",
+     "lexical": [
+      "lean on him"
+     ]
+    },
+    {
+     "id": "pay_off",
+     "say": "pay them to stop repeating it",
+     "detail": "about £40; you have £110",
+     "lexical": [
+      "buy his silence"
+     ]
+    },
+    {
+     "id": "leave",
+     "say": "walk away",
+     "lexical": [
+      "walk away"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B13",
+   "speakingTo": "Danny Ro",
+   "scene": "the hand car wash on the Parade, Danny Ro washing his own car; he owes Mickey's book",
+   "knownPeople": [
+    "Danny Ro",
+    "Rocco",
+    "Sera Kest"
+   ],
+   "verbs": [
+    {
+     "id": "threaten",
+     "say": "lean on them",
+     "detail": "two of his boys are drying the car",
+     "args": {
+      "tone": [
+       "quiet",
+       "loud"
+      ]
+     },
+     "lexical": [
+      "threaten him"
+     ]
+    },
+    {
+     "id": "collect_debt",
+     "say": "ask them for the money they owe",
+     "detail": "£300 outstanding",
+     "lexical": [
+      "call in the debt"
+     ]
+    },
+    {
+     "id": "forgive_debt",
+     "say": "cancel what they owe, in front of them",
+     "detail": "£300 written off",
+     "lexical": [
+      "write it off"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B14",
+   "speakingTo": "a pawnbroker",
+   "scene": "the pawnshop on Weighhouse Lane, the pawnbroker behind the grille; he took in Mickey's stolen watch and has been talking about who brought it",
+   "knownPeople": [
+    "Lena",
+    "Sam",
+    "Rocco"
+   ],
+   "verbs": [
+    {
+     "id": "pay_off",
+     "say": "pay them to keep quiet",
+     "args": {
+      "amount": [
+       "120",
+       "200"
+      ]
+     },
+     "lexical": [
+      "pay him off"
+     ]
+    },
+    {
+     "id": "use_hook",
+     "say": "use what you know about them against them",
+     "detail": "you hold something small",
+     "lexical": [
+      "hold it over him"
+     ]
+    },
+    {
+     "id": "threaten",
+     "say": "lean on them",
+     "detail": "a customer is looking at the watches",
+     "args": {
+      "tone": [
+       "quiet",
+       "loud"
+      ]
+     },
+     "lexical": [
+      "threaten him"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "B15",
+   "speakingTo": "Sam",
+   "scene": "Sam's cab at the lights on the harbour road, you in the passenger seat; he borrowed from the office float",
+   "knownPeople": [
+    "Sam",
+    "Lena",
+    "Rocco"
+   ],
+   "verbs": [
+    {
+     "id": "set_cut",
+     "say": "change what a crew member keeps",
+     "args": {
+      "policy": [
+       "fair",
+       "generous",
+       "skim"
+      ]
+     },
+     "lexical": [
+      "change his cut"
+     ]
+    },
+    {
+     "id": "ask_about",
+     "say": "ask what they saw",
+     "args": {
+      "topic": [
+       "the fare to Ironside",
+       "the man in the back seat"
+      ]
+     },
+     "lexical": [
+      "ask what he saw"
+     ]
+    },
+    {
+     "id": "collect_debt",
+     "say": "ask them for the money they owe",
+     "detail": "£25 outstanding",
+     "lexical": [
+      "ask for the float money"
+     ]
+    },
+    {
+     "id": "forgive_debt",
+     "say": "cancel what they owe, in front of them",
+     "detail": "£25 written off",
+     "lexical": [
+      "wipe the slate"
+     ]
+    }
+   ]
+  }
+ ]
+}

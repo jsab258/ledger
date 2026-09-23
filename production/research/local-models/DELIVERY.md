@@ -13,6 +13,14 @@ search result), DERIVED (my arithmetic or reasoning from cited things), ASSUMED,
 HOLE. MEASURED, VENDOR CLAIM and DOCUMENTATION say what kind of source a CITED
 figure is.
 
+> **MEASURED, 2026-09-23, the same evening: see RESULTS.md.** The experiment
+> in section 10 ran on this PC through step 4. Its main corrections to the text
+> below: the fair rerun of the 4B scored 32 of 42, not the 36 estimated in
+> section 1. The paid router scores 259 of 299 on the fresh lines, not near
+> its 41 of 42. No ready-made model reaches it. Worked examples picked per
+> line are the biggest lever measured, as section 4 predicted. And the typed
+> orders that get past the guard are obeyed by every local model far more
+> often than by the paid one.
 ## 0. Sourcing
 
 The web was open for this topic: arxiv.org and export.arxiv.org, huggingface.co
