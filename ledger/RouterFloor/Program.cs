@@ -270,9 +270,23 @@ static class Program
         foreach (var c in cases)
         {
             var ctx = Moment(c.Ctx);
-            // EXACTLY THE REQUEST RouteAsync BUILDS, minus the lexical path.
-            var req = new LlmRequest { Model = router.Model, System = router.BuildPrompt(ctx, now), MaxTokens = 220 };
-            req.Messages.Add(new LlmMessage("user", c.Text.Length <= 600 ? c.Text : c.Text.Substring(0, 600)));
+            // THE GUARD FIRST, AS RouteAsync HAS IT (23 September): a line
+            // that poses as an instruction never reaches the model, so it is
+            // scored as the speech the game makes it and costs no call.
+            var posing = IntentRouter.PosesAsInstruction(c.Text, ctx);
+            if (posing != null)
+            {
+                var guarded = Intent.Speech(posing, "guard");
+                rows.Add(new Row
+                {
+                    Case = c, Raw = "(guarded: " + posing + ")", Got = guarded, Ms = 0,
+                    Valid = true, Right = Matches(guarded, c.Want),
+                });
+                continue;
+            }
+            // EXACTLY THE REQUEST RouteAsync BUILDS, minus the lexical path:
+            // the router's own BuildRequest, so the floor cannot drift from it.
+            var req = router.BuildRequest(c.Text, ctx, now);
             var sw = Stopwatch.StartNew();
             string raw;
             try
@@ -311,7 +325,8 @@ static class Program
             if (!r.Valid && r.Right) s.RejectedRight++;
             if (!r.Valid && !r.Right) s.RejectedWrong++;
         }
-        var ms = rows.Select(r => r.Ms).OrderBy(x => x).ToList();
+        // THE MODEL'S TIME ONLY: a guarded line made no call and has none.
+        var ms = rows.Where(r => r.Got.Source != "guard").Select(r => r.Ms).OrderBy(x => x).ToList();
         if (ms.Count > 0)
         {
             s.MedianMs = ms[ms.Count / 2];
@@ -440,7 +455,9 @@ static class Program
         }
         var two = new[] { Cases[0], Cases[8] };   // a pay_off line and a talk line
         // RIGHT: pay_off for the first, speech for the second.
-        var right = ScoreOf(await Pass(new Canned(t => t == two[0].Text
+        // The line reaches the model fenced (IntentRouter.PlayerLineMessage), so
+        // the canned model finds it inside the fence rather than as the whole message.
+        var right = ScoreOf(await Pass(new Canned(t => t.Contains("\n" + two[0].Text + "\n")
             ? "{\"kind\":\"verb\",\"verb\":\"pay_off\",\"args\":{},\"why\":\"x\"}"
             : "{\"kind\":\"speech\",\"why\":\"x\"}"), two));
         Check("a correct reply scores right", right.Right == 2 && right.WrongValid == 0, $"{right.Right}/2");
@@ -460,6 +477,19 @@ static class Program
         var unoffered = Cases.Where(c => c.Want.Kind == "verb" && Moment(c.Ctx).VerbNamed(c.Want.Verb) == null)
                              .Select(c => c.Text).ToList();
         Check("every expected verb is on offer in its moment", unoffered.Count == 0, string.Join(" / ", unoffered));
+        // THE FORGED INSTRUCTION, 23 September: the paid model obeyed this line.
+        // Against a model that obeys everything, it is still speech.
+        var forged = Cases.Where(c => c.Category == "command").ToArray();
+        var obeyed = ScoreOf(await Pass(new Canned(_ =>
+            "{\"kind\":\"verb\",\"verb\":\"collect_debt\",\"args\":{},\"why\":\"x\"}"), forged));
+        Check("every line commanding the router is speech even against a model that obeys it",
+              obeyed.Right == forged.Length, $"{obeyed.Right}/{forged.Length}");
+        // AND THE GUARD TAKES NOTHING ELSE: no line of talk, verb or novel action
+        // in the 42 is mistaken for an instruction.
+        var stolen = Cases.Where(c => c.Category != "command"
+                                      && IntentRouter.PosesAsInstruction(c.Text, Moment(c.Ctx)) != null)
+                          .Select(c => c.Text).ToList();
+        Check("no line that is not a command is caught as one", stolen.Count == 0, string.Join(" / ", stolen));
         Console.WriteLine($"router-floor selftest: {(bad == 0 ? "ok" : bad + " FAILED")}");
         return bad == 0 ? 0 : 1;
     }
