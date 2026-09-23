@@ -178,3 +178,4 @@ One line each, dated, newest last.
 - 2026-09-23 The PS5 corner with every feature on (VSM, HW-RT Lumen, volumetric fog, contact shadows, sg.* 4, SP 100) differs from the street's settings on 2.4% of pixels by more than 20/255 (mean 4.7/255) at 2.6x the frame time: 9.20 -> 24.29 ms corner, 8.94 -> 20.82 ms hook, 1280x720 on the RX 6700.
 - 2026-09-23 The corner shots are named from ps5-corner.json, not the vignette spec, so the workflow's shot patterns missed them and the first run left them in the packaged folder; patterns widened.
 - 2026-09-23 The canon gate flagged the generated ContentWords.cs for 'street walkers' (a brand token); the core tests were red on two pushes before it was seen.
+- 2026-09-23 vignette-spec-test.cpp (the street's files read by the engine's own readers) now runs on every push as the cheap check spec-test (tools/spec-test-check.sh); 670 checks pass under MSVC; its first g++ compile is on the push runner.
