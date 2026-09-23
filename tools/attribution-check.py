@@ -54,6 +54,12 @@ WATCHED = {
     # same obligation as the shipped picks; the only difference is that these
     # are the ones the game does NOT play.
     "tools/mixamo-pick/known-bad": "Mixamo",
+    # THE STREET'S PEOPLE, 23 September: Mixamo bodies and clips from
+    # `ledger/Assets/Characters`, each converted by
+    # tools/art-recipes/person-export.py into one glb (the clip's rotations on
+    # the body's bones, the loop trimmed, the textures shrunk). A conversion
+    # is not authorship: the same corpus and the same obligation.
+    "production/assets/people": "Mixamo",
     "game-design/picked-clips": "VCTK",
     "voice-candidates": "VCTK",
     # THE SYNTHESISED BARKS, AND THEY BELONG HERE RATHER THAN IN `OURS`.

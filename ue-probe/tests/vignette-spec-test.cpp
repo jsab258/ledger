@@ -6972,6 +6972,27 @@ int main(int argc, char** argv)
 			std::string LErr;
 			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 20 && Lk.bFromFile,
 			      "the committed look file parses and supplies all twenty settings", LErr);
+			// THE PEOPLE, 23 September: the committed placements parse, there
+			// are a handful, and every one names a person converted to a glb.
+			{
+				bool POk = false;
+				const std::string PText = Slurp("production/specs/street-people.json", POk);
+				std::vector<LedgerStreet::Person> People;
+				std::string PErr;
+				const bool bParsed = POk && LedgerStreet::ParsePeople(PText, People, PErr);
+				int OnDisk = 0;
+				for (size_t I = 0; I < People.size(); ++I)
+				{
+					bool GOk = false;
+					Slurp(("production/assets/people/" + People[I].Glb + ".glb").c_str(), GOk);
+					if (GOk) { ++OnDisk; }
+				}
+				Check(bParsed && People.size() >= 3 && OnDisk == (int)People.size(),
+				      "the street's people parse, are a handful, and each has its glb", PErr);
+				std::vector<LedgerStreet::Person> None;
+				Check(!LedgerStreet::ParsePeople("{\"folk\": []}", None, PErr) && None.empty(),
+				      "a people file without its list is refused, not read as nobody", PErr);
+			}
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
 			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,
