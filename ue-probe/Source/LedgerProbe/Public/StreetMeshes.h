@@ -264,10 +264,23 @@ namespace LedgerStreet
 		double GlowGain;         // Blender's glow strengths into this engine's emissive
 		double FogDayR, FogDayG, FogDayB;   // the day fog's colour
 		double FogFalloff;       // how fast the fog thins with height
-		int    Read;             // how many of the four the file supplied
+		// FROM WHAT WETNESS THE GROUND IS A FILM OF WATER: the road, the
+		// paving and the kerb lose their relief map, because the pack's
+		// relief scattered every reflection a wet road should show (23
+		// September, found by rendering the road without it). Above 1 never.
+		double WetFilmFrom;
+		// HOW MUCH BRIGHTER A PICTURED ROOM READS than the facade's own light,
+		// standing in for the glow Blender gives it: the base material's
+		// glow is one flat colour and would wash a picture out.
+		double RoomGain;
+		// THE DISPLAY GLASS LEFT OUT, because the base material cannot be
+		// see-through and an opaque pane hides the lit room behind it.
+		bool   bGlassSeeThrough;
+		int    Read;             // how many of the seven the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
-		         FogFalloff(0.02), Read(0), bFromFile(false) {}
+		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
+		         Read(0), bFromFile(false) {}
 	};
 
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
@@ -291,6 +304,12 @@ namespace LedgerStreet
 		}
 		V = Root.Find("fog_height_falloff");
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogFalloff = V->Num; ++Out.Read; }
+		V = Root.Find("wet_film_from");
+		if (V != 0 && V->Type == T_NUM) { Out.WetFilmFrom = V->Num; ++Out.Read; }
+		V = Root.Find("picture_room_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.RoomGain = V->Num; ++Out.Read; }
+		V = Root.Find("glass_see_through");
+		if (V != 0 && V->Type == T_BOOL) { Out.bGlassSeeThrough = V->Bool; ++Out.Read; }
 		return true;
 	}
 
