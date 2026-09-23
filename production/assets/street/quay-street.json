@@ -114,7 +114,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 2086
+   "faces": 4474
   },
   {
    "mesh": "street_brick_rubbed",
@@ -140,7 +140,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 726
+   "faces": 1134
   },
   {
    "mesh": "street_car_glass",
@@ -336,7 +336,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 42
+   "faces": 178
   },
   {
    "mesh": "street_fascia_bare_timber",
@@ -424,7 +424,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 84
+   "faces": 180
   },
   {
    "mesh": "street_fascia_slate_blue",
@@ -446,7 +446,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 6
+   "faces": 54
   },
   {
    "mesh": "street_foliage",
@@ -534,7 +534,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 108
+   "faces": 972
   },
   {
    "mesh": "street_galvanised",
@@ -1462,7 +1462,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 72
+   "faces": 216
   },
   {
    "mesh": "street_interior",
@@ -1605,7 +1605,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 156
+   "faces": 396
   },
   {
    "mesh": "street_lens_amber",
@@ -1627,7 +1627,7 @@
    "drawn_tile_m": null,
    "emit_day": 0.0,
    "emit_night": 8.0,
-   "faces": 24
+   "faces": 72
   },
   {
    "mesh": "street_paint_door",
@@ -1649,7 +1649,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 66
+   "faces": 162
   },
   {
    "mesh": "street_paint_joinery",
@@ -1671,7 +1671,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 2466
+   "faces": 3618
   },
   {
    "mesh": "street_paint_white",
@@ -1744,7 +1744,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 42
+   "faces": 90
   },
   {
    "mesh": "street_pillarbox_red",
@@ -2047,7 +2047,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 625
+   "faces": 721
   },
   {
    "mesh": "street_standing_water",
@@ -2095,7 +2095,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 928
+   "faces": 1784
   },
   {
    "mesh": "street_stone",
@@ -2121,7 +2121,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 252
+   "faces": 348
   },
   {
    "mesh": "street_tile_patterned",
@@ -2150,7 +2150,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 6
+   "faces": 54
   },
   {
    "mesh": "street_tile_stall",
@@ -2172,7 +2172,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 18
+   "faces": 66
   },
   {
    "mesh": "street_tube_lit",
@@ -2194,7 +2194,7 @@
    "drawn_tile_m": null,
    "emit_day": 12.0,
    "emit_night": 12.0,
-   "faces": 36
+   "faces": 132
   }
  ]
 }

@@ -6107,6 +6107,63 @@ def _street_emit(key, lettered, night):
     return None
 
 
+#: THE PS5 CORNER'S EDGES, 23 September. Every part of this street is a box
+#: with knife edges, and a knife edge catches no light: a real sill, pilaster,
+#: fascia or kerb is rounded or arrised, and the thin highlight along it is
+#: much of what makes a close view read as built rather than modelled. For
+#: the corner - Mickey's front and the pavement and kerb before it (Jafar's
+#: PS5 experiment, production/specs/ps5-corner.json) - every edge sharper
+#: than 30 degrees is bevelled 6 mm in two steps before export. The region
+#: only, so the rest of the street stays as the presentable checklist left
+#: it; the report names doing the whole street as its own step. In this
+#: recipe's frame, before the export's reflection: x along the street, y east.
+BEVEL_CORNER_X = (2.0, 10.0)
+BEVEL_CORNER_Y = (2.9, 5.6)
+BEVEL_WIDTH_M = 0.006
+BEVEL_SKIP = ("glass", "standing_water", "sign_", "card_", "interior")
+
+
+def _bevel_corner(bpy):
+    """Bevel the corner's objects in place; returns the report segment."""
+    import math as _m
+    targets = []
+    for obj in bpy.context.scene.objects:
+        if obj.type != "MESH" or obj.name.startswith(STREET_GLB_SKIP) or not len(obj.data.vertices):
+            continue
+        mat = obj.data.materials[0].name if len(obj.data.materials) else ""
+        if mat.startswith(BEVEL_SKIP):
+            continue
+        M = obj.matrix_world
+        xs, ys = [], []
+        for c in obj.bound_box:
+            w = M @ __import__("mathutils").Vector(c)
+            xs.append(w.x); ys.append(w.y)
+        if max(xs) < BEVEL_CORNER_X[0] or min(xs) > BEVEL_CORNER_X[1]:
+            continue
+        if max(ys) < BEVEL_CORNER_Y[0] or min(ys) > BEVEL_CORNER_Y[1]:
+            continue
+        # NOTHING LONGER THAN THE CORNER: a whole terrace's wall or the
+        # footway's one long slab gains nothing from a bevel along 40 m.
+        if max(xs) - min(xs) > 12.0:
+            continue
+        targets.append(obj)
+    before = sum(len(o.data.polygons) for o in targets)
+    for obj in targets:
+        mod = obj.modifiers.new("corner_bevel", "BEVEL")
+        mod.width = BEVEL_WIDTH_M
+        mod.segments = 2
+        mod.limit_method = "ANGLE"
+        mod.angle_limit = _m.radians(30.0)
+    dg = bpy.context.evaluated_depsgraph_get()
+    dg.update()
+    for obj in targets:
+        me = bpy.data.meshes.new_from_object(obj.evaluated_get(dg))
+        obj.modifiers.clear()
+        obj.data = me
+    after = sum(len(o.data.polygons) for o in targets)
+    return "cornerBevel=objects-%d/faces-%d-to-%d/width-%.3fm" % (len(targets), before, after, BEVEL_WIDTH_M)
+
+
 def _export_street(bpy, args, parts):
     """Export the street's geometry, mirrored, one mesh per material, and a sidecar."""
     import json
@@ -6130,6 +6187,7 @@ def _export_street(bpy, args, parts):
     # export read them unturned and stood a west-side room box across the
     # road, 20 cm in front of the hook camera.
     bpy.context.view_layer.update()
+    bevel_note = _bevel_corner(bpy)
     for obj in list(bpy.context.scene.objects):
         if obj.type != "MESH":
             continue
@@ -6261,9 +6319,9 @@ def _export_street(bpy, args, parts):
             "meshes": [info[k] for k in sorted(groups)],
         }, fh, indent=1)
     size = os.path.getsize(out) if os.path.exists(out) else 0
-    print("tfExport glb=%s bytes=%d meshes=%d faces=%d skipped=%d mirror=y-reflected sidecar=%s"
+    print("tfExport glb=%s bytes=%d meshes=%d faces=%d skipped=%d mirror=y-reflected sidecar=%s %s"
           % (args["export_glb"], size, len(made), sum(i["faces"] for i in info.values()),
-             skipped, os.path.basename(side)))
+             skipped, os.path.basename(side), bevel_note))
     return 0 if size > 0 else 1
 
 
