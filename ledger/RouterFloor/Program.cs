@@ -15,6 +15,14 @@ using Ledger.Core;
 ///     llama-server -m Qwen3-4B-Instruct-2507-Q4_K_M.gguf -ngl 99 --port 8089
 ///     dotnet run -c Release --project ledger/RouterFloor -- --url http://127.0.0.1:8089
 ///     dotnet run -c Release --project ledger/RouterFloor -- --selftest
+///     dotnet run -c Release --project ledger/RouterFloor -- --anthropic   # the paid router
+///
+/// THE PAID ROUTER, 23 September (Jafar's decision 4, (a)): the router stays on
+/// the paid model, and the same lines run on it, through the game's own
+/// AnthropicClient and the model IntentRouter asks for. ANTHROPIC_API_KEY in
+/// the environment; nothing is sent without it, and the tokens and the cost
+/// are printed. There is no JSON constraint on that API, so it runs the
+/// shipped prompt only.
 ///
 /// WHY THE ROUTER. It is the one place the game asks a model to pick from a
 /// closed set - which is what the hardware-floor argument says a small model can
@@ -252,6 +260,8 @@ static class Program
         public bool Valid, Right;
     }
 
+    static long TokensIn, TokensOut;
+
     static async Task<List<Row>> Pass(ILlmClient llm, IList<Case> cases)
     {
         var router = new IntentRouter(llm);
@@ -265,7 +275,13 @@ static class Program
             req.Messages.Add(new LlmMessage("user", c.Text.Length <= 600 ? c.Text : c.Text.Substring(0, 600)));
             var sw = Stopwatch.StartNew();
             string raw;
-            try { raw = (await llm.CompleteAsync(req)).Text; }
+            try
+            {
+                var resp = await llm.CompleteAsync(req);
+                raw = resp.Text;
+                TokensIn += resp.InputTokens;
+                TokensOut += resp.OutputTokens;
+            }
             catch (Exception e) { raw = "TRANSPORT-ERROR " + e.GetType().Name + ": " + e.Message; }
             sw.Stop();
             var got = IntentRouter.Validate(raw, ctx);
@@ -316,7 +332,14 @@ static class Program
         if (args.Contains("--selftest")) return await SelfTest();
         string url = Arg(args, "--url", "http://127.0.0.1:8089");
         string outPath = Arg(args, "--out", null);
-        string label = Arg(args, "--label", "local model");
+        bool paid = args.Contains("--anthropic");
+        string key = paid ? Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY") : null;
+        if (paid && string.IsNullOrEmpty(key))
+        {
+            Console.WriteLine("routerFloor: --anthropic needs ANTHROPIC_API_KEY in the environment; nothing sent.");
+            return 2;
+        }
+        string label = Arg(args, "--label", paid ? Models.Ambient + ", the paid router as shipped" : "local model");
 
         // THE FREE BASELINE: what the router gets right with no model at all.
         int lexRight = 0;
@@ -337,9 +360,11 @@ static class Program
         md.AppendLine($"| no model (the lexical path alone) | {lexRight}/{Cases.Length} ({Pct(lexRight, Cases.Length)}) | - | - | - | 0 | 0 |");
 
         var passes = new List<(string mode, List<Row> rows)>();
-        foreach (var mode in new[] { "prompt", "json" })
+        foreach (var mode in paid ? new[] { "prompt" } : new[] { "prompt", "json" })
         {
-            var rows = await Pass(new LocalChatClient(url, mode == "json"), Cases);
+            ILlmClient client = paid ? (ILlmClient)new AnthropicClient(key)
+                                     : new LocalChatClient(url, mode == "json");
+            var rows = await Pass(client, Cases);
             passes.Add((mode, rows));
             var s = ScoreOf(rows);
             var rej = s.RejectedRight + s.RejectedWrong;
@@ -350,6 +375,13 @@ static class Program
                               + $"rejected={rej} rejectedRight={s.RejectedRight} medianMs={s.MedianMs:0} p90Ms={s.P90Ms:0}");
         }
         Console.WriteLine($"routerFloor lexicalOnly right={lexRight}/{Cases.Length}");
+        if (paid && Models.Cost.TryGetValue(Models.Ambient, out var price))
+        {
+            double usd = TokensIn * price.inPerM / 1e6 + TokensOut * price.outPerM / 1e6;
+            Console.WriteLine($"routerFloor tokensIn={TokensIn} tokensOut={TokensOut} costUsd={usd:0.0000}");
+            md.AppendLine();
+            md.AppendLine($"Tokens: {TokensIn} in, {TokensOut} out; about ${usd:0.000} at the game's own price table.");
+        }
 
         md.AppendLine();
         md.AppendLine("## By kind of line");

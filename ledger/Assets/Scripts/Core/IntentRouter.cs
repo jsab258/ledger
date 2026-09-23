@@ -431,6 +431,23 @@ namespace Ledger.Core
         // The boundary
         // ---------------------------------------------------------------
 
+        /// AN ARGUMENT'S VALUE AS TEXT, and a NUMBER counts, 23 September. The
+        /// paid router answered "Two hundred and forty, and you never saw me."
+        /// with {"amount":240} - the right verb and the right amount - and was
+        /// refused as a missing argument three times in 42 lines, because only
+        /// a JSON string was read. A number is written out plainly and then
+        /// matched against the closed set like any other value, so 240 finds
+        /// "240" and 999 is still refused as not in the set. Anything else
+        /// (a list, an object, true) is still no value at all.
+        static string ArgText(object v)
+        {
+            if (v is string s) return s;
+            if (v is double d) return d.ToString("0.##########", System.Globalization.CultureInfo.InvariantCulture);
+            if (v is long l) return l.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (v is int i) return i.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            return null;
+        }
+
         /// The security boundary. Anything not provably a member of the offered
         /// set becomes speech. This is deliberately joyless: no fuzzy matching,
         /// no nearest-option coercion, no partial credit for a verb with a bad
@@ -466,13 +483,13 @@ namespace Ledger.Core
                 foreach (var arg in spec.Args)
                 {
                     string value = null;
-                    if (args != null && args.TryGetValue(arg.Name, out var v)) value = v as string;
+                    if (args != null && args.TryGetValue(arg.Name, out var v)) value = ArgText(v);
                     if (value == null && args != null)
                     {
                         // Tolerate casing on the KEY only; the VALUE is still closed.
                         foreach (var kv in args)
                             if (string.Equals(kv.Key, arg.Name, StringComparison.OrdinalIgnoreCase))
-                            { value = kv.Value as string; break; }
+                            { value = ArgText(kv.Value); break; }
                     }
                     if (value == null) return Intent.Speech("missing argument", "model");
 
