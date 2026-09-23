@@ -854,6 +854,19 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       street_collision on. PROVEN 948557c9: brick=1/1 for both crimes,
       crimeNote none, with the street's own walls.
 
+- [ ] THE PARKED CARS' SHAPE, extended 23 Sep from the pair: turned and
+      repainted today, they still read as boxes beside the sheet's rounded
+      saloons - a flat bonnet, a vertical nose, a flat roof. A rounder side
+      profile built in Blender and brought across (they collide now, so the
+      crime and the walk are re-read after).
+- [ ] THE SCENE FILE'S FURNITURE IN THE TUNED LOOK: the lamp columns, the
+      kiosk, the skip, the bins and the pallets still wear the texture
+      pack's photographs and read rough beside the Blender street (the
+      columns as grey stucco, the kiosk's glass a grid). Gloss-painted cast
+      iron is a flat colour, as the joinery now is.
+- [ ] THE CRIME SAVE'S SIZE, runner against local (FINDINGS 23 Sep): commit
+      the runner's save beside its verdict so the difference can be read.
+
 ## Where things stand
 
 1. The look is in the game engine and measured against the flipped sheet from its viewpoint - sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent - with the haze, a proper kerb, the cars turned, smooth paint, relief tile and the night held; the pair is pair-03-day, the dusk ue-hook-dusk-02.
