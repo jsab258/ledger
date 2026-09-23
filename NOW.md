@@ -702,10 +702,15 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       street, lettering kept readable), imported and placed in the Unreal
       probe's world, and an Unreal frame from the sheet's viewpoint.
 - [ ] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped.
-- [ ] THE MATERIALS, rebuilt in Unreal from the same textures: the bricks in
-      their joints, the flags, the tile, the glass and the rooms behind it.
-- [ ] LIGHTING, GRADE AND COLOUR, tuned in Unreal in one pass until its frame
-      from the sheet's viewpoint matches the sheet; his 0.85 re-read then.
+- [ ] THE LOOK, DEVELOPED IN UNREAL against the sheet from its viewpoint -
+      ruled 23 September as a change of lanes: Blender is for shapes and
+      layout only, and its numbers are targets, reached again here. The
+      materials from the same textures (bricks in their joints, flags, tile,
+      glass and the rooms behind it); lighting, surface response, wetness,
+      grade and colour in one pass, his 0.85 re-read then; and the FAR END'S
+      DEPTH with Unreal's own fog and atmosphere.
+- [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
+      the same way.
 - [ ] DECISION 4: the same 42 router lines on the paid model, five pence.
 - [ ] DECISION 2: why a realistic witness under-fills the circle, and whether
       five to ten people is too few for the town to visibly know someone
