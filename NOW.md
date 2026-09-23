@@ -1043,7 +1043,13 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             controller, MoveTo over the mesh, RVO avoidance, the locomotion
             instance). It needs AIModule, bodies with walk clips (put to
             Jafar: the six realistic extras become the cast), a spawner off
-            quay-cast.json and the fixed clock driving the hours.
+            quay-cast.json and the fixed clock driving the hours. THE THREE
+            TALKERS' WALKER BODIES EXPORT (tried 23 Sep, not committed until the
+            walker is): person-export.py --also walk= on Leonard (Rocco, the
+            old-man idle's 135-203 and the walk), Martha (Lena, the same idle
+            and the female walk), Joe (Sam, the pockets clip and the walk);
+            each carries two clips. Leonard reads young for Rocco; David may
+            suit him better.
       BUILT ON UNREAL'S STANDARD GAME FRAMEWORK (Jafar 23 Sep 18:00): a
       player character with a body and animation, people with AI who walk
       and avoid you (navigation mesh, AI controllers), the engine's own
