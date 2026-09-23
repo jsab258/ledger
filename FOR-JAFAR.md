@@ -6,10 +6,10 @@ between them.
 
 ## Overnight
 
-1. **Done:** the corner's scanned surfaces judged (brick and paint better and now everywhere; flags dropped; the gap to Kingdom Come is shape and set dressing). Navigation works, with a path found to the cab rank. Nano timed on the card: the game holds 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled. Tomorrow's facade sitting is ready and tried once. Six more stage 1 items are done.
-2. **In the build machine now:** the MetaHuman standing in the corner, rounded edges and the sooty brick on the whole street, and the street's dirt switched on. I check each frame as it lands.
-3. **Waiting on you:** where the MetaHuman's files live; the three voice questions (consent, the allowlist's wording, the four newer voices); what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I'm carrying on with the picks.
-4. **Went wrong:** the scans first went on at half size (corrected). The stop hook held the research session to my list and misread one message to you (both fixed). The MetaHuman assembly crashed three times before the full-editor route worked.
+1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing. Navigation works. Nano timed on the card: 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled and standing in the corner with an idle. Tomorrow's facade sitting is ready. The hill is rebuilt, the street's edges are rounded, the far row has sooty brick, and the dirt is switched on. Stage 1 went from 4 to 16 of 47 done.
+2. **Still in the build machine:** the dirt, the hill, the permanent performance check and the MetaHuman's idle. Their frames land through the night, and I judge each one.
+3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I'm carrying on with the picks.
+4. **Went wrong:** the scans first went on at half size. One build went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. All fixed.
 5. **Your C: drive is 98% full,** 22 GB free. I've deleted nothing; heavy jobs stop if it drops under 10 GB.
 
 ## The plan at a glance
