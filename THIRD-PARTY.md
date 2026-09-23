@@ -298,7 +298,7 @@ holds and has to be corrected or widened.
 |---|---|
 | **Source** | **Poly Haven** (https://polyhaven.com), 2k JPG maps from dl.polyhaven.org via api.polyhaven.com/files, downloaded 23 September on Jafar's yes for the PS5 corner |
 | **Licence** | CC0 1.0 Universal — polyhaven.com/license |
-| **Where** | `production/assets/scanned/polyhaven/<asset>/`: `brick_4` (a warm red stretcher-bond brick, the Hook sheet's nearest) and `brick_wall_001` (a darker variegated brick, the alternate); diffuse, DirectX normal, roughness and ambient occlusion each |
+| **Where** | `production/assets/scanned/polyhaven/<asset>/`: `brick_4` (a warm red stretcher-bond brick, the Hook sheet's nearest), `brick_wall_001` (a darker variegated brick, the alternate), `concrete_pavement_02` (square concrete flags, the British footway's) and `asphalt_01` (a coarse grey road); diffuse, DirectX normal, roughness and ambient occlusion each |
 | **What** | the corner's scanned brick, for the "best free scanned materials" half of the PS5 experiment |
 
 ## What this project made itself
