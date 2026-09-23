@@ -287,11 +287,21 @@ namespace LedgerStreet
 		// through Blender's own light and camera curve; this is where they are
 		// reached again here, against the sheet, surface by surface.
 		std::vector<std::pair<std::string, Grade> > SurfaceGains;
-		int    Read;             // how many of the ten the file supplied
+		// THE NIGHT'S OWN: the three sky and sun gains above are the DAY's,
+		// tuned against a daylight sheet, and a night sky fifteen times as
+		// bright as its light is not a night. The night keeps the file's own
+		// sky unless these say otherwise, and its automatic exposure can be
+		// biased in stops, since the night carries no pin until a settled
+		// night reference exists.
+		double SkySeenGainNight;
+		double SkyLightGainNight;
+		double NightExposureBias;
+		int    Read;             // how many of the thirteen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
-		         SunGain(1.0), SkyLightGain(1.0), Read(0), bFromFile(false) {}
+		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
+		         NightExposureBias(0.0), Read(0), bFromFile(false) {}
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
@@ -336,6 +346,12 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SunGain = V->Num; ++Out.Read; }
 		V = Root.Find("sky_light_gain");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SkyLightGain = V->Num; ++Out.Read; }
+		V = Root.Find("sky_seen_gain_night");
+		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.SkySeenGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("sky_light_gain_night");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SkyLightGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("night_exposure_bias");
+		if (V != 0 && V->Type == T_NUM) { Out.NightExposureBias = V->Num; ++Out.Read; }
 		V = Root.Find("surface_gain");
 		if (V != 0 && V->Type == T_OBJ)
 		{

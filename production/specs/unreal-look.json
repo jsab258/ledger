@@ -27,5 +27,9 @@
       0.35
     ]
   },
-  "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. brick_red: Blender's red came back pink-grey under this sky light; this lands the parade's median on the sheet's 76/45/35 (measured 72/45/38)."
+  "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. brick_red: Blender's red came back pink-grey under this sky light; this lands the parade's median on the sheet's 76/45/35 (measured 72/45/38).",
+  "sky_seen_gain_night": 1.0,
+  "sky_light_gain_night": 1.0,
+  "night_exposure_bias": 0.0,
+  "night_note": "The three day gains are the day's only, tuned against a daylight sheet; the night keeps the scene file's own sky until the dusk frame is tuned, and night_exposure_bias (stops) darkens the night's automatic exposure."
 }
