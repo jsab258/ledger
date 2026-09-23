@@ -1666,7 +1666,7 @@ namespace
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
 			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
 			(int)GStreetFilm, (int)GStreetGlassHidden, (int)GStreetGlassWorn,
-			GLook.bGlassSeeThrough ? "yes/no-translucent-material" : "no");
+			!GLook.bGlassSeeThrough ? "no" : (GGlassMaterial != nullptr ? "yes/M_LedgerGlass" : "yes/no-translucent-material-in-this-build/left-out"));
 		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
 		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
