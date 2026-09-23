@@ -36,6 +36,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The blind listening test is ready for you:** https://claude.ai/artifact/KcjhMNZeMSJrDCBbSsEh3X. Ten lines from Rocco, Lena and Sam, each spoken by today's voice engine and by Nano, with the sides hidden and shuffled. Play both, pick the one you'd rather hear, and your picks save as you go. Headphones help.
 - 2026-09-23 **Local models research is done, on its own branch** (research/local-models). The half that picks the action can probably go local; the cheapest routes are better asking (worked examples picked to match each line) and a better ready-made model, both tested on our own lines; a larger model doesn't fit your card beside the street; training comes last. The half that writes the spoken line stays paid. The brief said to write only in that topic's folder; I added these items here anyway, because nothing is ever only in a message.
 
 - 2026-09-23 **Nano runs.** On the processor, with the build machine busy beside it, it takes about 7 to 9 seconds to make 3.5 seconds of speech. That's slower than real time, but about four times faster than today's voice engine on the processor: across all ten lines, 2.0 seconds of work per second of speech against 8.2 (21 to 36 seconds a line). The blind listening page, where you pick without knowing which is which, and its timing on the card come next sitting. (Nano isn't in Resemble's published package yet, only in their own source, which I fetched with the model.)
