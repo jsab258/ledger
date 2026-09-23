@@ -179,3 +179,4 @@ One line each, dated, newest last.
 - 2026-09-23 The corner shots are named from ps5-corner.json, not the vignette spec, so the workflow's shot patterns missed them and the first run left them in the packaged folder; patterns widened.
 - 2026-09-23 The canon gate flagged the generated ContentWords.cs for 'street walkers' (a brand token); the core tests were red on two pushes before it was seen.
 - 2026-09-23 vignette-spec-test.cpp (the street's files read by the engine's own readers) now runs on every push as the cheap check spec-test (tools/spec-test-check.sh); 670 checks pass under MSVC; its first g++ compile is on the push runner.
+- 2026-09-23 The Mixamo bodies held that are not already the street's extras are cartoons (The Boss, Big Vegas, Michelle, Sporty Granny) or modern sportswear (Shannon, Sophie; Remy imports at the wrong scale); the slice's cast has no period body of its own (sheet: scratchpad cast/sheet.png, not committed).
