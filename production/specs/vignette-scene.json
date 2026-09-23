@@ -674,20 +674,20 @@
       {
         "bom": "C6_fascia_lettering", "id": "generated/fascia_fish_market", "blend": "card",
         "on": "east_parade_fascia1", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 5.3, "height_m": 0.55, "uv": [0.1025, 0.6836, 0.8936, 0.8477],
-        "note": "MANDATORY. This image is a whole shopfront; the crop is the blue fascia band alone, 810 x 84 px, which is 9.64:1 and fills 5.30 m of the bay at the band's own 0.55 m height. NOTE FOR THE REVIEW: the lettering reads HOOK STREATS FISH MARKET, which is a generator misspelling of a canon street name and not a real mark."
+        "width_m": 4.1, "height_m": 0.55, "uv": [0.035, 0.425, 0.965, 0.675],
+        "note": "RE-CROPPED 23 SEPTEMBER to the lettering on the tiled board, 953 x 128 px, 7.44:1, and the board narrowed to 4.1 m to keep that proportion; the old crop was set on an earlier version of the picture and cut the letters. MANDATORY. This image is a whole shopfront; the crop is the blue fascia band alone, 810 x 84 px, which is 9.64:1 and fills 5.30 m of the bay at the band's own 0.55 m height. NOTE FOR THE REVIEW: the lettering reads HOOK STREATS FISH MARKET, which is a generator misspelling of a canon street name and not a real mark."
       },
       {
         "bom": "C6_fascia_lettering", "id": "generated/fascia_ritas_pawn", "blend": "card",
         "on": "east_parade_fascia2", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 4.69, "height_m": 0.55, "uv": [0.1172, 0.625, 0.8838, 0.8047],
-        "note": "MANDATORY. Crop is the green band, 785 x 92 px, 8.53:1."
+        "width_m": 2.8, "height_m": 0.55, "uv": [0.04, 0.34, 0.96, 0.70],
+        "note": "RE-CROPPED 23 SEPTEMBER: the picture had been regenerated and the old crop (the green band, 785 x 92 px) cut through the tops of the letters. Now the name board itself, RITA's with the pawnbroker's balls, 943 x 184 px, 5.12:1, at its own proportion: 2.8 m of the band at 0.55 m, a board on a fascia as Mickey's is. The garbled second line under it is left out."
       },
       {
         "bom": "C6_fascia_lettering", "id": "generated/fascia_steam_laundry", "blend": "card",
         "on": "east_parade_fascia4", "face": "street", "dx_m": 0.0, "dy_m": 0.0,
-        "width_m": 5.34, "height_m": 0.55, "uv": [0.0879, 0.6641, 0.9131, 0.834],
-        "note": "MANDATORY. Crop is the cream band, 845 x 87 px, 9.71:1. Bays 3 and 5 carry no fascia lettering on purpose: four signs are held and a parade with two unlettered units reads as a parade with two vacant ones, which is 1990 Britain."
+        "width_m": 4.7, "height_m": 0.55, "uv": [0.07, 0.235, 0.925, 0.435],
+        "note": "RE-CROPPED 23 SEPTEMBER to the cream band's lettering, 876 x 102 px, 8.59:1, and the board narrowed to 4.7 m to keep that proportion; the old crop was set on an earlier version of the picture. MANDATORY. Crop is the cream band, 845 x 87 px, 9.71:1. Bays 3 and 5 carry no fascia lettering on purpose: four signs are held and a parade with two unlettered units reads as a parade with two vacant ones, which is 1990 Britain."
       },
       {
         "bom": "C11_lit_interior_card", "id": "generated/interior_shop_shelves", "blend": "card",
