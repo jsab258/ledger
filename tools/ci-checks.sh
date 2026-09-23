@@ -155,6 +155,7 @@ real_table() {
     stage-check           "$REPO"                 "$PY tools/stage-check.py" \
     stage-check-selftest  "$REPO"                 "$PY tools/stage-check.py --selftest" \
     spec-test             "$REPO"                 "bash tools/spec-test-check.sh" \
+    talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \
     sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
     sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \

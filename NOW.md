@@ -991,6 +991,14 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             old cards in the Unity files stay as the legacy build has them.
       - [ ] TALKING: walk up, press a key, type a line; the router (fixed
             today) and the paid conversation model answer; a line on screen.
+            THE HELPER HALF WRITTEN 23 Sep on the recommendation put to Jafar
+            (run beside the game): ledger/TalkHelper, JSON lines on stdin and
+            stdout, the real engine and output guard, the brush-off when the
+            line is down or slower than eight seconds; selftest 7/7 in the
+            cheap checks; first lines on the paid model 1.4-2.2 s
+            (production/research/talk-helper/first-lines-2026-09-23.md). The
+            game half - start it, a key to talk, a box to type, the reply on
+            screen - is next.
             WITH THE CONTENT RULE IN THE CONVERSATION: offered a drink, Sam
             went for one and named two unminted pubs (FINDINGS 23 Sep), so the
             engine's prompt needs D18 and its replies the gate's rules.

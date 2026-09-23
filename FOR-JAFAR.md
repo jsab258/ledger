@@ -75,6 +75,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **Rocco, Lena and Sam answer in character through the helper**, the "run it beside the game" route I recommended, built while you decide. Each reply took 1.4 to 2.2 seconds on the paid model. Asked about evenings, Sam named no pub. Rocco said he'd seen Tom "a few times over the years", which may not fit a nephew arriving with a suitcase; that's for the cards. The game half, a key to talk and a box to type in, is next.
 - 2026-09-23 **The walk's first sound recording was silent.** Unreal mutes a game whose window isn't in front, and the build machine's game never is. The test runs now keep their sound; your own game still goes quiet when you switch away, as most games do. The next recording is the proof.
 - 2026-09-23 **People turn their heads to look at you now.** Walk within five metres in front of someone and their head eases round to your eyes, using Unreal's own look-at, and eases back when you leave. The picture is Elizabeth before and after. The street also makes sound: a distant traffic hum from the far end, and each of the six people says a line now and then from where they stand. That's confirmed placed and playing. A recording of the walk is on its way, so you can hear it change as you move.
 - 2026-09-23 **The slice's player has a stand-in body**: a Mixamo man in a grey tracksuit who stands, walks and runs, seen from behind the shoulder. Tom's look isn't settled anywhere I can find, and period clothes come with the clothing route. Say if you'd rather he waited for a proper body.
