@@ -206,3 +206,4 @@ runs on push.
 - THE DOWNLOADS GO AHEAD: Chatterbox Nano's package and weights (MIT) for the listening test; CC0 scanned materials from Poly Haven and ambientCG for the PS5 corner; the MetaHuman needs Jafar's Epic sign-in, once.
 - THE PS5 CORNER STANDS BESIDE KINGDOM COME DELIVERANCE 2, an overcast town street, "since that game is my stated bar"; Jafar supplies the frame.
 - CANON: TOM HAS NEVER BEEN TO THE HOOK. He is a stranger to everyone there, known only as Mickey's nephew by name (also in canon.md).
+- 2026-09-23 THE PS5 CORNER'S SCANNED MATERIALS (my decision, from Poly Haven's CC0 library, looked at against the Hook sheet): brick_4 (warm red stretcher bond; brick_wall_001 the darker alternate), concrete_pavement_02 (square flags), asphalt_01 (coarse grey road), painted_concrete_02 (smooth worn paint to tint the shopfront over, since the library's painted timber is all planking); 2k maps in production/assets/scanned/polyhaven.
