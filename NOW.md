@@ -21,16 +21,27 @@ FOR-JAFAR.md. Check free memory before anything heavy; MetaHuman Creator only
 with 10 GB free; never end another session's processes. Before he wakes,
 FOR-JAFAR.md opens with "Overnight", five lines.
 
-- [ ] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
+- [x] 1. THE PS5 CORNER'S CONTENT HALF: the scanned brick, flags, road and
       paint (production/assets/scanned/polyhaven, true scale and the sheet's
       gain in materials.json) on the corner, beside the Kingdom Come frames.
+      DONE 24 Sep (production/d1-probe/ue-corner_scanned.png,
+      production/d1-probe/ue-hook_scanned.png): brick and paint better, road
+      the same, flags worse (small pavers), no measurable cost; the gap to
+      KCD2 is shape and set dressing, not surfaces. Flags go back to drawn
+      with the next probe push.
 - [ ] 2. THE SLICE'S NAVIGATION FIX: the mesh that was not made, from the
-      engine's own navigation log in the slice walk's verdict.
+      engine's own navigation log in the slice walk's verdict. 3b658691's
+      agent alone left navData=none (no bounds volume); e934f1e7 spawns one
+      over the street and calls Build. Waiting on its run.
 - [ ] 3. THE METAHUMAN, once 10 GB is free: MH_Test assembled into a usable
       character and into the corner without his hands, or exact steps for
       the morning. The face's project settings are mine to switch on.
 - [ ] 4. NANO ON THE CARD WITH THE GAME RUNNING (download approved).
 - [ ] 5. THEN DOWN THE PRESENTABLE CHECKLIST.
+- [ ] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
+      23 Sep: 60 at his monitor, 3440x1440, never below 30, voice running):
+      a frame-time line in the slice walk at 1280x720 and at 3440x1440 drawn
+      at half and upscaled. Decision on what the target allows is with him.
 - [x] THE NINETEEN CAST VOICES' PERMISSIONS, voice by voice in FOR-JAFAR,
       against the TTS licensing research, before anything more is recorded.
       DONE 24 Sep: 23 voices, all VCTK, all conditional (credit, consent,

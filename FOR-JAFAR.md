@@ -19,6 +19,10 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. On the card, the ordinary street takes 19 ms a frame at 1280 by 720; the corner at the highest settings takes 36 ms, which is 28 a second.
+  - **(a) The picture fills your 3440 by 1440 screen, but is drawn at about half that each way and upscaled with Unreal's own upscaler, which is how current games reach 60 on this class of card (my recommendation).**
+  - (b) Drawn at the full 3440 by 1440, which on today's numbers means cutting most of what the corner has.
+  - Meanwhile I measure both ways: the probe's usual 1280 by 720, plus your screen size drawn at half and upscaled.
 - 2026-09-24 **Tomorrow's facade sitting: build its three missing tools tonight, or let the meter count them?** The plan is written, in a new sittings folder: the parade, then west north, then west south, each from drawing to accepted pair. But no dimensioned drawings of the facades exist, only numbers in the street's spec, and three tools are missing: one that draws a facade from those numbers, an Unreal shot that looks straight at one block, and a pair that lays the drawing over the frame.
   - **(a) I build the three tools tonight, after tonight's list, so tomorrow's meter measures only the facades (my recommendation).** They get built once for every facade in the town, so counting them in tomorrow's number would make one facade look dearer than it is.
   - (b) Leave them, and the meter counts them too.
@@ -110,130 +114,10 @@ between them.
 - 2026-09-23 **The hook camera in the game engine stands where the new sheet puts it**; it tilts up a little because the engine cannot shift its picture.
 - 2026-09-23 **The street is in the game engine, the right way round**, in place of the old boxes.
 
-## Rulings received
-
-- 2026-09-23 night **Four rulings**, now in the decisions file and the roadmap. PC only, Windows; consoles are a later, low-priority question. 60 frames a second at your monitor's resolution on this card, never below 30, with the voice running; every visual choice answers to it, and the slice measures against it. The nineteen cast voices' permissions checked, voice by voice, before anything more is recorded with them. And the cost of an hour of play on the paid model, measured from real calls in the slice. Also yes to the Nano download for timing it on the card.
-- 2026-09-23 **Local models: (a) on all three, and the line-writing half reopened.** Download the four models; spend the 35p on 300 fresh lines; if training is ever reached, a large free model on this PC is the teacher. In order: the fair rerun, the fresh lines, then the models. And line-writing is online by default, not by conclusion: once the slice measures what the game and the voice use, and the voice's double-size export is fixed, the best local writers that fit get a blind test against the paid model's lines, judged by you. The branch comes onto main when the action-picking comparison is done.
-
-- 2026-09-23 **All eleven waiting decisions answered, as recommended**, and the PS5 picture as (b): a frame from Kingdom Come Deliverance 2, an overcast town street, because that game is your stated bar; you'll send the screenshot. So: the downloads go ahead; faint knowledge remarks once per story, then watches; a dropped or slow connection gets the authored street and an in-character brush-off; the pause is covered by a person-like filler, with subtitles only alongside their audio; the minute after an event settles by rules the street's unease fades; the three unnamed areas are floor; talking runs beside the game; the six realistic extras become the slice's cast; the AI tester's hands are Claude's computer control through the paid API; and Tom has never been to the Hook (canon).
-- 2026-09-23 **Two changes to reporting**, now in the project rules. "For you:" shows only what's new since the last message, or "nothing new"; the full list lives here and in the sitting's final message. And the stop hook now holds only this checkout, so sessions in other folders aren't held to this list.
-- 2026-09-23 **An AI tester joins the slice.** Regression stays: the tests, the checks on every push, and the scripted runs in the packaged game, plus one scripted run through the slice's whole loop. Exploratory testing is new: an agent that plays the packaged game by looking at the screen and pressing keys, finds what's broken and writes it up worst first here, with every bug going onto the checklist. It can't judge fun or life; that's the Meridian Test with people. The slice isn't done until both have passed. Recorded in the roadmap and on the checklist, and I'm first finding out what Unreal already provides for this.
-- 2026-09-23 **The checklist, sorted, becomes the plan.** Floor items (what any decent game needs) are in where the research placed them. Ours (how the town notices you, stealth, trespass and the law, the town's layout) are in where the plan has them. Genre items are ruled by your twelve decisions, now G1 to G12 in the decisions file, with G0 for multiplayer being out. An item that's out stays on the list marked out, with what rules it out.
-- 2026-09-23 **Four rules make the checklist hold**, now in the project rules. The list refills only from the current stage's checklist. An item leaves a stage only as done, moved or out, each with a reason. Done needs a frame, a test or a recording linked in its row. A stage can't be marked finished while anything in it is open; one check enforces this on every push.
-- 2026-09-23 **A count per stage** (done, moved, out, open) goes at the top of this file and in every sitting's last message. It's written by the check, never typed.
-- 2026-09-23 **The hold on the checklist is lifted**; your sort arrived the same evening.
-- 2026-09-23 **Six more additions, inside the same order (presentable, then the PS5 corner, then the slice; checkpoint work only between visual items)**:
-  1. Heads that turn toward you and sound that comes from its source go into presentable, using what Unreal provides.
-  2. The slice is built on Unreal's standard game framework (a character with a body, AI people who walk and avoid you, the engine's sound, a simple interface), not grown out of the probe, which stays as the test harness. Re-estimate it honestly here.
-  3. The master feature checklist (957 items) is folded into the roadmap as per-stage items, and the list refills from it; research/baseline-features comes onto main and is folded in too.
-  4. Three design questions go here as decisions: offline or slow connection, the generation pause, the minute after an event.
-  5. A frame-rate-independent simulation joins the slice's definition of done.
-  6. The checklist's blind spots are a floor, and anything new you find playing other games goes on it with the way of looking that should have caught it.
-- 2026-09-23 **Three additions, after presentable and the PS5 corner and before or in the slice**: a blind listening test of Chatterbox Nano against our voice engine (ten lines, three cast voices, its speed on processor and card with the game running, watermark kept); the router fixed so a typed line can never pose as a system instruction, with injection cases in its tests; and the card's frame time and graphics memory while a character speaks, as part of the slice's definition of done.
-- 2026-09-23 **A change of plan: targets in order.** First presentable (the checklist in the roadmap: nothing in frame a placeholder, light not flat and the street wet, a handful of people), then one short PS5 experiment on one corner, then a slice you can play for ten to fifteen minutes, then sittings alternating polish and moat. The Hook sheet is the still-frame target for stage 1, not the game's quality bar; the aim stays D8, judged in motion.
-- 2026-09-23 **Decision 7: (a)**, make faint knowledge show, and fix the routines so friends actually meet; then measure reach again. Neither touches a constant. It lands in the playable slice.
-- 2026-09-23 **Decision 8: (a)**, reword canon to say where the shop block actually is. Done the same sitting.
-- 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
-  look-development happens in Unreal, against the sheet.** Lighting, surface
-  response, wetness, grade and depth do not cross over, so finishing them in
-  Blender is doing them twice. The last two days' Blender numbers are
-  targets and lessons, reached again in Unreal. The street moves in first;
-  the far end's depth is done with Unreal's own fog and atmosphere; new
-  shapes are built in Blender and brought across the same way.
-- 2026-09-23 **Decision 5: (a).** Unreal's way round is the true one - it
-  agrees with the research drawings. The mirror is fixed ONCE, where Blender
-  work crosses into Unreal, so every asset arrives the right way round and
-  nothing downstream has to remember it; compare against the sheet flipped
-  until then.
-- 2026-09-23 **Decision 6: (b), not my recommendation.** No tinting one
-  material in Unreal while the rest keeps the old look: the whole look moves
-  across, then Unreal is tuned against the sheet in one pass, and the 0.85 is
-  re-read then.
-- 2026-09-23 **Decision 4: (a).** The router stays on the paid model; run the
-  same 42 lines on it for the five pence; an offline router needs a model
-  trained for the job.
-- 2026-09-23 **Decision 2: (b), not my recommendation.** A realistic witness
-  reaching five to ten people in one retelling is the witness players will
-  produce. Find out why it under-fills the circle, and whether that is too few
-  for the town to visibly know someone within thirty minutes. No constant
-  changes; bring back what is found.
-- 2026-09-23 **The day's order:** move the look into Unreal first - the
-  street's geometry through the mesh route with the mirror fixed at that
-  crossing, the materials rebuilt from the same textures, then lighting, grade
-  and colour tuned until the Unreal frame from the sheet's viewpoint matches
-  the sheet. The pair is an Unreal frame beside the sheet from now on; Blender
-  stays the sketchpad. Then the rest of the list.
-- 2026-09-23 **The stop hook refuses an empty list with time left** until it
-  has been refilled from ROADMAP.md. Six-hour sitting today.
-- 2026-09-22 **Pass 4's street panel is the new Hook reference.** The old
-  sheet is kept beside it as retired. Not citable on it: the second MICKEY'S
-  sign on the neighbouring shop, and the third car, because a rank is one or
-  two. **The satellite dish is citable** — the household research records
-  dishes as new and contested in 1990.
-- 2026-09-22 **The constable is a beat constable who knows the new owner of
-  the cab office by sight.** Strangers cannot place Tom; the local bobby can.
-- 2026-09-22 **The visual lane resumes, in order**: derive the lens from the new
-  sheet's own geometry and write down how; re-close palette and colour at that
-  lens; the composition, which the new sheet now answers; then the shopfronts
-  to the 1989 photographs, parade first. The pair is rendered after each step.
-- 2026-09-22 **Overnight, nothing waits for you**: every decision takes my
-  recommendation, is written here, and work carries on. The sitting runs to
-  08:00. An "Overnight" section of five lines goes at the top before you wake.
-- 2026-09-22 **The small-model test runs when the card is free** — which
-  answers the download question.
-- 2026-09-22 **The camera turns to the sheet's view: south end looking
-  north.** The basin becomes the view the other way and is not wasted.
-  *(Re-issued the same day because I had not acted on it yet.)*
-- 2026-09-22 **No trading name.** The fascia reads MICKEY'S, which canon
-  already letters on that bay. Nothing is minted in an image spec.
-  *(Re-issued the same day.)*
-- 2026-09-22 **No fleet size.** A rank outside, one or two plain unmarked
-  second-hand saloons, no recognisable real model, hackney carriages in the
-  negative. *(Re-issued the same day.)*
-- 2026-09-22 **The arrest is first on the stage 3 list** — the end of the
-  consequence chain being reachable only from a test is the single most
-  important thing wrong with the game right now.
-- 2026-09-22 **Rumour reach: print the numbers before I rule.** No constant is
-  turned up until a rumour crosses the town.
-- 2026-09-22 **Keep the fish shop.** Built from the photographs, which outrank
-  the sheet, so it is the one frontage already right.
-- 2026-09-22 **The sheet is regenerated before anything else is matched to
-  it**, and palette and colour work stops until it exists.
-- 2026-09-22 **Photographs are links only.** Nothing copyrighted enters the
-  repository.
-- 2026-09-22 **The sheet governs mood, palette and composition; the
-  photographs govern what things actually looked like; where they disagree,
-  the photographs win.**
-- 2026-09-22 **Everything from the retired sheet is suspect until checked**,
-  and is listed before anything relies on it.
-- 2026-09-22 **Every message begins with `For you:`**, and from today every
-  item in it is in this file first.
-- 2026-09-22 **The PC rule is narrowed**: two Unreal builds must not overlap,
-  and nothing else waits on CI.
-- 2026-09-22 **The full probe runs only on pushes touching the Unreal project
-  or the scene.**
-- 2026-09-22 **Quay Street's three sides**: east is the six-bay parade, the
-  near west block carries shops, the far west block is plain terraces.
-- 2026-09-22 **The west side is built as a reflection** — fix the
-  construction, not the lettering.
-- 2026-09-22 **Image-to-3D moves to stage 2, unscheduled**, and comes back
-  when making props one at a time becomes the bottleneck, not when stage 2
-  starts.
-- 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
-
-## Resolved
-
-- 2026-09-23 **The paid key question, settled by you: run it here with the game's own key.** Done. The question as it was put:
-- 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
-  - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
-  - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
-  - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
-- 2026-09-23 **May I download what timing Nano on the card needs?** (answered yes, 23 September, night) You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
-  - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
-  - (b) No; Nano stays on the processor, which leaves the card to the game.
-  - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
 ## Things you should know
 
+- 2026-09-24 **The scanned surfaces are on the corner, and they are not what closes the gap to Kingdom Come.** They're free Poly Haven scans of real brick, flags, road and paint, laid at true size and matched to the street's own colours. The brick gains most: real-sized bricks and mortar, where before the bricks were twice too big. The paint gets a faint mottle. The road barely changes. The flags get worse, because the scan is small square pavers where a 1990 British pavement has big flags. They cost nothing measurable, 38.6 ms a frame against 35.7, which is within the noise. Beside the Kingdom Come frame, the gap is still shape and set dressing: deep openings, worn edges, uneven ground, clutter, dirt where walls meet the ground. So the content that answers the PS5 question is modelling, not surfaces. I'm keeping the brick and paint scans and putting the flags back to the drawn ones. The frame times may be high, because the research session could have been using the card.
+- 2026-09-24 **The navigation fix needed a second half.** Declaring the walker's size wasn't enough, because Unreal only builds walking routes inside a marked area and the street had none. The slice now marks the street as walkable when it starts. The proof is on the build machine now.
 - 2026-09-24 **The cast voices' permissions, voice by voice: there are 23, not 19, all from Edinburgh's VCTK recordings, and all 23 are CONDITIONAL, none clean yet and none clearly bad.** The conditions: a correct credit that actually ships (I've corrected the credit text tonight; no credits screen shows it yet), the speakers' consent settled (decision above), and the allowlist's wording (decision above). Aldous, Danny, June and Zlata have a fourth, your permission (decision above). By voice, with the recording's VCTK speaker number:
   - Principals: Lena p228, Rocco p227, Mara Ellis p231, Tobias Reese p256, Sera Kest p244: conditional.
   - Street: Sam p241, Ada p276, Vesna p238, Marla p282, Joey p263, Rita p249, Hal p273, Father Emil p245: conditional.
@@ -733,3 +617,126 @@ so the record stays complete.)*
   day. Used, the red diagnosed, and the self-pushing diagnostic removed.
 - 2026-09-22 **Whether to revert the metal fish shop** — asked and ruled the
   same day: keep it.
+
+## Rulings received
+
+- 2026-09-23 night **Four rulings**, now in the decisions file and the roadmap. PC only, Windows; consoles are a later, low-priority question. 60 frames a second at your monitor's resolution on this card, never below 30, with the voice running; every visual choice answers to it, and the slice measures against it. The nineteen cast voices' permissions checked, voice by voice, before anything more is recorded with them. And the cost of an hour of play on the paid model, measured from real calls in the slice. Also yes to the Nano download for timing it on the card.
+- 2026-09-23 **Local models: (a) on all three, and the line-writing half reopened.** Download the four models; spend the 35p on 300 fresh lines; if training is ever reached, a large free model on this PC is the teacher. In order: the fair rerun, the fresh lines, then the models. And line-writing is online by default, not by conclusion: once the slice measures what the game and the voice use, and the voice's double-size export is fixed, the best local writers that fit get a blind test against the paid model's lines, judged by you. The branch comes onto main when the action-picking comparison is done.
+
+- 2026-09-23 **All eleven waiting decisions answered, as recommended**, and the PS5 picture as (b): a frame from Kingdom Come Deliverance 2, an overcast town street, because that game is your stated bar; you'll send the screenshot. So: the downloads go ahead; faint knowledge remarks once per story, then watches; a dropped or slow connection gets the authored street and an in-character brush-off; the pause is covered by a person-like filler, with subtitles only alongside their audio; the minute after an event settles by rules the street's unease fades; the three unnamed areas are floor; talking runs beside the game; the six realistic extras become the slice's cast; the AI tester's hands are Claude's computer control through the paid API; and Tom has never been to the Hook (canon).
+- 2026-09-23 **Two changes to reporting**, now in the project rules. "For you:" shows only what's new since the last message, or "nothing new"; the full list lives here and in the sitting's final message. And the stop hook now holds only this checkout, so sessions in other folders aren't held to this list.
+- 2026-09-23 **An AI tester joins the slice.** Regression stays: the tests, the checks on every push, and the scripted runs in the packaged game, plus one scripted run through the slice's whole loop. Exploratory testing is new: an agent that plays the packaged game by looking at the screen and pressing keys, finds what's broken and writes it up worst first here, with every bug going onto the checklist. It can't judge fun or life; that's the Meridian Test with people. The slice isn't done until both have passed. Recorded in the roadmap and on the checklist, and I'm first finding out what Unreal already provides for this.
+- 2026-09-23 **The checklist, sorted, becomes the plan.** Floor items (what any decent game needs) are in where the research placed them. Ours (how the town notices you, stealth, trespass and the law, the town's layout) are in where the plan has them. Genre items are ruled by your twelve decisions, now G1 to G12 in the decisions file, with G0 for multiplayer being out. An item that's out stays on the list marked out, with what rules it out.
+- 2026-09-23 **Four rules make the checklist hold**, now in the project rules. The list refills only from the current stage's checklist. An item leaves a stage only as done, moved or out, each with a reason. Done needs a frame, a test or a recording linked in its row. A stage can't be marked finished while anything in it is open; one check enforces this on every push.
+- 2026-09-23 **A count per stage** (done, moved, out, open) goes at the top of this file and in every sitting's last message. It's written by the check, never typed.
+- 2026-09-23 **The hold on the checklist is lifted**; your sort arrived the same evening.
+- 2026-09-23 **Six more additions, inside the same order (presentable, then the PS5 corner, then the slice; checkpoint work only between visual items)**:
+  1. Heads that turn toward you and sound that comes from its source go into presentable, using what Unreal provides.
+  2. The slice is built on Unreal's standard game framework (a character with a body, AI people who walk and avoid you, the engine's sound, a simple interface), not grown out of the probe, which stays as the test harness. Re-estimate it honestly here.
+  3. The master feature checklist (957 items) is folded into the roadmap as per-stage items, and the list refills from it; research/baseline-features comes onto main and is folded in too.
+  4. Three design questions go here as decisions: offline or slow connection, the generation pause, the minute after an event.
+  5. A frame-rate-independent simulation joins the slice's definition of done.
+  6. The checklist's blind spots are a floor, and anything new you find playing other games goes on it with the way of looking that should have caught it.
+- 2026-09-23 **Three additions, after presentable and the PS5 corner and before or in the slice**: a blind listening test of Chatterbox Nano against our voice engine (ten lines, three cast voices, its speed on processor and card with the game running, watermark kept); the router fixed so a typed line can never pose as a system instruction, with injection cases in its tests; and the card's frame time and graphics memory while a character speaks, as part of the slice's definition of done.
+- 2026-09-23 **A change of plan: targets in order.** First presentable (the checklist in the roadmap: nothing in frame a placeholder, light not flat and the street wet, a handful of people), then one short PS5 experiment on one corner, then a slice you can play for ten to fifteen minutes, then sittings alternating polish and moat. The Hook sheet is the still-frame target for stage 1, not the game's quality bar; the aim stays D8, judged in motion.
+- 2026-09-23 **Decision 7: (a)**, make faint knowledge show, and fix the routines so friends actually meet; then measure reach again. Neither touches a constant. It lands in the playable slice.
+- 2026-09-23 **Decision 8: (a)**, reword canon to say where the shop block actually is. Done the same sitting.
+- 2026-09-23 **A change of lanes: Blender is for shapes and layout only; all
+  look-development happens in Unreal, against the sheet.** Lighting, surface
+  response, wetness, grade and depth do not cross over, so finishing them in
+  Blender is doing them twice. The last two days' Blender numbers are
+  targets and lessons, reached again in Unreal. The street moves in first;
+  the far end's depth is done with Unreal's own fog and atmosphere; new
+  shapes are built in Blender and brought across the same way.
+- 2026-09-23 **Decision 5: (a).** Unreal's way round is the true one - it
+  agrees with the research drawings. The mirror is fixed ONCE, where Blender
+  work crosses into Unreal, so every asset arrives the right way round and
+  nothing downstream has to remember it; compare against the sheet flipped
+  until then.
+- 2026-09-23 **Decision 6: (b), not my recommendation.** No tinting one
+  material in Unreal while the rest keeps the old look: the whole look moves
+  across, then Unreal is tuned against the sheet in one pass, and the 0.85 is
+  re-read then.
+- 2026-09-23 **Decision 4: (a).** The router stays on the paid model; run the
+  same 42 lines on it for the five pence; an offline router needs a model
+  trained for the job.
+- 2026-09-23 **Decision 2: (b), not my recommendation.** A realistic witness
+  reaching five to ten people in one retelling is the witness players will
+  produce. Find out why it under-fills the circle, and whether that is too few
+  for the town to visibly know someone within thirty minutes. No constant
+  changes; bring back what is found.
+- 2026-09-23 **The day's order:** move the look into Unreal first - the
+  street's geometry through the mesh route with the mirror fixed at that
+  crossing, the materials rebuilt from the same textures, then lighting, grade
+  and colour tuned until the Unreal frame from the sheet's viewpoint matches
+  the sheet. The pair is an Unreal frame beside the sheet from now on; Blender
+  stays the sketchpad. Then the rest of the list.
+- 2026-09-23 **The stop hook refuses an empty list with time left** until it
+  has been refilled from ROADMAP.md. Six-hour sitting today.
+- 2026-09-22 **Pass 4's street panel is the new Hook reference.** The old
+  sheet is kept beside it as retired. Not citable on it: the second MICKEY'S
+  sign on the neighbouring shop, and the third car, because a rank is one or
+  two. **The satellite dish is citable** — the household research records
+  dishes as new and contested in 1990.
+- 2026-09-22 **The constable is a beat constable who knows the new owner of
+  the cab office by sight.** Strangers cannot place Tom; the local bobby can.
+- 2026-09-22 **The visual lane resumes, in order**: derive the lens from the new
+  sheet's own geometry and write down how; re-close palette and colour at that
+  lens; the composition, which the new sheet now answers; then the shopfronts
+  to the 1989 photographs, parade first. The pair is rendered after each step.
+- 2026-09-22 **Overnight, nothing waits for you**: every decision takes my
+  recommendation, is written here, and work carries on. The sitting runs to
+  08:00. An "Overnight" section of five lines goes at the top before you wake.
+- 2026-09-22 **The small-model test runs when the card is free** — which
+  answers the download question.
+- 2026-09-22 **The camera turns to the sheet's view: south end looking
+  north.** The basin becomes the view the other way and is not wasted.
+  *(Re-issued the same day because I had not acted on it yet.)*
+- 2026-09-22 **No trading name.** The fascia reads MICKEY'S, which canon
+  already letters on that bay. Nothing is minted in an image spec.
+  *(Re-issued the same day.)*
+- 2026-09-22 **No fleet size.** A rank outside, one or two plain unmarked
+  second-hand saloons, no recognisable real model, hackney carriages in the
+  negative. *(Re-issued the same day.)*
+- 2026-09-22 **The arrest is first on the stage 3 list** — the end of the
+  consequence chain being reachable only from a test is the single most
+  important thing wrong with the game right now.
+- 2026-09-22 **Rumour reach: print the numbers before I rule.** No constant is
+  turned up until a rumour crosses the town.
+- 2026-09-22 **Keep the fish shop.** Built from the photographs, which outrank
+  the sheet, so it is the one frontage already right.
+- 2026-09-22 **The sheet is regenerated before anything else is matched to
+  it**, and palette and colour work stops until it exists.
+- 2026-09-22 **Photographs are links only.** Nothing copyrighted enters the
+  repository.
+- 2026-09-22 **The sheet governs mood, palette and composition; the
+  photographs govern what things actually looked like; where they disagree,
+  the photographs win.**
+- 2026-09-22 **Everything from the retired sheet is suspect until checked**,
+  and is listed before anything relies on it.
+- 2026-09-22 **Every message begins with `For you:`**, and from today every
+  item in it is in this file first.
+- 2026-09-22 **The PC rule is narrowed**: two Unreal builds must not overlap,
+  and nothing else waits on CI.
+- 2026-09-22 **The full probe runs only on pushes touching the Unreal project
+  or the scene.**
+- 2026-09-22 **Quay Street's three sides**: east is the six-bay parade, the
+  near west block carries shops, the far west block is plain terraces.
+- 2026-09-22 **The west side is built as a reflection** — fix the
+  construction, not the lettering.
+- 2026-09-22 **Image-to-3D moves to stage 2, unscheduled**, and comes back
+  when making props one at a time becomes the bottleneck, not when stage 2
+  starts.
+- 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
+
+## Resolved
+
+- 2026-09-23 **The paid key question, settled by you: run it here with the game's own key.** Done. The question as it was put:
+- 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
+  - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
+  - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
+  - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
+- 2026-09-23 **May I download what timing Nano on the card needs?** (answered yes, 23 September, night) You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
+  - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
+  - (b) No; Nano stays on the processor, which leaves the card to the game.
+  - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
