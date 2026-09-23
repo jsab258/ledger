@@ -131,6 +131,8 @@
 
 #include <clocale>
 #include <string>
+#include <map>
+#include <set>
 #include <vector>
 
 namespace
@@ -1166,6 +1168,7 @@ namespace
 	void SpawnPeople(UWorld* World, bool bInteractive);
 	void SpawnVehicles(UWorld* World, bool bInteractive);
 	void SpawnSounds(UWorld* World, bool bInteractive);
+	void SpawnCornerMetaHuman(UWorld* World);
 	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
 	// PaintStreet, called from ApplyCondition above it.
 	void ReDriveStreetLook(const Condition& C);
@@ -1288,8 +1291,13 @@ namespace
 		double CoversM = 1.0;
 		double Match[3] = {1.0, 1.0, 1.0};
 		UTexture2D* Tex[3] = {nullptr, nullptr, nullptr};
+		// WORN IN EVERY SHOT AND IN PLAY, not only the corner's scanned
+		// shots: the corner file's "always" (24 September, after the brick and
+		// the paint were judged better at true size and the flags worse).
+		bool bAlways = false;
 	};
 	std::vector<ScanSurface> GScan;
+	bool GScanPrimed = false;
 	// WHAT EACH STREET ROW WORE AT BIND TIME, so a scanned shot can be put
 	// back exactly, and which scan it wears now (-1 none).
 	struct RowWear
@@ -1307,11 +1315,28 @@ namespace
 	std::vector<std::pair<std::string, std::string> > GCvarsRestore;
 	std::string GCornerNote = "not-read";
 	int32 GCornerApplied = 0, GCornerMissing = 0;
+	// THE FACADE ELEVATIONS, 24 September, for Jafar's measurement sitting:
+	// a camera may be ORTHOGRAPHIC (its width in metres, so a frame can be
+	// read in metres against a dimensioned drawing), and a shot may be BARE
+	// (the people and cars hidden, so nothing stands between the camera and
+	// the facade it measures). Both are read from the same shot files.
+	std::map<std::string, double> GOrthoWidthM;
+	std::set<std::string> GBareShots;
+	TArray<TWeakObjectPtr<AActor>> GBareHide;
+	int32 GOrthoShots = 0, GBareShotsRun = 0;
+	// THE CORNER'S METAHUMAN, 24 September: Jafar's "one MetaHuman standing
+	// in it". Its class and its place come from the corner file's
+	// "metahuman" entry; it is shown in the corner's own shots and hidden in
+	// every other, so the street's comparison frames do not move.
+	std::string GMhClass;
+	double GMhX = 0.0, GMhY = 0.12, GMhZ = 0.0, GMhFaceDeg = 0.0;
+	TWeakObjectPtr<AActor> GMhActor;
+	std::string GMhNote = "not-asked";
+	int32 GMhShown = 0;
 
-	void AppendCorner()
+	void AppendShotsFile(const TCHAR* FileName, int32& Cams, int32& Shots, bool& bAnyFound)
 	{
 		using namespace LedgerVignette;
-		GCornerSets.clear();
 		// FOUND WHERE THE STREET'S OWN FILES ARE (FindStreetSidecar's three
 		// depths from the project and the binary), and beside the scene file
 		// last: the runner stages the scene file next to the game, not the
@@ -1319,11 +1344,11 @@ namespace
 		// on the first run (cornerNote=no-corner-file, dae5538c).
 		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
 		TArray<FString> Cands;
-		Cands.Add(AbsProject(TEXT("../production/specs/ps5-corner.json")));
-		Cands.Add(AbsProject(TEXT("../../../../production/specs/ps5-corner.json")));
+		Cands.Add(AbsProject(*(FString(TEXT("../production/specs/")) + FileName)));
+		Cands.Add(AbsProject(*(FString(TEXT("../../../../production/specs/")) + FileName)));
 		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
-			ExeDir, TEXT("../../../../../../production/specs/ps5-corner.json"))));
-		Cands.Add(FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("ps5-corner.json")));
+			ExeDir, FString(TEXT("../../../../../../production/specs/")) + FileName)));
+		Cands.Add(FPaths::Combine(FPaths::GetPath(GSpecPath), FileName));
 		FString Contents;
 		bool bFound = false;
 		for (int32 I = 0; I < Cands.Num() && !bFound; ++I)
@@ -1332,7 +1357,8 @@ namespace
 			FPaths::CollapseRelativeDirectories(C);
 			bFound = FPaths::FileExists(C) && FFileHelper::LoadFileToString(Contents, *C);
 		}
-		if (!bFound) { GCornerNote = "no-corner-file"; return; }
+		if (!bFound) { return; }
+		bAnyFound = true;
 		// THE TEXT OUTLIVES THE READER: Reader keeps a reference to the string
 		// it is given, and the first version handed it a temporary that died
 		// at once, so it read freed memory (cornerNote=corner-file-unreadable,
@@ -1340,8 +1366,7 @@ namespace
 		const std::string Text(TCHAR_TO_UTF8(*Contents));
 		Reader R(Text);
 		Value Root;
-		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { GCornerNote = "corner-file-unreadable"; return; }
-		int32 Cams = 0, Shots = 0;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { GCornerNote = std::string("unreadable-") + TCHAR_TO_UTF8(FileName); return; }
 		if (const Value* L = Root.Find("cameras"))
 		{
 			for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
@@ -1369,6 +1394,8 @@ namespace
 				C.GroundFound = true;
 				C.GroundEdge = "declared-by-the-corner-file";
 				if (C.Id.empty()) { continue; }
+				const Value* Ow = V.Find("ortho_width_m");
+				if (Ow != 0 && Ow->Type == T_NUM && Ow->Num > 0.0) { GOrthoWidthM[C.Id] = Ow->Num; }
 				GSpec.Cameras.push_back(C);
 				++Cams;
 			}
@@ -1398,12 +1425,24 @@ namespace
 					}
 				}
 				if (const Value* Sc = V.Find("scanned")) { CS.bScanned = Sc->Type == T_BOOL && Sc->Bool; }
+				if (const Value* Bb = V.Find("bare")) { if (Bb->Type == T_BOOL && Bb->Bool) { GBareShots.insert(S.Id); } }
 				GSpec.Shots.push_back(S);
 				GCornerSets.push_back(CS);
 				++Shots;
 			}
 		}
-		GScan.clear();
+		if (const Value* Mh = Root.Find("metahuman"))
+		{
+			if (Mh->Type == T_OBJ)
+			{
+				GMhClass = LedgerStreet::StrOr(*Mh, "class");
+				GMhX = LedgerStreet::NumOr(*Mh, "x_m", 0.0);
+				GMhY = LedgerStreet::NumOr(*Mh, "y_m", 0.12);
+				GMhZ = LedgerStreet::NumOr(*Mh, "z_m", 0.0);
+				GMhFaceDeg = LedgerStreet::NumOr(*Mh, "yaw_deg", 0.0);
+				GMhNote = GMhClass.empty() ? "no-class-named" : "asked";
+			}
+		}
 		if (const Value* L = Root.Find("scanned"))
 		{
 			for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
@@ -1414,6 +1453,7 @@ namespace
 				Sc.Base = LedgerStreet::StrOr(V, "base");
 				Sc.Asset = LedgerStreet::StrOr(V, "asset");
 				Sc.CoversM = LedgerStreet::NumOr(V, "covers_m", 1.0);
+				if (const Value* Al = V.Find("always")) { Sc.bAlways = Al->Type == T_BOOL && Al->Bool; }
 				const Value* F = V.Find("files");
 				for (size_t K = 0; F != 0 && F->Type == T_ARR && K < 3 && K < F->Arr.size(); ++K)
 				{
@@ -1428,9 +1468,26 @@ namespace
 				GScan.push_back(Sc);
 			}
 		}
-		GCornerNote = "appended/cameras-" + std::to_string(Cams) + "/shots-" + std::to_string(Shots)
-		            + "/scanned-" + std::to_string(GScan.size());
 	}
+
+	void AppendCorner()
+	{
+		GCornerSets.clear();
+		GScan.clear();
+		GOrthoWidthM.clear();
+		GBareShots.clear();
+		int32 Cams = 0, Shots = 0;
+		bool bAny = false;
+		GCornerNote.clear();
+		AppendShotsFile(TEXT("ps5-corner.json"), Cams, Shots, bAny);
+		AppendShotsFile(TEXT("facade-shots.json"), Cams, Shots, bAny);
+		if (!bAny) { GCornerNote = "no-corner-file"; return; }
+		const std::string Unreadable = GCornerNote;
+		GCornerNote = (Unreadable.empty() ? std::string() : Unreadable + "/") + "appended/cameras-" + std::to_string(Cams) + "/shots-" + std::to_string(Shots)
+		            + "/scanned-" + std::to_string(GScan.size()) + "/ortho-cameras-" + std::to_string(GOrthoWidthM.size())
+		            + "/bare-shots-" + std::to_string(GBareShots.size());
+	}
+
 
 	// PUT BACK WHAT THE LAST CORNER SHOT CHANGED, then set this shot's own.
 	// Called once per prepared pass, so the repeats and every shot after a
@@ -1445,6 +1502,18 @@ namespace
 			}
 		}
 		GCvarsRestore.clear();
+		if (GMhActor.IsValid())
+		{
+			const bool bCorner = ShotId.rfind("corner_", 0) == 0;
+			GMhActor->SetActorHiddenInGame(!bCorner);
+			if (bCorner) { ++GMhShown; }
+		}
+		const bool bBare = GBareShots.count(ShotId) > 0;
+		if (bBare) { ++GBareShotsRun; }
+		for (const TWeakObjectPtr<AActor>& W : GBareHide)
+		{
+			if (W.IsValid()) { W->SetActorHiddenInGame(bBare); }
+		}
 		for (size_t I = 0; I < GCornerSets.size(); ++I)
 		{
 			if (GCornerSets[I].ShotId != ShotId) { continue; }
@@ -1929,6 +1998,22 @@ namespace
 		SpawnPeople(World, bInteractive);
 		SpawnVehicles(World, bInteractive);
 		SpawnSounds(World, bInteractive);
+		SpawnCornerMetaHuman(World);
+	}
+
+	void SpawnCornerMetaHuman(UWorld* World)
+	{
+		if (GMhClass.empty() || World == nullptr) { return; }
+		UClass* Cls = LoadClass<AActor>(nullptr, UTF8_TO_TCHAR(GMhClass.c_str()));
+		if (Cls == nullptr) { GMhNote = "class-not-found/was-it-assembled-and-cooked"; return; }
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		const FVector At((float)(GMhX * 100.0), (float)(GMhZ * 100.0), (float)(GMhY * 100.0));
+		AActor* A = World->SpawnActor<AActor>(Cls, At, FRotator(0.0f, (float)GMhFaceDeg, 0.0f), Params);
+		if (A == nullptr) { GMhNote = "spawn-failed"; return; }
+		A->SetActorHiddenInGame(true);
+		GMhActor = A;
+		GMhNote = "placed";
 	}
 
 	// THE PARKED CARS, 23 September, for the presentable checklist: real-
@@ -1982,6 +2067,7 @@ namespace
 			{
 				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			}
+			GBareHide.Add(A);
 			++GVehiclesSpawned;
 		}
 		GVehiclesNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
@@ -2055,6 +2141,7 @@ namespace
 				if (!Look->HeadBone.IsNone()) { ++GHeadsFound; }
 				if (bInteractive && FParse::Param(FCommandLine::Get(), TEXT("LedgerSlice"))) { MakeSolid(A); }
 				GPeopleByGlb.Add(Stem, A);
+				GBareHide.Add(A);
 				++GPeopleSpawned;
 				continue;
 			}
@@ -2073,6 +2160,7 @@ namespace
 				C->SetPosition(At0, false);
 			}
 			GPeopleByGlb.Add(Stem, A);
+			GBareHide.Add(A);
 			++GPeopleSpawned;
 		}
 		GPeopleNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
@@ -2203,16 +2291,18 @@ namespace
 			" soundsPlaced=%d/%d soundBeds=%d soundVoices=%d soundClips=%d soundPlaying=%s",
 			(int)(GSoundBeds + GSoundVoices), (int)GSoundAsked, (int)GSoundBeds, (int)GSoundVoices, (int)GSoundClips,
 			bGSoundPlaying ? "yes" : "no/shots-have-no-ears");
-		char CornerBuf[200];
+		char CornerBuf[320];
 		std::snprintf(CornerBuf, sizeof(CornerBuf),
-		              " cornerCvarsApplied=%d cornerCvarsMissing=%d scanSurfaces=%d scanRows=%d scanMaps=%d scanShots=%d",
+		              " cornerCvarsApplied=%d cornerCvarsMissing=%d scanSurfaces=%d scanRows=%d scanMaps=%d scanShots=%d"
+		              " orthoShots=%d bareShots=%d bareHides=%d metahumanShown=%d",
 		              (int)GCornerApplied, (int)GCornerMissing, (int)GScan.size(), (int)GScanRows, (int)GScanMaps,
-		              (int)GScanShots);
+		              (int)GScanShots, (int)GOrthoShots, (int)GBareShotsRun, (int)GBareHide.Num(), (int)GMhShown);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
 		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf + SliceBuf
 		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
 		     + " scanNote=" + LedgerVignette::NoSpaces(GScanNote)
+		     + " metahumanNote=" + LedgerVignette::NoSpaces(GMhNote)
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
@@ -3621,6 +3711,17 @@ namespace
 			if (UCameraComponent* CC = GCam->GetCameraComponent())
 			{
 				CC->SetFieldOfView((float)HorizontalFovDeg(C.FovVerticalDeg, kShotW, kShotH));
+				const std::map<std::string, double>::const_iterator Ortho = GOrthoWidthM.find(C.Id);
+				if (Ortho != GOrthoWidthM.end())
+				{
+					CC->SetProjectionMode(ECameraProjectionMode::Orthographic);
+					CC->SetOrthoWidth((float)(Ortho->second * 100.0));
+					++GOrthoShots;
+				}
+				else
+				{
+					CC->SetProjectionMode(ECameraProjectionMode::Perspective);
+				}
 				CC->SetAspectRatio((float)kShotW / (float)kShotH);
 				CC->SetConstraintAspectRatio(true);
 				// WHAT THE TONE MAPPER IS SET TO, READ BACK RATHER THAN
@@ -6656,7 +6757,7 @@ namespace
 		{
 			if (GCornerSets[I].ShotId == ShotId) { bWant = GCornerSets[I].bScanned; }
 		}
-		if (bWant == GScanOn || GScan.empty()) { return; }
+		if (GScan.empty() || (GScanPrimed && bWant == GScanOn)) { return; }
 		if (GRowScan.Num() < GStreetMids.Num()) { GRowScan.Init(-1, GStreetMids.Num()); }
 		if (GStreetFlatNormal == nullptr)
 		{
@@ -6679,7 +6780,7 @@ namespace
 			UTexture2D* T[3] = {W.Tex[0], W.Tex[1], W.Tex[2]};
 			float TU = W.TU, TV = W.TV;
 			FLinearColor Gc = W.Grade;
-			if (bWant)
+			if (bWant || GScan[(size_t)K].bAlways)
 			{
 				ScanSurface& Sc = GScan[(size_t)K];
 				for (int32 M = 0; M < 3; ++M)
@@ -6717,6 +6818,7 @@ namespace
 			++Rows;
 		}
 		GScanOn = bWant;
+		GScanPrimed = true;
 		if (bWant)
 		{
 			++GScanShots;
@@ -7288,6 +7390,9 @@ namespace
 			GDecalResults, std::string(TCHAR_TO_UTF8(*GDecalRoot)),
 			GDecalRootFiles, GDecalRootTried);
 		PaintStreet();
+		// The scans marked "always" go on now, so play and every shot wear
+		// them; a corner shot marked scanned adds the rest.
+		DriveCornerSurfaces(std::string());
 	}
 
 	// ---- THE CONTROL QUADS -------------------------------------------------

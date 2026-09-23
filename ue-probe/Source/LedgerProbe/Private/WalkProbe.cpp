@@ -120,6 +120,9 @@
 #include "NavigationSystem.h"
 #include "NavigationPath.h"
 #include "SliceCharacter.h"
+#include "Misc/App.h"
+#include "HAL/IConsoleManager.h"
+#include <algorithm>
 
 #include <string>
 #include <vector>
@@ -327,6 +330,13 @@ namespace
 
 	FTSTicker::FDelegateHandle GTicker;
 	EWalkPhase GPhase      = EWalkPhase::WaitWorld;
+	// THE FRAME TIMES, 24 September, for Jafar's performance ruling: 60 a
+	// second at his monitor, never below 30, and "the slice measures against
+	// it". Every frame from the end of the settle to the end of the walk is
+	// kept; the frames that take a screenshot are slow for a reason that is
+	// not the game's, so the median carries the verdict and the worst is
+	// printed beside it rather than hidden.
+	std::vector<double> GFrameMs;
 	double     GPhaseStart = 0.0;
 	double     GRouteStart = 0.0;
 	int32      GTicks      = 0;
@@ -1474,6 +1484,20 @@ namespace
 			// The slice's player marks the street walkable and builds the mesh
 			// itself; the probe's own pawn does neither, so its walk says n/a.
 			const ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn);
+			{
+				std::vector<double> F = GFrameMs;
+				std::sort(F.begin(), F.end());
+				const size_t N = F.size();
+				int32 Over33 = 0;
+				for (double Ms : F) { if (Ms > 33.4) { ++Over33; } }
+				int32 VpW = 0, VpH = 0;
+				if (APlayerController* PC = NavWorld != nullptr ? NavWorld->GetFirstPlayerController() : nullptr) { PC->GetViewportSize(VpW, VpH); }
+				const IConsoleVariable* Sp = IConsoleManager::Get().FindConsoleVariable(TEXT("r.ScreenPercentage"));
+				Out.Add(FString::Printf(
+					TEXT("perfFrames=%d perfMedianMs=%.2f perfP95Ms=%.2f perfWorstMs=%.2f perfOver33Ms=%d perfViewport=%dx%d perfScreenPercentage=%s perfTarget=60fps-at-3440x1440/never-below-30"),
+					(int32)N, N ? F[N / 2] : 0.0, N ? F[(size_t)((N - 1) * 0.95)] : 0.0, N ? F[N - 1] : 0.0, Over33,
+					VpW, VpH, Sp != nullptr ? *Sp->GetString() : TEXT("absent")));
+			}
 			Out.Add(FString::Printf(
 				TEXT("navSystem=%s navData=%s navPathToRankPoints=%d navPathToRankCm=%.0f navPathPartial=%s navBounds=%s navBuilt=%s"),
 				Nav != nullptr ? TEXT("yes") : TEXT("NONE"), bNavData ? TEXT("yes") : TEXT("none"),
@@ -1576,6 +1600,11 @@ namespace
 	{
 		++GTicks;
 		const double Now = FPlatformTime::Seconds();
+		if (GPhase != EWalkPhase::WaitWorld && GPhase != EWalkPhase::WaitPawn &&
+		    GPhase != EWalkPhase::SettleAfterSpawn && GPhase != EWalkPhase::Done)
+		{
+			GFrameMs.push_back(FApp::GetDeltaTime() * 1000.0);
+		}
 		if (GRouteStart == 0.0) { GRouteStart = Now; GPhaseStart = Now; }
 
 		switch (GPhase)

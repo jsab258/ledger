@@ -358,23 +358,8 @@
         0.298,
         0.314
       ],
-      "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour"
-    },
-    {
-      "base": "paving",
-      "asset": "concrete_pavement_02",
-      "files": [
-        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_diff_2k.jpg",
-        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_nor_dx_2k.jpg",
-        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_rough_2k.jpg"
-      ],
-      "covers_m": 3.6,
-      "match_rgb": [
-        0.539,
-        0.404,
-        0.236
-      ],
-      "why": "the scan's mean brought to its drawn map's mean (paving), so it adds detail and wear, not a new colour"
+      "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour",
+      "always": true
     },
     {
       "base": "asphalt",
@@ -406,7 +391,8 @@
         1.011,
         1.62
       ],
-      "why": "the scan's mean brought to its palette colour (frame_painted), so it adds detail and wear, not a new colour"
+      "why": "the scan's mean brought to its palette colour (frame_painted), so it adds detail and wear, not a new colour",
+      "always": true
     },
     {
       "base": "paint_fascia",
@@ -422,8 +408,10 @@
         1.011,
         1.62
       ],
-      "why": "the scan's mean brought to its palette colour (fascia_slate_blue), so it adds detail and wear, not a new colour"
+      "why": "the scan's mean brought to its palette colour (fascia_slate_blue), so it adds detail and wear, not a new colour",
+      "always": true
     }
   ],
-  "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot."
+  "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot.",
+  "scanned_judged": "24 September, at true size (fdf8fbf9): the scanned brick and the scanned paint look clearly more real than the drawn ones - real bricks and recessed mortar, a painted surface with wear - so they are worn everywhere (always), in play and in every shot. The scanned flags lost their joints and stopped reading as flags, so the pavement keeps its drawn flags and the scan is dropped. The road scan changed nothing and stays in the scanned shots only. None of them costs frame time: 24.2 ms against 25.0 in a clean run."
 }
