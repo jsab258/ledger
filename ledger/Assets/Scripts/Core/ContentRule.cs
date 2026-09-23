@@ -151,5 +151,20 @@ namespace Ledger.Core
                 if (!IsShowableTrade(t)) bad.Add(t);
             return bad;
         }
+
+        /// WHICH OF D18'S SPEECH RULES A LINE BREAKS, as "kind/id", or null
+        /// when it breaks none. 23 September, for the one text nobody writes
+        /// or reviews: a model's reply in conversation, which the paid model's
+        /// Sam spent going for a drink at a pub nobody had minted. The rules are
+        /// the content gate's own, generated into ContentWords.cs by
+        /// tools/content-gate.py --emit-core, so there is one list and the gate
+        /// says when the copy here is stale.
+        public static string SpeechBreaks(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text)) return null;
+            foreach (var r in ContentWords.Speech)
+                if (r.Pattern.IsMatch(text)) return r.Kind + "/" + r.Id;
+            return null;
+        }
     }
 }
