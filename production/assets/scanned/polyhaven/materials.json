@@ -1,10 +1,56 @@
 {
   "what": "The PS5 corner's scanned surfaces, chosen 23 September from Poly Haven's CC0 library against the Hook sheet (DECISIONS.md), each with the real-world size its 2k maps cover, read from api.polyhaven.com/info, so the corner tiles them at true scale: a brick course near 75 mm, a British flag near 600 mm. Maps are diffuse, DirectX normal, roughness and ambient occlusion. Not yet read by any tool; the corner's material step reads it.",
   "surfaces": [
-    {"surface": "brick", "asset": "brick_4", "covers_m": 0.5, "authors": "Rob Tuytel", "why": "warm red stretcher bond, the sheet's nearest of twenty"},
-    {"surface": "brick_alternate", "asset": "brick_wall_001", "covers_m": 3.0, "authors": "Rob Tuytel, Dimitrios Savva", "why": "darker variegated brick, for the plain rows if the parade's red reads too uniform"},
-    {"surface": "footway", "asset": "concrete_pavement_02", "covers_m": 1.8, "authors": "Charlotte Baglioni", "why": "square concrete flags, three a side at 600 mm"},
-    {"surface": "road", "asset": "asphalt_01", "covers_m": 2.08, "authors": "Dario Barresi, Charlotte Baglioni", "why": "coarse grey road surface"},
-    {"surface": "paint", "asset": "painted_concrete_02", "covers_m": 4.0, "authors": "Rob Tuytel", "why": "smooth, lightly worn paint to tint the shopfront's navy over; the library's painted timber is all planking"}
-  ]
+    {
+      "surface": "brick",
+      "asset": "brick_4",
+      "covers_m": 0.5,
+      "authors": "Rob Tuytel",
+      "why": "warm red stretcher bond, the sheet's nearest of twenty",
+      "gain_to_sheet_rgb": [
+        0.68,
+        0.46,
+        0.41
+      ]
+    },
+    {
+      "surface": "brick_alternate",
+      "asset": "brick_wall_001",
+      "covers_m": 3.0,
+      "authors": "Rob Tuytel, Dimitrios Savva",
+      "why": "darker variegated brick, for the plain rows if the parade's red reads too uniform",
+      "gain_to_sheet_rgb": [
+        1.02,
+        0.69,
+        0.54
+      ]
+    },
+    {
+      "surface": "footway",
+      "asset": "concrete_pavement_02",
+      "covers_m": 1.8,
+      "authors": "Charlotte Baglioni",
+      "why": "square concrete flags, three a side at 600 mm",
+      "gain_to_sheet_rgb": [
+        0.61,
+        0.52,
+        0.4
+      ]
+    },
+    {
+      "surface": "road",
+      "asset": "asphalt_01",
+      "covers_m": 2.08,
+      "authors": "Dario Barresi, Charlotte Baglioni",
+      "why": "coarse grey road surface"
+    },
+    {
+      "surface": "paint",
+      "asset": "painted_concrete_02",
+      "covers_m": 4.0,
+      "authors": "Rob Tuytel",
+      "why": "smooth, lightly worn paint to tint the shopfront's navy over; the library's painted timber is all planking"
+    }
+  ],
+  "grade_note": "gain_to_sheet_rgb: the per-channel gain that brings the map's mean colour to the Hook sheet's (brick from its left wall, flags from its near footway, measured 23 September). The scans are paler and far less red than the sheet (red over green 1.35 against 2.01 for brick), so they are graded to it, as the street's own surfaces are; road and paint are tinted to the look file's existing colours."
 }
