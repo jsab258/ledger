@@ -60,6 +60,11 @@ on:
       # moved into Unreal. A new export is a new street in every probe frame,
       # so it builds; the recipe that writes it still does not.
       - 'production/assets/street/**'
+      # AND THE PEOPLE AND THE CARS, 23 September: glbs the editor run
+      # imports (tools/ue/import_people.py, import_vehicles.py), so a new one
+      # is a new frame in the same way a new street export is.
+      - 'production/assets/people/**'
+      - 'production/assets/vehicles/**'
       #
       # AND THE BLENDER RECIPES ARE NOT HERE ANY MORE. `tools/art-recipes/**`
       # was on this list from the same day and Jafar took it off on the

@@ -223,6 +223,11 @@ OURS = {
     # and stallriser tile drawn by tools/props/make_street_surfaces.py from
     # the recipe's own numbers, every pixel computed, the staining periodic
     # noise from a fixed seed. No pack photograph is read into them.
+    # THE PARKED CARS, 23 September: built by tools/art-recipes/car-model.py
+    # from Blender primitives - boxes, cylinders, a bevel, a subdivision, two
+    # boolean arches - with flat materials and no texture. No mesh, picture or
+    # outline from anywhere else, and no real make's lines (canon).
+    "production/assets/vehicles": "built by tools/art-recipes/car-model.py from Blender primitives, flat materials, no texture and no fetched input",
     "production/assets/street": "exported by tools/art-recipes/terrace-front.py --export-glb: this project's own street geometry, built from primitives by the recipe, with placeholder materials and no textures; the base-mesh lamps and props are not exported; and surfaces/, drawn by tools/props/make_street_surfaces.py from the recipe's numbers with no fetched input",
     # THE ART LINE'S PREVIEWS, added 2026-09-08 before the first one landed,
     # because the builder that wrote the recipe flagged that the first

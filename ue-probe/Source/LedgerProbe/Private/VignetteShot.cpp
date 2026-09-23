@@ -1159,6 +1159,7 @@ namespace
 	// scope.
 	void BindSurfaces();
 	void SpawnPeople(UWorld* World, bool bInteractive);
+	void SpawnVehicles(UWorld* World, bool bInteractive);
 	// THE STREET FROM BLENDER'S GLOW AND WET, per condition; defined beside
 	// PaintStreet, called from ApplyCondition above it.
 	void ReDriveStreetLook(const Condition& C);
@@ -1305,6 +1306,11 @@ namespace
 	// A glb from Blender faces +Y in this engine at yaw 0 (Blender's -Y, the
 	// street export's own axis rule), so a person facing yaw F is turned F-90.
 	const double kPersonYawOffsetDeg = -90.0;
+	// THE PARKED CARS, 23 September. A car from tools/art-recipes/car-model.py
+	// has its nose along -X at yaw 0, so a car facing yaw F is turned F-180.
+	int32 GVehiclesAsked = 0, GVehiclesSpawned = 0;
+	std::string GVehiclesNote = "not-built";
+	const double kVehicleYawOffsetDeg = -180.0;
 
 	UWorld* GameWorld()
 	{
@@ -1676,6 +1682,63 @@ namespace
 		}
 		GStreetNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 		SpawnPeople(World, bInteractive);
+		SpawnVehicles(World, bInteractive);
+	}
+
+	// THE PARKED CARS, 23 September, for the presentable checklist: real-
+	// looking models in place of the street recipe's extruded ones. In play a
+	// car blocks a body and NOT a sight line - the crime's sightings were
+	// proven without cars in them, and a car that hides a witness is a change
+	// to what the witnesses see, for its own run - and in the automation's
+	// shots nothing collides.
+	void SpawnVehicles(UWorld* World, bool bInteractive)
+	{
+		if (World == nullptr) { GVehiclesNote = "no-world"; return; }
+		const FString Path = FPaths::Combine(GStreetRepoRoot, TEXT("production/specs/street-vehicles.json"));
+		FString Text;
+		if (!FFileHelper::LoadFileToString(Text, *Path)) { GVehiclesNote = "no-vehicles-file"; return; }
+		std::vector<LedgerStreet::Person> Cars;
+		std::string Err;
+		if (!LedgerStreet::ParseVehicles(std::string(TCHAR_TO_UTF8(*Text)), Cars, Err))
+		{
+			GVehiclesNote = Err;
+			return;
+		}
+		GVehiclesAsked = (int32)Cars.size();
+		std::string Missing;
+		for (size_t I = 0; I < Cars.size(); ++I)
+		{
+			const LedgerStreet::Person& P = Cars[I];
+			const FString Stem = UTF8_TO_TCHAR(P.Glb.c_str());
+			const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/Vehicles/%s/SM_%s.SM_%s"), *Stem, *Stem, *Stem);
+			UStaticMesh* Mesh = LoadObject<UStaticMesh>(nullptr, *MeshPath);
+			if (Mesh == nullptr) { Missing += "/" + P.Glb + "-mesh"; continue; }
+			FActorSpawnParameters Params;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			const FVector At((float)(P.X * 100.0), (float)(P.Z * 100.0), (float)(P.Y * 100.0));
+			const FRotator Rot(0.0f, (float)(P.FaceDeg + kVehicleYawOffsetDeg), 0.0f);
+			AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(AStaticMeshActor::StaticClass(), At, Rot, Params);
+			if (A == nullptr) { Missing += "/" + P.Glb + "-spawn"; continue; }
+			MakeMovable(A);
+			UStaticMeshComponent* C = A->GetStaticMeshComponent();
+			if (C == nullptr) { A->Destroy(); Missing += "/" + P.Glb + "-component"; continue; }
+			C->SetMobility(EComponentMobility::Movable);
+			C->SetStaticMesh(Mesh);
+			C->SetCastShadow(true);
+			if (bInteractive)
+			{
+				C->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+				C->SetCollisionResponseToAllChannels(ECR_Block);
+				C->SetCollisionResponseToChannel(ECC_Visibility, ECR_Ignore);
+				C->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+			}
+			else
+			{
+				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			}
+			++GVehiclesSpawned;
+		}
+		GVehiclesNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 	}
 
 	// THE HANDFUL OF PEOPLE, 23 September, for the presentable checklist.
@@ -1775,7 +1838,10 @@ namespace
 			(int)GStreetSightThrough, (int)GStreetOldWallsOff);
 		char PeopleBuf[64];
 		std::snprintf(PeopleBuf, sizeof(PeopleBuf), " peopleSpawned=%d/%d", (int)GPeopleSpawned, (int)GPeopleAsked);
+		char CarsBuf[64];
+		std::snprintf(CarsBuf, sizeof(CarsBuf), " vehiclesSpawned=%d/%d", (int)GVehiclesSpawned, (int)GVehiclesAsked);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
+		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()

@@ -6992,6 +6992,19 @@ int main(int argc, char** argv)
 				std::vector<LedgerStreet::Person> None;
 				Check(!LedgerStreet::ParsePeople("{\"folk\": []}", None, PErr) && None.empty(),
 				      "a people file without its list is refused, not read as nobody", PErr);
+				bool VOk = false;
+				const std::string VText = Slurp("production/specs/street-vehicles.json", VOk);
+				std::vector<LedgerStreet::Person> Cars;
+				const bool bCars = VOk && LedgerStreet::ParseVehicles(VText, Cars, PErr);
+				int CarsOnDisk = 0;
+				for (size_t I = 0; I < Cars.size(); ++I)
+				{
+					bool GOk = false;
+					Slurp(("production/assets/vehicles/" + Cars[I].Glb + ".glb").c_str(), GOk);
+					if (GOk) { ++CarsOnDisk; }
+				}
+				Check(bCars && !Cars.empty() && CarsOnDisk == (int)Cars.size(),
+				      "the parked cars parse and each has its glb", PErr);
 			}
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1

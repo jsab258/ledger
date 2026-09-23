@@ -5681,7 +5681,10 @@ def parse_args(argv):
 #: people, which are stage 2's. And no material data: each mesh carries its
 #: material's NAME, and the sidecar says what that material was here - its
 #: colour, its map, its tile - as a TARGET for Unreal, not a result.
-STREET_GLB_SKIP = ("lamp", "figure")
+#: AND THE CARS, 23 September: Unreal takes a real-looking car built by
+#: tools/art-recipes/car-model.py and placed from production/specs/
+#: street-vehicles.json; this recipe's extruded cars stay for its own renders.
+STREET_GLB_SKIP = ("lamp", "figure", "veh")
 #: Where tools/props/make_street_surfaces.py writes the drawn surfaces.
 STREET_SURFACES_REL = os.path.join("production", "assets", "street", "surfaces")
 
