@@ -4,6 +4,14 @@ Everything meant for him lives here. Nothing is ever only in a message.
 Ruled 2026-09-22, after "For you:" items went into reports and were lost
 between them.
 
+## Overnight
+
+1. **Done:** the corner's scanned surfaces judged (brick and paint better and now everywhere; flags dropped; the gap to Kingdom Come is shape and set dressing). Navigation works, with a path found to the cab rank. Nano timed on the card: the game holds 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled. Tomorrow's facade sitting is ready and tried once. Six more stage 1 items are done.
+2. **In the build machine now:** the MetaHuman standing in the corner, rounded edges and the sooty brick on the whole street, and the street's dirt switched on. I check each frame as it lands.
+3. **Waiting on you:** where the MetaHuman's files live; the three voice questions (consent, the allowlist's wording, the four newer voices); what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I'm carrying on with the picks.
+4. **Went wrong:** the scans first went on at half size (corrected). The stop hook held the research session to my list and misread one message to you (both fixed). The MetaHuman assembly crashed three times before the full-editor route worked.
+5. **Your C: drive is 98% full,** 22 GB free. I've deleted nothing; heavy jobs stop if it drops under 10 GB.
+
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
