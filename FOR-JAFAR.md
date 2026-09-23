@@ -19,6 +19,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The slice's friends now meet**. I placed ten of the cast through the day at Mickey's, Rita's, the fish market and the quay, so friends share a doorway or a pavement. All 20 of their friendships now meet, where 55 of 80 in the old prototype city never did. With no rule of the rumour engine changed, a half-sure witness now tells about two people within thirty minutes of play, and a sure one about five. Where each person stands is my call, and you can overrule any of it.
 - 2026-09-23 **First reading of the card: the voice alone takes about 4 GB of its 10 GB**, and with the game drawing the street beside it the card peaked at 9.1 GB. There's a half-size version of the voice files already made, and trying it is the obvious first saving.
 - 2026-09-23 **The game has been running in the card's older graphics mode**, Shader Model 5 rather than the Shader Model 6 your card supports, because the project never asked for the newer one. The old mode rules out Unreal's detailed-geometry system (Nanite), its sharp shadows and hardware ray tracing. I've switched it to the new mode, with ray tracing available but off for the street. The next frames will show whether anything changed.
 - 2026-09-23 **The voice is slower than real time on this card**: its last measurement took 6.4 seconds to make 3.7 seconds of speech, with nothing else running. That makes the Nano test matter more.

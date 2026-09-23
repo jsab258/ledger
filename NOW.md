@@ -936,11 +936,16 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       (perception, memory, gossip, reaction, schedules, save), the retelling
       composer (StreetVoice.h), five Mixamo people idling. LACKS, in the
       order the slice needs them:
-      - [ ] THE CAST IN QUAY STREET: who the slice's two or three people are
+      - [x] THE CAST IN QUAY STREET: who the slice's two or three people are
             (canon.md), where each stands at each hour, their ties - routines
             WRITTEN so tied friends share a place (the 55-of-80 fault is the
             Unity city's hand-placed routines; Quay Street has none yet). A
             data file the port's Schedule reads.
+            DONE AS DATA 23 Sep: production/specs/quay-cast.json, ten people
+            and the prototype's 20 ties among them, all 20 together at least
+            an hour a day (was 55 of 80 never); measured in
+            game-design/rumour-reach-quay-2026-09-23.md. The Unreal walkers
+            that read it are still to come.
       - [ ] THEIR CARDS BROUGHT TO CANON: the conversation model speaks
             from each character's card, and the cards are the Unity era's -
             Lena is "bookkeeper of the Hook Street pub" (LenaSetup.cs), where
@@ -954,7 +959,10 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             player, seen by whoever the port's perception says.
       - [ ] DECISION 7 (a): a hearer's faint knowledge shows - a longer look,
             a remark, a changed manner - at the certainty hearers hold.
-      - [ ] REACH MEASURED AGAIN on the new routines; no constant touched.
+      - [x] REACH MEASURED AGAIN on the new routines; no constant touched.
+            23 Sep: a half-sure witness tells 1.7 of nine in thirty minutes of
+            play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,
+            against 29 of 40 in the prototype's city.
       - [ ] THE CARD READING while a character speaks.
 - Then alternate sittings, polish and moat.
 

@@ -1,0 +1,45 @@
+{
+  "what": "THE SLICE'S CAST IN QUAY STREET, 23 September: who is on the street at each hour and where, written so tied friends share a place - Jafar's decision 7 (a), 'fix the routines so friends actually meet', after 55 of the Unity prototype's 80 live friendships were never within talking range (game-design/rumour-reach-2026-09-23.md). The people are the prototype's approved cast whose work belongs on this street: Mickey's minicab office (D19) keeps Rocco, Lena and its dispatcher Zlata; Rita's pawn keeps Rita and Victor from its back room; the fish market keeps Marla, the vendor; Joey works the quay at the street's south end; Sam drifts between everyone; Ada and Noor pass through. The ties are the authored ones from ledger/Assets/Scripts/Game/GossipDirector.cs, unchanged, restricted to these ten. Places are the scene file's coordinates (production/specs/vignette-pieces.json): x along the street in metres from the quay end, z across it, east positive. 'off' is off the street. A routine lists the hour each place begins; the last entry runs round to the first.",
+  "talk_range_m": 6.0,
+  "talk_range_from": "GossipDirector.cs TalkRange",
+  "places": {
+    "mickeys_office": {"x_m": 6.0,  "z_m": 7.5,  "from": "decal_00_fascia_mickeys x, inside the front room"},
+    "mickeys_rank":   {"x_m": 7.5,  "z_m": 3.8,  "from": "the footway at Mickey's door, where the cabs wait"},
+    "fish_counter":   {"x_m": 12.0, "z_m": 7.5,  "from": "decal_01_fascia_fish_market x, inside"},
+    "fish_front":     {"x_m": 12.0, "z_m": 4.2,  "from": "the fish market's pavement"},
+    "ritas_counter":  {"x_m": 18.0, "z_m": 7.5,  "from": "decal_02_fascia_ritas_pawn x, inside"},
+    "ritas_step":     {"x_m": 18.0, "z_m": 4.4,  "from": "Rita's doorstep"},
+    "kiosk":          {"x_m": 16.5, "z_m": 4.3,  "from": "beside kiosk_plinth (16.5, 3.67)"},
+    "laundry_front":  {"x_m": 30.0, "z_m": 4.3,  "from": "decal_03_fascia_steam_laundry x, its pavement"},
+    "quay":           {"x_m": -5.0, "z_m": 0.0,  "from": "the quay apron at the street's south end"}
+  },
+  "people": [
+    {"id": "rocco",  "voice": "rocco", "role": "Mickey's old muscle (canon)",
+     "routine": [[0, "off"], [8, "mickeys_rank"], [12, "fish_front"], [13, "mickeys_rank"], [17, "quay"], [19, "mickeys_office"], [23, "off"]]},
+    {"id": "lena",   "voice": "lena", "role": "Mickey's bookkeeper (canon)",
+     "routine": [[0, "off"], [9, "mickeys_office"], [12, "fish_front"], [13, "mickeys_office"], [17, "ritas_step"], [18, "off"]]},
+    {"id": "zlata",  "voice": "zlata", "role": "the minicab office's dispatcher (tier-1 batch 2)",
+     "routine": [[0, "off"], [7, "mickeys_office"], [12, "mickeys_rank"], [13, "mickeys_office"], [20, "off"]]},
+    {"id": "sam",    "voice": "sam", "role": "drifts between everyone",
+     "routine": [[0, "off"], [9, "fish_front"], [13, "ritas_step"], [15, "mickeys_rank"], [17, "quay"], [19, "off"]]},
+    {"id": "rita",   "voice": "rita", "role": "keeps Rita's pawn",
+     "routine": [[0, "off"], [9, "ritas_counter"], [13, "ritas_step"], [14, "ritas_counter"], [17, "ritas_step"], [18, "off"]]},
+    {"id": "victor", "voice": null, "role": "the pawnbroker's back room (tier-2 promotion)",
+     "routine": [[0, "off"], [10, "ritas_counter"], [16, "ritas_step"], [18, "off"]]},
+    {"id": "marla",  "voice": "marla", "role": "the vendor, at the fish market",
+     "routine": [[0, "off"], [7, "fish_counter"], [14, "fish_front"], [15, "off"]]},
+    {"id": "joey",   "voice": "joey", "role": "the dock hand, at the quay",
+     "routine": [[0, "off"], [6, "quay"], [12, "mickeys_rank"], [13, "quay"], [15, "mickeys_rank"], [17, "ritas_step"], [18, "off"]]},
+    {"id": "ada",    "voice": "ada", "role": "a daytime regular",
+     "routine": [[0, "off"], [10, "laundry_front"], [11, "fish_counter"], [12, "fish_front"], [13, "off"], [16, "mickeys_rank"], [17, "off"]]},
+    {"id": "noor",   "voice": null, "role": "the journalist, who hears everything",
+     "routine": [[0, "off"], [11, "kiosk"], [12, "fish_front"], [13, "off"], [15, "mickeys_rank"], [16, "off"]]}
+  ],
+  "ties": [
+    ["rocco", "lena", 0.7], ["rocco", "sam", 0.8], ["sam", "lena", 0.6], ["ada", "lena", 0.6], ["ada", "sam", 0.5],
+    ["marla", "ada", 0.5], ["marla", "sam", 0.4], ["joey", "rocco", 0.6], ["joey", "sam", 0.3],
+    ["noor", "ada", 0.7], ["noor", "sam", 0.6], ["noor", "lena", 0.5], ["noor", "rocco", 0.5], ["noor", "marla", 0.4],
+    ["victor", "lena", 0.4], ["victor", "sam", 0.5], ["rita", "victor", 0.6], ["rita", "joey", 0.4],
+    ["zlata", "joey", 0.5], ["zlata", "sam", 0.4]
+  ]
+}
