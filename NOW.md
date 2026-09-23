@@ -735,11 +735,21 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       gully grates (pending push). NEXT: whatever the tuned pair shows is still missing
       in shape (the sheet's near west side is lower and set back - waits on
       decision 8's canon wording).
-- [ ] THE DUSK FRAME the roadmap names as what ties stage 1 together: the
+- [x] THE DUSK FRAME the roadmap names as what ties stage 1 together: the
       street at dusk, wet, lamps lit, a figure in silhouette - wet_night
       tuned in Unreal the way the day was, from the sheet's viewpoint.
-- [ ] DENSITY OF CLUTTER against the sheet (stage 1's fourth step): what
-      stands on the sheet's pavements and ours does not.
+      First version 99fc3386 (tuned by eye, no night sheet; sent to Jafar).
+- [x] DENSITY OF CLUTTER against the sheet (stage 1's fourth step): the
+      iron cover in front of Mickey's and gullies in the channel (99fc3386);
+      the rest of the sheet's pavement life is people, which is stage 2.
+- [ ] GRIME AS A SEPARABLE LAYER IN UNREAL (ROADMAP stage 1: "grime is the
+      strategy ... a surface carries its wear as a separable layer"):
+      Blender's wear - rain streaks from the wall heads, weathering patches -
+      is material nodes that did not cross; draw it into maps as the bricks
+      were, and lay it in Unreal as its own layer.
+- [ ] THE NEW STREET IN THE PLAYABLE GAME: the walk and the crime still run
+      on the scene file's street because the Blender street has no
+      collision; give it collision and move them onto it.
 - [x] DECISION 4: the same 42 router lines on the paid model - 37/42, and
       three of the misses were the checker refusing a numeric amount; fixed,
       40/42. About 9 US cents for both runs (4cfda29c).
