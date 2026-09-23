@@ -296,12 +296,17 @@ namespace LedgerStreet
 		double SkySeenGainNight;
 		double SkyLightGainNight;
 		double NightExposureBias;
-		int    Read;             // how many of the thirteen the file supplied
+		// THE SEE-THROUGH GLASS, when M_LedgerGlass is in the build: how much
+		// of a window is glass and how much is the room, and how smooth.
+		double GlassOpacity;
+		double GlassRoughness;
+		int    Read;             // how many of the fifteen the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
-		         NightExposureBias(0.0), Read(0), bFromFile(false) {}
+		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
+		         Read(0), bFromFile(false) {}
 	};
 
 	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
@@ -352,6 +357,10 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SkyLightGainNight = V->Num; ++Out.Read; }
 		V = Root.Find("night_exposure_bias");
 		if (V != 0 && V->Type == T_NUM) { Out.NightExposureBias = V->Num; ++Out.Read; }
+		V = Root.Find("glass_opacity");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassOpacity = V->Num; ++Out.Read; }
+		V = Root.Find("glass_roughness");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0 && V->Num <= 1.0) { Out.GlassRoughness = V->Num; ++Out.Read; }
 		V = Root.Find("surface_gain");
 		if (V != 0 && V->Type == T_OBJ)
 		{

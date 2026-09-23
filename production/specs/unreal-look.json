@@ -15,7 +15,7 @@
   "picture_room_gain": 8.0,
   "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
   "glass_see_through": true,
-  "glass_see_through_note": "The display glass is left out, because the base material cannot be see-through and an opaque pane hid the lit rooms behind it. The verdict line says so.",
+  "glass_see_through_note": "The display glass wears M_LedgerGlass (tools/ue/make_glass_material.py): translucent, lit in the forward pass so the sky lands on it as a sheen, tinted by the glass colour. If the build lacks that material the glass is left out, as it was before it existed; the verdict line counts both.",
   "sun_gain": 0.1,
   "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
   "sky_light_gain": 0.5,
@@ -41,5 +41,7 @@
   "sky_seen_gain_night": 1.0,
   "sky_light_gain_night": 1.0,
   "night_exposure_bias": 0.0,
-  "night_note": "The three day gains are the day's only, tuned against a daylight sheet; the night keeps the scene file's own sky until the dusk frame is tuned, and night_exposure_bias (stops) darkens the night's automatic exposure."
+  "night_note": "The three day gains are the day's only, tuned against a daylight sheet; the night keeps the scene file's own sky until the dusk frame is tuned, and night_exposure_bias (stops) darkens the night's automatic exposure.",
+  "glass_opacity": 0.25,
+  "glass_roughness": 0.05
 }
