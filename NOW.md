@@ -911,11 +911,15 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       where a line needs feeling. Its speed measured on the processor alone
       and on the card, WITH THE GAME RUNNING. Its watermark kept, not
       stripped. The text model stays the paid online one (decision 4).
-- [ ] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
+- [x] THE ROUTER CANNOT BE TOLD WHAT TO DO BY THE PLAYER (Jafar 23 Sep): a
       typed line can never pose as a system instruction - even the paid model
       obeyed a fake "SYSTEM:" line in the 42-line test. The fix, and that case
       and the other injection lines added to the router's tests so it stays
       fixed.
+      DONE 23 Sep 15:45 (b28fb267): the game refuses instruction-shaped lines
+      before either path sees them, and the rest reach the model fenced as
+      the player's; 15 forged lines and 11 near-misses in CoreTests; paid
+      42-line test 41/42, all three commands speech.
 - [ ] A SLICE YOU CAN PLAY, ten to fifteen minutes (ROADMAP.md item 3), with
       decision 7 (a) and the routines fixed so friends meet, reach measured
       again, no constant touched. PART OF ITS DEFINITION OF DONE (Jafar 23
