@@ -4049,6 +4049,24 @@ if __name__ == "__main__":
                       encoding="utf-8") as _f:
                 _f.write("glassMaterialStatus=RAISED glassMaterialNote=%s\n"
                          % str(_glass_err).replace(" ", "~")[:160])
+    # ---- AND THE GRIME, 24 September, FOR THE SAME REASON ------------------
+    # tools/ue/make_grime_material.py: the scene's multiply stains as deferred
+    # decals; the base material above is opaque and they were hidden.
+    if _inside_unreal():
+        try:
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import make_grime_material
+            make_grime_material.main()
+        except Exception as _grime_err:
+            try:
+                import unreal
+                _root = unreal.Paths.project_dir()
+            except Exception:
+                _root = "."
+            with open(os.path.join(_root, "ue-material.txt"), "a",
+                      encoding="utf-8") as _f:
+                _f.write("grimeMaterialStatus=RAISED grimeMaterialNote=%s\n"
+                         % str(_grime_err).replace(" ", "~")[:160])
     # ---- AND THE STREET FROM BLENDER, 23 September, FOR THE SAME REASON ----
     # tools/ue/import_street.py: the street's geometry becomes static meshes
     # in the editor run this step already starts, and appends its own line to
