@@ -1014,7 +1014,11 @@ jobs:
           } catch {
             $shotLeaves = @()
           }
-          $shotPatterns = @("ue-vign_*.png", "ue-pinset_*.png")
+          # AND THE PS5 CORNER'S SHOTS, 23 September: they come from
+          # production/specs/ps5-corner.json, not the vignette spec, so no
+          # leaf above names them and the first run rendered them and left
+          # them in the packaged folder.
+          $shotPatterns = @("ue-vign_*.png", "ue-pinset_*.png", "ue-corner_*.png", "ue-hook_max.png")
           function Test-IsShotPng([string]$name) {
             if ($shotLeaves -contains $name) { return $true }
             foreach ($p in $shotPatterns) { if ($name -like $p) { return $true } }
@@ -2211,7 +2215,7 @@ jobs:
           for leaf in $(grep -o 'file=[^ ]*\.png' "$VIGNVERDICT" 2>/dev/null | sed 's/^file=//' | sort -u); do
             stage_shot_png "$leaf"
           done
-          for pat in 'ue-vign_*.png' 'ue-pinset_*.png'; do
+          for pat in 'ue-vign_*.png' 'ue-pinset_*.png' 'ue-corner_*.png' 'ue-hook_max.png'; do
             git add -A -- "production/d1-probe/$pat" 2>/dev/null || true
           done
           # WHOLE-STEP COUNTS ON THE STEP'S OWN LINE. `vignNamed` counts

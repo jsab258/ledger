@@ -39,6 +39,12 @@ between them.
 
 ## Things you should know
 
+- 2026-09-23 **The PS5 experiment, first half: switching every Unreal feature on hardly changes the picture.** The picture is our corner as the street runs beside the same corner with everything on, and I've put the GTA V frame next to them for you to see (not committed, since it's their picture).
+  - **What was switched on:** sharp shadows, ray-traced bounced light and reflections, volumetric fog, contact shadows, every quality setting at its highest, full resolution.
+  - **What it changed:** only 2.4 per cent of the picture changes noticeably: the car's bonnet reflects properly, the road under it too, the puddle a little. It costs 2.6 times the frame time: 9.2 ms becomes 24.3 ms at 1280x720 (the Hook view: 8.9 becomes 20.8).
+  - **So the gap to a PS5 game isn't the card or the engine's features.** It's content: flat materials where a PS5 game has scanned ones, simple people, and none of the small clutter (posters, stains, wires, signs, litter) the GTA frame is thick with. It's also craft: weathering, grime, edges.
+  - **Still to do:** the half that tests content, the scanned materials and one MetaHuman, which waits on your yes to the downloads. The voice's share of the card is measured: about 4 GB of 10.
+  - **What it would mean for the whole street:** keep the street's current settings and spend the effort on content, with a few features added one at a time where each earns its cost. That's roughly 6 to 10 sittings of material, prop and clutter work for the street, a rough guess until the content half is tried.
 - 2026-09-23 **The slice, re-estimated honestly: about 12 to 18 sittings, not one.** Measured against what the Unreal side has today: a street, a camera on a capsule with no body, the simulation's rules ported and checked, idle people who never move, no sound, no AI, no navigation, and none of Unreal's animation, AI or interface modules even linked. On Unreal's standard framework, roughly, in sittings:
   - a player with a body and animation, 1 to 2;
   - people who walk their routines on a navigation mesh and step round you, 2 to 3;
