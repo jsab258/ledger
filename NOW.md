@@ -1055,7 +1055,11 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             The slice walk's next frames show whether the player now stops.
       - [ ] PEOPLE WHO WALK THEIR DAY AND STEP ROUND YOU: the navigation
             mesh around the player is pushed (7cc4767b, its path to Mickey's
-            rank in the slice walk's verdict). The walker itself is written
+            rank in the slice walk's verdict). FIRST RESULT: navSystem=yes,
+            navData=NONE - no mesh was made; the slice walk's verdict now
+            carries the engine's navigation log lines to say why. Suspects:
+            the invokers-only setting with no bounds, or the nav data class's
+            runtime generation not read from the ini. The walker itself is written
             and STASHED, not built ("WIP the slice's walkers": the engine's AI
             controller, MoveTo over the mesh, RVO avoidance, the locomotion
             instance). It needs AIModule, bodies with walk clips (put to

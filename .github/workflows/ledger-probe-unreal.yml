@@ -1762,6 +1762,14 @@ jobs:
           }
           if (-not (Test-Path $out)) { "sliceWalkStatus=NO-VERDICT" | Set-Content $out -Encoding utf8 }
           Add-Content $out "sliceWalkFramesCollected=$copied sliceWalkExitedInTime=$inTime"
+          # THE ENGINE'S OWN WORD ON NAVIGATION, 23 September: the first run
+          # with the navigation mesh switched on said navSystem=yes navData=none,
+          # and the log that would say why went with the workspace. Its
+          # navigation lines ride the verdict now.
+          if (Test-Path "slicewalk-run.log") {
+            Select-String -Path "slicewalk-run.log" -Pattern "LogNavigation|RecastNavMesh|NavMesh" |
+              Select-Object -First 25 | ForEach-Object { Add-Content $out ("# nav-log " + $_.Line.Trim()) }
+          }
           Write-Host (Get-Content $out -Raw)
           exit 0
 
