@@ -98,3 +98,21 @@ requests, propose nothing into the queue. The studio reads the delivery.
    than by a recollection of what the plan says?
 4. Are the sources that could not be reached named, with what that costs the
    lens they belonged to, rather than quietly replaced by general knowledge?
+
+## Added 2026-09-23, after the delivery: the second commission
+
+Jafar then put an independent list of 923 player expectations on main, written
+by a different model without sight of mine, at
+[astra-list.md](./astra-list.md), and commissioned the comparison that
+replaced the original DELIVERY.md:
+
+> Compare it against your checklist and against the plan. For every item in it,
+> mark whether your list has it, whether the plan has it, or neither. The items
+> in neither are the blind spots this whole exercise exists to find: list them
+> first, grouped by area, and say which of your four lenses should have caught
+> each one and why it did not.
+>
+> Then merge both lists into one master checklist at the level of specific
+> features, never headings, since headings are what swallowed head-turning and
+> positional sound. Each item gets its place in ROADMAP.md's stages, or a note
+> that it does not belong in this game and why.
