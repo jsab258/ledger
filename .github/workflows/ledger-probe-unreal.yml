@@ -1795,6 +1795,64 @@ jobs:
           Write-Host (Get-Content $out -Raw)
           exit 0
 
+      - name: Time the slice at Jafar's screen size
+        id: sliceperf
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 5
+        shell: pwsh
+        env:
+          SHOT_EXE: ${{ steps.build.outputs.exe }}
+        run: |
+          # THE PERFORMANCE RULING, MEASURED ON EVERY RUN, 24 September. Jafar,
+          # 23 September: 60 frames a second at his monitor's resolution on
+          # this card, never below 30, "and the slice measures against it".
+          # His monitor is 3440x1440. The slice stands still at that size,
+          # drawn at half and upscaled (-ForceRes, because a window that size
+          # does not fit his desktop and was quietly shrunk to 888x500), and
+          # the engine's own CSV profiler keeps 1500 frames; tools/slice-perf.py
+          # reads them. The voice is not running here: the night's measurement
+          # with Nano beside it is production/research/nano-listening-test/
+          # card-timing-2026-09-24.md. This step reports and never turns the
+          # run red.
+          $ErrorActionPreference = "Continue"
+          $out = "production/d1-probe/ue-perf-verdict.txt"
+          New-Item -ItemType Directory -Force -Path "production/d1-probe" | Out-Null
+          $exe = $env:SHOT_EXE
+          if ((-not $exe) -or (-not (Test-Path $exe))) {
+            "slicePerf=uw-half status=NO-LAUNCH/no-binary" | Set-Content $out -Encoding utf8
+            exit 0
+          }
+          $gameDir = Split-Path (Split-Path (Split-Path $exe -Parent) -Parent) -Parent
+          $csvDir = Join-Path $gameDir "Saved\Profiling\CSV"
+          Remove-Item "$csvDir\*" -Force -ErrorAction SilentlyContinue
+          $a = @("-LedgerSlice", "-RenderOffScreen", "-ResX=3440", "-ResY=1440", "-windowed", "-ForceRes",
+                 "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=50,t.MaxFPS=0,r.VSync=0",
+                 "-ExecCmds=`"csvprofile frames=1800`"")
+          $p = Start-Process -FilePath $exe -ArgumentList $a -PassThru -NoNewWindow `
+               -RedirectStandardOutput "sliceperf-run.log" -RedirectStandardError "sliceperf-run.err"
+          $t = 0
+          while (-not (Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue) -and $t -lt 180) { Start-Sleep 2; $t += 2 }
+          Start-Sleep 3
+          Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
+          $csv = Get-ChildItem $csvDir -Filter *.csv -ErrorAction SilentlyContinue | Select-Object -First 1
+          $py = $null
+          foreach ($cand in @("python3", "python", "C:\LedgerTools\python312\python.exe")) {
+            try { & $cand --version *> $null; if ($LASTEXITCODE -eq 0) { $py = $cand; break } } catch {}
+          }
+          if ($csv -and -not $py) {
+            "slicePerf=uw-half status=NO-PYTHON/the-csv-is-at-$($csv.FullName -replace ' ','~')" | Set-Content $out -Encoding utf8
+          } elseif ($csv) {
+            & $py tools/slice-perf.py $csv.FullName --label uw-half | Set-Content $out -Encoding utf8
+          } else {
+            "slicePerf=uw-half status=NO-CSV/waited-${t}s" | Set-Content $out -Encoding utf8
+          }
+          $res = Select-String -Path "sliceperf-run.log" -Pattern 'systemresolution\.res[xy]="(\d+)"' -AllMatches |
+                 ForEach-Object { $_.Matches } | ForEach-Object { $_.Groups[1].Value }
+          Add-Content $out ("slicePerfResolution=" + (($res | Select-Object -Last 2) -join "x"))
+          Write-Host (Get-Content $out -Raw)
+          exit 0
+
       - name: Commit two crimes and judge the witness
         id: crime
         if: always()
@@ -2365,6 +2423,7 @@ jobs:
           git add -A -- 'production/d1-probe/ue-walk-audio.wav' 2>/dev/null || true
           # THE SLICE'S WALK, 23 September.
           git add -A -- 'production/d1-probe/ue-slicewalk_*.png' 'production/d1-probe/ue-slicewalk-verdict.txt' 2>/dev/null || true
+          git add -A -- 'production/d1-probe/ue-perf-verdict.txt' 2>/dev/null || true
           # THE CRIME, THE WITNESS AND THE OVERHEARD CONSEQUENCE (ruling
           # 2026-09-08), THE SAME TWO RULES A FOURTH TIME. The crime verdict
           # is a TRACKED file, so a run that never reached the crime step,
