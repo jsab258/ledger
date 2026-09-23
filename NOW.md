@@ -805,7 +805,9 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       overheard line and restart all as before, victim 2.15 m, one pane
       broken per crime. street_collision TRUE. Left: the brick thrown
       through the window finds no shop floor (brick=0/1, as it was every
-      run until today).
+      run until today). PROVEN ON THE RUNNER, f28d4f8c: streetCollision=own,
+      witnessStatus and gossip REAL, restart RAN, crimeReached end, the walk's
+      collision REAL and grate shot AIMED.
 - [x] THE CRIME'S BROKEN WINDOW SHOWS AGAIN (found 23 Sep: since the street
       went into play the Blender glass, one mesh for every pane, stayed
       whole). The glass exported one mesh per bay and floor and the crime
