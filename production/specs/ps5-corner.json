@@ -1,0 +1,47 @@
+{
+  "what": "Jafar's PS5 experiment, 23 September: one small corner - Mickey's shopfront and the pavement in front of it - made as good as the engine allows, rendered beside a reference frame, with its cost on the card. The probe (ue-probe VignetteShot.cpp, AppendCorner) appends these cameras and shots AFTER the scene file's own, so they render last through the same path and the same shot line (frameMedianMs and the frame, production/d1-probe/ue-<shot>.png); the scene file, whose shot structure the g++ test pins, is not touched. A shot's cvars are applied when it is set up and put back when the next shot is.",
+  "cameras": [
+    {
+      "id": "cam_corner",
+      "x_m": 1.8,
+      "z_m": 2.3,
+      "eye_height_m": 1.6,
+      "yaw_deg": 30.0,
+      "pitch_deg": 2.0,
+      "fov_vertical_deg": 50.0,
+      "note": "On the carriageway 0.7 m off the east kerb, south-west of Mickey's, looking at its front (glass centre x 6.87, frontage z 5.0) from about five metres: the stallriser, the glass, the fascia and the flags in front of it."
+    }
+  ],
+  "shots": [
+    {
+      "id": "corner_street",
+      "camera": "cam_corner",
+      "condition": "overcast_day",
+      "cvars": [],
+      "note": "The corner as the street runs: the engine as every other frame has it."
+    },
+    {
+      "id": "corner_max",
+      "camera": "cam_corner",
+      "condition": "overcast_day",
+      "cvars": [
+        ["sg.ViewDistanceQuality", "4"],
+        ["sg.AntiAliasingQuality", "4"],
+        ["sg.ShadowQuality", "4"],
+        ["sg.GlobalIlluminationQuality", "4"],
+        ["sg.ReflectionQuality", "4"],
+        ["sg.PostProcessQuality", "4"],
+        ["sg.TextureQuality", "4"],
+        ["sg.EffectsQuality", "4"],
+        ["sg.FoliageQuality", "4"],
+        ["sg.ShadingQuality", "4"],
+        ["r.Shadow.Virtual.Enable", "1"],
+        ["r.VolumetricFog", "1"],
+        ["r.ContactShadows", "1"],
+        ["r.Lumen.Reflections.DownsampleFactor", "1"],
+        ["r.ScreenPercentage", "100"]
+      ],
+      "note": "Every feature that can be switched on while the game runs: the engine's own top quality level (cinematic, 4) in every group, virtual shadow maps, volumetric fog, contact shadows, full-resolution Lumen reflections. Nanite and hardware ray tracing cannot be switched on at run time - the first is built into the meshes at import, the second into the shaders at startup - and are the build changes this experiment names rather than makes."
+    }
+  ]
+}

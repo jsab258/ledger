@@ -1252,6 +1252,130 @@ namespace
 	// do with a street that could not be read: the automation writes a
 	// verdict and quits, the interactive path logs it and leaves the
 	// player standing in whatever the level would otherwise be.
+	// ---- THE PS5 CORNER, 23 September ------------------------------------
+	//
+	// Jafar's second target: one small corner - a shopfront and the pavement
+	// in front of it - as good as the engine allows, beside a reference
+	// frame, with its cost on the card. production/specs/ps5-corner.json,
+	// beside the scene file, names its cameras and shots; they are APPENDED
+	// to the scene file's own after it loads, so they render last through the
+	// same path and the same shot line (frameMedianMs, the frame), and the
+	// scene file - whose shot structure the g++ test pins - is untouched. A
+	// shot may carry engine settings: applied when its pass is prepared, put
+	// back when the next pass is, so the determinism repeats that follow
+	// every shot are taken with the engine as the street runs.
+	struct CornerSets
+	{
+		std::string ShotId;
+		std::vector<std::pair<std::string, std::string> > Sets;
+	};
+	std::vector<CornerSets> GCornerSets;
+	std::vector<std::pair<std::string, std::string> > GCvarsRestore;
+	std::string GCornerNote = "not-read";
+	int32 GCornerApplied = 0, GCornerMissing = 0;
+
+	void AppendCorner()
+	{
+		using namespace LedgerVignette;
+		GCornerSets.clear();
+		const FString Path = FPaths::Combine(FPaths::GetPath(GSpecPath), TEXT("ps5-corner.json"));
+		FString Contents;
+		if (!FFileHelper::LoadFileToString(Contents, *Path)) { GCornerNote = "no-corner-file"; return; }
+		Reader R(std::string(TCHAR_TO_UTF8(*Contents)));
+		Value Root;
+		if (!R.ReadValue(Root) || Root.Type != T_OBJ) { GCornerNote = "corner-file-unreadable"; return; }
+		int32 Cams = 0, Shots = 0;
+		if (const Value* L = Root.Find("cameras"))
+		{
+			for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
+			{
+				const Value& V = L->Arr[I];
+				const Value* X = V.Find("x_m");
+				const Value* Z = V.Find("z_m");
+				if (V.Type != T_OBJ || X == 0 || Z == 0 || X->Type != T_NUM || Z->Type != T_NUM) { continue; }
+				Camera C;
+				C.Id = LedgerStreet::StrOr(V, "id");
+				C.X = X->Num;
+				C.Z = Z->Num;
+				const Value* E = V.Find("eye_height_m");
+				const Value* Yw = V.Find("yaw_deg");
+				const Value* Pt = V.Find("pitch_deg");
+				const Value* Fv = V.Find("fov_vertical_deg");
+				C.EyeHeightM = (E != 0 && E->Type == T_NUM) ? E->Num : 1.6;
+				C.YawDeg = (Yw != 0 && Yw->Type == T_NUM) ? Yw->Num : 0.0;
+				C.PitchDeg = (Pt != 0 && Pt->Type == T_NUM) ? Pt->Num : 0.0;
+				C.FovVerticalDeg = (Fv != 0 && Fv->Type == T_NUM) ? Fv->Num : 60.0;
+				// ITS GROUND IS THE CROWN'S, declared: the corner camera stands
+				// on the carriageway, whose surface is within a few centimetres
+				// of 0 there.
+				C.GroundY = 0.0;
+				C.GroundFound = true;
+				C.GroundEdge = "declared-by-the-corner-file";
+				if (C.Id.empty()) { continue; }
+				GSpec.Cameras.push_back(C);
+				++Cams;
+			}
+		}
+		if (const Value* L = Root.Find("shots"))
+		{
+			for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
+			{
+				const Value& V = L->Arr[I];
+				if (V.Type != T_OBJ) { continue; }
+				Shot S;
+				S.Id = LedgerStreet::StrOr(V, "id");
+				S.CameraId = LedgerStreet::StrOr(V, "camera");
+				S.ConditionId = LedgerStreet::StrOr(V, "condition");
+				if (S.Id.empty() || S.CameraId.empty() || S.ConditionId.empty()) { continue; }
+				CornerSets CS;
+				CS.ShotId = S.Id;
+				if (const Value* Cv = V.Find("cvars"))
+				{
+					for (size_t K = 0; Cv->Type == T_ARR && K < Cv->Arr.size(); ++K)
+					{
+						const Value& P = Cv->Arr[K];
+						if (P.Type == T_ARR && P.Arr.size() == 2 && P.Arr[0].Type == T_STR && P.Arr[1].Type == T_STR)
+						{
+							CS.Sets.push_back(std::make_pair(P.Arr[0].Str, P.Arr[1].Str));
+						}
+					}
+				}
+				GSpec.Shots.push_back(S);
+				GCornerSets.push_back(CS);
+				++Shots;
+			}
+		}
+		GCornerNote = "appended/cameras-" + std::to_string(Cams) + "/shots-" + std::to_string(Shots);
+	}
+
+	// PUT BACK WHAT THE LAST CORNER SHOT CHANGED, then set this shot's own.
+	// Called once per prepared pass, so the repeats and every shot after a
+	// corner shot run on the engine as it was.
+	void DriveCornerCvars(const std::string& ShotId)
+	{
+		for (size_t I = GCvarsRestore.size(); I-- > 0;)
+		{
+			if (IConsoleVariable* V = IConsoleManager::Get().FindConsoleVariable(UTF8_TO_TCHAR(GCvarsRestore[I].first.c_str())))
+			{
+				V->Set(UTF8_TO_TCHAR(GCvarsRestore[I].second.c_str()), ECVF_SetByCode);
+			}
+		}
+		GCvarsRestore.clear();
+		for (size_t I = 0; I < GCornerSets.size(); ++I)
+		{
+			if (GCornerSets[I].ShotId != ShotId) { continue; }
+			for (size_t K = 0; K < GCornerSets[I].Sets.size(); ++K)
+			{
+				const std::pair<std::string, std::string>& P = GCornerSets[I].Sets[K];
+				IConsoleVariable* V = IConsoleManager::Get().FindConsoleVariable(UTF8_TO_TCHAR(P.first.c_str()));
+				if (V == nullptr) { ++GCornerMissing; continue; }
+				GCvarsRestore.push_back(std::make_pair(P.first, std::string(TCHAR_TO_UTF8(*V->GetString()))));
+				V->Set(UTF8_TO_TCHAR(P.second.c_str()), ECVF_SetByCode);
+				++GCornerApplied;
+			}
+		}
+	}
+
 	bool LoadSpec()
 	{
 		// THE C NUMERIC LOCALE, SET BEFORE ANYTHING IS PARSED. Under a
@@ -1287,6 +1411,8 @@ namespace
 			           + " specFrom=" + std::string(TCHAR_TO_UTF8(*NoSp(GSpecPath)));
 			return false;
 		}
+		// THE PS5 CORNER'S SHOTS, after the scene file's own (AppendCorner).
+		AppendCorner();
 		return true;
 	}
 
@@ -1840,8 +1966,12 @@ namespace
 		std::snprintf(PeopleBuf, sizeof(PeopleBuf), " peopleSpawned=%d/%d", (int)GPeopleSpawned, (int)GPeopleAsked);
 		char CarsBuf[64];
 		std::snprintf(CarsBuf, sizeof(CarsBuf), " vehiclesSpawned=%d/%d", (int)GVehiclesSpawned, (int)GVehiclesAsked);
+		char CornerBuf[96];
+		std::snprintf(CornerBuf, sizeof(CornerBuf), " cornerCvarsApplied=%d cornerCvarsMissing=%d",
+		              (int)GCornerApplied, (int)GCornerMissing);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
+		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
@@ -7105,6 +7235,9 @@ namespace
 			{
 				GPassPrepared = GShotPass;
 				++GWantSkyEpoch;
+				// THE CORNER'S ENGINE SETTINGS, once per pass: the last corner
+				// shot's put back, this shot's set (DriveCornerCvars).
+				DriveCornerCvars(S.Id);
 				if (GQuadActors.Num() > 0)
 				{
 					const Camera* QuadCam = ControlCamera();
