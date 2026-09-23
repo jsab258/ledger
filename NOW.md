@@ -7,7 +7,7 @@ roadmap.
 
 Last updated 2026-09-22, in the fifth sitting on his PC.
 
-SITTING: started 2026-09-22T20:53:35+02:00, limit 11.11h
+SITTING: started 2026-09-23T07:56:48+02:00, limit 6h
 
 That one line is read by the stop hook, which will not let the turn end while
 items below are unstruck and the six hours have not run out. It is written at
@@ -687,6 +687,29 @@ way it is ruled; the camera waits for him.
       exactly that and the west wall is fine coursed brick. The parade is
       still pale, because the pack's brick_red picture is a sandy fawn under
       the grade Jafar ruled on 15 September - decision 6, not touched.
+
+## 13. TODAY, 23 SEPTEMBER - Jafar's order, visual first
+
+The stage 1 exit test is a frame from the game, and everything matched to the
+sheet so far was rendered in Blender. So the look moves into Unreal, and the
+pair from now on is an Unreal frame beside the sheet - flipped, because the
+sheet was made on the Blender side and Unreal's way round is the true one.
+
+- [x] THE HOOK REFUSES AN EMPTY LIST WITH TIME LEFT until it is refilled from
+      ROADMAP.md (selftest 39/39, and it blocks on the live file).
+- [ ] THE GEOMETRY CROSSES: the Blender street exported through the mesh
+      route, the MIRROR FIXED AT THAT CROSSING (a reflection of the whole
+      street, lettering kept readable), imported and placed in the Unreal
+      probe's world, and an Unreal frame from the sheet's viewpoint.
+- [ ] THE PAIR IS AN UNREAL FRAME beside the sheet, flipped.
+- [ ] THE MATERIALS, rebuilt in Unreal from the same textures: the bricks in
+      their joints, the flags, the tile, the glass and the rooms behind it.
+- [ ] LIGHTING, GRADE AND COLOUR, tuned in Unreal in one pass until its frame
+      from the sheet's viewpoint matches the sheet; his 0.85 re-read then.
+- [ ] DECISION 4: the same 42 router lines on the paid model, five pence.
+- [ ] DECISION 2: why a realistic witness under-fills the circle, and whether
+      five to ten people is too few for the town to visibly know someone
+      within thirty minutes. No constant changes; a finding for Jafar.
 
 ## Where things stand
 
