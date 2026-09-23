@@ -997,7 +997,7 @@ namespace
 	// re-enters ApplyCondition every tick writes them once.
 	TArray<UMaterialInstanceDynamic*> GStreetMids;
 	TMap<FString, UTexture2D*> GStreetTex;
-	int32 GStreetTextured = 0, GStreetTexAsked = 0;
+	int32 GStreetTextured = 0, GStreetTexAsked = 0, GStreetDrawn = 0;
 	std::string GStreetLookFor;
 	int32 GStreetGlowing = 0, GStreetWet = 0;
 	// BLENDER'S GLOW STRENGTHS IN THIS ENGINE'S UNITLESS EMISSIVE, the first
@@ -1618,11 +1618,11 @@ namespace
 		char Buf[420];
 		std::snprintf(Buf, sizeof(Buf),
 			"streetStatus=%s streetMeshes=%d/%d streetHidden=%d/%d streetPainted=%d streetPictures=%d/%d"
-			" streetTextured=%d/%d streetGlowing=%d streetWet=%d streetGlowGain=%.2f/unitless/first-value-of-a-series",
+			" streetTextured=%d/%d streetDrawn=%d streetGlowing=%d streetWet=%d streetGlowGain=%.2f/unitless/first-value-of-a-series",
 			GStreetLoaded > 0 ? "PLACED" : "NONE", (int)GStreetLoaded, (int)GStreet.Rows.size(),
 			(int)GStreetHidden, (int)GSpec.Pieces.size(), (int)GStreetPainted,
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
-			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetGlowing, (int)GStreetWet,
+			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetDrawn, (int)GStreetGlowing, (int)GStreetWet,
 			GLook.GlowGain);
 		char LookBuf[200];
 		std::snprintf(LookBuf, sizeof(LookBuf),
@@ -5818,6 +5818,32 @@ namespace
 			// THE PHOTOGRAPH, where the surface wears one and nothing lettered
 			// is on it: the pack's own three maps, from the root the scene
 			// file's surfaces already staged, each decoded once for the run.
+			// THE DRAWN SURFACE FIRST, where the recipe draws one: its three
+			// images from the repository, tiled by its own width and height.
+			bool bDrawn = false;
+			if (Albedo == nullptr && !Rw.DrawnMap.empty() && !GStreetRepoRoot.IsEmpty())
+			{
+				++GStreetTexAsked;
+				UTexture2D* Got[3] = {nullptr, nullptr, nullptr};
+				for (int32 M = 0; M < 3; ++M)
+				{
+					const FString File = FPaths::Combine(GStreetRepoRoot, FString(UTF8_TO_TCHAR(
+						(Rw.DrawnMap + LedgerSurface::MapSuffix(M) + ".png").c_str())));
+					if (UTexture2D** Hit = GStreetTex.Find(File)) { Got[M] = *Hit; continue; }
+					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
+					int32 FW = 0, FH = 0;
+					FString LoadedAs;
+					Got[M] = ImportTexture(File, M == 0, FW, FH, LoadedAs);
+					GStreetTex.Add(File, Got[M]);
+				}
+				if (Got[0] != nullptr)
+				{
+					Albedo = Got[0]; NormalMap = Got[1]; RoughMap = Got[2];
+					bDrawn = true;
+					++GStreetTextured;
+					++GStreetDrawn;
+				}
+			}
 			if (Albedo == nullptr && !Rw.SurfaceMap.empty() && !GTexRoot.IsEmpty())
 			{
 				++GStreetTexAsked;
@@ -5868,8 +5894,10 @@ namespace
 			// TILED BY THE METRE: the export's UVs are metres, so a copy of
 			// the photograph every TileM metres is 1/TileM copies per unit.
 			const float Tiles = bPhoto ? (float)LedgerStreet::TilesPerMetre(Rw) : 1.0f;
-			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), Tiles > 0.0f ? Tiles : 1.0f);
-			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), Tiles > 0.0f ? Tiles : 1.0f);
+			const float TilesU = bDrawn ? (float)(1.0 / Rw.DrawnW) : (Tiles > 0.0f ? Tiles : 1.0f);
+			const float TilesV = bDrawn ? (float)(1.0 / Rw.DrawnH) : (Tiles > 0.0f ? Tiles : 1.0f);
+			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), TilesU);
+			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), TilesV);
 			// THE PALETTE OVER THE PHOTOGRAPH, as Blender lays it: authored
 			// colour over the map's own average. White on flat paint and on
 			// pictures, whose colour is already the texel.
@@ -5913,7 +5941,9 @@ namespace
 			}
 			if (LedgerStreet::TakesWater(Rw.Base))
 			{
-				const bool bPhoto = !Rw.SurfaceMap.empty();
+				// A DRAWN SURFACE ALREADY CARRIES ITS COLOUR and is graded by
+				// one; only a photograph takes the palette over it.
+				const bool bPhoto = !Rw.SurfaceMap.empty() && Rw.DrawnMap.empty();
 				const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
 				                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
 				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);

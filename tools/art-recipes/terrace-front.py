@@ -5365,6 +5365,8 @@ def parse_args(argv):
 #: material's NAME, and the sidecar says what that material was here - its
 #: colour, its map, its tile - as a TARGET for Unreal, not a result.
 STREET_GLB_SKIP = ("lamp", "figure")
+#: Where tools/props/make_street_surfaces.py writes the drawn surfaces.
+STREET_SURFACES_REL = os.path.join("production", "assets", "street", "surfaces")
 
 
 def _newell(pts):
@@ -5443,6 +5445,14 @@ def _export_street(bpy, args, parts):
     import mathutils
     by_id = {p["id"]: p for p in parts}
     table = {n: (rgb, rough) for n, rgb, rough in MATERIALS}
+    drawn = {}
+    try:
+        with open(os.path.join(args["root"], STREET_SURFACES_REL, "manifest.json"), encoding="utf-8") as fh:
+            for name, row in json.load(fh).get("surfaces", {}).items():
+                drawn[name] = {"map": STREET_SURFACES_REL.replace(os.sep, "/") + "/" + name,
+                               "tile_m": row.get("tile_m")}
+    except (OSError, ValueError):
+        drawn = {}
     groups = {}
     info = {}
     skipped = 0
@@ -5488,6 +5498,12 @@ def _export_street(bpy, args, parts):
                 # AND HOW BRIGHTLY IT GLOWS HERE, day and night, as TARGETS:
                 # Blender's emission strengths, which Unreal's own units do
                 # not share, so the Unreal side scales them by one named gain.
+                # THE DRAWN SURFACE, where this recipe draws one (bricks,
+                # flags, the stallriser tile): tools/props/make_street_surfaces.py
+                # draws the same numbers into seamless images, and Unreal
+                # wears those instead of the pack photograph.
+                "drawn_map": drawn.get(base, {}).get("map"),
+                "drawn_tile_m": drawn.get(base, {}).get("tile_m"),
                 "emit_day": _street_emit(key, lettered, False),
                 "emit_night": _street_emit(key, lettered, True),
                 "faces": 0,
