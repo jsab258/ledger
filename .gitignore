@@ -138,3 +138,6 @@ gallery-img/
 
 # The crime check prints its diagnosis into the run log; it is not committed.
 production/d1-probe/ue-crime-check.txt
+
+# The AI tester's runs: logs and crash dumps, kept on this PC; findings go to FOR-JAFAR.md.
+production/playtest/ai-tester/
