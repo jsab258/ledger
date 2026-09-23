@@ -948,8 +948,10 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       DELIVERANCE 2 overcast town street, his stated bar, frame to come from
       him. BRICK FETCHED 23 Sep (Poly Haven CC0, 2k: brick_4, the sheet's
       nearest warm red stretcher bond; brick_wall_001, a darker alternate) in
-      production/assets/scanned/polyhaven; still to choose: the stone flags,
-      the road, the painted wood; then onto the corner, then the MetaHuman.
+      production/assets/scanned/polyhaven; and the footway and road the
+      same evening (concrete_pavement_02, square flags; asphalt_01, coarse
+      grey); still to choose: the painted wood; then onto the corner, then
+      the MetaHuman.
 - [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
       ten lines, three cast voices, each by the engine we use now and by
       Nano, played to him BLIND in pairs so he picks without knowing which is
