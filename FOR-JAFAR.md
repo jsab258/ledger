@@ -87,6 +87,7 @@ between them.
 
 ## Rulings received
 
+- 2026-09-23 **Hold the checklist fold** until you send which of its items this game actually wants. Nothing goes into the roadmap from it meanwhile. I'm still bringing the other research branch onto main as it stands, folding nothing from it, and carrying on with everything else.
 - 2026-09-23 **Six more additions, inside the same order (presentable, then the PS5 corner, then the slice; checkpoint work only between visual items)**:
   1. Heads that turn toward you and sound that comes from its source go into presentable, using what Unreal provides.
   2. The slice is built on Unreal's standard game framework (a character with a body, AI people who walk and avoid you, the engine's sound, a simple interface), not grown out of the probe, which stays as the test harness. Re-estimate it honestly here.

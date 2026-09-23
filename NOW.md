@@ -1012,7 +1012,13 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       Honest estimate 12 to 18 sittings (FOR-JAFAR).
       AND IN ITS DEFINITION OF DONE (Jafar 23 Sep 18:00): the simulation runs
       the same regardless of frame rate.
-- [ ] AT A CHECKPOINT BETWEEN VISUAL ITEMS (Jafar 23 Sep 18:00): fold
+- [ ] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
+      research/baseline-features onto main, as it stands, folding nothing.
+- HELD BY JAFAR (23 Sep, 18:16): "do not put MASTER-CHECKLIST.md into
+      ROADMAP.md yet. I am sorting which of its items this game actually
+      wants first, and will send the result." The fold below waits for his
+      list, and so does folding the baseline branch's extras into the
+      checklist, since that is the same sorting. WHAT WAS ASKED (18:00): fold
       production/research/feature-coverage/MASTER-CHECKLIST.md (957 items,
       per-stage index) into ROADMAP.md as each stage's checklist, at the level
       of specific items, never headings, and make this list refill from it;
