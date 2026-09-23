@@ -775,6 +775,15 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       one retelling at most, friends rarely meet, and hearers hold it too
       faintly for the reaction ladder to show it. Put to him as decision 7.
 
+- [ ] SCHEDULES ON THE SHIPPING ENGINE (ROADMAP stage 3: "perception,
+      memory, gossip, schedules and save on the shipping engine"), extended
+      here 23 September because the list ran short. The Unreal port has
+      perception, memory, gossip, reaction and save; it has no schedules.
+      Core/Population.cs (699 lines: who is outdoors where at a given day
+      and hour, work and home hours) ported to the module with a golden
+      table regenerated from the C# Core, as the others were, and the
+      independent check. The named cast's routines next, in the same way.
+
 ## Where things stand
 
 1. The new Hook sheet is the reference, and the Blender street is matched to it - lens, colour, composition - then detail by detail: the parade to the 1989 photographs, glass, bricks, arches, pots, flags, nets, rooms behind the shop windows, the street running on to the rise.
