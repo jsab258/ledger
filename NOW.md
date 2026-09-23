@@ -897,9 +897,15 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
   - [ ] PEOPLE TURN THEIR HEAD TO LOOK AT YOU when you move near them or talk
         to them - Unreal's own look-at (the engine's LookAt anim node or
         Control Rig), not our own.
+        WRITTEN 23 Sep (b9696974): the engine's Look At node on the head bone
+        in a native animation instance, fading in within 5 m and in front.
+        Not done until the runner's verdict shows heads found and turned.
   - [ ] SOUND IS POSITIONAL: a voice or a noise comes from where its source
         is and changes as you move - Unreal's own audio (spatialised audio
         components, attenuation); the street has no sound at all today.
+        WRITTEN 23 Sep (09aeaf7f): a traffic bed at the north bend and a
+        voice on each of the six people, engine attenuation. Not done until
+        the runner's verdict shows the sounds placed.
   - [x] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
         hook frame is a shape rather than a model (the cars, the kiosk, the
         lamp columns, the railing, the skip, the bins, the pallets...), then
@@ -923,6 +929,10 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       features on and off, one corner at its best with one MetaHuman, beside a
       PS5-era reference, its cost on the card with the voice's share, and the
       plain-words answer in FOR-JAFAR.md.
+      FIRST HALF DONE 23 Sep (877eb312): every feature on changes 2.4 per cent
+      of the corner for 2.6x the frame time (9.2 -> 24.3 ms); the gap is
+      content and craft. The content half (scanned materials, one MetaHuman)
+      waits on Jafar's yes to the downloads.
 - [ ] A LISTENING TEST FOR CHATTERBOX NANO, before the slice (Jafar 23 Sep):
       ten lines, three cast voices, each by the engine we use now and by
       Nano, played to him BLIND in pairs so he picks without knowing which is
@@ -1012,21 +1022,16 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
       Honest estimate 12 to 18 sittings (FOR-JAFAR).
       AND IN ITS DEFINITION OF DONE (Jafar 23 Sep 18:00): the simulation runs
       the same regardless of frame rate.
-- [ ] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
-      research/baseline-features onto main, as it stands, folding nothing.
-- HELD BY JAFAR (23 Sep, 18:16): "do not put MASTER-CHECKLIST.md into
-      ROADMAP.md yet. I am sorting which of its items this game actually
-      wants first, and will send the result." The fold below waits for his
-      list, and so does folding the baseline branch's extras into the
-      checklist, since that is the same sorting. WHAT WAS ASKED (18:00): fold
-      production/research/feature-coverage/MASTER-CHECKLIST.md (957 items,
-      per-stage index) into ROADMAP.md as each stage's checklist, at the level
-      of specific items, never headings, and make this list refill from it;
-      it supersedes the 111-tile systems inventory. Bring the branch
-      research/baseline-features onto main and fold in anything the master
-      checklist lacks. The checklist's blind spots are a floor; anything
-      Jafar finds playing other games goes on it with the way of looking that
-      should have caught it.
+- [x] AT A CHECKPOINT BETWEEN VISUAL ITEMS: bring the branch
+      research/baseline-features onto main. DONE 23 Sep (e1e81fed).
+- [ ] THE CHECKLIST FOLDED, SORTED AS JAFAR RULED (23 Sep, evening; the hold
+      of 18:16 lifted): the twelve genre decisions in DECISIONS.md (G0-G12);
+      MASTER-CHECKLIST.md and the baseline research's six additions folded
+      into ROADMAP.md per stage, floor / ours / genre, outs kept with their
+      ruling; the four rules in CLAUDE.md; tools/stage-check.py counting per
+      stage and refusing a FINISHED stage with anything open, in the cheap
+      checks; the count at the top of FOR-JAFAR.md and in every sitting's
+      last message. THIS LIST REFILLS ONLY FROM THE CURRENT STAGE'S CHECKLIST.
 - Then alternate sittings, polish and moat.
 
 ## Where things stand
