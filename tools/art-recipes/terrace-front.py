@@ -3028,8 +3028,13 @@ def _north_rise(out):
             for fz in (1.1, 3.6):
                 # a house squeezed against the end of the span may be too
                 # narrow for a band of windows; it keeps its blank wall
+                # DARK, NOT SEE-THROUGH (23 September): the street's own
+                # "glass" is the shop glass Unreal draws see-through, and over
+                # a box with no room behind it the rise's windows vanished
+                # into their walls. car_glass is the dark opaque window the
+                # backdrop's other rows already wear.
                 if zb + fz + 1.3 < zb + h and y1 - y > 2.0:
-                    _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "glass",
+                    _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "car_glass",
                          xa - 0.05, xa, y + 0.8, y1 - 0.8, zb + fz, zb + fz + 1.3,
                          "a-floor-of-windows")
             # a stack on most of them

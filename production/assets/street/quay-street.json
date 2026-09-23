@@ -162,7 +162,7 @@
    "drawn_tile_m": null,
    "emit_day": null,
    "emit_night": null,
-   "faces": 288
+   "faces": 1128
   },
   {
    "mesh": "street_card_int23_fish",
@@ -603,28 +603,6 @@
    "faces": 18
   },
   {
-   "mesh": "street_glass_eg_bay18",
-   "material": "glass_eg_bay18",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 24
-  },
-  {
    "mesh": "street_glass_eg_bay2",
    "material": "glass_eg_bay2",
    "base_material": "glass",
@@ -757,28 +735,6 @@
    "faces": 38
   },
   {
-   "mesh": "street_glass_eu_bay18",
-   "material": "glass_eu_bay18",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 24
-  },
-  {
    "mesh": "street_glass_eu_bay2",
    "material": "glass_eu_bay2",
    "base_material": "glass",
@@ -801,50 +757,6 @@
    "faces": 38
   },
   {
-   "mesh": "street_glass_eu_bay22",
-   "material": "glass_eu_bay22",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 36
-  },
-  {
-   "mesh": "street_glass_eu_bay26",
-   "material": "glass_eu_bay26",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 36
-  },
-  {
    "mesh": "street_glass_eu_bay3",
    "material": "glass_eu_bay3",
    "base_material": "glass",
@@ -865,50 +777,6 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 38
-  },
-  {
-   "mesh": "street_glass_eu_bay30",
-   "material": "glass_eu_bay30",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 48
-  },
-  {
-   "mesh": "street_glass_eu_bay34",
-   "material": "glass_eu_bay34",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 72
   },
   {
    "mesh": "street_glass_eu_bay4",
@@ -997,28 +865,6 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 12
-  },
-  {
-   "mesh": "street_glass_wg_bay18",
-   "material": "glass_wg_bay18",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 54
   },
   {
    "mesh": "street_glass_wg_bay2",
@@ -1201,28 +1047,6 @@
    "faces": 64
   },
   {
-   "mesh": "street_glass_wu_bay18",
-   "material": "glass_wu_bay18",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 54
-  },
-  {
    "mesh": "street_glass_wu_bay2",
    "material": "glass_wu_bay2",
    "base_material": "glass",
@@ -1245,50 +1069,6 @@
    "faces": 64
   },
   {
-   "mesh": "street_glass_wu_bay22",
-   "material": "glass_wu_bay22",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 108
-  },
-  {
-   "mesh": "street_glass_wu_bay26",
-   "material": "glass_wu_bay26",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 144
-  },
-  {
    "mesh": "street_glass_wu_bay3",
    "material": "glass_wu_bay3",
    "base_material": "glass",
@@ -1309,50 +1089,6 @@
    "emit_day": null,
    "emit_night": null,
    "faces": 19
-  },
-  {
-   "mesh": "street_glass_wu_bay30",
-   "material": "glass_wu_bay30",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 120
-  },
-  {
-   "mesh": "street_glass_wu_bay34",
-   "material": "glass_wu_bay34",
-   "base_material": "glass",
-   "linear_rgb": [
-    0.085,
-    0.092,
-    0.1
-   ],
-   "roughness": 0.0,
-   "surface_map": null,
-   "tile_m": 0.0,
-   "decal": null,
-   "decal_uv": null,
-   "decal_emit": null,
-   "texture_mean": null,
-   "drawn_map": null,
-   "drawn_tile_m": null,
-   "emit_day": null,
-   "emit_night": null,
-   "faces": 120
   },
   {
    "mesh": "street_glass_wu_bay4",
