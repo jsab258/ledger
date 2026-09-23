@@ -53,6 +53,7 @@
 #include "VignetteSpec.h"
 #include "FrameStats.h"
 #include "SurfaceBind.h"
+#include "StreetMeshes.h"
 
 #include "CoreMinimal.h"
 #include "UObject/UnrealType.h"
@@ -974,6 +975,21 @@ namespace
 	int32   GDecalRootFiles = 0;
 	std::vector<std::string> GDecalRootTried;
 	std::vector<LedgerSurface::DecalResult> GDecalResults;
+	// ---- THE STREET FROM BLENDER, 23 September ----------------------------
+	// production/assets/street/quay-street.glb, made into static meshes by
+	// tools/ue/import_street.py, placed here at the origin (the export is
+	// already in this world's frame, the mirror fixed at the export) and
+	// standing in for the scene file's own terrace, ground and sign pieces
+	// in the automation's frames. The walk and the crime keep the scene
+	// file's street, which carries their collision; this one carries none.
+	LedgerStreet::Sidecar GStreet;
+	TArray<AStaticMeshActor*> GStreetActors;
+	FString GStreetFrom;
+	FString GStreetRepoRoot;
+	std::string GStreetNote = "not-tried";
+	std::vector<std::string> GStreetTried;
+	int32 GStreetLoaded = 0, GStreetHidden = 0, GStreetPainted = 0;
+	int32 GStreetPictures = 0, GStreetPicturesAsked = 0;
 	std::string GDecalsLine =
 		"decalsStatus=NOT-REACHED decalsPainted=nothing-measured"
 		" decalsNote=the-material-pass-never-ran";
@@ -1470,6 +1486,114 @@ namespace
 		}
 	}
 
+	// ---- THE STREET FROM BLENDER, 23 September ----------------------------
+	//
+	// WHERE THE SIDECAR IS. The probe runs from the checkout on the runner,
+	// so the export is reached where it is committed rather than staged: from
+	// the source project it is one level up, from the packaged project four.
+	FString FindStreetSidecar(std::vector<std::string>& OutTried)
+	{
+		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
+		TArray<FString> Cands;
+		Cands.Add(AbsProject(TEXT("../production/assets/street/quay-street.json")));
+		Cands.Add(AbsProject(TEXT("../../../../production/assets/street/quay-street.json")));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+			ExeDir, TEXT("../../../../../../production/assets/street/quay-street.json"))));
+		for (int32 I = 0; I < Cands.Num(); ++I)
+		{
+			FString C = Cands[I];
+			FPaths::CollapseRelativeDirectories(C);
+			OutTried.push_back(std::string(TCHAR_TO_UTF8(*C)));
+			if (FPaths::FileExists(C)) { return C; }
+		}
+		return FString();
+	}
+
+	// PLACE IT, AND HIDE WHAT IT STANDS IN FOR. Scale 1 at the origin with no
+	// turn: the export's metres are this world's, x along the street and the
+	// east side at +Y, which the import step reads back off Mickey's sign.
+	// The replaced pieces are HIDDEN, not destroyed, so every count, reading
+	// and verdict key about the scene file's street is what it was.
+	void SpawnStreet(UWorld* World)
+	{
+		GStreetTried.clear();
+		const FString Path = FindStreetSidecar(GStreetTried);
+		if (Path.IsEmpty()) { GStreetNote = "no-sidecar/the-scene-file-street-stands"; return; }
+		FString Contents;
+		if (!FFileHelper::LoadFileToString(Contents, *Path)) { GStreetNote = "sidecar-would-not-open"; return; }
+		std::string Err;
+		if (!LedgerStreet::ParseSidecar(std::string(TCHAR_TO_UTF8(*Contents)), GStreet, Err))
+		{
+			GStreetNote = Err;
+			return;
+		}
+		GStreetFrom = Path;
+		GStreetRepoRoot = FPaths::Combine(FPaths::GetPath(Path), TEXT("../../.."));
+		FPaths::CollapseRelativeDirectories(GStreetRepoRoot);
+		GStreetActors.SetNumZeroed((int32)GStreet.Rows.size());
+		std::string Missing;
+		for (size_t I = 0; I < GStreet.Rows.size(); ++I)
+		{
+			const LedgerStreet::Row& Rw = GStreet.Rows[I];
+			const FString ObjPath(UTF8_TO_TCHAR(LedgerStreet::ObjectPath(Rw.Mesh).c_str()));
+			UStaticMesh* M = LoadObject<UStaticMesh>(nullptr, *ObjPath);
+			if (M == nullptr)
+			{
+				if (Missing.size() < 120) { Missing += "/" + Rw.Mesh; }
+				continue;
+			}
+			FActorSpawnParameters Params;
+			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			AStaticMeshActor* A = World->SpawnActor<AStaticMeshActor>(
+				AStaticMeshActor::StaticClass(), FVector::ZeroVector, FRotator::ZeroRotator, Params);
+			if (A == nullptr) { continue; }
+			MakeMovable(A);
+			if (UStaticMeshComponent* C = A->GetStaticMeshComponent())
+			{
+				C->SetMobility(EComponentMobility::Movable);
+				C->SetStaticMesh(M);
+				C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+				C->SetCastShadow(true);
+			}
+#if WITH_EDITOR
+			A->SetActorLabel(UTF8_TO_TCHAR(Rw.Mesh.c_str()));
+#endif
+			GStreetActors[(int32)I] = A;
+			++GStreetLoaded;
+		}
+		if (GStreetLoaded == 0)
+		{
+			GStreetNote = "no-street-mesh-loaded/was-import_street.py-run-and-/Game/Ledger/Street-cooked" + Missing;
+			return;
+		}
+		for (size_t I = 0; I < GSpec.Pieces.size(); ++I)
+		{
+			const Piece& P = GSpec.Pieces[I];
+			if (!LedgerStreet::Replaced(GStreet.Replaced, P.Name, P.Shape, P.Asset)) { continue; }
+			AStaticMeshActor** Found = GByName.Find(FString(UTF8_TO_TCHAR(P.Name.c_str())));
+			if (Found != nullptr && *Found != nullptr)
+			{
+				(*Found)->SetActorHiddenInGame(true);
+				++GStreetHidden;
+			}
+		}
+		GStreetNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
+	}
+
+	std::string StreetSegmentNow()
+	{
+		char Buf[256];
+		std::snprintf(Buf, sizeof(Buf),
+			"streetStatus=%s streetMeshes=%d/%d streetHidden=%d/%d streetPainted=%d streetPictures=%d/%d",
+			GStreetLoaded > 0 ? "PLACED" : "NONE", (int)GStreetLoaded, (int)GStreet.Rows.size(),
+			(int)GStreetHidden, (int)GSpec.Pieces.size(), (int)GStreetPainted,
+			(int)GStreetPictures, (int)GStreetPicturesAsked);
+		return std::string(Buf) + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
+		     + " streetFrom=" + (GStreetFrom.IsEmpty()
+		                         ? "NOT-FOUND/tried=" + LedgerSurface::PathListValue(GStreetTried, 4)
+		                         : std::string(TCHAR_TO_UTF8(*NoSp(GStreetFrom))));
+	}
+
 	// BUILD THE WHOLE STREET ONCE. Every count is captured as it happens and
 	// the denominator comes off the FILE, before any spawning, so a run that
 	// dies halfway still prints what it was asked for.
@@ -1737,6 +1861,10 @@ namespace
 			++Emitted;
 			GByName.Add(FString(UTF8_TO_TCHAR(P.Name.c_str())), A);
 		}
+
+		// THE STREET FROM BLENDER, in the automation's frames only: the walk
+		// and the crime need the scene file's collision, which this has none of.
+		if (!bInteractive) { SpawnStreet(World); }
 
 		// H4: A POINT LIGHT UNDER EVERY EMISSIVE PIECE, which is what the
 		// file's lantern block says in as many words: one point light 0.05 m
@@ -2765,7 +2893,7 @@ namespace
 	// answers to one question.
 	std::string SceneLineWithSky()
 	{
-		return GSceneLine + " " + SkySegmentNow();
+		return GSceneLine + " " + StreetSegmentNow() + " " + SkySegmentNow();
 	}
 
 	// A CVAR THIS ENGINE VERSION DOES NOT CARRY PRINTS THE WORD `absent`.
@@ -5583,6 +5711,79 @@ namespace
 	// BIND EVERY SURFACE THE SHARED FILE ASKED FOR, and count what did not
 	// answer. A Phase C that renders and cannot say what it failed to load is
 	// worth less than one that loads less and says so.
+	// PAINT THE STREET FLAT, FOR ITS FIRST FRAME. Each mesh takes the colour
+	// and roughness Blender gave its material, as a one-texel map, and each
+	// lettered mesh its own picture through the UVs the export worked out -
+	// no crop here, the crop is in the UVs. This is NOT the look: the pack's
+	// maps, the wet, the grade and the light are the next item and are
+	// developed here against the sheet. It exists so the first Unreal frame
+	// shows the geometry the right way round with its signs readable.
+	void PaintStreet()
+	{
+		if (GStreetLoaded == 0 || GBaseMaterial == nullptr) { return; }
+		for (int32 I = 0; I < GStreetActors.Num(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr) { continue; }
+			UStaticMeshComponent* Comp = A->GetStaticMeshComponent();
+			if (Comp == nullptr) { continue; }
+			const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+			UMaterialInstanceDynamic* Mid = UMaterialInstanceDynamic::Create(GBaseMaterial, A);
+			if (Mid == nullptr) { continue; }
+			UTexture2D* Albedo = nullptr;
+			double Rough = Rw.Roughness >= 0.0 ? Rw.Roughness : 0.8;
+			if (!Rw.Decal.empty())
+			{
+				++GStreetPicturesAsked;
+				bool bRepo = false;
+				const FString Leaf(UTF8_TO_TCHAR(LedgerStreet::PictureLeaf(Rw, bRepo).c_str()));
+				TArray<FString> Where;
+				if (bRepo) { Where.Add(FPaths::Combine(GStreetRepoRoot, Leaf)); }
+				else
+				{
+					if (!GDecalRoot.IsEmpty()) { Where.Add(FPaths::Combine(GDecalRoot, Leaf)); }
+					Where.Add(FPaths::Combine(GStreetRepoRoot,
+						TEXT("ledger/Assets/StreamingAssets/Decals"), Leaf));
+				}
+				for (int32 W = 0; W < Where.Num() && Albedo == nullptr; ++W)
+				{
+					if (IFileManager::Get().FileSize(*Where[W]) <= 0) { continue; }
+					int32 FW = 0, FH = 0;
+					FString LoadedAs;
+					Albedo = ImportTexture(Where[W], true, FW, FH, LoadedAs);
+				}
+				if (Albedo != nullptr) { ++GStreetPictures; Rough = 0.42; }
+			}
+			if (Albedo == nullptr)
+			{
+				Albedo = Rw.bHasRgb
+					? MakeFlatTexture(LedgerStreet::SrgbByte(Rw.R), LedgerStreet::SrgbByte(Rw.G),
+					                  LedgerStreet::SrgbByte(Rw.B), true, TEXT("street-flat"))
+					: MakeFlatTexture(128, 128, 128, true, TEXT("street-flat-grey"));
+			}
+			const int32 RB = LedgerStreet::LinearByte(Rough);
+			UTexture2D* RoughTex = MakeFlatTexture(RB, RB, RB, false, TEXT("street-rough"));
+			if (Albedo != nullptr)
+			{
+				Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))), Albedo);
+			}
+			if (RoughTex != nullptr)
+			{
+				Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(2))), RoughTex);
+			}
+			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), 1.0f);
+			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), 1.0f);
+			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
+			                             FLinearColor(1.0f, 1.0f, 1.0f, 1.0f));
+			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+			for (int32 Slot = 0; Slot < Comp->GetNumMaterials(); ++Slot)
+			{
+				Comp->SetMaterial(Slot, Mid);
+			}
+			++GStreetPainted;
+		}
+	}
+
 	void BindSurfaces()
 	{
 		// THE WETNESS, DECIDED BEFORE THE FIRST INSTANCE IS MADE, because an
@@ -6144,6 +6345,7 @@ namespace
 		GDecalsLine = LedgerSurface::DecalsDoneLine(
 			GDecalResults, std::string(TCHAR_TO_UTF8(*GDecalRoot)),
 			GDecalRootFiles, GDecalRootTried);
+		PaintStreet();
 	}
 
 	// ---- THE CONTROL QUADS -------------------------------------------------

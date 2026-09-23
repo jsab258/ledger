@@ -428,7 +428,7 @@ namespace Ledger.Core
             for (int i = 0; i < plan.Cameras.Count; i++)
             {
                 var c = plan.Cameras[i];
-                bool camFound = plan.GroundAt(c.X, c.Z, out double camGroundY, out string camEdge);
+                bool camFound = plan.CameraGround(c, out double camGroundY, out string camEdge);
                 sb.Append('{');
                 sb.Append(Ks("id", c.Id)).Append(',');
                 sb.Append(Kn("x_m", c.X)).Append(',');

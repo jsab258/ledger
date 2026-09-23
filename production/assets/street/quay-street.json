@@ -1,0 +1,950 @@
+{
+ "what": "Quay Street's geometry, exported by tools/art-recipes/terrace-front.py --export-glb for Unreal's mesh route. One mesh per material; each mesh carries its material's name, and the rows below say what that material was in Blender - a TARGET for Unreal's look-development, not a result (Jafar, 23 September).",
+ "mirror": "REFLECTED y to -y AT EXPORT, faces re-wound: the Blender recipe builds the mirror of the street the scene file and Unreal describe, and this is the one place that is fixed. East arrives at Unreal +Y.",
+ "uvs": "metres by each face's own axis, except lettered faces (sign_, card_), whose UVs run reader's-left to reader's-right after the reflection, cropped by decal_uv",
+ "not_exported": "lamps and held props (Unreal places them from the scene file), stand-in people (stage 2)",
+ "units": "metres in Blender, z up; the glTF is y up",
+ "replaces_in_unreal": {
+  "piece_name_prefixes": [
+   "east_",
+   "west_",
+   "ground_",
+   "kerb",
+   "yellow_",
+   "gully_"
+  ],
+  "piece_shapes": [
+   "decal"
+  ],
+  "held_prop_assets": [
+   "awning_02",
+   "fascia_console_01",
+   "fascia_cornice_01",
+   "framed_poster",
+   "poster",
+   "roll_top_chimney"
+  ],
+  "why": "the recipe builds these itself; lamps, kiosk, pillar box, railing, bins, litter and ground props are the scene file's and stay"
+ },
+ "meshes": [
+  {
+   "mesh": "street_asphalt",
+   "material": "asphalt",
+   "base_material": "asphalt",
+   "linear_rgb": [
+    0.125,
+    0.123,
+    0.118
+   ],
+   "roughness": 0.85,
+   "surface_map": "asphalt",
+   "tile_m": 2.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 16
+  },
+  {
+   "mesh": "street_brick_grey",
+   "material": "brick_grey",
+   "base_material": "brick_grey",
+   "linear_rgb": [
+    0.21,
+    0.092,
+    0.064
+   ],
+   "roughness": 0.92,
+   "surface_map": "brick_grey",
+   "tile_m": 0.55,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 1644
+  },
+  {
+   "mesh": "street_brick_red",
+   "material": "brick_red",
+   "base_material": "brick_red",
+   "linear_rgb": [
+    0.236,
+    0.092,
+    0.057
+   ],
+   "roughness": 0.92,
+   "surface_map": "brick_red",
+   "tile_m": 0.55,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 2338
+  },
+  {
+   "mesh": "street_brick_rubbed",
+   "material": "brick_rubbed",
+   "base_material": "brick_rubbed",
+   "linear_rgb": [
+    0.307,
+    0.12,
+    0.074
+   ],
+   "roughness": 0.9,
+   "surface_map": "plaster",
+   "tile_m": 0.4,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 720
+  },
+  {
+   "mesh": "street_car_bluegrey",
+   "material": "car_bluegrey",
+   "base_material": "car_bluegrey",
+   "linear_rgb": [
+    0.07,
+    0.085,
+    0.105
+   ],
+   "roughness": 0.3,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 18
+  },
+  {
+   "mesh": "street_car_dark",
+   "material": "car_dark",
+   "base_material": "car_dark",
+   "linear_rgb": [
+    0.022,
+    0.024,
+    0.032
+   ],
+   "roughness": 0.26,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 18
+  },
+  {
+   "mesh": "street_car_glass",
+   "material": "car_glass",
+   "base_material": "car_glass",
+   "linear_rgb": [
+    0.01,
+    0.011,
+    0.014
+   ],
+   "roughness": 0.1,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 444
+  },
+  {
+   "mesh": "street_car_trim",
+   "material": "car_trim",
+   "base_material": "car_trim",
+   "linear_rgb": [
+    0.018,
+    0.018,
+    0.019
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_card_int23_fish",
+   "material": "card_production/art/interiors-2026-09-23/int23_fish",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/art/interiors-2026-09-23/int23_fish",
+   "decal_uv": [
+    0.05,
+    0.12,
+    0.95,
+    0.92
+   ],
+   "decal_emit": "room",
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_int23_grocer",
+   "material": "card_production/art/interiors-2026-09-23/int23_grocer",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/art/interiors-2026-09-23/int23_grocer",
+   "decal_uv": [
+    0.11,
+    0.22,
+    0.89,
+    0.93
+   ],
+   "decal_emit": "room",
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_int23_laundry",
+   "material": "card_production/art/interiors-2026-09-23/int23_laundry",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/art/interiors-2026-09-23/int23_laundry",
+   "decal_uv": [
+    0.03,
+    0.1,
+    0.73,
+    0.98
+   ],
+   "decal_emit": "room",
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_int23_pawn",
+   "material": "card_production/art/interiors-2026-09-23/int23_pawn",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/art/interiors-2026-09-23/int23_pawn",
+   "decal_uv": [
+    0.06,
+    0.2,
+    0.64,
+    0.92
+   ],
+   "decal_emit": "room",
+   "faces": 6
+  },
+  {
+   "mesh": "street_card_net_curtain_a",
+   "material": "card_production/assets/vignette/decals2d/net_curtain_a",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/assets/vignette/decals2d/net_curtain_a",
+   "decal_uv": null,
+   "decal_emit": "net",
+   "faces": 72
+  },
+  {
+   "mesh": "street_card_net_curtain_b",
+   "material": "card_production/assets/vignette/decals2d/net_curtain_b",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/assets/vignette/decals2d/net_curtain_b",
+   "decal_uv": null,
+   "decal_emit": "net",
+   "faces": 72
+  },
+  {
+   "mesh": "street_dish_grey",
+   "material": "dish_grey",
+   "base_material": "dish_grey",
+   "linear_rgb": [
+    0.42,
+    0.425,
+    0.42
+   ],
+   "roughness": 0.45,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 42
+  },
+  {
+   "mesh": "street_fascia_bare_timber",
+   "material": "fascia_bare_timber",
+   "base_material": "paint_stall",
+   "linear_rgb": [
+    0.021,
+    0.014,
+    0.01
+   ],
+   "roughness": 0.5,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_fascia_bottle_green",
+   "material": "fascia_bottle_green",
+   "base_material": "paint_stall",
+   "linear_rgb": [
+    0.06,
+    0.085,
+    0.072
+   ],
+   "roughness": 0.5,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_fascia_cream",
+   "material": "fascia_cream",
+   "base_material": "paint_stall",
+   "linear_rgb": [
+    0.52,
+    0.43,
+    0.27
+   ],
+   "roughness": 0.5,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 48
+  },
+  {
+   "mesh": "street_fascia_oxblood",
+   "material": "fascia_oxblood",
+   "base_material": "paint_stall",
+   "linear_rgb": [
+    0.105,
+    0.02,
+    0.024
+   ],
+   "roughness": 0.5,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 84
+  },
+  {
+   "mesh": "street_fascia_slate_blue",
+   "material": "fascia_slate_blue",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.0625,
+    0.0875,
+    0.119
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_frame_metal",
+   "material": "frame_metal",
+   "base_material": "frame_metal",
+   "linear_rgb": [
+    0.33,
+    0.34,
+    0.352
+   ],
+   "roughness": 0.3,
+   "surface_map": "plaster",
+   "tile_m": 0.4,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 272
+  },
+  {
+   "mesh": "street_frame_painted",
+   "material": "frame_painted",
+   "base_material": "frame_painted",
+   "linear_rgb": [
+    0.0625,
+    0.0875,
+    0.119
+   ],
+   "roughness": 0.35,
+   "surface_map": "plaster",
+   "tile_m": 0.4,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 108
+  },
+  {
+   "mesh": "street_glass",
+   "material": "glass",
+   "base_material": "glass",
+   "linear_rgb": [
+    0.085,
+    0.092,
+    0.1
+   ],
+   "roughness": 0.0,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 1950
+  },
+  {
+   "mesh": "street_glass_whitened",
+   "material": "glass_whitened",
+   "base_material": "glass_whitened",
+   "linear_rgb": [
+    0.42,
+    0.415,
+    0.385
+   ],
+   "roughness": 0.85,
+   "surface_map": "plaster",
+   "tile_m": 0.6,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_interior",
+   "material": "interior",
+   "base_material": "interior",
+   "linear_rgb": [
+    0.038,
+    0.035,
+    0.032
+   ],
+   "roughness": 0.95,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 126
+  },
+  {
+   "mesh": "street_interior_lit",
+   "material": "interior_lit",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_kerbstone",
+   "material": "kerbstone",
+   "base_material": "kerbstone",
+   "linear_rgb": [
+    0.3,
+    0.28,
+    0.255
+   ],
+   "roughness": 0.58,
+   "surface_map": "kerb",
+   "tile_m": 0.6,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 12
+  },
+  {
+   "mesh": "street_lamp_red",
+   "material": "lamp_red",
+   "base_material": "lamp_red",
+   "linear_rgb": [
+    0.16,
+    0.012,
+    0.01
+   ],
+   "roughness": 0.22,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_lead",
+   "material": "lead",
+   "base_material": "lead",
+   "linear_rgb": [
+    0.03,
+    0.03,
+    0.032
+   ],
+   "roughness": 0.6,
+   "surface_map": "metal",
+   "tile_m": 0.35,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 156
+  },
+  {
+   "mesh": "street_paint_door",
+   "material": "paint_door",
+   "base_material": "paint_door",
+   "linear_rgb": [
+    0.03,
+    0.055,
+    0.048
+   ],
+   "roughness": 0.42,
+   "surface_map": "wood",
+   "tile_m": 0.6,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 66
+  },
+  {
+   "mesh": "street_paint_joinery",
+   "material": "paint_joinery",
+   "base_material": "paint_joinery",
+   "linear_rgb": [
+    0.68,
+    0.672,
+    0.64
+   ],
+   "roughness": 0.42,
+   "surface_map": "plaster",
+   "tile_m": 0.5,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 2466
+  },
+  {
+   "mesh": "street_paint_white",
+   "material": "paint_white",
+   "base_material": "paint_white",
+   "linear_rgb": [
+    0.52,
+    0.515,
+    0.49
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 48
+  },
+  {
+   "mesh": "street_paint_yellow",
+   "material": "paint_yellow",
+   "base_material": "paint_yellow",
+   "linear_rgb": [
+    0.405,
+    0.331,
+    0.079
+   ],
+   "roughness": 0.55,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 24
+  },
+  {
+   "mesh": "street_paving",
+   "material": "paving",
+   "base_material": "paving",
+   "linear_rgb": [
+    0.245,
+    0.151,
+    0.069
+   ],
+   "roughness": 0.62,
+   "surface_map": "plaster",
+   "tile_m": 1.2,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 36
+  },
+  {
+   "mesh": "street_plate_front",
+   "material": "plate_front",
+   "base_material": "plate_front",
+   "linear_rgb": [
+    0.56,
+    0.56,
+    0.54
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 12
+  },
+  {
+   "mesh": "street_plate_rear",
+   "material": "plate_rear",
+   "base_material": "plate_rear",
+   "linear_rgb": [
+    0.48,
+    0.38,
+    0.035
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 12
+  },
+  {
+   "mesh": "street_pot_buff",
+   "material": "pot_buff",
+   "base_material": "pot_buff",
+   "linear_rgb": [
+    0.554,
+    0.397,
+    0.212
+   ],
+   "roughness": 0.8,
+   "surface_map": "plaster",
+   "tile_m": 0.5,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 40
+  },
+  {
+   "mesh": "street_pot_clay",
+   "material": "pot_clay",
+   "base_material": "pot_clay",
+   "linear_rgb": [
+    0.203,
+    0.073,
+    0.051
+   ],
+   "roughness": 0.8,
+   "surface_map": "plaster",
+   "tile_m": 0.5,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 160
+  },
+  {
+   "mesh": "street_render_cream",
+   "material": "render_cream",
+   "base_material": "render_cream",
+   "linear_rgb": [
+    0.55,
+    0.48,
+    0.28
+   ],
+   "roughness": 0.8,
+   "surface_map": "plaster",
+   "tile_m": 1.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 198
+  },
+  {
+   "mesh": "street_render_patch",
+   "material": "render_patch",
+   "base_material": "render_patch",
+   "linear_rgb": [
+    0.38,
+    0.285,
+    0.16
+   ],
+   "roughness": 0.85,
+   "surface_map": "plaster",
+   "tile_m": 0.3,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 20
+  },
+  {
+   "mesh": "street_sign_fascia_fish_market",
+   "material": "sign_generated/fascia_fish_market",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": "generated/fascia_fish_market",
+   "decal_uv": [
+    0.1025,
+    0.6836,
+    0.8936,
+    0.8477
+   ],
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_sign_fascia_ritas_pawn",
+   "material": "sign_generated/fascia_ritas_pawn",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": "generated/fascia_ritas_pawn",
+   "decal_uv": [
+    0.1172,
+    0.625,
+    0.8838,
+    0.8047
+   ],
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_sign_fascia_steam_laundry",
+   "material": "sign_generated/fascia_steam_laundry",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": "generated/fascia_steam_laundry",
+   "decal_uv": [
+    0.0879,
+    0.6641,
+    0.9131,
+    0.834
+   ],
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_sign_board_to_let",
+   "material": "sign_production/assets/vignette/decals2d/board_to_let",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": "production/assets/vignette/decals2d/board_to_let",
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_sign_fascia_mickeys_plain",
+   "material": "sign_production/assets/vignette/decals2d/fascia_mickeys_plain",
+   "base_material": "paint_fascia",
+   "linear_rgb": [
+    0.03,
+    0.022,
+    0.03
+   ],
+   "roughness": 0.45,
+   "surface_map": "wood",
+   "tile_m": 1.0,
+   "decal": "production/assets/vignette/decals2d/fascia_mickeys_plain",
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_slate",
+   "material": "slate",
+   "base_material": "slate",
+   "linear_rgb": [
+    0.06,
+    0.058,
+    0.062
+   ],
+   "roughness": 0.7,
+   "surface_map": "roof_b",
+   "tile_m": 0.8,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 810
+  },
+  {
+   "mesh": "street_steel_dark",
+   "material": "steel_dark",
+   "base_material": "steel_dark",
+   "linear_rgb": [
+    0.021,
+    0.021,
+    0.024
+   ],
+   "roughness": 0.42,
+   "surface_map": "metal",
+   "tile_m": 0.35,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 156
+  },
+  {
+   "mesh": "street_stone",
+   "material": "stone",
+   "base_material": "stone",
+   "linear_rgb": [
+    0.24,
+    0.225,
+    0.2
+   ],
+   "roughness": 0.8,
+   "surface_map": "concrete",
+   "tile_m": 0.8,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 246
+  },
+  {
+   "mesh": "street_tile_patterned",
+   "material": "tile_patterned",
+   "base_material": "tile_patterned",
+   "linear_rgb": [
+    0.62,
+    0.57,
+    0.43
+   ],
+   "roughness": 0.2,
+   "surface_map": "plaster",
+   "tile_m": 0.3,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 6
+  },
+  {
+   "mesh": "street_tile_stall",
+   "material": "tile_stall",
+   "base_material": "tile_stall",
+   "linear_rgb": [
+    0.044,
+    0.052,
+    0.058
+   ],
+   "roughness": 0.18,
+   "surface_map": "plaster",
+   "tile_m": 0.3,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 18
+  },
+  {
+   "mesh": "street_tube_lit",
+   "material": "tube_lit",
+   "base_material": "tube_lit",
+   "linear_rgb": [
+    0.9,
+    0.94,
+    1.0
+   ],
+   "roughness": 0.5,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 36
+  },
+  {
+   "mesh": "street_tyre",
+   "material": "tyre",
+   "base_material": "tyre",
+   "linear_rgb": [
+    0.008,
+    0.008,
+    0.008
+   ],
+   "roughness": 0.88,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "faces": 80
+  }
+ ]
+}

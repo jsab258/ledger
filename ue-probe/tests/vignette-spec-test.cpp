@@ -20,6 +20,7 @@
 // it was meant to print.
 #include "../Source/LedgerProbe/Public/VignetteSpec.h"
 #include "../Source/LedgerProbe/Public/SurfaceBind.h"
+#include "../Source/LedgerProbe/Public/StreetMeshes.h"
 
 #include <clocale>
 #include <cstdio>
@@ -4432,12 +4433,15 @@ int main(int argc, char** argv)
 			            Hook->EyeHeightM, Hook->YawDeg, Hook->PitchDeg,
 			            Hook->FovVerticalDeg,
 			            LedgerVignette::HorizontalFovDeg(Hook->FovVerticalDeg, 1280, 720));
-			// THE CAMERA STANDS IN THE CARRIAGEWAY, which is half of what
-			// "in the road near the left kerb" means and the half a position
-			// alone cannot say: the emitter resolved the ground under it.
-			Check(Hook->GroundFound && Hook->GroundEdge == "west_carriageway",
-			      "cam_hook stands on the west carriageway, as the panel's camera "
-			      "stands in the road and not on the pavement",
+			// THE CAMERA STANDS ON THE QUAY APRON, 23 September. It stood in
+			// the west carriageway while it reproduced the RETIRED panel; the
+			// approved sheet's lens puts it 3.2 m south of where this street
+			// starts, on the apron at crown level, which the scene file does
+			// not build, so it DECLARES that ground and the emitter names it
+			// as declared. What this still refuses is a camera on no ground.
+			Check(Hook->GroundFound && Hook->GroundEdge == "declared/quay_apron_at_crown_level",
+			      "cam_hook stands on the quay apron it declares, where the approved "
+			      "sheet's lens puts it",
 			      Hook->GroundEdge);
 			Check(Hook->Z > -3.0 + 0.255 && Hook->Z < -0.5,
 			      "and it is between the west channel and the crown, which is the "
@@ -6818,6 +6822,72 @@ int main(int argc, char** argv)
 		Check(LedgerVignette::TilingSegment(S).find("tilingFromFile=yes") != std::string::npos
 		      && LedgerVignette::TilingSegment(Empty).find("tilingFromFile=no") != std::string::npos,
 		      "the materials line says whether the tiling came from the file");
+	}
+
+	// ---- THE STREET FROM BLENDER, 23 September ----------------------------
+	// The committed export's sidecar parses, every mesh has a name Unreal can
+	// make an asset of and Blender did not cut short, and the list of the
+	// scene file's pieces the street stands in for keeps the lamps and the
+	// pavement furniture while taking the terraces, the ground and the signs.
+	{
+		bool SOk = false;
+		const std::string SText = Slurp("production/assets/street/quay-street.json", SOk);
+		LedgerStreet::Sidecar Sc;
+		std::string SErr;
+		const bool SParsed = SOk && LedgerStreet::ParseSidecar(SText, Sc, SErr);
+		Check(SParsed, "the street export's sidecar is on disk and parses", SOk ? SErr : "could not open");
+		int LongNames = 0, Dupes = 0, Pictures = 0, Coloured = 0;
+		bool MickeysPictured = false;
+		for (size_t I = 0; I < Sc.Rows.size(); ++I)
+		{
+			const LedgerStreet::Row& Rw = Sc.Rows[I];
+			if (Rw.Mesh.size() > 60) { ++LongNames; }
+			for (size_t J = I + 1; J < Sc.Rows.size(); ++J) { if (Sc.Rows[J].Mesh == Rw.Mesh) { ++Dupes; } }
+			if (!Rw.Decal.empty()) { ++Pictures; }
+			if (Rw.bHasRgb) { ++Coloured; }
+			if (Rw.Mesh == "street_sign_fascia_mickeys_plain" && !Rw.Decal.empty()) { MickeysPictured = true; }
+		}
+		std::printf("    street: meshes=%d pictured=%d coloured=%d longNames=%d dupes=%d\n",
+		            (int)Sc.Rows.size(), Pictures, Coloured, LongNames, Dupes);
+		Check(Sc.Rows.size() >= 40 && LongNames == 0 && Dupes == 0,
+		      "every street mesh is named once and under Blender's 63-character cut");
+		Check(MickeysPictured, "Mickey's sign arrives under its full name with its picture");
+		Check(Coloured + Pictures >= (int)Sc.Rows.size() - 2,
+		      "all but a couple of street meshes carry a colour or a picture to paint");
+		Check(LedgerStreet::ObjectPath("street_slate")
+		      == "/Game/Ledger/Street/quay-street/StaticMeshes/street_slate.street_slate",
+		      "a mesh's object path is the one the import measured");
+		int Kept = 0, Gone = 0, KeptTerrace = 0, GoneFurniture = 0;
+		for (size_t I = 0; I < S.Pieces.size(); ++I)
+		{
+			const LedgerVignette::Piece& P = S.Pieces[I];
+			const bool R = LedgerStreet::Replaced(Sc.Replaced, P.Name, P.Shape, P.Asset);
+			if (R) { ++Gone; } else { ++Kept; }
+			if (!R && (P.Name.compare(0, 5, "east_") == 0 || P.Name.compare(0, 5, "west_") == 0)) { ++KeptTerrace; }
+			if (R && (P.Name.compare(0, 6, "column") == 0 || P.Name.compare(0, 7, "lantern") == 0
+			          || P.Name.compare(0, 5, "kiosk") == 0 || P.Name.compare(0, 9, "pillarbox") == 0))
+			{
+				++GoneFurniture;
+			}
+		}
+		std::printf("    street stands in for %d of %d pieces, keeps %d\n", Gone, (int)S.Pieces.size(), Kept);
+		Check(Gone > 300 && KeptTerrace == 0,
+		      "the street stands in for every terrace piece of the scene file");
+		Check(GoneFurniture == 0 && Kept > 100,
+		      "and keeps the lamps, the kiosk and the pillar box, which it does not build");
+		Check(LedgerStreet::Replaced(Sc.Replaced, "prop_roll_top_chimney_0", "mesh", "roll_top_chimney")
+		      && !LedgerStreet::Replaced(Sc.Replaced, "prop_skip_0", "mesh", "skip")
+		      && LedgerStreet::Replaced(Sc.Replaced, "decal_anything", "decal", ""),
+		      "a roof or wall prop goes, a ground prop stays, a decal goes");
+		LedgerStreet::Replaces None;
+		Check(!LedgerStreet::Replaced(None, "east_parade_bay0", "box", ""),
+		      "a sidecar with no list stands in for nothing");
+		Check(LedgerStreet::SrgbByte(0.0) == 0 && LedgerStreet::SrgbByte(1.0) == 255
+		      && LedgerStreet::SrgbByte(0.2159) == 128 && LedgerStreet::LinearByte(0.5) == 128,
+		      "linear colours become the sRGB bytes a flat albedo texel is read as");
+		LedgerStreet::Sidecar Bad;
+		Check(!LedgerStreet::ParseSidecar("{\"meshes\": []}", Bad, SErr) && !SErr.empty(),
+		      "an empty sidecar is refused with a reason", SErr);
 	}
 
 	std::printf("%s: %d of %d check(s) failed\n",
