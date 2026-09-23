@@ -84,17 +84,28 @@ EMPTY = (["nothing"], ["nothing", "new"])
 BUILDER_MARKER = os.path.join(".claude", "builder-checkout")
 
 
-def in_builder_checkout(root, cwd):
-    """(ok, reason). This hook acts only for a session in the builder's own
-    checkout: the marker must be in the root it reads, and the session's
-    folder, when the payload names it, must be that root."""
-    if not os.path.isfile(os.path.join(root, BUILDER_MARKER)):
+def in_builder_checkout(root, cwd, session_id=None):
+    """(ok, reason). This hook acts only for the builder's own session: the
+    marker must be in the root it reads, the session's folder, when the
+    payload names it, must be that root, and when the marker names a session
+    (the builder writes its own id there at the start of every sitting) the
+    payload's session must be that one. THE SESSION TEST, 24 September: the
+    local-models session worked in this same folder and was held to the
+    builder's list all night, which a folder test cannot tell apart."""
+    marker = os.path.join(root, BUILDER_MARKER)
+    if not os.path.isfile(marker):
         return False, "not the builder's checkout (no .claude/builder-checkout here)"
     if cwd:
         a = os.path.normcase(os.path.realpath(cwd))
         b = os.path.normcase(os.path.realpath(root))
         if a != b:
             return False, "the session is in another folder (%s), not the builder's checkout" % cwd
+    try:
+        named = open(marker, encoding="utf-8").read().split()
+    except OSError:
+        named = []
+    if named and session_id and session_id not in named:
+        return False, "another session in the builder's folder (the marker names %s)" % named[0]
     return True, "the builder's checkout"
 
 
@@ -486,6 +497,14 @@ def selftest():
         check("accept/a-session-in-another-folder-is-not-held", not ok, why)
         ok, why = in_builder_checkout(tmp, None)
         check("reject/no-cwd-in-the-payload-still-holds-the-marked-root", ok, why)
+        with open(os.path.join(tmp, BUILDER_MARKER), "w") as fh:
+            fh.write("builder-123" + chr(10))
+        ok, why = in_builder_checkout(tmp, tmp, "builder-123")
+        check("reject/the-named-builder-session-is-held", ok, why)
+        ok, why = in_builder_checkout(tmp, tmp, "research-456")
+        check("accept/another-session-in-the-same-folder-is-not-held", not ok, why)
+        ok, why = in_builder_checkout(tmp, tmp, None)
+        check("reject/a-payload-without-a-session-still-holds-the-marked-root", ok, why)
 
     print("sitting-clock selftest: passed=%d/%d failed=%d"
           % (passed, passed + failed, failed))
@@ -531,7 +550,7 @@ def main(argv):
                 got = payload.get("last_assistant_message")
                 if isinstance(got, str):
                     message = got
-                here, why = in_builder_checkout(root, payload.get("cwd"))
+                here, why = in_builder_checkout(root, payload.get("cwd"), payload.get("session_id"))
                 if not here:
                     print("%s %s, so this list does not hold it" % (PERMIT, why))
                     return 0
