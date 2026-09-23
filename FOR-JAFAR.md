@@ -19,27 +19,22 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-23 **The paid run on the fresh lines needs your hands: the paid key is neither in this session nor stored on GitHub.** The workflow I set up failed at once for that reason.
+  - **(a) Add ANTHROPIC_API_KEY as a repository secret on GitHub (Settings, Secrets and variables, Actions), and tell me; I rerun it (my recommendation).** It stays out of the PC and out of chat.
+  - (b) Set ANTHROPIC_API_KEY as a user environment variable on the PC and restart the session.
+  - Meanwhile the local runs carry on; the paid score is only needed to set the bar.
 - 2026-09-23 **May I download what timing Nano on the card needs?** You asked for its speed on the processor (done: 2.0 seconds of work per second of speech) and on the card with the game running. The card route is Microsoft's DirectML add-on for the machine-learning library the voice runs in: 9 MB, from PyPI. But it only works with an older version of that library, so it needs a separate copy of it, about 250 MB more from PyPI, kept outside the project.
   - **(a) Yes, both, into a separate environment beside the voice's own (my recommendation).** It answers the question you asked.
   - (b) No; Nano stays on the processor, which leaves the card to the game.
   - Meanwhile the processor numbers stand, and the blind page is waiting for your picks.
-- 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
-  - **(a) Yes (my recommendation).** The cheapest real test of whether a better ready-made model does the router's job.
-  - (b) Only the two smallest.
-  - (c) Not now.
-  - Meanwhile the free first steps go first: rerun today's model fairly, and write 300 fresh test lines.
-- 2026-09-23 **Local models research: may I spend about 35p running the paid model on 300 fresh test lines?** It gives a fair score to beat; the 42 lines can't tell a good model from a very good one.
-  - **(a) Yes (my recommendation).**
-  - (b) No; compare on the 42 only.
-  - Meanwhile the lines get written, which costs nothing.
-- 2026-09-23 **Anthropic's rules forbid training a model on the paid model's answers without their permission**, and that includes anything I write. It only matters if we reach training, the last and costliest route.
-  - **(a) Use a large free model on your PC as the teacher (my recommendation).** Free, no permission needed.
-  - (b) Ask Anthropic for written permission; a message you would send.
-  - (c) Write the training examples by hand.
-  - Meanwhile nothing depends on it.
-
 ## Things you should know
 
+- 2026-09-23 **While your editor is open:** the build machine is still finishing one build from earlier pushes, with one more queued. They work in their own copy of the project, not the one you have open, and I can't cancel the queued one. I won't push anything that starts another until you've closed the editor. Switching on the MetaHuman Creator plugin changes the project file; I'll leave that change alone until you're done.
+- 2026-09-23 **Today's small model on the 299 fresh lines: 216 as shipped, 242 with the three wording changes.** There's a trade-off: dropping the wrapping around the player's line helps ordinary lines but makes typed orders work more often (31 of 39 obeyed, against 25). So the wrapping likely stays and the other changes carry on.
+- 2026-09-23 **My push to the research branch set off a full Unreal check on the PC runner**, which I didn't intend. It overlaps the model bake-off, so answer times measured in that window run slow; the scores aren't affected. Later pushes to that branch won't touch the game's files.
+- 2026-09-23 **First scores on the 299 fresh lines are sobering.** Ministral 3 3B, the best ready-made candidate on the 42 (35), gets 237 of 299 (79%) with 55 tidy-but-wrong answers, and obeys 35 of the 39 typed orders that get past the game's own block. The three free wording changes lift it to 251. Short of the bar so far; the paid model's score on the same lines is running.
+- 2026-09-23 **Three free wording changes for the small model alone take today's model from 32 to 38 of 42**, and tidy-but-wrong answers from 10 to 3, with nothing downloaded. The biggest single help is sending the player's line without the new wrapping (36 on its own). The paid model's wording is untouched. Caution: the changes were aimed at the 42 lines' own failures, so the 339 fresh lines are the real test.
+- 2026-09-23 **The fair rerun of today's small model: 32 of 42, not the 36 I estimated.** The game's own block now stops all three typed orders, but the model got worse elsewhere: it read five more hinted actions and questions as plain talk (for example `Somebody started that fire. Who?`). The likely cause is the new wrapping around the player's line, which tells the model the line is "something said inside the world". The paid model isn't bothered by it; the small one is. So route 3 gives the small model its own wording, and the gap to the paid model is 9 lines, not 5.
 - 2026-09-23 **In the slice, the street's people are solid now.** The player slides round Elizabeth instead of walking through her. The build machine's own test walk is unchanged, and its results still hold.
 - 2026-09-23 **The blind listening test is ready for you:** https://claude.ai/artifact/KcjhMNZeMSJrDCBbSsEh3X. Ten lines from Rocco, Lena and Sam, each spoken by today's voice engine and by Nano, with the sides hidden and shuffled. Play both, pick the one you'd rather hear, and your picks save as you go. Headphones help.
 - 2026-09-23 **Local models research is done, on its own branch** (research/local-models). The half that picks the action can probably go local; the cheapest routes are better asking (worked examples picked to match each line) and a better ready-made model, both tested on our own lines; a larger model doesn't fit your card beside the street; training comes last. The half that writes the spoken line stays paid. The brief said to write only in that topic's folder; I added these items here anyway, because nothing is ever only in a message.
@@ -107,6 +102,8 @@ between them.
 - 2026-09-23 **The street is in the game engine, the right way round**, in place of the old boxes.
 
 ## Rulings received
+
+- 2026-09-23 **Local models: (a) on all three, and the line-writing half reopened.** Download the four models; spend the 35p on 300 fresh lines; if training is ever reached, a large free model on this PC is the teacher. In order: the fair rerun, the fresh lines, then the models. And line-writing is online by default, not by conclusion: once the slice measures what the game and the voice use, and the voice's double-size export is fixed, the best local writers that fit get a blind test against the paid model's lines, judged by you. The branch comes onto main when the action-picking comparison is done.
 
 - 2026-09-23 **All eleven waiting decisions answered, as recommended**, and the PS5 picture as (b): a frame from Kingdom Come Deliverance 2, an overcast town street, because that game is your stated bar; you'll send the screenshot. So: the downloads go ahead; faint knowledge remarks once per story, then watches; a dropped or slow connection gets the authored street and an in-character brush-off; the pause is covered by a person-like filler, with subtitles only alongside their audio; the minute after an event settles by rules the street's unease fades; the three unnamed areas are floor; talking runs beside the game; the six realistic extras become the slice's cast; the AI tester's hands are Claude's computer control through the paid API; and Tom has never been to the Hook (canon).
 - 2026-09-23 **Two changes to reporting**, now in the project rules. "For you:" shows only what's new since the last message, or "nothing new"; the full list lives here and in the sitting's final message. And the stop hook now holds only this checkout, so sessions in other folders aren't held to this list.
@@ -215,6 +212,22 @@ between them.
 - 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
 
 ## Resolved
+
+- 2026-09-23 **Local models, answered (a) on all three.** The questions as they were put:
+- 2026-09-23 **Local models research: may I download four free models to test on your card?** About 10 GB, all Apache (free for any use), kept outside the project: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B (5.0 GB), Qwen3 1.7B (1.1 GB).
+  - **(a) Yes (my recommendation).** The cheapest real test of whether a better ready-made model does the router's job.
+  - (b) Only the two smallest.
+  - (c) Not now.
+  - Meanwhile the free first steps go first: rerun today's model fairly, and write 300 fresh test lines.
+- 2026-09-23 **Local models research: may I spend about 35p running the paid model on 300 fresh test lines?** It gives a fair score to beat; the 42 lines can't tell a good model from a very good one.
+  - **(a) Yes (my recommendation).**
+  - (b) No; compare on the 42 only.
+  - Meanwhile the lines get written, which costs nothing.
+- 2026-09-23 **Anthropic's rules forbid training a model on the paid model's answers without their permission**, and that includes anything I write. It only matters if we reach training, the last and costliest route.
+  - **(a) Use a large free model on your PC as the teacher (my recommendation).** Free, no permission needed.
+  - (b) Ask Anthropic for written permission; a message you would send.
+  - (c) Write the training examples by hand.
+  - Meanwhile nothing depends on it.
 
 - 2026-09-23 **Answered the same evening: (a) on all, the PS5 picture (b) with Kingdom Come Deliverance 2.** The questions as they were put:
   - 2026-09-23 **May I download what the Nano test and the PS5 corner need?** Downloads need your yes.
