@@ -1530,7 +1530,7 @@
    ],
    "emit_day": null,
    "emit_night": null,
-   "faces": 12
+   "faces": 24
   },
   {
    "mesh": "street_lamp_clear",
