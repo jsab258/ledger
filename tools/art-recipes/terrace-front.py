@@ -3002,67 +3002,69 @@ def _north_rise(out):
         y = RISE_Y_SPAN[0] + rnd.uniform(0.0, 6.0)
         n = 0
         row_a, row_b = xa, xb
+        # ATTEMPT FIVE, 24 September: STEPPED TERRACES. Beside the sheet in
+        # Unreal the four tries still read as stadium seating - five flat
+        # rows of separate boxes. A hillside street in a British port town is
+        # a TERRACE that steps up the slope a house at a time, one roofline
+        # stepping with it, render and brick side by side, a stack on every
+        # party wall. So the houses now come in terraces of three to seven,
+        # each house its own colour and each a step higher than the last going
+        # east - to the right in the game's view, as the sheet's hillside
+        # climbs - with the gable of the step showing. Gaps, gardens and trees
+        # between terraces as before.
         while y < RISE_Y_SPAN[1]:
-            # NOT ON ONE LINE: each house stands forward or back of its
-            # neighbours by up to a metre and a half, as houses built one at
-            # a time on a slope do, so a tier is not a ruled edge (the fourth
-            # try, 23 September).
-            step = rnd.uniform(-1.0, 1.5)
-            xa, xb = row_a + step, row_b + step
+            step_x = rnd.uniform(-1.0, 1.5)
+            xa, xb = row_a + step_x, row_b + step_x
             xm = (xa + xb) / 2.0
-            w = rnd.uniform(5.5, 9.0)              # one house
-            h = rnd.uniform(5.0, 6.6)              # to its eaves
-            rise = rnd.uniform(2.6, 3.6)           # a steeper roof, darker to the eye
-            y1 = min(y + w, RISE_Y_SPAN[1])
-            r = rnd.random()
-            wall = "render_cream" if r < 0.34 else ("brick_red" if r < 0.80 else "brick_grey")
-            _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
-                   ((xb, zb), (xb, zb + h), (xa, zb + h), (xa, zb)), y, y1,
-                   "house/%.1fm-wide/%.1fm-eaves/%s" % (y1 - y, h, wall))
-            _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), "slate",
-                   ((xb + 0.3, zb + h), (xm, zb + h + rise), (xa - 0.3, zb + h)), y, y1,
-                   "slate/%.1fm-rise" % rise)
-            # WINDOWS, one dark band a floor across the house's face. At a
-            # hundred metres a window is two or three pixels, and a band of
-            # them is what says house rather than shed.
-            for fz in (1.1, 3.6):
-                # a house squeezed against the end of the span may be too
-                # narrow for a band of windows; it keeps its blank wall
-                # DARK, NOT SEE-THROUGH (23 September): the street's own
-                # "glass" is the shop glass Unreal draws see-through, and over
-                # a box with no room behind it the rise's windows vanished
-                # into their walls. car_glass is the dark opaque window the
-                # backdrop's other rows already wear.
-                if zb + fz + 1.3 < zb + h and y1 - y > 2.0:
-                    _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "car_glass",
-                         xa - 0.05, xa, y + 0.8, y1 - 0.8, zb + fz, zb + fz + 1.3,
-                         "a-floor-of-windows")
-            # a stack on most of them
-            if rnd.random() < 0.7:
-                cy = y + (y1 - y) * rnd.uniform(0.2, 0.8)
-                _box(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red",
-                     xm - 0.35, xm + 0.35, cy - 0.45, cy + 0.45,
-                     zb + h + rise - 0.6, zb + h + rise + 1.1, "a-stack")
-            n += 1
-            # ATTEMPT THREE, 23 September, in the new lane: the rows were
-            # nearly continuous (gaps of 0.3 to 2.5 m) and in the game engine,
-            # with its haze turned down to the sheet's, the hill read as one
-            # wall of houses. The sheet's hillside has space between them,
-            # grass and trees. So two gaps in five are a garden or a plot,
-            # and a garden has trees in it.
-            if rnd.random() < 0.4:
-                gap = rnd.uniform(6.0, 16.0)
+            count = rnd.randint(3, 5)
+            w = rnd.uniform(5.0, 6.2)              # one house of the terrace
+            h = rnd.uniform(5.2, 6.2)              # its eaves, the terrace's own
+            rise = rnd.uniform(2.6, 3.4)           # its roof
+            step = rnd.uniform(0.5, 0.9)           # how far each house climbs
+            base = zb + rnd.uniform(0.0, 1.2)
+            for k in range(count):
+                y1 = min(y + w, RISE_Y_SPAN[1])
+                if y1 - y < 2.0:
+                    break
+                r = rnd.random()
+                wall = "render_cream" if r < 0.34 else ("brick_red" if r < 0.80 else "brick_grey")
+                top = base + h
+                # THE WALL RUNS DOWN TO THE TIER'S GROUND, so a house that has
+                # climbed stands on its own plinth rather than on air.
+                _prism(out, "backdrop_rise_%d_%d" % (t, n), wall,
+                       ((xb, zb), (xb, top), (xa, top), (xa, zb)), y, y1,
+                       "terraced-house/%d-of-%d/%.1fm-wide/%.1fm-up-the-slope/%s" % (k + 1, count, y1 - y, base - zb, wall))
+                _prism(out, "backdrop_rise_%d_%d_roof" % (t, n), "slate",
+                       ((xb + 0.3, top), (xm, top + rise), (xa - 0.3, top)), y, y1,
+                       "slate/%.1fm-rise" % rise)
+                for fz in (1.1, 3.6):
+                    if fz + 1.3 < h and y1 - y > 2.0:
+                        _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "car_glass",
+                             xa - 0.05, xa, y + 0.8, y1 - 0.8, base + fz, base + fz + 1.3,
+                             "a-floor-of-windows")
+                # A STACK ON THE PARTY WALL, the terrace's rhythm.
+                if k > 0:
+                    _box(out, "backdrop_rise_%d_%d_stack" % (t, n), "brick_red",
+                         xm - 0.35, xm + 0.35, y - 0.45, y + 0.45,
+                         top + rise - 0.6, top + rise + 1.1, "a-stack-on-the-party-wall")
+                n += 1
+                y = y1
+                base += step
+            # TWO GAPS IN THREE ARE A GARDEN OR A PLOT, and a garden has
+            # trees: the first stepped render filled the hill wall to wall.
+            if rnd.random() < 0.67:
+                gap = rnd.uniform(8.0, 20.0)
                 k = 0
-                ty = y1 + 1.5
-                while ty < y1 + gap - 1.5 and k < 3:
+                ty = y + 1.5
+                while ty < y + gap - 1.5 and k < 4:
                     r = rnd.uniform(2.2, 4.0)
                     _tree(out, "backdrop_rise_%d_%d_tree%d" % (t, n, k),
                           rnd.uniform(xa - 1.0, xb + 4.0), ty + r * 0.8, zb, r * 2.6, rnd)
                     ty += r * 1.6
                     k += 1
-                y = y1 + gap
+                y = y + gap
             else:
-                y = y1 + rnd.uniform(0.5, 3.0)     # a passage, a stair
+                y = y + rnd.uniform(1.5, 4.0)      # a passage, a stair
 
 
 def _backdrop(out):

@@ -51,7 +51,11 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       varied houses, scattered, off to the left of a bent street, in mist. Haze
       measures close already (hill luma 0.49/std 0.25 against 0.54/0.23), so
       it is the forms and their placement. Four attempts are in the recipe's
-      comments; a fifth needs the sheet's composition, not more jitter.
+      comments. ATTEMPT FIVE, 24 Sep 00:55: stepped terraces of 3-5 houses,
+      each a step up the slope to the right in the game's view, a stack on
+      every party wall, two gaps in three a garden with trees (Blender:
+      production/art/compare/stage1-2026-09-24/rise-attempt5-blender.png).
+      Judge it in Unreal when its run lands.
 - [ ] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
       23 Sep: 60 at his monitor, 3440x1440, never below 30, voice running):
       a frame-time line in the slice walk at 1280x720 and at 3440x1440 drawn
