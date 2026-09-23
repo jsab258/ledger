@@ -283,7 +283,7 @@ static class Program
                 var sb = new StringBuilder();
                 sb.AppendLine();
                 sb.AppendLine("WORKED EXAMPLES, from other scenes, chosen because they resemble this line. Each shows the reply:");
-                foreach (var ex in shown) sb.AppendLine($"  \"{ex.Text}\" -> {ReplyFor(ex.Want)}");
+                foreach (var ex in shown) sb.AppendLine($"  \"{ex.Text}\" -> {ReplyFor(ex.Want, ctx)}");
                 req.System += sb.ToString();
             }
         }
@@ -304,7 +304,9 @@ static class Program
             if (b.Want.Kind != "verb") return true;
             var v = ctx.VerbNamed(b.Want.Verb);
             if (v == null) return false;
-            return b.Want.Args.All(a => v.Args.Any(x => x.Name == a.Key && x.Options.Contains(a.Value)));
+            // The same argument NAMES; a value this scene does not offer (another
+            // topic, another amount) is shown as a slot, not as the other scene's value.
+            return b.Want.Args.All(a => v.Args.Any(x => x.Name == a.Key));
         }
         var ranked = Bank.Where(Fits).Select(b =>
         {
@@ -324,10 +326,13 @@ static class Program
         return pick;
     }
 
-    static string ReplyFor(Expect e) =>
+    static string ReplyFor(Expect e, IntentContext ctx) =>
         e.Kind == "verb"
             ? "{\"kind\":\"verb\",\"verb\":\"" + e.Verb + "\",\"args\":{"
-              + string.Join(",", e.Args.Select(a => $"\"{a.Key}\":\"{a.Value}\"")) + "}}"
+              + string.Join(",", e.Args.Select(a =>
+                    ctx.VerbNamed(e.Verb).Args.Any(x => x.Name == a.Key && x.Options.Contains(a.Value))
+                        ? $"\"{a.Key}\":\"{a.Value}\""
+                        : $"\"{a.Key}\":<the option here that fits>")) + "}}"
             : e.Kind == "novel" ? "{\"kind\":\"novel\", with a check and an effect as the rules above say}"
             : "{\"kind\":\"speech\"}";
 
@@ -511,6 +516,20 @@ static class Program
         string outPath = Arg(args, "--out", null);
         bool paid = args.Contains("--anthropic");
         string key = paid ? Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY") : null;
+        // THE GAME'S OWN KEY, 23 September (Jafar: run the paid lines here with
+        // the key the game uses). Read from the same file and field the game's
+        // Secrets.LoadAnthropicKey reads, so it never passes through a command
+        // line or a log. Never printed.
+        if (paid && string.IsNullOrEmpty(key) && args.Contains("--key-from-game"))
+        {
+            var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                                    "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json");
+            if (File.Exists(file))
+            {
+                using var sdoc = JsonDocument.Parse(File.ReadAllText(file));
+                if (sdoc.RootElement.TryGetProperty("anthropic_api_key", out var k)) key = k.GetString();
+            }
+        }
         if (paid && string.IsNullOrEmpty(key))
         {
             Console.WriteLine("routerFloor: --anthropic needs ANTHROPIC_API_KEY in the environment; nothing sent.");
@@ -538,7 +557,7 @@ static class Program
         if (bankPath != null)
         {
             LoadMoments(Arg(args, "--bank-moments", Arg(args, "--moments", null)));
-            Bank = LoadLines(bankPath);
+            Bank = bankPath.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).SelectMany(LoadLines).ToList();
             BankK = int.Parse(Arg(args, "--bank-k", "6"));
         }
         string modes = Arg(args, "--modes", paid ? "prompt" : "prompt,json");

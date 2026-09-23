@@ -3,49 +3,39 @@
 The research topic on local models. The full write-up with every source is
 DELIVERY.md beside this file. Written 23 September.
 
-## For you
+## What the measurements found (23 September, evening)
 
-These are also in FOR-JAFAR.md on the main line, added on 23 September.
+You said yes to all three questions, and the experiment ran on your card the
+same evening. The full table is in RESULTS.md beside this file.
 
-**Decisions waiting on you**
+- **No free model on your card picks actions as well as the paid one yet.** On
+  299 fresh test lines the paid model gets 259 right. The best free model gets
+  251 with better wording, and today's model gets 216 as it ships. Leave out the
+  lines where the test itself is arguable (explained below), and the paid model
+  gets 252 of 264 with 10 tidy-but-wrong answers. The best free model gets 235,
+  with 27 tidy-but-wrong. Those are the answers the game would carry out without
+  noticing they're wrong.
+- **The old 42 lines flattered everyone.** The paid model's 41 of 42 becomes
+  87% on fresh lines, and today's model's 32 becomes 72%.
+- **Better wording helps, but it trades against safety.** The changes that lift
+  the score also make the model obey more of the typed orders that get past the
+  game's own block.
+- **Every free model obeys most of those orders.** The paid model obeys 16 of
+  39. The free ones obey 25 or more.
+- **Worked examples picked per line: EXAMPLES.**
+- **Gemma 4 is out**: about four seconds a line, and most answers unreadable.
+- **Speed and memory are fine.** Today's model answers in a third of a second
+  and uses 3 GB of the card.
+- **The arguable lines:** the paid model calls handing someone a scarf, or
+  carrying their boxes, "just talk", where the test's writers called it a new
+  action. The game's rules support either reading.
 
-- **May I download four free models to test them on your card?** About 10 GB in
-  all, every one free for any use (Apache licence), kept outside the project and
-  never committed: Ministral 3 3B (2.2 GB), Qwen3.5 4B (2.7 GB), Gemma 4 E4B
-  (5.0 GB) and Qwen3 1.7B (1.1 GB).
-  - **(a) Yes (my recommendation).** This is the cheapest real test there is.
-  - (b) Only the two smallest.
-  - (c) Not now.
-  - Meanwhile: the first two steps need no download, and I would do them first.
-- **May I spend about 35 pence running the paid model on the new test lines?**
-  That gives a fair score to beat, on lines nobody has tuned anything on.
-  - **(a) Yes (my recommendation).**
-  - (b) No: compare against the 42 lines only, which can't tell a good model
-    from a very good one.
-- **Anthropic's rules forbid training a model on the paid model's answers**
-  without their permission. That also covers anything I write, since I am
-  Claude too. It only matters if we get to training, which comes
-  last.
-  - **(a) Use a large free model as the teacher, run on your own PC overnight
-    (my recommendation).** Free, and no permission needed.
-  - (b) Ask Anthropic for written permission. That's a message you would send.
-  - (c) Write the training examples by hand.
-  - Meanwhile: nothing depends on this until the last step.
-
-**Things you should know**
-
-- 2026-09-23 The small model's 33 out of 42 was measured before the game started
-  blocking typed commands itself. The paid model's 41 includes that help. Rerun
-  fairly, the small model probably gets about 36. Rerunning costs ten minutes.
-- 2026-09-23 The 42 test lines are too few to tell a good model from a very good
-  one, and three of them are nearly copies of the examples in the model's own
-  instructions. A fair test needs about 300 fresh lines, written before anything
-  is tuned.
-- 2026-09-23 Only the half that picks the action can go local on this evidence.
-  The half that writes the spoken line needs a bigger model than your card has
-  room for beside the street and the voice.
-
-## The answer
+**So the cheap routes don't reach the paid model.** Training is now the only
+route with evidence it could close the gap. By your ruling, its teacher is a
+large free model on this PC, and its first step is checking that teacher on the
+same 299 lines. The line-writing half is untouched, as you ruled. It waits on
+the slice's card measurement and is queued on the checklist.
+## What the research predicted, before measuring
 
 You asked for four routes, cheapest that works. Here is how they come out.
 
