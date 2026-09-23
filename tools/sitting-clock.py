@@ -18,8 +18,13 @@ and he found them by accident. So every message now begins with a line reading
 "For you:", and a rule that lives only in a document could not make that happen
 either.
 
-    1. THE STANDING LIST. If NOW.md has unfinished items and the sitting's
-       time limit has not passed, the turn does not end.
+    1. THE STANDING LIST. If the sitting's time limit has not passed, the
+       turn does not end while NOW.md has unfinished items - NOR WHILE IT HAS
+       NONE. Widened by Jafar on 23 September, after the list was finished at
+       eight minutes past midnight and the sitting stopped with eight hours
+       left: CLAUDE.md already said to refill the list from ROADMAP.md when it
+       runs short, and a rule in a document could not make that happen. An
+       empty list with time left is a list to refill, not a place to stop.
     2. THE FIRST LINE. If the turn's last message does not begin "For you:",
        the turn does not end.
 
@@ -269,7 +274,12 @@ def decide(text, now, message=None, for_jafar=None):
                         % (elapsed, limit))
     n = open_items(text)
     if n == 0:
-        return PERMIT, "the standing list is empty, with %.2f h still to run" % left
+        # AN EMPTY LIST IS NOT THE END OF A SITTING THAT HAS TIME LEFT, ruled
+        # 23 September. The only way out before the limit is to refill the
+        # list from the roadmap and work it.
+        return BLOCK, ("the standing list is empty with %.2f h of the %.2f h sitting "
+                       "still to run. Refill it from the next part of ROADMAP.md, as "
+                       "CLAUDE.md says, and carry on." % (left, limit))
     return BLOCK, ("%d item(s) still open on the standing list and %.2f h of the "
                    "%.2f h sitting left. Continue with the next item."
                    % (n, left, limit))
@@ -348,15 +358,20 @@ def selftest():
     check("accept/and-the-reason-says-what-to-do", "next item" in r, r)
     check("accept/and-counts-them", "2 item(s)" in r, r)
 
-    # THE TWO WAYS A SITTING LEGITIMATELY ENDS.
+    # THE ONE WAY A SITTING LEGITIMATELY ENDS: its time is up.
     v, r = decide(head + two_open, t0 + datetime.timedelta(hours=6), good)
     check("accept/at-the-limit-the-stop-is-permitted", v == PERMIT, r)
     v, r = decide(head + two_open, t0 + datetime.timedelta(hours=9), good)
     check("accept/past-the-limit-too", v == PERMIT, r)
+    # AN EMPTY LIST WITH TIME LEFT BLOCKS, 23 September: the sitting that
+    # stopped at eight past midnight with eight hours to run is the case.
     v, r = decide(head + "- [x] done\n- [x] also done\n",
                   t0 + datetime.timedelta(hours=1), good)
-    check("accept/an-empty-list-permits-early", v == PERMIT, r)
-    check("accept/and-says-how-long-was-left", "still to run" in r, r)
+    check("reject/an-empty-list-with-time-left-blocks", v == BLOCK, r)
+    check("reject/and-says-to-refill-it-from-the-roadmap", "ROADMAP.md" in r, r)
+    check("reject/and-says-how-long-is-left", "still to run" in r, r)
+    v, r = decide(head + "- [x] done\n", t0 + datetime.timedelta(hours=6, minutes=1), good)
+    check("accept/an-empty-list-at-the-limit-permits", v == PERMIT, r)
 
     # ONE MINUTE INSIDE THE LIMIT STILL BLOCKS, which is the boundary the
     # whole thing turns on.
@@ -365,20 +380,24 @@ def selftest():
 
     # ---- THE OPENER, WHICH IS THE SECOND JOB ------------------------------
     done = head + "- [x] done\n"
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), "The street is rendered.")
+    # THE OPENER IS JUDGED ON ITS OWN, with the sitting's time up, so the list
+    # plays no part: since 23 September an empty list with time left blocks
+    # for the list's own reason, and these cases are about the first line.
+    t_up = t0 + datetime.timedelta(hours=7)
+    v, r = decide(done, t_up, "The street is rendered.")
     check("reject/a-message-with-no-opener-blocks", v == BLOCK, r)
     check("reject/and-the-reason-quotes-what-it-found", "For you:" in r, r)
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), good)
+    v, r = decide(done, t_up, good)
     check("accept/an-empty-For-you-is-a-complete-answer", v == PERMIT, r)
-    v, r = decide(done, t0 + datetime.timedelta(hours=1),
+    v, r = decide(done, t_up,
                   "\n\n   For you: the runner is down\nand here is the rest")
     check("accept/blank-lines-and-indent-are-forgiven", v == PERMIT, r)
-    v, r = decide(done, t0 + datetime.timedelta(hours=1),
+    v, r = decide(done, t_up,
                   "Here is what happened.\nFor you: nothing")
     check("reject/an-opener-on-the-SECOND-line-is-not-an-opener", v == BLOCK, r)
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), "**For you:** nothing")
+    v, r = decide(done, t_up, "**For you:** nothing")
     check("reject/and-neither-is-one-wearing-bold", v == BLOCK, r)
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), "for you: nothing")
+    v, r = decide(done, t_up, "for you: nothing")
     check("reject/nor-one-in-lower-case", v == BLOCK, r)
     # AND IT IS ASKED EVEN WHEN THE TIME IS UP, which is the case a tired
     # reading of this would get wrong: ending on a buried report is exactly
@@ -398,9 +417,9 @@ def selftest():
         check("reject/%s-permits-rather-than-traps" % name, v == UNASSESSED, "%s %s" % (v, r))
     # A MESSAGE THE PAYLOAD DID NOT CARRY is not a missing opener. The hook
     # has no business blocking on a field the tool did not send.
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), None)
+    v, r = decide(done, t_up, None)
     check("reject/no-message-in-the-payload-does-not-block", v != BLOCK, "%s %s" % (v, r))
-    v, r = decide(done, t0 + datetime.timedelta(hours=1), "   \n  ")
+    v, r = decide(done, t_up, "   \n  ")
     check("reject/an-empty-message-does-not-block", v != BLOCK, "%s %s" % (v, r))
 
     # A CLOCK RUNNING BACKWARDS IS NOT A LIMIT.
