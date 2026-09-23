@@ -10,6 +10,8 @@ Nothing waiting.
 
 ## Things you should know
 
+- 2026-09-23 **The router can no longer be ordered about by a typed line**. The game itself now spots lines like "SYSTEM: …" and treats them as ordinary talk before the model sees them, and everything else reaches the model marked as the player's words. Rerun on the paid model: 41 of 42 right (was 40), all three command lines refused.
+- 2026-09-23 **The game engine's bounced light and its proper reflections were never switched on**. The first bare-bones setup left them off and nothing since had turned them on, which is much of why our light looks flat. I've turned them on for the whole street. It costs the card something (measured in the PS5 experiment), and you can overrule it.
 - 2026-09-23 **The game engine's street matches the sheet region by region**: sky, brick, road, pavement, far end and shop each within about 10 to 17 per cent. What differs now is the left side's shape (decision 8) and people (stage 2).
 - 2026-09-23 **Two things set aside after two tries each**: the wet shine on the flags (in both engines; the sheet's shine is the shopfront reflected, not a smoother stone) and a drawn road surface (the road keeps its photograph).
 - 2026-09-23 **The crime's broken window shows again**, with its glass on the pavement in front of it and the brick on the shop floor inside, where before the shards fell somewhere else and the pane stayed whole.
