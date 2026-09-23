@@ -276,12 +276,34 @@ namespace LedgerStreet
 		// THE DISPLAY GLASS LEFT OUT, because the base material cannot be
 		// see-through and an opaque pane hides the lit room behind it.
 		bool   bGlassSeeThrough;
-		int    Read;             // how many of the seven the file supplied
+		// THE UNREAL LOOK'S SUN AND SKY LIGHT, as multipliers of the scene
+		// file's own sun_intensity and sky_intensity. Multipliers and not
+		// new values because those two numbers are in the names of the scene
+		// file's grid rows, and the tuning is this engine's, not the file's.
+		double SunGain;
+		double SkyLightGain;
+		// PER-SURFACE COLOUR IN THIS ENGINE, a multiplier on the grade by the
+		// surface's base material name. Blender's colours are targets set
+		// through Blender's own light and camera curve; this is where they are
+		// reached again here, against the sheet, surface by surface.
+		std::vector<std::pair<std::string, Grade> > SurfaceGains;
+		int    Read;             // how many of the ten the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
-		         Read(0), bFromFile(false) {}
+		         SunGain(1.0), SkyLightGain(1.0), Read(0), bFromFile(false) {}
 	};
+
+	// THE COLOUR GAIN FOR ONE SURFACE, white when the file names none.
+	inline Grade SurfaceGainFor(const Look& Lk, const std::string& Base)
+	{
+		for (size_t I = 0; I < Lk.SurfaceGains.size(); ++I)
+		{
+			if (Lk.SurfaceGains[I].first == Base) { return Lk.SurfaceGains[I].second; }
+		}
+		Grade White = {1.0, 1.0, 1.0};
+		return White;
+	}
 
 	inline bool ParseLook(const std::string& Text, Look& Out, std::string& Err)
 	{
@@ -310,6 +332,25 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.RoomGain = V->Num; ++Out.Read; }
 		V = Root.Find("glass_see_through");
 		if (V != 0 && V->Type == T_BOOL) { Out.bGlassSeeThrough = V->Bool; ++Out.Read; }
+		V = Root.Find("sun_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SunGain = V->Num; ++Out.Read; }
+		V = Root.Find("sky_light_gain");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.SkyLightGain = V->Num; ++Out.Read; }
+		V = Root.Find("surface_gain");
+		if (V != 0 && V->Type == T_OBJ)
+		{
+			for (size_t I = 0; I < V->Obj.size(); ++I)
+			{
+				const Value& G = V->Obj[I].second;
+				if (G.Type == T_ARR && G.Arr.size() >= 3 && G.Arr[0].Type == T_NUM
+				    && G.Arr[1].Type == T_NUM && G.Arr[2].Type == T_NUM)
+				{
+					Grade Gr = {G.Arr[0].Num, G.Arr[1].Num, G.Arr[2].Num};
+					Out.SurfaceGains.push_back(std::make_pair(V->Obj[I].first, Gr));
+				}
+			}
+			++Out.Read;
+		}
 		return true;
 	}
 

@@ -1634,13 +1634,15 @@ namespace
 			(int)GStreetPictures, (int)GStreetPicturesAsked,
 			(int)GStreetTextured, (int)GStreetTexAsked, (int)GStreetDrawn, (int)GStreetGlowing, (int)GStreetWet,
 			GLook.GlowGain);
-		char LookBuf[360];
+		char LookBuf[420];
 		std::snprintf(LookBuf, sizeof(LookBuf),
-			" lookFrom=%s lookRead=%d/7 lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
-			" lookWetFilmFrom=%.2f lookRoomGain=%.2f streetFilm=%d streetGlassHidden=%d/see-through-%s",
-			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, GLook.SkySeenGain,
+			" lookFrom=%s lookRead=%d/10 lookSurfaceGains=%d lookSkySeenGain=%.3f lookFogDay=%.3f,%.3f,%.3f lookFogFalloff=%.4f"
+			" lookWetFilmFrom=%.2f lookRoomGain=%.2f lookSunGain=%.3f lookSkyLightGain=%.3f"
+			" streetFilm=%d streetGlassHidden=%d/see-through-%s",
+			LedgerVignette::NoSpaces(GLookNote).c_str(), GLook.Read, (int)GLook.SurfaceGains.size(), GLook.SkySeenGain,
 			GLook.FogDayR, GLook.FogDayG, GLook.FogDayB, GLook.FogFalloff,
-			GLook.WetFilmFrom, GLook.RoomGain, (int)GStreetFilm, (int)GStreetGlassHidden,
+			GLook.WetFilmFrom, GLook.RoomGain, GLook.SunGain, GLook.SkyLightGain,
+			(int)GStreetFilm, (int)GStreetGlassHidden,
 			GLook.bGlassSeeThrough ? "yes/no-translucent-material" : "no");
 		return std::string(Buf) + LookBuf + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
@@ -2615,7 +2617,7 @@ namespace
 		// names a bright sun must not light the night, whatever its data
 		// row says.
 		SetDirectional(GSun, FLinearColor(0.95f, 0.96f, 1.0f, 1.0f),
-		               C.SunOn ? (float)C.SunIntensity : 0.0f);
+		               C.SunOn ? (float)(C.SunIntensity * GLook.SunGain) : 0.0f);
 		// THE FILLS AT ZERO ALSO STOP THEM BEING SUNS. A directional light
 		// is an atmosphere sun light by default in this engine, so three
 		// fills left burning would put up to two extra sun discs in the sky
@@ -2713,7 +2715,7 @@ namespace
 				// OFF THE CONDITION, NOT OFF A CONSTANT KEYED ON SunOn. The
 				// ladder's control row is a DAY condition with the sky at
 				// 0.35, which the old pair of constants could not say.
-				SC->SetIntensity((float)C.SkyIntensity);
+				SC->SetIntensity((float)(C.SkyIntensity * GLook.SkyLightGain));
 				// RECAPTURED EXPLICITLY ON THE CHANGE. Real-time capture
 				// refreshes on its own, but a shot is photographed a fixed
 				// number of frames after the condition changes and a sky
@@ -5920,6 +5922,10 @@ namespace
 			{
 				Gr.R *= GLook.RoomGain; Gr.G *= GLook.RoomGain; Gr.B *= GLook.RoomGain;
 			}
+			{
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
+				Gr.R *= Sg.R; Gr.G *= Sg.G; Gr.B *= Sg.B;
+			}
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
 			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
@@ -5966,8 +5972,9 @@ namespace
 				const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
 				                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
 				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
 				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
-					FLinearColor((float)(Gr.R * D), (float)(Gr.G * D), (float)(Gr.B * D), 1.0f));
+					FLinearColor((float)(Gr.R * D * Sg.R), (float)(Gr.G * D * Sg.G), (float)(Gr.B * D * Sg.B), 1.0f));
 				Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())),
 					(float)LedgerStreet::WetnessParamFor(Rw.Base, C.Wetness));
 				++GStreetWet;

@@ -5698,7 +5698,12 @@ int main(int argc, char** argv)
 			      "the noise the fixture plants, and it is found without naming a cell",
 			      NS);
 		}
-		Check(NS.find("nullSpreadMeanLuma=0.0015/max=") != std::string::npos
+		// 0.0010 FROM 23 SEPTEMBER, and 0.0015 before it: the day group held
+		// the pin_030 rung while 0.300 was the live pin, and the fixture's
+		// widest sample was that rung's. The Unreal look's tuning moved the
+		// live pin to 2.000, no rung asks 2.000, so the group is five frames
+		// and its widest is vign_wet_060's planted 0.4410.
+		Check(NS.find("nullSpreadMeanLuma=0.0010/max=") != std::string::npos
 		      && NS.find("nullDriftMeanLuma=") != std::string::npos
 		      && NS.find("nullOrderMeanLuma=") != std::string::npos,
 		      "the spread, the one-pair drift in shot order and whether the group is "
@@ -6950,8 +6955,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 7 && Lk.bFromFile,
-			      "the committed look file parses and supplies all seven settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 10 && Lk.bFromFile,
+			      "the committed look file parses and supplies all ten settings", LErr);
 			LedgerStreet::Look Part;
 			Check(LedgerStreet::ParseLook("{\"sky_seen_gain\": 2.5}", Part, LErr) && Part.Read == 1
 			      && Part.SkySeenGain == 2.5 && Part.GlowGain == 0.10 && Part.FogFalloff == 0.02,

@@ -1,7 +1,7 @@
 {
   "what": "The Unreal look's own settings, read by the probe at run time (ue-probe/Source/LedgerProbe/Public/StreetMeshes.h ParseLook) so that tuning the frame against the Hook sheet is a file edit and a frame, not a build. Jafar, 23 September: the look is developed in Unreal against the sheet, in one pass. A missing file or key keeps the constant the probe always used, and the verdict line says lookFrom and lookRead.",
-  "sky_seen_gain": 1.0,
-  "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street. The dome's luminance is sky_intensity times this; the sky light still lights at sky_intensity. 1.0 was the probe's constant.",
+  "sky_seen_gain": 15.0,
+  "sky_seen_gain_note": "The sky dome as SEEN, over the sky intensity that lights the street: the sheet's sky is white over a dark street. Tuned 23 September against the sheet at the approved lens with the probe's own frame measured by region; 1.0 was the probe's constant.",
   "street_glow_gain": 0.1,
   "street_glow_gain_note": "Blender's glow strengths (tubes 12, lit rooms 3.4 by day and 0.7 at night) into this engine's unitless emissive. 0.10 was the first value.",
   "fog_day_colour": [
@@ -15,5 +15,17 @@
   "picture_room_gain": 1.0,
   "picture_room_gain_note": "How much brighter a pictured shop room reads than the light on the facade, standing in for Blender's glow.",
   "glass_see_through": true,
-  "glass_see_through_note": "The display glass is left out, because the base material cannot be see-through and an opaque pane hid the lit rooms behind it. The verdict line says so."
+  "glass_see_through_note": "The display glass is left out, because the base material cannot be see-through and an opaque pane hid the lit rooms behind it. The verdict line says so.",
+  "sun_gain": 0.1,
+  "sun_gain_note": "The Unreal day's sun is this times the scene file's sun_intensity. The sheet is overcast with no sun shadow; at the file's 3.0 the parade threw a hard shadow across the road.",
+  "sky_light_gain": 0.5,
+  "sky_light_gain_note": "The sky light on the street is this times the scene file's sky_intensity, so the seen sky can be bright while the walls stay as dark as the sheet's.",
+  "surface_gain": {
+    "brick_red": [
+      0.65,
+      0.45,
+      0.35
+    ]
+  },
+  "surface_gain_note": "Per-surface colour in this engine, by base material, over Blender's target colour. brick_red: Blender's red came back pink-grey under this sky light; this lands the parade's median on the sheet's 76/45/35 (measured 72/45/38)."
 }
