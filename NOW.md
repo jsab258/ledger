@@ -967,6 +967,15 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             player, seen by whoever the port's perception says.
       - [ ] DECISION 7 (a): a hearer's faint knowledge shows - a longer look,
             a remark, a changed manner - at the certainty hearers hold.
+            WRITTEN AND PARKED 23 Sep (git stash, "WIP decision 7 (a)"): a
+            floor under the ladder for anyone holding a story that shows
+            (StreetVoice.StoryThatShows). Two independent checks: the floor
+            shortens some gazes (Watches 14 m -> Comments 12 m), the coat still
+            has a band where it is seen from further, the StrangerTest harness
+            does not pass knowsSomething, the tests miss several constants,
+            and two design calls - the paper puts the whole town on it, the
+            staff would remark every 45 s. Put to Jafar (FOR-JAFAR); my
+            recommendation (a) is one remark per story, then the look.
       - [x] REACH MEASURED AGAIN on the new routines; no constant touched.
             23 Sep: a half-sure witness tells 1.7 of nine in thirty minutes of
             play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,

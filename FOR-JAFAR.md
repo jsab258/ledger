@@ -16,6 +16,11 @@ between them.
   - **(a) The overcast GTA V morning, the closest match to our weather (my recommendation).** I'll say in the report that it's a PS3-era bar.
   - (b) You drop in a frame from a native PS5 game you like, and I use that. I won't download game screenshots myself; they're someone else's copyright.
   - Meanwhile I use (a).
+- 2026-09-23 **Making faint knowledge show (your decision 7 a): how loud should it be?** It's written and tested, but two independent checks found the plain version overdoes it. Once the paper names Tom, the whole town holds the story and everyone near him would remark. His own staff, who stand near him all day, would remark every 45 seconds for an hour. It's parked, not committed, until you choose.
+  - **(a) Each person remarks once per story and afterwards just watches him longer. The paper counts, so after a front page the whole street looks and a few say something (my recommendation).**
+  - (b) Only people who heard it by word of mouth show it; the paper makes the town know without anyone acting on it.
+  - (c) They remark whenever they pass, as the first version did.
+  - Meanwhile I finish the PS5 report, then build (a) if the sitting has time.
 
 ## Things you should know
 
