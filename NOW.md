@@ -890,9 +890,16 @@ sheet was made on the Blender side and Unreal's way round is the true one.
 ROADMAP.md "The order from 23 September" is the governing text; this is the
 work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
-- [x] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
-      MET 23 Sep, my judgement, put to Jafar (FOR-JAFAR): production/art/
-      compare/hook-unreal-2026-09-23/pair-06-presentable.png (06f8eda4).
+- [ ] PRESENTABLE, the checklist in ROADMAP.md, worked in the pair:
+      MET 23 Sep on the first three, my judgement, put to Jafar (FOR-JAFAR):
+      production/art/compare/hook-unreal-2026-09-23/pair-06-presentable.png
+      (06f8eda4). REOPENED 23 Sep 18:00 by Jafar for two more:
+  - [ ] PEOPLE TURN THEIR HEAD TO LOOK AT YOU when you move near them or talk
+        to them - Unreal's own look-at (the engine's LookAt anim node or
+        Control Rig), not our own.
+  - [ ] SOUND IS POSITIONAL: a voice or a noise comes from where its source
+        is and changes as you move - Unreal's own audio (spatialised audio
+        components, attenuation); the street has no sound at all today.
   - [x] NOTHING IN FRAME IS A PLACEHOLDER: first an inventory of what in the
         hook frame is a shape rather than a model (the cars, the kiosk, the
         lamp columns, the railing, the skip, the bins, the pallets...), then
@@ -997,6 +1004,23 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,
             against 29 of 40 in the prototype's city.
       - [ ] THE CARD READING while a character speaks.
+      BUILT ON UNREAL'S STANDARD GAME FRAMEWORK (Jafar 23 Sep 18:00): a
+      player character with a body and animation, people with AI who walk
+      and avoid you (navigation mesh, AI controllers), the engine's own
+      sound, a simple interface. NOT grown out of the probe: the probe stays
+      the test harness and its checks keep running against the new build.
+      Honest estimate 12 to 18 sittings (FOR-JAFAR).
+      AND IN ITS DEFINITION OF DONE (Jafar 23 Sep 18:00): the simulation runs
+      the same regardless of frame rate.
+- [ ] AT A CHECKPOINT BETWEEN VISUAL ITEMS (Jafar 23 Sep 18:00): fold
+      production/research/feature-coverage/MASTER-CHECKLIST.md (957 items,
+      per-stage index) into ROADMAP.md as each stage's checklist, at the level
+      of specific items, never headings, and make this list refill from it;
+      it supersedes the 111-tile systems inventory. Bring the branch
+      research/baseline-features onto main and fold in anything the master
+      checklist lacks. The checklist's blind spots are a floor; anything
+      Jafar finds playing other games goes on it with the way of looking that
+      should have caught it.
 - Then alternate sittings, polish and moat.
 
 ## Where things stand

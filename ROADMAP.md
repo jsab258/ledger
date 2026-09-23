@@ -63,11 +63,30 @@ means; this says what the sittings work on next, and when each target stops.
 4. **AFTER THE SLICE, ALTERNATE**: one sitting of polish, one of moat, so
    neither falls behind.
 
-### The presentable checklist - polish toward it stops when all three hold
+ADDED 23 SEPTEMBER, 18:00, INSIDE THE SAME ORDER (presentable, then the PS5
+corner, then the slice; checkpoint work only between visual items, never
+ahead of them): (iv) heads that turn toward you and positional sound join
+the presentable checklist, using what Unreal provides; (v) the slice is built
+on Unreal's standard game framework - a player character with a body and
+animation, AI people who walk on a navigation mesh and avoid you, the
+engine's own sound, a simple interface - not grown out of the probe, which
+stays the test harness; (vi) a simulation that runs the same at any frame
+rate is part of the slice's definition of done; (vii) at a checkpoint, the
+master feature checklist (production/research/feature-coverage/
+MASTER-CHECKLIST.md, 957 items) is folded in below as each stage's checklist
+at the level of specific items, and the standing list refills from it; its
+blind spots are a floor, and what Jafar finds playing other games is added
+with the way of looking that should have caught it.
+
+### The presentable checklist - polish toward it stops when all five hold
 
 - **Nothing in frame is a placeholder.** Cars and props are real-looking
   models rather than shapes, and no car is a recognisable real model.
 - **The light is not flat, and the street is wet as the sheet is.**
+- **People turn their head to look at you** when you move near them or talk
+  to them.
+- **Sound is positional**: a voice or a noise comes from where its source is
+  and changes as you move.
 - **A handful of people stand or walk in the street**, even if they only idle.
 
 ### What the Hook sheet is, and what it is not
