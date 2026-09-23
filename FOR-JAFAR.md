@@ -57,6 +57,14 @@ plain houses.
 
 ## Things you should know
 
+- 2026-09-23 **The kerb and the yellow lines were built wrong, and are
+  fixed.** When the road was given its camber yesterday, nothing at its
+  edge followed it down: the kerb stood 200 mm instead of 125, and the
+  yellow lines stood as ribs 75 mm tall instead of paint. In the game engine
+  the kerb also wore a rough broken-stone photograph and read as a concrete
+  ramp beside the sheet's neat kerb. It is now drawn as precast concrete
+  blocks, 915 mm each, as the scene file says, and a check stops the heights
+  going wrong again.
 - 2026-09-23 **The game engine's day allows three times the fog you ruled
   on 14 September** (your cap 0.100 becomes 0.300 there, by a multiplier in
   its own settings; the scene file's number is untouched). With the street's

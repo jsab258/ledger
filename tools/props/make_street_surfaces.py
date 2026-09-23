@@ -257,7 +257,50 @@ def tiles(tf):
     return img, normal_from_height(h, 2.0), r, (tw, tw)
 
 
-SURFACES = ("brick_red", "brick_grey", "paving", "tile_patterned")
+#: THE KERB AS ITS OWN CONCRETE, 23 September. In Unreal the kerb took the
+#: texture pack's "kerb" photograph, whose relief is a rough broken stone,
+#: and beside the sheet's kerb - a neat grey precast block with a clean top -
+#: it read as a concrete ramp. The scene file says what a British kerb is:
+#: precast concrete, 915 mm blocks, "which is why a British kerb line has a
+#: joint every 915 mm". Four blocks to a tile so neighbours differ, a fine
+#: aggregate, a thin dark joint, and next to no relief.
+KERB_BLOCKS = 4
+
+
+def kerb_spec():
+    with open(os.path.join(ROOT, "production", "specs", "vignette-scene.json"), encoding="utf-8") as fh:
+        k = json.load(fh)["street"]["kerb"]
+    return float(k["block_length_m"])
+
+
+def kerb(tf):
+    import numpy as np
+    n = PX
+    block = kerb_spec()
+    tw = KERB_BLOCKS * block
+    xs = (np.arange(n) + 0.5) * tw / n
+    X, Y = np.meshgrid(xs, xs)
+    i = np.floor(X / block).astype(int) % KERB_BLOCKS
+    fx = np.mod(X, block)
+    joint = 0.006
+    jm = (fx < joint) | (fx > block - joint * 0.5)
+    base, rough = authored(tf, "kerbstone")
+    # ONE TONE PER BLOCK, as precast units from different pours are; a fine
+    # aggregate over it, and soft blotches a few blocks across.
+    tone = 0.92 + 0.16 * hash01(i, np.zeros_like(i), 53)
+    I, J = np.meshgrid(np.arange(n), np.arange(n))
+    grain = 1.0 + 0.07 * (hash01(I, J, 59) * 2.0 - 1.0)
+    blotch = 1.0 + 0.08 * (periodic_noise(n, 5, SEED + 61) * 2.0 - 1.0)
+    img = np.zeros((n, n, 3))
+    for c in range(3):
+        img[..., c] = base[c] * np.where(jm, 0.42, tone * grain * blotch)
+    dist = np.minimum(fx, block - fx)
+    h = np.clip((dist - joint * 0.5) / (1.5 * tw / n), 0.0, 1.0)
+    r = np.where(jm, min(1.0, rough + 0.12), rough) * (0.97 + 0.06 * hash01(i, np.ones_like(i), 67))
+    return img, normal_from_height(h, 1.5), r, (tw, tw)
+
+
+SURFACES = ("brick_red", "brick_grey", "paving", "tile_patterned", "kerbstone")
 
 
 def make(out_dir):
@@ -277,6 +320,8 @@ def make(out_dir):
             img, nrm, r, tile = brick(tf, name, 23)
         elif name == "paving":
             img, nrm, r, tile = flags(tf)
+        elif name == "kerbstone":
+            img, nrm, r, tile = kerb(tf)
         else:
             img, nrm, r, tile = tiles(tf)
         Image.fromarray(to_srgb8(img)).save(os.path.join(out_dir, name + ".png"))
@@ -345,6 +390,15 @@ def selftest():
        np.median(nrm[..., 2]) > 250 and nrm[..., 2].min() < 230)
     fi, _fn, _fr, ft = flags(tf)
     ok("the flag tile is whole flags", abs(ft[0] / tf.FLAG_W_M - round(ft[0] / tf.FLAG_W_M)) < 1e-9, ft)
+    ki, kn, _kr, kt = kerb(tf)
+    kbase, _r = authored(tf, "kerbstone")
+    dark_cols = (ki[..., 0] < kbase[0] * 0.6).mean(axis=0) > 0.9
+    runs = int(np.sum(dark_cols & ~np.roll(dark_cols, 1)))
+    ok("the kerb has a joint every block the scene file gives, and no more",
+       runs == KERB_BLOCKS and abs(kt[0] - KERB_BLOCKS * kerb_spec()) < 1e-9,
+       "%d joints over %.3f m" % (runs, kt[0]))
+    ok("and next to no relief between its joints, which is what the pack's kerb had too much of",
+       np.percentile(kn[..., 2], 90) > 250, "%.1f" % np.percentile(kn[..., 2], 90))
     print("make_street_surfaces selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
 

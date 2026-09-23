@@ -737,8 +737,11 @@
     0.2617,
     0.2402
    ],
-   "drawn_map": null,
-   "drawn_tile_m": null,
+   "drawn_map": "production/assets/street/surfaces/kerbstone",
+   "drawn_tile_m": [
+    3.66,
+    3.66
+   ],
    "emit_day": null,
    "emit_night": null,
    "faces": 12

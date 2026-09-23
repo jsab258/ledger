@@ -1890,9 +1890,12 @@ def plan_street(root, spec_rel=SPEC_REL):
 
     # ---- the road between them, MEASURED from the street block -----------
     q, _e = load_spec(root, spec_rel, "east_parade")
-    half = 3.0          # carriageway half width
-    kerb_w, kerb_up = 0.125, 0.125
+    half = ROAD_HALF_M  # carriageway half width
+    kerb_w = KERB_W_M
     foot = 2.0
+    if abs(footway_z(STREET_FRONTAGE_M) - THRESHOLD_ABOVE_CROWN_M) > 1e-9:
+        raise AssertionError("the footway no longer lands on the threshold: %.4f against %.4f"
+                             % (footway_z(STREET_FRONTAGE_M), THRESHOLD_ABOVE_CROWN_M))
     x0, x1 = -2.0, 44.0
     # THE ROAD IS CROWNED, AND IT NEVER WAS. The scene file has carried a
     # crossfall of 0.025 - one in forty, the value British road practice uses
@@ -1912,7 +1915,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     # SEVENTY-FIVE MILLIMETRES IS NOT EYEBALLED and it is not typed either:
     # it is half_width times crossfall, both read off the scene file, so a
     # street that is ever widened re-derives its own crown.
-    crossfall = 0.025
+    crossfall = ROAD_CROSSFALL
     fall = half * crossfall
     _road(out, "carriageway", "asphalt", x0, x1, half, fall,
           "two-3.0m-lanes/crowned-1-in-40/%.3fm-above-the-channel" % fall)
@@ -1945,10 +1948,11 @@ def plan_street(root, spec_rel=SPEC_REL):
     for sgn, name in ((1.0, "east"), (-1.0, "west")):
         a, b = sgn * half, sgn * (half + kerb_w)
         _box(out, "kerb_%s" % name, "kerbstone", x0, x1, min(a, b), max(a, b),
-             -0.30, kerb_up, "125mm-face/the-standard-British-upstand")
+             -0.30, kerb_top_z(), "125mm-face-above-the-channel/the-standard-British-upstand")
         c, d = sgn * (half + kerb_w), sgn * STREET_FRONTAGE_M
-        _box(out, "footway_%s" % name, "paving", x0, x1, min(c, d), max(c, d),
-             -0.30, THRESHOLD_ABOVE_CROWN_M, "2.0m/the-normal-British-footway")
+        _falling_slab(out, "footway_%s" % name, "paving", x0, x1, c, d,
+                      footway_z(c), footway_z(d),
+                      "2.0m/the-normal-British-footway/falling-1-in-40-to-its-kerb")
     # ---- the double yellow lines, MEASURED off the emitted piece list -----
     # Two 0.1 m bands 0.1 m apart, 12 mm of paint, running the street's whole
     # length at 2.5 and 2.7 m from the centre - which is 0.25 m out from the
@@ -1958,8 +1962,11 @@ def plan_street(root, spec_rel=SPEC_REL):
     for sgn, side in ((1.0, "east"), (-1.0, "west")):
         for n, across in enumerate((2.5, 2.7)):
             a, b = sgn * across, sgn * (across + 0.1)
+            # ON THE ROAD WHERE THEY ARE, which has fallen 62 to 70 mm from
+            # the crown by here: 12 mm above its higher edge, and down into
+            # it below its lower one, so the band is paint and not a rib.
             _box(out, "yellow_%s_%d" % (side, n), "paint_yellow", -2.0, 44.0,
-                 min(a, b), max(a, b), 0.0, 0.012,
+                 min(a, b), max(a, b), road_z(b) - 0.006, road_z(a) + 0.012,
                  "100mm-band-100mm-apart/12mm-of-paint/0.25m-out-from-the-kerb-face")
 
     # ---- the centre line, 22 September -----------------------------------
@@ -2440,8 +2447,8 @@ CHANNEL_GULLIES = (4.0, 20.0, 31.0)              # x along the east channel
 
 def _pavement_dressing(out):
     """The utility cover and the extra gully grates, flush."""
-    top = THRESHOLD_ABOVE_CROWN_M
     for k, (cx, cy) in enumerate(PAVEMENT_COVERS):
+        top = footway_z(cy)
         _box(out, "dressing_cover_surround_%d" % k, "brick_rubbed",
              cx - 0.45, cx + 0.45, cy - 0.36, cy + 0.36, top - 0.02, top + 0.004,
              "a-red-brown-surround")
@@ -2450,7 +2457,8 @@ def _pavement_dressing(out):
              "an-iron-utility-cover")
     for k, gx in enumerate(CHANNEL_GULLIES):
         _box(out, "dressing_gully_%d" % k, "steel_dark",
-             gx - 0.22, gx + 0.22, 2.78, 2.98, -0.03, 0.004, "a-gully-grate-in-the-channel")
+             gx - 0.22, gx + 0.22, 2.78, 2.98, road_z(2.98) - 0.03, road_z(2.78) + 0.004,
+             "a-gully-grate-in-the-channel")
 
 
 def _house_row_facing_south(out, prefix, xa, xb, y0, y1, zb, rnd, trees=False):
@@ -2719,6 +2727,59 @@ def _backdrop(out):
            "one-in-three/a-luffing-jib-at-rest/%.2fm-members" % t)
 
 
+#: THE GROUND ACROSS THE STREET, BY THE SCENE FILE'S OWN ARITHMETIC, 23
+#: September. Its ground section spells it out: the crown stands 3.0 x 0.025
+#: = 0.075 m above the channel, the kerb edge 0.125 m above the channel, the
+#: back of the footway 2.0 x 0.025 = 0.050 m above its kerb edge, "so the
+#: building threshold is 0.100 m above the crown". This file built the
+#: threshold right and the rest as if the road had never been crowned: the
+#: kerb 125 mm above the CROWN, which is 200 mm of face at the channel and
+#: 25 mm proud of a level footway; and the yellow lines, the gullies and the
+#: car's wheels at the crown's height over a road that has fallen 60 to 75 mm
+#: by the time it reaches them, so the "12 mm of paint" stood as a yellow rib
+#: nearly 75 mm tall. The first Unreal frame close enough to see it found it,
+#: where the kerb read as a concrete ramp beside the sheet's neat one.
+ROAD_HALF_M = 3.0
+ROAD_CROSSFALL = 0.025
+KERB_W_M = 0.125
+KERB_UPSTAND_M = 0.125
+FOOTWAY_CROSSFALL = 0.025
+
+
+def road_z(y):
+    """The carriageway's surface at y across the street: 0 at the crown,
+    falling 1 in 40 to each channel."""
+    return -min(abs(y), ROAD_HALF_M) * ROAD_CROSSFALL
+
+
+def kerb_top_z():
+    """The kerb's top, its upstand above the channel it stands in."""
+    return road_z(ROAD_HALF_M) + KERB_UPSTAND_M
+
+
+def footway_z(y):
+    """The footway at y, rising 1 in 40 from the kerb's back edge to the
+    frontage, where it lands on the threshold."""
+    back = ROAD_HALF_M + KERB_W_M
+    return kerb_top_z() + max(0.0, min(abs(y), STREET_FRONTAGE_M) - back) * FOOTWAY_CROSSFALL
+
+
+def _falling_slab(out, pid, material, x0, x1, ya, yb, za, zb, note=""):
+    """A slab whose top runs from height za at y = ya to zb at y = yb, level
+    along x, down to the same -0.30 the road and kerb stand on. For a footway
+    that falls toward its kerb, which a box cannot do."""
+    lo = -0.30
+    (y0, z0), (y1, z1) = sorted(((ya, za), (yb, zb)))
+    v = [(x0, y0, z0), (x0, y1, z1), (x1, y1, z1), (x1, y0, z0),
+         (x0, y0, lo), (x0, y1, lo), (x1, y1, lo), (x1, y0, lo)]
+    f = [(0, 3, 2, 1),                          # the top, falling across
+         (4, 5, 6, 7),                          # the underside
+         (0, 1, 5, 4), (3, 7, 6, 2),            # the two ends
+         (0, 4, 7, 3), (1, 2, 6, 5)]            # the two sides
+    out.append({"id": pid, "material": material, "kind": "mesh",
+                "verts": v, "faces": f, "note": note})
+
+
 def _road(out, pid, material, x0, x1, half, fall, note=""):
     """The carriageway as a crowned solid rather than a flat slab.
 
@@ -2754,7 +2815,7 @@ def _figures(out):
         # does not read as a person sets no scale at all, which was the whole
         # reason for putting one there.
         hw, hd = FIGURE_SHOULDER_M / 2.0, FIGURE_DEPTH_M / 2.0
-        base = THRESHOLD_ABOVE_CROWN_M
+        base = footway_z(fy) if abs(fy) > ROAD_HALF_M + KERB_W_M else road_z(fy)
         coat = ("figure_a", "figure_b", "figure_c")[n % 3]
         # TWO LEGS WITH DAYLIGHT BETWEEN THEM, AND A NECK. Turning the
         # shoulders across the view fixed the first fault and left a second
@@ -2897,6 +2958,9 @@ def _vehicles(out):
     nobody's car."""
     L, half, gw = CAR_L, CAR_W / 2.0, CAR_GLASS_W / 2.0
     for n, (cx, cy, facing, paint) in enumerate(VEHICLE_AT):
+        # ON THE ROAD WHERE IT IS PARKED, which is 49 mm below the crown two
+        # metres out; the tyres stood in the air by that much.
+        dz = road_z(cy)
 
         def place(profile, y0, y1, pid, material, note=""):
             # NOSE-AT-ZERO INTO WORLD, and the reversal is not decoration.
@@ -2908,7 +2972,7 @@ def _vehicles(out):
             # it, because a mirrored car is one with its normals inverted
             # and its driver on the wrong side.
             local = tuple(reversed([(L / 2.0 - px, pz) for (px, pz) in profile]))
-            world = tuple((cx + facing * lx, lz) for (lx, lz) in local)
+            world = tuple((cx + facing * lx, lz + dz) for (lx, lz) in local)
             a, b = cy + facing * y0, cy + facing * y1
             _prism(out, pid, material, world, min(a, b), max(a, b), note)
 
@@ -4131,7 +4195,7 @@ def _place_props(bpy, root, mats):
         height = hi[2] - lo[2]
         # THE GROUND UNDER THIS PROP, which is the footway where it stands on
         # the pavement and the road where it stands in the channel.
-        ground = THRESHOLD_ABOVE_CROWN_M if p["on_footway"] else 0.0
+        ground = footway_z(p["y"]) if p["on_footway"] else road_z(p["y"])
         # A SET-IN PIECE IS THE LID OF ITS OWN DISH and sits flush in the
         # running surface rather than on top of it; everything else stands.
         target_z = ground - height * 0.5 if p["set_in"] else ground + height * 0.5
@@ -6497,6 +6561,40 @@ def selftest():
                   "%.4f m" % (crown - channel))
             check("accept/and-the-crown-is-the-road-datum-at-zero",
                   abs(crown) < 1e-9, "%.4f" % crown)
+
+        # ---- AND WHAT STANDS AT THE ROAD'S EDGE STANDS ON IT, 23 September.
+        # The crown was built on 22 September and the kerb, the footway, the
+        # paint and the gullies went on standing where a flat road had put
+        # them, which no check asked about: a 200 mm kerb, and yellow "paint"
+        # 75 mm tall. Each is asked here against the scene file's numbers.
+        if not serr:
+            by = {b["id"]: b for b in street}
+            kerb = by.get("kerb_east")
+            check("accept/the-kerb-stands-125mm-above-its-channel",
+                  kerb is not None and abs(kerb["z1"] - road_z(3.0) - 0.125) < 1e-6,
+                  "%.4f" % (kerb["z1"] - road_z(3.0)) if kerb else "no kerb_east")
+            fw = by.get("footway_east")
+            if fw is not None and fw.get("kind") == "mesh":
+                tops = [v for v in fw["verts"] if v[2] > -0.29]
+                at_kerb = min(tops, key=lambda v: abs(v[1]))[2]
+                at_front = max(tops, key=lambda v: abs(v[1]))[2]
+                check("accept/the-footway-meets-the-kerb-top-and-rises-to-the-threshold",
+                      kerb is not None and abs(at_kerb - kerb["z1"]) < 1e-6
+                      and abs(at_front - THRESHOLD_ABOVE_CROWN_M) < 1e-6,
+                      "%.4f..%.4f" % (at_kerb, at_front))
+            else:
+                check("accept/the-footway-meets-the-kerb-top-and-rises-to-the-threshold",
+                      False, "footway_east is not a falling slab")
+            paint = [b for b in street if b["id"].startswith("yellow_")]
+            proud = [b["id"] for b in paint
+                     if b["z1"] - road_z(min(abs(b["y0"]), abs(b["y1"]))) > 0.0125 + 1e-9
+                     or b["z0"] > road_z(max(abs(b["y0"]), abs(b["y1"])))]
+            check("accept/the-yellow-lines-are-paint-on-the-road-not-ribs-over-it",
+                  len(paint) == 4 and not proud, ",".join(proud) or "%d" % len(paint))
+            gullies = [b for b in street if b["id"].startswith("dressing_gully_")]
+            high = [b["id"] for b in gullies if b["z1"] - road_z(abs(b["y0"])) > 0.005 + 1e-9]
+            check("accept/the-gullies-are-flush-with-the-channel",
+                  len(gullies) > 0 and not high, ",".join(high))
 
         # ---- THE PAVEMENT PROPS, read from the spec rather than chosen.
         props, perr = prop_placements(ROOT)
