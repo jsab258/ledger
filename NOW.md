@@ -726,8 +726,18 @@ sheet was made on the Blender side and Unreal's way round is the true one.
       relief is dropped for a film of water (f1b7a7f8). Then on the drawn
       surfaces (9529017d): brick 1.04, road 0.95, footway 1.1, far 0.98,
       shop 0.94, sky 1.03 - pair-02. The three sign crops fixed (2e172174);
-      see-through glass as its own material (1e7a0d8e, awaiting its run);
-      the wet flags' shine as a setting (paving floor 0.25, to verify).
+      see-through glass as its own material (1e7a0d8e, proven); the wet
+      flags' shine as a setting (paving floor 0.25: it OVERSHOT on the
+      runner, footway 1.6-2.5x the sheet and blue with sky - retune on the
+      local build once the queue drains). The far end's haze: fog colour
+      and a day cap x3 in the look file (749c7551, to verify). The kerb
+      at its scene-file height and drawn as precast blocks, the paint and
+      gullies on the cambered road (5237668a). The night's exposure held
+      at 0.1, because the lit rooms behind the see-through glass blacked
+      it out (52c13834). The cars turned to face the camera, in the
+      sheet's paints (412c0e33). The playable street holds the day's
+      exposure (d97e12b5, not compiled here). NEXT: the footway, then the
+      final day pair from a run with all of it.
 - [ ] NEW SHAPES THE SHEET STILL NEEDS, built in Blender and brought across
       the same way. DONE: the far hillside thinned with grass and 64 trees
       (08b0db2e, proven in Unreal); the street bends away at a terrace that
