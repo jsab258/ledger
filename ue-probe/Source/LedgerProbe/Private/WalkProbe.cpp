@@ -348,7 +348,11 @@ namespace
 	// frames. Whether this machine has an audio device at all is said, since
 	// a runner without one records silence and that must not read as sound.
 	bool bAudioDevice = false, bAudioRecording = false, bAudioStopped = false;
-	const TCHAR* kAudioLeaf = TEXT("ue-walk-audio");
+	// THE FILES' PREFIX, 23 September: "ue-walk" for the probe's own walk,
+	// "ue-slicewalk" when the same walk drives the slice's player
+	// (-LedgerSlice), so the two runs never write over each other.
+	FString GPrefix = TEXT("ue-walk");
+	FString WalkLeaf(const TCHAR* Rest) { return GPrefix + Rest; }
 
 	// ---- the grate aim: one camera, reused by both grate frames --------
 	AActor*       GGrateActor = nullptr;
@@ -659,7 +663,7 @@ namespace
 		if ((Now - GLastSeqCaptureTime) < kSeqInterval) { return; }
 		if (GSeqRequested >= kMaxSeqFrames) { return; }
 		GShotName = FString::Printf(TEXT("seq%03d"), GSeqRequested);
-		ShotBegin(AbsProject(*FString::Printf(TEXT("ue-walkseq_%03d.png"), GSeqRequested)), Now);
+		ShotBegin(AbsProject(*FString::Printf(TEXT("%sseq_%03d.png"), *GPrefix, GSeqRequested)), Now);
 		GSeqInFlight = true;
 		++GSeqRequested;
 		GLastSeqCaptureTime = Now;
@@ -1294,9 +1298,9 @@ namespace
 		Out.Add(FString::Printf(TEXT("walkPhaseReached=%s"), Phase));
 		Out.Add(TEXT("walkReached=in-progress"));
 		const FString Body = FString::Join(Out, TEXT("\n")) + TEXT("\n");
-		FFileHelper::SaveStringToFile(Body, *AbsProject(TEXT("ue-walk-verdict.txt")));
+		FFileHelper::SaveStringToFile(Body, *AbsProject(*WalkLeaf(TEXT("-verdict.txt"))));
 		FFileHelper::SaveStringToFile(Body, *FPaths::Combine(
-			FPaths::GetPath(FPlatformProcess::ExecutablePath()), TEXT("ue-walk-verdict.txt")));
+			FPaths::GetPath(FPlatformProcess::ExecutablePath()), *WalkLeaf(TEXT("-verdict.txt"))));
 	}
 
 	void WriteFinalVerdict()
@@ -1447,7 +1451,7 @@ namespace
 			TEXT("walkAudioDevice=%s walkAudioRecorded=%s walkAudioFile=%s.wav/written-after-this-line-see-the-workflow's-walkAudioCollected"),
 			bAudioDevice ? TEXT("yes") : TEXT("NONE/a-recording-would-be-silence"),
 			bAudioStopped ? TEXT("yes/pawn-arrival-to-end-of-walk") : (bAudioRecording ? TEXT("started-not-stopped") : TEXT("no")),
-			kAudioLeaf));
+			*WalkLeaf(TEXT("-audio"))));
 		Out.Add(FString::Printf(
 			TEXT("walkFramesRequested=%d/%d walkFramesWrote=%d/%d"),
 			GShotsAttempted, kTotalShots, GShotsWrote, kTotalShots));
@@ -1504,9 +1508,9 @@ namespace
 		Out.Add(TEXT("walkPhaseReached=done"));
 		Out.Add(TEXT("walkReached=end"));
 		const FString Body = FString::Join(Out, TEXT("\n")) + TEXT("\n");
-		FFileHelper::SaveStringToFile(Body, *AbsProject(TEXT("ue-walk-verdict.txt")));
+		FFileHelper::SaveStringToFile(Body, *AbsProject(*WalkLeaf(TEXT("-verdict.txt"))));
 		FFileHelper::SaveStringToFile(Body, *FPaths::Combine(
-			FPaths::GetPath(FPlatformProcess::ExecutablePath()), TEXT("ue-walk-verdict.txt")));
+			FPaths::GetPath(FPlatformProcess::ExecutablePath()), *WalkLeaf(TEXT("-verdict.txt"))));
 	}
 
 	void Finish()
@@ -1516,7 +1520,7 @@ namespace
 		if (bAudioRecording && World != nullptr)
 		{
 			UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
-			                                                 kAudioLeaf, FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
+			                                                 WalkLeaf(TEXT("-audio")), FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
 			bAudioStopped = true;
 		}
 		WriteFinalVerdict();
@@ -1596,7 +1600,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotStart:
-			return RunShotPhase(TEXT("start"), TEXT("ue-walk_00_start.png"),
+			return RunShotPhase(TEXT("start"), *WalkLeaf(TEXT("_00_start.png")),
 			                     EWalkPhase::ClearWalkA, Now);
 		case EWalkPhase::ClearWalkA:
 		{
@@ -1607,7 +1611,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotMidClear:
-			return RunShotPhase(TEXT("mid_clear"), TEXT("ue-walk_01_mid_clear.png"),
+			return RunShotPhase(TEXT("mid_clear"), *WalkLeaf(TEXT("_01_mid_clear.png")),
 			                     EWalkPhase::ClearWalkB, Now);
 		case EWalkPhase::ClearWalkB:
 		{
@@ -1620,7 +1624,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotAfterClear:
-			return RunShotPhase(TEXT("after_clear"), TEXT("ue-walk_02_after_clear.png"),
+			return RunShotPhase(TEXT("after_clear"), *WalkLeaf(TEXT("_02_after_clear.png")),
 			                     EWalkPhase::TeleportToWall, Now);
 		case EWalkPhase::TeleportToWall:
 		{
@@ -1658,7 +1662,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotBeforeBlocked:
-			return RunShotPhase(TEXT("before_blocked"), TEXT("ue-walk_03_before_blocked.png"),
+			return RunShotPhase(TEXT("before_blocked"), *WalkLeaf(TEXT("_03_before_blocked.png")),
 			                     EWalkPhase::BlockedWalk, Now);
 		case EWalkPhase::BlockedWalk:
 		{
@@ -1671,7 +1675,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotAfterBlocked:
-			return RunShotPhase(TEXT("after_blocked"), TEXT("ue-walk_04_after_blocked.png"),
+			return RunShotPhase(TEXT("after_blocked"), *WalkLeaf(TEXT("_04_after_blocked.png")),
 			                     EWalkPhase::AimGrate, Now);
 		// ---- THE GRATE, LAST ON PURPOSE. Every collision and walk number
 		// above is already measured and written by the time this runs, so a
@@ -1716,7 +1720,7 @@ namespace
 			return true;
 		}
 		case EWalkPhase::ShotGrateA:
-			return RunShotPhase(TEXT("grate_a"), TEXT("ue-walk_05_grate_a.png"),
+			return RunShotPhase(TEXT("grate_a"), *WalkLeaf(TEXT("_05_grate_a.png")),
 			                     EWalkPhase::ShotGrateB, Now);
 		// THE SAME CAMERA, NOT MOVED BETWEEN THE TWO. This is the pair
 		// tools/grate-zfight.py reads its flicker density from; if anything
@@ -1725,7 +1729,7 @@ namespace
 		// move, and the grateCamRead numbers on the rect line are what would
 		// show it.
 		case EWalkPhase::ShotGrateB:
-			return RunShotPhase(TEXT("grate_b"), TEXT("ue-walk_06_grate_b.png"),
+			return RunShotPhase(TEXT("grate_b"), *WalkLeaf(TEXT("_06_grate_b.png")),
 			                     EWalkPhase::RestoreView, Now);
 		case EWalkPhase::RestoreView:
 		{
@@ -1753,6 +1757,7 @@ namespace LedgerWalkProbe
 {
 	void Start()
 	{
+		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerSlice"))) { GPrefix = TEXT("ue-slicewalk"); }
 		WriteBreadcrumb(TEXT("start-called"));
 		GTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&Tick), 0.0f);
 	}

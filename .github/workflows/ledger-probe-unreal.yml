@@ -1702,6 +1702,62 @@ jobs:
       # engine start and shutdown on top of it and still names a genuine
       # hang. The step cap is 14 minutes so the kill lands INSIDE the step
       # and the evidence file is still written afterwards.
+      - name: Walk the slice's player and keep its frames
+        id: slicewalk
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 9
+        shell: pwsh
+        env:
+          SHOT_EXE: ${{ steps.build.outputs.exe }}
+          SHOT_PROJ: ${{ steps.build.outputs.projectDir }}
+          SHOT_SHA: ${{ steps.build.outputs.sha }}
+        run: |
+          # THE SLICE'S PLAYER, 23 September: the probe's own scripted walk
+          # driving the slice's character (-LedgerSlice), so a frame shows
+          # the body standing and walking from the player's camera. Its files
+          # are ue-slicewalk_*; this step reports and never turns the run red.
+          $ErrorActionPreference = "Continue"
+          $out = "production/d1-probe/ue-slicewalk-verdict.txt"
+          New-Item -ItemType Directory -Force -Path "production/d1-probe" | Out-Null
+          Get-ChildItem "production/d1-probe" -Filter "ue-slicewalk*" -ErrorAction SilentlyContinue |
+            Remove-Item -Force -ErrorAction SilentlyContinue
+          $exe = $env:SHOT_EXE
+          $proj = $env:SHOT_PROJ
+          if ((-not $exe) -or (-not (Test-Path $exe))) {
+            "sliceWalkStatus=NO-LAUNCH/no-binary" | Set-Content $out -Encoding utf8
+            exit 0
+          }
+          $binDir = Split-Path $exe -Parent
+          $dirs = @($proj, $binDir, (Join-Path $PWD "ue-probe"))
+          foreach ($d in $dirs) {
+            if ($d -and (Test-Path $d)) {
+              Get-ChildItem $d -Filter "ue-slicewalk*" -ErrorAction SilentlyContinue |
+                Remove-Item -Force -ErrorAction SilentlyContinue
+            }
+          }
+          $sliceArgs = @("-LedgerWalk", "-LedgerSlice", "-LedgerCommit=$($env:SHOT_SHA)", "-RenderOffScreen",
+                         "-ResX=960", "-ResY=540", "-windowed",
+                         "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
+          $p = Start-Process -FilePath $exe -ArgumentList $sliceArgs -PassThru -NoNewWindow `
+               -RedirectStandardOutput "slicewalk-run.log" -RedirectStandardError "slicewalk-run.err"
+          $inTime = $p.WaitForExit(420000)
+          if (-not $inTime) { try { $p.Kill() } catch {} }
+          $copied = 0
+          foreach ($d in $dirs) {
+            if (-not $d -or -not (Test-Path $d)) { continue }
+            foreach ($f in (Get-ChildItem $d -Filter "ue-slicewalk_*.png" -ErrorAction SilentlyContinue)) {
+              $dest = Join-Path "production/d1-probe" $f.Name
+              if (-not (Test-Path $dest)) { Copy-Item $f.FullName $dest -Force; $copied++ }
+            }
+            $v = Join-Path $d "ue-slicewalk-verdict.txt"
+            if ((Test-Path $v) -and -not (Test-Path $out)) { Copy-Item $v $out -Force }
+          }
+          if (-not (Test-Path $out)) { "sliceWalkStatus=NO-VERDICT" | Set-Content $out -Encoding utf8 }
+          Add-Content $out "sliceWalkFramesCollected=$copied sliceWalkExitedInTime=$inTime"
+          Write-Host (Get-Content $out -Raw)
+          exit 0
+
       - name: Commit two crimes and judge the witness
         id: crime
         if: always()
@@ -2270,6 +2326,8 @@ jobs:
           # committed as this run's.
           git add -A -- 'production/d1-probe/ue-walk.gif' 2>/dev/null || true
           git add -A -- 'production/d1-probe/ue-walk-audio.wav' 2>/dev/null || true
+          # THE SLICE'S WALK, 23 September.
+          git add -A -- 'production/d1-probe/ue-slicewalk_*.png' 'production/d1-probe/ue-slicewalk-verdict.txt' 2>/dev/null || true
           # THE CRIME, THE WITNESS AND THE OVERHEARD CONSEQUENCE (ruling
           # 2026-09-08), THE SAME TWO RULES A FOURTH TIME. The crime verdict
           # is a TRACKED file, so a run that never reached the crime step,
