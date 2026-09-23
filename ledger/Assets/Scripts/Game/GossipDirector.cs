@@ -36,6 +36,10 @@ namespace Ledger.Game
         GameController _game;
         GossipMill _mill;
         readonly Dictionary<string, NpcWalker> _walkers = new Dictionary<string, NpcWalker>();
+        /// Who has already remarked to the player on which story, so a story
+        /// that shows is remarked on once and then only watched (decision 7 a,
+        /// Core's RemarkLedger). Not saved: after a load, each may remark once more.
+        readonly RemarkLedger _remarks = new RemarkLedger();
         float _timer;
         GameTime _lastTickAt;
         bool _haveLastTick;
@@ -311,8 +315,18 @@ namespace Ledger.Game
                     if (r.Content.Subject == "player" && (strongest == null || r.Confidence > strongest.Confidence))
                         strongest = r;
 
+                // KNOWING SHOWS, decision 7 (a), 23 September: somebody holding
+                // a story about the player's night that they would still pass
+                // on stands on a floor under the ladder (StreetVoice.Stance), and
+                // what they say comes from that story.
+                var shows = StreetVoice.StoryThatShows(g, _mill.MinConfidenceToShare);
+                // ONCE PER STORY: a person who has already remarked on this
+                // story to the player watches him instead of remarking again.
                 var stance = StreetVoice.Stance(g.Suspicion.Value, g.Loyalty,
-                    strongest != null ? strongest.Confidence : 0.0, g.Leashed, _game.WearingCoat);
+                    strongest != null ? strongest.Confidence : 0.0, g.Leashed, _game.WearingCoat,
+                    knowsSomething: shows != null,
+                    remarkedAlready: _remarks.HasRemarked(g.Id, shows));
+                if (shows != null) strongest = shows;
                 w.Stance = stance;
 
                 // A bark as you pass: said BY somebody who holds a story, and
@@ -324,7 +338,14 @@ namespace Ledger.Game
                 float last = _lastBark.TryGetValue(g.Id, out var t) ? t : -999f;
                 if (Time.time - last < 45f) continue;
                 _lastBark[g.Id] = Time.time;
-                var line = StreetVoice.Recognition(g, strongest, stance, _game.Now.Day * 7 + _game.Now.Hour);
+                // THE SPEAKER IN THE SEED, 23 September: seeded by the hour
+                // alone, three people passed in the same game hour said the
+                // same line, which the floor made common. A stable hash of the
+                // id (string.GetHashCode is not stable across runtimes).
+                int idSeed = 0;
+                unchecked { foreach (char ch in g.Id ?? "") idSeed = idSeed * 31 + ch; }
+                var line = StreetVoice.Recognition(g, strongest, stance,
+                    unchecked(_game.Now.Day * 7 + _game.Now.Hour + idSeed));
                 if (line != null)
                     // A REMARK, not a conversation. This is somebody saying
                     // something about the player across a gap, which is exactly
@@ -332,9 +353,14 @@ namespace Ledger.Game
                     // you that you have been noticed — so it has to carry
                     // further than two people muttering to each other, and it
                     // has to be overhearable by a third party.
-                    SpeechBubble.Say(w.transform, line.Text, 5f,
+                {
+                    var bubble = SpeechBubble.Say(w.transform, line.Text, 5f,
                         stance >= StanceKind.Refuses ? UiTheme.Debit : UiTheme.AmberSoft,
                         Perception.LoudRemark, g.Id, line.Composed);
+                    // THE ONE REMARK COUNTS ONLY IF IT WAS HEARD: Say returns
+                    // null when the listener can make out no words (decision 7 a).
+                    if (shows != null) _remarks.Record(g.Id, shows, stance, heard: bubble != null);
+                }
             }
         }
 

@@ -88,4 +88,4 @@ WHY D AND A DISAGREE: the re-tell guard against floating point, in isolation.
 INSTRUMENT SELF-CHECK
   pressure mirror   36/36 row(s) where this file's pressure lands in the band StreetVoice.Stance returned
 
-strangerCurve crimesWalked=10 crossNoDecay=2/10 crossWithDecay=3/10 oneCrimePressureLie=0.324 commentsAt=0.42 firstTalkGameMinutes=6.000 playWindowGameMinutes=3600 lieCaughtAtLiveCadence=0/5 mirrorOk=36/36 atUtc=20260906-142554
+strangerCurve crimesWalked=10 crossNoDecay=2/10 crossWithDecay=3/10 oneCrimePressureLie=0.324 commentsAt=0.42 firstTalkGameMinutes=6.000 playWindowGameMinutes=3600 lieCaughtAtLiveCadence=0/5 mirrorOk=36/36 atUtc=20260923-153854

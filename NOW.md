@@ -975,7 +975,7 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             DirectML, as the Unity player had them, one cast voice each.
       - [ ] THE CRIME BY HAND: the automated beat's window, broken by the
             player, seen by whoever the port's perception says.
-      - [ ] DECISION 7 (a): a hearer's faint knowledge shows - a longer look,
+      - [x] DECISION 7 (a): a hearer's faint knowledge shows - a longer look,
             a remark, a changed manner - at the certainty hearers hold.
             WRITTEN AND PARKED 23 Sep (git stash, "WIP decision 7 (a)"): a
             floor under the ladder for anyone holding a story that shows
@@ -986,6 +986,12 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
             and two design calls - the paper puts the whole town on it, the
             staff would remark every 45 s. Put to Jafar (FOR-JAFAR); my
             recommendation (a) is one remark per story, then the look.
+            BUILT AS (a) AND COMMITTED 23 Sep after a third check: once per
+            story (Core RemarkLedger, counted only when heard and said at
+            Comments), the look after it (Watches, 14 m); the study harness
+            mirrors it and its sweep is regenerated. In the Unity game only:
+            the Unreal port has no Stance yet - the slice needs it ported,
+            with golden rows.
       - [x] REACH MEASURED AGAIN on the new routines; no constant touched.
             23 Sep: a half-sure witness tells 1.7 of nine in thirty minutes of
             play, a sure one 4.7; 2 of 10 half-sure witnesses reach nobody,

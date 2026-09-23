@@ -572,7 +572,13 @@ namespace Ledger.StrangerTest
                 return events;
             }
 
-            /// Where Lena stands right now, read the way `Passing` reads it.
+            /// Where Lena stands on the LADDER right now: the pressure and the
+            /// rung it gives, WITHOUT decision 7 (a)'s floor (23 September), so the
+            /// pressure mirror below compares like with like. `Passing` adds the
+            /// floor for what she says; the curve reports the ladder, and a
+            /// reader of section B should know that with the floor a person who
+            /// holds a story that shows watches rather than going quiet until it
+            /// fades below the share floor.
             public (double susp, double strongest, double pressure, StanceKind stance) Lena()
             {
                 var about = W.Lena.G.Rumors.Where(r => r.Content.Subject == "player")
