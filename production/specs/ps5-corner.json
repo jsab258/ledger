@@ -179,6 +179,251 @@
         ]
       ],
       "note": "The whole street from the sheet's own viewpoint with the same settings as corner_max, so the report's 'what it would take for the whole street' has the whole street's frame and frame time beside the corner's."
+    },
+    {
+      "id": "corner_scanned",
+      "camera": "cam_corner",
+      "condition": "overcast_day",
+      "cvars": [
+        [
+          "r.RayTracing.Enable",
+          "1"
+        ],
+        [
+          "sg.ViewDistanceQuality",
+          "4"
+        ],
+        [
+          "sg.AntiAliasingQuality",
+          "4"
+        ],
+        [
+          "sg.ShadowQuality",
+          "4"
+        ],
+        [
+          "sg.GlobalIlluminationQuality",
+          "4"
+        ],
+        [
+          "sg.ReflectionQuality",
+          "4"
+        ],
+        [
+          "sg.PostProcessQuality",
+          "4"
+        ],
+        [
+          "sg.TextureQuality",
+          "4"
+        ],
+        [
+          "sg.EffectsQuality",
+          "4"
+        ],
+        [
+          "sg.FoliageQuality",
+          "4"
+        ],
+        [
+          "sg.ShadingQuality",
+          "4"
+        ],
+        [
+          "r.Shadow.Virtual.Enable",
+          "1"
+        ],
+        [
+          "r.VolumetricFog",
+          "1"
+        ],
+        [
+          "r.ContactShadows",
+          "1"
+        ],
+        [
+          "r.Lumen.Reflections.DownsampleFactor",
+          "1"
+        ],
+        [
+          "r.ScreenPercentage",
+          "100"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing",
+          "1"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing.LightingMode",
+          "2"
+        ]
+      ],
+      "note": "Every feature that can be switched on while the game runs: the engine's own top quality level (cinematic, 4) in every group, virtual shadow maps, volumetric fog, contact shadows, full-resolution Lumen reflections. Hardware ray tracing is compiled in (the project's startup setting, from 23 September) and switched on here for Lumen, with hit lighting for its reflections (LightingMode 2): mirror-true reflections in the wet. Nanite is built into the meshes at import, not switched at run time.",
+      "scanned": true
+    },
+    {
+      "id": "hook_scanned",
+      "camera": "cam_hook",
+      "condition": "overcast_day",
+      "cvars": [
+        [
+          "r.RayTracing.Enable",
+          "1"
+        ],
+        [
+          "sg.ViewDistanceQuality",
+          "4"
+        ],
+        [
+          "sg.AntiAliasingQuality",
+          "4"
+        ],
+        [
+          "sg.ShadowQuality",
+          "4"
+        ],
+        [
+          "sg.GlobalIlluminationQuality",
+          "4"
+        ],
+        [
+          "sg.ReflectionQuality",
+          "4"
+        ],
+        [
+          "sg.PostProcessQuality",
+          "4"
+        ],
+        [
+          "sg.TextureQuality",
+          "4"
+        ],
+        [
+          "sg.EffectsQuality",
+          "4"
+        ],
+        [
+          "sg.FoliageQuality",
+          "4"
+        ],
+        [
+          "sg.ShadingQuality",
+          "4"
+        ],
+        [
+          "r.Shadow.Virtual.Enable",
+          "1"
+        ],
+        [
+          "r.VolumetricFog",
+          "1"
+        ],
+        [
+          "r.ContactShadows",
+          "1"
+        ],
+        [
+          "r.Lumen.Reflections.DownsampleFactor",
+          "1"
+        ],
+        [
+          "r.ScreenPercentage",
+          "100"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing",
+          "1"
+        ],
+        [
+          "r.Lumen.HardwareRayTracing.LightingMode",
+          "2"
+        ]
+      ],
+      "note": "The whole street from the sheet's own viewpoint with the same settings as corner_max, so the report's 'what it would take for the whole street' has the whole street's frame and frame time beside the corner's.",
+      "scanned": true
     }
-  ]
+  ],
+  "scanned": [
+    {
+      "base": "brick_red",
+      "asset": "brick_4",
+      "files": [
+        "production/assets/scanned/polyhaven/brick_4/brick_4_diff_2k.jpg",
+        "production/assets/scanned/polyhaven/brick_4/brick_4_nor_dx_2k.jpg",
+        "production/assets/scanned/polyhaven/brick_4/brick_4_rough_2k.jpg"
+      ],
+      "covers_m": 0.5,
+      "match_rgb": [
+        0.479,
+        0.298,
+        0.314
+      ],
+      "why": "the scan's mean brought to its drawn map's mean (brick_red), so it adds detail and wear, not a new colour"
+    },
+    {
+      "base": "paving",
+      "asset": "concrete_pavement_02",
+      "files": [
+        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_diff_2k.jpg",
+        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_nor_dx_2k.jpg",
+        "production/assets/scanned/polyhaven/concrete_pavement_02/concrete_pavement_02_rough_2k.jpg"
+      ],
+      "covers_m": 1.8,
+      "match_rgb": [
+        0.539,
+        0.404,
+        0.236
+      ],
+      "why": "the scan's mean brought to its drawn map's mean (paving), so it adds detail and wear, not a new colour"
+    },
+    {
+      "base": "asphalt",
+      "asset": "asphalt_01",
+      "files": [
+        "production/assets/scanned/polyhaven/asphalt_01/asphalt_01_diff_2k.jpg",
+        "production/assets/scanned/polyhaven/asphalt_01/asphalt_01_nor_dx_2k.jpg",
+        "production/assets/scanned/polyhaven/asphalt_01/asphalt_01_rough_2k.jpg"
+      ],
+      "covers_m": 2.08,
+      "match_rgb": [
+        1.232,
+        1.522,
+        1.884
+      ],
+      "why": "the scan's mean brought to its palette colour (asphalt), so it adds detail and wear, not a new colour"
+    },
+    {
+      "base": "frame_painted",
+      "asset": "painted_concrete_02",
+      "files": [
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_diff_2k.jpg",
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
+      ],
+      "covers_m": 4.0,
+      "match_rgb": [
+        0.675,
+        1.011,
+        1.62
+      ],
+      "why": "the scan's mean brought to its palette colour (frame_painted), so it adds detail and wear, not a new colour"
+    },
+    {
+      "base": "paint_fascia",
+      "asset": "painted_concrete_02",
+      "files": [
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_diff_2k.jpg",
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_nor_dx_2k.jpg",
+        "production/assets/scanned/polyhaven/painted_concrete_02/painted_concrete_02_rough_2k.jpg"
+      ],
+      "covers_m": 4.0,
+      "match_rgb": [
+        0.675,
+        1.011,
+        1.62
+      ],
+      "why": "the scan's mean brought to its palette colour (fascia_slate_blue), so it adds detail and wear, not a new colour"
+    }
+  ],
+  "scanned_what": "THE CONTENT HALF, 24 September: in the shots marked scanned, the street's own brick, flags, road and shopfront paint wear Poly Haven's CC0 scans (production/assets/scanned/polyhaven), tiled at their true size and graded to the colour each surface already renders, then put back for every other shot."
 }

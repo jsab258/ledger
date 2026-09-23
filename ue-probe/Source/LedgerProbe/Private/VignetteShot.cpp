@@ -1274,8 +1274,36 @@ namespace
 	{
 		std::string ShotId;
 		std::vector<std::pair<std::string, std::string> > Sets;
+		bool bScanned = false;
 	};
 	std::vector<CornerSets> GCornerSets;
+	// THE CONTENT HALF, 24 September: the corner file's "scanned" list - which
+	// street surface (by base material) wears which Poly Haven scan, its three
+	// maps from the repository, the real size its maps cover, and the colour
+	// match that brings the scan's mean to what the surface renders today.
+	struct ScanSurface
+	{
+		std::string Base, Asset;
+		std::string Files[3];
+		double CoversM = 1.0;
+		double Match[3] = {1.0, 1.0, 1.0};
+		UTexture2D* Tex[3] = {nullptr, nullptr, nullptr};
+	};
+	std::vector<ScanSurface> GScan;
+	// WHAT EACH STREET ROW WORE AT BIND TIME, so a scanned shot can be put
+	// back exactly, and which scan it wears now (-1 none).
+	struct RowWear
+	{
+		UTexture2D* Tex[3] = {nullptr, nullptr, nullptr};
+		float TU = 1.0f, TV = 1.0f;
+		FLinearColor Grade = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		bool bSaved = false;
+	};
+	TArray<RowWear> GRowWear;
+	TArray<int32> GRowScan;
+	bool GScanOn = false;
+	int32 GScanRows = 0, GScanMaps = 0, GScanShots = 0;
+	std::string GScanNote = "no-scanned-shot-yet";
 	std::vector<std::pair<std::string, std::string> > GCvarsRestore;
 	std::string GCornerNote = "not-read";
 	int32 GCornerApplied = 0, GCornerMissing = 0;
@@ -1369,12 +1397,39 @@ namespace
 						}
 					}
 				}
+				if (const Value* Sc = V.Find("scanned")) { CS.bScanned = Sc->Type == T_BOOL && Sc->Bool; }
 				GSpec.Shots.push_back(S);
 				GCornerSets.push_back(CS);
 				++Shots;
 			}
 		}
-		GCornerNote = "appended/cameras-" + std::to_string(Cams) + "/shots-" + std::to_string(Shots);
+		GScan.clear();
+		if (const Value* L = Root.Find("scanned"))
+		{
+			for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
+			{
+				const Value& V = L->Arr[I];
+				if (V.Type != T_OBJ) { continue; }
+				ScanSurface Sc;
+				Sc.Base = LedgerStreet::StrOr(V, "base");
+				Sc.Asset = LedgerStreet::StrOr(V, "asset");
+				Sc.CoversM = LedgerStreet::NumOr(V, "covers_m", 1.0);
+				const Value* F = V.Find("files");
+				for (size_t K = 0; F != 0 && F->Type == T_ARR && K < 3 && K < F->Arr.size(); ++K)
+				{
+					if (F->Arr[K].Type == T_STR) { Sc.Files[K] = F->Arr[K].Str; }
+				}
+				const Value* M = V.Find("match_rgb");
+				for (size_t K = 0; M != 0 && M->Type == T_ARR && K < 3 && K < M->Arr.size(); ++K)
+				{
+					if (M->Arr[K].Type == T_NUM && M->Arr[K].Num > 0.0) { Sc.Match[K] = M->Arr[K].Num; }
+				}
+				if (Sc.Base.empty() || Sc.Files[0].empty() || Sc.CoversM <= 0.0) { continue; }
+				GScan.push_back(Sc);
+			}
+		}
+		GCornerNote = "appended/cameras-" + std::to_string(Cams) + "/shots-" + std::to_string(Shots)
+		            + "/scanned-" + std::to_string(GScan.size());
 	}
 
 	// PUT BACK WHAT THE LAST CORNER SHOT CHANGED, then set this shot's own.
@@ -2148,13 +2203,16 @@ namespace
 			" soundsPlaced=%d/%d soundBeds=%d soundVoices=%d soundClips=%d soundPlaying=%s",
 			(int)(GSoundBeds + GSoundVoices), (int)GSoundAsked, (int)GSoundBeds, (int)GSoundVoices, (int)GSoundClips,
 			bGSoundPlaying ? "yes" : "no/shots-have-no-ears");
-		char CornerBuf[96];
-		std::snprintf(CornerBuf, sizeof(CornerBuf), " cornerCvarsApplied=%d cornerCvarsMissing=%d",
-		              (int)GCornerApplied, (int)GCornerMissing);
+		char CornerBuf[200];
+		std::snprintf(CornerBuf, sizeof(CornerBuf),
+		              " cornerCvarsApplied=%d cornerCvarsMissing=%d scanSurfaces=%d scanRows=%d scanMaps=%d scanShots=%d",
+		              (int)GCornerApplied, (int)GCornerMissing, (int)GScan.size(), (int)GScanRows, (int)GScanMaps,
+		              (int)GScanShots);
 		return std::string(Buf) + LookBuf + CollBuf + PeopleBuf + " peopleNote=" + LedgerVignette::NoSpaces(GPeopleNote)
 		     + CarsBuf + " vehiclesNote=" + LedgerVignette::NoSpaces(GVehiclesNote)
 		     + SoundsBuf + " soundNote=" + LedgerVignette::NoSpaces(GSoundNote) + HeadsBuf + SliceBuf
 		     + " cornerNote=" + LedgerVignette::NoSpaces(GCornerNote) + CornerBuf
+		     + " scanNote=" + LedgerVignette::NoSpaces(GScanNote)
 		     + " playExposure=" + GPlayExposure
 		     + " streetNote=" + LedgerVignette::NoSpaces(GStreetNote)
 		     + " streetFrom=" + (GStreetFrom.IsEmpty()
@@ -6506,6 +6564,14 @@ namespace
 			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
 			                             FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f));
 			Mid->SetScalarParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::WetnessParam())), 0.0f);
+			if (GRowWear.Num() < GStreetActors.Num()) { GRowWear.SetNum(GStreetActors.Num()); }
+			GRowWear[I].Tex[0] = Albedo;
+			GRowWear[I].Tex[1] = NormalMap;
+			GRowWear[I].Tex[2] = RoughTex;
+			GRowWear[I].TU = TilesU;
+			GRowWear[I].TV = TilesV;
+			GRowWear[I].Grade = FLinearColor((float)Gr.R, (float)Gr.G, (float)Gr.B, 1.0f);
+			GRowWear[I].bSaved = true;
 			if (GStreetNormals.Num() < GStreetActors.Num()) { GStreetNormals.SetNumZeroed(GStreetActors.Num()); }
 			GStreetNormals[I] = NormalMap;
 			if (GStreetMids.Num() < GStreetActors.Num()) { GStreetMids.SetNumZeroed(GStreetActors.Num()); }
@@ -6546,8 +6612,10 @@ namespace
 				// A DRAWN SURFACE ALREADY CARRIES ITS COLOUR and is graded by
 				// one; only a photograph takes the palette over it.
 				const bool bPhoto = !Rw.SurfaceMap.empty() && Rw.DrawnMap.empty();
-				const LedgerStreet::Grade Gr = bPhoto ? LedgerStreet::PaletteOverPhoto(Rw)
-				                                      : LedgerStreet::Grade{1.0, 1.0, 1.0};
+				const int32 Sk = I < GRowScan.Num() ? GRowScan[I] : -1;
+				const LedgerStreet::Grade Gr = (Sk >= 0 && Sk < (int32)GScan.size())
+					? LedgerStreet::Grade{GScan[(size_t)Sk].Match[0], GScan[(size_t)Sk].Match[1], GScan[(size_t)Sk].Match[2]}
+					: (bPhoto ? LedgerStreet::PaletteOverPhoto(Rw) : LedgerStreet::Grade{1.0, 1.0, 1.0});
 				const double D = LedgerStreet::WetDarken(Rw.Base, C.Wetness);
 				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
 				Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())),
@@ -6573,6 +6641,89 @@ namespace
 				}
 			}
 		}
+	}
+
+	// THE SCANNED SURFACES ON AND OFF, once per prepared pass (24 September):
+	// a shot the corner file marks scanned has the street's brick, flags, road
+	// and shopfront paint wear the scans - tiled at their true size, graded by
+	// the colour match and the look file's surface gain - and the next shot
+	// that is not scanned puts back exactly what each row wore. The condition
+	// is re-driven after either, so a floor's wetness and darkening follow.
+	void DriveCornerSurfaces(const std::string& ShotId)
+	{
+		bool bWant = false;
+		for (size_t I = 0; I < GCornerSets.size(); ++I)
+		{
+			if (GCornerSets[I].ShotId == ShotId) { bWant = GCornerSets[I].bScanned; }
+		}
+		if (bWant == GScanOn || GScan.empty()) { return; }
+		if (GRowScan.Num() < GStreetMids.Num()) { GRowScan.Init(-1, GStreetMids.Num()); }
+		if (GStreetFlatNormal == nullptr)
+		{
+			GStreetFlatNormal = MakeFlatTexture(128, 128, 255, false, TEXT("street-flat-normal"));
+		}
+		int32 Rows = 0;
+		for (int32 I = 0; I < GStreetMids.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			UMaterialInstanceDynamic* Mid = GStreetMids[I];
+			if (Mid == nullptr || I >= GRowWear.Num() || !GRowWear[I].bSaved) { continue; }
+			const LedgerStreet::Row& Rw = GStreet.Rows[(size_t)I];
+			if (!Rw.Decal.empty()) { continue; }
+			int32 K = -1;
+			for (size_t J = 0; J < GScan.size(); ++J)
+			{
+				if (GScan[J].Base == Rw.Base) { K = (int32)J; break; }
+			}
+			if (K < 0) { continue; }
+			const RowWear& W = GRowWear[I];
+			UTexture2D* T[3] = {W.Tex[0], W.Tex[1], W.Tex[2]};
+			float TU = W.TU, TV = W.TV;
+			FLinearColor Gc = W.Grade;
+			if (bWant)
+			{
+				ScanSurface& Sc = GScan[(size_t)K];
+				for (int32 M = 0; M < 3; ++M)
+				{
+					if (Sc.Tex[M] != nullptr || Sc.Files[M].empty()) { continue; }
+					const FString File = FPaths::Combine(GStreetRepoRoot, FString(UTF8_TO_TCHAR(Sc.Files[M].c_str())));
+					if (IFileManager::Get().FileSize(*File) <= 0) { continue; }
+					int32 FW = 0, FH = 0;
+					FString LoadedAs;
+					Sc.Tex[M] = ImportTexture(File, M == 0, FW, FH, LoadedAs);
+					if (Sc.Tex[M] != nullptr) { ++GScanMaps; }
+				}
+				if (Sc.Tex[0] == nullptr) { GScanNote = "no-scan-map/" + Sc.Asset; continue; }
+				T[0] = Sc.Tex[0];
+				if (Sc.Tex[1] != nullptr) { T[1] = Sc.Tex[1]; }
+				if (Sc.Tex[2] != nullptr) { T[2] = Sc.Tex[2]; }
+				TU = TV = (float)(1.0 / Sc.CoversM);
+				const LedgerStreet::Grade Sg = LedgerStreet::SurfaceGainFor(GLook, Rw.Base);
+				Gc = FLinearColor((float)(Sc.Match[0] * Sg.R), (float)(Sc.Match[1] * Sg.G),
+				                  (float)(Sc.Match[2] * Sg.B), 1.0f);
+				GRowScan[I] = K;
+			}
+			else
+			{
+				GRowScan[I] = -1;
+			}
+			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(0))), T[0]);
+			Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(1))),
+			                              T[1] != nullptr ? T[1] : GStreetFlatNormal);
+			if (T[2] != nullptr) { Mid->SetTextureParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::MapParam(2))), T[2]); }
+			Mid->SetScalarParameterValue(FName(TEXT("TilingU")), TU);
+			Mid->SetScalarParameterValue(FName(TEXT("TilingV")), TV);
+			Mid->SetVectorParameterValue(FName(UTF8_TO_TCHAR(LedgerSurface::AlbedoGradeParam())), Gc);
+			if (I < GStreetNormals.Num()) { GStreetNormals[I] = T[1]; }
+			++Rows;
+		}
+		GScanOn = bWant;
+		if (bWant)
+		{
+			++GScanShots;
+			GScanRows = Rows;
+			if (GScanNote == "no-scanned-shot-yet") { GScanNote = "worn"; }
+		}
+		GStreetLookFor.clear();
 	}
 
 	void BindSurfaces()
@@ -7421,6 +7572,7 @@ namespace
 				// THE CORNER'S ENGINE SETTINGS, once per pass: the last corner
 				// shot's put back, this shot's set (DriveCornerCvars).
 				DriveCornerCvars(S.Id);
+				DriveCornerSurfaces(S.Id);
 				if (GQuadActors.Num() > 0)
 				{
 					const Camera* QuadCam = ControlCamera();
