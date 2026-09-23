@@ -194,6 +194,12 @@ WATCHED = {
     # also swallow half the project. The token is the licence, because that is
     # the obligation: the OFL is what THIRD-PARTY.md has to say out loud.
     "ledger/Assets/Resources/LedgerSans.ttf": "SIL Open Font License",
+    # THE PS5 CORNER'S BAR, 23 September: two Kingdom Come: Deliverance II
+    # screenshots supplied by Jafar ("that game is my stated bar"), kept where
+    # every reference lives. Files, not the folder, because the folder's other
+    # pictures are this project's own work.
+    "production/reference/kcd2-town-arcades.jpg": "Warhorse Studios",
+    "production/reference/kcd2-town-fountain.jpg": "Warhorse Studios",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be
