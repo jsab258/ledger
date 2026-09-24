@@ -6,30 +6,30 @@ between them.
 
 ## This morning (24 September, the short sitting)
 
-1. **The disk:** C: had 5.1 GB free and now has 19 GB. I cleared only what was ours and rebuildable: the probe's old compile files (5.7 GB) and Python's download cache (7.8 GB). The biggest win, 33 GB of leftovers in the build runner's copy, needs your yes (below). The twenty largest folders are listed underneath.
-2. **The MetaHuman:** MH_Test now has a short, plain, dark haircut ([frame](production/art/compare/ps5-corner-2026-09-24/corner-metahuman-dressed.png)). The clothes are not what you asked for, though. The only outfit the MetaHuman plugin ships is a white T-shirt and white shorts, with bare feet, and its colours wouldn't take. A question is below.
-3. **The voices:** [the listening page is ready](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447), and since your note it saves your picks, like the A/B page. Aldous, Danny, June and Zlata are each heard blind in four voices, and you pick one each. The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
-4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded, and one new question is below: how much the town says is written ahead.
+1. **The disk:** C: had 5.1 GB free and now has 45 GB, after your yes to clearing the runner's leftovers. I cleared only what was ours and rebuildable: the probe's old compile files (5.7 GB) and Python's download cache (7.8 GB). The runner's copy went from 36 GB to 4.7 GB on your yes, and that was the only deletion. The twenty largest folders are listed underneath.
+2. **The MetaHuman:** MH_Test now has a short, plain, dark haircut ([frame](production/art/compare/ps5-corner-2026-09-24/corner-metahuman-dressed.png)). The clothes are not what you asked for, though. The only outfit the MetaHuman plugin ships is a white T-shirt and white shorts, with bare feet, and its colours wouldn't take. On your answer, I'll look for free clothing on Fab in a later sitting, or leave him until the clothing line.
+3. **The voices:** you've picked on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447). Aldous keeps his voice; Danny, June and Zlata change. The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
+4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded. Everything the town says unprompted is written ahead, on your answer.
 5. **The router:** your three changes are on the list, in stage 2.
-6. **A backup:** a proposal is below. Nothing is set up.
+6. **A backup:** set up in your Dropbox on your answer. MH_Test and his built files are there, 540 MB.
 
 **The twenty largest folders on C:**, biggest first. "Yours" means I haven't touched it and won't.
 
 1. Ai Shoujo, 184 GB: a game of yours, 165 GB of it mods. Yours.
 2. Anno 117, 138 GB: a Steam game. Steam can reinstall it. Yours.
 3. Kingdom Come: Deliverance II, 88 GB: the game we compare the street against. Keep.
-4. The build runner's copy of our game, 50 GB: 33 GB of it is leftovers. The question is below.
+4. The build runner's copy of our game, 50 GB: 33 GB of it was leftovers, cleared on your yes.
 5. Unreal Engine 5.8, 38 GB: the engine. Keep.
 6. Total War: Rome II, 38 GB: a Steam game. Yours.
 7. Honey Select 2, 38 GB: a game of yours. Yours.
 8. Windows, 37 GB. Keep.
 9. This project, 21 GB (was 26.5): 16 GB of it is its history. Keep; its old compile files are cleared.
 10. LM Studio's models, 24 GB: AI models downloaded through LM Studio. Nothing in the project uses them. Yours.
-11. wc26-picks, 23 GB: the old copy of the project. 16 GB of it is the voice tools the game still runs from. The question is below.
+11. wc26-picks, 23 GB: the old copy of the project. 16 GB of it is the voice tools the game still runs from. Moved and deleted in the next housekeeping sitting, on your answer.
 12. Downloads, 22 GB. Yours.
 13. Manor Lords, 15 GB: a Steam game. Yours.
 14. Vuze, 15 GB: the Vuze download program's folder. Yours.
-15. ledger-migrate, 15 GB: the older copy of the project. The question is below.
+15. ledger-migrate, 15 GB: the older copy of the project. Handled in the next housekeeping sitting, on your answer.
 16. Stable Diffusion (DirectML), 13 GB: an image generator from before. Nothing in the project uses it now. Yours.
 17. ledger-llama, 11 GB: the local-models research's models. Keep: a local model is still the likely fallback when the connection drops.
 18. Star Trek: Voyager demo, 9 GB: a Steam demo. Yours.
@@ -42,7 +42,7 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 24 of 47 done, 0 moved, 0 out, 23 open
-- stage 2: 5 of 254 done, 0 moved, 0 out, 249 open
+- stage 2: 5 of 255 done, 0 moved, 0 out, 250 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
 - stage 5: 0 of 29 done, 0 moved, 0 out, 29 open
@@ -53,41 +53,13 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Decisions waiting on me
 
-- 2026-09-24 **MH_Test's clothes: the plugin's only outfit is a white T-shirt and shorts, barefoot.** The haircut worked. But no plain 1990 clothes exist on this PC to put him in, and the outfit's colours never became settable by script.
-  - **(a) In a later sitting, I look for Epic's own MetaHuman clothing on Fab, Epic's store, which your Unreal-downloads rule covers, and dress him in trousers, a jumper and shoes with the same script (my recommendation).** If Fab needs your sign-in by hand, I'll say so then rather than guess.
-  - (b) Leave him as he is until the clothing line does period clothes properly. He's a test figure.
-  - (c) You dress him in MetaHuman Creator's wardrobe by hand. It's a few clicks, then I rebuild him.
-  - Meanwhile: he stands in the corner as in the frame. His files from before the dressing are kept on this PC.
-- 2026-09-24 **Pick a voice each for Aldous, Danny, June and Zlata, on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard blind in four voices: the one cast on 14 August and three other VCTK speakers nobody else in the game uses. Your picks save as you go, as on the A/B page, and I read them from there. Who's who shows once all four are picked.
-  - **(a) Pick on the page (recommended).** I can't hear the clips, so I have no pick of my own worth giving you. What I picked the alternatives for is written under each voice once you've picked.
-  - (b) Keep all four voices as cast on 14 August: pick the current one on the page, or say so.
-  - Meanwhile: nothing is cast and nothing is recorded with any of them.
-- 2026-09-24 **How much of what the town says is written ahead, rather than made up live?** It's the biggest single lever on the bill (the business research), and it's what keeps the street alive once a player's allowance runs out.
-  - **(a) Everything the town says unprompted is written ahead (my recommendation).** That means greetings, remarks in passing, reactions, rumours passed on and stock replies, from a large bank written and checked before release. Live talk is only for when you speak to someone and they answer you. What people say to each other and about you is most of what a street says, so most of the bill comes off. The bank is checked against the content rule once, before it ships, and the street sounds the same whether or not the allowance is left.
-  - (b) Only short barks written ahead. Rumours and remarks are made up live too. Richer and less repetitive, but the bill grows with every hour on the street, and the street falls quieter when the allowance ends.
-  - (c) Everything written ahead, with live talk only in the paid-key and capable-card modes. The cheapest, but the default game loses talking to the town, which is the point of it.
-  - Meanwhile: nothing is built. When the slice measures cost per hour, I'll split it by kind of line, so each choice has a price.
-- **The runner's copy of the game holds about 33 GB of leftovers. Clear them?** (2026-09-24) Every build downloads a fresh bundle, and 231 old ones have piled up that no build can reach. git's own cleanup removes them and touches nothing a build uses. My permission guard refused, because the runner's folder counts as shared, so it needs your yes.
-  - **(a) Yes: I run git's cleanup on the runner's copy between builds (recommended).** It frees about 33 GB, and the next build is as fast as ever.
-  - (b) Delete the runner's copy outright. It frees about 50 GB, and the next build re-downloads everything and compiles from scratch, about an hour.
-  - (c) Leave it.
-  - Meanwhile: nothing on the runner is touched. I'm clearing only what is ours and provably rebuildable.
-- 2026-09-24 **Where should the backup of what isn't in the project's history go?** It starts with the MetaHuman: your MH_Test (140 MB) and his built files (200 MB), about 350 MB. After that come the few files that exist only in the old copies. It leaves out the voice tools and models, which can be downloaded again, and never includes the AI key.
-  - **(a) A private release on the project's GitHub (my recommendation).** Free: GitHub charges nothing for release files, up to 2 GB each. Each backup is a dated zip you can download in one click, kept apart from the code's history as you ruled. I'd make one at the end of any sitting that changes these files.
-  - (b) Your Dropbox. It's already on this PC and syncs by itself. Free up to 2 GB, so it fits, but it shares that space with whatever else you keep there.
-  - (c) A USB drive, about £50 for 1 TB. It's offline, but it sits beside the PC, so a fire or a theft takes both.
-  - (d) Git LFS in the project. 1 GB free, then $5 a month per 50 GB. It puts the files into the history, against your ruling.
-  - Meanwhile: nothing is set up. There's one extra copy of MH_Test on this PC, taken before this morning's dressing.
-- 2026-09-24 **The two old copies of the project hold 38 GB. What goes?** Both copies' histories are on GitHub.
-  - ledger-migrate (15 GB) holds, only here: logs from the retired studio's supervisor, one answer file from 11 September, and the copy of the game your "play the street" shortcut opens (1.9 GB), which every build refreshes.
-  - wc26-picks (23 GB) holds the voice tools the game's voice still runs from (16 GB), and one recording, bench-spoke.wav, that exists only here.
-  - **(a) Next housekeeping sitting: move the voice tools and the played copy of the game into their own folder, point the build and the shortcut there, save the only-here files into the project, then delete both old copies (my recommendation).** It frees about 20 GB, and nothing that runs today breaks.
-  - (b) Delete only ledger-migrate's history now, 10.8 GB, and leave everything else.
-  - (c) Leave both.
-  - Meanwhile: both are untouched.
+None. All six from this morning are answered and under Resolved.
 
 ## Things you should know
 
+- 2026-09-24 **The runner's leftovers are cleared, and C: has 45 GB free.** The runner's copy of the game went from 36 GB of history to 4.7 GB. The copy is intact, and the next build uses it as before. Nothing else was deleted.
+- 2026-09-24 **The backup is set up in your Dropbox,** in a new folder called LEDGER backup, 540 MB: MH_Test as he is now, MH_Test from before the dressing, and his built files. It only ever adds and updates, never deletes, and I run it at the end of any sitting that changes these files. Nothing else in your Dropbox was looked at or touched.
+- 2026-09-24 **Your four voice picks are recorded,** and with your yes they're cast: Aldous keeps his voice; Danny, June and Zlata get the London, North East and France speakers. Making their clips for the game is on the list for a later sitting.
 - 2026-09-24 **The sitting stopped after about an hour and a half, when this morning's list was done.** You said "short, then stop", and I'd said I would stop when the list was done, so the limit now reads what was used. The measurement sitting is yours to start with a meter reading.
 - 2026-09-24 **The MetaHuman editor crashed four times this morning, and the fault was my script's.** It ran its next step while the editor was still busy inside the last one. Now it waits its turn. His files were copied aside first, so nothing was at risk.
 - 2026-09-24 **The first check on the plan went red, over the business research's spreadsheet.** The licence check had never seen a spreadsheet file and couldn't classify it. It's our own, so the check now treats spreadsheets as documents. All 670 quick checks pass here; GitHub's run is going now.
@@ -703,6 +675,7 @@ so the record stays complete.)*
 
 ## Rulings received
 
+- 2026-09-24 **Your answers to the morning's six decisions:** free Fab clothing only for MH_Test, or leave him; everything the town says unprompted is written ahead, generated by the models and checked once; git's cleanup on the runner's copy now, and that is the only deletion - nothing else on this PC is touched, the folder list was a list, not a plan; the backup goes to your Dropbox, not a public release; the old copies are handled next housekeeping sitting. Your four voice picks are in, and the flat voices go on the list as an experiment.
 - 2026-09-24 **The business direction and what goes on the plan.** Selling once with an allowance of live talk is the working direction, not the final one (in DECISIONS.md). Every AI call goes through our own server with a spending stop, and the model can be swapped there. The local line-writing test is now a priority. The AI notice, the report button, Steam's safeguards description and the content rule on live speech are on the checklist before outsiders play. The research is on main.
 - 2026-09-24 **Three router changes on the list:** the paid router gets the worked examples; the example bank gets typed orders answered as refusals; the game's own block catches orders in plain words. The local model stays a later option, most likely the fallback when the connection drops.
 - 2026-09-24 **Local models: one short job, then stop.** Time the worked examples on the quiet card, run the same method on the paid model, write both up, shut everything down.
@@ -820,6 +793,38 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 (resolved 24 Sep: (a), FREE clothing only, buy nothing; if none is plain enough for 1990, say so and leave him until the clothing line) **MH_Test's clothes: the plugin's only outfit is a white T-shirt and shorts, barefoot.** The haircut worked. But no plain 1990 clothes exist on this PC to put him in, and the outfit's colours never became settable by script.
+  - **(a) In a later sitting, I look for Epic's own MetaHuman clothing on Fab, Epic's store, which your Unreal-downloads rule covers, and dress him in trousers, a jumper and shoes with the same script (my recommendation).** If Fab needs your sign-in by hand, I'll say so then rather than guess.
+  - (b) Leave him as he is until the clothing line does period clothes properly. He's a test figure.
+  - (c) You dress him in MetaHuman Creator's wardrobe by hand. It's a few clicks, then I rebuild him.
+  - Meanwhile: he stands in the corner as in the frame. His files from before the dressing are kept on this PC.
+- 2026-09-24 (resolved 24 Sep: picked on the page - Aldous keeps his voice; Danny the London speaker; June the North East speaker; Zlata the speaker from France) **Pick a voice each for Aldous, Danny, June and Zlata, on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard blind in four voices: the one cast on 14 August and three other VCTK speakers nobody else in the game uses. Your picks save as you go, as on the A/B page, and I read them from there. Who's who shows once all four are picked.
+  - **(a) Pick on the page (recommended).** I can't hear the clips, so I have no pick of my own worth giving you. What I picked the alternatives for is written under each voice once you've picked.
+  - (b) Keep all four voices as cast on 14 August: pick the current one on the page, or say so.
+  - Meanwhile: nothing is cast and nothing is recorded with any of them.
+- 2026-09-24 (resolved 24 Sep: (a); and written ahead does not mean by hand - the bank can be generated ahead by the models and checked once, large and varied, paid for once) **How much of what the town says is written ahead, rather than made up live?** It's the biggest single lever on the bill (the business research), and it's what keeps the street alive once a player's allowance runs out.
+  - **(a) Everything the town says unprompted is written ahead (my recommendation).** That means greetings, remarks in passing, reactions, rumours passed on and stock replies, from a large bank written and checked before release. Live talk is only for when you speak to someone and they answer you. What people say to each other and about you is most of what a street says, so most of the bill comes off. The bank is checked against the content rule once, before it ships, and the street sounds the same whether or not the allowance is left.
+  - (b) Only short barks written ahead. Rumours and remarks are made up live too. Richer and less repetitive, but the bill grows with every hour on the street, and the street falls quieter when the allowance ends.
+  - (c) Everything written ahead, with live talk only in the paid-key and capable-card modes. The cheapest, but the default game loses talking to the town, which is the point of it.
+  - Meanwhile: nothing is built. When the slice measures cost per hour, I'll split it by kind of line, so each choice has a price.
+- 2026-09-24 (resolved 24 Sep: (a), and done the same morning; the only deletion) **The runner's copy of the game holds about 33 GB of leftovers. Clear them?** (2026-09-24) Every build downloads a fresh bundle, and 231 old ones have piled up that no build can reach. git's own cleanup removes them and touches nothing a build uses. My permission guard refused, because the runner's folder counts as shared, so it needs your yes.
+  - **(a) Yes: I run git's cleanup on the runner's copy between builds (recommended).** It frees about 33 GB, and the next build is as fast as ever.
+  - (b) Delete the runner's copy outright. It frees about 50 GB, and the next build re-downloads everything and compiles from scratch, about an hour.
+  - (c) Leave it.
+  - Meanwhile: nothing on the runner is touched. I'm clearing only what is ours and provably rebuildable.
+- 2026-09-24 (resolved 24 Sep: NOT (a) - the repository is public, and publishing raw MetaHuman files likely breaks Epic's licence; (b), your Dropbox, set up the same morning) **Where should the backup of what isn't in the project's history go?** It starts with the MetaHuman: your MH_Test (140 MB) and his built files (200 MB), about 350 MB. After that come the few files that exist only in the old copies. It leaves out the voice tools and models, which can be downloaded again, and never includes the AI key.
+  - **(a) A private release on the project's GitHub (my recommendation).** Free: GitHub charges nothing for release files, up to 2 GB each. Each backup is a dated zip you can download in one click, kept apart from the code's history as you ruled. I'd make one at the end of any sitting that changes these files.
+  - (b) Your Dropbox. It's already on this PC and syncs by itself. Free up to 2 GB, so it fits, but it shares that space with whatever else you keep there.
+  - (c) A USB drive, about £50 for 1 TB. It's offline, but it sits beside the PC, so a fire or a theft takes both.
+  - (d) Git LFS in the project. 1 GB free, then $5 a month per 50 GB. It puts the files into the history, against your ruling.
+  - Meanwhile: nothing is set up. There's one extra copy of MH_Test on this PC, taken before this morning's dressing.
+- 2026-09-24 (resolved 24 Sep: (a), in the next housekeeping sitting) **The two old copies of the project hold 38 GB. What goes?** Both copies' histories are on GitHub.
+  - ledger-migrate (15 GB) holds, only here: logs from the retired studio's supervisor, one answer file from 11 September, and the copy of the game your "play the street" shortcut opens (1.9 GB), which every build refreshes.
+  - wc26-picks (23 GB) holds the voice tools the game's voice still runs from (16 GB), and one recording, bench-spoke.wav, that exists only here.
+  - **(a) Next housekeeping sitting: move the voice tools and the played copy of the game into their own folder, point the build and the shortcut there, save the only-here files into the project, then delete both old copies (my recommendation).** It frees about 20 GB, and nothing that runs today breaks.
+  - (b) Delete only ledger-migrate's history now, 10.8 GB, and leave everything else.
+  - (c) Leave both.
+  - Meanwhile: both are untouched.
 - 2026-09-24 (read by Jafar the morning of 24 Sep; his answers came back) The overnight report, kept as it was:
   1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second at your screen size: 79 without the voice, 75 with it, and the slowest 1% at 59, right at the edge. Stage 1 went from 4 to 24 of 47 done.
   2. **Numbers worth knowing:** the game holds 80 frames a second at your screen size with Nano speaking, but Nano is slower than talk while the game runs. The game uses 4.6 GB of the card and Nano 2.1 GB.
