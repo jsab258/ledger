@@ -65,6 +65,8 @@ private:
 	// T TALKS, 24 September: the live encounter's conversation with whoever
 	// is near, counted like the act and consumed by the encounter.
 	void RequestTalk();
+	// ESC LEAVES THE GAME, 24 September: the encounter saves as it goes.
+	void RequestQuit();
 public:
 	int32 ConsumeActRequests();
 	int32 ConsumeTalkRequests();

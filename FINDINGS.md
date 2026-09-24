@@ -17,6 +17,6 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - The mesh tool's self-test fails two checks because the decision records it reads were archived on 24 September.
 - The conversation rules suggest "a message left with the barman" as period detail, which sits badly with the content rule's pubs.
 - In the build's scripted encounter the three residents are still archetypes (the shopkeeper, the lad, his mate); only the playable one is Lena, Sam and Rocco.
-- In the playable encounter the game stands still for the second or two the model takes to answer, and what is said is shown as the engine's debug text, which a shipping build would not show.
-- The player's side of the conversation is one fixed line; there is no way yet to say anything else.
+- In the playable encounter what is said is shown as the engine's debug text, which a shipping build would not show.
 - No route put a donkey jacket on a MetaHuman (24 September): Fab needs a yes to download and has no donkey jacket; MetaHuman's own outfit route cannot be scripted; the built body has no torso to fit to; image-to-3D needs an NVIDIA card. (production/research/clothing-pipeline/TRIED-2026-09-24.md)
+- A broken window cannot be seen: the clear pane just vanishes. Only the caption and the shout say it went (found by the AI tester).

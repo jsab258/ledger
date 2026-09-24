@@ -1,4 +1,5 @@
 #include "SliceCharacter.h"
+#include "HAL/PlatformMisc.h"
 
 #include "LocomotionAnim.h"
 
@@ -101,6 +102,7 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ALedgerSliceCharacter::RunReleased);
 	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
 	PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALedgerSliceCharacter::RequestTalk);
+	PlayerInputComponent->BindKey(EKeys::Escape, IE_Pressed, this, &ALedgerSliceCharacter::RequestQuit);
 }
 
 void ALedgerSliceCharacter::MoveForward(float Value)
@@ -125,6 +127,7 @@ void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed 
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
 void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
 void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
+void ALedgerSliceCharacter::RequestQuit() { FPlatformMisc::RequestExit(false); }
 int32 ALedgerSliceCharacter::ConsumeTalkRequests()
 {
 	const int32 N = TalkRequests;
