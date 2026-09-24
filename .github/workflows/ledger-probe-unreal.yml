@@ -1849,6 +1849,21 @@ jobs:
           # step read the CSV the moment it appeared, which is when the capture
           # BEGINS writing it, stopped the game a few frames in, and reported
           # NO-FRAMES.
+          # WITH THE VOICE RUNNING, as the ruling says (24 September): Nano,
+          # installed on this PC by the night of 23 September, speaks the
+          # listening test's lines in its built-in voice on the same card
+          # through the capture. Absent, the line says voice=none.
+          $nanoPy = "C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe"
+          $nano = $null
+          if (Test-Path $nanoPy) {
+            $env:NANO_PKG = "C:\LedgerTools\chatterbox-nano\src-master\src"
+            $env:NANO_WEIGHTS = "C:\LedgerTools\chatterbox-nano\weights"
+            $nano = Start-Process -FilePath $nanoPy -ArgumentList @("production/research/nano-listening-test/nano_card_timing.py",
+                     "`"$PWD`"", "nano-perf.json", "perf", "10") -PassThru -NoNewWindow `
+                     -RedirectStandardOutput "nano-perf.log" -RedirectStandardError "nano-perf.err"
+            $w = 0
+            while (-not (Select-String -Path "nano-perf.log" -Pattern "nanoCard label=" -Quiet -ErrorAction SilentlyContinue) -and $w -lt 120 -and -not $nano.HasExited) { Start-Sleep 2; $w += 2 }
+          }
           $a = @("-LedgerSlice", "-RenderOffScreen", "-ResX=3440", "-ResY=1440", "-windowed", "-ForceRes",
                  "-nosplash", "-unattended", "-dpcvars=r.ScreenPercentage=50,t.MaxFPS=0,r.VSync=0",
                  "-ExecCmds=`"csvprofile frames=1800`"", "-ExitAfterCsvProfiling")
@@ -1869,6 +1884,15 @@ jobs:
             & $py tools/slice-perf.py $csv.FullName --label uw-half | Set-Content $out -Encoding utf8
           } else {
             "slicePerf=uw-half status=NO-CSV/waited-${t}s" | Set-Content $out -Encoding utf8
+          }
+          if ($nano) {
+            if (-not $nano.HasExited) { Stop-Process -Id $nano.Id -Force -ErrorAction SilentlyContinue }
+            $rtf = @(Select-String -Path "nano-perf.log" -Pattern "rtf=([\d.]+)" -AllMatches -ErrorAction SilentlyContinue |
+                     ForEach-Object { $_.Matches } | ForEach-Object { [double]$_.Groups[1].Value })
+            $med = if ($rtf.Count) { ($rtf | Sort-Object)[[int][math]::Floor($rtf.Count / 2)] } else { "none" }
+            Add-Content $out ("slicePerfVoice=nano-built-in-voice-on-the-card lines=$($rtf.Count) nanoRtfMedian=$med")
+          } else {
+            Add-Content $out "slicePerfVoice=none/nano-not-installed-on-this-runner"
           }
           $res = Select-String -Path "sliceperf-run.log" -Pattern 'systemresolution\.res[xy]="(\d+)"' -AllMatches |
                  ForEach-Object { $_.Matches } | ForEach-Object { $_.Groups[1].Value }
