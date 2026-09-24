@@ -42,8 +42,11 @@ NEED_FREE_GB = 10.0
 CLOUD_TIMEOUT_S = 15 * 60
 
 
-def asset_name(who):
-    return "MH_" + who.capitalize()
+def asset_name(who, bare=False):
+    return "MH_" + who.capitalize() + ("Bare" if bare else "")
+
+
+BARE = os.environ.get("LEDGER_MH_BARE", "") == "1"
 
 
 def status_line(step, who, preset, status, seconds, note):
@@ -99,7 +102,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
 
     def open_character():
         who, preset = cast[st["i"]]
-        dest = CAST_DIR + asset_name(who)
+        dest = CAST_DIR + asset_name(who, BARE)
         st["who"], st["preset"], st["tc"] = who, preset, time.time()
         if not unreal.EditorAssetLibrary.does_asset_exist(dest):
             if step_name != "prepare":
@@ -131,8 +134,13 @@ def main_after_idle(seconds=20.0, settle=15.0):
         notes = []
         # THE PLAIN GARMENT, added after the character is open (with it
         # already in the collection, opening crashed: dress_metahuman.py).
-        garment = unreal.load_asset(GARMENT)
-        if garment is not None:
+        # BARE, FOR FITTING (24 September): the same preset with no garment,
+        # because a built body has its skin removed wherever clothes cover it,
+        # and a jacket needs the torso to be fitted to.
+        garment = None if BARE else unreal.load_asset(GARMENT)
+        if BARE:
+            notes.append("bare")
+        elif garment is not None:
             col = ch.internal_collection
             item = col.try_add_item_from_wardrobe_item("Outfits", garment)
             col.default_instance.try_add_slot_selection(
@@ -175,7 +183,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         p.set_editor_property("absolute_build_path", BUILD_ROOT)
         sub.build_meta_human(ch, p)
         unreal.EditorAssetLibrary.save_directory(BUILD_ROOT, only_if_is_dirty=False, recursive=True)
-        made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"]), recursive=True, include_folder=False)
+        made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"], BARE), recursive=True, include_folder=False)
         write(status_line(step_name, st["who"], st["preset"], "BUILT", time.time() - st["tc"],
                           "%d-assets-optimized-high" % len(made)))
 
