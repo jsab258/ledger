@@ -112,11 +112,11 @@ west_south 19 of 19, the parapet's coping and the pavement line included.
 
 | facade | started | drawing | in Unreal | accepted pair | finished | attempts |
 | --- | --- | --- | --- | --- | --- | --- |
-| east_parade | 09:41 | 09:42, from the spec, nothing written back | no rebuild: geometry unchanged since 01:38, frames from this morning's probe run (703b0688) | 09:48, attempt 1, six bays | 09:49 | 1 attempt, 0 rejected |
-| west_north | | | | | | |
+| east_parade | 09:41 | 09:42, from the spec, nothing written back | no rebuild: geometry unchanged since 01:38, frames from this morning's probe run (703b0688) | 09:46, attempt 1, six bays | 09:47 | 1 attempt, 0 rejected |
+| west_north | 09:47 | 09:47, from the spec; redrawn 09:49 the right way round | no rebuild: frames from this morning's probe run | 09:50, attempt 2, three bays | 09:51 | 2 attempts, 1 rejected |
 | west_south | | | | | | |
 
-### east_parade, accepted 09:48
+### east_parade, accepted 09:46
 
 Six bays paired (production/art/facades/2026-09-24-measured/east_parade-bay*-pair.png).
 Every edge the frames show is within 5 cm except these, each looked at on the
@@ -130,3 +130,19 @@ on the way, both measurement, not facade: levels only Mickey's has (the 0.12 m
 tile course) were being measured on every bay, and an edge found at another
 drawn edge (the sill rail's top, 80 mm above an invisible stallriser top) was
 reported as the first edge being out.
+
+### west_north, accepted 09:50 on the second attempt
+
+ATTEMPT 1 REJECTED, 09:47: the middle bay's side door was at the other end of
+the bay in Unreal. The building was right and the DRAWING was mirrored: the
+west blocks are turned a half turn as they land, so seen from the street they
+run right to left like the parade, and the drawing mirrored the east side only.
+The two end bays had passed only because each is the other's mirror image, and
+the camera numbered bay 0 along the street looks at the block's bay 2. Fixed in
+the tools: the drawing runs right to left on both sides, and the pair names the
+shot that stands in front of each west bay (bay i before shot bays-1-i).
+ATTEMPT 2 ACCEPTED: the middle bay 22 of 22 edges within 5 cm (worst 31 mm);
+the end bays every edge found within 5 cm but the end pier (74 mm, the brick
+return behind it) and two pairs of edges 36 mm apart (the pier's inside and the
+door frame) the tool cannot tell apart, each within 5 cm by eye. Pairs:
+production/art/facades/2026-09-24-measured/west_north-bay*-pair.png.

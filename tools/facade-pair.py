@@ -170,6 +170,15 @@ def pair(block, bay, frame_path, width_m, centre_z, out_png, plan_text=None, fd=
     d = fd.plan_drawing(block, plan_text if plan_text is not None else fd.run_plan(block), scene)
     frame = Image.open(frame_path).convert("RGB")
     fw, fh = frame.size
+    # THE CAMERA THAT LOOKS AT THIS BAY, 24 September. The facade shots are
+    # numbered along the street; a west block is turned end for end, so its
+    # bay i stands in front of shot (bays - 1 - i). Said out loud when the
+    # frame given is another bay's.
+    blk = next(b for b in scene["blocks"] if b["id"] == block)
+    shot = bay if blk["side"] == "east" else blk["bays"] - 1 - bay
+    if "_bay" in os.path.basename(frame_path) and ("_bay%d." % shot) not in os.path.basename(frame_path):
+        print("facadePair WARNING bay %d of %s is in front of shot bay%d, not %s"
+              % (bay, block, shot, os.path.basename(frame_path)))
     x_edges, levels = bay_edges(fd, d, bay)
     res = measure(np.asarray(frame.convert("L")).astype(float), d, bay, width_m, centre_z, x_edges, levels)
     # The drawing, cut to the same window in metres and scaled to the frame.
