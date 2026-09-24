@@ -42,11 +42,54 @@ NEED_FREE_GB = 10.0
 CLOUD_TIMEOUT_S = 15 * 60
 
 
-def asset_name(who, bare=False):
-    return "MH_" + who.capitalize() + ("Bare" if bare else "")
-
-
 BARE = os.environ.get("LEDGER_MH_BARE", "") == "1"
+# A SECOND TAKE BESIDE THE FIRST (24 September): LEDGER_MH_TAKE=T2 makes
+# MH_LenaT2 and so on, cast to the brief below, and leaves the stand-ins be.
+TAKE = os.environ.get("LEDGER_MH_TAKE", "")
+
+
+def asset_name(who, bare=False, take=None):
+    return "MH_" + who.capitalize() + ("Bare" if bare else "") + (TAKE if take is None else take)
+
+
+# CAST TO A BRIEF, 24 September. Jafar: "Why is Lena a middle aged chinese
+# woman? Need a proper casting for faces and bodies." Canon says only "Rocco
+# (old muscle), Lena (older bookkeeper)"; the voice cards make Sam a fast-
+# talking Scot. The brief (his to strike, FOR-JAFAR 24 September): Lena
+# British, about sixty, small and neat; Rocco British with an Italian name,
+# late fifties, big and heavy; Sam Scottish, late twenties, wiry. Each is
+# the base preset (its eyes, brows, wardrobe) with its face shape a weighted
+# mix of shipped faces, its skin tone and skin texture set (the texture
+# carries age: 121 is the aged set Walter and Grace share), its body held to
+# measurements, and a haircut from the plugin's grooms. Skin U runs light
+# (0.2, Vivian) to dark (0.95, Zuri); measurements are centimetres, and Fat,
+# Muscularity and Masculine/Feminine the creator's own sliders.
+GROOMS = "/MetaHumanCharacter/Optional/Grooms/Bindings/Hair/"
+CASTING = {
+    "lena": {"base": "Vivian", "face": {"Vivian": 0.55, "Celeste": 0.25, "Walter": 0.2},
+             "skin": {"u": 0.24, "v": 0.45, "face_texture_index": 121},
+             "body": {"Height": 160.0, "Fat": 0.6, "Muscularity": -0.8},
+             "hair": "WI_Hair_M_BobCurly"},
+    "rocco": {"base": "Jorge", "face": {"Jorge": 0.35, "Walter": 0.35, "Bruce": 0.3},
+              "skin": {"u": 0.34, "v": 0.5, "face_texture_index": 121},
+              "body": {"Height": 186.0, "Fat": 1.3, "Muscularity": 0.6},
+              "hair": "WI_Hair_S_HairLoss"},
+    "sam": {"base": "Orlando", "face": {"Orlando": 0.45, "Victor": 0.55},
+            "skin": {"u": 0.2, "v": 0.45, "face_texture_index": 28},
+            "body": {"Height": 173.0, "Fat": -1.0, "Muscularity": -0.3},
+            "hair": "WI_Hair_S_Messy"},
+}
+
+
+def blend(vectors_and_weights):
+    """The weighted mean of equal-length coefficient lists."""
+    total = sum(w for _, w in vectors_and_weights)
+    n = len(vectors_and_weights[0][0])
+    out = [0.0] * n
+    for vec, w in vectors_and_weights:
+        for i in range(n):
+            out[i] += float(vec[i]) * w / total
+    return out
 
 
 def status_line(step, who, preset, status, seconds, note):
@@ -102,6 +145,8 @@ def main_after_idle(seconds=20.0, settle=15.0):
 
     def open_character():
         who, preset = cast[st["i"]]
+        if TAKE and who in CASTING:
+            preset = CASTING[who]["base"]
         dest = CAST_DIR + asset_name(who, BARE)
         st["who"], st["preset"], st["tc"] = who, preset, time.time()
         if not unreal.EditorAssetLibrary.does_asset_exist(dest):
@@ -129,9 +174,68 @@ def main_after_idle(seconds=20.0, settle=15.0):
         st["opened"] = time.time()
         return True
 
+    def apply_casting(ch, who):
+        c = CASTING[who]
+        notes = []
+        vw = []
+        for name, w in c["face"].items():
+            src = unreal.load_asset(PRESET_DIR + name + "." + name)
+            if src is None:
+                notes.append("no-" + name)
+                continue
+            opened_here = not sub.is_object_added_for_editing(src)
+            if opened_here and not sub.try_add_object_to_edit(src):
+                notes.append("closed-" + name)
+                continue
+            vw.append((list(sub.get_face_model_coefficients(src)), w))
+            if opened_here:
+                sub.remove_object_to_edit(src)
+        if vw and all(len(v) == len(vw[0][0]) for v, _ in vw):
+            sub.set_face_model_coefficients(ch, blend(vw))
+            sub.commit_face_state(ch)
+            # The base preset's rig fits the base preset's face, not this one.
+            sub.remove_face_rig(ch)
+            notes.append("face-of-%d" % len(vw))
+        ss = ch.get_editor_property("skin_settings")
+        skin = ss.get_editor_property("skin")
+        for k, v in c["skin"].items():
+            skin.set_editor_property(k, v)
+        ss.set_editor_property("skin", skin)
+        # 4K FACE TEXTURES, not the default 2K: the close-up shows the difference.
+        res = ss.get_editor_property("desired_texture_sources_resolutions")
+        for k in ("face_albedo", "face_normal", "face_cavity"):
+            try:
+                res.set_editor_property(k, unreal.RequestTextureResolution.RES4K)
+            except Exception:
+                notes.append("no-4k-" + k)
+        ss.set_editor_property("desired_texture_sources_resolutions", res)
+        sub.commit_skin_settings(ch, ss)
+        notes.append("skin")
+        cons = sub.get_body_constraints(ch, False)
+        held = 0
+        for con in cons:
+            n = str(con.get_editor_property("name"))
+            if n in c["body"]:
+                con.set_editor_property("target_measurement", c["body"][n])
+                con.set_editor_property("is_active", True)
+                held += 1
+        sub.set_body_constraints(ch, cons)
+        sub.commit_body_state(ch)
+        notes.append("body-%d" % held)
+        hair = unreal.load_asset(GROOMS + c["hair"] + "." + c["hair"])
+        if hair is not None:
+            col = ch.internal_collection
+            item = col.try_add_item_from_wardrobe_item("Hair", hair)
+            col.default_instance.try_add_slot_selection(
+                unreal.MetaHumanPipelineSlotSelection(slot_name="Hair", selected_item=item))
+            notes.append("hair")
+        return notes
+
     def ask_cloud():
         ch = st["ch"]
         notes = []
+        if TAKE and st["who"] in CASTING:
+            notes += apply_casting(ch, st["who"])
         # THE PLAIN GARMENT, added after the character is open (with it
         # already in the collection, opening crashed: dress_metahuman.py).
         # BARE, FOR FITTING (24 September): the same preset with no garment,
@@ -163,7 +267,10 @@ def main_after_idle(seconds=20.0, settle=15.0):
         st["last"] = now
         rigged = sub.can_build_meta_human(ch, False)
         textured = bool(ch.get_editor_property("has_high_resolution_textures"))
-        if rigged and textured:
+        # A cast take's duplicate may still say "textured" from its base
+        # preset before the service answers: the service took 30 s at least.
+        early = TAKE and st["who"] in CASTING and now - st["asked"] < 30.0
+        if rigged and textured and not early:
             write(status_line(step_name, st["who"], st["preset"], "READY", now - st["tc"],
                               "rigged-and-textured-after-%.0fs" % (now - st["asked"])))
             next_character()
@@ -202,7 +309,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
             if now - st["opened"] < settle:
                 return
             if step_name == "prepare":
-                if sub.can_build_meta_human(st["ch"], False) and st["ch"].get_editor_property("has_high_resolution_textures"):
+                # A CAST TAKE IS ALWAYS ASKED: its duplicate carries the base
+                # preset's rig and textures, which the casting then changes.
+                if not (TAKE and st["who"] in CASTING) and sub.can_build_meta_human(st["ch"], False) and st["ch"].get_editor_property("has_high_resolution_textures"):
                     write(status_line(step_name, st["who"], st["preset"], "ALREADY-READY", now - st["tc"], "nothing asked"))
                     next_character()
                     return
@@ -258,6 +367,12 @@ def selftest():
     check("the line names who and what", "who=lena" in status_line("prepare", "lena", "Grace", "READY", 1, "x")
           and "status=READY" in status_line("prepare", "lena", "Grace", "READY", 1, "x"))
     check("a note keeps no spaces", " " not in status_line("p", "w", "p", "S", 1, "a b c").split("note=")[1])
+    check("a take sits beside the first", asset_name("lena", take="T2") == "MH_LenaT2")
+    check("each of the cast has a brief", sorted(CASTING) == ["lena", "rocco", "sam"])
+    check("each brief blends shipped faces and is based on one of them",
+          all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for c in CASTING.values()))
+    check("the blend is a weighted mean", blend([([0.0, 2.0], 1.0), ([2.0, 4.0], 3.0)]) == [1.5, 3.5])
+    check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
     print("make_cast_metahumans selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

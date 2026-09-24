@@ -12,6 +12,7 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 - Finished work: three lines: what changed; the picture; what next.
 - Ask him only about canon, scope or money: one multiple-choice question, your recommendation marked, and carry on with it meanwhile. The rest is yours.
 - No voice is cast without his yes.
+- Free content for Unreal (Fab, Epic or elsewhere) whose licence is on the allowlist: download it, note it in the summary, never ask (Jafar, 24 September).
 - If you got something wrong, one sentence, then move on.
 
 ## Records, and nothing more
