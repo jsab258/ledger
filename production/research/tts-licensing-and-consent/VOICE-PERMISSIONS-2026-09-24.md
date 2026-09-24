@@ -53,3 +53,10 @@ Clips 2 to 23 are in the same folder as row 1. Each one also has a conditioning 
 - **The research on main is wrong in two places.** It says no attribution file mentions VCTK. That is true of the six asset attribution files, but `THIRD-PARTY.md` names VCTK and has done since 31 July. The real gap is that the credit is incomplete and never ships. It also gets 19 by adding "17 cast voices plus 2 aliases". That total is a coincidence: the two aliases are extra names for Hal and Sera Kest, and the real count is 17 named voices plus 6 crowd voices, 23 in all. The ruling in DECISIONS.md inherited the "nineteen".
 - **Voices have already been recorded with.** The six crowd voices each have 335 generated barks in the build, 2,010 lines in total. None of them carries the watermark D50 says to keep, because every voice path still has it stubbed out. That is not a question about any one voice, but it applies to everything recorded from now on.
 - **Never try to identify the speakers.** The Hugging Face copy's terms forbid it. Credits may list speaker numbers, but not names or guesses.
+
+## Jafar's rulings, 24 September morning
+
+- Consent: VCTK's consent is taken to cover cloned game characters, accepted on the record as a stated risk. No email to Edinburgh.
+- The allowlist: "cloned real voices" means identifiable real people and public figures, not anonymous research volunteers. Written into ledger-v2/research/license-allowlist.md.
+- Aldous, Danny, June and Zlata: allowed (VCTK), never approved. Not re-cast from the nineteen, because shared voices would repeat. A listening page of each beside two or three alternative VCTK speakers of a suitable age and accent goes to him to pick, once the card is free.
+- From now on no voice is cast without his yes (CLAUDE.md).

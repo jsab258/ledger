@@ -44,6 +44,7 @@ When he finds something new while playing another game, it goes on the checklist
 
 - ASK HIM ONLY ABOUT CANON, SCOPE OR MONEY. Nothing else is his to answer.
 - EVERYTHING ELSE: take your own recommendation, put it at the top of the next report in one line so he can overrule it, and carry on. Do not stop and wait for an answer you could have given yourself.
+- NO VOICE IS CAST WITHOUT HIS YES (Jafar 2026-09-24, after four cast voices - Aldous, Danny, June, Zlata - were cast on 14 August without it). A voice for a character is put to him, with a listening page when there is a choice, and only his yes casts it.
 
 ## How to work
 

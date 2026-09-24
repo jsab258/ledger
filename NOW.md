@@ -7,7 +7,7 @@ roadmap.
 
 Last updated 2026-09-23, in the sixth sitting on his PC.
 
-SITTING: started 2026-09-23T22:31:23+02:00, limit 6h
+SITTING: started 2026-09-24T07:30:40+02:00, limit 1h
 
 That one line is read by the stop hook, which will not let the turn end while
 items below are unstruck and the six hours have not run out. It is written at

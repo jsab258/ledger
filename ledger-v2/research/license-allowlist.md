@@ -14,6 +14,7 @@ NEVER SHIP
 3. Hunyuan3D outputs if distribution may include EU, UK or South Korea (territory-excluded license); given Switzerland plus likely EU reach, treat as banned.
 4. Google Photorealistic 3D Tiles as shipped assets.
 5. Real brands, logos, car models, lyrics, likenesses, cloned real voices, celebrity styles.
+   "Cloned real voices" means the voices of identifiable real people and public figures. It does NOT cover anonymous volunteers who recorded for speech research under an open licence, such as the University of Edinburgh's VCTK corpus (CC BY 4.0, credited), whose consent is taken to cover cloned game characters as a stated risk on the record. Ruled by Jafar 2026-09-24.
 6. Suno or Udio output until their legal posture is re-verified at ship (Suno lost in Munich 2026-07-31, not final).
 
 PROCESS
