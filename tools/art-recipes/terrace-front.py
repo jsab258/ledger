@@ -753,7 +753,13 @@ SHOPFRONT_REFITS = {
                          "paint": ("slate_blue", (0.0625, 0.0875, 0.119))},
     ("east_parade", 1): {"frame": "frame_metal", "stall": "tile_stall"},
     ("west_north", 1):  {"frame": "frame_metal", "stall": "tile_stall"},
+    # THE SHIP CHANDLER'S, 24 September: a metal refit, as D06 gives the Hook's
+    # shops, with R05's plain glazed tile under the glass.
+    ("east_chandler", 0): {"frame": "frame_metal", "stall": "tile_stall"},
 }
+#: EVERY BLOCK THE STREET STANDS, in the order they are planned. The ship
+#: chandler's joined on 24 September; the list was written out twice before.
+STREET_BLOCKS = ("east_parade", "west_south", "west_north", "east_chandler")
 #: The two section materials a refit can be in, for the checks.
 REFIT_FRAMES = ("frame_metal", "frame_painted")
 #: And every material a shopfront's joinery can be in.
@@ -1043,6 +1049,7 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
             "chimney_w_m":      float(roofline["chimney"]["width_m"]),
             "chimney_d_m":      float(roofline["chimney"]["depth_m"]),
             "chimney_above_ridge_m": float(roofline["chimney"]["height_above_ridge_m"]),
+            "end_stack":        bool(block.get("end_stack", False)),
         }
         bl = brick_length_m(raw)
         if bl is None or bl <= 0:
@@ -1576,11 +1583,16 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
         _box(parts, "downpipe", "lead", W - dr * 2.0, W, -p["downpipe_dia_m"], 0.0,
              0.0, EAVES, "at-the-party-wall/one-per-bay-boundary-never-at-a-row-end")
 
-    # CHIMNEY STACK, on the party wall, top one metre above the ridge.
+    # CHIMNEY STACK, on the party wall, top one metre above the ridge. A
+    # BUILDING THAT STANDS ALONE has no party wall, so its stack goes in its
+    # end wall instead, inside the wall's line (24 September, the ship
+    # chandler's: a brick shop of its age without a stack reads wrong).
     cw, cd = p["chimney_w_m"], p["chimney_d_m"]
-    if party_wall:
+    end_stack = (not party_wall) and p.get("end_stack", False) and p["roof_kind"] != "parapet"
+    if party_wall or end_stack:
+        sx0, sx1 = (W - cw, W) if end_stack else (W - cw / 2.0, W + cw / 2.0)
         stack_top = p["ridge_m"] + p["chimney_above_ridge_m"]
-        _box(parts, "chimney_stack", wall, W - cw / 2.0, W + cw / 2.0,
+        _box(parts, "chimney_stack", wall, sx0, sx1,
              D / 2.0 - cd / 2.0, D / 2.0 + cd / 2.0,
              EAVES, stack_top,
              "a-stack-serves-both-houses-either-side-of-the-wall-it-stands-on")
@@ -1589,7 +1601,7 @@ def _roof_and_rainwater(parts, p, T, wall, party_wall, bay=0):
         # face and what every stack on the new sheet has. Its top is the
         # stack's own, so the pots stand on the cap and nothing floats.
         ov = STACK_CAP_OVERSAIL_M
-        _box(parts, "chimney_cap", wall, W - cw / 2.0 - ov, W + cw / 2.0 + ov,
+        _box(parts, "chimney_cap", wall, sx0 - ov, sx1 + ov,
              D / 2.0 - cd / 2.0 - ov, D / 2.0 + cd / 2.0 + ov,
              stack_top - STACK_CAP_H_M, stack_top,
              "oversailing-courses/%.0fmm-proud-all-round" % (ov * 1000))
@@ -1782,8 +1794,10 @@ def plan_pots(p):
     W, D = p["bay_width_m"], p["depth_m"]
     top = p["ridge_m"] + p["chimney_above_ridge_m"]
     parts = []
-    for b in range(p["bays"] - 1):          # a stack on every party wall
-        sx = (b + 1) * W
+    stacks = [(b, (b + 1) * W) for b in range(p["bays"] - 1)]   # a stack on every party wall
+    if p.get("end_stack"):                  # and a lone building's in its end wall
+        stacks.append((p["bays"] - 1, p["bays"] * W - p["chimney_w_m"] / 2.0))
+    for b, sx in stacks:
         for k, dx in enumerate((-0.22, 0.22)):
             mat = "pot_buff" if (b % 2 == 1 and k == 1) else "pot_clay"
             v, f = _pot_mesh(sx + dx, D / 2.0, top, POT_R_FOOT_M, POT_R_TOP_M,
@@ -1878,7 +1892,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     which is what a terrace rotated a half turn actually does.
     """
     out = []
-    for block_id in ("east_parade", "west_south", "west_north"):
+    for block_id in STREET_BLOCKS:
         q, err = load_spec(root, spec_rel, block_id)
         if err:
             return None, err
@@ -2079,7 +2093,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     #
     # A card 1.2 m behind the frontage, the depth the shopfront block gives,
     # lit at the file's own colour.
-    for block_id in ("east_parade", "west_south", "west_north"):
+    for block_id in STREET_BLOCKS:
         q, _e2 = load_spec(root, spec_rel, block_id)
         if _e2 or q["ground_floor"] != "shopfront":
             continue

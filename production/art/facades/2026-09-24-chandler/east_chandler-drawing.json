@@ -1,0 +1,75 @@
+{
+ "block": "east_chandler",
+ "side": "east",
+ "mirror": true,
+ "width_m": 6.0,
+ "top_m": 9.001,
+ "bays": 1,
+ "bay_width_m": 6.0,
+ "px_per_m": 80,
+ "x_edges_bay0": [
+  0.0,
+  0.35,
+  0.386,
+  1.152,
+  1.188,
+  2.088,
+  5.65,
+  6.0
+ ],
+ "x_edges_upper_bay0": [
+  0.0,
+  1.075,
+  1.925,
+  4.075,
+  4.925,
+  6.0
+ ],
+ "z_levels": [
+  0.0,
+  0.6,
+  0.68,
+  1.0,
+  1.981,
+  2.4,
+  2.48,
+  2.85,
+  3.4,
+  4.3,
+  5.8,
+  6.2,
+  9.001
+ ],
+ "not_drawn": [
+  "upper_arch_0_bay0",
+  "upper_arch_0_light_bay0",
+  "upper_arch_0_frame_bay0",
+  "upper_arch_1_bay0",
+  "upper_arch_1_light_bay0",
+  "upper_arch_1_frame_bay0",
+  "roof_front_bay0",
+  "roof_back_bay0"
+ ],
+ "bay": {
+  "widthM": 6.0,
+  "depthM": 8.0,
+  "groundFloorM": 3.4,
+  "firstFloorM": 2.8,
+  "eavesM": 6.2,
+  "ridgeM": 9.001,
+  "ridgeRiseM": 2.801,
+  "pitchDeg": 35.0,
+  "absoluteEavesM": 6.3,
+  "datumM": 0.1
+ },
+ "png": "east_chandler-drawing.png",
+ "size_px": [
+  860,
+  1110
+ ],
+ "origin_px": [
+  740.0,
+  890.0799999999999
+ ],
+ "x_axis": "block-local x runs right-to-left on the drawing"
+}
