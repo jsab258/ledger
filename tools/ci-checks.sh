@@ -152,6 +152,8 @@ real_table() {
     attribution-selftest  "$REPO"                 "$PY tools/attribution-check.py --selftest" \
     canon-gate            "$REPO"                 "$PY tools/canon-gate.py --corpus" \
     canon-gate-selftest   "$REPO"                 "$PY tools/canon-gate.py --selftest" \
+    approvals             "$REPO"                 "$PY tools/approvals.py" \
+    approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
     spec-test             "$REPO"                 "bash tools/spec-test-check.sh" \
     talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \

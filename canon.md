@@ -12,6 +12,8 @@ canon lines it changes, and canon cites the record at those lines.
 
 ## Game
 - LEDGER: open-town crime sim and social RPG. Single player, PC first.
+- Third-person, never first-person. PC only, on Windows. (Jafar, 2026-09-24,
+  after an audit prompt wrongly called it first-person.)
 - Town: Meridian, a fictional British port town. One map, seven districts:
   the Hook (old port, Mickey's, the player's minicab office), Copper Row (market quarter), the Exchange
   (offices, lawyers), the Parade (nightlife), Fairview (residential hills), Ironside
@@ -65,19 +67,30 @@ canon lines it changes, and canon cites the record at those lines.
   retired as a reference bar.
 
 ## Premise and cast (baseline pending OPEN 2)
-- Player: Tom Novak, arriving with one suitcase and a letter. His uncle Mickey
+- Player: Tom Nowak, 32, son of a Polish post-war settler and Mickey's sister,
+  arriving with one suitcase and a letter. His uncle Mickey
   has died and left him Mickey's, a minicab office in the Hook (D19), plus a half-dead criminal
   outfit and a book of uncollectable debts. Tom has never been to the Hook: he is a stranger
   to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).
-- Inherited loyalists: Rocco (old muscle), Lena (older bookkeeper).
+- Inherited loyalists: Ron Kirby (old muscle, 58, a docker until 1989, kept on
+  by Mickey for the door and the rank), Sheila Dunn (the bookkeeper, 53, at
+  Mickey's since she was 22).
 - Three rival organisations: the old-money machine (corruption and lawyers, head
-  Aldous Vane), the dockside syndicate (muscle and smuggling, head Sera Kest, called
-  the Widow), the new crew (flashy and reckless, head Danny Ro).
-- Detective: Mara Ellis. Day-life ring: Sam, Ada, June (Mickey's estranged daughter),
-  Father Emil, Noor (journalist love interest), Elias (teacher love interest), the
-  Fixer (broker between all three rivals).
-- What the town calls you reads out your standing: the new owner, then Novak, then
-  Tom, then Toma. The gate is knowing, not liking.
+  Geoffrey Agar), the dockside syndicate (muscle and smuggling, head Maureen Jensen,
+  called the Widow), the new crew (flashy and reckless, head Danny Cammack).
+- Detective: DS Carol Ellis. Day-life ring: Darren Milner (25, the street hustler),
+  Ada, June (Mickey's estranged daughter), Father Emil, Alison Sedman (journalist
+  love interest), Philip Danby (teacher love interest), the Fixer (broker between
+  all three rivals).
+- What the town calls you reads out your standing: the new owner, then Nowak, then
+  Tom, then Tommy. The gate is knowing, not liking.
+- NAMES, ruled by Jafar 2026-09-24 (DECISIONS, the casting research's renames):
+  Lena became Sheila Dunn, Rocco Ron Kirby, Sam Darren Milner, Mara Carol Ellis,
+  Aldous Vane Geoffrey Agar, Sera Kest Maureen Jensen, Noor Alison Sedman, Elias
+  Philip Danby, Danny Ro Danny Cammack, Tom Novak Tom Nowak, and the last rung
+  Toma Tommy. Mickey's, Ada and June are kept. The old names survive only as
+  internal ids (lena, rocco, sam and the rest), like the east_parade_* asset
+  names: identifiers, never what the player sees or hears.
 
 ## The content rule (D18, permanent)
 
@@ -151,6 +164,6 @@ which clauses the gate checks and which it does not claim to.
    legacy reference build; the C# Core stays the source of truth the C++
    port is checked against. Kept as item 1 so that "OPEN 2" above keeps
    its meaning; it is not open.
-2. Narrative survival. Whether Tom Novak, Acts I to III and the empire roster survive
+2. Narrative survival. Whether Tom Nowak, Acts I to III and the empire roster survive
    as baseline is decided in Phase 1 planning, along with the cast-sketch-versus-
    built-cards mismatch (Sam and Ada, written at one-street scale).
