@@ -1,94 +1,4 @@
-#!/usr/bin/env python3
-"""The sitting's approval page: pictures and sound, judged in minutes.
-
-    python tools/approval_page.py 2026-09-25           # writes production/approvals/2026-09-25/index.html and files.json
-    python tools/approval_page.py --selftest
-
-WHY, 24 September. Jafar: "Approvals reach me as one page per sitting,
-pictures and sound, judged in minutes, linked at the top of the closing
-summary." The page shows each principal's sheet (age, trade, face, body,
-hair, clothes), the three concept portraits, and the three lines spoken by
-every voice candidate, blind (letters only; ../voice-key.json says which is
-which). He approves a sheet whole or sends it back with a note, and picks a
-voice. His verdicts are stored by the page itself (the artifact's db, at
-verdicts/<slug>); the next sitting reads them and writes the approval file
-beside the sheet (tools/approvals.py --record).
-
-files.json maps each published path to its repo file, for publishing the page
-with its pictures and sound beside it.
-"""
-import html
-import json
-import os
-import re
-import sys
-
-REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CASTING = os.path.join(REPO, "production", "casting")
-ORDER = ("sheila-dunn", "ron-kirby", "darren-milner")
-FIELDS = ("Age", "Occupation", "Face", "Body", "Hair", "Clothes, 1990", "Voice")
-
-
-def read_sheet(slug):
-    """The sheet's name, its table fields and its three lines."""
-    path = os.path.join(CASTING, slug, "SHEET.md")
-    with open(path, encoding="utf-8-sig") as fh:
-        text = fh.read()
-    name = re.search(r"^#\s+(.+)$", text, re.M).group(1).strip()
-    fields = {}
-    for m in re.finditer(r"^\|\s*\*\*(.+?)\*\*\s*\|\s*(.+?)\s*\|\s*$", text, re.M):
-        fields[m.group(1)] = m.group(2)
-    lines = re.findall(r'^\d\.\s+"(.+)"\s*$', text, re.M)
-    return {"slug": slug, "name": name, "fields": {k: fields.get(k, "") for k in FIELDS}, "lines": lines[:3]}
-
-
-def voices(slug, names):
-    """Letters with their files, from names like <slug>-B-line2.mp3 and <slug>-B-reference.mp3."""
-    out = {}
-    for n in names:
-        m = re.match(re.escape(slug) + r"-([A-Z])-(line[123]|reference)\.(mp3|wav)$", n)
-        if m:
-            out.setdefault(m.group(1), {})[m.group(2)] = n
-    return [{"letter": k, **{p: v[p] for p in v}} for k, v in sorted(out.items())]
-
-
-def gather():
-    people, files = [], {}
-    for slug in ORDER:
-        if not os.path.exists(os.path.join(CASTING, slug, "SHEET.md")):
-            continue
-        p = read_sheet(slug)
-        p["pictures"] = {}
-        # IN THE GAME TONIGHT, beside the concept: the stand-in MetaHuman as
-        # the street lights it (the audit: "watch that person talk and move in
-        # street lighting"), until one is built to the approved portrait.
-        p["ingame"] = {}
-        for shot in ("close", "mid"):
-            rel = "production/casting/%s/ingame-%s.jpg" % (slug, shot)
-            if os.path.exists(os.path.join(REPO, rel)):
-                pub = "%s/ingame-%s.jpg" % (slug, shot)
-                p["ingame"][shot] = pub
-                files[pub] = rel
-        for shot in ("front", "profile", "full"):
-            rel = "production/casting/%s/%s.jpg" % (slug, shot)
-            if os.path.exists(os.path.join(REPO, rel)):
-                pub = "%s/%s.jpg" % (slug, shot)
-                p["pictures"][shot] = pub
-                files[pub] = rel
-        vdir = os.path.join(CASTING, slug, "voices")
-        names = sorted(os.listdir(vdir)) if os.path.isdir(vdir) else []
-        p["voices"] = voices(slug, names)
-        for v in p["voices"]:
-            for k in ("line1", "line2", "line3", "reference"):
-                if k in v:
-                    pub = "%s/voices/%s" % (slug, v[k])
-                    files[pub] = "production/casting/%s/voices/%s" % (slug, v[k])
-                    v[k] = pub
-        people.append(p)
-    return people, files
-
-
-PAGE = r"""<title>Casting Approvals</title>
+<title>Casting Approvals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
@@ -165,7 +75,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 
 <div class="wrap">
   <header>
-    <div class="kicker">LEDGER · approval page · __DATE__</div>
+    <div class="kicker">LEDGER · approval page · 2026-09-25</div>
     <h1>Sheila, Ron and Darren, for your yes</h1>
     <p class="how">Each person is approved whole: face, clothes and voice together. Look at the three pictures, play the three lines in each voice (the letters are blind; your approved voice is one of them), pick the voice that is the person, then Approve, or Redo with a word on what is wrong.</p>
     <div class="tally" id="tally">Loading your earlier verdicts…</div>
@@ -175,7 +85,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 </div>
 
 <script>
-const PEOPLE = __DATA__;
+const PEOPLE = [{"slug": "sheila-dunn", "name": "Sheila Dunn", "fields": {"Age": "53 (born 1937)", "Occupation": "Mickey's bookkeeper for thirty-one years, since she was 22. A widow in a council flat.", "Face": "Pale and lined, smoker's lines round the mouth, grey-blue eyes, a thin mouth; dentures.", "Body": "Small and neat, about 5 ft 3 in.", "Hair": "Greying brown, a short shampoo-and-set perm, done weekly.", "Clothes, 1990": "A beige hand-knitted cardigan buttoned over a cream blouse with a small round collar; a brown knee-length pleated skirt, flesh tights, flat brown lace-up shoes; a brown leather handbag. Large square tinted spectacles on a thin gold chain. No make-up but a plain lipstick.", "Voice": "Low, dry, unhurried; she withholds judgement in every line."}, "lines": ["Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.", "Sit down, you're making the place look untidy. Now, what is it you think you want to know?", "I saw what I saw. Whether I tell anybody else is a different question, isn't it."], "pictures": {"front": "sheila-dunn/front.jpg", "profile": "sheila-dunn/profile.jpg", "full": "sheila-dunn/full.jpg"}, "ingame": {"close": "sheila-dunn/ingame-close.jpg", "mid": "sheila-dunn/ingame-mid.jpg"}, "voices": [{"letter": "A", "line1": "sheila-dunn/voices/sheila-dunn-A-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-A-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-A-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-A-reference.mp3"}, {"letter": "B", "line1": "sheila-dunn/voices/sheila-dunn-B-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-B-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-B-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-B-reference.mp3"}, {"letter": "C", "line1": "sheila-dunn/voices/sheila-dunn-C-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-C-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-C-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-C-reference.mp3"}, {"letter": "D", "line1": "sheila-dunn/voices/sheila-dunn-D-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-D-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-D-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-D-reference.mp3"}, {"letter": "E", "line1": "sheila-dunn/voices/sheila-dunn-E-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-E-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-E-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-E-reference.mp3"}, {"letter": "F", "line1": "sheila-dunn/voices/sheila-dunn-F-line1.mp3", "line2": "sheila-dunn/voices/sheila-dunn-F-line2.mp3", "line3": "sheila-dunn/voices/sheila-dunn-F-line3.mp3", "reference": "sheila-dunn/voices/sheila-dunn-F-reference.mp3"}]}, {"slug": "ron-kirby", "name": "Ron Kirby", "fields": {"Age": "58 (born 1932)", "Occupation": "A docker until the dock labour scheme ended in 1989. Mickey kept him on the door and the rank.", "Face": "Broad, weathered and ruddy; a nose broken long ago; heavy-lidded, patient eyes.", "Body": "Big and heavy-set, about 6 ft 1 in, a thick neck; big hands with faded blue tattoos on the backs and forearms.", "Hair": "Bald on top, a short grey fringe at the sides; a full grey-brown moustache.", "Clothes, 1990": "A navy donkey jacket with a black shoulder panel over a grey knitted jumper; dark grey work trousers; scuffed black leather boots.", "Voice": "Low, worn, tired; decency without softness."}, "lines": ["Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.", "You want to stand there, son, you stand where I can see you. That's all I ask.", "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first."], "pictures": {"front": "ron-kirby/front.jpg", "profile": "ron-kirby/profile.jpg", "full": "ron-kirby/full.jpg"}, "ingame": {"close": "ron-kirby/ingame-close.jpg", "mid": "ron-kirby/ingame-mid.jpg"}, "voices": [{"letter": "A", "line1": "ron-kirby/voices/ron-kirby-A-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-A-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-A-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-A-reference.mp3"}, {"letter": "B", "line1": "ron-kirby/voices/ron-kirby-B-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-B-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-B-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-B-reference.mp3"}, {"letter": "C", "line1": "ron-kirby/voices/ron-kirby-C-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-C-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-C-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-C-reference.mp3"}, {"letter": "D", "line1": "ron-kirby/voices/ron-kirby-D-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-D-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-D-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-D-reference.mp3"}, {"letter": "E", "line1": "ron-kirby/voices/ron-kirby-E-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-E-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-E-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-E-reference.mp3"}, {"letter": "F", "line1": "ron-kirby/voices/ron-kirby-F-line1.mp3", "line2": "ron-kirby/voices/ron-kirby-F-line2.mp3", "line3": "ron-kirby/voices/ron-kirby-F-line3.mp3", "reference": "ron-kirby/voices/ron-kirby-F-reference.mp3"}]}, {"slug": "darren-milner", "name": "Darren Milner", "fields": {"Age": "25 (born 1965)", "Occupation": "The street hustler. Out of work since a youth training scheme; lives at his mother's; a pager, and the phone boxes.", "Face": "Narrow and pale, quick amused eyes, a cocky half-smile; clearly a grown man.", "Body": "Thin and restless, about 5 ft 9 in.", "Hair": "A grown-out perm with bleached tips; light stubble.", "Clothes, 1990": "A shiny purple and teal nylon shell-suit jacket over a white T-shirt; stonewashed jeans; scuffed white trainers; a black pager on his belt.", "Voice": "Quick, ingratiating, never still. His approved voice is kept (he is in its age range); it is Scottish, which a local lad would not be."}, "lines": ["Alright? Darren. You'll have heard of me. No? You will, give it a week.", "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates.", "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth."], "pictures": {"front": "darren-milner/front.jpg", "profile": "darren-milner/profile.jpg", "full": "darren-milner/full.jpg"}, "ingame": {"close": "darren-milner/ingame-close.jpg", "mid": "darren-milner/ingame-mid.jpg"}, "voices": [{"letter": "A", "line1": "darren-milner/voices/darren-milner-A-line1.mp3", "line2": "darren-milner/voices/darren-milner-A-line2.mp3", "line3": "darren-milner/voices/darren-milner-A-line3.mp3", "reference": "darren-milner/voices/darren-milner-A-reference.mp3"}]}];
 const state = {};           // slug -> {verdict, voice, note}
 let db = null, canWrite = true;
 let audio = null, playingBtn = null;
@@ -278,50 +188,3 @@ render();
   render();
 })();
 </script>
-"""
-
-
-def build(date):
-    people, files = gather()
-    out_dir = os.path.join(REPO, "production", "approvals", date)
-    os.makedirs(out_dir, exist_ok=True)
-    data = json.dumps(people, ensure_ascii=False).replace("</", "<\\/")
-    page = PAGE.replace("__DATA__", data).replace("__DATE__", html.escape(date))
-    with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(page)
-    with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:
-        json.dump(files, fh, indent=1)
-    pics = sum(len(p["pictures"]) for p in people)
-    vox = sum(len(p["voices"]) for p in people)
-    print("approval_page: %d people, %d pictures, %d voice candidates, %d files -> production/approvals/%s/index.html"
-          % (len(people), pics, vox, len(files), date))
-
-
-def selftest():
-    ok = bad = 0
-
-    def check(name, cond):
-        nonlocal ok, bad
-        if cond:
-            ok += 1
-        else:
-            bad += 1
-            print("approval_page selftest FAIL " + name)
-    v = voices("ron-kirby", ["ron-kirby-B-line1.mp3", "ron-kirby-B-line2.mp3", "ron-kirby-A-reference.mp3", "notes.txt", "sheila-dunn-A-line1.mp3"])
-    check("voices are grouped by letter, in order", [x["letter"] for x in v] == ["A", "B"])
-    check("a letter carries its lines", v[1].get("line1") == "ron-kirby-B-line1.mp3" and v[1].get("line2") == "ron-kirby-B-line2.mp3")
-    check("another person's files are not taken", all("sheila" not in json.dumps(x) for x in v))
-    if os.path.exists(os.path.join(CASTING, "sheila-dunn", "SHEET.md")):
-        s = read_sheet("sheila-dunn")
-        check("the sheet's name is read", s["name"] == "Sheila Dunn")
-        check("the sheet's age is read", s["fields"]["Age"].startswith("53"))
-        check("the sheet's three lines are read", len(s["lines"]) == 3)
-    check("the page carries no script from another host", "src=\"http" not in PAGE)
-    print("approval_page selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
-    return 1 if bad else 0
-
-
-if __name__ == "__main__":
-    if "--selftest" in sys.argv:
-        sys.exit(selftest())
-    build(sys.argv[1] if len(sys.argv) > 1 else "latest")
