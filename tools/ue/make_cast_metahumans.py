@@ -54,6 +54,66 @@ OUTFITS = {
     "rocco": ("sweater", "jeans", "boots"),
     "sam": ("tshirt", "slimjeans", "sneakers"),
 }
+# THE WARDROBE ITEMS THE PACKAGES MAKE, as imported on 24 September (overnight)
+# by import_fab_clothes.py: each package lands under /Game/Fab/<file name>.
+FAB_ITEMS = {
+    "sweater": "/Game/Fab/oa_sweater/WI_OA_Sweater",
+    "jeans": "/Game/Fab/oa_jeans/WI_OA_Jeans",
+    "slimjeans": "/Game/Fab/oa_slimjeansvariants/WI_OA_Jeans_slm",
+    "tshirt": "/Game/Fab/oa_tshirtvariants/WI_OA_TshirtLngSlv",
+    "boots": "/Game/Fab/oa_boots/WI_OA_Boots",
+    "flats": "/Game/Fab/oa_flats/WI_OA_Flats",
+    "sneakers": "/Game/Fab/oa_casualsneakers/WI_OA_CasualSneakers",
+}
+
+
+# PLAIN 1990 COLOURS, not Epic's grey with electric-blue trim (24 September,
+# overnight). Linear colour per garment's two diffuse colours, from the
+# casting sheets: Sheila's beige cardigan and brown shoes, Ron's navy jumper
+# and black boots, Darren's off-white shirt and grubby white trainers. Set on
+# the built clothing materials after the build, like the hair (the wardrobe's
+# own parameter lookup is not open to scripts). Keys are the garment's stem in
+# the built material's name, MI_WI_OA_<stem>_...
+CLOTH_COLOURS = {
+    "lena": {"Sweater": {"diffuse_color_1": (0.42, 0.34, 0.24), "diffuse_color_2": (0.36, 0.29, 0.20)},
+             "Flats": {"diffuse_color_1": (0.09, 0.045, 0.02), "diffuse_color_2": (0.09, 0.045, 0.02)}},
+    "rocco": {"Sweater": {"diffuse_color_1": (0.018, 0.022, 0.038), "diffuse_color_2": (0.015, 0.018, 0.03)},
+              "Boots": {"diffuse_color_1": (0.012, 0.011, 0.010), "diffuse_color_2": (0.012, 0.011, 0.010)}},
+    "sam": {"TshirtLngSlv": {"diffuse_color_1": (0.62, 0.60, 0.56), "diffuse_color_2": (0.62, 0.60, 0.56)},
+            "CasualSneakers": {"diffuse_color_1": (0.55, 0.54, 0.51), "diffuse_color_2": (0.50, 0.49, 0.47)}},
+}
+
+
+def cloth_materials(who, paths):
+    """(path, garment stem) for each built clothing material of one of the cast that CLOTH_COLOURS recolours."""
+    out = []
+    for p in paths:
+        name = p.split("/")[-1].split(".")[0]
+        if "/Clothing/" not in p or not name.startswith("MI_WI_OA_"):
+            continue
+        for stem in CLOTH_COLOURS.get(who, {}):
+            if name.startswith("MI_WI_OA_" + stem + "_"):
+                out.append((p, stem))
+    return out
+
+
+def recolour_cloth(who, made):
+    """Sets CLOTH_COLOURS on the built clothing materials; how many."""
+    import unreal
+    n = 0
+    for path, stem in cloth_materials(who, made):
+        mi = unreal.load_asset(path)
+        if not isinstance(mi, unreal.MaterialInstanceConstant):
+            continue
+        for pname, (r, g, b) in CLOTH_COLOURS[who][stem].items():
+            unreal.MaterialEditingLibrary.set_material_instance_vector_parameter_value(mi, pname, unreal.LinearColor(r, g, b, 1.0))
+        n += 1
+    return n
+
+
+def outfit_paths(who):
+    """The wardrobe items one of the cast is dressed in, as loadable object paths."""
+    return ["%s.%s" % (FAB_ITEMS[w], FAB_ITEMS[w].split("/")[-1]) for w in OUTFITS.get(who, ())]
 
 
 def fab_packages(names):
@@ -378,6 +438,52 @@ def main_after_idle(seconds=20.0, settle=15.0):
         write(status_line(step_name, st["who"], st["preset"], "BUILT", time.time() - st["tc"],
                           "%d-assets-optimized-high;hair-materials-recoloured-%d" % (len(made), recoloured)))
 
+    # LEDGER_MH_STEP=dress: Epic's plain clothes on a prepared take, nothing
+    # else changed (24 September, overnight): the plugin's T-shirt and shorts
+    # come off the Outfits slot and OUTFITS' three items go on, top, bottom and
+    # shoes. The face, skin, body and hair stay as they were; the build step
+    # then builds the take as usual.
+    if step_name == "dress":
+        def dress_tick(delta):
+            if time.time() - st["t0"] < seconds or st["busy"]:
+                return
+            st["busy"] = True
+            unreal.unregister_slate_post_tick_callback(st["h"])
+            try:
+                for who, preset in cast:
+                    t0 = time.time()
+                    ch = unreal.load_asset(CAST_DIR + asset_name(who, BARE))
+                    if ch is None:
+                        write(status_line(step_name, who, preset, "NOT-PREPARED", 0, CAST_DIR + asset_name(who, BARE)))
+                        continue
+                    if not sub.try_add_object_to_edit(ch):
+                        write(status_line(step_name, who, preset, "NOT-EDITABLE", 0, "try_add_object_to_edit refused"))
+                        continue
+                    col = ch.internal_collection
+                    on, missing = [], []
+                    for i, path in enumerate(outfit_paths(who)):
+                        wi = unreal.load_asset(path)
+                        if wi is None:
+                            missing.append(path.split("/")[-1].split(".")[0])
+                            continue
+                        item = col.try_add_item_from_wardrobe_item("Outfits", wi)
+                        if not on:
+                            col.default_instance.set_single_slot_selection("Outfits", item)
+                        else:
+                            col.default_instance.try_add_slot_selection(
+                                unreal.MetaHumanPipelineSlotSelection(slot_name="Outfits", selected_item=item))
+                        on.append(path.split("/")[-1].split(".")[0])
+                    sub.remove_object_to_edit(ch)
+                    unreal.EditorAssetLibrary.save_loaded_asset(ch, only_if_is_dirty=False)
+                    write(status_line(step_name, who, preset, "DRESSED" if on and not missing else "PART-DRESSED",
+                                      time.time() - t0, "on:" + ",".join(on) + (";missing:" + ",".join(missing) if missing else "")))
+            except Exception as e:
+                write(status_line(step_name, "none", "none", "RAISED", time.time() - st["t0"], repr(e)))
+            finally:
+                unreal.SystemLibrary.quit_editor()
+        st["h"] = unreal.register_slate_post_tick_callback(dress_tick)
+        return
+
     # LEDGER_MH_STEP=recolour: only the hair colour, on a take already built.
     if step_name == "recolour":
         def recolour_tick(delta):
@@ -389,8 +495,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 for who, preset in cast:
                     made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(who, BARE), recursive=True, include_folder=False)
                     n = recolour_hair(who, made)
+                    c = recolour_cloth(who, made)
                     unreal.EditorAssetLibrary.save_directory(BUILD_ROOT + "/" + asset_name(who, BARE), only_if_is_dirty=False, recursive=True)
-                    write(status_line(step_name, who, preset, "RECOLOURED", time.time() - st["t0"], "%d-hair-materials" % n))
+                    write(status_line(step_name, who, preset, "RECOLOURED", time.time() - st["t0"], "%d-hair-materials;%d-clothing-materials" % (n, c)))
             except Exception as e:
                 write(status_line(step_name, "none", "none", "RAISED", time.time() - st["t0"], repr(e)))
             finally:
@@ -485,6 +592,13 @@ def selftest():
     check("everyone is dressed head to foot, shoes included",
           sorted(OUTFITS) == ["lena", "rocco", "sam"] and all(len(o) == 3 for o in OUTFITS.values()))
     check("only MetaHuman packages are imported", fab_packages(["oa_jeans.mhpkg", "notes.txt", "x.zip"]) == ["oa_jeans.mhpkg"])
+    check("every outfit word names an imported wardrobe item", all(w in FAB_ITEMS for o in OUTFITS.values() for w in o))
+    check("an outfit path is a loadable object path", outfit_paths("rocco")[2] == "/Game/Fab/oa_boots/WI_OA_Boots.WI_OA_Boots")
+    check("everyone has shoes", all(o[2] in ("flats", "boots", "sneakers") for o in OUTFITS.values()))
+    check("only a recoloured garment's built material is picked",
+          cloth_materials("rocco", ["/G/MH_RoccoT2/Clothing/MI_WI_OA_Boots_M_shs_boots.x", "/G/MH_RoccoT2/Clothing/MI_WI_OA_Jeans_M_btm.x",
+                                    "/G/MH_RoccoT2/Face/MI_WI_OA_Boots_M.x"]) == [("/G/MH_RoccoT2/Clothing/MI_WI_OA_Boots_M_shs_boots.x", "Boots")])
+    check("no colour is brighter than cloth", all(0.0 <= v <= 1.0 for g in CLOTH_COLOURS.values() for p in g.values() for c in p.values() for v in c))
     check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
     print("make_cast_metahumans selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0

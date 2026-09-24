@@ -151,3 +151,8 @@ production/playtest/ai-tester/
 ue-probe/Content/Ledger/MetaHumans/
 ue-probe/Content/MH_Test.uasset
 ue-probe/Config/DefaultInput.ini
+
+# The game's run-time files, staged into the package by tools/ue/stage_game_data.py (24 September).
+ue-probe/Content/LedgerData/
+# Epic's Fab clothing the cast wear: Fab Standard License, never redistributed (24 September).
+ue-probe/Content/Fab/

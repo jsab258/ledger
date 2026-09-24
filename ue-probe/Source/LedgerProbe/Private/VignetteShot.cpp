@@ -1241,6 +1241,8 @@ namespace
 		Candidates.Add(FPaths::Combine(FPaths::LaunchDir(), TEXT("vignette-pieces.json")));
 		Candidates.Add(FPaths::Combine(
 			FPaths::GetPath(FPlatformProcess::ExecutablePath()), TEXT("vignette-pieces.json")));
+		// The game's own staged copy (tools/ue/stage_game_data.py), last.
+		Candidates.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/vignette-pieces.json")));
 		for (const FString& C : Candidates)
 		{
 			const FString Full = FPaths::ConvertRelativePathToFull(C);
@@ -1878,6 +1880,14 @@ namespace
 		Cands.Add(AbsProject(TEXT("../../../../production/assets/street/quay-street.json")));
 		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
 			ExeDir, TEXT("../../../../../../production/assets/street/quay-street.json"))));
+		// THE GAME'S OWN COPY, LAST, 24 September (overnight): the files the
+		// street reads, staged inside the package under their repository paths
+		// (tools/ue/stage_game_data.py, DirectoriesToAlwaysStageAsNonUFS), so
+		// a packaged game with no checkout anywhere still finds its street, its
+		// look, its people and its sounds. The repository root below is then
+		// Content/LedgerData, and every file read relative to it is there too.
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+			FPaths::ProjectContentDir(), TEXT("LedgerData/production/assets/street/quay-street.json"))));
 		for (int32 I = 0; I < Cands.Num(); ++I)
 		{
 			FString C = Cands[I];
