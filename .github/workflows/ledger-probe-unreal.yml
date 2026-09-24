@@ -2270,6 +2270,78 @@ jobs:
       # green: the exact colour that was read as a landing on runs 18 and
       # 22. A commit or a push that did not happen is not a landed run, so
       # it fails the job. Amendment A2, ruling of 2026-09-06.
+      - name: The integrated encounter, played, reloaded from disk, and unseen
+        id: encounter
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 45
+        shell: pwsh
+        env:
+          SHOT_EXE: ${{ steps.build.outputs.exe }}
+          SHOT_PROJ: ${{ steps.build.outputs.projectDir }}
+          SHOT_SHA: ${{ steps.build.outputs.sha }}
+        run: |
+          # THE ENCOUNTER, Jafar 24 September (ROADMAP.md, "Now"). Three
+          # launches of the packaged game with the new player character:
+          # PLAY commits the crime by the player's key, the witness sees it,
+          # shouts, the gossip carries it, the conversation helper (its free
+          # fake mode) is asked with the lad's own memories and the day, and
+          # the town is saved to disk before the game quits; RELOAD is a new
+          # process that reads that save back and asks again; UNSEEN is a
+          # clean start where the crime goes unseen. Each writes a verdict;
+          # the judge step below turns the run red if any of them failed.
+          $ErrorActionPreference = "Continue"
+          New-Item -ItemType Directory -Force -Path "production/d1-probe" | Out-Null
+          $modes = @("play", "reload", "unseen")
+          foreach ($m in $modes) {
+            Remove-Item "production/d1-probe/ue-encounter-$m-verdict.txt" -Force -ErrorAction SilentlyContinue
+          }
+          Remove-Item "production/d1-probe/ue-encounter-shout.wav" -Force -ErrorAction SilentlyContinue
+          $exe = $env:SHOT_EXE
+          $proj = $env:SHOT_PROJ
+          $sha = $env:SHOT_SHA
+          if (-not $sha) { $sha = "$env:GITHUB_SHA".Substring(0, 7) }
+          $binDir = if ($exe) { Split-Path $exe -Parent } else { $null }
+          $dirs = @(@($proj, $binDir, (Join-Path $PWD "ue-probe")) | Where-Object { $_ -and (Test-Path $_) })
+          foreach ($d in $dirs) {
+            Copy-Item "production/specs/vignette-pieces.json" (Join-Path $d "vignette-pieces.json") -Force -ErrorAction SilentlyContinue
+            Copy-Item "content/dialogue/crime-witness-v1.json" (Join-Path $d "crime-witness-v1.json") -Force -ErrorAction SilentlyContinue
+            foreach ($m in $modes) { Remove-Item (Join-Path $d "ue-encounter-$m-verdict.txt") -Force -ErrorAction SilentlyContinue }
+            Remove-Item (Join-Path $d "ue-encounter-shout.wav") -Force -ErrorAction SilentlyContinue
+          }
+          dotnet build ledger/TalkHelper -c Release -nologo -v q | Out-Host
+          $helper = (Join-Path $PWD "ledger/TalkHelper/bin/Release/net8.0/TalkHelper.exe")
+          $save = Join-Path $env:RUNNER_TEMP "ledger-encounter-save"
+          Remove-Item -Recurse -Force $save -ErrorAction SilentlyContinue
+          foreach ($m in $modes) {
+            $out = "production/d1-probe/ue-encounter-$m-verdict.txt"
+            if ((-not $exe) -or (-not (Test-Path $exe)) -or (-not (Test-Path $helper))) {
+              "encounterMode=$m`nencounterStatus=FAIL`nencounterFailed=no-binary-or-no-helper`nencounterCommit=$sha" | Set-Content $out -Encoding utf8
+              continue
+            }
+            $argv = @("-LedgerCrime", "-LedgerSlice", "-Encounter=$m", "-TalkHelper=$helper", "-TalkFake",
+                      "-EncounterSave=$save", "-LedgerCommit=$sha", "-RenderOffScreen",
+                      "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0", "-ResX=960", "-ResY=540",
+                      "-windowed", "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
+            $p = Start-Process -FilePath $exe -ArgumentList $argv -PassThru -NoNewWindow `
+                 -RedirectStandardOutput (Join-Path $env:RUNNER_TEMP "encounter-$m.log")
+            if (-not $p.WaitForExit(900000)) { try { $p.Kill() } catch {} ; Write-Host "encounter $m killed after 15 minutes" }
+            $got = $false
+            foreach ($d in $dirs) {
+              $f = Join-Path $d "ue-encounter-$m-verdict.txt"
+              if (Test-Path $f) { Copy-Item $f $out -Force; $got = $true; break }
+            }
+            if (-not $got) {
+              "encounterMode=$m`nencounterStatus=FAIL`nencounterFailed=no-verdict-written`nencounterCommit=$sha" | Set-Content $out -Encoding utf8
+            }
+            Write-Host (Get-Content $out -Raw)
+          }
+          foreach ($d in $dirs) {
+            $w = Join-Path $d "ue-encounter-shout.wav"
+            if (Test-Path $w) { Copy-Item $w "production/d1-probe/ue-encounter-shout.wav" -Force; break }
+          }
+          exit 0
+
       - name: Commit the probe result
         if: always()
         shell: bash
@@ -2508,6 +2580,8 @@ jobs:
           # run staged the clip's DELETION, which its step does at the top
           # for provenance, and never the clip it then made.
           git add -A -- 'production/d1-probe/ue-crime.gif' 2>/dev/null || true
+          # THE ENCOUNTER, 24 September: its three verdicts and the recorded shout.
+          git add -A -- 'production/d1-probe/ue-encounter-play-verdict.txt' 'production/d1-probe/ue-encounter-reload-verdict.txt' 'production/d1-probe/ue-encounter-unseen-verdict.txt' 'production/d1-probe/ue-encounter-shout.wav' 2>/dev/null || true
           # THE BASE MATERIAL, BY NAME. It is a BUILD PRODUCT made by
           # tools/ue/make_base_material.py in the step above, never by hand,
           # and it is committed so the next cook has something to carry into
@@ -2753,6 +2827,28 @@ jobs:
       # project's standing rule — verify a job's EFFECTS and not its exit
       # code. A step can exit 0 having written `probeTest=FAIL`; the engine's
       # own answer is in the file and the file is what is asked.
+      - name: Judge the encounter, the build's regression
+        if: always()
+        shell: bash
+        env:
+          GIT_CONFIG_COUNT: "1"
+          GIT_CONFIG_KEY_0: safe.directory
+          GIT_CONFIG_VALUE_0: "*"
+        run: |
+          # THE ENCOUNTER IS THE REGRESSION THE BUILD RUNS (Jafar, 24
+          # September): all three launches must pass for this commit.
+          PY=""
+          for c in python3 python py; do
+            if [ "$($c -c 'print(7*6)' 2>/dev/null)" = "42" ]; then PY="$c"; break; fi
+          done
+          [ -n "$PY" ] || { echo "no working python"; exit 1; }
+          SHORT="${GITHUB_SHA:0:7}"
+          "$PY" tools/encounter-verdict-check.py --selftest || exit 1
+          "$PY" tools/encounter-verdict-check.py --sha "$SHORT" \
+            production/d1-probe/ue-encounter-play-verdict.txt \
+            production/d1-probe/ue-encounter-reload-verdict.txt \
+            production/d1-probe/ue-encounter-unseen-verdict.txt
+
       - name: The build decides the colour of the run
         if: always()
         shell: bash

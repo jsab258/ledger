@@ -99,6 +99,7 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindAxisKey(EKeys::MouseY, this, &ALedgerSliceCharacter::LookPitch);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ALedgerSliceCharacter::RunPressed);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ALedgerSliceCharacter::RunReleased);
+	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
 }
 
 void ALedgerSliceCharacter::MoveForward(float Value)
@@ -121,6 +122,13 @@ void ALedgerSliceCharacter::LookYaw(float Value) { AddControllerYawInput(Value);
 void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Value); }
 void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed = RunSpeedCm; }
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
+void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
+int32 ALedgerSliceCharacter::ConsumeActRequests()
+{
+	const int32 N = ActRequests;
+	ActRequests = 0;
+	return N;
+}
 
 // THE STREET IS MARKED AS SOMEWHERE A PATH MAY RUN, 24 September. The second
 // run (3b658691) had the agent declared and still built no mesh: the engine

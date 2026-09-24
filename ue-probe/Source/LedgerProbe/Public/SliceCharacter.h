@@ -55,6 +55,18 @@ private:
 	void LookPitch(float Value);
 	void RunPressed();
 	void RunReleased();
+
+	// THE ACT KEY, 24 September: E, the same key and the same count the old
+	// test character carried, so the encounter's crime is the player's own
+	// input on the character the slice ships with. RequestAct counts a press;
+	// the crime module takes the count with ConsumeActRequests.
+	void RequestAct();
+
+public:
+	int32 ConsumeActRequests();
+
+private:
+	int32 ActRequests = 0;
 	void MarkStreetWalkable();
 	void BuildStreetNavigation();
 

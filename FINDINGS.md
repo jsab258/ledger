@@ -11,3 +11,5 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - The hill's mist does not change with the fog settings; two tries had no effect.
 - The ship chandler's has no name board.
 - MH_Test wears the plugin's only garment, a white T-shirt and shorts, barefoot.
+- The crime witness bank's line cw-ws-r4-02 has the witness saying she served the player "his bitter": alcohol, which the content rule forbids everywhere. (content/dialogue/crime-witness-v1.json)
+- The local project's content import fails (38 errors, damaged packages), so a local run cannot place the witnesses on the ground and cannot prove perception; the build machine regenerates the content cleanly every run.

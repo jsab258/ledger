@@ -49,6 +49,16 @@ def wanted(root):
             voice, leaf = c.split("/", 1)
             out.append((os.path.join(root, VOICE_REL, c), PACKAGE_ROOT + "/Voice/" + voice,
                         os.path.splitext(leaf)[0], False))
+    # ONE-OFF CUES, 24 September: a clip the game plays on an event (the
+    # encounter's shout), imported like a voice line and never looped.
+    for q in spec.get("cues", []):
+        c = q["clip"]
+        if c in seen:
+            continue
+        seen.add(c)
+        voice, leaf = c.split("/", 1)
+        out.append((os.path.join(root, VOICE_REL, c), PACKAGE_ROOT + "/Voice/" + voice,
+                    os.path.splitext(leaf)[0], False))
     return out
 
 
