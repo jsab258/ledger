@@ -74,17 +74,45 @@ CASTING = {
     "lena": {"base": "Vivian", "face": {"Vivian": 0.55, "Celeste": 0.25, "Walter": 0.2},
              "skin": {"u": 0.24, "v": 0.45, "face_texture_index": 121},
              "body": {"Height": 160.0, "Fat": 0.6, "Muscularity": -0.8},
-             "hair": "WI_Hair_M_BobCurly", "hair_colour": {"Melanin": 0.35, "Whiteness": 0.55},
+             "hair": "WI_Hair_M_BobCurly", "hair_colour": {"hairMelanin": 0.45, "WhiteAmount": 0.55},
              "no_makeup": True},
     "rocco": {"base": "Jorge", "face": {"Jorge": 0.35, "Walter": 0.35, "Bruce": 0.3},
               "skin": {"u": 0.34, "v": 0.5, "face_texture_index": 121},
               "body": {"Height": 186.0, "Fat": 1.3, "Muscularity": 0.6},
-              "hair": "WI_Hair_S_HairLoss", "hair_colour": {"Whiteness": 0.45}},
+              "hair": "WI_Hair_S_HairLoss", "hair_colour": {"WhiteAmount": 0.45}},
     "sam": {"base": "Orlando", "face": {"Orlando": 0.45, "Victor": 0.55},
             "skin": {"u": 0.2, "v": 0.45, "face_texture_index": 28},
             "body": {"Height": 173.0, "Fat": -1.0, "Muscularity": -0.3},
             "hair": "WI_Hair_S_Messy"},
 }
+
+
+def hair_materials(who, paths):
+    """The built haircut's own material instances among a take's asset paths."""
+    c = CASTING.get(who)
+    if not c or not c.get("hair_colour"):
+        return []
+    stem = c["hair"][len("WI_"):]
+    out = []
+    for path in paths:
+        name = path.split("/")[-1].split(".")[0]
+        if "/Grooms/" in path and name.startswith("MI_") and stem in name:
+            out.append(path)
+    return out
+
+
+def recolour_hair(who, made):
+    """Sets the brief's hair colour on the built haircut's materials; how many."""
+    import unreal
+    n = 0
+    for path in hair_materials(who, made) if TAKE else []:
+        mi = unreal.load_asset(path)
+        if not isinstance(mi, unreal.MaterialInstanceConstant):
+            continue
+        for pname, value in CASTING[who]["hair_colour"].items():
+            unreal.MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi, pname, value)
+        n += 1
+    return n
 
 
 def blend(vectors_and_weights):
@@ -243,9 +271,10 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 notes.append("hair-added")
             # THE HAIR'S COLOUR is set on the built hair materials after the
             # build (recolour_hair): the wardrobe's own parameter lookup is not
-            # open to scripts. On take T3 it set three materials and nothing
-            # visible changed: the names or the materials are not the ones
-            # the hair draws with. An open fault.
+            # open to scripts. Their names are the hair material's own,
+            # hairMelanin and WhiteAmount (probe_hair_materials.py): take T3
+            # first set "Melanin" and "Whiteness", which do not exist, and
+            # nothing changed.
         if c.get("no_makeup"):
             sub.commit_makeup_settings(ch, unreal.MetaHumanCharacterMakeupSettings())
             notes.append("no-makeup")
@@ -310,28 +339,30 @@ def main_after_idle(seconds=20.0, settle=15.0):
         p.set_editor_property("absolute_build_path", BUILD_ROOT)
         sub.build_meta_human(ch, p)
         made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"], BARE), recursive=True, include_folder=False)
-        recoloured = recolour_hair(made)
+        recoloured = recolour_hair(st["who"], made)
         unreal.EditorAssetLibrary.save_directory(BUILD_ROOT, only_if_is_dirty=False, recursive=True)
         write(status_line(step_name, st["who"], st["preset"], "BUILT", time.time() - st["tc"],
                           "%d-assets-optimized-high;hair-materials-recoloured-%d" % (len(made), recoloured)))
 
-    def recolour_hair(made):
-        c = CASTING.get(st["who"]) if TAKE else None
-        if not c or not c.get("hair_colour"):
-            return 0
-        n = 0
-        stem = c["hair"][len("WI_"):]
-        for path in made:
-            name = path.split("/")[-1].split(".")[0]
-            if "/Grooms/" not in path or not name.startswith("MI_") or stem not in name:
-                continue
-            mi = unreal.load_asset(path)
-            if not isinstance(mi, unreal.MaterialInstanceConstant):
-                continue
-            for pname, value in c["hair_colour"].items():
-                unreal.MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi, pname, value)
-            n += 1
-        return n
+    # LEDGER_MH_STEP=recolour: only the hair colour, on a take already built.
+    if step_name == "recolour":
+        def recolour_tick(delta):
+            if time.time() - st["t0"] < seconds or st["busy"]:
+                return
+            st["busy"] = True
+            unreal.unregister_slate_post_tick_callback(st["h"])
+            try:
+                for who, preset in cast:
+                    made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(who, BARE), recursive=True, include_folder=False)
+                    n = recolour_hair(who, made)
+                    unreal.EditorAssetLibrary.save_directory(BUILD_ROOT + "/" + asset_name(who, BARE), only_if_is_dirty=False, recursive=True)
+                    write(status_line(step_name, who, preset, "RECOLOURED", time.time() - st["t0"], "%d-hair-materials" % n))
+            except Exception as e:
+                write(status_line(step_name, "none", "none", "RAISED", time.time() - st["t0"], repr(e)))
+            finally:
+                unreal.SystemLibrary.quit_editor()
+        st["h"] = unreal.register_slate_post_tick_callback(recolour_tick)
+        return
 
     def step():
         now = time.time()
@@ -411,6 +442,11 @@ def selftest():
     check("each brief blends shipped faces and is based on one of them",
           all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for c in CASTING.values()))
     check("the blend is a weighted mean", blend([([0.0, 2.0], 1.0), ([2.0, 4.0], 3.0)]) == [1.5, 3.5])
+    check("the hair colour uses the hair material's own names",
+          all(k in ("hairMelanin", "hairRedness", "WhiteAmount") for c in CASTING.values() for k in c.get("hair_colour", {})))
+    check("only the haircut's own materials are recoloured",
+          hair_materials("lena", ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x", "/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x",
+                                  "/Game/x/Grooms/Hair_M_BobCurly.x"]) == ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x"])
     check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
     print("make_cast_metahumans selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
