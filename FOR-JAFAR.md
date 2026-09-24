@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **Every build now checks the slice against your 60 a second, and the first good reading meets it:** 79 frames a second at your screen size drawn at half and upscaled, with the slowest 1% of frames at 74. It uses 4.6 GB of the card's memory now, up from 3.5, with the scans and the MetaHuman in. With Nano's 2.1 GB beside it, that leaves about 2.7 GB spare.
 - 2026-09-24 **The day's mist may now thicken with distance.** It was capped at 30%, so the hill 150 metres off got no more haze than a wall 60 metres off, and it stood sharp where the sheet's hill fades. The cap is now 50%. The street's own far end, which was matched to the sheet, sits under the old cap and doesn't change.
 - 2026-09-24 **The street's dirt is on in Unreal:** all ten stains stand as decals, with water streaks down the party walls, moss, broken tarmac and the manholes. They're faint, because their strength is the old engine's, copied rather than re-guessed. Say if the street should be dirtier; it's one number.
 - 2026-09-24 **The MetaHuman stands at ease in the corner now,** arms down and weight settled, playing Elizabeth's idle carried onto his body. The head and face stay with him as he moves.

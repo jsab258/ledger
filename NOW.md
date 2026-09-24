@@ -59,10 +59,14 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       every party wall, two gaps in three a garden with trees (Blender:
       production/art/compare/stage1-2026-09-24/rise-attempt5-blender.png).
       Judge it in Unreal when its run lands.
-- [ ] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
+- [x] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
       23 Sep: 60 at his monitor, 3440x1440, never below 30, voice running):
       a frame-time line in the slice walk at 1280x720 and at 3440x1440 drawn
       at half and upscaled. Decision on what the target allows is with him.
+      DONE 24 Sep: every probe run now writes production/d1-probe/ue-perf-
+      verdict.txt (tools/slice-perf.py). First good reading, 8f8b45e3:
+      MEETS, 12.6 ms median (79 fps), 13.5 ms slowest 1%, 4.6 GB of video
+      memory; the walk's own line prints its frame times too.
 - [x] THE NINETEEN CAST VOICES' PERMISSIONS, voice by voice in FOR-JAFAR,
       against the TTS licensing research, before anything more is recorded.
       DONE 24 Sep: 23 voices, all VCTK, all conditional (credit, consent,
