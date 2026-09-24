@@ -2100,6 +2100,42 @@ namespace
 		GVehiclesNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
 	}
 
+	// ONE CAST METAHUMAN, at a stand-in's place and facing, idling. A
+	// MetaHuman faces its actor's +Y at yaw 0, as the Blender figures do, so
+	// the same offset turns it. The idle plays on whichever of its skeletal
+	// meshes shares the clip's skeleton, as the corner's does.
+	int32 GCastMetaHumans = 0, GCastIdling = 0;
+	std::string GCastNote = "none";
+	AActor* SpawnCastMetaHuman(UWorld* World, const std::string& ClassPath, const std::string& IdlePath,
+	                           const LedgerStreet::Person& P)
+	{
+		UClass* Cls = LoadClass<AActor>(nullptr, UTF8_TO_TCHAR(ClassPath.c_str()));
+		if (Cls == nullptr) { GCastNote = "class-not-found"; return nullptr; }
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		const FVector At((float)(P.X * 100.0), (float)(P.Z * 100.0), (float)(P.Y * 100.0));
+		AActor* A = World->SpawnActor<AActor>(Cls, At, FRotator(0.0f, (float)(P.FaceDeg + kPersonYawOffsetDeg), 0.0f), Params);
+		if (A == nullptr) { GCastNote = "spawn-failed"; return nullptr; }
+		UAnimSequenceBase* Idle = IdlePath.empty() ? nullptr : LoadObject<UAnimSequenceBase>(nullptr, UTF8_TO_TCHAR(IdlePath.c_str()));
+		if (Idle != nullptr)
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			A->GetComponents(Parts);
+			bool bPlaying = false;
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
+				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+				C->PlayAnimation(Idle, true);
+				C->SetPosition((float)(P.Phase * (double)Idle->GetPlayLength()), false);
+				bPlaying = true;
+			}
+			if (bPlaying) { ++GCastIdling; }
+		}
+		return A;
+	}
+
 	// THE HANDFUL OF PEOPLE, 23 September, for the presentable checklist.
 	// Seen and not simulated: no collision, no perception, nothing a system
 	// reads. In the automation's shots each is HELD at its phase of its loop,
@@ -2118,11 +2154,46 @@ namespace
 			return;
 		}
 		GPeopleAsked = (int32)People.size();
+		// THE CAST, 24 September: in the playable street a cast MetaHuman
+		// stands where the stand-in it replaces stood (the file's "cast").
+		std::map<std::string, std::pair<std::string, std::string>> CastByGlb;   // replaces -> (class, idle)
+		if (bInteractive)
+		{
+			const std::string Json(TCHAR_TO_UTF8(*Text));
+			Reader CR(Json);
+			Value CRoot;
+			if (CR.ReadValue(CRoot) && CRoot.Type == T_OBJ)
+			{
+				if (const Value* L = CRoot.Find("cast"))
+				{
+					for (size_t I = 0; L->Type == T_ARR && I < L->Arr.size(); ++I)
+					{
+						const Value& V = L->Arr[I];
+						if (V.Type != T_OBJ) { continue; }
+						CastByGlb[LedgerStreet::StrOr(V, "replaces")] =
+							std::make_pair(LedgerStreet::StrOr(V, "class"), LedgerStreet::StrOr(V, "idle"));
+					}
+				}
+			}
+		}
 		std::string Missing;
 		for (size_t I = 0; I < People.size(); ++I)
 		{
 			const LedgerStreet::Person& P = People[I];
 			const FString Stem = UTF8_TO_TCHAR(P.Glb.c_str());
+			auto CastIt = CastByGlb.find(P.Glb);
+			if (CastIt != CastByGlb.end())
+			{
+				if (AActor* M = SpawnCastMetaHuman(World, CastIt->second.first, CastIt->second.second, P))
+				{
+					// NO VOICE RIDES ON A CAST METAHUMAN YET: the street's voices
+					// look people up by their stand-in's actor.
+					++GPeopleSpawned;
+					++GCastMetaHumans;
+					continue;
+				}
+				Missing += "/" + P.Glb + "-cast-metahuman-" + GCastNote;
+			}
 			const FString MeshPath = FString::Printf(TEXT("/Game/Ledger/People/%s/SK_%s.SK_%s"), *Stem, *Stem, *Stem);
 			const FString AnimPath = FString::Printf(TEXT("/Game/Ledger/People/%s/A_%s.A_%s"), *Stem, *Stem, *Stem);
 			USkeletalMesh* Mesh = LoadObject<USkeletalMesh>(nullptr, *MeshPath);
@@ -2190,7 +2261,8 @@ namespace
 			GBareHide.Add(A);
 			++GPeopleSpawned;
 		}
-		GPeopleNote = Missing.empty() ? "placed" : "placed/missing" + Missing;
+		GPeopleNote = (Missing.empty() ? std::string("placed") : "placed/missing" + Missing)
+			+ "/castMetaHumans=" + std::to_string(GCastMetaHumans) + "/castIdling=" + std::to_string(GCastIdling);
 	}
 
 	// THE STREET'S SOUND, 23 September, for the presentable checklist: "sound is

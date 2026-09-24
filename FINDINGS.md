@@ -7,7 +7,9 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - Nano takes about four seconds to make a three-second line while the game runs, before playback begins.
 - The hill's mist does not change with the fog settings; two tries had no effect.
 - The ship chandler's has no name board.
-- MH_Test wears the plugin's only garment, a white T-shirt and shorts, barefoot.
+- The cast MetaHumans (Rocco, Lena, Sam) and MH_Test wear the plugin's only garment, a white T-shirt and shorts, barefoot. Epic's own free T-shirt, jeans and hoodie on Fab would dress them plainly, but a download needs Jafar's yes.
+- No street voice rides on a cast MetaHuman yet: the street's voices find people by their stand-in's actor.
+- Sam, made from the Orlando preset, reads older than his card (grey at the temples).
 - The crime witness bank's line cw-ws-r4-02 has the witness saying she served the player "his bitter": alcohol, which the content rule forbids everywhere. (content/dialogue/crime-witness-v1.json)
 - Suspicion is decided by the C# Core inside the conversation helper; the game's C++ port still has no suspicion of its own, so nothing outside a conversation (a crowd's reaction, a refusal to serve) can use it yet.
 - On the real model the lad's questioning varies from run to run: in two of six live runs he asked nothing pointed, once inventing a man with a van. Sam's card talks on the smaller model.
