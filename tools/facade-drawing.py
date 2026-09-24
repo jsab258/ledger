@@ -101,7 +101,15 @@ def plan_drawing(block_id, plan_text, scene):
     parts, skipped, bay = parse_plan(plan_text)
     width = blk["bays"] * blk["bay_width_m"]
     top = max([p["z"][1] for p in parts] + [bay.get("ridgeM", 0.0)])
-    mirror = blk["side"] == "east"
+    # BOTH SIDES RUN RIGHT TO LEFT AS SEEN FROM THE STREET, 24 September.
+    # The recipe's x is along the block from its own start. On the east
+    # side that is along the street, and a viewer facing east has it on
+    # the left; the west blocks are TURNED a half turn as they land
+    # (terrace-front.py plan_street: X = start + run - x), so a viewer
+    # facing west has it on the left too. This said east only, and every
+    # west drawing came out mirrored against the building - found on
+    # west_north's middle bay, whose side door is at the other end.
+    mirror = True
     gx, _ = edges(parts, 0, ("pilaster", "shop_door_leaf", "side_door_leaf", "display_glazing",
                              "gf_pier", "front_door"))
     ux, _ = edges(parts, 0, ("upper_glass", "upper_net"))
