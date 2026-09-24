@@ -74,7 +74,8 @@ CASTING = {
     "lena": {"base": "Vivian", "face": {"Vivian": 0.55, "Celeste": 0.25, "Walter": 0.2},
              "skin": {"u": 0.24, "v": 0.45, "face_texture_index": 121},
              "body": {"Height": 160.0, "Fat": 0.6, "Muscularity": -0.8},
-             "hair": "WI_Hair_M_BobCurly", "hair_colour": {"hairMelanin": 0.45, "WhiteAmount": 0.55},
+             "hair": "WI_Hair_M_BobCurly", "hair_colour": {"hairMelanin": 0.4, "hairRedness": 0.05, "WhiteAmount": 0.45,
+                                                               "MelaninVariationFine": 0.3, "MelaninVariationRough": 0.2},
              "no_makeup": True},
     "rocco": {"base": "Jorge", "face": {"Jorge": 0.35, "Walter": 0.35, "Bruce": 0.3},
               "skin": {"u": 0.34, "v": 0.5, "face_texture_index": 121},
@@ -443,7 +444,8 @@ def selftest():
           all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for c in CASTING.values()))
     check("the blend is a weighted mean", blend([([0.0, 2.0], 1.0), ([2.0, 4.0], 3.0)]) == [1.5, 3.5])
     check("the hair colour uses the hair material's own names",
-          all(k in ("hairMelanin", "hairRedness", "WhiteAmount") for c in CASTING.values() for k in c.get("hair_colour", {})))
+          all(k in ("hairMelanin", "hairRedness", "WhiteAmount", "MelaninVariationFine", "MelaninVariationRough")
+              for c in CASTING.values() for k in c.get("hair_colour", {})))
     check("only the haircut's own materials are recoloured",
           hair_materials("lena", ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x", "/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x",
                                   "/Game/x/Grooms/Hair_M_BobCurly.x"]) == ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x"])
