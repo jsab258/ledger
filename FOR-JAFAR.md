@@ -31,3 +31,14 @@ Decisions: none.
 - (3) Player camera remains stuck inside/against an NPC's body model even after walking backward twice; view is still mostly blocked by the NPC's torso, indicating a collision issue that persists.
 - (2) Player character is stuck extremely close against a wall/window with an NPC clipping into frame; camera view is blocked, suggesting a collision/positioning issue near this shop front.
 Full report: production/playtest/ai-tester/2026-09-24-1700/report.md
+
+### AI tester, 2026-09-24 17:11
+
+68 steps, 4 minutes, $0.75. Not a gate. Worst first:
+- (4) Say/talk proximity detection consistently fails ("Nobody near enough to talk to") even when standing right next to an NPC like Lena, making dialogue impossible to trigger reliably.
+- (4) Confirmed: player character (grey tracksuit man) is a separate NPC visible on screen, distinct from the camera-controlled avatar. The say/talk proximity check fails repeatedly even standing adjacent to Lena, making this 
+- (3) Say command repeatedly reports "Nobody near enough to talk to" even when standing right next to an NPC (Lena/Sam visible adjacent to player); proximity detection for talking seems broken.
+- (3) "Nobody near enough to talk to" appears even though the player character (grey tracksuit, seen from behind at center) is visible standing right in the middle of the scene, suggesting the actual controlled avatar may be a
+- (3) Player camera is clipping extremely close into an NPC's striped shirt, filling most of the right side of the screen at very close range; the NPC model appears far too large/close, indicating a collision or camera clippin
+- (2) A woman NPC is standing in an odd static pose directly in the player's path, facing the camera awkwardly close; she appears to be blocking movement near the shop window.
+Full report: production/playtest/ai-tester/2026-09-24-1711/report.md

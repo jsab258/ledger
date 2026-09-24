@@ -19,5 +19,6 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - In the build's scripted encounter the three residents are still archetypes (the shopkeeper, the lad, his mate); only the playable one is Lena, Sam and Rocco.
 - In the playable encounter what is said is shown as the engine's debug text, which a shipping build would not show.
 - No route put a donkey jacket on a MetaHuman (24 September): Fab needs a yes to download and has no donkey jacket; MetaHuman's own outfit route cannot be scripted; the built body has no torso to fit to; image-to-3D needs an NVIDIA card. (production/research/clothing-pipeline/TRIED-2026-09-24.md)
-- A broken window cannot be seen: the clear pane just vanishes. Only the caption and the shout say it went (found by the AI tester).
+- The broken window shows as scattered glass on the pavement and an empty frame; there is no crack or falling glass, and the frame's inside card shows through.
 - Any Unreal editor running on this PC, even a game started from it, blocks the build machine's build: the engine's lock refuses the compile in seconds, and the machine then tests a stale game (the red run of 1ede8879). The rule that two Unreal builds must not overlap has to cover editors too.
+- The AI tester has not yet played the packaged game: its first two tries stopped before any step, the second because a Windows Security sign-in window was in front, which is Jafar's to answer.

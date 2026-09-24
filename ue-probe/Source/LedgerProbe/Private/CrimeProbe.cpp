@@ -2122,6 +2122,7 @@ namespace
 	// through the same input path, so the playable version is also checked
 	// by the build. One step counter; nothing else differs.
 	bool bLiveScript = false;
+	bool bLiveFled = false;
 	int32 GLiveStep = 0;
 	double GLiveStepAt = 0.0;
 
@@ -3355,6 +3356,21 @@ namespace
 			GWatchSlot = -1;
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
+			// AND SEEN: broken glass on the pavement under the window, in play
+			// only (the regression's piece counts do not move). A clear pane
+			// that vanishes looks the same as a clear pane.
+			for (int32 K = 0; K < 14; ++K)
+			{
+				const double Fx = LedgerCrime::kCrimeAX + ((K * 37) % 29 - 14) * 0.1;
+				const double Fz = 4.45 + ((K * 53) % 11) * 0.045;
+				double Gy = 0.0;
+				std::string On;
+				if (!GroundYAt(World, Fx, Fz, Gy, On)) { Gy = 0.12; }
+				const double Sx = 0.04 + ((K * 17) % 7) * 0.02, Sz = 0.03 + ((K * 29) % 5) * 0.02;
+				LedgerVignetteShot::SpawnProbePiece(World, FString::Printf(TEXT("live_glass_shard_%02d"), K),
+					FVector((float)Fx, (float)(Gy + 0.006), (float)Fz), FVector((float)Sx, 0.008f, (float)Sz),
+					TEXT("box"), TEXT("metal"));
+			}
 			// THE DEED IS SAID, NOT ONLY DONE (the AI tester, 24 September): a
 			// pane of clear glass that vanishes is invisible, and the shout is
 			// only a sound, so the tester pressed E, broke the window and
@@ -3362,13 +3378,25 @@ namespace
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
 			if (!GFiledSummaryA.empty()) { Say(TEXT("Lena: \"Stop. I mean it. Stop.\""), 16.0f); }
 			WriteBreadcrumb(TEXT("live-deed"));
-			if (bLiveScript) { TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg); }
+			if (bLiveScript)
+			{
+				// A PICTURE OF THE WINDOW JUST AFTER, from where he stands; he
+				// runs for the yard a moment later.
+				if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-12.0f, 90.0f, 0.0f)); }
+				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()
+					/ TEXT("ue-encounter-live-deed.png")), true, false);
+			}
 			GPhase = ECrimePhase::LiveAfterDeed;
 			GPhaseStart = Now;
 			return true;
 		}
 		case ECrimePhase::LiveAfterDeed:
 		{
+			if (bLiveScript && !bLiveFled && Now - GLiveDeedAt >= 1.0)
+			{
+				TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg);
+				bLiveFled = true;
+			}
 			TakeActRequests(0);
 			if (bLiveScript) { TakeTalkRequests(); }
 			else { HumanTalkTick(World, Now); }
@@ -3383,7 +3411,7 @@ namespace
 					if (GFleeSeconds >= Perception::NoticeSeconds) { FileFleeSighting(World); }
 				}
 			}
-			if (Now - GLiveDeedAt < (bLiveScript ? 6.0 : LedgerCrime::kLiveLaterSeconds)) { return true; }
+			if (Now - GLiveDeedAt < (bLiveScript ? 7.0 : LedgerCrime::kLiveLaterSeconds)) { return true; }
 			// LATER: she walks round to the yard and tells the lad; he tells
 			// his mate; the week moves on. What is said is on the screen.
 			MoveBody(World, GW1Body, LedgerCrime::kW1BX, LedgerCrime::kW1BZ);
