@@ -190,6 +190,25 @@ namespace LedgerCrime
 	const double kW1BX = 22.5, kW1BZ = -7.5;    // P2, on the yard floor
 	const double kN2X  = 22.5, kN2Z  = -8.9;    // PN, behind the terrace from both
 	const double kOverhearX = 22.5, kOverhearZ = -3.3;   // Y, between the cones
+	// THE MAN RUNS THROUGH THE YARD, 24 September: three metres up it from
+	// the lad, coming down it toward him, just after the glass went. Only in
+	// the encounter's play run; the crime run never moves him there.
+	const double kFleeX = 22.5, kFleeZ = -5.9;
+	const double kFleeYawDeg = -90.0;          // facing -z, down the yard, at the lad
+	const double kFleeSeconds = 1.5;           // how long he is in the yard
+	// HOW THE LAD KNOWS TOM: by name, as Mickey's nephew, and by face not at
+	// all (canon, 23 September). Acquaintance.HeardOfYou.
+	const double kLadFamiliarity = 0.20;
+	// THE PREDICATE A SIGHTING NEAR THE DEED IS FILED UNDER. It must not
+	// contain "glass0": IsAboutCrimeA matches on that, and a man seen running
+	// through a yard is not a man seen breaking a window.
+	inline const char* NearPredicate() { return "was_near_the_deed"; }
+	inline const char* NearValue() { return "crime_a"; }
+
+	// Suspecting.cs CanTieSighting, transliterated: a sighting ties the man
+	// seen to the man in front of you only at a mark, a face or a name. A
+	// silhouette is half the street.
+	inline bool CanTieSighting(int Rung) { return Rung >= 2; }
 
 	// THE CONSTABLE, 22 September. ROADMAP's stage-3 gate asks for the arrest
 	// "reachable from live play, its callers outside Core counted and printed

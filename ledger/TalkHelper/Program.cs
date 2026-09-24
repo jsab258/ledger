@@ -47,6 +47,16 @@ using Ledger.Core;
 /// "heard": the memories retrieved into the prompt for this line, which is
 /// the evidence that the answer came from the simulation's own memory.
 ///
+/// OR THE EVIDENCE, AND THE CORE DECIDES THE SUSPICION, 24 September: instead
+/// of a number, the game may send what the character holds about a deed, who
+/// they know was near it, and how they know the player, and Suspecting.Derive
+/// (Core, tested) sets the level and the reason the model is given:
+///   "evidence":{"account":{"held":true,"seen":false,"rung":-1,"names":false,"confidence":0.45,"summary":"..."},
+///               "near":{"sawHim":true,"heard":false,"others":0,"summary":"..."},"familiarity":0.2}
+/// "who" keys the character's state when two people share a card, and
+/// "noReply":true asks for the derived level alone, with no model call and no
+/// cost. The reply then carries "suspicion", "level" and "why".
+///
 /// FAKE MODE, --fake (or LEDGER_TALK_FAKE=1), for the encounter's regression:
 /// no key, no network, no cost. A stand-in model answers from the memories in
 /// its prompt - it asks about the first one it was given, or passes the time
@@ -90,6 +100,9 @@ static class Program
             var knows = new List<Fact>();
             double? suspicion = null;
             string suspicionWhy = null;
+            string who = null;
+            bool noReply = false;
+            (double value, SuspicionLevel level, string why)? derived = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -121,23 +134,54 @@ static class Program
                                            k.TryGetProperty("value", out var kv) ? kv.GetString() ?? "" : ""));
                 if (r.TryGetProperty("suspicion", out v) && v.ValueKind == JsonValueKind.Number) suspicion = v.GetDouble();
                 if (r.TryGetProperty("suspicionWhy", out v)) suspicionWhy = v.GetString();
+                if (r.TryGetProperty("who", out v)) who = v.GetString();
+                if (r.TryGetProperty("noReply", out v) && v.ValueKind == JsonValueKind.True) noReply = true;
+                if (r.TryGetProperty("evidence", out v) && v.ValueKind == JsonValueKind.Object)
+                {
+                    var acc = new DeedAccount();
+                    var near = new Nearness();
+                    double fam = 0.0;
+                    if (v.TryGetProperty("account", out var a) && a.ValueKind == JsonValueKind.Object)
+                    {
+                        acc.Held = Bool(a, "held"); acc.SawItMyself = Bool(a, "seen"); acc.NamesHim = Bool(a, "names");
+                        acc.Rung = a.TryGetProperty("rung", out var rg) && rg.ValueKind == JsonValueKind.Number ? rg.GetInt32() : -1;
+                        acc.Confidence = a.TryGetProperty("confidence", out var c) && c.ValueKind == JsonValueKind.Number ? c.GetDouble() : 0.0;
+                        acc.Summary = a.TryGetProperty("summary", out var sm) ? sm.GetString() : null;
+                    }
+                    if (v.TryGetProperty("near", out var n) && n.ValueKind == JsonValueKind.Object)
+                    {
+                        near.SawHimMyself = Bool(n, "sawHim"); near.HeardHeWasNear = Bool(n, "heard");
+                        near.OthersNear = n.TryGetProperty("others", out var o) && o.ValueKind == JsonValueKind.Number ? o.GetInt32() : 0;
+                        near.Summary = n.TryGetProperty("summary", out var ns) ? ns.GetString() : null;
+                    }
+                    if (v.TryGetProperty("familiarity", out var fv) && fv.ValueKind == JsonValueKind.Number) fam = fv.GetDouble();
+                    derived = Suspecting.Derive(acc, near, fam);
+                }
             }
             catch (Exception)
             {
                 return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
+            if (noReply && !derived.HasValue)
+                return JsonSerializer.Serialize(new { id, to, error = "no-evidence" }, Plain);
+            if (derived.HasValue && noReply)
+            {
+                var dv = derived.Value;
+                return JsonSerializer.Serialize(new { id, to, who, suspicion = Math.Round(dv.value, 3), level = dv.level.ToString(), why = dv.why }, Plain);
+            }
             if (!Cards.TryGetValue(to, out var card))
                 return JsonSerializer.Serialize(new { id, to, error = "no-card" }, Plain);
+            string key = string.IsNullOrEmpty(who) ? to : who;
 
             var sw = Stopwatch.StartNew();
             string brush = BrushOffs[Math.Abs(id) % BrushOffs.Length];
             var now = new GameTime(day, hour, minute);
 
-            if (!_engines.TryGetValue(to, out var engine))
+            if (!_engines.TryGetValue(key, out var engine))
             {
                 engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
                     new SuspicionTracker(), _cost);
-                _engines[to] = engine;
+                _engines[key] = engine;
             }
             // THE SIMULATION'S STATE, loaded before the line is answered.
             foreach (var m in memories)
@@ -148,16 +192,25 @@ static class Program
                 if (!held) engine.Memory.Append(m);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
+            if (derived.HasValue)
+            {
+                suspicion = derived.Value.value;
+                suspicionWhy = derived.Value.why;
+            }
             if (suspicion.HasValue)
             {
-                engine.Suspicion.Restore(suspicion.Value);
-                if (!string.IsNullOrEmpty(suspicionWhy)) engine.Suspicion.Raise(0.0, suspicionWhy);
+                // THE REASON CARRIES THE MOVE, so it reads as the reason the
+                // level is where it is (LatestReason takes only raising ones).
+                if (string.IsNullOrEmpty(suspicionWhy)) engine.Suspicion.Restore(suspicion.Value);
+                else { engine.Suspicion.Restore(0.0); engine.Suspicion.Raise(suspicion.Value, suspicionWhy); }
             }
+            string level = engine.Suspicion.Level.ToString();
+            double holds = Math.Round(engine.Suspicion.Value, 3);
             var heard = new List<string>();
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy }, Plain);
             string reply;
             bool timedOut = false;
             using (var cts = new CancellationTokenSource(_patience))
@@ -182,8 +235,11 @@ static class Program
                     reply = brush;
                 }
             }
-            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy }, Plain);
         }
+
+        static bool Bool(JsonElement e, string name) =>
+            e.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.True;
     }
 
     /// THE STAND-IN MODEL FOR THE ENCOUNTER'S REGRESSION: it answers from the
@@ -205,7 +261,23 @@ static class Program
                     first = close > 0 ? l.Substring(close + 1).Trim() : l;
                     break;
                 }
-            string text = first == null ? "Morning. Quiet one today." : "I know what happened. " + first + " Was that you?";
+            // IT QUESTIONS ONLY WHEN THE CORE GAVE IT A REASON, 24 September:
+            // the level in the prompt decides, as it does for the real model.
+            // And when it asks, it asks about the reason it was given, as the
+            // real model is told to: the why line, not whichever memory
+            // retrieval happened to rank first.
+            bool suspects = sys.Contains("actively suspicious") || sys.Contains("caught this person");
+            const string WhyKey = "Why you feel that way, in your own words: ";
+            int wi = sys.IndexOf(WhyKey, StringComparison.Ordinal);
+            string why = null;
+            if (wi >= 0)
+            {
+                int end = sys.IndexOf('\n', wi);
+                why = (end < 0 ? sys.Substring(wi + WhyKey.Length) : sys.Substring(wi + WhyKey.Length, end - wi - WhyKey.Length)).Trim();
+            }
+            string text = first == null && why == null ? "Morning. Quiet one today."
+                : suspects ? "I know what happened. " + (why ?? first) + " Was that you?"
+                : "Funny business round here. " + first;
             return Task.FromResult(new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
         }
     }
@@ -343,6 +415,24 @@ static class Program
         int copies = 0;
         foreach (var ev in k.EngineFor("sam").Memory.Events) if (ev.Kind == "heard" && ev.Text == "Heard from Rita that the new owner put her window in.") copies++;
         Ok("a memory sent twice is held once", copies == 1, copies.ToString());
+
+        // THE CORE DECIDES WHO HAS REASON TO ASK, 24 September.
+        string Str(string json, string f) { using var dd = JsonDocument.Parse(json); return dd.RootElement.TryGetProperty(f, out var vv) && vv.ValueKind == JsonValueKind.String ? vv.GetString() : null; }
+        var q = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
+        LoadCards(q, cardsDir);
+        const string Mem = "\"memories\":[{\"day\":1,\"hour\":12,\"kind\":\"heard\",\"importance\":0.36,\"text\":\"I heard from the shopkeeper that the man that did the window ran\"}]";
+        const string Acc = "\"account\":{\"held\":true,\"seen\":false,\"names\":false,\"confidence\":0.45,\"summary\":\"the man that did the window ran\"}";
+        var lad = await q.Answer("{\"id\":9,\"to\":\"sam\",\"who\":\"n2\",\"say\":\"Evening.\",\"day\":4,\"hour\":18," + Mem +
+            ",\"evidence\":{" + Acc + ",\"near\":{\"sawHim\":true,\"others\":0,\"summary\":\"a man came through the yard at a run\"},\"familiarity\":0.2}}");
+        Ok("heard about it and saw him near it alone: suspicious, and he asks", Str(lad, "level") == "Suspicious" && Reply(lad).Contains("?"), lad);
+        Ok("and the reason travels with it", Str(lad, "why") != null && Str(lad, "why").Contains("came through the yard"), lad);
+        var mate = await q.Answer("{\"id\":10,\"to\":\"sam\",\"who\":\"r3\",\"say\":\"Evening.\",\"day\":4,\"hour\":18," + Mem +
+            ",\"evidence\":{" + Acc + ",\"familiarity\":0.2}}");
+        Ok("heard about it with nothing tying him: trusting, and he does not ask", Str(mate, "level") == "Trusting" && !Reply(mate).Contains("?"), mate);
+        Ok("two people on one card keep their own state", q.EngineFor("n2") != null && q.EngineFor("r3") != null && q.EngineFor("n2") != q.EngineFor("r3"));
+        var costBefore = q.Cost.TotalCalls;
+        var only = await q.Answer("{\"id\":11,\"to\":\"sam\",\"who\":\"r3\",\"noReply\":true,\"evidence\":{" + Acc + ",\"near\":{\"heard\":true},\"familiarity\":0.2}}");
+        Ok("the level alone, with no model call", Str(only, "level") == "Uneasy" && Str(only, "reply") == null && q.Cost.TotalCalls == costBefore, only);
 
         Console.WriteLine($"talkhelper selftest: passed={passed}/{passed + failed} failed={failed}");
         return failed == 0 ? 0 : 1;

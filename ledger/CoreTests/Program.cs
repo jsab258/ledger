@@ -76,6 +76,7 @@ namespace Ledger.CoreTests
                 TestBodyArchetype();
                 TestAcquaintance();
                 TestSuspicion();
+                TestSuspecting();
                 TestGossip();
                 TestConflictingValuesStayBounded();
                 TestSimClockReclaim();
@@ -1182,6 +1183,89 @@ namespace Ledger.CoreTests
             Check(stranger == 1 && companion > stranger,
                   "and she out-sees a stranger standing in the same spot",
                   $"companion {companion}, stranger {stranger}");
+        }
+
+        /// WHO HAS REASON TO SUSPECT TOM, 24 September: from the account of
+        /// the deed they hold, who they know was near, and how they know him.
+        /// The regression is the encounter's own case: the lad heard about the
+        /// window and saw the man come away from it with nobody else about,
+        /// and he must land on Suspicious (the band that asks); the man who
+        /// only heard about it must land on Trusting (nothing ties Tom to it).
+        static void TestSuspecting()
+        {
+            Console.WriteLine("Suspecting:");
+            var heard = new DeedAccount { Held = true, Confidence = 0.45,
+                Summary = "the man that did the window looked straight in at the shop before he ran" };
+            var seenNamed = new DeedAccount { Held = true, SawItMyself = true, Rung = 4, Confidence = 0.94, Summary = "he put the window in" };
+            var seenFace = new DeedAccount { Held = true, SawItMyself = true, Rung = 3, Confidence = 0.94, Summary = "the man looked straight in at the shop before he ran" };
+            var seenShape = new DeedAccount { Held = true, SawItMyself = true, Rung = 1, Confidence = 0.7, Summary = "a man, big, long coat" };
+            var heardNamed = new DeedAccount { Held = true, NamesHim = true, Confidence = 0.6, Summary = "Novak put the window in" };
+            var sawHimAlone = new Nearness { SawHimMyself = true, Summary = "a man came through the yard at a run just after the glass went" };
+            var sawHimWithOthers = new Nearness { SawHimMyself = true, OthersNear = 2 };
+            var heardHeWasNear = new Nearness { HeardHeWasNear = true };
+            double f = Acquaintance.HeardOfYou;
+
+            var none = Suspecting.Derive(new DeedAccount(), sawHimAlone, f);
+            Check(none.value == 0.0 && none.why == null, "no account of the deed: no suspicion, however near he was");
+            var onlyHeard = Suspecting.Derive(heard, new Nearness(), f);
+            Check(onlyHeard.level == SuspicionLevel.Trusting && onlyHeard.value < 0.25,
+                  "the regression's control: heard about the window, nothing ties him to it, no suspicion",
+                  $"{onlyHeard.value}");
+            Check(onlyHeard.why != null && onlyHeard.why.Contains("nothing I know ties him"),
+                  "and it says why not, in the character's own voice");
+            var lad = Suspecting.Derive(heard, sawHimAlone, f);
+            Check(lad.level == SuspicionLevel.Suspicious, "the regression: heard about it and saw him near it alone - suspicious, the band that asks", $"{lad.value}");
+            Check(new SuspicionTracker().Level == SuspicionLevel.Trusting, "(a fresh tracker is trusting)");
+            var t = new SuspicionTracker(); t.Raise(lad.value, lad.why);
+            Check(t.Level == SuspicionLevel.Suspicious, "the derived value lands in the same band on the tracker");
+            Check(lad.why.Contains("I heard that the man that did the window") && lad.why.Contains("came through the yard")
+                  && lad.why.Contains("nobody else about"), "the reason names the deed, the sighting and that he was alone", lad.why);
+            var crowd = Suspecting.Derive(heard, sawHimWithOthers, f);
+            Check(crowd.level == SuspicionLevel.Uneasy, "near it among others: uneasy, one band lower", $"{crowd.value}");
+            var hearsay = Suspecting.Derive(heard, heardHeWasNear, f);
+            Check(hearsay.level == SuspicionLevel.Uneasy, "told he was near it: uneasy");
+            var strangerHearsay = Suspecting.Derive(heard, heardHeWasNear, Acquaintance.Stranger);
+            Check(strangerHearsay.level == SuspicionLevel.Trusting, "hearsay about a name you do not know ties nobody");
+            var negative = Suspecting.Derive(heard, new Nearness { SawHimMyself = true, OthersNear = -3 }, f);
+            Check(negative.level == SuspicionLevel.Suspicious, "a negative count of others is none, not a crowd");
+            var blank = Suspecting.Derive(new DeedAccount { Held = true }, sawHimAlone, f);
+            Check(blank.why.StartsWith("I heard about what happened"), "an account with no words reads as English", blank.why);
+            Check(Suspecting.Derive(seenNamed, new Nearness(), f).level == SuspicionLevel.Confronting,
+                  "saw it and knew him: confronting, from the rung and not from a certainty the cap never lets reach 0.95");
+            var witness = Suspecting.Derive(seenFace, new Nearness(), f);
+            Check(witness.level == SuspicionLevel.Suspicious && witness.why.Contains("I'd know him again"),
+                  "the witness who saw his face at it has reason, and says she'd know him again (independent check)", witness.why);
+            Check(Suspecting.Derive(seenShape, new Nearness(), f).level == SuspicionLevel.Trusting,
+                  "a witness who saw only a shape has no reason to suspect this man");
+            Check(Suspecting.Derive(heardNamed, new Nearness(), f).level == SuspicionLevel.Suspicious,
+                  "told by someone who named him: suspicious");
+            var own = Suspecting.Derive(heard, sawHimAlone, Acquaintance.Close);
+            Check(own.level == SuspicionLevel.Uneasy && own.why.Contains("one of my own"),
+                  "his own people give him the benefit of the doubt: one band lower, and say so");
+            Check(Suspecting.Derive(seenNamed, new Nearness(), Acquaintance.Household).level == SuspicionLevel.Suspicious,
+                  "even household drop only one band from what they saw");
+            // THE NUMBER STAYS IN ITS BAND at both ends of the account's confidence.
+            foreach (double c in new[] { 0.0, 1.0, 7.0, -3.0 })
+            {
+                var a = heard; a.Confidence = c;
+                var r = Suspecting.Derive(a, sawHimAlone, f);
+                Check(r.value >= 0.50 && r.value < 0.80, $"confidence {c} keeps the value inside the band", $"{r.value}");
+            }
+            Check(!Suspecting.CanTieSighting(1) && Suspecting.CanTieSighting(2) && Suspecting.CanTieSighting(3)
+                  && Suspecting.CanTieSighting(4), "a silhouette ties nobody; a mark, a face or a name does");
+            // AND THE PROMPT CARRIES THE WHY, not only the level.
+            var tr = new SuspicionTracker(); tr.Restore(0.0); tr.Raise(lad.value, lad.why);
+            Check(tr.LatestReason() == lad.why, "the latest reason is the derived why, not the restore marker");
+            var fresh = new SuspicionTracker(); fresh.Restore(0.6);
+            Check(fresh.LatestReason() == null, "a restore alone is no reason");
+            // THE INDEPENDENT CHECK'S THREE: a reassurance is not a reason, an
+            // id is not words, and a restore starts the account again.
+            var eased = new SuspicionTracker(); eased.Raise(0.6, "saw him by the shop"); eased.Lower(0.05, "story checked out");
+            Check(eased.LatestReason() == "saw him by the shop", "a reassurance is not why somebody is suspicious", eased.LatestReason());
+            var idd = new SuspicionTracker(); idd.Raise(0.6, "caught contradiction on player.location_d2_evening");
+            Check(idd.LatestReason() == null, "a reason carrying an id never reaches the model");
+            var carried = new SuspicionTracker(); carried.Raise(0.6, "old reason"); carried.Restore(0.6);
+            Check(carried.LatestReason() == null, "a restore without a reason does not reuse the one before it");
         }
 
         static void TestSuspicion()
@@ -3917,6 +4001,8 @@ namespace Ledger.CoreTests
             suspicion.Raise(0.5, "test");
             await engine.SayToAsync("Everything alright?", now.AddMinutes(5));
             Check(llm.LastRequest.System.Contains("actively suspicious"), "suspicion level reflected in prompt");
+            Check(llm.LastRequest.System.Contains("Why you feel that way, in your own words: test."),
+                  "and the reason with it, so the model knows what to ask about (24 September)");
 
             // Reflected beliefs flow into the next prompt (the whole point of reflection).
             memory.ReplaceBeliefs(new[] { "The new owner cannot be trusted around money." });
