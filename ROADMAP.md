@@ -597,7 +597,13 @@ Stage state: OPEN
 | B04 | People opening, using and closing doors on their routes | floor | open | from the baseline research |
 | B05 | People queueing, waiting their turn and giving way to one another | floor | open | from the baseline research |
 | B06 | Puddles that ripple in rain and splash underfoot | floor | open | from the baseline research |
-| L01 | Local line-writing, judged blind: the best local writers that fit what the card has left write the same lines as the paid model, shown to Jafar without saying which is which | ours | open | queued, waiting on the slice's measurement of the card memory the game and the voice use, and on the voice's double-size export being fixed (Jafar 2026-09-23); until then line-writing is online by default, not by conclusion; production/research/local-models |
+| L01 | Local line-writing, judged blind: the best local writers that fit what the card has left write the same lines as the paid model, shown to Jafar without saying which is which | ours | open | A PRIORITY, NOT A CURIOSITY (Jafar 2026-09-24): writing lines is about 70 percent of the cost of talk (production/research/runtime-ai-business/SUMMARY.md). Still queued, waiting on the slice's measurement of the card memory the game and the voice use, and on the voice's double-size export being fixed (Jafar 2026-09-23); until then line-writing is online by default, not by conclusion; production/research/local-models |
+| R01 | The paid router gets the worked examples: the six example lines nearest what the player typed, with their answers. Measured: they lift it from 259 to 286 of 299, cut its confidently wrong answers from 38 to 12, and make it faster (0.7 s a line) | jafar 24 Sep | open | from the local-models research's results on main: production/research/local-models/SUMMARY.md |
+| R02 | The example bank gets examples of players typing orders, each answered correctly as a refusal; it has none | jafar 24 Sep | open | the research found every model obeys typed orders that get past the game's own block; production/research/local-models/SUMMARY.md |
+| R03 | The game's own block widened to catch orders said in plain words | jafar 24 Sep | open | the research's next step, cheapest first; production/research/local-models/SUMMARY.md |
+| AI01 | Every live AI call goes through a server of ours, never straight from the game; the key never ships inside the game | jafar 24 Sep | open | the working business direction, DECISIONS.md 2026-09-24; production/research/runtime-ai-business |
+| AI02 | The model and the provider can be swapped on the server without changing the game, since switching is the only way future price drops reach us | jafar 24 Sep | open | the working business direction, DECISIONS.md 2026-09-24; production/research/runtime-ai-business |
+| AI03 | The server has its own spending stop well below the provider's monthly cap, because at that cap every character goes silent until the next month | jafar 24 Sep | open | the working business direction, DECISIONS.md 2026-09-24; production/research/runtime-ai-business |
 
 ### Stage 3: one street that knows me
 
@@ -1075,6 +1081,11 @@ Stage state: OPEN
 | A48.05 | Terrain and collision loaded before the player reaches them | floor | open |  |
 | A48.10 | Loading that does not indefinitely freeze without explanation | floor | open |  |
 | J9 | Interiors that can be entered | floor (my call) | open |  |
+| AI04 | The server counts each copy's allowance of live conversation; when it is used up the street carries on with written lines and the in-character brush-off ruled for a dropped connection. Its size is set once the slice has measured our real cost per hour, and it comfortably exceeds a normal playthrough | jafar 24 Sep | open | the working business direction, DECISIONS.md 2026-09-24; production/research/runtime-ai-business |
+| AI05 | A notice telling players they are talking to an AI, as EU law and Steam require | jafar 24 Sep | open | needed before anyone outside his friends plays, whatever the final model; production/research/runtime-ai-business/notes/stores.md |
+| AI06 | A way for players to report bad output | jafar 24 Sep | open | needed before anyone outside his friends plays, whatever the final model; production/research/runtime-ai-business/notes/stores.md |
+| AI07 | The safeguards description Steam asks for | jafar 24 Sep | open | needed before anyone outside his friends plays, whatever the final model; production/research/runtime-ai-business/notes/stores.md |
+| AI08 | The content rule enforced on everything characters say live | jafar 24 Sep | open | needed before anyone outside his friends plays, whatever the final model; the live-screening ruling already covers it (DECISIONS.md, D49) |
 | U5 | Playtesting with people outside the team | floor (my call) | open |  |
 
 ### Stage 6: then the town

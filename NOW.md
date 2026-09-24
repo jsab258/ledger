@@ -7,12 +7,34 @@ roadmap.
 
 Last updated 2026-09-23, in the sixth sitting on his PC.
 
-SITTING: started 2026-09-24T07:30:40+02:00, limit 1h
+SITTING: started 2026-09-24T07:30:40+02:00, limit 3h
 
 That one line is read by the stop hook, which will not let the turn end while
 items below are unstruck and the six hours have not run out. It is written at
 the start of every sitting; without it the hook permits and says it measured
 nothing.
+
+## THIS MORNING, 24 September - Jafar's order: housekeeping, then stop
+
+The measurement sitting follows separately; he starts it himself with a meter
+reading. The card came free at about 07:50.
+
+- [ ] THE DISK: the twenty largest folders on C:, what each is, whether safe;
+      delete only what is provably safe; unsure goes to FOR-JAFAR as a question.
+- [ ] A BACKUP for what lives outside the project's history, the MetaHuman
+      first: a multiple-choice decision in FOR-JAFAR, nothing set up.
+- [ ] DRESS MH_TEST BY SCRIPT in plain 1990 clothes and a haircut, and rebuild.
+- [ ] THE LISTENING PAGE: Aldous, Danny, June and Zlata each beside two or
+      three other VCTK speakers of a suitable age and accent; its link in
+      FOR-JAFAR. No voice is cast without his yes.
+- [ ] THE MEASUREMENT SITTING PREPARED (production/sittings/2026-09-24-three-facades.md).
+
+THE ROUTER, three changes he put on the list this morning (ROADMAP R01-R03,
+stage 2), each a change to the game for a sitting of its own:
+
+- [ ] R01 The paid router gets the worked examples (259 to 286 of 299).
+- [ ] R02 The example bank gets typed orders answered as refusals.
+- [ ] R03 The game's own block widened to catch orders said in plain words.
 
 ## TONIGHT, 23-24 September, overnight - Jafar's order
 

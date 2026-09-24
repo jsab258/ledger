@@ -16,10 +16,10 @@ between them.
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
 - stage 1: 24 of 47 done, 0 moved, 0 out, 23 open
-- stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
+- stage 2: 5 of 254 done, 0 moved, 0 out, 249 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
-- stage 5: 0 of 24 done, 0 moved, 0 out, 24 open
+- stage 5: 0 of 29 done, 0 moved, 0 out, 29 open
 - stage 6: 0 of 82 done, 0 moved, 12 out, 70 open
 - ship-prep: 0 of 59 done, 0 moved, 16 out, 43 open
 - not staged: 0 of 74 done, 0 moved, 74 out, 0 open
@@ -27,15 +27,11 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-24 **How should the game pay for its live talk?** (research/runtime-ai-business, SUMMARY.md, and a spreadsheet you can change.)
-  - **(a) Sell the game once, with a generous allowance of live talk per copy counted on our own server; after it, written lines and the ruled brush-off. An optional mode for players' own keys, and running on capable cards later (my recommendation).** It is the one shape that caps what a copy can cost: at the placeholder 14 cents an hour, a 40-hour allowance costs at most $5.60 of the $17.49 we keep from a $24.99 sale.
-  - (b) Sell once with no allowance. Fine at 14 cents an hour, but at 36 cents a 120-hour player costs us $26 more than they paid.
-  - (c) Charge extra through credits or a subscription. The worst record in shipped games, and Steam supports subscriptions poorly.
-  - Meanwhile nothing is built. The allowance's size waits on the slice's measured cost per hour.
-- 2026-09-24 **Five items the stores and the law require are missing from the checklist.** An in-game way to report bad AI output (Steam, Microsoft, PEGI). A notice that players are talking to an AI, at the first conversation (EU AI Act, since August). Steam's description of our safeguards. Our content rule enforced on what characters say live. And our server's own spending stop before Anthropic's monthly cap, at which every character goes silent.
-  - **(a) Add all five as floor: the content rule and the report button with the slice's talking, the rest in ship-prep (my recommendation).**
-  - (b) Add them all to ship-prep.
-  - Meanwhile they're only in the research.
+- 2026-09-24 **How much of what the town says is written ahead, rather than made up live?** It's the biggest single lever on the bill (the business research), and it's what keeps the street alive once a player's allowance runs out.
+  - **(a) Everything the town says unprompted is written ahead (my recommendation).** That means greetings, remarks in passing, reactions, rumours passed on and stock replies, from a large bank written and checked before release. Live talk is only for when you speak to someone and they answer you. What people say to each other and about you is most of what a street says, so most of the bill comes off. The bank is checked against the content rule once, before it ships, and the street sounds the same whether or not the allowance is left.
+  - (b) Only short barks written ahead. Rumours and remarks are made up live too. Richer and less repetitive, but the bill grows with every hour on the street, and the street falls quieter when the allowance ends.
+  - (c) Everything written ahead, with live talk only in the paid-key and capable-card modes. The cheapest, but the default game loses talking to the town, which is the point of it.
+  - Meanwhile: nothing is built. When the slice measures cost per hour, I'll split it by kind of line, so each choice has a price.
 - **The runner's copy of the game holds about 33 GB of leftovers. Clear them?** (2026-09-24) Every build downloads a fresh bundle, and 231 old ones have piled up that no build can reach. git's own cleanup removes them and touches nothing a build uses. My permission guard refused, because the runner's folder counts as shared, so it needs your yes.
   - **(a) Yes: I run git's cleanup on the runner's copy between builds (recommended).** It frees about 33 GB, and the next build is as fast as ever.
   - (b) Delete the runner's copy outright. It frees about 50 GB, and the next build re-downloads everything and compiles from scratch, about an hour.
@@ -652,6 +648,8 @@ so the record stays complete.)*
 
 ## Rulings received
 
+- 2026-09-24 **The business direction and what goes on the plan.** Selling once with an allowance of live talk is the working direction, not the final one (in DECISIONS.md). Every AI call goes through our own server with a spending stop, and the model can be swapped there. The local line-writing test is now a priority. The AI notice, the report button, Steam's safeguards description and the content rule on live speech are on the checklist before outsiders play. The research is on main.
+- 2026-09-24 **Three router changes on the list:** the paid router gets the worked examples; the example bank gets typed orders answered as refusals; the game's own block catches orders in plain words. The local model stays a later option, most likely the fallback when the connection drops.
 - 2026-09-24 **Local models: one short job, then stop.** Time the worked examples on the quiet card, run the same method on the paid model, write both up, shut everything down.
 - 2026-09-24 **Your answers to the night's eight decisions:** MH_Test is dressed by script as a test figure (the clothing line does period clothes properly); the MetaHuman's files stay on this PC; the local-models session does one short timing job, then stops; 60 at your screen is met by drawing smaller and upscaling; the facade tools are confirmed; VCTK consent is accepted on the record as a stated risk, with no email; the allowlist's ban means identifiable real people and public figures, now written into it; Aldous, Danny, June and Zlata are allowed but were never approved, so they get a listening page with alternatives for you to pick. No voice is cast without your yes, now in the project instructions.
 - 2026-09-24 **"If you need to download anything for UE just do it."** Taken as: downloads for Unreal from Epic's own services (the engine, its plugins, MetaHuman textures and assets) go ahead without asking. Each one is still named here with where it came from and its size. Anything that isn't Unreal, or isn't from Epic, still asks.
@@ -767,6 +765,15 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 (resolved 24 Sep: (a), as the WORKING business direction, not a final one; recorded in DECISIONS.md; the allowance must comfortably exceed a normal playthrough) **How should the game pay for its live talk?** (research/runtime-ai-business, SUMMARY.md, and a spreadsheet you can change.)
+  - **(a) Sell the game once, with a generous allowance of live talk per copy counted on our own server; after it, written lines and the ruled brush-off. An optional mode for players' own keys, and running on capable cards later (my recommendation).** It is the one shape that caps what a copy can cost: at the placeholder 14 cents an hour, a 40-hour allowance costs at most $5.60 of the $17.49 we keep from a $24.99 sale.
+  - (b) Sell once with no allowance. Fine at 14 cents an hour, but at 36 cents a 120-hour player costs us $26 more than they paid.
+  - (c) Charge extra through credits or a subscription. The worst record in shipped games, and Steam supports subscriptions poorly.
+  - Meanwhile nothing is built. The allowance's size waits on the slice's measured cost per hour.
+- 2026-09-24 (resolved 24 Sep: on the checklist before anyone outside your friends plays, in stage 5 beside outside playtesting - the AI notice, the report button, Steam's safeguards description and the content rule on live speech; the spending stop went in with the server, in stage 2) **Five items the stores and the law require are missing from the checklist.** An in-game way to report bad AI output (Steam, Microsoft, PEGI). A notice that players are talking to an AI, at the first conversation (EU AI Act, since August). Steam's description of our safeguards. Our content rule enforced on what characters say live. And our server's own spending stop before Anthropic's monthly cap, at which every character goes silent.
+  - **(a) Add all five as floor: the content rule and the report button with the slice's talking, the rest in ship-prep (my recommendation).**
+  - (b) Add them all to ship-prep.
+  - Meanwhile they're only in the research.
 - 2026-09-24 (resolved 24 Sep: (b), dressed by script in plain 1990 clothes and a haircut, once the card is free) **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.
