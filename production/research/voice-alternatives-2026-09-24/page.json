@@ -1,0 +1,11 @@
+{"note": "The listening page's cast: each character's current voice (cast 14 August, never approved) and alternatives from VCTK speakers nobody else in the cast uses. Picked by accent and gender; VCTK's speakers are 18 to 38, so none is as old as Aldous (61) or Zlata (43).",
+ "characters": [
+  {"id": "aldous", "name": "Aldous Vane", "who": "61, old money, courtly and unhurried", "current": "p226", "alternatives": ["p281", "p232", "p258"],
+   "line": "Mr Novak. Forgive the intrusion. I only came to say how sorry I was about your uncle, and to leave you my card."},
+  {"id": "danny", "name": "Danny Ro", "who": "26, runs the new crew, grew up three streets away", "current": "p254", "alternatives": ["p243", "p274", "p286"],
+   "line": "Oi, Novak! Relax, I'm only messing with you. But you tell your uncle's lot the Strip is ours now, yeah?"},
+  {"id": "june", "name": "June", "who": "34, Mickey's estranged daughter, a nurse", "current": "p225", "alternatives": ["p257", "p267", "p277"],
+   "line": "You look like him. That isn't a compliment. How long have you been sleeping in that office?"},
+  {"id": "zlata", "name": "Zlata", "who": "43, runs dispatch at the parcel office, loud laugh, three languages", "current": "p233", "alternatives": ["p261", "p280", "p236"],
+   "line": "There he is! Where were you yesterday? No, don't tell me, I'll hear it by lunch anyway. The kettle's on."}
+ ]}

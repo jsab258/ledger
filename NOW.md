@@ -19,15 +19,17 @@ nothing.
 The measurement sitting follows separately; he starts it himself with a meter
 reading. The card came free at about 07:50.
 
-- [ ] THE DISK: the twenty largest folders on C:, what each is, whether safe;
+- [x] THE DISK: the twenty largest folders on C:, what each is, whether safe;
       delete only what is provably safe; unsure goes to FOR-JAFAR as a question.
-- [ ] A BACKUP for what lives outside the project's history, the MetaHuman
+      DONE 24 Sep: 5.1 to 19 GB free; the runner's 33 GB and the old copies wait on him.
+- [x] A BACKUP for what lives outside the project's history, the MetaHuman
       first: a multiple-choice decision in FOR-JAFAR, nothing set up.
 - [ ] DRESS MH_TEST BY SCRIPT in plain 1990 clothes and a haircut, and rebuild.
-- [ ] THE LISTENING PAGE: Aldous, Danny, June and Zlata each beside two or
+- [x] THE LISTENING PAGE: Aldous, Danny, June and Zlata each beside two or
       three other VCTK speakers of a suitable age and accent; its link in
       FOR-JAFAR. No voice is cast without his yes.
-- [ ] THE MEASUREMENT SITTING PREPARED (production/sittings/2026-09-24-three-facades.md).
+      DONE 24 Sep: https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447
+- [x] THE MEASUREMENT SITTING PREPARED (production/sittings/2026-09-24-three-facades.md).
 
 THE ROUTER, three changes he put on the list this morning (ROADMAP R01-R03,
 stage 2), each a change to the game for a sitting of its own:
