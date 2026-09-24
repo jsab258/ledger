@@ -27,7 +27,25 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **How should the game pay for its live talk?** (research/runtime-ai-business, SUMMARY.md, and a spreadsheet you can change.)
+  - **(a) Sell the game once, with a generous allowance of live talk per copy counted on our own server; after it, written lines and the ruled brush-off. An optional mode for players' own keys, and running on capable cards later (my recommendation).** It is the one shape that caps what a copy can cost: at the placeholder 14 cents an hour, a 40-hour allowance costs at most $5.60 of the $17.49 we keep from a $24.99 sale.
+  - (b) Sell once with no allowance. Fine at 14 cents an hour, but at 36 cents a 120-hour player costs us $26 more than they paid.
+  - (c) Charge extra through credits or a subscription. The worst record in shipped games, and Steam supports subscriptions poorly.
+  - Meanwhile nothing is built. The allowance's size waits on the slice's measured cost per hour.
+- 2026-09-24 **Five items the stores and the law require are missing from the checklist.** An in-game way to report bad AI output (Steam, Microsoft, PEGI). A notice that players are talking to an AI, at the first conversation (EU AI Act, since August). Steam's description of our safeguards. Our content rule enforced on what characters say live. And our server's own spending stop before Anthropic's monthly cap, at which every character goes silent.
+  - **(a) Add all five as floor: the content rule and the report button with the slice's talking, the rest in ship-prep (my recommendation).**
+  - (b) Add them all to ship-prep.
+  - Meanwhile they're only in the research.
+- **The runner's copy of the game holds about 33 GB of leftovers. Clear them?** (2026-09-24) Every build downloads a fresh bundle, and 231 old ones have piled up that no build can reach. git's own cleanup removes them and touches nothing a build uses. My permission guard refused, because the runner's folder counts as shared, so it needs your yes.
+  - **(a) Yes: I run git's cleanup on the runner's copy between builds (recommended).** It frees about 33 GB, and the next build is as fast as ever.
+  - (b) Delete the runner's copy outright. It frees about 50 GB, and the next build re-downloads everything and compiles from scratch, about an hour.
+  - (c) Leave it.
+  - Meanwhile: nothing on the runner is touched. I'm clearing only what is ours and provably rebuildable.
+
 ## Things you should know
+
+- 2026-09-24 **The business research is done, on its own branch** (research/runtime-ai-business). Nobody publishes what live AI costs per hour of play, so our own measurement will be the best figure anywhere. Every game that offered unlimited talk for one price had a rich backer or moved to cheaper or local models. And our model's price isn't falling: savings only come from being able to switch models.
+- 2026-09-24 **The sitting now runs to three hours, not one,** because the card came free and the MetaHuman dressing and the listening page joined it. I stop when those and the disk job are done. Say if you want it shorter.
 
 - 2026-09-24 **The worked examples really are slow on your card: 1.4 seconds a line** with nothing else running, the same as with Unreal beside it. The card reads the extra example text slowly. It uses 3.1 GB. Repeat runs at the same settings vary by a few lines (271 this time against 274).
 - 2026-09-24 **The same worked examples lift the paid model too: 259 to 286 of 299**, with tidy-but-wrong answers falling from 38 to 12, and faster (0.7 seconds a line). So the paid model stays 12 to 15 lines ahead of the free one with the same help, and is twice as fast. Worked examples are worth adding to the paid router whatever happens with the free one; that's a change to the game, for a sitting of its own. It cost about 30p.
