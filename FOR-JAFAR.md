@@ -57,6 +57,9 @@ None. All six from this morning are answered and under Resolved.
 
 ## Things you should know
 
+- 2026-09-24 **The new building is the ship chandler's,** at the north end of the east side, past the parade. The plan names a chandler among the Hook's trades, and the street had none. It's a building of its own: grey brick, a metal shopfront, a stack in its end wall, and a metre's passage from the parade. The street is 6 m longer to fit it.
+- 2026-09-24 **The chandler's first attempt was rejected.** Its measurements were right. But a stand-in house from the backdrop stood a metre into it, and its doors were lost in the parade's shadow. For the second attempt, the backdrop's houses start further on and its doors are at its sunny end.
+- 2026-09-24 **GitHub shows one red check run on the chandler, and it stays red until the next push that runs those checks.** Adding the building broke two tests that count the street's shop windows. I fixed both, and all 670 checks pass here. My access can't restart the run by hand.
 - 2026-09-24 **The three facades are accepted: the parade and west south first time, west north on its second attempt.** All three were already built to their numbers in earlier sittings, and none needed changing. So this sitting measured drawing, checking and accepting a facade, not building one from nothing. I'll say what that means for the cost when you give me the meter.
 - 2026-09-24 **The west side's drawings were mirror images of the buildings.** That's why west north's first attempt failed. Last night's checks passed only by coincidence. The measuring tools are fixed; no building changed.
 - 2026-09-24 **The sitting stopped at the third facade, as you ordered,** so the limit line now reads the time used, not four hours.

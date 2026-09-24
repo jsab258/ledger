@@ -3744,6 +3744,17 @@ namespace
 				{
 					CC->SetProjectionMode(ECameraProjectionMode::Orthographic);
 					CC->SetOrthoWidth((float)(Ortho->second * 100.0));
+					// NOTHING BEHIND THE CAMERA, 24 September. The engine's own
+					// ortho planes are placed from the ortho width and move the
+					// view's origin back with it: the ship chandler's shot, 17 m
+					// wide, drew the west block from across the street over the
+					// chandler's south end and the parade, which the 14 m bay
+					// shots never did. Near plane at the camera, far plane a
+					// kilometre out, and the origin left where the spec puts it.
+					CC->SetAutoCalculateOrthoPlanes(false);
+					CC->SetUpdateOrthoPlanes(false);
+					CC->SetOrthoNearClipPlane(0.0f);
+					CC->SetOrthoFarClipPlane(100000.0f);
 					++GOrthoShots;
 				}
 				else
