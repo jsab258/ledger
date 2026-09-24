@@ -112,6 +112,21 @@ west_south 19 of 19, the parapet's coping and the pavement line included.
 
 | facade | started | drawing | in Unreal | accepted pair | finished | attempts |
 | --- | --- | --- | --- | --- | --- | --- |
-| east_parade | | | | | | |
+| east_parade | 09:41 | 09:42, from the spec, nothing written back | no rebuild: geometry unchanged since 01:38, frames from this morning's probe run (703b0688) | 09:48, attempt 1, six bays | 09:49 | 1 attempt, 0 rejected |
 | west_north | | | | | | |
 | west_south | | | | | | |
+
+### east_parade, accepted 09:48
+
+Six bays paired (production/art/facades/2026-09-24-measured/east_parade-bay*-pair.png).
+Every edge the frames show is within 5 cm except these, each looked at on the
+pair: the fascia's top on four bays (maroon on red brick is faint; the search
+took the brick course or the sign's tile grout, and by eye the line sits on the
+join); Mickey's transom (dark slate on dark glass; the search took the strip
+lights behind, as on the first night); and one upright on bay 4 (white jamb on a
+cream pier; the search took the post box in front). NOT MEASURED: the ridge at
+9.0 m, above the top of every bay frame. Two faults in the pair tool were fixed
+on the way, both measurement, not facade: levels only Mickey's has (the 0.12 m
+tile course) were being measured on every bay, and an edge found at another
+drawn edge (the sill rail's top, 80 mm above an invisible stallriser top) was
+reported as the first edge being out.
