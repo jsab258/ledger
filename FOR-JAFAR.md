@@ -20,3 +20,14 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 **Budget.** The chandler: 61 minutes, about one point (71 to 72).
 
 Decisions: none.
+
+### AI tester, 2026-09-24 17:00
+
+45 steps, 2 minutes, $0.48. Not a gate. Worst first:
+- (5) [the tester's own fault, fixed: it photographed the screen before the game had drawn, and caught another app. It now copies only the game window's pixels.]
+- (4) E at Mickey's window seemed to do nothing. [It did break the window (the shout was recorded), but a clear pane vanishing cannot be seen and Lena's line lasted six seconds. Fixed: a line says the window goes in, and it stays up.]
+- (4) [The same report again.]
+- (3) Player camera is clipped extremely close inside another NPC's body model; the screen is mostly filled with the NPC's torso/clothing texture, blocking view entirely. [Fixed: the cast MetaHumans now block the player.]
+- (3) Player camera remains stuck inside/against an NPC's body model even after walking backward twice; view is still mostly blocked by the NPC's torso, indicating a collision issue that persists.
+- (2) Player character is stuck extremely close against a wall/window with an NPC clipping into frame; camera view is blocked, suggesting a collision/positioning issue near this shop front.
+Full report: production/playtest/ai-tester/2026-09-24-1700/report.md

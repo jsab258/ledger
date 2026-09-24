@@ -104,6 +104,11 @@
 #include "Sound/SoundWave.h"
 #include "InputKeyEventArgs.h"
 #include "GenericPlatform/GenericPlatformInputDeviceMapper.h"
+#include "Framework/Application/SlateApplication.h"
+#include "Widgets/Input/SEditableTextBox.h"
+#include "Widgets/Layout/SBox.h"
+#include "Engine/GameViewportClient.h"
+#include "Components/CapsuleComponent.h"
 
 #include <string>
 #include <vector>
@@ -753,7 +758,24 @@ namespace
 		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		AActor* A = World->SpawnActor<AActor>(Cls, Body->GetActorLocation(), FRotator::ZeroRotator, P);
 		if (A == nullptr) { return; }
-		A->SetActorEnableCollision(false);
+		// NOBODY WALKS THROUGH THEM (the AI tester, 24 September: its camera
+		// ended up inside Lena). The MetaHuman's own meshes collide with
+		// nothing, so no sight line in the measured street changes; a capsule
+		// of a person's size blocks the player, and only the player.
+		TArray<UPrimitiveComponent*> Prims;
+		A->GetComponents(Prims);
+		for (UPrimitiveComponent* Pc : Prims) { if (Pc != nullptr) { Pc->SetCollisionEnabled(ECollisionEnabled::NoCollision); } }
+		if (UCapsuleComponent* Cap = NewObject<UCapsuleComponent>(A, TEXT("LiveBodyBlock")))
+		{
+			Cap->InitCapsuleSize(30.0f, 88.0f);
+			Cap->SetupAttachment(A->GetRootComponent());
+			Cap->SetRelativeLocation(FVector(0.0f, 0.0f, 90.0f));
+			Cap->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+			Cap->SetCollisionResponseToAllChannels(ECR_Ignore);
+			Cap->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);
+			Cap->SetHiddenInGame(true);
+			Cap->RegisterComponent();
+		}
 		if (UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, kLiveIdle))
 		{
 			TArray<USkeletalMeshComponent*> Parts;
@@ -2233,17 +2255,236 @@ namespace
 		std::string R;
 		for (std::string::size_type I = At + K.size(); I < Line.size(); ++I)
 		{
-			if (Line[I] == '\\' && I + 1 < Line.size()) { R += Line[++I]; continue; }
+			if (Line[I] == '\\' && I + 1 < Line.size())
+			{
+				const char E = Line[++I];
+				R += (E == 'n' || E == 'r' || E == 't') ? ' ' : E;
+				continue;
+			}
 			if (Line[I] == '"') { break; }
 			R += Line[I];
 		}
 		return R;
 	}
 
+	// THE LIVE TALK WITHOUT STOPPING THE GAME, 24 September. In the playable
+	// encounter the helper is started once, when the street is ready, and
+	// kept; a line is written when the player talks and the answer is read a
+	// little every frame, so the street goes on while the model thinks. The
+	// regression keeps its own talk (RunTalk), which waits, because a script
+	// has nothing else to do. The helper ends by itself when the game closes
+	// its pipe.
+	struct FLiveHelper
+	{
+		FProcHandle Proc;
+		void* OutRead = nullptr; void* OutWrite = nullptr; void* InRead = nullptr; void* InWrite = nullptr;
+		std::string Buf;
+		bool bStarted = false, bReady = false;
+		int NextId = 1, PendingId = 0;
+		FString PendingName;
+		double AskedAt = 0.0;
+	};
+	FLiveHelper GLive;
+
+	void LiveHelperStart()
+	{
+		if (GLive.bStarted) { return; }
+		FString Exe;
+		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty()) { return; }
+		if (!FPlatformProcess::CreatePipe(GLive.OutRead, GLive.OutWrite) || !FPlatformProcess::CreatePipe(GLive.InRead, GLive.InWrite, true)) { return; }
+		GLive.Proc = FPlatformProcess::CreateProc(*Exe, FParse::Param(FCommandLine::Get(), TEXT("TalkFake")) ? TEXT("--fake") : TEXT(""),
+			false, true, true, nullptr, 0, nullptr, GLive.OutWrite, GLive.InRead);
+		GLive.bStarted = GLive.Proc.IsValid();
+	}
+
+	std::string MemoriesJson(const GossiperPtr& G)
+	{
+		std::string Mem;
+		if (G && G->Memory)
+		{
+			for (const MemoryEvent& E : G->Memory->Events)
+			{
+				if (!Mem.empty()) { Mem += ","; }
+				Mem += "{\"day\":" + std::to_string(E.Time.Day) + ",\"hour\":" + std::to_string(E.Time.Hour)
+					+ ",\"minute\":" + std::to_string(E.Time.Minute) + ",\"kind\":\"" + JsonEsc(E.Kind)
+					+ "\",\"importance\":" + std::to_string(E.Importance) + ",\"text\":\"" + JsonEsc(E.Text) + "\"}";
+			}
+		}
+		return Mem;
+	}
+
+	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA);
+	std::string JsonField(const std::string& Line, const std::string& Name);
+	void SaveEncounterToDisk();
+
+	// Asks, and returns at once; the answer arrives in LiveHelperPump.
+	bool LiveAsk(const GossiperPtr& G, const std::string& Card, const std::string& Who, int OwnRung, const FString& Name,
+	             const std::string& Said)
+	{
+		if (!GLive.bStarted || !GLive.bReady || GLive.PendingId != 0) { return false; }
+		const int Id = GLive.NextId++;
+		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"to\":\"" + JsonEsc(Card)
+			+ "\",\"who\":\"" + JsonEsc(Who) + "\",\"say\":\"" + JsonEsc(Said) + "\",\"day\":" + std::to_string(GNow.Day)
+			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
+			+ ",\"scene\":\"Quay Street, by the parade.\",\"memories\":[" + MemoriesJson(G) + "]"
+			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + "}\n";
+		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+		GLive.PendingId = Id;
+		GLive.PendingName = Name;
+		GLive.AskedAt = FPlatformTime::Seconds();
+		return true;
+	}
+
+	void LiveHelperPump()
+	{
+		if (!GLive.bStarted) { return; }
+		GLive.Buf += Utf8(FPlatformProcess::ReadPipe(GLive.OutRead));
+		std::string::size_type Nl;
+		while ((Nl = GLive.Buf.find('\n')) != std::string::npos)
+		{
+			const std::string L = GLive.Buf.substr(0, Nl);
+			GLive.Buf.erase(0, Nl + 1);
+			if (L.find("\"ready\"") != std::string::npos) { GLive.bReady = true; continue; }
+			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
+			{
+				const std::string Reply = JsonField(L, "reply");
+				Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
+				GLive.PendingId = 0;
+				if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
+			}
+		}
+		if (GLive.PendingId != 0 && FPlatformTime::Seconds() - GLive.AskedAt > 30.0)
+		{
+			Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White);
+			GLive.PendingId = 0;
+		}
+	}
+
+	// WHAT THE PLAYER SAYS, TYPED, 24 September: T near somebody opens a line
+	// at the bottom of the screen; Enter says it, Esc leaves it. While it is
+	// open the keys go to the line, not to the legs.
+	struct FTalkTarget { GossiperPtr G; std::string Card, Id; int Rung = -1; FString Name; };
+	FTalkTarget GTalkTarget;
+	TSharedPtr<SWidget> GSayBox;
+	TSharedPtr<SEditableTextBox> GSayText;
+	bool bSayOpen = false, bSayCommitted = false, bSayCancelled = false;
+	FString GSaid;
+	double GSayOpenedAt = 0.0;
+
+	void OpenSayBox(UWorld* World)
+	{
+		if (bSayOpen || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
+		bSayCommitted = bSayCancelled = false;
+		GSaid.Reset();
+		SAssignNew(GSayBox, SBox)
+			.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(0.0f, 0.0f, 0.0f, 90.0f))
+			[
+				SNew(SBox).WidthOverride(900.0f)
+				[
+					SAssignNew(GSayText, SEditableTextBox)
+					.HintText(FText::FromString(FString(TEXT("Say something to ")) + GTalkTarget.Name + TEXT(", then Enter. Esc to leave it.")))
+					.OnTextCommitted_Lambda([](const FText& T, ETextCommit::Type How)
+					{
+						if (How == ETextCommit::OnEnter) { GSaid = T.ToString(); bSayCommitted = true; }
+						else { bSayCancelled = true; }
+					})
+				]
+			];
+		GEngine->GameViewport->AddViewportWidgetContent(GSayBox.ToSharedRef(), 100);
+		if (APlayerController* PC = World->GetFirstPlayerController())
+		{
+			FInputModeUIOnly M;
+			M.SetWidgetToFocus(GSayText);
+			PC->SetInputMode(M);
+		}
+		FSlateApplication::Get().SetKeyboardFocus(GSayText);
+		bSayOpen = true;
+		GSayOpenedAt = FPlatformTime::Seconds();
+	}
+
+	void CloseSayBox(UWorld* World)
+	{
+		if (!bSayOpen) { return; }
+		if (GEngine != nullptr && GEngine->GameViewport != nullptr && GSayBox.IsValid())
+		{
+			GEngine->GameViewport->RemoveViewportWidgetContent(GSayBox.ToSharedRef());
+		}
+		GSayBox.Reset();
+		GSayText.Reset();
+		if (World != nullptr)
+		{
+			if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetInputMode(FInputModeGameOnly()); }
+		}
+		FSlateApplication::Get().SetAllUserFocusToGameViewport();
+		bSayOpen = false;
+	}
+
+	void RunTalk();
+
+	// THE PLAYER TALKS AT ANY POINT OF THE STORY, 24 September: before the
+	// window, to people who know nothing yet; after it, to people who might.
+	// Returns true while the typed line is open, when the rest of the phase
+	// should wait.
+	bool HumanTalkTick(UWorld* World, double Now)
+	{
+		LiveHelperStart();
+		LiveHelperPump();
+		if (bSayOpen)
+		{
+			// THE T THAT OPENED THE LINE is not the first letter of it.
+			if (GSayText.IsValid() && Now - GSayOpenedAt < 0.5)
+			{
+				const FString Cur = GSayText->GetText().ToString();
+				if (Cur == TEXT("t") || Cur == TEXT("T")) { GSayText->SetText(FText::GetEmpty()); }
+			}
+			if (bSayCommitted)
+			{
+				const FString Said = GSaid.TrimStartAndEnd();
+				CloseSayBox(World);
+				if (!Said.IsEmpty() && LiveAsk(GTalkTarget.G, GTalkTarget.Card, GTalkTarget.Id, GTalkTarget.Rung, GTalkTarget.Name, Utf8(Said)))
+				{
+					Say(FString(TEXT("You: ")) + Said, 10.0f, FColor::Cyan);
+				}
+			}
+			else if (bSayCancelled) { CloseSayBox(World); }
+			TakeTalkRequests();
+			return true;
+		}
+		if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return false; }
+		struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
+		const Who People[3] = {
+			{ GN2Body, GN2, "sam", "n2", TEXT("Sam"), -1 },
+			{ GW1Body, GW1, "lena", "w1", TEXT("Lena"), GW1RungA },
+			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Rocco"), -1 } };
+		const Who* Near = nullptr;
+		double Best = LedgerCrime::kLiveTalkM;
+		for (const Who& P : People)
+		{
+			if (P.Body == nullptr || !P.G) { continue; }
+			const double M = FVector::Dist2D(GPawn->GetActorLocation(), P.Body->GetActorLocation()) / 100.0;
+			if (M <= Best) { Best = M; Near = &P; }
+		}
+		if (Near == nullptr) { Say(TEXT("Nobody near enough to talk to."), 4.0f, FColor::White); return false; }
+		if (GLive.PendingId != 0) { Say(TEXT("Wait for an answer first."), 4.0f, FColor::White); return false; }
+		if (!GLive.bReady) { Say(TEXT("(The street's voices are still waking up. Try again in a moment.)"), 4.0f, FColor::White); return false; }
+		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
+		GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
+		OpenSayBox(World);
+		return true;
+	}
+
+	// WHO IS TALKED TO, 24 September: the lad by default (the regression);
+	// in the playable encounter whichever of Sam, Lena and Rocco is nearest,
+	// each on their own card and from their own memory.
+	GossiperPtr GTalkWith;
+	std::string GTalkWho = "n2", GTalkCardOverride;
+	int GTalkOwnRung = -1;
+
 	// THE CONVERSATION: the helper beside the game, one JSON line each way,
 	// carrying the lad's own memories and the simulation's day and hour.
 	void RunTalk()
 	{
+		const GossiperPtr Target = GTalkWith ? GTalkWith : GN2;
 		FString Exe;
 		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty())
 		{
@@ -2253,7 +2494,7 @@ namespace
 		bTalkFake = FParse::Param(FCommandLine::Get(), TEXT("TalkFake"));
 		FString Card = TEXT("sam");
 		FParse::Value(FCommandLine::Get(), TEXT("TalkAs="), Card);
-		GTalkCard = Utf8(Card);
+		GTalkCard = GTalkCardOverride.empty() ? Utf8(Card) : GTalkCardOverride;
 		// THE SIMULATION'S OWN CLOCK: GNow, which the encounter leaves at the
 		// third round's evening and the reload restores from the save and
 		// moves on to the next morning.
@@ -2299,9 +2540,9 @@ namespace
 		else
 		{
 			std::string Mem;
-			if (GN2 && GN2->Memory)
+			if (Target && Target->Memory)
 			{
-				for (const MemoryEvent& E : GN2->Memory->Events)
+				for (const MemoryEvent& E : Target->Memory->Events)
 				{
 					if (!Mem.empty()) { Mem += ","; }
 					Mem += "{\"day\":" + std::to_string(E.Time.Day) + ",\"hour\":" + std::to_string(E.Time.Hour)
@@ -2312,10 +2553,10 @@ namespace
 			// AND WHAT HE HOLDS AGAINST THE MAN IN FRONT OF HIM, for the Core
 			// to turn into a level and a reason (24 September).
 			const std::string Req = "{\"id\":1,\"to\":\"" + JsonEsc(GTalkCard)
-				+ "\",\"who\":\"n2\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
+				+ "\",\"who\":\"" + JsonEsc(GTalkWho) + "\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
 				+ ",\"hour\":" + std::to_string(GTalkHour) + ",\"minute\":" + std::to_string(GNow.Minute)
 				+ ",\"scene\":\"The yard behind the parade on Quay Street.\",\"memories\":[" + Mem + "]"
-				+ ",\"evidence\":" + EvidenceFor(GN2, LedgerCrime::kLadFamiliarity, -1) + "}";
+				+ ",\"evidence\":" + EvidenceFor(Target, LedgerCrime::kLadFamiliarity, GTalkOwnRung) + "}";
 			FPlatformProcess::WritePipe(InWrite, Un(Req));
 			std::string Rep = LineWith("\"id\":1", 45.0);
 			if (Rep.empty() && Buf.find("\"error\"") != std::string::npos) { Rep = Buf; }
@@ -3081,8 +3322,9 @@ namespace
 				}
 				if (GLiveStep == 1 && Now - GLiveStepAt >= 2.0) { PressKey(World, EKeys::E); GLiveStep = 2; }
 			}
+			if (!bLiveScript && HumanTalkTick(World, Now)) { TakeActRequests(0); return true; }
 			const int32 Presses = TakeActRequests(0);
-			TakeTalkRequests();
+			if (bLiveScript) { TakeTalkRequests(); }
 			if (Presses <= 0 || GPawn == nullptr || GGlass[0] == nullptr) { return true; }
 			const double ToGlass = FVector::Dist2D(GPawn->GetActorLocation(),
 				GGlass[0]->GetComponentsBoundingBox(true).GetCenter()) / 100.0;
@@ -3103,7 +3345,12 @@ namespace
 			GWatchSlot = -1;
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
-			if (!GFiledSummaryA.empty()) { Say(TEXT("Lena: \"Stop. I mean it. Stop.\""), 6.0f); }
+			// THE DEED IS SAID, NOT ONLY DONE (the AI tester, 24 September): a
+			// pane of clear glass that vanishes is invisible, and the shout is
+			// only a sound, so the tester pressed E, broke the window and
+			// reported that nothing happened.
+			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
+			if (!GFiledSummaryA.empty()) { Say(TEXT("Lena: \"Stop. I mean it. Stop.\""), 16.0f); }
 			WriteBreadcrumb(TEXT("live-deed"));
 			if (bLiveScript) { TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg); }
 			GPhase = ECrimePhase::LiveAfterDeed;
@@ -3113,7 +3360,8 @@ namespace
 		case ECrimePhase::LiveAfterDeed:
 		{
 			TakeActRequests(0);
-			TakeTalkRequests();
+			if (bLiveScript) { TakeTalkRequests(); }
+			else { HumanTalkTick(World, Now); }
 			// WHOEVER SEES HIM GO: the lad, by the same sight test, if the
 			// man comes through the yard while it is still fresh.
 			if (!bFleeFiled && GN2Body != nullptr && GPawn != nullptr)
@@ -3139,8 +3387,8 @@ namespace
 				GOverheard.Reply = LedgerCrime::ComposeOverheard(GCarried, GW1, GN2, LedgerCrime::Seed(GNow),
 					GSummaryText == "none" ? std::string() : GSummaryText,
 					GReplyText == "none" ? std::string() : GReplyText);
-				if (!GOverheard.Reply.TellText.empty()) { Say(FString(TEXT("Lena, in the yard: ")) + Un(GOverheard.Reply.TellText), 14.0f); }
-				if (!GOverheard.Reply.ReplyText.empty()) { Say(FString(TEXT("Sam: ")) + Un(GOverheard.Reply.ReplyText), 14.0f); }
+				if (!GOverheard.Reply.TellText.empty()) { Say(FString(TEXT("Lena, in the yard: ")) + Un(GOverheard.Reply.TellText), 30.0f); }
+				if (!GOverheard.Reply.ReplyText.empty()) { Say(FString(TEXT("Sam: ")) + Un(GOverheard.Reply.ReplyText), 30.0f); }
 			}
 			RespawnMate(World);
 			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 0);
@@ -3155,6 +3403,12 @@ namespace
 		}
 		case ECrimePhase::LiveRoam:
 		{
+			if (!bLiveScript)
+			{
+				HumanTalkTick(World, Now);
+				TakeActRequests(0);
+				return true;
+			}
 			if (bLiveScript)
 			{
 				if (GLiveStep < 3)
@@ -3170,16 +3424,38 @@ namespace
 				if (GLiveStep == 5 && Now - GLiveStepAt >= 2.0) { Finish(); return false; }
 			}
 			TakeActRequests(0);
-			if (TakeTalkRequests() <= 0 || GPawn == nullptr || GN2Body == nullptr) { return true; }
-			const double ToLad = FVector::Dist2D(GPawn->GetActorLocation(), GN2Body->GetActorLocation()) / 100.0;
-			if (ToLad > LedgerCrime::kLiveTalkM)
+			if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return true; }
+			struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
+			const Who People[3] = {
+				{ GN2Body, GN2, "sam", "n2", TEXT("Sam"), -1 },
+				{ GW1Body, GW1, "lena", "w1", TEXT("Lena"), GW1RungA },
+				{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Rocco"), -1 } };
+			const Who* Near = nullptr;
+			double Best = LedgerCrime::kLiveTalkM;
+			for (const Who& P : People)
+			{
+				if (P.Body == nullptr || !P.G) { continue; }
+				const double M = FVector::Dist2D(GPawn->GetActorLocation(), P.Body->GetActorLocation()) / 100.0;
+				if (M <= Best) { Best = M; Near = &P; }
+			}
+			if (Near == nullptr)
 			{
 				Say(TEXT("Nobody near enough to talk to."), 4.0f);
 				return true;
 			}
+			if (!bLiveScript)
+			{
+				if (GLive.PendingId != 0) { Say(TEXT("Wait for an answer first."), 4.0f, FColor::White); return true; }
+				if (!GLive.bReady) { Say(TEXT("(The street's voices are still waking up. Try again in a moment.)"), 4.0f, FColor::White); return true; }
+				GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
+				GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
+				OpenSayBox(World);
+				return true;
+			}
+			GTalkWith = Near->G; GTalkWho = Near->Id; GTalkCardOverride = Near->Card; GTalkOwnRung = Near->Rung;
 			Say(TEXT("You: Evening. Anything going on round here?"), 8.0f, FColor::Cyan);
 			RunTalk();
-			Say(FString(TEXT("Sam: ")) + Un(GTalkReply == "none" ? std::string("...") : GTalkReply), 20.0f);
+			Say(FString(Near->Name) + TEXT(": ") + Un(GTalkReply == "none" ? std::string("...") : GTalkReply), 20.0f, FColor::White);
 			SaveEncounterToDisk();
 			if (bLiveScript)
 			{

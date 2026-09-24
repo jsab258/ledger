@@ -59,6 +59,8 @@ public class LedgerProbe : ModuleRules
 		// RHI, 24 September: the card's own frame time (RHIGetGPUFrameCycles)
 		// and texture memory, for what each MetaHuman costs (MetaHumanCost.cpp).
 		PrivateDependencyModuleNames.Add("RHI");
+		// Slate, 24 September: the line the player types what they say into.
+		PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		// NavigationSystem, 23 September: the slice's navigation mesh, built
 		// at run time around invokers, and the path query that proves it.
 		PrivateDependencyModuleNames.Add("NavigationSystem");
