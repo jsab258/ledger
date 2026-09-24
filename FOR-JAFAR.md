@@ -6,11 +6,11 @@ between them.
 
 ## Overnight
 
-1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing. Navigation works. Nano timed on the card: 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled and standing in the corner with an idle. Tomorrow's facade sitting is ready. The hill is rebuilt, the street's edges are rounded, the far row has sooty brick, and the dirt is switched on. Stage 1 went from 4 to 16 of 47 done.
-2. **Still in the build machine:** the dirt, the hill, the permanent performance check and the MetaHuman's idle. Their frames land through the night, and I judge each one.
+1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing. Navigation works. Nano timed on the card: 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready. The street's edges are rounded, the far row has sooty brick, the dirt is on, and the hill is rebuilt. Stage 1 went from 4 to 20 of 47 done.
+2. **Still in the build machine:** the clutter, the performance check (its first run captured nothing, now fixed) and the hill's trees. I judge each as it lands.
 3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I'm carrying on with the picks.
-4. **Went wrong:** the scans first went on at half size. One build went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. All fixed.
-5. **Your C: drive is 98% full,** 22 GB free. I've deleted nothing; heavy jobs stop if it drops under 10 GB.
+4. **Went wrong:** the scans first went on at half size. Two builds went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. All fixed.
+5. **Your C: drive is 98% full,** under 20 GB free. I've deleted nothing; heavy jobs stop if it drops under 10 GB.
 
 ## The plan at a glance
 
