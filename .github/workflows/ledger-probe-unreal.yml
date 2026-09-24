@@ -50,6 +50,10 @@ on:
     paths:
       - 'ue-probe/**'
       - 'tools/ue/**'
+      # THE ENCOUNTER'S OTHER HALF, 24 September: the conversation helper and
+      # the Core it answers with, so a change there runs the regression too.
+      - 'ledger/TalkHelper/**'
+      - 'ledger/Assets/Scripts/Core/**'
       - '.github/workflows/ledger-probe-unreal.yml'
       # THE SCENE SPECIFICATIONS, added 2026-09-22. The safeguard is meant
       # to catch a change that breaks what stands on the street, and the
@@ -2261,15 +2265,6 @@ jobs:
           }
           if ($stitchExit -eq 0) { exit 0 } else { exit 1 }
 
-      # THE EVIDENCE CHANNEL, and the two rules the Unity workflow paid for.
-      # A run that measured nothing must SAY so rather than committing a
-      # stale checkout's file as its own, and every output is staged BY NAME.
-      # NO continue-on-error ON THIS STEP, DELIBERATELY. It carries an
-      # exit 1 for the case where the probe result could not be pushed, and
-      # with continue-on-error the step would fail while the JOB stayed
-      # green: the exact colour that was read as a landing on runs 18 and
-      # 22. A commit or a push that did not happen is not a landed run, so
-      # it fails the job. Amendment A2, ruling of 2026-09-06.
       - name: The integrated encounter, played, reloaded from disk, and unseen
         id: encounter
         if: always()
@@ -2342,6 +2337,15 @@ jobs:
           }
           exit 0
 
+      # THE EVIDENCE CHANNEL, and the two rules the Unity workflow paid for.
+      # A run that measured nothing must SAY so rather than committing a
+      # stale checkout's file as its own, and every output is staged BY NAME.
+      # NO continue-on-error ON THIS STEP, DELIBERATELY. It carries an
+      # exit 1 for the case where the probe result could not be pushed, and
+      # with continue-on-error the step would fail while the JOB stayed
+      # green: the exact colour that was read as a landing on runs 18 and
+      # 22. A commit or a push that did not happen is not a landed run, so
+      # it fails the job. Amendment A2, ruling of 2026-09-06.
       - name: Commit the probe result
         if: always()
         shell: bash
@@ -2810,23 +2814,6 @@ jobs:
           fi
           exit $RC
 
-      # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
-      #
-      # THE FAULT THIS CLOSES, and it had two halves that only added up
-      # together. The build step carried `continue-on-error: true`, so a
-      # failed build was an amber step and a green job. The step above banks
-      # the evidence and exits 0 whenever it managed to COMMIT something,
-      # which it always does, because "the build failed and here is the log"
-      # is a thing worth committing. So the last word on every run belonged
-      # to the archivist rather than to the build, and a red build reported
-      # green. The first half is fixed by the missing `continue-on-error`
-      # above. This is the second half: the evidence is still banked, always,
-      # and then it is READ, and what it says decides the colour.
-      #
-      # IT READS THE FILE RATHER THAN THE STEP OUTCOME, which is this
-      # project's standing rule — verify a job's EFFECTS and not its exit
-      # code. A step can exit 0 having written `probeTest=FAIL`; the engine's
-      # own answer is in the file and the file is what is asked.
       - name: Judge the encounter, the build's regression
         if: always()
         shell: bash
@@ -2849,6 +2836,23 @@ jobs:
             production/d1-probe/ue-encounter-reload-verdict.txt \
             production/d1-probe/ue-encounter-unseen-verdict.txt
 
+      # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
+      #
+      # THE FAULT THIS CLOSES, and it had two halves that only added up
+      # together. The build step carried `continue-on-error: true`, so a
+      # failed build was an amber step and a green job. The step above banks
+      # the evidence and exits 0 whenever it managed to COMMIT something,
+      # which it always does, because "the build failed and here is the log"
+      # is a thing worth committing. So the last word on every run belonged
+      # to the archivist rather than to the build, and a red build reported
+      # green. The first half is fixed by the missing `continue-on-error`
+      # above. This is the second half: the evidence is still banked, always,
+      # and then it is READ, and what it says decides the colour.
+      #
+      # IT READS THE FILE RATHER THAN THE STEP OUTCOME, which is this
+      # project's standing rule — verify a job's EFFECTS and not its exit
+      # code. A step can exit 0 having written `probeTest=FAIL`; the engine's
+      # own answer is in the file and the file is what is asked.
       - name: The build decides the colour of the run
         if: always()
         shell: bash

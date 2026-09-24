@@ -286,6 +286,14 @@ static class Program
             if (cond) passed++; else { failed++; Console.WriteLine($"talkhelper selftest FAIL {name} {detail}"); }
         }
         string Reply(string json) { using var d = JsonDocument.Parse(json); return d.RootElement.TryGetProperty("reply", out var v) ? v.GetString() : null; }
+        List<string> Heard(string json)
+        {
+            var o = new List<string>();
+            using var d = JsonDocument.Parse(json);
+            if (d.RootElement.TryGetProperty("heard", out var v) && v.ValueKind == JsonValueKind.Array)
+                foreach (var e in v.EnumerateArray()) o.Add(e.GetString());
+            return o;
+        }
         bool Flag(string json, string f) { using var d = JsonDocument.Parse(json); return d.RootElement.TryGetProperty(f, out var v) && v.GetBoolean(); }
 
         var fake = new FakeLlm();
@@ -329,7 +337,7 @@ static class Program
         var w = await k.Answer("{\"id\":7,\"to\":\"sam\",\"say\":\"What's the news?\",\"day\":3,\"hour\":17,\"memories\":[{\"day\":3,\"hour\":15,\"kind\":\"heard\",\"importance\":0.9,\"text\":\"Heard from Rita that the new owner put her window in.\"}]," +
             "\"suspicion\":0.6,\"suspicionWhy\":\"heard he put Rita's window in\"}");
         Ok("a memory sent by the game is in the answer", Reply(w) != null && Reply(w).Contains("window"), w);
-        Ok("and in what the helper says it heard", w.Contains("put her window in"), w);
+        Ok("and in what the helper says it heard", Heard(w).Contains("Heard from Rita that the new owner put her window in."), w);
         Ok("the day is the game's, not day 1", w.Contains("\"day\":3"), w);
         await k.Answer("{\"id\":8,\"to\":\"sam\",\"say\":\"Anything else?\",\"day\":3,\"hour\":18,\"memories\":[{\"day\":3,\"hour\":15,\"kind\":\"heard\",\"importance\":0.9,\"text\":\"Heard from Rita that the new owner put her window in.\"}]}");
         int copies = 0;
