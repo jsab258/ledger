@@ -88,6 +88,38 @@ def gather():
     return people, files
 
 
+# THINGS TO APPROVE THAT ARE NOT A PERSON, 25 September: the clothing item's
+# proof of manufacture. Each is judged on its own, stored at verdicts/<slug>.
+PROOFS = [{
+    "slug": "donkey-jacket",
+    "name": "The donkey jacket",
+    "was": "A proof that a garment can be made, fitted and worn, not the finished jacket",
+    "text": ("Made by script in Blender from MetaHuman's own template body (no money, no new licence), in two sizes, "
+             "and worn in the game over the cast's clothes, following each man's body as he idles. Ron takes the large, "
+             "Darren the regular. What it is not yet: cloth that hangs and moves, a proper collar and pockets, and a yoke "
+             "that sits over the shoulders; the template body is a woman's, and a trace of that shows. Approve the method "
+             "and it becomes the way garments are made; Redo with a word on what matters most."),
+    "pictures": [("production/casting/ron-kirby/jacket-mid.jpg", "Ron, the large, in the street"),
+                 ("production/casting/darren-milner/jacket-mid.jpg", "Darren, the regular, in the street"),
+                 ("production/casting/ron-kirby/jacket-close.jpg", "Ron, close"),
+                 ("production/casting/ron-kirby/jacket-made.jpg", "As made, on the template body")],
+}]
+
+
+def gather_proofs(files):
+    out = []
+    for pr in PROOFS:
+        pics = []
+        for rel, cap in pr["pictures"]:
+            if os.path.exists(os.path.join(REPO, rel)):
+                pub = "proofs/" + pr["slug"] + "/" + os.path.basename(os.path.dirname(rel)) + "-" + os.path.basename(rel)
+                files[pub] = rel
+                pics.append({"src": pub, "caption": cap})
+        if pics:
+            out.append({"slug": pr["slug"], "name": pr["name"], "was": pr["was"], "text": pr["text"], "pictures": pics})
+    return out
+
+
 PAGE = r"""<title>Casting Approvals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -166,8 +198,8 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 <div class="wrap">
   <header>
     <div class="kicker">LEDGER · approval page · __DATE__</div>
-    <h1>Sheila, Ron and Darren, for your yes</h1>
-    <p class="how">Each person is approved whole: face, clothes and voice together. Look at the three pictures, play the three lines in each voice (the letters are blind; your approved voice is one of them), pick the voice that is the person, then Approve, or Redo with a word on what is wrong.</p>
+    <h1>Sheila, Ron and Darren, and a jacket, for your yes</h1>
+    <p class="how">Each person is approved whole: face, clothes and voice together. Look at the three pictures, play the three lines in each voice (the letters are blind; your approved voice is one of them), pick the voice that is the person, then Approve, or Redo with a word on what is wrong. The jacket, at the end, is judged on its own.</p>
     <div class="tally" id="tally">Loading your earlier verdicts…</div>
   </header>
   <main class="wrap" id="people" style="gap:40px"></main>
@@ -176,6 +208,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 
 <script>
 const PEOPLE = __DATA__;
+const PROOFS = __PROOFS__;
 const state = {};           // slug -> {verdict, voice, note}
 let db = null, canWrite = true;
 let audio = null, playingBtn = null;
@@ -250,8 +283,28 @@ function render(){
     sec.append(el("div", {class:"verdict"}, note, el("div", {class:"row"}, ok, redo, saved), canWrite ? null : el("div", {class:"note-off", text:"Verdicts cannot be saved from this view."})));
     root.append(sec);
   }
-  const judged = PEOPLE.filter(p => state[p.slug] && state[p.slug].verdict).length;
-  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + PEOPLE.length + "</b> judged" + (db ? "" : " · verdicts are not being stored on this view");
+  for (const p of PROOFS) {
+    const s = state[p.slug] || {};
+    const sec = el("section", {class:"person", id:p.slug});
+    const st = el("span", {class:"state " + (s.verdict || "none"), text: s.verdict === "approve" ? "Approved" : s.verdict === "redo" ? "Redo" : "Not judged"});
+    sec.append(el("div", {class:"head"}, el("div", {}, el("h2", {text:p.name}), el("div", {class:"was", text:p.was})), st));
+    sec.append(el("p", {class:"how", text:p.text}));
+    const g = el("div", {class:"ingame"});
+    for (const pic of p.pictures) g.append(el("figure", {}, el("img", {src:pic.src, alt:p.name + ": " + pic.caption, loading:"lazy"}), el("figcaption", {text:pic.caption})));
+    sec.append(g);
+    const note = el("textarea", {id:"note-" + p.slug, placeholder:"What is wrong, in a few words (for Redo)"});
+    note.value = s.note || "";
+    const ok = el("button", {type:"button", class:"approve" + (s.verdict === "approve" ? " on" : ""), text:"Approve the method"});
+    const redo = el("button", {type:"button", class:"redo" + (s.verdict === "redo" ? " on" : ""), text:"Redo"});
+    const saved = el("span", {class:"saved", id:"saved-" + p.slug, text: s.at ? "Saved " + new Date(s.at).toLocaleString() : ""});
+    ok.addEventListener("click", () => save(p.slug, {verdict:"approve", note: note.value}));
+    redo.addEventListener("click", () => save(p.slug, {verdict:"redo", note: note.value}));
+    sec.append(el("div", {class:"verdict"}, note, el("div", {class:"row"}, ok, redo, saved), canWrite ? null : el("div", {class:"note-off", text:"Verdicts cannot be saved from this view."})));
+    root.append(sec);
+  }
+  const all = PEOPLE.concat(PROOFS);
+  const judged = all.filter(p => state[p.slug] && state[p.slug].verdict).length;
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + all.length + "</b> judged" + (db ? "" : " · verdicts are not being stored on this view");
 }
 
 let writing = Promise.resolve();
@@ -269,7 +322,7 @@ render();
 (async () => {
   try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
   if (!db) { render(); return; }
-  for (const p of PEOPLE) {
+  for (const p of PEOPLE.concat(PROOFS)) {
     try {
       const snap = await db.doc("verdicts/" + p.slug).get();
       if (snap.exists) state[p.slug] = Object.assign({}, snap.data());
@@ -283,10 +336,12 @@ render();
 
 def build(date):
     people, files = gather()
+    proofs = gather_proofs(files)
     out_dir = os.path.join(REPO, "production", "approvals", date)
     os.makedirs(out_dir, exist_ok=True)
     data = json.dumps(people, ensure_ascii=False).replace("</", "<\\/")
-    page = PAGE.replace("__DATA__", data).replace("__DATE__", html.escape(date))
+    pdata = json.dumps(proofs, ensure_ascii=False).replace("</", "<\\/")
+    page = PAGE.replace("__DATA__", data).replace("__PROOFS__", pdata).replace("__DATE__", html.escape(date))
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:

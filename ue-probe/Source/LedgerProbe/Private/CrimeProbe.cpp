@@ -106,6 +106,7 @@
 #include "GenericPlatform/GenericPlatformInputDeviceMapper.h"
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Input/SEditableTextBox.h"
+#include "LedgerJacket.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
@@ -815,6 +816,7 @@ namespace
 				C->SetPosition(FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f)), false);
 			}
 		}
+		LedgerJacket::Wear(A, Who);
 		Body->SetActorHiddenInGame(true);
 		GVisuals.Add(Body, A);
 		++GVisualsPlaced;
