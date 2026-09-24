@@ -1,13 +1,4 @@
 encounterMode=unseen
-encounterStatus=PASS
-encounterFailed=none
-encounterCommit=d244ff2
-pawnClass=LedgerSliceCharacter actPressLanded=player-input actRequestsSeen=1 actAttempted=yes
-aboutA w1=0 n2=0 r3=0 aboutB w1=0 n2=0 r3=0 crimeMemories w1=0 n2=0 r3=0
-filedSummaryA=none
-shout=not-played shoutSpatial=no shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=-1.0 shoutReachM=0.0 shoutWav=none
-talk=answered talkAs=sam talkFake=yes talkDay=4 talkHour=18 heardCount=0 heardCrime=no questioned=no
-talkReply=Morning. Quiet one today.
-suspicion lad=Trusting witness=Trusting mate=Trusting witnessRungA=-1 flee=not-seen fleeSeconds=0.00 fleeMetres=-1.0 fleeRung=-1 fleeCertainty=0.00 othersTheLadSaw=0
-suspicionWhyLad=none
-save=not-written savedBytes=0 loaded=no loadedBytes=0 savedByCommit=none clockLoaded=D0-00:00 talkAnswered=yes bankReadable=no saveDir=none
+encounterStatus=FAIL
+encounterFailed=no-verdict-written
+encounterCommit=1ede887
