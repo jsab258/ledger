@@ -48,7 +48,7 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       slice at 3440x1440 half-res 85 fps, 80 with Nano; Nano 0.9-1.0 s of work
       per s of speech alone, 1.3 with the game; game 3.5 GB + Nano 2.1 GB.
 - [ ] 5. THEN DOWN THE PRESENTABLE CHECKLIST.
-- [ ] 5a. THE RISE READS AS A PLACEHOLDER beside the sheet (24 Sep, Hook
+- [x] 5a. THE RISE READS AS A PLACEHOLDER beside the sheet (24 Sep, Hook
       pair at 00:35): rows of near-identical small boxes and lollipop trees
       straight ahead at the end of the street, where the sheet's hillside is
       varied houses, scattered, off to the left of a bent street, in mist. Haze
@@ -59,6 +59,12 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       every party wall, two gaps in three a garden with trees (Blender:
       production/art/compare/stage1-2026-09-24/rise-attempt5-blender.png).
       Judge it in Unreal when its run lands.
+      JUDGED 24 Sep (fe5919e9, then trees along each tier): it reads as a
+      hillside of terraces with trees among them
+      (production/art/compare/stage1-2026-09-24/hook-max-hill5b.png). Its
+      MIST SET ASIDE after two tries (cap, falloff; neither moved it):
+      the day's density is too thin at 110-200 m, and raising it moves the
+      far end the sheet was matched on - a measured density pass, later.
 - [x] 5b. THE SLICE MEASURED AGAINST THE PERFORMANCE TARGET (his ruling of
       23 Sep: 60 at his monitor, 3440x1440, never below 30, voice running):
       a frame-time line in the slice walk at 1280x720 and at 3440x1440 drawn
