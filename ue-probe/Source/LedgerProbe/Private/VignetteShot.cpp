@@ -6052,6 +6052,13 @@ namespace
 		// a shadow is a black street. Neither is left to a default: both are
 		// sites this project has already been bitten at.
 		C->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		// AND THE WHOLE ACTOR, 24 September: run from the editor (-game, as
+		// every local iteration is) the dome came back with the engine
+		// sphere's own "block all" collision, a 2 km shell every sight line
+		// and every ground trace started inside, so no witness could see and
+		// every body floated. Switching the actor's collision off is not
+		// undone by a component falling back to its mesh's default.
+		GSkyDome->SetActorEnableCollision(false);
 		C->SetCastShadow(false);
 		GSkyDome->SetActorScale3D(FVector(kSkyDomeDiameterM, kSkyDomeDiameterM,
 		                                  kSkyDomeDiameterM));

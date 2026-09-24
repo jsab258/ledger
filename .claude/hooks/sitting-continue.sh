@@ -1,7 +1,7 @@
 #!/bin/bash
-# Stop hook, one job (Jafar, 24 September): while the sitting's goal is open
-# and its time is not up, keep going; when either ends, stop. The deciding is
-# in tools/sitting-clock.py, which reads NOW.md's SITTING and GOAL lines, for
+# Stop hook, one job (Jafar, 24 September): while the sitting has time and
+# its list has an item left, keep going; otherwise stop. The deciding is
+# in tools/sitting-clock.py, which reads NOW.md (SITTING line and list), for
 # the builder's own session only. Exit 2 keeps the turn going (the reason goes
 # to stderr); exit 0 lets it end. It fails open: anything unexpected permits.
 # SITTING_GUARD=off turns it off, and says so.
