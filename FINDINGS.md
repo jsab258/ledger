@@ -18,3 +18,4 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - The conversation rules suggest "a message left with the barman" as period detail, which sits badly with the content rule's pubs.
 - The encounter's lad is answered through Sam's character card: the crime's residents are archetypes with no cards.
 - The encounter runs only as a test mode of the crime module; the ordinary playable slice does not yet start the conversation helper, shout or save.
+- No route put a donkey jacket on a MetaHuman (24 September): Fab needs a yes to download and has no donkey jacket; MetaHuman's own outfit route cannot be scripted; the built body has no torso to fit to; image-to-3D needs an NVIDIA card. (production/research/clothing-pipeline/TRIED-2026-09-24.md)
