@@ -15,7 +15,7 @@ between them.
 ## The plan at a glance
 
 <!-- stage-count: written by tools/stage-check.py --write-count, never typed -->
-- stage 1: 19 of 47 done, 0 moved, 0 out, 28 open
+- stage 1: 20 of 47 done, 0 moved, 0 out, 27 open
 - stage 2: 5 of 248 done, 0 moved, 0 out, 243 open
 - stage 3: 3 of 142 done, 0 moved, 2 out, 137 open
 - stage 4: 0 of 291 done, 0 moved, 9 out, 282 open
@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The street's dirt is on in Unreal:** all ten stains stand as decals, with water streaks down the party walls, moss, broken tarmac and the manholes. They're faint, because their strength is the old engine's, copied rather than re-guessed. Say if the street should be dirtier; it's one number.
 - 2026-09-24 **The MetaHuman stands at ease in the corner now,** arms down and weight settled, playing Elizabeth's idle carried onto his body. The head and face stay with him as he moves.
 - 2026-09-24 **The rebuilt hill in Unreal read as real terraced housing, but as a solid wall of it, so it has had a second pass.** The trees were hidden behind the tiers, so each tier now has clumps of trees along its front, which in Blender gives green among the houses as on the sheet. The Unreal frame is in the queue.
 - 2026-09-24 **The new performance check caught nothing on its first run.** It read the frame file the moment it appeared, which is when the game starts writing it, not when it finishes. It now waits for the game to finish and close itself.
