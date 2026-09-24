@@ -749,7 +749,6 @@ so the record stays complete.)*
 
 ## Resolved
 
-- 2026-09-24 **Answered: one short job on the quiet card, then stop.** Done. The question as it was put:
 - 2026-09-24 (resolved 24 Sep: (b), dressed by script in plain 1990 clothes and a haircut, once the card is free) **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.
