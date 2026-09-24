@@ -2157,7 +2157,9 @@ namespace
 		// THE CAST, 24 September: in the playable street a cast MetaHuman
 		// stands where the stand-in it replaces stood (the file's "cast").
 		std::map<std::string, std::pair<std::string, std::string>> CastByGlb;   // replaces -> (class, idle)
-		if (bInteractive)
+		// NOT WHEN THE ENCOUNTER RUNS: it places Lena, Sam and Rocco itself,
+		// as the witness, the lad and his mate, and two of each is wrong.
+		if (bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")))
 		{
 			const std::string Json(TCHAR_TO_UTF8(*Text));
 			Reader CR(Json);

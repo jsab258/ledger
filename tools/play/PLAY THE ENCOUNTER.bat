@@ -1,0 +1,15 @@
+@echo off
+REM  THE WINDOW ENCOUNTER, PLAYABLE, 24 September.
+REM  Walk to the shop window by Mickey's and press E. Lena sees you and
+REM  shouts. Run off through the yard behind the parade, past Sam, if you
+REM  like. Later that week the word has gone round; find Sam in the yard and
+REM  press T to talk. Close the window whenever you like: the street is saved,
+REM  and when you come back it still knows.
+REM  WASD to walk, the mouse to look, Shift to run.
+REM
+REM  The conversation uses the real model: your key is read from the game's
+REM  own settings into this window only, and never shown.
+cd /d "%~dp0..\.."
+dotnet build ledger\TalkHelper -c Release -nologo -v q >nul
+for /f "usebackq delims=" %%K in (`powershell -NoProfile -Command "(Get-Content -Raw \"$env:USERPROFILE\AppData\LocalLow\DefaultCompany\ledger\secrets.json\" | ConvertFrom-Json).anthropic_api_key"`) do set "ANTHROPIC_API_KEY=%%K"
+start "" "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe" "%CD%\ue-probe\LedgerProbe.uproject" -game -LedgerSlice -LedgerCrime -Encounter=live -TalkHelper="%CD%\ledger\TalkHelper\bin\Release\net8.0\TalkHelper.exe" -windowed -ResX=1600 -ResY=900 %*

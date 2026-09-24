@@ -210,6 +210,12 @@ namespace LedgerCrime
 	// silhouette is half the street.
 	inline bool CanTieSighting(int Rung) { return Rung >= 2; }
 
+	// THE LIVE ENCOUNTER, 24 September: how close the player must stand to
+	// the window to break it and to the lad to talk, and how long "later" is.
+	const double kLiveReachM = 2.2;
+	const double kLiveTalkM = 3.0;
+	const double kLiveLaterSeconds = 40.0;
+
 	// THE CONSTABLE, 22 September. ROADMAP's stage-3 gate asks for the arrest
 	// "reachable from live play, its callers outside Core counted and printed
 	// rather than zero"; the Unreal port had no arrest at all, and Core's rule

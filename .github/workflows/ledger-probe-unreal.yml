@@ -2292,6 +2292,7 @@ jobs:
             Remove-Item "production/d1-probe/ue-encounter-$m-verdict.txt" -Force -ErrorAction SilentlyContinue
           }
           Remove-Item "production/d1-probe/ue-encounter-shout.wav" -Force -ErrorAction SilentlyContinue
+          foreach ($n in 1, 2) { Remove-Item "production/d1-probe/ue-encounter-live-$n-verdict.txt" -Force -ErrorAction SilentlyContinue }
           $exe = $env:SHOT_EXE
           $proj = $env:SHOT_PROJ
           $sha = $env:SHOT_SHA
@@ -2328,6 +2329,36 @@ jobs:
             }
             if (-not $got) {
               "encounterMode=$m`nencounterStatus=FAIL`nencounterFailed=no-verdict-written`nencounterCommit=$sha" | Set-Content $out -Encoding utf8
+            }
+            Write-Host (Get-Content $out -Raw)
+          }
+          # THE PLAYABLE ENCOUNTER, SCRIPTED, 24 September: the live mode Jafar
+          # plays, walked by the probe through the same keys - first the deed
+          # and the week after, then a new process that comes back to a town
+          # that still knows. Its own save, fresh each run.
+          $liveSave = Join-Path $env:RUNNER_TEMP "ledger-encounter-live-save"
+          Remove-Item -Recurse -Force $liveSave -ErrorAction SilentlyContinue
+          foreach ($n in 1, 2) {
+            $out = "production/d1-probe/ue-encounter-live-$n-verdict.txt"
+            foreach ($d in $dirs) { Remove-Item (Join-Path $d "ue-encounter-live-verdict.txt") -Force -ErrorAction SilentlyContinue }
+            if ((-not $exe) -or (-not (Test-Path $exe)) -or (-not (Test-Path $helper))) {
+              "encounterMode=live`nencounterStatus=FAIL`nencounterFailed=no-binary-or-no-helper`nencounterCommit=$sha" | Set-Content $out -Encoding utf8
+              continue
+            }
+            $argv = @("-LedgerCrime", "-LedgerSlice", "-Encounter=live", "-LiveScript", "-TalkHelper=$helper", "-TalkFake",
+                      "-EncounterSave=$liveSave", "-LedgerCommit=$sha", "-RenderOffScreen",
+                      "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0", "-ResX=960", "-ResY=540",
+                      "-windowed", "-unattended", "-nosplash", "-nopause", "-stdout", "-FullStdOutLogOutput")
+            $p = Start-Process -FilePath $exe -ArgumentList $argv -PassThru -NoNewWindow `
+                 -RedirectStandardOutput (Join-Path $env:RUNNER_TEMP "encounter-live-$n.log")
+            if (-not $p.WaitForExit(900000)) { try { $p.Kill() } catch {} ; Write-Host "encounter live $n killed after 15 minutes" }
+            $got = $false
+            foreach ($d in $dirs) {
+              $f = Join-Path $d "ue-encounter-live-verdict.txt"
+              if (Test-Path $f) { Copy-Item $f $out -Force; $got = $true; break }
+            }
+            if (-not $got) {
+              "encounterMode=live`nencounterStatus=FAIL`nencounterFailed=no-verdict-written`nencounterCommit=$sha" | Set-Content $out -Encoding utf8
             }
             Write-Host (Get-Content $out -Raw)
           }
@@ -2586,6 +2617,7 @@ jobs:
           git add -A -- 'production/d1-probe/ue-crime.gif' 2>/dev/null || true
           # THE ENCOUNTER, 24 September: its three verdicts and the recorded shout.
           git add -A -- 'production/d1-probe/ue-encounter-play-verdict.txt' 'production/d1-probe/ue-encounter-reload-verdict.txt' 'production/d1-probe/ue-encounter-unseen-verdict.txt' 'production/d1-probe/ue-encounter-shout.wav' 2>/dev/null || true
+          git add -A -- 'production/d1-probe/ue-encounter-live-1-verdict.txt' 'production/d1-probe/ue-encounter-live-2-verdict.txt' 2>/dev/null || true
           # THE BASE MATERIAL, BY NAME. It is a BUILD PRODUCT made by
           # tools/ue/make_base_material.py in the step above, never by hand,
           # and it is committed so the next cook has something to carry into
@@ -2835,6 +2867,13 @@ jobs:
             production/d1-probe/ue-encounter-play-verdict.txt \
             production/d1-probe/ue-encounter-reload-verdict.txt \
             production/d1-probe/ue-encounter-unseen-verdict.txt
+          # AND THE PLAYABLE ONE, both runs, for this commit.
+          for n in 1 2; do
+            f="production/d1-probe/ue-encounter-live-$n-verdict.txt"
+            tr -d '\r' < "$f" | grep -qx "encounterStatus=PASS" || { echo "live run $n did not pass:"; cat "$f"; exit 1; }
+            tr -d '\r' < "$f" | grep -qx "encounterCommit=$SHORT" || { echo "live run $n is not this commit's"; exit 1; }
+          done
+          echo "liveEncounter status=PASS runs=2"
 
       # THE BUILD'S OWN EVIDENCE DECIDES THE COLOUR OF THIS RUN.
       #
