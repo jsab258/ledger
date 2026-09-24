@@ -20985,13 +20985,14 @@ namespace Ledger.CoreTests
             Console.WriteLine("    " + shapes);
             // THE PIPE COUNTS ARE ASSERTED AS WELL AS PRINTED, because the
             // circular-in-plan guard below is satisfied by a pipe shrunk to
-            // a disc. Nine lie along the street (one gutter, two booms, six
+            // a disc. Ten lie along the street (two gutters, two booms, six
             // rail bars) and thirty-two are pitched (twenty aerial elements,
-            // twelve swan-neck segments); both read off this print on the
-            // live tree, 2 Sep. Planting on_stacks [1] in the JSON prints
-            // cylRolled=8 cylPitched=22 and goes red here.
-            Check(shapes.Contains("cylRolled=9 cylPitched=32 "),
-                  "nine cylinders lie along the street and thirty-two are pitched, as printed on the live tree",
+            // twelve swan-neck segments); read off this print on the live
+            // tree, 2 Sep, and the second gutter is the ship chandler's,
+            // added 24 Sep. Planting on_stacks [1] in the JSON drops the
+            // counts and goes red here.
+            Check(shapes.Contains("cylRolled=10 cylPitched=32 "),
+                  "ten cylinders lie along the street and thirty-two are pitched, as printed on the live tree",
                   shapes);
 
             // A CYLINDER HAS ONE DIAMETER, NOT TWO, AND THIS GUARD WENT RED
@@ -22520,8 +22521,12 @@ namespace Ledger.CoreTests
         /// some shops open and some shut rather than a parade switched on at
         /// the mains. The night frame gains two lit windows on the near side,
         /// which is where the camera now stands.
-        const int WINDOW_CARDS_EXPECTED = 9;
-        const int WINDOW_LIT_EXPECTED = 5;
+        /// TEN AND SIX FROM 24 SEPTEMBER: the ship chandler's shop, a building
+        /// of its own north of the parade, brings its own interior card, and
+        /// it is lit at night with the others - the lit bays are named by
+        /// bay number in the JSON, and its one bay is bay 0.
+        const int WINDOW_CARDS_EXPECTED = 10;
+        const int WINDOW_LIT_EXPECTED = 6;
 
         /// PIECES CARRYING TWO NON-ZERO ROTATIONS, read off the live tree
         /// rather than assumed. Kept as a named constant because it is a

@@ -29,8 +29,8 @@
   },
 
   "street": {
-    "length_m": 42.0,
-    "length_note": "judgement. Long enough that cam_A has a kerb line running to a vanishing point through the fog, short enough that the whole vignette is one dispatch. The blocks occupy 3.0 to 39.0, so the road runs past them at both ends and the frame has no visible edge of the world.",
+    "length_m": 48.0,
+    "length_note": "judgement. Long enough that cam_A has a kerb line running to a vanishing point through the fog, short enough that the whole vignette is one dispatch. The blocks occupy 3.0 to 39.0, so the road runs past them at both ends and the frame has no visible edge of the world. LENGTHENED 24 September from 42.0 to 48.0 for the ship chandler's, which stands 40.0 to 46.0, so the road still runs past the blocks at both ends.",
 
     "carriageway": {
       "half_width_m": 3.0,
@@ -145,6 +145,27 @@
         "surface": "concrete"
       },
       "note": "SHOPS, ruled by Jafar 2026-09-22. This block was plain for one stated reason - \"plain wall with a side door, not a shopfront, because cam_B stands here and never photographs it\" - and that reason lapsed the day the hook camera moved onto this pavement: the block now fills the left third of the frame the whole stage is judged on, and the approved Hook sheet has a shop close on its near left with the street opening out beyond it. west_south stays PLAIN, so the contrast between the parade and the terraces survives and the street still changes as you walk down it. The 3.0 m between west_south's end at x=21.0 and this block's start at x=24.0 is the YARD ENTRANCE, and it is a gap in the data rather than a modelled object. It is what makes the dropped kerb above legitimate, and a dark slot in a terrace run is one of the cheapest night-frame reads there is."
+    },
+    {
+      "id": "east_chandler",
+      "bom": "C1_terrace_carcass",
+      "side": "east",
+      "start_x_m": 40.0,
+      "bays": 1,
+      "bay_width_m": 6.0,
+      "depth_m": 8.0,
+      "storey_heights_m": [3.40, 2.80],
+      "wall_surface": "brick_grey",
+      "ground_floor": "shopfront",
+      "end_stack": true,
+      "roof": {
+        "kind": "pitched",
+        "pitch_deg": 35.0,
+        "eaves_overhang_m": 0.30,
+        "surface": "roof",
+        "note": "trade_standard, as the parade's: a slated pitch clear of the slate minimum."
+      },
+      "note": "THE SHIP CHANDLER'S, added 24 September as the measurement sitting's one new building. The plan names a chandler among the Hook's frontage uses (production/research/atlas-01/TOWN-FORM-BIBLE.md, D07/D08) and the street had none; a resident keeps 'a chandler's stall by the repair yard'. A building of its own, not a seventh bay: a 1.0 m passage separates it from the parade's north end at 39.0, its brick is the older grey of the far side rather than the parade's red, and its front is a metal refit (D06: 'Hook shops receive metal frames'). One 6.0 m bay on the parade's module and storey heights, so its levels line through with its neighbour's."
     }
   ],
 
