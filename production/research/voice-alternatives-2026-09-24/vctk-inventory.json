@@ -1,0 +1,1096 @@
+{
+ "speakers": {
+  "p225": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p226": {
+   "age": "22",
+   "gender": "M",
+   "accent": "English",
+   "region": "Surrey"
+  },
+  "p227": {
+   "age": "38",
+   "gender": "M",
+   "accent": "English",
+   "region": "Cumbria"
+  },
+  "p228": {
+   "age": "22",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p229": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p230": {
+   "age": "22",
+   "gender": "F",
+   "accent": "English",
+   "region": "Stockton-on-tees"
+  },
+  "p231": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p232": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p233": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Staffordshire"
+  },
+  "p234": {
+   "age": "22",
+   "gender": "F",
+   "accent": "Scottish",
+   "region": "West Dumfries"
+  },
+  "p236": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Manchester"
+  },
+  "p237": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Fife"
+  },
+  "p238": {
+   "age": "22",
+   "gender": "F",
+   "accent": "NorthernIrish",
+   "region": "Belfast"
+  },
+  "p239": {
+   "age": "22",
+   "gender": "F",
+   "accent": "English",
+   "region": "SW England"
+  },
+  "p240": {
+   "age": "21",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p241": {
+   "age": "21",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Perth"
+  },
+  "p243": {
+   "age": "22",
+   "gender": "M",
+   "accent": "English",
+   "region": "London"
+  },
+  "p244": {
+   "age": "22",
+   "gender": "F",
+   "accent": "English",
+   "region": "Manchester"
+  },
+  "p245": {
+   "age": "25",
+   "gender": "M",
+   "accent": "Irish",
+   "region": "Dublin"
+  },
+  "p246": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Selkirk"
+  },
+  "p247": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Argyll"
+  },
+  "p248": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Indian",
+   "region": ""
+  },
+  "p249": {
+   "age": "22",
+   "gender": "F",
+   "accent": "Scottish",
+   "region": "Aberdeen"
+  },
+  "p250": {
+   "age": "22",
+   "gender": "F",
+   "accent": "English",
+   "region": "SE England"
+  },
+  "p251": {
+   "age": "26",
+   "gender": "M",
+   "accent": "Indian",
+   "region": ""
+  },
+  "p252": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Edinburgh"
+  },
+  "p253": {
+   "age": "22",
+   "gender": "F",
+   "accent": "Welsh",
+   "region": "Cardiff"
+  },
+  "p254": {
+   "age": "21",
+   "gender": "M",
+   "accent": "English",
+   "region": "Surrey"
+  },
+  "p255": {
+   "age": "19",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Galloway"
+  },
+  "p256": {
+   "age": "24",
+   "gender": "M",
+   "accent": "English",
+   "region": "Birmingham"
+  },
+  "p257": {
+   "age": "24",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p258": {
+   "age": "22",
+   "gender": "M",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p259": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "Nottingham"
+  },
+  "p260": {
+   "age": "21",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Orkney"
+  },
+  "p261": {
+   "age": "26",
+   "gender": "F",
+   "accent": "NorthernIrish",
+   "region": "Belfast"
+  },
+  "p262": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Scottish",
+   "region": "Edinburgh"
+  },
+  "p263": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Aberdeen"
+  },
+  "p264": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Scottish",
+   "region": "West Lothian"
+  },
+  "p265": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Scottish",
+   "region": "Ross"
+  },
+  "p266": {
+   "age": "22",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "Athlone"
+  },
+  "p267": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Yorkshire"
+  },
+  "p268": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Southern England"
+  },
+  "p269": {
+   "age": "20",
+   "gender": "F",
+   "accent": "English",
+   "region": "Newcastle"
+  },
+  "p270": {
+   "age": "21",
+   "gender": "M",
+   "accent": "English",
+   "region": "Yorkshire"
+  },
+  "p271": {
+   "age": "19",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Fife"
+  },
+  "p272": {
+   "age": "23",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Edinburgh"
+  },
+  "p273": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "Suffolk"
+  },
+  "p274": {
+   "age": "22",
+   "gender": "M",
+   "accent": "English",
+   "region": "Essex"
+  },
+  "p275": {
+   "age": "23",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Midlothian"
+  },
+  "p276": {
+   "age": "24",
+   "gender": "F",
+   "accent": "English",
+   "region": "Oxford"
+  },
+  "p277": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "NE England"
+  },
+  "p278": {
+   "age": "22",
+   "gender": "M",
+   "accent": "English",
+   "region": "Cheshire"
+  },
+  "p279": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "Leicester"
+  },
+  "p280": {
+   "age": "25",
+   "gender": "F",
+   "accent": "Unknown",
+   "region": "France"
+  },
+  "p281": {
+   "age": "29",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Edinburgh"
+  },
+  "p282": {
+   "age": "23",
+   "gender": "F",
+   "accent": "English",
+   "region": "Newcastle"
+  },
+  "p283": {
+   "age": "24",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "Cork"
+  },
+  "p284": {
+   "age": "20",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Fife"
+  },
+  "p285": {
+   "age": "21",
+   "gender": "M",
+   "accent": "Scottish",
+   "region": "Edinburgh"
+  },
+  "p286": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "Newcastle"
+  },
+  "p287": {
+   "age": "23",
+   "gender": "M",
+   "accent": "English",
+   "region": "York"
+  },
+  "p288": {
+   "age": "22",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "Dublin"
+  },
+  "p292": {
+   "age": "23",
+   "gender": "M",
+   "accent": "NorthernIrish",
+   "region": "Belfast"
+  },
+  "p293": {
+   "age": "22",
+   "gender": "F",
+   "accent": "NorthernIrish",
+   "region": "Belfast"
+  },
+  "p294": {
+   "age": "33",
+   "gender": "F",
+   "accent": "American",
+   "region": "San Francisco"
+  },
+  "p295": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "Dublin"
+  },
+  "p297": {
+   "age": "20",
+   "gender": "F",
+   "accent": "American",
+   "region": "New York"
+  },
+  "p298": {
+   "age": "19",
+   "gender": "M",
+   "accent": "Irish",
+   "region": "Tipperary"
+  },
+  "p299": {
+   "age": "25",
+   "gender": "F",
+   "accent": "American",
+   "region": "California"
+  },
+  "p300": {
+   "age": "23",
+   "gender": "F",
+   "accent": "American",
+   "region": "California"
+  },
+  "p301": {
+   "age": "23",
+   "gender": "F",
+   "accent": "American",
+   "region": "North Carolina"
+  },
+  "p302": {
+   "age": "20",
+   "gender": "M",
+   "accent": "Canadian",
+   "region": "Montreal"
+  },
+  "p303": {
+   "age": "24",
+   "gender": "F",
+   "accent": "Canadian",
+   "region": "Toronto"
+  },
+  "p304": {
+   "age": "22",
+   "gender": "M",
+   "accent": "NorthernIrish",
+   "region": "Belfast"
+  },
+  "p305": {
+   "age": "19",
+   "gender": "F",
+   "accent": "American",
+   "region": "Philadelphia"
+  },
+  "p306": {
+   "age": "21",
+   "gender": "F",
+   "accent": "American",
+   "region": "New York"
+  },
+  "p307": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Canadian",
+   "region": "Ontario"
+  },
+  "p308": {
+   "age": "18",
+   "gender": "F",
+   "accent": "American",
+   "region": "Alabama"
+  },
+  "p310": {
+   "age": "21",
+   "gender": "F",
+   "accent": "American",
+   "region": "Tennessee"
+  },
+  "p311": {
+   "age": "21",
+   "gender": "M",
+   "accent": "American",
+   "region": "Iowa"
+  },
+  "p312": {
+   "age": "19",
+   "gender": "F",
+   "accent": "Canadian",
+   "region": "Hamilton"
+  },
+  "p313": {
+   "age": "24",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "County Down"
+  },
+  "p314": {
+   "age": "26",
+   "gender": "F",
+   "accent": "SouthAfrican",
+   "region": "Cape Town"
+  },
+  "p316": {
+   "age": "20",
+   "gender": "M",
+   "accent": "Canadian",
+   "region": "Alberta"
+  },
+  "p317": {
+   "age": "23",
+   "gender": "F",
+   "accent": "Canadian",
+   "region": "Hamilton"
+  },
+  "p318": {
+   "age": "32",
+   "gender": "F",
+   "accent": "American",
+   "region": "Napa"
+  },
+  "p323": {
+   "age": "19",
+   "gender": "F",
+   "accent": "SouthAfrican",
+   "region": "Pretoria"
+  },
+  "p326": {
+   "age": "26",
+   "gender": "M",
+   "accent": "Australian",
+   "region": "English Sydney"
+  },
+  "p329": {
+   "age": "23",
+   "gender": "F",
+   "accent": "American",
+   "region": ""
+  },
+  "p330": {
+   "age": "26",
+   "gender": "F",
+   "accent": "American",
+   "region": ""
+  },
+  "p333": {
+   "age": "19",
+   "gender": "F",
+   "accent": "American",
+   "region": "Indiana"
+  },
+  "p334": {
+   "age": "18",
+   "gender": "M",
+   "accent": "American",
+   "region": "Chicago"
+  },
+  "p335": {
+   "age": "25",
+   "gender": "F",
+   "accent": "NewZealand",
+   "region": "English"
+  },
+  "p336": {
+   "age": "18",
+   "gender": "F",
+   "accent": "SouthAfrican",
+   "region": "Johannesburg"
+  },
+  "p339": {
+   "age": "21",
+   "gender": "F",
+   "accent": "American",
+   "region": "Pennsylvania"
+  },
+  "p340": {
+   "age": "18",
+   "gender": "F",
+   "accent": "Irish",
+   "region": "Dublin"
+  },
+  "p341": {
+   "age": "26",
+   "gender": "F",
+   "accent": "American",
+   "region": "Ohio"
+  },
+  "p343": {
+   "age": "27",
+   "gender": "F",
+   "accent": "Canadian",
+   "region": "Alberta"
+  },
+  "p345": {
+   "age": "22",
+   "gender": "M",
+   "accent": "American",
+   "region": "Florida"
+  },
+  "p347": {
+   "age": "26",
+   "gender": "M",
+   "accent": "SouthAfrican",
+   "region": "Johannesburg"
+  },
+  "p351": {
+   "age": "21",
+   "gender": "F",
+   "accent": "NorthernIrish",
+   "region": "Derry"
+  },
+  "p360": {
+   "age": "19",
+   "gender": "M",
+   "accent": "American",
+   "region": "New Jersey"
+  },
+  "p361": {
+   "age": "19",
+   "gender": "F",
+   "accent": "American",
+   "region": "New Jersey"
+  },
+  "p362": {
+   "age": "29",
+   "gender": "F",
+   "accent": "American",
+   "region": ""
+  },
+  "p363": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Canadian",
+   "region": "Toronto"
+  },
+  "p364": {
+   "age": "23",
+   "gender": "M",
+   "accent": "Irish",
+   "region": "Donegal"
+  },
+  "p374": {
+   "age": "28",
+   "gender": "M",
+   "accent": "Australian",
+   "region": "English"
+  },
+  "p376": {
+   "age": "22",
+   "gender": "M",
+   "accent": "Indian",
+   "region": ""
+  },
+  "s5": {
+   "age": "22",
+   "gender": "F",
+   "accent": "British",
+   "region": ""
+  }
+ },
+ "first_row_group": {
+  "p225": [
+   "main/train/0000.parquet",
+   0
+  ],
+  "p226": [
+   "main/train/0000.parquet",
+   4
+  ],
+  "p227": [
+   "main/train/0000.parquet",
+   11
+  ],
+  "p228": [
+   "main/train/0000.parquet",
+   19
+  ],
+  "p229": [
+   "main/train/0000.parquet",
+   26
+  ],
+  "p230": [
+   "main/train/0001.parquet",
+   1
+  ],
+  "p231": [
+   "main/train/0001.parquet",
+   9
+  ],
+  "p232": [
+   "main/train/0001.parquet",
+   18
+  ],
+  "p233": [
+   "main/train/0001.parquet",
+   27
+  ],
+  "p234": [
+   "main/train/0002.parquet",
+   1
+  ],
+  "p236": [
+   "main/train/0002.parquet",
+   8
+  ],
+  "p237": [
+   "main/train/0002.parquet",
+   18
+  ],
+  "p238": [
+   "main/train/0002.parquet",
+   25
+  ],
+  "p239": [
+   "main/train/0003.parquet",
+   2
+  ],
+  "p240": [
+   "main/train/0003.parquet",
+   12
+  ],
+  "p241": [
+   "main/train/0003.parquet",
+   19
+  ],
+  "p243": [
+   "main/train/0003.parquet",
+   26
+  ],
+  "p244": [
+   "main/train/0004.parquet",
+   1
+  ],
+  "p245": [
+   "main/train/0004.parquet",
+   10
+  ],
+  "p246": [
+   "main/train/0004.parquet",
+   17
+  ],
+  "p247": [
+   "main/train/0004.parquet",
+   24
+  ],
+  "p248": [
+   "main/train/0005.parquet",
+   1
+  ],
+  "p249": [
+   "main/train/0005.parquet",
+   8
+  ],
+  "p250": [
+   "main/train/0005.parquet",
+   15
+  ],
+  "p251": [
+   "main/train/0005.parquet",
+   25
+  ],
+  "p252": [
+   "main/train/0005.parquet",
+   32
+  ],
+  "p253": [
+   "main/train/0006.parquet",
+   7
+  ],
+  "p254": [
+   "main/train/0006.parquet",
+   15
+  ],
+  "p255": [
+   "main/train/0006.parquet",
+   23
+  ],
+  "p256": [
+   "main/train/0006.parquet",
+   30
+  ],
+  "p257": [
+   "main/train/0007.parquet",
+   4
+  ],
+  "p258": [
+   "main/train/0007.parquet",
+   13
+  ],
+  "p259": [
+   "main/train/0007.parquet",
+   21
+  ],
+  "p260": [
+   "main/train/0007.parquet",
+   31
+  ],
+  "p261": [
+   "main/train/0008.parquet",
+   5
+  ],
+  "p262": [
+   "main/train/0008.parquet",
+   14
+  ],
+  "p263": [
+   "main/train/0008.parquet",
+   22
+  ],
+  "p264": [
+   "main/train/0008.parquet",
+   32
+  ],
+  "p265": [
+   "main/train/0009.parquet",
+   9
+  ],
+  "p266": [
+   "main/train/0009.parquet",
+   16
+  ],
+  "p267": [
+   "main/train/0009.parquet",
+   24
+  ],
+  "p268": [
+   "main/train/0010.parquet",
+   0
+  ],
+  "p269": [
+   "main/train/0010.parquet",
+   8
+  ],
+  "p270": [
+   "main/train/0010.parquet",
+   16
+  ],
+  "p271": [
+   "main/train/0010.parquet",
+   25
+  ],
+  "p272": [
+   "main/train/0011.parquet",
+   2
+  ],
+  "p273": [
+   "main/train/0011.parquet",
+   10
+  ],
+  "p274": [
+   "main/train/0011.parquet",
+   18
+  ],
+  "p275": [
+   "main/train/0011.parquet",
+   28
+  ],
+  "p276": [
+   "main/train/0012.parquet",
+   3
+  ],
+  "p277": [
+   "main/train/0012.parquet",
+   13
+  ],
+  "p278": [
+   "main/train/0012.parquet",
+   22
+  ],
+  "p279": [
+   "main/train/0012.parquet",
+   30
+  ],
+  "p280": [
+   "main/train/0013.parquet",
+   5
+  ],
+  "p281": [
+   "main/train/0013.parquet",
+   10
+  ],
+  "p282": [
+   "main/train/0013.parquet",
+   19
+  ],
+  "p283": [
+   "main/train/0013.parquet",
+   26
+  ],
+  "p284": [
+   "main/train/0014.parquet",
+   3
+  ],
+  "p285": [
+   "main/train/0014.parquet",
+   11
+  ],
+  "p286": [
+   "main/train/0014.parquet",
+   19
+  ],
+  "p287": [
+   "main/train/0014.parquet",
+   29
+  ],
+  "p288": [
+   "main/train/0015.parquet",
+   5
+  ],
+  "p292": [
+   "main/train/0015.parquet",
+   13
+  ],
+  "p293": [
+   "main/train/0015.parquet",
+   21
+  ],
+  "p294": [
+   "main/train/0015.parquet",
+   29
+  ],
+  "p295": [
+   "main/train/0016.parquet",
+   5
+  ],
+  "p297": [
+   "main/train/0016.parquet",
+   13
+  ],
+  "p298": [
+   "main/train/0016.parquet",
+   21
+  ],
+  "p299": [
+   "main/train/0016.parquet",
+   29
+  ],
+  "p300": [
+   "main/train/0017.parquet",
+   5
+  ],
+  "p301": [
+   "main/train/0017.parquet",
+   13
+  ],
+  "p302": [
+   "main/train/0017.parquet",
+   21
+  ],
+  "p303": [
+   "main/train/0017.parquet",
+   27
+  ],
+  "p304": [
+   "main/train/0018.parquet",
+   2
+  ],
+  "p305": [
+   "main/train/0018.parquet",
+   10
+  ],
+  "p306": [
+   "main/train/0018.parquet",
+   19
+  ],
+  "p307": [
+   "main/train/0018.parquet",
+   26
+  ],
+  "p308": [
+   "main/train/0019.parquet",
+   1
+  ],
+  "p310": [
+   "main/train/0019.parquet",
+   10
+  ],
+  "p311": [
+   "main/train/0019.parquet",
+   18
+  ],
+  "p312": [
+   "main/train/0019.parquet",
+   27
+  ],
+  "p313": [
+   "main/train/0020.parquet",
+   2
+  ],
+  "p314": [
+   "main/train/0020.parquet",
+   11
+  ],
+  "p316": [
+   "main/train/0020.parquet",
+   19
+  ],
+  "p317": [
+   "main/train/0020.parquet",
+   28
+  ],
+  "p318": [
+   "main/train/0021.parquet",
+   3
+  ],
+  "p323": [
+   "main/train/0021.parquet",
+   12
+  ],
+  "p326": [
+   "main/train/0021.parquet",
+   20
+  ],
+  "p329": [
+   "main/train/0021.parquet",
+   28
+  ],
+  "p330": [
+   "main/train/0022.parquet",
+   4
+  ],
+  "p333": [
+   "main/train/0022.parquet",
+   13
+  ],
+  "p334": [
+   "main/train/0022.parquet",
+   21
+  ],
+  "p335": [
+   "main/train/0022.parquet",
+   30
+  ],
+  "p336": [
+   "main/train/0023.parquet",
+   5
+  ],
+  "p339": [
+   "main/train/0023.parquet",
+   14
+  ],
+  "p340": [
+   "main/train/0023.parquet",
+   22
+  ],
+  "p341": [
+   "main/train/0023.parquet",
+   31
+  ],
+  "p343": [
+   "main/train/0024.parquet",
+   6
+  ],
+  "p345": [
+   "main/train/0024.parquet",
+   14
+  ],
+  "p347": [
+   "main/train/0024.parquet",
+   22
+  ],
+  "p351": [
+   "main/train/0024.parquet",
+   30
+  ],
+  "p360": [
+   "main/train/0025.parquet",
+   6
+  ],
+  "p361": [
+   "main/train/0025.parquet",
+   15
+  ],
+  "p362": [
+   "main/train/0025.parquet",
+   23
+  ],
+  "p363": [
+   "main/train/0025.parquet",
+   25
+  ],
+  "p364": [
+   "main/train/0026.parquet",
+   1
+  ],
+  "p374": [
+   "main/train/0026.parquet",
+   7
+  ],
+  "p376": [
+   "main/train/0026.parquet",
+   16
+  ],
+  "s5": [
+   "main/train/0026.parquet",
+   24
+  ]
+ }
+}

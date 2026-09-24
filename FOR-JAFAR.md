@@ -4,13 +4,39 @@ Everything meant for him lives here. Nothing is ever only in a message.
 Ruled 2026-09-22, after "For you:" items went into reports and were lost
 between them.
 
-## Overnight
+## This morning (24 September, the short sitting)
 
-1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second at your screen size: 79 without the voice, 75 with it, and the slowest 1% at 59, right at the edge. Stage 1 went from 4 to 24 of 47 done.
-2. **Numbers worth knowing:** the game holds 80 frames a second at your screen size with Nano speaking, but Nano is slower than talk while the game runs. The game uses 4.6 GB of the card and Nano 2.1 GB.
-3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I've carried on with the picks.
-4. **Went wrong:** the scans first went on at half size. Five builds went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. The hill's mist didn't move on either try and is set aside. All the rest is fixed.
-5. **Your C: drive is 98% full,** under 20 GB free. I've deleted nothing.
+1. **The disk:** C: had 5.1 GB free and now has 19 GB. I cleared only what was ours and rebuildable: the probe's old compile files (5.7 GB) and Python's download cache (7.8 GB). The biggest win, 33 GB of leftovers in the build runner's copy, needs your yes (below). The twenty largest folders are listed underneath.
+2. **The MetaHuman:** being dressed now. Details to follow.
+3. **The voices:** [the listening page is ready](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447). Aldous, Danny, June and Zlata are each heard in their current voice and in three others, and you pick one each (below). The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
+4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded, and one new question is below: how much the town says is written ahead.
+5. **The router:** your three changes are on the list, in stage 2.
+6. **A backup:** a proposal is below. Nothing is set up.
+
+**The twenty largest folders on C:**, biggest first. "Yours" means I haven't touched it and won't.
+
+1. Ai Shoujo, 184 GB: a game of yours, 165 GB of it mods. Yours.
+2. Anno 117, 138 GB: a Steam game. Steam can reinstall it. Yours.
+3. Kingdom Come: Deliverance II, 88 GB: the game we compare the street against. Keep.
+4. The build runner's copy of our game, 50 GB: 33 GB of it is leftovers. The question is below.
+5. Unreal Engine 5.8, 38 GB: the engine. Keep.
+6. Total War: Rome II, 38 GB: a Steam game. Yours.
+7. Honey Select 2, 38 GB: a game of yours. Yours.
+8. Windows, 37 GB. Keep.
+9. This project, 21 GB (was 26.5): 16 GB of it is its history. Keep; its old compile files are cleared.
+10. LM Studio's models, 24 GB: AI models downloaded through LM Studio. Nothing in the project uses them. Yours.
+11. wc26-picks, 23 GB: the old copy of the project. 16 GB of it is the voice tools the game still runs from. The question is below.
+12. Downloads, 22 GB. Yours.
+13. Manor Lords, 15 GB: a Steam game. Yours.
+14. Vuze, 15 GB: the Vuze download program's folder. Yours.
+15. ledger-migrate, 15 GB: the older copy of the project. The question is below.
+16. Stable Diffusion (DirectML), 13 GB: an image generator from before. Nothing in the project uses it now. Yours.
+17. ledger-llama, 11 GB: the local-models research's models. Keep: a local model is still the likely fallback when the connection drops.
+18. Star Trek: Voyager demo, 9 GB: a Steam demo. Yours.
+19. Unity 6000.0, 8.6 GB: the Unity editor from before the move to Unreal. Its project was archived, not deleted, and was touched as late as yesterday, so ask me before removing it.
+20. Python's download cache, 7.8 GB: cleared. Anything needed downloads again.
+
+Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor start recompiles for a long time), and the Ubisoft launcher's leftover update, 7.6 GB (yours; the launcher can clear it).
 
 ## The plan at a glance
 
@@ -27,6 +53,12 @@ between them.
 
 ## Decisions waiting on me
 
+- 2026-09-24 **Pick a voice each for Aldous, Danny, June and Zlata: [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard in the voice cast on 14 August and in three other VCTK speakers nobody else in the game uses: saying one of the character's lines, and reading the same sentence as everyone else. The picks marked here are made on paper from the briefs, because I can't hear them; your ears decide.
+  - Aldous: **p281, Edinburgh, 29, the oldest free man (paper pick)**; p232 and p258, Southern England; or keep p226, Surrey.
+  - Danny: **p243, London (paper pick)**; p274, Essex; p286, Newcastle; or keep p254, Surrey.
+  - June: **p257, Southern England, 24, the oldest free English woman (paper pick)**; p267, Yorkshire; p277, North East; or keep p225, Southern England.
+  - Zlata: **p280, from France, English as a second language (paper pick)**; p261, Belfast, 26; p236, Manchester; or keep p233, Staffordshire.
+  - Meanwhile: nothing is cast and nothing is recorded with any of them. Nobody on the page is older than 38, so Aldous's and Zlata's ages will have to come from the voice engine's settings.
 - 2026-09-24 **How much of what the town says is written ahead, rather than made up live?** It's the biggest single lever on the bill (the business research), and it's what keeps the street alive once a player's allowance runs out.
   - **(a) Everything the town says unprompted is written ahead (my recommendation).** That means greetings, remarks in passing, reactions, rumours passed on and stock replies, from a large bank written and checked before release. Live talk is only for when you speak to someone and they answer you. What people say to each other and about you is most of what a street says, so most of the bill comes off. The bank is checked against the content rule once, before it ships, and the street sounds the same whether or not the allowance is left.
   - (b) Only short barks written ahead. Rumours and remarks are made up live too. Richer and less repetitive, but the bill grows with every hour on the street, and the street falls quieter when the allowance ends.
@@ -37,9 +69,24 @@ between them.
   - (b) Delete the runner's copy outright. It frees about 50 GB, and the next build re-downloads everything and compiles from scratch, about an hour.
   - (c) Leave it.
   - Meanwhile: nothing on the runner is touched. I'm clearing only what is ours and provably rebuildable.
+- 2026-09-24 **Where should the backup of what isn't in the project's history go?** It starts with the MetaHuman: your MH_Test (140 MB) and his built files (200 MB), about 350 MB. After that come the few files that exist only in the old copies. It leaves out the voice tools and models, which can be downloaded again, and never includes the AI key.
+  - **(a) A private release on the project's GitHub (my recommendation).** Free: GitHub charges nothing for release files, up to 2 GB each. Each backup is a dated zip you can download in one click, kept apart from the code's history as you ruled. I'd make one at the end of any sitting that changes these files.
+  - (b) Your Dropbox. It's already on this PC and syncs by itself. Free up to 2 GB, so it fits, but it shares that space with whatever else you keep there.
+  - (c) A USB drive, about £50 for 1 TB. It's offline, but it sits beside the PC, so a fire or a theft takes both.
+  - (d) Git LFS in the project. 1 GB free, then $5 a month per 50 GB. It puts the files into the history, against your ruling.
+  - Meanwhile: nothing is set up. There's one extra copy of MH_Test on this PC, taken before this morning's dressing.
+- 2026-09-24 **The two old copies of the project hold 38 GB. What goes?** Both copies' histories are on GitHub.
+  - ledger-migrate (15 GB) holds, only here: logs from the retired studio's supervisor, one answer file from 11 September, and the copy of the game your "play the street" shortcut opens (1.9 GB), which every build refreshes.
+  - wc26-picks (23 GB) holds the voice tools the game's voice still runs from (16 GB), and one recording, bench-spoke.wav, that exists only here.
+  - **(a) Next housekeeping sitting: move the voice tools and the played copy of the game into their own folder, point the build and the shortcut there, save the only-here files into the project, then delete both old copies (my recommendation).** It frees about 20 GB, and nothing that runs today breaks.
+  - (b) Delete only ledger-migrate's history now, 10.8 GB, and leave everything else.
+  - (c) Leave both.
+  - Meanwhile: both are untouched.
 
 ## Things you should know
 
+- 2026-09-24 **Downloaded for the listening page:** the first dozen recordings of sixteen VCTK speakers, read from the Edinburgh collection on HuggingFace (CC BY 4.0), about 15 MB of it per speaker. They're kept outside the project; the scripts that fetch them again are in the project.
+- 2026-09-24 **Nano can't learn a new voice on the card.** It crashes the whole process, at the same maths step the card can't do that I worked around last night for playback. The listening page's lines were made on the processor instead, about 10 seconds a line. Worth knowing before voices are cloned on the card at run time.
 - 2026-09-24 **The business research is done, on its own branch** (research/runtime-ai-business). Nobody publishes what live AI costs per hour of play, so our own measurement will be the best figure anywhere. Every game that offered unlimited talk for one price had a rich backer or moved to cheaper or local models. And our model's price isn't falling: savings only come from being able to switch models.
 - 2026-09-24 **The sitting now runs to three hours, not one,** because the card came free and the MetaHuman dressing and the listening page joined it. I stop when those and the disk job are done. Say if you want it shorter.
 
@@ -765,6 +812,12 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 (read by Jafar the morning of 24 Sep; his answers came back) The overnight report, kept as it was:
+  1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second at your screen size: 79 without the voice, 75 with it, and the slowest 1% at 59, right at the edge. Stage 1 went from 4 to 24 of 47 done.
+  2. **Numbers worth knowing:** the game holds 80 frames a second at your screen size with Nano speaking, but Nano is slower than talk while the game runs. The game uses 4.6 GB of the card and Nano 2.1 GB.
+  3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I've carried on with the picks.
+  4. **Went wrong:** the scans first went on at half size. Five builds went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. The hill's mist didn't move on either try and is set aside. All the rest is fixed.
+  5. **Your C: drive is 98% full,** under 20 GB free. I've deleted nothing.
 - 2026-09-24 (resolved 24 Sep: (a), as the WORKING business direction, not a final one; recorded in DECISIONS.md; the allowance must comfortably exceed a normal playthrough) **How should the game pay for its live talk?** (research/runtime-ai-business, SUMMARY.md, and a spreadsheet you can change.)
   - **(a) Sell the game once, with a generous allowance of live talk per copy counted on our own server; after it, written lines and the ruled brush-off. An optional mode for players' own keys, and running on capable cards later (my recommendation).** It is the one shape that caps what a copy can cost: at the placeholder 14 cents an hour, a 40-hour allowance costs at most $5.60 of the $17.49 we keep from a $24.99 sale.
   - (b) Sell once with no allowance. Fine at 14 cents an hour, but at 36 cents a 120-hour player costs us $26 more than they paid.
