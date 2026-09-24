@@ -1,2 +1,2 @@
-slicePerf=uw-half status=MEETS frames=1500 medianMs=12.73 p95Ms=13.27 p99Ms=13.65 worstMs=14.18 fps=78.5 gpuMedianMs=11.74 over16.7=0 over33.3=0 gpuMemMB=4569 target=60fps-at-3440x1440/never-below-30
+slicePerf=uw-half status=MEETS frames=1500 medianMs=12.71 p95Ms=13.26 p99Ms=13.54 worstMs=14.37 fps=78.7 gpuMedianMs=11.73 over16.7=0 over33.3=0 gpuMemMB=4567 target=60fps-at-3440x1440/never-below-30
 slicePerfResolution=3440x1440
