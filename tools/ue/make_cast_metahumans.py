@@ -43,6 +43,39 @@ GARMENT = "/MetaHumanCharacter/Optional/Clothing/WI_DefaultGarment.WI_DefaultGar
 # MetaHuman SDK registers a factory for .mhpkg (MetaHumanPackageFactory), so
 # an unreal.AssetImportTask on the file should bring each in by script; its
 # wardrobe item then takes GARMENT's place above (24 September, untried).
+# WHAT EACH WEARS, plain and of the period, from Epic's free Fab items (their
+# .mhpkg file names, as the listings give them for the jeans: oa_jeans.mhpkg;
+# the rest are guesses until downloaded). Dropped in FAB_DOWNLOADS, imported
+# by import_fab_packages(), then put on in place of GARMENT.
+FAB_DOWNLOADS = os.path.join(os.path.expanduser("~"), "Downloads")
+FAB_IMPORT_DIR = "/Game/Fab/"
+OUTFITS = {
+    "lena": ("sweater", "jeans", "flats"),
+    "rocco": ("sweater", "jeans", "boots"),
+    "sam": ("tshirt", "slimjeans", "sneakers"),
+}
+
+
+def fab_packages(names):
+    """The MetaHuman package files among these file names."""
+    return [n for n in names if n.lower().endswith(".mhpkg")]
+
+
+def import_fab_packages():
+    """Imports every .mhpkg in FAB_DOWNLOADS under FAB_IMPORT_DIR; the paths it made."""
+    import unreal
+    files = fab_packages(os.listdir(FAB_DOWNLOADS)) if os.path.isdir(FAB_DOWNLOADS) else []
+    tasks = []
+    for f in files:
+        t = unreal.AssetImportTask()
+        t.set_editor_property("filename", os.path.join(FAB_DOWNLOADS, f))
+        t.set_editor_property("destination_path", FAB_IMPORT_DIR + os.path.splitext(f)[0])
+        t.set_editor_property("automated", True)
+        t.set_editor_property("save", True)
+        tasks.append(t)
+    if tasks:
+        unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks(tasks)
+    return [p for t in tasks for p in (t.get_editor_property("imported_object_paths") or [])]
 NEED_FREE_GB = 10.0
 CLOUD_TIMEOUT_S = 15 * 60
 
@@ -449,6 +482,9 @@ def selftest():
     check("only the haircut's own materials are recoloured",
           hair_materials("lena", ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x", "/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x",
                                   "/Game/x/Grooms/Hair_M_BobCurly.x"]) == ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x"])
+    check("everyone is dressed head to foot, shoes included",
+          sorted(OUTFITS) == ["lena", "rocco", "sam"] and all(len(o) == 3 for o in OUTFITS.values()))
+    check("only MetaHuman packages are imported", fab_packages(["oa_jeans.mhpkg", "notes.txt", "x.zip"]) == ["oa_jeans.mhpkg"])
     check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
     print("make_cast_metahumans selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
