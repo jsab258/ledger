@@ -23,7 +23,8 @@ port town, 1988 to 1992.
 ## Constraints (the writer's role file carries the standing ones)
 - A line KNOWS its rung. A stranger line never contains Novak, Tom or Toma.
   A novak line never contains Tom or Toma as address. Mechanically checked.
-- No real brands. Beer is mild, bitter, stout, never a marque. The football
+- No real brands. D18 governs the room: tea from the urn, food, the telly,
+  the fire, dominoes and darts, and nothing played for money. The football
   club, paper, radio station are not yet named: refer to them obliquely
   (the match, the local rag, the pirate station) until the brand bible mints
   names.

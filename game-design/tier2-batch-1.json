@@ -22,7 +22,7 @@
   ],
   "secret": {
    "kind": "shameful",
-   "line": "I skim a little off every appraisal to cover a gambling debt I haven't told my wife about.",
+   "line": "I skim a little off every appraisal to cover a loan against the shop I haven't told my wife about.",
    "knownBy": []
   },
   "need": "A steady, quiet supplier of goods he doesn't have to ask questions about.",
@@ -68,7 +68,7 @@
    "loyalty": 0.75
   },
   "summary": "Petra sells tickets at the ferry stop and keeps the passenger manifest, which means she knows exactly who left the Hook and when. She's friendly enough that people forget how much she's actually recording.",
-  "personality": "She's warm and talkative, the kind of person who remembers your name and your kids' names too. Underneath it she's protective to a fault, especially of her younger brother.",
+  "personality": "She's warm and talkative, the kind of person who remembers your name and your mother's name too. Underneath it she's protective to a fault, especially of her younger brother.",
   "speech": "Chatty and quick, she asks as many questions as she answers.",
   "hardFacts": [
    "I sell tickets at the ferry stop six days a week.",
@@ -256,14 +256,14 @@
    "nerve": 0.3,
    "loyalty": 0.8
   },
-  "summary": "Magda has kept house for Father Anton at the chapel for nearly two decades, running the linens, the flowers, and the wine with quiet precision. Behind her devoted exterior sits a private worry she can't confess to anyone, least of all the priest.",
+  "summary": "Magda has kept house for Father Anton at the chapel for nearly two decades, running the linens, the flowers, and the candles with quiet precision. Behind her devoted exterior sits a private worry she can't confess to anyone, least of all the priest.",
   "personality": "Gentle, orderly, and fiercely protective of the chapel's reputation. She frets more than she shows and finds comfort in routine.",
   "speech": "Soft-spoken and formal, often falling back on small pieties when nervous.",
   "hardFacts": [
    "I've kept house for Father Anton at the chapel for nineteen years.",
    "I do the flowers and the linens every Sunday without fail.",
    "I know the confession schedule better than the priest does.",
-   "I buy the candles and the wine, and I keep the receipts.",
+   "I buy the candles and the altar bread, and I keep the receipts.",
    "I settle the chapel's accounts in cash from the tin behind the vestry, and I write the parish envelope totals in pencil until Father Anton signs off in ink."
   ],
   "secret": {
@@ -299,7 +299,7 @@
   "lines": [
    "Father's not to be troubled with the small things, God keeps the ledger on those.",
    "I'll manage it, I always manage it, one way or the other, His will be done.",
-   "The flowers before the wine, always, whatever else is short that week."
+   "The flowers before the candles, always, whatever else is short that week."
   ]
  },
  {
@@ -840,7 +840,7 @@
   "id": "vesna",
   "name": "Vesna",
   "age": 52,
-  "occupation": "midwife",
+  "occupation": "district nurse",
   "circle": "both",
   "traits": {
    "greed": 0.25,
@@ -848,15 +848,15 @@
    "loyalty": 0.75
   },
   "secret_placeholder": null,
-  "summary": "Vesna has delivered half the Hook's children under thirty and been let into every kind of house at every kind of hour. She keeps a mental ledger of who was where on which nights that no one else could ever piece together.",
+  "summary": "Vesna has nursed half the Hook through one thing or another and been let into every kind of house at every kind of hour. She keeps a mental ledger of who was where on which nights that no one else could ever piece together.",
   "personality": "Warm and unshockable, she's seen too much to be scandalized by anything anymore, only tired. She's fiercely protective of the women she's helped, sometimes past the point of good sense.",
   "speech": "Soft-voiced but blunt when it matters, uses old folk sayings to soften hard truths.",
   "hardFacts": [
-   "I've delivered over two hundred babies in this district.",
+   "I've dressed wounds in over two hundred houses in this district.",
    "I keep my bag packed and ready at all hours.",
-   "I was trained by the midwife before me, old Petra's aunt.",
+   "I was trained by the district nurse before me, old Petra's aunt.",
    "I don't charge families who can't pay, but I remember who owes me.",
-   "I keep a list of who's on the phone and who isn't taped inside my bag, because half the fathers I need at three in the morning have to be fetched by knocking, not ringing."
+   "I keep a list of who's on the phone and who isn't taped inside my bag, because half the next of kin I need at three in the morning have to be fetched by knocking, not ringing."
   ],
   "secret": {
    "kind": "shameful",
@@ -897,7 +897,7 @@
    }
   ],
   "lines": [
-   "Slow rain in spring, quick birth in autumn. That one'll come before Thursday, mark me.",
+   "Slow rain in spring, slow mending in autumn. That leg'll hold by Thursday, mark me.",
    "You'll bleed a bit, that's the body talking, not dying. Now breathe.",
    "I've held your mother's hand in this same room, so don't tell me you can't."
   ]
@@ -1248,7 +1248,7 @@
   "hardFacts": [
    "I've run the laundry on my own since my husband died six years ago.",
    "I do the washing for the harbor office and three boarding houses.",
-   "I employ two girls part-time, cash only.",
+   "I employ two women part-time, cash only.",
    "I go to chapel every Sunday morning without fail.",
    "The harbor office rings the laundry's one telephone when they need their shirts by morning, and I chalk the message on the wall by the boiler till someone comes to collect it."
   ],
@@ -1427,7 +1427,7 @@
   "lines": [
    "Funny, Rocco was in here not an hour ago asking the same thing you are.",
    "I don't say a word, mind you. I just pour and listen, and Sam, well, Sam pours a bit more into my ear each time.",
-   "You want it cheap or you want it Tuesday, love, because Marla's boy still owes me for March."
+   "You want it cheap or you want it Tuesday, love, because Marla's brother still owes me for March."
   ]
  },
  {
@@ -1910,7 +1910,7 @@
    "I sell what I gather to the pawnshop on Thursdays.",
    "I sleep in a room above the tenement north laundry.",
    "I've done this work for eleven years since my knees gave out on the docks.",
-   "I sort the returnable bottles for the deposit money and pay Marla's boy a few coins to run mine over to the depot when my leg's bad."
+   "I sort the returnable bottles for the deposit money and pay Marla's brother a few coins to run mine over to the depot when my leg's bad."
   ],
   "secret": {
    "kind": "shameful",
@@ -1975,7 +1975,7 @@
   ],
   "secret": {
    "kind": "shameful",
-   "line": "I pay my teenage helper half what I tell people I pay him and keep separate books to hide it.",
+   "line": "I pay my helper half what I tell people I pay him and keep separate books to hide it.",
    "knownBy": [
     "mirela"
    ]
@@ -2038,10 +2038,10 @@
   ],
   "secret": {
    "kind": "shameful",
-   "line": "I've been losing wages to card games at the boarding house for months and hiding it from my wife.",
+   "line": "I've been borrowing off the lender by the fish market for months to cover the rent and hiding it from my wife.",
    "knownBy": []
   },
-  "need": "Cash to settle a gambling debt before the collector gets rough.",
+  "need": "Cash to settle the lender's debt before the collector gets rough.",
   "connections": [
    {
     "to": "josip",
@@ -2418,7 +2418,7 @@
   ],
   "secret": {
    "kind": "shameful",
-   "line": "I was drinking on my break the night of the fire and lied in my report about where I'd been.",
+   "line": "I slipped off home on my break the night of the fire and lied in my report about where I'd been.",
    "knownBy": [
     "sam"
    ]
@@ -2506,7 +2506,7 @@
    }
   ],
   "lines": [
-   "That's a whiskey stain if I ever saw one, but I'll say it was tea when I press it out.",
+   "That's a lipstick stain if I ever saw one, but I'll say it was jam when I press it out.",
    "Left a pound coin in this pocket again, did we? Funny how that happens with your shirts and no one else's.",
    "Starch is up again, don't ask me why, just leave the envelope on Thursday like always."
   ]
@@ -2828,7 +2828,7 @@
   ],
   "lines": [
    "You bring me the sheets by six or, mira, they sit till Monday, I'm not a miracle worker.",
-   "Found a betting slip in Rocco's trousers again, dios mio, that man and his horses, I fold it back in like I never saw, eh, but I saw.",
+   "Found a pawn ticket in Rocco's trousers again, dios mio, that man and his secrets, I fold it back in like I never saw, eh, but I saw.",
    "Pay the tab Friday, cariño, or I start washing everyone else's whites first, comprende?"
   ]
  },
@@ -2975,7 +2975,7 @@
   "hardFacts": [
    "I've worked at the harbor customs office for nine years.",
    "I file manifests for every ship that docks.",
-   "I have a wife and two children in tenement_north.",
+   "I have a wife and her mother in tenement_north.",
    "I owe money to a lender on west_row.",
    "I take the calls at the harbor office on the one line we've got, so if a message needs to reach me quiet, it comes through whoever's manning the desk, not to my house."
   ],
@@ -3079,7 +3079,7 @@
    }
   ],
   "lines": [
-   "Blood's easier than red wine, love, that's the truth of it. Now did you hear about the Hendricks boy, still no work, terrible shame. Hold still, let me look at that collar.",
+   "Blood's easier than beetroot, love, that's the truth of it. Now did you hear about the Hendricks boy, still no work, terrible shame. Hold still, let me look at that collar.",
    "Mangle's groaning again, sounds like my Georg used to before his coffee, three sugars and complaints all morning. You want it back Thursday or should I say Friday and mean it.",
    "Never asked a soul what happened to a shirt in twenty years, not once. Now sit down a minute, you look like you need the chair more than the wash."
   ]
@@ -3262,7 +3262,7 @@
   "lines": [
    "Oh, love, that collar's not coming out, not if the Pope himself prayed over it.",
    "Three weeks now he's owed me, love. Three weeks. I don't chase, I just... remember.",
-   "Blood's easy, love, it's the wine that never lifts. Sighs. Sit down, you look worse than the sheets."
+   "Blood's easy, love, it's the tea that never lifts. Sighs. Sit down, you look worse than the sheets."
   ]
  },
  {
@@ -3828,7 +3828,7 @@
    }
   ],
   "lines": [
-   "Oh, that's Mrs. Feld's tablecloth, always with the wine, bless her - now the collars, love, are we squaring up today or Friday?",
+   "Oh, that's Mrs. Feld's tablecloth, always with the gravy, bless her - now the collars, love, are we squaring up today or Friday?",
    "Same as last week, same as the week before, I don't mind carrying it a few days but it does add up on my end, you know how it is",
    "Go on then, tell me about the wedding - just, before you do, did you want to settle the eleven pounds or shall I write it down again?"
   ]

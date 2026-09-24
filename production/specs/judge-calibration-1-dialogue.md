@@ -50,7 +50,7 @@ never American satire. A line can be canon-clean and still FAIL here.
 | pr-011 | stranger | deed_reaction | They say whoever did the off-licence knew the tape gets changed Mondays. Local knowledge, that. |  |  |
 | pr-012 | stranger | gossip_pass | The Widow's lot were down the fish quay this morning, counting crates that weren't theirs. |  |  |
 | pr-013 | stranger | gossip_pass | Vane's solicitor bought the whole snug a round Thursday. Generosity like that has paperwork behind it. |  |  |
-| pr-014 | stranger | gossip_pass | Danny Ro's boys put a jukebox in the arcade. Plays one song. Loudly. All hours. |  |  |
+| pr-014 | stranger | gossip_pass | Danny Ro's boys put a jukebox in the café. Plays one song. Loudly. All hours. |  |  |
 | pr-015 | stranger | gossip_pass | There's a copper asks questions in here Wednesdays. Drinks lime and soda. Tips like a magistrate. |  |  |
 | pr-016 | stranger | gossip_pass | Ferry ran late again. Harbour Board says weather. Harbour says the Board couldn't sail a bath. |  |  |
 | pr-017 | stranger | gossip_pass | The pirate station played requests till three. Half this town's courting on it and the other half's listening in. |  |  |
