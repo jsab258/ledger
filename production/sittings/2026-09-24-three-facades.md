@@ -103,6 +103,10 @@ parapet's top (7.10 and 7.175 m) falls at the frame's upper edge with the
 shot centred at 3.55 m and is not found; for the parapet rows, raise the
 shots' eye_height_m to about 3.9 in production/specs/facade-shots.json
 (a spec change, one probe run) if the parapet is to be measured.
+DONE THE SAME NIGHT, 04:00: every shot is now 14 m wide centred at 3.8 m
+(0bf8a128), and on bay 0 of each, as it stands, the pair finds every
+edge but one: east_parade 17 of 20 found within 5 cm, west_north 19 of 21,
+west_south 19 of 19, the parapet's coping and the pavement line included.
 
 ## Log (filled in during the sitting)
 
