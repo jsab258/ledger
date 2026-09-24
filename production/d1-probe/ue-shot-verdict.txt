@@ -1,4 +1,4 @@
-# UE probe shot b6db274 @1790250392
+# UE probe shot 0aa4f85 @1790251487
 # Line 1 names the commit this was measured on, as the Unity verdict does.
 # shotMeanLuma: mean over EVERY pixel of the committed file, 0 to 1,
 #   luma=(0.299R+0.587G+0.114B)/255, the same weights the Unity sim uses.
@@ -46,4 +46,4 @@ shotStatus=WROTE shotAttempt=FScreenshotRequest::RequestScreenshot shotFile=ue-s
 # :          ::          ..          ::          :
 # :::::::::::-:::::::::::--:::::::::::-:::::::::::
 shotReached=end
-stagedShotExit=0 stagedShotSeconds=7.02 stagedVerdictCandidates=3 stagedVerdictFound=yes stagedPngCandidates=3 stagedPngBytes=23361 stagedShotExitIsNotTheVerdict=true
+stagedShotExit=0 stagedShotSeconds=6.02 stagedVerdictCandidates=3 stagedVerdictFound=yes stagedPngCandidates=3 stagedPngBytes=23361 stagedShotExitIsNotTheVerdict=true
