@@ -369,7 +369,7 @@ def run(args):
     folder = os.path.join(REPO, "production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
     os.makedirs(folder, exist_ok=True)
     save = tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
-    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER,
+    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER, "-LedgerRepo=" + REPO,
                  "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
                  "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
     # THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE THE GAME, as the

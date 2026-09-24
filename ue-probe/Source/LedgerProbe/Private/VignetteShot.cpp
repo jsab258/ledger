@@ -1864,6 +1864,16 @@ namespace
 	{
 		const FString ExeDir = FPaths::GetPath(FPlatformProcess::ExecutablePath());
 		TArray<FString> Cands;
+		// -LedgerRepo=<the checkout>, FIRST WHEN GIVEN, 24 September: the
+		// steady packaged copy sits in an old folder four levels below no
+		// checkout at all, and played from there the street fell back to its
+		// grey placeholder pieces (the AI tester). Without the flag nothing
+		// changes.
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty())
+		{
+			Cands.Add(FPaths::Combine(Repo, TEXT("production/assets/street/quay-street.json")));
+		}
 		Cands.Add(AbsProject(TEXT("../production/assets/street/quay-street.json")));
 		Cands.Add(AbsProject(TEXT("../../../../production/assets/street/quay-street.json")));
 		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
