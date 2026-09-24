@@ -5702,6 +5702,9 @@ namespace
 		Cands.Add(AbsProject(TEXT("../ledger/Assets/StreamingAssets/CityPack/textures")));
 		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
 			ExeDir, TEXT("../../../../ledger/Assets/StreamingAssets/CityPack/textures"))));
+		// The game's own staged copy, last (tools/ue/stage_game_data.py).
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+			FPaths::ProjectContentDir(), TEXT("LedgerData/ledger/Assets/StreamingAssets/CityPack/textures"))));
 		// RECORDED AS IT IS ASKED, and the search still stops at the first
 		// answer: a list of every candidate whether or not it was reached
 		// would be named wrongly, since `tried` and `would have tried next`
@@ -5747,6 +5750,9 @@ namespace
 		Cands.Add(AbsProject(TEXT("../ledger/Assets/StreamingAssets/Decals")));
 		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
 			ExeDir, TEXT("../../../../ledger/Assets/StreamingAssets/Decals"))));
+		// The game's own staged copy, last (tools/ue/stage_game_data.py).
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+			FPaths::ProjectContentDir(), TEXT("LedgerData/ledger/Assets/StreamingAssets/Decals"))));
 		OutFiles = 0;
 		for (int32 I = 0; I < Cands.Num(); ++I)
 		{
@@ -5952,6 +5958,10 @@ namespace
 			Out.Add(AbsProject(*(FString(TEXT("../ledger/Assets/Resources/")) + Leaf)));
 			Out.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
 				ExeDir, TEXT("../../../../ledger/Assets/Resources"), *Leaf)));
+			// The game's own staged copy (tools/ue/stage_game_data.py), last:
+			// without it the steady packaged copy had no sky photograph.
+			Out.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(
+				FPaths::ProjectContentDir(), TEXT("LedgerData/ledger/Assets/Resources"), *Leaf)));
 		}
 	}
 

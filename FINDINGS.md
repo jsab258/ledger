@@ -22,4 +22,3 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - The broken window shows as scattered glass on the pavement and an empty frame; there is no crack or falling glass, and the frame's inside card shows through.
 - Any Unreal editor running on this PC, even a game started from it, blocks the build machine's build: the engine's lock refuses the compile in seconds, and the machine then tests a stale game (the red run of 1ede8879). The rule that two Unreal builds must not overlap has to cover editors too.
 - A spoken answer starts 6 to 9 seconds after its words appear, sentence by sentence (the first time a person speaks includes learning their voice). The voice server holds two copies of the voice model (about 5 GB of memory).
-- The packaged game plays much darker than the editor's build: signs and people are hard to make out (the AI tester, 19:31).

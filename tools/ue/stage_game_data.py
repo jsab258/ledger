@@ -37,6 +37,17 @@ FIXED = [
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"
+# WHOLE FOLDERS TOO, 25 September: the sky photograph, the photographed
+# surfaces and the decals. The build machine copies these beside its own test
+# copy, so its frames looked right, but the steady copy Jafar plays never had
+# them: its sky dome and surfaces fell back to plain colours and the street
+# played three times darker than the editor (measured, mean luminance 17
+# against 55 at the window). The game's finders look under LedgerData too.
+DIRS = [
+    "ledger/Assets/Resources/Sky",
+    "ledger/Assets/StreamingAssets/CityPack/textures",
+    DECAL_ROOT,
+]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"
 MAP_SUFFIXES = ("", "_n", "_r")          # SurfaceBind.h MapSuffix
@@ -77,6 +88,13 @@ def wanted():
         w = a.get("wav")
         if w:
             files.append(SOUND_ROOT + "/" + (w if w.endswith(".wav") else w + ".wav"))
+    for d in DIRS:
+        root = os.path.join(REPO, d)
+        for dirpath, _dirs, names in os.walk(root):
+            for n in names:
+                if n.endswith(".meta"):
+                    continue
+                files.append(os.path.relpath(os.path.join(dirpath, n), REPO).replace("\\", "/"))
     seen, out = set(), []
     for f in files:
         f = f.replace("\\", "/")
@@ -121,6 +139,8 @@ def selftest():
     check("each drawn map comes with its normal and roughness", any(f.endswith("_n.png") for f in files) and any(f.endswith("_r.png") for f in files))
     check("the street's voices are staged", any(f.startswith(VOICE_ROOT) for f in files))
     check("nothing is listed twice", len(files) == len(set(files)))
+    check("the sky photograph is staged", any(f.startswith("ledger/Assets/Resources/Sky/") and f.endswith(".png") for f in files))
+    check("the photographed surfaces are staged", any(f.startswith("ledger/Assets/StreamingAssets/CityPack/textures/") for f in files))
     check("the staging folder is inside the game's content", DEST.replace("\\", "/").endswith("ue-probe/Content/LedgerData"))
     print("stage_game_data selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
