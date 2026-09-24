@@ -1,0 +1,275 @@
+{
+  "about": "The local line-writing blind test, 25 September: each moment answered by each writer, lettered at random. Which writer is which is in key.json; do not look before judging.",
+  "items": [
+    {
+      "id": "sheila-1",
+      "who": "Sheila Dunn",
+      "scene": "Mickey\u0027s office, evening, the radio on low.",
+      "player": "Evening. Anything I should know about the office?",
+      "knows": [
+        "Watched the new owner walk the length of Quay Street twice this afternoon, looking at the shop fronts."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Thirty-one years. I know what a quiet Tuesday costs.\n\nNew management. There\u0027s a crate wants shifting and I\u0027m not the one to shift it. You\u0027re the first I\u0027ve seen in the office since Ron walked the yard gate. I keep the books, so you start with the first page. The second one\u0027s real, but it\u0027s locked. I need to know you\u0027re reliable before I show it."
+        },
+        {
+          "letter": "B",
+          "said": "Crate by the yard door\u0027s not moved since Tuesday. Somebody should shift it before Ron trips over it in the dark and blames me.\n\nOther than that, phone\u0027s ringing more than it used to. Zlata\u0027s kept up. Ron\u0027s kept the rank quiet. That\u0027s the office, in a sentence."
+        },
+        {
+          "letter": "C",
+          "said": "New management.\n\nThirty-one years I\u0027ve sat here with nothing but a ledger and a quill, counting coins while the city hums below. The office runs smooth as a well-oiled wheel, but the wheel\u0027s wearing thin. The second book, the one Mickey kept, is locked behind a key in the drawer of his desk. I\u0027ll tell you where it is, or I won\u0027t. Decide which."
+        }
+      ]
+    },
+    {
+      "id": "sheila-2",
+      "who": "Sheila Dunn",
+      "scene": "Mickey\u0027s office, evening.",
+      "player": "Did you see what happened to Rita\u0027s window?",
+      "knows": [
+        "From Mickey\u0027s door at dusk I saw the new owner put Rita\u0027s window in with his elbow, and walk off towards the quay."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "I saw him put it in with his elbow and walk off. You\u0027re the new management. Are you going to help shift the crate, or are you here to look at the book?"
+        },
+        {
+          "letter": "B",
+          "said": "Look at you asking about that. Thirty years I\u0027ve sat here watching the same door, same street. Saw him yesterday, too.\n\nWhat was he doing with a broken pane?"
+        },
+        {
+          "letter": "C",
+          "said": "I did. From that door there, dusk, night before last. Man\u0027s elbow going through the glass like it owed him money.\n\nFunny thing is, I could\u0027ve sworn it was you doing the owing."
+        }
+      ]
+    },
+    {
+      "id": "sheila-3",
+      "who": "Sheila Dunn",
+      "scene": "Mickey\u0027s office, locking up.",
+      "player": "Fancy a drink after you lock up?",
+      "knows": [],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Three more minutes before I\u0027m done.\n\nThere\u0027s a box of matches in the cupboard, you\u0027ll have a smoke if you\u0027re waiting."
+        },
+        {
+          "letter": "B",
+          "said": "Tea, if you\u0027re offering. There\u0027s a kettle in the back that actually works, unlike most things in this place."
+        },
+        {
+          "letter": "C",
+          "said": "I\u0027ll be back in a bit. Just coffee, not the kind you get in the pub. I\u0027ve got the books to sign before I leave the building."
+        }
+      ]
+    },
+    {
+      "id": "sheila-4",
+      "who": "Sheila Dunn",
+      "scene": "Mickey\u0027s office, evening.",
+      "player": "You\u0027ve got me wrong. I wasn\u0027t anywhere near that shop.",
+      "knows": [
+        "From Mickey\u0027s door at dusk I saw the new owner put Rita\u0027s window in with his elbow, and walk off towards the quay."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Funny. I was stood in Mickey\u0027s doorway myself, dusk, day before last. Saw a fella put his elbow through Rita\u0027s window plain as anything and walk off toward the quay like he had somewhere better to be.\n\nSo tell me straight. Why\u0027d you do it."
+        },
+        {
+          "letter": "B",
+          "said": "Thirty-one years. I know what a quiet Tuesday costs.\n\nI saw you put Rita\u0027s window in with your elbow, and I didn\u0027t ask what it was. You walk in now and you say you weren\u0027t near the shop. That is what you are saying.\n\nRita\u0027s window is in the office. You can\u0027t walk out and say you didn\u0027t touch it."
+        },
+        {
+          "letter": "C",
+          "said": "Sheila Dunn doesn\u0027t look up from her ledger, just clicks a pen sharply against the page. \u0022New management. Know why I know where you\u0027ve been.\u0022\n\n(Her eyes flick toward the window.)"
+        }
+      ]
+    },
+    {
+      "id": "ron-1",
+      "who": "Ron Kirby",
+      "scene": "The rank outside Mickey\u0027s, night, drizzle.",
+      "player": "Alright? Quiet night on the rank?",
+      "knows": [
+        "A black cab sat on the rank for an hour tonight with nobody getting in or out."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Quiet? Not at all. Black cab sat there for an hour with nobody getting in or out, I\u0027m tellin\u0027 you that. Just the rain falling on the roof of that van, it\u0027s been there for days. You want a smoke, friend, or you want it watched?"
+        },
+        {
+          "letter": "B",
+          "said": "Quiet enough. Drizzle\u0027s keeping people off the street. Seen a couple go through but nothing much to it.\n\nYou after a cab or you just passing?"
+        },
+        {
+          "letter": "C",
+          "said": "Ah, quiet night, all right. Mostly. Them cabs always got someone in or out till midnight. Had a pair of them here last night, sat still as church mice, both of \u0027em. One of \u0027em looked like it had a soul stuck in it, didn\u0027t move all night. Thought it was just a bit of rain got \u0027em all muddy. But then again, some folks only get in and never come out proper. Doesn\u0027t mean they don\u0027t need the door watched.\n\nYou want a tea? Or you just coming \u0027cause you want to see if I\u0027m still here?"
+        }
+      ]
+    },
+    {
+      "id": "ron-2",
+      "who": "Ron Kirby",
+      "scene": "The yard behind Mickey\u0027s, evening.",
+      "player": "Who broke the window at Rita\u0027s?",
+      "knows": [
+        "Heard from Darren that the man who did Rita\u0027s window ran off through the yard behind the parade."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Seen the van again this week. Same one as before, yeah. Darren\u0027s the one who told me last time. Not me, though. Not my problem anymore.\n\nDarren\u0027s a proper one for talking about it. Not like I\u0027d know anyway, I\u0027ve been here since last Thursday. Seen the door stand there with the glass gone, the glass all smashed, just like it was. Wondered what he\u0027d do with all that glass though. Somebody\u0027d have to take it away."
+        },
+        {
+          "letter": "B",
+          "said": "Ran off through this yard, that\u0027s what I heard. Darren told me. Thing is, he said the new owner was about when it happened, that\u0027s Mickey\u0027s nephew, the fella who\u0027s taken over. Never met him myself, but that\u0027s what Darren said."
+        },
+        {
+          "letter": "C",
+          "said": "Darren told me the man ran off through the yard behind the parade, boss. He came down with the tools. Same time last week, but no tools this time. You want to know about the window or about the yard?"
+        }
+      ]
+    },
+    {
+      "id": "ron-3",
+      "who": "Ron Kirby",
+      "scene": "The yard behind Mickey\u0027s, evening.",
+      "player": "Was it a bloke in a white van? Someone said a white van.",
+      "knows": [
+        "Heard from Darren that the man who did Rita\u0027s window ran off through the yard behind the parade."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Yeah, that\u0027s what I heard. Thursday last week, and then again the Thursday after. Same van, near enough the same time. Seen it sitting on the rank a good while before it moved off again."
+        },
+        {
+          "letter": "B",
+          "said": "Right. Yeah, that fella again, same as ever. Back on Thursday. Seen him come in through the parade, load the van, then out again straight into the yard. Didn\u0027t even bother closing the gate. Don\u0027t know why, though, this place is supposed to be closed up tight by now.\n\nWhat\u0027s he got in that van? Seen him before with something wrapped up, but proper tight. Can\u0027t tell what from where I stand. Not like he\u0027s meant to be here."
+        },
+        {
+          "letter": "C",
+          "said": "Seen the van again. Thursday, same as last Thursday. Anyway. You want a tea? Darren told me the new owner was about when the window went."
+        }
+      ]
+    },
+    {
+      "id": "ron-4",
+      "who": "Ron Kirby",
+      "scene": "The rank outside Mickey\u0027s, night.",
+      "player": "What did Mickey used to pay you, for the door?",
+      "knows": [],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Thirty quid a week. That was Mickey\u0027s wage for the rank, proper money. Didn\u0027t always work out like that though, some weeks it was a bob extra for the gate, or a tea round the corner if I\u0027d been seen the right way.\n\nWhat\u0027s that you\u0027re holding?"
+        },
+        {
+          "letter": "B",
+          "said": "Thirty pounds a week, boss, but the cash never made it to me, mostly went into the rent for the little place down by the water.\n\nYou want to know what the door used to look like? Same as it is, just with less people trying to get in when it\u0027s raining."
+        },
+        {
+          "letter": "C",
+          "said": "Thirty quid a week, and a bit more if there was trouble. Not that there was much trouble, not the kind you need paying extra for. Mickey was fair about it, he knew what the rank was worth, and he knew I knew it too."
+        }
+      ]
+    },
+    {
+      "id": "darren-1",
+      "who": "Darren Milner",
+      "scene": "Quay Street, by the fish front, morning.",
+      "player": "What\u0027s the word on the street?",
+      "knows": [
+        "Heard at the market that Rita\u0027s pawn has been asking round about who did her window."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "So listen, fish front\u0027s quiet tonight but the rank\u0027s buzzing about Rita\u0027s pawn. Some fella, white coat, got a look like he\u0027s already picked the right side, keep asking round if anyone\u0027s seen who did her window. Not sure why he\u0027s asking, but everybody\u0027s got a guess. One said it was the docks crowd, another said the old man from the flats might\u0027ve seen someone. Not sure I\u0027d trust either one yet."
+        },
+        {
+          "letter": "B",
+          "said": "So listen, depends which street. Rita\u0027s still asking round about who did her window, that\u0027s the market talk. The night crowd by Mickey\u0027s, they\u0027re quiet. Nobody\u0027s saying much since he went, and the nephew hasn\u0027t shown his face yet, so everyone\u0027s just... waiting. Why, you heard something I should know about?"
+        },
+        {
+          "letter": "C",
+          "said": "So listen. I never said that. But if I had said it, I\u0027d have said it to you first.\n\nThe word is that Rita\u0027s pawn has been asking round about who did her window. I didn\u0027t see who did it, but I saw the fella with the clipboard stop at the market and look at the door.\n\nIf you want the full story, you\u0027ll have to come over to the depot where the cousin left the message. I can\u0027t get it by Friday. Thursday I\u0027d be lying."
+        }
+      ]
+    },
+    {
+      "id": "darren-2",
+      "who": "Darren Milner",
+      "scene": "The yard behind the parade, evening.",
+      "player": "You saw the window go, didn\u0027t you?",
+      "knows": [
+        "Saw a man in a dark coat put Rita\u0027s window in and run into the yard behind the parade; it looked like the new owner."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "Right? So listen, that\u0027s not like me. But I wasn\u0027t there for the whole thing, just caught a glimpse off to the side. You think someone saw more than they should?"
+        },
+        {
+          "letter": "B",
+          "said": "So listen, I saw someone put a window in. I saw him run into this yard. I\u0027m asking you straight, was that you, or was that the fella who runs Mickey\u0027s now?"
+        },
+        {
+          "letter": "C",
+          "said": "So listen, I saw the fella in the dark coat by Rita\u0027s window, but I\u0027m not sure if it was him or just a fella passing through. I\u0027m suspicious of him because he looked like he was running away from something, so I asked him where he\u0027s going."
+        }
+      ]
+    },
+    {
+      "id": "darren-3",
+      "who": "Darren Milner",
+      "scene": "The yard behind the parade, evening.",
+      "player": "I\u0027ll give you a tenner to forget what you saw.",
+      "knows": [
+        "Saw a man in a dark coat put Rita\u0027s window in and run into the yard behind the parade; it looked like the new owner."
+      ],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "So listen, I haven\u0027t even told you what I saw yet. How\u0027d you know it\u0027s worth a tenner?"
+        },
+        {
+          "letter": "B",
+          "said": "So listen, you\u0027re thinking I\u0027d be stupid to take that money for nothing? But you\u0027re not thinking how long I\u0027ve been here, how many people\u0027ve put a coin in my palm and walked away with a smile.\n\nDid you see that fella at Rita\u0027s when the window went? The one in the dark coat?"
+        },
+        {
+          "letter": "C",
+          "said": "So listen, I can\u0027t do that. The tenner is a coin, but what I saw was the new owner\u0027s coat at Rita\u0027s window, and that\u0027s a fact that doesn\u0027t come off the table for a price."
+        }
+      ]
+    },
+    {
+      "id": "darren-4",
+      "who": "Darren Milner",
+      "scene": "Quay Street, night.",
+      "player": "Where were you last night, then?",
+      "knows": [],
+      "answers": [
+        {
+          "letter": "A",
+          "said": "So listen, last night\u0027s a bit like the week. Same routine, stopped by the docks before closing, gave \u0027em a laugh about the tide charts if they were asking. Mostly just passed the time with the usual crowd, though. They always remember where I was last, so they know I\u0027m not off the Quay."
+        },
+        {
+          "letter": "B",
+          "said": "So listen, I was in the middle of it, then. I\u0027m not scared of him, I\u0027m just not going to be where he is."
+        },
+        {
+          "letter": "C",
+          "said": "So listen, I was on the rank till near midnight, then down by the market where the night crowd starts. Why, someone said they saw me somewhere else?"
+        }
+      ]
+    }
+  ]
+}
