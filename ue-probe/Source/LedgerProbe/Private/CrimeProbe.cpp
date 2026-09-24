@@ -204,6 +204,10 @@ namespace
 	std::string GTalkWhy = "not-asked", GTalkReply = "none", GTalkHeard = "none", GTalkCard = "none";
 	int    GTalkDay = 0, GTalkHour = 0, GTalkHeardCount = 0;
 	bool   bTalkHeardCrime = false, bTalkQuestioned = false, bTalkFake = false;
+	bool   bTalkAnswered = false;      // the model answered: not offline, not timed out, no error
+	bool   bShoutSpatial = false;
+	double GShoutFalloffM = 0.0;
+	std::string GSavedByCommit = "none";
 	bool   bSavedToDisk = false, bLoadedFromDisk = false;
 	int    GSavedBytes = 0, GLoadedBytes = 0;
 	int    GClockDay = 0, GClockHour = 0, GClockMinute = 0;
@@ -1922,6 +1926,14 @@ namespace
 
 	// A memory of a crime is one the street files about a deed: something
 	// seen or something heard. Nothing else in this module writes either.
+	int HeardMemories(const GossiperPtr& G)
+	{
+		if (!G || !G->Memory) { return 0; }
+		int N = 0;
+		for (const MemoryEvent& E : G->Memory->Events) { if (E.Kind == "heard") { ++N; } }
+		return N;
+	}
+
 	int CrimeMemories(const GossiperPtr& G)
 	{
 		if (!G || !G->Memory) { return 0; }
@@ -1948,18 +1960,25 @@ namespace
 			bShoutRecording = true;
 		}
 		const FVector At = GW1Body->GetActorLocation() + FVector(0.0, 0.0, 160.0);
-		UAudioComponent* C = UGameplayStatics::SpawnSoundAtLocation(World, Wave, At);
+		// THE ATTENUATION GOES IN WITH THE SOUND, not after it: set on a
+		// component that is already playing, it never reaches the voice, and
+		// the shout plays flat and everywhere (the independent check).
+		USoundAttenuation* Att = NewObject<USoundAttenuation>(GetTransientPackage());
+		FSoundAttenuationSettings& A = Att->Attenuation;
+		A.bAttenuate = true;
+		A.bSpatialize = true;
+		A.AttenuationShape = EAttenuationShape::Sphere;
+		A.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
+		A.FalloffDistance = 4000.0f;
+		A.DistanceAlgorithm = EAttenuationDistanceModel::NaturalSound;
+		UAudioComponent* C = UGameplayStatics::SpawnSoundAtLocation(World, Wave, At, FRotator::ZeroRotator,
+			1.0f, 1.0f, 0.0f, Att);
 		if (C != nullptr)
 		{
-			C->bOverrideAttenuation = true;
-			FSoundAttenuationSettings& A = C->AttenuationOverrides;
-			A.bAttenuate = true;
-			A.bSpatialize = true;
-			A.AttenuationShape = EAttenuationShape::Sphere;
-			A.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
-			A.FalloffDistance = 4000.0f;
-			A.DistanceAlgorithm = EAttenuationDistanceModel::NaturalSound;
 			bShoutPlaying = C->IsPlaying();
+			const FSoundAttenuationSettings* Live = C->GetAttenuationSettingsToApply();
+			bShoutSpatial = Live != nullptr && Live->bSpatialize && Live->bAttenuate;
+			GShoutFalloffM = Live != nullptr ? (Live->AttenuationShapeExtents.X + Live->FalloffDistance) / 100.0 : 0.0;
 		}
 		GShoutAt = FPlatformTime::Seconds();
 		if (GPawn != nullptr) { GShoutPlayerM = FVector::Dist(GPawn->GetActorLocation(), At) / 100.0; }
@@ -1993,14 +2012,10 @@ namespace
 		FString Card = TEXT("sam");
 		FParse::Value(FCommandLine::Get(), TEXT("TalkAs="), Card);
 		GTalkCard = Utf8(Card);
-		if (GEnc == EEncounter::Reload)
-		{
-			GTalkDay = GClockDay + 1; GTalkHour = 9;
-		}
-		else
-		{
-			GTalkDay = LedgerCrime::kRound3Day; GTalkHour = LedgerCrime::kRound3Hour;
-		}
+		// THE SIMULATION'S OWN CLOCK: GNow, which the encounter leaves at the
+		// third round's evening and the reload restores from the save and
+		// moves on to the next morning.
+		GTalkDay = GNow.Day; GTalkHour = GNow.Hour;
 		void* OutRead = nullptr; void* OutWrite = nullptr; void* InRead = nullptr; void* InWrite = nullptr;
 		if (!FPlatformProcess::CreatePipe(OutRead, OutWrite) || !FPlatformProcess::CreatePipe(InRead, InWrite, true))
 		{
@@ -2054,17 +2069,28 @@ namespace
 			}
 			const std::string Req = "{\"id\":1,\"to\":\"" + JsonEsc(GTalkCard)
 				+ "\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
-				+ ",\"hour\":" + std::to_string(GTalkHour) + ",\"minute\":30"
+				+ ",\"hour\":" + std::to_string(GTalkHour) + ",\"minute\":" + std::to_string(GNow.Minute)
 				+ ",\"scene\":\"The yard behind the parade on Quay Street.\",\"memories\":[" + Mem + "]}";
 			FPlatformProcess::WritePipe(InWrite, Un(Req));
-			const std::string Rep = LineWith("\"id\":1", 45.0);
+			std::string Rep = LineWith("\"id\":1", 45.0);
+			if (Rep.empty() && Buf.find("\"error\"") != std::string::npos) { Rep = Buf; }
 			if (Rep.empty())
 			{
 				GTalkWhy = "no-reply";
 			}
+			else if (Rep.find("\"error\"") != std::string::npos)
+			{
+				GTalkWhy = "helper-error";
+				GTalkReply = Rep;
+			}
 			else
 			{
-				GTalkWhy = "answered";
+				// ANSWERED MEANS THE MODEL ANSWERED: a brush-off because the
+				// line was down or slow is the helper talking, not him.
+				bTalkAnswered = Rep.find("\"offline\":false") != std::string::npos
+					&& Rep.find("\"timedOut\":false") != std::string::npos
+					&& Rep.find("\"heard\":[") != std::string::npos;
+				GTalkWhy = bTalkAnswered ? "answered" : "brushed-off-or-malformed";
 				const std::string K = "\"reply\":\"";
 				std::string::size_type At = Rep.find(K);
 				if (At != std::string::npos)
@@ -2081,15 +2107,23 @@ namespace
 				std::string::size_type H = Rep.find("\"heard\":[");
 				if (H != std::string::npos)
 				{
-					std::string::size_type E = Rep.find(']', H);
+					// THE LIST ENDS AT THE FIRST ] OUTSIDE A STRING, and its
+					// entries are counted as strings, not as commas.
+					int Quotes = 0;
+					std::string::size_type E = std::string::npos;
+					for (std::string::size_type I = H + 9; I < Rep.size(); ++I)
+					{
+						if (Rep[I] == '\\') { ++I; continue; }
+						if (Rep[I] == '"') { ++Quotes; continue; }
+						if (Rep[I] == ']' && Quotes % 2 == 0) { E = I; break; }
+					}
 					GTalkHeard = Rep.substr(H + 9, E == std::string::npos ? std::string::npos : E - H - 9);
-					GTalkHeardCount = GTalkHeard.empty() ? 0 : 1;
-					for (char Ch : GTalkHeard) { if (Ch == ',') { ++GTalkHeardCount; } }
+					GTalkHeardCount = Quotes / 2;
 				}
 				// THE CRIME IS IN WHAT HE WAS GIVEN AND IN WHAT HE SAID: the
 				// clause the witness filed, which the gossip carried to him.
 				const std::string Key = GFiledSummaryA.size() > 24 ? GFiledSummaryA.substr(0, 24) : GFiledSummaryA;
-				bTalkHeardCrime = !Key.empty() && GTalkHeard.find(JsonEsc(Key)) != std::string::npos;
+				bTalkHeardCrime = bTalkAnswered && !Key.empty() && GTalkHeard.find(JsonEsc(Key)) != std::string::npos;
 				bTalkQuestioned = GTalkReply.find('?') != std::string::npos
 					&& !Key.empty() && GTalkReply.find(Key) != std::string::npos;
 				if (!bTalkFake)
@@ -2130,8 +2164,9 @@ namespace
 				*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
-		const std::string Clock = "day=" + std::to_string(LedgerCrime::kRound3Day) + "\nhour="
-			+ std::to_string(LedgerCrime::kRound3Hour) + "\nminute=30\nsummaryA=" + GFiledSummaryA + "\n";
+		const std::string Clock = "day=" + std::to_string(GNow.Day) + "\nhour=" + std::to_string(GNow.Hour)
+			+ "\nminute=" + std::to_string(GNow.Minute) + "\nsummaryA=" + GFiledSummaryA
+			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
 		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		bSavedToDisk = Ok;
@@ -2169,10 +2204,16 @@ namespace
 				else if (Kv == TEXT("hour")) { GClockHour = FCString::Atoi(*V); }
 				else if (Kv == TEXT("minute")) { GClockMinute = FCString::Atoi(*V); }
 				else if (Kv == TEXT("summaryA")) { GFiledSummaryA = Utf8(V); }
+				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 			}
 		}
 		else { Ok = false; }
+		// A SAVE FROM ANOTHER BUILD IS NOT THIS ENCOUNTER'S: the reload
+		// refuses it rather than reading an older town as this one.
+		if (GSavedByCommit != Utf8(CrimeSha())) { Ok = false; }
 		bLoadedFromDisk = Ok;
+		// THE CLOCK COMES BACK WITH THE SAVE, and the night passes.
+		GNow = GameTime(GClockDay + 1, 9, 0);
 	}
 
 	void WriteEncounterVerdict()
@@ -2183,16 +2224,18 @@ namespace
 		const int MW1 = CrimeMemories(GW1), MN2 = CrimeMemories(GN2), MR3 = CrimeMemories(GR3);
 		const int Ix = (GEnc == EEncounter::Unseen) ? 1 : 0;
 		const bool bSlice = FCString::Strcmp(GActPawnClass[Ix], TEXT("LedgerSliceCharacter")) == 0;
-		const bool bByInput = GActAttempted[Ix] && GActRequestsSeen[Ix] > 0
+		const bool bByInput = GActAttempted[Ix] && GActTook[Ix] && GActRequestsSeen[Ix] > 0
 			&& FCString::Strcmp(GActPressLanded[Ix], TEXT("player-input")) == 0;
+		const bool bBankReadable = !GFiledSummaryA.empty() && !LedgerCrime::IsUnreadableSummary(GFiledSummaryA);
+		const bool bShoutHeard = bShoutPlaying && bShoutSpatial && GShoutPlayerM >= 0.0 && GShoutPlayerM < GShoutFalloffM;
 		std::vector<std::pair<std::string, bool>> Need;
 		if (GEnc == EEncounter::Play)
 		{
 			Need.push_back({ "new-player-character", bSlice });
 			Need.push_back({ "crime-by-the-player's-own-key", bByInput });
-			Need.push_back({ "witness-saw-it", AW1 > 0 && MW1 > 0 });
-			Need.push_back({ "shout-in-the-street", bShoutPlaying });
-			Need.push_back({ "gossip-reached-the-lad", AN2 > 0 && MN2 > 0 });
+			Need.push_back({ "witness-saw-it", AW1 > 0 && MW1 > 0 && bBankReadable });
+			Need.push_back({ "shout-heard-in-the-street", bShoutHeard });
+			Need.push_back({ "gossip-reached-the-lad", AN2 > 0 && HeardMemories(GN2) > 0 });
 			Need.push_back({ "and-his-mate", AR3 > 0 });
 			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
 			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
@@ -2201,7 +2244,7 @@ namespace
 		else if (GEnc == EEncounter::Reload)
 		{
 			Need.push_back({ "loaded-from-disk", bLoadedFromDisk });
-			Need.push_back({ "the-lad-still-knows", AN2 > 0 && MN2 > 0 });
+			Need.push_back({ "the-lad-still-knows", AN2 > 0 && HeardMemories(GN2) > 0 && bBankReadable });
 			Need.push_back({ "his-mate-still-knows", AR3 > 0 });
 			Need.push_back({ "the-witness-still-knows", AW1 > 0 });
 			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
@@ -2213,7 +2256,7 @@ namespace
 			Need.push_back({ "crime-by-the-player's-own-key", bByInput });
 			Need.push_back({ "nobody-saw-it", AW1 + AN2 + AR3 + BW1 + BN2 + BR3 == 0 });
 			Need.push_back({ "nobody-remembers-a-crime", MW1 + MN2 + MR3 == 0 });
-			Need.push_back({ "the-helper-was-asked", GTalkWhy == "answered" });
+			Need.push_back({ "the-helper-answered", bTalkAnswered });
 			Need.push_back({ "he-knew-nothing", GTalkHeardCount == 0 && GTalkReply.find('?') == std::string::npos });
 		}
 		std::string Failed;
@@ -2228,18 +2271,20 @@ namespace
 		V += FString::Printf(TEXT("aboutA w1=%d n2=%d r3=%d aboutB w1=%d n2=%d r3=%d crimeMemories w1=%d n2=%d r3=%d\n"),
 			AW1, AN2, AR3, BW1, BN2, BR3, MW1, MN2, MR3);
 		V += FString::Printf(TEXT("filedSummaryA=%s\n"), GFiledSummaryA.empty() ? TEXT("none") : *Un(GFiledSummaryA));
-		V += FString::Printf(TEXT("shout=%s shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=%.1f shoutFalloffM=40 shoutWav=%s\n"),
-			*GShoutNote, GShoutPlayerM, bShoutWavWritten ? TEXT("ue-encounter-shout.wav") : TEXT("none"));
+		V += FString::Printf(TEXT("shout=%s shoutSpatial=%s shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=%.1f shoutReachM=%.1f shoutWav=%s\n"),
+			*GShoutNote, bShoutSpatial ? TEXT("yes") : TEXT("no"), GShoutPlayerM, GShoutFalloffM,
+			bShoutWavWritten ? TEXT("ue-encounter-shout.wav") : TEXT("none"));
 		V += FString::Printf(TEXT("talk=%s talkAs=%s talkFake=%s talkDay=%d talkHour=%d heardCount=%d heardCrime=%s questioned=%s\n"),
 			*Un(GTalkWhy), *Un(GTalkCard), bTalkFake ? TEXT("yes") : TEXT("no"), GTalkDay, GTalkHour, GTalkHeardCount,
 			bTalkHeardCrime ? TEXT("yes") : TEXT("no"), bTalkQuestioned ? TEXT("yes") : TEXT("no"));
 		V += FString::Printf(TEXT("talkReply=%s\n"), *Un(GTalkReply));
-		V += FString::Printf(TEXT("save=%s savedBytes=%d loaded=%s loadedBytes=%d clockLoaded=D%d %02d:%02d saveDir=%s\n"),
+		V += FString::Printf(TEXT("save=%s savedBytes=%d loaded=%s loadedBytes=%d savedByCommit=%s clockLoaded=D%d-%02d:%02d talkAnswered=%s bankReadable=%s saveDir=%s\n"),
 			bSavedToDisk ? TEXT("written") : TEXT("not-written"), GSavedBytes, bLoadedFromDisk ? TEXT("yes") : TEXT("no"),
-			GLoadedBytes, GClockDay, GClockHour, GClockMinute, *GSaveDirUsed);
+			GLoadedBytes, *Un(GSavedByCommit), GClockDay, GClockHour, GClockMinute,
+			bTalkAnswered ? TEXT("yes") : TEXT("no"), bBankReadable ? TEXT("yes") : TEXT("no"), *GSaveDirUsed);
 		const FString Leaf = FString::Printf(TEXT("ue-encounter-%s-verdict.txt"), EncName());
-		FFileHelper::SaveStringToFile(V, *AbsProject(*Leaf));
-		FFileHelper::SaveStringToFile(V, *ExeDir(*Leaf));
+		FFileHelper::SaveStringToFile(V, *AbsProject(*Leaf), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
+		FFileHelper::SaveStringToFile(V, *ExeDir(*Leaf), FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
 	}
 
 	// ---- the ticker ------------------------------------------------------
@@ -2619,7 +2664,9 @@ namespace
 				const GameTime Was = GNow;
 				GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 0);
 				RunRound3(GRound3);
-				GNow = Was;
+				// THE ENCOUNTER'S CLOCK MOVES ON with the story: the player
+				// finds the lad half an hour after he met his mate.
+				GNow = (GEnc != EEncounter::None) ? GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 30) : Was;
 				WriteBreadcrumb(TEXT("third-resident-met"));
 			}
 			GPhase = (GEnc != EEncounter::None) ? ECrimePhase::Talk : ECrimePhase::Done;
