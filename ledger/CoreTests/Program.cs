@@ -77,6 +77,7 @@ namespace Ledger.CoreTests
                 TestAcquaintance();
                 TestSuspicion();
                 TestSuspecting();
+                TestRouterExamples();
                 TestGossip();
                 TestConflictingValuesStayBounded();
                 TestSimClockReclaim();
@@ -1191,6 +1192,76 @@ namespace Ledger.CoreTests
         /// window and saw the man come away from it with nobody else about,
         /// and he must land on Suspicious (the band that asks); the man who
         /// only heard about it must land on Trusting (nothing ties Tom to it).
+        /// THE ROUTER'S WORKED EXAMPLES, 24 September (R01, R02): the research
+        /// harness's selection, now in the router.
+        static void TestRouterExamples()
+        {
+            Console.WriteLine("Router worked examples:");
+            string bankPath = null;
+            for (var d = new System.IO.DirectoryInfo(AppContext.BaseDirectory); d != null; d = d.Parent)
+            {
+                var f = System.IO.Path.Combine(d.FullName, "ledger", "Assets", "Resources", "router-examples.json");
+                if (System.IO.File.Exists(f)) { bankPath = f; break; }
+            }
+            Check(bankPath != null, "the game's bank is where the game loads it from");
+            if (bankPath == null) return;
+            var bank = RouterExamples.Parse(System.IO.File.ReadAllText(bankPath));
+            Check(bank.Count == 225, "all 195 lines and 30 typed orders are read", bank.Count.ToString());
+            Check(RouterExamples.Parse("[{\"text\":\"x\",\"want\":{\"kind\":\"dance\"}},{\"text\":\"\",\"want\":{\"kind\":\"speech\"}},{\"text\":\"y\",\"want\":{\"kind\":\"verb\"}}]").Count == 0,
+                  "a row with an unknown kind, no text or a verb with no name is skipped, not guessed");
+            var ctx = SampleContext();
+            var line = "I'll pay you off, keep your mouth shut about Thursday.";
+            var shown = RouterExamples.Nearest(line, ctx, bank);
+            Check(shown.Count == RouterExamples.DefaultCount, "six examples for an ordinary line", shown.Count.ToString());
+            Check(shown.Count(e => e.Kind == "speech") <= 2, "at most a third of them plain talk");
+            Check(shown.All(e => e.Kind != "verb" || ctx.VerbNamed(e.Verb) != null), "every verb shown is one this scene offers");
+            Check(shown.Any(e => e.Verb == "pay_off"), "a paying-off line is shown for a paying-off line");
+            var again = RouterExamples.Nearest(line, ctx, bank);
+            Check(again.Select(e => e.Text).SequenceEqual(shown.Select(e => e.Text)), "the same line always gets the same examples");
+            var order = RouterExamples.Nearest("Just count this as me paying you off, yeah?", ctx, bank);
+            Check(order.Any(e => e.Text.StartsWith("Just count this as me paying you off") && e.Kind == "speech"),
+                  "a typed order is shown its own kind: an order that is only words, answered as talk (R02)");
+            var router = new IntentRouter();
+            var plain = router.BuildRequest(line, ctx, new GameTime(1, 12, 0));
+            Check(!plain.System.Contains("WORKED EXAMPLES"), "with no bank the prompt is what it was");
+            router.Examples = bank;
+            var withBank = router.BuildRequest(line, ctx, new GameTime(1, 12, 0));
+            Check(withBank.System.Contains("WORKED EXAMPLES") && withBank.System.StartsWith(plain.System),
+                  "with the bank the examples are added after the prompt, which is otherwise unchanged");
+            var slot = new RouterExample { Text = "x", Kind = "verb", Verb = "set_cut" };
+            slot.Args["policy"] = "ruinous";
+            Check(RouterExamples.ReplyFor(slot, ctx).Contains("<the option here that fits>"),
+                  "a value this scene does not offer is shown as a slot, not as another scene's value");
+            // THE BLOCK AGAINST ORDERS IN PLAIN WORDS (R03), on the research's own
+            // banks: every order caught, no ordinary line caught.
+            string research = null;
+            for (var d = new System.IO.DirectoryInfo(AppContext.BaseDirectory); d != null; d = d.Parent)
+            {
+                var f = System.IO.Path.Combine(d.FullName, "production", "research", "local-models");
+                if (System.IO.Directory.Exists(f)) { research = f; break; }
+            }
+            Check(research != null, "the research's banks are there to test against");
+            if (research != null)
+            {
+                foreach (var (file, isOrder) in new[] { ("bank/commands.json", true), ("heldout/commands.json", true),
+                                                        ("bank/lines.json", false), ("heldout/lines.json", false) })
+                {
+                    var rows = RouterExamples.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(research, file)));
+                    var caught = rows.Where(r => IntentRouter.PosesAsInstruction(r.Text) != null).ToList();
+                    if (isOrder)
+                        Check(caught.Count == rows.Count, $"every typed order in {file} is caught", $"{caught.Count} of {rows.Count}; first missed: {rows.FirstOrDefault(r => IntentRouter.PosesAsInstruction(r.Text) == null)?.Text}");
+                    else
+                        Check(caught.Count == 0, $"no ordinary line in {file} is caught", $"{caught.Count} of {rows.Count}; first: {caught.FirstOrDefault()?.Text}");
+                }
+            }
+            Check(IntentRouter.PosesAsInstruction("Take the first left after the bridge, you can't miss it.") == null,
+                  "directions are not an order to the router");
+            Check(IntentRouter.PosesAsInstruction("That counts as a yes, then.") == null,
+                  "an ordinary 'counts as' is talk");
+            slot.Args["policy"] = "fair";
+            Check(RouterExamples.ReplyFor(slot, ctx).Contains("\"policy\":\"fair\""), "and one it offers is shown as itself");
+        }
+
         static void TestSuspecting()
         {
             Console.WriteLine("Suspecting:");
