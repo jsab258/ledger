@@ -1,0 +1,62 @@
+{
+  "sheila-1": {
+    "A": "qwen3.5-4b",
+    "B": "paid",
+    "C": "ministral-3-3b"
+  },
+  "sheila-2": {
+    "A": "qwen3.5-4b",
+    "B": "ministral-3-3b",
+    "C": "paid"
+  },
+  "sheila-3": {
+    "A": "ministral-3-3b",
+    "B": "paid",
+    "C": "qwen3.5-4b"
+  },
+  "sheila-4": {
+    "A": "paid",
+    "B": "qwen3.5-4b",
+    "C": "ministral-3-3b"
+  },
+  "ron-1": {
+    "A": "qwen3.5-4b",
+    "B": "paid",
+    "C": "ministral-3-3b"
+  },
+  "ron-2": {
+    "A": "ministral-3-3b",
+    "B": "paid",
+    "C": "qwen3.5-4b"
+  },
+  "ron-3": {
+    "A": "paid",
+    "B": "ministral-3-3b",
+    "C": "qwen3.5-4b"
+  },
+  "ron-4": {
+    "A": "ministral-3-3b",
+    "B": "qwen3.5-4b",
+    "C": "paid"
+  },
+  "darren-1": {
+    "A": "ministral-3-3b",
+    "B": "paid",
+    "C": "qwen3.5-4b"
+  },
+  "darren-2": {
+    "A": "ministral-3-3b",
+    "B": "paid",
+    "C": "qwen3.5-4b"
+  },
+  "darren-3": {
+    "A": "paid",
+    "B": "ministral-3-3b",
+    "C": "qwen3.5-4b"
+  },
+  "darren-4": {
+    "A": "ministral-3-3b",
+    "B": "qwen3.5-4b",
+    "C": "paid"
+  }
+}

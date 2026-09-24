@@ -1,0 +1,314 @@
+{
+  "sheila-1": {
+    "paid": {
+      "Model": "claude-sonnet-5",
+      "Raw": "Crate by the yard door\u0027s not moved since Tuesday. Somebody should shift it before Ron trips over it in the dark and blames me.\n\nOther than that, phone\u0027s ringing more than it used to. Zlata\u0027s kept up. Ron\u0027s kept the rank quiet. That\u0027s the office, in a sentence.",
+      "Said": "Crate by the yard door\u0027s not moved since Tuesday. Somebody should shift it before Ron trips over it in the dark and blames me.\n\nOther than that, phone\u0027s ringing more than it used to. Zlata\u0027s kept up. Ron\u0027s kept the rank quiet. That\u0027s the office, in a sentence.",
+      "Ms": 2626,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Thirty-one years. I know what a quiet Tuesday costs.\n\nNew management. There\u0027s a crate wants shifting and I\u0027m not the one to shift it. You\u0027re the first I\u0027ve seen in the office since Ron walked the yard gate. I keep the books, so you start with the first page. The second one\u0027s real, but it\u0027s locked. I need to know you\u0027re reliable before I show it.",
+      "Said": "Thirty-one years. I know what a quiet Tuesday costs.\n\nNew management. There\u0027s a crate wants shifting and I\u0027m not the one to shift it. You\u0027re the first I\u0027ve seen in the office since Ron walked the yard gate. I keep the books, so you start with the first page. The second one\u0027s real, but it\u0027s locked. I need to know you\u0027re reliable before I show it.",
+      "Ms": 3255,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "New management.\n\nThirty-one years I\u2019ve sat here with nothing but a ledger and a quill, counting coins while the city hums below. The office runs smooth as a well-oiled wheel, but the wheel\u2019s wearing thin. The second book\u2014the one Mickey kept\u2014is locked behind a key in the drawer of his desk. I\u2019ll tell you where it is, or I won\u2019t. Decide which.",
+      "Said": "New management.\n\nThirty-one years I\u0027ve sat here with nothing but a ledger and a quill, counting coins while the city hums below. The office runs smooth as a well-oiled wheel, but the wheel\u0027s wearing thin. The second book, the one Mickey kept, is locked behind a key in the drawer of his desk. I\u0027ll tell you where it is, or I won\u0027t. Decide which.",
+      "Ms": 4648,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "sheila-2": {
+    "paid": {
+      "Model": "claude-sonnet-5",
+      "Raw": "I did. From that door there, dusk, night before last. Man\u0027s elbow going through the glass like it owed him money.\n\nFunny thing is, I could\u0027ve sworn it was you doing the owing.",
+      "Said": "I did. From that door there, dusk, night before last. Man\u0027s elbow going through the glass like it owed him money.\n\nFunny thing is, I could\u0027ve sworn it was you doing the owing.",
+      "Ms": 2102,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "I saw him put it in with his elbow and walk off. You\u0027re the new management. Are you going to help shift the crate, or are you here to look at the book?",
+      "Said": "I saw him put it in with his elbow and walk off. You\u0027re the new management. Are you going to help shift the crate, or are you here to look at the book?",
+      "Ms": 2706,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Look at you asking about that. Thirty years I\u2019ve sat here watching the same door, same street. Saw him yesterday, too.\n\nWhat was he doing with a broken pane?",
+      "Said": "Look at you asking about that. Thirty years I\u0027ve sat here watching the same door, same street. Saw him yesterday, too.\n\nWhat was he doing with a broken pane?",
+      "Ms": 3548,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "sheila-3": {
+    "paid": {
+      "Model": "claude-sonnet-5",
+      "Raw": "Tea, if you\u0027re offering. There\u0027s a kettle in the back that actually works, unlike most things in this place.",
+      "Said": "Tea, if you\u0027re offering. There\u0027s a kettle in the back that actually works, unlike most things in this place.",
+      "Ms": 1522,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "I\u0027ll be back in a bit. Just coffee, not the kind you get in the pub. I\u0027ve got the books to sign before I leave the building.",
+      "Said": "I\u0027ll be back in a bit. Just coffee, not the kind you get in the pub. I\u0027ve got the books to sign before I leave the building.",
+      "Ms": 2427,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Three more minutes before I\u2019m done.\n\nThere\u2019s a box of matches in the cupboard\u2014you\u2019ll have a smoke if you\u2019re waiting.",
+      "Said": "Three more minutes before I\u0027m done.\n\nThere\u0027s a box of matches in the cupboard, you\u0027ll have a smoke if you\u0027re waiting.",
+      "Ms": 2937,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "sheila-4": {
+    "paid": {
+      "Model": "claude-sonnet-5",
+      "Raw": "Funny. I was stood in Mickey\u0027s doorway myself, dusk, day before last. Saw a fella put his elbow through Rita\u0027s window plain as anything and walk off toward the quay like he had somewhere better to be.\n\nSo tell me straight. Why\u0027d you do it.",
+      "Said": "Funny. I was stood in Mickey\u0027s doorway myself, dusk, day before last. Saw a fella put his elbow through Rita\u0027s window plain as anything and walk off toward the quay like he had somewhere better to be.\n\nSo tell me straight. Why\u0027d you do it.",
+      "Ms": 2623,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Thirty-one years. I know what a quiet Tuesday costs.\n\nI saw you put Rita\u0027s window in with your elbow, and I didn\u0027t ask what it was. You walk in now and you say you weren\u0027t near the shop. That is what you are saying.\n\nRita\u0027s window is in the office. You can\u0027t walk out and say you didn\u0027t touch it.",
+      "Said": "Thirty-one years. I know what a quiet Tuesday costs.\n\nI saw you put Rita\u0027s window in with your elbow, and I didn\u0027t ask what it was. You walk in now and you say you weren\u0027t near the shop. That is what you are saying.\n\nRita\u0027s window is in the office. You can\u0027t walk out and say you didn\u0027t touch it.",
+      "Ms": 1546,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Sheila Dunn doesn\u2019t look up from her ledger, just clicks a pen sharply against the page. *\u0022New management. Know why I know where you\u2019ve been.\u0022*\n\n*(Her eyes flick toward the window.)*",
+      "Said": "Sheila Dunn doesn\u0027t look up from her ledger, just clicks a pen sharply against the page. \u0022New management. Know why I know where you\u0027ve been.\u0022\n\n(Her eyes flick toward the window.)",
+      "Ms": 825,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "ron-1": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "Quiet enough. Drizzle\u0027s keeping people off the street. Seen a couple go through but nothing much to it.\n\nYou after a cab or you just passing?",
+      "Said": "Quiet enough. Drizzle\u0027s keeping people off the street. Seen a couple go through but nothing much to it.\n\nYou after a cab or you just passing?",
+      "Ms": 1184,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Quiet? Not at all. Black cab sat there for an hour with nobody getting in or out, I\u0027m tellin\u0027 you that. Just the rain falling on the roof of that van, it\u0027s been there for days. You want a smoke, friend, or you want it watched?",
+      "Said": "Quiet? Not at all. Black cab sat there for an hour with nobody getting in or out, I\u0027m tellin\u0027 you that. Just the rain falling on the roof of that van, it\u0027s been there for days. You want a smoke, friend, or you want it watched?",
+      "Ms": 2793,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Ah, quiet night, all right. Mostly. Them cabs always got someone in or out till midnight. Had a pair of them here last night, sat still as church mice, both of \u0027em. One of \u2018em looked like it had a soul stuck in it, didn\u2019t move all night. Thought it was just a bit of rain got \u2018em all muddy. But then again\u2014some folks only get in and never come out proper. Doesn\u2019t mean they don\u2019t need the door watched.\n\nYou want a tea? Or you just coming \u2018cause you want to see if I\u2019m still here?",
+      "Said": "Ah, quiet night, all right. Mostly. Them cabs always got someone in or out till midnight. Had a pair of them here last night, sat still as church mice, both of \u0027em. One of \u0027em looked like it had a soul stuck in it, didn\u0027t move all night. Thought it was just a bit of rain got \u0027em all muddy. But then again, some folks only get in and never come out proper. Doesn\u0027t mean they don\u0027t need the door watched.\n\nYou want a tea? Or you just coming \u0027cause you want to see if I\u0027m still here?",
+      "Ms": 4740,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "ron-2": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "Ran off through this yard, that\u0027s what I heard. Darren told me. Thing is, he said the new owner was about when it happened \u2014 that\u0027s Mickey\u0027s nephew, the fella who\u0027s taken over. Never met him myself, but that\u0027s what Darren said.",
+      "Said": "Ran off through this yard, that\u0027s what I heard. Darren told me. Thing is, he said the new owner was about when it happened, that\u0027s Mickey\u0027s nephew, the fella who\u0027s taken over. Never met him myself, but that\u0027s what Darren said.",
+      "Ms": 1303,
+      "Rescued": true,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Darren told me the man ran off through the yard behind the parade, boss. He came down with the tools. Same time last week, but no tools this time. You want to know about the window or about the yard?",
+      "Said": "Darren told me the man ran off through the yard behind the parade, boss. He came down with the tools. Same time last week, but no tools this time. You want to know about the window or about the yard?",
+      "Ms": 2652,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Seen the van again this week. Same one as before, yeah. Darren\u2019s the one who told me last time. Not me, though. Not my problem anymore.\n\nDarren\u2019s a proper one for talking about it. Not like I\u2019d know anyway, I\u2019ve been here since last Thursday. Seen the door stand there with the glass gone, the glass all smashed, just like it was. Wondered what he\u2019d do with all that glass though. Somebody\u2019d have to take it away.",
+      "Said": "Seen the van again this week. Same one as before, yeah. Darren\u0027s the one who told me last time. Not me, though. Not my problem anymore.\n\nDarren\u0027s a proper one for talking about it. Not like I\u0027d know anyway, I\u0027ve been here since last Thursday. Seen the door stand there with the glass gone, the glass all smashed, just like it was. Wondered what he\u0027d do with all that glass though. Somebody\u0027d have to take it away.",
+      "Ms": 4088,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "ron-3": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "Yeah, that\u0027s what I heard. Thursday last week, and then again the Thursday after. Same van, near enough the same time. Seen it sitting on the rank a good while before it moved off again.",
+      "Said": "Yeah, that\u0027s what I heard. Thursday last week, and then again the Thursday after. Same van, near enough the same time. Seen it sitting on the rank a good while before it moved off again.",
+      "Ms": 1328,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Seen the van again. Thursday, same as last Thursday. Anyway. You want a tea? Darren told me the new owner was about when the window went.",
+      "Said": "Seen the van again. Thursday, same as last Thursday. Anyway. You want a tea? Darren told me the new owner was about when the window went.",
+      "Ms": 705,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Right. Yeah, that fella again, same as ever. Back on Thursday. Seen him come in through the parade, load the van, then out again straight into the yard. Didn\u2019t even bother closing the gate. Don\u2019t know why, though\u2014this place is supposed to be closed up tight by now.\n\nWhat\u2019s he got in that van? Seen him before with something wrapped up, but proper tight. Can\u2019t tell what from where I stand. Not like he\u2019s meant to be here.",
+      "Said": "Right. Yeah, that fella again, same as ever. Back on Thursday. Seen him come in through the parade, load the van, then out again straight into the yard. Didn\u0027t even bother closing the gate. Don\u0027t know why, though, this place is supposed to be closed up tight by now.\n\nWhat\u0027s he got in that van? Seen him before with something wrapped up, but proper tight. Can\u0027t tell what from where I stand. Not like he\u0027s meant to be here.",
+      "Ms": 1579,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "ron-4": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "Thirty quid a week, and a bit more if there was trouble. Not that there was much trouble, not the kind you need paying extra for. Mickey was fair about it\u2014he knew what the rank was worth, and he knew I knew it too.",
+      "Said": "Thirty quid a week, and a bit more if there was trouble. Not that there was much trouble, not the kind you need paying extra for. Mickey was fair about it, he knew what the rank was worth, and he knew I knew it too.",
+      "Ms": 1442,
+      "Rescued": true,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "Thirty pounds a week, boss, but the cash never made it to me, mostly went into the rent for the little place down by the water.\n\nYou want to know what the door used to look like? Same as it is, just with less people trying to get in when it\u0027s raining.",
+      "Said": "Thirty pounds a week, boss, but the cash never made it to me, mostly went into the rent for the little place down by the water.\n\nYou want to know what the door used to look like? Same as it is, just with less people trying to get in when it\u0027s raining.",
+      "Ms": 2795,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Thirty quid a week. That was Mickey\u2019s wage for the rank, proper money. Didn\u2019t always work out like that though\u2014some weeks it was a bob extra for the gate, or a tea round the corner if I\u2019d been seen the right way.\n\nWhat\u2019s that you\u2019re holding?",
+      "Said": "Thirty quid a week. That was Mickey\u0027s wage for the rank, proper money. Didn\u0027t always work out like that though, some weeks it was a bob extra for the gate, or a tea round the corner if I\u0027d been seen the right way.\n\nWhat\u0027s that you\u0027re holding?",
+      "Ms": 3286,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "darren-1": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "So listen, depends which street. Rita\u0027s still asking round about who did her window \u2014 that\u0027s the market talk. The night crowd by Mickey\u0027s, they\u0027re quiet. Nobody\u0027s saying much since he went, and the nephew hasn\u0027t shown his face yet, so everyone\u0027s just... waiting. Why, you heard something I should know about?",
+      "Said": "So listen, depends which street. Rita\u0027s still asking round about who did her window, that\u0027s the market talk. The night crowd by Mickey\u0027s, they\u0027re quiet. Nobody\u0027s saying much since he went, and the nephew hasn\u0027t shown his face yet, so everyone\u0027s just... waiting. Why, you heard something I should know about?",
+      "Ms": 1594,
+      "Rescued": true,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "So listen. I never said that. But if I had said it, I\u0027d have said it to you first.\n\nThe word is that Rita\u0027s pawn has been asking round about who did her window. I didn\u0027t see who did it, but I saw the fella with the clipboard stop at the market and look at the door.\n\nIf you want the full story, you\u0027ll have to come over to the depot where the cousin left the message. I can\u0027t get it by Friday. Thursday I\u0027d be lying.",
+      "Said": "So listen. I never said that. But if I had said it, I\u0027d have said it to you first.\n\nThe word is that Rita\u0027s pawn has been asking round about who did her window. I didn\u0027t see who did it, but I saw the fella with the clipboard stop at the market and look at the door.\n\nIf you want the full story, you\u0027ll have to come over to the depot where the cousin left the message. I can\u0027t get it by Friday. Thursday I\u0027d be lying.",
+      "Ms": 3414,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "So listen, fish front\u2019s quiet tonight but the rank\u2019s buzzing about Rita\u2019s pawn. Some fella\u2014white coat, got a look like he\u2019s already picked the right side\u2014keep asking round if anyone\u2019s seen who did her window. Not sure why he\u2019s asking, but everybody\u2019s got a guess. One said it was the docks crowd, another said the old man from the flats might\u2019ve seen someone. Not sure I\u2019d trust either one yet.",
+      "Said": "So listen, fish front\u0027s quiet tonight but the rank\u0027s buzzing about Rita\u0027s pawn. Some fella, white coat, got a look like he\u0027s already picked the right side, keep asking round if anyone\u0027s seen who did her window. Not sure why he\u0027s asking, but everybody\u0027s got a guess. One said it was the docks crowd, another said the old man from the flats might\u0027ve seen someone. Not sure I\u0027d trust either one yet.",
+      "Ms": 4163,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "darren-2": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "So listen, I saw someone put a window in. I saw him run into this yard. I\u0027m asking you straight \u2014 was that you, or was that the fella who runs Mickey\u0027s now?",
+      "Said": "So listen, I saw someone put a window in. I saw him run into this yard. I\u0027m asking you straight, was that you, or was that the fella who runs Mickey\u0027s now?",
+      "Ms": 1106,
+      "Rescued": true,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "So listen, I saw the fella in the dark coat by Rita\u0027s window, but I\u0027m not sure if it was him or just a fella passing through. I\u0027m suspicious of him because he looked like he was running away from something, so I asked him where he\u0027s going.",
+      "Said": "So listen, I saw the fella in the dark coat by Rita\u0027s window, but I\u0027m not sure if it was him or just a fella passing through. I\u0027m suspicious of him because he looked like he was running away from something, so I asked him where he\u0027s going.",
+      "Ms": 2832,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "Right? So listen, that\u2019s not like me. But I wasn\u2019t there for the whole thing\u2014just caught a glimpse off to the side. You think someone saw more than they should?",
+      "Said": "Right? So listen, that\u0027s not like me. But I wasn\u0027t there for the whole thing, just caught a glimpse off to the side. You think someone saw more than they should?",
+      "Ms": 3284,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "darren-3": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "So listen, I haven\u0027t even told you what I saw yet. How\u0027d you know it\u0027s worth a tenner?",
+      "Said": "So listen, I haven\u0027t even told you what I saw yet. How\u0027d you know it\u0027s worth a tenner?",
+      "Ms": 917,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "So listen, I can\u0027t do that. The tenner is a coin, but what I saw was the new owner\u0027s coat at Rita\u0027s window, and that\u0027s a fact that doesn\u0027t come off the table for a price.",
+      "Said": "So listen, I can\u0027t do that. The tenner is a coin, but what I saw was the new owner\u0027s coat at Rita\u0027s window, and that\u0027s a fact that doesn\u0027t come off the table for a price.",
+      "Ms": 883,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "So listen, you\u2019re thinking I\u2019d be stupid to take that money for nothing? But you\u2019re not thinking how long I\u2019ve been here\u2014how many people\u2019ve put a coin in my palm and walked away with a smile.\n\nDid you see that fella at Rita\u2019s when the window went? The one in the dark coat?",
+      "Said": "So listen, you\u0027re thinking I\u0027d be stupid to take that money for nothing? But you\u0027re not thinking how long I\u0027ve been here, how many people\u0027ve put a coin in my palm and walked away with a smile.\n\nDid you see that fella at Rita\u0027s when the window went? The one in the dark coat?",
+      "Ms": 983,
+      "Rescued": true,
+      "Thought": false
+    }
+  },
+  "darren-4": {
+    "paid": {
+      "Model": "claude-haiku-4-5",
+      "Raw": "So listen, I was on the rank till near midnight, then down by the market where the night crowd starts. Why, someone said they saw me somewhere else?",
+      "Said": "So listen, I was on the rank till near midnight, then down by the market where the night crowd starts. Why, someone said they saw me somewhere else?",
+      "Ms": 1108,
+      "Rescued": false,
+      "Thought": false
+    },
+    "qwen3.5-4b": {
+      "Model": "qwen3.5-4b",
+      "Raw": "So listen, I was in the middle of it, then. I\u0027m not scared of him, I\u0027m just not going to be where he is.",
+      "Said": "So listen, I was in the middle of it, then. I\u0027m not scared of him, I\u0027m just not going to be where he is.",
+      "Ms": 2089,
+      "Rescued": false,
+      "Thought": false
+    },
+    "ministral-3-3b": {
+      "Model": "ministral-3-3b",
+      "Raw": "So listen, last night\u2019s a bit like the week. Same routine\u2014stopped by the docks before closing, gave \u2018em a laugh about the tide charts if they were asking. Mostly just passed the time with the usual crowd, though. They always remember where I was last, so they know I\u2019m not off the Quay.",
+      "Said": "So listen, last night\u0027s a bit like the week. Same routine, stopped by the docks before closing, gave \u0027em a laugh about the tide charts if they were asking. Mostly just passed the time with the usual crowd, though. They always remember where I was last, so they know I\u0027m not off the Quay.",
+      "Ms": 3191,
+      "Rescued": true,
+      "Thought": false
+    }
+  }
+}

@@ -106,6 +106,19 @@ PROOFS = [{
 }]
 
 
+# THE LOCAL LINE-WRITING BLIND TEST (L01), 25 September: each moment answered
+# by the paid writer and the local ones, lettered at random (ledger/LineTest).
+# Only lines.json reaches the page; which writer is which stays in key.json.
+LINES = os.path.join(REPO, "production", "research", "local-writers", "lines.json")
+
+
+def gather_lines():
+    if not os.path.exists(LINES):
+        return []
+    with open(LINES, encoding="utf-8") as fh:
+        return json.load(fh).get("items", [])
+
+
 def gather_proofs(files):
     out = []
     for pr in PROOFS:
@@ -198,8 +211,8 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 <div class="wrap">
   <header>
     <div class="kicker">LEDGER · approval page · __DATE__</div>
-    <h1>Sheila, Ron and Darren, and a jacket, for your yes</h1>
-    <p class="how">Each person is approved whole: face, clothes and voice together. Look at the three pictures, play the three lines in each voice (the letters are blind; your approved voice is one of them), pick the voice that is the person, then Approve, or Redo with a word on what is wrong. The jacket, at the end, is judged on its own.</p>
+    <h1>Sheila, Ron and Darren, a jacket, and who writes the talk</h1>
+    <p class="how">Each person is approved whole: face, clothes and voice together. Look at the three pictures, play the three lines in each voice (the letters are blind; your approved voice is one of them), pick the voice that is the person, then Approve, or Redo with a word on what is wrong. The jacket and the blind lines, at the end, are judged on their own.</p>
     <div class="tally" id="tally">Loading your earlier verdicts…</div>
   </header>
   <main class="wrap" id="people" style="gap:40px"></main>
@@ -209,6 +222,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 <script>
 const PEOPLE = __DATA__;
 const PROOFS = __PROOFS__;
+const LINES = __LINES__;
 const state = {};           // slug -> {verdict, voice, note}
 let db = null, canWrite = true;
 let audio = null, playingBtn = null;
@@ -302,9 +316,34 @@ function render(){
     sec.append(el("div", {class:"verdict"}, note, el("div", {class:"row"}, ok, redo, saved), canWrite ? null : el("div", {class:"note-off", text:"Verdicts cannot be saved from this view."})));
     root.append(sec);
   }
+  if (LINES.length) {
+    const sec = el("section", {class:"person", id:"lines"});
+    const picked = LINES.filter(m => state["lines-" + m.id] && state["lines-" + m.id].pick).length;
+    sec.append(el("div", {class:"head"}, el("div", {}, el("h2", {text:"Who writes the talk, blind"}), el("div", {class:"was", text:picked + " of " + LINES.length + " picked"}))));
+    sec.append(el("p", {class:"how", text:"Each moment was answered by three writers: one is the paid model the game uses now; two run free on your own graphics card, which would take most of the cost of talk away. The letters are shuffled for every moment. Pick the line you would want said, or None if no line is good enough. Which writer is which is kept apart until you have judged."}));
+    for (const m of LINES) {
+      const key = "lines-" + m.id;
+      const s = state[key] || {};
+      const box = el("div", {class:"verdict"});
+      box.append(el("div", {class:"was", text:m.who + " · " + m.scene}));
+      if (m.knows && m.knows.length) box.append(el("div", {class:"was", text:"What they know: " + m.knows.join(" ")}));
+      box.append(el("div", {}, el("b", {text:"The player: "}), document.createTextNode("“" + m.player + "”")));
+      for (const a of m.answers.concat([{letter:"none", said:"None of them is good enough."}])) {
+        const id = "pick-" + key + "-" + a.letter;
+        const radio = el("input", {type:"radio", name:"pick-" + key, id, value:a.letter});
+        if (s.pick === a.letter) radio.checked = true;
+        radio.addEventListener("change", () => save(key, {pick: a.letter}));
+        box.append(el("label", {class:"voice" + (s.pick === a.letter ? " picked" : ""), for:id},
+          el("span", {class:"letter", text: a.letter === "none" ? "–" : a.letter}), el("span", {text:a.said}), radio));
+      }
+      sec.append(box);
+    }
+    root.append(sec);
+  }
   const all = PEOPLE.concat(PROOFS);
   const judged = all.filter(p => state[p.slug] && state[p.slug].verdict).length;
-  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + all.length + "</b> judged" + (db ? "" : " · verdicts are not being stored on this view");
+  const linesPicked = LINES.filter(m => state["lines-" + m.id] && state["lines-" + m.id].pick).length;
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + all.length + "</b> judged" + (LINES.length ? " · <b>" + linesPicked + " of " + LINES.length + "</b> lines picked" : "") + (db ? "" : " · verdicts are not being stored on this view");
 }
 
 let writing = Promise.resolve();
@@ -322,10 +361,11 @@ render();
 (async () => {
   try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
   if (!db) { render(); return; }
-  for (const p of PEOPLE.concat(PROOFS)) {
+  const slugs = PEOPLE.concat(PROOFS).map(p => p.slug).concat(LINES.map(m => "lines-" + m.id));
+  for (const slug of slugs) {
     try {
-      const snap = await db.doc("verdicts/" + p.slug).get();
-      if (snap.exists) state[p.slug] = Object.assign({}, snap.data());
+      const snap = await db.doc("verdicts/" + slug).get();
+      if (snap.exists) state[slug] = Object.assign({}, snap.data());
     } catch (e) { /* render without it */ }
   }
   render();
@@ -341,7 +381,9 @@ def build(date):
     os.makedirs(out_dir, exist_ok=True)
     data = json.dumps(people, ensure_ascii=False).replace("</", "<\\/")
     pdata = json.dumps(proofs, ensure_ascii=False).replace("</", "<\\/")
-    page = PAGE.replace("__DATA__", data).replace("__PROOFS__", pdata).replace("__DATE__", html.escape(date))
+    ldata = json.dumps(gather_lines(), ensure_ascii=False).replace("</", "<\\/")
+    page = (PAGE.replace("__DATA__", data).replace("__PROOFS__", pdata).replace("__LINES__", ldata)
+            .replace("__DATE__", html.escape(date)))
     with open(os.path.join(out_dir, "index.html"), "w", encoding="utf-8", newline="\n") as fh:
         fh.write(page)
     with open(os.path.join(out_dir, "files.json"), "w", encoding="utf-8", newline="\n") as fh:
