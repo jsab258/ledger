@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The day's mist may now thicken with distance.** It was capped at 30%, so the hill 150 metres off got no more haze than a wall 60 metres off, and it stood sharp where the sheet's hill fades. The cap is now 50%. The street's own far end, which was matched to the sheet, sits under the old cap and doesn't change.
 - 2026-09-24 **The street's dirt is on in Unreal:** all ten stains stand as decals, with water streaks down the party walls, moss, broken tarmac and the manholes. They're faint, because their strength is the old engine's, copied rather than re-guessed. Say if the street should be dirtier; it's one number.
 - 2026-09-24 **The MetaHuman stands at ease in the corner now,** arms down and weight settled, playing Elizabeth's idle carried onto his body. The head and face stay with him as he moves.
 - 2026-09-24 **The rebuilt hill in Unreal read as real terraced housing, but as a solid wall of it, so it has had a second pass.** The trees were hidden behind the tiers, so each tier now has clumps of trees along its front, which in Blender gives green among the houses as on the sheet. The Unreal frame is in the queue.
