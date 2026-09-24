@@ -38,6 +38,11 @@ PRESET_DIR = "/MetaHumanCharacter/Optional/Presets/"
 CAST_DIR = "/Game/Cast/"
 BUILD_ROOT = "/Game/Ledger/MetaHumans"
 GARMENT = "/MetaHumanCharacter/Optional/Clothing/WI_DefaultGarment.WI_DefaultGarment"
+# EPIC'S FREE CLOTHES ON FAB (sweater, jeans, boots, flats, sneakers...) come
+# as .mhpkg files, downloadable only when Jafar is signed in to fab.com. The
+# MetaHuman SDK registers a factory for .mhpkg (MetaHumanPackageFactory), so
+# an unreal.AssetImportTask on the file should bring each in by script; its
+# wardrobe item then takes GARMENT's place above (24 September, untried).
 NEED_FREE_GB = 10.0
 CLOUD_TIMEOUT_S = 15 * 60
 
