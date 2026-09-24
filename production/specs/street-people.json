@@ -55,5 +55,29 @@
       "why": "at Mickey's window, turned toward the street's south end: the person in the PS5 corner until a MetaHuman can be made, and near Mickey's front in the hook frame, where the sheet has people too",
       "y_m": 0.0806
     }
+  ],
+  "cast_what": "THE SLICE'S CAST AS METAHUMANS, 24 September. Jafar: 'MetaHumans replace the Mixamo stand-ins for the slice's cast, starting with Rocco, Lena and Sam, in plain clothes for now.' In the playable street each takes the place and facing of the stand-in it replaces; the automation's shots keep the stand-ins, so the street's comparison frames do not move. Made by tools/ue/make_cast_metahumans.py from the plugin's presets (Rocco from Jorge, Lena from Grace, Sam from Orlando), outside the repository; the idle is the one retargeted onto MH_Test, played on any part that shares its skeleton.",
+  "cast": [
+    {
+      "id": "lena",
+      "replaces": "elizabeth-idle",
+      "class": "/Game/Ledger/MetaHumans/MH_Lena/BP_MH_Lena.BP_MH_Lena_C",
+      "idle": "/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH",
+      "why": "at Mickey's door, where the bookkeeper steps out"
+    },
+    {
+      "id": "rocco",
+      "replaces": "joe-pockets",
+      "class": "/Game/Ledger/MetaHumans/MH_Rocco/BP_MH_Rocco.BP_MH_Rocco_C",
+      "idle": "/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH",
+      "why": "one of the pair talking on the parade's pavement: at noon his routine has him at the fish front"
+    },
+    {
+      "id": "sam",
+      "replaces": "david-pockets",
+      "class": "/Game/Ledger/MetaHumans/MH_Sam/BP_MH_Sam.BP_MH_Sam_C",
+      "idle": "/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH",
+      "why": "the other of the pair: Sam is at the fish front from nine to one"
+    }
   ]
 }

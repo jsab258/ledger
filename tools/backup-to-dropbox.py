@@ -39,6 +39,9 @@ SOURCES = [
      r"metahuman\before-dressing-2026-09-24\MH_Test.uasset"),
     (r"C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans", r"metahuman\built\MetaHumans"),
     (r"C:\LedgerTools\mh-assemble\MHAssemble.uproject", r"metahuman\MHAssemble.uproject"),
+    # THE CAST'S SOURCE CHARACTERS, 24 September: Rocco, Lena and Sam, made by
+    # tools/ue/make_cast_metahumans.py, rigged and textured by Epic's service.
+    (r"C:\LedgerTools\mh-assemble\Content\Cast", r"metahuman\cast"),
 ]
 
 # Never copied, whatever a future entry above says: the key, and the place it lives.

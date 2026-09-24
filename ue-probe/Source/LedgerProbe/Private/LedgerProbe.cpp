@@ -13,6 +13,7 @@
 #include "Perception.h"
 #include "CoreGolden.h"
 #include "FrameStats.h"
+#include "MetaHumanCost.h"
 #include "VignetteShot.h"
 #include "WalkProbe.h"
 #include "CrimeProbe.h"
@@ -845,6 +846,13 @@ public:
 		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")))
 		{
 			LedgerCrimeProbe::Start();
+			return;
+		}
+		// WHAT EACH METAHUMAN COSTS ON THE CARD, 24 September: its own switch,
+		// on the ordinary launch, like the walk and the crime.
+		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerMhCost")))
+		{
+			LedgerMhCost::Start();
 			return;
 		}
 		if (!FParse::Param(FCommandLine::Get(), TEXT("LedgerGoldenTest")))

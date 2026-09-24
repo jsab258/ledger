@@ -1,0 +1,14 @@
+# What each MetaHuman costs on the card, standing 3.5 m in front of the camera in the street.
+# gpuMs is RHIGetGPUFrameCycles per frame, uncapped; texMB is the RHI's texture memory; delta is against nobody.
+mhcostStart cond=nobody at=19.9s spawned=0/0 note=none
+mhcost cond=nobody gpuMsMedian=9.52 gpuMsP95=9.73 frameMsMedian=10.74 texMB=2380 deltaGpuMs=+0.00 deltaTexMB=+0 frames=300 shadersPending=0 endAt=29.9s
+mhcostStart cond=rocco at=30.4s spawned=1/1 note=none
+mhcost cond=rocco gpuMsMedian=9.83 gpuMsP95=10.02 frameMsMedian=11.09 texMB=2407 deltaGpuMs=+0.31 deltaTexMB=+27 frames=300 shadersPending=0 endAt=39.5s
+mhcostStart cond=lena at=39.9s spawned=1/1 note=none
+mhcost cond=lena gpuMsMedian=9.86 gpuMsP95=10.09 frameMsMedian=11.13 texMB=2415 deltaGpuMs=+0.34 deltaTexMB=+35 frames=300 shadersPending=0 endAt=49.1s
+mhcostStart cond=sam at=49.6s spawned=1/1 note=none
+mhcost cond=sam gpuMsMedian=9.89 gpuMsP95=10.10 frameMsMedian=11.16 texMB=2423 deltaGpuMs=+0.36 deltaTexMB=+43 frames=300 shadersPending=0 endAt=58.7s
+mhcostStart cond=all-three at=58.7s spawned=3/3 note=none
+mhcost cond=all-three gpuMsMedian=10.15 gpuMsP95=10.38 frameMsMedian=11.48 texMB=2423 deltaGpuMs=+0.63 deltaTexMB=+43 frames=300 shadersPending=0 endAt=68.4s
+mhcostStart cond=test at=68.4s spawned=1/1 note=none
+mhcost cond=test gpuMsMedian=9.84 gpuMsP95=10.03 frameMsMedian=11.11 texMB=2428 deltaGpuMs=+0.31 deltaTexMB=+48 frames=300 shadersPending=0 endAt=78.0s
