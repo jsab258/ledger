@@ -29,6 +29,9 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The worked examples really are slow on your card: 1.4 seconds a line** with nothing else running, the same as with Unreal beside it. The card reads the extra example text slowly. It uses 3.1 GB. Repeat runs at the same settings vary by a few lines (271 this time against 274).
+- 2026-09-24 **The same worked examples lift the paid model too: 259 to 286 of 299**, with tidy-but-wrong answers falling from 38 to 12, and faster (0.7 seconds a line). So the paid model stays 12 to 15 lines ahead of the free one with the same help, and is twice as fast. Worked examples are worth adding to the paid router whatever happens with the free one; that's a change to the game, for a sitting of its own. It cost about 30p.
+- 2026-09-24 **The card is free.** The model server is shut down, and nothing from the local-models work is running.
 - 2026-09-24 **This sitting's limit is one hour, not the rule's default four:** you said "short housekeeping, then stop" and named no limit. With four, the stop hook wouldn't let me stop when the work is done. Say if you want the four.
 - 2026-09-24 **C: is down to 5.1 GB free, from about 20 GB last night.** The disk job goes first this morning.
 - 2026-09-24 **With the voice running, the slice is right at the edge of your 60:** 75 frames a second on average at your screen size, but its slowest 1% of frames run at 59, and 19 frames in 1,500 missed 60. Nano itself does 1.37 seconds of work per second of speech on the card while the game runs. Anything heavier on screen from here will need paying for somewhere.
@@ -631,6 +634,7 @@ so the record stays complete.)*
 
 ## Rulings received
 
+- 2026-09-24 **Local models: one short job, then stop.** Time the worked examples on the quiet card, run the same method on the paid model, write both up, shut everything down.
 - 2026-09-24 **Your answers to the night's eight decisions:** MH_Test is dressed by script as a test figure (the clothing line does period clothes properly); the MetaHuman's files stay on this PC; the local-models session does one short timing job, then stops; 60 at your screen is met by drawing smaller and upscaling; the facade tools are confirmed; VCTK consent is accepted on the record as a stated risk, with no email; the allowlist's ban means identifiable real people and public figures, now written into it; Aldous, Danny, June and Zlata are allowed but were never approved, so they get a listening page with alternatives for you to pick. No voice is cast without your yes, now in the project instructions.
 - 2026-09-24 **"If you need to download anything for UE just do it."** Taken as: downloads for Unreal from Epic's own services (the engine, its plugins, MetaHuman textures and assets) go ahead without asking. Each one is still named here with where it came from and its size. Anything that isn't Unreal, or isn't from Epic, still asks.
 - 2026-09-24 **Yes to downloading MH_Test's textures from Epic's MetaHuman service**, given in chat just before midnight. It asked why I asked: I don't download anything under his account without his say-so each time, and that's my own rule, not the project's.
@@ -745,6 +749,7 @@ so the record stays complete.)*
 
 ## Resolved
 
+- 2026-09-24 **Answered: one short job on the quiet card, then stop.** Done. The question as it was put:
 - 2026-09-24 (resolved 24 Sep: (b), dressed by script in plain 1990 clothes and a haircut, once the card is free) **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.

@@ -76,6 +76,19 @@ Card memory, measured with the model loaded and idle:
 - Ministral 3 3B: 2.5 GB
 - Qwen3-1.7B: 1.6 GB
 
+## Measured 24 September, on a quiet card
+
+- Today's Qwen3-4B with examples (the idlecard row): **1.40 s median, 2.12 s at
+  the 90th percentile**, the same as last night's 1.51 s with Unreal on the card.
+  So the time is real. The card reads the roughly 280 new prompt tokens of each
+  line at 227 to 487 tokens a second (average 284). Card memory is 3.05 GB
+  loaded and 3.16 GB after the run.
+- The paid router with the same examples: **286 of 299, 12 tidy-but-wrong;
+  without the novel lines, 258 of 264 with 5**. Median 0.71 s. .38. The
+  method lifts the paid router more than the gap it closed, so the paid router
+  stays ahead by 12 to 15 lines. Typed orders were not run with examples on
+  the paid router.
+
 ## What it says
 
 1. **Cheap changes alone don't reach the paid router.** Without the novel
@@ -160,5 +173,7 @@ Card memory, measured with the model loaded and idle:
 - Some answer times were taken while an Unreal job shared the card (the PC
   runner's check set off by this branch's push, then the main sitting's
   packaging). Scores are unaffected, because the temperature is 0.
-- One run per configuration: at temperature 0 a run repeats exactly, so there
-  are no seeds to vary.
+- One run per configuration. At temperature 0 a rerun is NOT exact on this
+  server (several parallel slots, and a shared prompt cache): the idle-card rerun
+  of today's model with examples scored 271 against 274. Treat differences of a
+  few lines as noise.
