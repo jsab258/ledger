@@ -215,6 +215,29 @@ namespace Ledger.Core
             Note(-amount, reason);
         }
 
+        /// THE LATEST REASON, IN THE CHARACTER'S OWN WORDS, for the prompt.
+        /// The level alone told the model how to feel and never why, so a
+        /// character with every reason to ask about the window was handed
+        /// "you are suspicious" and no window (24 September).
+        ///
+        /// ONLY A REASON THAT RAISED IT, SINCE THE LAST RESTORE, AND ONLY
+        /// WORDS (the independent check): a reassurance ("story checked out")
+        /// is not why somebody is suspicious; a restore starts the account
+        /// again, so an older reason must not leak across it; and a reason
+        /// that carries an id ("caught contradiction on player.location...")
+        /// is not something a person says.
+        public string LatestReason()
+        {
+            for (int i = _why.Count - 1; i >= 0; i--)
+            {
+                if (_why[i] == "(restored from save)") return null;
+                if (_moved[i] <= 0.0 || string.IsNullOrWhiteSpace(_why[i])) continue;
+                if (GossipMill.SaysWord(_why[i], "player") || _why[i].Contains("player.")) continue;
+                return _why[i];
+            }
+            return null;
+        }
+
         /// Text the LLM receives describing how this character currently feels
         /// about the player — descriptive, not decision-making.
         public string ToPromptDescriptor()
@@ -226,7 +249,10 @@ namespace Ledger.Core
                 case SuspicionLevel.Uneasy:
                     return "Something about this person has started to feel off to you. You are friendly but a little guarded.";
                 case SuspicionLevel.Suspicious:
-                    return "You are actively suspicious of this person. Their stories haven't added up. You probe with pointed questions and share little.";
+                    // NOT "their stories haven't added up" any more (24 September):
+                    // a sighting near a deed is a reason with no story in it, and
+                    // the why line below the level says which reason it is.
+                    return "You are actively suspicious of this person. You probe with pointed questions and share little.";
                 default:
                     return "You have essentially caught this person in their lies. You confront them about the inconsistencies you know about, firmly.";
             }

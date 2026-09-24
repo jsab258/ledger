@@ -23,6 +23,9 @@
 set -u
 REPO=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 L="$REPO/ledger"
+# THE CONVERSATION HELPER IS A CALLER, 24 September: the Unreal game runs it
+# beside itself for every conversation, so what it calls is running.
+# Suspecting.Derive is the first Core API whose only caller is there.
 
 exec dotnet run -c Release --project "$L/ReachCheck" -- \
   "$L/Assets/Scripts/Core" "$L/Assets/Scripts/Game" \
@@ -31,6 +34,6 @@ exec dotnet run -c Release --project "$L/ReachCheck" -- \
   --tests "$L/BalanceLab" \
   --tests "$L/BarkGen" \
   --tests "$L/Tier2Gen" \
-  --also  "$L/Assets/Editor" \
+  --also  "$L/Assets/Editor"   --also  "$L/TalkHelper" \
   --allow "$L/ReachCheck/allow.json" \
   "$@"

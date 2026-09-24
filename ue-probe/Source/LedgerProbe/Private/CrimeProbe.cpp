@@ -143,7 +143,7 @@ namespace
 		WaitWorld, WaitPawn, SettleAfterSpawn, PlaceProps,
 		ShotStart,
 		ApproachA, PlaceForA, SettleA, MeasureA, ShotBeforeA, SeqBeforeA,
-		AwaitActA, CommitA, SeqAfterA, ShotAfterA, Round1,
+		AwaitActA, CommitA, SeqAfterA, ShotAfterA, FleeYard, FleeWatch, Round1,
 		MoveW1ToYard, ApproachB, PlaceForB, SettleB, MeasureB, ShotBeforeB,
 		SeqBeforeB, AwaitActB, CommitB, SeqAfterB, ShotAfterB, Round2,
 		MoveToOverhear, SettleOverhear, OverheardHold, ShotOverheard,
@@ -211,6 +211,16 @@ namespace
 	bool   bShoutSpatial = false;
 	double GShoutFalloffM = 0.0;
 	std::string GSavedByCommit = "none";
+	// WHO HAD REASON TO SUSPECT HIM, 24 September: the lad's sighting of the
+	// man running through the yard, and the level the Core derived for the lad
+	// and for his mate from what each of them held.
+	double GFleeSeconds = 0.0, GFleeMetres = -1.0, GFleeCertainty = 0.0;
+	int    GFleeRung = -1;
+	bool   bFleeSeen = false, bFleeFiled = false;
+	std::string GFleeSummary = "none";
+	std::string GSuspN2 = "not-asked", GSuspR3 = "not-asked", GSuspW1 = "not-asked", GSuspWhyN2 = "none";
+	int    GFleeOthersSeen = 0;          // other people the lad could see while the man ran
+	int    GW1RungA = -1;                // the rung the shopkeeper reached on crime A, saved with the town
 	bool   bSavedToDisk = false, bLoadedFromDisk = false;
 	int    GSavedBytes = 0, GLoadedBytes = 0;
 	int    GClockDay = 0, GClockHour = 0, GClockMinute = 0;
@@ -1888,6 +1898,7 @@ namespace
 				               R.O.Certainty, /*bIndelible=*/false);
 				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == "w1")
 				{
+					GW1RungA = R.O.Rung;
 					GFiledSummaryA = Summary;
 					PlayShout();
 				}
@@ -1943,7 +1954,9 @@ namespace
 	}
 
 	// A memory of a crime is one the street files about a deed: something
-	// seen or something heard. Nothing else in this module writes either.
+	// seen or something heard. Since 24 September the lad's sighting of the
+	// man in the yard is an observation too, and is counted here: in the
+	// play run the lad holds two (what he heard, what he saw).
 	int HeardMemories(const GossiperPtr& G)
 	{
 		if (!G || !G->Memory) { return 0; }
@@ -2016,6 +2029,126 @@ namespace
 		bShoutRecording = false;
 	}
 
+	// THE LAD'S SIGHTING OF THE MAN IN THE YARD, measured off the running
+	// world like every witness: in sight long enough to notice, the rung his
+	// distance, the light and his acquaintance allow, and the certainty the
+	// resolver's own rule gives an actor seen fleeing. Filed only if it could
+	// tie the man to anyone (a mark, a face or a name).
+	void FileFleeSighting(UWorld* World)
+	{
+		if (GN2Body == nullptr || GPawn == nullptr || !GMill) { GFleeSummary = "no-lad-or-no-mill"; return; }
+		LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, GFleeSeconds);
+		W.Familiarity = LedgerCrime::kLadFamiliarity;
+		GFleeMetres = W.ActorMetres;
+		bFleeSeen = GFleeSeconds >= Perception::NoticeSeconds
+			&& Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4);
+		GFleeRung = bFleeSeen ? Perception::IdRung(W.ActorMetres, LedgerCrime::kLightLevel, W.Familiarity, false, W.FaceToward()) : 0;
+		const LedgerCore::Slot Got = (LedgerCore::Slot)((int)LedgerCore::Slot::Actor | (int)LedgerCore::Slot::Flight);
+		GFleeCertainty = bFleeSeen ? LedgerCore::Observe::CertaintyFor(Got, GFleeRung, true, false) : 0.0;
+		// WHO ELSE WAS ABOUT, MEASURED RATHER THAN ASSERTED (the independent
+		// check): every other person in the street, by the same sight test
+		// from the lad's eye.
+		GFleeOthersSeen = 0;
+		AActor* Others[2] = { GW1Body, GC1Body };
+		const FVector EyeUE = ToUE(W.EyeAt);
+		for (AActor* O : Others)
+		{
+			if (O == nullptr) { continue; }
+			const FBox B = O->GetComponentsBoundingBox();
+			const FVector HeadUE(B.GetCenter().X, B.GetCenter().Y, B.Max.Z - 10.0f);
+			const LedgerCrime::P3 Head = ToStreet(HeadUE);
+			std::string Blocker; double Len = 0.0;
+			const bool bBlocked = TraceBlocked(World, EyeUE, HeadUE, GN2Body, O, Blocker, Len);
+			if (Perception::InSight(LedgerCrime::Metres(W.EyeAt, Head), LedgerCrime::OffAxisDeg(W.EyeAt, W.WitnessYawDeg, Head),
+			                        LedgerCrime::kLightLevel, bBlocked, 0.0))
+			{
+				++GFleeOthersSeen;
+			}
+		}
+		if (!bFleeSeen || !LedgerCrime::CanTieSighting(GFleeRung)) { GFleeSummary = "not-filed/rung-too-low-to-tie"; return; }
+		GFleeSummary = GFleeRung >= 3
+			? "a man came through the yard at a run just after the glass went, and I'd know his face again"
+			: "a man came through the yard at a run just after the glass went";
+		// FILED BY HAND, NOT THROUGH Witness(): that writes "I think I saw it,
+		// couldn't swear to it", which reads as a sighting of the deed. This is
+		// a sighting of the man, and the memory says so. The rumour is the one
+		// Witness would add (hop 0, the measured certainty), so gossip carries
+		// it and the save keeps it exactly as it keeps any other.
+		RumorPtr Near = std::make_shared<Rumor>(Fact(std::string("player"), std::string(LedgerCrime::NearPredicate()),
+		                                             std::string(LedgerCrime::NearValue())));
+		Near->OriginId = "n2";
+		Near->Summary = GFleeSummary;
+		Near->Confidence = GFleeCertainty;
+		Near->Hops = 0;
+		if (GN2) { GN2->Rumors.push_back(Near); }
+		if (GN2 && GN2->Memory)
+		{
+			GN2->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "What I saw myself: " + GFleeSummary));
+		}
+		bFleeFiled = GN2 != nullptr;
+	}
+
+	// WHAT ONE RESIDENT HOLDS, AS THE EVIDENCE THE CORE DERIVES SUSPICION
+	// FROM (Suspecting.cs, in the helper): the best account of crime A they
+	// hold, whether they saw or heard that he was near it, and how they know
+	// him. Nobody else was seen near it in this street, so others is 0.
+	std::string EvidenceFor(const GossiperPtr& G, double Familiarity, int OwnRungOnA)
+	{
+		RumorPtr Acc, Near;
+		if (G)
+		{
+			for (const RumorPtr& R : G->Rumors)
+			{
+				if (!R) { continue; }
+				if (LedgerCrime::IsAboutCrimeA(R)) { if (!Acc || R->Confidence > Acc->Confidence) { Acc = R; } }
+				else if (R->Content.Predicate == LedgerCrime::NearPredicate() && R->Content.Value == LedgerCrime::NearValue())
+				{
+					if (!Near || R->Hops < Near->Hops) { Near = R; }
+				}
+			}
+		}
+		std::string J = "{\"account\":{";
+		if (Acc)
+		{
+			// THE RUNG, NOT THE CERTAINTY, says whether a first-hand account
+			// names him: a sighting is capped at 0.94. A heard account does not
+			// carry its teller's rung, so it never names him here.
+			J += std::string("\"held\":true,\"seen\":") + (Acc->Hops == 0 ? "true" : "false")
+				+ ",\"rung\":" + std::to_string(Acc->Hops == 0 ? OwnRungOnA : -1)
+				+ ",\"names\":false"
+				+ ",\"confidence\":" + std::to_string(Acc->Confidence)
+				+ ",\"summary\":\"" + JsonEsc(Acc->Summary) + "\"";
+		}
+		else { J += "\"held\":false"; }
+		J += "},\"near\":{";
+		if (Near)
+		{
+			// A RETOLD SIGHTING TIES NOBODY unless its teller named him, and
+			// the only sighting here is the lad's, who cannot: heard is false.
+			J += std::string("\"sawHim\":") + (Near->Hops == 0 ? "true" : "false")
+				+ ",\"heard\":false"
+				+ ",\"others\":" + std::to_string(Near->Hops == 0 ? GFleeOthersSeen : 0)
+				+ ",\"summary\":\"" + JsonEsc(Near->Summary) + "\"";
+		}
+		J += "},\"familiarity\":" + std::to_string(Familiarity) + "}";
+		return J;
+	}
+
+	std::string JsonField(const std::string& Line, const std::string& Name)
+	{
+		const std::string K = "\"" + Name + "\":\"";
+		std::string::size_type At = Line.find(K);
+		if (At == std::string::npos) { return "none"; }
+		std::string R;
+		for (std::string::size_type I = At + K.size(); I < Line.size(); ++I)
+		{
+			if (Line[I] == '\\' && I + 1 < Line.size()) { R += Line[++I]; continue; }
+			if (Line[I] == '"') { break; }
+			R += Line[I];
+		}
+		return R;
+	}
+
 	// THE CONVERSATION: the helper beside the game, one JSON line each way,
 	// carrying the lad's own memories and the simulation's day and hour.
 	void RunTalk()
@@ -2085,10 +2218,13 @@ namespace
 						+ "\",\"importance\":" + std::to_string(E.Importance) + ",\"text\":\"" + JsonEsc(E.Text) + "\"}";
 				}
 			}
+			// AND WHAT HE HOLDS AGAINST THE MAN IN FRONT OF HIM, for the Core
+			// to turn into a level and a reason (24 September).
 			const std::string Req = "{\"id\":1,\"to\":\"" + JsonEsc(GTalkCard)
-				+ "\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
+				+ "\",\"who\":\"n2\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
 				+ ",\"hour\":" + std::to_string(GTalkHour) + ",\"minute\":" + std::to_string(GNow.Minute)
-				+ ",\"scene\":\"The yard behind the parade on Quay Street.\",\"memories\":[" + Mem + "]}";
+				+ ",\"scene\":\"The yard behind the parade on Quay Street.\",\"memories\":[" + Mem + "]"
+				+ ",\"evidence\":" + EvidenceFor(GN2, LedgerCrime::kLadFamiliarity, -1) + "}";
 			FPlatformProcess::WritePipe(InWrite, Un(Req));
 			std::string Rep = LineWith("\"id\":1", 45.0);
 			if (Rep.empty() && Buf.find("\"error\"") != std::string::npos) { Rep = Buf; }
@@ -2116,7 +2252,14 @@ namespace
 					std::string R;
 					for (std::string::size_type I = At + K.size(); I < Rep.size(); ++I)
 					{
-						if (Rep[I] == '\\' && I + 1 < Rep.size()) { R += Rep[++I]; continue; }
+						// AN ESCAPED LINE BREAK IS A SPACE, not the letter n: a
+						// live reply in two paragraphs read "right now.nnLook".
+						if (Rep[I] == '\\' && I + 1 < Rep.size())
+						{
+							const char E = Rep[++I];
+							R += (E == 'n' || E == 'r' || E == 't') ? ' ' : E;
+							continue;
+						}
 						if (Rep[I] == '"') { break; }
 						R += Rep[I];
 					}
@@ -2138,6 +2281,8 @@ namespace
 					GTalkHeard = Rep.substr(H + 9, E == std::string::npos ? std::string::npos : E - H - 9);
 					GTalkHeardCount = Quotes / 2;
 				}
+				GSuspN2 = JsonField(Rep, "level");
+				GSuspWhyN2 = JsonField(Rep, "why");
 				// THE CRIME IS IN WHAT HE WAS GIVEN AND IN WHAT HE SAID: the
 				// clause the witness filed, which the gossip carried to him.
 				const std::string Key = GFiledSummaryA.size() > 24 ? GFiledSummaryA.substr(0, 24) : GFiledSummaryA;
@@ -2147,10 +2292,35 @@ namespace
 				if (!bTalkFake)
 				{
 					// A LIVE MODEL WORDS IT ITS OWN WAY: questioned means he
-					// asked something, with the crime in what he was given.
-					bTalkQuestioned = bTalkHeardCrime && GTalkReply.find('?') != std::string::npos;
+					// asked something, with the crime in what he was given,
+					// AND HE ASKED ABOUT IT: the reply names the deed or where
+					// it happened. Any question mark at all let "You looking
+					// for something?" pass as questioning (the independent
+					// check, and the first live run, 24 September).
+					std::string Low = GTalkReply;
+					for (char& Ch : Low) { Ch = (char)std::tolower((unsigned char)Ch); }
+					const char* Words[] = { "window", "glass", "yard", "shop", "smash", "broke" };
+					bool bAbout = false;
+					for (const char* Wd : Words) { if (Low.find(Wd) != std::string::npos) { bAbout = true; } }
+					bTalkQuestioned = bTalkHeardCrime && GTalkReply.find('?') != std::string::npos && bAbout;
 				}
 			}
+		}
+		// HIS MATE, THE CONTROL: he heard about the window too, and the Core
+		// is asked what he holds against the man, with no model call.
+		if (!Ready.empty())
+		{
+			const std::string Req2 = "{\"id\":2,\"to\":\"" + JsonEsc(GTalkCard)
+				+ "\",\"who\":\"r3\",\"noReply\":true,\"evidence\":" + EvidenceFor(GR3, LedgerCrime::kLadFamiliarity, -1) + "}";
+			FPlatformProcess::WritePipe(InWrite, Un(Req2));
+			const std::string Rep2 = LineWith("\"id\":2", 20.0);
+			GSuspR3 = Rep2.empty() ? std::string("no-reply") : JsonField(Rep2, "level");
+			// AND THE SHOPKEEPER, who saw his face at it: she has reason too.
+			const std::string Req3 = "{\"id\":3,\"to\":\"" + JsonEsc(GTalkCard)
+				+ "\",\"who\":\"w1\",\"noReply\":true,\"evidence\":" + EvidenceFor(GW1, LedgerCrime::kLadFamiliarity, GW1RungA) + "}";
+			FPlatformProcess::WritePipe(InWrite, Un(Req3));
+			const std::string Rep3 = LineWith("\"id\":3", 20.0);
+			GSuspW1 = Rep3.empty() ? std::string("no-reply") : JsonField(Rep3, "level");
 		}
 		FPlatformProcess::ClosePipe(InRead, InWrite);
 		const double TQuit = FPlatformTime::Seconds();
@@ -2184,6 +2354,8 @@ namespace
 		}
 		const std::string Clock = "day=" + std::to_string(GNow.Day) + "\nhour=" + std::to_string(GNow.Hour)
 			+ "\nminute=" + std::to_string(GNow.Minute) + "\nsummaryA=" + GFiledSummaryA
+			+ "\nrungA=" + std::to_string(GW1RungA)
+			+ "\nothersNear=" + std::to_string(GFleeOthersSeen)
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
 		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
@@ -2222,6 +2394,8 @@ namespace
 				else if (Kv == TEXT("hour")) { GClockHour = FCString::Atoi(*V); }
 				else if (Kv == TEXT("minute")) { GClockMinute = FCString::Atoi(*V); }
 				else if (Kv == TEXT("summaryA")) { GFiledSummaryA = Utf8(V); }
+				else if (Kv == TEXT("rungA")) { GW1RungA = FCString::Atoi(*V); }
+				else if (Kv == TEXT("othersNear")) { GFleeOthersSeen = FCString::Atoi(*V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 			}
 		}
@@ -2255,7 +2429,11 @@ namespace
 			Need.push_back({ "shout-heard-in-the-street", bShoutHeard });
 			Need.push_back({ "gossip-reached-the-lad", AN2 > 0 && HeardMemories(GN2) > 0 });
 			Need.push_back({ "and-his-mate", AR3 > 0 });
+			Need.push_back({ "the-lad-saw-him-run", bFleeFiled });
 			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
+			Need.push_back({ "the-lad-has-reason-to-suspect-him", GSuspN2 == "Suspicious" || GSuspN2 == "Confronting" });
+			Need.push_back({ "the-witness-has-reason-too", GSuspW1 == "Suspicious" || GSuspW1 == "Confronting" });
+			Need.push_back({ "his-mate-has-no-reason-to-question-him", GSuspR3 == "Trusting" || GSuspR3 == "Uneasy" });
 			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
 			Need.push_back({ "saved-to-disk", bSavedToDisk });
 		}
@@ -2266,6 +2444,8 @@ namespace
 			Need.push_back({ "his-mate-still-knows", AR3 > 0 });
 			Need.push_back({ "the-witness-still-knows", AW1 > 0 });
 			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
+			Need.push_back({ "the-lad-still-has-reason", GSuspN2 == "Suspicious" || GSuspN2 == "Confronting" });
+			Need.push_back({ "the-witness-still-has-reason", GSuspW1 == "Suspicious" || GSuspW1 == "Confronting" });
 			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
 		}
 		else
@@ -2276,6 +2456,7 @@ namespace
 			Need.push_back({ "nobody-remembers-a-crime", MW1 + MN2 + MR3 == 0 });
 			Need.push_back({ "the-helper-answered", bTalkAnswered });
 			Need.push_back({ "he-knew-nothing", GTalkHeardCount == 0 && GTalkReply.find('?') == std::string::npos });
+			Need.push_back({ "no-reason-to-suspect-him", GSuspN2 == "Trusting" });
 		}
 		std::string Failed;
 		for (const auto& N : Need) { if (!N.second) { Failed += (Failed.empty() ? "" : ",") + N.first; } }
@@ -2296,6 +2477,11 @@ namespace
 			*Un(GTalkWhy), *Un(GTalkCard), bTalkFake ? TEXT("yes") : TEXT("no"), GTalkDay, GTalkHour, GTalkHeardCount,
 			bTalkHeardCrime ? TEXT("yes") : TEXT("no"), bTalkQuestioned ? TEXT("yes") : TEXT("no"));
 		V += FString::Printf(TEXT("talkReply=%s\n"), *Un(GTalkReply));
+		V += FString::Printf(TEXT("suspicion lad=%s witness=%s mate=%s witnessRungA=%d flee=%s fleeSeconds=%.2f fleeMetres=%.1f fleeRung=%d fleeCertainty=%.2f othersTheLadSaw=%d\n"),
+			*Un(GSuspN2), *Un(GSuspW1), *Un(GSuspR3), GW1RungA,
+			bFleeFiled ? TEXT("filed") : (bFleeSeen ? TEXT("seen-not-filed") : TEXT("not-seen")),
+			GFleeSeconds, GFleeMetres, GFleeRung, GFleeCertainty, GFleeOthersSeen);
+		V += FString::Printf(TEXT("suspicionWhyLad=%s\n"), *Un(GSuspWhyN2));
 		V += FString::Printf(TEXT("save=%s savedBytes=%d loaded=%s loadedBytes=%d savedByCommit=%s clockLoaded=D%d-%02d:%02d talkAnswered=%s bankReadable=%s saveDir=%s\n"),
 			bSavedToDisk ? TEXT("written") : TEXT("not-written"), GSavedBytes, bLoadedFromDisk ? TEXT("yes") : TEXT("no"),
 			GLoadedBytes, *Un(GSavedByCommit), GClockDay, GClockHour, GClockMinute,
@@ -2462,7 +2648,39 @@ namespace
 			return RunForcedSeqPhase(ECrimePhase::ShotAfterA, Now);
 		case ECrimePhase::ShotAfterA:
 			return RunShotPhase(TEXT("after_crime_a"), TEXT("ue-crime_02_after_crime_a.png"),
-			                    ECrimePhase::Round1, Now);
+			                    GEnc == EEncounter::Play ? ECrimePhase::FleeYard : ECrimePhase::Round1, Now);
+		case ECrimePhase::FleeYard:
+		{
+			// HE RUNS: through the yard behind the parade, past the lad.
+			GBeat = "flee_yard";
+			TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg);
+			GFleeSeconds = 0.0;
+			GPhase = ECrimePhase::FleeWatch;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::FleeWatch:
+		{
+			// THE LAD SEES HIM OR DOES NOT, by the same test the witnesses
+			// are held to: seconds accrue only while the sightline holds.
+			if (GN2Body != nullptr && GPawn != nullptr && (Now - GPhaseStart) >= kSettleAfterTeleport)
+			{
+				const LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, 0.0);
+				if (Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4))
+				{
+					GFleeSeconds += Delta;
+				}
+			}
+			if ((Now - GPhaseStart) < kSettleAfterTeleport + LedgerCrime::kFleeSeconds) { return true; }
+			FileFleeSighting(World);
+			// BACK TO THE WINDOW HE LEFT, so the walk on to the second window
+			// starts where it always has.
+			TeleportPawn(World, LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, 90.0);
+			WriteBreadcrumb(TEXT("flee-yard-watched"));
+			GPhase = ECrimePhase::Round1;
+			GPhaseStart = Now;
+			return true;
+		}
 		case ECrimePhase::Round1:
 		{
 			// THE ACCEPTING HALF OF THE GOSSIP PAIR'S OPPOSITE: the same two

@@ -64,6 +64,13 @@ namespace Ledger.Core
 
             sb.AppendLine();
             sb.AppendLine(Suspicion.ToPromptDescriptor());
+            // AND WHY, when there is a why: the Core decided the level and the
+            // reason (Suspecting, Gossip), and the model performs both.
+            var why = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
+            if (!string.IsNullOrEmpty(why))
+            {
+                sb.AppendLine($"Why you feel that way, in your own words: {why}.");
+            }
 
             if (!string.IsNullOrEmpty(sceneContext))
             {
@@ -162,6 +169,16 @@ namespace Ledger.Core
             sb.AppendLine("- If the other person uses a word for something that does not exist in your world, you have never heard it. Do not repeat it, define it, or build a sentence around it. Answer with the thing you DO have — the phone box, a message left with the barman, come by in the morning, knock — and let not knowing the word show in that rather than in saying you do not know it.");
             sb.AppendLine("- Don't summarize or tie the moment up neatly. React to what was just said, from what you know and what you want.");
             sb.AppendLine("- Keep replies conversational and short — usually one to three sentences.");
+            // AT SUSPICIOUS AND ABOVE IT IS SAID, NOT HINTED, AND IT IS SAID
+            // LAST. On the real model the lad was told he was suspicious and
+            // why, mid-prompt, and answered with the state of the rank: "probe
+            // with pointed questions and share little" read to it as "share
+            // little", and the rule above about starting from what you want
+            // out of the conversation never knew what he wanted (24 September).
+            // The Core decided to ask; this line makes the ask, and gives the
+            // opening rule the want it asks for.
+            if (!string.IsNullOrEmpty(why) && Suspicion.Level >= SuspicionLevel.Suspicious)
+                sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). So in this reply, whatever they said, ask them straight out, your own way.");
             return sb.ToString();
         }
 
