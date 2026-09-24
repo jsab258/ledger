@@ -17,6 +17,7 @@ under 16.7 ms and the slowest 1% at or under 33.3 ms; BELOW-60 when the median
 is over 16.7 ms and the slowest 1% is not; BELOW-30 otherwise.
 """
 import csv
+import os
 import statistics
 import sys
 
@@ -51,6 +52,10 @@ def verdict(median, p99):
 
 def read(path):
     rows = list(csv.reader(open(path, encoding="utf-8", errors="ignore")))
+    if not rows:
+        # AN EMPTY FILE IS NO FRAMES, said as such (24 September: the reader
+        # raised on one, printed nothing, and the verdict lost its line).
+        return [], [], []
     header, body = rows[0], [r for r in rows[1:] if r and r[0] != "EVENTS" and len(r) > 10]
     body = body[DROP:]
     return (column(body, header, "FrameTime"), column(body, header, "GPUTime"),
@@ -83,6 +88,11 @@ def selftest():
     check("below 60", verdict(20.0, 30.0) == "BELOW-60")
     check("below 30", verdict(20.0, 40.0) == "BELOW-30")
     check("no frames says so", line("x", [], [], []) == "slicePerf=x status=NO-FRAMES")
+    import tempfile
+    with tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False) as fh:
+        empty = fh.name
+    check("an empty capture reads as no frames", line("x", *read(empty)) == "slicePerf=x status=NO-FRAMES")
+    os.remove(empty)
     s = line("x", [10.0] * 99 + [40.0], [8.0] * 100, [3000.0] * 100)
     check("the slowest 1% is read", "p99Ms=40.00" in s and "status=BELOW-30" in s)
     print("slice-perf selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
