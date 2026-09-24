@@ -1,0 +1,823 @@
+{
+ "what": "Blind voice candidates for Sheila Dunn, Ron Kirby and Darren Milner: which letter is which source. The approval page must not show this file.",
+ "made": "2026-09-24",
+ "engine": {
+  "model": "Chatterbox Nano (t3_nano_v1 with s3gen), from C:/LedgerTools/chatterbox-nano, loaded through tools/voice-live/voice-server.py's own load_models and sentences functions",
+  "licence": "MIT (Resemble AI); every output carries Chatterbox's Perth watermark",
+  "settings": "generate() defaults as in the game: temperature 0.8, top_p 0.95, top_k 1000, repetition_penalty 1.2; the reference is loudness-normalised to -27 LUFS by Chatterbox, which reads its first 10 s (vocoder) and 15 s (sound tokens); voice learned on the CPU, sound tokens on the DirectML card, vocoder on the CPU; one sentence at a time, the pieces joined back to back as the game plays them",
+  "seeds": "torch.manual_seed(20260924 + line*100 + sentence), the same for every candidate of a character; a take that failed a check was made once more with base 20270924"
+ },
+ "presentation": "Every file loudness-matched to -20 LUFS, peak at or under -1 dBFS, mp3 96 kbps CBR, 24 kHz mono (libsndfile's encoder). The game plays Chatterbox's raw level.",
+ "characters": {
+  "sheila-dunn": {
+   "name": "Sheila Dunn",
+   "lines": [
+    "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.",
+    "Sit down, you're making the place look untidy. Now, what is it you think you want to know?",
+    "I saw what I saw. Whether I tell anybody else is a different question, isn't it."
+   ],
+   "letters": {
+    "A": {
+     "kind": "designed",
+     "name": "sheila-2-warm",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A woman in her mid fifties with a low, warm, slightly husky voice speaks slowly and evenly with an English accent, in a dry, unhurried tone. Very clear, close-sounding recording with no background noise.",
+     "seed": 202,
+     "reference_text": "The weather turned cold by the evening, so I walked home slowly along the river, past the old warehouses and the empty yards, and got in just before the rain started.",
+     "reference_seconds": 10.51,
+     "median_f0_hz": 193.3,
+     "words_per_s": 2.97,
+     "check_flags": [],
+     "tries": 2,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-A-reference.mp3",
+     "reference_check": {
+      "seconds": 10.51,
+      "peak": 0.763,
+      "fails": [],
+      "kbps": 96.7
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-A-line1.mp3",
+       "seconds": 6.16,
+       "raw_seconds": 6.16,
+       "raw_peak": 0.192,
+       "raw_loudness_lufs": -31.1,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-A-line2.mp3",
+       "seconds": 5.24,
+       "raw_seconds": 5.24,
+       "raw_peak": 0.222,
+       "raw_loudness_lufs": -31.4,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-A-line3.mp3",
+       "seconds": 5.08,
+       "raw_seconds": 5.08,
+       "raw_peak": 0.351,
+       "raw_loudness_lufs": -29.6,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "B": {
+     "kind": "designed",
+     "name": "sheila-3-flat",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A woman in her mid fifties with a low-pitched, flat, dry voice speaks slowly and calmly in a monotone with an English accent. Very clear, close-sounding recording with no background noise.",
+     "seed": 301,
+     "reference_text": "The weather turned cold by the evening, so I walked home along the river, past the old warehouses, and got in just before the rain started.",
+     "reference_seconds": 9.37,
+     "median_f0_hz": 198.3,
+     "words_per_s": 2.78,
+     "check_flags": [],
+     "tries": 1,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-B-reference.mp3",
+     "reference_check": {
+      "seconds": 9.37,
+      "peak": 0.685,
+      "fails": [],
+      "kbps": 96.9
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-B-line1.mp3",
+       "seconds": 5.6,
+       "raw_seconds": 5.6,
+       "raw_peak": 0.263,
+       "raw_loudness_lufs": -27.0,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-B-line2.mp3",
+       "seconds": 5.36,
+       "raw_seconds": 5.36,
+       "raw_peak": 0.268,
+       "raw_loudness_lufs": -27.4,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-B-line3.mp3",
+       "seconds": 4.88,
+       "raw_seconds": 4.88,
+       "raw_peak": 0.266,
+       "raw_loudness_lufs": -27.4,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "C": {
+     "kind": "approved",
+     "clip": "game-design/picked-clips/lena.p228.mp3",
+     "speaker": "VCTK p228",
+     "licence": "CC BY 4.0: CSTR VCTK Corpus 0.92, University of Edinburgh (Yamagishi, Veaux, MacDonald), https://doi.org/10.7488/ds/2645; credited in THIRD-PARTY.md",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-C-reference.mp3",
+     "reference_check": {
+      "seconds": 12.0,
+      "peak": 0.69,
+      "fails": [],
+      "kbps": 96.6
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-C-line1.mp3",
+       "seconds": 5.6,
+       "raw_seconds": 5.6,
+       "raw_peak": 0.374,
+       "raw_loudness_lufs": -26.9,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-C-line2.mp3",
+       "seconds": 5.4,
+       "raw_seconds": 5.4,
+       "raw_peak": 0.349,
+       "raw_loudness_lufs": -27.8,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-C-line3.mp3",
+       "seconds": 4.88,
+       "raw_seconds": 4.88,
+       "raw_peak": 0.372,
+       "raw_loudness_lufs": -26.9,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "D": {
+     "kind": "designed",
+     "name": "sheila-1-husky",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A woman in her mid fifties with a low, husky, slightly gravelly voice speaks slowly and calmly with an English accent. Very clear, close-sounding recording with no background noise.",
+     "seed": 101,
+     "reference_text": "The weather turned cold by the evening, so I walked home along the river, past the old warehouses, and got in just before the rain started.",
+     "reference_seconds": 10.0,
+     "median_f0_hz": 180.8,
+     "words_per_s": 2.6,
+     "check_flags": [],
+     "tries": 1,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-D-reference.mp3",
+     "reference_check": {
+      "seconds": 10.0,
+      "peak": 0.614,
+      "fails": [],
+      "kbps": 96.8
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-D-line1.mp3",
+       "seconds": 6.36,
+       "raw_seconds": 6.36,
+       "raw_peak": 0.259,
+       "raw_loudness_lufs": -27.5,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-D-line2.mp3",
+       "seconds": 5.6,
+       "raw_seconds": 5.6,
+       "raw_peak": 0.312,
+       "raw_loudness_lufs": -27.5,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-D-line3.mp3",
+       "seconds": 5.24,
+       "raw_seconds": 5.24,
+       "raw_peak": 0.268,
+       "raw_loudness_lufs": -28.6,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "E": {
+     "kind": "slr83",
+     "speaker": "nof_05223",
+     "dialect": "Northern English female",
+     "median_f0_hz": 179.5,
+     "median_syl_per_s": 4.17,
+     "reference_seconds": 11.67,
+     "clips": [
+      {
+       "id": "nof_05223_00429774452",
+       "text": "The Greeks used to imagine that it was a sign from the gods to foretell war or heavy rain",
+       "seconds": 5.43,
+       "floor_db": -80.9
+      },
+      {
+       "id": "nof_05223_00555998274",
+       "text": "In one version of this technique a conductive sheet under test is placed between two coils",
+       "seconds": 5.89,
+       "floor_db": -80.5
+      }
+     ],
+     "licence": "CC BY-SA 4.0: Google, Crowdsourced high-quality UK and Ireland English Dialect speech data set (OpenSLR SLR83, https://www.openslr.org/83/), Demirsahin, Kjartansson, Gutkin, Rivera, LREC 2020. ShareAlike applies to adaptations of the recordings.",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-E-reference.mp3",
+     "reference_check": {
+      "seconds": 11.67,
+      "peak": 0.845,
+      "fails": [],
+      "kbps": 96.7
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-E-line1.mp3",
+       "seconds": 6.32,
+       "raw_seconds": 6.32,
+       "raw_peak": 0.509,
+       "raw_loudness_lufs": -26.7,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-E-line2.mp3",
+       "seconds": 5.8,
+       "raw_seconds": 5.8,
+       "raw_peak": 0.433,
+       "raw_loudness_lufs": -26.5,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-E-line3.mp3",
+       "seconds": 5.28,
+       "raw_seconds": 5.28,
+       "raw_peak": 0.443,
+       "raw_loudness_lufs": -25.8,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "F": {
+     "kind": "slr83",
+     "speaker": "nof_04310",
+     "dialect": "Northern English female",
+     "median_f0_hz": 179.5,
+     "median_syl_per_s": 5.14,
+     "reference_seconds": 10.55,
+     "clips": [
+      {
+       "id": "nof_04310_01516840040",
+       "text": "Unlike the previous two examples this text is prose rather than poetry",
+       "seconds": 4.47,
+       "floor_db": -75.1
+      },
+      {
+       "id": "nof_04310_00306560453",
+       "text": "The actual primary rainbow observed is said to be the effect of super-imposition of a number of bows",
+       "seconds": 5.73,
+       "floor_db": -72.2
+      }
+     ],
+     "licence": "CC BY-SA 4.0: Google, Crowdsourced high-quality UK and Ireland English Dialect speech data set (OpenSLR SLR83, https://www.openslr.org/83/), Demirsahin, Kjartansson, Gutkin, Rivera, LREC 2020. ShareAlike applies to adaptations of the recordings.",
+     "reference_file": "production/casting/sheila-dunn/voices/sheila-dunn-F-reference.mp3",
+     "reference_check": {
+      "seconds": 10.55,
+      "peak": 0.852,
+      "fails": [],
+      "kbps": 96.7
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-F-line1.mp3",
+       "seconds": 5.4,
+       "raw_seconds": 5.4,
+       "raw_peak": 0.401,
+       "raw_loudness_lufs": -26.7,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-F-line2.mp3",
+       "seconds": 5.6,
+       "raw_seconds": 5.6,
+       "raw_peak": 0.467,
+       "raw_loudness_lufs": -27.0,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/sheila-dunn/voices/sheila-dunn-F-line3.mp3",
+       "seconds": 5.0,
+       "raw_seconds": 5.0,
+       "raw_peak": 0.411,
+       "raw_loudness_lufs": -26.1,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    }
+   }
+  },
+  "ron-kirby": {
+   "name": "Ron Kirby",
+   "lines": [
+    "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+    "You want to stand there, son, you stand where I can see you. That's all I ask.",
+    "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first."
+   ],
+   "letters": {
+    "A": {
+     "kind": "slr83",
+     "speaker": "nom_09334",
+     "dialect": "Northern English male",
+     "median_f0_hz": 91.2,
+     "median_syl_per_s": 5.55,
+     "reference_seconds": 10.33,
+     "clips": [
+      {
+       "id": "nom_09334_01514041491",
+       "text": "When a man looks for something beyond his reach his friends say he is looking for the pot of gold at the end of the rainbow",
+       "seconds": 5.4,
+       "floor_db": -89.3
+      },
+      {
+       "id": "nom_09334_00597419555",
+       "text": "Please add a valid mature content warning to the introduction of your app in order to comply with our policy",
+       "seconds": 4.58,
+       "floor_db": -88.8
+      }
+     ],
+     "licence": "CC BY-SA 4.0: Google, Crowdsourced high-quality UK and Ireland English Dialect speech data set (OpenSLR SLR83, https://www.openslr.org/83/), Demirsahin, Kjartansson, Gutkin, Rivera, LREC 2020. ShareAlike applies to adaptations of the recordings.",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-A-reference.mp3",
+     "reference_check": {
+      "seconds": 10.33,
+      "peak": 0.85,
+      "fails": [],
+      "kbps": 96.8
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-A-line1.mp3",
+       "seconds": 5.72,
+       "raw_seconds": 5.72,
+       "raw_peak": 0.393,
+       "raw_loudness_lufs": -30.9,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-A-line2.mp3",
+       "seconds": 4.32,
+       "raw_seconds": 4.32,
+       "raw_peak": 0.564,
+       "raw_loudness_lufs": -28.0,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-A-line3.mp3",
+       "seconds": 4.84,
+       "raw_seconds": 4.84,
+       "raw_peak": 0.526,
+       "raw_loudness_lufs": -26.7,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "B": {
+     "kind": "designed",
+     "name": "ron-3-flat",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A man in his late fifties with a low-pitched, gravelly, flat voice speaks slowly in a weary monotone with an English accent. Very clear, close-sounding recording with no background noise.",
+     "seed": 601,
+     "reference_text": "The weather turned cold by the evening, so I walked home along the river, past the old warehouses, and got in just before the rain started.",
+     "reference_seconds": 11.04,
+     "median_f0_hz": 99.4,
+     "words_per_s": 2.36,
+     "check_flags": [],
+     "tries": 1,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-B-reference.mp3",
+     "reference_check": {
+      "seconds": 11.04,
+      "peak": 0.845,
+      "fails": [],
+      "kbps": 96.8
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-B-line1.mp3",
+       "seconds": 6.44,
+       "raw_seconds": 6.44,
+       "raw_peak": 0.231,
+       "raw_loudness_lufs": -29.5,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-B-line2.mp3",
+       "seconds": 5.96,
+       "raw_seconds": 5.96,
+       "raw_peak": 0.292,
+       "raw_loudness_lufs": -27.4,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-B-line3.mp3",
+       "seconds": 6.04,
+       "raw_seconds": 6.04,
+       "raw_peak": 0.246,
+       "raw_loudness_lufs": -29.1,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "C": {
+     "kind": "slr83",
+     "speaker": "nom_09697",
+     "dialect": "Northern English male",
+     "median_f0_hz": 86.6,
+     "median_syl_per_s": 4.88,
+     "reference_seconds": 10.05,
+     "clips": [
+      {
+       "id": "nom_09697_01768447622",
+       "text": "Tourists are enjoying fresh air in our pleasure gardens all year around",
+       "seconds": 4.02,
+       "floor_db": -86.9
+      },
+      {
+       "id": "nom_09697_01996970268",
+       "text": "The actual primary rainbow observed is said to be the effect of super-imposition of a number of bows",
+       "seconds": 5.68,
+       "floor_db": -86.2
+      }
+     ],
+     "licence": "CC BY-SA 4.0: Google, Crowdsourced high-quality UK and Ireland English Dialect speech data set (OpenSLR SLR83, https://www.openslr.org/83/), Demirsahin, Kjartansson, Gutkin, Rivera, LREC 2020. ShareAlike applies to adaptations of the recordings.",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-C-reference.mp3",
+     "reference_check": {
+      "seconds": 10.05,
+      "peak": 0.846,
+      "fails": [],
+      "kbps": 96.7
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-C-line1.mp3",
+       "seconds": 5.56,
+       "raw_seconds": 5.56,
+       "raw_peak": 0.336,
+       "raw_loudness_lufs": -30.4,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-C-line2.mp3",
+       "seconds": 4.44,
+       "raw_seconds": 4.44,
+       "raw_peak": 0.409,
+       "raw_loudness_lufs": -28.4,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-C-line3.mp3",
+       "seconds": 5.2,
+       "raw_seconds": 5.2,
+       "raw_peak": 0.833,
+       "raw_loudness_lufs": -23.7,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "D": {
+     "kind": "designed",
+     "name": "ron-2-warm",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A man in his late fifties with a deep, warm but worn voice speaks slowly and steadily with an English accent. Very clear, close-sounding recording with no background noise.",
+     "seed": 503,
+     "reference_text": "The weather turned cold by the evening, so I walked home along the river, past the old warehouses, and got in just before the rain started.",
+     "reference_seconds": 10.32,
+     "median_f0_hz": 117.6,
+     "words_per_s": 2.52,
+     "check_flags": [],
+     "tries": 3,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-D-reference.mp3",
+     "reference_check": {
+      "seconds": 10.32,
+      "peak": 0.759,
+      "fails": [],
+      "kbps": 96.9
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-D-line1.mp3",
+       "seconds": 6.52,
+       "raw_seconds": 6.52,
+       "raw_peak": 0.4,
+       "raw_loudness_lufs": -28.6,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-D-line2.mp3",
+       "seconds": 4.84,
+       "raw_seconds": 4.84,
+       "raw_peak": 0.373,
+       "raw_loudness_lufs": -27.1,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-D-line3.mp3",
+       "seconds": 5.84,
+       "raw_seconds": 5.84,
+       "raw_peak": 0.41,
+       "raw_loudness_lufs": -26.9,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "E": {
+     "kind": "approved",
+     "clip": "game-design/picked-clips/rocco.p227.mp3",
+     "speaker": "VCTK p227",
+     "licence": "CC BY 4.0: CSTR VCTK Corpus 0.92, University of Edinburgh (Yamagishi, Veaux, MacDonald), https://doi.org/10.7488/ds/2645; credited in THIRD-PARTY.md",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-E-reference.mp3",
+     "reference_check": {
+      "seconds": 12.0,
+      "peak": 0.848,
+      "fails": [],
+      "kbps": 96.6
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-E-line1.mp3",
+       "seconds": 6.04,
+       "raw_seconds": 6.04,
+       "raw_peak": 0.427,
+       "raw_loudness_lufs": -27.5,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-E-line2.mp3",
+       "seconds": 4.92,
+       "raw_seconds": 4.92,
+       "raw_peak": 0.556,
+       "raw_loudness_lufs": -26.5,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-E-line3.mp3",
+       "seconds": 5.84,
+       "raw_seconds": 5.84,
+       "raw_peak": 0.564,
+       "raw_loudness_lufs": -25.2,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    },
+    "F": {
+     "kind": "designed",
+     "name": "ron-1-rough",
+     "model": "parler-tts/parler-tts-mini-v1",
+     "description": "A man in his late fifties with a deep, rough, tired voice speaks slowly with an English accent. Very clear, close-sounding recording with no background noise.",
+     "seed": 402,
+     "reference_text": "The weather turned cold by the evening, so I walked home slowly along the river, past the old warehouses and the empty yards, and got in just before the rain started.",
+     "reference_seconds": 13.05,
+     "median_f0_hz": 90.9,
+     "words_per_s": 2.54,
+     "check_flags": [],
+     "tries": 2,
+     "licence": "Parler-TTS mini v1 weights: Apache-2.0 (license tag on the Hugging Face model card, read 2026-09-24); Parler-TTS code: Apache-2.0. Output is a synthetic voice from a written description; no named training speaker was used. Model trained on LibriTTS-R and Multilingual LibriSpeech English (both CC BY 4.0).",
+     "reference_file": "production/casting/ron-kirby/voices/ron-kirby-F-reference.mp3",
+     "reference_check": {
+      "seconds": 13.05,
+      "peak": 0.847,
+      "fails": [],
+      "kbps": 96.6
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-F-line1.mp3",
+       "seconds": 6.36,
+       "raw_seconds": 6.36,
+       "raw_peak": 0.531,
+       "raw_loudness_lufs": -31.2,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-F-line2.mp3",
+       "seconds": 5.08,
+       "raw_seconds": 5.08,
+       "raw_peak": 0.688,
+       "raw_loudness_lufs": -24.6,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/ron-kirby/voices/ron-kirby-F-line3.mp3",
+       "seconds": 5.44,
+       "raw_seconds": 5.44,
+       "raw_peak": 0.408,
+       "raw_loudness_lufs": -28.3,
+       "seed_base": 20260924,
+       "sentences": 2,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    }
+   }
+  },
+  "darren-milner": {
+   "name": "Darren Milner",
+   "lines": [
+    "Alright? Darren. You'll have heard of me. No? You will, give it a week.",
+    "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates.",
+    "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth."
+   ],
+   "letters": {
+    "A": {
+     "kind": "approved",
+     "clip": "game-design/picked-clips/sam.p241.mp3",
+     "speaker": "VCTK p241",
+     "licence": "CC BY 4.0: CSTR VCTK Corpus 0.92, University of Edinburgh (Yamagishi, Veaux, MacDonald), https://doi.org/10.7488/ds/2645; credited in THIRD-PARTY.md",
+     "reference_file": "production/casting/darren-milner/voices/darren-milner-A-reference.mp3",
+     "reference_check": {
+      "seconds": 11.24,
+      "peak": 0.638,
+      "fails": [],
+      "kbps": 96.8
+     },
+     "lines": {
+      "line1": {
+       "file": "production/casting/darren-milner/voices/darren-milner-A-line1.mp3",
+       "seconds": 5.56,
+       "raw_seconds": 5.56,
+       "raw_peak": 0.265,
+       "raw_loudness_lufs": -27.4,
+       "seed_base": 20260924,
+       "sentences": 5,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line2": {
+       "file": "production/casting/darren-milner/voices/darren-milner-A-line2.mp3",
+       "seconds": 7.12,
+       "raw_seconds": 7.12,
+       "raw_peak": 0.293,
+       "raw_loudness_lufs": -28.0,
+       "seed_base": 20260924,
+       "sentences": 3,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      },
+      "line3": {
+       "file": "production/casting/darren-milner/voices/darren-milner-A-line3.mp3",
+       "seconds": 6.76,
+       "raw_seconds": 6.76,
+       "raw_peak": 0.317,
+       "raw_loudness_lufs": -26.5,
+       "seed_base": 20260924,
+       "sentences": 4,
+       "regenerated": false,
+       "first_try_fails": [],
+       "fails": []
+      }
+     }
+    }
+   }
+  }
+ },
+ "check_problems": []
+}
