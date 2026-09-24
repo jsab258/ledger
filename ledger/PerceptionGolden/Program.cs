@@ -831,7 +831,7 @@ namespace Ledger.PerceptionGolden
                 mill.Witness("w1", new Fact("player", "broke_window_d1", "east_parade_glass0"),
                              "a window on the Parade went in", false, new GameTime(1, 12, 0), 0.94);
                 mill.Witness("w1", new Fact("novak", "owes_money_d1", "forty pounds"),
-                             "Novak is into somebody for forty", false, new GameTime(1, 12, 0), 0.94);
+                             "Nowak is into somebody for forty", false, new GameTime(1, 12, 0), 0.94);
                 mill.Get("w1").Leashed = true;
                 var ev = mill.Tick(new GameTime(1, 12, 2), (a, b) => true);
                 Key(sb, "gossip_leashed", "events", ev.Count.ToString(Inv));

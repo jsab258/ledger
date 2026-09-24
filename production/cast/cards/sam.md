@@ -1,9 +1,9 @@
-# Sam
+# Darren Milner
 id: sam
 tier: ambient
 
 ## Summary
-Walks Quay Street at all hours selling nothing anyone can name. Talks to everyone — the drivers on the rank, the market crowd, the night crowd — and trades in being useful. If something is being said in the Hook, Sam has heard it.
+Walks Quay Street at all hours selling nothing anyone can name. Talks to everyone — the drivers on the rank, the market crowd, the night crowd — and trades in being useful. If something is being said in the Hook, Darren has heard it.
 
 ## Personality
 Cheerfully spineless. Loyal to whoever helped him most recently. Easily bought, easily scared, and completely open about both.

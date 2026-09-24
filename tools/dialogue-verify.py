@@ -9,8 +9,8 @@ Tone is deliberately absent: it belongs to the D7 judge after calibration,
 and a tool pretending to measure tone would be a claim with no instrument.
 
 1. RUNG DISCIPLINE. A line knows its relationship rung and may not address
-   the player above it. stranger: no Novak, Tom or Toma. novak: no Tom or
-   Toma as address. tom: no Toma. The check is word-boundary, case aware
+   the player above it. stranger: no Nowak, Tom or Tommy. novak: no Tom or
+   Tommy as address. tom: no Tommy. The check is word-boundary, case aware
    for the names, and it reads the RUNG ORDER from the bank file rather
    than carrying its own copy (one idea, one implementation).
 2. REPETITION. No two lines whose token overlap (Jaccard, after stopword
@@ -29,9 +29,12 @@ import pathlib
 import re
 import sys
 
-NAMES = {"stranger": ["novak", "tom", "toma"],
-         "novak": ["tom", "toma"],
-         "tom": ["toma"]}
+# The rung ids keep the old spelling (ids, like lena and rocco); the names
+# said are canon's since 24 September: Nowak, Tom, Tommy. The old spellings
+# (Novak, Toma) are refused everywhere by tools/names-gate.py, not here.
+NAMES = {"stranger": ["nowak", "novak", "tom", "tommy", "toma"],
+         "novak": ["tom", "tommy", "toma"],
+         "tom": ["tommy", "toma"]}
 STOP = set("a an the and or but so of to in on at for with by from is are was were be "
            "you your he she it they we i me my his her its their this that there here "
            "then than as if not no yes do does did done have has had".split())

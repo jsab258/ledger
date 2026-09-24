@@ -55,6 +55,7 @@ namespace Ledger.Core
             }
 
             var retrieved = MemoryRetrieval.Retrieve(Memory, playerInput, now);
+            foreach (var m in retrieved) _shown.Add(m);
             if (retrieved.Count > 0)
             {
                 sb.AppendLine();
@@ -166,7 +167,7 @@ namespace Ledger.Core
             // have. That is period detail rather than a dodge, it is different
             // for each character, and it cannot be performed by repeating the
             // word back, which is what makes it a fix and not a firmer no.
-            sb.AppendLine("- If the other person uses a word for something that does not exist in your world, you have never heard it. Do not repeat it, define it, or build a sentence around it. Answer with the thing you DO have — the phone box, a message left with the barman, come by in the morning, knock — and let not knowing the word show in that rather than in saying you do not know it.");
+            sb.AppendLine("- If the other person uses a word for something that does not exist in your world, you have never heard it. Do not repeat it, define it, or build a sentence around it. Answer with the thing you DO have — the phone box, a note through the door, come by in the morning, knock — and let not knowing the word show in that rather than in saying you do not know it.");
             sb.AppendLine("- Don't summarize or tie the moment up neatly. React to what was just said, from what you know and what you want.");
             sb.AppendLine("- Keep replies conversational and short — usually one to three sentences.");
             // AT SUSPICIOUS AND ABOVE IT IS SAID, NOT HINTED, AND IT IS SAID
@@ -180,6 +181,47 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(why) && Suspicion.Level >= SuspicionLevel.Suspicious)
                 sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). So in this reply, whatever they said, ask them straight out, your own way.");
             return sb.ToString();
+        }
+
+        /// THE CLAIM CHECKER (ClaimCheck.cs), optional: when set, every reply is
+        /// read for claims the character's knowledge does not support before it
+        /// is said or remembered. Null, the default, checks nothing, so every
+        /// caller that does not set it behaves exactly as before.
+        public ILlmClient Checker { get; set; }
+        public string CheckerModel { get; set; } = Models.Ambient;
+
+        /// What the last reply's FIRST draft claimed without support; empty when
+        /// nothing, or when no check ran. What was said is the second draft or
+        /// ClaimCheck.KnownOnly.
+        public IReadOnlyList<string> LastInvented { get; private set; } = new List<string>();
+
+        /// Every memory the talk model has been shown in this conversation, so
+        /// the checker always knows at least what the speaker was told they
+        /// know (the independent check, 25 September: with 45 newer memories
+        /// the flat cap fell out of the checker's newest 40 while the talk
+        /// model still had it, and the true answer was replaced).
+        readonly HashSet<MemoryEvent> _shown = new HashSet<MemoryEvent>();
+
+        /// True when a check on the last reply failed or answered out of
+        /// shape, so the line was said UNCHECKED. It is logged apart from a
+        /// clean check (the independent check, 25 September): a retired model
+        /// id would otherwise switch the guard off and look like a quiet town.
+        public bool LastUnchecked { get; private set; }
+
+        async Task<IReadOnlyList<string>> InventedAsync(string known, string line, CancellationToken ct)
+        {
+            try
+            {
+                var r = await Checker.CompleteAsync(ClaimCheck.Request(CheckerModel, known, line), ct);
+                _cost?.Record(CheckerModel, r.InputTokens, r.OutputTokens);
+                var found = ClaimCheck.Parse(r.Text);
+                if (found != null) return found;
+            }
+            catch (Exception) when (!ct.IsCancellationRequested) { }
+            // A checker that fails or does not answer in the shape asked lets
+            // the line stand: a broken instrument must not silence the town.
+            LastUnchecked = true;
+            return new List<string>();
         }
 
         public async Task<string> SayToAsync(string playerInput, GameTime now,
@@ -218,12 +260,51 @@ namespace Ledger.Core
             _cost?.Record(Model, response.InputTokens, response.OutputTokens);
 
             var reply = ValidateReply(response.Text);
+
+            // ONLY WHAT THE SIMULATION KNOWS (ClaimCheck.cs): checked BEFORE the
+            // reply is said, kept in the transcript or remembered, so a claim
+            // nobody supports never becomes a memory the next answer builds on.
+            // One second draft, told what it claimed; then the plain true line.
+            LastInvented = new List<string>();
+            LastUnchecked = false;
+            if (Checker != null)
+            {
+                var why = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
+                var known = ClaimCheck.KnownFor(Card, ClaimCheck.WitnessedFor(Memory, _shown),
+                                                Memory.Beliefs, why, sceneContext, now.ToString());
+                try
+                {
+                    var invented = await InventedAsync(known, reply, ct);
+                    LastInvented = invented;
+                    if (invented.Count > 0)
+                    {
+                        var second = new LlmRequest { Model = Model, System = system + ClaimCheck.SecondDraftNote(invented) + "\n", MaxTokens = 300 };
+                        second.Messages.AddRange(_transcript);
+                        var r2 = await _llm.CompleteAsync(second, ct);
+                        _cost?.Record(Model, r2.InputTokens, r2.OutputTokens);
+                        var redrafted = ValidateReply(r2.Text);
+                        var again = await InventedAsync(known, redrafted, ct);
+                        reply = again.Count == 0 && !ClaimCheck.Repeats(redrafted, invented) ? redrafted : ClaimCheck.KnownOnly;
+                    }
+                }
+                catch (Exception)
+                {
+                    // CANCELLED OR FAILED MID-CHECK is the same as failing on
+                    // the first call: the player's turn is rolled back and the
+                    // caller hears about it, so no half-checked line is said
+                    // or remembered.
+                    if (_transcript.Count > 0) _transcript.RemoveAt(_transcript.Count - 1);
+                    LastInvented = new List<string>();
+                    LastUnchecked = false;
+                    throw;
+                }
+            }
             _transcript.Add(new LlmMessage("assistant", reply));
 
             Memory.Append(new MemoryEvent(now, "conversation", EstimateImportance(playerInput),
-                $"The player said to me: \"{Truncate(playerInput, 200)}\""));
+                ClaimCheck.PlayerSaid + $"\"{Truncate(playerInput, 200)}\""));
             Memory.Append(new MemoryEvent(now, "conversation", 0.3,
-                $"I replied: \"{Truncate(reply, 200)}\""));
+                ClaimCheck.IReplied + $"\"{Truncate(reply, 200)}\""));
 
             return reply;
         }

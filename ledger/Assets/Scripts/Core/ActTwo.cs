@@ -53,7 +53,7 @@ namespace Ledger.Core
                 : "A grinning fish appears on the bar's side wall overnight. Kids' stuff. Kids who wanted you to see it.";
 
         public const string Pp2LetterText =
-            "Cream paper, hand-delivered: Vane, Holt & Partners give notice that the bar's licence is 'under review'. " +
+            "Cream paper, hand-delivered: Agar, Holt & Partners give notice that the bar's licence is 'under review'. " +
             "The till stays shut to the public until it is answered. Pay the fees, have Hal make it disappear, or wait it out.";
 
         public const string Pp3KidText =
@@ -85,12 +85,12 @@ namespace Ledger.Core
         /// PP7's offer, in each head's doctrine and voice.
         public static string TableOffer(string armId) =>
             armId == "dockside"
-                ? "Sera Kest lets the silence run, then: \"Twelve per cent of what your street makes, and my people stop " +
+                ? "Maureen Jensen lets the silence run, then: \"Twelve per cent of what your street makes, and my people stop " +
                   "counting your crew. I keep every deal I make. That is why my deals are expensive.\""
             : armId == "machine"
-                ? "Aldous Vane apologises before he begins. \"Your holdings would be so much safer under proper management — " +
+                ? "Geoffrey Agar apologises before he begins. \"Your holdings would be so much safer under proper management — " +
                   "ours. A cap on what the fronts declare, and the inspections stop. Violence is a failure of paperwork.\""
-                : "Danny Ro laughs before he's finished the sentence. \"One round, together, mine to run. You get the quiet. " +
+                : "Danny Cammack laughs before he's finished the sentence. \"One round, together, mine to run. You get the quiet. " +
                   "I get the corner. Old men would call that generous, if they called me anything.\"";
 
         public static string TableResult(string armId, string answer)

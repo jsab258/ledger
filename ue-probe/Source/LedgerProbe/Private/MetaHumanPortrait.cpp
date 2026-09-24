@@ -25,7 +25,7 @@
 
 namespace LedgerMhPortrait
 {
-	const TCHAR* kWho[] = { TEXT("Lena"), TEXT("Sam"), TEXT("Rocco") };
+	const TCHAR* kWho[] = { TEXT("Lena"), TEXT("Sam"), TEXT("Rocco") };   // names-gate: allow (asset names MH_<who>T2)
 	// EPIC'S OWN IDLE, BODY AND FACE, 24 September: the MetaHuman plugin ships
 	// a standing loop on the very skeletons the cast are built on, and a face
 	// loop to go with it (blinks, breath, small looks). The elizabeth idle

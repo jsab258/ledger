@@ -181,6 +181,11 @@ static class Program
             {
                 engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
                     new SuspicionTracker(), _cost);
+                // THE CLAIM CHECK ON THE REAL MODEL (ClaimCheck.cs, 24 September):
+                // every reply is read for claims the character's knowledge does
+                // not support before it is said. Not on the stand-in models,
+                // which answer only from memory already.
+                if (_llm is AnthropicClient) engine.Checker = _llm;
                 _engines[key] = engine;
             }
             // THE SIMULATION'S STATE, loaded before the line is answered.
@@ -223,6 +228,20 @@ static class Program
                     {
                         timedOut = true;
                         reply = brush;
+                        // CANCEL WHAT IS ABANDONED (the independent check, 25
+                        // September): the source was disposed without being
+                        // cancelled whenever the delay won the race, so the
+                        // reply ran on and the character remembered saying a
+                        // line nobody heard (45 of 60 timeouts). Cancelled, the
+                        // engine rolls the turn back; if it finished in the
+                        // same instant it is remembered, so it is said.
+                        cts.Cancel();
+                        await Task.WhenAny(task, Task.Delay(1000));
+                        if (task.Status == TaskStatus.RanToCompletion)
+                        {
+                            timedOut = false;
+                            reply = ResponseValidator.Validate(task.Result, card.Name, card.AlsoCalled);
+                        }
                     }
                     else
                     {
@@ -235,7 +254,13 @@ static class Program
                     reply = brush;
                 }
             }
-            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy }, Plain);
+            // INVENTED: what the first draft claimed that nothing supports, kept
+            // for the log (the line said is the second draft or the plain one).
+            // UNCHECKED: the claim check failed or answered out of shape, so the
+            // line was said as written; apart from a clean check in the log.
+            var invented = timedOut ? new List<string>() : new List<string>(engine.LastInvented);
+            bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
+            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, invented, @unchecked }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -393,13 +418,17 @@ static class Program
         Ok("with the line down the character brushes the player off and says offline",
            Flag(e, "offline") && Array.IndexOf(BrushOffs, Reply(e)) >= 0, e);
 
-        var slow = new FakeLlm { Delay = TimeSpan.FromSeconds(5) };
+        var slow = new FakeLlm { Delay = TimeSpan.FromSeconds(2) };
         var s = new Helper(slow, TimeSpan.FromMilliseconds(300));
         LoadCards(s, cardsDir);
         var sw = Stopwatch.StartNew();
         var f = await s.Answer("{\"id\":5,\"to\":\"rocco\",\"say\":\"Alright?\"}");
         Ok("a slow model is abandoned for a brush-off at the patience limit",
-           Flag(f, "timedOut") && Array.IndexOf(BrushOffs, Reply(f)) >= 0 && sw.ElapsedMilliseconds < 3000, f);
+           Flag(f, "timedOut") && Array.IndexOf(BrushOffs, Reply(f)) >= 0 && sw.ElapsedMilliseconds < 1800, f);
+        await Task.Delay(2500);   // past the moment the abandoned reply would have landed
+        int unheard = 0;
+        foreach (var ev in s.EngineFor("rocco").Memory.Events) if (ev.Kind == "conversation") unheard++;
+        Ok("an abandoned reply is cancelled, never remembered as said", unheard == 0, unheard.ToString());
 
         // THE SIMULATION'S STATE REACHES THE ANSWER, 24 September.
         var k = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
