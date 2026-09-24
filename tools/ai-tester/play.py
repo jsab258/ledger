@@ -262,9 +262,29 @@ def screenshot(hwnd):
     gdi32.DeleteObject(bmp)
     gdi32.DeleteDC(mem)
     user32.ReleaseDC(hwnd, hdc)
-    if not ok:
-        raise RuntimeError("PrintWindow refused the game window")
-    return Image.frombuffer("RGBA", (w, h), buf, "raw", "BGRA", 0, 1).convert("RGB")
+    im = Image.frombuffer("RGBA", (w, h), buf, "raw", "BGRA", 0, 1).convert("RGB") if ok else None
+    # A DIRECTX WINDOW OFTEN GIVES PrintWindow NOTHING BUT BLACK (the packaged
+    # game did, 24 September, and the tester reported a dead game). Then the
+    # screen is read instead, but ONLY where the game's own window is on top
+    # at the centre and all four corners, so no other app can be in it.
+    if im is None or max(im.convert("L").getextrema()) < 8:
+        box = client_box(hwnd)
+        if not game_on_top(hwnd, box):
+            raise RuntimeError("the game is not on top of its own area, so the screen is not read")
+        from PIL import ImageGrab
+        im = ImageGrab.grab(bbox=box, all_screens=True).convert("RGB")
+    return im
+
+
+def game_on_top(hwnd, box):
+    """Every sampled point of the game's area belongs to the game's process."""
+    x0, y0, x1, y1 = box
+    mine = window_pid(hwnd)
+    for x, y in ((x0 + x1) // 2, (y0 + y1) // 2), (x0 + 4, y0 + 4), (x1 - 5, y0 + 4), (x0 + 4, y1 - 5), (x1 - 5, y1 - 5):
+        w = user32.WindowFromPoint(wt.POINT(x, y))
+        if not w or window_pid(w) != mine:
+            return False
+    return True
 
 
 # ---------------------------------------------------------------- the model
@@ -389,7 +409,12 @@ def run(args):
             log.append("%d. (stopped: the game was not in front, so no keys were sent; in front: %s)" % (step, front_title()[:60]))
             summary = "Stopped early: another window came to the front, so it stopped sending keys."
             break
-        im = screenshot(hwnd)
+        try:
+            im = screenshot(hwnd)
+        except RuntimeError as e:
+            log.append("%d. (stopped: %s)" % (step, e))
+            summary = "Stopped early: " + str(e) + "."
+            break
         pic = "step-%02d.jpg" % step
         im.save(os.path.join(folder, pic), quality=80)
         try:
