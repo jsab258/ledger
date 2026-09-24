@@ -7,7 +7,7 @@ roadmap.
 
 Last updated 2026-09-23, in the sixth sitting on his PC.
 
-SITTING: started 2026-09-24T07:30:40+02:00, limit 3h
+SITTING: started 2026-09-24T07:30:40+02:00, limit 1.4h
 
 That one line is read by the stop hook, which will not let the turn end while
 items below are unstruck and the six hours have not run out. It is written at
@@ -24,7 +24,11 @@ reading. The card came free at about 07:50.
       DONE 24 Sep: 5.1 to 19 GB free; the runner's 33 GB and the old copies wait on him.
 - [x] A BACKUP for what lives outside the project's history, the MetaHuman
       first: a multiple-choice decision in FOR-JAFAR, nothing set up.
-- [ ] DRESS MH_TEST BY SCRIPT in plain 1990 clothes and a haircut, and rebuild.
+- [x] DRESS MH_TEST BY SCRIPT in plain 1990 clothes and a haircut, and rebuild.
+      DONE AS FAR AS THIS PC ALLOWS, 24 Sep: the haircut, and the plugin's one
+      garment (white T-shirt and shorts, barefoot; colours not settable). Real
+      clothes are a question in FOR-JAFAR. Frame:
+      production/art/compare/ps5-corner-2026-09-24/corner-metahuman-dressed.png
 - [x] THE LISTENING PAGE: Aldous, Danny, June and Zlata each beside two or
       three other VCTK speakers of a suitable age and accent; its link in
       FOR-JAFAR. No voice is cast without his yes.
@@ -1259,7 +1263,7 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 ## Where things stand
 
 1. Morning 24 Sep, housekeeping: C: from 5.1 to 19 GB free (probe compile files, Python's cache); the runner's 33 GB of leftover packs and the two old checkouts wait on Jafar (FOR-JAFAR decisions); a backup proposal is in FOR-JAFAR, nothing set up.
-2. MH_Test dressed by script (the plugin's one garment, default colours, WI_Hair_S_Casual) and rebuilt to 65 assets; the probe from 703b0688 frames him. The source before dressing is kept at C:/LedgerTools/mh-assemble-before-dressing-2026-09-24.
+2. MH_Test dressed by script (WI_Hair_S_Casual; the plugin's one garment, a white tee and shorts, barefoot, colours not settable) and rebuilt to 65 assets; framed by the probe from 703b0688; real clothes wait on Jafar. The source before dressing is kept at C:/LedgerTools/mh-assemble-before-dressing-2026-09-24.
 3. Voices: the listening page saves picks, blind (https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447, collection "picks"); nothing cast until he picks. Nano cannot learn a voice on the card (ComplexFloat abort); processor instead.
 4. Business: research on main; the working direction in DECISIONS; AI01-AI08, R01-R03 on ROADMAP; L01 a priority; the written-ahead question waits on him. The quick checks now also run on ROADMAP pushes.
 5. Next: the measurement sitting, his, started with a meter reading (production/sittings/2026-09-24-three-facades.md); then the router changes R01-R03 and stage 1 on.

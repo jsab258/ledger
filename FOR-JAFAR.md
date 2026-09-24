@@ -7,7 +7,7 @@ between them.
 ## This morning (24 September, the short sitting)
 
 1. **The disk:** C: had 5.1 GB free and now has 19 GB. I cleared only what was ours and rebuildable: the probe's old compile files (5.7 GB) and Python's download cache (7.8 GB). The biggest win, 33 GB of leftovers in the build runner's copy, needs your yes (below). The twenty largest folders are listed underneath.
-2. **The MetaHuman:** being dressed now. Details to follow.
+2. **The MetaHuman:** MH_Test now has a short, plain, dark haircut ([frame](production/art/compare/ps5-corner-2026-09-24/corner-metahuman-dressed.png)). The clothes are not what you asked for, though. The only outfit the MetaHuman plugin ships is a white T-shirt and white shorts, with bare feet, and its colours wouldn't take. A question is below.
 3. **The voices:** [the listening page is ready](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447), and since your note it saves your picks, like the A/B page. Aldous, Danny, June and Zlata are each heard blind in four voices, and you pick one each. The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
 4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded, and one new question is below: how much the town says is written ahead.
 5. **The router:** your three changes are on the list, in stage 2.
@@ -53,6 +53,11 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Decisions waiting on me
 
+- 2026-09-24 **MH_Test's clothes: the plugin's only outfit is a white T-shirt and shorts, barefoot.** The haircut worked. But no plain 1990 clothes exist on this PC to put him in, and the outfit's colours never became settable by script.
+  - **(a) In a later sitting, I look for Epic's own MetaHuman clothing on Fab, Epic's store, which your Unreal-downloads rule covers, and dress him in trousers, a jumper and shoes with the same script (my recommendation).** If Fab needs your sign-in by hand, I'll say so then rather than guess.
+  - (b) Leave him as he is until the clothing line does period clothes properly. He's a test figure.
+  - (c) You dress him in MetaHuman Creator's wardrobe by hand. It's a few clicks, then I rebuild him.
+  - Meanwhile: he stands in the corner as in the frame. His files from before the dressing are kept on this PC.
 - 2026-09-24 **Pick a voice each for Aldous, Danny, June and Zlata, on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard blind in four voices: the one cast on 14 August and three other VCTK speakers nobody else in the game uses. Your picks save as you go, as on the A/B page, and I read them from there. Who's who shows once all four are picked.
   - **(a) Pick on the page (recommended).** I can't hear the clips, so I have no pick of my own worth giving you. What I picked the alternatives for is written under each voice once you've picked.
   - (b) Keep all four voices as cast on 14 August: pick the current one on the page, or say so.
@@ -83,6 +88,8 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Things you should know
 
+- 2026-09-24 **The sitting stopped after about an hour and a half, when this morning's list was done.** You said "short, then stop", and I'd said I would stop when the list was done, so the limit now reads what was used. The measurement sitting is yours to start with a meter reading.
+- 2026-09-24 **The MetaHuman editor crashed four times this morning, and the fault was my script's.** It ran its next step while the editor was still busy inside the last one. Now it waits its turn. His files were copied aside first, so nothing was at risk.
 - 2026-09-24 **The first check on the plan went red, over the business research's spreadsheet.** The licence check had never seen a spreadsheet file and couldn't classify it. It's our own, so the check now treats spreadsheets as documents. All 670 quick checks pass here; GitHub's run is going now.
 - 2026-09-24 **The plan check wasn't running on changes to the plan.** The quick checks only started when code changed, so a change to the checklist alone was never checked on GitHub, though your rule says every push. Fixed: the checklist file now starts them too. This morning's checklist changes were checked here instead, and they're clean.
 - 2026-09-24 **The listening page now saves your picks,** rebuilt like the A/B page after your note. Voices are lettered and blind, and who's who shows once all four are picked. The first version only played clips: my mistake.
