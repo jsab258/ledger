@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
-"""The stop hook's one job: while the sitting's goal is open and its time is
-not up, keep going; when either ends, stop.
+"""The stop hook's one job: while the sitting's time remains and its list has an
+item left, keep going; stop only when the time is up or the whole list is done.
 
     python tools/sitting-clock.py --hook < payload.json   # the Stop hook's call
     python tools/sitting-clock.py --selftest
 
 Jafar, 24 September, after the effort audit (production/audits/): every other
-check this hook did - the standing list, the "For you:" line, the match against
-FOR-JAFAR.md - is removed. It reads two lines of NOW.md:
+check this hook did - the "For you:" line, the match against FOR-JAFAR.md - is
+removed. CORRECTED BY HIM THE SAME EVENING: the sitting before finished its one
+goal in an hour and stopped with four hours left, because it was told to stop
+when the goal was done. A sitting now has a LIST IN ORDER; when an item is
+done the next is taken without asking. It reads NOW.md:
 
     SITTING: started <ISO time with offset>, limit <N>h
-    GOAL: open | <the sitting's goal>        (or GOAL: done | ...)
+    - [ ] an open item        - [x] a done one
+
+A SECOND STOP IN A ROW IS HELD TOO: letting it through made the hook a
+formality. What ends a loop is the work (an item ticked), the time limit, the
+platform's own cap on consecutive holds, and SITTING_GUARD=off.
 
 It acts only for the builder's own session: the untracked marker
 .claude/builder-checkout must exist in the folder the session runs in and hold
@@ -25,7 +32,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITTING_RE = re.compile(r"^SITTING:\s*started\s+(\S+)\s*,\s*limit\s+([0-9]+(?:\.[0-9]+)?)\s*h\s*$", re.M)
-GOAL_RE = re.compile(r"^GOAL:\s*(open|done)\b", re.M | re.I)
+OPEN_RE = re.compile(r"^\s*- \[ \]", re.M)
 PERMIT, BLOCK = 0, 2
 
 
@@ -33,24 +40,22 @@ def decide(now_text, now, in_scope=True, already_blocked=False):
     """(code, reason) for a stop at time `now` given NOW.md's text."""
     if not in_scope:
         return PERMIT, "not the builder's session, so this hook does not hold it"
-    if already_blocked:
-        return PERMIT, "the last stop was already held once; letting this one end"
     m = SITTING_RE.search(now_text or "")
-    g = GOAL_RE.search(now_text or "")
-    if not m or not g:
-        return PERMIT, "no SITTING or GOAL line in NOW.md, so nothing to hold to"
+    if not m:
+        return PERMIT, "no SITTING line in NOW.md, so nothing to hold to"
     try:
         start = datetime.datetime.fromisoformat(m.group(1))
     except ValueError:
         return PERMIT, "the SITTING line's time could not be read"
     end = start + datetime.timedelta(hours=float(m.group(2)))
-    if g.group(1).lower() == "done":
-        return PERMIT, "the sitting's goal is marked done"
     if now >= end:
         return PERMIT, "the sitting's time is up"
+    left_items = len(OPEN_RE.findall(now_text))
+    if left_items == 0:
+        return PERMIT, "the whole list is done"
     left = (end - now).total_seconds() / 3600.0
-    return BLOCK, ("the sitting's goal is still open and %.1f h of its time remain: "
-                   "keep going (mark GOAL: done in NOW.md when it is)" % left)
+    return BLOCK, ("%d item(s) left on the list and %.1f h of the sitting remain: take the next one "
+                   "(tick it - [x] in NOW.md when it is done)" % (left_items, left))
 
 
 def hook():
@@ -86,14 +91,16 @@ def selftest():
             bad += 1
             print("sitting-clock selftest FAIL " + name)
     t0 = datetime.datetime.fromisoformat("2026-09-24T13:00:00+02:00")
-    open_goal = "SITTING: started 2026-09-24T13:00:00+02:00, limit 5h\nGOAL: open | the encounter\n"
-    done_goal = open_goal.replace("GOAL: open", "GOAL: done")
-    check("an open goal with time left holds", decide(open_goal, t0 + datetime.timedelta(hours=1))[0] == BLOCK)
-    check("a done goal lets it stop", decide(done_goal, t0 + datetime.timedelta(hours=1))[0] == PERMIT)
-    check("time up lets it stop", decide(open_goal, t0 + datetime.timedelta(hours=5, minutes=1))[0] == PERMIT)
-    check("no lines, no hold", decide("nothing here", t0)[0] == PERMIT)
-    check("another session is never held", decide(open_goal, t0, in_scope=False)[0] == PERMIT)
-    check("a second stop in a row is let go", decide(open_goal, t0, already_blocked=True)[0] == PERMIT)
+    listed = ("SITTING: started 2026-09-24T13:00:00+02:00, limit 5h\n"
+              "- [x] 1. the first\n- [ ] 2. the second\n")
+    all_done = listed.replace("- [ ] 2.", "- [x] 2.")
+    one_hour = t0 + datetime.timedelta(hours=1)
+    check("an item left with time left holds", decide(listed, one_hour)[0] == BLOCK)
+    check("the whole list done lets it stop", decide(all_done, one_hour)[0] == PERMIT)
+    check("time up lets it stop", decide(listed, t0 + datetime.timedelta(hours=5, minutes=1))[0] == PERMIT)
+    check("no SITTING line, no hold", decide("- [ ] something", t0)[0] == PERMIT)
+    check("another session is never held", decide(listed, one_hour, in_scope=False)[0] == PERMIT)
+    check("a second stop in a row is held too", decide(listed, one_hour, already_blocked=True)[0] == BLOCK)
     print("sitting-clock selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

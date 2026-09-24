@@ -93,6 +93,9 @@
 // controller's own InputKey takes.
 #include "LedgerCharacter.h"
 #include "SliceCharacter.h"
+#include "Engine/StaticMeshActor.h"
+#include "Engine/StaticMesh.h"
+#include "Components/StaticMeshComponent.h"
 #include "AudioDevice.h"
 #include "AudioMixerBlueprintLibrary.h"
 #include "Components/AudioComponent.h"
@@ -619,6 +622,21 @@ namespace
 		if (Hit == nullptr) { return "none"; }
 		const FString Named = LedgerVignetteShot::StreetPieceNameOf(Hit);
 		if (!Named.IsEmpty()) { return Utf8(Named); }
+		// AN UNNAMED ACTOR SAYS WHAT MESH IT IS (24 September): "unnamed/
+		// StaticMeshActor_757" blocked every sight line in a local run and
+		// named nothing a person could look for.
+		if (const AStaticMeshActor* S = Cast<AStaticMeshActor>(Hit))
+		{
+			const UStaticMeshComponent* C = S->GetStaticMeshComponent();
+			const UStaticMesh* M = C != nullptr ? C->GetStaticMesh() : nullptr;
+			if (M != nullptr)
+			{
+				return "unnamed/" + Utf8(Hit->GetName()) + "/mesh=" + Utf8(M->GetName())
+					+ "/scale=" + std::to_string((int)Hit->GetActorScale3D().X)
+					+ "/collision=" + std::to_string((int)C->GetCollisionEnabled())
+					+ "/owner=" + Utf8(Hit->GetOuter() ? Hit->GetOuter()->GetName() : FString(TEXT("none")));
+			}
+		}
 		return "unnamed/" + Utf8(Hit->GetName());
 	}
 

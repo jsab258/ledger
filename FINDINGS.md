@@ -9,7 +9,6 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - The ship chandler's has no name board.
 - MH_Test wears the plugin's only garment, a white T-shirt and shorts, barefoot.
 - The crime witness bank's line cw-ws-r4-02 has the witness saying she served the player "his bitter": alcohol, which the content rule forbids everywhere. (content/dialogue/crime-witness-v1.json)
-- The local project's content import fails (38 errors, damaged packages), so a local run cannot place the witnesses on the ground and cannot prove perception; the build machine regenerates the content cleanly every run.
 - Suspicion is not ported to the game's C++ and is not sent to the conversation helper, so a live character who knows about a crime has no reason to question the player. In the encounter the questioning is proven only with the stand-in model; the live model, given the lad's real memory, talked about the window job and asked nothing.
 - The encounter's lad is answered through Sam's character card: the crime's residents are archetypes with no cards.
 - The encounter runs only as a test mode of the crime module; the ordinary playable slice does not yet start the conversation helper, shout or save.
