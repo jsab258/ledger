@@ -1,0 +1,154 @@
+<title>Four Voices to Pick</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --ground: #eef1f3; --card: #ffffff; --ink: #18212b; --muted: #5b6672;
+    --rule: #d3d9df; --accent: #2f6f73; --accent-ink: #ffffff; --picked: #dcecec;
+    --sans: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #121a21; --card: #1a242d; --ink: #e6ecf1; --muted: #9aa7b3;
+      --rule: #2c3844; --accent: #6fb3b6; --accent-ink: #0d1418; --picked: #22393d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #121a21; --card: #1a242d; --ink: #e6ecf1; --muted: #9aa7b3;
+    --rule: #2c3844; --accent: #6fb3b6; --accent-ink: #0d1418; --picked: #22393d;
+    color-scheme: dark;
+  }
+  body { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5; }
+  .wrap { max-width: 780px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; }
+  h1 { font-size: 1.6rem; font-weight: 600; margin: 0 0 6px; text-wrap: balance; }
+  .lede { color: var(--muted); margin: 0 0 10px; max-width: 64ch; }
+  .meter { font-family: var(--mono); font-size: .85rem; color: var(--muted); margin: 14px 0; font-variant-numeric: tabular-nums; }
+  .chars { display: grid; gap: 14px; }
+  .char { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 14px 16px; display: grid; gap: 10px; }
+  .char.done { background: var(--picked); }
+  .head { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+  .name { font-weight: 600; font-size: 1.1rem; }
+  .brief { color: var(--muted); font-size: .9rem; }
+  .line { font-size: 1.02rem; margin: 0; }
+  .voices { display: grid; gap: 8px; }
+  .voice { display: grid; grid-template-columns: 5.5em 1fr auto; gap: 8px 12px; align-items: center; padding-top: 8px; border-top: 1px solid var(--rule); }
+  .letter { font-family: var(--mono); font-weight: 500; }
+  .players { display: flex; gap: 8px; flex-wrap: wrap; }
+  button { font: inherit; border: 1px solid var(--rule); background: transparent; color: var(--ink); border-radius: 6px; padding: 6px 12px; cursor: pointer; }
+  .players button.playing { border-color: var(--accent); color: var(--accent); }
+  .pick[aria-pressed="true"], .none[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .foot { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .status { font-size: .85rem; color: var(--muted); min-height: 1.2em; }
+  .about { font-size: .85rem; color: var(--muted); grid-column: 2 / -1; }
+  .notes { margin-top: 22px; color: var(--muted); font-size: .88rem; display: grid; gap: 6px; max-width: 70ch; }
+  .notes p { margin: 0; }
+  @media (max-width: 560px) { .voice { grid-template-columns: 1fr; } .about { grid-column: auto; } }
+</style>
+<div class="wrap">
+  <h1>Pick a voice for each of the four</h1>
+  <p class="lede">Aldous, Danny, June and Zlata, each heard in four voices: the one cast on 14 August and three other VCTK speakers nobody else in the game uses. Which is the current one is hidden, as in the A/B test. Play them, then pick the one you want in the game. Your picks save as you go.</p>
+  <p class="lede">&ldquo;As &hellip;&rdquo; is the character's own line in that voice. &ldquo;Own recording&rdquo; is the speaker reading a sentence every speaker reads, so you can compare like with like. Nobody here is older than 38.</p>
+  <div class="meter" id="meter">0 of 4 picked</div>
+  <div class="chars" id="chars"></div>
+  <div class="notes" id="end" hidden><p>All four picked. Claude will read them from here. Who's who is now shown under each voice.</p></div>
+  <div class="notes">
+    <p>Lines made by Nano, the small version of the game's voice engine, on this PC's processor. The game's own engine may sound a little different; the difference between voices carries.</p>
+    <p>Recordings: CSTR VCTK Corpus, Centre for Speech Technology Research, University of Edinburgh, CC BY 4.0. Cloning them for game characters is a risk you accepted on the record on 24 September. Nothing is cast until you pick.</p>
+  </div>
+</div>
+<script>
+const CHARS = __DATA__;
+const picks = {};
+const box = document.getElementById("chars");
+let current = null;
+function allPicked() { return CHARS.every((c) => picks[c.id]); }
+function meter() {
+  const n = CHARS.filter((c) => picks[c.id]).length;
+  document.getElementById("meter").textContent = n + " of " + CHARS.length + " picked";
+  document.getElementById("end").hidden = n < CHARS.length;
+}
+function btn(label, cls, onClick) {
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = label;
+  if (cls) b.className = cls;
+  b.addEventListener("click", onClick);
+  return b;
+}
+function render() {
+  box.textContent = "";
+  const reveal = allPicked();
+  CHARS.forEach((c) => {
+    const sec = document.createElement("section");
+    sec.className = "char" + (picks[c.id] ? " done" : "");
+    const head = document.createElement("div"); head.className = "head";
+    const name = document.createElement("span"); name.className = "name"; name.textContent = c.name;
+    const brief = document.createElement("span"); brief.className = "brief"; brief.textContent = c.who;
+    head.append(name, brief);
+    const line = document.createElement("p"); line.className = "line"; line.textContent = "“" + c.line + "”";
+    const voices = document.createElement("div"); voices.className = "voices";
+    c.voices.forEach((v) => {
+      const row = document.createElement("div"); row.className = "voice";
+      const letter = document.createElement("span"); letter.className = "letter"; letter.textContent = "Voice " + v.letter;
+      const players = document.createElement("div"); players.className = "players";
+      const a = btn("As " + c.first, "", () => play("line_" + c.id + "_" + v.speaker + ".wav", a));
+      const o = btn("Own recording", "", () => play("own_" + v.speaker + ".wav", o));
+      players.append(a, o);
+      const pick = btn("Pick " + v.letter, "pick", () => choose(c.id, v.speaker));
+      pick.setAttribute("aria-pressed", picks[c.id] === v.speaker ? "true" : "false");
+      row.append(letter, players, pick);
+      if (reveal) {
+        const ab = document.createElement("span"); ab.className = "about";
+        ab.textContent = v.speaker + ": " + v.about + (v.now ? " (the voice cast on 14 August)" : "");
+        row.append(ab);
+      }
+      voices.append(row);
+    });
+    const foot = document.createElement("div"); foot.className = "foot";
+    const none = btn("None of these", "none", () => choose(c.id, "none"));
+    none.setAttribute("aria-pressed", picks[c.id] === "none" ? "true" : "false");
+    const status = document.createElement("span"); status.className = "status"; status.id = "s-" + c.id;
+    foot.append(none, status);
+    sec.append(head, line, voices, foot);
+    box.append(sec);
+  });
+  meter();
+}
+function play(src, b) {
+  if (current) { current.audio.pause(); current.b.classList.remove("playing"); }
+  const audio = new Audio(src);
+  current = { audio, b };
+  b.classList.add("playing");
+  audio.addEventListener("ended", () => b.classList.remove("playing"));
+  audio.play().catch(() => b.classList.remove("playing"));
+}
+let db = null;
+async function choose(id, speaker) {
+  picks[id] = speaker;
+  render();
+  const s = document.getElementById("s-" + id);
+  if (!db) { if (s) s.textContent = "Saved on this screen only; tell Claude your pick."; return; }
+  try {
+    await db.doc("picks/" + id).set({ character: id, speaker: speaker, at: new Date().toISOString() });
+    if (s) s.textContent = "Saved.";
+  } catch (e) {
+    if (s) s.textContent = "Not saved (" + (e && e.code ? e.code : "error") + "); tell Claude your pick.";
+  }
+}
+render();
+(async () => {
+  try { db = window.claude ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) return;
+  try {
+    const snap = await db.collection("picks").get();
+    (snap && snap.docs ? snap.docs : []).forEach((d) => {
+      const v = d.data ? d.data() : d;
+      if (v && v.character) picks[v.character] = v.speaker;
+    });
+    render();
+  } catch (e) { /* the page still works on this screen */ }
+})();
+</script>

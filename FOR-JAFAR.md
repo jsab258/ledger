@@ -8,7 +8,7 @@ between them.
 
 1. **The disk:** C: had 5.1 GB free and now has 19 GB. I cleared only what was ours and rebuildable: the probe's old compile files (5.7 GB) and Python's download cache (7.8 GB). The biggest win, 33 GB of leftovers in the build runner's copy, needs your yes (below). The twenty largest folders are listed underneath.
 2. **The MetaHuman:** being dressed now. Details to follow.
-3. **The voices:** [the listening page is ready](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447). Aldous, Danny, June and Zlata are each heard in their current voice and in three others, and you pick one each (below). The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
+3. **The voices:** [the listening page is ready](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447), and since your note it saves your picks, like the A/B page. Aldous, Danny, June and Zlata are each heard blind in four voices, and you pick one each. The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
 4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded, and one new question is below: how much the town says is written ahead.
 5. **The router:** your three changes are on the list, in stage 2.
 6. **A backup:** a proposal is below. Nothing is set up.
@@ -53,12 +53,10 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Decisions waiting on me
 
-- 2026-09-24 **Pick a voice each for Aldous, Danny, June and Zlata: [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard in the voice cast on 14 August and in three other VCTK speakers nobody else in the game uses: saying one of the character's lines, and reading the same sentence as everyone else. The picks marked here are made on paper from the briefs, because I can't hear them; your ears decide.
-  - Aldous: **p281, Edinburgh, 29, the oldest free man (paper pick)**; p232 and p258, Southern England; or keep p226, Surrey.
-  - Danny: **p243, London (paper pick)**; p274, Essex; p286, Newcastle; or keep p254, Surrey.
-  - June: **p257, Southern England, 24, the oldest free English woman (paper pick)**; p267, Yorkshire; p277, North East; or keep p225, Southern England.
-  - Zlata: **p280, from France, English as a second language (paper pick)**; p261, Belfast, 26; p236, Manchester; or keep p233, Staffordshire.
-  - Meanwhile: nothing is cast and nothing is recorded with any of them. Nobody on the page is older than 38, so Aldous's and Zlata's ages will have to come from the voice engine's settings.
+- 2026-09-24 **Pick a voice each for Aldous, Danny, June and Zlata, on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447).** Each is heard blind in four voices: the one cast on 14 August and three other VCTK speakers nobody else in the game uses. Your picks save as you go, as on the A/B page, and I read them from there. Who's who shows once all four are picked.
+  - **(a) Pick on the page (recommended).** I can't hear the clips, so I have no pick of my own worth giving you. What I picked the alternatives for is written under each voice once you've picked.
+  - (b) Keep all four voices as cast on 14 August: pick the current one on the page, or say so.
+  - Meanwhile: nothing is cast and nothing is recorded with any of them.
 - 2026-09-24 **How much of what the town says is written ahead, rather than made up live?** It's the biggest single lever on the bill (the business research), and it's what keeps the street alive once a player's allowance runs out.
   - **(a) Everything the town says unprompted is written ahead (my recommendation).** That means greetings, remarks in passing, reactions, rumours passed on and stock replies, from a large bank written and checked before release. Live talk is only for when you speak to someone and they answer you. What people say to each other and about you is most of what a street says, so most of the bill comes off. The bank is checked against the content rule once, before it ships, and the street sounds the same whether or not the allowance is left.
   - (b) Only short barks written ahead. Rumours and remarks are made up live too. Richer and less repetitive, but the bill grows with every hour on the street, and the street falls quieter when the allowance ends.
@@ -85,6 +83,7 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Things you should know
 
+- 2026-09-24 **The listening page now saves your picks,** rebuilt like the A/B page after your note. Voices are lettered and blind, and who's who shows once all four are picked. The first version only played clips: my mistake.
 - 2026-09-24 **Downloaded for the listening page:** the first dozen recordings of sixteen VCTK speakers, read from the Edinburgh collection on HuggingFace (CC BY 4.0), about 15 MB of it per speaker. They're kept outside the project; the scripts that fetch them again are in the project.
 - 2026-09-24 **Nano can't learn a new voice on the card.** It crashes the whole process, at the same maths step the card can't do that I worked around last night for playback. The listening page's lines were made on the processor instead, about 10 seconds a line. Worth knowing before voices are cloned on the card at run time.
 - 2026-09-24 **The business research is done, on its own branch** (research/runtime-ai-business). Nobody publishes what live AI costs per hour of play, so our own measurement will be the best figure anywhere. Every game that offered unlimited talk for one price had a rich backer or moved to cheaper or local models. And our model's price isn't falling: savings only come from being able to switch models.
