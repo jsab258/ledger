@@ -17,8 +17,11 @@ REM  THE PACKAGED GAME WHEN THERE IS ONE: the build the build machine checked,
 REM  copied to a steady place after every run. Otherwise the editor's own.
 set "PACKAGED=C:\Users\Jafar\ledger-migrate\ue-probe\Packaged\Windows\LedgerProbe.exe"
 set "HELPER=%CD%\ledger\TalkHelper\bin\Release\net8.0\TalkHelper.exe"
+REM  THE CAST'S VOICES: the small voice model beside the game, when it is installed.
+set "VOICE="
+if exist "C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe" set "VOICE=-VoicePython=C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe -VoiceScript=%CD%\tools\voice-live\voice-server.py"
 if exist "%PACKAGED%" (
-  start "" "%PACKAGED%" -LedgerSlice -LedgerCrime -Encounter=live "-TalkHelper=%HELPER%" -windowed -ResX=1600 -ResY=900 %*
+  start "" "%PACKAGED%" -LedgerSlice -LedgerCrime -Encounter=live "-TalkHelper=%HELPER%" %VOICE% -windowed -ResX=1600 -ResY=900 %*
 ) else (
-  start "" "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe" "%CD%\ue-probe\LedgerProbe.uproject" -game -LedgerSlice -LedgerCrime -Encounter=live "-TalkHelper=%HELPER%" -windowed -ResX=1600 -ResY=900 %*
+  start "" "C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe" "%CD%\ue-probe\LedgerProbe.uproject" -game -LedgerSlice -LedgerCrime -Encounter=live "-TalkHelper=%HELPER%" %VOICE% -windowed -ResX=1600 -ResY=900 %*
 )
