@@ -23,7 +23,16 @@ player character:
 
 When it passes, it becomes the regression the build runs.
 
+PASSED 24 September: all seven hold in the packaged build, it is the build's
+regression, and a playable version with the cast runs beside it.
+
 ## Next: a slice you can play, ten to fifteen minutes
+
+Where it stands, 24 September evening: the street, three cast MetaHumans, the
+crime, being seen, hearing about it later, typed talk answered aloud in the
+cast's voices, quit and come back; 73 fps at his screen size. Not yet: the
+packaged copy he plays, a spoken answer inside two or three seconds, plain
+clothes, local line-writing.
 
 Walk the street, talk to two or three people in their cast voices, commit the
 crime, be seen, hear about it later, in the packaged build, and at 60 frames a
