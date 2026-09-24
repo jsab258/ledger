@@ -114,23 +114,67 @@ def load_models(cpu_only):
         return ts[0] if len(ts) == 1 else orig_cat(ts, dim)
     torch.cat = cat
     from chatterbox.tts_turbo import ChatterboxTurboTTS
-    learner = ChatterboxTurboTTS.from_local(weights, "cpu", nano=True)
     if cpu_only:
-        return torch, learner, learner, "cpu"
+        return torch, ChatterboxTurboTTS.from_local(weights, "cpu", nano=True), "cpu"
+    # ONE COPY OF THE MODEL, 25 September. It used to load twice: a whole
+    # second copy on the processor only to learn voices, because the voice
+    # encoder aborts on the card (about 5 GB between them, FINDINGS). Every
+    # part that learning a voice uses (the voice encoder, the audio
+    # tokeniser, the vocoder's reference) now lives on the processor in the
+    # one copy, and only the part that makes the sound tokens is on the card.
     import torch_directml
     dev = torch_directml.device()
     speaker = ChatterboxTurboTTS.from_local(weights, dev, nano=True)
     speaker.s3gen.to("cpu")
+    speaker.ve.to("cpu")
     inf = speaker.s3gen.inference
     speaker.s3gen.inference = lambda speech_tokens, ref_dict, **k: inf(speech_tokens=speech_tokens.to("cpu"), ref_dict=ref_dict, **k)
-    return torch, learner, speaker, dev
+    return torch, speaker, dev
+
+
+CACHE = pathlib.Path(os.environ.get("NANO_VOICE_CACHE", r"C:\LedgerTools\chatterbox-nano\voice-cache"))
+
+
+def cache_path(who, clip, cache=CACHE):
+    """Where a learned voice is kept: named by the character and a hash of the
+    clip's bytes, so a changed clip is learned afresh, never stale."""
+    import hashlib
+    with open(clip, "rb") as fh:
+        digest = hashlib.sha1(fh.read()).hexdigest()[:12]
+    return cache / ("%s-%s.pt" % (who, digest))
+
+
+def learn(torch, speaker, who, clip):
+    """The character's voice, from the cache or learned once on the processor.
+    Learning runs with the model's device set to the processor for its
+    length: every tensor it makes starts there, and the caller moves the
+    token half to the card."""
+    from chatterbox.tts_turbo import Conditionals
+    kept = cache_path(who, clip)
+    if kept.exists():
+        try:
+            return Conditionals.load(str(kept)), True
+        except Exception:
+            pass   # an unreadable cache is learned again, never trusted
+    was = speaker.device
+    speaker.device = "cpu"
+    try:
+        speaker.prepare_conditionals(clip)
+    finally:
+        speaker.device = was
+    try:
+        kept.parent.mkdir(parents=True, exist_ok=True)
+        speaker.conds.save(str(kept))
+    except Exception:
+        pass       # a cache that cannot be written only costs time
+    return speaker.conds, False
 
 
 def serve(args):
     out = pathlib.Path(args.get("out") or tempfile.mkdtemp(prefix="ledger-voice-"))
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    torch, learner, speaker, dev = load_models(args.get("cpu"))
+    torch, speaker, dev = load_models(args.get("cpu"))
     import soundfile as sf
     voices = {}
     print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out)}), flush=True)
@@ -149,13 +193,10 @@ def serve(args):
         t = time.time()
         try:
             if who not in voices:
-                learner.prepare_conditionals(clip)
-                voices[who] = learner.conds
-            conds = voices[who]
-            if speaker is not learner:
-                conds = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
-                                                             for k, v in conds.gen.items()})
-            speaker.conds = conds
+                conds, _ = learn(torch, speaker, who, clip)
+                voices[who] = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
+                                                                   for k, v in conds.gen.items()})
+            speaker.conds = voices[who]
             pieces = sentences(text)
             for k, piece in enumerate(pieces):
                 torch.manual_seed(20260924 + i * 100 + k)
@@ -185,6 +226,14 @@ def selftest():
     check("Sam's clip is his cast voice", (clip_for("sam") or "").replace("\\\\", "/").endswith("sam.p241.mp3"))
     check("nobody else's name reaches a path", clip_for("../secrets") is None and clip_for("") is None)
     check("a character with no clip is none", clip_for("nobody") is None)
+    import tempfile as _tf
+    with _tf.TemporaryDirectory() as d:
+        a = pathlib.Path(d) / "a.wav"
+        a.write_bytes(b"one")
+        first = cache_path("sam", str(a), pathlib.Path(d))
+        a.write_bytes(b"two")
+        check("a changed clip is learned afresh, not read from a stale cache", cache_path("sam", str(a), pathlib.Path(d)) != first)
+        check("a learned voice is kept under the character's name", first.name.startswith("sam-") and first.suffix == ".pt")
     check("an answer splits into its sentences",
           sentences("So listen. You were here, weren't you? Don't lie.") == ["So listen.", "You were here, weren't you?", "Don't lie."])
     check("a long sentence is cut at a comma, never mid-word",
