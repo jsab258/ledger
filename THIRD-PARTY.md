@@ -81,6 +81,20 @@ from somebody's recording launders the obligation no better than synthesising
 from it does. The credit text above covers them, unchanged, because it was
 written to.
 
+## Casting voice candidates — VCTK, Google SLR83 (CC BY-SA 4.0), Parler-TTS
+
+`production/casting/<name>/voices/`, 24 September (overnight): three lines per
+candidate, spoken by Chatterbox (MIT) from one reference each, for Jafar to
+pick from blind. `production/casting/voice-key.json` says which letter came
+from which reference. Not shipped: the chosen voice's reference moves to
+`game-design/picked-clips` once he says yes.
+
+| Reference | Source | Licence | Credit |
+|---|---|---|---|
+| His approved clips (lena.p228, rocco.p227, sam.p241) | the CSTR VCTK Corpus, as above | CC BY 4.0 | the VCTK credit above |
+| Two Google northern English volunteers per sex (speakers nof_04310, nof_05223, nom_09697, nom_09334) | "Crowdsourced high-quality UK and Ireland English Dialect speech data set", Google, OpenSLR SLR83 (https://www.openslr.org/83/); Demirsahin, Kjartansson, Gutkin and Rivera, "Open-source Multi-speaker Corpora of the English Accents in the British Isles", LREC 2020 | CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/ | the clips derived from these references are shared under CC BY-SA 4.0 in turn. Whether a synthetic voice cloned from a ShareAlike reference must itself be ShareAlike is unsettled; it is a stated risk until he rules, and one reason these are candidates only |
+| Voices designed from a written description | Parler-TTS mini v1 (Hugging Face, parler-tts/parler-tts-mini-v1), weights Apache-2.0 | Apache-2.0 | designed from text alone; the model learned from audiobook readers, so "no real person behind it" is likely, not guaranteed |
+
 ## Character models and animation — Adobe Mixamo
 
 | | |
