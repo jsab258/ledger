@@ -30,7 +30,7 @@ if not defined PACKAGED set "PACKAGED=none"
 if exist "%PACKAGED%" (
   copy /y "production\specs\vignette-pieces.json" "%PACKDIR%\vignette-pieces.json" >nul
   copy /y "content\dialogue\crime-witness-v1.json" "%PACKDIR%\crime-witness-v1.json" >nul
-  start "" "%PACKAGED%" -LedgerSlice -LedgerCrime -Encounter=live "-TalkHelper=%HELPER%" %VOICE% -windowed -ResX=1600 -ResY=900 %*
+  start "" "%PACKAGED%" -LedgerSlice -LedgerCrime -Encounter=live "-LedgerRepo=%CD%" "-TalkHelper=%HELPER%" %VOICE% -windowed -ResX=1600 -ResY=900 %*
 ) else (
   copy /y "production\specs\vignette-pieces.json" "ue-probe\vignette-pieces.json" >nul
   copy /y "content\dialogue\crime-witness-v1.json" "ue-probe\crime-witness-v1.json" >nul
