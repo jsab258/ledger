@@ -3,9 +3,6 @@
 Unresolved faults only, at most twenty; a fault leaves this file when fixed.
 The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 
-- The conversation helper builds empty memory and knowledge stores and says it is day 1 on every request, so no character can answer from what the simulation knows. (Being fixed: the encounter.)
-- The packaged "restart" test restores strings held in memory; it never proves a real quit and a reload from disk. (Being fixed: the encounter.)
-- The new player character has no crime or conversation input; the crime key belongs to the old test character. (Being fixed: the encounter.)
 - Nano cannot learn a new voice on the card: the voice encoder aborts the process on DirectML (no complex numbers). Cloning runs on the processor.
 - Nano takes about four seconds to make a three-second line while the game runs, before playback begins.
 - The hill's mist does not change with the fog settings; two tries had no effect.
@@ -13,3 +10,6 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - MH_Test wears the plugin's only garment, a white T-shirt and shorts, barefoot.
 - The crime witness bank's line cw-ws-r4-02 has the witness saying she served the player "his bitter": alcohol, which the content rule forbids everywhere. (content/dialogue/crime-witness-v1.json)
 - The local project's content import fails (38 errors, damaged packages), so a local run cannot place the witnesses on the ground and cannot prove perception; the build machine regenerates the content cleanly every run.
+- Suspicion is not ported to the game's C++ and is not sent to the conversation helper, so a live character who knows about a crime has no reason to question the player. In the encounter the questioning is proven only with the stand-in model; the live model, given the lad's real memory, talked about the window job and asked nothing.
+- The encounter's lad is answered through Sam's character card: the crime's residents are archetypes with no cards.
+- The encounter runs only as a test mode of the crime module; the ordinary playable slice does not yet start the conversation helper, shout or save.
