@@ -1,7 +1,7 @@
 encounterMode=unseen
 encounterStatus=PASS
 encounterFailed=none
-encounterCommit=ab80d10
+encounterCommit=4d65d8f
 pawnClass=LedgerSliceCharacter actPressLanded=player-input actRequestsSeen=1 actAttempted=yes
 aboutA w1=0 n2=0 r3=0 aboutB w1=0 n2=0 r3=0 crimeMemories w1=0 n2=0 r3=0
 filedSummaryA=none
@@ -10,5 +10,6 @@ talk=answered talkAs=sam talkFake=yes talkDay=4 talkHour=18 heardCount=0 heardCr
 talkReply=Morning. Quiet one today.
 suspicion lad=Trusting witness=Trusting mate=Trusting witnessRungA=-1 flee=not-seen fleeSeconds=0.00 fleeMetres=-1.0 fleeRung=-1 fleeCertainty=0.00 othersTheLadSaw=0
 suspicionWhyLad=none
+voiceFirstHeardAfterS=-1.0
 voice=not-asked voiceSeconds=0.0
 save=not-written savedBytes=0 loaded=no loadedBytes=0 savedByCommit=none clockLoaded=D0-00:00 talkAnswered=yes bankReadable=no saveDir=none
