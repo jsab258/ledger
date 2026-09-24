@@ -7,11 +7,6 @@ on:
       - "tools/*.py"
       - "tools/*.sh"              # ci-checks.sh and reach-check.sh ARE the job now
       - "THIRD-PARTY.md"
-      # THE PLAN, added 24 September: the stage check is "run with the cheap
-      # checks on every push" (CLAUDE.md), but a push that changed only
-      # ROADMAP.md started nothing, so a stage marked FINISHED with an open
-      # item could have been pushed unchecked.
-      - "ROADMAP.md"
       - "voice-candidates/**"     # a new asset drop must re-run the attribution gate
       - ".github/workflows/ledger-core-tests.yml"
   workflow_dispatch:

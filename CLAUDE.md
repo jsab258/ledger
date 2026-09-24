@@ -1,65 +1,40 @@
 # LEDGER
 
-One session, on Jafar's PC, building a game. The studio that ran before is archived under legacy/studio-v2/ and can be reactivated from its REACTIVATE.md.
+One session, on Jafar's PC, building a game. The old studio is archived under legacy/studio-v2/.
 
-What governs: canon.md for the world and the content rules; ROADMAP.md for the six stages and what each one means; DECISIONS.md for what is already decided; production/research/README.md for which research and which concept sheet govern each thing's look; the licence allowlist is law. If any of these is unclear, ask Jafar; otherwise do not ask.
+## What governs
 
-## How to talk to Jafar
+canon.md (the world and content rules; it outranks everything), ROADMAP.md (milestones), DECISIONS.md (what is decided; its archive still binds), production/research/README.md (what governs each thing's look). The licence allowlist is law.
 
-- He is not a programmer. Plain words, short, the way you would explain it to someone standing next to you.
-- No file paths, commit hashes, flags, variable names or tool output unless he asks for them.
-- When a piece of work is finished, tell him in three lines: what changed; what it looks like, with the picture; what you would do next.
-- EVERY MESSAGE BEGINS WITH A LINE THAT READS `For you:` — followed by ONLY WHAT IS NEW SINCE YOUR LAST MESSAGE, one to a line, or by the words `nothing new`. It goes FIRST, before anything else, EVERY TIME, including when it is empty. Ruled 2026-09-22 after the rule it replaces failed twice in one sitting; narrowed by Jafar 2026-09-23 because repeating the whole list at every pause, fifteen items at a time, buried what was new. THE FULL LIST LIVES IN `FOR-JAFAR.md` AND IN THE SITTING'S FINAL MESSAGE.
-- WHAT BELONGS IN IT, and you do not get to judge whether it is blocking: a rule you think is wrong or costing time; anything you did that he might overrule; anything surprising, broken or reversed in what you built; anything waiting on his PC or his hands; a finding that changes what comes next. IF IN DOUBT IT GOES IN.
-- ANYTHING IN THAT LIST THAT IS A CHOICE becomes a multiple-choice question with your recommendation marked — and you CARRY ON with the recommendation while it waits, rather than stopping.
-- `FOR-JAFAR.md` AT THE ROOT IS THE CHANNEL, AND A MESSAGE ONLY REPEATS IT. Ruled 2026-09-22, because `For you:` items were getting lost between reports and he was scrolling a transcript to find them. FOUR SECTIONS: **Decisions waiting on me**, each a multiple-choice question with the recommendation marked and what you are doing meanwhile; **Things you should know**, one line each, newest first; **Rulings received**, one line each with the date, so he can see what landed; and **Resolved** at the bottom.
-- EVERY `For you:` ITEM GOES INTO THAT FILE IN THE SAME TURN IT IS WRITTEN, BEFORE IT GOES INTO A MESSAGE. NOTHING IS EVER ONLY IN A MESSAGE. During a sitting `For you:` stays exactly as it is - first line, every message, `nothing new` when nothing is - but it only ever repeats what the file already says, and only what is new since the last message.
-- WHEN SOMETHING IS RESOLVED IT MOVES TO `Resolved` WITH THE DATE rather than being deleted, so the record is complete.
-- AT THE END OF A SITTING, THE LAST MESSAGE IS THE FILE'S STAGE COUNT AND ITS TOP TWO SECTIONS, VERBATIM, AND NOTHING ELSE.
-- THE STAGE COUNT, AT THE TOP OF `FOR-JAFAR.md` AND IN EVERY SITTING'S LAST MESSAGE (Jafar 2026-09-23), so he sees the plan at a glance: one line per stage, done, moved, out and open, such as "stage 1: 38 of 47 done, 4 moved, 5 out, 5 open". It is written by `tools/stage-check.py --write-count`, never typed.
-- FINDINGS.md IS YOUR NOTEBOOK, NOT A CHANNEL TO HIM. A finding that needs him is also in `For you:`. Writing it down is not telling him.
-- WHY THE OLD RULE FAILED, kept because the next version of this will fail the same way if nobody remembers. It said "anything he has to know goes at the very top, in one line". It left the deciding to you, and on 22 September two things he needed — that the PC rule was costing most of the sitting, and that every sign on one side of the street was painted backwards — went into the middle and the bottom of a long report. He found both by accident. A list that is always there, even when it says `nothing`, cannot be quietly skipped.
+## Talking to Jafar
+
+- He is not a programmer. Plain words, short. No paths, hashes, flags or tool output unless he asks.
+- A finished piece of work: three lines. What changed; what it looks like, with the picture; what next.
+- Ask him only about canon, scope or money: one multiple-choice question, your recommendation marked, and carry on with it meanwhile. The rest is yours.
+- No voice is cast without his yes.
 - If you got something wrong, one sentence, then move on.
+
+## Records, and nothing more
+
+- NOW.md: five lines of current state, under 150 words, no history. It carries the SITTING line (start time and limit) and the GOAL line (the sitting's goal, marked open or done).
+- FOR-JAFAR.md: one dated summary at the end of each sitting, under 200 words: what changed, evidence, what failed or is unproven, what next, decisions he must make. Unresolved decisions carry forward; git keeps earlier summaries.
+- DECISIONS.md: one entry per material choice: date, decision, reason, who decided, link. Routine implementation choices go in commit messages.
+- FINDINGS.md: unresolved faults only, at most twenty.
+- Records go in with the work they describe or in the closing summary. No commit that only updates notes during a sitting.
+- The old records and the 979-item feature checklist are in production/archive/. The checklist is a reference, not a gate: check it for missing basics at each milestone; nothing waits on it.
+- Why: the two audits in production/audits/.
 
 ## How a sitting runs
 
-- NOW.md CARRIES A STANDING LIST, in priority order, drawn from ROADMAP.md. It is the work, and it is not a queue, a register or a dashboard: one ordered list of the next things, kept current as items finish.
-- WHEN AN ITEM IS DONE, TAKE THE NEXT ONE WITHOUT ASKING. A sitting ends at the time limit or when the list is empty, NEVER because one piece of work finished. Finishing something is not a reason to stop and report; it is a reason to write it down and start the next.
-- If he opens a sitting without naming a time limit, THE LIMIT IS FOUR HOURS.
-- WHEN THE LIST RUNS SHORT, EXTEND IT from the next part of ROADMAP.md rather than asking what is next.
-- THE HOOK MATCH LEADS. Ruled 2026-09-22, explicitly and as a change of order: visual work toward the Hook sheet comes FIRST in a sitting, and the crime, the simulation and the memory work follow it. A sitting that spends its hours on machinery and reaches the look last is a sitting that never reaches the look.
-
-## The checklist, and the four rules that make it hold (Jafar 2026-09-23)
-
-The plan is ROADMAP.md's per-stage checklist: the master feature checklist, sorted into floor, ours and genre, with the genre ruled by G0 to G12 in DECISIONS.md.
-
-1. THE STANDING LIST REFILLS ONLY FROM THE CURRENT STAGE'S CHECKLIST, NEVER FROM YOUR OWN IDEAS. Something you think is missing goes to him as a proposed checklist item, not onto the list.
-2. AN ITEM LEAVES A STAGE ONLY AS DONE, MOVED TO A LATER STAGE WITH A REASON, OR RULED OUT WITH A REASON. Nothing is dropped.
-3. DONE NEEDS EVIDENCE: a frame, a test or a recording, linked in the item's row. An item without evidence is not done, and the count reads it as open.
-4. A STAGE CANNOT BE DECLARED FINISHED WHILE ANY ITEM IN IT IS OPEN. Enforced mechanically, and this is the one check that does it: `tools/stage-check.py`, run with the cheap checks on every push, counts open items per stage and fails while any stage marked `FINISHED` has one. It is a check on the plan, ordered by him, not a record of this session; it keeps no history.
-
-When he finds something new while playing another game, it goes on the checklist with a note saying which way of looking should have caught it. The blind spots are a floor.
-
-## What to ask, and what to decide
-
-- ASK HIM ONLY ABOUT CANON, SCOPE OR MONEY. Nothing else is his to answer.
-- EVERYTHING ELSE: take your own recommendation, put it at the top of the next report in one line so he can overrule it, and carry on. Do not stop and wait for an answer you could have given yourself.
-- NO VOICE IS CAST WITHOUT HIS YES (Jafar 2026-09-24, after four cast voices - Aldous, Danny, June, Zlata - were cast on 14 August without it). A voice for a character is put to him, with a listening page when there is a choice, and only his yes casts it.
+- Each sitting has a goal and a time limit (four hours if unnamed). Stop when the goal is done or time is up, with everything committed and the closing summary written.
+- The stop hook has one job: while the goal is open and time remains, keep going; when either ends, stop. It reads NOW.md's SITTING and GOAL lines, for the builder's own session only (its id is in the untracked .claude/builder-checkout).
+- If a goal turns out much bigger than it looked, tell him rather than push on.
 
 ## How to work
 
-- Work through the standing list in NOW.md in order.
-- Visual work is edit, render, look, iterate, here, in minutes. Commit accepted work with its frame. An asset gets two attempts against its reference before it is finished from dimensions or set aside with a note. References are dimensioned drawings where they exist; a concept sheet governs look, not geometry.
-- Core work, anything under the simulation or its port, keeps its tests. A change to perception, memory or gossip runs CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, and adds a regression test. The C++ port must still match the C# golden table, and the table is REGENERATED from the C# Core for that comparison rather than read as committed — a table nobody regenerates is a table that quietly stops describing the game.
-- A change to perception, memory or gossip also gets ONE INDEPENDENT CHECK before it is committed: a subagent that has not seen your reasoning is handed the change, its test, canon and the intended behaviour IN PLAIN WORDS, and told to break it. The intended behaviour travels with it because a wrong change can pass an equally wrong test. Simulation only, never visual work.
-- Every commit says in plain words what changed and why. Pushes run the Core tests and the Unreal build on the runner; a red run is fixed before anything else.
-- TWO UNREAL BUILDS MUST NOT OVERLAP, and that is the whole of this rule. Narrowed 2026-09-22 from "no local build or render while any CI run is in progress", which cost most of a sitting: the probe runs eight to forty-seven minutes, a Blender render of the whole street is SIX SECONDS, and the second was waiting on the first for no reason anybody could name. A BLENDER RENDER, AN IMAGE-LANE JOB OR ANYTHING THAT DOES NOT USE THE UNREAL EDITOR RUNS WHENEVER YOU LIKE, whatever CI is doing. Only an Unreal build waits for an Unreal build.
-- AND THE FULL PROBE NO LONGER RUNS ON EVERY PUSH. It runs on pushes that touch the Unreal project or the scene; the cheap checks carry the rest. A forty-minute editor build is not the right answer to a changed markdown file.
-- Budget is scope and time, not a meter. Neither of us can read the usage meter from here, so a number is no use. Each sitting gets a SCOPE — a named set of outcomes — and a TIME LIMIT. Stop when the outcomes are done or the time is up, whichever comes first. On stopping, leave a SAVED CHECKPOINT: everything committed or stashed with a note, and NOW.md in five lines. If an outcome turns out much bigger than it looked, stop and tell him rather than pushing on.
-- REFERENCES LIVE IN `production/reference/` AND NOWHERE ELSE. Every tool, recipe and check that compares our work against an approved picture reads from that directory; no branch, no `git show`, no second copy beside a recipe. A retired reference that still resolves is how a week of comparisons went to the wrong picture without anything failing.
-- THE SHEET GOVERNS MOOD, PALETTE AND COMPOSITION; THE PHOTOGRAPHS GOVERN WHAT THINGS ACTUALLY LOOKED LIKE; WHERE THEY DISAGREE, THE PHOTOGRAPHS WIN (Jafar 2026-09-22). The photographs are `production/reference/photographs.md`, a page of LINKS: every period photograph the research cites is under photographer copyright with no open reuse licence, so none is copied in, and the allowlist's untagged-fails-the-gate rule is why. The Hook sheet was checked against the research and canon on 22 September and four things on it are not citable - the pub, the timber-only shopfronts, the narrowboats, the corner building; the three lists are `production/reference/hook-sheet-audit.md`. THREE OF THE FOUR WERE COMMANDED BY ITS PROMPT, WHICH IS CODEX'S RETIRED PROMPT translated - it asked for a pub and for 'plain unlettered painted timber' fronts - and everything else that came from the retired sheet is listed in `production/reference/retired-sheet-inheritance.md` and is suspect until checked. THE REGENERATED SHEET IS THE REFERENCE FROM THE NIGHT OF 22 SEPTEMBER: pass 4, one full-frame street photograph at `production/reference/hook-sheet.png`, the old poster kept beside it as retired; what on it may not be cited is in `production/reference/README.md`. Before it existed Jafar had STOPPED PALETTE AND COLOUR WORK: 'every adjustment at an unmeasured lens against a flawed sheet is work that will be redone.' Now it is approved, in his order: derive the lens from the new sheet's own geometry and write down how; re-close palette and colour against it at that lens; then rework the shopfronts built to the old sheet's tidy timber, starting with the parade.
-- Findings go in FINDINGS.md, one line each, dated. Decisions go in DECISIONS.md the same way. No queue, no register, no dashboard, no gate, no new tool unless the next visible outcome cannot be reached without it, and then the smallest one.
-- Do not build anything whose purpose is to measure, report on, or enforce this session's own behaviour. ONE EXCEPTION, ruled by Jafar on 22 September and the only one: a stop hook, with THREE jobs and no more. (1) It will not let a turn end before the sitting's time limit while the standing list has unfinished items - OR NONE: an empty list with time left has to be refilled from ROADMAP.md first. Widened by Jafar on 23 September after the list was finished at eight past midnight and the sitting stopped with eight hours left; the same job, made to cover the case the rule already named, because a rule in a document cannot stop a turn from ending. (2) It will not let a turn end whose last message does not begin `For you:`, for the same reason and after the same failure. (3) It will not let a turn end whose `For you:` says anything that is not already in `FOR-JAFAR.md`, added 2026-09-22 with the file itself and for the same reason as the other two: the rule existed and could not stop a turn. THE COUNT WAS TWO AND IS NOW THREE, said out loud rather than quietly amended, and three is the ceiling unless he raises it. It reads NOW.md, FOR-JAFAR.md and the message, keeps no records and no counters, and fails open. IT HOLDS ONLY THE BUILDER'S OWN CHECKOUT (Jafar 2026-09-23, after it held a research session in its own folder to this list): it acts only where the untracked marker `.claude/builder-checkout` exists and the session's folder is that checkout's root; everywhere else it permits and says so. AND ONLY THE BUILDER'S OWN SESSION (24 September, after the local-models session, working in this same folder, was held to this list all night): the builder writes its session id into that marker at the start of every sitting, beside the SITTING line, and any other session in the folder is permitted. That is a scope, not a fourth job. WRITE THE SITTING'S START TIME AND LIMIT INTO NOW.md AT THE START OF EVERY SITTING, on its own line as `SITTING: started <time with offset>, limit <N>h`; without it the hook permits every stop and says it measured nothing. Do not give it a fourth job, and do not add a second hook.
-- When two ways are both fine, do the cheaper one and note it. Stop to ask only for canon, scope or money.
-- Subagents for a bounded, parallel, mechanical task with a clear finish, and for the independent check above; never a director or producer.
-- When a sitting ends, NOW.md says where things stand in five lines.
+- Iterate locally: build and render in Unreal on this PC, look, fix, repeat; push only accepted work. Two Unreal builds must not overlap.
+- Commits say in plain words what changed and why. Pushes run the Core tests and the Unreal build; a red run is fixed first.
+- Simulation work (perception, memory, gossip, and their port) keeps its tests: CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, plus a regression test. The C++ port must match the C# golden table, regenerated from the C# Core for the comparison. It also gets one independent check: a subagent that has not seen your reasoning gets the change, its test, canon and the intended behaviour in plain words, and is told to break it.
+- Visual work: references live in production/reference/ only. The concept sheet governs mood, palette and composition; the photographs (links only) govern what things looked like and win where they disagree. An asset gets two attempts against its reference, then is finished from dimensions or set aside.
+- Subagents for bounded, parallel, mechanical tasks and for the independent check; never as a director.
+- When two ways are both fine, take the cheaper one.
