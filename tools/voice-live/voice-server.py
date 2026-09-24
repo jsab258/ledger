@@ -52,12 +52,23 @@ def clip_for(who, clips=CLIPS):
     return found[0] if found else None
 
 
-def sentences(text, longest=220):
+def sentences(text, longest=220, first_longest=60):
     """THE ANSWER IN SPEAKABLE PIECES, so the first can play while the next is
     made: split after . ! ? followed by a space, never mid-word, and a piece
-    over `longest` characters is split at its last comma or space before it."""
+    over `longest` characters is split at its last comma or space before it.
+
+    THE FIRST PIECE IS KEPT SHORT, 25 September: the time to the first sound
+    is the time to make the first piece, so a first sentence over
+    `first_longest` characters is split at its last comma or semicolon before
+    that, where a speaker would pause anyway ("Dark coat, moving quick" /
+    "didn't stop"). Never at a bare space, and never leaving a first piece
+    under 15 characters."""
     import re
     parts = [x.strip() for x in re.split(r"(?<=[.!?])\s+", text.strip()) if x.strip()]
+    if parts and len(parts[0]) > first_longest:
+        cut = max(parts[0].rfind(",", 0, first_longest), parts[0].rfind(";", 0, first_longest))
+        if cut >= 15:
+            parts[0:1] = [parts[0][:cut + 1].strip(), parts[0][cut + 1:].strip()]
     out = []
     for x in parts:
         while len(x) > longest:
@@ -236,6 +247,13 @@ def selftest():
         check("a learned voice is kept under the character's name", first.name.startswith("sam-") and first.suffix == ".pt")
     check("an answer splits into its sentences",
           sentences("So listen. You were here, weren't you? Don't lie.") == ["So listen.", "You were here, weren't you?", "Don't lie."])
+    check("a long first sentence starts on its first clause",
+          sentences("I saw a man go through it, dark coat, moving quick, and he never looked back once.")
+          == ["I saw a man go through it, dark coat, moving quick,", "and he never looked back once."])
+    check("a long first sentence with no comma is left whole, never cut at a space",
+          sentences("I saw a man go through it and he never looked back once not even at the corner.")
+          == ["I saw a man go through it and he never looked back once not even at the corner."])
+    check("a short first sentence is left alone", sentences("Aye, I saw it. Dark coat.") == ["Aye, I saw it.", "Dark coat."])
     check("a long sentence is cut at a comma, never mid-word",
           all(len(x) <= 221 for x in sentences("word, " * 80)) and all(not x.startswith("ord") for x in sentences("word, " * 80)))
     check("a good line parses", parse('{"id":3,"who":"lena","text":" New management. "}') == (3, "lena", "New management."))

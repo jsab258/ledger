@@ -31,3 +31,21 @@ starting, which also includes the game's side and the first sentence's length.
 
 Tool: tools/voice-live/voice-server.py (`learn`, `cache_path`); the learned
 voices live in C:\LedgerTools\chatterbox-nano\voice-cache on this PC.
+
+## Later that night: the first piece kept short
+
+The time to the first sound is the time to make the first piece, so a first
+sentence over 60 characters now starts on its first clause (split at its last
+comma or semicolon before that, never at a bare space). Three answers with
+long first sentences, voices already kept, before and after:
+
+| | first sound before | after | whole answer before | after |
+|---|---|---|---|---|
+| Darren | 6.03 s | 3.98 s | 7.78 s | 8.74 s |
+| Sheila | 4.71 s | 3.34 s | 6.76 s | 7.94 s |
+| Ron | (6.61 s, learning his voice) | 3.38 s | 8.28 s | 7.58 s |
+
+The answer starts 1.4 to 2 seconds sooner and takes about as long overall,
+with a pause at the comma where a speaker would pause anyway. With writing
+and checking (2.6 s typical, measured the same night), a spoken answer now
+starts at about 6 seconds, not the 2 to 3 the roadmap asks for.
