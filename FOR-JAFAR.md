@@ -83,6 +83,7 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Things you should know
 
+- 2026-09-24 **The plan check wasn't running on changes to the plan.** The quick checks only started when code changed, so a change to the checklist alone was never checked on GitHub, though your rule says every push. Fixed: the checklist file now starts them too. This morning's checklist changes were checked here instead, and they're clean.
 - 2026-09-24 **The listening page now saves your picks,** rebuilt like the A/B page after your note. Voices are lettered and blind, and who's who shows once all four are picked. The first version only played clips: my mistake.
 - 2026-09-24 **Downloaded for the listening page:** the first dozen recordings of sixteen VCTK speakers, read from the Edinburgh collection on HuggingFace (CC BY 4.0), about 15 MB of it per speaker. They're kept outside the project; the scripts that fetch them again are in the project.
 - 2026-09-24 **Nano can't learn a new voice on the card.** It crashes the whole process, at the same maths step the card can't do that I worked around last night for playback. The listening page's lines were made on the processor instead, about 10 seconds a line. Worth knowing before voices are cloned on the card at run time.
