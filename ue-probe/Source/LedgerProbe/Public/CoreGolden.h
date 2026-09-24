@@ -373,7 +373,7 @@ namespace Golden
 		Mill.Witness("w1", Fact("player", "broke_window_d1", "east_parade_glass0"),
 		             "a window on the Parade went in", false, GameTime(1, 12, 0), 0.94);
 		Mill.Witness("w1", Fact("novak", "owes_money_d1", "forty pounds"),
-		             "Novak is into somebody for forty", false, GameTime(1, 12, 0), 0.94);
+		             "Nowak is into somebody for forty", false, GameTime(1, 12, 0), 0.94);
 		Mill.Get("w1")->Leashed = true;
 		const std::vector<GossipEvent> Ev = Mill.Tick(GameTime(1, 12, 2), AlwaysTogether);
 		Put(R, "events", FromInt((long long)Ev.size()));

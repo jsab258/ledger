@@ -144,7 +144,7 @@ namespace Ledger.Core
 
         static readonly string[] Family =
         {
-            "Sedlak", "Brella", "Novak", "Kovacs", "Horvath", "Maddox", "Pallas", "Vaughn", "Zorich", "Simms",
+            "Sedlak", "Brella", "Sadowski", "Kovacs", "Horvath", "Maddox", "Pallas", "Vaughn", "Zorich", "Simms",
             "Babich", "Dury", "Griggs", "Hodak", "Ivers", "Jukes", "Clary", "Loveric", "Mathis", "Nizich",
             "Odom", "Perry", "Rukavina", "Salas", "Tomic", "Uzelac", "Vukas", "Zeigler", "Cavett", "Dujmovic",
         };

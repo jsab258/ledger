@@ -398,13 +398,13 @@ namespace Ledger.Core
         public static string Pp2LenaText(double loyalty, double strain)
         {
             if (loyalty < 0.35)
-                return "Lena reads the letter twice, puts it back on the counter, and says the books are in the cellar " +
+                return "Sheila reads the letter twice, puts it back on the counter, and says the books are in the cellar " +
                        "where they have always been. She does not offer to walk you through them. You have not earned that, " +
                        "and she is not pretending otherwise.";
             if (loyalty < LedgerState.TrustThreshold)
-                return "\"They'll want the ledgers,\" Lena says. \"The real ones are where Mickey left them.\" " +
+                return "\"They'll want the ledgers,\" Sheila says. \"The real ones are where Mickey left them.\" " +
                        "She tells you that much and stops, and the stopping is deliberate.";
-            return "Lena puts the kettle on, which she has not done since Mickey died. Then she takes you through it, " +
+            return "Sheila puts the kettle on, which she has not done since Mickey died. Then she takes you through it, " +
                    "month by month, in the flat voice of somebody who has been waiting years to be asked. " +
                    $"By the end you know exactly where the lie holds and exactly where it does not: {StrainWord(strain)}.";
         }
@@ -435,7 +435,7 @@ namespace Ledger.Core
 
         public const string InspectorArrivesText =
             "He is at the bar at ten past nine with a case and a folding rule, and he introduces himself " +
-            "twice — once to you and once to Lena, in the same words. Tobias Reese, Board of Customs and Excise. " +
+            "twice — once to you and once to Sheila, in the same words. Tobias Reese, Board of Customs and Excise. " +
             "He asks where he may sit, and then he asks whether the light is always this poor.";
 
         public static string InspectorAskText(int day, double scope) =>
@@ -482,9 +482,9 @@ namespace Ledger.Core
         public const int LastDayBudget = 2;
 
         public static string LastDayLenaText(bool willing) => willing
-            ? "\"They're in the cellar and they're in Mickey's hand,\" Lena says. \"Give me until four.\" " +
+            ? "\"They're in the cellar and they're in Mickey's hand,\" Sheila says. \"Give me until four.\" " +
               "She does not ask what happens to her if somebody notices, and you do not offer to tell her."
-            : "Lena listens to the whole of it. Then she says that the books are where they have always been, " +
+            : "Sheila listens to the whole of it. Then she says that the books are where they have always been, " +
               "and that she has a daughter, and that those two facts are the same answer.";
 
         public static string LastDayCrewText(string name) =>
@@ -522,7 +522,7 @@ namespace Ledger.Core
               "who knew you before any of it and did not stop knowing you. You are aware, sitting with them, " +
               "of how narrow that is. It would have taken one more careless month. It still might."
             : "The books hold. Everything you built is still yours. Ada is civil at the market and does not " +
-              "stop walking; Lena works her hours and goes home. You have the street. That is the whole of it.";
+              "stop walking; Sheila works her hours and goes home. You have the street. That is the whole of it.";
 
         /// The straight life has two roads into it and they do not feel the
         /// same. One is a man who built something and gave it up; the other is

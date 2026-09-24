@@ -18,7 +18,7 @@
       "I keep a ledger of every transaction, going back a decade.",
       "I have a back room where I store goods people don't want seen.",
       "I know the jewelers and dealers from here to the harbor office.",
-      "I keep a stack of fifty-pence pieces by the till for the gas meter out back, and I let Rocco use my phone for his calls since the box on the corner's been broken since March."
+      "I keep a stack of fifty-pence pieces by the till for the gas meter out back, and I let Ron use my phone for his calls since the box on the corner's been broken since March."
     ],
     "secret": {
       "kind": "shameful",
@@ -361,7 +361,7 @@
     ],
     "lines": [
       "Found a folded note in Mr. Halloran's trousers, three times over, same handwriting - none of my business, but you'd wonder, wouldn't you.",
-      "Don't tell Rocco I said it, but he's paying his tab in dribs since Tuesday, and that's not like him at all.",
+      "Don't tell Ron I said it, but he's paying his tab in dribs since Tuesday, and that's not like him at all.",
       "Come by after six, everyone's in and out of pockets by then, and I always find something worth a chat."
     ]
   },
@@ -1033,7 +1033,7 @@
     "lines": [
       "Two blocks, boss, and I'll knock a quid off if you don't tell Marla what I told you.",
       "Love, that ice'll outlast your marriage, now where's my envelope,",
-      "Ferry's late again, boss, ask Rocco, he's got the eyes for it, not me"
+      "Ferry's late again, boss, ask Ron, he's got the eyes for it, not me"
     ]
   },
   {
@@ -1381,7 +1381,7 @@
       "I've kept the teahouse near the crossing for eighteen years.",
       "I open before dawn for the dock shift and close after the evening crowd thins.",
       "I buy my leaves from a supplier who comes in on the Tuesday ferry.",
-      "I know Noor from her mornings writing up notes at my corner table.",
+      "I know Alison from her mornings writing up notes at my corner table.",
       "I keep a slate under the counter for regulars and settle it when the dockers get their envelopes on Fridays."
     ],
     "secret": {
@@ -1425,8 +1425,8 @@
       }
     ],
     "lines": [
-      "Funny, Rocco was in here not an hour ago asking the same thing you are.",
-      "I don't say a word, mind you. I just pour and listen, and Sam, well, Sam pours a bit more into my ear each time.",
+      "Funny, Ron was in here not an hour ago asking the same thing you are.",
+      "I don't say a word, mind you. I just pour and listen, and Darren, well, Darren pours a bit more into my ear each time.",
       "You want it cheap or you want it Tuesday, love, because Marla's brother still owes me for March."
     ]
   },
@@ -1513,7 +1513,7 @@
     "speech": "Speaks deliberately, often pausing to choose the exact right word, like he's still lettering a sign in his head.",
     "hardFacts": [
       "I've painted the signs for most shops along market_corner and west_row.",
-      "I keep a spare set of brushes and inks in the back of Rocco's bar storeroom.",
+      "I keep a spare set of brushes and inks in the back of Ron's bar storeroom.",
       "I trained as a clerk before I found I liked painting letters better.",
       "I repaint the harbor_office notice board every spring for a flat fee.",
       "I keep a slate at the corner shop for turps and brushes and settle it when a job pays out, same as everyone else on that block."
@@ -1776,7 +1776,7 @@
       "I know the crossing schedule better than the captain does.",
       "I load and unload cargo at the docks before each run.",
       "I've been questioned once by the customs shed about a missing manifest.",
-      "I take messages for two blokes on the far shore who don't have a phone, so people leave word with Rocco and I carry it over on the crossing."
+      "I take messages for two blokes on the far shore who don't have a phone, so people leave word with Ron and I carry it over on the crossing."
     ],
     "secret": {
       "kind": "criminal",
@@ -1843,7 +1843,7 @@
       "I sell most of my catch to Mirela's stall and a few restaurants direct.",
       "I've worked these channels for over twenty years.",
       "I own a flat-bottomed skiff I keep tied near the water homes.",
-      "I leave word with Rocco at the bar door if a buyer needs me, since I've no telephone out at the water homes."
+      "I leave word with Ron at the bar door if a buyer needs me, since I've no telephone out at the water homes."
     ],
     "secret": {
       "kind": "criminal",
@@ -1969,9 +1969,9 @@
     "hardFacts": [
       "I run a food cart at market corner every day but Sunday.",
       "I buy most of my vegetables from Mirela's stall.",
-      "I keep a stool near Lena's end of the bar most evenings.",
+      "I keep a stool near Sheila's end of the bar most evenings.",
       "I've had the same cart for nine years.",
-      "I take messages for the stall through the phone box on market corner. I give people that number and Rocco knows to fetch me if it rings before noon."
+      "I take messages for the stall through the phone box on market corner. I give people that number and Ron knows to fetch me if it rings before noon."
     ],
     "secret": {
       "kind": "shameful",
@@ -2828,7 +2828,7 @@
     ],
     "lines": [
       "You bring me the sheets by six or, mira, they sit till Monday, I'm not a miracle worker.",
-      "Found a pawn ticket in Rocco's trousers again, dios mio, that man and his secrets, I fold it back in like I never saw, eh, but I saw.",
+      "Found a pawn ticket in Ron's trousers again, dios mio, that man and his secrets, I fold it back in like I never saw, eh, but I saw.",
       "Pay the tab Friday, cariño, or I start washing everyone else's whites first, comprende?"
     ]
   },
@@ -3166,7 +3166,7 @@
       "I keep spare keys for regulars in a tin box, labeled by address.",
       "I lost my shop on the corner two years back to bad rent, work from a cart now.",
       "I don't ask what a key's for if the coin's good.",
-      "I take messages for jobs at the bar since I've no phone of my own, Rocco writes them on a slip and I settle up with him in coin at the end of the week."
+      "I take messages for jobs at the bar since I've no phone of my own, Ron writes them on a slip and I settle up with him in coin at the end of the week."
     ],
     "secret": {
       "kind": "criminal",
@@ -3341,7 +3341,7 @@
       "I keep a ledger of every key I've ever cut, going back a decade.",
       "I sharpened the shears for Marek's bar every autumn until he died.",
       "I've never worked north of the crossing.",
-      "I take messages for the shop through Rocco at the bar door since I've no phone of my own up here."
+      "I take messages for the shop through Ron at the bar door since I've no phone of my own up here."
     ],
     "secret": {
       "kind": "criminal",
@@ -3594,7 +3594,7 @@
     "hardFacts": [
       "I've run the repair yard since Marek's time, before that even.",
       "I can cut a working key from a wax impression in under an hour.",
-      "I owe Rocco for vouching for me when I first got here.",
+      "I owe Ron for vouching for me when I first got here.",
       "I don't touch anything with the harbor office's seal on it.",
       "I keep the yard's only phone by the compressor and charge a coin a call, mostly for the dock lads whose landlords won't run a line up."
     ],
@@ -3724,7 +3724,7 @@
     ],
     "secret": {
       "kind": "criminal",
-      "line": "I've sold spare keys to Sam's contacts for petty jobs without telling the owners.",
+      "line": "I've sold spare keys to Darren's contacts for petty jobs without telling the owners.",
       "knownBy": [
         "sam"
       ]

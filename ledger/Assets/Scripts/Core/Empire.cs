@@ -78,7 +78,7 @@ namespace Ledger.Core
     public class RivalArm
     {
         public string Id = "dockside";
-        public string HeadName = "Sera Kest";
+        public string HeadName = "Maureen Jensen";
         public double Attention;      // 0..1
         public int Stage;             // 0 quiet · 1 notice · 2 pressure · 3 grab · 4 summit
         public int LastActDay = -1;
@@ -133,9 +133,9 @@ namespace Ledger.Core
         /// Aldous Vane's machine, Danny Ro's New crew.
         public readonly List<RivalArm> Arms = new List<RivalArm>
         {
-            new RivalArm { Id = "dockside", HeadName = "Sera Kest" },
-            new RivalArm { Id = "machine", HeadName = "Aldous Vane" },
-            new RivalArm { Id = "newcrew", HeadName = "Danny Ro" },
+            new RivalArm { Id = "dockside", HeadName = "Maureen Jensen" },
+            new RivalArm { Id = "machine", HeadName = "Geoffrey Agar" },
+            new RivalArm { Id = "newcrew", HeadName = "Danny Cammack" },
         };
         /// The founding rival keeps its name — existing callers and saves read
         /// the dockside arm through it.
@@ -909,7 +909,7 @@ namespace Ledger.Core
                     break;
                 case 3:
                     events.Add(new EmpireEvent { Kind = "rival",
-                        Text = "A letter from Vane, Holt & Partners: your acquisitions are 'of interest'. The first fees arrive with it." });
+                        Text = "A letter from Agar, Holt & Partners: your acquisitions are 'of interest'. The first fees arrive with it." });
                     break;
                 default:
                     events.Add(new EmpireEvent { Kind = "rival",
@@ -959,7 +959,7 @@ namespace Ledger.Core
                     break;
                 case 3:
                     events.Add(new EmpireEvent { Kind = "rival",
-                        Text = "Your runners report a new toll: the kid takes his cut of your rounds now, 'for the neighbourhood'. Danny Ro's neighbourhood, apparently." });
+                        Text = "Your runners report a new toll: the kid takes his cut of your rounds now, 'for the neighbourhood'. Danny Cammack's neighbourhood, apparently." });
                     break;
                 default:
                     events.Add(new EmpireEvent { Kind = "rival",

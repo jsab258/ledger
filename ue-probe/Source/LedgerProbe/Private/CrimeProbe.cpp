@@ -2010,8 +2010,8 @@ namespace
 		// N2 faces +z, up the yard, by the ruling: he is not looking at
 		// anything and the terrace is between him and both windows anyway.
 		if (GN2Body != nullptr) { GN2Body->SetActorRotation(FRotator(0.0f, 90.0f, 0.0f)); }
-		DressBody(World, GW1Body, TEXT("Lena"));
-		DressBody(World, GN2Body, TEXT("Sam"));
+		DressBody(World, GW1Body, TEXT("Lena"));   // names-gate: allow (the asset MH_LenaT2, not shown)
+		DressBody(World, GN2Body, TEXT("Sam"));    // names-gate: allow (the asset MH_SamT2)
 
 		GGlass[0] = LedgerVignetteShot::FindStreetPiece(kGlassA);
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);
@@ -2243,7 +2243,7 @@ namespace
 		std::string On;
 		if (!GroundYAt(World, LedgerCrime::kR3X, LedgerCrime::kR3Z, GY, On)) { GY = 0.1; }
 		GR3Body = SpawnBody(World, TEXT("probe_body_r3"), LedgerCrime::kR3X, LedgerCrime::kR3Z, GY);
-		DressBody(World, GR3Body, TEXT("Rocco"));
+		DressBody(World, GR3Body, TEXT("Rocco"));   // names-gate: allow (the asset MH_RoccoT2)
 	}
 
 	// THE LAD'S SIGHTING OF THE MAN IN THE YARD, measured off the running
@@ -2692,9 +2692,9 @@ namespace
 		if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return false; }
 		struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
 		const Who People[3] = {
-			{ GN2Body, GN2, "sam", "n2", TEXT("Sam"), -1 },
-			{ GW1Body, GW1, "lena", "w1", TEXT("Lena"), GW1RungA },
-			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Rocco"), -1 } };
+			{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
+			{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
+			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
 		const Who* Near = nullptr;
 		const Who* Closest = nullptr;
 		double Best = LedgerCrime::kLiveTalkM, ClosestM = 1e9;
@@ -3184,7 +3184,7 @@ namespace
 					{
 						RespawnMate(World);
 						GPhase = ECrimePhase::LiveRoam;
-						Say(TEXT("The street remembers. Sam, Lena and Rocco are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
+						Say(TEXT("The street remembers. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 					}
 				}
 				if (GPhase == ECrimePhase::LiveWaitDeed)
@@ -3621,7 +3621,7 @@ namespace
 			// only a sound, so the tester pressed E, broke the window and
 			// reported that nothing happened.
 			Say(TEXT("The window goes in with a crash."), 16.0f, FColor::Orange);
-			if (!GFiledSummaryA.empty()) { Say(TEXT("Lena: \"Stop. I mean it. Stop.\""), 16.0f); }
+			if (!GFiledSummaryA.empty()) { Say(TEXT("Sheila: \"Stop. I mean it. Stop.\""), 16.0f); }
 			WriteBreadcrumb(TEXT("live-deed"));
 			if (bLiveScript)
 			{
@@ -3670,15 +3670,15 @@ namespace
 				GOverheard.Reply = LedgerCrime::ComposeOverheard(GCarried, GW1, GN2, LedgerCrime::Seed(GNow),
 					GSummaryText == "none" ? std::string() : GSummaryText,
 					GReplyText == "none" ? std::string() : GReplyText);
-				if (!GOverheard.Reply.TellText.empty()) { Say(FString(TEXT("Lena, in the yard: ")) + Un(GOverheard.Reply.TellText), 30.0f); }
-				if (!GOverheard.Reply.ReplyText.empty()) { Say(FString(TEXT("Sam: ")) + Un(GOverheard.Reply.ReplyText), 30.0f); }
+				if (!GOverheard.Reply.TellText.empty()) { Say(FString(TEXT("Sheila, in the yard: ")) + Un(GOverheard.Reply.TellText), 30.0f); }
+				if (!GOverheard.Reply.ReplyText.empty()) { Say(FString(TEXT("Darren: ")) + Un(GOverheard.Reply.ReplyText), 30.0f); }
 			}
 			RespawnMate(World);
 			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 0);
 			RunRound3(GRound3);
 			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 30);
 			SaveEncounterToDisk();
-			Say(TEXT("Later that week, evening. Sam, Lena and Rocco are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
+			Say(TEXT("Later that week, evening. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 			WriteBreadcrumb(TEXT("live-later"));
 			GPhase = ECrimePhase::LiveRoam;
 			GPhaseStart = Now;
@@ -3723,9 +3723,9 @@ namespace
 			if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return true; }
 			struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
 			const Who People[3] = {
-				{ GN2Body, GN2, "sam", "n2", TEXT("Sam"), -1 },
-				{ GW1Body, GW1, "lena", "w1", TEXT("Lena"), GW1RungA },
-				{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Rocco"), -1 } };
+				{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
+				{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
+				{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
 			const Who* Near = nullptr;
 			double Best = LedgerCrime::kLiveTalkM;
 			for (const Who& P : People)
@@ -3799,10 +3799,10 @@ namespace LedgerCrimeProbe
 		// DISPLAY NAMES ARE ARCHETYPES, NOT CAST. Canon's cast baseline is
 		// pending and a probe does not mint one; the heard memory line reads
 		// "I heard from the shopkeeper that ...".
-		GW1 = std::make_shared<Gossiper>("w1", GEnc == EEncounter::Live ? "Lena" : "the shopkeeper",
+		GW1 = std::make_shared<Gossiper>("w1", GEnc == EEncounter::Live ? "Sheila" : "the shopkeeper",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
-		GN2 = std::make_shared<Gossiper>("n2", GEnc == EEncounter::Live ? "Sam" : "the lad in the yard",
+		GN2 = std::make_shared<Gossiper>("n2", GEnc == EEncounter::Live ? "Darren" : "the lad in the yard",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GW1);
@@ -3810,7 +3810,7 @@ namespace LedgerCrimeProbe
 		// THE LAD'S MATE: tied to him and to nobody else, at the street's own
 		// tie, so the only way the crime can reach him is a second retelling.
 		GGraph->Link("n2", LedgerCrime::kR3Id, LedgerCrime::kR3Tie);
-		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, GEnc == EEncounter::Live ? std::string("Rocco") : std::string(LedgerCrime::kR3Name),
+		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, GEnc == EEncounter::Live ? std::string("Ron") : std::string(LedgerCrime::kR3Name),
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GR3);

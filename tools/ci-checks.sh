@@ -156,6 +156,8 @@ real_table() {
     content-gate-selftest "$REPO"                 "$PY tools/content-gate.py --selftest" \
     approvals             "$REPO"                 "$PY tools/approvals.py" \
     approvals-selftest    "$REPO"                 "$PY tools/approvals.py --selftest" \
+    names-gate            "$REPO"                 "$PY tools/names-gate.py" \
+    names-gate-selftest   "$REPO"                 "$PY tools/names-gate.py --selftest" \
     spec-test             "$REPO"                 "bash tools/spec-test-check.sh" \
     talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \

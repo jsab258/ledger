@@ -6,7 +6,8 @@ namespace Ledger.Core
     ///
     /// Open since 24 July and delegated to me on the 27th. The name is **Tom
     /// Novak** — Mickey's sister's boy, back in town with one suitcase and a
-    /// letter.
+    /// letter. NOWAK AND TOMMY since 24 September (Jafar's names ruling, canon's
+    /// NAMES block): Novak and Toma survive only in saves made before it.
     ///
     /// WHY THIS ONE. It had to sit beside Sedlak, Brela, Farid, Hal and
     /// Donna without sounding like it came from a different game, and it had to
@@ -23,9 +24,9 @@ namespace Ledger.Core
     /// somebody calls you is a readout of where you stand with them:
     ///
     ///   the new owner  — they know the bar changed hands, not who you are
-    ///   Novak           — you are a fact on this street now
+    ///   Nowak           — you are a fact on this street now
     ///   Tom          — they have decided about you, and it was fine
-    ///   Toma           — two or three people, ever
+    ///   Tommy          — two or three people, ever
     ///
     /// That gradient costs nothing, uses relationship state that already exists,
     /// and turns "somebody used your first name" into a thing the player can
@@ -33,8 +34,8 @@ namespace Ledger.Core
     public class PlayerIdentity
     {
         public string First = "Tom";
-        public string Diminutive = "Toma";
-        public string Surname = "Novak";
+        public string Diminutive = "Tommy";
+        public string Surname = "Nowak";
         /// What you are to somebody who has not placed you yet. Deliberately the
         /// same string the whole game already used.
         public string Unplaced = "the new owner";
@@ -119,8 +120,8 @@ namespace Ledger.Core
             var d = MiniJson.GetString(data, "diminutive");
             var s = MiniJson.GetString(data, "surname");
             if (!string.IsNullOrEmpty(f)) First = f;
-            if (!string.IsNullOrEmpty(d)) Diminutive = d;
-            if (!string.IsNullOrEmpty(s)) Surname = s;
+            if (!string.IsNullOrEmpty(d)) Diminutive = d == "Toma" ? "Tommy" : d;   // names-gate: allow (an old save)
+            if (!string.IsNullOrEmpty(s)) Surname = s == "Novak" ? "Nowak" : s;   // a save from before the names ruling; names-gate: allow
         }
     }
 }

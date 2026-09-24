@@ -1888,7 +1888,7 @@ namespace LedgerCrime
 		Expect(R, ClauseShape("he looked straight at me before he ran.")
 		       == "not-a-clause/trailing-full-stop",
 		       "clause-shape-catches-a-trailing-stop-Trim-would-have-hidden");
-		Expect(R, ClauseShape("Novak put the window in") == "sentence-not-clause/upper-first-character",
+		Expect(R, ClauseShape("Nowak put the window in") == "sentence-not-clause/upper-first-character",
 		       "clause-shape-reads-a-proper-noun-opening-as-not-a-clause");
 		// AND THE PERSON FAULT NO SHAPE CHECK CAN SEE, pinned as a reading and
 		// not as a pass: the lowercased sentence is a clause by every rule here
@@ -2176,12 +2176,12 @@ namespace LedgerCrime
 		Expect(R, !CarriesSummary("", Clause), "carries-summary-rejects-an-empty-line");
 
 		// The two helpers the interpolation needs, on the C#'s own rules.
-		Expect(R, LedgerCore::StreetVoice::Trim("  it was Novak.  ") == "it was Novak",
+		Expect(R, LedgerCore::StreetVoice::Trim("  it was Nowak.  ") == "it was Nowak",
 		       "street-voice-trim-strips-space-and-one-full-stop");
 		Expect(R, LedgerCore::StreetVoice::Cap("whoever put the window in")
 		       == "Whoever put the window in", "street-voice-cap-raises-the-first-letter");
-		Expect(R, LedgerCore::StreetVoice::Cap("Novak put the window in")
-		       == "Novak put the window in", "street-voice-cap-leaves-a-proper-noun-alone");
+		Expect(R, LedgerCore::StreetVoice::Cap("Nowak put the window in")
+		       == "Nowak put the window in", "street-voice-cap-leaves-a-proper-noun-alone");
 
 		// The verdict's own two lines, read back: the acceptance is a string on
 		// a line and not a field in a struct.
