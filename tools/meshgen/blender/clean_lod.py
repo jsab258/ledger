@@ -4,7 +4,21 @@
     blender --background --factory-startup --python clean_lod.py -- \
         --in SRC --out-dir DIR --id lamp_post_01 \
         --lods LOD0=1.0,LOD1=0.5,LOD2=0.25 --result DIR/blender-result.json \
-        [--target-height 3.0] [--pivot base-centre]
+        [--target-height 3.0] [--pivot base-centre] \
+        [--kind prop|garment] [--keep-mesh Jacket]
+
+A GARMENT IS NOT A PROP, 24 September. The research on clothing found that
+four lines here, each right for a kerb, silently ruin a coat: only meshes were
+selected, so the armature was dropped; the mesh was scaled and re-pivoted
+without it, which walks the cloth off the body; EVERY modifier was applied,
+including the Armature modifier that binds it; and the export took only the
+meshes. --kind garment keeps the coat where it was on the body, at the body's
+scale, applies only this script's own modifiers, and exports the armature with
+it when there is one. It also writes <id>_source.glb, the kept meshes as they
+came in with nothing cleaned, which is the reference the garment checker
+(meshgen.py --garment-check) measures the cleaned file against. --keep-mesh
+keeps only the meshes whose name contains that text, so one garment can be
+taken off a character file. Prop mode is unchanged.
 
 UNRUN WHERE IT WAS WRITTEN. There is no Blender in the container this was
 authored in, so every line below is untested against a real bpy. What IS tested
@@ -40,7 +54,8 @@ def parse_args(argv):
     everything before `--` and argparse's error path calls sys.exit, which
     inside Blender means no result file and therefore no diagnosis."""
     args = {"lods": "LOD0=1.0", "pivot": "base-centre", "target-height": None,
-            "in": None, "out-dir": None, "id": None, "result": None}
+            "in": None, "out-dir": None, "id": None, "result": None,
+            "kind": "prop", "keep-mesh": None}
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -57,6 +72,11 @@ def parse_args(argv):
     for need in ("in", "out-dir", "id", "result"):
         if not args[need]:
             raise ValueError(f"--{need} is required")
+    if args["kind"] not in ("prop", "garment"):
+        raise ValueError(f"--kind is prop or garment, not {args['kind']!r}")
+    if args["kind"] == "garment" and args["target-height"]:
+        raise ValueError("a garment keeps its body's scale: --target-height would size it "
+                         "off the body, so it is refused rather than ignored")
     return args
 
 
@@ -117,6 +137,10 @@ def counts(objs):
     return v, t
 
 
+def armatures():
+    return [o for o in bpy.context.scene.objects if o.type == "ARMATURE"]
+
+
 def select_only(objs):
     bpy.ops.object.select_all(action="DESELECT")
     for o in objs:
@@ -140,9 +164,26 @@ def main():
 
         bpy.ops.wm.read_factory_settings(use_empty=True)
         import_any(args["in"])
+        garment = args["kind"] == "garment"
+        if args["keep-mesh"]:
+            want = args["keep-mesh"].lower()
+            drop = [o for o in mesh_objects() if want not in o.name.lower()]
+            for o in drop:
+                bpy.data.objects.remove(o, do_unlink=True)
+            result["kept"] = [o.name for o in mesh_objects()]
         objs = mesh_objects()
         if not objs:
-            raise ValueError(f"{args['in']} imported without a single mesh object")
+            raise ValueError(f"{args['in']} imported without a single mesh object"
+                             + (f" named like {args['keep-mesh']!r}" if args["keep-mesh"] else ""))
+        result["kind"] = args["kind"]
+        result["armatures"] = [a.name for a in armatures()]
+        if garment:
+            # THE REFERENCE, before anything is touched: the same importer and
+            # the same exporter, and none of the cleaning in between.
+            ref = os.path.join(args["out-dir"], f"{args['id']}_source.glb")
+            select_only(objs + armatures())
+            bpy.ops.export_scene.gltf(filepath=ref, export_format="GLB", use_selection=True)
+            result["reference"] = ref
 
         for o in objs:
             o.data.calc_loop_triangles()
@@ -158,7 +199,7 @@ def main():
         # size, because the wrong size is visible and the distortion reads as
         # bad modelling.
         scale = 1.0
-        if args["target-height"]:
+        if args["target-height"] and not garment:
             want = float(args["target-height"])
             if dims[2] > 1e-9 and dims[2] >= dims[1]:
                 have = dims[2]      # glTF/Blender Z-up on import from FBX/OBJ
@@ -178,7 +219,9 @@ def main():
         # PIVOT. base-centre means x/y centred on the footprint and z=0 at the
         # bottom face, which is the only convention that lets a placer drop a
         # prop on a pavement without knowing anything about it.
-        if args["pivot"] == "base-centre":
+        if garment:
+            args["pivot"] = "kept-on-the-body"
+        elif args["pivot"] == "base-centre":
             dx = -(lo[0] + hi[0]) / 2.0
             dy = -(lo[1] + hi[1]) / 2.0
             dz = -lo[2]
@@ -211,13 +254,28 @@ def main():
                     dec.decimate_type = "COLLAPSE"
                     dec.ratio = ratio
                 bpy.context.view_layer.objects.active = c
-                for m in list(c.modifiers):
-                    bpy.ops.object.modifier_apply(modifier=m.name)
+                if garment:
+                    # ONLY OUR OWN, AND FIRST: the Armature modifier that binds
+                    # the coat to the body stays, unapplied, below them.
+                    for mod in ("ledger_dec", "ledger_tri"):
+                        if mod in c.modifiers:
+                            bpy.ops.object.modifier_move_to_index(modifier=mod, index=0)
+                    for mod in ("ledger_tri", "ledger_dec"):
+                        if mod in c.modifiers:
+                            bpy.ops.object.modifier_apply(modifier=mod)
+                else:
+                    for m in list(c.modifiers):
+                        bpy.ops.object.modifier_apply(modifier=m.name)
             for c in copies:
                 c.data.calc_loop_triangles()
             v, t = counts(copies)
             path = os.path.join(args["out-dir"], f"{args['id']}_{name}.glb")
-            select_only(copies)
+            select_only(copies + (armatures() if garment else []))
+            if garment:
+                # THE ORIGINALS STAY OUT OF THE FILE: hidden from the selection
+                # by being deselected is not enough when they share the armature.
+                for o in base:
+                    o.select_set(False)
             bpy.ops.export_scene.gltf(filepath=path, export_format="GLB",
                                       use_selection=True)
             if not os.path.exists(path):
