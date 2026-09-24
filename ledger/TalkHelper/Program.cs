@@ -33,6 +33,25 @@ using Ledger.Core;
 ///
 /// IN:  {"id":1,"to":"sam","say":"Morning.","hour":12,"scene":"..."}
 /// OUT: {"id":1,"to":"sam","reply":"...","ms":812,"offline":false,"timedOut":false}
+///
+/// WHAT THE CHARACTER KNOWS COMES FROM THE GAME, 24 September. Until now every
+/// engine started from an empty memory and knowledge store and every line was
+/// day 1, so nobody could answer from what the simulation knew (the outside
+/// audit's first finding). A request may now carry the character's state from
+/// the running simulation, and the helper loads it before answering:
+///   "day":3, "minute":10,
+///   "memories":[{"day":3,"hour":14,"minute":5,"kind":"observation","importance":0.9,"text":"..."}],
+///   "knows":[{"subject":"tom","predicate":"did","value":"..."}],
+///   "suspicion":0.6, "suspicionWhy":"saw him do it"
+/// Memories already held are not added twice. The reply carries "day" and
+/// "heard": the memories retrieved into the prompt for this line, which is
+/// the evidence that the answer came from the simulation's own memory.
+///
+/// FAKE MODE, --fake (or LEDGER_TALK_FAKE=1), for the encounter's regression:
+/// no key, no network, no cost. A stand-in model answers from the memories in
+/// its prompt - it asks about the first one it was given, or passes the time
+/// of day when it was given none - so a test can see knowledge arrive in the
+/// answer without paying for a model.
 /// The key is read from ANTHROPIC_API_KEY and never printed.
 static class Program
 {
@@ -60,11 +79,17 @@ static class Program
 
         public bool Online => _llm != null;
 
+        public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
+
         public async Task<string> Answer(string line)
         {
             int id = 0;
             string to = "", say = "", scene = "";
-            int hour = 12;
+            int hour = 12, day = 1, minute = 0;
+            var memories = new List<MemoryEvent>();
+            var knows = new List<Fact>();
+            double? suspicion = null;
+            string suspicionWhy = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -73,7 +98,29 @@ static class Program
                 if (r.TryGetProperty("to", out v)) to = v.GetString() ?? "";
                 if (r.TryGetProperty("say", out v)) say = v.GetString() ?? "";
                 if (r.TryGetProperty("hour", out v)) hour = v.GetInt32();
+                if (r.TryGetProperty("day", out v)) day = v.GetInt32();
+                if (r.TryGetProperty("minute", out v)) minute = v.GetInt32();
                 if (r.TryGetProperty("scene", out v)) scene = v.GetString() ?? "";
+                if (r.TryGetProperty("memories", out v) && v.ValueKind == JsonValueKind.Array)
+                    foreach (var m in v.EnumerateArray())
+                    {
+                        string text = m.TryGetProperty("text", out var t) ? t.GetString() ?? "" : "";
+                        if (text.Length == 0) continue;
+                        memories.Add(new MemoryEvent(
+                            new GameTime(m.TryGetProperty("day", out var md) ? md.GetInt32() : day,
+                                         m.TryGetProperty("hour", out var mh) ? mh.GetInt32() : hour,
+                                         m.TryGetProperty("minute", out var mm) ? mm.GetInt32() : 0),
+                            m.TryGetProperty("kind", out var mk) ? mk.GetString() ?? "observation" : "observation",
+                            m.TryGetProperty("importance", out var mi) ? mi.GetDouble() : 0.5,
+                            text));
+                    }
+                if (r.TryGetProperty("knows", out v) && v.ValueKind == JsonValueKind.Array)
+                    foreach (var k in v.EnumerateArray())
+                        knows.Add(new Fact(k.TryGetProperty("subject", out var ks) ? ks.GetString() ?? "" : "",
+                                           k.TryGetProperty("predicate", out var kp) ? kp.GetString() ?? "" : "",
+                                           k.TryGetProperty("value", out var kv) ? kv.GetString() ?? "" : ""));
+                if (r.TryGetProperty("suspicion", out v) && v.ValueKind == JsonValueKind.Number) suspicion = v.GetDouble();
+                if (r.TryGetProperty("suspicionWhy", out v)) suspicionWhy = v.GetString();
             }
             catch (Exception)
             {
@@ -84,8 +131,7 @@ static class Program
 
             var sw = Stopwatch.StartNew();
             string brush = BrushOffs[Math.Abs(id) % BrushOffs.Length];
-            if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, reply = brush, ms = 0L, offline = true, timedOut = false }, Plain);
+            var now = new GameTime(day, hour, minute);
 
             if (!_engines.TryGetValue(to, out var engine))
             {
@@ -93,13 +139,32 @@ static class Program
                     new SuspicionTracker(), _cost);
                 _engines[to] = engine;
             }
+            // THE SIMULATION'S STATE, loaded before the line is answered.
+            foreach (var m in memories)
+            {
+                bool held = false;
+                foreach (var e in engine.Memory.Events)
+                    if (e.Time.Equals(m.Time) && e.Text == m.Text) { held = true; break; }
+                if (!held) engine.Memory.Append(m);
+            }
+            foreach (var f in knows) engine.Knowledge.Learn(f);
+            if (suspicion.HasValue)
+            {
+                engine.Suspicion.Restore(suspicion.Value);
+                if (!string.IsNullOrEmpty(suspicionWhy)) engine.Suspicion.Raise(0.0, suspicionWhy);
+            }
+            var heard = new List<string>();
+            foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
+
+            if (_llm == null)
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard }, Plain);
             string reply;
             bool timedOut = false;
             using (var cts = new CancellationTokenSource(_patience))
             {
                 try
                 {
-                    var task = engine.SayToAsync(say, new GameTime { Day = 1, Hour = hour }, scene, cts.Token);
+                    var task = engine.SayToAsync(say, now, scene, cts.Token);
                     var done = await Task.WhenAny(task, Task.Delay(_patience));
                     if (done != task)
                     {
@@ -117,7 +182,31 @@ static class Program
                     reply = brush;
                 }
             }
-            return JsonSerializer.Serialize(new { id, to, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard }, Plain);
+        }
+    }
+
+    /// THE STAND-IN MODEL FOR THE ENCOUNTER'S REGRESSION: it answers from the
+    /// memories its prompt was given and nothing else, so what the simulation
+    /// knew is visible in the reply without a key or a bill.
+    sealed class KnowledgeFake : ILlmClient
+    {
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+        {
+            string first = null;
+            var sys = request.System ?? "";
+            int at = sys.IndexOf("Relevant memories", StringComparison.Ordinal);
+            if (at >= 0)
+                foreach (var raw in sys.Substring(at).Split('\n'))
+                {
+                    var l = raw.Trim();
+                    if (!l.StartsWith("- [")) continue;
+                    int close = l.IndexOf(']');
+                    first = close > 0 ? l.Substring(close + 1).Trim() : l;
+                    break;
+                }
+            string text = first == null ? "Morning. Quiet one today." : "I know what happened. " + first + " Was that you?";
+            return Task.FromResult(new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
         }
     }
 
@@ -149,9 +238,11 @@ static class Program
     {
         if (Array.IndexOf(args, "--selftest") >= 0) return await SelfTest(CardsDir(args));
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-        var helper = new Helper(string.IsNullOrEmpty(key) ? null : new AnthropicClient(key), TimeSpan.FromSeconds(8));
+        bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";
+        ILlmClient llm = fake ? new KnowledgeFake() : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
+        var helper = new Helper(llm, TimeSpan.FromSeconds(8));
         LoadCards(helper, CardsDir(args));
-        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online }, Plain));
+        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake }, Plain));
         Console.Out.Flush();
         string line;
         while ((line = Console.In.ReadLine()) != null)
@@ -229,6 +320,21 @@ static class Program
         var f = await s.Answer("{\"id\":5,\"to\":\"rocco\",\"say\":\"Alright?\"}");
         Ok("a slow model is abandoned for a brush-off at the patience limit",
            Flag(f, "timedOut") && Array.IndexOf(BrushOffs, Reply(f)) >= 0 && sw.ElapsedMilliseconds < 3000, f);
+
+        // THE SIMULATION'S STATE REACHES THE ANSWER, 24 September.
+        var k = new Helper(new KnowledgeFake(), TimeSpan.FromSeconds(8));
+        LoadCards(k, cardsDir);
+        var g = await k.Answer("{\"id\":6,\"to\":\"sam\",\"say\":\"Morning.\",\"day\":3,\"hour\":16}");
+        Ok("with nothing known, nothing is claimed", Reply(g) != null && !Reply(g).Contains("window"), g);
+        var w = await k.Answer("{\"id\":7,\"to\":\"sam\",\"say\":\"What's the news?\",\"day\":3,\"hour\":17,\"memories\":[{\"day\":3,\"hour\":15,\"kind\":\"heard\",\"importance\":0.9,\"text\":\"Heard from Rita that the new owner put her window in.\"}]," +
+            "\"suspicion\":0.6,\"suspicionWhy\":\"heard he put Rita's window in\"}");
+        Ok("a memory sent by the game is in the answer", Reply(w) != null && Reply(w).Contains("window"), w);
+        Ok("and in what the helper says it heard", w.Contains("put her window in"), w);
+        Ok("the day is the game's, not day 1", w.Contains("\"day\":3"), w);
+        await k.Answer("{\"id\":8,\"to\":\"sam\",\"say\":\"Anything else?\",\"day\":3,\"hour\":18,\"memories\":[{\"day\":3,\"hour\":15,\"kind\":\"heard\",\"importance\":0.9,\"text\":\"Heard from Rita that the new owner put her window in.\"}]}");
+        int copies = 0;
+        foreach (var ev in k.EngineFor("sam").Memory.Events) if (ev.Kind == "heard" && ev.Text == "Heard from Rita that the new owner put her window in.") copies++;
+        Ok("a memory sent twice is held once", copies == 1, copies.ToString());
 
         Console.WriteLine($"talkhelper selftest: passed={passed}/{passed + failed} failed={failed}");
         return failed == 0 ? 0 : 1;

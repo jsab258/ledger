@@ -102,5 +102,13 @@
         "Cold one."
       ]
     }
+  ],
+  "cues": [
+    {
+      "id": "shout_stop",
+      "clip": "crowd_f1/bc9b402a.wav",
+      "line": "Stop. I mean it. Stop.",
+      "what": "The encounter's audible consequence (24 September): the witness shouts where she stands when she sees the crime. A one-off cue, never played by the street on its own."
+    }
   ]
 }

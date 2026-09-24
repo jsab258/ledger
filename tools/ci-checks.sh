@@ -155,6 +155,7 @@ real_table() {
     spec-test             "$REPO"                 "bash tools/spec-test-check.sh" \
     talk-helper-selftest  "$REPO"                 "dotnet run --project ledger/TalkHelper -c Release -- --selftest" \
     crime-verdict-selftest "$REPO"                "$PY tools/crime-verdict-check.py --selftest" \
+    encounter-check-selftest "$REPO"                "$PY tools/encounter-verdict-check.py --selftest" \
     sky-material-selftest "$REPO"                 "$PY tools/ue/make_sky_material.py --selftest" \
     sky-longlat-selftest  "$REPO"                 "$PY tools/hdr-to-longlat.py --selftest" \
     facade-drawing-selftest "$REPO"               "$PY tools/facade-drawing.py --selftest" \

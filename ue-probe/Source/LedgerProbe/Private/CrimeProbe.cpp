@@ -92,6 +92,13 @@
 // made of once Slate has finished with it, which is the shape the player
 // controller's own InputKey takes.
 #include "LedgerCharacter.h"
+#include "SliceCharacter.h"
+#include "AudioDevice.h"
+#include "AudioMixerBlueprintLibrary.h"
+#include "Components/AudioComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Sound/SoundAttenuation.h"
+#include "Sound/SoundWave.h"
 #include "InputKeyEventArgs.h"
 #include "GenericPlatform/GenericPlatformInputDeviceMapper.h"
 
@@ -138,6 +145,7 @@ namespace
 		SeqBeforeB, AwaitActB, CommitB, SeqAfterB, ShotAfterB, Round2,
 		MoveToOverhear, SettleOverhear, OverheardHold, ShotOverheard,
 		MeetThird,
+		Talk, SaveDisk, LoadDisk,
 		Done
 	};
 
@@ -148,6 +156,9 @@ namespace
 	double      GLastTick   = 0.0;
 	int32       GTicks      = 0;
 	FString     GFinishReason = TEXT("process-completed-normally");
+
+	void PlayShout();
+	void WriteEncounterVerdict();
 
 	// ---- the act, and what is known about how it arrived -----------------
 	//
@@ -170,6 +181,33 @@ namespace
 	const TCHAR* GActPawnClass[2] = { TEXT("not-asked"), TEXT("not-asked") };
 
 	APawn*  GPawn = nullptr;
+
+	// ---- THE INTEGRATED ENCOUNTER, Jafar 24 September --------------------
+	//
+	// -Encounter=play|reload|unseen, with -LedgerCrime -LedgerSlice. PLAY:
+	// the new player character commits crime A by its own key, the witness
+	// sees it through the perception above, shouts where she stands, the
+	// gossip rounds carry it to the lad and his mate, the player questions
+	// the lad through the conversation helper with the lad's own memories and
+	// the simulation's day, and the town is saved TO DISK before the process
+	// quits. RELOAD: a new process, the same authoring, the save READ BACK
+	// FROM DISK, and the lad questioned again. UNSEEN: a clean start where
+	// only crime B, the occluded one, is committed: nobody sees it and nobody
+	// knows. Each writes ue-encounter-<mode>-verdict.txt; the crime module's
+	// own files are renamed so the crime run's evidence is never overwritten.
+	enum class EEncounter : uint8 { None, Play, Reload, Unseen };
+	EEncounter GEnc = EEncounter::None;
+	std::string GFiledSummaryA;         // what the witness filed for crime A
+	bool   bShoutPlaying = false, bShoutRecording = false, bShoutWavWritten = false;
+	double GShoutAt = 0.0, GShoutPlayerM = -1.0;
+	FString GShoutNote = TEXT("not-played");
+	std::string GTalkWhy = "not-asked", GTalkReply = "none", GTalkHeard = "none", GTalkCard = "none";
+	int    GTalkDay = 0, GTalkHour = 0, GTalkHeardCount = 0;
+	bool   bTalkHeardCrime = false, bTalkQuestioned = false, bTalkFake = false;
+	bool   bSavedToDisk = false, bLoadedFromDisk = false;
+	int    GSavedBytes = 0, GLoadedBytes = 0;
+	int    GClockDay = 0, GClockHour = 0, GClockMinute = 0;
+	FString GSaveDirUsed = TEXT("none");
 	AActor* GW1Body = nullptr;
 	AActor* GN2Body = nullptr;
 	AActor* GYardFloor = nullptr;
@@ -294,8 +332,26 @@ namespace
 	// BOTH PLACES, for the reason the walk verdict names: a packaged build's
 	// ProjectDir is the staged project and the workflow step looks in three
 	// candidates, so writing one file to one of them is a coin toss.
-	void SaveBoth(const FString& Leaf, const FString& Body)
+	const TCHAR* EncName()
 	{
+		switch (GEnc)
+		{
+		case EEncounter::Play:   return TEXT("play");
+		case EEncounter::Reload: return TEXT("reload");
+		case EEncounter::Unseen: return TEXT("unseen");
+		default:                 return TEXT("none");
+		}
+	}
+
+	void SaveBoth(const FString& InLeaf, const FString& Body)
+	{
+		// AN ENCOUNTER RUN NEVER WRITES OVER THE CRIME RUN'S EVIDENCE: its
+		// copies of the crime module's files carry the encounter's name.
+		FString Leaf = InLeaf;
+		if (GEnc != EEncounter::None && Leaf.StartsWith(TEXT("ue-crime")))
+		{
+			Leaf = FString::Printf(TEXT("ue-encounter-%s-crime%s"), EncName(), *Leaf.Mid(8));
+		}
 		FFileHelper::SaveStringToFile(Body, *AbsProject(*Leaf));
 		FFileHelper::SaveStringToFile(Body, *ExeDir(*Leaf));
 	}
@@ -957,6 +1013,13 @@ namespace
 
 	int32 TakeActRequests(int Index)
 	{
+		// THE SLICE'S OWN CHARACTER FIRST (24 September): the encounter's
+		// crime is committed by the player character the slice ships with.
+		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn))
+		{
+			GActPawnClass[Index] = TEXT("LedgerSliceCharacter");
+			return Slice->ConsumeActRequests();
+		}
 		ALedgerCharacter* Body = Cast<ALedgerCharacter>(GPawn);
 		if (Body == nullptr)
 		{
@@ -1682,6 +1745,7 @@ namespace
 	{
 		GPhase = ECrimePhase::Done;
 		WriteFinalVerdict();
+		if (GEnc != EEncounter::None) { WriteEncounterVerdict(); }
 		FPlatformMisc::RequestExit(false);
 	}
 
@@ -1800,6 +1864,11 @@ namespace
 				const Fact Content(std::string("player"), std::string("broke_a_window"), VictimId);
 				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/false, GNow,
 				               R.O.Certainty, /*bIndelible=*/false);
+				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == "w1")
+				{
+					GFiledSummaryA = Summary;
+					PlayShout();
+				}
 			}
 		}
 
@@ -1815,6 +1884,364 @@ namespace
 		}
 	}
 
+	// ---- the encounter's parts --------------------------------------------
+
+	std::string JsonEsc(const std::string& In)
+	{
+		std::string O;
+		for (char Ch : In)
+		{
+			switch (Ch)
+			{
+			case '\\': O += "\\\\"; break;
+			case '"':  O += "\\\""; break;
+			case '\n': O += "\\n"; break;
+			case '\r': O += "\\r"; break;
+			case '\t': O += "\\t"; break;
+			default:   O += Ch; break;
+			}
+		}
+		return O;
+	}
+
+	FString EncSaveDir()
+	{
+		FString D;
+		if (FParse::Value(FCommandLine::Get(), TEXT("EncounterSave="), D)) { return D; }
+		return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("Encounter"));
+	}
+
+	int AboutCrime(const GossiperPtr& G, bool bA)
+	{
+		if (!G) { return 0; }
+		std::vector<GossiperPtr> One(1, G);
+		int A = 0, B = 0;
+		LedgerCrime::CountAboutCrimes(One, A, B);
+		return bA ? A : B;
+	}
+
+	// A memory of a crime is one the street files about a deed: something
+	// seen or something heard. Nothing else in this module writes either.
+	int CrimeMemories(const GossiperPtr& G)
+	{
+		if (!G || !G->Memory) { return 0; }
+		int N = 0;
+		for (const MemoryEvent& E : G->Memory->Events)
+		{
+			if (E.Kind == "observation" || E.Kind == "heard") { ++N; }
+		}
+		return N;
+	}
+
+	// THE AUDIBLE CONSEQUENCE: the witness shouts where she stands, a
+	// spatialised clip from the crowd voices ("Stop. I mean it. Stop."), and
+	// the street's output is recorded for four seconds so it can be heard.
+	void PlayShout()
+	{
+		UWorld* World = GameWorld();
+		if (World == nullptr || GW1Body == nullptr) { GShoutNote = TEXT("no-world-or-witness-body"); return; }
+		USoundWave* Wave = LoadObject<USoundWave>(nullptr, TEXT("/Game/Ledger/Sounds/Voice/crowd_f1/bc9b402a.bc9b402a"));
+		if (Wave == nullptr) { GShoutNote = TEXT("clip-not-in-the-build"); return; }
+		if (World->GetAudioDevice().IsValid())
+		{
+			UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 10.0f);
+			bShoutRecording = true;
+		}
+		const FVector At = GW1Body->GetActorLocation() + FVector(0.0, 0.0, 160.0);
+		UAudioComponent* C = UGameplayStatics::SpawnSoundAtLocation(World, Wave, At);
+		if (C != nullptr)
+		{
+			C->bOverrideAttenuation = true;
+			FSoundAttenuationSettings& A = C->AttenuationOverrides;
+			A.bAttenuate = true;
+			A.bSpatialize = true;
+			A.AttenuationShape = EAttenuationShape::Sphere;
+			A.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
+			A.FalloffDistance = 4000.0f;
+			A.DistanceAlgorithm = EAttenuationDistanceModel::NaturalSound;
+			bShoutPlaying = C->IsPlaying();
+		}
+		GShoutAt = FPlatformTime::Seconds();
+		if (GPawn != nullptr) { GShoutPlayerM = FVector::Dist(GPawn->GetActorLocation(), At) / 100.0; }
+		GShoutNote = bShoutPlaying ? TEXT("playing") : TEXT("spawned-not-playing");
+	}
+
+	void StopShoutRecording(bool bForce)
+	{
+		if (!bShoutRecording) { return; }
+		if (!bForce && FPlatformTime::Seconds() - GShoutAt < 4.0) { return; }
+		if (UWorld* World = GameWorld())
+		{
+			UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
+				TEXT("ue-encounter-shout"), FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
+			bShoutWavWritten = true;
+		}
+		bShoutRecording = false;
+	}
+
+	// THE CONVERSATION: the helper beside the game, one JSON line each way,
+	// carrying the lad's own memories and the simulation's day and hour.
+	void RunTalk()
+	{
+		FString Exe;
+		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty())
+		{
+			GTalkWhy = "no-TalkHelper-path-given";
+			return;
+		}
+		bTalkFake = FParse::Param(FCommandLine::Get(), TEXT("TalkFake"));
+		FString Card = TEXT("sam");
+		FParse::Value(FCommandLine::Get(), TEXT("TalkAs="), Card);
+		GTalkCard = Utf8(Card);
+		if (GEnc == EEncounter::Reload)
+		{
+			GTalkDay = GClockDay + 1; GTalkHour = 9;
+		}
+		else
+		{
+			GTalkDay = LedgerCrime::kRound3Day; GTalkHour = LedgerCrime::kRound3Hour;
+		}
+		void* OutRead = nullptr; void* OutWrite = nullptr; void* InRead = nullptr; void* InWrite = nullptr;
+		if (!FPlatformProcess::CreatePipe(OutRead, OutWrite) || !FPlatformProcess::CreatePipe(InRead, InWrite, true))
+		{
+			GTalkWhy = "no-pipes";
+			return;
+		}
+		FProcHandle Proc = FPlatformProcess::CreateProc(*Exe, bTalkFake ? TEXT("--fake") : TEXT(""), false, true, true,
+			nullptr, 0, nullptr, OutWrite, InRead);
+		if (!Proc.IsValid())
+		{
+			GTalkWhy = "helper-did-not-start";
+			FPlatformProcess::ClosePipe(OutRead, OutWrite);
+			FPlatformProcess::ClosePipe(InRead, InWrite);
+			return;
+		}
+		std::string Buf;
+		auto LineWith = [&](const char* Key, double Limit) -> std::string
+		{
+			const double T0 = FPlatformTime::Seconds();
+			while (FPlatformTime::Seconds() - T0 < Limit)
+			{
+				Buf += Utf8(FPlatformProcess::ReadPipe(OutRead));
+				std::string::size_type Nl;
+				while ((Nl = Buf.find('\n')) != std::string::npos)
+				{
+					const std::string L = Buf.substr(0, Nl);
+					Buf.erase(0, Nl + 1);
+					if (L.find(Key) != std::string::npos) { return L; }
+				}
+				FPlatformProcess::Sleep(0.05f);
+			}
+			return std::string();
+		};
+		const std::string Ready = LineWith("\"ready\"", 45.0);
+		if (Ready.empty())
+		{
+			GTalkWhy = "helper-never-ready";
+		}
+		else
+		{
+			std::string Mem;
+			if (GN2 && GN2->Memory)
+			{
+				for (const MemoryEvent& E : GN2->Memory->Events)
+				{
+					if (!Mem.empty()) { Mem += ","; }
+					Mem += "{\"day\":" + std::to_string(E.Time.Day) + ",\"hour\":" + std::to_string(E.Time.Hour)
+						+ ",\"minute\":" + std::to_string(E.Time.Minute) + ",\"kind\":\"" + JsonEsc(E.Kind)
+						+ "\",\"importance\":" + std::to_string(E.Importance) + ",\"text\":\"" + JsonEsc(E.Text) + "\"}";
+				}
+			}
+			const std::string Req = "{\"id\":1,\"to\":\"" + JsonEsc(GTalkCard)
+				+ "\",\"say\":\"Evening. Anything going on round here?\",\"day\":" + std::to_string(GTalkDay)
+				+ ",\"hour\":" + std::to_string(GTalkHour) + ",\"minute\":30"
+				+ ",\"scene\":\"The yard behind the parade on Quay Street.\",\"memories\":[" + Mem + "]}";
+			FPlatformProcess::WritePipe(InWrite, Un(Req));
+			const std::string Rep = LineWith("\"id\":1", 45.0);
+			if (Rep.empty())
+			{
+				GTalkWhy = "no-reply";
+			}
+			else
+			{
+				GTalkWhy = "answered";
+				const std::string K = "\"reply\":\"";
+				std::string::size_type At = Rep.find(K);
+				if (At != std::string::npos)
+				{
+					std::string R;
+					for (std::string::size_type I = At + K.size(); I < Rep.size(); ++I)
+					{
+						if (Rep[I] == '\\' && I + 1 < Rep.size()) { R += Rep[++I]; continue; }
+						if (Rep[I] == '"') { break; }
+						R += Rep[I];
+					}
+					GTalkReply = R;
+				}
+				std::string::size_type H = Rep.find("\"heard\":[");
+				if (H != std::string::npos)
+				{
+					std::string::size_type E = Rep.find(']', H);
+					GTalkHeard = Rep.substr(H + 9, E == std::string::npos ? std::string::npos : E - H - 9);
+					GTalkHeardCount = GTalkHeard.empty() ? 0 : 1;
+					for (char Ch : GTalkHeard) { if (Ch == ',') { ++GTalkHeardCount; } }
+				}
+				// THE CRIME IS IN WHAT HE WAS GIVEN AND IN WHAT HE SAID: the
+				// clause the witness filed, which the gossip carried to him.
+				const std::string Key = GFiledSummaryA.size() > 24 ? GFiledSummaryA.substr(0, 24) : GFiledSummaryA;
+				bTalkHeardCrime = !Key.empty() && GTalkHeard.find(JsonEsc(Key)) != std::string::npos;
+				bTalkQuestioned = GTalkReply.find('?') != std::string::npos
+					&& !Key.empty() && GTalkReply.find(Key) != std::string::npos;
+				if (!bTalkFake)
+				{
+					// A LIVE MODEL WORDS IT ITS OWN WAY: questioned means he
+					// asked something, with the crime in what he was given.
+					bTalkQuestioned = bTalkHeardCrime && GTalkReply.find('?') != std::string::npos;
+				}
+			}
+		}
+		FPlatformProcess::ClosePipe(InRead, InWrite);
+		const double TQuit = FPlatformTime::Seconds();
+		while (FPlatformProcess::IsProcRunning(Proc) && FPlatformTime::Seconds() - TQuit < 5.0)
+		{
+			Buf += Utf8(FPlatformProcess::ReadPipe(OutRead));
+			FPlatformProcess::Sleep(0.05f);
+		}
+		if (FPlatformProcess::IsProcRunning(Proc)) { FPlatformProcess::TerminateProc(Proc, true); }
+		FPlatformProcess::CloseProc(Proc);
+		FPlatformProcess::ClosePipe(OutRead, OutWrite);
+	}
+
+	// THE SAVE, TO DISK: the mill as the JSON the C# codec reads, each
+	// resident's memory as its markdown, and the clock and the filed clause.
+	void SaveEncounterToDisk()
+	{
+		const FString Dir = EncSaveDir();
+		GSaveDirUsed = Dir;
+		IFileManager::Get().MakeDirectory(*Dir, true);
+		const std::string Json = GMill ? Save::CaptureMillAgents(*GMill) : std::string();
+		bool Ok = !Json.empty() && FFileHelper::SaveStringToFile(Un(Json), *(Dir / TEXT("agents.json")),
+			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM);
+		const GossiperPtr Gs[3] = { GW1, GN2, GR3 };
+		for (const GossiperPtr& G : Gs)
+		{
+			if (!G || !G->Memory) { Ok = false; continue; }
+			Ok = FFileHelper::SaveStringToFile(Un(G->Memory->ToMarkdown()),
+				*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))),
+				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		}
+		const std::string Clock = "day=" + std::to_string(LedgerCrime::kRound3Day) + "\nhour="
+			+ std::to_string(LedgerCrime::kRound3Hour) + "\nminute=30\nsummaryA=" + GFiledSummaryA + "\n";
+		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
+			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		bSavedToDisk = Ok;
+		GSavedBytes = (int)Json.size();
+	}
+
+	// THE LOAD, FROM DISK, in a process that never saw the crime.
+	void LoadEncounterFromDisk()
+	{
+		const FString Dir = EncSaveDir();
+		GSaveDirUsed = Dir;
+		FString J;
+		bool Ok = FFileHelper::LoadFileToString(J, *(Dir / TEXT("agents.json")));
+		if (Ok && GMill) { Save::RestoreMillAgents(Utf8(J), *GMill); GLoadedBytes = J.Len(); }
+		const GossiperPtr Gs[3] = { GW1, GN2, GR3 };
+		for (const GossiperPtr& G : Gs)
+		{
+			FString Md;
+			if (G && G->Memory && FFileHelper::LoadFileToString(Md, *(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id)))))
+			{
+				G->Memory->LoadFrom(Utf8(Md));
+			}
+			else { Ok = false; }
+		}
+		FString ClockText;
+		if (FFileHelper::LoadFileToString(ClockText, *(Dir / TEXT("clock.txt"))))
+		{
+			TArray<FString> Lines;
+			ClockText.ParseIntoArrayLines(Lines);
+			for (const FString& L : Lines)
+			{
+				FString Kv, V;
+				if (!L.Split(TEXT("="), &Kv, &V)) { continue; }
+				if (Kv == TEXT("day")) { GClockDay = FCString::Atoi(*V); }
+				else if (Kv == TEXT("hour")) { GClockHour = FCString::Atoi(*V); }
+				else if (Kv == TEXT("minute")) { GClockMinute = FCString::Atoi(*V); }
+				else if (Kv == TEXT("summaryA")) { GFiledSummaryA = Utf8(V); }
+			}
+		}
+		else { Ok = false; }
+		bLoadedFromDisk = Ok;
+	}
+
+	void WriteEncounterVerdict()
+	{
+		StopShoutRecording(true);
+		const int AW1 = AboutCrime(GW1, true), AN2 = AboutCrime(GN2, true), AR3 = AboutCrime(GR3, true);
+		const int BW1 = AboutCrime(GW1, false), BN2 = AboutCrime(GN2, false), BR3 = AboutCrime(GR3, false);
+		const int MW1 = CrimeMemories(GW1), MN2 = CrimeMemories(GN2), MR3 = CrimeMemories(GR3);
+		const int Ix = (GEnc == EEncounter::Unseen) ? 1 : 0;
+		const bool bSlice = FCString::Strcmp(GActPawnClass[Ix], TEXT("LedgerSliceCharacter")) == 0;
+		const bool bByInput = GActAttempted[Ix] && GActRequestsSeen[Ix] > 0
+			&& FCString::Strcmp(GActPressLanded[Ix], TEXT("player-input")) == 0;
+		std::vector<std::pair<std::string, bool>> Need;
+		if (GEnc == EEncounter::Play)
+		{
+			Need.push_back({ "new-player-character", bSlice });
+			Need.push_back({ "crime-by-the-player's-own-key", bByInput });
+			Need.push_back({ "witness-saw-it", AW1 > 0 && MW1 > 0 });
+			Need.push_back({ "shout-in-the-street", bShoutPlaying });
+			Need.push_back({ "gossip-reached-the-lad", AN2 > 0 && MN2 > 0 });
+			Need.push_back({ "and-his-mate", AR3 > 0 });
+			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
+			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
+			Need.push_back({ "saved-to-disk", bSavedToDisk });
+		}
+		else if (GEnc == EEncounter::Reload)
+		{
+			Need.push_back({ "loaded-from-disk", bLoadedFromDisk });
+			Need.push_back({ "the-lad-still-knows", AN2 > 0 && MN2 > 0 });
+			Need.push_back({ "his-mate-still-knows", AR3 > 0 });
+			Need.push_back({ "the-witness-still-knows", AW1 > 0 });
+			Need.push_back({ "helper-answered-from-his-memory", bTalkHeardCrime });
+			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
+		}
+		else
+		{
+			Need.push_back({ "new-player-character", bSlice });
+			Need.push_back({ "crime-by-the-player's-own-key", bByInput });
+			Need.push_back({ "nobody-saw-it", AW1 + AN2 + AR3 + BW1 + BN2 + BR3 == 0 });
+			Need.push_back({ "nobody-remembers-a-crime", MW1 + MN2 + MR3 == 0 });
+			Need.push_back({ "the-helper-was-asked", GTalkWhy == "answered" });
+			Need.push_back({ "he-knew-nothing", GTalkHeardCount == 0 && GTalkReply.find('?') == std::string::npos });
+		}
+		std::string Failed;
+		for (const auto& N : Need) { if (!N.second) { Failed += (Failed.empty() ? "" : ",") + N.first; } }
+		FString V;
+		V += FString::Printf(TEXT("encounterMode=%s\n"), EncName());
+		V += FString::Printf(TEXT("encounterStatus=%s\n"), Failed.empty() ? TEXT("PASS") : TEXT("FAIL"));
+		V += FString::Printf(TEXT("encounterFailed=%s\n"), Failed.empty() ? TEXT("none") : *Un(Failed));
+		V += FString::Printf(TEXT("encounterCommit=%s\n"), *CrimeSha());
+		V += FString::Printf(TEXT("pawnClass=%s actPressLanded=%s actRequestsSeen=%d actAttempted=%s\n"),
+			GActPawnClass[Ix], GActPressLanded[Ix], GActRequestsSeen[Ix], GActAttempted[Ix] ? TEXT("yes") : TEXT("no"));
+		V += FString::Printf(TEXT("aboutA w1=%d n2=%d r3=%d aboutB w1=%d n2=%d r3=%d crimeMemories w1=%d n2=%d r3=%d\n"),
+			AW1, AN2, AR3, BW1, BN2, BR3, MW1, MN2, MR3);
+		V += FString::Printf(TEXT("filedSummaryA=%s\n"), GFiledSummaryA.empty() ? TEXT("none") : *Un(GFiledSummaryA));
+		V += FString::Printf(TEXT("shout=%s shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=%.1f shoutFalloffM=40 shoutWav=%s\n"),
+			*GShoutNote, GShoutPlayerM, bShoutWavWritten ? TEXT("ue-encounter-shout.wav") : TEXT("none"));
+		V += FString::Printf(TEXT("talk=%s talkAs=%s talkFake=%s talkDay=%d talkHour=%d heardCount=%d heardCrime=%s questioned=%s\n"),
+			*Un(GTalkWhy), *Un(GTalkCard), bTalkFake ? TEXT("yes") : TEXT("no"), GTalkDay, GTalkHour, GTalkHeardCount,
+			bTalkHeardCrime ? TEXT("yes") : TEXT("no"), bTalkQuestioned ? TEXT("yes") : TEXT("no"));
+		V += FString::Printf(TEXT("talkReply=%s\n"), *Un(GTalkReply));
+		V += FString::Printf(TEXT("save=%s savedBytes=%d loaded=%s loadedBytes=%d clockLoaded=D%d %02d:%02d saveDir=%s\n"),
+			bSavedToDisk ? TEXT("written") : TEXT("not-written"), GSavedBytes, bLoadedFromDisk ? TEXT("yes") : TEXT("no"),
+			GLoadedBytes, GClockDay, GClockHour, GClockMinute, *GSaveDirUsed);
+		const FString Leaf = FString::Printf(TEXT("ue-encounter-%s-verdict.txt"), EncName());
+		FFileHelper::SaveStringToFile(V, *AbsProject(*Leaf));
+		FFileHelper::SaveStringToFile(V, *ExeDir(*Leaf));
+	}
+
 	// ---- the ticker ------------------------------------------------------
 	bool Tick(float)
 	{
@@ -1824,6 +2251,7 @@ namespace
 		const double Delta = Now - GLastTick;
 		GLastTick = Now;
 		UWorld* World = GameWorld();
+		StopShoutRecording(false);
 
 		// THE WATCHING CLOCK RUNS UNDER EVERY PHASE INSIDE A CRIME'S WINDOW,
 		// including the seconds the pawn stands at the window while a
@@ -1881,7 +2309,9 @@ namespace
 			TeleportPawn(World, LedgerCrime::kStartX, LedgerCrime::kStartZ, 0.0);
 			WriteBreadcrumb(TEXT("props-placed"));
 			GBeat = "start"; GBeatSpeaker = "none"; GBeatLineId = "none"; GBeatHeard = false;
-			GPhase = ECrimePhase::ShotStart;
+			GPhase = (GEnc == EEncounter::Reload) ? ECrimePhase::LoadDisk
+			       : (GEnc == EEncounter::Unseen) ? ECrimePhase::MoveW1ToYard
+			       : ECrimePhase::ShotStart;
 			GPhaseStart = Now;
 			return true;
 		}
@@ -2114,7 +2544,7 @@ namespace
 				GReplyText == "none" ? std::string() : GReplyText);
 			GOverheard.Events = GRound2.Passed;
 			WriteBreadcrumb(TEXT("gossip-round-2"));
-			GPhase = ECrimePhase::MoveToOverhear;
+			GPhase = (GEnc == EEncounter::Unseen) ? ECrimePhase::MeetThird : ECrimePhase::MoveToOverhear;
 			GPhaseStart = Now;
 			return true;
 		}
@@ -2192,7 +2622,31 @@ namespace
 				GNow = Was;
 				WriteBreadcrumb(TEXT("third-resident-met"));
 			}
+			GPhase = (GEnc != EEncounter::None) ? ECrimePhase::Talk : ECrimePhase::Done;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::Talk:
+		{
+			RunTalk();
+			WriteBreadcrumb(TEXT("encounter-talked"));
+			GPhase = (GEnc == EEncounter::Play) ? ECrimePhase::SaveDisk : ECrimePhase::Done;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::SaveDisk:
+		{
+			SaveEncounterToDisk();
+			WriteBreadcrumb(TEXT("encounter-saved-to-disk"));
 			GPhase = ECrimePhase::Done;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::LoadDisk:
+		{
+			LoadEncounterFromDisk();
+			WriteBreadcrumb(TEXT("encounter-loaded-from-disk"));
+			GPhase = ECrimePhase::Talk;
 			GPhaseStart = Now;
 			return true;
 		}
@@ -2214,6 +2668,15 @@ namespace LedgerCrimeProbe
 		// beside everything the run measured, so a decision layer that broke
 		// between the container and Jafar's PC cannot pass quietly.
 		GSelftest = LedgerCrime::Selftest();
+		{
+			FString Mode;
+			if (FParse::Value(FCommandLine::Get(), TEXT("Encounter="), Mode))
+			{
+				GEnc = Mode == TEXT("play") ? EEncounter::Play
+				     : Mode == TEXT("reload") ? EEncounter::Reload
+				     : Mode == TEXT("unseen") ? EEncounter::Unseen : EEncounter::None;
+			}
+		}
 
 		GGraph = std::make_shared<SocialGraph>();
 		GGraph->Link("w1", "n2", LedgerCrime::kTie);
