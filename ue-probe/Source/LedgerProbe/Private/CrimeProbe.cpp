@@ -736,7 +736,12 @@ namespace
 	// the witness at Mickey's, Sam the lad in the yard, Rocco his mate.
 	TMap<AActor*, TWeakObjectPtr<AActor>> GVisuals;
 	int32 GVisualsPlaced = 0;
-	const TCHAR* kLiveIdle = TEXT("/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH");
+	// EPIC'S OWN IDLE, BODY AND FACE (24 September, MetaHumanPortrait.cpp):
+	// the elizabeth idle carried over from an old street figure put the
+	// hands through the body; these are made on the cast's own skeletons.
+	const TCHAR* kLiveIdles[] = {
+		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_b_idle.mhc_mh001_fmn_b_idle"),
+		TEXT("/MetaHumanCharacter/Optional/Animation/TemplateAnimations/Technical_Loops/Idle/mhc_mh001_fmn_f_idle.mhc_mh001_fmn_f_idle") };
 
 	AActor* GVisualFor(AActor* Body)
 	{
@@ -759,8 +764,15 @@ namespace
 	void DressBody(UWorld* World, AActor* Body, const TCHAR* Who)
 	{
 		if (GEnc != EEncounter::Live || World == nullptr || Body == nullptr) { return; }
-		const FString Name = FString(TEXT("MH_")) + Who;
-		UClass* Cls = LoadClass<AActor>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/%s/BP_%s.BP_%s_C"), *Name, *Name, *Name));
+		// THE CAST MADE TO THE BRIEF, 24 September (make_cast_metahumans.py's
+		// CASTING, take T2); -CastTake= with nothing after it brings back the
+		// first stand-ins. Falls back to them if the take is not there.
+		FString Take = TEXT("T2");
+		FParse::Value(FCommandLine::Get(), TEXT("CastTake="), Take);
+		auto ClassFor = [](const FString& Name) {
+			return LoadClass<AActor>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/%s/BP_%s.BP_%s_C"), *Name, *Name, *Name)); };
+		UClass* Cls = ClassFor(FString(TEXT("MH_")) + Who + Take);
+		if (Cls == nullptr) { Cls = ClassFor(FString(TEXT("MH_")) + Who); }
 		if (Cls == nullptr) { return; }
 		FActorSpawnParameters P;
 		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
@@ -784,8 +796,10 @@ namespace
 			Cap->SetHiddenInGame(true);
 			Cap->RegisterComponent();
 		}
-		if (UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, kLiveIdle))
+		for (const TCHAR* IdlePath : kLiveIdles)
 		{
+			UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, IdlePath);
+			if (Idle == nullptr) { continue; }
 			TArray<USkeletalMeshComponent*> Parts;
 			A->GetComponents(Parts);
 			for (USkeletalMeshComponent* C : Parts)
@@ -794,6 +808,8 @@ namespace
 				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
 				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
 				C->PlayAnimation(Idle, true);
+				// Not all in step: each starts at its own point in the loop.
+				C->SetPosition(FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f)), false);
 			}
 		}
 		Body->SetActorHiddenInGame(true);

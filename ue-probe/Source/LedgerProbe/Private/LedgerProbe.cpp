@@ -14,6 +14,7 @@
 #include "CoreGolden.h"
 #include "FrameStats.h"
 #include "MetaHumanCost.h"
+#include "MetaHumanPortrait.h"
 #include "VignetteShot.h"
 #include "WalkProbe.h"
 #include "CrimeProbe.h"
@@ -853,6 +854,11 @@ public:
 		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerMhCost")))
 		{
 			LedgerMhCost::Start();
+			return;
+		}
+		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerPortrait")))
+		{
+			LedgerMhPortrait::Start();
 			return;
 		}
 		if (!FParse::Param(FCommandLine::Get(), TEXT("LedgerGoldenTest")))
