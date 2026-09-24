@@ -2,6 +2,13 @@
 
 One session, on Jafar's PC, building a game. The old studio is archived under legacy/studio-v2/.
 
+## Project facts: every session and every prompt gets these right
+
+- Third-person, never first-person. (An audit prompt on 24 September called it first-person; that was wrong and must never recur.)
+- PC only, Windows.
+- Britain, 1990 (canon's window is 1988 to 1992).
+- Content: no alcohol and no gambling, shown or spoken of; tobacco allowed; no children anywhere. The rest is canon.md's content rule.
+
 ## What governs
 
 canon.md (the world and content rules; it outranks everything), ROADMAP.md (milestones), DECISIONS.md (what is decided; its archive still binds), production/research/README.md (what governs each thing's look). The licence allowlist is law.
@@ -33,6 +40,11 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 
 ## How to work
 
+- Nothing is multiplied until one complete sample has been approved by Jafar in the assembled game.
+- An approval lives beside what it approves and names what it was approved against; when that changes (a canon rule, a spec, a voice), it lapses by itself, and the build flags anything in the game without a current one (tools/approvals.py).
+- Approvals reach him as one page per sitting, pictures and sound, judged in minutes, linked first in the closing summary.
+- The AI tester walks the packaged release build, with the real cast, dialogue, light and sound.
+- Every audit is saved in production/audits/, and each finding ends as a ruling in DECISIONS.md, one of these rules, or an item on the list, never only a prompt; the next audit checks the last one's stuck.
 - Iterate locally: build and render in Unreal on this PC, look, fix, repeat; push only accepted work. Two Unreal builds must not overlap.
 - Commits say in plain words what changed and why. Pushes run the Core tests and the Unreal build; a red run is fixed first.
 - Simulation work (perception, memory, gossip, and their port) keeps its tests: CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, plus a regression test. The C++ port must match the C# golden table, regenerated from the C# Core for the comparison. It also gets one independent check: a subagent that has not seen your reasoning gets the change, its test, canon and the intended behaviour in plain words, and is told to break it.

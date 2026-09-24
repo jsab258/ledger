@@ -1,5 +1,7 @@
-SITTING: started 2026-09-24T20:14:22+02:00, limit 1.5h
-- [x] 1. Why the MetaHumans look wrong, fixed as far as time allows: face textures, hair, skin/eyes/teeth shading in the street's light, idle movement; against the KCD2 frames and Epic's sample.
-- [ ] 2. Dress them plainly in Epic's free Fab clothing, with shoes. (Blocked: Fab needs Jafar signed in.)
-- [x] 3. Portraits within the ninety minutes: Lena, Sam, Rocco, close-up and mid-shot in daylight beside the KCD2 people frame, linked at the top of FOR-JAFAR.md.
-STATE: the cast are re-made to a brief (take T2, in the game) and idle in Epic's own loop; take T3 swapped haircuts but looked worse; still barefoot in T-shirts; grey hair and clothes go to the overnight sitting.
+SITTING: started 2026-09-24T22:00:43+02:00, limit 8h (budget at start: total 78)
+- [ ] 0. First half hour: push what is sound; project facts atop CLAUDE.md; the drink line fixed and every bank checked; the pipeline audit saved; his rulings in DECISIONS and canon; the six mechanisms.
+- [ ] 1. Casting: CASTING.md; a sheet per principal from Sheila Dunn, Ron Kirby, Darren Milner (age, trade, front, profile, full body, clothes, hair, three lines in the chosen voice); concept portraits; one approval page with older voices blind beside his approved ones, by morning. No MetaHuman rebuilt.
+- [ ] 2. Clothing proof: one 1990 donkey jacket on two bodies, moving, packaged; the cast dressed plainly meanwhile.
+- [ ] 3. The assembled game: packaged darkness; debug-text dialogue; the project folder dependency; live talk inventing things.
+- [ ] 4. Next from ROADMAP.md.
+STATE: the cast are take T2, idling, barefoot in T-shirts; last sitting's work is committed here, not yet pushed.

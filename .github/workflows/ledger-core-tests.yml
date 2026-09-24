@@ -6,6 +6,12 @@ on:
       - "ledger/**"
       - "tools/*.py"
       - "tools/*.sh"              # ci-checks.sh and reach-check.sh ARE the job now
+      # THE CONTENT GATE AND THE APPROVALS read these (24 September): the gate
+      # rotted for two weeks because a dialogue edit never started this job.
+      - "content/**"
+      - "game-design/**"
+      - "canon.md"
+      - "production/**"
       - "THIRD-PARTY.md"
       - "voice-candidates/**"     # a new asset drop must re-run the attribution gate
       - ".github/workflows/ledger-core-tests.yml"

@@ -197,7 +197,12 @@ rule("bitter_noun", "alcohol", "the drink, NOT the adjective. Needs a drink "
      "context word or a bare noun at the end of a clause, so 'a bitter man', "
      "'bitter cold' and 'a bitter truth' all pass",
      r"(?:\b(?:pints?|halves?|half|glass(?:es)?|drinks?|drinking|pulling|"
-     r"pour\w*|serv\w*)\s+(?:of\s+)?bitter\b)|(?:\ba bitter\b(?!\s+[a-z]))",
+     r"pour\w*|serv\w*)\s+(?:of\s+)?bitter\b)|(?:\ba bitter\b(?!\s+[a-z]))"
+     # AND A POSSESSIVE BITTER standing alone, "served him his bitter": the
+     # witness bank carried it past this gate until 24 September, because
+     # "him his" sat between the verb and the drink. "His bitter enemy" and
+     # "her bitter words" still pass: a following word makes it the adjective.
+     r"|(?:\b(?:his|her|my|your|their|our|the usual)\s+bitter\b(?!\s+[a-z]))",
      token=None)
 rule("mild_noun", "alcohol", "the drink, NOT the adjective. 'Mild and "
      "self-effacing' is a live cast card and must pass; 'the mild on the "
@@ -525,6 +530,8 @@ PERMITTED = (
 UNDER_CAUGHT = (
     ("pub", "the place, and the rule says pubs may exist",
      "How's the pub treating you?"),
+    ("bitter", "the adjective after a possessive, beside the drink rule of 24 September",
+     "He was his bitter self all week, and her bitter words stayed with him."),
     ("bar", "the fitting and the room",
      "New face behind an old bar. That stool's got a bad leg, same as its owner."),
     ("port", "this is a PORT TOWN",
@@ -844,7 +851,10 @@ def read_corpus():
             missing.append("glob/" + pattern.replace(" ", "_") + "/matched0")
             continue
         for p in matched:
-            rel = str(p.relative_to(REPO))
+            # FORWARD SLASHES ON EVERY OS. BASELINE and EXEMPT are written
+            # with "/", and on Windows str() gave "\", so no baseline entry
+            # ever matched there and every one of them read as stale.
+            rel = p.relative_to(REPO).as_posix()
             if any(rel.startswith(e) for e in EXEMPT):
                 exempted.append(rel)
                 continue
@@ -891,7 +901,7 @@ def clause_audit():
         return [], ["clause audit measured nothing: no spec matched the globs"]
     base_clause = None
     for p in files:
-        rel = str(p.relative_to(REPO))
+        rel = p.relative_to(REPO).as_posix()
         try:
             doc = json.loads(p.read_text(encoding="utf-8"))
         except (OSError, ValueError) as e:
@@ -924,7 +934,7 @@ def clause_audit():
             problems.append(
                 "%s: rules_clause is NOT identical to %s. A one-off spec with "
                 "a weaker clause is the hole D17 names."
-                % (rel, str(files[0].relative_to(REPO))))
+                % (rel, files[0].relative_to(REPO).as_posix()))
         if clause and CLAUSE not in clause:
             problems.append("%s: rules_clause does not carry the D17 clause" % rel)
         absent = [t for t in want_tokens if t.lower() not in toks]
@@ -1037,9 +1047,9 @@ def library_clips(root=None):
         # one: the selftest's library lives in a temp folder and a path that
         # blew up on it would make the rejecting fixtures unrunnable.
         try:
-            rel = str(p.relative_to(REPO))
+            rel = p.relative_to(REPO).as_posix()
         except ValueError:
-            rel = str(p.relative_to(root))
+            rel = p.relative_to(root).as_posix()
         out.append((rel, slot, title, live))
     return out
 
@@ -1704,6 +1714,7 @@ def selftest():
                  "exists in this repo.")
     guilty = (
         ("a pint of bitter and a packet of crisps", "pint"),
+        ("I've poured the SYNTHETICMAN his bitter, I'd know him anywhere", "bitter_noun"),
         ("Mickey kept the SYNTHETICALE on the left", None),
         ("two bottles of whisky behind the counter", "whisky"),
         ("he was drunk by four and drunker by six", "drunk"),
