@@ -45,6 +45,10 @@ namespace Ledger.Game
                     // the whole router then, and it costs nothing.
                     _router = new IntentRouter(_game != null ? _game.Llm : null,
                                                _game != null ? _game.Cost : null);
+                    // THE WORKED EXAMPLES, 24 September (roadmap R01 and R02): the
+                    // research's bank of lines and typed orders, each with its answer.
+                    var bank = Resources.Load<TextAsset>("router-examples");
+                    if (bank != null) _router.Examples = RouterExamples.Parse(bank.text);
                 }
                 return _router;
             }
