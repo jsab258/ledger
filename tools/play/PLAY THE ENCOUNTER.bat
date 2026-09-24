@@ -13,11 +13,11 @@ REM  own settings into this window only, and never shown.
 cd /d "%~dp0..\.."
 dotnet build ledger\TalkHelper -c Release -nologo -v q >nul
 for /f "usebackq delims=" %%K in (`powershell -NoProfile -Command "(Get-Content -Raw \"$env:USERPROFILE\AppData\LocalLow\DefaultCompany\ledger\secrets.json\" | ConvertFrom-Json).anthropic_api_key"`) do set "ANTHROPIC_API_KEY=%%K"
-REM  THE EDITOR'S OWN BUILD, NOT THE STEADY PACKAGED COPY, for now: that copy
-REM  lacks the files the build machine lays beside the game for the street's
-REM  look, and played from there the street is grey and unfinished - the AI
-REM  tester found it, 24 September. Set LEDGER_PLAY_PACKAGED to try it anyway.
-set "PACKAGED=%LEDGER_PLAY_PACKAGED%"
+REM  THE PACKAGED GAME WHEN THERE IS ONE: the build the build machine checked,
+REM  copied to a steady place after every run, told where this checkout is so
+REM  it finds the street's files - without that its street was grey, the AI
+REM  tester found on 24 September. Otherwise the editor's own build.
+set "PACKAGED=C:\Users\Jafar\ledger-migrate\ue-probe\Packaged\Windows\LedgerProbe.exe"
 set "HELPER=%CD%\ledger\TalkHelper\bin\Release\net8.0\TalkHelper.exe"
 REM  THE CAST'S VOICES: the small voice model beside the game, when it is installed.
 set "VOICE="

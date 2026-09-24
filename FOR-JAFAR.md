@@ -13,7 +13,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - Rocco, Lena and Sam are MetaHumans, about 0.3 ms each; the slice holds 73 fps at your screen size.
 - The encounter is playable with them, and the build plays it too. You type what you say, they answer aloud in their cast voices, and the town remembers after you quit.
 - The router got worked examples and blocks typed orders.
-- An AI tester plays and reports: five runs, $2.08.
+- An AI tester plays and reports: six runs, $2.19.
 
 **Failed.** No route put a donkey jacket on a MetaHuman (written up in the clothing research). The cast are barefoot in T-shirts.
 
@@ -27,13 +27,20 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - (a) Yes (recommended).
 - (b) No, wait.
 
-### What the AI tester found (five runs, $2.08)
+### What the AI tester found (six runs, $2.19)
 
-Worst first; the first five are fixed.
+Worst first; all fixed.
 - It could not talk to "Lena": it was a stand-in woman at Mickey's door. Fixed: the stand-ins the cast replaces are gone from the encounter, and "too far" now says who is nearest.
 - It never found the yard. Fixed: the game now says where the yard is.
 - It broke the window and saw nothing happen. Fixed: a line says so, and glass lies on the pavement.
 - Its camera went inside a MetaHuman. Fixed: they now block the player.
 - Its first picture caught another app on your desktop. Fixed: it now copies only the game window. That picture stays on this PC.
-- Not yet: on the steady packaged copy it found the street grey, with placeholder surfaces and torn rooftops. That copy lacks the files the build machine lays beside the game, so the play file uses the editor's build meanwhile.
+- On the steady packaged copy it found the street grey: that copy could not find the street's files. Fixed: the game is told where they are, and a last run shows the real street.
 - A false alarm: it took Lena for a child. She is an adult, only shorter than Tom.
+
+### AI tester, 2026-09-24 19:31
+
+12 steps, 1 minutes, $0.11. Not a gate. Worst first:
+- (2) Scene is very dark, hard to see building details like Mickey's minicab sign; lighting may be too low.
+- (2) Overall scene lighting remains extremely dark throughout play session, making it hard to identify shop signs (e.g., Mickey's minicab office) and NPCs; likely a lighting/exposure bug.
+Full report: production/playtest/ai-tester/2026-09-24-1931/report.md
