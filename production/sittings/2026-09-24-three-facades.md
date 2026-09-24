@@ -113,8 +113,8 @@ west_south 19 of 19, the parapet's coping and the pavement line included.
 | facade | started | drawing | in Unreal | accepted pair | finished | attempts |
 | --- | --- | --- | --- | --- | --- | --- |
 | east_parade | 09:41 | 09:42, from the spec, nothing written back | no rebuild: geometry unchanged since 01:38, frames from this morning's probe run (703b0688) | 09:46, attempt 1, six bays | 09:47 | 1 attempt, 0 rejected |
-| west_north | 09:47 | 09:47, from the spec; redrawn 09:49 the right way round | no rebuild: frames from this morning's probe run | 09:50, attempt 2, three bays | 09:51 | 2 attempts, 1 rejected |
-| west_south | | | | | | |
+| west_north | 09:47 | 09:47, from the spec; redrawn 09:49 the right way round | no rebuild: frames from this morning's probe run | 09:50, attempt 2, three bays | 09:50 | 2 attempts, 1 rejected |
+| west_south | 09:50 | 09:50, from the spec, nothing written back | no rebuild: frames from this morning's probe run | 09:52, attempt 1, three bays | 09:52 | 1 attempt, 0 rejected |
 
 ### east_parade, accepted 09:46
 
@@ -146,3 +146,19 @@ the end bays every edge found within 5 cm but the end pier (74 mm, the brick
 return behind it) and two pairs of edges 36 mm apart (the pier's inside and the
 door frame) the tool cannot tell apart, each within 5 cm by eye. Pairs:
 production/art/facades/2026-09-24-measured/west_north-bay*-pair.png.
+
+### west_south, accepted 09:52 on the first attempt
+
+Every edge found on all three bays, all within 5 cm (worst 46 mm), and by eye
+every door and window where the drawing puts it, the right way round. Pairs:
+production/art/facades/2026-09-24-measured/west_south-bay*-pair.png.
+
+### What this sitting measured, and what it did not
+
+All three facades were already built to the spec in earlier sittings, and
+nothing on any of them needed to change, so no geometry was rebuilt and no
+Unreal build was run: each was drawn, paired on this morning's probe frames,
+measured and accepted. The sitting measured the drawing-to-accepted-pair half
+of a facade, including two fixes to the pair tool and one to the drawing
+(the west side ran the wrong way round), and NOT the building of a facade from
+nothing.

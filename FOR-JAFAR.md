@@ -57,6 +57,9 @@ None. All six from this morning are answered and under Resolved.
 
 ## Things you should know
 
+- 2026-09-24 **The three facades are accepted: the parade and west south first time, west north on its second attempt.** All three were already built to their numbers in earlier sittings, and none needed changing. So this sitting measured drawing, checking and accepting a facade, not building one from nothing. I'll say what that means for the cost when you give me the meter.
+- 2026-09-24 **The west side's drawings were mirror images of the buildings.** That's why west north's first attempt failed. Last night's checks passed only by coincidence. The measuring tools are fixed; no building changed.
+- 2026-09-24 **The sitting stopped at the third facade, as you ordered,** so the limit line now reads the time used, not four hours.
 - 2026-09-24 **Your Dropbox is safe from the backup, and now checked, not just promised.** It writes only inside its own new folder, LEDGER backup, and refuses the whole run if any file would land anywhere else. It has no delete step, and it has never opened or listed anything else in your Dropbox. The one thing it takes from the rest is 514 MB of space.
 - 2026-09-24 **The runner's leftovers are cleared, and C: has 45 GB free.** The runner's copy of the game went from 36 GB of history to 4.7 GB. The copy is intact, and the next build uses it as before. Nothing else was deleted.
 - 2026-09-24 **The backup is set up in your Dropbox,** in a new folder called LEDGER backup, 540 MB: MH_Test as he is now, MH_Test from before the dressing, and his built files. It only ever adds and updates, never deletes, and I run it at the end of any sitting that changes these files. Nothing else in your Dropbox was looked at or touched.
