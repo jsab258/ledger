@@ -1258,8 +1258,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. Overnight 23-24 Sep done: PS5 corner answered (scans on brick and paint street-wide; KCD2 gap is shape and set dressing); navigation works; Nano timed on the card; MH_Test assembled, in the corner with a retargeted idle; every probe run checks the performance ruling with the voice running (75 fps, slowest 1% at 59: the edge).
-2. Stage 1 at 24 of 47 (stage-check); tonight's look: whole-street bevels, sooty brick, stains as decals, the hill's stepped terraces with trees, crates and a bin. The hill's mist set aside after two tries (needs a measured density pass).
-3. Tomorrow's measurement sitting ready, not started: production/sittings/2026-09-24-three-facades.md; drawing, frames (twelve) and pair tools proven.
-4. Waiting on Jafar: dressing MH_Test, where MetaHuman files live, three voice decisions, what 60 fps allows. C: 98% full. MetaHuman assets live outside git in C:/LedgerTools/mh-assemble (copied in by the workflow).
-5. Next: the facade sitting (his, with the meter); then stage 1 on - A08.07 hair (after the MetaHuman is dressed), A23.16 distance (density pass), the slice's talking (game half).
+1. Morning 24 Sep, housekeeping: C: from 5.1 to 19 GB free (probe compile files, Python's cache); the runner's 33 GB of leftover packs and the two old checkouts wait on Jafar (FOR-JAFAR decisions); a backup proposal is in FOR-JAFAR, nothing set up.
+2. MH_Test dressed by script (the plugin's one garment, default colours, WI_Hair_S_Casual) and rebuilt to 65 assets; the probe from 703b0688 frames him. The source before dressing is kept at C:/LedgerTools/mh-assemble-before-dressing-2026-09-24.
+3. Voices: the listening page saves picks, blind (https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447, collection "picks"); nothing cast until he picks. Nano cannot learn a voice on the card (ComplexFloat abort); processor instead.
+4. Business: research on main; the working direction in DECISIONS; AI01-AI08, R01-R03 on ROADMAP; L01 a priority; the written-ahead question waits on him. The quick checks now also run on ROADMAP pushes.
+5. Next: the measurement sitting, his, started with a meter reading (production/sittings/2026-09-24-three-facades.md); then the router changes R01-R03 and stage 1 on.

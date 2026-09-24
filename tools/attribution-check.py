@@ -443,6 +443,11 @@ NOT_ASSET_SUFFIXES = {
     ".dll",
     # Documents, manifests, data and logs.
     ".md", ".txt", ".json", ".tsv", ".html", ".log",
+    # .xlsx ADDED 24 SEP 2026, caught by this check on the first push after
+    # the runtime-AI business research came onto main: its
+    # runtime-ai-business-model.xlsx is a spreadsheet this project wrote,
+    # numbers and formulas, carrying no third-party anything.
+    ".xlsx",
     # Extensionless: hooks, `.gitignore`, `ledger/.verify-footer`. `suffix` is
     # empty for a dotfile with no second dot, so this bucket is where they land.
     "",
