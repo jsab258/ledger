@@ -109,6 +109,7 @@
 #include "Widgets/Layout/SBox.h"
 #include "Engine/GameViewportClient.h"
 #include "Components/CapsuleComponent.h"
+#include "Sound/SoundWaveProcedural.h"
 
 #include <string>
 #include <vector>
@@ -736,6 +737,13 @@ namespace
 	TMap<AActor*, TWeakObjectPtr<AActor>> GVisuals;
 	int32 GVisualsPlaced = 0;
 	const TCHAR* kLiveIdle = TEXT("/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH");
+
+	AActor* GVisualFor(AActor* Body)
+	{
+		if (Body == nullptr) { return nullptr; }
+		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
+		return (V != nullptr && V->IsValid()) ? V->Get() : Body;
+	}
 
 	void SyncVisual(AActor* Body)
 	{
@@ -2283,6 +2291,8 @@ namespace
 		bool bStarted = false, bReady = false;
 		int NextId = 1, PendingId = 0;
 		FString PendingName;
+		std::string PendingCard;
+		AActor* PendingBody = nullptr;
 		double AskedAt = 0.0;
 	};
 	FLiveHelper GLive;
@@ -2296,6 +2306,112 @@ namespace
 		GLive.Proc = FPlatformProcess::CreateProc(*Exe, FParse::Param(FCommandLine::Get(), TEXT("TalkFake")) ? TEXT("--fake") : TEXT(""),
 			false, true, true, nullptr, 0, nullptr, GLive.OutWrite, GLive.InRead);
 		GLive.bStarted = GLive.Proc.IsValid();
+	}
+
+	// THE CAST SPEAKS, 24 September: each answer is also sent to the voice
+	// server beside the game (tools/voice-live/voice-server.py), which speaks
+	// it in the character's cast voice and hands back a sound file; the game
+	// plays it where they stand. Started only when the command line names the
+	// voice's Python and script; without them the answers stay text.
+	struct FLiveVoice
+	{
+		FProcHandle Proc;
+		void* OutRead = nullptr; void* OutWrite = nullptr; void* InRead = nullptr; void* InWrite = nullptr;
+		std::string Buf;
+		bool bStarted = false, bReady = false;
+		TMap<int32, TWeakObjectPtr<AActor>> Pending;   // line id -> who says it
+	};
+	FLiveVoice GVoice;
+	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false;
+	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
+
+	void LiveVoiceStart()
+	{
+		if (GVoice.bStarted) { return; }
+		FString Py, Script;
+		if (!FParse::Value(FCommandLine::Get(), TEXT("VoicePython="), Py) || !FParse::Value(FCommandLine::Get(), TEXT("VoiceScript="), Script)) { return; }
+		GVoice.bStarted = true;   // one try, whatever happens
+		if (!FPlatformProcess::CreatePipe(GVoice.OutRead, GVoice.OutWrite) || !FPlatformProcess::CreatePipe(GVoice.InRead, GVoice.InWrite, true)) { return; }
+		GVoice.Proc = FPlatformProcess::CreateProc(*Py, *FString::Printf(TEXT("\"%s\""), *Script), false, true, true,
+			nullptr, 0, nullptr, GVoice.OutWrite, GVoice.InRead);
+	}
+
+	// A WAV THE SERVER WROTE (16-bit PCM, soundfile's own header), played as a
+	// procedural wave at the speaker, with the shout's falloff.
+	void PlayVoiceFile(const FString& Path, AActor* Who)
+	{
+		UWorld* World = GameWorld();
+		TArray<uint8> Bytes;
+		if (World == nullptr || Who == nullptr || !FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 44) { return; }
+		int32 Rate = 24000, Channels = 1, DataAt = -1, DataLen = 0;
+		for (int32 I = 12; I + 8 <= Bytes.Num();)
+		{
+			const int32 Len = Bytes[I + 4] | (Bytes[I + 5] << 8) | (Bytes[I + 6] << 16) | (Bytes[I + 7] << 24);
+			if (FMemory::Memcmp(&Bytes[I], "fmt ", 4) == 0 && I + 16 <= Bytes.Num())
+			{
+				Channels = Bytes[I + 10] | (Bytes[I + 11] << 8);
+				Rate = Bytes[I + 12] | (Bytes[I + 13] << 8) | (Bytes[I + 14] << 16) | (Bytes[I + 15] << 24);
+			}
+			if (FMemory::Memcmp(&Bytes[I], "data", 4) == 0) { DataAt = I + 8; DataLen = FMath::Min(Len, Bytes.Num() - DataAt); break; }
+			I += 8 + Len + (Len & 1);
+		}
+		if (DataAt < 0 || DataLen <= 0) { return; }
+		USoundWaveProcedural* W = NewObject<USoundWaveProcedural>(GetTransientPackage());
+		W->SetSampleRate(Rate);
+		W->NumChannels = Channels;
+		W->Duration = (float)DataLen / (float)(2 * Channels * Rate);
+		W->bLooping = false;
+		W->QueueAudio(&Bytes[DataAt], DataLen);
+		USoundAttenuation* Att = NewObject<USoundAttenuation>(GetTransientPackage());
+		Att->Attenuation.bAttenuate = true;
+		Att->Attenuation.bSpatialize = true;
+		Att->Attenuation.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
+		Att->Attenuation.FalloffDistance = 2500.0f;
+		UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
+			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
+		bVoicePlayed = true;
+		GVoiceSeconds = W->Duration;
+		GVoicePlayedAt = FPlatformTime::Seconds();
+		// THE SCRIPTED RUN KEEPS WHAT THE STREET HEARD, so the voice can be
+		// listened to rather than only counted.
+		if (bLiveScript && World->GetAudioDevice().IsValid())
+		{
+			UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 20.0f);
+			bVoiceRecording = true;
+		}
+	}
+
+	std::string JsonField(const std::string& Line, const std::string& Name);
+
+	void LiveVoicePump()
+	{
+		if (!GVoice.bStarted || GVoice.OutRead == nullptr) { return; }
+		GVoice.Buf += Utf8(FPlatformProcess::ReadPipe(GVoice.OutRead));
+		std::string::size_type Nl;
+		while ((Nl = GVoice.Buf.find('\n')) != std::string::npos)
+		{
+			const std::string L = GVoice.Buf.substr(0, Nl);
+			GVoice.Buf.erase(0, Nl + 1);
+			if (L.find("\"ready\"") != std::string::npos) { GVoice.bReady = true; continue; }
+			const std::string::size_type At = L.find("\"id\":");
+			if (At == std::string::npos) { continue; }
+			const int32 Id = atoi(L.c_str() + At + 5);
+			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(Id);
+			const std::string Wav = JsonField(L, "wav");
+			if (Who != nullptr && Who->IsValid() && Wav != "none") { PlayVoiceFile(Un(Wav), Who->Get()); }
+			GVoice.Pending.Remove(Id);
+		}
+	}
+
+	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who)
+	{
+		if (!GVoice.bReady || GVoice.InWrite == nullptr || Text.empty() || Text == "none") { return; }
+		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"who\":\"" + JsonEsc(Card)
+			+ "\",\"text\":\"" + JsonEsc(Text) + "\"}\n";
+		FPlatformProcess::WritePipe(GVoice.InWrite, Un(Req));
+		GVoice.Pending.Add(Id, Who);
+		bVoiceAsked = true;
+		GVoiceAskedAt = FPlatformTime::Seconds();
 	}
 
 	std::string MemoriesJson(const GossiperPtr& G)
@@ -2332,6 +2448,7 @@ namespace
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
+		GLive.PendingCard = Card;
 		GLive.AskedAt = FPlatformTime::Seconds();
 		return true;
 	}
@@ -2350,6 +2467,7 @@ namespace
 			{
 				const std::string Reply = JsonField(L, "reply");
 				Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
+				LiveVoiceSay(GLive.PendingId, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody));
 				GLive.PendingId = 0;
 				if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 			}
@@ -2364,7 +2482,7 @@ namespace
 	// WHAT THE PLAYER SAYS, TYPED, 24 September: T near somebody opens a line
 	// at the bottom of the screen; Enter says it, Esc leaves it. While it is
 	// open the keys go to the line, not to the legs.
-	struct FTalkTarget { GossiperPtr G; std::string Card, Id; int Rung = -1; FString Name; };
+	struct FTalkTarget { GossiperPtr G; std::string Card, Id; int Rung = -1; FString Name; AActor* Body = nullptr; };
 	FTalkTarget GTalkTarget;
 	TSharedPtr<SWidget> GSayBox;
 	TSharedPtr<SEditableTextBox> GSayText;
@@ -2430,6 +2548,8 @@ namespace
 	{
 		LiveHelperStart();
 		LiveHelperPump();
+		LiveVoiceStart();
+		LiveVoicePump();
 		if (bSayOpen)
 		{
 			// THE T THAT OPENED THE LINE is not the first letter of it.
@@ -2444,6 +2564,7 @@ namespace
 				CloseSayBox(World);
 				if (!Said.IsEmpty() && LiveAsk(GTalkTarget.G, GTalkTarget.Card, GTalkTarget.Id, GTalkTarget.Rung, GTalkTarget.Name, Utf8(Said)))
 				{
+					GLive.PendingBody = GTalkTarget.Body;
 					Say(FString(TEXT("You: ")) + Said, 10.0f, FColor::Cyan);
 				}
 			}
@@ -2480,6 +2601,7 @@ namespace
 		if (!GLive.bReady) { Say(TEXT("(The street's voices are still waking up. Try again in a moment.)"), 4.0f, FColor::White); return false; }
 		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
 		GTalkTarget.Rung = Near->Rung; GTalkTarget.Name = FString(Near->Name);
+		GTalkTarget.Body = Near->Body;
 		OpenSayBox(World);
 		return true;
 	}
@@ -2846,6 +2968,9 @@ namespace
 			bFleeFiled ? TEXT("filed") : (bFleeSeen ? TEXT("seen-not-filed") : TEXT("not-seen")),
 			GFleeSeconds, GFleeMetres, GFleeRung, GFleeCertainty, GFleeOthersSeen);
 		V += FString::Printf(TEXT("suspicionWhyLad=%s\n"), *Un(GSuspWhyN2));
+		V += FString::Printf(TEXT("voice=%s voiceSeconds=%.1f\n"),
+			!GVoice.bStarted ? TEXT("not-asked") : (bVoicePlayed ? TEXT("played") : (bVoiceAsked ? TEXT("asked-never-came") : (GVoice.bReady ? TEXT("ready-not-used") : TEXT("never-ready")))),
+			GVoiceSeconds);
 		V += FString::Printf(TEXT("save=%s savedBytes=%d loaded=%s loadedBytes=%d savedByCommit=%s clockLoaded=D%d-%02d:%02d talkAnswered=%s bankReadable=%s saveDir=%s\n"),
 			bSavedToDisk ? TEXT("written") : TEXT("not-written"), GSavedBytes, bLoadedFromDisk ? TEXT("yes") : TEXT("no"),
 			GLoadedBytes, *Un(GSavedByCommit), GClockDay, GClockHour, GClockMinute,
@@ -3325,6 +3450,7 @@ namespace
 		{
 			if (bLiveScript)
 			{
+				LiveVoiceStart();
 				if (GLiveStep == 0)
 				{
 					TeleportPawn(World, LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, 90.0);
@@ -3441,6 +3567,8 @@ namespace
 		}
 		case ECrimePhase::LiveRoam:
 		{
+			LiveVoiceStart();
+			LiveVoicePump();
 			if (!bLiveScript)
 			{
 				HumanTalkTick(World, Now);
@@ -3451,15 +3579,26 @@ namespace
 			{
 				if (GLiveStep < 3)
 				{
-					TeleportPawn(World, LedgerCrime::kN2X, LedgerCrime::kN2Z + 2.5, -90.0);
+					// BESIDE SAM, on the side away from Lena, who stands in the
+					// yard with him now: T talks to whoever is nearest.
+					TeleportPawn(World, LedgerCrime::kN2X + 1.3, LedgerCrime::kN2Z, 180.0);
 					// AND THE CAMERA WITH HIM, toward the lad: the view is the
 					// controller's, and a scripted step turns only the body.
-					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, -90.0f, 0.0f)); }
+					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, 180.0f, 0.0f)); }
 					GLiveStep = 3; GLiveStepAt = Now;
 					return true;
 				}
-				if (GLiveStep == 3 && Now - GLiveStepAt >= 1.0) { PressKey(World, EKeys::T); GLiveStep = 4; GLiveStepAt = Now; }
-				if (GLiveStep == 5 && Now - GLiveStepAt >= 2.0) { Finish(); return false; }
+				const bool bVoiceWanted = GVoice.bStarted && GVoice.OutRead != nullptr;
+				const bool bVoiceWait = bVoiceWanted && !GVoice.bReady && Now - GLiveStepAt < 90.0;
+				if (GLiveStep == 3 && Now - GLiveStepAt >= 1.0 && !bVoiceWait) { PressKey(World, EKeys::T); GLiveStep = 4; GLiveStepAt = Now; }
+				const bool bSpeaking = bVoiceAsked && !bVoicePlayed && Now - GVoiceAskedAt < 40.0;
+				if (bVoiceRecording && Now - GVoicePlayedAt >= GVoiceSeconds + 0.8)
+				{
+					UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
+						TEXT("ue-encounter-live-voice"), FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
+					bVoiceRecording = false;
+				}
+				if (GLiveStep == 5 && Now - GLiveStepAt >= 2.0 && !bSpeaking && !bVoiceRecording) { Finish(); return false; }
 			}
 			TakeActRequests(0);
 			if (TakeTalkRequests() <= 0 || GPawn == nullptr) { return true; }
@@ -3493,6 +3632,7 @@ namespace
 			GTalkWith = Near->G; GTalkWho = Near->Id; GTalkCardOverride = Near->Card; GTalkOwnRung = Near->Rung;
 			Say(TEXT("You: Evening. Anything going on round here?"), 8.0f, FColor::Cyan);
 			RunTalk();
+			LiveVoiceSay(9001, Near->Card, GTalkReply, GVisualFor(Near->Body));
 			Say(FString(Near->Name) + TEXT(": ") + Un(GTalkReply == "none" ? std::string("...") : GTalkReply), 20.0f, FColor::White);
 			SaveEncounterToDisk();
 			if (bLiveScript)
