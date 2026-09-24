@@ -285,9 +285,10 @@ def glb_stats(path):
     verts = tris = prims = 0
     positioned = 0                # primitives whose POSITION accessor carried
                                   # min/max; the denominator for the bounds
+    skinned = 0                   # primitives carrying JOINTS_0 and WEIGHTS_0
 
     def walk(i, parent, depth):
-        nonlocal verts, tris, prims, positioned
+        nonlocal verts, tris, prims, positioned, skinned
         if depth > 64 or i >= len(nodes):
             return                # a cyclic or malformed graph must not hang
         n = nodes[i]
@@ -296,6 +297,9 @@ def glb_stats(path):
         if mi is not None and mi < len(meshes):
             for pr in meshes[mi].get("primitives") or []:
                 prims += 1
+                at = pr.get("attributes") or {}
+                if "JOINTS_0" in at and "WEIGHTS_0" in at:
+                    skinned += 1
                 ai = (pr.get("attributes") or {}).get("POSITION")
                 if ai is None or ai >= len(acc):
                     continue
@@ -343,6 +347,12 @@ def glb_stats(path):
         "max_m": [round(v, 4) for v in hi] if have else None,
         # Pivot convention: base-centred means y_min ~ 0 and x/z centred.
         "base_y": round(lo[1], 4) if have else None,
+        # THE SKIN, 24 September: the research on clothing found this reader
+        # blind to it, so a coat whose binding had been destroyed and a coat
+        # that worked were the same file to it.
+        "skins": len(js.get("skins") or []),
+        "joints": sum(len(sk.get("joints") or []) for sk in (js.get("skins") or [])),
+        "skinned_primitives": skinned,
     }
 
 
@@ -365,6 +375,45 @@ def mesh_verdict(st):
                        "- a unit error, or an export in centimetres")
     return True, (f"{st['verts']} verts, {st['tris']} tris, "
                   f"{st['dims_m'][0]}x{st['dims_m'][1]}x{st['dims_m'][2]} m")
+
+
+def garment_verdict(out, ref):
+    """(ok, reason) for a cleaned garment against its uncleaned reference.
+
+    WHY IT EXISTS, 24 September. mesh_verdict counts corners and measures size,
+    so a coat that still works and a coat the clean-up ruined both got a green
+    tick (research: clothing-assembly-line). A garment is ruined in one of
+    three ways, and this names which: it has MOVED off the body (re-pivoted or
+    re-scaled, so its bounds no longer sit where the reference's did), its SKIN
+    was dropped (the reference was bound to a skeleton and the output is not,
+    or is bound to fewer joints), or it is degenerate. A garment that was never
+    skinned (MetaHuman's route needs none) passes on the first and third alone.
+    """
+    # ONLY THE CORNER FLOORS, NOT THE SIZE FLOORS: a skinned garment is read
+    # in its skeleton's node space (a Mixamo armature node carries 0.01), so
+    # its absolute size here is not metres, and the reference is the ruler.
+    if out["verts"] < MESH_MIN_VERTS or out["tris"] < MESH_MIN_TRIS:
+        return False, f"degenerate: {out['verts']} verts / {out['tris']} tris"
+    if not ref.get("min_m") or not out.get("min_m"):
+        return False, "bounds unknown on one side, so where it sits could not be measured"
+    size = max(ref["dims_m"]) if ref.get("dims_m") else 1.0
+    tol = max(1e-6, 0.01 * size)             # one percent of the garment, in its own units
+    off = max(abs(a - b) for a, b in zip(out["min_m"] + out["max_m"], ref["min_m"] + ref["max_m"]))
+    if off > tol:
+        return False, (f"RUINED: moved off the body, its bounds are {off / size * 100:.0f}% of its "
+                       f"size from where the uncleaned file put them (tolerance 1%)")
+    if ref.get("skinned_primitives", 0) > 0:
+        if out.get("skinned_primitives", 0) < ref["skinned_primitives"] or out.get("skins", 0) == 0:
+            return False, (f"RUINED: skin dropped, {out.get('skinned_primitives', 0)} of "
+                           f"{ref['skinned_primitives']} primitive(s) still bound to a skeleton")
+        if out.get("joints", 0) < ref.get("joints", 0):
+            return False, (f"RUINED: bound to {out.get('joints', 0)} joints where the "
+                           f"reference had {ref.get('joints', 0)}")
+        skin = f"skin kept ({out['joints']} joints, {out['skinned_primitives']} primitive(s))"
+    else:
+        skin = "no skin in the reference, none needed"
+    return True, (f"sits where it did on the body (off by {off / size * 100:.2f}% of its size); {skin}; "
+                  f"{out['verts']} verts, {out['tris']} tris")
 
 
 def series(root):
@@ -1427,6 +1476,9 @@ def main(argv=None):
     ap.add_argument("--no-send", action="store_true",
                     help="do not commit or push the report and manifest back")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--garment-check", nargs=2, metavar=("CLEANED_GLB", "SOURCE_GLB"),
+                    help="judge a cleaned garment against its uncleaned reference "
+                         "(clean_lod.py --kind garment writes <id>_source.glb)")
     ap.add_argument("--series", nargs="?", const=".", metavar="DIR",
                     help="print the mesh measurement series over every GLB "
                          "under DIR. This is what the floors were read off.")
@@ -1436,6 +1488,10 @@ def main(argv=None):
         return series(a.series)
     if a.selftest:
         return selftest()
+    if a.garment_check:
+        ok, why = garment_verdict(glb_stats(a.garment_check[0]), glb_stats(a.garment_check[1]))
+        print(("garmentCheck status=PASS " if ok else "garmentCheck status=FAIL ") + why)
+        return 0 if ok else 1
 
     here = pathlib.Path(__file__).resolve().parent
     repo = pathlib.Path(a.repo) if (a.repo and a.repo.strip()) else None
@@ -1621,7 +1677,7 @@ def main(argv=None):
 # thing, and it is not the same as coverage.
 # ---------------------------------------------------------------------------
 def _synth_glb(path, verts=100, tris=50, dims=(1.0, 2.0, 1.0), node_scale=1.0,
-               with_bounds=True, break_it=None):
+               with_bounds=True, break_it=None, skin_joints=0, shift=0.0):
     """A minimal but REAL GLB: header, JSON chunk, correct total length.
 
     The reader only ever looks at the JSON chunk, so a fixture needs no buffer
@@ -1631,8 +1687,8 @@ def _synth_glb(path, verts=100, tris=50, dims=(1.0, 2.0, 1.0), node_scale=1.0,
     half = [d / (2.0 * node_scale) for d in dims]
     acc = [{"count": verts, "type": "VEC3", "componentType": 5126}]
     if with_bounds:
-        acc[0]["min"] = [-half[0], 0.0, -half[2]]
-        acc[0]["max"] = [half[0], half[1] * 2, half[2]]
+        acc[0]["min"] = [-half[0], 0.0 + shift, -half[2]]
+        acc[0]["max"] = [half[0], half[1] * 2 + shift, half[2]]
     acc.append({"count": tris * 3, "type": "SCALAR", "componentType": 5125})
     js = {
         "asset": {"version": "2.0"},
@@ -1643,6 +1699,10 @@ def _synth_glb(path, verts=100, tris=50, dims=(1.0, 2.0, 1.0), node_scale=1.0,
         "scene": 0,
         "materials": [{"name": "m"}],
     }
+    if skin_joints:
+        js["meshes"][0]["primitives"][0]["attributes"].update({"JOINTS_0": 0, "WEIGHTS_0": 0})
+        js["skins"] = [{"joints": list(range(skin_joints))}]
+        js["nodes"][0]["skin"] = 0
     blob = json.dumps(js).encode("utf-8")
     blob += b" " * ((4 - len(blob) % 4) % 4)
     body = struct.pack("<I4s", len(blob), b"JSON") + blob
@@ -2285,6 +2345,27 @@ def selftest():                                                  # noqa: C901
               and "\u2014" in p.read_text(encoding="utf-8", errors="replace")]
     ok(f"no em-dashes in the {len(ours) - len(absent)} shipped files READ "
        f"({len(absent)} absent, not read)", not dashed, str(dashed))
+
+    # THE GARMENT CHECK, 24 September: it must tell a working coat from a
+    # ruined one, in both directions, which the plain verdict never could.
+    with tempfile.TemporaryDirectory() as gd:
+        ref = glb_stats(_synth_glb(os.path.join(gd, "ref.glb"), dims=(0.8, 0.8, 0.6), skin_joints=65))
+        good = glb_stats(_synth_glb(os.path.join(gd, "good.glb"), dims=(0.8, 0.8, 0.6), skin_joints=65))
+        moved = glb_stats(_synth_glb(os.path.join(gd, "moved.glb"), dims=(0.8, 0.8, 0.6), skin_joints=65, shift=-0.9))
+        bare = glb_stats(_synth_glb(os.path.join(gd, "bare.glb"), dims=(0.8, 0.8, 0.6)))
+        ok("the reader sees a skin: joints and bound primitives",
+           ref["skins"] == 1 and ref["joints"] == 65 and ref["skinned_primitives"] == 1, str(ref))
+        ok("and sees none where there is none", bare["skins"] == 0 and bare["skinned_primitives"] == 0)
+        g = garment_verdict(good, ref)
+        ok("a coat that sits where it did with its skin passes", g[0], g[1])
+        mv = garment_verdict(moved, ref)
+        ok("a coat walked off the body fails, and says moved", not mv[0] and "moved off the body" in mv[1], mv[1])
+        sk = garment_verdict(bare, ref)
+        ok("a coat whose skin was dropped fails, and says skin", not sk[0] and "skin dropped" in sk[1], sk[1])
+        un = garment_verdict(bare, glb_stats(_synth_glb(os.path.join(gd, "bref.glb"), dims=(0.8, 0.8, 0.6))))
+        ok("a coat that was never skinned needs none (MetaHuman's route)", un[0], un[1])
+        ok("the plain verdict cannot tell the moved coat from the good one, which is why this exists",
+           mesh_verdict(moved)[0] == mesh_verdict(good)[0])
 
     print("")
     for n in notes:
