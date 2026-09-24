@@ -100,6 +100,7 @@ void ALedgerSliceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Pressed, this, &ALedgerSliceCharacter::RunPressed);
 	PlayerInputComponent->BindKey(EKeys::LeftShift, IE_Released, this, &ALedgerSliceCharacter::RunReleased);
 	PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALedgerSliceCharacter::RequestAct);
+	PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALedgerSliceCharacter::RequestTalk);
 }
 
 void ALedgerSliceCharacter::MoveForward(float Value)
@@ -123,6 +124,13 @@ void ALedgerSliceCharacter::LookPitch(float Value) { AddControllerPitchInput(-Va
 void ALedgerSliceCharacter::RunPressed() { GetCharacterMovement()->MaxWalkSpeed = RunSpeedCm; }
 void ALedgerSliceCharacter::RunReleased() { GetCharacterMovement()->MaxWalkSpeed = WalkSpeedCm; }
 void ALedgerSliceCharacter::RequestAct() { ++ActRequests; }
+void ALedgerSliceCharacter::RequestTalk() { ++TalkRequests; }
+int32 ALedgerSliceCharacter::ConsumeTalkRequests()
+{
+	const int32 N = TalkRequests;
+	TalkRequests = 0;
+	return N;
+}
 int32 ALedgerSliceCharacter::ConsumeActRequests()
 {
 	const int32 N = ActRequests;

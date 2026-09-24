@@ -62,11 +62,16 @@ private:
 	// the crime module takes the count with ConsumeActRequests.
 	void RequestAct();
 
+	// T TALKS, 24 September: the live encounter's conversation with whoever
+	// is near, counted like the act and consumed by the encounter.
+	void RequestTalk();
 public:
 	int32 ConsumeActRequests();
+	int32 ConsumeTalkRequests();
 
 private:
 	int32 ActRequests = 0;
+	int32 TalkRequests = 0;
 	void MarkStreetWalkable();
 	void BuildStreetNavigation();
 

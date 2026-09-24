@@ -149,6 +149,7 @@ namespace
 		MoveToOverhear, SettleOverhear, OverheardHold, ShotOverheard,
 		MeetThird,
 		Talk, SaveDisk, LoadDisk,
+		LiveWaitDeed, LiveAfterDeed, LiveRoam,
 		Done
 	};
 
@@ -198,7 +199,7 @@ namespace
 	// only crime B, the occluded one, is committed: nobody sees it and nobody
 	// knows. Each writes ue-encounter-<mode>-verdict.txt; the crime module's
 	// own files are renamed so the crime run's evidence is never overwritten.
-	enum class EEncounter : uint8 { None, Play, Reload, Unseen };
+	enum class EEncounter : uint8 { None, Play, Reload, Unseen, Live };
 	EEncounter GEnc = EEncounter::None;
 	std::string GFiledSummaryA;         // what the witness filed for crime A
 	bool   bShoutPlaying = false, bShoutRecording = false, bShoutWavWritten = false;
@@ -356,6 +357,7 @@ namespace
 		case EEncounter::Play:   return TEXT("play");
 		case EEncounter::Reload: return TEXT("reload");
 		case EEncounter::Unseen: return TEXT("unseen");
+		case EEncounter::Live:   return TEXT("live");
 		default:                 return TEXT("none");
 		}
 	}
@@ -722,6 +724,60 @@ namespace
 			TEXT("cyl"), TEXT("cloth_dark"));
 	}
 
+	// THE LIVE ENCOUNTER'S PEOPLE, 24 September: in play the perceivers stay
+	// the probe's own bodies, measured exactly as in the regression, hidden;
+	// a MetaHuman stands where each stands and faces where it faces. Lena is
+	// the witness at Mickey's, Sam the lad in the yard, Rocco his mate.
+	TMap<AActor*, TWeakObjectPtr<AActor>> GVisuals;
+	int32 GVisualsPlaced = 0;
+	const TCHAR* kLiveIdle = TEXT("/Game/Ledger/MetaHumans/MH_Test/Anim/A_elizabeth-idle_MH.A_elizabeth-idle_MH");
+
+	void SyncVisual(AActor* Body)
+	{
+		if (Body == nullptr) { return; }
+		TWeakObjectPtr<AActor>* V = GVisuals.Find(Body);
+		if (V == nullptr || !V->IsValid()) { return; }
+		const FBox B = Body->GetComponentsBoundingBox();
+		const FVector Feet(B.GetCenter().X, B.GetCenter().Y, B.Min.Z);
+		// A MetaHuman faces its actor's +Y; the body's yaw is its gaze.
+		(*V)->SetActorLocationAndRotation(Feet, FRotator(0.0f, Body->GetActorRotation().Yaw - 90.0f, 0.0f));
+	}
+
+	void DressBody(UWorld* World, AActor* Body, const TCHAR* Who)
+	{
+		if (GEnc != EEncounter::Live || World == nullptr || Body == nullptr) { return; }
+		const FString Name = FString(TEXT("MH_")) + Who;
+		UClass* Cls = LoadClass<AActor>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/%s/BP_%s.BP_%s_C"), *Name, *Name, *Name));
+		if (Cls == nullptr) { return; }
+		FActorSpawnParameters P;
+		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AActor* A = World->SpawnActor<AActor>(Cls, Body->GetActorLocation(), FRotator::ZeroRotator, P);
+		if (A == nullptr) { return; }
+		A->SetActorEnableCollision(false);
+		if (UAnimSequenceBase* Idle = LoadObject<UAnimSequenceBase>(nullptr, kLiveIdle))
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			A->GetComponents(Parts);
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
+				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
+				C->PlayAnimation(Idle, true);
+			}
+		}
+		Body->SetActorHiddenInGame(true);
+		GVisuals.Add(Body, A);
+		++GVisualsPlaced;
+		SyncVisual(Body);
+	}
+
+	// A LINE ON THE SCREEN for the one playing: what is said, and what to do.
+	void Say(const FString& Line, float Seconds = 12.0f, FColor Colour = FColor::White)
+	{
+		if (GEngine != nullptr) { GEngine->AddOnScreenDebugMessage(-1, Seconds, Colour, Line); }
+	}
+
 	// A BODY MOVES BY ITS OWN TRANSFORM, not by a second spawn: W1 stands at
 	// P1 for crime A and at P2 for crime B, and spawning her twice would put
 	// two shopkeepers in the frame and two entries in the probe map.
@@ -733,6 +789,7 @@ namespace
 		if (!GroundYAt(World, StreetX, StreetZ, GroundY, On)) { GroundY = 0.1; }
 		Body->SetActorLocation(ToUE(LedgerCrime::P3(
 			StreetX, GroundY + LedgerCrime::kBodyHeightM * 0.5, StreetZ)));
+		SyncVisual(Body);
 	}
 
 	void FaceBody(AActor* Body, const LedgerCrime::P3& Toward)
@@ -741,6 +798,7 @@ namespace
 		const LedgerCrime::P3 At = ToStreet(Body->GetActorLocation());
 		const double Yaw = LedgerCrime::YawToFace(At, Toward);
 		Body->SetActorRotation(FRotator(0.0f, (float)Yaw, 0.0f));
+		SyncVisual(Body);
 	}
 
 	void TeleportPawn(UWorld* World, double StreetX, double StreetZ, double YawDeg)
@@ -1027,21 +1085,23 @@ namespace
 	// for a project with no action mappings it returns false on a perfectly
 	// successful press - so what is reported is the last thing this code can
 	// honestly know, which is that a UPlayerInput existed to receive it.
-	const TCHAR* PressActKey(UWorld* World)
+	const TCHAR* PressKey(UWorld* World, const FKey& Key)
 	{
 		APlayerController* PC = (World != nullptr) ? World->GetFirstPlayerController() : nullptr;
 		if (PC == nullptr) { return TEXT("no-player-controller"); }
 		if (PC->PlayerInput == nullptr) { return TEXT("no-player-input"); }
 		const FInputDeviceId Device = IPlatformInputDeviceMapper::Get().GetDefaultInputDevice();
 		const uint64 Stamp = FPlatformTime::Cycles64();
-		FInputKeyEventArgs Pressed(nullptr, Device, EKeys::E, IE_Pressed, Stamp);
+		FInputKeyEventArgs Pressed(nullptr, Device, Key, IE_Pressed, Stamp);
 		PC->InputKey(Pressed);
 		// RELEASED TOO, always. A press with no release leaves the key latched
 		// in the input stack, a state no human leaves behind.
-		FInputKeyEventArgs Released(nullptr, Device, EKeys::E, IE_Released, Stamp);
+		FInputKeyEventArgs Released(nullptr, Device, Key, IE_Released, Stamp);
 		PC->InputKey(Released);
 		return TEXT("player-input");
 	}
+
+	const TCHAR* PressActKey(UWorld* World) { return PressKey(World, EKeys::E); }
 
 	int32 TakeActRequests(int Index)
 	{
@@ -1814,7 +1874,9 @@ namespace
 		if (GN2Body != nullptr) { ++GBodiesSpawned; }
 
 		if (!GroundYAt(World, LedgerCrime::kC1AX, LedgerCrime::kC1AZ, GY, On)) { GY = 0.1; }
-		GC1Body = SpawnBody(World, TEXT("probe_body_c1"),
+		// NO CONSTABLE IN PLAY: the cast has no policeman yet, and a grey
+		// cylinder on the pavement is a stand-in.
+		GC1Body = (GEnc == EEncounter::Live) ? nullptr : SpawnBody(World, TEXT("probe_body_c1"),
 		                    LedgerCrime::kC1AX, LedgerCrime::kC1AZ, GY);
 		bC1Spawned = (GC1Body != nullptr);
 		FaceBody(GC1Body, LedgerCrime::P3(LedgerCrime::kCrimeAX, 0.0, LedgerCrime::kCrimeAZ));
@@ -1823,6 +1885,8 @@ namespace
 		// N2 faces +z, up the yard, by the ruling: he is not looking at
 		// anything and the terrace is between him and both windows anyway.
 		if (GN2Body != nullptr) { GN2Body->SetActorRotation(FRotator(0.0f, 90.0f, 0.0f)); }
+		DressBody(World, GW1Body, TEXT("Lena"));
+		DressBody(World, GN2Body, TEXT("Sam"));
 
 		GGlass[0] = LedgerVignetteShot::FindStreetPiece(kGlassA);
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);
@@ -1941,7 +2005,8 @@ namespace
 	{
 		FString D;
 		if (FParse::Value(FCommandLine::Get(), TEXT("EncounterSave="), D)) { return D; }
-		return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir() / TEXT("Encounter"));
+		return FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+			/ (GEnc == EEncounter::Live ? TEXT("EncounterLive") : TEXT("Encounter")));
 	}
 
 	int AboutCrime(const GossiperPtr& G, bool bA)
@@ -2027,6 +2092,32 @@ namespace
 			bShoutWavWritten = true;
 		}
 		bShoutRecording = false;
+	}
+
+	double GLiveDeedAt = 0.0;
+	// THE LIVE ENCOUNTER, SCRIPTED (-LiveScript): the same live phases, with
+	// the probe walking where a player would and pressing the same keys
+	// through the same input path, so the playable version is also checked
+	// by the build. One step counter; nothing else differs.
+	bool bLiveScript = false;
+	int32 GLiveStep = 0;
+	double GLiveStepAt = 0.0;
+
+	int32 TakeTalkRequests()
+	{
+		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn)) { return Slice->ConsumeTalkRequests(); }
+		return 0;
+	}
+
+	// HIS MATE, Rocco, in the yard with the lad from the week's end on.
+	void RespawnMate(UWorld* World)
+	{
+		if (GR3Body != nullptr || World == nullptr) { return; }
+		double GY = 0.0;
+		std::string On;
+		if (!GroundYAt(World, LedgerCrime::kR3X, LedgerCrime::kR3Z, GY, On)) { GY = 0.1; }
+		GR3Body = SpawnBody(World, TEXT("probe_body_r3"), LedgerCrime::kR3X, LedgerCrime::kR3Z, GY);
+		DressBody(World, GR3Body, TEXT("Rocco"));
 	}
 
 	// THE LAD'S SIGHTING OF THE MAN IN THE YARD, measured off the running
@@ -2448,6 +2539,27 @@ namespace
 			Need.push_back({ "the-witness-still-has-reason", GSuspW1 == "Suspicious" || GSuspW1 == "Confronting" });
 			Need.push_back({ "he-questioned-the-player", bTalkQuestioned });
 		}
+		else if (GEnc == EEncounter::Live)
+		{
+			// THE PLAYABLE ENCOUNTER, SCRIPTED: the real people are there; a
+			// first run commits the deed through the live phases, a second
+			// run comes back to a town that still knows.
+			Need.push_back({ "the-real-people-stand-there", GVisualsPlaced >= 2 });
+			if (!bLoadedFromDisk)
+			{
+				Need.push_back({ "the-window-went", GActTook[0] });
+				Need.push_back({ "lena-saw-it", AW1 > 0 && bBankReadable });
+				Need.push_back({ "sam-saw-him-run", bFleeFiled });
+				Need.push_back({ "gossip-reached-sam", AN2 > 0 && HeardMemories(GN2) > 0 });
+				Need.push_back({ "saved-to-disk", bSavedToDisk });
+			}
+			else
+			{
+				Need.push_back({ "the-town-still-knows", AN2 > 0 && AW1 > 0 });
+			}
+			Need.push_back({ "sam-has-reason", GSuspN2 == "Suspicious" || GSuspN2 == "Confronting" });
+			Need.push_back({ "sam-questioned-the-player", bTalkQuestioned });
+		}
 		else
 		{
 			Need.push_back({ "new-player-character", bSlice });
@@ -2560,7 +2672,31 @@ namespace
 			GBeat = "start"; GBeatSpeaker = "none"; GBeatLineId = "none"; GBeatHeard = false;
 			GPhase = (GEnc == EEncounter::Reload) ? ECrimePhase::LoadDisk
 			       : (GEnc == EEncounter::Unseen) ? ECrimePhase::MoveW1ToYard
+			       : (GEnc == EEncounter::Live) ? ECrimePhase::LiveWaitDeed
 			       : ECrimePhase::ShotStart;
+			if (GEnc == EEncounter::Live)
+			{
+				// COME BACK AND THE TOWN STILL KNOWS: a save from before is
+				// read, and the street goes straight to what they know.
+				// -LiveFresh STARTS THE STORY AGAIN: the old save is left where it
+				// is and written over once the new story reaches "later".
+				if (!FParse::Param(FCommandLine::Get(), TEXT("LiveFresh"))
+				    && IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json"))))
+				{
+					LoadEncounterFromDisk();
+					if (bLoadedFromDisk)
+					{
+						RespawnMate(World);
+						GPhase = ECrimePhase::LiveRoam;
+						Say(TEXT("The street remembers. Find Sam in the yard behind the parade and press T to talk."), 20.0f, FColor::Yellow);
+					}
+				}
+				if (GPhase == ECrimePhase::LiveWaitDeed)
+				{
+					GWatchSlot = 0;
+					Say(TEXT("Walk to the shop window by Mickey's and press E."), 20.0f, FColor::Yellow);
+				}
+			}
 			GPhaseStart = Now;
 			return true;
 		}
@@ -2933,6 +3069,127 @@ namespace
 			GPhaseStart = Now;
 			return true;
 		}
+		case ECrimePhase::LiveWaitDeed:
+		{
+			if (bLiveScript)
+			{
+				if (GLiveStep == 0)
+				{
+					TeleportPawn(World, LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, 90.0);
+					GLiveStep = 1; GLiveStepAt = Now;
+					return true;
+				}
+				if (GLiveStep == 1 && Now - GLiveStepAt >= 2.0) { PressKey(World, EKeys::E); GLiveStep = 2; }
+			}
+			const int32 Presses = TakeActRequests(0);
+			TakeTalkRequests();
+			if (Presses <= 0 || GPawn == nullptr || GGlass[0] == nullptr) { return true; }
+			const double ToGlass = FVector::Dist2D(GPawn->GetActorLocation(),
+				GGlass[0]->GetComponentsBoundingBox(true).GetCenter()) / 100.0;
+			if (ToGlass > LedgerCrime::kLiveReachM)
+			{
+				Say(TEXT("Nothing to break here. The window is by Mickey's door."), 4.0f);
+				return true;
+			}
+			// THE SAME DEED AS THE REGRESSION: the vantage measured with the
+			// glass standing, then the deed, then what she saw filed.
+			GReadings.push_back(MeasureVantage(World, "w1", "A", GW1Body, GGlass[0], GSeconds[0][0]));
+			GReadings.push_back(MeasureVantage(World, "n2", "A", GN2Body, GGlass[0], GSeconds[0][1]));
+			GActRequestsSeen[0] += Presses;
+			GActAttempted[0] = true;
+			CommitDeed(World, 0);
+			GActTook[0] = GCrime[0].bPieceFound && GCrime[0].bHiddenAfter;
+			ResolveAndFile(0);
+			GWatchSlot = -1;
+			GFleeSeconds = 0.0;
+			GLiveDeedAt = Now;
+			if (!GFiledSummaryA.empty()) { Say(TEXT("Lena: \"Stop. I mean it. Stop.\""), 6.0f); }
+			WriteBreadcrumb(TEXT("live-deed"));
+			if (bLiveScript) { TeleportPawn(World, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, LedgerCrime::kFleeYawDeg); }
+			GPhase = ECrimePhase::LiveAfterDeed;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::LiveAfterDeed:
+		{
+			TakeActRequests(0);
+			TakeTalkRequests();
+			// WHOEVER SEES HIM GO: the lad, by the same sight test, if the
+			// man comes through the yard while it is still fresh.
+			if (!bFleeFiled && GN2Body != nullptr && GPawn != nullptr)
+			{
+				const LedgerCrime::Reading W = MeasureVantage(World, "n2", "flee", GN2Body, nullptr, 0.0);
+				if (Perception::InSight(W.ActorMetres, W.ActorOffAxisDeg, LedgerCrime::kLightLevel, W.bActorOccluded, 1.4))
+				{
+					GFleeSeconds += Delta;
+					if (GFleeSeconds >= Perception::NoticeSeconds) { FileFleeSighting(World); }
+				}
+			}
+			if (Now - GLiveDeedAt < (bLiveScript ? 6.0 : LedgerCrime::kLiveLaterSeconds)) { return true; }
+			// LATER: she walks round to the yard and tells the lad; he tells
+			// his mate; the week moves on. What is said is on the screen.
+			MoveBody(World, GW1Body, LedgerCrime::kW1BX, LedgerCrime::kW1BZ);
+			FaceBody(GW1Body, ToStreet(GN2Body != nullptr ? GN2Body->GetActorLocation() : FVector::ZeroVector));
+			RunGossipRound(2, GRound2);
+			{
+				std::string Id, Text, Clause, Speaker, Why;
+				int Variants = 0;
+				if (LedgerCrime::BankPick(GBankText, "overheard", GAchievedRung, LedgerCrime::Seed(GNow),
+				                          Id, Text, Clause, Speaker, Variants, Why)) { GReplyText = Text; }
+				GOverheard.Reply = LedgerCrime::ComposeOverheard(GCarried, GW1, GN2, LedgerCrime::Seed(GNow),
+					GSummaryText == "none" ? std::string() : GSummaryText,
+					GReplyText == "none" ? std::string() : GReplyText);
+				if (!GOverheard.Reply.TellText.empty()) { Say(FString(TEXT("Lena, in the yard: ")) + Un(GOverheard.Reply.TellText), 14.0f); }
+				if (!GOverheard.Reply.ReplyText.empty()) { Say(FString(TEXT("Sam: ")) + Un(GOverheard.Reply.ReplyText), 14.0f); }
+			}
+			RespawnMate(World);
+			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 0);
+			RunRound3(GRound3);
+			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 30);
+			SaveEncounterToDisk();
+			Say(TEXT("Later that week, evening. Sam is in the yard behind the parade. Press T near him to talk."), 20.0f, FColor::Yellow);
+			WriteBreadcrumb(TEXT("live-later"));
+			GPhase = ECrimePhase::LiveRoam;
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::LiveRoam:
+		{
+			if (bLiveScript)
+			{
+				if (GLiveStep < 3)
+				{
+					TeleportPawn(World, LedgerCrime::kN2X, LedgerCrime::kN2Z + 2.5, -90.0);
+					// AND THE CAMERA WITH HIM, toward the lad: the view is the
+					// controller's, and a scripted step turns only the body.
+					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, -90.0f, 0.0f)); }
+					GLiveStep = 3; GLiveStepAt = Now;
+					return true;
+				}
+				if (GLiveStep == 3 && Now - GLiveStepAt >= 1.0) { PressKey(World, EKeys::T); GLiveStep = 4; GLiveStepAt = Now; }
+				if (GLiveStep == 5 && Now - GLiveStepAt >= 2.0) { Finish(); return false; }
+			}
+			TakeActRequests(0);
+			if (TakeTalkRequests() <= 0 || GPawn == nullptr || GN2Body == nullptr) { return true; }
+			const double ToLad = FVector::Dist2D(GPawn->GetActorLocation(), GN2Body->GetActorLocation()) / 100.0;
+			if (ToLad > LedgerCrime::kLiveTalkM)
+			{
+				Say(TEXT("Nobody near enough to talk to."), 4.0f);
+				return true;
+			}
+			Say(TEXT("You: Evening. Anything going on round here?"), 8.0f, FColor::Cyan);
+			RunTalk();
+			Say(FString(TEXT("Sam: ")) + Un(GTalkReply == "none" ? std::string("...") : GTalkReply), 20.0f);
+			SaveEncounterToDisk();
+			if (bLiveScript)
+			{
+				GLiveStep = 5; GLiveStepAt = Now;
+				// A PICTURE OF THE TALK, words on the screen and all.
+				FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()
+					/ (bLoadedFromDisk ? TEXT("ue-encounter-live-talk-after-reload.png") : TEXT("ue-encounter-live-talk.png"))), true, false);
+			}
+			return true;
+		}
 		case ECrimePhase::Done:
 		default:
 			Finish();
@@ -2957,8 +3214,10 @@ namespace LedgerCrimeProbe
 			{
 				GEnc = Mode == TEXT("play") ? EEncounter::Play
 				     : Mode == TEXT("reload") ? EEncounter::Reload
-				     : Mode == TEXT("unseen") ? EEncounter::Unseen : EEncounter::None;
+				     : Mode == TEXT("unseen") ? EEncounter::Unseen
+				     : Mode == TEXT("live") ? EEncounter::Live : EEncounter::None;
 			}
+			bLiveScript = FParse::Param(FCommandLine::Get(), TEXT("LiveScript"));
 		}
 
 		GGraph = std::make_shared<SocialGraph>();
@@ -2967,10 +3226,10 @@ namespace LedgerCrimeProbe
 		// DISPLAY NAMES ARE ARCHETYPES, NOT CAST. Canon's cast baseline is
 		// pending and a probe does not mint one; the heard memory line reads
 		// "I heard from the shopkeeper that ...".
-		GW1 = std::make_shared<Gossiper>("w1", "the shopkeeper",
+		GW1 = std::make_shared<Gossiper>("w1", GEnc == EEncounter::Live ? "Lena" : "the shopkeeper",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
-		GN2 = std::make_shared<Gossiper>("n2", "the lad in the yard",
+		GN2 = std::make_shared<Gossiper>("n2", GEnc == EEncounter::Live ? "Sam" : "the lad in the yard",
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GW1);
@@ -2978,7 +3237,7 @@ namespace LedgerCrimeProbe
 		// THE LAD'S MATE: tied to him and to nobody else, at the street's own
 		// tie, so the only way the crime can reach him is a second retelling.
 		GGraph->Link("n2", LedgerCrime::kR3Id, LedgerCrime::kR3Tie);
-		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, LedgerCrime::kR3Name,
+		GR3 = std::make_shared<Gossiper>(LedgerCrime::kR3Id, GEnc == EEncounter::Live ? std::string("Rocco") : std::string(LedgerCrime::kR3Name),
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GR3);
