@@ -2320,9 +2320,15 @@ namespace
 		std::string Buf;
 		bool bStarted = false, bReady = false;
 		TMap<int32, TWeakObjectPtr<AActor>> Pending;   // line id -> who says it
+		// SENTENCE BY SENTENCE: each piece is queued as it arrives and played
+		// when the one before it has finished, so the first sentence is heard
+		// while the rest are still being made.
+		TArray<TPair<FString, TWeakObjectPtr<AActor>>> Queue;
+		double BusyUntil = 0.0;
+		bool bLastIn = false;
 	};
 	FLiveVoice GVoice;
-	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false;
+	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
 
 	void LiveVoiceStart()
@@ -2338,11 +2344,11 @@ namespace
 
 	// A WAV THE SERVER WROTE (16-bit PCM, soundfile's own header), played as a
 	// procedural wave at the speaker, with the shout's falloff.
-	void PlayVoiceFile(const FString& Path, AActor* Who)
+	double PlayVoiceFile(const FString& Path, AActor* Who)
 	{
 		UWorld* World = GameWorld();
 		TArray<uint8> Bytes;
-		if (World == nullptr || Who == nullptr || !FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 44) { return; }
+		if (World == nullptr || Who == nullptr || !FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 44) { return 0.0; }
 		int32 Rate = 24000, Channels = 1, DataAt = -1, DataLen = 0;
 		for (int32 I = 12; I + 8 <= Bytes.Num();)
 		{
@@ -2355,7 +2361,7 @@ namespace
 			if (FMemory::Memcmp(&Bytes[I], "data", 4) == 0) { DataAt = I + 8; DataLen = FMath::Min(Len, Bytes.Num() - DataAt); break; }
 			I += 8 + Len + (Len & 1);
 		}
-		if (DataAt < 0 || DataLen <= 0) { return; }
+		if (DataAt < 0 || DataLen <= 0) { return 0.0; }
 		USoundWaveProcedural* W = NewObject<USoundWaveProcedural>(GetTransientPackage());
 		W->SetSampleRate(Rate);
 		W->NumChannels = Channels;
@@ -2369,16 +2375,20 @@ namespace
 		Att->Attenuation.FalloffDistance = 2500.0f;
 		UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
-		bVoicePlayed = true;
-		GVoiceSeconds = W->Duration;
-		GVoicePlayedAt = FPlatformTime::Seconds();
-		// THE SCRIPTED RUN KEEPS WHAT THE STREET HEARD, so the voice can be
-		// listened to rather than only counted.
-		if (bLiveScript && World->GetAudioDevice().IsValid())
+		if (!bVoicePlayed)
 		{
-			UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 20.0f);
-			bVoiceRecording = true;
+			GVoicePlayedAt = FPlatformTime::Seconds();
+			// THE SCRIPTED RUN KEEPS WHAT THE STREET HEARD, so the voice can
+			// be listened to rather than only counted.
+			if (bLiveScript && World->GetAudioDevice().IsValid())
+			{
+				UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 40.0f);
+				bVoiceRecording = true;
+			}
 		}
+		bVoicePlayed = true;
+		GVoiceSeconds += W->Duration;
+		return W->Duration;
 	}
 
 	std::string JsonField(const std::string& Line, const std::string& Name);
@@ -2398,8 +2408,20 @@ namespace
 			const int32 Id = atoi(L.c_str() + At + 5);
 			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(Id);
 			const std::string Wav = JsonField(L, "wav");
-			if (Who != nullptr && Who->IsValid() && Wav != "none") { PlayVoiceFile(Un(Wav), Who->Get()); }
-			GVoice.Pending.Remove(Id);
+			const bool bLast = L.find("\"last\":true") != std::string::npos || L.find("\"error\"") != std::string::npos;
+			if (Who != nullptr && Wav != "none") { GVoice.Queue.Add(TPair<FString, TWeakObjectPtr<AActor>>(Un(Wav), *Who)); }
+			if (bLast) { GVoice.Pending.Remove(Id); bVoiceAllIn = true; }
+		}
+		const double Now = FPlatformTime::Seconds();
+		if (GVoice.Queue.Num() > 0 && Now >= GVoice.BusyUntil)
+		{
+			TPair<FString, TWeakObjectPtr<AActor>> Next = GVoice.Queue[0];
+			GVoice.Queue.RemoveAt(0);
+			if (Next.Value.IsValid())
+			{
+				const double Len = PlayVoiceFile(Next.Key, Next.Value.Get());
+				GVoice.BusyUntil = Now + Len + 0.15;
+			}
 		}
 	}
 
@@ -2968,6 +2990,7 @@ namespace
 			bFleeFiled ? TEXT("filed") : (bFleeSeen ? TEXT("seen-not-filed") : TEXT("not-seen")),
 			GFleeSeconds, GFleeMetres, GFleeRung, GFleeCertainty, GFleeOthersSeen);
 		V += FString::Printf(TEXT("suspicionWhyLad=%s\n"), *Un(GSuspWhyN2));
+		V += FString::Printf(TEXT("voiceFirstHeardAfterS=%.1f\n"), bVoicePlayed ? GVoicePlayedAt - GVoiceAskedAt : -1.0);
 		V += FString::Printf(TEXT("voice=%s voiceSeconds=%.1f\n"),
 			!GVoice.bStarted ? TEXT("not-asked") : (bVoicePlayed ? TEXT("played") : (bVoiceAsked ? TEXT("asked-never-came") : (GVoice.bReady ? TEXT("ready-not-used") : TEXT("never-ready")))),
 			GVoiceSeconds);
@@ -3591,8 +3614,8 @@ namespace
 				const bool bVoiceWanted = GVoice.bStarted && GVoice.OutRead != nullptr;
 				const bool bVoiceWait = bVoiceWanted && !GVoice.bReady && Now - GLiveStepAt < 90.0;
 				if (GLiveStep == 3 && Now - GLiveStepAt >= 1.0 && !bVoiceWait) { PressKey(World, EKeys::T); GLiveStep = 4; GLiveStepAt = Now; }
-				const bool bSpeaking = bVoiceAsked && !bVoicePlayed && Now - GVoiceAskedAt < 40.0;
-				if (bVoiceRecording && Now - GVoicePlayedAt >= GVoiceSeconds + 0.8)
+				const bool bSpeaking = bVoiceAsked && !(bVoicePlayed && bVoiceAllIn && GVoice.Queue.Num() == 0) && Now - GVoiceAskedAt < 60.0;
+				if (bVoiceRecording && bVoiceAllIn && GVoice.Queue.Num() == 0 && Now >= GVoice.BusyUntil + 0.8)
 				{
 					UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
 						TEXT("ue-encounter-live-voice"), FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));

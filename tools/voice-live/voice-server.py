@@ -19,7 +19,8 @@ HOW, from what this project already measured:
   result is kept and handed to the card model.
 
 IN:  {"id":1,"who":"sam","text":"So listen..."}
-OUT: {"id":1,"who":"sam","wav":"C:/.../1.wav","ms":2310,"seconds":3.4}
+OUT: {"id":1,"part":0,"last":false,"who":"sam","wav":"C:/.../1-0.wav","ms":2310,"seconds":3.4}
+     one line per sentence, as each is ready, so the first can play at once
      or {"id":1,"error":"no-clip"} - never a guess.
 A first line {"ready":true,...} once the model is loaded.
 """
@@ -49,6 +50,24 @@ def clip_for(who, clips=CLIPS):
         return None
     found = sorted(glob.glob(str(clips / (who + ".*.wav")))) + sorted(glob.glob(str(clips / (who + ".*.mp3"))))
     return found[0] if found else None
+
+
+def sentences(text, longest=220):
+    """THE ANSWER IN SPEAKABLE PIECES, so the first can play while the next is
+    made: split after . ! ? followed by a space, never mid-word, and a piece
+    over `longest` characters is split at its last comma or space before it."""
+    import re
+    parts = [x.strip() for x in re.split(r"(?<=[.!?])\s+", text.strip()) if x.strip()]
+    out = []
+    for x in parts:
+        while len(x) > longest:
+            cut = max(x.rfind(",", 0, longest), x.rfind(" ", 0, longest))
+            cut = cut if cut > 0 else longest
+            out.append(x[:cut + 1].strip())
+            x = x[cut + 1:].strip()
+        if x:
+            out.append(x)
+    return out
 
 
 def parse(line):
@@ -137,13 +156,16 @@ def serve(args):
                 conds = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
                                                              for k, v in conds.gen.items()})
             speaker.conds = conds
-            torch.manual_seed(20260924 + i)
-            wav = speaker.generate(text)
-            path = out / ("%d.wav" % i)
-            data = wav.squeeze(0).detach().cpu().numpy()
-            sf.write(str(path), data, speaker.sr, subtype="PCM_16")
-            print(dumps({"id": i, "who": who, "wav": str(path), "ms": int((time.time() - t) * 1000),
-                              "seconds": round(len(data) / speaker.sr, 2), "rate": speaker.sr}), flush=True)
+            pieces = sentences(text)
+            for k, piece in enumerate(pieces):
+                torch.manual_seed(20260924 + i * 100 + k)
+                wav = speaker.generate(piece)
+                path = out / ("%d-%d.wav" % (i, k))
+                data = wav.squeeze(0).detach().cpu().numpy()
+                sf.write(str(path), data, speaker.sr, subtype="PCM_16")
+                print(dumps({"id": i, "part": k, "last": k == len(pieces) - 1, "who": who, "wav": str(path),
+                             "ms": int((time.time() - t) * 1000), "seconds": round(len(data) / speaker.sr, 2),
+                             "rate": speaker.sr}), flush=True)
         except Exception as e:
             print(dumps({"id": i, "who": who, "error": "failed", "why": type(e).__name__}), flush=True)
     return 0
@@ -163,6 +185,10 @@ def selftest():
     check("Sam's clip is his cast voice", (clip_for("sam") or "").replace("\\\\", "/").endswith("sam.p241.mp3"))
     check("nobody else's name reaches a path", clip_for("../secrets") is None and clip_for("") is None)
     check("a character with no clip is none", clip_for("nobody") is None)
+    check("an answer splits into its sentences",
+          sentences("So listen. You were here, weren't you? Don't lie.") == ["So listen.", "You were here, weren't you?", "Don't lie."])
+    check("a long sentence is cut at a comma, never mid-word",
+          all(len(x) <= 221 for x in sentences("word, " * 80)) and all(not x.startswith("ord") for x in sentences("word, " * 80)))
     check("a good line parses", parse('{"id":3,"who":"lena","text":" New management. "}') == (3, "lena", "New management."))
     for badline in ('[1]', '{"id":"3","who":"lena","text":"x"}', '{"id":3,"who":"lena","text":"  "}', '{"id":3,"text":"x"}'):
         try:
