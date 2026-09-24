@@ -6,7 +6,7 @@ between them.
 
 ## Overnight
 
-1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second: 79 at your screen size. Stage 1 went from 4 to 22 of 47 done.
+1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second: 79 at your screen size. Stage 1 went from 4 to 24 of 47 done.
 2. **Numbers worth knowing:** the game holds 80 frames a second at your screen size with Nano speaking, but Nano is slower than talk while the game runs. The game uses 4.6 GB of the card and Nano 2.1 GB.
 3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I've carried on with the picks.
 4. **Went wrong:** the scans first went on at half size. Five builds went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. The hill's mist didn't move on either try and is set aside. All the rest is fixed.
@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The per-build performance check now runs with the voice, as your ruling says:** Nano speaks on the same card for the whole capture, and the result records both the frame rate and how fast Nano kept up.
 - 2026-09-24 **Every build now checks the slice against your 60 a second, and the first good reading meets it:** 79 frames a second at your screen size drawn at half and upscaled, with the slowest 1% of frames at 74. It uses 4.6 GB of the card's memory now, up from 3.5, with the scans and the MetaHuman in. With Nano's 2.1 GB beside it, that leaves about 2.7 GB spare.
 - 2026-09-24 **The hill's mist is set aside after two tries; neither changed it.** Tonight's mist is too thin at that distance for its limits to matter. Thickening it would also change the street's far end, which is matched to the sheet. Both settings are back as they were. The hill itself now reads as terraces stepping up a hillside with trees among them; it just isn't hazy like the sheet's.
 - 2026-09-24 **The street's dirt is on in Unreal:** all ten stains stand as decals, with water streaks down the party walls, moss, broken tarmac and the manholes. They're faint, because their strength is the old engine's, copied rather than re-guessed. Say if the street should be dirtier; it's one number.
