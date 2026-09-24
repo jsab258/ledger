@@ -108,6 +108,21 @@ namespace LedgerMhPortrait
 		}
 		if (!GCam.IsValid()) { return; }
 		GCam->SetActorLocationAndRotation(Eye, (Look - Eye).Rotation());
+		// NO SHOT ON A BLINK: every close-up fell at the same point in the
+		// face loop, and on take T3 that point was a blink. For a still, the
+		// face is held at the loop's first frame; the body keeps idling.
+		if (UAnimSequenceBase* FaceIdle = LoadObject<UAnimSequenceBase>(nullptr, kFaceIdle))
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			GPerson->GetComponents(Parts);
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+				if (M == nullptr || M->GetSkeleton() != FaceIdle->GetSkeleton()) { continue; }
+				C->SetPosition(0.0f, false);
+				C->SetPlayRate(0.0f);
+			}
+		}
 		GCam->GetCameraComponent()->SetFieldOfView(bClose ? 28.0f : 34.0f);
 		if (APlayerController* PC = World->GetFirstPlayerController())
 		{
