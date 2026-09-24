@@ -89,7 +89,7 @@ FOR-JAFAR.md opens with "Overnight", five lines.
       tools built and committed (15cec6b6); the Unreal elevation shots
       proven (4b72442c, twelve frames); the pair tried once on Mickey's bay,
       17 of 19 edges within 5 cm. READY; not started.
-- [ ] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines: done,
+- [x] THE "OVERNIGHT" SECTION at the top of FOR-JAFAR.md, five lines: done,
       waiting on him, anything that went wrong.
 
 ## 1. Toward the Hook sheet (stage 1)
@@ -1234,8 +1234,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. Overnight 23-24 Sep: the PS5 corner answered (scans help brick and paint, now street-wide; the gap to KCD2 is shape and set dressing); navigation works; Nano timed on the card (80 fps at 3440x1440 half-res with it running; Nano 1.3 s per s of speech then); MH_Test assembled, in the corner, with a retargeted idle.
-2. Stage 1 at 16 of 47 (stage-check); tonight's visual steps in the queue: whole-street bevels and sooty brick (landed), stains as decals (staging fixed), the hill's fifth try, two crates and a bin; the per-run performance check (capture wait fixed).
-3. Tomorrow's measurement sitting is ready and not started: production/sittings/2026-09-24-three-facades.md, tools/facade-drawing.py, tools/facade-pair.py, production/specs/facade-shots.json (twelve frames proven).
-4. Waiting on Jafar: dressing MH_Test (a/b), where MetaHuman files live, the three voice decisions, what 60 fps at his monitor allows. C: is 98% full (19.7 GB).
-5. Next: judge the queued frames (hill, stains, idle, clutter, perf) and tick what they earn; then stage 1 on - A22.06 edges, A22.11 dirt, A23.16 distance, A08.07 hair (the MetaHuman's).
+1. Overnight 23-24 Sep done: PS5 corner answered (scans on brick and paint street-wide; KCD2 gap is shape and set dressing); navigation works; Nano timed on the card; MH_Test assembled, in the corner with a retargeted idle; every probe run checks the performance ruling (79 fps, MEETS).
+2. Stage 1 at 22 of 47 (stage-check); tonight's look: whole-street bevels, sooty brick, stains as decals, the hill's stepped terraces with trees, crates and a bin. The hill's mist set aside after two tries (needs a measured density pass).
+3. Tomorrow's measurement sitting ready, not started: production/sittings/2026-09-24-three-facades.md; drawing, frames (twelve) and pair tools proven.
+4. Waiting on Jafar: dressing MH_Test, where MetaHuman files live, three voice decisions, what 60 fps allows. C: 98% full. MetaHuman assets live outside git in C:/LedgerTools/mh-assemble (copied in by the workflow).
+5. Next: the facade sitting (his, with the meter); then stage 1 on - A08.07 hair (after the MetaHuman is dressed), A23.16 distance (density pass), the slice's talking (game half).

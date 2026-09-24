@@ -6,11 +6,11 @@ between them.
 
 ## Overnight
 
-1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing. Navigation works. Nano timed on the card: 80 frames a second at your screen size with the voice, but Nano is slower than talk while the game runs. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready. The street's edges are rounded, the far row has sooty brick, the dirt is on, and the hill is rebuilt. Stage 1 went from 4 to 20 of 47 done.
-2. **Still in the build machine:** the clutter, the performance check (its first run captured nothing, now fixed) and the hill's trees. I judge each as it lands.
-3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I'm carrying on with the picks.
-4. **Went wrong:** the scans first went on at half size. Five builds went red over a copy command that had actually worked; their pictures and results were fine, and every build since the fix is green. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. All fixed.
-5. **Your C: drive is 98% full,** under 20 GB free. I've deleted nothing; heavy jobs stop if it drops under 10 GB.
+1. **Done:** the corner's scanned surfaces judged, with brick and paint now on the whole street and the flags dropped; the gap to Kingdom Come is shape and set dressing, not the card. Navigation works. Nano timed on the card. MH_Test is assembled and standing in the corner at ease. Tomorrow's facade sitting is ready and not started. The street has rounded edges, sooty brick on the far row, its dirt switched on, a rebuilt hill and a first bit of clutter. Every build now checks your 60 a second: 79 at your screen size. Stage 1 went from 4 to 22 of 47 done.
+2. **Numbers worth knowing:** the game holds 80 frames a second at your screen size with Nano speaking, but Nano is slower than talk while the game runs. The game uses 4.6 GB of the card and Nano 2.1 GB.
+3. **Waiting on you:** dressing the MetaHuman; where its files live; the three voice questions; what "60 at my monitor" allows. All are under Decisions below, each with my pick, and I've carried on with the picks.
+4. **Went wrong:** the scans first went on at half size. Five builds went red over a copy command that had actually worked. The stop hook held the research session and misread one message. The MetaHuman assembly crashed three times before the full-editor route worked. The hill's mist didn't move on either try and is set aside. All the rest is fixed.
+5. **Your C: drive is 98% full,** under 20 GB free. I've deleted nothing.
 
 ## The plan at a glance
 
