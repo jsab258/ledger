@@ -904,7 +904,9 @@ def licence_row(item, spec, backend, tool_versions, decision_records):
 # must be the entire line, starting at column 0, and fenced code blocks are
 # removed before matching - an EXAMPLE of the marker is not the marker.
 DECISION_MARKER = "TOOL-DECISION:"
-DECISION_GLOBS = ["ledger-v2/respec/decision-register/*.md",
+# The register moved with the old studio into legacy/ on 24 September (its
+# records still bind, CLAUDE.md); both places are read.
+DECISION_GLOBS = ["legacy/studio-v2/respec/decision-register/*.md", "ledger-v2/respec/decision-register/*.md",
                   "game-design/decision-*.md", "production/specs/decision-*.md"]
 DECISION_MARKER_RE = re.compile(
     r"^TOOL-DECISION:[ \t]+([A-Za-z0-9][A-Za-z0-9._-]*)[ \t]*$", re.MULTILINE)
@@ -935,7 +937,7 @@ def find_decision_records(repo):
             except OSError:
                 continue
             for m in DECISION_MARKER_RE.finditer(_FENCE_RE.sub("", t)):
-                out.setdefault(m.group(1).lower(), str(p.relative_to(repo)))
+                out.setdefault(m.group(1).lower(), p.relative_to(repo).as_posix())   # forward slashes on Windows too
     return out
 
 
