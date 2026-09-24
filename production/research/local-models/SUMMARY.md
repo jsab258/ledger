@@ -3,6 +3,20 @@
 The research topic on local models. The full write-up with every source is
 DELIVERY.md beside this file. Written 23 September.
 
+## Measured the next morning (24 September), on a quiet card
+
+- **The worked examples really are slow on your card: 1.4 seconds a line** with
+  nothing else running, the same as last night. The card reads the extra example
+  text slowly. It uses 3.1 GB. Today's model scored 271 this time, not 274:
+  repeated runs at the same settings vary by a few lines.
+- **The same examples lift the paid model too, from 259 to 286 of 299.** Its
+  tidy-but-wrong answers fall from 38 to 12, and it gets faster, 0.7 seconds a
+  line. Leaving out the arguable lines, 258 of 264 with 5 tidy-but-wrong.
+- **So the gap reopens:** with the same help, the paid model is 12 to 15 lines
+  ahead of the free one, and twice as fast. Worked examples are worth adding to
+  the paid router whatever happens with the free one. That would be a change
+  to the game's router, so it's for a sitting of its own. It cost about 30p.
+
 ## What the measurements found (23 September, evening)
 
 You said yes to all three questions, and the experiment ran on your card the

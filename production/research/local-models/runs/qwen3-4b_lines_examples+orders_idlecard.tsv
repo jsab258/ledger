@@ -1,0 +1,300 @@
+mode	moment	kind	want	got	right	valid	ms	text
+prompt	M01	talk	speech	speech	1	1	2401	Morning. You look like you slept in that chair.
+prompt	M01	talk	speech	speech	1	1	1091	Was Mickey always in this early, or is it just you?
+prompt	M01	talk	speech	speech	1	1	1267	that radio's been hissing all night, has Lena had a look at it
+prompt	M01	talk	speech	speech	1	1	977	Cold enough in here to hang meat.
+prompt	M01	verb's words, not the verb	speech	set_cut(fair)	0	1	1403	What sort of cut did Mickey used to give you lot, out of interest?
+prompt	M01	oblique verb	set_cut(generous)	set_cut(generous)	1	1	1428	You've carried this place since Mickey went. From Friday your envelope gets fatter.
+prompt	M01	oblique verb	leave	speech	0	1	1095	Right, that's me. Hold the fort.
+prompt	M01	plain verb	set_cut(fair)	set_cut(fair)	1	1	1467	I'm setting your cut to fair, Rocco, same as the rest of the crew.
+prompt	M01	argument	set_cut(skim)	set_cut(skim)	1	1	1550	Office takes a bit extra off the top of yours from now on. Quietly, mind. It won't show on the sheet.
+prompt	M01	novel	novel	novel/crew/attention_up	1	1	1591	Give me the keys, I'll do the early airport run myself.
+prompt	M02	talk	speech	speech	1	1	2479	Smells like the whole North Sea in here. Busy morning?
+prompt	M02	talk	speech	speech	1	1	1120	How long's your family had this pitch, then?
+prompt	M02	talk	speech	speech	1	1	1244	You know Rocco? Drives for us at Mickey's.
+prompt	M02	talk	speech	speech	1	1	1119	gulls are bold today, one nearly had my hat
+prompt	M02	verb's words, not the verb	speech	speech	1	1	1143	Honestly, I've never paid anybody off in my life. Never needed to.
+prompt	M02	plain verb	pay_off	pay_off	1	1	1749	I'll give you ninety quid to stop telling people I torched that van.
+prompt	M02	oblique verb	lean_on	lean_on	1	1	1731	Lovely steady hands for gutting. You'd want to keep them that way, so the van story stops with you.
+prompt	M02	oblique verb	plant_doubt	plant_doubt	1	1	1794	Funny, I heard the van's owner lit it himself for the insurance. Mention that to your customers, eh?
+prompt	M02	oblique verb	pay_off	plant_doubt	0	1	1737	Couple of folded notes under your scales there. Let's say you've gone off the subject of that van.
+prompt	M02	novel	novel	novel/none/nothing	1	1	1356	Here, give us that crate, I'll carry it out to your van for you.
+prompt	M03	talk	speech	speech	1	1	2253	How long did you work for Mickey, all told?
+prompt	M03	talk	speech	speech	1	1	1267	Your handwriting's neater than his, I'll give you that.
+prompt	M03	talk	speech	speech	1	1	1141	morning lena. kettle's not on then
+prompt	M03	talk	speech	speech	1	1	1116	Did Mickey do all this bookkeeping by hand, every night?
+prompt	M03	verb's words, not the verb	speech	speech	1	1	1116	Is it true Mickey used to write off debts for anyone with a sob story?
+prompt	M03	plain verb	collect_debt	collect_debt	1	1	1429	You owe the book sixty quid, Lena. I need it back today.
+prompt	M03	oblique verb	collect_debt	collect_debt	1	1	1404	Sixty against your name in here. I'd like it squared before the weekend, if you can.
+prompt	M03	oblique verb	forgive_debt	forgive_debt	1	1	1479	Tear out your page. Mickey would've wanted it, and so do I.
+prompt	M03	oblique verb	forgive_debt	forgive_debt	1	1	1441	That sixty you owe? Gone. You've earned it ten times over.
+prompt	M03	novel	novel	speech	0	1	1192	Pass me the ledger, I'm locking it in the safe tonight.
+prompt	M04	talk	speech	speech	1	1	2271	Is it always this dead on a wet Tuesday?
+prompt	M04	talk	speech	speech	1	1	1116	That nearside wiper's going to give up any minute.
+prompt	M04	talk	speech	speech	1	1	1063	how long you been driving for Mickey's
+prompt	M04	talk	speech	speech	1	1	1117	Rocco reckons you know every back street in the Hook.
+prompt	M04	verb's words, not the verb	speech	speech	1	1	1141	Mickey never walked away from a driver in trouble, did he?
+prompt	M04	plain verb	collect_debt	collect_debt	1	1	1443	You owe the book forty-five quid. Pay up.
+prompt	M04	oblique verb	collect_debt	collect_debt	1	1	1469	Forty-five, wasn't it? I'll take it out of tonight's fares if that's easier on you.
+prompt	M04	oblique verb	lean_on	lean_on	1	1	1748	Whatever you've been saying about me in the back of that cab, it stops now, or you'll not be driving anything.
+prompt	M04	oblique verb	leave	leave	1	1	1343	Right, I'm getting out of this rain. Mind how you go.
+prompt	M04	novel	novel	novel/cash/standing_up	1	1	1591	Give us your keys, I'll swap that wiper blade for you now.
+prompt	M05	talk	speech	speech	1	1	2472	Evening, Sam. You're out late.
+prompt	M05	talk	speech	speech	1	1	1198	Quiet street tonight. Where's everyone got to?
+prompt	M05	talk	speech	speech	1	1	1118	you still living above the chemist?
+prompt	M05	talk	speech	speech	1	1	1167	Rocco says you used to knock about with the Parade lot, back in the day.
+prompt	M05	verb's words, not the verb	speech	speech	1	1	1315	Somebody told me you used to inform for the Old Bill. That true?
+prompt	M05	plain verb	ask_about(the break-in)	ask_about(the break-in)	1	1	1830	What did you see the night of the break-in, Sam?
+prompt	M05	oblique verb	ask_about(the van)	ask_about(the van)	1	1	1499	That van that went up. You were out here that night, so what did your eyes tell you?
+prompt	M05	oblique verb	inform(Danny Ro)	inform(Danny Ro)	1	1	1649	Time somebody put Danny Ro's name in front of the law. I'll see to it tonight.
+prompt	M05	argument	inform(Sera Kest)	inform(Sera Kest)	1	1	1569	Not Danny. It's Sera Kest the coppers need to hear about, and they'll hear it from me.
+prompt	M05	novel	novel	novel/none/nothing	1	1	1486	Here, have my scarf, you're shivering.
+prompt	M06	talk	speech	speech	1	1	2195	Morning, Ada. Mind if I sit?
+prompt	M06	talk	speech	speech	1	1	1057	Is the tea always this strong in here?
+prompt	M06	talk	speech	speech	1	1	1056	How's Noor getting on at the paper?
+prompt	M06	talk	speech	speech	1	1	1080	You've known this street longer than most. Has it changed much?
+prompt	M06	talk	speech	speech	1	1	1057	sam says you knew mickey before any of us
+prompt	M06	talk	speech	speech	1	1	1106	Rain's meant to clear by dinner, apparently.
+prompt	M06	talk	speech	speech	1	1	1057	What did you do before all this, Ada?
+prompt	M06	talk	speech	speech	1	1	1105	I still can't find my way round the Hook without a map.
+prompt	M06	novel	novel	speech	0	1	1586	Let me settle your bill today, and Sam's while I'm at it.
+prompt	M06	novel	novel	novel/standing/standing_up	1	1	1598	Hold still, I'll wedge a matchbox under that wobbly table leg.
+prompt	M07	talk	speech	speech	1	1	2399	Busy morning in the harbour office?
+prompt	M07	talk	speech	speech	1	1	1116	Is it always this cold in here, or is the heating off?
+prompt	M07	talk	speech	speech	1	1	1019	What time does the Rotterdam boat usually come in?
+prompt	M07	talk	speech	speech	1	1	1115	you've got a good view of the water from that counter
+prompt	M07	verb's words, not the verb	speech	speech	1	1	1167	Do folk round here get paid off often? I'm still learning how things work.
+prompt	M07	plain verb	pay_off	pay_off	1	1	1769	I'll pay you a hundred and fifty quid to stop talking about me. Deal?
+prompt	M07	oblique verb	use_hook	use_hook	1	1	1751	Funny how nobody's ever checked your overtime sheets against the gate log. I have.
+prompt	M07	oblique verb	pay_off	speech	0	1	1090	Envelope under this timetable's yours. Find something else to talk about.
+prompt	M07	oblique verb	leave	leave	1	1	1321	Right, that's me. I'll let you get back to your forms.
+prompt	M07	novel	novel	novel/standing/standing_up	1	1	1495	Shift over, I'll help you carry those files through to the back.
+prompt	M08	talk	speech	speech	1	1	2502	Bit parky out here, isn't it?
+prompt	M08	talk	speech	speech	1	1	1173	How's your back holding up these days?
+prompt	M08	talk	speech	ask_about(the warehouse)	0	1	1451	Who left this skip full of old tyres, any idea?
+prompt	M08	talk	speech	speech	1	1	1157	lena says you've been doing doubles all week
+prompt	M08	verb's words, not the verb	speech	ask_about(the fire)	0	1	1536	Everybody's got a theory about the fire. I'm sick of hearing them.
+prompt	M08	plain verb	ask_about(the fire)	ask_about(the fire)	1	1	1558	What did you see at the fire, Rocco?
+prompt	M08	oblique verb	ask_about(the warehouse)	ask_about(the warehouse)	1	1	1544	You were round the warehouse Thursday night. Tell me what you clocked.
+prompt	M08	oblique verb	set_cut(fair)	set_cut(fair)	1	1	1492	Your share's been all over the place. From now on you get what's fair, same as the others.
+prompt	M08	argument	set_cut(skim)	set_cut(skim)	1	1	1688	The office is skimming yours from now on, Rocco. Take it up with me if you don't like it.
+prompt	M08	novel	novel	novel/none/nothing	1	1	1648	Hold the torch while I get this padlock off the gate.
+prompt	M09	talk	speech	speech	1	1	2626	Grey one this morning, Father.
+prompt	M09	talk	speech	speech	1	1	1104	Is the roof still letting the rain in?
+prompt	M09	talk	speech	speech	1	1	1260	June says you've been here thirty years. That right?
+prompt	M09	talk	speech	speech	1	1	1082	do you get many in on a weekday
+prompt	M09	verb's words, not the verb	speech	speech	1	1	1210	I didn't see much at the funeral myself. I was stood right at the back.
+prompt	M09	plain verb	ask_about(the break-in)	ask_about(the break-in)	1	1	1529	What did you see at the break-in, Father?
+prompt	M09	oblique verb	ask_about(the funeral)	ask_about(the funeral)	1	1	1490	You were at the front for Mickey's service. Notice anyone there who shouldn't have been?
+prompt	M09	oblique verb	ask_about(the break-in)	ask_about(the break-in)	1	1	1490	The night they forced your vestry door, did you catch sight of anyone?
+prompt	M09	argument	ask_about(the funeral)	ask_about(the funeral)	1	1	1502	Not the break-in. The funeral. What did you see there?
+prompt	M09	novel	novel	novel/standing/standing_up	1	1	1514	Here, let me carry those hymn books in for you.
+prompt	M10	talk	speech	speech	1	1	2585	Morning. Quiet on the parade today.
+prompt	M10	talk	speech	speech	1	1	1136	How long have you had the shop?
+prompt	M10	talk	speech	speech	1	1	1164	Noor says the Gazette's selling out by nine these days.
+prompt	M10	talk	speech	speech	1	1	1053	your sign's faded something rotten
+prompt	M10	verb's words, not the verb	speech	speech	1	1	1185	Mickey used to let debts ride for months, didn't he? Soft touch.
+prompt	M10	plain verb	collect_debt	collect_debt	1	1	1682	You owe Mickey's book a hundred and twenty. I'm here to collect it.
+prompt	M10	oblique verb	forgive_debt	forgive_debt	1	1	1505	That hundred and twenty in the book? Wipe it. Call it a fresh start between us.
+prompt	M10	oblique verb	pay_off	pay_off	1	1	1808	Eighty quid, folded in this Gazette. Take it, and the talk about me stops at your counter.
+prompt	M10	oblique verb	lean_on	lean_on	1	1	1713	Lot of glass in this shop front. You'll want to stop discussing me with your customers.
+prompt	M10	novel	novel	novel/none/nothing	1	1	1561	Give us that bundle, I'll get your papers onto the rack for you.
+prompt	M11	talk	speech	speech	1	1	2293	Those things'll see you off before any villain does, you know.
+prompt	M11	talk	speech	speech	1	1	1164	you lot ever actually go home, or do you sleep in there?
+prompt	M11	talk	speech	speech	1	1	1115	How long have you been working the Hook, then?
+prompt	M11	talk	speech	speech	1	1	1115	Mickey used to say you were the only straight copper in Meridian. Was he right?
+prompt	M11	verb's words, not the verb	speech	speech	1	1	1167	Half the street thinks I've come down here to give you names. I haven't. Just walking past.
+prompt	M11	oblique verb	inform(Sera Kest)	inform(Sera Kest)	1	1	1530	You might want to look at what comes off Sera Kest's boats after midnight. That's all I'm saying.
+prompt	M11	oblique verb	leave	leave	1	1	1216	Enjoy your smoke, Detective. I'll leave you to it.
+prompt	M11	plain verb	inform(Aldous Vane)	inform(Aldous Vane)	1	1	1723	I want to inform on Aldous Vane. He's been taking backhanders on the harbour contracts.
+prompt	M11	argument	inform(Danny Ro)	inform(Danny Ro)	1	1	1539	Not Kest, not Vane. It's Danny Ro you want for the break-in. You didn't get it from me.
+prompt	M11	novel	novel	novel/none/nothing	1	1	1536	Here, that lighter's had it. Let me give you a light off mine.
+prompt	M12	talk	speech	speech	1	1	2367	You always keep the engine running, or is that just for me?
+prompt	M12	talk	speech	speech	1	1	1107	So what does a man like you actually do all day?
+prompt	M12	talk	speech	speech	1	1	1060	Mickey never once mentioned you. Funny, that.
+prompt	M12	talk	speech	speech	1	1	1083	Nice motor. Company car, is it?
+prompt	M12	talk	speech	speech	1	1	1060	What's Sera Kest to you, then? Friend or business?
+prompt	M12	talk	speech	speech	1	1	1059	heard you know everyone worth knowing in this town
+prompt	M12	talk	speech	speech	1	1	1060	Rain's coming in off the harbour again. Typical Meridian.
+prompt	M12	talk	speech	speech	1	1	1083	Danny Ro seems to think he runs the Parade now. Does he?
+prompt	M12	novel	novel	novel/standing/standing_down	1	1	1540	Budge over, I'm getting in out of the rain.
+prompt	M12	novel	novel	speech	0	1	1195	I pass him the envelope of Mickey's old papers. Tell me what these mean.
+prompt	M13	talk	speech	speech	1	1	2279	Nice view from up here. You can see half the Hook.
+prompt	M13	talk	speech	speech	1	1	1068	How long have you been running the Parade, then?
+prompt	M13	talk	speech	speech	1	1	1007	Rocco says you used to wash cabs for Mickey. That true?
+prompt	M13	talk	speech	speech	1	1	1197	Your lads always this chatty, Danny?
+prompt	M13	verb's words, not the verb	speech	threaten(quiet)	0	1	1441	Nobody's threatening anybody, Danny. Tell your mates to calm down.
+prompt	M13	oblique verb	threaten(quiet)	threaten(loud)	0	1	1506	just between us, Danny, keep your lot off my rank or they'll be picking their teeth up off this concrete
+prompt	M13	oblique verb	leave	speech	0	1	1122	Right, that's me. Enjoy the view, lads.
+prompt	M13	plain verb	leave	leave	1	1	1332	I'm walking out of here, Danny. We're finished talking.
+prompt	M13	argument	threaten(loud)	threaten(loud)	1	1	1624	OI, DANNY! ANY OF YOUR RATS TOUCH MY CABS AGAIN AND I'LL PUT THE LOT OF YOU IN HOSPITAL!
+prompt	M13	novel	novel	novel/none/nothing	1	1	1612	I chuck him the keys to Mickey's old Granada. Call it a peace offering.
+prompt	M14	talk	speech	speech	1	1	2460	Early start for you, then? Those crates look a weight.
+prompt	M14	talk	speech	speech	1	1	1088	How long've you worked Copper Row?
+prompt	M14	talk	speech	speech	1	1	1141	Sam says you know everybody on this street by their first name.
+prompt	M14	talk	speech	speech	1	1	1140	bloody freezing this morning isnt it
+prompt	M14	verb's words, not the verb	speech	ask_about(the lorry)	0	1	1618	Everyone keeps going on at me about that lorry. It's doing my head in.
+prompt	M14	oblique verb	ask_about(the fight)	ask_about(the fight)	1	1	1541	Heard there was a bit of a scrap round here last night. Catch any of it?
+prompt	M14	oblique verb	pay_off(50)	pay_off(50)	1	1	1475	There's a fifty in it for you if last night slips your mind.
+prompt	M14	plain verb	ask_about(the lorry)	ask_about(the lorry)	1	1	1630	What did you see of that lorry last night?
+prompt	M14	argument	pay_off(100)	pay_off(100)	1	1	1529	That's a hundred, all in tenners. Your eyes were shut last night, weren't they?
+prompt	M14	novel	novel	novel/standing/standing_up	1	1	1576	Let me grab the other end of that crate for you.
+prompt	M15	talk	speech	speech	1	1	2402	He never threw a thing away, did he?
+prompt	M15	talk	speech	speech	1	1	1001	How are you holding up, June?
+prompt	M15	talk	speech	speech	1	1	1166	Father Emil did a lovely service, I thought. Mickey would've pretended to hate it.
+prompt	M15	talk	speech	speech	1	1	1167	Is that Mickey in the photo on the mantel? He looks about twenty.
+prompt	M15	verb's words, not the verb	speech	speech	1	1	1195	I won't ask you about his last week, June. Not today.
+prompt	M15	oblique verb	ask_about(Mickey's last week)	ask_about(Mickey's last week)	1	1	1659	Was he himself, those last few days before it happened?
+prompt	M15	oblique verb	leave	leave	1	1	1434	I'll let you get on with the packing. Take care of yourself, June.
+prompt	M15	plain verb	ask_about(the letter)	ask_about(the letter)	1	1	1428	What do you know about the letter Mickey left?
+prompt	M15	argument	ask_about(Mickey's last week)	ask_about(Mickey's last week)	1	1	1458	Forget the letter for now. What was he doing in his last week?
+prompt	M15	novel	novel	novel/standing/standing_up	1	1	1520	Here, I'll carry these boxes down to the van for you.
+prompt	M16	talk	speech	speech	1	1	2495	Long day. You always the last one out?
+prompt	M16	talk	speech	speech	1	1	1163	How many years did you keep the books for Mickey?
+prompt	M16	talk	speech	speech	1	1	1141	Rocco reckons Tuesday nights are getting busier. You seeing that?
+prompt	M16	talk	speech	speech	1	1	1219	your handwriting's a lot neater than mine ever was
+prompt	M16	verb's words, not the verb	speech	speech	1	1	1220	Mickey never grassed on his own drivers, did he?
+prompt	M16	oblique verb	set_cut(generous)	set_cut(generous)	1	1	1511	The lads have earned it this month. Put a bit extra in each of those envelopes.
+prompt	M16	oblique verb	inform(Sam)	inform(Sam)	1	1	1824	Somebody ought to let the station know what Sam's been doing on the side, and it's going to be me.
+prompt	M16	plain verb	inform(Rocco)	inform(Rocco)	1	1	1753	I'm going to the police about Rocco. They can have him.
+prompt	M16	argument	set_cut(skim)	set_cut(skim)	1	1	1542	Take a bit off the top of every envelope before they go out. The book needs it more than they do.
+prompt	M16	novel	novel	novel/none/nothing	1	1	1606	I'll drop the envelopes round to the lads myself on my way home.
+prompt	M17	talk	speech	speech	1	1	2305	Busy one this morning, love. Is it always like this?
+prompt	M17	talk	speech	speech	1	1	1121	Been running this place long?
+prompt	M17	talk	speech	speech	1	1	1096	Is Ada about today? Haven't seen her since the funeral.
+prompt	M17	talk	speech	speech	1	1	1121	Noor still come in for her breakfast of a morning?
+prompt	M17	verb's words, not the verb	speech	speech	1	1	1119	Don't look so nervous, love. I'm not here to pay anybody off.
+prompt	M17	oblique verb	plant_doubt	plant_doubt	1	1	1795	Funny, I heard it was one of Kest's lot that did that van, not me. Pass it on.
+prompt	M17	oblique verb	pay_off	pay_off	1	1	1788	Put this towards a new urn, and maybe let that story about me go cold.
+prompt	M17	oblique verb	plant_doubt	plant_doubt	1	1	1739	You know who really had it in for that van's owner? His own brother-in-law. Worth mentioning to the queue.
+prompt	M17	plain verb	pay_off	pay_off	1	1	1710	I'll pay you to stop repeating what you heard about me. Sixty do it?
+prompt	M17	novel	novel	novel/standing/attention_up	1	1	1675	Here, I'll clear those back tables for you while you're rushed off your feet.
+prompt	M18	talk	speech	speech	1	1	2311	Nice office. Bit cold for my taste.
+prompt	M18	talk	speech	speech	1	1	1166	How long has your lot had the docks, then?
+prompt	M18	talk	speech	speech	1	1	1165	Danny Ro talks about you like you're the weather. Always there, never nice.
+prompt	M18	talk	speech	speech	1	1	1170	what's aldous vane to you anyway
+prompt	M18	verb's words, not the verb	speech	speech	1	1	1091	I didn't come here to threaten you, Sera. I came to talk business.
+prompt	M18	oblique verb	use_hook	use_hook	1	1	1603	I know about the Thursday boat, Sera. So let's be reasonable about the rank, shall we?
+prompt	M18	oblique verb	leave	speech	0	1	1208	Right, that's me. Don't get up.
+prompt	M18	plain verb	use_hook	use_hook	1	1	1640	I know your secret, and I'm going to use it against you.
+prompt	M18	argument	threaten(quiet)	threaten(quiet)	1	1	1627	Just between the two of us, Sera, lay a finger on my drivers and you'll be fishing yourself out of the harbour.
+prompt	M18	novel	novel	speech	0	1	1144	I'm switching that heater on, it's freezing in here.
+prompt	M19	talk	speech	speech	1	1	2308	Do you ever actually go home, Noor?
+prompt	M19	talk	speech	speech	1	1	1127	How's the paper doing these days? Still selling?
+prompt	M19	talk	speech	speech	1	1	1149	Mara Ellis reckons you're the only honest reporter left in Meridian.
+prompt	M19	talk	speech	speech	1	1	1127	thats a lot of proofs. deadline tonight?
+prompt	M19	verb's words, not the verb	speech	ask_about(the fire)	0	1	1469	Everybody in the Hook wants to talk about that fire. I'm sick of hearing about it.
+prompt	M19	oblique verb	plant_doubt	REJECTED:unknown argument	0	0	1526	Between us, the word on the quay is that van was an insurance job. Might be worth a paragraph.
+prompt	M19	oblique verb	ask_about(the fire)	ask_about(the fire)	1	1	1511	You were down there when the warehouse went up, weren't you? Go on, what was it like?
+prompt	M19	plain verb	plant_doubt	REJECTED:unknown argument	0	0	1529	I need a different story going round about that van. Help me plant some doubt.
+prompt	M19	argument	ask_about(the council vote)	ask_about(the council vote)	1	1	1628	Not the fire, I mean the council vote. What did you see in that chamber?
+prompt	M19	novel	novel	novel/none/nothing	1	1	1563	I'll run these proofs down to the print room for you.
+prompt	M20	talk	speech	speech	1	1	2440	Lovely roses. You do those yourself?
+prompt	M20	talk	speech	speech	1	1	1117	Rocco says you used to drive for Mickey, back in the day.
+prompt	M20	talk	speech	speech	1	1	1141	Cold out here. How's the back these days?
+prompt	M20	talk	speech	speech	1	1	1167	terrible about the bus fares going up again, isn't it
+prompt	M20	verb's words, not the verb	speech	speech	1	1	1143	Don't panic, I'm not here about what you owe. Just saying hello.
+prompt	M20	oblique verb	collect_debt	collect_debt	1	1	1517	You know why I'm on your step. Two hundred, and I'll be on my way.
+prompt	M20	oblique verb	forgive_debt	forgive_debt	1	1	1513	Mickey's gone, and so's your page in his book. Consider yourself square.
+prompt	M20	plain verb	collect_debt	collect_debt	1	1	1400	I've come to collect the two hundred you owe Mickey's.
+prompt	M20	argument	threaten(loud)	threaten(loud)	1	1	1585	LET THE WHOLE STREET HEAR IT: CROSS ME AGAIN AND YOU WON'T WALK RIGHT FOR A MONTH.
+prompt	M20	novel	novel	novel/standing/standing_up	1	1	1615	Here, let me fix that gate for you, it's hanging off its hinge.
+prompt	M21	talk	speech	speech	1	1	2206	Afternoon, Elias. Mind if I sit? My feet are finished.
+prompt	M21	talk	speech	speech	1	1	1077	How long's this place been shut up, then?
+prompt	M21	talk	speech	speech	1	1	971	You knew Mickey long?
+prompt	M21	talk	speech	speech	1	1	1057	seen noor about today?
+prompt	M21	talk	speech	speech	1	1	1099	Cold enough to crack the paint on this bench.
+prompt	M21	talk	speech	speech	1	1	1056	What do you do with yourself all day, sitting out here?
+prompt	M21	talk	speech	speech	1	1	1077	They say the council want to flog the building. You heard anything?
+prompt	M21	talk	speech	speech	1	1	1097	Funny old street. Quieter than I expected, this end.
+prompt	M21	novel	novel	novel/none/nothing	1	1	1441	Here, have my scarf round your neck, you're shivering.
+prompt	M21	novel	novel	novel/none/nothing	1	1	1497	Come on, I'll run you home in the cab before it gets dark.
+prompt	M22	talk	speech	speech	1	1	2438	Long meeting. Do they always drone on like that?
+prompt	M22	talk	speech	speech	1	1	1058	Mara Ellis had plenty to say tonight, didn't she?
+prompt	M22	talk	speech	speech	1	1	1104	How long have you sat on the council, Mr Vane?
+prompt	M22	talk	speech	speech	1	1	1055	nice room this. smells of polish and old men's coats
+prompt	M22	verb's words, not the verb	speech	use_hook	0	1	1756	Honestly, what I know about council business would fit on the back of a bus ticket.
+prompt	M22	plain verb	use_hook	use_hook	1	1	1538	I know what you did, Vane, and I'll use it against you if you don't help me.
+prompt	M22	oblique verb	use_hook	speech	0	1	1106	Shame if the committee found out where the money for your extension really came from, Aldous.
+prompt	M22	oblique verb	use_hook	use_hook	1	1	1742	I've read the letters from the harbour contractor, Mr Vane. I think you'll vote the way I ask.
+prompt	M22	oblique verb	leave	leave	1	1	1232	I'll let you get home, councillor. Evening.
+prompt	M22	novel	novel	novel/standing/attention_up	1	1	1655	Give me those files, I'll carry them down to your car for you.
+prompt	M23	talk	speech	speech	1	1	2671	Cold one. How long you been driving for the market?
+prompt	M23	talk	speech	speech	1	1	1192	Smells like it's been a good week for mackerel.
+prompt	M23	talk	speech	speech	1	1	1223	You on your own today, or is Rocco about somewhere?
+prompt	M23	talk	speech	speech	1	1	1141	nice van. bedford, is it?
+prompt	M23	verb's words, not the verb	speech	speech	1	1	1252	Don't look so worried, I'm not here to lean on anyone. Just cutting through to the market.
+prompt	M23	plain verb	ask_about(the boat)	ask_about(the boat)	1	1	1556	Tell me what you saw on that boat.
+prompt	M23	oblique verb	pay_off(160)	pay_off(160)	1	1	1867	A hundred and sixty quid says your memory of Tuesday has gone a bit foggy. Deal?
+prompt	M23	oblique verb	threaten(quiet)	threaten(quiet)	1	1	1692	Just between you and me, nice and quiet: one more word about what you saw and you'll regret it.
+prompt	M23	argument	threaten(loud)	threaten(loud)	1	1	1723	OI! EVERYONE ON THIS BAY CAN HEAR IT! YOU OPEN YOUR MOUTH AGAIN AND I'LL BREAK YOUR BLOODY ARMS!
+prompt	M23	novel	novel	novel/standing/standing_up	1	1	1646	Here, let me help you get these boxes into the back of the van.
+prompt	M24	talk	speech	speech	1	1	2185	Anything on that radio worth hearing, Rocco?
+prompt	M24	talk	speech	speech	1	1	1106	Where's Lena got to tonight?
+prompt	M24	talk	speech	speech	1	1	1084	Is Sam on the late shift or has he knocked off?
+prompt	M24	talk	speech	speech	1	1	1061	How long have you been sat behind this desk?
+prompt	M24	talk	speech	speech	1	1	1159	that radios been crackling since i walked in
+prompt	M24	talk	speech	speech	1	1	1085	Busy night, or is it just the rain keeping folk in?
+prompt	M24	talk	speech	speech	1	1	1036	What was Mickey like to work for, honestly?
+prompt	M24	talk	speech	speech	1	1	1084	Does anyone ever actually ring for a cab from the phone box outside?
+prompt	M24	novel	novel	novel/none/nothing	1	1	1626	Pass us the screwdriver, I'll have a go at fixing that aerial.
+prompt	M24	novel	novel	speech	0	1	1265	I'll take the next fare myself. You put your feet up.
+prompt	M25	talk	speech	speech	1	1	2227	How long's your family had this shop?
+prompt	M25	talk	speech	speech	1	1	1123	Lena says you're one of the old faces round here.
+prompt	M25	talk	speech	speech	1	1	1096	busy spring? everyone seems to be painting their front doors
+prompt	M25	verb's words, not the verb	speech	speech	1	1	1304	Relax, I'm not here about the money today. Just passing.
+prompt	M25	plain verb	collect_debt	collect_debt	1	1	1613	You owe the book seventy-five quid. I'm here to collect it.
+prompt	M25	oblique verb	collect_debt	collect_debt	1	1	1684	Lena tells me there's a small matter of seventy-five outstanding. Shall we settle it now?
+prompt	M25	oblique verb	lean_on	lean_on	1	1	1697	Whatever you saw Rocco do last week, you didn't see it. Be a pity about all this glass.
+prompt	M25	oblique verb	leave	leave	1	1	1110	I'll leave you to your customers. Ta-ra.
+prompt	M25	novel	novel	speech	0	1	1233	I'll take a tin of that green paint and a box of nails, please.
+prompt	M26	talk	speech	speech	1	1	2279	Quiet one tonight, Sam. You all right?
+prompt	M26	talk	speech	speech	1	1	1026	Heard from Lena at all today?
+prompt	M26	talk	speech	speech	1	1	1087	How long you been driving for Mickey's?
+prompt	M26	talk	speech	speech	1	1	1219	these chairs were old when mickey bought them weren't they
+prompt	M26	verb's words, not the verb	speech	ask_about(the fight)	0	1	1537	Honestly, I'm sick to death of hearing about that fight.
+prompt	M26	plain verb	ask_about(the stranger)	ask_about(the stranger)	1	1	1512	What did you see of that stranger who came in here?
+prompt	M26	oblique verb	set_cut(generous)	set_cut(generous)	1	1	1484	You've carried this place, Sam. From now on you keep a bigger share of your fares.
+prompt	M26	oblique verb	leave	speech	0	1	1243	I'm away home, Sam. Don't let the phone bite.
+prompt	M26	argument	set_cut(skim)	set_cut(skim)	1	1	1570	The office is taking an extra slice off your fares from now on. Sorry, times are tight.
+prompt	M26	novel	novel	speech	0	1	1165	Sit there, I'll make you a cup of tea. You look done in.
+prompt	M27	talk	speech	speech	1	1	2299	Has the number twelve been through yet?
+prompt	M27	talk	speech	speech	1	1	1089	Freezing in this shelter. The wind comes straight off the harbour.
+prompt	M27	talk	speech	speech	1	1	1087	You lived round here long?
+prompt	M27	talk	speech	speech	1	1	1116	Seen Noor lately? She used to get this bus.
+prompt	M27	verb's words, not the verb	speech	speech	1	1	1112	I doubt the bus'll come before dark, to be honest.
+prompt	M27	plain verb	lean_on	lean_on	1	1	1676	Keep what you saw to yourself, or you'll regret it. I mean that.
+prompt	M27	oblique verb	lean_on	lean_on	1	1	1728	Lot of people on this road talk. Lot of them end up wishing they hadn't. You're not one of them, are you?
+prompt	M27	oblique verb	plant_doubt	plant_doubt	1	1	1766	Funny, I heard it wasn't Rocco at all that night. Word is he was across town the whole time.
+prompt	M27	oblique verb	plant_doubt	plant_doubt	1	1	1507	between us, the story going round has it backwards. ask yourself who gains from blaming Rocco
+prompt	M27	novel	novel	novel/none/nothing	1	1	1445	Here, take my umbrella, I'm only going round the corner.
+prompt	M28	talk	speech	speech	1	1	2123	How are you holding up, Lena?
+prompt	M28	talk	speech	speech	1	1	1054	Good turnout. More than I expected for Mickey.
+prompt	M28	talk	speech	speech	1	1	1077	Father Emil said some good words, didn't he?
+prompt	M28	talk	speech	speech	1	1	1156	Who's June? She keeps looking over here.
+prompt	M28	talk	speech	speech	1	1	1055	Did Mickey ever talk about me?
+prompt	M28	talk	speech	speech	1	1	1557	i didnt really know him, which feels wrong standing here
+prompt	M28	talk	speech	speech	1	1	1029	Those sandwiches have seen better days.
+prompt	M28	talk	speech	speech	1	1	1077	What happens to the office now, do you reckon?
+prompt	M28	novel	novel	speech	0	1	1182	Let me fetch you a cup of tea and a slice of that cake.
+prompt	M28	novel	novel	novel/none/nothing	1	1	1687	I'll help stack these chairs so June can get off home.
+prompt	M29	talk	speech	speech	1	1	2693	Bit grim down here. Who did the painting on the walls?
+prompt	M29	talk	speech	speech	1	1	1168	You waiting for someone, or do you just like the view?
+prompt	M29	talk	speech	speech	1	1	1222	Cold place to stand about all day.
+prompt	M29	talk	speech	speech	1	1	1142	what's the parade like after dark these days
+prompt	M29	verb's words, not the verb	speech	speech	1	1	1196	Danny Ro? Never met the man. Is he as mad as they say?
+prompt	M29	plain verb	pay_off(40)	pay_off(40)	1	1	1740	Forty quid to keep your mouth shut about seeing me here.
+prompt	M29	oblique verb	threaten(quiet)	threaten(quiet)	1	1	1640	Nice and quiet now, just you and me. Breathe a word about tonight and you'll wish you hadn't.
+prompt	M29	oblique verb	inform(Danny Ro)	inform(Danny Ro)	1	1	1785	Danny Ro's had his run. I'm going to have a word with a detective I know about him.
+prompt	M29	argument	threaten(loud)	threaten(loud)	1	1	1784	OI! I'M SAYING THIS SO THE WHOLE UNDERPASS HEARS IT - YOU TALK AND YOU'RE FINISHED!
+prompt	M29	novel	novel	speech	0	1	1311	Hold still, let me have a look at that cut on your hand.
+prompt	M30	talk	speech	speech	1	1	2635	What's the film? I can't make head nor tail of it.
+prompt	M30	talk	speech	speech	1	1	1129	Do you always do business during the pictures?
+prompt	M30	talk	speech	speech	1	1	1207	Sera Kest said I'd find you back here.
+prompt	M30	talk	speech	speech	1	1	1042	these seats are murder on the back
+prompt	M30	verb's words, not the verb	speech	speech	1	1	1236	Nobody ever informs on anybody in the Hook, do they? Funny place.
+prompt	M30	plain verb	inform(Sera Kest)	inform(Sera Kest)	1	1	1816	I'm going to tell the police what Sera Kest has been up to.
+prompt	M30	oblique verb	use_hook	use_hook	1	1	1580	That little business with the kiosk takings. I know about it, and I think you'll help me now.
+prompt	M30	oblique verb	leave	leave	1	1	1309	Enjoy the rest of the film. I'll see myself out.
+prompt	M30	argument	inform(Aldous Vane)	inform(Aldous Vane)	1	1	1734	Councillor Vane's name is going to a detective sergeant I know. All of it, the lot.
+prompt	M30	novel	novel	speech	0	1	1262	Here, I brought you a choc ice from the kiosk. Go on, take it.
