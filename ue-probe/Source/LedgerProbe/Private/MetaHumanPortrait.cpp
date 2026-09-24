@@ -5,6 +5,7 @@
 // facing the road, idling, and a camera put in front of the face and then
 // further back. Frames: ue-portrait-<who>-close.png and -mid.png.
 #include "MetaHumanPortrait.h"
+#include "LedgerJacket.h"
 
 #include "Animation/AnimSequenceBase.h"
 #include "Camera/CameraActor.h"
@@ -82,6 +83,7 @@ namespace LedgerMhPortrait
 				C->SetPosition(1.5f, false);
 			}
 		}
+		LedgerJacket::Wear(A, kWho[GAt]);
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s body idle %s, face idle %s"), kWho[GAt],
 			Idles[0] != nullptr ? TEXT("loaded") : TEXT("MISSING"), Idles[1] != nullptr ? TEXT("loaded") : TEXT("MISSING"));
 		GPerson = A;
