@@ -27,7 +27,7 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-24 **MH_Test stands in the corner, in grey underwear, bald, arms out in the default pose.** That's how he left MetaHuman Creator: no clothes or hair were chosen, and he has no idle animation yet. The face and skin read as a real person beside the street's other people.
+- 2026-09-24 **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.
   - Meanwhile he stays in the corner frames only, and he now stands at ease instead of with his arms out: Elizabeth's idle, carried onto his body by the engine's retargeting.
