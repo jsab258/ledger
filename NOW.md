@@ -1235,7 +1235,7 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 ## Where things stand
 
 1. Overnight 23-24 Sep done: PS5 corner answered (scans on brick and paint street-wide; KCD2 gap is shape and set dressing); navigation works; Nano timed on the card; MH_Test assembled, in the corner with a retargeted idle; every probe run checks the performance ruling (79 fps, MEETS).
-2. Stage 1 at 22 of 47 (stage-check); tonight's look: whole-street bevels, sooty brick, stains as decals, the hill's stepped terraces with trees, crates and a bin. The hill's mist set aside after two tries (needs a measured density pass).
+2. Stage 1 at 24 of 47 (stage-check); tonight's look: whole-street bevels, sooty brick, stains as decals, the hill's stepped terraces with trees, crates and a bin. The hill's mist set aside after two tries (needs a measured density pass).
 3. Tomorrow's measurement sitting ready, not started: production/sittings/2026-09-24-three-facades.md; drawing, frames (twelve) and pair tools proven.
 4. Waiting on Jafar: dressing MH_Test, where MetaHuman files live, three voice decisions, what 60 fps allows. C: 98% full. MetaHuman assets live outside git in C:/LedgerTools/mh-assemble (copied in by the workflow).
 5. Next: the facade sitting (his, with the meter); then stage 1 on - A08.07 hair (after the MetaHuman is dressed), A23.16 distance (density pass), the slice's talking (game half).
