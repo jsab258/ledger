@@ -83,6 +83,7 @@ Just below those: Unreal's shared cache, 7.6 GB (keep: without it every editor s
 
 ## Things you should know
 
+- 2026-09-24 **The first check on the plan went red, over the business research's spreadsheet.** The licence check had never seen a spreadsheet file and couldn't classify it. It's our own, so the check now treats spreadsheets as documents. All 670 quick checks pass here; GitHub's run is going now.
 - 2026-09-24 **The plan check wasn't running on changes to the plan.** The quick checks only started when code changed, so a change to the checklist alone was never checked on GitHub, though your rule says every push. Fixed: the checklist file now starts them too. This morning's checklist changes were checked here instead, and they're clean.
 - 2026-09-24 **The listening page now saves your picks,** rebuilt like the A/B page after your note. Voices are lettered and blind, and who's who shows once all four are picked. The first version only played clips: my mistake.
 - 2026-09-24 **Downloaded for the listening page:** the first dozen recordings of sixteen VCTK speakers, read from the Edinburgh collection on HuggingFace (CC BY 4.0), about 15 MB of it per speaker. They're kept outside the project; the scripts that fetch them again are in the project.
