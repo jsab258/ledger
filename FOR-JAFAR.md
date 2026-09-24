@@ -30,7 +30,7 @@ between them.
 - 2026-09-24 **MH_Test stands in the corner, in grey underwear, bald, arms out in the default pose.** That's how he left MetaHuman Creator: no clothes or hair were chosen, and he has no idle animation yet. The face and skin read as a real person beside the street's other people.
   - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
   - (b) I pick plain 1990 clothes and a haircut by script.
-  - Meanwhile he stays in the corner frames only. He now has an idle: Elizabeth's standing motion, carried onto his body by the engine's retargeting in four seconds. Its frame is in the queue.
+  - Meanwhile he stays in the corner frames only, and he now stands at ease instead of with his arms out: Elizabeth's idle, carried onto his body by the engine's retargeting.
 - 2026-09-24 **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
   - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
   - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
@@ -61,6 +61,7 @@ between them.
 
 ## Things you should know
 
+- 2026-09-24 **The MetaHuman stands at ease in the corner now,** arms down and weight settled, playing Elizabeth's idle carried onto his body. The head and face stay with him as he moves.
 - 2026-09-24 **The rebuilt hill in Unreal read as real terraced housing, but as a solid wall of it, so it has had a second pass.** The trees were hidden behind the tiers, so each tier now has clumps of trees along its front, which in Blender gives green among the houses as on the sheet. The Unreal frame is in the queue.
 - 2026-09-24 **The new performance check caught nothing on its first run.** It read the frame file the moment it appeared, which is when the game starts writing it, not when it finishes. It now waits for the game to finish and close itself.
 - 2026-09-24 **A first bit of clutter:** two crates out in front of the fish market's window, clear of its doors, and a litter bin on the far shops' pavement. It's a small step toward the lived-in look Kingdom Come has and our street doesn't, using props we already had.
