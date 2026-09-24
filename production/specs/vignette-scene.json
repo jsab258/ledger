@@ -158,6 +158,7 @@
       "wall_surface": "brick_grey",
       "ground_floor": "shopfront",
       "end_stack": true,
+      "doors_on": "right",
       "roof": {
         "kind": "pitched",
         "pitch_deg": 35.0,

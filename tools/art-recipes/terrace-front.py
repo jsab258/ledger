@@ -1050,6 +1050,7 @@ def load_spec(root, spec_rel=SPEC_REL, block_id="east_parade"):
             "chimney_d_m":      float(roofline["chimney"]["depth_m"]),
             "chimney_above_ridge_m": float(roofline["chimney"]["height_above_ridge_m"]),
             "end_stack":        bool(block.get("end_stack", False)),
+            "doors_on":         block.get("doors_on"),
         }
         bl = brick_length_m(raw)
         if bl is None or bl <= 0:
@@ -2872,7 +2873,10 @@ def _house_row_facing_south(out, prefix, xa, xb, y0, y1, zb, rnd, trees=False):
 #: APPROACH_CROSS_X faces the camera; the east row runs to the corner and the
 #: west row stops where the bend opens. Still a BACKDROP, named as one, with
 #: no door anyone can reach; stage 6 builds the town and deletes it.
-APPROACH_X = (44.0, 58.0)
+#: FROM 48.0 SINCE 24 SEPTEMBER, where the lengthened street now ends: the
+#: ship chandler's stands 40.0 to 46.0, and the first backdrop house, from
+#: about 44.8, stood a metre into it. A real building replaces the stand-in.
+APPROACH_X = (48.0, 58.0)
 APPROACH_BEND_X = (50.0, 56.0)       # the westward road's own width, along x
 APPROACH_CROSS_X = (58.0, 66.0)      # the terrace across the end, front to back
 APPROACH_CROSS_Y = (-42.0, 18.0)     # and how far it runs across the view
@@ -3598,7 +3602,11 @@ def plan_parts(p, bay=0, party_wall=True):
     the wall has a NEGATIVE y; z is height from the threshold.
     """
     parts = []
-    doors_on = BAY_DOORS_ON[bay % len(BAY_DOORS_ON)]
+    # A BUILDING OF ITS OWN CAN NAME ITS DOOR SIDE (24 September): the ship
+    # chandler's puts its doors at its north end, out of the shadow the
+    # taller parade throws across its south end, where they could not be
+    # seen, let alone measured. A row keeps its rhythm below.
+    doors_on = p.get("doors_on") or BAY_DOORS_ON[bay % len(BAY_DOORS_ON)]
     has_side_door = (bay % 6) != BAY_WITHOUT_SIDE_DOOR
     W = p["bay_width_m"]
     D = p["depth_m"]
