@@ -20,3 +20,4 @@ The old notebook is in production/archive/FINDINGS-to-2026-09-24.md.
 - In the playable encounter what is said is shown as the engine's debug text, which a shipping build would not show.
 - No route put a donkey jacket on a MetaHuman (24 September): Fab needs a yes to download and has no donkey jacket; MetaHuman's own outfit route cannot be scripted; the built body has no torso to fit to; image-to-3D needs an NVIDIA card. (production/research/clothing-pipeline/TRIED-2026-09-24.md)
 - A broken window cannot be seen: the clear pane just vanishes. Only the caption and the shout say it went (found by the AI tester).
+- Any Unreal editor running on this PC, even a game started from it, blocks the build machine's build: the engine's lock refuses the compile in seconds, and the machine then tests a stale game (the red run of 1ede8879). The rule that two Unreal builds must not overlap has to cover editors too.

@@ -2457,14 +2457,24 @@ namespace
 			{ GW1Body, GW1, "lena", "w1", TEXT("Lena"), GW1RungA },
 			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Rocco"), -1 } };
 		const Who* Near = nullptr;
-		double Best = LedgerCrime::kLiveTalkM;
+		const Who* Closest = nullptr;
+		double Best = LedgerCrime::kLiveTalkM, ClosestM = 1e9;
 		for (const Who& P : People)
 		{
 			if (P.Body == nullptr || !P.G) { continue; }
 			const double M = FVector::Dist2D(GPawn->GetActorLocation(), P.Body->GetActorLocation()) / 100.0;
 			if (M <= Best) { Best = M; Near = &P; }
+			if (M < ClosestM) { ClosestM = M; Closest = &P; }
 		}
-		if (Near == nullptr) { Say(TEXT("Nobody near enough to talk to."), 4.0f, FColor::White); return false; }
+		if (Near == nullptr)
+		{
+			// SAY WHO IS WHERE: "nobody near" alone sent the tester round in
+			// circles beside a stand-in.
+			Say(Closest != nullptr
+				? FString::Printf(TEXT("Nobody near enough to talk to. The nearest is %s, %.0f metres away."), Closest->Name, ClosestM)
+				: FString(TEXT("Nobody near enough to talk to.")), 6.0f, FColor::White);
+			return false;
+		}
 		if (GLive.PendingId != 0) { Say(TEXT("Wait for an answer first."), 4.0f, FColor::White); return false; }
 		if (!GLive.bReady) { Say(TEXT("(The street's voices are still waking up. Try again in a moment.)"), 4.0f, FColor::White); return false; }
 		GTalkTarget.G = Near->G; GTalkTarget.Card = Near->Card; GTalkTarget.Id = Near->Id;
@@ -2929,13 +2939,13 @@ namespace
 					{
 						RespawnMate(World);
 						GPhase = ECrimePhase::LiveRoam;
-						Say(TEXT("The street remembers. Find Sam in the yard behind the parade and press T to talk."), 20.0f, FColor::Yellow);
+						Say(TEXT("The street remembers. Sam, Lena and Rocco are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 					}
 				}
 				if (GPhase == ECrimePhase::LiveWaitDeed)
 				{
 					GWatchSlot = 0;
-					Say(TEXT("Walk to the shop window by Mickey's and press E."), 20.0f, FColor::Yellow);
+					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
 				}
 			}
 			GPhaseStart = Now;
@@ -3395,7 +3405,7 @@ namespace
 			RunRound3(GRound3);
 			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 30);
 			SaveEncounterToDisk();
-			Say(TEXT("Later that week, evening. Sam is in the yard behind the parade. Press T near him to talk."), 20.0f, FColor::Yellow);
+			Say(TEXT("Later that week, evening. Sam, Lena and Rocco are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 			WriteBreadcrumb(TEXT("live-later"));
 			GPhase = ECrimePhase::LiveRoam;
 			GPhaseStart = Now;

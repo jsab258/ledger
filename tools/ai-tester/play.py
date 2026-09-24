@@ -299,6 +299,16 @@ def run(args):
         ctypes.windll.shcore.SetProcessDpiAwareness(2)
     except Exception:
         pass
+    # AN EDITOR ON THIS PC BLOCKS THE BUILD MACHINE'S BUILD (24 September: the
+    # tester's editor-run game held the engine's lock, the runner's compile was
+    # refused in three seconds, and it tested a stale game). So the editor form
+    # refuses while the build machine has a job running; the packaged game,
+    # the default, never takes that lock.
+    if args.get("editor"):
+        jobs = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Runner.Worker.exe"], capture_output=True, text=True).stdout
+        if "Runner.Worker.exe" in jobs:
+            print("aiTester status=BUILD-MACHINE-BUSY (an editor now would block its build; run without --editor, or later)")
+            return 2
     idle = seconds_since_input()
     if idle < 120 and not args.get("force"):
         print("aiTester status=PC-IN-USE secondsSinceInput=%.0f (it takes the keyboard and mouse; run it when nobody is at the PC, or --force)" % idle)
