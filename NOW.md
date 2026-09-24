@@ -35,6 +35,26 @@ reading. The card came free at about 07:50.
       DONE 24 Sep: https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447
 - [x] THE MEASUREMENT SITTING PREPARED (production/sittings/2026-09-24-three-facades.md).
 
+AFTER HIS ANSWERS, 24 September morning (the runner cleanup and the Dropbox
+backup were done at once; the rest waits its turn after the measurement sitting):
+
+- [x] THE RUNNER'S LEFTOVERS CLEARED (git's cleanup; 36 GB to 4.7 GB; C: 45 GB
+      free). THE ONLY DELETION: nothing else on this PC is deleted, moved or
+      touched; anything else that could go is a question in FOR-JAFAR.
+- [x] THE BACKUP IN HIS DROPBOX (tools/backup-to-dropbox.py; "LEDGER backup",
+      540 MB). Run it at the end of any sitting that changes those files.
+- [ ] CAST THE THREE NEW VOICES he picked: Danny p243, June p277, Zlata p280
+      (clips, voice picks, attribution); Aldous keeps p226.
+- [ ] MH_TEST'S CLOTHES: FREE MetaHuman clothing from Fab only, buy nothing;
+      trousers, a jumper and shoes by script. If none is plain enough for
+      1990, say so and leave him until the clothing line.
+- [ ] VOICES THAT CARRY FEELING (ROADMAP VX01): per-line emotion control, the
+      paralinguistic tags, livelier reference clips, then a more expressive
+      source within the licence; blind listening pages for him.
+- [ ] NEXT HOUSEKEEPING SITTING: the voice tools and the played copy into their
+      own folder, the build and the shortcut repointed, the only-here files
+      saved into the project, then both old copies deleted.
+
 THE ROUTER, three changes he put on the list this morning (ROADMAP R01-R03,
 stage 2), each a change to the game for a sitting of its own:
 
@@ -1262,8 +1282,8 @@ work. PRESENTABLE stops when its checklist holds, and nothing finer is done.
 
 ## Where things stand
 
-1. Morning 24 Sep, housekeeping: C: from 5.1 to 19 GB free (probe compile files, Python's cache); the runner's 33 GB of leftover packs and the two old checkouts wait on Jafar (FOR-JAFAR decisions); a backup proposal is in FOR-JAFAR, nothing set up.
-2. MH_Test dressed by script (WI_Hair_S_Casual; the plugin's one garment, a white tee and shorts, barefoot, colours not settable) and rebuilt to 65 assets; framed by the probe from 703b0688; real clothes wait on Jafar. The source before dressing is kept at C:/LedgerTools/mh-assemble-before-dressing-2026-09-24.
-3. Voices: the listening page saves picks, blind (https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447, collection "picks"); nothing cast until he picks. Nano cannot learn a voice on the card (ComplexFloat abort); processor instead.
-4. Business: research on main; the working direction in DECISIONS; AI01-AI08, R01-R03 on ROADMAP; L01 a priority; the written-ahead question waits on him. The quick checks now also run on ROADMAP pushes.
-5. Next: the measurement sitting, his, started with a meter reading (production/sittings/2026-09-24-three-facades.md); then the router changes R01-R03 and stage 1 on.
+1. Morning 24 Sep, housekeeping, done: C: from 5.1 to 45 GB free (probe compile files, Python's cache, and on his yes git's cleanup of the runner's copy, the only deletion); the MetaHuman backed up to his Dropbox.
+2. MH_Test has a haircut and the plugin's one garment (white tee and shorts, barefoot); free Fab clothing next, or leave him (his ruling).
+3. Voices: his picks are in (Aldous p226 kept; Danny p243, June p277, Zlata p280) and cast by his yes, clips to make; the flat-voice experiment is on the list (VX01).
+4. Business: research on main; working direction in DECISIONS; written-ahead ruled (a), generated ahead and checked once; AI01-AI08, R01-R03 on ROADMAP; the quick checks now run on ROADMAP pushes.
+5. Next: the measurement sitting, his, started with a meter reading (production/sittings/2026-09-24-three-facades.md); then the list above in order.

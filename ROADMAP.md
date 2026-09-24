@@ -591,6 +591,7 @@ Stage state: OPEN
 | N7 | Live spoken conversation with memory | floor (my call) | open |  |
 | V1 | Voice casting and direction | floor (my call) | open |  |
 | V2 | Motion capture and performance | floor (my call) | open |  |
+| VX01 | Voices that carry feeling, not flat read speech: the VCTK recordings are calm read speech and cloning copies that delivery. An experiment, cheapest first: the emotion control set per line from what the character is feeling, which the game knows; the paralinguistic tags; livelier reference clips; and only if those fall short, a more expressive source of voices within the licence rules. Blind listening pages for Jafar at each step | jafar 24 Sep | open | Jafar 2026-09-24: 'the voices sound flat' |
 | B01 | Music, ambience and effects lowering while dialogue plays | floor | open | from the baseline research |
 | B02 | Wind and rain sound that follows the current weather | floor | open | from the baseline research |
 | B03 | Camera follow smoothing rather than a rigidly locked view | floor | open | from the baseline research |
