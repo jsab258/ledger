@@ -1,13 +1,13 @@
 encounterMode=play
 encounterStatus=PASS
 encounterFailed=none
-encounterCommit=a9442a3
+encounterCommit=da863c1
 pawnClass=LedgerSliceCharacter actPressLanded=player-input actRequestsSeen=1 actAttempted=yes
 aboutA w1=1 n2=1 r3=1 aboutB w1=0 n2=0 r3=0 crimeMemories w1=1 n2=2 r3=1
 filedSummaryA=the man that did the window looked straight in at the shop before he ran, and his face is known if not his name
 shout=playing shoutSpatial=yes shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=2.5 shoutReachM=43.0 shoutWav=ue-encounter-shout.wav
 talk=answered talkAs=sam talkFake=yes talkDay=4 talkHour=18 heardCount=2 heardCrime=yes questioned=yes
 talkReply=I know what happened. I heard that the man that did the window looked straight in at the shop before he ran, and his face is known if not his name; and I saw him near it at the time (a man came through the yard at a run just after the glass went, and I'd know his face again), and nobody else about. Was that you?
-suspicion lad=Suspicious witness=Suspicious mate=Trusting witnessRungA=3 flee=filed fleeSeconds=1.51 fleeMetres=3.0 fleeRung=3 fleeCertainty=0.38 othersTheLadSaw=0
+suspicion lad=Suspicious witness=Suspicious mate=Trusting witnessRungA=3 flee=filed fleeSeconds=1.50 fleeMetres=3.0 fleeRung=3 fleeCertainty=0.38 othersTheLadSaw=0
 suspicionWhyLad=I heard that the man that did the window looked straight in at the shop before he ran, and his face is known if not his name; and I saw him near it at the time (a man came through the yard at a run just after the glass went, and I'd know his face again), and nobody else about
 save=written savedBytes=1328 loaded=no loadedBytes=0 savedByCommit=none clockLoaded=D0-00:00 talkAnswered=yes bankReadable=yes saveDir=C:\actions-runner-ledger\_work\_temp\ledger-encounter-save
