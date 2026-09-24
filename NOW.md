@@ -6,4 +6,4 @@ SITTING: started 2026-09-24T14:46:04+02:00, limit 5h
 - [x] 5. The encounter is playable (tools/play), with Lena, Sam and Rocco; the build runs it too.
 - [x] 6. The AI tester plays by screen and keys and writes what broke; first run $0.48.
 - [ ] 7. Next ROADMAP items.
-STATE: encounter playable with the cast, typed talk, visible glass, answers spoken in cast voices. Next: the tester on the packaged game, voice speed.
+STATE: encounter playable from the editor build with the cast, typed talk, spoken cast voices, visible glass. Next: the packaged copy's missing files, voice speed.
