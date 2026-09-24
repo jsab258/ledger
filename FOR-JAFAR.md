@@ -18,13 +18,13 @@ Fixed: hands through bodies, frozen faces, wrong casting. Still wrong: barefoot 
 
 **Unproven.** No comparison with Epic's MetaHuman sample yet. Canon's overcast street lights faces softer than KCD2's sun.
 
-**Next, overnight.** Grey hair, no eye make-up on Lena, clothes and shoes, the sample.
+**Next, overnight.** Grey hair, clothes and shoes, the sample.
 
 **You:** sign in to fab.com in my browser pane; I can't.
 
-**Decide** the brief:
-- (A) Lena British, about 60, small; Rocco British-Italian, late 50s, heavy; Sam Scottish, late 20s, wiry (recommended).
-- (B) You set each one's background and age.
+**Decide** whose looks I build to:
+- (A) The casting research's: Lena 53, Rocco 58 an ex-docker, Sam 25, all local (recommended).
+- (B) My shorter brief: Lena about 60, Rocco British-Italian, Sam Scottish.
 - (C) You write it.
 
 ## 24 September, evening: suspicion, the cast as MetaHumans, the encounter to play
