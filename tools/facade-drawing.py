@@ -106,7 +106,7 @@ def plan_drawing(block_id, plan_text, scene):
                              "gf_pier", "front_door"))
     ux, _ = edges(parts, 0, ("upper_glass", "upper_net"))
     _, gz = edges(parts, 0, ("pilaster", "shop_door_leaf", "side_door_leaf", "display_glazing",
-                             "stallriser", "transom_bar", "fascia_band", "upper_glass", "parapet",
+                             "stallriser", "display_sill_rail", "transom_bar", "fascia_band", "upper_glass", "parapet",
                              "coping", "gf_band_above"))
     levels = sorted(set([0.0] + [z for z in gz if z > 0.0] + [bay.get("groundFloorM", 0.0),
                     bay.get("eavesM", 0.0), bay.get("ridgeM", 0.0)]))

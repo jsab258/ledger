@@ -82,7 +82,17 @@ def bay_edges(fd, d, bay):
                 w = p["x"][1] - p["x"][0]
                 if k not in zs or w > zs[k][1] - zs[k][0]:
                     zs[k] = (p["x"][0], p["x"][1])
-    levels = [(z, zs.get(round(z, 3))) for z in d["z_levels"]]
+    # ONLY THIS BAY'S LEVELS, 24 September. The drawing's levels are gathered
+    # from bay 0, and Mickey's alone has the 0.12 m course of dark tile under
+    # its stallriser; measured on the other five bays, where nothing stands
+    # there, the search found the pavement 120 mm away and called it an
+    # error. A level no part of this bay makes is not measured on it; the
+    # pavement, ground floor, eaves and ridge belong to every bay and stay.
+    b = d.get("bay", {})
+    common = {0.0, round(b.get("groundFloorM", -1.0), 3), round(b.get("eavesM", -1.0), 3),
+              round(b.get("ridgeM", -1.0), 3)}
+    levels = [(z, zs.get(round(z, 3))) for z in d["z_levels"]
+              if round(z, 3) in zs or round(z, 3) in common]
     return sorted(xs.items()), levels
 
 
@@ -117,7 +127,8 @@ def measure(gray, d, bay, width_m, centre_z, x_edges, levels):
         if prof.max() < 4.0:
             out.append(("x", x, None)); continue
         k = nearest_peak(list(prof), px - c0)
-        out.append(("x", x, abs((c0 + k + 0.5) - px) / s * 1000.0))
+        out.append(("x", x, taken(x, x + (-1.0 if d["mirror"] else 1.0) * (c0 + k + 0.5 - px) / s, [e for e, _ in x_edges],
+                                  abs((c0 + k + 0.5) - px) / s * 1000.0)))
     for z, span in levels:
         _, pz = frame_px(d, bay, width_m, centre_z, fw, fh, 0.0, z)
         x0, x1 = span if span else (bay * d["bay_width_m"] + 0.2, (bay + 1) * d["bay_width_m"] - 0.2)
@@ -131,8 +142,24 @@ def measure(gray, d, bay, width_m, centre_z, x_edges, levels):
         if prof.max() < 4.0:
             out.append(("z", z, None)); continue
         k = nearest_peak(list(prof), pz - r0)
-        out.append(("z", z, abs((r0 + k + 0.5) - pz) / s * 1000.0))
+        # Rows grow downward and levels upward, so the found level is z minus.
+        out.append(("z", z, taken(z, z - (r0 + k + 0.5 - pz) / s, [L for L, _ in levels],
+                                  abs((r0 + k + 0.5) - pz) / s * 1000.0)))
     return out
+
+
+def taken(want, found, drawn, off_mm):
+    """The offset, unless the edge found is another drawn edge of this bay.
+    ADDED 24 September: where both sides of an edge are one colour - the
+    stallriser and the sill rail on it, both the shop's paint - nothing shows
+    there, and the search took the rail's top 80 mm up and called the
+    stallriser 87 mm out. An edge found within tolerance of a DIFFERENT drawn
+    edge is that edge's, so this one is reported not found rather than wrong;
+    the other is measured in its own right."""
+    if off_mm > TOLERANCE_MM and any(abs(found - o) * 1000.0 <= TOLERANCE_MM
+                                     for o in drawn if abs(o - want) > 1e-6):
+        return None
+    return off_mm
 
 
 def pair(block, bay, frame_path, width_m, centre_z, out_png, plan_text=None, fd=None, scene=None):
