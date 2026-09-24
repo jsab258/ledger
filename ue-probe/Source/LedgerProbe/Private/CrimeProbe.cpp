@@ -107,6 +107,9 @@
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "Widgets/Layout/SBox.h"
+#include "Widgets/SBoxPanel.h"
+#include "Widgets/Text/STextBlock.h"
+#include "Styling/CoreStyle.h"
 #include "Engine/GameViewportClient.h"
 #include "Components/CapsuleComponent.h"
 #include "Sound/SoundWaveProcedural.h"
@@ -819,9 +822,81 @@ namespace
 	}
 
 	// A LINE ON THE SCREEN for the one playing: what is said, and what to do.
+	// THE GAME'S OWN SUBTITLES, 24 September (overnight): these were engine
+	// debug messages, which a release build does not draw, so in a shipped
+	// game every word said would have vanished (the production pipeline
+	// audit). Now a Slate panel of its own over the view, above the say box:
+	// the newest line last, at most six, each gone after its seconds. Every
+	// line also goes to the log, where the tester can read it.
+	struct FSubLine { FString Text; FLinearColor Colour; double Until = 0.0; };
+	TArray<FSubLine> GSubs;
+	TSharedPtr<SVerticalBox> GSubBox;
+	TSharedPtr<SWidget> GSubRoot;
+	TWeakObjectPtr<UWorld> GSubWorld;
+
+	void SubsRebuild()
+	{
+		if (!GSubBox.IsValid()) { return; }
+		GSubBox->ClearChildren();
+		for (const FSubLine& L : GSubs)
+		{
+			GSubBox->AddSlot().AutoHeight().Padding(FMargin(0.0f, 2.0f))
+			[
+				SNew(STextBlock)
+				.Text(FText::FromString(L.Text))
+				.ColorAndOpacity(FSlateColor(L.Colour))
+				.Font(FCoreStyle::GetDefaultFontStyle("Regular", 17))
+				.ShadowOffset(FVector2D(1.5f, 1.5f))
+				.ShadowColorAndOpacity(FLinearColor(0.0f, 0.0f, 0.0f, 0.9f))
+				// A FIXED WRAP, not AutoWrapText: the lines are rebuilt whenever
+				// one is added, and auto-wrap waits a frame for its width, so
+				// the frame a line was said in showed it running off the edge.
+				.WrapTextAt(1060.0f)
+			];
+		}
+	}
+
+	void SubsEnsure()
+	{
+		if (GEngine == nullptr || GEngine->GameViewport == nullptr) { return; }
+		// A NEW WORLD CLEARS THE VIEWPORT'S WIDGETS, so the panel is added
+		// again whenever the game world is not the one it was added under.
+		UWorld* W = GEngine->GameViewport->GetWorld();
+		if (GSubRoot.IsValid() && GSubWorld.Get() == W) { return; }
+		// AT MOST 1100 WIDE, NEVER WIDER THAN THE WINDOW: a fixed 1100 ran the
+		// lines off the edge of a 960-wide window instead of wrapping them.
+		SAssignNew(GSubRoot, SBox)
+			.HAlign(HAlign_Center).VAlign(VAlign_Bottom).Padding(FMargin(40.0f, 0.0f, 40.0f, 150.0f))
+			[
+				SNew(SBox).MaxDesiredWidth(1100.0f)
+				[
+					SAssignNew(GSubBox, SVerticalBox)
+				]
+			];
+		GEngine->GameViewport->AddViewportWidgetContent(GSubRoot.ToSharedRef(), 50);
+		GSubWorld = W;
+		SubsRebuild();
+	}
+
+	void SubsTick()
+	{
+		const double Now = FPlatformTime::Seconds();
+		const int32 Before = GSubs.Num();
+		GSubs.RemoveAll([Now](const FSubLine& L) { return L.Until < Now; });
+		if (GSubs.Num() != Before) { SubsRebuild(); }
+	}
+
 	void Say(const FString& Line, float Seconds = 12.0f, FColor Colour = FColor::White)
 	{
-		if (GEngine != nullptr) { GEngine->AddOnScreenDebugMessage(-1, Seconds, Colour, Line); }
+		UE_LOG(LogTemp, Display, TEXT("LedgerSay: %s"), *Line);
+		SubsEnsure();
+		FSubLine L;
+		L.Text = Line;
+		L.Colour = FLinearColor(Colour);
+		L.Until = FPlatformTime::Seconds() + Seconds;
+		GSubs.Add(L);
+		while (GSubs.Num() > 6) { GSubs.RemoveAt(0); }
+		SubsRebuild();
 	}
 
 	// A BODY MOVES BY ITS OWN TRANSFORM, not by a second spawn: W1 stands at
@@ -1317,6 +1392,8 @@ namespace
 		Candidates.Add(FPaths::Combine(FPaths::LaunchDir(), kBankLeaf));
 		Candidates.Add(FPaths::Combine(FPaths::GetPath(FPlatformProcess::ExecutablePath()), kBankLeaf));
 		Candidates.Add(FPaths::Combine(FPaths::ProjectDir(), TEXT(".."), kBankRepoPath));
+		// The game's own staged copy (tools/ue/stage_game_data.py), last.
+		Candidates.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"), kBankRepoPath));
 		for (const FString& C : Candidates)
 		{
 			const FString Full = FPaths::ConvertRelativePathToFull(C);
@@ -3029,6 +3106,7 @@ namespace
 		GLastTick = Now;
 		UWorld* World = GameWorld();
 		StopShoutRecording(false);
+		SubsTick();
 
 		// THE WATCHING CLOCK RUNS UNDER EVERY PHASE INSIDE A CRIME'S WINDOW,
 		// including the seconds the pawn stands at the window while a

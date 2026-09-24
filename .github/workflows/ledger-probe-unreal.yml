@@ -309,6 +309,18 @@ jobs:
           } else {
             Write-Host "metahumanCopied=NO-SOURCE/$($mhSrc -replace ' ','~')"
           }
+          # THE CLOTHES THE CAST WEAR, 24 September (overnight): Epic's free Fab
+          # garments, of which only the part the built cast depend on is kept
+          # in the scratch project (tools/ue/fab_closure.py). Fab Standard
+          # License: never in the repository, so copied here like the cast.
+          $fabSrc = "C:\LedgerTools\mh-assemble\Content\Fab"
+          $fabDst = Join-Path $PWD "ue-probe\Content\Fab"
+          if (Test-Path $fabSrc) {
+            robocopy $fabSrc $fabDst /MIR /NFL /NDL /NJH /NJS /NP | Out-Null
+            Write-Host "fabClothesCopied=$(@(Get-ChildItem $fabDst -Recurse -File -ErrorAction SilentlyContinue).Count)-files"
+          } else {
+            Write-Host "fabClothesCopied=NO-SOURCE"
+          }
           exit 0
 
       - name: Build the UE probe target and run the golden test
@@ -439,6 +451,13 @@ jobs:
             # flag does. The editor build is genuine UE setup cost and belongs
             # in the cold cook number rather than being hidden by a flag that
             # makes the cook fail instead.
+            # THE GAME'S RUN-TIME FILES GO INSIDE THE PACKAGE (24 September,
+            # overnight): the street, its look, people, sounds and drawn maps,
+            # and the witness lines, under Content/LedgerData, which
+            # DefaultGame.ini stages as plain files. A packaged copy then needs
+            # no project folder beside it.
+            $stage = & python tools/ue/stage_game_data.py 2>&1
+            $L += ($stage | Select-Object -Last 1)
             $uatArgs = @("BuildCookRun", "-project=`"$proj`"", "-noP4",
                          "-platform=Win64", "-clientconfig=Development",
                          "-cook", "-build", "-stage", "-pak", "-archive",

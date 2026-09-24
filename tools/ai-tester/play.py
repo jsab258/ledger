@@ -369,17 +369,32 @@ def run(args):
     folder = os.path.join(REPO, "production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
     os.makedirs(folder, exist_ok=True)
     save = tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
-    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER, "-LedgerRepo=" + REPO,
+    # THE PACKAGED GAME AS A PLAYER GETS IT, 24 September (overnight), Jafar's
+    # rule: the tester walks the packaged release build with the real cast,
+    # dialogue, light and sound. A package made since the game carries its own
+    # run-time files (Content/LedgerData, tools/ue/stage_game_data.py) is run
+    # ALONE: no -LedgerRepo, nothing copied beside it, so a missing file shows
+    # as a fault here instead of being papered over. An older package gets the
+    # old props, and the report says which.
+    pack_root = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe")
+    self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
+        pack_root, "Content", "LedgerData", "production", "assets", "street", "quay-street.json"))
+    shipping = os.path.isfile(os.path.join(pack_root, "Binaries", "Win64", "LedgerProbe-Win64-Shipping.exe"))
+    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER,
                  "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
                  "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
-    # THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE THE GAME, as the
-    # build machine puts them: without them the packaged street is empty and
-    # the screen black (24 September, the run that reported a dead game).
-    import shutil
-    stage = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe") if not args.get("editor") else os.path.join(REPO, "ue-probe")
-    if os.path.isdir(stage):
-        shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
-        shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
+    if not self_contained:
+        game_args.append("-LedgerRepo=" + REPO)
+        # THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE AN OLDER GAME,
+        # as the build machine puts them: without them its street is empty and
+        # the screen black (24 September, the run that reported a dead game).
+        import shutil
+        stage = pack_root if not args.get("editor") else os.path.join(REPO, "ue-probe")
+        if os.path.isdir(stage):
+            shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
+            shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
+    print("aiTester build=%s selfContained=%s config=%s" % ("editor" if args.get("editor") else "packaged",
+                                                           "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     if args.get("editor"):
         cmd = [EDITOR, PROJECT, "-game"] + game_args
         title = "LedgerProbe"
