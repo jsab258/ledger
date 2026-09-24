@@ -27,40 +27,10 @@ between them.
 
 ## Decisions waiting on me
 
-- 2026-09-24 **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
-  - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
-  - (b) I pick plain 1990 clothes and a haircut by script.
-  - Meanwhile he stays in the corner frames only, and he now stands at ease instead of with his arms out: Elizabeth's idle, carried onto his body by the engine's retargeting.
-- 2026-09-24 **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
-  - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
-  - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
-  - Meanwhile I'm doing (a).
-- 2026-09-23 **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list** (the builder's note, 24 Sep: since 00:15 the hook holds only the builder's own session, so this one no longer arises; the choice of its next steps is still yours), which another session is working through in this folder right now. Taking items from that list there would collide with it.
-  - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
-  - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
-  - Meanwhile it has stopped.
-- 2026-09-24 **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. Measured tonight on a quiet card: the ordinary slice runs at 120 frames a second at 1280 by 720. At your full size, drawn at half and upscaled, it runs at 85, or 80 with the voice. My earlier figures of 19 and 36 ms were taken while another job was using the card. The corner at its highest settings takes 25 ms at 1280 by 720, which it couldn't afford at full size.
-  - **(a) The picture fills your 3440 by 1440 screen, but is drawn at about half that each way and upscaled with Unreal's own upscaler, which is how current games reach 60 on this class of card (my recommendation).**
-  - (b) Drawn at the full 3440 by 1440, which on today's numbers means cutting most of what the corner has.
-  - Meanwhile I measure both ways: the probe's usual 1280 by 720, plus your screen size drawn at half and upscaled.
-- 2026-09-24 **Tomorrow's facade sitting: build its three missing tools tonight, or let the meter count them?** The plan is written, in a new sittings folder: the parade, then west north, then west south, each from drawing to accepted pair. But no dimensioned drawings of the facades exist, only numbers in the street's spec, and three tools are missing: one that draws a facade from those numbers, an Unreal shot that looks straight at one block, and a pair that lays the drawing over the frame.
-  - **(a) I build the three tools tonight, after tonight's list, so tomorrow's meter measures only the facades (my recommendation).** They get built once for every facade in the town, so counting them in tomorrow's number would make one facade look dearer than it is.
-  - (b) Leave them, and the meter counts them too.
-  - Done as (a): the drawing tool, the straight-on Unreal frames and the measuring tool are built and were tried once on Mickey's bay (17 of 19 edges within 5 cm), without changing it.
-- 2026-09-24 **The voices' consent: write to Edinburgh, or accept the risk on the record?** All 23 cast voices come from the University of Edinburgh's VCTK recordings. The licence allows commercial use and cloning with credit, but says outright that it doesn't cover the speakers' personal rights, and nothing published says the volunteers agreed to being cloned for a game. The corpus is titled "for CSTR Voice Cloning Toolkit", so they very likely did.
-  - **(a) Write to CSTR at Edinburgh and ask whether VCTK's consent covers a cloned character voice in a commercial game (my recommendation).** It's one email, yours to send; I've drafted nothing yet, and can.
-  - (b) Accept the inference as a stated risk, on the record, and carry on.
-  - Meanwhile nothing new is recorded with the voices, as you ruled.
-- 2026-09-24 **The licence allowlist contradicts itself on voices (canon).** Its never-ship list bans "cloned real voices", which read literally bans all 23, while its ship-safe list allows "the local voice pipeline as built".
-  - **(a) The ban means identifiable real people and public figures, not anonymous volunteers who recorded for speech research, and the allowlist says so in writing (my recommendation).**
-  - (b) It means every real voice, and the cast is re-voiced from a synthetic source.
-  - Meanwhile the allowlist is unchanged; it's law, so it's yours.
-- 2026-09-24 **Four voices are outside your 31 July cloning permission:** Aldous, Danny, June and Zlata, cast on 14 August. Your 31 July yes named "the nineteen".
-  - **(a) One line from you extending it to all 23 (my recommendation);** their paperwork (credit, casting record, voice manifest) I'll bring up to date regardless.
-  - (b) Re-cast those four from the nineteen already cleared.
-
 ## Things you should know
 
+- 2026-09-24 **This sitting's limit is one hour, not the rule's default four:** you said "short housekeeping, then stop" and named no limit. With four, the stop hook wouldn't let me stop when the work is done. Say if you want the four.
+- 2026-09-24 **C: is down to 5.1 GB free, from about 20 GB last night.** The disk job goes first this morning.
 - 2026-09-24 **With the voice running, the slice is right at the edge of your 60:** 75 frames a second on average at your screen size, but its slowest 1% of frames run at 59, and 19 frames in 1,500 missed 60. Nano itself does 1.37 seconds of work per second of speech on the card while the game runs. Anything heavier on screen from here will need paying for somewhere.
 - 2026-09-24 **The per-build performance check now runs with the voice, as your ruling says:** Nano speaks on the same card for the whole capture, and the result records both the frame rate and how fast Nano kept up.
 - 2026-09-24 **Every build now checks the slice against your 60 a second, and the first good reading meets it:** 79 frames a second at your screen size drawn at half and upscaled, with the slowest 1% of frames at 74. It uses 4.6 GB of the card's memory now, up from 3.5, with the scans and the MetaHuman in. With Nano's 2.1 GB beside it, that leaves about 2.7 GB spare.
@@ -661,6 +631,7 @@ so the record stays complete.)*
 
 ## Rulings received
 
+- 2026-09-24 **Your answers to the night's eight decisions:** MH_Test is dressed by script as a test figure (the clothing line does period clothes properly); the MetaHuman's files stay on this PC; the local-models session does one short timing job, then stops; 60 at your screen is met by drawing smaller and upscaling; the facade tools are confirmed; VCTK consent is accepted on the record as a stated risk, with no email; the allowlist's ban means identifiable real people and public figures, now written into it; Aldous, Danny, June and Zlata are allowed but were never approved, so they get a listening page with alternatives for you to pick. No voice is cast without your yes, now in the project instructions.
 - 2026-09-24 **"If you need to download anything for UE just do it."** Taken as: downloads for Unreal from Epic's own services (the engine, its plugins, MetaHuman textures and assets) go ahead without asking. Each one is still named here with where it came from and its size. Anything that isn't Unreal, or isn't from Epic, still asks.
 - 2026-09-24 **Yes to downloading MH_Test's textures from Epic's MetaHuman service**, given in chat just before midnight. It asked why I asked: I don't download anything under his account without his say-so each time, and that's my own rule, not the project's.
 - 2026-09-23 night **Four rulings**, now in the decisions file and the roadmap. PC only, Windows; consoles are a later, low-priority question. 60 frames a second at your monitor's resolution on this card, never below 30, with the voice running; every visual choice answers to it, and the slice measures against it. The nineteen cast voices' permissions checked, voice by voice, before anything more is recorded with them. And the cost of an hour of play on the paid model, measured from real calls in the slice. Also yes to the Nano download for timing it on the card.
@@ -773,6 +744,38 @@ so the record stays complete.)*
 - 2026-09-22 **llama.cpp Vulkan next sitting**, for the hardware floor.
 
 ## Resolved
+
+- 2026-09-24 (resolved 24 Sep: (b), dressed by script in plain 1990 clothes and a haircut, once the card is free) **MH_Test stands in the corner, in grey underwear and bald.** That's how he left MetaHuman Creator: no clothes or hair were chosen. The face and skin read as a real person beside the street's other people.
+  - **(a) You dress him in MetaHuman Creator: clothes and hair, a few clicks in its Wardrobe and Hair panels, then I re-assemble him (my recommendation).** He's your character, so the look is yours.
+  - (b) I pick plain 1990 clothes and a haircut by script.
+  - Meanwhile he stays in the corner frames only, and he now stands at ease instead of with his arms out: Elizabeth's idle, carried onto his body by the engine's retargeting.
+- 2026-09-24 (resolved 24 Sep: (a), on this PC outside the history) **Where the MetaHuman's files live.** Assembled, MH_Test is 203 MB of game assets, and the character file itself is 138 MB, which is over the size GitHub accepts for one file.
+  - **(a) They stay on your PC, outside the project's history, and the build machine (also your PC) copies them in for each build (my recommendation).** It's free and the history stays small. The catch: only this PC can build the corner with its MetaHuman.
+  - (b) Git's large-file storage, which is free up to 1 GB and then a paid add-on.
+  - Meanwhile I'm doing (a).
+- 2026-09-23 (resolved 24 Sep: it does one short timing job on the idle card, then stops) **The local-models session is finished, and the stop hook keeps holding it open against the main sitting's list** (the builder's note, 24 Sep: since 00:15 the hook holds only the builder's own session, so this one no longer arises; the choice of its next steps is still yours), which another session is working through in this folder right now. Taking items from that list there would collide with it.
+  - **(a) Stop that session here (my recommendation).** The next local-models steps wait for a sitting of their own.
+  - (b) Have it take the next two local-models steps: timing the worked examples on an idle card, then a wider block for typed orders said in plain words.
+  - Meanwhile it has stopped.
+- 2026-09-24 (resolved 24 Sep: (a), draw smaller and upscale) **What "60 a second at my monitor's resolution" allows.** Your monitor is 3440 by 1440, five and a half times the pixels of the frames the probe measures. Measured tonight on a quiet card: the ordinary slice runs at 120 frames a second at 1280 by 720. At your full size, drawn at half and upscaled, it runs at 85, or 80 with the voice. My earlier figures of 19 and 36 ms were taken while another job was using the card. The corner at its highest settings takes 25 ms at 1280 by 720, which it couldn't afford at full size.
+  - **(a) The picture fills your 3440 by 1440 screen, but is drawn at about half that each way and upscaled with Unreal's own upscaler, which is how current games reach 60 on this class of card (my recommendation).**
+  - (b) Drawn at the full 3440 by 1440, which on today's numbers means cutting most of what the corner has.
+  - Meanwhile I measure both ways: the probe's usual 1280 by 720, plus your screen size drawn at half and upscaled.
+- 2026-09-24 (resolved 24 Sep: (a) confirmed) **Tomorrow's facade sitting: build its three missing tools tonight, or let the meter count them?** The plan is written, in a new sittings folder: the parade, then west north, then west south, each from drawing to accepted pair. But no dimensioned drawings of the facades exist, only numbers in the street's spec, and three tools are missing: one that draws a facade from those numbers, an Unreal shot that looks straight at one block, and a pair that lays the drawing over the frame.
+  - **(a) I build the three tools tonight, after tonight's list, so tomorrow's meter measures only the facades (my recommendation).** They get built once for every facade in the town, so counting them in tomorrow's number would make one facade look dearer than it is.
+  - (b) Leave them, and the meter counts them too.
+  - Done as (a): the drawing tool, the straight-on Unreal frames and the measuring tool are built and were tried once on Mickey's bay (17 of 19 edges within 5 cm), without changing it.
+- 2026-09-24 (resolved 24 Sep: (b), accepted on the record as a stated risk, no email) **The voices' consent: write to Edinburgh, or accept the risk on the record?** All 23 cast voices come from the University of Edinburgh's VCTK recordings. The licence allows commercial use and cloning with credit, but says outright that it doesn't cover the speakers' personal rights, and nothing published says the volunteers agreed to being cloned for a game. The corpus is titled "for CSTR Voice Cloning Toolkit", so they very likely did.
+  - **(a) Write to CSTR at Edinburgh and ask whether VCTK's consent covers a cloned character voice in a commercial game (my recommendation).** It's one email, yours to send; I've drafted nothing yet, and can.
+  - (b) Accept the inference as a stated risk, on the record, and carry on.
+  - Meanwhile nothing new is recorded with the voices, as you ruled.
+- 2026-09-24 (resolved 24 Sep: (a), written into the allowlist) **The licence allowlist contradicts itself on voices (canon).** Its never-ship list bans "cloned real voices", which read literally bans all 23, while its ship-safe list allows "the local voice pipeline as built".
+  - **(a) The ban means identifiable real people and public figures, not anonymous volunteers who recorded for speech research, and the allowlist says so in writing (my recommendation).**
+  - (b) It means every real voice, and the cast is re-voiced from a synthetic source.
+  - Meanwhile the allowlist is unchanged; it's law, so it's yours.
+- 2026-09-24 (resolved 24 Sep: allowed but never approved; not re-cast; a listening page with alternatives for him to pick) **Four voices are outside your 31 July cloning permission:** Aldous, Danny, June and Zlata, cast on 14 August. Your 31 July yes named "the nineteen".
+  - **(a) One line from you extending it to all 23 (my recommendation);** their paperwork (credit, casting record, voice manifest) I'll bring up to date regardless.
+  - (b) Re-cast those four from the nineteen already cleared.
 
 - 2026-09-23 (resolved 24 Sep: memory was free and MH_Test was assembled) **MetaHuman Creator wants 10 GB of free memory to open a rigged face, and the PC had 6.8.** The biggest user is a local language model server (llama-server, about 7 GB), which the research session is running for its model tests. Unreal itself holds about 3.7 GB, and the build machine is idle.
 - 2026-09-23 (resolved 24 Sep: the textures and the assembly went through on that sign-in) **Your Epic sign-in worked, confirmed:** MH_Test came back rigged from Epic's service, and its rig state reads Joints and Blend Shapes. (I had called it done a step early, while the bar still read 0 per cent.) Two things remain before a MetaHuman is fully usable. The MetaHuman Creator Core Data needs installing beside the engine, which is your hands in the Epic Games Launcher. And two character settings in the project need switching on, one click on "Enable Missing".
