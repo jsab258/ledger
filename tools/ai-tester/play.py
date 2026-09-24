@@ -372,6 +372,14 @@ def run(args):
     game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER,
                  "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
                  "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
+    # THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE THE GAME, as the
+    # build machine puts them: without them the packaged street is empty and
+    # the screen black (24 September, the run that reported a dead game).
+    import shutil
+    stage = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe") if not args.get("editor") else os.path.join(REPO, "ue-probe")
+    if os.path.isdir(stage):
+        shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
+        shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
     if args.get("editor"):
         cmd = [EDITOR, PROJECT, "-game"] + game_args
         title = "LedgerProbe"
