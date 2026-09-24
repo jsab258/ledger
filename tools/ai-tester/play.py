@@ -184,18 +184,46 @@ def seconds_since_input():
     return (ctypes.windll.kernel32.GetTickCount() - li.dwTime) / 1000.0
 
 
+def window_pid(hwnd):
+    pid = wt.DWORD(0)
+    user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+    return pid.value
+
+
+def front_title():
+    fg = user32.GetForegroundWindow()
+    n = user32.GetWindowTextLengthW(fg)
+    buf = ctypes.create_unicode_buffer(n + 1)
+    user32.GetWindowTextW(fg, buf, n + 1)
+    return buf.value
+
+
 def game_in_front(hwnd):
     """KEYS GO ONLY TO THE GAME. If anything else is in front - somebody
     clicked away, a dialog came up - no key is sent at all, because typed
-    words and an Enter in the wrong window could send a message."""
-    return user32.GetForegroundWindow() == hwnd
+    words and an Enter in the wrong window could send a message. The test is
+    the front window's PROCESS: the packaged game owns more than one window,
+    and the exact-window test refused it (24 September)."""
+    fg = user32.GetForegroundWindow()
+    return fg != 0 and window_pid(fg) == window_pid(hwnd)
 
 
 def focus(hwnd):
+    """Bring the game to the front. Windows lets only the program that has the
+    front hand it on, so this borrows the front window's input thread for a
+    moment (the packaged game refused the plain call, 24 September)."""
+    fg = user32.GetForegroundWindow()
+    t_fg = user32.GetWindowThreadProcessId(fg, None)
+    t_me = ctypes.windll.kernel32.GetCurrentThreadId()
+    attached = bool(t_fg) and t_fg != t_me and user32.AttachThreadInput(t_me, t_fg, True)
     user32.keybd_event(0x12, 0, 0, 0)            # ALT, so Windows lets us take the foreground
+    user32.ShowWindow(hwnd, 9)                   # SW_RESTORE
+    user32.BringWindowToTop(hwnd)
     user32.SetForegroundWindow(hwnd)
     user32.keybd_event(0x12, 0, 2, 0)
-    time.sleep(0.2)
+    if attached:
+        user32.AttachThreadInput(t_me, t_fg, False)
+    time.sleep(0.3)
 
 
 def client_box(hwnd):
@@ -343,6 +371,11 @@ def run(args):
         game.terminate()
         return 1
     time.sleep(25)                                   # the street builds and the encounter places its people
+    for _ in range(10):                              # the first time the window may not take the front at once
+        focus(hwnd)
+        if game_in_front(hwnd):
+            break
+        time.sleep(1.0)
     log, notes = [], []
     tin = tout = 0
     summary = None
@@ -353,7 +386,7 @@ def run(args):
             break
         focus(hwnd)
         if not game_in_front(hwnd):
-            log.append("%d. (stopped: the game was not in front, so no keys were sent)" % step)
+            log.append("%d. (stopped: the game was not in front, so no keys were sent; in front: %s)" % (step, front_title()[:60]))
             summary = "Stopped early: another window came to the front, so it stopped sending keys."
             break
         im = screenshot(hwnd)
@@ -416,7 +449,8 @@ def run(args):
     with open(os.path.join(folder, "report.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(lines) + "\n")
     rel = os.path.relpath(folder, REPO).replace("\\", "/") + "/report.md"
-    fj = os.path.join(REPO, "FOR-JAFAR.md")
+    # A RUN THAT TOOK NO STEP HAS NOTHING TO TELL HIM, and says why here only.
+    fj = os.path.join(REPO, "FOR-JAFAR.md") if done > 0 else os.devnull
     with open(fj, "a", encoding="utf-8") as f:
         f.write("\n".join(for_jafar_block(worst, cost, done, elapsed, stamp, rel)) + "\n")
     print("aiTester status=RAN steps=%d minutes=%.1f notes=%d costUsd=%.2f report=%s" % (done, elapsed, len(notes), cost, rel))
