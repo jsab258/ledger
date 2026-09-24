@@ -1,0 +1,11 @@
+encounterMode=reload
+encounterStatus=PASS
+encounterFailed=none
+encounterCommit=b6db274
+pawnClass=not-asked actPressLanded=not-attempted actRequestsSeen=0 actAttempted=no
+aboutA w1=1 n2=1 r3=1 aboutB w1=0 n2=0 r3=0 crimeMemories w1=1 n2=1 r3=1
+filedSummaryA=the man that did the window looked straight in at the shop before he ran, and his face is known if not his name
+shout=not-played shoutClip=crowd_f1/bc9b402a shoutPlayerDistanceM=-1.0 shoutFalloffM=40 shoutWav=none
+talk=answered talkAs=sam talkFake=yes talkDay=5 talkHour=9 heardCount=2 heardCrime=yes questioned=yes
+talkReply=I know what happened. I heard from the shopkeeper that the man that did the window looked straight in at the shop before he ran, and his face is known if not his name Was that you?
+save=not-written savedBytes=0 loaded=yes loadedBytes=1092 clockLoaded=D4 18:30 saveDir=C:\actions-runner-ledger\_work\_temp\ledger-encounter-save
