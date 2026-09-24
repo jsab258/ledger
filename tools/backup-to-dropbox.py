@@ -72,10 +72,26 @@ def needs_copy(src, dst):
     return a.st_size != b.st_size or a.st_mtime > b.st_mtime + 1
 
 
+def inside(path, dest):
+    """True only when path is dest itself or somewhere under it, after
+    resolving '..' and any link or junction on the way."""
+    root = os.path.realpath(dest)
+    return os.path.commonpath([os.path.realpath(path), root]) == root
+
+
 def run(sources, dest, dry=False):
     copied = unchanged = size = 0
     missing = [s for s, _ in sources if not os.path.exists(s)]
-    for s, d in pairs(sources, dest):
+    # JAFAR'S DROPBOX IS HIS, 24 September: "just need to be 10000000% sure you
+    # don't fuck up my dropbox". Every file this writes is checked to lie
+    # inside the backup's own folder before anything is written, and one that
+    # does not stops the whole run with nothing copied. There is no delete
+    # anywhere in this file outside the self-test's own temporary folder.
+    plan = pairs(sources, dest)
+    outside = [d for _, d in plan if not inside(d, dest)]
+    if outside or os.path.islink(dest):
+        return "backupToDropbox=REFUSED-OUTSIDE-ITS-FOLDER copied=0 first=%s" % (outside[:1] or [dest])[0].replace(" ", "~")
+    for s, d in plan:
         if needs_copy(s, d):
             if not dry:
                 os.makedirs(os.path.dirname(d), exist_ok=True)
@@ -118,6 +134,11 @@ def selftest():
         third = run(lst, dst)
         check("a file gone from the source stays in the backup", os.path.exists(os.path.join(dst, "b.bin")))
         check("and the gone source is named", "MISSING-SOURCE" in third)
+        escape = run([(os.path.join(src, "d"), os.path.join("..", "escaped"))], dst)
+        check("a destination outside the backup folder is refused", "REFUSED-OUTSIDE-ITS-FOLDER" in escape)
+        check("and nothing is written there", not os.path.exists(os.path.join(t, "escaped")))
+    check("every real destination is inside the backup folder",
+          all(inside(d, DEST) for _, d in pairs(SOURCES, DEST)))
     print("backup-to-dropbox selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 

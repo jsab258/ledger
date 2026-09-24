@@ -11,7 +11,7 @@ between them.
 3. **The voices:** you've picked on [the listening page](https://claude.ai/artifact/7rU1JMUr5Nc2SFTuwDm447). Aldous keeps his voice; Danny, June and Zlata change. The lines are made by Nano on the processor, since the card crashes when Nano learns a new voice.
 4. **The business research is on main.** Your direction, the two requirements and the four checklist items are recorded. Everything the town says unprompted is written ahead, on your answer.
 5. **The router:** your three changes are on the list, in stage 2.
-6. **A backup:** set up in your Dropbox on your answer. MH_Test and his built files are there, 540 MB.
+6. **A backup:** set up in your Dropbox on your answer. MH_Test and his built files are there, 514 MB, in one new folder called LEDGER backup, which didn't exist before. Your Dropbox is safe from it. The backup can only write inside that one folder: every file is checked before anything is written, and a file aimed anywhere else stops the whole run with nothing copied. It has no delete step. It never opens, lists or changes anything else in your Dropbox. The one thing it can do to the rest of your Dropbox is use 514 MB of your space.
 
 **The twenty largest folders on C:**, biggest first. "Yours" means I haven't touched it and won't.
 
@@ -57,6 +57,7 @@ None. All six from this morning are answered and under Resolved.
 
 ## Things you should know
 
+- 2026-09-24 **Your Dropbox is safe from the backup, and now checked, not just promised.** It writes only inside its own new folder, LEDGER backup, and refuses the whole run if any file would land anywhere else. It has no delete step, and it has never opened or listed anything else in your Dropbox. The one thing it takes from the rest is 514 MB of space.
 - 2026-09-24 **The runner's leftovers are cleared, and C: has 45 GB free.** The runner's copy of the game went from 36 GB of history to 4.7 GB. The copy is intact, and the next build uses it as before. Nothing else was deleted.
 - 2026-09-24 **The backup is set up in your Dropbox,** in a new folder called LEDGER backup, 540 MB: MH_Test as he is now, MH_Test from before the dressing, and his built files. It only ever adds and updates, never deletes, and I run it at the end of any sitting that changes these files. Nothing else in your Dropbox was looked at or touched.
 - 2026-09-24 **Your four voice picks are recorded,** and with your yes they're cast: Aldous keeps his voice; Danny, June and Zlata get the London, North East and France speakers. Making their clips for the game is on the list for a later sitting.
