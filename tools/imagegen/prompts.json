@@ -854,13 +854,13 @@
    "prompt": "a British village hall notice, hand-lettered marker capitals reading 'JUMBLE SALE' large across the top, a second line reading 'SATURDAY 2PM', beneath them a short block of smaller hand lettering read as texture, sun-bleached, browning tape at the corners"
   },
   {
-   "id": "poster_bingo",
+   "id": "poster_summer_show",
    "kind": "poster",
-   "binds_to": "Decals/generated — the amusement arcade window, Quay Street",
+   "binds_to": "Decals/generated — a shop window, Quay Street",
    "width": 640,
    "height": 896,
    "seed": 8086,
-   "prompt": "a British seaside bingo poster, cheap three-colour offset print, enormous condensed capitals reading 'BINGO' with a second line reading 'EVERY NIGHT', a block of smaller type beneath read as texture, garish red and yellow, sun-faded to pink, curling from the glass"
+   "prompt": "a British seaside summer show poster, cheap three-colour offset print, enormous condensed capitals reading 'SUMMER SHOW' with a second line reading 'EVERY NIGHT', a block of smaller type beneath read as texture, garish red and yellow, sun-faded to pink, curling from the glass"
   },
   {
    "id": "poster_cinema",
@@ -887,7 +887,7 @@
    "width": 640,
    "height": 896,
    "seed": 8089,
-   "prompt": "a British pub darts league sheet, bold capitals reading 'DARTS LEAGUE' across the top, beneath it a ruled fixture grid filled with an even block of small type and pencil marks read as texture, beer-stained at one corner, drawing pins holding it"
+   "prompt": "a British pub darts league sheet, bold capitals reading 'DARTS LEAGUE' across the top, beneath it a ruled fixture grid filled with an even block of small type and pencil marks read as texture, tea-stained at one corner, drawing pins holding it"
   },
   {
    "id": "poster_election",
@@ -959,7 +959,7 @@
    "width": 768,
    "height": 512,
    "seed": 8097,
-   "prompt": "the back bar of a small British pub seen from inside the bar at night, the camera indoors facing the bottle shelves, rows of plain unlettered bottles on glass shelves filling the frame edge to edge, an etched mirror panel behind them, brass pump handles along the counter edge at the foot of the frame, warm tungsten light, cigarette haze"
+   "prompt": "the back of the counter of a small British pub seen from behind it at night, the camera indoors facing the back fitting, shelves of thick white cups stacked on saucers and plain unlabelled tins filling the frame edge to edge, an etched mirror panel behind them, a dented chrome twin tea urn steaming on the counter edge at the foot of the frame, warm tungsten light, cigarette haze"
   },
   {
    "id": "interior_stair_landing",

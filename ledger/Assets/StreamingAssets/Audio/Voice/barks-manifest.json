@@ -387,7 +387,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_m1",
    "exaggeration": 0.35,
    "file": "crowd_m1/3ad03ac5.wav"
@@ -395,7 +395,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_m2",
    "exaggeration": 0.35,
    "file": "crowd_m2/71d46a9c.wav"
@@ -403,7 +403,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_m3",
    "exaggeration": 0.35,
    "file": "crowd_m3/a8cc5cef.wav"
@@ -411,7 +411,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_f1",
    "exaggeration": 0.35,
    "file": "crowd_f1/473efeb6.wav"
@@ -419,7 +419,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_f2",
    "exaggeration": 0.35,
    "file": "crowd_f2/baafbeb3.wav"
@@ -427,7 +427,7 @@
   {
    "slot": "exchange.tell.doubtful",
    "index": 8,
-   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody sober.",
+   "line": "The new owner was at the warehouse on Tuesday? I'd want it from somebody with sense.",
    "voice": "crowd_f3",
    "exaggeration": 0.35,
    "file": "crowd_f3/90b510e0.wav"
@@ -4179,7 +4179,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_m1",
    "exaggeration": 0.65,
    "file": "crowd_m1/f58c6f3c.wav"
@@ -4187,7 +4187,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_m2",
    "exaggeration": 0.65,
    "file": "crowd_m2/c4971893.wav"
@@ -4195,7 +4195,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_m3",
    "exaggeration": 0.65,
    "file": "crowd_m3/e40ad6be.wav"
@@ -4203,7 +4203,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_f1",
    "exaggeration": 0.65,
    "file": "crowd_f1/7a7d92d5.wav"
@@ -4211,7 +4211,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_f2",
    "exaggeration": 0.65,
    "file": "crowd_f2/503d92c2.wav"
@@ -4219,7 +4219,7 @@
   {
    "slot": "exchange.answer.nervous",
    "index": 3,
-   "line": "I've got children. Talk about the weather.",
+   "line": "I've got my mother to think of. Talk about the weather.",
    "voice": "crowd_f3",
    "exaggeration": 0.65,
    "file": "crowd_f3/7d4b0757.wav"
@@ -8211,7 +8211,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_m1",
    "exaggeration": 0.35,
    "file": "crowd_m1/aeccdcc2.wav"
@@ -8219,7 +8219,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_m2",
    "exaggeration": 0.35,
    "file": "crowd_m2/a91d8b35.wav"
@@ -8227,7 +8227,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_m3",
    "exaggeration": 0.35,
    "file": "crowd_m3/9934addc.wav"
@@ -8235,7 +8235,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_f1",
    "exaggeration": 0.35,
    "file": "crowd_f1/d1f139a7.wav"
@@ -8243,7 +8243,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_f2",
    "exaggeration": 0.35,
    "file": "crowd_f2/698fc070.wav"
@@ -8251,7 +8251,7 @@
   {
    "slot": "ambient.open.slump",
    "index": 4,
-   "line": "I've laid the boy off. I hated doing it.",
+   "line": "I've laid my assistant off. I hated doing it.",
    "voice": "crowd_f3",
    "exaggeration": 0.35,
    "file": "crowd_f3/18c87fe9.wav"
@@ -12003,7 +12003,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_m1",
    "exaggeration": 0.35,
    "file": "crowd_m1/96865a6f.wav"
@@ -12011,7 +12011,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_m2",
    "exaggeration": 0.35,
    "file": "crowd_m2/9f65b76c.wav"
@@ -12019,7 +12019,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_m3",
    "exaggeration": 0.35,
    "file": "crowd_m3/582c2015.wav"
@@ -12027,7 +12027,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_f1",
    "exaggeration": 0.35,
    "file": "crowd_f1/17a2b94a.wav"
@@ -12035,7 +12035,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_f2",
    "exaggeration": 0.35,
    "file": "crowd_f2/69c3dc11.wav"
@@ -12043,7 +12043,7 @@
   {
    "slot": "ambient.open.ordinary",
    "index": 13,
-   "line": "Your lad's got tall.",
+   "line": "You've had your hair cut.",
    "voice": "crowd_f3",
    "exaggeration": 0.35,
    "file": "crowd_f3/df8a3828.wav"

@@ -27,7 +27,7 @@ namespace Ledger.Core
             new Rule("alcohol", "lager", false, @"\blagers?\b"),
             new Rule("alcohol", "ale", false, @"\bales?\b"),
             new Rule("alcohol", "stout", false, @"\bstouts?\b"),
-            new Rule("alcohol", "bitter_noun", false, @"(?:\b(?:pints?|halves?|half|glass(?:es)?|drinks?|drinking|pulling|pour\w*|serv\w*)\s+(?:of\s+)?bitter\b)|(?:\ba bitter\b(?!\s+[a-z]))"),
+            new Rule("alcohol", "bitter_noun", false, @"(?:\b(?:pints?|halves?|half|glass(?:es)?|drinks?|drinking|pulling|pour\w*|serv\w*)\s+(?:of\s+)?bitter\b)|(?:\ba bitter\b(?!\s+[a-z]))|(?:\b(?:his|her|my|your|their|our|the usual)\s+bitter\b(?!\s+[a-z]))"),
             new Rule("alcohol", "mild_noun", false, @"(?:\b(?:pints?|halves?|half|glass(?:es)?|drinks?|drinking|pulling|pour\w*|serv\w*)\s+(?:of\s+)?mild\b)|(?:\bthe mild\b(?!\s+(?:weather|winter|spring|summer|autumn|day|night|case|form|version|one|steel|soap|cheese|sort|kind|manner)))"),
             new Rule("alcohol", "pint", false, @"\bpints?\b(?!\s+(?:bottles?|of\s+(?:milk|water|cream|paraffin|oil|blood|tea|squash)))(?<!milk pint)"),
             new Rule("alcohol", "whisky", false, @"\bwhisk(?:e)?y\b"),
