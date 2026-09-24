@@ -1,3 +1,3 @@
-slicePerf=uw-half status=MEETS frames=1500 medianMs=13.70 p95Ms=15.27 p99Ms=17.21 worstMs=20.01 fps=73.0 gpuMedianMs=11.98 over16.7=23 over33.3=0 gpuMemMB=4766 target=60fps-at-3440x1440/never-below-30
-slicePerfVoice=nano-built-in-voice-on-the-card lines=9 nanoRtfMedian=1.28
+slicePerf=uw-half status=NO-CSV/waited-2s
+slicePerfVoice=nano-built-in-voice-on-the-card lines=2 nanoRtfMedian=1.01
 slicePerfResolution=3440x1440
