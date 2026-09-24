@@ -200,6 +200,16 @@ WATCHED = {
     # pictures are this project's own work.
     "production/reference/kcd2-town-arcades.jpg": "Warhorse Studios",
     "production/reference/kcd2-town-fountain.jpg": "Warhorse Studios",
+    # THE CASTING VOICE CANDIDATES, 24 September (overnight): three lines per
+    # candidate, spoken by Chatterbox from a reference that is his approved VCTK
+    # clip, a voice designed from a written description by Parler-TTS, or two
+    # clips of a Google northern English volunteer (SLR83, CC BY-SA 4.0). Each
+    # is a derivative of its reference, so the barks' reasoning holds; the
+    # token names the section of THIRD-PARTY.md that credits all three, and
+    # production/casting/voice-key.json says which letter came from which.
+    "production/casting/sheila-dunn/voices": "Casting voice candidates",
+    "production/casting/ron-kirby/voices": "Casting voice candidates",
+    "production/casting/darren-milner/voices": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be
@@ -299,6 +309,11 @@ OURS = {
     # moves and wrong when a live copy of it remains: both carry frames, so
     # both are rows.
     # THE ONE PLACE A REFERENCE LIVES, added 2026-09-22 with the rule.
+    # The casting sheets' concept portraits, 24 September: made by
+    # tools/imagegen running Z-Image-Turbo (Apache-2.0) from written
+    # descriptions of invented people, no fetched asset as an input. The voice
+    # folders beneath are third-party-derived and carry their own rows above.
+    "production/casting": "concept portraits made by tools/imagegen running Z-Image-Turbo (Apache-2.0) from written descriptions of invented people, no fetched asset as an input; the voices folders beneath carry their own third-party rows",
     "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png (pass 4 of the 22 September regeneration, approved that night) and hook-sheet-2026-09-09-retired.png (the sheet it replaced) are both this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) through stable-diffusion.cpp (MIT) on Jafar's machine, no fetched asset as an input",
     "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived; and the walk's sound, recorded by the engine from the street's own ambience and the crowd voices this file attributes separately",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
