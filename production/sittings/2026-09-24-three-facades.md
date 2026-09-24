@@ -96,6 +96,13 @@ footway's 0.1 m above the road, which put every level about 100 mm out; and
 taking the nearest strong edge rather than the strongest, since a sill has two
 edges 75 mm apart.
 
+TRIED ON THE OTHER TWO THE SAME NIGHT, bay 0 each, as they stand: west_north
+17 of 18 edges found within 5 cm (worst 83 mm), west_south 16 of 16. The
+parapet's top (7.10 and 7.175 m) falls at the frame's upper edge with the
+shot centred at 3.55 m and is not found; for the parapet rows, raise the
+shots' eye_height_m to about 3.9 in production/specs/facade-shots.json
+(a spec change, one probe run) if the parapet is to be measured.
+
 ## Log (filled in during the sitting)
 
 | facade | started | drawing | in Unreal | accepted pair | finished | attempts |
