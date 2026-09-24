@@ -2159,7 +2159,15 @@ namespace
 		std::map<std::string, std::pair<std::string, std::string>> CastByGlb;   // replaces -> (class, idle)
 		// NOT WHEN THE ENCOUNTER RUNS: it places Lena, Sam and Rocco itself,
 		// as the witness, the lad and his mate, and two of each is wrong.
-		if (bInteractive && !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")))
+		// IN THE PLAYABLE ENCOUNTER THE STAND-INS THE CAST REPLACES ARE LEFT OUT
+		// altogether: the encounter places Lena, Sam and Rocco itself, and the
+		// AI tester took the stand-in woman at Mickey's door for Lena and could
+		// not talk to her (24 September). The build's scripted encounter keeps
+		// every stand-in, so its measured sight lines do not move.
+		FString EncMode;
+		FParse::Value(FCommandLine::Get(), TEXT("Encounter="), EncMode);
+		const bool bLiveEncounter = FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")) && EncMode == TEXT("live");
+		if (bInteractive && (bLiveEncounter || !FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime"))))
 		{
 			const std::string Json(TCHAR_TO_UTF8(*Text));
 			Reader CR(Json);
@@ -2184,6 +2192,7 @@ namespace
 			const LedgerStreet::Person& P = People[I];
 			const FString Stem = UTF8_TO_TCHAR(P.Glb.c_str());
 			auto CastIt = CastByGlb.find(P.Glb);
+			if (CastIt != CastByGlb.end() && bLiveEncounter) { continue; }
 			if (CastIt != CastByGlb.end())
 			{
 				if (AActor* M = SpawnCastMetaHuman(World, CastIt->second.first, CastIt->second.second, P))
