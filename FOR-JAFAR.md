@@ -15,7 +15,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - The game dresses each as your pick (Sheila C1, Ron C1, Darren C5), jacket off; Sheila speaks in your D.
 - An accent checker tests every voice: 39 American casting clips removed, 5 street lines out of use.
 
-**Evidence.** Two reviewers who did not make them passed the three lines; accent, words, licence and names checks pass.
+**Evidence.** Two reviewers who did not make them passed the three lines; accent, words, licence and names checks pass; build machine green.
 
 **Failed.**
 - No clean voice sounds like Ron's pick; he keeps his July voice.
