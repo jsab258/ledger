@@ -210,6 +210,13 @@ WATCHED = {
     "production/casting/sheila-dunn/voices": "Casting voice candidates",
     "production/casting/ron-kirby/voices": "Casting voice candidates",
     "production/casting/darren-milner/voices": "Casting voice candidates",
+    # THE ACTING TEST, 25 September: the same Chatterbox, cloned from the
+    # voice he picked for each (so from the same references as above), and an
+    # "acted" reference that is that voice cloned reading a passage in a
+    # feeling. Derivatives of the same references; the same credits.
+    "production/casting/sheila-dunn/acting": "Casting voice candidates",
+    "production/casting/ron-kirby/acting": "Casting voice candidates",
+    "production/casting/darren-milner/acting": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be
@@ -277,7 +284,7 @@ OURS = {
     # under the same production/art tree, so a delivered PNG would be
     # classified as ours by a row that only ever meant the previews. The
     # value says so; narrowing the path rule is queue 153.
-    "production/art": "renders by a recipe under tools/art-recipes of this project's own piece list - the previews under production/art/*/previews and the accepted frames a recipe commits beside its asset - renders of this project's own piece list by a recipe under tools/art-recipes, greys from the recipe plus the CC0 base meshes attributed in ledger/Assets/Props/base-mesh/THIRD-PARTY.md; a DELIVERY under the same commission is somebody's and is not covered by this row",
+    "production/art": "renders by a recipe under tools/art-recipes of this project's own piece list - the previews under production/art/*/previews and the accepted frames a recipe commits beside its asset - renders of this project's own piece list by a recipe under tools/art-recipes, greys from the recipe plus the CC0 base meshes attributed in ledger/Assets/Props/base-mesh/THIRD-PARTY.md; a DELIVERY under the same commission is somebody's and is not covered by this row; and clothing/, the garments sewn by tools/meshgen/blender from FreeSewing's patterns (MIT), pictured in Blender and worn by a MetaHuman in this project's street",
     # The Unreal probe's own frames, added 3 Sep 2026 when run 17 rendered the
     # street for the first time and this check went red naming five PNGs. The
     # same category as sim-shots and for a stronger reason: Phase B is
@@ -313,7 +320,7 @@ OURS = {
     # tools/imagegen running Z-Image-Turbo (Apache-2.0) from written
     # descriptions of invented people, no fetched asset as an input. The voice
     # folders beneath are third-party-derived and carry their own rows above.
-    "production/casting": "concept portraits made by tools/imagegen running Z-Image-Turbo (Apache-2.0) from written descriptions of invented people, no fetched asset as an input; the voices folders beneath carry their own third-party rows",
+    "production/casting": "concept portraits made by tools/imagegen running Z-Image-Turbo (Apache-2.0) from written descriptions of invented people, no fetched asset as an input; and candidates-2026-09-25, pictures taken in this project's own street by its portrait tool of MetaHumans built on this PC from its casting sheets (Epic's MetaHuman licence lets renders be shown; the MetaHuman files themselves stay out of this repository); the voices and acting folders beneath carry their own third-party rows",
     "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png (pass 4 of the 22 September regeneration, approved that night) and hook-sheet-2026-09-09-retired.png (the sheet it replaced) are both this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) through stable-diffusion.cpp (MIT) on Jafar's machine, no fetched asset as an input",
     "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived; and the walk's sound, recorded by the engine from the street's own ambience and the crowd voices this file attributes separately",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
@@ -443,7 +450,7 @@ NOT_ASSET_SUFFIXES = {
     # to cover everything walked.
     ".request",
     # Source and build products of source.
-    ".cs", ".py", ".pyc", ".sh", ".bat", ".cmd", ".ps1", ".h", ".cpp",
+    ".cs", ".py", ".pyc", ".sh", ".bat", ".cmd", ".ps1", ".h", ".cpp", ".mjs",
     ".shader", ".csproj", ".uproject", ".yml", ".ini",
     # `.uasset` IS A BUILD PRODUCT HERE AND THAT IS WHY IT SITS ON THIS SIDE.
     # The only one in the tree is `ue-probe/Content/Ledger/M_LedgerSurface`,

@@ -87,7 +87,10 @@ written to.
 candidate, spoken by Chatterbox (MIT) from one reference each, for Jafar to
 pick from blind. `production/casting/voice-key.json` says which letter came
 from which reference. Not shipped: the chosen voice's reference moves to
-`game-design/picked-clips` once he says yes.
+`game-design/picked-clips` once he says yes. `production/casting/<name>/acting/`,
+25 September: the acting test, the same engine cloned from the voice he picked
+(so from these same references), each line made four ways;
+`production/casting/acting-key.json` says which is which.
 
 | Reference | Source | Licence | Credit |
 |---|---|---|---|
