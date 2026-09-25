@@ -1,0 +1,198 @@
+{
+ "freeC": 1.8,
+ "freeF": 62.4,
+ "groups": [
+  {
+   "id": "runner-leftovers",
+   "title": "The build machine's leftovers from its last build",
+   "paths": [
+    "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Packaged",
+    "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Saved",
+    "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Intermediate",
+    "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Binaries"
+   ],
+   "why": "The last build's packaged game, cooked files, logs and compile scratch. Every build deletes these four itself at its start and makes them again, and its game has already been copied out to the played copy, so nothing reads them between builds.",
+   "after": "Nothing changes until the next build, which makes them again as it always does. From now on the build also clears them at its end (a step added to the workflow), so they stop sitting on C: between builds.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Packaged",
+     6.18
+    ],
+    [
+     "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Saved",
+     6.12
+    ],
+    [
+     "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Intermediate",
+     5.1
+    ],
+    [
+     "C:\\actions-runner-ledger\\_work\\ledger\\ledger\\ue-probe\\Binaries",
+     0.83
+    ]
+   ],
+   "gb": 18.2,
+   "movedGb": 0
+  },
+  {
+   "id": "runner-old-workspace",
+   "title": "The build machine's old workspace for wc26-picks",
+   "paths": [
+    "C:\\actions-runner-ledger\\_work\\wc26-picks"
+   ],
+   "why": "Left from when this machine built the wc26-picks project. The machine now builds only this project, so nothing uses it.",
+   "after": "Nothing changes.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\actions-runner-ledger\\_work\\wc26-picks",
+     4.51
+    ]
+   ],
+   "gb": 4.5,
+   "movedGb": 0
+  },
+  {
+   "id": "old-copy-wc26-picks",
+   "title": "The old copy of the project: wc26-picks",
+   "paths": [
+    "C:\\Users\\Jafar\\wc26-picks"
+   ],
+   "moveOut": [
+    {
+     "from": "C:\\Users\\Jafar\\wc26-picks\\tools\\voice-live\\env-export",
+     "to": "F:\\LedgerTools\\voice-env-export",
+     "why": "the game's live voice still loads a library folder from here (its pointer file is changed to the new place)"
+    },
+    {
+     "from": "C:\\Users\\Jafar\\wc26-picks\\tools\\voice-live\\game-out",
+     "to": "F:\\LedgerTools\\voice-graphs\\game-out",
+     "why": "the voice model converted for the old Unity player; hours to make again, so kept on F:"
+    },
+    {
+     "from": "C:\\Users\\Jafar\\wc26-picks\\tools\\voice-live\\export-out",
+     "to": "F:\\LedgerTools\\voice-graphs\\export-out",
+     "why": "the same, an earlier conversion"
+    }
+   ],
+   "saveIntoProject": "140 small files found nowhere on GitHub (7 MB): 37 prop models made by the old recipes, the old supervisor's log, two reply receipts, the migration log and bench-spoke.wav; into production/archive/old-copies/wc26-picks/.",
+   "why": "Its history is on GitHub: every commit is pushed. Everything else in it is Python environments that can be made again, an old packaged game the played copy replaced, and build output.",
+   "after": "The live voice runs from F: (checked by making a line before anything is deleted); the old files are in the project's archive.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\wc26-picks",
+     22.66
+    ]
+   ],
+   "gb": 22.7,
+   "movedGb": 15.4
+  },
+  {
+   "id": "old-copy-ledger-migrate",
+   "title": "The older copy of the project: ledger-migrate",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-migrate"
+   ],
+   "moveOut": [
+    {
+     "from": "C:\\Users\\Jafar\\ledger-migrate\\ue-probe\\Packaged",
+     "to": "F:\\LedgerTools\\played-game",
+     "why": "the played copy of the game, which your 'play the street' shortcut opens and every build refreshes; a link is left at the old place, so the shortcut and the build find it without anything of yours being changed"
+    }
+   ],
+   "saveIntoProject": "7 small files found nowhere on GitHub (15 MB): the retired studio's supervisor logs and the 11 September answer file; into production/archive/old-copies/ledger-migrate/.",
+   "why": "Its history is on GitHub: every commit and branch is pushed. Apart from the played copy, nothing in it is used.",
+   "after": "The shortcut opens the same game, now kept on F:.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-migrate",
+     18.15
+    ]
+   ],
+   "gb": 18.1,
+   "movedGb": 5.4
+  },
+  {
+   "id": "project-intermediate",
+   "title": "This project's local compile scratch",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate"
+   ],
+   "why": "Compile and cook scratch for the game on this PC.",
+   "after": "The next build here makes it again, a few minutes slower, and it grows back to the same size at once, so it frees nothing for long.",
+   "recommend": false,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate",
+     4.96
+    ]
+   ],
+   "gb": 5.0,
+   "movedGb": 0
+  },
+  {
+   "id": "unreal-cache",
+   "title": "Unreal's shared cache",
+   "paths": [
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache",
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen"
+   ],
+   "why": "Compiled shaders and cooked data that every editor start and every build reuses. All of it was written in the last three days, so all of it is in use.",
+   "after": "Every editor start and build would compile for a long time, and it would grow straight back.",
+   "recommend": false,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache",
+     12.34
+    ],
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen",
+     6.68
+    ]
+   ],
+   "gb": 19.0,
+   "movedGb": 0
+  }
+ ],
+ "others": [
+  {
+   "name": "Dropbox",
+   "path": "C:\\Users\\Jafar\\Dropbox",
+   "gb": 41.1,
+   "why": "yours; the backup adds to it and never deletes"
+  },
+  {
+   "name": "Windows' hibernation file",
+   "path": "C:\\hiberfil.sys",
+   "gb": 13.7,
+   "why": "a Windows setting you can switch off yourself"
+  },
+  {
+   "name": "Windows' swap file",
+   "path": "C:\\pagefile.sys",
+   "gb": 11.7,
+   "why": "Windows'"
+  },
+  {
+   "name": "Hugging Face's download cache",
+   "path": "C:\\Users\\Jafar\\.cache\\huggingface",
+   "gb": 3.5,
+   "why": "two speech datasets from August and the voice model; not on your list, so untouched; add it and it can go"
+  },
+  {
+   "name": "C:\\LedgerTools\\parler-tts and slr83",
+   "path": "C:\\LedgerTools\\slr83",
+   "gb": 0.0,
+   "why": "links to the only copies on F:, taking no room on C:; left alone (measured through the link they looked like 7.8 GB of duplicates)"
+  },
+  {
+   "name": "F:\\LedgerTools, my own rejected and superseded files",
+   "path": "F:\\LedgerTools",
+   "gb": 13.7,
+   "why": "not on your list; the large-file record lists 13.7 GB of my own there that are rejected or superseded; add it and the end-of-sitting sweep can clear them"
+  }
+ ]
+}

@@ -36,6 +36,13 @@
 // photographs each where the game stands them, in that place's light, from
 // in front of their own face: a close-up, the speaking line, and a wider
 // shot. Pictures ue-portrait-ingame-<who>-<shot>.png.
+//
+// WHY FACES READ EAST ASIAN, 25 September (night): even Epic's European preset
+// Vivian, built here, reads narrower-eyed than Epic's own picture of her. Three
+// switches take away one difference each, with no rebuild: -PortraitNoHair
+// hides the head hair (never brows or lashes), -PortraitStudio adds a plain
+// key and fill light at the face, -PortraitFaceRest shows the face with no
+// animation, at rest.
 #include "MetaHumanPortrait.h"
 #include "LedgerJacket.h"
 
@@ -57,6 +64,8 @@
 #include "ShaderCompiler.h"
 #include "UnrealClient.h"
 #include "EngineUtils.h"
+#include "Engine/PointLight.h"
+#include "Components/PointLightComponent.h"
 
 namespace LedgerMhPortrait
 {
@@ -87,6 +96,9 @@ namespace LedgerMhPortrait
 	FString GSpeech = TEXT("_n");     // -PortraitSpeech: the speaking animation's variant; _n, the neutral mood, by default
 	bool GScan = false;               // the shot running is a scan of the face idle
 	bool GInGame = false;             // -PortraitInGame: the game's own cast, where it stands
+	bool GNoHair = false, GStudio = false, GFaceRest = false;   // the look tests
+	float GStudioCd = 8.0f;           // -PortraitStudioCd: the key light's candela (60 blew the picture out)
+	TArray<TWeakObjectPtr<AActor>> GLights;
 
 	FTSTicker::FDelegateHandle GTicker;
 	double GStart = 0.0, GPhaseAt = 0.0;
@@ -191,6 +203,46 @@ namespace LedgerMhPortrait
 	// THE HAT on the body's head bone, set square to the wearer (a MetaHuman
 	// faces its actor's +Y, as the cap faces its own +Y), then carried by the
 	// bone as the head moves.
+	// THE LOOK TESTS (see the top of this file).
+	void LookTests(UWorld* World, const FVector& Face)
+	{
+		if (!GPerson.IsValid()) { return; }
+		if (GNoHair)
+		{
+			TArray<USceneComponent*> Parts;
+			GPerson->GetComponents(Parts);
+			for (USceneComponent* C : Parts)
+			{
+				const FString N = C != nullptr ? C->GetName() : FString();
+				if (N.Equals(TEXT("Hair"), ESearchCase::IgnoreCase) || N.StartsWith(TEXT("Hair"), ESearchCase::IgnoreCase))
+				{
+					C->SetVisibility(false, true);
+				}
+			}
+		}
+		if (GFaceRest)
+		{
+			for (USkeletalMeshComponent* C : FaceParts()) { C->Stop(); C->SetAnimation(nullptr); }
+		}
+		if (GStudio && GLights.Num() == 0)
+		{
+			// A photographer's key from the camera's left and above, and a softer fill from its right.
+			const FRotator Facing(0.0f, GPerson->GetActorRotation().Yaw - 180.0f, 0.0f);
+			const struct { FVector At; float Candela; } Rig[] = { { FVector(-70.0f, -110.0f, 45.0f), GStudioCd }, { FVector(80.0f, -120.0f, 0.0f), GStudioCd / 3.0f } };
+			for (const auto& L : Rig)
+			{
+				APointLight* Light = World->SpawnActor<APointLight>(Face + Facing.RotateVector(L.At), FRotator::ZeroRotator);
+				if (Light == nullptr) { continue; }
+				Light->PointLightComponent->SetIntensityUnits(ELightUnits::Candelas);
+				Light->PointLightComponent->SetIntensity(L.Candela);
+				Light->PointLightComponent->SetAttenuationRadius(400.0f);
+				Light->PointLightComponent->SetSourceRadius(25.0f);
+				Light->PointLightComponent->SetCastShadows(true);
+				GLights.Add(Light);
+			}
+		}
+	}
+
 	void WearHat()
 	{
 		if (GHat.IsEmpty() || !GPerson.IsValid() || GPerson->Tags.Contains(TEXT("LedgerHat"))) { return; }
@@ -295,6 +347,7 @@ namespace LedgerMhPortrait
 		// Body and face together: Epic's two idles are a pair, and holding the
 		// face alone while the body went on tipped the head against the neck.
 		HoldIdles(GFaceAt);
+		LookTests(World, Face);
 		GCam->GetCameraComponent()->SetFieldOfView(bMid ? 34.0f : 28.0f);
 		if (APlayerController* PC = World->GetFirstPlayerController())
 		{
@@ -503,6 +556,10 @@ namespace LedgerMhPortrait
 			FParse::Value(FCommandLine::Get(), TEXT("HatScale="), GHatScale);
 		}
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitFaceAt="), GFaceAt);
+		GNoHair = FParse::Param(FCommandLine::Get(), TEXT("PortraitNoHair"));
+		GStudio = FParse::Param(FCommandLine::Get(), TEXT("PortraitStudio"));
+		FParse::Value(FCommandLine::Get(), TEXT("PortraitStudioCd="), GStudioCd);
+		GFaceRest = FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceRest"));
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))

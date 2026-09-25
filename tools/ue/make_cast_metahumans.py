@@ -235,6 +235,17 @@ CANDIDATES = {
     "E2": {"lena": _c("Vivian", {"Vivian": 1.0}, 121, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN)},
     # E3, the control: Vivian as Epic ships her, own face and own skin.
     "E3": {"lena": _c("Vivian", {"Vivian": 1.0}, None, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN)},
+    # E4, Vivian wholly as Epic ships her: her own hair and make-up too (E3 still
+    # had Sheila's haircut and no make-up), to compare with Epic's own picture.
+    "E4": {"lena": _c("Vivian", {"Vivian": 1.0}, None, 0.22, 0.45, 160.0, 0.6, -0.8, None, makeup=True)},
+    # F1, THE FIX (25 September, night): E4, Vivian wholly as shipped, looked
+    # like Epic's own picture of her, so the build is sound; what read East
+    # Asian was the dark straight bob with a heavy side fringe on Sheila (with
+    # all make-up gone, under the street's dim light). Her approved face, C1,
+    # with the sheet's hair: short and off the face like a set, a lighter
+    # greying brown.
+    "F1": {"lena": _c("Vivian", {"Vivian": 0.5, "Walter": 0.25, "Celeste": 0.25}, 121, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_SweptUp",
+                      {"hairMelanin": 0.3, "hairRedness": 0.08, "WhiteAmount": 0.5})},
 }
 
 
@@ -422,7 +433,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         sub.set_body_constraints(ch, cons)
         sub.commit_body_state(ch)
         notes.append("body-%d" % held)
-        hair = unreal.load_asset(GROOMS + c["hair"] + "." + c["hair"])
+        hair = unreal.load_asset(GROOMS + c["hair"] + "." + c["hair"]) if c.get("hair") else None   # none: the preset keeps its own
         if hair is not None:
             col = ch.internal_collection
             item = col.try_add_item_from_wardrobe_item("Hair", hair)

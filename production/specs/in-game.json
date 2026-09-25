@@ -1,13 +1,17 @@
 {
  "about": "What the playable build uses, each by the thing its approval sits beside (tools/approvals.py). The build flags every entry without a current approval. Add an entry when something is placed in the game; the approval comes from Jafar, on the sitting's approval page. 24 September.",
  "placed": [
-  {"thing": "production/casting/sheila-dunn/SHEET.md", "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take C1, the candidate Jafar approved; voice lena.parler-d, his pick D)"},
-  {"thing": "production/casting/ron-kirby/SHEET.md", "what": "Ron Kirby: face, body, clothes, hair and voice (in the game as the MetaHuman 'Rocco', take C1, the candidate Jafar approved; voice rocco.p227, his July voice, until a clean one like his pick is found)"},
-  {"thing": "production/casting/darren-milner/SHEET.md", "what": "Darren Milner: face, body, clothes, hair and voice (in the game as the MetaHuman 'Sam', take C5, the candidate Jafar approved; voice sam.p241, his pick A)"},
+  {"thing": "production/casting/sheila-dunn/SHEET.md", "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take C1, the candidate Jafar approved; voice lena.parler-d, his pick D)", "backup": [{"path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC1.uasset", "as": "approved/sheila-dunn/source/MH_LenaC1.uasset", "first": true}, {"path": "game-design/picked-clips/lena.parler-d.mp3", "as": "approved/sheila-dunn/voice/lena.parler-d.mp3", "first": true}, {"path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC1", "as": "approved/sheila-dunn/built/MH_LenaC1"}]},
+  {"thing": "production/casting/ron-kirby/SHEET.md", "what": "Ron Kirby: face, body, clothes, hair and voice (in the game as the MetaHuman 'Rocco', take C1, the candidate Jafar approved; voice rocco.p227, his July voice, until a clean one like his pick is found)", "backup": [{"path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC1.uasset", "as": "approved/ron-kirby/source/MH_RoccoC1.uasset", "first": true}, {"path": "game-design/picked-clips/rocco.p227.mp3", "as": "approved/ron-kirby/voice/rocco.p227.mp3", "first": true}, {"path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC1", "as": "approved/ron-kirby/built/MH_RoccoC1"}]},
+  {"thing": "production/casting/darren-milner/SHEET.md", "what": "Darren Milner: face, body, clothes, hair and voice (in the game as the MetaHuman 'Sam', take C5, the candidate Jafar approved; voice sam.p241, his pick A)", "backup": [{"path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC5.uasset", "as": "approved/darren-milner/source/MH_SamC5.uasset", "first": true}, {"path": "game-design/picked-clips/sam.p241.mp3", "as": "approved/darren-milner/voice/sam.p241.mp3", "first": true}, {"path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC5", "as": "approved/darren-milner/built/MH_SamC5"}]},
   {"thing": "content/dialogue/crime-witness-v1.json", "what": "the witness lines of the window encounter"},
   {"thing": "production/specs/unreal-look.json", "what": "the street's light and grade"},
   {"thing": "production/specs/vignette-pieces.json", "what": "the street's pieces"},
   {"thing": "production/specs/street-sounds.json", "what": "the street's sound"},
   {"thing": "production/art/interiors-2026-09-23/manifest.json", "what": "the four window interiors"}
+ ],
+ "backupAlso": [
+  {"path": "F:/LedgerTools/mh-dress/MHAssemble.uproject", "as": "approved/rebuild/MHAssemble.uproject", "first": true, "why": "the scratch project the faces are rebuilt in (tools/ue/make_cast_metahumans.py)"},
+  {"path": "F:/LedgerTools/mh-dress/Content/Python/init_unreal.py", "as": "approved/rebuild/init_unreal.py", "first": true, "why": "how that project runs the repository's scripts"}
  ]
 }

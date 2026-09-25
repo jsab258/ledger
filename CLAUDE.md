@@ -32,9 +32,17 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 - The old records and the 979-item feature checklist are in production/archive/. The checklist is a reference, not a gate: check it for missing basics at each milestone; nothing waits on it.
 - Why: the two audits in production/audits/.
 
+## Disk: what may ever be deleted (Jafar, 25 September)
+
+- Deletion happens only inside this fixed list, and only after he approves a cleanup page that names each folder, its size and why: the two old copies, C:\Users\Jafar\wc26-picks and C:\Users\Jafar\ledger-migrate; the project's own build, render and scratch folders (its gitignored build output, such as ue-probe\Intermediate, Saved, Packaged and DerivedDataCache and the .NET bin and obj folders, and its gitignored render and scratch output); C:\LedgerTools; the build machine's working copy, C:\actions-runner-ledger\_work; and Unreal's cache, %LOCALAPPDATA%\UnrealEngine\Common. Nothing outside it is ever deleted, moved or changed, least of all his Documents, Desktop, Downloads, Dropbox or anything else of his.
+- Never deleted, even inside the list: what he has approved, anything the game or a build uses, anything the backup covers (tools/backup-to-dropbox.py's list). The old copies go only once everything in them is shown to be on GitHub or moved out (the voice tools and the played copy of the game, as agreed on 24 September).
+- tools/cleanup.py refuses any path outside the list, and any protected one.
+- THE LARGE-FILE RECORD, so it cannot creep back: every file or folder of 100 MB or more that I create goes into production/large-files.json (tools/large_files.py) with what made it and why. At the end of every sitting I delete only my own entries from that record that are rejected or superseded, only inside the list above; never anything I did not create, and never by guessing that something is unused. New scratch and caches go to drive F, not C.
+- Every sitting's summary gives free space on C: at the start and at the end. Below 60 GB, the cleanup page comes before anything else in the next sitting.
+
 ## How a sitting runs
 
-- Each sitting has a list in order and a time limit (four hours if unnamed). When an item is done, take the next without asking. Stop only when time is up or the list is done, everything committed; the closing summary ends with something he can act on: how to play what exists, a recommended decision, or both.
+- Each sitting has a list in order and a time limit (four hours if unnamed). When an item is done, take the next without asking. Stop only when time is up or the list is done, everything committed; the closing summary ends with something he can act on: how to play what exists, a recommended decision, or both. At the end of every sitting the backup runs (tools/backup-to-dropbox.py; the summary's commit sets it off through tools/hooks/post-commit) and the summary gives its line, and the large-file record is swept.
 - The stop hook has one job: while time remains and the list has an item left, keep going. It reads NOW.md, for the builder's own session only (its id is in the untracked .claude/builder-checkout).
 - If an item turns out much bigger than it looked, tell him rather than push on.
 
