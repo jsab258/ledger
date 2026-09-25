@@ -1,0 +1,188 @@
+{
+ "sheila-dunn": [
+  {
+   "take": "C1",
+   "front": "sheila-dunn/C1-front.jpg",
+   "profile": "sheila-dunn/C1-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/C1-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C2",
+   "front": "sheila-dunn/C2-front.jpg",
+   "profile": "sheila-dunn/C2-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/C2-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C3",
+   "front": "sheila-dunn/C3-front.jpg",
+   "profile": "sheila-dunn/C3-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/C3-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C4",
+   "front": "sheila-dunn/C4-front.jpg",
+   "profile": "sheila-dunn/C4-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/C4-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C5",
+   "front": "sheila-dunn/C5-front.jpg",
+   "profile": "sheila-dunn/C5-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/C5-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  }
+ ],
+ "ron-kirby": [
+  {
+   "take": "C1",
+   "front": "ron-kirby/C1-front.jpg",
+   "profile": "ron-kirby/C1-profile.jpg",
+   "speak": {
+    "file": "ron-kirby/C1-speak.jpg",
+    "frames": 85,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C2",
+   "front": "ron-kirby/C2-front.jpg",
+   "profile": "ron-kirby/C2-profile.jpg",
+   "speak": {
+    "file": "ron-kirby/C2-speak.jpg",
+    "frames": 85,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C3",
+   "front": "ron-kirby/C3-front.jpg",
+   "profile": "ron-kirby/C3-profile.jpg",
+   "speak": {
+    "file": "ron-kirby/C3-speak.jpg",
+    "frames": 85,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C4",
+   "front": "ron-kirby/C4-front.jpg",
+   "profile": "ron-kirby/C4-profile.jpg",
+   "speak": {
+    "file": "ron-kirby/C4-speak.jpg",
+    "frames": 85,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C5",
+   "front": "ron-kirby/C5-front.jpg",
+   "profile": "ron-kirby/C5-profile.jpg",
+   "speak": {
+    "file": "ron-kirby/C5-speak.jpg",
+    "frames": 85,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  }
+ ],
+ "darren-milner": [
+  {
+   "take": "C1",
+   "front": "darren-milner/C1-front.jpg",
+   "profile": "darren-milner/C1-profile.jpg",
+   "speak": {
+    "file": "darren-milner/C1-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C2",
+   "front": "darren-milner/C2-front.jpg",
+   "profile": "darren-milner/C2-profile.jpg",
+   "speak": {
+    "file": "darren-milner/C2-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C3",
+   "front": "darren-milner/C3-front.jpg",
+   "profile": "darren-milner/C3-profile.jpg",
+   "speak": {
+    "file": "darren-milner/C3-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C4",
+   "front": "darren-milner/C4-front.jpg",
+   "profile": "darren-milner/C4-profile.jpg",
+   "speak": {
+    "file": "darren-milner/C4-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "C5",
+   "front": "darren-milner/C5-front.jpg",
+   "profile": "darren-milner/C5-profile.jpg",
+   "speak": {
+    "file": "darren-milner/C5-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  }
+ ]
+}

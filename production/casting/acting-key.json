@@ -1,0 +1,445 @@
+{
+ "what": "The acting test: which letter is which reference and settings. The approval page must not show this file.",
+ "engine": "Chatterbox (original ChatterboxTTS, MIT), on the processor, temperature 0.8, min_p 0.05, repetition_penalty 1.2; every output carries Chatterbox's Perth watermark",
+ "settings": {
+  "default": {
+   "exaggeration": 0.5,
+   "cfg_weight": 0.5
+  },
+  "drama": {
+   "exaggeration": 0.7,
+   "cfg_weight": 0.3
+  }
+ },
+ "acted_reference": {
+  "exaggeration": 1.0,
+  "cfg_weight": 0.3,
+  "how": "the calm reference cloned, reading a passage in the feeling"
+ },
+ "seed": 20260925,
+ "characters": {
+  "sheila-dunn": {
+   "voice": "production/casting/sheila-dunn/voices/sheila-dunn-D-reference.mp3",
+   "lines": {
+    "threat": {
+     "line": "Put that book down. Now. You touch Mickey's ledgers again and the whole street will know what you are.",
+     "acted_reference": "production/casting/sheila-dunn/acting/sheila-dunn-acted-reference-threat.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-threat-A.mp3",
+       "seconds": 5.88,
+       "raw_lufs": -16.6
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-threat-B.mp3",
+       "seconds": 6.42,
+       "raw_lufs": -19.4
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-threat-C.mp3",
+       "seconds": 6.42,
+       "raw_lufs": -17.0
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-threat-D.mp3",
+       "seconds": 6.44,
+       "raw_lufs": -15.1
+      }
+     }
+    },
+    "warmth": {
+     "line": "Sit down, love, you look done in. I'll put the kettle on. Mickey would have liked you, I think.",
+     "acted_reference": "production/casting/sheila-dunn/acting/sheila-dunn-acted-reference-warmth.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-warmth-A.mp3",
+       "seconds": 5.8,
+       "raw_lufs": -15.8
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-warmth-B.mp3",
+       "seconds": 6.66,
+       "raw_lufs": -19.0
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-warmth-C.mp3",
+       "seconds": 6.06,
+       "raw_lufs": -20.4
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-warmth-D.mp3",
+       "seconds": 5.68,
+       "raw_lufs": -15.6
+      }
+     }
+    },
+    "embarrassment": {
+     "line": "Oh. I didn't hear you come in. I was just talking to myself. Don't look at me like that.",
+     "acted_reference": "production/casting/sheila-dunn/acting/sheila-dunn-acted-reference-embarrassment.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-A.mp3",
+       "seconds": 7.56,
+       "raw_lufs": -16.8
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-B.mp3",
+       "seconds": 6.42,
+       "raw_lufs": -20.0
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-C.mp3",
+       "seconds": 7.12,
+       "raw_lufs": -17.8
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-D.mp3",
+       "seconds": 6.3,
+       "raw_lufs": -19.6
+      }
+     }
+    },
+    "humour": {
+     "line": "Thirty-one years, and the only thing that's ever balanced in this office is the dust on that shelf.",
+     "acted_reference": "production/casting/sheila-dunn/acting/sheila-dunn-acted-reference-humour.mp3",
+     "letters": {
+      "A": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-humour-A.mp3",
+       "seconds": 5.74,
+       "raw_lufs": -20.4
+      },
+      "B": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-humour-B.mp3",
+       "seconds": 7.08,
+       "raw_lufs": -13.6
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-humour-C.mp3",
+       "seconds": 7.32,
+       "raw_lufs": -14.9
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/sheila-dunn/acting/sheila-dunn-humour-D.mp3",
+       "seconds": 5.78,
+       "raw_lufs": -19.6
+      }
+     }
+    }
+   }
+  },
+  "ron-kirby": {
+   "voice": "production/casting/ron-kirby/voices/ron-kirby-A-reference.mp3",
+   "lines": {
+    "threat": {
+     "line": "Walk away, son. Thirty years on the docks, and I never once had to ask a man twice.",
+     "acted_reference": "production/casting/ron-kirby/acting/ron-kirby-acted-reference-threat.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-threat-A.mp3",
+       "seconds": 5.28,
+       "raw_lufs": -16.1
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-threat-B.mp3",
+       "seconds": 4.88,
+       "raw_lufs": -23.1
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-threat-C.mp3",
+       "seconds": 5.04,
+       "raw_lufs": -15.1
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-threat-D.mp3",
+       "seconds": 4.76,
+       "raw_lufs": -19.8
+      }
+     }
+    },
+    "warmth": {
+     "line": "Here, get this tea down you. Mickey would've wanted someone looking out for you, and it may as well be me.",
+     "acted_reference": "production/casting/ron-kirby/acting/ron-kirby-acted-reference-warmth.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-warmth-A.mp3",
+       "seconds": 5.64,
+       "raw_lufs": -16.7
+      },
+      "B": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-warmth-B.mp3",
+       "seconds": 4.6,
+       "raw_lufs": -16.2
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-warmth-C.mp3",
+       "seconds": 4.32,
+       "raw_lufs": -21.7
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-warmth-D.mp3",
+       "seconds": 4.76,
+       "raw_lufs": -22.6
+      }
+     }
+    },
+    "embarrassment": {
+     "line": "Ah. You weren't meant to see that. It's a letter, that's all. From my sister. Leave it, will you.",
+     "acted_reference": "production/casting/ron-kirby/acting/ron-kirby-acted-reference-embarrassment.mp3",
+     "letters": {
+      "A": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-embarrassment-A.mp3",
+       "seconds": 4.52,
+       "raw_lufs": -22.9
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-embarrassment-B.mp3",
+       "seconds": 4.2,
+       "raw_lufs": -19.5
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-embarrassment-C.mp3",
+       "seconds": 5.88,
+       "raw_lufs": -15.0
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-embarrassment-D.mp3",
+       "seconds": 4.84,
+       "raw_lufs": -15.0
+      }
+     }
+    },
+    "humour": {
+     "line": "Rain again. I've been wet since nineteen fifty-eight, boss. I don't even notice any more.",
+     "acted_reference": "production/casting/ron-kirby/acting/ron-kirby-acted-reference-humour.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-humour-A.mp3",
+       "seconds": 4.6,
+       "raw_lufs": -16.0
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-humour-B.mp3",
+       "seconds": 4.16,
+       "raw_lufs": -24.6
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-humour-C.mp3",
+       "seconds": 5.12,
+       "raw_lufs": -15.7
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/ron-kirby/acting/ron-kirby-humour-D.mp3",
+       "seconds": 4.08,
+       "raw_lufs": -20.2
+      }
+     }
+    }
+   }
+  },
+  "darren-milner": {
+   "voice": "production/casting/darren-milner/voices/darren-milner-A-reference.mp3",
+   "lines": {
+    "threat": {
+     "line": "You want to be careful, you. People round here talk, and I'm the one they talk to.",
+     "acted_reference": "production/casting/darren-milner/acting/darren-milner-acted-reference-threat.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-threat-A.mp3",
+       "seconds": 3.96,
+       "raw_lufs": -12.8
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-threat-B.mp3",
+       "seconds": 3.84,
+       "raw_lufs": -18.3
+      },
+      "C": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-threat-C.mp3",
+       "seconds": 3.72,
+       "raw_lufs": -12.0
+      },
+      "D": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-threat-D.mp3",
+       "seconds": 3.72,
+       "raw_lufs": -16.2
+      }
+     }
+    },
+    "warmth": {
+     "line": "So listen, you did me a good turn back there. I don't forget that. Anything you need, you come to me first.",
+     "acted_reference": "production/casting/darren-milner/acting/darren-milner-acted-reference-warmth.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-warmth-A.mp3",
+       "seconds": 4.96,
+       "raw_lufs": -11.0
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-warmth-B.mp3",
+       "seconds": 4.88,
+       "raw_lufs": -16.7
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-warmth-C.mp3",
+       "seconds": 6.32,
+       "raw_lufs": -18.4
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-warmth-D.mp3",
+       "seconds": 4.8,
+       "raw_lufs": -11.6
+      }
+     }
+    },
+    "embarrassment": {
+     "line": "That's not my pager. I'm minding it. For a mate. Stop laughing, it's not funny.",
+     "acted_reference": "production/casting/darren-milner/acting/darren-milner-acted-reference-embarrassment.mp3",
+     "letters": {
+      "A": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-A.mp3",
+       "seconds": 5.04,
+       "raw_lufs": -15.4
+      },
+      "B": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-B.mp3",
+       "seconds": 4.8,
+       "raw_lufs": -11.0
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-C.mp3",
+       "seconds": 5.04,
+       "raw_lufs": -16.9
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-D.mp3",
+       "seconds": 4.52,
+       "raw_lufs": -12.3
+      }
+     }
+    },
+    "humour": {
+     "line": "So listen, I can get it you by Friday. Thursday I'd be lying. Wednesday I'd be in the cells.",
+     "acted_reference": "production/casting/darren-milner/acting/darren-milner-acted-reference-humour.mp3",
+     "letters": {
+      "A": {
+       "reference": "acted",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-humour-A.mp3",
+       "seconds": 4.88,
+       "raw_lufs": -14.4
+      },
+      "B": {
+       "reference": "calm",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-humour-B.mp3",
+       "seconds": 5.52,
+       "raw_lufs": -16.6
+      },
+      "C": {
+       "reference": "calm",
+       "settings": "drama",
+       "file": "production/casting/darren-milner/acting/darren-milner-humour-C.mp3",
+       "seconds": 4.88,
+       "raw_lufs": -16.4
+      },
+      "D": {
+       "reference": "acted",
+       "settings": "default",
+       "file": "production/casting/darren-milner/acting/darren-milner-humour-D.mp3",
+       "seconds": 5.04,
+       "raw_lufs": -13.9
+      }
+     }
+    }
+   }
+  }
+ }
+}

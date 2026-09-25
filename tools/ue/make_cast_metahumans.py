@@ -181,16 +181,75 @@ CASTING = {
 }
 
 
+# CANDIDATES, 25 September. Jafar's ruling: faces are cast in MetaHuman
+# first; several candidates per character from the casting sheet, shown front,
+# profile and speaking in the game's light, and the one he approves becomes
+# the concept. Five each, as takes C1 to C5 (MH_LenaC1 ...), every one a
+# different blend of the plugin's light-skinned people within the sheet: age
+# carried by the skin texture (121 is the aged set Walter and Grace share),
+# height and build held to the sheet, a haircut, and facial hair for Ron (his
+# moustache) and Darren (stubble). Grace's face is left out: Lena taken from
+# her read as East Asian (24 September).
+FACIAL = "/MetaHumanCharacter/Optional/Grooms/Bindings/"
+
+
+def _c(base, face, tex, u, v, height, fat, musc, hair, colour=None, beard=None, mustache=None, makeup=False):
+    b = {"base": base, "face": face, "skin": {"u": u, "v": v, "face_texture_index": tex},
+         "body": {"Height": height, "Fat": fat, "Muscularity": musc}, "hair": hair}
+    if colour:
+        b["hair_colour"] = colour
+    if beard:
+        b["beard"] = beard
+    if mustache:
+        b["mustache"] = mustache
+    if not makeup:
+        b["no_makeup"] = True
+    return b
+
+
+GREY_BROWN = {"hairMelanin": 0.45, "hairRedness": 0.05, "WhiteAmount": 0.4}
+GREY = {"hairMelanin": 0.4, "WhiteAmount": 0.55}
+CANDIDATES = {
+    "C1": {"lena": _c("Vivian", {"Vivian": 0.5, "Walter": 0.25, "Celeste": 0.25}, 121, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN),
+           "rocco": _c("Walter", {"Walter": 0.45, "Bruce": 0.35, "Victor": 0.2}, 121, 0.36, 0.6, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY, mustache="WI_Mustache_L_Full"),
+           "sam": _c("Orlando", {"Orlando": 0.45, "Victor": 0.55}, 28, 0.2, 0.45, 175.0, -1.0, -0.3, "WI_Hair_S_Messy", beard="WI_Beard_S_Stubble")},
+    "C2": {"lena": _c("Jelena", {"Jelena": 0.5, "Walter": 0.3, "Vivian": 0.2}, 121, 0.21, 0.5, 160.0, 0.4, -0.8, "WI_Hair_S_BobLayered", GREY_BROWN),
+           "rocco": _c("Bruce", {"Bruce": 0.5, "Walter": 0.3, "Kelvin": 0.2}, 13, 0.38, 0.7, 186.0, 1.1, 0.8, "WI_Hair_S_BaldingStubble", GREY, mustache="WI_Mustache_S_Full"),
+           "sam": _c("Victor", {"Victor": 0.5, "Kelvin": 0.3, "Orlando": 0.2}, 28, 0.22, 0.4, 175.0, -1.0, -0.5, "WI_Hair_M_SideSweptFringe", beard="WI_Beard_S_Stubble")},
+    "C3": {"lena": _c("Celeste", {"Celeste": 0.45, "Vivian": 0.3, "Walter": 0.25}, 58, 0.25, 0.5, 161.0, 0.8, -0.8, "WI_Hair_S_SweptUp", GREY_BROWN),
+           "rocco": _c("Walter", {"Walter": 0.5, "Lorenzo": 0.3, "Bruce": 0.2}, 121, 0.4, 0.55, 185.0, 1.4, 0.4, "WI_Hair_S_RecedeMessy", GREY, mustache="WI_Mustache_L_Messy"),
+           "sam": _c("Kelvin", {"Kelvin": 0.5, "Victor": 0.3, "Lorenzo": 0.2}, 27, 0.24, 0.35, 174.0, -0.9, -0.4, "WI_Hair_S_Casual", beard="WI_Beard_S_Stubble")},   # BobMessy ran the card out of video memory at build
+    "C4": {"lena": _c("Vivian", {"Vivian": 0.35, "Jelena": 0.35, "Walter": 0.3}, 121, 0.2, 0.42, 158.0, 0.2, -0.8, "WI_Hair_M_Layered", GREY_BROWN),
+           "rocco": _c("Bruce", {"Bruce": 0.4, "Walter": 0.4, "Victor": 0.2}, 121, 0.34, 0.65, 188.0, 1.5, 0.5, "WI_Hair_S_HairLoss", GREY, mustache="WI_Mustache_S_Full"),
+           "sam": _c("Orlando", {"Orlando": 0.4, "Kelvin": 0.3, "Lorenzo": 0.3}, 85, 0.26, 0.42, 176.0, -1.0, -0.6, "WI_Hair_L_MessyClumps", beard="WI_Beard_S_Stubble")},
+    "C5": {"lena": _c("Jelena", {"Jelena": 0.4, "Celeste": 0.3, "Walter": 0.3}, 17, 0.24, 0.48, 162.0, 0.6, -0.7, "WI_Hair_S_Pixie", GREY_BROWN),
+           "rocco": _c("Kelvin", {"Kelvin": 0.35, "Walter": 0.4, "Bruce": 0.25}, 137, 0.42, 0.6, 186.0, 1.2, 0.7, "WI_Hair_S_BaldingStubble", GREY, mustache="WI_Mustache_L_Full"),
+           "sam": _c("Victor", {"Victor": 0.4, "Lorenzo": 0.35, "Orlando": 0.25}, 151, 0.23, 0.45, 175.0, -0.8, -0.4, "WI_Hair_S_CurlyFade")},
+}
+
+
+def brief(who):
+    """The brief the current take builds `who` to: a candidate's, the cast's, or none (a stand-in)."""
+    if TAKE in CANDIDATES:
+        return CANDIDATES[TAKE].get(who)
+    return CASTING.get(who) if TAKE else None
+
+
+def use_take(take):
+    global TAKE
+    TAKE = take
+
+
 def hair_materials(who, paths):
-    """The built haircut's own material instances among a take's asset paths."""
-    c = CASTING.get(who)
+    """The built haircut's (and moustache's) own material instances among a take's asset paths."""
+    c = brief(who) if TAKE else CASTING.get(who)
     if not c or not c.get("hair_colour"):
         return []
-    stem = c["hair"][len("WI_"):]
+    stems = [c[k][len("WI_"):] for k in ("hair", "mustache", "beard") if c.get(k)]
     out = []
     for path in paths:
         name = path.split("/")[-1].split(".")[0]
-        if "/Grooms/" in path and name.startswith("MI_") and stem in name:
+        if "/Grooms/" in path and name.startswith("MI_") and any(s in name for s in stems):
             out.append(path)
     return out
 
@@ -203,7 +262,7 @@ def recolour_hair(who, made):
         mi = unreal.load_asset(path)
         if not isinstance(mi, unreal.MaterialInstanceConstant):
             continue
-        for pname, value in CASTING[who]["hair_colour"].items():
+        for pname, value in brief(who)["hair_colour"].items():
             unreal.MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi, pname, value)
         n += 1
     return n
@@ -248,7 +307,9 @@ def main_after_idle(seconds=20.0, settle=15.0):
     import unreal
     step_name = os.environ.get("LEDGER_MH_STEP", "prepare")
     only = [w.strip() for w in os.environ.get("LEDGER_MH_ONLY", "").split(",") if w.strip()]
-    cast = [c for c in CAST if not only or c[0] in only]
+    takes = [t.strip() for t in os.environ.get("LEDGER_MH_TAKES", "").split(",") if t.strip()] or [TAKE]
+    # every take asked for, each of the cast in it: (who, preset, take)
+    cast = [(w, p, t) for t in takes for (w, p) in CAST if not only or w in only]
     st = {"t0": time.time(), "h": None, "i": 0, "phase": "wait", "busy": False}
     out = os.path.join(unreal.Paths.project_dir(), "ue-material.txt")
     sub = unreal.get_editor_subsystem(unreal.MetaHumanCharacterEditorSubsystem)
@@ -272,9 +333,10 @@ def main_after_idle(seconds=20.0, settle=15.0):
         st["phase"] = "open" if st["i"] < len(cast) else "quit"
 
     def open_character():
-        who, preset = cast[st["i"]]
-        if TAKE and who in CASTING:
-            preset = CASTING[who]["base"]
+        who, preset, take = cast[st["i"]]
+        use_take(take)
+        if brief(who):
+            preset = brief(who)["base"]
         dest = CAST_DIR + asset_name(who, BARE)
         st["who"], st["preset"], st["tc"] = who, preset, time.time()
         if not unreal.EditorAssetLibrary.does_asset_exist(dest):
@@ -303,7 +365,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         return True
 
     def apply_casting(ch, who):
-        c = CASTING[who]
+        c = brief(who)
         notes = []
         vw = []
         for name, w in c["face"].items():
@@ -369,6 +431,22 @@ def main_after_idle(seconds=20.0, settle=15.0):
             # hairMelanin and WhiteAmount (probe_hair_materials.py): take T3
             # first set "Melanin" and "Whiteness", which do not exist, and
             # nothing changed.
+        # FACIAL HAIR (the candidates): Ron's moustache, Darren's stubble.
+        for key, folder, slot in (("mustache", "Mustaches", "Mustache"), ("beard", "Beards", "Beard")):
+            name = c.get(key)
+            if not name:
+                continue
+            wi = unreal.load_asset(FACIAL + folder + "/" + name + "." + name)
+            if wi is None:
+                notes.append("no-" + name)
+                continue
+            try:
+                col = ch.internal_collection
+                item = col.try_add_item_from_wardrobe_item(slot, wi)
+                col.default_instance.set_single_slot_selection(slot, item)
+                notes.append(key)
+            except Exception as e:
+                notes.append("%s-refused-%s" % (key, type(e).__name__))
         if c.get("no_makeup"):
             sub.commit_makeup_settings(ch, unreal.MetaHumanCharacterMakeupSettings())
             notes.append("no-makeup")
@@ -377,7 +455,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
     def ask_cloud():
         ch = st["ch"]
         notes = []
-        if TAKE and st["who"] in CASTING:
+        if brief(st["who"]):
             notes += apply_casting(ch, st["who"])
         # THE PLAIN GARMENT, added after the character is open (with it
         # already in the collection, opening crashed: dress_metahuman.py).
@@ -385,7 +463,23 @@ def main_after_idle(seconds=20.0, settle=15.0):
         # because a built body has its skin removed wherever clothes cover it,
         # and a jacket needs the torso to be fitted to.
         garment = None if BARE else unreal.load_asset(GARMENT)
-        if BARE:
+        # DRESSED AT ONCE (LEDGER_MH_DRESSED=1, 25 September): the plain
+        # clothes go on here instead of the plugin's garment, saving the dress
+        # step's editor run (one editor holding many candidates ran out of
+        # memory).
+        dressed = [] if BARE or os.environ.get("LEDGER_MH_DRESSED", "") != "1" else [unreal.load_asset(x) for x in outfit_paths(st["who"])]
+        if dressed and all(w is not None for w in dressed):
+            col = ch.internal_collection
+            for i, wi in enumerate(dressed):
+                item = col.try_add_item_from_wardrobe_item("Outfits", wi)
+                if i == 0:
+                    col.default_instance.set_single_slot_selection("Outfits", item)
+                else:
+                    col.default_instance.try_add_slot_selection(
+                        unreal.MetaHumanPipelineSlotSelection(slot_name="Outfits", selected_item=item))
+            notes.append("dressed-%d" % len(dressed))
+            garment = None
+        elif BARE:
             notes.append("bare")
         elif garment is not None:
             col = ch.internal_collection
@@ -393,7 +487,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
             col.default_instance.try_add_slot_selection(
                 unreal.MetaHumanPipelineSlotSelection(slot_name="Outfits", selected_item=item))
             notes.append("garment")
-        else:
+        elif not any(n.startswith("dressed") for n in notes):
             notes.append("no-garment")
         sub.request_auto_rigging(ch, unreal.MetaHumanCharacterAutoRiggingRequestParams())
         sub.request_texture_sources(ch, unreal.MetaHumanCharacterTextureRequestParams())
@@ -412,7 +506,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
         textured = bool(ch.get_editor_property("has_high_resolution_textures"))
         # A cast take's duplicate may still say "textured" from its base
         # preset before the service answers: the service took 30 s at least.
-        early = TAKE and st["who"] in CASTING and now - st["asked"] < 30.0
+        early = bool(brief(st["who"])) and now - st["asked"] < 30.0
         if rigged and textured and not early:
             write(status_line(step_name, st["who"], st["preset"], "READY", now - st["tc"],
                               "rigged-and-textured-after-%.0fs" % (now - st["asked"])))
@@ -429,14 +523,20 @@ def main_after_idle(seconds=20.0, settle=15.0):
             return
         p = unreal.MetaHumanCharacterEditorBuildParameters()
         p.set_editor_property("pipeline_type", unreal.MetaHumanDefaultPipelineType.OPTIMIZED)
-        p.set_editor_property("pipeline_quality", unreal.MetaHumanQualityLevel.HIGH)
+        # LEDGER_MH_QUALITY=medium (25 September): a build whose hair ran this
+        # PC out of memory at High (the swap file cannot grow on a full C:).
+        q = os.environ.get("LEDGER_MH_QUALITY", "high").lower()
+        p.set_editor_property("pipeline_quality", unreal.MetaHumanQualityLevel.MEDIUM if q == "medium" else unreal.MetaHumanQualityLevel.HIGH)
         p.set_editor_property("absolute_build_path", BUILD_ROOT)
         sub.build_meta_human(ch, p)
         made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(st["who"], BARE), recursive=True, include_folder=False)
         recoloured = recolour_hair(st["who"], made)
-        unreal.EditorAssetLibrary.save_directory(BUILD_ROOT, only_if_is_dirty=False, recursive=True)
+        # ONLY THIS CHARACTER'S FOLDER (25 September): saving the whole build
+        # root with only_if_is_dirty=False loaded every candidate built before
+        # it, so each build ran heavier than the last until this PC ran out.
+        unreal.EditorAssetLibrary.save_directory(BUILD_ROOT + "/" + asset_name(st["who"], BARE), only_if_is_dirty=False, recursive=True)
         write(status_line(step_name, st["who"], st["preset"], "BUILT", time.time() - st["tc"],
-                          "%d-assets-optimized-high;hair-materials-recoloured-%d" % (len(made), recoloured)))
+                          "%d-assets-optimized-%s;hair-materials-recoloured-%d" % (len(made), os.environ.get("LEDGER_MH_QUALITY", "high").lower(), recoloured)))
 
     # LEDGER_MH_STEP=dress: Epic's plain clothes on a prepared take, nothing
     # else changed (24 September, overnight): the plugin's T-shirt and shorts
@@ -450,7 +550,8 @@ def main_after_idle(seconds=20.0, settle=15.0):
             st["busy"] = True
             unreal.unregister_slate_post_tick_callback(st["h"])
             try:
-                for who, preset in cast:
+                for who, preset, take in cast:
+                    use_take(take)
                     t0 = time.time()
                     ch = unreal.load_asset(CAST_DIR + asset_name(who, BARE))
                     if ch is None:
@@ -492,7 +593,8 @@ def main_after_idle(seconds=20.0, settle=15.0):
             st["busy"] = True
             unreal.unregister_slate_post_tick_callback(st["h"])
             try:
-                for who, preset in cast:
+                for who, preset, take in cast:
+                    use_take(take)
                     made = unreal.EditorAssetLibrary.list_assets(BUILD_ROOT + "/" + asset_name(who, BARE), recursive=True, include_folder=False)
                     n = recolour_hair(who, made)
                     c = recolour_cloth(who, made)
@@ -522,7 +624,7 @@ def main_after_idle(seconds=20.0, settle=15.0):
             if step_name == "prepare":
                 # A CAST TAKE IS ALWAYS ASKED: its duplicate carries the base
                 # preset's rig and textures, which the casting then changes.
-                if not (TAKE and st["who"] in CASTING) and sub.can_build_meta_human(st["ch"], False) and st["ch"].get_editor_property("has_high_resolution_textures"):
+                if not brief(st["who"]) and sub.can_build_meta_human(st["ch"], False) and st["ch"].get_editor_property("has_high_resolution_textures"):
                     write(status_line(step_name, st["who"], st["preset"], "ALREADY-READY", now - st["tc"], "nothing asked"))
                     next_character()
                     return
@@ -600,6 +702,21 @@ def selftest():
                                     "/G/MH_RoccoT2/Face/MI_WI_OA_Boots_M.x"]) == [("/G/MH_RoccoT2/Clothing/MI_WI_OA_Boots_M_shs_boots.x", "Boots")])
     check("no colour is brighter than cloth", all(0.0 <= v <= 1.0 for g in CLOTH_COLOURS.values() for p in g.values() for c in p.values() for v in c))
     check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
+    cands = [(t, w, c) for t, byw in CANDIDATES.items() for w, c in byw.items()]
+    check("five candidates for each of the three", sorted(CANDIDATES) == ["C1", "C2", "C3", "C4", "C5"]
+          and all(sorted(byw) == ["lena", "rocco", "sam"] for byw in CANDIDATES.values()))
+    check("every candidate blends shipped faces around its base, weights summing to one",
+          all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for _, _, c in cands))
+    check("no candidate is made from Grace's face", all("Grace" not in c["face"] for _, _, c in cands))
+    check("the candidates of one person all differ", all(len({repr(sorted(CANDIDATES[t][w]["face"].items())) + CANDIDATES[t][w]["hair"]
+                                                            for t in CANDIDATES}) == 5 for w in ("lena", "rocco", "sam")))
+    check("heights are the sheets' (Sheila about 160, Ron about 186, Darren about 175)",
+          all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in CANDIDATES for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
+    check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in CANDIDATES))
+    use_take("C3")
+    check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")
+    check("its moustache is recoloured with its hair", hair_materials("rocco", ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"]) == ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"])
+    use_take("")
     print("make_cast_metahumans selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
