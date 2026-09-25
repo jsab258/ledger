@@ -15,7 +15,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - Voice test: calm or acted reference, default or drama settings, per feeling.
 - Flat cap, FreeSewing pattern to worn by Ron in the street: about 70 minutes, against the research's 8 to 20 hour guess.
 
-**Evidence.** Licence, canon, content and names checks and every new self-test pass here.
+**Evidence.** Build machine green (core tests, Unreal build); licence, canon, content and names checks pass.
 
 **Unproven.** The acted reference is the same voice pushed by the engine, not a recording of acting. Some candidates stray from the sheets: younger Sheilas, Rons with beards. The cap is rounder than a flat cap, without tweed.
 
