@@ -48,7 +48,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line2": {
        "file": "production/casting/sheila-dunn/voices/sheila-dunn-A-line2.mp3",
@@ -60,7 +61,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/sheila-dunn/voices/sheila-dunn-A-line3.mp3",
@@ -72,9 +74,11 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "B": {
      "kind": "designed",
@@ -107,7 +111,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line2": {
        "file": "production/casting/sheila-dunn/voices/sheila-dunn-B-line2.mp3",
@@ -119,7 +124,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/sheila-dunn/voices/sheila-dunn-B-line3.mp3",
@@ -131,9 +137,11 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "C": {
      "kind": "approved",
@@ -297,7 +305,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/sheila-dunn/voices/sheila-dunn-E-line3.mp3",
@@ -490,7 +499,8 @@
        "sentences": 3,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line2": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-B-line2.mp3",
@@ -502,7 +512,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-B-line3.mp3",
@@ -514,9 +525,11 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "C": {
      "kind": "slr83",
@@ -582,7 +595,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
      }
     },
@@ -617,7 +631,8 @@
        "sentences": 3,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line2": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-D-line2.mp3",
@@ -629,7 +644,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-D-line3.mp3",
@@ -641,9 +657,11 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "E": {
      "kind": "approved",
@@ -727,7 +745,8 @@
        "sentences": 3,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line2": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-F-line2.mp3",
@@ -739,7 +758,8 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "line3": {
        "file": "production/casting/ron-kirby/voices/ron-kirby-F-line3.mp3",
@@ -751,9 +771,11 @@
        "sentences": 2,
        "regenerated": false,
        "first_try_fails": [],
-       "fails": []
+       "fails": [],
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     }
    }
   },

@@ -847,6 +847,9 @@ public:
 		if (FParse::Param(FCommandLine::Get(), TEXT("LedgerCrime")))
 		{
 			LedgerCrimeProbe::Start();
+			// The portrait tool beside it, only to photograph the encounter's own
+			// cast where they stand (-PortraitInGame, 25 September).
+			if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame"))) { LedgerMhPortrait::Start(); }
 			return;
 		}
 		// WHAT EACH METAHUMAN COSTS ON THE CARD, 24 September: its own switch,

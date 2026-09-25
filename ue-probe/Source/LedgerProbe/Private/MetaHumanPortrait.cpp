@@ -28,6 +28,14 @@
 // another moment; -PortraitFaceScan photographs the idle every half second
 // (ue-scan-<who>-<take>/) to choose one. -PortraitSpeech=<suffix> picks a
 // variant of the speaking animation (tools/ue/speech_faces.py).
+//
+// IN THE GAME, 25 September (evening): Jafar asked to see each character as
+// the game has them, beside the candidate he approved. -PortraitInGame, with
+// the game's -Encounter=live -CastAllNow, spawns nobody: it finds the cast
+// the encounter placed (their approved take, their clothes, their idle) and
+// photographs each where the game stands them, in that place's light, from
+// in front of their own face: a close-up, the speaking line, and a wider
+// shot. Pictures ue-portrait-ingame-<who>-<shot>.png.
 #include "MetaHumanPortrait.h"
 #include "LedgerJacket.h"
 
@@ -48,6 +56,7 @@
 #include "Misc/Paths.h"
 #include "ShaderCompiler.h"
 #include "UnrealClient.h"
+#include "EngineUtils.h"
 
 namespace LedgerMhPortrait
 {
@@ -77,6 +86,7 @@ namespace LedgerMhPortrait
 	float GFaceAt = 0.0f;              // -PortraitFaceAt: the face idle's moment for a still
 	FString GSpeech = TEXT("_n");     // -PortraitSpeech: the speaking animation's variant; _n, the neutral mood, by default
 	bool GScan = false;               // the shot running is a scan of the face idle
+	bool GInGame = false;             // -PortraitInGame: the game's own cast, where it stands
 
 	FTSTicker::FDelegateHandle GTicker;
 	double GStart = 0.0, GPhaseAt = 0.0;
@@ -115,6 +125,20 @@ namespace LedgerMhPortrait
 
 	void Place(UWorld* World)
 	{
+		if (GInGame)
+		{
+			// The game's own: the actor the encounter dressed as this character
+			// (tagged LedgerCast), never a stand-in elsewhere in the street.
+			GPerson = nullptr;
+			const FString Prefix = FString(TEXT("BP_MH_")) + kWho[GJobs[GAt].Who];
+			for (TActorIterator<AActor> It(World); It; ++It)
+			{
+				if (It->Tags.Contains(TEXT("LedgerCast")) && It->GetClass()->GetName().StartsWith(Prefix)) { GPerson = *It; break; }
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: in game, %s is %s"), kWho[GJobs[GAt].Who],
+				GPerson.IsValid() ? *GPerson->GetClass()->GetName() : TEXT("NOT FOUND"));
+			return;
+		}
 		if (GPerson.IsValid()) { GPerson->Destroy(); }
 		const FJob& J = GJobs[GAt];
 		const FString Name = FString(TEXT("MH_")) + kWho[J.Who] + J.Take;
@@ -197,6 +221,8 @@ namespace LedgerMhPortrait
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: hat on %s at %s"), *GPerson->GetName(), *At.ToString());
 	}
 
+	FString Stem();
+
 	void Aim(UWorld* World)
 	{
 		if (!GPerson.IsValid()) { return; }
@@ -206,6 +232,9 @@ namespace LedgerMhPortrait
 		// camera stands out toward the road from it.
 		const FBox B = GPerson->GetComponentsBoundingBox();
 		const FVector Face(GPerson->GetActorLocation().X, GPerson->GetActorLocation().Y, B.Max.Z - 12.0f);
+		// The offsets below are for a person facing -Y (yaw 180); in the game
+		// they are turned to however the person stands.
+		const FRotator Turn(0.0f, GInGame ? GPerson->GetActorRotation().Yaw - 180.0f : 0.0f, 0.0f);
 		// Close: head and shoulders, about half a metre tall in frame. Mid: the
 		// top of the head to below the waist, about a metre ten. (The first
 		// run's 75 cm and 230 cm cut the crown off the one and the face off
@@ -227,7 +256,33 @@ namespace LedgerMhPortrait
 		// shot stands, the same plain doors behind.
 		case EShot::Profile: default: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
 		}
-		GPerson->SetActorRotation(FRotator(0.0f, Shot == EShot::Profile ? 90.0f : 180.0f, 0.0f));
+		Eye = Face + Turn.RotateVector(Eye - Face);
+		Look = Face + Turn.RotateVector(Look - Face);
+		// A CLEAR LINE TO THE FACE, in the game: where the person stands close to
+		// a wall the camera came out inside it and the picture was black (Ron in
+		// the yard). The camera swings round the face, a little at a time, to the
+		// first place with nothing between it and the face.
+		if (GInGame)
+		{
+			FCollisionQueryParams Q(TEXT("LedgerPortraitSight"), false, GPerson.Get());
+			const FVector Out = Eye - Face;
+			for (float Swing : { 0.0f, 25.0f, -25.0f, 50.0f, -50.0f, 75.0f, -75.0f, 100.0f, -100.0f })
+			{
+				const FVector Try = Face + FRotator(0.0f, Swing, 0.0f).RotateVector(Out);
+				// From the camera toward the face: the face is inside the game's own
+				// hidden stand-in body, so a hit within 40 cm of it is the person.
+				FHitResult Hit;
+				const bool bBlocked = World->LineTraceSingleByChannel(Hit, Try, Face, ECC_Visibility, Q)
+					&& FVector::Dist(Hit.ImpactPoint, Face) > 40.0f;
+				if (!bBlocked)
+				{
+					Eye = Try;
+					UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s camera swung %.0f degrees for a clear view"), *Stem(), Swing);
+					break;
+				}
+			}
+		}
+		if (!GInGame) { GPerson->SetActorRotation(FRotator(0.0f, Shot == EShot::Profile ? 90.0f : 180.0f, 0.0f)); }
 		if (!GCam.IsValid())
 		{
 			GCam = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), Eye, (Look - Eye).Rotation());
@@ -251,7 +306,7 @@ namespace LedgerMhPortrait
 				// left a head in the profile shot. Twenty metres along the
 				// pavement, well clear of any camera here.
 				Me->SetActorHiddenInGame(true);
-				if (GCandidates && !Me->Tags.Contains(TEXT("LedgerPortraitMoved")))
+				if ((GCandidates || GInGame) && !Me->Tags.Contains(TEXT("LedgerPortraitMoved")))
 				{
 					Me->SetActorLocation(Me->GetActorLocation() + FVector(2000.0f, 0.0f, 0.0f), false, nullptr, ETeleportType::TeleportPhysics);
 					Me->Tags.Add(TEXT("LedgerPortraitMoved"));
@@ -276,6 +331,7 @@ namespace LedgerMhPortrait
 	FString Stem()
 	{
 		const FJob& J = GJobs[GAt];
+		if (GInGame) { return FString(TEXT("ingame-")) + FString(kWho[J.Who]).ToLower(); }
 		return FString(kWho[J.Who]).ToLower() + (GCandidates ? TEXT("-") + J.Take.ToLower() : FString());
 	}
 
@@ -327,6 +383,14 @@ namespace LedgerMhPortrait
 		{
 		case 0:
 			if (World == nullptr || World->GetFirstPlayerController() == nullptr || Now - GStart < 8.0) { return true; }
+			// In the game, the encounter dresses its cast a little after the street
+			// loads: wait for all three (up to two minutes) before the first picture.
+			if (GInGame && Now - GStart < 120.0)
+			{
+				int32 Cast = 0;
+				for (TActorIterator<AActor> It(World); It; ++It) { if (It->Tags.Contains(TEXT("LedgerCast"))) { ++Cast; } }
+				if (Cast < 3) { return true; }
+			}
 			GPhase = 1;
 			return true;
 		case 1:
@@ -441,6 +505,13 @@ namespace LedgerMhPortrait
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitFaceAt="), GFaceAt);
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
+		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))
+		{
+			GInGame = true;
+			GJobs.Reset();
+			for (int32 W = 0; W < 3; ++W) { GJobs.Add({ W, FString() }); }
+			GShots = { EShot::Front, EShot::Speak, EShot::Mid };
+		}
 		FString Who;
 		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitWho="), Who))
 		{

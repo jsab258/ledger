@@ -1,5 +1,7 @@
-SITTING: started 2026-09-25T14:19:34+02:00, limit 6h (budget at start: total 84)
-- [x] 1. MetaHuman candidates for Sheila Dunn, Ron Kirby, Darren Milner: five each, plain clothes, front, profile and speaking in the street's daylight, on one approval page (re-shot after the eyes looked glazed).
-- [x] 2. Same page: the voice test, calm against acted reference, same speaker, lines and settings, blind; each line marked threat, warmth, embarrassment or humour; the original engine's drama settings (0.7, 0.3) tried.
-- [x] 3. FreeSewing's flat cap, pattern to worn by Ron in the street: about 70 minutes; a first pass.
-STATE: list done; page with Jafar for the weekend. Candidates and the cap's working files on drive F; C: and memory tight, one heavy job at a time.
+SITTING: started 2026-09-25T20:29:59+02:00, limit 4h (budget at start: total 88)
+- [x] 0. The quality gate recorded in CLAUDE.md; his verdicts recorded.
+- [x] 1. The approved faces and voices into the game: Sheila C1, Ron C1, Darren C5, no jacket; Sheila's voice D (this PC's game; the build machine has no room on C:).
+- [x] 2. A clean voice for Ron like his pick: none found that passes; he keeps his July voice, p227.
+- [x] 3. Every American-accented voice removed: 39 casting clips; the street's 5 crowd lines out of use.
+- [x] 4. A gated approval page: the three voices as the game speaks them; the faces held back (they read East Asian, against the sheets).
+STATE: faces read East Asian even from Epic's European preset as built here; cause not found. C: full.

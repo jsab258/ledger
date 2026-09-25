@@ -51,7 +51,8 @@
        "settings": "drama",
        "file": "production/casting/sheila-dunn/acting/sheila-dunn-threat-D.mp3",
        "seconds": 6.44,
-       "raw_lufs": -15.1
+       "raw_lufs": -15.1,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
      }
     },
@@ -64,7 +65,8 @@
        "settings": "drama",
        "file": "production/casting/sheila-dunn/acting/sheila-dunn-warmth-A.mp3",
        "seconds": 5.8,
-       "raw_lufs": -15.8
+       "raw_lufs": -15.8,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "B": {
        "reference": "calm",
@@ -98,7 +100,8 @@
        "settings": "drama",
        "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-A.mp3",
        "seconds": 7.56,
-       "raw_lufs": -16.8
+       "raw_lufs": -16.8,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "B": {
        "reference": "calm",
@@ -112,14 +115,16 @@
        "settings": "default",
        "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-C.mp3",
        "seconds": 7.12,
-       "raw_lufs": -17.8
+       "raw_lufs": -17.8,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "D": {
        "reference": "calm",
        "settings": "drama",
        "file": "production/casting/sheila-dunn/acting/sheila-dunn-embarrassment-D.mp3",
        "seconds": 6.3,
-       "raw_lufs": -19.6
+       "raw_lufs": -19.6,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
      }
     },
@@ -262,7 +267,8 @@
        "seconds": 4.84,
        "raw_lufs": -15.0
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "humour": {
      "line": "Rain again. I've been wet since nineteen fifty-eight, boss. I don't even notice any more.",
@@ -312,7 +318,8 @@
        "settings": "default",
        "file": "production/casting/darren-milner/acting/darren-milner-threat-A.mp3",
        "seconds": 3.96,
-       "raw_lufs": -12.8
+       "raw_lufs": -12.8,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "B": {
        "reference": "calm",
@@ -326,7 +333,8 @@
        "settings": "drama",
        "file": "production/casting/darren-milner/acting/darren-milner-threat-C.mp3",
        "seconds": 3.72,
-       "raw_lufs": -12.0
+       "raw_lufs": -12.0,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "D": {
        "reference": "calm",
@@ -335,7 +343,8 @@
        "seconds": 3.72,
        "raw_lufs": -16.2
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "warmth": {
      "line": "So listen, you did me a good turn back there. I don't forget that. Anything you need, you come to me first.",
@@ -346,7 +355,8 @@
        "settings": "drama",
        "file": "production/casting/darren-milner/acting/darren-milner-warmth-A.mp3",
        "seconds": 4.96,
-       "raw_lufs": -11.0
+       "raw_lufs": -11.0,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "B": {
        "reference": "calm",
@@ -367,9 +377,11 @@
        "settings": "default",
        "file": "production/casting/darren-milner/acting/darren-milner-warmth-D.mp3",
        "seconds": 4.8,
-       "raw_lufs": -11.6
+       "raw_lufs": -11.6,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "embarrassment": {
      "line": "That's not my pager. I'm minding it. For a mate. Stop laughing, it's not funny.",
@@ -380,14 +392,16 @@
        "settings": "drama",
        "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-A.mp3",
        "seconds": 5.04,
-       "raw_lufs": -15.4
+       "raw_lufs": -15.4,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "B": {
        "reference": "acted",
        "settings": "drama",
        "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-B.mp3",
        "seconds": 4.8,
-       "raw_lufs": -11.0
+       "raw_lufs": -11.0,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "C": {
        "reference": "calm",
@@ -401,9 +415,11 @@
        "settings": "default",
        "file": "production/casting/darren-milner/acting/darren-milner-embarrassment-D.mp3",
        "seconds": 4.52,
-       "raw_lufs": -12.3
+       "raw_lufs": -12.3,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       }
-     }
+     },
+     "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
     },
     "humour": {
      "line": "So listen, I can get it you by Friday. Thursday I'd be lying. Wednesday I'd be in the cells.",
@@ -428,7 +444,8 @@
        "settings": "drama",
        "file": "production/casting/darren-milner/acting/darren-milner-humour-C.mp3",
        "seconds": 4.88,
-       "raw_lufs": -16.4
+       "raw_lufs": -16.4,
+       "removed": "removed 25 September: American accent (tools/voice-live/accent_check.py)"
       },
       "D": {
        "reference": "acted",

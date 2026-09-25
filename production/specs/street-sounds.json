@@ -48,11 +48,11 @@
     },
     {
       "person": "leonard-idle",
-      "voice": "crowd_m3",
+      "voice": "crowd_m1",
       "clips": [
-        "crowd_m3/953daf64.wav",
-        "crowd_m3/ebfc772e.wav",
-        "crowd_m3/8b40c7c8.wav"
+        "crowd_m1/d66906a6.wav",
+        "crowd_m1/769cffe0.wav",
+        "crowd_m1/f250914a.wav"
       ],
       "lines": [
         "There's no work at the docks. None.",
@@ -64,12 +64,10 @@
       "person": "martha-idle",
       "voice": "crowd_f1",
       "clips": [
-        "crowd_f1/2295289d.wav",
         "crowd_f1/e91bbda9.wav",
         "crowd_f1/c16288f0.wav"
       ],
       "lines": [
-        "Doctor wants money I haven't got.",
         "It was nothing. A week ago it was nothing.",
         "It's worse in the cold. It's always worse in the cold."
       ]
@@ -79,13 +77,11 @@
       "voice": "crowd_f2",
       "clips": [
         "crowd_f2/709679c9.wav",
-        "crowd_f2/b06575d5.wav",
-        "crowd_f2/46e3fbfa.wav"
+        "crowd_f2/b06575d5.wav"
       ],
       "lines": [
         "It's not the price. It's that they say it like it's normal.",
-        "My rent's the same, my wages are the same, and yet.",
-        "Somebody's making that money. It's not us."
+        "My rent's the same, my wages are the same, and yet."
       ]
     },
     {
@@ -110,5 +106,6 @@
       "line": "Stop. I mean it. Stop.",
       "what": "The encounter's audible consequence (24 September): the witness shouts where she stands when she sees the crime. A one-off cue, never played by the street on its own."
     }
-  ]
+  ],
+  "accentCheck": "25 September: every clip here passes tools/voice-live/accent_check.py or is a Scottish voice read as Scottish; Leonard's three lines read American in crowd_m3 and are now crowd_m1's takes of the same words, and Martha's and Kate's one American line each is taken out."
 }

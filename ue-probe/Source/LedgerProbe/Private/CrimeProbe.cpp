@@ -768,20 +768,39 @@ namespace
 	void DressBody(UWorld* World, AActor* Body, const TCHAR* Who)
 	{
 		if (GEnc != EEncounter::Live || World == nullptr || Body == nullptr) { return; }
-		// THE CAST MADE TO THE BRIEF, 24 September (make_cast_metahumans.py's
-		// CASTING, take T2); -CastTake= with nothing after it brings back the
-		// first stand-ins. Falls back to them if the take is not there.
-		FString Take = TEXT("T2");
-		FParse::Value(FCommandLine::Get(), TEXT("CastTake="), Take);
+		// THE FACES JAFAR APPROVED, 25 September (the casting page): each
+		// character is the candidate he chose, Sheila C1, Ron C1, Darren C5
+		// (make_cast_metahumans.py's CANDIDATES). -CastTake=T2 brings back the
+		// cast made to the brief for all three, and -CastTake= with nothing
+		// after it the first stand-ins. Where a take is not in this copy of the
+		// game (the build machine's has no room for the candidates yet), the
+		// next one down is used: the approved candidate, then T2, then the
+		// stand-in.
+		const TCHAR* Approved = FCString::Strcmp(Who, TEXT("Sam")) == 0 ? TEXT("C5") : TEXT("C1");   // names-gate: allow (the asset MH_SamC5)
+		TArray<FString> Takes = { Approved, TEXT("T2"), TEXT("") };
+		FString Forced;
+		if (FParse::Value(FCommandLine::Get(), TEXT("CastTake="), Forced))
+		{
+			Takes = { Forced, TEXT("") };
+		}
 		auto ClassFor = [](const FString& Name) {
 			return LoadClass<AActor>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/%s/BP_%s.BP_%s_C"), *Name, *Name, *Name)); };
-		UClass* Cls = ClassFor(FString(TEXT("MH_")) + Who + Take);
-		if (Cls == nullptr) { Cls = ClassFor(FString(TEXT("MH_")) + Who); }
+		UClass* Cls = nullptr;
+		for (const FString& Take : Takes)
+		{
+			Cls = ClassFor(FString(TEXT("MH_")) + Who + Take);
+			if (Cls != nullptr)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerCast: %s is MH_%s%s"), Who, Who, *Take);
+				break;
+			}
+		}
 		if (Cls == nullptr) { return; }
 		FActorSpawnParameters P;
 		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		AActor* A = World->SpawnActor<AActor>(Cls, Body->GetActorLocation(), FRotator::ZeroRotator, P);
 		if (A == nullptr) { return; }
+		A->Tags.Add(TEXT("LedgerCast"));   // the encounter's own cast, for the portrait tool's -PortraitInGame
 		// NOBODY WALKS THROUGH THEM (the AI tester, 24 September: its camera
 		// ended up inside Lena). The MetaHuman's own meshes collide with
 		// nothing, so no sight line in the measured street changes; a capsule
@@ -1967,6 +1986,8 @@ namespace
 	}
 
 	// ---- the props -------------------------------------------------------
+	void RespawnMate(UWorld* World);   // below; -CastAllNow calls it from here
+
 	void PlaceProps(UWorld* World)
 	{
 		// + 1 FOR THE CONSTABLE, 22 September. He is spawned through the same
@@ -2012,6 +2033,10 @@ namespace
 		if (GN2Body != nullptr) { GN2Body->SetActorRotation(FRotator(0.0f, 90.0f, 0.0f)); }
 		DressBody(World, GW1Body, TEXT("Lena"));   // names-gate: allow (the asset MH_LenaT2, not shown)
 		DressBody(World, GN2Body, TEXT("Sam"));    // names-gate: allow (the asset MH_SamT2)
+		// -CastAllNow, 25 September (evening): Ron joins the other two from the
+		// start, where the story puts him later, so the portrait tool's
+		// -PortraitInGame can photograph all three where the game stands them.
+		if (GEnc == EEncounter::Live && FParse::Param(FCommandLine::Get(), TEXT("CastAllNow"))) { RespawnMate(World); }
 
 		GGlass[0] = LedgerVignetteShot::FindStreetPiece(kGlassA);
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);

@@ -42,7 +42,8 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 
 - Nothing is multiplied until one complete sample has been approved by Jafar in the assembled game.
 - An approval lives beside what it approves and names what it was approved against; when that changes (a canon rule, a spec, a voice), it lapses by itself, and the build flags anything in the game without a current one (tools/approvals.py).
-- Approvals reach him as one page per sitting, pictures and sound, judged in minutes, linked first in the closing summary.
+- Approvals reach him as one page per sitting, pictures and sound, judged in minutes, linked first in the closing summary. The page keeps the 25 September casting page's format: each item's pictures and sound, one pick and a note, stored on the page (tools/candidate_page.py).
+- THE GATE (Jafar, 25 September; a lumpy cap and American-accented voices reached him). Nothing goes on his page until it passes two checks. First, yours: compared against real references (photographs of the actual thing, the approved face, the casting sheet; for a voice, the accent the sheet names); if it fails, fix it or leave it off. A voice drifting American or away from the named accent is rejected before he hears it. Second, a reviewer that has not seen it being made compares it against the same references and tries to find what is wrong. Only what passes both reaches him. A rough proof that a method works is a finding in the summary, never an item on his page.
 - The AI tester walks the packaged release build, with the real cast, dialogue, light and sound.
 - Every audit is saved in production/audits/, and each finding ends as a ruling in DECISIONS.md, one of these rules, or an item on the list, never only a prompt; the next audit checks the last one's stuck.
 - Iterate locally: build and render in Unreal on this PC, look, fix, repeat; push only accepted work. Two Unreal builds must not overlap.

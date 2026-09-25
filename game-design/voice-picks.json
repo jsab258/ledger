@@ -77,10 +77,10 @@
       "accent": "English"
     },
     "lena": {
-      "candidate": 2,
-      "speaker": "p228",
-      "age": "22",
-      "accent": "English"
+      "speaker": "parler-d",
+      "accent": "English",
+      "designed": true,
+      "note": "25 September: Jafar's blind pick D on the casting page, a voice designed from a written description by Parler-TTS mini v1 (Apache-2.0); it passed the accent check (tools/voice-live/accent_check.py). Replaces p228."
     },
     "marla": {
       "candidate": 1,

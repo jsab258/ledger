@@ -6,22 +6,23 @@ decision you need to make. Unresolved decisions carry forward. Earlier
 summaries are in git; everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## 25 September, afternoon
+## 25 September, evening
 
-**[Your approval page](https://claude.ai/artifact/BmG9NGPN8pAJpLoEWynM5g):** five MetaHumans each for Sheila, Ron and Darren, front, profile and speaking; each voice acting four ways, blind; the first cap.
+**[Your approval page](https://claude.ai/artifact/VENTjjoFEMVhGruPZpUbSq):** the three voices as the game now speaks them; faces held back.
 
 **Changed.**
-- Fifteen candidates from the casting sheets, plain clothes, street daylight; each speaks your picked voice's line.
-- Voice test: calm or acted reference, default or drama settings, per feeling.
-- Flat cap, FreeSewing pattern to worn by Ron in the street: about 70 minutes, against the research's 8 to 20 hour guess.
+- The gate is in CLAUDE.md; your picks are recorded.
+- The game dresses each as your pick (Sheila C1, Ron C1, Darren C5), jacket off; Sheila speaks in your D.
+- An accent checker tests every voice: 39 American casting clips removed, 5 street lines out of use.
 
-**Evidence.** Build machine green (core tests, Unreal build); licence, canon, content and names checks pass.
+**Evidence.** Two reviewers who did not make them passed the three lines; accent, words, licence and names checks pass.
 
-**Unproven.** The acted reference is the same voice pushed by the engine, not a recording of acting. Some candidates stray from the sheets: younger Sheilas, Rons with beards. The cap is rounder than a flat cap, without tweed.
+**Failed.**
+- No clean voice sounds like Ron's pick; he keeps his July voice.
+- The faces read East Asian even from Epic's European preset built here, so the fault is in how faces are built or shown, not only my choices. Next sitting, first.
+- No room on C: to give the build machine the new faces.
 
-**Got wrong.** A save step of mine made builds run out of memory; fixed, all rebuilt. Sheila first looked stoned: her face was held still while her body moved on; fixed, all re-shot.
-
-**Next.** Your chosen faces into the game; VoxCPM2 if acting helps.
+**Got wrong.** I put faces I had noted as East Asian on your last page, and ran two heavy jobs at once; one crashed.
 
 **Decide.**
-- Ron's picked voice is a Google ShareAlike voice, listening-only by your ruling: (A) design a clean voice like it (recommended), (B) pick another.
+- C: is full: (A) you switch off hibernation, 13 GB back (recommended); (B) I list what's big, read-only.
