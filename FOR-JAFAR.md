@@ -6,23 +6,21 @@ decision you need to make. Unresolved decisions carry forward. Earlier
 summaries are in git; everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## 25 September, evening
+## 26 September, night
 
-**[Your approval page](https://claude.ai/artifact/VENTjjoFEMVhGruPZpUbSq):** the three voices as the game now speaks them; faces held back.
+**[The cleanup page](https://claude.ai/artifact/29sjrBNeLWYZqtscLK3pk7):** what would go from C:, folder by folder, with sizes and why. Nothing is deleted.
 
 **Changed.**
-- The gate is in CLAUDE.md; your picks are recorded.
-- The game dresses each as your pick (Sheila C1, Ron C1, Darren C5), jacket off; Sheila speaks in your D.
-- An accent checker tests every voice: 39 American casting clips removed, 5 street lines out of use.
+- Backup: its list comes from what you approved; all 315 files are in Dropbox, checked byte for byte. It runs at each sitting's end, never deleting, overwriting or filling C:.
+- CLAUDE.md: the places that may ever be deleted, and the large-file record.
+- Faces: Vivian built here matches Epic's picture, so the build is sound. My choices made ours read East Asian: the blended face shapes, a dark fringed bob, no make-up, brown eyes, and the dim street light. New hair alone (Sheila) didn't fix it, a blind review found.
 
-**Evidence.** Two reviewers who did not make them passed the three lines; accent, words, licence and names checks pass; build machine green.
+**Free space on C:.** 2.2 GB at the start, 2.7 GB now; about 65 GB after the page's recommended groups.
 
-**Failed.**
-- No clean voice sounds like Ron's pick; he keeps his July voice.
-- The faces read East Asian even from Epic's European preset built here, so the fault is in how faces are built or shown, not only my choices. Next sitting, first.
-- No room on C: to give the build machine the new faces.
+**Got wrong.** I nearly listed two links to F: as duplicates; the tool's check caught it.
 
-**Got wrong.** I put faces I had noted as East Asian on your last page, and ran two heavy jobs at once; one crashed.
+**Next.** Faces rebuilt on northern European presets, judged in street light first.
 
 **Decide.**
-- C: is full: (A) you switch off hibernation, 13 GB back (recommended); (B) I list what's big, read-only.
+- The cleanup page: yes or no per group (I recommend the four marked).
+- Add F:\LedgerTools to the list, so my own 13.7 GB of rejects there can go: (A) yes (recommended), (B) no.

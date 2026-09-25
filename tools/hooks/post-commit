@@ -1,0 +1,14 @@
+#!/bin/sh
+# THE BACKUP AT EVERY SITTING'S END, 25 September (Jafar: "make it run at the
+# end of every sitting"). A sitting ends with its summary in FOR-JAFAR.md, so a
+# commit that changes that file runs tools/backup-to-dropbox.py, which only
+# ever adds to his Dropbox's "LEDGER backup" folder (it never deletes, never
+# overwrites, never writes outside it, never fills drive C:). Its line goes to
+# .git/backup-to-dropbox.log. Installed with:
+#   cp tools/hooks/post-commit .git/hooks/post-commit
+if git diff-tree --no-commit-id --name-only -r HEAD | grep -qx "FOR-JAFAR.md"; then
+  line=$(python tools/backup-to-dropbox.py 2>&1 | tail -1)
+  echo "$(date +%Y-%m-%dT%H:%M:%S) $(git rev-parse --short HEAD) $line" >> .git/backup-to-dropbox.log
+  echo "post-commit: $line"
+fi
+exit 0

@@ -1,0 +1,455 @@
+{
+ "about": "Every file or folder of 100 MB or more that Claude created, with what made it and why (tools/large_files.py; CLAUDE.md, Disk).",
+ "entries": [
+  {
+   "path": "F:/LedgerTools/approved-cast-2026-09-25",
+   "madeBy": "Claude, 25 Sep",
+   "why": "a second copy of the three approved faces while Dropbox has no room for them",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 959
+  },
+  {
+   "path": "F:/LedgerTools/hf",
+   "madeBy": "the gate's reviewers and word checks, 25 Sep",
+   "why": "speech-to-text and accent models for checking voices (Whisper small and medium, two accent classifiers, a speaker model)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 8201
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (its source)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 188
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC5.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 173
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaE1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (its source)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 173
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaE2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (its source)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaE3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (its source)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 173
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaE4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 26 Sep",
+   "why": "the same (its source)",
+   "status": "superseded",
+   "recorded": "2026-09-26",
+   "mb": 173
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaF1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 26 Sep",
+   "why": "the same (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-26",
+   "mb": 191,
+   "statusWhy": "a blind review found hair alone did not fix the face (26 Sep)"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (its source)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 189
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 192
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 189
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 194
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC5.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 179
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 169
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 169
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (its source)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamC5.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (its source)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 185
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC1",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (built)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 296
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC2",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 290
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC3",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 315
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC4",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 325
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC5",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 283
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaE1",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (built)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 287
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaE2",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (built)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 296
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaE3",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a test of why faces read East Asian (built)",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 287
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaE4",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 26 Sep",
+   "why": "Vivian wholly as shipped, the test that cleared the build (built)",
+   "status": "superseded",
+   "recorded": "2026-09-26",
+   "mb": 280
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaF1",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 26 Sep",
+   "why": "Sheila's approved face with the sheet's hair, the first fix (built)",
+   "status": "rejected",
+   "recorded": "2026-09-26",
+   "mb": 315,
+   "statusWhy": "a blind review found hair alone did not fix the face (26 Sep)"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC1",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (built)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 296
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC2",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 295
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC3",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 298
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC4",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 295
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC5",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 288
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC1",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 315
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC2",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 312
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC3",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 313
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC4",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "a casting candidate he did not choose (built)",
+   "status": "rejected",
+   "recorded": "2026-09-25",
+   "mb": 319
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC5",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
+   "why": "the approved face (built)",
+   "status": "kept",
+   "recorded": "2026-09-25",
+   "mb": 339
+  },
+  {
+   "path": "F:/LedgerTools/tmp/cand",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "the first candidate pictures, glazed eyes",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 1690
+  },
+  {
+   "path": "F:/LedgerTools/tmp/cand2",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "raw candidate frames, packed into production/casting/candidates-2026-09-25",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 1739
+  },
+  {
+   "path": "F:/LedgerTools/tmp/etest",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "face test frames, summed up in production/casting/in-game-2026-09-25/face-tests.jpg",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 392
+  },
+  {
+   "path": "F:/LedgerTools/tmp/eyes",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "tests of the glazed-eyes fix",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 116
+  },
+  {
+   "path": "F:/LedgerTools/tmp/eyes2",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "tests of the glazed-eyes fix",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 104
+  },
+  {
+   "path": "F:/LedgerTools/tmp/eyes_m",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "tests of the glazed-eyes fix",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 132
+  },
+  {
+   "path": "F:/LedgerTools/tmp/eyes_n",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "tests of the glazed-eyes fix",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 131
+  },
+  {
+   "path": "F:/LedgerTools/tmp/ingame",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "in-game pictures before the camera and cast were right",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 385
+  },
+  {
+   "path": "F:/LedgerTools/tmp/ingame2",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "in-game pictures before the camera and cast were right",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 279
+  },
+  {
+   "path": "F:/LedgerTools/tmp/ingame3",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "in-game pictures before the camera and cast were right",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 279
+  },
+  {
+   "path": "F:/LedgerTools/tmp/ingame4",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "in-game pictures before the camera and cast were right",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 413
+  },
+  {
+   "path": "F:/LedgerTools/tmp/ingame5",
+   "madeBy": "the portrait tool, 25 Sep",
+   "why": "raw in-game frames, packed into production/casting/in-game-2026-09-25",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 385
+  },
+  {
+   "path": "F:/LedgerTools/tmp/look",
+   "madeBy": "the portrait tool, 26 Sep",
+   "why": "the face tests' frames, summed up in face-fault.jpg",
+   "status": "superseded",
+   "recorded": "2026-09-26",
+   "mb": 1257
+  },
+  {
+   "path": "F:/LedgerTools/tmp/pip-cache",
+   "madeBy": "a reviewer's installs, 25 Sep",
+   "why": "a download cache",
+   "status": "superseded",
+   "recorded": "2026-09-25",
+   "mb": 389
+  }
+ ]
+}
