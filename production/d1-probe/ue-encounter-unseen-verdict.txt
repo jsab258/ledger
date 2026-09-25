@@ -1,7 +1,7 @@
 encounterMode=unseen
 encounterStatus=PASS
 encounterFailed=none
-encounterCommit=5b92199
+encounterCommit=1542732
 pawnClass=LedgerSliceCharacter actPressLanded=player-input actRequestsSeen=1 actAttempted=yes
 aboutA w1=0 n2=0 r3=0 aboutB w1=0 n2=0 r3=0 crimeMemories w1=0 n2=0 r3=0
 filedSummaryA=none
