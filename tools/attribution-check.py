@@ -217,6 +217,10 @@ WATCHED = {
     "production/casting/sheila-dunn/acting": "Casting voice candidates",
     "production/casting/ron-kirby/acting": "Casting voice candidates",
     "production/casting/darren-milner/acting": "Casting voice candidates",
+    # THE CAST IN THE GAME, 25 September (evening): each character's line as
+    # the game's voice engine speaks it from their game clip (Sheila's
+    # Parler-designed D, Ron's p227, Darren's p241), for the in-game page.
+    "production/casting/in-game-2026-09-25/voice": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be

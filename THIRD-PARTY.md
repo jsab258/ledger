@@ -90,7 +90,7 @@ from which reference. Not shipped: the chosen voice's reference moves to
 `game-design/picked-clips` once he says yes. `production/casting/<name>/acting/`,
 25 September: the acting test, the same engine cloned from the voice he picked
 (so from these same references), each line made four ways;
-`production/casting/acting-key.json` says which is which.
+`production/casting/acting-key.json` says which is which. `production/casting/in-game-2026-09-25/voice/`, 25 September (evening): each character's line as the game's voice engine speaks it from their game clip (Sheila's designed D, Ron's p227, Darren's p241). Sheila's game clip, `game-design/picked-clips/lena.parler-d.mp3`, is her designed voice D, credited here rather than under VCTK.
 
 | Reference | Source | Licence | Credit |
 |---|---|---|---|

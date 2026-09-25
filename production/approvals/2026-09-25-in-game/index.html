@@ -1,0 +1,148 @@
+<title>The Cast In Game</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(26px,4vw,34px)/1 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.tally,.was{font:400 13px/1.4 var(--type);color:var(--muted)}
+.tally b{color:var(--ink)}
+section.person{display:grid;gap:18px;background:var(--surface);border:1px solid var(--rule);padding:22px}
+.sides{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.side{display:grid;gap:8px;align-content:start}
+.side img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--chip)}
+.side img.wide{aspect-ratio:16/9}
+.speak{width:100%;aspect-ratio:4/3;background-color:var(--chip);background-repeat:no-repeat}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px/1 var(--display);letter-spacing:.04em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 12px;cursor:pointer;min-height:38px}
+button:hover{border-color:var(--ink)}
+button.playing{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · approval page · 25 September, evening</div>
+    <h1>Do the game's voices match what you chose?</h1>
+    <p class="how">For each of Sheila, Ron and Darren, a line as the game's own voice engine speaks it, from the voice the game now gives them (press Play). Their faces are held back: you saw they read East Asian, the sheets do not describe that, and under the new gate a face that fails its sheet does not come to you until it is fixed. Pick whether the voice matches what you chose, with a word if not.</p>
+    <p class="how">Everything here passed the gate first: checked against the casting sheet and for accent and words, then looked at by a second reviewer that did not make it.</p>
+    <div class="tally" id="tally">Loading your earlier picks…</div>
+  </header>
+  <main class="wrap" id="people"></main>
+  <footer>Faces: Epic's MetaHuman, built on this PC from the casting sheets; in the game as the encounter dresses them. Voices: the game's own voice engine (Chatterbox Nano) from each character's game clip: Sheila the voice you picked (D, designed by Parler-TTS), Ron his July voice (p227, VCTK), Darren his (p241, VCTK). Each line passed the accent check and a word check before a second reviewer listened by measurement.</footer>
+</div>
+
+<script>
+const PEOPLE = [{"slug": "sheila-dunn", "name": "Sheila Dunn", "take": "C1", "line": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.", "voice": "game/sheila-dunn.wav"}, {"slug": "ron-kirby", "name": "Ron Kirby", "take": "C1", "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.", "voice": "game/ron-kirby.wav"}, {"slug": "darren-milner", "name": "Darren Milner", "take": "C5", "line": "A shape's not much to go on. Half the town could pass for that on a night like this.", "voice": "game/darren-milner.wav"}];
+const state = {};
+let db = null, canWrite = true, audio = null, playing = null, timer = 0;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function stop(){ if (audio) audio.pause(); if (playing) playing.classList.remove("playing"); clearInterval(timer); audio = null; playing = null; }
+function play(src, btn, onFrame){
+  const same = playing === btn; stop(); if (same) return;
+  const a = new Audio(src); audio = a; playing = btn; btn.classList.add("playing");
+  a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
+  a.play().then(() => { if (onFrame) timer = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
+}
+function spriteBox(sp){
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking"});
+  box.style.backgroundImage = "url(" + sp.file + ")";
+  box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+  const show = i => {
+    i = Math.max(0, Math.min(sp.frames - 1, i));
+    const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    box.style.backgroundPosition = (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  };
+  show(0);
+  return {box, at: t => show(Math.floor(t * sp.fps))};
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { if (e && e.code === "invalid_argument") { canWrite = false; render(); } });
+}
+function render(){
+  const root = document.getElementById("people");
+  root.replaceChildren();
+  let judged = 0;
+  for (const p of PEOPLE) {
+    const k = "game-" + p.slug, st = state[k] || {};
+    if (st.pick) judged++;
+    const sec = el("section", {class:"person", id:p.slug});
+    sec.append(el("div", {}, el("h2", {text:p.name}), el("div", {class:"was", text:"Speaking: “" + p.line + "”"})));
+    if (!p.chosenFront && !p.gameFront && p.voice) {
+      const b = el("button", {type:"button", text:"Play the line"});
+      b.addEventListener("click", () => play(p.voice, b));
+      sec.append(el("div", {class:"row"}, b));
+    }
+    const chosen = el("div", {class:"side"}, el("h3", {text:"You chose: " + p.take}));
+    if (p.chosenFront) chosen.append(el("img", {src:p.chosenFront, alt:p.name + ", the candidate you chose", loading:"lazy"}));
+    const game = el("div", {class:"side"}, el("h3", {text:"In the game"}));
+    if (p.gameFront) game.append(el("img", {src:p.gameFront, alt:p.name + " in the game", loading:"lazy"}));
+    const talk = el("div", {class:"side"}, el("h3", {text:"In the game, speaking"}));
+    if (p.speak) {
+      const s = spriteBox(p.speak);
+      const b = el("button", {type:"button", text:"Play the line"});
+      if (p.voice) b.addEventListener("click", () => play(p.voice, b, s.at));
+      talk.append(s.box, el("div", {class:"row"}, b));
+    }
+    if (p.gameWide) talk.append(el("img", {class:"wide", src:p.gameWide, alt:p.name + " where the game stands them", loading:"lazy"}));
+    if (p.chosenFront || p.gameFront) sec.append(el("div", {class:"sides"}, chosen, game, talk));
+    const picks = el("div", {class:"row"});
+    for (const [v, t] of [["match", "The voice matches what I chose"], ["no", "It does not"]]) {
+      const id = "pick-" + k + "-" + v;
+      const r = el("input", {type:"radio", name:"pick-" + k, id, value:v});
+      if (st.pick === v) r.checked = true;
+      r.addEventListener("change", () => save(k, {pick:v}));
+      picks.append(el("label", {class:"pick", for:id}, r, document.createTextNode(t)));
+    }
+    const note = el("textarea", {placeholder:"What is right or wrong, in a few words (optional)"});
+    note.value = st.note || "";
+    note.addEventListener("change", () => save(k, {note:note.value}));
+    sec.append(picks, note, el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    root.append(sec);
+  }
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + PEOPLE.length + "</b> judged" + (db ? "" : " · picks are not being stored on this view");
+}
+render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const p of PEOPLE) { try { const s = await db.doc("verdicts/game-" + p.slug).get(); if (s.exists) state["game-" + p.slug] = Object.assign({}, s.data()); } catch (e) {} }
+  render();
+})();
+</script>

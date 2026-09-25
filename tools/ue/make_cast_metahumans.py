@@ -194,7 +194,7 @@ FACIAL = "/MetaHumanCharacter/Optional/Grooms/Bindings/"
 
 
 def _c(base, face, tex, u, v, height, fat, musc, hair, colour=None, beard=None, mustache=None, makeup=False):
-    b = {"base": base, "face": face, "skin": {"u": u, "v": v, "face_texture_index": tex},
+    b = {"base": base, "face": face, "skin": {"u": u, "v": v} if tex is None else {"u": u, "v": v, "face_texture_index": tex},
          "body": {"Height": height, "Fat": fat, "Muscularity": musc}, "hair": hair}
     if colour:
         b["hair_colour"] = colour
@@ -225,6 +225,16 @@ CANDIDATES = {
     "C5": {"lena": _c("Jelena", {"Jelena": 0.4, "Celeste": 0.3, "Walter": 0.3}, 17, 0.24, 0.48, 162.0, 0.6, -0.7, "WI_Hair_S_Pixie", GREY_BROWN),
            "rocco": _c("Kelvin", {"Kelvin": 0.35, "Walter": 0.4, "Bruce": 0.25}, 137, 0.42, 0.6, 186.0, 1.2, 0.7, "WI_Hair_S_BaldingStubble", GREY, mustache="WI_Mustache_L_Full"),
            "sam": _c("Victor", {"Victor": 0.4, "Lorenzo": 0.35, "Orlando": 0.25}, 151, 0.23, 0.45, 175.0, -0.8, -0.4, "WI_Hair_S_CurlyFade")},
+    # WHY THEY READ EAST ASIAN, 25 September (evening; Jafar: "they all look
+    # kinda Asian"). The faces are blends of European presets, but each had
+    # its skin set swapped by number, and a skin set carries the scanned
+    # person's eyelids, nose and cheeks as well as colour. Two tests on
+    # Sheila's approved face (C1): E1 keeps her base preset's own skin set,
+    # E2 the aged set 121 she was built with.
+    "E1": {"lena": _c("Vivian", {"Vivian": 0.5, "Walter": 0.25, "Celeste": 0.25}, None, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN)},
+    "E2": {"lena": _c("Vivian", {"Vivian": 1.0}, 121, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN)},
+    # E3, the control: Vivian as Epic ships her, own face and own skin.
+    "E3": {"lena": _c("Vivian", {"Vivian": 1.0}, None, 0.22, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREY_BROWN)},
 }
 
 
@@ -703,16 +713,17 @@ def selftest():
     check("no colour is brighter than cloth", all(0.0 <= v <= 1.0 for g in CLOTH_COLOURS.values() for p in g.values() for c in p.values() for v in c))
     check("skin tone inside the picker", all(0.0 <= c["skin"]["u"] <= 1.0 and 0.0 <= c["skin"]["v"] <= 1.0 for c in CASTING.values()))
     cands = [(t, w, c) for t, byw in CANDIDATES.items() for w, c in byw.items()]
-    check("five candidates for each of the three", sorted(CANDIDATES) == ["C1", "C2", "C3", "C4", "C5"]
-          and all(sorted(byw) == ["lena", "rocco", "sam"] for byw in CANDIDATES.values()))
+    FIVE = [t for t in CANDIDATES if t.startswith("C")]   # the five he chose from; E takes are tests
+    check("five candidates for each of the three", FIVE == ["C1", "C2", "C3", "C4", "C5"]
+          and all(sorted(byw) == ["lena", "rocco", "sam"] for t, byw in CANDIDATES.items() if t in FIVE))
     check("every candidate blends shipped faces around its base, weights summing to one",
           all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for _, _, c in cands))
     check("no candidate is made from Grace's face", all("Grace" not in c["face"] for _, _, c in cands))
     check("the candidates of one person all differ", all(len({repr(sorted(CANDIDATES[t][w]["face"].items())) + CANDIDATES[t][w]["hair"]
-                                                            for t in CANDIDATES}) == 5 for w in ("lena", "rocco", "sam")))
+                                                            for t in FIVE}) == 5 for w in ("lena", "rocco", "sam")))
     check("heights are the sheets' (Sheila about 160, Ron about 186, Darren about 175)",
-          all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in CANDIDATES for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
-    check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in CANDIDATES))
+          all(abs(CANDIDATES[t][w]["body"]["Height"] - h) <= 3 for t in FIVE for w, h in (("lena", 160), ("rocco", 186), ("sam", 175))))
+    check("Ron always has his moustache", all(CANDIDATES[t]["rocco"].get("mustache") for t in FIVE))
     use_take("C3")
     check("a candidate take builds to its own brief", brief("rocco") is CANDIDATES["C3"]["rocco"] and asset_name("rocco") == "MH_RoccoC3")
     check("its moustache is recoloured with its hair", hair_materials("rocco", ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"]) == ["/G/MH_RoccoC3/Grooms/MI_WI_Mustache_L_Messy_Hair.x"])

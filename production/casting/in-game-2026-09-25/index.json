@@ -1,0 +1,41 @@
+{
+ "sheila-dunn": {
+  "line": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.",
+  "front": "sheila-dunn-front.jpg",
+  "wide": "sheila-dunn-wide.jpg",
+  "speak": {
+   "file": "sheila-dunn-speak.jpg",
+   "frames": 97,
+   "cols": 10,
+   "rows": 10,
+   "fps": 15
+  },
+  "voice": "voice/sheila-dunn.wav"
+ },
+ "ron-kirby": {
+  "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+  "front": "ron-kirby-front.jpg",
+  "wide": "ron-kirby-wide.jpg",
+  "speak": {
+   "file": "ron-kirby-speak.jpg",
+   "frames": 95,
+   "cols": 10,
+   "rows": 10,
+   "fps": 15
+  },
+  "voice": "voice/ron-kirby.wav"
+ },
+ "darren-milner": {
+  "line": "A shape's not much to go on. Half the town could pass for that on a night like this.",
+  "front": "darren-milner-front.jpg",
+  "wide": "darren-milner-wide.jpg",
+  "speak": {
+   "file": "darren-milner-speak.jpg",
+   "frames": 69,
+   "cols": 10,
+   "rows": 7,
+   "fps": 15
+  },
+  "voice": "voice/darren-milner.wav"
+ }
+}

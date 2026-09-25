@@ -5,9 +5,12 @@
 // its skin weights, so it follows any cast member's body by leader pose: it
 // takes their bones' positions, which carry their height and build.
 //
-// -Jacket=rocco,sam chooses who wears it (the cast's internal ids); by default
-// Ron (id rocco), whose sheet puts him in one. -Jacket= with nothing after it
-// takes it off everyone.
+// -Jacket=rocco,sam chooses who wears it (the cast's internal ids). -Jacket=
+// with nothing after it takes it off everyone.
+//
+// OFF BY DEFAULT, 25 September (evening): Jafar judged it nothing like a
+// donkey jacket, and approved Ron's face in the plain clothes the candidates
+// wore, so the game shows him as approved. -Jacket=rocco puts it back on.
 #pragma once
 
 #include "Components/SkeletalMeshComponent.h"
@@ -29,7 +32,7 @@ namespace LedgerJacket
 
 	inline bool Wears(const TCHAR* Who)
 	{
-		FString Wearers = TEXT("rocco");
+		FString Wearers;
 		// false: read past the comma ("rocco,sam"), which the engine's reader
 		// otherwise stops at (the first run dressed Ron alone).
 		FParse::Value(FCommandLine::Get(), TEXT("Jacket="), Wearers, false);
