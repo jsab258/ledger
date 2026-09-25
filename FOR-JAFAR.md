@@ -12,12 +12,12 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Changed.**
 - Backup: its list comes from what you approved; all 315 files are in Dropbox, checked byte for byte. It runs at each sitting's end, never deleting, overwriting or filling C:.
-- CLAUDE.md: the places that may ever be deleted, and the large-file record.
+- CLAUDE.md: what may ever be deleted; the large-file record.
 - Faces: Vivian built here matches Epic's picture, so the build is sound. My choices made ours read East Asian: the blended face shapes, a dark fringed bob, no make-up, brown eyes, and the dim street light. New hair alone (Sheila) didn't fix it, a blind review found.
 
-**Free space on C:.** 2.2 GB at the start, 2.7 GB now; about 65 GB after the page's recommended groups.
+**Free space on C:.** 2.2 GB at the start, 1.5 GB now (after a build); about 65 GB after the page's recommended groups. Builds green.
 
-**Got wrong.** I nearly listed two links to F: as duplicates; the tool's check caught it.
+**Got wrong.** I nearly listed two links to F: as duplicates; the check caught it.
 
 **Next.** Faces rebuilt on northern European presets, judged in street light first.
 
