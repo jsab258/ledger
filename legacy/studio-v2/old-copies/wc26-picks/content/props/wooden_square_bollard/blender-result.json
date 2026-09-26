@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\wooden_square_bollard\\wooden_square_bollard_LOD0.glb"
+  },
+  "source": {
+    "verts": 80,
+    "tris": 46,
+    "dims_m": [
+      0.1247,
+      0.1247,
+      1.0
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 80,
+      "tris": 46,
+      "bytes": 4028
+    }
+  },
+  "dims_m": [
+    0.1247,
+    0.1247,
+    1.0
+  ]
+}

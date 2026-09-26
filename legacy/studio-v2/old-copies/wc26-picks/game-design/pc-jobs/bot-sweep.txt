@@ -1,0 +1,10 @@
+botSweepPasses=304
+botSweepSent=0
+botSweepRefused=0
+botSweepEverySec=120
+botSweepSecSinceLast=0
+botSweepLastResult=sent0/refused0/of18
+botBriefTapsFiled=0
+botBriefReasonsFiled=0
+botUptimeSec=39323
+botSweepWrittenAt=2026-09-11T07:51:16

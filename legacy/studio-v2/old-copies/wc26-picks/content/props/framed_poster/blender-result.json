@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\framed_poster\\framed_poster_LOD0.glb"
+  },
+  "source": {
+    "verts": 56,
+    "tris": 28,
+    "dims_m": [
+      0.5057,
+      0.0134,
+      0.8005
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 56,
+      "tris": 28,
+      "bytes": 3280
+    }
+  },
+  "dims_m": [
+    0.5057,
+    0.0134,
+    0.8005
+  ]
+}

@@ -1,0 +1,17 @@
+executor=idle
+handledTotal=3
+answeredTotal=0
+seenTotal=3
+pendingNow=0
+backlogSkippedAtFirstStart=0
+lastMsg=2026-09-16T1412Z-79313222
+lastOutcome=failed
+limitPausesThisInstruction=0
+limitResumeIn=none
+cli=found
+cliLastStart=started
+cliWhy=none
+sessionsStarted=1/1
+worktree=ready
+stopFile=absent
+written=2026-09-22T08:40:54Z

@@ -328,6 +328,7 @@ OURS = {
     "production/reference": "approved reference pictures, copied in from where they were made and listed with their provenance in production/reference/README.md; hook-sheet.png (pass 4 of the 22 September regeneration, approved that night) and hook-sheet-2026-09-09-retired.png (the sheet it replaced) are both this project's own work, made by tools/imagegen running Z-Image-Turbo (Apache-2.0) through stable-diffusion.cpp (MIT) on Jafar's machine, no fetched asset as an input",
     "production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; the live path, unarchived; and the walk's sound, recorded by the engine from the street's own ambience and the crowd voices this file attributes separately",
     "legacy/studio-v2/production/d1-probe": "rendered by the Unreal probe from this project's own piece list, carrying the ambientCG and CityPack textures this file attributes separately, committed by CI every run; archived 2026-09-22 with the studio, path changed and nothing else",
+    "legacy/studio-v2/old-copies": "saved on 26 September from the two old copies before their deletion, the files found nowhere on GitHub: the old studio's prop models, level-of-detail cuts made by this project's own tools/meshgen/blender/clean_lod.py from the CC0 base meshes attributed in ledger/Assets/Props/base-mesh/THIRD-PARTY.md, and the supervisor's small status files and answer receipts; anything carrying a token or chat id went to Jafar's Dropbox backup instead",
 }
 
 # File types that are content rather than code. A directory holding only text
@@ -474,6 +475,9 @@ NOT_ASSET_SUFFIXES = {
     ".dll",
     # Documents, manifests, data and logs.
     ".md", ".txt", ".json", ".tsv", ".html", ".log",
+    # .lock ADDED 26 SEP 2026: the old studio supervisor's one-line lock files,
+    # archived from the old copies (legacy/studio-v2/old-copies); plain text.
+    ".lock",
     # .xlsx ADDED 24 SEP 2026, caught by this check on the first push after
     # the runtime-AI business research came onto main: its
     # runtime-ai-business-model.xlsx is a spreadsheet this project wrote,

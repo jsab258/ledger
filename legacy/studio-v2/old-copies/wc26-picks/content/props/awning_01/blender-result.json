@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\awning_01\\awning_01_LOD0.glb"
+  },
+  "source": {
+    "verts": 36,
+    "tris": 20,
+    "dims_m": [
+      3.0,
+      1.7351,
+      1.3233
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 36,
+      "tris": 20,
+      "bytes": 2424
+    }
+  },
+  "dims_m": [
+    3.0,
+    1.7351,
+    1.3233
+  ]
+}

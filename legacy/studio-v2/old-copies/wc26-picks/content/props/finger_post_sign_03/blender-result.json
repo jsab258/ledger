@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\finger_post_sign_03\\finger_post_sign_03_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\finger_post_sign_03\\finger_post_sign_03_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\finger_post_sign_03\\finger_post_sign_03_LOD2.glb"
+  },
+  "source": {
+    "verts": 2190,
+    "tris": 2808,
+    "dims_m": [
+      1.3955,
+      0.7662,
+      2.7997
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 2190,
+      "tris": 2808,
+      "bytes": 88148
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 1371,
+      "tris": 1404,
+      "bytes": 53516
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 809,
+      "tris": 702,
+      "bytes": 31504
+    }
+  },
+  "dims_m": [
+    1.3955,
+    0.7662,
+    2.7997
+  ]
+}

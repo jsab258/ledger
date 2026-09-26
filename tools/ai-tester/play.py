@@ -44,7 +44,7 @@ import tempfile
 import time
 
 REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-PACKAGED = r"C:\Users\Jafar\ledger-migrate\ue-probe\Packaged\Windows\LedgerProbe.exe"
+PACKAGED = r"F:\LedgerTools\played-game\Windows\LedgerProbe.exe"   # 26 September: moved out of the old copy ledger-migrate
 EDITOR = r"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe"
 PROJECT = os.path.join(REPO, "ue-probe", "LedgerProbe.uproject")
 HELPER = os.path.join(REPO, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.exe")

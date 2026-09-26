@@ -1,0 +1,29 @@
+supervisor=running
+daemons=3
+running=2
+gaveUp=1
+autostart=removed
+resync=ok/e953e62b
+outboxFiles=18
+outboxReceipts=42
+outboxRefusals=0
+written=2026-09-11T07:53:09
+botSweepPasses=304
+botSweepSent=0
+botSweepRefused=0
+botSweepEverySec=120
+botSweepSecSinceLast=0
+botSweepLastResult=sent0/refused0/of18
+botBriefTapsFiled=0
+botBriefReasonsFiled=0
+botUptimeSec=39323
+botSweepWrittenAt=2026-09-11T07:51:16
+botSweepAgeSec=113
+botSweepStatus=read/10-key(s)
+executorState=idle
+executorHandled=1
+executorPending=0
+executorLimitResumeIn=none
+studio-watcher=gaveup studio-watcherUptimeSec=nothing-measured studio-watcherStarts=5 studio-watcherStops=5 studio-watcherLastExit=3221225786
+telegram-bot=running telegram-botUptimeSec=39437 telegram-botStarts=2 telegram-botStops=1 telegram-botLastExit=4294967295
+claude-executor=running claude-executorUptimeSec=127197 claude-executorStarts=1 claude-executorStops=0 claude-executorLastExit=none

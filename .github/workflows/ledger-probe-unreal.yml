@@ -712,7 +712,10 @@ jobs:
         run: |
           $ErrorActionPreference = "Continue"
           $src = Join-Path $PWD "ue-probe\Packaged"
-          $dst = "C:\Users\Jafar\ledger-migrate\ue-probe\Packaged"
+          # THE PLAYED COPY'S OWN PLACE, 26 September: out of the old copy
+          # ledger-migrate (deleted in the cleanup Jafar approved) and off the
+          # full drive C:, straight to F:, where his play shortcut points.
+          $dst = "F:\LedgerTools\played-game"
 
           $srcExists = Test-Path $src
           $srcFiles = @()
@@ -2940,3 +2943,24 @@ jobs:
             exit 1
           fi
           echo "the engine built and the ported Core answered the C# table — green on its own evidence"
+
+      # NOTHING LEFT BEHIND, 26 September (Jafar: drive C filled again "because
+      # nothing cleans up after itself"). The build's packaged game, cooked
+      # files, logs and compile scratch are cleared at its start already; now
+      # also at its end, once the game has been copied out to the played copy
+      # and every result above is committed, so 17 GB no longer sits on C:
+      # between builds. Only these four folders of this working copy.
+      - name: Clear this build's leftovers
+        if: always()
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          $freed = 0
+          foreach ($d in @("ue-probe\Packaged", "ue-probe\Saved", "ue-probe\Intermediate", "ue-probe\Binaries")) {
+            $p = Join-Path $PWD $d
+            if (Test-Path $p) {
+              $freed += (Get-ChildItem $p -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum
+              Remove-Item $p -Recurse -Force -ErrorAction SilentlyContinue
+            }
+          }
+          Write-Host ("leftoversCleared freedGB={0:N1} freeC={1:N1}" -f ($freed / 1GB), ((Get-PSDrive C).Free / 1GB))

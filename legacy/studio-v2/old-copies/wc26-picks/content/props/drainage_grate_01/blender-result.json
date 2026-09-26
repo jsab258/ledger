@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drainage_grate_01\\drainage_grate_01_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drainage_grate_01\\drainage_grate_01_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drainage_grate_01\\drainage_grate_01_LOD2.glb"
+  },
+  "source": {
+    "verts": 600,
+    "tris": 504,
+    "dims_m": [
+      0.3999,
+      0.3999,
+      0.015
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 600,
+      "tris": 504,
+      "bytes": 23600
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 348,
+      "tris": 252,
+      "bytes": 14152
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 237,
+      "tris": 126,
+      "bytes": 7408
+    }
+  },
+  "dims_m": [
+    0.3999,
+    0.3999,
+    0.015
+  ]
+}

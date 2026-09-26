@@ -1,0 +1,12 @@
+executor=idle
+handledTotal=1
+answeredTotal=0
+seenTotal=1
+pendingNow=0
+backlogSkippedAtFirstStart=0
+limitPausesThisInstruction=0
+limitResumeIn=none
+cli=missing
+worktree=unknown
+stopFile=absent
+written=2026-09-11T05:53:03Z

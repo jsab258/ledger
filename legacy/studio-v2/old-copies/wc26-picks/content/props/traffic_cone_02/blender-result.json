@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\traffic_cone_02\\traffic_cone_02_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\traffic_cone_02\\traffic_cone_02_LOD1.glb"
+  },
+  "source": {
+    "verts": 266,
+    "tris": 288,
+    "dims_m": [
+      0.3002,
+      0.3002,
+      0.45
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 266,
+      "tris": 288,
+      "bytes": 11616
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 149,
+      "tris": 144,
+      "bytes": 7004
+    }
+  },
+  "dims_m": [
+    0.3002,
+    0.3002,
+    0.45
+  ]
+}

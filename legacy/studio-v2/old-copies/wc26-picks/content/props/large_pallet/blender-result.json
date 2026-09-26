@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\large_pallet\\large_pallet_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\large_pallet\\large_pallet_LOD1.glb"
+  },
+  "source": {
+    "verts": 672,
+    "tris": 336,
+    "dims_m": [
+      2.0,
+      1.1001,
+      0.19
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 672,
+      "tris": 336,
+      "bytes": 24888
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 504,
+      "tris": 168,
+      "bytes": 13188
+    }
+  },
+  "dims_m": [
+    2.0,
+    1.1001,
+    0.19
+  ]
+}

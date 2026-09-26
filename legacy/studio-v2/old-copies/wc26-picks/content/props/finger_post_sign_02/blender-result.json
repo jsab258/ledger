@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\finger_post_sign_02\\finger_post_sign_02_LOD0.glb"
+  },
+  "source": {
+    "verts": 126,
+    "tris": 62,
+    "dims_m": [
+      1.2,
+      0.65,
+      2.7763
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 126,
+      "tris": 62,
+      "bytes": 5616
+    }
+  },
+  "dims_m": [
+    1.2,
+    0.65,
+    2.7763
+  ]
+}

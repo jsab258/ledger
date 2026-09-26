@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\garden_bench_01\\garden_bench_01_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\garden_bench_01\\garden_bench_01_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\garden_bench_01\\garden_bench_01_LOD2.glb"
+  },
+  "source": {
+    "verts": 1113,
+    "tris": 1134,
+    "dims_m": [
+      1.0953,
+      0.4844,
+      0.8289
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 1113,
+      "tris": 1134,
+      "bytes": 43636
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 724,
+      "tris": 567,
+      "bytes": 27972
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 445,
+      "tris": 283,
+      "bytes": 17724
+    }
+  },
+  "dims_m": [
+    1.0953,
+    0.4844,
+    0.8289
+  ]
+}

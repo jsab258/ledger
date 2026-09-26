@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drain_cover_01\\drain_cover_01_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drain_cover_01\\drain_cover_01_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\drain_cover_01\\drain_cover_01_LOD2.glb"
+  },
+  "source": {
+    "verts": 1872,
+    "tris": 1888,
+    "dims_m": [
+      0.1,
+      0.1,
+      0.0015
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 1872,
+      "tris": 1888,
+      "bytes": 72452
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 1004,
+      "tris": 944,
+      "bytes": 39032
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 532,
+      "tris": 472,
+      "bytes": 20260
+    }
+  },
+  "dims_m": [
+    0.1,
+    0.1,
+    0.0015
+  ]
+}
