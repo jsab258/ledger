@@ -47,8 +47,10 @@ def grid(n, cols=COLS):
 def pack(src, out):
     from PIL import Image
     index = {}
-    for p in sorted(glob.glob(os.path.join(src, "ue-portrait-*-c*-front.png"))):
-        m = re.match(r"ue-portrait-(\w+)-(c\d)-front\.png$", os.path.basename(p))
+    os.makedirs(out, exist_ok=True)
+    # Any take, a letter and a number (C1 on 25 September, P1 on the 26th).
+    for p in sorted(glob.glob(os.path.join(src, "ue-portrait-*-*-front.png"))):
+        m = re.match(r"ue-portrait-([a-z]+)-([a-z]\d)-front\.png$", os.path.basename(p))
         if not m or m.group(1) not in WHO:
             continue
         who, take = m.group(1), m.group(2).upper()

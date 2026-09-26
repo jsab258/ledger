@@ -334,7 +334,7 @@ namespace Ledger.Core
             return false;
         }
 
-        static bool EndsWithAbbreviation(string line, int dot)
+        internal static bool EndsWithAbbreviation(string line, int dot)
         {
             int start = dot;
             while (start > 0 && char.IsLetter(line[start - 1])) start--;

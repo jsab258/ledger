@@ -66,6 +66,9 @@
 #include "EngineUtils.h"
 #include "Engine/PointLight.h"
 #include "Components/PointLightComponent.h"
+#include "Engine/DirectionalLight.h"
+#include "Components/DirectionalLightComponent.h"
+#include "LedgerHair.h"
 
 namespace LedgerMhPortrait
 {
@@ -98,6 +101,16 @@ namespace LedgerMhPortrait
 	bool GInGame = false;             // -PortraitInGame: the game's own cast, where it stands
 	bool GNoHair = false, GStudio = false, GFaceRest = false;   // the look tests
 	float GStudioCd = 8.0f;           // -PortraitStudioCd: the key light's candela (60 blew the picture out)
+	// IN THE SUN, 26 September (-PortraitSunlit). Jafar: "Judge them in the
+	// street's daylight." The stand by Mickey's is in the parade's shade at the
+	// street's noon, and a face in shade has dark eyes and hair and no eyelid
+	// crease (FINDINGS). The same street and sun: the person stands at the
+	// nearest place on the pavement or road where the sun reaches the face,
+	// turned so it falls from a little to one side, as a photographer would
+	// stand someone. Nothing about the light is changed.
+	bool GSunlit = false, GSunFound = false;
+	FVector GStand = FVector::ZeroVector;  // where the person stands, when found (engine units)
+	float GYaw = 180.0f;                    // the person's facing for the front shots
 	TArray<TWeakObjectPtr<AActor>> GLights;
 
 	FTSTicker::FDelegateHandle GTicker;
@@ -135,6 +148,8 @@ namespace LedgerMhPortrait
 		return Out;
 	}
 
+	void FindSun(UWorld* World);
+
 	void Place(UWorld* World)
 	{
 		if (GInGame)
@@ -162,9 +177,11 @@ namespace LedgerMhPortrait
 		}
 		FActorSpawnParameters P;
 		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		if (GSunlit && !GSunFound) { FindSun(World); }
 		// Facing the road (-Y in this engine is toward the west side): a
 		// MetaHuman faces its actor's +Y, so yaw 180 turns it to face -Y.
-		AActor* A = World->SpawnActor<AActor>(Cls, StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm), FRotator(0.0f, 180.0f, 0.0f), P);
+		const FVector At = GSunFound ? GStand : StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm);
+		AActor* A = World->SpawnActor<AActor>(Cls, At, FRotator(0.0f, GYaw, 0.0f), P);
 		if (A == nullptr) { return; }
 		UAnimSequenceBase* Idles[] = { LoadObject<UAnimSequenceBase>(nullptr, kIdle), LoadObject<UAnimSequenceBase>(nullptr, kFaceIdle) };
 		TArray<USkeletalMeshComponent*> Parts;
@@ -184,6 +201,55 @@ namespace LedgerMhPortrait
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s body idle %s, face idle %s"), *Name,
 			Idles[0] != nullptr ? TEXT("loaded") : TEXT("MISSING"), Idles[1] != nullptr ? TEXT("loaded") : TEXT("MISSING"));
 		GPerson = A;
+	}
+
+	// THE NEAREST SUNLIT PLACE to the usual stand (see GSunlit): a 1 m grid over
+	// the pavement and road, 40 m along and 14 m across; a place counts when the
+	// ground is found under it, a face 1.6 m above it sees the sun 80 m off,
+	// the camera's place in front of the face sees the face, and no wall is
+	// within three metres (by a facade the face had half the sky: dim).
+	void FindSun(UWorld* World)
+	{
+		ADirectionalLight* Sun = nullptr;
+		for (TActorIterator<ADirectionalLight> It(World); It; ++It)
+		{
+			if (Sun == nullptr || It->GetComponent()->Intensity > Sun->GetComponent()->Intensity) { Sun = *It; }
+		}
+		GSunFound = true;
+		GStand = StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm);
+		if (Sun == nullptr) { UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: sunlit: NO SUN in the street")); return; }
+		const FVector ToSun = -Sun->GetActorForwardVector();
+		const float SunYaw = FMath::RadiansToDegrees(FMath::Atan2(ToSun.Y, ToSun.X));
+		// The face turned 35 degrees off the sun, the side that keeps the street behind.
+		const float FaceYaw = SunYaw + 35.0f;
+		GYaw = FaceYaw - 90.0f;          // a MetaHuman faces its actor's +Y
+		const FVector Front = FRotator(0.0f, FaceYaw, 0.0f).Vector();
+		FCollisionQueryParams Q(TEXT("LedgerPortraitSun"), true);   // complex: the street's buildings have no simple collision
+		float Best = TNumericLimits<float>::Max();
+		for (int32 Ix = -15; Ix <= 25; ++Ix)
+		{
+			for (int32 Iz = 0; Iz <= 14; ++Iz)
+			{
+				const FVector Top = StreetToUE(kStandX + Ix, 6.0, kStandZ - Iz);
+				FHitResult Ground;
+				if (!World->LineTraceSingleByChannel(Ground, Top, Top - FVector(0, 0, 900.0f), ECC_Visibility, Q)) { continue; }
+				const FVector Face = Ground.ImpactPoint + FVector(0, 0, 160.0f);
+				FHitResult Hit;
+				if (World->LineTraceSingleByChannel(Hit, Face, Face + ToSun * 8000.0f, ECC_Visibility, Q)) { continue; }
+				if (World->LineTraceSingleByChannel(Hit, Face + Front * 200.0f, Face, ECC_Visibility, Q)) { continue; }
+				bool bRoom = true;
+				for (int32 Deg = 0; Deg < 360 && bRoom; Deg += 45)
+				{
+					// Open ground: three metres clear all round, so the face has the whole sky and not half of it.
+					bRoom = !World->LineTraceSingleByChannel(Hit, Face, Face + FRotator(0.0f, (float)Deg, 0.0f).Vector() * 300.0f, ECC_Visibility, Q);
+				}
+				if (!bRoom) { continue; }
+				const float D = (float)(Ix * Ix + Iz * Iz);
+				if (D < Best) { Best = D; GStand = Ground.ImpactPoint; }
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: sunlit: sun from yaw %.0f, stand %s (%s), facing yaw %.0f"), SunYaw,
+			*GStand.ToString(), Best < TNumericLimits<float>::Max() ? TEXT("in the sun") : TEXT("NO SUNLIT PLACE, the usual stand"), GYaw);
 	}
 
 	// Every part playing one of the idles, held at one moment of them.
@@ -286,7 +352,7 @@ namespace LedgerMhPortrait
 		const FVector Face(GPerson->GetActorLocation().X, GPerson->GetActorLocation().Y, B.Max.Z - 12.0f);
 		// The offsets below are for a person facing -Y (yaw 180); in the game
 		// they are turned to however the person stands.
-		const FRotator Turn(0.0f, GInGame ? GPerson->GetActorRotation().Yaw - 180.0f : 0.0f, 0.0f);
+		const FRotator Turn(0.0f, GInGame ? GPerson->GetActorRotation().Yaw - 180.0f : GYaw - 180.0f, 0.0f);
 		// Close: head and shoulders, about half a metre tall in frame. Mid: the
 		// top of the head to below the waist, about a metre ten. (The first
 		// run's 75 cm and 230 cm cut the crown off the one and the face off
@@ -334,7 +400,9 @@ namespace LedgerMhPortrait
 				}
 			}
 		}
-		if (!GInGame) { GPerson->SetActorRotation(FRotator(0.0f, Shot == EShot::Profile ? 90.0f : 180.0f, 0.0f)); }
+		if (!GInGame) { GPerson->SetActorRotation(FRotator(0.0f, Shot == EShot::Profile ? GYaw - 90.0f : GYaw, 0.0f)); }
+		// The hair's own colour, once the person has been in the world a while (LedgerHair.h).
+		LedgerHair::Keep(GPerson.Get(), *Stem());
 		if (!GCam.IsValid())
 		{
 			GCam = World->SpawnActor<ACameraActor>(ACameraActor::StaticClass(), Eye, (Look - Eye).Rotation());
@@ -560,6 +628,7 @@ namespace LedgerMhPortrait
 		GStudio = FParse::Param(FCommandLine::Get(), TEXT("PortraitStudio"));
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitStudioCd="), GStudioCd);
 		GFaceRest = FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceRest"));
+		GSunlit = FParse::Param(FCommandLine::Get(), TEXT("PortraitSunlit"));
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))

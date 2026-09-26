@@ -155,6 +155,9 @@ def cache_path(who, clip, cache=CACHE):
     return cache / ("%s-%s.pt" % (who, digest))
 
 
+CAST = ("lena", "rocco", "sam")   # the talkers whose voices --prewarm prepares
+
+
 def learn(torch, speaker, who, clip):
     """The character's voice, from the cache or learned once on the processor.
     Learning runs with the model's device set to the processor for its
@@ -188,7 +191,31 @@ def serve(args):
     torch, speaker, dev = load_models(args.get("cpu"))
     import soundfile as sf
     voices = {}
-    print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out)}), flush=True)
+
+    def ready_voice(who, clip):
+        if who not in voices:
+            conds, _ = learn(torch, speaker, who, clip)
+            voices[who] = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
+                                                               for k, v in conds.gen.items()})
+        speaker.conds = voices[who]
+
+    # PREPARED BEFORE THE CONVERSATION (--prewarm, 26 September; Jafar: "prepare
+    # each cast voice before the conversation instead of on first use"): each
+    # cast voice learned or read from the cache, and one word said in it, so
+    # the card has run the model once before the player's first line.
+    warmed = []
+    if args.get("prewarm"):
+        for who in CAST:
+            clip = clip_for(who)
+            if clip is None:
+                continue
+            try:
+                ready_voice(who, clip)
+                speaker.generate("Right.")
+                warmed.append(who)
+            except Exception:
+                pass   # a voice that will not warm is learned on first use, as before
+    print(dumps({"ready": True, "device": str(dev), "loadS": round(time.time() - t0, 1), "out": str(out), "warmed": warmed}), flush=True)
     for line in sys.stdin:
         if not line.strip():
             continue
@@ -203,11 +230,7 @@ def serve(args):
             continue
         t = time.time()
         try:
-            if who not in voices:
-                conds, _ = learn(torch, speaker, who, clip)
-                voices[who] = type(conds)(t3=conds.t3.to(device=dev), gen={k: (v.to("cpu") if torch.is_tensor(v) else v)
-                                                                   for k, v in conds.gen.items()})
-            speaker.conds = voices[who]
+            ready_voice(who, clip)
             pieces = sentences(text)
             for k, piece in enumerate(pieces):
                 torch.manual_seed(20260924 + i * 100 + k)
@@ -270,7 +293,7 @@ def selftest():
 if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
-    a = {"cpu": "--cpu" in sys.argv}
+    a = {"cpu": "--cpu" in sys.argv, "prewarm": "--prewarm" in sys.argv}
     if "--out" in sys.argv:
         a["out"] = sys.argv[sys.argv.index("--out") + 1]
     sys.exit(serve(a))

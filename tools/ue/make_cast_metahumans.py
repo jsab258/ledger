@@ -249,6 +249,87 @@ CANDIDATES = {
 }
 
 
+# THE NEW CANDIDATES, 26 September (Jafar: rebuild the three "from northern
+# European presets, following their casting sheets, with hair, eye colour and
+# make-up to match"). What made the last ones read East Asian: even blends of
+# several faces (they average toward the model's middle face: a flat mid-face,
+# low nose bridge), a dark fringed bob, all make-up removed, brown eyes. So each
+# face is one European preset, or one leading at least 80%; eyes at the chart
+# places Epic's own European presets use (tools/ue/preset_facts.py: Walter's
+# grey-blue, Orlando's blue); the base preset's own beard or moustache taken
+# off unless the sheet has one; Sheila in the light make-up of a woman of 53 in
+# 1990 (a thin liner, natural lips, a touch of blush), the men in none.
+GREY_BLUE = {"pattern": "IRIS008", "u": 0.34, "v": 0.79}      # Walter's
+BLUE = {"pattern": "IRIS008", "u": 0.45, "v": 0.6}            # Orlando's
+GREYING_SET = {"hairMelanin": 0.3, "hairRedness": 0.1, "WhiteAmount": 0.45}
+GREY_SIDES = {"hairMelanin": 0.4, "hairRedness": 0.05, "WhiteAmount": 0.55}
+LIGHT_BROWN = {"hairMelanin": 0.25, "hairRedness": 0.15, "WhiteAmount": 0.0}
+SHEILA_MAKEUP = {"eyes": {"type": "THIN_LINER", "opacity": 0.25, "primary_color": (0.12, 0.09, 0.07)},
+                 "lips": {"type": "NATURAL", "opacity": 0.3, "color": (0.45, 0.2, 0.2)},
+                 "blush": {"type": "LOW_SWEEP", "intensity": 0.12, "color": (0.6, 0.3, 0.3)}}
+
+
+def _n(base, face, tex, u, v, height, fat, musc, hair, colour, eyes, clear=(), beard=None, mustache=None, makeup=None):
+    b = _c(base, face, tex, u, v, height, fat, musc, hair, colour, beard=beard, mustache=mustache, makeup=bool(makeup))
+    b["eyes"] = eyes
+    b["clear"] = list(clear)
+    if makeup:
+        b["makeup"] = makeup
+    return b
+
+
+NEW = {
+    "N1": {"lena": _n("Vivian", {"Vivian": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREYING_SET, GREY_BLUE, makeup=SHEILA_MAKEUP),
+           "rocco": _n("Walter", {"Walter": 1.0}, 121, 0.3, 0.75, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_SIDES, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Orlando", {"Orlando": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_BobCurly", LIGHT_BROWN, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "N2": {"lena": _n("Jelena", {"Jelena": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREYING_SET, GREY_BLUE, makeup=SHEILA_MAKEUP),
+           "rocco": _n("Bruce", {"Bruce": 1.0}, 121, 0.3, 0.75, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_SIDES, GREY_BLUE, ("Beard",), mustache="WI_Mustache_S_Full"),
+           "sam": _n("Victor", {"Victor": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_L_MessyClumps", LIGHT_BROWN, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "N3": {"lena": _n("Celeste", {"Celeste": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_Updo", GREYING_SET, GREY_BLUE, makeup=SHEILA_MAKEUP),
+           "rocco": _n("Walter", {"Walter": 0.8, "Bruce": 0.2}, 121, 0.3, 0.75, 186.0, 1.3, 0.6, "WI_Hair_S_BaldingStubble", GREY_SIDES, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Orlando", {"Orlando": 0.8, "Victor": 0.2}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_BobCurly", LIGHT_BROWN, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "N4": {"lena": _n("Jelena", {"Jelena": 0.8, "Vivian": 0.2}, 99, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_M_BobCurly", GREYING_SET, GREY_BLUE, makeup=SHEILA_MAKEUP),
+           "rocco": _n("Bruce", {"Bruce": 0.8, "Walter": 0.2}, 13, 0.3, 0.75, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_SIDES, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Victor", {"Victor": 0.8, "Orlando": 0.2}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_Layered", LIGHT_BROWN, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "N5": {"lena": _n("Vivian", {"Vivian": 0.8, "Celeste": 0.2}, 58, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_Updo", GREYING_SET, GREY_BLUE, makeup=SHEILA_MAKEUP),
+           "rocco": _n("Walter", {"Walter": 0.85, "Victor": 0.15}, 121, 0.3, 0.75, 186.0, 1.3, 0.6, "WI_Hair_S_BaldingStubble", GREY_SIDES, GREY_BLUE, ("Beard",), mustache="WI_Mustache_S_Full"),
+           "sam": _n("Orlando", {"Orlando": 0.85, "Bruce": 0.15}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_S_Messy", LIGHT_BROWN, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+}
+CANDIDATES.update(NEW)
+
+# THE SECOND ATTEMPT, 26 September, from the N1 portraits against the sheets.
+# Sheila's M_BobCurly is a shoulder-length fringe over one eye, not "a short
+# shampoo-and-set perm"; her make-up is "none but a plain lipstick". Ron's skin
+# read olive, not "weathered and ruddy", and his fringe and moustache too dark
+# for "grey". Darren's cut was long and straight, not "a grown-out perm with
+# bleached tips": the hair material's ombre lightens the ends. The hair colour
+# itself was right in the game (ue-probe LedgerHair.h logged it); the street's
+# shade darkens it.
+SET_GREYING = {"hairMelanin": 0.4, "hairRedness": 0.1, "WhiteAmount": 0.45}
+GREY_FRINGE = {"hairMelanin": 0.35, "hairRedness": 0.05, "WhiteAmount": 0.7}
+BLEACHED_TIPS = {"hairMelanin": 0.3, "hairRedness": 0.15, "WhiteAmount": 0.0,
+                 "Ombre": 1.0, "OmbreMelanin": 0.05, "OmbreRedness": 0.1, "OmbreShift": 0.55, "OmbreContrast": 0.5, "OmbreIntensity": 1.0}
+PLAIN_LIPSTICK = {"lips": {"type": "NATURAL", "opacity": 0.5, "color": (0.55, 0.14, 0.14)}}
+SECOND = {
+    "P1": {"lena": _n("Vivian", {"Vivian": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING, GREY_BLUE, makeup=PLAIN_LIPSTICK),
+           "rocco": _n("Walter", {"Walter": 1.0}, 121, 0.22, 0.7, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_FRINGE, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Orlando", {"Orlando": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_BobMessy", BLEACHED_TIPS, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "P2": {"lena": _n("Jelena", {"Jelena": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING, GREY_BLUE, makeup=PLAIN_LIPSTICK),
+           "rocco": _n("Bruce", {"Bruce": 1.0}, 121, 0.22, 0.7, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_FRINGE, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Victor", {"Victor": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_S_Messy", BLEACHED_TIPS, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "P3": {"lena": _n("Celeste", {"Celeste": 1.0}, 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING, GREY_BLUE, makeup=PLAIN_LIPSTICK),
+           "rocco": _n("Walter", {"Walter": 0.8, "Bruce": 0.2}, 121, 0.22, 0.7, 186.0, 1.3, 0.6, "WI_Hair_S_BaldingStubble", GREY_FRINGE, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Orlando", {"Orlando": 0.8, "Victor": 0.2}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_BobMessy", BLEACHED_TIPS, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "P4": {"lena": _n("Jelena", {"Jelena": 0.8, "Vivian": 0.2}, 99, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_SweptUp", SET_GREYING, GREY_BLUE, makeup=PLAIN_LIPSTICK),
+           "rocco": _n("Bruce", {"Bruce": 0.8, "Walter": 0.2}, 13, 0.22, 0.7, 186.0, 1.3, 0.6, "WI_Hair_S_HairLoss", GREY_FRINGE, GREY_BLUE, ("Beard",), mustache="WI_Mustache_L_Full"),
+           "sam": _n("Victor", {"Victor": 0.8, "Orlando": 0.2}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_Layered", BLEACHED_TIPS, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "P5": {"lena": _n("Vivian", {"Vivian": 0.8, "Celeste": 0.2}, 58, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_SweptUp", SET_GREYING, GREY_BLUE, makeup=PLAIN_LIPSTICK),
+           "rocco": _n("Walter", {"Walter": 0.85, "Victor": 0.15}, 121, 0.22, 0.7, 186.0, 1.3, 0.6, "WI_Hair_S_BaldingStubble", GREY_FRINGE, GREY_BLUE, ("Beard",), mustache="WI_Mustache_S_Full"),
+           "sam": _n("Orlando", {"Orlando": 0.85, "Bruce": 0.15}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_S_Messy", BLEACHED_TIPS, BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+}
+CANDIDATES.update(SECOND)
+
+
 def brief(who):
     """The brief the current take builds `who` to: a candidate's, the cast's, or none (a stand-in)."""
     if TAKE in CANDIDATES:
@@ -452,6 +533,14 @@ def main_after_idle(seconds=20.0, settle=15.0):
             # hairMelanin and WhiteAmount (probe_hair_materials.py): take T3
             # first set "Melanin" and "Whiteness", which do not exist, and
             # nothing changed.
+        # THE BASE PRESET'S OWN FACIAL HAIR OFF where the sheet has none (26
+        # September: Ron's candidates kept Walter's and Bruce's beards).
+        for slot in c.get("clear", []):
+            try:
+                ch.internal_collection.default_instance.set_single_slot_selection(slot, unreal.MetaHumanPaletteItemKey())
+                notes.append("cleared-" + slot)
+            except Exception as e:
+                notes.append("clear-%s-refused-%s" % (slot, type(e).__name__))
         # FACIAL HAIR (the candidates): Ron's moustache, Darren's stubble.
         for key, folder, slot in (("mustache", "Mustaches", "Mustache"), ("beard", "Beards", "Beard")):
             name = c.get(key)
@@ -471,6 +560,48 @@ def main_after_idle(seconds=20.0, settle=15.0):
         if c.get("no_makeup"):
             sub.commit_makeup_settings(ch, unreal.MetaHumanCharacterMakeupSettings())
             notes.append("no-makeup")
+        # THE SHEET'S EYES (26 September): a place on the iris colour chart.
+        if c.get("eyes"):
+            try:
+                e = c["eyes"]
+                iris = unreal.MetaHumanCharacterEyeIrisProperties()
+                iris.pattern = getattr(unreal.MetaHumanCharacterEyesIrisPattern, e["pattern"])
+                iris.primary_color_u = e["u"]
+                iris.primary_color_v = e["v"]
+                es = ch.get_editor_property("eyes_settings")
+                es.eye_left.iris = iris
+                es.eye_right.iris = iris
+                sub.commit_eyes_settings(character=ch, eyes_settings=es)
+                notes.append("eyes")
+            except Exception as ex:
+                notes.append("eyes-refused-%s" % type(ex).__name__)
+        # LIGHT MAKE-UP where the sheet's person would wear it.
+        if c.get("makeup"):
+            try:
+                m = c["makeup"]
+                ms = unreal.MetaHumanCharacterMakeupSettings()
+                if "eyes" in m:
+                    ep = unreal.MetaHumanCharacterEyeMakeupProperties()
+                    ep.type = getattr(unreal.MetaHumanCharacterEyeMakeupType, m["eyes"]["type"])
+                    ep.opacity = m["eyes"]["opacity"]
+                    ep.primary_color = unreal.LinearColor(*m["eyes"]["primary_color"], 1.0)
+                    ms.eyes = ep
+                if "lips" in m:
+                    lp = unreal.MetaHumanCharacterLipsMakeupProperties()
+                    lp.type = getattr(unreal.MetaHumanCharacterLipsMakeupType, m["lips"]["type"])
+                    lp.opacity = m["lips"]["opacity"]
+                    lp.color = unreal.LinearColor(*m["lips"]["color"], 1.0)
+                    ms.lips = lp
+                if "blush" in m:
+                    bp = unreal.MetaHumanCharacterBlushMakeupProperties()
+                    bp.type = getattr(unreal.MetaHumanCharacterBlushMakeupType, m["blush"]["type"])
+                    bp.intensity = m["blush"]["intensity"]
+                    bp.color = unreal.LinearColor(*m["blush"]["color"], 1.0)
+                    ms.blush = bp
+                sub.commit_makeup_settings(ch, ms)
+                notes.append("makeup")
+            except Exception as ex:
+                notes.append("makeup-refused-%s" % type(ex).__name__)
         return notes
 
     def ask_cloud():

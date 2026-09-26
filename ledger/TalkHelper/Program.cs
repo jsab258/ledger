@@ -33,6 +33,11 @@ using Ledger.Core;
 ///
 /// IN:  {"id":1,"to":"sam","say":"Morning.","hour":12,"scene":"..."}
 /// OUT: {"id":1,"to":"sam","reply":"...","ms":812,"offline":false,"timedOut":false}
+/// With --early (26 September, the voice's delay): first, as soon as the reply's
+/// first sentence is written and has passed its own check,
+///      {"id":1,"to":"sam","first":"...","ms":640}
+/// and then the usual line, with "rest": what follows the first sentence, the
+/// only part still to be spoken.
 ///
 /// WHAT THE CHARACTER KNOWS COMES FROM THE GAME, 24 September. Until now every
 /// engine started from an empty memory and knowledge store and every line was
@@ -86,6 +91,15 @@ static class Program
         readonly TimeSpan _patience;
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
+        public bool Early;
+        // A turn abandoned at the patience limit may still be unwinding; the
+        // same character's next line waits for it (the independent check: a
+        // late unwind disturbed the next turn's transcript).
+        readonly Dictionary<ConversationEngine, Task> _unwinding = new Dictionary<ConversationEngine, Task>();
+        // Where an early first sentence is written (the selftest listens here).
+        public Action<string> Emit = line => { lock (Console.Out) { Console.Out.WriteLine(line); Console.Out.Flush(); } };
+        // The claim check on a stand-in model too, for the selftest.
+        public bool CheckAlways;
 
         public bool Online => _llm != null;
 
@@ -185,7 +199,7 @@ static class Program
                 // every reply is read for claims the character's knowledge does
                 // not support before it is said. Not on the stand-in models,
                 // which answer only from memory already.
-                if (_llm is AnthropicClient) engine.Checker = _llm;
+                if (_llm is AnthropicClient || CheckAlways) engine.Checker = _llm;
                 _engines[key] = engine;
             }
             // THE SIMULATION'S STATE, loaded before the line is answered.
@@ -218,11 +232,39 @@ static class Program
                 return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy }, Plain);
             string reply;
             bool timedOut = false;
+            string earlyFirst = null;
+            var gate = new object();
+            bool closed = false;
+            if (_unwinding.TryGetValue(engine, out var before))
+            {
+                await Task.WhenAny(before, Task.Delay(10000));
+                _unwinding.Remove(engine);
+            }
             using (var cts = new CancellationTokenSource(_patience))
             {
                 try
                 {
-                    var task = engine.SayToAsync(say, now, scene, cts.Token);
+                    Func<string, Task<bool>> onFirst = null;
+                    if (Early)
+                    {
+                        onFirst = first =>
+                        {
+                            // Once this line's answer is written, a late first sentence is dropped.
+                            lock (gate)
+                            {
+                                if (closed) return Task.FromResult(false);
+                                // THE CONTENT RULE on the sentence itself: one the
+                                // validator would replace is not said early; the turn
+                                // goes on as if nothing had been (the independent check).
+                                var said = ResponseValidator.Validate(first, card.Name, card.AlsoCalled);
+                                if (ResponseValidator.IsDeflection(said, card.Name)) return Task.FromResult(false);
+                                earlyFirst = said;
+                                Emit(JsonSerializer.Serialize(new { id, to, first = earlyFirst, ms = sw.ElapsedMilliseconds }, Plain));
+                            }
+                            return Task.FromResult(true);
+                        };
+                    }
+                    var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var done = await Task.WhenAny(task, Task.Delay(_patience));
                     if (done != task)
                     {
@@ -236,7 +278,10 @@ static class Program
                         // engine rolls the turn back; if it finished in the
                         // same instant it is remembered, so it is said.
                         cts.Cancel();
+                        // (A first sentence already heard is kept by the engine itself
+                        // as it unwinds: ConversationEngine.RememberSaid.)
                         await Task.WhenAny(task, Task.Delay(1000));
+                        if (!task.IsCompleted) _unwinding[engine] = task;
                         if (task.Status == TaskStatus.RanToCompletion)
                         {
                             timedOut = false;
@@ -260,7 +305,23 @@ static class Program
             // line was said as written; apart from a clean check in the log.
             var invented = timedOut ? new List<string>() : new List<string>(engine.LastInvented);
             bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
-            return JsonSerializer.Serialize(new { id, to, day, reply, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, invented, @unchecked }, Plain);
+            // THE REST, when the first sentence has already been sent to be spoken:
+            // what follows it, or nothing if the reply is no longer its sequel
+            // (a brush-off after a timeout, or the first sentence alone).
+            lock (gate) closed = true;
+            string rest = null;
+            if (earlyFirst != null)
+            {
+                int at = timedOut ? -1 : reply.IndexOf(earlyFirst, StringComparison.Ordinal);
+                // (a dash the validator turned into a comma leaves the rest starting with one)
+                rest = at >= 0 ? reply.Substring(at + earlyFirst.Length).Trim().TrimStart(',', ';', ':').Trim() : "";
+                if (at < 0) reply = earlyFirst;
+                // WHAT WAS HEARD is what the character keeps: the first sentence,
+                // and the rest only if it is spoken (the independent check: a rest
+                // the content rule refused stayed in memory unheard).
+                if (!timedOut) engine.CorrectLastSaid(rest.Length > 0 ? earlyFirst + " " + rest : earlyFirst);
+            }
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, invented, @unchecked }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -338,6 +399,7 @@ static class Program
         bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";
         ILlmClient llm = fake ? new KnowledgeFake() : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
         var helper = new Helper(llm, TimeSpan.FromSeconds(8));
+        helper.Early = Array.IndexOf(args, "--early") >= 0;
         LoadCards(helper, CardsDir(args));
         Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake }, Plain));
         Console.Out.Flush();
@@ -463,7 +525,126 @@ static class Program
         var only = await q.Answer("{\"id\":11,\"to\":\"sam\",\"who\":\"r3\",\"noReply\":true,\"evidence\":{" + Acc + ",\"near\":{\"heard\":true},\"familiarity\":0.2}}");
         Ok("the level alone, with no model call", Str(only, "level") == "Uneasy" && Str(only, "reply") == null && q.Cost.TotalCalls == costBefore, only);
 
+        // THE FIRST SENTENCE, EARLY, 26 September: spoken as soon as it is
+        // written and checked; never anything unchecked; kept as said.
+        Ok("a first sentence is cut at its end", ConversationEngine.FirstSentence("Aye. I saw him.") == "Aye.");
+        Ok("not until more follows it", ConversationEngine.FirstSentence("Aye.") == null && ConversationEngine.FirstSentence("Aye, I") == null);
+        Ok("a title is not a sentence's end", ConversationEngine.FirstSentence("Mr. Hall knows. Ask him.") == "Mr. Hall knows.");
+        Ok("a reply with a tag waits to be cleaned whole", ConversationEngine.FirstSentence("<thinking>Lie. </thinking> Aye. No.") == null);
+        // The independent check's cases, 26 September.
+        Ok("never inside a quotation", ConversationEngine.FirstSentence("He said \"Go home. Now.\" and walked off. That's all.") == "He said \"Go home. Now.\" and walked off.");
+        Ok("never inside brackets", ConversationEngine.FirstSentence("Aye (I saw him. Honest) at nine. That's all.") == "Aye (I saw him. Honest) at nine.");
+        Ok("\"No.\" before a number is not an end", ConversationEngine.FirstSentence("No. 12 had its window put in. Terrible.") == "No. 12 had its window put in.");
+        Ok("\"No.\" before words is", ConversationEngine.FirstSentence("No. I never saw him.") == "No.");
+        Ok("an initial is not an end", ConversationEngine.FirstSentence("It was J. Novak. I saw him.") == "It was J. Novak.");
+        Ok("nor are a.m. and Sgt.", ConversationEngine.FirstSentence("About 9 a.m. he came. Ask Sgt. Hall. Go on.") == "About 9 a.m. he came.");
+        Ok("dots alone are not a sentence", ConversationEngine.FirstSentence("... Right. Off you go.") == "... Right.");
+        // The second attack's cases.
+        Ok("never inside a single quotation", ConversationEngine.FirstSentence("He said 'Go home. Now.' and walked off. That's all.") == "He said 'Go home. Now.' and walked off.");
+        Ok("nor after Capt.", ConversationEngine.FirstSentence("It was Capt. Hale. I saw him.") == "It was Capt. Hale.");
+        Ok("a contraction ends a sentence", ConversationEngine.FirstSentence("No, I can't. Ask Rocco, he might.") == "No, I can't.");
+        Ok("an apostrophe in a word opens nothing", ConversationEngine.FirstSentence("The lads' van was here. Then gone.") == "The lads' van was here.");
+        Ok("nor does a dropped letter", ConversationEngine.FirstSentence("'Course I did. Saw him plain.") == "'Course I did." &&
+           ConversationEngine.FirstSentence("I saw 'im. Plain as day.") == "I saw 'im.");
+
+        async Task<(List<(long at, string line)> firsts, string last, long lastAt, StreamFake llm, Helper helper)> Early(StreamFake llm, string say, TimeSpan patience)
+        {
+            var eh = new Helper(llm, patience) { Early = true, CheckAlways = true };
+            LoadCards(eh, cardsDir);
+            var clock = Stopwatch.StartNew();
+            var firsts = new List<(long, string)>();
+            eh.Emit = line => { lock (firsts) firsts.Add((clock.ElapsedMilliseconds, line)); };
+            var last = await eh.Answer("{\"id\":20,\"to\":\"sam\",\"say\":\"" + say + "\"}");
+            return (firsts, last, clock.ElapsedMilliseconds, llm, eh);
+        }
+        string Said(Helper eh)
+        {
+            string o = null;
+            foreach (var ev in eh.EngineFor("sam").Memory.Events)
+                if (ev.Kind == "conversation" && ev.Text.StartsWith(ClaimCheck.IReplied)) o = ev.Text;
+            return o;
+        }
+
+        var clean = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine."), "See anything?", TimeSpan.FromSeconds(8));
+        Ok("the checked first sentence goes out before the rest is written",
+           clean.firsts.Count == 1 && Str(clean.firsts[0].line, "first") == "Aye." && clean.firsts[0].at + 250 < clean.lastAt,
+           clean.firsts.Count + " " + clean.lastAt);
+        Ok("and the rest follows, to be spoken after it", Str(clean.last, "rest") == "I saw him go by the chip shop at nine." &&
+           Reply(clean.last) == "Aye. I saw him go by the chip shop at nine.", clean.last);
+
+        var restBad = await Early(new StreamFake("Aye. It was Dennis from the yard, I know it."), "Who was it?", TimeSpan.FromSeconds(8));
+        Ok("if the rest invents, only the checked first sentence is said",
+           restBad.firsts.Count == 1 && Reply(restBad.last) == "Aye." && Str(restBad.last, "rest") == "", restBad.last);
+        Ok("and remembered as all that was said", Said(restBad.helper) != null && Said(restBad.helper).Contains("\"Aye.\""), Said(restBad.helper));
+
+        var restRefused = await Early(new StreamFake("Aye. Fancy a pint after?"), "Busy?", TimeSpan.FromSeconds(8));
+        Ok("a rest the content rule refuses is not said", restRefused.firsts.Count == 1 && Reply(restRefused.last) == "Aye." && Str(restRefused.last, "rest") == "", restRefused.last);
+        Ok("and is not kept as said either", Said(restRefused.helper) != null && !Said(restRefused.helper).Contains("pint"), Said(restRefused.helper));
+        var bracket = await Early(new StreamFake("As an AI I would not know. Anyway, no."), "See anything?", TimeSpan.FromSeconds(8));
+        Ok("a first sentence the validator would replace is not said early", bracket.firsts.Count == 0, bracket.last);
+
+        var broke = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine.") { ThrowBeforeText = true }, "See anything?", TimeSpan.FromSeconds(8));
+        Ok("a stream that breaks before any sentence falls back to the plain call", broke.firsts.Count == 0 &&
+           Reply(broke.last) == "Aye. I saw him go by the chip shop at nine." && !Flag(broke.last, "timedOut"), broke.last);
+        var quoted = await Early(new StreamFake("Aye. \"Get out,\" he said. Then he went."), "What happened?", TimeSpan.FromSeconds(8));
+        Ok("the rest keeps its own opening quote", Str(quoted.last, "rest") == "\"Get out,\" he said. Then he went.", quoted.last);
+
+        var firstBad = await Early(new StreamFake("Dennis from the yard did it. Everyone knows."), "Who was it?", TimeSpan.FromSeconds(8));
+        Ok("a first sentence that invents is never sent early", firstBad.firsts.Count == 0 && Str(firstBad.last, "rest") == null, firstBad.last);
+        Ok("and the reply is the usual second draft or the plain line", Reply(firstBad.last) != null && !Reply(firstBad.last).Contains("Dennis"), firstBad.last);
+
+        var late = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine.") { Pause = TimeSpan.FromSeconds(3) }, "See anything?", TimeSpan.FromMilliseconds(900));
+        Ok("out of time after the first sentence: that sentence is the reply, nothing more is said",
+           late.firsts.Count == 1 && Flag(late.last, "timedOut") && Reply(late.last) == "Aye." && Str(late.last, "rest") == "", late.last);
+        Ok("and the character keeps what the player heard", Said(late.helper) != null && Said(late.helper).Contains("\"Aye.\""), Said(late.helper));
+
+        var plain = new Helper(new StreamFake("Aye. I saw him go by the chip shop at nine."), TimeSpan.FromSeconds(8)) { CheckAlways = true };
+        LoadCards(plain, cardsDir);
+        int plainFirsts = 0;
+        plain.Emit = _ => plainFirsts++;
+        var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
+        Ok("without --early nothing changes: the whole reply, no first line, no rest",
+           plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
         Console.WriteLine($"talkhelper selftest: passed={passed}/{passed + failed} failed={failed}");
         return failed == 0 ? 0 : 1;
+    }
+
+    /// A model that writes its reply in two parts, a pause apart, and a claim
+    /// check that calls anything about Dennis or the yard invented.
+    sealed class StreamFake : IStreamingLlmClient
+    {
+        readonly string _reply;
+        public TimeSpan Pause = TimeSpan.FromMilliseconds(400);
+        int _drafts;
+        public bool ThrowBeforeText;
+        public StreamFake(string reply) { _reply = reply; }
+        static bool IsCheck(LlmRequest r) => r.System != null && r.System.StartsWith("You read one line");
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+        {
+            if (IsCheck(request))
+            {
+                var line = request.Messages.Count > 0 ? request.Messages[request.Messages.Count - 1].Content : "";
+                // only the fenced line, not what the character knows
+                int open = line.IndexOf("LINE:\n<<<>>>\n", StringComparison.Ordinal);
+                var said = open >= 0 ? line.Substring(open + 13) : line;
+                int close = said.IndexOf("<<<>>>", StringComparison.Ordinal);
+                if (close >= 0) said = said.Substring(0, close);
+                bool bad = said.Contains("Dennis") || said.Contains("yard");
+                return Task.FromResult(new LlmResponse { Text = bad ? "{\"invented\":[\"who did it\"]}" : "{\"invented\":[]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
+            }
+            // the first draft is the reply; a second draft says nothing it could invent
+            return Task.FromResult(new LlmResponse { Text = _drafts++ == 0 ? _reply : "Can't say I did.", InputTokens = 400, OutputTokens = 10, Model = request.Model });
+        }
+        public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
+        {
+            if (ThrowBeforeText) throw new LlmStreamBrokenException("Overloaded");
+            _drafts++;
+            var cut = _reply.IndexOf(". ", StringComparison.Ordinal) + 2;
+            onText(_reply.Substring(0, cut) + _reply.Substring(cut, 1));
+            await Task.Delay(Pause, ct);
+            onText(_reply);
+            return new LlmResponse { Text = _reply, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
+        }
     }
 }
