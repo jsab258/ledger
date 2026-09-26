@@ -1,0 +1,9 @@
+Second reviewer, faces 2026-09-26. Enlarged crops in this folder (face, eyes, profile-zoom per take).
+
+Sheila P1  FAIL  broad flat midface, hooded narrow eyes, low brows: East Asian / Eurasian lean in front view. Green eyes. Full glossy lips. Honey-blonde choppy modern crop, not greying brown set.
+Sheila P3  FAIL  near-identical to P1 (mean pixel difference 8.8 on the face), same faults.
+Sheila P2  FAIL  least Asian-leaning (visible lid crease, higher brows) but same face base, green eyes, full lips, same modern blonde hair.
+Ron P1     FAIL  long narrow face, arched brows, olive cast, aquiline nose: Mediterranean/Turkish read. Slight, not heavy-set. Pale. Thinning crop over the crown, not bald. Thin moustache.
+Ron P2     PASS (narrow)  white English, broad, heavy-set, full grey-brown chevron moustache, broad nose. Fix: skin not ruddy; hair covers the crown in profile (not bald on top).
+Darren P1  FAIL  straight lank bob with a hard white dip-dyed lower band (2010s ombre, not a 1990 grown-out perm with bleached tips); white ends render flat/unshaded; saturated yellow-green eyes.
+Darren P4  FAIL  same dip-dye; eyes more saturated with red, bloodshot rims; broader heavier jaw, reads ~30.
