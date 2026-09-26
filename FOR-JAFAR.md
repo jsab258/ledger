@@ -17,9 +17,9 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 - After, in the game: 5.4 / 8.7 s. Words at 1.4 s; the voice takes 4 s more.
 - Pocket TTS: 2.0 / 2.9 s, but all three voices drifted American, twice: set aside.
 
-**Free space on C:.** 64.9 GB at the start, 53.6 GB now (Unreal's cache): cleanup page first next sitting. Backup OK.
+**Free space on C:.** 64.9 GB at the start, 49.8 GB at the end (Unreal's caches): cleanup page first next. Backup OK.
 
-**Got wrong.** Every candidate's eyes came out green (I misread Epic's eye chart). One call broke the build machine's build; fixed, green.
+**Got wrong.** Every candidate's eyes came out green (I misread Epic's eye chart). One call broke the build machine's build; fixed.
 
 **Missing.** Your latency research.
 
