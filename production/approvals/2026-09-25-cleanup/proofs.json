@@ -1,0 +1,18 @@
+{
+ "about": "Jafar's safeguards for deleting the two old copies (26 September): rename first, delete last, and only if the live voice makes a line, a build succeeds and his play shortcut opens the game, all with the old copies renamed. tools/cleanup.py delete-renamed refuses unless every item below is true.",
+ "renamed": ["C:\\Users\\Jafar\\wc26-picks -> C:\\Users\\Jafar\\wc26-picks.to-delete-2026-09-26", "C:\\Users\\Jafar\\ledger-migrate -> C:\\Users\\Jafar\\ledger-migrate.to-delete-2026-09-26"],
+ "noStashes": true,
+ "noStashesDetail": "git stash list empty in both; no commit on any branch missing from a remote; each branch's latest commit fetched from GitHub by hash (ledger: main, pc-inbox, pc-results, art/atlas-01; wc26-picks: its one branch), all HTTP 200",
+ "settingsBackedUp": true,
+ "settingsDetail": "tools/runner/config.local (the bot's token and chat id) and .pc-watcher-state.json from each copy, copied to the Dropbox backup under old-copies/ and checked byte for byte",
+ "leftoversSaved": true,
+ "leftoversDetail": "145 files found nowhere on GitHub, scanned twice for tokens, keys, chat ids and passwords with none found, into legacy/studio-v2/old-copies; the two supervisor logs (a chat id) and bench-spoke.wav (unknown provenance) to the Dropbox backup instead",
+ "movedOutVerified": true,
+ "movedOutDetail": "copied to F: and compared byte for byte, every file whole: voice-env-export 54706 files 2.25 GB, voice-graphs/game-out 14 files 8.56 GB, voice-graphs/export-out 11 files 4.6 GB, played-game 321 files 5.43 GB",
+ "voiceMakesALine": true,
+ "voiceDetail": "tools/voice-live/voice-server.py, the game's own live voice, loaded in 26.5 s with its library from F:\\LedgerTools\\voice-env-export (the pointer file changed from the old copy), and made a 2.66 s line of Sheila's in 3.99 s; the accent check reads it English (1.00)",
+ "buildSucceeds": true,
+ "buildDetail": "a local build of the game's code succeeded; the build machine's run on commit 76eccff went green (core tests and the Unreal build) and put its packaged game straight into F:\\LedgerTools\\played-game (320 of 320 files, the game found)",
+ "shortcutOpensGame": true,
+ "shortcutDetail": "tools/play/PLAY THE ENCOUNTER.bat, pointed straight at F:, started the game from F:\\LedgerTools\\played-game twice (the copied game, then the build machine's fresh one); both times the street loaded with its 671 pieces, the player and the cast; closed after each check"
+}
