@@ -297,41 +297,46 @@
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP1",
    "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 289
+   "mb": 289,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP2",
    "madeBy": "tools/ue/make_cast_metahumans.py take P2 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 292
+   "mb": 292,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP3",
    "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 295
+   "mb": 295,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP4",
    "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 316
+   "mb": 316,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP5",
    "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 311
+   "mb": 311,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC1",
@@ -389,9 +394,10 @@
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP1",
    "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 288
+   "mb": 288,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP2",
@@ -405,25 +411,28 @@
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP3",
    "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 293
+   "mb": 293,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP4",
    "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 286
+   "mb": 286,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP5",
    "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 293
+   "mb": 293,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC1",
@@ -481,41 +490,46 @@
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP1",
    "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 364
+   "mb": 364,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP2",
    "madeBy": "tools/ue/make_cast_metahumans.py take P2 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 312
+   "mb": 312,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP3",
    "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 364
+   "mb": 364,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP4",
    "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 356
+   "mb": 356,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP5",
    "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
    "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
-   "status": "kept",
+   "status": "rejected",
    "recorded": "2026-09-26",
-   "mb": 314
+   "mb": 314,
+   "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
    "path": "F:/LedgerTools/played-game",
