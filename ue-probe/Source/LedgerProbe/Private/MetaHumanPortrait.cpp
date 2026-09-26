@@ -68,6 +68,7 @@
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
 #include "Components/DirectionalLightComponent.h"
+#include "Components/LightComponent.h"
 #include "LedgerHair.h"
 
 namespace LedgerMhPortrait
@@ -213,7 +214,7 @@ namespace LedgerMhPortrait
 		ADirectionalLight* Sun = nullptr;
 		for (TActorIterator<ADirectionalLight> It(World); It; ++It)
 		{
-			if (Sun == nullptr || It->GetComponent()->Intensity > Sun->GetComponent()->Intensity) { Sun = *It; }
+			if (Sun == nullptr || It->GetLightComponent()->Intensity > Sun->GetLightComponent()->Intensity) { Sun = *It; }
 		}
 		GSunFound = true;
 		GStand = StreetToUE(kStandX, 0.0, kStandZ) + FVector(0, 0, kGroundCm);
