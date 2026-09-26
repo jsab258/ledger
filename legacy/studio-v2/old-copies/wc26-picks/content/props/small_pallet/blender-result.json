@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\small_pallet\\small_pallet_LOD0.glb"
+  },
+  "source": {
+    "verts": 224,
+    "tris": 120,
+    "dims_m": [
+      0.8658,
+      1.0005,
+      0.155
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 224,
+      "tris": 120,
+      "bytes": 12080
+    }
+  },
+  "dims_m": [
+    0.8658,
+    1.0005,
+    0.155
+  ]
+}

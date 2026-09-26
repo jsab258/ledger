@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\oil_barrel\\oil_barrel_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\oil_barrel\\oil_barrel_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\oil_barrel\\oil_barrel_LOD2.glb"
+  },
+  "source": {
+    "verts": 2362,
+    "tris": 3680,
+    "dims_m": [
+      0.597,
+      0.597,
+      0.8602
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 2362,
+      "tris": 3680,
+      "bytes": 99316
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 1323,
+      "tris": 1840,
+      "bytes": 54924
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 803,
+      "tris": 920,
+      "bytes": 32692
+    }
+  },
+  "dims_m": [
+    0.597,
+    0.597,
+    0.8602
+  ]
+}

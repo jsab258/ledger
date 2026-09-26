@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\weathertop_chimney\\weathertop_chimney_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\weathertop_chimney\\weathertop_chimney_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\weathertop_chimney\\weathertop_chimney_LOD2.glb"
+  },
+  "source": {
+    "verts": 738,
+    "tris": 936,
+    "dims_m": [
+      0.9505,
+      0.9505,
+      0.6668
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 738,
+      "tris": 936,
+      "bytes": 30476
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 453,
+      "tris": 468,
+      "bytes": 18568
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 265,
+      "tris": 233,
+      "bytes": 11124
+    }
+  },
+  "dims_m": [
+    0.9505,
+    0.9505,
+    0.6668
+  ]
+}

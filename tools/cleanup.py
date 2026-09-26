@@ -14,9 +14,17 @@ approves; only then does anything go, and only a group he said yes to.
 
 THE FIXED LIST (CLAUDE.md, Disk) is ALLOWED below. A path outside it is
 refused, and so is a PROTECTED one inside it: what he approved, what the game
-or a build uses, what the backup covers. This file has no delete in it yet:
-the deleting step is written after his approval, against this same list, and
-moves out what must survive before anything goes.
+or a build uses, what the backup covers.
+
+THE DELETING STEP, 26 September, after his approval on the page:
+    python tools/cleanup.py delete-group ID    # a group he said yes to (verdicts.json beside the page)
+    python tools/cleanup.py rename-old         # the old copies renamed, not deleted
+    python tools/cleanup.py restore-old        # their names put back
+    python tools/cleanup.py delete-renamed     # only once proofs.json says all three proofs passed
+    python tools/cleanup.py sweep-record       # my own recorded rejects on F:
+Deletion walks the tree by hand: a link or junction is removed as a link,
+never entered, so what it points to is never touched (the self-test proves it
+on a throwaway tree).
 """
 import json
 import os
@@ -104,6 +112,127 @@ def size_gb(path):
             except OSError:
                 pass
     return total / 1e9 if os.path.isdir(path) else (os.path.getsize(path) / 1e9 if os.path.exists(path) else 0.0)
+
+
+# ---- DELETING, 26 September: only what he approved on the page ------------
+#
+# His safeguards for the old copies: rename first, delete last (the renamed
+# copies go only after the live voice makes a line, a build succeeds and his
+# play shortcut opens the game); repoint, never link; secrets never into the
+# public repository; settings files never deleted silently (copied to the
+# Dropbox backup first); no stashes. And in F:\LedgerTools, only what the
+# large-file record names as my own rejected or superseded files.
+RENAMED = "to-delete-2026-09-26"
+OLD_COPIES = [os.path.join(HOME, "wc26-picks"), os.path.join(HOME, "ledger-migrate")]
+ALLOWED += [p + "." + RENAMED for p in OLD_COPIES]
+APPROVALS = os.path.join(REPO, "production", "approvals", DATE + "-cleanup")
+F_TOOLS = r"F:\LedgerTools"
+
+
+def record_rejects():
+    """The F:\\LedgerTools paths the large-file record names as mine, rejected or superseded."""
+    rec = json.load(open(os.path.join(REPO, "production", "large-files.json"), encoding="utf-8"))
+    out = []
+    for e in rec["entries"]:
+        p = os.path.normpath(e["path"])
+        if e.get("status") in ("rejected", "superseded") and inside(p, F_TOOLS) and norm(p) != norm(F_TOOLS):
+            out.append(p)
+    return out
+
+
+def may_delete(path):
+    """(ok, why) for one path to be deleted."""
+    if any(norm(path) == norm(x) for x in record_rejects()):
+        return True, "my own recorded reject on F:"
+    if inside(path, F_TOOLS):
+        return False, "F:\\LedgerTools: only my own recorded rejects"
+    return allowed(path)
+
+
+def _long(p):
+    p = os.path.abspath(p)
+    return p if p.startswith("\\\\?\\") else "\\\\?\\" + p
+
+
+def remove_tree(path, done):
+    """Deletes path and what is inside it. A link or junction is removed as a
+    link: never entered, and what it points to is never touched."""
+    import stat
+    lp = _long(path)
+    if is_link(lp):
+        try:
+            os.rmdir(lp)            # a junction or a directory link: removes the link only
+        except OSError:
+            os.unlink(lp)           # a file link
+        done["links"] += 1
+        return
+    if os.path.isdir(lp):
+        with os.scandir(lp) as it:
+            entries = [e.path for e in it]
+        for e in entries:
+            remove_tree(e, done)
+        os.rmdir(lp)
+        return
+    try:
+        size = os.lstat(lp).st_size
+        os.chmod(lp, stat.S_IWRITE)
+        os.remove(lp)
+        done["files"] += 1
+        done["bytes"] += size
+    except OSError as e:
+        done["failed"].append("%s (%s)" % (path, e.strerror))
+
+
+def delete(path):
+    ok, why = may_delete(path)
+    if not ok:
+        return {"path": path, "refused": why}
+    done = {"files": 0, "links": 0, "bytes": 0, "failed": []}
+    if os.path.exists(_long(path)) or is_link(_long(path)):
+        try:
+            remove_tree(path, done)
+        except OSError as e:
+            done["failed"].append("%s (%s)" % (path, e.strerror))
+    return {"path": path, "files": done["files"], "links": done["links"], "gb": round(done["bytes"] / 1e9, 2),
+            "failed": done["failed"][:5], "failedCount": len(done["failed"]), "gone": not os.path.exists(_long(path))}
+
+
+def approved_groups():
+    v = json.load(open(os.path.join(APPROVALS, "verdicts.json"), encoding="utf-8"))
+    return {k.replace("cleanup-", ""): d.get("pick") for k, d in v.items()}
+
+
+def delete_group(gid):
+    if approved_groups().get(gid) != "yes":
+        return [{"group": gid, "refused": "not approved on the page"}]
+    g = next(x for x in PLAN if x["id"] == gid)
+    if g.get("moveOut"):
+        return [{"group": gid, "refused": "an old copy: rename first, prove, then delete-renamed"}]
+    return [delete(p) for p in g["paths"]]
+
+
+def rename_old(back=False):
+    out = []
+    for p in OLD_COPIES:
+        a, b = (p + "." + RENAMED, p) if back else (p, p + "." + RENAMED)
+        if os.path.exists(a) and not os.path.exists(b):
+            os.rename(a, b)             # same drive: a rename moves nothing
+            out.append("%s -> %s" % (a, b))
+        else:
+            out.append("left: %s (exists %s, target exists %s)" % (a, os.path.exists(a), os.path.exists(b)))
+    return out
+
+
+def delete_renamed():
+    proofs = json.load(open(os.path.join(APPROVALS, "proofs.json"), encoding="utf-8"))
+    need = ("voiceMakesALine", "buildSucceeds", "shortcutOpensGame", "movedOutVerified", "noStashes", "settingsBackedUp", "leftoversSaved")
+    missing = [k for k in need if proofs.get(k) is not True]
+    if missing:
+        return [{"refused": "proofs not all passed: " + ", ".join(missing)}]
+    for gid in ("old-copy-wc26-picks", "old-copy-ledger-migrate"):
+        if approved_groups().get(gid) != "yes":
+            return [{"refused": gid + " not approved"}]
+    return [delete(p + "." + RENAMED) for p in OLD_COPIES]
 
 
 W = os.path.join(RUNNER, "ledger", "ledger", "ue-probe")
@@ -350,7 +479,26 @@ def selftest():
     check_("a place on the list is allowed", allowed(os.path.join(HOME, "wc26-picks", "ue-probe"))[0])
     check_("a link to F: is refused", not allowed(r"C:\LedgerTools\slr83")[0])
     src = open(os.path.abspath(__file__), encoding="utf-8").read().split("def selftest")[0]
-    check_("no delete in this file yet", all(w not in src for w in ("os.remove(", "shutil.rmtree", "os.unlink(", "os.rmdir(", "shutil.move(")))
+    check_("no rmtree or move anywhere: deletion walks by hand, links as links", all(w not in src for w in ("shutil.rmtree", "shutil.move(")))
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as t:
+        target = os.path.join(t, "target")
+        os.makedirs(target)
+        open(os.path.join(target, "keep.txt"), "w").write("keep")
+        tree = os.path.join(t, "tree", "deep")
+        os.makedirs(tree)
+        open(os.path.join(tree, "a.txt"), "w").write("a")
+        subprocess.run(["cmd", "/c", "mklink", "/J", os.path.join(tree, "link"), target], capture_output=True)
+        check_("the test junction was made", is_link(os.path.join(tree, "link")))
+        done = {"files": 0, "links": 0, "bytes": 0, "failed": []}
+        remove_tree(os.path.join(t, "tree"), done)
+        check_("a tree with a junction inside is deleted", not os.path.exists(os.path.join(t, "tree")))
+        check_("and what the junction pointed to is untouched", open(os.path.join(target, "keep.txt")).read() == "keep")
+        check_("the junction was removed as a link", done["links"] == 1 and done["files"] == 1)
+    check_("F:\\LedgerTools itself is refused", not may_delete(F_TOOLS)[0])
+    check_("a file on F: not in the record is refused", not may_delete(os.path.join(F_TOOLS, "played-game"))[0])
+    check_("his Documents are refused for deletion", "refused" in delete(os.path.join(HOME, "Documents", "nothing-here")))
     print("cleanup selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
@@ -361,6 +509,16 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "check"
     if cmd == "page":
         page()
+    elif cmd == "delete-group":
+        print(json.dumps(delete_group(sys.argv[2]), indent=1))
+    elif cmd == "rename-old":
+        print("\n".join(rename_old()))
+    elif cmd == "restore-old":
+        print("\n".join(rename_old(back=True)))
+    elif cmd == "delete-renamed":
+        print(json.dumps(delete_renamed(), indent=1))
+    elif cmd == "sweep-record":
+        print(json.dumps([delete(p) for p in record_rejects()], indent=1))
     else:
         problems = check()
         for p in problems:

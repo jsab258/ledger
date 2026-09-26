@@ -17,7 +17,8 @@ REM  THE PACKAGED GAME WHEN THERE IS ONE: the build the build machine checked,
 REM  copied to a steady place after every run, told where this checkout is so
 REM  it finds the street's files - without that its street was grey, the AI
 REM  tester found on 24 September. Otherwise the editor's own build.
-set "PACKAGED=C:\Users\Jafar\ledger-migrate\ue-probe\Packaged\Windows\LedgerProbe.exe"
+REM  (26 September: the played copy now lives on F:, out of the old copy ledger-migrate.)
+set "PACKAGED=F:\LedgerTools\played-game\Windows\LedgerProbe.exe"
 set "HELPER=%CD%\ledger\TalkHelper\bin\Release\net8.0\TalkHelper.exe"
 REM  THE CAST'S VOICES: the small voice model beside the game, when it is installed.
 set "VOICE="
@@ -25,7 +26,7 @@ if exist "C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe" set "VOICE=
 REM  THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE THE GAME, as the
 REM  build machine puts them before every run: without them the street is
 REM  empty and the screen black - the AI tester found it, 24 September.
-set "PACKDIR=C:\Users\Jafar\ledger-migrate\ue-probe\Packaged\Windows\LedgerProbe"
+set "PACKDIR=F:\LedgerTools\played-game\Windows\LedgerProbe"
 if not defined PACKAGED set "PACKAGED=none"
 if exist "%PACKAGED%" (
   copy /y "production\specs\vignette-pieces.json" "%PACKDIR%\vignette-pieces.json" >nul

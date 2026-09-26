@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\swing_bin\\swing_bin_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\swing_bin\\swing_bin_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\swing_bin\\swing_bin_LOD2.glb"
+  },
+  "source": {
+    "verts": 736,
+    "tris": 800,
+    "dims_m": [
+      0.33,
+      0.32,
+      0.7123
+    ],
+    "objects": 2
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 736,
+      "tris": 800,
+      "bytes": 30344
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 418,
+      "tris": 399,
+      "bytes": 19800
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 248,
+      "tris": 200,
+      "bytes": 12544
+    }
+  },
+  "dims_m": [
+    0.33,
+    0.32,
+    0.7123
+  ]
+}

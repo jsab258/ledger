@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\wooden_crate_02\\wooden_crate_02_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\wooden_crate_02\\wooden_crate_02_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\wooden_crate_02\\wooden_crate_02_LOD2.glb"
+  },
+  "source": {
+    "verts": 1736,
+    "tris": 868,
+    "dims_m": [
+      0.8811,
+      0.9251,
+      1.0455
+    ],
+    "objects": 2
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 1736,
+      "tris": 868,
+      "bytes": 62796
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 1302,
+      "tris": 434,
+      "bytes": 33496
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 1085,
+      "tris": 217,
+      "bytes": 17884
+    }
+  },
+  "dims_m": [
+    0.8811,
+    0.9251,
+    1.0455
+  ]
+}

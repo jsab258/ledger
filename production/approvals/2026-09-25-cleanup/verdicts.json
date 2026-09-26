@@ -1,0 +1,8 @@
+{
+ "cleanup-runner-leftovers": {"pick": "yes", "at": "2026-09-26T04:21:11.486Z"},
+ "cleanup-runner-old-workspace": {"pick": "yes", "at": "2026-09-26T04:21:18.160Z"},
+ "cleanup-old-copy-wc26-picks": {"pick": "yes", "at": "2026-09-26T04:21:22.795Z"},
+ "cleanup-old-copy-ledger-migrate": {"pick": "yes", "at": "2026-09-26T04:21:25.790Z"},
+ "cleanup-unreal-cache": {"pick": "no", "at": "2026-09-26T04:21:48.959Z"},
+ "cleanup-project-intermediate": {"pick": "no", "at": "2026-09-26T04:21:55.946Z"}
+}

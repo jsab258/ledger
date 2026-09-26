@@ -1,0 +1,47 @@
+{
+  "ok": true,
+  "error": null,
+  "blender": "4.5.13 LTS",
+  "outputs": {
+    "LOD0": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\ornate_bench\\ornate_bench_LOD0.glb",
+    "LOD1": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\ornate_bench\\ornate_bench_LOD1.glb",
+    "LOD2": "C:\\Users\\Jafar\\wc26-picks\\content\\props\\ornate_bench\\ornate_bench_LOD2.glb"
+  },
+  "source": {
+    "verts": 2286,
+    "tris": 1976,
+    "dims_m": [
+      1.5,
+      0.7128,
+      0.8499
+    ],
+    "objects": 1
+  },
+  "scale_applied": 1.0,
+  "pivot": "base-centre",
+  "ladder": {
+    "LOD0": {
+      "ratio": 1.0,
+      "verts": 2286,
+      "tris": 1976,
+      "bytes": 86508
+    },
+    "LOD1": {
+      "ratio": 0.5,
+      "verts": 1308,
+      "tris": 988,
+      "bytes": 49176
+    },
+    "LOD2": {
+      "ratio": 0.25,
+      "verts": 894,
+      "tris": 493,
+      "bytes": 29048
+    }
+  },
+  "dims_m": [
+    1.5,
+    0.7128,
+    0.8499
+  ]
+}
