@@ -1,0 +1,530 @@
+{
+ "what": "The delay from the player's line to a character's first sound, measured 26 September by tools/voice-live/latency.py driving the game's own helper and voice server beside the running packaged game (12 lines, Sheila, Ron and Darren in turn). Seconds after the line was sent; firstHeard adds one frame and the sound card's start-up to firstSoundMade.",
+ "runs": {
+  "before": {
+   "what": "before: the helper answers whole, then the current voice (Chatterbox Nano on the graphics card) speaks",
+   "summary": {
+    "firstWords": {
+     "median": 2.01,
+     "slowest": 2.67,
+     "fastest": 1.26,
+     "n": 12
+    },
+    "firstSentence": {
+     "median": 2.01,
+     "slowest": 2.67,
+     "fastest": 1.26,
+     "n": 12
+    },
+    "firstSoundMade": {
+     "median": 6.14,
+     "slowest": 7.73,
+     "fastest": 4.37,
+     "n": 12
+    },
+    "firstHeard": {
+     "median": 6.18,
+     "slowest": 7.76,
+     "fastest": 4.41,
+     "n": 12
+    },
+    "replyWhole": {
+     "median": 2.01,
+     "slowest": 2.67,
+     "fastest": 1.26,
+     "n": 12
+    }
+   },
+   "lines": [
+    {
+     "who": "lena",
+     "say": "Evening. Anything going on round here?",
+     "firstWords": 2.65,
+     "firstSoundMade": 7.73,
+     "firstHeard": 7.76,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "You look like you've been stood there a while.",
+     "firstWords": 1.91,
+     "firstSoundMade": 5.95,
+     "firstHeard": 5.98,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "What are you selling today, then?",
+     "firstWords": 1.83,
+     "firstSoundMade": 7.37,
+     "firstHeard": 7.41,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "How long have you kept the books for Mickey?",
+     "firstWords": 2.11,
+     "firstSoundMade": 5.4,
+     "firstHeard": 5.43,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Did you hear the glass go last night?",
+     "firstWords": 1.26,
+     "firstSoundMade": 4.37,
+     "firstHeard": 4.41,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Who's the new owner, then?",
+     "firstWords": 1.86,
+     "firstSoundMade": 6.34,
+     "firstHeard": 6.38,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "Is it always this quiet on a Tuesday?",
+     "firstWords": 2.15,
+     "firstSoundMade": 5.22,
+     "firstHeard": 5.26,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Were you on the docks, before?",
+     "firstWords": 2.16,
+     "firstSoundMade": 6.49,
+     "firstHeard": 6.52,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Can you get me a pager?",
+     "firstWords": 2.23,
+     "firstSoundMade": 7.22,
+     "firstHeard": 7.25,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "Do you know who broke the window?",
+     "firstWords": 2.67,
+     "firstSoundMade": 6.46,
+     "firstHeard": 6.49,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Cold one tonight, isn't it.",
+     "firstWords": 1.77,
+     "firstSoundMade": 5.06,
+     "firstHeard": 5.09,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Your mum know you're out?",
+     "firstWords": 1.64,
+     "firstSoundMade": 4.7,
+     "firstHeard": 4.74,
+     "error": null
+    }
+   ]
+  },
+  "after-free": {
+   "what": "after the free fixes: the first checked sentence sent early (--early), the voices prepared first (--prewarm); current voice",
+   "summary": {
+    "firstWords": {
+     "median": 1.63,
+     "slowest": 2.47,
+     "fastest": 1.22,
+     "n": 11
+    },
+    "firstSentence": {
+     "median": 1.63,
+     "slowest": 2.47,
+     "fastest": 1.22,
+     "n": 11
+    },
+    "firstSoundMade": {
+     "median": 5.75,
+     "slowest": 7.31,
+     "fastest": 4.12,
+     "n": 11
+    },
+    "firstHeard": {
+     "median": 5.78,
+     "slowest": 7.34,
+     "fastest": 4.16,
+     "n": 11
+    },
+    "replyWhole": {
+     "median": 2.35,
+     "slowest": 3.25,
+     "fastest": 1.83,
+     "n": 11
+    }
+   },
+   "lines": [
+    {
+     "who": "lena",
+     "say": "Evening. Anything going on round here?",
+     "firstWords": 2.06,
+     "firstSoundMade": 7.31,
+     "firstHeard": 7.34,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "You look like you've been stood there a while.",
+     "firstWords": 1.24,
+     "firstSoundMade": 5.29,
+     "firstHeard": 5.32,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "What are you selling today, then?",
+     "firstWords": 1.31,
+     "firstSoundMade": 6.93,
+     "firstHeard": 6.97,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "How long have you kept the books for Mickey?",
+     "firstWords": 1.72,
+     "firstSoundMade": 5.2,
+     "firstHeard": 5.24,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Did you hear the glass go last night?",
+     "firstWords": 1.22,
+     "firstSoundMade": 4.12,
+     "firstHeard": 4.16,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Who's the new owner, then?",
+     "firstWords": 1.23,
+     "firstSoundMade": 5.82,
+     "firstHeard": 5.85,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "Is it always this quiet on a Tuesday?",
+     "firstWords": 1.67,
+     "firstSoundMade": 4.24,
+     "firstHeard": 4.27,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Were you on the docks, before?",
+     "firstWords": 1.53,
+     "firstSoundMade": 4.93,
+     "firstHeard": 4.97,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Can you get me a pager?",
+     "firstWords": null,
+     "firstSoundMade": null,
+     "firstHeard": null,
+     "error": "no reply"
+    },
+    {
+     "who": "lena",
+     "say": "Do you know who broke the window?",
+     "firstWords": 2.16,
+     "firstSoundMade": 5.92,
+     "firstHeard": 5.96,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Cold one tonight, isn't it.",
+     "firstWords": 1.63,
+     "firstSoundMade": 5.75,
+     "firstHeard": 5.78,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Your mum know you're out?",
+     "firstWords": 2.47,
+     "firstSoundMade": 5.92,
+     "firstHeard": 5.95,
+     "error": null
+    }
+   ]
+  },
+  "after-pocket": {
+   "what": "with Pocket TTS on the processor instead (set aside: its voices failed the accent gate)",
+   "summary": {
+    "firstWords": {
+     "median": 1.37,
+     "slowest": 2.72,
+     "fastest": 1.23,
+     "n": 12
+    },
+    "firstSentence": {
+     "median": 1.37,
+     "slowest": 2.72,
+     "fastest": 1.23,
+     "n": 12
+    },
+    "firstSoundMade": {
+     "median": 1.52,
+     "slowest": 2.84,
+     "fastest": 1.37,
+     "n": 12
+    },
+    "firstHeard": {
+     "median": 1.55,
+     "slowest": 2.88,
+     "fastest": 1.4,
+     "n": 12
+    },
+    "firstPieceWhole": {
+     "median": 2.51,
+     "slowest": 3.77,
+     "fastest": 2.02,
+     "n": 12
+    },
+    "replyWhole": {
+     "median": 2.12,
+     "slowest": 3.43,
+     "fastest": 1.82,
+     "n": 12
+    }
+   },
+   "lines": [
+    {
+     "who": "lena",
+     "say": "Evening. Anything going on round here?",
+     "firstWords": 2.06,
+     "firstSoundMade": 2.22,
+     "firstHeard": 2.26,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "You look like you've been stood there a while.",
+     "firstWords": 1.33,
+     "firstSoundMade": 1.47,
+     "firstHeard": 1.51,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "What are you selling today, then?",
+     "firstWords": 1.34,
+     "firstSoundMade": 1.49,
+     "firstHeard": 1.53,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "How long have you kept the books for Mickey?",
+     "firstWords": 1.98,
+     "firstSoundMade": 2.12,
+     "firstHeard": 2.16,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Did you hear the glass go last night?",
+     "firstWords": 1.28,
+     "firstSoundMade": 1.42,
+     "firstHeard": 1.46,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Who's the new owner, then?",
+     "firstWords": 1.41,
+     "firstSoundMade": 1.56,
+     "firstHeard": 1.6,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "Is it always this quiet on a Tuesday?",
+     "firstWords": 1.74,
+     "firstSoundMade": 1.86,
+     "firstHeard": 1.89,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Were you on the docks, before?",
+     "firstWords": 1.38,
+     "firstSoundMade": 1.53,
+     "firstHeard": 1.56,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Can you get me a pager?",
+     "firstWords": 1.36,
+     "firstSoundMade": 1.5,
+     "firstHeard": 1.54,
+     "error": null
+    },
+    {
+     "who": "lena",
+     "say": "Do you know who broke the window?",
+     "firstWords": 2.72,
+     "firstSoundMade": 2.84,
+     "firstHeard": 2.88,
+     "error": null
+    },
+    {
+     "who": "rocco",
+     "say": "Cold one tonight, isn't it.",
+     "firstWords": 1.27,
+     "firstSoundMade": 1.42,
+     "firstHeard": 1.46,
+     "error": null
+    },
+    {
+     "who": "sam",
+     "say": "Your mum know you're out?",
+     "firstWords": 1.23,
+     "firstSoundMade": 1.37,
+     "firstHeard": 1.4,
+     "error": null
+    }
+   ]
+  },
+  "ingame-nano": {
+   "what": "in the game (-AskScript, the player's own path, 9 lines), current voice, with the free fixes",
+   "summary": {
+    "firstWords": {
+     "median": 1.43,
+     "slowest": 4.33
+    },
+    "firstHeard": {
+     "median": 5.35,
+     "slowest": 8.66
+    }
+   },
+   "lines": [
+    {
+     "who": "sam",
+     "firstWords": 1.78,
+     "firstHeard": 6.26
+    },
+    {
+     "who": "lena",
+     "firstWords": 4.33,
+     "firstHeard": 8.66
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.42,
+     "firstHeard": 4.05
+    },
+    {
+     "who": "sam",
+     "firstWords": 1.43,
+     "firstHeard": 5.58
+    },
+    {
+     "who": "lena",
+     "firstWords": 1.78,
+     "firstHeard": 5.02
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.35,
+     "firstHeard": 4.15
+    },
+    {
+     "who": "sam",
+     "firstWords": 1.31,
+     "firstHeard": 7.0
+    },
+    {
+     "who": "lena",
+     "firstWords": 1.92,
+     "firstHeard": 5.35
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.35,
+     "firstHeard": 4.65
+    }
+   ]
+  },
+  "ingame-pocket2": {
+   "what": "in the game, Pocket TTS on the processor (set aside by the gate)",
+   "summary": {
+    "firstWords": {
+     "median": 1.8,
+     "slowest": 2.69
+    },
+    "firstHeard": {
+     "median": 2.02,
+     "slowest": 2.89
+    }
+   },
+   "lines": [
+    {
+     "who": "sam",
+     "firstWords": 1.8,
+     "firstHeard": 2.02
+    },
+    {
+     "who": "lena",
+     "firstWords": 2.56,
+     "firstHeard": 2.81
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.35,
+     "firstHeard": 1.57
+    },
+    {
+     "who": "sam",
+     "firstWords": 2.04,
+     "firstHeard": 2.24
+    },
+    {
+     "who": "lena",
+     "firstWords": 1.92,
+     "firstHeard": 2.12
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.78,
+     "firstHeard": 1.97
+    },
+    {
+     "who": "sam",
+     "firstWords": 1.38,
+     "firstHeard": 1.59
+    },
+    {
+     "who": "lena",
+     "firstWords": 2.69,
+     "firstHeard": 2.89
+    },
+    {
+     "who": "rocco",
+     "firstWords": 1.52,
+     "firstHeard": 1.7
+    }
+   ]
+  }
+ }
+}

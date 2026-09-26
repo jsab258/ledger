@@ -1,0 +1,195 @@
+<title>Faces and a Quicker Voice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(26px,4vw,34px)/1 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.tally,.was,.cap{font:400 13px/1.4 var(--type);color:var(--muted)}
+.tally b{color:var(--ink)}
+section.person{display:grid;gap:22px;background:var(--surface);border:1px solid var(--rule);padding:22px}
+.capgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.capgrid img{width:100%;display:block;background:var(--chip)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.cand{display:grid;gap:8px;border:1px solid var(--rule);padding:10px;background:var(--ground)}
+.cand.picked{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--chip)}
+.speak{width:100%;aspect-ratio:4/3;background-color:var(--chip);background-repeat:no-repeat}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px/1 var(--display);letter-spacing:.04em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 12px;cursor:pointer;min-height:38px}
+button:hover{border-color:var(--ink)}
+button.playing{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+.take{font:700 20px/1 var(--display)}
+.acting{display:grid;gap:14px}
+.feel{display:grid;gap:8px;border-top:1px solid var(--rule);padding-top:12px}
+.feel .label{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.feel q{font-style:italic}
+textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · approval page · 26 September, for the weekend</div>
+    <h1>Three faces rebuilt to their sheets, and a quicker voice</h1>
+    <p class="how">Faces rebuilt from Epic's northern European presets to each casting sheet, five each, photographed in the street with a plain light on the face: the street's own daylight is what made faces read East Asian (see the summary). Only what passed my check and a blind reviewer's is here, which this time is one: Ron. Say whether he is Ron, or not, with a word.</p>
+    <p class="how">No voices this time. A new voice (Pocket, on the processor) brought the first sound down to 2.0 seconds in the game from 5.4, but its copies of all three voices drifted American or away from the voices you approved, twice each, so none reached you.</p>
+    <div class="tally" id="tally">Loading your earlier picks…</div>
+  </header>
+  <main class="wrap" id="people"></main>
+  <footer>Faces: Epic's MetaHuman, built on this PC from its presets (Ron: Bruce), in Epic's free plain clothes; the speaking face animated from his line's audio by Epic's MetaHuman Animator, in the voice you approved. Each candidate was checked against the casting sheet, its concept portrait and the 1990 research, then by a reviewer that did not see it made.</footer>
+</div>
+<script>
+const PEOPLE = [{"slug": "sheila-dunn", "name": "Sheila Dunn", "pron": "her", "audio": "", "candidates": [], "voices": [], "voiceNote": "", "faceNote": "No candidate passed, after two attempts. The reviewer found her faces still leaning East Asian from the front, green eyes where the sheet says grey-blue, full lips, and a modern crop where the sheet says a set. Set aside for now; the summary says what next.", "sheetLines": ["Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.", "Sit down, you're making the place look untidy. Now, what is it you think you want to know?", "I saw what I saw. Whether I tell anybody else is a different question, isn't it."]}, {"slug": "ron-kirby", "name": "Ron Kirby", "pron": "him", "audio": "line/ron-kirby.wav", "candidates": [{"take": "P2", "front": "cand/ron-kirby/P2-front.jpg", "profile": "cand/ron-kirby/P2-profile.jpg", "speak": {"file": "cand/ron-kirby/P2-speak.jpg", "frames": 85, "cols": 10, "rows": 9, "fps": 15}}], "voices": [], "voiceNote": "", "faceNote": "P2, built on Epic's preset Bruce: bald on top with grey sides, a full grey-brown moustache, broad and heavy. What is still off: his skin is paler than the sheet's ruddy and weathered, and some hair runs across the crown. Ron's other four failed my check or the reviewer's.", "sheetLines": ["Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.", "You want to stand there, son, you stand where I can see you. That's all I ask.", "Nobody's asked me yet. When they do, I'll tell them the truth, and I'll tell you first."]}, {"slug": "darren-milner", "name": "Darren Milner", "pron": "him", "audio": "", "candidates": [], "voices": [], "voiceNote": "", "faceNote": "No candidate passed, after two attempts: the bleached tips came out as a hard white dip-dye, no MetaHuman haircut is a man's perm, and the eyes are too green. Set aside for now.", "sheetLines": ["Alright? Darren. You'll have heard of me. No? You will, give it a week.", "Tell you what, I can get you anything, me. Radio, pager, a lift to Grimsby. Mates' rates.", "I never saw nothing. Well. I saw a bit. Depends who's asking, doesn't it, and what it's worth."]}];
+const state = {};
+let db = null, canWrite = true, audio = null, playing = null, raf = 0;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function stop(){ if (audio) audio.pause(); if (playing) playing.classList.remove("playing"); clearInterval(raf); audio = null; playing = null; }
+function play(src, btn, onFrame){
+  const same = playing === btn; stop(); if (same) return;
+  const a = new Audio(src); audio = a; playing = btn; btn.classList.add("playing");
+  a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
+  a.play().then(() => { if (onFrame) raf = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
+}
+function spriteBox(sp){
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking"});
+  box.style.backgroundImage = "url(" + sp.file + ")";
+  box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+  const show = i => {
+    i = Math.max(0, Math.min(sp.frames - 1, i));
+    const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    box.style.backgroundPosition = (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  };
+  show(0);
+  return {box, at: t => show(Math.floor(t * sp.fps))};
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { if (e && e.code === "invalid_argument") { canWrite = false; render(); } });
+}
+function picks(key, options, cur){
+  const row = el("div", {class:"row"});
+  for (const [v, t] of options) {
+    const id = "pick-" + key + "-" + v;
+    const r = el("input", {type:"radio", name:"pick-" + key, id, value:v});
+    if (cur === v) r.checked = true;
+    r.addEventListener("change", () => save(key, {pick:v}));
+    row.append(el("label", {class:"pick", for:id}, r, document.createTextNode(t)));
+  }
+  return row;
+}
+function note(key, st){
+  const t = el("textarea", {placeholder:"What is right or wrong, in a few words (optional)"});
+  t.value = st.note || "";
+  t.addEventListener("change", () => save(key, {note:t.value}));
+  return t;
+}
+function render(){
+  const root = document.getElementById("people");
+  root.replaceChildren();
+  let judged = 0, total = 0;
+  for (const p of PEOPLE) {
+    const sec = el("section", {class:"person", id:p.slug});
+    sec.append(el("div", {}, el("h2", {text:p.name})));
+    if (p.candidates.length) {
+      const fk = "face-" + p.slug, fs = state[fk] || {};
+      total++; if (fs.pick) judged++;
+      const grid = el("div", {class:"cands"});
+      for (const c of p.candidates.concat([{take:"none"}])) {
+        const box = el("div", {class:"cand" + (fs.pick === c.take ? " picked" : "")});
+        if (c.take !== "none") {
+          box.append(el("div", {class:"take", text:c.take}));
+          box.append(el("div", {class:"pair"},
+            c.front ? el("img", {src:c.front, alt:p.name + " " + c.take + ", front", loading:"lazy"}) : el("div", {class:"speak"}),
+            c.profile ? el("img", {src:c.profile, alt:p.name + " " + c.take + ", profile", loading:"lazy"}) : el("div", {class:"speak"})));
+          if (c.speak && p.audio) {
+            const s = spriteBox(c.speak);
+            const b = el("button", {type:"button", text:"Play the line"});
+            b.addEventListener("click", () => play(p.audio, b, s.at));
+            box.append(s.box, el("div", {class:"row"}, b));
+          }
+        } else {
+          box.append(el("div", {class:"take", text:"None of these"}));
+        }
+        const id = "pick-" + fk + "-" + c.take;
+        const radio = el("input", {type:"radio", name:"pick-" + fk, id, value:c.take});
+        if (fs.pick === c.take) radio.checked = true;
+        radio.addEventListener("change", () => save(fk, {pick:c.take}));
+        box.append(el("label", {class:"pick", for:id}, radio, document.createTextNode(c.take === "none" ? "None is " + p.pron : "This is " + p.pron)));
+        grid.append(box);
+      }
+      sec.append(el("h3", {text:"Faces"}));
+      if (p.faceNote) sec.append(el("p", {class:"was", text:p.faceNote}));
+      sec.append(grid, note(fk, fs), el("span", {class:"saved", text: fs.at ? "Saved " + new Date(fs.at).toLocaleString() : ""}));
+    } else if (p.faceNote) {
+      sec.append(el("h3", {text:"Faces"}), el("p", {class:"was", text:p.faceNote}));
+    }
+    const ac = el("div", {class:"acting"});
+    if (p.voices.length || p.voiceNote) ac.append(el("h3", {text:"Voices"}));
+    if (p.voiceNote) ac.append(el("p", {class:"was", text:p.voiceNote}));
+    if (p.voices.length) {
+      const vk = "voice-" + p.slug, vs = state[vk] || {};
+      total++; if (vs.pick) judged++;
+      for (const v of p.voices) {
+        const row = el("div", {class:"row"});
+        v.lines.forEach((ln, i) => {
+          const b = el("button", {type:"button", text:"Line " + (i + 1)});
+          b.addEventListener("click", () => play(ln.src, b));
+          row.append(b);
+        });
+        ac.append(el("div", {class:"feel"}, el("div", {class:"label", text:"Voice " + v.letter}), el("div", {class:"was", text:v.delay}), row));
+      }
+      const lines = el("div", {class:"was"});
+      p.voices[0].lines.forEach((ln, i) => lines.append(el("div", {text:(i + 1) + ". “" + ln.text + "”"})));
+      ac.append(lines, picks(vk, p.voices.map(v => [v.letter, "Voice " + v.letter + " is " + p.pron]).concat([["none", "Neither"]]), vs.pick), note(vk, vs));
+    }
+    sec.append(ac);
+    root.append(sec);
+  }
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + total + "</b> picked" + (db ? "" : " · picks are not being stored on this view");
+}
+render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const p of PEOPLE) for (const k of ["face-" + p.slug, "voice-" + p.slug]) {
+    try { const s = await db.doc("verdicts/" + k).get(); if (s.exists) state[k] = Object.assign({}, s.data()); } catch (e) {}
+  }
+  render();
+})();
+</script>

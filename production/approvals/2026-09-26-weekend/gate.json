@@ -1,0 +1,76 @@
+{
+ "what": "What passed the gate for the 26 September weekend page (CLAUDE.md: my own check against the references, then a reviewer that did not see it made; only what passes both reaches him).",
+ "faces": {
+  "sheila-dunn": {
+   "passed": [],
+   "mine": {
+    "pass": [
+     "P1",
+     "P2",
+     "P3"
+    ],
+    "fail": {
+     "P4": "reads about thirty, not 53 (the young skin set)",
+     "P5": "reads about thirty, not 53"
+    }
+   },
+   "reviewer": {
+    "P1": "FAIL: from the front can read East Asian or Eurasian (broad flat midface, narrow hooded eyes, no crease); green eyes; full glossy lips; a modern textured crop, not a set",
+    "P2": "FAIL: least Asian, but the same green eyes, full lips and modern hair, and nearer 45 than 53",
+    "P3": "FAIL: nearly the same image as P1"
+   },
+   "note": "No candidate passed, after two attempts. The reviewer found her faces still leaning East Asian from the front, green eyes where the sheet says grey-blue, full lips, and a modern crop where the sheet says a set. Set aside for now; the summary says what next."
+  },
+  "ron-kirby": {
+   "passed": [
+    "P2"
+   ],
+   "mine": {
+    "pass": [
+     "P1",
+     "P2"
+    ],
+    "fail": {
+     "P3": "no grey fringe at the sides",
+     "P4": "reads about 45, hair on top",
+     "P5": "no grey fringe; thin moustache"
+    }
+   },
+   "reviewer": {
+    "P1": "FAIL: long narrow face, olive cast, hooked nose read Mediterranean; slight, not heavy-set",
+    "P2": "PASS narrowly: a white English man of about 58 to 62, broad and heavy-set, full grey-brown moustache; paler than ruddy, and some hair across the crown"
+   },
+   "note": "P2, built on Epic's preset Bruce: bald on top with grey sides, a full grey-brown moustache, broad and heavy. What is still off: his skin is paler than the sheet's ruddy and weathered, and some hair runs across the crown. Ron's other four failed my check or the reviewer's."
+  },
+  "darren-milner": {
+   "passed": [],
+   "mine": {
+    "pass": [
+     "P1",
+     "P4"
+    ],
+    "fail": {
+     "P2": "frosted spikes: late 1990s",
+     "P3": "as P1, a near copy",
+     "P5": "frosted spikes: late 1990s"
+    }
+   },
+   "reviewer": {
+    "P1": "FAIL: a hard pure-white dip-dye (2010s), no perm; eyes an unnatural yellow-green",
+    "P4": "FAIL: the same dip-dye; eyes more saturated with red rims; reads about 30"
+   },
+   "note": "No candidate passed, after two attempts: the bleached tips came out as a hard white dip-dye, no MetaHuman haircut is a man's perm, and the eyes are too green. Set aside for now."
+  }
+ },
+ "voices": {},
+ "voicesSetAside": {
+  "engine": "Pocket TTS (Kyutai) on the processor, cloned from each character's game clip",
+  "why": "Darren: American in both attempts (my accent check). Sheila and Ron: parts of lines American and a different-sounding person in both attempts (the blind reviewer's windowed accent, word and likeness checks, then mine on the second). Not put before him.",
+  "evidence": "F:/LedgerTools/review-voice-2026-09-26 (reviewer), F:/LedgerTools/selfcheck-voice-2026-09-26 (mine)"
+ },
+ "page": {
+  "how_faces": "Faces rebuilt from Epic's northern European presets to each casting sheet, five each, photographed in the street with a plain light on the face: the street's own daylight is what made faces read East Asian (see the summary). Only what passed my check and a blind reviewer's is here, which this time is one: Ron. Say whether he is Ron, or not, with a word.",
+  "how_voices": "No voices this time. A new voice (Pocket, on the processor) brought the first sound down to 2.0 seconds in the game from 5.4, but its copies of all three voices drifted American or away from the voices you approved, twice each, so none reached you.",
+  "foot": "Faces: Epic's MetaHuman, built on this PC from its presets (Ron: Bruce), in Epic's free plain clothes; the speaking face animated from his line's audio by Epic's MetaHuman Animator, in the voice you approved. Each candidate was checked against the casting sheet, its concept portrait and the 1990 research, then by a reviewer that did not see it made."
+ }
+}
