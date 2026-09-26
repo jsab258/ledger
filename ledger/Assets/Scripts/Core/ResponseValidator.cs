@@ -106,6 +106,10 @@ namespace Ledger.Core
                 : reply.Substring(0, MaxChars - 1).TrimEnd() + "…";
         }
 
+        /// Whether Validate put its in-character deflection in place of a reply
+        /// (TalkHelper's early first sentence is not spoken if so).
+        public static bool IsDeflection(string reply, string characterName) => reply == Deflect(characterName);
+
         static string Deflect(string characterName) =>
             $"({characterName} looks at you a moment, seems to lose the thread, then changes the subject.)";
 

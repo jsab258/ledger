@@ -2414,6 +2414,8 @@ namespace
 		std::string PendingCard;
 		AActor* PendingBody = nullptr;
 		double AskedAt = 0.0;
+		bool bFirstSaid = false;   // the answer's first sentence came early and is being spoken
+		double FirstAt = 0.0;      // when the answer's first words arrived (-AskScript's measure)
 	};
 	FLiveHelper GLive;
 
@@ -2423,7 +2425,11 @@ namespace
 		FString Exe;
 		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty()) { return; }
 		if (!FPlatformProcess::CreatePipe(GLive.OutRead, GLive.OutWrite) || !FPlatformProcess::CreatePipe(GLive.InRead, GLive.InWrite, true)) { return; }
-		GLive.Proc = FPlatformProcess::CreateProc(*Exe, FParse::Param(FCommandLine::Get(), TEXT("TalkFake")) ? TEXT("--fake") : TEXT(""),
+		// --early (26 September; Jafar: about six seconds passed between his line
+		// and the character speaking): the helper sends the answer's first
+		// sentence the moment it is written and has passed its own check for
+		// invented details, and the rest after; LiveHelperPump speaks each.
+		GLive.Proc = FPlatformProcess::CreateProc(*Exe, FParse::Param(FCommandLine::Get(), TEXT("TalkFake")) ? TEXT("--fake --early") : TEXT("--early"),
 			false, true, true, nullptr, 0, nullptr, GLive.OutWrite, GLive.InRead);
 		GLive.bStarted = GLive.Proc.IsValid();
 	}
@@ -2443,13 +2449,23 @@ namespace
 		// SENTENCE BY SENTENCE: each piece is queued as it arrives and played
 		// when the one before it has finished, so the first sentence is heard
 		// while the rest are still being made.
-		TArray<TPair<FString, TWeakObjectPtr<AActor>>> Queue;
+		// A PIECE THAT CONTINUES THE ONE BEFORE ("joined", 26 September): a voice
+		// that streams (tools/voice-live/pocket-server.py) sends a sentence in
+		// pieces as its sound is made; each is added to the sound already
+		// playing, with no gap, and the usual pause is left only between
+		// sentences.
+		struct FPiece { FString Wav; TWeakObjectPtr<AActor> Who; bool bJoined = false; };
+		TArray<FPiece> Queue;
 		double BusyUntil = 0.0;
 		bool bLastIn = false;
+		TWeakObjectPtr<UAudioComponent> Playing;
+		TWeakObjectPtr<USoundWaveProcedural> PlayingWave;
+		double PlayingEnd = 0.0;
 	};
 	FLiveVoice GVoice;
 	bool bVoiceAsked = false, bVoicePlayed = false, bVoiceRecording = false, bVoiceAllIn = false;
 	double GVoiceSeconds = 0.0, GVoiceAskedAt = 0.0, GVoicePlayedAt = 0.0;
+	double GVoiceStartedAt = 0.0;   // when the latest sentence's sound began to play
 
 	void LiveVoiceStart()
 	{
@@ -2458,18 +2474,17 @@ namespace
 		if (!FParse::Value(FCommandLine::Get(), TEXT("VoicePython="), Py) || !FParse::Value(FCommandLine::Get(), TEXT("VoiceScript="), Script)) { return; }
 		GVoice.bStarted = true;   // one try, whatever happens
 		if (!FPlatformProcess::CreatePipe(GVoice.OutRead, GVoice.OutWrite) || !FPlatformProcess::CreatePipe(GVoice.InRead, GVoice.InWrite, true)) { return; }
-		GVoice.Proc = FPlatformProcess::CreateProc(*Py, *FString::Printf(TEXT("\"%s\""), *Script), false, true, true,
+		// --prewarm: the cast voices are learned and run once before the server
+		// says it is ready, not on the first line said to each (26 September).
+		GVoice.Proc = FPlatformProcess::CreateProc(*Py, *FString::Printf(TEXT("\"%s\" --prewarm"), *Script), false, true, true,
 			nullptr, 0, nullptr, GVoice.OutWrite, GVoice.InRead);
 	}
 
-	// A WAV THE SERVER WROTE (16-bit PCM, soundfile's own header), played as a
-	// procedural wave at the speaker, with the shout's falloff.
-	double PlayVoiceFile(const FString& Path, AActor* Who)
+	// The sound in a WAV the server wrote (16-bit PCM, soundfile's own header).
+	bool ReadVoiceWav(const FString& Path, TArray<uint8>& Bytes, int32& Rate, int32& Channels, int32& DataAt, int32& DataLen)
 	{
-		UWorld* World = GameWorld();
-		TArray<uint8> Bytes;
-		if (World == nullptr || Who == nullptr || !FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 44) { return 0.0; }
-		int32 Rate = 24000, Channels = 1, DataAt = -1, DataLen = 0;
+		Rate = 24000; Channels = 1; DataAt = -1; DataLen = 0;
+		if (!FFileHelper::LoadFileToArray(Bytes, *Path) || Bytes.Num() < 44) { return false; }
 		for (int32 I = 12; I + 8 <= Bytes.Num();)
 		{
 			const int32 Len = Bytes[I + 4] | (Bytes[I + 5] << 8) | (Bytes[I + 6] << 16) | (Bytes[I + 7] << 24);
@@ -2481,20 +2496,47 @@ namespace
 			if (FMemory::Memcmp(&Bytes[I], "data", 4) == 0) { DataAt = I + 8; DataLen = FMath::Min(Len, Bytes.Num() - DataAt); break; }
 			I += 8 + Len + (Len & 1);
 		}
-		if (DataAt < 0 || DataLen <= 0) { return 0.0; }
+		return DataAt >= 0 && DataLen > 0;
+	}
+
+	// A PIECE THAT CONTINUES the sound still playing: its sound is added to the
+	// same wave, so there is no gap. Its length, or 0 if nothing is playing.
+	double ContinueVoiceFile(const FString& Path)
+	{
+		TArray<uint8> Bytes;
+		int32 Rate, Channels, DataAt, DataLen;
+		if (!GVoice.PlayingWave.IsValid() || !GVoice.Playing.IsValid() || !ReadVoiceWav(Path, Bytes, Rate, Channels, DataAt, DataLen)) { return 0.0; }
+		GVoice.PlayingWave->QueueAudio(&Bytes[DataAt], DataLen);
+		const double Len = (double)DataLen / (double)(2 * Channels * Rate);
+		GVoiceSeconds += Len;
+		return Len;
+	}
+
+	// A WAV THE SERVER WROTE, played as a procedural wave at the speaker, with
+	// the shout's falloff. The wave plays until LiveVoicePump stops it at the
+	// end of its sound, so a streaming voice's later pieces can be added to it.
+	double PlayVoiceFile(const FString& Path, AActor* Who)
+	{
+		UWorld* World = GameWorld();
+		TArray<uint8> Bytes;
+		int32 Rate, Channels, DataAt, DataLen;
+		if (World == nullptr || Who == nullptr || !ReadVoiceWav(Path, Bytes, Rate, Channels, DataAt, DataLen)) { return 0.0; }
 		USoundWaveProcedural* W = NewObject<USoundWaveProcedural>(GetTransientPackage());
 		W->SetSampleRate(Rate);
 		W->NumChannels = Channels;
-		W->Duration = (float)DataLen / (float)(2 * Channels * Rate);
+		W->Duration = INDEFINITELY_LOOPING_DURATION;
 		W->bLooping = false;
+		const float Seconds = (float)DataLen / (float)(2 * Channels * Rate);
 		W->QueueAudio(&Bytes[DataAt], DataLen);
 		USoundAttenuation* Att = NewObject<USoundAttenuation>(GetTransientPackage());
 		Att->Attenuation.bAttenuate = true;
 		Att->Attenuation.bSpatialize = true;
 		Att->Attenuation.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
 		Att->Attenuation.FalloffDistance = 2500.0f;
-		UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
+		GVoice.Playing = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
+		GVoice.PlayingWave = W;
+		GVoiceStartedAt = FPlatformTime::Seconds();
 		if (!bVoicePlayed)
 		{
 			GVoicePlayedAt = FPlatformTime::Seconds();
@@ -2507,8 +2549,8 @@ namespace
 			}
 		}
 		bVoicePlayed = true;
-		GVoiceSeconds += W->Duration;
-		return W->Duration;
+		GVoiceSeconds += Seconds;
+		return Seconds;
 	}
 
 	std::string JsonField(const std::string& Line, const std::string& Name);
@@ -2529,17 +2571,41 @@ namespace
 			TWeakObjectPtr<AActor>* Who = GVoice.Pending.Find(Id);
 			const std::string Wav = JsonField(L, "wav");
 			const bool bLast = L.find("\"last\":true") != std::string::npos || L.find("\"error\"") != std::string::npos;
-			if (Who != nullptr && Wav != "none") { GVoice.Queue.Add(TPair<FString, TWeakObjectPtr<AActor>>(Un(Wav), *Who)); }
+			if (Who != nullptr && Wav != "none")
+			{
+				FLiveVoice::FPiece Piece;
+				Piece.Wav = Un(Wav);
+				Piece.Who = *Who;
+				Piece.bJoined = L.find("\"joined\":true") != std::string::npos;
+				GVoice.Queue.Add(Piece);
+			}
 			if (bLast) { GVoice.Pending.Remove(Id); bVoiceAllIn = true; }
 		}
 		const double Now = FPlatformTime::Seconds();
+		// A continuing piece goes straight onto the sound still playing.
+		while (GVoice.Queue.Num() > 0 && GVoice.Queue[0].bJoined && GVoice.Playing.IsValid())
+		{
+			const double Len = ContinueVoiceFile(GVoice.Queue[0].Wav);
+			GVoice.Queue.RemoveAt(0);
+			GVoice.PlayingEnd = FMath::Max(GVoice.PlayingEnd, Now) + Len;
+			GVoice.BusyUntil = GVoice.PlayingEnd + 0.15;
+		}
+		// The wave ends when its sound has; a streaming one gets a moment's grace for its next piece.
+		if (GVoice.Playing.IsValid() && Now > GVoice.PlayingEnd + 0.12)
+		{
+			GVoice.Playing->Stop();
+			GVoice.Playing = nullptr;
+			GVoice.PlayingWave = nullptr;
+		}
 		if (GVoice.Queue.Num() > 0 && Now >= GVoice.BusyUntil)
 		{
-			TPair<FString, TWeakObjectPtr<AActor>> Next = GVoice.Queue[0];
+			FLiveVoice::FPiece Next = GVoice.Queue[0];
 			GVoice.Queue.RemoveAt(0);
-			if (Next.Value.IsValid())
+			if (Next.Who.IsValid())
 			{
-				const double Len = PlayVoiceFile(Next.Key, Next.Value.Get());
+				if (GVoice.Playing.IsValid()) { GVoice.Playing->Stop(); }
+				const double Len = PlayVoiceFile(Next.Wav, Next.Who.Get());
+				GVoice.PlayingEnd = Now + Len;
 				GVoice.BusyUntil = Now + Len + 0.15;
 			}
 		}
@@ -2607,17 +2673,42 @@ namespace
 			if (L.find("\"ready\"") != std::string::npos) { GLive.bReady = true; continue; }
 			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
 			{
+				// THE FIRST SENTENCE, EARLY: said and spoken at once; the answer's
+				// line that follows carries only what is left to say ("rest").
+				if (GLive.FirstAt < GLive.AskedAt) { GLive.FirstAt = FPlatformTime::Seconds(); }
+				const std::string First = JsonField(L, "first");
+				if (First != "none")
+				{
+					Say(GLive.PendingName + TEXT(": ") + Un(First), 20.0f, FColor::White);
+					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, First, GVisualFor(GLive.PendingBody));
+					GLive.bFirstSaid = true;
+					continue;
+				}
 				const std::string Reply = JsonField(L, "reply");
-				Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
-				LiveVoiceSay(GLive.PendingId, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody));
+				if (GLive.bFirstSaid)
+				{
+					const std::string Rest = JsonField(L, "rest");
+					if (Rest != "none" && !Rest.empty())
+					{
+						Say(GLive.PendingName + TEXT(": ") + Un(Rest), 20.0f, FColor::White);
+						LiveVoiceSay(GLive.PendingId * 10 + 1, GLive.PendingCard, Rest, GVisualFor(GLive.PendingBody));
+					}
+				}
+				else
+				{
+					Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
+					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody));
+				}
 				GLive.PendingId = 0;
+				GLive.bFirstSaid = false;
 				if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 			}
 		}
 		if (GLive.PendingId != 0 && FPlatformTime::Seconds() - GLive.AskedAt > 30.0)
 		{
-			Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White);
+			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
 			GLive.PendingId = 0;
+			GLive.bFirstSaid = false;
 		}
 	}
 
@@ -2682,6 +2773,68 @@ namespace
 
 	void RunTalk();
 
+	// THE DELAY, MEASURED IN THE GAME ITSELF (-AskScript=N, 26 September; Jafar:
+	// "measure the path ... with the game running"). N lines are asked in turn
+	// of Darren, Sheila and Ron down the player's own path (LiveAsk, the
+	// helper's early first sentence, the voice beside the game), each once the
+	// last has been heard out; for each, the seconds from the line sent to the
+	// answer's first words and to its first sound playing are written to
+	// ask-script.json in the game's log folder, and the game then closes.
+	struct FAskScript { int32 Left = 0, N = 0; bool bWaiting = false; double SentAt = 0.0, HeardAt = 0.0; FString Rows; };
+	FAskScript GAsk;
+
+	void AskScriptTick(double Now)
+	{
+		if (GAsk.N == 0)
+		{
+			int32 N = 0;
+			if (!FParse::Value(FCommandLine::Get(), TEXT("AskScript="), N) || N <= 0) { GAsk.N = -1; return; }
+			GAsk.N = N;
+			GAsk.Left = N;
+		}
+		if (GAsk.N < 0) { return; }
+		static const char* Lines[] = { "What are you selling today, then?", "Evening. Anything going on round here?",
+			"You look like you've been stood there a while.", "Who's the new owner, then?", "Is it always this quiet?",
+			"Did you hear the glass go last night?" };
+		struct Who { AActor* Body; GossiperPtr G; const char* Card; const char* Id; const TCHAR* Name; int Rung; };
+		const Who People[3] = {
+			{ GN2Body, GN2, "sam", "n2", TEXT("Darren"), -1 },
+			{ GW1Body, GW1, "lena", "w1", TEXT("Sheila"), GW1RungA },
+			{ GR3Body, GR3, "rocco", LedgerCrime::kR3Id, TEXT("Ron"), -1 } };
+		const bool bVoiceIdle = GVoice.Queue.Num() == 0 && GVoice.Pending.Num() == 0 && Now > GVoice.BusyUntil + 1.0;
+		if (GAsk.bWaiting)
+		{
+			if (GAsk.HeardAt == 0.0 && GVoiceStartedAt > GAsk.SentAt) { GAsk.HeardAt = GVoiceStartedAt; }
+			const bool bDone = GLive.PendingId == 0 && GAsk.HeardAt > 0.0 && bVoiceIdle;
+			if (!bDone && Now - GAsk.SentAt < 45.0) { return; }
+			const int32 I = GAsk.N - GAsk.Left;
+			GAsk.Rows += FString::Printf(TEXT("%s{\"who\":\"%s\",\"firstWords\":%.2f,\"firstHeard\":%s}"), GAsk.Rows.IsEmpty() ? TEXT("") : TEXT(","),
+				UTF8_TO_TCHAR(People[I % 3].Card), GLive.FirstAt > GAsk.SentAt ? GLive.FirstAt - GAsk.SentAt : -1.0,
+				GAsk.HeardAt > 0.0 ? *FString::Printf(TEXT("%.2f"), GAsk.HeardAt - GAsk.SentAt) : TEXT("null"));
+			UE_LOG(LogTemp, Display, TEXT("LedgerAskScript: line %d to %s: first words %.2f s, first sound %.2f s"), I + 1,
+				UTF8_TO_TCHAR(People[I % 3].Card), GLive.FirstAt - GAsk.SentAt, GAsk.HeardAt > 0.0 ? GAsk.HeardAt - GAsk.SentAt : -1.0);
+			GAsk.bWaiting = false;
+			--GAsk.Left;
+			if (GAsk.Left <= 0)
+			{
+				FFileHelper::SaveStringToFile(TEXT("{\"lines\":[") + GAsk.Rows + TEXT("]}"), *(FPaths::ProjectLogDir() / TEXT("ask-script.json")));
+				FPlatformMisc::RequestExit(false);
+			}
+			return;
+		}
+		if (!GLive.bReady || GLive.PendingId != 0 || (GVoice.bStarted && !GVoice.bReady) || !bVoiceIdle) { return; }
+		const int32 I = GAsk.N - GAsk.Left;
+		const Who& P = People[I % 3];
+		if (P.Body == nullptr || !P.G) { return; }
+		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Lines[I % 6]))
+		{
+			GLive.PendingBody = P.Body;
+			GAsk.SentAt = GLive.AskedAt;
+			GAsk.HeardAt = 0.0;
+			GAsk.bWaiting = true;
+		}
+	}
+
 	// THE PLAYER TALKS AT ANY POINT OF THE STORY, 24 September: before the
 	// window, to people who know nothing yet; after it, to people who might.
 	// Returns true while the typed line is open, when the rest of the phase
@@ -2692,6 +2845,7 @@ namespace
 		LiveHelperPump();
 		LiveVoiceStart();
 		LiveVoicePump();
+		AskScriptTick(Now);
 		if (bSayOpen)
 		{
 			// THE T THAT OPENED THE LINE is not the first letter of it.

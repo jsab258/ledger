@@ -208,6 +208,56 @@ namespace Ledger.Core
         /// id would otherwise switch the guard off and look like a quiet town.
         public bool LastUnchecked { get; private set; }
 
+        /// A LINE ALREADY SAID when its turn could not finish (26 September): the
+        /// first sentence was heard, then the rest ran out of time or failed.
+        /// The turn was rolled back, so it is kept here as said, the same way a
+        /// finished turn is, or the character would forget words the player heard.
+        public void RememberSaid(string playerInput, string said, GameTime now)
+        {
+            _transcript.Add(new LlmMessage("user", playerInput));
+            _transcript.Add(new LlmMessage("assistant", said));
+            TrimTranscript();
+            Memory.Append(new MemoryEvent(now, "conversation", EstimateImportance(playerInput),
+                ClaimCheck.PlayerSaid + $"\"{Truncate(playerInput, 200)}\""));
+            Memory.Append(new MemoryEvent(now, "conversation", 0.3,
+                ClaimCheck.IReplied + $"\"{Truncate(said, 200)}\""));
+        }
+
+        /// WHAT WAS HEARD, when it is not what the turn kept (26 September, the
+        /// independent check): the caller spoke the early first sentence and
+        /// then less than the whole reply (the rest refused by the content rule
+        /// or cut), so the kept reply is put right to what the player heard.
+        public void CorrectLastSaid(string heard)
+        {
+            if (string.IsNullOrEmpty(heard)) return;
+            for (int i = _transcript.Count - 1; i >= 0; i--)
+            {
+                if (_transcript[i].Role != "assistant") continue;
+                _transcript[i] = new LlmMessage("assistant", heard);
+                break;
+            }
+            Memory.CorrectLast(ClaimCheck.IReplied, ClaimCheck.IReplied + $"\"{Truncate(heard, 200)}\"");
+        }
+
+        /// The first sentence's own check: as InventedAsync, but it leaves
+        /// LastUnchecked to the whole reply's check, which runs after it, and
+        /// hands its cost back to be kept on the turn's own thread (it runs on
+        /// a pool thread, and the cost tracker is not thread-safe).
+        async Task<(IReadOnlyList<string> found, LlmResponse cost)> FirstInventedAsync(string known, string line, CancellationToken ct)
+        {
+            try
+            {
+                var r = await Checker.CompleteAsync(ClaimCheck.Request(CheckerModel, known, line), ct).ConfigureAwait(false);
+                var found = ClaimCheck.Parse(r.Text);
+                // Out of shape is not a pass here: the first sentence waits for the whole check.
+                return (found ?? new List<string> { "(unchecked)" }, r);
+            }
+            catch (Exception) when (!ct.IsCancellationRequested)
+            {
+                return (new List<string> { "(unchecked)" }, null);
+            }
+        }
+
         async Task<IReadOnlyList<string>> InventedAsync(string known, string line, CancellationToken ct)
         {
             try
@@ -224,12 +274,105 @@ namespace Ledger.Core
             return new List<string>();
         }
 
+        /// THE FIRST SENTENCE, EARLY, 26 September (Jafar: six seconds from his
+        /// line to the character speaking; the target is under two). With a
+        /// streaming client and onFirstChecked set, the reply is read as it is
+        /// written; its first sentence is checked on its own for anything the
+        /// character could not know, the moment it is complete, and handed to
+        /// onFirstChecked if it passes, so the voice can start on it while the
+        /// rest is written and checked. Nothing that failed the claim check is
+        /// handed over; the content rule is the caller's (TalkHelper runs
+        /// ResponseValidator on the sentence, and answers false to refuse it,
+        /// when the turn goes on as if nothing had been said early).
+        /// If the rest then fails its check, the reply is that first sentence
+        /// alone: it has been heard, and a second draft would contradict it.
+        /// FirstSentence: the text up to its first full stop, question or
+        /// exclamation mark that is followed by more text, outside any quotation
+        /// or brackets and not after a title, initial or "No." before a number
+        /// (TextShape's own list); null while there is none.
+        public static string FirstSentence(string text)
+        {
+            // A tag may open a block of the model's own reasoning, which is never
+            // said: such a reply waits to be cleaned whole.
+            if (string.IsNullOrEmpty(text) || text.IndexOf('<') >= 0) return null;
+            int depth = 0;
+            bool quoted = false, single = false;
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                if (c == '(' || c == '[') { depth++; continue; }
+                if ((c == ')' || c == ']') && depth > 0) { depth--; continue; }
+                if (c == '"') { quoted = !quoted; continue; }
+                if (c == '\u201c') { quoted = true; continue; }
+                if (c == '\u201d') { quoted = false; continue; }
+                // A British single quotation: opened where a word could start, closed
+                // where one ends; an apostrophe inside a word (can't) is neither.
+                if (c == '\'' || c == '\u2018' || c == '\u2019')
+                {
+                    bool before = i > 0 && !char.IsWhiteSpace(text[i - 1]) && text[i - 1] != '(';
+                    bool after = i + 1 < text.Length && !char.IsWhiteSpace(text[i + 1]);
+                    if (!single && !before && after && c != '\u2019' && !Elided(text, i + 1)) single = true;
+                    else if (single && before && (!after || char.IsPunctuation(text[i + 1]))) single = false;
+                    continue;
+                }
+                if (depth > 0 || quoted || single || (c != '.' && c != '!' && c != '?')) continue;
+                int end = i;
+                while (end + 1 < text.Length && (text[end + 1] == '.' || text[end + 1] == '!' || text[end + 1] == '?')) end++;
+                int next = end + 1;
+                if (next >= text.Length || !char.IsWhiteSpace(text[next])) { i = end; continue; }
+                while (next < text.Length && char.IsWhiteSpace(text[next])) next++;
+                if (next >= text.Length) return null;          // nothing after it yet
+                if (c == '.' && end == i && Abbreviated(text, i) && !(IsNo(text, i) && !char.IsDigit(text[next]))) { i = end; continue; }
+                var first = text.Substring(0, end + 1).Trim();
+                bool words = false;
+                foreach (var ch in first) if (char.IsLetterOrDigit(ch)) { words = true; break; }
+                if (!words) { i = end; continue; }             // "..." is not a sentence
+                return first;
+            }
+            return null;
+        }
+
+        // A full stop after a title, initial or abbreviation (TextShape's list and
+        // these), and not after a contraction ("I can't." ends a sentence).
+        static readonly string[] MoreTitles = { "Capt", "Supt", "Fr", "Cllr", "Co", "Col", "Gen", "Lt", "Maj", "Sr", "Jr", "Mt", "Ltd", "Bros", "Revd", "Det", "Con", "Sgts", "Hon" };
+
+        static bool Abbreviated(string text, int dot)
+        {
+            int start = dot;
+            while (start > 0 && char.IsLetter(text[start - 1])) start--;
+            if (start > 0 && (text[start - 1] == '\'' || text[start - 1] == '’')) return false;
+            var word = text.Substring(start, dot - start);
+            foreach (var t in MoreTitles) if (word == t) return true;
+            return TextShape.EndsWithAbbreviation(text, dot);
+        }
+
+        // A word with its first letters dropped ('em, 'im, 'course): an apostrophe, not a quotation.
+        static readonly string[] Elisions = { "em", "im", "is", "er", "e", "ere", "ave", "ad", "ow", "ouse", "alf", "ome", "eard",
+                                              "course", "cause", "til", "appen", "ello", "ang", "n", "twas", "tis" };
+
+        static bool Elided(string text, int at)
+        {
+            int end = at;
+            while (end < text.Length && char.IsLetter(text[end])) end++;
+            var word = text.Substring(at, end - at).ToLowerInvariant();
+            foreach (var e in Elisions) if (word == e) return true;
+            return false;
+        }
+
+        // "No." ends a sentence ("No. I never saw him."), except before a number ("No. 12").
+        static bool IsNo(string text, int dot) =>
+            dot >= 2 && (text.Substring(dot - 2, 2) == "No" || text.Substring(dot - 2, 2) == "no")
+            && (dot == 2 || !char.IsLetter(text[dot - 3]));
+
         public async Task<string> SayToAsync(string playerInput, GameTime now,
-            string sceneContext = "", CancellationToken ct = default)
+            string sceneContext = "", CancellationToken ct = default, Func<string, Task<bool>> onFirstChecked = null)
         {
             var system = BuildSystemPrompt(playerInput, now, sceneContext);
 
-            _transcript.Add(new LlmMessage("user", playerInput));
+            // THIS TURN'S OWN LINE, so a rollback removes it and nothing else (the
+            // independent check: a turn unwinding late removed the next turn's line).
+            var mine = new LlmMessage("user", playerInput);
+            _transcript.Add(mine);
             TrimTranscript();
 
             var request = new LlmRequest
@@ -247,19 +390,94 @@ namespace Ledger.Core
             // the same single thread in the harness — so those mutations never race a
             // reader. The network hop's own ConfigureAwait(false) stays inside the client.
             LlmResponse response;
+            // WHAT THE CHARACTER KNOWS, worked out before the reply when the first
+            // sentence is to be checked as soon as it is written.
+            var streaming = onFirstChecked != null && Checker != null ? _llm as IStreamingLlmClient : null;
+            string knownEarly = null;
+            if (streaming != null)
+            {
+                var whyEarly = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
+                knownEarly = ClaimCheck.KnownFor(Card, ClaimCheck.WitnessedFor(Memory, _shown),
+                                                 Memory.Beliefs, whyEarly, sceneContext, now.ToString());
+            }
+            string firstSentence = null;
+            Task<(bool heard, IReadOnlyList<string> found, LlmResponse cost)> firstHandedOver = null;
+            // Whether the early first sentence was handed over and so heard.
+            async Task<bool> Heard()
+            {
+                if (firstHandedOver == null) return false;
+                try { return (await firstHandedOver).heard; } catch (Exception) { return false; }
+            }
             try
             {
-                response = await _llm.CompleteAsync(request, ct);
+                if (streaming != null)
+                {
+                    try
+                    {
+                    response = await streaming.StreamAsync(request, text =>
+                    {
+                        if (firstHandedOver != null) return;
+                        var f = FirstSentence(text);
+                        if (f == null) return;
+                        firstSentence = ValidateReply(f);
+                        var said = firstSentence;
+                        firstHandedOver = Task.Run(async () =>
+                        {
+                            var (bad, cost) = await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
+                            if (bad.Count > 0) return (false, bad, cost);
+                            ct.ThrowIfCancellationRequested();
+                            return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
+                        });
+                    }, ct);
+                    }
+                    catch (LlmStreamBrokenException) when (!ct.IsCancellationRequested)
+                    {
+                        // A STREAM THAT BROKE before anything of it was heard (the
+                        // independent check): the plain call, with its retries, and
+                        // the broken stream's first sentence forgotten. Once a
+                        // sentence has been heard, asking again could contradict it.
+                        if (await Heard()) throw;
+                        firstHandedOver = null;
+                        firstSentence = null;
+                        response = await _llm.CompleteAsync(request, ct);
+                    }
+                }
+                else
+                {
+                    response = await _llm.CompleteAsync(request, ct);
+                }
             }
             catch (Exception) // ANY failure (LlmApiException, cancellation, network) must
             {                 // roll back the user turn we just appended, or it leaks.
-                if (_transcript.Count > 0) _transcript.RemoveAt(_transcript.Count - 1);
+                _transcript.Remove(mine);
+                // ...keeping only what the player already heard, if anything.
+                if (await Heard()) RememberSaid(playerInput, firstSentence, now);
                 throw;
             }
 
             _cost?.Record(Model, response.InputTokens, response.OutputTokens);
 
             var reply = ValidateReply(response.Text);
+            bool firstHeard = false;
+            IReadOnlyList<string> firstFlagged = null;
+            try
+            {
+                if (firstHandedOver != null)
+                {
+                    var early = await firstHandedOver;
+                    if (early.cost != null) _cost?.Record(CheckerModel, early.cost.InputTokens, early.cost.OutputTokens);
+                    firstHeard = early.heard;
+                    // What the first sentence's own check found is not thrown away
+                    // when the whole reply's check misses it.
+                    if (!early.heard && early.found.Count > 0 && !(early.found.Count == 1 && early.found[0] == "(unchecked)"))
+                        firstFlagged = early.found;
+                }
+            }
+            catch (Exception)
+            {
+                _transcript.Remove(mine);
+                throw;
+            }
 
             // ONLY WHAT THE SIMULATION KNOWS (ClaimCheck.cs): checked BEFORE the
             // reply is said, kept in the transcript or remembered, so a claim
@@ -275,8 +493,14 @@ namespace Ledger.Core
                 try
                 {
                     var invented = await InventedAsync(known, reply, ct);
+                    if (firstFlagged != null && invented.Count == 0) invented = firstFlagged;
                     LastInvented = invented;
-                    if (invented.Count > 0)
+                    if (invented.Count > 0 && firstHeard)
+                    {
+                        // The checked first sentence has been heard: the rest goes.
+                        reply = firstSentence;
+                    }
+                    else if (invented.Count > 0)
                     {
                         var second = new LlmRequest { Model = Model, System = system + ClaimCheck.SecondDraftNote(invented) + "\n", MaxTokens = 300 };
                         second.Messages.AddRange(_transcript);
@@ -286,6 +510,11 @@ namespace Ledger.Core
                         var again = await InventedAsync(known, redrafted, ct);
                         reply = again.Count == 0 && !ClaimCheck.Repeats(redrafted, invented) ? redrafted : ClaimCheck.KnownOnly;
                     }
+                    // ABANDONED WHILE CHECKING: a caller that has given up on the
+                    // turn must not find it kept afterwards (the independent check,
+                    // 26 September: a checker that ignored cancellation let a
+                    // timed-out turn be remembered whole).
+                    ct.ThrowIfCancellationRequested();
                 }
                 catch (Exception)
                 {
@@ -293,9 +522,13 @@ namespace Ledger.Core
                     // the first call: the player's turn is rolled back and the
                     // caller hears about it, so no half-checked line is said
                     // or remembered.
-                    if (_transcript.Count > 0) _transcript.RemoveAt(_transcript.Count - 1);
+                    _transcript.Remove(mine);
                     LastInvented = new List<string>();
                     LastUnchecked = false;
+                    // What the player already heard is kept, and only that
+                    // (the independent check: a turn abandoned after its first
+                    // sentence was heard left the character remembering nothing).
+                    if (firstHeard) RememberSaid(playerInput, firstSentence, now);
                     throw;
                 }
             }

@@ -4260,6 +4260,27 @@ namespace Ledger.CoreTests
             }
         }
 
+        /// A response body that gives its text, then drops the connection.
+        class DroppingStream : System.IO.MemoryStream
+        {
+            bool _gave;
+            public DroppingStream(string text) : base(System.Text.Encoding.UTF8.GetBytes(text)) { }
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                if (_gave) throw new System.IO.IOException("The response ended prematurely.");
+                _gave = true;
+                return base.Read(buffer, offset, count);
+            }
+            public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken ct)
+                => Task.FromResult(Read(buffer, offset, count));
+            public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken ct = default)
+            {
+                if (_gave) throw new System.IO.IOException("The response ended prematurely.");
+                _gave = true;
+                return base.ReadAsync(buffer, ct);
+            }
+        }
+
         static HttpResponseMessage Http(HttpStatusCode code, string body)
             => new HttpResponseMessage(code) { Content = new StringContent(body) };
 
@@ -4630,6 +4651,44 @@ namespace Ledger.CoreTests
             }
             Check(threw400, "400 throws");
             Check(h400.Calls == 1, "400 is not retried");
+
+            // THE REPLY AS IT IS WRITTEN (StreamAsync, 26 September): server-sent
+            // events assembled in order; an error before any text, or a stream that
+            // stops short before any, falls back to the plain call; one that stops
+            // short after text was handed over fails rather than pass as whole.
+            static string Sse(params string[] events)
+            {
+                var sb = new System.Text.StringBuilder();
+                foreach (var e in events) sb.Append("event: x\r\ndata: ").Append(e).Append("\r\n\r\n");
+                return sb.ToString();
+            }
+            const string Start = "{\"type\":\"message_start\",\"message\":{\"model\":\"m\",\"usage\":{\"input_tokens\":7}}}";
+            static string Delta(string t) => "{\"type\":\"content_block_delta\",\"index\":0,\"delta\":{\"type\":\"text_delta\",\"text\":\"" + t + "\"}}";
+            const string Stop = "{\"type\":\"message_stop\"}";
+            const string Done = "{\"type\":\"message_delta\",\"delta\":{\"stop_reason\":\"end_turn\"},\"usage\":{\"output_tokens\":4}}";
+            var seen = new List<string>();
+            var hs = new ScriptedHandler(() => Http(HttpStatusCode.OK, Sse(Start, Delta("Aye. "), "{\"type\":\"ping\"}", Delta("I saw him."), Done, Stop)));
+            var rs = await Client(hs).StreamAsync(OneTurn(), t => seen.Add(t));
+            Check(rs.Text == "Aye. I saw him." && seen.Count == 2 && seen[0] == "Aye. " && rs.StopReason == "end_turn"
+                  && rs.InputTokens == 7 && rs.OutputTokens == 4, "a stream is read whole, in order, with its counts");
+            var he = new ScriptedHandler(() => Http(HttpStatusCode.OK, Sse(Start, "{\"type\":\"error\",\"error\":{\"type\":\"overloaded_error\",\"message\":\"Overloaded\"}}")),
+                                         () => Http(HttpStatusCode.OK, OkBody));
+            bool brokeE = false;
+            try { await Client(he).StreamAsync(OneTurn(), null); } catch (LlmStreamBrokenException) { brokeE = true; }
+            Check(brokeE && he.Calls == 1, "an error mid-stream is reported as a broken stream, not retried here");
+            var hshort = new ScriptedHandler(() => Http(HttpStatusCode.OK, Sse(Start, Delta("Aye. I saw him go by the chi"))));
+            bool threwShort = false;
+            try { await Client(hshort).StreamAsync(OneTurn(), null); }
+            catch (LlmStreamBrokenException) { threwShort = true; }
+            Check(threwShort, "a stream that stops short after text fails, never passes as the whole reply");
+            var hnothing = new ScriptedHandler(() => Http(HttpStatusCode.OK, Sse(Start)), () => Http(HttpStatusCode.OK, OkBody));
+            var hdrop = new ScriptedHandler(() => new HttpResponseMessage(HttpStatusCode.OK) { Content = new StreamContent(new DroppingStream(Sse(Start, Delta("Aye, I")))) });
+            bool brokeD = false;
+            try { await Client(hdrop).StreamAsync(OneTurn(), null); } catch (LlmStreamBrokenException) { brokeD = true; }
+            Check(brokeD, "a connection dropped mid-reply is a broken stream too, for the caller to ask again");
+            bool brokeN = false;
+            try { await Client(hnothing).StreamAsync(OneTurn(), null); } catch (LlmStreamBrokenException) { brokeN = true; }
+            Check(brokeN && hnothing.Calls == 1, "so is one that stops before any text");
         }
 
         static void TestResponseParsing()

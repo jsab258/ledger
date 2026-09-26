@@ -265,6 +265,21 @@ namespace Ledger.Core
             return sb.ToString();
         }
 
+        /// The last conversation event starting with `prefix` given new text,
+        /// and the file rewritten (26 September: what a character keeps of its
+        /// own reply is put right to what the player actually heard).
+        public void CorrectLast(string prefix, string text)
+        {
+            for (int i = Events.Count - 1; i >= 0; i--)
+            {
+                var e = Events[i];
+                if (e.Kind != "conversation" || !e.Text.StartsWith(prefix, StringComparison.Ordinal)) continue;
+                Events[i] = new MemoryEvent(e.Time, e.Kind, e.Importance, text);
+                Save();
+                return;
+            }
+        }
+
         void Save()
         {
             if (_filePath == null) return;

@@ -1,0 +1,87 @@
+{
+ "what": "Which letter is which voice on the 26 September weekend page. The page must not show this file.",
+ "made": "2026-09-26",
+ "engines": {
+  "nano": {
+   "what": "Chatterbox Nano on the graphics card, the game's current voice (tools/voice-live/voice-server.py)",
+   "delay": "Delay measured in the running game: to be measured"
+  },
+  "pocket": {
+   "what": "Pocket TTS (Kyutai; code MIT, weights CC BY 4.0) on the processor (tools/voice-live/pocket-server.py)",
+   "delay": "Delay measured in the running game: to be measured"
+  }
+ },
+ "sheila-dunn": {
+  "letters": {
+   "A": {
+    "engine": "pocket",
+    "delay": "Delay measured in the running game: to be measured",
+    "lines": [
+     {
+      "file": "production/casting/voices-2026-09-26/sheila-dunn/A-line1.wav",
+      "sheetLine": 1
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/sheila-dunn/A-line2.wav",
+      "sheetLine": 3
+     }
+    ]
+   },
+   "B": {
+    "engine": "nano",
+    "delay": "Delay measured in the running game: to be measured",
+    "lines": [
+     {
+      "file": "production/casting/voices-2026-09-26/sheila-dunn/B-line1.wav",
+      "sheetLine": 1
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/sheila-dunn/B-line2.wav",
+      "sheetLine": 3
+     }
+    ]
+   }
+  }
+ },
+ "ron-kirby": {
+  "letters": {
+   "A": {
+    "engine": "pocket",
+    "delay": "Delay measured in the running game: to be measured",
+    "lines": [
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/A-line1.wav",
+      "sheetLine": 1
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/A-line2.wav",
+      "sheetLine": 2
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/A-line3.wav",
+      "sheetLine": 3
+     }
+    ]
+   },
+   "B": {
+    "engine": "nano",
+    "delay": "Delay measured in the running game: to be measured",
+    "lines": [
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/B-line1.wav",
+      "sheetLine": 1
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/B-line2.wav",
+      "sheetLine": 2
+     },
+     {
+      "file": "production/casting/voices-2026-09-26/ron-kirby/B-line3.wav",
+      "sheetLine": 3
+     }
+    ]
+   }
+  }
+ },
+ "outcome": "Voice A (Pocket TTS) failed the gate for Sheila and Ron (the blind reviewer, then my own windowed check on a second attempt); the clips were never put on his page and were moved to F:/LedgerTools/selfcheck-voice-2026-09-26/clips as evidence."
+}

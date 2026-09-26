@@ -286,6 +286,54 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaN1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take N1 (26 September sitting)",
+   "why": "first attempt at the northern European rebuild; wrong haircut and make-up against the sheet",
+   "status": "rejected",
+   "recorded": "2026-09-26",
+   "mb": 297
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 289
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P2 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 292
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 295
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 316
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaP5",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 311
+  },
+  {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC1",
    "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
    "why": "the approved face (built)",
@@ -328,6 +376,54 @@
    "recorded": "2026-09-25",
    "mb": 288,
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoN1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take N1 (26 September sitting)",
+   "why": "first attempt at the northern European rebuild; wrong haircut and make-up against the sheet",
+   "status": "rejected",
+   "recorded": "2026-09-26",
+   "mb": 288
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 288
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P2 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 289
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 293
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 286
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoP5",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 293
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamC1",
@@ -374,12 +470,68 @@
    "mb": 339
   },
   {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamN1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take N1 (26 September sitting)",
+   "why": "first attempt at the northern European rebuild; wrong haircut and make-up against the sheet",
+   "status": "rejected",
+   "recorded": "2026-09-26",
+   "mb": 327
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P1 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 364
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P2 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 312
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P3 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 364
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P4 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 356
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamP5",
+   "madeBy": "tools/ue/make_cast_metahumans.py take P5 (26 September sitting)",
+   "why": "second attempt at the northern European rebuild, a candidate for the weekend page",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 314
+  },
+  {
    "path": "F:/LedgerTools/played-game",
    "madeBy": "the cleanup, 26 Sep; replaced by every build",
    "why": "his played copy of the game; the play launcher, the AI tester and the build point here",
    "status": "kept",
    "recorded": "2026-09-26",
    "mb": 5427
+  },
+  {
+   "path": "F:/LedgerTools/pocket-tts",
+   "madeBy": "pip install pocket-tts and its model (26 September sitting)",
+   "why": "Pocket TTS on the processor, tried beside the current voice",
+   "status": "kept",
+   "recorded": "2026-09-26",
+   "mb": 1121
   },
   {
    "path": "F:/LedgerTools/tmp/cand",
