@@ -179,12 +179,16 @@ namespace Ledger.Core
                 "face\"); what somebody did not do or say; a guess, opinion, prediction or feeling, or anything marked as a guess " +
                 "(\"could've been anyone\", \"I think\", \"maybe\"); vague words (somebody, talk, things, people); anything about the " +
                 "conversation itself or the person they are talking to (\"you're asking a lot\", \"new management\"); habits of the street " +
-                "or of people that a C, H or P item describes; the time now when T1 gives it; small talk about the weather or the scene now.\n" +
+                "or of people that a C, H or P item describes; the time now when T1 gives it; small talk about the weather or the scene now; " +
+                "the speaker's own everyday life, tastes and belongings, and the street's ordinary fixtures, when they name no particular " +
+                "person, vehicle, time or happening (\"I don't drive\", \"plain ones in the tin\", \"the phone box on the corner\").\n" +
                 "Check the items before you write \"none\": a detail a C, H, M, S, T, K or P item gives, in other words, has that item's id.\n" +
                 "Give each specific a kind: vehicle, person, time, place, appearance, object, amount, action, police, business for " +
                 "things that happened; or weather, now, denial, guess, habit, talk, street, self for things that are not claims about an " +
-                "event: street is the general run of the street or the rank (\"quiet today\", \"people in and out\", \"the market crowd's " +
-                "moving through\"), self is what the speaker is doing or has been doing (\"stood here all afternoon\", \"waiting on a call\"), " +
+                "event: street is the general run of the street or the rank and its ordinary fixtures (\"quiet today\", \"people in and out\", " +
+                "\"the market crowd's moving through\", \"the phone box on the corner\", \"the evening paper\"), self is what the speaker is doing " +
+                "or has been doing, and their own everyday life, tastes, belongings and habits as they tell them (\"stood here all afternoon\", " +
+                "\"waiting on a call\", \"I never learned to drive\", \"my usual\", \"digestives in the tin\"), " +
                 "talk is about this conversation or the person they are talking to (\"you're asking a lot\"). What they heard other people " +
                 "say is not talk: give it the kind of what it is about, and the item they heard it in.\n" +
                 "Examples, with M1 \"[D3 21:40] I saw a man put the pawn shop window in and run towards the quay\":\n" +
@@ -193,6 +197,8 @@ namespace Ledger.Core
                 "\"Big lad in a dark coat, got into a white van.\" -> {\"specifics\": [{\"detail\": \"big\", \"kind\": \"appearance\", " +
                 "\"source\": \"none\"}, {\"detail\": \"a dark coat\", \"kind\": \"appearance\", \"source\": \"none\"}, {\"detail\": " +
                 "\"a white van\", \"kind\": \"vehicle\", \"source\": \"none\"}]}\n" +
+                "\"Plain ones in the tin. I never learned to drive, me.\" -> {\"specifics\": [{\"detail\": \"plain biscuits in the tin\", " +
+                "\"kind\": \"self\", \"source\": \"none\"}, {\"detail\": \"never learned to drive\", \"kind\": \"self\", \"source\": \"none\"}]}\n" +
                 "\"It's gone five, love. Rain's coming on. No idea, ask Rita.\" -> {\"specifics\": [{\"detail\": \"it's gone five\", " +
                 "\"kind\": \"now\", \"source\": \"T1\"}, {\"detail\": \"rain's coming on\", \"kind\": \"weather\", \"source\": \"none\"}]}\n" +
                 "Answer with the JSON and nothing else.";
