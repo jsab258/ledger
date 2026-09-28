@@ -7,147 +7,176 @@
   "mickeys_office": {
    "x_m": 6.0,
    "z_m": 7.5,
-   "from": "decal_00_fascia_mickeys x, inside the front room"
+   "from": "decal_00_fascia_mickeys x, inside the front room",
+   "said": "the front room of Mickey's, the cab office"
   },
   "mickeys_rank": {
    "x_m": 7.5,
    "z_m": 3.8,
-   "from": "the footway at Mickey's door, where the cabs wait"
+   "from": "the footway at Mickey's door, where the cabs wait",
+   "said": "the pavement at Mickey's door, where the cabs wait"
   },
   "fish_counter": {
    "x_m": 12.0,
    "z_m": 7.5,
-   "from": "decal_01_fascia_fish_market x, inside"
+   "from": "decal_01_fascia_fish_market x, inside",
+   "said": "behind the counter of the fish market on Quay Street"
   },
   "fish_front": {
    "x_m": 12.0,
    "z_m": 4.2,
-   "from": "the fish market's pavement"
+   "from": "the fish market's pavement",
+   "said": "the pavement outside the fish market"
   },
   "ritas_counter": {
    "x_m": 18.0,
    "z_m": 7.5,
-   "from": "decal_02_fascia_ritas_pawn x, inside"
+   "from": "decal_02_fascia_ritas_pawn x, inside",
+   "said": "behind the counter of Rita's pawn shop"
   },
   "ritas_step": {
    "x_m": 18.0,
    "z_m": 4.4,
-   "from": "Rita's doorstep"
+   "from": "Rita's doorstep",
+   "said": "Rita's doorstep"
   },
   "kiosk": {
    "x_m": 16.5,
    "z_m": 4.3,
-   "from": "beside kiosk_plinth (16.5, 3.67)"
+   "from": "beside kiosk_plinth (16.5, 3.67)",
+   "said": "by the kiosk on Quay Street"
   },
   "laundry_front": {
    "x_m": 30.0,
    "z_m": 4.3,
-   "from": "decal_03_fascia_steam_laundry x, its pavement"
+   "from": "decal_03_fascia_steam_laundry x, its pavement",
+   "said": "the pavement outside the steam laundry"
   },
   "quay": {
    "x_m": -5.0,
    "z_m": 0.0,
-   "from": "the quay apron at the street's south end"
+   "from": "the quay apron at the street's south end",
+   "said": "the quay at the bottom of Quay Street"
   },
   "laundry_counter": {
    "x_m": 30.0,
    "z_m": 7.5,
-   "from": "the steam laundry's counter, inside (decal_03_fascia_steam_laundry x)"
+   "from": "the steam laundry's counter, inside (decal_03_fascia_steam_laundry x)",
+   "said": "the steam laundry's counter"
   },
   "adas_step": {
    "x_m": 6.5,
    "z_m": -4.5,
-   "from": "Ada's front step and window, in the terraces across from Mickey's (canon: the west block across from Mickey's is plain terraces)"
+   "from": "Ada's front step and window, in the terraces across from Mickey's (canon: the west block across from Mickey's is plain terraces)",
+   "said": "Ada's front step, in the terraces across from Mickey's"
   },
   "cafe": {
    "x_m": 24.0,
    "z_m": -7.5,
-   "from": "the cafe, inside, in the west block's shops across from the parade's north half (canon)"
+   "from": "the cafe, inside, in the west block's shops across from the parade's north half (canon)",
+   "said": "inside the cafe across the street from Mickey's"
   },
   "cafe_front": {
    "x_m": 24.0,
    "z_m": -4.3,
-   "from": "the cafe's pavement"
+   "from": "the cafe's pavement",
+   "said": "the pavement outside the cafe"
   },
   "pension_counter": {
    "x_m": 32.0,
    "z_m": -7.5,
-   "from": "the newsagent's counter where pensions and benefits are paid, in the same shop block"
+   "from": "the newsagent's counter where pensions and benefits are paid, in the same shop block",
+   "said": "the newsagent's counter, where the pensions are paid"
   },
   "hals_shop": {
    "x_m": 39.0,
    "z_m": -7.5,
-   "from": "Hal's shop, the same block's far end"
+   "from": "Hal's shop, the same block's far end",
+   "said": "Hal's shop at the end of the row"
   },
   "bus_stop": {
    "x_m": 46.0,
    "z_m": -4.3,
-   "from": "the bus stop at the street's north end, west pavement"
+   "from": "the bus stop at the street's north end, west pavement",
+   "said": "the bus stop at the top of Quay Street"
   },
   "docks": {
    "x_m": -60.0,
    "z_m": 0.0,
-   "from": "the dock gate and the quays beyond it"
+   "from": "the dock gate and the quays beyond it",
+   "said": "the dock gate"
   },
   "fish_dock": {
    "x_m": -60.0,
    "z_m": 40.0,
-   "from": "the wholesale fish market on the fish dock"
+   "from": "the wholesale fish market on the fish dock",
+   "said": "the wholesale fish market on the fish dock"
   },
   "repair_yard": {
    "x_m": -60.0,
    "z_m": -40.0,
-   "from": "the boat repair yard"
+   "from": "the boat repair yard",
+   "said": "the boat repair yard"
   },
   "harbour_office": {
    "x_m": -100.0,
    "z_m": 0.0,
-   "from": "the harbourmaster's office"
+   "from": "the harbourmaster's office",
+   "said": "the harbourmaster's office"
   },
   "customs_shed": {
    "x_m": -100.0,
    "z_m": 40.0,
-   "from": "the customs shed"
+   "from": "the customs shed",
+   "said": "the customs shed"
   },
   "ferry_stop": {
    "x_m": -100.0,
    "z_m": -40.0,
-   "from": "the ferry landing"
+   "from": "the ferry landing",
+   "said": "the ferry landing"
   },
   "warehouse_row": {
    "x_m": -140.0,
    "z_m": 0.0,
-   "from": "the old warehouse row"
+   "from": "the old warehouse row",
+   "said": "the old warehouse row"
   },
   "chapel": {
    "x_m": 100.0,
    "z_m": 0.0,
-   "from": "Father Emil's chapel and the presbytery door beside it"
+   "from": "Father Emil's chapel and the presbytery door beside it",
+   "said": "Father Emil's chapel"
   },
   "chapel_hall": {
    "x_m": 100.0,
    "z_m": 40.0,
-   "from": "the chapel hall"
+   "from": "the chapel hall",
+   "said": "the chapel hall"
   },
   "market": {
    "x_m": 100.0,
    "z_m": -40.0,
-   "from": "the open market, on its days"
+   "from": "the open market, on its days",
+   "said": "the open market"
   },
   "boarding_house": {
    "x_m": 140.0,
    "z_m": 0.0,
-   "from": "the boarding house's front room"
+   "from": "the boarding house's front room",
+   "said": "the front room of the boarding house"
   },
   "flats": {
    "x_m": 140.0,
    "z_m": 40.0,
-   "from": "the council flats' landings and laundry room"
+   "from": "the council flats' landings and laundry room",
+   "said": "the council flats"
   },
   "allotments": {
    "x_m": 140.0,
    "z_m": -40.0,
-   "from": "the allotments by the railway"
+   "from": "the allotments by the railway",
+   "said": "the allotments by the railway"
   }
  },
  "people": [

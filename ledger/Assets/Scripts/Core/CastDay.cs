@@ -39,6 +39,7 @@ namespace Ledger.Core
 
         public double TalkRangeM { get; private set; }
         readonly Dictionary<string, (double x, double z)> _places = new Dictionary<string, (double, double)>();
+        readonly Dictionary<string, string> _said = new Dictionary<string, string>();
         readonly Dictionary<string, List<(int hour, string place)>> _daily = new Dictionary<string, List<(int, string)>>();
         readonly Dictionary<string, List<(int hour, string place)>[]> _byWeekday = new Dictionary<string, List<(int, string)>[]>();
         readonly List<string> _people = new List<string>();
@@ -67,6 +68,7 @@ namespace Ledger.Core
                     throw new FormatException($"cast file: place {kv.Key} needs x_m and z_m");
                 if (kv.Key == Off) throw new FormatException("cast file: 'off' is not a place");
                 c._places[kv.Key] = (x, z);
+                if (p.TryGetValue("said", out var so) && so is string saidWords && saidWords.Trim().Length > 0) c._said[kv.Key] = saidWords.Trim();
             }
             foreach (var po in MiniJson.GetList(root, "people") ?? throw new FormatException("cast file: no people"))
             {
@@ -149,6 +151,14 @@ namespace Ledger.Core
             foreach (var (from, pl) in routine) if (from <= h) place = pl;
             return place;
         }
+
+        /// THE PLACE IN PLAIN WORDS, as a person there would say where they are
+        /// ("the pavement outside the fish market"), from the file's "said"; null
+        /// when it has none (town list 6u: each person's own place in their talk).
+        public string SaidOf(string place) => place != null && _said.TryGetValue(place, out var w) ? w : null;
+
+        /// Where somebody is this hour, in plain words, or null when off the street or unknown.
+        public string WhereWords(string id, int day, int hour) => SaidOf(PlaceOf(id, day, hour));
 
         /// Where they stand, or null when off the street or unknown.
         public (double x, double z)? Where(string id, int day, int hour)

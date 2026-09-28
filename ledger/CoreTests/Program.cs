@@ -8433,6 +8433,19 @@ namespace Ledger.CoreTests
             Check(PlayerIdentity.KnowsName(stranger), "one memory of you is enough to learn it");
             Check(me.AddressBy(stranger) == "Tommy", "and a friend uses the short one", me.AddressBy(stranger));
             Check(me.AddressBy((Gossiper)null) == "the new owner", "asking about nobody is safe");
+            // WHERE THEY ARE, in plain words (town list 6u): every place of the named
+            // cast has words a person there would use, and the routine gives them.
+            {
+                var hook = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var wordless = new List<string>();
+                foreach (var pl in hook.Places) if (hook.SaidOf(pl) == null || System.Text.RegularExpressions.Regex.IsMatch(hook.SaidOf(pl), @"decal|_|\d")) wordless.Add(pl);
+                string anyWhere = null;
+                foreach (var person in hook.People)
+                    for (int hh = 0; hh < 24 && anyWhere == null; hh++)
+                        if (hook.Where(person, 1, hh) != null) anyWhere = hook.WhereWords(person, 1, hh);
+                Check(wordless.Count == 0 && anyWhere != null && hook.SaidOf("off") == null && hook.SaidOf(null) == null,
+                      "every place a person can be has plain words for it, none of them an asset name", string.Join(",", wordless));
+            }
             // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's
             // word or their own earlier talk, and what they call him is the game's.
             string never = me.HowTheyKnowHim(false, false, "Tom"), heardOf = me.HowTheyKnowHim(false, true, "Tom");
