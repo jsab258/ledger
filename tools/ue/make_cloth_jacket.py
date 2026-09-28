@@ -46,7 +46,9 @@ def main_after_idle(seconds=20.0):
         ui = unreal.FbxImportUI()
         ui.set_editor_property("import_as_skeletal", False)
         ui.set_editor_property("import_mesh", True)
-        ui.set_editor_property("import_materials", False)
+        # THE JACKET'S OWN COLOURS: navy wool, the black yoke, the buttons, as
+        # Blender made them (without them it wore the engine's grey, 28 September).
+        ui.set_editor_property("import_materials", True)
         ui.set_editor_property("import_textures", False)
         ui.set_editor_property("mesh_type_to_import", unreal.FBXImportType.FBXIT_STATIC_MESH)
         ui.static_mesh_import_data.set_editor_property("combine_meshes", True)
@@ -57,6 +59,31 @@ def main_after_idle(seconds=20.0):
         log("imported %s -> %s" % (os.path.basename(fbx), paths))
         return unreal.load_asset(paths[0]) if paths else None
 
+    # THE JACKET'S COLOURS on the render mesh's slots, by the slot names Blender
+    # gave them (a re-import over the existing mesh brought no materials, 28
+    # September): instances of the engine's basic shape material, whose one
+    # parameter is its colour.
+    COLOURS = {"wool": (0.035, 0.043, 0.075), "yoke": (0.012, 0.012, 0.013), "button": (0.02, 0.018, 0.016)}
+
+    def colour_render_mesh(mesh, dest):
+        base = unreal.load_asset("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial")
+        tools = unreal.AssetToolsHelpers.get_asset_tools()
+        mats = mesh.get_editor_property("static_materials")
+        for i, sm in enumerate(mats):
+            slot = str(sm.get_editor_property("material_slot_name")).lower()
+            key = next((k for k in COLOURS if k in slot), "wool")
+            name = "MI_DonkeyJacket_" + key.capitalize()
+            path = dest + "/" + name
+            mi = unreal.load_asset(path) if unreal.EditorAssetLibrary.does_asset_exist(path) else tools.create_asset(
+                name, dest, unreal.MaterialInstanceConstant, unreal.MaterialInstanceConstantFactoryNew())
+            unreal.MaterialEditingLibrary.set_material_instance_parent(mi, base)
+            r, g, b = COLOURS[key]
+            unreal.MaterialEditingLibrary.set_material_instance_vector_parameter_value(mi, "Color", unreal.LinearColor(r, g, b, 1.0))
+            unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
+            mesh.set_material(i, mi)
+            log("slot %d %s -> %s" % (i, slot, name))
+        unreal.EditorAssetLibrary.save_loaded_asset(mesh, only_if_is_dirty=False)
+
     def run():
         src = os.environ.get("LEDGER_JACKET_DIR", "F:/LedgerTools/tmp/drape")
         name = os.environ.get("LEDGER_JACKET_NAME", "ron_donkey")
@@ -64,15 +91,16 @@ def main_after_idle(seconds=20.0):
         dest = ROOT + name
         render = import_static(os.path.join(src, name + "_render_static.fbx"), dest, "SM_" + name + "_Render")
         sim = import_static(os.path.join(src, name + "_sim_static.fbx"), dest, "SM_" + name + "_Sim")
+        if render is not None:
+            colour_render_mesh(render, dest)
         body = unreal.load_asset(body_path)
         log("body %s: %s" % (body_path, type(body).__name__ if body else "NOT FOUND"))
         lib = unreal.EditorAssetLibrary
         df_path, ca_path = dest + "/DF_" + name, dest + "/CA_" + name
-        for p in (df_path, ca_path):
-            if lib.does_asset_exist(p):
-                lib.delete_asset(p)
-        df = lib.duplicate_asset("/ChaosClothAsset/DF_StaticMeshClothTemplate", df_path)
-        ca = lib.duplicate_asset("/ChaosClothAsset/CA_Template", ca_path)
+        # MADE ONCE, THEN REGENERATED: deleting and copying again failed on the
+        # second run (both copies came back empty), so an existing pair is kept.
+        df = unreal.load_asset(df_path) if lib.does_asset_exist(df_path) else lib.duplicate_asset("/ChaosClothAsset/DF_StaticMeshClothTemplate", df_path)
+        ca = unreal.load_asset(ca_path) if lib.does_asset_exist(ca_path) else lib.duplicate_asset("/ChaosClothAsset/CA_Template", ca_path)
         log("graph %s, cloth asset %s" % (type(df).__name__ if df else None, type(ca).__name__ if ca else None))
         if not (df and ca and render and sim):
             return

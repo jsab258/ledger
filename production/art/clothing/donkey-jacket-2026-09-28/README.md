@@ -9,3 +9,7 @@ Not for approval yet: a proof that the route works, on the way to one jacket, si
 ## Into Unreal's cloth, same night
 
 tools/ue/make_cloth_jacket.py imports the two meshes and fills a copy of Epic's static-mesh cloth template (its nodes StaticMesh_Render, StaticMesh_SIM and TransferSkinWeights, whose names were read from the template file, since Python cannot list a graph) and regenerates the cloth asset: done, CA_ron_donkey in the dressing project (cloth-asset-2026-09-28.txt). Ron's whole body is kept in that project for the weights (tools/ue/export_dcc.py, geometry mode, now saved). Next: the jacket on Ron in the game on a cloth component, simulated, and checked walking, sitting and with arms up.
+
+## Worn and moving, same night
+
+The cloth asset on Ron in the game (LedgerJacket.h WearCloth: a Chaos cloth component following his body's pose and colliding with his physics asset, PHYS_MH_RoccoP2), photographed four times a second through Epic's walk loop and its body range-of-motion loop (the portrait tool's -PortraitMotion= and -PortraitCloth=): cloth-walk-sheet.jpg and cloth-rom-sheet.jpg. It moves with him walking, bending and with his arms forward; 3 cm of ease keeps his jumper under it but for one patch at one side. Still wrong: it renders in the cloth asset's default grey (the colours given to the meshes do not reach the cloth asset; its graph sets its own materials), the chest still shows his muscle, the collar reads as two tabs at the front. No sitting animation ships with the engine.

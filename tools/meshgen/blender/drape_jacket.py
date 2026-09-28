@@ -45,6 +45,10 @@ OFFSET = opt("--offset", 0.03)
 FRAMES = opt("--frames", 90, int)
 SOURCE_LOD = opt("--lod", 1, int)       # the body level the shell is cut from: even, few-centimetre triangles
 SMOOTH = opt("--smooth", 40, int)      # smoothing passes over the shell before it hangs
+# EASE over the outermost point: 3 cm, since the jacket goes over a jumper
+# (1 cm let Ron's navy jumper through across his belly in the game, first
+# wearing, 28 September).
+EASE = opt("--ease", 0.03)
 os.makedirs(OUT, exist_ok=True)
 
 NAVY = (0.035, 0.043, 0.075, 1.0)       # navy wool, dark in the street's light
@@ -199,7 +203,7 @@ for k in range(BINS):                         # fill any empty direction from it
 
 def hang(v, extra=0.0):
     k = angle_bin(v.co)
-    want = chest_r[k] + 0.01 + extra      # a centimetre of ease
+    want = chest_r[k] + EASE + extra      # room over the clothes beneath
     r = radius(v.co)
     if r <= 1e-6:
         return
