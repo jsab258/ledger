@@ -280,6 +280,8 @@
  "people": [
   {
    "id": "rocco",
+   "called": "Ron Kirby, who keeps Mickey's door and the rank",
+   "name": "Ron Kirby",
    "role": "Ron Kirby: Mickey's door and rank (canon)",
    "routine": [
     [
@@ -342,6 +344,8 @@
   },
   {
    "id": "lena",
+   "called": "Sheila Dunn, Mickey's bookkeeper",
+   "name": "Sheila Dunn",
    "role": "Sheila Dunn: Mickey's bookkeeper (canon)",
    "routine": [
     [
@@ -428,6 +432,7 @@
   },
   {
    "id": "zlata",
+   "called": "the dispatcher at the cab office",
    "role": "the cab office's dispatcher",
    "routine": [
     [
@@ -470,6 +475,7 @@
   },
   {
    "id": "ferko",
+   "called": "a day driver on Mickey's rank",
    "role": "a day cab driver on Mickey's rank",
    "routine": [
     [
@@ -508,6 +514,7 @@
   },
   {
    "id": "dusan",
+   "called": "the night cab driver",
    "role": "the night cab driver",
    "routine": [
     [
@@ -538,6 +545,8 @@
   },
   {
    "id": "june",
+   "called": "June, Mickey's daughter, back for the funeral",
+   "name": "June",
    "role": "June: Mickey's daughter, back for the funeral (canon)",
    "routine": [
     [
@@ -586,6 +595,8 @@
   },
   {
    "id": "sam",
+   "called": "Darren Milner, the street hustler, always on his rounds",
+   "name": "Darren Milner",
    "role": "Darren Milner: the street hustler, on his rounds (canon)",
    "routine": [
     [
@@ -850,6 +861,8 @@
   },
   {
    "id": "ada",
+   "called": "Ada, the widow who keeps a window on Quay Street",
+   "name": "Ada",
    "role": "Ada: the widow who keeps a window on Quay Street (canon)",
    "routine": [
     [
@@ -958,6 +971,8 @@
   },
   {
    "id": "noor",
+   "called": "Alison Sedman, the reporter, out on her rounds",
+   "name": "Alison Sedman",
    "role": "Alison Sedman: the reporter on her rounds (canon)",
    "routine": [
     [
@@ -1090,6 +1105,7 @@
   },
   {
    "id": "marla",
+   "called": "the woman from the fish shop, who buys on the fish dock",
    "role": "the fish shop's woman, who buys on the fish dock",
    "routine": [
     [
@@ -1156,6 +1172,7 @@
   },
   {
    "id": "joey",
+   "called": "a dock hand on the quay",
    "role": "a dock hand working the quay at the street's end",
    "routine": [
     [
@@ -1198,6 +1215,8 @@
   },
   {
    "id": "rita",
+   "called": "Rita, who keeps the pawn shop",
+   "name": "Rita",
    "role": "keeps Rita's pawn",
    "routine": [
     [
@@ -1250,6 +1269,7 @@
   },
   {
    "id": "victor",
+   "called": "the pawn's back-room hand",
    "role": "the pawn's back room",
    "routine": [
     [
@@ -1294,6 +1314,8 @@
   },
   {
    "id": "hal",
+   "called": "Hal, who keeps the coin shop that sells no coins",
+   "name": "Hal",
    "role": "keeps the coin shop that sells no coins; calls on Rita's on Mondays",
    "routine": [
     [
@@ -1356,6 +1378,7 @@
   },
   {
    "id": "tibor",
+   "called": "a customs officer who lives past Rita's",
    "role": "a customs officer, home past Rita's",
    "routine": [
     [
@@ -1396,6 +1419,8 @@
   },
   {
    "id": "emil",
+   "called": "Father Emil, who says mass and calls on the old",
+   "name": "Father Emil",
    "role": "Father Emil (canon): mass, the presbytery, calls on the old",
    "routine": [
     [
@@ -1502,6 +1527,7 @@
   },
   {
    "id": "vesna",
+   "called": "Father Emil's housekeeper",
    "role": "keeps Father Emil's house and buys for his table",
    "routine": [
     [
@@ -1600,6 +1626,7 @@
   },
   {
    "id": "magda",
+   "called": "the chapel's cleaner, who does its flowers",
    "role": "cleans the chapel and does its flowers",
    "routine": [
     [
@@ -1710,6 +1737,7 @@
   },
   {
    "id": "zora",
+   "called": "a washerwoman at the steam laundry",
    "role": "a washerwoman at the steam laundry",
    "routine": [
     [
@@ -1754,6 +1782,7 @@
   },
   {
    "id": "iva",
+   "called": "a presser at the steam laundry",
    "role": "works the steam laundry's presses",
    "routine": [
     [
@@ -1784,6 +1813,7 @@
   },
   {
    "id": "selma",
+   "called": "a laundress at the steam laundry",
    "role": "a laundress",
    "routine": [
     [
@@ -1814,6 +1844,7 @@
   },
   {
    "id": "tanja",
+   "called": "a laundress at the steam laundry",
    "role": "a laundress",
    "routine": [
     [
@@ -1840,6 +1871,7 @@
   },
   {
    "id": "katarina",
+   "called": "the seamstress who does alterations at the laundry and sells on the market",
    "role": "a seamstress who takes in alterations at the laundry, and sells on the market",
    "routine": [
     [
@@ -1916,6 +1948,7 @@
   },
   {
    "id": "ines",
+   "called": "the pawn's appraiser",
    "role": "the pawn's appraiser",
    "routine": [
     [
@@ -1960,6 +1993,7 @@
   },
   {
    "id": "marta",
+   "called": "the pawn's clerk",
    "role": "the pawn's clerk",
    "routine": [
     [
@@ -2000,6 +2034,7 @@
   },
   {
    "id": "jelena",
+   "called": "a locksmith who works the pawn's counter in the mornings",
    "role": "a locksmith who works from the pawn's counter in the mornings",
    "routine": [
     [
@@ -2084,6 +2119,7 @@
   },
   {
    "id": "stipe",
+   "called": "a crane driver on the docks",
    "role": "a crane driver on the docks, home by the quay",
    "routine": [
     [
@@ -2120,6 +2156,7 @@
   },
   {
    "id": "fabjan",
+   "called": "a net mender on the docks",
    "role": "mends nets on the docks",
    "routine": [
     [
@@ -2156,6 +2193,7 @@
   },
   {
    "id": "goran",
+   "called": "a customs assistant on the docks",
    "role": "a customs assistant on the docks",
    "routine": [
     [
@@ -2252,6 +2290,7 @@
   },
   {
    "id": "tomas",
+   "called": "a boat repairer from the yard",
    "role": "a boat repairer; breakfast at the street's cafe, the docks twice a week",
    "routine": [
     [
@@ -2334,6 +2373,7 @@
   },
   {
    "id": "luka",
+   "called": "a locksmith and repairman at the yard",
    "role": "a locksmith and repairman at the yard",
    "routine": [
     [
@@ -2372,6 +2412,7 @@
   },
   {
    "id": "bruno",
+   "called": "a clerk at the harbour office",
    "role": "a harbour clerk",
    "routine": [
     [
@@ -2412,6 +2453,7 @@
   },
   {
    "id": "petra",
+   "called": "the ferry's ticket clerk, who lodges at the boarding house",
    "role": "the ferry's ticket clerk; lodges at the boarding house",
    "routine": [
     [
@@ -2456,6 +2498,7 @@
   },
   {
    "id": "dario",
+   "called": "a ferryman",
    "role": "a ferryman",
    "routine": [
     [
@@ -2500,6 +2543,7 @@
   },
   {
    "id": "sanja",
+   "called": "the woman who keeps the boarding house",
    "role": "keeps the boarding house; buys fish for her lodgers",
    "routine": [
     [
@@ -2560,6 +2604,7 @@
   },
   {
    "id": "hana",
+   "called": "the letter writer at the newsagent's pension counter",
    "role": "writes letters and fills in forms for people, at the newsagent's pension counter",
    "routine": [
     [
@@ -2634,6 +2679,7 @@
   },
   {
    "id": "franjo",
+   "called": "the sign painter doing the street's boards this month",
    "role": "a sign painter, on the street's boards this month",
    "routine": [
     [
@@ -2716,6 +2762,7 @@
   },
   {
    "id": "danica",
+   "called": "the rent collector's runner",
    "role": "runs for the rent collector",
    "routine": [
     [
@@ -2846,6 +2893,7 @@
   },
   {
    "id": "drago",
+   "called": "a scrap dealer on the warehouse row",
    "role": "a scrap dealer on the old warehouse row",
    "routine": [
     [
@@ -2876,6 +2924,7 @@
   },
   {
    "id": "filip",
+   "called": "the night watchman on the warehouse row",
    "role": "the night watchman on the warehouse row",
    "routine": [
     [

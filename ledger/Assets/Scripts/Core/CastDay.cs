@@ -25,7 +25,10 @@ namespace Ledger.Core
     /// place runs from its hour to the next pair's and the last runs round
     /// to the first, "off" meaning off the street; optionally "days", keyed by
     /// weekday ("mon" to "sun"), each a routine that replaces the daily one on
-    /// that day; and "ties", each [a, b, strength] with anything after the
+    /// that day; optionally "name", what the street calls them when canon or
+    /// the street gives them one, "called", how another local speaks of them
+    /// ("the dispatcher at the cab office"), and "role", a note of what they
+    /// do; and "ties", each [a, b, strength] with anything after the
     /// strength (a note of where they meet) ignored. A place a routine names
     /// that "places" does not define is refused, so a typo cannot quietly
     /// send somebody off the street.
@@ -46,6 +49,9 @@ namespace Ledger.Core
         readonly Dictionary<string, List<(int hour, string place)>> _daily = new Dictionary<string, List<(int, string)>>();
         readonly Dictionary<string, List<(int hour, string place)>[]> _byWeekday = new Dictionary<string, List<(int, string)>[]>();
         readonly List<string> _people = new List<string>();
+        readonly Dictionary<string, string> _name = new Dictionary<string, string>();
+        readonly Dictionary<string, string> _role = new Dictionary<string, string>();
+        readonly Dictionary<string, string> _called = new Dictionary<string, string>();
         readonly List<(string a, string b, double w)> _ties = new List<(string, string, double)>();
 
         public IReadOnlyList<string> People => _people;
@@ -95,6 +101,9 @@ namespace Ledger.Core
                 if (string.IsNullOrEmpty(id)) throw new FormatException("cast file: a person with no id");
                 if (c._daily.ContainsKey(id)) throw new FormatException($"cast file: {id} twice");
                 c._people.Add(id);
+                if (MiniJson.GetString(p, "name") is string nm && nm.Trim().Length > 0) c._name[id] = nm.Trim();
+                if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
+                if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
                 c._daily[id] = c.ReadRoutine(id, MiniJson.GetList(p, "routine"));
                 if (p.ContainsKey("days") && !(p["days"] is Dictionary<string, object>))
                     throw new FormatException($"cast file: {id}'s days must be an object keyed mon to sun");
@@ -242,6 +251,150 @@ namespace Ledger.Core
             if (wa == null || wb == null) return false;
             double dx = wa.Value.x - wb.Value.x, dz = wa.Value.z - wb.Value.z;
             return Math.Sqrt(dx * dx + dz * dz) <= TalkRangeM;
+        }
+
+        /// WHAT THE STREET CALLS SOMEBODY (town list 6ad): the name canon or the
+        /// street gives them ("Ron Kirby", "Rita"), or null for somebody known
+        /// only by what they do.
+        public string NameOf(string id) => id != null && _name.TryGetValue(id, out var n) ? n : null;
+
+        /// What they do, as a neighbour would put it: the file's role without the
+        /// name before its colon or its "(canon)" mark ("Mickey's door and rank").
+        public string RoleOf(string id)
+        {
+            if (id == null || !_role.TryGetValue(id, out var r)) return null;
+            r = r.Replace("(canon)", " ");
+            int colon = r.IndexOf(':');
+            if (colon >= 0 && NameOf(id) != null) r = r.Substring(colon + 1);
+            return System.Text.RegularExpressions.Regex.Replace(r, @"\s+", " ").Trim(' ', ',', ';');
+        }
+
+        /// Somebody as another person speaks of them in passing: by name, or as
+        /// the street describes them.
+        public string Called(string id) => NameOf(id) ?? Described(id);
+
+        /// Somebody as another local would describe them: the file's "called"
+        /// ("Ron Kirby, who keeps Mickey's door and the rank"), else their name
+        /// and role.
+        public string Described(string id)
+        {
+            if (id != null && _called.TryGetValue(id, out var c)) return c;
+            var n = NameOf(id); var r = RoleOf(id);
+            return n != null ? (r != null ? n + ", " + r : n) : (r ?? id);
+        }
+
+        /// The most friends a person is told of besides the named people and
+        /// their close friends, strongest first (the prompt's length is paid
+        /// each turn).
+        public const int MostKnown = 12;
+
+        static readonly (string part, int from, int to)[] PartsOfDay = { ("mornings", 7, 12), ("afternoons", 12, 17), ("evenings", 17, 23), ("nights", 23, 30) };
+
+        /// WHERE SOMEBODY USUALLY IS, as a friend would know it: for each part of
+        /// the day, the area they are in for at least half of its hours across the
+        /// week, parts in the same area run together ("Rita's in the mornings and
+        /// afternoons", "the chapel most of the day"). Null when they have no
+        /// usual place on the street (Darren on his rounds).
+        public string UsualWords(string id)
+        {
+            if (id == null || !_daily.ContainsKey(id)) return null;
+            var usual = new List<(string part, string area)>();
+            foreach (var (part, from, to) in PartsOfDay)
+            {
+                var count = new Dictionary<string, int>();
+                int all = 0;
+                for (int d = 0; d < 7; d++)
+                    for (int h = from; h < to; h++)
+                    {
+                        all++;
+                        var pl = PlaceOf(id, h >= 24 ? d + 1 : d, h % 24);
+                        var ar = pl == Off ? null : AreaOf(pl) ?? pl;
+                        if (ar != null) count[ar] = count.TryGetValue(ar, out var c) ? c + 1 : 1;
+                    }
+                string best = null; int bestN = 0;
+                foreach (var kv in count)
+                    if (kv.Value > bestN || (kv.Value == bestN && string.CompareOrdinal(kv.Key, best) < 0)) { best = kv.Key; bestN = kv.Value; }
+                if (best != null && bestN * 2 >= all) usual.Add((part, best));
+            }
+            if (usual.Count == 0) return null;
+            var bits = new List<string>();
+            for (int i = 0; i < usual.Count;)
+            {
+                int j = i;
+                var parts = new List<string>();
+                while (j < usual.Count && usual[j].area == usual[i].area) { parts.Add(usual[j].part); j++; }
+                var names = AreaNames(usual[i].area);
+                string where = names.Count > 0 ? names[0] : usual[i].area;
+                bool nights = parts.Remove("nights");
+                bits.Add(parts.Count == 0 ? where + " at night"
+                    : parts.Count == 3 ? where + (nights ? " day and night" : " most of the day")
+                    : where + " in the " + string.Join(" and ", parts) + (nights ? " and at night" : ""));
+                i = j;
+            }
+            return string.Join(", ", bits);
+        }
+
+        /// WHO SOMEBODY KNOWS, AND WHERE (town list 6ad): with no map, asking a
+        /// local is the way round, and nobody could say where a friend usually
+        /// is. Everybody in the named cast has heard of the named people (thirty
+        /// to fifty authored residents sit inside one person's circle:
+        /// production/research/small-town-networks); their friends they know by
+        /// where they usually are; whoever is with them now they can see; and the
+        /// street's places they can name. Lines for their talk, each a thing the
+        /// claim check lets them say (its P items). Empty for somebody not in the
+        /// cast. `present`, when the game sends it, is who is really with them
+        /// (cast ids), in place of the routines' guess.
+        public List<string> PeopleFor(string id, int day, int hour, IEnumerable<string> present = null)
+        {
+            var lines = new List<string>();
+            if (id == null || !_daily.ContainsKey(id)) return lines;
+            var listed = new HashSet<string> { id };
+            var friends = new List<(string who, double w)>();
+            foreach (var (a, b, w) in _ties)
+            {
+                if (a == id) friends.Add((b, w));
+                else if (b == id) friends.Add((a, w));
+            }
+            friends.Sort((x, y) => x.w != y.w ? y.w.CompareTo(x.w) : string.CompareOrdinal(x.who, y.who));
+            // The named people and close friends always; other friends, strongest
+            // first, up to twelve in all besides the named.
+            int weakRoom = MostKnown;
+            foreach (var (who, w) in friends) if (w >= 0.6 && NameOf(who) == null) weakRoom--;
+            foreach (var (who, w) in friends)
+            {
+                bool close = w >= 0.6;
+                if (!close && NameOf(who) == null && weakRoom-- <= 0) continue;
+                listed.Add(who);
+                var usual = UsualWords(who);
+                lines.Add(Described(who) + (close ? "; you know each other well" : "; you know each other a little") + (usual != null ? "; usually at " + usual : "") + ".");
+            }
+            foreach (var who in _people)
+                if (!listed.Contains(who) && NameOf(who) != null)
+                {
+                    listed.Add(who);
+                    lines.Add(Described(who) + "; everybody on the street knows who that is.");
+                }
+            var here = new List<string>();
+            if (present != null)
+            {
+                var seenIds = new HashSet<string>();
+                foreach (var who in present)
+                    if (who != id && who != null && _daily.ContainsKey(who) && seenIds.Add(who)) here.Add(Called(who));
+            }
+            else
+            {
+                // The routines' guess: within talking range and in the same area,
+                // so the counters either side of a wall are not together (the
+                // independent check: Mickey's and the fish market's, 6.0 m apart).
+                string myArea = AreaOf(PlaceOf(id, day, hour));
+                foreach (var who in _people)
+                    if (who != id && myArea != null && AreaOf(PlaceOf(who, day, hour)) == myArea && Together(id, who, day, hour)) here.Add(Called(who));
+            }
+            if (here.Count > 0) lines.Add("Here with you now: " + string.Join("; ", here) + ".");
+            var places = new List<string>();
+            foreach (var kv in _areaNames) if (kv.Value.Count > 0 && !_within.ContainsKey(kv.Key)) places.Add(kv.Value[0]);
+            if (places.Count > 0) lines.Add("The street's places, as people call them: " + string.Join(", ", places) + ".");
+            return lines;
         }
 
         /// Hours a week the two are together, over one whole week.

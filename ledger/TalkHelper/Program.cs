@@ -300,6 +300,7 @@ static class Program
             string deedTopic = null, sawHimAt = null; int deedDay = -1, deedHour = -1;
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             string callsHim = null;
+            List<string> present = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -366,6 +367,12 @@ static class Program
                 if (r.TryGetProperty("noReply", out v) && v.ValueKind == JsonValueKind.True) noReply = true;
                 // A NEW CONVERSATION (town list 6ae): the game says so when he walks up again.
                 if (r.TryGetProperty("fresh", out v) && v.ValueKind == JsonValueKind.True) fresh = true;
+                // WHO IS REALLY WITH THEM (town list 6ad), as cast ids, when the game knows.
+                if (r.TryGetProperty("present", out v) && v.ValueKind == JsonValueKind.Array)
+                {
+                    present = new List<string>();
+                    foreach (var pe in v.EnumerateArray()) if (pe.ValueKind == JsonValueKind.String) present.Add(pe.GetString());
+                }
                 if (r.TryGetProperty("evidence", out v) && v.ValueKind == JsonValueKind.Object)
                 {
                     var acc = new DeedAccount();
@@ -443,6 +450,8 @@ static class Program
                 engine = NewEngine(card);
                 _engines[key] = engine;
             }
+            // WHO THEY KNOW, AND WHERE (town list 6ad), from the cast file this hour.
+            if (Cast != null) engine.People = Cast.PeopleFor(key, day, hour, present);
             // THE SIMULATION'S STATE, loaded before the line is answered.
             foreach (var m in memories)
             {
@@ -1096,6 +1105,12 @@ static class Program
         string placedPrompt = placed.EngineFor("sam") == null ? "" : placed.EngineFor("sam").BuildSystemPrompt("Morning.", new GameTime(placedDay, placedHour, 0), "");
         Ok("the cast's routines are read, and a person is told where they are this hour beside the game's scene",
            placed.Cast != null && placedWords != null && placed.LastScene == "Quay Street, by the parade. Where you are: " + placedWords + ".", placed.LastScene ?? "no scene");
+        Ok("and who they know on the street, where their friends usually are, and the street's places (town list 6ad)",
+           placedPrompt.Contains("- Ron Kirby, who keeps Mickey's door and the rank; you know each other well; usually at Mickey's most of the day.")
+           && placedPrompt.Contains("; everybody on the street knows who that is.") && placedPrompt.Contains("The street's places, as people call them: "), placedPrompt);
+        await placed.Answer("{\"id\":82,\"to\":\"sam\",\"say\":\"Who's that?\",\"day\":" + placedDay + ",\"hour\":" + placedHour + ",\"present\":[\"rita\",\"nobody\"]}");
+        string presentPrompt = placed.EngineFor("sam").BuildSystemPrompt("Who's that?", new GameTime(placedDay, placedHour, 0), "");
+        Ok("who the game says is with them is who they see", presentPrompt.Contains("- Here with you now: Rita.") , presentPrompt);
 
         // THE RELAY SAYS NO (town list 6t): a brush-off, and the player told why.
         var refused = new Helper(new RefusingFake(), TimeSpan.FromSeconds(8));

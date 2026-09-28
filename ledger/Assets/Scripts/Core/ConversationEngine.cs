@@ -85,6 +85,11 @@ namespace Ledger.Core
         /// How this person knows Tom and what they call him (PlayerIdentity.
         /// HowTheyKnowHim), as the game sends it each turn; null when it does not.
         public string HowYouKnowHim { get; set; }
+
+        /// WHO THEY KNOW ON THE STREET, AND WHERE (town list 6ad): lines from
+        /// CastDay.PeopleFor, set by the caller each turn; shown to the talk model
+        /// and given to the claim check as P items. Null or empty for none.
+        public IReadOnlyList<string> People { get; set; }
         /// True once the game has said how they know him; until then the helper
         /// reads it off this conversation's own earlier talk.
         public bool KnowsHimFromGame { get; set; }
@@ -169,6 +174,13 @@ namespace Ledger.Core
             {
                 sb.AppendLine();
                 sb.AppendLine($"Current scene: {sceneContext} It is {now.ToldAs} ({now.Slot}).");
+            }
+
+            if (People != null && People.Count > 0)
+            {
+                sb.AppendLine();
+                sb.AppendLine("People and places on the street you know of, and all you know of them. Where somebody usually is, is only usual: you do not know where anyone is right now unless they are here with you. Anybody not named here you speak of by what they do.");
+                foreach (var p in People) sb.AppendLine("- " + p);
             }
 
             sb.AppendLine();
@@ -961,7 +973,7 @@ namespace Ledger.Core
             if (streaming != null)
             {
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim);
+                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People);
             }
             var d1 = new Drafted();
             try
@@ -994,7 +1006,7 @@ namespace Ledger.Core
             if (Checker != null)
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim);
+                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People);
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,
