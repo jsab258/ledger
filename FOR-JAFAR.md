@@ -8,16 +8,16 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 29 September
 
-**[Your page: the first hour and four calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
+**[Your page: the first hour and two calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
 
 **Decide (on the page):**
-- Talk server in Germany, €6 a month, capped (recommended).
-- Tom's ending reading built from what he has seen (recommended).
 - Sheila withholds Tom's name by choice (recommended).
 - Neighbours' talk heard at most every 45 seconds (recommended), or that plus 16 more lines a kind.
 
+**Your answers, done:** talk server waits for your friends (your Hetzner first); Tom's reading from what he has seen; F:\town-verify in the Recycle Bin.
+
 **Done:**
-- Talk naming Tom now raises suspicion in whoever hears it.
+- Talk naming Tom now raises suspicion in its hearers.
 - Nothing said about Tom repeats within two hours; neighbours' talk came round every 1.5 minutes, now 10 or more.
 - 27 street lines fixed: a doctor who charged (the GP was free), "the little ones", Mickey's as a pub.
 - A night-one job seen plainly reaches Tom's face by minute thirty, 13 of 13.
@@ -27,7 +27,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Got wrong:** a push with a check red, fixed in minutes; the page's reason for minute thirty, corrected.
 
-**Research:** 1990 street speech and the NHS.
+**Research:** 1990 speech and the NHS.
 
 **C: free:** 41.5 GB last night, 52.5 GB now. Backup: runs with this commit.
 

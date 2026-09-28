@@ -21,16 +21,9 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and four decisions",
-        "lede": "The plan for a player's first hour, and four things only you can decide. One tap each, and a note if you want.",
+        "title": "The first hour, and two decisions",
+        "lede": "The plan for a player's first hour, and the things still waiting on you. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September.",
         "questions": [
-            ("q-relay", "Where the talk server runs, so no key ships with a friend's copy",
-             [("hetzner", "A small rented server in Germany, about €6 a month, stopping all calls at $50 a month while friends play (recommended: cheapest, simple, and Europe is where they are)"),
-              ("fly", "Fly.io, about $3 a month, the same stop"),
-              ("later", "Not yet: no copies go to friends until you say")]),
-            ("q-reading", "Tom's reading of what the ending will cost (D58, D33)",
-             [("seen", "Built from what he has seen and heard, so it can be wrong, as a man's reading of his own position is (recommended: it is what D33 says)"),
-              ("truth", "The true state, put into words: simpler and always right, but a meter by another name")]),
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
               ("canon", "Canon wins: once she has met him she calls him Nowak like everyone else")]),
@@ -78,7 +71,7 @@ def build(date):
 
 def selftest():
     page = build("2026-09-29")
-    assert page.startswith("<title>") and 'data-key="first-hour"' in page and 'data-key="q-relay"' in page and 'data-key="q-reading"' in page
+    assert page.startswith("<title>") and 'data-key="first-hour"' in page and 'data-key="q-chatter"' in page and 'q-relay' not in page
     assert "<script" not in town_page.outline_html(DAYS["2026-09-29"]["docs"][0][2])
     for key, _, options in DAYS["2026-09-29"]["questions"]:
         assert "recommended" in options[0][1], key

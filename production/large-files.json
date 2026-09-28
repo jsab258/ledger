@@ -719,7 +719,8 @@
    "why": "scratch, no longer needed; it sits outside the places I may delete, so it waits for Jafar's yes",
    "status": "superseded",
    "recorded": "2026-09-28",
-   "mb": 905
+   "mb": 905,
+   "statusWhy": "Removed on Jafar's yes, 28 September: sent to F:'s Recycle Bin (863 MB), recoverable until he empties it"
   }
  ]
 }
