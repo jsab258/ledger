@@ -221,6 +221,11 @@ WATCHED = {
     # the game's voice engine speaks it from their game clip (Sheila's
     # Parler-designed D, Ron's p227, Darren's p241), for the in-game page.
     "production/casting/in-game-2026-09-25/voice": "Casting voice candidates",
+    # 28 September: the thinking sounds and the day's page's speaking lines are
+    # the game's voice engine speaking from the cast clips: clones, so VCTK's
+    # and Parler's obligations, by the same reasoning as the barks.
+    "content/voice/acks": "Casting voice candidates",
+    "production/approvals/2026-09-28": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be
