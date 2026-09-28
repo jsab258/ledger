@@ -4798,6 +4798,12 @@ namespace Ledger.CoreTests
             var p = ClaimCheck.ParseItems("```json\n{\"specifics\": [{\"detail\": \"a man with a van\", \"kind\": \"vehicle\", \"source\": \"none\"}]}\n```", ids);
             Check(p != null && p.Count == 1 && p[0] == "a man with a van", "an answer in a code fence is read, and a specific with no source is invented");
             Check(ClaimCheck.ParseItems("{\"specifics\": []}", ids).Count == 0, "an empty list is read as nothing invented");
+            // How they know him supports "we've met" (town list 6s), as a memory does.
+            var withK = ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent>(), null, null, null, null, "You have met Mickey's nephew, the new owner, and you know him to speak to: you call him Nowak.");
+            var kIds = withK.ConvertAll(i => i.id);
+            Check(kIds.Contains("K1") && withK.Exists(i => i.id == "K1" && i.text.StartsWith("How they know him, as they were told it:") && i.text.Contains("you call him Nowak"))
+                  && ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"the chapel on Dock Road\", \"kind\": \"place\", \"source\": \"K1\"}]}", kIds).Count == 1,
+                  "how they know him is known to the check, labelled, and alone it clears no detail: the second look reads it against K");
             Check(ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"ran through the yard\", \"kind\": \"action\", \"source\": \"M1\"}]}", ids).Count == 0,
                 "a specific its item supports is not invented");
             Check(ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"ran through the yard\", \"kind\": \"action\", \"source\": \"M1, C2\"}]}", ids).Count == 0
@@ -8416,6 +8422,17 @@ namespace Ledger.CoreTests
             Check(PlayerIdentity.KnowsName(stranger), "one memory of you is enough to learn it");
             Check(me.AddressBy(stranger) == "Tommy", "and a friend uses the short one", me.AddressBy(stranger));
             Check(me.AddressBy((Gossiper)null) == "the new owner", "asking about nobody is safe");
+            // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's
+            // word or their own earlier talk, and what they call him is the game's.
+            string never = me.HowTheyKnowHim(false, false, "Tom"), heardOf = me.HowTheyKnowHim(false, true, "Tom");
+            Check(never.Contains("for the first time") && never.Contains("the new owner") && !never.Contains("Nowak") && !never.Contains("call him Tom")
+                  && heardOf.Contains("have not met") && heardOf.Contains("Nowak") && heardOf.Contains("would not know him by sight") && !heardOf.Contains("call him Tom"),
+                  "never met: the new owner, for the first time; heard of: the name, not the face, and never Tom, whatever the game sends", heardOf);
+            Check(me.HowTheyKnowHim(true, false, null).Contains("you call him the new owner.") && me.HowTheyKnowHim(true, false, "Nowak").Contains("you call him Nowak.")
+                  && me.HowTheyKnowHim(true, false, "Tom").Contains("you call him Tom.") && me.HowTheyKnowHim(true, false, "Tommy").Contains("you call him Tommy.")
+                  && me.HowTheyKnowHim(true, false, "Boss").Contains("you call him the new owner.") && me.HowTheyKnowHim(true, false, null).Contains("Say nothing about when, where or how often")
+                  && me.HowTheyKnowHim(true, false, null, onlyTheirOwnTalk: true).StartsWith("You have spoken with"),
+                  "met: the name the game sends, only if he goes by it, else the new owner; met only by their own talk, spoken with before; always held to their memories");
 
             // Renaming is free, which is the whole reason this is data.
             var snap = MiniJson.Serialize(me.Capture());

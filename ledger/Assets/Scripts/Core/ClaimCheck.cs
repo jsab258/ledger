@@ -90,9 +90,10 @@ namespace Ledger.Core
         /// What the character knows, as numbered items: C for their card (not
         /// how they talk), H for their hard facts, B for beliefs, M for every
         /// memory with its time, W for why they are wary, S for the scene, T for
-        /// the time now. The same material as KnownFor, in the same order.
+        /// the time now, K for how they know him (town list 6s). The same
+        /// material as KnownFor, in the same order.
         public static List<(string id, string text)> KnownItems(CharacterCard card, IEnumerable<MemoryEvent> retrieved,
-            IEnumerable<string> beliefs, string why, string scene, string now = null)
+            IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null)
         {
             var items = new List<(string, string)>();
             int n = 0;
@@ -119,6 +120,7 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(why)) items.Add(("W1", "Why they are wary: " + why));
             if (!string.IsNullOrEmpty(scene)) items.Add(("S1", "The scene: " + scene));
             if (!string.IsNullOrEmpty(now)) items.Add(("T1", "It is now " + now + "."));
+            if (!string.IsNullOrEmpty(knowsHim)) items.Add(("K1", "How they know him, as they were told it: " + knowsHim));
             return items;
         }
 
@@ -158,7 +160,7 @@ namespace Ledger.Core
                 "(\"could've been anyone\", \"I think\", \"maybe\"); vague words (somebody, talk, things, people); anything about the " +
                 "conversation itself or the person they are talking to (\"you're asking a lot\", \"new management\"); habits of the street " +
                 "or of people that a C or H item describes; the time now when T1 gives it; small talk about the weather or the scene now.\n" +
-                "Check the items before you write \"none\": a detail a C, H, M, S or T item gives, in other words, has that item's id.\n" +
+                "Check the items before you write \"none\": a detail a C, H, M, S, T or K item gives, in other words, has that item's id.\n" +
                 "Give each specific a kind: vehicle, person, time, place, appearance, object, amount, action, police, business for " +
                 "things that happened; or weather, now, denial, guess, habit, talk, street, self for things that are not claims about an " +
                 "event: street is the general run of the street or the rank (\"quiet today\", \"people in and out\", \"the market crowd's " +
@@ -531,9 +533,11 @@ namespace Ledger.Core
                 if (Array.IndexOf(Loose, kind) >= 0 && !NamesSomething(detail, kind)) continue;
                 if (Array.IndexOf(NotClaims, kind) >= 0 && Array.IndexOf(Loose, kind) < 0) continue;
                 // Support for an event is a belief, a memory or what they were
-                // told (B, M, W). The card, the scene and the time now alone
-                // never are (the independent check: "the police came last
-                // night" cited to the scene passed); the second look decides.
+                // told (B, M, W). The card, the scene, the time now and how they
+                // know him (K) alone never are (the independent check: "the
+                // police came last night" cited to the scene passed); the second
+                // look decides. What a character says about the person they are
+                // talking to is not listed at all, K or no K (FINDINGS).
                 bool eventSupport = false;
                 if (ids != null) foreach (var id in ids) if (id[0] == 'B' || id[0] == 'M' || id[0] == 'W') eventSupport = true;
                 if (!eventSupport) outList.Add(detail.Trim());
@@ -581,7 +585,7 @@ namespace Ledger.Core
         /// other: without them a true "just after half nine" was flagged and a
         /// false "before Mickey died, not last night" passed.
         public static string KnownFor(CharacterCard card, IEnumerable<MemoryEvent> retrieved,
-                                      IEnumerable<string> beliefs, string why, string scene, string now = null)
+                                      IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null)
         {
             var sb = new StringBuilder();
             sb.AppendLine("About themselves:");
@@ -601,6 +605,7 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(why)) sb.AppendLine("Why they are wary: " + why);
             if (!string.IsNullOrEmpty(scene)) sb.AppendLine("The scene: " + scene);
             if (!string.IsNullOrEmpty(now)) sb.AppendLine("It is now " + now + ".");
+            if (!string.IsNullOrEmpty(knowsHim)) sb.AppendLine("How they know him, as they were told it: " + knowsHim);
             return sb.ToString();
         }
 
