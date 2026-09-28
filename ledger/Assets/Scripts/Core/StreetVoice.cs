@@ -151,8 +151,19 @@ namespace Ledger.Core
         /// He heard this line: remembered under its own bank, so the bank moves on.
         public void Heard(SpokenLine line)
         {
-            if (line != null) HeardLine(line.Bank, StreetVoice.WordingOf(line));
+            if (line == null) return;
+            HeardLine(line.Bank, StreetVoice.WordingOf(line));
+            // A telling of the town's own news, counted by story (town list 6aq).
+            if (line.Composed && line.Source?.Content != null && line.Source.Content.Subject == TownNews.Subject)
+            {
+                var key = line.Source.TopicKey;
+                _storyTold[key] = TimesToldHim(key) + 1;
+            }
         }
+
+        /// How many tellings of a story of the town's own he has made out.
+        public int TimesToldHim(string topicKey) => topicKey != null && _storyTold.TryGetValue(topicKey, out var n) ? n : 0;
+        readonly Dictionary<string, int> _storyTold = new Dictionary<string, int>();
 
         /// He heard this line from this bank: remembered, so the bank moves on.
         /// Only what he heard counts, as for the remarks themselves.
@@ -180,7 +191,9 @@ namespace Ledger.Core
             foreach (var s in said) saidOut.Add(s);
             var heardOut = new List<object>();
             foreach (var h in heard) heardOut.Add(new List<object> { h.bank, h.line });
-            return new Dictionary<string, object> { { "said", saidOut }, { "heard", heardOut } };
+            var told = new Dictionary<string, object>();
+            foreach (var kv in _storyTold) told[kv.Key] = kv.Value;
+            return new Dictionary<string, object> { { "said", saidOut }, { "heard", heardOut }, { "told", told } };
         }
 
         /// A ledger from ToJson's values. Whatever it cannot read, it skips: a
@@ -195,6 +208,10 @@ namespace Ledger.Core
                 foreach (var p in pairs)
                     if (p is List<object> pair && pair.Count == 2 && pair[0] is string bank && pair[1] is string line)
                         ledger.HeardLine(bank, line);
+            if (saved.TryGetValue("told", out var told) && told is Dictionary<string, object> toldMap)
+                foreach (var kv in toldMap)
+                    if (kv.Value is double dv && dv >= 0) ledger._storyTold[kv.Key] = (int)dv;
+                    else if (kv.Value is int iv && iv >= 0) ledger._storyTold[kv.Key] = iv;
             return ledger;
         }
     }
@@ -586,12 +603,16 @@ namespace Ledger.Core
 
         // ---- overheard exchanges: the mill, out loud ----
 
+        /// The most tellings of one story of the town's own he makes out (town list 6aq).
+        public const int MostNewsTellings = 4;
+
         /// What the two of them SAY when a rumour passes between them.
         ///
         /// The teller names the story; the hearer answers in the way their
         /// own disposition dictates. Both lines carry the rumour, so a player
         /// in earshot learns it by listening — the ledger row becomes a side
         /// effect of having heard, rather than the event itself.
+
         public static List<SpokenLine> Exchange(Rumor r, Gossiper from, Gossiper to, int seed, RemarkLedger heard = null)
         {
             var lines = new List<SpokenLine>();
@@ -618,6 +639,46 @@ namespace Ledger.Core
                 answerBank = bank;
                 int s = Answer(seed, to.Id);
                 return heard != null ? heard.Fresh(bank, bankLines, s) : Pick(s, bankLines);
+            }
+
+            // THE TOWN'S OWN NEWS (town list 6aq): told as news, not as something
+            // seen of a man ("I'd say it in front of him" is about him), and never
+            // about the player.
+            if (r.Content != null && r.Content.Subject == TownNews.Subject)
+            {
+                // Four tellings of one story he can make out; after that it is the
+                // street's murmur, as real talk is (TownReach: thirteen an hour
+                // before, the same words back inside three minutes).
+                if (heard != null && heard.TimesToldHim(r.TopicKey) >= MostNewsTellings) return lines;
+                string news = Tell("exchange/tell/news", new[]
+                {
+                    $"Did you hear? {Cap(what)}.",
+                    $"Here, {what}.",
+                    $"{Cap(what)}, apparently.",
+                    $"You'll never guess. {Cap(what)}.",
+                    $"They're saying {what}.",
+                    $"Seems {what}.",
+                    $"Have you heard? {Cap(what)}.",
+                    $"I'll tell you something. {Cap(what)}.",
+                    $"Talk of the street, this. {Cap(what)}.",
+                    $"You'll want to hear this. {Cap(what)}.",
+                });
+                string heardIt = Reply("exchange/reply/news", new[]
+                {
+                    "Never.",
+                    "Well, I never.",
+                    "Go on.",
+                    "You're joking.",
+                    "Doesn't surprise me.",
+                    "First I've heard of it.",
+                    "There's always something.",
+                    "Who told you that?",
+                    "Well, it's none of my business.",
+                    "I'd not have thought it."
+                });
+                lines.Add(new SpokenLine { SpeakerId = from.Id, Text = news, AboutPlayer = false, Source = r, Composed = true, Bank = tellBank, Wording = Unfill(news, what) });
+                lines.Add(new SpokenLine { SpeakerId = to.Id, Text = heardIt, AboutPlayer = false, Source = r, Bank = answerBank });
+                return lines;
             }
 
             // Fourteen a band rather than two or three. BarkGen measured the

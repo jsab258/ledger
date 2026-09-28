@@ -1,0 +1,22 @@
+{
+  "what": "The town's own news (town list 6aq): happenings among the named cast, drawn from their routines, filed as sightings by everybody in the area at that hour, and told by the same gossip rounds and street banks as any story. One sample first, for Jafar's page; no more until he has heard it in the game. Each story's subject is \"town\"; its \"parties\" hold it but never pass it on. Read by Core/TownNews.cs.",
+  "stories": [
+    {
+      "id": "hal_rita_row",
+      "summary": "Hal and Rita had words in the pawn, and nobody knows what about",
+      "area": "ritas",
+      "day": 0,
+      "hour": 11,
+      "fact": [
+        "town",
+        "hal_rita_row_d0",
+        "seen"
+      ],
+      "confidence": 0.9,
+      "parties": [
+        "hal",
+        "rita"
+      ]
+    }
+  ]
+}

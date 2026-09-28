@@ -22,7 +22,7 @@ REPO = town_page.REPO
 DAYS = {
     "2026-09-29": {
         "title": "The first hour, and eight decisions",
-        "lede": "The plan for a player's first hour, and eight things only you can decide. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September; Tom's reading is back, because it failed its review again.",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and eight things only you can decide. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September; Tom's reading is back, because it failed its review again.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -56,6 +56,8 @@ DAYS = {
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),
              "Approve the hour", "Change it (say what in the note)"),
+            ("town-news", "The town's own news: one sample", os.path.join(REPO, "game-design", "town-news-sample-2026-09-29.md"),
+             "Approve it, and write about ten more like it", "Change it (say what in the note)"),
         ],
     },
 }

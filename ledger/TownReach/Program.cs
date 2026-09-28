@@ -11,7 +11,7 @@ using Ledger.Core;
 ///
 ///     dotnet run --project ledger/TownReach -c Release -- [--cast production/specs/quay-cast.json] [--days 14] [--every 1] [--ties]
 ///     ... -- --cast production/specs/hook-cast.json --meridian sheila,ron,darren,ada,june
-///     ... -- --cast production/specs/hook-cast.json --two-hours [--clear-every 45] [--deed-at 30]
+///     ... -- --cast production/specs/hook-cast.json --two-hours [--clear-every 45] [--deed-at 30] [--town-news]
 ///
 /// A MEASUREMENT AND NOTHING ELSE. It changes no constant and decides nothing:
 /// the mill is the shipped GossipMill with its own numbers, the routines are
@@ -58,7 +58,8 @@ static class Program
         string metArg = Arg(args, "--meridian", null);
         if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv));
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
-                                                                   double.Parse(Arg(args, "--deed-at", "-1"), Inv));
+                                                                   double.Parse(Arg(args, "--deed-at", "-1"), Inv),
+                                                                   Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
 
         Console.WriteLine($"townReach cast={Path.GetFileName(castPath)} people={people.Count} ties={cast.Ties.Count} " +
                           $"talkRangeM={cast.TalkRangeM.ToString(Inv)} days={days}");
@@ -316,7 +317,7 @@ static class Program
     /// RemarkLedger for the whole two hours, told only of what he heard. With
     /// --clear-every N, the neighbours' words he can make out come no oftener
     /// than every N seconds instead of the Core's floor, to compare (the street's murmur is not counted).
-    static int TwoHours(CastDay cast, string castJson, double clearEvery, double deedAtMinute = -1)
+    static int TwoHours(CastDay cast, string castJson, double clearEvery, double deedAtMinute = -1, TownNews newsFile = null)
     {
         var people = cast.People;
         var placesObj = MiniJson.AsObject(MiniJson.AsObject(MiniJson.Deserialize(castJson))["places"]);
@@ -364,11 +365,15 @@ static class Program
                 // list 6an): what the neighbours in earshot say after it.
                 double deedT = deedAtMinute < 0 ? -1 : deedAtMinute * 60.0;
                 bool deedHeard = false;
+                // THE TOWN'S OWN NEWS (town list 6aq): filed as its hour comes.
+                TownNews news = null;
+                if (newsFile != null) { news = new TownNews(); news.Stories.AddRange(newsFile.Stories); }
                 for (int playHour = 0; playHour < Hours; playHour++)
                 {
                     int abs = 9 + playHour, day = abs / 24, hourOfDay = abs % 24;
                     if (abs == sightAbs) mill.Witness(witness, new Fact("player", "night_walk_d1", "seen"),
                         "the new owner was about the yard late at night", sensitive: true, seen, confidence: 1.0);
+                    news?.Seed(mill, cast, new GameTime(day, hourOfDay, 0));
                     var outNow = people.Where(p => cast.Where(p, day, hourOfDay) != null).ToList();
                     (string name, double x, double z) at;
                     if (mode == "walking") at = spots[playHour % spots.Count];
@@ -384,7 +389,7 @@ static class Program
                         var events = mill.Tick(new GameTime(day, hourOfDay, minute), (a, b) => cast.Together(a, b, day, hourOfDay));
                         foreach (var ev in events)
                         {
-                            if (ev.Rumor == null || ev.Rumor.Content.Subject != "player") continue;
+                            if (ev.Rumor == null || (ev.Rumor.Content.Subject != "player" && (news == null || ev.Rumor.Content.Subject != TownNews.Subject))) continue;
                             if (!earshot.Contains(ev.FromId) || !earshot.Contains(ev.ToId)) continue;
                             double t = hourStart + minute / 60.0 * SecondsPerHour;
                             var from = mill.Get(ev.FromId); var to = mill.Get(ev.ToId);
@@ -447,6 +452,29 @@ static class Program
             }
 
             Console.WriteLine($"MODE {mode}: runs={runs} (each of the cast out at each hour of night one as the witness)");
+            if (newsFile != null)
+            {
+                // The town's own news: how often he overheard it, and when first.
+                int runsHeard = 0, inFirstHour = 0, inTwo = 0; var firsts = new List<double>();
+                for (int r = 0; r < runs; r++)
+                {
+                    double first = double.MaxValue;
+                    foreach (var kv in freshHeard)
+                    {
+                        if (kv.Key != "exchange/tell/news" || r >= kv.Value.Count) continue;
+                        foreach (var (t, _) in kv.Value[r])
+                        {
+                            if (t < 3600) inFirstHour++;
+                            if (t < 7200) inTwo++;
+                            first = Math.Min(first, t);
+                        }
+                    }
+                    if (first < double.MaxValue) { runsHeard++; firsts.Add(first / 60.0); }
+                }
+                firsts.Sort();
+                string med = firsts.Count == 0 ? "never" : firsts[firsts.Count / 2].ToString("0.0", Inv) + " min";
+                Console.WriteLine($"  the town's own news: overheard in {runsHeard}/{runs} runs, first a median {med} in; tellings he overheard in the first hour {inFirstHour / (double)runs:0.0} a run, in two hours {inTwo / (double)runs:0.0}");
+            }
             if (deedAtMinute >= 0)
             {
                 // After the deed: what the neighbours said, and how soon.

@@ -36,7 +36,7 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 <main class="wrap">
 <header><p class="eyebrow">LEDGER · the town session · 2026-09-29</p>
 <h1>The first hour, and eight decisions</h1>
-<p class="lede">The plan for a player&#x27;s first hour, and eight things only you can decide. One tap each, and a note if you want. The talk server and Tom&#x27;s reading you answered on 28 September; Tom&#x27;s reading is back, because it failed its review again.</p></header>
+<p class="lede">The plan for a player&#x27;s first hour, the first story of the town&#x27;s own, and eight things only you can decide. One tap each, and a note if you want. The talk server and Tom&#x27;s reading you answered on 28 September; Tom&#x27;s reading is back, because it failed its review again.</p></header>
 <section><h2>Your calls</h2><p class="intro">The first choice in each is my recommendation.</p>
 <div class="card" data-key="q-sheila-name"><h3>Sheila&#x27;s card keeps Tom at &quot;new management&quot; until he earns a name; canon says names follow knowing, not liking</h3><div class="row">
 <label class="pick"><input type="radio" name="q-sheila-name" id="q-sheila-name-exception" value="exception"><span>Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town&#x27;s)</span></label>
@@ -101,6 +101,21 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 <h3>For Jafar</h3>
 <p>Approve the hour as the plan for the first session, or send it back with what to change. Two things in it wait on your rulings, both on this page: whether the Ledger&#x27;s belief about what the street knows is built from what Tom has seen and heard; and whether Sheila, who keeps him at &quot;new management&quot; until he earns a name, is the exception to canon&#x27;s rule that names follow knowing, not liking.</p>
 <div class="row"><label class="pick"><input type="radio" name="first-hour" id="first-hour-approve" value="approve"><span>Approve the hour</span></label><label class="pick"><input type="radio" name="first-hour" id="first-hour-redo" value="redo"><span>Change it (say what in the note)</span></label></div><textarea id="first-hour-note" placeholder="What to change"></textarea><p class="status" id="first-hour-status"></p></article></section>
+<section><h2>The town&#x27;s own news: one sample</h2><article class="card outline" data-key="town-news">
+<p>Until now every story the street passed on was about Tom, so before he did anything the street had nothing to say, and over two hours the only stories anyone told were his. This is the first story of the town&#x27;s own, to hear before any more are written.</p>
+<h3>The story</h3>
+<p><strong>Hal and Rita had words in the pawn, and nobody knows what about.</strong></p>
+<p>It happens at Rita&#x27;s pawn at eleven on Monday morning, when Hal calls there as he does every Monday. Everybody in the pawn then saw it: Rita and Hal themselves, Darren Milner, the pawn&#x27;s back-room hand, its appraiser, its clerk, and the locksmith who works its counter in the mornings. From them it travels the way any story does, friend to friend, as their days cross; Hal and Rita keep it to themselves.</p>
+<p>It names only people the street knows by name, says only what was seen, and leaves the why open: nobody in the town can say what the row was about, so no character can invent it.</p>
+<h3>How Tom hears it</h3>
+<p>Two neighbours, as he passes:</p>
+<ul><li>&quot;Here, Hal and Rita had words in the pawn, and nobody knows what about.&quot; / &quot;Never.&quot;</li><li>&quot;Talk of the street, this. Hal and Rita had words in the pawn, and nobody knows what about.&quot; / &quot;I&#x27;d not have thought it.&quot;</li><li>&quot;Seems Hal and Rita had words in the pawn, and nobody knows what about.&quot; / &quot;Well, it&#x27;s none of my business.&quot;</li><li>&quot;Hal and Rita had words in the pawn, and nobody knows what about, apparently.&quot; / &quot;Who told you that?&quot;</li></ul>
+<p>He makes out four tellings at most; after that it is the street&#x27;s murmur.</p>
+<h3>What it does</h3>
+<p>Measured over two hours of play on the named cast&#x27;s street (TownReach): he overhears it in every run, the first time about a minute in, four times in all, never the same words twice. It raises nobody&#x27;s suspicion of him.</p>
+<h3>If you approve</h3>
+<p>About ten more of the same shape, each drawn from the routines (who is where, when), each checked the same way, then the builder puts them in the game and records the crowd voices for the telling lines.</p>
+<div class="row"><label class="pick"><input type="radio" name="town-news" id="town-news-approve" value="approve"><span>Approve it, and write about ten more like it</span></label><label class="pick"><input type="radio" name="town-news" id="town-news-redo" value="redo"><span>Change it (say what in the note)</span></label></div><textarea id="town-news-note" placeholder="What to change"></textarea><p class="status" id="town-news-status"></p></article></section>
 <p class="status" id="store-status"></p></main>
 <script>
 let db = null, canWrite = true;
