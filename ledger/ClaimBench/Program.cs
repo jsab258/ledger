@@ -22,6 +22,7 @@ using Ledger.Core;
 ///     dotnet run --project ledger/ClaimBench -c Release -- pipeline v2   # the whole turn, as the game runs it
 ///     dotnet run --project ledger/ClaimBench -c Release -- smalltalk     # real names in small talk, the rule off and on
 ///     dotnet run --project ledger/ClaimBench -c Release -- tics          # a card's verbal tic over a conversation, before and after
+///     dotnet run --project ledger/ClaimBench -c Release -- disguise      # inventions hidden in small talk, through the live check
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -95,6 +96,7 @@ static class Program
             case "gold": return Gold(dir);
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
+            case "disguise": return await Disguise(dir);
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
@@ -418,6 +420,57 @@ static class Program
         ConversationEngine.RealWorldRule = true;
         WriteJsonl(Path.Combine(dir, "smalltalk.jsonl"), rows);
         Console.WriteLine($"smalltalk: usd={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
+        return 0;
+    }
+
+    /// INVENTIONS HIDDEN IN SMALL TALK (town list 6at): the check now leaves out
+    /// a speaker's own everyday life and the street's ordinary fixtures, so each
+    /// of these wraps an invented happening, person or vehicle in exactly that
+    /// kind of texture; each must still be flagged. The live check (CheckAsync),
+    /// with only a card's knowledge, so nothing in them is supported.
+    static async Task<int> Disguise(string dir)
+    {
+        var lines = new[]
+        {
+            "I never learned to drive, but I saw a white van by the phone box on the corner at eleven.",
+            "My usual, same as always. Rita's lad bought twenty off me last night.",
+            "Plain ones in the tin. A fella called Dennis brought them round Tuesday.",
+            "I get the evening paper. It had a bit about the pawn window being put in.",
+            "Phone box on the corner, if you need it. Somebody was using it at midnight, shouting.",
+            "I walk everywhere, me. Walked past a man in a donkey jacket running from the yard.",
+            "Market for the veg. The fish van was there late, blue one, engine running.",
+            "Kettle's on in the office. Sheila had the police in about the takings this morning.",
+            "I stand here all day. Saw the new owner by the yard gate at two in the morning.",
+            "Radio's on in the office. Heard Hal and Rita shouting about money on Monday.",
+            "I don't drive nothing. Ron's cousin drove a Transit through here at night.",
+            "Same stall these twenty years. The stall man said somebody broke in Sunday.",
+        };
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, "rocco.md")));
+        var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Quay Street, early evening, dry.", new GameTime(2, 18, 0).ToString());
+        using var client = new AnthropicClient(Key());
+        int flagged = 0, passed = 0;
+        var rows = new List<object>();
+        foreach (var line in lines)
+        {
+            IReadOnlyList<string> found = null;
+            for (int attempt = 0; attempt < 3 && found == null; attempt++)
+            {
+                try
+                {
+                    var (f, calls) = await ClaimCheck.CheckAsync(client, Models.Ambient, items, line, default);
+                    foreach (var c in calls) Spend(Models.Ambient, c.InputTokens, c.OutputTokens);
+                    found = f;
+                }
+                catch (Exception) { await Task.Delay(2000); }
+            }
+            bool caught = found != null && found.Count > 0;
+            if (caught) flagged++; else passed++;
+            rows.Add(new { line, caught, flagged = found });
+            Console.WriteLine($"  {(caught ? "caught" : "PASSED")}: {line}");
+        }
+        WriteJsonl(Path.Combine(dir, "disguise.jsonl"), rows);
+        Console.WriteLine($"disguise: inventions hidden in small talk caught {flagged}/{lines.Length}; usd={_usd:0.00}");
         return 0;
     }
 

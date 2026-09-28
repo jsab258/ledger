@@ -9183,7 +9183,9 @@ namespace Ledger.CoreTests
                 Check(pp.Contains("- Ron Kirby, who keeps Mickey's door and the rank; you know each other well") && pp.Contains("you do not know where anyone is right now unless they are here with you")
                       && pIds.Contains("P1") && ClaimCheck.NumberedKnown(pItems).Contains("P1: Somebody or somewhere on the street they know: ")
                       && habitP.Count == 1 && habitNone.Count == 1 && eventP.Count == 1
-                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("a C, H or P item describes"),
+                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("a C, H or P item describes")
+                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("the speaker's own everyday life, tastes and belongings")
+                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("\"I never learned to drive\""),
                       "they are told who they know, and the claim check reads it: a habit or event from a P item alone goes to the second look");
             }
 
