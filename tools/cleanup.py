@@ -32,7 +32,7 @@ import shutil
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATE = "2026-09-25"
+DATE = "2026-09-28"   # this week's page; the 25 September one is carried out (git has it)
 HOME = os.path.expanduser("~")
 LOCAL = os.environ.get("LOCALAPPDATA", os.path.join(HOME, "AppData", "Local"))
 RUNNER = r"C:\actions-runner-ledger\_work"
@@ -208,7 +208,16 @@ def delete_group(gid):
     g = next(x for x in PLAN if x["id"] == gid)
     if g.get("moveOut"):
         return [{"group": gid, "refused": "an old copy: rename first, prove, then delete-renamed"}]
+    if gid == "runner-checkout" and runner_busy():
+        return [{"group": gid, "refused": "the build machine is building; try again when it is idle"}]
     return [delete(p) for p in g["paths"]]
+
+
+def runner_busy():
+    """True while the build machine runs a job (a Runner.Worker process exists)."""
+    import subprocess
+    out = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Runner.Worker.exe"], capture_output=True, text=True).stdout
+    return "Runner.Worker.exe" in out
 
 
 def rename_old(back=False):
@@ -237,45 +246,25 @@ def delete_renamed():
 
 W = os.path.join(RUNNER, "ledger", "ledger", "ue-probe")
 PLAN = [
-    {"id": "runner-leftovers", "title": "The build machine's leftovers from its last build",
-     "paths": [os.path.join(W, d) for d in ("Packaged", "Saved", "Intermediate", "Binaries")],
-     "why": "The last build's packaged game, cooked files, logs and compile scratch. Every build deletes these four itself at its start and makes them again, and its game has already been copied out to the played copy, so nothing reads them between builds.",
-     "after": "Nothing changes until the next build, which makes them again as it always does. From now on the build also clears them at its end (a step added to the workflow), so they stop sitting on C: between builds.",
+    # 28 September: C: at 42 to 52 GB, under his 60. The 25 September groups are carried out.
+    {"id": "unreal-old-cache", "title": "Unreal's old cache, which nothing uses any more",
+     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache")],
+     "why": "Unreal kept the same data twice: in this old file cache and in its newer store. Since this morning it is set to neither read nor write the old one (the newer store, now capped at 20 GB in Unreal's own settings, holds the same data). Its own cleaner only removes files unused for a week, so left alone it would take a week or more to empty.",
+     "after": "Nothing you would notice; the first time something found only here is needed, Unreal makes it again.",
      "recommend": True},
-    {"id": "runner-old-workspace", "title": "The build machine's old workspace for wc26-picks",
-     "paths": [os.path.join(RUNNER, "wc26-picks")],
-     "why": "Left from when this machine built the wc26-picks project. The machine now builds only this project, so nothing uses it.",
-     "after": "Nothing changes.", "recommend": True},
-    {"id": "old-copy-wc26-picks", "title": "The old copy of the project: wc26-picks",
-     "paths": [os.path.join(HOME, "wc26-picks")],
-     "moveOut": [
-         {"from": os.path.join(HOME, "wc26-picks", "tools", "voice-live", "env-export"), "to": r"F:\LedgerTools\voice-env-export",
-          "why": "the game's live voice still loads a library folder from here (its pointer file is changed to the new place)"},
-         {"from": os.path.join(HOME, "wc26-picks", "tools", "voice-live", "game-out"), "to": r"F:\LedgerTools\voice-graphs\game-out",
-          "why": "the voice model converted for the old Unity player; hours to make again, so kept on F:"},
-         {"from": os.path.join(HOME, "wc26-picks", "tools", "voice-live", "export-out"), "to": r"F:\LedgerTools\voice-graphs\export-out",
-          "why": "the same, an earlier conversion"}],
-     "saveIntoProject": "140 small files found nowhere on GitHub (7 MB): 37 prop models made by the old recipes, the old supervisor's log, two reply receipts, the migration log and bench-spoke.wav; into production/archive/old-copies/wc26-picks/.",
-     "why": "Its history is on GitHub: every commit is pushed. Everything else in it is Python environments that can be made again, an old packaged game the played copy replaced, and build output.",
-     "after": "The live voice runs from F: (checked by making a line before anything is deleted); the old files are in the project's archive.",
-     "recommend": True},
-    {"id": "old-copy-ledger-migrate", "title": "The older copy of the project: ledger-migrate",
-     "paths": [os.path.join(HOME, "ledger-migrate")],
-     "moveOut": [
-         {"from": os.path.join(HOME, "ledger-migrate", "ue-probe", "Packaged"), "to": r"F:\LedgerTools\played-game",
-          "why": "the played copy of the game, which your 'play the street' shortcut opens and every build refreshes; a link is left at the old place, so the shortcut and the build find it without anything of yours being changed"}],
-     "saveIntoProject": "7 small files found nowhere on GitHub (15 MB): the retired studio's supervisor logs and the 11 September answer file; into production/archive/old-copies/ledger-migrate/.",
-     "why": "Its history is on GitHub: every commit and branch is pushed. Apart from the played copy, nothing in it is used.",
-     "after": "The shortcut opens the same game, now kept on F:.",
+    {"id": "runner-checkout", "title": "The build machine's copy of the project",
+     "paths": [os.path.join(RUNNER, "ledger", "ledger")],
+     "why": "About half of it is history piled up: every build fetches only the newest commit, but the old ones were never cleared out, 7.6 GB so far. The builds need only the newest.",
+     "after": "The next build starts from a fresh copy of the newest commit, a few minutes longer once, and about 7 GB of this comes back as that copy. From then on each build clears the old history at its end (a step added to the build), so it stops piling up.",
      "recommend": True},
     {"id": "project-intermediate", "title": "This project's local compile scratch",
      "paths": [os.path.join(REPO, "ue-probe", "Intermediate")],
      "why": "Compile and cook scratch for the game on this PC.",
      "after": "The next build here makes it again, a few minutes slower, and it grows back to the same size at once, so it frees nothing for long.",
      "recommend": False},
-    {"id": "unreal-cache", "title": "Unreal's shared cache",
-     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache"), os.path.join(LOCAL, "UnrealEngine", "Common", "Zen")],
-     "why": "Compiled shaders and cooked data that every editor start and every build reuses. All of it was written in the last three days, so all of it is in use.",
+    {"id": "unreal-store", "title": "Unreal's newer cache store",
+     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen")],
+     "why": "The compiled shaders and cooked data every editor start and build reuses. Capped this morning at 20 GB in Unreal's own settings, and it trims itself above that.",
      "after": "Every editor start and build would compile for a long time, and it would grow straight back.",
      "recommend": False},
 ]
@@ -284,10 +273,8 @@ NOT_IN_LIST = [
     ("Dropbox", os.path.join(HOME, "Dropbox"), "yours; the backup adds to it and never deletes"),
     ("Windows' hibernation file", r"C:\hiberfil.sys", "a Windows setting you can switch off yourself"),
     ("Windows' swap file", r"C:\pagefile.sys", "Windows'"),
+    ("Windows' temporary files", os.path.join(LOCAL, "Temp"), "not on your list, so untouched"),
     ("Hugging Face's download cache", os.path.join(HOME, ".cache", "huggingface"), "two speech datasets from August and the voice model; not on your list, so untouched; add it and it can go"),
-    ("C:\\LedgerTools\\parler-tts and slr83", r"C:\LedgerTools\slr83",
-     "links to the only copies on F:, taking no room on C:; left alone (measured through the link they looked like 7.8 GB of duplicates)"),
-    ("F:\\LedgerTools, my own rejected and superseded files", r"F:\LedgerTools", "not on your list; the large-file record lists 13.7 GB of my own there that are rejected or superseded; add it and the end-of-sitting sweep can clear them"),
 ]
 
 
@@ -384,7 +371,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
 </style>
 <div class="wrap">
   <header>
-    <div class="kicker">LEDGER · cleanup page · 25 September, night</div>
+    <div class="kicker">LEDGER · cleanup page · 28 September</div>
     <h1>What would go from drive C, and why</h1>
     <p class="how">Nothing has been deleted. Each group below is a folder or a few, with its size, why it can go, and what happens after. Say yes or no to each; only the groups you say yes to go, and only inside the list you gave (now in CLAUDE.md). Anything that must survive is moved to F: first and checked there. Groups I would not delete are shown too, marked, so you see everything I looked at.</p>
     <div class="meter" id="meter"></div>
@@ -393,7 +380,7 @@ footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var
   <main class="wrap" id="groups"></main>
   <section class="group"><h2>Not on your list, so not touched</h2><div class="tbl"><table id="others"></table></div></section>
   <section class="group"><h2>What stops it filling again</h2>
-    <p>1. The build machine clears its build leftovers at the end of each build, not only at the start. 2. Every large file I make is recorded (production/large-files.json), and at the end of each sitting only my own rejected or superseded ones go, only inside your list. 3. My scratch and downloads go to drive F. 4. The backup never lets drive C fall below 1.8 GB free. 5. Each summary shows free space on C: before and after; under 60 GB, this page comes first next time.</p>
+    <p>1. Unreal's cache is capped at 20 GB in its own settings (since 28 September) and trims itself. 2. The build machine clears its build leftovers at the end of each build, and, once you say yes above, its old history too. 3. Every large file I make is recorded (production/large-files.json), and at the end of each day only my own rejected or superseded ones go, only inside your list. 4. My scratch and downloads go to drive F. 5. Each day's summary shows free space on C: before and after; under 60 GB, this page comes first.</p>
   </section>
   <footer>Sizes measured __WHEN__ by tools/cleanup.py, which refuses any path outside the list or protected (what you approved, what the game or a build uses, what the backup covers).</footer>
 </div>

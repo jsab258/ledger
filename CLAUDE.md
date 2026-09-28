@@ -25,7 +25,7 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 ## Records, and nothing more
 
 - NOW.md, no history: the GOAL line (what runs, until when), the builder's list in order as Jafar wrote it (- [ ] open, - [x] done), a line of state, and a Handovers heading where the town session leaves single lines for the builder.
-- FOR-JAFAR.md: one dated summary a day, under 200 words, that day's approval page linked first: what changed, evidence, what failed or is unproven, free space on C: before and after, one line per piece of research done, and anything that needs him. Unresolved decisions carry forward; git keeps earlier summaries (Jafar, 28 September).
+- FOR-JAFAR.md: one dated summary a day, written by 07:00 each morning and covering everything since the last, under 200 words, that day's approval page linked first; anything that needs him urgently before then goes at the top of the file at once: what changed, evidence, what failed or is unproven, free space on C: before and after, one line per piece of research done, and anything that needs him. Unresolved decisions carry forward; git keeps earlier summaries (Jafar, 28 September).
 - DECISIONS.md: one entry per material choice: date, decision, reason, who decided, link. Routine implementation choices go in commit messages.
 - FINDINGS.md: unresolved faults only, at most twenty.
 - Records go in with the work they describe or in the day's summary. No commit that only updates notes, except the day's summary.
@@ -43,7 +43,7 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 ## How the week runs (Jafar, 28 September)
 
 - One goal runs until Sunday evening, set by Jafar with /goal; there are no sittings and no stop hook of our own. The builder's list in NOW.md is worked in order; when an item is done, take the next without asking. Nothing waits on his hands: he writes from his phone.
-- Each day ends with its summary, which ends with something he can act on (how to play what exists, a recommended decision, or both); then the backup runs (tools/backup-to-dropbox.py; the summary's commit sets it off through tools/hooks/post-commit) and the summary gives its line, and the large-file record is swept.
+- Each day's summary (by 07:00) ends with something he can act on (how to play what exists, a recommended decision, or both); then the backup runs (tools/backup-to-dropbox.py; the summary's commit sets it off through tools/hooks/post-commit) and the summary gives its line, and the large-file record is swept.
 - If an item turns out much bigger than it looked, tell him rather than push on.
 
 ## Research first (Jafar, 28 September)
