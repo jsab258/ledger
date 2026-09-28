@@ -36,27 +36,26 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 29 September
 
-**[Your page: the first hour and seven calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Still open: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s).
+**[Your page: the first hour, the town's first story, eight calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Still open: [28 September's](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s).
 
-**Decide there:** Sheila withholding Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; $20–40 to retune invention checks.
+**Decide there:** Sheila and Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet for Tom; $20–40 to retune the invention check, now pressing: 28 of 36 small-talk answers end "that's as far as I can take you".
 
-**Your answers, done:** talk server waits (Hetzner first); Tom's reading from what he has seen; scratch folder in F:'s Recycle Bin.
+**Your answers, done:** talk server waits (Hetzner first); Tom's reading from his own sight; scratch folder recycled.
 
 **Done:**
-- Talk naming Tom raises suspicion; nothing repeats within two hours; 27 street lines fixed.
-- Characters keep talk across reloads, know if they've met him, where they are and the weekday; speak only English; promise nothing; can end a talk.
-- Tom's "where were you?" answers count: a caught lie keeps them wary; the truth never reads as a lie.
-- The talk program runs on a friend's PC; players learn where their words go.
+- Talk naming Tom raises suspicion; no repeats in two hours; 27 street lines fixed.
+- Characters keep talk across reloads, know Tom, the place and the weekday, promise nothing, end talks.
+- Tom's "where were you?" counts, and a lie can surface later; he can own up or ask for silence.
+- Locals say who someone is and where they usually are.
+- The street reacts to a deed; no real brands or mobiles; no spoken stage directions; fewer tics.
 
 **Failed:** Tom's reading, again.
 
-**Got wrong:** a push with a check red, a page's reason; corrected.
+**Research:** 1990 speech; what players are told; three checklist sweeps.
 
-**Research:** 1990 speech; what players are told; two checklist sweeps.
+**C: free:** 41.5 GB yesterday, 46.8 now; the builder's cleanup page waits. Backup runs with this commit.
 
-**C: free:** 41.5 GB last night, 55.2 now; the builder's cleanup page waits on you. Backup runs with this commit.
-
-**Next:** locals telling Tom who someone is and where to find them.
+**Next:** your page.
 
 ## 26 September, day
 
