@@ -98,6 +98,11 @@ static class Program
     sealed class Helper
     {
         public readonly Dictionary<string, CharacterCard> Cards = new Dictionary<string, CharacterCard>();
+        /// The named cast's routines (production/specs/hook-cast.json), so each
+        /// person is told where they are this hour (town list 6u); null without.
+        public CastDay Cast;
+        /// The scene the last line was answered in (the selftest reads it).
+        public string LastScene;
         readonly Dictionary<string, ConversationEngine> _engines = new Dictionary<string, ConversationEngine>();
         readonly ILlmClient _llm;
         readonly CostTracker _cost = new CostTracker();
@@ -392,6 +397,11 @@ static class Program
             if (!Cards.TryGetValue(to, out var card))
                 return JsonSerializer.Serialize(new { id, to, error = "no-card" }, Plain);
             string key = string.IsNullOrEmpty(who) ? to : who;
+            // WHERE THIS PERSON IS, from their routine at this hour, beside the
+            // scene the game sends (the same for everybody until now).
+            var where = Cast?.WhereWords(key, day, hour);
+            if (where != null) scene = (string.IsNullOrWhiteSpace(scene) ? "" : scene.Trim() + " ") + "Where you are: " + where + ".";
+            LastScene = scene;
 
             var sw = Stopwatch.StartNew();
             string brush = BrushOffs[Math.Abs(id) % BrushOffs.Length];
@@ -620,6 +630,14 @@ static class Program
         return Path.Combine("production", "cast", "cards");
     }
 
+    /// The named cast's file, beside the cards (production/specs/hook-cast.json).
+    static void LoadCast(Helper h, string cardsDir)
+    {
+        var path = Path.GetFullPath(Path.Combine(cardsDir, "..", "..", "specs", "hook-cast.json"));
+        if (!File.Exists(path)) return;
+        try { h.Cast = CastDay.Parse(File.ReadAllText(path)); } catch (FormatException) { h.Cast = null; }
+    }
+
     static void LoadCards(Helper h, string dir)
     {
         if (!Directory.Exists(dir)) return;
@@ -660,6 +678,7 @@ static class Program
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
         LoadCards(helper, CardsDir(args));
+        LoadCast(helper, CardsDir(args));
         Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
         string line;
@@ -924,6 +943,19 @@ static class Program
         var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
         Ok("without --early nothing changes: the whole reply, no first line, no rest",
            plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
+        // WHERE THEY ARE (town list 6u): each person told their own place this hour.
+        var placed = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+        LoadCards(placed, cardsDir);
+        LoadCast(placed, cardsDir);
+        int placedDay = -1, placedHour = -1; string placedWords = null;
+        for (int dd = 0; dd < 7 && placedWords == null; dd++)
+            for (int hh = 8; hh < 20 && placedWords == null; hh++)
+                if (placed.Cast?.WhereWords("sam", dd, hh) is string ww) { placedDay = dd; placedHour = hh; placedWords = ww; }
+        await placed.Answer("{\"id\":81,\"to\":\"sam\",\"say\":\"Morning.\",\"day\":" + placedDay + ",\"hour\":" + placedHour + ",\"scene\":\"Quay Street, by the parade.\"}");
+        string placedPrompt = placed.EngineFor("sam") == null ? "" : placed.EngineFor("sam").BuildSystemPrompt("Morning.", new GameTime(placedDay, placedHour, 0), "");
+        Ok("the cast's routines are read, and a person is told where they are this hour beside the game's scene",
+           placed.Cast != null && placedWords != null && placed.LastScene == "Quay Street, by the parade. Where you are: " + placedWords + ".", placed.LastScene ?? "no scene");
 
         // THE RELAY SAYS NO (town list 6t): a brush-off, and the player told why.
         var refused = new Helper(new RefusingFake(), TimeSpan.FromSeconds(8));
