@@ -1,0 +1,88 @@
+diff --git a/tools/town_page.py b/tools/town_page.py
+index 4de02532..eaae5be0 100644
+--- a/tools/town_page.py
++++ b/tools/town_page.py
+@@ -142,6 +142,55 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
+ """
+ 
+ 
++CORE = os.path.join(REPO, "ledger", "Assets", "Scripts", "Core")
++
++
++def reading_phrases():
++    """Every phrase Tom's reading of the ending's cost can show, read from the
++    Core's own source so the page cannot drift from the code: EndingReading's
++    lines and reasons, the books' words (ActThree.StrainWord, ScopeWord) and
++    the police's (Police.Describe). A name is shown as [name]."""
++    lit = r'"((?:[^"\\]|\\.)*)"'
++    out = []
++
++    def add(p):
++        p = re.sub(r"\{[^}]*\}", "[name]", p).replace('\\"', '"')
++        if len(p.split()) >= 3 and p not in out:
++            out.append(p)
++    src = open(os.path.join(CORE, "EndingReading.cs"), encoding="utf-8").read()
++    body = src[src.index("public static class EndingReading"):]
++    body = re.sub(r"//[^\n]*", "", body)
++    # An interpolation hole, however it is written (it may hold quotes of its own), is a name.
++    body = re.sub(r"\{[^{}\n]*\}", "{x}", body)
++    for p in re.findall(r"\$?" + lit, body):
++        add(p)
++    act = open(os.path.join(CORE, "ActThree.cs"), encoding="utf-8").read()
++    for meth in ("StrainWord", "ScopeWord"):
++        seg = act[act.index("public static string " + meth):]
++        for p in re.findall(lit, seg[:seg.index(";")]):
++            add(p)
++    hom = open(os.path.join(CORE, "Homicide.cs"), encoding="utf-8").read()
++    seg = hom[hom.index("public static string Describe"):]
++    for p in re.findall(lit, seg[:seg.index(";")]):
++        add(p)
++    return out
++
++
++def reading_html():
++    esc = html.escape
++    items = "".join(f"<li>{esc(p)}</li>" for p in reading_phrases())
++    return ('</section><section><h2>Tom\'s reading of what the ending will cost</h2>'
++            '<article class="card outline" data-key="reading">'
++            '<p class="intro">D58 asked that every cost deciding the ending be readable before it lands, as Tom\'s own reading with its reasons, '
++            'never a number and never what someone else thinks (D33). The Core now works each cost out: the books, the police, Ellis\'s case, '
++            'who could take it over, the people who knew him before, and anyone who watched him kill. Each reads clear, coming or landed, '
++            'with reasons, and nothing lands without first reading as coming. These are all the words it can use; the screen they appear on '
++            'is the builder\'s.</p><ul>' + items + '</ul>'
++            '<div class="row"><label class="pick"><input type="radio" name="reading" id="reading-approve" value="approve"><span>These words will do</span></label>'
++            '<label class="pick"><input type="radio" name="reading" id="reading-redo" value="redo"><span>Change them (say which in the note)</span></label></div>'
++            '<textarea id="reading-note" placeholder="Which words, and how"></textarea><p class="status" id="reading-status"></p></article>')
++
++
+ def build(date):
+     sheets = [read_sheet(s) for s in SLUGS if os.path.exists(os.path.join(CASTING, s, "SHEET.md"))]
+     esc = html.escape
+@@ -152,7 +201,7 @@ def build(date):
+              '<header><p class="eyebrow">LEDGER · the town session · ' + esc(date) + '</p>',
+              '<h1>Casting sheets and the story</h1>',
+              '<p class="lede">Eleven principals on paper, text only, and the story in two pages. '
+-             'Pick on each, add a note if something is wrong. Faces and voices come after, from the builder, made to what you approve.</p></header>',
++             'Then the words of Tom\'s reading of what the ending will cost. Pick on each, add a note if something is wrong. Faces, voices and screens come after, from the builder, made to what you approve.</p></header>',
+              '<section><h2>Your calls first</h2><p class="intro">Canon questions the sheets and the story raise. The first choice in each is my recommendation.</p>']
+     for key, title, options in QUESTIONS:
+         parts.append(f'<div class="card" data-key="{key}"><h3>{esc(title)}</h3><div class="row">')
+@@ -183,7 +232,8 @@ def build(date):
+     parts.append(outline_html())
+     parts.append('<div class="row"><label class="pick"><input type="radio" name="story" id="story-approve" value="approve"><span>Approve the outline</span></label>'
+                  '<label class="pick"><input type="radio" name="story" id="story-redo" value="redo"><span>Redo it (say what in the note)</span></label></div>'
+-                 '<textarea id="story-note" placeholder="What to change"></textarea><p class="status" id="story-status"></p></article></section>')
++                 '<textarea id="story-note" placeholder="What to change"></textarea><p class="status" id="story-status"></p></article>')
++    parts.append(reading_html() + '</section>')
+     parts.append('<p class="status" id="store-status"></p></main>')
+     parts.append(SCRIPT)
+     return "\n".join(parts)
+@@ -235,6 +285,8 @@ def selftest():
+     assert page.count('data-key="sheet-') == len(SLUGS), page.count('data-key="sheet-')
+     assert "<title>" in page[:8000] and 'data-key="story"' in page
+     assert "<script" not in outline_html()
++    phrases = reading_phrases()
++    assert 'data-key="reading"' in page and len(phrases) >= 20 and not any(re.search(r"\d", p) for p in phrases), phrases
+     print("town_page selftest: ok,", len(SLUGS), "sheets,", len(QUESTIONS), "questions")
+     return 0
+ 

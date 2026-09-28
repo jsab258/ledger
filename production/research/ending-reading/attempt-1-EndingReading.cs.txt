@@ -1,0 +1,230 @@
+using System;
+using System.Collections.Generic;
+
+namespace Ledger.Core
+{
+    /// TOM'S OWN READING OF WHAT THE ENDING WILL COST (town list 6i, 28
+    /// September). D58's second condition, binding stages 3 and 4: every cost
+    /// that decides the ending "is readable by the player BEFORE it lands, as
+    /// Tom's reading with its reasons, never as a number from another mind and
+    /// never as a meter"; "a cost the player could not have seen is a trap; a
+    /// cost he watched arrive is the game". D33: the player sees his own
+    /// position, never other minds, itemised in the Ledger with its reasons in
+    /// the Why idiom. D12: what others know is never shown as ground truth.
+    ///
+    /// So every line here is something Tom can know: his own books, the
+    /// inspector's manner, a detective on the street and what the paper says,
+    /// who watched him and how they have been with him since, who in his crew
+    /// has run things alone or is at odds with whom, and how the people who
+    /// knew him before now are with him. Never a number, never what anyone
+    /// thinks. The words are provisional: D33 leaves the wording and the layout
+    /// to the Ledger's screen, and these go to Jafar on an approval page first.
+    public enum CostLevel
+    {
+        /// Nothing about this is closing in.
+        Clear,
+        /// It is coming, and he can still move it.
+        Coming,
+        /// It has landed: this door is shut, or this thing is lost, as things stand.
+        Here,
+    }
+
+    public sealed class CostReading
+    {
+        /// Which cost: books, police, case, successor, life, witnesses.
+        public string Cost;
+        public CostLevel Level;
+        /// Tom's reading, in words.
+        public string Line;
+        /// Its reasons, in words, as far as he can see them.
+        public List<string> Why = new List<string>();
+    }
+
+    /// One of the crew, as Tom sees them, for the successor's reading.
+    public sealed class CrewView
+    {
+        public string Name;
+        /// Has run something of his on their own.
+        public bool RanSomethingAlone;
+        /// Is openly at odds with somebody in the crew.
+        public string AtOddsWith;
+        /// Up to it, and staying, as far as he can judge from how they have been.
+        public bool UpToIt;
+        public bool WouldStay;
+    }
+
+    /// Somebody Tom saw watch him do it.
+    public sealed class WitnessView
+    {
+        public string Name;
+        /// Cannot hold his eye since: what a nervous witness looks like from outside.
+        public bool Uneasy;
+    }
+
+    /// What the game knows that the books do not.
+    public sealed class CostContext
+    {
+        public Inquiry Police = Inquiry.None;
+        public List<CrewView> Crew = new List<CrewView>();
+        public List<WitnessView> Witnesses = new List<WitnessView>();
+    }
+
+    public static class EndingReading
+    {
+        /// The readings, landed first, then coming, then clear.
+        public static List<CostReading> Read(LedgerState s, CostContext c)
+        {
+            var list = new List<CostReading>();
+            if (s == null) return list;
+            c = c ?? new CostContext();
+            list.Add(Books(s));
+            list.Add(Police(s, c));
+            list.Add(Case(s));
+            list.Add(Successor(s, c));
+            list.Add(Life(s));
+            var w = Witnesses(c);
+            if (w != null) list.Add(w);
+            list.Sort((a, b) => b.Level.CompareTo(a.Level));
+            return list;
+        }
+
+        /// The books, which are his own: what the inspection will see, and why.
+        public static CostReading Books(LedgerState s)
+        {
+            double seen = ActThreeState.SeenStrain(s);
+            var r = new CostReading
+            {
+                Cost = "books",
+                Level = seen >= LedgerState.BooksHoldThreshold ? CostLevel.Here
+                      : seen >= LedgerState.BooksHoldThreshold * ComingShare ? CostLevel.Coming : CostLevel.Clear,
+                Line = ActThreeState.StrainWord(ActThreeState.LedgerStrain(s)),
+            };
+            // WHICH WAY IT IS WRONG: the two directions of the lie.
+            bool unwashed = s.TotalRacketIncome > 0 && s.TotalWashed < s.TotalRacketIncome * 0.9;
+            bool overwashed = s.TotalWashed > Math.Max(1, s.TakingsToDate) * 0.35;
+            if (overwashed) r.Why.Add("the books claim more fares than the cars had hours for");
+            if (unwashed) r.Why.Add("there is night money the books never took in");
+            if (!overwashed && !unwashed) r.Why.Add("what went through the books looks like what a cab office takes");
+            if (s.Cooperations + s.Stonewalls > 0)
+                r.Why.Add(ActThreeState.ScopeWord(ActThreeState.ScopeFactor(s.Cooperations, s.Stonewalls)));
+            if (s.LedgersMoved) r.Why.Add("the real books are out of the office");
+            if (s.PublicRecord) r.Why.Add("a man who has done time gets read more closely");
+            r.Why.Add(r.Level == CostLevel.Here ? "as things stand, keeping anything means the books have to hold, and they will not"
+                    : r.Level == CostLevel.Coming ? "they will hold if nothing more goes through them wrongly"
+                    : "they hold");
+            return r;
+        }
+
+        /// The police, as he can see them: a detective on the street, his name used.
+        public static CostReading Police(LedgerState s, CostContext c)
+        {
+            var i = s.Hunted && c.Police < Inquiry.Manhunt ? Inquiry.Manhunt : c.Police;
+            var r = new CostReading
+            {
+                Cost = "police",
+                Level = i >= Inquiry.Manhunt ? CostLevel.Here : i >= Inquiry.Procedure ? CostLevel.Coming : CostLevel.Clear,
+                Line = i == Inquiry.None ? "nobody from the police is asking about you" : Ledger.Core.Police.Describe(i),
+            };
+            if (i >= Inquiry.Procedure) r.Why.Add("there is a body, and the police do not let a body go");
+            if (i >= Inquiry.Investigation) r.Why.Add("once they use your name, the audit cannot be waited out");
+            if (i >= Inquiry.Manhunt) r.Why.Add("handing it all over and walking away is no longer a door: whoever takes it cannot take a killing with it");
+            else if (i >= Inquiry.Procedure) r.Why.Add("if they start hunting you, handing it over and walking away stops being a way out");
+            return r;
+        }
+
+        /// Ellis's case: whether it stands up without him.
+        public static CostReading Case(LedgerState s)
+        {
+            var r = new CostReading
+            {
+                Cost = "case",
+                Level = s.EllisCaseAnswerable ? CostLevel.Clear : CostLevel.Coming,
+                Line = s.EllisCaseAnswerable ? "Ellis has nothing that stands up on its own"
+                                             : "Ellis has something she can stand on",
+            };
+            r.Why.Add(s.EllisCaseAnswerable
+                ? "what she had has been answered, bought, or pointed somewhere else"
+                : "while it stands, keeping both lives is out of reach; it does not decide the rest");
+            return r;
+        }
+
+        /// Who could carry it, judged as people, as he has seen them.
+        public static CostReading Successor(LedgerState s, CostContext c)
+        {
+            var r = new CostReading { Cost = "successor" };
+            if (s.HandedOver && s.HasReadySuccessor)
+            {
+                r.Level = CostLevel.Clear;
+                r.Line = $"it is {s.SuccessorName ?? "somebody else"}'s name on the licence now";
+                return r;
+            }
+            var ready = c.Crew.Find(v => v.RanSomethingAlone && v.AtOddsWith == null && v.UpToIt && v.WouldStay);
+            if (ready != null || s.HasReadySuccessor)
+            {
+                r.Level = CostLevel.Clear;
+                r.Line = $"{ready?.Name ?? s.SuccessorName ?? "somebody"} could carry it";
+                r.Why.Add("they have run something of yours alone, they are at odds with nobody, and they have stayed");
+                return r;
+            }
+            r.Level = CostLevel.Coming;
+            r.Line = c.Crew.Count == 0 ? "there is nobody to hand it to" : "nobody could carry it yet";
+            foreach (var v in c.Crew)
+            {
+                if (!v.RanSomethingAlone) r.Why.Add($"{v.Name} has never run anything of yours alone");
+                else if (v.AtOddsWith != null) r.Why.Add($"{v.Name} is at odds with {v.AtOddsWith}");
+                else if (!v.UpToIt) r.Why.Add($"{v.Name} is not up to it yet");
+                else if (!v.WouldStay) r.Why.Add($"you are not sure {v.Name} would stay");
+            }
+            return r;
+        }
+
+        /// The people who knew him before it: how they are with him now.
+        public static CostReading Life(LedgerState s)
+        {
+            var r = new CostReading
+            {
+                Cost = "life",
+                Level = s.BestDayLifeLoyalty >= LedgerState.TrustThreshold ? CostLevel.Clear
+                      : s.BestDayLifeLoyalty >= LifeCooling ? CostLevel.Coming : CostLevel.Here,
+            };
+            r.Line = r.Level == CostLevel.Clear ? "somebody who knew you before all this still counts you a friend"
+                   : r.Level == CostLevel.Coming ? "the people who knew you before are cooling"
+                   : "the people who knew you before are civil to you, and no more";
+            if (s.DayLifeDeparted > 0) r.Why.Add("some of them have stopped coming round");
+            r.Why.Add(r.Level == CostLevel.Here ? "as things stand, giving it all up would not buy them back"
+                    : "keeping one of them is what makes giving it up worth anything");
+            return r;
+        }
+
+        /// Those he saw watch him, and how they have been with him since.
+        public static CostReading Witnesses(CostContext c)
+        {
+            if (c.Witnesses.Count == 0) return null;
+            var uneasy = c.Witnesses.FindAll(w => w.Uneasy);
+            var r = new CostReading
+            {
+                Cost = "witnesses",
+                Level = uneasy.Count > 0 ? CostLevel.Coming : CostLevel.Clear,
+                Line = uneasy.Count > 0 ? $"{Names(uneasy)} watched you do it and cannot hold your eye"
+                     : c.Witnesses.Count == 1 ? $"{c.Witnesses[0].Name} watched you do it, and has held steady since"
+                     : $"{Names(c.Witnesses)} watched you do it, and have held steady since",
+            };
+            r.Why.Add(uneasy.Count > 0 ? "a frightened witness is the kind who ends up talking to a detective"
+                                       : "none of them has cooled towards you since");
+            return r;
+        }
+
+        /// A cost is coming once what the inspection sees passes this share of the line.
+        public const double ComingShare = 0.6;
+        /// The people who knew him before are cooling below a friend's loyalty,
+        /// and lost below this.
+        public const double LifeCooling = 0.35;
+
+        static string Names(List<WitnessView> w)
+        {
+            if (w.Count == 1) return w[0].Name;
+            if (w.Count == 2) return w[0].Name + " and " + w[1].Name;
+            return string.Join(", ", w.GetRange(0, w.Count - 1).ConvertAll(x => x.Name)) + " and " + w[w.Count - 1].Name;
+        }
+    }
+}

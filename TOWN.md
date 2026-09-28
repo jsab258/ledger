@@ -28,12 +28,12 @@ run the Core suites, then push to main.
   - [x] f. Owed since D58: Act III's letter, cellar and laundering cap still read as a pub; reworded for the cab office, the cap's reasoning redone from research.
   - [x] g. Owed since D58 (queue 399, marked checkpoint work by Jafar on 21 September): confirm the two endings a hunted player has left are reachable from a hunted state. Both are; no card needed.
   - [x] h. Stage 3's test, the Core side: a witnessed crime reaching a second and a third resident within one game week. On the quay's routines (the street today), a sure witness's story does so every time; on the forty-person named cast, 78% (a second resident 96%). Frame budget and arrest in the game are the builder's.
-  - [ ] i. D58's second condition and D33: every cost that decides the ending (the books, being hunted, a witness's nerve, the successor, whether anyone still counts him) readable before it lands, as Tom's own reading with its reasons, never a number and never another mind; the Core side with tests, its words on an approval page, the screen to the builder.
+  - [ ] i. D58's second condition and D33: every cost that decides the ending (the books, being hunted, a witness's nerve, the successor, whether anyone still counts him) readable before it lands, as Tom's own reading with its reasons, never a number and never another mind; the Core side with tests, its words on an approval page, the screen to the builder. First attempt failed the gate (it put hidden numbers into words; production/research/ending-reading/NOTE-2026-09-28.md); waiting on Jafar: is Tom's reading built from what he has seen and heard, or from the true state?
 
 ## Status
 
-- Items 1 and 2 done in the simulation, with two independent checks; the look, the remark and the routines are handed to the builder.
-- Item 3 done: invented details in what the player hears fell from 30% to 5% of turns on 240 test turns, through three rounds of the independent check.
-- Items 4 and 5 wait on Jafar: the eleven sheets and the story outline are on one approval page, linked first in FOR-JAFAR.md.
-- Handovers waiting on the builder: knowing shows (item 1), the named cast's routines (item 2).
-- Decisions waiting on Jafar: the six questions on the 28 September page. Item 6 under way: 6f and 6a done (the slowest first word 7.9 s to 4.8 s); 6b, the relay, built and tested here, its hosting a question for Jafar.
+- Items 1 to 3 done: the town shows what it has heard, friends meet (80 of 80), invented details fell from 30% to 7% of test turns, and the slowest first word from 7.9 s to 4.8 s.
+- Items 4 and 5 wait on Jafar: the eleven sheets and the story outline are on the 28 September page, linked first in FOR-JAFAR.md.
+- Item 6: a, c, d, e, f, g and h done; b (the relay) built and tested, waiting on where it runs; i (Tom's reading) failed the gate and waits on a ruling.
+- Handovers waiting on the builder: knowing shows, the named cast's routines, the AI notice and the report button.
+- Decisions waiting on Jafar: the page's six questions; where the relay runs and its budget; how Tom's reading is sourced.
