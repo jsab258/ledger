@@ -3,11 +3,55 @@
  "kicker": "LEDGER · Monday 28 September",
  "title": "Monday's page",
  "how": [
-  "Only what passed my check and a second, blind reviewer is here. Pick one per item; a note is optional. Your picks save on the page.",
-  "Sheila's and Darren's new faces are not here: they are closer each time but still fail the reviewer (see the summary)."
+  "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
+  "Faces: front and profile in a plain studio light, and the face speaking a line."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
+  {
+   "kind": "faces",
+   "key": "face-sheila-dunn",
+   "name": "Sheila Dunn",
+   "pron": "her",
+   "note": "Her fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: she reads about 45 to 48, not 53 (smooth forehead and upper lip, no smoker's lines); a peach tint on the upper lids and red inner corners; the hair darker and warmer than the concept's ash grey-brown; the proportions close to the concept. In the speaking frames her eyes blur during a blink. The haircut is Epic's nearest, not yet a set; her glasses come with her clothes.",
+   "audio": "production/approvals/2026-09-28/speak-sheila-dunn.wav",
+   "candidates": [
+    {
+     "take": "S4",
+     "front": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-front.jpg",
+     "profile": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-profile.jpg",
+     "speak": {
+      "file": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-speak.jpg",
+      "frames": 94,
+      "cols": 10,
+      "rows": 10,
+      "fps": 15
+     }
+    }
+   ]
+  },
+  {
+   "kind": "faces",
+   "key": "face-darren-milner",
+   "name": "Darren Milner",
+   "pron": "him",
+   "note": "His fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: the lids cut into the iris and the brows are heavy, so he looks sullen rather than quick and amused, and about 30; orange upper lids and red inner corners; the brown of the hair darker and redder than the concept's, the blond a band at the ends. The haircut is Epic's nearest, not yet a grown-out perm.",
+   "audio": "production/approvals/2026-09-28/speak-darren-milner.wav",
+   "candidates": [
+    {
+     "take": "S4",
+     "front": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-front.jpg",
+     "profile": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-profile.jpg",
+     "speak": {
+      "file": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-speak.jpg",
+      "frames": 82,
+      "cols": 10,
+      "rows": 9,
+      "fps": 15
+     }
+    }
+   ]
+  },
   {
    "kind": "look",
    "key": "look-talk-light",
