@@ -40,6 +40,21 @@ namespace Ledger.Core
 
         public const string ReportLabel = "Report this line";
 
+        /// WHEN THE TOWN'S LIVE TALK STOPS (town list 6t), what the player is
+        /// told, plainly and not in any character's voice: why, and when it comes
+        /// back. Null for any other failure, which stays a brush-off.
+        public static string TalkPaused(string errorType, string until) =>
+            errorType == "allowance_spent"
+                ? "This copy has used its live talk " + (until == "next month" ? "for the month. It comes back at the start of next month." : "for today. It comes back tomorrow.")
+                  + " Until then people answer in a few words of their own."
+            : errorType == "relay_stopped"
+                ? "Live talk is paused for everyone for the rest of the month. Until it is back, people answer in a few words of their own."
+            : errorType == "too_busy"
+                ? "Too many lines at once. Give it a moment and try again."
+            : errorType == "unknown_copy"
+                ? "This copy cannot reach the town's talk. Check that the game is up to date, or tell the developers."
+            : null;
+
         /// What the player is told once a report has gone (the helper says where).
         public static string ReportThanks(string saved) =>
             saved == "relay" ? "Thank you. It has gone to the developers."

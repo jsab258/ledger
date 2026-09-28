@@ -203,11 +203,13 @@ namespace Ledger.Relay
             _up.Timeout = TimeSpan.FromSeconds(90);
         }
 
-        static async Task Refuse(HttpContext ctx, int status, string type, string message)
+        static async Task Refuse(HttpContext ctx, int status, string type, string message, string until = null)
         {
             ctx.Response.StatusCode = status;
             ctx.Response.ContentType = "application/json";
-            await ctx.Response.WriteAsync(JsonSerializer.Serialize(new { type = "error", error = new { type, message } }));
+            await ctx.Response.WriteAsync(until == null
+                ? JsonSerializer.Serialize(new { type = "error", error = new { type, message } })
+                : JsonSerializer.Serialize(new { type = "error", error = new { type, message, until } }));
         }
 
         public async Task Handle(HttpContext ctx)
@@ -240,7 +242,7 @@ namespace Ledger.Relay
             // side cannot overshoot, settled from the real usage after it.
             var (inP, outP) = _s.PriceOf(model);
             double estimate = (chars / 3.0 * inP + (int)body["max_tokens"] * outP) / 1e6;
-            string refusal = null, refusalType = null; int refusalStatus = 0;
+            string refusal = null, refusalType = null, refusalUntil = null; int refusalStatus = 0;
             lock (_gate)
             {
                 var now = UtcNow();
@@ -252,7 +254,11 @@ namespace Ledger.Relay
                 if (_usage.MonthUsd + _reservedAll + estimate > _s.MonthBudgetUsd * _s.StopAt)
                 { refusalStatus = 403; refusalType = "relay_stopped"; refusal = "The month's budget is spent; the town speaks its written lines."; }
                 else if (spend.DayUsd + mine + estimate > _s.CopyDayUsd || spend.MonthUsd + mine + estimate > _s.CopyMonthUsd)
-                { refusalStatus = 403; refusalType = "allowance_spent"; refusal = "This copy's allowance of live talk is spent for now."; }
+                {
+                    refusalStatus = 403; refusalType = "allowance_spent"; refusal = "This copy's allowance of live talk is spent for now.";
+                    // When it comes back, so the player can be told (town list 6t).
+                    refusalUntil = spend.MonthUsd + mine + estimate > _s.CopyMonthUsd ? "next month" : "tomorrow";
+                }
                 else if (flying >= _s.InFlightPerCopy || q.Count >= _s.PerMinutePerCopy)
                 { refusalStatus = 429; refusalType = "too_busy"; refusal = "Too many calls at once."; }
                 else
@@ -266,7 +272,7 @@ namespace Ledger.Relay
             if (refusal != null)
             {
                 Log(copy, role, 0, 0, 0, refusalStatus, sw.ElapsedMilliseconds, refusalType);
-                await Refuse(ctx, refusalStatus, refusalType, refusal);
+                await Refuse(ctx, refusalStatus, refusalType, refusal, refusalUntil);
                 return;
             }
 

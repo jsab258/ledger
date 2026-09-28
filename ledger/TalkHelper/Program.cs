@@ -448,6 +448,7 @@ static class Program
             if (_llm == null)
                 return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy, manner }, Plain);
             string reply;
+            string paused = null;
             bool timedOut = false;
             string earlyFirst = null;
             var gate = new object();
@@ -510,6 +511,13 @@ static class Program
                         reply = ResponseValidator.Validate(await task, card.Name, card.AlsoCalled);
                     }
                 }
+                catch (LlmApiException e) when (AiNotice.TalkPaused(e.ErrorType, e.Until) != null)
+                {
+                    // THE RELAY SAID NO (town list 6t): the character still brushes him
+                    // off, and the player is told why and when talk comes back.
+                    reply = brush;
+                    paused = AiNotice.TalkPaused(e.ErrorType, e.Until);
+                }
                 catch (Exception)
                 {
                     timedOut = true;
@@ -548,7 +556,7 @@ static class Program
             string model = generated ? engine.Model : null;
             Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -686,6 +694,12 @@ static class Program
             if (Delay > TimeSpan.Zero) await Task.Delay(Delay, ct);
             return new LlmResponse { Text = Next, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
         }
+    }
+
+    sealed class RefusingFake : ILlmClient
+    {
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default) =>
+            throw new LlmApiException(403, "This copy's allowance of live talk is spent for now.", "allowance_spent", "tomorrow");
     }
 
     static async Task<int> SelfTest(string cardsDir)
@@ -910,6 +924,14 @@ static class Program
         var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
         Ok("without --early nothing changes: the whole reply, no first line, no rest",
            plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
+        // THE RELAY SAYS NO (town list 6t): a brush-off, and the player told why.
+        var refused = new Helper(new RefusingFake(), TimeSpan.FromSeconds(8));
+        LoadCards(refused, cardsDir);
+        string spentLine = await refused.Answer("{\"id\":71,\"to\":\"sam\",\"say\":\"Morning.\"}");
+        Ok("when the allowance is spent the character brushes him off and the player is told why and when",
+           Str(spentLine, "paused") == AiNotice.TalkPaused("allowance_spent", "tomorrow") && Str(spentLine, "paused").Contains("tomorrow")
+           && !Flag(spentLine, "timedOut") && Reply(spentLine) != null, spentLine);
 
         // HOW THEY KNOW HIM (town list 6s): the game's acquaintance reaches the prompt.
         var knower = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));

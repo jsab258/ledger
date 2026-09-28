@@ -5108,6 +5108,17 @@ namespace Ledger.CoreTests
                 "a belief the content rule refuses is never kept, since beliefs go into every later prompt", string.Join(" | ", eNight.Memory.Beliefs));
 
             // THE NOTICE THAT THE TOWN TALKS THROUGH AN AI (town list 6c).
+            // When live talk stops, the player is told why and when it comes back (town list 6t).
+            string pauseBad = null;
+            foreach (var (t, u) in new[] { ("allowance_spent", "tomorrow"), ("allowance_spent", "next month"), ("relay_stopped", (string)null), ("too_busy", (string)null), ("unknown_copy", (string)null) })
+            {
+                var w = AiNotice.TalkPaused(t, u);
+                if (w == null || ContentRule.SpeechBreaks(w) != null || System.Text.RegularExpressions.Regex.IsMatch(w, @"\d")) pauseBad = t + ": " + w;
+            }
+            Check(pauseBad == null && AiNotice.TalkPaused("allowance_spent", "tomorrow").Contains("tomorrow") && AiNotice.TalkPaused("allowance_spent", "next month").Contains("next month")
+                  && AiNotice.TalkPaused("overloaded_error", null) == null && AiNotice.TalkPaused(null, null) == null,
+                  "when our server says no, the player is told why and when talk comes back, in plain words; any other failure stays a brush-off", pauseBad ?? "");
+
             // Where the words go and what is kept, true to how the copy talks (town list 6w).
             Check(AiNotice.TextFor(true).Contains("through our server to Anthropic") && AiNotice.TextFor(true).Contains("Our server keeps none of your words unless you report a line")
                   && !AiNotice.TextFor(false).Contains("our server") && AiNotice.TextFor(false).Contains("sent to Anthropic")

@@ -152,12 +152,12 @@ namespace Ledger.Core
                 if (status == 429 || status >= 500)
                 {
                     if (attempt >= MaxRetries)
-                        throw new LlmApiException(status, ExtractErrorMessage(text));
+                        throw ApiError(status, text);
                     await Task.Delay(RetryDelay(attempt + 1), ct).ConfigureAwait(false);
                     continue;
                 }
                 if (status >= 400)
-                    throw new LlmApiException(status, ExtractErrorMessage(text));
+                    throw ApiError(status, text);
 
                 return ParseResponse(text);
             }
@@ -273,6 +273,20 @@ namespace Ledger.Core
             }
         }
 
+        /// The error with its type and, from our relay, when talk comes back.
+        static LlmApiException ApiError(int status, string body)
+        {
+            string type = null, until = null;
+            try
+            {
+                var error = MiniJson.GetObject(MiniJson.AsObject(MiniJson.Deserialize(body)), "error");
+                type = MiniJson.GetString(error, "type");
+                until = MiniJson.GetString(error, "until");
+            }
+            catch { }
+            return new LlmApiException(status, ExtractErrorMessage(body), type, until);
+        }
+
         static string ExtractErrorMessage(string body)
         {
             try
@@ -317,9 +331,16 @@ namespace Ledger.Core
     public class LlmApiException : Exception
     {
         public int StatusCode { get; }
-        public LlmApiException(int statusCode, string message) : base($"HTTP {statusCode}: {message}")
+        /// The error's type as the server named it ("allowance_spent" from our
+        /// relay, "overloaded_error" from the provider), or null.
+        public string ErrorType { get; }
+        /// From our relay, when talk comes back ("tomorrow", "next month"), or null.
+        public string Until { get; }
+        public LlmApiException(int statusCode, string message, string errorType = null, string until = null) : base($"HTTP {statusCode}: {message}")
         {
             StatusCode = statusCode;
+            ErrorType = errorType;
+            Until = until;
         }
     }
 
