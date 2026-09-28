@@ -1,4 +1,4 @@
-<title>The first hour, and two decisions</title>
+<title>The first hour, and seven decisions</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
 <style>
@@ -35,8 +35,8 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 </style>
 <main class="wrap">
 <header><p class="eyebrow">LEDGER · the town session · 2026-09-29</p>
-<h1>The first hour, and two decisions</h1>
-<p class="lede">The plan for a player&#x27;s first hour, and the things still waiting on you. One tap each, and a note if you want. The talk server and Tom&#x27;s reading you answered on 28 September.</p></header>
+<h1>The first hour, and seven decisions</h1>
+<p class="lede">The plan for a player&#x27;s first hour, and seven things only you can decide. One tap each, and a note if you want. The talk server and Tom&#x27;s reading you answered on 28 September; Tom&#x27;s reading is back, because it failed its review again.</p></header>
 <section><h2>Your calls</h2><p class="intro">The first choice in each is my recommendation.</p>
 <div class="card" data-key="q-sheila-name"><h3>Sheila&#x27;s card keeps Tom at &quot;new management&quot; until he earns a name; canon says names follow knowing, not liking</h3><div class="row">
 <label class="pick"><input type="radio" name="q-sheila-name" id="q-sheila-name-exception" value="exception"><span>Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town&#x27;s)</span></label>
@@ -47,6 +47,28 @@ textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding
 <label class="pick"><input type="radio" name="q-chatter" id="q-chatter-cap-more" value="cap-more"><span>The same, and thirty lines to each everyday kind instead of fourteen, so a line never comes round inside 22 minutes even in a crowd: sixteen more openers and sixteen more replies for day and for night, which I write and the builder voices</span></label>
 <label class="pick"><input type="radio" name="q-chatter" id="q-chatter-pace" value="pace"><span>The old pace, an exchange every 6 to 78 seconds: livelier, but a line comes round every one and a half minutes, and it needs about sixty lines a kind before ten minutes hold</span></label>
 </div><textarea id="q-chatter-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-chatter-status"></p></div>
+<div class="card" data-key="q-clock"><h3>How fast the game&#x27;s day runs. A plainly seen job on night one reaches Tom&#x27;s face by minute thirty only at two game minutes a real second or faster, and at two, seven times in thirteen only at minute thirty itself</h3><div class="row">
+<label class="pick"><input type="radio" name="q-clock" id="q-clock-two-wait" value="two-wait"><span>Two game minutes a second, a day in twelve real minutes, as the first hour was planned, and a way to wait until evening, so a slow player is not caught at the thirty-minute edge; a way to wait is a basic the game needs anyway (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-clock" id="q-clock-three" value="three"><span>Three a second, a day in eight minutes: the night&#x27;s story reaches Tom by minute twenty every time, nothing new to build, but a night lasts under three real minutes</span></label>
+<label class="pick"><input type="radio" name="q-clock" id="q-clock-slower" value="slower"><span>Slower, a day in twenty-four minutes or more: calmer, but the town cannot know him inside the first half hour unless he waits through a day</span></label>
+</div><textarea id="q-clock-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-clock-status"></p></div>
+<div class="card" data-key="q-reading"><h3>Tom&#x27;s reading of what the ending will cost failed its review a second time. It is built only from what he sees, as you ruled, but the game&#x27;s visible signs do not change where the hidden lines are: a friend calls him Tom well below the line where the ending counts them a friend, so the reading can say all is well while a door shuts</h3><div class="row">
+<label class="pick"><input type="radio" name="q-reading" id="q-reading-signs" value="signs"><span>Give every line a sign: each thing that decides the ending gets one thing Tom can see that changes exactly when it crosses its line (a friend who would stand by him says so; the inspector&#x27;s manner turns on the morning the books stop standing; the police at the door when it is a manhunt), and the reading is built on those; several evenings of work, some of it the builder&#x27;s (recommended: it is what your D58 asks, a cost he can watch arrive)</span></label>
+<label class="pick"><input type="radio" name="q-reading" id="q-reading-rough" value="rough"><span>Let his reading be roughly right: it follows the signs there are and can be caught out; cheaper, but a cost can land unseen, which D58 calls a trap</span></label>
+<label class="pick"><input type="radio" name="q-reading" id="q-reading-later" value="later"><span>Leave it until the town&#x27;s signs are built in the game, and come back to it then</span></label>
+</div><textarea id="q-reading-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-reading-status"></p></div>
+<div class="card" data-key="q-name-before"><h3>Canon says Tom arrives &quot;known only as Mickey&#x27;s nephew by name&quot;, and Mickey spoke of him to his own people. Before he comes, do Sheila, Ron and Darren know his name?</h3><div class="row">
+<label class="pick"><input type="radio" name="q-name-before" id="q-name-before-mickeys-own" value="mickeys-own"><span>Mickey&#x27;s own people know his name, Tom Nowak, from Mickey, though they have never seen him; the rest of the street does not (recommended: it is what &quot;Mickey spoke of him&quot; means, and the street&#x27;s ladder still starts at &quot;the new owner&quot;)</span></label>
+<label class="pick"><input type="radio" name="q-name-before" id="q-name-before-nobody" value="nobody"><span>Nobody knows his name until he gives it, Mickey&#x27;s own people included</span></label>
+</div><textarea id="q-name-before-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-name-before-status"></p></div>
+<div class="card" data-key="q-privacy"><h3>Before your friends play through our server, players should be able to read a short privacy notice, linked from the notice they already see: who is responsible for their words, how long a reported line is kept, and their rights</h3><div class="row">
+<label class="pick"><input type="radio" name="q-privacy" id="q-privacy-draft" value="draft"><span>I draft it for your approval, naming you as responsible and keeping reported lines for a year (recommended: the law asks for it at that point, and it is text I can write)</span></label>
+<label class="pick"><input type="radio" name="q-privacy" id="q-privacy-later" value="later"><span>Later, before the store: friends see the notice as it stands, which says where their words go and what is kept</span></label>
+</div><textarea id="q-privacy-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-privacy-status"></p></div>
+<div class="card" data-key="q-bench"><h3>The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time. Tuning it properly means writing the test conversations again with today&#x27;s cards, about $20 to $40 of calls</h3><div class="row">
+<label class="pick"><input type="radio" name="q-bench" id="q-bench-yes" value="yes"><span>Yes, spend it: every third reply is slower than it needs to be (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-bench" id="q-bench-later" value="later"><span>Not now</span></label>
+</div><textarea id="q-bench-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-bench-status"></p></div>
 </section>
 <section><h2>The first hour, on paper</h2><article class="card outline" data-key="first-hour">
 <p>For Jafar&#x27;s approval (town list 6j; ROADMAP stage 4, &quot;the first hour&quot;). Under two pages, not a script. It follows the story outline on the 28 September page (arrival and Act I), canon, and three pieces of research: teaching a social system in thirty minutes, what players do when a world remembers them, and how stories travel between the named cast (measured 28 September).</p>
