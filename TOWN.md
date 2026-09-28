@@ -27,6 +27,8 @@ run the Core suites, then push to main.
   - [x] e. The content rule on everything said live: every path a live line can take, checked.
   - [x] f. Owed since D58: Act III's letter, cellar and laundering cap still read as a pub; reworded for the cab office, the cap's reasoning redone from research.
   - [x] g. Owed since D58 (queue 399, marked checkpoint work by Jafar on 21 September): confirm the two endings a hunted player has left are reachable from a hunted state. Both are; no card needed.
+  - [x] h. Stage 3's test, the Core side: a witnessed crime reaching a second and a third resident within one game week. On the quay's routines (the street today), a sure witness's story does so every time; on the forty-person named cast, 78% (a second resident 96%). Frame budget and arrest in the game are the builder's.
+  - [ ] i. D58's second condition and D33: every cost that decides the ending (the books, being hunted, a witness's nerve, the successor, whether anyone still counts him) readable before it lands, as Tom's own reading with its reasons, never a number and never another mind; the Core side with tests, its words on an approval page, the screen to the builder.
 
 ## Status
 
