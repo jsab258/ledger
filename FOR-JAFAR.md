@@ -38,22 +38,22 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[Your page: the first hour and seven calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
 
-**Decide (on the page):** Sheila withholding Tom's name; how often neighbours' talk is heard; the game's clock; Tom's reading, which failed its review again; whether Mickey's people know Tom's name; a privacy notice; $20 to $40 to retune the invention check.
+**Decide (on the page):** Sheila withholding Tom's name; neighbours' talk; the game's clock; Tom's reading, failed again; whether Mickey's people know Tom's name; a privacy notice; $20 to $40 to retune the invention check.
 
 **Your answers, done:** talk server waits (your Hetzner first); Tom's reading from what he has seen; F:	own-verify in the Recycle Bin.
 
 **Done:**
-- Talk naming Tom raises suspicion; nothing about Tom repeats within two hours; 27 street lines fixed for 1990.
-- Characters keep what Tom said across a reload, know whether they have met him and where they are, and the player is told when live talk stops.
-- The notice says where typed words go.
+- Talk naming Tom raises suspicion; nothing about him repeats within two hours; 27 street lines fixed.
+- Characters keep talk across a reload, know whether they have met him, where they are and the weekday; they speak only English, promise nothing the world won't do, and can end a conversation.
+- The talk program runs on a friend's PC; players learn where typed words go and when talk stops.
 
-**Failed:** Tom's reading again: the game's signs do not change where the ending's lines are.
+**Failed:** Tom's reading again: the game's signs miss the ending's lines.
 
-**Got wrong:** a push with a check red; a page's reason; both corrected.
+**Got wrong:** a push with a check red; a page's reason; corrected.
 
-**Research:** 1990 speech; what players must be told; a checklist sweep.
+**Research:** 1990 speech; what players are told; two checklist sweeps.
 
-**C: free:** 41.5 GB last night, 37.0 GB now (the builder's cleanup page). Backup: runs with this commit.
+**C: free:** 41.5 GB last night, 55.7 GB now (builder's cleanup page). Backup: runs with this commit.
 
 ## 26 September, day
 
