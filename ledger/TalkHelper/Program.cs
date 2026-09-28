@@ -575,7 +575,7 @@ static class Program
             // WRITTEN BY THE MODEL, marked so (the EU's AI Act, Article 50(2):
             // generated text marked in a form a machine can read); a brush-off
             // and the fallback line are the game's own words.
-            bool generated = reply != brush && !fellBack;
+            bool generated = reply != brush && !fellBack && !ResponseValidator.IsDeflection(reply, card.Name);
             string model = generated ? engine.Model : null;
             Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
