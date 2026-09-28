@@ -72,8 +72,8 @@ def inline(md):
     return s
 
 
-def outline_html():
-    with open(OUTLINE, encoding="utf-8") as fh:
+def outline_html(path=None):
+    with open(path or OUTLINE, encoding="utf-8") as fh:
         text = fh.read()
     out, para, items = [], [], []
 

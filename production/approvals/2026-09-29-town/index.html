@@ -1,0 +1,116 @@
+<title>The first hour, and two decisions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--flag:#8d2f22;
+ --ok:#2f6b45;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:46rem;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:28px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2rem;line-height:1.15}h2{font-size:1.45rem}h3{font-size:1.1rem;margin-top:14px}
+.lede{color:var(--soft);margin:6px 0 0}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
+section{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px}
+.intro{color:var(--soft);font-size:.92rem;margin:0}
+dl{display:grid;grid-template-columns:8.5rem 1fr;gap:6px 14px;margin:0;font-size:.95rem}
+dt{color:var(--soft);font-weight:600}dd{margin:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+.voice{background:var(--amber-bg);border-radius:4px;padding:8px 10px;font-size:.95rem}
+.voice strong{color:var(--flag)}
+blockquote{margin:0;padding-left:12px;border-left:3px solid var(--line);font-family:"Newsreader",Georgia,serif;font-size:1.05rem}
+.lines{display:grid;gap:6px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.pick{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;flex:1 1 14rem}
+.pick input{margin-top:4px}
+.pick:has(input:checked){border-color:var(--amber);background:var(--amber-bg)}
+textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.status{font-size:.85rem;color:var(--soft)}
+.saved{color:var(--ok)}
+.outline p,.outline li{max-width:65ch}
+.outline ul{padding-left:1.2rem;margin:4px 0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+<main class="wrap">
+<header><p class="eyebrow">LEDGER · the town session · 2026-09-29</p>
+<h1>The first hour, and two decisions</h1>
+<p class="lede">The plan for a player&#x27;s first hour, and two things only you can decide. One tap each, and a note if you want.</p></header>
+<section><h2>Your calls</h2><p class="intro">The first choice in each is my recommendation.</p>
+<div class="card" data-key="q-relay"><h3>Where the talk server runs, so no key ships with a friend&#x27;s copy</h3><div class="row">
+<label class="pick"><input type="radio" name="q-relay" id="q-relay-hetzner" value="hetzner"><span>A small rented server in Germany, about €6 a month, stopping all calls at $50 a month while friends play (recommended: cheapest, simple, and Europe is where they are)</span></label>
+<label class="pick"><input type="radio" name="q-relay" id="q-relay-fly" value="fly"><span>Fly.io, about $3 a month, the same stop</span></label>
+<label class="pick"><input type="radio" name="q-relay" id="q-relay-later" value="later"><span>Not yet: no copies go to friends until you say</span></label>
+</div><textarea id="q-relay-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-relay-status"></p></div>
+<div class="card" data-key="q-reading"><h3>Tom&#x27;s reading of what the ending will cost (D58, D33)</h3><div class="row">
+<label class="pick"><input type="radio" name="q-reading" id="q-reading-seen" value="seen"><span>Built from what he has seen and heard, so it can be wrong, as a man&#x27;s reading of his own position is (recommended: it is what D33 says)</span></label>
+<label class="pick"><input type="radio" name="q-reading" id="q-reading-truth" value="truth"><span>The true state, put into words: simpler and always right, but a meter by another name</span></label>
+</div><textarea id="q-reading-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-reading-status"></p></div>
+<div class="card" data-key="q-sheila-name"><h3>Sheila&#x27;s card keeps Tom at &quot;new management&quot; until he earns a name; canon says names follow knowing, not liking</h3><div class="row">
+<label class="pick"><input type="radio" name="q-sheila-name" id="q-sheila-name-exception" value="exception"><span>Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town&#x27;s)</span></label>
+<label class="pick"><input type="radio" name="q-sheila-name" id="q-sheila-name-canon" value="canon"><span>Canon wins: once she has met him she calls him Nowak like everyone else</span></label>
+</div><textarea id="q-sheila-name-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-sheila-name-status"></p></div>
+</section>
+<section><h2>The first hour, on paper</h2><article class="card outline" data-key="first-hour">
+<p>For Jafar&#x27;s approval (town list 6j; ROADMAP stage 4, &quot;the first hour&quot;). Under two pages, not a script. It follows the story outline on the 28 September page (arrival and Act I), canon, and three pieces of research: teaching a social system in thirty minutes, what players do when a world remembers them, and how stories travel between the named cast (measured 28 September).</p>
+<h3>What the first hour has to do</h3>
+<p>The research is plain about it. Remembering is quiet and forgetting is loud: a town that tracks you only tints its greetings unless something comes back and is said to your face. So the first hour is built on four steps, and the last is the one no hint can fake:</p>
+<ul><li><strong>He moves.</strong> Walking, talking, the office, the street.</li><li><strong>He is seen</strong> doing something that matters, or is known to have refused.</li><li><strong>It is written down.</strong> The town holds it; his Ledger holds what he believes it holds.</li><li><strong>It comes back</strong>, said to his face by somebody who was not there.</li></ul>
+<p>The Meridian Test asks that the world visibly know him at least once in the first thirty minutes. Among the forty named people as they live now, a plainly seen night reaches a second person in about six real minutes (the slowest tenth, nineteen); in the coat that makes him harder to recognise, it reaches anyone at all only about six times in ten within a week. Those figures are a best case: they assume he has met everyone and average sightings over every hour of the week. Only somebody who can tell it is him shows what they have heard, so the one who brings it back on day 2 has to be somebody he met on day 1, and whether that happens by minute thirty is not yet measured.</p>
+<h3>The clock</h3>
+<p>The old game ran two game minutes to a real second, so a day was twelve real minutes; the new game has not set its clock yet. The times below assume the old rate and a nine o&#x27;clock start. At a slower rate the hour covers fewer days, and day 2 falls later: if it falls past minute thirty, &quot;it comes back&quot; misses the Meridian bar, so the rate is chosen with this hour in mind. The days are the likely order when the story is played straight; as the outline says, beats fire on states, not on the clock.</p>
+<h3>The hour</h3>
+<p><strong>Minutes 0 to 7: day 1.</strong> Tom arrives with one suitcase and the letter, after the funeral he missed. Sheila Dunn is at Mickey&#x27;s to meet him, shows him round, and stops at the one door she does not open. The first time he can speak to anyone, the game tells him, once, that the town answers in words written by an AI model and that a line can be reported. On the street: Ron Kirby at the rank calls him boss and watches him; Darren Milner is on the pavement, friendly and owing; Ada is at her window; June, Mickey&#x27;s daughter, back for the funeral, wants nothing from the office and says so. Strangers call him the new owner; the people he has met use his name, because they know him now (Sheila&#x27;s card has her keep him at &quot;new management&quot; until he earns it: see the question below).</p>
+<p><strong>Minutes 7 to 11: night one.</strong> The outfit&#x27;s first ask comes, as Mickey&#x27;s arrangements outlive him: a small job for the night, and a coat that makes him harder to recognise. He can refuse; refusing ends Mickey&#x27;s arrangement, and does not fail the game.</p>
+<p><strong>Minutes 12 to 24: day 2, it comes back.</strong> Whatever he did with the ask, the outfit&#x27;s people talk about it, so the night is a story either way. If he went and was seen, it reaches a second person within minutes; somebody who heard looks at him longer, and the first time Darren, or anyone he met yesterday who has heard, sees him, they say it to his face (&quot;Funny hours you keep&quot;). If he went unseen, or refused, it is the outfit&#x27;s talk that comes back the same way (&quot;Heard you told them no&quot;). His Ledger shows what he believes the street now knows.</p>
+<p><strong>Minutes 24 to 36: day 3.</strong> Ada asks him in for tea on the evening the outfit&#x27;s second ask falls: the week&#x27;s first test of which life he keeps. Alison Sedman asks him about the warehouse fire, the story she will not drop.</p>
+<p><strong>Minutes 36 to 60: days 4 and 5.</strong> If the street has got loud about him, DS Carol Ellis turns up on Quay Street. What he did on those two nights keeps coming back, from more of the people he has met.</p>
+<p>The week ends on day 7, a little under half an hour later: Sheila, over the real book, &quot;So which is it going to be?&quot;</p>
+<h3>How it teaches</h3>
+<p>Every hint fires the first time it can mean something, never on the clock: the first time he can talk, the first night job, the first time he is seen, the first remark he overhears about himself, the first time he opens the Ledger. The research found the old game&#x27;s four hints all firing inside ninety seconds because they ran on the clock, two of them overlapping. Hints are the world&#x27;s own words where they can be (Sheila on the rank, Ron on the coat), and a line of plain text only where the world has nobody to say it.</p>
+<h3>What is not in the first hour</h3>
+<p>The three rivals, beyond a name overheard. Act II. Any ending. Money beyond the takings and the first job&#x27;s envelope. Nothing that needs a number to be understood. And not carried over from the old game: its day-5 scene with Ron, which breaks the content rule.</p>
+<h3>What exists and what does not</h3>
+<ul><li><strong>In the new game:</strong> walking, talking with its check on what a character may know, being seen, the story spreading.</li><li><strong>In the simulation, not yet in the game:</strong> the longer look and the word said about him or to his face; the AI notice and the report button; the name ladder.</li><li><strong>Not built:</strong> the outfit&#x27;s asks, the outfit&#x27;s people talking about what he did with them, Ada&#x27;s tea and Alison&#x27;s question as scenes, Ellis turning up, the Ledger&#x27;s screen, the hints on first occurrence, and the new game&#x27;s clock.</li></ul>
+<h3>For Jafar</h3>
+<p>Approve the hour as the plan for the first session, or send it back with what to change. Two things in it wait on your rulings, both on this page: whether the Ledger&#x27;s belief about what the street knows is built from what Tom has seen and heard; and whether Sheila, who keeps him at &quot;new management&quot; until he earns a name, is the exception to canon&#x27;s rule that names follow knowing, not liking.</p>
+<div class="row"><label class="pick"><input type="radio" name="first-hour" id="first-hour-approve" value="approve"><span>Approve the hour</span></label><label class="pick"><input type="radio" name="first-hour" id="first-hour-redo" value="redo"><span>Change it (say what in the note)</span></label></div><textarea id="first-hour-note" placeholder="What to change"></textarea><p class="status" id="first-hour-status"></p></article></section>
+<p class="status" id="store-status"></p></main>
+<script>
+let db = null, canWrite = true;
+const state = {};
+function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}
+function save(key){
+  const card=document.querySelector('[data-key="'+key+'"]');
+  const picked=card.querySelector('input[type=radio]:checked');
+  const note=document.getElementById(key+"-note").value;
+  state[key]={pick:picked?picked.value:null,note:note,at:new Date().toISOString()};
+  if(!db){status(key,"Not saved: this view cannot store your answer.");return;}
+  if(!canWrite){status(key,"Not saved: you can read this page but not answer on it.");return;}
+  status(key,"Saving...");
+  db.doc("verdicts/"+key).set(state[key]).then(()=>status(key,"Saved",true)).catch(e=>{
+    if(e&&(e.code==="not_granted"||e.code==="permission_denied"||e.code==="invalid_argument")) canWrite=false;
+    status(key,"Not saved: "+(e&&e.message?e.message:"the store refused it")+".");});
+}
+for(const card of document.querySelectorAll("[data-key]")){
+  const key=card.dataset.key;
+  card.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",()=>save(key)));
+  const t=document.getElementById(key+"-note"); if(t) t.addEventListener("change",()=>save(key));
+}
+(async()=>{
+  try{ db = await window.claude?.use?.("db"); }catch(e){ db=null; }
+  const g=document.getElementById("store-status");
+  if(!db){ g.textContent="Answers cannot be stored in this view."; return; }
+  for(const card of document.querySelectorAll("[data-key]")){
+    const key=card.dataset.key;
+    try{
+      const snap=await db.doc("verdicts/"+key).get();
+      const v=snap&&(snap.data?snap.data():snap);
+      if(v&&v.pick){const r=document.getElementById(key+"-"+v.pick); if(r) r.checked=true;}
+      if(v&&v.note){document.getElementById(key+"-note").value=v.note;}
+      if(v&&(v.pick||v.note)) status(key,"Saved",true);
+    }catch(e){}
+  }
+})();
+</script>
