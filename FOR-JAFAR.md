@@ -36,28 +36,24 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 29 September
 
-**[Your page: the first hour and two calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
+**[Your page: the first hour and seven calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
 
-**Decide (on the page):**
-- Sheila withholds Tom's name by choice (recommended).
-- Neighbours' talk heard at most every 45 seconds (recommended), or that plus 16 more lines a kind.
+**Decide (on the page):** Sheila withholding Tom's name; how often neighbours' talk is heard; the game's clock; Tom's reading, which failed its review again; whether Mickey's people know Tom's name; a privacy notice; $20 to $40 to retune the invention check.
 
-**Your answers, done:** talk server waits for your friends (your Hetzner first); Tom's reading from what he has seen; F:\town-verify in the Recycle Bin.
+**Your answers, done:** talk server waits (your Hetzner first); Tom's reading from what he has seen; F:	own-verify in the Recycle Bin.
 
 **Done:**
-- Talk naming Tom now raises suspicion in its hearers.
-- Nothing said about Tom repeats within two hours; neighbours' talk came round every 1.5 minutes, now 10 or more.
-- 27 street lines fixed: a doctor who charged (the GP was free), "the little ones", Mickey's as a pub.
-- A night-one job seen plainly reaches Tom's face by minute thirty, 13 of 13.
-- Each friend's session recorded, to read beside your runbook.
+- Talk naming Tom raises suspicion; nothing about Tom repeats within two hours; 27 street lines fixed for 1990.
+- Characters keep what Tom said across a reload, know whether they have met him and where they are, and the player is told when live talk stops.
+- The notice says where typed words go.
 
-**Failed:** fewer invention false alarms cost catches; not kept.
+**Failed:** Tom's reading again: the game's signs do not change where the ending's lines are.
 
-**Got wrong:** a push with a check red, fixed in minutes; the page's reason for minute thirty, corrected.
+**Got wrong:** a push with a check red; a page's reason; both corrected.
 
-**Research:** 1990 speech and the NHS.
+**Research:** 1990 speech; what players must be told; a checklist sweep.
 
-**C: free:** 41.5 GB last night, 52.5 GB now. Backup: runs with this commit.
+**C: free:** 41.5 GB last night, 37.0 GB now (the builder's cleanup page). Backup: runs with this commit.
 
 ## 26 September, day
 
