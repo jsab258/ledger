@@ -1,5 +1,19 @@
-SITTING: started 2026-09-26T07:21:08+02:00, limit 5h (budget at start: total 91). C: free at start: 64.9 GB.
-- [x] 1. Faces: Sheila, Ron and Darren rebuilt from northern European presets to their sheets, five each; my check, then a blind reviewer; only Ron's P2 passed and is on his page. The street's daylight causes the East Asian read: his decision.
-- [x] 2. Voice delay: 6.2 s to the first sound before; the free fixes in; 5.4 s in the game. Pocket TTS 2.0 s, but its voices failed the gate twice each: set aside.
-- [x] 3. End of sitting: my rejected builds swept (5.3 GB on F:), backup OK, summary written.
-STATE: waiting on his page, and on three decisions in FOR-JAFAR. C: 53.6 GB: the cleanup page comes first next sitting.
+GOAL: one goal, set by Jafar with /goal, runs from Monday 28 September until Sunday 4 October evening. One summary a day in FOR-JAFAR.md. C: free at the start of the week: 42.4 GB (49.8 on Saturday).
+
+## The builder's list, in order
+
+- [ ] 1. Cleanup: C: is below 60 GB, at 49.8. The cleanup page first, as the rule says, within the fixed list of places, deleting only my own recorded leftovers.
+- [ ] 2. His verdicts from the weekend pages: read them, including whether Ron's P2 is Ron. Anything he has not judged carries onto the next page.
+- [ ] 3. Faces, following the new research (production/research/character-pipeline/clothing-and-face-lighting-2026-09-27.md). First make the comparison fair: the same exposure, face level of detail and material quality in the street as in the portrait tool (at medium or low quality MetaHuman skin loses its subsurface scattering). Then the conversation light: one soft light, only on the character being spoken to, off to one side of the camera, on a lighting channel of its own, its indirect and fog contribution off, and a faint light in the eyes; measured against a budget of 0.5 ms. Brighten the street's daylight only if the street pair still calls for it after that, judged so it does not go hazy. Then Sheila's and Darren's candidates again in the corrected light, with eye colours from their casting sheets (the last all came out green by mistake).
+- [ ] 5. Clothes, following the new research. MetaHuman clothing is scriptable in Python on 5.8 (Epic's example scripts in the MetaHuman Character plugin), so no computer use. The earlier jacket was solid because MetaHuman's resizing strips the cloth simulation: use the resizing graph with Strip Sim Mesh = false. Sew the garment around the actual MetaHuman body in Blender, with a separate simulation mesh. First one donkey jacket on one body, its loose parts simulated, tested walking, sitting and with arms raised; then versions for three builds; then automate it. Then a proper flat cap and work trousers from FreeSewing's patterns. Every garment checked against 1990 photographs before it reaches him. If the free route stalls on the jacket, one month of Marvelous Designer at $39 is approved.
+- [ ] 6. The voice delay, following the latency research (production/research/live-speech-architecture/conversation-latency-2026-09-25.md). Pocket TTS again, from longer takes of his approved voices, the accent checked before he hears anything. If it still drifts American, bring him a decision on a paid voice service with its cost per hour. Cover the pause that remains with a small thinking gesture and a short sound of acknowledgement, never a loading sign. Then livelier lines: VoxCPM2 with acting direction per line for the lines made in advance, on a blind page.
+- [ ] 7. The town session's handovers, wired into the game as they arrive.
+- [ ] 8. The playable slice, with the real people, their clothes, suspicion and the encounter, and the AI tester walking the packaged release build once a day.
+- [ ] 9. Then, so the run never stops for lack of work: the frame rate at 3440 by 1440 with upscaling, against the target of 60; what one hour of conversation costs, from real calls; a first trial of a live connection to Unreal, if the Blender one helped; then the next items from ROADMAP.md.
+- [ ] 10. (Was 4; moved to the end until the Blender connection is live: it loads when a session starts, so from the next session.) Street clutter, live in Blender: ten pieces of 1990 British street clutter, each made against two reference photographs, through the quality gate, with the time each took against the script route's times. If working live passes the gate faster, it becomes the route for clutter; if not, scripts. All ten on one approval page; once he approves, dress the street with them. If the live connection is not working yet, do this item last.
+
+STATE: setup done on Monday; the list starts at item 1. Blender live: registered, loads from the next session (tools/blender-live/start-blender-live.ps1 starts Blender for it). Unreal's cache capped at 20 GB in its own settings.
+
+## Handovers
+
+(The town session leaves single lines here for the builder.)

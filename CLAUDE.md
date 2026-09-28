@@ -1,6 +1,6 @@
 # LEDGER
 
-One session, on Jafar's PC, building a game. The old studio is archived under legacy/studio-v2/.
+Two sessions on Jafar's PC, building a game (see "Two sessions, one repository"). The old studio is archived under legacy/studio-v2/.
 
 ## Project facts: every session and every prompt gets these right
 
@@ -24,11 +24,11 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 
 ## Records, and nothing more
 
-- NOW.md: under 150 words, no history: the SITTING line (start and limit), the sitting's list in order (- [ ] open, - [x] done), a line of state.
-- FOR-JAFAR.md: one dated summary at the end of each sitting, under 200 words: what changed, evidence, what failed or is unproven, what next, decisions he must make. Unresolved decisions carry forward; git keeps earlier summaries.
+- NOW.md, no history: the GOAL line (what runs, until when), the builder's list in order as Jafar wrote it (- [ ] open, - [x] done), a line of state, and a Handovers heading where the town session leaves single lines for the builder.
+- FOR-JAFAR.md: one dated summary a day, under 200 words, that day's approval page linked first: what changed, evidence, what failed or is unproven, free space on C: before and after, one line per piece of research done, and anything that needs him. Unresolved decisions carry forward; git keeps earlier summaries (Jafar, 28 September).
 - DECISIONS.md: one entry per material choice: date, decision, reason, who decided, link. Routine implementation choices go in commit messages.
 - FINDINGS.md: unresolved faults only, at most twenty.
-- Records go in with the work they describe or in the closing summary. No commit that only updates notes during a sitting.
+- Records go in with the work they describe or in the day's summary. No commit that only updates notes, except the day's summary.
 - The old records and the 979-item feature checklist are in production/archive/. The checklist is a reference, not a gate: check it for missing basics at each milestone; nothing waits on it.
 - Why: the two audits in production/audits/.
 
@@ -37,20 +37,33 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 - Deletion happens only inside this fixed list, and only after he approves a cleanup page that names each folder, its size and why: the two old copies, C:\Users\Jafar\wc26-picks and C:\Users\Jafar\ledger-migrate; the project's own build, render and scratch folders (its gitignored build output, such as ue-probe\Intermediate, Saved, Packaged and DerivedDataCache and the .NET bin and obj folders, and its gitignored render and scratch output); C:\LedgerTools; the build machine's working copy, C:\actions-runner-ledger\_work; Unreal's cache, %LOCALAPPDATA%\UnrealEngine\Common; and, in F:\LedgerTools, only the files and folders production/large-files.json names as my own rejected or superseded ones, never the folder itself (the voice libraries and his played game live there; Jafar, 26 September). Nothing outside it is ever deleted, moved or changed, least of all his Documents, Desktop, Downloads, Dropbox or anything else of his.
 - Never deleted, even inside the list: what he has approved, anything the game or a build uses, anything the backup covers (tools/backup-to-dropbox.py's list). The old copies go only once everything in them is shown to be on GitHub or moved out (the voice tools and the played copy of the game, as agreed on 24 September).
 - tools/cleanup.py refuses any path outside the list, and any protected one.
-- THE LARGE-FILE RECORD, so it cannot creep back: every file or folder of 100 MB or more that I create goes into production/large-files.json (tools/large_files.py) with what made it and why. At the end of every sitting I delete only my own entries from that record that are rejected or superseded, only inside the list above; never anything I did not create, and never by guessing that something is unused. New scratch and caches go to drive F, not C.
-- Every sitting's summary gives free space on C: at the start and at the end. Below 60 GB, the cleanup page comes before anything else in the next sitting.
+- THE LARGE-FILE RECORD, so it cannot creep back: every file or folder of 100 MB or more that I create goes into production/large-files.json (tools/large_files.py) with what made it and why. At the end of every day I delete only my own entries from that record that are rejected or superseded, only inside the list above; never anything I did not create, and never by guessing that something is unused. New scratch and caches go to drive F, not C.
+- Every day's summary gives free space on C: before and after. Below 60 GB, the cleanup page comes before anything else next.
 
-## How a sitting runs
+## How the week runs (Jafar, 28 September)
 
-- Each sitting has a list in order and a time limit (four hours if unnamed). When an item is done, take the next without asking. Stop only when time is up or the list is done, everything committed; the closing summary ends with something he can act on: how to play what exists, a recommended decision, or both. At the end of every sitting the backup runs (tools/backup-to-dropbox.py; the summary's commit sets it off through tools/hooks/post-commit) and the summary gives its line, and the large-file record is swept.
-- The stop hook has one job: while time remains and the list has an item left, keep going. It reads NOW.md, for the builder's own session only (its id is in the untracked .claude/builder-checkout).
+- One goal runs until Sunday evening, set by Jafar with /goal; there are no sittings and no stop hook of our own. The builder's list in NOW.md is worked in order; when an item is done, take the next without asking. Nothing waits on his hands: he writes from his phone.
+- Each day ends with its summary, which ends with something he can act on (how to play what exists, a recommended decision, or both); then the backup runs (tools/backup-to-dropbox.py; the summary's commit sets it off through tools/hooks/post-commit) and the summary gives its line, and the large-file record is swept.
 - If an item turns out much bigger than it looked, tell him rather than push on.
+
+## Research first (Jafar, 28 September)
+
+- Before solving something from memory, check production/research/, which already holds nearly fifty topics.
+- Research when: before a kind of work not yet done in this project; after two failed attempts at the same thing; before relying on memory about a tool, version, API or licence that could have changed; and always before declaring anything impossible, blocked or possible only by hand.
+- The research goes to a separate helper given the problem, not your theory about it, capped at about thirty minutes, with dated sources. Its note is saved in production/research/ under a topic folder, and the day's summary gives it one line.
+- Anything the research suggests that touches money, licences, canon or scope goes to Jafar as a decision.
+
+## Two sessions, one repository (Jafar, 28 September)
+
+- The builder works in C:\Users\Jafar\ledger-local on main: the Unreal project, art, faces, clothes, voices and anything that uses the graphics card.
+- The town session works in the git worktree C:\Users\Jafar\ledger-town on the branch town: the town's simulation, the check on invented facts, casting sheets and the story. It never touches the Unreal project, art, voices or anything that uses the graphics card. It leaves work for the builder as single lines under the Handovers heading in NOW.md; the builder wires them into the game.
+- Each session fetches and rebases before every push, and pushes its work to main.
 
 ## How to work
 
 - Nothing is multiplied until one complete sample has been approved by Jafar in the assembled game.
 - An approval lives beside what it approves and names what it was approved against; when that changes (a canon rule, a spec, a voice), it lapses by itself, and the build flags anything in the game without a current one (tools/approvals.py).
-- Approvals reach him as one page per sitting, pictures and sound, judged in minutes, linked first in the closing summary. The page keeps the 25 September casting page's format: each item's pictures and sound, one pick and a note, stored on the page (tools/candidate_page.py).
+- Approvals reach him as one page a day, pictures and sound, judged in minutes, linked first in the day's summary. The page keeps the 25 September casting page's format: each item's pictures and sound, one pick and a note, stored on the page (tools/candidate_page.py).
 - THE GATE (Jafar, 25 September; a lumpy cap and American-accented voices reached him). Nothing goes on his page until it passes two checks. First, yours: compared against real references (photographs of the actual thing, the approved face, the casting sheet; for a voice, the accent the sheet names); if it fails, fix it or leave it off. A voice drifting American or away from the named accent is rejected before he hears it. Second, a reviewer that has not seen it being made compares it against the same references and tries to find what is wrong. Only what passes both reaches him. A rough proof that a method works is a finding in the summary, never an item on his page.
 - The AI tester walks the packaged release build, with the real cast, dialogue, light and sound.
 - Every audit is saved in production/audits/, and each finding ends as a ruling in DECISIONS.md, one of these rules, or an item on the list, never only a prompt; the next audit checks the last one's stuck.
