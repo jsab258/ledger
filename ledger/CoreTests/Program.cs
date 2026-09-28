@@ -5102,6 +5102,12 @@ namespace Ledger.CoreTests
                 "a belief the content rule refuses is never kept, since beliefs go into every later prompt", string.Join(" | ", eNight.Memory.Beliefs));
 
             // THE NOTICE THAT THE TOWN TALKS THROUGH AN AI (town list 6c).
+            // Where the words go and what is kept, true to how the copy talks (town list 6w).
+            Check(AiNotice.TextFor(true).Contains("through our server to Anthropic") && AiNotice.TextFor(true).Contains("Our server keeps none of your words unless you report a line")
+                  && !AiNotice.TextFor(false).Contains("our server") && AiNotice.TextFor(false).Contains("sent to Anthropic")
+                  && AiNotice.TextFor(true).Contains("within 30 days") && AiNotice.TextFor(false).Contains("kept on this computer")
+                  && !AiNotice.Text.Contains("nothing else does") && ContentRule.SpeechBreaks(AiNotice.TextFor(false)) == null,
+                  "the notice says where what he types goes and what is kept, through the relay or straight to Anthropic");
             Check(ContentRule.SpeechBreaks(AiNotice.Text) == null && AiNotice.Text.Contains("AI model") && AiNotice.Text.Contains("report")
                   && AiNotice.ReportThanks("relay") != AiNotice.ReportThanks("local") && AiNotice.ReportThanks("lost").Contains("could not"),
                 "the notice says the town talks through an AI model and how to report a line, within the content rule, and the thanks say where a report went");

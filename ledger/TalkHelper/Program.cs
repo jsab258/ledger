@@ -629,7 +629,7 @@ static class Program
         }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
         LoadCards(helper, CardsDir(args));
-        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.Text, report = AiNotice.ReportLabel } }, Plain));
+        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.TextFor(relay != null), report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
         string line;
         while ((line = Console.In.ReadLine()) != null)
