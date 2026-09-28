@@ -297,7 +297,7 @@ static class Program
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
             string walkedFrom = null, walkedHeard = null;
-            string deedTopic = null, sawHimAt = null; int deedDay = -1, deedHour = -1;
+            string deedTopic = null, sawHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             string callsHim = null;
             List<string> present = null;
@@ -320,6 +320,8 @@ static class Program
                     deedHour = dd.TryGetProperty("hour", out var dh) && dh.ValueKind == JsonValueKind.Number ? dh.GetInt32() : -1;
                     // Where this person saw him at about the deed's time, if they did.
                     sawHimAt = dd.TryGetProperty("sawHimAt", out var sa) && sa.ValueKind == JsonValueKind.String ? sa.GetString() : null;
+                    // A grave deed (a killing): nobody keeps it quiet for the asking (town list 6al).
+                    deedGrave = dd.TryGetProperty("grave", out var gv) && gv.ValueKind == JsonValueKind.True;
                 }
                 // HE WALKED OFF MID-REPLY (town list 6v): who from, and what he heard.
                 if (r.TryGetProperty("walkedAway", out var wa) && wa.ValueKind == JsonValueKind.Object)
@@ -518,6 +520,26 @@ static class Program
                     claimOut = new { areas = areaList, result = result.ToString().ToLowerInvariant() };
                 }
             }
+            // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): about the deed they
+            // suspect him of; the Core decides whether they keep it quiet.
+            string ownedUpOut = null;
+            object keepsQuietOut = null;
+            // Only the deed this line is sent with: an older deed would come without
+            // its gravity (the independent check: a killing kept quiet).
+            string silenceTopic = deedTopic;
+            if (silenceTopic != null && !string.IsNullOrEmpty(say))
+            {
+                if (Silence.OwnsUp(say) && engine.HeardOwnUp(silenceTopic, now)) ownedUpOut = silenceTopic;
+                if (Silence.AsksQuiet(say))
+                {
+                    var stance = Cast?.QuietStance(key) ?? KeepsQuietFor.Friend;
+                    var ident = new PlayerIdentity();
+                    bool firstName = callsHim != null && (callsHim == ident.First || callsHim == ident.Diminutive);
+                    engine.HeardAskQuiet(silenceTopic, Silence.Agrees(stance, firstName, deedGrave), now);
+                    bool agreed = engine.KeepsQuiet[silenceTopic];
+                    keepsQuietOut = new { topic = silenceTopic, agreed, fragile = agreed && Silence.Fragile(stance) };
+                }
+            }
             if (suspicion.HasValue)
             {
                 // THE REASON CARRIES THE MOVE, so it reads as the reason the
@@ -540,7 +562,7 @@ static class Program
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut }, Plain);
             string reply;
             string paused = null;
             bool timedOut = false;
@@ -656,7 +678,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, claim = claimOut, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1092,6 +1114,25 @@ static class Program
         Ok("an answer that is not plain and names nowhere they saw him is not taken down at all; \"Me?\" before a plain answer leaves it plain",
            vagueSaid.Contains("\"claim\":null") && Math.Abs(Sus(vagueSaid) - 0.5) < 1e-9 && meSaid.Contains("\"result\":\"contradiction\"")
            && vague.EngineFor("sam").Answers.Count == 0, vagueSaid + " | " + meSaid);
+
+        // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): Darren says yes to
+        // anybody and his silence is fragile; Ron keeps it quiet for the owner;
+        // nobody keeps a grave deed quiet; "it was me" is remembered as told by him.
+        var quiet = new Helper(new FakeLlm { Next = "Right you are." }, TimeSpan.FromSeconds(8));
+        LoadCards(quiet, cardsDir);
+        LoadCast(quiet, cardsDir);
+        string qDeed = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}";
+        string qSam = await quiet.Answer("{\"id\":120,\"to\":\"sam\",\"say\":\"Keep it to yourself, Darren.\",\"day\":2,\"hour\":10," + qDeed + "}");
+        string qRon = await quiet.Answer("{\"id\":121,\"to\":\"rocco\",\"say\":\"Yeah, it was me. Keep it to yourself.\",\"day\":2,\"hour\":10," + qDeed + "}");
+        string qGrave = await quiet.Answer("{\"id\":122,\"to\":\"lena\",\"say\":\"Don't tell anyone.\",\"day\":2,\"hour\":10,\"deed\":{\"topic\":\"player.killing_d1\",\"day\":1,\"hour\":23,\"grave\":true}}");
+        string qNone = await quiet.Answer("{\"id\":123,\"to\":\"sam\",\"say\":\"Nice weather.\",\"day\":2,\"hour\":10," + qDeed + "}");
+        string qNoDeed = await quiet.Answer("{\"id\":124,\"to\":\"lena\",\"say\":\"Keep it to yourself, Sheila.\",\"day\":2,\"hour\":11}");
+        Ok("asked to keep it quiet, the Core decides and the game is told: Darren yes and fragile, Ron yes for the owner, nobody for a killing; owning up is kept",
+           qSam.Contains("\"keepsQuiet\":{\"topic\":\"player.window_d1\",\"agreed\":true,\"fragile\":true}")
+           && qRon.Contains("\"ownedUp\":\"player.window_d1\"") && qRon.Contains("\"agreed\":true,\"fragile\":false")
+           && qGrave.Contains("\"agreed\":false") && qNone.Contains("\"keepsQuiet\":null") && qNone.Contains("\"ownedUp\":null")
+           && qNoDeed.Contains("\"keepsQuiet\":null") && !quiet.EngineFor("lena").KeepsQuiet.ContainsKey("player.window_d1")
+           && quiet.EngineFor("rocco").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("He has owned up to it"), qSam + " | " + qRon + " | " + qGrave);
 
         // WHERE THEY ARE (town list 6u): each person told their own place this hour.
         var placed = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));

@@ -45,6 +45,56 @@ namespace Ledger.Core
         int _asksThisTalk;
         bool _promptAsks;
 
+        /// OWNING UP, AND KEEPING QUIET (town list 6al): the deeds he has owned up
+        /// to with this person, and for each deed he asked them to keep quiet,
+        /// whether the Core had them agree (Silence). Asked once, answered for good.
+        public readonly HashSet<string> OwnedUp = new HashSet<string>();
+        public readonly Dictionary<string, bool> KeepsQuiet = new Dictionary<string, bool>();
+
+        /// He owned up to a deed: remembered once, as told by him.
+        public bool HeardOwnUp(string topic, GameTime now)
+        {
+            if (string.IsNullOrEmpty(topic) || !OwnedUp.Add(topic)) return false;
+            var e = new MemoryEvent(now, "observation", 0.8, "He told me himself that it was him.");
+            Memory.Append(e);
+            TagStory(e, topic);
+            return true;
+        }
+
+        /// He asked them to keep a deed quiet, and the Core's answer: remembered
+        /// once; asking again changes nothing.
+        public bool HeardAskQuiet(string topic, bool agreed, GameTime now)
+        {
+            if (string.IsNullOrEmpty(topic) || KeepsQuiet.ContainsKey(topic)) return false;
+            KeepsQuiet[topic] = agreed;
+            var e = new MemoryEvent(now, "observation", 0.7, agreed
+                ? "He asked me to keep it to myself, and I said I would."
+                : "He asked me to keep it to myself. I would not.");
+            Memory.Append(e);
+            TagStory(e, topic);
+            return true;
+        }
+
+        // The promises a line makes, and any promise of silence unless the Core
+        // had them agree to keep the current deed quiet (town list 6al).
+        List<string> PromisesIn(string text)
+        {
+            var found = Promises.Find(text);
+            bool agreed = CurrentDeed != null && KeepsQuiet.TryGetValue(CurrentDeed, out var yes) && yes;
+            // A bare "not a word" is a promise when he spoke of telling, and after
+            // he owned up to the deed or they refused to keep it quiet (the
+            // independent check: "Mum's the word, Tom." straight after "yeah, it
+            // was me", and "Not a word, then." after "please, Sheila").
+            bool bare = Silence.SpeaksOfTelling(_turnInput)
+                || (CurrentDeed != null && (OwnedUp.Contains(CurrentDeed) || KeepsQuiet.ContainsKey(CurrentDeed)));
+            if (!agreed)
+                foreach (var p in Promises.FindSilence(text, bare)) if (!found.Contains(p)) found.Add(p);
+            return found;
+        }
+
+        // His line this turn, for reading a bare "not a word" in the reply.
+        string _turnInput;
+
         /// The text without the ending mark, and whether it carried one.
         public static string WithoutDone(string text, out bool ended)
         {
@@ -177,6 +227,14 @@ namespace Ledger.Core
                         ? $"He told you he was at {answered.Said} {when}, and it fits what you saw. You need not ask him again."
                         : $"He has told you he was at {answered.Said} {when}. You cannot say otherwise, so do not ask him where he was then again.");
             }
+
+            bool ownedUp = CurrentDeed != null && OwnedUp.Contains(CurrentDeed);
+            if (ownedUp)
+                sb.AppendLine("He has owned up to it: he told you himself that it was him. What you make of that is yours.");
+            if (CurrentDeed != null && KeepsQuiet.TryGetValue(CurrentDeed, out var keepsQuiet))
+                sb.AppendLine(keepsQuiet
+                    ? "He asked you to keep it to yourself, and you will: you will not pass it on."
+                    : "He asked you to keep it to yourself, and you will not. Whatever you tell him, never say you will.");
 
             if (!string.IsNullOrEmpty(sceneContext))
             {
@@ -311,7 +369,9 @@ namespace Ledger.Core
             _promptAsks = false;
             if (!string.IsNullOrEmpty(why) && Suspicion.Level >= SuspicionLevel.Suspicious)
             {
-                if (answered != null && answered.Result == ClaimResult.Contradiction)
+                if (ownedUp)
+                    sb.AppendLine($"What you want out of this conversation: to know where you stand now ({why}). He has owned up to it, so do not ask him again whether it was him.");
+                else if (answered != null && answered.Result == ClaimResult.Contradiction)
                     sb.AppendLine($"What you want out of this conversation: the truth about it ({why}). He has lied to you about where he was, and you know it: in this reply, whatever they said, put that to him, your own way. Do not ask him where he was again.");
                 else if (answered != null)
                     sb.AppendLine($"What you want out of this conversation: to settle whether they had anything to do with it ({why}). He has told you where he was, so do not ask that again: press him on what you still do not know, or let it lie, your own way.");
@@ -466,6 +526,13 @@ namespace Ledger.Core
 
         /// "on Tuesday night", "on Tuesday afternoon": the deed's time as they
         /// would say it; before six in the morning is the night before.
+        Dictionary<string, object> QuietJson()
+        {
+            var d = new Dictionary<string, object>();
+            foreach (var kv in KeepsQuiet) d[kv.Key] = kv.Value;
+            return d;
+        }
+
         public static string WhenWords(int day, int hour)
         {
             if (day < 0 || hour < 0) return "that night";
@@ -577,6 +644,7 @@ namespace Ledger.Core
                 { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
+                { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() },
             };
         }
 
@@ -589,6 +657,8 @@ namespace Ledger.Core
             _shown.Clear();
             _transcript.Clear();
             _asksThisTalk = 0;
+            OwnedUp.Clear();
+            KeepsQuiet.Clear();
             Knowledge.Facts.Clear();
             Suspicion.Restore(0.0);
             _knownOnlySaid = 0;
@@ -667,6 +737,9 @@ namespace Ledger.Core
             }
             if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
             if (saved.TryGetValue("asksThisTalk", out var at)) _asksThisTalk = Math.Max(0, WholeOrMinus(at));
+            if (saved.TryGetValue("ownedUp", out var ou) && ou is List<object> oul) foreach (var x in oul) if (x is string xs && xs.Length > 0) OwnedUp.Add(xs);
+            if (saved.TryGetValue("keepsQuiet", out var kq) && kq is Dictionary<string, object> kqd)
+                foreach (var kv in kqd) if (kv.Value is bool kb) KeepsQuiet[kv.Key] = kb;
         }
 
         List<object> AnswersJson()
@@ -794,7 +867,7 @@ namespace Ledger.Core
                             // A sentence carrying the ending mark waits for the whole reply,
                             // where the mark is taken out: it is never spoken early. Nor is
                             // a promise, which the whole reply's turn asks again without.
-                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || Promises.Find(said).Count > 0)
+                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || PromisesIn(said).Count > 0)
                                 return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
@@ -973,6 +1046,7 @@ namespace Ledger.Core
             string sceneContext = "", CancellationToken ct = default, Func<string, Task<bool>> onFirstChecked = null)
         {
             LastEnded = false;
+            _turnInput = playerInput;
             if (_lastTurn.HasValue && (now.Day != _lastTurn.Value.Day || now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes))
                 StartFresh();
             _lastTurn = now;
@@ -1052,7 +1126,7 @@ namespace Ledger.Core
                     LastInvented = invented;
                     // A PROMISE THE WORLD WILL NOT KEEP (town list 6af) is asked
                     // again without, the same way as a claim nobody supports.
-                    var promised = Promises.Find(reply);
+                    var promised = PromisesIn(reply);
                     LastPromised = promised;
                     var flagged = new List<string>(invented);
                     flagged.AddRange(promised);
@@ -1082,7 +1156,7 @@ namespace Ledger.Core
                         {
                             var redrafted = ValidateReply(d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
-                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && Promises.Find(redrafted).Count == 0;
+                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0;
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
                             if (!holds) _lastCleanCited = new List<string>();
                         }
