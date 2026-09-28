@@ -2191,6 +2191,33 @@ namespace Ledger.CoreTests
                   && !faintSaid.Text.Contains(faintStory.Summary),
                 "and it carries the story it came from, so he can stop them and ask", faintSaid?.Text ?? "none");
 
+            // HOURS WITHOUT REPETITION (town list 6k, ROADMAP stage 6): with the
+            // ledger of what he has heard, a bank gives a line he has not heard.
+            Check(faintSaid.Text == StreetVoice.FaintLines[5] && faintSaid.Bank == "faint",
+                "without the ledger the seed alone chooses, as before (the port's golden rows stand)");
+            var heardLedger = new RemarkLedger();
+            var heardLines = new List<string>();
+            for (int k = 0; k < StreetVoice.FaintLines.Length; k++)
+            {
+                var l = StreetVoice.FaintRemark(Holder("fr" + k, 0.1, true), faintStory, seed: 5, heard: heardLedger);
+                heardLines.Add(l.Text);
+                heardLedger.Heard(l);
+            }
+            var fifteenth = StreetVoice.FaintRemark(Holder("fr15", 0.1, true), faintStory, seed: 5, heard: heardLedger);
+            Check(heardLines.Distinct().Count() == StreetVoice.FaintLines.Length && fifteenth.Text == heardLines[0],
+                "with it, the same seed gives all fourteen before any line comes round again, and then the one heard longest ago",
+                heardLines.Distinct().Count() + " / " + fifteenth.Text);
+            var notHeard = new RemarkLedger();
+            var said1 = StreetVoice.FaintRemark(Holder("nh", 0.1, true), faintStory, 5, notHeard);
+            var said2 = StreetVoice.FaintRemark(Holder("nh2", 0.1, true), faintStory, 5, notHeard);
+            Check(said1.Text == said2.Text, "a line he did not hear is not counted as heard");
+            var recLedger = new RemarkLedger();
+            var rec1 = StreetVoice.Recognition(Holder("rc", 0.9, true), faintStory, StanceKind.Avoids, 3, recLedger);
+            recLedger.Heard(rec1);
+            var rec2 = StreetVoice.Recognition(Holder("rc2", 0.9, true), faintStory, StanceKind.Avoids, 3, recLedger);
+            Check(rec1.Bank == "recognition/avoids" && rec2.Text != rec1.Text && StreetVoice.Recognition(Holder("rc3", 0.9, true), faintStory, StanceKind.Avoids, 3).Text == rec1.Text,
+                "and so for every band of the recognitions, each its own bank", rec1.Text + " / " + rec2.Text);
+
             // RegardFor: the whole decision in one call, for somebody he has met
             // (Acquaintance.Known), who can tell it is him; on arrival he is a
             // stranger to everybody (canon), which the gate below covers.

@@ -28,7 +28,12 @@ anyone at all only about six times in ten within a week. Those figures are a
 best case: they assume he has met everyone and average sightings over every
 hour of the week. Only somebody who can tell it is him shows what they have
 heard, so the one who brings it back on day 2 has to be somebody he met on day
-1, and whether that happens by minute thirty is not yet measured.
+1. Measured with the five he meets (Sheila, Ron, Darren, Ada and June) and a
+night-one sighting by whoever of the forty is out: one of them says it to his
+face by minute thirty in 13 of 13 cases, but 7 of those only at minute thirty
+itself, because the routines bring those five out where he passes them only
+in the evening; in the coat, 6 of 13. So the day-one five need to be on Quay
+Street during day 2, not only after dark, for the hour to hold.
 
 ## The clock
 

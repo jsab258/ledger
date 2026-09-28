@@ -44,6 +44,8 @@ namespace Ledger.Core
     {
         public string SpeakerId;
         public string Text;
+        /// The bank the line was taken from, for RemarkLedger.Heard (town list 6k).
+        public string Bank;
         /// True when this is about the player — those carry a lead if heard.
         public bool AboutPlayer;
         /// The rumour behind it, when there is one. The player who overhears
@@ -116,6 +118,46 @@ namespace Ledger.Core
         }
 
         public int Count => _said.Count;
+
+        // THE LINES HE HAS HEARD, bank by bank, and when (town list 6k).
+        readonly Dictionary<string, Dictionary<string, int>> _linesHeard = new Dictionary<string, Dictionary<string, int>>();
+        int _hearings;
+
+        /// A LINE FROM A BANK THAT HE HAS NOT HEARD LATELY (town list 6k,
+        /// ROADMAP stage 6, "hours of content without repetition"): one he has
+        /// never heard, the seed choosing where to start, or, once he has heard
+        /// them all, the one heard longest ago. Chance alone repeats itself: five
+        /// remarks drawn at random from fourteen repeat one more often than not.
+        public string Fresh(string bank, string[] lines, int seed)
+        {
+            if (lines == null || lines.Length == 0) return "";
+            _linesHeard.TryGetValue(bank ?? "", out var heard);
+            int n = lines.Length, start = ((seed % n) + n) % n;
+            string oldest = null;
+            int oldestAt = int.MaxValue;
+            for (int k = 0; k < n; k++)
+            {
+                var line = lines[(start + k) % n];
+                if (heard == null || !heard.TryGetValue(line, out var at)) return line;
+                if (at < oldestAt) { oldestAt = at; oldest = line; }
+            }
+            return oldest;
+        }
+
+        /// He heard this line: remembered under its own bank, so the bank moves on.
+        public void Heard(SpokenLine line)
+        {
+            if (line != null) HeardLine(line.Bank, line.Text);
+        }
+
+        /// He heard this line from this bank: remembered, so the bank moves on.
+        /// Only what he heard counts, as for the remarks themselves.
+        public void HeardLine(string bank, string line)
+        {
+            if (string.IsNullOrEmpty(line)) return;
+            if (!_linesHeard.TryGetValue(bank ?? "", out var heard)) _linesHeard[bank ?? ""] = heard = new Dictionary<string, int>();
+            heard[line] = ++_hearings;
+        }
     }
 
     /// HOW MUCH OF A STORY ABOUT THE PLAYER SOMEBODY HOLDS, for how it shows
@@ -452,11 +494,13 @@ namespace Ledger.Core
         /// word to a companion once he is past). None of it names the story:
         /// they would no longer pass it on. Their memory still holds it, so he
         /// can stop and ask what they meant.
-        public static SpokenLine FaintRemark(Gossiper g, Rumor about, int seed)
+        /// With `heard`, the line is one he has not heard lately (RemarkLedger.Fresh);
+        /// without it, as before, the seed alone chooses.
+        public static SpokenLine FaintRemark(Gossiper g, Rumor about, int seed, RemarkLedger heard = null)
         {
             if (g == null || about == null) return null;
-            string text = Pick(seed, FaintLines);
-            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = true, Source = about };
+            string text = heard != null ? heard.Fresh("faint", FaintLines, seed) : Pick(seed, FaintLines);
+            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = true, Source = about, Bank = "faint" };
         }
 
         /// Fourteen, as every band is (BarkGen's repeat floor).
@@ -679,16 +723,20 @@ namespace Ledger.Core
         /// a story about them. Short, pointed, and STOPPABLE — the player can
         /// turn round and ask what they meant, because the speaker's memory
         /// holds the same rumour this line came from.
-        public static SpokenLine Recognition(Gossiper g, Rumor about, StanceKind stance, int seed)
+        public static SpokenLine Recognition(Gossiper g, Rumor about, StanceKind stance, int seed, RemarkLedger heard = null)
         {
             if (g == null || stance < StanceKind.Comments) return null;
+            // With `heard`, a line he has not heard lately from the same bank
+            // (RemarkLedger.Fresh, town list 6k); without it, the seed alone.
+            string usedBank = null;
+            string From(string bank, string[] lines) { usedBank = bank; return heard != null ? heard.Fresh(bank, lines, seed) : Pick(seed, lines); }
             // Every one of these has to INVITE being stopped, because it can
             // be: the speaker's memory holds the same rumour the line came
             // from, so the player can turn round and ask what they meant. A
             // line that closes the subject wastes the only bark system in the
             // genre that can be interrogated.
             string text =
-                stance >= StanceKind.Confronts ? Pick(seed, new[]
+                stance >= StanceKind.Confronts ? From("recognition/confronts", new[]
                 {
                     "You and I need a word. Not here.",
                     "I've been waiting to see you, as it happens.",
@@ -705,7 +753,7 @@ namespace Ledger.Core
                     "I'd like an answer, and I'd like it today.",
                     "Look at me when I'm talking to you.",
                 })
-                : stance == StanceKind.Refuses ? Pick(seed, new[]
+                : stance == StanceKind.Refuses ? From("recognition/refuses", new[]
                 {
                     "I've nothing for you today.",
                     "Whatever it is, no.",
@@ -722,7 +770,7 @@ namespace Ledger.Core
                     "I've heard enough to know my answer.",
                     "Ask me in a year.",
                 })
-                : stance == StanceKind.Avoids ? Pick(seed, new[]
+                : stance == StanceKind.Avoids ? From("recognition/avoids", new[]
                 {
                     "...",
                     "Excuse me.",
@@ -739,7 +787,7 @@ namespace Ledger.Core
                     "Mind yourself.",
                     "...Evening.",
                 })
-                : about != null && about.Sensitive ? Pick(seed, new[]
+                : about != null && about.Sensitive ? From("recognition/sensitive", new[]
                 {
                     "There they are. The busy one.",
                     "Heard your name this week. More than once.",
@@ -756,7 +804,7 @@ namespace Ledger.Core
                     "Careful on that corner. People watch it.",
                     "You and I should have a proper talk one day.",
                 })
-                : Pick(seed, new[]
+                : From("recognition/ordinary", new[]
                 {
                     "Mickey's one. Still standing, then.",
                     "All right.",
@@ -773,7 +821,7 @@ namespace Ledger.Core
                     "You'll be at the market Thursday, I expect.",
                     "Evening.",
                 });
-            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = about != null, Source = about };
+            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = about != null, Source = about, Bank = usedBank };
         }
 
         // ---- ambient life: the city that is busy without you ----
