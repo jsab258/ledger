@@ -298,6 +298,22 @@ namespace Ledger.Core
         /// keep (Promises); empty when nothing, or when no check ran.
         public IReadOnlyList<string> LastPromised { get; private set; } = new List<string>();
 
+        /// WHAT THE LAST REPLY SPOKE OF (town list 6ah): the stories (the game's
+        /// topic keys, "player.window_d1") of the memories the claim check found
+        /// the said reply drawing on, so the game can record the town reacting
+        /// to what the player did in talk. Empty when none, or no check ran.
+        public IReadOnlyList<string> LastSpokeOf { get; private set; } = new List<string>();
+
+        readonly Dictionary<string, string> _storyOf = new Dictionary<string, string>();
+        List<string> _lastCleanCited = new List<string>();
+
+        /// The game says which story a memory belongs to (its topic key).
+        public void TagStory(MemoryEvent e, string story)
+        {
+            if (e == null || string.IsNullOrEmpty(story)) return;
+            _storyOf[$"[{e.Time}] {e.Text}"] = story;
+        }
+
         // How often this conversation has fallen back on saying it knows no more.
         int _knownOnlySaid;
 
@@ -654,6 +670,9 @@ namespace Ledger.Core
             {
                 var (found, calls) = await CheckLine(Checker, CheckerModel, known, line, ct);
                 foreach (var c in calls) _cost?.Record(CheckerModel, c.InputTokens, c.OutputTokens);
+                // What a clean line drew on, from the list's own answer (its first call).
+                _lastCleanCited = found != null && found.Count == 0 && calls != null && calls.Count > 0
+                    ? ClaimCheck.CitedMemories(calls[0].Text, known) : new List<string>();
                 if (found != null) return found;
             }
             catch (Exception) when (!ct.IsCancellationRequested) { }
@@ -816,6 +835,8 @@ namespace Ledger.Core
             // One second draft, told what it claimed; then the plain true line.
             LastInvented = new List<string>();
             LastPromised = new List<string>();
+            LastSpokeOf = new List<string>();
+            _lastCleanCited = new List<string>();
             LastUnchecked = false;
             if (Checker != null)
             {
@@ -840,6 +861,7 @@ namespace Ledger.Core
                     flagged.AddRange(promised);
                     if (flagged.Count > 0 && firstHeard)
                     {
+                        _lastCleanCited = new List<string>();
                         // The checked first sentence has been heard: the rest goes.
                         reply = firstSentence;
                     }
@@ -857,6 +879,7 @@ namespace Ledger.Core
                         if (d2.FirstFlagged != null)
                         {
                             reply = ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                            _lastCleanCited = new List<string>();
                         }
                         else
                         {
@@ -864,8 +887,13 @@ namespace Ledger.Core
                             var again = await InventedAsync(known, redrafted, ct);
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && Promises.Find(redrafted).Count == 0;
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                            if (!holds) _lastCleanCited = new List<string>();
                         }
                     }
+                    var spoke = new List<string>();
+                    foreach (var text in _lastCleanCited)
+                        if (_storyOf.TryGetValue(text, out var story) && !spoke.Contains(story)) spoke.Add(story);
+                    LastSpokeOf = spoke;
                     // ABANDONED WHILE CHECKING: a caller that has given up on the
                     // turn must not find it kept afterwards (the independent check,
                     // 26 September: a checker that ignored cancellation let a
