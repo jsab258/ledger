@@ -66,9 +66,13 @@ def main(argv):
     sr = model.sample_rate
     voices = {}
 
+    # --prompts DIR (28 September): learn each voice from DIR/<who>.wav, a longer
+    # take of the approved voice (tools/voice-live/longer_takes.py), where there is one.
+    prompts = pathlib.Path(argv[argv.index("--prompts") + 1]) if "--prompts" in argv else None
+
     def voice(who):
         if who not in voices:
-            clip = vs.clip_for(who)
+            clip = str(prompts / (who + ".wav")) if prompts is not None and (prompts / (who + ".wav")).exists() else vs.clip_for(who)
             if clip is None:
                 return None
             voices[who] = model.get_state_for_audio_prompt(str(clip), truncate=True)
