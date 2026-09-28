@@ -263,7 +263,7 @@ namespace Ledger.Core
             // to answer from — the till, the pavement, a person's standing, who
             // is talking to whom. A rule that only forbids produces a stiff
             // dodge; the rule and the section together produce four people.
-            sb.AppendLine("- Do not open by accepting the frame of the question. If they ask what the mood is, do not begin with a word for the mood. Start where you were already looking — see what you notice first, above — or with what you were doing, or with what you want out of this conversation. Two people asked the same thing in the same room do not begin the same way, because they were not looking at the same thing.");
+            sb.AppendLine("- Do not open by accepting the frame of the question. If they ask what the mood is, do not begin with a word for the mood. Start with what you were already looking at, said the way a person says it (\"Rain's coming on.\"), or with what you were doing, or with what you want out of this conversation; never describe yourself looking or turning (\"I look up from the rank\" is narration, not speech). Two people asked the same thing in the same room do not begin the same way, because they were not looking at the same thing.");
             // AND WORDS FROM OUTSIDE THIS WORLD. Asked to "email or text",
             // Lena answered "No phone number for you, no email either" — she
             // held the period in substance and used the word fluently, which
@@ -738,7 +738,9 @@ namespace Ledger.Core
                     d.Response = await streaming.StreamAsync(request, text =>
                     {
                         if (d.FirstTask != null) return;
-                        var f = FirstSentence(text);
+                        // A stage direction said in the first person is never the
+                        // sentence spoken early (town list 6aj): the next one is.
+                        var f = FirstSentence(ResponseValidator.WithoutGestures(text));
                         if (f == null) return;
                         d.First = ValidateReply(f);
                         var said = d.First;
