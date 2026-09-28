@@ -61,6 +61,7 @@ namespace Ledger.CoreTests
             try
             {
                 TestGameTime();
+                TestCastDay();
                 TestMiniJson();
                 TestCharacterCard();
                 TestMemoryStoreRoundtrip();
@@ -2038,6 +2039,327 @@ namespace Ledger.CoreTests
             Check(faintLine != null && faintLine.AboutPlayer && faintLine.Source == shows,
                 "and what the faint hearer says is about you, from the story they hold",
                 faintLine != null ? faintLine.Text : "no line");
+
+            // KNOWING A LITTLE SHOWS TOO (Jafar's list, 28 September): a story
+            // held under the share floor, which the mill keeps for days as it
+            // fades, used to leave its holder exactly like a stranger.
+            var fadingMill = new GossipMill(new SocialGraph());
+            var fader = Holder("fd", 0.3, true);
+            fadingMill.Add(fader);
+            fadingMill.Age(new GameTime(1, 0, 0));
+            int shownHours = 0, heldHours = 0;
+            for (int h = 1; h <= 24 * 30; h++)
+            {
+                fadingMill.Age(new GameTime(1 + h / 24, h % 24, 0));
+                if (fader.Rumors.Count > 0) heldHours++;
+                if (StreetVoice.StoryThatShows(fader, shareFloor) != null) shownHours++;
+            }
+            Check(heldHours > 4 * shownHours && shownHours > 0,
+                "the case: a retold story is held far longer than it is strong enough to pass on",
+                $"held {heldHours} h, would pass it on {shownHours} h");
+            Check(StreetVoice.StoryHalfRemembered(Holder("hr1", 0.1, true), shareFloor) != null,
+                "a story under the floor is half remembered");
+            Check(StreetVoice.StoryHalfRemembered(Holder("hr2", shareFloor, true), shareFloor) == null
+                  && StreetVoice.StoryHalfRemembered(Holder("hr3", 0.0, true), shareFloor) == null,
+                "not at the floor, where it shows, and not at nothing");
+            Check(StreetVoice.StoryHalfRemembered(Holder("hr4", 0.1, false), shareFloor) == null
+                  && StreetVoice.StoryHalfRemembered(Holder("hr5", 0.1, true, subject: "rocco"), shareFloor) == null,
+                "only his night, as for a story that shows, so talk does not become a crowd");
+            Check(StreetVoice.StoryHalfRemembered(Holder("hr6", 0.05, true, suppressed: true), shareFloor) == null,
+                "a story paid or scared quiet (Contain leaves it at 0.05) does not show at all");
+            var twoFaint = Holder("hr7", 0.05, true);
+            var fainter = twoFaint.Rumors[0];
+            var lessFaint = new Rumor { Content = new Fact("player", "yard_visit", "seen"), OriginId = "ada",
+                Summary = "he was in the yard", Confidence = 0.15, Sensitive = true };
+            twoFaint.Rumors.Add(lessFaint);
+            Check(StreetVoice.StoryHalfRemembered(twoFaint, shareFloor) == lessFaint, "of two, the stronger");
+
+            // Its floor: a look, one rung under a story that shows.
+            Check(StreetVoice.Stance(0.0, 0.5, 0.1, false, false) == StanceKind.Indifferent
+                  && StreetVoice.Stance(0.0, 0.5, 0.1, false, false, knowsALittle: true) == StanceKind.Notices,
+                "a person who knows a little notices him, where the ladder alone left them indifferent");
+            Check(StreetVoice.Stance(0.0, 0.5, 0.1, leashed: true, wearingCoat: false, knowsALittle: true) == StanceKind.Notices,
+                "leashed, they still look: a look is not speech");
+            Check(StreetVoice.Stance(0.0, 0.5, 0.1, leashed: false, wearingCoat: true, knowsALittle: true) == StanceKind.Indifferent,
+                "in the coat, unsure it is him, nothing");
+            int littleBad = 0, littleN = 0;
+            string littleFirst = "";
+            foreach (var s in new[] { 0.0, 0.2, 0.5, 0.8, 1.0 })
+                foreach (var loy in new[] { 0.1, 0.5, 0.95 })
+                    foreach (var t in new[] { 0.0, 0.1, 0.19, 0.3, 0.7, 1.0 })
+                        foreach (var leash in new[] { false, true })
+                            foreach (var coat in new[] { false, true })
+                                foreach (var knows in new[] { false, true })
+                                    foreach (var hadSay in new[] { false, true })
+                                    {
+                                        littleN++;
+                                        var without = StreetVoice.Stance(s, loy, t, leash, coat, knows, hadSay);
+                                        var want = !coat && without < StanceKind.Notices ? StanceKind.Notices : without;
+                                        var got = StreetVoice.Stance(s, loy, t, leash, coat, knows, hadSay, knowsALittle: true);
+                                        if (got != want) { littleBad++; if (littleFirst == "") littleFirst = $"s={s} loy={loy} t={t} leash={leash} coat={coat} knows={knows} said={hadSay}: {got} want {want}"; }
+                                    }
+            Check(littleBad == 0, "a floor only: nobody lowered, nobody above it moved, a story that shows still wins",
+                $"{littleBad}/{littleN} {littleFirst}");
+            // THE LOOK (the gaze research): a stranger glances from about ten
+            // metres for half a second and has looked away by 2.4 m; somebody
+            // who notices him looks again in the passing zone and holds it past
+            // the one-second polite line; somebody watching keeps him in view
+            // and looks back.
+            Check(StreetVoice.FirstLookMetres(StanceKind.Indifferent) == StreetVoice.CivilGlanceMetres
+                  && StreetVoice.FirstLookMetres(StanceKind.Notices) == StreetVoice.CivilGlanceMetres
+                  && StreetVoice.FirstLookMetres(StanceKind.Watches) == StreetVoice.GazeMetres(StanceKind.Watches)
+                  && StreetVoice.FirstLookMetres(StanceKind.Avoids) == StreetVoice.GazeMetres(StanceKind.Avoids),
+                "everybody's first look lands where a stranger's glance does, or further off for those who watch");
+            Check(StreetVoice.LookHoldSeconds(StanceKind.Indifferent) < 1.0 && StreetVoice.LookHoldSeconds(StanceKind.Notices) < 1.0
+                  && StreetVoice.KnowingLookSeconds > 1.0,
+                "a first look is a glance, under the one-second polite line; the knowing look is over it");
+            Check(StreetVoice.SecondLookMetres(StanceKind.Notices) == StreetVoice.PassingZoneMetres
+                  && StreetVoice.SecondLookMetres(StanceKind.Indifferent) == 0.0 && StreetVoice.SecondLookMetres(StanceKind.Watches) == 0.0,
+                "one who notices him looks again as he comes through the passing zone; a stranger does not");
+            Check(StreetVoice.PassingZoneMetres - StreetVoice.KnowingLookSeconds * 1.4 <= 1.0,
+                "and at a walking pace (1.4 m/s) the knowing look holds until he is about alongside, within a metre",
+                $"{StreetVoice.KnowingLookSeconds * 1.4:0.0} m of walking from {StreetVoice.PassingZoneMetres} m");
+            Check(double.IsPositiveInfinity(StreetVoice.LookHoldSeconds(StanceKind.Watches))
+                  && double.IsPositiveInfinity(StreetVoice.LookHoldSeconds(StanceKind.Comments))
+                  && double.IsPositiveInfinity(StreetVoice.LookHoldSeconds(StanceKind.Confronts)),
+                "somebody watching keeps him in view while he is in range");
+            Check(StreetVoice.LookAwayMetres(StanceKind.Indifferent) == StreetVoice.CivilLookAwayMetres
+                  && StreetVoice.LookAwayMetres(StanceKind.Notices) == 0.0 && StreetVoice.LookAwayMetres(StanceKind.Watches) == 0.0,
+                "a stranger's eyes drop as he comes close; one who knows keeps looking as he passes");
+            Check(!StreetVoice.LooksBack(StanceKind.Indifferent) && !StreetVoice.LooksBack(StanceKind.Notices)
+                  && StreetVoice.LooksBack(StanceKind.Watches) && StreetVoice.LooksBack(StanceKind.Comments)
+                  && StreetVoice.LooksBack(StanceKind.Confronts),
+                "and those who watch him look back after he has passed");
+            Check(StreetVoice.LookAwayMetres(StanceKind.Avoids) == StreetVoice.CivilLookAwayMetres
+                  && StreetVoice.LookAwayMetres(StanceKind.Refuses) == StreetVoice.CivilLookAwayMetres
+                  && !StreetVoice.LooksBack(StanceKind.Avoids) && !StreetVoice.LooksBack(StanceKind.Refuses)
+                  && StreetVoice.LookHoldSeconds(StanceKind.Refuses) == StreetVoice.CivilGlanceSeconds,
+                "one who avoids or refuses him glances and does not want to be caught looking");
+
+            // May remark: some do, fewer as it fades, the same ones every time.
+            var faintStory = Holder("x", 0.1, true).Rumors[0];
+            int would10 = 0, would05 = 0, would19 = 0, lost = 0;
+            for (int i = 0; i < 2000; i++)
+            {
+                string who = "resident" + i;
+                bool at10 = StreetVoice.MayRemarkFaintly(who, faintStory, shareFloor);
+                var weaker = new Rumor { Content = faintStory.Content, Confidence = 0.05, Sensitive = true };
+                var stronger19 = new Rumor { Content = faintStory.Content, Confidence = 0.19, Sensitive = true };
+                bool at05 = StreetVoice.MayRemarkFaintly(who, weaker, shareFloor);
+                bool at19 = StreetVoice.MayRemarkFaintly(who, stronger19, shareFloor);
+                if (at10) would10++;
+                if (at05) would05++;
+                if (at19) would19++;
+                if (at05 && !at10) lost++;
+                if (at10 != StreetVoice.MayRemarkFaintly(who, faintStory, shareFloor)) lost += 1000;
+            }
+            Check(Math.Abs(would10 / 2000.0 - 0.5) < 0.05 && Math.Abs(would05 / 2000.0 - 0.25) < 0.05 && Math.Abs(would19 / 2000.0 - 0.95) < 0.03,
+                "a story halfway down the floor is remarked on by about half, a quarter of the way by a quarter",
+                $"0.19: {would19}/2000  0.10: {would10}/2000  0.05: {would05}/2000");
+            Check(lost == 0, "the same people every time, and as it fades only ever fewer", lost.ToString());
+            var atFloor = new Rumor { Content = faintStory.Content, Confidence = shareFloor, Sensitive = true };
+            Check(StreetVoice.MayRemarkFaintly("anybody", atFloor, shareFloor) && !StreetVoice.MayRemarkFaintly("anybody", null, shareFloor),
+                "at the floor everybody would; with no story nobody");
+            // STRICTLY UNDER (the independent check planted <= and nothing noticed):
+            // a draw exactly equal to the story's share of the floor does not remark.
+            var drawKey = RemarkLedger.KeyFor("resident7", faintStory);
+            double draw = StreetVoice.FaintDraw(drawKey);
+            var exactly = new Rumor { Content = faintStory.Content, Confidence = draw, Sensitive = true };
+            var aHair = new Rumor { Content = faintStory.Content, Confidence = Math.BitIncrement(draw), Sensitive = true };
+            Check(!StreetVoice.MayRemarkFaintly("resident7", exactly, 1.0) && StreetVoice.MayRemarkFaintly("resident7", aHair, 1.0),
+                "a draw equal to the story's share does not remark; a hair over it does", $"draw {draw}");
+
+            // What they say names nothing of the story, and passes the content rule.
+            var fl = StreetVoice.FaintLines;
+            Check(fl.Length == 14 && new HashSet<string>(fl).Count == 14, "fourteen lines, all different");
+            string badFaint = null;
+            var details = new[] { "yard", "midnight", "night", "window", "rita", "runner", "coat", "package", "copper", "van",
+                                  "knife", "money", "fight", "broke", "stole", "warehouse", "tuesday", "saw" };
+            foreach (var l in fl)
+            {
+                if (ContentRule.SpeechBreaks(l) != null) badFaint = l + " -> " + ContentRule.SpeechBreaks(l);
+                foreach (var d in details)
+                    if (System.Text.RegularExpressions.Regex.IsMatch(l.ToLowerInvariant(), @"\b" + d + @"\b")) badFaint = l + " -> names '" + d + "'";
+                if (!System.Text.RegularExpressions.Regex.IsMatch(l, @"\b(him|his|he|he's|that one|nephew)\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                    badFaint = l + " -> not about him";
+                if (System.Text.RegularExpressions.Regex.IsMatch(l, @"\byou\b|\byour\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase))
+                    badFaint = l + " -> said to his face, not to a companion";
+            }
+            Check(badFaint == null, "each line is about him, to a companion, names no detail, and passes the content rule", badFaint ?? "");
+            var faintSaid = StreetVoice.FaintRemark(Holder("fs", 0.1, true), faintStory, seed: 5);
+            Check(faintSaid != null && faintSaid.AboutPlayer && faintSaid.Source == faintStory && !faintSaid.Composed
+                  && !faintSaid.Text.Contains(faintStory.Summary),
+                "and it carries the story it came from, so he can stop them and ask", faintSaid?.Text ?? "none");
+
+            // RegardFor: the whole decision in one call, for somebody he has met
+            // (Acquaintance.Known), who can tell it is him; on arrival he is a
+            // stranger to everybody (canon), which the gate below covers.
+            // Companion beside them unless a check says not.
+            double known = Acquaintance.Known;
+            var nobody = new Gossiper("nb", "nb", new MemoryStore("nb"), new KnowledgeBase(), new SuspicionTracker());
+            var rgNone = StreetVoice.RegardFor(nobody, shareFloor, false, new RemarkLedger(), known, true);
+            Check(rgNone.Knowing == Knowing.Nothing && rgNone.Stance == StanceKind.Indifferent && !rgNone.Speaks
+                  && rgNone.FirstLookMetres == StreetVoice.CivilGlanceMetres && rgNone.FirstLookSeconds == StreetVoice.CivilGlanceSeconds
+                  && rgNone.SecondLookMetres == 0.0 && rgNone.LookAwayMetres == StreetVoice.CivilLookAwayMetres && !rgNone.LooksBack,
+                "a stranger who has heard nothing: a passer-by's glance");
+            string talker = null, quiet = null;
+            for (int i = 0; i < 200 && (talker == null || quiet == null); i++)
+            {
+                var id = "p" + i;
+                if (StreetVoice.MayRemarkFaintly(id, Holder(id, 0.1, true).Rumors[0], shareFloor)) talker = talker ?? id;
+                else quiet = quiet ?? id;
+            }
+            var remarks = new RemarkLedger();
+            var tk = Holder(talker, 0.1, true);
+            var rgLittle = StreetVoice.RegardFor(tk, shareFloor, false, remarks, known, true);
+            Check(rgLittle.Knowing == Knowing.ALittle && rgLittle.KnowsItIsHim && rgLittle.Stance == StanceKind.Notices
+                  && rgLittle.SecondLookMetres == StreetVoice.PassingZoneMetres && rgLittle.SecondLookSeconds == StreetVoice.KnowingLookSeconds
+                  && rgLittle.LookAwayMetres == 0.0 && rgLittle.Speaks && rgLittle.Faint && rgLittle.Story == tk.Rumors[0],
+                "somebody who knows a little: the knowing look as he passes, and a word to a companion due",
+                $"{rgLittle.Knowing} {rgLittle.Stance} speaks={rgLittle.Speaks}");
+            var rgAlone = StreetVoice.RegardFor(Holder(talker, 0.1, true), shareFloor, false, new RemarkLedger(), known, false);
+            Check(rgAlone.Stance == StanceKind.Notices && !rgAlone.Speaks,
+                "alone, with nobody to say it to, they only look");
+            var qt = Holder(quiet, 0.1, true);
+            var rgQuiet = StreetVoice.RegardFor(qt, shareFloor, false, remarks, known, true);
+            Check(rgQuiet.Knowing == Knowing.ALittle && rgQuiet.Stance == StanceKind.Notices && !rgQuiet.Speaks,
+                "another who knows as little only looks");
+            // THE CANON GATE (the independent check): somebody who has only heard
+            // of him cannot pick him out, so nothing they hold shows.
+            var rgHeardOf = StreetVoice.RegardFor(Holder(talker, 0.1, true), shareFloor, false, new RemarkLedger(), Acquaintance.HeardOfYou, true);
+            var rgHeardOfEnough = StreetVoice.RegardFor(Holder("hoe", 0.3, true), shareFloor, false, new RemarkLedger(), Acquaintance.HeardOfYou, true);
+            var rgHeardOfStrong = StreetVoice.RegardFor(Holder("hos", 0.8, true), shareFloor, false, new RemarkLedger(), Acquaintance.HeardOfYou, true);
+            Check(!rgHeardOf.KnowsItIsHim && rgHeardOf.Knowing == Knowing.ALittle && rgHeardOf.Stance == StanceKind.Indifferent && !rgHeardOf.Speaks
+                  && rgHeardOfEnough.Knowing == Knowing.Enough && rgHeardOfEnough.Stance == StanceKind.Indifferent && !rgHeardOfEnough.Speaks
+                  && rgHeardOfStrong.Stance == StanceKind.Indifferent && rgHeardOfStrong.SecondLookMetres == 0.0
+                  && rgHeardOfStrong.LookAwayMetres == StreetVoice.CivilLookAwayMetres && !rgHeardOfStrong.LooksBack,
+                "somebody who has only heard of him holds the story and treats him as the stranger he is to them, however sure the story",
+                $"{rgHeardOf.Stance} / {rgHeardOfEnough.Stance} / {rgHeardOfStrong.Stance}");
+            var suspiciousStranger = Holder("ss", 0.8, true);
+            suspiciousStranger.Suspicion.Raise(0.5, "he lied to me about the yard");
+            Check(StreetVoice.RegardFor(suspiciousStranger, shareFloor, false, new RemarkLedger(), Acquaintance.HeardOfYou, true).Stance
+                  == StreetVoice.Stance(0.5, 0.5, 0.0, false, false),
+                "their own suspicion of him still counts; only the story they cannot pin on him does not");
+            Check(StreetVoice.RegardFor(Holder("stg", 0.1, true), shareFloor, false, new RemarkLedger(), Acquaintance.Stranger, true).Stance == StanceKind.Indifferent,
+                "and so does a face in the crowd");
+            Check(!remarks.RecordFaint(talker, rgLittle.Story, heard: false) && !remarks.HasRemarked(talker, rgLittle.Story),
+                "a faint remark not heard is not their one remark");
+            Check(remarks.RecordFaint(talker, rgLittle.Story, heard: true) && !remarks.RecordFaint(talker, rgLittle.Story, heard: true),
+                "a heard one is, once");
+            var rgAfter = StreetVoice.RegardFor(tk, shareFloor, false, remarks, known, true);
+            Check(rgAfter.Stance == StanceKind.Notices && !rgAfter.Speaks && rgAfter.RemarkedAlready,
+                "and after it, the look without the remark");
+            tk.Rumors[0].Confidence = 0.3;
+            var rgBack = StreetVoice.RegardFor(tk, shareFloor, false, remarks, known, true);
+            Check(rgBack.Knowing == Knowing.Enough && rgBack.Stance == StanceKind.Watches && !rgBack.Speaks,
+                "if the story comes back strong they watch him, and do not say it twice");
+            tk.Rumors[0].Confidence = 0.1;
+            var leashedTalker = Holder(talker, 0.1, true);
+            leashedTalker.Leashed = true;
+            var rgLeash = StreetVoice.RegardFor(leashedTalker, shareFloor, false, new RemarkLedger(), known, true);
+            Check(rgLeash.Stance == StanceKind.Notices && !rgLeash.Speaks, "leashed, the look and no word");
+            var rgCoat = StreetVoice.RegardFor(Holder(talker, 0.1, true), shareFloor, true, new RemarkLedger(), known, true);
+            Check(rgCoat.Stance == StanceKind.Indifferent && !rgCoat.Speaks && rgCoat.Knowing == Knowing.ALittle,
+                "in the coat, nothing, though they still hold it");
+            // IN THE COAT, A STORY THAT SHOWS: the floor is Notices, and it must be
+            // a glance, not the knowing look (the check found it was).
+            var rgCoatEnough = StreetVoice.RegardFor(Holder("ce", 0.3, true), shareFloor, true, new RemarkLedger(), known, true);
+            Check(rgCoatEnough.Stance == StanceKind.Notices && rgCoatEnough.SecondLookMetres == 0.0
+                  && rgCoatEnough.LookAwayMetres == StreetVoice.CivilLookAwayMetres && !rgCoatEnough.Speaks,
+                "in the coat even one who knows enough only glances, unsure it is him");
+            var enough = Holder("en", 0.3, true);
+            var rgEnough = StreetVoice.RegardFor(enough, shareFloor, false, new RemarkLedger(), known, true);
+            Check(rgEnough.Knowing == Knowing.Enough && rgEnough.Stance == StanceKind.Comments && rgEnough.Speaks && !rgEnough.Faint
+                  && rgEnough.LooksBack && double.IsPositiveInfinity(rgEnough.FirstLookSeconds),
+                "a story that shows is as it was: the remark from Recognition, once, and he is watched");
+            Check(rgEnough.Stance == StreetVoice.Stance(0.0, 0.5, 0.3, false, false, knowsSomething: true),
+                "and the same stance the ladder and its floor gave before");
+            // WHEN A STORY SHOWS, NO HALF-REMEMBERED ONE IS LOOKED FOR (the check
+            // planted the lookup regardless, and nothing noticed): after their say
+            // on the strong story they do not add a faint remark on a weaker one.
+            var both2 = Holder(talker, 0.3, true);
+            var weakOther = new Rumor { Content = new Fact("player", "yard_visit", "seen"), OriginId = "ada",
+                Summary = "he was in the yard", Confidence = 0.1, Sensitive = true };
+            both2.Rumors.Add(weakOther);
+            var ledBoth = new RemarkLedger();
+            ledBoth.Record(talker, both2.Rumors[0], StanceKind.Comments, heard: true);
+            var rgBoth = StreetVoice.RegardFor(both2, shareFloor, false, ledBoth, known, true);
+            Check(rgBoth.Story == both2.Rumors[0] && rgBoth.Stance == StanceKind.Watches && !rgBoth.Speaks && !rgBoth.Faint,
+                "one who has had their say on a strong story does not follow it with a faint one");
+            // THE PRESSURE READS EVERY STORY ABOUT HIM, not only his nights (the
+            // check planted a sensitive-only strongest, and nothing noticed).
+            var talkOnly = new Gossiper("to", "to", new MemoryStore("to"), new KnowledgeBase(), new SuspicionTracker());
+            talkOnly.Rumors.Add(new Rumor { Content = new Fact("player", "seen_about", "quay"), Summary = "s", Confidence = 0.9, Sensitive = false });
+            var rgTalk = StreetVoice.RegardFor(talkOnly, shareFloor, false, new RemarkLedger(), known, true);
+            Check(rgTalk.Knowing == Knowing.Nothing && rgTalk.Stance == StanceKind.Watches,
+                "strong street talk about him still raises the ladder, though it is not a story that shows", rgTalk.Stance.ToString());
+            // A NaN FIRST MUST NOT HIDE A REAL STORY (the check).
+            var nanFirst = new Gossiper("nf", "nf", new MemoryStore("nf"), new KnowledgeBase(), new SuspicionTracker());
+            nanFirst.Rumors.Add(new Rumor { Content = new Fact("player", "seen_about", "quay"), Summary = "s", Confidence = double.NaN });
+            nanFirst.Rumors.Add(new Rumor { Content = new Fact("player", "seen_about", "yard"), Summary = "s", Confidence = 0.9 });
+            Check(StreetVoice.RegardFor(nanFirst, shareFloor, false, new RemarkLedger(), known, true).Stance == StanceKind.Watches,
+                "a broken certainty listed first does not hide a real one");
+            // THE HALF-REMEMBERED STORY'S RULES, pinned in C# as well as in the
+            // golden rows (the check found three caught only there).
+            var indelibleQuiet = Holder("iq", 0.05, true, suppressed: true, indelible: true);
+            Check(StreetVoice.StoryHalfRemembered(indelibleQuiet, shareFloor) == indelibleQuiet.Rumors[0],
+                "a fact no money buys back shows even when they were paid to keep quiet");
+            var tie2 = Holder("t2", 0.15, true);
+            tie2.Rumors.Add(new Rumor { Content = new Fact("player", "yard_visit", "seen"), Summary = "s", Confidence = 0.15, Sensitive = true });
+            Check(StreetVoice.StoryHalfRemembered(tie2, shareFloor) == tie2.Rumors[0], "of two as faint, the first");
+            // Suspicion alone at the speaking rung speaks on the caller's cooldown,
+            // as the ladder always has: the once-per-story rule is the floor's.
+            var suspicious = Holder(talker, 0.1, true);
+            suspicious.Suspicion.Raise(0.8, "saw him at the yard gate");
+            var ledSus = new RemarkLedger();
+            ledSus.RecordFaint(talker, suspicious.Rumors[0], heard: true);
+            var rgSus = StreetVoice.RegardFor(suspicious, shareFloor, false, ledSus, known, true);
+            Check(rgSus.Stance >= StanceKind.Comments && rgSus.Speaks && rgSus.RemarkedAlready && !rgSus.Faint,
+                "real suspicion speaks up whatever the story's one remark, as the ladder always has", rgSus.Stance.ToString());
+
+            // And in talk: a manner, only while nothing ties him to a deed.
+            var mannerEngine = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(),
+                new SuspicionTracker(), new CostTracker());
+            string basePrompt = mannerEngine.BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "");
+            mannerEngine.Heard = Knowing.ALittle;
+            mannerEngine.HeardStory = "the new owner was about the yard after midnight.";
+            string littlePrompt = mannerEngine.BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "");
+            Check(basePrompt.Contains("at ease with them") && !littlePrompt.Contains("at ease with them")
+                  && littlePrompt.Contains("half heard something about this person")
+                  && littlePrompt.Contains("about the yard after midnight") && littlePrompt.Contains("never as something you know"),
+                "a person who knows a little is cooler with him in talk, not at ease, and only vague about it");
+            mannerEngine.Heard = Knowing.Enough;
+            Check(mannerEngine.BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "").Contains("you do not accuse them"),
+                "one who has heard enough is careful, and does not accuse");
+            mannerEngine.Suspicion.Raise(0.3, "saw him near the yard");
+            string uneasyPrompt = mannerEngine.BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "");
+            Check(mannerEngine.HeardManner() == null && uneasyPrompt.Contains("a little guarded"),
+                "a reason to suspect him outranks it: the level says how they are");
+            mannerEngine.Suspicion.Restore(0.0);
+            mannerEngine.Heard = Knowing.ALittle;
+            mannerEngine.HeardStory = "   ";
+            Check(mannerEngine.HeardManner() == null, "an empty story gives no manner");
+            mannerEngine.Heard = Knowing.Nothing;
+            Check(mannerEngine.BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "") == basePrompt,
+                "and with nothing heard the prompt is exactly as it was");
+            // WHAT THE FACT-CHECKER IS TOLD (the check turned WhyForCheck off and
+            // nothing noticed): a reply that mentions the half-heard story must
+            // reach the checker with the story in what they know.
+            var talkFake = new FakeLlm { NextReply = "Something about the yard, late on. I couldn't swear to it." };
+            var checkFake = new FakeLlm { NextReply = "{\"invented\": []}" };
+            var checkedEngine = new ConversationEngine(talkFake, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(),
+                new SuspicionTracker(), new CostTracker()) { Checker = checkFake };
+            checkedEngine.Heard = Knowing.ALittle;
+            checkedEngine.HeardStory = "the new owner was about the yard after midnight";
+            checkedEngine.SayToAsync("Heard anything about me?", new GameTime(5, 10, 0), "Mickey's front room.").GetAwaiter().GetResult();
+            string toChecker = checkFake.LastRequest != null && checkFake.LastRequest.Messages.Count > 0 ? checkFake.LastRequest.Messages[0].Content : "";
+            Check(toChecker.Contains("about the yard after midnight"),
+                "the fact-checker is told the story the character half heard", toChecker.Length > 0 ? "sent" : "nothing sent");
+            checkedEngine.Heard = Knowing.Nothing;
+            checkedEngine.SayToAsync("Anything else?", new GameTime(5, 10, 5), "Mickey's front room.").GetAwaiter().GetResult();
+            string toChecker2 = checkFake.LastRequest != null && checkFake.LastRequest.Messages.Count > 0 ? checkFake.LastRequest.Messages[0].Content : "";
+            Check(!toChecker2.Contains("half remember hearing"),
+                "and not when they hold nothing");
 
             // AMBIENT LIFE: the city talking about itself, which is what makes
             // it feel older than the player.
@@ -23001,6 +23323,122 @@ namespace Ledger.CoreTests
         /// Core owes a statement of what it meant by the pair before either
         /// emitter is trusted with it.
         const int MULTI_ROTATION_EXPECTED = 0;
+
+        /// WHO IS WHERE, AND WHO IS WITH WHOM (CastDay), 28 September: the one
+        /// reader of the cast routine files, so the game's walkers, the reach
+        /// measurement and these tests cannot read a routine three ways.
+        static void TestCastDay()
+        {
+            Console.WriteLine("CastDay:");
+            var quayPath = Root("production/specs/quay-cast.json");
+            Check(quayPath != null, "the street's cast file is in the repository");
+            if (quayPath == null) return;
+            var quay = CastDay.Parse(File.ReadAllText(quayPath));
+            Check(quay.People.Count == 10 && quay.Ties.Count == 20 && quay.TalkRangeM == 6.0,
+                "the ten on the built street, their twenty friendships, six metres", $"{quay.People.Count} {quay.Ties.Count} {quay.TalkRangeM}");
+            int neverQ = 0;
+            string firstNever = "";
+            foreach (var (a, b, w) in quay.Ties)
+                if (quay.HoursTogetherPerWeek(a, b) == 0) { neverQ++; if (firstNever == "") firstNever = a + "-" + b; }
+            Check(neverQ == 0, "every friendship on the built street meets (23 September's routines)", $"{neverQ} never: {firstNever}");
+            Check(quay.HoursTogetherPerWeek("rocco", "sam") == 56 && quay.DaysTogetherPerWeek("rocco", "sam") == 7,
+                "Ron and Darren, eight hours a day on the rank and the quay: 56 a week, every day");
+            Check(quay.PlaceOf("rocco", 0, 3) == CastDay.Off && quay.Where("rocco", 0, 3) == null
+                  && quay.PlaceOf("rocco", 0, 8) == "mickeys_rank" && quay.PlaceOf("rocco", 0, 23) == CastDay.Off,
+                "a routine runs from each hour to the next; 'off' is off the street");
+            Check(quay.PlaceOf("nobody", 0, 12) == null && !quay.Together("nobody", "rocco", 0, 12), "somebody not in the cast is nowhere");
+            bool symmetric = true;
+            foreach (var a in quay.People)
+                foreach (var b in quay.People)
+                    for (int h = 0; h < 24; h++)
+                        if (quay.Together(a, b, 0, h) != quay.Together(b, a, 0, h)) symmetric = false;
+            Check(symmetric, "together is the same both ways");
+            // fish_counter to mickeys_office is exactly six metres: the rule is "within".
+            var edge = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":6,\"z_m\":0},\"c\":{\"x_m\":6.01,\"z_m\":0}}," +
+                "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"b\"]]},{\"id\":\"r\",\"routine\":[[0,\"c\"]]}],\"ties\":[]}");
+            Check(edge.Together("p", "q", 0, 9) && !edge.Together("p", "r", 0, 9), "six metres is within talking range; a hair over is not");
+            // A weekday's own routine replaces the daily one on that day only.
+            var week = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"m\":{\"x_m\":100,\"z_m\":0}}," +
+                "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"a\"],[17,\"off\"]],\"days\":{\"sat\":[[0,\"off\"],[9,\"m\"],[13,\"off\"]],\"sun\":[[0,\"off\"]]}}," +
+                "{\"id\":\"q\",\"routine\":[[0,\"off\"],[10,\"m\"],[12,\"off\"]]}],\"ties\":[[\"p\",\"q\",0.5,\"the market on Saturdays\"]]}");
+            Check(CastDay.Weekday(5) == 5 && CastDay.Weekday(7) == 0 && CastDay.Weekday(-1) == 6, "the week is Population's: day modulo 7, Monday first");
+            Check(week.PlaceOf("p", 0, 10) == "a" && week.PlaceOf("p", 5, 10) == "m" && week.PlaceOf("p", 6, 10) == CastDay.Off
+                  && week.PlaceOf("p", 12, 10) == "m",
+                "a Saturday routine on Saturdays only, and every Saturday");
+            Check(week.HoursTogetherPerWeek("p", "q") == 2 && week.DaysTogetherPerWeek("p", "q") == 1,
+                "so a pair who meet only at Saturday's market meet two hours on one day a week");
+            // A bad file is refused, naming what is wrong: a typo must not send somebody off the street.
+            string Refused(string json)
+            {
+                try { CastDay.Parse(json); return null; } catch (FormatException e) { return e.Message; }
+            }
+            const string Pl = "\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}}";
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"b\"]]}],\"ties\":[]}")?.Contains("'b'") == true,
+                "a place the file does not define is refused, by name");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[24,\"a\"]]}],\"ties\":[]}") != null
+                  && Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[9.5,\"a\"]]}],\"ties\":[]}") != null,
+                "an hour outside 0 to 23, or not whole, is refused");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[9,\"a\"],[9,\"off\"]]}],\"ties\":[]}") != null,
+                "two places at one hour is refused");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"x\",0.5]]}") != null,
+                "a friendship with somebody not in the cast is refused");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sunday\":[[0,\"a\"]]}}],\"ties\":[]}") != null,
+                "a day that is not mon to sun is refused");
+            Check(Refused("{\"places\":{},\"people\":[],\"ties\":[]}") != null, "no talking range is refused");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}") != null,
+                "the same person twice is refused");
+            // (the second independent check found these accepted without a word)
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":[[0,\"a\"]]}],\"ties\":[]}") != null
+                  && Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":\"sun\"}],\"ties\":[]}") != null,
+                "days that are not an object are refused, not silently dropped");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":{}}") != null, "ties that are not a list are refused");
+            const string Two = "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}]";
+            Check(Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"p\",0.5]]}") != null, "a person tied to themselves is refused");
+            Check(Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"q\",0.5],[\"q\",\"p\",0.4]]}") != null, "the same friendship twice is refused");
+            Check(Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"q\",0]]}") != null && Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"q\",-0.3]]}") != null
+                  && Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"q\",1.5]]}") != null,
+                "a friendship's strength outside (0, 1] is refused");
+            Check(Refused("{" + Pl + "," + Two + ",\"ties\":[[\"p\",\"q\",1.0]]}") == null, "and a strength of exactly 1 is allowed");
+            Check(Refused("{" + Pl + ",\"people\":[{\"id\":\"p\",\"routine\":[[-1,\"a\"]]}],\"ties\":[]}") != null, "an hour of -1 is refused");
+            Check(Refused("{\"talk_range_m\":0,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[],\"ties\":[]}") != null, "a talking range of nothing is refused");
+            Check(Refused("{\"talk_range_m\":6,\"places\":{\"off\":{\"x_m\":0,\"z_m\":0}},\"people\":[],\"ties\":[]}") != null, "'off' cannot be a place");
+            var clock = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[6,\"a\"],[20,\"b\"]]}],\"ties\":[]}");
+            Check(clock.PlaceOf("p", 0, 27) == clock.PlaceOf("p", 0, 3) && clock.PlaceOf("p", 0, 30) == "a" && clock.PlaceOf("p", 0, -1) == clock.PlaceOf("p", 0, 23),
+                "an hour past 23 or under 0 is read round the clock");
+            // A routine that does not start at midnight runs round from its last
+            // entry; one written out of order is read in order.
+            var wraps = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[6,\"a\"],[20,\"b\"]]}],\"ties\":[]}");
+            Check(wraps.PlaceOf("p", 0, 3) == "b" && wraps.PlaceOf("p", 0, 6) == "a" && wraps.PlaceOf("p", 0, 21) == "b",
+                "before its first hour a routine is still where its last entry put it");
+            var unsorted = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[20,\"off\"],[8,\"a\"],[0,\"off\"],[12,\"b\"]]}],\"ties\":[]}");
+            Check(unsorted.PlaceOf("p", 0, 9) == "a" && unsorted.PlaceOf("p", 0, 13) == "b" && unsorted.PlaceOf("p", 0, 21) == CastDay.Off
+                  && unsorted.PlaceOf("p", 0, 3) == CastDay.Off,
+                "a routine written out of order is read in order");
+            // THE WHOLE NAMED CAST (hook-cast.json, 28 September): every friendship
+            // meets, as often as a small town's friends would (the rule is an
+            // authoring rule, CastDay.FriendsMeetDays).
+            Check(CastDay.FriendsMeetDays(0.8) == 5 && CastDay.FriendsMeetDays(0.6) == 5 && CastDay.FriendsMeetDays(0.59) == 3
+                  && CastDay.FriendsMeetDays(0.45) == 3 && CastDay.FriendsMeetDays(0.44) == 1 && CastDay.FriendsMeetDays(0.3) == 1,
+                "the town's rule: 0.6 and over most days, 0.45 to 0.55 three, weaker one");
+            var hookPath = Root("production/specs/hook-cast.json");
+            Check(hookPath != null, "the whole cast's file is in the repository");
+            if (hookPath == null) return;
+            var hook = CastDay.Parse(File.ReadAllText(hookPath));
+            Check(hook.People.Count == 40 && hook.Ties.Count == 80, "forty people, their eighty friendships", $"{hook.People.Count} {hook.Ties.Count}");
+            int neverH = 0, shortH = 0;
+            string firstShort = "";
+            foreach (var (a, b, w) in hook.Ties)
+            {
+                if (hook.HoursTogetherPerWeek(a, b) == 0) neverH++;
+                int days = hook.DaysTogetherPerWeek(a, b);
+                if (days < CastDay.FriendsMeetDays(w)) { shortH++; if (firstShort == "") firstShort = $"{a}-{b} {w}: {days} days"; }
+            }
+            Check(neverH == 0, "every friendship among the named cast meets (was 55 of 80 never)", neverH.ToString());
+            Check(shortH == 0, "and as often as the town's rule asks", $"{shortH} short: {firstShort}");
+            // The ten on the built street keep the places 23 September gave them.
+            foreach (var p in quay.People)
+                Check(hook.People.Contains(p), "the built street's ten are in the whole cast", p);
+        }
 
         /// Walk up from the test binary to a file in the repository. Same
         /// shape as the voice-conditionals check above, which is the only

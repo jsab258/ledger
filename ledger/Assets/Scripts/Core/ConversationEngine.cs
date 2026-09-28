@@ -42,6 +42,41 @@ namespace Ledger.Core
             Model = model ?? (card.Tier == "core" ? Models.Core : Models.Ambient);
         }
 
+        /// WHAT THEY HAVE HEARD ABOUT THE PLAYER'S NIGHTS, by the street's own
+        /// rule (StreetVoice.RegardFor): how much, and the story as a clause.
+        /// Jafar's list, 28 September: someone who knows even a little "treats
+        /// him slightly differently". Nothing (the default) changes nothing.
+        /// Read only while their suspicion is Trusting: every higher level
+        /// already says how they are with him, and why.
+        public Knowing Heard { get; set; } = Knowing.Nothing;
+        public string HeardStory { get; set; }
+
+        /// THE MANNER A STORY GIVES THEM while nothing ties him to a deed, in
+        /// place of "you trust this person and are at ease with them", which
+        /// is not how anybody holding a story about a man stands with him. The
+        /// Core decided what they hold; the model performs the manner. Null
+        /// when it does not apply.
+        public string HeardManner()
+        {
+            if (Heard == Knowing.Nothing || Suspicion.Level != SuspicionLevel.Trusting) return null;
+            var story = (HeardStory ?? "").Trim().TrimEnd('.');
+            if (story.Length == 0) return null;
+            return Heard == Knowing.ALittle
+                ? $"You have half heard something about this person, and could not swear to it: {story}. It makes you a shade cooler and more watchful with them than with a stranger. You do not bring it up unless they do, and if they ask, you only half remember it: speak of it vaguely, as talk you may have wrong, never as something you know."
+                : $"You have this about this person, from what you saw or were told: {story}. It is on your mind while you talk and it makes you careful with them. You may let it show your own way, but you do not accuse them.";
+        }
+
+        /// What the claim check is told on top of the card and the memories:
+        /// why they are wary, or, while Trusting, the story the talk model was
+        /// shown, so a reply that mentions it is not taken for an invention.
+        string WhyForCheck()
+        {
+            if (Suspicion.Level != SuspicionLevel.Trusting) return Suspicion.LatestReason();
+            if (HeardManner() == null) return null;
+            var story = HeardStory.Trim().TrimEnd('.');
+            return Heard == Knowing.ALittle ? $"they half remember hearing that {story}" : $"they hold this about him, seen or heard: {story}";
+        }
+
         public string BuildSystemPrompt(string playerInput, GameTime now, string sceneContext)
         {
             var sb = new StringBuilder();
@@ -64,7 +99,7 @@ namespace Ledger.Core
             }
 
             sb.AppendLine();
-            sb.AppendLine(Suspicion.ToPromptDescriptor());
+            sb.AppendLine(HeardManner() ?? Suspicion.ToPromptDescriptor());
             // AND WHY, when there is a why: the Core decided the level and the
             // reason (Suspecting, Gossip), and the model performs both.
             var why = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
@@ -396,9 +431,8 @@ namespace Ledger.Core
             string knownEarly = null;
             if (streaming != null)
             {
-                var whyEarly = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
                 knownEarly = ClaimCheck.KnownFor(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                 Memory.Beliefs, whyEarly, sceneContext, now.ToString());
+                                                 Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
             }
             string firstSentence = null;
             Task<(bool heard, IReadOnlyList<string> found, LlmResponse cost)> firstHandedOver = null;
@@ -487,9 +521,8 @@ namespace Ledger.Core
             LastUnchecked = false;
             if (Checker != null)
             {
-                var why = Suspicion.Level == SuspicionLevel.Trusting ? null : Suspicion.LatestReason();
                 var known = ClaimCheck.KnownFor(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                Memory.Beliefs, why, sceneContext, now.ToString());
+                                                Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
                 try
                 {
                     var invented = await InventedAsync(known, reply, ct);

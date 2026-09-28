@@ -103,7 +103,63 @@ namespace Ledger.Core
             return k != null && _said.Add(k);
         }
 
+        /// A HALF-REMEMBERED STORY'S ONE REMARK (StreetVoice.FaintRemark),
+        /// 28 September. Heard, or it does not count. The key is the story's, so
+        /// a story remarked on faintly is not remarked on again if it comes
+        /// back strong, and one remarked on strongly is not remarked on again
+        /// as it fades: one remark per person per story, whichever came first.
+        public bool RecordFaint(string personId, Rumor r, bool heard)
+        {
+            if (!heard) return false;
+            var k = KeyFor(personId, r);
+            return k != null && _said.Add(k);
+        }
+
         public int Count => _said.Count;
+    }
+
+    /// HOW MUCH OF A STORY ABOUT THE PLAYER SOMEBODY HOLDS, for how it shows
+    /// (Jafar's list, 28 September).
+    public enum Knowing
+    {
+        /// Nothing about his night, or only what they were paid or scared off.
+        Nothing = 0,
+        /// A story of his night they would no longer pass on: fading, not gone.
+        ALittle = 1,
+        /// A story they would still pass on (StreetVoice.StoryThatShows).
+        Enough = 2,
+    }
+
+    /// One person's bearing toward the player right now (StreetVoice.RegardFor).
+    public sealed class Regard
+    {
+        public Knowing Knowing;
+        /// The story behind it, or null.
+        public Rumor Story;
+        public StanceKind Stance;
+        /// They can tell the man in front of them is the one their story is
+        /// about (Acquaintance.CanNameYou). When false nothing they hold shows,
+        /// and the game sends the conversation helper no "knowing".
+        public bool KnowsItIsHim;
+        /// Where the first look lands as he comes towards them, in metres.
+        public double FirstLookMetres;
+        /// How long it holds, in seconds; infinity while he is in range.
+        public double FirstLookSeconds;
+        /// Where a second, knowing look comes, in metres; 0 for none.
+        public double SecondLookMetres;
+        /// How long the second look holds, in seconds.
+        public double SecondLookSeconds;
+        /// Where their eyes drop as he comes close; 0 when they keep looking.
+        public double LookAwayMetres;
+        /// Whether they look back after he has passed.
+        public bool LooksBack;
+        /// They have already had their one say on this story.
+        public bool RemarkedAlready;
+        /// A line is due while he is in earshot.
+        public bool Speaks;
+        /// And it is a half-remembered one (FaintRemark), said to the companion
+        /// beside them rather than to him, once he has gone past; not Recognition.
+        public bool Faint;
     }
 
     public static class StreetVoice
@@ -123,7 +179,7 @@ namespace Ledger.Core
         /// which is what makes friendship mechanically worth having.
         public static StanceKind Stance(double suspicion, double loyalty,
             double strongestAboutPlayer, bool leashed, bool wearingCoat, bool knowsSomething = false,
-            bool remarkedAlready = false)
+            bool remarkedAlready = false, bool knowsALittle = false)
         {
             // A leash is a mouth held shut, not a mind changed: they still
             // watch, they simply do not speak.
@@ -165,6 +221,18 @@ namespace Ledger.Core
                           : StanceKind.Comments;
                 if (rung < floor) rung = floor;
             }
+            // KNOWING A LITTLE SHOWS TOO (Jafar's list, 28 September: "someone
+            // who has heard a little about Tom behaves exactly like someone who
+            // has heard nothing"). A story below the share floor is one they
+            // would no longer pass on, and the mill keeps it for about eleven
+            // more days as it fades (Age drops it under 0.03). Through those
+            // days its pressure is under 0.09 and the ladder above leaves them
+            // Indifferent. So a half-remembered story is a floor of its own,
+            // one rung under a story that shows: they notice him, and look
+            // again, longer than a stranger would, as he passes (SecondLookMetres).
+            // Leashed, a look is still allowed; in the coat, unsure it is him,
+            // nothing.
+            if (knowsALittle && !wearingCoat && rung < StanceKind.Notices) rung = StanceKind.Notices;
             return rung;
         }
 
@@ -193,6 +261,222 @@ namespace Ledger.Core
             }
             return best;
         }
+
+        /// THE STORY A PERSON STILL HOLDS BUT WOULD NO LONGER PASS ON, or null:
+        /// the same kind of story as StoryThatShows (his night, not bought or
+        /// scared quiet) held under the mill's share floor. The strongest of
+        /// them. Whether a stronger story also shows is the caller's question
+        /// (RegardFor asks StoryThatShows first).
+        internal static Rumor StoryHalfRemembered(Gossiper g, double shareFloor)
+        {
+            if (g == null) return null;
+            Rumor best = null;
+            foreach (var r in g.Rumors)
+            {
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !r.Sensitive) continue;
+                if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
+                if (!(r.Confidence > 0.0) || r.Confidence >= shareFloor) continue;
+                if (best == null || r.Confidence > best.Confidence) best = r;
+            }
+            return best;
+        }
+
+        /// WHETHER SOMEBODY WHO KNOWS A LITTLE SAYS SO, once: "may remark on
+        /// it" (Jafar, 28 September). Some do and some do not, and the fainter
+        /// the story the fewer: a person remarks when their own fixed draw,
+        /// a stable hash of who they are and which story, falls under the
+        /// story's confidence as a share of the floor. At the floor that is
+        /// everybody; halfway down, half. No number is introduced: the floor
+        /// is the mill's. The draw is fixed per person and story, so the same
+        /// save gives the same street, and as the story fades the ones still
+        /// minded to say something only ever get fewer.
+        internal static bool MayRemarkFaintly(string personId, Rumor r, double shareFloor)
+        {
+            var k = RemarkLedger.KeyFor(personId, r);
+            if (k == null || !(shareFloor > 0.0)) return false;
+            return FaintDraw(k) < r.Confidence / shareFloor;
+        }
+
+        /// The fixed draw, 0 to 0.9999, from FNV-1a (ASCII keys, so the port's
+        /// byte-wise Hash agrees).
+        internal static double FaintDraw(string key) => (Hash(key) % 10000u) / 10000.0;
+
+        // ---- the look itself (production/research/gaze-and-knowing, 28 September) ----
+        //
+        // What the street did before this: every head within 5 m turned to him
+        // the same way, stranger or not. What people do (the research's
+        // measured street studies): a stranger glances early, from about ten
+        // metres, for about half a second, and has looked away by about 2.4 m.
+        // Somebody who knows something glances the same way and then, as he
+        // comes through the passing zone, looks again and holds it past the
+        // one-second polite line, into close range. Somebody watching keeps
+        // him in view from further off and looks back after he has passed.
+        // The contrast is the point, so the stranger's glance is written down
+        // here too. Every look turns the head: from a camera behind him, eyes
+        // alone cannot be read. GazeMetres is the ladder's own number and is
+        // left as it stood; the look reads it only for those who watch.
+
+        /// WHERE THE FIRST LOOK LANDS as he comes towards them, in metres: the
+        /// stranger's early glance for everybody, or further off for those the
+        /// ladder has watching him.
+        internal static double FirstLookMetres(StanceKind stance) =>
+            Math.Max(CivilGlanceMetres, GazeMetres(stance));
+
+        /// HOW LONG THE FIRST LOOK HOLDS, in seconds: a glance, except for
+        /// those who watch him, who keep him in view for as long as he is in
+        /// range (infinity: the game ends that look when he leaves it).
+        internal static double LookHoldSeconds(StanceKind stance) =>
+            stance == StanceKind.Watches || stance == StanceKind.Comments || stance == StanceKind.Confronts
+                ? double.PositiveInfinity : CivilGlanceSeconds;
+
+        /// WHERE THE SECOND LOOK COMES, in metres, or 0 for none: the knowing
+        /// look of somebody who notices him, as he comes into the passing zone,
+        /// held for KnowingLookSeconds.
+        internal static double SecondLookMetres(StanceKind stance) =>
+            stance == StanceKind.Notices ? PassingZoneMetres : 0.0;
+
+        /// WHERE THE EYES GO ELSEWHERE as he comes close, in metres: a
+        /// stranger's civil look away (and one who avoids or refuses him, who
+        /// has no wish to be caught looking); 0 for everybody who knows
+        /// something, who keeps looking as he passes.
+        internal static double LookAwayMetres(StanceKind stance) =>
+            stance <= StanceKind.Indifferent || stance == StanceKind.Avoids || stance == StanceKind.Refuses
+                ? CivilLookAwayMetres : 0.0;
+
+        /// WHETHER THEY LOOK BACK after he has passed: those who watch him.
+        internal static bool LooksBack(StanceKind stance) =>
+            stance == StanceKind.Watches || stance == StanceKind.Comments || stance == StanceKind.Confronts;
+
+        /// Where a stranger's glance at a passer-by lands: the median measured
+        /// look distance, 10.3 m (Fotios and others, Sheffield, 2015), rounded.
+        public const double CivilGlanceMetres = 10.0;
+
+        /// A stranger's glance: the median measured look, 0.48 s (Fotios and
+        /// others, 2015), rounded.
+        public const double CivilGlanceSeconds = 0.5;
+
+        /// Where two passing people come closest to each other's notice: the
+        /// passing zone, 3.0 to 3.7 m (Patterson and others, 2002), its near end.
+        public const double PassingZoneMetres = 3.0;
+
+        /// The knowing look: the top of the "intensified glance" still held at
+        /// close range, 0.39 to 1.52 s (Arminen and Heino, 2023), past the
+        /// one-second line where polite ends, short of the 3.3 s of comfortable
+        /// eye contact (Binetti and others, 2016). From the passing zone at a
+        /// walking pace it holds until he is about alongside them.
+        public const double KnowingLookSeconds = 1.5;
+
+        /// Where a stranger's eyes drop as somebody comes close: Goffman's
+        /// eight feet (1963). What glance there is at close range starts at
+        /// 2.5 to 3 m and is over in half a second (Arminen and Heino, 2023).
+        public const double CivilLookAwayMetres = 2.4;
+
+        /// HOW ONE PERSON TREATS THE PLAYER RIGHT NOW, in one call, so the game,
+        /// the port and the tests cannot compose it three different ways.
+        ///
+        /// `familiarity` is how well they know him by sight (Acquaintance): a
+        /// story shows only in somebody who can tell that the man in front of
+        /// them is the one it is about. Somebody who has only heard of him
+        /// cannot pick him out of a bus queue (Acquaintance.HeardOfYou), so
+        /// whatever they hold, they treat him as the stranger he is to them
+        /// (the independent check, 28 September: without this, gossip alone
+        /// let the town recognise him). `companionNear` is whether somebody
+        /// they could talk to is beside them: a half-remembered story is said
+        /// about him to a companion, not to his face (the gaze research: faint
+        /// knowledge is a word to a companion, and lines people say to each
+        /// other read as natural where lines aimed at the player do not).
+        /// `remarks` is the caller's record of who has had their say (may be
+        /// null: nobody has).
+        ///
+        /// The caller says a line only when `Speaks` and the player is in
+        /// earshot, and records it only if it was heard: Record for a story
+        /// that shows, RecordFaint for a half-remembered one. A stance of
+        /// Comments or above reached by suspicion alone speaks on the caller's
+        /// own cooldown, as the ladder always has; the once-per-story rule is
+        /// the floor's, so `Speaks` and `RemarkedAlready` can both be true.
+        public static Regard RegardFor(Gossiper g, double shareFloor, bool wearingCoat, RemarkLedger remarks,
+                                       double familiarity, bool companionNear)
+        {
+            var out1 = new Regard();
+            if (g == null) return out1;
+            Rumor strongest = null;
+            foreach (var r in g.Rumors)
+            {
+                if (r == null || r.Content == null || r.Content.Subject != "player") continue;
+                if (!(r.Confidence >= 0.0)) continue;   // a NaN must not hide a real story
+                if (strongest == null || r.Confidence > strongest.Confidence) strongest = r;
+            }
+            var shows = StoryThatShows(g, shareFloor);
+            var little = shows == null ? StoryHalfRemembered(g, shareFloor) : null;
+            out1.Story = shows ?? little;
+            out1.Knowing = shows != null ? Knowing.Enough : little != null ? Knowing.ALittle : Knowing.Nothing;
+            out1.KnowsItIsHim = Acquaintance.CanNameYou(familiarity);
+            bool shows1 = shows != null && out1.KnowsItIsHim;
+            bool little1 = little != null && out1.KnowsItIsHim;
+            bool had = remarks != null && remarks.HasRemarked(g.Id, out1.Story);
+            out1.RemarkedAlready = had;
+            // NOT THE LADDER'S PRESSURE EITHER (the second independent check): a
+            // story about a man they cannot pick out is not a story about the
+            // man in front of them, so it adds nothing to how they stand to him.
+            double aboutHim = out1.KnowsItIsHim && strongest != null ? strongest.Confidence : 0.0;
+            out1.Stance = Stance(g.Suspicion != null ? g.Suspicion.Value : 0.0, g.Loyalty,
+                aboutHim, g.Leashed, wearingCoat,
+                knowsSomething: shows1, remarkedAlready: had, knowsALittle: little1);
+            out1.FirstLookMetres = FirstLookMetres(out1.Stance);
+            out1.FirstLookSeconds = LookHoldSeconds(out1.Stance);
+            out1.SecondLookMetres = SecondLookMetres(out1.Stance);
+            out1.SecondLookSeconds = out1.SecondLookMetres > 0 ? KnowingLookSeconds : 0.0;
+            out1.LookAwayMetres = LookAwayMetres(out1.Stance);
+            out1.LooksBack = LooksBack(out1.Stance);
+            // IN THE COAT, UNSURE IT IS HIM: whoever the coat leaves noticing him
+            // only glances and looks away, as a stranger does (the check found
+            // the knowing look given to a coat).
+            if (wearingCoat && out1.Stance == StanceKind.Notices)
+            {
+                out1.SecondLookMetres = 0.0;
+                out1.SecondLookSeconds = 0.0;
+                out1.LookAwayMetres = CivilLookAwayMetres;
+            }
+            if (out1.Stance >= StanceKind.Comments)
+                out1.Speaks = true;
+            else if (little1 && companionNear && !had && !g.Leashed && !wearingCoat && MayRemarkFaintly(g.Id, little, shareFloor))
+            {
+                out1.Speaks = true;
+                out1.Faint = true;
+            }
+            return out1;
+        }
+
+        /// WHAT SOMEBODY WHO KNOWS A LITTLE SAYS, once, to a companion, about
+        /// him, as he goes past, where he can overhear (the gaze research: a
+        /// word to a companion once he is past). None of it names the story:
+        /// they would no longer pass it on. Their memory still holds it, so he
+        /// can stop and ask what they meant.
+        public static SpokenLine FaintRemark(Gossiper g, Rumor about, int seed)
+        {
+            if (g == null || about == null) return null;
+            string text = Pick(seed, FaintLines);
+            return new SpokenLine { SpeakerId = g.Id, Text = text, AboutPlayer = true, Source = about };
+        }
+
+        /// Fourteen, as every band is (BarkGen's repeat floor).
+        internal static readonly string[] FaintLines =
+        {
+            "That's Mickey's nephew, that is.",
+            "Is that him? The nephew?",
+            "Somebody was saying something about him. I forget what.",
+            "I've heard his name somewhere. Can't place it.",
+            "There was talk about that one. Or was it somebody else.",
+            "Him. Something went round about him. It'll come to me.",
+            "I've heard a thing or two about him. Nothing I'd swear to.",
+            "His name came up. I wasn't really listening.",
+            "Didn't somebody say something about him? Never mind.",
+            "He's the one people were on about. Only talk, mind.",
+            "Something was said about him. It's gone now.",
+            "People have been saying things about him. Half of it rubbish, I expect.",
+            "I heard something about him. Can't remember who from.",
+            "Keeps busy, that one, so I hear. Or so somebody said.",
+        };
 
         /// The ladder's rungs by pressure, as they have stood since M15.2.
         static StanceKind Rung(double pressure, bool leashed)

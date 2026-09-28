@@ -62,6 +62,17 @@ using Ledger.Core;
 /// "noReply":true asks for the derived level alone, with no model call and no
 /// cost. The reply then carries "suspicion", "level" and "why".
 ///
+/// AND WHAT THEY HAVE HEARD OF HIS NIGHTS, 28 September (Jafar: someone who
+/// knows even a little treats him slightly differently): the game sends the
+/// street's own count (StreetVoice.RegardFor's Knowing and Story), and only
+/// when RegardFor says they can tell it is him (KnowsItIsHim; otherwise
+/// "nothing"), since somebody who has only heard of him does not know the man
+/// in front of them is the one the story is about,
+///   "knowing":{"level":"little"|"enough"|"nothing","story":"..."}
+/// and while nothing ties him to a deed the character is given the manner that
+/// story gives them instead of being at ease with him; the reply's "manner"
+/// says which ("little" or "enough", as sent) or is null.
+///
 /// FAKE MODE, --fake (or LEDGER_TALK_FAKE=1), for the encounter's regression:
 /// no key, no network, no cost. A stand-in model answers from the memories in
 /// its prompt - it asks about the first one it was given, or passes the time
@@ -117,6 +128,9 @@ static class Program
             string who = null;
             bool noReply = false;
             (double value, SuspicionLevel level, string why)? derived = null;
+            bool knowingSent = false;
+            var knowing = Knowing.Nothing;
+            string knowingStory = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -171,6 +185,13 @@ static class Program
                     if (v.TryGetProperty("familiarity", out var fv) && fv.ValueKind == JsonValueKind.Number) fam = fv.GetDouble();
                     derived = Suspecting.Derive(acc, near, fam);
                 }
+                if (r.TryGetProperty("knowing", out v) && v.ValueKind == JsonValueKind.Object)
+                {
+                    string lv = v.TryGetProperty("level", out var kl) && kl.ValueKind == JsonValueKind.String ? kl.GetString() : "";
+                    knowing = lv == "little" ? Knowing.ALittle : lv == "enough" ? Knowing.Enough : Knowing.Nothing;
+                    knowingStory = v.TryGetProperty("story", out var kst) && kst.ValueKind == JsonValueKind.String ? kst.GetString() : null;
+                    knowingSent = true;
+                }
             }
             catch (Exception)
             {
@@ -211,6 +232,10 @@ static class Program
                 if (!held) engine.Memory.Append(m);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
+            // WHAT THEY HAVE HEARD OF HIS NIGHTS, as the street's rule counts it
+            // (StreetVoice.RegardFor), 28 September; kept until the game sends
+            // it again, "nothing" included.
+            if (knowingSent) { engine.Heard = knowing; engine.HeardStory = knowingStory; }
             if (derived.HasValue)
             {
                 suspicion = derived.Value.value;
@@ -225,11 +250,13 @@ static class Program
             }
             string level = engine.Suspicion.Level.ToString();
             double holds = Math.Round(engine.Suspicion.Value, 3);
+            // The manner a story gave them, when it did (null otherwise).
+            string manner = engine.HeardManner() == null ? null : engine.Heard == Knowing.ALittle ? "little" : "enough";
             var heard = new List<string>();
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy, manner }, Plain);
             string reply;
             bool timedOut = false;
             string earlyFirst = null;
@@ -321,7 +348,7 @@ static class Program
                 // the content rule refused stayed in memory unheard).
                 if (!timedOut) engine.CorrectLastSaid(rest.Length > 0 ? earlyFirst + " " + rest : earlyFirst);
             }
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, invented, @unchecked }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -361,7 +388,11 @@ static class Program
                 int end = sys.IndexOf('\n', wi);
                 why = (end < 0 ? sys.Substring(wi + WhyKey.Length) : sys.Substring(wi + WhyKey.Length, end - wi - WhyKey.Length)).Trim();
             }
-            string text = first == null && why == null ? "Morning. Quiet one today."
+            // A MANNER FROM A STORY (ConversationEngine.HeardManner): the stand-in
+            // shows it the way the real model is asked to, cooler, without the
+            // story, so a test can see the manner arrive.
+            bool halfHeard = !suspects && sys.Contains("You have half heard something about this person");
+            string text = halfHeard ? "Oh. It's you. I've heard bits." : first == null && why == null ? "Morning. Quiet one today."
                 : suspects ? "I know what happened. " + (why ?? first) + " Was that you?"
                 : "Funny business round here. " + first;
             return Task.FromResult(new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
@@ -524,6 +555,24 @@ static class Program
         var costBefore = q.Cost.TotalCalls;
         var only = await q.Answer("{\"id\":11,\"to\":\"sam\",\"who\":\"r3\",\"noReply\":true,\"evidence\":{" + Acc + ",\"near\":{\"heard\":true},\"familiarity\":0.2}}");
         Ok("the level alone, with no model call", Str(only, "level") == "Uneasy" && Str(only, "reply") == null && q.Cost.TotalCalls == costBefore, only);
+
+        // KNOWING A LITTLE SHOWS IN TALK, 28 September.
+        const string Little = "\"knowing\":{\"level\":\"little\",\"story\":\"the new owner was about the yard after midnight\"}";
+        var faint = await q.Answer("{\"id\":12,\"to\":\"sam\",\"who\":\"f1\",\"say\":\"Morning.\",\"day\":5,\"hour\":10," + Little + "}");
+        Ok("a person who knows a little is given the manner it gives them", Str(faint, "manner") == "little" && Str(faint, "level") == "Trusting", faint);
+        Ok("and it shows in the answer", Reply(faint) == "Oh. It's you. I've heard bits.", faint);
+        Ok("the manner is the story's, in the prompt, with no 'at ease'",
+           q.EngineFor("f1").BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "").Contains("about the yard after midnight")
+           && !q.EngineFor("f1").BuildSystemPrompt("Morning.", new GameTime(5, 10, 0), "").Contains("at ease with them"));
+        var kept = await q.Answer("{\"id\":13,\"to\":\"sam\",\"who\":\"f1\",\"say\":\"Still here?\",\"day\":5,\"hour\":11}");
+        Ok("kept until the game says otherwise", Str(kept, "manner") == "little", kept);
+        var gone = await q.Answer("{\"id\":14,\"to\":\"sam\",\"who\":\"f1\",\"say\":\"Morning.\",\"day\":9,\"hour\":10,\"knowing\":{\"level\":\"nothing\"}}");
+        Ok("and gone when the story is", Str(gone, "manner") == null && Reply(gone) != "Oh. It's you. I've heard bits.", gone);
+        var both = await q.Answer("{\"id\":15,\"to\":\"sam\",\"who\":\"f2\",\"say\":\"Evening.\",\"day\":4,\"hour\":18," + Mem +
+            ",\"evidence\":{" + Acc + ",\"near\":{\"sawHim\":true,\"others\":0,\"summary\":\"a man came through the yard at a run\"},\"familiarity\":0.2}," + Little + "}");
+        Ok("a reason to suspect him outranks the manner: he asks", Str(both, "manner") == null && Str(both, "level") == "Suspicious" && Reply(both).Contains("?"), both);
+        var unheard16 = await q.Answer("{\"id\":16,\"to\":\"sam\",\"who\":\"f3\",\"say\":\"Morning.\",\"day\":5,\"hour\":10}");
+        Ok("somebody who has heard nothing has no manner from it", Str(unheard16, "manner") == null, unheard16);
 
         // THE FIRST SENTENCE, EARLY, 26 September: spoken as soon as it is
         // written and checked; never anything unchecked; kept as said.
