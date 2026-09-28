@@ -355,6 +355,92 @@
    "statusWhy": "failed the gate on 26 September (gate.json)"
   },
   {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaQ1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q1 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 285,
+   "statusWhy": "finished as R and S takes, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaQ2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q2 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 285,
+   "statusWhy": "finished as R and S takes, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaQ3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q3 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 282,
+   "statusWhy": "my check, 28 September: staring or drooping eyes, full mouth; not her thin-mouthed face"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaQ4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q4 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 288,
+   "statusWhy": "my check, 28 September: staring or drooping eyes, full mouth; not her thin-mouthed face"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaR1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take R1 (28 September)",
+   "why": "the third attempt finished: calm lids, plainer lipstick, bleached tips",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 285
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaR2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take R2 (28 September)",
+   "why": "the third attempt finished: calm lids, plainer lipstick, bleached tips",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 285
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaS1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S1 (28 September)",
+   "why": "faces finished from measurements of the concept portraits",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 285
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaS2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S2 (28 September)",
+   "why": "faces from measurements, second pass from the reviewer's numbers",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 285,
+   "statusWhy": "S3, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaS3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S3 (28 September)",
+   "why": "faces from measurements, third pass",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 285,
+   "statusWhy": "S4, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaS4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S4 (28 September)",
+   "why": "faces from measurements, fourth pass",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 285
+  },
+  {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_RoccoC1",
    "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
    "why": "the approved face (built)",
@@ -546,6 +632,92 @@
    "recorded": "2026-09-26",
    "mb": 314,
    "statusWhy": "failed the gate on 26 September (gate.json)"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamQ1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q1 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 358,
+   "statusWhy": "finished as R and S takes, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamQ2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q2 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 0,
+   "statusWhy": "finished as R and S takes, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamQ3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q3 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 358,
+   "statusWhy": "finished as R and S takes, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamQ4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take Q4 (28 September)",
+   "why": "third attempt after research: full eye presets, Sheila's face pushed along the European and age directions",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 357,
+   "statusWhy": "my check, 28 September: reddened lids, reads older and broader than Darren"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamR1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take R1 (28 September)",
+   "why": "the third attempt finished: calm lids, plainer lipstick, bleached tips",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 365
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamR2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take R2 (28 September)",
+   "why": "the third attempt finished: calm lids, plainer lipstick, bleached tips",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 365
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamS1",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S1 (28 September)",
+   "why": "faces finished from measurements of the concept portraits",
+   "status": "rejected",
+   "recorded": "2026-09-28",
+   "mb": 365
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamS2",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S2 (28 September)",
+   "why": "faces from measurements, second pass from the reviewer's numbers",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 365,
+   "statusWhy": "S3, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamS3",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S3 (28 September)",
+   "why": "faces from measurements, third pass",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 365,
+   "statusWhy": "S4, 28 September"
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_SamS4",
+   "madeBy": "tools/ue/make_cast_metahumans.py take S4 (28 September)",
+   "why": "faces from measurements, fourth pass",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 365
   },
   {
    "path": "F:/LedgerTools/played-game",

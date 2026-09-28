@@ -1,0 +1,54 @@
+{
+ "sheila-dunn": [
+  {
+   "take": "R1",
+   "front": "sheila-dunn/R1-front.jpg",
+   "profile": "sheila-dunn/R1-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/R1-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  },
+  {
+   "take": "R2",
+   "front": "sheila-dunn/R2-front.jpg",
+   "profile": "sheila-dunn/R2-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/R2-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  }
+ ],
+ "darren-milner": [
+  {
+   "take": "R1",
+   "front": "darren-milner/R1-front.jpg",
+   "profile": "darren-milner/R1-profile.jpg",
+   "speak": {
+    "file": "darren-milner/R1-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "R2",
+   "front": "darren-milner/R2-front.jpg",
+   "profile": "darren-milner/R2-profile.jpg",
+   "speak": {
+    "file": "darren-milner/R2-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  }
+ ]
+}

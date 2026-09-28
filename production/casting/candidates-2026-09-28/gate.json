@@ -1,0 +1,37 @@
+{
+ "date": "2026-09-28",
+ "references": [
+  "production/casting/sheila-dunn/SHEET.md",
+  "production/casting/sheila-dunn/front.jpg",
+  "production/casting/sheila-dunn/profile.jpg",
+  "production/casting/darren-milner/SHEET.md",
+  "production/casting/darren-milner/front.jpg",
+  "production/casting/darren-milner/profile.jpg"
+ ],
+ "mine": {
+  "Q": "Sheila Q1 and Q2 white English, her age, grey-blue eyes, but red lower lids and a mauve mouth; Q3 and Q4 stare or droop, full mouths: dropped. Darren Q1 to Q4 bleached all through, not tips; Q4 red lids, older: dropped.",
+  "R": "all four pass my check: Sheila's lids calm, R1 closer than R2; Darren brown with bleached tips from the front.",
+  "S1": "Sheila rounder at the cheeks, shorter nose, calm lids; lips still full and glossy. Darren narrower jaw, eyes apart; bleach still long in profile. Both sent to the reviewer.",
+  "S2": "Sheila thinner mouth in a matte plain red, lighter brows, the nose no longer beaky; Darren eyes more open, brows up, lower face shorter. Both pass my check.",
+  "S3": "Photographed first under the shadowed conversation light (brow shadows darkened the sockets), then again in the studio light, the one light every take is now judged in.",
+  "S4": "Sheila cool greying brown, mid brows, no dark rings; Darren a brown head with bleached ends front and profile, lids more open. Both pass my check."
+ },
+ "reviewer": {
+  "sheila-dunn/R1": "FAIL: gaunt, long nose with a dropped tip, full unpainted mouth, pink lid rims, golden hair; neck folds look older than 53. Better of the two.",
+  "sheila-dunn/R2": "FAIL: as R1, rounder staring eyes.",
+  "darren-milner/R1": "FAIL: broad square jaw, heavy lower face, reads 30 to 35; heavy pink-rimmed lids; blond all through in profile; an ear shows through the hair.",
+  "darren-milner/R2": "FAIL: as R1, the jaw marginally narrower. Better of the two.",
+  "look-talk-light": "FAIL: the two pictures differ in camera and background; the face is about 3.4 times as bright as the brick behind it, where overcast daylight would give about 1.5 to 2.",
+  "sheila-dunn/S1": "FAIL: front proportions close to the concept (pupils 0.58/0.58, cheekbones 1.22/1.16, jaw 1.03/1.02, nose 0.40/0.40) but hair about 1% grey against two thirds, dark brows, full glossy plum lips, reads about 45, nose tip juts in profile.",
+  "darren-milner/S1": "FAIL: eyes close-set (0.51 against 0.56), lower face long (0.61 against 0.555), low brows and heavy lids read sullen, crown too dark, bleach half the length.",
+  "look-talk-light-3cd": "FAIL: one camera now, but in linear light the face is 3.9 times the wall (2.1 on screen); flat (forehead against chin 1.2 to 1 where daylight gives about 4.5); nothing falls on the wall.",
+  "sheila-dunn/S2": "FAIL: a dark band round the lower lids and in the creases (52% of the cheek's brightness), read as eye make-up or soreness; dark brows; no smoker's lines.",
+  "darren-milner/S2": "FAIL: upper lids cover a third of the iris (drowsy), grey-green under the eyes; hair blond all through in profile.",
+  "sheila-dunn/S3": "FAIL (studio light): hair warm and golden (saturation 0.16) where the concept's is cool grey-brown (0.07); brows now pale (0.65 against 0.33); a little young and smooth.",
+  "darren-milner/S3": "FAIL (studio light): lids still heavy (65% of the iris), grey-green under the eyes; hair blond from root to tip against the concept's dark brown base.",
+  "look-talk-light-final": "PASS: skin 2.0 times the whole wall and 1.5 times the red brick faces in linear light; light from above kept (forehead to chin 5.0 to 2.2); the hair and moustache keep their colour; small catch-lights. Fade it in rather than switch it on (done: 0.8 s).",
+  "sheila-dunn/S4": "FAIL: reads 45 to 48 (smooth forehead and upper lip, no smoker's lines); peach upper lids and red inner corners; hair darker and warmer than the concept's ash (median 20 to 54 against 108). Proportions close.",
+  "darren-milner/S4": "FAIL: lids cut the iris (68% shows), orange upper lids, red inner corners, heavy dark brows: sullen, about 30; the brown base too dark and red (39 against 96), the blond a band. Hair meets the sheet's words."
+ },
+ "next": "Set aside after four measured passes: each fixed the last review's points and met new ones, some the opposite of the last. Next route (research, 28 September): a head made to the concept in MPFB2 (CC0) and conformed with Mesh to MetaHuman, or Fab's editable presets (money, his). The orange lids and red inner corners, on both faces, come from something shared: found first."
+}

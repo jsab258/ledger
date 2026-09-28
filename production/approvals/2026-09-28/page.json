@@ -1,0 +1,128 @@
+{
+ "tab": "Monday's Page",
+ "kicker": "LEDGER · Monday 28 September",
+ "title": "Monday's page",
+ "how": [
+  "Only what passed my check and a second, blind reviewer is here. Pick one per item; a note is optional. Your picks save on the page.",
+  "Sheila's and Darren's new faces are not here: they are closer each time but still fail the reviewer (see the summary)."
+ ],
+ "foot": "Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "look",
+   "key": "look-talk-light",
+   "name": "The conversation light",
+   "note": "A faint light on whoever you are talking to, from above and to one side, and a catch-light in the eyes. It lights only their skin (not their hair), only that person, costs 0.2 ms a frame, and fades six seconds after they stop; a face already in sun gets none. Shown on Ron: judge the light, not the face.",
+   "pictures": [
+    {
+     "src": "production/art/lighting/talk-light-2026-09-28/rocco-front-final.jpg",
+     "alt": "Ron in the street's daylight, no conversation light"
+    },
+    {
+     "src": "production/art/lighting/talk-light-2026-09-28/rocco-talk-final.jpg",
+     "alt": "The same moment and camera, with the conversation light"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "game-sheila-dunn",
+   "name": "Sheila's voice, in the game",
+   "note": "Your pick D, as the game speaks it. Carried from 25 September.",
+   "line": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it.",
+   "audio": "production/casting/in-game-2026-09-25/voice/sheila-dunn.wav",
+   "options": [
+    [
+     "yes",
+     "This is her"
+    ],
+    [
+     "no",
+     "Not her"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "game-ron-kirby",
+   "name": "Ron's voice, in the game",
+   "note": "His July voice, as the game speaks it. Carried from 25 September.",
+   "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+   "audio": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
+   "options": [
+    [
+     "yes",
+     "This is him"
+    ],
+    [
+     "no",
+     "Not him"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "game-darren-milner",
+   "name": "Darren's voice, in the game",
+   "note": "His approved voice (Scottish, which the sheet notes), as the game speaks it. Carried from 25 September.",
+   "line": "A shape's not much to go on. Half the town could pass for that on a night like this.",
+   "audio": "production/casting/in-game-2026-09-25/voice/darren-milner.wav",
+   "options": [
+    [
+     "yes",
+     "This is him"
+    ],
+    [
+     "no",
+     "Not him"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "think-ron-kirby",
+   "name": "Ron, while he thinks",
+   "note": "When you ask him something, he says one of these at once, in his own voice, and stops the moment his answer starts. It covers the wait; there is no loading sign. Both of his, one after the other.",
+   "line": "Let me think.  /  Well, now.",
+   "audio": "production/approvals/2026-09-28/thinking-ron.wav",
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "think-darren-milner",
+   "name": "Darren, while he thinks",
+   "note": "The same for Darren. Sheila has none yet: both tries leaned away from her accent.",
+   "line": "Hmm, well now.  /  Let me think.",
+   "audio": "production/approvals/2026-09-28/thinking-darren.wav",
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  }
+ ]
+}

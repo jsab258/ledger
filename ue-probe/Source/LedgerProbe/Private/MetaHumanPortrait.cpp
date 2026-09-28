@@ -128,7 +128,15 @@ namespace LedgerMhPortrait
 	// -PortraitCost measures the conversation light's cost on the card before
 	// the Talk shot: GPU time per frame, 120 frames off and 120 on.
 	bool GPair = false, GCost = false, GCostDone = false;
+	bool GTalkAll = false;                  // -PortraitTalkLightAll: every shot in the conversation light, as a player talking sees them
 	float GPinExposure = 0.0f;              // the exposure held for the rest of a person's pair, 0 = automatic
+	// ONE CAMERA FOR THE PAIR (28 September; the blind reviewer: the street and
+	// talk pictures differed in angle and background, as the person turned
+	// between shots): the first shot's camera and the person's facing are kept
+	// for the rest of that person's pair.
+	bool GPairAim = false;
+	FVector GPairEye = FVector::ZeroVector, GPairLook = FVector::ZeroVector;
+	float GPairYaw = 0.0f;
 	// THE HELD EXPOSURE, found by matching (28 September): the view's own last
 	// exposure reads back as zero here, so -PortraitSweep="auto,-1,0,1,..."
 	// shoots the Front framing once automatic and once per fixed exposure bias,
@@ -442,6 +450,11 @@ namespace LedgerMhPortrait
 				}
 			}
 		}
+		if (GPair && GInGame)
+		{
+			if (!GPairAim) { GPairEye = Eye; GPairLook = Look; GPairYaw = GPerson->GetActorRotation().Yaw; GPairAim = true; }
+			else { Eye = GPairEye; Look = GPairLook; GPerson->SetActorRotation(FRotator(0.0f, GPairYaw, 0.0f)); }
+		}
 		if (!GInGame) { GPerson->SetActorRotation(FRotator(0.0f, Shot == EShot::Profile ? GYaw - 90.0f : GYaw, 0.0f)); }
 		// The hair's own colour, once the person has been in the world a while (LedgerHair.h).
 		LedgerHair::Keep(GPerson.Get(), *Stem());
@@ -460,7 +473,7 @@ namespace LedgerMhPortrait
 		LookTests(World, Face);
 		// THE PAIR'S LIGHT, per shot: the conversation light only on Talk, the
 		// studio key and fill only on Studio (unless -PortraitStudio asks for it on every shot).
-		if (Shot == EShot::Talk) { LedgerTalkLight::Key(World, GPerson.Get(), Eye, Face); }
+		if (Shot == EShot::Talk || GTalkAll) { LedgerTalkLight::Key(World, GPerson.Get(), Eye, Face); }
 		else { LedgerTalkLight::Off(); }
 		if (GPair && !GStudio)
 		{
@@ -629,6 +642,7 @@ namespace LedgerMhPortrait
 			return true;
 		case 1:
 			GPinExposure = 0.0f;
+			GPairAim = false;
 			LedgerTalkLight::Off();
 			Place(World);
 			if (!GPerson.IsValid()) { NextJobOrQuit(); return true; }
@@ -773,6 +787,7 @@ namespace LedgerMhPortrait
 		GFaceRest = FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceRest"));
 		GSunlit = FParse::Param(FCommandLine::Get(), TEXT("PortraitSunlit"));
 		GCost = FParse::Param(FCommandLine::Get(), TEXT("PortraitCost"));
+		GTalkAll = FParse::Param(FCommandLine::Get(), TEXT("PortraitTalkLightAll"));
 		if (!GExposureReader.IsValid()) { GExposureReader = FSceneViewExtensions::NewExtension<FExposureReader>(); }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitPair")))
 		{

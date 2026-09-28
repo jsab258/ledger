@@ -47,6 +47,9 @@ DIRS = [
     "ledger/Assets/Resources/Sky",
     "ledger/Assets/StreamingAssets/CityPack/textures",
     DECAL_ROOT,
+    # THE THINKING SOUNDS, 28 September: each person's short acknowledgement,
+    # played while their answer is made (CrimeProbe.cpp AckStart).
+    "content/voice/acks",
 ]
 VOICE_ROOT = "ledger/Assets/StreamingAssets/Audio/Voice"
 SOUND_ROOT = "production/assets/sounds"
@@ -136,6 +139,7 @@ def selftest():
     files = wanted()
     check("the street's sidecar is staged", "production/assets/street/quay-street.json" in files)
     check("the witness lines are staged", "content/dialogue/crime-witness-v1.json" in files)
+    check("the thinking sounds are staged", "content/voice/acks" in DIRS)
     check("each drawn map comes with its normal and roughness", any(f.endswith("_n.png") for f in files) and any(f.endswith("_r.png") for f in files))
     check("the street's voices are staged", any(f.startswith(VOICE_ROOT) for f in files))
     check("nothing is listed twice", len(files) == len(set(files)))

@@ -99,6 +99,8 @@
 #include "AudioDevice.h"
 #include "AudioMixerBlueprintLibrary.h"
 #include "Components/AudioComponent.h"
+#include "Animation/AnimSingleNodeInstance.h"
+#include "Animation/AnimSequenceBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundAttenuation.h"
 #include "Sound/SoundWave.h"
@@ -2617,6 +2619,117 @@ namespace
 		}
 	}
 
+	// THE PAUSE, COVERED (28 September; production/research/live-speech-
+	// architecture/conversation-latency-2026-09-25.md: "pre-render several
+	// character-specific breaths, 'Hmm' and brief acknowledgements; pair them
+	// with gaze shifts ... Never force a filler to finish when the answer is
+	// ready"; loading signs did not help). When a line is put to someone, one
+	// of their own short sounds (content/voice/acks/<card>/*.wav, in their
+	// approved voice, none of them agreeing to anything) plays at once where
+	// they stand, with its face animation when one has been made
+	// (/Game/Ledger/MetaHumans/Speech/AS_ack_<card>_<name>), and is cut off the
+	// moment the answer's own sound begins. -NoAck leaves the pause bare.
+	struct FAck
+	{
+		TWeakObjectPtr<UAudioComponent> Sound;
+		TWeakObjectPtr<USkeletalMeshComponent> Face;
+		TWeakObjectPtr<UAnimationAsset> FaceIdle;
+		float FaceIdleAt = 0.0f;
+		double Until = 0.0;
+	};
+	FAck GAck;
+	int32 GAckTurn = 0;
+
+	TArray<FString> AckFiles(const std::string& Card)
+	{
+		const FString Rel = FString(TEXT("content/voice/acks/")) + Un(Card);
+		for (const FString& Dir : { FPaths::Combine(FPaths::ProjectDir(), TEXT(".."), Rel),
+		                            FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"), Rel) })
+		{
+			TArray<FString> Found;
+			IFileManager::Get().FindFiles(Found, *FPaths::Combine(Dir, TEXT("*.wav")), true, false);
+			if (Found.Num() == 0) { continue; }
+			Found.Sort();
+			for (FString& F : Found) { F = FPaths::Combine(Dir, F); }
+			return Found;
+		}
+		return TArray<FString>();
+	}
+
+	void AckEnd(bool bCut)
+	{
+		if (GAck.Sound.IsValid()) { GAck.Sound->Stop(); }
+		if (GAck.Face.IsValid() && GAck.FaceIdle.IsValid())
+		{
+			GAck.Face->PlayAnimation(GAck.FaceIdle.Get(), true);
+			GAck.Face->SetPosition(GAck.FaceIdleAt, false);
+		}
+		if (GAck.Sound.IsValid() || GAck.Face.IsValid()) { UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s"), bCut ? TEXT("cut off by the answer") : TEXT("done")); }
+		GAck = FAck();
+	}
+
+	void AckStart(const std::string& Card, AActor* Who)
+	{
+		static const bool bNo = FParse::Param(FCommandLine::Get(), TEXT("NoAck"));
+		UWorld* World = GameWorld();
+		AckEnd(true);
+		if (bNo || World == nullptr || Who == nullptr) { return; }
+		const TArray<FString> Files = AckFiles(Card);
+		TArray<uint8> Bytes;
+		int32 Rate, Channels, DataAt, DataLen;
+		if (Files.Num() == 0) { UE_LOG(LogTemp, Display, TEXT("LedgerAck: none for %s"), *Un(Card)); return; }
+		const FString Wav = Files[GAckTurn++ % Files.Num()];
+		if (!ReadVoiceWav(Wav, Bytes, Rate, Channels, DataAt, DataLen)) { return; }
+		USoundWaveProcedural* W = NewObject<USoundWaveProcedural>(GetTransientPackage());
+		W->SetSampleRate(Rate);
+		W->NumChannels = Channels;
+		W->Duration = INDEFINITELY_LOOPING_DURATION;
+		W->bLooping = false;
+		W->QueueAudio(&Bytes[DataAt], DataLen);
+		USoundAttenuation* Att = NewObject<USoundAttenuation>(GetTransientPackage());
+		Att->Attenuation.bAttenuate = true;
+		Att->Attenuation.bSpatialize = true;
+		Att->Attenuation.AttenuationShapeExtents = FVector(300.0f, 0.0f, 0.0f);
+		Att->Attenuation.FalloffDistance = 2500.0f;
+		const double Seconds = (double)DataLen / (double)(2 * Channels * Rate);
+		GAck.Sound = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
+			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
+		GAck.Until = FPlatformTime::Seconds() + Seconds;
+		// THE GLANCE: the sound's own face animation, on the face (the part whose
+		// skeleton the animation was made on), then back to the idle where it was.
+		// Named as tools/ue/speech_faces.py names it: AS_ plus the sound's name, dashes as underscores.
+		const FString Name = FString::Printf(TEXT("AS_ack_%s_%s"), *Un(Card), *FPaths::GetBaseFilename(Wav).Replace(TEXT("-"), TEXT("_")));
+		UAnimSequenceBase* Anim = LoadObject<UAnimSequenceBase>(nullptr, *FString::Printf(TEXT("/Game/Ledger/MetaHumans/Speech/%s.%s"), *Name, *Name));
+		if (Anim != nullptr)
+		{
+			TArray<USkeletalMeshComponent*> Parts;
+			Who->GetComponents(Parts);
+			for (USkeletalMeshComponent* C : Parts)
+			{
+				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+				if (M == nullptr || M->GetSkeleton() != Anim->GetSkeleton()) { continue; }
+				if (UAnimSingleNodeInstance* Node = C->GetSingleNodeInstance())
+				{
+					GAck.FaceIdle = Node->GetAnimationAsset();
+					GAck.FaceIdleAt = Node->GetCurrentTime();
+				}
+				C->PlayAnimation(Anim, false);
+				GAck.Face = C;
+				break;
+			}
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerAck: %s says %s, %.2f s, face %s"), *Un(Card), *FPaths::GetBaseFilename(Wav), Seconds,
+			GAck.Face.IsValid() ? TEXT("yes") : TEXT("no"));
+	}
+
+	// Each frame: the acknowledgement ends with its sound, or at once when the answer starts.
+	void AckTick()
+	{
+		if (!GAck.Sound.IsValid() && !GAck.Face.IsValid()) { return; }
+		if (GVoice.Playing.IsValid()) { AckEnd(true); return; }
+		if (FPlatformTime::Seconds() > GAck.Until + 0.1) { AckEnd(false); }
+	}
+
 	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who)
 	{
 		if (!GVoice.bReady || GVoice.InWrite == nullptr || Text.empty() || Text == "none") { return; }
@@ -2835,6 +2948,7 @@ namespace
 		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Lines[I % 6]))
 		{
 			GLive.PendingBody = P.Body;
+			AckStart(P.Card, GVisualFor(P.Body));
 			GAsk.SentAt = GLive.AskedAt;
 			GAsk.HeardAt = 0.0;
 			GAsk.bWaiting = true;
@@ -2866,7 +2980,9 @@ namespace
 		AActor* Visual = GTalkLitBody != nullptr ? GVisualFor(GTalkLitBody) : nullptr;
 		if (bOff || Now > GTalkLitUntil || Visual == nullptr || PC == nullptr || PC->PlayerCameraManager == nullptr)
 		{
-			LedgerTalkLight::Off();
+			// Only a light the game put on: the portrait tool lights people itself,
+			// and this switched its light off the frame after (28 September).
+			if (GTalkLitBody != nullptr) { LedgerTalkLight::Off(); }
 			if (Now > GTalkLitUntil) { GTalkLitBody = nullptr; }
 			return;
 		}
@@ -2892,6 +3008,7 @@ namespace
 		LiveVoicePump();
 		AskScriptTick(Now);
 		TalkLightTick(World, Now);
+		AckTick();
 		if (bSayOpen)
 		{
 			// THE T THAT OPENED THE LINE is not the first letter of it.
@@ -2907,6 +3024,7 @@ namespace
 				if (!Said.IsEmpty() && LiveAsk(GTalkTarget.G, GTalkTarget.Card, GTalkTarget.Id, GTalkTarget.Rung, GTalkTarget.Name, Utf8(Said)))
 				{
 					GLive.PendingBody = GTalkTarget.Body;
+					AckStart(GTalkTarget.Card, GVisualFor(GTalkTarget.Body));
 					Say(FString(TEXT("You: ")) + Said, 10.0f, FColor::Cyan);
 				}
 			}

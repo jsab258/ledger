@@ -32,7 +32,7 @@ import shutil
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATE = "2026-09-28"   # this week's page; the 25 September one is carried out (git has it)
+DATE = "2026-09-29"   # the next page; the 28 September one is carried out (git has it and its verdicts)
 HOME = os.path.expanduser("~")
 LOCAL = os.environ.get("LOCALAPPDATA", os.path.join(HOME, "AppData", "Local"))
 RUNNER = r"C:\actions-runner-ledger\_work"
@@ -210,7 +210,30 @@ def delete_group(gid):
         return [{"group": gid, "refused": "an old copy: rename first, prove, then delete-renamed"}]
     if gid == "runner-checkout" and runner_busy():
         return [{"group": gid, "refused": "the build machine is building; try again when it is idle"}]
+    if g.get("cap"):
+        return [cap_store(g["cap"])]
     return [delete(p) for p in g["paths"]]
+
+
+def cap_store(limit_bytes):
+    """Lowers Unreal's cache-store cap in its own user-wide settings (and the repository's copy of them),
+    then stops the store if nothing Unreal is running, so it starts again with the new cap. Deletes nothing:
+    the store trims itself at its next cleaning."""
+    import re
+    import subprocess
+    out = {"group": "unreal-store-cap", "capBytes": limit_bytes}
+    for f in (os.path.join(LOCAL, "Unreal Engine", "Engine", "Config", "UserEngine.ini"), os.path.join(REPO, "tools", "ue", "UserEngine.ini")):
+        text = open(f, encoding="utf-8").read()
+        new = re.sub(r"--gc-disksize-softlimit \d+", "--gc-disksize-softlimit %d" % limit_bytes, text)
+        open(f, "w", encoding="utf-8", newline="\n").write(new)
+        out[f] = "changed" if new != text else "already so"
+    busy = subprocess.run(["tasklist"], capture_output=True, text=True).stdout
+    if any(n in busy for n in ("UnrealEditor", "Runner.Worker", "UnrealBuildTool")):
+        out["store"] = "left running: Unreal is in use; the cap applies when it next starts"
+    else:
+        subprocess.run(["taskkill", "/IM", "zenserver.exe", "/F"], capture_output=True)
+        out["store"] = "stopped; it starts again with the new cap when Unreal next runs"
+    return out
 
 
 def runner_busy():
@@ -246,27 +269,19 @@ def delete_renamed():
 
 W = os.path.join(RUNNER, "ledger", "ledger", "ue-probe")
 PLAN = [
-    # 28 September: C: at 42 to 52 GB, under his 60. The 25 September groups are carried out.
-    {"id": "unreal-old-cache", "title": "Unreal's old cache, which nothing uses any more",
+    # 28 September, night: C: back to 53.8 GB after the day's approved cleanup
+    # (74.1 at best): Unreal's store filled to its 20 GB cap again and the
+    # build machine's copy came back as a fresh 9.5 GB, as the page said.
+    {"id": "unreal-store-cap", "title": "Unreal's cache store: capped at 10 GB instead of 20",
+     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen")], "keepGb": 10.0, "cap": 10 * 1024 ** 3,
+     "why": "The compiled shaders and cooked data every editor start and build reuses, capped this morning at 20 GB in Unreal's own settings; it has filled to that cap. Nothing is deleted by hand: the cap in Unreal's settings goes down to 10 GB, and the store trims itself to it at its next cleaning (it cleans every six hours), dropping what was used longest ago.",
+     "after": "The first build after a big change compiles some shaders again, a few minutes longer; day to day nothing you would notice.",
+     "recommend": True},
+    {"id": "unreal-old-cache", "title": "Unreal's old cache again, 2 GB back since this afternoon",
      "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache")],
-     "why": "Unreal kept the same data twice: in this old file cache and in its newer store. Since this morning it is set to neither read nor write the old one (the newer store, now capped at 20 GB in Unreal's own settings, holds the same data). Its own cleaner only removes files unused for a week, so left alone it would take a week or more to empty.",
-     "after": "Nothing you would notice; the first time something found only here is needed, Unreal makes it again.",
+     "why": "Deleted this afternoon on your yes, and set in Unreal's settings to take nothing new, but 2 GB came back by evening: something still writes to it. I am finding what, so it stops.",
+     "after": "Nothing you would notice.",
      "recommend": True},
-    {"id": "runner-checkout", "title": "The build machine's copy of the project",
-     "paths": [os.path.join(RUNNER, "ledger", "ledger")],
-     "why": "About half of it is history piled up: every build fetches only the newest commit, but the old ones were never cleared out, 7.6 GB so far. The builds need only the newest.",
-     "after": "The next build starts from a fresh copy of the newest commit, a few minutes longer once, and about 7 GB of this comes back as that copy. From then on each build clears the old history at its end (a step added to the build), so it stops piling up.",
-     "recommend": True},
-    {"id": "project-intermediate", "title": "This project's local compile scratch",
-     "paths": [os.path.join(REPO, "ue-probe", "Intermediate")],
-     "why": "Compile and cook scratch for the game on this PC.",
-     "after": "The next build here makes it again, a few minutes slower, and it grows back to the same size at once, so it frees nothing for long.",
-     "recommend": False},
-    {"id": "unreal-store", "title": "Unreal's newer cache store",
-     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen")],
-     "why": "The compiled shaders and cooked data every editor start and build reuses. Capped this morning at 20 GB in Unreal's own settings, and it trims itself above that.",
-     "after": "Every editor start and build would compile for a long time, and it would grow straight back.",
-     "recommend": False},
 ]
 
 NOT_IN_LIST = [
@@ -285,6 +300,8 @@ def measure():
         g = dict(g)
         g["sizes"] = [(p, round(size_gb(p), 2)) for p in g["paths"]]
         g["gb"] = round(sum(s for _, s in g["sizes"]), 1)
+        if "keepGb" in g:                  # a cap, not a deletion: what it frees is what is over the cap
+            g["gb"] = round(max(0.0, g["gb"] - g["keepGb"]), 1)
         g["movedGb"] = round(sum(size_gb(m["from"]) for m in g.get("moveOut", [])), 1)
         groups.append(g)
     others = []

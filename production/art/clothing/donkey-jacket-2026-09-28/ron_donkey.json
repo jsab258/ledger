@@ -1,0 +1,21 @@
+{
+ "body": "F:/LedgerTools/tmp/dcc/MH_RoccoP2/MH_RoccoP2_Body.fbx",
+ "offset": 0.03,
+ "frames": 90,
+ "sourceLod": 1,
+ "sim": {
+  "verts": 2516,
+  "tris": 4900
+ },
+ "render": {
+  "verts": 31262
+ },
+ "hem": 0.902,
+ "neck": 1.622,
+ "neckRadius": 0.06,
+ "settling": {
+  "largestFallM": 0.079,
+  "lastFrameMoveM": 0.0217
+ },
+ "weightsCoverage": 1.0
+}

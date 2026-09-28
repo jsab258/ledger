@@ -29,6 +29,7 @@ outside it, and backed up to Dropbox (DECISIONS, 24 September).
 ONE LINE PER CHARACTER PER STEP, appended to ue-material.txt in the project
 folder: who, from which preset, what happened, how long.
 """
+import json
 import os
 import sys
 import time
@@ -329,6 +330,215 @@ SECOND = {
 }
 CANDIDATES.update(SECOND)
 
+# THE THIRD ATTEMPT, 28 September, after research (production/research/
+# character-pipeline/eye-colour-2026-09-28.md and faces-and-hair-2026-09-28.md).
+# EYES: Epic's own eye presets, every field (004 grey-blue for Sheila, 006 blue
+# for Darren). SHEILA'S FACE: pushed along two directions in the face model's
+# coefficients, written as a blend with negative weights (they still sum to
+# one): European against East Asian among the presets' young women (Celeste,
+# Jelena, Vivian against Aera, Lani, Tuya), so the push is not also an age
+# change; and old against young among the East Asian women (Grace and Sook-ja
+# against Aera, Lani, Tuya), so ethnicity cancels and age remains. Three bases,
+# since her last candidates were all one face. DARREN keeps Orlando's face (it
+# passed the reviewer) with softer, brassy bleached tips (ombre contrast 0,
+# half intensity) on wavier cuts; the hair's shape is still the wardrobe's.
+EYES_GREY_BLUE = {"pattern": "IRIS007", "u": 0.2359, "v": 0.7703, "secondary_u": 0.2837, "secondary_v": 0.4953, "blend": 0.6267,
+                  "softness": 0.77, "method": "STRUCTURAL", "shadow": 0.5364, "ring_size": 0.8062, "ring_softness": 0.085,
+                  "ring_grey": 0.84, "saturation": 0.76}
+EYES_BLUE = {"pattern": "IRIS002", "u": 0.234, "v": 0.9891, "secondary_u": 0.2837, "secondary_v": 0.4953, "blend": 0.7327,
+             "softness": 0.77, "method": "STRUCTURAL", "shadow": 0.89, "ring_size": 0.775, "ring_softness": 0.085,
+             "ring_grey": 0.686, "saturation": 0.88}
+SET_GREYING_BROWN = {"hairMelanin": 0.55, "hairRedness": 0.1, "WhiteAmount": 0.35}
+SOFT_BLEACH = {"hairMelanin": 0.35, "hairRedness": 0.2, "WhiteAmount": 0.0,
+               "Ombre": 1.0, "OmbreMelanin": 0.12, "OmbreRedness": 0.35, "OmbreShift": 0.5, "OmbreContrast": 0.0, "OmbreIntensity": 0.5}
+MATTE_LIPSTICK = {"lips": {"type": "NATURAL", "opacity": 0.3, "color": (0.42, 0.14, 0.14)}}
+
+
+def sheila_face(base, european, older):
+    """Base preset + european x (European - East Asian, young women) + older x (old - young, East Asian women)."""
+    w = {base: 1.0}
+    for n in ("Celeste", "Jelena", "Vivian"):
+        w[n] = w.get(n, 0.0) + european / 3.0
+    for n in ("Aera", "Lani", "Tuya"):
+        w[n] = w.get(n, 0.0) - european / 3.0 - older / 3.0
+    for n in ("Grace", "Sook-ja"):
+        w[n] = w.get(n, 0.0) + older / 2.0
+    return w
+
+
+THIRD = {
+    "Q1": {"lena": _n("Jelena", sheila_face("Jelena", 0.6, 0.5), 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING_BROWN, EYES_GREY_BLUE, makeup=MATTE_LIPSTICK),
+           "sam": _n("Orlando", {"Orlando": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_Layered", SOFT_BLEACH, EYES_BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "Q2": {"lena": _n("Jelena", sheila_face("Jelena", 1.0, 0.5), 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING_BROWN, EYES_GREY_BLUE, makeup=MATTE_LIPSTICK),
+           "sam": _n("Orlando", {"Orlando": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_BobMessy", SOFT_BLEACH, EYES_BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "Q3": {"lena": _n("Vivian", sheila_face("Vivian", 0.8, 0.5), 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING_BROWN, EYES_GREY_BLUE, makeup=MATTE_LIPSTICK),
+           "sam": _n("Orlando", {"Orlando": 0.5, "Victor": 0.5}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_Layered", SOFT_BLEACH, EYES_BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+    "Q4": {"lena": _n("Celeste", sheila_face("Celeste", 0.8, 0.6), 121, 0.2, 0.45, 160.0, 0.6, -0.8, "WI_Hair_S_BobLayered", SET_GREYING_BROWN, EYES_GREY_BLUE, makeup=MATTE_LIPSTICK),
+           "sam": _n("Victor", {"Victor": 1.0}, None, 0.18, 0.45, 175.0, -1.0, -0.3, "WI_Hair_M_Layered", SOFT_BLEACH, EYES_BLUE, ("Mustache",), beard="WI_Beard_S_Stubble")},
+}
+# Ron is P2, approved: the third attempt builds only Sheila and Darren (LEDGER_MH_ONLY=lena,sam).
+for _t in THIRD:
+    THIRD[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(THIRD)
+
+# FINISHING THE THIRD ATTEMPT, 28 September, from its portraits against the
+# sheets and concept portraits. Sheila's Q1 and Q2 read as white English
+# women of her age with her grey-blue eyes, but the aged skin set reddens
+# their lower lids (the "high" look of 26 September) and the matte lipstick
+# reads mauve, where the sheet has "a plain lipstick" and the concept a red
+# one. Q3 and Q4 stare or droop and have full mouths: dropped. Darren's
+# bleach covers the whole head where the sheet has bleached tips on a grown-out
+# perm, and Victor's lids redden too. The faces are kept; only the under-eye
+# accent, the lipstick and the hair colour change, and Darren takes Q2's
+# messier cut, nearest the concept's shape.
+CALM_LIDS = {"under_eye": {"redness": 0.2, "saturation": 0.3, "lightness": 0.55}}
+PLAIN_RED = {"lips": {"type": "NATURAL", "opacity": 0.45, "color": (0.5, 0.12, 0.12)}}
+TIPPED = {"hairMelanin": 0.5, "hairRedness": 0.15, "WhiteAmount": 0.0,
+          "Ombre": 1.0, "OmbreMelanin": 0.1, "OmbreRedness": 0.3, "OmbreShift": 0.6, "OmbreContrast": 0.3, "OmbreIntensity": 0.8}
+
+
+def _finish(brief, **changes):
+    b = json.loads(json.dumps(brief))
+    b.update(changes)
+    return b
+
+
+FINISH = {
+    "R1": {"lena": _finish(THIRD["Q1"]["lena"], accents=CALM_LIDS, makeup=PLAIN_RED),
+           "sam": _finish(THIRD["Q2"]["sam"], accents=CALM_LIDS, hair_colour=TIPPED)},
+    "R2": {"lena": _finish(THIRD["Q2"]["lena"], accents=CALM_LIDS, makeup=PLAIN_RED),
+           "sam": _finish(THIRD["Q3"]["sam"], accents=CALM_LIDS, hair_colour=TIPPED, hair="WI_Hair_M_BobMessy")},
+}
+for _t in FINISH:
+    FINISH[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(FINISH)
+
+# FROM DIMENSIONS, 28 September. The blind reviewer failed R1 and R2: Sheila
+# long-nosed, full-mouthed and gaunt against a rounder, softer concept with a
+# thin mouth; Darren broad-jawed and older against a narrow, pointed concept;
+# pink lids on both; Sheila's hair golden, Darren's blond all through in
+# profile. Two attempts and the research are spent, so the faces are finished
+# from measurements (CLAUDE.md): each concept portrait and each R1 front was
+# measured with the eye-to-chin height as the ruler (production/casting/
+# candidates-2026-09-28/MEASURES.md), and the landmarks are moved by the
+# difference, in centimetres, at MetaHuman's scale (Sheila's eye-to-chin about
+# 10.9 cm, Darren's about 12.5).
+SHEILA_SHAPE = [
+    {"at": "nose_tip", "move": [0.0, -0.1, 0.45]}, {"at": "nose_base", "move": [0.0, 0.0, 0.55]},
+    {"at": "nose_wings", "move": [0.0, 0.0, 0.4]},
+    {"at": "upper_lip", "move": [0.0, 0.0, 0.1]}, {"at": "upper_lip_sides", "move": [0.0, 0.0, 0.3]},
+    {"at": "mouth_corners", "move": [0.0, 0.0, 0.44], "width": 0.875},
+    {"at": "lower_lip", "move": [0.0, 0.0, 0.8]}, {"at": "lower_lip_sides", "move": [0.0, 0.0, 0.7], "width": 0.9},
+    {"at": "cheeks", "width": 1.15}, {"at": "lower_cheeks", "width": 1.15}, {"at": "cheek_sides", "width": 1.12},
+    {"at": "cheekbones", "width": 1.12}, {"at": "jaw_front", "width": 1.08}, {"at": "jaw_angle", "width": 1.08},
+    {"at": "chin_sides", "width": 1.05}, {"at": "brows", "move": [0.0, 0.0, -0.1]},
+]
+DARREN_SHAPE = [
+    {"at": "jaw_front", "width": 0.88}, {"at": "jaw_angle", "width": 0.88}, {"at": "chin_sides", "width": 0.85},
+    {"at": "chin", "move": [0.0, 0.2, 0.0]}, {"at": "lower_cheeks", "width": 0.9},
+    {"at": "cheeks", "move": [0.0, -0.3, 0.0], "width": 0.95},
+    {"at": "eyes", "move": [0.2, 0.0, 0.0]}, {"at": "upper_lids", "move": [0.0, 0.0, 0.08]},
+    {"at": "nose_tip", "move": [0.0, 0.0, 0.2]}, {"at": "nose_base", "move": [0.0, 0.0, 0.25]},
+]
+CALMER_LIDS = {"under_eye": {"redness": 0.1, "saturation": 0.2, "lightness": 0.55}}
+RED_LIPSTICK = {"lips": {"type": "NATURAL", "opacity": 0.7, "color": (0.45, 0.08, 0.08)}}
+ASH_GREYING = {"hairMelanin": 0.6, "hairRedness": 0.0, "WhiteAmount": 0.5}
+TIPS_ONLY = dict(TIPPED, OmbreShift=0.8)
+
+
+def _calm_eyes(eyes):
+    return dict(eyes, veins=0.3, veins_cover=0.1)
+
+
+DIMENSIONS = {
+    "S1": {"lena": _finish(THIRD["Q1"]["lena"], accents=CALMER_LIDS, makeup=RED_LIPSTICK, hair_colour=ASH_GREYING,
+                           eyes=_calm_eyes(EYES_GREY_BLUE), sculpt=SHEILA_SHAPE),
+           "sam": _finish(THIRD["Q2"]["sam"], accents=CALMER_LIDS, hair_colour=TIPS_ONLY, eyes=_calm_eyes(EYES_BLUE),
+                          sculpt=DARREN_SHAPE)},
+}
+for _t in DIMENSIONS:
+    DIMENSIONS[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(DIMENSIONS)
+
+# FROM DIMENSIONS, SECOND PASS, 28 September evening. The blind reviewer
+# measured S1 close to Sheila's concept from the front (pupils 0.58 and 0.58,
+# cheekbones 1.22 and 1.16, jaw 1.03 and 1.02, nose 0.40 and 0.40) but failed
+# her colouring: hair about 1% grey against the concept's two thirds, dark
+# brows, a glossy plum lipstick (Epic's lipstick is glossy and metallic by
+# default), and a nose tip standing out past the chin twice the concept's.
+# Darren: eyes too close (0.51 against 0.56), the lower face long (eyes to
+# mouth 0.61 against 0.555), low brows and heavy lids reading sullen, the
+# crown too dark and the bleach half the length. The reviewer's numbers, in
+# centimetres at MetaHuman's scale, give the moves added here.
+SHEILA_SHAPE_2 = SHEILA_SHAPE + [
+    {"at": "nose_tip", "move": [0.0, -0.3, 0.0]},          # back toward the face
+    {"at": "lower_lip", "move": [0.0, -0.1, 0.25]}, {"at": "lower_lip_sides", "move": [0.0, 0.0, 0.2]},
+]
+DARREN_SHAPE_2 = DARREN_SHAPE + [
+    {"at": "eyes", "move": [0.3, 0.0, 0.0]},                # 0.51 to 0.56 of 12.5 cm: 0.6 cm more between the pupils
+    {"at": "brows", "move": [0.0, 0.0, 0.25]}, {"at": "upper_lids", "move": [0.0, 0.0, 0.08]},
+    {"at": "upper_lip", "move": [0.0, 0.0, 0.3]}, {"at": "upper_lip_sides", "move": [0.0, 0.0, 0.3]},
+    {"at": "mouth_corners", "move": [0.0, 0.0, 0.4]},       # the mouth up with the rest, its corners a touch more
+    {"at": "lower_lip", "move": [0.0, 0.0, 0.3]}, {"at": "lower_lip_sides", "move": [0.0, 0.0, 0.3]},
+    {"at": "chin", "move": [0.0, 0.0, 0.4]},                # 0.61 to 0.555 of 12.5 cm: the lower face 0.6 cm shorter
+]
+HALF_GREY = {"hairMelanin": 0.4, "hairRedness": 0.02, "WhiteAmount": 0.65}
+GREYING_BROWS = {"hairMelanin": 0.4, "hairRedness": 0.02, "WhiteAmount": 0.35}
+PLAIN_MATTE_RED = {"lips": {"type": "NATURAL", "opacity": 0.75, "color": (0.38, 0.06, 0.06), "roughness": 0.75, "metalness": 0.0}}
+ASH_TIPS = {"hairMelanin": 0.3, "hairRedness": 0.1, "WhiteAmount": 0.0,
+            "Ombre": 1.0, "OmbreMelanin": 0.08, "OmbreRedness": 0.3, "OmbreShift": 0.9, "OmbreContrast": 0.4, "OmbreIntensity": 0.8}
+CLEAR_LIDS = {"under_eye": {"redness": 0.05, "saturation": 0.15, "lightness": 0.6}}
+DIMENSIONS_2 = {
+    "S2": {"lena": _finish(DIMENSIONS["S1"]["lena"], sculpt=SHEILA_SHAPE_2, hair_colour=HALF_GREY, brow_colour=GREYING_BROWS,
+                           makeup=PLAIN_MATTE_RED),
+           "sam": _finish(DIMENSIONS["S1"]["sam"], sculpt=DARREN_SHAPE_2, hair_colour=ASH_TIPS, accents=CLEAR_LIDS)},
+}
+for _t in DIMENSIONS_2:
+    DIMENSIONS_2[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(DIMENSIONS_2)
+
+# THIRD PASS, 28 September night, from a fresh reviewer's S2 verdict: Sheila
+# has a dark band round the lower lids and in the creases (52% of the cheek's
+# brightness; the concept's 87%), reading as eye make-up or soreness, and her
+# brows still dark; Darren's upper lids cover a third of the iris (drowsy),
+# a grey-green band lies under his eyes, and in profile his hair is blond
+# all through, no brown crown.
+LIGHT_LIDS = {"under_eye": {"redness": 0.05, "saturation": 0.2, "lightness": 0.8}}
+ASH_BROWS = {"hairMelanin": 0.25, "hairRedness": 0.02, "WhiteAmount": 0.5}
+NEUTRAL_LIDS = {"under_eye": {"redness": 0.1, "saturation": 0.1, "lightness": 0.65}}
+TIPS_ONLY_SHARP = dict(ASH_TIPS, OmbreShift=1.0, OmbreContrast=0.8)
+SHEILA_SHAPE_3 = SHEILA_SHAPE_2 + [{"at": "lower_lids", "move": [0.0, 0.0, 0.05]}]
+DARREN_SHAPE_3 = DARREN_SHAPE_2 + [{"at": "upper_lids", "move": [0.0, 0.0, 0.2]}]
+DIMENSIONS_3 = {
+    "S3": {"lena": _finish(DIMENSIONS_2["S2"]["lena"], sculpt=SHEILA_SHAPE_3, accents=LIGHT_LIDS, brow_colour=ASH_BROWS),
+           "sam": _finish(DIMENSIONS_2["S2"]["sam"], sculpt=DARREN_SHAPE_3, accents=NEUTRAL_LIDS, hair_colour=TIPS_ONLY_SHARP)},
+}
+for _t in DIMENSIONS_3:
+    DIMENSIONS_3[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(DIMENSIONS_3)
+
+# FOURTH PASS, 28 September night, from S3's reviewer, in the studio light
+# (the one light every take is now judged in): Sheila's hair reads warm and
+# golden (saturation 0.16) where the concept's is a cool grey-brown (0.07),
+# and her brows now pale (0.65 of full brightness against the concept's 0.33;
+# S2's were called too dark, so between the two); Darren's hair is blond from
+# root to tip (0.53 to 0.71 against the concept's dark brown base, 0.16 to
+# 0.26), his lids still heavy (65% of the iris showing) and grey-green under
+# the eyes (too little saturation there reads grey).
+COOL_GREY_BROWN = {"hairMelanin": 0.6, "hairRedness": 0.0, "WhiteAmount": 0.5}
+MID_BROWS = {"hairMelanin": 0.5, "hairRedness": 0.02, "WhiteAmount": 0.2}
+BROWN_BLEACHED_ENDS = {"hairMelanin": 0.65, "hairRedness": 0.1, "WhiteAmount": 0.0,
+                       "Ombre": 1.0, "OmbreMelanin": 0.15, "OmbreRedness": 0.25, "OmbreShift": 1.0, "OmbreContrast": 0.8, "OmbreIntensity": 0.8}
+PLAIN_LIDS = {"under_eye": {"redness": 0.35, "saturation": 0.5, "lightness": 0.62}}
+DARREN_SHAPE_4 = DARREN_SHAPE_3 + [{"at": "upper_lids", "move": [0.0, 0.0, 0.25]}, {"at": "lower_lids", "move": [0.0, 0.0, -0.05]}]
+DIMENSIONS_4 = {
+    "S4": {"lena": _finish(DIMENSIONS_3["S3"]["lena"], hair_colour=COOL_GREY_BROWN, brow_colour=MID_BROWS),
+           "sam": _finish(DIMENSIONS_3["S3"]["sam"], sculpt=DARREN_SHAPE_4, accents=PLAIN_LIDS, hair_colour=BROWN_BLEACHED_ENDS)},
+}
+for _t in DIMENSIONS_4:
+    DIMENSIONS_4[_t]["rocco"] = SECOND["P2"]["rocco"]
+CANDIDATES.update(DIMENSIONS_4)
+
 
 def brief(who):
     """The brief the current take builds `who` to: a candidate's, the cast's, or none (a stand-in)."""
@@ -356,15 +566,26 @@ def hair_materials(who, paths):
     return out
 
 
+def brow_materials(who, paths):
+    """The built eyebrows' material instances among a take's asset paths, when the brief gives them a colour
+    (28 September: the brows kept the base preset's, and Sheila's dark ones made her read darker and younger)."""
+    c = brief(who) if TAKE else CASTING.get(who)
+    if not c or not c.get("brow_colour"):
+        return []
+    return [p for p in paths if "/Grooms/" in p and p.split("/")[-1].split(".")[0].startswith("MI_") and "Eyebrows" in p]
+
+
 def recolour_hair(who, made):
-    """Sets the brief's hair colour on the built haircut's materials; how many."""
+    """Sets the brief's hair colour on the built haircut's materials, and its brow colour on the eyebrows'; how many."""
     import unreal
     n = 0
-    for path in hair_materials(who, made) if TAKE else []:
+    jobs = [(p, "hair_colour") for p in (hair_materials(who, made) if TAKE else [])]
+    jobs += [(p, "brow_colour") for p in (brow_materials(who, made) if TAKE else [])]
+    for path, key in jobs:
         mi = unreal.load_asset(path)
         if not isinstance(mi, unreal.MaterialInstanceConstant):
             continue
-        for pname, value in brief(who)["hair_colour"].items():
+        for pname, value in brief(who)[key].items():
             unreal.MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi, pname, value)
         n += 1
     return n
@@ -379,6 +600,42 @@ def blend(vectors_and_weights):
         for i in range(n):
             out[i] += float(vec[i]) * w / total
     return out
+
+
+# THE FACE LANDMARKS (MetaHumanCharacterEditorSubsystem.get_face_landmarks, 88
+# points; numbered from Jelena's, F:/LedgerTools/mh-dress/preset-coeffs.json,
+# and a plot of them front and side, 28 September). Centimetres: x to the
+# face's left (the viewer's right), y forward, z up.
+MARK = {
+    "nose_tip": [64], "nose_base": [65], "nose_bridge": [6], "nose_wings": [67, 45],
+    "upper_lip": [5, 47, 31], "upper_lip_sides": [49, 34], "mouth_corners": [48, 32],
+    "lower_lip": [4], "lower_lip_sides": [9, 16],
+    "chin": [62], "chin_sides": [3, 30], "jaw_front": [63, 43], "jaw_angle": [68, 46],
+    "cheeks": [2, 29], "lower_cheeks": [1, 28], "cheek_sides": [55, 21], "cheekbones": [66, 23],
+    "upper_lids": [51, 44, 52, 36, 20, 35], "lower_lids": [53, 33, 37, 19],
+    "brows": [10, 77, 24, 26],
+    "eyes": [51, 44, 52, 53, 33, 22, 57, 36, 20, 35, 37, 19, 18, 40],
+}
+
+
+def sculpt_deltas(marks, ops):
+    """The move for each landmark from a list of ops: {"at": MARK name, "move": [dx, dy, dz]}
+    (the same move for each point; dx is outward from the middle, mirrored on the
+    right) or {"at": name, "width": k} (distance from the middle times k). Summed."""
+    out = {}
+    for op in ops:
+        for i in MARK[op["at"]]:
+            x = marks[i][0]
+            side = -1.0 if x < 0 else 1.0
+            d = out.setdefault(i, [0.0, 0.0, 0.0])
+            if "move" in op:
+                dx, dy, dz = op["move"]
+                d[0] += dx * side
+                d[1] += dy
+                d[2] += dz
+            if "width" in op:
+                d[0] += x * (op["width"] - 1.0)
+    return {i: tuple(v) for i, v in out.items()}
 
 
 def status_line(step, who, preset, status, seconds, note):
@@ -485,6 +742,12 @@ def main_after_idle(seconds=20.0, settle=15.0):
         if vw and all(len(v) == len(vw[0][0]) for v, _ in vw):
             sub.set_face_model_coefficients(ch, blend(vw))
             sub.commit_face_state(ch)
+            if c.get("sculpt"):
+                marks = [(v.x, v.y, v.z) for v in sub.get_face_landmarks(ch)]
+                moves = sculpt_deltas(marks, c["sculpt"])
+                sub.translate_face_landmarks(ch, sorted(moves), [unreal.Vector(*moves[i]) for i in sorted(moves)])
+                sub.commit_face_state(ch)
+                notes.append("sculpt-%d" % len(moves))
             # The base preset's rig fits the base preset's face, not this one.
             sub.remove_face_rig(ch)
             notes.append("face-of-%d" % len(vw))
@@ -493,6 +756,17 @@ def main_after_idle(seconds=20.0, settle=15.0):
         for k, v in c["skin"].items():
             skin.set_editor_property(k, v)
         ss.set_editor_property("skin", skin)
+        # ACCENTS: the skin's per-region redness, saturation and lightness
+        # (0.5 is neutral); the aged skin set reddens the lower lids.
+        if c.get("accents"):
+            acc = ss.get_editor_property("accents")
+            for region, vals in c["accents"].items():
+                r = acc.get_editor_property(region)
+                for k, v in vals.items():
+                    r.set_editor_property(k, v)
+                acc.set_editor_property(region, r)
+            ss.set_editor_property("accents", acc)
+            notes.append("accents")
         # 4K FACE TEXTURES, not the default 2K: the close-up shows the difference.
         res = ss.get_editor_property("desired_texture_sources_resolutions")
         for k in ("face_albedo", "face_normal", "face_cavity"):
@@ -568,9 +842,32 @@ def main_after_idle(seconds=20.0, settle=15.0):
                 iris.pattern = getattr(unreal.MetaHumanCharacterEyesIrisPattern, e["pattern"])
                 iris.primary_color_u = e["u"]
                 iris.primary_color_v = e["v"]
+                # EVERY FIELD, 28 September: a fresh iris keeps the C++ defaults
+                # for the rest (an olive secondary at double saturation), which
+                # turned every eye green (research: eye-colour-2026-09-28.md).
+                if "secondary_u" in e:
+                    iris.secondary_color_u = e["secondary_u"]
+                    iris.secondary_color_v = e["secondary_v"]
+                    iris.color_blend = e["blend"]
+                    iris.color_blend_softness = e["softness"]
+                    iris.blend_method = getattr(unreal.MetaHumanCharacterEyesBlendMethod, e["method"])
+                    iris.shadow_details = e["shadow"]
+                    iris.limbal_ring_size = e["ring_size"]
+                    iris.limbal_ring_softness = e["ring_softness"]
+                    iris.limbal_ring_color = unreal.LinearColor(e["ring_grey"], e["ring_grey"], e["ring_grey"], 1.0)
+                    iris.global_saturation = e["saturation"]
+                    iris.global_tint = unreal.LinearColor(1.0, 1.0, 1.0, 1.0)
                 es = ch.get_editor_property("eyes_settings")
                 es.eye_left.iris = iris
                 es.eye_right.iris = iris
+                # THE WHITES' VEINS (28 September; the blind reviewer: sore,
+                # pink eyes): Epic's default is full intensity.
+                if "veins" in e:
+                    for eye in (es.eye_left, es.eye_right):
+                        sc = eye.sclera
+                        sc.vascularity_intensity = e["veins"]
+                        sc.vascularity_coverage = e["veins_cover"]
+                        eye.sclera = sc
                 sub.commit_eyes_settings(character=ch, eyes_settings=es)
                 notes.append("eyes")
             except Exception as ex:
@@ -591,6 +888,12 @@ def main_after_idle(seconds=20.0, settle=15.0):
                     lp.type = getattr(unreal.MetaHumanCharacterLipsMakeupType, m["lips"]["type"])
                     lp.opacity = m["lips"]["opacity"]
                     lp.color = unreal.LinearColor(*m["lips"]["color"], 1.0)
+                    # Epic's lipstick is glossy and metallic by default (roughness
+                    # 0.25, metalness 1.0): a 1990 plain lipstick is neither.
+                    if "roughness" in m["lips"]:
+                        lp.roughness = m["lips"]["roughness"]
+                    if "metalness" in m["lips"]:
+                        lp.metalness = m["lips"]["metalness"]
                     ms.lips = lp
                 if "blush" in m:
                     bp = unreal.MetaHumanCharacterBlushMakeupProperties()
@@ -843,6 +1146,11 @@ def selftest():
     check("only the haircut's own materials are recoloured",
           hair_materials("lena", ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x", "/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x",
                                   "/Game/x/Grooms/Hair_M_BobCurly.x"]) == ["/Game/x/Grooms/MI_WI_Hair_M_BobCurly_None_1_Hair.x"])
+    grooms = ["/Game/x/Grooms/MI_WI_Hair_S_BobLayered_Hair.x", "/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x"]
+    use_take("S2")
+    check("a take that names a brow colour recolours the eyebrows and nothing else",
+          brow_materials("lena", grooms) == ["/Game/x/Grooms/MI_WI_Eyebrows_M_SlightArch_Hair.x"] and brow_materials("sam", grooms) == [])
+    use_take("")
     check("everyone is dressed head to foot, shoes included",
           sorted(OUTFITS) == ["lena", "rocco", "sam"] and all(len(o) == 3 for o in OUTFITS.values()))
     check("only MetaHuman packages are imported", fab_packages(["oa_jeans.mhpkg", "notes.txt", "x.zip"]) == ["oa_jeans.mhpkg"])
@@ -860,7 +1168,26 @@ def selftest():
           and all(sorted(byw) == ["lena", "rocco", "sam"] for t, byw in CANDIDATES.items() if t in FIVE))
     check("every candidate blends shipped faces around its base, weights summing to one",
           all(c["base"] in c["face"] and abs(sum(c["face"].values()) - 1.0) < 1e-6 for _, _, c in cands))
-    check("no candidate is made from Grace's face", all("Grace" not in c["face"] for _, _, c in cands))
+    # NOT MADE FROM THE EAST ASIAN PRESETS (Grace was Lena's first base, 24
+    # September): none is a base, and since the 28 September push uses them
+    # with negative weight to steer away, their weights together are zero or
+    # less, so no candidate leans on them.
+    east_asian = ("Aera", "Aoi", "Bo", "Grace", "Kelvin", "Lani", "Sook-ja", "Tuya")
+    check("no candidate is made from Grace's face",
+          all(c["base"] != "Grace" and ("Grace" not in c["face"] or sum(w for n, w in c["face"].items() if n in east_asian) <= 1e-9)
+              for _, _, c in cands))
+    regions = {"scalp", "forehead", "nose", "under_eye", "cheeks", "lips", "chin", "ears"}
+    check("skin accents name real regions and fields, each 0 to 1",
+          all(set(c.get("accents", {})) <= regions and all(set(v) <= {"redness", "saturation", "lightness"} and all(0 <= x <= 1 for x in v.values())
+                                                          for v in c.get("accents", {}).values()) for _, _, c in cands))
+    marks = [(0.0, 0.0, 0.0)] * 88
+    marks[48], marks[32] = (-2.0, 0.0, 0.0), (2.0, 0.0, 0.0)
+    d = sculpt_deltas(marks, [{"at": "mouth_corners", "move": [0.1, 0.0, 0.2], "width": 0.5}])
+    check("a sculpt is mirrored left and right and its width scales from the middle",
+          abs(d[48][0] - 0.9) < 1e-9 and abs(d[32][0] + 0.9) < 1e-9 and d[48][2] == d[32][2] == 0.2)
+    check("every landmark named is one of the 88", all(0 <= i < 88 for v in MARK.values() for i in v))
+    check("finishing a take keeps its face", FINISH["R1"]["lena"]["face"] == THIRD["Q1"]["lena"]["face"]
+          and FINISH["R2"]["sam"]["face"] == THIRD["Q3"]["sam"]["face"] and FINISH["R1"]["lena"] is not THIRD["Q1"]["lena"])
     check("the candidates of one person all differ", all(len({repr(sorted(CANDIDATES[t][w]["face"].items())) + CANDIDATES[t][w]["hair"]
                                                             for t in FIVE}) == 5 for w in ("lena", "rocco", "sam")))
     check("heights are the sheets' (Sheila about 160, Ron about 186, Darren about 175)",

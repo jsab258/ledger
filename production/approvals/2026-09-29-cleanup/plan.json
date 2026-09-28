@@ -1,0 +1,76 @@
+{
+ "freeC": 57.4,
+ "freeF": 30.2,
+ "groups": [
+  {
+   "id": "unreal-store-cap",
+   "title": "Unreal's cache store: capped at 10 GB instead of 20",
+   "paths": [
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen"
+   ],
+   "keepGb": 10.0,
+   "cap": 10737418240,
+   "why": "The compiled shaders and cooked data every editor start and build reuses, capped this morning at 20 GB in Unreal's own settings; it has filled to that cap. Nothing is deleted by hand: the cap in Unreal's settings goes down to 10 GB, and the store trims itself to it at its next cleaning (it cleans every six hours), dropping what was used longest ago.",
+   "after": "The first build after a big change compiles some shaders again, a few minutes longer; day to day nothing you would notice.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen",
+     21.81
+    ]
+   ],
+   "gb": 11.8,
+   "movedGb": 0
+  },
+  {
+   "id": "unreal-old-cache",
+   "title": "Unreal's old cache again, 2 GB back since this afternoon",
+   "paths": [
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache"
+   ],
+   "why": "Deleted this afternoon on your yes, and set in Unreal's settings to take nothing new, but 2 GB came back by evening: something still writes to it. I am finding what, so it stops.",
+   "after": "Nothing you would notice.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache",
+     2.2
+    ]
+   ],
+   "gb": 2.2,
+   "movedGb": 0
+  }
+ ],
+ "others": [
+  {
+   "name": "Dropbox",
+   "path": "C:\\Users\\Jafar\\Dropbox",
+   "gb": 42.6,
+   "why": "yours; the backup adds to it and never deletes"
+  },
+  {
+   "name": "Windows' hibernation file",
+   "path": "C:\\hiberfil.sys",
+   "gb": 13.7,
+   "why": "a Windows setting you can switch off yourself"
+  },
+  {
+   "name": "Windows' swap file",
+   "path": "C:\\pagefile.sys",
+   "gb": 9.6,
+   "why": "Windows'"
+  },
+  {
+   "name": "Windows' temporary files",
+   "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp",
+   "gb": 2.0,
+   "why": "not on your list, so untouched"
+  },
+  {
+   "name": "Hugging Face's download cache",
+   "path": "C:\\Users\\Jafar\\.cache\\huggingface",
+   "gb": 8.0,
+   "why": "two speech datasets from August and the voice model; not on your list, so untouched; add it and it can go"
+  }
+ ]
+}
