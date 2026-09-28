@@ -95,7 +95,7 @@ namespace LedgerMhPortrait
 
 	// Talk and Studio frame as Front does: the street with the conversation
 	// light on (LedgerTalkLight.h), and with the plain studio key and fill.
-	enum class EShot : uint8 { Close, Mid, Front, Profile, Speak, Scan, Talk, Studio };
+	enum class EShot : uint8 { Close, Mid, Front, Profile, Speak, Scan, Talk, Studio, Motion };
 
 	struct FJob { int32 Who; FString Take; };
 	TArray<FJob> GJobs;
@@ -107,6 +107,15 @@ namespace LedgerMhPortrait
 	float GFaceAt = 0.0f;              // -PortraitFaceAt: the face idle's moment for a still
 	FString GSpeech = TEXT("_n");     // -PortraitSpeech: the speaking animation's variant; _n, the neutral mood, by default
 	bool GScan = false;               // the shot running is a scan of the face idle
+	// THE MOTION SHOT, 28 September (Jafar's list, item 5: the jacket "tested
+	// walking, sitting and with arms raised"): -PortraitMotion=<body animation>
+	// plays it in real time, so cloth simulates, and pictures it four times a
+	// second for six seconds (ue-motion-<who>-<take>/fNNNN.png); -PortraitCloth=
+	// <cloth asset> puts the simulated jacket on the person (LedgerJacket.h).
+	FString GMotionAnim, GClothPath;
+	bool GMotion = false;
+	constexpr int32 MotionFrames = 24;
+	constexpr double MotionStep = 0.25;
 	bool GInGame = false;             // -PortraitInGame: the game's own cast, where it stands
 	bool GNoHair = false, GStudio = false, GFaceRest = false;   // the look tests
 	float GStudioCd = 8.0f;           // -PortraitStudioCd: the key light's candela (60 blew the picture out)
@@ -237,6 +246,7 @@ namespace LedgerMhPortrait
 			}
 		}
 		LedgerJacket::Wear(A, kWho[J.Who]);
+		if (!GClothPath.IsEmpty()) { LedgerJacket::WearCloth(A, GClothPath); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s body idle %s, face idle %s"), *Name,
 			Idles[0] != nullptr ? TEXT("loaded") : TEXT("MISSING"), Idles[1] != nullptr ? TEXT("loaded") : TEXT("MISSING"));
 		GPerson = A;
@@ -408,14 +418,14 @@ namespace LedgerMhPortrait
 		// run's 75 cm and 230 cm cut the crown off the one and the face off
 		// the other.) Front and Speak are straight on; Profile is from the
 		// side, the camera along the street.
-		const bool bMid = Shot == EShot::Mid;
+		const bool bMid = Shot == EShot::Mid || Shot == EShot::Motion;
 		const float Back = bMid ? 320.0f : 170.0f;
 		FVector Eye;
 		FVector Look = Face + FVector(0.0f, 0.0f, bMid ? -40.0f : -8.0f);
 		switch (Shot)
 		{
 		case EShot::Close: Eye = Face + FVector(25.0f, -Back, -4.0f); break;
-		case EShot::Mid: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
+		case EShot::Mid: case EShot::Motion: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
 		case EShot::Front: case EShot::Talk: case EShot::Studio: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
 		case EShot::Speak: Eye = Face + FVector(0.0f, -Back - 20.0f, -6.0f); Look = Face + FVector(0.0f, 0.0f, -12.0f); break;
 		// THE PROFILE turns the person, not the camera: from either side along
@@ -532,6 +542,7 @@ namespace LedgerMhPortrait
 		switch (S)
 		{
 		case EShot::Talk: return TEXT("talk");
+		case EShot::Motion: return TEXT("motion");
 		case EShot::Studio: return TEXT("studio");
 		case EShot::Close: return TEXT("close");
 		case EShot::Mid: return TEXT("mid");
@@ -547,6 +558,33 @@ namespace LedgerMhPortrait
 		const FJob& J = GJobs[GAt];
 		if (GInGame) { return FString(TEXT("ingame-")) + FString(kWho[J.Who]).ToLower(); }
 		return FString(kWho[J.Who]).ToLower() + (GCandidates ? TEXT("-") + J.Take.ToLower() : FString());
+	}
+
+	// THE MOTION SHOT: the body animation plays in real time from here, and the
+	// face idle with it, so the cloth simulates as it would in the game.
+	bool StartMotion()
+	{
+		UAnimSequenceBase* Anim = LoadObject<UAnimSequenceBase>(nullptr, *GMotionAnim);
+		int32 Bodies = 0;
+		TArray<USkeletalMeshComponent*> Parts;
+		if (GPerson.IsValid()) { GPerson->GetComponents(Parts); }
+		for (USkeletalMeshComponent* C : Parts)
+		{
+			USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
+			if (C == nullptr || C->GetSingleNodeInstance() == nullptr) { continue; }
+			if (Anim != nullptr && M != nullptr && M->GetSkeleton() == Anim->GetSkeleton())
+			{
+				C->PlayAnimation(Anim, true);
+				++Bodies;
+			}
+			C->SetPlayRate(1.0f);
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: %s moves: %s on %d part(s)"), *Stem(), *GMotionAnim, Bodies);
+		if (Anim == nullptr || Bodies == 0) { return false; }
+		GMotion = true;
+		GFrame = 0;
+		GFrames = MotionFrames;
+		return true;
 	}
 
 	// THE SPEAKING SHOT: the line's face animation, stepped by hand so every
@@ -662,6 +700,12 @@ namespace LedgerMhPortrait
 				GPhaseAt = Now;
 				return true;
 			}
+			if (GShots[GShot] == EShot::Motion)
+			{
+				GPhase = StartMotion() ? 5 : 4;
+				GPhaseAt = Now;
+				return true;
+			}
 			if (GShots[GShot] == EShot::Scan)
 			{
 				GScan = true;
@@ -724,8 +768,8 @@ namespace LedgerMhPortrait
 		{
 			// One frame of the line: pose, then the picture of it.
 			if (GScan) { HoldIdles(GFrame * 0.5f); }
-			else { for (USkeletalMeshComponent* C : FaceParts()) { C->SetPosition((float)GFrame / SpeakFps, false); } }
-			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-%s-%s/f%04d.png"), GScan ? TEXT("scan") : TEXT("speak"), *Stem(), GFrame));
+			else if (!GMotion) { for (USkeletalMeshComponent* C : FaceParts()) { C->SetPosition((float)GFrame / SpeakFps, false); } }
+			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-%s-%s/f%04d.png"), GScan ? TEXT("scan") : GMotion ? TEXT("motion") : TEXT("speak"), *Stem(), GFrame));
 			FScreenshotRequest::RequestScreenshot(Out, false, false);
 			GPhaseAt = Now;
 			GPhase = 6;
@@ -733,9 +777,10 @@ namespace LedgerMhPortrait
 		}
 		case 6:
 			// Two engine frames per picture, so each request is taken before the next.
-			if (Now - GPhaseAt < 0.12) { return true; }
+			if (Now - GPhaseAt < (GMotion ? MotionStep : 0.12)) { return true; }
 			if (++GFrame < GFrames) { GPhase = 5; return true; }
 			GScan = false;
+			GMotion = false;
 			GPhaseAt = Now;
 			GPhase = 4;
 			return true;
@@ -795,6 +840,8 @@ namespace LedgerMhPortrait
 			GShots = { EShot::Front, EShot::Talk, EShot::Studio };
 		}
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
+		FParse::Value(FCommandLine::Get(), TEXT("PortraitCloth="), GClothPath);
+		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitMotion="), GMotionAnim)) { GShots = { EShot::Mid, EShot::Motion }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))
 		{

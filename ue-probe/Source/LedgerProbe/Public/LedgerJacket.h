@@ -13,8 +13,11 @@
 // wore, so the game shows him as approved. -Jacket=rocco puts it back on.
 #pragma once
 
+#include "ChaosClothAsset/ClothAssetBase.h"
+#include "ChaosClothAsset/ClothComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
+#include "PhysicsEngine/PhysicsAsset.h"
 #include "GameFramework/Actor.h"
 #include "Misc/CommandLine.h"
 
@@ -64,6 +67,36 @@ namespace LedgerJacket
 		J->RegisterComponent();
 		J->SetLeaderPoseComponent(Body);
 		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: %s wears the donkey jacket"), Who);
+		return true;
+	}
+
+	// THE SIMULATED JACKET, 28 September (Jafar's list, item 5): a Chaos cloth
+	// asset (tools/ue/make_cloth_jacket.py, from Epic's static-mesh cloth
+	// template: the jacket hung on Ron's own body in Blender, its skin weights
+	// copied from that body) on a cloth component that follows the body's pose
+	// and collides with the body's physics asset, so its loose parts swing.
+	inline bool WearCloth(AActor* A, const FString& Path)
+	{
+		if (A == nullptr || Path.IsEmpty()) { return false; }
+		UChaosClothAssetBase* Asset = LoadObject<UChaosClothAssetBase>(nullptr, *Path);
+		USkeletalMeshComponent* Body = nullptr;
+		TArray<USkeletalMeshComponent*> Parts;
+		A->GetComponents(Parts);
+		for (USkeletalMeshComponent* C : Parts) { if (C != nullptr && C->GetName() == TEXT("Body")) { Body = C; break; } }
+		if (Asset == nullptr || Body == nullptr)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth NOT worn (asset %s, body %s)"),
+				Asset != nullptr ? TEXT("found") : TEXT("MISSING"), Body != nullptr ? TEXT("found") : TEXT("MISSING"));
+			return false;
+		}
+		UChaosClothComponent* J = NewObject<UChaosClothComponent>(A, TEXT("LedgerClothJacket"));
+		J->SetupAttachment(Body);
+		J->RegisterComponent();
+		J->SetAsset(Asset);
+		J->SetLeaderPoseComponent(Body);
+		UPhysicsAsset* Phys = Body->GetPhysicsAsset();
+		if (Phys != nullptr) { J->AddCollisionSource(Body, Phys); }
+		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth %s worn, colliding with %s"), *Path, Phys != nullptr ? *Phys->GetName() : TEXT("nothing (no physics asset)"));
 		return true;
 	}
 }

@@ -149,6 +149,10 @@ production/playtest/ai-tester/
 # the repository and copied in by the probe workflow; the character asset is
 # 138 MB, over the file limit.
 ue-probe/Content/Ledger/MetaHumans/
+# 28 September: the simulated jacket's cloth asset and the whole body it was fitted on,
+# linked from F:/LedgerTools/mh-dress; MetaHuman-derived, so out of the public repository.
+ue-probe/Content/Ledger/Cloth/
+ue-probe/Content/Ledger/Export/
 ue-probe/Content/MH_Test.uasset
 ue-probe/Config/DefaultInput.ini
 

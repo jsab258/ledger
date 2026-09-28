@@ -56,6 +56,9 @@ public class LedgerProbe : ModuleRules
 		// AudioMixer, 23 September: the engine's own output recorder, so the
 		// walk's sound is committed as a recording anyone can listen to.
 		PrivateDependencyModuleNames.Add("AudioMixer");
+		// ChaosClothAssetEngine, 28 September: the simulated donkey jacket's cloth
+		// component (LedgerJacket.h WearCloth).
+		PrivateDependencyModuleNames.Add("ChaosClothAssetEngine");
 		// RHI, 24 September: the card's own frame time (RHIGetGPUFrameCycles)
 		// and texture memory, for what each MetaHuman costs (MetaHumanCost.cpp).
 		PrivateDependencyModuleNames.Add("RHI");
