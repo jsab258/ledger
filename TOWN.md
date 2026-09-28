@@ -20,7 +20,7 @@ run the Core suites, then push to main.
 - [x] 4. Casting sheets for the eleven principals who have none, from CASTING.md, the casting research and the renamed cast: age, origin, occupation, build, hair, what they wear (from the clothing research), how they move, and which of his approved voices fits by age, sex and accent, flagging anyone who needs an older voice. Text only; faces and voice samples are the builder's. One approval page for the sheets.
 - [x] 5. The story. From canon, the decisions, the endings already written, the crime layer and the research on authored stories in simulations and British crime fiction, a short outline for his approval: Tom's arrival, the first days, the three acts, the rivals, and how the endings are reached. Under two pages, not a script.
 - [ ] 6. Then the non-visual items of ROADMAP.md, in order. As read on 28 September (the router's changes are already done; the blind test of local line-writing needs local models, so it is the builder's):
-  - [ ] a. Conversation fast enough to feel like talk, the text side: how long the player waits for the first checked sentence, kept inside the budget with the new claim check.
+  - [x] a. Conversation fast enough to feel like talk, the text side: how long the player waits for the first checked sentence, kept inside the budget with the new claim check.
   - [ ] b. Every live AI call through a server of ours: the key never ships, model and provider swappable there, a spending stop well below the provider's cap, each copy's allowance counted. Built and tested here; where it is hosted, and what it costs, is his.
   - [ ] c. A notice that players are talking to an AI, and a way to report bad output: the helper's side here, what shows on screen to the builder.
   - [ ] d. Steam's safeguards description, written from what the game actually enforces.
@@ -33,4 +33,4 @@ run the Core suites, then push to main.
 - Item 3 done: invented details in what the player hears fell from 30% to 5% of turns on 240 test turns, through three rounds of the independent check.
 - Items 4 and 5 wait on Jafar: the eleven sheets and the story outline are on one approval page, linked first in FOR-JAFAR.md.
 - Handovers waiting on the builder: knowing shows (item 1), the named cast's routines (item 2).
-- Decisions waiting on Jafar: the six questions on the 28 September page. Item 6 under way: 6f done (its research came in first); 6a next, measured with item 3.
+- Decisions waiting on Jafar: the six questions on the 28 September page. Item 6 under way: 6f and 6a done (the slowest first word 7.9 s to 4.8 s); 6b, the relay, built and tested here, its hosting a question for Jafar.
