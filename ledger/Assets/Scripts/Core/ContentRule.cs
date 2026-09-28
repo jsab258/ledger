@@ -162,6 +162,8 @@ namespace Ledger.Core
         public static string SpeechBreaks(string text)
         {
             if (string.IsNullOrWhiteSpace(text)) return null;
+            // Curly apostrophes read as straight, on every path (town list 6e).
+            text = text.Replace('’', '\'').Replace('‘', '\'');
             foreach (var r in ContentWords.Speech)
                 if (r.Pattern.IsMatch(text)) return r.Kind + "/" + r.Id;
             return null;

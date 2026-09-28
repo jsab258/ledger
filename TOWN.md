@@ -23,9 +23,10 @@ run the Core suites, then push to main.
   - [x] a. Conversation fast enough to feel like talk, the text side: how long the player waits for the first checked sentence, kept inside the budget with the new claim check.
   - [ ] b. Every live AI call through a server of ours: the key never ships, model and provider swappable there, a spending stop well below the provider's cap, each copy's allowance counted. Built and tested here; where it is hosted, and what it costs, is his. Built (ledger/Relay, self-test 21/21); waiting on Jafar for where it runs and the month's budget.
   - [x] c. A notice that players are talking to an AI, and a way to report bad output: the helper's side here, what shows on screen to the builder.
-  - [ ] d. Steam's safeguards description, written from what the game actually enforces.
-  - [ ] e. The content rule on everything said live: every path a live line can take, checked.
+  - [x] d. Steam's safeguards description, written from what the game actually enforces.
+  - [x] e. The content rule on everything said live: every path a live line can take, checked.
   - [x] f. Owed since D58: Act III's letter, cellar and laundering cap still read as a pub; reworded for the cab office, the cap's reasoning redone from research.
+  - [x] g. Owed since D58 (queue 399, marked checkpoint work by Jafar on 21 September): confirm the two endings a hunted player has left are reachable from a hunted state. Both are; no card needed.
 
 ## Status
 

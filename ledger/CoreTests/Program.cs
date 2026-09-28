@@ -4678,6 +4678,62 @@ namespace Ledger.CoreTests
             Check(fallbacksClean && startsDiffer && ClaimCheck.KnownOnlyFor("rocco", 3) == ClaimCheck.KnownOnlyFor("rocco", 3),
                 "every fallback wording keeps the content rule, where one starts depends on who is speaking, and it is the same every run");
 
+            // WHAT NO CHARACTER MAY SAY TO A PLAYER (SafetyRule, town list 6e).
+            string safetyMissed = null, safetyWrong = null;
+            foreach (var bad in new[] { "Go and top yourself.", "Why don't you just kill yourself?", "You'd be better off dead, son.",
+                                        "Might as well slit your wrists now.", "Go on, end it all.", "Take your own life, then.", "Nobody would miss you.",
+                                        // the independent check's misses
+                                        "You should just end it all.", "Why don't you end it all?", "Nobody'd miss you.", "No one would miss you.",
+                                        "Have you thought about killing yourself?", "Go on, throw yourself off the bridge.", "Cut your wrists and have done.",
+                                        "You’d be better off dead." })
+                if (SafetyRule.SpeechBreaks(bad) == null || !ResponseValidator.IsDeflection(ResponseValidator.Validate(bad, "Sam"), "Sam")) safetyMissed = bad;
+            foreach (var fine in new[] { "Mind you don't hurt yourself on that.", "I'll kill you if you come back.", "He's better off dead, that one.",
+                                         "You'll cut yourself on that glass.", "Don't shoot yourself in the foot.", "Mickey took his own life? Never.",
+                                         // the independent check's ordinary British speech
+                                         "Don't kill yourself rushing, love.", "You'll kill yourself lifting that crate.", "You'll do yourself in carrying that lot.",
+                                         "You take your life in your hands crossing Quay Street.", "Take the night off yourself, boss.",
+                                         "You off yourself, then? I'm off home.", "Mind you don't drown yourself in paperwork.", "Go and hang yourself a coat up.",
+                                         "I'll cut your throat if you cross me." })
+                if (SafetyRule.SpeechBreaks(fine) != null) safetyWrong = fine;
+            Check(safetyMissed == null, "a line urging the player to harm or kill themselves is never said", safetyMissed);
+            Check(safetyWrong == null, "but ordinary care, a threat, a death and an idiom are", safetyWrong);
+
+            // WHAT THE PLAYER HEARS IS WHAT IS KEPT (FINDINGS, 26 September; town list 6e).
+            var ePint = Engine(new ScriptedLlm("Fancy a pint after?"), new ScriptedLlm(Clean));
+            var rPint = await ePint.SayToAsync("Busy?", now, "In the yard.");
+            bool pintKept = false;
+            foreach (var ev in ePint.Memory.Events) if (ev.Text.Contains("pint")) pintKept = true;
+            Check(ResponseValidator.IsDeflection(rPint, ePint.Card.Name) && !pintKept,
+                "a reply the content rule refuses is said and remembered as the character changing the subject, never as written", rPint);
+            var sPint = new ScriptedStream("Aye. Fancy a pint after?");
+            var eSPint = Streamed(sPint, new ScriptedLlm(Clean, Clean));
+            var rSPint = await eSPint.SayToAsync("Busy?", now, "In the yard.", default, s => Task.FromResult(true));
+            bool keptAye = false, keptPint = false;
+            foreach (var ev in eSPint.Memory.Events) { if (ev.Text == ClaimCheck.IReplied + "\"Aye.\"") keptAye = true; if (ev.Text.Contains("pint")) keptPint = true; }
+            Check(rSPint == "Aye." && keptAye && !keptPint, "and when its first sentence was already heard, that sentence alone is the reply", rSPint);
+            // The fifth pass of the independent check.
+            Check(ResponseValidator.IsDeflection(ResponseValidator.Validate("(Sam shrugs and looks away.)", "Sam"), "Sam")
+                  && ResponseValidator.IsDeflection(ResponseValidator.Validate("*shrugs* Dunno.", "Sam"), "Sam")
+                  && ResponseValidator.Validate(ResponseValidator.Validate("Fancy a pint?", "Sam"), "Sam") == ResponseValidator.Validate("Fancy a pint?", "Sam"),
+                "a reply that opens as a stage direction is never said, and the deflection itself stays what it is");
+            var sDash = new ScriptedStream("Aye — I saw nothing. Fancy a pint after?");
+            var eDash = Streamed(sDash, new ScriptedLlm(Clean, Clean));
+            var rDash = await eDash.SayToAsync("Busy?", now, "In the yard.", default, s => Task.FromResult(true));
+            Check(rDash == "Aye, I saw nothing.", "the heard sentence is kept cleaned, as everything said is", rDash);
+            var sEarlyPint = new ScriptedStream("Fancy a pint after? I'm buying.");
+            var handedPint = new List<string>();
+            var eEarlyPint = Streamed(sEarlyPint, new ScriptedLlm(Clean, Clean));
+            await eEarlyPint.SayToAsync("Busy?", now, "In the yard.", default, s => { lock (handedPint) handedPint.Add(s); return Task.FromResult(true); });
+            Check(handedPint.Count == 0, "the engine itself never hands over a first sentence the content rule refuses, whatever its caller checks");
+            var dCurly = new Director().Validate("{\"kind\":\"demand\",\"who\":\"Mitch\",\"day\":14,\"hour\":9,\"amount\":180," +
+                "\"line\":\"Mitch told the rank you’d be better off dead.\",\"because\":\"Mitch has not been paid since day 4\"}", SampleWorld());
+            Check(!dCurly.IsSomething, "a director's line is read with its curly apostrophes straightened");
+            var eNight = Engine(new ScriptedLlm("- The new owner is trouble.\n- I could murder a pint at the Feathers.\n- Ron keeps things from me."), new ScriptedLlm(Clean));
+            eNight.Memory.Append(new MemoryEvent(now, "observation", 0.5, "Saw the new owner by the yard."));
+            await eNight.ReflectAsync(now.Day, now);
+            Check(eNight.Memory.Beliefs.Count == 2 && !string.Join(" ", eNight.Memory.Beliefs).Contains("pint"),
+                "a belief the content rule refuses is never kept, since beliefs go into every later prompt", string.Join(" | ", eNight.Memory.Beliefs));
+
             // THE NOTICE THAT THE TOWN TALKS THROUGH AN AI (town list 6c).
             Check(ContentRule.SpeechBreaks(AiNotice.Text) == null && AiNotice.Text.Contains("AI model") && AiNotice.Text.Contains("report")
                   && AiNotice.ReportThanks("relay") != AiNotice.ReportThanks("local") && AiNotice.ReportThanks("lost").Contains("could not"),
@@ -12933,6 +12989,42 @@ namespace Ledger.CoreTests
                 Check(!ActThreeState.Eligible(s).Contains(Ending.Quiet),
                     "and a successor can inherit a licence but never a homicide — "
                     + "killing takes the quiet ending off the table outright");
+
+                // D58, CONDITION 1 (queue 399, Jafar 21 September: "confirm that
+                // the two endings left to a hunted player ... are actually
+                // reachable from a hunted state"). Traced 28 September: neither
+                // the Kingdom's nor the Straight Life's condition reads Hunted,
+                // and Hunted is set in one place (ActThreeHost.Books, from
+                // Police.BarsQuietExit). What a body does besides: Ellis's case
+                // stands (the check above), which only Both needs and which costs
+                // the Kingdom the 0.7 easing of what the inspection sees; and a
+                // witness's loyalty is capped by their nerve (Watched). Nothing
+                // in the Core lowers anyone's loyalty for a killing or a manhunt
+                // otherwise, and no arrest ends the run before the audit closes.
+                var huntedKeeps = new LedgerState
+                {
+                    Hunted = true, EllisCaseAnswerable = false,          // the body's lead stands
+                    BusinessesOwned = 1, RacketsEstablished = 1,
+                    TotalRacketIncome = 1000, TotalWashed = 600, TakingsToDate = 4000, Cooperations = 3,
+                    BestDayLifeLoyalty = 0.2,                             // nobody who knew him before
+                };
+                Check(ActThreeState.Eligible(huntedKeeps).Contains(Ending.Kingdom) && ActThreeState.Resolve(huntedKeeps) == Ending.Kingdom,
+                    "a hunted player who kept the business, with books that hold, reaches the Kingdom",
+                    string.Join(",", ActThreeState.Eligible(huntedKeeps)) + $" seen {ActThreeState.SeenStrain(huntedKeeps):0.00}");
+                var huntedGivesUp = new LedgerState
+                {
+                    Hunted = true, EllisCaseAnswerable = false,
+                    BusinessesOwned = 1, EmpireDissolved = true,          // sold up
+                    BestDayLifeLoyalty = 0.6,                             // one friend still counts him
+                };
+                var huntedNeverBuilt = new LedgerState { Hunted = true, EllisCaseAnswerable = false, BestDayLifeLoyalty = 0.6 };
+                Check(ActThreeState.Resolve(huntedGivesUp) == Ending.StraightLife && ActThreeState.Resolve(huntedNeverBuilt) == Ending.StraightLife,
+                    "and one who gave up the business, or never built it, and kept a friend reaches the Straight Life",
+                    ActThreeState.Resolve(huntedGivesUp) + " / " + ActThreeState.Resolve(huntedNeverBuilt));
+                Check(Watched.LoyaltyCeiling(0.2) < LedgerState.TrustThreshold && Watched.LoyaltyCeiling(0.5) >= LedgerState.TrustThreshold,
+                    "the friend can be a witness with a steady hand (nerve 0.4 or more), or anyone who never watched: "
+                    + "only a nervous witness is capped below a friend's loyalty",
+                    $"{Watched.LoyaltyCeiling(0.2):0.00} / {Watched.LoyaltyCeiling(0.5):0.00}");
             }
 
             // ---- it survives a save ----
@@ -21054,6 +21146,11 @@ namespace Ledger.CoreTests
                 "\"because\":\"Mitch has not been paid since day 4\"}", w);
             Check(ok.Kind == Pressures.Demand && ok.Who == "Mitch" && ok.Amount == 180, "a justified demand is scheduled");
             Check(ok.FireDay == 14 && ok.IsSomething, "and it has a day");
+            // The content rule on the director's own line (town list 6e): the player reads it.
+            var pint = d.Validate("{\"kind\":\"demand\",\"who\":\"Mitch\",\"day\":14,\"hour\":9,\"amount\":180," +
+                "\"line\":\"Mitch came by and said he would take it out of you over a pint.\"," +
+                "\"because\":\"Mitch has not been paid since day 4\"}", w);
+            Check(!pint.IsSomething, "a director's line the content rule refuses makes a quiet night");
 
             // The boundary. A person who does not exist cannot be given a pressure.
             var stranger = d.Validate("{\"kind\":\"demand\",\"who\":\"The Mayor\",\"day\":14,\"amount\":100," +

@@ -33,6 +33,16 @@ namespace Ledger.Core
                 if (lower.Contains(m))
                     return Deflect(characterName);
 
+            // A STAGE DIRECTION (the independent check, 28 September): the
+            // deflection is kept in the transcript as what the player was shown,
+            // and a model copying its bracketed narration, "(Sheila shrugs.)",
+            // must not reach the player. A reply opening with a bracket or an
+            // asterisk is narration, never speech; the deflection passes as itself.
+            var opening = reply.TrimStart();
+            if ((opening.StartsWith("(") || opening.StartsWith("[") || opening.StartsWith("*"))
+                && reply.Trim() != Deflect(characterName))
+                return Deflect(characterName);
+
             reply = Humanize(reply);
             if (string.IsNullOrWhiteSpace(reply)) return Deflect(characterName);
 
@@ -57,6 +67,9 @@ namespace Ledger.Core
             // what stands behind the prompt, on the gate's own rules
             // (ContentRule.SpeechBreaks).
             if (ContentRule.SpeechBreaks(reply) != null) return Deflect(characterName);
+            // AND WHAT NO CHARACTER MAY SAY TO A PLAYER (SafetyRule, 28 September):
+            // urging them to harm or kill themselves.
+            if (SafetyRule.SpeechBreaks(reply) != null) return Deflect(characterName);
 
             // LAYER 2 — SHAPE, on the one text in this game that nobody wrote
             // and nobody reviewed.
