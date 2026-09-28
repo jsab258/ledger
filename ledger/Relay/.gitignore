@@ -1,0 +1,6 @@
+# What the relay writes where it runs: never committed.
+copies.json
+usage.json
+relay.log
+relay.json
+*.tmp

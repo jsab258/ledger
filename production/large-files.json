@@ -712,6 +712,14 @@
    "status": "kept",
    "recorded": "2026-09-26",
    "mb": 13163
+  },
+  {
+   "path": "F:/town-verify",
+   "madeBy": "the town session, 28 September: a copy of the code, exported to test one commit on its own",
+   "why": "scratch, no longer needed; it sits outside the places I may delete, so it waits for Jafar's yes",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 905
   }
  ]
 }

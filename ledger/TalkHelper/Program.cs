@@ -78,7 +78,9 @@ using Ledger.Core;
 /// its prompt - it asks about the first one it was given, or passes the time
 /// of day when it was given none - so a test can see knowledge arrive in the
 /// answer without paying for a model.
-/// The key is read from ANTHROPIC_API_KEY and never printed.
+/// The key is read from ANTHROPIC_API_KEY and never printed. With --relay
+/// <address> the helper holds no key: it sends a copy's code (--copy, or
+/// LEDGER_COPY) to our relay (ledger/Relay), which holds it.
 static class Program
 {
     static readonly string[] BrushOffs =
@@ -431,7 +433,14 @@ static class Program
         if (Array.IndexOf(args, "--selftest") >= 0) return await SelfTest(CardsDir(args));
         var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
         bool fake = Array.IndexOf(args, "--fake") >= 0 || Environment.GetEnvironmentVariable("LEDGER_TALK_FAKE") == "1";
-        ILlmClient llm = fake ? new KnowledgeFake() : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
+        // THROUGH OUR RELAY (town list 6b): --relay <address> and a copy's code
+        // (--copy or LEDGER_COPY) instead of a key, so no key ships with the game.
+        int ri = Array.IndexOf(args, "--relay"), ci = Array.IndexOf(args, "--copy");
+        string relay = ri >= 0 && ri + 1 < args.Length ? args[ri + 1] : null;
+        string copy = ci >= 0 && ci + 1 < args.Length ? args[ci + 1] : Environment.GetEnvironmentVariable("LEDGER_COPY");
+        ILlmClient llm = fake ? new KnowledgeFake()
+            : relay != null ? (string.IsNullOrEmpty(copy) ? null : new AnthropicClient(null) { BaseUrl = relay, CopyCode = copy })
+            : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
         var helper = new Helper(llm, TimeSpan.FromSeconds(8));
         helper.Early = Array.IndexOf(args, "--early") >= 0;
         LoadCards(helper, CardsDir(args));
