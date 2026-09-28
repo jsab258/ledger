@@ -21,6 +21,16 @@ namespace Ledger.Core
 
         public long TotalMinutes => ((long)Day * 24 + Hour) * 60 + Minute;
 
+        /// THE DAY OF THE WEEK, the week the routines run by (CastDay.Weekday:
+        /// day 0 is a Monday), for what a character is told of the time (town
+        /// list 6ai): "D2 09:00" alone left "What day is it?" unanswerable.
+        public string WeekdayName => WeekdayNames[((Day % 7) + 7) % 7];
+
+        static readonly string[] WeekdayNames = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+        /// The time as a character is told it: "Wednesday, D2 09:00".
+        public string ToldAs => WeekdayName + ", " + ToString();
+
         public static GameTime FromTotalMinutes(long total)
         {
             long day = total / (24 * 60);

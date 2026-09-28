@@ -54,7 +54,7 @@ run the Core suites, then push to main.
   - [x] af. Characters promise nothing the world will not do (A31.07): "see you at the quay at nine" passes the rules and the check. Done: a rule in the prompt, and a narrow check on the plain shapes of a promise (meeting him, keeping watch, lending, asking round, coming round) that asks for a second draft without it and never speaks it early; "I'll tell you what" and "see you later" pass.
   - [x] ag. Talk stays in English (A47.02): the content and safety word lists are English only. Done: the prompt says so, and a reply of four words or more with none of English's own small words or contractions is not said (ResponseValidator.LooksEnglish); measured on the claim bench's 4858 real replies and the street's 350 lines, none refused; German, French, Spanish, Italian and Polish caught; Dutch with "sorry" in it slips through.
   - [ ] ah. The session record learns when a character spoke of what Tom did (stage 5): the claim check knows which memory a detail came from and throws it away.
-  - [ ] ai. Characters know the day of the week (A47.09): they get only "D2 09:00", though routines run by weekday.
+  - [x] ai. Characters know the day of the week (A47.09): they get only "D2 09:00", though routines run by weekday. Done: they are told "Wednesday, D2 09:00" by the routines' own week (GameTime.ToldAs), and so is the claim check.
 
 ## Status
 

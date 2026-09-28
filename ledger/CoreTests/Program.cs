@@ -5291,7 +5291,7 @@ namespace Ledger.CoreTests
             await e10.SayToAsync("Go on.", now, "");
             var k10 = KnownOf(check10.Requests[0]);
             Check(k10.Contains("flat cap") && k10.Contains("1th fish van"), "with thirteen witnessed memories, all of them reach KNOWN, whatever the player's words");
-            Check(k10.Contains("[" + new GameTime(2, 21, 40) + "]") && k10.Contains("It is now " + now),
+            Check(k10.Contains("[" + new GameTime(2, 21, 40) + "]") && k10.Contains("It is now " + now.ToldAs),
                 "each memory's time, and the time now, are in KNOWN: a time is a claim like any other");
 
             // WHAT THE TALK MODEL WAS SHOWN, HOWEVER OLD (the second independent
@@ -5459,6 +5459,18 @@ namespace Ledger.CoreTests
             bool remembered = false;
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
+
+            // THE DAY OF THE WEEK (town list 6ai), the routines' own week.
+            {
+                var weekday = new ConversationEngine(null, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                var wedMorning = new GameTime(2, 9, 0);
+                var weekItems = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, null, wedMorning.ToldAs);
+                Check(new GameTime(0, 9, 0).WeekdayName == "Monday" && wedMorning.WeekdayName == "Wednesday" && new GameTime(7, 9, 0).WeekdayName == "Monday"
+                      && CastDay.WeekdayKeys[CastDay.Weekday(2)] == "wed"
+                      && weekday.BuildSystemPrompt("x", wedMorning, "In the bar.").Contains("It is Wednesday, D2 09:00")
+                      && weekItems.Exists(i => i.id == "T1" && i.text.Contains("Wednesday")),
+                      "a character is told the day of the week, the routines' own, and the check knows it too");
+            }
 
             // ONLY IN ENGLISH (town list 6ag): a reply in another language is not
             // said, whatever it says; English of any kind, and short replies, pass.
