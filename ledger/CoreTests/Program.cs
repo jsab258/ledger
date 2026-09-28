@@ -5460,6 +5460,29 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // A PROMISE THE WORLD WILL NOT KEEP (town list 6af).
+            {
+                string missed = null, wrongly = null;
+                foreach (var p in new[] { "Aye, I'll meet you at the quay at nine.", "See you by the rank tonight.", "I'll keep an eye out for you.",
+                                          "Leave it with me.", "I'll lend you a tenner.", "I'll ask around for you.", "I’ll let you know.", "I'll come round later." })
+                    if (Promises.Find(p).Count == 0) missed = p;
+                foreach (var p in new[] { "I'll tell you what, it's bitter out.", "See you later.", "I'll give you that.", "I'll be honest with you.",
+                                          "See you around.", "I watched him go.", "I'll not have that said." })
+                    if (Promises.Find(p).Count > 0) wrongly = p + " -> " + string.Join(",", Promises.Find(p));
+                Check(missed == null && wrongly == null, "a promise to meet, watch, lend, ask round or come round is found; how people talk is not",
+                      (missed ?? "") + " | " + (wrongly ?? ""));
+
+                var promiseTalk = new ScriptedLlm("I'll meet you at the quay at nine, don't worry.", "Can't say I'll be about. Try the quay yourself.");
+                var promiseCheck = new ScriptedLlm("{\"specifics\": []}");
+                var pe = new ConversationEngine(promiseTalk, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = promiseCheck };
+                var kept = await pe.SayToAsync("Meet me at the quay at nine?", new GameTime(3, 20, 0), "In the bar.");
+                Check(kept == "Can't say I'll be about. Try the quay yourself." && pe.LastPromised.Count >= 1 && promiseTalk.Requests.Count == 2
+                      && promiseTalk.Requests[1].System.Contains("You cannot promise to do anything later"),
+                      "a reply that promises what the world will not do is asked again without it", kept);
+                Check(pe.BuildSystemPrompt("x", new GameTime(3, 20, 1), "").Contains("Never promise to do anything later"),
+                      "and the character is told not to promise in the first place");
+            }
+
             // A CONVERSATION STARTS FRESH, AND A CHARACTER CAN END IT (town list 6ae).
             {
                 var freshLlm = new FakeLlm { NextReply = "Evening." };
