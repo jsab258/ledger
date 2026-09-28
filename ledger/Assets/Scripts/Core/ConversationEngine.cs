@@ -207,6 +207,7 @@ namespace Ledger.Core
             // from writing it in the first place.
             sb.AppendLine("- In your world nobody drinks alcohol, gambles or bets, and there are no children. Never mention drink, pubs as places to drink, betting, the pools or games of chance, or children, even if the other person does. If they offer you a drink or a bet, turn it to a tea, a smoke or the matter in hand without naming what they offered.");
             sb.AppendLine("- Never invent a place or a business either. Name only places already named in what you have been told here; anywhere else is \"down the road\" or \"over in Copper Row\".");
+            sb.AppendLine("- Never promise to do anything later: to meet him somewhere, keep watch or an eye out, lend or give him anything, ask around or pass word on, or come round. Nothing in your world would make it happen. If he asks, put him off in your own way.");
             sb.AppendLine($"- When you have had enough of this conversation (you are busy, you are done with them, or they have insulted you), say so in your own words and end your reply with {DoneMark}; that ends the conversation. Never write {DoneMark} otherwise.");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
             sb.AppendLine("- Talk like a person, not a writer: contractions, plain words, sentences that can trail off. Say 'is' and 'has', never 'serves as' or 'boasts'. No dashes, no neat lists of three, no 'it's not just X, it's Y', and never words like delve, tapestry, testament, vibrant, crucial, pivotal, showcase.");
@@ -291,6 +292,10 @@ namespace Ledger.Core
         /// nothing, or when no check ran. What was said is the second draft or
         /// one of ClaimCheck.KnownOnlyLines.
         public IReadOnlyList<string> LastInvented { get; private set; } = new List<string>();
+
+        /// What the last reply's first draft promised that the world will not
+        /// keep (Promises); empty when nothing, or when no check ran.
+        public IReadOnlyList<string> LastPromised { get; private set; } = new List<string>();
 
         // How often this conversation has fallen back on saying it knows no more.
         int _knownOnlySaid;
@@ -573,8 +578,9 @@ namespace Ledger.Core
                             if (ResponseValidator.IsDeflection(ResponseValidator.Validate(said, Card.Name, Card.AlsoCalled), Card.Name))
                                 return (false, bad, cost);
                             // A sentence carrying the ending mark waits for the whole reply,
-                            // where the mark is taken out: it is never spoken early.
-                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0)
+                            // where the mark is taken out: it is never spoken early. Nor is
+                            // a promise, which the whole reply's turn asks again without.
+                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || Promises.Find(said).Count > 0)
                                 return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
@@ -808,6 +814,7 @@ namespace Ledger.Core
             // nobody supports never becomes a memory the next answer builds on.
             // One second draft, told what it claimed; then the plain true line.
             LastInvented = new List<string>();
+            LastPromised = new List<string>();
             LastUnchecked = false;
             if (Checker != null)
             {
@@ -824,20 +831,28 @@ namespace Ledger.Core
                     // turns heard their first word after about 8 s.
                     var invented = firstFlagged ?? await InventedAsync(known, reply, ct);
                     LastInvented = invented;
-                    if (invented.Count > 0 && firstHeard)
+                    // A PROMISE THE WORLD WILL NOT KEEP (town list 6af) is asked
+                    // again without, the same way as a claim nobody supports.
+                    var promised = Promises.Find(reply);
+                    LastPromised = promised;
+                    var flagged = new List<string>(invented);
+                    flagged.AddRange(promised);
+                    if (flagged.Count > 0 && firstHeard)
                     {
                         // The checked first sentence has been heard: the rest goes.
                         reply = firstSentence;
                     }
-                    else if (invented.Count > 0)
+                    else if (flagged.Count > 0)
                     {
-                        var second = new LlmRequest { Model = Model, System = system + ClaimCheck.SecondDraftNote(invented) + "\n", MaxTokens = 300 };
+                        string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented) + "\n" : "")
+                                    + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "");
+                        var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300 };
                         second.Messages.AddRange(_transcript);
                         // The second draft is streamed the same way, its first
                         // sentence handed over as soon as it passes and repeats
                         // nothing the first draft was caught claiming.
                         d2 = new Drafted();
-                        await DraftAsync(d2, second, streaming, knownEarly, onFirstChecked, invented, ct);
+                        await DraftAsync(d2, second, streaming, knownEarly, onFirstChecked, flagged, ct);
                         if (d2.FirstFlagged != null)
                         {
                             reply = ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
@@ -846,7 +861,7 @@ namespace Ledger.Core
                         {
                             var redrafted = ValidateReply(d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
-                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, invented);
+                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && Promises.Find(redrafted).Count == 0;
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
                         }
                     }

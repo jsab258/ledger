@@ -555,6 +555,8 @@ static class Program
             // UNCHECKED: the claim check failed or answered out of shape, so the
             // line was said as written; apart from a clean check in the log.
             var invented = timedOut ? new List<string>() : new List<string>(engine.LastInvented);
+            // PROMISED: what the first draft promised that the world will not keep (town list 6af), for the log.
+            var promised = timedOut ? new List<string>() : new List<string>(engine.LastPromised);
             bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
             // THE REST, when the first sentence has already been sent to be spoken:
             // what follows it, or nothing if the reply is no longer its sequel
@@ -584,7 +586,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, promised, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
