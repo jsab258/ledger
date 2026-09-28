@@ -5571,6 +5571,38 @@ namespace Ledger.CoreTests
                       "and if he heard none of it, none of it counts as said to him");
             }
 
+            // HIS ANSWER, REMEMBERED (town list 6ac): per deed, once, a caught lie
+            // sticking, and only an answer to their own question of where he was.
+            {
+                var talkAsk = new FakeLlm { NextReply = "Where were you on Tuesday night, then?" };
+                var ans = new ConversationEngine(talkAsk, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                Check(!ans.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)), "nobody has asked him anything yet");
+                await ans.SayToAsync("Evening.", new GameTime(2, 20, 0), "In the bar.");
+                ans.CurrentDeed = "player.window_d1";
+                var lie = ans.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Contradiction, "Rita's", new GameTime(2, 20, 1));
+                var again = ans.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Contradiction, "Rita's", new GameTime(2, 20, 2));
+                var changed = ans.HeardAnswer("player.window_d1", 1, 23, "Rita's", new[] { "ritas" }, ClaimResult.Consistent, "Rita's", new GameTime(2, 20, 3));
+                ans.Suspicion.Restore(0.0); ans.Suspicion.Raise(0.5, "I saw him near the window");
+                ans.ApplyAnswers("player.window_d1");
+                double onWindow = ans.Suspicion.Value;
+                ans.Suspicion.Restore(0.0); ans.Suspicion.Raise(0.3, "I saw him by the van");
+                ans.ApplyAnswers("player.van_d2");
+                string windowPrompt = ans.BuildSystemPrompt("x", new GameTime(2, 20, 5), "");
+                ans.CurrentDeed = "player.van_d2";
+                string vanPrompt = ans.BuildSystemPrompt("x", new GameTime(2, 20, 5), "");
+                var back = new ConversationEngine(null, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                back.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(ans.CaptureTalk()))));
+                Check(ans.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && lie != null && again == null && changed == null
+                      && Math.Abs(onWindow - (0.5 + ConversationEngine.LieWeight)) < 1e-9 && Math.Abs(ans.Suspicion.Value - 0.3) < 1e-9
+                      && windowPrompt.Contains("on Tuesday night, and you know that is a lie: you saw him at Rita's") && !vanPrompt.Contains("you know that is a lie")
+                      && ans.Memory.Events.Exists(e => e.Text.Contains("He changed his story")) && ans.Memory.Events.FindAll(e => e.Text.Contains("He lied to me")).Count == 1
+                      && back.Answers.Count == 1 && back.Answers[0].DeedHour == 23 && back.Answers[0].Areas.Count == 1,
+                      "an answer after their question counts once; a caught lie sticks and changes nothing when he changes his story; it weighs only on its own deed; and it survives a reload",
+                      $"{ans.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2))} {lie != null} {again == null} {changed == null} {onWindow} {ans.Suspicion.Value} {windowPrompt.Contains("on Tuesday night, and you know that is a lie: you saw him at Rita's")} {!vanPrompt.Contains("you know that is a lie")} {ans.Memory.Events.Exists(e => e.Text.Contains("He changed his story"))} {ans.Memory.Events.FindAll(e => e.Text.Contains("He lied to me")).Count} {back.Answers.Count} {(back.Answers.Count > 0 ? back.Answers[0].DeedHour : -9)} {(back.Answers.Count > 0 ? back.Answers[0].Areas.Count : -9)}");
+                Check(ConversationEngine.WhenWords(1, 23) == "on Tuesday night" && ConversationEngine.WhenWords(2, 2) == "on Tuesday night" && ConversationEngine.WhenWords(3, 14) == "on Thursday afternoon",
+                      "the deed's time as they would say it, the small hours belonging to the night before");
+            }
+
             // THE CONVERSATION SURVIVES A SAVE AND A RELOAD (town list 6r): through
             // the save's own JSON into a fresh engine, the same talk, memory,
             // knowledge and suspicion; and the model sees what was said before.
@@ -8564,6 +8596,154 @@ namespace Ledger.CoreTests
                         if (hook.Where(person, 1, hh) != null) anyWhere = hook.WhereWords(person, 1, hh);
                 Check(wordless.Count == 0 && anyWhere != null && hook.SaidOf("off") == null && hook.SaidOf(null) == null,
                       "every place a person can be has plain words for it, none of them an asset name", string.Join(",", wordless));
+            }
+            // WHERE HE SAYS HE WAS (town list 6ac): places grouped by area as people
+            // say them, and read only from plain statements, never so a true answer
+            // is a lie (the independent check's cases, each a regression here).
+            {
+                var hookA = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var noArea = new List<string>();
+                foreach (var pl in hookA.Places) if (hookA.AreaOf(pl) == null) noArea.Add(pl);
+                var spoken = hookA.SpokenAreas();
+                string Says(string line) { var set = new List<string>(Claims.WhereHeSays(line, spoken)); set.Sort(StringComparer.Ordinal); return string.Join(",", set); }
+                var cases = new (string line, string areas)[]
+                {
+                    ("I was at the chapel all night.", "chapel"),
+                    ("I was at the fish market this morning, prices are mad.", ""),
+                    ("Who says I was at Rita's? I was at the chapel.", "chapel"),
+                    ("If I was at Rita's you'd have seen me.", ""),
+                    ("I was at the chapel, then Rita's.", "chapel,ritas"),
+                    ("I was at the market, the fish market I mean.", "fish_dock,fish_market,market"),
+                    ("I wasn't at Rita's.", ""),
+                    ("I was at Rita\u2019s.", "ritas"),
+                    ("I was at the cafeteria.", ""),
+                    ("Were you at the chapel?", ""),
+                    ("He was at the chapel.", ""),
+                    ("I was at the harbour office.", "harbour_office"),
+                };
+                string wrong = null;
+                foreach (var (line, want) in cases) if (Says(line) != want) wrong = line + " -> " + Says(line) + " (want " + want + ")";
+                Check(noArea.Count == 0 && hookA.AreaOf("fish_front") == "fish_market" && spoken["fish market"].SetEquals(new[] { "fish_market", "fish_dock" })
+                      && spoken["docks"].IsSupersetOf(new[] { "docks", "fish_dock", "customs", "repair_yard", "harbour_office" }),
+                      "every place has an area; a name can mean more than one, and the docks cover what is on them", string.Join(",", noArea));
+                Check(wrong == null, "where he says he was: plain statements only, every place named, never another time, a question, a supposition or somebody else", wrong ?? "");
+                // THE SECOND PASS: punctuation never hides a place; a place the list does
+                // not know beside one it does, a clock time, another day: never definite.
+                string SaysD(string line) { var set = new List<string>(Claims.WhereHeSays(line, spoken, new Claims.DeedWhen(1, 23, 2), false, out bool def)); set.Sort(StringComparer.Ordinal); return string.Join(",", set) + (def ? " definite" : ""); }
+                var cases2 = new (string line, string want)[]
+                {
+                    ("I was at the chapel all night.", "chapel definite"),
+                    ("I was at \"the chapel\".", "chapel definite"),
+                    ("I was at the chapel; then Rita's.", "chapel,ritas"),
+                    ("I was at the chapel\u2014then Rita's.", "chapel,ritas"),
+                    ("I was at the chapel: Rita's was shut.", "chapel,ritas"),
+                    ("I was at the pawn, then walked past the chapel.", "chapel,ritas"),
+                    ("I was at home, not at Rita's.", "ritas"),
+                    ("I was in the yard all night, then the cafe.", "cafe"),
+                    ("I was at the cafe at six.", ""),
+                    ("I was at the cafe till ten, then home.", "cafe"),
+                    ("I was at the cafe till four, then home.", ""),
+                    ("I was at the cafe on Monday.", ""),
+                    ("I was at the cafe on Tuesday night.", "cafe definite"),
+                    ("I was at the chapel. Then Rita's.", "chapel"),
+                    ("I was at the chapel! Went on to Rita's after.", "chapel"),
+                    ("I was at the market all night.", "fish_market,market definite"),
+                    ("After the chapel I was at Rita's.", "chapel,ritas"),
+                    ("Left the cafe and I was at Rita's all night.", "cafe,ritas"),
+                    ("Past the kiosk, I was at the chapel.", "chapel,kiosk"),
+                    ("Me? I was at the chapel all night.", "chapel definite"),
+                    ("No. I was at the chapel.", "chapel definite"),
+                    ("I was at the chapel around eleven.", "chapel"),
+                    ("I was at the chapel last night.", "chapel definite"),
+                    ("I was at the chapel on Tuesday night.", "chapel definite"),
+                    ("I was at the chapel yesterday.", "chapel"),
+                };
+                string wrong2 = null;
+                foreach (var (line, want) in cases2) if (SaysD(line) != want) wrong2 = line + " -> " + SaysD(line) + " (want " + want + ")";
+                var tueNight = new Claims.DeedWhen(1, 23, 2);
+                var bare = Claims.WhereHeSays("At the chapel, all night.", spoken, tueNight, true, out bool bareDef);
+                var bareNot = Claims.WhereHeSays("At the chapel, all night.", spoken, tueNight, false, out _);
+                var bareRank = Claims.WhereHeSays("The rank was empty when I left.", spoken, tueNight, true, out _);
+                Check(bare.SetEquals(new[] { "chapel" }) && bareDef && bareNot.Count == 0 && bareRank.Count == 0,
+                      "a bare \"At the chapel, all night.\" is his answer when he is answering their question, and only then; \"The rank was empty when I left\" is no answer");
+                var times = new (string line, Claims.DeedWhen deed, bool other)[]
+                {
+                    ("Where were you around eleven, when the window went?", tueNight, false),
+                    ("Where were you at half ten?", tueNight, false),
+                    ("Where were you at 11pm?", tueNight, false),
+                    ("Where were you at 22:30?", tueNight, false),
+                    ("Where were you at midnight?", tueNight, false),
+                    ("No one saw you. Where were you?", tueNight, false),
+                    ("Where were you last night?", tueNight, false),
+                    ("Where were you at three?", tueNight, true),
+                    ("Where were you at 3?", tueNight, true),
+                    ("Where were you last night?", new Claims.DeedWhen(0, 23, 2), true),
+                    ("Where were you this afternoon?", new Claims.DeedWhen(2, 14, 2), false),
+                    ("Where were you this afternoon?", tueNight, true),
+                    ("Where were you at lunchtime?", new Claims.DeedWhen(2, 13, 2), false),
+                    ("Where were you at lunchtime?", tueNight, true),
+                    ("Where were you on Tuesday night?", tueNight, false),
+                    ("Where were you on Monday?", tueNight, true),
+                    ("Where were you at eleven?", default, true),
+                    ("Where were you at 11am?", tueNight, true),
+                    ("Where were you at eleven in the morning?", tueNight, true),
+                    ("Where were you at eleven at night?", tueNight, false),
+                    ("Where were you at 11?", tueNight, false),
+                    ("Where were you on Tuesday afternoon?", tueNight, true),
+                    ("Where were you on Tuesday morning?", tueNight, true),
+                    ("Where were you on Tuesday night?", new Claims.DeedWhen(1, 14, 2), true),
+                    ("Where were you on Tuesday afternoon?", new Claims.DeedWhen(1, 14, 2), false),
+                    ("Where were you on Wednesday morning?", new Claims.DeedWhen(2, 2, 2), false),
+                    ("Where were you on Tuesday night?", new Claims.DeedWhen(2, 2, 2), false),
+                    ("Where were you on Wednesday night?", new Claims.DeedWhen(2, 2, 2), true),
+                    ("Where were you Tuesday night, or was it Tuesday morning?", tueNight, true),
+                };
+                string wrongTime = null;
+                foreach (var (line, deed, other) in times) if (Claims.NamesAnotherTime(line, deed) != other) wrongTime = line;
+                if (Claims.WhereHeSays("I was at the chapel on Tuesday night.", spoken, new Claims.DeedWhen(1, 14, 2), false, out _).Count != 0)
+                    wrongTime = "his Tuesday night answer, for a deed on Tuesday afternoon";
+                Check(wrongTime == null, "a time is the deed's when it is within an hour of it, on its day or its part of the day; with no deed, every time is another", wrongTime ?? "");
+                var looseCases = new (string line, bool loose)[]
+                {
+                    ("Where were you yesterday?", true),
+                    ("What were you doing after work?", true),
+                    ("Where were you on Tuesday?", true),
+                    ("Where were you on Tuesday night?", false),
+                    ("Where were you last night?", false),
+                    ("Where were you around eleven?", false),
+                    ("Where were you yesterday, around eleven?", false),
+                    ("Where were you, then?", false),
+                };
+                string wrongLoose = null;
+                foreach (var (line, loose) in looseCases) if (Claims.LooseTime(line, tueNight) != loose) wrongLoose = line;
+                Check(wrongLoose == null, "a question about a whole day, or part of one with no day, is too loose to judge a plain answer by", wrongLoose ?? "");
+                Check(wrong2 == null && hookA.Fits("fish_dock", "docks") && hookA.Fits("docks", "fish_dock") && !hookA.Fits("chapel", "ritas")
+                      && hookA.AreaFor("ritas_counter") == "ritas" && hookA.AreaFor("ritas") == "ritas" && hookA.AreaFor("quay_street") == null && hookA.AreaFor("off") == null,
+                      "only a plain answer naming one place is definite; a place on the docks fits the docks; a sighting must be a known place", wrong2 ?? "");
+            }
+            {
+                var asks = new ConversationEngine(new FakeLlm { NextReply = "Where were you this morning, then?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asks.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var asksYa = new ConversationEngine(new FakeLlm { NextReply = "Where were ya, then?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asksYa.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var knows = new ConversationEngine(new FakeLlm { NextReply = "I know where you were." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                knows.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var asksSix = new ConversationEngine(new FakeLlm { NextReply = "Where were you at six, then?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asksSix.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var asksTue = new ConversationEngine(new FakeLlm { NextReply = "Where were you on Tuesday night?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asksTue.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var asksAfter = new ConversationEngine(new FakeLlm { NextReply = "I saw you this morning. Where were you that night?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asksAfter.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                var asksDay = new ConversationEngine(new FakeLlm { NextReply = "Where were you yesterday?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asksDay.SayToAsync("Morning.", new GameTime(2, 10, 0), "").GetAwaiter().GetResult();
+                Check(asksAfter.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2), out bool looseAfter) && looseAfter
+                      && asksDay.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2), out bool looseDay) && looseDay
+                      && asksTue.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2), out bool looseTue) && !looseTue,
+                      "their question is read from the sentence that asks it; another time elsewhere in their reply, or a whole day, makes it loose");
+                Check(!asksSix.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && asksTue.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && !asksTue.AskedWhereAbout(new Claims.DeedWhen(0, 23, 2)),
+                      "their question at another hour or on another day is not about the deed; on the deed's own day it is");
+                Check(!asks.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && asksYa.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && !knows.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)),
+                      "asking where he was this morning is not asking about the deed; \"where were ya\" is asking; \"I know where you were\" is not");
             }
             // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's
             // word or their own earlier talk, and what they call him is the game's.

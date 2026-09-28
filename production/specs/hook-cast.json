@@ -179,6 +179,104 @@
    "said": "the allotments by the railway"
   }
  },
+ "areas": {
+  "mickeys": {
+   "places": ["mickeys_office", "mickeys_rank"],
+   "names": ["Mickey's", "the office", "the cab office", "the rank"]
+  },
+  "fish_market": {
+   "places": ["fish_counter", "fish_front"],
+   "names": ["the fish market", "the fishmonger's", "the market"]
+  },
+  "ritas": {
+   "places": ["ritas_counter", "ritas_step"],
+   "names": ["Rita's", "the pawn shop", "the pawnbroker's", "the pawn"]
+  },
+  "kiosk": {
+   "places": ["kiosk"],
+   "names": ["the kiosk"]
+  },
+  "laundry": {
+   "places": ["laundry_front", "laundry_counter"],
+   "names": ["the steam laundry", "the laundry", "the laundrette"]
+  },
+  "quay": {
+   "places": ["quay"],
+   "names": ["the quay"]
+  },
+  "adas": {
+   "places": ["adas_step"],
+   "names": ["Ada's"]
+  },
+  "cafe": {
+   "places": ["cafe", "cafe_front"],
+   "names": ["the cafe", "the caff"]
+  },
+  "newsagent": {
+   "places": ["pension_counter"],
+   "names": ["the newsagent's", "the paper shop"]
+  },
+  "hals": {
+   "places": ["hals_shop"],
+   "names": ["Hal's"]
+  },
+  "bus_stop": {
+   "places": ["bus_stop"],
+   "names": ["the bus stop"]
+  },
+  "docks": {
+   "places": ["docks"],
+   "names": ["the docks", "the dock gate"]
+  },
+  "fish_dock": {
+   "within": "docks",
+   "places": ["fish_dock"],
+   "names": ["the fish dock", "the fish market"]
+  },
+  "repair_yard": {
+   "within": "docks",
+   "places": ["repair_yard"],
+   "names": ["the repair yard", "the boatyard"]
+  },
+  "harbour_office": {
+   "within": "docks",
+   "places": ["harbour_office"],
+   "names": ["the harbour office", "the harbourmaster's"]
+  },
+  "customs": {
+   "within": "docks",
+   "places": ["customs_shed"],
+   "names": ["the customs shed", "customs"]
+  },
+  "ferry": {
+   "places": ["ferry_stop"],
+   "names": ["the ferry landing", "the ferry"]
+  },
+  "warehouses": {
+   "places": ["warehouse_row"],
+   "names": ["the warehouses", "warehouse row"]
+  },
+  "chapel": {
+   "places": ["chapel", "chapel_hall"],
+   "names": ["the chapel", "the church"]
+  },
+  "market": {
+   "places": ["market"],
+   "names": ["the market"]
+  },
+  "boarding_house": {
+   "places": ["boarding_house"],
+   "names": ["the boarding house"]
+  },
+  "flats": {
+   "places": ["flats"],
+   "names": ["the flats"]
+  },
+  "allotments": {
+   "places": ["allotments"],
+   "names": ["the allotments"]
+  }
+ },
  "people": [
   {
    "id": "rocco",

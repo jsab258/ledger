@@ -154,6 +154,17 @@ namespace Ledger.Core
                 sb.AppendLine($"Why you feel that way, in your own words: {why}.");
             }
 
+            var answered = CurrentDeed == null ? null : Answers.Find(x => x.Topic == CurrentDeed);
+            if (answered != null)
+            {
+                string when = WhenWords(answered.DeedDay, answered.DeedHour);
+                sb.AppendLine(answered.Result == ClaimResult.Contradiction
+                    ? $"He told you he was at {answered.Said} {when}, and you know that is a lie: you saw him at {answered.Saw ?? "somewhere else"}."
+                    : answered.Result == ClaimResult.Consistent
+                        ? $"He told you he was at {answered.Said} {when}, and it fits what you saw. You need not ask him again."
+                        : $"He has told you he was at {answered.Said} {when}. You cannot say otherwise, so do not ask him where he was then again.");
+            }
+
             if (!string.IsNullOrEmpty(sceneContext))
             {
                 sb.AppendLine();
@@ -307,6 +318,121 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _storyOf = new Dictionary<string, string>();
         List<string> _lastCleanCited = new List<string>();
 
+        /// WHAT HE TOLD THEM OF WHERE HE WAS (town list 6ac, the second checklist
+        /// sweep, A15.10): the alibi check (Claims) was reached only by the
+        /// retired Unity code, so an answer counted for nothing and a suspicious
+        /// person asked again in every reply. One per deed.
+        ///
+        /// READ CONSERVATIVELY, after the independent check found true answers
+        /// read as lies: only an answer to their own question of where he was
+        /// counts (AskedWhereAbout), only plain statements (Claims.WhereHeSays), every
+        /// area he named, and a lie only when where they saw him is none of them.
+        /// A caught lie stays for that deed; a repeated answer counts once.
+        public sealed class Answer
+        {
+            public string Topic;              // the deed ("player.window_d1")
+            public int DeedDay, DeedHour;     // when it was
+            public string Said;               // where he said he was, as said ("the chapel and Rita's")
+            public List<string> Areas = new List<string>();
+            public ClaimResult Result;        // Contradiction: they saw him elsewhere
+            public string Saw;                // where they saw him, when they did ("Rita's")
+        }
+
+        public List<Answer> Answers { get; } = new List<Answer>();
+
+        /// The deed their suspicion is about this turn (the game's "deed"); the
+        /// prompt speaks only of his answers about it.
+        public string CurrentDeed { get; set; }
+
+        /// A caught lie raises their suspicion by this, on top of what the deed's
+        /// evidence gives, for as long as that deed is the question (Claims.Process's
+        /// own amount); an answer that fits what they saw lowers it a little.
+        public const double LieWeight = 0.15, FitsWeight = 0.03;
+
+        static readonly Regex AskedWhereRx = new Regex(
+            @"\bwhere (were|was) (you|ya)\b|\bwhere'?d you (go|get to)\b|\bwhat were you (doing|up to)\b|\bwere you (out|about|around)\b",
+            RegexOptions.IgnoreCase);
+
+        /// Their last reply asked him where he was, at no other time than the deed's
+        /// (a time in their question allowed only when it is the deed's).
+        public bool AskedWhereAbout(Claims.DeedWhen deed) => AskedWhereAbout(deed, out _);
+
+        /// As above, read from the sentence that asks it (the fifth pass: "I saw
+        /// you this morning. Where were you that night?" asks about the night);
+        /// `loose` when its time is too loose to judge a plain answer against
+        /// one hour (Claims.LooseTime), or another sentence of theirs names
+        /// another time, so the question may be about either.
+        public bool AskedWhereAbout(Claims.DeedWhen deed, out bool loose)
+        {
+            loose = false;
+            for (int i = _transcript.Count - 1; i >= 0; i--)
+                if (_transcript[i].Role == "assistant")
+                {
+                    string asked = null; bool otherElsewhere = false;
+                    foreach (var raw in Regex.Split(_transcript[i].Content.Replace('\u2019', '\''), @"(?<=[.!?])\s+"))
+                    {
+                        var sentence = raw.Trim();
+                        if (asked == null && AskedWhereRx.IsMatch(sentence)) asked = sentence;
+                        else if (Claims.NamesAnotherTime(sentence, deed)) otherElsewhere = true;
+                    }
+                    // Their question, about another time, is not about the deed.
+                    if (asked == null || Claims.NamesAnotherTime(asked, deed)) return false;
+                    loose = otherElsewhere || Claims.LooseTime(asked, deed);
+                    return true;
+                }
+            return false;
+        }
+
+        /// He answered, about a deed. Returns the answer when it is new (a
+        /// different place or result), else null; a caught lie is never undone
+        /// by a later answer, which is remembered as a changed story.
+        public Answer HeardAnswer(string topic, int deedDay, int deedHour, string said, IEnumerable<string> areas, ClaimResult result, string saw, GameTime now)
+        {
+            if (string.IsNullOrEmpty(topic) || string.IsNullOrEmpty(said)) return null;
+            var areaList = new List<string>(areas ?? new string[0]);
+            areaList.Sort(StringComparer.Ordinal);
+            var had = Answers.Find(a => a.Topic == topic);
+            string when = WhenWords(deedDay, deedHour);
+            if (had != null && had.Result == result && string.Join(",", had.Areas) == string.Join(",", areaList)) return null;
+            if (had != null && had.Result == ClaimResult.Contradiction)
+            {
+                string story = $"He changed his story about {when}: now he says he was at {said}.";
+                if (!Memory.Events.Exists(e => e.Text == story)) Memory.Append(new MemoryEvent(now, "observation", 0.6, story));
+                return null;
+            }
+            Answers.RemoveAll(a => a.Topic == topic);
+            var answer = new Answer { Topic = topic, DeedDay = deedDay, DeedHour = deedHour, Said = said, Areas = areaList, Result = result, Saw = saw };
+            Answers.Add(answer);
+            Memory.Append(new MemoryEvent(now, "observation", result == ClaimResult.Contradiction ? 0.8 : 0.5,
+                result == ClaimResult.Contradiction ? $"He told me he was at {said} {when}, but I saw him at {saw ?? "somewhere else"}. He lied to me."
+                : result == ClaimResult.Consistent ? $"He told me he was at {said} {when}, and it fits what I saw."
+                : $"He told me he was at {said} {when}. I can't say otherwise."));
+            return answer;
+        }
+
+        /// The weight of his answer about this deed on their suspicion, applied
+        /// after the evidence has set it; other deeds' answers are only memories.
+        public void ApplyAnswers(string topic)
+        {
+            var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            if (a != null) ApplyAnswer(a);
+        }
+
+        public void ApplyAnswer(Answer a)
+        {
+            if (a.Result == ClaimResult.Contradiction) Suspicion.Raise(LieWeight, $"he told me he was at {a.Said}, and I saw him at {a.Saw ?? "somewhere else"}");
+            else if (a.Result == ClaimResult.Consistent) Suspicion.Lower(FitsWeight, "his story fits what I saw");
+        }
+
+        /// "on Tuesday night", "on Tuesday afternoon": the deed's time as they
+        /// would say it; before six in the morning is the night before.
+        public static string WhenWords(int day, int hour)
+        {
+            if (day < 0 || hour < 0) return "that night";
+            var t = hour < 6 ? new GameTime(Math.Max(0, day - 1), 23, 0) : new GameTime(day, hour, 0);
+            return "on " + t.WeekdayName + " " + t.Slot.ToString().ToLowerInvariant();
+        }
+
         /// The game says which story a memory belongs to (its topic key).
         public void TagStory(MemoryEvent e, string story)
         {
@@ -410,6 +536,7 @@ namespace Ledger.Core
                 { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
                 { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
+                { "answers", AnswersJson() }, { "currentDeed", CurrentDeed },
             };
         }
 
@@ -430,6 +557,8 @@ namespace Ledger.Core
             KnowsHimFromGame = false;
             _lastTurn = null;
             LastEnded = false;
+            Answers.Clear();
+            CurrentDeed = null;
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -478,12 +607,36 @@ namespace Ledger.Core
             if (saved.TryGetValue("heardStory", out var hst) && hst is string story) HeardStory = story;
             if (saved.TryGetValue("howYouKnowHim", out var hk) && hk is string knows) HowYouKnowHim = knows;
             if (saved.TryGetValue("knowsHimFromGame", out var kg) && kg is bool fromGame) KnowsHimFromGame = fromGame;
+            if (saved.TryGetValue("currentDeed", out var cd) && cd is string cds) CurrentDeed = cds;
+            if (saved.TryGetValue("answers", out var ans) && ans is List<object> ansList)
+                foreach (var ao in ansList)
+                {
+                    var o = ao as Dictionary<string, object>;
+                    if (o == null || !(o.TryGetValue("topic", out var t) && t is string topic) || !(o.TryGetValue("said", out var sd) && sd is string said)) continue;
+                    var r = o.TryGetValue("result", out var rr) && rr is string rs && Enum.TryParse(rs, out ClaimResult parsed) && Enum.IsDefined(typeof(ClaimResult), parsed) ? parsed : ClaimResult.Unknown;
+                    var back = new Answer { Topic = topic, Said = said, Result = r, Saw = o.TryGetValue("saw", out var sw) ? sw as string : null,
+                                            DeedDay = o.TryGetValue("day", out var ady) ? WholeOrMinus(ady) : -1, DeedHour = o.TryGetValue("hour", out var ahr) ? WholeOrMinus(ahr) : -1 };
+                    if (o.TryGetValue("areas", out var ars) && ars is List<object> arl) foreach (var x in arl) if (x is string xs) back.Areas.Add(xs);
+                    Answers.Add(back);
+                }
             if (saved.TryGetValue("lastTurn", out var lt) && lt is List<object> ltf && ltf.Count == 3)
             {
                 int ld = WholeOrMinus(ltf[0]), lh = WholeOrMinus(ltf[1]), lm = WholeOrMinus(ltf[2]);
                 if (ld >= 0 && lh >= 0 && lh <= 23 && lm >= 0 && lm <= 59) _lastTurn = new GameTime(ld, lh, lm);
             }
             if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
+        }
+
+        List<object> AnswersJson()
+        {
+            var list = new List<object>();
+            foreach (var a in Answers)
+            {
+                var areas = new List<object>(); foreach (var ar in a.Areas) areas.Add(ar);
+                list.Add(new Dictionary<string, object> { { "topic", a.Topic }, { "day", a.DeedDay }, { "hour", a.DeedHour }, { "said", a.Said },
+                                                          { "areas", areas }, { "result", a.Result.ToString() }, { "saw", a.Saw } });
+            }
+            return list;
         }
 
         /// A whole number as saved (int in memory, double through JSON), or -1.

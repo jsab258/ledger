@@ -297,6 +297,7 @@ static class Program
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
             string walkedFrom = null, walkedHeard = null;
+            string deedTopic = null, sawHimAt = null; int deedDay = -1, deedHour = -1;
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             string callsHim = null;
             try
@@ -307,6 +308,17 @@ static class Program
                 {
                     report = rp.GetInt32();
                     if (r.TryGetProperty("why", out var rw) && rw.ValueKind == JsonValueKind.String) reportWhy = rw.GetString();
+                }
+                // THE DEED THEY SUSPECT HIM OF, and when (town list 6ac): what an answer
+                // about where he was is about.
+                if (r.TryGetProperty("deed", out var dd) && dd.ValueKind == JsonValueKind.Object
+                    && dd.TryGetProperty("topic", out var dt) && dt.ValueKind == JsonValueKind.String)
+                {
+                    deedTopic = dt.GetString();
+                    deedDay = dd.TryGetProperty("day", out var ddy) && ddy.ValueKind == JsonValueKind.Number ? ddy.GetInt32() : -1;
+                    deedHour = dd.TryGetProperty("hour", out var dh) && dh.ValueKind == JsonValueKind.Number ? dh.GetInt32() : -1;
+                    // Where this person saw him at about the deed's time, if they did.
+                    sawHimAt = dd.TryGetProperty("sawHimAt", out var sa) && sa.ValueKind == JsonValueKind.String ? sa.GetString() : null;
                 }
                 // HE WALKED OFF MID-REPLY (town list 6v): who from, and what he heard.
                 if (r.TryGetProperty("walkedAway", out var wa) && wa.ValueKind == JsonValueKind.Object)
@@ -462,12 +474,54 @@ static class Program
                 suspicion = derived.Value.value;
                 suspicionWhy = derived.Value.why;
             }
+            // HIS ANSWER ABOUT WHERE HE WAS (town list 6ac): only an answer to their
+            // own question of where he was, read from plain statements, checked
+            // against where they saw him at about the deed's time, by area.
+            object claimOut = null;
+            ConversationEngine.Answer newAnswer = null;
+            if (deedTopic != null) engine.CurrentDeed = deedTopic;
+            var deedWhen = new Claims.DeedWhen(deedDay, deedHour, now.Day);
+            if (deedTopic != null && Cast != null && !string.IsNullOrEmpty(say) && engine.AskedWhereAbout(deedWhen, out bool looseQuestion))
+            {
+                var areas = Claims.WhereHeSays(say, Cast.SpokenAreas(), deedWhen, true, out bool definite);
+                // A question about a whole day leaves any answer at most unknown.
+                if (looseQuestion) definite = false;
+                // Only a known place or area is a sighting; only a definite answer
+                // checks out or is caught. Any other is unknown when it could be true,
+                // and not taken down at all when nothing in it fits what they saw:
+                // "you cannot say otherwise" would be untrue (the fourth pass).
+                string sawArea = areas.Count > 0 ? Cast.AreaFor(sawHimAt) : null;
+                bool fits = false;
+                foreach (var ar in areas) if (Cast.Fits(ar, sawArea)) fits = true;
+                ClaimResult? judged = areas.Count == 0 ? (ClaimResult?)null
+                    : sawArea == null ? ClaimResult.Unknown
+                    : definite ? (fits ? ClaimResult.Consistent : ClaimResult.Contradiction)
+                    : fits ? ClaimResult.Unknown : (ClaimResult?)null;
+                if (judged.HasValue)
+                {
+                    var result = judged.Value;
+                    var saidNames = new List<string>();
+                    foreach (var ar in areas) { var n = Cast.AreaNames(ar); saidNames.Add(n.Count > 0 ? n[0] : ar); }
+                    saidNames.Sort(StringComparer.Ordinal);
+                    string sawWords = sawArea == null ? null : Cast.AreaNames(sawArea) is var sn && sn.Count > 0 ? sn[0] : sawArea;
+                    newAnswer = engine.HeardAnswer(deedTopic, deedDay, deedHour, string.Join(" and ", saidNames), areas, result, sawWords, now);
+                    var areaList = new List<string>(areas); areaList.Sort(StringComparer.Ordinal);
+                    claimOut = new { areas = areaList, result = result.ToString().ToLowerInvariant() };
+                }
+            }
             if (suspicion.HasValue)
             {
                 // THE REASON CARRIES THE MOVE, so it reads as the reason the
                 // level is where it is (LatestReason takes only raising ones).
                 if (string.IsNullOrEmpty(suspicionWhy)) engine.Suspicion.Restore(suspicion.Value);
                 else { engine.Suspicion.Restore(0.0); engine.Suspicion.Raise(suspicion.Value, suspicionWhy); }
+                // And what he has told them about this deed, on top, every turn the evidence is set.
+                engine.ApplyAnswers(engine.CurrentDeed);
+            }
+            else if (newAnswer != null)
+            {
+                // No evidence this turn: only a new answer moves them, once.
+                engine.ApplyAnswer(newAnswer);
             }
             string level = engine.Suspicion.Level.ToString();
             double holds = Math.Round(engine.Suspicion.Value, 3);
@@ -477,7 +531,7 @@ static class Program
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy, manner }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner }, Plain);
             string reply;
             string paused = null;
             bool timedOut = false;
@@ -593,7 +647,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, promised, spokeOf, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, claim = claimOut, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -987,6 +1041,48 @@ static class Program
         Ok("walking off mid-reply: they keep only what he heard, and remember he left",
            walked.Contains("\"noted\":true") && walkedEngine.Memory.Events.Exists(e => e.Text.Contains("walked off while I was still talking"))
            && walkedEngine.Memory.Events.Exists(e => e.Text.EndsWith("\"Hm.\", and no more")), walked);
+
+        // WHERE HE SAYS HE WAS (town list 6ac): an answer to their question, read
+        // against where they saw him at the deed's time, and a lie kept on top.
+        var alibi = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(alibi, cardsDir);
+        LoadCast(alibi, cardsDir);
+        string deedBits = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"ritas_counter\"},\"suspicion\":0.5,\"suspicionWhy\":\"I saw him near the window\"";
+        string unasked = await alibi.Answer("{\"id\":100,\"to\":\"sam\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string lie = await alibi.Answer("{\"id\":101,\"to\":\"sam\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string after = await alibi.Answer("{\"id\":102,\"to\":\"sam\",\"say\":\"Well?\",\"day\":2,\"hour\":10," + deedBits + "}");
+        double Sus(string json) { using var d = JsonDocument.Parse(json); return d.RootElement.GetProperty("suspicion").GetDouble(); }
+        Ok("an answer counts only once they have asked where he was; then a lie against what they saw keeps them more suspicious, turn after turn",
+           !unasked.Contains("\"result\"") && lie.Contains("\"result\":\"contradiction\"") && Sus(lie) > 0.5 + 0.1 && Math.Abs(Sus(after) - Sus(lie)) < 1e-6
+           && alibi.EngineFor("sam").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("you saw him at Rita's"), unasked + " | " + lie);
+        var truthful = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(truthful, cardsDir);
+        LoadCast(truthful, cardsDir);
+        await truthful.Answer("{\"id\":104,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string truth = await truthful.Answer("{\"id\":105,\"to\":\"sam\",\"say\":\"I was at Rita\u2019s, then the chapel.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        Ok("a true answer naming where they saw him, among other places, is never a lie, nor lets him off", truth.Contains("\"result\":\"unknown\"") && Math.Abs(Sus(truth) - 0.5) < 1e-9, truth);
+        var oddHelper = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(oddHelper, cardsDir);
+        LoadCast(oddHelper, cardsDir);
+        string oddBits = deedBits.Replace("ritas_counter", "quay_street");
+        await oddHelper.Answer("{\"id\":106,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + oddBits + "}");
+        string oddSaw = await oddHelper.Answer("{\"id\":107,\"to\":\"sam\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10," + oddBits + "}");
+        Ok("a sighting the game names by no known place or area makes an answer unknown, never a lie", oddSaw.Contains("\"result\":\"unknown\""), oddSaw);
+        var vague = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(vague, cardsDir);
+        LoadCast(vague, cardsDir);
+        await vague.Answer("{\"id\":108,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string vagueSaid = await vague.Answer("{\"id\":109,\"to\":\"sam\",\"say\":\"I was at the chapel. Then the cafe.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string meSaid = await alibi.Answer("{\"id\":110,\"to\":\"sam\",\"say\":\"Me? I was at the chapel all night.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        var dayQ = new Helper(new FakeLlm { Next = "Where were you yesterday?" }, TimeSpan.FromSeconds(8));
+        LoadCards(dayQ, cardsDir);
+        LoadCast(dayQ, cardsDir);
+        await dayQ.Answer("{\"id\":111,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        string daySaid = await dayQ.Answer("{\"id\":112,\"to\":\"sam\",\"say\":\"I was at the cafe.\",\"day\":2,\"hour\":10," + deedBits + "}");
+        Ok("asked about a whole day, his plain answer is never a lie", !daySaid.Contains("contradiction") && Math.Abs(Sus(daySaid) - 0.5) < 1e-9, daySaid);
+        Ok("an answer that is not plain and names nowhere they saw him is not taken down at all; \"Me?\" before a plain answer leaves it plain",
+           vagueSaid.Contains("\"claim\":null") && Math.Abs(Sus(vagueSaid) - 0.5) < 1e-9 && meSaid.Contains("\"result\":\"contradiction\"")
+           && vague.EngineFor("sam").Answers.Count == 0, vagueSaid + " | " + meSaid);
 
         // WHERE THEY ARE (town list 6u): each person told their own place this hour.
         var placed = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
