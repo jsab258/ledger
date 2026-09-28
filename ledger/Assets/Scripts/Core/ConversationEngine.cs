@@ -305,6 +305,25 @@ namespace Ledger.Core
             Memory.CorrectLast(ClaimCheck.IReplied, ClaimCheck.IReplied + $"\"{Truncate(heard, 200)}\"");
         }
 
+        /// HE WALKED OFF WHILE THEY WERE TALKING (town list 6v): what they kept
+        /// of their last reply becomes what he heard of it, and they remember
+        /// that he left. Heard nothing, the reply is kept as unfinished, never
+        /// as said; a line nobody heard is not remembered as said to him.
+        public void WalkedAway(string heard, GameTime now)
+        {
+            heard = heard?.Trim();
+            for (int i = _transcript.Count - 1; i >= 0; i--)
+            {
+                if (_transcript[i].Role != "assistant") continue;
+                _transcript[i] = new LlmMessage("assistant", string.IsNullOrEmpty(heard) ? "..." : heard + " ...");
+                break;
+            }
+            Memory.CorrectLast(ClaimCheck.IReplied, string.IsNullOrEmpty(heard)
+                ? ClaimCheck.IReplied + "nothing: he walked off before I could answer"
+                : ClaimCheck.IReplied + $"\"{Truncate(heard, 200)}\", and no more");
+            Memory.Append(new MemoryEvent(now, "observation", 0.5, "He walked off while I was still talking to him."));
+        }
+
         /// THE CONVERSATION IN A SAVE (town list 6r, the checklist sweep of 28
         /// September): what this person remembers, the talk the model still
         /// sees, what they have learned, what they have heard of his nights and
