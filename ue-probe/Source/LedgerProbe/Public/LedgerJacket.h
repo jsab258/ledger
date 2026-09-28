@@ -17,6 +17,8 @@
 #include "ChaosClothAsset/ClothComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
+#include "Materials/MaterialInterface.h"
+#include "Misc/Paths.h"
 #include "PhysicsEngine/PhysicsAsset.h"
 #include "GameFramework/Actor.h"
 #include "Misc/CommandLine.h"
@@ -94,6 +96,26 @@ namespace LedgerJacket
 		J->RegisterComponent();
 		J->SetAsset(Asset);
 		J->SetLeaderPoseComponent(Body);
+		// ITS COLOURS, set on the component: a cloth asset regenerated from the
+		// template renders in the engine's grey debug cloth, whatever the meshes
+		// carried (28 September). The instances sit beside the asset
+		// (MI_DonkeyJacket_Wool, _Yoke, _Button; tools/ue/make_cloth_jacket.py),
+		// matched to the slots by name, wool where no name matches.
+		const FString Folder = FPaths::GetPath(Path.Left(Path.Find(TEXT("."))));
+		auto Mat = [&Folder](const TCHAR* Key) { const FString N = FString(TEXT("MI_DonkeyJacket_")) + Key; return LoadObject<UMaterialInterface>(nullptr, *(Folder / N + TEXT(".") + N)); };
+		UMaterialInterface* Wool = Mat(TEXT("Wool"));
+		UMaterialInterface* Yoke = Mat(TEXT("Yoke"));
+		UMaterialInterface* Button = Mat(TEXT("Button"));
+		const TArray<FName> Slots = J->GetMaterialSlotNames();
+		FString Seen;
+		for (int32 I = 0; I < FMath::Max(Slots.Num(), J->GetNumMaterials()); ++I)
+		{
+			const FString S = Slots.IsValidIndex(I) ? Slots[I].ToString().ToLower() : FString();
+			UMaterialInterface* M = S.Contains(TEXT("yoke")) ? Yoke : S.Contains(TEXT("button")) ? Button : Wool;
+			if (M != nullptr) { J->SetMaterial(I, M); }
+			Seen += FString::Printf(TEXT("%s%d:%s"), Seen.IsEmpty() ? TEXT("") : TEXT(", "), I, S.IsEmpty() ? TEXT("(unnamed)") : *S);
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth slots %s; wool %s"), *Seen, Wool != nullptr ? TEXT("found") : TEXT("MISSING"));
 		UPhysicsAsset* Phys = Body->GetPhysicsAsset();
 		if (Phys != nullptr) { J->AddCollisionSource(Body, Phys); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth %s worn, colliding with %s"), *Path, Phys != nullptr ? *Phys->GetName() : TEXT("nothing (no physics asset)"));
