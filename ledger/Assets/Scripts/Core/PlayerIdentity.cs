@@ -105,6 +105,35 @@ namespace Ledger.Core
             g != null && g.Memory != null && g.Memory.Events.Count > 0;
 
         /// Convenience for the game layer: what this person calls you right now.
+        /// HOW SOMEBODY KNOWS HIM, for their talk (town list 6s, the checklist
+        /// sweep of 28 September): the cards said "I have never met Mickey's
+        /// nephew" for the whole game.
+        ///
+        /// WHETHER THEY HAVE MET HIM is the game's to say (it knows who has been
+        /// in a scene with him), or their own earlier talk with him; never read
+        /// off familiarity, which the game sets for the whole cast from the
+        /// first minute (the independent check: Ron was told on his first talk
+        /// that he had met him and called him Tom). WHAT THEY CALL HIM to his
+        /// face is the game's too, from the street's ladder, and only a name he
+        /// goes by; "the new owner" when it sends none, since nobody has told
+        /// them his name (the gate is knowing, not liking). Met only by their own
+        /// talk, they have spoken with him before, no more.
+        /// Somebody who has only heard of him would not know him by sight.
+        /// The check does not read what a character says about the person they
+        /// are talking to, so the line itself holds them to their memories.
+        public string HowTheyKnowHim(bool met, bool heardOfHim, string calls, bool onlyTheirOwnTalk = false)
+        {
+            const string hold = " Say nothing about when, where or how often you have met him beyond what your memories say.";
+            if (!met)
+                return (heardOfHim
+                    ? $"You have not met Mickey's nephew, {Unplaced}, but you have heard of him: his name is {Surname}. You would not know him by sight; to his face he is {Unplaced} until he says who he is."
+                    : $"You have never met Mickey's nephew, {Unplaced}: you are speaking with him for the first time.") + " Do not talk as though you had met him before.";
+            string name = calls == First || calls == Diminutive || calls == Surname || calls == Unplaced ? calls : Unplaced;
+            return (onlyTheirOwnTalk
+                ? $"You have spoken with Mickey's nephew, {Unplaced}, before: you call him {name}."
+                : $"You have met Mickey's nephew, {Unplaced}, and you know him to speak to: you call him {name}.") + hold;
+        }
+
         public string AddressBy(Gossiper g) =>
             g == null ? Unplaced : AddressBy(KnowsName(g), g.Loyalty);
 

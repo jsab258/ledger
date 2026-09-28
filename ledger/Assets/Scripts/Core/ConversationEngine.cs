@@ -49,6 +49,14 @@ namespace Ledger.Core
         /// Read only while their suspicion is Trusting: every higher level
         /// already says how they are with him, and why.
         public Knowing Heard { get; set; } = Knowing.Nothing;
+        /// How this person knows Tom and what they call him (PlayerIdentity.
+        /// HowTheyKnowHim), as the game sends it each turn; null when it does not.
+        public string HowYouKnowHim { get; set; }
+        /// True once the game has said how they know him; until then the helper
+        /// reads it off this conversation's own earlier talk.
+        public bool KnowsHimFromGame { get; set; }
+        /// They have spoken with him before, in this conversation's memory.
+        public bool HasSpokenWithHim => Memory.Events.Exists(ClaimCheck.IsOwnTalk);
         public string HeardStory { get; set; }
 
         /// THE MANNER A STORY GIVES THEM while nothing ties him to a deed, in
@@ -81,6 +89,11 @@ namespace Ledger.Core
         {
             var sb = new StringBuilder();
             sb.AppendLine(Card.ToPromptBlock());
+            if (!string.IsNullOrEmpty(HowYouKnowHim))
+            {
+                sb.AppendLine();
+                sb.AppendLine(HowYouKnowHim);
+            }
 
             if (Memory.Beliefs.Count > 0)
             {
@@ -320,7 +333,7 @@ namespace Ledger.Core
             {
                 { "card", Card.Id }, { "memory", memory }, { "beliefs", beliefs }, { "shown", shown }, { "transcript", transcript },
                 { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
-                { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid },
+                { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
             };
         }
 
@@ -337,6 +350,8 @@ namespace Ledger.Core
             _knownOnlySaid = 0;
             Heard = Knowing.Nothing;
             HeardStory = null;
+            HowYouKnowHim = null;
+            KnowsHimFromGame = false;
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -383,6 +398,8 @@ namespace Ledger.Core
             }
             if (saved.TryGetValue("heard", out var hd) && hd is string hs && Enum.TryParse(hs, out Knowing k) && Enum.IsDefined(typeof(Knowing), k)) Heard = k;
             if (saved.TryGetValue("heardStory", out var hst) && hst is string story) HeardStory = story;
+            if (saved.TryGetValue("howYouKnowHim", out var hk) && hk is string knows) HowYouKnowHim = knows;
+            if (saved.TryGetValue("knowsHimFromGame", out var kg) && kg is bool fromGame) KnowsHimFromGame = fromGame;
             if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
         }
 
@@ -696,7 +713,7 @@ namespace Ledger.Core
             if (streaming != null)
             {
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
+                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString(), HowYouKnowHim);
             }
             var d1 = new Drafted();
             try
@@ -726,7 +743,7 @@ namespace Ledger.Core
             if (Checker != null)
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
+                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString(), HowYouKnowHim);
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,

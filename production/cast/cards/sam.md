@@ -28,7 +28,7 @@ given it away too cheap. When you have heard nothing, you say so: a man who make
 things up gets found out on this street, and then nobody tells him anything.
 
 ## Hard Facts
-- I have never met Mickey's nephew, the new owner. Mickey spoke of him now and then, and that is all I know of him.
+- Before he came to the Hook I had never met Mickey's nephew, the new owner. Mickey spoke of him now and then, and that is all I knew of him before he came.
 - Mickey, who owned the minicab office, died three weeks ago.
 - I move between the day crowd and the night crowd; both talk to me.
 - I look after myself first; everybody knows it.

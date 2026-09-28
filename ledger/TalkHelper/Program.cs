@@ -93,6 +93,7 @@ static class Program
     // THE REPLY AS WRITTEN: apostrophes and accents stay themselves rather
     // than escape codes, so a log or a transcript reads as the line was said.
     static readonly JsonSerializerOptions Plain = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+    static readonly PlayerIdentity Tom = new PlayerIdentity();
 
     sealed class Helper
     {
@@ -289,6 +290,8 @@ static class Program
             int? report = null;
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
+            bool acquaintanceSent = false, metHim = false, heardOfHim = false;
+            string callsHim = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -356,6 +359,15 @@ static class Program
                     if (v.TryGetProperty("familiarity", out var fv) && fv.ValueKind == JsonValueKind.Number) fam = fv.GetDouble();
                     derived = Suspecting.Derive(acc, near, fam);
                 }
+                // HOW THIS PERSON KNOWS TOM (town list 6s), as the game knows it:
+                // whether they have met him, heard of him, and what they call him.
+                if (r.TryGetProperty("acquaintance", out var aq) && aq.ValueKind == JsonValueKind.Object)
+                {
+                    acquaintanceSent = true;
+                    metHim = Bool(aq, "met");
+                    heardOfHim = Bool(aq, "heardOf");
+                    callsHim = aq.TryGetProperty("calls", out var ac) && ac.ValueKind == JsonValueKind.String ? ac.GetString() : null;
+                }
                 if (r.TryGetProperty("knowing", out v) && v.ValueKind == JsonValueKind.Object)
                 {
                     string lv = v.TryGetProperty("level", out var kl) && kl.ValueKind == JsonValueKind.String ? kl.GetString() : "";
@@ -399,6 +411,17 @@ static class Program
                 if (!held) engine.Memory.Append(m);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
+            // Kept until the game sends it again; until the game has ever sent it,
+            // read off this conversation's own earlier talk with him.
+            // Met is the game's word or their own earlier talk: the game cannot
+            // make them forget a conversation they have had.
+            if (acquaintanceSent)
+            {
+                engine.HowYouKnowHim = Tom.HowTheyKnowHim(metHim || engine.HasSpokenWithHim, heardOfHim, callsHim, onlyTheirOwnTalk: !metHim);
+                engine.KnowsHimFromGame = true;
+            }
+            else if (!engine.KnowsHimFromGame)
+                engine.HowYouKnowHim = Tom.HowTheyKnowHim(engine.HasSpokenWithHim, false, null, onlyTheirOwnTalk: true);
             // WHAT THEY HAVE HEARD OF HIS NIGHTS, as the street's rule counts it
             // (StreetVoice.RegardFor), 28 September; kept until the game sends
             // it again, "nothing" included.
@@ -887,6 +910,23 @@ static class Program
         var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
         Ok("without --early nothing changes: the whole reply, no first line, no rest",
            plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
+        // HOW THEY KNOW HIM (town list 6s): the game's acquaintance reaches the prompt.
+        var knower = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+        LoadCards(knower, cardsDir);
+        await knower.Answer("{\"id\":60,\"to\":\"lena\",\"say\":\"Morning.\"}");
+        string firstTime = knower.EngineFor("lena").HowYouKnowHim;
+        await knower.Answer("{\"id\":63,\"to\":\"lena\",\"say\":\"Me again.\"}");
+        Ok("with nothing from the game, a first talk is a first meeting; the next, they have spoken before, and nobody has told them his name",
+           firstTime.Contains("for the first time") && knower.EngineFor("lena").HowYouKnowHim.Contains("You have spoken with")
+           && knower.EngineFor("lena").HowYouKnowHim.Contains("you call him the new owner"), knower.EngineFor("lena").HowYouKnowHim);
+        await knower.Answer("{\"id\":64,\"to\":\"lena\",\"say\":\"Still me.\",\"acquaintance\":{\"met\":false}}");
+        Ok("the game cannot make them forget a talk they have had", !knower.EngineFor("lena").HowYouKnowHim.Contains("for the first time"), knower.EngineFor("lena").HowYouKnowHim);
+        await knower.Answer("{\"id\":61,\"to\":\"sam\",\"say\":\"Morning.\",\"acquaintance\":{\"met\":true,\"calls\":\"Tom\"}}");
+        string knowPrompt = knower.EngineFor("sam").BuildSystemPrompt("Morning.", new GameTime(1, 12, 0), "");
+        await knower.Answer("{\"id\":62,\"to\":\"sam\",\"say\":\"Still here.\"}");
+        Ok("what the game says a person calls Tom reaches their talk, and holds until it says otherwise",
+           knowPrompt.Contains("you call him Tom") && knower.EngineFor("sam").HowYouKnowHim.Contains("you call him Tom") && !knowPrompt.Contains("I have never met"), knowPrompt.Length.ToString());
 
         // TALK KEPT WITH THE GAME'S SAVE (town list 6r).
         string talkDir = Path.Combine(Path.GetTempPath(), "talkhelper-selftest-" + Guid.NewGuid().ToString("N"));
