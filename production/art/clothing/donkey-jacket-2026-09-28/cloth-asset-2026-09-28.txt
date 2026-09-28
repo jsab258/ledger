@@ -1,0 +1,11 @@
+imported ron_donkey_render_static.fbx -> ['/Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Render.SM_ron_donkey_Render']
+imported ron_donkey_sim_static.fbx -> ['/Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Sim.SM_ron_donkey_Sim']
+body /Game/Ledger/Export/MH_RoccoP2/MH_RoccoP2_Body.MH_RoccoP2_Body: SkeletalMesh
+graph Dataflow, cloth asset ChaosClothAsset
+cloth asset dataflow_instance = <Struct 'DataflowInstance' (0x0000017AE37C3D50) {}>
+  set dataflow_instance to our graph
+set StaticMesh_Render.StaticMesh = /Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Render.SM_ron_donkey_Render: True
+set StaticMesh_SIM.StaticMesh = /Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Sim.SM_ron_donkey_Sim: True
+set TransferSkinWeights.SkeletalMesh = /Game/Ledger/Export/MH_RoccoP2/MH_RoccoP2_Body.MH_RoccoP2_Body: True
+regenerate: True
+done
