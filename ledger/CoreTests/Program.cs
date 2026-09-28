@@ -5460,6 +5460,28 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // A CONVERSATION STARTS FRESH, AND A CHARACTER CAN END IT (town list 6ae).
+            {
+                var freshLlm = new FakeLlm { NextReply = "Evening." };
+                var fe = new ConversationEngine(freshLlm, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                await fe.SayToAsync("Quiet tonight?", new GameTime(3, 21, 0), "In the bar.");
+                await fe.SayToAsync("Anything else?", new GameTime(3, 21, 30), "In the bar.");
+                int sameTalk = freshLlm.LastRequest.Messages.Count;
+                await fe.SayToAsync("Morning.", new GameTime(4, 9, 0), "In the bar.");
+                int nextDay = freshLlm.LastRequest.Messages.Count;
+                Check(sameTalk == 3 && nextDay == 1 && fe.Memory.Events.Exists(e => e.Text.Contains("Quiet tonight?")),
+                      "the same evening is one conversation; the next morning starts a new one, and the old one is still remembered", sameTalk + " " + nextDay);
+                freshLlm.NextReply = "I've heard enough from you. We're finished here. [done]";
+                var endedReply = await fe.SayToAsync("You're a liar.", new GameTime(4, 9, 5), "In the bar.");
+                Check(fe.LastEnded && endedReply == "I've heard enough from you. We're finished here." && !fe.Memory.Events.Exists(e => e.Text.Contains("[done]")),
+                      "a character can end the conversation: the mark is taken out before anybody hears it, and the game is told", endedReply);
+                freshLlm.NextReply = "Morning to you.";
+                await fe.SayToAsync("Morning.", new GameTime(4, 9, 6), "In the bar.");
+                Check(!fe.LastEnded && ConversationEngine.WithoutDone("Fine [DONE]", out var e2) == "Fine" && e2 && ConversationEngine.WithoutDone("Fine.", out var e3) == "Fine." && !e3
+                      && fe.BuildSystemPrompt("x", new GameTime(4, 9, 7), "").Contains("[done]"),
+                      "the next reply does not end it unless it says so, and the character is told how to end one");
+            }
+
             // HE WALKED OFF MID-REPLY (town list 6v): what he heard is what was said.
             {
                 var walkLlm = new FakeLlm { NextReply = "Well, I did see a van by the yard, and a man with it." };

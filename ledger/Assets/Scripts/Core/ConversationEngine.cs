@@ -17,6 +17,39 @@ namespace Ledger.Core
     public class ConversationEngine
     {
         public const int MaxTranscriptTurns = 12;
+
+        /// A CONVERSATION STARTS FRESH after this long apart, or on another day
+        /// (town list 6ae, the second checklist sweep): "Morning, Ron" on day two
+        /// was the next line of last night's talk. What was said is kept in
+        /// memory; only the talk the model still sees is cleared.
+        public const int FreshAfterMinutes = 120;
+
+        /// THE MARK A CHARACTER ENDS A CONVERSATION WITH (town list 6ae): done,
+        /// busy or insulted, they say so and end the reply with it; it is taken
+        /// out before anybody hears the line, and LastEnded tells the game.
+        public const string DoneMark = "[done]";
+
+        GameTime? _lastTurn;
+
+        /// The last reply ended the conversation, by the character's choice.
+        public bool LastEnded { get; private set; }
+
+        /// Starts the next line as a new conversation (the game's {"fresh":true}).
+        public void StartFresh() => _transcript.Clear();
+
+        /// The text without the ending mark, and whether it carried one.
+        public static string WithoutDone(string text, out bool ended)
+        {
+            ended = false;
+            if (string.IsNullOrEmpty(text)) return text;
+            int at;
+            while ((at = text.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase)) >= 0)
+            {
+                ended = true;
+                text = text.Remove(at, DoneMark.Length);
+            }
+            return ended ? Regex.Replace(text, @"\s{2,}", " ").Trim() : text;
+        }
         public const int MaxReplyChars = 600;
 
         readonly ILlmClient _llm;
@@ -174,6 +207,7 @@ namespace Ledger.Core
             // from writing it in the first place.
             sb.AppendLine("- In your world nobody drinks alcohol, gambles or bets, and there are no children. Never mention drink, pubs as places to drink, betting, the pools or games of chance, or children, even if the other person does. If they offer you a drink or a bet, turn it to a tea, a smoke or the matter in hand without naming what they offered.");
             sb.AppendLine("- Never invent a place or a business either. Name only places already named in what you have been told here; anywhere else is \"down the road\" or \"over in Copper Row\".");
+            sb.AppendLine($"- When you have had enough of this conversation (you are busy, you are done with them, or they have insulted you), say so in your own words and end your reply with {DoneMark}; that ends the conversation. Never write {DoneMark} otherwise.");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
             sb.AppendLine("- Talk like a person, not a writer: contractions, plain words, sentences that can trail off. Say 'is' and 'has', never 'serves as' or 'boasts'. No dashes, no neat lists of three, no 'it's not just X, it's Y', and never words like delve, tapestry, testament, vibrant, crucial, pivotal, showcase.");
             // SPEECH ONLY, AND THIS IS FROM A REAL TRANSCRIPT. Asked something
@@ -353,6 +387,7 @@ namespace Ledger.Core
                 { "card", Card.Id }, { "memory", memory }, { "beliefs", beliefs }, { "shown", shown }, { "transcript", transcript },
                 { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
                 { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
+                { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
             };
         }
 
@@ -371,6 +406,8 @@ namespace Ledger.Core
             HeardStory = null;
             HowYouKnowHim = null;
             KnowsHimFromGame = false;
+            _lastTurn = null;
+            LastEnded = false;
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -419,6 +456,11 @@ namespace Ledger.Core
             if (saved.TryGetValue("heardStory", out var hst) && hst is string story) HeardStory = story;
             if (saved.TryGetValue("howYouKnowHim", out var hk) && hk is string knows) HowYouKnowHim = knows;
             if (saved.TryGetValue("knowsHimFromGame", out var kg) && kg is bool fromGame) KnowsHimFromGame = fromGame;
+            if (saved.TryGetValue("lastTurn", out var lt) && lt is List<object> ltf && ltf.Count == 3)
+            {
+                int ld = WholeOrMinus(ltf[0]), lh = WholeOrMinus(ltf[1]), lm = WholeOrMinus(ltf[2]);
+                if (ld >= 0 && lh >= 0 && lh <= 23 && lm >= 0 && lm <= 59) _lastTurn = new GameTime(ld, lh, lm);
+            }
             if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
         }
 
@@ -529,6 +571,10 @@ namespace Ledger.Core
                             // well as in the caller (the independent check): a caller that
                             // forgot them would otherwise speak a refused sentence early.
                             if (ResponseValidator.IsDeflection(ResponseValidator.Validate(said, Card.Name, Card.AlsoCalled), Card.Name))
+                                return (false, bad, cost);
+                            // A sentence carrying the ending mark waits for the whole reply,
+                            // where the mark is taken out: it is never spoken early.
+                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0)
                                 return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
@@ -703,6 +749,10 @@ namespace Ledger.Core
         public async Task<string> SayToAsync(string playerInput, GameTime now,
             string sceneContext = "", CancellationToken ct = default, Func<string, Task<bool>> onFirstChecked = null)
         {
+            LastEnded = false;
+            if (_lastTurn.HasValue && (now.Day != _lastTurn.Value.Day || now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes))
+                _transcript.Clear();
+            _lastTurn = now;
             var system = BuildSystemPrompt(playerInput, now, sceneContext);
 
             // THIS TURN'S OWN LINE, so a rollback removes it and nothing else (the
@@ -830,6 +880,8 @@ namespace Ledger.Core
             // remembered as that, never as what the model wrote. When a first
             // sentence was already heard and the rest is refused, that sentence
             // alone is the reply.
+            reply = WithoutDone(reply, out var endedHere);
+            LastEnded = endedHere;
             var shown = ResponseValidator.Validate(reply, Card.Name, Card.AlsoCalled);
             string heardFirst = firstHeard ? firstSentence : d2 != null && d2.Heard ? d2.First : null;
             if (ResponseValidator.IsDeflection(shown, Card.Name) && heardFirst != null)
