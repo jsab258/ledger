@@ -91,7 +91,24 @@ namespace Ledger.Core
             {
                 if (currentSection == null) return;
                 var text = body.ToString().Trim();
-                if (currentSection.Equals("Hard Facts", StringComparison.OrdinalIgnoreCase))
+                // THEIR OWN WORDS (town list 6ap): the fixed lines, by kind, kept out
+                // of the prompt (ToPromptBlock) so the model never parrots them.
+                if (currentSection.Equals(OwnWordsSection, StringComparison.OrdinalIgnoreCase))
+                {
+                    foreach (var line in text.Split('\n'))
+                    {
+                        var t = line.Trim();
+                        if (!t.StartsWith("- ")) continue;
+                        int colon = t.IndexOf(':');
+                        if (colon < 3) continue;
+                        var kind = t.Substring(2, colon - 2).Trim().ToLowerInvariant();
+                        var said = t.Substring(colon + 1).Trim();
+                        if (said.Length == 0) continue;
+                        if (!card.OwnWords.TryGetValue(kind, out var list)) card.OwnWords[kind] = list = new List<string>();
+                        list.Add(said);
+                    }
+                }
+                else if (currentSection.Equals("Hard Facts", StringComparison.OrdinalIgnoreCase))
                 {
                     foreach (var line in text.Split('\n'))
                     {
@@ -148,6 +165,19 @@ namespace Ledger.Core
                 card.Id = card.Name.ToLowerInvariant().Replace(' ', '_');
             return card;
         }
+
+        /// THEIR OWN WORDS (town list 6ap; the third checklist sweep): the fixed
+        /// lines everybody shared ("That's as far as I can take you", "Not now,
+        /// love. Busy.") were wrong for some ("love" from Ron to his boss) and
+        /// the same from everyone; each card now gives its own, by kind:
+        /// "known-only", "deflect", "brush-off". Empty for a card without them,
+        /// which then uses the shared ones.
+        public const string OwnWordsSection = "Their Own Words";
+        public readonly Dictionary<string, List<string>> OwnWords = new Dictionary<string, List<string>>();
+
+        /// This person's own lines of a kind; empty when the card gives none.
+        public IReadOnlyList<string> Own(string kind) =>
+            kind != null && OwnWords.TryGetValue(kind, out var l) ? l : (IReadOnlyList<string>)new List<string>();
 
         /// The character-identity portion of the system prompt.
         public string ToPromptBlock()

@@ -49,6 +49,10 @@ namespace Ledger.Core
         /// only to measure what it does (ClaimBench smalltalk).
         public static bool RealWorldRule = true;
 
+        /// The prompt's rule against a verbal tic (town list 6ap); off only to
+        /// measure what it does (ClaimBench tics).
+        public static bool TicRule = true;
+
         public const int MaxAsks = 2;
         int _asksThisTalk;
         bool _promptAsks;
@@ -139,6 +143,8 @@ namespace Ledger.Core
             Suspicion = suspicion;
             _cost = cost;
             Model = model ?? (card.Tier == "core" ? Models.Core : Models.Ambient);
+            // Their own words when a line is refused (town list 6ap).
+            ResponseValidator.OwnDeflections(card.Name, card.Own("deflect"));
         }
 
         /// WHAT THEY HAVE HEARD ABOUT THE PLAYER'S NIGHTS, by the street's own
@@ -318,6 +324,8 @@ namespace Ledger.Core
             sb.AppendLine("- Never promise to do anything later: to meet him somewhere, keep watch or an eye out, lend or give him anything, ask around or pass word on, or come round. Nothing in your world would make it happen. If he asks, put him off in your own way.");
             sb.AppendLine($"- When you have had enough of this conversation (you are busy, you are done with them, or they have insulted you), say so in your own words and end your reply with {DoneMark}; that ends the conversation. Never write {DoneMark} otherwise.");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
+            if (TicRule)
+                sb.AppendLine("- Never open two replies in a row the same way.");
             sb.AppendLine("- Talk like a person, not a writer: contractions, plain words, sentences that can trail off. Say 'is' and 'has', never 'serves as' or 'boasts'. No dashes, no neat lists of three, no 'it's not just X, it's Y', and never words like delve, tapestry, testament, vibrant, crucial, pivotal, showcase.");
             // SPEECH ONLY, AND THIS IS FROM A REAL TRANSCRIPT. Asked something
             // he could not answer, Sam replied "Sam squints at that like you've
@@ -1295,7 +1303,7 @@ namespace Ledger.Core
                         await DraftAsync(d2, second, streaming, knownEarly, onFirstChecked, flagged, ct);
                         if (d2.FirstFlagged != null)
                         {
-                            reply = ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                            reply = ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
                             _lastCleanCited = new List<string>();
                         }
                         else
@@ -1303,7 +1311,7 @@ namespace Ledger.Core
                             var redrafted = ValidateReply(d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
                             bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
-                            reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                            reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card, _knownOnlySaid++);
                             if (!holds) _lastCleanCited = new List<string>();
                         }
                     }

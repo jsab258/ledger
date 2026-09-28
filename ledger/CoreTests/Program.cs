@@ -5530,6 +5530,38 @@ namespace Ledger.CoreTests
                       "and the character is told not to promise in the first place");
             }
 
+            // THEIR OWN WORDS (town list 6ap): each card's fixed lines, never in the
+            // prompt; the fallback, the refusal and the brush-off in that voice, the
+            // refusals taken in turn; a card without them keeps the shared ones.
+            {
+                var ron = CharacterCard.Parse(File.ReadAllText(Root("production/cast/cards/rocco.md")));
+                var sheila = CharacterCard.Parse(File.ReadAllText(Root("production/cast/cards/lena.md")));
+                var darren = CharacterCard.Parse(File.ReadAllText(Root("production/cast/cards/sam.md")));
+                string ronPrompt = ron.ToPromptBlock();
+                var ownDeflect = ron.Own("deflect");
+                new ConversationEngine(new FakeLlm { NextReply = "x" }, ron, new MemoryStore("rocco"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                var d1 = ResponseValidator.Validate("(Ron shrugs.)", ron.Name, ron.AlsoCalled);
+                var d2 = ResponseValidator.Validate("[Ron looks away.]", ron.Name, ron.AlsoCalled);
+                bool noLove = true;
+                foreach (var c in new[] { ron, sheila, darren })
+                    foreach (var kind in new[] { "known-only", "deflect", "brush-off" })
+                    {
+                        if (c.Own(kind).Count < 3) noLove = false;
+                        foreach (var l in c.Own(kind)) if (ContentRule.SpeechBreaks(l) != null || RealWorld.Find(l).Count > 0) noLove = false;
+                    }
+                foreach (var l in ron.Own("known-only")) if (l.Contains("love")) noLove = false;
+                var bare = CharacterCard.Parse("# Somebody\nid: somebody\n\n## Summary\nA person.\n");
+                Check(noLove && !ronPrompt.Contains("Their Own Words") && !ronPrompt.Contains("Rank's busy") && !ron.Sections.ContainsKey(CharacterCard.OwnWordsSection)
+                      && ron.Own("known-only").Contains(ClaimCheck.KnownOnlyFor(ron, 0)) && ClaimCheck.IsKnownOnly(ClaimCheck.KnownOnlyFor(ron, 1), ron)
+                      && ClaimCheck.KnownOnlyFor(ron, 0) != ClaimCheck.KnownOnlyFor(ron, 1)
+                      && ownDeflect.Contains(d1) && ownDeflect.Contains(d2) && d1 != d2 && ResponseValidator.IsDeflection(d1, ron.Name)
+                      && ClaimCheck.IsKnownOnly(ClaimCheck.KnownOnlyFor(bare, 0), bare) && bare.Own("deflect").Count == 0,
+                      "each card's own fixed lines, in its voice and within the rules, never shown to the model; refusals in turn; a card without them keeps the shared ones");
+                Check(darren.Sections["Speech Style"].Contains("never twice running") && new ConversationEngine(null, darren, new MemoryStore("sam"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker())
+                          .BuildSystemPrompt("x", new GameTime(2, 10, 0), "").Contains("Never open two replies in a row the same way"),
+                      "a card's verbal tic is bounded, and every character is told not to open two replies the same way");
+            }
+
             // REAL NAMES AND LATER THINGS IN LIVE TALK (town list 6ao): found only as
             // names, asked again without, never spoken early; ordinary words pass.
             {
