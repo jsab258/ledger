@@ -5530,6 +5530,30 @@ namespace Ledger.CoreTests
                       "and the character is told not to promise in the first place");
             }
 
+            // REAL NAMES AND LATER THINGS IN LIVE TALK (town list 6ao): found only as
+            // names, asked again without, never spoken early; ordinary words pass.
+            {
+                string missedR = null, wronglyR = null;
+                foreach (var p in new[] { "Silk Cut, since you ask.", "He drives a Ford, blue one.", "Looks like a Transit.", "I'm a Man United man, me.", "Coronation Street's on.",
+                                          "I'll ring you on your mobile.", "Send us an email.", "Thatcher's to blame.", "Down Sainsbury's.", "Reads the Sun, him.", "An old Vauxhall." })
+                    if (RealWorld.Find(p).Count == 0) missedR = p;
+                foreach (var p in new[] { "Takes courage, that.", "The players were out on the quay.", "Shell's on the beach.", "The sun's out.", "Look in the mirror.",
+                                          "It spurs you on.", "An arsenal of excuses.", "The mobile library comes Thursdays.", "Ford the stream.", "Transit's the word for it.",
+                                          "The Madonna in the chapel.", "He's a rover, that one.", "A regal sort.", "Mickey's, the Tivoli, the Harbour Board." })
+                    if (RealWorld.Find(p).Count > 0) wronglyR = p + " -> " + string.Join(",", RealWorld.Find(p));
+                Check(missedR == null && wronglyR == null, "real makes, brands, clubs, programmes, papers, public figures and later things are found; ordinary words and the game's own names are not",
+                      (missedR ?? "") + " | " + (wronglyR ?? ""));
+
+                var brandTalk = new ScriptedLlm("Silk Cut, same as always.", "My usual. Same as always.");
+                var brandCheck = new ScriptedLlm("{\"specifics\": []}");
+                var be = new ConversationEngine(brandTalk, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = brandCheck };
+                var brandKept = await be.SayToAsync("What are you smoking?", new GameTime(3, 20, 0), "In the bar.");
+                Check(brandKept == "My usual. Same as always." && be.LastRealNames.Count == 1 && brandTalk.Requests.Count == 2
+                      && brandTalk.Requests[1].System.Contains("Nothing in your world is called that")
+                      && be.BuildSystemPrompt("x", new GameTime(3, 20, 1), "").Contains("never name a real make of car"),
+                      "a reply naming a real brand is asked again without it, and the character is told not to in the first place", brandKept);
+            }
+
             // A CONVERSATION STARTS FRESH, AND A CHARACTER CAN END IT (town list 6ae).
             {
                 var freshLlm = new FakeLlm { NextReply = "Evening." };

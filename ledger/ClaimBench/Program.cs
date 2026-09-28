@@ -20,6 +20,7 @@ using Ledger.Core;
 ///     dotnet run --project ledger/ClaimBench -c Release -- gold          # agreement, and what to settle by hand
 ///     dotnet run --project ledger/ClaimBench -c Release -- check v2      # a checker on the same drafts
 ///     dotnet run --project ledger/ClaimBench -c Release -- pipeline v2   # the whole turn, as the game runs it
+///     dotnet run --project ledger/ClaimBench -c Release -- smalltalk     # real names in small talk, the rule off and on
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -91,6 +92,7 @@ static class Program
             case "generate": return await Generate(dir, parallel);
             case "label": return await LabelAll(dir, parallel);
             case "gold": return Gold(dir);
+            case "smalltalk": return await SmallTalk(dir, parallel);
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
@@ -361,6 +363,59 @@ static class Program
         Console.WriteLine($"check {variant} ({half}): invented turns caught {tp}/{tp + fn} ({recall * 100:0}%, 95% {Wilson(tp, tp + fn)}), " +
                           $"clean turns flagged {fp}/{fp + tn} ({falseAlarm * 100:0}%), unchecked={unchecked1}, " +
                           $"ms median={ms[ms.Count / 2]} p90={ms[(int)(ms.Count * 0.9)]}, usd={_usd:0.00}");
+        return 0;
+    }
+
+    /// REAL NAMES IN SMALL TALK (town list 6ao): a dozen questions a friend will
+    /// ask, to each character who talks, with the prompt's rule off and then on,
+    /// through the real engine and its check. Counts the first drafts that named
+    /// a real make, brand, club, programme, paper, public figure or later thing
+    /// (asked again without, RealWorld), and the replies said that still do.
+    static async Task<int> SmallTalk(string dir, int parallel)
+    {
+        var probes = new[]
+        {
+            "What are you smoking?", "Who do you support?", "What's on the telly tonight?", "Nice car that, what is it?",
+            "Have you got a mobile I could borrow?", "What paper do you read?", "What do you make of Thatcher?", "Where do you do your shopping?",
+            "What music are you into?", "What do you drive?", "Can I email you about it?", "What biscuits have you got in?",
+        };
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cost = new CostTracker();
+        using var client = new AnthropicClient(Key());
+        var rows = new List<object>();
+        var gate = new SemaphoreSlim(parallel);
+        foreach (bool rule in new[] { false, true })
+        {
+            ConversationEngine.RealWorldRule = rule;
+            int drafts = 0, said = 0, n = 0, failed = 0;
+            var jobs = new List<(string card, string probe)>();
+            foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in probes) jobs.Add((c, p));
+            await Task.WhenAll(jobs.Select(async job =>
+            {
+                await gate.WaitAsync();
+                try
+                {
+                    var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md")));
+                    var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = client };
+                    string reply;
+                    try { reply = await engine.SayToAsync(job.probe, new GameTime(2, 18, 0), "Quay Street, early evening, dry.", default, null); }
+                    catch (Exception) { Interlocked.Increment(ref failed); return; }
+                    var inReply = RealWorld.Find(reply);
+                    lock (rows)
+                    {
+                        n++;
+                        if (engine.LastRealNames.Count > 0) drafts++;
+                        if (inReply.Count > 0) said++;
+                        rows.Add(new { rule, card = job.card, probe = job.probe, draftNamed = engine.LastRealNames, invented = engine.LastInvented, reply, replyNamed = inReply });
+                    }
+                }
+                finally { gate.Release(); }
+            }));
+            Console.WriteLine($"smalltalk rule={(rule ? "on" : "off")}: first drafts naming a real name or later thing {drafts}/{n}; replies said that do {said}/{n}; failed {failed}");
+        }
+        ConversationEngine.RealWorldRule = true;
+        WriteJsonl(Path.Combine(dir, "smalltalk.jsonl"), rows);
+        Console.WriteLine($"smalltalk: usd={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
         return 0;
     }
 
