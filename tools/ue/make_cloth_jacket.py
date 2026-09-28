@@ -66,7 +66,20 @@ def main_after_idle(seconds=20.0):
     COLOURS = {"wool": (0.035, 0.043, 0.075), "yoke": (0.012, 0.012, 0.013), "button": (0.02, 0.018, 0.016)}
 
     def colour_render_mesh(mesh, dest):
-        base = unreal.load_asset("/Engine/BasicShapes/BasicShapeMaterial.BasicShapeMaterial")
+        # A BASE MATERIAL OF OUR OWN, flagged for skinned meshes and cloth: the
+        # engine's basic shape material is not, and on the game's cloth
+        # component it fell back to the engine's grey (28 September).
+        base_path = dest + "/M_DonkeyJacket_Base"
+        base = unreal.load_asset(base_path) if unreal.EditorAssetLibrary.does_asset_exist(base_path) else             unreal.EditorAssetLibrary.duplicate_asset("/Engine/BasicShapes/BasicShapeMaterial", base_path)
+        for flag in ("used_with_skeletal_mesh", "used_with_clothing"):
+            try:
+                base.set_editor_property(flag, True)
+            except Exception as e:
+                log("  %s: %s" % (flag, e))
+        unreal.MaterialEditingLibrary.recompile_material(base)
+        unreal.EditorAssetLibrary.save_loaded_asset(base, only_if_is_dirty=False)
+        log("base material %s: skeletal %s, clothing %s" % (base_path, base.get_editor_property("used_with_skeletal_mesh"),
+                                                            base.get_editor_property("used_with_clothing")))
         tools = unreal.AssetToolsHelpers.get_asset_tools()
         mats = mesh.get_editor_property("static_materials")
         for i, sm in enumerate(mats):
@@ -96,11 +109,16 @@ def main_after_idle(seconds=20.0):
         body = unreal.load_asset(body_path)
         log("body %s: %s" % (body_path, type(body).__name__ if body else "NOT FOUND"))
         lib = unreal.EditorAssetLibrary
-        df_path, ca_path = dest + "/DF_" + name, dest + "/CA_" + name
-        # MADE ONCE, THEN REGENERATED: deleting and copying again failed on the
-        # second run (both copies came back empty), so an existing pair is kept.
-        df = unreal.load_asset(df_path) if lib.does_asset_exist(df_path) else lib.duplicate_asset("/ChaosClothAsset/DF_StaticMeshClothTemplate", df_path)
-        ca = unreal.load_asset(ca_path) if lib.does_asset_exist(ca_path) else lib.duplicate_asset("/ChaosClothAsset/CA_Template", ca_path)
+        # A FRESH PAIR EACH TIME, under the time it was made: the template's
+        # import nodes keep their own copy of the meshes from the first import
+        # and refresh only when their Reimport button is pressed, so a kept
+        # graph never saw the new ease or colours (28 September); and deleting
+        # a pair and copying again under the same name failed.
+        stamp = time.strftime("%m%d%H%M")
+        df_path, ca_path = dest + "/DF_" + name + "_" + stamp, dest + "/CA_" + name + "_" + stamp
+        df = lib.duplicate_asset("/ChaosClothAsset/DF_StaticMeshClothTemplate", df_path)
+        ca = lib.duplicate_asset("/ChaosClothAsset/CA_Template", ca_path)
+        log("cloth asset path %s.%s" % (ca_path, ca_path.split("/")[-1]))
         log("graph %s, cloth asset %s" % (type(df).__name__ if df else None, type(ca).__name__ if ca else None))
         if not (df and ca and render and sim):
             return

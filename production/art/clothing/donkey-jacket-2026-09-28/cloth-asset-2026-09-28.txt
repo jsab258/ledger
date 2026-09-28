@@ -1,11 +1,13 @@
 imported ron_donkey_render_static.fbx -> ['/Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Render.SM_ron_donkey_Render']
 imported ron_donkey_sim_static.fbx -> ['/Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Sim.SM_ron_donkey_Sim']
+base material /Game/Ledger/Cloth/ron_donkey/M_DonkeyJacket_Base: skeletal True, clothing True
 slot 0 m_donkeywool -> MI_DonkeyJacket_Wool
 slot 1 m_donkeyyoke -> MI_DonkeyJacket_Yoke
 slot 2 m_donkeybutton -> MI_DonkeyJacket_Button
 body /Game/Ledger/Export/MH_RoccoP2/MH_RoccoP2_Body.MH_RoccoP2_Body: SkeletalMesh
+cloth asset path /Game/Ledger/Cloth/ron_donkey/CA_ron_donkey_09282235.CA_ron_donkey_09282235
 graph Dataflow, cloth asset ChaosClothAsset
-cloth asset dataflow_instance = <Struct 'DataflowInstance' (0x00000207CCEA8550) {}>
+cloth asset dataflow_instance = <Struct 'DataflowInstance' (0x00000225295CAF50) {}>
   set dataflow_instance to our graph
 set StaticMesh_Render.StaticMesh = /Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Render.SM_ron_donkey_Render: True
 set StaticMesh_SIM.StaticMesh = /Game/Ledger/Cloth/ron_donkey/SM_ron_donkey_Sim.SM_ron_donkey_Sim: True
