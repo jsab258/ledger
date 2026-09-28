@@ -5603,6 +5603,37 @@ namespace Ledger.CoreTests
                       "the deed's time as they would say it, the small hours belonging to the night before");
             }
 
+            // ASKING, AND KNOWING WHEN TO STOP (town list 6ak): asked straight out
+            // twice with no straight answer, they say what they make of it; a
+            // caught lie is put to him; an answer is never asked for again.
+            {
+                var asker = new ConversationEngine(new FakeLlm { NextReply = "Was it you, then?" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                asker.Suspicion.Raise(0.6, "I saw him near the window");
+                string p1 = asker.BuildSystemPrompt("Evening.", new GameTime(2, 20, 0), "");
+                await asker.SayToAsync("Evening.", new GameTime(2, 20, 0), "");
+                await asker.SayToAsync("Nice weather.", new GameTime(2, 20, 1), "");
+                string p3 = asker.BuildSystemPrompt("Is it?", new GameTime(2, 20, 2), "");
+                var back = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                back.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(asker.CaptureTalk()))));
+                back.Suspicion.Raise(0.6, "I saw him near the window");
+                string pBack = back.BuildSystemPrompt("Is it?", new GameTime(2, 20, 2), "");
+                asker.StartFresh();
+                string pFresh = asker.BuildSystemPrompt("Morning.", new GameTime(3, 9, 0), "");
+                asker.CurrentDeed = "player.window_d1";
+                asker.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Contradiction, "Rita's", new GameTime(3, 9, 1));
+                string pLie = asker.BuildSystemPrompt("Morning.", new GameTime(3, 9, 2), "");
+                var fits = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                fits.Suspicion.Raise(0.6, "I saw him near the window");
+                fits.CurrentDeed = "player.window_d1";
+                fits.HeardAnswer("player.window_d1", 1, 23, "Rita's", new[] { "ritas" }, ClaimResult.Consistent, "Rita's", new GameTime(3, 9, 1));
+                string pFits = fits.BuildSystemPrompt("Morning.", new GameTime(3, 9, 2), "");
+                Check(p1.Contains("ask them straight out") && p3.Contains("had no straight answer: do not ask again") && !p3.Contains("ask them straight out")
+                      && pBack.Contains("had no straight answer") && pFresh.Contains("ask them straight out")
+                      && pLie.Contains("He has lied to you about where he was") && !pLie.Contains("ask them straight out")
+                      && pFits.Contains("He has told you where he was, so do not ask that again") && !pFits.Contains("ask them straight out"),
+                      "asked straight out twice with no answer, they stop asking (and a reload keeps count); a caught lie is put to him; an answer is never asked for again");
+            }
+
             // THE CONVERSATION SURVIVES A SAVE AND A RELOAD (town list 6r): through
             // the save's own JSON into a fresh engine, the same talk, memory,
             // knowledge and suspicion; and the model sees what was said before.

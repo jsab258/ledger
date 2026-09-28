@@ -35,7 +35,15 @@ namespace Ledger.Core
         public bool LastEnded { get; private set; }
 
         /// Starts the next line as a new conversation (the game's {"fresh":true}).
-        public void StartFresh() => _transcript.Clear();
+        public void StartFresh() { _transcript.Clear(); _asksThisTalk = 0; }
+
+        /// ASKING, AND KNOWING WHEN TO STOP (town list 6ak, the third checklist
+        /// sweep): how many replies of this conversation were told to ask him
+        /// straight out; after MaxAsks with no straight answer they say what they
+        /// make of it instead of asking in every reply for good.
+        public const int MaxAsks = 2;
+        int _asksThisTalk;
+        bool _promptAsks;
 
         /// The text without the ending mark, and whether it carried one.
         public static string WithoutDone(string text, out bool ended)
@@ -293,8 +301,28 @@ namespace Ledger.Core
             // out of the conversation never knew what he wanted (24 September).
             // The Core decided to ask; this line makes the ask, and gives the
             // opening rule the want it asks for.
+            //
+            // AND WHAT HE HAS ANSWERED CHANGES THE WANT (town list 6ak): after an
+            // answer that fits, the lines above said "you need not ask him again"
+            // and this one "ask them straight out"; a caught liar was asked where
+            // he was in every reply for good. Now a lie is put to him, an answer
+            // is not asked for again, and after MaxAsks straight asks with no
+            // straight answer they say what they make of it.
+            _promptAsks = false;
             if (!string.IsNullOrEmpty(why) && Suspicion.Level >= SuspicionLevel.Suspicious)
-                sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). So in this reply, whatever they said, ask them straight out, your own way.");
+            {
+                if (answered != null && answered.Result == ClaimResult.Contradiction)
+                    sb.AppendLine($"What you want out of this conversation: the truth about it ({why}). He has lied to you about where he was, and you know it: in this reply, whatever they said, put that to him, your own way. Do not ask him where he was again.");
+                else if (answered != null)
+                    sb.AppendLine($"What you want out of this conversation: to settle whether they had anything to do with it ({why}). He has told you where he was, so do not ask that again: press him on what you still do not know, or let it lie, your own way.");
+                else if (_asksThisTalk >= MaxAsks)
+                    sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). You have asked him straight out and had no straight answer: do not ask again; say what you make of that, your own way.");
+                else
+                {
+                    sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). So in this reply, whatever they said, ask them straight out, your own way.");
+                    _promptAsks = true;
+                }
+            }
             return sb.ToString();
         }
 
@@ -548,7 +576,7 @@ namespace Ledger.Core
                 { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
                 { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
-                { "answers", AnswersJson() }, { "currentDeed", CurrentDeed },
+                { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
             };
         }
 
@@ -560,6 +588,7 @@ namespace Ledger.Core
             Memory.ReplaceBeliefs(new string[0]);
             _shown.Clear();
             _transcript.Clear();
+            _asksThisTalk = 0;
             Knowledge.Facts.Clear();
             Suspicion.Restore(0.0);
             _knownOnlySaid = 0;
@@ -637,6 +666,7 @@ namespace Ledger.Core
                 if (ld >= 0 && lh >= 0 && lh <= 23 && lm >= 0 && lm <= 59) _lastTurn = new GameTime(ld, lh, lm);
             }
             if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
+            if (saved.TryGetValue("asksThisTalk", out var at)) _asksThisTalk = Math.Max(0, WholeOrMinus(at));
         }
 
         List<object> AnswersJson()
@@ -944,7 +974,7 @@ namespace Ledger.Core
         {
             LastEnded = false;
             if (_lastTurn.HasValue && (now.Day != _lastTurn.Value.Day || now.TotalMinutes - _lastTurn.Value.TotalMinutes >= FreshAfterMinutes))
-                _transcript.Clear();
+                StartFresh();
             _lastTurn = now;
             var system = BuildSystemPrompt(playerInput, now, sceneContext);
 
@@ -1104,6 +1134,7 @@ namespace Ledger.Core
             }
             reply = shown;
             _transcript.Add(new LlmMessage("assistant", reply));
+            if (_promptAsks) _asksThisTalk++;
 
             Memory.Append(new MemoryEvent(now, "conversation", EstimateImportance(playerInput),
                 ClaimCheck.PlayerSaid + $"\"{Truncate(playerInput, 200)}\""));
