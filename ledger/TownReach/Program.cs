@@ -81,7 +81,7 @@ static class Program
         foreach (double firstSight in new[] { 0.5, 0.6, 1.0 })
         {
             double reach60 = 0, reachEnd = 0, showBefore = 0, showAfter = 0, hearers = 0, storyRemarkers = 0, faintRemarkers = 0;
-            int peakBefore = 0, peakAfter = 0, runs = 0, reachedNobody = 0;
+            int peakBefore = 0, peakAfter = 0, runs = 0, reachedNobody = 0, weekSecond = 0, weekThird = 0;
             double busiestBefore = 0, busiestAfter = 0;
             foreach (var witness in people)
                 for (int sightHour = 0; sightHour < 24 * 7; sightHour += every)
@@ -101,7 +101,7 @@ static class Program
                     var heardBy = new HashSet<string>();
                     var saidAboutStory = new HashSet<string>();
                     var saidFaintly = new HashSet<string>();
-                    int heardBy60 = 0, runPeakBefore = 0, runPeakAfter = 0;
+                    int heardBy60 = 0, heardByWeek = -1, runPeakBefore = 0, runPeakAfter = 0;
                     for (int hour = 0; hour < days * 24; hour++)
                     {
                         int abs = sightHour + hour;
@@ -133,6 +133,7 @@ static class Program
                         runPeakBefore = Math.Max(runPeakBefore, showingBefore);
                         runPeakAfter = Math.Max(runPeakAfter, showingAfter);
                         if (hour == 59) heardBy60 = heardBy.Count;
+                        if (hour == 24 * 7 - 1) heardByWeek = heardBy.Count;
                     }
                     peakBefore = Math.Max(peakBefore, runPeakBefore);
                     peakAfter = Math.Max(peakAfter, runPeakAfter);
@@ -144,10 +145,16 @@ static class Program
                     storyRemarkers += saidAboutStory.Count;
                     faintRemarkers += saidFaintly.Count;
                     if (heardBy.Count == 0) reachedNobody++;
+                    if (heardByWeek < 0) heardByWeek = heardBy.Count;
+                    if (heardByWeek >= 1) weekSecond++;
+                    if (heardByWeek >= 2) weekThird++;
                 }
             double perHearer(double v) => hearers > 0 ? v / hearers : 0;
             Console.WriteLine($"FIRST SIGHT {firstSight.ToString("0.00", Inv)}: runs={runs} (every witness x every {every} h of a week)");
             Console.WriteLine($"  reach: others who hear it  at 60h mean={reach60 / runs:0.00}  by day {days} mean={reachEnd / runs:0.00}  witnesses reaching nobody={reachedNobody}/{runs}");
+            // ROADMAP stage 3's test: the witness is the first resident to hold it;
+            // a second and a third are the first two others to hear it.
+            Console.WriteLine($"  stage 3 (one game week): reached a second resident {weekSecond}/{runs} ({weekSecond * 100.0 / runs:0}%), a second and a third {weekThird}/{runs} ({weekThird * 100.0 / runs:0}%)");
             Console.WriteLine($"  shows, per hearer, game hours out on the street:  before={perHearer(showBefore):0.0}  after={perHearer(showAfter):0.0}");
             Console.WriteLine($"  showing in the same hour:  most in any run before={peakBefore} after={peakAfter};  a run's busiest hour, mean before={busiestBefore / runs:0.0} after={busiestAfter / runs:0.0}");
             Console.WriteLine($"  hearers who say something about the story at least once: {perHearer(storyRemarkers) * 100:0}%  " +
