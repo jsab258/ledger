@@ -58,7 +58,12 @@ namespace Ledger.Core
         public static readonly Dictionary<string, (double inPerM, double outPerM)> Cost =
             new Dictionary<string, (double, double)>
             {
-                { Core, (3.0, 15.0) },
+                // $2 in and $10 out per million tokens, Anthropic's pricing page
+                // read 28 September 2026: the launch price made standard, the
+                // rise to $3/$15 set for 1 September cancelled. This read $3/$15,
+                // so every cost the helper reported for Sheila's talk was half
+                // as much again as the bill.
+                { Core, (2.0, 10.0) },
                 { Ambient, (1.0, 5.0) },
             };
     }
