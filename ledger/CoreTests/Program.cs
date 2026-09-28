@@ -5460,6 +5460,21 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // ONLY IN ENGLISH (town list 6ag): a reply in another language is not
+            // said, whatever it says; English of any kind, and short replies, pass.
+            {
+                string wrong = null;
+                foreach (var foreign in new[] { "Ja, ich habe nichts gesehen, aber ein Bier trinken wir.", "Je ne sais rien de cette nuit-la, monsieur.",
+                                                "No se nada de eso, lo siento mucho.", "Nie wiem nic o tym, przykro mi." })
+                    if (!ResponseValidator.IsDeflection(ResponseValidator.Validate(foreign, "Sam"), "Sam")) wrong = foreign;
+                foreach (var english in new[] { "Aye.", "Mm, no.", "Couldn't tell you, pal.", "Never saw him, not once, not ever.", "Market's slow this week, like always." })
+                    if (ResponseValidator.IsDeflection(ResponseValidator.Validate(english, "Sam"), "Sam")) wrong = english;
+                Check(wrong == null, "a reply in another language becomes the stand-in, and English of any kind is said", wrong ?? "");
+                Check(card != null && new ConversationEngine(null, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost)
+                      .BuildSystemPrompt("x", new GameTime(3, 20, 1), "").Contains("Always speak English"),
+                      "and the character is told to speak English whatever he speaks");
+            }
+
             // A PROMISE THE WORLD WILL NOT KEEP (town list 6af).
             {
                 string missed = null, wrongly = null;

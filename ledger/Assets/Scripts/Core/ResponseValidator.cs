@@ -70,6 +70,10 @@ namespace Ledger.Core
             // AND WHAT NO CHARACTER MAY SAY TO A PLAYER (SafetyRule, 28 September):
             // urging them to harm or kill themselves.
             if (SafetyRule.SpeechBreaks(reply) != null) return Deflect(characterName);
+            // AND ONLY IN ENGLISH (town list 6ag; ruling G12, English only for now):
+            // the content and safety rules read English words, so a reply in
+            // another language would pass them whatever it said.
+            if (!LooksEnglish(reply)) return Deflect(characterName);
 
             // LAYER 2 — SHAPE, on the one text in this game that nobody wrote
             // and nobody reviewed.
@@ -118,6 +122,40 @@ namespace Ledger.Core
                 ? reply.Substring(0, cut).TrimEnd()
                 : reply.Substring(0, MaxChars - 1).TrimEnd() + "…";
         }
+
+        /// ENGLISH, OR TOO SHORT TO TELL: a reply of four words or more carries at
+        /// least one of English's common small words ("the", "I", "you", "was",
+        /// "aye"...). A German, French or Spanish reply of any length has none of
+        /// them; "Aye." and "Mm, no." are too short to judge and pass.
+        public static bool LooksEnglish(string reply)
+        {
+            if (string.IsNullOrWhiteSpace(reply)) return true;
+            var words = System.Text.RegularExpressions.Regex.Matches(reply.ToLowerInvariant().Replace('\u2019', '\''), @"[\p{L}']+");
+            if (words.Count < 4) return true;
+            foreach (System.Text.RegularExpressions.Match w in words)
+            {
+                // An English contraction is English ("who's", "you've", "nothing's").
+                string v = w.Value;
+                if (EnglishSmallWords.Contains(v) || v.EndsWith("'s") || v.EndsWith("'ve") || v.EndsWith("'ll")
+                    || v.EndsWith("'re") || v.EndsWith("'d") || v.EndsWith("n't")) return true;
+            }
+            return false;
+        }
+
+        /// Words English does not share with the languages a player might type:
+        /// no "no", "a", "in", "so", "was", "me", "he", "is" or "i", which are
+        /// words in Spanish, German, Italian or Polish too.
+        static readonly HashSet<string> EnglishSmallWords = new HashSet<string>
+        {
+            "the", "and", "but", "or", "of", "to", "on", "at", "for", "with", "from", "by", "about",
+            "i'm", "i've", "i'll", "i'd", "my", "you", "you're", "your", "he's", "him", "his", "she", "she's", "her",
+            "it", "it's", "we", "us", "our", "they", "them", "their", "that", "this", "there", "here", "what", "who", "where", "when",
+            "were", "are", "be", "been", "have", "has", "had", "do", "did", "don't", "didn't", "can't", "won't", "not",
+            "yes", "aye", "if", "just", "any", "some", "all", "one", "out", "up", "down", "then", "now", "well", "like",
+            "yeah", "nothing", "somebody", "nobody", "anybody", "never", "always", "before", "after", "much", "night", "last",
+            "does", "said", "every", "know", "tell", "ask", "sorry", "hello", "get", "got", "going", "come", "see", "saw",
+            "think", "look", "good", "right", "mate", "pal", "love",
+        };
 
         /// Whether Validate put its in-character deflection in place of a reply
         /// (TalkHelper's early first sentence is not spoken if so).
