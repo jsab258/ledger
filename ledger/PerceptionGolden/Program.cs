@@ -104,6 +104,7 @@ namespace Ledger.PerceptionGolden
                 EmitRecognition(sb);
                 EmitCastDay(sb);
                 EmitOriginRung(sb);
+                EmitJustNow(sb);
             }
 
             var text = sb.ToString();
@@ -477,6 +478,23 @@ namespace Ledger.PerceptionGolden
         /// which the port left out of scope on 8 September: every stance, with
         /// no story, a plain one and one of his night, over enough seeds to
         /// reach every line of every band.
+        /// THE STREET JUST AFTER A DEED (town list 6an), for the port of
+        /// StreetVoice.Ambient: what a pair says at each moment after each kind
+        /// of noise, and before any, over a spread of seeds.
+        static void EmitJustNow(StringBuilder sb)
+        {
+            var a = new Gossiper("ja", "ja", new MemoryStore("ja"), new KnowledgeBase(), new SuspicionTracker());
+            var b = new Gossiper("jb", "jb", new MemoryStore("jb"), new KnowledgeBase(), new SuspicionTracker());
+            var now = new GameTime(1, 10, 0);
+            foreach (var kind in new[] { "glass", "shout", "crash", "bang", "none" })
+                foreach (double since in new[] { -1.0, 0.0, 3.0, 89.9, 90.0, 179.9, 180.0 })
+                    for (int seed = 0; seed < 12; seed++)
+                    {
+                        var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
+                        Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
+                    }
+        }
+
         static void EmitRecognition(StringBuilder sb)
         {
             var g = new Gossiper("rc", "rc", new MemoryStore("rc"), new KnowledgeBase(), new SuspicionTracker());

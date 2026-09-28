@@ -8918,6 +8918,42 @@ namespace Ledger.CoreTests
                 Check(!asks.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && asksYa.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && !knows.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)),
                       "asking where he was this morning is not asking about the deed; \"where were ya\" is asking; \"I know where you were\" is not");
             }
+            // THE STREET JUST AFTER A DEED (town list 6an): a reaction first, then
+            // the street settling, then everyday talk; nothing changes without a
+            // deed; every line within canon's content rule; the shared replies fit
+            // every kind of noise.
+            {
+                var ja = new Gossiper("ja", "ja", new MemoryStore("ja"), new KnowledgeBase(), new SuspicionTracker());
+                var jb = new Gossiper("jb", "jb", new MemoryStore("jb"), new KnowledgeBase(), new SuspicionTracker());
+                var jnow = new GameTime(1, 10, 0);
+                string wrongJ = null;
+                for (int seed = 0; seed < 40; seed++)
+                {
+                    var plain = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed);
+                    var none = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed, null, null, -1);
+                    var gone = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed, null, "glass", StreetVoice.SettlingSeconds);
+                    if (plain[0].Text != none[0].Text || plain[1].Text != none[1].Text || plain[0].Text != gone[0].Text) wrongJ = "without a deed, or after it, the talk changed: seed " + seed;
+                    foreach (var kind in new[] { "glass", "shout", "crash", "bang" })
+                    {
+                        var fresh = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed, null, kind, 0.0);
+                        var late = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed, null, kind, StreetVoice.JustNowSeconds - 0.1);
+                        var settle = StreetVoice.Ambient(ja, jb, jnow, 0.5, 1.0, false, false, seed, null, kind, StreetVoice.JustNowSeconds);
+                        string want = kind == "bang" ? "noise" : kind;
+                        if (fresh[0].Bank != "ambient/open/justnow/" + want || late[0].Bank != fresh[0].Bank || fresh[1].Bank != "ambient/reply/justnow"
+                            || settle[0].Bank != "ambient/open/settling" || settle[1].Bank != "ambient/reply/settling") wrongJ = "banks wrong for " + kind + " seed " + seed;
+                        foreach (var l in new[] { fresh[0], fresh[1], settle[0], settle[1] })
+                        {
+                            if (ContentRule.SpeechBreaks(l.Text) != null) wrongJ = "content rule: " + l.Text;
+                            if (l.AboutPlayer) wrongJ = "about the player: " + l.Text;
+                        }
+                        foreach (var l in new[] { fresh[1], settle[0], settle[1] })
+                            if (System.Text.RegularExpressions.Regex.IsMatch(l.Text, @"\b(glass|window|shout|bang|crash)", System.Text.RegularExpressions.RegexOptions.IgnoreCase)) wrongJ = "a shared line names one kind: " + l.Text;
+                    }
+                }
+                Check(wrongJ == null && StreetVoice.JustNowSpeakAfterSeconds < StreetVoice.ClearWordsEverySeconds,
+                      "after a deed: a reaction for ninety seconds, the street settling for ninety more, then everyday talk; unchanged without one; within the content rule; shared lines fit every noise", wrongJ ?? "");
+            }
+
             // A STAGE DIRECTION SAID IN THE FIRST PERSON (town list 6aj): taken out,
             // the speech kept; talk that only sounds like one kept whole.
             {
