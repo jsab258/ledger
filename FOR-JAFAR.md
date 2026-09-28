@@ -20,11 +20,11 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Delay.** Ron and Darren now say "Let me think" at once. Pocket failed again: set aside.
 
-**Jacket.** Hung on Ron's body in Blender; now Unreal cloth, not yet on him.
+**Jacket.** Hung on Ron's body in Blender; worn in the game as moving cloth; not ready to show.
 
 **C:.** 46.4 GB, 74.1 after your cleanup, 54 to 57 settled. Backup OK.
 
-**Builds.** Core tests green again; Unreal building.
+**Builds.** Core tests green again; Unreal green.
 
 **Research.** Paid voices; a whole MetaHuman body in Blender; Unreal cloth by script.
 
