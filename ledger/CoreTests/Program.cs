@@ -8745,6 +8745,72 @@ namespace Ledger.CoreTests
                 Check(!asks.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && asksYa.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && !knows.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)),
                       "asking where he was this morning is not asking about the deed; \"where were ya\" is asking; \"I know where you were\" is not");
             }
+            // WHO THEY KNOW, AND WHERE (town list 6ad): with no map, asking a local is
+            // the way round. The named people by name, everybody else by what they
+            // do; friends by where they usually are; whoever is here now; and the
+            // claim check lets them say it (P items), habits and all.
+            {
+                var hookP = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var named = new[] { "rocco", "lena", "sam", "june", "ada", "noor", "emil", "rita", "hal" };
+                string missing = null;
+                foreach (var who in hookP.People)
+                {
+                    string all = string.Join("\n", hookP.PeopleFor(who, 1, 10));
+                    foreach (var n in named)
+                        if (n != who && !all.Contains(hookP.NameOf(n) + ", ")) missing = who + " knows nothing of " + n;
+                    int told = 0;
+                    foreach (var l in hookP.PeopleFor(who, 1, 10)) if (!l.StartsWith("Here with you now") && !l.StartsWith("The street's places")) told++;
+                    int always = 0;
+                    foreach (var o2 in hookP.People) if (o2 != who && hookP.NameOf(o2) != null) always++;
+                    foreach (var (ta, tb, tw) in hookP.Ties) if ((ta == who || tb == who) && tw >= 0.6 && hookP.NameOf(ta == who ? tb : ta) == null) always++;
+                    int named9 = 0;
+                    foreach (var o2 in hookP.People) if (o2 != who && hookP.NameOf(o2) != null) named9++;
+                    if (told > named9 + Math.Max(CastDay.MostKnown, always - named9)) missing = who + " is told of " + told;
+                    if (hookP.Described(who) == who || all.Contains(" " + who + " ") || all.Contains(" " + who + ";")) missing = who + " has no description of their own";
+                    if (all.Contains(" " + who + ",") || all.Contains("(canon)")) missing = who + "'s lines show an id or a note";
+                }
+                var ron = hookP.PeopleFor("rocco", 1, 10);
+                Check(hookP.NameOf("rocco") == "Ron Kirby" && hookP.RoleOf("rocco") == "Mickey's door and rank" && hookP.NameOf("zlata") == null
+                      && hookP.Called("zlata") == "the dispatcher at the cab office" && hookP.Described("rocco") == "Ron Kirby, who keeps Mickey's door and the rank" && hookP.RoleOf("emil") == "mass, the presbytery, calls on the old"
+                      && hookP.UsualWords("rocco") == "Mickey's most of the day" && hookP.UsualWords("sam") == null
+                      && hookP.UsualWords("joey") == "the quay in the mornings, Mickey's in the afternoons"
+                      && hookP.UsualWords("filip") == "the warehouses in the evenings and at night",
+                      "the street's names for people, what they do, and where they usually are", hookP.UsualWords("joey") ?? "");
+                Check(missing == null && ron.Exists(l => l.StartsWith("Sheila Dunn, Mickey's bookkeeper; you know each other well; usually at Mickey's"))
+                      && ron.Exists(l => l.StartsWith("Here with you now: ") && l.Contains("Sheila Dunn"))
+                      && ron.Exists(l => l.StartsWith("The street's places, as people call them: ") && l.Contains("the chapel") && !l.Contains("the fish dock"))
+                      && hookP.PeopleFor("nobody", 1, 10).Count == 0
+                      && hookP.PeopleFor("rocco", 1, 10, new[] { "sam", "zlata", "ghost" }).Contains("Here with you now: Darren Milner; the dispatcher at the cab office.")
+                      && hookP.PeopleFor("zora", 1, 10, new[] { "selma", "tanja", "selma" }).Contains("Here with you now: a laundress at the steam laundry; a laundress at the steam laundry.")
+                      && !hookP.PeopleFor("zlata", 1, 10).Exists(l => l.StartsWith("Here with you now") && l.Contains("the woman from the fish shop"))
+                      && hookP.PeopleFor("sam", 1, 10).FindAll(l => l.Contains("; you know each other")).Count >= 12
+                      && !hookP.PeopleFor("rocco", 1, 10, new string[0]).Exists(l => l.StartsWith("Here with you now")),
+                      "everybody in the named cast has heard of every named person; a friend comes with where they usually are, and whoever is here now", missing ?? string.Join(" | ", ron));
+                var pe = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                pe.People = hookP.PeopleFor("lena", 1, 10);
+                string pp = pe.BuildSystemPrompt("Where's Ron?", new GameTime(1, 10, 0), "");
+                var pItems = ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent>(), null, null, null, null, null, pe.People);
+                var pIds = new List<string>();
+                foreach (var (id, _) in pItems) pIds.Add(id);
+                var pHabits = new List<string>();
+                var habitP = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Ron is at Mickey's most of the day\", \"kind\": \"habit\", \"source\": \"P1\"}]}", pIds, pHabits);
+                // The second look clears a habit from a P item, never an event.
+                string habitList = "{\"specifics\": [{\"detail\": \"Rita does the books\", \"kind\": \"habit\", \"source\": \"P1\"}]}";
+                string eventList = "{\"specifics\": [{\"detail\": \"Ron was at the quay\", \"kind\": \"place\", \"source\": \"P1\"}]}";
+                string lookP = "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"P1\"}]}";
+                var habitCleared = ClaimCheck.CheckAsync(new ScriptedLlm(habitList, lookP), "m", pItems, "x", CancellationToken.None).GetAwaiter().GetResult();
+                var eventKept = ClaimCheck.CheckAsync(new ScriptedLlm(eventList, lookP), "m", pItems, "x", CancellationToken.None).GetAwaiter().GetResult();
+                Check(pHabits.Count == 1 && habitCleared.invented.Count == 0 && habitCleared.calls.Count == 2 && eventKept.invented.Count == 1,
+                      "a habit cited to what they know of the street's people gets a second look, which may clear it from those; an event it never may");
+                var habitNone = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Ron is at Mickey's most of the day\", \"kind\": \"habit\", \"source\": \"none\"}]}", pIds);
+                var eventP = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Ron was at the quay last night\", \"kind\": \"place\", \"source\": \"P1\"}]}", pIds);
+                Check(pp.Contains("- Ron Kirby, who keeps Mickey's door and the rank; you know each other well") && pp.Contains("you do not know where anyone is right now unless they are here with you")
+                      && pIds.Contains("P1") && ClaimCheck.NumberedKnown(pItems).Contains("P1: Somebody or somewhere on the street they know: ")
+                      && habitP.Count == 1 && habitNone.Count == 1 && eventP.Count == 1
+                      && ClaimCheck.RequestItems("m", "x", "y").System.Contains("a C, H or P item describes"),
+                      "they are told who they know, and the claim check reads it: a habit or event from a P item alone goes to the second look");
+            }
+
             // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's
             // word or their own earlier talk, and what they call him is the game's.
             string never = me.HowTheyKnowHim(false, false, "Tom"), heardOf = me.HowTheyKnowHim(false, true, "Tom");

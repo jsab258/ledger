@@ -91,7 +91,7 @@ static class Program
             case "generate": return await Generate(dir, parallel);
             case "label": return await LabelAll(dir, parallel);
             case "gold": return Gold(dir);
-            case "check": return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
+            case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
             case "raw":
@@ -355,7 +355,7 @@ static class Program
             finally { gate.Release(); }
         }));
         results.Sort((x, y) => string.CompareOrdinal((string)x.GetType().GetProperty("id").GetValue(x), (string)y.GetType().GetProperty("id").GetValue(y)));
-        WriteJsonl(Path.Combine(dir, $"check.{variant}.{half}.jsonl"), results);
+        WriteJsonl(Path.Combine(dir, $"check.{variant}.{half}{(_withPeople ? ".people" : "")}.jsonl"), results);
         ms.Sort();
         double recall = tp + fn > 0 ? tp * 1.0 / (tp + fn) : 0, falseAlarm = fp + tn > 0 ? fp * 1.0 / (fp + tn) : 0;
         Console.WriteLine($"check {variant} ({half}): invented turns caught {tp}/{tp + fn} ({recall * 100:0}%, 95% {Wilson(tp, tp + fn)}), " +
@@ -429,9 +429,19 @@ static class Program
         foreach (var m in set.GetProperty("memories").EnumerateArray())
             memory.Append(new MemoryEvent(new GameTime(m.GetProperty("day").GetInt32(), m.GetProperty("hour").GetInt32(), m.GetProperty("minute").GetInt32()),
                 m.GetProperty("kind").GetString(), m.GetProperty("importance").GetDouble(), m.GetProperty("text").GetString()));
-        return ClaimCheck.KnownItems(card, ClaimCheck.WitnessedFor(memory), memory.Beliefs, null, scene, now.ToString());
+        // WITH WHO THEY KNOW ON THE STREET (--people, town list 6ad), as the
+        // helper now gives it: the named cast file read for this card at this hour.
+        IEnumerable<string> people = null;
+        if (_withPeople)
+        {
+            _cast ??= CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+            people = _cast.PeopleFor(d.card, now.Day, now.Hour);
+        }
+        return ClaimCheck.KnownItems(card, ClaimCheck.WitnessedFor(memory), memory.Beliefs, null, scene, now.ToString(), null, people);
     }
     static JsonDocument _scenarios;
+    static bool _withPeople;
+    static CastDay _cast;
 
     static async Task<LlmResponse> Retry(Func<Task<LlmResponse>> call)
     {

@@ -90,10 +90,12 @@ namespace Ledger.Core
         /// What the character knows, as numbered items: C for their card (not
         /// how they talk), H for their hard facts, B for beliefs, M for every
         /// memory with its time, W for why they are wary, S for the scene, T for
-        /// the time now, K for how they know him (town list 6s). The same
+        /// the time now, K for how they know him (town list 6s), P for the
+        /// people and places of the street they know (town list 6ad). The same
         /// material as KnownFor, in the same order.
         public static List<(string id, string text)> KnownItems(CharacterCard card, IEnumerable<MemoryEvent> retrieved,
-            IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null)
+            IEnumerable<string> beliefs, string why, string scene, string now = null, string knowsHim = null,
+            IEnumerable<string> people = null)
         {
             var items = new List<(string, string)>();
             int n = 0;
@@ -121,6 +123,9 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(scene)) items.Add(("S1", "The scene: " + scene));
             if (!string.IsNullOrEmpty(now)) items.Add(("T1", "It is now " + now + "."));
             if (!string.IsNullOrEmpty(knowsHim)) items.Add(("K1", "How they know him, as they were told it: " + knowsHim));
+            n = 0;
+            foreach (var p in people ?? Array.Empty<string>())
+                if (!string.IsNullOrWhiteSpace(p)) items.Add(("P" + (++n), "Somebody or somewhere on the street they know: " + p));
             return items;
         }
 
@@ -159,8 +164,8 @@ namespace Ledger.Core
                 "face\"); what somebody did not do or say; a guess, opinion, prediction or feeling, or anything marked as a guess " +
                 "(\"could've been anyone\", \"I think\", \"maybe\"); vague words (somebody, talk, things, people); anything about the " +
                 "conversation itself or the person they are talking to (\"you're asking a lot\", \"new management\"); habits of the street " +
-                "or of people that a C or H item describes; the time now when T1 gives it; small talk about the weather or the scene now.\n" +
-                "Check the items before you write \"none\": a detail a C, H, M, S, T or K item gives, in other words, has that item's id.\n" +
+                "or of people that a C, H or P item describes; the time now when T1 gives it; small talk about the weather or the scene now.\n" +
+                "Check the items before you write \"none\": a detail a C, H, M, S, T, K or P item gives, in other words, has that item's id.\n" +
                 "Give each specific a kind: vehicle, person, time, place, appearance, object, amount, action, police, business for " +
                 "things that happened; or weather, now, denial, guess, habit, talk, street, self for things that are not claims about an " +
                 "event: street is the general run of the street or the rank (\"quiet today\", \"people in and out\", \"the market crowd's " +
@@ -206,7 +211,8 @@ namespace Ledger.Core
             // entries that were written whole are read, and if none of them
             // is flagged the line is unchecked, never clean.
             bool cut = r.StopReason == "max_tokens";
-            var flagged = ParseItems(cut ? Salvaged(r.Text) : r.Text, ids);
+            var habits = new HashSet<string>();
+            var flagged = ParseItems(cut ? Salvaged(r.Text) : r.Text, ids, habits);
             if (cut && (flagged == null || flagged.Count == 0)) return (null, calls);
             if (flagged == null || flagged.Count == 0) return (flagged, calls);
             // ONE SECOND LOOK A DETAIL, side by side (measured on the bench:
@@ -239,7 +245,9 @@ namespace Ledger.Core
                 // word for word, and lost the first call's cost).
                 var v = looks[i].Status == System.Threading.Tasks.TaskStatus.RanToCompletion ? looks[i].Result : null;
                 if (v != null) calls.Add(v);
-                var ok = v == null ? null : ParseVerify(v.Text, 1, ids);
+                // What they know of the street's people clears a habit, never an
+                // event (town list 6ad).
+                var ok = v == null ? null : ParseVerify(v.Text, 1, habits.Contains(flagged[i]) ? ids : ids.FindAll(x => x[0] != 'P'));
                 if (ok == null || !ok[0]) left.Add(flagged[i]);
             }
             // A cut-off answer the second look cleared is still only half read
@@ -516,7 +524,14 @@ namespace Ledger.Core
             return cited;
         }
 
-        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds)
+        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds) => ParseItems(answer, validIds, null);
+
+        /// As above, with `habits` given the flagged details the list called a
+        /// habit, which the second look may clear from what they know of the
+        /// street's people (P items); anything else it may not (town list 6ad,
+        /// the independent check: "Darren was at the quay" cleared by "usually
+        /// at the quay").
+        public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds, ICollection<string> habits)
         {
             // Every list in the answer is read (the independent check: an empty
             // list followed by a corrected one came back clean), and one that
@@ -556,8 +571,11 @@ namespace Ledger.Core
                 if (kind == "habit")
                 {
                     bool card = false;
+                    // A habit a P item is cited for goes to the second look: "Rita
+                    // keeps the pawn shop" does not give "Rita does the Widow's books"
+                    // (the independent check of town list 6ad).
                     if (ids != null) foreach (var id in ids) if (id[0] == 'C' || id[0] == 'H') card = true;
-                    if (!card) outList.Add(detail.Trim());
+                    if (!card) { outList.Add(detail.Trim()); habits?.Add(detail.Trim()); }
                     continue;
                 }
                 if (Array.IndexOf(Loose, kind) >= 0 && !NamesSomething(detail, kind)) continue;
