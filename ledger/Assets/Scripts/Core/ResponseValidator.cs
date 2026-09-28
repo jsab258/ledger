@@ -123,8 +123,25 @@ namespace Ledger.Core
         /// (TalkHelper's early first sentence is not spoken if so).
         public static bool IsDeflection(string reply, string characterName) => reply == Deflect(characterName);
 
-        static string Deflect(string characterName) =>
-            $"({characterName} looks at you a moment, seems to lose the thread, then changes the subject.)";
+        /// SAID, NOT NARRATED (town list 6ab, the second checklist sweep): the
+        /// stand-in was a stage direction in brackets, "(Ron Kirby looks at you a
+        /// moment...)", read aloud by the voice. It is now a line a person says,
+        /// the same one for a given person every time, so the game and the
+        /// helper can still tell it from a reply.
+        static string Deflect(string characterName)
+        {
+            uint h = 2166136261;
+            foreach (char c in characterName ?? "") { h ^= c; h *= 16777619; }
+            return DeflectLines[(int)(h % (uint)DeflectLines.Length)];
+        }
+
+        internal static readonly string[] DeflectLines =
+        {
+            "No. Let's leave that there.",
+            "Anyway. Never mind that.",
+            "I'll not get into that. What else?",
+            "Let's talk about something else.",
+        };
 
         /// Deterministic de-telling: fixes the mechanical "AI voice" giveaways
         /// that need no rewrite and no extra API call — dashes become commas,

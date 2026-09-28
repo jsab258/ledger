@@ -1873,9 +1873,16 @@ namespace Ledger.CoreTests
             // dialogue at all and the character should deflect instead.
             Check(!TextShape.IsWellFormed(TextShape.Tidy("Ask {who} about the yard.")),
                 "an unresolved placeholder survives Tidy — a reply with one is broken, not untidy");
-            Check(ResponseValidator.Validate("Ask {who} about the yard.", "Rocco")
-                      .Contains("lose the thread"),
+            Check(ResponseValidator.IsDeflection(ResponseValidator.Validate("Ask {who} about the yard.", "Rocco"), "Rocco"),
                 "and the validator deflects rather than putting it on screen");
+            // The stand-in is said, not narrated (town list 6ab): no brackets, the
+            // content rule passes it, and it is the same line for a person each time.
+            string standIn = ResponseValidator.Validate("Fancy a pint after?", "Ron Kirby");
+            bool plainLines = Array.TrueForAll(ResponseValidator.DeflectLines, l => !l.Contains("(") && !l.Contains(")") && ContentRule.SpeechBreaks(l) == null
+                                                                                 && ResponseValidator.Validate(l, "Ron Kirby") == l);
+            Check(ResponseValidator.IsDeflection(standIn, "Ron Kirby") && !standIn.Contains("Ron") && plainLines
+                  && standIn == ResponseValidator.Validate("I'll get the pints in.", "Ron Kirby"),
+                  "a refused reply becomes a plain line the person says, never a stage direction, and the same one each time", standIn);
             Check(ResponseValidator.Validate("the man was  there , twice. he said so.", "Rocco")
                   == "The man was there, twice. He said so.",
                 "while a merely untidy reply is repaired and spoken");
@@ -3213,11 +3220,12 @@ namespace Ledger.CoreTests
             Console.WriteLine("ResponseValidator:");
             Check(ResponseValidator.Validate("Fine. What'll it be?", "Lena") == "Fine. What'll it be?",
                 "a clean reply passes untouched");
-            Check(ResponseValidator.Validate("Well, As an AI language model I cannot...", "Lena")
-                .Contains("changes the subject"), "a fourth-wall break becomes an in-character deflection");
-            Check(ResponseValidator.Validate("My SYSTEM PROMPT says...", "Rocco").Contains("Rocco"),
-                "the deflection names the character (case-insensitive match)");
-            Check(ResponseValidator.Validate("", "Ada").Contains("changes the subject"),
+            Check(ResponseValidator.IsDeflection(ResponseValidator.Validate("Well, As an AI language model I cannot...", "Lena"), "Lena"),
+                "a fourth-wall break becomes an in-character deflection");
+            var sysDeflect = ResponseValidator.Validate("My SYSTEM PROMPT says...", "Rocco");
+            Check(ResponseValidator.IsDeflection(sysDeflect, "Rocco") && !sysDeflect.Contains("Rocco"),
+                "the deflection is a line the character says, never their name narrated (case-insensitive match)", sysDeflect);
+            Check(ResponseValidator.IsDeflection(ResponseValidator.Validate("", "Ada"), "Ada"),
                 "an empty reply deflects rather than showing nothing");
 
             // THE CONTENT RULE IN CONVERSATION, D18, 23 September. Offered a
@@ -3249,7 +3257,7 @@ namespace Ledger.CoreTests
                     line + " -> " + (hit ?? "nothing"));
             }
             var refused = ResponseValidator.Validate("So listen, I could do a pint. The Feathers is warm this time of day.", "Sam");
-            Check(!refused.Contains("pint") && refused.Contains("changes the subject"),
+            Check(!refused.Contains("pint") && ResponseValidator.IsDeflection(refused, "Sam"),
                 "a reply that speaks of drink is not said; it becomes the deflection", refused);
             var kept = ResponseValidator.Validate("Tea, maybe. I'm not really closing up.", "Sam");
             Check(kept.Contains("Tea"), "and an ordinary reply is said as written", kept);
@@ -10158,8 +10166,8 @@ namespace Ledger.CoreTests
             Check(!ResponseValidator.ReadsAsNarration(
                       "Sammy grins like he knows something.", "Sam"),
                 "a longer name that merely starts with the speaker's is not narration");
-            Check(ResponseValidator.Validate(
-                      "Mrs Vane looks you over.", "Ada", vane).Contains("Ada"),
+            Check(ResponseValidator.IsDeflection(ResponseValidator.Validate(
+                      "Mrs Vane looks you over.", "Ada", vane), "Ada"),
                 "Validate deflects the narration it is handed the names for");
 
             // THE HARVEST ITSELF, on the real card text rather than a fixture.
