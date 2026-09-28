@@ -103,6 +103,7 @@ namespace Ledger.PerceptionGolden
                 EmitKnowing(sb);
                 EmitRecognition(sb);
                 EmitCastDay(sb);
+                EmitOriginRung(sb);
             }
 
             var text = sb.ToString();
@@ -499,6 +500,121 @@ namespace Ledger.PerceptionGolden
         /// small files that pin the rules a real file does not reach today (a
         /// routine that wraps round midnight, one written out of order, the
         /// six-metre edge, a weekday's own routine) and the files it refuses.
+        /// THE FIRST TELLER'S RUNG (town list 6n, 28 September): carried
+        /// through retelling (Tick) and asking (CompareNotes), which now passes
+        /// a body on whole and indelible; and the account the suspicion rule
+        /// reads (Suspecting.AccountOf), for each rung the witness reached.
+        static void EmitOriginRung(StringBuilder sb)
+        {
+            foreach (int rung in new[] { -1, 0, 1, 2, 3, 4 })
+            {
+                var g = new SocialGraph(); g.Link("w", "a", 0.9); g.Link("a", "b", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "w", "a", "b" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("w", new Fact("player", "window_d1", "seen"), "the window went", true, new GameTime(1, 23, 0), 0.94, rung: rung);
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                mill.Tick(new GameTime(1, 23, 12), (x, y) => true);
+                foreach (var id in new[] { "w", "a", "b" })
+                {
+                    var r = mill.Get(id).Best("player.window_d1");
+                    var acc = Suspecting.AccountOf(mill.Get(id), "player.window_d1");
+                    foreach (var (famName, fam) in new[] { ("stranger", Acquaintance.Stranger), ("heardOf", Acquaintance.HeardOfYou), ("close", Acquaintance.Close) })
+                    {
+                        var (value, level, _) = Suspecting.Derive(acc, new Nearness(), fam);
+                        Row(sb, "OriginRung", rung.ToString(Inv), id, famName, r == null ? "none" : r.Hops.ToString(Inv), r == null ? "none" : r.OriginRung.ToString(Inv),
+                            acc.SawItMyself ? "1" : "0", acc.Rung.ToString(Inv), acc.NamesHim ? "1" : "0", level.ToString(), D(value));
+                    }
+                }
+            }
+            {
+                // Heard from somebody who recognised him, then seen as a shape, then seen plainly.
+                var g = new SocialGraph(); g.Link("n", "a", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "n", "a" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, new GameTime(1, 23, 0), 0.94, rung: 4);
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                foreach (var (step, conf, look) in new[] { ("shape", 0.9, 1), ("plain", 0.6, 3), ("offLadder", 0.5, 9) })
+                {
+                    mill.Witness("a", new Fact("player", "window_d1", "seen"), step, true, new GameTime(1, 23, 30), conf, rung: look);
+                    var acc = Suspecting.AccountOf(mill.Get("a"), "player.window_d1");
+                    var (value, level, _) = Suspecting.Derive(acc, new Nearness(), Acquaintance.HeardOfYou);
+                    Row(sb, "HeardThenSeen", step, mill.Get("a").Rumors.Count.ToString(Inv), acc.SawItMyself ? "1" : "0", acc.Rung.ToString(Inv),
+                        acc.NamesHim ? "1" : "0", level.ToString(), D(value));
+                }
+            }
+            {
+                // Two witnesses: the vaguer surer telling first, then the one who named him.
+                var g = new SocialGraph(); g.Link("s", "a", 0.9); g.Link("n", "a", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "s", "n", "a" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("s", new Fact("player", "window_d1", "seen"), "a shape", true, new GameTime(1, 23, 0), 0.94, rung: 1);
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => x == "s" || y == "s");
+                mill.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, new GameTime(1, 23, 0), 0.8, rung: 4);
+                var ev = mill.Tick(new GameTime(1, 23, 12), (x, y) => x == "n" || y == "n");
+                var acc = Suspecting.AccountOf(mill.Get("a"), "player.window_d1");
+                Row(sb, "NamingThrough", ev.Count.ToString(Inv), mill.Get("a").Rumors.Count.ToString(Inv), acc.NamesHim ? "1" : "0",
+                    mill.Get("a").Memory.Events.Count(e => e.Kind == "heard").ToString(Inv));
+            }
+            {
+                // A speaker with a look of their own and a naming beside it: one telling.
+                var g = new SocialGraph(); g.Link("n", "s", 0.9); g.Link("s", "l", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "n", "s", "l" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, new GameTime(1, 23, 0), 0.94, rung: 4);
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => x == "n" || y == "n");
+                mill.Witness("s", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 8), 0.9, rung: 1);
+                var ev = mill.Tick(new GameTime(1, 23, 12), (x, y) => x == "l" || y == "l");
+                var acc = Suspecting.AccountOf(mill.Get("l"), "player.window_d1");
+                Row(sb, "OneTelling", ev.Count.ToString(Inv), mill.Get("l").Rumors.Count.ToString(Inv), acc.NamesHim ? "1" : "0",
+                    mill.Get("l").Memory.Events.Count(e => e.Kind == "heard").ToString(Inv), D(mill.Get("l").Suspicion.Value));
+            }
+            foreach (var asked in new[] { false, true })
+            {
+                // A faint naming heard first, then a sure look with no rung given: the
+                // surest copy is the telling (or the answer), the naming goes in
+                // quietly and is remembered, and the account's words and number agree.
+                var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "s", "l" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
+                mill.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away", true, new GameTime(1, 23, 0), 0.90);
+                mill.Get("l").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
+                var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                var acc = Suspecting.AccountOf(mill.Get("l"), "player.window_d1");
+                Row(sb, "SurestTold", asked ? "asked" : "talk", ev.Count.ToString(Inv), D(mill.Get("l").Suspicion.Value),
+                    mill.Get("l").Memory.Events.Count(e => e.Kind == "heard").ToString(Inv), acc.NamesHim ? "1" : "0", acc.Summary, D(acc.Confidence));
+            }
+            {
+                // A faint look of their own beside a surer naming: the naming places the number.
+                var g = new SocialGraph(); g.Link("n", "a", 0.9);
+                var mill = new GossipMill(g);
+                foreach (var id in new[] { "n", "a" })
+                    mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, new GameTime(1, 23, 0), 0.94, rung: 4);
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                mill.Witness("a", new Fact("player", "window_d1", "seen"), "a shape", true, new GameTime(1, 23, 30), 0.25, rung: 1);
+                var acc = Suspecting.AccountOf(mill.Get("a"), "player.window_d1");
+                var (value, level, _) = Suspecting.Derive(acc, new Nearness(), Acquaintance.HeardOfYou);
+                Row(sb, "NamingPlaces", D(acc.Confidence), D(acc.NamingConfidence), level.ToString(), D(value));
+            }
+            {
+                var g = new SocialGraph(); g.Link("w", "c", 0.1);
+                var mill = new GossipMill(g);
+                mill.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Add(new Gossiper("c", "c", new MemoryStore("c"), new KnowledgeBase(), new SuspicionTracker()));
+                mill.Witness("w", new Fact("player", "killed_d1", "the docker"), "he put the docker down", false, new GameTime(1, 23, 0), 1.0, indelible: true, rung: 4);
+                mill.CompareNotes("c", "w", new GameTime(1, 23, 40));
+                var r = mill.Get("c").Best("player.killed_d1");
+                Row(sb, "AskedAboutBody", r == null ? "none" : D(r.Confidence), r != null && r.Indelible ? "1" : "0", r == null ? "none" : r.OriginRung.ToString(Inv),
+                    mill.Get("c").Knowledge.CheckClaim(new Fact("player", "killed_d1", "nobody")).ToString());
+            }
+        }
+
         static void EmitCastDay(StringBuilder sb)
         {
             foreach (var name in new[] { "quay-cast.json", "hook-cast.json" })

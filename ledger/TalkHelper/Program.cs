@@ -245,6 +245,8 @@ static class Program
                         acc.Rung = a.TryGetProperty("rung", out var rg) && rg.ValueKind == JsonValueKind.Number ? rg.GetInt32() : -1;
                         acc.Confidence = a.TryGetProperty("confidence", out var c) && c.ValueKind == JsonValueKind.Number ? c.GetDouble() : 0.0;
                         acc.Summary = a.TryGetProperty("summary", out var sm) ? sm.GetString() : null;
+                        // How surely the naming reached them; a game that does not send it yet gets the account's own.
+                        acc.NamingConfidence = a.TryGetProperty("namingConfidence", out var nc) && nc.ValueKind == JsonValueKind.Number ? nc.GetDouble() : acc.Confidence;
                     }
                     if (v.TryGetProperty("near", out var n) && n.ValueKind == JsonValueKind.Object)
                     {

@@ -42,6 +42,14 @@ namespace Ledger.Core
         public double Confidence;  // 0..1
         public int Hops;           // 0 = witnessed first-hand
         public bool Sensitive;     // pertains to the player's hidden (night) life
+        /// HOW WELL THE FIRST TELLER SAW THE MAN (town list 6n, 28 September):
+        /// the rung they reached on the five-rung ladder (0 someone, 1 a
+        /// silhouette, 2 a mark, 3 a face, 4 recognition), carried unchanged
+        /// through every retelling, or -1 when nobody gave it. FINDINGS, 24
+        /// September: a retold rumour did not carry it, so hearsay whose first
+        /// teller had named the player could never raise anyone's suspicion
+        /// (Suspecting.AccountOf reads it).
+        public int OriginRung = -1;
 
         /// A FACT, not a story. Set only by a killing (combat-spec §7b).
         ///
@@ -260,7 +268,7 @@ namespace Ledger.Core
         /// saw SOMETHING but can't swear to who, and everything downstream (spread,
         /// heat, bribe prices) inherits that doubt.
         public void Witness(string witnessId, Fact content, string summary, bool sensitive, GameTime now,
-            double confidence = 1.0, bool indelible = false)
+            double confidence = 1.0, bool indelible = false, int rung = -1)
         {
             var w = Get(witnessId);
             // A DROPPED WITNESS IS NOW A NUMBER, BECAUSE IT WAS NOTHING AT ALL
@@ -288,7 +296,51 @@ namespace Ledger.Core
             if (w == null) { WitnessesDropped++; return; }
             confidence = Math.Clamp(confidence, 0.0, 1.0);
             if (confidence >= 0.95) w.Knowledge.Learn(content); // only certainty becomes hard knowledge
-            var already = w.BestOfValue(content.Subject + "." + content.Predicate, content.Value);
+            rung = Math.Clamp(rung, -1, 4);
+            string topic = content.Subject + "." + content.Predicate;
+            // WHERE A LOOK IS KNOWN, THEIR OWN SIGHTING IS KEPT BESIDE WHAT THEY
+            // HEARD (town list 6n, the independent check): folded into the one
+            // copy, a vaguer look of their own erased a telling that had named
+            // him, and a heard body at certainty meant a later look of their own
+            // was never theirs. Where nobody gave a rung, nothing below changes.
+            bool rungKnown = rung >= 0;
+            foreach (var x in w.Rumors)
+                if (x.TopicKey == topic && x.Content.Value == content.Value && x.OriginRung >= 0) rungKnown = true;
+            if (rungKnown)
+            {
+                Rumor own = null;
+                foreach (var x in w.Rumors)
+                    if (x.TopicKey == topic && x.Content.Value == content.Value && x.Hops == 0 && (own == null || x.Confidence > own.Confidence)) own = x;
+                if (own == null)
+                {
+                    w.Rumors.Add(new Rumor
+                    {
+                        Content = content, OriginId = witnessId, Summary = summary,
+                        Confidence = confidence, Hops = 0, Sensitive = sensitive,
+                        Indelible = indelible, OriginRung = rung,
+                    });
+                }
+                else
+                {
+                    // A second look of their own: the better of the two, as below.
+                    own.OriginRung = Math.Max(own.OriginRung, rung);
+                    if (indelible && !own.Indelible)
+                    {
+                        own.Indelible = true;
+                        own.Confidence = Math.Max(own.Confidence, confidence);
+                        own.Summary = summary;
+                        if (own.Confidence >= 0.95) w.Knowledge.Learn(content);
+                    }
+                    else if (confidence > own.Confidence)
+                    {
+                        own.Confidence = confidence;
+                        own.Summary = summary;
+                    }
+                }
+            }
+            else
+            {
+            var already = w.BestOfValue(topic, content.Value);
             if (already == null)
             {
                 w.Rumors.Add(new Rumor
@@ -318,6 +370,7 @@ namespace Ledger.Core
                 already.Confidence = confidence;
                 already.Hops = 0;
                 already.Summary = summary;
+            }
             }
             w.Memory.Append(new MemoryEvent(now, "observation", sensitive ? 0.9 : 0.6,
                 confidence >= 0.95 ? $"I saw it myself: {summary}"
@@ -388,6 +441,9 @@ namespace Ledger.Core
 
             foreach (var speaker in _agents.Values)
             {
+                // The speaker's copies in telling order, built once per speaker
+                // (the fourth pass: once per pair it cost four times the tick).
+                var slots = TellingSlots(snapshot[speaker.Id]);
                 foreach (var listenerId in _graph.Contacts(speaker.Id))
                 {
                     var listener = Get(listenerId);
@@ -396,8 +452,13 @@ namespace Ledger.Core
 
                     double tie = _graph.Tie(speaker.Id, listenerId);
                     if (tie <= 0) continue;
-
-                    foreach (var r in snapshot[speaker.Id])
+                    // One story, one telling a round: where a rung is involved a
+                    // speaker may hold their own look and what they heard side by
+                    // side, and each copy raised the listener's suspicion again
+                    // (the independent check's second pass). The surest copy of a
+                    // version is the telling; the rest go in quietly (the third pass).
+                    HashSet<string> toldThisRound = null;
+                    foreach (var (r, version) in SurestFirst(slots, x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
                     {
                         if (r.Confidence < MinConfidenceToShare && !r.Indelible) continue;
                         // Money and hooks buy silence about STORIES. Nobody keeps
@@ -417,17 +478,28 @@ namespace Ledger.Core
                         // values, comparing against the overall best let each re-add an
                         // identical copy of the other's version every round, growing
                         // Rumors and Memory without bound (audit 2026-07-27).
-                        var existing = listener.BestOfValue(r.TopicKey, r.Content.Value);
-                        if (existing != null && existing.Confidence >= passed)
-                            continue;
+                        var weigh = Weigh(listener, r, passed);
+                        if (weigh == Telling.Held) continue;
+                        if (weigh == Telling.New && version != null && !(toldThisRound ??= new HashSet<string>()).Add(version)) weigh = Telling.Quiet;
+
 
                         var heard = new Rumor
                         {
                             Content = r.Content, OriginId = r.OriginId, Summary = r.Summary,
                             Confidence = passed, Hops = r.Hops + 1, Sensitive = r.Sensitive,
-                            Indelible = r.Indelible,
+                            Indelible = r.Indelible, OriginRung = r.OriginRung,
                         };
                         listener.Rumors.Add(heard);
+                        if (weigh == Telling.Quiet)
+                        {
+                            // A naming is new to them though the story is not: it is
+                            // remembered, so they can say who told them (the third pass).
+                            if (heard.OriginRung >= 4)
+                                listener.Memory.Append(new MemoryEvent(now, "heard", Math.Clamp(passed * 0.8, 0.2, 0.85),
+                                    $"I heard from {speaker.DisplayName} that {r.Summary}"));
+                            if (heard.Indelible && heard.Confidence >= 0.95) listener.Knowledge.Learn(heard.Content);
+                            continue;
+                        }
                         listener.Memory.Append(new MemoryEvent(now, "heard",
                             Math.Clamp(passed * 0.8, 0.2, 0.85),
                             $"I heard from {speaker.DisplayName} that {r.Summary}"));
@@ -468,6 +540,87 @@ namespace Ledger.Core
             return events;
         }
 
+        /// WHAT A TELLING GIVES A LISTENER: nothing, if they hold this
+        /// version of the story at least as surely (the old guard, which stops
+        /// stories breeding), and, when the telling carries its first teller's
+        /// rung, a copy at least as well identified (town list 6n, the
+        /// independent check: a telling that named him was dropped because a
+        /// vaguer version was already held more surely). With no rung it is
+        /// the old guard exactly.
+        ///
+        /// Only a naming counts (a heard rung matters only at 4), and only a
+        /// naming held at least as surely stops it (the second pass: a faded
+        /// one at 0.1 blocked a fresh one). A telling let through for its
+        /// naming alone, or a second copy of a version already told this round,
+        /// is the same story already held, so it is kept quietly: no second
+        /// raise of suspicion and no event. A memory only when it names him,
+        /// for the name is news and they must be able to say who told them
+        /// (the third pass).
+        enum Telling { New, Held, Quiet }
+
+        /// The copies a speaker tells, in their own order, except that where a
+        /// version carries a rung its copies are told surest first, so the
+        /// round's one telling is the surest as it would arrive (the third pass:
+        /// a faint heard copy was told in full and the speaker's own sure look
+        /// went in quietly, so the listener's suspicion rose by a third).
+        /// With no rung anywhere the order is exactly as held.
+        /// Each copy yielded with its version ("topic=value") when the version
+        /// carries a rung, else null (such a copy is told as it always was).
+        static IEnumerable<(Rumor r, string version)> SurestFirst(List<TellingSlot> slots, Func<Rumor, double> passedOf)
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.Copies == null) { yield return (slot.Single, null); continue; }
+                var copies = slot.Copies.Count == 1 ? slot.Copies : slot.Copies.OrderByDescending(passedOf).ToList();
+                foreach (var r in copies) yield return (r, slot.Version);
+            }
+        }
+
+        /// One place in a speaker's telling: a copy told as it always was, or
+        /// every copy of a version that carries a rung, grouped where the first
+        /// of them stood. Built once per speaker, the key once per copy; only
+        /// the order within a group waits for the listener, since it turns on
+        /// the tie between them.
+        struct TellingSlot { public Rumor Single; public string Version; public List<Rumor> Copies; }
+
+        static List<TellingSlot> TellingSlots(List<Rumor> copies)
+        {
+            var slots = new List<TellingSlot>(copies.Count);
+            bool anyRung = false;
+            foreach (var x in copies) if (x.OriginRung >= 0) { anyRung = true; break; }
+            if (!anyRung)
+            {
+                foreach (var r in copies) slots.Add(new TellingSlot { Single = r });
+                return slots;
+            }
+            var keys = new string[copies.Count];
+            var rungVersions = new HashSet<string>();
+            for (int i = 0; i < copies.Count; i++)
+            {
+                keys[i] = copies[i].TopicKey + "=" + copies[i].Content.Value;
+                if (copies[i].OriginRung >= 0) rungVersions.Add(keys[i]);
+            }
+            var at = new Dictionary<string, int>();
+            for (int i = 0; i < copies.Count; i++)
+            {
+                if (!rungVersions.Contains(keys[i])) { slots.Add(new TellingSlot { Single = copies[i] }); continue; }
+                if (at.TryGetValue(keys[i], out int s)) { slots[s].Copies.Add(copies[i]); continue; }
+                at[keys[i]] = slots.Count;
+                slots.Add(new TellingSlot { Version = keys[i], Copies = new List<Rumor> { copies[i] } });
+            }
+            return slots;
+        }
+
+        static Telling Weigh(Gossiper listener, Rumor r, double passed)
+        {
+            var existing = listener.BestOfValue(r.TopicKey, r.Content.Value);
+            if (existing == null || existing.Confidence < passed) return Telling.New;
+            if (r.OriginRung < 4) return Telling.Held;
+            foreach (var x in listener.Rumors)
+                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && x.Confidence >= passed)
+                    return Telling.Held;
+            return Telling.Quiet;
+        }
         /// Suspicion-driven escalation (design-doc §6.4): a suspicious NPC doesn't
         /// wait for chance encounters — they seek someone out and ASK. A directed,
         /// deterministic exchange: the partner tells the checker everything they're
@@ -508,27 +661,42 @@ namespace Ledger.Core
             // does not depend on the rumour, so it belongs where it is decided
             // once — and sitting after two per-rumour filters it read as though
             // it might.
-            foreach (var r in partner.Rumors.ToList())
+            HashSet<string> askedToldThisRound = null;
+            foreach (var (r, askedVersion) in SurestFirst(TellingSlots(partner.Rumors.ToList()), x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
             {
                 if (r.Content.Subject != "player") continue;
                 if (r.Confidence < MinConfidenceToShare && !r.Indelible) continue;
                 if (!r.Indelible && partner.Suppressed.Contains(r.TopicKey)) continue;
                 if (!r.Indelible && partner.Leashed) continue;
 
-                double passed = r.Confidence * tie * HopDecay;
+                // A BODY ARRIVES AS TRUE AS IT LEFT, asked about or not (town list
+                // 6n): this used the decay and dropped the mark, so asking a
+                // witness about a killing gave a weakened copy that could be
+                // talked away, while ordinary talk (Tick) passed it on whole.
+                double passed = r.Indelible ? r.Confidence : r.Confidence * tie * HopDecay;
                 if (passed < MinConfidenceToShare) continue;
                 // Value-aware for the same reason as Tick's guard: conflicting
                 // versions must settle, not breed (audit 2026-07-27).
-                var existing = checker.BestOfValue(r.TopicKey, r.Content.Value);
-                if (existing != null && existing.Confidence >= passed)
-                    continue;
+                var weigh = Weigh(checker, r, passed);
+                if (weigh == Telling.Held) continue;
+                if (weigh == Telling.New && askedVersion != null && !(askedToldThisRound ??= new HashSet<string>()).Add(askedVersion)) weigh = Telling.Quiet;
+
 
                 var heard = new Rumor
                 {
                     Content = r.Content, OriginId = r.OriginId, Summary = r.Summary,
                     Confidence = passed, Hops = r.Hops + 1, Sensitive = r.Sensitive,
+                    Indelible = r.Indelible, OriginRung = r.OriginRung,
                 };
                 checker.Rumors.Add(heard);
+                if (weigh == Telling.Quiet)
+                {
+                    if (heard.OriginRung >= 4)
+                        checker.Memory.Append(new MemoryEvent(now, "heard", System.Math.Clamp(passed * 0.8, 0.2, 0.85),
+                            $"{partner.DisplayName} told me, when I asked: {r.Summary}"));
+                    if (heard.Indelible && heard.Confidence >= 0.95) checker.Knowledge.Learn(heard.Content);
+                    continue;
+                }
                 checker.Memory.Append(new MemoryEvent(now, "heard",
                     System.Math.Clamp(passed * 0.8, 0.2, 0.85),
                     $"{partner.DisplayName} told me, when I asked: {r.Summary}"));
@@ -545,6 +713,11 @@ namespace Ledger.Core
                     checker.Suspicion.Raise(LeakSuspicion * passed, "I went asking, and I did not like the answer");
                     ev.Exposure = true;
                 }
+                // A body heard of at certainty is hard knowledge, as in Tick, and
+                // after the contradiction check for the same reason (the
+                // independent check: asked about, it was held but never learned).
+                if (heard.Indelible && heard.Confidence >= 0.95)
+                    checker.Knowledge.Learn(heard.Content);
                 events.Add(ev);
             }
             return events;
