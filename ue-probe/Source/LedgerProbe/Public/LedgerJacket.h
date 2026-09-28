@@ -16,6 +16,8 @@
 #include "ChaosClothAsset/ClothAssetBase.h"
 #include "ChaosClothAsset/ClothComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "Engine/StaticMesh.h"
 #include "Engine/SkeletalMesh.h"
 #include "Materials/MaterialInterface.h"
 #include "Misc/Paths.h"
@@ -119,6 +121,32 @@ namespace LedgerJacket
 		UPhysicsAsset* Phys = Body->GetPhysicsAsset();
 		if (Phys != nullptr) { J->AddCollisionSource(Body, Phys); }
 		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: cloth %s worn, colliding with %s"), *Path, Phys != nullptr ? *Phys->GetName() : TEXT("nothing (no physics asset)"));
+		// THE COLLAR, fixed to the upper back, 29 September: stiff melton
+		// barely moves, and as a second simulated layer 12 mm over the yoke the
+		// collar's points and the yoke's were drawn to the wrong layer (a torn
+		// collar and a blotchy yoke). SM_<name>_Collar beside the asset is made
+		// in the body's rest pose, so it goes on spine_05 at the inverse of that
+		// bone's rest-pose place in the body.
+		const FString Name = FPaths::GetCleanFilename(Folder);
+		const FString CollarName = FString(TEXT("SM_")) + Name + TEXT("_Collar");
+		UStaticMesh* CollarMesh = LoadObject<UStaticMesh>(nullptr, *(Folder / CollarName + TEXT(".") + CollarName));
+		const FName Bone(TEXT("spine_05"));
+		USkeletalMesh* BodyMesh = Body->GetSkeletalMeshAsset();
+		const int32 BoneIndex = BodyMesh != nullptr ? BodyMesh->GetRefSkeleton().FindBoneIndex(Bone) : INDEX_NONE;
+		if (CollarMesh != nullptr && BoneIndex != INDEX_NONE)
+		{
+			const FReferenceSkeleton& Ref = BodyMesh->GetRefSkeleton();
+			FTransform RefInBody = FTransform::Identity;
+			for (int32 I = BoneIndex; I != INDEX_NONE; I = Ref.GetParentIndex(I)) { RefInBody = RefInBody * Ref.GetRefBonePose()[I]; }
+			UStaticMeshComponent* Collar = NewObject<UStaticMeshComponent>(A, TEXT("LedgerJacketCollar"));
+			Collar->SetStaticMesh(CollarMesh);
+			Collar->SetupAttachment(Body, Bone);
+			Collar->SetRelativeTransform(RefInBody.Inverse());
+			Collar->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+			for (int32 I = 0; I < Collar->GetNumMaterials(); ++I) { if (Wool != nullptr) { Collar->SetMaterial(I, Wool); } }
+			Collar->RegisterComponent();
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerJacket: collar %s"), CollarMesh == nullptr ? TEXT("none beside the asset") : BoneIndex == INDEX_NONE ? TEXT("NOT fixed (no spine_05)") : TEXT("fixed to spine_05"));
 		return true;
 	}
 }
