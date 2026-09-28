@@ -75,6 +75,21 @@ namespace Ledger.Core
 
         public static bool IsKnownOnly(string line) => Array.IndexOf(KnownOnlyLines, line) >= 0;
 
+        /// The fallback in this person's own words when their card gives them
+        /// (town list 6ap), else the shared ones.
+        public static string KnownOnlyFor(CharacterCard card, int n)
+        {
+            var own = card?.Own("known-only");
+            if (own == null || own.Count == 0) return KnownOnlyFor(card?.Id, n);
+            uint h = 2166136261;
+            foreach (char c in card.Id ?? "") { h ^= c; h *= 16777619; }
+            return own[(int)((h + (uint)Math.Max(0, n)) % (uint)own.Count)];
+        }
+
+        /// Whether a line is a fallback, the shared ones or this person's own.
+        public static bool IsKnownOnly(string line, CharacterCard card) =>
+            IsKnownOnly(line) || (card != null && line != null && card.OwnWords.TryGetValue("known-only", out var own) && own.Contains(line));
+
         // ---- the third version: every specific, with the item that supports it (28 September) ----
         //
         // Measured on a fixed set of test conversations (ledger/ClaimBench,

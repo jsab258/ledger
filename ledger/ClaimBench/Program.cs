@@ -21,6 +21,7 @@ using Ledger.Core;
 ///     dotnet run --project ledger/ClaimBench -c Release -- check v2      # a checker on the same drafts
 ///     dotnet run --project ledger/ClaimBench -c Release -- pipeline v2   # the whole turn, as the game runs it
 ///     dotnet run --project ledger/ClaimBench -c Release -- smalltalk     # real names in small talk, the rule off and on
+///     dotnet run --project ledger/ClaimBench -c Release -- tics          # a card's verbal tic over a conversation, before and after
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -93,6 +94,7 @@ static class Program
             case "label": return await LabelAll(dir, parallel);
             case "gold": return Gold(dir);
             case "smalltalk": return await SmallTalk(dir, parallel);
+            case "tics": return await Tics(dir, parallel);
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
@@ -416,6 +418,71 @@ static class Program
         ConversationEngine.RealWorldRule = true;
         WriteJsonl(Path.Combine(dir, "smalltalk.jsonl"), rows);
         Console.WriteLine($"smalltalk: usd={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
+        return 0;
+    }
+
+    /// A CARD'S VERBAL TIC OVER A CONVERSATION (town list 6ap): Darren opened 18
+    /// of his 80 bench replies with "so listen" and Ron said "boss" in 49. Four
+    /// six-turn conversations each, the first drafts as written (no check, so
+    /// the drafts are what is measured), with the cards and the prompt as they
+    /// were and as they are.
+    static async Task<int> Tics(string dir, int parallel)
+    {
+        var talks = new[]
+        {
+            new[] { "Evening.", "Busy night?", "What's the word on the street?", "Anyone about earlier?", "Right. Anything else?", "See you, then." },
+            new[] { "Alright?", "How's business?", "Seen anything odd lately?", "Who was that you were talking to?", "Fair enough.", "What's the weather doing?" },
+            new[] { "Morning.", "You been here long?", "What do you know about the van?", "Who drives it?", "Where does it go?", "Cheers." },
+            new[] { "Got a minute?", "What do you make of me?", "Heard anything about the window?", "Who told you that?", "You sure?", "Right, I'll leave you to it." },
+        };
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cost = new CostTracker();
+        using var client = new AnthropicClient(Key());
+        var rows = new List<object>();
+        var gate = new SemaphoreSlim(parallel);
+        foreach (bool now in new[] { false, true })
+        {
+            ConversationEngine.TicRule = now;
+            int samReplies = 0, samSoListen = 0, samTwice = 0, ronReplies = 0, ronBoss = 0;
+            var jobs = new List<(string card, string[] says)>();
+            foreach (var c in new[] { "sam", "rocco" }) foreach (var t in talks) jobs.Add((c, t));
+            await Task.WhenAll(jobs.Select(async job =>
+            {
+                await gate.WaitAsync();
+                try
+                {
+                    var text = File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"));
+                    if (!now)
+                    {
+                        text = text.Replace("Opens with 'so listen' when he has something to sell you, never twice running.", "Starts sentences with 'so listen'.")
+                                   .Replace("calls people 'boss' or 'friend' now and then, not in every breath.", "calls people 'boss' or 'friend'.");
+                    }
+                    var card = CharacterCard.Parse(text);
+                    var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost);
+                    bool lastSo = false;
+                    for (int i = 0; i < job.says.Length; i++)
+                    {
+                        string reply;
+                        try { reply = await engine.SayToAsync(job.says[i], new GameTime(2, 18, i), "Quay Street, early evening, dry.", default, null); }
+                        catch (Exception) { break; }
+                        bool so = reply.TrimStart().StartsWith("So listen", StringComparison.OrdinalIgnoreCase);
+                        bool boss = System.Text.RegularExpressions.Regex.IsMatch(reply, @"\bboss\b", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                        lock (rows)
+                        {
+                            if (job.card == "sam") { samReplies++; if (so) samSoListen++; if (so && lastSo) samTwice++; }
+                            else { ronReplies++; if (boss) ronBoss++; }
+                            rows.Add(new { now, card = job.card, turn = i, said = job.says[i], reply });
+                        }
+                        lastSo = so;
+                    }
+                }
+                finally { gate.Release(); }
+            }));
+            Console.WriteLine($"tics {(now ? "now" : "before")}: Darren opens with \"so listen\" {samSoListen}/{samReplies} (twice running {samTwice}); Ron says \"boss\" in {ronBoss}/{ronReplies}");
+        }
+        ConversationEngine.TicRule = true;
+        WriteJsonl(Path.Combine(dir, "tics.jsonl"), rows);
+        Console.WriteLine($"tics: usd={cost.EstimateUsd():0.00} -> tics.jsonl");
         return 0;
     }
 

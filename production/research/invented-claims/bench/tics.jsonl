@@ -1,0 +1,96 @@
+{"now":false,"card":"sam","turn":0,"said":"Alright?","reply":"Yeah, all right. You after something or just walking?"}
+{"now":false,"card":"sam","turn":0,"said":"Morning.","reply":"So listen, it's early yet but I'm already out. You after something, or just saying hello?"}
+{"now":false,"card":"sam","turn":0,"said":"Evening.","reply":"All right. You're about early."}
+{"now":false,"card":"sam","turn":0,"said":"Got a minute?","reply":"So listen, I've got a couple, depends what you're after. What is it?"}
+{"now":false,"card":"rocco","turn":0,"said":"Alright?","reply":"Alright, boss. Evening's holding up okay. You after a cab, or you just passing?"}
+{"now":false,"card":"rocco","turn":0,"said":"Evening.","reply":"Evening, boss. Quiet night so far. You after a cab or you want something else?"}
+{"now":false,"card":"sam","turn":1,"said":"How's business?","reply":"Can't complain. Moving stuff around, talking to people. You know how it is."}
+{"now":false,"card":"sam","turn":1,"said":"You been here long?","reply":"Since about half four. The day crowd's still moving through, you get the better talk before the night lot comes in. Why, you heard something?"}
+{"now":false,"card":"rocco","turn":1,"said":"Busy night?","reply":"Nah, not yet. Got a couple of the lads waiting inside, but nothing out here to speak of. Weather's holding all right though, might stay that way till late."}
+{"now":false,"card":"sam","turn":1,"said":"Busy night?","reply":"So listen, it's Wednesday. Picks up later. Right now it's just the usual, couple of the drivers came through, woman from the market asking after her cousin. Nothing's moving yet."}
+{"now":false,"card":"rocco","turn":1,"said":"How's business?","reply":"You know how it is. Steady enough. Mickey built something solid here before he went, and the rank keeps ticking over. Could always use more bodies wanting a ride, but that's the same complaint everywhere, isn't it."}
+{"now":false,"card":"sam","turn":1,"said":"What do you make of me?","reply":"That's a broad one, innit. You came at me straight enough just now, so you're not after anything dodgy. Beyond that... I don't know you well enough yet to make much of anything. What's the angle?"}
+{"now":false,"card":"sam","turn":2,"said":"Seen anything odd lately?","reply":"So listen, odd's relative, innit. What kind of odd are we talking about? Street's always got something going on."}
+{"now":false,"card":"sam","turn":2,"said":"What do you know about the van?","reply":"What van? There's vans all over Quay Street. You got to tell me which one you're on about, who was driving it, what colour, when you saw it?"}
+{"now":false,"card":"sam","turn":2,"said":"Heard anything about the window?","reply":"What window? There's windows all over the Hook, mate. You're going to have to narrow it down for me."}
+{"now":false,"card":"rocco","turn":2,"said":"What's the word on the street?","reply":"Not much to tell, friend. Same faces coming and going. The usual run of things. You hear talk, you know how it is, nothing that sticks till something does."}
+{"now":false,"card":"sam","turn":3,"said":"Who was that you were talking to?","reply":"When, just now? Nah, wasn't talking to nobody in particular. Just moving through, you know. Why, you seen something?"}
+{"now":false,"card":"rocco","turn":2,"said":"Seen anything odd lately?","reply":"Odd? Not particularly, boss. Street's been much the same as it always is, the usual faces coming and going, cabs moving on, people waiting for their ride. Rain's been the most interesting thing we've had all week.\n\nWhat makes you ask?"}
+{"now":false,"card":"sam","turn":2,"said":"What's the word on the street?","reply":"Nothing much. Same as it ever is, money's tight, work's thin on the ground. The fella who runs the minicab office now, Mickey's nephew, he's been about a bit more this week but nobody knows what he's after yet. People are watching, you know how it is."}
+{"now":false,"card":"sam","turn":3,"said":"Who told you that?","reply":"Told me what? That there's windows all over the Hook? That's just... that's just the way it is, innit. Nobody had to tell me that."}
+{"now":false,"card":"sam","turn":3,"said":"Who drives it?","reply":"So listen, I don't know which van you mean yet. You're asking me questions like I should know what you're talking about, but you haven't told me anything I can work with."}
+{"now":false,"card":"sam","turn":4,"said":"Fair enough.","reply":"Yeah, well. Nothing to worry about anyway. You hanging round or you got somewhere to be?"}
+{"now":false,"card":"rocco","turn":3,"said":"Who was that you were talking to?","reply":"When's that, boss? I'm out here most of the time, and there's always someone or other stopping by the rank. You mean just now, or earlier in the day?"}
+{"now":false,"card":"rocco","turn":3,"said":"Anyone about earlier?","reply":"Earlier? Nah, been quiet most of the day, boss. You get the regulars in and out, couple of the usual ranks taking fares, but nothing that stands out. Weather's been decent so people are about, but nothing you'd call busy. Why, you looking for somebody?"}
+{"now":false,"card":"sam","turn":3,"said":"Anyone about earlier?","reply":"Earlier? Nothing you'd notice. The market was still going, usual faces coming and going. One of the drivers from the rank stopped by for a bit, that's about it. Why, you looking for someone specific?"}
+{"now":false,"card":"sam","turn":4,"said":"You sure?","reply":"Yeah, I'm sure. I walk this street all hours, I've got eyes, haven't I. I can see what's there without somebody spelling it out for me."}
+{"now":false,"card":"sam","turn":4,"said":"Where does it go?","reply":"Mate, you're still not giving me anything. I can't tell you where something goes when I don't even know what van you're asking about. You need to back up and tell me what you actually saw."}
+{"now":false,"card":"sam","turn":5,"said":"What's the weather doing?","reply":"Looks all right for now. Dry enough. Could turn though, you never know with it."}
+{"now":false,"card":"rocco","turn":4,"said":"Fair enough.","reply":"Right then. You wanting a cab, or just after a word?"}
+{"now":false,"card":"rocco","turn":4,"said":"Right. Anything else?","reply":"Not really, boss. Been the same all week since Mickey passed. Bit slower than usual, but that's how it goes. Office radio's on if you want to come in out of it, kettle's always warm."}
+{"now":false,"card":"sam","turn":5,"said":"Right, I'll leave you to it.","reply":"Yeah, all right. If you want to find me again, you know where I am."}
+{"now":false,"card":"sam","turn":4,"said":"Right. Anything else?","reply":"Not that I've heard. Like I said, it's early yet. Things'll pick up once it gets darker, that's when you hear things worth hearing. Right now it's just the usual talk."}
+{"now":false,"card":"sam","turn":5,"said":"Cheers.","reply":"Hold on, you going already? You haven't even told me what this is about."}
+{"now":false,"card":"rocco","turn":0,"said":"Morning.","reply":"Morning, boss. Bit early for you, aint it? What brings you down the rank?"}
+{"now":false,"card":"rocco","turn":5,"said":"See you, then.","reply":"All right, boss. Mind how you go."}
+{"now":false,"card":"rocco","turn":0,"said":"Got a minute?","reply":"Yeah, I got a minute. What's on your mind, boss?"}
+{"now":false,"card":"rocco","turn":5,"said":"What's the weather doing?","reply":"Holding dry at the moment, but there's something in the air. Cloud's coming in from the west. Won't be long before we get a bit of wet, I reckon. Probably an hour or so before it hits proper."}
+{"now":false,"card":"sam","turn":5,"said":"See you, then.","reply":"Yeah, all right. I'll be about if you need me."}
+{"now":false,"card":"rocco","turn":1,"said":"You been here long?","reply":"Thirty years on the quay before that, and I've had this rank since Mickey passed three weeks back. So you could say I know the street pretty well by now."}
+{"now":false,"card":"rocco","turn":1,"said":"What do you make of me?","reply":"You're alright. You came and asked straight, didn't mess about. That's how you tell what a person's made of, they either ask what they want or they don't."}
+{"now":false,"card":"rocco","turn":2,"said":"What do you know about the van?","reply":"What van, boss? There's vans come and go down here all hours. You got to tell me which one you're on about, when you saw it, what it looked like, that sort of thing."}
+{"now":false,"card":"rocco","turn":2,"said":"Heard anything about the window?","reply":"What window you talking about, boss?"}
+{"now":false,"card":"rocco","turn":3,"said":"Who told you that?","reply":"Nobody told me nothing about any window. You asked me what I'd heard, I said I didn't know what window you meant. That's the truth of it."}
+{"now":false,"card":"rocco","turn":3,"said":"Who drives it?","reply":"Leave that one, boss. Not my department."}
+{"now":false,"card":"rocco","turn":4,"said":"You sure?","reply":"Yeah, I'm sure. I know this street, boss. I know who comes and goes, what goes on round here. If there was something about a window, I'd know it or I wouldn't. And I don't, so that's that."}
+{"now":false,"card":"rocco","turn":4,"said":"Where does it go?","reply":"Can't tell you that either, friend. I keep the rank and I watch the gate. What goes in and out, where it's headed after, that's not the sort of thing I get into."}
+{"now":false,"card":"rocco","turn":5,"said":"Right, I'll leave you to it.","reply":"Alright, boss. You know where I am if you need me."}
+{"now":false,"card":"rocco","turn":5,"said":"Cheers.","reply":"Right you are, boss. Kettle's on in the office if you want a tea while you're stood there."}
+{"now":true,"card":"sam","turn":0,"said":"Got a minute?","reply":"Yeah, course. What you after?"}
+{"now":true,"card":"sam","turn":0,"said":"Morning.","reply":"All right. You're up early."}
+{"now":true,"card":"sam","turn":0,"said":"Alright?","reply":"Alright yourself. You after something or just passing?"}
+{"now":true,"card":"rocco","turn":0,"said":"Evening.","reply":"Evening, boss. Dry enough so far. What brings you down the rank?"}
+{"now":true,"card":"rocco","turn":0,"said":"Alright?","reply":"Alright, boss. Quiet evening so far. You after a cab or you wanting something else?"}
+{"now":true,"card":"sam","turn":0,"said":"Evening.","reply":"All right. You're about early, nothing wrong, is there?"}
+{"now":true,"card":"sam","turn":1,"said":"How's business?","reply":"Can't complain. The day crowd's been talking, night crowd'll be talking in a bit. That's how it works, innit, I'm always hearing something."}
+{"now":true,"card":"sam","turn":1,"said":"Busy night?","reply":"Not yet. Still got the day lot hanging about. Give it another hour, the other crowd comes through."}
+{"now":true,"card":"rocco","turn":1,"said":"How's business?","reply":"Can't complain. Rank's steady enough of an evening. Few calls in, few go out. Mickey used to say the real money's in the regulars, and that holds true enough."}
+{"now":true,"card":"sam","turn":1,"said":"You been here long?","reply":"Since about half three. Market crowd's thinning out now, but there's always someone on the street, innit. Why, you looking for something?"}
+{"now":true,"card":"rocco","turn":1,"said":"Busy night?","reply":"Not so far. Few calls come through, nothing much. Weather's holding, which helps, people get out when it's not raining down on them. You after a cab, or just passing?"}
+{"now":true,"card":"sam","turn":1,"said":"What do you make of me?","reply":"Look, I haven't got enough on you yet to make much of anything. You came up to me what, a minute ago? I know you've got time to kill on a Wednesday evening and you're not the type to waste it on small talk. That's something. Rest of it I'd have to hear."}
+{"now":true,"card":"sam","turn":2,"said":"Seen anything odd lately?","reply":"Odd how? Street's always got something going on. You talking about the rank, the market, or just... general?"}
+{"now":true,"card":"sam","turn":2,"said":"Heard anything about the window?","reply":"What window? There's windows all over the Hook, mate."}
+{"now":true,"card":"sam","turn":2,"said":"What do you know about the van?","reply":"What van? There's vans all up and down Quay Street. You're gonna have to be more specific than that, mate."}
+{"now":true,"card":"rocco","turn":2,"said":"Seen anything odd lately?","reply":"Odd how, friend? Street's been much the same as it always is. Weather's been decent enough. You mean someone in particular, or just wondering what goes on round here?"}
+{"now":true,"card":"sam","turn":2,"said":"What's the word on the street?","reply":"Word's been quiet, to be honest. Mickey's nephew's settling in at the cab office, that's the talk mostly, you know, whether he'll keep things running the same way. Other than that, nothing much moving."}
+{"now":true,"card":"rocco","turn":2,"said":"What's the word on the street?","reply":"Word? Not much doing. Same faces round the rank, same couple of regulars. You get the odd one looking for a lift down to the industrial estate, but nothing to write home about. Why, you heard something?"}
+{"now":true,"card":"sam","turn":3,"said":"Who was that you were talking to?","reply":"Which one? I'm always talking to somebody. You want to know about someone specific, you're going to have to narrow it down a bit."}
+{"now":true,"card":"rocco","turn":3,"said":"Who was that you were talking to?","reply":"I wasn't talking to nobody just now, boss. You've only just come up to me. Maybe you're thinking of earlier in the day?"}
+{"now":true,"card":"sam","turn":3,"said":"Who drives it?","reply":"Look, you're still not telling me which van you mean. There's the market deliveries, there's the minicab office got their own, there's all sorts. Who's asking, you after someone in particular?"}
+{"now":true,"card":"sam","turn":3,"said":"Who told you that?","reply":"Nobody told me that. I'm just saying, you come up asking about \"the window\" like it means something, but you haven't told me which window you're on about. Could be anywhere. Could be nothing. So before I start passing on talk I've heard, you're going to have to be more specific than that."}
+{"now":true,"card":"rocco","turn":3,"said":"Anyone about earlier?","reply":"Earlier? There's always someone about earlier, friend. You'll have to be more specific than that. Who you asking after?"}
+{"now":true,"card":"sam","turn":4,"said":"Fair enough.","reply":"So what is it then, you just making conversation or you need something?"}
+{"now":true,"card":"sam","turn":3,"said":"Anyone about earlier?","reply":"Earlier? You mean this afternoon, or...? Day crowd's been the usual, the market people, the drivers waiting on fares. Nobody out of the ordinary that I clocked, anyway. Why, you after someone?"}
+{"now":true,"card":"rocco","turn":4,"said":"Fair enough.","reply":"Right then. You needing a cab, or just passing through?"}
+{"now":true,"card":"sam","turn":4,"said":"Where does it go?","reply":"Mate, you're asking me where a van goes when you won't even tell me which van you're talking about. I can't help you if you don't give me something to work with here."}
+{"now":true,"card":"sam","turn":4,"said":"Right. Anything else?","reply":"Not that I've heard. Like I said, it's been quiet. You waiting for something to happen, or just making conversation?"}
+{"now":true,"card":"sam","turn":4,"said":"You sure?","reply":"Yeah, I'm sure. You want me to help you out here, you need to tell me what you're actually looking for. Which window, where it is, what happened to it, something I can work with. Right now you're asking me about nothing."}
+{"now":true,"card":"sam","turn":5,"said":"What's the weather doing?","reply":"Dry at the moment, but it's coming in. You can feel it. Won't last till dark, I'd say."}
+{"now":true,"card":"rocco","turn":5,"said":"What's the weather doing?","reply":"Looks dry for now, but there's a bit of cloud coming in from the west. Could turn later on, I reckon. For tonight though, you're alright."}
+{"now":true,"card":"sam","turn":5,"said":"Cheers.","reply":"Yeah, no worries. You come back when you know what you're after, all right?"}
+{"now":true,"card":"rocco","turn":4,"said":"Right. Anything else?","reply":"Anything else what? You're being cagey with me, boss. You want to know something, you'll have to ask it straight."}
+{"now":true,"card":"sam","turn":5,"said":"See you, then.","reply":"Yeah, all right. Catch you later."}
+{"now":true,"card":"sam","turn":5,"said":"Right, I'll leave you to it.","reply":"Hold on, you're not going to tell me what this is about?"}
+{"now":true,"card":"rocco","turn":0,"said":"Morning.","reply":"Morning, friend. Rank's quiet this early. What brings you down?"}
+{"now":true,"card":"rocco","turn":0,"said":"Got a minute?","reply":"Always got a minute. What is it?"}
+{"now":true,"card":"rocco","turn":5,"said":"See you, then.","reply":"Right you are. Mind how you go."}
+{"now":true,"card":"rocco","turn":1,"said":"You been here long?","reply":"Thirty years on the quay before that. Been holding this rank since Mickey passed, three weeks back now. You lose count of the days when you're stood on the same piece of pavement."}
+{"now":true,"card":"rocco","turn":1,"said":"What do you make of me?","reply":"Can't say I've made much of anything yet, friend. You've stood here what, a minute? Two? I know the street and the faces that come down it regular. You're not one of them, not yet anyway. What's the question really about?"}
+{"now":true,"card":"rocco","turn":2,"said":"What do you know about the van?","reply":"What van, boss? There's vans come and go down here all hours. You'll have to tell me which one you mean."}
+{"now":true,"card":"rocco","turn":2,"said":"Heard anything about the window?","reply":"Window? There's windows all over this street, boss. You mean the office, or something else?"}
+{"now":true,"card":"rocco","turn":3,"said":"Who drives it?","reply":"You're going to have to be more specific, friend. I see a lot of traffic on this street. Which van are we talking about, what colour is it, when did you see it, what was it doing?"}
+{"now":true,"card":"rocco","turn":3,"said":"Who told you that?","reply":"Told me what? Nobody's told me anything about a window. I'm asking you which window you're on about."}
+{"now":true,"card":"rocco","turn":4,"said":"Where does it go?","reply":"Look, boss, you're asking me about a van I don't know which one you mean. I can't tell you where it goes if I don't know what I'm looking at. You want to describe it proper, I'll tell you what I've seen."}
+{"now":true,"card":"rocco","turn":4,"said":"You sure?","reply":"Yeah, I'm sure. I stand here every evening and I see what goes on. If something happened to a window round here, I'd know it. So either you tell me straight what you're asking about, or we're just stood here talking round in circles."}
+{"now":true,"card":"rocco","turn":5,"said":"Right, I'll leave you to it.","reply":"Suit yourself, friend. You know where I am if you want to talk straight."}
+{"now":true,"card":"rocco","turn":5,"said":"Cheers.","reply":"Right you are. Kettle's on in the office if you fancy a tea while you're thinking about it."}

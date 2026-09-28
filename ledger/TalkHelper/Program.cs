@@ -85,7 +85,7 @@ static class Program
 {
     static readonly string[] BrushOffs =
     {
-        "Not now, love. Busy.",
+        "Not now. Busy.",
         "Catch me later, eh?",
         "Can't stop. Another time.",
     };
@@ -454,7 +454,9 @@ static class Program
             LastScene = scene;
 
             var sw = Stopwatch.StartNew();
-            string brush = BrushOffs[Math.Abs(id) % BrushOffs.Length];
+            // Their own words when too busy to talk (town list 6ap), else the shared ones.
+            var ownBrush = card.Own("brush-off");
+            string brush = ownBrush.Count > 0 ? ownBrush[Math.Abs(id) % ownBrush.Count] : BrushOffs[Math.Abs(id) % BrushOffs.Length];
             var now = new GameTime(day, hour, minute);
 
             if (!_engines.TryGetValue(key, out var engine))
@@ -734,7 +736,7 @@ static class Program
             }
             // FELL BACK: the reply is one of the "that's all I know" wordings,
             // for the log (how often the check leaves a character nothing to say).
-            bool fellBack = !timedOut && ClaimCheck.IsKnownOnly(reply);
+            bool fellBack = !timedOut && ClaimCheck.IsKnownOnly(reply, card);
             // WRITTEN BY THE MODEL, marked so (the EU's AI Act, Article 50(2):
             // generated text marked in a form a machine can read); a brush-off
             // and the fallback line are the game's own words.
@@ -947,7 +949,7 @@ static class Program
         LoadCards(off, cardsDir);
         var e = await off.Answer("{\"id\":4,\"to\":\"lena\",\"say\":\"Got a minute?\"}");
         Ok("with the line down the character brushes the player off and says offline",
-           Flag(e, "offline") && Array.IndexOf(BrushOffs, Reply(e)) >= 0, e);
+           Flag(e, "offline") && off.Cards["lena"].OwnWords["brush-off"].Contains(Reply(e)), e);
 
         var slow = new FakeLlm { Delay = TimeSpan.FromSeconds(2) };
         var s = new Helper(slow, TimeSpan.FromMilliseconds(300));
@@ -955,7 +957,7 @@ static class Program
         var sw = Stopwatch.StartNew();
         var f = await s.Answer("{\"id\":5,\"to\":\"rocco\",\"say\":\"Alright?\"}");
         Ok("a slow model is abandoned for a brush-off at the patience limit",
-           Flag(f, "timedOut") && Array.IndexOf(BrushOffs, Reply(f)) >= 0 && sw.ElapsedMilliseconds < 1800, f);
+           Flag(f, "timedOut") && s.Cards["rocco"].OwnWords["brush-off"].Contains(Reply(f)) && sw.ElapsedMilliseconds < 1800, f);
         await Task.Delay(2500);   // past the moment the abandoned reply would have landed
         int unheard = 0;
         foreach (var ev in s.EngineFor("rocco").Memory.Events) if (ev.Kind == "conversation") unheard++;

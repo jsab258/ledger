@@ -40,7 +40,7 @@ namespace Ledger.Core
             // asterisk is narration, never speech; the deflection passes as itself.
             var opening = reply.TrimStart();
             if ((opening.StartsWith("(") || opening.StartsWith("[") || opening.StartsWith("*"))
-                && reply.Trim() != Deflect(characterName))
+                && !IsDeflection(reply.Trim(), characterName))
                 return Deflect(characterName);
 
             reply = Humanize(reply);
@@ -163,7 +163,26 @@ namespace Ledger.Core
 
         /// Whether Validate put its in-character deflection in place of a reply
         /// (TalkHelper's early first sentence is not spoken if so).
-        public static bool IsDeflection(string reply, string characterName) => reply == Deflect(characterName);
+        public static bool IsDeflection(string reply, string characterName) =>
+            reply != null && (reply == SharedDeflect(characterName)
+                || (characterName != null && OwnDeflect.TryGetValue(characterName, out var own) && Array.IndexOf(own, reply) >= 0));
+
+        /// THEIR OWN WORDS WHEN A LINE IS REFUSED (town list 6ap): the card's
+        /// "deflect" lines, set by the engine for its character; taken in turn,
+        /// so a person does not say the same one every time. A person without
+        /// them has the shared line chosen by their name, as before.
+        public static void OwnDeflections(string characterName, IReadOnlyList<string> lines)
+        {
+            if (string.IsNullOrEmpty(characterName) || lines == null || lines.Count == 0) return;
+            var copy = new string[lines.Count];
+            for (int i = 0; i < copy.Length; i++) copy[i] = lines[i];
+            OwnDeflect[characterName] = copy;
+        }
+
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string[]> OwnDeflect =
+            new System.Collections.Concurrent.ConcurrentDictionary<string, string[]>();
+        static readonly System.Collections.Concurrent.ConcurrentDictionary<string, int> DeflectTurn =
+            new System.Collections.Concurrent.ConcurrentDictionary<string, int>();
 
         /// SAID, NOT NARRATED (town list 6ab, the second checklist sweep): the
         /// stand-in was a stage direction in brackets, "(Ron Kirby looks at you a
@@ -171,6 +190,13 @@ namespace Ledger.Core
         /// the same one for a given person every time, so the game and the
         /// helper can still tell it from a reply.
         static string Deflect(string characterName)
+        {
+            if (characterName != null && OwnDeflect.TryGetValue(characterName, out var own))
+                return own[(int)((uint)DeflectTurn.AddOrUpdate(characterName, 0, (_, v) => v + 1) % (uint)own.Length)];
+            return SharedDeflect(characterName);
+        }
+
+        static string SharedDeflect(string characterName)
         {
             uint h = 2166136261;
             foreach (char c in characterName ?? "") { h ^= c; h *= 16777619; }
