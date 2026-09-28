@@ -5452,6 +5452,25 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // HE WALKED OFF MID-REPLY (town list 6v): what he heard is what was said.
+            {
+                var walkLlm = new FakeLlm { NextReply = "Well, I did see a van by the yard, and a man with it." };
+                var walkEngine = new ConversationEngine(walkLlm, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                await walkEngine.SayToAsync("Seen anything?", new GameTime(3, 12, 0), "In the bar.");
+                walkEngine.WalkedAway("Well, I did see", new GameTime(3, 12, 1));
+                walkLlm.NextReply = "Never mind.";
+                await walkEngine.SayToAsync("Sorry, go on.", new GameTime(3, 12, 5), "In the bar.");
+                var lastMine = walkLlm.LastRequest.Messages.FindLast(m => m.Role == "assistant");
+                Check(lastMine != null && lastMine.Content == "Well, I did see ..." && walkEngine.Memory.Events.Exists(e => e.Text == "He walked off while I was still talking to him.")
+                      && !walkEngine.Memory.Events.Exists(e => e.Text.Contains("a man with it")),
+                      "walked off mid-reply: the model sees only what he heard, and she remembers that he left", lastMine?.Content ?? "none");
+                var silent = new ConversationEngine(new FakeLlm(), card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                await silent.SayToAsync("Seen anything?", new GameTime(3, 12, 0), "In the bar.");
+                silent.WalkedAway(null, new GameTime(3, 12, 1));
+                Check(silent.Memory.Events.Exists(e => e.Text.Contains("nothing: he walked off before I could answer")),
+                      "and if he heard none of it, none of it counts as said to him");
+            }
+
             // THE CONVERSATION SURVIVES A SAVE AND A RELOAD (town list 6r): through
             // the save's own JSON into a fresh engine, the same talk, memory,
             // knowledge and suspicion; and the model sees what was said before.

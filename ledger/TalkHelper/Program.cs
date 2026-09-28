@@ -295,6 +295,7 @@ static class Program
             int? report = null;
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
+            string walkedFrom = null, walkedHeard = null;
             bool acquaintanceSent = false, metHim = false, heardOfHim = false;
             string callsHim = null;
             try
@@ -305,6 +306,12 @@ static class Program
                 {
                     report = rp.GetInt32();
                     if (r.TryGetProperty("why", out var rw) && rw.ValueKind == JsonValueKind.String) reportWhy = rw.GetString();
+                }
+                // HE WALKED OFF MID-REPLY (town list 6v): who from, and what he heard.
+                if (r.TryGetProperty("walkedAway", out var wa) && wa.ValueKind == JsonValueKind.Object)
+                {
+                    walkedFrom = wa.TryGetProperty("to", out var wt) && wt.ValueKind == JsonValueKind.String ? wt.GetString() : "";
+                    walkedHeard = wa.TryGetProperty("heard", out var wh) && wh.ValueKind == JsonValueKind.String ? wh.GetString() : "";
                 }
                 if (r.TryGetProperty("talk", out var tk) && tk.ValueKind == JsonValueKind.String)
                 {
@@ -386,6 +393,12 @@ static class Program
                 return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
             if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
+            if (walkedFrom != null)
+            {
+                var left = EngineFor(walkedFrom);
+                if (left != null) left.WalkedAway(walkedHeard, new GameTime(day, hour, minute));
+                return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = left != null }, Plain);
+            }
             if (report.HasValue) return await ReportAsync(report.Value, reportWhy);
             if (noReply && !derived.HasValue)
                 return JsonSerializer.Serialize(new { id, to, error = "no-evidence" }, Plain);
@@ -943,6 +956,16 @@ static class Program
         var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
         Ok("without --early nothing changes: the whole reply, no first line, no rest",
            plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
+        // HE WALKED OFF MID-REPLY (town list 6v).
+        var walker = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+        LoadCards(walker, cardsDir);
+        await walker.Answer("{\"id\":91,\"to\":\"sam\",\"say\":\"Seen anything?\"}");
+        string walked = await walker.Answer("{\"walkedAway\":{\"to\":\"sam\",\"heard\":\"Hm.\"},\"day\":1,\"hour\":12}");
+        var walkedEngine = walker.EngineFor("sam");
+        Ok("walking off mid-reply: they keep only what he heard, and remember he left",
+           walked.Contains("\"noted\":true") && walkedEngine.Memory.Events.Exists(e => e.Text.Contains("walked off while I was still talking"))
+           && walkedEngine.Memory.Events.Exists(e => e.Text.EndsWith("\"Hm.\", and no more")), walked);
 
         // WHERE THEY ARE (town list 6u): each person told their own place this hour.
         var placed = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
