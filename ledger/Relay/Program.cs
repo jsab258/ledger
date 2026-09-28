@@ -157,6 +157,7 @@ namespace Ledger.Relay
                     try { await client.CompleteAsync(Talk()); } catch (LlmApiException e) { spent = e; }
                 }
                 Ok("a copy's day allowance runs out, and the refusal is final, not a retry", spent != null && spent.StatusCode == 403 && spent.Message.Contains("allowance"), spent?.Message ?? "never ran out");
+                Ok("and it says what it is and when talk comes back", spent != null && spent.ErrorType == "allowance_spent" && spent.Until == "tomorrow", spent?.ErrorType + " " + spent?.Until);
                 var otherClient = new AnthropicClient(null) { BaseUrl = url, CopyCode = other, MaxRetries = 0 };
                 Ok("another copy is not affected", (await otherClient.CompleteAsync(Talk())).Text.StartsWith("Aye"));
                 clock = clock.AddDays(1);
