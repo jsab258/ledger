@@ -5634,6 +5634,66 @@ namespace Ledger.CoreTests
                       "asked straight out twice with no answer, they stop asking (and a reload keeps count); a caught lie is put to him; an answer is never asked for again");
             }
 
+            // A LIE FOUND OUT LATER (town list 6am): judged again once, only a
+            // definite answer; hearsay a doubt at half weight; what he told others
+            // set against what they saw; all kept across a reload.
+            {
+                var lt = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                lt.CurrentDeed = "player.window_d1";
+                lt.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), true);
+                bool judged = lt.JudgeAgain("player.window_d1", ClaimResult.Contradiction, "Rita's", new GameTime(2, 18, 0));
+                bool again = lt.JudgeAgain("player.window_d1", ClaimResult.Consistent, "the chapel", new GameTime(2, 18, 1));
+                string ltp = lt.BuildSystemPrompt("x", new GameTime(2, 18, 2), "");
+                var vague = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                vague.HeardAnswer("player.window_d1", 1, 23, "the chapel and Rita's", new[] { "chapel", "ritas" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), false);
+                bool vagueJudged = vague.JudgeAgain("player.window_d1", ClaimResult.Contradiction, "the cafe", new GameTime(2, 18, 0));
+                var doubt = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                doubt.CurrentDeed = "player.window_d1";
+                doubt.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), true);
+                bool doubted = doubt.HeardOtherwise("player.window_d1", "Rita's", new GameTime(2, 18, 0)) && !doubt.HeardOtherwise("player.window_d1", "the cafe", new GameTime(2, 18, 1));
+                doubt.Suspicion.Restore(0.0); doubt.Suspicion.Raise(0.5, "I saw him near the window");
+                doubt.ApplyAnswers("player.window_d1");
+                double doubtVal = doubt.Suspicion.Value;
+                string dp = doubt.BuildSystemPrompt("x", new GameTime(2, 18, 2), "");
+                var told = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                told.CurrentDeed = "player.window_d1";
+                bool heardTold = told.HeardHeToldOthers("player.window_d1", 1, 23, "the chapel", "Rita's", new GameTime(2, 18, 0)) && !told.HeardHeToldOthers("player.window_d1", 1, 23, "the cafe", "Rita's", new GameTime(2, 18, 1));
+                told.Suspicion.Restore(0.0); told.Suspicion.Raise(0.5, "I saw him near the window");
+                told.ApplyAnswers("player.window_d1");
+                double toldVal = told.Suspicion.Value;
+                string tp = told.BuildSystemPrompt("x", new GameTime(2, 18, 2), "");
+                var ltBack = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                ltBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(doubt.CaptureTalk()))));
+                var toldBack = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                toldBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(told.CaptureTalk()))));
+                Check(judged && !again && lt.Answers[0].Result == ClaimResult.Contradiction && ltp.Contains("you know that is a lie: you saw him at Rita's")
+                      && lt.Memory.Events.Exists(e => e.Text.Contains("but I know now he was at Rita's")) && !vagueJudged
+                      && doubted && Math.Abs(doubtVal - (0.5 + ConversationEngine.LieWeight / 2)) < 1e-9 && dp.Contains("but you have heard he was at Rita's then")
+                      && heardTold && Math.Abs(toldVal - (0.5 + ConversationEngine.LieWeight / 2)) < 1e-9 && tp.Contains("You have heard he has been telling people he was at the chapel on Tuesday night")
+                      && ltBack.Answers.Count == 1 && ltBack.Answers[0].Definite && ltBack.Answers[0].HeardSaw == "Rita's"
+                      && toldBack.ToldOthers.ContainsKey("player.window_d1"),
+                      "a definite answer is caught later once, a vague one never; hearsay and what he told others weigh half a lie; all kept across a reload");
+                var hedge = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                hedge.CurrentDeed = "player.window_d1";
+                hedge.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), false);
+                hedge.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, new GameTime(2, 10, 1), true);
+                bool hedgeCaught = hedge.JudgeAgain("player.window_d1", ClaimResult.Contradiction, "Rita's", new GameTime(2, 18, 0));
+                var listed = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                listed.CurrentDeed = "player.window_d1";
+                listed.HeardAnswer("player.window_d1", 1, 23, "the chapel and Rita's", new[] { "chapel", "ritas" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), false);
+                bool sawOther = listed.SawOtherwise("player.window_d1", "the kiosk", new GameTime(2, 18, 0)) && !listed.SawOtherwise("player.window_d1", "the cafe", new GameTime(2, 18, 1));
+                string lp = listed.BuildSystemPrompt("x", new GameTime(2, 18, 2), "");
+                var weigh = new ConversationEngine(new FakeLlm { NextReply = "Right." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                double w0 = weigh.AnswerWeight("player.window_d1");
+                weigh.HeardHeToldOthers("player.window_d1", 1, 23, "the chapel", "Rita's", new GameTime(2, 10, 0));
+                double w1 = weigh.AnswerWeight("player.window_d1");
+                weigh.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Contradiction, "Rita's", new GameTime(2, 10, 1), true);
+                double w2 = weigh.AnswerWeight("player.window_d1");
+                Check(hedgeCaught && sawOther && lp.Contains("you saw him at the kiosk then, which he did not mention") && !lp.Contains("You cannot say otherwise")
+                      && w0 == 0.0 && Math.Abs(w1 - ConversationEngine.LieWeight / 2) < 1e-9 && Math.Abs(w2 - ConversationEngine.LieWeight) < 1e-9,
+                      "a hedged answer said plainly after is plain; a list they saw him outside of is no longer \"cannot say otherwise\"; what his answers weigh never counts his lie twice");
+            }
+
             // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): read narrowly,
             // decided by the Core, told to the character, kept across a reload; a
             // promise of silence they will not keep is asked again without.

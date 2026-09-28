@@ -297,7 +297,8 @@ static class Program
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
             string walkedFrom = null, walkedHeard = null;
-            string deedTopic = null, sawHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
+            string deedTopic = null, sawHimAt = null, heardHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
+            var heardHeSaid = new List<string>();
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             string callsHim = null;
             List<string> present = null;
@@ -322,6 +323,15 @@ static class Program
                     sawHimAt = dd.TryGetProperty("sawHimAt", out var sa) && sa.ValueKind == JsonValueKind.String ? sa.GetString() : null;
                     // A grave deed (a killing): nobody keeps it quiet for the asking (town list 6al).
                     deedGrave = dd.TryGetProperty("grave", out var gv) && gv.ValueKind == JsonValueKind.True;
+                    // Where they have heard he was, and where they have heard he says he was (town list 6am).
+                    heardHimAt = dd.TryGetProperty("heardHimAt", out var hh) && hh.ValueKind == JsonValueKind.String ? hh.GetString() : null;
+                    // One area id, or every area of the claim ("the fish market" is two).
+                    if (dd.TryGetProperty("heardHeSaid", out var hs))
+                    {
+                        if (hs.ValueKind == JsonValueKind.String) heardHeSaid.Add(hs.GetString());
+                        else if (hs.ValueKind == JsonValueKind.Array)
+                            foreach (var he in hs.EnumerateArray()) if (he.ValueKind == JsonValueKind.String) heardHeSaid.Add(he.GetString());
+                    }
                 }
                 // HE WALKED OFF MID-REPLY (town list 6v): who from, and what he heard.
                 if (r.TryGetProperty("walkedAway", out var wa) && wa.ValueKind == JsonValueKind.Object)
@@ -489,8 +499,33 @@ static class Program
             // own question of where he was, read from plain statements, checked
             // against where they saw him at about the deed's time, by area.
             object claimOut = null;
-            ConversationEngine.Answer newAnswer = null;
             if (deedTopic != null) engine.CurrentDeed = deedTopic;
+            // What his answers about this deed weigh before this turn: without the
+            // game's evidence only the change moves them (the independent check of 6am).
+            double answersBefore = engine.AnswerWeight(deedTopic);
+            string AreaWords(string area) => area == null || Cast == null ? null : Cast.AreaNames(area) is var nm && nm.Count > 0 ? nm[0] : area;
+            string deedSawArea = Cast?.AreaFor(sawHimAt);
+            // A LIE FOUND OUT LATER (town list 6am), first: an answer they could not
+            // judge, judged again once they know where he was, before anything he
+            // says now can replace it (the independent check: a changed story
+            // escaped). A list or vague answer is never a lie; if they saw him
+            // somewhere it does not name, they say so.
+            if (deedTopic != null && Cast != null && deedSawArea != null)
+            {
+                var held = engine.Answers.Find(x => x.Topic == deedTopic);
+                if (held != null && held.Result == ClaimResult.Unknown)
+                {
+                    bool fitsHeld = false;
+                    foreach (var ar in held.Areas) if (Cast.Fits(ar, deedSawArea)) fitsHeld = true;
+                    if (held.Definite)
+                    {
+                        var later = fitsHeld ? ClaimResult.Consistent : ClaimResult.Contradiction;
+                        if (engine.JudgeAgain(deedTopic, later, AreaWords(deedSawArea), now))
+                            claimOut = new { topic = deedTopic, areas = held.Areas, result = later.ToString().ToLowerInvariant(), definite = true, later = true };
+                    }
+                    else if (!fitsHeld) engine.SawOtherwise(deedTopic, AreaWords(deedSawArea), now);
+                }
+            }
             var deedWhen = new Claims.DeedWhen(deedDay, deedHour, now.Day);
             if (deedTopic != null && Cast != null && !string.IsNullOrEmpty(say) && engine.AskedWhereAbout(deedWhen, out bool looseQuestion))
             {
@@ -515,11 +550,39 @@ static class Program
                     foreach (var ar in areas) { var n = Cast.AreaNames(ar); saidNames.Add(n.Count > 0 ? n[0] : ar); }
                     saidNames.Sort(StringComparer.Ordinal);
                     string sawWords = sawArea == null ? null : Cast.AreaNames(sawArea) is var sn && sn.Count > 0 ? sn[0] : sawArea;
-                    newAnswer = engine.HeardAnswer(deedTopic, deedDay, deedHour, string.Join(" and ", saidNames), areas, result, sawWords, now);
+                    engine.HeardAnswer(deedTopic, deedDay, deedHour, string.Join(" and ", saidNames), areas, result, sawWords, now, definite);
                     var areaList = new List<string>(areas); areaList.Sort(StringComparer.Ordinal);
-                    claimOut = new { areas = areaList, result = result.ToString().ToLowerInvariant() };
+                    // A lie caught later this same turn is what the game hears of, not the new story.
+                    if (claimOut == null) claimOut = new { topic = deedTopic, areas = areaList, result = result.ToString().ToLowerInvariant(), definite, later = false };
                 }
             }
+            // HEARSAY, AND WHAT HE TOLD OTHERS (town list 6am), against the answer he
+            // has now: hearsay against a definite answer is a doubt at half weight;
+            // what he has been telling people, reaching somebody who saw him where
+            // none of it fits, half a caught lie. The game sends both every turn.
+            if (deedTopic != null && Cast != null)
+            {
+                var held = engine.Answers.Find(x => x.Topic == deedTopic);
+                string heardArea = Cast.AreaFor(heardHimAt);
+                if (held != null && heardArea != null)
+                {
+                    bool fitsHeard = false;
+                    foreach (var ar in held.Areas) if (Cast.Fits(ar, heardArea)) fitsHeard = true;
+                    if (!fitsHeard) engine.HeardOtherwise(deedTopic, AreaWords(heardArea), now);
+                }
+                var saidAreas = new List<string>();
+                foreach (var h in heardHeSaid) { var ar = Cast.AreaFor(h); if (ar != null && !saidAreas.Contains(ar)) saidAreas.Add(ar); }
+                if (saidAreas.Count > 0 && deedSawArea != null)
+                {
+                    bool anyFits = false;
+                    foreach (var ar in saidAreas) if (Cast.Fits(ar, deedSawArea)) anyFits = true;
+                    var saidWords = new List<string>();
+                    foreach (var ar in saidAreas) { var w = AreaWords(ar); if (!saidWords.Contains(w)) saidWords.Add(w); }
+                    saidWords.Sort(StringComparer.Ordinal);
+                    if (!anyFits) engine.HeardHeToldOthers(deedTopic, deedDay, deedHour, string.Join(" and ", saidWords), AreaWords(deedSawArea), now);
+                }
+            }
+
             // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): about the deed they
             // suspect him of; the Core decides whether they keep it quiet.
             string ownedUpOut = null;
@@ -549,10 +612,13 @@ static class Program
                 // And what he has told them about this deed, on top, every turn the evidence is set.
                 engine.ApplyAnswers(engine.CurrentDeed);
             }
-            else if (newAnswer != null)
+            else if (deedTopic != null)
             {
-                // No evidence this turn: only a new answer moves them, once.
-                engine.ApplyAnswer(newAnswer);
+                // No evidence this turn: only the change in what his answers weigh
+                // moves them, once.
+                double change = engine.AnswerWeight(deedTopic) - answersBefore;
+                if (change > 1e-12) engine.Suspicion.Raise(change, engine.AnswerReason(deedTopic));
+                else if (change < -1e-12) engine.Suspicion.Lower(-change, "his story fits what I saw");
             }
             string level = engine.Suspicion.Level.ToString();
             double holds = Math.Round(engine.Suspicion.Value, 3);
@@ -1114,6 +1180,37 @@ static class Program
         Ok("an answer that is not plain and names nowhere they saw him is not taken down at all; \"Me?\" before a plain answer leaves it plain",
            vagueSaid.Contains("\"claim\":null") && Math.Abs(Sus(vagueSaid) - 0.5) < 1e-9 && meSaid.Contains("\"result\":\"contradiction\"")
            && vague.EngineFor("sam").Answers.Count == 0, vagueSaid + " | " + meSaid);
+
+        // A LIE FOUND OUT LATER (town list 6am): his answer, unjudged when given,
+        // is caught once the game learns where this person saw him; and what he
+        // told somebody else, reaching Sheila, is set against what she saw.
+        var laterH = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(laterH, cardsDir);
+        LoadCast(laterH, cardsDir);
+        string noSight = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23},\"suspicion\":0.5,\"suspicionWhy\":\"I saw him near the window\"";
+        string withSight = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"ritas_counter\"},\"suspicion\":0.5,\"suspicionWhy\":\"I saw him near the window\"";
+        await laterH.Answer("{\"id\":130,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + noSight + "}");
+        string unjudged = await laterH.Answer("{\"id\":131,\"to\":\"sam\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10," + noSight + "}");
+        string caught = await laterH.Answer("{\"id\":132,\"to\":\"sam\",\"say\":\"Nice weather.\",\"day\":2,\"hour\":18," + withSight + "}");
+        string afterCaught = await laterH.Answer("{\"id\":133,\"to\":\"sam\",\"say\":\"Well?\",\"day\":2,\"hour\":18," + withSight + "}");
+        string toldSheila = await laterH.Answer("{\"id\":134,\"to\":\"lena\",\"say\":\"Evening.\",\"day\":2,\"hour\":18,\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"ritas_counter\",\"heardHeSaid\":\"chapel\"},\"suspicion\":0.5,\"suspicionWhy\":\"I saw him near the window\"}");
+        string fishTold = await laterH.Answer("{\"id\":135,\"to\":\"rocco\",\"say\":\"Evening.\",\"day\":2,\"hour\":18,\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"fish_front\",\"heardHeSaid\":[\"fish_dock\",\"fish_market\"]},\"suspicion\":0.5,\"suspicionWhy\":\"I saw him near the window\"}");
+        var noEvidence = new Helper(new FakeLlm { Next = "Where were you on Tuesday night, then?" }, TimeSpan.FromSeconds(8));
+        LoadCards(noEvidence, cardsDir);
+        LoadCast(noEvidence, cardsDir);
+        string bare = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23";
+        await noEvidence.Answer("{\"id\":140,\"to\":\"sam\",\"say\":\"Evening.\",\"day\":2,\"hour\":10," + bare + "}}");
+        string ne1 = await noEvidence.Answer("{\"id\":141,\"to\":\"sam\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10," + bare + ",\"heardHimAt\":\"ritas\"}}");
+        string ne2 = await noEvidence.Answer("{\"id\":142,\"to\":\"sam\",\"say\":\"Well?\",\"day\":2,\"hour\":11," + bare + ",\"heardHimAt\":\"ritas\",\"sawHimAt\":\"ritas_counter\"}}");
+        string ne3 = await noEvidence.Answer("{\"id\":143,\"to\":\"sam\",\"say\":\"Well?\",\"day\":2,\"hour\":11," + bare + ",\"heardHimAt\":\"ritas\",\"sawHimAt\":\"ritas_counter\"}}");
+        Ok("what he told others fits when any of its areas fits; without the game's evidence each thing counts once: hearsay half a lie, then the caught lie in all",
+           Math.Abs(Sus(fishTold) - 0.5) < 1e-9 && Math.Abs(Sus(ne1) - ConversationEngine.LieWeight / 2) < 1e-6
+           && Math.Abs(Sus(ne2) - ConversationEngine.LieWeight) < 1e-6 && Math.Abs(Sus(ne3) - ConversationEngine.LieWeight) < 1e-6, fishTold + " | " + ne1 + " | " + ne2 + " | " + ne3);
+        Ok("an answer unjudged when given is caught once they know where he was, once; what he told others is set against what they saw",
+           unjudged.Contains("\"result\":\"unknown\"") && caught.Contains("\"later\":true") && caught.Contains("\"result\":\"contradiction\"")
+           && Sus(caught) > 0.5 + 0.1 && Math.Abs(Sus(afterCaught) - Sus(caught)) < 1e-6 && !afterCaught.Contains("\"later\":true")
+           && Sus(toldSheila) > 0.5 + 0.05 && laterH.EngineFor("lena").BuildSystemPrompt("x", new GameTime(2, 18, 5), "").Contains("You have heard he has been telling people he was at the chapel"),
+           unjudged + " | " + caught + " | " + toldSheila);
 
         // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): Darren says yes to
         // anybody and his silence is fragile; Ron keeps it quiet for the owner;

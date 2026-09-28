@@ -225,8 +225,14 @@ namespace Ledger.Core
                     ? $"He told you he was at {answered.Said} {when}, and you know that is a lie: you saw him at {answered.Saw ?? "somewhere else"}."
                     : answered.Result == ClaimResult.Consistent
                         ? $"He told you he was at {answered.Said} {when}, and it fits what you saw. You need not ask him again."
-                        : $"He has told you he was at {answered.Said} {when}. You cannot say otherwise, so do not ask him where he was then again.");
+                        : answered.HeardSaw != null
+                            ? $"He has told you he was at {answered.Said} {when}, but you have heard he was at {answered.HeardSaw} then. Do not ask him where he was again; you may put what you heard to him."
+                        : answered.SawElsewhere
+                            ? $"He has told you he was at {answered.Said} {when}, and you saw him at {answered.Saw} then, which he did not mention. Do not ask him where he was again; you may put that to him."
+                            : $"He has told you he was at {answered.Said} {when}. You cannot say otherwise, so do not ask him where he was then again.");
             }
+            if (CurrentDeed != null && ToldOthers.TryGetValue(CurrentDeed, out var toldOthers) && (answered == null || answered.Result != ClaimResult.Contradiction))
+                sb.AppendLine($"You have heard he has been telling people he was at {toldOthers.said} {WhenWords(toldOthers.day, toldOthers.hour)}, and you saw him at {toldOthers.saw} then.");
 
             bool ownedUp = CurrentDeed != null && OwnedUp.Contains(CurrentDeed);
             if (ownedUp)
@@ -436,6 +442,101 @@ namespace Ledger.Core
             public List<string> Areas = new List<string>();
             public ClaimResult Result;        // Contradiction: they saw him elsewhere
             public string Saw;                // where they saw him, when they did ("Rita's")
+            public bool Definite;             // one plain place: the only kind judged again later
+            public string HeardSaw;           // where they have heard he was instead, if they have
+            public bool SawElsewhere;         // a list or vague answer, and they since saw him somewhere it does not name
+        }
+
+        /// WHAT HIS ANSWERS ABOUT A DEED WEIGH on their suspicion, as ApplyAnswers
+        /// adds it: a caught lie, a fit, hearsay against a definite answer, and
+        /// what he told others. Without the game's evidence the helper applies
+        /// only the change a turn makes, so nothing counts twice (the independent
+        /// check of town list 6am).
+        public double AnswerWeight(string topic)
+        {
+            if (topic == null) return 0.0;
+            double w = 0.0;
+            var a = Answers.Find(x => x.Topic == topic);
+            if (a != null)
+                w += a.Result == ClaimResult.Contradiction ? LieWeight
+                   : a.Result == ClaimResult.Consistent ? -FitsWeight
+                   : a.HeardSaw != null ? LieWeight / 2 : 0.0;
+            if (ToldOthers.ContainsKey(topic) && (a == null || a.Result != ClaimResult.Contradiction)) w += LieWeight / 2;
+            return w;
+        }
+
+        /// The reason the weight of his answers about a deed gives, in their words.
+        public string AnswerReason(string topic)
+        {
+            var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            if (a != null && a.Result == ClaimResult.Contradiction) return $"he told me he was at {a.Said}, and I saw him at {a.Saw ?? "somewhere else"}";
+            if (a != null && a.HeardSaw != null && a.Result == ClaimResult.Unknown) return $"he told me he was at {a.Said}, and I heard he was at {a.HeardSaw}";
+            if (topic != null && ToldOthers.TryGetValue(topic, out var t)) return $"I heard he's been saying he was at {t.said}, and I saw him at {t.saw}";
+            return "his story fits what I saw";
+        }
+
+        /// A list or vague answer, and they since saw him somewhere it does not
+        /// name: not a lie, but no longer "I can't say otherwise". Once.
+        public bool SawOtherwise(string topic, string saw, GameTime now)
+        {
+            var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            if (a == null || a.Definite || a.Result != ClaimResult.Unknown || a.SawElsewhere || string.IsNullOrEmpty(saw)) return false;
+            a.SawElsewhere = true;
+            a.Saw = saw;
+            Memory.Append(new MemoryEvent(now, "observation", 0.5,
+                $"He told me he was at {a.Said} {WhenWords(a.DeedDay, a.DeedHour)}. I saw him at {saw}, which he never said."));
+            return true;
+        }
+
+        /// WHAT THEY HAVE HEARD HE TOLD OTHERS (town list 6am): by deed, where he
+        /// has been saying he was and where they saw him instead.
+        public readonly Dictionary<string, (string said, string saw, int day, int hour)> ToldOthers =
+            new Dictionary<string, (string, string, int, int)>();
+
+        /// A LIE FOUND OUT LATER (town list 6am, the third checklist sweep): an
+        /// answer they could not judge when he gave it ("I can't say otherwise")
+        /// is judged again once they know where he was, from a sighting of their
+        /// own that reached the game later. Only a definite answer, and only
+        /// once: a judged answer stays judged. True when it changed.
+        public bool JudgeAgain(string topic, ClaimResult result, string saw, GameTime now)
+        {
+            var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            if (a == null || !a.Definite || a.Result != ClaimResult.Unknown || result == ClaimResult.Unknown) return false;
+            a.Result = result;
+            a.Saw = saw;
+            string when = WhenWords(a.DeedDay, a.DeedHour);
+            Memory.Append(new MemoryEvent(now, "observation", result == ClaimResult.Contradiction ? 0.8 : 0.5,
+                result == ClaimResult.Contradiction
+                    ? $"He told me he was at {a.Said} {when}, but I know now he was at {saw ?? "somewhere else"}. He lied to me."
+                    : $"He told me he was at {a.Said} {when}, and I know now that it fits."));
+            return true;
+        }
+
+        /// Hearsay against his answer: they have heard he was somewhere else at
+        /// the time. A doubt, weighing half a caught lie; once, and only on a
+        /// definite answer they could not judge themselves.
+        public bool HeardOtherwise(string topic, string heardAt, GameTime now)
+        {
+            var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            if (a == null || !a.Definite || a.Result != ClaimResult.Unknown || a.HeardSaw != null || string.IsNullOrEmpty(heardAt)) return false;
+            a.HeardSaw = heardAt;
+            Memory.Append(new MemoryEvent(now, "observation", 0.6,
+                $"He told me he was at {a.Said} {WhenWords(a.DeedDay, a.DeedHour)}, but I heard he was at {heardAt}."));
+            return true;
+        }
+
+        /// What he told somebody else, reached them through the town's talk, and
+        /// they saw him elsewhere: half a caught lie, as it is secondhand. Once
+        /// a deed.
+        public bool HeardHeToldOthers(string topic, int deedDay, int deedHour, string said, string saw, GameTime now)
+        {
+            if (string.IsNullOrEmpty(topic) || string.IsNullOrEmpty(said) || string.IsNullOrEmpty(saw) || ToldOthers.ContainsKey(topic)) return false;
+            ToldOthers[topic] = (said, saw, deedDay, deedHour);
+            var e = new MemoryEvent(now, "observation", 0.7,
+                $"I heard he's been telling people he was at {said} {WhenWords(deedDay, deedHour)}. I saw him at {saw}.");
+            Memory.Append(e);
+            TagStory(e, topic);
+            return true;
         }
 
         public List<Answer> Answers { get; } = new List<Answer>();
@@ -486,22 +587,27 @@ namespace Ledger.Core
         /// He answered, about a deed. Returns the answer when it is new (a
         /// different place or result), else null; a caught lie is never undone
         /// by a later answer, which is remembered as a changed story.
-        public Answer HeardAnswer(string topic, int deedDay, int deedHour, string said, IEnumerable<string> areas, ClaimResult result, string saw, GameTime now)
+        public Answer HeardAnswer(string topic, int deedDay, int deedHour, string said, IEnumerable<string> areas, ClaimResult result, string saw, GameTime now, bool definite = false)
         {
             if (string.IsNullOrEmpty(topic) || string.IsNullOrEmpty(said)) return null;
             var areaList = new List<string>(areas ?? new string[0]);
             areaList.Sort(StringComparer.Ordinal);
             var had = Answers.Find(a => a.Topic == topic);
             string when = WhenWords(deedDay, deedHour);
-            if (had != null && had.Result == result && string.Join(",", had.Areas) == string.Join(",", areaList)) return null;
+            if (had != null && had.Result == result && string.Join(",", had.Areas) == string.Join(",", areaList))
+            {
+                // Hedged first, then said plainly: plain from now on (the independent check of 6am).
+                if (definite && !had.Definite && had.Result == ClaimResult.Unknown) had.Definite = true;
+                return null;
+            }
             if (had != null && had.Result == ClaimResult.Contradiction)
             {
-                string story = $"He changed his story about {when}: now he says he was at {said}.";
+                string story = $"He changed his story about where he was {when}: now he says he was at {said}.";
                 if (!Memory.Events.Exists(e => e.Text == story)) Memory.Append(new MemoryEvent(now, "observation", 0.6, story));
                 return null;
             }
             Answers.RemoveAll(a => a.Topic == topic);
-            var answer = new Answer { Topic = topic, DeedDay = deedDay, DeedHour = deedHour, Said = said, Areas = areaList, Result = result, Saw = saw };
+            var answer = new Answer { Topic = topic, DeedDay = deedDay, DeedHour = deedHour, Said = said, Areas = areaList, Result = result, Saw = saw, Definite = definite };
             Answers.Add(answer);
             Memory.Append(new MemoryEvent(now, "observation", result == ClaimResult.Contradiction ? 0.8 : 0.5,
                 result == ClaimResult.Contradiction ? $"He told me he was at {said} {when}, but I saw him at {saw ?? "somewhere else"}. He lied to me."
@@ -516,16 +622,18 @@ namespace Ledger.Core
         {
             var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
             if (a != null) ApplyAnswer(a);
+            // What he told others, when their own answer from him has not already caught him.
+            if (topic != null && ToldOthers.TryGetValue(topic, out var told) && (a == null || a.Result != ClaimResult.Contradiction))
+                Suspicion.Raise(LieWeight / 2, $"I heard he's been saying he was at {told.said}, and I saw him at {told.saw}");
         }
 
         public void ApplyAnswer(Answer a)
         {
             if (a.Result == ClaimResult.Contradiction) Suspicion.Raise(LieWeight, $"he told me he was at {a.Said}, and I saw him at {a.Saw ?? "somewhere else"}");
             else if (a.Result == ClaimResult.Consistent) Suspicion.Lower(FitsWeight, "his story fits what I saw");
+            else if (a.HeardSaw != null) Suspicion.Raise(LieWeight / 2, $"he told me he was at {a.Said}, and I heard he was at {a.HeardSaw}");
         }
 
-        /// "on Tuesday night", "on Tuesday afternoon": the deed's time as they
-        /// would say it; before six in the morning is the night before.
         Dictionary<string, object> QuietJson()
         {
             var d = new Dictionary<string, object>();
@@ -533,6 +641,16 @@ namespace Ledger.Core
             return d;
         }
 
+        List<object> ToldOthersJson()
+        {
+            var list = new List<object>();
+            foreach (var kv in ToldOthers)
+                list.Add(new Dictionary<string, object> { { "topic", kv.Key }, { "said", kv.Value.said }, { "saw", kv.Value.saw }, { "day", kv.Value.day }, { "hour", kv.Value.hour } });
+            return list;
+        }
+
+        /// "on Tuesday night", "on Tuesday afternoon": the deed's time as they
+        /// would say it; before six in the morning is the night before.
         public static string WhenWords(int day, int hour)
         {
             if (day < 0 || hour < 0) return "that night";
@@ -644,7 +762,7 @@ namespace Ledger.Core
                 { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid }, { "howYouKnowHim", HowYouKnowHim }, { "knowsHimFromGame", KnowsHimFromGame },
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
-                { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() },
+                { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
             };
         }
 
@@ -659,6 +777,7 @@ namespace Ledger.Core
             _asksThisTalk = 0;
             OwnedUp.Clear();
             KeepsQuiet.Clear();
+            ToldOthers.Clear();
             Knowledge.Facts.Clear();
             Suspicion.Restore(0.0);
             _knownOnlySaid = 0;
@@ -728,6 +847,9 @@ namespace Ledger.Core
                     var back = new Answer { Topic = topic, Said = said, Result = r, Saw = o.TryGetValue("saw", out var sw) ? sw as string : null,
                                             DeedDay = o.TryGetValue("day", out var ady) ? WholeOrMinus(ady) : -1, DeedHour = o.TryGetValue("hour", out var ahr) ? WholeOrMinus(ahr) : -1 };
                     if (o.TryGetValue("areas", out var ars) && ars is List<object> arl) foreach (var x in arl) if (x is string xs) back.Areas.Add(xs);
+                    back.Definite = o.TryGetValue("definite", out var df) && df is bool dfb && dfb;
+                    back.HeardSaw = o.TryGetValue("heardSaw", out var hsw) ? hsw as string : null;
+                    back.SawElsewhere = o.TryGetValue("sawElsewhere", out var swe) && swe is bool sweb && sweb;
                     Answers.Add(back);
                 }
             if (saved.TryGetValue("lastTurn", out var lt) && lt is List<object> ltf && ltf.Count == 3)
@@ -740,6 +862,11 @@ namespace Ledger.Core
             if (saved.TryGetValue("ownedUp", out var ou) && ou is List<object> oul) foreach (var x in oul) if (x is string xs && xs.Length > 0) OwnedUp.Add(xs);
             if (saved.TryGetValue("keepsQuiet", out var kq) && kq is Dictionary<string, object> kqd)
                 foreach (var kv in kqd) if (kv.Value is bool kb) KeepsQuiet[kv.Key] = kb;
+            if (saved.TryGetValue("toldOthers", out var tol) && tol is List<object> toll)
+                foreach (var to in toll)
+                    if (to is Dictionary<string, object> tod && tod.TryGetValue("topic", out var tt) && tt is string ttopic
+                        && tod.TryGetValue("said", out var tsd) && tsd is string tsaid && tod.TryGetValue("saw", out var tsw) && tsw is string tsaw)
+                        ToldOthers[ttopic] = (tsaid, tsaw, tod.TryGetValue("day", out var tdy) ? WholeOrMinus(tdy) : -1, tod.TryGetValue("hour", out var thr) ? WholeOrMinus(thr) : -1);
         }
 
         List<object> AnswersJson()
@@ -749,7 +876,8 @@ namespace Ledger.Core
             {
                 var areas = new List<object>(); foreach (var ar in a.Areas) areas.Add(ar);
                 list.Add(new Dictionary<string, object> { { "topic", a.Topic }, { "day", a.DeedDay }, { "hour", a.DeedHour }, { "said", a.Said },
-                                                          { "areas", areas }, { "result", a.Result.ToString() }, { "saw", a.Saw } });
+                                                          { "areas", areas }, { "result", a.Result.ToString() }, { "saw", a.Saw },
+                                                          { "definite", a.Definite }, { "heardSaw", a.HeardSaw }, { "sawElsewhere", a.SawElsewhere } });
             }
             return list;
         }
