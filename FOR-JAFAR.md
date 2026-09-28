@@ -6,10 +6,6 @@ decision you need to make. Unresolved decisions carry forward. Earlier
 summaries are in git; everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Needs you now (28 September)
-
-**[The cleanup page](https://claude.ai/artifact/KHjL38cq2t4nkRx4SeJB4W):** C: is at 55 GB, under your 60. Two groups, each one tap: Unreal's old cache (14.5 GB, nothing uses it since today's cap) and the build machine's copy (about 7 GB net). Both recommended; nothing goes without your yes.
-
 ## Town, 29 September
 
 **[Your page: the first hour and four calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
