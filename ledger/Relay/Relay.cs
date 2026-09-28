@@ -72,6 +72,10 @@ namespace Ledger.Relay
         public string CopiesFile { get; set; } = "copies.json";
         public string UsageFile { get; set; } = "usage.json";
         public string LogFile { get; set; } = "relay.log";
+        /// Players' reports of what the AI said, kept for us to act on.
+        public string ReportsFile { get; set; } = "reports.jsonl";
+        public int ReportsPerCopyPerDay { get; set; } = 20;
+        public int MaxReportBytes { get; set; } = 20000;
 
         public sealed class Shape
         {
@@ -99,6 +103,7 @@ namespace Ledger.Relay
             s.CopiesFile = Path.Combine(dir, s.CopiesFile);
             s.UsageFile = Path.Combine(dir, s.UsageFile);
             s.LogFile = Path.Combine(dir, s.LogFile);
+            s.ReportsFile = Path.Combine(dir, s.ReportsFile);
             return s;
         }
     }
@@ -320,6 +325,42 @@ namespace Ledger.Relay
             }
         }
 
+        readonly Dictionary<string, (string day, int count)> _reports = new Dictionary<string, (string, int)>();
+
+        /// A PLAYER'S REPORT of a line (town list 6c): what was said and what
+        /// came back, and why they reported it, as the helper sends it. Kept,
+        /// with the copy it came from, for us to read and act on; the player
+        /// chose to send these words, so unlike the call log they are kept.
+        public async Task Report(HttpContext ctx)
+        {
+            var copy = _copies.Find(ctx.Request.Headers["x-ledger-copy"].ToString());
+            if (copy == null) { await Refuse(ctx, 401, "unknown_copy", "This copy is not known here."); return; }
+            JsonObject body;
+            try
+            {
+                using var ms = new MemoryStream();
+                await ctx.Request.Body.CopyToAsync(ms);
+                if (ms.Length > _s.MaxReportBytes) { await Refuse(ctx, 413, "too_large", "Report too large."); return; }
+                body = JsonNode.Parse(ms.ToArray()) as JsonObject;
+            }
+            catch (Exception) { body = null; }
+            if (body == null) { await Refuse(ctx, 400, "not_a_report", "A report is a JSON object."); return; }
+            lock (_gate)
+            {
+                var day = UtcNow().ToString("yyyy-MM-dd");
+                _reports.TryGetValue(copy.Hash, out var seen);
+                if (seen.day != day) seen = (day, 0);
+                if (seen.count >= _s.ReportsPerCopyPerDay) body = null;
+                else _reports[copy.Hash] = (day, seen.count + 1);
+            }
+            if (body == null) { await Refuse(ctx, 429, "too_many_reports", "Too many reports today."); return; }
+            var line = new JsonObject { ["receivedAt"] = UtcNow().ToString("O"), ["copy"] = copy.Hash.Substring(0, 8), ["report"] = body };
+            try { lock (_gate) File.AppendAllText(_s.ReportsFile, line.ToJsonString() + "\n"); }
+            catch (IOException) { await Refuse(ctx, 503, "not_kept", "The report could not be kept."); return; }
+            ctx.Response.ContentType = "application/json";
+            await ctx.Response.WriteAsync("{\"ok\":true}");
+        }
+
         /// Why a request is not one of the game's own; null when it is.
         string Unfit(JsonObject body, out string role, out bool stream, out int chars)
         {
@@ -380,6 +421,7 @@ namespace Ledger.Relay
             var app = builder.Build();
             var relay = service ?? new RelayService(s, upstream);
             app.MapPost("/v1/messages", new RequestDelegate(relay.Handle));
+            app.MapPost("/v1/report", new RequestDelegate(relay.Report));
             app.MapGet("/health", ctx => ctx.Response.WriteAsync("ok"));
             return app;
         }

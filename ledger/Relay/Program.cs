@@ -93,6 +93,7 @@ namespace Ledger.Relay
                 {
                     ApiKey = "sk-server-only", Upstream = "http://provider.invalid",
                     CopiesFile = Path.Combine(dir, "copies.json"), UsageFile = Path.Combine(dir, "usage.json"), LogFile = Path.Combine(dir, "relay.log"),
+                    ReportsFile = Path.Combine(dir, "reports.jsonl"),
                     CopyDayUsd = 0.05, CopyMonthUsd = 0.20, MonthBudgetUsd = 10,
                 };
                 var copies = new Copies();
@@ -171,9 +172,28 @@ namespace Ledger.Relay
                 try { await client.CompleteAsync(Talk()); } catch (LlmApiException e) { busy = e; }
                 Ok("a busy provider's answer passes through unchanged", busy != null && busy.StatusCode == 529);
                 provider.Status = 200;
+
+                // 6. A player's report of a line: kept for us, with the copy it came from.
+                async Task<int> Rep(string json, string withCode)
+                {
+                    using var h = new HttpClient();
+                    var m = new HttpRequestMessage(HttpMethod.Post, url.TrimEnd('/') + "/v1/report") { Content = new StringContent(json, Encoding.UTF8, "application/json") };
+                    if (withCode != null) m.Headers.Add("x-ledger-copy", withCode);
+                    return (int)(await h.SendAsync(m)).StatusCode;
+                }
+                var reports = Path.Combine(dir, "reports.jsonl");
+                Ok("a player's report is kept, with the copy it came from",
+                   await Rep("{\"why\":\"he was rude\",\"turn\":{\"say\":\"hi\",\"reply\":\"clear off\"}}", code) == 200 &&
+                   File.ReadAllText(reports).Contains("he was rude") && File.ReadAllText(reports).Contains(Copies.HashOf(code).Substring(0, 8)));
+                Ok("a report from an unknown copy is refused", await Rep("{\"why\":\"x\"}", "LDG-NOPE") == 401);
+                Ok("so is one that is not a report", await Rep("not json", code) == 400);
+                Ok("or too large", await Rep("{\"why\":\"" + new string('x', 30000) + "\"}", code) == 413);
+                int lastReport = 0;
+                for (int i = 0; i < 25; i++) lastReport = await Rep("{\"why\":\"again\"}", code);
+                Ok("and past twenty a day from one copy, reports wait for tomorrow", lastReport == 429);
                 await app.StopAsync();
 
-                // 6. The whole month's stop, well below the provider's cap, and a restart keeps the count.
+                // 7. The whole month's stop, well below the provider's cap, and a restart keeps the count.
                 var s2 = Settings();
                 s2.MonthBudgetUsd = 0.02; s2.CopyDayUsd = 1; s2.CopyMonthUsd = 1;
                 var provider2 = new FakeProvider();

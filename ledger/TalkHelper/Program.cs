@@ -118,6 +118,67 @@ static class Program
 
         public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
 
+        /// A TURN AS THE PLAYER HAD IT, kept for a report (town list 6c: Steam,
+        /// Microsoft and PEGI all require a way to report what the AI said):
+        /// the last hundred, what was said to whom and what came back.
+        public sealed class Turn
+        {
+            public int Id { get; set; }
+            public string To { get; set; }
+            public int Day { get; set; }
+            public int Hour { get; set; }
+            public int Minute { get; set; }
+            public string Say { get; set; }
+            public string Reply { get; set; }
+            public bool Generated { get; set; }
+            public string Model { get; set; }
+            public List<string> Invented { get; set; }
+            public bool Unchecked { get; set; }
+            public long Ms { get; set; }
+        }
+        readonly List<Turn> _turns = new List<Turn>();
+        /// Where a report is kept when it cannot be sent.
+        public string ReportsDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "LEDGER", "reports");
+        /// Sends a report to our relay; null when the helper talks to the provider directly.
+        public Func<string, Task<bool>> SendReport;
+
+        void Keep(Turn t)
+        {
+            lock (_turns)
+            {
+                _turns.Add(t);
+                if (_turns.Count > 100) _turns.RemoveAt(0);
+            }
+        }
+
+        /// THE PLAYER REPORTS A LINE: {"report": <the turn's id>, "why": "..."}.
+        /// Sent to our relay when there is one, else (or when sending fails)
+        /// kept on this PC; either way the answer says where it went.
+        async Task<string> ReportAsync(int id, string why)
+        {
+            Turn t = null;
+            lock (_turns) for (int i = _turns.Count - 1; i >= 0 && t == null; i--) if (_turns[i].Id == id) t = _turns[i];
+            if (t == null) return JsonSerializer.Serialize(new { reported = id, found = false }, Plain);
+            why = why ?? "";
+            if (why.Length > 500) why = why.Substring(0, 500);
+            var record = JsonSerializer.Serialize(new { reportedAt = DateTime.UtcNow.ToString("O"), why, turn = t }, Plain);
+            string saved = "local";
+            if (SendReport != null)
+            {
+                try { if (await SendReport(record)) saved = "relay"; } catch (Exception) { }
+            }
+            if (saved == "local")
+            {
+                try
+                {
+                    Directory.CreateDirectory(ReportsDir);
+                    File.AppendAllText(Path.Combine(ReportsDir, "reports.jsonl"), record + "\n");
+                }
+                catch (Exception) { saved = "lost"; }
+            }
+            return JsonSerializer.Serialize(new { reported = id, found = true, saved, thanks = AiNotice.ReportThanks(saved) }, Plain);
+        }
+
         public async Task<string> Answer(string line)
         {
             int id = 0;
@@ -133,10 +194,17 @@ static class Program
             bool knowingSent = false;
             var knowing = Knowing.Nothing;
             string knowingStory = null;
+            int? report = null;
+            string reportWhy = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
                 var r = doc.RootElement;
+                if (r.TryGetProperty("report", out var rp) && rp.ValueKind == JsonValueKind.Number)
+                {
+                    report = rp.GetInt32();
+                    if (r.TryGetProperty("why", out var rw) && rw.ValueKind == JsonValueKind.String) reportWhy = rw.GetString();
+                }
                 if (r.TryGetProperty("id", out var v)) id = v.GetInt32();
                 if (r.TryGetProperty("to", out v)) to = v.GetString() ?? "";
                 if (r.TryGetProperty("say", out v)) say = v.GetString() ?? "";
@@ -199,6 +267,7 @@ static class Program
             {
                 return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
+            if (report.HasValue) return await ReportAsync(report.Value, reportWhy);
             if (noReply && !derived.HasValue)
                 return JsonSerializer.Serialize(new { id, to, error = "no-evidence" }, Plain);
             if (derived.HasValue && noReply)
@@ -288,7 +357,7 @@ static class Program
                                 var said = ResponseValidator.Validate(first, card.Name, card.AlsoCalled);
                                 if (ResponseValidator.IsDeflection(said, card.Name)) return Task.FromResult(false);
                                 earlyFirst = said;
-                                Emit(JsonSerializer.Serialize(new { id, to, first = earlyFirst, ms = sw.ElapsedMilliseconds }, Plain));
+                                Emit(JsonSerializer.Serialize(new { id, to, first = earlyFirst, ms = sw.ElapsedMilliseconds, generated = true }, Plain));
                             }
                             return Task.FromResult(true);
                         };
@@ -353,7 +422,14 @@ static class Program
             // FELL BACK: the reply is one of the "that's all I know" wordings,
             // for the log (how often the check leaves a character nothing to say).
             bool fellBack = !timedOut && ClaimCheck.IsKnownOnly(reply);
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack }, Plain);
+            // WRITTEN BY THE MODEL, marked so (the EU's AI Act, Article 50(2):
+            // generated text marked in a form a machine can read); a brush-off
+            // and the fallback line are the game's own words.
+            bool generated = reply != brush && !fellBack;
+            string model = generated ? engine.Model : null;
+            Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
+                            Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -442,9 +518,22 @@ static class Program
             : relay != null ? (string.IsNullOrEmpty(copy) ? null : new AnthropicClient(null) { BaseUrl = relay, CopyCode = copy })
             : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
         var helper = new Helper(llm, TimeSpan.FromSeconds(8));
+        if (relay != null && !string.IsNullOrEmpty(copy))
+        {
+            // A player's report goes to our relay, which keeps it for us to act on.
+            var reportClient = new System.Net.Http.HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+            helper.SendReport = async record =>
+            {
+                using var m = new System.Net.Http.HttpRequestMessage(System.Net.Http.HttpMethod.Post, relay.TrimEnd('/') + "/v1/report")
+                    { Content = new System.Net.Http.StringContent(record, System.Text.Encoding.UTF8, "application/json") };
+                m.Headers.Add("x-ledger-copy", copy);
+                using var resp = await reportClient.SendAsync(m);
+                return resp.IsSuccessStatusCode;
+            };
+        }
         helper.Early = Array.IndexOf(args, "--early") >= 0;
         LoadCards(helper, CardsDir(args));
-        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake }, Plain));
+        Console.Out.WriteLine(JsonSerializer.Serialize(new { ready = true, cards = helper.Cards.Keys, online = helper.Online, fake, notice = new { title = AiNotice.Title, text = AiNotice.Text, report = AiNotice.ReportLabel } }, Plain));
         Console.Out.Flush();
         string line;
         while ((line = Console.In.ReadLine()) != null)
@@ -666,6 +755,34 @@ static class Program
         Ok("out of time after the first sentence: that sentence is the reply, nothing more is said",
            late.firsts.Count == 1 && Flag(late.last, "timedOut") && Reply(late.last) == "Aye." && Str(late.last, "rest") == "", late.last);
         Ok("and the character keeps what the player heard", Said(late.helper) != null && Said(late.helper).Contains("\"Aye.\""), Said(late.helper));
+
+        // A PLAYER'S REPORT (town list 6c), and every generated line marked as such.
+        var reportsDir = Path.Combine(Path.GetTempPath(), "ledger-reports-selftest-" + Guid.NewGuid().ToString("N").Substring(0, 8));
+        var rh = new Helper(new StreamFake("Aye. I saw him go by the chip shop at nine."), TimeSpan.FromSeconds(8)) { CheckAlways = true, ReportsDir = reportsDir };
+        LoadCards(rh, cardsDir);
+        var said30 = await rh.Answer("{\"id\":30,\"to\":\"sam\",\"say\":\"See anything?\"}");
+        Ok("a line the model wrote is marked as generated, with its model", Flag(said30, "generated") && Str(said30, "model") != null, said30);
+        var rep = await rh.Answer("{\"report\":30,\"why\":\"he named a stranger\"}");
+        var keptReport = File.Exists(Path.Combine(reportsDir, "reports.jsonl")) ? File.ReadAllText(Path.Combine(reportsDir, "reports.jsonl")) : "";
+        Ok("a reported line is kept with what was said, the reply and the player's note, and the answer says where and thanks them",
+           Str(rep, "saved") == "local" && Flag(rep, "found") && keptReport.Contains("See anything?") && keptReport.Contains("chip shop") &&
+           keptReport.Contains("he named a stranger") && Str(rep, "thanks") == AiNotice.ReportThanks("local"), rep + " / " + keptReport);
+        Ok("a report of a line that never was finds nothing and keeps nothing",
+           !Flag(await rh.Answer("{\"report\":999}"), "found") && File.ReadAllLines(Path.Combine(reportsDir, "reports.jsonl")).Length == 1);
+        var sent = new List<string>();
+        rh.SendReport = rec => { sent.Add(rec); return Task.FromResult(true); };
+        Ok("with a relay, the report is sent there instead",
+           Str(await rh.Answer("{\"report\":30}"), "saved") == "relay" && sent.Count == 1 && File.ReadAllLines(Path.Combine(reportsDir, "reports.jsonl")).Length == 1);
+        rh.SendReport = rec => throw new InvalidOperationException("relay down");
+        Ok("and when the relay cannot be reached it is kept here, never lost",
+           Str(await rh.Answer("{\"report\":30}"), "saved") == "local" && File.ReadAllLines(Path.Combine(reportsDir, "reports.jsonl")).Length == 2);
+        try { Directory.Delete(reportsDir, true); } catch (IOException) { }
+        var slowHelper = new Helper(new StreamFake("I saw him go by the chip shop at nine and then some") { Pause = TimeSpan.FromSeconds(3) }, TimeSpan.FromMilliseconds(500)) { Early = true, CheckAlways = true };
+        LoadCards(slowHelper, cardsDir);
+        slowHelper.Emit = _ => { };
+        var brushed = await slowHelper.Answer("{\"id\":31,\"to\":\"sam\",\"say\":\"See anything?\"}");
+        Ok("a brush-off is the game's own words, not marked generated", Flag(brushed, "timedOut") && !Flag(brushed, "generated"), brushed);
+        Ok("but a first sentence heard before time ran out is", Flag(late.last, "generated"), late.last);
 
         var plain = new Helper(new StreamFake("Aye. I saw him go by the chip shop at nine."), TimeSpan.FromSeconds(8)) { CheckAlways = true };
         LoadCards(plain, cardsDir);

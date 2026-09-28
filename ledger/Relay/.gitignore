@@ -4,3 +4,4 @@ usage.json
 relay.log
 relay.json
 *.tmp
+reports.jsonl
