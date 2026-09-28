@@ -10,6 +10,22 @@
    "mb": 959
   },
   {
+   "path": "F:/LedgerTools/blender52/blender-5.2.2-windows-x64",
+   "madeBy": "blender.org Blender 5.2.2 LTS portable (28 September)",
+   "why": "the official Blender MCP needs Blender 5.1 or newer; the live connection for street clutter",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 955
+  },
+  {
+   "path": "F:/LedgerTools/blender52/blender-5.2.2-windows-x64.zip",
+   "madeBy": "download from blender.org (28 September)",
+   "why": "the archive Blender 5.2.2 was unpacked from; unpacked, so no longer needed",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 404
+  },
+  {
    "path": "F:/LedgerTools/hf",
    "madeBy": "the gate's reviewers and word checks, 25 Sep",
    "why": "speech-to-text and accent models for checking voices (Whisper small and medium, two accent classifiers, a speaker model)",
@@ -672,6 +688,14 @@
    "recorded": "2026-09-25",
    "mb": 389,
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
+  },
+  {
+   "path": "F:/LedgerTools/uv",
+   "madeBy": "uv 0.12.19 from GitHub, and its cache (28 September)",
+   "why": "runs the Blender MCP server",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 123
   },
   {
    "path": "F:/LedgerTools/voice-env-export",
