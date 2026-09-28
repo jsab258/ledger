@@ -6,6 +6,34 @@ decision you need to make. Unresolved decisions carry forward. Earlier
 summaries are in git; everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
+## Needs you now (29 September)
+
+**[Tuesday's cleanup page](https://claude.ai/artifact/CKZN26j6P2cc91khC1uNRX):** C: settled at 54 to 57 GB tonight, under your 60: Unreal's cache refilled to its cap and the build machine's copy came back. Two groups, both recommended: cap that cache at 10 GB (about 12 GB back), and its old cache again (2 GB).
+
+## Builder, Monday 28 September
+
+**[Monday's page](https://claude.ai/artifact/SFQ1TofkLwLQ5NfYVkMACa):** the two new faces with the reviewer's notes, the conversation light, the voices as the game speaks them, the thinking sounds.
+
+**Faces.** Measured to the concepts four times; the closest shown, as you ruled.
+
+**Light.** Faint, skin only, 0.2 ms; passed the reviewer at the fifth try.
+
+**Delay.** Ron and Darren now say "Let me think" at once. Pocket failed again: set aside.
+
+**Jacket.** Hung on Ron's body in Blender; now Unreal cloth, not yet on him.
+
+**C:.** 46.4 GB, 74.1 after your cleanup, 54 to 57 settled. Backup OK.
+
+**Builds.** Core tests green again; Unreal building.
+
+**Research.** Paid voices; a whole MetaHuman body in Blender; Unreal cloth by script.
+
+**Got wrong.** The cleanup note stayed up; I used Sheila's long voice sample unchecked (it read American).
+
+**Decide.**
+- Delay: (A) Inworld: about $0.28 an hour of play, first sound about 1.7 s; Ron's and Darren's recorded voices can't be copied without consent, so they'd be redesigned, you picking; needs your Inworld account (recommended). (B) Keep 5.4 s with the thinking sounds.
+- Hair: (A) curls made in Blender, free (recommended); (B) Fab's curly haircuts, CHF 9 to 17.
+
 ## Town, 29 September
 
 **[Your page: the first hour and two calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
