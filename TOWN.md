@@ -21,7 +21,7 @@ run the Core suites, then push to main.
 - [x] 5. The story. From canon, the decisions, the endings already written, the crime layer and the research on authored stories in simulations and British crime fiction, a short outline for his approval: Tom's arrival, the first days, the three acts, the rivals, and how the endings are reached. Under two pages, not a script.
 - [ ] 6. Then the non-visual items of ROADMAP.md, in order. As read on 28 September (the router's changes are already done; the blind test of local line-writing needs local models, so it is the builder's):
   - [x] a. Conversation fast enough to feel like talk, the text side: how long the player waits for the first checked sentence, kept inside the budget with the new claim check.
-  - [ ] b. Every live AI call through a server of ours: the key never ships, model and provider swappable there, a spending stop well below the provider's cap, each copy's allowance counted. Built and tested here; where it is hosted, and what it costs, is his.
+  - [ ] b. Every live AI call through a server of ours: the key never ships, model and provider swappable there, a spending stop well below the provider's cap, each copy's allowance counted. Built and tested here; where it is hosted, and what it costs, is his. Built (ledger/Relay, self-test 21/21); waiting on Jafar for where it runs and the month's budget.
   - [ ] c. A notice that players are talking to an AI, and a way to report bad output: the helper's side here, what shows on screen to the builder.
   - [ ] d. Steam's safeguards description, written from what the game actually enforces.
   - [ ] e. The content rule on everything said live: every path a live line can take, checked.

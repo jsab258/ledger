@@ -66,6 +66,10 @@ namespace Ledger.Core
                 { Core, (2.0, 10.0) },
                 { Ambient, (1.0, 5.0) },
             };
+
+        /// The role a model plays, as the relay knows it (ledger/Relay): the
+        /// relay, not the game, chooses the model for each role.
+        public static string RoleOf(string model) => model == Core ? "core" : model == Ambient ? "ambient" : model;
     }
 
     /// Raw-HTTP Anthropic Messages API client. Dependency-free by design so the
@@ -76,6 +80,21 @@ namespace Ledger.Core
         readonly HttpClient _http;
         readonly string _apiKey;
         public int MaxRetries = 3;
+        /// Where the calls go: the provider, or our relay (ledger/Relay).
+        public string BaseUrl = "https://api.anthropic.com";
+        /// THROUGH THE RELAY (town list 6b): a copy's code instead of a key, and
+        /// each model named by its role, so no key ever ships with the game.
+        public string CopyCode;
+
+        void Authorise(HttpRequestMessage msg)
+        {
+            if (!string.IsNullOrEmpty(CopyCode)) msg.Headers.Add("x-ledger-copy", CopyCode);
+            else msg.Headers.Add("x-api-key", _apiKey);
+            msg.Headers.Add("anthropic-version", "2023-06-01");
+        }
+
+        string ModelFor(string model) => string.IsNullOrEmpty(CopyCode) ? model : Models.RoleOf(model);
+        string MessagesUrl => BaseUrl.TrimEnd('/') + "/v1/messages";
         public Func<int, TimeSpan> RetryDelay = attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)); // 2s,4s,8s
 
         public AnthropicClient(string apiKey, TimeSpan? timeout = null, HttpMessageHandler handler = null)
@@ -95,7 +114,7 @@ namespace Ledger.Core
 
             var body = new Dictionary<string, object>
             {
-                { "model", request.Model },
+                { "model", ModelFor(request.Model) },
                 { "max_tokens", request.MaxTokens },
                 { "messages", messages },
             };
@@ -105,9 +124,8 @@ namespace Ledger.Core
 
             for (int attempt = 0; ; attempt++)
             {
-                using var msg = new HttpRequestMessage(HttpMethod.Post, "https://api.anthropic.com/v1/messages");
-                msg.Headers.Add("x-api-key", _apiKey);
-                msg.Headers.Add("anthropic-version", "2023-06-01");
+                using var msg = new HttpRequestMessage(HttpMethod.Post, MessagesUrl);
+                Authorise(msg);
                 msg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
                 string text;
@@ -156,15 +174,14 @@ namespace Ledger.Core
                 messages.Add(new Dictionary<string, object> { { "role", m.Role }, { "content", m.Content } });
             var body = new Dictionary<string, object>
             {
-                { "model", request.Model },
+                { "model", ModelFor(request.Model) },
                 { "max_tokens", request.MaxTokens },
                 { "messages", messages },
                 { "stream", true },
             };
             if (!string.IsNullOrEmpty(request.System)) body["system"] = request.System;
-            var msg = new HttpRequestMessage(HttpMethod.Post, "https://api.anthropic.com/v1/messages");
-            msg.Headers.Add("x-api-key", _apiKey);
-            msg.Headers.Add("anthropic-version", "2023-06-01");
+            var msg = new HttpRequestMessage(HttpMethod.Post, MessagesUrl);
+            Authorise(msg);
             msg.Content = new StringContent(MiniJson.Serialize(body), Encoding.UTF8, "application/json");
             HttpResponseMessage resp = null;
             try
