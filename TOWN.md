@@ -32,6 +32,7 @@ run the Core suites, then push to main.
   - [x] j. ROADMAP stage 4, the first hour, on paper: what the player meets, learns and can do in the first hour of play, built on the teaching research's four steps (he moves, he is seen, it is written down, it comes back); through the gate, then on the next approval page. Through the gate on its second pass; on the 29 September page, waiting on Jafar.
   - [x] k. ROADMAP stage 6, hours without repetition, the Core's side: how often the street's own words (the remarks, the recognitions, the fallback lines) repeat within an hour of play, measured, and fixed where a player would hear the same line twice.
   - [x] l. Meridian condition 2, the simulation's side (ROADMAP stage 6's sampling): with the five people of day one, a plainly seen night one comes back to his face by minute thirty in 13 of 13 cases, 7 of them only at minute thirty itself; in the coat, 6 of 13. The routines bring those five out where he passes only in the evening: noted in the first hour for the builder's scenes.
+  - [x] m. The claim check's false alarms (item 3's cost): 30% of honest replies are flagged and redrafted. Bring that down without losing what it catches, tuned on the bench's tuning half and measured on the held-back half. Tried and not kept: false alarms 30% to 21% cost catches 90% to 85%. Tuning it properly needs the test replies written again with the current cards (a follow-up, about $7).
 
 ## Status
 
