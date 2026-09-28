@@ -37,7 +37,11 @@ namespace Ledger.PerceptionGolden
         /// consumer would have read `warning CS0414...` as a table row.
         public static int Main(string[] args)
         {
-            string path = args != null && args.Length > 0 ? args[0] : "perception-golden.txt";
+            // The table's path is the first argument that is not a flag, so
+            // `--awaiting-port out.txt` and `out.txt --awaiting-port` agree.
+            string path = "perception-golden.txt";
+            foreach (var a in args ?? Array.Empty<string>())
+                if (!a.StartsWith("--", StringComparison.Ordinal)) { path = a; break; }
             var sb = new StringBuilder();
             sb.Append("# perception golden table, emitted from Ledger.Core as shipped\n");
             sb.Append("# fn|args...|expected   -- consumed by ue-probe, agreement to 1e-9\n");
@@ -87,6 +91,19 @@ namespace Ledger.PerceptionGolden
                                   .Append('|').Append(Perception.SymmetryPredictsSeen(m, a, ly, lt, occ) ? "1" : "0").Append('\n');
 
             EmitCrimeSlice(sb);
+
+            // ROWS AWAITING THE PORT, 28 September: the town session writes the
+            // Core and its rows; the builder ports them to StreetVoice.h. Until
+            // the port answers them they are emitted only on request, because
+            // the port check fails on a row it cannot answer (that is its job).
+            // The port's commit moves EmitKnowing and EmitRecognition above
+            // this line and accepts the table; the handover in NOW.md says so.
+            if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
+            {
+                EmitKnowing(sb);
+                EmitRecognition(sb);
+                EmitCastDay(sb);
+            }
 
             var text = sb.ToString();
             System.IO.File.WriteAllText(path, text);
@@ -305,6 +322,252 @@ namespace Ledger.PerceptionGolden
                 bool second = led.Record("m", r, StanceKind.Comments, true);
                 Row(sb, "RemarkRecordTwice", "Comments", "1", Bit(first) + Bit(second));
             }
+        }
+
+        /// KNOWING A LITTLE SHOWS, 28 September (Jafar's town list, item 1):
+        /// StreetVoice's StoryHalfRemembered, Stance's knowsALittle floor, the
+        /// look (FirstLookMetres, LookHoldSeconds, SecondLookMetres,
+        /// LookAwayMetres, LooksBack and their constants), the faint remark
+        /// (FaintDraw, MayRemarkFaintly,
+        /// FaintRemark's lines, RemarkLedger.RecordFaint) and RegardFor, the
+        /// one call the street makes. Holders are written as EmitStance's are.
+        static void EmitKnowing(StringBuilder sb)
+        {
+            Gossiper HolderOf(string id, string enc, bool leashed = false, double suspicion = 0.0, double loyalty = 0.5)
+            {
+                var g = new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), loyalty: loyalty);
+                g.Leashed = leashed;
+                if (suspicion > 0) g.Suspicion.Raise(suspicion, "golden");
+                foreach (var e in enc.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var f = e.Split(':');
+                    var r = new Rumor
+                    {
+                        Content = new Fact(f[0], f[1], f[2]), OriginId = "o", Summary = "s",
+                        Confidence = double.Parse(f[3], Inv), Sensitive = f[4] == "1", Indelible = f[5] == "1",
+                    };
+                    g.Rumors.Add(r);
+                    if (f[6] == "1") g.Suppressed.Add(r.TopicKey);
+                }
+                return g;
+            }
+            string[] stories =
+            {
+                "", "player:night_walk:seen:0.1:1:0:0", "player:night_walk:seen:0.19:1:0:0",
+                "player:night_walk:seen:0.2:1:0:0", "player:night_walk:seen:0.3:1:0:0",
+                "player:night_walk:seen:0.0:1:0:0", "player:night_walk:seen:0.1:0:0:0",
+                "player:night_walk:seen:0.05:1:0:1", "player:night_walk:seen:0.05:1:1:1",
+                "rocco:night_walk:seen:0.1:1:0:0",
+                "player:night_walk:seen:0.05:1:0:0;player:yard_visit:seen:0.15:1:0:0",
+                "player:yard_visit:seen:0.15:1:0:0;player:night_walk:seen:0.15:1:0:0",
+                "player:yard_visit:seen:0.3:1:0:0;player:night_walk:seen:0.1:1:0:0",
+                // street talk about him, strong but not his nights; a NaN listed first
+                "player:seen_about:quay:0.9:0:0:0",
+                "player:seen_about:quay:NaN:1:0:0;player:seen_about:yard:0.9:1:0:0",
+            };
+            foreach (var floor in new[] { "0.2", "0.25" })
+                foreach (var s in stories)
+                {
+                    var g = HolderOf("h", s);
+                    var half = StreetVoice.StoryHalfRemembered(g, double.Parse(floor, Inv));
+                    Row(sb, "StoryHalfRemembered", floor, s == "" ? "none" : s,
+                        (half == null ? -1 : g.Rumors.IndexOf(half)).ToString(Inv));
+                }
+
+            foreach (var s in new[] { 0.0, 0.2, 0.22, 0.5, 1.0 })
+                foreach (var loy in new[] { 0.1, 0.5, 0.95 })
+                    foreach (var t in new[] { 0.0, 0.1, 0.19, 0.3, 0.7 })
+                        foreach (var leash in new[] { false, true })
+                            foreach (var coat in new[] { false, true })
+                                foreach (var knows in new[] { false, true })
+                                    foreach (var had in new[] { false, true })
+                                        foreach (var little in new[] { false, true })
+                                            Row(sb, "StanceLittle", D(s), D(loy), D(t), Bit(leash), Bit(coat), Bit(knows), Bit(had), Bit(little),
+                                                StreetVoice.Stance(s, loy, t, leash, coat, knows, had, little).ToString());
+
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+            {
+                double hold = StreetVoice.LookHoldSeconds(k);
+                Row(sb, "FirstLookMetres", k.ToString(), D(StreetVoice.FirstLookMetres(k)));
+                Row(sb, "LookHoldSeconds", k.ToString(), double.IsPositiveInfinity(hold) ? "inf" : D(hold));
+                Row(sb, "SecondLookMetres", k.ToString(), D(StreetVoice.SecondLookMetres(k)));
+                Row(sb, "LookAwayMetres", k.ToString(), D(StreetVoice.LookAwayMetres(k)));
+                Row(sb, "LooksBack", k.ToString(), Bit(StreetVoice.LooksBack(k)));
+            }
+            Row(sb, "StreetVoiceConst", "CivilGlanceMetres", D(StreetVoice.CivilGlanceMetres));
+            Row(sb, "StreetVoiceConst", "CivilGlanceSeconds", D(StreetVoice.CivilGlanceSeconds));
+            Row(sb, "StreetVoiceConst", "PassingZoneMetres", D(StreetVoice.PassingZoneMetres));
+            Row(sb, "StreetVoiceConst", "KnowingLookSeconds", D(StreetVoice.KnowingLookSeconds));
+            Row(sb, "StreetVoiceConst", "CivilLookAwayMetres", D(StreetVoice.CivilLookAwayMetres));
+
+            // The draw over many people, so a port whose hash or modulo slips
+            // by one lands on a different row somewhere.
+            for (int i = 0; i < 40; i++)
+            {
+                string person = "p" + i.ToString(Inv);
+                var r = new Rumor { Content = new Fact("player", "night_walk", "seen"), Confidence = 0.1 };
+                string key = RemarkLedger.KeyFor(person, r);
+                Row(sb, "FaintDraw", key.Replace('|', '#'), D(StreetVoice.FaintDraw(key)));
+                foreach (var conf in new[] { 0.0, 0.05, 0.1, 0.19, 0.2 })
+                {
+                    r.Confidence = conf;
+                    Row(sb, "MayRemarkFaintly", person, D(conf), "0.2", Bit(StreetVoice.MayRemarkFaintly(person, r, 0.2)));
+                }
+            }
+            Row(sb, "MayRemarkFaintly", "none", "0.1", "0.2", Bit(StreetVoice.MayRemarkFaintly("x", null, 0.2)));
+            Row(sb, "MayRemarkFaintly", "p0", "0.1", "0", Bit(StreetVoice.MayRemarkFaintly("p0",
+                new Rumor { Content = new Fact("player", "night_walk", "seen"), Confidence = 0.1 }, 0.0)));
+            // STRICTLY UNDER: a draw exactly equal to the share, and a hair over.
+            foreach (var person in new[] { "p0", "p7", "resident7" })
+            {
+                var r = new Rumor { Content = new Fact("player", "night_walk", "seen") };
+                double draw = StreetVoice.FaintDraw(RemarkLedger.KeyFor(person, r));
+                foreach (var conf in new[] { draw, Math.BitIncrement(draw), Math.BitDecrement(draw) })
+                {
+                    r.Confidence = conf;
+                    Row(sb, "MayRemarkFaintly", person, D(conf), "1", Bit(StreetVoice.MayRemarkFaintly(person, r, 1.0)));
+                }
+            }
+
+            var holderForLines = HolderOf("fl", "player:night_walk:seen:0.1:1:0:0");
+            foreach (var seed in new[] { -15, -1, 0, 1, 5, 13, 14, 27, 100 })
+            {
+                var line = StreetVoice.FaintRemark(holderForLines, holderForLines.Rumors[0], seed);
+                Row(sb, "FaintRemark", seed.ToString(Inv), Esc(line.Text));
+            }
+            Row(sb, "FaintRemark", "nostory", StreetVoice.FaintRemark(holderForLines, null, 0) == null ? "null" : "line");
+
+            foreach (var heard in new[] { false, true })
+            {
+                var led = new RemarkLedger();
+                var r = new Rumor { Content = new Fact("player", "night_walk", "seen") };
+                bool first = led.RecordFaint("m", r, heard);
+                bool second = led.RecordFaint("m", r, heard);
+                bool strongAfter = led.Record("m", r, StanceKind.Comments, true);
+                Row(sb, "RecordFaint", Bit(heard), Bit(first) + Bit(second) + Bit(strongAfter) + Bit(led.HasRemarked("m", r)));
+            }
+
+            // RegardFor over holders, coats, leashes, suspicion, a remark had,
+            // whether they can tell it is him, and whether a companion is by.
+            foreach (var s in stories)
+                foreach (var coat in new[] { false, true })
+                    foreach (var leash in new[] { false, true })
+                        foreach (var sus in new[] { 0.0, 0.5 })
+                            foreach (var had in new[] { false, true })
+                                foreach (var id in new[] { "p0", "p1", "p3" })
+                                    foreach (var fam in new[] { Acquaintance.HeardOfYou, Acquaintance.Known })
+                                        foreach (var companion in new[] { false, true })
+                                        {
+                                            var g = HolderOf(id, s, leash, sus);
+                                            var led = new RemarkLedger();
+                                            if (had && g.Rumors.Count > 0)
+                                                foreach (var r in g.Rumors) led.RecordFaint(id, r, true);
+                                            var rg = StreetVoice.RegardFor(g, 0.2, coat, led, fam, companion);
+                                            Row(sb, "RegardFor", id, s == "" ? "none" : s, Bit(coat), Bit(leash), D(sus), Bit(had), D(fam), Bit(companion),
+                                                rg.Knowing.ToString(), (rg.Story == null ? -1 : g.Rumors.IndexOf(rg.Story)).ToString(Inv),
+                                                Bit(rg.KnowsItIsHim), rg.Stance.ToString(), D(rg.FirstLookMetres),
+                                                double.IsPositiveInfinity(rg.FirstLookSeconds) ? "inf" : D(rg.FirstLookSeconds),
+                                                D(rg.SecondLookMetres), D(rg.SecondLookSeconds),
+                                                D(rg.LookAwayMetres), Bit(rg.LooksBack), Bit(rg.RemarkedAlready), Bit(rg.Speaks), Bit(rg.Faint));
+                                        }
+        }
+
+        /// RECOGNITION, the line said as he passes (StreetVoice.Recognition),
+        /// which the port left out of scope on 8 September: every stance, with
+        /// no story, a plain one and one of his night, over enough seeds to
+        /// reach every line of every band.
+        static void EmitRecognition(StringBuilder sb)
+        {
+            var g = new Gossiper("rc", "rc", new MemoryStore("rc"), new KnowledgeBase(), new SuspicionTracker());
+            var plain = new Rumor { Content = new Fact("player", "seen_about", "quay"), Summary = "s", Confidence = 0.5, Sensitive = false };
+            var night = new Rumor { Content = new Fact("player", "night_walk", "seen"), Summary = "s", Confidence = 0.5, Sensitive = true };
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var (name, about) in new[] { ("none", (Rumor)null), ("plain", plain), ("night", night) })
+                    for (int seed = -1; seed < 15; seed++)
+                    {
+                        var line = StreetVoice.Recognition(g, about, k, seed);
+                        Row(sb, "Recognition", k.ToString(), name, seed.ToString(Inv),
+                            line == null ? "null" : Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                    }
+            Row(sb, "Recognition", "Comments", "nobody", "0", StreetVoice.Recognition(null, night, StanceKind.Comments, 0) == null ? "null" : "line");
+        }
+
+        /// WHO IS WHERE, AND WHO IS WITH WHOM (CastDay), 28 September, for the
+        /// port the named cast's walkers will read the routine files through:
+        /// every person's place at every hour of every weekday and every
+        /// friendship's together-or-not, over both committed cast files; then
+        /// small files that pin the rules a real file does not reach today (a
+        /// routine that wraps round midnight, one written out of order, the
+        /// six-metre edge, a weekday's own routine) and the files it refuses.
+        static void EmitCastDay(StringBuilder sb)
+        {
+            foreach (var name in new[] { "quay-cast.json", "hook-cast.json" })
+            {
+                string path = null;
+                for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null && path == null; dir = dir.Parent)
+                {
+                    var p = System.IO.Path.Combine(dir.FullName, "production", "specs", name);
+                    if (System.IO.File.Exists(p)) path = p;
+                }
+                if (path == null) { Row(sb, "CastFile", name, "missing"); continue; }
+                var cast = CastDay.Parse(System.IO.File.ReadAllText(path));
+                Row(sb, "CastFile", name, cast.People.Count.ToString(Inv), cast.Ties.Count.ToString(Inv), D(cast.TalkRangeM));
+                foreach (var person in cast.People)
+                    for (int day = 0; day < 7; day++)
+                        for (int hour = 0; hour < 24; hour++)
+                            Row(sb, "CastPlaceOf", name, person, day.ToString(Inv), hour.ToString(Inv), cast.PlaceOf(person, day, hour));
+                foreach (var (a, b, w) in cast.Ties)
+                {
+                    var bits = new StringBuilder();
+                    for (int day = 0; day < 7; day++)
+                        for (int hour = 0; hour < 24; hour++)
+                            bits.Append(cast.Together(a, b, day, hour) ? '1' : '0');
+                    Row(sb, "CastTogether", name, a, b, bits.ToString());
+                    Row(sb, "CastWeek", name, a, b, cast.HoursTogetherPerWeek(a, b).ToString(Inv), cast.DaysTogetherPerWeek(a, b).ToString(Inv),
+                        CastDay.FriendsMeetDays(w).ToString(Inv));
+                }
+            }
+            string[][] files =
+            {
+                new[] { "wraps", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[6,\"a\"],[20,\"b\"]]}],\"ties\":[]}" },
+                new[] { "unsorted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[20,\"off\"],[8,\"a\"],[0,\"off\"],[12,\"b\"]]}],\"ties\":[]}" },
+                new[] { "weekday", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sun\":[[0,\"off\"]]}}],\"ties\":[]}" },
+            };
+            foreach (var f in files)
+            {
+                var c = CastDay.Parse(f[1]);
+                for (int day = -8; day < 8; day++)
+                    for (int hour = 0; hour < 24; hour++)
+                        Row(sb, "CastPlaceOfFile", f[0], day.ToString(Inv), hour.ToString(Inv), c.PlaceOf("p", day, hour));
+            }
+            var edge = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":6,\"z_m\":0},\"c\":{\"x_m\":3.6,\"z_m\":4.8},\"d\":{\"x_m\":6.000001,\"z_m\":0}}," +
+                "\"people\":[{\"id\":\"pa\",\"routine\":[[0,\"a\"]]},{\"id\":\"pb\",\"routine\":[[0,\"b\"]]},{\"id\":\"pc\",\"routine\":[[0,\"c\"]]},{\"id\":\"pd\",\"routine\":[[0,\"d\"]]}],\"ties\":[]}");
+            foreach (var other in new[] { "pb", "pc", "pd" })
+                Row(sb, "CastTogetherEdge", "pa", other, Bit(edge.Together("pa", other, 0, 9)));
+            string[][] refused =
+            {
+                new[] { "unknown-place", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"b\"]]}],\"ties\":[]}" },
+                new[] { "hour-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[24,\"a\"]]}],\"ties\":[]}" },
+                new[] { "half-hour", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9.5,\"a\"]]}],\"ties\":[]}" },
+                new[] { "two-at-once", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9,\"a\"],[9,\"off\"]]}],\"ties\":[]}" },
+                new[] { "tie-stranger", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"x\",0.5]]}" },
+                new[] { "tie-self", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"p\",0.5]]}" },
+                new[] { "tie-twice", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",0.5],[\"q\",\"p\",0.4]]}" },
+                new[] { "tie-strength", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",0]]}" },
+                new[] { "days-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "day-name", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sunday\":[[0,\"a\"]]}}],\"ties\":[]}" },
+                new[] { "ties-not-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":{}}" },
+                new[] { "no-range", "{\"places\":{},\"people\":[],\"ties\":[]}" },
+                new[] { "person-twice", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+            };
+            foreach (var r in refused)
+            {
+                string outcome;
+                try { CastDay.Parse(r[1]); outcome = "accepted"; } catch (FormatException) { outcome = "refused"; }
+                Row(sb, "CastRefused", r[0], outcome);
+            }
+            foreach (var tie in new[] { 0.3, 0.44, 0.45, 0.55, 0.59, 0.6, 0.8 })
+                Row(sb, "CastMeetDays", D(tie), CastDay.FriendsMeetDays(tie).ToString(Inv));
         }
 
         static void EmitCrimeSlice(StringBuilder sb)

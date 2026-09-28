@@ -1,0 +1,3251 @@
+{
+ "what": "EVERY NAMED PERSON WITH A FRIENDSHIP, hour by hour, 28 September: the town list's item 2, 'friends who never meet'. The prototype city's routines were placed by hand one person at a time and 55 of its 80 live friendships were never within talking range (game-design/rumour-reach-2026-09-23.md); these are written pair by pair, so every friendship has a place and a time where two such people would meet in a small port town in 1990, and the stronger the friendship the more days they do. The forty people and eighty ties are the prototype mill's own (GossipDirector.cs's authored links and the live tier-two batch), unchanged; ids are internal (canon.md: old names survive only as ids). The ten of quay-cast.json keep their places on the built street. No pub, betting shop or bingo: the content rule. Read by Core/CastDay.cs; checked by CoreTests (every tie meets) and measured by ledger/TownReach.",
+ "talk_range_m": 6.0,
+ "talk_range_from": "GossipDirector.cs TalkRange",
+ "week": "day modulo 7: 0 mon to 6 sun, Population.IsRestDay's convention; 'days' replaces the daily routine on that weekday",
+ "places": {
+  "mickeys_office": {
+   "x_m": 6.0,
+   "z_m": 7.5,
+   "from": "decal_00_fascia_mickeys x, inside the front room"
+  },
+  "mickeys_rank": {
+   "x_m": 7.5,
+   "z_m": 3.8,
+   "from": "the footway at Mickey's door, where the cabs wait"
+  },
+  "fish_counter": {
+   "x_m": 12.0,
+   "z_m": 7.5,
+   "from": "decal_01_fascia_fish_market x, inside"
+  },
+  "fish_front": {
+   "x_m": 12.0,
+   "z_m": 4.2,
+   "from": "the fish market's pavement"
+  },
+  "ritas_counter": {
+   "x_m": 18.0,
+   "z_m": 7.5,
+   "from": "decal_02_fascia_ritas_pawn x, inside"
+  },
+  "ritas_step": {
+   "x_m": 18.0,
+   "z_m": 4.4,
+   "from": "Rita's doorstep"
+  },
+  "kiosk": {
+   "x_m": 16.5,
+   "z_m": 4.3,
+   "from": "beside kiosk_plinth (16.5, 3.67)"
+  },
+  "laundry_front": {
+   "x_m": 30.0,
+   "z_m": 4.3,
+   "from": "decal_03_fascia_steam_laundry x, its pavement"
+  },
+  "quay": {
+   "x_m": -5.0,
+   "z_m": 0.0,
+   "from": "the quay apron at the street's south end"
+  },
+  "laundry_counter": {
+   "x_m": 30.0,
+   "z_m": 7.5,
+   "from": "the steam laundry's counter, inside (decal_03_fascia_steam_laundry x)"
+  },
+  "adas_step": {
+   "x_m": 6.5,
+   "z_m": -4.5,
+   "from": "Ada's front step and window, in the terraces across from Mickey's (canon: the west block across from Mickey's is plain terraces)"
+  },
+  "cafe": {
+   "x_m": 24.0,
+   "z_m": -7.5,
+   "from": "the cafe, inside, in the west block's shops across from the parade's north half (canon)"
+  },
+  "cafe_front": {
+   "x_m": 24.0,
+   "z_m": -4.3,
+   "from": "the cafe's pavement"
+  },
+  "pension_counter": {
+   "x_m": 32.0,
+   "z_m": -7.5,
+   "from": "the newsagent's counter where pensions and benefits are paid, in the same shop block"
+  },
+  "hals_shop": {
+   "x_m": 39.0,
+   "z_m": -7.5,
+   "from": "Hal's shop, the same block's far end"
+  },
+  "bus_stop": {
+   "x_m": 46.0,
+   "z_m": -4.3,
+   "from": "the bus stop at the street's north end, west pavement"
+  },
+  "docks": {
+   "x_m": -60.0,
+   "z_m": 0.0,
+   "from": "the dock gate and the quays beyond it"
+  },
+  "fish_dock": {
+   "x_m": -60.0,
+   "z_m": 40.0,
+   "from": "the wholesale fish market on the fish dock"
+  },
+  "repair_yard": {
+   "x_m": -60.0,
+   "z_m": -40.0,
+   "from": "the boat repair yard"
+  },
+  "harbour_office": {
+   "x_m": -100.0,
+   "z_m": 0.0,
+   "from": "the harbourmaster's office"
+  },
+  "customs_shed": {
+   "x_m": -100.0,
+   "z_m": 40.0,
+   "from": "the customs shed"
+  },
+  "ferry_stop": {
+   "x_m": -100.0,
+   "z_m": -40.0,
+   "from": "the ferry landing"
+  },
+  "warehouse_row": {
+   "x_m": -140.0,
+   "z_m": 0.0,
+   "from": "the old warehouse row"
+  },
+  "chapel": {
+   "x_m": 100.0,
+   "z_m": 0.0,
+   "from": "Father Emil's chapel and the presbytery door beside it"
+  },
+  "chapel_hall": {
+   "x_m": 100.0,
+   "z_m": 40.0,
+   "from": "the chapel hall"
+  },
+  "market": {
+   "x_m": 100.0,
+   "z_m": -40.0,
+   "from": "the open market, on its days"
+  },
+  "boarding_house": {
+   "x_m": 140.0,
+   "z_m": 0.0,
+   "from": "the boarding house's front room"
+  },
+  "flats": {
+   "x_m": 140.0,
+   "z_m": 40.0,
+   "from": "the council flats' landings and laundry room"
+  },
+  "allotments": {
+   "x_m": 140.0,
+   "z_m": -40.0,
+   "from": "the allotments by the railway"
+  }
+ },
+ "people": [
+  {
+   "id": "rocco",
+   "role": "Ron Kirby: Mickey's door and rank (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     8,
+     "mickeys_rank"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "mickeys_rank"
+    ],
+    [
+     17,
+     "quay"
+    ],
+    [
+     19,
+     "mickeys_office"
+    ],
+    [
+     23,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "allotments"
+     ],
+     [
+      13,
+      "off"
+     ],
+     [
+      19,
+      "mickeys_office"
+     ],
+     [
+      23,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "lena",
+   "role": "Sheila Dunn: Mickey's bookkeeper (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "mickeys_office"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "mickeys_office"
+    ],
+    [
+     17,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "pension_counter"
+     ],
+     [
+      10,
+      "mickeys_office"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "mickeys_office"
+     ],
+     [
+      17,
+      "ritas_step"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "mickeys_office"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "zlata",
+   "role": "the cab office's dispatcher",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "mickeys_office"
+    ],
+    [
+     12,
+     "mickeys_rank"
+    ],
+    [
+     13,
+     "mickeys_office"
+    ],
+    [
+     20,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "mickeys_office"
+     ],
+     [
+      16,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ferko",
+   "role": "a day cab driver on Mickey's rank",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     8,
+     "mickeys_rank"
+    ],
+    [
+     19,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      12,
+      "mickeys_rank"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "dusan",
+   "role": "the night cab driver",
+   "routine": [
+    [
+     0,
+     "mickeys_rank"
+    ],
+    [
+     3,
+     "off"
+    ],
+    [
+     18,
+     "mickeys_rank"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "mickeys_rank"
+     ],
+     [
+      3,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "june",
+   "role": "June: Mickey's daughter, back for the funeral (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     10,
+     "mickeys_office"
+    ],
+    [
+     12,
+     "off"
+    ],
+    [
+     16,
+     "chapel"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "chapel"
+     ],
+     [
+      12,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "sam",
+   "role": "Darren Milner: the street hustler, on his rounds (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "cafe"
+    ],
+    [
+     10,
+     "ritas_step"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "laundry_front"
+    ],
+    [
+     15,
+     "mickeys_rank"
+    ],
+    [
+     17,
+     "quay"
+    ],
+    [
+     19,
+     "mickeys_rank"
+    ],
+    [
+     20,
+     "warehouse_row"
+    ],
+    [
+     22,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "cafe"
+     ],
+     [
+      10,
+      "docks"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "ferry_stop"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      20,
+      "cafe"
+     ],
+     [
+      22,
+      "off"
+     ]
+    ],
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "cafe"
+     ],
+     [
+      10,
+      "ritas_step"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "kiosk"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      20,
+      "warehouse_row"
+     ],
+     [
+      22,
+      "off"
+     ]
+    ],
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "cafe"
+     ],
+     [
+      10,
+      "docks"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "ferry_stop"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      20,
+      "cafe"
+     ],
+     [
+      22,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "cafe"
+     ],
+     [
+      10,
+      "market"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "ritas_step"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      20,
+      "warehouse_row"
+     ],
+     [
+      22,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      13,
+      "off"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      21,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      13,
+      "kiosk"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ada",
+   "role": "Ada: the widow who keeps a window on Quay Street (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "adas_step"
+    ],
+    [
+     10,
+     "laundry_front"
+    ],
+    [
+     11,
+     "fish_counter"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "adas_step"
+    ],
+    [
+     16,
+     "mickeys_rank"
+    ],
+    [
+     17,
+     "adas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "pension_counter"
+     ],
+     [
+      10,
+      "laundry_front"
+     ],
+     [
+      11,
+      "fish_counter"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "adas_step"
+     ],
+     [
+      16,
+      "mickeys_rank"
+     ],
+     [
+      17,
+      "adas_step"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "chapel"
+     ],
+     [
+      11,
+      "chapel_hall"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      14,
+      "adas_step"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "noor",
+   "role": "Alison Sedman: the reporter on her rounds (canon)",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "laundry_front"
+    ],
+    [
+     10,
+     "pension_counter"
+    ],
+    [
+     11,
+     "kiosk"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "off"
+    ],
+    [
+     15,
+     "mickeys_rank"
+    ],
+    [
+     16,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "laundry_front"
+     ],
+     [
+      10,
+      "ferry_stop"
+     ],
+     [
+      11,
+      "kiosk"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "off"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      16,
+      "off"
+     ]
+    ],
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "laundry_front"
+     ],
+     [
+      10,
+      "ferry_stop"
+     ],
+     [
+      11,
+      "kiosk"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "off"
+     ],
+     [
+      15,
+      "mickeys_rank"
+     ],
+     [
+      16,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      11,
+      "kiosk"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "marla",
+   "role": "the fish shop's woman, who buys on the fish dock",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     5,
+     "fish_dock"
+    ],
+    [
+     7,
+     "fish_counter"
+    ],
+    [
+     14,
+     "fish_front"
+    ],
+    [
+     15,
+     "off"
+    ]
+   ],
+   "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      5,
+      "fish_dock"
+     ],
+     [
+      7,
+      "fish_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "fish_counter"
+     ],
+     [
+      14,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "joey",
+   "role": "a dock hand working the quay at the street's end",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     6,
+     "quay"
+    ],
+    [
+     12,
+     "mickeys_rank"
+    ],
+    [
+     13,
+     "quay"
+    ],
+    [
+     15,
+     "mickeys_rank"
+    ],
+    [
+     17,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "rita",
+   "role": "keeps Rita's pawn",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "ritas_counter"
+    ],
+    [
+     13,
+     "ritas_step"
+    ],
+    [
+     14,
+     "ritas_counter"
+    ],
+    [
+     17,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "ritas_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "victor",
+   "role": "the pawn's back room",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     10,
+     "ritas_counter"
+    ],
+    [
+     16,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "ritas_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "hal",
+   "role": "keeps the coin shop that sells no coins; calls on Rita's on Mondays",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     10,
+     "hals_shop"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "mon": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "hals_shop"
+     ],
+     [
+      11,
+      "ritas_counter"
+     ],
+     [
+      12,
+      "hals_shop"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "hals_shop"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "tibor",
+   "role": "a customs officer, home past Rita's",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "customs_shed"
+    ],
+    [
+     13,
+     "harbour_office"
+    ],
+    [
+     17,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "emil",
+   "role": "Father Emil (canon): mass, the presbytery, calls on the old",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "chapel"
+    ],
+    [
+     13,
+     "adas_step"
+    ],
+    [
+     14,
+     "chapel"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "chapel"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      12,
+      "chapel"
+     ],
+     [
+      13,
+      "adas_step"
+     ],
+     [
+      14,
+      "chapel"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "chapel"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      12,
+      "chapel"
+     ],
+     [
+      13,
+      "adas_step"
+     ],
+     [
+      14,
+      "chapel"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "chapel"
+     ],
+     [
+      11,
+      "chapel_hall"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "vesna",
+   "role": "keeps Father Emil's house and buys for his table",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "chapel"
+    ],
+    [
+     11,
+     "fish_counter"
+    ],
+    [
+     12,
+     "chapel"
+    ],
+    [
+     21,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "chapel"
+     ],
+     [
+      10,
+      "market"
+     ],
+     [
+      11,
+      "fish_counter"
+     ],
+     [
+      12,
+      "chapel"
+     ],
+     [
+      21,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "chapel"
+     ],
+     [
+      10,
+      "market"
+     ],
+     [
+      11,
+      "fish_counter"
+     ],
+     [
+      12,
+      "chapel"
+     ],
+     [
+      21,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "chapel"
+     ],
+     [
+      11,
+      "chapel_hall"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "magda",
+   "role": "cleans the chapel and does its flowers",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "chapel"
+    ],
+    [
+     12,
+     "off"
+    ]
+   ],
+   "days": {
+    "mon": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "chapel"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      14,
+      "adas_step"
+     ],
+     [
+      15,
+      "off"
+     ]
+    ],
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "chapel"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      14,
+      "adas_step"
+     ],
+     [
+      15,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "chapel"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      14,
+      "adas_step"
+     ],
+     [
+      15,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "chapel"
+     ],
+     [
+      11,
+      "chapel_hall"
+     ],
+     [
+      12,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "zora",
+   "role": "a washerwoman at the steam laundry",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     6,
+     "laundry_counter"
+    ],
+    [
+     14,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      6,
+      "laundry_counter"
+     ],
+     [
+      12,
+      "fish_front"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "iva",
+   "role": "works the steam laundry's presses",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "laundry_counter"
+    ],
+    [
+     17,
+     "flats"
+    ],
+    [
+     19,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "selma",
+   "role": "a laundress",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "laundry_counter"
+    ],
+    [
+     16,
+     "flats"
+    ],
+    [
+     19,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "tanja",
+   "role": "a laundress",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "laundry_counter"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "katarina",
+   "role": "a seamstress who takes in alterations at the laundry, and sells on the market",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "laundry_counter"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "market"
+     ],
+     [
+      12,
+      "laundry_counter"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "market"
+     ],
+     [
+      12,
+      "laundry_counter"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "market"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "ines",
+   "role": "the pawn's appraiser",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "ritas_counter"
+    ],
+    [
+     17,
+     "ritas_step"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "ritas_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "marta",
+   "role": "the pawn's clerk",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "ritas_counter"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "ritas_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "jelena",
+   "role": "a locksmith who works from the pawn's counter in the mornings",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "ritas_counter"
+    ],
+    [
+     12,
+     "repair_yard"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "mon": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "ritas_counter"
+     ],
+     [
+      12,
+      "repair_yard"
+     ],
+     [
+      16,
+      "mickeys_office"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "ritas_counter"
+     ],
+     [
+      14,
+      "repair_yard"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "ritas_counter"
+     ],
+     [
+      12,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "stipe",
+   "role": "a crane driver on the docks, home by the quay",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     6,
+     "docks"
+    ],
+    [
+     17,
+     "quay"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "fabjan",
+   "role": "mends nets on the docks",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     6,
+     "docks"
+    ],
+    [
+     17,
+     "quay"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "goran",
+   "role": "a customs assistant on the docks",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     8,
+     "docks"
+    ],
+    [
+     12,
+     "customs_shed"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "docks"
+     ],
+     [
+      12,
+      "customs_shed"
+     ],
+     [
+      17,
+      "off"
+     ],
+     [
+      18,
+      "cafe"
+     ],
+     [
+      21,
+      "off"
+     ]
+    ],
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      8,
+      "docks"
+     ],
+     [
+      12,
+      "customs_shed"
+     ],
+     [
+      17,
+      "off"
+     ],
+     [
+      18,
+      "cafe"
+     ],
+     [
+      21,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "tomas",
+   "role": "a boat repairer; breakfast at the street's cafe, the docks twice a week",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     8,
+     "repair_yard"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "cafe"
+     ],
+     [
+      8,
+      "repair_yard"
+     ],
+     [
+      10,
+      "docks"
+     ],
+     [
+      12,
+      "repair_yard"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "cafe"
+     ],
+     [
+      8,
+      "repair_yard"
+     ],
+     [
+      10,
+      "docks"
+     ],
+     [
+      12,
+      "repair_yard"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "luka",
+   "role": "a locksmith and repairman at the yard",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     8,
+     "repair_yard"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "allotments"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "bruno",
+   "role": "a harbour clerk",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "harbour_office"
+    ],
+    [
+     12,
+     "ferry_stop"
+    ],
+    [
+     13,
+     "harbour_office"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "petra",
+   "role": "the ferry's ticket clerk; lodges at the boarding house",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "ferry_stop"
+    ],
+    [
+     19,
+     "off"
+    ]
+   ],
+   "days": {
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "ferry_stop"
+     ],
+     [
+      19,
+      "mickeys_rank"
+     ],
+     [
+      20,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "dario",
+   "role": "a ferryman",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     6,
+     "ferry_stop"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      6,
+      "ferry_stop"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "sanja",
+   "role": "keeps the boarding house; buys fish for her lodgers",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "boarding_house"
+    ],
+    [
+     11,
+     "fish_counter"
+    ],
+    [
+     12,
+     "fish_front"
+    ],
+    [
+     13,
+     "boarding_house"
+    ],
+    [
+     20,
+     "off"
+    ]
+   ],
+   "days": {
+    "sat": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "boarding_house"
+     ],
+     [
+      20,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "boarding_house"
+     ],
+     [
+      20,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "hana",
+   "role": "writes letters and fills in forms for people, at the newsagent's pension counter",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "adas_step"
+    ],
+    [
+     10,
+     "pension_counter"
+    ],
+    [
+     13,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "adas_step"
+     ],
+     [
+      10,
+      "pension_counter"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "adas_step"
+     ],
+     [
+      10,
+      "pension_counter"
+     ],
+     [
+      11,
+      "market"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "franjo",
+   "role": "a sign painter, on the street's boards this month",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     8,
+     "mickeys_rank"
+    ],
+    [
+     12,
+     "off"
+    ],
+    [
+     13,
+     "laundry_front"
+    ],
+    [
+     17,
+     "off"
+    ]
+   ],
+   "days": {
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      7,
+      "cafe"
+     ],
+     [
+      9,
+      "flats"
+     ],
+     [
+      11,
+      "mickeys_rank"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      13,
+      "laundry_front"
+     ],
+     [
+      17,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ],
+     [
+      10,
+      "allotments"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "danica",
+   "role": "runs for the rent collector",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     9,
+     "flats"
+    ],
+    [
+     12,
+     "off"
+    ],
+    [
+     13,
+     "kiosk"
+    ],
+    [
+     14,
+     "off"
+    ],
+    [
+     17,
+     "quay"
+    ],
+    [
+     18,
+     "off"
+    ]
+   ],
+   "days": {
+    "tue": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "flats"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      13,
+      "kiosk"
+     ],
+     [
+      14,
+      "off"
+     ]
+    ],
+    "thu": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "flats"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      13,
+      "kiosk"
+     ],
+     [
+      14,
+      "off"
+     ]
+    ],
+    "fri": [
+     [
+      0,
+      "off"
+     ],
+     [
+      9,
+      "flats"
+     ],
+     [
+      10,
+      "mickeys_office"
+     ],
+     [
+      11,
+      "flats"
+     ],
+     [
+      12,
+      "off"
+     ],
+     [
+      13,
+      "kiosk"
+     ],
+     [
+      14,
+      "off"
+     ],
+     [
+      17,
+      "quay"
+     ],
+     [
+      18,
+      "off"
+     ]
+    ],
+    "sat": [
+     [
+      0,
+      "off"
+     ]
+    ],
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "drago",
+   "role": "a scrap dealer on the old warehouse row",
+   "routine": [
+    [
+     0,
+     "off"
+    ],
+    [
+     7,
+     "cafe"
+    ],
+    [
+     9,
+     "warehouse_row"
+    ],
+    [
+     21,
+     "off"
+    ]
+   ],
+   "days": {
+    "sun": [
+     [
+      0,
+      "off"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "filip",
+   "role": "the night watchman on the warehouse row",
+   "routine": [
+    [
+     0,
+     "warehouse_row"
+    ],
+    [
+     7,
+     "off"
+    ],
+    [
+     17,
+     "warehouse_row"
+    ]
+   ]
+  }
+ ],
+ "ties": [
+  [
+   "rocco",
+   "lena",
+   0.7,
+   "mickeys_rank/mickeys_office 10:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "rocco",
+   "sam",
+   0.8,
+   "mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat; quay 17:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "sam",
+   "lena",
+   0.6,
+   "fish_front 12:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank/mickeys_office 15:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank/mickeys_office 16:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "ada",
+   "lena",
+   0.6,
+   "fish_counter/mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 16:00 Mon,Tue,Wed,Thu,Fri; ..."
+  ],
+  [
+   "ada",
+   "sam",
+   0.5,
+   "mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "marla",
+   "ada",
+   0.5,
+   "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_counter/fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "marla",
+   "sam",
+   0.4,
+   "fish_counter/fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "joey",
+   "rocco",
+   0.6,
+   "mickeys_rank/fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "joey",
+   "sam",
+   0.3,
+   "mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "noor",
+   "ada",
+   0.7,
+   "kiosk/fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "noor",
+   "sam",
+   0.6,
+   "fish_front 12:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri; kiosk/ritas_step 11:00 Mon,Wed"
+  ],
+  [
+   "noor",
+   "lena",
+   0.5,
+   "fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 15:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "noor",
+   "rocco",
+   0.5,
+   "fish_front 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "noor",
+   "marla",
+   0.4,
+   "kiosk/fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front/fish_counter 12:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "victor",
+   "lena",
+   0.4,
+   "ritas_step 17:00 Mon,Tue,Thu,Fri"
+  ],
+  [
+   "victor",
+   "sam",
+   0.5,
+   "ritas_counter/ritas_step 10:00 Mon,Wed; ritas_counter/ritas_step 11:00 Mon,Wed; ritas_counter/ritas_step 13:00 Fri; ..."
+  ],
+  [
+   "ferko",
+   "joey",
+   0.5,
+   "mickeys_rank 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "ferko",
+   "sam",
+   0.4,
+   "mickeys_rank 15:00 daily; mickeys_rank 16:00 daily; mickeys_rank/fish_front 12:00 Mon,Tue,Wed,Thu,Fri; ..."
+  ],
+  [
+   "rita",
+   "victor",
+   0.6,
+   "ritas_counter 10:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; ritas_counter 12:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "rita",
+   "joey",
+   0.4,
+   "ritas_step 17:00 Mon,Tue,Thu,Fri,Sat"
+  ],
+  [
+   "rita",
+   "tibor",
+   0.4,
+   "ritas_step 17:00 Mon,Tue,Thu,Fri"
+  ],
+  [
+   "vesna",
+   "ada",
+   0.5,
+   "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 10:00 Sun; chapel_hall 11:00 Sun"
+  ],
+  [
+   "vesna",
+   "marla",
+   0.4,
+   "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "tibor",
+   "joey",
+   0.4,
+   "ritas_step 17:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "june",
+   "lena",
+   0.5,
+   "mickeys_office 10:00 Mon,Tue,Wed,Thu,Fri; mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "june",
+   "emil",
+   0.45,
+   "chapel 16:00 Mon,Tue,Wed,Thu,Fri; chapel 10:00 Sun"
+  ],
+  [
+   "emil",
+   "vesna",
+   0.7,
+   "chapel 09:00 daily; chapel 07:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 08:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "emil",
+   "ada",
+   0.6,
+   "adas_step 13:00 Mon,Tue,Wed,Thu,Fri,Sat; chapel 10:00 Sun; chapel_hall 11:00 Sun"
+  ],
+  [
+   "zlata",
+   "joey",
+   0.5,
+   "mickeys_rank 12:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_office/mickeys_rank 15:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_office/mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "zlata",
+   "ferko",
+   0.45,
+   "mickeys_office/mickeys_rank 13:00 daily; mickeys_office/mickeys_rank 14:00 daily; mickeys_office/mickeys_rank 15:00 daily; ..."
+  ],
+  [
+   "zlata",
+   "sam",
+   0.4,
+   "mickeys_office/mickeys_rank 15:00 daily; mickeys_office/mickeys_rank 16:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_office/mickeys_rank 19:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "hal",
+   "sam",
+   0.3,
+   "ritas_counter/ritas_step 11:00 Mon"
+  ],
+  [
+   "hal",
+   "rita",
+   0.3,
+   "ritas_counter 11:00 Mon"
+  ],
+  [
+   "petra",
+   "noor",
+   0.4,
+   "ferry_stop 10:00 Tue,Thu"
+  ],
+  [
+   "petra",
+   "rocco",
+   0.3,
+   "mickeys_rank/mickeys_office 19:00 Fri"
+  ],
+  [
+   "tomas",
+   "rocco",
+   0.3,
+   "cafe 07:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "tomas",
+   "sam",
+   0.4,
+   "docks 10:00 Tue,Thu; docks 11:00 Tue,Thu"
+  ],
+  [
+   "magda",
+   "ada",
+   0.5,
+   "adas_step 14:00 Mon,Wed,Fri; chapel 10:00 Sun; chapel_hall 11:00 Sun"
+  ],
+  [
+   "bruno",
+   "petra",
+   0.3,
+   "ferry_stop 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "sanja",
+   "ada",
+   0.4,
+   "fish_counter 11:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "sanja",
+   "noor",
+   0.5,
+   "fish_counter/kiosk 11:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "sanja",
+   "rocco",
+   0.3,
+   "fish_counter/mickeys_rank 11:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "goran",
+   "sam",
+   0.5,
+   "docks 10:00 Tue,Thu; docks 11:00 Tue,Thu; cafe 20:00 Tue,Thu; ..."
+  ],
+  [
+   "goran",
+   "fabjan",
+   0.3,
+   "docks 08:00 Mon,Tue,Wed,Thu,Fri; docks 09:00 Mon,Tue,Wed,Thu,Fri; docks 10:00 Mon,Tue,Wed,Thu,Fri; ..."
+  ],
+  [
+   "katarina",
+   "ada",
+   0.3,
+   "laundry_counter/laundry_front 10:00 Mon,Wed,Thu"
+  ],
+  [
+   "katarina",
+   "sam",
+   0.5,
+   "market 11:00 Fri,Sat; market 10:00 Fri; market 12:00 Sat; ..."
+  ],
+  [
+   "stipe",
+   "sam",
+   0.5,
+   "quay 17:00 Mon,Tue,Wed,Thu,Fri; docks 10:00 Tue,Thu; docks 11:00 Tue,Thu"
+  ],
+  [
+   "stipe",
+   "rocco",
+   0.3,
+   "quay 17:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "drago",
+   "sam",
+   0.5,
+   "warehouse_row 20:00 Mon,Wed,Fri"
+  ],
+  [
+   "drago",
+   "rocco",
+   0.3,
+   "cafe 07:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "hana",
+   "ada",
+   0.6,
+   "adas_step 09:00 Mon,Tue,Wed,Fri,Sat"
+  ],
+  [
+   "hana",
+   "noor",
+   0.4,
+   "pension_counter 10:00 Mon,Wed,Fri"
+  ],
+  [
+   "hana",
+   "sam",
+   0.3,
+   "market 11:00 Fri"
+  ],
+  [
+   "zora",
+   "noor",
+   0.4,
+   "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri; fish_front 12:00 Sat"
+  ],
+  [
+   "zora",
+   "ada",
+   0.5,
+   "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat; fish_front 12:00 Sat"
+  ],
+  [
+   "zora",
+   "lena",
+   0.3,
+   "fish_front 12:00 Sat"
+  ],
+  [
+   "franjo",
+   "lena",
+   0.5,
+   "mickeys_rank/mickeys_office 11:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank/mickeys_office 10:00 Mon,Tue,Wed,Thu; mickeys_rank/mickeys_office 09:00 Mon,Tue,Wed"
+  ],
+  [
+   "franjo",
+   "rocco",
+   0.4,
+   "cafe 07:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank 11:00 Mon,Tue,Wed,Thu,Fri; mickeys_rank 08:00 Mon,Tue,Wed,Thu; ..."
+  ],
+  [
+   "danica",
+   "sam",
+   0.45,
+   "quay 17:00 Mon,Wed,Fri; kiosk 13:00 Wed; kiosk/ritas_step 13:00 Fri"
+  ],
+  [
+   "danica",
+   "lena",
+   0.4,
+   "mickeys_office 10:00 Fri"
+  ],
+  [
+   "danica",
+   "franjo",
+   0.3,
+   "flats 09:00 Fri"
+  ],
+  [
+   "luka",
+   "rocco",
+   0.4,
+   "cafe 07:00 Mon,Tue,Wed,Thu,Fri,Sat; allotments 10:00 Sun; allotments 11:00 Sun; ..."
+  ],
+  [
+   "dusan",
+   "rocco",
+   0.5,
+   "mickeys_rank/mickeys_office 19:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 20:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank/mickeys_office 21:00 Mon,Tue,Wed,Thu,Fri,Sat; ..."
+  ],
+  [
+   "dusan",
+   "sam",
+   0.6,
+   "mickeys_rank 19:00 Mon,Tue,Wed,Thu,Fri,Sat; mickeys_rank 20:00 Sat"
+  ],
+  [
+   "iva",
+   "noor",
+   0.5,
+   "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "iva",
+   "sam",
+   0.4,
+   "laundry_counter/laundry_front 13:00 Mon; laundry_counter/laundry_front 14:00 Mon"
+  ],
+  [
+   "fabjan",
+   "sam",
+   0.4,
+   "quay 17:00 Mon,Tue,Wed,Thu,Fri; docks 10:00 Tue,Thu; docks 11:00 Tue,Thu"
+  ],
+  [
+   "fabjan",
+   "rocco",
+   0.3,
+   "quay 17:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "ines",
+   "sam",
+   0.5,
+   "ritas_counter/ritas_step 10:00 Mon,Wed; ritas_counter/ritas_step 11:00 Mon,Wed; ritas_counter/ritas_step 13:00 Fri; ..."
+  ],
+  [
+   "ines",
+   "lena",
+   0.3,
+   "ritas_step 17:00 Mon,Tue,Thu,Fri"
+  ],
+  [
+   "dario",
+   "sam",
+   0.5,
+   "ferry_stop 13:00 Tue,Thu; ferry_stop 14:00 Tue,Thu; quay 17:00 Sat"
+  ],
+  [
+   "dario",
+   "noor",
+   0.3,
+   "ferry_stop 10:00 Tue,Thu"
+  ],
+  [
+   "selma",
+   "ada",
+   0.4,
+   "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "selma",
+   "noor",
+   0.4,
+   "laundry_counter/laundry_front 09:00 Mon,Tue,Wed,Thu,Fri"
+  ],
+  [
+   "filip",
+   "sam",
+   0.5,
+   "warehouse_row 20:00 Mon,Wed,Fri; warehouse_row 21:00 Mon,Wed,Fri"
+  ],
+  [
+   "tanja",
+   "ada",
+   0.3,
+   "laundry_counter/laundry_front 10:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "marta",
+   "sam",
+   0.5,
+   "ritas_counter/ritas_step 10:00 Mon,Wed; ritas_counter/ritas_step 11:00 Mon,Wed; ritas_counter/ritas_step 13:00 Fri; ..."
+  ],
+  [
+   "marta",
+   "noor",
+   0.3,
+   "ritas_counter/kiosk 11:00 Mon,Tue,Wed,Thu,Fri,Sat"
+  ],
+  [
+   "jelena",
+   "sam",
+   0.5,
+   "ritas_counter/ritas_step 10:00 Mon,Wed; ritas_counter/ritas_step 11:00 Mon,Wed; ritas_counter/ritas_step 13:00 Fri; ..."
+  ],
+  [
+   "jelena",
+   "lena",
+   0.4,
+   "mickeys_office 16:00 Mon"
+  ]
+ ]
+}
