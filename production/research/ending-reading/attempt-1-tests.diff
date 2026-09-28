@@ -1,0 +1,82 @@
+diff --git a/ledger/CoreTests/Program.cs b/ledger/CoreTests/Program.cs
+index 73e9c14a..635c84f4 100644
+--- a/ledger/CoreTests/Program.cs
++++ b/ledger/CoreTests/Program.cs
+@@ -13027,6 +13027,77 @@ namespace Ledger.CoreTests
+                     $"{Watched.LoyaltyCeiling(0.2):0.00} / {Watched.LoyaltyCeiling(0.5):0.00}");
+             }
+ 
++            // ---- TOM'S READING OF WHAT THE ENDING WILL COST (town list 6i; D58's second condition, D33) ----
++            {
++                var calm = new LedgerState { BusinessesOwned = 1, TotalRacketIncome = 1000, TotalWashed = 900, TakingsToDate = 4000,
++                                             EllisCaseAnswerable = true, BestDayLifeLoyalty = 0.7 };
++                var calmRead = EndingReading.Read(calm, new CostContext
++                    { Crew = { new CrewView { Name = "Ron", RanSomethingAlone = true, UpToIt = true, WouldStay = true } } });
++                Check(calmRead.TrueForAll(r => r.Level == CostLevel.Clear), "a run in which nothing is closing in reads clear throughout",
++                    string.Join(" | ", calmRead.ConvertAll(r => r.Cost + ":" + r.Level)));
++
++                // THE BOOKS: seen coming before they fail. Washing climbs; the level never skips Coming.
++                var levels = new List<CostLevel>();
++                for (int washed = 900; washed <= 4000; washed += 50)
++                {
++                    var st = new LedgerState { BusinessesOwned = 1, TotalRacketIncome = 1000, TotalWashed = washed, TakingsToDate = 2000 };
++                    var lv = EndingReading.Books(st).Level;
++                    if (levels.Count == 0 || levels[levels.Count - 1] != lv) levels.Add(lv);
++                    Check(lv != CostLevel.Here || !ActThreeState.Eligible(st).Contains(Ending.Kingdom),
++                        "the books read as landed only when they would really fail the inspection");
++                }
++                Check(levels.Count == 3 && levels[0] == CostLevel.Clear && levels[1] == CostLevel.Coming && levels[2] == CostLevel.Here,
++                    "as more is washed, the books read clear, then coming, then landed: never a failure he could not see arrive",
++                    string.Join(",", levels));
++                var over = EndingReading.Books(new LedgerState { BusinessesOwned = 1, TotalRacketIncome = 1000, TotalWashed = 3000, TakingsToDate = 2000 });
++                var under = EndingReading.Books(new LedgerState { BusinessesOwned = 1, TotalRacketIncome = 3000, TotalWashed = 200, TakingsToDate = 4000 });
++                Check(over.Why.Exists(w => w.Contains("more fares than the cars")) && under.Why.Exists(w => w.Contains("night money")),
++                    "and it says which way the books are wrong: too much through them, or night money they never took in");
++
++                // THE POLICE: the quiet exit is seen closing before it shuts.
++                var policeClear = EndingReading.Police(calm, new CostContext());
++                var policeComing = EndingReading.Police(calm, new CostContext { Police = Inquiry.Procedure });
++                var policeHere = EndingReading.Police(new LedgerState { Hunted = true }, new CostContext());
++                Check(policeClear.Level == CostLevel.Clear && policeComing.Level == CostLevel.Coming && policeHere.Level == CostLevel.Here,
++                    "a detective on the street reads as coming; being hunted reads as landed");
++                Check(policeComing.Why.Exists(w => w.Contains("stops being a way out")) && policeHere.Why.Exists(w => w.Contains("no longer a door")),
++                    "and the reading says, before it shuts, that being hunted closes handing it over and walking away");
++
++                // THE SUCCESSOR, judged as people: every reason is one he could see.
++                var noOne = EndingReading.Successor(new LedgerState(), new CostContext { Crew = {
++                    new CrewView { Name = "Darren", RanSomethingAlone = false, UpToIt = true, WouldStay = true },
++                    new CrewView { Name = "Ron", RanSomethingAlone = true, AtOddsWith = "Darren", UpToIt = true, WouldStay = true } } });
++                Check(noOne.Level == CostLevel.Coming && noOne.Why.Contains("Darren has never run anything of yours alone")
++                      && noOne.Why.Contains("Ron is at odds with Darren"),
++                    "with nobody ready, each of the crew is read for the reason he could see", string.Join(" | ", noOne.Why));
++
++                // THE LIFE, and the witnesses.
++                Check(EndingReading.Life(new LedgerState { BestDayLifeLoyalty = 0.45 }).Level == CostLevel.Coming
++                      && EndingReading.Life(new LedgerState { BestDayLifeLoyalty = 0.2 }).Level == CostLevel.Here,
++                    "the people who knew him before read as cooling before they read as lost");
++                var seenBy = EndingReading.Witnesses(new CostContext { Witnesses = { new WitnessView { Name = "Darren", Uneasy = true },
++                                                                                      new WitnessView { Name = "Ron" } } });
++                Check(seenBy.Level == CostLevel.Coming && seenBy.Line.StartsWith("Darren watched you do it"),
++                    "a witness who cannot hold his eye reads as coming, by name", seenBy.Line);
++
++                // NEVER A NUMBER, NEVER ANOTHER MIND'S STATE, and landed first.
++                var worst = new LedgerState { Hunted = true, BusinessesOwned = 2, TotalRacketIncome = 5000, TotalWashed = 100, TakingsToDate = 500,
++                                              BestDayLifeLoyalty = 0.1, DayLifeDeparted = 2, Cooperations = 1, Stonewalls = 2, PublicRecord = true };
++                var worstRead = EndingReading.Read(worst, new CostContext { Police = Inquiry.Manhunt,
++                    Witnesses = { new WitnessView { Name = "Darren", Uneasy = true } }, Crew = { new CrewView { Name = "Ron" } } });
++                string numbered = null, minded = null;
++                foreach (var r in worstRead)
++                    foreach (var text in new List<string>(r.Why) { r.Line })
++                    {
++                        if (System.Text.RegularExpressions.Regex.IsMatch(text, @"\d")) numbered = text;
++                        if (System.Text.RegularExpressions.Regex.IsMatch(text, @"\b(loyalty|suspicion|nerve|thinks|believes|knows that)\b")) minded = text;
++                    }
++                Check(numbered == null && minded == null, "no reading carries a number or names what anyone else thinks", numbered ?? minded);
++                bool ordered = true;
++                for (int i = 1; i < worstRead.Count; i++) if (worstRead[i].Level > worstRead[i - 1].Level) ordered = false;
++                Check(ordered && worstRead[0].Level == CostLevel.Here, "what has landed is read first, then what is coming");
++            }
++
+             // ---- it survives a save ----
+             {
+                 var book = new HomicideBook();
