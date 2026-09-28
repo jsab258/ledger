@@ -323,6 +323,27 @@ jobs:
           }
           exit 0
 
+      # WAIT FOR THIS PC'S OWN UNREAL WORK, 28 September. The builder session
+      # runs Unreal's editor and compiler on this same PC, and the engine's
+      # lock refuses a second compile (ConflictingInstance; FINDINGS). The
+      # builder waits for this job before each launch it makes; this job
+      # waits for whatever of the builder's is already running (anything
+      # Unreal not started from this runner's folder), up to 40 minutes.
+      - name: Wait for this PC's own Unreal work to finish
+        timeout-minutes: 42
+        shell: pwsh
+        run: |
+          $t0 = Get-Date
+          while ($true) {
+            $busy = @(Get-CimInstance Win32_Process | Where-Object {
+              ($_.Name -like 'UnrealEditor*' -or $_.Name -like 'UnrealBuildTool*' -or ($_.Name -eq 'dotnet.exe' -and $_.CommandLine -match 'UnrealBuildTool|AutomationTool')) -and
+              ($_.CommandLine -notmatch 'actions-runner-ledger') })
+            if ($busy.Count -eq 0) { break }
+            if (((Get-Date) - $t0).TotalMinutes -gt 40) { Write-Host "localUnrealStillBusy after 40 minutes: going ahead"; break }
+            Start-Sleep -Seconds 20
+          }
+          Write-Host ("localUnrealWaitSeconds={0:N0}" -f ((Get-Date) - $t0).TotalSeconds)
+
       - name: Build the UE probe target and run the golden test
         id: build
         timeout-minutes: 60
@@ -2964,3 +2985,18 @@ jobs:
             }
           }
           Write-Host ("leftoversCleared freedGB={0:N1} freeC={1:N1}" -f ($freed / 1GB), ((Get-PSDrive C).Free / 1GB))
+
+      # NO HISTORY PILING UP, 28 September (the cleanup page: 7.6 GB of old
+      # commits had built up in this working copy; every build fetches only
+      # the newest, but nothing cleared the old). Unreachable commits and
+      # their files go at the end of every build; the working copy stays.
+      - name: Clear the old history
+        if: always()
+        continue-on-error: true
+        shell: pwsh
+        run: |
+          $before = (Get-ChildItem .git -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum
+          git reflog expire --expire=now --all
+          git gc --prune=now --quiet
+          $after = (Get-ChildItem .git -Recurse -File -Force -ErrorAction SilentlyContinue | Measure-Object Length -Sum).Sum
+          Write-Host ("historyCleared gitGB {0:N1} -> {1:N1}" -f ($before / 1GB), ($after / 1GB))
