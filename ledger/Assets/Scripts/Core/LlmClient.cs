@@ -194,17 +194,21 @@ namespace Ledger.Core
                 string line;
                 bool stopped = false;
                 string error = null;
+                // What was used before a stop: the prompt, and roughly four
+                // characters a token of what had been written.
+                LlmResponse SoFar() => new LlmResponse { Model = result.Model, InputTokens = result.InputTokens,
+                                                         OutputTokens = Math.Max(result.OutputTokens, (sb.Length + 3) / 4), Text = sb.ToString() };
                 while (error == null)
                 {
                     try { line = await reader.ReadLineAsync().ConfigureAwait(false); }
-                    catch (Exception) when (ct.IsCancellationRequested) { throw new OperationCanceledException(ct); }
+                    catch (Exception) when (ct.IsCancellationRequested) { throw new LlmStreamStoppedException(SoFar(), ct); }
                     // A connection dropped mid-reply is a broken stream, which the
                     // caller may ask again for, as the plain call retries a drop.
                     catch (Exception ex) when (ex is System.IO.IOException || ex is HttpRequestException)
                     {
                         throw new LlmStreamBrokenException("the connection dropped mid-reply: " + ex.Message);
                     }
-                    ct.ThrowIfCancellationRequested();
+                    if (ct.IsCancellationRequested) throw new LlmStreamStoppedException(SoFar(), ct);
                     if (line == null) break;
                     if (!line.StartsWith("data:")) continue;
                     var data = line.Substring(5).Trim();
@@ -308,5 +312,15 @@ namespace Ledger.Core
     public class LlmStreamBrokenException : LlmApiException
     {
         public LlmStreamBrokenException(string message) : base(500, message) { }
+    }
+
+    /// A STREAM STOPPED BY ITS CALLER, with what it had used so far: the
+    /// prompt's tokens (from the stream's opening) and the reply written
+    /// before the stop, so a stopped draft's cost is still counted (the
+    /// independent check, 28 September). It is a cancellation like any other.
+    public class LlmStreamStoppedException : OperationCanceledException
+    {
+        public readonly LlmResponse SoFar;
+        public LlmStreamStoppedException(LlmResponse soFar, CancellationToken ct) : base(ct) { SoFar = soFar; }
     }
 }

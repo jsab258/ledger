@@ -644,6 +644,14 @@ static class Program
         var firstBad = await Early(new StreamFake("Dennis from the yard did it. Everyone knows."), "Who was it?", TimeSpan.FromSeconds(8));
         Ok("a first sentence that invents is never sent early", firstBad.firsts.Count == 0 && Str(firstBad.last, "rest") == null, firstBad.last);
         Ok("and the reply is the usual second draft or the plain line", Reply(firstBad.last) != null && !Reply(firstBad.last).Contains("Dennis"), firstBad.last);
+        // Town list 6a: the failed draft is stopped, and the second draft's first
+        // sentence goes out without waiting for the failed draft to finish.
+        var redraftEarly = await Early(new StreamFake("Dennis from the yard did it. Everyone knows.") { Redraft = "Can't say I did. Ask Rita.", Pause = TimeSpan.FromSeconds(2) },
+                                       "Who was it?", TimeSpan.FromSeconds(8));
+        Ok("a first sentence that invents stops its draft, and the second draft's first sentence goes out at once",
+           redraftEarly.llm.Stopped && redraftEarly.firsts.Count == 1 && Str(redraftEarly.firsts[0].line, "first") == "Can't say I did." && redraftEarly.firsts[0].at < 1500,
+           redraftEarly.firsts.Count > 0 ? redraftEarly.firsts[0].at + " " + redraftEarly.firsts[0].line : redraftEarly.last);
+        Ok("and its rest follows", Str(redraftEarly.last, "rest") == "Ask Rita." && Reply(redraftEarly.last) == "Can't say I did. Ask Rita.", redraftEarly.last);
 
         var late = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine.") { Pause = TimeSpan.FromSeconds(3) }, "See anything?", TimeSpan.FromMilliseconds(900));
         Ok("out of time after the first sentence: that sentence is the reply, nothing more is said",
@@ -670,6 +678,10 @@ static class Program
         public TimeSpan Pause = TimeSpan.FromMilliseconds(400);
         int _drafts;
         public bool ThrowBeforeText;
+        /// What every draft after the first says.
+        public string Redraft = "Can't say I did.";
+        /// Whether the first draft's stream was stopped before it finished.
+        public bool Stopped;
         public StreamFake(string reply) { _reply = reply; }
         static bool IsCheck(LlmRequest r) => r.System != null && r.System.StartsWith("You read one line");
         static bool IsSecondLook(LlmRequest r) => r.System != null && r.System.StartsWith("You check details");
@@ -690,17 +702,19 @@ static class Program
                 return Task.FromResult(new LlmResponse { Text = bad ? "{\"specifics\":[{\"detail\":\"who did it\",\"kind\":\"person\",\"source\":\"none\"}]}" : "{\"specifics\":[]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
             }
             // the first draft is the reply; a second draft says nothing it could invent
-            return Task.FromResult(new LlmResponse { Text = _drafts++ == 0 ? _reply : "Can't say I did.", InputTokens = 400, OutputTokens = 10, Model = request.Model });
+            return Task.FromResult(new LlmResponse { Text = _drafts++ == 0 ? _reply : Redraft, InputTokens = 400, OutputTokens = 10, Model = request.Model });
         }
         public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
         {
             if (ThrowBeforeText) throw new LlmStreamBrokenException("Overloaded");
-            _drafts++;
-            var cut = _reply.IndexOf(". ", StringComparison.Ordinal) + 2;
-            onText(_reply.Substring(0, cut) + _reply.Substring(cut, 1));
-            await Task.Delay(Pause, ct);
-            onText(_reply);
-            return new LlmResponse { Text = _reply, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
+            bool first = _drafts++ == 0;
+            var text = first ? _reply : Redraft;
+            var cut = text.IndexOf(". ", StringComparison.Ordinal) + 2;
+            onText(text.Substring(0, cut) + text.Substring(cut, 1));
+            try { await Task.Delay(Pause, ct); }
+            catch (OperationCanceledException) { if (first) Stopped = true; throw; }
+            onText(text);
+            return new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model };
         }
     }
 }

@@ -4304,6 +4304,8 @@ namespace Ledger.CoreTests
             readonly Queue<string> _lines;
             public readonly List<LlmRequest> Requests = new List<LlmRequest>();
             public CancellationTokenSource CancelOnCall; public int CancelAt = -1;
+            /// A call that answers only after a while, as a slow check does.
+            public int SlowAt = -1; public TimeSpan Slow = TimeSpan.FromMilliseconds(300);
             /// A call that fails as a busy or broken service does, not cancelled.
             public int ThrowAt = -1;
             /// Why the first call stopped ("max_tokens" for an answer cut off).
@@ -4316,8 +4318,50 @@ namespace Ledger.CoreTests
                 if (Requests.Count == CancelAt) { CancelOnCall.Cancel(); throw new OperationCanceledException(ct); }
                 if (Requests.Count == ThrowAt) throw new InvalidOperationException("overloaded");
                 var text = _lines.Count > 1 ? _lines.Dequeue() : _lines.Peek();
+                if (Requests.Count == SlowAt) return Later(text, request.Model);
                 return Task.FromResult(new LlmResponse { Text = text, StopReason = Requests.Count == 1 ? FirstStop : "end_turn",
                                                          InputTokens = 10, OutputTokens = 10, Model = request.Model });
+            }
+
+            async Task<LlmResponse> Later(string text, string model)
+            {
+                await Task.Delay(Slow);
+                return new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 10, OutputTokens = 10, Model = model };
+            }
+        }
+
+        /// A model that streams each scripted draft in two parts, a pause apart
+        /// (the first sentence and the start of the next, then the whole), and
+        /// notes when the first draft is stopped between them.
+        class ScriptedStream : IStreamingLlmClient
+        {
+            readonly Queue<string> _drafts;
+            public readonly List<LlmRequest> Requests = new List<LlmRequest>();
+            public int Streams;
+            public bool FirstStopped;
+            /// The stream that fails, as a busy provider does, after its first sentence.
+            public int FailAt = -1;
+            public TimeSpan Pause = TimeSpan.FromMilliseconds(300);
+            public ScriptedStream(params string[] drafts) => _drafts = new Queue<string>(drafts);
+            public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default) =>
+                throw new InvalidOperationException("the plain call was not expected");
+            public async Task<LlmResponse> StreamAsync(LlmRequest request, Action<string> onText, CancellationToken ct = default)
+            {
+                Requests.Add(request);
+                int n = ++Streams;
+                var text = _drafts.Dequeue();
+                int cut = text.IndexOf(". ", StringComparison.Ordinal);
+                cut = cut < 0 ? text.IndexOf("? ", StringComparison.Ordinal) : cut;
+                onText(cut < 0 ? text : text.Substring(0, cut + 3));
+                if (n == FailAt) { await Task.Delay(20); throw new LlmApiException(529, "overloaded"); }
+                try { await Task.Delay(Pause, ct); }
+                catch (OperationCanceledException)
+                {
+                    if (n == 1) FirstStopped = true;
+                    throw new LlmStreamStoppedException(new LlmResponse { InputTokens = 1000, OutputTokens = 7, Model = request.Model }, ct);
+                }
+                onText(text);
+                return new LlmResponse { Text = text, StopReason = "end_turn", InputTokens = 10, OutputTokens = 10, Model = request.Model };
             }
         }
 
@@ -4633,6 +4677,77 @@ namespace Ledger.CoreTests
             for (int k = 0; k < 20; k++) if (ClaimCheck.KnownOnlyFor("id" + k, 0) != ClaimCheck.KnownOnlyFor("id0", 0)) startsDiffer = true;
             Check(fallbacksClean && startsDiffer && ClaimCheck.KnownOnlyFor("rocco", 3) == ClaimCheck.KnownOnlyFor("rocco", 3),
                 "every fallback wording keeps the content rule, where one starts depends on who is speaking, and it is the same every run");
+
+            // A FIRST SENTENCE THAT FAILS ITS OWN CHECK (town list 6a): that draft
+            // is stopped there and the second draft asked for at once, streamed,
+            // its own first sentence handed over as soon as it passes.
+            ConversationEngine Streamed(ScriptedStream talk, ScriptedLlm check) =>
+                new ConversationEngine(talk, MakeLenaCard(), Mem(), new KnowledgeBase(), new SuspicionTracker(), new CostTracker()) { Checker = check };
+            var s1 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "Couldn't say what he drove. He went off fast.");
+            var c1 = new ScriptedLlm(Flag("a white van"), Unsupported, Clean, Clean);
+            var es1 = Streamed(s1, c1);
+            var handed1 = new List<string>();
+            var r1 = await es1.SayToAsync("What was he driving?", now, "In the yard.", default, s => { lock (handed1) handed1.Add(s); return Task.FromResult(true); });
+            Check(s1.FirstStopped && s1.Streams == 2, "the draft whose first sentence failed is stopped there, and the second draft streamed", s1.Streams + " " + s1.FirstStopped);
+            Check(handed1.Count == 1 && handed1[0] == "Couldn't say what he drove." && r1 == "Couldn't say what he drove. He went off fast.",
+                "the second draft's first sentence is handed over early, and its rest follows", string.Join(" | ", handed1) + " / " + r1);
+            Check(c1.Requests.Count == 4 && es1.LastInvented.Count == 1 && es1.LastInvented[0] == "a white van",
+                "the failed draft's rest is never checked: four checker calls, not six", c1.Requests.Count.ToString());
+            Check(s1.Requests[1].System.Contains("a white van"), "the second draft is told what the first sentence claimed");
+            bool vanKept = false;
+            foreach (var ev in es1.Memory.Events) if (ev.Text.Contains("van")) vanKept = true;
+            Check(!vanKept, "and the stopped draft is never remembered");
+
+            var s2 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "A white van? Couldn't say.");
+            var c2 = new ScriptedLlm(Flag("a white van"), Unsupported, Clean);
+            var handed2 = new List<string>();
+            var r2s = await Streamed(s2, c2).SayToAsync("What was he driving?", now, "In the yard.", default, s => { lock (handed2) handed2.Add(s); return Task.FromResult(true); });
+            Check(handed2.Count == 0 && ClaimCheck.IsKnownOnly(r2s), "a second draft opening on what was flagged is never handed over: the fallback", r2s);
+
+            var s3 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "Couldn't say what he drove. It was Dennis, mind.");
+            var c3 = new ScriptedLlm(Flag("a white van"), Unsupported, Clean, Flag("Dennis"), Unsupported);
+            var es3 = Streamed(s3, c3);
+            var r3s = await es3.SayToAsync("What was he driving?", now, "In the yard.", default, s => Task.FromResult(true));
+            bool keptFirst3 = false;
+            foreach (var ev in es3.Memory.Events) if (ev.Text == ClaimCheck.IReplied + "\"Couldn't say what he drove.\"") keptFirst3 = true;
+            Check(r3s == "Couldn't say what he drove." && keptFirst3, "a second draft whose rest invents is said as its heard first sentence alone", r3s);
+
+            var s4 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "Couldn't say what he drove. He went off fast.");
+            var c4 = new ScriptedLlm(Flag("a white van"), Unsupported, Clean, Clean);
+            var es4 = Streamed(s4, c4);
+            var cts4 = new CancellationTokenSource();
+            bool cancelled4 = false;
+            try { await es4.SayToAsync("What was he driving?", now, "In the yard.", cts4.Token, s => { cts4.Cancel(); return Task.FromResult(true); }); }
+            catch (OperationCanceledException) { cancelled4 = true; }
+            bool keptHeard4 = false;
+            foreach (var ev in es4.Memory.Events) if (ev.Text == ClaimCheck.IReplied + "\"Couldn't say what he drove.\"") keptHeard4 = true;
+            Check(cancelled4 && keptHeard4, "a turn given up after the second draft's first sentence was heard keeps that sentence, and only that");
+
+            // The fourth pass of the independent check.
+            var cost5 = new CostTracker();
+            var s5 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "Couldn't say what he drove. He went off fast.");
+            var es5 = new ConversationEngine(s5, MakeLenaCard(), Mem(), new KnowledgeBase(), new SuspicionTracker(), cost5)
+                      { Checker = new ScriptedLlm(Flag("a white van"), Unsupported, Clean, Clean) };
+            await es5.SayToAsync("What was he driving?", now, "In the yard.", default, s => Task.FromResult(true));
+            // Talk: the stopped draft (1000 in, 7 out) and the second (10, 10); checks: four calls of 10 and 10,
+            // the first sentence's list and second look kept as one record.
+            Check(cost5.TotalCalls == 5 && Math.Abs(cost5.EstimateUsd() - ((1010 * 2.0 + 17 * 10.0) + (40 * 1.0 + 40 * 5.0)) / 1e6) < 1e-9,
+                "a stopped draft's usage so far is counted, with every check", cost5.TotalCalls + " " + cost5.EstimateUsd());
+            var cost6 = new CostTracker();
+            var s6 = new ScriptedStream("A white van, parked by Rita's. Then gone.", "Couldn't say what he drove. He went off fast.") { FailAt = 2 };
+            var c6 = new ScriptedLlm(Flag("a white van"), Unsupported, Clean) { SlowAt = 3, Slow = TimeSpan.FromMilliseconds(300) };
+            var es6 = new ConversationEngine(s6, MakeLenaCard(), Mem(), new KnowledgeBase(), new SuspicionTracker(), cost6) { Checker = c6 };
+            var handed6 = new List<string>();
+            bool failed6 = false;
+            try { await es6.SayToAsync("What was he driving?", now, "In the yard.", default, s => { lock (handed6) handed6.Add(s); return Task.FromResult(true); }); }
+            catch (LlmApiException) { failed6 = true; }
+            await Task.Delay(400);
+            bool remembered6 = false;
+            foreach (var ev in es6.Memory.Events) if (ev.Text.StartsWith(ClaimCheck.IReplied)) remembered6 = true;
+            Check(failed6 && handed6.Count == 0 && !remembered6,
+                "a draft that fails while its first sentence is still being checked hands nothing over afterwards, and nothing is remembered",
+                failed6 + " " + string.Join("|", handed6) + " " + remembered6);
+            Check(c6.Requests.Count == 3 && cost6.TotalCalls == 3, "and the check it had started is still counted (the stopped draft, its check, the failed draft's check)", cost6.TotalCalls.ToString());
 
             // A reply that claims nothing costs one check and no second draft.
             var talk3 = new ScriptedLlm("Ran off through the yard, I heard. Got the sack last year, mind.");

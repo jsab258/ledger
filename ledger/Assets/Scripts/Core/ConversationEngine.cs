@@ -310,6 +310,140 @@ namespace Ledger.Core
             }
         }
 
+        /// ONE DRAFT OF A REPLY, as the voice will hear it (town list 6a, 28
+        /// September). Streamed when the caller speaks early: its first sentence
+        /// is checked on its own the moment it is written, and handed to
+        /// onFirstChecked if it passes and repeats nothing in `flagged` (what
+        /// the draft before it was caught claiming). If it fails, the rest of
+        /// the draft is stopped, since the turn will not use it. Filled in as it
+        /// goes, so a caller whose turn fails can still tell what was heard.
+        sealed class Drafted
+        {
+            /// The whole draft; null when it was stopped after its first
+            /// sentence failed (what the stopped stream had used is recorded).
+            public LlmResponse Response;
+            /// Its first sentence, as checked and handed over.
+            public string First;
+            /// Whether the first sentence was handed over, and so heard.
+            public bool Heard;
+            /// What the first sentence's own check found, when it failed.
+            public IReadOnlyList<string> FirstFlagged;
+            public Task<(bool heard, IReadOnlyList<string> found, LlmResponse cost)> FirstTask;
+            /// Set when the draft has failed or been given up: its first
+            /// sentence, still being checked, is then never handed over (the
+            /// independent check: a sentence went to the voice after its turn
+            /// had already ended).
+            public volatile bool Closed;
+
+            public async Task<bool> HeardAsync()
+            {
+                if (FirstTask == null) return false;
+                try { return (await FirstTask).heard; } catch (Exception) { return false; }
+            }
+        }
+
+        static bool Unchecked(IReadOnlyList<string> found) => found.Count == 1 && found[0] == "(unchecked)";
+        static bool FailedFirst((bool heard, IReadOnlyList<string> found, LlmResponse cost) r) =>
+            !r.heard && r.found.Count > 0 && !Unchecked(r.found);
+
+        async Task DraftAsync(Drafted d, LlmRequest request, IStreamingLlmClient streaming, List<(string id, string text)> knownEarly,
+            Func<string, Task<bool>> onFirstChecked, IReadOnlyList<string> flagged, CancellationToken ct)
+        {
+            if (streaming == null)
+            {
+                d.Response = await _llm.CompleteAsync(request, ct);
+                _cost?.Record(Model, d.Response.InputTokens, d.Response.OutputTokens);
+                return;
+            }
+            // The first sentence's check is counted once, however the draft ends.
+            bool firstCounted = false;
+            void CountFirst()
+            {
+                if (firstCounted || d.FirstTask == null || d.FirstTask.Status != TaskStatus.RanToCompletion) return;
+                firstCounted = true;
+                var c = d.FirstTask.Result.cost;
+                if (c != null) _cost?.Record(CheckerModel, c.InputTokens, c.OutputTokens);
+            }
+            using var stop = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            try
+            {
+                try
+                {
+                    d.Response = await streaming.StreamAsync(request, text =>
+                    {
+                        if (d.FirstTask != null) return;
+                        var f = FirstSentence(text);
+                        if (f == null) return;
+                        d.First = ValidateReply(f);
+                        var said = d.First;
+                        d.FirstTask = Task.Run(async () =>
+                        {
+                            var (bad, cost) = await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
+                            if (bad.Count == 0 && flagged != null && ClaimCheck.Repeats(said, flagged)) bad = flagged;
+                            if (bad.Count > 0)
+                            {
+                                // Stopped for a real failure, never for a check that could not run.
+                                if (!Unchecked(bad)) { try { stop.Cancel(); } catch (ObjectDisposedException) { } }
+                                return (false, bad, cost);
+                            }
+                            ct.ThrowIfCancellationRequested();
+                            if (d.Closed) return (false, bad, cost);
+                            return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
+                        });
+                    }, stop.Token);
+                }
+                catch (Exception e) when (!ct.IsCancellationRequested && stop.IsCancellationRequested)
+                {
+                    // STOPPED: the first sentence failed, and the rest is not
+                    // wanted; what the stream had used is still counted.
+                    if (e is LlmStreamStoppedException s && s.SoFar != null) _cost?.Record(Model, s.SoFar.InputTokens, s.SoFar.OutputTokens);
+                    d.Response = null;
+                }
+                catch (LlmStreamBrokenException) when (!ct.IsCancellationRequested)
+                {
+                    // A STREAM THAT BROKE before anything of it was heard (the
+                    // independent check): the plain call, with its retries, and the
+                    // broken stream's first sentence forgotten (and not handed over
+                    // late), unless it had failed its check, when the draft is
+                    // abandoned as if stopped. Once a sentence has been heard,
+                    // asking again could contradict it.
+                    d.Closed = true;
+                    if (await d.HeardAsync()) throw;
+                    if (d.FirstTask != null && d.FirstTask.Status == TaskStatus.RanToCompletion && FailedFirst(d.FirstTask.Result))
+                    {
+                        d.Response = null;
+                    }
+                    else
+                    {
+                        CountFirst();
+                        d.FirstTask = null;
+                        d.First = null;
+                        d.Closed = false;
+                        d.Response = await _llm.CompleteAsync(request, ct);
+                    }
+                }
+                if (d.Response != null) _cost?.Record(Model, d.Response.InputTokens, d.Response.OutputTokens);
+                if (d.FirstTask != null)
+                {
+                    var early = await d.FirstTask;
+                    CountFirst();
+                    d.Heard = early.heard;
+                    // What the first sentence's own check found stands for the whole
+                    // draft: the turn goes straight to the next draft.
+                    if (FailedFirst(early)) d.FirstFlagged = early.found;
+                }
+            }
+            catch (Exception)
+            {
+                // A DRAFT THAT FAILED hands nothing over afterwards, and its first
+                // sentence's check, once finished, is still counted.
+                d.Closed = true;
+                if (d.FirstTask != null) { try { await d.FirstTask; } catch (Exception) { } }
+                CountFirst();
+                throw;
+            }
+        }
+
         /// The check's calls as one cost to record.
         static LlmResponse Summed(List<LlmResponse> calls)
         {
@@ -449,7 +583,6 @@ namespace Ledger.Core
             // continuation resume where it started — Unity's main thread in the game,
             // the same single thread in the harness — so those mutations never race a
             // reader. The network hop's own ConfigureAwait(false) stays inside the client.
-            LlmResponse response;
             // WHAT THE CHARACTER KNOWS, worked out before the reply when the first
             // sentence is to be checked as soon as it is written.
             var streaming = onFirstChecked != null && Checker != null ? _llm as IStreamingLlmClient : null;
@@ -459,84 +592,23 @@ namespace Ledger.Core
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
                                                    Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
             }
-            string firstSentence = null;
-            Task<(bool heard, IReadOnlyList<string> found, LlmResponse cost)> firstHandedOver = null;
-            // Whether the early first sentence was handed over and so heard.
-            async Task<bool> Heard()
-            {
-                if (firstHandedOver == null) return false;
-                try { return (await firstHandedOver).heard; } catch (Exception) { return false; }
-            }
+            var d1 = new Drafted();
             try
             {
-                if (streaming != null)
-                {
-                    try
-                    {
-                    response = await streaming.StreamAsync(request, text =>
-                    {
-                        if (firstHandedOver != null) return;
-                        var f = FirstSentence(text);
-                        if (f == null) return;
-                        firstSentence = ValidateReply(f);
-                        var said = firstSentence;
-                        firstHandedOver = Task.Run(async () =>
-                        {
-                            var (bad, cost) = await FirstInventedAsync(knownEarly, said, ct).ConfigureAwait(false);
-                            if (bad.Count > 0) return (false, bad, cost);
-                            ct.ThrowIfCancellationRequested();
-                            return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
-                        });
-                    }, ct);
-                    }
-                    catch (LlmStreamBrokenException) when (!ct.IsCancellationRequested)
-                    {
-                        // A STREAM THAT BROKE before anything of it was heard (the
-                        // independent check): the plain call, with its retries, and
-                        // the broken stream's first sentence forgotten. Once a
-                        // sentence has been heard, asking again could contradict it.
-                        if (await Heard()) throw;
-                        firstHandedOver = null;
-                        firstSentence = null;
-                        response = await _llm.CompleteAsync(request, ct);
-                    }
-                }
-                else
-                {
-                    response = await _llm.CompleteAsync(request, ct);
-                }
+                await DraftAsync(d1, request, streaming, knownEarly, onFirstChecked, null, ct);
             }
             catch (Exception) // ANY failure (LlmApiException, cancellation, network) must
             {                 // roll back the user turn we just appended, or it leaks.
                 _transcript.Remove(mine);
                 // ...keeping only what the player already heard, if anything.
-                if (await Heard()) RememberSaid(playerInput, firstSentence, now);
+                if (await d1.HeardAsync()) RememberSaid(playerInput, d1.First, now);
                 throw;
             }
 
-            _cost?.Record(Model, response.InputTokens, response.OutputTokens);
-
-            var reply = ValidateReply(response.Text);
-            bool firstHeard = false;
-            IReadOnlyList<string> firstFlagged = null;
-            try
-            {
-                if (firstHandedOver != null)
-                {
-                    var early = await firstHandedOver;
-                    if (early.cost != null) _cost?.Record(CheckerModel, early.cost.InputTokens, early.cost.OutputTokens);
-                    firstHeard = early.heard;
-                    // What the first sentence's own check found is not thrown away
-                    // when the whole reply's check misses it.
-                    if (!early.heard && early.found.Count > 0 && !(early.found.Count == 1 && early.found[0] == "(unchecked)"))
-                        firstFlagged = early.found;
-                }
-            }
-            catch (Exception)
-            {
-                _transcript.Remove(mine);
-                throw;
-            }
+            var reply = d1.Response != null ? ValidateReply(d1.Response.Text) : null;
+            bool firstHeard = d1.Heard;
+            string firstSentence = d1.First;
+            IReadOnlyList<string> firstFlagged = d1.FirstFlagged;
 
             // ONLY WHAT THE SIMULATION KNOWS (ClaimCheck.cs): checked BEFORE the
             // reply is said, kept in the transcript or remembered, so a claim
@@ -548,10 +620,17 @@ namespace Ledger.Core
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
+                Drafted d2 = null;
                 try
                 {
-                    var invented = await InventedAsync(known, reply, ct);
-                    if (firstFlagged != null && invented.Count == 0) invented = firstFlagged;
+                    // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,
+                    // 28 September): the draft is abandoned there, its rest
+                    // stopped and never checked, and the second draft asked for
+                    // at once. Measured on the claim bench, a failed first
+                    // sentence kept the player waiting a whole reply, its whole
+                    // check, a second draft and its check: the slowest tenth of
+                    // turns heard their first word after about 8 s.
+                    var invented = firstFlagged ?? await InventedAsync(known, reply, ct);
                     LastInvented = invented;
                     if (invented.Count > 0 && firstHeard)
                     {
@@ -562,11 +641,22 @@ namespace Ledger.Core
                     {
                         var second = new LlmRequest { Model = Model, System = system + ClaimCheck.SecondDraftNote(invented) + "\n", MaxTokens = 300 };
                         second.Messages.AddRange(_transcript);
-                        var r2 = await _llm.CompleteAsync(second, ct);
-                        _cost?.Record(Model, r2.InputTokens, r2.OutputTokens);
-                        var redrafted = ValidateReply(r2.Text);
-                        var again = await InventedAsync(known, redrafted, ct);
-                        reply = again.Count == 0 && !ClaimCheck.Repeats(redrafted, invented) ? redrafted : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                        // The second draft is streamed the same way, its first
+                        // sentence handed over as soon as it passes and repeats
+                        // nothing the first draft was caught claiming.
+                        d2 = new Drafted();
+                        await DraftAsync(d2, second, streaming, knownEarly, onFirstChecked, invented, ct);
+                        if (d2.FirstFlagged != null)
+                        {
+                            reply = ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                        }
+                        else
+                        {
+                            var redrafted = ValidateReply(d2.Response.Text);
+                            var again = await InventedAsync(known, redrafted, ct);
+                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, invented);
+                            reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
+                        }
                     }
                     // ABANDONED WHILE CHECKING: a caller that has given up on the
                     // turn must not find it kept afterwards (the independent check,
@@ -585,8 +675,10 @@ namespace Ledger.Core
                     LastUnchecked = false;
                     // What the player already heard is kept, and only that
                     // (the independent check: a turn abandoned after its first
-                    // sentence was heard left the character remembering nothing).
-                    if (firstHeard) RememberSaid(playerInput, firstSentence, now);
+                    // sentence was heard left the character remembering nothing),
+                    // from whichever draft it was.
+                    var heard = firstHeard ? firstSentence : d2 != null && await d2.HeardAsync() ? d2.First : null;
+                    if (heard != null) RememberSaid(playerInput, heard, now);
                     throw;
                 }
             }
