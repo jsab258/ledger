@@ -87,6 +87,11 @@ namespace Ledger.Core
             return found;
         }
 
+        /// The prompt's rule, in the content rule's shape (ConversationEngine;
+        /// here, beside the list, so the era's words live in the one file the
+        /// canon gate knows names them in order to refuse them).
+        public const string PromptRule = "- Your world has its own makes, brands, shops, clubs, papers and programmes, and none of them is a real one: never name a real make of car, cigarette, drink or food, a shop, a football club, a newspaper, a television or radio programme or channel, a band or singer, or any real public figure. Say it the way people do without the name: \"an old estate\", \"my usual\", \"the match\", \"the telly\", \"the paper\". It is 1990: nobody has a mobile phone, the internet or email; there is the phone box, a letter, the paper.";
+
         /// The note that asks for a second draft without them.
         public static string SecondDraftNote(IReadOnlyList<string> named) =>
             "- Your first answer named \"" + string.Join("\"; \"", named) + "\". Nothing in your world is called that: no real make, brand, shop, " +

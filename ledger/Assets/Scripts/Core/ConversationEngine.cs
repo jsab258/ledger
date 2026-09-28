@@ -314,7 +314,7 @@ namespace Ledger.Core
             // REAL NAMES AND LATER THINGS (town list 6ao): canon's brands rule, in
             // the rule's own shape, and RealWorld behind it.
             if (RealWorldRule)
-                sb.AppendLine("- Your world has its own makes, brands, shops, clubs, papers and programmes, and none of them is a real one: never name a real make of car, cigarette, drink or food, a shop, a football club, a newspaper, a television or radio programme or channel, a band or singer, or any real public figure. Say it the way people do without the name: \"an old estate\", \"my usual\", \"the match\", \"the telly\", \"the paper\". It is 1990: nobody has a mobile phone, the internet or email; there is the phone box, a letter, the paper.");
+                sb.AppendLine(RealWorld.PromptRule);
             sb.AppendLine("- Never promise to do anything later: to meet him somewhere, keep watch or an eye out, lend or give him anything, ask around or pass word on, or come round. Nothing in your world would make it happen. If he asks, put him off in your own way.");
             sb.AppendLine($"- When you have had enough of this conversation (you are busy, you are done with them, or they have insulted you), say so in your own words and end your reply with {DoneMark}; that ends the conversation. Never write {DoneMark} otherwise.");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
