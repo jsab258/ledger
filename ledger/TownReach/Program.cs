@@ -56,7 +56,7 @@ static class Program
         var cast = CastDay.Parse(File.ReadAllText(castPath));
         var people = cast.People;
         string metArg = Arg(args, "--meridian", null);
-        if (metArg != null) return Meridian(cast, metArg.Split(','));
+        if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv));
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv));
 
         Console.WriteLine($"townReach cast={Path.GetFileName(castPath)} people={people.Count} ties={cast.Ties.Count} " +
@@ -212,11 +212,15 @@ static class Program
     /// them says it to his face. Only those he met can tell it is him; everyone
     /// else is a stranger to him, as canon has it. He passes everybody out on the
     /// street once an hour, as in the rest of this tool: generous.
-    static int Meridian(CastDay cast, string[] met)
+    static int Meridian(CastDay cast, string[] met, double rate)
     {
         var people = cast.People;
         var metSet = new HashSet<string>(met.Select(m => m.Trim()).Where(m => m.Length > 0));
-        Console.WriteLine($"meridian met={string.Join(",", metSet)} of {people.Count}; night one, play from 09:00, counted to minute 30 (hour 60)");
+        // THE CLOCK (town list 6x): game minutes a real second. At 2 a game hour
+        // is half a real minute and minute thirty is game hour 60; at 1, hour 30.
+        int lastHour = (int)Math.Round(30 * rate);
+        double MinuteOf(int gameHour) => gameHour / rate;
+        Console.WriteLine($"meridian met={string.Join(",", metSet)} of {people.Count}; night one, play from 09:00, counted to minute 30 (hour {lastHour}) at {rate.ToString(Inv)} game minutes a real second");
         foreach (double firstSight in new[] { 0.6, 1.0 })
         {
             int runs = 0, shown = 0, faced = 0;
@@ -241,7 +245,7 @@ static class Program
                         "the new owner was about the yard after midnight", sensitive: true, start, confidence: firstSight);
                     var remarks = new RemarkLedger();
                     bool wasShown = false, wasFaced = false, wasHeld = false;
-                    for (int playHour = sightHour; playHour < 60; playHour++)
+                    for (int playHour = sightHour; playHour < lastHour; playHour++)
                     {
                         int abs = 9 + playHour, day = abs / 24, hourOfDay = abs % 24;
                         for (int minute = 0; minute < 60; minute += 6)
@@ -274,8 +278,8 @@ static class Program
             }
             firstShown.Sort();
             firstHeld.Sort();
-            Console.WriteLine($"  someone he met first holds it (before it can show), minutes: {string.Join(" ", firstHeld.Select(h => (h * 0.5).ToString("0", Inv)))}");
-            string when = firstShown.Count > 0 ? $"; when it shows, median minute {firstShown[firstShown.Count / 2] * 0.5:0} (all: {string.Join(" ", firstShown.Select(h => (h * 0.5).ToString("0", Inv)))})" : "";
+            Console.WriteLine($"  someone he met first holds it (before it can show), minutes: {string.Join(" ", firstHeld.Select(h => MinuteOf(h).ToString("0", Inv)))}");
+            string when = firstShown.Count > 0 ? $"; when it shows, median minute {MinuteOf(firstShown[firstShown.Count / 2]):0} (all: {string.Join(" ", firstShown.Select(h => MinuteOf(h).ToString("0", Inv)))})" : "";
             Console.WriteLine($"FIRST SIGHT {firstSight.ToString("0.00", Inv)}: runs={runs} (each of the cast out on the street at each hour of night one)");
             Console.WriteLine($"  by minute 30, someone he met shows it: {shown}/{runs} ({shown * 100.0 / Math.Max(1, runs):0}%); says it to his face: {faced}/{runs} ({faced * 100.0 / Math.Max(1, runs):0}%){when}");
         }
