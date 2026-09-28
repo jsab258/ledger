@@ -5634,6 +5634,88 @@ namespace Ledger.CoreTests
                       "asked straight out twice with no answer, they stop asking (and a reload keeps count); a caught lie is put to him; an answer is never asked for again");
             }
 
+            // OWNING UP, AND "KEEP IT TO YOURSELF" (town list 6al): read narrowly,
+            // decided by the Core, told to the character, kept across a reload; a
+            // promise of silence they will not keep is asked again without.
+            {
+                string wrongS = null;
+                foreach (var line in new[] { "Yeah, it was me.", "All right. I did it.", "I put the window in, so what.", "Guilty as charged.", "Aye, that was me.",
+                                             "Yeah, I did it, so what?", "It was me, alright?", "It was me that broke it.", "It was me what done it.", "I did it and I'm not sorry.", "It was me, not Darren.", "It was me, I'll pay for it." })
+                    if (!Silence.OwnsUp(line)) wrongS = "missed: " + line;
+                foreach (var line in new[] { "It wasn't me.", "Was it me?", "If it was me you'd know.", "Rita says it was me.", "It was me who told you about the van.", "I never did it.", "It was me? Don't be daft.", "They think it was me.", "Nothing to do with me.",
+                                             "You're looking at me like it was me.", "That was me you saw at the rank, I was working.", "It was me mum on the phone.", "I feel guilty about Mickey.", "You look guilty.",
+                                             "I own up to nothing.", "I admit it looks bad.", "I did that run to the docks last night.", "I broke it to her gently.", "Guilty.", "Yeah, it was me. Not.", "It was me, only joking.",
+                                             "Yeah right, it was me.", "Yeah, right, it was me.", "So it was me, eh? Prove it.", "So it was me, right? That's what you reckon?", "It was me, not likely.", "It was me, not really.", "It was me, not a chance." })
+                    if (Silence.OwnsUp(line)) wrongS = "read as owning up: " + line;
+                foreach (var line in new[] { "Keep it to yourself.", "Can you keep this quiet?", "Don't tell anyone.", "Not a word to Rita, eh?", "Keep schtum, Darren.", "This stays between us.",
+                                             "You won't tell anyone, will you?", "Can you keep a secret?", "Don't breathe a word.", "Say nothing, eh.", "Don't tell the police.", "Keep quiet about it.", "Don't go telling anyone.", "I'd rather you kept it to yourself." })
+                    if (!Silence.AsksQuiet(line)) wrongS = "missed: " + line;
+                foreach (var line in new[] { "Keep it to yourself or else.", "Here's a tenner, keep it quiet.", "Don't tell me that.", "Don't mention it.", "Did you keep it to yourself?", "Rita told me to keep it quiet.", "Morning.",
+                                             "Not a word of a lie, I was at home.", "There's not a word of truth in it.", "Between you and me, I think Darren did it.", "I'll say nothing without a solicitor.",
+                                             "Why couldn't you keep it to yourself?", "Keep it quiet or you're next.", "Keep it to yourself if you want to keep your teeth.", "Keep it quiet and I'll see you right.",
+                                             "Not a word to say for yourself, Ron?", "There's not a word to say.", "Don't say anything, just listen.", "Keep it quiet in here, I've a headache.",
+                                             "Keep it quiet unless you want trouble.", "Keep it quiet and nobody gets hurt.", "Keep it to yourself and I'll make it up to you.",
+                                             "You won't tell anyone where you were, will you?", "Mickey always said keep it to yourself." })
+                    if (Silence.AsksQuiet(line)) wrongS = "read as asking: " + line;
+                Check(wrongS == null, "owning up and asking for silence are read only from plain lines, never a denial, a supposition, money, a threat or somebody else's words", wrongS ?? "");
+                Check(Silence.Agrees(KeepsQuietFor.Owner, false, false) && !Silence.Agrees(KeepsQuietFor.Owner, true, true)
+                      && Silence.Agrees(KeepsQuietFor.Friend, true, false) && !Silence.Agrees(KeepsQuietFor.Friend, false, false)
+                      && Silence.Agrees(KeepsQuietFor.Anyone, false, false) && !Silence.Agrees(KeepsQuietFor.Nobody, true, false)
+                      && Silence.Fragile(KeepsQuietFor.Anyone) && !Silence.Fragile(KeepsQuietFor.Owner),
+                      "Mickey's people keep it quiet for the owner, a friend on first-name terms, anybody who says yes to anybody (fragile); nobody a grave deed");
+                var hookQ = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                Check(hookQ.QuietStance("rocco") == KeepsQuietFor.Owner && hookQ.QuietStance("lena") == KeepsQuietFor.Owner
+                      && hookQ.QuietStance("sam") == KeepsQuietFor.Anyone && hookQ.QuietStance("zlata") == KeepsQuietFor.Friend,
+                      "who keeps things quiet for whom, from the cast file, a friend by default");
+
+                var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                q.Suspicion.Raise(0.6, "I saw him near the window");
+                q.CurrentDeed = "player.window_d1";
+                bool owned = q.HeardOwnUp("player.window_d1", new GameTime(2, 10, 0)) && !q.HeardOwnUp("player.window_d1", new GameTime(2, 10, 1));
+                bool refused = q.HeardAskQuiet("player.window_d1", false, new GameTime(2, 10, 2)) && !q.HeardAskQuiet("player.window_d1", true, new GameTime(2, 10, 3));
+                string qp = q.BuildSystemPrompt("Keep it quiet.", new GameTime(2, 10, 4), "");
+                var qBack = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                qBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(q.CaptureTalk()))));
+                Check(owned && refused && qp.Contains("He has owned up to it") && qp.Contains("and you will not. Whatever you tell him, never say you will")
+                      && !qp.Contains("ask them straight out") && q.Memory.Events.Exists(e => e.Text == "He told me himself that it was him.")
+                      && qBack.OwnedUp.Contains("player.window_d1") && qBack.KeepsQuiet.TryGetValue("player.window_d1", out var kept) && !kept,
+                      "owning up and a refusal to keep quiet are remembered once, told to them, never asked again, and kept across a reload");
+                string wrongP = null;
+                foreach (var line in new[] { "Not a word, boss.", "I'll keep it to myself.", "I won't tell a soul.", "You won't hear it from me, Tom.", "I'll not tell a soul.",
+                                             "I'll keep my mouth shut.", "I'll say nothing.", "It stays between us.", "It goes no further.",
+                                             "I won't say anything.", "I won't let on.", "I'll not say owt.", "Nobody'll hear it from me.",
+                                             "I'll keep it to meself.", "I'll say nowt.", "It won't go any further.", "Nobody'll know from me." })
+                    if (Promises.FindSilence(line).Count == 0) wrongP = "missed: " + line;
+                foreach (var line in new[] { "Morning, boss.", "I'll keep it in mind.", "I won't tell you again.", "Not a word of a lie.",
+                                             "I'd keep that quiet if I were you, Tom.", "Keep it quiet, Tom, the police are sniffing about.", "You'd best keep quiet about it.",
+                                             "Keep mum, love.", "Coppers won't tell anyone owt.", "He'll keep it quiet.", "I'll say nothing against Mickey." })
+                    if (Promises.FindSilence(line).Count > 0) wrongP = "read as a promise of silence: " + line;
+                if (Promises.FindSilence("Not a word.", false).Count > 0 || !Silence.SpeaksOfTelling("You won't tell anyone?") || Silence.SpeaksOfTelling("Did Mickey say anything about the van?"))
+                    wrongP = "a bare \"not a word\" is a promise only when he spoke of telling";
+                var noAsk = new ConversationEngine(new FakeLlm { NextReply = "Not a word, Tom." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                noAsk.CurrentDeed = "player.window_d1";
+                var yesAsk = new ConversationEngine(new FakeLlm { NextReply = "Not a word, Tom." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                yesAsk.CurrentDeed = "player.window_d1";
+                yesAsk.HeardAskQuiet("player.window_d1", true, new GameTime(2, 10, 0));
+                var pi = typeof(ConversationEngine).GetMethod("PromisesIn", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                bool flaggedNoAsk = ((List<string>)pi.Invoke(noAsk, new object[] { "I won't tell a soul, Tom." })).Count == 1;
+                bool flaggedYes = ((List<string>)pi.Invoke(yesAsk, new object[] { "I won't tell a soul, Tom." })).Count == 0;
+                var owns = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                owns.CurrentDeed = "player.window_d1";
+                owns.HeardOwnUp("player.window_d1", new GameTime(2, 10, 0));
+                var refusedQ = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                refusedQ.CurrentDeed = "player.window_d1";
+                refusedQ.HeardAskQuiet("player.window_d1", false, new GameTime(2, 10, 0));
+                bool bareAfterOwning = ((List<string>)pi.Invoke(owns, new object[] { "Mum's the word, Tom." })).Count == 1;
+                bool bareAfterRefusal = ((List<string>)pi.Invoke(refusedQ, new object[] { "Not a word, then." })).Count == 1;
+                Check(wrongP == null && flaggedNoAsk && flaggedYes && bareAfterOwning && bareAfterRefusal,
+                      "a promise of silence stands only where the Core had them agree; a bare one is read after he owned up or they refused", wrongP ?? "");
+                Check(Promises.FindSilence("Not a word, boss.").Count == 1
+                      && Promises.SecondDraftNote(new[] { "Not a word" }).Contains("you will not keep this quiet for him")
+                      && !Promises.SecondDraftNote(new[] { "I'll meet you" }).Contains("quiet"),
+                      "a promise of silence is found, and its second draft says they will not keep it");
+            }
+
             // THE CONVERSATION SURVIVES A SAVE AND A RELOAD (town list 6r): through
             // the save's own JSON into a fresh engine, the same talk, memory,
             // knowledge and suspicion; and the model sees what was said before.

@@ -280,6 +280,7 @@
  "people": [
   {
    "id": "rocco",
+   "keepsQuiet": "owner",
    "called": "Ron Kirby, who keeps Mickey's door and the rank",
    "name": "Ron Kirby",
    "role": "Ron Kirby: Mickey's door and rank (canon)",
@@ -344,6 +345,7 @@
   },
   {
    "id": "lena",
+   "keepsQuiet": "owner",
    "called": "Sheila Dunn, Mickey's bookkeeper",
    "name": "Sheila Dunn",
    "role": "Sheila Dunn: Mickey's bookkeeper (canon)",
@@ -595,6 +597,7 @@
   },
   {
    "id": "sam",
+   "keepsQuiet": "anyone",
    "called": "Darren Milner, the street hustler, always on his rounds",
    "name": "Darren Milner",
    "role": "Darren Milner: the street hustler, on his rounds (canon)",

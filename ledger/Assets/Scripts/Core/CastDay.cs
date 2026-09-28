@@ -27,8 +27,9 @@ namespace Ledger.Core
     /// weekday ("mon" to "sun"), each a routine that replaces the daily one on
     /// that day; optionally "name", what the street calls them when canon or
     /// the street gives them one, "called", how another local speaks of them
-    /// ("the dispatcher at the cab office"), and "role", a note of what they
-    /// do; and "ties", each [a, b, strength] with anything after the
+    /// ("the dispatcher at the cab office"), "role", a note of what they do,
+    /// and "keepsQuiet", for whom they keep a thing quiet when asked ("owner",
+    /// "anyone", "nobody", else a friend: Silence); and "ties", each [a, b, strength] with anything after the
     /// strength (a note of where they meet) ignored. A place a routine names
     /// that "places" does not define is refused, so a typo cannot quietly
     /// send somebody off the street.
@@ -52,6 +53,7 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _name = new Dictionary<string, string>();
         readonly Dictionary<string, string> _role = new Dictionary<string, string>();
         readonly Dictionary<string, string> _called = new Dictionary<string, string>();
+        readonly Dictionary<string, KeepsQuietFor> _quiet = new Dictionary<string, KeepsQuietFor>();
         readonly List<(string a, string b, double w)> _ties = new List<(string, string, double)>();
 
         public IReadOnlyList<string> People => _people;
@@ -104,6 +106,7 @@ namespace Ledger.Core
                 if (MiniJson.GetString(p, "name") is string nm && nm.Trim().Length > 0) c._name[id] = nm.Trim();
                 if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
                 if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
+                if (MiniJson.GetString(p, "keepsQuiet") is string kq) c._quiet[id] = Silence.Parse(kq.Trim());
                 c._daily[id] = c.ReadRoutine(id, MiniJson.GetList(p, "routine"));
                 if (p.ContainsKey("days") && !(p["days"] is Dictionary<string, object>))
                     throw new FormatException($"cast file: {id}'s days must be an object keyed mon to sun");
@@ -268,6 +271,10 @@ namespace Ledger.Core
             if (colon >= 0 && NameOf(id) != null) r = r.Substring(colon + 1);
             return System.Text.RegularExpressions.Regex.Replace(r, @"\s+", " ").Trim(' ', ',', ';');
         }
+
+        /// For whom somebody keeps a thing quiet when asked (town list 6al): the
+        /// file's "keepsQuiet", else a friend.
+        public KeepsQuietFor QuietStance(string id) => id != null && _quiet.TryGetValue(id, out var q) ? q : KeepsQuietFor.Friend;
 
         /// Somebody as another person speaks of them in passing: by name, or as
         /// the street describes them.
