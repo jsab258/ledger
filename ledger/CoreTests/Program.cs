@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -2403,6 +2403,121 @@ namespace Ledger.CoreTests
             Check(rec1.Bank == "recognition/avoids" && rec2.Text != rec1.Text && StreetVoice.Recognition(Holder("rc3", 0.9, true), faintStory, StanceKind.Avoids, 3).Text == rec1.Text,
                 "and so for every band of the recognitions, each its own bank", rec1.Text + " / " + rec2.Text);
 
+            // TWO HOURS WITHOUT REPETITION (town list 6o): what he overhears, the
+            // gossip passing and the neighbours' own talk, from the same ledger.
+            {
+                var nbA = Holder("na", 0.1, true); var nbB = Holder("nb2", 0.1, true);
+                var noon = new GameTime(2, 12, 0);
+                var seedOnly = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 7);
+                var seedAgain = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 7, new RemarkLedger());
+                Check(seedOnly[0].Text == seedAgain[0].Text && seedOnly[1].Text == seedAgain[1].Text
+                      && seedOnly[0].Bank == "ambient/open/ordinary" && seedOnly[1].Bank == "ambient/reply/ordinary",
+                      "neighbours' talk: without the ledger, or with nothing yet heard, the seed chooses as before, and each half names its bank");
+                var amb = new RemarkLedger();
+                var opens = new List<string>(); var replies = new List<string>();
+                for (int k = 0; k < 14; k++)
+                {
+                    var two = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 7, amb);
+                    opens.Add(two[0].Text); replies.Add(two[1].Text);
+                    amb.Heard(two[0]); amb.Heard(two[1]);
+                }
+                var fifteenthTalk = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 7, amb);
+                Check(opens.Distinct().Count() == 14 && replies.Distinct().Count() == 14 && fifteenthTalk[0].Text == opens[0] && fifteenthTalk[1].Text == replies[0],
+                      "with it, the same two on the same seed give fourteen openers and fourteen replies before one comes round, and then the oldest",
+                      $"{opens.Distinct().Count()} {replies.Distinct().Count()}");
+                var night = StreetVoice.Ambient(nbA, nbB, new GameTime(2, 23, 0), 0.5, 1.0, false, false, 7, amb);
+                Check(night[0].Bank == "ambient/open/night" && night[0].Text == StreetVoice.Ambient(nbA, nbB, new GameTime(2, 23, 0), 0.5, 1.0, false, false, 7)[0].Text,
+                      "each band is its own bank: the day's talk heard does not move the night's on");
+                var told = new Rumor { Content = new Fact("player", "night_walk_d1", "seen"), Summary = "the new owner was about the yard after midnight", Confidence = 0.6, Hops = 1 };
+                var gl = new RemarkLedger();
+                var tells = new List<string>(); var answers = new List<string>();
+                for (int k = 0; k < 14; k++)
+                {
+                    var ex = StreetVoice.Exchange(told, nbA, nbB, 11, gl);
+                    tells.Add(ex[0].Text); answers.Add(ex[1].Text);
+                    gl.Heard(ex[0]); gl.Heard(ex[1]);
+                }
+                var exSeed = StreetVoice.Exchange(told, nbA, nbB, 11);
+                Check(exSeed[0].Bank == "exchange/tell/secondhand" && exSeed[1].Bank == "exchange/answer/" + (nbB.Nerve > 0.65 ? "nervous" : nbB.Loyalty > 0.65 ? "loyal" : nbB.Greed > 0.65 ? "greedy" : "neutral")
+                      && tells[0] == exSeed[0].Text && answers[0] == exSeed[1].Text
+                      && tells.Distinct().Count() == 14 && answers.Distinct().Count() == 14,
+                      "overheard gossip: the same story told fourteen times in his hearing is told fourteen ways and answered fourteen ways",
+                      $"{exSeed[0].Bank} {exSeed[1].Bank} {tells.Distinct().Count()} {answers.Distinct().Count()}");
+
+                // Three stories told in his hearing, one ledger: three wordings, not
+                // one wording fresh again for each new story (the independent check).
+                var byWording = new RemarkLedger();
+                var openings = new List<string>();
+                foreach (var summary in new[] { "the new owner was about the yard late at night", "somebody put the pawn shop window in", "the van on the quay was never Mickey's" })
+                {
+                    var story = new Rumor { Content = new Fact("player", "s" + openings.Count, "x"), Summary = summary, Confidence = 0.6, Hops = 1 };
+                    var ex = StreetVoice.Exchange(story, nbA, nbB, 45, byWording);
+                    openings.Add(ex[0].Text.Replace(summary, "").Replace(char.ToUpperInvariant(summary[0]) + summary.Substring(1), ""));
+                    byWording.Heard(ex[0]); byWording.Heard(ex[1]);
+                }
+                Check(openings.Distinct().Count() == 3, "three stories heard told: three different wordings", string.Join(" | ", openings));
+                // A line he did not hear leaves the bank where it was: heard, not
+                // heard, then the one not heard comes again.
+                var unheard = new RemarkLedger();
+                var heardTalk = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 9, unheard);
+                unheard.Heard(heardTalk[0]); unheard.Heard(heardTalk[1]);
+                var missedTalk = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 9, unheard);
+                var againTalk = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 9, unheard);
+                var heardEx = StreetVoice.Exchange(told, nbA, nbB, 9, unheard);
+                unheard.Heard(heardEx[0]); unheard.Heard(heardEx[1]);
+                var missedEx = StreetVoice.Exchange(told, nbA, nbB, 9, unheard);
+                var againEx = StreetVoice.Exchange(told, nbA, nbB, 9, unheard);
+                Check(missedTalk[0].Text != heardTalk[0].Text && againTalk[0].Text == missedTalk[0].Text && againTalk[1].Text == missedTalk[1].Text
+                      && missedEx[0].Text != heardEx[0].Text && againEx[0].Text == missedEx[0].Text && againEx[1].Text == missedEx[1].Text,
+                      "talk and gossip he did not hear use up nothing, and what he heard moves the bank on");
+                // The wording is fixed when the telling is made: the story retold
+                // before he hears it does not change what the ledger keeps.
+                var shifting = new Rumor { Content = new Fact("player", "shift", "x"), Summary = "the new owner was at the yard", Confidence = 0.6, Hops = 1 };
+                var ledgerShift = new RemarkLedger();
+                var saidShift = StreetVoice.Exchange(shifting, nbA, nbB, 45, ledgerShift);
+                shifting.Summary = "the new owner was at the yard with a van";
+                ledgerShift.Heard(saidShift[0]);
+                var nextShift = StreetVoice.Exchange(shifting, nbA, nbB, 45, ledgerShift);
+                Check(saidShift[0].Wording != null && StreetVoice.Unfill(nextShift[0].Text, "the new owner was at the yard with a van") != saidShift[0].Wording,
+                      "a story retold between the saying and the hearing does not bring the same wording round", saidShift[0].Wording);
+
+                // THE LEDGER SURVIVES A RELOAD: through the save's own JSON and back,
+                // the same next line and the same remarks already made.
+                var kept = new RemarkLedger();
+                for (int k = 0; k < 9; k++)
+                {
+                    var two = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, kept);
+                    kept.Heard(two[0]); kept.Heard(two[1]);
+                }
+                kept.Record("nb2", told, StanceKind.Comments, heard: true);
+                var reloaded = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(kept.ToJson()))));
+                var nextKept = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, kept);
+                var nextReloaded = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, reloaded);
+                Check(nextKept[0].Text == nextReloaded[0].Text && nextKept[1].Text == nextReloaded[1].Text
+                      && reloaded.HasRemarked("nb2", told) && reloaded.Count == kept.Count,
+                      "after a save and a reload the banks carry on where they were, and a remark made stays made",
+                      nextKept[0].Text + " / " + nextReloaded[0].Text);
+                // Once every line is heard, the oldest comes back: the order survives too.
+                var full = new RemarkLedger();
+                for (int k = 0; k < 16; k++)
+                {
+                    var two = StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, full);
+                    full.Heard(two[0]); full.Heard(two[1]);
+                }
+                var fullBack = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(full.ToJson()))));
+                Check(StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, full)[0].Text
+                      == StreetVoice.Ambient(nbA, nbB, noon, 0.5, 1.0, false, false, 3, fullBack)[0].Text,
+                      "and once a bank has come round, the line heard longest ago is still the one heard longest ago");
+                var damaged = RemarkLedger.FromJson(new Dictionary<string, object>
+                {
+                    { "said", new List<object> { 7, null, "", "x|player.a=b" } },
+                    { "heard", new List<object> { "nope", new List<object> { "ambient/open/ordinary" }, new List<object> { 1, 2 }, new List<object> { "faint", "That's Mickey's nephew, that is." } } },
+                });
+                Check(damaged.Count == 1 && RemarkLedger.FromJson(null).Count == 0 && RemarkLedger.FromJson(new Dictionary<string, object>()).Count == 0
+                      && StreetVoice.FaintRemark(nbA, told, 0, damaged).Text != "That's Mickey's nephew, that is.",
+                      "a damaged or missing ledger in a save is read as far as it can be, and never throws");
+            }
+
             // RegardFor: the whole decision in one call, for somebody he has met
             // (Acquaintance.Known), who can tell it is him; on arrival he is a
             // stranger to everybody (canon), which the gate below covers.
@@ -2592,6 +2707,16 @@ namespace Ledger.CoreTests
                 "a hot street is a loud street");
             Check(StreetVoice.ChatterLevel(0.9, 0) < 0.01, "an empty one is quiet whatever is being said elsewhere");
             Check(StreetVoice.AmbientEverySeconds(0.5, 1) > 1e9, "one person alone does not hold a conversation");
+            // THE WORDS HE CAN MAKE OUT (town list 6o): however hot and crowded, no
+            // oftener than the floor, and at the floor a fourteen-line band with
+            // the ledger never comes back inside BarkGen's ten minutes.
+            double quickest = double.MaxValue;
+            foreach (double heatNow in new[] { 0.0, 0.5, 1.0, 3.0, double.NaN, double.PositiveInfinity, -2.0 })
+                for (int crowd = 2; crowd <= 40; crowd++) quickest = Math.Min(quickest, StreetVoice.AmbientEverySeconds(heatNow, crowd));
+            Check(quickest >= StreetVoice.ClearWordsEverySeconds && StreetVoice.ClearWordsEverySeconds * 14 >= 600,
+                  "the neighbours' words come no oftener than the floor, and fourteen lines at it last ten minutes", quickest.ToString(System.Globalization.CultureInfo.InvariantCulture));
+            Check(StreetVoice.ChatterLevel(1.0, 40) > StreetVoice.ChatterLevel(0.0, 2),
+                  "and the murmur is not capped: a crowded hot street still sounds it");
 
             // ---- BANK DEPTH, and the pairing (BarkGen, 2026-07-28) ----
             //
