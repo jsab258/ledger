@@ -4678,6 +4678,11 @@ namespace Ledger.CoreTests
             Check(fallbacksClean && startsDiffer && ClaimCheck.KnownOnlyFor("rocco", 3) == ClaimCheck.KnownOnlyFor("rocco", 3),
                 "every fallback wording keeps the content rule, where one starts depends on who is speaking, and it is the same every run");
 
+            // THE NOTICE THAT THE TOWN TALKS THROUGH AN AI (town list 6c).
+            Check(ContentRule.SpeechBreaks(AiNotice.Text) == null && AiNotice.Text.Contains("AI model") && AiNotice.Text.Contains("report")
+                  && AiNotice.ReportThanks("relay") != AiNotice.ReportThanks("local") && AiNotice.ReportThanks("lost").Contains("could not"),
+                "the notice says the town talks through an AI model and how to report a line, within the content rule, and the thanks say where a report went");
+
             // A FIRST SENTENCE THAT FAILS ITS OWN CHECK (town list 6a): that draft
             // is stopped there and the second draft asked for at once, streamed,
             // its own first sentence handed over as soon as it passes.
