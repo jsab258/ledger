@@ -157,7 +157,7 @@ namespace Ledger.Core
             if (!string.IsNullOrEmpty(sceneContext))
             {
                 sb.AppendLine();
-                sb.AppendLine($"Current scene: {sceneContext} It is {now} ({now.Slot}).");
+                sb.AppendLine($"Current scene: {sceneContext} It is {now.ToldAs} ({now.Slot}).");
             }
 
             sb.AppendLine();
@@ -789,7 +789,7 @@ namespace Ledger.Core
             if (streaming != null)
             {
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString(), HowYouKnowHim);
+                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim);
             }
             var d1 = new Drafted();
             try
@@ -820,7 +820,7 @@ namespace Ledger.Core
             if (Checker != null)
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString(), HowYouKnowHim);
+                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim);
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,
