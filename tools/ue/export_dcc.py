@@ -41,6 +41,10 @@ def geometry(unreal, ch, name, out_dir):
     finally:
         if opened:
             sub.remove_object_to_edit(ch)
+    # KEPT IN THE PROJECT too (28 September): the cloth template copies skin
+    # weights from this body (tools/ue/make_cloth_jacket.py), and unsaved the
+    # assets were gone when the editor closed.
+    unreal.EditorAssetLibrary.save_directory(dest, only_if_is_dirty=False, recursive=True)
     os.makedirs(out_dir, exist_ok=True)
     made = []
     for path in unreal.EditorAssetLibrary.list_assets(dest, recursive=True):
@@ -57,7 +61,7 @@ def geometry(unreal, ch, name, out_dir):
         task.set_editor_property("replace_identical", True)
         task.set_editor_property("options", unreal.FbxExportOption())
         ok = unreal.Exporter.run_asset_export_task(task)
-        made.append("%s ok=%s %d bytes" % (dst, ok, os.path.getsize(dst) if os.path.exists(dst) else 0))
+        made.append("%s ok=%s %d bytes (asset %s)" % (dst, ok, os.path.getsize(dst) if os.path.exists(dst) else 0, path))
     return "%s geometry: %s" % (name, "; ".join(made) or "no skeletal meshes made under " + dest)
 
 
