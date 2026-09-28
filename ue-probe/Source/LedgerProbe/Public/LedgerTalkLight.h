@@ -42,12 +42,33 @@ namespace LedgerTalkLight
 		TWeakObjectPtr<USpotLightComponent> Key;
 		TWeakObjectPtr<URectLightComponent> Eyes;
 		TWeakObjectPtr<AActor> Person;
+		double OnAt = 0.0;       // when it was put on this person: it fades in from there
+		int32 SunState = -1;     // last logged: 0 in shade, 1 in sun
 	};
 	inline FRig& Rig() { static FRig R; return R; }
+	// FADED IN over this many seconds (the reviewer who passed it: "if it
+	// switches on instantly, he will visibly pop out of the street").
+	constexpr double FadeInSeconds = 0.8;
 
 	// -TalkKeyCd= and -TalkEyeCd= tune the two lights without a rebuild.
-	inline float KeyCandela() { float V = 6.0f; FParse::Value(FCommandLine::Get(), TEXT("TalkKeyCd="), V); return V; }
-	inline float EyeCandela() { float V = 2.0f; FParse::Value(FCommandLine::Get(), TEXT("TalkEyeCd="), V); return V; }
+	// FROM MEASUREMENT, 28 September, after two tries failed the blind
+	// reviewer (6 cd, then 3 cd): measured in linear light, not screen
+	// values, Ron's face was 0.7 times the brick behind him unlit and 3.9
+	// times at 3 cd, where skin against brick in the same daylight is about
+	// 1.5 to 2. A sweep from 45 degrees up (1.0, 1.4, 1.8 cd) gave 1.35,
+	// 1.61 and 1.85 on my patches of face and wall, which read about 1.3
+	// times lower than the reviewer's; 1.2 cd sits in the band on both
+	// (production/art/lighting/talk-light-2026-09-28/README.md).
+	// Cut a fifth after the third review (1.2 cd measured 2.0 to 2.6 on the
+	// reviewer's patches), and to 0.6 cd after the fourth (1 cd: 2.17 on its
+	// patches, the added light 1.4 times the daylight on the face).
+	inline float KeyCandela() { float V = 0.6f; FParse::Value(FCommandLine::Get(), TEXT("TalkKeyCd="), V); return V; }
+	// A FACE THE SUN ALREADY REACHES is past 2 on its own (Sheila, sunlit:
+	// about 2.3 in linear light unlit): there it gets no key, only the eye light.
+	inline float SunShare() { float V = 0.0f; FParse::Value(FCommandLine::Get(), TEXT("TalkSunShare="), V); return V; }
+	// The eye light's shine on the skin still lifted a sunlit face by a third
+	// at 2 cd (Sheila: 2.17 to 2.92 times the wall with no key): halved.
+	inline float EyeCandela() { float V = 1.0f; FParse::Value(FCommandLine::Get(), TEXT("TalkEyeCd="), V); return V; }
 
 	inline void Channels(AActor* A, bool bLit)
 	{
@@ -56,7 +77,12 @@ namespace LedgerTalkLight
 		A->GetComponents(Parts);
 		for (UPrimitiveComponent* C : Parts)
 		{
-			if (C != nullptr) { C->SetLightingChannels(true, bLit, false); }
+			// NOT THE HAIR (the fourth review, 28 September): shadowed or not,
+			// hair under the key went pale (Ron's moustache 8.5 times brighter
+			// against 2.4 for the skin), so the hair, brows, moustache and
+			// lashes stay in the street's own light only.
+			const bool bHair = C != nullptr && C->GetClass()->GetName() == TEXT("GroomComponent");
+			if (C != nullptr) { C->SetLightingChannels(true, bLit && !bHair, false); }
 		}
 		TArray<ULODSyncComponent*> Syncs;
 		A->GetComponents(Syncs);
@@ -90,6 +116,22 @@ namespace LedgerTalkLight
 		return FVector::CrossProduct(Look, ToSun).Z >= 0.0f ? 1.0f : -1.0f;
 	}
 
+	// Whether the sun reaches the face: nothing between it and the sun but the
+	// person themself (anything within 40 cm of the face is taken as them).
+	inline bool Sunlit(UWorld* World, AActor* Person, const FVector& Face)
+	{
+		ADirectionalLight* Sun = nullptr;
+		for (TActorIterator<ADirectionalLight> It(World); It; ++It)
+		{
+			if (Sun == nullptr || It->GetLightComponent()->Intensity > Sun->GetLightComponent()->Intensity) { Sun = *It; }
+		}
+		if (Sun == nullptr) { return false; }
+		FCollisionQueryParams Q(TEXT("LedgerTalkSun"), false, Person);
+		const FVector Far = Face - Sun->GetActorForwardVector() * 5000.0f;
+		FHitResult Hit;
+		return !(World->LineTraceSingleByChannel(Hit, Face, Far, ECC_Visibility, Q) && FVector::Dist(Hit.ImpactPoint, Face) > 40.0f);
+	}
+
 	inline void Key(UWorld* World, AActor* Person, const FVector& Eye, const FVector& Face)
 	{
 		if (World == nullptr || Person == nullptr) { return; }
@@ -110,24 +152,30 @@ namespace LedgerTalkLight
 			K->SetupAttachment(Root);
 			K->RegisterComponent();
 			K->SetIntensityUnits(ELightUnits::Candelas);
-			K->SetIntensity(KeyCandela());
+			K->SetIntensity(0.0f);           // faded in by the update below
 			K->SetLightColor(FLinearColor(1.0f, 0.96f, 0.9f));
 			K->SetAttenuationRadius(400.0f);
 			K->SetInnerConeAngle(12.0f);
 			K->SetOuterConeAngle(30.0f);
 			K->SetSourceRadius(20.0f);     // soft: a wide source, not a point
 			K->SetSoftSourceRadius(30.0f);
-			K->SetCastShadows(false);
+			// UNSHADOWED: shadows (deep ones for hair) cost 1.99 ms a frame on
+			// this card (budget 0.5; 0.21 without), and the hair they were for
+			// is now off this light's channel (Channels). -TalkShadow turns
+			// them on, to measure.
+			K->SetCastShadows(FParse::Param(FCommandLine::Get(), TEXT("TalkShadow")));
+			K->bCastDeepShadow = K->CastShadows;
 			K->SetIndirectLightingIntensity(0.0f);
 			K->SetVolumetricScatteringIntensity(0.0f);
 			K->SetLightingChannels(false, true, false);
+			K->MarkRenderStateDirty();
 
 			URectLightComponent* E = NewObject<URectLightComponent>(H, TEXT("TalkEyes"));
 			E->SetMobility(EComponentMobility::Movable);
 			E->SetupAttachment(Root);
 			E->RegisterComponent();
 			E->SetIntensityUnits(ELightUnits::Candelas);
-			E->SetIntensity(EyeCandela());
+			E->SetIntensity(0.0f);
 			E->SetSourceWidth(24.0f);
 			E->SetSourceHeight(12.0f);
 			E->SetAttenuationRadius(400.0f);
@@ -142,18 +190,32 @@ namespace LedgerTalkLight
 			R.Key = K;
 			R.Eyes = E;
 			R.Person = Person;
+			R.OnAt = FPlatformTime::Seconds();
 			Channels(Person, true);
 			UE_LOG(LogTemp, Display, TEXT("LedgerTalkLight: on %s, key %.1f cd, eyes %.1f cd"), *Person->GetClass()->GetName(), KeyCandela(), EyeCandela());
 		}
 		// Placed each call, so it follows the camera: the key 1.2 m from the
 		// face, turned 40 degrees off the camera line toward the sun's side and
-		// raised 25 degrees; the eye light just above the camera.
+		// raised 45 degrees (25 flattened the face: the reviewer measured
+		// forehead against chin going from 4.5 to 1 down to 1.2 to 1, where
+		// the street's light from above keeps the chin and neck darker); the
+		// eye light just above the camera.
 		const FVector ToCam = (Eye - Face).GetSafeNormal();
 		const float Side = SunSide(World, Eye, Face);
-		const FVector KeyDir = FRotator(25.0f, 40.0f * Side, 0.0f).RotateVector(FVector(ToCam.X, ToCam.Y, 0.0f).GetSafeNormal());
+		const FVector KeyDir = FRotator(45.0f, 40.0f * Side, 0.0f).RotateVector(FVector(ToCam.X, ToCam.Y, 0.0f).GetSafeNormal());
 		const FVector KeyAt = Face + KeyDir * 120.0f;
 		if (R.Key.IsValid()) { R.Key->SetWorldLocationAndRotation(KeyAt, (Face - KeyAt).Rotation()); }
 		const FVector EyeAt = Eye + FVector(0.0f, 0.0f, 12.0f);
 		if (R.Eyes.IsValid()) { R.Eyes->SetWorldLocationAndRotation(EyeAt, (Face - EyeAt).Rotation()); }
+		const bool bSun = Sunlit(World, Person, Face);
+		const float Fade = (float)FMath::Clamp((FPlatformTime::Seconds() - R.OnAt) / FadeInSeconds, 0.0, 1.0);
+		const float Want = (bSun ? KeyCandela() * SunShare() : KeyCandela()) * Fade;
+		if (R.Key.IsValid() && !FMath::IsNearlyEqual(R.Key->Intensity, Want, 0.001f)) { R.Key->SetIntensity(Want); }
+		if (R.Eyes.IsValid() && !FMath::IsNearlyEqual(R.Eyes->Intensity, EyeCandela() * Fade, 0.001f)) { R.Eyes->SetIntensity(EyeCandela() * Fade); }
+		if (R.SunState != (bSun ? 1 : 0))
+		{
+			R.SunState = bSun ? 1 : 0;
+			UE_LOG(LogTemp, Display, TEXT("LedgerTalkLight: %s, key %.2f cd"), bSun ? TEXT("in sun") : TEXT("in shade"), bSun ? KeyCandela() * SunShare() : KeyCandela());
+		}
 	}
 }

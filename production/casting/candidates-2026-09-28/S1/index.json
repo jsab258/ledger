@@ -1,0 +1,30 @@
+{
+ "sheila-dunn": [
+  {
+   "take": "S1",
+   "front": "sheila-dunn/S1-front.jpg",
+   "profile": "sheila-dunn/S1-profile.jpg",
+   "speak": {
+    "file": "sheila-dunn/S1-speak.jpg",
+    "frames": 94,
+    "cols": 10,
+    "rows": 10,
+    "fps": 15
+   }
+  }
+ ],
+ "darren-milner": [
+  {
+   "take": "S1",
+   "front": "darren-milner/S1-front.jpg",
+   "profile": "darren-milner/S1-profile.jpg",
+   "speak": {
+    "file": "darren-milner/S1-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  }
+ ]
+}

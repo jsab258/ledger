@@ -3,6 +3,7 @@
 
     F:/LedgerTools/pocket-tts/env/Scripts/python.exe tools/voice-live/longer_takes.py vctk OUTDIR
     F:/LedgerTools/parler-tts/env/Scripts/python.exe tools/voice-live/longer_takes.py sheila OUTDIR
+    C:/LedgerTools/chatterbox-nano/env-dml/Scripts/python.exe tools/voice-live/longer_takes.py pick OUTDIR
 
 WHY, 28 September (Jafar's list, item 6: "Pocket TTS again, from longer takes
 of my approved voices, with the accent checked before I hear anything"). On
@@ -22,6 +23,14 @@ reference holds a voice better.
           Three more sentences are made the same way, same description and
           seed, and joined after her approved reference into about 25 to 30
           seconds: OUTDIR/lena.wav.
+          CHECKED FIRST, 28 September: that take read American (1.00) though
+          her reference reads English (0.97): the same seed on other words
+          is not the same voice. So `sheila` now makes each sentence with
+          several seeds into OUTDIR/sheila-cand/, and
+  pick    (run in the chatterbox env, which has the accent classifier) keeps
+          only the candidates that read English whole and in every 2.5 s
+          window (tools/voice-live/accent_check.py), and joins them after her
+          reference: OUTDIR/lena.wav.
 
 Loudness is evened to -20 LUFS. Nothing here is heard by Jafar: the takes only
 teach Pocket; what it says is checked for accent before any page.
@@ -34,6 +43,7 @@ import sys
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 INV = ROOT / "production" / "research" / "voice-alternatives-2026-09-24" / "vctk-inventory.json"
 SPEAKERS = {"rocco": "p227", "sam": "p241"}
+SEEDS = [101, 102, 103, 104, 105]
 SHEILA_MORE = [
     "I kept the ledgers for the whole row of shops, the chandler's and the fish market and the rest, and I never once lost a penny.",
     "You get to know a street when you've walked up it every morning for thirty years, who comes early and who never pays on time.",
@@ -126,22 +136,67 @@ def sheila(out):
     if rsr != sr:
         import librosa
         ref = librosa.resample(ref, orig_sr=rsr, target_sr=sr)
-    pieces = [trim(ref, sr)]
+    cand = out / "sheila-cand"
+    cand.mkdir(exist_ok=True)
+    sf.write(str(cand / "reference.wav"), trim(ref, sr), sr, subtype="PCM_16")
     desc = tok(d["description"], return_tensors="pt").input_ids
     for k, line in enumerate(SHEILA_MORE):
-        torch.manual_seed(d["seed"])
-        gen = model.generate(input_ids=desc, prompt_input_ids=tok(line, return_tensors="pt").input_ids)
-        a = gen.cpu().numpy().squeeze().astype("float32")
-        pieces.append(trim(a, sr))
-        print("sheila take", k + 1, round(len(a) / sr, 1), "s", flush=True)
+        for seed in SEEDS:
+            torch.manual_seed(seed)
+            gen = model.generate(input_ids=desc, prompt_input_ids=tok(line, return_tensors="pt").input_ids)
+            a = gen.cpu().numpy().squeeze().astype("float32")
+            sf.write(str(cand / ("line%d-seed%d.wav" % (k + 1, seed))), trim(a, sr), sr, subtype="PCM_16")
+            print("sheila line", k + 1, "seed", seed, round(len(a) / sr, 1), "s", flush=True)
+    (cand / "made.json").write_text(json.dumps({"description": d["description"], "seeds": SEEDS, "reference": d["reference_file"],
+                                                "lines": SHEILA_MORE}, indent=1), encoding="utf-8")
+
+
+def english_throughout(path):
+    """The accent verdict of a file whole and of every 2.5 s window (1.25 s hop): (all pass, worst American share)."""
+    import os
+    import tempfile
+    import librosa
+    import soundfile as sf
+    sys.path.insert(0, str(ROOT / "tools" / "voice-live"))
+    import accent_check as ac
+    y, sr = librosa.load(path, sr=16000)
+    tmp = os.path.join(tempfile.mkdtemp(), "w.wav")
+    verdicts = [ac.verdict(ac.scores(path))]
+    for s in range(0, max(1, len(y) - int(2.5 * sr) + 1), int(1.25 * sr)):
+        sf.write(tmp, y[s:s + int(2.5 * sr)], sr)
+        verdicts.append(ac.verdict(ac.scores(tmp)))
+    return all(v == "PASS" for v, _, _ in verdicts), max(am for _, _, am in verdicts)
+
+
+def pick(out):
+    import soundfile as sf
+    cand = out / "sheila-cand"
+    ref, sr = sf.read(str(cand / "reference.wav"), dtype="float32")
+    pieces, used, report = [ref], [], {}
+    for k in range(1, len(SHEILA_MORE) + 1):
+        best = None
+        for seed in SEEDS:
+            f = cand / ("line%d-seed%d.wav" % (k, seed))
+            if not f.exists():
+                continue
+            ok, am = english_throughout(str(f))
+            report[f.name] = {"english": ok, "american": round(am, 3)}
+            print(f.name, "english throughout" if ok else "not", "american %.3f" % am, flush=True)
+            if ok and (best is None or am < best[1]):
+                best = (f, am)
+        if best:
+            a, _ = sf.read(str(best[0]), dtype="float32")
+            pieces.append(a)
+            used.append(best[0].name)
     data = even(join(pieces, sr), sr)
     sf.write(str(out / "lena.wav"), data, sr, subtype="PCM_16")
-    (out / "sheila-takes.json").write_text(json.dumps({"description": d["description"], "seed": d["seed"], "reference": d["reference_file"],
-                                                       "lines": SHEILA_MORE, "seconds": round(len(data) / sr, 1)}, indent=1), encoding="utf-8")
-    print("lena", round(len(data) / sr, 1), "s")
+    ok, am = english_throughout(str(out / "lena.wav"))
+    (out / "sheila-takes.json").write_text(json.dumps({"used": used, "candidates": report, "seconds": round(len(data) / sr, 1),
+                                                       "joinedEnglishThroughout": ok, "joinedAmerican": round(am, 3)}, indent=1), encoding="utf-8")
+    print("lena", round(len(data) / sr, 1), "s, used", used, "english throughout" if ok else "NOT english throughout", "american %.3f" % am)
 
 
 if __name__ == "__main__":
     out = pathlib.Path(sys.argv[2])
     out.mkdir(parents=True, exist_ok=True)
-    {"vctk": vctk, "sheila": sheila}[sys.argv[1]](out)
+    {"vctk": vctk, "sheila": sheila, "pick": pick}[sys.argv[1]](out)
