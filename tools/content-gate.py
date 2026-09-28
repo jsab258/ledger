@@ -70,7 +70,8 @@ The rule bars alcohol and gambling AS SUBSTANCE AND AS ACTIVITY. It does not
 bar the building. A gate that refused the word "pub" would be wrong, would be
 routed around within a day, and would be worse than no gate. So:
 
-  ALLOWED, and each of these is a live string in the corpus this gate passes:
+  ALLOWED, and each of these passes this gate (the pub line left the street on
+  28 September, when Mickey's was long a cab office; the place stays allowed):
     pub, pubs            "How's the pub treating you?"
     bar (the fitting)    "New face behind an old bar."
     port                 "Two bolts short on the port side."  (a PORT TOWN)

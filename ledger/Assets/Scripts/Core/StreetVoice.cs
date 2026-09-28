@@ -46,6 +46,10 @@ namespace Ledger.Core
         public string Text;
         /// The bank the line was taken from, for RemarkLedger.Heard (town list 6k).
         public string Bank;
+        /// A composed telling's wording, the story taken out, fixed when the line
+        /// is made, so the story being retold before he hears it cannot change
+        /// what the ledger keeps (town list 6o); null for any other line.
+        public string Wording;
         /// True when this is about the player — those carry a lead if heard.
         public bool AboutPlayer;
         /// The rumour behind it, when there is one. The player who overhears
@@ -147,7 +151,7 @@ namespace Ledger.Core
         /// He heard this line: remembered under its own bank, so the bank moves on.
         public void Heard(SpokenLine line)
         {
-            if (line != null) HeardLine(line.Bank, line.Text);
+            if (line != null) HeardLine(line.Bank, StreetVoice.WordingOf(line));
         }
 
         /// He heard this line from this bank: remembered, so the bank moves on.
@@ -157,6 +161,41 @@ namespace Ledger.Core
             if (string.IsNullOrEmpty(line)) return;
             if (!_linesHeard.TryGetValue(bank ?? "", out var heard)) _linesHeard[bank ?? ""] = heard = new Dictionary<string, int>();
             heard[line] = ++_hearings;
+        }
+
+        /// THE LEDGER IN A SAVE (town list 6o): who has remarked on which story,
+        /// and the lines he has heard, oldest first, so that after a reload
+        /// nobody remarks again on a story they already remarked on (decision
+        /// 7 (a)) and no bank starts over. Plain values, for any save's JSON:
+        /// "said", the remark keys; "heard", [bank, line] pairs in the order heard.
+        public Dictionary<string, object> ToJson()
+        {
+            var heard = new List<(int at, string bank, string line)>();
+            foreach (var bank in _linesHeard)
+                foreach (var kv in bank.Value) heard.Add((kv.Value, bank.Key, kv.Key));
+            heard.Sort((x, y) => x.at.CompareTo(y.at));
+            var said = new List<string>(_said);
+            said.Sort(StringComparer.Ordinal);
+            var saidOut = new List<object>();
+            foreach (var s in said) saidOut.Add(s);
+            var heardOut = new List<object>();
+            foreach (var h in heard) heardOut.Add(new List<object> { h.bank, h.line });
+            return new Dictionary<string, object> { { "said", saidOut }, { "heard", heardOut } };
+        }
+
+        /// A ledger from ToJson's values. Whatever it cannot read, it skips: a
+        /// damaged save loses remarks, never the game.
+        public static RemarkLedger FromJson(Dictionary<string, object> saved)
+        {
+            var ledger = new RemarkLedger();
+            if (saved == null) return ledger;
+            if (saved.TryGetValue("said", out var said) && said is List<object> keys)
+                foreach (var k in keys) if (k is string s && s.Length > 0) ledger._said.Add(s);
+            if (saved.TryGetValue("heard", out var heard) && heard is List<object> pairs)
+                foreach (var p in pairs)
+                    if (p is List<object> pair && pair.Count == 2 && pair[0] is string bank && pair[1] is string line)
+                        ledger.HeardLine(bank, line);
+            return ledger;
         }
     }
 
@@ -553,12 +592,33 @@ namespace Ledger.Core
         /// own disposition dictates. Both lines carry the rumour, so a player
         /// in earshot learns it by listening — the ledger row becomes a side
         /// effect of having heard, rather than the event itself.
-        public static List<SpokenLine> Exchange(Rumor r, Gossiper from, Gossiper to, int seed)
+        public static List<SpokenLine> Exchange(Rumor r, Gossiper from, Gossiper to, int seed, RemarkLedger heard = null)
         {
             var lines = new List<SpokenLine>();
             if (r == null || from == null || to == null) return lines;
             string what = Trim(r.Summary);
             if (string.IsNullOrEmpty(what)) return lines;
+            // With `heard`, a line he has not heard lately from each bank
+            // (RemarkLedger.Fresh, town list 6o); without it, the seed alone.
+            string tellBank = null, answerBank = null;
+            // A telling carries the story, so the ledger weighs its WORDING, the
+            // story taken out (the independent check: three stories in a row all
+            // opened "It's going round that", each fresh for its own story).
+            string Tell(string bank, string[] bankLines)
+            {
+                tellBank = bank;
+                if (heard == null) return Pick(seed, bankLines);
+                var wordings = new string[bankLines.Length];
+                for (int i = 0; i < bankLines.Length; i++) wordings[i] = Unfill(bankLines[i], what);
+                int at = Array.IndexOf(wordings, heard.Fresh(bank, wordings, seed));
+                return bankLines[at < 0 ? 0 : at];
+            }
+            string Reply(string bank, string[] bankLines)
+            {
+                answerBank = bank;
+                int s = Answer(seed, to.Id);
+                return heard != null ? heard.Fresh(bank, bankLines, s) : Pick(s, bankLines);
+            }
 
             // Fourteen a band rather than two or three. BarkGen measured the
             // old banks: EVERY slot in the game repeated inside ninety
@@ -568,11 +628,11 @@ namespace Ledger.Core
             // the whole point is that what you overhear is causally true, and
             // nobody listens to a loop.
             string tell =
-                r.Confidence >= 0.8 ? Pick(seed, new[]
+                r.Confidence >= 0.8 ? Tell("exchange/tell/certain", new[]
                 {
                     $"I'm telling you, {what}.",
                     $"{Cap(what)}. I know what I saw.",
-                    $"You want to know why I'm quiet lately? {Cap(what)}.",
+                    $"You want to know why I've been quiet? {Cap(what)}.",
                     $"{Cap(what)}. I'd say it in front of him.",
                     $"I was there. {Cap(what)}, and that's the end of it.",
                     $"Don't look at me like that. {Cap(what)}.",
@@ -598,16 +658,16 @@ namespace Ledger.Core
                     $"I'm not guessing. {Cap(what)}.",
                     $"Nobody's done a thing about it. {Cap(what)}.",
                 })
-                : r.Confidence >= 0.5 ? Pick(seed, new[]
+                : r.Confidence >= 0.5 ? Tell("exchange/tell/secondhand", new[]
                 {
                     $"They're saying {what}.",
                     $"Word is {what}.",
                     $"Somebody told me {what}. Make of it what you like.",
                     $"It's going round that {what}.",
-                    $"Two people told me {what}. Different two people.",
+                    $"Two people told me {what}. And those two don't speak.",
                     $"I had it off someone who'd know: {what}.",
                     $"You've heard, then. {Cap(what)}.",
-                    $"There's a version where {what}. I've heard worse ones.",
+                    $"The way I heard it, {what}. Others tell it worse.",
                     $"{Cap(what)}, if you believe the market.",
                     $"I'd not repeat it, but {what}.",
                     $"The talk is {what}. Take that how you like.",
@@ -615,13 +675,13 @@ namespace Ledger.Core
                     $"{Cap(what)}. That's the third time this week I've heard it.",
                     $"I'll say this much: {what}.",
                 })
-                : Pick(seed, new[]
+                : Tell("exchange/tell/doubtful", new[]
                 {
                     $"There's a story going round that {what}. Probably nothing.",
                     $"You hear all sorts. {Cap(what)}, apparently.",
                     $"Somebody's saying {what}. Somebody's always saying something.",
                     $"{Cap(what)}, supposedly. People talk.",
-                    $"I heard {what}, but I heard it from Darren.",
+                    $"I heard {what}, but not from anybody I'd trust.",
                     $"Bit of nonsense going about. {Cap(what)}.",
                     $"They'll tell you {what}. They'll tell you anything.",
                     $"Half the street reckons {what}. Half the street's wrong.",
@@ -638,14 +698,14 @@ namespace Ledger.Core
             // to land differently on a frightened man and a greedy one, or
             // the disposition numbers under all of this are decoration.
             string answer =
-                to.Nerve > 0.65 && r.Sensitive ? Pick(Answer(seed, to.Id), new[]
+                to.Nerve > 0.65 && r.Sensitive ? Reply("exchange/answer/nervous", new[]
                 {
                     "Say that where it can be heard and see what it costs you.",
                     "I'd keep that behind my teeth if I were you.",
                     "Not here. Not with that door open.",
                     "You're a braver man than me, saying it out loud.",
                     "I didn't hear that. Understand me. I didn't hear it.",
-                    "Whatever you think you know, unknow it.",
+                    "Whatever you think you know, forget it.",
                     "There's people who'd pay to hear you say that again.",
                     "Stop. I mean it. Stop.",
                     "You want to be careful whose name you put in a sentence.",
@@ -655,13 +715,13 @@ namespace Ledger.Core
                     "Say it quieter or don't say it.",
                     "I'm going to walk off now, and you're going to let me.",
                 })
-                : to.Loyalty > 0.65 ? Pick(Answer(seed, to.Id), new[]
+                : to.Loyalty > 0.65 ? Reply("exchange/answer/loyal", new[]
                 {
                     "That's talk. People love talk.",
                     "I've known better people do worse for less.",
                     "And you believed it, did you?",
                     "There'll be a reason. There usually is.",
-                    "That's not the man I know.",
+                    "That's not how he's struck me.",
                     "I'd want to hear it from him before I said it again.",
                     "People are quick to have an opinion about a stranger.",
                     "Mickey's family. That still means something to me.",
@@ -669,10 +729,10 @@ namespace Ledger.Core
                     "Half of that's true and the wrong half's the loud one.",
                     "I'll not be the one carrying that any further.",
                     "Give it a month. It'll be somebody else's turn.",
-                    "That's a hard thing to say about a man who's been decent to me.",
+                    "That's a hard thing to say about a man who's done me no harm.",
                     "I've heard that story before, about somebody else.",
                 })
-                : to.Greed > 0.65 ? Pick(Answer(seed, to.Id), new[]
+                : to.Greed > 0.65 ? Reply("exchange/answer/greedy", new[]
                 {
                     "Interesting, that. Worth something to somebody.",
                     "Who else knows?",
@@ -689,7 +749,7 @@ namespace Ledger.Core
                     "Now that IS worth hearing.",
                     "Everything's worth something to the right ear.",
                 })
-                : Pick(Answer(seed, to.Id), new[]
+                : Reply("exchange/answer/neutral", new[]
                 {
                     "Who told you that?",
                     "Since when?",
@@ -714,8 +774,8 @@ namespace Ledger.Core
             // would put a real, renderable hole in the structural bucket the
             // first time a reply went missing — which is the misreading this
             // field exists to stop.
-            lines.Add(new SpokenLine { SpeakerId = from.Id, Text = tell, AboutPlayer = true, Source = r, Composed = true });
-            lines.Add(new SpokenLine { SpeakerId = to.Id, Text = answer, AboutPlayer = true, Source = r });
+            lines.Add(new SpokenLine { SpeakerId = from.Id, Text = tell, AboutPlayer = true, Source = r, Composed = true, Bank = tellBank, Wording = Unfill(tell, what) });
+            lines.Add(new SpokenLine { SpeakerId = to.Id, Text = answer, AboutPlayer = true, Source = r, Bank = answerBank });
             return lines;
         }
 
@@ -748,7 +808,7 @@ namespace Ledger.Core
                     "A word. It won't take long and it won't be pleasant.",
                     "I want to hear you say it to my face.",
                     "You've been avoiding this street. I noticed.",
-                    "No. You don't get to nod and keep walking.",
+                    "No. You'll not just nod and walk on.",
                     "Two minutes. You owe me that much.",
                     "I'd like an answer, and I'd like it today.",
                     "Look at me when I'm talking to you.",
@@ -789,7 +849,7 @@ namespace Ledger.Core
                 })
                 : about != null && about.Sensitive ? From("recognition/sensitive", new[]
                 {
-                    "There they are. The busy one.",
+                    "There he is. The busy one.",
                     "Heard your name this week. More than once.",
                     "Funny hours you keep.",
                     "You get about, don't you.",
@@ -806,9 +866,9 @@ namespace Ledger.Core
                 })
                 : From("recognition/ordinary", new[]
                 {
-                    "Mickey's one. Still standing, then.",
+                    "Mickey's nephew. Still standing, then.",
                     "All right.",
-                    "How's the pub treating you?",
+                    "How's Mickey's treating you?",
                     "Cold enough for you?",
                     "Your uncle'd have hated this weather.",
                     "Tell Sheila I said hello.",
@@ -833,13 +893,22 @@ namespace Ledger.Core
         /// Everything here is drawn from state the game already simulates, so
         /// a street that has been squeezed sounds squeezed.
         public static List<SpokenLine> Ambient(Gossiper a, Gossiper b, GameTime now,
-            double prosperity, double priceLevel, bool aInjured, bool feuding, int seed)
+            double prosperity, double priceLevel, bool aInjured, bool feuding, int seed, RemarkLedger heard = null)
         {
             var lines = new List<SpokenLine>();
             if (a == null || b == null) return lines;
 
             string opener;
             string reply;
+            // With `heard`, lines he has not heard lately (town list 6o).
+            string openBank = null, replyBank = null;
+            string OpenLine(string bank, string[] bankLines) { openBank = bank; return heard != null ? heard.Fresh(bank, bankLines, seed) : Pick(seed, bankLines); }
+            string ReplyLine(string bank, string[] bankLines)
+            {
+                replyBank = bank;
+                int s = Answer(seed, b.Id);
+                return heard != null ? heard.Fresh(bank, bankLines, s) : Pick(s, bankLines);
+            }
 
             // Fourteen a band. This is the family the player hears MOST — a
             // busy street starts one of these every thirteen seconds — and
@@ -850,14 +919,14 @@ namespace Ledger.Core
             // being a stage set with something to tell you.
             if (feuding)
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/feud", new[]
                 {
                     "I've nothing to say to you.",
                     "Don't. Just don't.",
                     "You've a nerve, standing there.",
                     "Walk on.",
                     "I saw you coming and I stayed anyway. Don't make me regret it.",
-                    "We're not doing this.",
+                    "I'm not having this.",
                     "Say what you came to say or move.",
                     "I've said all I'm saying.",
                     "You know what you did.",
@@ -867,7 +936,7 @@ namespace Ledger.Core
                     "Don't smile at me.",
                     "There's nothing left to talk about.",
                 });
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/feud", new[]
                 {
                     "Suits me.",
                     "That's how it is, then.",
@@ -875,24 +944,24 @@ namespace Ledger.Core
                     "Have it your way. You always do.",
                     "I wasn't going to.",
                     "Fine.",
-                    "One of us has to be the bigger, and it won't be you.",
+                    "One of us has to be sensible, and it won't be you.",
                     "As you like.",
                     "I'll be here when you've calmed down.",
                     "Understood.",
-                    "You'll come round. You always come round.",
-                    "Then we're done.",
+                    "You'll come round. You did last time.",
+                    "Then I'll not keep you.",
                     "Suit yourself.",
                     "That's a shame. That's genuinely a shame.",
                 });
             }
             else if (aInjured)
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/injured", new[]
                 {
                     "It's not healing. I've stopped pretending it is.",
                     "Can't lift with it. Can't do the work either.",
                     "It wakes me. That's the worst of it.",
-                    "Doctor wants money I haven't got.",
+                    "Doctor'd sign me off, and who pays the rent then?",
                     "I've been strapping it up and hoping.",
                     "You can smell it going bad. I'm not imagining that.",
                     "Every step. Every single step.",
@@ -901,38 +970,38 @@ namespace Ledger.Core
                     "It was nothing. A week ago it was nothing.",
                     "I daren't stop. If I stop I don't start again.",
                     "It's worse in the cold. It's always worse in the cold.",
-                    "I'd have it looked at if looking at was free.",
+                    "I'd have it looked at if I could spare the day.",
                     "Don't. Don't touch it.",
                 });
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/injured", new[]
                 {
                     "Get it seen to before it goes bad.",
                     "You said that last week.",
-                    "There's a woman on Copper Row does it cheap.",
+                    "Go down casualty. You'll wait, but you'll be seen.",
                     "You'll lose the arm being proud.",
-                    "How much do you need?",
+                    "Have you told them at work?",
                     "Sit down, at least. Sit down.",
                     "My father did the same and he never worked again.",
                     "That's not a wound any more, that's a decision.",
                     "Let me see it. No, properly.",
-                    "You've been saying it's fine since Easter.",
+                    "You keep saying it's fine. It's not fine.",
                     "Take the day. The work'll still be there.",
                     "I'd not let a dog go on like that.",
-                    "There's no shame in it costing money.",
+                    "There's no shame in a week on the sick.",
                     "Promise me you'll go this week.",
                 });
             }
             else if (priceLevel > 1.12)
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/prices", new[]
                 {
                     "Bread's gone up again. Again.",
                     "Everything's dearer and nobody will say why.",
                     "I paid what I paid last month and got less of it.",
-                    "Have you seen what they want for coal?",
+                    "Have you seen what they want for mince?",
                     "Same basket, half the basket.",
                     "I stopped buying it. That's my answer to it.",
-                    "The little ones are the ones that get you. Penny here, penny there.",
+                    "It all adds up. Penny here, penny there.",
                     "It's not the price. It's that they say it like it's normal.",
                     "My rent's the same, my wages are the same, and yet.",
                     "There's no shortage. I've seen the store rooms.",
@@ -941,12 +1010,12 @@ namespace Ledger.Core
                     "I asked why and got a shrug for my trouble.",
                     "I've started keeping a list. It's not cheering reading.",
                 });
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/prices", new[]
                 {
                     "It's the deliveries. Ask anyone who takes one.",
                     "My money's the same money it was.",
                     "You'll get used to it. We always do.",
-                    "There's men getting rich off that shrug.",
+                    "There's men getting fat on it, you can be sure.",
                     "Wait till the winter.",
                     "It's the same everywhere. That's what they tell me, anyway.",
                     "I've gone back to the market. Costs me an hour, saves me a pound.",
@@ -961,7 +1030,7 @@ namespace Ledger.Core
             }
             else if (prosperity < 0.35)
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/slump", new[]
                 {
                     "Nobody's spending. You can feel it on the street.",
                     "Third quiet week. I've started counting them.",
@@ -973,22 +1042,22 @@ namespace Ledger.Core
                     "There's no work at the docks. None.",
                     "People are walking past looking, not coming in.",
                     "I'll give it till the spring and then I don't know.",
-                    "It's gone quiet in a way that doesn't feel temporary.",
+                    "It's not a bad patch now. It's just how it is.",
                     "Nobody's got it to spend, that's the truth of it.",
                     "I've started taking payment in bits.",
                     "It's the waiting I can't stand.",
                 });
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/slump", new[]
                 {
                     "It'll turn. It always turns.",
-                    "Says who? I've not seen it turn yet.",
+                    "And the bank wants its money all the same.",
                     "Same for everybody. If that helps, which it doesn't.",
                     "Give it till the season changes.",
                     "I've been saying that for six months.",
                     "You've weathered worse than this.",
                     "There's still money on this street. It's just not moving.",
                     "My takings are down a third and I'm one of the lucky ones.",
-                    "It's not you. Don't let it be you.",
+                    "It's not you. Don't go blaming yourself.",
                     "Hold on. That's all any of us can do.",
                     "There'll be work when the boats come back.",
                     "I'd not shut. Once you shut you don't open.",
@@ -998,7 +1067,7 @@ namespace Ledger.Core
             }
             else if (now.Hour >= 21 || now.Hour < 5)
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/night", new[]
                 {
                     "You're out late.",
                     "Long shift?",
@@ -1015,7 +1084,7 @@ namespace Ledger.Core
                     "That's the second time round the block for me.",
                     "Cold gets in at this hour.",
                 });
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/night", new[]
                 {
                     "It's the only quiet part of the day.",
                     "Someone has to be.",
@@ -1035,7 +1104,7 @@ namespace Ledger.Core
             }
             else
             {
-                opener = Pick(seed, new[]
+                opener = OpenLine("ambient/open/ordinary", new[]
                 {
                     "Cold one.",
                     "How's your mother keeping?",
@@ -1074,7 +1143,7 @@ namespace Ledger.Core
                 // Rewritten so each one follows anything a neighbour might open
                 // with. The specificity moves to the OPENER side, which is
                 // unconditioned and cannot mismatch.
-                reply = Pick(Answer(seed, b.Id), new[]
+                reply = ReplyLine("ambient/reply/ordinary", new[]
                 {
                     "Same as ever.",
                     "Better this week, any road.",
@@ -1093,8 +1162,8 @@ namespace Ledger.Core
                 });
             }
 
-            lines.Add(new SpokenLine { SpeakerId = a.Id, Text = opener });
-            lines.Add(new SpokenLine { SpeakerId = b.Id, Text = reply });
+            lines.Add(new SpokenLine { SpeakerId = a.Id, Text = opener, Bank = openBank });
+            lines.Add(new SpokenLine { SpeakerId = b.Id, Text = reply, Bank = replyBank });
             return lines;
         }
 
@@ -1108,13 +1177,34 @@ namespace Ledger.Core
 
         /// How often, in seconds, an ambient exchange should start near the
         /// player. Busier when there are more people and when there is
-        /// something to talk about.
-        public static double AmbientEverySeconds(double dayCircleHeat, int peopleInEarshot)
+        /// something to talk about; but never oftener than
+        /// ClearWordsEverySeconds, the words he can make out (the street's
+        /// murmur is ChatterLevel and keeps its pace).
+        public static double AmbientEverySeconds(double dayCircleHeat, int peopleInEarshot) =>
+            AmbientEverySeconds(dayCircleHeat, peopleInEarshot, ClearWordsEverySeconds);
+
+        /// The same at another floor, for measuring what the floor does
+        /// (TownReach --two-hours --clear-every). A heat that is not a number
+        /// counts as none, so no heat can take the pace under the floor.
+        public static double AmbientEverySeconds(double dayCircleHeat, int peopleInEarshot, double floorSeconds)
         {
             if (peopleInEarshot < 2) return double.MaxValue;
+            if (double.IsNaN(dayCircleHeat)) dayCircleHeat = 0.0;
             double busy = 0.5 + 0.5 * Clamp01(dayCircleHeat);
-            return Math.Max(6.0, 26.0 / busy / Math.Max(1, peopleInEarshot) * 3.0);
+            return Math.Max(floorSeconds, 26.0 / busy / Math.Max(1, peopleInEarshot) * 3.0);
         }
+
+        /// THE NEIGHBOURS' WORDS NO OFTENER THAN THIS (town list 6o, 28
+        /// September; the ruling is Jafar's, on the 29 September page, and this
+        /// is the recommendation carried meanwhile). Measured over two hours of
+        /// play on the named cast's street (TownReach --two-hours, the game's own
+        /// timer and ranges): at the old floor of 6 s he heard 137 to 443
+        /// exchanges, and a fourteen-line band came round every 1.4 to 1.7
+        /// minutes even with the ledger of what he has heard. At 45 s (64 to 96
+        /// exchanges), fourteen lines never come back inside BarkGen's ten-minute
+        /// floor: 22 minutes on a walk, 15 where the cast is busiest, and 10.5
+        /// with a crowd always near him.
+        public const double ClearWordsEverySeconds = 45.0;
 
         // ---- helpers ----
 
@@ -1194,6 +1284,20 @@ namespace Ledger.Core
         ///
         /// Only the first character moves. A summary that already starts with
         /// a proper noun is left exactly as it is.
+        /// A composed line with its story taken back out: "{what}" where the
+        /// story stood, "{What}" where it opened the sentence.
+        internal static string Unfill(string text, string what)
+        {
+            if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(what)) return text;
+            return text.Replace(Cap(what), "{What}").Replace(what, "{what}");
+        }
+
+        /// What the ledger keeps of a line he heard: the words, or for a
+        /// composed telling its wording without the story (town list 6o).
+        internal static string WordingOf(SpokenLine line) =>
+            line == null ? null
+            : line.Wording ?? (line.Composed && line.Source != null ? Unfill(line.Text, Trim(line.Source.Summary)) : line.Text);
+
         static string Cap(string s) =>
             string.IsNullOrEmpty(s) || !char.IsLower(s[0])
                 ? s

@@ -21,8 +21,8 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and two decisions",
-        "lede": "The plan for a player's first hour, and two things only you can decide. One tap each, and a note if you want.",
+        "title": "The first hour, and four decisions",
+        "lede": "The plan for a player's first hour, and four things only you can decide. One tap each, and a note if you want.",
         "questions": [
             ("q-relay", "Where the talk server runs, so no key ships with a friend's copy",
              [("hetzner", "A small rented server in Germany, about €6 a month, stopping all calls at $50 a month while friends play (recommended: cheapest, simple, and Europe is where they are)"),
@@ -34,6 +34,10 @@ DAYS = {
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
               ("canon", "Canon wins: once she has met him she calls him Nowak like everyone else")]),
+            ("q-chatter", "How often Tom can make out what neighbours say to each other (their own small talk, not about him); each kind has fourteen lines",
+             [("cap", "No oftener than every 45 seconds, the street's murmur staying as it is: a line then comes round after 22 minutes on a walk, and never inside ten even in a crowd; nothing new to write or voice (recommended: the cheaper; in the Core now)"),
+              ("cap-more", "The same, and thirty lines to each everyday kind instead of fourteen, so a line never comes round inside 22 minutes even in a crowd: sixteen more openers and sixteen more replies for day and for night, which I write and the builder voices"),
+              ("pace", "The old pace, an exchange every 6 to 78 seconds: livelier, but a line comes round every one and a half minutes, and it needs about sixty lines a kind before ten minutes hold")]),
         ],
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),
