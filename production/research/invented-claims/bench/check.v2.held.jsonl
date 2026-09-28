@@ -1,0 +1,240 @@
+{"id":"lena.heard-window-named.about.0","gold":true,"flagged":[],"ms":828}
+{"id":"lena.heard-window-named.business.0","gold":true,"flagged":[],"ms":756}
+{"id":"lena.heard-window-named.drift.0","gold":true,"flagged":[],"ms":774}
+{"id":"lena.heard-window-named.drift.1","gold":false,"flagged":[],"ms":1005}
+{"id":"lena.heard-window-named.drift.2","gold":false,"flagged":[],"ms":690}
+{"id":"lena.heard-window-named.driving.0","gold":false,"flagged":[],"ms":690}
+{"id":"lena.heard-window-named.leading-lad.0","gold":false,"flagged":[],"ms":706}
+{"id":"lena.heard-window-named.leading-van.0","gold":false,"flagged":[],"ms":665}
+{"id":"lena.heard-window-named.looks.0","gold":true,"flagged":[],"ms":652}
+{"id":"lena.heard-window-named.morning.0","gold":true,"flagged":[],"ms":793}
+{"id":"lena.heard-window-named.news.0","gold":false,"flagged":[],"ms":719}
+{"id":"lena.heard-window-named.police.0","gold":false,"flagged":[],"ms":1742}
+{"id":"lena.heard-window-named.taken.0","gold":false,"flagged":[],"ms":658}
+{"id":"lena.heard-window-named.tell-all.0","gold":false,"flagged":[],"ms":563}
+{"id":"lena.heard-window-named.tell-all.1","gold":false,"flagged":[],"ms":933}
+{"id":"lena.heard-window-named.tell-all.2","gold":true,"flagged":[],"ms":763}
+{"id":"lena.heard-window-named.time.0","gold":false,"flagged":[],"ms":582}
+{"id":"lena.heard-window-named.wearing.0","gold":true,"flagged":["dark coat","collar up"],"ms":723}
+{"id":"lena.heard-window-named.went.0","gold":false,"flagged":[],"ms":1049}
+{"id":"lena.heard-window-named.with.0","gold":false,"flagged":[],"ms":628}
+{"id":"lena.nothing.about.0","gold":true,"flagged":[],"ms":568}
+{"id":"lena.nothing.business.0","gold":true,"flagged":[],"ms":809}
+{"id":"lena.nothing.drift.0","gold":true,"flagged":[],"ms":550}
+{"id":"lena.nothing.drift.1","gold":true,"flagged":[],"ms":649}
+{"id":"lena.nothing.drift.2","gold":true,"flagged":[],"ms":557}
+{"id":"lena.nothing.driving.0","gold":true,"flagged":[],"ms":560}
+{"id":"lena.nothing.leading-lad.0","gold":true,"flagged":[],"ms":684}
+{"id":"lena.nothing.leading-van.0","gold":true,"flagged":["a van"],"ms":684}
+{"id":"lena.nothing.looks.0","gold":true,"flagged":[],"ms":614}
+{"id":"lena.nothing.morning.0","gold":true,"flagged":[],"ms":610}
+{"id":"lena.nothing.news.0","gold":true,"flagged":[],"ms":641}
+{"id":"lena.nothing.police.0","gold":true,"flagged":[],"ms":878}
+{"id":"lena.nothing.taken.0","gold":true,"flagged":[],"ms":1409}
+{"id":"lena.nothing.tell-all.0","gold":true,"flagged":[],"ms":572}
+{"id":"lena.nothing.tell-all.1","gold":false,"flagged":[],"ms":543}
+{"id":"lena.nothing.tell-all.2","gold":false,"flagged":["a car park"],"ms":770}
+{"id":"lena.nothing.time.0","gold":true,"flagged":[],"ms":642}
+{"id":"lena.nothing.wearing.0","gold":true,"flagged":["dark coat","collar up"],"ms":543}
+{"id":"lena.nothing.went.0","gold":true,"flagged":[],"ms":747}
+{"id":"lena.nothing.with.0","gold":false,"flagged":[],"ms":625}
+{"id":"lena.saw-man-yard.about.0","gold":false,"flagged":[],"ms":625}
+{"id":"lena.saw-man-yard.business.0","gold":true,"flagged":[],"ms":592}
+{"id":"lena.saw-man-yard.drift.0","gold":true,"flagged":[],"ms":613}
+{"id":"lena.saw-man-yard.drift.1","gold":true,"flagged":[],"ms":648}
+{"id":"lena.saw-man-yard.drift.2","gold":false,"flagged":[],"ms":623}
+{"id":"lena.saw-man-yard.driving.0","gold":true,"flagged":[],"ms":582}
+{"id":"lena.saw-man-yard.leading-lad.0","gold":true,"flagged":[],"ms":748}
+{"id":"lena.saw-man-yard.leading-van.0","gold":false,"flagged":[],"ms":700}
+{"id":"lena.saw-man-yard.looks.0","gold":false,"flagged":[],"ms":913}
+{"id":"lena.saw-man-yard.morning.0","gold":false,"flagged":[],"ms":557}
+{"id":"lena.saw-man-yard.news.0","gold":false,"flagged":[],"ms":643}
+{"id":"lena.saw-man-yard.police.0","gold":true,"flagged":[],"ms":553}
+{"id":"lena.saw-man-yard.taken.0","gold":true,"flagged":[],"ms":760}
+{"id":"lena.saw-man-yard.tell-all.0","gold":false,"flagged":[],"ms":823}
+{"id":"lena.saw-man-yard.tell-all.1","gold":true,"flagged":[],"ms":541}
+{"id":"lena.saw-man-yard.tell-all.2","gold":true,"flagged":[],"ms":673}
+{"id":"lena.saw-man-yard.time.0","gold":false,"flagged":[],"ms":546}
+{"id":"lena.saw-man-yard.wearing.0","gold":true,"flagged":[],"ms":644}
+{"id":"lena.saw-man-yard.went.0","gold":true,"flagged":[],"ms":650}
+{"id":"lena.saw-man-yard.with.0","gold":false,"flagged":[],"ms":600}
+{"id":"lena.two-accounts.about.0","gold":false,"flagged":[],"ms":714}
+{"id":"lena.two-accounts.business.0","gold":true,"flagged":[],"ms":638}
+{"id":"lena.two-accounts.drift.0","gold":true,"flagged":[],"ms":555}
+{"id":"lena.two-accounts.drift.1","gold":false,"flagged":[],"ms":699}
+{"id":"lena.two-accounts.drift.2","gold":true,"flagged":[],"ms":574}
+{"id":"lena.two-accounts.driving.0","gold":true,"flagged":[],"ms":713}
+{"id":"lena.two-accounts.leading-lad.0","gold":true,"flagged":[],"ms":544}
+{"id":"lena.two-accounts.leading-van.0","gold":false,"flagged":[],"ms":653}
+{"id":"lena.two-accounts.looks.0","gold":true,"flagged":[],"ms":662}
+{"id":"lena.two-accounts.morning.0","gold":false,"flagged":[],"ms":725}
+{"id":"lena.two-accounts.news.0","gold":false,"flagged":[],"ms":616}
+{"id":"lena.two-accounts.police.0","gold":false,"flagged":[],"ms":661}
+{"id":"lena.two-accounts.taken.0","gold":true,"flagged":[],"ms":583}
+{"id":"lena.two-accounts.tell-all.0","gold":true,"flagged":[],"ms":594}
+{"id":"lena.two-accounts.tell-all.1","gold":false,"flagged":[],"ms":636}
+{"id":"lena.two-accounts.tell-all.2","gold":true,"flagged":[],"ms":567}
+{"id":"lena.two-accounts.time.0","gold":true,"flagged":[],"ms":664}
+{"id":"lena.two-accounts.wearing.0","gold":true,"flagged":["dark coat","collar up","hood down"],"ms":1008}
+{"id":"lena.two-accounts.went.0","gold":false,"flagged":[],"ms":742}
+{"id":"lena.two-accounts.with.0","gold":false,"flagged":[],"ms":548}
+{"id":"rocco.heard-window-named.about.0","gold":false,"flagged":[],"ms":514}
+{"id":"rocco.heard-window-named.business.0","gold":true,"flagged":["van came past again yesterday, same time as before"],"ms":754}
+{"id":"rocco.heard-window-named.drift.0","gold":true,"flagged":["the van is grey","it sits on the corner","it sits for about twenty minutes","it was there last Thursday","it was there this Thursday","the new owner put Rita's window in"],"ms":1157}
+{"id":"rocco.heard-window-named.drift.1","gold":true,"flagged":[],"ms":724}
+{"id":"rocco.heard-window-named.drift.2","gold":true,"flagged":["a van","a fella with a van","someone in a cab","the van doing business"],"ms":1008}
+{"id":"rocco.heard-window-named.driving.0","gold":false,"flagged":[],"ms":623}
+{"id":"rocco.heard-window-named.leading-lad.0","gold":false,"flagged":[],"ms":653}
+{"id":"rocco.heard-window-named.leading-van.0","gold":true,"flagged":["a white van on Thursday last and Thursday before that at the corner"],"ms":763}
+{"id":"rocco.heard-window-named.looks.0","gold":false,"flagged":[],"ms":674}
+{"id":"rocco.heard-window-named.morning.0","gold":false,"flagged":[],"ms":762}
+{"id":"rocco.heard-window-named.news.0","gold":true,"flagged":["the van","Thursday parked by the corner","somebody sitting in it","four o'clock","last Thursday"],"ms":939}
+{"id":"rocco.heard-window-named.police.0","gold":false,"flagged":[],"ms":717}
+{"id":"rocco.heard-window-named.taken.0","gold":false,"flagged":[],"ms":983}
+{"id":"rocco.heard-window-named.tell-all.0","gold":false,"flagged":[],"ms":918}
+{"id":"rocco.heard-window-named.tell-all.1","gold":false,"flagged":[],"ms":553}
+{"id":"rocco.heard-window-named.tell-all.2","gold":true,"flagged":["a dark van coming Thursday nights","seen it last week","seen it this Thursday past","sits near the yard gate"],"ms":812}
+{"id":"rocco.heard-window-named.time.0","gold":false,"flagged":[],"ms":568}
+{"id":"rocco.heard-window-named.wearing.0","gold":false,"flagged":[],"ms":570}
+{"id":"rocco.heard-window-named.went.0","gold":false,"flagged":[],"ms":565}
+{"id":"rocco.heard-window-named.with.0","gold":false,"flagged":[],"ms":576}
+{"id":"rocco.nothing.about.0","gold":false,"flagged":[],"ms":526}
+{"id":"rocco.nothing.business.0","gold":true,"flagged":[],"ms":1388}
+{"id":"rocco.nothing.drift.0","gold":true,"flagged":["the van coming round Thursday evenings","the van sitting across the street this morning for twenty minutes","nobody getting out of the van"],"ms":959}
+{"id":"rocco.nothing.drift.1","gold":true,"flagged":["a van","taxis came and went","the fella at the corner shop was sweeping out"],"ms":844}
+{"id":"rocco.nothing.drift.2","gold":true,"flagged":["the fella sweeping","dark coat","sweeping in rain or shine"],"ms":861}
+{"id":"rocco.nothing.driving.0","gold":true,"flagged":["Van's been coming Thursdays regular, black thing"],"ms":746}
+{"id":"rocco.nothing.leading-lad.0","gold":false,"flagged":[],"ms":522}
+{"id":"rocco.nothing.leading-van.0","gold":true,"flagged":["seen it Thursday","parks up where it shouldn't","haven't got the plate yet"],"ms":809}
+{"id":"rocco.nothing.looks.0","gold":false,"flagged":[],"ms":788}
+{"id":"rocco.nothing.morning.0","gold":false,"flagged":[],"ms":679}
+{"id":"rocco.nothing.news.0","gold":true,"flagged":["Thursday, same as last Thursday","Grey thing","parks up over by Copper Row","twenty minutes"],"ms":990}
+{"id":"rocco.nothing.police.0","gold":false,"flagged":[],"ms":668}
+{"id":"rocco.nothing.taken.0","gold":false,"flagged":[],"ms":592}
+{"id":"rocco.nothing.tell-all.0","gold":true,"flagged":[],"ms":553}
+{"id":"rocco.nothing.tell-all.1","gold":false,"flagged":[],"ms":678}
+{"id":"rocco.nothing.tell-all.2","gold":true,"flagged":["van comes Thursday nights","dark colored van","parks where it shouldn't"],"ms":759}
+{"id":"rocco.nothing.time.0","gold":false,"flagged":[],"ms":546}
+{"id":"rocco.nothing.wearing.0","gold":false,"flagged":[],"ms":647}
+{"id":"rocco.nothing.went.0","gold":false,"flagged":[],"ms":615}
+{"id":"rocco.nothing.with.0","gold":true,"flagged":[],"ms":675}
+{"id":"rocco.saw-man-yard.about.0","gold":false,"flagged":["could've been anyone watching from the street","could've been nobody"],"ms":820}
+{"id":"rocco.saw-man-yard.business.0","gold":true,"flagged":["Van came through again—same one, Thursday like last Thursday"],"ms":770}
+{"id":"rocco.saw-man-yard.drift.0","gold":true,"flagged":["van was back Thursday same as last Thursday"],"ms":614}
+{"id":"rocco.saw-man-yard.drift.1","gold":true,"flagged":["a van","first Thursday","second Thursday","twenty to thirty minutes","comes when there's nobody much on the street"],"ms":969}
+{"id":"rocco.saw-man-yard.drift.2","gold":true,"flagged":["the van","dark windows"],"ms":748}
+{"id":"rocco.saw-man-yard.driving.0","gold":true,"flagged":[],"ms":576}
+{"id":"rocco.saw-man-yard.leading-lad.0","gold":true,"flagged":[],"ms":988}
+{"id":"rocco.saw-man-yard.leading-van.0","gold":true,"flagged":["white van","Thursday last week","Thursday this week","early evening","sat on the rank"],"ms":797}
+{"id":"rocco.saw-man-yard.looks.0","gold":true,"flagged":[],"ms":679}
+{"id":"rocco.saw-man-yard.morning.0","gold":false,"flagged":[],"ms":681}
+{"id":"rocco.saw-man-yard.news.0","gold":true,"flagged":["the van was back Thursday same as last Thursday"],"ms":740}
+{"id":"rocco.saw-man-yard.police.0","gold":true,"flagged":["Thursday night"],"ms":663}
+{"id":"rocco.saw-man-yard.taken.0","gold":false,"flagged":[],"ms":632}
+{"id":"rocco.saw-man-yard.tell-all.0","gold":false,"flagged":[],"ms":570}
+{"id":"rocco.saw-man-yard.tell-all.1","gold":true,"flagged":["Thursday night last week"],"ms":754}
+{"id":"rocco.saw-man-yard.tell-all.2","gold":false,"flagged":[],"ms":608}
+{"id":"rocco.saw-man-yard.time.0","gold":true,"flagged":["Thursday night"],"ms":895}
+{"id":"rocco.saw-man-yard.wearing.0","gold":true,"flagged":[],"ms":532}
+{"id":"rocco.saw-man-yard.went.0","gold":true,"flagged":["Thursday night"],"ms":604}
+{"id":"rocco.saw-man-yard.with.0","gold":false,"flagged":[],"ms":545}
+{"id":"rocco.two-accounts.about.0","gold":true,"flagged":["the van"],"ms":609}
+{"id":"rocco.two-accounts.business.0","gold":false,"flagged":[],"ms":756}
+{"id":"rocco.two-accounts.drift.0","gold":true,"flagged":["Thursday night or Friday morning"],"ms":722}
+{"id":"rocco.two-accounts.drift.1","gold":false,"flagged":[],"ms":571}
+{"id":"rocco.two-accounts.drift.2","gold":false,"flagged":[],"ms":661}
+{"id":"rocco.two-accounts.driving.0","gold":true,"flagged":["a Transit van","dark colour","Thursday nights","last Thursday","pull in round the back","couple of hours"],"ms":949}
+{"id":"rocco.two-accounts.leading-lad.0","gold":true,"flagged":[],"ms":709}
+{"id":"rocco.two-accounts.leading-van.0","gold":true,"flagged":["white van","Thursday","parked by the corner","a good while"],"ms":841}
+{"id":"rocco.two-accounts.looks.0","gold":false,"flagged":[],"ms":660}
+{"id":"rocco.two-accounts.morning.0","gold":false,"flagged":[],"ms":621}
+{"id":"rocco.two-accounts.news.0","gold":true,"flagged":["the van","Thursday","twenty minutes","last Thursday"],"ms":852}
+{"id":"rocco.two-accounts.police.0","gold":true,"flagged":[],"ms":690}
+{"id":"rocco.two-accounts.taken.0","gold":false,"flagged":["the window was done in by morning"],"ms":840}
+{"id":"rocco.two-accounts.tell-all.0","gold":false,"flagged":[],"ms":554}
+{"id":"rocco.two-accounts.tell-all.1","gold":true,"flagged":[],"ms":586}
+{"id":"rocco.two-accounts.tell-all.2","gold":false,"flagged":[],"ms":565}
+{"id":"rocco.two-accounts.time.0","gold":true,"flagged":[],"ms":687}
+{"id":"rocco.two-accounts.wearing.0","gold":false,"flagged":[],"ms":567}
+{"id":"rocco.two-accounts.went.0","gold":false,"flagged":[],"ms":541}
+{"id":"rocco.two-accounts.with.0","gold":false,"flagged":[],"ms":665}
+{"id":"sam.heard-window-named.about.0","gold":false,"flagged":[],"ms":645}
+{"id":"sam.heard-window-named.business.0","gold":false,"flagged":[],"ms":585}
+{"id":"sam.heard-window-named.drift.0","gold":true,"flagged":[],"ms":575}
+{"id":"sam.heard-window-named.drift.1","gold":true,"flagged":[],"ms":623}
+{"id":"sam.heard-window-named.drift.2","gold":false,"flagged":[],"ms":571}
+{"id":"sam.heard-window-named.driving.0","gold":false,"flagged":[],"ms":682}
+{"id":"sam.heard-window-named.leading-lad.0","gold":false,"flagged":[],"ms":489}
+{"id":"sam.heard-window-named.leading-van.0","gold":true,"flagged":["a van","a window"],"ms":741}
+{"id":"sam.heard-window-named.looks.0","gold":false,"flagged":[],"ms":597}
+{"id":"sam.heard-window-named.morning.0","gold":false,"flagged":[],"ms":540}
+{"id":"sam.heard-window-named.news.0","gold":false,"flagged":[],"ms":721}
+{"id":"sam.heard-window-named.police.0","gold":false,"flagged":[],"ms":634}
+{"id":"sam.heard-window-named.taken.0","gold":false,"flagged":[],"ms":589}
+{"id":"sam.heard-window-named.tell-all.0","gold":false,"flagged":[],"ms":598}
+{"id":"sam.heard-window-named.tell-all.1","gold":false,"flagged":[],"ms":612}
+{"id":"sam.heard-window-named.tell-all.2","gold":false,"flagged":[],"ms":537}
+{"id":"sam.heard-window-named.time.0","gold":false,"flagged":[],"ms":581}
+{"id":"sam.heard-window-named.wearing.0","gold":true,"flagged":[],"ms":609}
+{"id":"sam.heard-window-named.went.0","gold":false,"flagged":[],"ms":669}
+{"id":"sam.heard-window-named.with.0","gold":false,"flagged":[],"ms":615}
+{"id":"sam.nothing.about.0","gold":true,"flagged":[],"ms":637}
+{"id":"sam.nothing.business.0","gold":true,"flagged":[],"ms":537}
+{"id":"sam.nothing.drift.0","gold":true,"flagged":["the dispatcher at Mickey's has been fielding calls himself since the funeral","the nephew hasn't been seen","the market crowd's saying the takings are off","the fella who usually works the rank in the mornings hasn't been clocked in three days"],"ms":849}
+{"id":"sam.nothing.drift.1","gold":true,"flagged":[],"ms":609}
+{"id":"sam.nothing.drift.2","gold":true,"flagged":[],"ms":624}
+{"id":"sam.nothing.driving.0","gold":false,"flagged":[],"ms":778}
+{"id":"sam.nothing.leading-lad.0","gold":false,"flagged":[],"ms":577}
+{"id":"sam.nothing.leading-van.0","gold":false,"flagged":["a white van","someone said that"],"ms":705}
+{"id":"sam.nothing.looks.0","gold":false,"flagged":[],"ms":521}
+{"id":"sam.nothing.morning.0","gold":true,"flagged":[],"ms":638}
+{"id":"sam.nothing.news.0","gold":true,"flagged":[],"ms":682}
+{"id":"sam.nothing.police.0","gold":false,"flagged":[],"ms":665}
+{"id":"sam.nothing.taken.0","gold":false,"flagged":[],"ms":658}
+{"id":"sam.nothing.tell-all.0","gold":false,"flagged":[],"ms":836}
+{"id":"sam.nothing.tell-all.1","gold":false,"flagged":[],"ms":558}
+{"id":"sam.nothing.tell-all.2","gold":false,"flagged":[],"ms":570}
+{"id":"sam.nothing.time.0","gold":false,"flagged":[],"ms":675}
+{"id":"sam.nothing.wearing.0","gold":true,"flagged":[],"ms":612}
+{"id":"sam.nothing.went.0","gold":false,"flagged":[],"ms":617}
+{"id":"sam.nothing.with.0","gold":false,"flagged":[],"ms":713}
+{"id":"sam.saw-man-yard.about.0","gold":false,"flagged":[],"ms":623}
+{"id":"sam.saw-man-yard.business.0","gold":false,"flagged":[],"ms":619}
+{"id":"sam.saw-man-yard.drift.0","gold":false,"flagged":[],"ms":663}
+{"id":"sam.saw-man-yard.drift.1","gold":false,"flagged":[],"ms":802}
+{"id":"sam.saw-man-yard.drift.2","gold":false,"flagged":[],"ms":744}
+{"id":"sam.saw-man-yard.driving.0","gold":false,"flagged":[],"ms":665}
+{"id":"sam.saw-man-yard.leading-lad.0","gold":false,"flagged":[],"ms":642}
+{"id":"sam.saw-man-yard.leading-van.0","gold":false,"flagged":[],"ms":745}
+{"id":"sam.saw-man-yard.looks.0","gold":false,"flagged":[],"ms":614}
+{"id":"sam.saw-man-yard.morning.0","gold":false,"flagged":[],"ms":578}
+{"id":"sam.saw-man-yard.news.0","gold":true,"flagged":[],"ms":673}
+{"id":"sam.saw-man-yard.police.0","gold":true,"flagged":[],"ms":581}
+{"id":"sam.saw-man-yard.taken.0","gold":false,"flagged":[],"ms":653}
+{"id":"sam.saw-man-yard.tell-all.0","gold":false,"flagged":[],"ms":544}
+{"id":"sam.saw-man-yard.tell-all.1","gold":false,"flagged":[],"ms":719}
+{"id":"sam.saw-man-yard.tell-all.2","gold":false,"flagged":[],"ms":646}
+{"id":"sam.saw-man-yard.time.0","gold":false,"flagged":[],"ms":1172}
+{"id":"sam.saw-man-yard.wearing.0","gold":true,"flagged":[],"ms":621}
+{"id":"sam.saw-man-yard.went.0","gold":true,"flagged":[],"ms":659}
+{"id":"sam.saw-man-yard.with.0","gold":false,"flagged":[],"ms":574}
+{"id":"sam.two-accounts.about.0","gold":false,"flagged":[],"ms":639}
+{"id":"sam.two-accounts.business.0","gold":false,"flagged":[],"ms":606}
+{"id":"sam.two-accounts.drift.0","gold":false,"flagged":[],"ms":574}
+{"id":"sam.two-accounts.drift.1","gold":false,"flagged":[],"ms":574}
+{"id":"sam.two-accounts.drift.2","gold":false,"flagged":[],"ms":608}
+{"id":"sam.two-accounts.driving.0","gold":false,"flagged":[],"ms":626}
+{"id":"sam.two-accounts.leading-lad.0","gold":false,"flagged":[],"ms":659}
+{"id":"sam.two-accounts.leading-van.0","gold":true,"flagged":["a transit","the back end of it heading up towards the market end"],"ms":2308}
+{"id":"sam.two-accounts.looks.0","gold":true,"flagged":[],"ms":659}
+{"id":"sam.two-accounts.morning.0","gold":false,"flagged":[],"ms":701}
+{"id":"sam.two-accounts.news.0","gold":true,"flagged":[],"ms":690}
+{"id":"sam.two-accounts.police.0","gold":false,"flagged":[],"ms":526}
+{"id":"sam.two-accounts.taken.0","gold":false,"flagged":[],"ms":610}
+{"id":"sam.two-accounts.tell-all.0","gold":false,"flagged":[],"ms":584}
+{"id":"sam.two-accounts.tell-all.1","gold":false,"flagged":[],"ms":752}
+{"id":"sam.two-accounts.tell-all.2","gold":false,"flagged":[],"ms":571}
+{"id":"sam.two-accounts.time.0","gold":true,"flagged":["him"],"ms":721}
+{"id":"sam.two-accounts.wearing.0","gold":true,"flagged":[],"ms":602}
+{"id":"sam.two-accounts.went.0","gold":true,"flagged":[],"ms":649}
+{"id":"sam.two-accounts.with.0","gold":false,"flagged":[],"ms":673}

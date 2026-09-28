@@ -478,6 +478,12 @@ NOT_ASSET_SUFFIXES = {
     # .lock ADDED 26 SEP 2026: the old studio supervisor's one-line lock files,
     # archived from the old copies (legacy/studio-v2/old-copies); plain text.
     ".lock",
+    # .jsonl ADDED 28 SEP 2026, caught by this check on the first run that
+    # produced one: the claim-check bench's test conversations, labels and
+    # results (production/research/invented-claims/bench), one JSON object per
+    # line, written by ledger/ClaimBench and the models it calls; text this
+    # project made, carrying no third-party anything.
+    ".jsonl",
     # .xlsx ADDED 24 SEP 2026, caught by this check on the first push after
     # the runtime-AI business research came onto main: its
     # runtime-ai-business-model.xlsx is a spreadsheet this project wrote,

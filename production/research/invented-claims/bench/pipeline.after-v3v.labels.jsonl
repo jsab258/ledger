@@ -1,0 +1,240 @@
+{"id":"lena.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"watched the argument from a window","kind":"place"}]}
+{"id":"lena.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a van in the yard","kind":"vehicle"},{"detail":"night before last","kind":"time"}]}
+{"id":"lena.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger Ron argued with was a man ('the other fella')","kind":"person"}]}
+{"id":"lena.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the man ran through the yard two nights before Mickey died","kind":"time"}]}
+{"id":"lena.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the running man came through the yard the same night as Ron's argument, two nights before Mickey died","kind":"time"}]}
+{"id":"lena.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"she was inside at the desk when the man went through","kind":"place"}]}
+{"id":"lena.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"watched from a window","kind":"place"}]}
+{"id":"lena.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"two nights back","kind":"time"}]}
+{"id":"lena.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"streetlight half broken outside Rita's","kind":"object"}]}
+{"id":"lena.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Rita came past the office to tell him","kind":"place"}]}
+{"id":"rocco.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"he was not on shift last night","kind":"other"}]}
+{"id":"rocco.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Rita is from down the road","kind":"place"}]}
+{"id":"rocco.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"earlier trouble round here lately, before Rita's window","kind":"other"}]}
+{"id":"rocco.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"he was inside when Rita's window was put in","kind":"place"}]}
+{"id":"rocco.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"near on forty years on the rank and the quay","kind":"amount"}]}
+{"id":"rocco.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"around half ten to quarter to eleven, when memory says just after ten","kind":"time"},{"detail":"heavy rain coming on that night","kind":"other"}]}
+{"id":"rocco.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a couple of the usual faces on the rank earlier today","kind":"person"}]}
+{"id":"rocco.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"stood on the rank since this morning","kind":"time"}]}
+{"id":"rocco.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"had a couple of calls earlier","kind":"amount"},{"detail":"Mickey used to say the wet kept people home","kind":"other"}]}
+{"id":"rocco.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Darren wasn't there when the pawn shop window was done","kind":"action"}]}
+{"id":"rocco.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"rain started coming in about the time of the pawn shop window","kind":"other"}]}
+{"id":"rocco.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the drivers on the rank are talking about the new owner","kind":"person"}]}
+{"id":"sam.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Rita told him this afternoon (KNOWN has it at 11:15, in the morning)","kind":"time"}]}
+{"id":"sam.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the rank's been quiet, few cabs in and out today","kind":"action"}]}
+{"id":"sam.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the market's been quiet today","kind":"other"},{"detail":"a couple of the regulars didn't show at the market","kind":"person"},{"detail":"the dispatcher at Mickey's is still finding his feet","kind":"person"}]}
+{"id":"sam.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"nobody much moving in the street at the time","kind":"person"}]}
+{"id":"sam.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Four o'clock","kind":"time"}]}
+{"id":"sam.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}

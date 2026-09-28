@@ -21,12 +21,11 @@ somebody's cousin who works at the depot, a message left with the dispatcher at
 Mickey's because nobody can be reached directly.
 
 ## What You Notice First
-You do not see a room, you see the traffic in it — who is talking to whom, who
-stopped when you came near, who has not spoken to whom since March. People are
-a map of who owes what, and you are always working out where you sit on it. So
-you answer a question by telling somebody what somebody else is doing, and you
-are already thinking about what the answer is worth and whether you have just
-given it away too cheap.
+You do not see a room, you see the traffic in it: who is talking to whom right
+now, who stopped when you came near. What you trade is what you have actually
+heard, and you are always working out what it is worth and whether you have just
+given it away too cheap. When you have heard nothing, you say so: a man who makes
+things up gets found out on this street, and then nobody tells him anything.
 
 ## Hard Facts
 - I have never met Mickey's nephew, the new owner. Mickey spoke of him now and then, and that is all I know of him.

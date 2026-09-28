@@ -348,7 +348,10 @@ static class Program
                 // the content rule refused stayed in memory unheard).
                 if (!timedOut) engine.CorrectLastSaid(rest.Length > 0 ? earlyFirst + " " + rest : earlyFirst);
             }
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked }, Plain);
+            // FELL BACK: the reply is one of the "that's all I know" wordings,
+            // for the log (how often the check leaves a character nothing to say).
+            bool fellBack = !timedOut && ClaimCheck.IsKnownOnly(reply);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -669,8 +672,12 @@ static class Program
         public bool ThrowBeforeText;
         public StreamFake(string reply) { _reply = reply; }
         static bool IsCheck(LlmRequest r) => r.System != null && r.System.StartsWith("You read one line");
+        static bool IsSecondLook(LlmRequest r) => r.System != null && r.System.StartsWith("You check details");
         public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
         {
+            // the check's second look: nothing it flagged is supported
+            if (IsSecondLook(request))
+                return Task.FromResult(new LlmResponse { Text = "{\"verdicts\":[{\"n\":1,\"supported\":false}]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
             if (IsCheck(request))
             {
                 var line = request.Messages.Count > 0 ? request.Messages[request.Messages.Count - 1].Content : "";
@@ -680,7 +687,7 @@ static class Program
                 int close = said.IndexOf("<<<>>>", StringComparison.Ordinal);
                 if (close >= 0) said = said.Substring(0, close);
                 bool bad = said.Contains("Dennis") || said.Contains("yard");
-                return Task.FromResult(new LlmResponse { Text = bad ? "{\"invented\":[\"who did it\"]}" : "{\"invented\":[]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
+                return Task.FromResult(new LlmResponse { Text = bad ? "{\"specifics\":[{\"detail\":\"who did it\",\"kind\":\"person\",\"source\":\"none\"}]}" : "{\"specifics\":[]}", InputTokens = 300, OutputTokens = 10, Model = request.Model });
             }
             // the first draft is the reply; a second draft says nothing it could invent
             return Task.FromResult(new LlmResponse { Text = _drafts++ == 0 ? _reply : "Can't say I did.", InputTokens = 400, OutputTokens = 10, Model = request.Model });
