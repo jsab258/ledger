@@ -41,6 +41,14 @@ namespace Ledger.Core
         /// sweep): how many replies of this conversation were told to ask him
         /// straight out; after MaxAsks with no straight answer they say what they
         /// make of it instead of asking in every reply for good.
+        /// The real names and later things the last reply's first draft said
+        /// (town list 6ao); empty when none.
+        public List<string> LastRealNames { get; private set; } = new List<string>();
+
+        /// The prompt's rule on real names and later things (town list 6ao); off
+        /// only to measure what it does (ClaimBench smalltalk).
+        public static bool RealWorldRule = true;
+
         public const int MaxAsks = 2;
         int _asksThisTalk;
         bool _promptAsks;
@@ -303,6 +311,10 @@ namespace Ledger.Core
             sb.AppendLine("- In your world nobody drinks alcohol, gambles or bets, and there are no children. Never mention drink, pubs as places to drink, betting, the pools or games of chance, or children, even if the other person does. If they offer you a drink or a bet, turn it to a tea, a smoke or the matter in hand without naming what they offered.");
             sb.AppendLine("- Never invent a place or a business either. Name only places already named in what you have been told here; anywhere else is \"down the road\" or \"over in Copper Row\".");
             sb.AppendLine("- Always speak English, whatever language the other person uses. If they speak another, you do not follow it, and you say so your own way.");
+            // REAL NAMES AND LATER THINGS (town list 6ao): canon's brands rule, in
+            // the rule's own shape, and RealWorld behind it.
+            if (RealWorldRule)
+                sb.AppendLine("- Your world has its own makes, brands, shops, clubs, papers and programmes, and none of them is a real one: never name a real make of car, cigarette, drink or food, a shop, a football club, a newspaper, a television or radio programme or channel, a band or singer, or any real public figure. Say it the way people do without the name: \"an old estate\", \"my usual\", \"the match\", \"the telly\", \"the paper\". It is 1990: nobody has a mobile phone, the internet or email; there is the phone box, a letter, the paper.");
             sb.AppendLine("- Never promise to do anything later: to meet him somewhere, keep watch or an eye out, lend or give him anything, ask around or pass word on, or come round. Nothing in your world would make it happen. If he asks, put him off in your own way.");
             sb.AppendLine($"- When you have had enough of this conversation (you are busy, you are done with them, or they have insulted you), say so in your own words and end your reply with {DoneMark}; that ends the conversation. Never write {DoneMark} otherwise.");
             sb.AppendLine($"- Reply as {Card.Name} would speak, in plain dialogue only: no stage directions, no quotation marks around your whole reply, no XML or bracketed tags.");
@@ -995,7 +1007,7 @@ namespace Ledger.Core
                             // A sentence carrying the ending mark waits for the whole reply,
                             // where the mark is taken out: it is never spoken early. Nor is
                             // a promise, which the whole reply's turn asks again without.
-                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || PromisesIn(said).Count > 0)
+                            if (said.IndexOf(DoneMark, StringComparison.OrdinalIgnoreCase) >= 0 || PromisesIn(said).Count > 0 || RealWorld.Find(said).Count > 0)
                                 return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
@@ -1234,6 +1246,7 @@ namespace Ledger.Core
             // One second draft, told what it claimed; then the plain true line.
             LastInvented = new List<string>();
             LastPromised = new List<string>();
+            LastRealNames = new List<string>();
             LastSpokeOf = new List<string>();
             _lastCleanCited = new List<string>();
             LastUnchecked = false;
@@ -1256,8 +1269,12 @@ namespace Ledger.Core
                     // again without, the same way as a claim nobody supports.
                     var promised = PromisesIn(reply);
                     LastPromised = promised;
+                    // A real name or a later thing (town list 6ao), asked again without.
+                    var realNames = RealWorld.Find(reply);
+                    LastRealNames = realNames;
                     var flagged = new List<string>(invented);
                     flagged.AddRange(promised);
+                    flagged.AddRange(realNames);
                     if (flagged.Count > 0 && firstHeard)
                     {
                         _lastCleanCited = new List<string>();
@@ -1267,7 +1284,8 @@ namespace Ledger.Core
                     else if (flagged.Count > 0)
                     {
                         string note = (invented.Count > 0 ? ClaimCheck.SecondDraftNote(invented) + "\n" : "")
-                                    + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "");
+                                    + (promised.Count > 0 ? Promises.SecondDraftNote(promised) + "\n" : "")
+                                    + (realNames.Count > 0 ? RealWorld.SecondDraftNote(realNames) + "\n" : "");
                         var second = new LlmRequest { Model = Model, System = system + note, MaxTokens = 300 };
                         second.Messages.AddRange(_transcript);
                         // The second draft is streamed the same way, its first
@@ -1284,7 +1302,7 @@ namespace Ledger.Core
                         {
                             var redrafted = ValidateReply(d2.Response.Text);
                             var again = await InventedAsync(known, redrafted, ct);
-                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0;
+                            bool holds = again.Count == 0 && !ClaimCheck.Repeats(redrafted, flagged) && PromisesIn(redrafted).Count == 0 && RealWorld.Find(redrafted).Count == 0;
                             reply = holds ? redrafted : d2.Heard ? d2.First : ClaimCheck.KnownOnlyFor(Card.Id, _knownOnlySaid++);
                             if (!holds) _lastCleanCited = new List<string>();
                         }

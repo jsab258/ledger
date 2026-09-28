@@ -45,7 +45,7 @@ DAYS = {
             ("q-privacy", "Before your friends play through our server, players should be able to read a short privacy notice, linked from the notice they already see: who is responsible for their words, how long a reported line is kept, and their rights",
              [("draft", "I draft it for your approval, naming you as responsible and keeping reported lines for a year (recommended: the law asks for it at that point, and it is text I can write)"),
               ("later", "Later, before the store: friends see the notice as it stands, which says where their words go and what is kept")]),
-            ("q-bench", "The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time. Tuning it properly means writing the test conversations again with today's cards, about $20 to $40 of calls",
+            ("q-bench", "The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time; and in small talk it is far worse: asked \"what biscuits have you got in?\" or \"what do you drive?\", 28 of 36 answers came out as \"That's as far as I can take you\". Tuning it properly means writing the test conversations again with today's cards, about $20 to $40 of calls",
              [("yes", "Yes, spend it: every third reply is slower than it needs to be (recommended)"),
               ("later", "Not now")]),
             ("q-keep-quiet", "When Tom asks someone to keep what he did to themselves, who does? The game decides, never the AI; this is my reading of the approved cards and canon, built that way meanwhile",
