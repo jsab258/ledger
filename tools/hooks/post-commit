@@ -4,11 +4,13 @@
 # commit that changes that file runs tools/backup-to-dropbox.py, which only
 # ever adds to his Dropbox's "LEDGER backup" folder (it never deletes, never
 # overwrites, never writes outside it, never fills drive C:). Its line goes to
-# .git/backup-to-dropbox.log. Installed with:
+# backup-to-dropbox.log in the shared git folder. Installed with:
 #   cp tools/hooks/post-commit .git/hooks/post-commit
 if git diff-tree --no-commit-id --name-only -r HEAD | grep -qx "FOR-JAFAR.md"; then
   line=$(python tools/backup-to-dropbox.py 2>&1 | tail -1)
-  echo "$(date +%Y-%m-%dT%H:%M:%S) $(git rev-parse --short HEAD) $line" >> .git/backup-to-dropbox.log
+  # The shared git folder, so a commit from a worktree (where .git is a file)
+  # logs too; in the main checkout it is .git, as before.
+  echo "$(date +%Y-%m-%dT%H:%M:%S) $(git rev-parse --short HEAD) $line" >> "$(git rev-parse --git-common-dir)/backup-to-dropbox.log"
   echo "post-commit: $line"
 fi
 exit 0
