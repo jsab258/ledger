@@ -388,6 +388,11 @@ namespace Ledger.Core
                             }
                             ct.ThrowIfCancellationRequested();
                             if (d.Closed) return (false, bad, cost);
+                            // The content and safety rules on the sentence itself, here as
+                            // well as in the caller (the independent check): a caller that
+                            // forgot them would otherwise speak a refused sentence early.
+                            if (ResponseValidator.IsDeflection(ResponseValidator.Validate(said, Card.Name, Card.AlsoCalled), Card.Name))
+                                return (false, bad, cost);
                             return (await onFirstChecked(said).ConfigureAwait(false), bad, cost);
                         });
                     }, stop.Token);
@@ -609,6 +614,7 @@ namespace Ledger.Core
             bool firstHeard = d1.Heard;
             string firstSentence = d1.First;
             IReadOnlyList<string> firstFlagged = d1.FirstFlagged;
+            Drafted d2 = null;
 
             // ONLY WHAT THE SIMULATION KNOWS (ClaimCheck.cs): checked BEFORE the
             // reply is said, kept in the transcript or remembered, so a claim
@@ -620,7 +626,6 @@ namespace Ledger.Core
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToString());
-                Drafted d2 = null;
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,
@@ -682,6 +687,22 @@ namespace Ledger.Core
                     throw;
                 }
             }
+            // WHAT THE PLAYER HEARS IS WHAT IS KEPT (FINDINGS, 26 September; town
+            // list 6e): the content rule and the rest of ResponseValidator run
+            // here, so a line refused as the character's changing the subject is
+            // remembered as that, never as what the model wrote. When a first
+            // sentence was already heard and the rest is refused, that sentence
+            // alone is the reply.
+            var shown = ResponseValidator.Validate(reply, Card.Name, Card.AlsoCalled);
+            string heardFirst = firstHeard ? firstSentence : d2 != null && d2.Heard ? d2.First : null;
+            if (ResponseValidator.IsDeflection(shown, Card.Name) && heardFirst != null)
+            {
+                // The heard sentence, cleaned as everything said is (the
+                // independent check: "Aye — I saw nothing." was kept as it came).
+                var cleaned = ResponseValidator.Validate(heardFirst, Card.Name, Card.AlsoCalled);
+                shown = ResponseValidator.IsDeflection(cleaned, Card.Name) ? heardFirst : cleaned;
+            }
+            reply = shown;
             _transcript.Add(new LlmMessage("assistant", reply));
 
             Memory.Append(new MemoryEvent(now, "conversation", EstimateImportance(playerInput),
@@ -740,7 +761,10 @@ namespace Ledger.Core
             foreach (var line in response.Text.Split('\n'))
             {
                 var t = line.Trim();
-                if (t.StartsWith("- ")) beliefs.Add(t.Substring(2).Trim());
+                // A belief the content rule refuses is not kept (town list 6e): what
+                // a character believes goes into every prompt they are given after.
+                if (t.StartsWith("- ") && ContentRule.SpeechBreaks(t) == null && SafetyRule.SpeechBreaks(t) == null)
+                    beliefs.Add(t.Substring(2).Trim());
             }
             if (beliefs.Count > 0)
             {

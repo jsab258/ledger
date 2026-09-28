@@ -275,7 +275,10 @@ namespace Ledger.Core
 
             var line = (MiniJson.GetString(obj, "line") ?? "").Trim();
             if (line.Length == 0) return new Pressure();        // an occasion nobody can see is not one
-            line = ConversationEngine.ValidateReply(line);      // same scrubbing every NPC line gets
+            line = ResponseValidator.Humanize(ConversationEngine.ValidateReply(line));   // same scrubbing every NPC line gets
+            // THE CONTENT RULE ON THIS LINE TOO (town list 6e): the player reads it,
+            // and a model wrote it. One that breaks the rule makes a quiet night.
+            if (ContentRule.SpeechBreaks(line) != null || SafetyRule.SpeechBreaks(line) != null) return new Pressure();
 
             var because = (MiniJson.GetString(obj, "because") ?? "").Trim();
             if (because.Length == 0) return new Pressure();     // unjustified is unwanted
