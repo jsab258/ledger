@@ -49,6 +49,20 @@ namespace Ledger.Core
 
         /// A save's version without committing to loading it — the front end
         /// uses this to decide whether "Continue" is offered at all.
+        /// One rumour as saved. The first teller's rung is written only when it
+        /// is known, so a save with none reads exactly as before (town list 6n).
+        static Dictionary<string, object> RumorJson(Rumor r)
+        {
+            var d = new Dictionary<string, object>
+            {
+                { "subj", r.Content.Subject }, { "pred", r.Content.Predicate }, { "val", r.Content.Value },
+                { "origin", r.OriginId }, { "summary", r.Summary }, { "conf", r.Confidence },
+                { "hops", r.Hops }, { "sensitive", r.Sensitive }, { "indelible", r.Indelible },
+            };
+            if (r.OriginRung >= 0) d["rung"] = r.OriginRung;
+            return d;
+        }
+
         public static int PeekVersion(string json)
         {
             try
@@ -137,12 +151,7 @@ namespace Ledger.Core
                 { "id", a.Id }, { "loyalty", a.Loyalty }, { "leashed", a.Leashed },
                 { "suspicion", a.Suspicion.Value },
                 { "suppressed", a.Suppressed.Cast<object>().ToList() },
-                { "rumors", a.Rumors.Select(r => (object)new Dictionary<string, object>
-                    {
-                        { "subj", r.Content.Subject }, { "pred", r.Content.Predicate }, { "val", r.Content.Value },
-                        { "origin", r.OriginId }, { "summary", r.Summary }, { "conf", r.Confidence },
-                        { "hops", r.Hops }, { "sensitive", r.Sensitive }, { "indelible", r.Indelible },
-                    }).ToList() },
+                { "rumors", a.Rumors.Select(r => (object)RumorJson(r)).ToList() },
                 { "facts", a.Knowledge.Facts.Select(f => (object)new Dictionary<string, object>
                     {
                         { "subj", f.Subject }, { "pred", f.Predicate }, { "val", f.Value },
@@ -330,6 +339,9 @@ namespace Ledger.Core
                         OriginId = MiniJson.GetString(r, "origin"), Summary = MiniJson.GetString(r, "summary"),
                         Confidence = Num(r, "conf"), Hops = MiniJson.GetInt(r, "hops"), Sensitive = Flag(r, "sensitive"),
                         Indelible = Flag(r, "indelible"),
+                        // The first teller's rung (town list 6n): absent in older saves, and
+                        // then unknown; clamped to the ladder, as a hand-edited file may say anything.
+                        OriginRung = MiniJson.TryGetInt(r, "rung", out var rungSaved) ? Math.Clamp(rungSaved, -1, 4) : -1,
                     });
                 }
                 g.Knowledge.Facts.Clear();
