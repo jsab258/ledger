@@ -70,6 +70,12 @@
 #include "Components/DirectionalLightComponent.h"
 #include "Components/LightComponent.h"
 #include "LedgerHair.h"
+#include "LedgerTalkLight.h"
+#include "DynamicRHI.h"
+#include "SceneViewExtension.h"
+#include "HAL/IConsoleManager.h"
+#include "Scalability.h"
+#include "SceneManagement.h"
 
 namespace LedgerMhPortrait
 {
@@ -87,7 +93,9 @@ namespace LedgerMhPortrait
 	const double kStandX = 9.5, kStandZ = 4.4, kGroundCm = 12.0;
 	const float SpeakFps = 15.0f;
 
-	enum class EShot : uint8 { Close, Mid, Front, Profile, Speak, Scan };
+	// Talk and Studio frame as Front does: the street with the conversation
+	// light on (LedgerTalkLight.h), and with the plain studio key and fill.
+	enum class EShot : uint8 { Close, Mid, Front, Profile, Speak, Scan, Talk, Studio };
 
 	struct FJob { int32 Who; FString Take; };
 	TArray<FJob> GJobs;
@@ -109,6 +117,28 @@ namespace LedgerMhPortrait
 	// nearest place on the pavement or road where the sun reaches the face,
 	// turned so it falls from a little to one side, as a photographer would
 	// stand someone. Nothing about the light is changed.
+	// THE FAIR PAIR, 28 September (-PortraitPair). Jafar: "First make the
+	// comparison fair: the same exposure, face level of detail and material
+	// quality in the street as in the portrait tool." Each person is shot three
+	// ways with the same framing: the street as it is, with the conversation
+	// light, and with the studio light. The first shot's automatic exposure,
+	// once settled, is read back from the view and held for the other two, so
+	// the three differ only in light; every shot logs the face's LOD, the
+	// material and shading quality and the exposure (LedgerPortrait: look).
+	// -PortraitCost measures the conversation light's cost on the card before
+	// the Talk shot: GPU time per frame, 120 frames off and 120 on.
+	bool GPair = false, GCost = false, GCostDone = false;
+	float GPinExposure = 0.0f;              // the exposure held for the rest of a person's pair, 0 = automatic
+	// THE HELD EXPOSURE, found by matching (28 September): the view's own last
+	// exposure reads back as zero here, so -PortraitSweep="auto,-1,0,1,..."
+	// shoots the Front framing once automatic and once per fixed exposure bias,
+	// the frames are matched for brightness afterwards, and -PortraitHoldBias=b
+	// then holds that one bias for every shot of the pair.
+	TArray<FString> GSweep;                 // per shot: "auto" or a bias
+	bool GHold = false;
+	float GHoldBias = 0.0f;
+	int32 GCostFrame = 0;
+	TArray<double> GCostOff, GCostOn;
 	bool GSunlit = false, GSunFound = false;
 	FVector GStand = FVector::ZeroVector;  // where the person stands, when found (engine units)
 	float GYaw = 180.0f;                    // the person's facing for the front shots
@@ -350,7 +380,18 @@ namespace LedgerMhPortrait
 		// THE FACE: the tallest point of the body, less a head's half. The
 		// camera stands out toward the road from it.
 		const FBox B = GPerson->GetComponentsBoundingBox();
-		const FVector Face(GPerson->GetActorLocation().X, GPerson->GetActorLocation().Y, B.Max.Z - 12.0f);
+		FVector Face(GPerson->GetActorLocation().X, GPerson->GetActorLocation().Y, B.Max.Z - 12.0f);
+		// IN THE GAME, THE HEAD BONE: the actor's bounds put Ron P2's face at
+		// his chest on 28 September, so the camera aims at the head itself.
+		if (GInGame)
+		{
+			TArray<USkeletalMeshComponent*> Bodies;
+			GPerson->GetComponents(Bodies);
+			for (USkeletalMeshComponent* C : Bodies)
+			{
+				if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Face = C->GetSocketLocation(TEXT("head")) + FVector(0.0f, 0.0f, 6.0f); break; }
+			}
+		}
 		// The offsets below are for a person facing -Y (yaw 180); in the game
 		// they are turned to however the person stands.
 		const FRotator Turn(0.0f, GInGame ? GPerson->GetActorRotation().Yaw - 180.0f : GYaw - 180.0f, 0.0f);
@@ -367,7 +408,7 @@ namespace LedgerMhPortrait
 		{
 		case EShot::Close: Eye = Face + FVector(25.0f, -Back, -4.0f); break;
 		case EShot::Mid: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
-		case EShot::Front: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
+		case EShot::Front: case EShot::Talk: case EShot::Studio: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
 		case EShot::Speak: Eye = Face + FVector(0.0f, -Back - 20.0f, -6.0f); Look = Face + FVector(0.0f, 0.0f, -12.0f); break;
 		// THE PROFILE turns the person, not the camera: from either side along
 		// the pavement the first runs framed another person's head, or a
@@ -417,6 +458,42 @@ namespace LedgerMhPortrait
 		// face alone while the body went on tipped the head against the neck.
 		HoldIdles(GFaceAt);
 		LookTests(World, Face);
+		// THE PAIR'S LIGHT, per shot: the conversation light only on Talk, the
+		// studio key and fill only on Studio (unless -PortraitStudio asks for it on every shot).
+		if (Shot == EShot::Talk) { LedgerTalkLight::Key(World, GPerson.Get(), Eye, Face); }
+		else { LedgerTalkLight::Off(); }
+		if (GPair && !GStudio)
+		{
+			if (Shot == EShot::Studio && GLights.Num() == 0) { GStudio = true; LookTests(World, Face); GStudio = false; }
+			if (Shot != EShot::Studio) { for (auto& L : GLights) { if (L.IsValid()) { L->Destroy(); } } GLights.Reset(); }
+		}
+		// THE PAIR'S EXPOSURE: held at one fixed bias for every shot (-PortraitHoldBias),
+		// or per shot in a sweep; otherwise automatic for the first shot, then held.
+		const bool bSweepShot = GSweep.IsValidIndex(GShot) && GSweep[GShot] != TEXT("auto");
+		if ((GHold || GSweep.Num() > 0) && GCam.IsValid())
+		{
+			FPostProcessSettings& PP = GCam->GetCameraComponent()->PostProcessSettings;
+			const bool bFixed = GHold || bSweepShot;
+			PP.bOverride_AutoExposureMethod = bFixed;
+			PP.AutoExposureMethod = EAutoExposureMethod::AEM_Manual;
+			PP.bOverride_AutoExposureApplyPhysicalCameraExposure = bFixed;
+			PP.AutoExposureApplyPhysicalCameraExposure = false;
+			PP.bOverride_AutoExposureBias = bFixed;
+			PP.AutoExposureBias = GHold ? GHoldBias : bSweepShot ? FCString::Atof(*GSweep[GShot]) : 0.0f;
+		}
+		else if (GPair && GCam.IsValid())
+		{
+			FPostProcessSettings& PP = GCam->GetCameraComponent()->PostProcessSettings;
+			const bool bHold = GPinExposure > 0.0f;
+			PP.bOverride_AutoExposureMethod = bHold;
+			PP.AutoExposureMethod = EAutoExposureMethod::AEM_Manual;
+			PP.bOverride_AutoExposureApplyPhysicalCameraExposure = bHold;
+			PP.AutoExposureApplyPhysicalCameraExposure = false;
+			PP.bOverride_AutoExposureBias = bHold;
+			// Manual, without the physical camera: exposure = 2^bias / 1.2, so the
+			// bias that gives back the settled exposure E is log2(1.2 E).
+			PP.AutoExposureBias = bHold ? FMath::Log2(1.2f * GPinExposure) : 0.0f;
+		}
 		GCam->GetCameraComponent()->SetFieldOfView(bMid ? 34.0f : 28.0f);
 		if (APlayerController* PC = World->GetFirstPlayerController())
 		{
@@ -441,6 +518,8 @@ namespace LedgerMhPortrait
 	{
 		switch (S)
 		{
+		case EShot::Talk: return TEXT("talk");
+		case EShot::Studio: return TEXT("studio");
 		case EShot::Close: return TEXT("close");
 		case EShot::Mid: return TEXT("mid");
 		case EShot::Front: return TEXT("front");
@@ -497,6 +576,39 @@ namespace LedgerMhPortrait
 		GPhase = 1;
 	}
 
+	// THE EXPOSURE IN USE, read where the engine sets each view up (its view
+	// state is private to the local player; a view extension is the engine's
+	// own way in). The last main view's value is kept.
+	float GViewExposure = 0.0f;
+	class FExposureReader : public FSceneViewExtensionBase
+	{
+	public:
+		FExposureReader(const FAutoRegister& R) : FSceneViewExtensionBase(R) {}
+		virtual void SetupView(FSceneViewFamily& Family, FSceneView& View) override
+		{
+			if (View.State != nullptr) { GViewExposure = View.State->GetLastEyeAdaptationExposure(); }
+		}
+	};
+	TSharedPtr<FExposureReader, ESPMode::ThreadSafe> GExposureReader;
+
+	// WHAT THE PICTURE WAS TAKEN WITH: the face's LOD, the material and shading
+	// quality, and the exposure the view is using. The pair's first shot holds
+	// its settled exposure for the next two.
+	void LogLook(UWorld* World)
+	{
+		if (!GExposureReader.IsValid()) { GExposureReader = FSceneViewExtensions::NewExtension<FExposureReader>(); }
+		const float Exposure = GViewExposure;
+		int32 Lod = -1;
+		for (USkeletalMeshComponent* C : FaceParts()) { Lod = C->GetPredictedLODLevel(); break; }
+		static IConsoleVariable* MQ = IConsoleManager::Get().FindConsoleVariable(TEXT("r.MaterialQualityLevel"));
+		static IConsoleVariable* SSS = IConsoleManager::Get().FindConsoleVariable(TEXT("r.SubsurfaceScattering"));
+		const Scalability::FQualityLevels Q = Scalability::GetQualityLevels();
+		UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: look %s %s: faceLOD %d, materialQuality %d, shading %d, sss %d, exposure %.5f%s"),
+			*Stem(), *ShotName(GShots[GShot]), Lod, MQ ? MQ->GetInt() : -1, Q.ShadingQuality, SSS ? SSS->GetInt() : -1, Exposure,
+			GPair && GPinExposure > 0.0f ? *FString::Printf(TEXT(" (held at %.5f)"), GPinExposure) : TEXT(" (automatic)"));
+		if (GPair && GPinExposure <= 0.0f && Exposure > 0.0f) { GPinExposure = Exposure; }
+	}
+
 	bool Tick(float)
 	{
 		const double Now = FPlatformTime::Seconds();
@@ -516,6 +628,8 @@ namespace LedgerMhPortrait
 			GPhase = 1;
 			return true;
 		case 1:
+			GPinExposure = 0.0f;
+			LedgerTalkLight::Off();
 			Place(World);
 			if (!GPerson.IsValid()) { NextJobOrQuit(); return true; }
 			GShot = 0;
@@ -541,12 +655,40 @@ namespace LedgerMhPortrait
 				GPhaseAt = Now;
 				return true;
 			}
+			if (GCost && !GCostDone && GShots[GShot] == EShot::Talk)
+			{
+				LedgerTalkLight::Off();
+				GCostFrame = 0;
+				GCostOff.Reset();
+				GCostOn.Reset();
+				GPhase = 7;
+				return true;
+			}
+			GPhase = 3;
+			return true;
+		}
+		case 7:
+		{
+			// 30 frames to settle, 120 off; the rig on, 30 to settle, 120 on.
+			++GCostFrame;
+			const double Ms = FPlatformTime::ToMilliseconds(RHIGetGPUFrameCycles(0));
+			if (GCostFrame > 30 && GCostFrame <= 150) { GCostOff.Add(Ms); }
+			if (GCostFrame == 151) { Aim(World); }
+			if (GCostFrame > 180 && GCostFrame <= 300) { GCostOn.Add(Ms); }
+			if (GCostFrame < 300) { return true; }
+			auto Median = [](TArray<double> V) { V.Sort(); return V.Num() ? V[V.Num() / 2] : 0.0; };
+			const double Off = Median(GCostOff), On = Median(GCostOn);
+			UE_LOG(LogTemp, Display, TEXT("LedgerPortrait: cost %s conversation light: gpuMs off %.3f, on %.3f, delta %.3f (median of %d each; budget 0.5)"),
+				*Stem(), Off, On, On - Off, GCostOff.Num());
+			GCostDone = true;
 			GPhase = 3;
 			return true;
 		}
 		case 3:
 		{
-			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-portrait-%s-%s.png"), *Stem(), *ShotName(GShots[GShot])));
+			LogLook(World);
+			const FString Name = GSweep.IsValidIndex(GShot) ? TEXT("front-ev") + GSweep[GShot] : ShotName(GShots[GShot]);
+			const FString Out = FPaths::ConvertRelativePathToFull(GOut / FString::Printf(TEXT("ue-portrait-%s-%s.png"), *Stem(), *Name));
 			FScreenshotRequest::RequestScreenshot(Out, false, false);
 			GPhaseAt = Now;
 			GPhase = 4;
@@ -630,6 +772,13 @@ namespace LedgerMhPortrait
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitStudioCd="), GStudioCd);
 		GFaceRest = FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceRest"));
 		GSunlit = FParse::Param(FCommandLine::Get(), TEXT("PortraitSunlit"));
+		GCost = FParse::Param(FCommandLine::Get(), TEXT("PortraitCost"));
+		if (!GExposureReader.IsValid()) { GExposureReader = FSceneViewExtensions::NewExtension<FExposureReader>(); }
+		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitPair")))
+		{
+			GPair = true;
+			GShots = { EShot::Front, EShot::Talk, EShot::Studio };
+		}
 		FParse::Value(FCommandLine::Get(), TEXT("PortraitSpeech="), GSpeech);
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitFaceScan"))) { GShots = { EShot::Scan }; }
 		if (FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame")))
@@ -638,6 +787,15 @@ namespace LedgerMhPortrait
 			GJobs.Reset();
 			for (int32 W = 0; W < 3; ++W) { GJobs.Add({ W, FString() }); }
 			GShots = { EShot::Front, EShot::Speak, EShot::Mid };
+		}
+		if (GPair) { GShots = { EShot::Front, EShot::Talk, EShot::Studio }; }
+		GHold = FParse::Value(FCommandLine::Get(), TEXT("PortraitHoldBias="), GHoldBias);
+		FString Sweep;
+		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitSweep="), Sweep, false))
+		{
+			Sweep.ParseIntoArray(GSweep, TEXT(","), true);
+			GShots.Reset();
+			for (int32 I = 0; I < GSweep.Num(); ++I) { GShots.Add(EShot::Front); }
 		}
 		FString Who;
 		if (FParse::Value(FCommandLine::Get(), TEXT("PortraitWho="), Who))

@@ -107,6 +107,8 @@
 #include "Framework/Application/SlateApplication.h"
 #include "Widgets/Input/SEditableTextBox.h"
 #include "LedgerJacket.h"
+#include "LedgerTalkLight.h"
+#include "Camera/PlayerCameraManager.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
@@ -2839,6 +2841,45 @@ namespace
 		}
 	}
 
+	// THE CONVERSATION LIGHT (LedgerTalkLight.h, 28 September): on whoever the
+	// player is talking to, from the moment the line box opens until six
+	// seconds after their answer has been heard out, placed from the player's
+	// camera each frame. In the street's flat daylight a face is underlit; lit
+	// this way it reads as it does in the studio (the fair pair, 28 September:
+	// face brightness 42 to 115 at one held exposure), for 0.33 ms of the card.
+	// -NoTalkLight turns it off.
+	double GTalkLitUntil = 0.0;
+	AActor* GTalkLitBody = nullptr;
+
+	void TalkLightTick(UWorld* World, double Now)
+	{
+		static const bool bOff = FParse::Param(FCommandLine::Get(), TEXT("NoTalkLight"));
+		AActor* Body = bSayOpen ? GTalkTarget.Body : GLive.PendingId != 0 ? GLive.PendingBody : nullptr;
+		if (Body != nullptr)
+		{
+			if (Body != GTalkLitBody) { LedgerTalkLight::Off(); }
+			GTalkLitBody = Body;
+			GTalkLitUntil = FMath::Max(GTalkLitUntil, Now + 6.0);
+		}
+		if (GVoice.Playing.IsValid()) { GTalkLitUntil = FMath::Max(GTalkLitUntil, GVoice.PlayingEnd + 6.0); }
+		APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
+		AActor* Visual = GTalkLitBody != nullptr ? GVisualFor(GTalkLitBody) : nullptr;
+		if (bOff || Now > GTalkLitUntil || Visual == nullptr || PC == nullptr || PC->PlayerCameraManager == nullptr)
+		{
+			LedgerTalkLight::Off();
+			if (Now > GTalkLitUntil) { GTalkLitBody = nullptr; }
+			return;
+		}
+		FVector Face = Visual->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f);
+		TArray<USkeletalMeshComponent*> Parts;
+		Visual->GetComponents(Parts);
+		for (USkeletalMeshComponent* C : Parts)
+		{
+			if (C != nullptr && C->DoesSocketExist(TEXT("head"))) { Face = C->GetSocketLocation(TEXT("head")) + FVector(0.0f, 0.0f, 6.0f); break; }
+		}
+		LedgerTalkLight::Key(World, Visual, PC->PlayerCameraManager->GetCameraLocation(), Face);
+	}
+
 	// THE PLAYER TALKS AT ANY POINT OF THE STORY, 24 September: before the
 	// window, to people who know nothing yet; after it, to people who might.
 	// Returns true while the typed line is open, when the rest of the phase
@@ -2850,6 +2891,7 @@ namespace
 		LiveVoiceStart();
 		LiveVoicePump();
 		AskScriptTick(Now);
+		TalkLightTick(World, Now);
 		if (bSayOpen)
 		{
 			// THE T THAT OPENED THE LINE is not the first letter of it.
