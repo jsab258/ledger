@@ -633,6 +633,11 @@ static class Program
     static string CardsDir(string[] args)
     {
         for (int i = 0; i + 1 < args.Length; i++) if (args[i] == "--cards") return args[i + 1];
+        // AS SHIPPED (town list 6aa): a "cards" folder beside the program, on a
+        // friend's PC with no project folder anywhere; the project's own copy
+        // when run from the repository.
+        var beside = Path.Combine(AppContext.BaseDirectory, "cards");
+        if (Directory.Exists(beside)) return beside;
         var d = new DirectoryInfo(AppContext.BaseDirectory);
         while (d != null)
         {
@@ -643,10 +648,12 @@ static class Program
         return Path.Combine("production", "cast", "cards");
     }
 
-    /// The named cast's file, beside the cards (production/specs/hook-cast.json).
+    /// The named cast's file: beside the program as shipped, else the project's
+    /// (production/specs/hook-cast.json, beside the cards).
     static void LoadCast(Helper h, string cardsDir)
     {
-        var path = Path.GetFullPath(Path.Combine(cardsDir, "..", "..", "specs", "hook-cast.json"));
+        var path = Path.Combine(AppContext.BaseDirectory, "hook-cast.json");
+        if (!File.Exists(path)) path = Path.GetFullPath(Path.Combine(cardsDir, "..", "..", "specs", "hook-cast.json"));
         if (!File.Exists(path)) return;
         try { h.Cast = CastDay.Parse(File.ReadAllText(path)); } catch (FormatException) { h.Cast = null; }
     }
