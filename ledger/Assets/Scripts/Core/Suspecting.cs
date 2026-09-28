@@ -18,11 +18,16 @@ namespace Ledger.Core
         /// (independent check, 24 September).
         public int Rung;
         /// A heard account whose first teller named him (they recognised
-        /// him). A rumour does not carry its teller's rung yet, so a caller
-        /// that cannot know says false.
+        /// him). Rumor.OriginRung carries the teller's rung through every
+        /// retelling (town list 6n); Suspecting.AccountOf reads it.
         public bool NamesHim;
-        /// The account's confidence as it reached them, 0..1.
+        /// The account's confidence as it reached them, 0..1: that of the copy
+        /// whose words are in Summary.
         public double Confidence;
+        /// How surely the naming reached them, 0..1, when NamesHim: it places
+        /// the number when the naming is what decides the case (the fourth
+        /// pass: a faint look of their own set it).
+        public double NamingConfidence;
         /// What they were told or saw, as a clause ("the man that did the
         /// window looked straight in at the shop before he ran").
         public string Summary;
@@ -73,6 +78,57 @@ namespace Ledger.Core
         /// long coat", and that is half the street.
         public static bool CanTieSighting(int rung) => rung >= 2;
 
+        /// THE ACCOUNT A PERSON HOLDS, read off the rumours they hold (town list
+        /// 6n, 28 September): seen themselves when it is first-hand, with the
+        /// rung they reached; heard, and naming him, when whoever first told
+        /// it recognised him (rung 4), however many mouths it passed through.
+        /// FINDINGS, 24 September: without the rung on the rumour, hearsay that
+        /// named him could never raise anyone's suspicion.
+        ///
+        /// EVERY COPY THEY HOLD, not the surest one (the independent check): a
+        /// person can hold their own sighting and a telling of the same deed
+        /// side by side, and ranking by certainty alone let a vaguer, surer
+        /// copy hide a recognition. Seen: their own sighting at its best rung.
+        /// Named: any telling whose first teller recognised him.
+        public static DeedAccount AccountOf(Gossiper g, string topicKey)
+        {
+            var acc = new DeedAccount { Rung = -1 };
+            if (g == null || string.IsNullOrEmpty(topicKey)) return acc;
+            // The words come from the copy that decides the case (the second
+            // pass: the rung from one look and the words from another made one
+            // line say "a shape by the glass; and I'd know him again").
+            Rumor best = null, ownDeciding = null, naming = null;
+            foreach (var r in g.Rumors)
+            {
+                if (r.TopicKey != topicKey) continue;
+                acc.Held = true;
+                if (best == null || r.Confidence > best.Confidence) best = r;
+                if (r.Hops == 0)
+                {
+                    acc.SawItMyself = true;
+                    if (ownDeciding == null || r.OriginRung > ownDeciding.OriginRung
+                        || (r.OriginRung == ownDeciding.OriginRung && r.Confidence > ownDeciding.Confidence)) ownDeciding = r;
+                }
+                else if (r.OriginRung >= 4)
+                {
+                    acc.NamesHim = true;
+                    if (naming == null || r.Confidence > naming.Confidence) naming = r;
+                }
+            }
+            if (!acc.Held) return acc;
+            if (ownDeciding != null) acc.Rung = ownDeciding.OriginRung;
+            // What they saw, when they saw anything (the line opens "I saw it myself"),
+            // at the look that sets the rung; else the telling that named him.
+            // The number is that same copy's, so the words and the doubt agree
+            // (the third pass: the words of a faint copy stood beside the
+            // certainty of a sure one).
+            var deciding = ownDeciding ?? naming ?? best;
+            acc.Summary = deciding.Summary;
+            acc.Confidence = deciding.Confidence;
+            if (naming != null) acc.NamingConfidence = naming.Confidence;
+            return acc;
+        }
+
         public static (double value, SuspicionLevel level, string why) Derive(
             DeedAccount account, Nearness near, double familiarity)
         {
@@ -85,6 +141,7 @@ namespace Ledger.Core
 
             SuspicionLevel band;
             string why;
+            double sure = account.Confidence;
             if (account.SawItMyself && account.Rung >= 4)
             {
                 band = SuspicionLevel.Confronting;
@@ -97,10 +154,16 @@ namespace Ledger.Core
                 band = SuspicionLevel.Suspicious;
                 why = $"{told}; and I'd know him again, and here he is";
             }
-            else if (!account.SawItMyself && account.NamesHim)
+            else if (account.NamesHim && familiarity >= Acquaintance.HeardOfYou)
             {
+                // Told by somebody who knew him, and they know who "Novak" is: a
+                // stranger to the name can tie nobody to it, as for hearsay that
+                // he was near (the independent check, 28 September). Their own
+                // vaguer look, if they had one, does not undo what they were told.
                 band = SuspicionLevel.Suspicious;
-                why = $"{told}, and whoever saw it named him";
+                why = account.SawItMyself ? $"{told}; and somebody who saw it plainer than I did named him"
+                                          : $"{told}, and whoever saw it named him";
+                if (account.SawItMyself) sure = account.NamingConfidence;
             }
             else if (near.SawHimMyself && others == 0)
             {
@@ -132,7 +195,7 @@ namespace Ledger.Core
                 band = band - 1;
                 why += "; but he is one of my own, and I would rather it was not him";
             }
-            return (Place(band, account.Confidence), band, why);
+            return (Place(band, sure), band, why);
         }
 
         static string Seen(Nearness near) =>

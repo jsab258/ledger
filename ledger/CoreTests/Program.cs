@@ -1313,6 +1313,191 @@ namespace Ledger.CoreTests
                   "a witness who saw only a shape has no reason to suspect this man");
             Check(Suspecting.Derive(heardNamed, new Nearness(), f).level == SuspicionLevel.Suspicious,
                   "told by someone who named him: suspicious");
+
+            // THE FIRST TELLER'S RUNG TRAVELS WITH THE STORY (town list 6n; FINDINGS,
+            // 24 September: hearsay that named him could not raise suspicion).
+            {
+                var gr = new SocialGraph(); gr.Link("w", "a", 0.9); gr.Link("a", "b", 0.9);
+                var gm = new GossipMill(gr);
+                foreach (var id in new[] { "w", "a", "b" })
+                    gm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var t0 = new GameTime(1, 23, 0);
+                gm.Witness("w", new Fact("player", "window_d1", "seen"), "Novak put the pawn shop window in", true, t0, 0.94, rung: 4);
+                gm.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                gm.Tick(new GameTime(1, 23, 12), (x, y) => true);
+                var heardByB = gm.Get("b").Best("player.window_d1");
+                Check(gm.Get("w").Best("player.window_d1").OriginRung == 4 && heardByB != null && heardByB.Hops == 2 && heardByB.OriginRung == 4,
+                      "a story told by someone who recognised him keeps that through two retellings", heardByB == null ? "not heard" : heardByB.OriginRung.ToString());
+                var bAccount = Suspecting.AccountOf(gm.Get("b"), "player.window_d1");
+                var bDerived = Suspecting.Derive(bAccount, new Nearness(), f);
+                Check(bAccount.Held && !bAccount.SawItMyself && bAccount.NamesHim && bDerived.level == SuspicionLevel.Suspicious
+                      && bDerived.why.Contains("whoever saw it named him"),
+                      "and so the second-hand hearer has reason to suspect him, and says why", bDerived.why);
+                var own1 = Suspecting.AccountOf(gm.Get("w"), "player.window_d1");
+                Check(own1.SawItMyself && own1.Rung == 4 && !own1.NamesHim && Suspecting.Derive(own1, new Nearness(), f).level == SuspicionLevel.Confronting,
+                      "the witness's own account is read as seen, at the rung they reached");
+
+                var gm2 = new GossipMill(gr);
+                foreach (var id in new[] { "w", "a", "b" })
+                    gm2.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                gm2.Witness("w", new Fact("player", "window_d1", "seen"), "a man put the window in", true, t0, 0.94, rung: 3);
+                gm2.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                var faceOnly = Suspecting.AccountOf(gm2.Get("a"), "player.window_d1");
+                Check(!faceOnly.NamesHim && Suspecting.Derive(faceOnly, new Nearness(), f).level == SuspicionLevel.Trusting,
+                      "a story whose teller only saw a face names nobody when retold");
+                gm2.Witness("a", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 30), 0.95, rung: 1);
+                var aOwn = gm2.Get("a").Best("player.window_d1");
+                Check(aOwn.Hops == 0 && aOwn.OriginRung == 1, "once they see it themselves, the rung is their own look, not the teller's", aOwn.OriginRung.ToString());
+                Check(new Rumor().OriginRung == -1 && Suspecting.AccountOf(null, "player.window_d1").Held == false, "unknown by default, and nobody is no account");
+
+                // ASKED ABOUT A BODY, a witness passes it on whole, as in ordinary talk.
+                var gr3 = new SocialGraph(); gr3.Link("w", "c", 0.1);
+                var gm3 = new GossipMill(gr3);
+                gm3.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()));
+                gm3.Add(new Gossiper("c", "c", new MemoryStore("c"), new KnowledgeBase(), new SuspicionTracker()));
+                gm3.Witness("w", new Fact("player", "killed_d1", "the docker"), "he put the docker down", false, t0, 1.0, indelible: true, rung: 4);
+                gm3.CompareNotes("c", "w", new GameTime(1, 23, 40));
+                var asked = gm3.Get("c").Best("player.killed_d1");
+                Check(asked != null && asked.Indelible && Math.Abs(asked.Confidence - 1.0) < 1e-9 && asked.OriginRung == 4,
+                      "asked about a killing, a witness passes it on as true as it left, and as indelible (it was weakened and forgettable)",
+                      asked == null ? "not passed" : $"{asked.Confidence} {asked.Indelible}");
+
+                // THE INDEPENDENT CHECK'S FIRST PASS ON THIS CHANGE, one regression each.
+                GossipMill Mill3(SocialGraph gg, params string[] ids)
+                {
+                    var mm = new GossipMill(gg);
+                    foreach (var id in ids) mm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    return mm;
+                }
+                // 1. A stranger to his name is not identified by talk.
+                Check(Suspecting.Derive(bAccount, new Nearness(), Acquaintance.Stranger).level == SuspicionLevel.Trusting,
+                      "told that he was named, somebody who has never heard of him ties nobody to it");
+                // 2a. Their own recognition is not hidden by a vaguer, surer telling.
+                var g4 = new SocialGraph(); g4.Link("w", "a", 0.9);
+                var m4 = Mill3(g4, "w", "a");
+                m4.Witness("a", new Fact("player", "window_d1", "seen"), "Novak, in the dark", true, t0, 0.5, rung: 4);
+                m4.Witness("w", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, t0, 0.94, rung: 1);
+                m4.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                var a4 = Suspecting.AccountOf(m4.Get("a"), "player.window_d1");
+                Check(a4.SawItMyself && a4.Rung == 4 && Suspecting.Derive(a4, new Nearness(), f).level == SuspicionLevel.Confronting,
+                      "somebody who recognised him keeps that, whatever vaguer story reaches them after", $"{a4.Rung} {m4.Get("a").Rumors.Count}");
+                // 2b. A telling that named him is not dropped for a vaguer version already held more surely.
+                var g5 = new SocialGraph(); g5.Link("s", "a", 0.9); g5.Link("n", "a", 0.9);
+                var m5 = Mill3(g5, "s", "n", "a");
+                m5.Witness("s", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, t0, 0.94, rung: 1);
+                m5.Tick(new GameTime(1, 23, 6), (x, y) => x == "s" || y == "s");
+                m5.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, t0, 0.8, rung: 4);
+                m5.Tick(new GameTime(1, 23, 12), (x, y) => x == "n" || y == "n");
+                Check(Suspecting.AccountOf(m5.Get("a"), "player.window_d1").NamesHim,
+                      "a telling that named him still reaches somebody who already held a vaguer version more surely");
+                // 4. Seeing it themselves never lowers what they were told.
+                var g6 = new SocialGraph(); g6.Link("n", "a", 0.9);
+                var m6 = Mill3(g6, "n", "a");
+                m6.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, t0, 0.94, rung: 4);
+                m6.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                m6.Witness("a", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 30), 0.9, rung: 1);
+                var a6 = Suspecting.AccountOf(m6.Get("a"), "player.window_d1");
+                Check(a6.SawItMyself && a6.NamesHim && Suspecting.Derive(a6, new Nearness(), f).level == SuspicionLevel.Suspicious,
+                      "told by somebody who recognised him, then seeing only a shape themselves: still suspicious, not trusting");
+                m6.Witness("a", new Fact("player", "window_d1", "seen"), "him, plain", true, new GameTime(1, 23, 40), 0.6, rung: 3);
+                Check(Suspecting.AccountOf(m6.Get("a"), "player.window_d1").Rung == 3, "and a second, clearer look of their own counts, even less surely held");
+                // 4b. A body heard of at certainty, then seen: their own sighting is theirs.
+                var g7 = new SocialGraph(); g7.Link("w", "c", 0.9);
+                var m7 = Mill3(g7, "w", "c");
+                m7.Witness("w", new Fact("player", "killed_d1", "the docker"), "he put the docker down", false, t0, 1.0, indelible: true, rung: 4);
+                m7.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                m7.Witness("c", new Fact("player", "killed_d1", "the docker"), "I saw him do it", false, new GameTime(1, 23, 10), 1.0, indelible: true, rung: 3);
+                var c7 = Suspecting.AccountOf(m7.Get("c"), "player.killed_d1");
+                Check(c7.SawItMyself && c7.Rung == 3 && c7.NamesHim, "heard of a killing, then seen: they saw it themselves as well as being told");
+                // 3. Asked about a body, it is known, not merely held.
+                Check(gm3.Get("c").Knowledge.CheckClaim(new Fact("player", "killed_d1", "nobody")) == ClaimResult.Contradiction,
+                      "asked about a killing, the fact is learned, so a lie about it is caught, as by ordinary talk");
+                // 5. A rung off the ladder is held to it.
+                var m8 = Mill3(new SocialGraph(), "w");
+                m8.Witness("w", new Fact("player", "window_d1", "seen"), "x", true, t0, 0.9, rung: 9);
+                Check(m8.Get("w").Best("player.window_d1").OriginRung == 4, "a rung off the ladder is held to it");
+
+                // THE SECOND PASS. One story, one telling: a speaker holding a look
+                // of their own and a telling that named him is heard once.
+                var g9 = new SocialGraph(); g9.Link("n", "s", 0.9); g9.Link("s", "l", 0.9);
+                var m9 = Mill3(g9, "n", "s", "l");
+                m9.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, t0, 0.94, rung: 4);
+                m9.Tick(new GameTime(1, 23, 6), (x, y) => x == "n" || y == "n");
+                m9.Witness("s", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 8), 0.9, rung: 1);
+                double before9 = m9.Get("l").Suspicion.Value;
+                var ev9 = m9.Tick(new GameTime(1, 23, 12), (x, y) => x == "l" || y == "l");
+                var heard9 = m9.Get("l").Memory.Events.Where(e => e.Kind == "heard").Select(e => e.Text).ToList();
+                Check(ev9.Count == 1 && heard9.Count == 2 && heard9.Exists(x => x.Contains("Novak put it in")) && Suspecting.AccountOf(m9.Get("l"), "player.window_d1").NamesHim,
+                      "a speaker with their own look and a naming beside it is heard once, and the naming still arrives, remembered",
+                      $"{ev9.Count} events: {string.Join(" | ", heard9)}");
+                // The faded naming does not block a fresh one.
+                var g10 = new SocialGraph(); g10.Link("n", "l", 0.9);
+                var m10 = Mill3(g10, "n", "l");
+                m10.Get("l").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "old", Summary = "long ago", Confidence = 0.1, Hops = 3, Sensitive = true, OriginRung = 4 });
+                m10.Get("l").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "s", Summary = "a shape", Confidence = 0.7, Hops = 1, Sensitive = true, OriginRung = 1 });
+                m10.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, t0, 0.94, rung: 4);
+                m10.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                Check(m10.Get("l").Rumors.Exists(x => x.OriginRung == 4 && x.Confidence > 0.5), "a fresh naming is kept though a faded one is held");
+                // The reason is told from the copy that decides it.
+                var why9 = Suspecting.Derive(Suspecting.AccountOf(m9.Get("s"), "player.window_d1"), new Nearness(), f).why;
+                var whyB = Suspecting.Derive(Suspecting.AccountOf(m5.Get("a"), "player.window_d1"), new Nearness(), f).why;
+                Check(why9.Contains("a shape by the glass") && why9.Contains("somebody who saw it plainer than I did named him") && !why9.Contains("I'd know him again"),
+                      "somebody who saw a shape themselves and was told the name says exactly that", why9);
+                Check(whyB.Contains("Novak put it in") && whyB.Contains("whoever saw it named him"),
+                      "and somebody who only heard it tells the naming, not the vaguer version", whyB);
+
+                // THE THIRD PASS. The surest copy is the telling, whichever the speaker
+                // came by first: a faint naming heard, then their own sure look with no
+                // rung given (as the game calls it today). The weaker copy was told and
+                // the surer slipped in quietly, so the lie it exposed cost a third.
+                var g11 = new SocialGraph(); g11.Link("s", "l", 0.9);
+                var m11 = Mill3(g11, "s", "l");
+                m11.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it, somebody said", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
+                m11.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90);
+                m11.Get("l").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
+                var ev11 = m11.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                double rise11 = m11.Get("l").Suspicion.Value;
+                double full11 = m11.ContradictionSuspicion * 0.90 * 0.9 * m11.HopDecay;
+                Check(ev11.Count == 1 && ev11[0].Contradiction && Math.Abs(rise11 - full11) < 1e-9,
+                      "a faint naming heard first and a sure look of their own: told once, at the surer amount",
+                      $"{ev11.Count} events, rise {rise11:0.000} of {full11:0.000}");
+                var heard11 = m11.Get("l").Memory.Events.Where(e => e.Kind == "heard").Select(e => e.Text).ToList();
+                var l11 = Suspecting.AccountOf(m11.Get("l"), "player.window_d1");
+                Check(heard11.Count == 2 && heard11.Exists(x => x.Contains("Novak did it, somebody said")) && l11.NamesHim,
+                      "and the naming that went in quietly is remembered, so they can say who told them", string.Join(" | ", heard11));
+                // The words and the number come from the same copy.
+                Check(l11.Summary == "Novak did it, somebody said" && Math.Abs(l11.Confidence - 0.30 * 0.9 * m11.HopDecay) < 1e-9,
+                      "the reason's words and its certainty are the naming's, not a surer copy's", $"{l11.Summary} {l11.Confidence:0.000}");
+                // Asked, the same: the surest copy is the answer.
+                var g12 = new SocialGraph(); g12.Link("s", "c", 0.9);
+                var m12 = Mill3(g12, "s", "c");
+                m12.Get("s").Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "seen"), OriginId = "n", Summary = "Novak did it, somebody said", Confidence = 0.30, Hops = 1, Sensitive = true, OriginRung = 4 });
+                m12.Witness("s", new Fact("player", "window_d1", "seen"), "him coming away from the glass", true, t0, 0.90);
+                m12.Get("c").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
+                var ev12 = m12.CompareNotes("c", "s", new GameTime(1, 23, 6));
+                double full12 = m12.ContradictionSuspicion * 0.90 * 0.9 * m12.HopDecay;
+                Check(ev12.Count == 1 && Math.Abs(m12.Get("c").Suspicion.Value - full12) < 1e-9
+                      && m12.Get("c").Memory.Events.Count(e => e.Kind == "heard") == 2 && Suspecting.AccountOf(m12.Get("c"), "player.window_d1").NamesHim,
+                      "asked, the surest copy is the answer, and the naming beside it is remembered",
+                      $"{ev12.Count} events, rise {m12.Get("c").Suspicion.Value:0.000} of {full12:0.000}");
+                // THE FOURTH PASS. A faint look of their own and a surer naming: the
+                // naming decides the case, so it places the number; the words stay theirs.
+                var g13 = new SocialGraph(); g13.Link("n", "a", 0.9);
+                var m13 = Mill3(g13, "n", "a");
+                m13.Witness("n", new Fact("player", "window_d1", "seen"), "Novak put it in", true, t0, 0.94, rung: 4);
+                m13.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                m13.Witness("a", new Fact("player", "window_d1", "seen"), "a shape by the glass", true, new GameTime(1, 23, 30), 0.25, rung: 1);
+                var a13 = Suspecting.AccountOf(m13.Get("a"), "player.window_d1");
+                var d13 = Suspecting.Derive(a13, new Nearness(), f);
+                double named13 = 0.94 * 0.9 * m13.HopDecay;
+                Check(Math.Abs(a13.NamingConfidence - named13) < 1e-9 && d13.level == SuspicionLevel.Suspicious
+                      && Math.Abs(d13.value - (0.50 + 0.30 * 0.5 * named13)) < 1e-9 && d13.why.Contains("a shape by the glass"),
+                      "a faint look and a surer naming: the naming places the number, the words are what they saw",
+                      $"{d13.value:0.000} {a13.Confidence:0.000} {a13.NamingConfidence:0.000}");
+                var plainHeard = heardNamed; plainHeard.NamingConfidence = 0.0;
+                Check(Math.Abs(Suspecting.Derive(heardNamed, new Nearness(), f).value - Suspecting.Derive(plainHeard, new Nearness(), f).value) < 1e-12,
+                      "somebody who only heard it is placed by the account's own certainty, as before");
+            }
             var own = Suspecting.Derive(heard, sawHimAlone, Acquaintance.Close);
             Check(own.level == SuspicionLevel.Uneasy && own.why.Contains("one of my own"),
                   "his own people give him the benefit of the doubt: one band lower, and say so");
@@ -3330,6 +3515,36 @@ namespace Ledger.CoreTests
             SaveCodec.RestoreMillAgents(jsonP, millQ);
             Check((lenaAgain != null ? lenaAgain.Rumors.Count : -1) == lenaRumors,
                 "and the second pass is idempotent for everyone who was already restored");
+
+            // THE FIRST TELLER'S RUNG IS KEPT (town list 6n), and only when known.
+            Check(!jsonP.Contains("\"rung\""), "a rumour nobody gave a rung saves exactly as before");
+            var (millR, _, _) = FreshMill();
+            var teller = new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker());
+            teller.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d6", "seen"), OriginId = "r76", Summary = "x",
+                                          Confidence = 0.6, Hops = 2, Sensitive = true, OriginRung = 4 });
+            millR.Add(teller);
+            var jsonR = SaveCodec.Capture(now, new Wallet(10), new Campaign(), new PlayerKnowledge(), new SecretsBook(), new BeatBook(), millR, new DebtBook(), null);
+            var (millS, _, _) = FreshMill();
+            millS.Add(new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonR, millS);
+            var joanAgain = millS.Get("r77");
+            Check(joanAgain.Rumors.Count == 1 && joanAgain.Rumors[0].OriginRung == 4, "a rumour's first teller's rung survives a save");
+            var (millT, _, _) = FreshMill();
+            millT.Add(new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonR.Replace("\"rung\":4", "\"rung\":99"), millT);
+            var (millU, _, _) = FreshMill();
+            millU.Add(new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonR.Replace(",\"rung\":4", ""), millU);
+            Check(jsonR.Contains("\"rung\":4") && millT.Get("r77").Rumors[0].OriginRung == 4 && millU.Get("r77").Rumors[0].OriginRung == -1,
+                "a hand-edited rung is held to the ladder, and an older save without one reads as unknown");
+            var (millV, _, _) = FreshMill();
+            millV.Add(new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonR.Replace("\"rung\":4", "\"rung\":null"), millV);
+            var (millW, _, _) = FreshMill();
+            millW.Add(new Gossiper("r77", "Joan", new MemoryStore("r77"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonR.Replace("\"rung\":4", "\"rung\":\"four\""), millW);
+            Check(millV.Get("r77").Rumors[0].OriginRung == -1 && millW.Get("r77").Rumors[0].OriginRung == -1,
+                "a rung that is not a number reads as unknown, not as someone");
 
             // Open-mode fields are additive: an open city with a Fall behind it
             // must come back exactly, and old saves (no keys) default closed.
