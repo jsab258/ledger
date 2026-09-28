@@ -1,0 +1,25 @@
+{
+ "body": "F:/LedgerTools/tmp/dcc/MH_RoccoP2/MH_RoccoP2_Body.fbx",
+ "offset": 0.03,
+ "frames": 90,
+ "sourceLod": 1,
+ "sim": {
+  "verts": 2516,
+  "tris": 4900
+ },
+ "render": {
+  "verts": 33085
+ },
+ "hem": 0.802,
+ "neck": 1.622,
+ "neckRadius": 0.06,
+ "settling": {
+  "largestFallM": 0.057,
+  "lastFrameMoveM": 0.0267
+ },
+ "chestFilled": 195,
+ "reclearedToJumper": 344,
+ "sleevePointsTubed": 1276,
+ "clearedToStandoff": 493,
+ "weightsCoverage": 1.0
+}

@@ -124,6 +124,86 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaQ1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaQ2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaQ3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaQ4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 192
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaR1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaR2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "S4, on Monday's page for Jafar's verdict",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 191
+  },
+  {
    "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_RoccoC1.uasset",
    "madeBy": "tools/ue/make_cast_metahumans.py, 25 Sep",
    "why": "the approved face (its source)",
@@ -210,6 +290,86 @@
    "status": "kept",
    "recorded": "2026-09-25",
    "mb": 185
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamQ1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamQ2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamQ3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamQ4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 169
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamR1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamR2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamS1.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamS2.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamS3.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "a face candidate for Sheila (Lena) or Darren (Sam); failed the blind reviewer and replaced by S4",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 172
+  },
+  {
+   "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_SamS4.uasset",
+   "madeBy": "tools/ue/make_cast_metahumans.py, 28 September",
+   "why": "S4, on Monday's page for Jafar's verdict",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 172
   },
   {
    "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC1",
@@ -754,6 +914,14 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/tmp/dcc",
+   "madeBy": "tools/ue/export_dcc.py, 28 September",
+   "why": "Ron's whole body as FBX, the body the jacket is hung on",
+   "status": "kept",
+   "recorded": "2026-09-28",
+   "mb": 122
+  },
+  {
    "path": "F:/LedgerTools/tmp/etest",
    "madeBy": "the portrait tool, 25 Sep",
    "why": "face test frames, summed up in production/casting/in-game-2026-09-25/face-tests.jpg",
@@ -860,6 +1028,62 @@
    "recorded": "2026-09-25",
    "mb": 389,
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
+  },
+  {
+   "path": "F:/LedgerTools/tmp/qcand",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 956
+  },
+  {
+   "path": "F:/LedgerTools/tmp/rcand",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 475
+  },
+  {
+   "path": "F:/LedgerTools/tmp/s2cand",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 238
+  },
+  {
+   "path": "F:/LedgerTools/tmp/s3cand",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 238
+  },
+  {
+   "path": "F:/LedgerTools/tmp/s3studio",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 238
+  },
+  {
+   "path": "F:/LedgerTools/tmp/s4studio",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 235
+  },
+  {
+   "path": "F:/LedgerTools/tmp/scand",
+   "madeBy": "the portrait tool (-LedgerPortrait), 28 September",
+   "why": "raw renders of the face candidates; the chosen pictures are in production/casting/candidates-2026-09-28",
+   "status": "superseded",
+   "recorded": "2026-09-28",
+   "mb": 238
   },
   {
    "path": "F:/LedgerTools/uv",

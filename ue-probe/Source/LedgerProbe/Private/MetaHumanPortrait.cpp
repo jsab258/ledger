@@ -418,14 +418,18 @@ namespace LedgerMhPortrait
 		// run's 75 cm and 230 cm cut the crown off the one and the face off
 		// the other.) Front and Speak are straight on; Profile is from the
 		// side, the camera along the street.
-		const bool bMid = Shot == EShot::Mid || Shot == EShot::Motion;
-		const float Back = bMid ? 320.0f : 170.0f;
+		// Motion: the whole person, head to feet, so a garment is seen to its
+		// hem and a sitting body with its lap (the Mid framing cut the jacket
+		// at mid-thigh and a sit at the chest, 28 September).
+		const bool bMid = Shot == EShot::Mid;
+		const float Back = Shot == EShot::Motion ? 560.0f : bMid ? 320.0f : 170.0f;
 		FVector Eye;
-		FVector Look = Face + FVector(0.0f, 0.0f, bMid ? -40.0f : -8.0f);
+		FVector Look = Face + FVector(0.0f, 0.0f, Shot == EShot::Motion ? -85.0f : bMid ? -40.0f : -8.0f);
 		switch (Shot)
 		{
 		case EShot::Close: Eye = Face + FVector(25.0f, -Back, -4.0f); break;
-		case EShot::Mid: case EShot::Motion: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
+		case EShot::Mid: Eye = Face + FVector(40.0f, -Back, -15.0f); break;
+		case EShot::Motion: Eye = Face + FVector(60.0f, -Back, -60.0f); break;
 		case EShot::Front: case EShot::Talk: case EShot::Studio: Eye = Face + FVector(0.0f, -Back, -4.0f); break;
 		case EShot::Speak: Eye = Face + FVector(0.0f, -Back - 20.0f, -6.0f); Look = Face + FVector(0.0f, 0.0f, -12.0f); break;
 		// THE PROFILE turns the person, not the camera: from either side along
@@ -517,7 +521,7 @@ namespace LedgerMhPortrait
 			// bias that gives back the settled exposure E is log2(1.2 E).
 			PP.AutoExposureBias = bHold ? FMath::Log2(1.2f * GPinExposure) : 0.0f;
 		}
-		GCam->GetCameraComponent()->SetFieldOfView(bMid ? 34.0f : 28.0f);
+		GCam->GetCameraComponent()->SetFieldOfView(bMid || Shot == EShot::Motion ? 34.0f : 28.0f);
 		if (APlayerController* PC = World->GetFirstPlayerController())
 		{
 			PC->SetViewTarget(GCam.Get());

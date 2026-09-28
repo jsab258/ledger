@@ -57,26 +57,47 @@ def main_after_idle(seconds=20.0):
         unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
         paths = list(task.get_editor_property("imported_object_paths") or [])
         log("imported %s -> %s" % (os.path.basename(fbx), paths))
-        return unreal.load_asset(paths[0]) if paths else None
+        # the mesh, not the first thing imported (a material can come first:
+        # the collar's did, 29 September)
+        meshes = [a for a in (unreal.load_asset(p) for p in paths) if isinstance(a, unreal.StaticMesh)]
+        return meshes[0] if meshes else None
 
     # THE JACKET'S COLOURS on the render mesh's slots, by the slot names Blender
     # gave them (a re-import over the existing mesh brought no materials, 28
     # September): instances of the engine's basic shape material, whose one
     # parameter is its colour.
-    COLOURS = {"wool": (0.035, 0.043, 0.075), "yoke": (0.012, 0.012, 0.013), "button": (0.02, 0.018, 0.016)}
+    # THE YOKE black and glossy against the navy: at 0.012 and a roughness of
+    # 0.6 it read as a grey smear no darker than the wool (the blind reviewer,
+    # 29 September); the references' panel is black leather or PVC with a shine.
+    COLOURS = {"wool": (0.02, 0.022, 0.032), "yoke": (0.004, 0.004, 0.0045), "button": (0.02, 0.018, 0.016)}
+    ROUGHNESS = {"wool": 0.95, "yoke": 0.45, "button": 0.4}   # 0.3 threw hot highlights off every lump
 
     def colour_render_mesh(mesh, dest):
-        # A BASE MATERIAL OF OUR OWN, flagged for skinned meshes and cloth: the
+        # A BASE MATERIAL OF OUR OWN, flagged for skinned meshes and cloth (the
         # engine's basic shape material is not, and on the game's cloth
-        # component it fell back to the engine's grey (28 September).
-        base_path = dest + "/M_DonkeyJacket_Base"
-        base = unreal.load_asset(base_path) if unreal.EditorAssetLibrary.does_asset_exist(base_path) else             unreal.EditorAssetLibrary.duplicate_asset("/Engine/BasicShapes/BasicShapeMaterial", base_path)
+        # component it fell back to grey), with a colour and a roughness: wool
+        # matt, the yoke's leather or PVC with a little sheen (the first, on the
+        # basic shape material, was too shiny, 28 September).
+        mel = unreal.MaterialEditingLibrary
+        base_path = dest + "/M_DonkeyJacket_Matt"
+        if unreal.EditorAssetLibrary.does_asset_exist(base_path):
+            base = unreal.load_asset(base_path)
+        else:
+            base = unreal.AssetToolsHelpers.get_asset_tools().create_asset("M_DonkeyJacket_Matt", dest, unreal.Material, unreal.MaterialFactoryNew())
+            col = mel.create_material_expression(base, unreal.MaterialExpressionVectorParameter, -400, 0)
+            col.set_editor_property("parameter_name", "Color")
+            col.set_editor_property("default_value", unreal.LinearColor(0.02, 0.022, 0.032, 1.0))
+            rough = mel.create_material_expression(base, unreal.MaterialExpressionScalarParameter, -400, 200)
+            rough.set_editor_property("parameter_name", "Roughness")
+            rough.set_editor_property("default_value", 0.92)
+            spec = mel.create_material_expression(base, unreal.MaterialExpressionConstant, -400, 320)
+            spec.set_editor_property("r", 0.25)
+            mel.connect_material_property(col, "", unreal.MaterialProperty.MP_BASE_COLOR)
+            mel.connect_material_property(rough, "", unreal.MaterialProperty.MP_ROUGHNESS)
+            mel.connect_material_property(spec, "", unreal.MaterialProperty.MP_SPECULAR)
         for flag in ("used_with_skeletal_mesh", "used_with_clothing"):
-            try:
-                base.set_editor_property(flag, True)
-            except Exception as e:
-                log("  %s: %s" % (flag, e))
-        unreal.MaterialEditingLibrary.recompile_material(base)
+            base.set_editor_property(flag, True)
+        mel.recompile_material(base)
         unreal.EditorAssetLibrary.save_loaded_asset(base, only_if_is_dirty=False)
         log("base material %s: skeletal %s, clothing %s" % (base_path, base.get_editor_property("used_with_skeletal_mesh"),
                                                             base.get_editor_property("used_with_clothing")))
@@ -92,6 +113,7 @@ def main_after_idle(seconds=20.0):
             unreal.MaterialEditingLibrary.set_material_instance_parent(mi, base)
             r, g, b = COLOURS[key]
             unreal.MaterialEditingLibrary.set_material_instance_vector_parameter_value(mi, "Color", unreal.LinearColor(r, g, b, 1.0))
+            unreal.MaterialEditingLibrary.set_material_instance_scalar_parameter_value(mi, "Roughness", ROUGHNESS[key])
             unreal.EditorAssetLibrary.save_loaded_asset(mi, only_if_is_dirty=False)
             mesh.set_material(i, mi)
             log("slot %d %s -> %s" % (i, slot, name))
@@ -106,6 +128,13 @@ def main_after_idle(seconds=20.0):
         sim = import_static(os.path.join(src, name + "_sim_static.fbx"), dest, "SM_" + name + "_Sim")
         if render is not None:
             colour_render_mesh(render, dest)
+        # THE COLLAR, a static piece the game fixes to his upper back
+        # (LedgerJacket.h), not part of the cloth (29 September)
+        collar_fbx = os.path.join(src, name + "_collar_static.fbx")
+        if os.path.exists(collar_fbx):
+            collar = import_static(collar_fbx, dest, "SM_" + name + "_Collar")
+            if collar is not None:
+                colour_render_mesh(collar, dest)
         body = unreal.load_asset(body_path)
         log("body %s: %s" % (body_path, type(body).__name__ if body else "NOT FOUND"))
         lib = unreal.EditorAssetLibrary
@@ -150,6 +179,19 @@ def main_after_idle(seconds=20.0):
             except Exception as e:
                 done = "%s %s" % (type(e).__name__, e)
             log("set %s.%s = %s: %s" % (node, prop, obj.get_path_name(), done))
+        # HELD CLOSE: each point of the cloth may move at most this many
+        # centimetres from where the body's movement carries it. Left free, the
+        # cloth sank onto the body's collision shapes, inside Ron's jumper,
+        # which showed through across the belly (28 September); melton is
+        # heavy and stiff and moves with the body. Low and High the same, so
+        # the template's painted map does not matter.
+        maxd = float(os.environ.get("LEDGER_JACKET_MAXD", "1.5"))
+        for node, prop, value in (("SimulationMaxDistanceConfig", "MaxDistance", "(Low=%g,High=%g)" % (maxd, maxd)),):
+            try:
+                done = del_.set_dataflow_node_property(df, node, prop, value)
+            except Exception as e:
+                done = "%s %s" % (type(e).__name__, e)
+            log("set %s.%s = %s: %s" % (node, prop, value, done))
         try:
             ok = dbl.regenerate_asset_from_dataflow(ca, False)
             log("regenerate: %s" % ok)
