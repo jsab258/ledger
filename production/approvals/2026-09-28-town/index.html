@@ -1,0 +1,268 @@
+<title>Town Sheets and Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--flag:#8d2f22;
+ --ok:#2f6b45;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:46rem;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:28px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2rem;line-height:1.15}h2{font-size:1.45rem}h3{font-size:1.1rem;margin-top:14px}
+.lede{color:var(--soft);margin:6px 0 0}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
+section{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px}
+.intro{color:var(--soft);font-size:.92rem;margin:0}
+dl{display:grid;grid-template-columns:8.5rem 1fr;gap:6px 14px;margin:0;font-size:.95rem}
+dt{color:var(--soft);font-weight:600}dd{margin:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+.voice{background:var(--amber-bg);border-radius:4px;padding:8px 10px;font-size:.95rem}
+.voice strong{color:var(--flag)}
+blockquote{margin:0;padding-left:12px;border-left:3px solid var(--line);font-family:"Newsreader",Georgia,serif;font-size:1.05rem}
+.lines{display:grid;gap:6px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.pick{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;flex:1 1 14rem}
+.pick input{margin-top:4px}
+.pick:has(input:checked){border-color:var(--amber);background:var(--amber-bg)}
+textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.status{font-size:.85rem;color:var(--soft)}
+.saved{color:var(--ok)}
+.outline p,.outline li{max-width:65ch}
+.outline ul{padding-left:1.2rem;margin:4px 0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+<main class="wrap">
+<header><p class="eyebrow">LEDGER · the town session · 2026-09-28</p>
+<h1>Casting sheets and the story</h1>
+<p class="lede">Eleven principals on paper, text only, and the story in two pages. Pick on each, add a note if something is wrong. Faces and voices come after, from the builder, made to what you approve.</p></header>
+<section><h2>Your calls first</h2><p class="intro">Canon questions the sheets and the story raise. The first choice in each is my recommendation.</p>
+<div class="card" data-key="q-emil"><h3>Father Emil&#x27;s name</h3><div class="row">
+<label class="pick"><input type="radio" name="q-emil" id="q-emil-emil" value="emil"><span>Keep Emil: the priest of the town&#x27;s Polish community, who knew Tom&#x27;s father (recommended: it ties Tom to the parish, and keeps the name the game already uses)</span></label>
+<label class="pick"><input type="radio" name="q-emil" id="q-emil-walsh" value="walsh"><span>Father Brendan Walsh, an Irish-born parish priest (the casting research&#x27;s other offer)</span></label>
+</div><textarea id="q-emil-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-emil-status"></p></div>
+<div class="card" data-key="q-fixer"><h3>The Fixer&#x27;s name</h3><div class="row">
+<label class="pick"><input type="radio" name="q-fixer" id="q-fixer-garbutt" value="garbutt"><span>Keith Garbutt, the casting research&#x27;s proposal (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-fixer" id="q-fixer-none" value="none"><span>No name: he stays &quot;the Fixer&quot; to everyone</span></label>
+</div><textarea id="q-fixer-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-fixer-status"></p></div>
+<div class="card" data-key="q-june"><h3>June&#x27;s surname</h3><div class="row">
+<label class="pick"><input type="radio" name="q-june" id="q-june-suddaby" value="suddaby"><span>Suddaby, her father&#x27;s (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-june" id="q-june-married" value="married"><span>A married name you give</span></label>
+</div><textarea id="q-june-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-june-status"></p></div>
+<div class="card" data-key="q-tom"><h3>Tom&#x27;s life before the Hook</h3><div class="row">
+<label class="pick"><input type="radio" name="q-tom" id="q-tom-unsaid" value="unsaid"><span>Left unsaid: nobody in the game asks and he never tells (recommended: the player fills it)</span></label>
+<label class="pick"><input type="radio" name="q-tom" id="q-tom-decide" value="decide"><span>Decided now, in a line you give</span></label>
+</div><textarea id="q-tom-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-tom-status"></p></div>
+<div class="card" data-key="q-ada"><h3>Ada as a retired teacher (the prototype&#x27;s card)</h3><div class="row">
+<label class="pick"><input type="radio" name="q-ada" id="q-ada-out" value="out"><span>Leave it out (recommended: her years of teaching cannot be spoken of without children)</span></label>
+<label class="pick"><input type="radio" name="q-ada" id="q-ada-in" value="in"><span>Put it back, as a fact she never talks about</span></label>
+</div><textarea id="q-ada-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-ada-status"></p></div>
+<div class="card" data-key="q-spine"><h3>The story&#x27;s spine as the baseline: Tom, the three acts, the three rivals and the empire roster (canon&#x27;s open question 2)</h3><div class="row">
+<label class="pick"><input type="radio" name="q-spine" id="q-spine-yes" value="yes"><span>Yes, as outlined (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-spine" id="q-spine-changes" value="changes"><span>Yes, with the changes in your note</span></label>
+<label class="pick"><input type="radio" name="q-spine" id="q-spine-other" value="other"><span>A different story</span></label>
+</div><textarea id="q-spine-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-spine-status"></p></div>
+</section><section><h2>The eleven sheets</h2><p class="intro">Each passed two checks: mine against canon and the casting and dress research, and a reviewer's who had not seen them made. Where a voice is flagged, the approved voice does not fit the age or accent and a new one is needed.</p>
+<article class="card" data-key="sheet-tom-nowak"><h3>Tom Nowak</h3><p class="intro">The player. A principal of LEDGER (production/casting/CASTING.md); until 24 September the name was spelt Novak. Text only: face, clothes and any voice are the builder&#x27;s, made to this sheet once it is approved.</p><dl>
+<dt>Age</dt><dd>32 (born 1958)</dd>
+<dt>Origin</dt><dd>Son of a Polish post-war settler and Mickey&#x27;s sister. The family moved away from the port when he was small (the casting research&#x27;s account, 7.3), so he is a stranger to everyone in the Hook, known only as Mickey&#x27;s nephew by name (canon). Where he grew up and what he did there, canon does not say: see the question on the page.</dd>
+<dt>Occupation</dt><dd>The new owner of Mickey&#x27;s, the minicab office on Quay Street, with its half-dead outfit and book of uncollectable debts (canon). Arrives with one suitcase and a letter.</dd>
+<dt>Build</dt><dd>About 5 ft 9 in (175 cm, the average man of 1993), lean; nothing about him says money.</dd>
+<dt>Face</dt><dd>Clean-shaven (a shave read as trustworthy then), no tattoos, ordinary.</dd>
+<dt>Hair</dt><dd>Short, dark brown, cut plainly: short back and sides.</dd>
+<dt>Clothes, 1990</dt><dd>He arrives after the funeral, which he missed; his one good suit, a plain dark two-piece, is for the business of the inheritance. Day to day: jeans, a plain jumper or sweatshirt, leather shoes or trainers, a zip-front nylon or cotton jacket for the rain. One suitcase: he is seen in the same few things again and again, which the town will notice.</dd>
+<dt>How he moves</dt><dd>A stranger&#x27;s walk: head up (nobody in 1990 walks looking at a phone), reading shop boards and doorways, stopping where a local would not. The sheet does not make him a smoker (about three men in ten were).</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>The player&#x27;s lines are typed, so Tom needs no voice. If he is ever to speak aloud he needs casting: of the approved men&#x27;s voices one is 38 (Ron&#x27;s) and the rest are 21 to 25, and none is his.</div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-tom-nowak" id="sheet-tom-nowak-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-tom-nowak" id="sheet-tom-nowak-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-tom-nowak-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-tom-nowak-status"></p></article>
+<article class="card" data-key="sheet-carol-ellis"><h3>DS Carol Ellis</h3><p class="intro">The detective. A principal of LEDGER (production/casting/CASTING.md); until 24 September she was Mara Ellis, and the old name survives only as an internal id (ellis). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>40 (born 1950)</dd>
+<dt>Origin</dt><dd>A local woman who came up through the town&#x27;s force. One of few women detectives then (the share of women in CID in 1990 is unsourced).</dd>
+<dt>Occupation</dt><dd>Detective Sergeant, CID, in plain clothes. Which force Meridian&#x27;s police belong to is not decided in canon, so the sheet names none. Canon: police are corruptible as individuals, never as a thesis; nothing on this sheet says which she is.</dd>
+<dt>Build</dt><dd>About 5 ft 5 in, slim and upright; the average woman of 1993 was 5 ft 3 in.</dd>
+<dt>Face</dt><dd>Minimal make-up; lines of tiredness rather than age.</dd>
+<dt>Hair</dt><dd>Short and practical: a feathered bob, mid-brown.</dd>
+<dt>Clothes, 1990</dt><dd>A navy or grey jacket and skirt, a plain blouse, tights, low court shoes or flat boots for walking, a shoulder bag, a belted raincoat. Skirt suits with modest shoulder pads were what working women wore.</dd>
+<dt>How she moves</dt><dd>Brisk and economical. Writes in her notebook while she listens and lets silences run. Stands side-on in doorways, where she can see the room and the street. Procedure is her drama (Prime Suspect, 1991, is the reference for the procedure, not for her face).</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Level and quick, a local accent, short questions with gaps left after them. Approved in July: p231 (a woman, 23, English, southern). <strong>Needs an older voice:</strong> 23 against 40, and southern against a local woman.</div>
+<div class="lines"><blockquote>I&#x27;m not asking you to remember everything. I&#x27;m asking you to remember it the same way twice.</blockquote><blockquote>Write it down. Paper doesn&#x27;t get tired and it doesn&#x27;t change its mind.</blockquote><blockquote>You can talk to me here, or you can talk to me at the station. I&#x27;d rather here. So would you.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-carol-ellis" id="sheet-carol-ellis-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-carol-ellis" id="sheet-carol-ellis-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-carol-ellis-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-carol-ellis-status"></p></article>
+<article class="card" data-key="sheet-geoffrey-agar"><h3>Geoffrey Agar</h3><p class="intro">Head of the old-money machine. A principal of LEDGER (production/casting/CASTING.md); until 24 September he was Aldous Vane, and the old name survives only as an internal id (aldous). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>62 (born 1928)</dd>
+<dt>Origin</dt><dd>A timber-merchant family of the town (casting research).</dd>
+<dt>Occupation</dt><dd>Solicitor; a former long-serving councillor, now honorary alderman: aldermen as such were abolished in 1974, and a council can make a former member an honorary alderman for past service (Local Government Act 1972, section 249), which suits old money exactly. Heads the old-money machine of corruption and lawyers (canon).</dd>
+<dt>Build</dt><dd>Tall and spare, about 5 ft 11 in, a slight stoop he does not admit to.</dd>
+<dt>Face</dt><dd>Long, clean-shaven, rimless glasses.</dd>
+<dt>Hair</dt><dd>Silver, swept back.</dd>
+<dt>Clothes, 1990</dt><dd>A dark three-piece suit: the waistcoat had been going since the war, so it marks him as old-fashioned and old money. White shirt, a sober tie, a watch chain. Outdoors a knee-length dark wool overcoat with a velvet collar, the smart man&#x27;s coat of the years he learned to dress; black leather gloves, black lace-ups, a black umbrella. Bareheaded: the bowler had gone by the 1980s.</dd>
+<dt>How he moves</dt><dd>Slowly, and never seen to hurry. Waits for doors to be opened. Speaks quietly enough that people lean in. Sits back; lets the other man fill the silence.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Quiet and precise, educated vowels, never hurried. Approved on 24 September: p226 (a man, 22, English, Surrey). The accent suits his class; <strong>the age does not: he needs an older voice</strong> (22 against 62).</div>
+<div class="lines"><blockquote>Sit down. I find most things go better sitting down.</blockquote><blockquote>I don&#x27;t make threats. I make sure people have read the paperwork.</blockquote><blockquote>I prefer things done properly. It saves everybody so much trouble later.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-geoffrey-agar" id="sheet-geoffrey-agar-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-geoffrey-agar" id="sheet-geoffrey-agar-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-geoffrey-agar-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-geoffrey-agar-status"></p></article>
+<article class="card" data-key="sheet-maureen-jensen"><h3>Maureen Jensen, &quot;the Widow&quot;</h3><p class="intro">Head of the dockside syndicate. A principal of LEDGER (production/casting/CASTING.md); until 24 September she was Sera Kest, and the old name survives only as an internal id (sera; the voice file says kest). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>57 (born 1933)</dd>
+<dt>Origin</dt><dd>A fishing family of the Hook (Jensen is among the evidence&#x27;s fishing-family names); a trawler-owner&#x27;s widow.</dd>
+<dt>Occupation</dt><dd>Heads the dockside syndicate: muscle and smuggling (canon).</dd>
+<dt>Build</dt><dd>About 5 ft 3 in, solid, straight-backed.</dd>
+<dt>Face</dt><dd>A hard face; smoker&#x27;s lines round the mouth; careful make-up.</dd>
+<dt>Hair</dt><dd>A lacquered blonde set: big, heavily styled hair carried into the early 1990s.</dd>
+<dt>Clothes, 1990</dt><dd>A tailored dark suit or wool dress; heavy gold (sovereign rings, a chain, earrings). An older wool coat with a fur collar, bought years ago and worn without caring: by 1990 fur drew abuse in the street, and she has never cared what the street thinks. Court shoes. The fish-factory women she came from wore winter coats, white headscarves and wellingtons; everything she wears says how far she has come from them.</dd>
+<dt>How she moves</dt><dd>She hardly does: people come to her. Sits facing the door. Smokes steadily and taps the ash as if it were a point being made.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Low, smoke-roughened, flat local vowels; says little and means it. Approved in July (as Kest): p244 (a woman, 22, English, Manchester). <strong>Needs an older voice:</strong> 22 against 57, and a Manchester accent against a woman of the Hook.</div>
+<div class="lines"><blockquote>I&#x27;ve learned to count. You&#x27;d be surprised how few round here have.</blockquote><blockquote>I don&#x27;t like surprises, love. I&#x27;ve had enough of them for one life.</blockquote><blockquote>I&#x27;m not interested in what you are. I&#x27;m interested in what you&#x27;ll do.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-maureen-jensen" id="sheet-maureen-jensen-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-maureen-jensen" id="sheet-maureen-jensen-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-maureen-jensen-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-maureen-jensen-status"></p></article>
+<article class="card" data-key="sheet-danny-cammack"><h3>Danny Cammack</h3><p class="intro">Head of the new crew. A principal of LEDGER (production/casting/CASTING.md); until 24 September he was Danny Ro, and the old id survives (danny). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>27 (born 1963)</dd>
+<dt>Origin</dt><dd>Grimsby-side; Cammack is a Lincolnshire name.</dd>
+<dt>Occupation</dt><dd>Heads the new crew: flashy and reckless (canon); loud money (CASTING.md).</dd>
+<dt>Build</dt><dd>About 5 ft 10 in, wiry, restless.</dd>
+<dt>Face</dt><dd>Clean-shaven, quick-eyed; a smoker.</dd>
+<dt>Hair</dt><dd>Short on top and long at the back, the cut everywhere in 1980s Britain. <strong>Nobody in the game calls it a mullet:</strong> the word only caught on in 1994.</dd>
+<dt>Clothes, 1990</dt><dd>A soft leather blouson, a polo shirt, pleated trousers, loafers, a heavy gold chain and a sovereign ring: the football-casual lad grown into money, as that scene faded into rave. (No dated source for the blouson itself.)</dd>
+<dt>How he moves</dt><dd>Fast. Takes up room, talks with his hands, never quite still; sits on tables rather than chairs.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Fast and loud, Lincolnshire, laughing at his own lines. Approved on 24 September: p243 (a man, 22, English, London). The age is near enough; <strong>the accent is not: a London voice for a Grimsby man.</strong> Flagged for the accent check, not for age.</div>
+<div class="lines"><blockquote>Old men and their arrangements. It&#x27;s 1990, mate. Nobody asks permission any more.</blockquote><blockquote>Always in a hurry, me. Somebody&#x27;s got to be.</blockquote><blockquote>You want to watch who you stand next to round here. You&#x27;re stood next to me.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-danny-cammack" id="sheet-danny-cammack-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-danny-cammack" id="sheet-danny-cammack-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-danny-cammack-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-danny-cammack-status"></p></article>
+<article class="card" data-key="sheet-ada"><h3>Ada Vane</h3><p class="intro">The old woman of the street. A principal of LEDGER (production/casting/CASTING.md); she keeps her name, and her surname (Jafar, 25 September). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>78 (born 1912)</dd>
+<dt>Origin</dt><dd>A widow of the Hook. (The August prototype card made her a retired schoolteacher; this sheet leaves that out, and it is Jafar&#x27;s to put back.)</dd>
+<dt>Occupation</dt><dd>Keeps a window on Quay Street (CASTING.md; canon names only &quot;Ada&quot;). In the routines of 28 September her step is in the terraces across from Mickey&#x27;s.</dd>
+<dt>Build</dt><dd>Small, about 5 ft 0 in and shorter than she was; hunched. The old of 1990 were visibly shorter still than the average.</dd>
+<dt>Face</dt><dd>Deeply lined, bright-eyed; full dentures (a fifth of adults had no natural teeth in 1988, a third of the unskilled).</dd>
+<dt>Hair</dt><dd>Grey, set; outdoors under a headscarf tied under the chin, and in the wet a clear plastic rain hood over it.</dd>
+<dt>Clothes, 1990</dt><dd>Indoors a nylon overall over a skirt and cardigan, and slippers. Outdoors a wool or tweed coat, fur-lined ankle boots, a shopping bag.</dd>
+<dt>How she moves</dt><dd>Slowly, in short steps, a hand to the railing or the wall. On her step or at her window, watching; she turns her whole body to look, not just her head.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Thin, old and sharp; broad local vowels; her dentures soften the s. Approved in July: p276 (a woman, 24, English, Oxford). <strong>Needs an older voice:</strong> 24 against 78, and an Oxford accent against a widow of the Hook. The most urgent of the older voices.</div>
+<div class="lines"><blockquote>I&#x27;ve sat at that window a long time, love. Long enough to know when to say nothing.</blockquote><blockquote>Don&#x27;t stand on my step with that face on. Come in or go on.</blockquote><blockquote>I don&#x27;t gossip. I remember. It&#x27;s not the same thing.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-ada" id="sheet-ada-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-ada" id="sheet-ada-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-ada-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-ada-status"></p></article>
+<article class="card" data-key="sheet-june"><h3>June</h3><p class="intro">Mickey&#x27;s estranged daughter, and so Tom&#x27;s first cousin (canon: Tom is the son of Mickey&#x27;s sister). A principal of LEDGER (production/casting/CASTING.md); she keeps her name. Her surname would be her father&#x27;s, Suddaby, unless she married (the casting research&#x27;s proposal; not yet ruled: see the page). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>38 (born 1952)</dd>
+<dt>Origin</dt><dd>Born in the Hook; left it young.</dd>
+<dt>Occupation</dt><dd>A working life somewhere else; canon does not say what, and the sheet assumes nothing. Back for her father&#x27;s funeral.</dd>
+<dt>Build</dt><dd>About 5 ft 4 in, slim.</dd>
+<dt>Face</dt><dd>Careful make-up, tired from the journey; the look of someone who has decided not to cry in front of these people.</dd>
+<dt>Hair</dt><dd>Highlighted, but shorter and less big than the local women&#x27;s: it marks her as from away.</dd>
+<dt>Clothes, 1990</dt><dd>A dark wool coat or belted raincoat, a dark suit or dress, tights, court shoes, a holdall.</dd>
+<dt>How she moves</dt><dd>Quickly and on guard. Keeps her coat on indoors at Mickey&#x27;s and does not sit down there, as if she might leave at any minute.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Quick and clipped, the local accent worn down by years away. Approved on 24 September: p277 (a woman, 23, English, North-East England). <strong>Needs an older voice:</strong> 23 against 38, by the same rule as the others; the North-East accent is near a local one but not it.</div>
+<div class="lines"><blockquote>I didn&#x27;t come back for the business. I came back because somebody had to.</blockquote><blockquote>I&#x27;m not stopping long. I&#x27;ve a life to get back to.</blockquote><blockquote>Don&#x27;t make it a speech. Just say it.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-june" id="sheet-june-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-june" id="sheet-june-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-june-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-june-status"></p></article>
+<article class="card" data-key="sheet-father-emil"><h3>Father Emil</h3><p class="intro">The priest. A principal of LEDGER (production/casting/CASTING.md). His name is not yet ruled: the casting research offers an Irish-born parish priest, Father Brendan Walsh, or keeping Emil as the priest of the town&#x27;s Polish community, who would have known Tom&#x27;s father (see the question on the page). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>About 61 (born about 1929)</dd>
+<dt>Origin</dt><dd>Either Irish-born, as many English Catholic priests of his generation were said to be (unsourced), or of the Polish community that settled after the war. The sheet waits on the name.</dd>
+<dt>Occupation</dt><dd>The Catholic parish priest. Canon: religion is present as part of life, never mocked, never a mechanic. Where his church stands, canon does not say (the routines of 28 September put it off Quay Street).</dd>
+<dt>Build</dt><dd>Medium height, thin, a little stooped; about 5 ft 8 in.</dd>
+<dt>Face</dt><dd>Clean-shaven, lined, attentive; reading glasses in a top pocket.</dd>
+<dt>Hair</dt><dd>Thinning, grey, combed flat.</dd>
+<dt>Clothes, 1990</dt><dd>A black suit over a black clerical shirt and collar, which a man trained in the 1950s wears all day; round the parish a black or grey pullover or cardigan over the clerical shirt, black trousers and shoes, a dark raincoat, perhaps a black beret. The cassock had gone from everyday wear in the 1960s.</dd>
+<dt>How he moves</dt><dd>An unhurried walk round the parish with his hands behind his back; stops for everybody; calls on the old. Listens with his head a little down.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Soft and slow; Irish if he is Father Walsh, a faint Polish lilt if he is Emil. Approved in July: p245 (a man, 25, Irish, Dublin). <strong>Needs an older voice</strong> (25 against 61). The Irish accent fits only if he is Father Walsh.</div>
+<div class="lines"><blockquote>I don&#x27;t ask where people have been. I ask whether they&#x27;re all right.</blockquote><blockquote>I&#x27;m not here to ask you anything. I&#x27;m here in case you want to say something.</blockquote><blockquote>Sit a minute. Nobody&#x27;s going to mind you sitting a minute.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-father-emil" id="sheet-father-emil-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-father-emil" id="sheet-father-emil-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-father-emil-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-father-emil-status"></p></article>
+<article class="card" data-key="sheet-alison-sedman"><h3>Alison Sedman</h3><p class="intro">The journalist. A principal of LEDGER (production/casting/CASTING.md); until 24 September she was Noor, and the old name survives only as an internal id (noor). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>30 (born 1960)</dd>
+<dt>Origin</dt><dd>Local; grammar school, the first of her family at college.</dd>
+<dt>Occupation</dt><dd>A reporter on the town&#x27;s evening paper (its name is still owed by the brand bible). Canon: a love interest in the day-life ring.</dd>
+<dt>Build</dt><dd>About 5 ft 5 in, quick.</dd>
+<dt>Face</dt><dd>Big glasses: by the late 1980s fashionable frames were smaller and rounder, so hers are a few years behind, which suits a provincial reporter. Big earrings.</dd>
+<dt>Hair</dt><dd>Big permed hair.</dd>
+<dt>Clothes, 1990</dt><dd>A jumper or blouse and a skirt, a belted mac, flat boots for walking, a shoulder bag with a spiral-top shorthand notebook and a biro, her contacts book never far off.</dd>
+<dt>How she moves</dt><dd>Fast, always half writing; leans on counters; asks the second question after the answer.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Bright and quick, local, a reporter&#x27;s neutral politeness over it. <strong>No approved voice:</strong> a woman of 30 with a local accent is still to cast, and nothing is cast without Jafar&#x27;s yes.</div>
+<div class="lines"><blockquote>I&#x27;m not writing anything yet. I&#x27;m just listening. People forget there&#x27;s a difference.</blockquote><blockquote>I like to hear a thing twice before I believe it once.</blockquote><blockquote>You&#x27;d be surprised what people tell you when you don&#x27;t ask.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-alison-sedman" id="sheet-alison-sedman-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-alison-sedman" id="sheet-alison-sedman-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-alison-sedman-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-alison-sedman-status"></p></article>
+<article class="card" data-key="sheet-philip-danby"><h3>Philip Danby</h3><p class="intro">The teacher. A principal of LEDGER (production/casting/CASTING.md); until 24 September he was Elias. Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>33 (born 1957)</dd>
+<dt>Origin</dt><dd>Local; went away to train and came back.</dd>
+<dt>Occupation</dt><dd>A teacher at the comprehensive, which stands closed for the game&#x27;s window (canon: no children anywhere; the building is there and nobody is in it), so his days are his own. Canon: a love interest in the day-life ring.</dd>
+<dt>Build</dt><dd>About 5 ft 10 in, loose-limbed, a little round-shouldered.</dd>
+<dt>Face</dt><dd>Clean-shaven, open, a bit tired.</dd>
+<dt>Hair</dt><dd>Brown, a side parting, due a cut.</dd>
+<dt>Clothes, 1990</dt><dd>What he is seen in, with the school shut: jeans or cords, a knitted jumper, an anorak or quilted jacket, desert boots or trainers; a cord jacket with leather elbow patches over a shirt and knitted tie when he dresses up.</dd>
+<dt>How he moves</dt><dd>Walks a great deal; carries a paperback or the paper; stands a little too close when he is interested and steps back when he notices.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Mild and a little hesitant, local vowels an education has smoothed. <strong>No approved voice:</strong> a man of 33 with a local accent is still to cast.</div>
+<div class="lines"><blockquote>I&#x27;ve more time than I know what to do with just now.</blockquote><blockquote>I walk. It&#x27;s that or sit indoors watching the rain.</blockquote><blockquote>You notice things when you&#x27;re not in a hurry. I&#x27;m never in a hurry now.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-philip-danby" id="sheet-philip-danby-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-philip-danby" id="sheet-philip-danby-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-philip-danby-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-philip-danby-status"></p></article>
+<article class="card" data-key="sheet-the-fixer"><h3>The Fixer</h3><p class="intro">The broker between all three rivals. A principal of LEDGER (production/casting/CASTING.md). His name is not yet ruled: the casting research offers Keith Garbutt (see the question on the page). Text only: face, clothes and voice samples are the builder&#x27;s.</p><dl>
+<dt>Age</dt><dd>48 (born 1942)</dd>
+<dt>Origin</dt><dd>Of the town; nobody can say which side he started on, which is the point of him.</dd>
+<dt>Occupation</dt><dd>Brokers between the old-money machine, the dockside syndicate and the new crew (canon).</dd>
+<dt>Build</dt><dd>Medium, about 5 ft 9 in, neat, a little heavy at the middle.</dd>
+<dt>Face</dt><dd>A neat moustache: the 1970s and 1980s were its heyday and the 1990s preferred a bare lip, so it says he settled his look in the seventies.</dd>
+<dt>Hair</dt><dd>Dark going grey, short and neat.</dd>
+<dt>Clothes, 1990</dt><dd>A car coat, between a jacket and a three-quarter coat, in cotton suedette or brushed nylon lined with pile (sheepskin was the football manager&#x27;s); driving gloves, slip-on shoes, a plain suit or slacks and a knitted shirt. Not the camel coat and trilby of the TV wheeler-dealer, which is the cliché to steer away from.</dd>
+<dt>How he moves</dt><dd>Calm; sits with his back to a wall; never raises his voice; lights other people&#x27;s cigarettes before his own.</dd>
+</dl>
+<div class="voice"><span class="eyebrow">Voice</span><br>Even and unhurried, local, never raised. <strong>No approved voice:</strong> a man of 48 is still to cast, older than any approved man&#x27;s voice (the oldest, Ron&#x27;s p227, is 38).</div>
+<div class="lines"><blockquote>I don&#x27;t take sides. I take a percentage. It&#x27;s a more honest arrangement.</blockquote><blockquote>Everybody wants the same thing. They just want it first.</blockquote><blockquote>Say what you need. Whether I can help is another conversation.</blockquote></div>
+<div class="row"><label class="pick"><input type="radio" name="sheet-the-fixer" id="sheet-the-fixer-approve" value="approve"><span>Approve this sheet</span></label><label class="pick"><input type="radio" name="sheet-the-fixer" id="sheet-the-fixer-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="sheet-the-fixer-note" placeholder="What is right or wrong, in a few words"></textarea><p class="status" id="sheet-the-fixer-status"></p></article>
+</section><section><h2>The story, in outline</h2><article class="card outline" data-key="story">
+<p>For Jafar&#x27;s approval, 28 September (town list, item 5). Under two pages, not a script. From canon, DECISIONS (D30, D33, D58), the July act drafts he approved (legacy/v1-era/act-drafts), the endings as built (ActThree.cs), the crime layer, and the research on authored stories in simulations and on British crime fiction. Where the July drafts assumed a pub, drink or dollars, this follows canon since: Mickey&#x27;s is a minicab office.</p>
+<h3>The spine</h3>
+<p>A stranger inherits a position, not a business. Tom Nowak arrives with one suitcase and a letter; his uncle Mickey, dead three weeks, has left him Mickey&#x27;s, a cab office on Quay Street in the Hook, a half-dead outfit and a book of debts nobody can collect. The town decides who he is by what it knows, and what it calls him says how far he has got: the new owner, Nowak, Tom, Tommy. Three questions in turn: what did you inherit; how big can it get before your two lives touch; which life was real.</p>
+<p>Underneath, never explained: the dock labour scheme ended in July 1989 and more than half the registered dockers&#x27; jobs went. That is why the debts will not pay, why the outfit is half dead, and why a loud new crew can rise. The register is British noir, which runs on class, not greed: who may speak to whom, and how.</p>
+<h3>Arrival</h3>
+<p>He comes after the funeral, which he missed; June, Mickey&#x27;s daughter, came back for it and is still in town, wanting nothing from the office. Sheila Dunn shows him round and stops at the one door she does not open; she promised Mickey to size him up. Ron Kirby, kept on since the docks let him go, calls him boss and watches him. Darren Milner is already on the pavement, friendly and owing. Ada watches from her window. By nightfall half the street has seen him and none of it knows him, and the first thing the town does is talk.</p>
+<h3>Act I: The Inheritance (the first week)</h3>
+<p>The most scripted act, as the research advises: the world is most predictable before the player changes it. Five threads, as approved in July: the outfit&#x27;s claim (Mickey&#x27;s arrangements outlive him; the first ask comes on night one, and refusing breaks his deal, not a quest); the warehouse fire, the founding rumour Alison Sedman will not drop and Ellis will not close; Mickey&#x27;s real book, which Sheila shows when she trusts him or when Ellis&#x27;s pressure forces her hand, with a page in Mickey&#x27;s hand tying the fire to the outfit; the street deciding who he is, every act seen, retold and now shown; and someone worth being honest for, Alison (built) or Philip Danby (still to write). Ada&#x27;s tea is the week&#x27;s first test of which life he keeps. The week ends with Sheila, over the real book: &quot;So which is it going to be?&quot; Wind it down, take it over, or refuse to say; the street learns the answer.</p>
+<h3>Act II: The Squeeze</h3>
+<p>Opens when the business has grown. Each rival attacks a different ledger, and notices him only through what its own people see. Maureen Jensen, the Widow, and the dockside syndicate go after his people: poaching Ron, taxing his drivers. Geoffrey Agar and the old-money machine go after his clean money with paper: the office&#x27;s private-hire licence, a solicitor&#x27;s letter, an inspection. Danny Cammack&#x27;s new crew go after his cover: noise on Quay Street that brings heat he did not earn. The Fixer sells true reads, a meeting, one truce. DS Carol Ellis joins the street&#x27;s crimes to the warehouse fire: one case. One collision is guaranteed: an evening with his day life is interrupted by his night life at the door, and both worlds see each other. It ends at a sit-down with one head: accept, defy, or counter with what he knows.</p>
+<h3>Act III: The Ledger Comes Due (ruled in July: an audit)</h3>
+<p>A courteous letter naming a date: a VAT inspection by Customs and Excise, which ran VAT in 1990. The fare book has been lying since day one: too little laundered and the night money has no source, too much and a cab office on this street earned more than it could. The inspector brings one item each morning; Tom produces it or asks for it in writing. Sheila, if she trusts him, tells him where the lie holds. Ellis offers a trade: give her a rival, at the price that the street learns who talks; refusing her can still reach the best ending, but only through what the town believes. Someone in his crew may ask to take it over. On the last day he can reach only a few people, and whoever picks up is the campaign he played. Then the books open.</p>
+<h3>How the endings are reached (as built)</h3>
+<p>Never picked from a list: each is a state the world is in when the inspection closes, and when several fit, the stronger wins: Quiet, then Both, then the Straight Life, then the Kingdom. <strong>Quiet</strong>: he hands it to someone who can hold it (competence, loyalty, standing, no feud), never while he is hunted for a killing; three watch-only days show whether it holds. <strong>Both</strong>: the business survives, one friendship holds, the street does not hold his rackets as fact, Ellis&#x27;s case is answerable, and the books both hold and make sense; rare, and by the July ruling not meant to be reached on a first playthrough (aimed at by the balance, not enforced). <strong>The Kingdom</strong>: the business survives and the books hold; he keeps what he built, and finds the people in it civil and no more unless one friend still counts him. <strong>The Straight Life</strong>: no business at the close, never built or sold up, and one friendship holds. <strong>Burn Both</strong>: none of these; what doing nothing produces. By D58 there is no redemption path, and every cost must be visible as it approaches, through Tom&#x27;s own reading with its reasons (D33): a cost he could not see is a trap.</p>
+<h3>Rules the writing keeps</h3>
+<p>Beats fire on states, not on sequence; the only dates are those people in the story name (the week&#x27;s end, the letter). No single beat can fail the run. The simulation decides who is alive, who knows what, who is where and how the law stands; the models only voice it. No drink, gambling or children; the town remembers everything, and now shows it.</p>
+<h3>Owed, already ordered</h3>
+<p>Act III&#x27;s text in the Core still reads as a pub (the letter, the cellar, duty on stock, a cap on laundering set by bar takings): D58 made rewording it checkpoint work, and the cap must be re-derived for a cab office (fares against fuel, cars and drivers; VAT powers under the 1983 VAT Act, not the excise act).</p>
+<h3>For Jafar to rule</h3>
+<p>Canon&#x27;s open question 2: <strong>does this spine (Tom, the three acts, the three rivals and the empire roster) stand as the baseline, with the cast as today&#x27;s sheets have it</strong> (Ada the widow at her window rather than July&#x27;s teacher, Philip the teacher; Ada&#x27;s teaching is its own question on the page)? <strong>(a) Yes, as outlined (recommended)</strong>; (b) yes, with the changes in your note; (c) a different story.</p>
+<div class="row"><label class="pick"><input type="radio" name="story" id="story-approve" value="approve"><span>Approve the outline</span></label><label class="pick"><input type="radio" name="story" id="story-redo" value="redo"><span>Redo it (say what in the note)</span></label></div><textarea id="story-note" placeholder="What to change"></textarea><p class="status" id="story-status"></p></article></section>
+<p class="status" id="store-status"></p></main>
+<script>
+let db = null, canWrite = true;
+const state = {};
+function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}
+function save(key){
+  const card=document.querySelector('[data-key="'+key+'"]');
+  const picked=card.querySelector('input[type=radio]:checked');
+  const note=document.getElementById(key+"-note").value;
+  state[key]={pick:picked?picked.value:null,note:note,at:new Date().toISOString()};
+  if(!db){status(key,"Not saved: this view cannot store your answer.");return;}
+  if(!canWrite){status(key,"Not saved: you can read this page but not answer on it.");return;}
+  status(key,"Saving...");
+  db.doc("verdicts/"+key).set(state[key]).then(()=>status(key,"Saved",true)).catch(e=>{
+    if(e&&(e.code==="not_granted"||e.code==="permission_denied"||e.code==="invalid_argument")) canWrite=false;
+    status(key,"Not saved: "+(e&&e.message?e.message:"the store refused it")+".");});
+}
+for(const card of document.querySelectorAll("[data-key]")){
+  const key=card.dataset.key;
+  card.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",()=>save(key)));
+  const t=document.getElementById(key+"-note"); if(t) t.addEventListener("change",()=>save(key));
+}
+(async()=>{
+  try{ db = await window.claude?.use?.("db"); }catch(e){ db=null; }
+  const g=document.getElementById("store-status");
+  if(!db){ g.textContent="Answers cannot be stored in this view."; return; }
+  for(const card of document.querySelectorAll("[data-key]")){
+    const key=card.dataset.key;
+    try{
+      const snap=await db.doc("verdicts/"+key).get();
+      const v=snap&&(snap.data?snap.data():snap);
+      if(v&&v.pick){const r=document.getElementById(key+"-"+v.pick); if(r) r.checked=true;}
+      if(v&&v.note){document.getElementById(key+"-note").value=v.note;}
+      if(v&&(v.pick||v.note)) status(key,"Saved",true);
+    }catch(e){}
+  }
+})();
+</script>

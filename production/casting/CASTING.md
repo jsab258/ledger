@@ -61,17 +61,17 @@ people. Ages are in 1990.
 | **Sheila Dunn** | 53 | Mickey's bookkeeper for thirty-one years; a widow in a council flat | grey-brown shampoo-and-set, large glasses on a chain, cardigan, no make-up but lipstick, smoker's lines, dentures | [sheet](sheila-dunn/SHEET.md) |
 | **Ron Kirby** | 58 | a docker until the scheme ended in 1989; Mickey kept him on the door and the rank | big, heavy-set, bald, full moustache, tattooed forearms, donkey jacket | [sheet](ron-kirby/SHEET.md) |
 | **Darren Milner** | 25 | the street hustler; out of work since a youth training scheme, lives at his mother's, pager and phone boxes | bleached-tip grown-out perm, shell suit or bomber jacket, thin | [sheet](darren-milner/SHEET.md) |
-| **Tom Nowak** | 32 | the player; son of a Polish post-war settler and Mickey's sister, a stranger to the Hook | short hair, clean-shaven, no tattoos | to come |
-| **DS Carol Ellis** | 40 | Humberside CID | feathered bob, blazer, minimal make-up | to come |
-| **Geoffrey Agar** | 62 | solicitor and alderman, head of the old-money machine | silver hair swept back, rimless glasses, three-piece suit | to come |
-| **Maureen Jensen, "the Widow"** | 57 | trawler-owner's widow from a Hessle Road family, head of the dockside syndicate | blonde set, heavy gold, fur-collared coat, hard face | to come |
-| **Danny Cammack** | 27 | head of the new crew, Grimsby-side, loud money | mullet, gold chain, leather blouson | to come |
-| **Ada** | 78 | the old woman of the street; a widow who keeps a window on Quay Street | headscarf, hunched, dentures | to come |
-| **June** | 38 | Mickey's estranged daughter, back for the funeral | highlights, shoulder pads | to come |
-| **Father Emil** | about 61 | the priest (name not yet ruled: the research offers Father Brendan Walsh, or Emil as the Polish mission's priest who knew Tom's father) | black suit and collar, thinning grey hair | to come |
-| **Alison Sedman** | 30 | a reporter on the local paper; grammar school, first of her family at college | big permed hair, big glasses, a notebook | to come |
-| **Philip Danby** | 33 | a teacher at the comprehensive, which stands closed for the game's window | side parting, knitted tie, corduroy jacket | to come |
-| **the Fixer** | 48 | brokers between all three rivals (name not yet ruled: the research offers Keith Garbutt) | neat moustache, car coat | to come |
+| **Tom Nowak** | 32 | the player; son of a Polish post-war settler and Mickey's sister, a stranger to the Hook | short hair, clean-shaven, no tattoos | [sheet](tom-nowak/SHEET.md) |
+| **DS Carol Ellis** | 40 | Humberside CID | feathered bob, blazer, minimal make-up | [sheet](carol-ellis/SHEET.md) |
+| **Geoffrey Agar** | 62 | solicitor and alderman, head of the old-money machine | silver hair swept back, rimless glasses, three-piece suit | [sheet](geoffrey-agar/SHEET.md) |
+| **Maureen Jensen, "the Widow"** | 57 | trawler-owner's widow from a Hessle Road family, head of the dockside syndicate | blonde set, heavy gold, fur-collared coat, hard face | [sheet](maureen-jensen/SHEET.md) |
+| **Danny Cammack** | 27 | head of the new crew, Grimsby-side, loud money | mullet, gold chain, leather blouson | [sheet](danny-cammack/SHEET.md) |
+| **Ada** | 78 | the old woman of the street; a widow who keeps a window on Quay Street | headscarf, hunched, dentures | [sheet](ada/SHEET.md) |
+| **June** | 38 | Mickey's estranged daughter, back for the funeral | highlights, shoulder pads | [sheet](june/SHEET.md) |
+| **Father Emil** | about 61 | the priest (name not yet ruled: the research offers Father Brendan Walsh, or Emil as the Polish mission's priest who knew Tom's father) | black suit and collar, thinning grey hair | [sheet](father-emil/SHEET.md) |
+| **Alison Sedman** | 30 | a reporter on the local paper; grammar school, first of her family at college | big permed hair, big glasses, a notebook | [sheet](alison-sedman/SHEET.md) |
+| **Philip Danby** | 33 | a teacher at the comprehensive, which stands closed for the game's window | side parting, knitted tie, corduroy jacket | [sheet](philip-danby/SHEET.md) |
+| **the Fixer** | 48 | brokers between all three rivals (name not yet ruled: the research offers Keith Garbutt) | neat moustache, car coat | [sheet](the-fixer/SHEET.md) |
 
 **Mickey** (Michael Suddaby, 1924-1990), a trawlerman until the fleet went,
 then the cab office, appears only in a framed photograph: flat cap, moustache.
