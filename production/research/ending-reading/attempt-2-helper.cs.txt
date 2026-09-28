@@ -1,0 +1,35 @@
+    static readonly JsonSerializerOptions ViewJson = new JsonSerializerOptions { IncludeFields = true, PropertyNameCaseInsensitive = true };
+
+----
+            TomsView readingOf = null;
+
+----
+                // TOM'S READING OF WHAT THE ENDING WILL COST (town list 6i): the
+                // game sends what he has seen and heard, and gets his readings
+                // back for the Ledger. Only what he did, saw, heard and was told
+                // has a field; anything else sent is ignored.
+                if (r.TryGetProperty("reading", out var rv) && rv.ValueKind == JsonValueKind.Object)
+                    readingOf = JsonSerializer.Deserialize<TomsView>(rv.GetRawText(), ViewJson) ?? new TomsView();
+
+----
+            if (readingOf != null)
+            {
+                var readings = new List<object>();
+                foreach (var rd in TomsReading.Read(readingOf))
+                    readings.Add(new { cost = rd.Cost, outlook = rd.Outlook.ToString().ToLowerInvariant(), line = rd.Line, why = rd.Why, stake = rd.Stake });
+                return JsonSerializer.Serialize(new { id, readings }, Plain);
+            }
+
+----
+        // TOM'S READING (town list 6i): what he has seen and heard in, his readings out;
+        // a hidden number sent by mistake changes nothing.
+        var reader = new Helper(null, TimeSpan.FromSeconds(8));
+        string readingLine = "{\"id\":51,\"reading\":{\"takings\":3000,\"nightMoney\":2000,\"putThrough\":500,"
+            + "\"before\":[{\"name\":\"June\",\"calledHim\":\"Tom\",\"daysSinceCameRound\":1}],\"timesHeardEllisAsking\":1,"
+            + "\"witnessesHeKnowsOf\":{\"the lad at the chip shop\":null}";
+        string rd1 = await reader.Answer(readingLine + "}}");
+        string rd2 = await reader.Answer(readingLine + ",\"bestDayLifeLoyalty\":0.1,\"ellisCaseAnswerable\":true}}");
+        Ok("the game sends what Tom has seen and heard, and gets his readings with their reasons",
+           rd1.Contains("\"cost\":\"books\"") && rd1.Contains("\"outlook\":\"coming\"") && rd1.Contains("June still calls you Tom") && rd1.Contains("\"stake\":"), rd1);
+        Ok("a hidden number sent with it changes nothing", rd1.Replace("\"id\":51", "") == rd2.Replace("\"id\":51", ""), rd2);
+

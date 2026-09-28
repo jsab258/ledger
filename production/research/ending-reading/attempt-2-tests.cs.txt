@@ -1,0 +1,88 @@
+        static void TestTomsReading()
+        {
+            Console.WriteLine("Tom's reading:");
+            // NOTHING HIDDEN CAN GET IN: the view holds only what he did, saw,
+            // heard and was told. Loyalty, heat, a case's strength and a
+            // successor's verdict are all fractions; the view has none.
+            var fractions = new List<string>();
+            foreach (var type in new[] { typeof(TomsView), typeof(FromBefore), typeof(CrewSeen), typeof(WitnessSeen) })
+                foreach (var f in type.GetFields())
+                    if (f.FieldType == typeof(double) || f.FieldType == typeof(float) || f.FieldType == typeof(double?)) fractions.Add(type.Name + "." + f.Name);
+            Check(fractions.Count == 0, "what Tom has seen carries no fraction, so no hidden number can be put into words", string.Join(",", fractions));
+
+            // THE BOOKS, from Sheila's own four phrases once she has walked him through.
+            Outlook BooksWith(string word, int night = 0, int through = 0) =>
+                TomsReading.Books(new TomsView { Takings = 3000, NightMoney = night, PutThrough = through, SheilasWord = word }).Outlook;
+            Check(BooksWith(ActThreeState.StrainWord(0.1)) == Outlook.Quiet && BooksWith(ActThreeState.StrainWord(0.3)) == Outlook.Quiet
+                  && BooksWith(ActThreeState.StrainWord(0.6)) == Outlook.Coming && BooksWith(ActThreeState.StrainWord(0.9)) == Outlook.Shut,
+                  "the books read from Sheila's words: fine, a question or two, not sure, and they will not stand");
+            var ownSense = TomsReading.Books(new TomsView { Takings = 3000, NightMoney = 2000, PutThrough = 500 });
+            Check(ownSense.Outlook == Outlook.Coming && ownSense.Why.Exists(w => w.Contains("night money you never ran through")) && ownSense.Why.Exists(w => w.Contains("nobody has taken you through")),
+                  "without her, his own figures: night money he never put through reads as coming, and he knows he is guessing");
+
+            // THE LIFE, from who still comes round and what they call him. It can be wrong.
+            var friend = new FromBefore { Name = "June", CalledHim = "Tom", DaysSinceCameRound = 1 };
+            var lifeOk = TomsReading.Life(new TomsView { Before = { friend, new FromBefore { Name = "Ada", CalledHim = "Nowak", DaysSinceCameRound = 9 } } });
+            Check(lifeOk.Outlook == Outlook.Quiet && lifeOk.Why[0].StartsWith("June still calls you Tom, and came round a day ago") && lifeOk.Why.Exists(w => w.Contains("Ada has not come round in a week")),
+                  "somebody from before who calls him Tom and came round lately: quiet, with the others read too", string.Join(" | ", lifeOk.Why));
+            var drifting = TomsReading.Life(new TomsView { Before = { new FromBefore { Name = "June", CalledHim = "Tom", DaysSinceCameRound = 6 } } });
+            Check(drifting.Outlook == Outlook.Coming,
+                  "a friend who has not come round in six days reads as drifting, whatever she feels: his reading, which can be wrong");
+            var gone = TomsReading.Life(new TomsView { Before = { new FromBefore { Name = "June", SaidTheyWereDone = true }, new FromBefore { Name = "Ada", TurnedHimAway = true } } });
+            Check(gone.Outlook == Outlook.Shut && TomsReading.Life(new TomsView { Before = { new FromBefore { Name = "June", CalledHim = "Tommy", DaysSinceCameRound = 0 } } }).Why[0].Contains("came round today"),
+                  "all of them done with him or turning him away: shut, as far as he can tell; and today reads as today");
+
+            // THE STREET, ELLIS, THE POLICE: each can be seen coming before it shuts.
+            Check(TomsReading.Street(new TomsView()).Outlook == Outlook.Quiet && TomsReading.Street(new TomsView { HeardRacketTalkThisWeek = 1 }).Outlook == Outlook.Coming
+                  && TomsReading.Street(new TomsView { HeardRacketTalkThisWeek = 4, HeardItSaidAsFact = true }).Outlook == Outlook.Shut,
+                  "the street: quiet, then talked of, then said flatly as fact");
+            var ellisOpen = TomsReading.Ellis(new TomsView { TimesHeardEllisAsking = 2, WitnessesHeKnowsOf = { { "the lad at the chip shop", null } } });
+            var ellisAnswered = TomsReading.Ellis(new TomsView { EllisUsedHisName = true, WitnessesHeKnowsOf = { { "the lad at the chip shop", "now says he was mistaken" } } });
+            Check(ellisOpen.Outlook == Outlook.Coming && ellisAnswered.Outlook == Outlook.Quiet && ellisAnswered.Why[0] == "Ellis has used your name to your face"
+                  && ellisAnswered.Why.Contains("the lad at the chip shop now says he was mistaken"),
+                  "Ellis: asking with a witness he has not answered is coming; with every witness he knows of answered it is quiet, and says why");
+            Check(TomsReading.Police(new TomsView()) == null && TomsReading.Police(new TomsView { SawPoliceOverABody = true }).Outlook == Outlook.Coming
+                  && TomsReading.Police(new TomsView { SawPoliceOverABody = true, PoliceAskingForHimByName = true }).Line.Contains("no longer a way out"),
+                  "the police: nothing without a body; a body is coming; asked for by name, handing it over is shut");
+
+            // THE SUCCESSOR: what he has seen them do, never whether they could hold it.
+            var crew = TomsReading.Successor(new TomsView { Crew = {
+                new CrewSeen { Name = "Ron", RanAlone = "the rank for a week", WentClean = true, CameWhenCalled = true },
+                new CrewSeen { Name = "Darren", RanAlone = "the Thursday collection", WentClean = false, SeenArguingWith = "Ron" },
+                new CrewSeen { Name = "Kev" } } });
+            Check(crew.Line.Contains("nobody will tell you") && crew.Why.Contains("Ron ran the rank for a week alone, and it went clean; Ron came when you called")
+                  && crew.Why.Exists(w => w.StartsWith("Darren") && w.Contains("fall out with Ron")) && crew.Why.Contains("Kev has never run anything of yours alone"),
+                  "the successor: what each has run alone and how it went, and never a verdict", string.Join(" | ", crew.Why));
+            Check(TomsReading.Successor(new TomsView { HandedItOver = true, HandedTo = "Ron" }).Line == "it is Ron's name on the licence now",
+                  "handed over: whose name is on the licence, and still no verdict");
+
+            // THOSE WHO WATCHED.
+            Check(TomsReading.Watched(new TomsView()) == null
+                  && TomsReading.Watched(new TomsView { Watched = { new WitnessSeen { Name = "Mrs Kelly", HeldHisEye = false } } }).Outlook == Outlook.Coming,
+                  "a witness who cannot meet his eye reads as coming");
+
+            // THE WHOLE READING: shut first, and every word plain.
+            var all = TomsReading.Read(new TomsView
+            {
+                Takings = 3000, NightMoney = 2000, PutThrough = 900, SheilasWord = ActThreeState.StrainWord(0.9), DaysHeAnsweredTheInspector = 2, DaysHeStonewalled = 3,
+                Before = { friend }, HeardRacketTalkThisWeek = 2, TimesHeardEllisAsking = 1, WitnessesHeKnowsOf = { { "Mrs Kelly", null } },
+                SawPoliceOverABody = true, QuestionedAboutIt = true, Crew = { new CrewSeen { Name = "Ron" } },
+                Watched = { new WitnessSeen { Name = "Mrs Kelly", HeldHisEye = null } },
+            });
+            bool ordered = true;
+            for (int i = 1; i < all.Count; i++) if (all[i].Outlook > all[i - 1].Outlook) ordered = false;
+            string badWords = null;
+            foreach (var rd in all)
+                foreach (var w in new[] { rd.Line, rd.Stake }.Concat(rd.Why))
+                {
+                    if (System.Text.RegularExpressions.Regex.IsMatch(w, @"\d")) badWords = w + " (a number)";
+                    else if (w.Contains("player.") || w.Contains("_d")) badWords = w + " (an id)";
+                    else if (ContentRule.SpeechBreaks(w) != null) badWords = w + " (" + ContentRule.SpeechBreaks(w) + ")";
+                }
+            Check(all.Count == 7 && ordered && all[0].Cost == "books" && all[0].Outlook == Outlook.Shut,
+                  "the whole reading, what has shut first", string.Join(",", all.Select(x => x.Cost + ":" + x.Outlook)));
+            Check(badWords == null, "every line in words: no number, no id, and nothing the content rule refuses", badWords ?? "");
+            Check(TomsReading.Read(null).Count == 0, "no view, no reading");
+            Check(all.TrueForAll(x => !string.IsNullOrEmpty(x.Stake)), "every reading says what rides on it");
+        }
+

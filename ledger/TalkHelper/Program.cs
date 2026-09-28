@@ -118,6 +118,98 @@ static class Program
 
         public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
 
+        ConversationEngine NewEngine(CharacterCard card)
+        {
+            var engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
+                new SuspicionTracker(), _cost);
+            // THE CLAIM CHECK ON THE REAL MODEL (ClaimCheck.cs, 24 September):
+            // every reply is read for claims the character's knowledge does
+            // not support before it is said. Not on the stand-in models,
+            // which answer only from memory already.
+            if (_llm is AnthropicClient || CheckAlways) engine.Checker = _llm;
+            return engine;
+        }
+
+        /// TALK KEPT WITH THE GAME'S SAVE (town list 6r, the checklist sweep of 28
+        /// September): what Tom said to each person lived only in here, so a
+        /// reload forgot it and a new game carried it over.
+        ///   {"talk":"save","path":P}  every conversation, written to P
+        ///   {"talk":"load","path":P}  every conversation replaced by P's
+        ///   {"talk":"reset"}          every conversation forgotten (a new game)
+        /// P must end ".talk.json", beside the game's own save, so a slip in the
+        /// game cannot make this write over anything else.
+        public async Task<string> Talk(string op, string path, string stamp = null)
+        {
+            op = (op ?? "").Trim().ToLowerInvariant();
+            // A LOAD OR A RESET FORGETS EVERYBODY FIRST, whatever else fails: the
+            // timeline the player left is gone either way (the independent check:
+            // a load with a bad path kept the old talk).
+            if (op == "reset" || op == "load")
+            {
+                _engines.Clear();
+                _unwinding.Clear();
+                if (op == "reset") return JsonSerializer.Serialize(new { talk = "reset" }, Plain);
+            }
+            if (op != "save" && op != "load") return JsonSerializer.Serialize(new { talk = op, error = "unknown" }, Plain);
+            if (string.IsNullOrWhiteSpace(path) || !path.EndsWith(".talk.json", StringComparison.OrdinalIgnoreCase))
+                return JsonSerializer.Serialize(new { talk = op, error = "path-must-end-.talk.json" }, Plain);
+            if (op == "save")
+            {
+                // A turn given up at the patience limit may still be finishing:
+                // wait for it (as the next turn does), or the save keeps a line
+                // nobody heard, read while it is being written.
+                foreach (var t in new List<Task>(_unwinding.Values)) await Task.WhenAny(t, Task.Delay(10000));
+                _unwinding.Clear();
+                string tmp = path + ".tmp";
+                try
+                {
+                    var people = new Dictionary<string, object>();
+                    foreach (var kv in _engines) people[kv.Key] = kv.Value.CaptureTalk();
+                    var root = new Dictionary<string, object> { { "version", 1 }, { "people", people } };
+                    if (!string.IsNullOrEmpty(stamp)) root["stamp"] = stamp;
+                    File.WriteAllText(tmp, MiniJson.Serialize(root));
+                    File.Move(tmp, path, overwrite: true);
+                    return JsonSerializer.Serialize(new { talk = "saved", people = people.Count }, Plain);
+                }
+                catch (Exception)
+                {
+                    // A FAILED SAVE LEAVES NO TALK AT ALL in the slot, never an
+                    // older timeline's: a load then finds none, and nobody knows
+                    // what they were never told (the independent check).
+                    try { if (File.Exists(tmp)) File.Delete(tmp); } catch (Exception) { }
+                    try { if (File.Exists(path)) File.Delete(path); } catch (Exception) { }
+                    return JsonSerializer.Serialize(new { talk = "save", error = "unwritable" }, Plain);
+                }
+            }
+            if (!File.Exists(path)) return JsonSerializer.Serialize(new { talk = "loaded", people = 0, missing = true }, Plain);
+            Dictionary<string, object> saved;
+            try { saved = MiniJson.AsObject(MiniJson.Deserialize(File.ReadAllText(path))); }
+            catch (Exception) { saved = null; }
+            var list = MiniJson.GetObject(saved, "people");
+            if (list == null) return JsonSerializer.Serialize(new { talk = "loaded", people = 0, error = "unreadable" }, Plain);
+            // THE STAMP (the independent check): the game names each save with its
+            // own id and sends it with "save" and with "load". Talk stamped for
+            // another save, left behind by a save that could not replace it, is
+            // never loaded: nobody knows what they were told in another game.
+            string onFile = MiniJson.GetString(saved, "stamp");
+            if (!string.IsNullOrEmpty(stamp) && onFile != stamp)
+                return JsonSerializer.Serialize(new { talk = "loaded", people = 0, stale = true }, Plain);
+            int skipped = 0;
+            foreach (var kv in list)
+            {
+                var state = MiniJson.AsObject(kv.Value);
+                string cardId = MiniJson.GetString(state, "card");
+                // By the card's own id, not its file name (sam.md copied as darren.md).
+                CharacterCard card = null;
+                if (cardId != null) foreach (var c in Cards.Values) if (c.Id == cardId) { card = c; break; }
+                if (state == null || card == null) { skipped++; continue; }
+                var engine = NewEngine(card);
+                engine.RestoreTalk(state);
+                _engines[kv.Key] = engine;
+            }
+            return JsonSerializer.Serialize(new { talk = "loaded", people = _engines.Count, skipped }, Plain);
+        }
+
         /// A TURN AS THE PLAYER HAD IT, kept for a report (town list 6c: Steam,
         /// Microsoft and PEGI all require a way to report what the AI said):
         /// the last hundred, what was said to whom and what came back.
@@ -196,6 +288,7 @@ static class Program
             string knowingStory = null;
             int? report = null;
             string reportWhy = null;
+            string talkOp = null, talkPath = null, talkStamp = null;
             try
             {
                 using var doc = JsonDocument.Parse(line);
@@ -204,6 +297,12 @@ static class Program
                 {
                     report = rp.GetInt32();
                     if (r.TryGetProperty("why", out var rw) && rw.ValueKind == JsonValueKind.String) reportWhy = rw.GetString();
+                }
+                if (r.TryGetProperty("talk", out var tk) && tk.ValueKind == JsonValueKind.String)
+                {
+                    talkOp = tk.GetString();
+                    if (r.TryGetProperty("path", out var tp) && tp.ValueKind == JsonValueKind.String) talkPath = tp.GetString();
+                    if (r.TryGetProperty("stamp", out var ts) && ts.ValueKind == JsonValueKind.String) talkStamp = ts.GetString();
                 }
                 if (r.TryGetProperty("id", out var v)) id = v.GetInt32();
                 if (r.TryGetProperty("to", out v)) to = v.GetString() ?? "";
@@ -269,6 +368,7 @@ static class Program
             {
                 return JsonSerializer.Serialize(new { error = "bad-line" }, Plain);
             }
+            if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
             if (report.HasValue) return await ReportAsync(report.Value, reportWhy);
             if (noReply && !derived.HasValue)
                 return JsonSerializer.Serialize(new { id, to, error = "no-evidence" }, Plain);
@@ -287,13 +387,7 @@ static class Program
 
             if (!_engines.TryGetValue(key, out var engine))
             {
-                engine = new ConversationEngine(_llm, card, new MemoryStore(card.Id), new KnowledgeBase(),
-                    new SuspicionTracker(), _cost);
-                // THE CLAIM CHECK ON THE REAL MODEL (ClaimCheck.cs, 24 September):
-                // every reply is read for claims the character's knowledge does
-                // not support before it is said. Not on the stand-in models,
-                // which answer only from memory already.
-                if (_llm is AnthropicClient || CheckAlways) engine.Checker = _llm;
+                engine = NewEngine(card);
                 _engines[key] = engine;
             }
             // THE SIMULATION'S STATE, loaded before the line is answered.
@@ -793,6 +887,58 @@ static class Program
         var pl = await plain.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
         Ok("without --early nothing changes: the whole reply, no first line, no rest",
            plainFirsts == 0 && Reply(pl) == "Aye. I saw him go by the chip shop at nine." && Str(pl, "rest") == null, pl);
+
+        // TALK KEPT WITH THE GAME'S SAVE (town list 6r).
+        string talkDir = Path.Combine(Path.GetTempPath(), "talkhelper-selftest-" + Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(talkDir);
+        try
+        {
+            string slot = Path.Combine(talkDir, "slot1.talk.json");
+            var keeper = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+            LoadCards(keeper, cardsDir);
+            await keeper.Answer("{\"id\":41,\"to\":\"sam\",\"say\":\"I was at the pictures all night, honest.\"}");
+            string saved = await keeper.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+            Ok("save writes every conversation beside the game's save", Str(saved, "talk") == "saved" && File.Exists(slot) && !File.Exists(slot + ".tmp"), saved);
+            await keeper.Answer("{\"talk\":\"reset\"}");
+            Ok("reset (a new game) forgets every conversation", keeper.EngineFor("sam") == null);
+            string loaded = await keeper.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+            var back = keeper.EngineFor("sam");
+            Ok("load puts them back: he still remembers what Tom told him",
+               Str(loaded, "talk") == "loaded" && back != null && back.Memory.Events.Exists(e => e.Text.Contains("pictures all night")), loaded);
+            await keeper.Answer("{\"id\":42,\"to\":\"lena\",\"say\":\"Morning.\"}");
+            string missing = await keeper.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(Path.Combine(talkDir, "none.talk.json")) + "}");
+            Ok("loading a save with no talk beside it forgets the abandoned timeline's",
+               keeper.EngineFor("sam") == null && keeper.EngineFor("lena") == null && missing.Contains("\"missing\":true"), missing);
+            string odd = await keeper.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(Path.Combine(talkDir, "game.sav")) + "}");
+            Ok("it will not write anything but a .talk.json", odd.Contains("path-must-end-.talk.json") && !File.Exists(Path.Combine(talkDir, "game.sav")), odd);
+            File.WriteAllText(Path.Combine(talkDir, "bad.talk.json"), "{ not json");
+            string bad = await keeper.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(Path.Combine(talkDir, "bad.talk.json")) + "}");
+            Ok("a damaged talk file loads nobody and says so, and the helper carries on", bad.Contains("unreadable") && keeper.EngineFor("sam") == null, bad);
+            // A failed save leaves no talk in the slot, never an older timeline's.
+            await keeper.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+            Directory.CreateDirectory(slot + ".tmp");
+            string failedSave = await keeper.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+            Directory.Delete(slot + ".tmp");
+            Ok("a save that fails removes the old talk from the slot, so a load finds none",
+               failedSave.Contains("unwritable") && !File.Exists(slot), failedSave);
+            await keeper.Answer("{\"id\":43,\"to\":\"sam\",\"say\":\"Morning.\"}");
+            string badLoad = await keeper.Answer("{\"talk\":\"load\",\"path\":\"slot2.sav\"}");
+            Ok("a load with a bad path still forgets the timeline it leaves", badLoad.Contains("path-must-end") && keeper.EngineFor("sam") == null, badLoad);
+            // A save that cannot replace a file another program holds leaves the old
+            // game's talk there; its stamp keeps it from ever being loaded.
+            await keeper.Answer("{\"id\":44,\"to\":\"sam\",\"say\":\"I was at the pictures, honest.\"}");
+            string stampedA = await keeper.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(slot) + ",\"stamp\":\"game-A\"}");
+            await keeper.Answer("{\"talk\":\"reset\"}");
+            string heldSave;
+            using (var held = new FileStream(slot, FileMode.Open, FileAccess.Read, FileShare.Read))
+                heldSave = await keeper.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(slot) + ",\"stamp\":\"game-B\"}");
+            string staleLoad = await keeper.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(slot) + ",\"stamp\":\"game-B\"}");
+            string rightLoad = await keeper.Answer("{\"talk\":\"LOAD\",\"path\":" + JsonSerializer.Serialize(slot) + ",\"stamp\":\"game-A\"}");
+            Ok("talk left behind by another game is never loaded into this one, and a command's case does not matter",
+               stampedA.Contains("saved") && heldSave.Contains("unwritable") && staleLoad.Contains("\"stale\":true") && rightLoad.Contains("\"people\":1"),
+               heldSave + " " + staleLoad + " " + rightLoad);
+        }
+        finally { try { Directory.Delete(talkDir, true); } catch (Exception) { } }
 
         Console.WriteLine($"talkhelper selftest: passed={passed}/{passed + failed} failed={failed}");
         return failed == 0 ? 0 : 1;

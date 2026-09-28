@@ -1,0 +1,331 @@
+using System;
+using System.Collections.Generic;
+
+namespace Ledger.Core
+{
+    /// TOM'S OWN READING OF WHAT THE ENDING WILL COST (town list 6i, second
+    /// attempt, 28 September). D58's second condition: every cost that decides
+    /// the ending is readable before it lands, "as Tom's reading with its
+    /// reasons, never as a number from another mind and never as a meter". D33:
+    /// the player sees his own position, never other minds. Jafar ruled on 28
+    /// September: the reading is built from what Tom has seen and heard, so it
+    /// can be wrong, as a man's reading of his own position is.
+    ///
+    /// THE RULE IT KEEPS (production/research/detection-legibility): a readout is
+    /// fair when it gives back something the character knows and the camera took
+    /// away, and cheating when it adds something he does not know. So the input
+    /// is TomsView, which holds only what he did, saw, heard and was told. No
+    /// loyalty, no heat, no case strength, no successor's verdict: there is no
+    /// field for them. The first attempt read the true state and put hidden
+    /// numbers into words (production/research/ending-reading/NOTE-2026-09-28.md).
+    ///
+    /// The game collects the view as it happens (handed to the builder); the
+    /// words are provisional until Jafar approves them on a page.
+    public enum Outlook
+    {
+        /// Nothing he has seen says this is closing in.
+        Quiet,
+        /// He has seen it coming, and he can still move it.
+        Coming,
+        /// As far as he can tell, this door has shut.
+        Shut,
+    }
+
+    public sealed class Reading
+    {
+        /// Which cost: "books", "life", "street", "ellis", "police", "successor", "witnesses".
+        public string Cost;
+        public Outlook Outlook;
+        /// Tom's reading, in words, to himself ("you"). Names, never "he", "she" or
+        /// "they" for a person: the view does not carry who is which, and a singular
+        /// "they" for one known man reads as a template (production/research/street-lines-1990).
+        public string Line;
+        /// What he has seen that makes him think so.
+        public List<string> Why = new List<string>();
+        /// What rides on it: which ways out it opens or shuts, by the ending's
+        /// own rule (ActThreeState.Eligible), never a number.
+        public string Stake;
+    }
+
+    /// Somebody from the life he had before the business.
+    public sealed class FromBefore
+    {
+        public string Name;
+        /// What they called him the last time they spoke: "Tom", "Tommy", "Nowak",
+        /// "the new owner", or null when they have not spoken to him.
+        public string CalledHim;
+        /// Days since they last came round or stopped to talk; -1 never.
+        public int DaysSinceCameRound = -1;
+        /// The last time he went to them, they turned him away or would not stop.
+        public bool TurnedHimAway;
+        /// They told him they were done with him.
+        public bool SaidTheyWereDone;
+    }
+
+    /// One of his crew, as he has seen them work.
+    public sealed class CrewSeen
+    {
+        public string Name;
+        /// Something of his they ran on their own ("the rank for a week"), or null.
+        public string RanAlone;
+        /// How it went, as he saw it: true clean, false badly, null not yet known.
+        public bool? WentClean;
+        /// Somebody in the crew he has seen them fall out with, or null.
+        public string SeenArguingWith;
+        /// When things got hot, they came when he called: true, false, or null not tested.
+        public bool? CameWhenCalled;
+    }
+
+    /// Somebody he saw watch him do it.
+    public sealed class WitnessSeen
+    {
+        public string Name;
+        /// Since then: true they have held his eye, false they have not, null not seen since.
+        public bool? HeldHisEye;
+    }
+
+    /// WHAT TOM HAS SEEN AND HEARD, and done: the only input.
+    public sealed class TomsView
+    {
+        // His own books and his own dealings: his position, which he knows.
+        public int Takings;          // what the office has honestly taken
+        public int NightMoney;       // what the other work brought in
+        public int PutThrough;       // how much of that he ran through the books
+        /// Sheila's word on where the books hold, if she walked him through them
+        /// (ActThreeState.Pp2LenaText); null when she has not.
+        public string SheilasWord;
+        public int DaysHeAnsweredTheInspector, DaysHeStonewalled;
+        public bool BooksMovedOut;
+        public bool BusinessSoldUp;
+        public int BusinessesHeld;
+
+        // The life before.
+        public List<FromBefore> Before = new List<FromBefore>();
+
+        // The street, as he hears it.
+        /// Times this week he has heard the rackets talked about as he passed.
+        public int HeardRacketTalkThisWeek;
+        /// Somebody said it flatly, as a thing everybody knows, not as a rumour.
+        public bool HeardItSaidAsFact;
+        /// He has heard his time inside talked about.
+        public bool HeardHisRecordTalkedOf;
+
+        // Ellis.
+        public int TimesHeardEllisAsking;
+        public bool EllisUsedHisName;
+        /// People he knows saw something she could use, and what he did about each:
+        /// null nothing yet, else what ("now says he was mistaken").
+        public Dictionary<string, string> WitnessesHeKnowsOf = new Dictionary<string, string>();
+
+        // The police, over a body.
+        public bool SawPoliceOverABody;
+        public bool QuestionedAboutIt;
+        public bool PoliceAskingForHimByName;
+
+        // The crew and the hand-over.
+        public List<CrewSeen> Crew = new List<CrewSeen>();
+        public bool HandedItOver;
+        public string HandedTo;
+
+        // Those who watched.
+        public List<WitnessSeen> Watched = new List<WitnessSeen>();
+    }
+
+    public static class TomsReading
+    {
+        /// Days without somebody from before coming round, after which he reads it as them drifting.
+        public const int DriftingDays = 4;
+        /// Racket talk heard in a week at which he reads the street as holding it.
+        public const int StreetFullOfIt = 3;
+
+        /// His readings: what has shut first, then what is coming, then what is quiet.
+        public static List<Reading> Read(TomsView v)
+        {
+            var list = new List<Reading>();
+            if (v == null) return list;
+            list.Add(Books(v));
+            list.Add(Life(v));
+            list.Add(Street(v));
+            list.Add(Ellis(v));
+            var police = Police(v);
+            if (police != null) list.Add(police);
+            list.Add(Successor(v));
+            var watched = Watched(v);
+            if (watched != null) list.Add(watched);
+            list.Sort((a, b) => b.Outlook.CompareTo(a.Outlook));
+            return list;
+        }
+
+        public static Reading Books(TomsView v)
+        {
+            var r = new Reading { Cost = "books", Stake = "keeping the business needs the books to stand being read, and keeping the people as well needs them to make sense, not only to be handled well; selling up or handing it over needs neither" };
+            bool heldBack = v.NightMoney > 0 && v.PutThrough < v.NightMoney;
+            bool heavy = v.Takings > 0 ? v.PutThrough > v.Takings / 3 : v.PutThrough > 0;
+            if (v.SheilasWord != null) r.Why.Add($"Sheila took you through them: {v.SheilasWord}");
+            else r.Why.Add("nobody has taken you through the books; you have only your own sense of them");
+            if (heldBack) r.Why.Add("there is night money you never ran through them");
+            if (heavy) r.Why.Add("you ran a lot through them for what the cars take honestly");
+            if (v.DaysHeAnsweredTheInspector + v.DaysHeStonewalled > 0)
+                r.Why.Add(v.DaysHeAnsweredTheInspector >= v.DaysHeStonewalled
+                    ? "you have given the inspector what he asked for, most days"
+                    : "you have told the inspector to put it in writing, most days");
+            if (v.BooksMovedOut) r.Why.Add("the real books are out of the office");
+            // Once Sheila has taken him through them, her words govern: she reads
+            // books better than he does. They are what she SAID (Act III's walk
+            // through), four phrases, and the line the inspection draws falls
+            // inside her third, so her third reads as "not sure": it can be wrong.
+            r.Outlook = v.SheilasWord != null ? FromSheila(v.SheilasWord, heldBack || heavy)
+                      : heldBack || heavy ? Outlook.Coming : Outlook.Quiet;
+            r.Line = r.Outlook == Outlook.Shut ? "the books will not stand being read, as far as you can tell"
+                   : r.Outlook == Outlook.Coming ? "you are not sure the books will stand being read"
+                   : "the books look like a cab office's books, to you";
+            if (v.BusinessSoldUp) r.Why.Add("you have sold up, so there is little left in them to lose");
+            return r;
+        }
+
+        public static Reading Life(TomsView v)
+        {
+            var r = new Reading { Cost = "life", Stake = "keeping the people needs somebody from before who still counts you a friend, whatever you do with the business" };
+            FromBefore close = null;
+            foreach (var p in v.Before)
+                if (!p.SaidTheyWereDone && !p.TurnedHimAway && IsFirstName(p.CalledHim)
+                    && p.DaysSinceCameRound >= 0 && p.DaysSinceCameRound < DriftingDays) { close = p; break; }
+            int done = 0, away = 0, drifting = 0;
+            foreach (var p in v.Before)
+            {
+                if (p.SaidTheyWereDone) { done++; r.Why.Add($"{p.Name} has finished with you, and said so"); }
+                else if (p.TurnedHimAway) { away++; r.Why.Add($"{p.Name} would not stop for you, the last time"); }
+                else if (p.DaysSinceCameRound < 0 || p.DaysSinceCameRound >= DriftingDays)
+                {
+                    drifting++;
+                    r.Why.Add(p.DaysSinceCameRound < 0 ? $"{p.Name} has not come round" : $"{p.Name} has not come round in {Days(p.DaysSinceCameRound)}");
+                }
+                else if (p != close) r.Why.Add($"{p.Name} still comes round, and calls you {p.CalledHim ?? "nothing much"}");
+            }
+            if (close != null) r.Why.Insert(0, $"{close.Name} still calls you {close.CalledHim}, and came round {Ago(close.DaysSinceCameRound)}");
+            r.Outlook = close != null ? Outlook.Quiet
+                      : v.Before.Count > 0 && done + away == v.Before.Count ? Outlook.Shut
+                      : Outlook.Coming;
+            r.Line = r.Outlook == Outlook.Quiet ? "somebody who knew you before all this still counts you a friend, you think"
+                   : r.Outlook == Outlook.Shut ? "nobody from before will have you now, as far as you can tell"
+                   : "the people from before are drifting, and you cannot say who still counts you a friend";
+            if (v.Before.Count == 0) r.Why.Add("you have not kept anybody from before");
+            return r;
+        }
+
+        public static Reading Street(TomsView v)
+        {
+            var r = new Reading { Cost = "street", Stake = "keeping both the business and the people needs the street not to hold the other work as fact" };
+            if (v.HeardItSaidAsFact) r.Why.Add("you heard somebody say it flatly, as a thing everybody knows");
+            if (v.HeardRacketTalkThisWeek > 0)
+                r.Why.Add(v.HeardRacketTalkThisWeek >= StreetFullOfIt ? "it is on the street every time you pass" : "you have heard it talked of, now and then");
+            else r.Why.Add("you have not heard the other work talked of this week");
+            if (v.HeardHisRecordTalkedOf) r.Why.Add("they talk about your time inside");
+            r.Outlook = v.HeardItSaidAsFact ? Outlook.Shut : v.HeardRacketTalkThisWeek > 0 ? Outlook.Coming : Outlook.Quiet;
+            r.Line = r.Outlook == Outlook.Shut ? "the street holds the other work as fact now, as far as you can hear"
+                   : r.Outlook == Outlook.Coming ? "the other work is talked about; it is not fact yet, to your ear"
+                   : "the street is not talking about the other work, that you have heard";
+            return r;
+        }
+
+        public static Reading Ellis(TomsView v)
+        {
+            var r = new Reading { Cost = "ellis", Stake = "keeping both the business and the people needs her to have nothing that stands up on its own" };
+            int open = 0;
+            foreach (var w in v.WitnessesHeKnowsOf)
+            {
+                if (w.Value == null) { open++; r.Why.Add($"{w.Key} saw something she could use, and you have done nothing about it"); }
+                else r.Why.Add($"{w.Key} {w.Value}");
+            }
+            if (v.EllisUsedHisName) r.Why.Insert(0, "Ellis has used your name to your face");
+            else if (v.TimesHeardEllisAsking > 0) r.Why.Insert(0, v.TimesHeardEllisAsking > 1 ? "you keep hearing that Ellis has been asking" : "you heard Ellis has been asking");
+            bool asking = v.EllisUsedHisName || v.TimesHeardEllisAsking > 0;
+            r.Outlook = asking && open > 0 ? Outlook.Coming : Outlook.Quiet;
+            r.Line = !asking ? "you have not heard of Ellis asking about you"
+                   : open > 0 ? "Ellis is asking, and somebody could give her what she needs"
+                   : "Ellis is asking, but everybody you know of who saw anything has been answered";
+            if (asking && v.WitnessesHeKnowsOf.Count == 0) r.Why.Add("you do not know who she might have; that is the trouble with not knowing");
+            return r;
+        }
+
+        /// Only when there is a body: until then there is nothing to read.
+        public static Reading Police(TomsView v)
+        {
+            if (!v.SawPoliceOverABody && !v.QuestionedAboutIt && !v.PoliceAskingForHimByName) return null;
+            var r = new Reading { Cost = "police", Stake = "handing it over and walking away is shut while they are hunting you" };
+            if (v.SawPoliceOverABody) r.Why.Add("there is a body, and the police do not let a body go");
+            if (v.QuestionedAboutIt) r.Why.Add("they have questioned you about it");
+            if (v.PoliceAskingForHimByName) r.Why.Add("they are asking for you by name");
+            r.Outlook = v.PoliceAskingForHimByName ? Outlook.Shut : Outlook.Coming;
+            r.Line = r.Outlook == Outlook.Shut
+                ? "they are hunting you; handing it all over and walking away is no longer a way out, because nobody can take a killing off your hands"
+                : "the police are on a body; if they start hunting you, handing it over and walking away stops being a way out";
+            return r;
+        }
+
+        public static Reading Successor(TomsView v)
+        {
+            var r = new Reading { Cost = "successor", Stake = "handing it over is the one way out that does not need the books; it needs somebody who can carry it, and nobody will tell you who" };
+            if (v.HandedItOver)
+            {
+                r.Outlook = Outlook.Quiet;
+                r.Line = $"it is {v.HandedTo ?? "somebody else"}'s name on the licence now";
+                r.Why.Add($"whether {v.HandedTo ?? "they"} can hold it, nobody will tell you");
+                return r;
+            }
+            bool anyTried = false;
+            foreach (var c in v.Crew)
+            {
+                if (c.RanAlone == null) { r.Why.Add($"{c.Name} has never run anything of yours alone"); continue; }
+                anyTried = true;
+                string how = c.WentClean == true ? "and it went clean" : c.WentClean == false ? "and it went badly" : "and you do not know yet how it went";
+                string row = $"{c.Name} ran {c.RanAlone} alone, {how}";
+                if (c.SeenArguingWith != null) row += $"; you have seen {c.Name} fall out with {c.SeenArguingWith}";
+                if (c.CameWhenCalled == true) row += $"; {c.Name} came when you called";
+                else if (c.CameWhenCalled == false) row += $"; {c.Name} did not come when you called";
+                r.Why.Add(row);
+            }
+            r.Outlook = anyTried ? Outlook.Quiet : Outlook.Coming;
+            r.Line = v.Crew.Count == 0 ? "there is nobody to hand it to"
+                   : anyTried ? "somebody has run something of yours alone; whether they could hold it all, nobody will tell you"
+                   : "nobody has run anything of yours alone yet, so you have no way to judge who could hold it";
+            if (v.Crew.Count == 0) r.Outlook = Outlook.Coming;
+            return r;
+        }
+
+        /// Only when he saw somebody watch him.
+        public static Reading Watched(TomsView v)
+        {
+            if (v.Watched.Count == 0) return null;
+            var r = new Reading { Cost = "witnesses", Stake = "a witness who talks to Ellis gives her something that could stand up" };
+            int uneasy = 0;
+            foreach (var w in v.Watched)
+            {
+                if (w.HeldHisEye == false) { uneasy++; r.Why.Add($"{w.Name} watched you do it and has not met your eye since"); }
+                else if (w.HeldHisEye == true) r.Why.Add($"{w.Name} watched you do it and has held your eye since");
+                else r.Why.Add($"{w.Name} watched you do it, and you have not seen them since");
+            }
+            r.Outlook = uneasy > 0 ? Outlook.Coming : Outlook.Quiet;
+            r.Line = uneasy > 0 ? "somebody who watched you is frightened, and frightened people end up talking to detectives"
+                   : "those who watched you have held steady, as far as you have seen";
+            return r;
+        }
+
+        /// Sheila's phrase, as Tom takes it; a phrase she never says reads by his own figures.
+        static Outlook FromSheila(string word, bool ownDoubts)
+        {
+            if (word == ActThreeState.StrainWord(1.0)) return Outlook.Shut;
+            if (word == ActThreeState.StrainWord(0.5)) return Outlook.Coming;
+            if (word == ActThreeState.StrainWord(0.0) || word == ActThreeState.StrainWord(0.3)) return Outlook.Quiet;
+            return ownDoubts ? Outlook.Coming : Outlook.Quiet;
+        }
+
+        static bool IsFirstName(string called) => called == "Tom" || called == "Tommy";
+
+        /// "today", "a day ago", "three days ago", "a week ago", "weeks ago".
+        static string Ago(int n) => n <= 0 ? "today" : Days(n) + " ago";
+
+        static string Days(int n) => n <= 0 ? "today" : n == 1 ? "a day" : n <= 6 ? $"{Words[n]} days" : n < 14 ? "a week" : "weeks";
+        static readonly string[] Words = { "no", "one", "two", "three", "four", "five", "six" };
+    }
+}
