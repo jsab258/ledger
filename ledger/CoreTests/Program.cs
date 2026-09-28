@@ -5530,6 +5530,79 @@ namespace Ledger.CoreTests
                       "and the character is told not to promise in the first place");
             }
 
+            // THE TOWN'S OWN NEWS (town list 6aq): a happening among the named cast,
+            // seen by everybody in its area at its hour, filed once, spread by the
+            // same rounds, told as news and never as about him, raising nobody's
+            // suspicion; four tellings he can make out, then murmur, kept in a save.
+            {
+                var hookN = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                var news = TownNews.Parse(File.ReadAllText(Root("production/specs/town-news.json")));
+                var st = news.Stories[0];
+                var seen = news.WitnessesOf(st, hookN);
+                var graph = new SocialGraph();
+                foreach (var (ta, tb, tw) in hookN.Ties) graph.Link(ta, tb, tw);
+                var nm = new GossipMill(graph);
+                foreach (var p in hookN.People) nm.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker()));
+                var early = news.Seed(nm, hookN, new GameTime(st.Day, st.Hour - 1, 0));
+                var onTime = news.Seed(nm, hookN, new GameTime(st.Day, st.Hour, 0));
+                var again = news.Seed(nm, hookN, new GameTime(st.Day + 1, 9, 0));
+                int holdersBefore = 0;
+                foreach (var p in hookN.People) if (nm.Get(p).Best(st.Fact.Subject + "." + st.Fact.Predicate) != null) holdersBefore++;
+                bool partyTold = false;
+                for (int d = 0; d < 3; d++)
+                    for (int hr = 8; hr < 22; hr++)
+                    {
+                        int dd = st.Day + d, hh = hr;
+                        foreach (var ev in nm.Tick(new GameTime(dd, hh, 0), (a, b) => hookN.Together(a, b, dd, hh)))
+                            if (ev.Rumor != null && ev.Rumor.TopicKey == st.Fact.Subject + "." + st.Fact.Predicate && st.Parties.Contains(ev.FromId)) partyTold = true;
+                    }
+                int holdersAfter = 0; double maxSus = 0;
+                foreach (var p in hookN.People)
+                {
+                    if (nm.Get(p).Best(st.Fact.Subject + "." + st.Fact.Predicate) != null) holdersAfter++;
+                    maxSus = Math.Max(maxSus, nm.Get(p).Suspicion.Value);
+                }
+                bool refusesPlayer = false, refusesTwice = false;
+                try { TownNews.Parse("{\"stories\":[{\"id\":\"x\",\"summary\":\"s\",\"area\":\"ritas\",\"day\":0,\"hour\":11,\"fact\":[\"player\",\"p\",\"v\"]}]}"); }
+                catch (FormatException) { refusesPlayer = true; }
+                try { TownNews.Parse("{\"stories\":[{\"id\":\"x\",\"summary\":\"s\",\"area\":\"ritas\",\"day\":0,\"hour\":11,\"fact\":[\"town\",\"p\",\"v\"]},{\"id\":\"x\",\"summary\":\"s\",\"area\":\"ritas\",\"day\":0,\"hour\":11,\"fact\":[\"town\",\"q\",\"v\"]}]}"); }
+                catch (FormatException) { refusesTwice = true; }
+                bool partiesQuiet = !partyTold && nm.Get("rita").Suppressed.Contains(st.Fact.Subject + "." + st.Fact.Predicate)
+                    && !nm.Get("rita").Memory.Events.Exists(e => e.Text.Contains("Hal and Rita")) && !nm.Get("hal").Memory.Events.Exists(e => e.Text.Contains("Hal and Rita"));
+                Check(early.Count == 0 && onTime.Count == 1 && again.Count == 0 && seen.Contains("rita") && seen.Contains("hal") && seen.Contains("marta") && seen.Count >= 5
+                      && holdersBefore == seen.Count && holdersAfter > holdersBefore && maxSus == 0.0 && refusesPlayer && refusesTwice && partiesQuiet
+                      && ContentRule.SpeechBreaks(st.Summary) == null && RealWorld.Find(st.Summary).Count == 0,
+                      "the town's own news is seen by everybody at the pawn when Hal calls on a Monday, filed once, spreads, and raises nobody's suspicion",
+                      holdersBefore + " -> " + holdersAfter + ", suspicion " + maxSus);
+
+                var na = nm.Get("marta"); var nb = nm.Get("stipe");
+                var rumor = na.Best(st.Fact.Subject + "." + st.Fact.Predicate);
+                var ledger = new RemarkLedger();
+                string wrongN = null;
+                int heardCount = 0;
+                for (int seed = 0; seed < 8; seed++)
+                {
+                    var ls = StreetVoice.Exchange(rumor, na, nb, seed, ledger);
+                    if (seed < StreetVoice.MostNewsTellings)
+                    {
+                        if (ls.Count != 2 || ls[0].Bank != "exchange/tell/news" || ls[1].Bank != "exchange/reply/news" || ls[0].AboutPlayer || !ls[0].Text.Contains("Hal and Rita"))
+                            wrongN = "telling " + seed + ": " + (ls.Count > 0 ? ls[0].Bank + " " + ls[0].Text : "none");
+                        foreach (var l in ls) if (ContentRule.SpeechBreaks(l.Text) != null || RealWorld.Find(l.Text).Count > 0) wrongN = "rules: " + l.Text;
+                        foreach (var l in ls) ledger.Heard(l);
+                        heardCount++;
+                    }
+                    else if (ls.Count != 0) wrongN = "a fifth telling was made out";
+                }
+                var back = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(ledger.ToJson()))));
+                var playerRumor = new Rumor { Content = new Fact("player", "window_d1", "seen"), Summary = "the new owner put the window in", Confidence = 0.9 };
+                var aboutHim = StreetVoice.Exchange(playerRumor, na, nb, 3, ledger);
+                var killing = new Rumor { Content = new Fact("victim_walter", "killed", "true"), Summary = "Walter was killed", Confidence = 1.0, Indelible = true };
+                var toldKilling = StreetVoice.Exchange(killing, na, nb, 3, ledger);
+                Check(wrongN == null && back.TimesToldHim(rumor.TopicKey) == StreetVoice.MostNewsTellings && aboutHim.Count == 2 && aboutHim[0].AboutPlayer && aboutHim[0].Bank != "exchange/tell/news"
+                      && (toldKilling.Count == 0 || toldKilling[0].Bank != "exchange/tell/news"),
+                      "the town's news is told as news, four times he can make out and then murmur, the count kept in a save; a story about him, or a killing, is told as before", wrongN ?? "");
+            }
+
             // THEIR OWN WORDS (town list 6ap): each card's fixed lines, never in the
             // prompt; the fallback, the refusal and the brush-off in that voice, the
             // refusals taken in turn; a card without them keeps the shared ones.

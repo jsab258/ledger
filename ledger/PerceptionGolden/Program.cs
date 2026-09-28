@@ -105,6 +105,7 @@ namespace Ledger.PerceptionGolden
                 EmitCastDay(sb);
                 EmitOriginRung(sb);
                 EmitJustNow(sb);
+                EmitTownNews(sb);
             }
 
             var text = sb.ToString();
@@ -493,6 +494,33 @@ namespace Ledger.PerceptionGolden
                         var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
                         Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
                     }
+        }
+
+        /// THE TOWN'S OWN NEWS (town list 6aq), for the port of StreetVoice.Exchange's
+        /// news bank and of TownNews: how a story not about the player is told,
+        /// over a spread of seeds, and who witnesses the sample on the named cast.
+        static void EmitTownNews(StringBuilder sb)
+        {
+            var a = new Gossiper("na", "na", new MemoryStore("na"), new KnowledgeBase(), new SuspicionTracker());
+            var b = new Gossiper("nb", "nb", new MemoryStore("nb"), new KnowledgeBase(), new SuspicionTracker());
+            var r = new Rumor { Content = new Fact("town", "hal_rita_row_d0", "seen"), Summary = "Hal and Rita had words in the pawn, and nobody knows what about", Confidence = 0.9 };
+            for (int seed = 0; seed < 20; seed++)
+            {
+                var lines = StreetVoice.Exchange(r, a, b, seed);
+                Row(sb, "TownNews", seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text), Bit(lines[0].AboutPlayer));
+            }
+            var root = FindRepoRoot();
+            var cast = CastDay.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(root, "production", "specs", "hook-cast.json")));
+            var news = TownNews.Parse(System.IO.File.ReadAllText(System.IO.Path.Combine(root, "production", "specs", "town-news.json")));
+            foreach (var st in news.Stories)
+                Row(sb, "TownNewsWitnesses", st.Id, string.Join(",", news.WitnessesOf(st, cast)));
+        }
+
+        static string FindRepoRoot()
+        {
+            for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
+                if (System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "production", "specs", "town-news.json"))) return dir.FullName;
+            return ".";
         }
 
         static void EmitRecognition(StringBuilder sb)
