@@ -411,6 +411,19 @@ bpy.context.view_layer.objects.active = render
 bpy.ops.object.transform_apply(location=True, rotation=True, scale=True)
 bpy.ops.object.join()
 
+# ---------------------------------------------------------------- plain meshes for Unreal's cloth
+# Epic's cloth template (DF_StaticMeshClothTemplate) takes a render and a
+# simulation mesh as plain static meshes in the body's rest pose, and copies
+# the skin weights from the body itself (its TransferSkinWeights node); so
+# both are written here as they are, before any weights, in the body's
+# world space: NAME_render_static.fbx and NAME_sim_static.fbx.
+for obj, tag in ((render, "render"), (sim, "sim")):
+    bpy.ops.object.select_all(action="DESELECT")
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.export_scene.fbx(filepath=os.path.join(OUT, "%s_%s_static.fbx" % (NAME, tag)), use_selection=True,
+                             object_types={"MESH"}, mesh_smooth_type="FACE", add_leaf_bones=False)
+
 # ---------------------------------------------------------------- the weights
 # body_world is the body in world metres with its own weights; each target
 # takes the weights of the nearest point of the body's surface.
