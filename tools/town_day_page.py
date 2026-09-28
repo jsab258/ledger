@@ -37,6 +37,24 @@ DAYS = {
              "Approve the hour", "Change it (say what in the note)"),
         ],
     },
+    "2026-09-30": {
+        "title": "Three decisions",
+        "lede": "Three things only you can decide. One tap each, and a note if you want.",
+        "questions": [
+            ("q-clock", "How fast the game's day runs. A plainly seen job on night one reaches Tom's face by minute thirty only at two game minutes a real second or faster, and at two, seven times in thirteen only at minute thirty itself",
+             [("two-wait", "Two game minutes a second, a day in twelve real minutes, as the first hour was planned, and a way to wait until evening, so a slow player is not caught at the thirty-minute edge; a way to wait is a basic the game needs anyway (recommended)"),
+              ("three", "Three a second, a day in eight minutes: the night's story reaches Tom by minute twenty every time, nothing new to build, but a night lasts under three real minutes"),
+              ("slower", "Slower, a day in twenty-four minutes or more: calmer, but the town cannot know him inside the first half hour unless he waits through a day")]),
+            ("q-reading", "Tom's reading of what the ending will cost failed its review a second time. It is built only from what he sees, as you ruled, but the game's visible signs do not change where the hidden lines are: a friend calls him Tom well below the line where the ending counts them a friend, so the reading can say all is well while a door shuts",
+             [("signs", "Give every line a sign: each thing that decides the ending gets one thing Tom can see that changes exactly when it crosses its line (a friend who would stand by him says so; the inspector's manner turns on the morning the books stop standing; the police at the door when it is a manhunt), and the reading is built on those; several evenings of work, some of it the builder's (recommended: it is what your D58 asks, a cost he can watch arrive)"),
+              ("rough", "Let his reading be roughly right: it follows the signs there are and can be caught out; cheaper, but a cost can land unseen, which D58 calls a trap"),
+              ("later", "Leave it until the town's signs are built in the game, and come back to it then")]),
+            ("q-bench", "The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time. Tuning it properly means writing the test conversations again with today's cards, about $20 to $40 of calls",
+             [("yes", "Yes, spend it: every third reply is slower than it needs to be (recommended)"),
+              ("later", "Not now")]),
+        ],
+        "docs": [],
+    },
 }
 
 
