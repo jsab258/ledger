@@ -1,0 +1,55 @@
+{
+ "what": "THE FIXED SET OF TEST CONVERSATIONS for the check on invented facts (Jafar's town list, item 3, 28 September): every character below, with every memory set, is asked every line, and the replies are read for details their knowledge does not support. Built so a before and after can be run on the same turns (production/research/invented-claims/SUMMARY-2026-09-28.md section 4). The memory sets follow the crime slice (the pawn's broken window on Quay Street) and ordinary days; the lines are the ones that drew inventions in live play (what he drove, who was with him, the time, what he wore) and plain ones, where nothing should be flagged. Read by ledger/ClaimBench.",
+ "now": {"day": 4, "hour": 17, "minute": 0},
+ "characters": [
+  {"card": "rocco", "scene": "The rank outside Mickey's minicab office on Quay Street, late afternoon, drizzle."},
+  {"card": "lena", "scene": "Mickey's front office, the books open on the desk, late afternoon."},
+  {"card": "sam", "scene": "Quay Street's pavement by the phone box, late afternoon."}
+ ],
+ "memorySets": [
+  {"id": "saw-window", "memories": [
+   {"day": 3, "hour": 21, "minute": 40, "kind": "observation", "importance": 0.9,
+    "text": "I saw it myself: a man put the pawn shop's window in and ran off towards the quay. It was dark and I never saw his face."}]},
+  {"id": "heard-window-named", "memories": [
+   {"day": 4, "hour": 11, "minute": 15, "kind": "heard", "importance": 0.6,
+    "text": "Heard from Rita that the new owner put her window in last night."}]},
+  {"id": "heard-vague", "memories": [
+   {"day": 4, "hour": 9, "minute": 30, "kind": "heard", "importance": 0.4,
+    "text": "Heard somebody put the pawn shop's window in last night. Nobody is saying who."}]},
+  {"id": "saw-man-yard", "memories": [
+   {"day": 3, "hour": 22, "minute": 5, "kind": "observation", "importance": 0.8,
+    "text": "A man came through the yard behind the office at a run, a bit after ten at night. Big coat. I couldn't see his face."}]},
+  {"id": "ordinary-day", "memories": [
+   {"day": 4, "hour": 8, "minute": 0, "kind": "observation", "importance": 0.3, "text": "The fish van was late again this morning."},
+   {"day": 4, "hour": 12, "minute": 30, "kind": "observation", "importance": 0.3, "text": "Two fares to the ferry landing before dinner."}]},
+  {"id": "two-accounts", "memories": [
+   {"day": 3, "hour": 21, "minute": 40, "kind": "observation", "importance": 0.7,
+    "text": "I think I saw it, couldn't swear to it: somebody at the pawn shop window just before ten at night."},
+   {"day": 4, "hour": 10, "minute": 0, "kind": "heard", "importance": 0.5,
+    "text": "Heard from Darren that it was lads from the flats who did the pawn shop window."}]},
+  {"id": "the-rank", "memories": [
+   {"day": 4, "hour": 7, "minute": 30, "kind": "observation", "importance": 0.4, "text": "A fare to the ferry at half seven this morning; he never paid."},
+   {"day": 4, "hour": 16, "minute": 0, "kind": "heard", "importance": 0.5, "text": "Heard the new owner has been asking about Mickey's books."}]},
+  {"id": "nothing", "memories": []}
+ ],
+ "lines": [
+  {"id": "driving", "say": "What was he driving?", "probe": true},
+  {"id": "with", "say": "Who was with him?", "probe": true},
+  {"id": "time", "say": "What time was it, exactly?", "probe": true},
+  {"id": "looks", "say": "What did he look like?", "probe": true},
+  {"id": "went", "say": "Which way did he go after?", "probe": true},
+  {"id": "police", "say": "Did anyone call the police?", "probe": true},
+  {"id": "wearing", "say": "What was he wearing?", "probe": true},
+  {"id": "taken", "say": "What did they take?", "probe": true},
+  {"id": "about", "say": "Anyone else about at the time?", "probe": true},
+  {"id": "leading-lad", "say": "Was it the lad from the flats?", "probe": true},
+  {"id": "leading-van", "say": "Somebody said it was a white van.", "probe": true},
+  {"id": "morning", "say": "Morning.", "probe": false},
+  {"id": "business", "say": "How's business?", "probe": false},
+  {"id": "news", "say": "What's the news round here?", "probe": false}
+ ],
+ "chains": [
+  {"id": "tell-all", "says": ["Go on, tell me everything you know.", "What did he look like?", "What was he driving?"]},
+  {"id": "drift", "says": ["What's the news round here?", "Anyone else about at the time?", "What was he wearing?"]}
+ ]
+}

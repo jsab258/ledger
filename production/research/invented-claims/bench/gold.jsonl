@@ -1,0 +1,480 @@
+{"id":"lena.heard-vague.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.business.0","invented":true,"source":"ruled","details":[{"detail":"Ron is driving more fares than he's booking","kind":"person"}]}
+{"id":"lena.heard-vague.drift.0","invented":false,"source":"ruled","details":[]}
+{"id":"lena.heard-vague.drift.1","invented":true,"source":"ruled","details":[{"detail":"Ron was about at the time the pawn shop window was put in","kind":"person"}]}
+{"id":"lena.heard-vague.drift.2","invented":true,"source":"agreed","details":[{"detail":"he was wearing his usual old jacket","kind":"appearance"}]}
+{"id":"lena.heard-vague.driving.0","invented":true,"source":"agreed","details":[{"detail":"a dark saloon","kind":"vehicle"},{"detail":"Ron gesturing with his hands during the argument","kind":"action"}]}
+{"id":"lena.heard-vague.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.looks.0","invented":true,"source":"agreed","details":[{"detail":"a big man","kind":"appearance"},{"detail":"wearing a coat too heavy for the weather","kind":"appearance"},{"detail":"left quickly once he saw her looking","kind":"action"}]}
+{"id":"lena.heard-vague.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.news.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.time.0","invented":true,"source":"agreed","details":[{"detail":"somewhere gone eleven","kind":"time"},{"detail":"she was locking the side door when it happened","kind":"action"}]}
+{"id":"lena.heard-vague.wearing.0","invented":true,"source":"agreed","details":[{"detail":"saw him from the window","kind":"place"},{"detail":"dark coat","kind":"appearance"}]}
+{"id":"lena.heard-vague.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-vague.with.0","invented":true,"source":"agreed","details":[{"detail":"the stranger left out the gate, seen from behind","kind":"action"}]}
+{"id":"lena.heard-window-named.about.0","invented":true,"source":"ruled","details":[{"detail":"Ron was there with him (the new owner) when the window was put in","kind":"person"},{"detail":"heard it wasn't friendly","kind":"action"}]}
+{"id":"lena.heard-window-named.business.0","invented":true,"source":"ruled","details":[{"detail":"Ron is running more fares than he's booking","kind":"action"}]}
+{"id":"lena.heard-window-named.drift.0","invented":true,"source":"agreed","details":[{"detail":"the yard gate has been stuck and nobody has fixed it","kind":"object"},{"detail":"since Tuesday (for the gate)","kind":"time"}]}
+{"id":"lena.heard-window-named.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.looks.0","invented":true,"source":"agreed","details":[{"detail":"two men worth mentioning came by this week","kind":"person"},{"detail":"neither of them introduced himself","kind":"action"}]}
+{"id":"lena.heard-window-named.morning.0","invented":true,"source":"agreed","details":[{"detail":"Rita's window is still not fixed","kind":"other"}]}
+{"id":"lena.heard-window-named.news.0","invented":false,"source":"ruled","details":[]}
+{"id":"lena.heard-window-named.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.tell-all.1","invented":false,"source":"ruled","details":[]}
+{"id":"lena.heard-window-named.tell-all.2","invented":true,"source":"ruled","details":[{"detail":"Ron might have seen a motor","kind":"vehicle"}]}
+{"id":"lena.heard-window-named.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.wearing.0","invented":true,"source":"agreed","details":[{"detail":"dark coat, collar up","kind":"appearance"},{"detail":"Ron sent him off","kind":"action"}]}
+{"id":"lena.heard-window-named.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.heard-window-named.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.nothing.about.0","invented":true,"source":"ruled","details":[{"detail":"Ron was in the yard that night","kind":"action"}]}
+{"id":"lena.nothing.business.0","invented":true,"source":"ruled","details":[{"detail":"the fare gap has been the same most weeks since Mickey died","kind":"time"}]}
+{"id":"lena.nothing.drift.0","invented":true,"source":"agreed","details":[{"detail":"Ron's been quiet about the yard gate lately","kind":"action"}]}
+{"id":"lena.nothing.drift.1","invented":true,"source":"agreed","details":[{"detail":"they were talking in low voices","kind":"action"}]}
+{"id":"lena.nothing.drift.2","invented":true,"source":"agreed","details":[{"detail":"dark coat","kind":"appearance"},{"detail":"collar up","kind":"appearance"}]}
+{"id":"lena.nothing.driving.0","invented":true,"source":"agreed","details":[{"detail":"they were by the gate","kind":"place"},{"detail":"she was doing the Friday totals at the time","kind":"time"}]}
+{"id":"lena.nothing.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"a lad who hangs round the market end","kind":"person"},{"detail":"a lad who comes for the docks run","kind":"person"}]}
+{"id":"lena.nothing.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"Ron was closer to the gate than her","kind":"place"}]}
+{"id":"lena.nothing.looks.0","invented":true,"source":"agreed","details":[{"detail":"dark coat","kind":"appearance"},{"detail":"collar up","kind":"appearance"},{"detail":"stranger was gone before she could get past the counter","kind":"action"}]}
+{"id":"lena.nothing.morning.0","invented":true,"source":"ruled","details":[{"detail":"takings are down against the same night last week","kind":"amount"}]}
+{"id":"lena.nothing.news.0","invented":true,"source":"agreed","details":[{"detail":"Ron said the crate is nothing","kind":"action"}]}
+{"id":"lena.nothing.police.0","invented":true,"source":"agreed","details":[{"detail":"nobody has come round asking questions","kind":"police"}]}
+{"id":"lena.nothing.taken.0","invented":true,"source":"ruled","details":[{"detail":"takings match the pad","kind":"other"}]}
+{"id":"lena.nothing.tell-all.0","invented":true,"source":"agreed","details":[{"detail":"today is a Tuesday","kind":"time"}]}
+{"id":"lena.nothing.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.nothing.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"lena.nothing.time.0","invented":true,"source":"agreed","details":[{"detail":"it was gone dark when the argument happened","kind":"time"},{"detail":"Mickey had already locked the front","kind":"action"}]}
+{"id":"lena.nothing.wearing.0","invented":true,"source":"agreed","details":[{"detail":"a dark coat","kind":"appearance"},{"detail":"collar turned up","kind":"appearance"},{"detail":"it was near dark","kind":"time"}]}
+{"id":"lena.nothing.went.0","invented":true,"source":"agreed","details":[{"detail":"half a dozen fares through here today","kind":"amount"}]}
+{"id":"lena.nothing.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.business.0","invented":true,"source":"agreed","details":[{"detail":"the morning fares got backed up because the fish van was late","kind":"action"},{"detail":"today is a Tuesday","kind":"time"}]}
+{"id":"lena.ordinary-day.drift.0","invented":true,"source":"agreed","details":[{"detail":"more ferry landing fares than yesterday","kind":"amount"}]}
+{"id":"lena.ordinary-day.drift.1","invented":true,"source":"agreed","details":[{"detail":"Darren went past twice, once more than usual","kind":"action"}]}
+{"id":"lena.ordinary-day.drift.2","invented":true,"source":"agreed","details":[{"detail":"he was wearing the same coat he always wears","kind":"appearance"},{"detail":"the coat was too warm for the weather and too worn out to be worth mending","kind":"appearance"}]}
+{"id":"lena.ordinary-day.driving.0","invented":true,"source":"ruled","details":[{"detail":"they were stood by the gate","kind":"place"},{"detail":"he left on foot up toward the market","kind":"action"}]}
+{"id":"lena.ordinary-day.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"the stranger kept his collar up the whole time","kind":"appearance"}]}
+{"id":"lena.ordinary-day.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"Ron told her about it, saying it was a fella","kind":"action"},{"detail":"the argument got quiet afterwards","kind":"action"}]}
+{"id":"lena.ordinary-day.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.news.0","invented":true,"source":"agreed","details":[{"detail":"second time this week the fish van was late","kind":"amount"}]}
+{"id":"lena.ordinary-day.police.0","invented":true,"source":"agreed","details":[{"detail":"whoever came round left no mark you could point to","kind":"other"}]}
+{"id":"lena.ordinary-day.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"the yard is not lit properly","kind":"place"}]}
+{"id":"lena.ordinary-day.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.wearing.0","invented":true,"source":"agreed","details":[{"detail":"grey jacket","kind":"appearance"},{"detail":"jacket too big in the shoulders","kind":"appearance"},{"detail":"kept his hands in his pockets the whole time he talked to Ron","kind":"action"}]}
+{"id":"lena.ordinary-day.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.ordinary-day.with.0","invented":true,"source":"ruled","details":[{"detail":"Mickey had a lot of company in his last few weeks","kind":"person"}]}
+{"id":"lena.saw-man-yard.about.0","invented":false,"source":"ruled","details":[]}
+{"id":"lena.saw-man-yard.business.0","invented":true,"source":"agreed","details":[{"detail":"Tuesday's takings were down against last week","kind":"amount"},{"detail":"Wednesday's takings not much better","kind":"amount"},{"detail":"Ron is booking fewer fares than he's driving","kind":"action"}]}
+{"id":"lena.saw-man-yard.drift.0","invented":true,"source":"agreed","details":[{"detail":"the ledger came up two short for last night","kind":"amount"},{"detail":"third time this month the ledger came up short","kind":"amount"},{"detail":"Ron is out front more than he used to be and watches the gate less","kind":"action"}]}
+{"id":"lena.saw-man-yard.drift.1","invented":true,"source":"agreed","details":[{"detail":"Zlata was on the phones at the time the man ran through the yard","kind":"person"},{"detail":"Darren was up and down the street at the time","kind":"person"}]}
+{"id":"lena.saw-man-yard.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.driving.0","invented":true,"source":"agreed","details":[{"detail":"collar up","kind":"appearance"},{"detail":"stood at the back door","kind":"place"}]}
+{"id":"lena.saw-man-yard.leading-lad.0","invented":true,"source":"ruled","details":[{"detail":"head down","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.news.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.police.0","invented":true,"source":"ruled","details":[{"detail":"police weren't called","kind":"police"}]}
+{"id":"lena.saw-man-yard.taken.0","invented":true,"source":"ruled","details":[{"detail":"Ron hasn't said a word about the man in the yard","kind":"action"}]}
+{"id":"lena.saw-man-yard.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"Mickey was a big man gone soft round the middle","kind":"appearance"},{"detail":"Mickey wore the same coat winter and summer","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"Mickey never drove and never learned to","kind":"action"},{"detail":"Mickey sat in the office chair and let the others do the driving","kind":"action"},{"detail":"the man ran through the yard two nights before Mickey died (it was last night)","kind":"time"},{"detail":"heard boots","kind":"object"}]}
+{"id":"lena.saw-man-yard.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-man-yard.wearing.0","invented":true,"source":"agreed","details":[{"detail":"the coat was dark and heavy","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.went.0","invented":true,"source":"agreed","details":[{"detail":"the yard gate left swinging after he went","kind":"object"}]}
+{"id":"lena.saw-man-yard.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.business.0","invented":true,"source":"agreed","details":[{"detail":"Ron is the one booking fewer fares than he drives","kind":"person"},{"detail":"three fares less this week","kind":"amount"}]}
+{"id":"lena.saw-window.drift.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop's window is still boarded up","kind":"object"},{"detail":"the pawn shop is two doors down","kind":"place"},{"detail":"the window was put in on Tuesday night","kind":"time"},{"detail":"whoever did it hasn't been caught","kind":"police"},{"detail":"Ron has been jumpy since the window was smashed","kind":"action"}]}
+{"id":"lena.saw-window.drift.1","invented":true,"source":"agreed","details":[{"detail":"Ron says he saw nothing of the pawn shop window being put in","kind":"person"},{"detail":"the man had his back to her before she had the window in view","kind":"action"}]}
+{"id":"lena.saw-window.drift.2","invented":true,"source":"agreed","details":[{"detail":"dark coat, dark trousers","kind":"appearance"}]}
+{"id":"lena.saw-window.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.looks.0","invented":true,"source":"agreed","details":[{"detail":"dark clothes","kind":"appearance"}]}
+{"id":"lena.saw-window.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.saw-window.news.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop's window is still boarded up","kind":"object"},{"detail":"the pawn shop is two doors from the fish market","kind":"place"},{"detail":"Tuesday night","kind":"time"}]}
+{"id":"lena.saw-window.police.0","invented":true,"source":"ruled","details":[{"detail":"a man at the docks and how much he earns in a week","kind":"person"},{"detail":"the window costs more than the docks worker earns in a week","kind":"amount"},{"detail":"Rita won't want the law hanging round her door longer than it has to","kind":"action"}]}
+{"id":"lena.saw-window.taken.0","invented":true,"source":"agreed","details":[{"detail":"she was across the street when she saw it","kind":"place"}]}
+{"id":"lena.saw-window.tell-all.0","invented":true,"source":"ruled","details":[{"detail":"Ron is the driver booking fewer fares than he drives","kind":"person"},{"detail":"takings are down against last week","kind":"amount"}]}
+{"id":"lena.saw-window.tell-all.1","invented":true,"source":"ruled","details":[{"detail":"the man who broke Rita's window and the stranger Ron argued with are different men","kind":"person"}]}
+{"id":"lena.saw-window.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"the stranger in the yard came and went over the wall by the gate","kind":"action"}]}
+{"id":"lena.saw-window.time.0","invented":true,"source":"agreed","details":[{"detail":"heard the glass break before looking up","kind":"action"}]}
+{"id":"lena.saw-window.wearing.0","invented":true,"source":"agreed","details":[{"detail":"she got a proper look at the stranger Ron argued with in the yard","kind":"other"}]}
+{"id":"lena.saw-window.went.0","invented":true,"source":"agreed","details":[{"detail":"he didn't look back","kind":"action"},{"detail":"she watched it from the office","kind":"place"}]}
+{"id":"lena.saw-window.with.0","invented":true,"source":"agreed","details":[{"detail":"out by the gate","kind":"place"}]}
+{"id":"lena.the-rank.about.0","invented":true,"source":"agreed","details":[{"detail":"Ron was out front at the time","kind":"person"},{"detail":"Zlata was on the phone most of the morning","kind":"action"}]}
+{"id":"lena.the-rank.business.0","invented":false,"source":"ruled","details":[]}
+{"id":"lena.the-rank.drift.0","invented":true,"source":"agreed","details":[{"detail":"Ron is chasing the unpaid fare","kind":"action"}]}
+{"id":"lena.the-rank.drift.1","invented":true,"source":"agreed","details":[{"detail":"Ron was in the yard at the time","kind":"person"},{"detail":"Zlata was on the phone at the time","kind":"person"}]}
+{"id":"lena.the-rank.drift.2","invented":true,"source":"agreed","details":[{"detail":"Ron was there watching the non-paying ferry fare","kind":"person"},{"detail":"the fare walked off without paying in front of Ron","kind":"action"}]}
+{"id":"lena.the-rank.driving.0","invented":true,"source":"agreed","details":[{"detail":"by the gate","kind":"place"},{"detail":"low voices","kind":"other"}]}
+{"id":"lena.the-rank.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.the-rank.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"a fella at the market has had a white van for years","kind":"vehicle"},{"detail":"the market fella delivers fish before dawn","kind":"action"}]}
+{"id":"lena.the-rank.looks.0","invented":true,"source":"agreed","details":[{"detail":"a second man who did not pay today","kind":"amount"}]}
+{"id":"lena.the-rank.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.the-rank.news.0","invented":true,"source":"agreed","details":[{"detail":"Ron is fuming about the unpaid ferry fare","kind":"action"}]}
+{"id":"lena.the-rank.police.0","invented":true,"source":"agreed","details":[{"detail":"Ron noted the registration of the fare that skipped","kind":"action"}]}
+{"id":"lena.the-rank.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.the-rank.tell-all.0","invented":true,"source":"agreed","details":[{"detail":"today is Tuesday","kind":"time"},{"detail":"Ron is the driver booking fewer fares than he's driven this week","kind":"person"}]}
+{"id":"lena.the-rank.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"coat too heavy for the weather","kind":"appearance"},{"detail":"kept his collar up","kind":"appearance"}]}
+{"id":"lena.the-rank.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"he was on foot, not driving","kind":"action"},{"detail":"heading down toward the quay","kind":"place"}]}
+{"id":"lena.the-rank.time.0","invented":true,"source":"agreed","details":[{"detail":"she watched him get in the cab herself","kind":"action"}]}
+{"id":"lena.the-rank.wearing.0","invented":true,"source":"agreed","details":[{"detail":"a grey jacket, a bit worn at the collar","kind":"appearance"},{"detail":"he has worn the same jacket most mornings this week","kind":"action"}]}
+{"id":"lena.the-rank.went.0","invented":true,"source":"agreed","details":[{"detail":"lost him in the crowd by the fish market","kind":"place"}]}
+{"id":"lena.the-rank.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.business.0","invented":true,"source":"agreed","details":[{"detail":"Tuesday takings were down against last Tuesday","kind":"amount"},{"detail":"three fares fewer booked than driven","kind":"amount"},{"detail":"Ron is the driver booking fewer fares than he drives","kind":"action"}]}
+{"id":"lena.two-accounts.drift.0","invented":true,"source":"ruled","details":[{"detail":"the pawn shop window has a crack in it","kind":"other"}]}
+{"id":"lena.two-accounts.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.drift.2","invented":true,"source":"agreed","details":[{"detail":"she was locking up when she saw the figure","kind":"action"}]}
+{"id":"lena.two-accounts.driving.0","invented":true,"source":"agreed","details":[{"detail":"the argument happened by the gate","kind":"place"}]}
+{"id":"lena.two-accounts.leading-lad.0","invented":true,"source":"ruled","details":[{"detail":"Darren wasn't there himself when the window was done","kind":"action"},{"detail":"a stone was thrown to break the pawn shop window","kind":"object"}]}
+{"id":"lena.two-accounts.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.looks.0","invented":true,"source":"agreed","details":[{"detail":"dark coat","kind":"appearance"},{"detail":"kept his collar up","kind":"appearance"},{"detail":"stood by the yard gate","kind":"place"},{"detail":"maybe five minutes","kind":"time"},{"detail":"Ron walked him out to the street","kind":"action"}]}
+{"id":"lena.two-accounts.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.news.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.police.0","invented":false,"source":"ruled","details":[]}
+{"id":"lena.two-accounts.taken.0","invented":true,"source":"agreed","details":[{"detail":"stock was taken from the pawn shop window","kind":"object"},{"detail":"what was taken was of little value","kind":"amount"}]}
+{"id":"lena.two-accounts.tell-all.0","invented":true,"source":"ruled","details":[{"detail":"today is a Tuesday","kind":"time"},{"detail":"the takings are down against last week","kind":"amount"},{"detail":"Ron is booking fewer fares than he drives","kind":"action"}]}
+{"id":"lena.two-accounts.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"stood by the yard gate","kind":"place"},{"detail":"low voices","kind":"other"},{"detail":"Ron's back to me","kind":"appearance"},{"detail":"watching from the window","kind":"place"}]}
+{"id":"lena.two-accounts.time.0","invented":true,"source":"ruled","details":[{"detail":"Just gone half nine","kind":"time"}]}
+{"id":"lena.two-accounts.wearing.0","invented":true,"source":"agreed","details":[{"detail":"wore a dark coat","kind":"appearance"},{"detail":"collar up, hood down","kind":"appearance"},{"detail":"saw enough of his face to know she didn't know him","kind":"appearance"},{"detail":"he didn't hang about long","kind":"action"}]}
+{"id":"lena.two-accounts.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"lena.two-accounts.with.0","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.heard-vague.about.0","invented":true,"source":"agreed","details":[{"detail":"the fella who does the shop two doors down was still there","kind":"person"},{"detail":"saw his light on","kind":"action"},{"detail":"about half nine","kind":"time"},{"detail":"the woman from the flats","kind":"person"},{"detail":"she was heading back from somewhere","kind":"action"},{"detail":"gone eleven or so","kind":"time"}]}
+{"id":"rocco.heard-vague.business.0","invented":true,"source":"agreed","details":[{"detail":"the rank has been quiet this last week","kind":"other"}]}
+{"id":"rocco.heard-vague.drift.0","invented":true,"source":"agreed","details":[{"detail":"claims to have seen the pawn shop's window put in, when he only heard about it","kind":"other"}]}
+{"id":"rocco.heard-vague.drift.1","invented":true,"source":"agreed","details":[{"detail":"was out on the rank till gone midnight last night","kind":"time"},{"detail":"a van came through","kind":"vehicle"},{"detail":"about half ten","kind":"time"},{"detail":"the same van that's been round Thursday nights","kind":"vehicle"},{"detail":"after the van it was raining and the street was empty","kind":"other"}]}
+{"id":"rocco.heard-vague.drift.2","invented":true,"source":"agreed","details":[{"detail":"a van was about near the pawn shop","kind":"vehicle"},{"detail":"the van was there earlier on, before the window went in","kind":"time"}]}
+{"id":"rocco.heard-vague.driving.0","invented":true,"source":"agreed","details":[{"detail":"a van came through Thursday","kind":"vehicle"},{"detail":"grey van with rust on the nearside","kind":"appearance"},{"detail":"came round about half seven","kind":"time"},{"detail":"parked by the corner","kind":"place"},{"detail":"parked for about twenty minutes then left","kind":"action"},{"detail":"same time as last week","kind":"time"}]}
+{"id":"rocco.heard-vague.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"has seen the lad from the flats around and says he mostly keeps his head down","kind":"person"}]}
+{"id":"rocco.heard-vague.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"saw the van himself","kind":"vehicle"},{"detail":"Thursday last and the Thursday before that","kind":"time"},{"detail":"same colour (white)","kind":"appearance"},{"detail":"sits quiet for a bit then moves on","kind":"action"}]}
+{"id":"rocco.heard-vague.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-vague.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-vague.news.0","invented":true,"source":"agreed","details":[{"detail":"the glass was all over the pavement this morning","kind":"object"}]}
+{"id":"rocco.heard-vague.police.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop owner was out this morning sweeping up glass","kind":"action"}]}
+{"id":"rocco.heard-vague.taken.0","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.heard-vague.tell-all.0","invented":true,"source":"agreed","details":[{"detail":"someone walking past twice in an hour","kind":"action"},{"detail":"the van came back","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"}]}
+{"id":"rocco.heard-vague.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"a man who walked past twice","kind":"person"},{"detail":"a man in a van","kind":"vehicle"}]}
+{"id":"rocco.heard-vague.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"a van","kind":"vehicle"},{"detail":"dark coloured, blue or black","kind":"appearance"},{"detail":"came in round seven","kind":"time"},{"detail":"parked back of the yard","kind":"place"},{"detail":"stayed about twenty minutes then left","kind":"action"},{"detail":"same van the Thursday before at the same time","kind":"time"}]}
+{"id":"rocco.heard-vague.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-vague.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-vague.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-vague.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.business.0","invented":true,"source":"agreed","details":[{"detail":"a van came past","kind":"vehicle"},{"detail":"yesterday, at the same time as before","kind":"time"},{"detail":"the van had come past before (again)","kind":"action"}]}
+{"id":"rocco.heard-window-named.drift.0","invented":true,"source":"agreed","details":[{"detail":"a van seen again","kind":"vehicle"},{"detail":"on Thursday, same as last Thursday","kind":"time"},{"detail":"the van is grey","kind":"appearance"},{"detail":"sits on the corner","kind":"place"},{"detail":"about twenty minutes","kind":"amount"},{"detail":"a man in the van waiting","kind":"person"},{"detail":"Rita's shop window boarded up","kind":"object"}]}
+{"id":"rocco.heard-window-named.drift.1","invented":true,"source":"agreed","details":[{"detail":"a van incident the character refers to as a known event","kind":"vehicle"}]}
+{"id":"rocco.heard-window-named.drift.2","invented":true,"source":"agreed","details":[{"detail":"a man with a van","kind":"person"},{"detail":"the van","kind":"vehicle"},{"detail":"he sits in the cab and rarely gets out","kind":"action"},{"detail":"the van turns up, does its business, then leaves","kind":"action"},{"detail":"something is inside the van","kind":"object"}]}
+{"id":"rocco.heard-window-named.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"saw the white van himself","kind":"vehicle"},{"detail":"seen it Thursday last and the Thursday before","kind":"time"},{"detail":"same spot down by the corner","kind":"place"}]}
+{"id":"rocco.heard-window-named.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.news.0","invented":true,"source":"agreed","details":[{"detail":"saw the van again yesterday","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"},{"detail":"parked up over by the corner","kind":"place"},{"detail":"about four o'clock","kind":"time"},{"detail":"somebody sitting in it watching the rank","kind":"person"},{"detail":"they moved off before anything came of it","kind":"action"},{"detail":"Rita runs the shop across from here","kind":"place"}]}
+{"id":"rocco.heard-window-named.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"a van","kind":"vehicle"},{"detail":"dark colour","kind":"appearance"},{"detail":"comes through Thursday nights regularly","kind":"time"},{"detail":"seen last week and again this Thursday past","kind":"time"},{"detail":"sits for a bit near the yard gate, then leaves","kind":"action"}]}
+{"id":"rocco.heard-window-named.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.heard-window-named.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.business.0","invented":true,"source":"agreed","details":[{"detail":"two jobs out this afternoon","kind":"amount"}]}
+{"id":"rocco.nothing.drift.0","invented":true,"source":"agreed","details":[{"detail":"saw the van again this morning","kind":"vehicle"},{"detail":"the same van has been coming round Thursday evenings","kind":"time"},{"detail":"the van sat across the street","kind":"place"},{"detail":"the van sat there about twenty minutes","kind":"amount"},{"detail":"nobody got out of the van","kind":"action"},{"detail":"the gutters on the yard gate are starting to back up","kind":"object"}]}
+{"id":"rocco.nothing.drift.1","invented":true,"source":"agreed","details":[{"detail":"a van at the scene that nobody paid any mind","kind":"vehicle"},{"detail":"a couple of the usual taxis came and went","kind":"action"},{"detail":"the fella at the corner shop was sweeping out","kind":"person"},{"detail":"the street was quiet at the time","kind":"other"}]}
+{"id":"rocco.nothing.drift.2","invented":true,"source":"agreed","details":[{"detail":"a man sweeping was present","kind":"person"},{"detail":"a van he was watching","kind":"vehicle"},{"detail":"it was early","kind":"time"},{"detail":"the sweeper is always out there sweeping, rain or shine","kind":"action"}]}
+{"id":"rocco.nothing.driving.0","invented":true,"source":"agreed","details":[{"detail":"a van has been coming regularly","kind":"vehicle"},{"detail":"the van comes on Thursdays","kind":"time"},{"detail":"the van is black","kind":"appearance"}]}
+{"id":"rocco.nothing.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"saw the van on Thursday","kind":"time"},{"detail":"the van comes at the same time each visit","kind":"action"},{"detail":"the van parks where it shouldn't","kind":"place"}]}
+{"id":"rocco.nothing.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.morning.0","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.nothing.news.0","invented":true,"source":"agreed","details":[{"detail":"the van seen again","kind":"vehicle"},{"detail":"grey van","kind":"appearance"},{"detail":"Thursday, same as last Thursday","kind":"time"},{"detail":"parks up over by Copper Row","kind":"place"},{"detail":"for about twenty minutes, then off again","kind":"amount"}]}
+{"id":"rocco.nothing.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.tell-all.0","invented":true,"source":"agreed","details":[{"detail":"a van that shouldn't be here","kind":"vehicle"},{"detail":"Thursday nights","kind":"time"}]}
+{"id":"rocco.nothing.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"a van that comes regularly","kind":"vehicle"},{"detail":"the van comes on Thursday nights","kind":"time"},{"detail":"the van is dark coloured","kind":"appearance"},{"detail":"the van parks where it shouldn't","kind":"action"}]}
+{"id":"rocco.nothing.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.nothing.with.0","invented":true,"source":"ruled","details":[{"detail":"Mickey was at the office most days before he died","kind":"action"}]}
+{"id":"rocco.ordinary-day.about.0","invented":true,"source":"agreed","details":[{"detail":"a bit of backing up on the street because of the fish van","kind":"action"},{"detail":"around half eleven","kind":"time"}]}
+{"id":"rocco.ordinary-day.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.drift.0","invented":true,"source":"agreed","details":[{"detail":"third time this week the fish van was late","kind":"amount"},{"detail":"drizzle since four o'clock","kind":"time"}]}
+{"id":"rocco.ordinary-day.drift.1","invented":true,"source":"agreed","details":[{"detail":"the fish van was early, before half eight","kind":"time"},{"detail":"the fares were after dinner, a couple of hours back","kind":"time"},{"detail":"the woman from the flats going down to the shops","kind":"person"},{"detail":"fella with the trolley from the market","kind":"person"}]}
+{"id":"rocco.ordinary-day.drift.2","invented":true,"source":"agreed","details":[{"detail":"the fella with the trolley came past","kind":"person"},{"detail":"the woman from the flats came past","kind":"person"}]}
+{"id":"rocco.ordinary-day.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"a man who didn't look like the lad from the flats","kind":"person"},{"detail":"wore a proper coat, not a jumper","kind":"appearance"},{"detail":"came past the phone box","kind":"place"},{"detail":"about an hour ago","kind":"time"},{"detail":"walked down toward the yard gate like he knew where he was going","kind":"action"}]}
+{"id":"rocco.ordinary-day.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"saw the van twice","kind":"vehicle"},{"detail":"Thursday last week and Thursday this week","kind":"time"},{"detail":"early morning before the fish van comes through","kind":"time"},{"detail":"parked up facing the yards","kind":"place"},{"detail":"nobody getting in or out of it","kind":"action"}]}
+{"id":"rocco.ordinary-day.looks.0","invented":true,"source":"agreed","details":[{"detail":"Mickey was a tall fella with broad shoulders","kind":"appearance"},{"detail":"Mickey kept his hair neat even towards the end","kind":"appearance"},{"detail":"Mickey wore a proper coat, not a windbreaker","kind":"appearance"}]}
+{"id":"rocco.ordinary-day.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.news.0","invented":true,"source":"agreed","details":[{"detail":"a grey van seen twice this week","kind":"vehicle"},{"detail":"Thursday last and yesterday same time","kind":"time"},{"detail":"parked over by the old market","kind":"place"},{"detail":"nobody gets out, just sits there","kind":"action"}]}
+{"id":"rocco.ordinary-day.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.tell-all.0","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.ordinary-day.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"the fish van driver never gets out of the cab","kind":"action"},{"detail":"the fish van driver just honks and waits","kind":"action"}]}
+{"id":"rocco.ordinary-day.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"a white van","kind":"vehicle"},{"detail":"rust on the nearside of the van","kind":"appearance"},{"detail":"faded, unreadable lettering down the side","kind":"appearance"},{"detail":"the same van comes Thursdays and Mondays","kind":"time"},{"detail":"has been coming for a couple of months at least","kind":"time"},{"detail":"he is always late on Thursday","kind":"time"}]}
+{"id":"rocco.ordinary-day.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.ordinary-day.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-man-yard.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-man-yard.business.0","invented":true,"source":"agreed","details":[{"detail":"it is Thursday","kind":"time"},{"detail":"the office doing the school runs","kind":"action"},{"detail":"a van came through again","kind":"vehicle"},{"detail":"the same van came through last Thursday","kind":"time"}]}
+{"id":"rocco.saw-man-yard.drift.0","invented":true,"source":"agreed","details":[{"detail":"a van was back","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"},{"detail":"parked down the side","kind":"place"},{"detail":"nobody gets in or out of it, then it's gone","kind":"action"}]}
+{"id":"rocco.saw-man-yard.drift.1","invented":true,"source":"agreed","details":[{"detail":"a van that comes and sits on the street","kind":"vehicle"},{"detail":"it happened on two Thursdays, the first Thursday and the second Thursday","kind":"time"},{"detail":"the van sits there twenty minutes to half an hour, then leaves","kind":"action"},{"detail":"he was out there both times it happened","kind":"action"}]}
+{"id":"rocco.saw-man-yard.drift.2","invented":true,"source":"agreed","details":[{"detail":"a van","kind":"vehicle"},{"detail":"the van's windows were too dark to see in","kind":"appearance"},{"detail":"the van sat there as if waiting","kind":"action"}]}
+{"id":"rocco.saw-man-yard.driving.0","invented":true,"source":"agreed","details":[{"detail":"Friday morning (KNOWN says a bit after ten at night, on no named weekday)","kind":"time"}]}
+{"id":"rocco.saw-man-yard.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"the coat was dark","kind":"appearance"}]}
+{"id":"rocco.saw-man-yard.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"a white van","kind":"vehicle"},{"detail":"seen twice, Thursday last week and Thursday this week, early evening","kind":"time"},{"detail":"the van sat on the rank for a bit before moving off","kind":"action"}]}
+{"id":"rocco.saw-man-yard.looks.0","invented":true,"source":"agreed","details":[{"detail":"the coat was dark","kind":"appearance"}]}
+{"id":"rocco.saw-man-yard.morning.0","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.saw-man-yard.news.0","invented":true,"source":"agreed","details":[{"detail":"the van was back","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"}]}
+{"id":"rocco.saw-man-yard.police.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.saw-man-yard.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-man-yard.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-man-yard.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"Thursday night last week (or the week before)","kind":"time"}]}
+{"id":"rocco.saw-man-yard.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-man-yard.time.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.saw-man-yard.wearing.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.saw-man-yard.went.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"},{"detail":"he went out past the gate","kind":"action"}]}
+{"id":"rocco.saw-man-yard.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.drift.0","invented":true,"source":"ruled","details":[{"detail":"a dark blue van","kind":"vehicle"},{"detail":"the van came by again Thursday, same time as last week","kind":"time"},{"detail":"the van sits round the back of the market","kind":"place"},{"detail":"the van sits for twenty minutes","kind":"amount"},{"detail":"the driver didn't get out either time","kind":"action"},{"detail":"the pawn shop is still boarded up","kind":"object"},{"detail":"he was stood right here on the rank when it happened","kind":"place"}]}
+{"id":"rocco.saw-window.drift.1","invented":true,"source":"agreed","details":[{"detail":"a couple of minicabs coming and going at the time of the break-in","kind":"vehicle"}]}
+{"id":"rocco.saw-window.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.leading-lad.0","invented":true,"source":"ruled","details":[{"detail":"a dark coat","kind":"appearance"}]}
+{"id":"rocco.saw-window.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"a white van comes round","kind":"vehicle"},{"detail":"Thursday nights","kind":"time"},{"detail":"parks up near the corner","kind":"place"},{"detail":"stays maybe twenty minutes","kind":"amount"},{"detail":"seen it twice at the same time","kind":"action"}]}
+{"id":"rocco.saw-window.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.news.0","invented":true,"source":"agreed","details":[{"detail":"a van seen again","kind":"vehicle"},{"detail":"Thursday, and the two Thursdays before","kind":"time"},{"detail":"parked in Copper Row","kind":"place"},{"detail":"about twenty minutes","kind":"amount"},{"detail":"parked up and then left","kind":"action"}]}
+{"id":"rocco.saw-window.police.0","invented":true,"source":"agreed","details":[{"detail":"it happened on Thursday night","kind":"time"},{"detail":"never heard the sirens go past","kind":"police"}]}
+{"id":"rocco.saw-window.taken.0","invented":true,"source":"agreed","details":[{"detail":"nothing was taken from the pawn shop","kind":"action"},{"detail":"night before last","kind":"time"}]}
+{"id":"rocco.saw-window.tell-all.0","invented":true,"source":"agreed","details":[{"detail":"three nights back","kind":"time"}]}
+{"id":"rocco.saw-window.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"medium sort of build","kind":"appearance"}]}
+{"id":"rocco.saw-window.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"the man came past him on foot before the window went in","kind":"action"}]}
+{"id":"rocco.saw-window.time.0","invented":true,"source":"agreed","details":[{"detail":"quarter past nine, maybe twenty past","kind":"time"}]}
+{"id":"rocco.saw-window.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.saw-window.went.0","invented":true,"source":"agreed","details":[{"detail":"night before last","kind":"time"}]}
+{"id":"rocco.saw-window.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.about.0","invented":true,"source":"agreed","details":[{"detail":"a couple walked past","kind":"person"},{"detail":"maybe twenty minutes before","kind":"time"},{"detail":"heading toward the market","kind":"place"}]}
+{"id":"rocco.the-rank.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.drift.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.drift.1","invented":true,"source":"agreed","details":[{"detail":"he was on his own when he got in the cab","kind":"person"},{"detail":"driver came back looking the way they do when money's gone missing","kind":"action"},{"detail":"rain coming in sideways at half seven this morning","kind":"other"}]}
+{"id":"rocco.the-rank.drift.2","invented":true,"source":"agreed","details":[{"detail":"was inside when he came through","kind":"action"},{"detail":"it was still dark at half seven that morning","kind":"other"},{"detail":"rain coming down that morning","kind":"other"}]}
+{"id":"rocco.the-rank.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"the fare walked off without a word","kind":"action"},{"detail":"another person he saw who moved differently from the fare","kind":"person"}]}
+{"id":"rocco.the-rank.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"saw the white van himself","kind":"vehicle"},{"detail":"Thursday last week","kind":"time"},{"detail":"Thursday again this week, same time, middle of the afternoon","kind":"time"},{"detail":"sits up towards Copper Row","kind":"place"},{"detail":"engine off, nobody gets in or out of it","kind":"action"}]}
+{"id":"rocco.the-rank.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.news.0","invented":true,"source":"agreed","details":[{"detail":"seen the van again","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"}]}
+{"id":"rocco.the-rank.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"Mickey was a big fella, older than him by a bit","kind":"appearance"},{"detail":"Mickey had grey hair","kind":"appearance"},{"detail":"Mickey always wore a coat even when it wasn't cold","kind":"appearance"}]}
+{"id":"rocco.the-rank.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"Mickey had a dark car he kept clean","kind":"vehicle"},{"detail":"the car hasn't been seen much since Mickey died","kind":"action"},{"detail":"the nephew has a different car, as he heard","kind":"vehicle"}]}
+{"id":"rocco.the-rank.time.0","invented":true,"source":"agreed","details":[{"detail":"a van pulled away","kind":"vehicle"},{"detail":"the van left before he could say anything about the unpaid fare","kind":"action"}]}
+{"id":"rocco.the-rank.wearing.0","invented":true,"source":"ruled","details":[{"detail":"Grey coat","kind":"appearance"},{"detail":"would know the walk again","kind":"appearance"}]}
+{"id":"rocco.the-rank.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.the-rank.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.about.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"},{"detail":"the van he saw","kind":"vehicle"}]}
+{"id":"rocco.two-accounts.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.drift.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night or Friday morning","kind":"time"}]}
+{"id":"rocco.two-accounts.drift.1","invented":false,"source":"ruled","details":[]}
+{"id":"rocco.two-accounts.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.driving.0","invented":true,"source":"agreed","details":[{"detail":"a fella in a van","kind":"person"},{"detail":"the van looks like a Transit","kind":"vehicle"},{"detail":"the van is a dark colour","kind":"appearance"},{"detail":"comes Thursday nights, same as last Thursday","kind":"time"},{"detail":"pulls in round the back","kind":"place"},{"detail":"stays a couple of hours, then off again","kind":"action"}]}
+{"id":"rocco.two-accounts.leading-lad.0","invented":true,"source":"agreed","details":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.two-accounts.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"a white van seen again","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"},{"detail":"parked up by the corner","kind":"place"},{"detail":"nobody in it","kind":"other"},{"detail":"sat there a good while","kind":"action"}]}
+{"id":"rocco.two-accounts.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.news.0","invented":true,"source":"agreed","details":[{"detail":"the van seen again","kind":"vehicle"},{"detail":"Thursday, same as last Thursday","kind":"time"},{"detail":"sits there maybe twenty minutes","kind":"amount"},{"detail":"van parks then drives off, regularly","kind":"action"},{"detail":"pawn shop window done a couple nights back","kind":"time"}]}
+{"id":"rocco.two-accounts.police.0","invented":true,"source":"agreed","details":[{"detail":"a couple of uniforms seen round the corner","kind":"police"},{"detail":"this morning","kind":"time"},{"detail":"they were just passing through, not headed here","kind":"action"}]}
+{"id":"rocco.two-accounts.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.tell-all.1","invented":true,"source":"ruled","details":[{"detail":"the person was looking in the pawn shop window","kind":"action"}]}
+{"id":"rocco.two-accounts.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.time.0","invented":true,"source":"agreed","details":[{"detail":"the light was already off in the shop","kind":"other"}]}
+{"id":"rocco.two-accounts.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"rocco.two-accounts.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.about.0","invented":true,"source":"agreed","details":[{"detail":"was down the road at the time","kind":"place"},{"detail":"the fella from the market heard it","kind":"person"},{"detail":"maybe half eleven","kind":"time"},{"detail":"nobody on Quay Street but the night crowd","kind":"person"}]}
+{"id":"sam.heard-vague.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.drift.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.drift.1","invented":true,"source":"ruled","details":[{"detail":"the market fella opened up this morning","kind":"person"}]}
+{"id":"sam.heard-vague.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.driving.0","invented":true,"source":"agreed","details":[{"detail":"the vehicle was something dark","kind":"vehicle"}]}
+{"id":"sam.heard-vague.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"the fella at the market","kind":"person"},{"detail":"it was dark","kind":"appearance"},{"detail":"he was up late doing stock","kind":"action"}]}
+{"id":"sam.heard-vague.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.news.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.police.0","invented":true,"source":"ruled","details":[{"detail":"nobody has told the police about the pawn shop window","kind":"police"}]}
+{"id":"sam.heard-vague.taken.0","invented":true,"source":"agreed","details":[{"detail":"the fella at the market as a source on the break-in","kind":"person"},{"detail":"it was quick, in and out before anybody came past","kind":"action"}]}
+{"id":"sam.heard-vague.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.tell-all.2","invented":false,"source":"ruled","details":[]}
+{"id":"sam.heard-vague.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-vague.went.0","invented":true,"source":"agreed","details":[{"detail":"a fella at the market told him about it","kind":"person"},{"detail":"he went down toward the docks","kind":"place"},{"detail":"he always goes to the docks when he needs to think or not be seen","kind":"action"}]}
+{"id":"sam.heard-vague.with.0","invented":true,"source":"ruled","details":[{"detail":"was talking to three people before the other person walked over","kind":"amount"}]}
+{"id":"sam.heard-window-named.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.business.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.heard-window-named.drift.0","invented":true,"source":"agreed","details":[{"detail":"didn't even knock, just did it","kind":"action"}]}
+{"id":"sam.heard-window-named.drift.1","invented":true,"source":"ruled","details":[{"detail":"Rita wasn't keen to go into details with him and he didn't push it","kind":"action"}]}
+{"id":"sam.heard-window-named.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.leading-van.0","invented":true,"source":"ruled","details":[{"detail":"heard it was a white van","kind":"vehicle"}]}
+{"id":"sam.heard-window-named.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.news.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.heard-window-named.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.wearing.0","invented":true,"source":"agreed","details":[{"detail":"he saw the man talking to somebody","kind":"action"}]}
+{"id":"sam.heard-window-named.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.heard-window-named.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.about.0","invented":true,"source":"agreed","details":[{"detail":"the fella with the dark Vauxhall on the rank","kind":"vehicle"},{"detail":"been there since half two","kind":"time"},{"detail":"the woman from the flower stall is about","kind":"person"},{"detail":"the two off the produce end are about","kind":"person"}]}
+{"id":"sam.nothing.business.0","invented":true,"source":"agreed","details":[{"detail":"three messages waiting to move","kind":"amount"},{"detail":"somebody's cousin needs a driver found","kind":"action"},{"detail":"before six","kind":"time"}]}
+{"id":"sam.nothing.drift.0","invented":true,"source":"agreed","details":[{"detail":"the dispatcher at Mickey's has been fielding calls himself since the funeral","kind":"action"},{"detail":"nobody has seen the nephew yet / he may not be coming down","kind":"action"},{"detail":"the market crowd saying the takings are off","kind":"other"},{"detail":"the fella who usually works the rank in the mornings","kind":"person"},{"detail":"not seen him in three days","kind":"time"}]}
+{"id":"sam.nothing.drift.1","invented":true,"source":"agreed","details":[{"detail":"the funeral was three weeks back","kind":"time"},{"detail":"half the rank turned up for the funeral","kind":"amount"},{"detail":"the dispatcher at the funeral","kind":"person"},{"detail":"couple of the older drivers at the funeral","kind":"person"}]}
+{"id":"sam.nothing.drift.2","invented":true,"source":"agreed","details":[{"detail":"Mickey wore a shirt most days","kind":"appearance"}]}
+{"id":"sam.nothing.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.morning.0","invented":true,"source":"ruled","details":[{"detail":"Four o'clock or near enough","kind":"time"}]}
+{"id":"sam.nothing.news.0","invented":true,"source":"agreed","details":[{"detail":"the drivers on the rank are talking like they've got nowhere to send people","kind":"action"},{"detail":"the night crowd's been quiet because of it","kind":"action"},{"detail":"the market woman","kind":"person"},{"detail":"the fella from the docks","kind":"person"},{"detail":"the market woman and the dock fella haven't spoken since somebody passed on what one of them said","kind":"action"}]}
+{"id":"sam.nothing.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.time.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.nothing.wearing.0","invented":true,"source":"agreed","details":[{"detail":"the fella from the depot","kind":"person"},{"detail":"the fella from the depot was the one who found Mickey","kind":"action"}]}
+{"id":"sam.nothing.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.nothing.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.drift.0","invented":true,"source":"agreed","details":[{"detail":"Mickey's usual drivers are saying there have been two ferry fares","kind":"action"}]}
+{"id":"sam.ordinary-day.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.drift.2","invented":true,"source":"agreed","details":[{"detail":"the woman at the market complaining about the late fish van","kind":"person"}]}
+{"id":"sam.ordinary-day.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"a white van parked up","kind":"vehicle"},{"detail":"near the market","kind":"place"},{"detail":"since this morning","kind":"time"}]}
+{"id":"sam.ordinary-day.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.morning.0","invented":true,"source":"agreed","details":[{"detail":"the fish van got here in the afternoon","kind":"time"},{"detail":"the other person is not usually by the phone box at this time of day","kind":"action"}]}
+{"id":"sam.ordinary-day.news.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.ordinary-day.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.went.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.ordinary-day.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.about.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.saw-man-yard.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.drift.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.news.0","invented":true,"source":"agreed","details":[{"detail":"the depot bringing in new routes","kind":"action"},{"detail":"next month","kind":"time"},{"detail":"somebody moving stuff from the back of the units","kind":"action"},{"detail":"the back of the units","kind":"place"},{"detail":"overnight","kind":"time"}]}
+{"id":"sam.saw-man-yard.police.0","invented":true,"source":"agreed","details":[{"detail":"the office was quiet when he came through","kind":"action"}]}
+{"id":"sam.saw-man-yard.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-man-yard.wearing.0","invented":true,"source":"agreed","details":[{"detail":"the coat was dark","kind":"appearance"}]}
+{"id":"sam.saw-man-yard.went.0","invented":true,"source":"agreed","details":[{"detail":"he went past the character and into the street","kind":"action"}]}
+{"id":"sam.saw-man-yard.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.about.0","invented":true,"source":"agreed","details":[{"detail":"a couple of people further down the street","kind":"person"},{"detail":"the street was quiet, just him and the man","kind":"other"}]}
+{"id":"sam.saw-window.business.0","invented":true,"source":"agreed","details":[{"detail":"a couple of messages moved this morning","kind":"action"},{"detail":"the fella at the rank asked him to find somebody to shift some stuff","kind":"action"},{"detail":"by Friday","kind":"time"}]}
+{"id":"sam.saw-window.drift.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop window was done three nights back","kind":"time"},{"detail":"Mickey's office has been quiet since he died","kind":"other"},{"detail":"the drivers don't know who's running things and are nervous about their money","kind":"other"}]}
+{"id":"sam.saw-window.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.looks.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.saw-window.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.news.0","invented":true,"source":"agreed","details":[{"detail":"the fella who runs the rank has a dispute with the dispatcher over who gets sent where","kind":"action"},{"detail":"the dispute has been going on since Tuesday","kind":"time"}]}
+{"id":"sam.saw-window.police.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop is still shut up","kind":"other"},{"detail":"a board on the pawn shop window","kind":"object"},{"detail":"the pawn shop can be seen from the phone box","kind":"place"}]}
+{"id":"sam.saw-window.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.tell-all.1","invented":false,"source":"ruled","details":[]}
+{"id":"sam.saw-window.tell-all.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.saw-window.went.0","invented":true,"source":"agreed","details":[{"detail":"glass all over the pavement","kind":"object"}]}
+{"id":"sam.saw-window.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.business.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.the-rank.drift.0","invented":true,"source":"agreed","details":[{"detail":"the new owner was in the office asking about Mickey's books","kind":"place"},{"detail":"the asking about Mickey's books happened yesterday","kind":"time"}]}
+{"id":"sam.the-rank.drift.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.leading-lad.0","invented":true,"source":"ruled","details":[{"detail":"three or four lads hanging round the flats","kind":"amount"}]}
+{"id":"sam.the-rank.leading-van.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.looks.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.morning.0","invented":true,"source":"agreed","details":[{"detail":"been on this corner since the market crowd thinned out","kind":"action"}]}
+{"id":"sam.the-rank.news.0","invented":false,"source":"ruled","details":[]}
+{"id":"sam.the-rank.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.tell-all.1","invented":true,"source":"agreed","details":[{"detail":"tall enough","kind":"appearance"},{"detail":"dark jacket","kind":"appearance"}]}
+{"id":"sam.the-rank.tell-all.2","invented":true,"source":"agreed","details":[{"detail":"one of Mickey's cabs","kind":"vehicle"},{"detail":"a black Rover, the older kind","kind":"vehicle"},{"detail":"saw him pull up to the rank","kind":"action"},{"detail":"the driver was away from the cab, standing talking to someone over by the market","kind":"person"},{"detail":"the Rover moved off with the fare in the back","kind":"action"}]}
+{"id":"sam.the-rank.time.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.wearing.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.the-rank.went.0","invented":true,"source":"agreed","details":[{"detail":"about fifteen people walked past the phone box since the morning","kind":"amount"}]}
+{"id":"sam.the-rank.with.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.about.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.business.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.drift.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.drift.1","invented":false,"source":"ruled","details":[]}
+{"id":"sam.two-accounts.drift.2","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.driving.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.leading-lad.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.leading-van.0","invented":true,"source":"agreed","details":[{"detail":"heard it was a white van","kind":"vehicle"},{"detail":"someone said it was a transit","kind":"vehicle"},{"detail":"saw the back end of the van","kind":"vehicle"},{"detail":"heading up towards the market end","kind":"place"}]}
+{"id":"sam.two-accounts.looks.0","invented":true,"source":"ruled","details":[{"detail":"night before last","kind":"time"}]}
+{"id":"sam.two-accounts.morning.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.news.0","invented":true,"source":"agreed","details":[{"detail":"the pawn shop window went in two nights back","kind":"time"},{"detail":"nobody's seen the nephew yet","kind":"action"}]}
+{"id":"sam.two-accounts.police.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.taken.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.tell-all.0","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.tell-all.1","invented":false,"source":"agreed","details":[]}
+{"id":"sam.two-accounts.tell-all.2","invented":false,"source":"ruled","details":[]}
+{"id":"sam.two-accounts.time.0","invented":true,"source":"agreed","details":[{"detail":"the person at the window was a man (\"him\")","kind":"person"}]}
+{"id":"sam.two-accounts.wearing.0","invented":true,"source":"agreed","details":[{"detail":"about fifteen people walked past since the light started going","kind":"amount"}]}
+{"id":"sam.two-accounts.went.0","invented":true,"source":"agreed","details":[{"detail":"been here by the phone box since half two","kind":"time"}]}
+{"id":"sam.two-accounts.with.0","invented":false,"source":"agreed","details":[]}

@@ -1,0 +1,240 @@
+{"id":"lena.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"today is Thursday","kind":"time"}]}
+{"id":"lena.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger was gone before she got a proper look","kind":"action"}]}
+{"id":"lena.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the listener standing with his hands in his pockets","kind":"appearance"}]}
+{"id":"lena.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"several men came through the office door today","kind":"person"}]}
+{"id":"lena.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Tuesday's takings didn't match the phone log","kind":"other"}]}
+{"id":"lena.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"dark coat","kind":"appearance"},{"detail":"collar up","kind":"appearance"},{"detail":"taller than Ron","kind":"appearance"},{"detail":"watched from the back window","kind":"place"}]}
+{"id":"lena.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger walked in and walked out on foot","kind":"action"}]}
+{"id":"lena.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"it happened the night before last","kind":"time"}]}
+{"id":"lena.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the walking seller is from the market","kind":"place"}]}
+{"id":"lena.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Zlata was on the phones in the office at the time of the argument","kind":"person"},{"detail":"saw the argument through the back window","kind":"place"}]}
+{"id":"lena.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"takings are down against the same week last year","kind":"amount"},{"detail":"Ron is driving more than he puts in the book","kind":"action"}]}
+{"id":"lena.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron has been quieter than usual","kind":"action"},{"detail":"since Tuesday (of Ron's quietness)","kind":"time"}]}
+{"id":"lena.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"dark coat","kind":"appearance"},{"detail":"collar up","kind":"appearance"},{"detail":"it was near dark","kind":"time"},{"detail":"she was locking up at the time","kind":"action"}]}
+{"id":"lena.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron had his back to her during the argument","kind":"action"},{"detail":"the stranger had his collar up","kind":"appearance"}]}
+{"id":"lena.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a fella (the stranger was a man)","kind":"person"},{"detail":"on foot","kind":"action"},{"detail":"standing where the vans park","kind":"place"}]}
+{"id":"lena.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger was tall","kind":"appearance"},{"detail":"the stranger wore a coat with the collar up","kind":"appearance"}]}
+{"id":"lena.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron's been quiet since Tuesday","kind":"action"},{"detail":"since Tuesday (applied to Ron)","kind":"time"}]}
+{"id":"lena.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"nobody called the police","kind":"police"},{"detail":"Ron sorted it his own way","kind":"action"}]}
+{"id":"lena.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the tin still sat where it always sits","kind":"object"}]}
+{"id":"lena.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"today is a Tuesday","kind":"time"},{"detail":"the takings are down against last week","kind":"amount"},{"detail":"Ron is the driver booking fewer fares than he drives","kind":"person"},{"detail":"three days running","kind":"time"}]}
+{"id":"lena.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"she heard voices and then looked out to see them","kind":"action"}]}
+{"id":"lena.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger wore a dark coat","kind":"appearance"},{"detail":"the stranger had his collar up","kind":"appearance"}]}
+{"id":"lena.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron was doing the talking, loud","kind":"action"},{"detail":"the other fella kept his collar up","kind":"appearance"},{"detail":"kept his back to the window","kind":"action"},{"detail":"wasn't dressed for round here","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron was out by the gate when the man came through","kind":"person"}]}
+{"id":"lena.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"takings are down against last Tuesday","kind":"amount"}]}
+{"id":"lena.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"out the gate end","kind":"place"},{"detail":"gone before I got to the window properly","kind":"action"}]}
+{"id":"lena.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"kept his head down","kind":"action"}]}
+{"id":"lena.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Zlata had three calls in twenty minutes","kind":"amount"},{"detail":"the calls were for the docks","kind":"place"},{"detail":"nothing coming back the other way","kind":"action"}]}
+{"id":"lena.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron was there and tried to speak as the man ran past","kind":"person"}]}
+{"id":"lena.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"it is a Tuesday afternoon","kind":"time"},{"detail":"Thursday takings run about fifteen percent under Friday","kind":"amount"},{"detail":"Ron has been booking fewer fares than he drives this fortnight","kind":"action"}]}
+{"id":"lena.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"two nights before Mickey died","kind":"time"},{"detail":"gone before I'd got the window open","kind":"action"}]}
+{"id":"lena.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a coat too heavy for the weather","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the coat was dark","kind":"appearance"},{"detail":"the coat was heavy","kind":"appearance"}]}
+{"id":"lena.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"she got to the window after the man ran through","kind":"action"},{"detail":"the yard gate was left swinging","kind":"object"}]}
+{"id":"lena.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron is booking fewer fares than he's driving, again","kind":"action"}]}
+{"id":"lena.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the pawn shop window went in two nights back","kind":"time"}]}
+{"id":"lena.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"by the gate","kind":"place"},{"detail":"I was locking up","kind":"action"}]}
+{"id":"lena.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Ron's voice going quick and low","kind":"action"}]}
+{"id":"lena.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a stranger came knocking at the yard gate on Tuesday","kind":"time"}]}
+{"id":"lena.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"not much was taken","kind":"amount"},{"detail":"someone came out shouting before the lads had much time","kind":"action"}]}
+{"id":"lena.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"wearing something with a hood up","kind":"appearance"}]}
+{"id":"lena.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"lena.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the stranger was standing by the gate","kind":"place"}]}
+{"id":"rocco.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a couple of people he didn't know","kind":"person"},{"detail":"the night before yesterday","kind":"time"}]}
+{"id":"rocco.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Mickey was a big man","kind":"appearance"},{"detail":"Mickey wore the same brown coat for years with the collar turned up","kind":"appearance"}]}
+{"id":"rocco.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Mickey was tall","kind":"appearance"},{"detail":"Mickey was getting on in years","kind":"appearance"},{"detail":"Mickey had grey hair, kept neat","kind":"appearance"},{"detail":"Mickey wore a blue jumper most days","kind":"appearance"},{"detail":"Mickey kept the office radio on loud enough to hear from the rank","kind":"action"}]}
+{"id":"rocco.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Mickey drove a blue Vauxhall","kind":"vehicle"},{"detail":"the car was an old thing he kept going","kind":"appearance"},{"detail":"parked round the back by the yard gate most evenings","kind":"place"}]}
+{"id":"rocco.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"an office radio that gives the time","kind":"object"}]}
+{"id":"rocco.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the coat was dark","kind":"appearance"}]}
+{"id":"rocco.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Thursday night","kind":"time"},{"detail":"the coat was dark","kind":"appearance"},{"detail":"only saw him from the side","kind":"other"}]}
+{"id":"rocco.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a couple of calls went out since lunch","kind":"action"}]}
+{"id":"rocco.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Thursday night","kind":"time"}]}
+{"id":"rocco.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the police were at the pawn shop","kind":"police"},{"detail":"this morning","kind":"time"},{"detail":"came out for the papers","kind":"action"}]}
+{"id":"rocco.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"glass all over","kind":"object"}]}
+{"id":"rocco.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Tuesday night","kind":"time"}]}
+{"id":"rocco.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"rocco.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"it's Friday","kind":"time"},{"detail":"the woman from the flats came looking for someone to get a message to her sister","kind":"person"},{"detail":"her sister is over in Copper Row","kind":"place"},{"detail":"the message is needed by tomorrow","kind":"time"}]}
+{"id":"sam.heard-window-named.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"a couple of the drivers got a job out to the industrial estate this morning","kind":"action"},{"detail":"the industrial estate","kind":"place"},{"detail":"the rank's been quiet","kind":"other"}]}
+{"id":"sam.heard-window-named.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"Rita said it was late","kind":"time"}]}
+{"id":"sam.heard-window-named.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"it's gone half five","kind":"time"}]}
+{"id":"sam.heard-window-named.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.heard-window-named.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the fella at the market said something different","kind":"person"},{"detail":"this morning","kind":"time"}]}
+{"id":"sam.nothing.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.news.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.nothing.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.business.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"was down at the market this morning","kind":"time"}]}
+{"id":"sam.saw-man-yard.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the office lights on some nights and off others","kind":"object"},{"detail":"the drivers don't know who to ring so they're ringing everybody","kind":"action"}]}
+{"id":"sam.saw-man-yard.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"he was coming the other way when he saw the man","kind":"action"}]}
+{"id":"sam.saw-man-yard.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"three white vans sitting at the market","kind":"vehicle"}]}
+{"id":"sam.saw-man-yard.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the nephew hasn't shown up at the office and nobody has seen him yet","kind":"action"}]}
+{"id":"sam.saw-man-yard.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.time.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.saw-man-yard.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the coat was dark","kind":"appearance"}]}
+{"id":"sam.saw-man-yard.went.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"he was gone past the bins","kind":"place"}]}
+{"id":"sam.saw-man-yard.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.about.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.business.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.drift.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"two nights back","kind":"time"}]}
+{"id":"sam.two-accounts.drift.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.drift.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.driving.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.leading-lad.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.leading-van.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.looks.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"dark jacket","kind":"appearance"}]}
+{"id":"sam.two-accounts.morning.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"it's half four in the afternoon","kind":"time"}]}
+{"id":"sam.two-accounts.news.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"window done over a couple of nights back (known: last night, D3)","kind":"time"},{"detail":"nobody's seen the nephew yet","kind":"other"}]}
+{"id":"sam.two-accounts.police.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.taken.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.1","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.tell-all.2","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.time.0","model":"claude-opus-5-5","parsed":true,"invented":[{"detail":"the shops were closed","kind":"other"}]}
+{"id":"sam.two-accounts.wearing.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.went.0","model":"claude-opus-5-5","parsed":true,"invented":[]}
+{"id":"sam.two-accounts.with.0","model":"claude-opus-5-5","parsed":true,"invented":[]}

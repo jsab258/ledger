@@ -1,0 +1,234 @@
+{
+ "lena.heard-vague.business.0": {
+  "invented": true,
+  "why": "names Ron as the driver booking fewer fares; the card says only 'which of the drivers'"
+ },
+ "lena.heard-vague.drift.0": {
+  "invented": false,
+  "why": "Ron's habit, as her card places him; no event claimed"
+ },
+ "lena.heard-vague.drift.1": {
+  "invented": true,
+  "why": "puts Ron at the scene at the time; nothing she holds says so"
+ },
+ "lena.heard-window-named.about.0": {
+  "invented": true,
+  "why": "Ron there with him, and it 'wasn't friendly': invented presence and manner"
+ },
+ "lena.heard-window-named.business.0": {
+  "invented": true,
+  "why": "names Ron as the driver; 'quieter than last Tuesday' invented"
+ },
+ "lena.heard-window-named.news.0": {
+  "invented": false,
+  "why": "a story going round is what she heard from Rita"
+ },
+ "lena.heard-window-named.tell-all.1": {
+  "invented": false,
+  "why": "shouting for arguing is her hard fact in other words"
+ },
+ "lena.heard-window-named.tell-all.2": {
+  "invented": true,
+  "why": "what Rita was bothered about is invented"
+ },
+ "lena.nothing.about.0": {
+  "invented": true,
+  "why": "puts Ron in the yard that night with no memory at all"
+ },
+ "lena.nothing.business.0": {
+  "invented": true,
+  "why": "'most weeks since Mickey went' is an invented duration"
+ },
+ "lena.nothing.morning.0": {
+  "invented": true,
+  "why": "the card says she compares the takings; that they are down is invented"
+ },
+ "lena.nothing.taken.0": {
+  "invented": true,
+  "why": "'takings match the pad' is an invented check of the books"
+ },
+ "lena.ordinary-day.driving.0": {
+  "invented": true,
+  "why": "voices, the gate, leaving on foot to the market: all invented"
+ },
+ "lena.ordinary-day.with.0": {
+  "invented": true,
+  "why": "Mickey's company in his last weeks is invented"
+ },
+ "lena.saw-man-yard.about.0": {
+  "invented": false,
+  "why": "marked as a guess: 'that's who I'd have expected'"
+ },
+ "lena.saw-man-yard.leading-lad.0": {
+  "invented": true,
+  "why": "'head down' is not in her memory, which says she could not see his face"
+ },
+ "lena.saw-man-yard.police.0": {
+  "invented": true,
+  "why": "whether the police were called is invented"
+ },
+ "lena.saw-man-yard.taken.0": {
+  "invented": true,
+  "why": "that she checked the till and found nothing missing is invented"
+ },
+ "lena.saw-window.police.0": {
+  "invented": true,
+  "why": "Rita's phone calls, the window's cost and a docker's wage are invented"
+ },
+ "lena.saw-window.tell-all.0": {
+  "invented": true,
+  "why": "the takings down, Ron as the driver: invented"
+ },
+ "lena.saw-window.tell-all.1": {
+  "invented": true,
+  "why": "that the two men are different is something she cannot know"
+ },
+ "lena.the-rank.business.0": {
+  "invented": false,
+  "why": "her memory in other words, with an idiom"
+ },
+ "lena.two-accounts.drift.0": {
+  "invented": true,
+  "why": "'a crack in it' is a detail no memory gives"
+ },
+ "lena.two-accounts.leading-lad.0": {
+  "invented": true,
+  "why": "Darren not there, and a stone thrown: invented"
+ },
+ "lena.two-accounts.police.0": {
+  "invented": false,
+  "why": "an opinion of Rita's character, no event"
+ },
+ "lena.two-accounts.tell-all.0": {
+  "invented": true,
+  "why": "Tuesday, the takings and Ron: invented"
+ },
+ "lena.two-accounts.time.0": {
+  "invented": true,
+  "why": "'just gone half nine' is more precise than 'just before ten'"
+ },
+ "lena.two-accounts.with.0": {
+  "invented": false,
+  "why": "'fella' used loosely for the 'somebody' she could not swear to"
+ },
+ "rocco.heard-vague.taken.0": {
+  "invented": false,
+  "why": "narration of the card's own habit (the folded paper), no event"
+ },
+ "rocco.nothing.morning.0": {
+  "invented": false,
+  "why": "small talk about the weather now"
+ },
+ "rocco.nothing.with.0": {
+  "invented": true,
+  "why": "that Mickey was at the office most days is invented"
+ },
+ "rocco.ordinary-day.tell-all.0": {
+  "invented": false,
+  "why": "small talk about the weather now"
+ },
+ "rocco.saw-man-yard.morning.0": {
+  "invented": false,
+  "why": "small talk about the weather"
+ },
+ "rocco.saw-window.drift.0": {
+  "invented": true,
+  "why": "the van, its colour, its day, the boarding: invented, from the card's sample line"
+ },
+ "rocco.saw-window.leading-lad.0": {
+  "invented": true,
+  "why": "'the one with the dark coat' is invented; he never saw more than a man"
+ },
+ "rocco.the-rank.wearing.0": {
+  "invented": true,
+  "why": "a grey coat and 'I'd know the walk again' are invented"
+ },
+ "rocco.two-accounts.drift.1": {
+  "invented": false,
+  "why": "the rank's habit at that hour, no event"
+ },
+ "rocco.two-accounts.tell-all.1": {
+  "invented": true,
+  "why": "'looking in' adds an action the memory does not give"
+ },
+ "sam.heard-vague.drift.1": {
+  "invented": true,
+  "why": "the market man opening up this morning is invented"
+ },
+ "sam.heard-vague.police.0": {
+  "invented": true,
+  "why": "nobody telling the police is invented"
+ },
+ "sam.heard-vague.tell-all.2": {
+  "invented": false,
+  "why": "a question, not a claim"
+ },
+ "sam.heard-vague.with.0": {
+  "invented": true,
+  "why": "talking to three people before is an invented action"
+ },
+ "sam.heard-window-named.business.0": {
+  "invented": false,
+  "why": "small talk about the rank, no event"
+ },
+ "sam.heard-window-named.drift.1": {
+  "invented": true,
+  "why": "how Rita was when she told him is invented"
+ },
+ "sam.heard-window-named.leading-van.0": {
+  "invented": true,
+  "why": "'that's what I heard too' confirms the player's white van"
+ },
+ "sam.heard-window-named.news.0": {
+  "invented": false,
+  "why": "loose talk about the street's mood, no event"
+ },
+ "sam.nothing.morning.0": {
+  "invented": true,
+  "why": "'four o'clock or near enough' is wrong: it is five"
+ },
+ "sam.nothing.time.0": {
+  "invented": false,
+  "why": "the time now is right; the rest is vague"
+ },
+ "sam.ordinary-day.news.0": {
+  "invented": false,
+  "why": "a mood, no event"
+ },
+ "sam.saw-man-yard.about.0": {
+  "invented": false,
+  "why": "possibilities, marked as such"
+ },
+ "sam.saw-window.looks.0": {
+  "invented": false,
+  "why": "'moving fast' follows from 'ran off'; the clothes are marked 'maybe'"
+ },
+ "sam.saw-window.tell-all.1": {
+  "invented": false,
+  "why": "'moving fast' follows from 'ran off'"
+ },
+ "sam.the-rank.business.0": {
+  "invented": false,
+  "why": "small talk about the rank"
+ },
+ "sam.the-rank.leading-lad.0": {
+  "invented": true,
+  "why": "'three or four of them' is an invented count"
+ },
+ "sam.the-rank.news.0": {
+  "invented": false,
+  "why": "her memory of the new owner asking about the books; the ferry fare is his memory"
+ },
+ "sam.two-accounts.drift.1": {
+  "invented": false,
+  "why": "'dark' follows from before ten at night; 'moving through' is vague"
+ },
+ "sam.two-accounts.looks.0": {
+  "invented": true,
+  "why": "'night before last' is wrong: it was last night"
+ },
+ "sam.two-accounts.tell-all.2": {
+  "invented": false,
+  "why": "'on foot, far as I could tell' is marked as a guess"
+ }
+}
