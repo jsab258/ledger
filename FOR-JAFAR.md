@@ -10,27 +10,30 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[The cleanup page](https://claude.ai/artifact/KHjL38cq2t4nkRx4SeJB4W):** C: is at 55 GB, under your 60. Two groups, each one tap: Unreal's old cache (14.5 GB, nothing uses it since today's cap) and the build machine's copy (about 7 GB net). Both recommended; nothing goes without your yes.
 
-## Town, 28 September
+## Town, 29 September
 
-**[Your page: casting sheets and the story](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s):** eleven sheets, the outline, six canon questions; my picks marked.
+**[Your page: the first hour and four calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
 
-**Decide:**
-- Talk server, so no key ships: (A) small rented server in Germany, about €6 a month, stopping at $50 a month while friends play (recommended); (B) Fly.io, about $3; (C) not yet.
-- Tom's reading of what the ending will cost: (A) built from what he has seen and heard, so it can be wrong (recommended); (B) the true state in words.
+**Decide (on the page):**
+- Talk server in Germany, €6 a month, capped (recommended).
+- Tom's ending reading built from what he has seen (recommended).
+- Sheila withholds Tom's name by choice (recommended).
+- Neighbours' talk heard at most every 45 seconds (recommended), or that plus 16 more lines a kind.
 
 **Done:**
-- The town looks twice when it has heard something; all 80 friendships meet.
-- Invented details: 30% of test replies to 7%. Slowest first word 7.9 s to 4.8 s.
-- Act III is a VAT inspection of a cab office.
-- Talk server, AI notice, report button, Steam's AI text: built and tested.
-- Characters never urge a player to self-harm.
-- Both endings left to a hunted player are reachable (D58).
+- Talk naming Tom now raises suspicion in whoever hears it.
+- Nothing said about Tom repeats within two hours; neighbours' talk came round every 1.5 minutes, now 10 or more.
+- 27 street lines fixed: a doctor who charged (the GP was free), "the little ones", Mickey's as a pub.
+- A night-one job seen plainly reaches Tom's face by minute thirty, 13 of 13.
+- Each friend's session recorded, to read beside your runbook.
 
-**Failed:** Tom's reading failed the review: hidden numbers put into words. Set aside.
+**Failed:** fewer invention false alarms cost catches; not kept.
 
-**Got wrong:** an 863 MB scratch folder, F:\town-verify, outside my places; it needs your yes to remove.
+**Got wrong:** a push with a check red, fixed in minutes; the page's reason for minute thirty, corrected.
 
-**C: free:** 25.6 GB at 16:37, 41.5 GB now. Backup: runs with this commit.
+**Research:** 1990 street speech and the NHS.
+
+**C: free:** 41.5 GB last night, 52.5 GB now. Backup: runs with this commit.
 
 ## 26 September, day
 
