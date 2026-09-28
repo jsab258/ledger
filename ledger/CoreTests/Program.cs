@@ -5546,6 +5546,10 @@ namespace Ledger.CoreTests
                 var early = news.Seed(nm, hookN, new GameTime(st.Day, st.Hour - 1, 0));
                 var onTime = news.Seed(nm, hookN, new GameTime(st.Day, st.Hour, 0));
                 var again = news.Seed(nm, hookN, new GameTime(st.Day + 1, 9, 0));
+                // After a load, the stories already filed stay filed.
+                var reloaded = TownNews.Parse(File.ReadAllText(Root("production/specs/town-news.json")));
+                reloaded.FromFiled(new List<string>(news.Filed));
+                var afterLoad = reloaded.Seed(nm, hookN, new GameTime(st.Day + 1, 10, 0));
                 int holdersBefore = 0;
                 foreach (var p in hookN.People) if (nm.Get(p).Best(st.Fact.Subject + "." + st.Fact.Predicate) != null) holdersBefore++;
                 bool partyTold = false;
@@ -5569,7 +5573,7 @@ namespace Ledger.CoreTests
                 catch (FormatException) { refusesTwice = true; }
                 bool partiesQuiet = !partyTold && nm.Get("rita").Suppressed.Contains(st.Fact.Subject + "." + st.Fact.Predicate)
                     && !nm.Get("rita").Memory.Events.Exists(e => e.Text.Contains("Hal and Rita")) && !nm.Get("hal").Memory.Events.Exists(e => e.Text.Contains("Hal and Rita"));
-                Check(early.Count == 0 && onTime.Count == 1 && again.Count == 0 && seen.Contains("rita") && seen.Contains("hal") && seen.Contains("marta") && seen.Count >= 5
+                Check(early.Count == 0 && onTime.Count == 1 && again.Count == 0 && afterLoad.Count == 0 && seen.Contains("rita") && seen.Contains("hal") && seen.Contains("marta") && seen.Count >= 5
                       && holdersBefore == seen.Count && holdersAfter > holdersBefore && maxSus == 0.0 && refusesPlayer && refusesTwice && partiesQuiet
                       && ContentRule.SpeechBreaks(st.Summary) == null && RealWorld.Find(st.Summary).Count == 0,
                       "the town's own news is seen by everybody at the pawn when Hal calls on a Monday, filed once, spreads, and raises nobody's suspicion",
