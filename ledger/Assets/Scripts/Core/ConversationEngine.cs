@@ -292,6 +292,107 @@ namespace Ledger.Core
             Memory.CorrectLast(ClaimCheck.IReplied, ClaimCheck.IReplied + $"\"{Truncate(heard, 200)}\"");
         }
 
+        /// THE CONVERSATION IN A SAVE (town list 6r, the checklist sweep of 28
+        /// September): what this person remembers, the talk the model still
+        /// sees, what they have learned, what they have heard of his nights and
+        /// which memories the model has been shown, as plain values for any
+        /// save's JSON. Without it a reload forgot every word Tom had said.
+        public Dictionary<string, object> CaptureTalk()
+        {
+            var memory = new List<object>();
+            var shown = new List<object>();
+            // Field by field, the importance exact: the text line rounds it to
+            // two places, and a reload then recalled different memories (the
+            // independent check).
+            for (int i = 0; i < Memory.Events.Count; i++)
+            {
+                var e = Memory.Events[i];
+                memory.Add(new List<object> { e.Time.Day, e.Time.Hour, e.Time.Minute, e.Kind, e.Importance, e.Text });
+                if (_shown.Contains(e)) shown.Add(i);
+            }
+            var beliefs = new List<object>();
+            foreach (var b in Memory.Beliefs) beliefs.Add(b);
+            var transcript = new List<object>();
+            foreach (var m in _transcript) transcript.Add(new List<object> { m.Role, m.Content });
+            var facts = new List<object>();
+            foreach (var f in Knowledge.Facts) facts.Add(new List<object> { f.Subject, f.Predicate, f.Value });
+            return new Dictionary<string, object>
+            {
+                { "card", Card.Id }, { "memory", memory }, { "beliefs", beliefs }, { "shown", shown }, { "transcript", transcript },
+                { "facts", facts }, { "suspicion", Suspicion.Value }, { "suspicionWhy", Suspicion.LatestReason() }, { "heard", Heard.ToString() },
+                { "heardStory", HeardStory }, { "knownOnlySaid", _knownOnlySaid },
+            };
+        }
+
+        /// Puts a CaptureTalk back, over whatever this engine held. What it
+        /// cannot read it skips: a damaged save loses words, never the game.
+        public void RestoreTalk(Dictionary<string, object> saved)
+        {
+            Memory.Events.Clear();
+            Memory.ReplaceBeliefs(new string[0]);
+            _shown.Clear();
+            _transcript.Clear();
+            Knowledge.Facts.Clear();
+            Suspicion.Restore(0.0);
+            _knownOnlySaid = 0;
+            Heard = Knowing.Nothing;
+            HeardStory = null;
+            if (saved == null) return;
+            // Saved positions to the memories actually restored, so one memory
+            // skipped does not move every "shown" mark onto the wrong one.
+            var restoredAt = new Dictionary<int, MemoryEvent>();
+            if (saved.TryGetValue("memory", out var mem) && mem is List<object> lines)
+                for (int li = 0; li < lines.Count; li++)
+                {
+                    var l = lines[li];
+                    if (!(l is List<object> f) || f.Count != 6) continue;
+                    int d = WholeOrMinus(f[0]), h = WholeOrMinus(f[1]), m = WholeOrMinus(f[2]);
+                    if (d < 0 || h < 0 || h > 23 || m < 0 || m > 59 || !(f[3] is string kind) || !(f[5] is string text) || text.Length == 0) continue;
+                    double imp = f[4] is double di ? di : f[4] is int ii ? ii : double.NaN;
+                    if (double.IsNaN(imp) || double.IsInfinity(imp)) continue;
+                    var restored = new MemoryEvent(new GameTime(d, h, m), kind, imp, text);
+                    Memory.Append(restored);
+                    restoredAt[li] = restored;
+                }
+            if (saved.TryGetValue("beliefs", out var bl) && bl is List<object> bs)
+            {
+                var keep = new List<string>();
+                foreach (var b in bs) if (b is string bt) keep.Add(bt);
+                Memory.ReplaceBeliefs(keep);
+            }
+            if (saved.TryGetValue("shown", out var sh) && sh is List<object> idx)
+                foreach (var i in idx)
+                {
+                    if (restoredAt.TryGetValue(WholeOrMinus(i), out var shownEvent)) _shown.Add(shownEvent);
+                }
+            if (saved.TryGetValue("transcript", out var tr) && tr is List<object> turns)
+                foreach (var t in turns)
+                    if (t is List<object> pair && pair.Count == 2 && pair[0] is string role && (role == "user" || role == "assistant") && pair[1] is string text)
+                        _transcript.Add(new LlmMessage(role, text));
+            TrimTranscript();
+            if (saved.TryGetValue("facts", out var fs) && fs is List<object> triples)
+                foreach (var f in triples)
+                    if (f is List<object> tri && tri.Count == 3 && tri[0] is string subj && tri[1] is string pred && tri[2] is string val)
+                        Knowledge.Learn(new Fact(subj, pred, val));
+            // The level with its reason, as the helper sets it, so the prompt keeps
+            // "why you feel that way" after a reload (the independent check).
+            if (saved.TryGetValue("suspicion", out var sv) && sv is double sus && sus >= 0 && sus <= 1)
+            {
+                if (saved.TryGetValue("suspicionWhy", out var sw) && sw is string why && why.Length > 0) { Suspicion.Restore(0.0); Suspicion.Raise(sus, why); }
+                else Suspicion.Restore(sus);
+            }
+            if (saved.TryGetValue("heard", out var hd) && hd is string hs && Enum.TryParse(hs, out Knowing k) && Enum.IsDefined(typeof(Knowing), k)) Heard = k;
+            if (saved.TryGetValue("heardStory", out var hst) && hst is string story) HeardStory = story;
+            if (saved.TryGetValue("knownOnlySaid", out var ko)) _knownOnlySaid = Math.Max(0, WholeOrMinus(ko));
+        }
+
+        /// A whole number as saved (int in memory, double through JSON), or -1.
+        static int WholeOrMinus(object v) =>
+            v is int n ? n
+            : v is long l && l >= 0 && l <= int.MaxValue ? (int)l
+            : v is double d && d >= 0 && d <= int.MaxValue && d == Math.Floor(d) ? (int)d
+            : -1;
+
         /// The first sentence's own check: as InventedAsync, but it leaves
         /// LastUnchecked to the whole reply's check, which runs after it, and
         /// hands its cost back to be kept on the turn's own thread (it runs on
