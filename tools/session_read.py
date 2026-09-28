@@ -32,7 +32,7 @@ FIELDS = {
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
-HOWS = {"look", "remark", "recognition", "question"}
+HOWS = {"look", "remark", "recognition", "question", "talk"}
 THIRTY = 30 * 60
 
 

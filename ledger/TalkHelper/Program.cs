@@ -283,6 +283,7 @@ static class Program
             string to = "", say = "", scene = "";
             int hour = 12, day = 1, minute = 0;
             var memories = new List<MemoryEvent>();
+            var storyOfMemory = new Dictionary<MemoryEvent, string>();
             var knows = new List<Fact>();
             double? suspicion = null;
             string suspicionWhy = null;
@@ -331,13 +332,16 @@ static class Program
                     {
                         string text = m.TryGetProperty("text", out var t) ? t.GetString() ?? "" : "";
                         if (text.Length == 0) continue;
-                        memories.Add(new MemoryEvent(
+                        var mem = new MemoryEvent(
                             new GameTime(m.TryGetProperty("day", out var md) ? md.GetInt32() : day,
                                          m.TryGetProperty("hour", out var mh) ? mh.GetInt32() : hour,
                                          m.TryGetProperty("minute", out var mm) ? mm.GetInt32() : 0),
                             m.TryGetProperty("kind", out var mk) ? mk.GetString() ?? "observation" : "observation",
                             m.TryGetProperty("importance", out var mi) ? mi.GetDouble() : 0.5,
-                            text));
+                            text);
+                        memories.Add(mem);
+                        // Which story it belongs to (town list 6ah), when the game says.
+                        if (m.TryGetProperty("story", out var ms) && ms.ValueKind == JsonValueKind.String) storyOfMemory[mem] = ms.GetString();
                     }
                 if (r.TryGetProperty("knows", out v) && v.ValueKind == JsonValueKind.Array)
                     foreach (var k in v.EnumerateArray())
@@ -434,6 +438,7 @@ static class Program
                 foreach (var e in engine.Memory.Events)
                     if (e.Time.Equals(m.Time) && e.Text == m.Text) { held = true; break; }
                 if (!held) engine.Memory.Append(m);
+                if (storyOfMemory.TryGetValue(m, out var st)) engine.TagStory(m, st);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
             if (fresh) engine.StartFresh();
@@ -557,6 +562,8 @@ static class Program
             var invented = timedOut ? new List<string>() : new List<string>(engine.LastInvented);
             // PROMISED: what the first draft promised that the world will not keep (town list 6af), for the log.
             var promised = timedOut ? new List<string>() : new List<string>(engine.LastPromised);
+            // SPOKE OF: the stories this reply drew on (town list 6ah), for the session record.
+            var spokeOf = timedOut ? new List<string>() : new List<string>(engine.LastSpokeOf);
             bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
             // THE REST, when the first sentence has already been sent to be spoken:
             // what follows it, or nothing if the reply is no longer its sequel
@@ -586,7 +593,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, promised, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, promised, spokeOf, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>

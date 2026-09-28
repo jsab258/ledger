@@ -486,6 +486,36 @@ namespace Ledger.Core
         /// Null when the answer is not the JSON asked for, or an entry has no
         /// detail the Core can read (the caller then lets the line stand,
         /// marked unchecked: a broken checker must not silence the town).
+        /// THE MEMORIES A CHECKED LINE DREW ON (town list 6ah): the texts of the
+        /// memory items (M) the list cites as sources, from its own answer; empty
+        /// when it cites none or cannot be read. What a character spoke of, for
+        /// the game's record of the town reacting to what the player did.
+        public static List<string> CitedMemories(string answer, List<(string id, string text)> items)
+        {
+            var cited = new List<string>();
+            if (string.IsNullOrEmpty(answer) || items == null) return cited;
+            var ids = new List<string>();
+            foreach (var (id, _) in items) ids.Add(id);
+            foreach (var text in TopLevelObjects(answer))
+            {
+                object parsed;
+                try { parsed = MiniJson.Deserialize(text); } catch (Exception) { continue; }
+                var list = MiniJson.AsList(MiniJson.AsObject(parsed) is Dictionary<string, object> o && o.TryGetValue("specifics", out var v) ? v : null);
+                if (list == null) continue;
+                foreach (var x in list)
+                {
+                    var src = MiniJson.GetString(MiniJson.AsObject(x), "source");
+                    var found = src == null ? null : SourceIds(src.Trim(), ids);
+                    if (found == null) continue;
+                    foreach (var id in found)
+                        if (id[0] == 'M')
+                            foreach (var (itemId, itemText) in items)
+                                if (itemId == id && !cited.Contains(itemText)) cited.Add(itemText);
+                }
+            }
+            return cited;
+        }
+
         public static IReadOnlyList<string> ParseItems(string answer, ICollection<string> validIds)
         {
             // Every list in the answer is read (the independent check: an empty

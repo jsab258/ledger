@@ -5460,6 +5460,26 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // WHAT A REPLY SPOKE OF (town list 6ah): the stories of the memories a
+            // clean check found it drawing on, for the game's record of the town
+            // reacting in talk; none when it drew on none, or fell back.
+            {
+                var spokeMem = new MemoryStore("lena");
+                var window = new MemoryEvent(new GameTime(1, 23, 10), "observation", 0.9, "I saw a man put Rita's window in and run for the quay.");
+                spokeMem.Append(window);
+                var spokeTalk = new ScriptedLlm("Somebody put Rita's window in the other night, ran for the quay.");
+                var spokeCheck = new ScriptedLlm("{\"specifics\": [{\"detail\": \"Rita's window put in\", \"kind\": \"action\", \"source\": \"M1\"}]}");
+                var se = new ConversationEngine(spokeTalk, card, spokeMem, new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = spokeCheck };
+                se.TagStory(window, "player.window_d1");
+                await se.SayToAsync("Anything happen round here?", new GameTime(2, 10, 0), "In the bar.");
+                var spokeNothing = new ConversationEngine(new ScriptedLlm("Quiet enough."), card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost)
+                    { Checker = new ScriptedLlm("{\"specifics\": []}") };
+                await spokeNothing.SayToAsync("Anything happen?", new GameTime(2, 10, 0), "In the bar.");
+                Check(se.LastSpokeOf.Count == 1 && se.LastSpokeOf[0] == "player.window_d1" && spokeNothing.LastSpokeOf.Count == 0,
+                      "a reply drawing on the memory of what he did is reported as speaking of it; one drawing on nothing is not",
+                      string.Join(",", se.LastSpokeOf));
+            }
+
             // THE DAY OF THE WEEK (town list 6ai), the routines' own week.
             {
                 var weekday = new ConversationEngine(null, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
