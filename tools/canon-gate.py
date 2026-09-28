@@ -68,6 +68,11 @@ EXEMPT = ("canon.md", "ledger-v2/", "legacy/", "tools/canon-gate.py",
           # itself, as canon.md is; --emit-core --check keeps it equal to the
           # list, so nothing else can hide in it.
           "ledger/Assets/Scripts/Core/ContentWords.cs",
+          # THE REAL NAMES AND LATER THINGS LIVE TALK REFUSES (town list 6ao,
+          # 29 September): the speech-safe list and the prompt's rule, which
+          # name the brands and the era's later things in order to refuse them
+          # in what characters say. The law itself, as ContentWords.cs is.
+          "ledger/Assets/Scripts/Core/RealWorld.cs",
           # THE JUDGE'S REJECTING FIXTURES. Sample 2 contains canon
           # violations BY CONSTRUCTION: without them D7's zero-false-passes
           # clause cannot be measured at all. A gate that refused its own
