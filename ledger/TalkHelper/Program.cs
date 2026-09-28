@@ -296,7 +296,7 @@ static class Program
             string reportWhy = null;
             string talkOp = null, talkPath = null, talkStamp = null;
             string walkedFrom = null, walkedHeard = null;
-            bool acquaintanceSent = false, metHim = false, heardOfHim = false;
+            bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             string callsHim = null;
             try
             {
@@ -348,6 +348,8 @@ static class Program
                 if (r.TryGetProperty("suspicionWhy", out v)) suspicionWhy = v.GetString();
                 if (r.TryGetProperty("who", out v)) who = v.GetString();
                 if (r.TryGetProperty("noReply", out v) && v.ValueKind == JsonValueKind.True) noReply = true;
+                // A NEW CONVERSATION (town list 6ae): the game says so when he walks up again.
+                if (r.TryGetProperty("fresh", out v) && v.ValueKind == JsonValueKind.True) fresh = true;
                 if (r.TryGetProperty("evidence", out v) && v.ValueKind == JsonValueKind.Object)
                 {
                     var acc = new DeedAccount();
@@ -434,6 +436,7 @@ static class Program
                 if (!held) engine.Memory.Append(m);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
+            if (fresh) engine.StartFresh();
             // Kept until the game sends it again; until the game has ever sent it,
             // read off this conversation's own earlier talk with him.
             // Met is the game's word or their own earlier talk: the game cannot
@@ -579,7 +582,9 @@ static class Program
             string model = generated ? engine.Model : null;
             Keep(new Turn { Id = id, To = to, Day = day, Hour = hour, Minute = minute, Say = say, Reply = reply, Generated = generated,
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
+            // ENDED: the character closed the conversation (town list 6ae).
+            bool ends = !timedOut && engine.LastEnded;
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy, manner, invented, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
