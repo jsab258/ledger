@@ -127,6 +127,250 @@ namespace Ledger.Core
             return full;
         }
 
+        /// WHEN THE DEED WAS, and which day it is now, for reading whether a time
+        /// named in talk is the deed's (the independent check's fourth pass: their
+        /// "where were you around eleven, when the window went?" is about an
+        /// eleven o'clock deed). Unknown, the default, reads every time as another.
+        public readonly struct DeedWhen
+        {
+            public readonly int Day, Hour, Today;
+            public readonly bool Known;
+            public DeedWhen(int day, int hour, int today) { Day = day; Hour = hour; Today = today; Known = day >= 0 && hour >= 0; }
+            /// The small hours belong to the night before.
+            public int NightDay => Hour < 6 ? Day - 1 : Day;
+            /// The weekday of the deed's night ("Tuesday" for 02:00 on Wednesday).
+            public string Weekday => Known ? new GameTime(NightDay, 12, 0).WeekdayName : null;
+            /// The weekday of the deed's own day ("Wednesday" for 02:00 on Wednesday).
+            public string DayWeekday => Known ? new GameTime(Day, 12, 0).WeekdayName : null;
+        }
+
+        /// WHERE HE SAYS HE WAS, as areas (town list 6ac, after the independent
+        /// check found true answers read as lies): from each plain sentence that
+        /// opens as a first-person past claim ("I was at", "I've been at"), every
+        /// area it names, so "the chapel, then Rita's" is both. Never a question,
+        /// a denial, reported speech ("who says I was at", "she told you"), a
+        /// supposition ("if I was at") or a sentence that names another time
+        /// ("this morning", "yesterday"). Empty when none.
+        public static HashSet<string> WhereHeSays(string said, IDictionary<string, HashSet<string>> spokenAreas) =>
+            WhereHeSays(said, spokenAreas, default, false, out _);
+
+        static readonly System.Text.RegularExpressions.Regex TimeWordRx = new System.Text.RegularExpressions.Regex(
+            @"(?<= )(this morning|this afternoon|this evening|today|tonight|last night|yesterday|earlier|tomorrow|last week|lunchtime|lunch|breakfast|dinner time|dinnertime|after work|before work|before you came|just now|a minute ago)(?= )");
+        static readonly string[] HourWords = { "twelve", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
+        // A number word is a clock time only after a word that makes it one, or
+        // before one ("no one saw you" names no time).
+        static readonly System.Text.RegularExpressions.Regex ClockWordRx = new System.Text.RegularExpressions.Regex(
+            @"(?<= )(?:(?:at|around|about|gone|after|before|till|until|by|nearly|since|from|half|past|quarter to|round|near) (twelve|one|two|three|four|five|six|seven|eight|nine|ten|eleven)(?! (?:of|another|point|thing|way|day|minute|second|bit|or two|more|last))|(twelve|one|two|three|four|five|six|seven|eight|nine|ten|eleven) (?:oclock|am|pm|thirty|fifteen|forty|in the morning|at night))(?= )");
+
+        static bool TimeWordFits(string w, DeedWhen d)
+        {
+            if (!d.Known) return false;
+            int h = d.Hour;
+            switch (w)
+            {
+                case "today": case "earlier": case "just now": case "a minute ago": case "before you came": return d.Day == d.Today;
+                case "this morning": return d.Day == d.Today && h < 12;
+                case "this afternoon": return d.Day == d.Today && h >= 12 && h < 18;
+                case "this evening": return d.Day == d.Today && h >= 17;
+                case "tonight": return d.NightDay == d.Today && (h >= 17 || h < 6);
+                case "last night": return d.NightDay == d.Today - 1 && (h >= 17 || h < 6);
+                case "yesterday": return d.Day == d.Today - 1 || d.NightDay == d.Today - 1;
+                case "lunch": case "lunchtime": return h >= 11 && h < 15;
+                case "dinner time": case "dinnertime": return (h >= 11 && h < 15) || (h >= 17 && h < 21);
+                case "breakfast": return h >= 6 && h < 10;
+                case "after work": return h >= 17 || h < 6;
+                case "before work": return h >= 5 && h < 9;
+                default: return false;
+            }
+        }
+
+        // Within an hour of the deed's: on the twenty-four-hour clock when the
+        // number or the words say which half of the day ("11am", "eleven at
+        // night"; the fifth pass: "at 11am" was taken for an 11 pm deed), else
+        // on a twelve-hour clock ("around eleven" for 23:00).
+        static bool HourFits(int clock, DeedWhen d, string half)
+        {
+            if (!d.Known || half == "both") return false;
+            if (clock > 12 || half != null)
+            {
+                int h24 = clock > 12 ? clock % 24 : half == "am" ? clock % 12 : clock % 12 + 12;
+                int diff24 = ((h24 - d.Hour) % 24 + 24) % 24;
+                return diff24 <= 1 || diff24 == 23;
+            }
+            int diff = ((clock - d.Hour) % 12 + 12) % 12;
+            return diff == 0 || diff == 1 || diff == 11;
+        }
+
+        // Which half of the day the words give a clock time: "am", "pm", "both"
+        // (they disagree) or null.
+        static string HalfOfDay(string s)
+        {
+            bool am = System.Text.RegularExpressions.Regex.IsMatch(s, @" (am|in the morning|this morning) ");
+            bool pm = System.Text.RegularExpressions.Regex.IsMatch(s, @" (pm|in the afternoon|in the evening|at night|this afternoon|this evening|tonight|last night) ");
+            return am && pm ? "both" : am ? "am" : pm ? "pm" : null;
+        }
+
+        static string Letters(string text) =>
+            " " + System.Text.RegularExpressions.Regex.Replace(
+                (text ?? "").ToLowerInvariant().Replace("a.m.", "am").Replace("p.m.", "pm").Replace("'", "").Replace("\u2019", ""),
+                @"[^a-z]+", " ").Trim() + " ";
+
+        // Words for a whole day, or for a part of one with no day to it.
+        static readonly HashSet<string> LooseWords = new HashSet<string>
+            { "today", "yesterday", "earlier", "lunch", "lunchtime", "breakfast", "dinner time", "dinnertime", "after work", "before work", "just now", "a minute ago", "before you came" };
+
+        /// WHETHER A QUESTION'S TIME IS TOO LOOSE for a plain answer to be judged
+        /// against one hour (the fifth pass: "where were you yesterday?" and his
+        /// true "I was at the cafe", there in the day): it names a whole day, a
+        /// part of one with no day ("after work"), or a weekday with no part of
+        /// it, and nothing narrower. No time at all is not loose: they are asking
+        /// about the deed.
+        public static bool LooseTime(string text, DeedWhen deed)
+        {
+            if (string.IsNullOrEmpty(text)) return false;
+            string s = Letters(text);
+            bool loose = false, narrow = false;
+            foreach (System.Text.RegularExpressions.Match m in TimeWordRx.Matches(s))
+                if (LooseWords.Contains(m.Value)) loose = true; else narrow = true;
+            if (System.Text.RegularExpressions.Regex.IsMatch(text, @"\d") || ClockWordRx.IsMatch(s)
+                || System.Text.RegularExpressions.Regex.IsMatch(s, @" (midnight|noon|midday) "))
+                narrow = true;
+            foreach (var wd in new[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" })
+                if (s.Contains(" " + wd + " "))
+                {
+                    if (System.Text.RegularExpressions.Regex.IsMatch(s, " " + wd + " (night|evening|morning|afternoon) ")) narrow = true;
+                    else loose = true;
+                }
+            return loose && !narrow;
+        }
+
+        /// WORDS FOR ANOTHER TIME than the deed's, as the answer and their
+        /// question are both read (the independent check's third and fourth
+        /// passes): a part of a day, a clock time or a weekday that is not the
+        /// deed's; with the deed unknown, any of them.
+        public static bool NamesAnotherTime(string text, DeedWhen deed)
+        {
+            if (string.IsNullOrEmpty(text)) return false;
+            string s = Letters(text);
+            string half = HalfOfDay(s);
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(text, @"\d+(?:[:.]\d\d)?"))
+            {
+                string n = m.Value.Split(':', '.')[0];
+                if (n.Length > 2 || !int.TryParse(n, out int v) || v > 24 || !HourFits(v, deed, half)) return true;
+            }
+            foreach (System.Text.RegularExpressions.Match m in TimeWordRx.Matches(s))
+                if (!TimeWordFits(m.Value, deed)) return true;
+            foreach (System.Text.RegularExpressions.Match m in ClockWordRx.Matches(s))
+            {
+                string w = m.Groups[1].Success ? m.Groups[1].Value : m.Groups[2].Value;
+                if (!HourFits(System.Array.IndexOf(HourWords, w), deed, half)) return true;
+            }
+            if (System.Text.RegularExpressions.Regex.IsMatch(s, @" midnight ") && !HourFits(24, deed, null)) return true;
+            if (System.Text.RegularExpressions.Regex.IsMatch(s, @" (noon|midday) ") && !HourFits(12, deed, "pm")) return true;
+            // A weekday, with its part of the day when it has one, read against the
+            // deed's hour as "this morning" is (the sixth pass: "Tuesday afternoon"
+            // was taken for a deed at 23:00 on Tuesday).
+            foreach (var wd in new[] { "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday" })
+            {
+                if (!s.Contains(" " + wd + " ")) continue;
+                bool night = string.Equals(wd, deed.Weekday, System.StringComparison.OrdinalIgnoreCase);
+                bool own = string.Equals(wd, deed.DayWeekday, System.StringComparison.OrdinalIgnoreCase);
+                if (!deed.Known) return true;
+                int h = deed.Hour;
+                var parts = System.Text.RegularExpressions.Regex.Matches(s, "(?<= )" + wd + " (morning|afternoon|evening|night)(?= )");
+                if (parts.Count == 0 && !(night || own)) return true;
+                // Every one named, not only the first ("Tuesday night, or was it Tuesday morning?").
+                foreach (System.Text.RegularExpressions.Match part in parts)
+                {
+                    string w = part.Groups[1].Value;
+                    bool fits = w == "morning" ? own && h < 12
+                        : w == "afternoon" ? own && h >= 12 && h < 18
+                        : w == "evening" ? own && h >= 17
+                        : night && (h >= 17 || h < 6);
+                    if (!fits) return true;
+                }
+            }
+            return false;
+        }
+
+        /// Openers for a bare answer to "where were you?": "At the chapel."
+        static readonly string[] BareOpeners = { "at ", "in ", "down at ", "up at ", "over at ", "round at ", "the " };
+
+        // Words around an answer, not another sentence of it: "Me? I was at the
+        // chapel." is one answer (the fourth pass).
+        static readonly System.Text.RegularExpressions.Regex FillerRx = new System.Text.RegularExpressions.Regex(
+            @"^ ((me|no|nah|yes|yeah|aye|honest|honestly|mate|pal|love|look|listen|well|eh|what|why|sorry|right|alright|ok|okay|course|of course|straight up|i swear) )+$");
+
+        // PLAIN: one place and nothing after it but how long he was there, or
+        // the deed's night (a night that is not the deed's never gets this far).
+        static readonly System.Text.RegularExpressions.Regex PlainRx = new System.Text.RegularExpressions.Regex(
+            @"^\s*(the\s+)?#(\s+(all night|all evening|the whole night|the whole time|the whole evening|that night|at the time|all the time|last night|tonight|this evening|on (monday|tuesday|wednesday|thursday|friday|saturday|sunday) (night|evening)))*(\s+(honest|mate|pal|love|i swear))?\s*$");
+
+        /// As above, and `definite` is true only for a one-sentence answer naming
+        /// one place and nothing else ("I was at the chapel all night"): only a
+        /// definite answer can check out or be caught as a lie. With
+        /// `answeringWhere`, a sentence that is only a place ("At the chapel, all
+        /// night.") is his answer too, because they have just asked.
+        public static HashSet<string> WhereHeSays(string said, IDictionary<string, HashSet<string>> spokenAreas, DeedWhen deed, bool answeringWhere, out bool definite)
+        {
+            definite = false;
+            var areas = new HashSet<string>();
+            if (string.IsNullOrWhiteSpace(said) || spokenAreas == null) return areas;
+            string text = said.Replace('\u2019', '\'').Replace('\u2018', '\'');
+            var names = new List<string>(spokenAreas.Keys);
+            names.RemoveAll(n => n.Length == 0);
+            names.Sort((x, y) => y.Length.CompareTo(x.Length));
+            int claims = 0, sentences = 0; bool plain = false;
+            foreach (var raw in System.Text.RegularExpressions.Regex.Split(text, @"(?<=[.!?])\s+"))
+            {
+                var sentence = raw.Trim();
+                if (sentence.Length == 0) continue;
+                // Every non-letter a space: a dash, a colon or a quotation mark must
+                // not hide a place (the second pass).
+                string s = " " + System.Text.RegularExpressions.Regex.Replace(sentence.ToLowerInvariant().Replace("'", ""), @"[^a-z]+", " ").Trim() + " ";
+                if (FillerRx.IsMatch(s)) continue;
+                sentences++;
+                if (sentence.EndsWith("?")) continue;
+                if (System.Text.RegularExpressions.Regex.IsMatch(s, @" (never|wasnt|was not|nowhere near|if|says|said|told|tell|reckon|think|thinks|suppose|maybe|might) "))
+                    continue;
+                // A part of a day, a clock time or a day that is not the deed's: another time.
+                if (NamesAnotherTime(sentence, deed)) continue;
+                int at = -1, len = 0; bool bare = false;
+                foreach (var opener in Openers)
+                {
+                    int i = s.IndexOf(" " + opener, System.StringComparison.Ordinal);
+                    if (i >= 0 && (at < 0 || i < at)) { at = i; len = opener.Length; }
+                }
+                // A bare place, answering their question, from the sentence's start.
+                if (at < 0 && answeringWhere)
+                    foreach (var opener in BareOpeners)
+                        if (s.StartsWith(" " + opener, System.StringComparison.Ordinal)) { at = 0; len = opener == "the " ? 0 : opener.Length; bare = true; break; }
+                if (at < 0) continue;
+                // Every place the sentence names, before the opener as well as after
+                // it: "after the chapel I was at Rita's" names two (the fourth pass).
+                string head = s.Substring(0, at) + " ";
+                string tail = " " + s.Substring(at + 1 + len) + " ";
+                var here = new HashSet<string>();
+                int before = 0, after = 0;
+                foreach (var name in names)
+                {
+                    var rx = new System.Text.RegularExpressions.Regex(@"(?<=\s)" + System.Text.RegularExpressions.Regex.Escape(name) + @"(?=\s)");
+                    if (rx.IsMatch(head)) { here.UnionWith(spokenAreas[name]); before++; head = rx.Replace(head, "#"); }
+                    if (rx.IsMatch(tail)) { here.UnionWith(spokenAreas[name]); after++; tail = rx.Replace(tail, "#"); }
+                }
+                bool plainHere = before == 0 && after == 1 && PlainRx.IsMatch(tail);
+                // A bare answer is only a place: "The rank was empty when I left" is not one.
+                if (bare && !plainHere) continue;
+                claims++;
+                areas.UnionWith(here);
+                if (plainHere) plain = true;
+            }
+            // One sentence, one claim, one place: "I was at the chapel. Then Rita's."
+            // is not definite (the third pass).
+            definite = sentences == 1 && claims == 1 && plain;
+            return areas;
+        }
+
         /// Turn a typed line into a claim about where the player was, or null.
         ///
         /// `places` maps a spoken name to the id the world uses — "the anchor"

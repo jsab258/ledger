@@ -36,24 +36,27 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 29 September
 
-**[Your page: the first hour and seven calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Also waiting: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s) (sheets, story).
+**[Your page: the first hour and seven calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Still open: [the 28 September page](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s).
 
-**Decide (on the page):** Sheila withholding Tom's name; neighbours' talk; the game's clock; Tom's reading, failed again; whether Mickey's people know Tom's name; a privacy notice; $20 to $40 to retune the invention check.
+**Decide there:** Sheila withholding Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; $20–40 to retune invention checks.
 
-**Your answers, done:** talk server waits (your Hetzner first); Tom's reading from what he has seen; F:	own-verify in the Recycle Bin.
+**Your answers, done:** talk server waits (Hetzner first); Tom's reading from what he has seen; scratch folder in F:'s Recycle Bin.
 
 **Done:**
-- Talk naming Tom raises suspicion; nothing about him repeats within two hours; 27 street lines fixed.
-- Characters keep talk across a reload, know whether they have met him, where they are and the weekday; they speak only English, promise nothing the world won't do, and can end a conversation.
-- The talk program runs on a friend's PC; players learn where typed words go and when talk stops.
+- Talk naming Tom raises suspicion; nothing repeats within two hours; 27 street lines fixed.
+- Characters keep talk across reloads, know if they've met him, where they are and the weekday; speak only English; promise nothing; can end a talk.
+- Tom's "where were you?" answers count: a caught lie keeps them wary; the truth never reads as a lie.
+- The talk program runs on a friend's PC; players learn where their words go.
 
-**Failed:** Tom's reading again: the game's signs miss the ending's lines.
+**Failed:** Tom's reading, again.
 
-**Got wrong:** a push with a check red; a page's reason; corrected.
+**Got wrong:** a push with a check red, a page's reason; corrected.
 
 **Research:** 1990 speech; what players are told; two checklist sweeps.
 
-**C: free:** 41.5 GB last night, 55.7 GB now (builder's cleanup page). Backup: runs with this commit.
+**C: free:** 41.5 GB last night, 55.2 now; the builder's cleanup page waits on you. Backup runs with this commit.
+
+**Next:** locals telling Tom who someone is and where to find them.
 
 ## 26 September, day
 

@@ -40,6 +40,9 @@ namespace Ledger.Core
         public double TalkRangeM { get; private set; }
         readonly Dictionary<string, (double x, double z)> _places = new Dictionary<string, (double, double)>();
         readonly Dictionary<string, string> _said = new Dictionary<string, string>();
+        readonly Dictionary<string, string> _areaOf = new Dictionary<string, string>();
+        readonly Dictionary<string, List<string>> _areaNames = new Dictionary<string, List<string>>();
+        readonly Dictionary<string, string> _within = new Dictionary<string, string>();
         readonly Dictionary<string, List<(int hour, string place)>> _daily = new Dictionary<string, List<(int, string)>>();
         readonly Dictionary<string, List<(int hour, string place)>[]> _byWeekday = new Dictionary<string, List<(int, string)>[]>();
         readonly List<string> _people = new List<string>();
@@ -69,6 +72,21 @@ namespace Ledger.Core
                 if (kv.Key == Off) throw new FormatException("cast file: 'off' is not a place");
                 c._places[kv.Key] = (x, z);
                 if (p.TryGetValue("said", out var so) && so is string saidWords && saidWords.Trim().Length > 0) c._said[kv.Key] = saidWords.Trim();
+            }
+            // The areas, optional: each a list of its places and the names people use.
+            foreach (var kv in MiniJson.GetObject(root, "areas") ?? new Dictionary<string, object>())
+            {
+                var a = MiniJson.AsObject(kv.Value);
+                if (MiniJson.GetString(a, "within") is string within && within.Length > 0) c._within[kv.Key] = within;
+                var names = new List<string>();
+                foreach (var n in MiniJson.GetList(a, "names") ?? new List<object>()) if (n is string ns && ns.Trim().Length > 0) names.Add(ns.Trim());
+                c._areaNames[kv.Key] = names;
+                foreach (var pl in MiniJson.GetList(a, "places") ?? new List<object>())
+                    if (pl is string pls)
+                    {
+                        if (!c._places.ContainsKey(pls)) throw new FormatException($"cast file: area {kv.Key} names a place {pls} that \"places\" does not define");
+                        c._areaOf[pls] = kv.Key;
+                    }
             }
             foreach (var po in MiniJson.GetList(root, "people") ?? throw new FormatException("cast file: no people"))
             {
@@ -150,6 +168,54 @@ namespace Ledger.Core
             string place = routine[routine.Count - 1].place;
             foreach (var (from, pl) in routine) if (from <= h) place = pl;
             return place;
+        }
+
+        /// THE AREA A PLACE BELONGS TO, as people say it (town list 6ac): the fish
+        /// market's counter and its pavement are both "the fish market", so a
+        /// true answer about where somebody was is never read as a lie. Null
+        /// when the file gives the place no area.
+        public string AreaOf(string place) => place != null && _areaOf.TryGetValue(place, out var a) ? a : null;
+
+        /// What people call an area, the first way first ("the fish market").
+        public IReadOnlyList<string> AreaNames(string area) =>
+            area != null && _areaNames.TryGetValue(area, out var n) ? n : (IReadOnlyList<string>)new List<string>();
+
+        /// Every spoken name to the areas it can mean, as Claims.WhereHeSays reads
+        /// a line: lower case, without apostrophes or a leading "the". A name can
+        /// mean more than one ("the fish market": the shop and the fish dock), and
+        /// an area's names cover the areas within it ("the docks": the fish dock,
+        /// customs, the repair yard), so a true answer is never read as a lie.
+        public Dictionary<string, HashSet<string>> SpokenAreas()
+        {
+            var d = new Dictionary<string, HashSet<string>>();
+            foreach (var kv in _areaNames)
+                foreach (var name in kv.Value)
+                {
+                    var k = SpokenKey(name);
+                    if (k.Length == 0) continue;
+                    if (!d.TryGetValue(k, out var set)) d[k] = set = new HashSet<string>();
+                    set.Add(kv.Key);
+                    foreach (var w in _within) if (w.Value == kv.Key) set.Add(w.Key);
+                }
+            return d;
+        }
+
+        /// Whether an area he named fits the area he was seen in: the same, or
+        /// one within the other either way (the fish dock is on the docks).
+        public bool Fits(string named, string seen) =>
+            named != null && seen != null && (named == seen
+                || (_within.TryGetValue(seen, out var w1) && w1 == named)
+                || (_within.TryGetValue(named, out var w2) && w2 == seen));
+
+        /// A known place or area id, as the area it is in; null for anything else.
+        public string AreaFor(string placeOrArea) =>
+            placeOrArea == null ? null : AreaOf(placeOrArea) ?? (_areaNames.ContainsKey(placeOrArea) ? placeOrArea : null);
+
+        /// A name as Claims reads it: lower case, no apostrophes, no leading "the".
+        public static string SpokenKey(string name)
+        {
+            var k = (name ?? "").ToLowerInvariant().Replace("'", "").Replace("\u2019", "").Trim();
+            return k.StartsWith("the ") ? k.Substring(4) : k;
         }
 
         /// THE PLACE IN PLAIN WORDS, as a person there would say where they are
