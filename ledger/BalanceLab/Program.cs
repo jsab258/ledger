@@ -857,7 +857,7 @@ namespace Ledger.BalanceLab
                 DayCircleRacketHeat = mill.DayCircleHeat(),
                 TotalWashed = wallet.TotalWashed,
                 TotalRacketIncome = empire.TotalRacketIncome,
-                BarTakingsToDate = takingsToDate,
+                TakingsToDate = takingsToDate,
             };
             foreach (var a in mill.Agents)
                 if (a.Circle != "night" && a.Loyalty > books.BestDayLifeLoyalty)

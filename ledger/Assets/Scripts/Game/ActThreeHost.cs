@@ -49,7 +49,7 @@ namespace Ledger.Game
                         && _gossip.Mill.StrongestSurvivingPlayerLead() < LedgerState.CaseStandsAt),
                 TotalWashed = Wallet.TotalWashed,
                 TotalRacketIncome = e.TotalRacketIncome,
-                BarTakingsToDate = TotalTakings,
+                TakingsToDate = TotalTakings,
                 HandedOver = ActThree.SuccessorId != null,
                 Cooperations = ActThree.Cooperations,
                 Stonewalls = ActThree.Stonewalls,
@@ -214,12 +214,12 @@ namespace Ledger.Game
                 // Lena reads over your shoulder, because of course she does.
                 var lena = _gossip.Mill.Get("Lena");
                 lena?.Memory.Append(new MemoryEvent(Now, "observation", 0.95,
-                    "A revenue letter came for the pub. Mickey got one of those once. " +
+                    "A VAT letter came for the office. Mickey got one of those once. " +
                     "I watched him not sleep for a fortnight."));
                 return;
             }
 
-            // PP2 — the cellar, and how much of it Lena is willing to show you.
+            // PP2 — the back room, and how much of it Lena is willing to show you.
             // Fires when you are actually standing near her: the scene is her
             // deciding what you have earned, so it needs you in the room.
             if (!ActThree.Pp2Fired && _player != null)
@@ -337,7 +337,7 @@ namespace Ledger.Game
 
         NpcWalker _inspectorWalker;
 
-        /// He does not walk the district. He is at the bar, at a table, from
+        /// He does not walk the district. He is in the office, at a table, from
         /// nine until six, and the fact that he does not go anywhere is the
         /// characterisation: everybody else in this game has a life you can
         /// intersect, and he has an appointment with your books.
@@ -356,7 +356,7 @@ namespace Ledger.Game
 
             var host = _inspectorWalker.gameObject.AddComponent<ConversationHost>();
             host.Initialize(this, InspectorCard, null, null);
-            host.SceneContext = "At a table just inside the Hook Street pub, papers squared, talking with the owner.";
+            host.SceneContext = "At a table just inside Mickey's, the cab office on Quay Street, papers squared, talking with the owner.";
             host.ExtraContext = () =>
             {
                 var s = Books();
@@ -385,7 +385,7 @@ id: reisz
 tier: core
 
 ## Summary
-Inspector, Board of Customs and Excise, nineteen years. Fifty-ish, grey, entirely unremarkable — the sort of man who is already sitting down when you notice he has come in. He is at a table in the bar every day until the date on the letter, and he is not going anywhere else.
+Officer of HM Customs and Excise, from the local VAT office, nineteen years. Fifty-ish, grey, entirely unremarkable — the sort of man who is already sitting down when you notice he has come in. He is at a table in the office every day until the date on the letter, and he is not going anywhere else.
 
 ## Personality
 Incorruptible, and not out of principle — out of a total lack of interest. He is not building a case, he does not think you are wicked, and he could not tell you the name of the street outside. He is reading a document. He explains each step because the procedure requires him to explain it, and the courtesy is real and worth nothing.
@@ -394,11 +394,11 @@ Incorruptible, and not out of principle — out of a total lack of interest. He 
 Flat, exact, complete sentences. Names the regulation before the request. Says ""of course"" to refusals. Never raises his voice and never repeats himself, and both of those are worse than the alternative.
 
 ## Hard Facts
-- I am here under section 112 of the Customs and Excise Management Act. Everything I do, I will tell you I am doing.
-- I do not take anything from anybody. Not a drink, not a lift, not a favour.
-- I do not come here after dark unless a constable comes with me. That is not a courtesy to you. It is the section.
+- I am here under Schedule 7 to the Value Added Tax Act 1983. Everything I do, I will tell you I am doing.
+- I do not take anything from anybody. Not a cup of tea, not a lift, not a favour.
+- I come in working hours. After dark I would need a justice's warrant and a constable with me. That is not a courtesy to you. It is the schedule.
 - What I am asked to inspect is set out in the letter. What I inspect beyond it depends on the cooperation I receive.
-- I have been doing this for nineteen years and I have never once been surprised by a public house.
+- I have been doing this for nineteen years and I have never once been surprised by a set of books.
 ";
 
         // ---- the three verbs ----
@@ -427,7 +427,7 @@ Flat, exact, complete sentences. Names the regulation before the request. Says "
                 // Lena has watched a revenue man be told to put it in writing
                 // before, and she knows how that one went.
                 _gossip?.Mill?.Get("Lena")?.Memory.Append(new MemoryEvent(Now, "observation", 0.9,
-                    "They sent the excise man away with a piece of paper today. " +
+                    "They sent the VAT man away with a piece of paper today. " +
                     "Mickey did that once. It did not go the way he thought it would."));
             }
             return true;
@@ -507,7 +507,7 @@ Flat, exact, complete sentences. Names the regulation before the request. Says "
             // They now genuinely know, and knowing is a fact in this world
             // rather than a mood — it goes into the mill like anything else.
             mill.Witness(whoId, new Fact("player", "confessed", "true"),
-                "the one who owns the pub told me what they have really been doing, to my face", true, Now, 1.0);
+                "the one who owns Mickey's told me what they have really been doing, to my face", true, Now, 1.0);
             ToastLine(ActThreeState.LastDayTruthText(friend.DisplayName ?? whoId), 15f);
             return true;
         }
@@ -521,7 +521,7 @@ Flat, exact, complete sentences. Names the regulation before the request. Says "
             ActThree.SoldUp = true;
             ToastLine("Hal does it in an afternoon, for a percentage, without once asking why. " +
                       $"Everything you took a year to build goes in six hours and raises £{raised}. " +
-                      "The pub is a pub again, and the cellar is a cellar.", 16f);
+                      "The cab office is a cab office again, and the back room is only a back room.", 16f);
             return true;
         }
 
@@ -559,7 +559,7 @@ Flat, exact, complete sentences. Names the regulation before the request. Says "
                     "What I said in confidence came back out of a revenue office with my name on it. " +
                     "I know exactly who it went through."));
                 mill.Witness(burned.Id, new Fact("player", "informs", "police"),
-                    "the one who owns the pub talks to the revenue people, and uses what you tell them", true, Now, 0.9);
+                    "the one who owns Mickey's talks to the revenue people, and uses what you tell them", true, Now, 0.9);
                 ToastLine($"It is pointed elsewhere by the end of the week. {burned.DisplayName} finds out " +
                           "on Thursday, from somebody who was not being cruel about it.", 15f);
             }

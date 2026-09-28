@@ -7153,7 +7153,7 @@ namespace Ledger.CoreTests
         {
             BusinessesOwned = 2, RacketsEstablished = 2, CrewCount = 3,
             BestDayLifeLoyalty = 0.2, DayCircleRacketHeat = 0.8,
-            TotalWashed = 900, TotalRacketIncome = 1000, BarTakingsToDate = 3000,
+            TotalWashed = 900, TotalRacketIncome = 1000, TakingsToDate = 3000,
         };
 
         static void TestActThree()
@@ -7171,19 +7171,19 @@ namespace Ledger.CoreTests
             // THE LEDGER STRAIN, wrong in BOTH directions. This is the idea the
             // whole act rests on: laundering too little and laundering too much
             // are the same crime to a careful reader.
-            var honest = new LedgerState { TotalRacketIncome = 0, TotalWashed = 0, BarTakingsToDate = 2000 };
+            var honest = new LedgerState { TotalRacketIncome = 0, TotalWashed = 0, TakingsToDate = 2000 };
             Check(ActThreeState.LedgerStrain(honest) < 0.05, "a bar that only ever sold drink has nothing to explain");
 
-            var unwashed = new LedgerState { TotalRacketIncome = 1000, TotalWashed = 0, BarTakingsToDate = 2000 };
+            var unwashed = new LedgerState { TotalRacketIncome = 1000, TotalWashed = 0, TakingsToDate = 2000 };
             Check(ActThreeState.LedgerStrain(unwashed) > 0.9,
                 "night money with no laundering behind it has nowhere to have come from");
 
-            var overwashed = new LedgerState { TotalRacketIncome = 1000, TotalWashed = 3000, BarTakingsToDate = 1000 };
+            var overwashed = new LedgerState { TotalRacketIncome = 1000, TotalWashed = 3000, TakingsToDate = 1000 };
             Check(ActThreeState.LedgerStrain(overwashed) > 0.9,
                 "and a bar that washed more than it could ever have taken is telling a story nobody believes",
                 ActThreeState.LedgerStrain(overwashed).ToString("0.00"));
 
-            var careful = new LedgerState { TotalRacketIncome = 500, TotalWashed = 500, BarTakingsToDate = 4000 };
+            var careful = new LedgerState { TotalRacketIncome = 500, TotalWashed = 500, TakingsToDate = 4000 };
             Check(ActThreeState.LedgerStrain(careful) < 0.3, "careful laundering inside a real trade holds",
                 ActThreeState.LedgerStrain(careful).ToString("0.00"));
 
@@ -7220,7 +7220,7 @@ namespace Ledger.CoreTests
             {
                 BusinessesOwned = 1, RacketsEstablished = 1,
                 BestDayLifeLoyalty = 0.1, DayCircleRacketHeat = 0.9,
-                TotalRacketIncome = 2500, TotalWashed = 0, BarTakingsToDate = 400,
+                TotalRacketIncome = 2500, TotalWashed = 0, TakingsToDate = 400,
             };
             Check(ActThreeState.Resolve(did_nothing) == Ending.BurnBoth,
                 "doing nothing produces Burn Both, as the default and not a special case",
@@ -7385,7 +7385,7 @@ namespace Ledger.CoreTests
                 BusinessesOwned = 1, RacketsEstablished = 1, CrewCount = 2,
                 BestDayLifeLoyalty = 0.6, DayCircleRacketHeat = 0.3,
                 EllisCaseAnswerable = false,
-                TotalWashed = 900, TotalRacketIncome = 1000, BarTakingsToDate = 3000,
+                TotalWashed = 900, TotalRacketIncome = 1000, TakingsToDate = 3000,
                 HasReadySuccessor = true,
             };
 
@@ -7429,7 +7429,7 @@ namespace Ledger.CoreTests
             Reads("EllisCaseAnswerable", null, w => w.EllisCaseAnswerable = true);
             Reads("TotalWashed", null, w => w.TotalWashed = 0, w => w.TotalWashed = 9000);
             Reads("TotalRacketIncome", null, w => w.TotalRacketIncome = 9000);
-            Reads("BarTakingsToDate", null, w => w.BarTakingsToDate = 1);
+            Reads("TakingsToDate", null, w => w.TakingsToDate = 1);
             Reads("HandedOver", null, w => w.HandedOver = true);
             // Only meaningful once you have actually signed: it is the check
             // that stops you handing it to somebody who could not hold it.
@@ -7445,8 +7445,8 @@ namespace Ledger.CoreTests
             // by recommendation): the same books read HARDER with a conviction
             // on file — and the term is modest, not fatal.
             {
-                var noRecord = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, BarTakingsToDate = 400 };
-                var record = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, BarTakingsToDate = 400, PublicRecord = true };
+                var noRecord = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, TakingsToDate = 400 };
+                var record = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, TakingsToDate = 400, PublicRecord = true };
                 Check(ActThreeState.SeenStrain(record) > ActThreeState.SeenStrain(noRecord) + 1e-9,
                     "a conviction on file makes the same books read harder",
                     $"{ActThreeState.SeenStrain(record):0.000} vs {ActThreeState.SeenStrain(noRecord):0.000}");
@@ -7458,9 +7458,9 @@ namespace Ledger.CoreTests
             // deflection's easing, and by a real margin (audit 2026-07-27: the
             // 0.55 was pinned only from above).
             {
-                var baseline = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, BarTakingsToDate = 400 };
-                var moved = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, BarTakingsToDate = 400, LedgersMoved = true };
-                var pointed = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, BarTakingsToDate = 400, EllisCaseAnswerable = true };
+                var baseline = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, TakingsToDate = 400 };
+                var moved = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, TakingsToDate = 400, LedgersMoved = true };
+                var pointed = new LedgerState { TotalRacketIncome = 2000, TotalWashed = 200, TakingsToDate = 400, EllisCaseAnswerable = true };
                 double easeMoved = ActThreeState.SeenStrain(baseline) - ActThreeState.SeenStrain(moved);
                 double easePointed = ActThreeState.SeenStrain(baseline) - ActThreeState.SeenStrain(pointed);
                 Check(easeMoved > easePointed + 1e-9,
@@ -7538,7 +7538,7 @@ namespace Ledger.CoreTests
 
             // The same world with the washing actually done keeps everything.
             var washed = Ruinous();
-            washed.TotalWashed = 3800; washed.BarTakingsToDate = 14000;
+            washed.TotalWashed = 3800; washed.TakingsToDate = 14000;
             Check(ActThreeState.SeenStrain(washed) < LedgerState.BooksHoldThreshold,
                 "and the same world with the washing done reads as a bar",
                 ActThreeState.SeenStrain(washed).ToString("0.00"));
@@ -7569,7 +7569,7 @@ namespace Ledger.CoreTests
                 BusinessesOwned = 0, RacketsEstablished = 0, CrewCount = 0,
                 EmpireDissolved = false,          // never dissolved, because never built
                 BestDayLifeLoyalty = 0.7,
-                TotalWashed = 1800, TotalRacketIncome = 0, BarTakingsToDate = 3099,
+                TotalWashed = 1800, TotalRacketIncome = 0, TakingsToDate = 3099,
             };
             Check(ActThreeState.LedgerStrain(neverBuilt) > LedgerState.BooksHoldThreshold,
                 "an honest player's books can still read badly (see decisions-pending #10)",
@@ -7627,7 +7627,7 @@ namespace Ledger.CoreTests
                 s.BestDayLifeLoyalty = 0.2;      // the life is already gone
                 s.DayCircleRacketHeat = 0.8;
                 s.EllisCaseAnswerable = false;   // no deflection easing it
-                s.TotalWashed = 1000; s.TotalRacketIncome = 3000; s.BarTakingsToDate = 9000;
+                s.TotalWashed = 1000; s.TotalRacketIncome = 3000; s.TakingsToDate = 9000;
                 s.Cooperations = coop; s.Stonewalls = stone;
                 return s;
             }
@@ -7705,7 +7705,7 @@ namespace Ledger.CoreTests
             LedgerState Books(bool moved)
             {
                 var s = Kingdom();
-                s.TotalWashed = 1000; s.TotalRacketIncome = 3000; s.BarTakingsToDate = 9000;
+                s.TotalWashed = 1000; s.TotalRacketIncome = 3000; s.TakingsToDate = 9000;
                 s.LedgersMoved = moved;
                 return s;
             }
