@@ -45,6 +45,10 @@ namespace Ledger.Core
 
             reply = Humanize(reply);
             if (string.IsNullOrWhiteSpace(reply)) return Deflect(characterName);
+            // A STAGE DIRECTION SAID IN THE FIRST PERSON (town list 6aj): "I look
+            // at you steady." is taken out, the speech around it kept.
+            reply = WithoutGestures(reply);
+            if (string.IsNullOrWhiteSpace(reply)) return Deflect(characterName);
 
             // NARRATION IS NOT SPEECH, and this is from a real transcript.
             // Asked something he could not answer, one character replied
@@ -245,6 +249,60 @@ namespace Ledger.Core
                 if (word.Length > 2 && char.IsLower(word[0])) return true;
             }
             return false;
+        }
+
+        /// A STAGE DIRECTION SAID IN THE FIRST PERSON (town list 6aj, the third
+        /// checklist sweep): "I look at you steady.", "I look up from the rank,
+        /// squinting at you through the drizzle.", "I turn from the phone box."
+        /// The narration guard above holds only the speaker's own name, so these
+        /// reached the voice, and with the early first sentence were the first
+        /// thing heard: 15 of the claim bench's 240 final replies, 12 of them
+        /// Ron's. A whole sentence that opens "I" and a gesture (looking,
+        /// turning, nodding, shrugging...) and carries nothing a person says in
+        /// talk (a question, a contraction, a reason, a "mate", how often) is
+        /// taken out wherever it stands; everything else is kept, so "I look
+        /// after the books" and "I look at you and I see Mickey" still pass.
+        /// Only complete sentences are read, so a reply still arriving loses
+        /// nothing it has not finished.
+        public static string WithoutGestures(string reply)
+        {
+            if (string.IsNullOrEmpty(reply) || reply.IndexOf("I ", StringComparison.Ordinal) < 0) return reply;
+            var parts = System.Text.RegularExpressions.Regex.Split(reply, @"(?<=[.!])\s+");
+            var kept = new List<string>();
+            bool dropped = false;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                var p = parts[i];
+                var t = p.Trim();
+                bool complete = t.EndsWith(".") || t.EndsWith("!");
+                if (complete && IsGesture(t)) { dropped = true; continue; }
+                kept.Add(p);
+            }
+            return dropped ? string.Join(" ", kept).Trim() : reply;
+        }
+
+        static readonly System.Text.RegularExpressions.Regex GestureOpen = new System.Text.RegularExpressions.Regex(
+            @"^I (just |only |slowly |simply |briefly |finally |quietly |then )?(look|glance|turn|nod|shrug|lean|squint|smile|grin|frown|sigh|shake|raise|fold|stub|eye|study|gesture|point|wave|pause|straighten|wipe|tap|rub|scratch|cross|laugh|chuckle|snort|peer|stare|blink|tilt|jerk|flick|exhale|puff|sniff|cough|clear|watch|regard|consider|hold your gaze|meet your eye)\b(?! (after|for|into|like|forward|out for|to see)\b)");
+        static readonly System.Text.RegularExpressions.Regex SaysSomething = new System.Text.RegularExpressions.Regex(
+            @"\?|n't\b|'(m|re|ve|ll|d|s)\b|\b(because|cos|when|if|that|what|who|why|how|but|so|see|mind|reckon|think|know|mean|say|said|tell|told|every|always|never|usually|sometimes|often|used|would|could|should|can|will|must|might|me|mate|love|pal|son|lad|eh|aye|like|too|as well|and I)\b",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        // Openers that are a stage direction whatever follows ("I look at you
+        // like you've lost the plot", "I shift my weight"), unless the sentence
+        // asks, reasons aloud or tells a habit.
+        static readonly System.Text.RegularExpressions.Regex AlwaysGesture = new System.Text.RegularExpressions.Regex(
+            @"^I (just |then |only |slowly )?(look (at you|up from|up at|back(?! on)|out(?! for)|past|across|round|over at|down at|away)|glance|shift|squint|peer|stare|shrug|nod|turn (from|back|away|round)|lean (against|back|in|on|forward)|straighten|stop and look|stop looking|stop halfway|slow down)\b");
+        static readonly System.Text.RegularExpressions.Regex StillTalk = new System.Text.RegularExpressions.Regex(
+            @"\?|\band I (see|think|know|reckon|wonder|say|tell)\b|\b(every|always|usually|often|never|most days|all day|whenever|when I|if I)\b",
+            System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+
+        static bool IsGesture(string sentence)
+        {
+            if (sentence.Split(' ').Length > 25) return false;
+            if (AlwaysGesture.IsMatch(sentence)) return !StillTalk.IsMatch(sentence);
+            if (!GestureOpen.IsMatch(sentence)) return false;
+            if (SaysSomething.IsMatch(sentence)) return false;
+            return sentence.Split(' ').Length <= 18;
         }
 
         public static string Humanize(string reply)

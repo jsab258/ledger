@@ -8745,6 +8745,40 @@ namespace Ledger.CoreTests
                 Check(!asks.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && asksYa.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)) && !knows.AskedWhereAbout(new Claims.DeedWhen(1, 23, 2)),
                       "asking where he was this morning is not asking about the deed; \"where were ya\" is asking; \"I know where you were\" is not");
             }
+            // A STAGE DIRECTION SAID IN THE FIRST PERSON (town list 6aj): taken out,
+            // the speech kept; talk that only sounds like one kept whole.
+            {
+                var gestureCases = new (string reply, string want)[]
+                {
+                    ("I look at you steady. What do you want?", "What do you want?"),
+                    ("I look up from the rank, squinting at you through the drizzle. Rain's coming on.", "Rain's coming on."),
+                    ("I turn from the phone box. Evening.", "Evening."),
+                    ("Aye. I shrug. Nothing I can do.", "Aye. Nothing I can do."),
+                    ("I look after Mickey's books.", "I look after Mickey's books."),
+                    ("I look at you and I see Mickey.", "I look at you and I see Mickey."),
+                    ("I nod to the lads every morning, that's all.", "I nod to the lads every morning, that's all."),
+                    ("I smile when I think of him.", "I smile when I think of him."),
+                    ("I watch the rank for Mickey, mate.", "I watch the rank for Mickey, mate."),
+                    ("I looked at him and he ran.", "I looked at him and he ran."),
+                    ("I take the fares.", "I take the fares."),
+                    ("I look at you steady", "I look at you steady"),
+                    ("I look at you like you've lost the plot. Go on then.", "Go on then."),
+                    ("I shift my weight, eyes still on the street. Quiet tonight.", "Quiet tonight."),
+                    ("I stop and look at you proper. Who told you that?", "Who told you that?"),
+                    ("I nod, because that fits what I saw. Go on.", "Go on."),
+                    ("I look up to Ron, always have.", "I look up to Ron, always have."),
+                    ("I look out for the lads.", "I look out for the lads."),
+                    ("I stare at them books all day.", "I stare at them books all day."),
+                    ("I turn to Rita when I'm short.", "I turn to Rita when I'm short."),
+                };
+                string wrongG = null;
+                foreach (var (reply, want) in gestureCases) if (ResponseValidator.WithoutGestures(reply) != want) wrongG = reply + " -> " + ResponseValidator.WithoutGestures(reply);
+                Check(wrongG == null && ResponseValidator.IsDeflection(ResponseValidator.Validate("I turn from the phone box.", "Ron Kirby"), "Ron Kirby")
+                      && ResponseValidator.Validate("I look at you steady. What do you want?", "Ron Kirby") == "What do you want?"
+                      && ConversationEngine.FirstSentence(ResponseValidator.WithoutGestures("I look at you steady. Rain's coming on. And")) == "Rain's coming on.",
+                      "a stage direction said in the first person is taken out and never spoken early; talk that only sounds like one is kept whole", wrongG ?? "");
+            }
+
             // WHO THEY KNOW, AND WHERE (town list 6ad): with no map, asking a local is
             // the way round. The named people by name, everybody else by what they
             // do; friends by where they usually are; whoever is here now; and the
