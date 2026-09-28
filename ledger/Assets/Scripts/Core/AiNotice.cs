@@ -12,12 +12,31 @@ namespace Ledger.Core
     {
         public const string Title = "Before you talk to anyone";
 
-        public const string Text =
+        /// THE NOTICE, true to how this copy talks (town list 6w, 28 September;
+        /// production/research/player-data-notice/NOTE-2026-09-28.md): through
+        /// our relay, or straight to the provider as in Jafar's own copy. It
+        /// names where the words go and what is kept, as the GDPR and the Swiss
+        /// FADP want at the point of collection. Anthropic's commercial terms as
+        /// read on 28 September 2026: deleted within 30 days, longer only if its
+        /// safety checks flag them or the law requires it, and not used for
+        /// training. The fuller privacy notice it should link to does not exist
+        /// yet (a decision for Jafar); until it does, no link is promised.
+        public static string TextFor(bool throughRelay) =>
             "The people of this town answer you in words written as you play by an AI model. " +
             "It is told only what each of them has seen, heard and believes, and each line is checked against that " +
             "before you hear it, but it can still get things wrong. " +
+            (throughRelay
+                ? "What you type is sent through our server to Anthropic, the American company whose Claude model writes the replies. " +
+                  "Our server keeps none of your words unless you report a line. "
+                : "What you type is sent to Anthropic, the American company whose Claude model writes the replies. ") +
+            "Anthropic deletes it within 30 days, or longer only if its safety checks flag it or the law requires it, " +
+            "and does not train its models on it. " +
             "If a line is wrong, hurtful or breaks the game, report it: that line, what you said just before it " +
-            "and your note go to the developers, and nothing else does.";
+            "and your note " +
+            (throughRelay ? "are kept for the developers, with a code for your copy of the game." : "are kept on this computer for the developers.");
+
+        /// The notice for the copies friends and players get, which talk through the relay.
+        public static readonly string Text = TextFor(true);
 
         public const string ReportLabel = "Report this line";
 
