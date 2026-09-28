@@ -1,0 +1,11 @@
+{
+ "approves": "production/casting/candidates-2026-09-26/ron-kirby/P2-front.jpg",
+ "by": "Jafar",
+ "on": "2026-09-28",
+ "note": "His pick on the 26 September weekend page: Ron's face is P2 (\"This is him\"). The face only: clothes and voice are not yet approved.",
+ "against": {
+  "production/casting/candidates-2026-09-26/ron-kirby/P2-front.jpg": "5ec71e7a7493cb6406092e8b86c31f488c616757",
+  "production/casting/ron-kirby/SHEET.md": "7fc22b6dc30fc36c89a7f0dbf38da94d74c8e325",
+  "production/approvals/2026-09-26-weekend/gate.json": "6d1a715b65b6733a78944892d26113e1a2778091"
+ }
+}

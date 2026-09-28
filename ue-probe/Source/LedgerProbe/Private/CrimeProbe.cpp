@@ -776,8 +776,12 @@ namespace
 		// game (the build machine's has no room for the candidates yet), the
 		// next one down is used: the approved candidate, then T2, then the
 		// stand-in.
-		const TCHAR* Approved = FCString::Strcmp(Who, TEXT("Sam")) == 0 ? TEXT("C5") : TEXT("C1");   // names-gate: allow (the asset MH_SamC5)
+		// RON'S FACE, 28 September: Jafar picked P2 on the 26 September weekend
+		// page ("This is him"), rebuilt on Epic's Bruce; C1 stays next in line.
+		const bool bRon = FCString::Strcmp(Who, TEXT("Rocco")) == 0;   // names-gate: allow (the asset MH_RoccoP2)
+		const TCHAR* Approved = FCString::Strcmp(Who, TEXT("Sam")) == 0 ? TEXT("C5") : bRon ? TEXT("P2") : TEXT("C1");   // names-gate: allow (the asset MH_SamC5)
 		TArray<FString> Takes = { Approved, TEXT("T2"), TEXT("") };
+		if (bRon) { Takes.Insert(TEXT("C1"), 1); }
 		FString Forced;
 		if (FParse::Value(FCommandLine::Get(), TEXT("CastTake="), Forced))
 		{

@@ -1,0 +1,110 @@
+{
+ "freeC": 55.2,
+ "freeF": 44.9,
+ "groups": [
+  {
+   "id": "unreal-old-cache",
+   "title": "Unreal's old cache, which nothing uses any more",
+   "paths": [
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache"
+   ],
+   "why": "Unreal kept the same data twice: in this old file cache and in its newer store. Since this morning it is set to neither read nor write the old one (the newer store, now capped at 20 GB in Unreal's own settings, holds the same data). Its own cleaner only removes files unused for a week, so left alone it would take a week or more to empty.",
+   "after": "Nothing you would notice; the first time something found only here is needed, Unreal makes it again.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache",
+     14.93
+    ]
+   ],
+   "gb": 14.9,
+   "movedGb": 0
+  },
+  {
+   "id": "runner-checkout",
+   "title": "The build machine's copy of the project",
+   "paths": [
+    "C:\\actions-runner-ledger\\_work\\ledger\\ledger"
+   ],
+   "why": "About half of it is history piled up: every build fetches only the newest commit, but the old ones were never cleared out, 7.6 GB so far. The builds need only the newest.",
+   "after": "The next build starts from a fresh copy of the newest commit, a few minutes longer once, and about 7 GB of this comes back as that copy. From then on each build clears the old history at its end (a step added to the build), so it stops piling up.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\actions-runner-ledger\\_work\\ledger\\ledger",
+     15.42
+    ]
+   ],
+   "gb": 15.4,
+   "movedGb": 0
+  },
+  {
+   "id": "project-intermediate",
+   "title": "This project's local compile scratch",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate"
+   ],
+   "why": "Compile and cook scratch for the game on this PC.",
+   "after": "The next build here makes it again, a few minutes slower, and it grows back to the same size at once, so it frees nothing for long.",
+   "recommend": false,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Intermediate",
+     5.1
+    ]
+   ],
+   "gb": 5.1,
+   "movedGb": 0
+  },
+  {
+   "id": "unreal-store",
+   "title": "Unreal's newer cache store",
+   "paths": [
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen"
+   ],
+   "why": "The compiled shaders and cooked data every editor start and build reuses. Capped this morning at 20 GB in Unreal's own settings, and it trims itself above that.",
+   "after": "Every editor start and build would compile for a long time, and it would grow straight back.",
+   "recommend": false,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen",
+     13.87
+    ]
+   ],
+   "gb": 13.9,
+   "movedGb": 0
+  }
+ ],
+ "others": [
+  {
+   "name": "Dropbox",
+   "path": "C:\\Users\\Jafar\\Dropbox",
+   "gb": 42.1,
+   "why": "yours; the backup adds to it and never deletes"
+  },
+  {
+   "name": "Windows' hibernation file",
+   "path": "C:\\hiberfil.sys",
+   "gb": 13.7,
+   "why": "a Windows setting you can switch off yourself"
+  },
+  {
+   "name": "Windows' swap file",
+   "path": "C:\\pagefile.sys",
+   "gb": 9.6,
+   "why": "Windows'"
+  },
+  {
+   "name": "Windows' temporary files",
+   "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp",
+   "gb": 1.0,
+   "why": "not on your list, so untouched"
+  },
+  {
+   "name": "Hugging Face's download cache",
+   "path": "C:\\Users\\Jafar\\.cache\\huggingface",
+   "gb": 3.5,
+   "why": "two speech datasets from August and the voice model; not on your list, so untouched; add it and it can go"
+  }
+ ]
+}
