@@ -218,6 +218,7 @@ static class Program
         {
             int runs = 0, shown = 0, faced = 0;
             var firstShown = new List<int>();
+            var firstHeld = new List<int>();
             for (int sightHour = 13; sightHour <= 19; sightHour++)
             {
                 int sHour = (9 + sightHour) % 24;
@@ -236,7 +237,7 @@ static class Program
                     mill.Witness(witness, new Fact("player", "night_walk_d1", "seen"),
                         "the new owner was about the yard after midnight", sensitive: true, start, confidence: firstSight);
                     var remarks = new RemarkLedger();
-                    bool wasShown = false, wasFaced = false;
+                    bool wasShown = false, wasFaced = false, wasHeld = false;
                     for (int playHour = sightHour; playHour < 60; playHour++)
                     {
                         int abs = 9 + playHour, day = abs / 24, hourOfDay = abs % 24;
@@ -245,9 +246,10 @@ static class Program
                         mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
                         foreach (var p in metSet)
                         {
-                            if (cast.Where(p, day, hourOfDay) == null) continue;
                             var g = mill.Get(p);
                             if (g == null) continue;
+                            if (!wasHeld && g.Rumors.Any(r => r.Content.Subject == "player")) { wasHeld = true; firstHeld.Add(playHour + 1); }
+                            if (cast.Where(p, day, hourOfDay) == null) continue;
                             bool companion = people.Any(o => o != p && cast.Together(p, o, day, hourOfDay));
                             var rg = StreetVoice.RegardFor(g, mill.MinConfidenceToShare, false, remarks, Acquaintance.Known, companion);
                             if (rg.Knowing != Knowing.Nothing && rg.KnowsItIsHim)
@@ -268,6 +270,8 @@ static class Program
                 }
             }
             firstShown.Sort();
+            firstHeld.Sort();
+            Console.WriteLine($"  someone he met first holds it (before it can show), minutes: {string.Join(" ", firstHeld.Select(h => (h * 0.5).ToString("0", Inv)))}");
             string when = firstShown.Count > 0 ? $"; when it shows, median minute {firstShown[firstShown.Count / 2] * 0.5:0} (all: {string.Join(" ", firstShown.Select(h => (h * 0.5).ToString("0", Inv)))})" : "";
             Console.WriteLine($"FIRST SIGHT {firstSight.ToString("0.00", Inv)}: runs={runs} (each of the cast out on the street at each hour of night one)");
             Console.WriteLine($"  by minute 30, someone he met shows it: {shown}/{runs} ({shown * 100.0 / Math.Max(1, runs):0}%); says it to his face: {faced}/{runs} ({faced * 100.0 / Math.Max(1, runs):0}%){when}");

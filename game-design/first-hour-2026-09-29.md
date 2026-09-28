@@ -31,9 +31,10 @@ heard, so the one who brings it back on day 2 has to be somebody he met on day
 1. Measured with the five he meets (Sheila, Ron, Darren, Ada and June) and a
 night-one sighting by whoever of the forty is out: one of them says it to his
 face by minute thirty in 13 of 13 cases, but 7 of those only at minute thirty
-itself, because the routines bring those five out where he passes them only
-in the evening; in the coat, 6 of 13. So the day-one five need to be on Quay
-Street during day 2, not only after dark, for the hour to hold.
+itself, because the story only reaches those five in the evening, through the
+friends they meet then (they are about during the day; the story is not yet
+with them); in the coat, 6 of 13. So for the hour to hold, the first night's
+job should be seen by, or told to, somebody close to one of the day-one five.
 
 ## The clock
 
