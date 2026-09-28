@@ -11,7 +11,7 @@ using Ledger.Core;
 ///
 ///     dotnet run --project ledger/TownReach -c Release -- [--cast production/specs/quay-cast.json] [--days 14] [--every 1] [--ties]
 ///     ... -- --cast production/specs/hook-cast.json --meridian sheila,ron,darren,ada,june
-///     ... -- --cast production/specs/hook-cast.json --two-hours [--clear-every 45]
+///     ... -- --cast production/specs/hook-cast.json --two-hours [--clear-every 45] [--deed-at 30]
 ///
 /// A MEASUREMENT AND NOTHING ELSE. It changes no constant and decides nothing:
 /// the mill is the shipped GossipMill with its own numbers, the routines are
@@ -57,7 +57,8 @@ static class Program
         var people = cast.People;
         string metArg = Arg(args, "--meridian", null);
         if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv));
-        if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv));
+        if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
+                                                                   double.Parse(Arg(args, "--deed-at", "-1"), Inv));
 
         Console.WriteLine($"townReach cast={Path.GetFileName(castPath)} people={people.Count} ties={cast.Ties.Count} " +
                           $"talkRangeM={cast.TalkRangeM.ToString(Inv)} days={days}");
@@ -315,7 +316,7 @@ static class Program
     /// RemarkLedger for the whole two hours, told only of what he heard. With
     /// --clear-every N, the neighbours' words he can make out come no oftener
     /// than every N seconds instead of the Core's floor, to compare (the street's murmur is not counted).
-    static int TwoHours(CastDay cast, string castJson, double clearEvery)
+    static int TwoHours(CastDay cast, string castJson, double clearEvery, double deedAtMinute = -1)
     {
         var people = cast.People;
         var placesObj = MiniJson.AsObject(MiniJson.AsObject(MiniJson.Deserialize(castJson))["places"]);
@@ -359,6 +360,10 @@ static class Program
                 }
                 double nextTalk = 0;
                 int ambientCount = 0;
+                // A WINDOW GOES IN where he stands, at --deed-at real minutes (town
+                // list 6an): what the neighbours in earshot say after it.
+                double deedT = deedAtMinute < 0 ? -1 : deedAtMinute * 60.0;
+                bool deedHeard = false;
                 for (int playHour = 0; playHour < Hours; playHour++)
                 {
                     int abs = 9 + playHour, day = abs / 24, hourOfDay = abs % 24;
@@ -419,16 +424,22 @@ static class Program
                     double every = StreetVoice.AmbientEverySeconds(mill.DayCircleHeat(), near.Count, clearEvery);
                     if (every > 1e8) continue;   // fewer than two near: the game's timer waits
                     double hourEnd = hourStart + SecondsPerHour;
+                    // The first words after the deed come as the hush lifts.
+                    if (deedT >= 0 && !deedHeard && deedT < hourEnd && nextTalk > deedT + StreetVoice.JustNowSpeakAfterSeconds)
+                        nextTalk = Math.Max(hourStart, deedT + StreetVoice.JustNowSpeakAfterSeconds);
                     while (nextTalk < hourEnd)
                     {
                         double t = Math.Max(nextTalk, hourStart);
+                        if (deedT >= 0 && t >= deedT) deedHeard = true;
                         nextTalk = t + every;
                         if (pairs.Count == 0) continue;   // spent, with nobody to pair
                         var (a, b) = pairs[ambientCount++ % pairs.Count];
                         var now = new GameTime(day, hourOfDay, 0);
                         int seed = day * 17 + hourOfDay * 3 + near.Count;
-                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed)) Note(runSeed, l.Bank, t, l.Text);
-                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, ledger)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); }
+                        string justNow = deedT >= 0 && t >= deedT ? "glass" : null;
+                        double since = deedT >= 0 && t >= deedT ? t - deedT : -1;
+                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, null, justNow, since)) Note(runSeed, l.Bank, t, l.Text);
+                        foreach (var l in StreetVoice.Ambient(mill.Get(a), mill.Get(b), now, 0.5, 1.0, false, false, seed, ledger, justNow, since)) { Note(runFresh, l.Bank, t, l.Text); ledger.Heard(l); }
                     }
                 }
                 foreach (var kv in runSeed) { if (!seedHeard.TryGetValue(kv.Key, out var l)) seedHeard[kv.Key] = l = new List<List<(double, string)>>(); l.Add(kv.Value); }
@@ -436,6 +447,34 @@ static class Program
             }
 
             Console.WriteLine($"MODE {mode}: runs={runs} (each of the cast out at each hour of night one as the witness)");
+            if (deedAtMinute >= 0)
+            {
+                // After the deed: what the neighbours said, and how soon.
+                double d0 = deedAtMinute * 60.0;
+                int everydaySoon = 0, reactions = 0, settlingLines = 0, everydaySettling = 0, runsHeard = 0;
+                var firstAfter = new List<double>();
+                for (int r = 0; r < runs; r++)
+                {
+                    double first = double.MaxValue;
+                    foreach (var kv in freshHeard)
+                    {
+                        if (r >= kv.Value.Count || !kv.Key.StartsWith("ambient/open/")) continue;
+                        foreach (var (t, _) in kv.Value[r])
+                        {
+                            if (t < d0 || t >= d0 + StreetVoice.SettlingSeconds + 120) continue;
+                            bool soon = t < d0 + StreetVoice.JustNowSeconds;
+                            if (kv.Key.StartsWith("ambient/open/justnow/")) { reactions++; first = Math.Min(first, t - d0); }
+                            else if (kv.Key == "ambient/open/settling") settlingLines++;
+                            else if (soon) everydaySoon++;
+                            else everydaySettling++;
+                        }
+                    }
+                    if (first < double.MaxValue) { runsHeard++; firstAfter.Add(first); }
+                }
+                firstAfter.Sort();
+                string firstMedian = firstAfter.Count == 0 ? "none" : firstAfter[firstAfter.Count / 2].ToString("0", Inv) + " s";
+                Console.WriteLine($"  after the deed at minute {deedAtMinute.ToString(Inv)}: runs where he heard a reaction {runsHeard}/{runs}, the first a median {firstMedian} after; within {StreetVoice.JustNowSeconds.ToString(Inv)} s: reactions {reactions}, everyday lines {everydaySoon}; from then to {(StreetVoice.SettlingSeconds + 120).ToString(Inv)} s: settling {settlingLines}, everyday {everydaySettling}");
+            }
             Console.WriteLine("  bank: lines seen | heard in two hours, mean (most) | most in any ten minutes (lines needed for none to come back inside BarkGen's ten-minute floor, with the ledger) | repeats (exact words: right for its one story), seed alone / ledger | shortest gap between hearing one line twice, minutes, the median over the runs where a line came back (k/runs), seed alone / ledger");
             foreach (var bank in freshHeard.Keys.Union(seedHeard.Keys).OrderBy(k => k, StringComparer.Ordinal))
             {

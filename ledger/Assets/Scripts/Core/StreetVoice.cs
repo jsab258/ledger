@@ -892,8 +892,27 @@ namespace Ledger.Core
         /// the player arrived — and it is the half that was entirely absent.
         /// Everything here is drawn from state the game already simulates, so
         /// a street that has been squeezed sounds squeezed.
+        /// THE STREET JUST AFTER A DEED (town list 6an; A13.21 and A13.20, the third
+        /// checklist sweep): glass went, the street hushed for a second, and the
+        /// next words he made out were two neighbours on the price of bread. For
+        /// the first JustNowSeconds after a deed within earshot of them, a pair
+        /// says what anybody would ("What was that? Glass?"), naming nobody they
+        /// did not see; then, to SettlingSeconds, the street settling ("Gone quiet
+        /// now, anyway."); and after that everyday talk again, which is the panic
+        /// passing. In the player's real
+        /// seconds, as what he hears is paced (ClearWordsEverySeconds): at two
+        /// game minutes a second, ten game minutes would pass in five. `justNow`
+        /// is what they heard: "glass", "shout", "crash", or anything else for a
+        /// noise; `secondsSince` the real seconds since, below zero for none.
+        public const double JustNowSeconds = 90.0, SettlingSeconds = 180.0;
+
+        /// The first exchange after a deed comes as soon as the hush lifts, not
+        /// ClearWordsEverySeconds later: people say "what was that" at once.
+        public const double JustNowSpeakAfterSeconds = 3.0;
+
         public static List<SpokenLine> Ambient(Gossiper a, Gossiper b, GameTime now,
-            double prosperity, double priceLevel, bool aInjured, bool feuding, int seed, RemarkLedger heard = null)
+            double prosperity, double priceLevel, bool aInjured, bool feuding, int seed, RemarkLedger heard = null,
+            string justNow = null, double secondsSince = -1)
         {
             var lines = new List<SpokenLine>();
             if (a == null || b == null) return lines;
@@ -908,6 +927,88 @@ namespace Ledger.Core
                 replyBank = bank;
                 int s = Answer(seed, b.Id);
                 return heard != null ? heard.Fresh(bank, bankLines, s) : Pick(s, bankLines);
+            }
+
+            bool fresh = justNow != null && secondsSince >= 0 && secondsSince < JustNowSeconds;
+            bool settling = justNow != null && secondsSince >= JustNowSeconds && secondsSince < SettlingSeconds;
+            if (fresh)
+            {
+                string kind = justNow == "glass" || justNow == "shout" || justNow == "crash" ? justNow : "noise";
+                opener = kind == "glass" ? OpenLine("ambient/open/justnow/glass", new[]
+                    {
+                        "What was that? Glass?",
+                        "That was glass, that.",
+                        "Somebody's window's gone in.",
+                        "Did you hear that? Sounded like a window.",
+                        "That's a window going, that is.",
+                        "Glass. Down the road somewhere.",
+                    })
+                    : kind == "shout" ? OpenLine("ambient/open/justnow/shout", new[]
+                    {
+                        "Who's that shouting?",
+                        "Somebody's shouting their head off.",
+                        "Did you hear that shouting?",
+                        "That's trouble, that is.",
+                        "Hark at that.",
+                    })
+                    : kind == "crash" ? OpenLine("ambient/open/justnow/crash", new[]
+                    {
+                        "What was that bang?",
+                        "Something's gone over, listen.",
+                        "That was a crash, that.",
+                        "What's gone on down there?",
+                        "Something's come down, that.",
+                        "Hell of a bang, that.",
+                    })
+                    : OpenLine("ambient/open/justnow/noise", new[]
+                    {
+                        "What was that?",
+                        "Did you hear that?",
+                        "What's going on down there?",
+                        "Something's up.",
+                        "What's all that about?",
+                        "What the hell was that?",
+                    });
+                reply = ReplyLine("ambient/reply/justnow", new[]
+                {
+                    "Came from down that way.",
+                    "I'm not going to look.",
+                    "Best stay out of it.",
+                    "Someone'll ring the police.",
+                    "It's always something round here.",
+                    "Keep your head down, that's what I say.",
+                    "Not our business.",
+                    "Don't go over. Leave it.",
+                    "I heard it. I didn't see it.",
+                    "Let's hope that's the end of it.",
+                });
+                lines.Add(new SpokenLine { SpeakerId = a.Id, Text = opener, Bank = openBank });
+                lines.Add(new SpokenLine { SpeakerId = b.Id, Text = reply, Bank = replyBank });
+                return lines;
+            }
+            if (settling)
+            {
+                opener = OpenLine("ambient/open/settling", new[]
+                {
+                    "Gone quiet now, anyway.",
+                    "Whatever that was, it's done with.",
+                    "Did anybody see what happened?",
+                    "Curtains are twitching all down the street.",
+                    "My heart's going ten to the dozen.",
+                    "Whole street's on edge now.",
+                });
+                reply = ReplyLine("ambient/reply/settling", new[]
+                {
+                    "Somebody'll know what it was. Somebody always does.",
+                    "I didn't see and I'm not asking.",
+                    "Best not to wonder.",
+                    "It'll be all round the street by tomorrow.",
+                    "Least said, soonest mended.",
+                    "Let it lie.",
+                });
+                lines.Add(new SpokenLine { SpeakerId = a.Id, Text = opener, Bank = openBank });
+                lines.Add(new SpokenLine { SpeakerId = b.Id, Text = reply, Bank = replyBank });
+                return lines;
             }
 
             // Fourteen a band. This is the family the player hears MOST — a
