@@ -93,6 +93,8 @@
 // controller's own InputKey takes.
 #include "LedgerCharacter.h"
 #include "SliceCharacter.h"
+#include "LedgerSession.h"
+#include "Misc/CoreDelegates.h"
 #include "Engine/StaticMeshActor.h"
 #include "Engine/StaticMesh.h"
 #include "Components/StaticMeshComponent.h"
@@ -2471,7 +2473,41 @@ namespace
 	{
 		if (GLive.bStarted) { return; }
 		FString Exe;
-		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty()) { return; }
+		if (!FParse::Value(FCommandLine::Get(), TEXT("TalkHelper="), Exe) || Exe.IsEmpty())
+		{
+			// THE TALK PROGRAM SHIPPED WITH THE GAME, 29 September (handover
+			// 6aa): with none named, the game's own copy beside it
+			// (tools/publish-talk-helper.ps1, published into the package by
+			// the build): LedgerTalk.exe, needing no .NET, its cards beside it.
+			// Only in the live encounter, where talk is played.
+			// Never for a run nobody is at: the build machine's and the
+			// scripts' runs pass -unattended, and must not make paid calls
+			// unasked; they name their talk program when they want one.
+			if (GEnc != EEncounter::Live || FParse::Param(FCommandLine::Get(), TEXT("unattended"))) { return; }
+			const FString Cands[2] = { FPaths::Combine(FPaths::ProjectDir(), TEXT("../LedgerTalk/LedgerTalk.exe")),
+			                           FPaths::Combine(FPaths::ProjectDir(), TEXT("LedgerTalk/LedgerTalk.exe")) };
+			for (FString C : Cands)
+			{
+				C = FPaths::ConvertRelativePathToFull(C);
+				FPaths::CollapseRelativeDirectories(C);
+				if (FPaths::FileExists(C)) { Exe = C; break; }
+			}
+			if (Exe.IsEmpty()) { return; }
+			// HIS OWN COPY'S KEY, from the game's secrets file on his PC (never
+			// in the package, never written anywhere), into the talk program's
+			// environment only; a friend's copy has none and goes through the relay.
+			if (FPlatformMisc::GetEnvironmentVariable(TEXT("ANTHROPIC_API_KEY")).IsEmpty())
+			{
+				FString Secrets;
+				const FString SecretsPath = FPaths::Combine(FPlatformProcess::UserDir(), TEXT("../AppData/LocalLow/DefaultCompany/ledger/secrets.json"));
+				if (FFileHelper::LoadFileToString(Secrets, *SecretsPath))
+				{
+					const std::string Key = JsonField(Utf8(Secrets), "anthropic_api_key");
+					if (Key != "none" && !Key.empty()) { FPlatformMisc::SetEnvironmentVar(TEXT("ANTHROPIC_API_KEY"), *Un(Key)); }
+				}
+			}
+			UE_LOG(LogTemp, Display, TEXT("LedgerTalk: the game's own talk program, %s"), *Exe);
+		}
 		if (!FPlatformProcess::CreatePipe(GLive.OutRead, GLive.OutWrite) || !FPlatformProcess::CreatePipe(GLive.InRead, GLive.InWrite, true)) { return; }
 		// --early (26 September; Jafar: about six seconds passed between his line
 		// and the character speaking): the helper sends the answer's first
@@ -2837,6 +2873,68 @@ namespace
 	// the player goes out of earshot (6 m, GossipDirector's) while someone is
 	// still answering, the talk program is told once what he heard before he
 	// left; the character then keeps only that, and remembers that he went.
+	// THE SESSION RECORD'S HELPERS (handover 6p). The cast file, found where
+	// the street file is found: -LedgerRepo, the checkout beside the project,
+	// or the game's own staged copy.
+	FString SessionCastFile()
+	{
+		TArray<FString> Cands;
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, TEXT("production/specs/hook-cast.json"))); }
+		Cands.Add(AbsProject(TEXT("../production/specs/hook-cast.json")));
+		Cands.Add(AbsProject(TEXT("../../../../production/specs/hook-cast.json")));
+		Cands.Add(FPaths::ConvertRelativePathToFull(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData/production/specs/hook-cast.json"))));
+		for (FString C : Cands)
+		{
+			FPaths::CollapseRelativeDirectories(C);
+			if (FPaths::FileExists(C)) { return C; }
+		}
+		return FString();
+	}
+
+	// A list of strings out of a reply line: "name":["a","b"].
+	TArray<FString> JsonList(const std::string& Line, const std::string& Name)
+	{
+		TArray<FString> Out;
+		const std::string K = "\"" + Name + "\":[";
+		std::string::size_type I = Line.find(K);
+		if (I == std::string::npos) { return Out; }
+		I += K.size();
+		std::string Cur;
+		bool bIn = false;
+		for (; I < Line.size(); ++I)
+		{
+			const char C = Line[I];
+			if (!bIn && C == ']') { break; }
+			if (C == '"') { if (bIn) { Out.Add(Un(Cur)); Cur.clear(); } bIn = !bIn; continue; }
+			if (bIn && C == '\\' && I + 1 < Line.size()) { Cur += Line[++I]; continue; }
+			if (bIn) { Cur += C; }
+		}
+		return Out;
+	}
+
+	// THE SESSION'S END, when the game closes: the talk program's input is
+	// closed, and the line it then writes says what this session's talk cost.
+	void SessionEndAtExit()
+	{
+		double Usd = -1.0;
+		if (GLive.bStarted && GLive.InWrite != nullptr)
+		{
+			FPlatformProcess::ClosePipe(GLive.InRead, GLive.InWrite);
+			GLive.InRead = GLive.InWrite = nullptr;
+			std::string Buf;
+			const double T0 = FPlatformTime::Seconds();
+			while (FPlatformTime::Seconds() - T0 < 3.0)
+			{
+				Buf += Utf8(FPlatformProcess::ReadPipe(GLive.OutRead));
+				const std::string::size_type At = Buf.find("\"usd\":");
+				if (At != std::string::npos) { Usd = atof(Buf.c_str() + At + 6); break; }
+				FPlatformProcess::Sleep(0.05f);
+			}
+		}
+		LedgerSession::End(TEXT("quit"), Usd);
+	}
+
 	void LiveWalkedAwayCheck()
 	{
 		if (GLive.AnswerCard.empty() || GLive.bWalkedSent || GPawn == nullptr) { return; }
@@ -2907,6 +3005,28 @@ namespace
 				}
 				GLive.LastReplyId = GLive.PendingId;
 				GLive.LastReplyName = GLive.PendingName;
+				// THE SESSION RECORD (handover 6p): whom his line named, how the
+				// answer went, and anything they put to him or drew on.
+				{
+					const FString Who = Un(GLive.PendingCard);
+					const TArray<FString> Named = JsonList(L, "named");
+					if (Named.Num() > 0)
+					{
+						LedgerSession::Write(TEXT("named"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"names\":") + LedgerSession::List(Named));
+					}
+					const std::string Went = JsonField(L, "went");
+					const double Secs = (GLive.FirstAt > GLive.AskedAt ? GLive.FirstAt : FPlatformTime::Seconds()) - GLive.AskedAt;
+					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Who)
+						+ (Went != "none" ? TEXT(",\"how\":") + LedgerSession::Str(Un(Went)) : FString()) + FString::Printf(TEXT(",\"s\":%.1f"), Secs));
+					for (const FString& Story : JsonList(L, "putToHim"))
+					{
+						LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"how\":\"question\",\"story\":") + LedgerSession::Str(Story));
+					}
+					for (const FString& Story : JsonList(L, "spokeOf"))
+					{
+						LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"how\":\"talk\",\"story\":") + LedgerSession::Str(Story));
+					}
+				}
 				if (GLive.bFirstSaid)
 				{
 					const std::string Rest = JsonField(L, "rest");
@@ -2976,6 +3096,7 @@ namespace
 	{
 		if (bSayOpen || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
 		if (!GLive.bNoticeShown) { ShowAiNotice(); }
+		LedgerSession::Write(TEXT("talk"), TEXT("\"who\":") + LedgerSession::Str(Un(GTalkTarget.Card)));
 		bSayCommitted = bSayCancelled = false;
 		GSaid.Reset();
 		SAssignNew(GSayBox, SBox)
@@ -3139,6 +3260,7 @@ namespace
 		LiveHelperPump();
 		LiveVoiceStart();
 		LiveVoicePump();
+		if (GPawn != nullptr) { LedgerSession::Look(GPawn->GetActorLocation(), bSayOpen); }
 		AskScriptTick(Now);
 		TalkLightTick(World, Now);
 		AckTick();
@@ -3684,6 +3806,17 @@ namespace
 					GWatchSlot = 0;
 					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
 				}
+				// THE SESSION RECORD STARTS (handover 6p): a new game or a
+				// loaded save, and the deed the save holds.
+				LedgerSession::Start(CrimeSha(), !bLoadedFromDisk, SessionCastFile());
+				if (bLoadedFromDisk)
+				{
+					TArray<FString> Deeds;
+					if (!GFiledSummaryA.empty()) { Deeds.Add(TEXT("player.window_d1")); }
+					LedgerSession::Write(TEXT("load"), TEXT("\"from\":") + LedgerSession::Str(FPaths::ConvertRelativePathToFull(EncSaveDir()))
+						+ TEXT(",\"deeds\":") + LedgerSession::List(Deeds));
+				}
+				FCoreDelegates::OnEnginePreExit.AddStatic(&SessionEndAtExit);
 			}
 			GPhaseStart = Now;
 			return true;
@@ -4093,6 +4226,7 @@ namespace
 			GWatchSlot = -1;
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
+			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":\"player.window_d1\""));
 			// AND SEEN: broken glass on the pavement under the window, in play
 			// only (the regression's piece counts do not move). A clear pane
 			// that vanishes looks the same as a clear pane.

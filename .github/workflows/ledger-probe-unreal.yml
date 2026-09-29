@@ -733,6 +733,26 @@ jobs:
       # must not take away the last good build Jafar could still play. The
       # stamp file is what stops a stale copy from reading as fresh, not a
       # deletion.
+      - name: Ship the talk program inside the package
+        if: always()
+        continue-on-error: true
+        timeout-minutes: 10
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Continue"
+          # THE TALK PROGRAM SHIPS WITH THE GAME, 29 September (the town
+          # session's handover 6aa): LedgerTalk.exe, needing no .NET, with the
+          # cast's cards and routines, beside the game in the package
+          # (Packaged\Windows\LedgerTalk), where the game looks for it when no
+          # -TalkHelper is given (CrimeProbe.cpp, LiveHelperStart). The copy
+          # Jafar plays then carries it.
+          $win = Join-Path $PWD "ue-probe\Packaged\Windows"
+          if (-not (Test-Path (Join-Path $win "LedgerProbe"))) { Write-Host "talkShip=NO-PACKAGE"; exit 0 }
+          $out = Join-Path $win "LedgerTalk"
+          & pwsh -NoProfile -File tools\publish-talk-helper.ps1 -Out $out
+          $exe = Join-Path $out "LedgerTalk.exe"
+          Write-Host ("talkShip=" + $(if (Test-Path $exe) { "SHIPPED" } else { "FAILED" }) + " talkShipDir=" + ($out -replace ' ','~'))
+
       - name: Copy the packaged build to a stable path
         id: stable-copy
         if: always()
