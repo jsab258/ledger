@@ -1,0 +1,173 @@
+"""A MetaHuman body's measurements as FreeSewing asks for them (mm; the slope in degrees), taken off its exported mesh.
+
+    blender -b -P tools/meshgen/blender/body_measurements.py -- BODY.fbx OUT.json
+
+WHY, 29 September (Jafar's list, item 5, the pattern route:
+production/research/clothing-pipeline/pattern-jacket-2026-09-29.md). A jacket
+cut from FreeSewing's Brian block is drafted to the wearer's measurements:
+biceps, chest, hpsToBust, hpsToWaistBack, neck, shoulderToShoulder,
+shoulderSlope, shoulderToWrist, waistToArmpit, waistToHips and wrist
+(Simon's collar adds nothing more). They are taken as a tape takes them: a girth is the length round the
+convex outline of a slice through the body (a tape bridges the hollows), a
+length a straight line between two landmarks found from the skeleton. The
+slices are taken off the torso alone (the arms hang clear in the rest pose)
+and, for the biceps, across the upper arm square to its bone.
+
+Landmarks (the MetaHuman skeleton's joints, in the body's own rest pose):
+  chest  the fullest girth between the armpits and 12 cm below them
+  waist  the girth at the spine_02 joint, where a man's trouser waist sits
+  hips   the fullest girth from the waist down to the crotch
+  neck   the girth just under the body mesh's top edge, where the head joins
+  HPS    the high point of the shoulder: the top of the body beside the
+         neck, at the neck's radius out from its centre
+  shoulder point  the top of the body above each upperarm joint
+  bust point      the most forward point of the chest slice on one side
+"""
+import json
+import math
+import sys
+
+import bpy
+from mathutils import Vector
+
+argv = sys.argv[sys.argv.index("--") + 1:]
+BODY, OUT = argv[0], argv[1]
+
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.ops.import_scene.fbx(filepath=BODY)
+arm = next(o for o in bpy.context.scene.objects if o.type == "ARMATURE")
+body = max((o for o in bpy.context.scene.objects if o.type == "MESH"), key=lambda o: len(o.data.vertices))
+names = {g.index: g.name for g in body.vertex_groups}
+W = body.matrix_world
+pts = []
+for v in body.data.vertices:
+    best, w = "", 0.0
+    for g in v.groups:
+        if g.weight > w:
+            best, w = names.get(g.group, ""), g.weight
+    pts.append((W @ v.co, best))
+
+
+def joint(name):
+    return arm.matrix_world @ arm.data.bones[name].head_local
+
+
+ARM_BONES = ("upperarm", "lowerarm", "hand", "thumb", "index", "middle", "ring", "pinky", "clavicle", "wrist", "elbow")
+# THE TORSO ALONE: by the bones that move each point, and, below the
+# shoulders, inside the shoulders' width too (in the rest pose the hands hang
+# beside the hips, and a wrist bone's points are not all named for an arm).
+
+
+def hull(xy):
+    xy = sorted(set((round(a, 5), round(b, 5)) for a, b in xy))
+    if len(xy) < 3:
+        return xy
+
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lo, up = [], []
+    for q in xy:
+        while len(lo) >= 2 and cross(lo[-2], lo[-1], q) <= 0:
+            lo.pop()
+        lo.append(q)
+    for q in reversed(xy):
+        while len(up) >= 2 and cross(up[-2], up[-1], q) <= 0:
+            up.pop()
+        up.append(q)
+    return lo[:-1] + up[:-1]
+
+
+def perimeter(poly):
+    return sum(math.dist(poly[i], poly[(i + 1) % len(poly)]) for i in range(len(poly))) if len(poly) > 2 else 0.0
+
+
+def girth_at(z, points, band=0.006):
+    sl = [(p.x, p.y) for p in points if abs(p.z - z) < band]
+    return perimeter(hull(sl)), sl
+
+
+pelvis, spine2, neck, head = joint("pelvis"), joint("spine_02"), joint("neck_01"), joint("head")
+up_l, up_r, low_l = joint("upperarm_l"), joint("upperarm_r"), joint("lowerarm_l")
+SHOULDER_X = abs(up_l.x)
+torso = [p for p, b in pts if not b.startswith(ARM_BONES) and (p.z > up_l.z - 0.05 or abs(p.x) < SHOULDER_X)]
+thigh_l = joint("thigh_l")
+ARMPIT = up_l.z - 0.09
+
+chest_z, chest = max(((z, girth_at(z, torso)[0]) for z in [ARMPIT - k * 0.01 for k in range(0, 13)]), key=lambda t: t[1])
+waist_z = spine2.z
+waist = girth_at(waist_z, torso)[0]
+hips_z, hips = max(((z, girth_at(z, torso)[0]) for z in [waist_z - k * 0.01 for k in range(0, int((waist_z - thigh_l.z) * 100) + 1)]), key=lambda t: t[1])
+# the body mesh ends at the base of the neck, where the head's mesh joins:
+# the neck is measured just under that edge
+TOP = max(p.z for p, _ in pts)
+neck_z = TOP - 0.012
+neck_g, neck_sl = girth_at(neck_z, [p for p, b in pts if abs(p.x) < 0.12])
+neck_c = Vector((sum(x for x, _ in neck_sl) / max(1, len(neck_sl)), sum(y for _, y in neck_sl) / max(1, len(neck_sl)), neck_z))
+neck_r = neck_g / (2 * math.pi)
+
+
+def top_near(x, y, r=0.015, pool=torso):
+    near = [p for p in pool if abs(p.x - x) < r and abs(p.y - y) < r]
+    return max(near, key=lambda p: p.z) if near else None
+
+
+# the high point of the shoulder: beside the neck, on the side (x>0), a
+# little out from the neck's radius
+hps = top_near(neck_c.x + neck_r + 0.01, neck_c.y)
+all_pts = [p for p, _ in pts]
+# THE SHOULDER POINT (the acromion, where a tailor takes shoulder to
+# shoulder) sits outside the arm's joint, over the edge of the shoulder: the
+# top of the body 3.5 cm further out than the joint (at the joint itself the
+# first measure read 37.5 cm, a boy's shoulders)
+sp_l = top_near(up_l.x + 0.035 * (1 if up_l.x > 0 else -1), up_l.y, 0.02, all_pts)
+sp_r = top_near(up_r.x + 0.035 * (1 if up_r.x > 0 else -1), up_r.y, 0.02, all_pts)
+chest_sl = [p for p in torso if abs(p.z - chest_z) < 0.006 and p.x > 0.02]
+front_sign = -1.0          # the body faces -Y once imported
+bust = min(chest_sl, key=lambda p: front_sign * -1 * p.y) if chest_sl else None
+bust = min(chest_sl, key=lambda p: p.y) if chest_sl else None
+
+# the biceps: the upper arm's points in a 1 cm slab square to the bone, halfway
+# down it, measured round their outline in that plane
+axis = (low_l - up_l).normalized()
+mid = up_l + (low_l - up_l) * 0.5     # halfway down the upper arm (at a third it caught the deltoid)
+u = axis.orthogonal().normalized()
+v2 = axis.cross(u).normalized()
+arm_pts = [p for p, b in pts if b.startswith("upperarm") and b.endswith("_l")]
+slab = [((p - mid).dot(u), (p - mid).dot(v2)) for p in arm_pts if abs((p - mid).dot(axis)) < 0.006]
+biceps = perimeter(hull(slab))
+
+# THE SLEEVE'S TWO (Brian's sleeve needs them; without them it drafted 55 mm
+# long): shoulder to wrist, from the shoulder point along the arm's bones to
+# the wrist joint; and the wrist's girth, square to the forearm just above it.
+hand_l = joint("hand_l")
+shoulder_to_wrist = ((sp_l - low_l).length + (low_l - hand_l).length) if sp_l else 0.0
+fa = (hand_l - low_l).normalized()
+wu = fa.orthogonal().normalized()
+wv = fa.cross(wu).normalized()
+at_wrist = hand_l - fa * 0.02
+fore_pts = [p for p, b in pts if b.startswith(("lowerarm", "wrist", "hand")) and b.endswith("_l")]
+wrist = perimeter(hull([((p - at_wrist).dot(wu), (p - at_wrist).dot(wv)) for p in fore_pts if abs((p - at_wrist).dot(fa)) < 0.006]))
+
+m = lambda metres: round(metres * 1000.0, 1)
+out = {
+    "body": BODY,
+    "measurements": {
+        "biceps": m(biceps),
+        "chest": m(chest),
+        "waist": m(waist),
+        "hips": m(hips),
+        "neck": m(neck_g),
+        "hpsToBust": m((hps - bust).length) if hps and bust else None,
+        "hpsToWaistBack": m(hps.z - waist_z) if hps else None,
+        "shoulderToShoulder": m((sp_l - sp_r).length) if sp_l and sp_r else None,
+        "shoulderSlope": round(math.degrees(math.atan2(hps.z - sp_l.z, abs(sp_l.x - hps.x))), 1) if hps and sp_l else None,
+        "waistToArmpit": m(ARMPIT - waist_z),
+        "waistToHips": m(waist_z - hips_z),
+        "shoulderToWrist": m(shoulder_to_wrist),
+        "wrist": m(wrist),
+    },
+    "heights_m": {"chest": round(chest_z, 3), "waist": round(waist_z, 3), "hips": round(hips_z, 3), "neck": round(neck_z, 3),
+                  "armpit": round(ARMPIT, 3), "hps": round(hps.z, 3) if hps else None, "top": round(max(p.z for p in all_pts), 3)},
+}
+json.dump(out, open(OUT, "w"), indent=1)
+print("MEASURED", json.dumps(out["measurements"]))
