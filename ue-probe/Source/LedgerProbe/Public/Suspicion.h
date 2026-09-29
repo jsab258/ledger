@@ -11,10 +11,10 @@
 // refusals, ClaimResult 45, KnowledgeBase 49 to 66. Eighteen lines that let
 // Gossip.cs Witness 290 and Tick 400 stay verbatim.
 //
-// SuspicionTracker IS NOT PORTED. It is named out of scope by the ruling,
-// which means the two Suspicion.Raise calls inside GossipMill.Tick are
-// absent; Gossip.h names that omission at each of the two sites, and the
-// crime verdict prints
+// SuspicionTracker WAS NOT PORTED until 29 September, and now only its
+// number is (below, for StreetVoice::RegardFor). The two Suspicion.Raise
+// calls inside GossipMill.Tick are still absent; Gossip.h names that omission
+// at each of the two sites, and the crime verdict prints
 // gossipSuspicionPorted=no/SuspicionTracker-out-of-scope.
 //
 // NO UNREAL TYPE IS IN THIS FILE, deliberately: the standing rule from 25
@@ -191,5 +191,24 @@ namespace LedgerCore
 			}
 			return ClaimResult::Unknown;
 		}
+	};
+
+	// Suspicion.cs 72 to 205, THE NUMBER ONLY (29 September, for the knowing
+	// port: StreetVoice's RegardFor reads a person's suspicion, and the golden
+	// rows raise it). Value, Raise, Lower and Restore, clamped as the C#'s
+	// Math.Clamp clamps (a NaN passes through). NOT HERE YET: the reasons
+	// trail (Reasons, RecentReasons, MaxReasons), which nothing ported reads,
+	// and the two Raise calls inside GossipMill.Tick, which Gossip.h still
+	// names as absent; both come with the port of town list 6n.
+	class SuspicionTracker
+	{
+		double V;
+		static double Clamp(double X) { return X < 0.0 ? 0.0 : X > 1.0 ? 1.0 : X; }
+	public:
+		SuspicionTracker() : V(0.0) {}
+		double Value() const { return V; }
+		void Restore(double Value) { V = Clamp(Value); }
+		void Raise(double Amount, const std::string& /*Reason*/) { V = Clamp(V + Amount); }
+		void Lower(double Amount, const std::string& /*Reason*/) { V = Clamp(V - Amount); }
 	};
 }

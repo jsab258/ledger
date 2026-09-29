@@ -14,7 +14,7 @@
 // lines decides a hop.
 //
 // SCOPE, from the ruling section 1 item 6: SocialGraph 9 to 32; Rumor 37 to
-// 59; Gossiper 64 to 118 less Suspicion; GossipEvent 122 to 128; and from
+// 59; Gossiper 64 to 118 (Suspicion as its number, 29 September); GossipEvent 122 to 128; and from
 // GossipMill only _agents, _graph, the four tunables 141 to 144, the
 // constructor 146, Tie 152, Add 154, Get 178 to 179, WitnessesOffered and
 // WitnessesDropped 194 to 195, SummariesSaying, SaysWord and IsWordChar 225
@@ -28,8 +28,10 @@
 // StrongestSurvivingPlayerLead.
 //
 // THE ONE OMISSION INSIDE A PORTED FUNCTION, named at each of its two sites
-// below: SuspicionTracker is out of scope, so Tick's two Suspicion.Raise
-// calls (Gossip.cs 402 and 412) are absent while ev.Contradiction and
+// below: SuspicionTracker came on 29 September as its number alone
+// (Suspicion.h, for StreetVoice::RegardFor), and Tick's two Suspicion.Raise
+// calls (Gossip.cs 402 and 412) are still absent, so in play everybody's
+// suspicion reads 0 until town list 6n brings them. ev.Contradiction and
 // ev.Exposure are set exactly as 406 and 413 set them. The crime verdict
 // prints gossipSuspicionPorted=no/SuspicionTracker-out-of-scope.
 //
@@ -183,12 +185,13 @@ namespace LedgerCore
 
 	typedef std::shared_ptr<Rumor> RumorPtr;
 
-	// Gossip.cs 64 to 118, less Suspicion. One NPC's social side: their
-	// memory, what they factually know, the rumours they carry, and which of
-	// the player's two faces they belong to.
+	// Gossip.cs 64 to 118. One NPC's social side: their memory, what they
+	// factually know, the rumours they carry, and which of the player's two
+	// faces they belong to.
 	//
-	// SuspicionTracker IS THE ONE MEMBER THAT DID NOT COME. The C# field and
-	// the constructor's fifth argument are both absent here, by the ruling.
+	// SuspicionTracker came on 29 September as its number alone (the member
+	// Suspicion below); the constructor's fifth argument is still absent, and
+	// a new tracker always starts at 0, as the C#'s default one does.
 	class Gossiper
 	{
 	public:
@@ -218,6 +221,11 @@ namespace LedgerCore
 		// everything.
 		bool Leashed;
 
+		// How much this person suspects the player: the number alone since
+		// 29 September (Suspicion.h), for StreetVoice::RegardFor. Nothing in
+		// the mill raises it yet; see the header's note on Tick.
+		SuspicionTracker Suspicion;
+
 		Gossiper(const std::string& InId, const std::string& InDisplayName,
 		         const std::shared_ptr<MemoryStore>& InMemory,
 		         const std::shared_ptr<KnowledgeBase>& InKnowledge,
@@ -228,8 +236,8 @@ namespace LedgerCore
 			  Greed(InGreed), Nerve(InNerve), Loyalty(InLoyalty), Leashed(false)
 		{
 			// C#: Memory = memory ?? new MemoryStore(id), and the same for
-			// Knowledge. The SuspicionTracker line between them is the one
-			// omission, named in this file's header.
+			// Knowledge. The SuspicionTracker line between them is the
+			// member's own default, a tracker at 0.
 			if (!Memory)    { Memory    = std::make_shared<MemoryStore>(InId); }
 			if (!Knowledge) { Knowledge = std::make_shared<KnowledgeBase>(); }
 		}

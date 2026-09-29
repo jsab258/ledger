@@ -22,11 +22,14 @@
 // proper noun.
 //
 // SCOPE, queue 147: SpokenLine 43 to 72; Exchange 131 to 296; Pick, Answer,
-// Hash, Trim, Cap; and since 23 September StanceKind, Stance, GazeMetres,
-// StoryThatShows and RemarkLedger (the section at the end). OUT OF SCOPE AND
-// NOT HERE, so a reader can tell a missing member from a forgotten one:
-// Recognition, Ambient, ChatterLevel, AmbientEverySeconds, Clamp01
-// (LedgerCore::Clamp01 in Perception.h is the same arithmetic).
+// Hash, Trim, Cap; since 23 September StanceKind, Stance, GazeMetres,
+// StoryThatShows and RemarkLedger; and since 29 September the knowing
+// section (StoryHalfRemembered, Stance's knowsALittle, the look, the faint
+// remark, RegardFor) and Recognition (the sections at the end). OUT OF SCOPE
+// AND NOT HERE, so a reader can tell a missing member from a forgotten one:
+// Ambient, ChatterLevel, AmbientEverySeconds, RemarkLedger's Fresh and its
+// save (town list 6k and 6o), Clamp01 (LedgerCore::Clamp01 in Perception.h
+// is the same arithmetic).
 //
 // THE DEVIATIONS FROM THE C#, NAMED, in the shape the eight of
 // game-design/decision-2026-09-08-the-core-port-and-its-eight-deviations.md
@@ -86,6 +89,8 @@
 
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
 
+#include <limits>
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -110,6 +115,10 @@ namespace LedgerCore
 		// the TELLING is marked, exactly as StreetVoice.cs 289 to 295 marks
 		// it: the answer is a literal from a band and is bankable as written.
 		bool        Composed;
+		// The bank the line was drawn from ("faint", "recognition/sensitive"),
+		// as the C#'s SpokenLine.Bank. Set by Recognition and FaintRemark;
+		// Exchange's banks come with the port of town list 6k.
+		std::string Bank;
 
 		SpokenLine() : AboutPlayer(false), Composed(false) {}
 	};
@@ -230,7 +239,7 @@ namespace LedgerCore
 		static const char* const Lines[14] = {
 			"I'm telling you, {what}.",
 			"{What}. I know what I saw.",
-			"You want to know why I'm quiet lately? {What}.",
+			"You want to know why I've been quiet? {What}.",
 			"{What}. I'd say it in front of him.",
 			"I was there. {What}, and that's the end of it.",
 			"Don't look at me like that. {What}.",
@@ -256,10 +265,10 @@ namespace LedgerCore
 			"Word is {what}.",
 			"Somebody told me {what}. Make of it what you like.",
 			"It's going round that {what}.",
-			"Two people told me {what}. Different two people.",
+			"Two people told me {what}. And those two don't speak.",
 			"I had it off someone who'd know: {what}.",
 			"You've heard, then. {What}.",
-			"There's a version where {what}. I've heard worse ones.",
+			"The way I heard it, {what}. Others tell it worse.",
 			"{What}, if you believe the market.",
 			"I'd not repeat it, but {what}.",
 			"The talk is {what}. Take that how you like.",
@@ -280,7 +289,7 @@ namespace LedgerCore
 			"You hear all sorts. {What}, apparently.",
 			"Somebody's saying {what}. Somebody's always saying something.",
 			"{What}, supposedly. People talk.",
-			"I heard {what}, but I heard it from Darren.",
+			"I heard {what}, but not from anybody I'd trust.",
 			"Bit of nonsense going about. {What}.",
 			"They'll tell you {what}. They'll tell you anything.",
 			"Half the street reckons {what}. Half the street's wrong.",
@@ -305,7 +314,7 @@ namespace LedgerCore
 			"Not here. Not with that door open.",
 			"You're a braver man than me, saying it out loud.",
 			"I didn't hear that. Understand me. I didn't hear it.",
-			"Whatever you think you know, unknow it.",
+			"Whatever you think you know, forget it.",
 			"There's people who'd pay to hear you say that again.",
 			"Stop. I mean it. Stop.",
 			"You want to be careful whose name you put in a sentence.",
@@ -328,7 +337,7 @@ namespace LedgerCore
 			"I've known better people do worse for less.",
 			"And you believed it, did you?",
 			"There'll be a reason. There usually is.",
-			"That's not the man I know.",
+			"That's not how he's struck me.",
 			"I'd want to hear it from him before I said it again.",
 			"People are quick to have an opinion about a stranger.",
 			"Mickey's family. That still means something to me.",
@@ -336,7 +345,7 @@ namespace LedgerCore
 			"Half of that's true and the wrong half's the loud one.",
 			"I'll not be the one carrying that any further.",
 			"Give it a month. It'll be somebody else's turn.",
-			"That's a hard thing to say about a man who's been decent to me.",
+			"That's a hard thing to say about a man who's done me no harm.",
 			"I've heard that story before, about somebody else.",
 		};
 		OutCount = 14;
@@ -600,7 +609,7 @@ namespace LedgerCore
 
 		inline StanceKind Stance(double Suspicion, double Loyalty, double StrongestAboutPlayer,
 		                         bool bLeashed, bool bWearingCoat, bool bKnowsSomething = false,
-		                         bool bRemarkedAlready = false)
+		                         bool bRemarkedAlready = false, bool bKnowsALittle = false)
 		{
 			double Pressure = Clamp01(0.55 * Clamp01(Suspicion) + 0.45 * Clamp01(StrongestAboutPlayer));
 			Pressure -= 0.35 * Clamp01(Loyalty - 0.5) * 2.0 * (Pressure < 0.85 ? 1.0 : 0.4);
@@ -614,6 +623,10 @@ namespace LedgerCore
 				                       : StanceKind::Comments;
 				if ((int)R < (int)Floor) R = Floor;
 			}
+			// KNOWING A LITTLE SHOWS TOO (Jafar's list, 28 September): a story
+			// held under the share floor is a floor of its own, Notices; in
+			// the coat, unsure it is him, nothing.
+			if (bKnowsALittle && !bWearingCoat && (int)R < (int)StanceKind::Notices) R = StanceKind::Notices;
 			return R;
 		}
 
@@ -627,13 +640,24 @@ namespace LedgerCore
 			     : 22;
 		}
 
+		// Arrangement.cs 54 and 77: a story of one of the outfit's nights.
+		namespace Arrangement
+		{
+			inline bool IsNight(const RumorPtr& R)
+			{
+				static const std::string TopicPrefix = "player.outfit_d";
+				return R && R->TopicKey().compare(0, TopicPrefix.size(), TopicPrefix) == 0;
+			}
+		}
+
 		inline RumorPtr StoryThatShows(const Gossiper& G, double ShareFloor)
 		{
 			RumorPtr Best;
 			for (std::vector<RumorPtr>::size_type I = 0; I < G.Rumors.size(); ++I)
 			{
 				const RumorPtr& R = G.Rumors[I];
-				if (!R || R->Content.Subject != "player" || !R->Sensitive) continue;
+				// His night, or what he did with the outfit's ask (town list 6z).
+				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R))) continue;
 				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
 				if (!(R->Confidence >= ShareFloor)) continue;
 				if (!Best || R->Confidence > Best->Confidence) Best = R;
@@ -663,7 +687,430 @@ namespace LedgerCore
 				const std::string K = KeyFor(PersonId, R);
 				return !K.empty() && Said.insert(K).second;
 			}
+			// A half-remembered story's one remark: heard, or it does not
+			// count, under the story's own key, so one remark per person per
+			// story whichever came first.
+			bool RecordFaint(const std::string& PersonId, const RumorPtr& R, bool bHeard)
+			{
+				if (!bHeard) return false;
+				const std::string K = KeyFor(PersonId, R);
+				return !K.empty() && Said.insert(K).second;
+			}
 			std::size_t Count() const { return Said.size(); }
 		};
+
+		// ---- knowing a little, and the look (29 September) ----------------
+		//
+		// TRANSLITERATED from StreetVoice.cs's knowing section, the town list's
+		// handover 1 (Jafar's list, 28 September: "someone who has heard a
+		// little about Tom behaves exactly like someone who has heard nothing"
+		// was the fault). Checked against PerceptionGolden EmitKnowing: the
+		// half-remembered story over fifteen holders and two floors, Stance
+		// with knowsALittle over 4,800 cells, the look for every stance and
+		// its five constants, the faint draw over forty people and the share's
+		// edge, the faint lines, RecordFaint, and RegardFor over 2,880 holders.
+		// The research behind the look: production/research/gaze-and-knowing.
+
+		/// The strongest story of his night a person still holds but would no
+		/// longer pass on (under the share floor, above nothing), or null.
+		inline RumorPtr StoryHalfRemembered(const Gossiper& G, double ShareFloor)
+		{
+			RumorPtr Best;
+			for (std::vector<RumorPtr>::size_type I = 0; I < G.Rumors.size(); ++I)
+			{
+				const RumorPtr& R = G.Rumors[I];
+				if (!R || R->Content.Subject != "player" || !(R->Sensitive || Arrangement::IsNight(R))) continue;
+				if (!R->Indelible && G.SuppressedHas(R->TopicKey())) continue;
+				if (!(R->Confidence > 0.0) || R->Confidence >= ShareFloor) continue;
+				if (!Best || R->Confidence > Best->Confidence) Best = R;
+			}
+			return Best;
+		}
+
+		/// The fixed draw, 0 to 0.9999, from FNV-1a over the remark key.
+		inline double FaintDraw(const std::string& Key)
+		{
+			return (Hash(Key) % 10000u) / 10000.0;
+		}
+
+		/// Whether somebody who knows a little says so, once: their fixed draw
+		/// under the story's confidence as a share of the floor.
+		inline bool MayRemarkFaintly(const std::string& PersonId, const RumorPtr& R, double ShareFloor)
+		{
+			const std::string K = RemarkLedger::KeyFor(PersonId, R);
+			if (K.empty() || !(ShareFloor > 0.0)) return false;
+			return FaintDraw(K) < R->Confidence / ShareFloor;
+		}
+
+		/// Where a stranger's glance lands: the median measured look distance,
+		/// 10.3 m (Fotios and others, Sheffield, 2015), rounded.
+		static const double CivilGlanceMetres = 10.0;
+		/// A stranger's glance, 0.48 s (Fotios and others, 2015), rounded.
+		static const double CivilGlanceSeconds = 0.5;
+		/// The passing zone's near end, 3.0 to 3.7 m (Patterson and others, 2002).
+		static const double PassingZoneMetres = 3.0;
+		/// The knowing look: the top of the intensified glance still held at
+		/// close range, 0.39 to 1.52 s (Arminen and Heino, 2023).
+		static const double KnowingLookSeconds = 1.5;
+		/// Where a stranger's eyes drop: Goffman's eight feet (1963).
+		static const double CivilLookAwayMetres = 2.4;
+
+		/// Where the first look lands as he comes towards them, in metres.
+		inline double FirstLookMetres(StanceKind K)
+		{
+			const double Gaze = GazeMetres(K);
+			return CivilGlanceMetres > Gaze ? CivilGlanceMetres : Gaze;
+		}
+
+		/// How long the first look holds: a glance, or for as long as he is in
+		/// range (infinity) for those who watch him.
+		inline double LookHoldSeconds(StanceKind K)
+		{
+			return K == StanceKind::Watches || K == StanceKind::Comments || K == StanceKind::Confronts
+				? std::numeric_limits<double>::infinity() : CivilGlanceSeconds;
+		}
+
+		/// Where the second, knowing look comes, or 0 for none.
+		inline double SecondLookMetres(StanceKind K)
+		{
+			return K == StanceKind::Notices ? PassingZoneMetres : 0.0;
+		}
+
+		/// Where the eyes go elsewhere as he comes close, or 0 for those who
+		/// keep looking.
+		inline double LookAwayMetres(StanceKind K)
+		{
+			return (int)K <= (int)StanceKind::Indifferent || K == StanceKind::Avoids || K == StanceKind::Refuses
+				? CivilLookAwayMetres : 0.0;
+		}
+
+		/// Whether they look back after he has passed.
+		inline bool LooksBack(StanceKind K)
+		{
+			return K == StanceKind::Watches || K == StanceKind::Comments || K == StanceKind::Confronts;
+		}
+
+		/// How much of a story about the player somebody holds.
+		enum class Knowing { Nothing = 0, ALittle = 1, Enough = 2 };
+
+		inline const char* KnowingName(Knowing K)
+		{
+			switch (K)
+			{
+				case Knowing::Nothing: return "Nothing";
+				case Knowing::ALittle: return "ALittle";
+				case Knowing::Enough:  return "Enough";
+			}
+			return "unknown";
+		}
+
+		/// One person's bearing toward the player right now (RegardFor).
+		struct Regard
+		{
+			Knowing    HowMuch;
+			RumorPtr   Story;
+			StanceKind Stance;
+			bool       bKnowsItIsHim;
+			double     FirstLookMetres;
+			double     FirstLookSeconds;
+			double     SecondLookMetres;
+			double     SecondLookSeconds;
+			double     LookAwayMetres;
+			bool       bLooksBack;
+			bool       bRemarkedAlready;
+			bool       bSpeaks;
+			bool       bFaint;
+
+			Regard() : HowMuch(Knowing::Nothing), Stance(StanceKind::Indifferent), bKnowsItIsHim(false),
+			           FirstLookMetres(0.0), FirstLookSeconds(0.0), SecondLookMetres(0.0),
+			           SecondLookSeconds(0.0), LookAwayMetres(0.0), bLooksBack(false),
+			           bRemarkedAlready(false), bSpeaks(false), bFaint(false) {}
+		};
+
+		/// HOW ONE PERSON TREATS THE PLAYER RIGHT NOW, in one call, as the C#.
+		/// `Familiarity` is how well they know him by sight (Acquaintance): a
+		/// story shows only in somebody who can tell it is him
+		/// (Acquaintance.CanNameYou is Perception's RecognitionFamiliarity).
+		/// `Remarks` may be null: nobody has had their say.
+		inline Regard RegardFor(const Gossiper* G, double ShareFloor, bool bWearingCoat,
+		                        const RemarkLedger* Remarks, double Familiarity, bool bCompanionNear)
+		{
+			Regard Out;
+			if (!G) return Out;
+			RumorPtr Strongest;
+			for (std::vector<RumorPtr>::size_type I = 0; I < G->Rumors.size(); ++I)
+			{
+				const RumorPtr& R = G->Rumors[I];
+				if (!R || R->Content.Subject != "player") continue;
+				if (!(R->Confidence >= 0.0)) continue;   // a NaN must not hide a real story
+				if (!Strongest || R->Confidence > Strongest->Confidence) Strongest = R;
+			}
+			const RumorPtr Shows = StoryThatShows(*G, ShareFloor);
+			const RumorPtr Little = !Shows ? StoryHalfRemembered(*G, ShareFloor) : RumorPtr();
+			Out.Story = Shows ? Shows : Little;
+			Out.HowMuch = Shows ? Knowing::Enough : Little ? Knowing::ALittle : Knowing::Nothing;
+			Out.bKnowsItIsHim = Familiarity >= Perception::RecognitionFamiliarity;
+			const bool bShows1 = Shows && Out.bKnowsItIsHim;
+			const bool bLittle1 = Little && Out.bKnowsItIsHim;
+			const bool bHad = Remarks && Remarks->HasRemarked(G->Id, Out.Story);
+			Out.bRemarkedAlready = bHad;
+			const double AboutHim = Out.bKnowsItIsHim && Strongest ? Strongest->Confidence : 0.0;
+			Out.Stance = Stance(G->Suspicion.Value(), G->Loyalty, AboutHim, G->Leashed, bWearingCoat,
+			                    bShows1, bHad, bLittle1);
+			Out.FirstLookMetres = FirstLookMetres(Out.Stance);
+			Out.FirstLookSeconds = LookHoldSeconds(Out.Stance);
+			Out.SecondLookMetres = SecondLookMetres(Out.Stance);
+			Out.SecondLookSeconds = Out.SecondLookMetres > 0 ? KnowingLookSeconds : 0.0;
+			Out.LookAwayMetres = LookAwayMetres(Out.Stance);
+			Out.bLooksBack = LooksBack(Out.Stance);
+			// In the coat, unsure it is him: whoever the coat leaves noticing
+			// him only glances and looks away, as a stranger does.
+			if (bWearingCoat && Out.Stance == StanceKind::Notices)
+			{
+				Out.SecondLookMetres = 0.0;
+				Out.SecondLookSeconds = 0.0;
+				Out.LookAwayMetres = CivilLookAwayMetres;
+			}
+			if ((int)Out.Stance >= (int)StanceKind::Comments)
+			{
+				Out.bSpeaks = true;
+			}
+			else if (bLittle1 && bCompanionNear && !bHad && !G->Leashed && !bWearingCoat
+			         && MayRemarkFaintly(G->Id, Little, ShareFloor))
+			{
+				Out.bSpeaks = true;
+				Out.bFaint = true;
+			}
+			return Out;
+		}
+
+		/// Fourteen, as every band is.
+		inline const char* const* FaintLines(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"That's Mickey's nephew, that is.",
+				"Is that him? The nephew?",
+				"Somebody was saying something about him. I forget what.",
+				"I've heard his name somewhere. Can't place it.",
+				"There was talk about that one. Or was it somebody else.",
+				"Him. Something went round about him. It'll come to me.",
+				"I've heard a thing or two about him. Nothing I'd swear to.",
+				"His name came up. I wasn't really listening.",
+				"Didn't somebody say something about him? Never mind.",
+				"He's the one people were on about. Only talk, mind.",
+				"Something was said about him. It's gone now.",
+				"People have been saying things about him. Half of it rubbish, I expect.",
+				"I heard something about him. Can't remember who from.",
+				"Keeps busy, that one, so I hear. Or so somebody said.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		/// What somebody who knows a little says, once, to a companion, about
+		/// him, as he goes past; null (an empty pointer) with no one or no
+		/// story. The seed alone chooses (the C#'s `heard` overload, which
+		/// picks a line he has not heard lately, comes with town list 6k).
+		inline std::shared_ptr<SpokenLine> FaintRemark(const Gossiper* G, const RumorPtr& About, int Seed)
+		{
+			if (!G || !About) return std::shared_ptr<SpokenLine>();
+			int Count = 0;
+			const char* const* Lines = FaintLines(Count);
+			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
+			Line->SpeakerId = G->Id;
+			Line->Text = Pick(Seed, Lines, Count);
+			Line->AboutPlayer = true;
+			Line->Source = About;
+			Line->Bank = "faint";
+			return Line;
+		}
+
+		// ---- Recognition (29 September) ---------------------------------
+		//
+		// StreetVoice.cs's Recognition, left out of the port on 8 September and
+		// brought in with the knowing section: something said as the player
+		// goes past, by somebody holding a story about him, at Comments or
+		// above. Every line invites being stopped. Checked against
+		// PerceptionGolden EmitRecognition: every stance, no story, a plain one
+		// and one of his night, over sixteen seeds. The seed alone chooses, as
+		// for FaintRemark.
+
+		inline const char* const* RecognitionConfronts(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"You and I need a word. Not here.",
+				"I've been waiting to see you, as it happens.",
+				"Don't walk past me. Not today.",
+				"Stop there. You know why.",
+				"I've been rehearsing this. Give me a minute of it.",
+				"There you are. I've had four days to think about this.",
+				"You're going to stand there and hear it.",
+				"A word. It won't take long and it won't be pleasant.",
+				"I want to hear you say it to my face.",
+				"You've been avoiding this street. I noticed.",
+				"No. You'll not just nod and walk on.",
+				"Two minutes. You owe me that much.",
+				"I'd like an answer, and I'd like it today.",
+				"Look at me when I'm talking to you.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionRefuses(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"I've nothing for you today.",
+				"Whatever it is, no.",
+				"Door's shut. Try somebody else.",
+				"Not for you. Not any more.",
+				"I'd rather not, and I'd rather not explain why.",
+				"We're closed. To you.",
+				"You'll want to ask somebody who doesn't know you.",
+				"No. And don't ask twice.",
+				"There's nothing here you want.",
+				"I've made up my mind about you.",
+				"Save your breath.",
+				"Not today. Not tomorrow either.",
+				"I've heard enough to know my answer.",
+				"Ask me in a year.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionAvoids(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"...",
+				"Excuse me.",
+				"Sorry, in a hurry.",
+				"Can't stop.",
+				"Another time.",
+				"Mm.",
+				"I'm late as it is.",
+				"Not now. Sorry.",
+				"Right. Right.",
+				"Somebody's waiting on me.",
+				"Yes. No. Sorry.",
+				"I've got to be somewhere.",
+				"Mind yourself.",
+				"...Evening.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		// What he did with the outfit's ask (town list 6z): six a bank, from
+		// somebody who heard it.
+		inline const char* const* RecognitionOutfitDid(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you did Mickey's run.",
+				"Down the landing after dark, I hear. Same as Mickey.",
+				"They say you've picked up where Mickey left off.",
+				"Word is you kept Mickey's arrangement. I'd keep that quiet.",
+				"Late one, was it? Down by the ferry.",
+				"So you're doing Mickey's rounds now.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionOutfitRefused(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard you told them no.",
+				"Heard you sent Ron back with it.",
+				"They say you turned Mickey's lot down.",
+				"Word is you said no to them. Brave or daft, I've not decided.",
+				"You told them no, then. Not like Mickey, that.",
+				"Not doing Mickey's errands, I hear.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionOutfitNoShow(int& OutCount)
+		{
+			static const char* const Lines[6] = {
+				"Heard they waited on you at the landing.",
+				"Somebody stood by the ferry half the night, I'm told.",
+				"They say you never turned up.",
+				"Word is you left them waiting. They'll not like that.",
+				"Mickey'd never have kept them waiting, they say.",
+				"Busy, were you? Not at the landing, anyway.",
+			};
+			OutCount = 6;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionSensitive(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"There he is. The busy one.",
+				"Heard your name this week. More than once.",
+				"Funny hours you keep.",
+				"You get about, don't you.",
+				"Sleeping all right?",
+				"You want to be careful, a man as talked-about as you.",
+				"Someone was asking after you. I said I hadn't seen you.",
+				"Busy week, was it.",
+				"Odd, the places a name turns up.",
+				"I'd not say what I've heard. But I've heard it.",
+				"You'll know what people are saying.",
+				"Still standing. That surprises some.",
+				"Careful on that corner. People watch it.",
+				"You and I should have a proper talk one day.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		inline const char* const* RecognitionOrdinary(int& OutCount)
+		{
+			static const char* const Lines[14] = {
+				"Mickey's nephew. Still standing, then.",
+				"All right.",
+				"How's Mickey's treating you?",
+				"Cold enough for you?",
+				"Your uncle'd have hated this weather.",
+				"Tell Sheila I said hello.",
+				"Still open, is it?",
+				"You've the look of him, you know. Around the eyes.",
+				"Long day?",
+				"Mind how you go.",
+				"That step of yours needs seeing to.",
+				"Good to see the lights on down there.",
+				"You'll be at the market Thursday, I expect.",
+				"Evening.",
+			};
+			OutCount = 14;
+			return Lines;
+		}
+
+		inline std::shared_ptr<SpokenLine> Recognition(const Gossiper* G, const RumorPtr& About, StanceKind K, int Seed)
+		{
+			if (!G || (int)K < (int)StanceKind::Comments) return std::shared_ptr<SpokenLine>();
+			const bool bNight = Arrangement::IsNight(About) && About->Hops > 0;
+			const char* Bank = 0;
+			const char* const* Lines = 0;
+			int Count = 0;
+			if ((int)K >= (int)StanceKind::Confronts)          { Bank = "recognition/confronts";      Lines = RecognitionConfronts(Count); }
+			else if (K == StanceKind::Refuses)                 { Bank = "recognition/refuses";        Lines = RecognitionRefuses(Count); }
+			else if (K == StanceKind::Avoids)                  { Bank = "recognition/avoids";         Lines = RecognitionAvoids(Count); }
+			else if (bNight && About->Content.Value == "did")     { Bank = "recognition/outfit-did";     Lines = RecognitionOutfitDid(Count); }
+			else if (bNight && About->Content.Value == "refused") { Bank = "recognition/outfit-refused"; Lines = RecognitionOutfitRefused(Count); }
+			else if (bNight && About->Content.Value == "noshow")  { Bank = "recognition/outfit-noshow";  Lines = RecognitionOutfitNoShow(Count); }
+			else if (About && About->Sensitive)                { Bank = "recognition/sensitive";      Lines = RecognitionSensitive(Count); }
+			else                                               { Bank = "recognition/ordinary";       Lines = RecognitionOrdinary(Count); }
+			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
+			Line->SpeakerId = G->Id;
+			Line->Text = Pick(Seed, Lines, Count);
+			Line->AboutPlayer = (bool)About;
+			Line->Source = About;
+			Line->Bank = Bank;
+			return Line;
+		}
 	}
 }

@@ -200,6 +200,22 @@ int main(int argc, char** argv)
 		Loud(!A.Known, "a scenario key nothing produces reports unknown, not zero");
 	}
 	{
+		// A ROW WITH SEVERAL ANSWERS IS CHECKED WHOLE (MultiAnswer, 29
+		// September): the comparison reads only the last field, so a wrong
+		// answer earlier in the row, or a row of another length, must still
+		// fail (the independent check found nothing else would notice).
+		const std::string Good = "RegardFor|p0|none|0|0|0|0|0.5|0|Nothing|-1|1|Indifferent|10|0.5|0|0|2.4|0|0|0|0";
+		const std::vector<std::string> F = SplitPipe(Good);
+		const Answer A = Evaluate(F);
+		Loud(A.Known && Agrees(A.Got, F[F.size() - 1], Tol), "a row of several answers agrees as the C# wrote it");
+		std::string Wrong = Good;
+		Wrong.replace(Wrong.find("Indifferent"), 11, "Watches");
+		const std::vector<std::string> W = SplitPipe(Wrong);
+		Loud(!Agrees(Evaluate(W).Got, W[W.size() - 1], Tol), "and a wrong answer in the middle of it fails");
+		const std::vector<std::string> L = SplitPipe(Good + "|0");
+		Loud(!Agrees(Evaluate(L).Got, L[L.size() - 1], Tol), "and so does a row with an answer too many");
+	}
+	{
 		Loud(!Agrees("1", "1.000000002", Tol), "the tolerance is a bound and not a shrug");
 		Loud(Agrees("full", "full", Tol), "two identical strings agree");
 		Loud(!Agrees("full", "Full", Tol), "a string answer compares exactly");
