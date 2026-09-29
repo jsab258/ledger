@@ -52,15 +52,15 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **No page today:** nothing has passed the gate yet.
 
-**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its other builds; Ron's work trousers (broken sitting); the flat cap (profile right, band off his head); Sheila's cardigan (collar and neckline broken); Ron's grey jumper (closest yet: fine standing and walking, the hem breaks sitting). Sheila's skirt fails sitting.
+**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its other builds; Ron's work trousers (broken sitting); the flat cap (profile right, band off his head); Sheila's cardigan (collar and neckline broken); Ron's jumper and Darren's jacket (right standing and walking, broken sitting). Sheila's skirt fails sitting.
 
 **Decide:**
 - Marvelous Designer is scriptable except one click at each start, online; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
 - The standing shapes now come close; every failure is how clothes bend sitting or walking, tested in Blender, and Unreal redoes those weights anyway. (A, recommended) I finish shapes to the gate standing; the builder tests the poses in Unreal. (B) Keep testing poses here.
 
-**Next:** Darren, then the others in order.
+**Next:** Tom, then the others. Much bigger than it looked: every garment so far fails the same sitting test.
 
-**Research:** ten notes: sleeves to jumpers.
+**Research:** eleven notes, sleeves to garment edges.
 
 **Pushes:** free GitHub tests only.
 

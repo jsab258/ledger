@@ -54,6 +54,12 @@ WELT = opt("--welt", 0.05)
 # built as a clean ring round the neck (what failed on the cardigan was every
 # edge cut from the skin; its body, welt and sleeves passed)
 CREW = "--crew" in argv
+# A ZIP JACKET (--zip; 30 September, Darren's shell-suit jacket): the V as the
+# open zip, closed below it with a zip line; the band only up the V and round
+# the neck, as a collar (--band-in wide); no buttons; the panel in the V a
+# white T-shirt with no collar; --panels paints the raglan shoulders and upper
+# sleeves a second colour
+ZIP = "--zip" in argv
 log = {"body": BODY}
 
 
@@ -279,7 +285,7 @@ def _neck_cut(c):
     return c.z > NECK_Z - 0.035 - DIP * fr * fr and math.hypot(c.x - NECK_AX.x, c.y - NECK_AX.y) < NECK_R + DIP * 0.3 * fr
 
 
-if CREW:
+if CREW or ZIP:
     # THE CREW NECK STOPS AT THE NECK'S BASE (Ron's second try: cut round a
     # radius, the knit climbed the slope of his thick neck into a tube): all
     # the knit above the base, level at the back and sides, dipping at the
@@ -305,7 +311,7 @@ for sgn in (() if CREW else (1.0, -1.0)):
     log.setdefault("vFacesRemoved", []).append(nf0 - len(bm.faces))
 bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
 seam = []
-if not CREW:
+if not CREW and not ZIP:
     # the opening down the middle: cut at x = 0 on the front, then parted there
     front = [f for f in bm.faces if f.calc_center_median().y < FRONT_Y]
     geom = list({v for f in front for v in f.verts}) + list({e for f in front for e in f.edges}) + front
@@ -318,6 +324,237 @@ bm.free()
 knit_me.update()
 log["cut"] = {"frontParted": len(seam)}
 
+# ---- TRIMS GROWN FROM THE GARMENT'S OWN EDGES (--extrude-trims; SHELLSUIT-EDGES-2026-09-30.md, after the
+# jacket's second review: every trim laid on a cut edge tore at its ends or came away from the body) -----------
+#
+# The shell's open edges are cleaned (short edges collapsed, slivers dissolved)
+# and snapped to clean lines: the hem level, each cuff square to its arm, each
+# side of the V straight, the neckline smoothed round the neck. Then each trim
+# is extruded from its edge, sharing its points: the waistband down from the hem
+# and drawn in, turned inside; each cuff along the arm and drawn in to the
+# wrist; the collar up from the neckline, leaning in, its front ends standing
+# straight up from the top of the V (the zip's top tucks into it); the zip's
+# tapes a few millimetres out from each side of the V. One mesh; the render
+# step's Solidify closes every edge with a rim.
+EXTRUDE = "--extrude-trims" in argv
+if EXTRUDE:
+    Zn_x = NECK_Z - 0.25 * 0.07
+    mid_y_shell = float(np.mean(np.array([v.co[:] for v in knit_me.vertices])[:, 1]))
+    bm = bmesh.new()
+    bm.from_mesh(knit_me)
+    for _ in range(4):
+        short = [e for e in bm.edges if e.is_boundary and e.calc_length() < opt("--min-edge", 0.005)]
+        if not short:
+            break
+        bmesh.ops.collapse(bm, edges=short)
+    bmesh.ops.dissolve_degenerate(bm, dist=0.0008, edges=bm.edges[:])
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
+    bm.verts.ensure_lookup_table()
+
+    def border_loops():
+        seen, loops_ = set(), []
+        for v0 in bm.verts:
+            if v0 in seen or not v0.is_boundary:
+                continue
+            line = [v0]
+            seen.add(v0)
+            cur, prev = v0, None
+            while True:
+                nxt = [e.other_vert(cur) for e in cur.link_edges if e.is_boundary and e.other_vert(cur) is not prev]
+                nxt = [n for n in nxt if n not in seen]
+                if not nxt:
+                    break
+                prev, cur = cur, nxt[0]
+                seen.add(cur)
+                line.append(cur)
+            if len(line) > 6:
+                loops_.append(line)
+        return loops_
+
+    loops = border_loops()
+    roles = {}
+    for lp in loops:
+        cz = sum(v.co.z for v in lp) / len(lp)
+        cx = sum(v.co.x for v in lp) / len(lp)
+        if cz < HEM_Z + 0.03:
+            roles["hem"] = lp
+        elif cx > 0.25:
+            roles["cuff_l"] = lp
+        elif cx < -0.25:
+            roles["cuff_r"] = lp
+        else:
+            roles["opening"] = lp
+    log["borders"] = {k: len(v) for k, v in roles.items()}
+
+    def smooth_loop(lp, rounds, fixed=()):
+        n = len(lp)
+        for _ in range(rounds):
+            new = []
+            for i in range(n):
+                if lp[i] in fixed:
+                    new.append(lp[i].co.copy())
+                    continue
+                a, b = lp[(i - 1) % n], lp[(i + 1) % n]
+                new.append(lp[i].co * 0.5 + (a.co + b.co) * 0.25)
+            for v, c in zip(lp, new):
+                v.co = c
+
+    # the hem level, then smooth round
+    if "hem" in roles:
+        for v in roles["hem"]:
+            v.co.z = HEM_Z
+        smooth_loop(roles["hem"], 6)
+        for v in roles["hem"]:
+            v.co.z = HEM_Z
+    # the cuffs square to the arm
+    for sd in ("l", "r"):
+        lp = roles.get("cuff_" + sd)
+        if not lp:
+            continue
+        a_, h_ = (Vector(tuple(wrist[sd][0])), Vector(tuple(wrist[sd][1])))
+        ax_ = (h_ - a_).normalized()
+        c_ = a_ + (h_ - a_) * opt("--cuff-t", 0.90)
+        for v in lp:
+            v.co = v.co - ax_ * (v.co - c_).dot(ax_)
+        smooth_loop(lp, 6)
+    # the opening: each side of the V straight, the neckline smooth round the neck; the V's point fixed
+    op = roles.get("opening")
+    if op:
+        vpt = min(op, key=lambda v: v.co.z)
+        i0 = op.index(vpt)
+        op = op[i0:] + op[:i0]                   # from the V's point: one side up, the neckline, the other side down
+        for v in op:
+            if v is vpt:
+                continue
+            p = v.co
+            on_v = p.y < NECK_AX.y and p.z < Zn_x - 0.003
+            if on_v:
+                sg = 1.0 if p.x >= 0 else -1.0
+                t_ = max(0.0, min(1.0, (p.z - V_Z) / max(1e-6, Zn_x - V_Z)))
+                v.co.x = sg * (0.004 + (NECK_SIDE - 0.004) * t_)
+        smooth_loop(op, 4, fixed=(vpt,))
+        # the neckline part: radius and height smoothed by angle round the neck
+        neck_pts = [v for v in op if not (v.co.y < NECK_AX.y and v.co.z < Zn_x - 0.003)]
+        if len(neck_pts) > 6:
+            smooth_loop(neck_pts, 12, fixed=(neck_pts[0], neck_pts[-1]))
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    bm.normal_update()
+
+    TRIM = bm.faces.layers.int.get("trim") or bm.faces.layers.int.new("trim")
+
+    def extrude_loop(edges, move, rows=1, tag=0):
+        """Extrude border edges `rows` times; move(vert_new, orig_co, row_index) places each new point; the new faces
+        are tagged `tag` in the face layer "trim" (1 collar, 2 zip tape, 3 waistband, 4 cuff). Returns the new rows'
+        points."""
+        out_rows = []
+        cur_edges = edges
+        for r in range(rows):
+            res = bmesh.ops.extrude_edge_only(bm, edges=cur_edges)
+            for f_ in res["geom"]:
+                if isinstance(f_, bmesh.types.BMFace):
+                    f_[TRIM] = tag
+            new_verts = [e for e in res["geom"] if isinstance(e, bmesh.types.BMVert)]
+            new_edges = [e for e in res["geom"] if isinstance(e, bmesh.types.BMEdge)
+                         and all(v in set(new_verts) for v in e.verts)]
+            for v in new_verts:
+                move(v, v.co.copy(), r)
+            out_rows.append(new_verts)
+            cur_edges = new_edges
+        return out_rows
+
+    def loop_edges(lp):
+        s = set(lp)
+        return [e for e in bm.edges if e.is_boundary and e.verts[0] in s and e.verts[1] in s]
+
+    # the waistband: 2 rows down WELT, drawn in, ribbed; then turned 1.5 cm inside
+    cxy = Vector((0.0, mid_y_shell, 0.0))
+    if "hem" in roles:
+        WI = opt("--welt-in", 0.02)
+        n_rib = int(2 * math.pi * 0.17 / 0.007)
+
+        def mv_band(v, c, r):
+            d = Vector((c.x - cxy.x, c.y - cxy.y, 0.0))
+            L_ = d.length
+            if r < 2:
+                f = (r + 1) / 2
+                a = math.atan2(c.y - cxy.y, c.x)
+                rib = 0.0016 * math.cos(a * n_rib) if r == 1 else 0.0
+                v.co = Vector((c.x, c.y, HEM_Z - WELT * f)) - (d / max(L_, 1e-6)) * (WI * (0.7 if r == 0 else 0.3) - rib)
+            else:
+                v.co = Vector((c.x, c.y, c.z + 0.015)) - (d / max(L_, 1e-6)) * 0.004
+        extrude_loop(loop_edges(roles["hem"]), mv_band, rows=3, tag=3)
+    # the sleeves drawn in over their last 10 cm to meet the cuffs (before the cuffs grow from them)
+    for sd in ("l", "r"):
+        a_, h_ = (Vector(tuple(wrist[sd][0])), Vector(tuple(wrist[sd][1])))
+        ax_ = (h_ - a_).normalized()
+        t1 = opt("--cuff-t", 0.90) * (h_ - a_).length
+        WR0 = opt("--wrist-r", 0.026) + 0.011
+        for v in bm.verts:
+            p = v.co
+            if (p.x > 0) != (sd == "l") or abs(p.x) < 0.2:
+                continue
+            rel = p - a_
+            t = rel.dot(ax_)
+            radial = rel - ax_ * t
+            if t1 - 0.10 < t <= t1 + 0.002 and radial.length < 0.08:
+                f = min(1.0, (t - (t1 - 0.10)) / 0.10) ** 1.5
+                v.co = a_ + ax_ * t + radial.normalized() * (radial.length + (WR0 - radial.length) * f)
+    # the cuffs: 2 rows along the arm 5 cm, drawn in to the wrist, ribbed; turned inside
+    for sd in ("l", "r"):
+        lp = roles.get("cuff_" + sd)
+        if not lp:
+            continue
+        a_, h_ = (Vector(tuple(wrist[sd][0])), Vector(tuple(wrist[sd][1])))
+        ax_ = (h_ - a_).normalized()
+        WR = opt("--wrist-r", 0.026) + 0.008
+
+        def mv_cuff(v, c, r, a_=a_, ax_=ax_, WR=WR):
+            rel = c - a_
+            t = rel.dot(ax_)
+            radial = rel - ax_ * t
+            u_ = radial.normalized() if radial.length > 1e-6 else Vector((0, 0, 1))
+            if r < 2:
+                f = (r + 1) / 2
+                w_ = ax_.cross(u_)
+                ang = math.atan2(radial.dot(w_), radial.dot(ax_.orthogonal().normalized()))
+                rr = radial.length + (WR - radial.length) * min(1.0, f * 1.4)
+                rib = 0.0012 * math.cos(ang * 18) if r == 1 else 0.0
+                v.co = a_ + ax_ * (t + 0.025) + u_ * (rr + rib)
+            else:
+                v.co = a_ + ax_ * (t - 0.015) + u_ * (radial.length - 0.003)
+        extrude_loop(loop_edges(lp), mv_cuff, rows=3, tag=4)
+    # the collar: up from the neckline, leaning in; the zip tapes out from each side of the V
+    if op:
+        neck_set = set(v for v in op if not (v.co.y < NECK_AX.y and v.co.z < Zn_x - 0.003))
+        v_set = set(op) - neck_set
+        # the corners (where V meets neckline) belong to both
+        corners = [v for v in neck_set if any(e.other_vert(v) in v_set for e in v.link_edges if e.is_boundary)]
+        CH = opt("--collar-h", 0.045)
+
+        def mv_collar(v, c, r):
+            d = Vector((c.x - NECK_AX.x, c.y - NECK_AX.y, 0.0))
+            rad = d.length
+            hn = BVH.ray_cast(Vector((NECK_AX.x, NECK_AX.y, c.z + CH * (r + 1) / 3)), d.normalized(), 0.25)[0]
+            r_neck = ((hn - Vector((NECK_AX.x, NECK_AX.y, hn.z))).length + 0.007) if hn is not None else rad - 0.01
+            f = (r + 1) / 3
+            r_new = rad + (min(rad, r_neck) - rad) * min(1.0, f * 1.2)
+            v.co = Vector((NECK_AX.x, NECK_AX.y, c.z + CH / 3)) + d.normalized() * r_new
+        ne = [e for e in bm.edges if e.is_boundary and e.verts[0] in neck_set and e.verts[1] in neck_set]
+        extrude_loop(ne, mv_collar, rows=3, tag=1)
+        TAPE = opt("--tape", 0.006)
+
+        def mv_tape(v, c, r):
+            sg = 1.0 if c.x >= 0 else -1.0
+            v.co = c + Vector((-sg * TAPE, -0.001, 0.0))
+        ve = [e for e in bm.edges if e.is_boundary and (e.verts[0] in v_set or e.verts[1] in v_set)
+              and e.verts[0] in set(op) and e.verts[1] in set(op) and not (e.verts[0] in neck_set and e.verts[1] in neck_set)]
+        extrude_loop(ve, mv_tape, rows=1, tag=2)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces[:])
+    bm.to_mesh(knit_me)
+    bm.free()
+    knit_me.update()
+    log["extruded"] = True
+
 # ---- ribbing at the welt and the cuffs ---------------------------------------------------------------------------
 
 # THE WELT AND CUFFS AS SHAPES (the first review: 'no ribbed welt and no
@@ -329,14 +566,19 @@ girth_r = 0.17
 for v in knit_me.vertices:
     p = Vector(v.co)
     d = 0.0
-    if p.z < HEM_Z + WELT:
+    if p.z < HEM_Z + WELT and not EXTRUDE:
         f = 1.0 - (p.z - HEM_Z) / WELT
         a = math.atan2(p.y - mid_y, p.x)
         n_rib = int(2 * math.pi * girth_r / 0.007)
-        d = -0.008 * min(1.0, f * 1.6) + 0.0018 * math.cos(a * n_rib) * min(1.0, f * 4)
+        d = -opt("--welt-in", 0.008) * min(1.0, f * 1.6) + 0.0018 * math.cos(a * n_rib) * min(1.0, f * 4)
+    elif (HEM_Z if EXTRUDE else -9.0) < p.z < (HEM_Z if EXTRUDE else HEM_Z + WELT) + opt("--blouse-h", 0.0) and abs(p.x) < opt("--torso-half", 0.165) + 0.02:
+        # A BLOUSON (Darren's first review: 'a straight tube, the band as wide as
+        # the body'): the body just above the band puffs out, most 4 cm above it
+        u_ = (p.z - HEM_Z - (0.0 if EXTRUDE else WELT)) / opt("--blouse-h", 0.12)
+        d = opt("--blouse", 0.0) * math.sin(math.pi * min(1.0, u_ * 1.6)) ** 0.7 * (1.0 - u_) ** 0.5
     for s_ in ("l", "r"):
         a_, h_ = wrist[s_]
-        if (p.x > 0) == (s_ == "l") and abs(p.x) > 0.25:
+        if (p.x > 0) == (s_ == "l") and abs(p.x) > 0.25 and not EXTRUDE:
             L_ = float(np.linalg.norm(h_ - a_))
             t = float(np.dot(np.array(p) - a_, h_ - a_) / (L_ * L_))
             c0 = opt("--cuff-t", 0.90) - 0.06 / L_
@@ -415,9 +657,76 @@ def band_along(pts, side_dirs, name="Band"):
         sd = Vector(sd)
         sd = (sd - nrm_ * sd.dot(nrm_)).normalized()
         lift = nrm_ * 0.0025
-        inn.append(p + sd * 0.020 + lift)
-        outn.append(p - sd * 0.009 + lift)
+        inn.append(p + sd * opt("--band-in", 0.020) + lift)
+        outn.append(p - sd * opt("--band-out", 0.009) + lift)
     return strip(name, [outn, [a.lerp(b, 0.5) for a, b in zip(outn, inn)], inn], knitm, 0.003), inn, outn
+
+
+def neck_ring(extras_, NB, gap=0.0, edge_z_min=None, ribbed=True, name="Neckband"):
+    """A band from the knit's own neck edge (its points round the neck by angle, smoothed), rising NB and leaning
+    in to 5 mm off the neck, arched over the cut edge; closed, or open at the front by `gap` radians either side."""
+    if edge_z_min is None:
+        edge_z_min = NECK_Z - 0.08
+    # the crew neck's band: a ribbed ring from the knit's neck edge up to hug the neck, 28 mm, rising
+
+    # ANCHORED TO THE KNIT'S OWN NECK EDGE (placed by the neck's radius, the band
+    # sat low on the wide base of a thick neck and flared out under the knit):
+    # the edge's points round the neck, by angle, smoothed; the band stands up
+    # from them, leaning a little in, over the edge
+    _bk = bmesh.new()
+    _bk.from_mesh(knit_me)
+    _ep = [v.co.copy() for v in _bk.verts if v.is_boundary and v.co.z > edge_z_min
+           and math.hypot(v.co.x - NECK_AX.x, v.co.y - NECK_AX.y) < opt("--edge-r", NECK_R + 0.03)]
+    _bk.free()
+    _ang = np.array([math.atan2(q.x - NECK_AX.x, -(q.y - NECK_AX.y)) for q in _ep])
+    _rad = np.array([math.hypot(q.x - NECK_AX.x, q.y - NECK_AX.y) for q in _ep])
+    _zz = np.array([q.z for q in _ep])
+    order_ = np.argsort(_ang)
+    _ang, _rad, _zz = _ang[order_], _rad[order_], _zz[order_]
+    grid_a = np.linspace(-math.pi, math.pi, 97)[:-1]                     # a closed ring: no seam at the back
+    if gap > 0:
+        grid_a = np.linspace(gap, 2 * math.pi - gap, 80)                  # open at the front (a collar over an open zip)
+        grid_a = np.where(grid_a > math.pi, grid_a - 2 * math.pi, grid_a)
+    ext_a = np.concatenate([_ang - 2 * math.pi, _ang, _ang + 2 * math.pi])
+    r_edge = np.interp(grid_a, ext_a, np.tile(_rad, 3))
+    z_edge = np.interp(grid_a, ext_a, np.tile(_zz, 3))
+    for _ in range(opt("--band-smooth", 24, int)):                     # round the ring (the rim had come out wavy)
+        r_edge = 0.5 * r_edge + 0.25 * (np.roll(r_edge, 1) + np.roll(r_edge, -1))
+        z_edge = 0.5 * z_edge + 0.25 * (np.roll(z_edge, 1) + np.roll(z_edge, -1))
+    rows_n = []
+    for r_i in range(7):
+        h = NB * r_i / 6
+        row = []
+        for k in range(len(grid_a) + (1 if gap <= 0 else 0)):
+            a_ = grid_a[k % len(grid_a)]
+            k = k % len(grid_a)
+            d_ = Vector((math.sin(a_), -math.cos(a_), 0.0))
+            # from the knit's edge (its foot a little under it) in a straight line to 5 mm off the neck, NB up
+            foot_r, foot_z = r_edge[k] + opt("--foot-out", 0.012), z_edge[k] - opt("--foot-down", 0.010)   # well over the cut edge
+            top_z = foot_z + NB * opt("--band-rise", 0.7)
+            hn = BVH.ray_cast(Vector((NECK_AX.x, NECK_AX.y, top_z)), d_, 0.25)[0]
+            top_r = ((hn - Vector((NECK_AX.x, NECK_AX.y, top_z))).length + 0.005) if hn is not None else foot_r - 0.01
+            top_r = min(top_r, foot_r)
+            top_r = max(top_r, foot_r - opt("--max-lean", 1.0))          # a stand collar stands (it had lain flat)
+            t_ = r_i / 6
+            r_ = foot_r + (top_r - foot_r) * t_
+            # arched, so it clears the knit's cut edge it passes over (straight, the edge showed through it as
+            # a sawtooth) and stands up round the neck rather than lying flat
+            z_ = foot_z + (top_z - foot_z) * t_ + opt("--band-arch", 0.007) * math.sin(math.pi * min(1.0, t_ * 1.3))
+            rib = (0.0011 * math.cos(a_ * 48) * (0.4 + 0.6 * t_)) if ribbed else 0.0
+            row.append(Vector((NECK_AX.x, NECK_AX.y, z_)) + d_ * (r_ + rib))
+        rows_n.append(row)
+    nb_obj = strip(name, rows_n, knitm, 0.003)
+    _nb = bmesh.new()
+    _nb.from_mesh(nb_obj.data)
+    bmesh.ops.remove_doubles(_nb, verts=_nb.verts[:], dist=1e-5)       # the ring's ends one seam-free piece
+    _nb.to_mesh(nb_obj.data)
+    _nb.free()
+    extras_.append(nb_obj)
+    _all = [q for r_ in rows_n for q in r_]
+    log[name] = {"mm": NB * 1000, "zRange": [round(min(q.z for q in _all), 3), round(max(q.z for q in _all), 3)],
+                       "rFoot": round(float(np.mean([(q - Vector((NECK_AX.x, NECK_AX.y, q.z))).length for q in rows_n[0]])), 3),
+                       "rTop": round(float(np.mean([(q - Vector((NECK_AX.x, NECK_AX.y, q.z))).length for q in rows_n[-1]])), 3)}
 
 
 if not CREW:
@@ -443,7 +752,7 @@ if not CREW:
         front = [on_knit_from_front(sgn * 0.004, z_) for z_ in np.linspace(HEM_Z + 0.004, V_Z, 26)]
         vside = [on_knit_from_front(sgn * (0.004 + (NECK_SIDE - 0.004) * t_ + 0.008), V_Z + (Zn - V_Z) * t_)
                  for t_ in np.linspace(0.0, 1.0, 22)[1:]]
-        seg_f = [(q, (sgn, 0, 0), "front") for q in front]
+        seg_f = [] if ZIP else [(q, (sgn, 0, 0), "front") for q in front]
         seg_v = [(q, (sgn * (Zn - V_Z), 0.0, -NECK_SIDE), "v") for q in vside]
         if sgn > 0:
             LEFT_PART = seg_f + seg_v
@@ -467,7 +776,7 @@ if not CREW:
             sides.append(sd)
             parts.append(part)
     band_left_pts = []
-    if len(path) > 8:
+    if len(path) > 8 and not ZIP:
         # resampled evenly along the path, then made
         P_ = np.array([tuple(q) for q in path])
         d_ = np.linalg.norm(np.diff(P_, axis=0), axis=1)
@@ -485,7 +794,42 @@ if not CREW:
 
     # ---- seven buttons on the left front band, from just under the V to above the welt ----------------------------
 
-    left = band_left_pts
+    left = [] if ZIP else band_left_pts
+    if ZIP:
+        # the zip: a 7 mm metal line from the hem to the V's point, on the knit
+        zp = [on_knit_from_front(0.0, z_) for z_ in np.linspace(HEM_Z + 0.002, V_Z, 40)]
+        zp = [q for q in zp if q is not None]
+        if len(zp) > 3:
+            zipm = tailor.material("M_Zip", tuple(float(c) for c in opt("--zip-rgb", "0.10,0.10,0.11", str).split(",")), 0.3)
+            rows_z = []
+            for dx in (-0.0035, 0.0, 0.0035):
+                rows_z.append([q + Vector((dx, -0.0015, 0.0)) for q in zp])
+            extras.append(strip("Zip", rows_z, zipm, 0.0015))
+            bpy.ops.mesh.primitive_cube_add(size=1.0, location=zp[-1] + Vector((0, -0.004, -0.012)))
+            pull = bpy.context.active_object
+            pull.scale = (0.010, 0.004, 0.024)
+            pull.data.materials.append(zipm)
+            extras.append(pull)
+        log["zip"] = len(zp)
+        # two slanted pocket openings, low on the front (the concept)
+        for sgn in (1.0, -1.0):
+            pp = [on_knit_from_front(sgn * (opt("--pocket-x", 0.085) + 0.035 * t_), HEM_Z + WELT + 0.02 + opt("--pocket-h", 0.13) * t_)
+                  for t_ in np.linspace(0.0, 1.0, 14)]
+            pp = [q for q in pp if q is not None]
+            if len(pp) > 3:
+                pocm = tailor.material("M_PocketEdge", tuple(0.6 * float(c) for c in knit_col), 0.5)
+                rows_p = [[q + Vector((dx, -0.0012, 0.0)) for q in pp] for dx in (-0.003, 0.003)]
+                extras.append(strip("Pocket", rows_p, pocm, 0.0012))
+        # a narrow facing up each side of the open V (the zip's tape), so its edges are finished, not raw
+        for sgn in (() if EXTRUDE else (1.0, -1.0)):
+            vp = [on_knit_from_front(sgn * (0.004 + (NECK_SIDE - 0.004) * t_ + 0.006), V_Z + (Zn - V_Z) * t_)
+                  for t_ in np.linspace(0.0, opt("--facing-top", 0.86), 24)]            # stopping under the collar
+            vp = [q for q in vp if q is not None]
+            if len(vp) > 3:
+                sd_ = (sgn * (Zn - V_Z), 0.0, -NECK_SIDE)
+                _bi, _bo = opt("--band-in", 0.020), opt("--band-out", 0.009)
+                o_, _i, _o = band_along(vp, [sd_] * len(vp), name="Facing")
+                extras.append(o_)
     if left:
         zs = np.linspace(V_Z - 0.012, HEM_Z + 0.015 + 0.006, 7)       # the top one marks the V, the first 1.5 cm over the hem
         for z_ in zs:
@@ -534,8 +878,11 @@ if not CREW:
                 best = float(hull[:, 1].min())
             row.append(Vector((float(x_), best - 0.005, float(z_))))
         blouse_rows.append(row)
+    if ZIP:
+        blousem = tailor.material("M_TShirtWhite", (0.88, 0.88, 0.86), 0.7)
     if len(blouse_rows) > 2:
         extras.append(strip("BlouseFront", blouse_rows, blousem, 0.0012))
+    if len(blouse_rows) > 2 and not ZIP:
         # the placket: a 25 mm strip down the middle, 1.5 mm proud
         plk = []
         for row in blouse_rows:
@@ -550,116 +897,66 @@ if not CREW:
             b_ = bpy.context.active_object
             b_.data.materials.append(tailor.material("M_BlouseButton", (0.92, 0.90, 0.84), 0.3))
             extras.append(b_)
-    # the collar: laid on everything made so far, and on her
-    _cb = bmesh.new()
-    for o_ in [knit] + [e for e in extras if e.type == "MESH"]:
-        _dg = bpy.context.evaluated_depsgraph_get()
-        _m = bpy.data.meshes.new_from_object(o_.evaluated_get(_dg))
-        _m.transform(o_.matrix_world)
-        _cb.from_mesh(_m)
-        bpy.data.meshes.remove(_m)
-    UNDER = BVHTree.FromBMesh(_cb)
-    _cb.free()
+    if not ZIP:
+        # the collar: laid on everything made so far, and on her
+        _cb = bmesh.new()
+        for o_ in [knit] + [e for e in extras if e.type == "MESH"]:
+            _dg = bpy.context.evaluated_depsgraph_get()
+            _m = bpy.data.meshes.new_from_object(o_.evaluated_get(_dg))
+            _m.transform(o_.matrix_world)
+            _cb.from_mesh(_m)
+            bpy.data.meshes.remove(_m)
+        UNDER = BVHTree.FromBMesh(_cb)
+        _cb.free()
 
 
-    def laid(x_, y_):
-        """Dropped from just above the neck's base (from higher, the ray began inside her neck) onto the band,
-        knit or blouse beneath, or her where there is none."""
-        top = Vector((x_, y_, NECK_Z + 0.03))
-        if tailor.depth_inside(BVH, top) > 0.0:
-            return None
-        hu = UNDER.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
-        hb = BVH.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
-        hits = [h for h in (hu, hb) if h is not None]
-        return max(hits, key=lambda h: h.z) + Vector((0, 0, 0.003)) if hits else None
+        def laid(x_, y_):
+            """Dropped from just above the neck's base (from higher, the ray began inside her neck) onto the band,
+            knit or blouse beneath, or her where there is none."""
+            top = Vector((x_, y_, NECK_Z + 0.03))
+            if tailor.depth_inside(BVH, top) > 0.0:
+                return None
+            hu = UNDER.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
+            hb = BVH.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
+            hits = [h for h in (hu, hb) if h is not None]
+            return max(hits, key=lambda h: h.z) + Vector((0, 0, 0.003)) if hits else None
 
 
-    COLLAR = opt("--collar", 0.055)
-    R_IN = NECK_R - opt("--collar-in", 0.004)
-    rows_c = []
-    for f_ in np.linspace(0.0, 1.0, 7):
-        row = []
-        for a_ in np.linspace(math.radians(8), math.radians(352), 90):   # a_ = 0 at the throat: the two ends meet there
-            # the ends rounded: within 35 mm of the throat the collar narrows on a quarter circle
-            d_front = min(a_, 2 * math.pi - a_) * R_IN
-            w_ = COLLAR if d_front > 0.035 else COLLAR * math.sqrt(max(0.0, 1.0 - ((0.035 - d_front) / 0.035) ** 2))
-            r_ = R_IN + w_ * f_
-            x_, y_ = NECK_AX.x + r_ * math.sin(a_), NECK_AX.y - r_ * math.cos(a_)
-            q = laid(x_, y_)
-            row.append(q)
-        rows_c.append(row)
-    # a point that found nothing takes its neighbour's height
-    for row in rows_c:
-        for k in range(len(row)):
-            if row[k] is None:
-                near_ = next((row[j] for j in sorted(range(len(row)), key=lambda j: abs(j - k)) if row[j] is not None), None)
-                a_k = math.radians(8) + (math.radians(344)) * k / (len(row) - 1)
-                row[k] = Vector((NECK_AX.x + R_IN * math.sin(a_k), NECK_AX.y - R_IN * math.cos(a_k), near_.z if near_ else NECK_Z))
-    for r_ in rows_c:
-        _o = np.array([tuple(p) for p in r_])
-        for _ in range(4):
-            _o[1:-1] = 0.5 * _o[1:-1] + 0.25 * (_o[:-2] + _o[2:])
-        r_[:] = [Vector(p) for p in _o]
-    extras.append(strip("Collar", rows_c, blousem, 0.002))
-    log["blouse"] = {"panelRows": len(blouse_rows), "collarMm": COLLAR * 1000}
+        COLLAR = opt("--collar", 0.055)
+        R_IN = NECK_R - opt("--collar-in", 0.004)
+        rows_c = []
+        for f_ in np.linspace(0.0, 1.0, 7):
+            row = []
+            for a_ in np.linspace(math.radians(8), math.radians(352), 90):   # a_ = 0 at the throat: the two ends meet there
+                # the ends rounded: within 35 mm of the throat the collar narrows on a quarter circle
+                d_front = min(a_, 2 * math.pi - a_) * R_IN
+                w_ = COLLAR if d_front > 0.035 else COLLAR * math.sqrt(max(0.0, 1.0 - ((0.035 - d_front) / 0.035) ** 2))
+                r_ = R_IN + w_ * f_
+                x_, y_ = NECK_AX.x + r_ * math.sin(a_), NECK_AX.y - r_ * math.cos(a_)
+                q = laid(x_, y_)
+                row.append(q)
+            rows_c.append(row)
+        # a point that found nothing takes its neighbour's height
+        for row in rows_c:
+            for k in range(len(row)):
+                if row[k] is None:
+                    near_ = next((row[j] for j in sorted(range(len(row)), key=lambda j: abs(j - k)) if row[j] is not None), None)
+                    a_k = math.radians(8) + (math.radians(344)) * k / (len(row) - 1)
+                    row[k] = Vector((NECK_AX.x + R_IN * math.sin(a_k), NECK_AX.y - R_IN * math.cos(a_k), near_.z if near_ else NECK_Z))
+        for r_ in rows_c:
+            _o = np.array([tuple(p) for p in r_])
+            for _ in range(4):
+                _o[1:-1] = 0.5 * _o[1:-1] + 0.25 * (_o[:-2] + _o[2:])
+            r_[:] = [Vector(p) for p in _o]
+        extras.append(strip("Collar", rows_c, blousem, 0.002))
+    log["blouse"] = {"panelRows": len(blouse_rows), "collarMm": 0 if ZIP else COLLAR * 1000}
 else:
-    # the crew neck's band: a ribbed ring from the knit's neck edge up to hug the neck, 28 mm, rising
     extras = []
-    NB = opt("--neckband", 0.028)
-    # ANCHORED TO THE KNIT'S OWN NECK EDGE (placed by the neck's radius, the band
-    # sat low on the wide base of a thick neck and flared out under the knit):
-    # the edge's points round the neck, by angle, smoothed; the band stands up
-    # from them, leaning a little in, over the edge
-    _bk = bmesh.new()
-    _bk.from_mesh(knit_me)
-    _ep = [v.co.copy() for v in _bk.verts if v.is_boundary and v.co.z > NECK_Z - 0.08
-           and math.hypot(v.co.x - NECK_AX.x, v.co.y - NECK_AX.y) < opt("--edge-r", NECK_R + 0.03)]
-    _bk.free()
-    _ang = np.array([math.atan2(q.x - NECK_AX.x, -(q.y - NECK_AX.y)) for q in _ep])
-    _rad = np.array([math.hypot(q.x - NECK_AX.x, q.y - NECK_AX.y) for q in _ep])
-    _zz = np.array([q.z for q in _ep])
-    order_ = np.argsort(_ang)
-    _ang, _rad, _zz = _ang[order_], _rad[order_], _zz[order_]
-    grid_a = np.linspace(-math.pi, math.pi, 97)[:-1]                     # a closed ring: no seam at the back
-    ext_a = np.concatenate([_ang - 2 * math.pi, _ang, _ang + 2 * math.pi])
-    r_edge = np.interp(grid_a, ext_a, np.tile(_rad, 3))
-    z_edge = np.interp(grid_a, ext_a, np.tile(_zz, 3))
-    for _ in range(opt("--band-smooth", 24, int)):                     # round the ring (the rim had come out wavy)
-        r_edge = 0.5 * r_edge + 0.25 * (np.roll(r_edge, 1) + np.roll(r_edge, -1))
-        z_edge = 0.5 * z_edge + 0.25 * (np.roll(z_edge, 1) + np.roll(z_edge, -1))
-    rows_n = []
-    for r_i in range(7):
-        h = NB * r_i / 6
-        row = []
-        for k in range(len(grid_a) + 1):
-            a_ = grid_a[k % len(grid_a)]
-            k = k % len(grid_a)
-            d_ = Vector((math.sin(a_), -math.cos(a_), 0.0))
-            # from the knit's edge (its foot a little under it) in a straight line to 5 mm off the neck, NB up
-            foot_r, foot_z = r_edge[k] + opt("--foot-out", 0.012), z_edge[k] - opt("--foot-down", 0.010)   # well over the cut edge
-            top_z = foot_z + NB * opt("--band-rise", 0.7)
-            hn = BVH.ray_cast(Vector((NECK_AX.x, NECK_AX.y, top_z)), d_, 0.25)[0]
-            top_r = ((hn - Vector((NECK_AX.x, NECK_AX.y, top_z))).length + 0.005) if hn is not None else foot_r - 0.01
-            top_r = min(top_r, foot_r)
-            t_ = r_i / 6
-            r_ = foot_r + (top_r - foot_r) * t_
-            # arched, so it clears the knit's cut edge it passes over (straight, the edge showed through it as
-            # a sawtooth) and stands up round the neck rather than lying flat
-            z_ = foot_z + (top_z - foot_z) * t_ + opt("--band-arch", 0.007) * math.sin(math.pi * min(1.0, t_ * 1.3))
-            rib = 0.0011 * math.cos(a_ * 48) * (0.4 + 0.6 * t_)
-            row.append(Vector((NECK_AX.x, NECK_AX.y, z_)) + d_ * (r_ + rib))
-        rows_n.append(row)
-    nb_obj = strip("Neckband", rows_n, knitm, 0.003)
-    _nb = bmesh.new()
-    _nb.from_mesh(nb_obj.data)
-    bmesh.ops.remove_doubles(_nb, verts=_nb.verts[:], dist=1e-5)       # the ring's ends one seam-free piece
-    _nb.to_mesh(nb_obj.data)
-    _nb.free()
-    extras.append(nb_obj)
-    _all = [q for r_ in rows_n for q in r_]
-    log["neckband"] = {"mm": NB * 1000, "zRange": [round(min(q.z for q in _all), 3), round(max(q.z for q in _all), 3)],
-                       "rFoot": round(float(np.mean([(q - Vector((NECK_AX.x, NECK_AX.y, q.z))).length for q in rows_n[0]])), 3),
-                       "rTop": round(float(np.mean([(q - Vector((NECK_AX.x, NECK_AX.y, q.z))).length for q in rows_n[-1]])), 3)}
+    neck_ring(extras, opt("--neckband", 0.028))
+if ZIP and not EXTRUDE:
+    # THE SHELL SUIT'S STAND COLLAR: the same band, taller and plain, round the back and sides, open over the zip
+    _gap = math.asin(min(0.95, (NECK_SIDE + opt("--collar-gap", 0.006)) / max(1e-6, NECK_R + 0.03)))
+    neck_ring(extras, opt("--collar-h", 0.045), gap=_gap, edge_z_min=Zn - 0.004, ribbed=False, name="Collar")
 
 # ---- THE WELT AND CUFFS AS FINE RIBBED RINGS OVER THE KNIT (the second try's
 # ribs, cut into the knit's own points, were too coarse to show) -------------------------------------------------
@@ -694,15 +991,15 @@ def ring_band(name, centre_of, axis_of, rows, around, depth_out, rib_every, radi
 
 
 mid_c = Vector((0.0, mid_y, 0.0))
-welt = ring_band("Welt", lambda r: Vector((0.0, mid_y, HEM_Z + 0.002 + (WELT - 0.002) * r / 5)), lambda r: Vector((0, 0, 1)),
+welt = ring_band("Welt", lambda r: Vector((0.0, mid_y, HEM_Z + 0.002 + (WELT - 0.002) * r / 5 - (0.006 if r == 0 else 0.0))), lambda r: Vector((0, 0, 1)),
                  6, 256, 0.0025, 0.007, 0.20, skip=lambda q: q is None or (q.y < FRONT_Y and abs(q.x) < 0.012))
-if welt:
+if welt and not EXTRUDE:
     extras.append(welt)
 # SNUG CUFFS (the second review: 'the sleeve ends flare open with a thin,
 # ragged rim'): each a ribbed tube 5 cm long round the wrist, 8 mm clear of it,
 # the sleeve's last 10 cm drawn in to meet it and ending 5 mm over it
 WRIST_R = opt("--wrist-r", 0.026) + 0.008
-for s_ in ("l", "r"):
+for s_ in (() if EXTRUDE else ("l", "r")):
     a_, h_ = (Vector(tuple(wrist[s_][0])), Vector(tuple(wrist[s_][1])))
     ax_ = (h_ - a_).normalized()
     L_ = (h_ - a_).length
@@ -735,6 +1032,64 @@ for s_ in ("l", "r"):
     extras.append(strip("Cuff", rows_k, knitm, 0.003))
 knit_me.update()
 log["ribbed"] = {"welt": bool(welt)}
+
+# ---- a second colour over the shoulders and upper sleeves (--panels r,g,b: a shell suit's raglan panels) --------
+PANELS = opt("--panels", "", str)
+if PANELS:
+    # CLEAN PANEL LINES (assigned face by face the edge came out sawtoothed):
+    # the knit is first cut along each raglan line (a plane from the side of the
+    # neck down to the armpit) and across each arm below the elbow, then each
+    # face takes the panel colour above its raglan line and above that cut
+    panm = tailor.material("M_Panel", tuple(float(c) for c in PANELS.split(",")), 0.5)
+    knit_me.materials.append(panm)
+    NS = NECK_SIDE + 0.01
+    T_P = opt("--panel-t", 1.15)
+    planes = {}
+    bmp = bmesh.new()
+    bmp.from_mesh(knit_me)
+    for sd, sg in (("l", 1.0), ("r", -1.0)):
+        sh = Vector(tuple(tailor.joint(arm, "upperarm_" + sd)))
+        el = Vector(tuple(tailor.joint(arm, "lowerarm_" + sd)))
+        P0 = Vector((sg * NS, 0.0, NECK_Z - 0.02))
+        P1 = Vector((sg * (abs(sh.x) + 0.03), 0.0, opt("--armpit-z", 1.40)))
+        d_ = P1 - P0
+        n_ = Vector((d_.z, 0.0, -d_.x)).normalized()
+        if n_.dot(Vector((sg * 0.15, 0.0, NECK_Z + 0.05)) - P0) < 0:
+            n_ = -n_
+        Q = sh + (el - sh) * T_P
+        m_ = (el - sh).normalized()
+        planes[sd] = (P0, n_, Q, m_)
+        for co_, no_ in ((P0, n_), (Q, m_)):
+            bmesh.ops.bisect_plane(bmp, geom=bmp.verts[:] + bmp.edges[:] + bmp.faces[:], plane_co=co_, plane_no=no_)
+    # slivers the cuts left collapsed (the first review: dark specks along the panel line)
+    bmesh.ops.dissolve_degenerate(bmp, dist=0.0008, edges=bmp.edges[:])
+    TRIM_P = bmp.faces.layers.int.get("trim")
+    for f in bmp.faces:
+        c = f.calc_center_median()
+        if TRIM_P is not None and f[TRIM_P] in (1, 2, 3, 4):
+            continue                                 # the collar, tapes, waistband and cuffs keep the body colour
+        sd = "l" if c.x > 0 else "r"
+        P0, n_, Q, m_ = planes[sd]
+        # the teal ends at the raglan line itself; only the collar (inside the neckline) stays purple (an extra
+        # clearance from the neck's side left the line jagged where it met the collar)
+        if (c - P0).dot(n_) > 0 and (c - Q).dot(m_) < 0:
+            f.material_index = 1
+    bmp.to_mesh(knit_me)
+    bmp.free()
+    knit_me.update()
+    log["panels"] = PANELS
+
+if EXTRUDE and ZIP:
+    # the zip's tapes (the rows grown out from each side of the V) in the zip's colour
+    zipm2 = tailor.material("M_ZipTape", tuple(float(c) for c in opt("--zip-rgb", "0.10,0.10,0.11", str).split(",")), 0.3)
+    knit_me.materials.append(zipm2)
+    zi = len(knit_me.materials) - 1
+    Zn_y = NECK_Z - 0.25 * 0.07
+    _tr = knit_me.attributes.get("trim")
+    if _tr is not None:
+        for f in knit_me.polygons:
+            if _tr.data[f.index].value == 2:
+                f.material_index = zi
 
 # ---- the render mesh -------------------------------------------------------------------------------------------
 

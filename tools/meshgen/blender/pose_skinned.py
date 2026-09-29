@@ -108,11 +108,12 @@ if ZONES:
         p_ = garment.matrix_world @ v.co
         ax_ = abs(p_.x)
         sd = "l" if p_.x > 0 else "r"
-        if p_.z < ARMPIT_Z + 0.04 and ax_ < SIDE_X + 0.09:
-            f = 0.0 if (ax_ < SIDE_X or p_.z < ARMPIT_Z - 0.06) else (ax_ - SIDE_X) / 0.09
+        BL = opt("--arm-blend", 0.09)
+        if p_.z < ARMPIT_Z + 0.04 and ax_ < SIDE_X + BL:
+            f = 0.0 if (ax_ < SIDE_X or p_.z < ARMPIT_Z - 0.06) else (ax_ - SIDE_X) / BL
             f = max(0.0, min(1.0, f))
             if p_.z < ARMPIT_Z - 0.06 and ax_ >= SIDE_X:
-                f = max(f, min(1.0, (ax_ - SIDE_X - 0.03) / 0.09))      # the sleeve hanging beside the body stays on the arm
+                f = max(f, min(1.0, (ax_ - SIDE_X - 0.03) / BL))       # the sleeve hanging beside the body stays on the arm
             freed = 0.0
             for g in list(v.groups):
                 if gnames[g.group].startswith(ARMISH_):
@@ -135,8 +136,8 @@ if ZONES:
             h_ = arm.matrix_world @ arm.pose.bones["hand_" + sd].head
             t = (p_ - a_).dot(h_ - a_) / (h_ - a_).length_squared
             if t > CUFF_T:
-                for g in list(v.groups):
-                    garment.vertex_groups[g.group].remove([v.index])
+                for gidx in [g.group for g in v.groups]:
+                    garment.vertex_groups[gidx].remove([v.index])
                 grp_("lowerarm_twist_01_" + sd).add([v.index], 0.6, "REPLACE")
                 grp_("lowerarm_" + sd).add([v.index], 0.4, "REPLACE")
 bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
@@ -194,8 +195,8 @@ for i, c in enumerate(comp):
     if ZONES and zc > opt("--neck-above", 9.0):
         z0, z1 = min(comp_z[c]), max(comp_z[c])
         t_ = (gco[i][2] - z0) / max(1e-6, z1 - z0)
-        for g in list(garment.data.vertices[i].groups):
-            names[g.group].remove([i])
+        for gidx in [g.group for g in garment.data.vertices[i].groups]:   # indices first: removing while reading them went stale
+            garment.vertex_groups[gidx].remove([i])
         for gi, w in wmap[cloth_ids[k]]:
             names[gi].add([i], w * (1.0 - t_), "REPLACE")
         front = gco[i][1] < cxy[1]
@@ -206,8 +207,8 @@ for i, c in enumerate(comp):
             gg.add([i], cur + w * t_, "REPLACE")
         glued += 1
         continue
-    for g in list(garment.data.vertices[i].groups):
-        names[g.group].remove([i])
+    for gidx in [g.group for g in garment.data.vertices[i].groups]:
+        garment.vertex_groups[gidx].remove([i])
     for gi, w in wmap[cloth_ids[k]]:
         names[gi].add([i], w, "REPLACE")
     glued += 1
@@ -256,6 +257,38 @@ mask.invert_vertex_group = True
 mask.show_viewport = False
 log_rigid = glued
 side_cut = 0
+# TRIMS THAT ARE PART OF THE ONE MESH (--grown; the jacket's last attempt grows its collar, waistband and cuffs
+# from its own edges, so they are no longer separate pieces to glue): the waistband's points below the hem take
+# the weights of the knit just above them at the same place round (the same all down each column: copied from
+# the nearest skin, the seated band crumpled into sawtooth layers); the collar's points above --neck-above blend
+# onto spine_05 and neck_01 towards its top
+if "--grown" in argv:
+    HEM_G = opt("--hem", 0.0)
+    NECK_G = opt("--neck-above", 9.0)
+    top_g = float(gco[:, 2].max())
+    wmap2 = {i: [(g.group, g.weight) for g in garment.data.vertices[i].groups] for i in cloth_ids}
+    grown = 0
+    for i in cloth_ids:
+        z = gco[i][2]
+        if HEM_G > 0 and z < HEM_G - 0.002:
+            _p, k, _d = kd.find(Vector((gco[i][0], gco[i][1], HEM_G + 0.03)))
+            src = wmap2[cloth_ids[k]]
+            for gidx in [g.group for g in garment.data.vertices[i].groups]:
+                garment.vertex_groups[gidx].remove([i])
+            for gi, w in src:
+                garment.vertex_groups[gi].add([i], w, "REPLACE")
+            grown += 1
+        elif z > NECK_G:
+            t_ = min(1.0, (z - NECK_G) / max(1e-6, top_g - NECK_G))
+            for gidx, w in [(g.group, g.weight) for g in garment.data.vertices[i].groups]:
+                garment.vertex_groups[gidx].add([i], w * (1.0 - t_), "REPLACE")
+            front = gco[i][1] < cxy[1]
+            for nm, w in (("spine_05", 0.7 if front else 0.55), ("neck_01", 0.3 if front else 0.45)):
+                gg = garment.vertex_groups.get(nm) or garment.vertex_groups.new(name=nm)
+                cur = next((g.weight for g in garment.data.vertices[i].groups if g.group == gg.index), 0.0)
+                gg.add([i], cur + w * t_, "REPLACE")
+            grown += 1
+    log_rigid = grown
 # SITTING (CARDIGAN-BUILD-2026-09-29.md): below the waist the back rides the
 # pelvis and lower spine, no thigh; the front's sides take at most 30% of a
 # thigh (the second review: the back ballooned into a hump when she sat)
