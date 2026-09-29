@@ -379,7 +379,7 @@ def weld(obj, pairs, co, max_gap=0.045):
         for v in alive[1:]:
             targetmap[v] = alive[0]
     bmesh.ops.weld_verts(bm, targetmap=targetmap)
-    # and a point no face uses is dropped (smoothing pulls it to the origin: the cap, 30 September)
+    # and a point no face uses is dropped (smoothing pulls it to the origin: the cap, 29 September)
     bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
     bm.to_mesh(obj.data)
     bm.free()

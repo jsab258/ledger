@@ -1,4 +1,4 @@
-# Blind review 2 (30 September, early morning): FAIL
+# Blind review 2 (29 September, late evening): FAIL
 
 A second fresh reviewer judged the second attempt (review-1.md's fixes) against the same references, the photographs 149-009 and 149-006 opened.
 
@@ -15,4 +15,4 @@ Right: dark grey, flat front, no turn-ups; the leg straight and fairly wide, a l
 
 ## What follows
 
-Two failed reviews, so the two-tries rule: research first (production/research/clothing-pipeline/SKINNING-TROUSERS-2026-09-30.md), then one more attempt, and if that fails the trousers are set aside.
+Two failed reviews, so the two-tries rule: research first (production/research/clothing-pipeline/SKINNING-TROUSERS-2026-09-29.md), then one more attempt, and if that fails the trousers are set aside.

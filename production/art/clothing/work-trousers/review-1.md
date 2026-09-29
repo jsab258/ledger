@@ -1,4 +1,4 @@
-# Blind review 1 (30 September, just after midnight): FAIL
+# Blind review 1 (29 September, late evening): FAIL
 
 A fresh reviewer judged Ron's work trousers (the first attempt: FreeSewing's Titan at Charlie's settings, sewn and settled round his body by projection, finished with a waistband, belt, loops, fly and pockets, then skinned to his body walking, sitting and with a foot up a stair) against production/reference/work-trousers-and-flat-cap-1990.md and Peter Fryer's Smith's Dock photographs (149-009, 149-006), which it opened.
 
