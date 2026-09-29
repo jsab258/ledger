@@ -3003,6 +3003,19 @@ namespace
 					Say(Un(Paused), 12.0f, FColor(210, 210, 210));
 					GLive.bPausedShown = true;
 				}
+				// ONCE UNTIL IT COMES BACK (handover 6ax): a reply without it
+				// means talk is back, so the next pause is said again.
+				if (Paused == "none" || Paused.empty()) { GLive.bPausedShown = false; }
+				// WALKED OFF (handover 6ay): he left while it was coming, and
+				// the answer is only {"id","to","walkedOff":true}: nothing to
+				// say or show, only the record's line.
+				if (L.find("\"walkedOff\":true") != std::string::npos)
+				{
+					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Un(GLive.PendingCard)) + TEXT(",\"how\":\"walkedOff\""));
+					GLive.PendingId = 0;
+					GLive.bFirstSaid = false;
+					continue;
+				}
 				GLive.LastReplyId = GLive.PendingId;
 				GLive.LastReplyName = GLive.PendingName;
 				// THE SESSION RECORD (handover 6p): whom his line named, how the
