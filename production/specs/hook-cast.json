@@ -2944,9 +2944,46 @@
      "warehouse_row"
     ]
    ]
+  },
+  {
+   "id": "outfit_man",
+   "called": "a man who hangs about the ferry landing at night",
+   "role": "one of the outfit Mickey had his arrangement with, never named; at the ferry landing at night (town list 6z)",
+   "routine": [
+    [
+     0,
+     "ferry_stop"
+    ],
+    [
+     1,
+     "off"
+    ],
+    [
+     9,
+     "cafe"
+    ],
+    [
+     10,
+     "off"
+    ],
+    [
+     20,
+     "warehouse_row"
+    ],
+    [
+     22,
+     "ferry_stop"
+    ]
+   ]
   }
  ],
  "ties": [
+  [
+   "outfit_man",
+   "sam",
+   0.45,
+   "cafe 09:00 Mon,Tue,Wed,Thu,Fri; warehouse_row 20:00 Mon,Wed,Fri; warehouse_row 21:00 Mon,Wed,Fri"
+  ],
   [
    "rocco",
    "lena",

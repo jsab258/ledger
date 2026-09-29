@@ -352,7 +352,9 @@ namespace Ledger.Core
             Rumor best = null;
             foreach (var r in g.Rumors)
             {
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !r.Sensitive) continue;
+                // His night, or what he did with the outfit's ask, which shows
+                // though only the envelope handed over is a secret (town list 6z).
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -371,7 +373,9 @@ namespace Ledger.Core
             Rumor best = null;
             foreach (var r in g.Rumors)
             {
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !r.Sensitive) continue;
+                // His night, or what he did with the outfit's ask, which shows
+                // though only the envelope handed over is a secret (town list 6z).
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence > 0.0) || r.Confidence >= shareFloor) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -907,6 +911,39 @@ namespace Ledger.Core
                     "I've got to be somewhere.",
                     "Mind yourself.",
                     "...Evening.",
+                })
+                // WHAT HE DID WITH THE OUTFIT'S ASK (town list 6z): the first hour
+                // Jafar approved has the night come back to his face either way,
+                // "Heard you told them no", and every answer sounded alike. Only
+                // from somebody who heard it (the outfit's man was there). Six a
+                // bank, not fourteen: a person remarks once on a story
+                // (RemarkLedger), and a night's story reaches a handful in a day.
+                : Arrangement.IsNight(about) && about.Hops > 0 && about.Content.Value == "did" ? From("recognition/outfit-did", new[]
+                {
+                    "Heard you did Mickey's run.",
+                    "Down the landing after dark, I hear. Same as Mickey.",
+                    "They say you've picked up where Mickey left off.",
+                    "Word is you kept Mickey's arrangement. I'd keep that quiet.",
+                    "Late one, was it? Down by the ferry.",
+                    "So you're doing Mickey's rounds now.",
+                })
+                : Arrangement.IsNight(about) && about.Hops > 0 && about.Content.Value == "refused" ? From("recognition/outfit-refused", new[]
+                {
+                    "Heard you told them no.",
+                    "Heard you sent Ron back with it.",
+                    "They say you turned Mickey's lot down.",
+                    "Word is you said no to them. Brave or daft, I've not decided.",
+                    "You told them no, then. Not like Mickey, that.",
+                    "Not doing Mickey's errands, I hear.",
+                })
+                : Arrangement.IsNight(about) && about.Hops > 0 && about.Content.Value == "noshow" ? From("recognition/outfit-noshow", new[]
+                {
+                    "Heard they waited on you at the landing.",
+                    "Somebody stood by the ferry half the night, I'm told.",
+                    "They say you never turned up.",
+                    "Word is you left them waiting. They'll not like that.",
+                    "Mickey'd never have kept them waiting, they say.",
+                    "Busy, were you? Not at the landing, anyway.",
                 })
                 : about != null && about.Sensitive ? From("recognition/sensitive", new[]
                 {

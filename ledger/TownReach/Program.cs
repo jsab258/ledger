@@ -56,7 +56,8 @@ static class Program
         var cast = CastDay.Parse(File.ReadAllText(castPath));
         var people = cast.People;
         string metArg = Arg(args, "--meridian", null);
-        if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv));
+        if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv),
+                                            Arg(args, "--teller", null), int.Parse(Arg(args, "--told-at", "22"), Inv), Arg(args, "--answer", "did"));
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -214,16 +215,25 @@ static class Program
     /// them says it to his face. Only those he met can tell it is him; everyone
     /// else is a stranger to him, as canon has it. He passes everybody out on the
     /// street once an hour, as in the rest of this tool: generous.
-    static int Meridian(CastDay cast, string[] met, double rate)
+    /// `teller` (town list 6z): instead of every sighting of night one, the one
+    /// telling of his night by this cast member at `toldAt` o'clock on night
+    /// one, for certain: the outfit's man after the landing.
+    static int Meridian(CastDay cast, string[] met, double rate, string teller = null, int toldAt = 22, string answer = "did")
     {
         var people = cast.People;
+        NightAnswer what = answer == "refused" ? NightAnswer.Refused : answer == "noshow" ? NightAnswer.NoShow : NightAnswer.Did;
+        if (teller != null && (!people.Contains(teller) || (toldAt < 22 && toldAt > 4) || toldAt < 0 || toldAt > 23 || Arrangement.Value(what) != answer))
+        {
+            Console.Error.WriteLine($"meridian: --teller must be a cast id ({teller}), --told-at an hour of night one, 22 to 4 ({toldAt}), --answer did, refused or noshow ({answer})");
+            return 2;
+        }
         var metSet = new HashSet<string>(met.Select(m => m.Trim()).Where(m => m.Length > 0));
         // THE CLOCK (town list 6x): game minutes a real second. At 2 a game hour
         // is half a real minute and minute thirty is game hour 60; at 1, hour 30.
         int lastHour = (int)Math.Round(30 * rate);
         double MinuteOf(int gameHour) => gameHour / rate;
         Console.WriteLine($"meridian met={string.Join(",", metSet)} of {people.Count}; night one, play from 09:00, counted to minute 30 (hour {lastHour}) at {rate.ToString(Inv)} game minutes a real second");
-        foreach (double firstSight in new[] { 0.6, 1.0 })
+        foreach (double firstSight in teller != null ? new[] { 1.0 } : new[] { 0.6, 1.0 })
         {
             int runs = 0, shown = 0, faced = 0;
             var firstShown = new List<int>();
@@ -232,9 +242,12 @@ static class Program
             {
                 int sHour = (9 + sightHour) % 24;
                 int sAbsDay = (9 + sightHour) / 24;
+                if (teller != null && sHour != toldAt) continue;
                 foreach (var witness in people)
                 {
-                    if (cast.Where(witness, sAbsDay, sHour) == null) continue;   // not out on the street to see it
+                    if (teller != null && witness != teller) continue;
+                    // A teller knows it wherever they are.
+                    if (teller == null && cast.Where(witness, sAbsDay, sHour) == null) continue;   // not out on the street to see it
                     runs++;
                     var graph = new SocialGraph();
                     foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
@@ -243,8 +256,13 @@ static class Program
                         mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker()));
                     var start = new GameTime(sAbsDay, sHour, 0);
                     mill.Age(start);
-                    mill.Witness(witness, new Fact("player", "night_walk_d1", "seen"),
-                        "the new owner was about the yard after midnight", sensitive: true, start, confidence: firstSight);
+                    // With a teller, the arrangement's own story of night one, as
+                    // Arrangement.Answer files it (town list 6z).
+                    if (teller != null)
+                        mill.Witness(witness, new Fact("player", "outfit_d0", Arrangement.Value(what)), Arrangement.Said(what), what == NightAnswer.Did, start, 1.0);
+                    else
+                        mill.Witness(witness, new Fact("player", "night_walk_d1", "seen"),
+                            "the new owner was about the yard after midnight", sensitive: true, start, confidence: firstSight);
                     var remarks = new RemarkLedger();
                     bool wasShown = false, wasFaced = false, wasHeld = false;
                     for (int playHour = sightHour; playHour < lastHour; playHour++)
