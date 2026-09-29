@@ -170,6 +170,10 @@ namespace Ledger.Core
         /// CastDay.PeopleFor, set by the caller each turn; shown to the talk model
         /// and given to the claim check as P items. Null or empty for none.
         public IReadOnlyList<string> People { get; set; }
+        /// Their own name, for the claim check (town list 6be): null for the
+        /// card's heading; empty when the speaker is not the card's person (a
+        /// card lent to somebody else), whose name is then nobody's to state.
+        public string SpeakerName { get; set; }
         /// True once the game has said how they know him; until then the helper
         /// reads it off this conversation's own earlier talk.
         public bool KnowsHimFromGame { get; set; }
@@ -1251,7 +1255,7 @@ namespace Ledger.Core
             if (streaming != null)
             {
                 knownEarly = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People);
+                                                   Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName);
             }
             var d1 = new Drafted();
             try
@@ -1286,7 +1290,7 @@ namespace Ledger.Core
             if (Checker != null)
             {
                 var known = ClaimCheck.KnownItems(Card, ClaimCheck.WitnessedFor(Memory, _shown),
-                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People);
+                                                  Memory.Beliefs, WhyForCheck(), sceneContext, now.ToldAs, HowYouKnowHim, People, SpeakerName);
                 try
                 {
                     // A FIRST SENTENCE THAT FAILED ITS OWN CHECK (town list 6a,

@@ -23,6 +23,7 @@ using Ledger.Core;
 ///     dotnet run --project ledger/ClaimBench -c Release -- smalltalk     # real names in small talk, the rule off and on
 ///     dotnet run --project ledger/ClaimBench -c Release -- tics          # a card's verbal tic over a conversation, before and after
 ///     dotnet run --project ledger/ClaimBench -c Release -- disguise      # inventions hidden in small talk, through the live check
+///     dotnet run --project ledger/ClaimBench -c Release -- firsts        # a newcomer's first questions, through the real engine
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -97,9 +98,70 @@ static class Program
             case "smalltalk": return await SmallTalk(dir, parallel);
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
+            case "firsts": return await Firsts(dir, parallel);
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
+            case "again":
+            {
+                // Some turns of the bench's drafts through the live check, each
+                // several times, one try at a time, with the items as the check
+                // builds them now and as they were before town list 6be (whole P
+                // lines, no own name): whether a turn one run missed is a change
+                // to the items or the checker's own run-to-run noise (town list
+                // 6be tried a split of the P lines this way). `again id ... --times 3`.
+                _withPeople = true;
+                int times = int.Parse(Arg(args, "--times", "3"));
+                var ids = args.Skip(1).TakeWhile(a => !a.StartsWith("--")).ToList();
+                var drafts = ReadJsonl<Draft>(Path.Combine(dir, "drafts.jsonl")).Where(x => ids.Contains(x.id)).ToList();
+                using var client = new AnthropicClient(Key());
+                foreach (var d in drafts)
+                {
+                    var now = ItemsFor(d);
+                    var nowT = now.Find(i => i.id == "T1").text;
+                    var before = now.Where(i => i.id[0] != 'N' && i.id[0] != 'P' && !(i.id == "S2") && !i.text.StartsWith("Their own name")).ToList();
+                    int day = int.Parse(System.Text.RegularExpressions.Regex.Match(nowT, @"D(\d+)").Groups[1].Value);
+                    int hour = int.Parse(System.Text.RegularExpressions.Regex.Match(nowT, @"D\d+ (\d+):").Groups[1].Value);
+                    int np = 0;
+                    foreach (var p in _cast.PeopleFor(d.card, day, hour)) before.Add(("P" + (++np), "Somebody or somewhere on the street they know: " + p));
+                    async Task<bool> Flagged(List<(string id, string text)> items)
+                    {
+                        var (found, calls) = await ClaimCheck.CheckAsync(client, Models.Ambient, items, d.reply, default);
+                        foreach (var c in calls) Spend(Models.Ambient, c.InputTokens, c.OutputTokens);
+                        // --show: what the check wrote each time it let the turn through.
+                        if (args.Contains("--show") && (found == null || found.Count == 0))
+                            Console.WriteLine("  passed, " + (ReferenceEquals(items, now) ? "now" : "before") + ": " +
+                                              string.Join(" || ", calls.Select(c => System.Text.RegularExpressions.Regex.Replace(c.Text, @"\s+", " "))));
+                        return found != null && found.Count > 0;
+                    }
+                    // One at a time, the two layouts in turn: the same request sent
+                    // many at once came back alike, so those were not separate tries.
+                    int a = 0, b = 0;
+                    for (int t = 0; t < times; t++)
+                    {
+                        if (await Flagged(now)) a++;
+                        if (await Flagged(before)) b++;
+                    }
+                    Console.WriteLine($"{d.id}: flagged {a}/{times} as now, {b}/{times} as before");
+                }
+                Console.WriteLine($"usd={_usd:0.00}");
+                return 0;
+            }
+            case "rawline":
+            {
+                // One line said by one of the cast at 10:00 on the first day, with
+                // who they know on the street, through the live check, every call
+                // printed: `rawline sam "Mickey had a daughter, June."`.
+                using var client = new AnthropicClient(Key());
+                var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "cast", "cards", args[1] + ".md")));
+                var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+                var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Dry, grey.", new GameTime(0, 10, 0).ToldAs, null, cast.PeopleFor(args[1], 0, 10));
+                Console.WriteLine(ClaimCheck.NumberedKnown(items.Where(i => i.id[0] == 'N' || i.text.StartsWith("Their own name")).ToList()));
+                var (invented, calls) = await ClaimCheck.CheckAsync(client, Models.Ambient, items, args[2], default);
+                foreach (var c in calls) Console.WriteLine("call: " + c.Text);
+                Console.WriteLine("invented: " + (invented == null ? "(unchecked)" : string.Join(" | ", invented)));
+                return 0;
+            }
             case "raw":
             {
                 // One draft's checker answer as written, for reading why it flagged.
@@ -420,6 +482,62 @@ static class Program
         ConversationEngine.RealWorldRule = true;
         WriteJsonl(Path.Combine(dir, "smalltalk.jsonl"), rows);
         Console.WriteLine($"smalltalk: usd={cost.EstimateUsd():0.00} (the engine's own rate card) -> smalltalk.jsonl");
+        return 0;
+    }
+
+    /// A NEWCOMER'S FIRST QUESTIONS (town list 6be, the fourth sweep): with no
+    /// instructions a friend's first lines go to the people in front of him,
+    /// and every bench so far asked about a night's events or small talk. Twenty
+    /// such questions to each character who talks, through the real engine and
+    /// its check, each a first line to them; counts the answers that end in
+    /// their "that's all I know" or a refusal, for reading by eye after.
+    static async Task<int> Firsts(string dir, int parallel)
+    {
+        var probes = new[]
+        {
+            "Who are you?", "What is this place?", "What am I meant to do here?", "How did Mickey die?", "Sorry I missed the funeral.",
+            "What's behind that door?", "Where do I sleep?", "Who runs things round here?", "Is there any money in the business?", "Did Mickey leave me anything?",
+            "What was Mickey like?", "Who can I trust?", "How many drivers are there?", "Where's the office?", "What do you do here?",
+            "Do you work for me now?", "Anything I should know?", "Where can I get something to eat?", "Who was Mickey's family?", "What happens now?",
+        };
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        var cost = new CostTracker();
+        using var client = new AnthropicClient(Key());
+        var rows = new List<object>();
+        var gate = new SemaphoreSlim(parallel);
+        int fallback = 0, refused = 0, n = 0, failed = 0;
+        var byCard = new Dictionary<string, int>();
+        var jobs = new List<(string card, string probe)>();
+        foreach (var c in new[] { "lena", "rocco", "sam" }) foreach (var p in probes) jobs.Add((c, p));
+        await Task.WhenAll(jobs.Select(async job =>
+        {
+            await gate.WaitAsync();
+            try
+            {
+                var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md")));
+                var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = client };
+                engine.People = cast.PeopleFor(job.card, 0, 10);
+                engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);
+                string where = cast.WhereWords(job.card, 0, 10);
+                string reply;
+                try { reply = await engine.SayToAsync(job.probe, new GameTime(0, 10, 0), "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""), default, null); }
+                catch (Exception) { Interlocked.Increment(ref failed); return; }
+                bool fell = ClaimCheck.IsKnownOnly(reply, card);
+                bool refusedLine = ResponseValidator.IsDeflection(reply, card.Name);
+                lock (rows)
+                {
+                    n++;
+                    if (fell) { fallback++; byCard[job.card] = (byCard.TryGetValue(job.card, out var k) ? k : 0) + 1; }
+                    if (refusedLine) refused++;
+                    rows.Add(new { card = job.card, probe = job.probe, reply, fell, refused = refusedLine, invented = engine.LastInvented });
+                }
+            }
+            finally { gate.Release(); }
+        }));
+        WriteJsonl(Path.Combine(dir, "firsts.jsonl"), rows);
+        Console.WriteLine($"firsts: a newcomer's first questions, {n} answered ({failed} failed): \"that's all I know\" {fallback} (" +
+                          string.Join(", ", byCard.Select(kv => kv.Key + " " + kv.Value)) + $"), refused {refused}; usd={cost.EstimateUsd():0.00} -> firsts.jsonl");
         return 0;
     }
 

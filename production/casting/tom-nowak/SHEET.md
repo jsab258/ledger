@@ -7,7 +7,7 @@ the builder's, made to this sheet once it is approved.
 | | |
 |---|---|
 | **Age** | 32 (born 1958) |
-| **Origin** | Son of a Polish post-war settler and Mickey's sister. The family moved away from the port when he was small (the casting research's account, 7.3), so he is a stranger to everyone in the Hook, known only as Mickey's nephew by name (canon). Where he grew up and what he did there, canon does not say: see the question on the page. |
+| **Origin** | Son of a Polish post-war settler and Mickey's sister. The family moved away from the port when he was small (the casting research's account, 7.3), so he is a stranger to everyone in the Hook, known only as Mickey's nephew by name (canon). Where he grew up and what he did there is left unsaid: nobody in the game asks and he never tells (Jafar, 28 September). |
 | **Occupation** | The new owner of Mickey's, the minicab office on Quay Street, with its half-dead outfit and book of uncollectable debts (canon). Arrives with one suitcase and a letter. |
 | **Build** | About 5 ft 9 in (175 cm, the average man of 1993), lean; nothing about him says money. |
 | **Face** | Clean-shaven (a shave read as trustworthy then), no tattoos, ordinary. |

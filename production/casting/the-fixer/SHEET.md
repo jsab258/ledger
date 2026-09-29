@@ -1,8 +1,8 @@
-# The Fixer
+# Keith Garbutt, the Fixer
 
 The broker between all three rivals. A principal of LEDGER
-(production/casting/CASTING.md). His name is not yet ruled: the casting research
-offers Keith Garbutt (see the question on the page). Text only: face, clothes
+(production/casting/CASTING.md). His name is Keith Garbutt, the casting
+research's proposal (Jafar, 28 September); most call him the Fixer. Text only: face, clothes
 and voice samples are the builder's.
 
 | | |

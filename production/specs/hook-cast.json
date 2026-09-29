@@ -145,8 +145,8 @@
   "chapel": {
    "x_m": 100.0,
    "z_m": 0.0,
-   "from": "Father Emil's chapel and the presbytery door beside it",
-   "said": "Father Emil's chapel"
+   "from": "Father Walsh's chapel and the presbytery door beside it",
+   "said": "Father Walsh's chapel"
   },
   "chapel_hall": {
    "x_m": 100.0,
@@ -346,6 +346,7 @@
   {
    "id": "lena",
    "keepsQuiet": "owner",
+   "namesHim": "on-trust",
    "called": "Sheila Dunn, Mickey's bookkeeper",
    "name": "Sheila Dunn",
    "role": "Sheila Dunn: Mickey's bookkeeper (canon)",
@@ -1422,9 +1423,9 @@
   },
   {
    "id": "emil",
-   "called": "Father Emil, who says mass and calls on the old",
-   "name": "Father Emil",
-   "role": "Father Emil (canon): mass, the presbytery, calls on the old",
+   "called": "Father Walsh, who says mass and calls on the old",
+   "name": "Father Walsh",
+   "role": "Father Walsh (canon, Father Brendan Walsh, Irish-born): mass, the presbytery, calls on the old",
    "routine": [
     [
      0,
@@ -1530,8 +1531,8 @@
   },
   {
    "id": "vesna",
-   "called": "Father Emil's housekeeper",
-   "role": "keeps Father Emil's house and buys for his table",
+   "called": "Father Walsh's housekeeper",
+   "role": "keeps Father Walsh's house and buys for his table",
    "routine": [
     [
      0,

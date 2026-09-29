@@ -7,7 +7,7 @@ September). Text only: face, clothes and voice samples are the builder's.
 | | |
 |---|---|
 | **Age** | 78 (born 1912) |
-| **Origin** | A widow of the Hook. (The August prototype card made her a retired schoolteacher; this sheet leaves that out, and it is Jafar's to put back.) |
+| **Origin** | A widow of the Hook. (The August prototype card made her a retired schoolteacher; Jafar left that out on 28 September: her years of teaching could not be spoken of without children.) |
 | **Occupation** | Keeps a window on Quay Street (CASTING.md; canon names only "Ada"). In the routines of 28 September her step is in the terraces across from Mickey's. |
 | **Build** | Small, about 5 ft 0 in and shorter than she was; hunched. The old of 1990 were visibly shorter still than the average. |
 | **Face** | Deeply lined, bright-eyed; full dentures (a fifth of adults had no natural teeth in 1988, a third of the unskilled). |

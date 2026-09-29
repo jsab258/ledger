@@ -66,12 +66,14 @@ canon lines it changes, and canon cites the record at those lines.
   strategy, not stylization. The bar is the Meridian Test (D8, D9); GTA V PS3 is
   retired as a reference bar.
 
-## Premise and cast (baseline pending OPEN 2)
+## Premise and cast (the baseline: Jafar, 2026-09-28, OPEN 2)
 - Player: Tom Nowak, 32, son of a Polish post-war settler and Mickey's sister,
-  arriving with one suitcase and a letter. His uncle Mickey
+  arriving with one suitcase and a letter. His uncle Mickey (Michael Suddaby)
   has died and left him Mickey's, a minicab office in the Hook (D19), plus a half-dead criminal
   outfit and a book of uncollectable debts. Tom has never been to the Hook: he is a stranger
   to everyone there, known only as Mickey's nephew by name (Jafar, 2026-09-23).
+  His life before the Hook is left unsaid: nobody in the game asks and he never
+  tells (Jafar, 2026-09-28).
 - Inherited loyalists: Ron Kirby (old muscle, 58, a docker until 1989, kept on
   by Mickey for the door and the rank), Sheila Dunn (the bookkeeper, 53, at
   Mickey's since she was 22).
@@ -79,16 +81,19 @@ canon lines it changes, and canon cites the record at those lines.
   Geoffrey Agar), the dockside syndicate (muscle and smuggling, head Maureen Jensen,
   called the Widow), the new crew (flashy and reckless, head Danny Cammack).
 - Detective: DS Carol Ellis. Day-life ring: Darren Milner (25, the street hustler),
-  Ada, June (Mickey's estranged daughter), Father Emil, Alison Sedman (journalist
-  love interest), Philip Danby (teacher love interest), the Fixer (broker between
-  all three rivals).
+  Ada, June Suddaby (Mickey's estranged daughter), Father Brendan Walsh (the
+  Irish-born parish priest), Alison Sedman (journalist love interest), Philip
+  Danby (teacher love interest), the Fixer, Keith Garbutt (broker between all
+  three rivals). Ada was never a teacher (Jafar, 2026-09-28).
 - What the town calls you reads out your standing: the new owner, then Nowak, then
   Tom, then Tommy. The gate is knowing, not liking.
 - NAMES, ruled by Jafar 2026-09-24 (DECISIONS, the casting research's renames):
   Lena became Sheila Dunn, Rocco Ron Kirby, Sam Darren Milner, Mara Carol Ellis,
   Aldous Vane Geoffrey Agar, Sera Kest Maureen Jensen, Noor Alison Sedman, Elias
   Philip Danby, Danny Ro Danny Cammack, Tom Novak Tom Nowak, and the last rung
-  Toma Tommy. Mickey's, Ada and June are kept. The old names survive only as
+  Toma Tommy. Mickey's, Ada and June are kept. Ruled 2026-09-28 on the town
+  page: Father Emil became Father Brendan Walsh (Father Walsh to the street),
+  the Fixer is Keith Garbutt, and June's surname is her father's, Suddaby. The old names survive only as
   internal ids (lena, rocco, sam and the rest), like the east_parade_* asset
   names: identifiers, never what the player sees or hears.
 
@@ -164,6 +169,9 @@ which clauses the gate checks and which it does not claim to.
    legacy reference build; the C# Core stays the source of truth the C++
    port is checked against. Kept as item 1 so that "OPEN 2" above keeps
    its meaning; it is not open.
-2. Narrative survival. Whether Tom Nowak, Acts I to III and the empire roster survive
-   as baseline is decided in Phase 1 planning, along with the cast-sketch-versus-
-   built-cards mismatch (Sam and Ada, written at one-street scale).
+2. Narrative survival: DECIDED 2026-09-28 by Jafar. Tom Nowak, the three acts,
+   the three rivals and the empire roster are the baseline, as the story outline
+   he approved that day tells them (game-design/story-outline-2026-09-28.md).
+   Kept as item 2 so that "OPEN 2" above keeps its meaning. What stays open of
+   it is the cast-sketch-versus-built-cards mismatch (Sam and Ada, written at
+   one-street scale), which the cards settle as they are written.

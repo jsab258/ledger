@@ -5671,7 +5671,7 @@ namespace Ledger.CoreTests
                 {
                     ("Have you seen Sheila?", "lena"), ("Ask Mrs Dunn.", "lena"), ("Ask the bookkeeper.", "lena"), ("Ron Kirby told me.", "rocco"),
                     ("Kirby's a big lad.", "rocco"), ("Rita said so.", "rita"), ("I was at Rita's.", ""), ("Down Hal's, then Ada's.", ""),
-                    ("Father Emil was at the chapel.", "emil"), ("Did Darren and Alison talk?", "noor,sam"), ("Who's the dispatcher?", "zlata"),
+                    ("Father Walsh was at the chapel.", "emil"), ("Walsh was about.", "emil"), ("Did Darren and Alison talk?", "noor,sam"), ("Who's the dispatcher?", "zlata"),
                     ("Morning.", ""), ("I ran into a ferryman.", ""), ("June was at the funeral.", "june"),
                 })
                 {
@@ -5927,6 +5927,13 @@ namespace Ledger.CoreTests
                 Check(hookQ.QuietStance("rocco") == KeepsQuietFor.Owner && hookQ.QuietStance("lena") == KeepsQuietFor.Owner
                       && hookQ.QuietStance("sam") == KeepsQuietFor.Anyone && hookQ.QuietStance("zlata") == KeepsQuietFor.Friend,
                       "who keeps things quiet for whom, from the cast file, a friend by default");
+                // Sheila names him only once she trusts him (Jafar, 29 September page).
+                string badName = null;
+                try { CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"x\",\"namesHim\":\"soon\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}"); }
+                catch (FormatException e) { badName = e.Message; }
+                Check(hookQ.NamesHimOnlyOnTrust("lena") && !hookQ.NamesHimOnlyOnTrust("rocco") && !hookQ.NamesHimOnlyOnTrust("sam")
+                      && !hookQ.NamesHimOnlyOnTrust(null) && badName != null && badName.Contains("namesHim"),
+                      "Sheila alone calls him by name only once she trusts him, from the cast file; any other word there is refused", badName ?? "");
 
                 var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
                 q.Suspicion.Raise(0.6, "I saw him near the window");
@@ -9254,6 +9261,29 @@ namespace Ledger.CoreTests
                       && ClaimCheck.RequestItems("m", "x", "y").System.Contains("the speaker's own everyday life, tastes and belongings")
                       && ClaimCheck.RequestItems("m", "x", "y").System.Contains("\"I never learned to drive\""),
                       "they are told who they know, and the claim check reads it: a habit or event from a P item alone goes to the second look");
+
+                // A NEWCOMER'S FIRST QUESTIONS (town list 6be): "Who are you?"
+                // answered with their own name fell back to "that's all I know".
+                // Their own name is a card item, and none for a card lent to
+                // somebody else. Who the street's people are stays in the P items,
+                // which clear only a habit: split out to clear more, it failed the
+                // independent check twice, and its attacks stay refused here.
+                string ownName = pItems.Find(i => i.text.StartsWith("Their own name")).id;
+                // One detail through the whole check, the second look citing `look`:
+                // what is left invented (empty when it may be said).
+                IReadOnlyList<string> OneDetail(List<(string id, string text)> items, string detail, string kind, string source, string look) =>
+                    ClaimCheck.CheckAsync(new ScriptedLlm("{\"specifics\": [{\"detail\": \"" + detail + "\", \"kind\": \"" + kind + "\", \"source\": \"" + source + "\"}]}",
+                                                          "{\"verdicts\": [{\"n\": 1, \"supported\": true, \"source\": \"" + look + "\"}]}"),
+                                          "m", items, "x", CancellationToken.None).GetAwaiter().GetResult().invented;
+                string ronP = pItems.Find(i => i.text.Contains("Ron Kirby")).id, darrenP = pItems.Find(i => i.text.Contains("Darren Milner")).id;
+                Check(pItems.Exists(i => i.id[0] == 'C' && i.text == "Their own name is Lena Moreau.")
+                      && OneDetail(pItems, "Lena Moreau", "person", ownName, ownName).Count == 0
+                      && ClaimCheck.KnownItems(MakeLenaCard(), new List<MemoryEvent>(), null, null, null, null, null, pe.People, "").TrueForAll(i => !i.text.StartsWith("Their own name"))
+                      && OneDetail(pItems, "Ron minding Mickey's door", "person", ronP, ronP).Count == 1
+                      && OneDetail(pItems, "Darren doing his rounds", "action", darrenP, darrenP).Count == 1
+                      && OneDetail(pItems, "Ron was on Mickey's door", "place", ronP, ronP).Count == 1
+                      && OneDetail(pItems, "Darren was with me", "person", darrenP, darrenP).Count == 1,
+                      "their own name may be said, and no name for a card lent to somebody else; what the street's people habitually do never places them at a time");
             }
 
             // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's

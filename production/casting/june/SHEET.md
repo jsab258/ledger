@@ -1,9 +1,9 @@
-# June
+# June Suddaby
 
 Mickey's estranged daughter, and so Tom's first cousin (canon: Tom is the son of
 Mickey's sister). A principal of LEDGER (production/casting/CASTING.md); she
-keeps her name. Her surname would be her father's, Suddaby, unless she married
-(the casting research's proposal; not yet ruled: see the page). Text only:
+keeps her name. Her surname is her father's, Suddaby (Jafar, 28 September);
+the street calls her June. Text only:
 face, clothes and voice samples are the builder's.
 
 | | |

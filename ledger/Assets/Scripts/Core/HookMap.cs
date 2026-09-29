@@ -36,7 +36,7 @@ namespace Ledger.Core
 
             // The district (planned; geometry in the build-out).
             P("pawnshop",        "Rita's pawnshop",          -28,  -6, "business", true),
-            P("chapel",          "Father Emil's chapel",     -34,  10, "landmark", true),
+            P("chapel",          "Father Walsh's chapel",    -34,  10, "landmark", true),
             P("ferry_stop",      "the ferry stop",            30,  18, "landmark", true),
             P("cab_rank",        "the cab rank",              24, -10, "corner",   true),
             P("warehouse_row",   "the old warehouse row",    -24, -20, "landmark", true),
