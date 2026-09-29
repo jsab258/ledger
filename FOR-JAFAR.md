@@ -14,19 +14,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page: the police, Sheila's trust, the week's end, the calls carried](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)**, picks marked.
+**[Your page: the police, Sheila's trust, the week's end, threats](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)**, picks marked.
 
-**Decide there:** can an arrest happen, what one does and says; word of the police asking; when Sheila trusts Tom; day 7 and her words. Carried: yesterday's nine, the check's retune now on your subscription, not money.
+**Decide there:** arrests and their words; the police asking; when Sheila trusts Tom (a friend she sees at the slice's crime never gets the real book); day 7; does winding it down end Mickey's arrangement; threats (two). Carried: yesterday's nine, the retune now on your subscription.
 
-**Decide here:** friends' live talk goes through our relay, which needs a key: (A) your new capped key, one monthly limit (recommended); (B) none for friends yet.
+**Decide here:** friends' talk through our relay needs a key: (A) your capped one (recommended); (B) none yet.
 
-**Done:** Tom's no to the outfit asked back first; 1990 shop hours everybody knows; arrests cost hours, not the game; damage found next morning; the town talks by its routines; Sheila's trust; the week's end; no tool of mine calls the API now.
+**Done:** the no to the outfit; 1990 shop hours; arrests; damage found; the town's routines; Sheila's trust; day 7; a threat never buys silence; the whole week on paper, nothing collided; no tool of mine calls the API.
 
-**Research:** 1990 shop hours; custody and bail; the caution's words; four checklist sweeps; Claude Code's print mode.
+**Research:** shop hours, custody, the caution, threats, all 1990; five sweeps; Claude Code's print mode.
 
-**Got wrong:** my pushes set off a paid playtest 46 times unnoticed; I pushed once on a red check; Sheila's trust and day 7 took nine reviews; a 2.5 GB review copy sits on C:, on the cleanup list.
+**Got wrong:** my pushes set off a paid playtest 46 times unnoticed; one push on a red check; trust, day 7, winding down and threats took seventeen reviews (threats I stopped, much bigger than it looked); a 2.5 GB review copy on C:.
 
-**C: free:** 46.8 GB at the last summary, 46 now. Backup runs with this commit.
+**C: free:** 46.8 GB at the last summary, 54 now. Backup runs with this commit.
 
 **Next:** your page.
 
