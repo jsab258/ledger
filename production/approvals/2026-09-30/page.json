@@ -5,7 +5,7 @@
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
   "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
-  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
+  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; Ron, faster, heard blind; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
@@ -81,6 +81,41 @@
       "fps": 15
      }
     }
+   ]
+  },
+  {
+   "kind": "pair",
+   "key": "speed-ron-kirby",
+   "name": "Ron, faster: the same three lines, two ways",
+   "note": "One of these is Ron's voice as the game speaks it now, which takes about 3.5 seconds to start in play; the other is a free engine that starts in about 2. Heard blind: which is which is kept off the page. If the faster one is still Ron, the game switches him to it. My accent check: the faster engine held his accent on 15 of 16 test lines. The reviewer, measuring what it cannot hear: both word-perfect, no glitches, the same man; A is closer to his reference voice and steadier, with a creak on \"Right\"; B is livelier and rises on \"Who told you that?\"; a 4-second stretch of A, across \"that way. Right, I'll bring the car\", reads American to the accent check though each line on its own reads English: listen for it.",
+   "line": "I don't know anything about that, and I'd rather keep it that way. / Right. I'll bring the car round at half nine, then. / Who told you that? Was it Darren? It was, wasn't it.",
+   "takes": [
+    {
+     "label": "A",
+     "audio": "production/approvals/2026-09-30/speed-ron-A.wav"
+    },
+    {
+     "label": "B",
+     "audio": "production/approvals/2026-09-30/speed-ron-B.wav"
+    }
+   ],
+   "options": [
+    [
+     "A",
+     "A is Ron"
+    ],
+    [
+     "B",
+     "B is Ron"
+    ],
+    [
+     "both",
+     "Both are Ron"
+    ],
+    [
+     "neither",
+     "Neither"
+    ]
    ]
   },
   {

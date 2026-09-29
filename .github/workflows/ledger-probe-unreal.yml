@@ -310,6 +310,13 @@ jobs:
           # name: robocopy's "files copied" is exit code 1, and inside the
           # build step it turned the whole run red (80ec4b58) though every
           # part of the build had passed.
+          # THE APPROVED FACES, 29 September (the AI tester: the packaged game
+          # showed only the brief-made cast). Sheila's S4, Ron's P2 and
+          # Darren's C5 are built in the dressing project on drive F and
+          # linked (directory junctions) into the scratch project's
+          # MetaHumans folder, so this copy takes them with the rest (robocopy
+          # follows junctions); their clothes are the Fab garments copied
+          # below, all present in the Fab closure.
           $mhSrc = "C:\LedgerTools\mh-assemble\Content\Ledger\MetaHumans"
           $mhDst = Join-Path $PWD "ue-probe\Content\Ledger\MetaHumans"
           if (Test-Path $mhSrc) {

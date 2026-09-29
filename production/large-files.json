@@ -42,6 +42,14 @@
    "mb": 8201
   },
   {
+   "path": "F:/LedgerTools/hf/hub/datasets--jspaulsen--vctk",
+   "madeBy": "the builder, 29 September: five of the 34 parquet files of jspaulsen/vctk (VCTK 0.92 mirror, CC BY 4.0), by hf_hub_download",
+   "why": "the northern English women's recordings for Sheila's voice; their clips are extracted to F:/LedgerTools/vctk-north",
+   "status": "superseded",
+   "recorded": "2026-09-29",
+   "mb": 2684
+  },
+  {
    "path": "F:/LedgerTools/hf/hub/models--samuel-vitorino--sopro-v2-turbo",
    "madeBy": "the builder, 29 September: snapshot_download of samuel-vitorino/sopro-v2-turbo (Apache-2.0)",
    "why": "Sopro V2 Turbo's weights for the voice-delay trial",
