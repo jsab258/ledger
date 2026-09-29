@@ -46,6 +46,9 @@ public class LedgerProbe : ModuleRules
 		// estimated: a cold build, cook and package of this project is 4.3
 		// minutes and a warm one is under a minute, both with this module in.
 		PrivateDependencyModuleNames.AddRange(new string[] { "ImageWrapper", "InputCore", "ApplicationCore" });
+		// Json, 29 September: the session record reads the cast file's places
+		// (LedgerSession.h, production/specs/hook-cast.json).
+		PrivateDependencyModuleNames.Add("Json");
 		// AnimGraphRuntime AND AnimationCore, 23 September, for the heads that
 		// turn toward the player (Jafar: "use what Unreal provides"). The
 		// turn is the engine's own Look At node (FAnimNode_LookAt, in
