@@ -33,4 +33,6 @@ Still Jafar's before it can be wired: what a threat does (town list 6cd, on his
 The town's pieces are saved together as one `TownSave` (town list 6bl), its
 `ToJson` beside the game's save and `FromJson` on a load: the hints, the asks,
 Ada's tea, the police file, what he has heard, the news filed, the damage, the
-arrests, the hours the town has talked, and the week's end.
+arrests, the hours the town has talked, and the week's end. Its port matches
+the rows behind `--awaiting-port`: `TownSaveWritten`, `TownSaveBack`,
+`TownSaveSame`, `TownSaveLaterRefused` and `TownSaveJunk`.
