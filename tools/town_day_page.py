@@ -22,7 +22,7 @@ REPO = town_page.REPO
 DAYS = {
     "2026-09-29": {
         "title": "The first hour, and eleven decisions",
-        "lede": "The plan for a player's first hour, the first story of the town's own, and eleven things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today, the last two: what the town cannot say because nobody has written it.",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and eleven things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today: the last two calls, what the town cannot say because nobody has written it, and the hints, each the first time it matters.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -70,6 +70,8 @@ DAYS = {
              "Approve the hour", "Change it (say what in the note)"),
             ("town-news", "The town's own news: one sample", os.path.join(REPO, "game-design", "town-news-sample-2026-09-29.md"),
              "Approve it, and write about ten more like it", "Change it (say what in the note)"),
+            ("first-moments", "The hints, each the first time it matters", os.path.join(REPO, "game-design", "first-moments-2026-09-29.md"),
+             "Approve the moments and their words", "Change them (say what in the note)"),
         ],
     },
 }
