@@ -9495,6 +9495,31 @@ namespace Ledger.CoreTests
                       && OneDetail(pItems, "Ron was on Mickey's door", "place", ronP, ronP).Count == 1
                       && OneDetail(pItems, "Darren was with me", "person", darrenP, darrenP).Count == 1,
                       "their own name may be said, and no name for a card lent to somebody else; what the street's people habitually do never places them at a time");
+                // TWO OLDER GAPS (town list 6bf, the independent check of 6be): an
+                // alibi given as "now" and naming nobody was dropped unread; the
+                // same words given twice took the habit's leave both times.
+                var nowIds = new List<string> { "S1", "T1", "M1", "P1" };
+                var alibi = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"he was here with me when the window went\", \"kind\": \"now\", \"source\": \"S1\"}]}", nowIds);
+                var smallTalk = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"quiet this morning\", \"kind\": \"now\", \"source\": \"none\"}, {\"detail\": \"it's gone five\", \"kind\": \"now\", \"source\": \"T1\"}]}", nowIds);
+                var twiceHabits = new List<string>();
+                var twiceGiven = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Ron on the door\", \"kind\": \"place\", \"source\": \"none\"}, {\"detail\": \"Ron on the door\", \"kind\": \"habit\", \"source\": \"P1\"}]}", nowIds, twiceHabits);
+                var onceHabits = new List<string>();
+                ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"Ron on the door most days\", \"kind\": \"habit\", \"source\": \"P1\"}]}", nowIds, onceHabits);
+                var asSelf = ClaimCheck.ParseItems("{\"specifics\": [{\"detail\": \"he was here with me when the window went\", \"kind\": \"self\", \"source\": \"none\"}]}", nowIds);
+                var bareHabits = new List<string>();
+                var bareTwice = ClaimCheck.ParseItems("{\"specifics\": [\"Ron on the door\", {\"detail\": \"Ron on the door\", \"kind\": \"habit\", \"source\": \"P1\"}]}", nowIds, bareHabits);
+                string leak = null;
+                foreach (var a in new[] { "we were in here together when the window went", "my brother was with me all night", "a chap was in here earlier",
+                                          "he walked in at nine", "him and me, in here till midnight", "the lads were in here" })
+                    if (!ClaimCheck.TellsOfThen(a)) leak = a;
+                string small = null;
+                foreach (var a in new[] { "he's sat in his cab", "she's got the kettle on", "they close before six", "I've been stood here all afternoon", "she's tired" })
+                    if (ClaimCheck.TellsOfThen(a)) small = a;
+                Check(alibi.Count == 1 && asSelf.Count == 1 && smallTalk.Count == 0 && twiceGiven.Count == 2 && twiceHabits.Count == 0 && onceHabits.Count == 1
+                      && bareTwice.Count == 2 && bareHabits.Count == 0 && leak == null && small == null
+                      && ClaimCheck.TellsOfThen("he was here with me when the window went") && !ClaimCheck.TellsOfThen("quiet since eight")
+                      && !ClaimCheck.TellsOfThen("it's gone five") && !ClaimCheck.TellsOfThen(null),
+                      "an alibi given as any loose kind is read as the claim it is, small talk about now is not; words given both as a habit and as a claim, bare or not, are read as the claim", (leak ?? "") + (small ?? ""));
             }
 
             // HOW THEY KNOW HIM, for their talk (town list 6s): met is the game's
