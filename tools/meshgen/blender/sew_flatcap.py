@@ -228,257 +228,398 @@ def snap_line(t):
 log["peak"] = {"depthMm": round(fwd.length * 1000), "downDeg": PEAK_DOWN, "snap": [round(c, 3) for c in SNAP]}
 say("peak", log["peak"])
 
-# ---- the crown and band laid over the head ------------------------------------------------------------
+# ---- THE THIRD ATTEMPT: THE CROWN MODELLED, THE PATTERN GIVING ITS SIZES (--model) ---------------------------
+#
+# WHY, 29 September (production/research/clothing-pipeline/FLAT-CAP-2026-09-29.md,
+# after two blind reviews failed the sewn cap): Florent's band can lie smooth
+# only as a wide cone forward over the peak, and sewn by projection its spare
+# length gathered into puckers and lumps however it was laid; game artists
+# model or sculpt stiff hats. So the crown is modelled: a height field over
+# its footprint (the hat line, and across the front out over the peak to
+# SNAP_BACK behind its edge), rising from that outline and capped by the flat
+# top, a plane sloping up from the peak's edge to 14 mm above the top of the
+# head behind its middle (the photographs' wedge: the crown 4 to 6 cm above
+# the brow), never nearer the head than 5 mm; a soft bulge just above the band
+# at the sides and back; smoothed. The pattern gives the hat line's girth, the
+# peak and its depth.
+MODEL = "--model" in argv
+if MODEL:
+    C3 = Vector((float(c2[0]), float(c2[1]), TOP_Z - 0.10))
+    HEADC = Vector((0.0, CY, TOP_Z - 0.09))
+    CAP_VIEWS = (("front", (0, -1.1, 0.02)), ("side", (1.1, 0, 0.02)), ("back", (0, 1.1, 0.02)), ("three-quarter", (0.75, -0.8, 0.12)))
+    grey0 = tailor.material("M_Body", (0.5, 0.5, 0.5))
+    body.data.materials.append(grey0)
+    SPAN = inner_len / 1000.0 * SCALE * PEAK_W / 2                  # the peak's half-width along the hat line
+    NPHI, NT = 240, 26
+    outline, over_peak = [], []
+    for i in range(NPHI):
+        s_ = GIRTH * i / NPHI
+        s_signed = s_ if s_ <= GIRTH / 2 else s_ - GIRTH
+        r_, out_ = ring_at(s_)
+        if abs(s_signed) < SPAN * 0.98:
+            s_in = s_signed / (2 * SPAN) + 0.5
+            x_ = float(np.interp(s_in * bin_s[-1], bin_s, bin_arr[:, 0]))
+            y_out = float(np.interp(x_, _ox[_oo], _oy[_oo]))
+            q = peak_point(x_, y_out - SNAP_BACK) + Vector((0, 0, 0.003))
+            w_ = max(0.0, 1.0 - (abs(s_signed) / SPAN) ** 2)
+            outline.append(q)
+            over_peak.append(w_)
+        else:
+            outline.append(r_ + out_ * 0.002)
+            over_peak.append(0.0)
+    O_ = np.array([tuple(q) for q in outline])
+    P0 = np.array([float(c2[0]), float(c2[1]) + opt("--top-back", 0.01)])
+    front = O_[0]
+    # THE PROFILE (the first modelled try rose on past the head's top into a tall
+    # box): from the peak's edge straight up over the forehead, steep enough to
+    # clear it, to a flat top just above the head, level from there back
+    Z_TOP = TOP_Z + opt("--top-lift", 0.010)
+    slope = opt("--front-slope", 0.0)
+    if slope <= 0:
+        slope = 0.3
+        for yy in np.linspace(front[1] + 0.01, CY, 30):
+            hz = -1.0
+            for xx in (-0.03, 0.0, 0.03):
+                hit, _n, _i, _d = BVH.ray_cast(Vector((xx, yy, TOP_Z + 0.3)), Vector((0, 0, -1)), 0.6)
+                if hit is not None:
+                    hz = max(hz, hit.z)
+            if hz > 0:
+                slope = max(slope, (hz + 0.008 - front[2]) / max(1e-6, yy - front[1]))
 
-C3 = Vector((float(c2[0]), float(c2[1]), TOP_Z - 0.10))       # the head's middle, under the crown
-front_top = ring_at(0.0)[0] + Vector((0, 0, 0.077))
+    def head_z(x, y):
+        hit, _n, _i, _d = BVH.ray_cast(Vector((x, y, TOP_Z + 0.3)), Vector((0, 0, -1)), 0.6)
+        return hit.z if hit is not None else -1.0
+
+    BULGE = opt("--bulge", 0.005)
+    verts, grid = [], []
+    for i in range(NPHI):
+        row = []
+        for j in range(NT):
+            t = j / (NT - 1) * 0.96
+            xy = O_[i, :2] + (P0 - O_[i, :2]) * t ** 0.9
+            d_in = float(np.linalg.norm(xy - O_[i, :2]))
+            # just above the band at the sides and back, a soft bulge outwards
+            if t < 0.25 and over_peak[i] < 0.5:
+                away = O_[i, :2] - P0
+                away /= max(1e-6, np.linalg.norm(away))
+                xy = xy + away * BULGE * math.sin(math.pi * t / 0.25) * (1.0 - over_peak[i])
+            plane = min(Z_TOP, front[2] + (xy[1] - front[1]) * slope)
+            # ROUNDED SHOULDERS (the second modelled try stood up in straight walls,
+            # a flower pot from the front): each side rises from the band in a
+            # quarter-ellipse, upright at the band, level ROUND in from it; the
+            # sloped front meets the sides in a smooth blend, not a crease
+            D_ = opt("--round", 0.10)
+            q_ = min(1.0, d_in / D_)
+            g = O_[i, 2] + (Z_TOP + 0.03 - O_[i, 2]) * math.sqrt(max(0.0, 1.0 - (1.0 - q_) ** 2))
+            k_ = opt("--blend", 0.02)
+            z = -k_ * math.log(math.exp(-plane / k_) + math.exp(-g / k_))
+            z = max(z, head_z(xy[0], xy[1]) + 0.005)
+            row.append(len(verts))
+            verts.append((float(xy[0]), float(xy[1]), z))
+        grid.append(row)
+    centre = len(verts)
+    verts.append((float(P0[0]), float(P0[1]), max(min(Z_TOP, front[2] + (P0[1] - front[1]) * slope), head_z(P0[0], P0[1]) + 0.005)))
+    faces = []
+    for i in range(NPHI):
+        i2 = (i + 1) % NPHI
+        for j in range(NT - 1):
+            faces.append((grid[i][j], grid[i2][j], grid[i2][j + 1], grid[i][j + 1]))
+        faces.append((grid[i][NT - 1], grid[i2][NT - 1], centre))
+    me_ = bpy.data.meshes.new("Cap")
+    me_.from_pydata(verts, [], faces)
+    me_.validate()
+    cap = bpy.data.objects.new("Cap", me_)
+    bpy.context.collection.objects.link(cap)
+    # smoothed (the outline kept), and kept off the head
+    xs = np.array(verts)
+    edges_m = np.array([e.vertices[:] for e in me_.edges])
+    degm = np.bincount(edges_m.ravel(), minlength=len(xs)).astype(float)
+    keep_ = np.zeros(len(xs), dtype=bool)
+    keep_[[grid[i][0] for i in range(NPHI)]] = True
+    for _ in range(opt("--model-smooth", 24, int)):
+        acc = np.zeros_like(xs)
+        np.add.at(acc, edges_m[:, 0], xs[edges_m[:, 1]])
+        np.add.at(acc, edges_m[:, 1], xs[edges_m[:, 0]])
+        avg = acc / np.maximum(degm, 1)[:, None]
+        xs[~keep_] = xs[~keep_] * 0.5 + avg[~keep_] * 0.5
+        for k in np.where(~keep_)[0]:
+            xs[k, 2] = max(xs[k, 2], head_z(xs[k, 0], xs[k, 1]) + 0.005)
+    for k, v in enumerate(me_.vertices):
+        v.co = xs[k]
+    me_.update()
+    # the seam where the top meets the band, a faint groove about 3 cm above the band's edge, round the sides and
+    # back (over the peak the band lies under the crown)
+    SEAM_T = opt("--seam-t", 0.11)
+    for i in range(NPHI):
+        if over_peak[i] > 0.3:
+            continue
+        for j in range(NT):
+            t = j / (NT - 1) * 0.96
+            w_ = math.exp(-((t - SEAM_T) / 0.018) ** 2)
+            if w_ > 0.05:
+                vi = grid[i][j]
+                p_ = Vector(me_.vertices[vi].co)
+                toward = Vector((P0[0] - p_.x, P0[1] - p_.y, 0.0))
+                if toward.length > 1e-6:
+                    me_.vertices[vi].co = p_ + toward.normalized() * 0.0012 * w_
+    me_.update()
+    log["modelPushedOut"] = tailor.push_out(cap, BVH, 0.004)     # the head nowhere through (the occiput bulges above the band)
+    log["model"] = {"points": len(xs), "frontZ": round(float(front[2]), 3), "topZ": round(float(xs[:, 2].max()), 3), "frontSlope": round(slope, 2),
+                    "crownAboveBrowMm": round((float(xs[:, 2].max()) - float(ring_at(0.0)[0].z)) * 1000)}
+    say("modelled", log["model"])
+else:
+    # ---- the crown and band laid over the head ------------------------------------------------------------
+
+    C3 = Vector((float(c2[0]), float(c2[1]), TOP_Z - 0.10))       # the head's middle, under the crown
+    front_top = ring_at(0.0)[0] + Vector((0, 0, 0.077))
 
 
-def over_head(u, v):
-    """The crown half's pattern point: `u` 0..1 front to back along its centre line, `v` metres out to the side;
-    the centre line runs from above the band's front up over the head to the back of the hat line."""
-    back_pt = ring_at(GIRTH / 2)[0]
-    a0 = math.atan2(front_top.z - C3.z, front_top.y - C3.y)
-    a1 = math.atan2(back_pt.z - C3.z, back_pt.y - C3.y)
-    # over the top: from the front (about 130 degrees) down through straight up (90) to the back (about 0)
-    while a1 > a0:
-        a1 -= 2 * math.pi
-    a = a0 + (a1 - a0) * u
-    dirv = Vector((0.0, math.cos(a), math.sin(a)))
-    hit, _n, _i, _d = BVH.ray_cast(C3 + dirv * 0.25, -dirv, 0.3)
-    base = hit if hit is not None else C3 + dirv * 0.11
-    r = (base - C3).length + 0.012
-    phi = v / max(0.05, r)
-    # turned about the front-back axis through the head's middle, towards the wearer's left (+x)
-    p = C3 + dirv * r
-    local = p - C3
-    R = Matrix.Rotation(phi, 3, Vector((0, 1, 0)))
-    return C3 + R @ local
+    def over_head(u, v):
+        """The crown half's pattern point: `u` 0..1 front to back along its centre line, `v` metres out to the side;
+        the centre line runs from above the band's front up over the head to the back of the hat line."""
+        back_pt = ring_at(GIRTH / 2)[0]
+        a0 = math.atan2(front_top.z - C3.z, front_top.y - C3.y)
+        a1 = math.atan2(back_pt.z - C3.z, back_pt.y - C3.y)
+        # over the top: from the front (about 130 degrees) down through straight up (90) to the back (about 0)
+        while a1 > a0:
+            a1 -= 2 * math.pi
+        a = a0 + (a1 - a0) * u
+        dirv = Vector((0.0, math.cos(a), math.sin(a)))
+        hit, _n, _i, _d = BVH.ray_cast(C3 + dirv * 0.25, -dirv, 0.3)
+        base = hit if hit is not None else C3 + dirv * 0.11
+        r = (base - C3).length + 0.012
+        phi = v / max(0.05, r)
+        # turned about the front-back axis through the head's middle, towards the wearer's left (+x)
+        p = C3 + dirv * r
+        local = p - C3
+        R = Matrix.Rotation(phi, 3, Vector((0, 1, 0)))
+        return C3 + R @ local
 
 
-centre_line = np.array(top_segs["centre"])
-cs = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(centre_line, axis=0), axis=1))])
+    centre_line = np.array(top_segs["centre"])
+    cs = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(centre_line, axis=0), axis=1))])
 
 
-def crown_point(x, y):
-    """The crown half laid as a wide, shallow disc: its centre line along the head's middle a little above it,
-    each point out to the side by its distance from the centre line, dropping gently towards the edge."""
-    d2 = np.hypot(centre_line[:, 0] - x, centre_line[:, 1] - y)
-    k = int(np.argmin(d2))
-    mid = over_head(cs[k] / cs[-1], 0.0)
-    v = float(d2[k]) / 1000.0
-    return Vector((v, mid.y, max(ring_at(0.0)[0].z + 0.01, mid.z + 0.012 - 1.2 * v * v)))
+    def crown_point(x, y):
+        """The crown half laid as a wide, shallow disc: its centre line along the head's middle a little above it,
+        each point out to the side by its distance from the centre line, dropping gently towards the edge."""
+        d2 = np.hypot(centre_line[:, 0] - x, centre_line[:, 1] - y)
+        k = int(np.argmin(d2))
+        mid = over_head(cs[k] / cs[-1], 0.0)
+        v = float(d2[k]) / 1000.0
+        return Vector((v, mid.y, max(ring_at(0.0)[0].z + 0.01, mid.z + 0.012 - 1.2 * v * v)))
 
 
-lower_line = np.array(band_segs["lower"])[::-1]                  # from the front centre to the tip
-ls_ = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(lower_line, axis=0), axis=1))])
+    lower_line = np.array(band_segs["lower"])[::-1]                  # from the front centre to the tip
+    ls_ = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(lower_line, axis=0), axis=1))])
 
 
-FLARE = math.radians(opt("--flare", 55.0))
+    FLARE = math.radians(opt("--flare", 55.0))
 
 
-def band_point(x, y):
-    """The band flared out from the hat line, as its pattern asks: its upper edge (422 mm a side) is far longer
-    than its lower (245), so it stands out like a cone's skirt under a crown about 30 cm across. (Laid upright,
-    the first runs crumpled that length into a ridge along the seam, a pillbox's wall.)"""
-    d2 = np.hypot(lower_line[:, 0] - x, lower_line[:, 1] - y)
-    k = int(np.argmin(d2))
-    p, out = ring_at(ls_[k] / 1000.0 * SCALE)
-    d = float(d2[k]) / 1000.0
-    return p + (Vector((0, 0, 1)) * math.cos(FLARE) + out * math.sin(FLARE)) * d + out * 0.004
+    def band_point(x, y):
+        """The band flared out from the hat line, as its pattern asks: its upper edge (422 mm a side) is far longer
+        than its lower (245), so it stands out like a cone's skirt under a crown about 30 cm across. (Laid upright,
+        the first runs crumpled that length into a ridge along the seam, a pillbox's wall.)"""
+        d2 = np.hypot(lower_line[:, 0] - x, lower_line[:, 1] - y)
+        k = int(np.argmin(d2))
+        p, out = ring_at(ls_[k] / 1000.0 * SCALE)
+        d = float(d2[k]) / 1000.0
+        return p + (Vector((0, 0, 1)) * math.cos(FLARE) + out * math.sin(FLARE)) * d + out * 0.004
 
 
-def mirror(pts):
-    return [(-p[0], p[1], p[2]) for p in pts]
+    def mirror(pts):
+        return [(-p[0], p[1], p[2]) for p in pts]
 
 
-G = tailor.Garment()
-top_l = [tuple(crown_point(x, y)) for x, y in top_flat]
-band_l = [tuple(band_point(x, y)) for x, y in band_flat]
-AT = {}
-AT["TL"] = G.add("crown_l", top_flat, top_faces, top_l, layout=(0.0, 0.0))
-AT["TR"] = G.add("crown_r", top_flat, top_faces, mirror(top_l), layout=(0.0, -0.3), mirror=True)
-AT["BL"] = G.add("band", band_flat, band_faces, band_l, layout=(0.5, 0.0))
-fold = {k: AT["BL"][k] for k in band_idx["fold"]}
-# THE BAND'S OTHER HALF IS FLIPPED ACROSS ITS FOLD, which runs along the
-# pattern's x (foldBottom to foldTop at y = 0), so y changes sign; flipped
-# across x instead (as the jacket's back is, whose fold runs down y) the shared
-# fold points carried the other half's lengths, 30 cm long, and threw a strip
-# of cloth out sideways (the cap's sixth to eighth runs)
-band_flat_r = [(x, -y) for x, y in band_flat]
-band_faces_r = [list(reversed(f)) for f in band_faces]
-AT["BR"] = G.add("band", band_flat_r, band_faces_r, mirror(band_l), layout=(0.5, 0.0), share=fold)
+    G = tailor.Garment()
+    top_l = [tuple(crown_point(x, y)) for x, y in top_flat]
+    band_l = [tuple(band_point(x, y)) for x, y in band_flat]
+    AT = {}
+    AT["TL"] = G.add("crown_l", top_flat, top_faces, top_l, layout=(0.0, 0.0))
+    AT["TR"] = G.add("crown_r", top_flat, top_faces, mirror(top_l), layout=(0.0, -0.3), mirror=True)
+    AT["BL"] = G.add("band", band_flat, band_faces, band_l, layout=(0.5, 0.0))
+    fold = {k: AT["BL"][k] for k in band_idx["fold"]}
+    # THE BAND'S OTHER HALF IS FLIPPED ACROSS ITS FOLD, which runs along the
+    # pattern's x (foldBottom to foldTop at y = 0), so y changes sign; flipped
+    # across x instead (as the jacket's back is, whose fold runs down y) the shared
+    # fold points carried the other half's lengths, 30 cm long, and threw a strip
+    # of cloth out sideways (the cap's sixth to eighth runs)
+    band_flat_r = [(x, -y) for x, y in band_flat]
+    band_faces_r = [list(reversed(f)) for f in band_faces]
+    AT["BR"] = G.add("band", band_flat_r, band_faces_r, mirror(band_l), layout=(0.5, 0.0), share=fold)
 
 
-def ids(p, idx, s):
-    return [AT[p][k] for k in idx[s]]
+    def ids(p, idx, s):
+        return [AT[p][k] for k in idx[s]]
 
 
-G.seam("crown centre", ids("TL", top_idx, "centre"), ids("TR", top_idx, "centre"))
-G.seam("crown to band", ids("TL", top_idx, "side"), list(reversed(ids("BL", band_idx, "upper"))))
-G.seam("crown to band", ids("TR", top_idx, "side"), list(reversed(ids("BR", band_idx, "upper"))))
-cap = G.build("Cap")
-cap.shape_key_clear()
-co0 = tailor.coords(cap, evaluated=False)
-log["place"] = {"points": len(G.verts), "seamGapsMm": tailor.seam_gaps(co0, G.seams)}
-say("placed", log["place"])
-grey0 = tailor.material("M_Body", (0.5, 0.5, 0.5))
-body.data.materials.append(grey0)
-HEADC = Vector((0.0, CY, TOP_Z - 0.09))
-CAP_VIEWS = (("front", (0, -1.1, 0.02)), ("side", (1.1, 0, 0.02)), ("back", (0, 1.1, 0.02)), ("three-quarter", (0.75, -0.8, 0.12)))
-tailor.pictures(os.path.join(OUT, "place"), HEADC, views=CAP_VIEWS, res=(700, 600))
+    G.seam("crown centre", ids("TL", top_idx, "centre"), ids("TR", top_idx, "centre"))
+    G.seam("crown to band", ids("TL", top_idx, "side"), list(reversed(ids("BL", band_idx, "upper"))))
+    G.seam("crown to band", ids("TR", top_idx, "side"), list(reversed(ids("BR", band_idx, "upper"))))
+    cap = G.build("Cap")
+    cap.shape_key_clear()
+    co0 = tailor.coords(cap, evaluated=False)
+    log["place"] = {"points": len(G.verts), "seamGapsMm": tailor.seam_gaps(co0, G.seams)}
+    say("placed", log["place"])
+    grey0 = tailor.material("M_Body", (0.5, 0.5, 0.5))
+    body.data.materials.append(grey0)
+    HEADC = Vector((0.0, CY, TOP_Z - 0.09))
+    CAP_VIEWS = (("front", (0, -1.1, 0.02)), ("side", (1.1, 0, 0.02)), ("back", (0, 1.1, 0.02)), ("three-quarter", (0.75, -0.8, 0.12)))
+    tailor.pictures(os.path.join(OUT, "place"), HEADC, views=CAP_VIEWS, res=(700, 600))
 
-# ---- the opening held on the hat line, the crown's front on the peak ---------------------------------------
+    # ---- the opening held on the hat line, the crown's front on the peak ---------------------------------------
 
-me = cap.data
-fixed = []
-for side_, (tk, bk_) in ((1, ("TL", "BL")), (-1, ("TR", "BR"))):
-    lower = ids(bk_, band_idx, "lower")[::-1]                    # front centre to tip
-    for j, vi in enumerate(lower):
-        s_ = j / max(1, len(lower) - 1) * band_lower * SCALE
-        me.vertices[vi].co = ring_at(side_ * s_)[0]
-        fixed.append(vi)
-    back = ids(tk, top_idx, "back")[::-1]                        # tip end (backEdge) to the centre back
-    for j, vi in enumerate(back):
-        s_ = (band_lower + j / max(1, len(back) - 1) * crown_back) * SCALE
-        me.vertices[vi].co = ring_at(side_ * s_)[0]
-        fixed.append(vi)
-    # THE CROWN'S FRONT SEWN ONTO THE PEAK (the research: the top's front 'sewn
-    # or pinned to the brim's upper face 1 to 2 cm behind the brim's edge'):
-    # the crown's side edge from its front centre, SEW_ON mm each way, along a
-    # line on the peak's top SNAP_BACK mm behind its edge (with the band's top
-    # edge sewn to it); a single snap point left the band's front to stand up
-    side_ids = ids(tk, top_idx, "side")[::-1]                    # from the front centre (midFront) back
-    band_up = ids(bk_, band_idx, "upper")                         # from the fold (foldTop) back
-    side_pts = np.array([top_flat[k] for k in top_idx["side"][::-1]])
-    run_ = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(side_pts, axis=0), axis=1))])
-    for j, vi in enumerate(side_ids):
-        if run_[j] > SEW_ON:
-            break
-        q = snap_line(side_ * run_[j] / 1000.0)
-        me.vertices[vi].co = q
-        fixed.append(vi)
-        if j < len(band_up):
-            me.vertices[band_up[j]].co = q
-            fixed.append(band_up[j])
-# BLOCKED (a flat cap is shaped on a block): the middle of the crown's centre line held level a little above
-# the top of the head, so the top lies flat instead of following the head's dome
-BLOCK = opt("--block", 0.0)                                      # m above the top of the head; 0 = not blocked
-if BLOCK > 0:
-    cen = ids("TL", top_idx, "centre")
-    cpts = np.array([top_flat[k] for k in top_idx["centre"]])
-    crun = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(cpts, axis=0), axis=1))])
-    y_front, y_back = CY - opt("--block-front", 0.075), CY + opt("--block-back", 0.035)
-    for j, vi in enumerate(cen):
-        u = crun[j] / crun[-1]
-        if 0.28 <= u <= 0.62:
-            yy = y_front + (y_back - y_front) * (u - 0.28) / 0.34
-            me.vertices[vi].co = Vector((0.0, yy, TOP_Z + BLOCK))
+    me = cap.data
+    fixed = []
+    for side_, (tk, bk_) in ((1, ("TL", "BL")), (-1, ("TR", "BR"))):
+        lower = ids(bk_, band_idx, "lower")[::-1]                    # front centre to tip
+        for j, vi in enumerate(lower):
+            s_ = j / max(1, len(lower) - 1) * band_lower * SCALE
+            me.vertices[vi].co = ring_at(side_ * s_)[0]
             fixed.append(vi)
-            fixed.append(ids("TR", top_idx, "centre")[j])
-            me.vertices[ids("TR", top_idx, "centre")[j]].co = Vector((0.0, yy, TOP_Z + BLOCK))
-me.update()
-# the head and the peak together are what the cloth lies on
-col = body.copy()
-col.data = body.data.copy()
-bpy.context.collection.objects.link(col)
-bpy.ops.object.select_all(action="DESELECT")
-col.select_set(True)
-peak_c = peak.copy()
-peak_c.data = peak.data.copy()
-bpy.context.collection.objects.link(peak_c)
-# the peak as one surface facing up, the cloth to lie on its top (as a thin solid, a point caught inside it
-# was pushed from face to face and walked 30 cm out sideways: the cap's sixth run)
-_pb = bmesh.new()
-_pb.from_mesh(peak_c.data)
-_pb.normal_update()
-for f in _pb.faces:
-    if f.normal.z < 0:
-        f.normal_flip()
-_pb.to_mesh(peak_c.data)
-_pb.free()
-peak_c.select_set(True)
-bpy.context.view_layer.objects.active = col
-bpy.ops.object.join()
-COL_BVH = tailor.bvh_of(col)
-bpy.data.objects.remove(col, do_unlink=True)
-gap, edges_ = tailor.relax(cap, G.sewing, fixed, COL_BVH, iterations=opt("--relax", 300, int), clear=CLEAR, report=say)
-log["sew"] = {"widestGapMm": gap, "edgesVsPattern": edges_}
-say("sewn", log["sew"])
-tailor.pictures(os.path.join(OUT, "sewn"), HEADC, views=CAP_VIEWS, res=(700, 600))
-co = tailor.coords(cap, evaluated=False)
-_wide = [i for i in range(len(co)) if abs(co[i][0]) > 0.16]
-say("wider than the head after sewing:", len(_wide), sorted(set(G.piece_of[i] for i in _wide)),
-    [(i, G.piece_of[i], [round(float(c), 3) for c in co[i]], [round(float(c), 3) for c in G.flat[i]], i in fixed) for i in _wide[:6]])
-merged = tailor.weld(cap, G.sewing, co, max_gap=0.02)
-fixed_now = []
-bm = bmesh.new()
-bm.from_mesh(cap.data)
-bm.verts.ensure_lookup_table()
-fx_co = [Vector(co[i]) for i in fixed]
-for v in bm.verts:
-    if min((v.co - f).length for f in fx_co) < 1e-5:
-        fixed_now.append(v.index)
-bm.free()
-gap2, edges2 = tailor.relax(cap, [], fixed_now, COL_BVH, iterations=opt("--settle", 150, int), clear=CLEAR, report=say,
-                            gravity=opt("--gravity", 0.0001), length_rounds=8)
-_before = tailor.coords(cap, evaluated=False)
-press_ = tailor.press(cap, COL_BVH, rounds=opt("--press", 60, int), smooth=opt("--smooth", 0.35), lengths=opt("--press-lengths", 5, int))
-_after = tailor.coords(cap, evaluated=False)
-_mv = np.linalg.norm(_after - _before, axis=1)
-say("press moved most", [(int(i), round(float(_mv[i]) * 1000), [round(float(c), 3) for c in _before[i]]) for i in np.argsort(-_mv)[:4]])
-log["edgeSmoothed"] = tailor.smooth_edges_of(cap, float(ring[:, 2].max()) + 0.03, rounds=16)
-# THE SEAM BETWEEN CROWN AND BAND SMOOTHED ALONG ITSELF (the close views: it
-# came out crinkled where the band's extra length gathered into it)
-seam_line = {}
-cco = tailor.coords(cap, evaluated=False)
-from mathutils.kdtree import KDTree as _KD
-_kd = _KD(len(cco))
-for i, q in enumerate(cco):
-    _kd.insert(Vector(q), i)
-_kd.balance()
-for side_, (tk, bk_) in ((1, ("TL", "BL")), (-1, ("TR", "BR"))):
-    line_ids = []
-    for a_, b_ in zip(ids(tk, top_idx, "side"), list(reversed(ids(bk_, band_idx, "upper")))):
-        mid_ = Vector((co[a_] + co[b_]) / 2)
-        _p, j, _d = _kd.find(mid_)
-        if _d < 0.02 and (not line_ids or line_ids[-1] != j):
-            line_ids.append(j)
-    seam_line[side_] = line_ids
-cme = cap.data
-for _ in range(20):
-    for side_, line_ids in seam_line.items():
-        new = {}
-        for k in range(1, len(line_ids) - 1):
-            a_, b_, c_ = (cme.vertices[line_ids[k + d]].co for d in (-1, 0, 1))
-            new[line_ids[k]] = b_ * 0.5 + (a_ + c_) * 0.25
-        for j, v in new.items():
-            cme.vertices[j].co = v
-cme.update()
-# THE CLOTH ON THE PEAK LIES ON IT (the close views: kept 4 mm off by the
-# collision, the band's front stood clear of the peak and the forehead showed
-# through the gap, a second brim): anything within 12 mm above the peak's top (22 left a sawtooth edge)
-# goes down to 1.5 mm above it
-_pb2 = bmesh.new()
-_pb2.from_mesh(peak.data)
-_pb2.transform(peak.matrix_world)
-PEAK_TREE = BVHTree.FromBMesh(_pb2)
-_pb2.free()
-laid = 0
-for v in cme.vertices:
-    w = cap.matrix_world @ v.co
-    hit, _n, _i, dist = PEAK_TREE.ray_cast(w, Vector((0, 0, -1)), opt("--lay", 0.012))
-    if hit is not None:
-        v.co = cap.matrix_world.inverted() @ (hit + Vector((0, 0, 0.0015)))
-        laid += 1
-cme.update()
-log["laidOnPeak"] = laid
-# and nothing inside the head after the smoothing (the second attempt's back: the head came through at two
-# corners where the edge smoothing pulled the cloth in)
-log["pushedOutOfHead"] = tailor.push_out(cap, BVH, 0.003)
-log["seamSmoothed"] = {k: len(v) for k, v in seam_line.items()}
-log["settle"] = {"welded": merged, "edgesVsPattern": edges2, "press": press_}
-say("settled", log["settle"])
+        back = ids(tk, top_idx, "back")[::-1]                        # tip end (backEdge) to the centre back
+        for j, vi in enumerate(back):
+            s_ = (band_lower + j / max(1, len(back) - 1) * crown_back) * SCALE
+            me.vertices[vi].co = ring_at(side_ * s_)[0]
+            fixed.append(vi)
+        # THE CROWN'S FRONT SEWN ONTO THE PEAK (the research: the top's front 'sewn
+        # or pinned to the brim's upper face 1 to 2 cm behind the brim's edge'):
+        # the crown's side edge from its front centre, SEW_ON mm each way, along a
+        # line on the peak's top SNAP_BACK mm behind its edge (with the band's top
+        # edge sewn to it); a single snap point left the band's front to stand up
+        side_ids = ids(tk, top_idx, "side")[::-1]                    # from the front centre (midFront) back
+        band_up = ids(bk_, band_idx, "upper")                         # from the fold (foldTop) back
+        side_pts = np.array([top_flat[k] for k in top_idx["side"][::-1]])
+        run_ = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(side_pts, axis=0), axis=1))])
+        for j, vi in enumerate(side_ids):
+            if run_[j] > SEW_ON:
+                break
+            q = snap_line(side_ * run_[j] / 1000.0)
+            me.vertices[vi].co = q
+            fixed.append(vi)
+            if j < len(band_up):
+                me.vertices[band_up[j]].co = q
+                fixed.append(band_up[j])
+    # BLOCKED (a flat cap is shaped on a block): the middle of the crown's centre line held level a little above
+    # the top of the head, so the top lies flat instead of following the head's dome
+    BLOCK = opt("--block", 0.0)                                      # m above the top of the head; 0 = not blocked
+    if BLOCK > 0:
+        cen = ids("TL", top_idx, "centre")
+        cpts = np.array([top_flat[k] for k in top_idx["centre"]])
+        crun = np.concatenate([[0.0], np.cumsum(np.linalg.norm(np.diff(cpts, axis=0), axis=1))])
+        y_front, y_back = CY - opt("--block-front", 0.075), CY + opt("--block-back", 0.035)
+        for j, vi in enumerate(cen):
+            u = crun[j] / crun[-1]
+            if 0.28 <= u <= 0.62:
+                yy = y_front + (y_back - y_front) * (u - 0.28) / 0.34
+                me.vertices[vi].co = Vector((0.0, yy, TOP_Z + BLOCK))
+                fixed.append(vi)
+                fixed.append(ids("TR", top_idx, "centre")[j])
+                me.vertices[ids("TR", top_idx, "centre")[j]].co = Vector((0.0, yy, TOP_Z + BLOCK))
+    me.update()
+    # the head and the peak together are what the cloth lies on
+    col = body.copy()
+    col.data = body.data.copy()
+    bpy.context.collection.objects.link(col)
+    bpy.ops.object.select_all(action="DESELECT")
+    col.select_set(True)
+    peak_c = peak.copy()
+    peak_c.data = peak.data.copy()
+    bpy.context.collection.objects.link(peak_c)
+    # the peak as one surface facing up, the cloth to lie on its top (as a thin solid, a point caught inside it
+    # was pushed from face to face and walked 30 cm out sideways: the cap's sixth run)
+    _pb = bmesh.new()
+    _pb.from_mesh(peak_c.data)
+    _pb.normal_update()
+    for f in _pb.faces:
+        if f.normal.z < 0:
+            f.normal_flip()
+    _pb.to_mesh(peak_c.data)
+    _pb.free()
+    peak_c.select_set(True)
+    bpy.context.view_layer.objects.active = col
+    bpy.ops.object.join()
+    COL_BVH = tailor.bvh_of(col)
+    bpy.data.objects.remove(col, do_unlink=True)
+    gap, edges_ = tailor.relax(cap, G.sewing, fixed, COL_BVH, iterations=opt("--relax", 300, int), clear=CLEAR, report=say,
+                               bend=opt("--bend", 0.0))
+    log["sew"] = {"widestGapMm": gap, "edgesVsPattern": edges_}
+    say("sewn", log["sew"])
+    tailor.pictures(os.path.join(OUT, "sewn"), HEADC, views=CAP_VIEWS, res=(700, 600))
+    co = tailor.coords(cap, evaluated=False)
+    _wide = [i for i in range(len(co)) if abs(co[i][0]) > 0.16]
+    say("wider than the head after sewing:", len(_wide), sorted(set(G.piece_of[i] for i in _wide)),
+        [(i, G.piece_of[i], [round(float(c), 3) for c in co[i]], [round(float(c), 3) for c in G.flat[i]], i in fixed) for i in _wide[:6]])
+    merged = tailor.weld(cap, G.sewing, co, max_gap=0.02)
+    fixed_now = []
+    bm = bmesh.new()
+    bm.from_mesh(cap.data)
+    bm.verts.ensure_lookup_table()
+    fx_co = [Vector(co[i]) for i in fixed]
+    for v in bm.verts:
+        if min((v.co - f).length for f in fx_co) < 1e-5:
+            fixed_now.append(v.index)
+    bm.free()
+    gap2, edges2 = tailor.relax(cap, [], fixed_now, COL_BVH, iterations=opt("--settle", 150, int), clear=CLEAR, report=say,
+                                gravity=opt("--gravity", 0.0001), length_rounds=8, bend=opt("--bend", 0.0))
+    _before = tailor.coords(cap, evaluated=False)
+    press_ = tailor.press(cap, COL_BVH, rounds=opt("--press", 60, int), smooth=opt("--smooth", 0.35), lengths=opt("--press-lengths", 5, int))
+    _after = tailor.coords(cap, evaluated=False)
+    _mv = np.linalg.norm(_after - _before, axis=1)
+    say("press moved most", [(int(i), round(float(_mv[i]) * 1000), [round(float(c), 3) for c in _before[i]]) for i in np.argsort(-_mv)[:4]])
+    log["edgeSmoothed"] = tailor.smooth_edges_of(cap, float(ring[:, 2].max()) + 0.03, rounds=16)
+    # THE SEAM BETWEEN CROWN AND BAND SMOOTHED ALONG ITSELF (the close views: it
+    # came out crinkled where the band's extra length gathered into it)
+    seam_line = {}
+    cco = tailor.coords(cap, evaluated=False)
+    from mathutils.kdtree import KDTree as _KD
+    _kd = _KD(len(cco))
+    for i, q in enumerate(cco):
+        _kd.insert(Vector(q), i)
+    _kd.balance()
+    for side_, (tk, bk_) in ((1, ("TL", "BL")), (-1, ("TR", "BR"))):
+        line_ids = []
+        for a_, b_ in zip(ids(tk, top_idx, "side"), list(reversed(ids(bk_, band_idx, "upper")))):
+            mid_ = Vector((co[a_] + co[b_]) / 2)
+            _p, j, _d = _kd.find(mid_)
+            if _d < 0.02 and (not line_ids or line_ids[-1] != j):
+                line_ids.append(j)
+        seam_line[side_] = line_ids
+    cme = cap.data
+    for _ in range(20):
+        for side_, line_ids in seam_line.items():
+            new = {}
+            for k in range(1, len(line_ids) - 1):
+                a_, b_, c_ = (cme.vertices[line_ids[k + d]].co for d in (-1, 0, 1))
+                new[line_ids[k]] = b_ * 0.5 + (a_ + c_) * 0.25
+            for j, v in new.items():
+                cme.vertices[j].co = v
+    cme.update()
+    # THE CLOTH ON THE PEAK LIES ON IT (the close views: kept 4 mm off by the
+    # collision, the band's front stood clear of the peak and the forehead showed
+    # through the gap, a second brim): anything within 12 mm above the peak's top (22 left a sawtooth edge)
+    # goes down to 1.5 mm above it
+    _pb2 = bmesh.new()
+    _pb2.from_mesh(peak.data)
+    _pb2.transform(peak.matrix_world)
+    PEAK_TREE = BVHTree.FromBMesh(_pb2)
+    _pb2.free()
+    laid = 0
+    for v in cme.vertices:
+        w = cap.matrix_world @ v.co
+        hit, _n, _i, dist = PEAK_TREE.ray_cast(w, Vector((0, 0, -1)), opt("--lay", 0.012))
+        if hit is not None:
+            v.co = cap.matrix_world.inverted() @ (hit + Vector((0, 0, 0.0015)))
+            laid += 1
+    cme.update()
+    log["laidOnPeak"] = laid
+    # and nothing inside the head after the smoothing (the second attempt's back: the head came through at two
+    # corners where the edge smoothing pulled the cloth in)
+    log["pushedOutOfHead"] = tailor.push_out(cap, BVH, 0.003)
+    log["seamSmoothed"] = {k: len(v) for k, v in seam_line.items()}
+    log["settle"] = {"welded": merged, "edgesVsPattern": edges2, "press": press_}
+    say("settled", log["settle"])
 
 # ---- the render mesh: tweed, the peak 5 mm thick ----------------------------------------------------------
 
@@ -518,8 +659,7 @@ _pk.to_mesh(peak.data)
 _pk.free()
 s2 = peak.modifiers.new("Solidify", "SOLIDIFY")
 s2.thickness, s2.offset = 0.0035, -1.0
-bv = peak.modifiers.new("Bevel", "BEVEL")
-bv.width, bv.segments = 0.0016, 3
+# (no bevel: on the peak's dense outline it speckled the rim)
 for o in (render, peak):
     for p in o.data.polygons:
         p.use_smooth = True
