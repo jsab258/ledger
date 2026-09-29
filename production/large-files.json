@@ -912,6 +912,22 @@
    "mb": 1121
   },
   {
+   "path": "F:/LedgerTools/slr83/scottish_english_male.zip",
+   "madeBy": "the builder, 29 September: downloaded from openslr.org/resources/83",
+   "why": "the source of the Scottish calibration set",
+   "status": "superseded",
+   "recorded": "2026-09-29",
+   "mb": 620
+  },
+  {
+   "path": "F:/LedgerTools/slr83/scottish_male",
+   "madeBy": "the builder, 29 September: OpenSLR 83 scottish_english_male.zip unpacked (CC BY-SA 4.0)",
+   "why": "calibrating the accent check on genuine Scottish speech (measurement only, never shipped)",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 949
+  },
+  {
    "path": "F:/LedgerTools/sopro",
    "madeBy": "the builder, 29 September: pip install sopro 2.2.0 and CPU torch in its own venv",
    "why": "Sopro V2 Turbo, the next free voice engine for the delay (Jafar: free routes only); tools/voice-live/sopro_takes.py",
