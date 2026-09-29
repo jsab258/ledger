@@ -221,7 +221,8 @@ static class Program
     /// there from nine to half past ten, then, taking the envelope, is seen
     /// leaving and reaches the landing near one after the two hours' walk);
     /// the gossip ticking hour by hour on the cast's routines; each morning at
-    /// nine whether DS Ellis comes (PoliceFile, on the street's talk); and what
+    /// nine whether DS Ellis comes (PoliceFile, on the street's talk), and if
+    /// she does, whom she asks (PoliceFile.Asked, town list 6bq); and what
     /// the five he met on day 1 show or say to his face as he passes each of
     /// them once an hour (StreetVoice.RegardFor, as --meridian: a best case).
     /// No other sighting is filed (the envelope's walk and the tea's are seen
@@ -235,8 +236,8 @@ static class Program
         int halfHour = (int)Math.Round(30 * rate);
         double MinuteOf(int gameHour) => gameHour / rate;
         Console.WriteLine($"first hour on paper: met {string.Join(",", met)}; play from 09:00 on day 0 to minute 60 (hour {lastHour}) at {rate.ToString(Inv)} game minutes a real second");
-        Console.WriteLine("| the envelope | Ada's tea | first shown to him | first said to his face | by minute 30 | the arrangement by minute 60 | Ada | Ellis |");
-        Console.WriteLine("|---|---|---|---|---|---|---|---|");
+        Console.WriteLine("| the envelope | Ada's tea | first shown to him | first said to his face | by minute 30 | the arrangement by minute 60 | Ada | Ellis | word of her by minute 60 |");
+        Console.WriteLine("|---|---|---|---|---|---|---|---|---|");
         var policies = new (string name, NightAnswer first, NightAnswer later)[]
         {
             ("takes it every night", NightAnswer.Did, NightAnswer.Did),
@@ -255,7 +256,8 @@ static class Program
                 var tea = AdasTea.For(0, true);
                 var police = new PoliceFile();
                 var remarks = new RemarkLedger();
-                string firstShown = null, firstFaced = null, ellis = "does not come", byThirty = null;
+                string firstShown = null, firstFaced = null, ellis = "does not come", byThirty = null, policeFaced = null;
+                int askedBy = 0;
                 int handOverAt = -1;   // play hour at which a delayed envelope is handed over
                 mill.Age(new GameTime(0, 9, 0));
                 for (int playHour = 0; playHour < lastHour; playHour++)
@@ -267,6 +269,7 @@ static class Program
                     {
                         string why = police.EllisComes(mill, day);
                         if (why != null && ellis == "does not come") ellis = $"day {day + 1} (minute {MinuteOf(playHour):0}), for {why}";
+                        if (why != null) askedBy += PoliceFile.Asked(mill, PoliceFile.WhoSheAsks(mill), why, now);
                     }
                     if (day == tea.Day && hod == 10) tea.SheSeesHim(now);
                     // Ron brings the ask after dark, at the office, before the tea.
@@ -302,10 +305,12 @@ static class Program
                         var rg = StreetVoice.RegardFor(g, mill.MinConfidenceToShare, false, remarks, Acquaintance.Known, companion);
                         if (rg.Knowing == Knowing.Nothing || !rg.KnowsItIsHim) continue;
                         firstShown ??= $"minute {MinuteOf(playHour + 1):0}, {p}";
-                        if (rg.Speaks && !rg.Faint && firstFaced == null && rg.Story != null)
+                        if (rg.Speaks && !rg.Faint && (firstFaced == null || (policeFaced == null && PoliceFile.IsAsking(rg.Story))) && rg.Story != null)
                         {
                             var line = StreetVoice.Recognition(g, rg.Story, rg.Stance, playHour, remarks);
-                            firstFaced = $"minute {MinuteOf(playHour + 1):0}, {p}: \"{line?.Text}\"";
+                            string said = $"minute {MinuteOf(playHour + 1):0}, {p}: \"{line?.Text}\"";
+                            firstFaced ??= said;
+                            if (PoliceFile.IsAsking(rg.Story)) policeFaced ??= said;
                         }
                         if (rg.Speaks && rg.Story != null)
                         {
@@ -320,7 +325,9 @@ static class Program
                 var adaG = mill.Get(AdasTea.Ada);
                 string adaAfter = $"{tea.State}, regard {adaG.Loyalty:0.00}" + (tea.SeenGoing ? ", saw him go" : "");
                 string arr = arrangement.Ended ? $"ended ({arrangement.EndedWhy}, {arrangement.Nights.Count} nights)" : $"stands ({arrangement.Nights.Count} nights)";
-                Console.WriteLine($"| {name} | {(sits ? "sits with her" : "stands her up")} | {firstShown ?? "never"} | {firstFaced ?? "never"} | {byThirty} | {arr} | {adaAfter} | {ellis} |");
+                int holdWord = mill.Agents.Count(a => a.Rumors.Any(PoliceFile.IsAsking));
+                string word = askedBy == 0 ? "-" : $"she asked {askedBy}, {holdWord} hold it; " + (policeFaced ?? "not said to his face");
+                Console.WriteLine($"| {name} | {(sits ? "sits with her" : "stands her up")} | {firstShown ?? "never"} | {firstFaced ?? "never"} | {byThirty} | {arr} | {adaAfter} | {ellis} | {word} |");
             }
         return 0;
     }

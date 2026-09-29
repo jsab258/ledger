@@ -225,6 +225,66 @@ namespace Ledger.Core
             return null;
         }
 
+        /// Every visit of hers about him is told under this topic and the day.
+        public const string AskingPrefix = "player.police_d";
+        /// How the people she asked tell it: news the street passes on, no
+        /// secret of his (not sensitive), so it never counts towards her coming
+        /// back (Loudness counts only his nights).
+        public const string AskedSaid = "that detective, Ellis, was on Quay Street asking after Mickey's nephew";
+        /// What each person she asked remembers, for their talk.
+        public const string AskedMemory = "DS Ellis, the detective, stopped me on Quay Street and asked me about Mickey's nephew, the new owner.";
+
+        /// Whether a story is the street's word that she was asking after him.
+        public static bool IsAsking(Rumor r) =>
+            r != null && r.TopicKey != null && r.TopicKey.StartsWith(AskingPrefix, StringComparison.Ordinal);
+
+        /// WHO SHE ASKS on a visit about him (town list 6bq): everybody of his
+        /// day world who holds a story of his nights, heard or seen, the ones
+        /// her enquiries lead her to; in order, for the save and the port.
+        public static List<string> WhoSheAsks(GossipMill mill)
+        {
+            var who = new List<string>();
+            if (mill == null) return who;
+            foreach (var a in mill.Agents)
+            {
+                if (a.Circle != "day") continue;
+                foreach (var r in a.Rumors)
+                    if (r.Content != null && r.Content.Subject == "player" && r.Sensitive && r.Confidence > 0) { who.Add(a.Id); break; }
+            }
+            who.Sort(StringComparer.Ordinal);
+            return who;
+        }
+
+        /// SHE ASKED THEM (town list 6bq; the checklist's A15.06, a warning
+        /// before any arrest, and the audible half of A15.09): on a visit that
+        /// EllisComes gave for him (the street's talk or a crime of his, never
+        /// a body, which is not about him), each person she asks remembers it
+        /// and has it to pass on as the street's news, "that detective was
+        /// asking after you" at his face, told like any story. Before it the
+        /// people she asked forgot her at once, and the claim check refused
+        /// anybody who said she had been. Returns how many she asked.
+        public static int Asked(GossipMill mill, IEnumerable<string> who, string why, GameTime now)
+        {
+            if (mill == null || who == null || string.IsNullOrEmpty(why) || why == "body") return 0;
+            var fact = new Fact("player", "police_d" + now.Day, "asking");
+            string topic = AskingPrefix + now.Day;
+            var seen = new HashSet<string>();
+            int n = 0;
+            foreach (var id in who)
+            {
+                var g = id == null ? null : mill.Get(id);
+                // Once a day: a crime and the street's talk on one visit ask once.
+                if (g == null || !seen.Add(id) || g.Rumors.Exists(r => r.TopicKey == topic && r.Hops == 0)) continue;
+                int memories = g.Memory.Events.Count;
+                mill.Witness(id, fact, AskedSaid, false, now, 1.0);
+                // Their memory of it is being asked, not a sighting of their own.
+                if (g.Memory.Events.Count > memories) g.Memory.Events.RemoveRange(memories, g.Memory.Events.Count - memories);
+                g.Memory.Append(new MemoryEvent(now, "observation", 0.7, AskedMemory));
+                n++;
+            }
+            return n;
+        }
+
         /// WHAT SHE CAN PUT TO HIM about one deed: the strongest thing she holds
         /// (a statement naming him over a description over talk), or null.
         public Known? Strongest(string topic)

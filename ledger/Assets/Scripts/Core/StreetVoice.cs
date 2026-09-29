@@ -353,8 +353,9 @@ namespace Ledger.Core
             foreach (var r in g.Rumors)
             {
                 // His night, or what he did with the outfit's ask, which shows
-                // though only the envelope handed over is a secret (town list 6z).
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
+                // though only the envelope handed over is a secret (town list 6z),
+                // or the police asking after him (town list 6bq).
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r))) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -374,7 +375,9 @@ namespace Ledger.Core
             foreach (var r in g.Rumors)
             {
                 // His night, or what he did with the outfit's ask, which shows
-                // though only the envelope handed over is a secret (town list 6z).
+                // though only the envelope handed over is a secret (town list 6z);
+                // not the police asking after him, which shows while it is news
+                // and is then forgotten, with no faint remark (town list 6bq).
                 if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r))) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence > 0.0) || r.Confidence >= shareFloor) continue;
@@ -505,6 +508,11 @@ namespace Ledger.Core
             foreach (var r in g.Rumors)
             {
                 if (r == null || r.Content == null || r.Content.Subject != "player") continue;
+                // The police asking after him is news of the police, not of
+                // anything he did: it shows in their manner, but weighs nothing
+                // on how they stand to him (town list 6bq, the independent check:
+                // being asked moved a person from Comments to Avoids).
+                if (PoliceFile.IsAsking(r)) continue;
                 if (!(r.Confidence >= 0.0)) continue;   // a NaN must not hide a real story
                 if (strongest == null || r.Confidence > strongest.Confidence) strongest = r;
             }
@@ -911,6 +919,26 @@ namespace Ledger.Core
                     "I've got to be somewhere.",
                     "Mind yourself.",
                     "...Evening.",
+                })
+                // THE POLICE ASKING AFTER HIM (town list 6bq): whoever she asked
+                // says so as the one she asked; whoever heard it, as talk.
+                : PoliceFile.IsAsking(about) && about.Hops == 0 ? From("recognition/police-asked", new[]
+                {
+                    "That detective stopped me about you.",
+                    "Had a detective on at me about you. Ellis, she said.",
+                    "Ellis was asking me about you. Thought you'd want to know.",
+                    "There's a woman detective asking about you.",
+                    "The police asked me about you.",
+                    "I've had the police at me over you.",
+                })
+                : PoliceFile.IsAsking(about) ? From("recognition/police-heard", new[]
+                {
+                    "That detective was asking after you, I hear.",
+                    "Police were round asking about you, they say.",
+                    "You've got the police asking questions, you know.",
+                    "Word is Ellis was down the street after you.",
+                    "Heard a detective's been asking about you.",
+                    "They say the police have been asking round about you.",
                 })
                 // WHAT HE DID WITH THE OUTFIT'S ASK (town list 6z): the first hour
                 // Jafar approved has the night come back to his face either way,
