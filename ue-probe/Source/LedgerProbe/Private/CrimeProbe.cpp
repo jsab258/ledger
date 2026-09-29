@@ -2078,6 +2078,46 @@ namespace
 		GGlass[1] = LedgerVignetteShot::FindStreetPiece(kGlassB);
 	}
 
+	// THE CAST FILE, once read (the ties, and the places where he is seen).
+	CastDay GCast;
+	bool bGCast = false;
+
+	// THE WINDOW AS A DEED THE TOWN HOLDS (town list 6ac, 6au): when it
+	// happened, game time, and where each who saw him near it saw him (a
+	// place id from the cast file), by gossip id.
+	bool bDeedDone = false;
+	int GDeedDay = -1, GDeedHour = -1;
+	std::map<std::string, std::string> GSawHimAt;
+
+	void MarkDeedTime()
+	{
+		if (bDeedDone) { return; }
+		bDeedDone = true;
+		GDeedDay = GNow.Day;
+		GDeedHour = GNow.Hour;
+	}
+
+	// SEEN NEAR THE DEED (town list 6au): the place nearest where he stood,
+	// kept as where this person saw him, and the story that he was there,
+	// given to them for the gossip to carry.
+	void SawHimNear(const GossiperPtr& G, double X, double Z, double Confidence)
+	{
+		if (!G || !bGCast) { return; }
+		MarkDeedTime();
+		const std::string Place = GCast.NearestPlace(X, Z, 6.0);
+		if (Place.empty()) { return; }
+		GSawHimAt[G->Id] = Place;
+		const std::string AreaId = GCast.AreaOf(Place);
+		const std::string Area = AreaId.empty() ? Place : AreaId;
+		const std::vector<std::string> Names = GCast.AreaNamesOf(Area);
+		const std::string Words = !Names.empty() ? Names[0] : !GCast.SaidOf(Place).empty() ? GCast.SaidOf(Place) : Area;
+		const std::string Topic = std::string("player.") + LedgerCrime::SightingPredicate(LedgerCrime::WindowDeedKey());
+		for (const RumorPtr& R : G->Rumors) { if (R && R->TopicKey() == Topic) { return; } }
+		RumorPtr At = LedgerCrime::SightingStory(LedgerCrime::WindowDeedKey(), Area, Words, GDeedDay, GDeedHour, G->Id, Confidence);
+		G->Rumors.push_back(At);
+		UE_LOG(LogTemp, Display, TEXT("LedgerDeed: %s saw him at %s: %s"), *Un(G->Id), *Un(Place), *Un(At->Summary));
+	}
+
 	// ---- filing what a witness got ---------------------------------------
 	void ResolveAndFile(int Index)
 	{
@@ -2146,6 +2186,12 @@ namespace
 				const Fact Content(std::string("player"), std::string("broke_a_window"), VictimId);
 				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/false, GNow,
 				               R.O.Certainty, /*bIndelible=*/false);
+				// WHERE SHE SAW HIM (town list 6ac, 6au), in play, when what she
+				// saw can be tied to him.
+				if (GEnc == EEncounter::Live && Index == 0 && LedgerCrime::CanTieSighting(R.O.Rung))
+				{
+					SawHimNear(GMill->Get(R.WitnessId), LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, R.O.Certainty);
+				}
 				if (GEnc != EEncounter::None && Index == 0 && R.WitnessId == "w1")
 				{
 					GW1RungA = R.O.Rung;
@@ -2286,6 +2332,9 @@ namespace
 	// through the same input path, so the playable version is also checked
 	// by the build. One step counter; nothing else differs.
 	bool bLiveScript = false;
+	// -AskAfterDeed (29 September): the scripted talk breaks the window first, as
+	// -LiveScript does, and asks once the street holds the deed.
+	bool bAskAfterDeed = false;
 	bool bLiveFled = false;
 	int32 GLiveStep = 0;
 	double GLiveStepAt = 0.0;
@@ -2364,6 +2413,7 @@ namespace
 			GN2->Memory->Append(MemoryEvent(GNow, "observation", 0.6, "What I saw myself: " + GFleeSummary));
 		}
 		bFleeFiled = GN2 != nullptr;
+		if (GEnc == EEncounter::Live) { SawHimNear(GN2, LedgerCrime::kFleeX, LedgerCrime::kFleeZ, GFleeCertainty); }
 	}
 
 	// WHAT ONE RESIDENT HOLDS, AS THE EVIDENCE THE CORE DERIVES SUSPICION
@@ -2956,6 +3006,10 @@ namespace
 		// 6 m), not guessed from their routines.
 		const bool bFresh = !GLive.Talked.count(Card) || GLive.Left.count(Card);
 		const std::string Acquaintance = AcquaintanceJson(G, Card);
+		// THE DEED THEY HOLD (town list 6ac, 6am, 6au).
+		const std::string DeedField = (bDeedDone && G)
+			? LedgerCrime::DeedJson(*G, LedgerCrime::WindowDeedKey(), GDeedDay, GDeedHour, GSawHimAt.count(G->Id) ? GSawHimAt[G->Id] : std::string())
+			: std::string();
 		GLive.Talked.insert(Card);
 		GLive.Left.erase(Card);
 		std::string Present;
@@ -2976,9 +3030,9 @@ namespace
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
 			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
-			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + "}\n";
+			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
-		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)));
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
 		GLive.PendingCard = Card;
@@ -3041,6 +3095,64 @@ namespace
 			Said += " " + A->second + "-" + B->second + "=" + LedgerCrime::F2(T.W);
 		}
 		UE_LOG(LogTemp, Display, TEXT("LedgerCast: ties from %s:%s"), *Path, *Un(Said));
+		GCast = Cast;
+		bGCast = true;
+	}
+
+	// WHAT A REPLY SAYS OF HIS ANSWER, HIS OWNING UP AND A PROMISE TO KEEP
+	// QUIET (town list 6am, 6al), into the town's gossip: a definite answer
+	// about where he was becomes the story "he says he was at ..." held by
+	// the one he told, carried like any story; owning up gives them the deed's
+	// story as told by him; an agreement to keep it quiet holds back what they
+	// know of it. NOT HERE: a fragile agreement taken back when somebody pays
+	// or threatens them, since nobody in the game pays or threatens yet; and a
+	// killing's "grave", since there is none.
+	GossiperPtr GossiperOfCard(const std::string& Card)
+	{
+		return Card == "lena" ? GW1 : Card == "sam" ? GN2 : Card == "rocco" ? GR3 : GossiperPtr();
+	}
+
+	void TakeClaimsFromReply(const std::string& Line, const std::string& Card)
+	{
+		using namespace LedgerVignette;
+		const GossiperPtr G = GossiperOfCard(Card);
+		Value Root;
+		std::string Err;
+		if (!G || !MiniJson::Deserialize(Line, Root, Err) || Root.Type != T_OBJ) { return; }
+		const Value* Claim = CastDay::GetObject(&Root, "claim");
+		const Value* Definite = CastDay::Get(Claim, "definite");
+		const Value* AreasV = CastDay::GetList(Claim, "areas");
+		std::string Topic;
+		if (Claim != nullptr && Definite != nullptr && Definite->Type == T_BOOL && Definite->Bool && AreasV != nullptr
+		    && CastDay::GetString(Claim, "topic", Topic) && !Topic.empty())
+		{
+			std::vector<std::string> Areas;
+			for (const Value& A : AreasV->Arr) { if (A.Type == T_STR && !A.Str.empty()) { Areas.push_back(A.Str); } }
+			if (!Areas.empty())
+			{
+				const std::vector<std::string> Names = bGCast ? GCast.AreaNamesOf(Areas[0]) : std::vector<std::string>();
+				RumorPtr Said = LedgerCrime::ClaimStory(Topic, Areas, Names.empty() ? Areas[0] : Names[0], G->Id);
+				bool bHeld = false;
+				for (const RumorPtr& R : G->Rumors) { if (R && R->TopicKey() == Said->TopicKey() && R->Content.Value == Said->Content.Value) { bHeld = true; } }
+				if (!bHeld)
+				{
+					G->Rumors.push_back(Said);
+					UE_LOG(LogTemp, Display, TEXT("LedgerDeed: %s heard him say: %s"), *Un(Card), *Un(Said->Summary));
+				}
+			}
+		}
+		const Value* Quiet = CastDay::GetObject(&Root, "keepsQuiet");
+		const Value* Agreed = CastDay::Get(Quiet, "agreed");
+		if (Quiet != nullptr && Agreed != nullptr && Agreed->Type == T_BOOL && Agreed->Bool && CastDay::GetString(Quiet, "topic", Topic) && !Topic.empty())
+		{
+			LedgerCrime::KeepQuiet(*G, Topic);
+			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: %s keeps %s quiet"), *Un(Card), *Un(Topic));
+		}
+		if (CastDay::GetString(&Root, "ownedUp", Topic) && !Topic.empty())
+		{
+			G->Rumors.push_back(LedgerCrime::OwnedUpStory(Topic, G->Id));
+			UE_LOG(LogTemp, Display, TEXT("LedgerDeed: he owned up to %s to %s"), *Un(Topic), *Un(Card));
+		}
 	}
 
 	// A list of strings out of a reply line: "name":["a","b"].
@@ -3193,6 +3305,7 @@ namespace
 						LedgerSession::Write(TEXT("known"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"how\":\"talk\",\"story\":") + LedgerSession::Str(Story));
 					}
 				}
+				TakeClaimsFromReply(L, GLive.PendingCard);
 				if (GLive.bFirstSaid)
 				{
 					const std::string Rest = JsonField(L, "rest");
@@ -3343,6 +3456,7 @@ namespace
 			GAsk.Left = N;
 		}
 		if (GAsk.N < 0) { return; }
+		if (bAskAfterDeed && GPhase != ECrimePhase::LiveRoam) { return; }
 		static const char* Lines[] = { "What are you selling today, then?", "Evening. Anything going on round here?",
 			"You look like you've been stood there a while.", "Who's the new owner, then?", "Is it always this quiet?",
 			"Did you hear the glass go last night?" };
@@ -3940,6 +4054,8 @@ namespace
 			+ "\nrungA=" + std::to_string(GW1RungA)
 			+ "\nothersNear=" + std::to_string(GFleeOthersSeen)
 			+ "\ntalkStamp=" + GLive.TalkStamp
+			+ (bDeedDone ? "\ndeedDay=" + std::to_string(GDeedDay) + "\ndeedHour=" + std::to_string(GDeedHour) : std::string())
+			+ [] { std::string S; for (const auto& Kv : GSawHimAt) { S += "\nsaw_" + Kv.first + "=" + Kv.second; } return S; }()
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
 		// THE TALK SAVED BESIDE IT, under the same stamp (handover 6r).
 		if (GLive.bStarted && GLive.bReady)
@@ -3992,6 +4108,9 @@ namespace
 				else if (Kv == TEXT("rungA")) { GW1RungA = FCString::Atoi(*V); }
 				else if (Kv == TEXT("othersNear")) { GFleeOthersSeen = FCString::Atoi(*V); }
 				else if (Kv == TEXT("talkStamp")) { GLive.TalkStamp = Utf8(V); }
+				else if (Kv == TEXT("deedDay")) { GDeedDay = FCString::Atoi(*V); bDeedDone = true; }
+				else if (Kv == TEXT("deedHour")) { GDeedHour = FCString::Atoi(*V); }
+				else if (Kv.StartsWith(TEXT("saw_"))) { GSawHimAt[Utf8(Kv.Mid(4))] = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 			}
 		}
@@ -4606,9 +4725,9 @@ namespace
 		}
 		case ECrimePhase::LiveWaitDeed:
 		{
-			if (bLiveScript)
+			if (bLiveScript || bAskAfterDeed)
 			{
-				LiveVoiceStart();
+				if (bLiveScript) { LiveVoiceStart(); }
 				if (GLiveStep == 0)
 				{
 					TeleportPawn(World, LedgerCrime::kCrimeAX, LedgerCrime::kCrimeAZ, 90.0);
@@ -4641,6 +4760,7 @@ namespace
 			GFleeSeconds = 0.0;
 			GLiveDeedAt = Now;
 			LedgerSession::Write(TEXT("deed"), TEXT("\"what\":\"player.window_d1\""));
+			MarkDeedTime();
 			// AND SEEN: broken glass on the pavement under the window, in play
 			// only (the regression's piece counts do not move). A clear pane
 			// that vanishes looks the same as a clear pane.
@@ -4831,6 +4951,7 @@ namespace LedgerCrimeProbe
 				     : Mode == TEXT("live") ? EEncounter::Live : EEncounter::None;
 			}
 			bLiveScript = FParse::Param(FCommandLine::Get(), TEXT("LiveScript"));
+			bAskAfterDeed = FParse::Param(FCommandLine::Get(), TEXT("AskAfterDeed"));
 		}
 
 		GGraph = std::make_shared<SocialGraph>();
