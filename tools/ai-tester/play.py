@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py start [--editor] [--force] [--wait 60]
+    python tools/ai-tester/play.py start [--editor | --plain] [--force] [--wait 60] [--game-arg X]
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
@@ -401,6 +401,11 @@ def start(args):
             shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
             shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
     game_args += [x for x in args.get("extra", []) if x.startswith("-") and " " not in x]
+    # --plain, 29 September: the packaged game as a friend starts it, with no
+    # mode and no talk path, only a window the tester can drive.
+    if args.get("plain"):
+        game_args = ["-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
+                     "-dpcvars=Slate.ForceRawInputSimulation=1"]
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
@@ -574,7 +579,7 @@ if __name__ == "__main__":
     verb = argv[0] if argv else ""
     rest = argv[1:]
     if verb == "start":
-        a = {"editor": "--editor" in rest, "force": "--force" in rest}
+        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest}
         if "--wait" in rest:
             a["wait"] = rest[rest.index("--wait") + 1]
         # --game-arg X, repeatable: one more argument for the game, such as a
