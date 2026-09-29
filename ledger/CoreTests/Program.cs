@@ -6315,7 +6315,26 @@ namespace Ledger.CoreTests
                 var hoursBack = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(hours.ToJson()))));
                 int afterLoad = hoursBack.RunTo(hoursMill, rc, new GameTime(0, 11, 30));
                 var townBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(new TownSave { Hours = hours }.ToJson()))));
-                bool hoursOnce = firstRun == 1 && sameHour == 0 && gameOwnPair && skippedTwo == 2 && hours.NextHour == 12 && afterLoad == 0
+                // A load loses no hour of fading: straight through against a save and
+                // load (a fresh mill with the same stories) at half past two.
+                GossipMill Fading() { var m = RoundsMill(); return m; }
+                var straight = Fading(); var straightHours = new TownHours();
+                for (int hh = 9; hh <= 20; hh++) straightHours.RunTo(straight, rc, new GameTime(0, hh, 0));
+                var loaded = Fading(); var loadedHours = new TownHours();
+                for (int hh = 9; hh <= 14; hh++) loadedHours.RunTo(loaded, rc, new GameTime(0, hh, 0));
+                var reGraph = new SocialGraph();
+                foreach (var (a, b, w) in rc.Ties) reGraph.Link(a, b, w);
+                var reloaded = new GossipMill(reGraph);
+                foreach (var g0 in loaded.Agents)
+                {
+                    var copy = new Gossiper(g0.Id, g0.Id, new MemoryStore(g0.Id), new KnowledgeBase(), new SuspicionTracker());
+                    foreach (var r0 in g0.Rumors) copy.Rumors.Add(new Rumor { Content = r0.Content, Summary = r0.Summary, Confidence = r0.Confidence, Hops = r0.Hops, Sensitive = r0.Sensitive });
+                    reloaded.Add(copy);
+                }
+                var reloadedHours = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(loadedHours.ToJson()))));
+                for (int hh = 15; hh <= 20; hh++) reloadedHours.RunTo(reloaded, rc, new GameTime(0, hh, 0));
+                bool noHourLost = Math.Abs(straight.Get("p").Rumors[0].Confidence - reloaded.Get("p").Rumors[0].Confidence) < 1e-12;
+                bool hoursOnce = firstRun == 1 && sameHour == 0 && gameOwnPair && skippedTwo == 2 && hours.NextHour == 12 && afterLoad == 0 && noHourLost
                                  && townBack.Hours.NextHour == 12 && TownRounds.HourStart(-1).Equals(new GameTime(-1, 23, 0));
                 Check(passed9 >= 1 && qHeard && rNotYet && rHeard && same && !Holds(onStreetBoth, "q") && Holds(onStreetOne, "q") && noRetell && hoursOnce
                       && ran == 3 && Holds(skipped, "r") && longest == TownRounds.LongestCatchUpHours

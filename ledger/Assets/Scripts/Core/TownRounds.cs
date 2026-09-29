@@ -88,6 +88,11 @@ namespace Ledger.Core
             if (mill == null || cast == null) return 0;
             long hourNow = TownRounds.FloorDiv(now.TotalMinutes, 60);
             if (hourNow < NextHour) return 0;
+            // The mill's ageing clock is not in the save: started again at the
+            // first hour not yet run, a load loses no hour of fading (the
+            // independent check: one hour's fade missing after each load). A
+            // mill that has aged to that hour already is not aged again.
+            if (NextHour >= 0) mill.Age(TownRounds.HourStart(NextHour));
             int ran = 0;
             if (NextHour >= 0 && hourNow > NextHour)
                 ran += TownRounds.CatchUp(mill, cast, TownRounds.HourStart(NextHour), TownRounds.HourStart(hourNow));
