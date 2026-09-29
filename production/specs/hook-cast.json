@@ -1219,6 +1219,7 @@
   },
   {
    "id": "rita",
+   "police": "never",
    "called": "Rita, who keeps the pawn shop",
    "name": "Rita",
    "role": "keeps Rita's pawn",
@@ -1273,6 +1274,7 @@
   },
   {
    "id": "victor",
+   "police": "never",
    "called": "the pawn's back-room hand",
    "role": "the pawn's back room",
    "routine": [
@@ -1318,6 +1320,7 @@
   },
   {
    "id": "hal",
+   "police": "never",
    "called": "Hal, who keeps the coin shop that sells no coins",
    "name": "Hal",
    "role": "keeps the coin shop that sells no coins; calls on Rita's on Mondays",
@@ -1382,6 +1385,7 @@
   },
   {
    "id": "tibor",
+   "police": "never",
    "called": "a customs officer who lives past Rita's",
    "role": "a customs officer, home past Rita's",
    "routine": [
@@ -2897,6 +2901,7 @@
   },
   {
    "id": "drago",
+   "police": "never",
    "called": "a scrap dealer on the warehouse row",
    "role": "a scrap dealer on the old warehouse row",
    "routine": [
@@ -2947,6 +2952,7 @@
   },
   {
    "id": "outfit_man",
+   "police": "never",
    "circle": "night",
    "called": "a man who hangs about the ferry landing at night",
    "role": "one of the outfit Mickey had his arrangement with, never named; at the ferry landing at night (town list 6z)",

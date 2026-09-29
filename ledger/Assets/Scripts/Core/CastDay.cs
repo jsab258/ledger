@@ -59,6 +59,7 @@ namespace Ledger.Core
         readonly Dictionary<string, KeepsQuietFor> _quiet = new Dictionary<string, KeepsQuietFor>();
         readonly HashSet<string> _nameOnTrust = new HashSet<string>();
         readonly Dictionary<string, string> _circle = new Dictionary<string, string>();
+        readonly HashSet<string> _neverToPolice = new HashSet<string>();
         readonly List<(string a, string b, double w)> _ties = new List<(string, string, double)>();
 
         public IReadOnlyList<string> People => _people;
@@ -112,6 +113,12 @@ namespace Ledger.Core
                 if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
                 if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
                 if (MiniJson.GetString(p, "keepsQuiet") is string kq) c._quiet[id] = Silence.Parse(kq.Trim());
+                if (p.ContainsKey("police"))
+                {
+                    if (!(p["police"] is string pol) || pol != "never")
+                        throw new FormatException($"cast file: {id}'s police must be \"never\" or absent");
+                    c._neverToPolice.Add(id);
+                }
                 if (p.ContainsKey("circle"))
                 {
                     if (!(p["circle"] is string cr) || (cr != "day" && cr != "night" && cr != "both"))
@@ -298,6 +305,11 @@ namespace Ledger.Core
         /// ladder sends (Jafar, on the 29 September page: Sheila is the exception by
         /// her own choice, as she promised Mickey to size him up).
         public bool NamesHimOnlyOnTrust(string id) => id != null && _nameOnTrust.Contains(id);
+
+        /// Whether somebody never goes to the police, whatever they saw or
+        /// suffered: their trade keeps them from it (the file's "police": "never",
+        /// town list 6bj). Read only by PoliceFile.WouldReport.
+        public bool NeverToPolice(string id) => id != null && _neverToPolice.Contains(id);
 
         /// Which of his worlds somebody belongs to, for the gossip (Gossiper.Circle):
         /// the file's "circle", else "day", the town he lives among by day

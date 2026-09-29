@@ -51,9 +51,11 @@ namespace Ledger.Core
     /// enquiries bring her through the Hook: she comes to Quay Street for a body,
     /// for a crime a detective takes once reported, and, from the first hour's
     /// day 4, for the street's talk once it is loud. The street always knows
-    /// more than she does. With every trait at its default (nerve and loyalty
-    /// 0.5) no witness reports anything: the cast file gives nobody traits yet
-    /// (town list 6bj), so who reports is decided by traits still to be given.
+    /// more than she does. Who reports is decided by each person's nerve and
+    /// loyalty; the cast file gives nobody their own yet (town list 6bj: moving
+    /// the town off the middle values moves bribes, debts, company and more,
+    /// so the scope is Jafar's), so at the defaults no witness reports unless
+    /// the story cools them on him (Ada stood up for her tea).
     public sealed class PoliceFile
     {
         /// How many people of his day world must be passing talk of his nights
@@ -114,10 +116,12 @@ namespace Ledger.Core
         ///     into that band).
         ///   - Nobody reports a sighting that is no crime; nobody on a hook
         ///     reports anything; somebody bought or frightened quiet about this
-        ///     deed (`topic` in their Suppressed) reports nothing but a body.
-        public static bool WouldReport(Gossiper g, Offence o, bool victim, string topic)
+        ///     deed (`topic` in their Suppressed) reports nothing but a body;
+        ///     somebody whose trade keeps them from the police (`neverToPolice`,
+        ///     CastDay.NeverToPolice) reports nothing at all.
+        public static bool WouldReport(Gossiper g, Offence o, bool victim, string topic, bool neverToPolice = false)
         {
-            if (g == null || o == Offence.Suspicious || g.Leashed) return false;
+            if (g == null || neverToPolice || o == Offence.Suspicious || g.Leashed) return false;
             if (topic != null && g.Suppressed.Contains(topic) && o != Offence.Killing) return false;
             if (victim)
             {
