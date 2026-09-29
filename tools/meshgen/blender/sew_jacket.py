@@ -52,12 +52,20 @@ BODY_ONLY = "--body" in argv
 # --from SETTLED.npy: the body stage's settled points; the body starts there and
 # each sleeve starts with its top on the settled armhole (the second stage)
 FROM = argv[argv.index("--from") + 1] if "--from" in argv else None
+# --pose DEG: the whole jacket sewn and draped with the arms raised to DEG
+# below the horizontal, then the arms lowered to the rest pose over RETURN
+# frames with the cloth carried on them (29 September: in the rest pose the
+# arms, 45 degrees down, close the armpits and the sleeves cannot form)
+POSE = float(argv[argv.index("--pose") + 1]) if "--pose" in argv else None
+RETURN = 60
 os.makedirs(OUT, exist_ok=True)
 T0 = time.time()
 EDGE = 10.0                       # cloth triangle edge, mm (the research: drape at about 10 mm)
 CLEAR_TORSO = 0.045               # the body pieces start this far out from the torso, metres
 CLEAR_ARM = 0.04
 LIFT = 0.12                       # the body pieces start this far above where they hang, so the shoulders close over him
+if "--lift" in argv:
+    LIFT = float(argv[argv.index("--lift") + 1])
 Y_BEND, R_BEND = 150.0, 0.06      # above this far down the pattern (mm) each body piece bends in over the shoulder, round this radius (m)
 
 pattern = json.load(open(SRC, encoding="utf-8"))
@@ -244,10 +252,44 @@ for o in meshes[1:]:
 
 
 def joint(name):
+    if POSE is not None:
+        return arm.matrix_world @ arm.pose.bones[name].head
     return arm.matrix_world @ arm.data.bones[name].head_local
 
 
-body_me = body_src.data.copy()
+# THE ARMS RAISED (--pose): each upper arm turned about the axis square to it
+# and to the vertical, at its own joint, until the elbow is DEG below the
+# shoulder's horizontal; the forearm and hand follow as its children.
+REST_ROT = {}
+if POSE is not None:
+    bpy.context.view_layer.objects.active = arm
+    for side in ("l", "r"):
+        pb = arm.pose.bones["upperarm_" + side]
+        REST_ROT[side] = pb.rotation_quaternion.copy() if pb.rotation_mode == "QUATERNION" else pb.rotation_euler.copy()
+        bpy.context.view_layer.update()
+        sh_w = arm.matrix_world @ pb.head
+        el_w = arm.matrix_world @ arm.pose.bones["lowerarm_" + side].head
+        d = (el_w - sh_w).normalized()
+        now = math.degrees(math.asin(max(-1.0, min(1.0, -d.z))))       # degrees below horizontal
+        ax = d.cross(Vector((0, 0, 1))).normalized()
+        from mathutils import Matrix
+        Rw = Matrix.Rotation(math.radians(POSE - now) * -1.0, 4, ax)     # turns d up by (now - POSE)
+        test = (Rw.to_3x3() @ d)
+        if test.z < d.z:                                                  # the axis's sign: the elbow must rise
+            Rw = Matrix.Rotation(math.radians(now - POSE) * -1.0, 4, ax)
+        M = arm.matrix_world
+        Ra = (M.inverted() @ Rw @ M).to_3x3().to_4x4()
+        head_a = pb.head.copy()
+        T = Matrix.Translation(head_a) @ Ra @ Matrix.Translation(-head_a)
+        pb.matrix = T @ pb.matrix
+        bpy.context.view_layer.update()
+        el2 = arm.matrix_world @ arm.pose.bones["lowerarm_" + side].head
+        d2 = (el2 - sh_w).normalized()
+        print("POSE arm %s: %.1f degrees below horizontal, now %.1f" % (side, now, math.degrees(math.asin(-d2.z))), flush=True)
+    dg = bpy.context.evaluated_depsgraph_get()
+    body_me = bpy.data.meshes.new_from_object(body_src.evaluated_get(dg))
+else:
+    body_me = body_src.data.copy()
 body_me.transform(body_src.matrix_world)
 body = bpy.data.objects.new("Body", body_me)
 bpy.context.collection.objects.link(body)
@@ -365,14 +407,18 @@ def place_sleeve(flat, side):
     up = Vector((0, 0, 1))
     across = axis.cross(up).normalized()             # horizontal, square to the arm
     over = across.cross(axis).normalized()           # the top of the arm
-    bic = sh + axis * 0.13 + Vector((0, 0, LIFT))   # the biceps line, 13 cm down the arm, clear of the armpit
+    bic = sh + axis * 0.13 + Vector((0, 0, LIFT if POSE is None else 0.0))   # the biceps line, 13 cm down the arm, clear of the armpit
     width_top = 2 * sp["bicepsRight"][0]
     width_cuff = 2 * sp["wristRight"][0]
     out = []
     for x, y in flat:
         t = max(0.0, min(1.0, y / sp["centerWrist"][1]))
         w = width_top + (width_cuff - width_top) * t
-        r = w / (2 * math.pi) / 1000.0 + CLEAR_ARM
+        # THE PATTERN'S OWN GIRTH, as the body pieces' ellipse: a radius of
+        # w / 2 pi rolls the flat piece without stretching it; the ease is the
+        # pattern's (bicepsEase), and 4 cm more stretched the first frame by
+        # half again, which the cloth then kept (29 September)
+        r = w / (2 * math.pi) / 1000.0 + (CLEAR_ARM if POSE is None else 0.0)
         th = math.pi * x / (w / 2)                   # 0 on top of the arm, +-pi underneath
         # the front of the arm towards -Y: turn so that +x runs forward
         pos = bic + axis * (y / 1000.0) + (over * math.cos(th) + across * math.sin(th) * side) * r
@@ -496,9 +542,17 @@ for poly in me.polygons:
         c = flat_co[me.loops[li].vertex_index]
         uv.data[li].uv = (c[0] / 3.0 + 0.5, c[1] / 3.0 + 0.9)
 
-col = body.modifiers.new("Collision", "COLLISION")
-body.collision.thickness_outer = 0.002
-body.collision.cloth_friction = 10.0
+# POSED, the collider is the body on its skeleton, so it moves as the arms come
+# down; otherwise the still copy
+collider = body_src if POSE is not None else body
+if POSE is not None:
+    body_src.hide_set(False)
+    body_src.hide_render = False
+    body.hide_render = True
+    body.hide_set(True)
+col = collider.modifiers.new("Collision", "COLLISION")
+collider.collision.thickness_outer = 0.002
+collider.collision.cloth_friction = 10.0
 
 cl = jacket.modifiers.new("Cloth", "CLOTH")
 st, cs = cl.settings, cl.collision_settings
@@ -515,6 +569,20 @@ cs.distance_min = 0.002           # the research: about 2 mm; wider rests on air
 cs.collision_quality = 4
 cs.use_self_collision = False
 SEWN = min(100, FRAMES - 40)
+if POSE is not None:
+    # sewn by SEWN, settled under gravity 40 frames, the arms brought down over
+    # RETURN frames, then 30 to settle
+    F0 = SEWN + 40
+    FRAMES = max(FRAMES, F0 + RETURN + 30) if "--noreturn" not in argv else F0
+    for side in ("l", "r"):
+        pb = arm.pose.bones["upperarm_" + side]
+        path = "rotation_quaternion" if pb.rotation_mode == "QUATERNION" else "rotation_euler"
+        pb.keyframe_insert(path, frame=1)
+        pb.keyframe_insert(path, frame=F0)
+        setattr(pb, path, REST_ROT[side])
+        pb.keyframe_insert(path, frame=F0 + RETURN)
+    scn0 = bpy.context.scene
+    scn0.frame_set(1)
 gw = st.effector_weights
 gw.gravity = 0.0
 gw.keyframe_insert("gravity", frame=1)
@@ -557,6 +625,13 @@ cen = Vector((CX, CY, (HPS_Z + chest_z) / 2))
 if sum(f.normal.dot(f.calc_center_median() - cen) for f in bm.faces) < 0:
     bmesh.ops.reverse_faces(bm, faces=bm.faces[:])
 # how far off the body it sits, and the hem's width against the chest's
+if POSE is not None:
+    # measured against the body where it ended, back in its rest pose
+    _fin = bpy.data.meshes.new_from_object(body_src.evaluated_get(bpy.context.evaluated_depsgraph_get()))
+    _fin.transform(body_src.matrix_world)
+    _bf = bmesh.new()
+    _bf.from_mesh(_fin)
+    BVH = BVHTree.FromBMesh(_bf)
 near = [BVH.find_nearest(v.co) for v in bm.verts]
 clear_mm = sorted((n[3] * 1000.0) for n in near if n[0] is not None)
 hem_z = min(v.co.z for v in bm.verts)
@@ -578,8 +653,8 @@ wool.diffuse_color = (0.05, 0.06, 0.09, 1)
 jacket.data.materials.append(wool)
 grey = bpy.data.materials.new("M_Body")
 grey.diffuse_color = (0.5, 0.5, 0.5, 1)
-body.data.materials.clear()
-body.data.materials.append(grey)
+collider.data.materials.clear()
+collider.data.materials.append(grey)
 scn.render.engine = "BLENDER_WORKBENCH"
 scn.display.shading.light = "STUDIO"
 scn.display.shading.color_type = "MATERIAL"
@@ -596,7 +671,7 @@ for label, off in (("front", (0, -3.4, 0.1)), ("side", (3.4, 0, 0.1)), ("back", 
     bpy.ops.render.render(write_still=True)
 
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT, "jacket.blend"))
-report = {"pattern": SRC, "body": BODY, "frames": FRAMES, "vertices": len(done.vertices), "triangles": len(done.polygons),
+report = {"pattern": SRC, "body": BODY, "frames": FRAMES, "pose": POSE, "lift": LIFT, "vertices": len(done.vertices), "triangles": len(done.polygons),
           "seamPairs": len(sewing), "gapsByFrame": gaps,
           "clearanceMm": {"min": round(clear_mm[0], 1), "p05": round(clear_mm[len(clear_mm) // 20], 1),
                           "median": round(clear_mm[len(clear_mm) // 2], 1)},
