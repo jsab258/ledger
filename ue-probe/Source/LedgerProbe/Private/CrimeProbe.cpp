@@ -121,6 +121,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Sound/SoundWaveProcedural.h"
 
+#include <set>
 #include <string>
 #include <vector>
 
@@ -2444,7 +2445,17 @@ namespace
 		// game is sent once the talk program is ready.
 		std::string TalkStamp;
 		bool bTalkLoad = false, bTalkReset = false;
+		// A CONVERSATION STARTS AND ENDS, 29 September (handover 6ae): whom
+		// he has talked to, and who has since been left (out of earshot, or
+		// they closed it), so the next line to them starts afresh.
+		std::set<std::string> Talked, Left;
 	};
+
+	// The named cast's bodies by their cast id (the talk program's "who").
+	AActor* CardBody(const std::string& Card)
+	{
+		return Card == "sam" ? GN2Body : Card == "lena" ? GW1Body : Card == "rocco" ? GR3Body : nullptr;
+	}
 	FLiveHelper GLive;
 
 	// THE NOTICE, plainly, before the first conversation and on F1: that the
@@ -2852,9 +2863,30 @@ namespace
 		const int H = GNow.Hour;
 		const char* Light = (H >= 20 || H < 6) ? "Overcast and dry; dark, the street lamps on."
 			: (H < 8 || H >= 18) ? "Overcast and dry; the light going." : "Overcast and dry; grey daylight.";
+		// A NEW CONVERSATION (handover 6ae): the first with them, or the first
+		// since he left them or they ended it; and WHO ELSE IS THERE (6ad): the
+		// named people really within talking range of them (the cast file's
+		// 6 m), not guessed from their routines.
+		const bool bFresh = !GLive.Talked.count(Card) || GLive.Left.count(Card);
+		GLive.Talked.insert(Card);
+		GLive.Left.erase(Card);
+		std::string Present;
+		if (AActor* Me = CardBody(Card))
+		{
+			for (const char* Other : { "sam", "lena", "rocco" })
+			{
+				AActor* B = CardBody(Other);
+				if (Other == Card || B == nullptr) { continue; }
+				if (FVector::Dist2D(Me->GetActorLocation(), B->GetActorLocation()) / 100.0 <= 6.0)
+				{
+					Present += std::string(Present.empty() ? "" : ",") + "\"" + Other + "\"";
+				}
+			}
+		}
 		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"to\":\"" + JsonEsc(Card)
 			+ "\",\"who\":\"" + JsonEsc(Card) + "\",\"say\":\"" + JsonEsc(Said) + "\",\"day\":" + std::to_string(GNow.Day)
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
+			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
 			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
@@ -3018,6 +3050,8 @@ namespace
 				}
 				GLive.LastReplyId = GLive.PendingId;
 				GLive.LastReplyName = GLive.PendingName;
+				// THEY CLOSED IT (handover 6ae): his next line to them starts afresh.
+				if (L.find("\"ends\":true") != std::string::npos) { GLive.Left.insert(GLive.PendingCard); }
 				// THE SESSION RECORD (handover 6p): whom his line named, how the
 				// answer went, and anything they put to him or drew on.
 				{
@@ -3072,6 +3106,19 @@ namespace
 		if (Notices > 0) { ShowAiNotice(); }
 		if (Reports > 0) { LiveReportLast(); }
 		LiveWalkedAwayCheck();
+		// OUT OF EARSHOT OF SOMEBODY HE HAS TALKED TO: the next line to them
+		// is a new conversation (handover 6ae).
+		if (GPawn != nullptr)
+		{
+			for (const std::string& Card : GLive.Talked)
+			{
+				AActor* B = CardBody(Card);
+				if (B != nullptr && FVector::Dist2D(GPawn->GetActorLocation(), B->GetActorLocation()) / 100.0 > LedgerCrime::kEarshotM)
+				{
+					GLive.Left.insert(Card);
+				}
+			}
+		}
 		// THE SAVE'S TALK LOADED, or a new game's talk cleared, once ready.
 		if (GLive.bReady && (GLive.bTalkLoad || GLive.bTalkReset))
 		{
