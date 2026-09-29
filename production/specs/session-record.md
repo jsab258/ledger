@@ -38,13 +38,17 @@ decimal), and `e`, the event. In the order they happen:
 | `police` | `who`, who told them; `story`, the deed's topic; `how`: `"statement"`, `"description"` or `"talk"` (PoliceFile.Known) | somebody tells the police, or the street's talk reaches DS Ellis (town list 6bm) |
 | `ellis` | `why`: `"talk"`, `"body"`, or the reported crime (`"Wounding player.cut_d2"`); `day`, the game day | DS Ellis comes to Quay Street (PoliceFile.EllisComes; town list 6bm); with `day`, her asking after him (`player.police_d<day>`) counts as the town reacting to the crime she came for, or to what he had done by then (town list 6bt) |
 | `taken` | `story`, the deed he was taken in for; `day`, the game day; `end`: `"Cautioned"`, `"Charged"` or `"BailedToReturn"` (Custody.End) | he is taken in (PoliceFile.TakeIn); the street's word of it (`player.taken_d<day>`) counts as the town reacting to that deed, as what he claimed about a deed (`player.claim_<deed>`) does to the deed (town list 6bt) |
+| `tea` | `day`, the game day; `state`: `"Stayed"`, `"LeftEarly"` or `"StoodUp"` (AdasTea.State once her evening closes) | Ada's tea is over, however it went (town list 6cf) |
+| `found` | `who`, who found it; `damage`, the damage's key (`"rita_window"`); `story`, the deed that did it | somebody comes by and finds the damage he did (Aftermath.Tick's finders); counted as the town reacting to that deed, though it names nobody (town list 6cf) |
+| `trust` | `who` | somebody who names him only on trust comes to trust him (the talk helper's `trustEarned`, town list 6cf) |
+| `week` | `answer`: `"WindDown"`, `"TakeOver"` or `"WontSay"`; `story`, its topic (`"player.week_d6"`) | his answer at the week's end is given, or the day she asked ends unanswered (WeeksEnd.Give or Close); its story counts as a deed of this session for the town's reaction (town list 6cf) |
 | `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
 `story` (known), `who` (talk), `names` (named), `moment` (hint), `night`, `answer`
 and `story` (ask), `who`, `story` and `how` (police), `why` (ellis, end), `story` and
-`day` (taken); `load`
-needs none.
+`day` (taken), `day` and `state` (tea), `who`, `damage` and `story` (found), `who` (trust),
+`answer` and `story` (week); `load` needs none.
 The others may be left out. `player` is `"friend"` or `"jafar"` and `how` one
 of the five above; any other value is warned about. Nothing else is written. A line the reader cannot use
 (unknown `e`, a field missing or of the wrong kind) is shown as unread, and a

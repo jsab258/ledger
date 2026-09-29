@@ -995,6 +995,17 @@ namespace Ledger.Core
                     "You told them no, then. Not like Mickey, that.",
                     "Not doing Mickey's errands, I hear.",
                 })
+                // WOUND DOWN AT THE WEEK'S END (town list 6cc): no envelope came
+                // back; Mickey's arrangement is simply over.
+                : Arrangement.IsNight(about) && about.Hops > 0 && about.Content.Value == "wounddown" ? From("recognition/outfit-wounddown", new[]
+                {
+                    "Heard Ron went down the landing for you. No more of Mickey's errands, they say.",
+                    "Word is Mickey's friends down the landing won't be calling on you now.",
+                    "Heard you've finished with Mickey's arrangements.",
+                    "They say Ron took word down the landing. You're out of it.",
+                    "So that's Mickey's arrangement done with, they say.",
+                    "Heard you're having nothing more to do with Mickey's lot.",
+                })
                 : Arrangement.IsNight(about) && about.Hops > 0 && about.Content.Value == "noshow" ? From("recognition/outfit-noshow", new[]
                 {
                     "Heard they waited on you at the landing.",

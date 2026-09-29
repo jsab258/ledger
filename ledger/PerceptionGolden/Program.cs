@@ -777,6 +777,12 @@ namespace Ledger.PerceptionGolden
                         Row(sb, "RecognitionWeek", value, k.ToString(), seed.ToString(Inv),
                             line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
                     }
+            for (int seed = 0; seed < 6; seed++)
+            {
+                var about = new Rumor { Content = new Fact("player", "outfit_d6", "wounddown"), Summary = Arrangement.SaidWoundDown, Confidence = 0.5, Sensitive = false, Hops = 1 };
+                var line = StreetVoice.Recognition(g, about, StanceKind.Comments, seed);
+                Row(sb, "RecognitionOutfitWound", seed.ToString(Inv), line == null ? "null" : line.Bank + "|" + Esc(line.Text));
+            }
             foreach (var holderId in new[] { "wk", "lena" })
             {
                 var holder = new Gossiper(holderId, holderId, new MemoryStore(holderId), new KnowledgeBase(), new SuspicionTracker());

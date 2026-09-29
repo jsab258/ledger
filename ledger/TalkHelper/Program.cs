@@ -376,7 +376,7 @@ static class Program
             string walkedFrom = null, walkedHeard = null;
             string deedTopic = null, sawHimAt = null, heardHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
             bool askTonight = false;
-            bool weekAsk = false, weekStands = false, weekRealBook = false, weekDayOff = false;
+            bool weekAsk = false, weekStands = false, weekRealBook = false, weekDayOff = false, weekEnded = false;
             bool sawHimNear = false;
             var heardHeSaid = new List<string>();
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
@@ -472,6 +472,8 @@ static class Program
                     weekStands = wk.TryGetProperty("stands", out var wkStands) && wkStands.ValueKind == JsonValueKind.True;
                     weekRealBook = wk.TryGetProperty("realBook", out var wkBook) && wkBook.ValueKind == JsonValueKind.True;
                     weekDayOff = wk.TryGetProperty("dayOff", out var wkOff) && wkOff.ValueKind == JsonValueKind.True;
+                    // Mickey's arrangement already ended (town list 6cc): she never offers it.
+                    weekEnded = wk.TryGetProperty("ended", out var wkEnd) && wkEnd.ValueKind == JsonValueKind.True;
                 }
                 // WHO IS REALLY WITH THEM (town list 6ad), as cast ids, when the game knows.
                 if (r.TryGetProperty("present", out v) && v.ValueKind == JsonValueKind.Array)
@@ -776,7 +778,7 @@ static class Program
                     // down, then?" was never read).
                     else if (WeeksEnd.Sounds(say) is var sounds && sounds != WeekAnswer.None)
                     {
-                        weekReply = WeeksEnd.AskPlainly(sounds);
+                        weekReply = WeeksEnd.AskPlainly(sounds, weekEnded);
                         lock (_askedNo) _askedWeek[key] = sounds;
                     }
                     // With talk off, the question again, never a brush-off.
@@ -1917,6 +1919,8 @@ static class Program
             string otherAnswer = Line(changes, 121, "lena", "I'm taking it over.", Stands);
             string changedYes = Line(changes, 122, "lena", "Yes.", Stands);
             string shrug = Line(WeekHelperAsked(), 123, "lena", "Yeah, yeah.", Stands);
+            // Mickey's arrangement already ended: her plain question never offers it (town list 6cc).
+            string endedAsk = Line(WeekHelper(null), 124, "lena", "I'm taking it over.", "{\"stands\":true,\"realBook\":true,\"ended\":true}");
             var weekOff2 = WeekHelper(null);
             string offWhat = Line(weekOff2, 112, "lena", "What do you mean?", Stands);
             Ok("the week's end: Sheila's question and her plain question in her own fixed words, his yes to it as his next line to her is his answer; a mixed line, a line without the question, a yes after a line to somebody else, or the question sent to somebody else is nothing; with talk off it all still comes",
@@ -1930,7 +1934,8 @@ static class Program
                && Reply(offSounds) == WeeksEnd.AskPlainly(WeekAnswer.WindDown) && Reply(offYes) == WeeksEnd.Took(WeekAnswer.WindDown)
                && offYes.Contains("\"weekAnswer\":\"WindDown\"") && offYes.Contains("\"offline\":true") && Reply(offWhat) == WeeksEnd.StillAsks
                && Reply(otherAnswer) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && Reply(changedYes) == WeeksEnd.Took(WeekAnswer.TakeOver)
-               && changedYes.Contains("\"weekAnswer\":\"TakeOver\"") && !shrug.Contains("\"weekAnswer\":\""),
+               && changedYes.Contains("\"weekAnswer\":\"TakeOver\"") && !shrug.Contains("\"weekAnswer\":\"")
+               && Reply(endedAsk) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver, true),
                opened + " | " + sounds + " | " + yes + " | " + offYes);
         }
         Ok("a card lent to somebody else does not lend them its name; its own person keeps theirs",

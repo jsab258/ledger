@@ -6232,6 +6232,62 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // WINDING IT DOWN ENDS MICKEY'S ARRANGEMENT THAT NIGHT (town list 6cc):
+            // her words close the book on it, so Ron carries the word down; taking
+            // it over never undoes a no, and her plain question never offers what
+            // is gone.
+            {
+                var cm = new GossipMill(null);
+                foreach (var id in new[] { "lena", Arrangement.Doorman, Arrangement.OutfitMan }) cm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var asks = new Arrangement(0);
+                asks.Answer(0, NightAnswer.Did); asks.Answer(2, NightAnswer.Did); asks.Answer(4, NightAnswer.Did);
+                var wk = new WeeksEnd();
+                wk.Ask(new GameTime(6, 10, 30), false);
+                bool given = wk.Give(WeekAnswer.WindDown, new GameTime(6, 10, 40), cm, null, asks);
+                bool notYet = !cm.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.Summary == Arrangement.SaidWoundDown) && !asks.WasDelivered(6);
+                var waiting = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(asks.ToJson()))));
+                asks.PassedTo(7, cm, new GameTime(7, 6, 0));
+                var told = cm.Get(Arrangement.OutfitMan).Rumors.Find(r => r.Summary == Arrangement.SaidWoundDown);
+                var cmBack = new GossipMill(null);
+                cmBack.Add(new Gossiper(Arrangement.OutfitMan, Arrangement.OutfitMan, new MemoryStore("o"), new KnowledgeBase(), new SuspicionTracker()));
+                waiting.PassedTo(7, cmBack, new GameTime(7, 6, 0));
+                bool ended = asks.Ended && asks.EndedWhy == "wound down" && !asks.AsksOn(6) && asks.Nights[6] == NightAnswer.Refused
+                             && cm.Get(Arrangement.Doorman).Memory.Events.Exists(e => e.Text == Arrangement.HeardWoundDown)
+                             && notYet && told != null && told.Content.Value == "wounddown" && told.Hops == 0
+                             && cmBack.Get(Arrangement.OutfitMan).Rumors.Exists(r => r.Summary == Arrangement.SaidWoundDown)
+                             && Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"first\":0,\"nights\":[[0,\"refused\"]],\"delivered\":[0],\"woundDown\":[0]}"))).EndedWhy == "refused";
+                var woundLine = StreetVoice.Recognition(new Gossiper("wl", "wl", new MemoryStore("wl"), new KnowledgeBase(), new SuspicionTracker()),
+                    new Rumor { Content = new Fact("player", "outfit_d6", "wounddown"), Summary = Arrangement.SaidWoundDown, Confidence = 0.5, Hops = 1 }, StanceKind.Comments, 0);
+                ended = ended && woundLine != null && woundLine.Bank == "recognition/outfit-wounddown";
+                var asksBack = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(asks.ToJson()))));
+                // A load never makes it a night Ron brought, and loads again the same (the second review).
+                string once = MiniJson.Serialize(asksBack.ToJson());
+                var twice = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(once)));
+                ended = ended && !asksBack.WasDelivered(6) && MiniJson.Serialize(twice.ToJson()) == once
+                        && Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"first\":0,\"nights\":[[0,\"did\"],[2,\"did\"],[4,\"did\"],[6,\"refused\"]],\"delivered\":[0,2,4],\"woundDown\":[6],\"woundTell\":[6,0]}"))).EndedWhy == "wound down";
+                var refusedFirst = new Arrangement(0);
+                refusedFirst.Answer(0, NightAnswer.Refused);
+                var wk2 = new WeeksEnd();
+                wk2.Ask(new GameTime(6, 10, 30), false);
+                wk2.Give(WeekAnswer.TakeOver, new GameTime(6, 10, 40), null, null, refusedFirst);
+                var kept = new Arrangement(0);
+                kept.Answer(0, NightAnswer.Did);
+                var wk3 = new WeeksEnd();
+                wk3.Ask(new GameTime(6, 10, 30), false);
+                wk3.Give(WeekAnswer.TakeOver, new GameTime(6, 10, 40), null, null, kept);
+                // Wound down on a day with no ask, after a night the ask never reached him.
+                var monday = new Arrangement(0);
+                monday.Answer(0, NightAnswer.Did); monday.Answer(2, NightAnswer.Did); monday.Answer(4, NightAnswer.Did);
+                bool mondayEnds = monday.WoundDown(new GameTime(7, 10, 0)) && monday.Nights[6] == NightAnswer.Undelivered
+                                  && monday.Nights[8] == NightAnswer.Refused && !monday.AsksOn(8) && monday.EndedWhy == "wound down";
+                Check(given && ended && asksBack.Ended && asksBack.EndedWhy == "wound down" && refusedFirst.EndedWhy == "refused"
+                      && !refusedFirst.WoundDown(new GameTime(6, 11, 0)) && !kept.Ended && kept.AsksOn(2) && mondayEnds
+                      && WeeksEnd.AskPlainly(WeekAnswer.TakeOver, true).Contains("finished") && !WeeksEnd.AskPlainly(WeekAnswer.TakeOver, true).Contains("everything that comes with them")
+                      && WeeksEnd.AskPlainly(WeekAnswer.WindDown, true).Contains("finished already"),
+                      "telling Sheila he is winding it down ends Mickey's arrangement that night, Ron carrying the word down, and a load keeps why; taking it over never undoes a no nor ends anything; her plain question never offers what is gone",
+                      $"{given} {ended} {asksBack.EndedWhy} {mondayEnds}");
+            }
+
             // WHEN SHEILA TRUSTS HIM (town list 6bz, carried until Jafar rules):
             // once he has talked with her on three different days, never caught
             // in a lie, heard otherwise or telling others otherwise, and not wary.
