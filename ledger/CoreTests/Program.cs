@@ -6232,6 +6232,101 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // A THREAT TO KEEP QUIET (town list 6cd, carried until Jafar rules): read
+            // in narrow shapes; never an ask for silence; remembered once a deed,
+            // warier; the one threatened holds the story first-hand; the street
+            // says it to his face; and Sheila never trusts a man who threatened her.
+            {
+                var threatLines = new (string line, bool want)[]
+                {
+                    ("Say a word and you'll regret it.", true), ("Keep your mouth shut or else.", true), ("Look, not a word to Rita, or you'll be sorry.", true),
+                    ("Don't tell Rita, if you know what's good for you.", true), ("Keep your mouth shut or else. I mean it.", true), ("Tell anyone and you'll be sorry.", true),
+                    ("Say a word and you'll regret it, understand?", true), ("Tell anyone and you'll be sorry, I'm not joking.", true),
+                    ("Open your mouth and you'll regret it.", true), ("You'll be sorry if you tell anyone.", true),
+                    ("You'll regret it if you don't come to the tea.", false), ("You'll regret it.", false), ("Did you say a word to anyone?", false),
+                    ("Keep it to yourself.", false), ("He said you'd regret it.", false), ("Say a word and you'll regret it. Only joking.", false),
+                    ("Put in a good word for me, or else Rita will have my hide.", false), ("", false), (null, false),
+                    // The independent check's ordinary lines.
+                    ("I'll do you a favour.", false), ("I'll do you a good price on the glass.", false), ("You're dead right.", false), ("You're next door to Rita.", false),
+                    ("You never saw me, I was at home all night.", false), ("You didn't see me, it was Darren.", false), ("You said you saw nothing.", false),
+                    ("You never saw anything like it, glass all over the pavement.", false), ("Don't tell Rita or I'll never hear the end of it.", false),
+                    ("Keep it to yourself, or I'll be in trouble.", false), ("Don't tell anyone or you'll get me into trouble.", false),
+                    ("Don't tell Rita, I'll get you a new one.", false), ("Tell Rita I'll be round to fix it.", false), ("That's the last time I say anything to you.", false),
+                    ("Look, accidents happen, just don't tell Rita it was me.", false), ("Rita said tell anyone and you'll be sorry.", false),
+                    ("Mickey used to say, say a word and you'll regret it.", false), ("Say a word and you'll regret it. Just messing.", false),
+                    ("Say a word and you'll regret it, ha ha.", false), ("Tell anyone and you'll be sorry. No, I don't mean that.", false),
+                    // The second review: jokes, quotations, friendly warnings and "I know where you live".
+                    ("Keep your mouth shut or else. Just a joke, love.", false), ("Say a word and you'll regret it. Sorry, I didn't mean that.", false),
+                    ("Mickey's lot told Rita. Keep your mouth shut or else.", false), ("Say a word and you'll regret it. Not my words, Ron's.", false),
+                    ("Now I know where you live.", false), ("I know where you live. We're neighbours.", false), ("I know where you live.", false),
+                    ("Don't tell Rita or you'll regret it. She'll never let you hear the end of it.", false),
+                    ("Tell the police and you'll be sorry. They'll have you down the station all day.", false),
+                    // The third review.
+                    ("Tell Rita and you'll be sorry :)", false), ("\"Say a word and you'll regret it.\"", false),
+                    ("Yeah, it was me. Say a word and you'll regret it.", true), ("Tell anyone and you'll be sorry, Ron.", true),
+                    ("Tell anyone and you'll be sorry, I'm not kidding.", true), ("Keep quiet, or else you'll regret it.", true),
+                    // The fourth review: a laugh, an emoji, reported speech, quotations.
+                    ("Say a word and you'll regret it, ha!", false), ("Say a word and you'll regret it lol", false), ("Say a word and you'll regret it, jk", false),
+                    ("Say a word and you'll regret it, not!", false), ("Say a word and you'll regret it \ud83d\ude09", false), ("Say a word and you'll regret it =)", false),
+                    ("Tell anyone and you'll be sorry, apparently.", false), ("\"Say a word and you'll regret it\".", false),
+                    ("\"Tell anyone and you'll be sorry\" - Mickey.", false),
+                    // The fifth review: smileys without a space; common threats.
+                    ("Tell anyone and you'll be sorry;)", false), ("Say a word and you'll regret it!;)", false), ("Tell anyone and you'll be sorry :]", false),
+                    ("Tell anyone and you'll be sorry ^_^", false), ("Tell anyone and you'll be sorry <3", false),
+                    ("Tell anyone and I'll kill you.", true), ("Tell anyone and you're dead.", true), ("Keep it to yourself. Say a word and you'll regret it.", true),
+                    ("Not a word to anyone. You'll regret it if you do.", true), ("Don't say anything or you'll regret it.", true), ("Grass me up and you'll regret it.", true),
+                    ("Expect the glazier at ten, and don't tell Rita.", false),
+                };
+                var threatWrong = new List<string>();
+                foreach (var (line, want) in threatLines) if (Silence.Threatens(line) != want) threatWrong.Add(line ?? "null");
+                Check(threatWrong.Count == 0 && !Silence.AsksQuiet("Say a word and you'll regret it.") && !Silence.AsksQuiet("Keep it to yourself. I know where you live.")
+                      && !Silence.AsksQuiet("Don't tell anyone, you'll be sorry if you do.") && Silence.AsksQuiet("Keep it to yourself.")
+                      && !Silence.AsksQuiet("Keep it to yourself. Or I'll kill you.") && !Silence.AsksQuiet("Keep it to yourself or you will be sorry.")
+                      && !Silence.AsksQuiet("Keep it to yourself. You'll get a slap.") && !Silence.AsksQuiet("Keep your mouth shut. Or I'll shut it for you.")
+                      && Silence.AsksQuiet("Yeah, it was me. Keep it to yourself, will you?") && Silence.AsksQuiet("Keep it to yourself. Please.")
+                      // The third review: a menace in the ask's own sentence, however worded.
+                      && !Silence.AsksQuiet("Keep your mouth shut or there'll be trouble.") && !Silence.AsksQuiet("Keep it to yourself and no one gets hurt.")
+                      && !Silence.AsksQuiet("Keep it to yourself, or you're for it.") && !Silence.AsksQuiet("Not a word to anyone, or it'll be the worse for you.")
+                      && !Silence.AsksQuiet("Keep it to yourself, you'll live longer.") && !Silence.AsksQuiet("Don't tell anyone, you know what happens to grasses.")
+                      && !Silence.AsksQuiet("Keep schtum, or it's your head.") && !Silence.AsksQuiet("Keep ya mouth shut or ya'll be sorry.")
+                      && Silence.AsksQuiet("Not a word to Rita, eh?") && Silence.AsksQuiet("Can you keep this quiet?") && Silence.AsksQuiet("Please don't tell anyone.")
+                      && Silence.AsksQuiet("Keep it to yourself, Sheila, please.")
+                      // The fourth review: common asks.
+                      && Silence.AsksQuiet("Don't tell anyone it was me.") && Silence.AsksQuiet("Don't tell anyone you saw me.") && Silence.AsksQuiet("Don't tell anyone else.")
+                      && Silence.AsksQuiet("Promise you won't tell anyone.") && Silence.AsksQuiet("Can we keep this between us?") && Silence.AsksQuiet("Keep this between you and me.")
+                      && Silence.AsksQuiet("Please don't tell.") && Silence.AsksQuiet("Do me a favour and keep it to yourself.") && Silence.AsksQuiet("Don't mention this to anyone.")
+                      && Silence.AsksQuiet("Let's keep this between ourselves.") && !Silence.AsksQuiet("Don't tell anyone, or you'll regret it."),
+                      "a threat to keep quiet is read only in its plain shapes, never a turn of phrase, a question, a joke or somebody else's words, and is never an ask for silence",
+                      string.Join(" | ", threatWrong));
+
+                var te = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                for (int d = 0; d < 3; d++) te.TalkDays.Add(d);
+                bool trustedBefore = Trust.Earned(te, 3);
+                double warierBefore = te.Suspicion.Value;
+                double weightBefore = te.AnswerWeight("player.window_d1");
+                bool first = te.HeardThreat("player.window_d1", new GameTime(2, 10, 0));
+                bool again = te.HeardThreat("player.window_d1", new GameTime(2, 10, 5));
+                te.ApplyAnswers("player.window_d1");
+                var teBack = new ConversationEngine(null, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                teBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(te.CaptureTalk()))));
+                bool heard = first && !again && te.Suspicion.Value > warierBefore && te.AnswerWeight("player.window_d1") > weightBefore
+                             && te.Memory.Events.Exists(e => e.Text == ConversationEngine.ThreatMemory)
+                             && trustedBefore && !Trust.Earned(te, 3) && teBack.Threatened.Contains("player.window_d1");
+                var tm = new GossipMill(null);
+                foreach (var id in new[] { "ada", "joey" }) tm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                bool filed = Silence.FileThreat(tm, "ada", "player.window_d1", new GameTime(2, 10, 0)) && !Silence.FileThreat(tm, "ada", "player.window_d1", new GameTime(2, 11, 0))
+                             && !Silence.FileThreat(tm, "nobody", "player.window_d1", new GameTime(2, 10, 0));
+                var threatStory = tm.Get("ada").Rumors.Find(Silence.IsThreat);
+                var toldLine = StreetVoice.Recognition(tm.Get("ada"), threatStory, StanceKind.Comments, 0);
+                var heardLine = StreetVoice.Recognition(tm.Get("joey"), new Rumor { Content = new Fact("player", "threat_window_d1", "threatened"), Summary = Silence.ThreatSaid, Confidence = 0.6, Hops = 1 }, StanceKind.Comments, 0);
+                filed = filed && threatStory != null && threatStory.TopicKey == "player.threat_window_d1" && !threatStory.Sensitive
+                        && StreetVoice.StoryThatShows(tm.Get("ada"), tm.MinConfidenceToShare) == threatStory
+                        && toldLine != null && toldLine.Bank == "recognition/threat-told" && heardLine != null && heardLine.Bank == "recognition/threat-heard";
+                Check(heard && filed,
+                      "a threat is remembered once a deed and makes them warier, kept with the talk, and keeps Sheila's trust back; the one threatened holds the story first-hand, once, and the street says it to his face",
+                      $"{heard} {filed}");
+            }
+
             // WINDING IT DOWN ENDS MICKEY'S ARRANGEMENT THAT NIGHT (town list 6cc):
             // her words close the book on it, so Ron carries the word down; taking
             // it over never undoes a no, and her plain question never offers what
@@ -7252,8 +7347,31 @@ namespace Ledger.CoreTests
                 refusedQ.HeardAskQuiet("player.window_d1", false, new GameTime(2, 10, 0));
                 bool bareAfterOwning = ((List<string>)pi.Invoke(owns, new object[] { "Mum's the word, Tom." })).Count == 1;
                 bool bareAfterRefusal = ((List<string>)pi.Invoke(refusedQ, new object[] { "Not a word, then." })).Count == 1;
-                Check(wrongP == null && flaggedNoAsk && flaggedYes && bareAfterOwning && bareAfterRefusal,
-                      "a promise of silence stands only where the Core had them agree; a bare one is read after he owned up or they refused", wrongP ?? "");
+                // After a threat too (the fourth review of 6cd).
+                var threatenedQ = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                threatenedQ.CurrentDeed = "player.window_d1";
+                threatenedQ.HeardThreat("player.window_d1", new GameTime(2, 10, 0));
+                bool bareAfterThreat = ((List<string>)pi.Invoke(threatenedQ, new object[] { "All right, all right. Not a word." })).Count == 1
+                                       && ((List<string>)pi.Invoke(threatenedQ, new object[] { "Mum's the word, Tom." })).Count == 1;
+                // Her caving in, in other words (the fifth review of 6cd), and the prompt tells her.
+                foreach (var cave in new[] { "You won't hear anything from me, Tom.", "All right, all right. I'm saying nothing.", "Nobody will hear it from me.",
+                                             "I won't grass, don't worry.", "Your secret is safe with me.", "Not a peep." })
+                    if (((List<string>)pi.Invoke(threatenedQ, new object[] { cave })).Count == 0) bareAfterThreat = false;
+                var menacedQ = new ConversationEngine(new FakeLlm { NextReply = "x" }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                menacedQ.CurrentDeed = "player.window_d1";
+                menacedQ.Menaced.Add("player.window_d1");
+                bareAfterThreat = bareAfterThreat && ((List<string>)pi.Invoke(menacedQ, new object[] { "Not a word." })).Count == 1
+                                  && menacedQ.BuildSystemPrompt("Well?", new GameTime(2, 10, 5), "").Contains("you will not keep it quiet for him")
+                                  && Silence.Menaces("Tell anyone and you're dead right.") && !Silence.Menaces("Morning, Sheila.");
+                // The sixth review: ordinary menaces, and her promise in its commonest words.
+                foreach (var m in new[] { "Tell anyone and I'll do you in.", "Keep it to yourself, I'm warning you.", "Say a word and I'll smash your face in.", "Watch your back, Ron.",
+                                          "Keep it to yourself if you want to stay in one piece.", "You'll be in trouble.", "Don't cross me.", "This is your last warning.", "Forget you saw me." })
+                    if (!Silence.Menaces(m)) bareAfterThreat = false;
+                foreach (var cave in new[] { "All right, all right. I'm not going to tell anyone.", "I won't tell on you, Tom.", "All right. I won't tell.", "Fine. I won't mention it.",
+                                             "I shan't tell.", "Won't say a word.", "I'm not saying a word.", "I'll keep my gob shut.", "Secret's safe with me.", "Nobody'll know.", "I won't go to the police." })
+                    if (((List<string>)pi.Invoke(threatenedQ, new object[] { cave })).Count == 0) bareAfterThreat = false;
+                Check(wrongP == null && flaggedNoAsk && flaggedYes && bareAfterOwning && bareAfterRefusal && bareAfterThreat,
+                      "a promise of silence stands only where the Core had them agree; a bare one is read after he owned up, they refused, or he threatened them", wrongP ?? "");
                 Check(Promises.FindSilence("Not a word, boss.").Count == 1
                       && Promises.SecondDraftNote(new[] { "Not a word" }).Contains("you will not keep this quiet for him")
                       && !Promises.SecondDraftNote(new[] { "I'll meet you" }).Contains("quiet"),

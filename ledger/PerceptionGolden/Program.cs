@@ -128,6 +128,7 @@ namespace Ledger.PerceptionGolden
                 EmitPoliceAsked(sb);
                 EmitTaken(sb);
                 EmitWeeksEnd(sb);
+                EmitThreats(sb);
             }
 
             var text = sb.ToString();
@@ -727,6 +728,31 @@ namespace Ledger.PerceptionGolden
                 var shows = StreetVoice.StoryThatShows(holder, 0.35);
                 Row(sb, "TakenShows", D(c), shows == null ? "null" : shows.TopicKey);
             }
+        }
+
+        /// A THREAT TO KEEP QUIET (town list 6cd), awaiting the port: which
+        /// stories are threats, filing one (once a person and deed), and the
+        /// lines at his face, told first-hand or heard. The reading of his words
+        /// stays in the talk program.
+        static void EmitThreats(StringBuilder sb)
+        {
+            foreach (var pred in new[] { "threat_window_d1", "threat_", "threat", "taken_d4" })
+                Row(sb, "ThreatIs", pred, Bit(Silence.IsThreat(new Rumor { Content = new Fact("player", pred, "threatened") })));
+            var mill = new GossipMill(null);
+            foreach (var id in new[] { "ada", "joey" }) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+            foreach (var (who, topic) in new[] { ("ada", "player.window_d1"), ("ada", "player.window_d1"), ("joey", "window_d3"), ("nobody", "player.window_d1"), ("ada", "") })
+                Row(sb, "ThreatFiled", who, topic, Bit(Silence.FileThreat(mill, who, topic, new GameTime(2, 10, 0))));
+            foreach (var id in new[] { "ada", "joey" })
+                foreach (var r in mill.Get(id).Rumors) Row(sb, "ThreatHeld", id, r.TopicKey, Esc(r.Summary), Bit(r.Sensitive), r.Hops.ToString(Inv));
+            var g = new Gossiper("tg", "tg", new MemoryStore("tg"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var hops in new[] { 0, 1 })
+                    for (int seed = 0; seed < 6; seed++)
+                    {
+                        var about = new Rumor { Content = new Fact("player", "threat_window_d1", "threatened"), Summary = Silence.ThreatSaid, Confidence = 0.5, Sensitive = false, Hops = hops };
+                        var line = StreetVoice.Recognition(g, about, k, seed);
+                        Row(sb, "RecognitionThreat", k.ToString(), hops.ToString(Inv), seed.ToString(Inv), line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                    }
         }
 
         /// THE WEEK'S END (town list 6ca), awaiting the port: when Sheila asks

@@ -31,7 +31,8 @@ namespace Ledger.Core
         {
             if (engine == null) return false;
             if (engine.Suspicion.Level != SuspicionLevel.Trusting) return false;
-            if (engine.Doubted || engine.ToldOthers.Count > 0) return false;
+            // Nor after he threatened her (town list 6cd).
+            if (engine.Doubted || engine.ToldOthers.Count > 0 || engine.Threatened.Count > 0) return false;
             foreach (var a in engine.Answers)
                 if (a.Result == ClaimResult.Contradiction || a.SawElsewhere) return false;
             if (engine.DeedEvidence.Count > 0) return false;
