@@ -47,6 +47,24 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **Next:** your three calls.
 
+## Clothes, Wednesday 30 September
+
+**No page from me today:** nothing has passed the gate yet.
+
+**Set aside, per your rule: the donkey jacket** (and its other builds). Three blind reviewers failed it, the last after research: the armpit tears with the arms up, the sides gather, the back bags under the yoke. What it left works for the rest: Ron measured properly, clothes cut from real patterns and sewn round his own body.
+
+**Decide:** Marvelous Designer can be scripted except one click each time it opens, online and signed in; $39 a month, 14 days free. (A, recommended) you start the free trial on your account; I script it, try the jacket once, and use your approved month only if it passes. (B) The jacket stays set aside.
+
+**Work trousers:** cut from FreeSewing for Ron, sewn round him a new way (every seam closed, nothing through him); belt, fly, pockets. Two reviewers failed them sitting and on a stair; researching, then the last try.
+
+**Flat cap:** being built on his head.
+
+**Research:** sleeves; the jacket's weight (84 kg simulated); Marvelous Designer's scripting; 1990 trousers and caps; skinning trousers (running).
+
+**Pushes set off:** free GitHub tests only.
+
+**C: free:** 34 GB when I began, 47.3 now. Backup runs with this commit.
+
 ## Builder, Tuesday 29 September
 
 **[Tuesday's page](https://claude.ai/artifact/TmJnie1Qzo6jE6NdkyqRPo):** Ron threatening, made two ways, blind; Monday's items still wait (Sheila's game voice taken off: it leans American in moments).
