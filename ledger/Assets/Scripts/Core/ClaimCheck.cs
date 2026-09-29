@@ -590,11 +590,14 @@ namespace Ledger.Core
                 all.AddRange(one);
             }
             var outList = new List<string>();
+            // Flagged details the list gave a kind other than habit: the same
+            // words given again as a habit are still read as the claim.
+            var claimed = new HashSet<string>();
             foreach (var x in all)
             {
                 if (x is string bare)
                 {
-                    if (!string.IsNullOrWhiteSpace(bare)) outList.Add(bare.Trim());
+                    if (!string.IsNullOrWhiteSpace(bare)) { outList.Add(bare.Trim()); claimed.Add(bare.Trim()); }
                     continue;
                 }
                 var o = MiniJson.AsObject(x);
@@ -617,6 +620,11 @@ namespace Ledger.Core
                     if (!card) { outList.Add(detail.Trim()); habits?.Add(detail.Trim()); }
                     continue;
                 }
+                // A loose detail that tells of somebody at another time is the
+                // claim it is, named or not, whatever loose kind it was given
+                // (town list 6bf, the independent check of 6be: "he was here with
+                // me when the window went", given as now or self, passed unread).
+                if (Array.IndexOf(Loose, kind) >= 0 && TellsOfThen(detail)) kind = "person";
                 if (Array.IndexOf(Loose, kind) >= 0 && !NamesSomething(detail, kind)) continue;
                 if (Array.IndexOf(NotClaims, kind) >= 0 && Array.IndexOf(Loose, kind) < 0) continue;
                 // Support for an event is a belief, a memory or what they were
@@ -627,9 +635,42 @@ namespace Ledger.Core
                 // talking to is not listed at all, K or no K (FINDINGS).
                 bool eventSupport = false;
                 if (ids != null) foreach (var id in ids) if (id[0] == 'B' || id[0] == 'M' || id[0] == 'W') eventSupport = true;
-                if (!eventSupport) outList.Add(detail.Trim());
+                if (!eventSupport) { outList.Add(detail.Trim()); claimed.Add(detail.Trim()); }
             }
+            // The same words given twice, once as a habit a P item may clear and
+            // once as anything else, are read as the claim both times (town list
+            // 6bf): the second look is asked by the words, and gave both the
+            // habit's leave.
+            if (habits != null) foreach (var d in claimed) habits.Remove(d);
             return outList;
+        }
+
+        static readonly string[] Somebody = { "he", "she", "they", "him", "her", "them", "his", "their", "we", "us", "somebody", "someone",
+            "man", "woman", "lad", "lads", "bloke", "fella", "chap", "mate", "pal", "friend", "brother", "sister", "mum", "mother", "dad",
+            "father", "wife", "husband", "both" };
+        // Words of a deed done or of a time gone; not "got", "sat" or "stood",
+        // which in British speech are as often now ("she's got the kettle on"),
+        // nor "before" or "after", which as often look ahead (the check of 6bf).
+        static readonly string[] Then = { "was", "were", "been", "went", "came", "did", "saw", "seen", "left", "ran", "when", "while",
+            "since", "earlier", "yesterday", "then", "till", "until", "midnight", "night", "clock" };
+        static readonly string[] NotDeeds = { "tired", "bored", "scared", "worried", "married", "retired", "closed", "used", "supposed", "interested" };
+
+        /// Whether a detail tells of somebody at another time than now: a person
+        /// and a word of a deed done or of when ("he was here with me when the
+        /// window went", "he walked in at nine"); not a clock time alone, which
+        /// as often says when a place shuts ("they close before six"). Only ever
+        /// makes the check stricter; a word list always leaks (FINDINGS).
+        internal static bool TellsOfThen(string detail)
+        {
+            if (string.IsNullOrWhiteSpace(detail)) return false;
+            bool who = false, then = false;
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(detail.ToLowerInvariant().Replace('\u2019', '\''), @"[a-z]+"))
+            {
+                var w = m.Value;
+                if (Array.IndexOf(Somebody, w) >= 0) who = true;
+                if (Array.IndexOf(Then, w) >= 0 || (w.Length >= 5 && w.EndsWith("ed") && Array.IndexOf(NotDeeds, w) < 0)) then = true;
+            }
+            return who && then;
         }
 
         /// The memories a checked line may draw on: EVERYTHING the character
