@@ -276,6 +276,60 @@ namespace Ledger.Core
         /// file's "keepsQuiet", else a friend.
         public KeepsQuietFor QuietStance(string id) => id != null && _quiet.TryGetValue(id, out var q) ? q : KeepsQuietFor.Friend;
 
+        // The street's words for the named people, beside their names (town list 6bd).
+        static readonly Dictionary<string, string[]> RoleWords = new Dictionary<string, string[]>
+        {
+            { "lena", new[] { "the bookkeeper" } },
+            { "noor", new[] { "the reporter", "the journalist" } },
+            { "emil", new[] { "the priest", "the Father" } },
+            { "ada", new[] { "the widow" } },
+            { "sam", new[] { "the hustler" } },
+            { "rita", new[] { "the pawnbroker" } },
+            { "june", new[] { "Mickey's daughter" } },
+            { "zlata", new[] { "the dispatcher" } },
+        };
+
+        /// WHOM A TYPED LINE NAMES (town list 6bd, the fourth sweep): the cast ids
+        /// of the people it names by name, first name or surname ("Sheila", "Dunn",
+        /// "Father Emil"), or by the street's word for a named person ("the
+        /// bookkeeper"), for the session record's `named` line, never the words.
+        /// A name that is a place's ("at Rita's", "Hal's") is the place, not them.
+        public List<string> WhoNamed(string line)
+        {
+            var ids = new List<string>();
+            if (string.IsNullOrWhiteSpace(line)) return ids;
+            string text = line.Replace('\u2019', '\'');
+            var places = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            foreach (var kv in _areaNames) foreach (var n in kv.Value) places.Add(n.Replace('\u2019', '\''));
+            foreach (var id in _people)
+            {
+                var forms = new List<string>();
+                if (_name.TryGetValue(id, out var full))
+                {
+                    forms.Add(full);
+                    var parts = full.Split(' ');
+                    foreach (var part in parts) if (part.Length > 2 && part != "Father") forms.Add(part);
+                }
+                if (RoleWords.TryGetValue(id, out var roles)) forms.AddRange(roles);
+                foreach (var form in forms)
+                {
+                    bool role = form.StartsWith("the ", StringComparison.Ordinal) || form.Contains(" ");
+                    var rx = new System.Text.RegularExpressions.Regex(@"(?<![\w'])" + System.Text.RegularExpressions.Regex.Escape(form) + @"(?![\w-])" + (role ? "" : @"(?!'s\b)"),
+                        role ? System.Text.RegularExpressions.RegexOptions.IgnoreCase : System.Text.RegularExpressions.RegexOptions.None);
+                    bool hit = false;
+                    foreach (System.Text.RegularExpressions.Match m in rx.Matches(text)) { hit = true; break; }
+                    // "Kirby's" is him; "Rita's" is the pawn when the street names a place so.
+                    if (!hit && !role)
+                    {
+                        var poss = new System.Text.RegularExpressions.Regex(@"(?<![\w'])" + System.Text.RegularExpressions.Regex.Escape(form) + @"'s\b");
+                        if (poss.IsMatch(text) && !places.Contains(form + "'s")) hit = true;
+                    }
+                    if (hit) { if (!ids.Contains(id)) ids.Add(id); break; }
+                }
+            }
+            return ids;
+        }
+
         /// Somebody as another person speaks of them in passing: by name, or as
         /// the street describes them.
         public string Called(string id) => NameOf(id) ?? Described(id);
