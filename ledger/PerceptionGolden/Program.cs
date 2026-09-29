@@ -96,6 +96,8 @@ namespace Ledger.PerceptionGolden
             EmitRecognition(sb);
             // Ported to CastDay.h on 29 September (town list handover 2).
             EmitCastDay(sb);
+            // Ported to StreetVoice.h on 29 September (town list 6k, the save of 6o).
+            EmitRemarkLedger(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -587,6 +589,127 @@ namespace Ledger.PerceptionGolden
             for (var dir = new System.IO.DirectoryInfo(AppContext.BaseDirectory); dir != null; dir = dir.Parent)
                 if (System.IO.File.Exists(System.IO.Path.Combine(dir.FullName, "production", "specs", "town-news.json"))) return dir.FullName;
             return ".";
+        }
+
+        /// LINES HE HAS NOT HEARD LATELY, AND THE LEDGER IN A SAVE (town list
+        /// 6k and 6o), for the port of RemarkLedger.Fresh, HeardLine, Heard,
+        /// TimesToldHim and ToJson/FromJson, and of StreetVoice.WordingOf: whole
+        /// runs of remarks drawn through the ledger, faint ones and
+        /// recognitions, every fifth unheard, a remark recorded and a town
+        /// story told along the way, with and without a save and a reload in
+        /// the middle, which must change nothing that follows.
+        static void EmitRemarkLedger(StringBuilder sb)
+        {
+            var g = new Gossiper("rl", "rl", new MemoryStore("rl"), new KnowledgeBase(), new SuspicionTracker());
+            var night = new Rumor { Content = new Fact("player", "night_walk", "seen"), Summary = "s", Confidence = 0.1, Sensitive = true };
+            var plain = new Rumor { Content = new Fact("player", "seen_about", "quay"), Summary = "s", Confidence = 0.5 };
+            var town = new Rumor { Content = new Fact("town", "hal_rita_row_d0", "seen"), Summary = "Hal and Rita had words in the pawn", Confidence = 0.9 };
+            string[] runs =
+            {
+                "3,3,7,0,-5,13,2,2,9,100,-1,6,4,11,5,8,1,12,10,3,3,7,0,14,27,-15,2,9,6,1",
+                "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+            };
+            foreach (var run in runs)
+                foreach (var reloadAt in new[] { -1, 17 })
+                {
+                    var seeds = run.Split(',').Select(x => int.Parse(x, Inv)).ToArray();
+                    var led = new RemarkLedger();
+                    var said = new StringBuilder();
+                    for (int step = 0; step < seeds.Length; step++)
+                    {
+                        var line = step % 3 == 2 ? StreetVoice.Recognition(g, plain, StanceKind.Comments, seeds[step], led)
+                                                 : StreetVoice.FaintRemark(g, night, seeds[step], led);
+                        if (step % 5 != 4) led.Heard(line);
+                        if (step == 5) led.RecordFaint("rl", night, true);
+                        if (step % 7 == 6)
+                            led.Heard(new SpokenLine { Composed = true, Source = town, Bank = "exchange/tell/news", Text = "Here, Hal and Rita had words in the pawn." });
+                        if (step == reloadAt)
+                            led = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(led.ToJson()))));
+                        said.Append(step == 0 ? "" : "/").Append(Esc(line.Text));
+                    }
+                    Row(sb, "RemarkFreshRun", run, reloadAt.ToString(Inv), said.ToString(), led.TimesToldHim(town.TopicKey).ToString(Inv),
+                        Bit(led.HasRemarked("rl", night)), Bit(led.HasRemarked("rl", plain)));
+                }
+            foreach (var (text, summary, composed) in new[]
+            {
+                ("I'm telling you, the new owner was at the warehouse.", "the new owner was at the warehouse.", true),
+                ("The new owner was at the warehouse. I know what I saw.", "the new owner was at the warehouse", true),
+                ("The new owner was at the warehouse. I know what I saw.", "the new owner was at the warehouse", false),
+                ("Twice: the lad ran, and the lad ran.", "the lad ran", true),
+                ("Nothing to take out here.", "", true),
+                ("Anana", "ana", true),
+                ("Hat hat", "hat", true),
+            })
+                Row(sb, "WordingOf", Esc(text), Esc(summary), Bit(composed),
+                    Esc(StreetVoice.WordingOf(new SpokenLine { Text = text, Composed = composed, Source = new Rumor { Content = new Fact("a", "b", "c"), Summary = summary } })));
+            // THE LEDGER'S SMALLER RULES, each a named case the port answers the
+            // same way (the independent check, 29 September): only a composed
+            // telling of the town's own story is counted; a line's own wording is
+            // what is kept, an empty one kept as empty; an empty line is never
+            // heard; each bank has its own hearing; a damaged save keeps what it
+            // can; quotes, backslashes and newlines survive the save; a count too
+            // big for an int reads as the C# reads it.
+            {
+                var cases = new List<(string, Func<string>)>
+                {
+                    ("told-only-town-composed", () =>
+                    {
+                        var l = new RemarkLedger();
+                        l.Heard(new SpokenLine { Composed = true, Source = plain, Bank = "x", Text = "t1" });
+                        l.Heard(new SpokenLine { Composed = false, Source = town, Bank = "x", Text = "t2" });
+                        l.Heard(new SpokenLine { Composed = true, Source = town, Bank = "exchange/tell/news", Text = "Here, Hal and Rita had words in the pawn." });
+                        return l.TimesToldHim(plain.TopicKey) + "," + l.TimesToldHim(town.TopicKey);
+                    }),
+                    ("wording-kept", () =>
+                    {
+                        var l = new RemarkLedger();
+                        l.Heard(new SpokenLine { Composed = true, Source = town, Bank = "exchange/tell/news", Text = "Here, Hal and Rita had words in the pawn." });
+                        l.Heard(new SpokenLine { Composed = true, Source = town, Bank = "exchange/tell/news", Text = "x", Wording = "Well, {what}." });
+                        return l.Fresh("exchange/tell/news", new[] { "Here, {What}.", "Well, {what}.", "So, {what}." }, 0);
+                    }),
+                    ("wording-empty", () =>
+                    {
+                        var l = new RemarkLedger();
+                        l.Heard(new SpokenLine { Bank = "b", Text = "x", Wording = "" });
+                        return l.Fresh("b", new[] { "x", "y" }, 0);
+                    }),
+                    ("empty-line", () =>
+                    {
+                        var l = new RemarkLedger();
+                        l.HeardLine("b", "");
+                        return l.Fresh("b", new[] { "", "x" }, 0);
+                    }),
+                    ("banks-apart", () =>
+                    {
+                        var l = new RemarkLedger();
+                        l.HeardLine("recognition/ordinary", "Evening.");
+                        return l.Fresh("recognition/sensitive", new[] { "Evening.", "x" }, 0);
+                    }),
+                    ("damaged-save", () =>
+                    {
+                        var l = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                            "{\"said\":[\"\",\"a\",3],\"heard\":[[\"b\",\"l\",\"x\"],[\"b\",3],[\"b\",\"m\"]],\"told\":{\"a\":-1,\"b\":2.9,\"c\":\"3\"}}")));
+                        return l.Count + "," + l.TimesToldHim("a") + "," + l.TimesToldHim("b") + "," + l.TimesToldHim("c") + ","
+                            + l.Fresh("b", new[] { "m", "z" }, 0);
+                    }),
+                    ("escapes-saved", () =>
+                    {
+                        var l = new RemarkLedger();
+                        const string id = "p\"q\\r\ns", heardLine = "a \"line\" \\ with\nnewline";
+                        l.Record(id, night, StanceKind.Comments, true);
+                        l.HeardLine("b", heardLine);
+                        l = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(l.ToJson()))));
+                        return Bit(l.HasRemarked(id, night)) + "," + l.Fresh("b", new[] { heardLine, "other" }, 0);
+                    }),
+                    ("told-too-big", () =>
+                    {
+                        var l = RemarkLedger.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"told\":{\"a\":1e10,\"b\":2147483647}}")));
+                        return l.TimesToldHim("a") + "," + l.TimesToldHim("b");
+                    }),
+                };
+                foreach (var (name, answer) in cases)
+                    Row(sb, "RemarkCase", name, "[" + Esc(answer()) + "]");
+            }
         }
 
         static void EmitRecognition(StringBuilder sb)

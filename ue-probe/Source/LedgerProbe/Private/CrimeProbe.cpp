@@ -3399,9 +3399,10 @@ namespace
 	// a half-remembered story as a word to the one beside them once he has
 	// gone past (FaintRemark), otherwise as he comes by (Recognition), and
 	// recorded only as heard. Nobody speaks up unasked while he is talking to
-	// them, nor more often than the street's clear words (45 s). NOT YET: the
-	// coat (the outfit's ask brings it, town list 6z), and the remarks kept in
-	// the save (town list 6o), so a reload lets each say theirs again.
+	// them, nor more often than the street's clear words (45 s). The lines
+	// come through the ledger, so a bank does not repeat itself before he has
+	// heard it through (town list 6k), and the ledger is kept in the save
+	// (6o). NOT YET: the coat (the outfit's ask brings it, town list 6z).
 	void RegardTick(UWorld* World, double Now)
 	{
 		if (World == nullptr || GPawn == nullptr || !GMill || Now - GLive.RegardAt < 1.0) { return; }
@@ -3467,21 +3468,28 @@ namespace
 			if (R.bFaint)
 			{
 				if (!bPassed) { continue; }
-				Line = StreetVoice::FaintRemark(P.G.get(), R.Story, Seed);
+				Line = StreetVoice::FaintRemark(P.G.get(), R.Story, Seed, &GLive.Remarks);
 				if (Line) { GLive.Remarks.RecordFaint(P.G->Id, R.Story, true); ++GLive.FaintSaid; }
 			}
 			else
 			{
 				if (bPassed) { continue; }
-				Line = StreetVoice::Recognition(P.G.get(), R.Story, R.Stance, Seed);
+				Line = StreetVoice::Recognition(P.G.get(), R.Story, R.Stance, Seed, &GLive.Remarks);
 				if (Line) { GLive.Remarks.Record(P.G->Id, R.Story, R.Stance, true); }
 			}
 			if (!Line) { continue; }
+			// HEARD, so its bank moves on (town list 6k): a line from a bank he
+			// has not heard lately, and the one heard longest ago once he has
+			// heard them all.
+			GLive.Remarks.Heard(*Line);
 			GLive.LineAt[P.Card] = Now;
 			++GLive.LinesSaid;
 			Say(FString(P.Name) + (R.bFaint ? TEXT(" (to the one beside them): ") : TEXT(": ")) + Un(Line->Text), 8.0f, FColor::White);
 			LiveVoiceSay(GLive.NextLineId++, P.Card, Line->Text, Visual);
 			UE_LOG(LogTemp, Display, TEXT("LedgerRegard: %s says (%s, %.1f m): %s"), P.Name, UTF8_TO_TCHAR(Line->Bank.c_str()), M, *Un(Line->Text));
+			// KEPT AT ONCE, as a reply is: a remark made and then lost to a quit
+			// would be made again after the reload.
+			if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 		}
 	}
 
@@ -3881,6 +3889,11 @@ namespace
 		}
 		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		// WHO HAS HAD THEIR SAY AND WHAT HE HAS HEARD (town list 6o), so a
+		// reload neither lets anybody remark twice on a story nor starts a
+		// bank over.
+		Ok = FFileHelper::SaveStringToFile(Un(GLive.Remarks.ToJson()), *(Dir / TEXT("remarks.json")),
+			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		bSavedToDisk = Ok;
 		GSavedBytes = (int)Json.size();
 	}
@@ -3927,6 +3940,12 @@ namespace
 		// refuses it rather than reading an older town as this one.
 		if (GSavedByCommit != Utf8(CrimeSha())) { Ok = false; }
 		bLoadedFromDisk = Ok;
+		// The remarks and the lines heard (town list 6o), only from a save the
+		// load took; a save from before they were kept has none, and a damaged
+		// one loses them, never the game.
+		FString RemarksText;
+		GLive.Remarks = Ok && FFileHelper::LoadFileToString(RemarksText, *(Dir / TEXT("remarks.json")))
+			? StreetVoice::RemarkLedger::FromJson(Utf8(RemarksText)) : StreetVoice::RemarkLedger();
 		// THE TALK COMES BACK TOO, once the talk program is ready (handover 6r).
 		GLive.bTalkLoad = Ok && !GLive.TalkStamp.empty();
 		GLive.bTalkReset = false;
@@ -4137,6 +4156,7 @@ namespace
 					// (handover 6r), not the last story's.
 					GLive.bTalkReset = true;
 					GLive.bTalkLoad = false;
+					GLive.Remarks = StreetVoice::RemarkLedger();   // and nobody has said anything to him yet
 					GWatchSlot = 0;
 					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
 				}

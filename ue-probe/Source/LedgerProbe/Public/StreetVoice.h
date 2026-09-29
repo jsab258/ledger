@@ -88,8 +88,11 @@
 #pragma once
 
 #include "Gossip.h"      // Rumor, Gossiper, RumorPtr, GossiperPtr
+#include "MiniJson.h"    // the remark ledger's save, read as the C# reads it
 
+#include <algorithm>
 #include <limits>
+#include <map>
 #include <memory>
 #include <set>
 #include <string>
@@ -117,10 +120,15 @@ namespace LedgerCore
 		bool        Composed;
 		// The bank the line was drawn from ("faint", "recognition/sensitive"),
 		// as the C#'s SpokenLine.Bank. Set by Recognition and FaintRemark;
-		// Exchange's banks come with the port of town list 6k.
+		// Exchange's banks come with the port of its ledger argument (6o).
 		std::string Bank;
+		// What the ledger keeps of a composed telling: its wording without the
+		// story (town list 6o); bHasWording false where the C# has null (an
+		// empty wording is kept, as the C#'s ?? keeps it).
+		std::string Wording;
+		bool        bHasWording;
 
-		SpokenLine() : AboutPlayer(false), Composed(false) {}
+		SpokenLine() : AboutPlayer(false), Composed(false), bHasWording(false) {}
 	};
 
 	namespace StreetVoice
@@ -665,11 +673,39 @@ namespace LedgerCore
 			return Best;
 		}
 
-		/// RemarkLedger: who has had their say on which story. An empty key is
-		/// the C#'s null (no story).
+		/// A line with its story taken back out: StreetVoice.cs Unfill, as
+		/// string.Replace, every occurrence, ordinal.
+		inline std::string ReplaceAll(std::string S, const std::string& From, const std::string& To)
+		{
+			if (From.empty()) return S;
+			std::string::size_type At = 0;
+			while ((At = S.find(From, At)) != std::string::npos) { S.replace(At, From.size(), To); At += To.size(); }
+			return S;
+		}
+		inline std::string Unfill(const std::string& Text, const std::string& What)
+		{
+			if (Text.empty() || What.empty()) return Text;
+			return ReplaceAll(ReplaceAll(Text, Cap(What), "{What}"), What, "{what}");
+		}
+		/// What the ledger keeps of a line he heard: the words, or for a
+		/// composed telling its wording without the story (town list 6o).
+		inline std::string WordingOf(const SpokenLine& Line)
+		{
+			if (Line.bHasWording) return Line.Wording;
+			return Line.Composed && Line.Source ? Unfill(Line.Text, Trim(Line.Source->Summary)) : Line.Text;
+		}
+
+		/// RemarkLedger: who has had their say on which story, and since 29
+		/// September the lines he has heard, bank by bank, and when (town list
+		/// 6k), the tellings of the town's own stories (6aq), and its save
+		/// (6o). An empty key is the C#'s null (no story).
 		class RemarkLedger
 		{
 			std::set<std::string> Said;
+			std::map<std::string, std::map<std::string, int> > LinesHeard;
+			int Hearings = 0;
+			std::map<std::string, int> StoryTold;
+			std::vector<std::string> StoryOrder;   // the C# dictionary's order, for the save
 		public:
 			static std::string KeyFor(const std::string& PersonId, const RumorPtr& R)
 			{
@@ -697,6 +733,145 @@ namespace LedgerCore
 				return !K.empty() && Said.insert(K).second;
 			}
 			std::size_t Count() const { return Said.size(); }
+
+			/// A LINE FROM A BANK HE HAS NOT HEARD LATELY: one he has never
+			/// heard, the seed choosing where to start, or, once he has heard
+			/// them all, the one heard longest ago.
+			std::string Fresh(const std::string& Bank, const char* const* Lines, int N, int Seed) const
+			{
+				if (Lines == 0 || N <= 0) return std::string();
+				std::map<std::string, std::map<std::string, int> >::const_iterator B = LinesHeard.find(Bank);
+				const int Start = ((Seed % N) + N) % N;
+				std::string Oldest;
+				int OldestAt = std::numeric_limits<int>::max();
+				for (int K = 0; K < N; ++K)
+				{
+					const std::string Line = Lines[(Start + K) % N];
+					if (B == LinesHeard.end()) return Line;
+					std::map<std::string, int>::const_iterator At = B->second.find(Line);
+					if (At == B->second.end()) return Line;
+					if (At->second < OldestAt) { OldestAt = At->second; Oldest = Line; }
+				}
+				return Oldest;
+			}
+
+			/// He heard this line from this bank: remembered, so the bank moves on.
+			void HeardLine(const std::string& Bank, const std::string& Line)
+			{
+				if (Line.empty()) return;
+				LinesHeard[Bank][Line] = ++Hearings;
+			}
+
+			/// He heard this line: remembered under its own bank; a telling
+			/// of the town's own news counted by story.
+			void Heard(const SpokenLine& Line)
+			{
+				HeardLine(Line.Bank, WordingOf(Line));
+				if (Line.Composed && Line.Source && Line.Source->Content.Subject == "town")
+				{
+					const std::string Key = Line.Source->TopicKey();
+					if (!StoryTold.count(Key)) StoryOrder.push_back(Key);
+					// C#'s unchecked int: past int.MaxValue it wraps, here defined
+					StoryTold[Key] = (int)((unsigned)TimesToldHim(Key) + 1u);
+				}
+			}
+
+			int TimesToldHim(const std::string& TopicKey) const
+			{
+				std::map<std::string, int>::const_iterator I = StoryTold.find(TopicKey);
+				return I == StoryTold.end() ? 0 : I->second;
+			}
+
+			// THE LEDGER IN A SAVE (town list 6o), as the C#'s ToJson: "said",
+			// the remark keys in ordinal order; "heard", [bank, line] pairs in
+			// the order heard; "told", each town story's tellings.
+			std::string ToJson() const
+			{
+				std::string Out = "{\"said\":[";
+				bool bFirst = true;
+				for (std::set<std::string>::const_iterator I = Said.begin(); I != Said.end(); ++I)
+				{
+					Out += (bFirst ? "" : ",") + JsonString(*I);
+					bFirst = false;
+				}
+				std::vector<std::pair<int, std::pair<std::string, std::string> > > Order;
+				for (std::map<std::string, std::map<std::string, int> >::const_iterator B = LinesHeard.begin(); B != LinesHeard.end(); ++B)
+					for (std::map<std::string, int>::const_iterator L = B->second.begin(); L != B->second.end(); ++L)
+						Order.push_back(std::make_pair(L->second, std::make_pair(B->first, L->first)));
+				std::sort(Order.begin(), Order.end());
+				Out += "],\"heard\":[";
+				for (size_t I = 0; I < Order.size(); ++I)
+					Out += (I ? "," : "") + std::string("[") + JsonString(Order[I].second.first) + "," + JsonString(Order[I].second.second) + "]";
+				Out += "],\"told\":{";
+				for (size_t I = 0; I < StoryOrder.size(); ++I)
+				{
+					char Buf[24];
+					std::snprintf(Buf, sizeof(Buf), "%d", TimesToldHim(StoryOrder[I]));
+					Out += (I ? "," : "") + JsonString(StoryOrder[I]) + ":" + Buf;
+				}
+				return Out + "}}";
+			}
+
+			/// A ledger from ToJson's text. Whatever it cannot read, it skips:
+			/// a damaged save loses remarks, never the game.
+			static RemarkLedger FromJson(const std::string& Json)
+			{
+				using namespace LedgerVignette;
+				RemarkLedger L;
+				Value Root;
+				std::string Err;
+				if (!MiniJson::Deserialize(Json, Root, Err) || Root.Type != T_OBJ) return L;
+				const Value* S = 0; const Value* H = 0; const Value* T = 0;
+				for (size_t I = 0; I < Root.Obj.size(); ++I)
+				{
+					if (Root.Obj[I].first == "said") S = &Root.Obj[I].second;
+					else if (Root.Obj[I].first == "heard") H = &Root.Obj[I].second;
+					else if (Root.Obj[I].first == "told") T = &Root.Obj[I].second;
+				}
+				if (S != 0 && S->Type == T_ARR)
+					for (size_t I = 0; I < S->Arr.size(); ++I)
+						if (S->Arr[I].Type == T_STR && !S->Arr[I].Str.empty()) L.Said.insert(S->Arr[I].Str);
+				if (H != 0 && H->Type == T_ARR)
+					for (size_t I = 0; I < H->Arr.size(); ++I)
+					{
+						const Value& P = H->Arr[I];
+						if (P.Type == T_ARR && P.Arr.size() == 2 && P.Arr[0].Type == T_STR && P.Arr[1].Type == T_STR)
+							L.HeardLine(P.Arr[0].Str, P.Arr[1].Str);
+					}
+				if (T != 0 && T->Type == T_OBJ)
+					for (size_t I = 0; I < T->Obj.size(); ++I)
+						if (T->Obj[I].second.Type == T_NUM && T->Obj[I].second.Num >= 0)
+						{
+							if (!L.StoryTold.count(T->Obj[I].first)) L.StoryOrder.push_back(T->Obj[I].first);
+							// (int)dv in the C#: past int.MaxValue .NET 8 on x64 gives
+							// int.MinValue; here that, defined, rather than undefined
+							const double N = T->Obj[I].second.Num;
+							L.StoryTold[T->Obj[I].first] = N >= 2147483648.0 ? std::numeric_limits<int>::min() : (int)N;
+						}
+				return L;
+			}
+
+			// The remark keys, in ordinal order, and each bank's heard lines
+			// oldest first, for the golden rows.
+			std::vector<std::string> SaidKeys() const { return std::vector<std::string>(Said.begin(), Said.end()); }
+
+		private:
+			static std::string JsonString(const std::string& S)
+			{
+				std::string Out = "\"";
+				for (size_t I = 0; I < S.size(); ++I)
+				{
+					const unsigned char C = (unsigned char)S[I];
+					if (C == '"') Out += "\\\"";
+					else if (C == '\\') Out += "\\\\";
+					else if (C == '\n') Out += "\\n";
+					else if (C == '\r') Out += "\\r";
+					else if (C == '\t') Out += "\\t";
+					else if (C < 0x20) { char Buf[8]; std::snprintf(Buf, sizeof(Buf), "\\u%04x", (unsigned)C); Out += Buf; }
+					else Out += (char)C;
+				}
+				return Out + "\"";
+			}
 		};
 
 		// ---- knowing a little, and the look (29 September) ----------------
@@ -909,16 +1084,17 @@ namespace LedgerCore
 
 		/// What somebody who knows a little says, once, to a companion, about
 		/// him, as he goes past; null (an empty pointer) with no one or no
-		/// story. The seed alone chooses (the C#'s `heard` overload, which
-		/// picks a line he has not heard lately, comes with town list 6k).
-		inline std::shared_ptr<SpokenLine> FaintRemark(const Gossiper* G, const RumorPtr& About, int Seed)
+		/// story. With `Heard`, a line he has not heard lately (the remark
+		/// ledger's Fresh, town list 6k); without it, the seed alone chooses.
+		inline std::shared_ptr<SpokenLine> FaintRemark(const Gossiper* G, const RumorPtr& About, int Seed,
+		                                               const RemarkLedger* Heard = 0)
 		{
 			if (!G || !About) return std::shared_ptr<SpokenLine>();
 			int Count = 0;
 			const char* const* Lines = FaintLines(Count);
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
 			Line->SpeakerId = G->Id;
-			Line->Text = Pick(Seed, Lines, Count);
+			Line->Text = Heard != 0 ? Heard->Fresh("faint", Lines, Count, Seed) : Pick(Seed, Lines, Count);
 			Line->AboutPlayer = true;
 			Line->Source = About;
 			Line->Bank = "faint";
@@ -932,8 +1108,8 @@ namespace LedgerCore
 		// goes past, by somebody holding a story about him, at Comments or
 		// above. Every line invites being stopped. Checked against
 		// PerceptionGolden EmitRecognition: every stance, no story, a plain one
-		// and one of his night, over sixteen seeds. The seed alone chooses, as
-		// for FaintRemark.
+		// and one of his night, over sixteen seeds. With the ledger, a line he
+		// has not heard lately, as for FaintRemark.
 
 		inline const char* const* RecognitionConfronts(int& OutCount)
 		{
@@ -1089,7 +1265,8 @@ namespace LedgerCore
 			return Lines;
 		}
 
-		inline std::shared_ptr<SpokenLine> Recognition(const Gossiper* G, const RumorPtr& About, StanceKind K, int Seed)
+		inline std::shared_ptr<SpokenLine> Recognition(const Gossiper* G, const RumorPtr& About, StanceKind K, int Seed,
+		                                               const RemarkLedger* Heard = 0)
 		{
 			if (!G || (int)K < (int)StanceKind::Comments) return std::shared_ptr<SpokenLine>();
 			const bool bNight = Arrangement::IsNight(About) && About->Hops > 0;
@@ -1106,7 +1283,7 @@ namespace LedgerCore
 			else                                               { Bank = "recognition/ordinary";       Lines = RecognitionOrdinary(Count); }
 			std::shared_ptr<SpokenLine> Line = std::make_shared<SpokenLine>();
 			Line->SpeakerId = G->Id;
-			Line->Text = Pick(Seed, Lines, Count);
+			Line->Text = Heard != 0 ? Heard->Fresh(Bank, Lines, Count, Seed) : Pick(Seed, Lines, Count);
 			Line->AboutPlayer = (bool)About;
 			Line->Source = About;
 			Line->Bank = Bank;

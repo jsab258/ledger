@@ -1578,6 +1578,148 @@ namespace Golden
 				A.Got = MultiAnswer(F, 7, Outs);
 			}
 		}
+		// THE REMARK LEDGER (town list 6k, 6o): a whole run replayed from the
+		// row's own seeds, as EmitRemarkLedger drew it; the lines said, the
+		// town story's tellings, and the two remarks it holds.
+		else if (Fn == "RemarkFreshRun" && F.size() >= 7)
+		{
+			std::vector<int> Seeds;
+			std::string::size_type Start = 0;
+			while (Start <= F[1].size())
+			{
+				std::string::size_type End = F[1].find(',', Start);
+				if (End == std::string::npos) End = F[1].size();
+				Seeds.push_back(I(F[1].substr(Start, End - Start)));
+				Start = End + 1;
+			}
+			const int ReloadAt = I(F[2]);
+			Gossiper G("rl", "rl", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			RumorPtr Night = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+			Night->Summary = "s"; Night->Confidence = 0.1; Night->Sensitive = true;
+			RumorPtr Plain = std::make_shared<Rumor>(Fact("player", "seen_about", "quay"));
+			Plain->Summary = "s"; Plain->Confidence = 0.5;
+			RumorPtr Town = std::make_shared<Rumor>(Fact("town", "hal_rita_row_d0", "seen"));
+			Town->Summary = "Hal and Rita had words in the pawn"; Town->Confidence = 0.9;
+			StreetVoice::RemarkLedger L;
+			std::string Said;
+			for (size_t Step = 0; Step < Seeds.size(); ++Step)
+			{
+				const std::shared_ptr<SpokenLine> Line = Step % 3 == 2
+					? StreetVoice::Recognition(&G, Plain, StreetVoice::StanceKind::Comments, Seeds[Step], &L)
+					: StreetVoice::FaintRemark(&G, Night, Seeds[Step], &L);
+				if (!Line) { Said = "no-line"; break; }
+				if (Step % 5 != 4) L.Heard(*Line);
+				if (Step == 5) L.RecordFaint("rl", Night, true);
+				if (Step % 7 == 6)
+				{
+					SpokenLine News;
+					News.Composed = true; News.Source = Town; News.Bank = "exchange/tell/news";
+					News.Text = "Here, Hal and Rita had words in the pawn.";
+					L.Heard(News);
+				}
+				if ((int)Step == ReloadAt) L = StreetVoice::RemarkLedger::FromJson(L.ToJson());
+				Said += (Step == 0 ? "" : "/") + Escape(Line->Text);
+			}
+			std::vector<std::string> Outs;
+			Outs.push_back(Said);
+			Outs.push_back(FromInt(L.TimesToldHim(Town->TopicKey())));
+			Outs.push_back(FromBool(L.HasRemarked("rl", Night)));
+			Outs.push_back(FromBool(L.HasRemarked("rl", Plain)));
+			A.Known = true;
+			A.Got = MultiAnswer(F, 3, Outs);
+		}
+		else if (Fn == "WordingOf" && F.size() >= 5)
+		{
+			SpokenLine Line;
+			Line.Text = Unescape(F[1]);
+			Line.Composed = B(F[3]);
+			Line.Source = std::make_shared<Rumor>(Fact("a", "b", "c"));
+			Line.Source->Summary = Unescape(F[2]);
+			A.Known = true;
+			A.Got = Escape(StreetVoice::WordingOf(Line));
+		}
+		// THE LEDGER'S SMALLER RULES, by name, as EmitRemarkLedger's cases.
+		else if (Fn == "RemarkCase" && F.size() >= 3)
+		{
+			RumorPtr Night = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+			Night->Summary = "s"; Night->Confidence = 0.1; Night->Sensitive = true;
+			RumorPtr Plain = std::make_shared<Rumor>(Fact("player", "seen_about", "quay"));
+			Plain->Summary = "s"; Plain->Confidence = 0.5;
+			RumorPtr Town = std::make_shared<Rumor>(Fact("town", "hal_rita_row_d0", "seen"));
+			Town->Summary = "Hal and Rita had words in the pawn"; Town->Confidence = 0.9;
+			typedef StreetVoice::RemarkLedger Ledger;
+			auto Said = [](const RumorPtr& Src, const char* Bank, const char* Text, bool bComposed) {
+				SpokenLine L; L.Source = Src; L.Bank = Bank; L.Text = Text; L.Composed = bComposed; return L; };
+			auto Num = [](long long V) { return FromInt(V); };
+			std::string Got;
+			bool bKnown = true;
+			if (F[1] == "told-only-town-composed")
+			{
+				Ledger L;
+				L.Heard(Said(Plain, "x", "t1", true));
+				L.Heard(Said(Town, "x", "t2", false));
+				L.Heard(Said(Town, "exchange/tell/news", "Here, Hal and Rita had words in the pawn.", true));
+				Got = Num(L.TimesToldHim(Plain->TopicKey())) + "," + Num(L.TimesToldHim(Town->TopicKey()));
+			}
+			else if (F[1] == "wording-kept")
+			{
+				Ledger L;
+				L.Heard(Said(Town, "exchange/tell/news", "Here, Hal and Rita had words in the pawn.", true));
+				SpokenLine W = Said(Town, "exchange/tell/news", "x", true);
+				W.Wording = "Well, {what}."; W.bHasWording = true;
+				L.Heard(W);
+				static const char* const Lines[3] = { "Here, {What}.", "Well, {what}.", "So, {what}." };
+				Got = L.Fresh("exchange/tell/news", Lines, 3, 0);
+			}
+			else if (F[1] == "wording-empty")
+			{
+				Ledger L;
+				SpokenLine W = Said(RumorPtr(), "b", "x", false);
+				W.Wording = ""; W.bHasWording = true;
+				L.Heard(W);
+				static const char* const Lines[2] = { "x", "y" };
+				Got = L.Fresh("b", Lines, 2, 0);
+			}
+			else if (F[1] == "empty-line")
+			{
+				Ledger L;
+				L.HeardLine("b", "");
+				static const char* const Lines[2] = { "", "x" };
+				Got = L.Fresh("b", Lines, 2, 0);
+			}
+			else if (F[1] == "banks-apart")
+			{
+				Ledger L;
+				L.HeardLine("recognition/ordinary", "Evening.");
+				static const char* const Lines[2] = { "Evening.", "x" };
+				Got = L.Fresh("recognition/sensitive", Lines, 2, 0);
+			}
+			else if (F[1] == "damaged-save")
+			{
+				const Ledger L = Ledger::FromJson("{\"said\":[\"\",\"a\",3],\"heard\":[[\"b\",\"l\",\"x\"],[\"b\",3],[\"b\",\"m\"]],\"told\":{\"a\":-1,\"b\":2.9,\"c\":\"3\"}}");
+				static const char* const Lines[2] = { "m", "z" };
+				Got = Num((long long)L.Count()) + "," + Num(L.TimesToldHim("a")) + "," + Num(L.TimesToldHim("b")) + "," + Num(L.TimesToldHim("c"))
+					+ "," + L.Fresh("b", Lines, 2, 0);
+			}
+			else if (F[1] == "escapes-saved")
+			{
+				Ledger L;
+				const std::string Id = "p\"q\\r\ns", HeardLineText = "a \"line\" \\ with\nnewline";
+				L.Record(Id, Night, StreetVoice::StanceKind::Comments, true);
+				L.HeardLine("b", HeardLineText);
+				L = Ledger::FromJson(L.ToJson());
+				const char* const Lines[2] = { HeardLineText.c_str(), "other" };
+				Got = FromBool(L.HasRemarked(Id, Night)) + "," + L.Fresh("b", Lines, 2, 0);
+			}
+			else if (F[1] == "told-too-big")
+			{
+				const Ledger L = Ledger::FromJson("{\"told\":{\"a\":1e10,\"b\":2147483647}}");
+				Got = Num(L.TimesToldHim("a")) + "," + Num(L.TimesToldHim("b"));
+			}
+			else { bKnown = false; }
+			A.Known = bKnown;
+			A.Got = "[" + Escape(Got) + "]";
+		}
 		// THE NAMED CAST'S ROUTINES, answered from CastDay.h (PerceptionGolden
 		// EmitCastDay, town list handover 2). The two committed files come
 		// through ReadCastFile; the small files are the C#'s own, copied from
