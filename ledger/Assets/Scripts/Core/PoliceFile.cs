@@ -87,6 +87,52 @@ namespace Ledger.Core
         readonly List<(int day, string why)> _visits = new List<(int, string)>();
         public IReadOnlyList<(int day, string why)> Visits => _visits;
         public int EllisCameOn => _visits.Count > 0 ? _visits[0].day : -1;
+
+        readonly List<(int day, string topic)> _calls = new List<(int, string)>();
+        /// The days a constable called to take him in, and for which deed.
+        public IReadOnlyList<(int day, string topic)> ConstableCalls => _calls;
+
+        /// WHETHER A CONSTABLE CALLS TODAY TO TAKE HIM IN (town list 6bp): a
+        /// window is the constable's, not the detective's, so on a statement
+        /// naming him he calls the day after it was given; each deed once, one a
+        /// call (the game calls it until it returns null). The deed's topic, or
+        /// null. The game takes him where he is found (Custody.Take); for a
+        /// detective's crime she takes him on her visit (CanArrest).
+        public string ConstableComes(int day)
+        {
+            // One call a day (the independent check: two windows took him twice
+            // in one morning); the next deed waits for the next morning.
+            if (_calls.Exists(c => c.day == day)) return null;
+            foreach (var e in _entries)
+                if (e.Offence == Offence.Damage && e.How == Known.Statement && e.Day < day && !_calls.Exists(c => c.topic == e.Topic) && !WasTaken(e.Topic))
+                {
+                    _calls.Add((day, e.Topic));
+                    return e.Topic;
+                }
+            return null;
+        }
+
+        readonly List<(string topic, long outMinute)> _taken = new List<(string, long)>();
+
+        /// Whether he has been taken in for this deed.
+        public bool WasTaken(string topic) => _taken.Exists(t => t.topic == topic);
+
+        /// HE IS TAKEN IN for a deed the police can arrest him for (CanArrest),
+        /// by the constable who calls for it or by DS Ellis on her visit: the
+        /// spell in custody (Custody.Take), recorded so that nobody takes him for
+        /// the same deed again (the independent check: on her next visit she took
+        /// him again for a window he had answered for); null, and nothing done,
+        /// when there is no arrest to make or he is already in the cells.
+        public Custody TakeIn(string topic, GameTime now, bool ownsUp, bool inTheCoat)
+        {
+            if (topic == null || !CanArrest(topic)) return null;
+            foreach (var t in _taken) if (t.outMinute > now.TotalMinutes) return null;
+            Offence o = Offence.Suspicious;
+            foreach (var e in _entries) if (e.Topic == topic && e.How == Known.Statement && Arrestable(e.Offence)) { o = e.Offence; break; }
+            var c = Custody.Take(topic, o, now, ownsUp, inTheCoat);
+            if (c != null) _taken.Add((topic, c.OutAt.TotalMinutes));
+            return c;
+        }
         public string EllisCameFor => _visits.Count > 0 ? _visits[0].why : null;
 
         // Whether a detective takes this offence (the rest are a constable's).
@@ -107,9 +153,12 @@ namespace Ledger.Core
         ///     frightened (nerve), a wounding or robbery more readily than a push
         ///     (about half against a quarter, the research's rates). The victim
         ///     of a killing reports nothing: whoever finds the body does.
-        ///   - A witness goes only for a crime a detective takes: a wounding or a
-        ///     robbery unafraid and not on his side (nerve at least 0.4, loyalty
-        ///     under 0.5); a killing whenever not on his side, the brave because
+        ///   - A witness goes for a crime a detective takes, or a window (town
+        ///     list 6bp, carried until Jafar rules on his page: so that an arrest
+        ///     can follow the first build's only crime): a wounding, a robbery or
+        ///     criminal damage unafraid and not on his side (nerve at least 0.4,
+        ///     loyalty under 0.5), which at the middle values nobody is until a
+        ///     story cools them on him; a killing whenever not on his side, the brave because
         ///     they can and the nervous because they crack (Watched.WouldTalkToPolice
         ///     is its low-nerve half; the independent check found a band between
         ///     the two where nobody reported a body, and watching it pushed people
@@ -131,7 +180,7 @@ namespace Ledger.Core
                 double fear = o == Offence.Assault ? 0.5 : 0.3;
                 return g.Loyalty < settle && g.Nerve >= fear;
             }
-            if (!Detective(o)) return false;
+            if (!Detective(o) && o != Offence.Damage) return false;
             if (o == Offence.Killing) return g.Loyalty < 0.5;
             return g.Nerve >= 0.4 && g.Loyalty < 0.5;
         }
@@ -303,6 +352,7 @@ namespace Ledger.Core
         /// is judged by its own offence.
         public bool CanArrest(string topic)
         {
+            if (topic == null || WasTaken(topic)) return false;
             foreach (var e in _entries)
                 if (e.Topic == topic && e.How == Known.Statement && Arrestable(e.Offence)) return true;
             return false;
@@ -325,7 +375,11 @@ namespace Ledger.Core
                 list.Add(new Dictionary<string, object> { { "who", e.Who }, { "topic", e.Topic }, { "offence", e.Offence.ToString() }, { "how", e.How.ToString() }, { "day", (double)e.Day } });
             var visits = new List<object>();
             foreach (var (day, why) in _visits) visits.Add(new List<object> { (double)day, why });
-            return new Dictionary<string, object> { { "entries", list }, { "visits", visits } };
+            var calls = new List<object>();
+            foreach (var (day, topic) in _calls) calls.Add(new List<object> { (double)day, topic });
+            var taken = new List<object>();
+            foreach (var (topic, outMinute) in _taken) taken.Add(new List<object> { topic, (double)outMinute });
+            return new Dictionary<string, object> { { "entries", list }, { "visits", visits }, { "calls", calls }, { "taken", taken } };
         }
 
         /// From ToJson's values; what it cannot read it skips.
@@ -365,6 +419,20 @@ namespace Ledger.Core
                         if (!dup) f._visits.Add((day, why));
                     }
             f._visits.Sort((a, b) => a.day.CompareTo(b.day));
+            // A constable's call only for a statement about a window, given before it.
+            if (saved.TryGetValue("calls", out var cs) && cs is List<object> calls)
+                foreach (var x in calls)
+                    if (x is List<object> pair && pair.Count == 2 && Day(pair[0], out int day) && pair[1] is string topic
+                        && f._entries.Exists(e => e.Topic == topic && e.Offence == Offence.Damage && e.How == Known.Statement && e.Day < day)
+                        && !f._calls.Exists(c => c.topic == topic))
+                        f._calls.Add((day, topic));
+            f._calls.Sort((a, b) => a.day.CompareTo(b.day));
+            // Taken in only for a deed with a statement he could be arrested for.
+            if (saved.TryGetValue("taken", out var tk) && tk is List<object> takenList)
+                foreach (var x in takenList)
+                    if (x is List<object> pair && pair.Count == 2 && pair[0] is string topic && pair[1] is double om && om >= 0 && om < 1e8 && om == Math.Floor(om)
+                        && f.CanArrest(topic))
+                        f._taken.Add((topic, (long)om));
             return f;
         }
     }

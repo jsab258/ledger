@@ -111,6 +111,7 @@ namespace Ledger.PerceptionGolden
                 EmitJustNow(sb);
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
+                EmitTaken(sb);
             }
 
             var text = sb.ToString();
@@ -563,6 +564,43 @@ namespace Ledger.PerceptionGolden
                         var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
                         Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
                     }
+        }
+
+        /// WHAT AN ARREST DOES (town list 6bp), awaiting the port: the hours held
+        /// and how it ends for each offence, owned up or not; the next sitting
+        /// from each weekday; which stories are the street seeing him taken, the
+        /// lines they give by stance, seen or heard; and that it shows.
+        static void EmitTaken(StringBuilder sb)
+        {
+            foreach (Offence o in Enum.GetValues(typeof(Offence)))
+                foreach (var owns in new[] { false, true })
+                    foreach (var day in new[] { 0, 4, 5, 6 })
+                    {
+                        var c = Custody.Take("player.x_d1", o, new GameTime(day, 10, 0), owns, owns);
+                        Row(sb, "CustodyTake", o.ToString(), Bit(owns), day.ToString(Inv),
+                            c == null ? "null" : c.End + "|" + c.OutAt.TotalMinutes.ToString(Inv) + "|" + c.AnswerDay.ToString(Inv) + "|" + Bit(c.CoatKept));
+                    }
+            for (int d = -1; d < 8; d++) Row(sb, "CustodyNextSitting", d.ToString(Inv), Custody.NextSitting(d).ToString(Inv));
+            foreach (var pred in new[] { "taken_d4", "taken_d", "taken", "police_d4" })
+                Row(sb, "CustodyIsTaken", pred, Bit(Custody.IsTaken(new Rumor { Content = new Fact("player", pred, "police") })));
+            var g = new Gossiper("tk", "tk", new MemoryStore("tk"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var hops in new[] { 0, 1 })
+                    for (int seed = 0; seed < 6; seed++)
+                    {
+                        var about = new Rumor { Content = new Fact("player", "taken_d4", "police"), Summary = Custody.TakenSaid, Confidence = 0.5, Sensitive = false, Hops = hops };
+                        var line = StreetVoice.Recognition(g, about, k, seed);
+                        Row(sb, "RecognitionTaken", k.ToString(), hops.ToString(Inv), seed.ToString(Inv),
+                            line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                    }
+            var holder = new Gossiper("th", "th", new MemoryStore("th"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var c in new[] { 0.2, 0.5, 0.9 })
+            {
+                holder.Rumors.Clear();
+                holder.Rumors.Add(new Rumor { Content = new Fact("player", "taken_d4", "police"), Summary = Custody.TakenSaid, Confidence = c, Sensitive = false });
+                var shows = StreetVoice.StoryThatShows(holder, 0.35);
+                Row(sb, "TakenShows", D(c), shows == null ? "null" : shows.TopicKey);
+            }
         }
 
         /// WORD THAT THE POLICE ARE ASKING (town list 6bq), awaiting the port:

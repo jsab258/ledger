@@ -5280,7 +5280,8 @@ namespace Ledger.CoreTests
                 var hooked = P("hooked", 0.7, 0.2); hooked.Leashed = true;
                 var bought = P("bought", 0.7, 0.2); bought.Suppressed.Add("player.cut_d2");
                 var loyalVictim = P("loyalVictim", 0.9, 0.9);
-                Check(PoliceFile.WouldReport(rita, Offence.Damage, true, null) && !PoliceFile.WouldReport(bold, Offence.Damage, false, null)
+                Check(PoliceFile.WouldReport(rita, Offence.Damage, true, null) && PoliceFile.WouldReport(bold, Offence.Damage, false, null)
+                      && !PoliceFile.WouldReport(plain, Offence.Damage, false, null) && !PoliceFile.WouldReport(timid, Offence.Damage, false, null)
                       && !PoliceFile.WouldReport(bold, Offence.Suspicious, false, null) && !PoliceFile.WouldReport(bold, Offence.Assault, false, null)
                       && PoliceFile.WouldReport(bold, Offence.Wounding, false, null) && PoliceFile.WouldReport(bold, Offence.Killing, false, null)
                       && !PoliceFile.WouldReport(plain, Offence.Wounding, false, null) && !PoliceFile.WouldReport(plain, Offence.Killing, false, null)
@@ -5293,7 +5294,85 @@ namespace Ledger.CoreTests
                       && !PoliceFile.WouldReport(hooked, Offence.Wounding, false, null) && !PoliceFile.WouldReport(hooked, Offence.Killing, false, null)
                       && !PoliceFile.WouldReport(bought, Offence.Wounding, false, "player.cut_d2") && PoliceFile.WouldReport(bought, Offence.Killing, false, "player.cut_d2")
                       && !PoliceFile.WouldReport(null, Offence.Killing, false, null),
-                      "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness reports a detective's crime unafraid and not on his side, and the nervous crack over a body; an ordinary witness says nothing; the hooked say nothing, the bought nothing but a body");
+                      "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness reports a detective's crime or a window unafraid and not on his side, and the nervous crack over a body; an ordinary witness says nothing; the hooked say nothing, the bought nothing but a body");
+
+                // WHAT AN ARREST DOES (town list 6bp): a constable calls the day after a
+                // statement about a window, once; he is held the hours the Home
+                // Office found, the coat kept, and let go on a caution, a charge
+                // with bail to the next weekday's magistrates, or bail to come back.
+                var winFile = new PoliceFile();
+                winFile.Report("ada", "player.window_d1", Offence.Damage, 4, 2);
+                winFile.Report("sam", "player.window_d2", Offence.Damage, 3, 2);
+                winFile.Report("ada", "player.window_d3", Offence.Damage, 4, 2);
+                string callSame = winFile.ConstableComes(2), callNext = winFile.ConstableComes(3), callAgain = winFile.ConstableComes(3);
+                // Taken once for a deed, one at a time, and never again for it.
+                var firstTake = winFile.TakeIn("player.window_d1", new GameTime(3, 10, 0), false, false);
+                bool noSecondWhileHeld = winFile.TakeIn("player.window_d3", new GameTime(3, 12, 0), false, false) == null;
+                bool neverAgain = !winFile.CanArrest("player.window_d1") && winFile.TakeIn("player.window_d1", new GameTime(5, 10, 0), false, false) == null;
+                string callNextDay = winFile.ConstableComes(4);
+                var secondTake = winFile.TakeIn(callNextDay, new GameTime(4, 10, 0), true, true);
+                var winBack = PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(winFile.ToJson()))));
+                var badCall = PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"entries\": [], \"calls\": [[3, \"player.window_d1\"]]}")));
+                bool calls = callSame == null && callNext == "player.window_d1" && callAgain == null && winFile.ConstableCalls.Count == 2
+                             && firstTake != null && firstTake.End == CustodyEnd.Charged && noSecondWhileHeld && neverAgain
+                             && callNextDay == "player.window_d3" && secondTake != null && secondTake.End == CustodyEnd.Cautioned && !secondTake.CoatKept
+                             && winBack.ConstableCalls.Count == 2 && winBack.WasTaken("player.window_d1") && winBack.WasTaken("player.window_d3") && !winBack.CanArrest("player.window_d1")
+                             && winBack.ConstableComes(5) == null && badCall.ConstableCalls.Count == 0 && winFile.EllisCameOn == -1
+                             && PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"entries\": [], \"taken\": [[\"player.x\", 100]]}"))).WasTaken("player.x") == false;
+                // Tuesday's window, taken Wednesday at ten (day 2 a Wednesday).
+                var tenAm = new GameTime(2, 10, 0);
+                var denied = Custody.Take("player.window_d1", Offence.Damage, tenAm, false, true);
+                var owned = Custody.Take("player.window_d1", Offence.Damage, tenAm, true, false);
+                var cut = Custody.Take("player.cut_d2", Offence.Wounding, tenAm, false, false);
+                var killed = Custody.Take("player.body_d2", Offence.Killing, tenAm, true, true);
+                var friday = Custody.Take("player.window_d4", Offence.Damage, new GameTime(4, 18, 0), false, false);
+                bool taken = denied.End == CustodyEnd.Charged && denied.OutAt.Equals(new GameTime(2, 16, 0)) && denied.CoatKept && denied.AnswerDay == 3
+                             && owned.End == CustodyEnd.Cautioned && owned.OutAt.Equals(new GameTime(2, 12, 0)) && owned.AnswerDay == -1 && !owned.CoatKept
+                             && cut.End == CustodyEnd.Charged && cut.OutAt.Equals(new GameTime(2, 18, 0)) && cut.AnswerDay == 3
+                             && killed.End == CustodyEnd.BailedToReturn && killed.OutAt.Equals(new GameTime(3, 8, 0)) && killed.AnswerDay == 31 && killed.CoatKept
+                             && friday.AnswerDay == 7 && Custody.NextSitting(4) == 7 && Custody.NextSitting(5) == 7 && Custody.NextSitting(0) == 1
+                             && Custody.Take("player.shove_d1", Offence.Assault, tenAm, false, false) == null && Custody.Take("", Offence.Damage, tenAm, false, false) == null
+                             && denied.Holds(new GameTime(2, 15, 59)) && !denied.Holds(new GameTime(2, 16, 0)) && !denied.Holds(new GameTime(2, 9, 59));
+                bool saveKeeps = true;
+                foreach (var c0 in new[] { denied, owned, cut, killed, friday })
+                {
+                    var b0 = Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(c0.ToJson()))));
+                    if (b0 == null || b0.End != c0.End || !b0.OutAt.Equals(c0.OutAt) || b0.CoatKept != c0.CoatKept || b0.AnswerDay != c0.AnswerDay || b0.Topic != c0.Topic) saveKeeps = false;
+                }
+                bool saveRefuses = Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"topic\": \"x\", \"offence\": \"Assault\", \"taken\": 3000}"))) == null
+                                   && Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"topic\": \"x\", \"offence\": \"5\", \"taken\": 3000}"))) == null
+                                   && Custody.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"topic\": \"x\", \"offence\": \"Damage\", \"taken\": -5}"))) == null
+                                   && Custody.FromJson(null) == null;
+                // The street sees him taken, and says so to his face once he is out.
+                var office = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"office\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"office\"],\"names\":[\"Mickey's\"]}}," +
+                    "\"people\":[{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"office\"],[20,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+                var tm = new GossipMill(null);
+                foreach (var id in office.People) tm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var sawIt = Custody.SeenTaken(tm, office, "mickeys", tenAm);
+                var sawAgain = Custody.SeenTaken(tm, office, "mickeys", tenAm);
+                var takenStory = tm.Get("zlata").Rumors.Find(Custody.IsTaken);
+                var sawLine = StreetVoice.Recognition(tm.Get("zlata"), takenStory, StanceKind.Comments, 0);
+                var heardTaken = new Rumor { Content = new Fact("player", "taken_d2", "police"), Summary = Custody.TakenSaid, Confidence = 0.6, Sensitive = false, Hops = 1 };
+                var takenHeardLine = StreetVoice.Recognition(tm.Get("joey"), heardTaken, StanceKind.Comments, 0);
+                bool street = sawIt.Count == 1 && sawIt[0] == "zlata" && sawAgain.Count == 0 && takenStory != null && !takenStory.Sensitive
+                              && StreetVoice.StoryThatShows(tm.Get("zlata"), tm.MinConfidenceToShare) == takenStory
+                              && sawLine != null && sawLine.Bank == "recognition/taken-saw" && takenHeardLine != null && takenHeardLine.Bank == "recognition/taken-heard"
+                              && !Custody.IsTaken(new Rumor { Content = new Fact("player", "taken", "police") });
+                // The town's save keeps each arrest the police file made, once, the
+                // earliest of any given twice, in order; none it did not make.
+                var ts = new TownSave();
+                ts.Police.Report("ada", "player.window_d1", Offence.Damage, 4, 1);
+                var tsTaken = ts.Police.TakeIn("player.window_d1", tenAm, false, false);
+                ts.Arrests.Add(tsTaken);
+                ts.Arrests.Add(killed);
+                var tsJson = ts.ToJson();
+                ((List<object>)tsJson["arrests"]).Insert(0, Custody.Take("player.window_d1", Offence.Damage, new GameTime(5, 10, 0), false, false).ToJson());
+                var tsBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(tsJson))));
+                bool saved6bp = tsBack.Arrests.Count == 1 && tsBack.Arrests[0].Topic == "player.window_d1" && tsBack.Arrests[0].TakenAt.Equals(tenAm)
+                                && tsBack.Police.WasTaken("player.window_d1") && !tsBack.Police.CanArrest("player.window_d1");
+                Check(calls && taken && saveKeeps && saveRefuses && street && saved6bp,
+                      "a constable calls the day after a statement about a window, once; he is held the hours the Home Office found, the coat kept, and let go on a caution, a charge with bail to the next weekday's magistrates, or bail to come back, never a game end; the street sees him taken and says so once he is out; the save keeps it",
+                      $"{calls} {taken} {saveKeeps} {saveRefuses} {street} {saved6bp}");
 
                 var file = new PoliceFile();
                 var named = file.Report("bold", "player.cut_d2", Offence.Wounding, 4, 2);
@@ -6208,6 +6287,8 @@ namespace Ledger.CoreTests
                       && keeperMem.Count == 1 && keeperMem[0].Text == dmg.MemoryOf() && keeperMem[0].Text.Contains("never saw who did it")
                       && fm.Get("keeper").Suspicion.Value == 0.0 && atFour && nightBefore.Count == 1 && nightBefore[0].when.Equals(new GameTime(0, 8, 0)) && badArgs
                       && Aftermath.DefaultMend(broke).Equals(new GameTime(1, 16, 0)) && Aftermath.DefaultMend(new GameTime(1, 2, 0)).Equals(new GameTime(1, 16, 0))
+                      && Aftermath.DefaultMend(new GameTime(5, 23, 30)).Equals(new GameTime(7, 16, 0)) && Aftermath.DefaultMend(new GameTime(6, 3, 0)).Equals(new GameTime(7, 16, 0))
+                      && new Aftermath("shop", "far", said, broke, new GameTime(100000, 0, 0)).MendedAt.Equals(new GameTime(90, 23, 30))
                       && Aftermath.FromJson(new Dictionary<string, object> { { "area", "shop" }, { "key", "k" }, { "said", said }, { "done", 100.0 }, { "mended", 50.0 } }) == null,
                       "whoever comes into the area before the damage is mended finds it, once, however long it stays and across a save, remembering the damage and never the deed; never whoever saw the deed or anybody elsewhere; nothing once mended",
                       string.Join(",", early.Select(e => e.who + "@" + e.when)) + " | " + string.Join(",", later.Select(e => e.who + "@" + e.when)));
