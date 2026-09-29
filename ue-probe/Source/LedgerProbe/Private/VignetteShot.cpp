@@ -103,6 +103,8 @@
 #include "Animation/SkeletalMeshActor.h"
 #include "Sound/SoundWave.h"
 #include "Engine/PointLight.h"
+#include "Engine/SpotLight.h"
+#include "Components/SpotLightComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Engine/DirectionalLight.h"
 #include "Components/DirectionalLightComponent.h"
@@ -820,6 +822,11 @@ namespace
 	TMap<FString, UTexture2D*> GSkyPhotoCache;
 	ACameraActor* GCam = nullptr;
 	TArray<APointLight*> GLanterns;
+	// THE POOL UNDER EACH LAMP, 29 September: a cone of light pointing down
+	// beside each lantern's point light, when the look file asks for one (a
+	// bare point light lit the house fronts to the eaves as brightly as the
+	// pavement). Shown and hidden with the lanterns.
+	TArray<ASpotLight*> GLanternPools;
 	TArray<APointLight*> GWindows;
 	TMap<FString, AStaticMeshActor*> GByName;
 	// A SEPARATE MAP FOR THE CRIME PROBE'S OWN PIECES, ruling of 2026-09-08
@@ -2747,6 +2754,32 @@ namespace
 					PC->SetIntensityUnits(ELightUnits::Lumens);
 					PC->SetIntensity((float)LampLumens);
 				}
+				double PoolLumens = GLook.LanternPoolLumens;
+				FParse::Value(FCommandLine::Get(), TEXT("LanternPoolLumens="), PoolLumens);
+				if (PoolLumens > 0.0)
+				{
+					FActorSpawnParameters SP;
+					SP.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+					ASpotLight* S = World->SpawnActor<ASpotLight>(ASpotLight::StaticClass(),
+						FVector(P.X * 100.0, P.Z * 100.0, LightY * 100.0), FRotator(-90.0f, 0.0f, 0.0f), SP);
+					if (S != nullptr)
+					{
+						MakeMovable(S);
+						if (USpotLightComponent* SC = Cast<USpotLightComponent>(S->GetLightComponent()))
+						{
+							SC->SetMobility(EComponentMobility::Movable);
+							SC->SetWorldRotation(FRotator(-90.0f, 0.0f, 0.0f));
+							SC->SetIntensityUnits(ELightUnits::Lumens);
+							SC->SetIntensity((float)PoolLumens);
+							SC->SetAttenuationRadius((float)GSpec.Lantern.RangeM * 100.0f);
+							SC->SetLightColor(Lamp);
+							SC->SetInnerConeAngle((float)GLook.LanternPoolInnerDeg);
+							SC->SetOuterConeAngle((float)GLook.LanternPoolOuterDeg);
+							SC->SetCastShadows(true);
+						}
+						GLanternPools.Add(S);
+					}
+				}
 			}
 			if (L != nullptr)
 			{
@@ -3453,6 +3486,8 @@ namespace
 		SetDirectional(GFillC, Sky * 0.45f, kFillGround * FillScale);
 		for (int32 I = 0; I < GLanterns.Num(); ++I)
 			if (ULightComponent* L = GLanterns[I]->GetLightComponent()) L->SetVisibility(C.LanternsOn);
+		for (int32 I = 0; I < GLanternPools.Num(); ++I)
+			if (ULightComponent* L = GLanternPools[I]->GetLightComponent()) L->SetVisibility(C.LanternsOn);
 		// AND THE LAMP HEADS THEMSELVES, QUEUE 333, IMMEDIATELY BESIDE THE
 		// LIGHTS THEY BELONG TO. The two lines above switch the light the
 		// fixture CASTS; this switches the glass the fixture IS. They are
@@ -3480,7 +3515,8 @@ namespace
 				F->SetFogDensity((float)C.FogDensity * kFogDensityGain);
 				F->SetFogInscatteringColor(C.SunOn ? FLinearColor((float)GLook.FogDayR, (float)GLook.FogDayG,
 				                                                  (float)GLook.FogDayB, 1.0f)
-				                                   : FLinearColor(0.06f, 0.05f, 0.05f, 1.0f));
+				                                   : FLinearColor((float)GLook.FogNightR, (float)GLook.FogNightG,
+				                                                  (float)GLook.FogNightB, 1.0f));
 				F->SetFogHeightFalloff((float)GLook.FogFalloff);
 				// AND THE FOG STOPS OWNING THE FAR FIELD, which is the
 				// measurement that started this: with nothing behind it the
@@ -6889,6 +6925,20 @@ namespace
 				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
 					FLinearColor((float)Rw.R * K, (float)Rw.G * K, (float)Rw.B * K, 1.0f));
 				++GStreetGlowing;
+			}
+			// A PICTURED ROOM OR NET GLOWS AT NIGHT TOO, 29 September: the lit
+			// shop and the lit bedroom behind its net, at the recipe's own
+			// night strength in the room's warm colour (the blind review of the
+			// sodium night: not one window lit; the shops' tubes lit but no
+			// light inside). By day a picture keeps its own colour and nothing
+			// is added, as before.
+			else if ((Rw.Emit == "net" || Rw.Emit == "room") && !Rw.Decal.empty() && Rw.bHasRgb)
+			{
+				const double Gain = GLook.RoomGlowGainNight > 0.0 ? GLook.RoomGlowGainNight : GLook.GlowGain;
+				const float K = (!C.SunOn && Rw.EmitNight > 0.0) ? (float)(Rw.EmitNight * Gain) : 0.0f;
+				Mid->SetVectorParameterValue(FName(TEXT("EmissiveColor")),
+					FLinearColor((float)Rw.R * K, (float)Rw.G * K, (float)Rw.B * K, 1.0f));
+				if (K > 0.0f) { ++GStreetGlowing; }
 			}
 			if (LedgerStreet::TakesWater(Rw.Base))
 			{

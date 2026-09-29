@@ -1,46 +1,47 @@
 {
- "freeC": 42.7,
- "freeF": 34.0,
+ "freeC": 57.9,
+ "freeF": 33.7,
  "groups": [
   {
-   "id": "probe-packaged",
-   "title": "An old packaged copy of the game, from 23 September",
+   "id": "unreal-cache-to-f",
+   "title": "Move Unreal's cache to drive F, and delete the copy on C:",
    "paths": [
-    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged"
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen",
+    "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache"
    ],
-   "why": "The game packaged here once, on 23 September. You play the copy on drive F, and the build machine packages its own; nothing runs this one.",
-   "after": "Nothing you would notice.",
+   "why": "Unreal keeps a cache of built shaders and assets (capped at 10 GB on your yes of Tuesday), and an older cache it is draining. Your rule is that caches live on drive F, not C: (F has 31 GB free). On your yes I point Unreal's own settings at the LedgerTools folder on drive F, and once Unreal is closed I delete both old copies on C:.",
+   "after": "The next build or two are a few minutes slower while the cache refills on F. It stays at 10 GB there.",
+   "move": "F:/LedgerTools/zen/Data",
    "recommend": true,
    "sizes": [
     [
-     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged",
-     1.14
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\Zen",
+     10.94
+    ],
+    [
+     "C:\\Users\\Jafar\\AppData\\Local\\UnrealEngine\\Common\\DerivedDataCache",
+     2.2
     ]
    ],
-   "gb": 1.1,
+   "gb": 13.1,
    "movedGb": 0
   },
   {
-   "id": "probe-saved-old",
-   "title": "Superseded film frames and old crash reports",
+   "id": "helper-checkout",
+   "title": "A spare copy of the project a helper left behind",
    "paths": [
-    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript",
-    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes"
+    "C:\\Users\\Jafar\\ledger-local\\.claude\\worktrees"
    ],
-   "why": "The frames of Sheila's look films before the ones on your page (recorded as superseded), and the editor's crash reports from earlier in the month.",
+   "why": "A helper I ran on Tuesday worked in its own spare copy of the project, and the copy stayed. Everything in it is on GitHub; nothing uses it. I no longer run helpers that way.",
    "after": "Nothing you would notice.",
    "recommend": true,
    "sizes": [
     [
-     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript",
-     0.36
-    ],
-    [
-     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes",
-     0.28
+     "C:\\Users\\Jafar\\ledger-local\\.claude\\worktrees",
+     2.56
     ]
    ],
-   "gb": 0.6,
+   "gb": 2.6,
    "movedGb": 0
   }
  ],
@@ -66,7 +67,7 @@
   {
    "name": "Windows' temporary files",
    "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp",
-   "gb": 4.4,
+   "gb": 5.4,
    "why": "not on your list, so untouched"
   },
   {

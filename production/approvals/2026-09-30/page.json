@@ -4,7 +4,7 @@
  "title": "Wednesday's page",
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
-  "New today: how Sheila looks at you as you walk past her, three ways; the street with its new clutter. The rest is Tuesday's, not yet picked.",
+  "New today: how Sheila looks at you as you walk past her, three ways; the street with its new clutter, and at night. The rest is Tuesday's, not yet picked.",
   "Faces: front and profile in a plain studio light, and the face speaking a line."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
@@ -62,6 +62,32 @@
     [
      "no",
      "Something jars"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-street-night",
+   "name": "The street at night, under its sodium lamps",
+   "note": "\"Later that week, evening\" used to play in broad daylight; it now plays at night. The lamps are low-pressure sodium, one orange colour, lighting pools under each lamp with the gaps between left dark, and the wet road carries their reflections (from the research on 1990 street light). It passed my check and a blind reviewer's. Say if it reads as night to you, and if the orange is right. The blind reviewer's remaining notes: the left terrace's brick is lit almost evenly up to the eaves, closer to floodlighting than to pools; across the road the upper brick is brighter than the pavement in front of Rita's; the wet road carries few streaks from the lamps; colours survive the sodium light (the green stripes, the green bin), where under real sodium they would go orange and black; the cream tiles under the right-hand shop are the brightest patch; that shop's window reads as a board; the lit upstairs windows read cool grey-green rather than warm. Fixed since the first try, in these frames: lamps that pool light on the pavement, the town's orange glow in the sky, lit windows on the hillside and upstairs, and shops lit inside.",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-09-30/street-night-camA.webp",
+     "alt": "Along the east pavement, at night"
+    },
+    {
+     "src": "production/approvals/2026-09-30/street-night-camB.webp",
+     "alt": "Across the road at the shops, at night"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "That reads as night"
+    ],
+    [
+     "no",
+     "Not like this"
     ]
    ]
   },

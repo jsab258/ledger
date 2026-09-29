@@ -364,6 +364,17 @@ def net_curtain(rng, pitch_mm, gather):
     return Image.fromarray((np.clip(out, 0, 1) * 255).astype(np.uint8), "RGBA")
 
 
+def net_curtain_lit(rng, pitch_mm, gather):
+    """The same net with a room lit behind it at night, 29 September: a
+    tungsten bulb seen through the weave, warm and brighter where the fabric
+    is thin (the blind review of the sodium night: not one window lit, so the
+    street read empty rather than quiet)."""
+    base = np.asarray(net_curtain(rng, pitch_mm, gather)).astype(np.float32) / 255.0
+    rgb, alpha = base[..., :3], base[..., 3:]
+    glow = np.clip(rgb * np.array([1.00, 0.80, 0.50]) * (1.15 - 0.35 * alpha), 0, 1)
+    return Image.fromarray((np.concatenate([glow, alpha], -1) * 255).astype(np.uint8), "RGBA")
+
+
 # ---------------------------------------------------------------------------
 # E10. Street name plate. CANON STRINGS ONLY.
 # ---------------------------------------------------------------------------
@@ -421,7 +432,13 @@ def build(dest=DEST, streets=None, districts=None):
              "1024x1024mm, 26mm weave pitch, gathered"),
             ("net_curtain_b.png", "C12_net_curtain",
              lambda: net_curtain(_rng("C12b"), 17.0, 0.35),
-             "1024x1024mm, 17mm weave pitch, nearly flat")]
+             "1024x1024mm, 17mm weave pitch, nearly flat"),
+            ("net_curtain_a_lit.png", "C12_net_curtain",
+             lambda: net_curtain_lit(_rng("C12a"), 26.0, 1.0),
+             "net_curtain_a with a room lit behind it: warm tungsten through the weave"),
+            ("net_curtain_b_lit.png", "C12_net_curtain",
+             lambda: net_curtain_lit(_rng("C12b"), 17.0, 0.35),
+             "net_curtain_b with a room lit behind it: warm tungsten through the weave")]
     jobs.append(("fascia_mickeys_plain.png", "C6_fascia_lettering",
                  lambda: make_fascia("Mickey's", _rng("C6mickeys")),
                  "5650x460mm fascia face, canon name in plain capitals, "

@@ -273,6 +273,14 @@ namespace LedgerStreet
 		double SkySeenGain;      // the sky dome as SEEN, over the sky intensity that lights
 		double GlowGain;         // Blender's glow strengths into this engine's emissive
 		double FogDayR, FogDayG, FogDayB;   // the day fog's colour
+		// THE NIGHT HAZE'S COLOUR, 29 September: a town's sodium lamps light
+		// low cloud and haze a dull orange-brown (production/research/
+		// evening-light-1990); it was a fixed near-grey (0.06, 0.05, 0.05).
+		double FogNightR, FogNightG, FogNightB;
+		// A PICTURED ROOM'S GLOW AT NIGHT (the lit shop, the lit room behind a
+		// net), a gain on the recipe's night strength in place of GlowGain,
+		// which is tuned for the tubes at 12 and left a room at 1.2 unseen.
+		double RoomGlowGainNight;
 		double FogFalloff;       // how fast the fog thins with height
 		// FROM WHAT WETNESS THE GROUND IS A FILM OF WATER: the road, the
 		// paving and the kerb lose their relief map, because the pack's
@@ -348,16 +356,23 @@ namespace LedgerStreet
 		// glass, which then shaded everything under it (29 September: the
 		// upper storeys lit, the pavement under the lamp dark).
 		double LanternLightY;
+		// THE POOL UNDER EACH LAMP: a downward cone of this many lumens beside
+		// the point light (0 for none), and its inner and outer half-angles.
+		// Sodium lanterns throw their light down and along the road; a bare
+		// point light lit the house fronts as brightly as the pavement.
+		double LanternPoolLumens, LanternPoolInnerDeg, LanternPoolOuterDeg;
 		bool   bLanternRgb;
 		double LanternR, LanternG, LanternB;
-		int    Read;             // how many of the twenty-three the file supplied
+		int    Read;             // how many of the twenty-seven the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
+		         FogNightR(0.06), FogNightG(0.05), FogNightB(0.05), RoomGlowGainNight(0.0),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
 		         bStreetInPlay(false), FogCapGainDay(1.0), NightExposurePin(0.0),
-		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0), bLanternRgb(false),
+		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0),
+		         LanternPoolLumens(0.0), LanternPoolInnerDeg(35.0), LanternPoolOuterDeg(70.0), bLanternRgb(false),
 		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
 		         Read(0), bFromFile(false) {}
 	};
@@ -679,6 +694,14 @@ namespace LedgerStreet
 		{
 			Out.FogDayR = V->Arr[0].Num; Out.FogDayG = V->Arr[1].Num; Out.FogDayB = V->Arr[2].Num; ++Out.Read;
 		}
+		V = Root.Find("room_glow_gain_night");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.RoomGlowGainNight = V->Num; ++Out.Read; }
+		V = Root.Find("fog_night_colour");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM
+		    && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)
+		{
+			Out.FogNightR = V->Arr[0].Num; Out.FogNightG = V->Arr[1].Num; Out.FogNightB = V->Arr[2].Num; ++Out.Read;
+		}
 		V = Root.Find("fog_height_falloff");
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogFalloff = V->Num; ++Out.Read; }
 		V = Root.Find("wet_film_from");
@@ -709,6 +732,14 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogCapGainDay = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_lumens");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLumens = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_pool_lumens");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternPoolLumens = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_pool_cone_deg");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 2 && V->Arr[0].Type == T_NUM && V->Arr[1].Type == T_NUM
+		    && V->Arr[0].Num > 0.0 && V->Arr[0].Num <= V->Arr[1].Num && V->Arr[1].Num <= 89.0)
+		{
+			Out.LanternPoolInnerDeg = V->Arr[0].Num; Out.LanternPoolOuterDeg = V->Arr[1].Num; ++Out.Read;
+		}
 		V = Root.Find("lantern_light_y_m");
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLightY = V->Num; ++Out.Read; }
 		V = Root.Find("lantern_linear_rgb");

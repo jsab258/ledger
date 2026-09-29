@@ -170,7 +170,7 @@
    "emit_day": null,
    "emit_night": null,
    "reveal_on": null,
-   "faces": 1680
+   "faces": 1176
   },
   {
    "mesh": "street_card_int23_fish",
@@ -305,7 +305,30 @@
    "emit_day": 0.3,
    "emit_night": 0.05,
    "reveal_on": null,
-   "faces": 78
+   "faces": 54
+  },
+  {
+   "mesh": "street_card_net_curtain_a_lit",
+   "material": "card_production/assets/vignette/decals2d/net_curtain_a_lit",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/assets/vignette/decals2d/net_curtain_a_lit",
+   "decal_uv": null,
+   "decal_emit": "net",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.3,
+   "emit_night": 1.2,
+   "reveal_on": null,
+   "faces": 24
   },
   {
    "mesh": "street_card_net_curtain_b",
@@ -328,7 +351,30 @@
    "emit_day": 0.3,
    "emit_night": 0.05,
    "reveal_on": null,
-   "faces": 78
+   "faces": 48
+  },
+  {
+   "mesh": "street_card_net_curtain_b_lit",
+   "material": "card_production/assets/vignette/decals2d/net_curtain_b_lit",
+   "base_material": "interior_lit",
+   "linear_rgb": [
+    1.0,
+    0.714,
+    0.344
+   ],
+   "roughness": 0.9,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": "production/assets/vignette/decals2d/net_curtain_b_lit",
+   "decal_uv": null,
+   "decal_emit": "net",
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.3,
+   "emit_night": 1.2,
+   "reveal_on": null,
+   "faces": 30
   },
   {
    "mesh": "street_cl_bollard_bollard_black",
@@ -2544,6 +2590,29 @@
    "emit_night": 12.0,
    "reveal_on": null,
    "faces": 264
+  },
+  {
+   "mesh": "street_window_far_lit",
+   "material": "window_far_lit",
+   "base_material": "window_far_lit",
+   "linear_rgb": [
+    0.11,
+    0.08,
+    0.045
+   ],
+   "roughness": 0.3,
+   "surface_map": null,
+   "tile_m": 0.0,
+   "decal": null,
+   "decal_uv": null,
+   "decal_emit": null,
+   "texture_mean": null,
+   "drawn_map": null,
+   "drawn_tile_m": null,
+   "emit_day": 0.0,
+   "emit_night": 80.0,
+   "reveal_on": null,
+   "faces": 504
   }
  ]
 }

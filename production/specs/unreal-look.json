@@ -59,8 +59,8 @@
   "night_exposure_pin_note": "23 September. A night row that asks the scene file for no exposure pin is held here instead of left automatic: the lit rooms seen through the see-through glass throw the automatic meter, and cam_A beside Mickey's window came out black (mean 0.0 on three local takes, and on the runner in two runs of four). 0.1 is where a healthy dusk frame's automatic exposure already settles: the hook camera's dusk measured 22.1 automatic and 22.8 held at 0.1, locally. Rows with their own pin keep it. 29 September: 0.4, two stops darker than the 0.1 it was, once the lamps lit the street (lantern_lumens): at 0.1 the lamp-lit street read as floodlit; the research says to under-expose a lamp-lit night on purpose so the gaps between lamps stay dark (production/research/evening-light-1990).",
   "street_collision": true,
   "street_collision_note": "23 September. TRUE: the Blender street is the walls in play - its triangles collide (complex-as-simple, set at import), the shop and car glass block a body but not a sight line, and the scene file's pieces it replaces lose their collision. Switched on after the crime and the walk held on it on the runner's own build, locally, with the kerb dropped over the gully as the scene file cuts it and every probe bounds query counting non-colliding parts. False puts back the scene file's walls.",
-  "lantern_lumens": 800,
-  "lantern_lumens_note": "29 September. The scene file's lantern intensity (3.2) is a Unity number and lit almost nothing in this engine, so the night had no pools of light (the AI tester's evening, and every night frame). Chosen from a series of night frames at 800, 1800 and 4550 lumens with the light hung under the lamp's glass (F:/LedgerTools/tmp/lamps2): at this exposure the physical figure for a 35 W low-pressure sodium lamp, about 4,550 (Philips SOX 35W; production/research/evening-light-1990), floodlit the whole terrace; 800 with the night held two stops darker gives pools of light under each lamp with the facade between falling into shade, as the research describes. -LanternLumens= overrides it for a series.",
+  "lantern_lumens": 300,
+  "lantern_lumens_note": "29 September. The all-round glow of each sodium lantern, in lumens (the scene file's Unity-era 3.2 lit almost nothing, so the night had no light). With the light hung under the lamp's glass, 800 alone floodlit the terrace; with the pool below (lantern_pool_lumens) the glow was judged on night frames at 800, 400 and 300 (F:/LedgerTools/tmp/lamps2 and lamps3): 300 lets the upper storeys between lamps fall into shade. The physical output of a 35 W low-pressure sodium lamp is about 4,550 lumens (production/research/evening-light-1990); these are look numbers at the night's held exposure, not a photometric claim. -LanternLumens= overrides it for a series.",
   "lantern_linear_rgb": [
     1.0,
     0.25,
@@ -68,5 +68,19 @@
   ],
   "lantern_linear_rgb_note": "29 September. Low-pressure sodium is one colour, about 589 nm: chromaticity (0.569, 0.430), about linear (1.0, 0.25, 0.0) (production/research/evening-light-1990). The scene file's gamma (1, 0.857, 0) is yellower than the lamp.",
   "lantern_light_y_m": 4.78,
-  "lantern_light_y_m_note": "29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark."
+  "lantern_light_y_m_note": "29 September. The lamp's light, metres above the road's crown: 2 cm under the glass of the Blender street's lamp head (tools/art-recipes/lighting-column.py; its lens spans 4.80 to 4.82 m). At the scene file's box height (4.915 m) the light sat inside the head, above the glass, and the head shaded everything under it: the first sodium night lit the upper storeys and left the pavement under each lamp dark.",
+  "lantern_pool_lumens": 1200,
+  "lantern_pool_cone_deg": [
+    35,
+    70
+  ],
+  "lantern_pool_note": "29 September. The pool under each lamp: a downward cone of light beside the lantern's point light, inner and outer half-angles in degrees. The blind review of the first sodium night: 'the lamps light the house fronts more than the pavement ... the pools on the ground are weak'. Low-pressure sodium lanterns throw their light down and along the road (production/research/evening-light-1990). Chosen from night frames at 1600, 2400 and 1200 lumens with glows of 800, 400 and 300: 1200 gives a clear pool without the near pavement blowing out; -LanternPoolLumens= overrides it for a series.",
+  "fog_night_colour": [
+    0.1,
+    0.055,
+    0.025
+  ],
+  "fog_night_colour_note": "29 September. The night haze's colour, linear: a dull orange-brown, as a town's sodium lamps light low cloud and haze (Kyba and others via Live Science 2015, in production/research/evening-light-1990). The blind review of the first sodium night: the sky was charcoal, 'without the dull orange glow a town's lamps throw on low cloud'. It was a fixed (0.06, 0.05, 0.05).",
+  "room_glow_gain_night": 0.08,
+  "room_glow_gain_night_note": "29 September. A pictured room's glow at night (the lit shops, the lit rooms behind a third of the upstairs nets), a gain on the recipe's night strength (1.6 a shop, 1.2 a lit net, 0.05 a dark one) in place of street_glow_gain, which is tuned for the fluorescent tubes at 12 and left the rooms unseen: the blind review of the sodium night found not one window lit and the shops' tubes lighting nothing. 0.08, not the first try's 0.25, at which the shops' pictured interiors washed out into blank cream panels and the lit nets read white."
 }

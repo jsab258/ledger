@@ -500,6 +500,10 @@ MATERIALS = (
     # grey-green and nearly mirror-smooth in the frame, its broken edges a
     # pale green (the thickness of float glass catching the light), and the
     # pieces on the pavement a shade lighter so they glint.
+    # A FAR HOUSE'S LIT WINDOW (_house_row_facing_south): dim and warm by
+    # day, so it reads as a window like its neighbours; a tungsten room at
+    # night, when _street_emit lights it.
+    ("window_far_lit", (0.110, 0.080, 0.045), 0.30),
     ("shard_a_glass", (0.018, 0.026, 0.024), 0.04),
     ("shard_a_edge",  (0.320, 0.460, 0.400), 0.20),
     ("shard_a_ground", (0.090, 0.120, 0.110), 0.03),
@@ -2032,6 +2036,11 @@ def plan_street(root, spec_rel=SPEC_REL):
     _pavement_dressing(out)
     _street_furniture(out, root)
     _broken_windows(out)
+    # EVERY THIRD UPSTAIRS WINDOW HAS A LIT ROOM BEHIND ITS NET AT NIGHT.
+    nets = [q for q in out if q.get("decal_emit") == "net" and "net_curtain" in str(q.get("decal", ""))]
+    for k, q in enumerate(nets):
+        if k % NET_LIT_EVERY == 1:
+            q["decal"] = q["decal"] + "_lit"
     _standing_water(out, root)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
@@ -2475,6 +2484,13 @@ CARD_EMIT_DAY, CARD_EMIT_NIGHT = 0.40, 1.60
 #: glass: bright enough by day to bring the sheet's pale upstairs windows,
 #: nearly dark at night, when most front bedrooms are.
 NET_EMIT_DAY, NET_EMIT_NIGHT = 0.30, 0.05
+#: AND A LIT ROOM BEHIND A NET, 29 September: every third upstairs window
+#: along the street shows a warm room at night (the blind review of the
+#: sodium night: not one window lit, so the street read empty rather than
+#: quiet; the research names windows as the night's only real colour). By day
+#: they are nets like the rest.
+NET_LIT_EMIT_DAY, NET_LIT_EMIT_NIGHT = 0.30, 1.20
+NET_LIT_EVERY = 3
 NET_CURTAINS = ("production/assets/vignette/decals2d/net_curtain_a",
                 "production/assets/vignette/decals2d/net_curtain_b")
 
@@ -3174,7 +3190,12 @@ def _house_row_facing_south(out, prefix, xa, xb, y0, y1, zb, rnd, trees=False):
         for fz in (1.0, 3.5):
             for k in (0.3, 0.7):
                 cy = y + (ye - y) * k
-                _box(out, "%s%d_win%d%d" % (prefix, n, int(fz), int(k * 10)), "car_glass",
+                # ABOUT THREE IN TEN LIT AT NIGHT (29 September: the hillside
+                # was an unlit mass after dark), chosen by position rather than
+                # by the row's own random draws, so no house changes shape.
+                lit = (n * 7 + int(fz) * 3 + int(k * 10)) % 10 < 3
+                _box(out, "%s%d_win%d%d" % (prefix, n, int(fz), int(k * 10)),
+                     "window_far_lit" if lit else "car_glass",
                      xa - 0.05, xa, cy - 0.45, cy + 0.45, zb + fz, zb + fz + 1.3, "a-window")
         if rnd.random() < 0.7:
             cy = y + (ye - y) * rnd.uniform(0.2, 0.8)
@@ -3245,8 +3266,9 @@ def _north_approach(out):
         for fz in (1.0, 3.6):
             for k in (0.28, 0.72):
                 cxw = x + (xe - x) * k
+                lit = (n * 7 + int(fz) * 3 + int(k * 100)) % 10 < 3
                 _box(out, "backdrop_rise_approach_e%d_win%d%d" % (n, int(fz), int(k * 100)),
-                     "car_glass", cxw - 0.45, cxw + 0.45, f - 0.03, f, fz,
+                     "window_far_lit" if lit else "car_glass", cxw - 0.45, cxw + 0.45, f - 0.03, f, fz,
                      min(fz + 1.4, h - 0.3), "a-window")
         n += 1
         x = xe
@@ -3394,7 +3416,10 @@ def _north_rise(out):
                        "slate/%.1fm-rise" % rise)
                 for fz in (1.1, 3.6):
                     if fz + 1.3 < h and y1 - y > 2.0:
-                        _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)), "car_glass",
+                        # ABOUT THREE IN TEN LIT AT NIGHT, by position (29 September).
+                        lit = (t * 5 + n * 3 + int(fz)) % 10 < 3
+                        _box(out, "backdrop_rise_%d_%d_win%d" % (t, n, int(fz)),
+                             "window_far_lit" if lit else "car_glass",
                              xa - 0.05, xa, y + 0.8, y1 - 0.8, base + fz, base + fz + 1.3,
                              "a-floor-of-windows")
                 # A STACK ON THE PARTY WALL, the terrace's rhythm.
@@ -6054,7 +6079,10 @@ def build_and_render(args):
         if key.startswith("card_") and cm is not None and cm.use_nodes:
             bc = cm.node_tree.nodes.get("Principled BSDF")
             if bc is not None and "Emission Strength" in bc.inputs:
-                if "net_curtain" in key:
+                if "net_curtain" in key and key.endswith("_lit"):
+                    bc.inputs["Emission Strength"].default_value = (
+                        NET_LIT_EMIT_NIGHT if night else NET_LIT_EMIT_DAY)
+                elif "net_curtain" in key:
                     bc.inputs["Emission Strength"].default_value = (
                         NET_EMIT_NIGHT if night else NET_EMIT_DAY)
                 else:
@@ -6485,7 +6513,15 @@ def _street_emit(key, lettered, night):
         return 8.0 if night else 0.0
     if key == "interior_lit":
         return 0.7 if night else 3.4
+    if key == "window_far_lit":
+        # Unreal glows a plain row at its colour times this times the look
+        # file's street_glow_gain (0.02, tuned for the tubes at 12); the
+        # colour is dim so the window reads as dark glass by day, so the
+        # strength is high to come out near a tube's glow at night.
+        return 80.0 if night else 0.0
     if key.startswith("card_"):
+        if "net_curtain" in key and key.endswith("_lit"):
+            return NET_LIT_EMIT_NIGHT if night else NET_LIT_EMIT_DAY
         if "net_curtain" in key:
             return NET_EMIT_NIGHT if night else NET_EMIT_DAY
         return CARD_EMIT_NIGHT if night else CARD_EMIT_DAY
