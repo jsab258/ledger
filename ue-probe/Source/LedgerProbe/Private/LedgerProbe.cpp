@@ -620,8 +620,32 @@ namespace
 			FTickerDelegate::CreateStatic(&ShotTick), 0.0f);
 	}
 
+	// THE CAST FILES FOR THE CastDay ROWS (29 September): the copy staged in
+	// Content/LedgerData (tools/ue/stage_game_data.py), then the checkout
+	// beside the project, then -LedgerRepo.
+	bool ReadCastFileForGolden(const std::string& Name, std::string& Out)
+	{
+		const FString Rel = FString(TEXT("production/specs/")) + UTF8_TO_TCHAR(Name.c_str());
+		TArray<FString> Cands;
+		Cands.Add(FPaths::Combine(FPaths::ProjectContentDir(), TEXT("LedgerData"), Rel));
+		Cands.Add(FPaths::Combine(FPaths::ProjectDir(), TEXT(".."), Rel));
+		FString Repo;
+		if (FParse::Value(FCommandLine::Get(), TEXT("LedgerRepo="), Repo) && !Repo.IsEmpty()) { Cands.Add(FPaths::Combine(Repo, Rel)); }
+		for (const FString& C : Cands)
+		{
+			FString Text;
+			if (FPaths::FileExists(C) && FFileHelper::LoadFileToString(Text, *C))
+			{
+				Out = TCHAR_TO_UTF8(*Text);
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void RunGoldenTest()
 	{
+		LedgerCore::Golden::CastFileReader() = &ReadCastFileForGolden;
 		FString Tried;
 		const FString Found      = FindGoldenTable(Tried);
 		const FString GoldenPath = Found.IsEmpty()

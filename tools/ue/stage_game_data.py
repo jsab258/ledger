@@ -35,6 +35,7 @@ FIXED = [
     "production/specs/street-people.json",
     "production/specs/street-sounds.json",
     "production/specs/hook-cast.json",   # the places the session record names (29 September)
+    "production/specs/quay-cast.json",   # the built street's ten, for the CastDay rows of the golden run (29 September)
     "content/dialogue/crime-witness-v1.json",
 ]
 DECAL_ROOT = "ledger/Assets/StreamingAssets/Decals"

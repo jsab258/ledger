@@ -94,6 +94,8 @@ namespace Ledger.PerceptionGolden
             // Ported to StreetVoice.h on 29 September (town list handover 1).
             EmitKnowing(sb);
             EmitRecognition(sb);
+            // Ported to CastDay.h on 29 September (town list handover 2).
+            EmitCastDay(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -103,7 +105,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitCastDay(sb);
                 EmitOriginRung(sb);
                 EmitJustNow(sb);
                 EmitTownNews(sb);
@@ -757,13 +758,22 @@ namespace Ledger.PerceptionGolden
                     for (int day = 0; day < 7; day++)
                         for (int hour = 0; hour < 24; hour++)
                             Row(sb, "CastPlaceOf", name, person, day.ToString(Inv), hour.ToString(Inv), cast.PlaceOf(person, day, hour));
+                for (int i = 0; i < cast.Ties.Count; i++)
+                    Row(sb, "CastTie", name, i.ToString(Inv), cast.Ties[i].a, cast.Ties[i].b, D(cast.Ties[i].w));
+                foreach (var person in cast.People)
+                    Row(sb, "CastPerson", name, person, Esc(cast.NameOf(person)), cast.CircleOf(person), Bit(cast.NamesHimOnlyOnTrust(person)));
+                foreach (var place in cast.Places)
+                    Row(sb, "CastPlace", name, place, Esc(cast.SaidOf(place)), cast.AreaOf(place) ?? "null");
                 foreach (var (a, b, w) in cast.Ties)
                 {
                     var bits = new StringBuilder();
                     for (int day = 0; day < 7; day++)
                         for (int hour = 0; hour < 24; hour++)
                             bits.Append(cast.Together(a, b, day, hour) ? '1' : '0');
-                    Row(sb, "CastTogether", name, a, b, bits.ToString());
+                    // "w" FIRST, so the 168 bits compare as text: read as a
+                    // number only the first seventeen digits after the first 1
+                    // counted (the independent check, 29 September).
+                    Row(sb, "CastTogether", name, a, b, "w" + bits.ToString());
                     Row(sb, "CastWeek", name, a, b, cast.HoursTogetherPerWeek(a, b).ToString(Inv), cast.DaysTogetherPerWeek(a, b).ToString(Inv),
                         CastDay.FriendsMeetDays(w).ToString(Inv));
                 }
@@ -778,7 +788,7 @@ namespace Ledger.PerceptionGolden
             {
                 var c = CastDay.Parse(f[1]);
                 for (int day = -8; day < 8; day++)
-                    for (int hour = 0; hour < 24; hour++)
+                    for (int hour = -24; hour < 48; hour++)
                         Row(sb, "CastPlaceOfFile", f[0], day.ToString(Inv), hour.ToString(Inv), c.PlaceOf("p", day, hour));
             }
             var edge = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":6,\"z_m\":0},\"c\":{\"x_m\":3.6,\"z_m\":4.8},\"d\":{\"x_m\":6.000001,\"z_m\":0}}," +
@@ -800,6 +810,32 @@ namespace Ledger.PerceptionGolden
                 new[] { "ties-not-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":{}}" },
                 new[] { "no-range", "{\"places\":{},\"people\":[],\"ties\":[]}" },
                 new[] { "person-twice", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "off-place", "{\"talk_range_m\":6,\"places\":{\"off\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
+                new[] { "circle-evening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":\"evening\"}],\"ties\":[]}" },
+                new[] { "circle-number", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":1}],\"ties\":[]}" },
+                new[] { "circle-night", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":\"night\"}],\"ties\":[]}" },
+                new[] { "names-him-soon", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"namesHim\":\"soon\"}],\"ties\":[]}" },
+                new[] { "names-him-spaced", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"namesHim\":\" on-trust \"}],\"ties\":[]}" },
+                new[] { "area-unknown-place", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"x\":{\"places\":[\"b\"]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "range-zero", "{\"talk_range_m\":0,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "range-text", "{\"talk_range_m\":\"6\",\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "range-twice-last-good", "{\"talk_range_m\":-1,\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "strength-over-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",1.01]]}" },
+                new[] { "strength-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",1]]}" },
+                new[] { "hour-minus-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[-1,\"a\"]]}],\"ties\":[]}" },
+                new[] { "id-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "place-no-z", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "routine-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[]}],\"ties\":[]}" },
+                new[] { "step-short", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0]]}],\"ties\":[]}" },
+                new[] { "step-noted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\",\"note\"]]}],\"ties\":[]}" },
+                new[] { "days-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{}}],\"ties\":[]}" },
+                new[] { "sun-twice-last-good", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sun\":[[0,\"b\"]],\"sun\":[[0,\"a\"]]}}],\"ties\":[]}" },
+                new[] { "hour-sum", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9-17,\"a\"]]}],\"ties\":[]}" },
+                new[] { "x-two-points", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":5.5.2,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "range-plus", "{\"talk_range_m\":+6,\"places\":{\"a\":{\"x_m\":.5,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "escape-quote", "{\"talk_range_m\":6,\"places\":{\"Rita\\'s\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
+                new[] { "accented-ids", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"zo\\u00eb\",\"routine\":[[0,\"a\"]]},{\"id\":\"zo\\u00e9\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+                new[] { "no-break-space", "{\u00a0\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
             };
             foreach (var r in refused)
             {

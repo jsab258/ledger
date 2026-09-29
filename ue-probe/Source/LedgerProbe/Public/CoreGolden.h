@@ -44,12 +44,16 @@
 #include "Observation.h"
 #include "Perception.h"
 #include "Reaction.h"
+#include "CastDay.h"
 #include "Schedule.h"
 #include "StreetVoice.h"
 #include "Suspicion.h"
 
 #include <cstdio>
 #include <cstdlib>
+#include <fstream>
+#include <map>
+#include <sstream>
 #include <limits>
 #include <memory>
 #include <string>
@@ -1207,6 +1211,38 @@ namespace Golden
 		return All;
 	}
 
+	// THE CAST FILES the CastDay rows name (quay-cast.json, hook-cast.json),
+	// through a reader the host may set: the test reads production/specs/
+	// in the repository it runs from; the game sets its own (LedgerProbe.cpp:
+	// the copy staged in Content/LedgerData, or the checkout). Each file is
+	// read and parsed once.
+	typedef bool (*FCastFileReader)(const std::string& Name, std::string& Out);
+	inline FCastFileReader& CastFileReader() { static FCastFileReader R = 0; return R; }
+	inline bool ReadCastFile(const std::string& Name, std::string& Out)
+	{
+		if (CastFileReader() != 0) return CastFileReader()(Name, Out);
+		std::ifstream In(("production/specs/" + Name).c_str(), std::ios::binary);
+		if (!In) return false;
+		std::ostringstream S;
+		S << In.rdbuf();
+		Out = S.str();
+		if (Out.size() >= 3 && (unsigned char)Out[0] == 0xEF && (unsigned char)Out[1] == 0xBB && (unsigned char)Out[2] == 0xBF) Out.erase(0, 3);
+		return true;
+	}
+	inline const CastDay* CastNamed(const std::string& Name)
+	{
+		static std::map<std::string, std::pair<bool, CastDay> > Read;
+		std::map<std::string, std::pair<bool, CastDay> >::iterator It = Read.find(Name);
+		if (It == Read.end())
+		{
+			std::pair<bool, CastDay> E(false, CastDay());
+			std::string Text, Err;
+			E.first = ReadCastFile(Name, Text) && CastDay::Parse(Text, E.second, Err);
+			It = Read.insert(std::make_pair(Name, E)).first;
+		}
+		return It->second.first ? &It->second.second : 0;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -1540,6 +1576,143 @@ namespace Golden
 				if (Line) { Outs.push_back(Line->Bank); Outs.push_back(Escape(Line->Text)); Outs.push_back(FromBool(Line->AboutPlayer)); }
 				else      { Outs.push_back("null"); }
 				A.Got = MultiAnswer(F, 7, Outs);
+			}
+		}
+		// THE NAMED CAST'S ROUTINES, answered from CastDay.h (PerceptionGolden
+		// EmitCastDay, town list handover 2). The two committed files come
+		// through ReadCastFile; the small files are the C#'s own, copied from
+		// Program.cs by script rather than retyped.
+		else if (Fn == "CastFile" || Fn == "CastPlaceOf" || Fn == "CastTogether" || Fn == "CastWeek"
+		         || Fn == "CastTie" || Fn == "CastPerson" || Fn == "CastPlace")
+		{
+			const CastDay* C = CastNamed(F[1]);
+			A.Known = true;
+			if (Fn == "CastFile")
+			{
+				std::vector<std::string> Outs;
+				if (C == 0) { Outs.push_back("missing"); }
+				else { Outs.push_back(FromInt((long long)C->People().size())); Outs.push_back(FromInt((long long)C->Ties().size())); Outs.push_back(FromDouble(C->TalkRangeM)); }
+				A.Got = MultiAnswer(F, 2, Outs);
+			}
+			else if (C == 0) { A.Got = "cast-file-not-read/" + F[1]; }
+			else if (Fn == "CastPlaceOf" && F.size() >= 6) { A.Got = C->PlaceOf(F[2], I(F[3]), I(F[4])); }
+			else if (Fn == "CastTogether" && F.size() >= 5)
+			{
+				// "w" first, as the C# writes it, so the bits compare as text
+				std::string Bits = "w";
+				for (int Dd = 0; Dd < 7; ++Dd)
+					for (int Hh = 0; Hh < 24; ++Hh) Bits += C->Together(F[2], F[3], Dd, Hh) ? '1' : '0';
+				A.Got = Bits;
+			}
+			else if (Fn == "CastWeek" && F.size() >= 7)
+			{
+				double W = 0.0;
+				for (size_t T = 0; T < C->Ties().size(); ++T)
+					if (C->Ties()[T].A == F[2] && C->Ties()[T].B == F[3]) W = C->Ties()[T].W;
+				std::vector<std::string> Outs;
+				Outs.push_back(FromInt(C->HoursTogetherPerWeek(F[2], F[3])));
+				Outs.push_back(FromInt(C->DaysTogetherPerWeek(F[2], F[3])));
+				Outs.push_back(FromInt(CastDay::FriendsMeetDays(W)));
+				A.Got = MultiAnswer(F, 4, Outs);
+			}
+			// a tie by its place in the file: who, who, and its strength
+			else if (Fn == "CastTie" && F.size() >= 6)
+			{
+				const size_t Ix = (size_t)I(F[2]);
+				std::vector<std::string> Outs;
+				if (Ix < C->Ties().size()) { Outs.push_back(C->Ties()[Ix].A); Outs.push_back(C->Ties()[Ix].B); Outs.push_back(FromDouble(C->Ties()[Ix].W)); }
+				else { Outs.push_back("no-such-tie"); }
+				A.Got = MultiAnswer(F, 3, Outs);
+			}
+			// a person: the name the street gives them, their circle, whether
+			// they name him only once they trust him
+			else if (Fn == "CastPerson" && F.size() >= 6)
+			{
+				const std::string Nm = C->NameOf(F[2]);
+				std::vector<std::string> Outs;
+				Outs.push_back(Nm.empty() ? std::string("null") : Escape(Nm));
+				Outs.push_back(C->CircleOf(F[2]));
+				Outs.push_back(FromBool(C->NamesHimOnlyOnTrust(F[2])));
+				A.Got = MultiAnswer(F, 3, Outs);
+			}
+			// a place: what it is called where it is said, and its area
+			else if (Fn == "CastPlace" && F.size() >= 5)
+			{
+				const std::string Sd = C->SaidOf(F[2]), Ar = C->AreaOf(F[2]);
+				std::vector<std::string> Outs;
+				Outs.push_back(Sd.empty() ? std::string("null") : Escape(Sd));
+				Outs.push_back(Ar.empty() ? std::string("null") : Ar);
+				A.Got = MultiAnswer(F, 3, Outs);
+			}
+			else { A.Got = "row-too-short"; }
+		}
+		else if ((Fn == "CastPlaceOfFile" && F.size() >= 5) || (Fn == "CastTogetherEdge" && F.size() >= 4)
+		         || (Fn == "CastRefused" && F.size() >= 3) || (Fn == "CastMeetDays" && F.size() >= 3))
+		{
+			static const char* const Files[][2] = {
+				{ "wraps", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[6,\"a\"],[20,\"b\"]]}],\"ties\":[]}" },
+				{ "unsorted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":50,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[20,\"off\"],[8,\"a\"],[0,\"off\"],[12,\"b\"]]}],\"ties\":[]}" },
+				{ "weekday", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sun\":[[0,\"off\"]]}}],\"ties\":[]}" },
+			};
+			static const char* const Refused[][2] = {
+				{ "unknown-place", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"b\"]]}],\"ties\":[]}" },
+				{ "hour-24", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[24,\"a\"]]}],\"ties\":[]}" },
+				{ "half-hour", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9.5,\"a\"]]}],\"ties\":[]}" },
+				{ "two-at-once", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9,\"a\"],[9,\"off\"]]}],\"ties\":[]}" },
+				{ "tie-stranger", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"x\",0.5]]}" },
+				{ "tie-self", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"p\",0.5]]}" },
+				{ "tie-twice", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",0.5],[\"q\",\"p\",0.4]]}" },
+				{ "tie-strength", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",0]]}" },
+				{ "days-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "day-name", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sunday\":[[0,\"a\"]]}}],\"ties\":[]}" },
+				{ "ties-not-list", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":{}}" },
+				{ "no-range", "{\"places\":{},\"people\":[],\"ties\":[]}" },
+				{ "person-twice", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "off-place", "{\"talk_range_m\":6,\"places\":{\"off\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
+				{ "circle-evening", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":\"evening\"}],\"ties\":[]}" },
+				{ "circle-number", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":1}],\"ties\":[]}" },
+				{ "circle-night", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"circle\":\"night\"}],\"ties\":[]}" },
+				{ "names-him-soon", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"namesHim\":\"soon\"}],\"ties\":[]}" },
+				{ "names-him-spaced", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"namesHim\":\" on-trust \"}],\"ties\":[]}" },
+				{ "area-unknown-place", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"x\":{\"places\":[\"b\"]}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "range-zero", "{\"talk_range_m\":0,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "range-text", "{\"talk_range_m\":\"6\",\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "range-twice-last-good", "{\"talk_range_m\":-1,\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "strength-over-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",1.01]]}" },
+				{ "strength-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]},{\"id\":\"q\",\"routine\":[[0,\"a\"]]}],\"ties\":[[\"p\",\"q\",1]]}" },
+				{ "hour-minus-one", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[-1,\"a\"]]}],\"ties\":[]}" },
+				{ "id-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "place-no-z", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "routine-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[]}],\"ties\":[]}" },
+				{ "step-short", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0]]}],\"ties\":[]}" },
+				{ "step-noted", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\",\"note\"]]}],\"ties\":[]}" },
+				{ "days-empty", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{}}],\"ties\":[]}" },
+				{ "sun-twice-last-good", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]],\"days\":{\"sun\":[[0,\"b\"]],\"sun\":[[0,\"a\"]]}}],\"ties\":[]}" },
+				{ "hour-sum", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[9-17,\"a\"]]}],\"ties\":[]}" },
+				{ "x-two-points", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":5.5.2,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "range-plus", "{\"talk_range_m\":+6,\"places\":{\"a\":{\"x_m\":.5,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "escape-quote", "{\"talk_range_m\":6,\"places\":{\"Rita\\'s\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"]]}],\"ties\":[]}" },
+				{ "accented-ids", "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"zo\\u00eb\",\"routine\":[[0,\"a\"]]},{\"id\":\"zo\\u00e9\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+				{ "no-break-space", "{\xC2\xA0\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"p\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}" },
+			};
+			static const char* const Edge = "{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0},\"b\":{\"x_m\":6,\"z_m\":0},\"c\":{\"x_m\":3.6,\"z_m\":4.8},\"d\":{\"x_m\":6.000001,\"z_m\":0}},\"people\":[{\"id\":\"pa\",\"routine\":[[0,\"a\"]]},{\"id\":\"pb\",\"routine\":[[0,\"b\"]]},{\"id\":\"pc\",\"routine\":[[0,\"c\"]]},{\"id\":\"pd\",\"routine\":[[0,\"d\"]]}],\"ties\":[]}";
+			A.Known = true;
+			if (Fn == "CastMeetDays") { A.Got = FromInt(CastDay::FriendsMeetDays(D(F[1]))); }
+			else if (Fn == "CastTogetherEdge")
+			{
+				CastDay C; std::string Err;
+				A.Got = CastDay::Parse(Edge, C, Err) ? FromBool(C.Together(F[1], F[2], 0, 9)) : "edge-file-refused/" + Err;
+			}
+			else
+			{
+				const char* const (*Table)[2] = Fn == "CastRefused" ? Refused : Files;
+				const size_t N = Fn == "CastRefused" ? sizeof(Refused) / sizeof(Refused[0]) : sizeof(Files) / sizeof(Files[0]);
+				const char* Json = 0;
+				for (size_t Q = 0; Q < N; ++Q) if (F[1] == Table[Q][0]) Json = Table[Q][1];
+				CastDay C; std::string Err;
+				if (Json == 0) { A.Got = "unknown-file/" + F[1]; }
+				else if (Fn == "CastRefused") { A.Got = CastDay::Parse(Json, C, Err) ? "accepted" : "refused"; }
+				else { A.Got = CastDay::Parse(Json, C, Err) ? C.PlaceOf("p", I(F[2]), I(F[3])) : "refused/" + Err; }
 			}
 		}
 		// THE SCHEDULE, answered from Schedule.h. A resident is its index,
