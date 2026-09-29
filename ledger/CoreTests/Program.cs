@@ -5319,6 +5319,43 @@ namespace Ledger.CoreTests
                       && window.CanArrest("player.window_d0") && window.Strongest("player.window_d0") == Known.Statement
                       && file.CanArrest("player.cut_d2"),
                       "a window brings a constable, not the detective; a named statement makes criminal damage an arrest, as the law of 1990 had it; a reported wounding brings her; a body always brings her; each reason once");
+
+                // WORD THAT THE POLICE ARE ASKING (town list 6bq): whom she asks, what
+                // they remember and pass on, never counted as his nights' talk.
+                var askMill = new GossipMill(null);
+                foreach (var id in new[] { "ada", "rita", "sam", "outfit_man" })
+                    askMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), id == "outfit_man" ? "night" : "day"));
+                var dusk = new GameTime(1, 22, 0);
+                askMill.Witness("ada", new Fact("player", "window_d1", "seen"), "the new owner by the pawn window", true, dusk, 1.0);
+                askMill.Witness("outfit_man", new Fact("player", "window_d1", "seen"), "the new owner by the pawn window", true, dusk, 1.0);
+                askMill.Witness("rita", new Fact("player", "seen_about", "quay"), "the new owner on the quay", false, dusk, 1.0);
+                var sheAsks = PoliceFile.WhoSheAsks(askMill);
+                int loudBefore = PoliceFile.Loudness(askMill);
+                var visit = new GameTime(4, 9, 0);
+                int askedN = PoliceFile.Asked(askMill, new[] { "ada", "ada", "ghost", null }, "talk", visit);
+                int askedAgain = PoliceFile.Asked(askMill, new[] { "ada" }, "Wounding player.cut_d3", visit);
+                // No pressure of its own: the same stance with and without being asked.
+                var withAsk = StreetVoice.RegardFor(askMill.Get("ada"), askMill.MinConfidenceToShare, false, null, Acquaintance.Known, false);
+                var adaNoAsk = new Gossiper("ada2", "ada2", new MemoryStore("ada2"), new KnowledgeBase(), new SuspicionTracker());
+                foreach (var r0 in askMill.Get("ada").Rumors) if (!PoliceFile.IsAsking(r0)) adaNoAsk.Rumors.Add(r0);
+                var withoutAsk = StreetVoice.RegardFor(adaNoAsk, askMill.MinConfidenceToShare, false, null, Acquaintance.Known, false);
+                var fadedAsk = new Gossiper("fa", "fa", new MemoryStore("fa"), new KnowledgeBase(), new SuspicionTracker());
+                fadedAsk.Rumors.Add(new Rumor { Content = new Fact("player", "police_d4", "asking"), Summary = PoliceFile.AskedSaid, Confidence = 0.05, Sensitive = false });
+                var adaAsk = askMill.Get("ada").Rumors.Find(PoliceFile.IsAsking);
+                bool forBodyNone = PoliceFile.Asked(askMill, new[] { "rita" }, "body", visit) == 0 && PoliceFile.Asked(askMill, new[] { "rita" }, null, visit) == 0
+                                   && !askMill.Get("rita").Rumors.Exists(PoliceFile.IsAsking);
+                var askedLine = StreetVoice.Recognition(askMill.Get("ada"), adaAsk, StanceKind.Comments, 0);
+                var heardAsk = new Rumor { Content = new Fact("player", "police_d4", "asking"), Summary = PoliceFile.AskedSaid, Confidence = 0.6, Sensitive = false, Hops = 1 };
+                var heardLine = StreetVoice.Recognition(askMill.Get("sam"), heardAsk, StanceKind.Comments, 0);
+                Check(sheAsks.Count == 1 && sheAsks[0] == "ada" && askedN == 1 && adaAsk != null && !adaAsk.Sensitive && adaAsk.Hops == 0
+                      && askMill.Get("ada").Memory.Events.Count(e => e.Text == PoliceFile.AskedMemory) == 1 && askedAgain == 0
+                      && !askMill.Get("ada").Memory.Events.Exists(e => e.Text.Contains(PoliceFile.AskedSaid)) && PoliceFile.Loudness(askMill) == loudBefore && forBodyNone
+                      && withAsk.Stance == withoutAsk.Stance && StreetVoice.StoryHalfRemembered(fadedAsk, askMill.MinConfidenceToShare) == null
+                      && StreetVoice.StoryThatShows(askMill.Get("ada"), askMill.MinConfidenceToShare) != null
+                      && askedLine != null && askedLine.Bank == "recognition/police-asked" && heardLine != null && heardLine.Bank == "recognition/police-heard"
+                      && !PoliceFile.IsAsking(new Rumor { Content = new Fact("player", "police", "asking") }),
+                      "she asks the day people holding a story of his nights; each remembers it and passes it on as the street's news, never his nights' talk, and says so to his face, as the one she asked or as talk; a visit for a body asks nobody about him",
+                      $"{string.Join(",", sheAsks)} {askedN} {adaAsk?.Sensitive} {askedLine?.Bank} {heardLine?.Bank}");
                 var push = new PoliceFile();
                 push.Report("bold", "player.shove_d1", Offence.Assault, 4, 1);
                 Check(!push.CanArrest("player.shove_d1") && push.Strongest("player.shove_d1") == Known.Statement

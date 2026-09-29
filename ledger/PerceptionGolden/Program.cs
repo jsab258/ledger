@@ -110,6 +110,7 @@ namespace Ledger.PerceptionGolden
                 EmitOriginRung(sb);
                 EmitJustNow(sb);
                 EmitTownNews(sb);
+                EmitPoliceAsked(sb);
             }
 
             var text = sb.ToString();
@@ -562,6 +563,48 @@ namespace Ledger.PerceptionGolden
                         var lines = StreetVoice.Ambient(a, b, now, 0.5, 1.0, false, false, seed, null, kind == "none" ? null : kind, since);
                         Row(sb, "JustNow", kind, D(since), seed.ToString(Inv), lines[0].Bank, Esc(lines[0].Text), lines[1].Bank, Esc(lines[1].Text));
                     }
+        }
+
+        /// WORD THAT THE POLICE ARE ASKING (town list 6bq), awaiting the port:
+        /// which stories are hers (IsAsking), the lines they give at his face
+        /// by stance, told first-hand or heard, sensitive or not, and that
+        /// StoryThatShows now shows one.
+        static void EmitPoliceAsked(StringBuilder sb)
+        {
+            var g = new Gossiper("pa", "pa", new MemoryStore("pa"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var pred in new[] { "police_d4", "police_d", "police", "outfit_d4" })
+                Row(sb, "PoliceIsAsking", pred, Bit(PoliceFile.IsAsking(new Rumor { Content = new Fact("player", pred, "asking") })));
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var hops in new[] { 0, 1 })
+                    foreach (var sens in new[] { false, true })
+                        for (int seed = 0; seed < 6; seed++)
+                        {
+                            var about = new Rumor { Content = new Fact("player", "police_d4", "asking"), Summary = PoliceFile.AskedSaid, Confidence = 0.5, Sensitive = sens, Hops = hops };
+                            var line = StreetVoice.Recognition(g, about, k, seed);
+                            Row(sb, "RecognitionPolice", k.ToString(), hops.ToString(Inv), Bit(sens), seed.ToString(Inv),
+                                line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                        }
+            var holder = new Gossiper("ph", "ph", new MemoryStore("ph"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var c in new[] { 0.2, 0.5, 0.9 })
+            {
+                holder.Rumors.Clear();
+                holder.Rumors.Add(new Rumor { Content = new Fact("player", "police_d4", "asking"), Summary = PoliceFile.AskedSaid, Confidence = c, Sensitive = false });
+                var shows = StreetVoice.StoryThatShows(holder, 0.35);
+                var half = StreetVoice.StoryHalfRemembered(holder, 0.35);
+                Row(sb, "PoliceShows", D(c), shows == null ? "null" : shows.TopicKey, half == null ? "null" : half.TopicKey);
+            }
+            // No pressure of its own: a heard night story at 0.4 and being asked,
+            // at each suspicion, stand as the night story alone does.
+            foreach (var susp in new[] { 0.0, 0.25, 0.5 })
+                foreach (var asked in new[] { false, true })
+                {
+                    var p = new Gossiper("pr", "pr", new MemoryStore("pr"), new KnowledgeBase(), new SuspicionTracker());
+                    p.Suspicion.Restore(susp);
+                    p.Rumors.Add(new Rumor { Content = new Fact("player", "night_walk", "seen"), Summary = "s", Confidence = 0.4, Sensitive = true, Hops = 1 });
+                    if (asked) p.Rumors.Add(new Rumor { Content = new Fact("player", "police_d4", "asking"), Summary = PoliceFile.AskedSaid, Confidence = 1.0, Sensitive = false });
+                    var rg = StreetVoice.RegardFor(p, 0.35, false, null, Acquaintance.Known, false);
+                    Row(sb, "PoliceRegard", D(susp), Bit(asked), rg.Stance.ToString(), rg.Story == null ? "null" : rg.Story.TopicKey);
+                }
         }
 
         /// THE TOWN'S OWN NEWS (town list 6aq), for the port of StreetVoice.Exchange's
