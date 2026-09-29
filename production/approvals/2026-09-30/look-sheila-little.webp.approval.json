@@ -1,0 +1,12 @@
+{
+ "approves": "production/approvals/2026-09-30/look-sheila-little.webp",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: how Sheila looks at Tom as he passes, by what she has heard (three ways).",
+ "against": {
+  "production/approvals/2026-09-30/look-sheila-little.webp": "a22c4e61ced3033275b408e15035d6af79c15f1d",
+  "production/approvals/2026-09-30/look-sheila-none.webp": "491ab7daa2a2ad5d6c14268ad5699cb166b1cf88",
+  "production/approvals/2026-09-30/look-sheila-enough.webp": "03b06db8c9297a8f2d9f81baad1aefc45fe3eff2",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

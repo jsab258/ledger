@@ -1,0 +1,11 @@
+{
+ "approves": "production/casting/in-game-2026-09-25/voice/darren-milner.wav",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: Darren's voice as the game speaks it (sam.p241).",
+ "against": {
+  "production/casting/in-game-2026-09-25/voice/darren-milner.wav": "bd3400a2e5939ee4237d75c576aaf589779fe336",
+  "production/casting/darren-milner/SHEET.md": "aaec2a64cc3ca94287601c36b42367fb222cfd72",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

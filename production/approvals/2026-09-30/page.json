@@ -4,41 +4,11 @@
  "title": "Wednesday's page",
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
-  "New today: how Sheila looks at you as you walk past her, three ways; the street with its new clutter, and at night. The rest is Tuesday's, not yet picked.",
-  "Faces: front and profile in a plain studio light, and the face speaking a line."
+  "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
+  "Left for you: the street by day and at night, as whole frames, and three calls, each with my recommendation."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
-  {
-   "kind": "look",
-   "key": "look-sheila-regard",
-   "name": "Sheila, as you walk past her: three ways",
-   "note": "The same walk three times, filmed in the game. What she has heard of your night changes how she looks at you: knowing nothing, a stranger's glance that lands about ten metres off, lasts half a second and is gone before you are close; half-remembering a story, the same glance and then a second, longer look as you pass; sure it is you, she keeps you in view, says one line, and looks back after you until you are well past. Her voice is not in these (it waits on your paid-voice decision), so her lips do not move; the line is a subtitle. The blind reviewer's remaining notes: her hair and clothes are the game's stand-in, not her casting sheet's (a short greying set, a cardigan and skirt, tinted glasses), so she reads nearer 40 than 53; at the closest moments her eyes are cast steeply down; the look back turns her head but not her shoulders, so it reads as watching where you went more than looking over her shoulder; the first glance barely shows from this camera, as she already faces that way; you are in the picture for only about two of the 24 seconds; and three single frames are missing (a tenth of a second each, not visible).",
-   "pictures": [
-    {
-     "src": "production/approvals/2026-09-30/look-sheila-none.webp",
-     "alt": "She knows nothing of you"
-    },
-    {
-     "src": "production/approvals/2026-09-30/look-sheila-little.webp",
-     "alt": "She has half-heard a story"
-    },
-    {
-     "src": "production/approvals/2026-09-30/look-sheila-enough.webp",
-     "alt": "She is sure it is you"
-    }
-   ],
-   "options": [
-    [
-     "yes",
-     "That reads right"
-    ],
-    [
-     "no",
-     "Not like this"
-    ]
-   ]
-  },
   {
    "kind": "look",
    "key": "look-street-dressed",
@@ -92,175 +62,75 @@
    ]
   },
   {
-   "kind": "pair",
-   "key": "act-ron-kirby-threat",
-   "name": "Ron, threatening: two ways of making his voice act",
-   "note": "The same line in Ron's voice, made two different ways, heard blind (which is which is kept off the page). Both passed the accent, words and likeness checks and a blind reviewer. Which sounds more like Ron meaning it? Only Ron's threat is here tonight: his other lines, and Sheila's and Darren's, failed the accent check in one way or the other.",
-   "line": "Walk away, son. Thirty years on the docks, and I never once had to ask a man twice.",
-   "takes": [
+   "kind": "look",
+   "key": "call-hair",
+   "name": "Hair: the curls made in Blender failed three times",
+   "note": "Your ruling was curls made in Blender. Three attempts, the last after research into how a 1990 shampoo-and-set is made (on rollers: shape by region, a side parting, the ends rolled under), all fail at a glance: above, the third on Sheila's head shows a hard parting, a stiff raised flap, a woven-looking cap, spikes on top and tassels at the back. Under the two-tries rule it is set aside. Sheila does not need it: the face you picked, S4, wears a short, soft, side-swept cut close to her portrait. Darren does: his S4 wears long hair, your 'woman's haircut'. (A) Epic's own MetaHuman haircuts, free: the nearest man's short cut to his sheet (a grown-out perm, bleached tips) on your next page with his face, and Sheila keeps S4's (recommended; I am doing it meanwhile). (B) Keep at curls made in Blender: days, and uncertain.",
+   "pictures": [
     {
-     "label": "A",
-     "audio": "production/approvals/2026-09-29/act-ron-threat-A.wav"
+     "src": "production/art/hair-2026-09-29/sheila-attempt-3.webp",
+     "alt": "The third attempt on Sheila's head: front, three-quarter, side, back"
     },
     {
-     "label": "B",
-     "audio": "production/approvals/2026-09-29/act-ron-threat-B.wav"
+     "src": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-front.jpg",
+     "alt": "Darren's S4, with the long hair you turned down"
     }
    ],
    "options": [
     [
      "A",
-     "A"
+     "A: Epic's haircuts (recommended)"
     ],
     [
      "B",
-     "B"
-    ],
-    [
-     "neither",
-     "Neither is him"
+     "B: keep at Blender curls"
     ]
-   ]
-  },
-  {
-   "kind": "faces",
-   "key": "face-sheila-dunn",
-   "name": "Sheila Dunn",
-   "pron": "her",
-   "note": "Her fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: she reads about 45 to 48, not 53 (smooth forehead and upper lip, no smoker's lines); a peach tint on the upper lids and red inner corners; the hair darker and warmer than the concept's ash grey-brown; the proportions close to the concept. In the speaking frames her eyes blur during a blink. The haircut is Epic's nearest, not yet a set; her glasses come with her clothes.",
-   "audio": "production/approvals/2026-09-28/speak-sheila-dunn.wav",
-   "candidates": [
-    {
-     "take": "S4",
-     "front": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-front.jpg",
-     "profile": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-profile.jpg",
-     "speak": {
-      "file": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-speak.jpg",
-      "frames": 94,
-      "cols": 10,
-      "rows": 10,
-      "fps": 15
-     }
-    }
-   ]
-  },
-  {
-   "kind": "faces",
-   "key": "face-darren-milner",
-   "name": "Darren Milner",
-   "pron": "him",
-   "note": "His fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: the lids cut into the iris and the brows are heavy, so he looks sullen rather than quick and amused, and about 30; orange upper lids and red inner corners; the brown of the hair darker and redder than the concept's, the blond a band at the ends. The haircut is Epic's nearest, not yet a grown-out perm.",
-   "audio": "production/approvals/2026-09-28/speak-darren-milner.wav",
-   "candidates": [
-    {
-     "take": "S4",
-     "front": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-front.jpg",
-     "profile": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-profile.jpg",
-     "speak": {
-      "file": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-speak.jpg",
-      "frames": 82,
-      "cols": 10,
-      "rows": 9,
-      "fps": 15
-     }
-    }
    ]
   },
   {
    "kind": "look",
-   "key": "look-talk-light",
-   "name": "The conversation light",
-   "note": "A faint light on whoever you are talking to, from above and to one side, and a catch-light in the eyes. It lights only their skin (not their hair), only that person, costs 0.2 ms a frame, and fades six seconds after they stop; a face already in sun gets none. Shown on Ron: judge the light, not the face.",
+   "key": "call-marks",
+   "name": "The pillar box and the kiosk: whose marks",
+   "note": "Both stand in the street plain, with no postal cipher and no telephone company's mark. Canon says every brand is fictional. (A) Marks made up for LEDGER's Britain, in the 1990 manner (recommended). (B) The real 1990 marks: against canon. (C) Plain, as now.",
    "pictures": [
     {
-     "src": "production/art/lighting/talk-light-2026-09-28/rocco-front-final.jpg",
-     "alt": "Ron in the street's daylight, no conversation light"
+     "src": "production/art/clutter-2026-09-29/pillar-box.jpg",
+     "alt": "The pillar box, plain"
     },
     {
-     "src": "production/art/lighting/talk-light-2026-09-28/rocco-talk-final.jpg",
-     "alt": "The same moment and camera, with the conversation light"
+     "src": "production/art/clutter-2026-09-29/kx100-kiosk.jpg",
+     "alt": "The kiosk, plain"
     }
    ],
    "options": [
     [
-     "yes",
-     "Keep it"
+     "A",
+     "A: made-up marks (recommended)"
     ],
     [
-     "no",
-     "Not like this"
+     "B",
+     "B: the real ones"
+    ],
+    [
+     "C",
+     "C: plain"
     ]
    ]
   },
   {
-   "kind": "voice",
-   "key": "game-ron-kirby",
-   "name": "Ron's voice, in the game",
-   "note": "His July voice, as the game speaks it. Carried from 25 September.",
-   "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
-   "audio": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
+   "kind": "look",
+   "key": "call-font",
+   "name": "The street's name plates: a font's licence",
+   "note": "The nearest free face to the Kindersley capitals of 1990 street name plates is Marcellus SC, under the SIL Open Font Licence, which lets a game ship a font and is widely used; it is not on LEDGER's licence allowlist, so the plates stay blank until you say. (A) Add the Open Font Licence to the allowlist, for fonts (recommended). (B) No: the plates stay blank.",
+   "pictures": [],
    "options": [
     [
-     "yes",
-     "This is him"
+     "A",
+     "A: add it (recommended)"
     ],
     [
-     "no",
-     "Not him"
-    ]
-   ]
-  },
-  {
-   "kind": "voice",
-   "key": "game-darren-milner",
-   "name": "Darren's voice, in the game",
-   "note": "His approved voice (Scottish, which the sheet notes), as the game speaks it. Carried from 25 September.",
-   "line": "A shape's not much to go on. Half the town could pass for that on a night like this.",
-   "audio": "production/casting/in-game-2026-09-25/voice/darren-milner.wav",
-   "options": [
-    [
-     "yes",
-     "This is him"
-    ],
-    [
-     "no",
-     "Not him"
-    ]
-   ]
-  },
-  {
-   "kind": "voice",
-   "key": "think-ron-kirby",
-   "name": "Ron, while he thinks",
-   "note": "When you ask him something, he says one of these at once, in his own voice, and stops the moment his answer starts. It covers the wait; there is no loading sign. Both of his, one after the other.",
-   "line": "Let me think.  /  Well, now.",
-   "audio": "production/approvals/2026-09-28/thinking-ron.wav",
-   "options": [
-    [
-     "yes",
-     "Keep it"
-    ],
-    [
-     "no",
-     "Not like this"
-    ]
-   ]
-  },
-  {
-   "kind": "voice",
-   "key": "think-darren-milner",
-   "name": "Darren, while he thinks",
-   "note": "The same for Darren. Sheila has none yet: both tries leaned away from her accent.",
-   "line": "Hmm, well now.  /  Let me think.",
-   "audio": "production/approvals/2026-09-28/thinking-darren.wav",
-   "options": [
-    [
-     "yes",
-     "Keep it"
-    ],
-    [
-     "no",
-     "Not like this"
+     "B",
+     "B: no"
     ]
    ]
   }

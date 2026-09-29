@@ -1,0 +1,22 @@
+{
+ "what": "Jafar's picks on Wednesday's page (https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ), read from the page's store on 29 September at 18:20. He judged it at 11:24 to 11:28 on 29 September, and the same items again on Tuesday's page (https://claude.ai/artifact/TmJnie1Qzo6jE6NdkyqRPo) at 14:15 with the same picks. The street by day and at night were added after: no pick yet.",
+ "read": "2026-09-29T18:20",
+ "picks": {
+  "look-sheila-regard": {"pick": "yes", "at": "2026-09-29T11:24:31Z"},
+  "face-sheila-dunn": {"pick": "S4", "at": "2026-09-29T11:27:43Z"},
+  "face-darren-milner": {"pick": "none", "note": "hair is fucked, woman's haircut", "at": "2026-09-29T11:28:04Z",
+                         "tuesday": {"pick": "none", "note": "Hair looks terrible, woman's hair"}},
+  "act-ron-kirby-threat": {"pick": "B", "at": "2026-09-29T13:09:01Z",
+                           "means": "B is the game's own voice engine (Chatterbox Nano); A was VoxCPM2 (production/casting/acting-key-2026-09-29.json)"},
+  "look-talk-light": {"pick": "yes", "at": "2026-09-29T11:28:14Z"},
+  "game-ron-kirby": {"pick": "yes", "at": "2026-09-29T11:28:34Z"},
+  "game-darren-milner": {"pick": "yes", "at": "2026-09-29T11:28:42Z"},
+  "think-ron-kirby": {"pick": "yes", "at": "2026-09-29T11:28:50Z"},
+  "think-darren-milner": {"pick": "yes", "at": "2026-09-29T11:28:56Z"},
+  "clutter-pillar-box": {"pick": "yes"}, "clutter-kx100-kiosk": {"pick": "yes"}, "clutter-belisha-beacon": {"pick": "yes"},
+  "clutter-bus-stop": {"pick": "yes"}, "clutter-dustbin": {"pick": "yes"}, "clutter-bollard": {"pick": "yes"},
+  "clutter-grit-bin": {"pick": "yes"}, "clutter-telegraph-pole": {"pick": "yes"},
+  "look-street-dressed": {"pick": null},
+  "look-street-night": {"pick": null}
+ }
+}

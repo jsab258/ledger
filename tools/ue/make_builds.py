@@ -2,7 +2,7 @@
 
     set LEDGER_MH_SCRIPT=make_builds
     set LEDGER_BUILDS_OUT=F:/LedgerTools/bodies
-    set LEDGER_BUILDS_STEP=make      (then =export, in a second run)
+    set LEDGER_BUILDS_STEP=make      (sets, re-rigs and exports; =export only exports)
     UnrealEditor.exe F:/LedgerTools/mh-dress/MHAssemble.uproject -unattended
 
 WHY, 29 September (Jafar: the clothing session sews and drapes in Blender on
@@ -14,6 +14,12 @@ male average of the period; the face does not matter, the body does. Each is
 then exported as the cast's bodies are (tools/ue/export_dcc.py, geometry: the
 body and the full body as FBX with the skeleton, in the reference pose) into
 LEDGER_BUILDS_OUT/<name>/, and what it did goes to make-builds.txt there.
+
+SET ASIDE, 29 September (the two-tries rule): three attempts, the third
+re-rigged by Epic's service with blocking True and exported while still open
+(production/research/character-pipeline/metahuman-builds-2026-09-29.md); the
+rigging finished each time, yet all three bodies still measure the same
+(chest 923, waist 941 mm): the constraints never reach the Walter copy's body.
 """
 import os
 import time
@@ -40,6 +46,7 @@ def make(unreal, name, body):
     sub = unreal.get_editor_subsystem(unreal.MetaHumanCharacterEditorSubsystem)
     opened = not sub.is_object_added_for_editing(ch) and sub.try_add_object_to_edit(ch)
     held = []
+    exported = "not exported"
     try:
         cons = sub.get_body_constraints(ch, False)
         for con in cons:
@@ -50,11 +57,26 @@ def make(unreal, name, body):
                 held.append(n)
         sub.set_body_constraints(ch, cons)
         sub.commit_body_state(ch)
+        # THE THIRD AND LAST ATTEMPT (the two-tries rule), 29 September
+        # (production/research/character-pipeline/metahuman-builds-2026-09-29.md):
+        # a copied preset keeps its old body rig, and reopening the character
+        # reloads the body from that rig, so the new body is re-rigged here,
+        # as the cast is (blocking, so it returns when the cloud has answered),
+        # and exported while still open.
+        rp = unreal.MetaHumanCharacterAutoRiggingRequestParams()
+        try:
+            rp.set_editor_property("blocking", True)
+            rp.set_editor_property("report_progress", False)
+        except Exception as e:
+            held.append("no-blocking:%r" % e)
+        sub.request_auto_rigging(ch, rp)
+        import export_dcc
+        exported = export_dcc.geometry(unreal, ch, name, os.path.join(os.environ.get("LEDGER_BUILDS_OUT", "F:/LedgerTools/bodies"), name))
     finally:
         if opened:
             sub.remove_object_to_edit(ch)
     unreal.EditorAssetLibrary.save_loaded_asset(ch, only_if_is_dirty=False)
-    return ch, "%s body %s (set: %s)" % (name, body, ",".join(held) or "NONE")
+    return ch, "%s body %s (set: %s); %s" % (name, body, ",".join(held) or "NONE", exported)
 
 
 def main_after_idle(seconds=20.0):

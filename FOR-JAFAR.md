@@ -1,16 +1,28 @@
 # For Jafar
 
-One dated summary per sitting, written at its end, under 200 words: what
-changed, the evidence, what failed or is unproven, what is next, and any
-decision you need to make. Unresolved decisions carry forward. Earlier
-summaries are in git; everything before 24 September afternoon is in
+The overview first (the builder keeps it, for all three sessions); then each
+session's own dated summary, under 200 words. Earlier summaries are in git;
+everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Needs you now (29 September)
+## Overview (Tuesday 29 September, 18:30)
 
-**LEDGER's own capped key, when you make it:** save it alone in a text file at %LOCALAPPDATA%\LEDGER\live-talk-key.txt; the game reads it only while you play, and nothing else ever does. Until then the characters' talk is offline when you play. (The old key is gone from GitHub: thank you.)
+### Needs you
 
-**[Wednesday's cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi):** your two yeses are done (C: 53 to 55 GB). C: is 57.9 GB with the build machine idle; two new groups on the page would take it to 73.6: Unreal's cache moved to drive F, as your rule says caches should be (12.1 GB off C:), and a spare copy of the project a helper left (2.4 GB).
+1. **[Cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi)** (builder): C: is at 49.6 GB, under your 60. Two groups: Unreal's cache moved to drive F (12.1 GB) and a spare project copy a helper left (2.4 GB). Recommended: yes to both.
+2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; three calls: hair, the pillar box's and kiosk's marks, the name plates' font. Recommended: yes to both frames, A on each call.
+3. **[Town's page: the police, Sheila's trust, the week's end, threats](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)** (town), with the calls carried from before. Recommended: the picks marked on it.
+4. **LEDGER's own capped key** (builder and town; no page): the characters' live talk and the town's relay both wait on it; the paid writer won your blind 8 of 12. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
+
+### Road to worth playing
+
+- **Faces approved** (builder): Ron's and Sheila's yes; Darren's waits on a man's haircut. Since yesterday: your S4 for Sheila, going into the game tonight; hair made in Blender set aside after three tries.
+- **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet. Since yesterday: clothing moved to its own session, with Ron's, Darren's and Sheila's bodies; the three spare builds set aside after three tries.
+- **Voices** (builder): Ron's and Darren's yes; Sheila's leans American on every free engine. Since yesterday: your yeses; your blind pick keeps the game's own engine.
+- **The delay before a character speaks** (builder): 5.4 s to the first sound; thinking sounds cover it for Ron and Darren; the next free engine is untried. Since yesterday: your yes to the thinking sounds; paid voices ruled out.
+- **The replies that time out** (builder): one in five (28 September); no live talk until your key. Since yesterday: nothing.
+- **The first week wired into the game** (town writes, builder wires): the week is whole on paper; the game has the first night's window and the evening; about ten handovers wait on your town page. Since yesterday: the week finished on paper; the evening now plays at night.
+- **The AI tester walking it** (builder): walks the packaged game, played by me; next after tonight's build. Since yesterday: the three faults it found are fixed.
 
 ## Town, 30 September
 

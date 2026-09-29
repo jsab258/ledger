@@ -1,0 +1,11 @@
+{
+ "approves": "production/approvals/2026-09-29/act-ron-threat-B.wav",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "His blind pick on Wednesday's and Tuesday's pages, 29 September: B, the game's own voice engine, over VoxCPM2 (A).",
+ "against": {
+  "production/approvals/2026-09-29/act-ron-threat-B.wav": "0090e329baf7742420f06c13fe6954a311982e6a",
+  "production/casting/acting-key-2026-09-29.json": "3de02ba668472e0fa0905bcde3ebb2c12b19d6d9",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}
