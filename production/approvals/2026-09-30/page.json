@@ -5,7 +5,7 @@
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
   "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
-  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; Ron, faster, heard blind; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
+  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; Ron, faster, heard blind; a new voice for Sheila; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
@@ -13,7 +13,7 @@
    "kind": "look",
    "key": "look-street-dressed",
    "name": "The street, with its 1990 clutter",
-   "note": "The street as the game draws it now, by day. New in it: a KX100 telephone kiosk, a pillar box, galvanised dustbins, cast-iron bollards, council litter bins, a telegraph pole with its wires to the houses, and a grit bin at the top of the street. Each passed my check and a blind reviewer's, which under your rule is their approval; the pillar box and kiosk carry no marks until you choose them. Say if anything jars. The blind reviewer's remaining notes: the kiosk's glass shows no tint or reflection, so it reads a little like an empty frame; the telegraph wires two to the flats opposite seem to end at the chimneys from the far end of the street, and no feed cable reaches the pole; the dustbins and the pillar box's foot are mostly hidden by cars and people in these views. (Its two other notes, the wires' sag and the litter bin crowding the lamp post, are fixed in these frames.)",
+   "note": "The street as the game draws it now, by day. New in it: a KX100 telephone kiosk, a pillar box, galvanised dustbins, cast-iron bollards, council litter bins, a telegraph pole with its wires to the houses, and a grit bin at the top of the street. Each passed my check and a blind reviewer's, which under your rule is their approval; the pillar box and kiosk carry no marks until you choose them. Say if anything jars. The blind reviewer's remaining notes: the kiosk's glass shows no tint or reflection, so it reads a little like an empty frame; the telegraph wires two to the flats opposite seem to end at the chimneys from the far end of the street, and no feed cable reaches the pole; the dustbins and the pillar box's foot are mostly hidden by cars and people in these views. (Its two other notes, the wires' sag and the litter bin crowding the lamp post, are fixed in these frames.) The stylised figures in these frames are the placeholders of 23 September; townspeople made as MetaHumans replace them for the friends' build.",
    "pictures": [
     {
      "src": "production/approvals/2026-09-30/street-hook-day.webp",
@@ -39,7 +39,7 @@
    "kind": "look",
    "key": "look-street-night",
    "name": "The street at night, under its sodium lamps",
-   "note": "\"Later that week, evening\" used to play in broad daylight; it now plays at night. The lamps are low-pressure sodium, one orange colour, lighting pools under each lamp with the gaps between left dark, and the wet road carries their reflections (from the research on 1990 street light). It passed my check and a blind reviewer's. Say if it reads as night to you, and if the orange is right. The blind reviewer's remaining notes: the left terrace's brick is lit almost evenly up to the eaves, closer to floodlighting than to pools; across the road the upper brick is brighter than the pavement in front of Rita's; the wet road carries few streaks from the lamps; colours survive the sodium light (the green stripes, the green bin), where under real sodium they would go orange and black; the cream tiles under the right-hand shop are the brightest patch; that shop's window reads as a board; the lit upstairs windows read cool grey-green rather than warm. Fixed since the first try, in these frames: lamps that pool light on the pavement, the town's orange glow in the sky, lit windows on the hillside and upstairs, and shops lit inside.",
+   "note": "\"Later that week, evening\" used to play in broad daylight; it now plays at night. The lamps are low-pressure sodium, one orange colour, lighting pools under each lamp with the gaps between left dark, and the wet road carries their reflections (from the research on 1990 street light). It passed my check and a blind reviewer's. Say if it reads as night to you, and if the orange is right. The blind reviewer's remaining notes: the left terrace's brick is lit almost evenly up to the eaves, closer to floodlighting than to pools; across the road the upper brick is brighter than the pavement in front of Rita's; the wet road carries few streaks from the lamps; colours survive the sodium light (the green stripes, the green bin), where under real sodium they would go orange and black; the cream tiles under the right-hand shop are the brightest patch; that shop's window reads as a board; the lit upstairs windows read cool grey-green rather than warm. Fixed since the first try, in these frames: lamps that pool light on the pavement, the town's orange glow in the sky, lit windows on the hillside and upstairs, and shops lit inside. The stylised figures in these frames are the placeholders of 23 September; townspeople made as MetaHumans replace them for the friends' build.",
    "pictures": [
     {
      "src": "production/approvals/2026-09-30/street-night-camA.webp",
@@ -115,6 +115,28 @@
     [
      "neither",
      "Neither"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "voice-sheila-dunn-p267",
+   "name": "Sheila's voice, at last one that stays English",
+   "note": "Her voice D leans American on every engine; this one is cloned from a Yorkshire woman's recordings (VCTK, the free-licence source of Ron's and Darren's voices) through the fast free engine, so she would also answer in about 2 seconds. It held an English accent on all 19 test lines. The reviewer's notes: it is cloned from a woman of 23, so listen for age; the pitch is ordinary rather than low; the third line is a little brisk for 'unhurried'. Her sheet's three lines.",
+   "line": "Thirty-one years I've kept Mickey's books, love. I know what every fare cost and who never paid it. / Sit down, you're making the place look untidy. Now, what is it you think you want to know? / I saw what I saw. Whether I tell anybody else is a different question, isn't it.",
+   "audio": "production/approvals/2026-09-30/sheila-voice-p267.wav",
+   "options": [
+    [
+     "yes",
+     "This is her"
+    ],
+    [
+     "older",
+     "Her, but older"
+    ],
+    [
+     "no",
+     "Not her"
     ]
    ]
   },
