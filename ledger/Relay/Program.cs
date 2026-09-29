@@ -77,6 +77,18 @@ namespace Ledger.Relay
             }
         }
 
+        // A stand-in model that keeps the last request it was sent (the night's
+        // reflection is built inside the engine), and answers as a belief list.
+        sealed class CaptureLlm : ILlmClient
+        {
+            public LlmRequest Last;
+            public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+            {
+                Last = request;
+                return Task.FromResult(new LlmResponse { Text = "- The new owner is asking about Tuesday.", StopReason = "end_turn", InputTokens = 100, OutputTokens = 10, Model = request.Model });
+            }
+        }
+
         static async Task<int> SelfTest()
         {
             int passed = 0, failed = 0;
@@ -124,6 +136,48 @@ namespace Ledger.Relay
                 Ok("the claim check goes through on the ambient model, its reply capped", provider.Seen[1].body["model"].ToString() == Models.Ambient && (int)provider.Seen[1].body["max_tokens"] == 1000);
                 var refl = await client.CompleteAsync(new LlmRequest { Model = Models.Core, MaxTokens = 400, Messages = { new LlmMessage("user", "You are Ron Kirby. Below are your existing beliefs and today's experiences.\nRewrite your beliefs as at most seven short first-person bullet points.") } });
                 Ok("a night's reflection, which has no system prompt, goes through", refl.Text.StartsWith("Aye"));
+
+                // 1b. THE CORE'S OWN REQUESTS, NOT STAND-INS (town list 6ba, the fourth
+                // sweep): the relay passes only requests of the game's shapes, and
+                // the tests above write their own; a changed opening line in the
+                // Core would have turned every friend's talk into brush-offs with
+                // nothing red. So the real prompts, built as the helper builds them
+                // for Ron with his people, forty memories and a deed in hand.
+                string repo = null;
+                for (var d = new DirectoryInfo(AppContext.BaseDirectory); d != null && repo == null; d = d.Parent)
+                    if (File.Exists(Path.Combine(d.FullName, "production", "cast", "cards", "rocco.md"))) repo = d.FullName;
+                if (repo == null) Ok("the Core's own requests: the cards are found", false, "no production/cast/cards above " + AppContext.BaseDirectory);
+                else
+                {
+                    var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(repo, "production", "cast", "cards", "rocco.md")));
+                    var cast = CastDay.Parse(File.ReadAllText(Path.Combine(repo, "production", "specs", "hook-cast.json")));
+                    var capture = new CaptureLlm();
+                    var engine = new ConversationEngine(capture, card, new MemoryStore("rocco"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                    engine.People = cast.PeopleFor("rocco", 1, 22);
+                    engine.CurrentDeed = "player.window_d1";
+                    engine.Suspicion.Raise(0.6, "I saw him near the window");
+                    for (int m = 0; m < 40; m++)
+                        engine.Memory.Append(new MemoryEvent(new GameTime(1, 8 + m % 14, m), "observation", 0.5 + (m % 5) * 0.1, $"On the rank, a driver came in and went out again, the {m}th time today, nothing much to it."));
+                    engine.HeardAnswer("player.window_d1", 1, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, new GameTime(2, 10, 0), true);
+                    string talkPrompt = engine.BuildSystemPrompt("Where were you on Tuesday night?", new GameTime(2, 10, 5), "Dry, grey.");
+                    var realTalk = await client.CompleteAsync(new LlmRequest { Model = Models.Core, System = talkPrompt, MaxTokens = 300, Messages = { new LlmMessage("user", "Where were you on Tuesday night?") } });
+                    var items = ClaimCheck.KnownItems(card, engine.Memory.Events, engine.Memory.Beliefs, "I saw him near the window", "Dry, grey.", new GameTime(2, 10, 5).ToldAs, null, engine.People);
+                    var list = ClaimCheck.RequestItems(Models.Ambient, ClaimCheck.NumberedKnown(items), "Aye. Saw him go by the rank.");
+                    var realList = await client.CompleteAsync(list);
+                    var look = ClaimCheck.RequestVerify(Models.Ambient, ClaimCheck.NumberedKnown(items), new[] { "saw him go by the rank" });
+                    var realLook = await client.CompleteAsync(look);
+                    engine.Memory.Append(new MemoryEvent(new GameTime(2, 18, 0), "observation", 0.6, "The new owner came by the rank and asked about Tuesday."));
+                    await engine.ReflectAsync(2, new GameTime(2, 23, 0));
+                    var reflRequest = capture.Last;
+                    var realRefl = reflRequest == null ? null : await client.CompleteAsync(reflRequest);
+                    int talkChars = talkPrompt.Length + "Where were you on Tuesday night?".Length;
+                    int listChars = (list.System?.Length ?? 0); foreach (var m in list.Messages) listChars += m.Content.Length;
+                    Ok("the Core's own requests go through the relay: Ron's full prompt, the claim check's list and second look, and a night's reflection",
+                       realTalk.Text == "Aye. Saw him go." && realList.Text == "Aye. Saw him go." && realLook.Text == "Aye. Saw him go." && realRefl != null && realRefl.Text.StartsWith("Aye"),
+                       (realTalk.Text ?? "") + " | " + (realList.Text ?? "") + " | " + (realRefl?.Text ?? "no reflection request"));
+                    Ok("and the largest of them uses under half the relay's limit on length",
+                       Math.Max(talkChars, listChars) < s.MaxChars / 2, talkChars + " and " + listChars + " of " + s.MaxChars);
+                }
 
                 // 2. Streamed, as the helper speaks early.
                 var seen = new List<string>();
