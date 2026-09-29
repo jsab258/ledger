@@ -12,10 +12,10 @@
 // Gossip.cs Witness 290 and Tick 400 stay verbatim.
 //
 // SuspicionTracker WAS NOT PORTED until 29 September, and now only its
-// number is (below, for StreetVoice::RegardFor). The two Suspicion.Raise
-// calls inside GossipMill.Tick are still absent; Gossip.h names that omission
-// at each of the two sites, and the crime verdict prints
-// gossipSuspicionPorted=no/SuspicionTracker-out-of-scope.
+// number is (below, for StreetVoice::RegardFor), with SuspicionLevel 68 for
+// Suspecting.h. Since town list 6n the mill raises it as the C# does: the two
+// Suspicion.Raise calls in GossipMill.Tick and the two in CompareNotes are
+// in Gossip.h, and the crime verdict prints gossipSuspicionPorted=yes.
 //
 // NO UNREAL TYPE IS IN THIS FILE, deliberately: the standing rule from 25
 // August is that the arithmetic and the strings live where the tests run,
@@ -193,13 +193,31 @@ namespace LedgerCore
 		}
 	};
 
+	// Suspicion.cs 68. The four bands, in the C#'s order, which Suspecting.h
+	// counts down by one for his own people. enum class, as ClaimResult is,
+	// so the C# names survive intact; the table compares a level by its NAME.
+	enum class SuspicionLevel { Trusting, Uneasy, Suspicious, Confronting };
+
+	inline const char* SuspicionLevelName(SuspicionLevel L)
+	{
+		switch (L)
+		{
+			case SuspicionLevel::Trusting:    return "Trusting";
+			case SuspicionLevel::Uneasy:      return "Uneasy";
+			case SuspicionLevel::Suspicious:  return "Suspicious";
+			case SuspicionLevel::Confronting: return "Confronting";
+		}
+		return "unknown-level";
+	}
+
 	// Suspicion.cs 72 to 205, THE NUMBER ONLY (29 September, for the knowing
 	// port: StreetVoice's RegardFor reads a person's suspicion, and the golden
 	// rows raise it). Value, Raise, Lower and Restore, clamped as the C#'s
-	// Math.Clamp clamps (a NaN passes through). NOT HERE YET: the reasons
-	// trail (Reasons, RecentReasons, MaxReasons), which nothing ported reads,
-	// and the two Raise calls inside GossipMill.Tick, which Gossip.h still
-	// names as absent; both come with the port of town list 6n.
+	// Math.Clamp clamps (a NaN passes through). NOT HERE: the reasons trail
+	// (Reasons, RecentReasons, MaxReasons), which nothing ported reads, so a
+	// Raise's reason is taken and dropped; and Level, which nothing ported
+	// asks. The mill's four Raise calls (Tick and CompareNotes) are in
+	// Gossip.h since town list 6n.
 	class SuspicionTracker
 	{
 		double V;

@@ -9,31 +9,31 @@
 //
 // WHAT THIS FILE IS FOR, in one sentence from the crime ruling: THE ONE RULE
 // THAT DECIDES WHETHER ONE CHARACTER PASSES A RUMOUR TO ANOTHER is
-// GossipMill.Tick, Gossip.cs 356 to 383, and its heart is 371 to 372:
-// passed = r.Confidence * tie * HopDecay, then a floor. Nothing else in 976
-// lines decides a hop.
+// GossipMill.Tick, Gossip.cs 433 to 541, and its heart is 471: passed =
+// r.Confidence * tie * HopDecay, then a floor. CompareNotes, 631 to 724, is
+// the same rule for a question asked outright; nothing else in 1188 lines
+// decides a hop.
 //
-// SCOPE, from the ruling section 1 item 6: SocialGraph 9 to 32; Rumor 37 to
-// 59; Gossiper 64 to 118 (Suspicion as its number, 29 September); GossipEvent 122 to 128; and from
-// GossipMill only _agents, _graph, the four tunables 141 to 144, the
-// constructor 146, Tie 152, Add 154, Get 178 to 179, WitnessesOffered and
-// WitnessesDropped 194 to 195, SummariesSaying, SaysWord and IsWordChar 225
-// to 256, Witness 262 to 325, and Tick 341 to 430 with together as a
-// function argument.
+// SCOPE, from the ruling section 1 item 6 and town list 6n (29 September):
+// SocialGraph 9 to 32; Rumor 37 to 67, with OriginRung 52; Gossiper 72 to
+// 126 (Suspicion as its number, 29 September); GossipEvent 130 to 136; and
+// from GossipMill only _agents, _graph, the four tunables 149 to 152, the
+// constructor 154, Tie 160, Add 162, Get 186 to 187, WitnessesOffered and
+// WitnessesDropped 202 to 203, SummariesSaying, SaysWord and IsWordChar 233
+// to 264, Witness 270 to 378 with its rung, Tick 433 to 541 with together as
+// a function argument, Telling, SurestFirst, TellingSlot, TellingSlots and
+// Weigh 559 to 623, and CompareNotes 631 to 724.
 //
 // OUT OF SCOPE AND NOT HERE, so a reader can tell a missing member from a
-// forgotten one: Forget, PlayerClaims, CompareNotes, KnowsSecret,
-// DayCircleHeat, Leads, ExposureOf, Bribe, Intimidate, Discredit, UseHook,
-// Age, HoldsIndelible, Contain, Backfire, RestoreDiscredited and
-// StrongestSurvivingPlayerLead.
+// forgotten one: Forget, PlayerClaims, KnowsSecret, DayCircleHeat, Leads,
+// ExposureOf, Bribe, Intimidate, Discredit, UseHook, Age, HoldsIndelible,
+// Contain, Backfire, RestoreDiscredited and StrongestSurvivingPlayerLead.
 //
-// THE ONE OMISSION INSIDE A PORTED FUNCTION, named at each of its two sites
-// below: SuspicionTracker came on 29 September as its number alone
-// (Suspicion.h, for StreetVoice::RegardFor), and Tick's two Suspicion.Raise
-// calls (Gossip.cs 402 and 412) are still absent, so in play everybody's
-// suspicion reads 0 until town list 6n brings them. ev.Contradiction and
-// ev.Exposure are set exactly as 406 and 413 set them. The crime verdict
-// prints gossipSuspicionPorted=no/SuspicionTracker-out-of-scope.
+// SUSPICION IS RAISED AS THE C# RAISES IT since town list 6n: Tick's two
+// Suspicion.Raise calls (Gossip.cs 513 and 523) and CompareNotes' two (707
+// and 713) are here, on the value-only SuspicionTracker of Suspicion.h,
+// which takes each reason and drops it because its reasons trail is not
+// ported. The crime verdict prints gossipSuspicionPorted=yes.
 //
 // REFERENCE SEMANTICS, AND WHERE THIS PORT KEEPS THEM. C# Rumor, Gossiper,
 // MemoryStore and KnowledgeBase are classes, and the mill MUTATES them
@@ -58,14 +58,40 @@
 #include "Perception.h"      // LedgerCore::Clamp
 #include "Suspicion.h"
 
+#include <algorithm>
 #include <cctype>
+#include <cmath>
 #include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace LedgerCore
 {
+	// C#'s Math.Max(double, double), NaN and signed zero included: a NaN on
+	// either side is the answer, and +0 beats -0. The plain `a > b ? a : b`
+	// this file used before answers the other operand for a NaN on the left,
+	// and a NaN is a value the save and the memory markdown can both carry
+	// (Perception.h, IsNaNBits). By its bits, for the fast-math reason
+	// Perception.h gives.
+	inline double DotNetMax(double A, double B)
+	{
+		if (IsNaNBits(A)) { return A; }
+		if (IsNaNBits(B)) { return B; }
+		if (A != B) { return B < A ? A : B; }
+		return std::signbit(B) ? A : B;
+	}
+
+	// C#'s double.CompareTo, which is what OrderByDescending sorts by: a NaN
+	// is smaller than every number and equal to another NaN, so the order is
+	// a total one even where `>` is not.
+	inline int DotNetCompare(double A, double B)
+	{
+		const bool bNanA = IsNaNBits(A), bNanB = IsNaNBits(B);
+		if (bNanA || bNanB) { return bNanA ? (bNanB ? 0 : -1) : 1; }
+		return A < B ? -1 : (A > B ? 1 : 0);
+	}
 	// Gossip.cs 9 to 32. Undirected weighted acquaintance graph: how likely,
 	// and how faithfully, two NPCs pass talk about a third party (usually the
 	// player). Weight is 0..1.
@@ -148,7 +174,7 @@ namespace LedgerCore
 		}
 	};
 
-	// Gossip.cs 37 to 59. A propagating piece of talk about someone. Content
+	// Gossip.cs 37 to 67. A propagating piece of talk about someone. Content
 	// is a structured Fact so it can be checked against what an NPC already
 	// knows; Confidence decays each hop so third-hand rumour carries less
 	// weight than an eyewitness account.
@@ -161,6 +187,15 @@ namespace LedgerCore
 		double      Confidence;   // 0..1
 		int         Hops;         // 0 = witnessed first-hand
 		bool        Sensitive;    // pertains to the player's hidden (night) life
+
+		/// HOW WELL THE FIRST TELLER SAW THE MAN (town list 6n, 28
+		/// September): the rung they reached on the five-rung ladder (0
+		/// someone, 1 a silhouette, 2 a mark, 3 a face, 4 recognition),
+		/// carried unchanged through every retelling, or -1 when nobody gave
+		/// it. FINDINGS, 24 September: a retold rumour did not carry it, so
+		/// hearsay whose first teller had named the player could never raise
+		/// anyone's suspicion (Suspecting::AccountOf reads it).
+		int         OriginRung;
 
 		/// A FACT, not a story. Set only by a killing (combat spec 7b).
 		///
@@ -176,7 +211,7 @@ namespace LedgerCore
 
 		Rumor(const Fact& InContent)
 			: Content(InContent), Confidence(0.0), Hops(0),
-			  Sensitive(false), Indelible(false)
+			  Sensitive(false), OriginRung(-1), Indelible(false)
 		{
 		}
 
@@ -185,7 +220,7 @@ namespace LedgerCore
 
 	typedef std::shared_ptr<Rumor> RumorPtr;
 
-	// Gossip.cs 64 to 118. One NPC's social side: their memory, what they
+	// Gossip.cs 72 to 126. One NPC's social side: their memory, what they
 	// factually know, the rumours they carry, and which of the player's two
 	// faces they belong to.
 	//
@@ -222,8 +257,8 @@ namespace LedgerCore
 		bool Leashed;
 
 		// How much this person suspects the player: the number alone since
-		// 29 September (Suspicion.h), for StreetVoice::RegardFor. Nothing in
-		// the mill raises it yet; see the header's note on Tick.
+		// 29 September (Suspicion.h), for StreetVoice::RegardFor. The mill
+		// raises it in Tick and CompareNotes (town list 6n), as the C# does.
 		SuspicionTracker Suspicion;
 
 		Gossiper(const std::string& InId, const std::string& InDisplayName,
@@ -293,7 +328,7 @@ namespace LedgerCore
 
 	typedef std::shared_ptr<Gossiper> GossiperPtr;
 
-	// Gossip.cs 122 to 128. One thing that happened during a gossip round,
+	// Gossip.cs 130 to 136. One thing that happened during a gossip round,
 	// for the sim report and for the player-facing heat readout.
 	struct GossipEvent
 	{
@@ -308,13 +343,13 @@ namespace LedgerCore
 		GossipEvent() : Contradiction(false), Exposure(false) {}
 	};
 
-	// Gossip.cs 133 onward. The rumour network. Seeds first-hand sightings
+	// Gossip.cs 142 onward. The rumour network. Seeds first-hand sightings
 	// and, each round, lets socially tied NPCs who are together pass talk
 	// along.
 	class GossipMill
 	{
 	public:
-		// Gossip.cs 141 to 144. Tunables. Confidence is multiplied by tie
+		// Gossip.cs 149 to 152. Tunables. Confidence is multiplied by tie
 		// strength and this factor per hop; a rumour stops spreading once it
 		// drops below the share floor.
 		double HopDecay;
@@ -322,7 +357,7 @@ namespace LedgerCore
 		double ContradictionSuspicion;   // scaled by rumour confidence
 		double LeakSuspicion;            // day NPC hears a night rumour, no prior lie
 
-		// Gossip.cs 146.
+		// Gossip.cs 154.
 		explicit GossipMill(const std::shared_ptr<SocialGraph>& InGraph)
 			: HopDecay(0.8), MinConfidenceToShare(0.2),
 			  ContradictionSuspicion(0.35), LeakSuspicion(0.12),
@@ -331,14 +366,14 @@ namespace LedgerCore
 		{
 		}
 
-		/// Gossip.cs 152. How strongly two people are connected, 0..1.
+		/// Gossip.cs 160. How strongly two people are connected, 0..1.
 		/// Exposed as a passthrough rather than by handing out the graph:
 		/// callers outside the mill want to ASK about a relationship, not to
 		/// hold and possibly mutate the thing that defines every
 		/// relationship.
 		double Tie(const std::string& A, const std::string& B) const { return Graph->Tie(A, B); }
 
-		/// Gossip.cs 154: _agents[g.Id] = g. An existing id is REPLACED in
+		/// Gossip.cs 162: _agents[g.Id] = g. An existing id is REPLACED in
 		/// place and keeps its position, which is what a C# Dictionary does
 		/// and what Tick's iteration order depends on.
 		void Add(const GossiperPtr& G)
@@ -350,7 +385,7 @@ namespace LedgerCore
 			AgentList.push_back(G);
 		}
 
-		/// Gossip.cs 178 to 179. NULL IS A MISS, NOT A THROW.
+		/// Gossip.cs 186 to 187. NULL IS A MISS, NOT A THROW.
 		/// Dictionary.TryGetValue(null) raises ArgumentNullException, the one
 		/// lookup method whose whole purpose is not to throw. SaveChaos
 		/// reached it through SaveCodec, from a saved agent record whose id
@@ -371,7 +406,7 @@ namespace LedgerCore
 
 		const std::vector<GossiperPtr>& Agents() const { return AgentList; }
 
-		/// Gossip.cs 194 to 195. HOW MANY SIGHTINGS WERE OFFERED TO THIS
+		/// Gossip.cs 202 to 203. HOW MANY SIGHTINGS WERE OFFERED TO THIS
 		/// MILL, AND HOW MANY IT REFUSED BECAUSE IT HAD NEVER HEARD OF THE
 		/// WITNESS.
 		///
@@ -387,7 +422,7 @@ namespace LedgerCore
 		int WitnessesOffered() const { return Offered; }
 		int WitnessesDropped() const { return Dropped; }
 
-		/// Gossip.cs 225 to 241. How many rumour summaries say `word` out
+		/// Gossip.cs 233 to 244. How many rumour summaries say `word` out
 		/// loud.
 		///
 		/// WHY THIS IS IN CORE AND NOT A GREP. A rumour has two halves that
@@ -415,7 +450,7 @@ namespace LedgerCore
 			return N;
 		}
 
-		/// Gossip.cs 245 to 254. Does `text` contain `word` as a whole word?
+		/// Gossip.cs 248 to 262. Does `text` contain `word` as a whole word?
 		/// Case-insensitive, because a sentence that starts "Player was
 		/// seen..." is the same bug. WHOLE WORDS: "a player's entrance" is a
 		/// leak; "two players" is a different word and matching it would make
@@ -436,7 +471,7 @@ namespace LedgerCore
 			return false;
 		}
 
-		/// Gossip.cs 256. char.IsLetterOrDigit is Unicode-aware in C# and
+		/// Gossip.cs 264. char.IsLetterOrDigit is Unicode-aware in C# and
 		/// this is ASCII, which is the same answer for every string this
 		/// probe builds and is named here rather than assumed.
 		static bool IsWordChar(char C)
@@ -444,14 +479,15 @@ namespace LedgerCore
 			return std::isalnum((unsigned char)C) != 0 || C == '_';
 		}
 
-		/// Gossip.cs 262 to 325. A first-hand sighting enters the network.
+		/// Gossip.cs 270 to 378. A first-hand sighting enters the network.
 		/// Confidence defaults to certain; a disguise (or distance, or
 		/// darkness) passes less than 1.0: the witness saw SOMETHING but
 		/// cannot swear to who, and everything downstream (spread, heat,
-		/// bribe prices) inherits that doubt.
+		/// bribe prices) inherits that doubt. `Rung` is how well they saw the
+		/// man (Rumor::OriginRung), -1 when the caller does not give it.
 		void Witness(const std::string& WitnessId, const Fact& Content,
 		             const std::string& Summary, bool bSensitive, const GameTime& Now,
-		             double Confidence = 1.0, bool bIndelible = false)
+		             double Confidence = 1.0, bool bIndelible = false, int Rung = -1)
 		{
 			GossiperPtr W = Get(WitnessId);
 			// A DROPPED WITNESS IS NOW A NUMBER, BECAUSE IT WAS NOTHING AT
@@ -476,37 +512,88 @@ namespace LedgerCore
 			if (!W) { Dropped++; return; }
 			Confidence = Clamp(Confidence, 0.0, 1.0);
 			if (Confidence >= 0.95) W->Knowledge->Learn(Content);   // only certainty becomes hard knowledge
-			RumorPtr Already = W->BestOfValue(Content.Subject + "." + Content.Predicate,
-			                                  Content.Value);
-			if (!Already)
+			Rung = Rung < -1 ? -1 : (Rung > 4 ? 4 : Rung);         // C#: Math.Clamp(rung, -1, 4)
+			const std::string Topic = Content.Subject + "." + Content.Predicate;
+			// WHERE A LOOK IS KNOWN, THEIR OWN SIGHTING IS KEPT BESIDE WHAT
+			// THEY HEARD (town list 6n, the independent check): folded into
+			// the one copy, a vaguer look of their own erased a telling that
+			// had named him, and a heard body at certainty meant a later look
+			// of their own was never theirs. Where nobody gave a rung, nothing
+			// below changes.
+			bool bRungKnown = Rung >= 0;
+			for (std::vector<RumorPtr>::size_type I = 0; I < W->Rumors.size(); ++I)
 			{
-				RumorPtr R = std::make_shared<Rumor>(Content);
-				R->OriginId = WitnessId; R->Summary = Summary;
-				R->Confidence = Confidence; R->Hops = 0; R->Sensitive = bSensitive;
-				R->Indelible = bIndelible;
-				W->Rumors.push_back(R);
+				const RumorPtr& X = W->Rumors[I];
+				if (X->TopicKey() == Topic && X->Content.Value == Content.Value && X->OriginRung >= 0) bRungKnown = true;
 			}
-			else if (bIndelible && !Already->Indelible)
+			if (bRungKnown)
 			{
-				// Somebody who half-heard a scuffle later learns there was a
-				// body in it. The doubtful version does not survive that: it
-				// is upgraded in place, at whatever certainty the body
-				// carries, rather than sitting alongside as a live maybe.
-				Already->Indelible = true;
-				Already->Confidence = Already->Confidence > Confidence ? Already->Confidence : Confidence;
-				Already->Hops = 0;
-				Already->Summary = Summary;
-				if (Already->Confidence >= 0.95) W->Knowledge->Learn(Content);
+				RumorPtr Own;
+				for (std::vector<RumorPtr>::size_type I = 0; I < W->Rumors.size(); ++I)
+				{
+					const RumorPtr& X = W->Rumors[I];
+					if (X->TopicKey() == Topic && X->Content.Value == Content.Value && X->Hops == 0
+					    && (!Own || X->Confidence > Own->Confidence)) Own = X;
+				}
+				if (!Own)
+				{
+					RumorPtr R = std::make_shared<Rumor>(Content);
+					R->OriginId = WitnessId; R->Summary = Summary;
+					R->Confidence = Confidence; R->Hops = 0; R->Sensitive = bSensitive;
+					R->Indelible = bIndelible; R->OriginRung = Rung;
+					W->Rumors.push_back(R);
+				}
+				else
+				{
+					// A second look of their own: the better of the two, as below.
+					Own->OriginRung = Own->OriginRung > Rung ? Own->OriginRung : Rung;   // C#: Math.Max
+					if (bIndelible && !Own->Indelible)
+					{
+						Own->Indelible = true;
+						Own->Confidence = DotNetMax(Own->Confidence, Confidence);
+						Own->Summary = Summary;
+						if (Own->Confidence >= 0.95) W->Knowledge->Learn(Content);
+					}
+					else if (Confidence > Own->Confidence)
+					{
+						Own->Confidence = Confidence;
+						Own->Summary = Summary;
+					}
+				}
 			}
-			else if (Confidence > Already->Confidence)
+			else
 			{
-				// A clearer second look strengthens a doubtful first one.
-				// This used to drop the repeat on the floor, so no later
-				// sighting could ever firm up an early maybe (audit
-				// 2026-07-27).
-				Already->Confidence = Confidence;
-				Already->Hops = 0;
-				Already->Summary = Summary;
+				RumorPtr Already = W->BestOfValue(Topic, Content.Value);
+				if (!Already)
+				{
+					RumorPtr R = std::make_shared<Rumor>(Content);
+					R->OriginId = WitnessId; R->Summary = Summary;
+					R->Confidence = Confidence; R->Hops = 0; R->Sensitive = bSensitive;
+					R->Indelible = bIndelible;
+					W->Rumors.push_back(R);
+				}
+				else if (bIndelible && !Already->Indelible)
+				{
+					// Somebody who half-heard a scuffle later learns there was a
+					// body in it. The doubtful version does not survive that: it
+					// is upgraded in place, at whatever certainty the body
+					// carries, rather than sitting alongside as a live maybe.
+					Already->Indelible = true;
+					Already->Confidence = DotNetMax(Already->Confidence, Confidence);
+					Already->Hops = 0;
+					Already->Summary = Summary;
+					if (Already->Confidence >= 0.95) W->Knowledge->Learn(Content);
+				}
+				else if (Confidence > Already->Confidence)
+				{
+					// A clearer second look strengthens a doubtful first one.
+					// This used to drop the repeat on the floor, so no later
+					// sighting could ever firm up an early maybe (audit
+					// 2026-07-27).
+					Already->Confidence = Confidence;
+					Already->Hops = 0;
+					Already->Summary = Summary;
+				}
 			}
 			// THE MEMORY LINE IS WRITTEN ON EVERY CALL, including the fourth
 			// branch where nothing about the rumour changed: seeing it again
@@ -524,7 +611,7 @@ namespace LedgerCore
 				                   : "I think I saw it, couldn't swear to it: " + Summary));
 		}
 
-		/// Gossip.cs 341 to 430. One gossip round. `together` decides which
+		/// Gossip.cs 433 to 541. One gossip round. `together` decides which
 		/// tied pairs are actually in a position to talk this round
 		/// (co-located in game, or always true in tests). Returns everything
 		/// that propagated, for logging.
@@ -546,6 +633,9 @@ namespace LedgerCore
 			for (std::vector<GossiperPtr>::size_type SI = 0; SI < AgentList.size(); ++SI)
 			{
 				const GossiperPtr Speaker = AgentList[SI];
+				// The speaker's copies in telling order, built once per speaker
+				// (the fourth pass: once per pair it cost four times the tick).
+				const std::vector<TellingSlot> Slots = TellingSlots(SnapshotOf(Snapshot, Speaker->Id));
 				const std::vector<std::string> Contacts = Graph->Contacts(Speaker->Id);
 				for (std::vector<std::string>::size_type CI = 0; CI < Contacts.size(); ++CI)
 				{
@@ -558,11 +648,20 @@ namespace LedgerCore
 
 					const double TieW = Graph->Tie(Speaker->Id, ListenerId);
 					if (TieW <= 0) continue;
-
-					const std::vector<RumorPtr>& Held = SnapshotOf(Snapshot, Speaker->Id);
-					for (std::vector<RumorPtr>::size_type RI = 0; RI < Held.size(); ++RI)
+					// One story, one telling a round: where a rung is involved a
+					// speaker may hold their own look and what they heard side by
+					// side, and each copy raised the listener's suspicion again
+					// (the independent check's second pass). The surest copy of a
+					// version is the telling; the rest go in quietly (the third pass).
+					// C#: a HashSet made on first use; its absence and its
+					// emptiness answer every Add alike.
+					std::vector<std::string> ToldThisRound;
+					const double Hop = HopDecay;
+					const std::vector<Told> Order = SurestFirst(Slots,
+						[TieW, Hop](const Rumor& X) { return X.Indelible ? X.Confidence : X.Confidence * TieW * Hop; });
+					for (std::vector<Told>::size_type RI = 0; RI < Order.size(); ++RI)
 					{
-						const RumorPtr& R = Held[RI];
+						const RumorPtr& R = Order[RI].R;
 						if (R->Confidence < MinConfidenceToShare && !R->Indelible) continue;
 						// Money and hooks buy silence about STORIES. Nobody
 						// keeps a body to themselves because they were paid to.
@@ -583,14 +682,27 @@ namespace LedgerCore
 						// best let each re-add an identical copy of the
 						// other's version every round, growing Rumors and
 						// Memory without bound (audit 2026-07-27).
-						const RumorPtr Existing = Listener->BestOfValue(R->TopicKey(), R->Content.Value);
-						if (Existing && Existing->Confidence >= Passed) continue;
+						Telling Weighed = Weigh(*Listener, *R, Passed);
+						if (Weighed == Telling::Held) continue;
+						if (Weighed == Telling::New && Order[RI].bHasVersion && !AddOnce(ToldThisRound, Order[RI].Version)) Weighed = Telling::Quiet;
 
 						RumorPtr Heard = std::make_shared<Rumor>(R->Content);
 						Heard->OriginId = R->OriginId; Heard->Summary = R->Summary;
 						Heard->Confidence = Passed; Heard->Hops = R->Hops + 1;
 						Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
+						Heard->OriginRung = R->OriginRung;
 						Listener->Rumors.push_back(Heard);
+						if (Weighed == Telling::Quiet)
+						{
+							// A naming is new to them though the story is not: it
+							// is remembered, so they can say who told them (the
+							// third pass).
+							if (Heard->OriginRung >= 4)
+								Listener->Memory->Append(MemoryEvent(Now, "heard", Clamp(Passed * 0.8, 0.2, 0.85),
+									"I heard from " + Speaker->DisplayName + " that " + R->Summary));
+							if (Heard->Indelible && Heard->Confidence >= 0.95) Listener->Knowledge->Learn(Heard->Content);
+							continue;
+						}
 						Listener->Memory->Append(MemoryEvent(Now, "heard",
 							Clamp(Passed * 0.8, 0.2, 0.85),
 							"I heard from " + Speaker->DisplayName + " that " + R->Summary));
@@ -603,13 +715,8 @@ namespace LedgerCore
 						// exposed.
 						if (Listener->Knowledge->CheckClaim(R->Content) == ClaimResult::Contradiction)
 						{
-							// OMITTED HERE, Gossip.cs 402: the C# raises the
-							// listener's suspicion by ContradictionSuspicion
-							// times passed. SuspicionTracker is out of scope
-							// by the ruling, so the raise is absent and
-							// nothing else on these lines is. The tunable
-							// above is kept so the number is still readable
-							// beside the port that does not spend it.
+							Listener->Suspicion.Raise(ContradictionSuspicion * Passed,
+								"a rumor about " + R->TopicKey() + " contradicts what the new owner told me");
 							Listener->Memory->Append(MemoryEvent(Now, "observation", 0.85,
 								"What I heard about " + ReplaceAll(R->TopicKey(), "player.", "")
 								+ " doesn't match what they told me to my face."));
@@ -620,12 +727,7 @@ namespace LedgerCore
 						// life springs a leak.
 						else if (R->Sensitive && Listener->Circle == "day")
 						{
-							// OMITTED HERE, Gossip.cs 412: the C# raises the
-							// listener's suspicion by LeakSuspicion times
-							// passed with the reason "heard something that
-							// doesn't fit the person I thought I knew".
-							// SuspicionTracker is out of scope; ev.Exposure
-							// is still set exactly as 413 sets it.
+							Listener->Suspicion.Raise(LeakSuspicion * Passed, "heard something that doesn't fit the person I thought I knew");
 							Ev.Exposure = true;
 						}
 
@@ -645,6 +747,277 @@ namespace LedgerCore
 				}
 			}
 			return Events;
+		}
+
+		/// Gossip.cs 543 to 559. WHAT A TELLING GIVES A LISTENER: nothing, if
+		/// they hold this version of the story at least as surely (the old
+		/// guard, which stops stories breeding), and, when the telling
+		/// carries its first teller's rung, a copy at least as well
+		/// identified (town list 6n, the independent check: a telling that
+		/// named him was dropped because a vaguer version was already held
+		/// more surely). With no rung it is the old guard exactly.
+		///
+		/// Only a naming counts (a heard rung matters only at 4), and only a
+		/// naming held at least as surely stops it (the second pass: a faded
+		/// one at 0.1 blocked a fresh one). A telling let through for its
+		/// naming alone, or a second copy of a version already told this
+		/// round, is the same story already held, so it is kept quietly: no
+		/// second raise of suspicion and no event. A memory only when it
+		/// names him, for the name is news and they must be able to say who
+		/// told them (the third pass).
+		enum class Telling { New, Held, Quiet };
+
+		/// Gossip.cs 631 to 724. Suspicion-driven escalation (design doc
+		/// 6.4): a suspicious NPC does not wait for chance encounters, they
+		/// seek someone out and ASK. A directed, deterministic exchange: the
+		/// partner tells the checker everything they are willing to share
+		/// about the player (suppression and leashes respected; leashed
+		/// checkers do not check, the hook's protection). Same consequence
+		/// rules as organic gossip: contradictions with the player's claims
+		/// and cross-circle leaks move the checker's suspicion further.
+		std::vector<GossipEvent> CompareNotes(const std::string& CheckerId, const std::string& PartnerId,
+		                                      const GameTime& Now)
+		{
+			std::vector<GossipEvent> Events;
+			GossiperPtr Checker = Get(CheckerId);
+			GossiperPtr Partner = Get(PartnerId);
+			if (!Checker || !Partner || Checker->Leashed) return Events;
+
+			Checker->Memory->Append(MemoryEvent(Now, "conversation", 0.6,
+				"I asked " + Partner->DisplayName + " straight out what they knew about the new owner."));
+
+			const double TieW = DotNetMax(Graph->Tie(CheckerId, PartnerId), 0.5);   // asking directly beats a weak tie
+			// A BODY SURVIVES ALL THREE OF THESE, AND HERE IT DID NOT (the
+			// C#, 4 August): Tick exempts an INDELIBLE rumour from the
+			// confidence floor, from suppression and from the leash, and this
+			// method exempted it from none of them, so a hook or a bribe on a
+			// witness stopped them answering a direct question about a corpse
+			// they saw while the same witness would still have volunteered it
+			// in ordinary talk. AND THE PARTNER'S LEASH IS NO LONGER TESTED
+			// INSIDE THE LOOP: it does not depend on the rumour.
+			std::vector<std::string> AskedToldThisRound;
+			const double Hop = HopDecay;
+			const std::vector<RumorPtr> Asked = Partner->Rumors;   // C#: partner.Rumors.ToList()
+			const std::vector<Told> Order = SurestFirst(TellingSlots(Asked),
+				[TieW, Hop](const Rumor& X) { return X.Indelible ? X.Confidence : X.Confidence * TieW * Hop; });
+			for (std::vector<Told>::size_type RI = 0; RI < Order.size(); ++RI)
+			{
+				const RumorPtr& R = Order[RI].R;
+				if (R->Content.Subject != "player") continue;
+				if (R->Confidence < MinConfidenceToShare && !R->Indelible) continue;
+				if (!R->Indelible && Partner->SuppressedHas(R->TopicKey())) continue;
+				if (!R->Indelible && Partner->Leashed) continue;
+
+				// A BODY ARRIVES AS TRUE AS IT LEFT, asked about or not (town
+				// list 6n): this used the decay and dropped the mark, so asking
+				// a witness about a killing gave a weakened copy that could be
+				// talked away, while ordinary talk (Tick) passed it on whole.
+				const double Passed = R->Indelible ? R->Confidence : R->Confidence * TieW * HopDecay;
+				if (Passed < MinConfidenceToShare) continue;
+				// Value-aware for the same reason as Tick's guard: conflicting
+				// versions must settle, not breed (audit 2026-07-27).
+				Telling Weighed = Weigh(*Checker, *R, Passed);
+				if (Weighed == Telling::Held) continue;
+				if (Weighed == Telling::New && Order[RI].bHasVersion && !AddOnce(AskedToldThisRound, Order[RI].Version)) Weighed = Telling::Quiet;
+
+				RumorPtr Heard = std::make_shared<Rumor>(R->Content);
+				Heard->OriginId = R->OriginId; Heard->Summary = R->Summary;
+				Heard->Confidence = Passed; Heard->Hops = R->Hops + 1;
+				Heard->Sensitive = R->Sensitive; Heard->Indelible = R->Indelible;
+				Heard->OriginRung = R->OriginRung;
+				Checker->Rumors.push_back(Heard);
+				if (Weighed == Telling::Quiet)
+				{
+					if (Heard->OriginRung >= 4)
+						Checker->Memory->Append(MemoryEvent(Now, "heard", Clamp(Passed * 0.8, 0.2, 0.85),
+							Partner->DisplayName + " told me, when I asked: " + R->Summary));
+					if (Heard->Indelible && Heard->Confidence >= 0.95) Checker->Knowledge->Learn(Heard->Content);
+					continue;
+				}
+				Checker->Memory->Append(MemoryEvent(Now, "heard",
+					Clamp(Passed * 0.8, 0.2, 0.85),
+					Partner->DisplayName + " told me, when I asked: " + R->Summary));
+
+				GossipEvent Ev;
+				Ev.FromId = PartnerId; Ev.ToId = CheckerId; Ev.RumorRef = Heard;
+				if (Checker->Knowledge->CheckClaim(R->Content) == ClaimResult::Contradiction)
+				{
+					Checker->Suspicion.Raise(ContradictionSuspicion * Passed,
+						"what " + Partner->DisplayName + " told me contradicts what the new owner said to my face");
+					Ev.Contradiction = true;
+				}
+				else if (R->Sensitive && Checker->Circle == "day")
+				{
+					Checker->Suspicion.Raise(LeakSuspicion * Passed, "I went asking, and I did not like the answer");
+					Ev.Exposure = true;
+				}
+				// A body heard of at certainty is hard knowledge, as in Tick,
+				// and after the contradiction check for the same reason (the
+				// independent check: asked about, it was held but never
+				// learned).
+				if (Heard->Indelible && Heard->Confidence >= 0.95)
+				{
+					Checker->Knowledge->Learn(Heard->Content);
+				}
+				Events.push_back(Ev);
+			}
+			return Events;
+		}
+
+	private:
+		/// Gossip.cs 579 to 584. One place in a speaker's telling: a copy
+		/// told as it always was, or every copy of a version that carries a
+		/// rung, grouped where the first of them stood. Built once per
+		/// speaker, the key once per copy; only the order within a group
+		/// waits for the listener, since it turns on the tie between them.
+		/// C#'s `Copies == null` is bGrouped false here.
+		struct TellingSlot
+		{
+			RumorPtr              Single;
+			std::string           Version;
+			std::vector<RumorPtr> Copies;
+			bool                  bGrouped;
+			TellingSlot() : bGrouped(false) {}
+		};
+
+		/// One copy as SurestFirst yields it, with its version ("topic=value")
+		/// when the version carries a rung; C#'s null version is bHasVersion
+		/// false.
+		struct Told
+		{
+			RumorPtr    R;
+			std::string Version;
+			bool        bHasVersion;
+			Told() : bHasVersion(false) {}
+		};
+
+		/// Gossip.cs 586 to 612.
+		static std::vector<TellingSlot> TellingSlots(const std::vector<RumorPtr>& Copies)
+		{
+			std::vector<TellingSlot> Slots;
+			Slots.reserve(Copies.size());
+			bool bAnyRung = false;
+			for (std::vector<RumorPtr>::size_type I = 0; I < Copies.size(); ++I)
+			{
+				if (Copies[I]->OriginRung >= 0) { bAnyRung = true; break; }
+			}
+			if (!bAnyRung)
+			{
+				for (std::vector<RumorPtr>::size_type I = 0; I < Copies.size(); ++I)
+				{
+					TellingSlot S; S.Single = Copies[I];
+					Slots.push_back(S);
+				}
+				return Slots;
+			}
+			std::vector<std::string> Keys(Copies.size());
+			std::vector<std::string> RungVersions;   // C#: HashSet
+			for (std::vector<RumorPtr>::size_type I = 0; I < Copies.size(); ++I)
+			{
+				Keys[I] = Copies[I]->TopicKey() + "=" + Copies[I]->Content.Value;
+				if (Copies[I]->OriginRung >= 0) AddOnce(RungVersions, Keys[I]);
+			}
+			std::vector<std::pair<std::string, std::vector<TellingSlot>::size_type> > At;   // C#: Dictionary
+			for (std::vector<RumorPtr>::size_type I = 0; I < Copies.size(); ++I)
+			{
+				if (!Contains(RungVersions, Keys[I]))
+				{
+					TellingSlot S; S.Single = Copies[I];
+					Slots.push_back(S);
+					continue;
+				}
+				bool bFound = false;
+				for (std::vector<std::pair<std::string, std::vector<TellingSlot>::size_type> >::size_type K = 0;
+				     K < At.size(); ++K)
+				{
+					if (At[K].first == Keys[I]) { Slots[At[K].second].Copies.push_back(Copies[I]); bFound = true; break; }
+				}
+				if (bFound) continue;
+				At.push_back(std::make_pair(Keys[I], Slots.size()));
+				TellingSlot S; S.bGrouped = true; S.Version = Keys[I]; S.Copies.push_back(Copies[I]);
+				Slots.push_back(S);
+			}
+			return Slots;
+		}
+
+		/// Gossip.cs 561 to 577. The copies a speaker tells, in their own
+		/// order, except that where a version carries a rung its copies are
+		/// told surest first, so the round's one telling is the surest as it
+		/// would arrive (the third pass: a faint heard copy was told in full
+		/// and the speaker's own sure look went in quietly, so the listener's
+		/// suspicion rose by a third). With no rung anywhere the order is
+		/// exactly as held.
+		///
+		/// EAGER RATHER THAN A C# ITERATOR, and the same list: the C# yields
+		/// lazily, but nothing the loops over it do between two copies can
+		/// change a speaker's copy (a telling makes a NEW rumour for the
+		/// listener), so a group ordered when it is reached and a group
+		/// ordered up front are one order. OrderByDescending is a stable
+		/// sort on double.CompareTo, and so is this.
+		static std::vector<Told> SurestFirst(const std::vector<TellingSlot>& Slots,
+		                                     const std::function<double(const Rumor&)>& PassedOf)
+		{
+			std::vector<Told> Out;
+			for (std::vector<TellingSlot>::size_type I = 0; I < Slots.size(); ++I)
+			{
+				const TellingSlot& Slot = Slots[I];
+				if (!Slot.bGrouped)
+				{
+					Told T; T.R = Slot.Single;
+					Out.push_back(T);
+					continue;
+				}
+				std::vector<std::pair<double, RumorPtr> > Keyed;
+				for (std::vector<RumorPtr>::size_type C = 0; C < Slot.Copies.size(); ++C)
+				{
+					Keyed.push_back(std::make_pair(PassedOf(*Slot.Copies[C]), Slot.Copies[C]));
+				}
+				if (Keyed.size() != 1)
+				{
+					std::stable_sort(Keyed.begin(), Keyed.end(),
+						[](const std::pair<double, RumorPtr>& A, const std::pair<double, RumorPtr>& B)
+						{ return DotNetCompare(A.first, B.first) > 0; });
+				}
+				for (std::vector<std::pair<double, RumorPtr> >::size_type C = 0; C < Keyed.size(); ++C)
+				{
+					Told T; T.R = Keyed[C].second; T.Version = Slot.Version; T.bHasVersion = true;
+					Out.push_back(T);
+				}
+			}
+			return Out;
+		}
+
+		/// Gossip.cs 614 to 623.
+		static Telling Weigh(const Gossiper& Listener, const Rumor& R, double Passed)
+		{
+			const RumorPtr Existing = Listener.BestOfValue(R.TopicKey(), R.Content.Value);
+			if (!Existing || Existing->Confidence < Passed) return Telling::New;
+			if (R.OriginRung < 4) return Telling::Held;
+			for (std::vector<RumorPtr>::size_type I = 0; I < Listener.Rumors.size(); ++I)
+			{
+				const RumorPtr& X = Listener.Rumors[I];
+				if (X->TopicKey() == R.TopicKey() && X->Content.Value == R.Content.Value
+				    && X->OriginRung >= 4 && X->Confidence >= Passed)
+					return Telling::Held;
+			}
+			return Telling::Quiet;
+		}
+
+		/// HashSet<string>.Add: true if it was not there and now is.
+		static bool AddOnce(std::vector<std::string>& Set, const std::string& V)
+		{
+			if (Contains(Set, V)) return false;
+			Set.push_back(V);
+			return true;
+		}
+
+		static bool Contains(const std::vector<std::string>& Set, const std::string& V)
+		{
+			for (std::vector<std::string>::size_type I = 0; I < Set.size(); ++I)
+			{
+				if (Set[I] == V) return true;
+			}
+			return false;
 		}
 
 	private:

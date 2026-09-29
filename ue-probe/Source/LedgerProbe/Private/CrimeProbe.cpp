@@ -1790,7 +1790,7 @@ namespace
 		         + " summariesSayingPlayer=" + LedgerCrime::Int(GMill ? GMill->SummariesSaying("player") : 0)
 		         + "/" + SummariesDenominator() + "-rumours"
 		         + " summariesSayingPlayerStat=whole-run/every-agent-every-rumour"
-		           " gossipSuspicionPorted=no/SuspicionTracker-out-of-scope"));
+		           " gossipSuspicionPorted=yes/town-list-6n"));
 
 		// 6. The two rounds.
 		Out.Add(Un(LedgerCrime::GossipRoundLine(GRound1)));

@@ -98,6 +98,8 @@ namespace Ledger.PerceptionGolden
             EmitCastDay(sb);
             // Ported to StreetVoice.h on 29 September (town list 6k, the save of 6o).
             EmitRemarkLedger(sb);
+            // Ported to Gossip.h, Suspecting.h and SaveCodec.h on 29 September (town list 6n).
+            EmitOriginRung(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -107,7 +109,6 @@ namespace Ledger.PerceptionGolden
             // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitOriginRung(sb);
                 EmitJustNow(sb);
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
@@ -917,7 +918,7 @@ namespace Ledger.PerceptionGolden
                 var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
                 var acc = Suspecting.AccountOf(mill.Get("l"), "player.window_d1");
                 Row(sb, "SurestTold", asked ? "asked" : "talk", ev.Count.ToString(Inv), D(mill.Get("l").Suspicion.Value),
-                    mill.Get("l").Memory.Events.Count(e => e.Kind == "heard").ToString(Inv), acc.NamesHim ? "1" : "0", acc.Summary, D(acc.Confidence));
+                    mill.Get("l").Memory.Events.Count(e => e.Kind == "heard").ToString(Inv), acc.NamesHim ? "1" : "0", Esc(acc.Summary), D(acc.Confidence));
             }
             {
                 // A faint look of their own beside a surer naming: the naming places the number.
@@ -942,6 +943,43 @@ namespace Ledger.PerceptionGolden
                 var r = mill.Get("c").Best("player.killed_d1");
                 Row(sb, "AskedAboutBody", r == null ? "none" : D(r.Confidence), r != null && r.Indelible ? "1" : "0", r == null ? "none" : r.OriginRung.ToString(Inv),
                     mill.Get("c").Knowledge.CheckClaim(new Fact("player", "killed_d1", "nobody")).ToString());
+            }
+            {
+                // THE RUNG IN A SAVE (SaveCodec, town list 6n), for the port's
+                // SaveCodec.h: read back clamped to the ladder, and unknown when
+                // absent or not a number. The fixture travels in the row, so both
+                // engines read the same bytes.
+                const string fixture = "{\"agents\":[{\"id\":\"w\",\"rumors\":["
+                    + "{\"subj\":\"player\",\"pred\":\"absent\",\"val\":\"v\",\"conf\":0.5,\"hops\":1},"
+                    + "{\"subj\":\"player\",\"pred\":\"two\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":2},"
+                    + "{\"subj\":\"player\",\"pred\":\"nine\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":9},"
+                    + "{\"subj\":\"player\",\"pred\":\"minusfive\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":-5},"
+                    + "{\"subj\":\"player\",\"pred\":\"quoted\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":\"3\"},"
+                    + "{\"subj\":\"player\",\"pred\":\"null\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":null},"
+                    + "{\"subj\":\"player\",\"pred\":\"bool\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":true},"
+                    + "{\"subj\":\"player\",\"pred\":\"fraction\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":2.7},"
+                    + "{\"subj\":\"player\",\"pred\":\"negfraction\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":-0.5},"
+                    + "{\"subj\":\"player\",\"pred\":\"huge\",\"val\":\"v\",\"conf\":0.5,\"hops\":1,\"rung\":1e300}"
+                    + "]}]}";
+                var read = new GossipMill(new SocialGraph());
+                read.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()));
+                SaveCodec.RestoreMillAgents(fixture, read);
+                Row(sb, "OriginRungSave", "read", Esc(fixture), string.Join(",", read.Get("w").Rumors.Select(x => x.OriginRung.ToString(Inv))));
+                // And written only when known: a capture and a restart.
+                var written = new[] { -1, 0, 3, 4 };
+                var src = new GossipMill(new SocialGraph());
+                src.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()));
+                for (int i = 0; i < written.Length; i++)
+                    src.Get("w").Rumors.Add(new Rumor { Content = new Fact("player", "p" + i.ToString(Inv), "v"), OriginId = "w", Summary = "s", Confidence = 0.5, Hops = 1, OriginRung = written[i] });
+                var json = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(),
+                                             new BeatBook(), src, new DebtBook(), new Dictionary<string, object>());
+                int keys = 0;
+                for (int at = json.IndexOf("\"rung\"", StringComparison.Ordinal); at >= 0; at = json.IndexOf("\"rung\"", at + 1, StringComparison.Ordinal)) keys++;
+                var back = new GossipMill(new SocialGraph());
+                back.Add(new Gossiper("w", "w", new MemoryStore("w"), new KnowledgeBase(), new SuspicionTracker()));
+                SaveCodec.RestoreMillAgents(json, back);
+                Row(sb, "OriginRungSave", "roundTrip", string.Join(",", written.Select(x => x.ToString(Inv))), keys.ToString(Inv),
+                    string.Join(",", back.Get("w").Rumors.Select(x => x.OriginRung.ToString(Inv))));
             }
         }
 
