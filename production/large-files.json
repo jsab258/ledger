@@ -963,11 +963,11 @@
   },
   {
    "path": "F:/LedgerTools/tmp/clothes",
-   "madeBy": "the clothing session (tools/meshgen/blender/sew_donkey.py, press_garment.py, finish_donkey.py, pose_test.py)",
-   "why": "scratch for the donkey jacket's sewing runs, drafts and check pictures; the chosen run's files go to F:/LedgerTools/garments, the failed runs are superseded",
+   "madeBy": "the clothing session (tools/meshgen/blender/sew_donkey.py, sew_trousers.py, sew_flatcap.py and the finishing and pose-test scripts)",
+   "why": "scratch for the clothing session's sewing runs, drafts and check pictures (the jacket, the trousers, the cap); a finished garment's files go to F:/LedgerTools/garments, failed runs are superseded",
    "status": "kept",
    "recorded": "2026-09-29",
-   "mb": 884
+   "mb": 1466
   },
   {
    "path": "F:/LedgerTools/tmp/dcc",

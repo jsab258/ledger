@@ -363,17 +363,24 @@ def weld(obj, pairs, co, max_gap=0.045):
     groups = {}
     for i in range(len(parent)):
         groups.setdefault(find(i), []).append(i)
-    targetmap = {}
     for r, members in groups.items():
         if len(members) < 2:
             continue
         m = Vector(np.mean([co[i] for i in members], axis=0))
         for i in members:
             bm.verts[i].co = m
-            if i != r:
-                targetmap[bm.verts[i]] = bm.verts[r]
+    verts = list(bm.verts)
     bmesh.ops.delete(bm, geom=[e for e in bm.edges if not e.link_faces], context="EDGES")
+    # a point no face uses (two pattern points the triangulation merged) goes with its sewing edge: each group
+    # is welded onto a member that is still there (the cap, 29 September)
+    targetmap = {}
+    for r, members in groups.items():
+        alive = [verts[i] for i in members if verts[i].is_valid]
+        for v in alive[1:]:
+            targetmap[v] = alive[0]
     bmesh.ops.weld_verts(bm, targetmap=targetmap)
+    # and a point no face uses is dropped (smoothing pulls it to the origin: the cap, 30 September)
+    bmesh.ops.delete(bm, geom=[v for v in bm.verts if not v.link_faces], context="VERTS")
     bm.to_mesh(obj.data)
     bm.free()
     obj.data.update()
@@ -898,3 +905,280 @@ def torso_weights(obj, arm_bones=ARMISH, keep_near=0.06, uv_name="pattern", smoo
     bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
     bpy.ops.object.mode_set(mode="OBJECT")
     return cut
+
+
+# ---- the body's sections, and a collider for trousers --------------------------------
+
+def section_loops(obj, co, no):
+    """The body cut by a plane (a point on it and its normal, world space): each closed or open line of the
+    cut as an array of points (m), in order along the line."""
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    bm.transform(obj.matrix_world)
+    r = bmesh.ops.bisect_plane(bm, geom=bm.verts[:] + bm.edges[:] + bm.faces[:], plane_co=co, plane_no=no)
+    cut = [e for e in r["geom_cut"] if isinstance(e, bmesh.types.BMEdge)]
+    adj = {}
+    for e in cut:
+        a, b = e.verts
+        adj.setdefault(a, []).append(b)
+        adj.setdefault(b, []).append(a)
+    seen, loops = set(), []
+    # open lines first from their ends, then whatever is left is closed
+    starts = [v for v in adj if len(adj[v]) == 1] + list(adj)
+    for s in starts:
+        if s in seen:
+            continue
+        line, prev, cur = [s], None, s
+        seen.add(s)
+        while True:
+            nxt = [n for n in adj[cur] if n is not prev and n not in seen]
+            if not nxt:
+                break
+            prev, cur = cur, nxt[0]
+            seen.add(cur)
+            line.append(cur)
+        loops.append(np.array([v.co[:] for v in line]))
+    bm.free()
+    return loops
+
+
+def part_thighs(body, apart=0.008, z_lo=0.74, z_full=(0.80, 0.875), z_hi=0.895, reach=0.05):
+    """The inner thighs moved apart by `apart` each where they touch, as a shape key 'apart' set on: a
+    collider only, so trousers' cloth can lie between them.
+
+    WHY, 29 September (the work trousers, CLOTHES.md item 4): Ron's thighs
+    touch from his crotch 8 cm down (sections through his body: no gap
+    between them from 0.80 to 0.885 m). Cloth cannot lie between two surfaces
+    that touch; a collision pushes it out in front or behind, a web across
+    the crotch. A real pair of trousers lies there pressed between the
+    thighs; parted by 8 mm each, the two layers of cloth fit."""
+    if body.data.shape_keys is None:
+        body.shape_key_add(name="Basis")
+    key = body.shape_key_add(name="apart")
+    M = body.matrix_world
+    Mi = M.inverted()
+    moved = 0
+    for v in body.data.vertices:
+        w = M @ v.co
+        ax = abs(w.x)
+        if ax >= reach or w.z <= z_lo or w.z >= z_hi or ax < 1e-5:
+            continue
+        if w.z < z_full[0]:
+            f = (w.z - z_lo) / (z_full[0] - z_lo)
+        elif w.z > z_full[1]:
+            f = (z_hi - w.z) / (z_hi - z_full[1])
+        else:
+            f = 1.0
+        g = 1.0 - ax / reach
+        d = apart * f * g * (1.0 if w.x > 0 else -1.0)
+        key.data[v.index].co = Mi @ (w + Vector((d, 0.0, 0.0)))
+        moved += 1
+    key.value = 1.0
+    return moved
+
+
+def relax(obj, pairs, fixed, body_bvh, iterations=300, clear=0.004, uv_name="pattern", ramp=100, report=None,
+          gravity=0.0, length_rounds=1):
+    """The garment sewn by projection, without dynamics: each round every edge is drawn towards its length on
+    the flat pattern, every seam pair towards its midpoint (gently at first, `ramp` rounds to full), the
+    `fixed` points put back, and anything nearer the body than `clear` put out along its normal. Returns the
+    widest seam gap (mm) and the edges against the pattern (5/50/95%).
+
+    WHY, 29 September (the work trousers, runs 4 and 5): Blender's sewing
+    springs, weightless and fast, pulled the trouser legs up the calves into
+    a crumple and left two seams 5 cm open, because the laying out had a band
+    of cloth stretched fourteen times at the crotch that the placed rest shape
+    kept. A projection has no momentum: it takes each piece towards its
+    pattern and each seam shut a little at a time, the body always in the way."""
+    me = obj.data
+    uv = me.uv_layers[uv_name]
+    n = len(me.vertices)
+    M = np.array(obj.matrix_world)
+    x = np.array([v.co[:] for v in me.vertices]) @ M[:3, :3].T + M[:3, 3]
+    target = {}
+    for poly in me.polygons:
+        li = list(poly.loop_indices)
+        for k in range(len(li)):
+            a, b = li[k], li[(k + 1) % len(li)]
+            va, vb = me.loops[a].vertex_index, me.loops[b].vertex_index
+            ua, ub = uv.data[a].uv, uv.data[b].uv
+            target[(min(va, vb), max(va, vb))] = math.hypot(ua[0] - ub[0], ua[1] - ub[1])
+    edges = np.array(list(target.keys()))
+    L = np.array([target[tuple(e)] for e in edges])
+    deg = np.bincount(edges.ravel(), minlength=n).astype(float)
+    P = np.array(pairs) if len(pairs) else np.zeros((0, 2), dtype=int)
+    fx = np.zeros(n, dtype=bool)
+    fx[list(fixed)] = True
+    x0 = x.copy()
+    for it in range(iterations):
+        if gravity:
+            # SETTLED THE SAME WAY (29 September, run 6: Blender's cloth, settling
+            # the projection-sewn trousers under gravity, let them fall through the
+            # body at the fly, a hip and a buttock): each round a small step down,
+            # then the pattern's lengths and the body take it back
+            x[:, 2] -= gravity
+        for _r in range(length_rounds):
+            d = x[edges[:, 1]] - x[edges[:, 0]]
+            ln = np.linalg.norm(d, axis=1)
+            corr = ((ln - L) / np.maximum(ln, 1e-9))[:, None] * d * 0.5
+            acc = np.zeros_like(x)
+            np.add.at(acc, edges[:, 0], corr)
+            np.add.at(acc, edges[:, 1], -corr)
+            x = x + acc / np.maximum(deg, 1)[:, None]
+            x[fx] = x0[fx]
+        if len(P):
+            rate = 0.5 * min(1.0, (it + 1) / max(1, ramp))
+            mid = 0.5 * (x[P[:, 0]] + x[P[:, 1]])
+            x[P[:, 0]] += (mid - x[P[:, 0]]) * rate
+            x[P[:, 1]] += (mid - x[P[:, 1]]) * rate
+        x[fx] = x0[fx]
+        for i in range(n):
+            p = Vector(x[i])
+            hit, nrm, _f, _d = body_bvh.find_nearest(p)
+            if hit is not None and (p - hit).dot(nrm) < clear:
+                x[i] = hit + nrm * clear
+        if report and (it + 1) % 50 == 0:
+            gap = float(np.max(np.linalg.norm(x[P[:, 0]] - x[P[:, 1]], axis=1))) * 1000 if len(P) else 0.0
+            report("relax round %d: widest seam gap %.1f mm" % (it + 1, gap))
+    Mi = np.linalg.inv(M)
+    xl = x @ Mi[:3, :3].T + Mi[:3, 3]
+    for i, v in enumerate(me.vertices):
+        v.co = xl[i]
+    me.update()
+    ln = np.linalg.norm(x[edges[:, 1]] - x[edges[:, 0]], axis=1)
+    r = ln / np.maximum(L, 1e-9)
+    gap = float(np.max(np.linalg.norm(x[P[:, 0]] - x[P[:, 1]], axis=1))) * 1000 if len(P) else 0.0
+    return round(gap, 1), [round(float(np.percentile(r, q)), 3) for q in (5, 50, 95)]
+
+
+# ---- the test poses (moved from pose_test.py, 29 September, for the trousers' test too) ----------------
+
+def turn(arm, bone, axis, deg, child=None, want=None):
+    """Turn a pose bone about a world axis through its own joint. If `want` is given (a world direction), the
+    sign is chosen so that `child`'s joint moves that way."""
+    pb = arm.pose.bones[bone]
+    bpy.context.view_layer.update()
+    M = arm.matrix_world
+    head = pb.head.copy()
+    before = pb.matrix.copy()
+
+    def apply(sign):
+        R = Matrix.Rotation(math.radians(deg * sign), 4, axis)
+        Ra = (M.inverted() @ R @ M).to_3x3().to_4x4()
+        pb.matrix = Matrix.Translation(head) @ Ra @ Matrix.Translation(-head) @ before
+        bpy.context.view_layer.update()
+
+    if want is None or child is None:
+        apply(1)
+        return
+    c0 = M @ arm.pose.bones[child].head
+    apply(1)
+    moved = (M @ arm.pose.bones[child].head) - c0
+    if moved.dot(want) < 0:
+        apply(-1)
+
+
+def make_pose(arm, name):
+    X, Z = Vector((1, 0, 0)), Vector((0, 0, 1))
+    fwd, up = Vector((0, -1, 0)), Vector((0, 0, 1))
+    if name in ("down", "walk", "sit", "stair"):
+        pose_arms(arm, 80.0)
+    if name == "up":
+        pose_arms(arm, -35.0)
+    if name == "walk":
+        turn(arm, "thigh_l", X, 25, "calf_l", fwd)
+        turn(arm, "thigh_r", X, 15, "calf_r", -fwd)
+        turn(arm, "calf_r", X, 30, "foot_r", -fwd + up * 0.3)
+        turn(arm, "upperarm_l", X, 20, "lowerarm_l", -fwd)       # arms swing against the legs
+        turn(arm, "upperarm_r", X, 20, "lowerarm_r", fwd)
+    if name == "stair":
+        # one foot up a stair: the left thigh 55 degrees forward, its knee bent 75
+        turn(arm, "thigh_l", X, 55, "calf_l", fwd)
+        turn(arm, "calf_l", X, 75, "foot_l", -fwd - up)
+    if name == "sit":
+        turn(arm, "spine_01", X, 10, "spine_03", fwd)
+        for s in ("l", "r"):
+            turn(arm, "thigh_" + s, X, 85, "calf_" + s, fwd + up)
+            turn(arm, "calf_" + s, X, 85, "foot_" + s, -fwd - up)
+            turn(arm, "lowerarm_" + s, X, 50, "hand_" + s, fwd)
+
+
+def bridge_slices(obj, z_lo, z_hi, split_z, step=0.008, deepest=0.04, smooth_rounds=10):
+    """Heavy cloth bridges the body's hollows: each horizontal slice of the garment between z_lo and z_hi goes
+    out to its own convex hull (the whole slice above split_z; below it, each side's, x > 0 and x < 0, apart),
+    each point no more than `deepest`; the moves are then smoothed over the cloth so no slice leaves a step.
+    Returns how many points moved and the most, mm.
+
+    WHY, 29 September (the work trousers, first blind review: 'it wraps the
+    seat so closely that the cleft between the buttocks shows ... like thin
+    stretch fabric, not heavy work twill'): the projection lays the cloth on
+    the body wherever the pattern's lengths allow; twill spans the cleft."""
+    me = obj.data
+    M = np.array(obj.matrix_world)
+    x = np.array([v.co[:] for v in me.vertices]) @ M[:3, :3].T + M[:3, 3]
+    disp = np.zeros_like(x)
+    for z in np.arange(z_lo, z_hi, step):
+        sel = np.where(np.abs(x[:, 2] - z) < step * 0.5)[0]
+        groups = [sel] if z > split_z else [sel[x[sel, 0] > 0], sel[x[sel, 0] < 0]]
+        for g in groups:
+            if len(g) < 6:
+                continue
+            hull = _hull2(x[g, :2])
+            if len(hull) < 3:
+                continue
+            for i in g:
+                q, d = _to_hull(x[i, :2], hull)
+                if 1e-4 < d <= deepest:
+                    disp[i, :2] = q - x[i, :2]
+    edges = np.array([e.vertices[:] for e in me.edges])
+    deg = np.bincount(edges.ravel(), minlength=len(x)).astype(float)
+    mag0 = np.linalg.norm(disp, axis=1)
+    for _ in range(smooth_rounds):
+        acc = np.zeros_like(disp)
+        np.add.at(acc, edges[:, 0], disp[edges[:, 1]])
+        np.add.at(acc, edges[:, 1], disp[edges[:, 0]])
+        avg = acc / np.maximum(deg, 1)[:, None]
+        # smoothed, but never below what a point needed to reach its hull
+        grow = np.linalg.norm(avg, axis=1) > np.linalg.norm(disp, axis=1)
+        disp = np.where(grow[:, None] | (mag0[:, None] < 1e-6), 0.5 * (disp + avg), disp)
+    x = x + disp
+    Mi = np.linalg.inv(M)
+    xl = x @ Mi[:3, :3].T + Mi[:3, 3]
+    for i, v in enumerate(me.vertices):
+        v.co = xl[i]
+    me.update()
+    mag = np.linalg.norm(disp, axis=1)
+    return int((mag > 0.001).sum()), round(float(mag.max()) * 1000, 1)
+
+
+def smooth_edges_of(obj, z_max, rounds=12):
+    """The garment's open edges below z_max (a trouser leg's hem) smoothed along themselves: each point to the
+    middle of its two neighbours on the edge, `rounds` times. Returns how many points moved.
+
+    WHY, 29 September (the work trousers, first blind review: 'the edge is
+    crinkled like torn paper'): the hem is where the projection's rows ran
+    round the foot; a hem is a clean, turned edge."""
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    bm.verts.ensure_lookup_table()
+    nb = {}
+    for e in bm.edges:
+        if e.is_boundary:
+            a, b = e.verts
+            nb.setdefault(a.index, []).append(b.index)
+            nb.setdefault(b.index, []).append(a.index)
+    M = obj.matrix_world
+    ids = [i for i, n in nb.items() if len(n) == 2 and (M @ bm.verts[i].co).z < z_max]
+    co = {i: bm.verts[i].co.copy() for i in nb}
+    for _ in range(rounds):
+        new = {}
+        for i in ids:
+            a, b = nb[i]
+            new[i] = 0.5 * co[i] + 0.25 * (co[a] + co[b])
+        co.update(new)
+    for i in ids:
+        bm.verts[i].co = co[i]
+    bm.to_mesh(obj.data)
+    bm.free()
+    obj.data.update()
+    return len(ids)
