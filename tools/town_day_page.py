@@ -128,7 +128,9 @@ DAYS["2026-09-30"] = carried(
     [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
       "Approve how it goes and its lines", "Change it (say what in the note)"),
      ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
-      "Approve how it goes and its lines", "Change it (say what in the note)")])
+      "Approve how it goes and its lines", "Change it (say what in the note)"),
+     ("arrest-words", "What he is told at the arrest and on release", os.path.join(REPO, "game-design", "arrest-words-2026-09-29.md"),
+      "Approve the words", "Change them (say what in the note)")])
 
 
 def build(date):
