@@ -151,6 +151,7 @@ namespace Ledger.SaveChaos
             fm.Happened(Moment.LedgerOpened, 20);
             var arr = new Arrangement(0);
             arr.Answer(0, NightAnswer.Did);
+            arr.Delivered(2);
             arr.Answer(2, NightAnswer.NoShow);
             arr.Answer(4, NightAnswer.Did);
             var police = new PoliceFile();
@@ -189,8 +190,13 @@ namespace Ledger.SaveChaos
                     }
                     if (a.Ended != (a.EndedWhy != null)) return (false, $"ended={a.Ended} why={a.EndedWhy}");
                     if (!a.Ended && a.NextNight != expect) return (false, $"next={a.NextNight} expected {expect}");
-                    a.PassedTo(a.FirstDay + 40);
-                    if (!a.Ended) return (false, "twenty nights away did not end it");
+                    // Nights he had the ask and stayed away end it; undelivered ones never do.
+                    for (int k = 0; k < 20 && !a.Ended; k++)
+                    {
+                        a.Delivered(a.NextNight);
+                        a.PassedTo(a.NextNight + 1);
+                    }
+                    if (!a.Ended) return (false, "twenty nights away with the ask did not end it");
                     return (true, "ok");
                 }),
                 ("PoliceFile", MiniJson.Serialize(police.ToJson()), d =>

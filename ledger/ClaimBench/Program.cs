@@ -24,6 +24,7 @@ using Ledger.Core;
 ///     dotnet run --project ledger/ClaimBench -c Release -- tics          # a card's verbal tic over a conversation, before and after
 ///     dotnet run --project ledger/ClaimBench -c Release -- disguise      # inventions hidden in small talk, through the live check
 ///     dotnet run --project ledger/ClaimBench -c Release -- firsts        # a newcomer's first questions, through the real engine
+///     dotnet run --project ledger/ClaimBench -c Release -- hours         # what is open when, without the street's hours and with them
 ///
 /// AGAINST THE REAL ENGINE: every draft comes from ConversationEngine.SayToAsync
 /// with the card, memories and scene the game would send, and what the checker
@@ -99,6 +100,8 @@ static class Program
             case "tics": return await Tics(dir, parallel);
             case "disguise": return await Disguise(dir);
             case "firsts": return await Firsts(dir, parallel);
+            case "hours": return await Hours(dir, parallel);
+            case "hourslook": return await HoursLook();
             case "check": _withPeople = args.Contains("--people"); return await Check(dir, args.Length > 1 ? args[1] : "v2", parallel, Arg(args, "--half", "all"));
             case "pipeline": return await Pipeline(dir, args.Length > 1 ? args[1] : "run", parallel, Arg(args, "--checker", "v3v"),
                                                    args.Contains("--early"));
@@ -538,6 +541,102 @@ static class Program
         WriteJsonl(Path.Combine(dir, "firsts.jsonl"), rows);
         Console.WriteLine($"firsts: a newcomer's first questions, {n} answered ({failed} failed): \"that's all I know\" {fallback} (" +
                           string.Join(", ", byCard.Select(kv => kv.Key + " " + kv.Value)) + $"), refused {refused}; usd={cost.EstimateUsd():0.00} -> firsts.jsonl");
+        return 0;
+    }
+
+    /// WHAT IS OPEN WHEN (town list 6bo): eight questions a friend asks about
+    /// the street's shops, to Sheila, Ron and Darren on a Wednesday at half
+    /// past two (the half day: Rita's, Hal's and the fish shop shut), through
+    /// the real engine and its check, without the street's hours and with them
+    /// (CastDay.HoursFor, the O item). Each reply is marked by what it says
+    /// against the cast file: right, wrong, or no answer ("that's all I know",
+    /// a refusal, or no hours given).
+    static async Task<int> Hours(string dir, int parallel)
+    {
+        // A question, the words a right answer has (any), and the words a wrong one does (any).
+        var probes = new (string ask, string[] right, string[] wrong)[]
+        {
+            ("Is Rita's open now?", new[] { "shut", "closed", "half day", "half-day", "early closing", "not open", "till one" }, new[] { "she's open", "it's open", "yes, open", "open till half five" }),
+            ("What time does the cafe shut?", new[] { "ten" }, new[] { "three", "four", "five", "six", "two" }),
+            ("Is the fish shop open on a Sunday?", new[] { "no", "shut", "closed" }, new[] { "yes" }),
+            ("What days is the market on?", new[] { "tuesday" }, new[] { "monday", "wednesday", "thursday" }),
+            ("Can I get a paper on a Sunday?", new[] { "yes", "kiosk", "newsagent", "paper shop", "seven" }, new[] { "no papers", "can't" }),
+            ("Is the cab office open all night?", new[] { "three" }, new[] { "all night", "midnight", "twenty-four" }),
+            ("When does the laundry open in the morning?", new[] { "eight" }, new[] { "seven", "nine", "six" }),
+            ("Is Hal's open this afternoon?", new[] { "shut", "closed", "half day", "half-day", "early closing", "not", "till one" }, new[] { "yes", "he's open", "it's open" }),
+        };
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        var now = new GameTime(2, 14, 30);
+        var cost = new CostTracker();
+        using var client = new AnthropicClient(Key());
+        var rows = new List<object>();
+        var gate = new SemaphoreSlim(parallel);
+        var tally = new Dictionary<string, int[]>();   // with/without -> right, wrong, none
+        int failed = 0;
+        var jobs = new List<(string card, int probe, bool with)>();
+        foreach (var with in new[] { false, true }) foreach (var c in new[] { "lena", "rocco", "sam" }) for (int i = 0; i < probes.Length; i++) jobs.Add((c, i, with));
+        await Task.WhenAll(jobs.Select(async job =>
+        {
+            await gate.WaitAsync();
+            try
+            {
+                var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md")));
+                var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = client };
+                engine.People = cast.PeopleFor(job.card, now.Day, now.Hour);
+                if (job.with) engine.StreetHours = cast.HoursFor(now.Day, now.Hour, now.Minute);
+                engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);
+                string where = cast.WhereWords(job.card, now.Day, now.Hour);
+                var (ask, right, wrong) = probes[job.probe];
+                string reply;
+                try { reply = await engine.SayToAsync(ask, now, "Dry, grey." + (where != null ? " Where you are: " + where + "." : ""), default, null); }
+                catch (Exception) { Interlocked.Increment(ref failed); return; }
+                var low = " " + reply.ToLowerInvariant().Replace('\u2019', '\'') + " ";
+                bool fell = ClaimCheck.IsKnownOnly(reply, card) || ResponseValidator.IsDeflection(reply, card.Name);
+                bool isWrong = !fell && wrong.Any(w => low.Contains(w));
+                bool isRight = !fell && !isWrong && right.Any(w => low.Contains(w));
+                string mark = isRight ? "right" : isWrong ? "wrong" : "none";
+                lock (rows)
+                {
+                    var key = job.with ? "with" : "without";
+                    if (!tally.TryGetValue(key, out var t)) tally[key] = t = new int[3];
+                    t[isRight ? 0 : isWrong ? 1 : 2]++;
+                    rows.Add(new { hours = job.with, card = job.card, ask, reply, mark, fell, invented = engine.LastInvented });
+                }
+            }
+            finally { gate.Release(); }
+        }));
+        WriteJsonl(Path.Combine(dir, "hours.jsonl"), rows);
+        foreach (var key in new[] { "without", "with" })
+            if (tally.TryGetValue(key, out var t))
+                Console.WriteLine($"hours {key} the street's hours: right {t[0]}, wrong {t[1]}, no answer {t[2]} (by the words; read hours.jsonl by eye)");
+        Console.WriteLine($"hours: {failed} failed; usd={cost.EstimateUsd():0.00} -> hours.jsonl");
+        return 0;
+    }
+
+    /// THE SECOND LOOK ON HOURS (town list 6bo): true and false details about
+    /// the street's hours, each shown to the second look alone with the O item,
+    /// its answer printed, to see why a true one is refused.
+    static async Task<int> HoursLook()
+    {
+        var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
+        var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
+        var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, "lena.md")));
+        var now = new GameTime(2, 14, 30);
+        var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Dry, grey.", now.ToldAs, null, cast.PeopleFor("lena", now.Day, now.Hour), null, cast.HoursFor(now.Day, now.Hour, now.Minute));
+        var known = ClaimCheck.NumberedKnown(items);
+        using var client = new AnthropicClient(Key());
+        foreach (var (detail, truth) in new[] { ("Hal's shuts at one on Wednesdays", true), ("the newsagent's opens seven till twelve on Sundays", true), ("the laundry opens at eight", true),
+                                               ("the cafe shuts at twelve on Sundays", true), ("Rita's is shut now", true),
+                                               ("the laundry opens at half eight", false), ("Rita's shuts at half five on Wednesdays", false), ("the fish shop is shut on Thursdays", false),
+                                               ("the cafe shuts at half twelve on Sundays", false) })
+        {
+            var r = await client.CompleteAsync(ClaimCheck.RequestVerify(Models.Ambient, known, new[] { detail }), default);
+            Spend(Models.Ambient, r.InputTokens, r.OutputTokens);
+            var ok = ClaimCheck.ParseVerify(r.Text, 1, items.ConvertAll(i => i.id));
+            Console.WriteLine($"  {(truth ? "true " : "false")} {(ok != null && ok[0] ? "cleared" : "REFUSED")}: {detail} -> {r.Text.Replace('\n', ' ')}");
+        }
+        Console.WriteLine($"hourslook: usd={_usd:0.00}");
         return 0;
     }
 

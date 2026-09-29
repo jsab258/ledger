@@ -50,6 +50,8 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _areaOf = new Dictionary<string, string>();
         readonly Dictionary<string, List<string>> _areaNames = new Dictionary<string, List<string>>();
         readonly Dictionary<string, string> _within = new Dictionary<string, string>();
+        readonly Dictionary<string, (double open, double close)?[]> _hours = new Dictionary<string, (double, double)?[]>();
+        readonly Dictionary<string, string> _hoursNote = new Dictionary<string, string>();
         readonly Dictionary<string, List<(int hour, string place)>> _daily = new Dictionary<string, List<(int, string)>>();
         readonly Dictionary<string, List<(int hour, string place)>[]> _byWeekday = new Dictionary<string, List<(int, string)>[]>();
         readonly List<string> _people = new List<string>();
@@ -95,6 +97,8 @@ namespace Ledger.Core
                 var names = new List<string>();
                 foreach (var n in MiniJson.GetList(a, "names") ?? new List<object>()) if (n is string ns && ns.Trim().Length > 0) names.Add(ns.Trim());
                 c._areaNames[kv.Key] = names;
+                if (a != null && a.ContainsKey("hours")) c._hours[kv.Key] = ReadHours(kv.Key, a["hours"]);
+                if (MiniJson.GetString(a, "hours_note") is string hn && hn.Trim().Length > 0) c._hoursNote[kv.Key] = hn.Trim();
                 foreach (var pl in MiniJson.GetList(a, "places") ?? new List<object>())
                     if (pl is string pls)
                     {
@@ -211,6 +215,121 @@ namespace Ledger.Core
         /// true answer about where somebody was is never read as a lie. Null
         /// when the file gives the place no area.
         public string AreaOf(string place) => place != null && _areaOf.TryGetValue(place, out var a) ? a : null;
+
+        // An area's hours: each weekday it opens, [open, close] in whole or half
+        // hours from that day's midnight, a close past 24 into the next morning
+        // but never round to the next day's opening; a weekday left out is shut.
+        static (double open, double close)?[] ReadHours(string area, object value)
+        {
+            var o = MiniJson.AsObject(value) ?? throw new FormatException($"cast file: area {area}'s hours must be an object of weekdays");
+            if (o.Count == 0) throw new FormatException($"cast file: area {area}'s hours name no weekday; leave hours out for a place with none");
+            var week = new (double open, double close)?[7];
+            foreach (var kv in o)
+            {
+                int wd = Array.IndexOf(WeekdayKeys, kv.Key);
+                if (wd < 0) throw new FormatException($"cast file: area {area}'s hours name no weekday: {kv.Key}");
+                if (!(kv.Value is List<object> pair) || pair.Count != 2 || !(pair[0] is double open) || !(pair[1] is double close)
+                    || open < 0 || open >= 24 || close <= open || close > 30 || close - open > 24 || open * 2 != Math.Floor(open * 2) || close * 2 != Math.Floor(close * 2))
+                    throw new FormatException($"cast file: area {area}'s hours on {kv.Key} must be [open, close], whole or half hours, open before 24 and close after it, by six the next morning at the latest");
+                week[wd] = (open, close);
+            }
+            // A close past midnight must not run into the next day's opening.
+            for (int wd = 0; wd < 7; wd++)
+                if (week[wd].HasValue && week[(wd + 1) % 7].HasValue && week[wd].Value.close - 24 > week[(wd + 1) % 7].Value.open)
+                    throw new FormatException($"cast file: area {area}'s hours on {WeekdayKeys[wd]} run past the next day's opening");
+            return week;
+        }
+
+        /// OPEN AND CLOSED (town list 6bo): whether a place or area is open at
+        /// this hour and minute of this day, its hours from the cast file (a
+        /// close past midnight counts on the next morning); null when it has no
+        /// hours, being no shop (the quay, the flats, the chapel).
+        public bool? OpenAt(string placeOrArea, int day, int hour, int minute = 0)
+        {
+            var area = AreaFor(placeOrArea);
+            if (area == null || !_hours.TryGetValue(area, out var week)) return null;
+            // The hour and minute wrapped into the day, as PlaceOf wraps them.
+            long all = ((long)day * 24 + hour) * 60 + minute;
+            long d0 = all >= 0 ? all / 1440 : -((-all + 1439) / 1440);
+            day = (int)d0;
+            double t = (all - d0 * 1440) / 60.0;
+            var today = week[Weekday(day)];
+            if (today.HasValue && today.Value.open <= t && t < today.Value.close) return true;
+            var before = week[Weekday(day - 1)];
+            if (before.HasValue && t + 24 < before.Value.close) return true;
+            return false;
+        }
+
+        static readonly string[] Numbers = { "twelve", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven" };
+        static readonly string[] DayNames = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+        // A time as a local says it: "half five", "three in the morning".
+        static string TimeWords(double t, bool closing)
+        {
+            int h = (int)Math.Floor(t);
+            bool half = t - h >= 0.5;
+            string said = (half ? "half " : "") + Numbers[h % 12];
+            if (!half && h % 24 == 0) return "midnight";
+            if (closing ? (t > 24 || t <= 7) : t < 7) return said + " in the morning";
+            if (!closing && t >= 18) return said + " in the evening";
+            if (closing && t >= 20) return said + " at night";
+            return said;
+        }
+
+        // Weekdays as a local says them: "Monday to Friday", "Tuesdays and Fridays".
+        static string DaysWords(List<int> days)
+        {
+            days.Sort();
+            bool run = days.Count >= 3 && days[days.Count - 1] - days[0] == days.Count - 1;
+            if (run) return DayNames[days[0]] + " to " + DayNames[days[days.Count - 1]];
+            var names = days.ConvertAll(d => DayNames[d] + "s");
+            return names.Count == 1 ? names[0] : string.Join(", ", names.GetRange(0, names.Count - 1)) + " and " + names[names.Count - 1];
+        }
+
+        /// AN AREA'S HOURS AS PEOPLE SAY THEM (town list 6bo): its usual hours,
+        /// the days that differ, and the days it is shut, each said in full
+        /// ("nine till half five, on Wednesdays it shuts at one, shut on
+        /// Sundays"), since the claim check's second look did not read "Wednesdays
+        /// till one" as shutting at one; a place open three days or fewer by its
+        /// days ("Tuesdays, Fridays and Saturdays, eight till four"). Null when
+        /// it has no hours.
+        public string HoursWords(string area)
+        {
+            if (area == null || !_hours.TryGetValue(area, out var week)) return null;
+            var groups = new List<((double open, double close) h, List<int> days)>();
+            var shut = new List<int>();
+            for (int d = 0; d < 7; d++)
+            {
+                if (!week[d].HasValue) { shut.Add(d); continue; }
+                var h = week[d].Value;
+                int g = groups.FindIndex(x => x.h == h);
+                if (g < 0) groups.Add((h, new List<int> { d }));
+                else groups[g].days.Add(d);
+            }
+            string Span((double open, double close) h) => h.open == 0 && h.close == 24 ? "day and night" : TimeWords(h.open, false) + " till " + TimeWords(h.close, true);
+            var bits = new List<string>();
+            if (7 - shut.Count <= 3)
+                foreach (var (h, days) in groups) bits.Add(DaysWords(days) + ", " + Span(h));
+            else if (groups.Count > 0)
+            {
+                // The usual hours: the most days, the earliest first.
+                int u = 0;
+                for (int i = 1; i < groups.Count; i++) if (groups[i].days.Count > groups[u].days.Count) u = i;
+                var usual = groups[u].h;
+                bits.Add(Span(usual) + (groups.Count == 1 && shut.Count == 0 ? " every day" : ""));
+                for (int i = 0; i < groups.Count; i++)
+                {
+                    if (i == u) continue;
+                    var (h, days) = groups[i];
+                    bits.Add("on " + DaysWords(days) + (h.close == usual.close ? " it opens at " + TimeWords(h.open, false)
+                                                     : h.open == usual.open ? " it shuts at " + TimeWords(h.close, true)
+                                                     : " " + Span(h)));
+                }
+                if (shut.Count > 0) bits.Add("shut on " + DaysWords(shut));
+            }
+            if (_hoursNote.TryGetValue(area, out var note)) bits.Add(note);
+            return string.Join(", ", bits);
+        }
 
         /// What people call an area, the first way first ("the fish market").
         public IReadOnlyList<string> AreaNames(string area) =>
@@ -496,6 +615,22 @@ namespace Ledger.Core
             foreach (var kv in _areaNames) if (kv.Value.Count > 0 && !_within.ContainsKey(kv.Key)) places.Add(kv.Value[0]);
             if (places.Count > 0) lines.Add("The street's places, as people call them: " + string.Join(", ", places) + ".");
             return lines;
+        }
+
+        /// THE STREET'S OPENING HOURS AS EVERYBODY KNOWS THEM (town list 6bo):
+        /// every shop's hours and whether it is open at this hour and minute,
+        /// one line for anybody's talk (ConversationEngine.StreetHours) and the
+        /// claim check's O item; null when no area has hours.
+        public string HoursFor(int day, int hour, int minute = 0)
+        {
+            var hours = new List<string>();
+            foreach (var kv in _areaNames)
+                if (_hours.ContainsKey(kv.Key))
+                {
+                    string name = kv.Value.Count > 0 ? kv.Value[0] : kv.Key;
+                    hours.Add(char.ToUpperInvariant(name[0]) + name.Substring(1) + ": " + HoursWords(kv.Key) + "; " + (OpenAt(kv.Key, day, hour, minute) == true ? "open now." : "shut now."));
+                }
+            return hours.Count > 0 ? "Opening hours, as everybody on the street knows them. " + string.Join(" ", hours) : null;
         }
 
         /// Hours a week the two are together, over one whole week.

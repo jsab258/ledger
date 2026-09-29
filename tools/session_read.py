@@ -146,8 +146,10 @@ def one(events):
                 done_at.setdefault(what, -1.0)
     for d in deeds:
         done_at.setdefault(d["what"], d["t"])
-    # What he did with the outfit's ask is a deed of this session too (town list 6bh).
-    asks = [e for e in events if e["e"] == "ask"]
+    # What he did with the outfit's ask is a deed of this session too (town list
+    # 6bh); an answer the spec does not know is warned of and is no deed (the
+    # independent check of 6bn: a night the ask never reached him is no deed).
+    asks = [e for e in events if e["e"] == "ask" and e["answer"] in ANSWERS]
     for a in asks:
         done_at.setdefault(a["story"], a["t"])
     knowns = [e for e in events if e["e"] == "known"]
@@ -461,6 +463,7 @@ def selftest():
         assert [m for _, m in fh_["hints"]] == ["StandingStill", "CanTalk", "FirstAsk", "Nonsense"], fh_["hints"]
         assert fh_["first_known"] is not None and fh_["first_known"]["story"] == "player.outfit_d0" and fh_["known_by_30"], fh_["first_known"]
         assert "night 0 refused" in th and "hints shown: StandingStill" in th and any("Nonsense" in w for w in wh) and any("maybe" in w for w in wh), (th, wh)
+        assert "night 2" not in th and [a[1] for a in fh_["asks"]] == [0], (th, fh_["asks"])
         # What the police heard, and DS Ellis on the street (town list 6bm).
         policed = write("2026-10-12-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
                                                     {"t": 1500, "e": "police", "who": "ron", "story": "player.outfit_d2", "how": "talk"},

@@ -3,6 +3,7 @@
  "talk_range_m": 6.0,
  "talk_range_from": "GossipDirector.cs TalkRange",
  "week": "day modulo 7: 0 mon to 6 sun, Population.IsRestDay's convention; 'days' replaces the daily routine on that weekday",
+ "hours_what": "OPEN AND CLOSED (town list 6bo, 29 September): an area's 'hours' gives, for each weekday it opens, [open, close] in hours from that day's midnight, whole or half hours, a close past 24 running into the next morning until six at the latest; a weekday left out is shut. 'hours_note' is said after them. From production/research/shop-hours-1990/NOTE-2026-09-29.md, sourced: the Shops Act 1950 as it stood in 1990 (every shop not exempt shut by one on one weekday of its choosing; all shut by eight; on Sundays only papers, tobacco, sweets and meals; fish exempt from the half day but not sold on Sundays), fish sold after the dock's morning auction. Inferred: the half day on Wednesday, as independents still kept it in the 1980s by one 2020 account (the note's two local sources, Hull's and Grimsby's from the early 1900s, say Thursday); the market on Tuesday, Friday and Saturday, Grimsby's market days today (1990's not found); a pawnbroker's nine till half five (today's in Hull); the steam laundry, a works rather than a shop, with no half day; and the rest fitted to who is where in the routines below: the cafe open late because some of its regulars eat there on weekday evenings, the cab office till the night driver goes home at three.",
  "places": {
   "mickeys_office": {
    "x_m": 6.0,
@@ -182,23 +183,28 @@
  "areas": {
   "mickeys": {
    "places": ["mickeys_office", "mickeys_rank"],
-   "names": ["Mickey's", "the office", "the cab office", "the rank"]
+   "names": ["Mickey's", "the office", "the cab office", "the rank"],
+   "hours": {"mon": [7, 27], "tue": [7, 27], "wed": [7, 27], "thu": [7, 27], "fri": [7, 27], "sat": [7, 27], "sun": [9, 27]}
   },
   "fish_market": {
    "places": ["fish_counter", "fish_front"],
-   "names": ["the fish market", "the fishmonger's", "the market"]
+   "names": ["the fish market", "the fishmonger's", "the market"],
+   "hours": {"mon": [7.5, 14], "tue": [7.5, 14], "wed": [7.5, 14], "thu": [7.5, 14], "fri": [7.5, 14], "sat": [7.5, 14]}
   },
   "ritas": {
    "places": ["ritas_counter", "ritas_step"],
-   "names": ["Rita's", "the pawn shop", "the pawnbroker's", "the pawn"]
+   "names": ["Rita's", "the pawn shop", "the pawnbroker's", "the pawn"],
+   "hours": {"mon": [9, 17.5], "tue": [9, 17.5], "wed": [9, 13], "thu": [9, 17.5], "fri": [9, 17.5], "sat": [9, 17.5]}
   },
   "kiosk": {
    "places": ["kiosk"],
-   "names": ["the kiosk"]
+   "names": ["the kiosk"],
+   "hours": {"mon": [6, 18], "tue": [6, 18], "wed": [6, 18], "thu": [6, 18], "fri": [6, 18], "sat": [6, 18], "sun": [7, 14]}
   },
   "laundry": {
    "places": ["laundry_front", "laundry_counter"],
-   "names": ["the steam laundry", "the laundry", "the laundrette"]
+   "names": ["the steam laundry", "the laundry", "the laundrette"],
+   "hours": {"mon": [8, 17.5], "tue": [8, 17.5], "wed": [8, 17.5], "thu": [8, 17.5], "fri": [8, 17.5], "sat": [8, 17.5]}
   },
   "quay": {
    "places": ["quay"],
@@ -210,15 +216,19 @@
   },
   "cafe": {
    "places": ["cafe", "cafe_front"],
-   "names": ["the cafe", "the caff"]
+   "names": ["the cafe", "the caff"],
+   "hours": {"mon": [6.5, 22], "tue": [6.5, 22], "wed": [6.5, 22], "thu": [6.5, 22], "fri": [6.5, 22], "sat": [6.5, 22], "sun": [8, 12]}
   },
   "newsagent": {
    "places": ["pension_counter"],
-   "names": ["the newsagent's", "the paper shop"]
+   "names": ["the newsagent's", "the paper shop"],
+   "hours": {"mon": [6, 17.5], "tue": [6, 17.5], "wed": [6, 17.5], "thu": [6, 17.5], "fri": [6, 17.5], "sat": [6, 17.5], "sun": [7, 12]},
+   "hours_note": "the post office counter nine till half five on weekdays"
   },
   "hals": {
    "places": ["hals_shop"],
-   "names": ["Hal's"]
+   "names": ["Hal's"],
+   "hours": {"mon": [10, 18], "tue": [10, 18], "wed": [10, 13], "thu": [10, 18], "fri": [10, 18], "sat": [10, 18]}
   },
   "bus_stop": {
    "places": ["bus_stop"],
@@ -262,7 +272,8 @@
   },
   "market": {
    "places": ["market"],
-   "names": ["the market"]
+   "names": ["the market"],
+   "hours": {"tue": [8, 16], "fri": [8, 16], "sat": [8, 16]}
   },
   "boarding_house": {
    "places": ["boarding_house"],
@@ -1134,24 +1145,6 @@
     ]
    ],
    "days": {
-    "wed": [
-     [
-      0,
-      "off"
-     ],
-     [
-      5,
-      "fish_dock"
-     ],
-     [
-      7,
-      "fish_counter"
-     ],
-     [
-      13,
-      "off"
-     ]
-    ],
     "sat": [
      [
       0,
