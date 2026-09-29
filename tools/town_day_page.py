@@ -132,16 +132,22 @@ DAYS["2026-09-30"] = {
 # backstory (Jafar, 29 September: only identity or what is hard to undo, at most
 # three new a day).
 DAYS["2026-10-01"] = {
-    "title": "The warehouse fire, and yesterday's calls",
-    "lede": "One new call, backstory: the warehouse fire, Act I's founding rumour, drafted from the outline and checked by two fresh reviewers against canon and the cast. Yesterday's three stay until you answer them. One tap each, and a note if you want.",
+    "title": "The warehouse fire, the talk's biggest fault, and Steam's wording",
+    "lede": "Three new calls: the warehouse fire (backstory); whether to reopen the check behind the talk's biggest fault; and the wording of Steam's AI disclosure, which locks once Valve approves the game. "
+            "Paused by your ruling of 29 September (no new systems until the slice is worth playing), yours to reopen any time: Tom's reading of what the ending will cost, everyone's own nerve, the day in court, and what he is told going into his Ledger. "
+            "Yesterday's three stay until you answer them. One tap each, and a note if you want.",
     "questions": list(DAYS["2026-09-30"]["questions"]) + [
         ("q-fire-draft", "The warehouse fire: nothing says when it burned, whose it was or whether anybody was hurt, so Alison's question on day 3 finds a town with nothing to say (Father Walsh's old July card would put it around 1970; everything else says last year)",
          [("recommended", "Last November, eleven months before Tom comes: an importer's warehouse on the old row, nobody hurt (the night watchman had slipped off home and lied about his rounds); the outfit had it burned as a lesson for the rent it was owed, Mickey found them the men, and his page in the real book says so; the street believes the owner did it for the insurance (recommended)"),
           ("long-ago", "Long ago, about 1970, as Father Walsh's old card has it: Ellis's and Alison's thread becomes an old story"),
           ("hurt", "Last November, but the watchman got out with his hands burned (his secret, that he was not there, goes)"),
           ("death", "Last November, and the watchman died: a murder inquiry and an inquest, the whole town still talking of it")]),
+        ("q-fallback", "The talk's biggest fault: half of a newcomer's first questions end in \"that's all I know\", because the check against invented facts also stops honest paraphrase. Three attempts failed, so it is set aside under your rule; the route left is retuning the check itself (its standard and worked examples), in small runs on your subscription",
+         [("retune", "Reopen it: retune the check on the bench in small runs over the week, measured on a newcomer's questions and on the inventions it must still catch (recommended: it is what most stops the slice being worth playing)"),
+          ("leave", "Leave it set aside for now")]),
     ],
-    "docs": [],
+    "docs": [("steam-ai", "Steam's AI disclosure, drafted", os.path.join(REPO, "production", "store", "steam-ai-disclosure.md"),
+              "Approve it as the wording for the store page", "Change it (say what in the note)")],
 }
 
 

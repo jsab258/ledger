@@ -1,0 +1,123 @@
+<title>The warehouse fire, the talk&#x27;s biggest fault, and Steam&#x27;s wording</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Public+Sans:wght@400;600&display=swap">
+<style>
+:root{--bg:#eef0ee;--card:#fbfcfb;--ink:#1d2326;--soft:#56646a;--line:#cdd4d2;--amber:#a7650f;--amber-bg:#f6e8d3;--flag:#8d2f22;
+ --ok:#2f6b45;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141819;--card:#1c2123;--ink:#e3e7e5;--soft:#9aa8ad;--line:#33403f;--amber:#e3a454;--amber-bg:#2f2517;--flag:#e58a78;--ok:#7cc497;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "Public Sans",system-ui,sans-serif;margin:0}
+.wrap{max-width:46rem;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:28px}
+h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:600;text-wrap:balance;margin:0}
+h1{font-size:2rem;line-height:1.15}h2{font-size:1.45rem}h3{font-size:1.1rem;margin-top:14px}
+.lede{color:var(--soft);margin:6px 0 0}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);margin:0 0 4px}
+section{display:grid;gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:10px}
+.intro{color:var(--soft);font-size:.92rem;margin:0}
+dl{display:grid;grid-template-columns:8.5rem 1fr;gap:6px 14px;margin:0;font-size:.95rem}
+dt{color:var(--soft);font-weight:600}dd{margin:0}
+@media (max-width:520px){dl{grid-template-columns:1fr}dt{margin-top:6px}}
+.voice{background:var(--amber-bg);border-radius:4px;padding:8px 10px;font-size:.95rem}
+.voice strong{color:var(--flag)}
+blockquote{margin:0;padding-left:12px;border-left:3px solid var(--line);font-family:"Newsreader",Georgia,serif;font-size:1.05rem}
+.lines{display:grid;gap:6px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+.pick{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:4px;padding:8px 10px;cursor:pointer;flex:1 1 14rem}
+.pick input{margin-top:4px}
+.pick:has(input:checked){border-color:var(--amber);background:var(--amber-bg)}
+textarea{width:100%;box-sizing:border-box;min-height:3.2rem;font:inherit;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.status{font-size:.85rem;color:var(--soft)}
+.saved{color:var(--ok)}
+.outline p,.outline li{max-width:65ch}
+.outline ul{padding-left:1.2rem;margin:4px 0}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+</style>
+<main class="wrap">
+<header><p class="eyebrow">LEDGER · the town session · 2026-10-01</p>
+<h1>The warehouse fire, the talk&#x27;s biggest fault, and Steam&#x27;s wording</h1>
+<p class="lede">Three new calls: the warehouse fire (backstory); whether to reopen the check behind the talk&#x27;s biggest fault; and the wording of Steam&#x27;s AI disclosure, which locks once Valve approves the game. Paused by your ruling of 29 September (no new systems until the slice is worth playing), yours to reopen any time: Tom&#x27;s reading of what the ending will cost, everyone&#x27;s own nerve, the day in court, and what he is told going into his Ledger. Yesterday&#x27;s three stay until you answer them. One tap each, and a note if you want.</p></header>
+<section><h2>Your calls</h2><p class="intro">The first choice in each is my recommendation.</p>
+<div class="card" data-key="q-mickey-death"><h3>How Mickey died. Neither canon nor the outline says, so asked &quot;How did Mickey die?&quot;, Sheila and Ron made up a heart attack and the check stopped them; now they say they don&#x27;t know. Sheila&#x27;s card has her see Ron argue with a stranger in the yard two nights before he died</h3><div class="row">
+<label class="pick"><input type="radio" name="q-mickey-death" id="q-mickey-death-heart" value="heart"><span>His heart, at the office early one morning; Ron found him when he came on at the rank; the doctor said his heart, and nobody on the street thinks otherwise (recommended: the story is what Tom inherited, and a mystery in the death would be a thread the outline has no room for; the argument in the yard stays something Sheila saw)</span></label>
+<label class="pick"><input type="radio" name="q-mickey-death" id="q-mickey-death-doubt" value="doubt"><span>His heart, as the doctor said, but some on the street wonder, and the argument in the yard keeps the doubt alive; never solved, never a quest</span></label>
+<label class="pick"><input type="radio" name="q-mickey-death" id="q-mickey-death-yours" value="yours"><span>Something else, in your note</span></label>
+</div><textarea id="q-mickey-death-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-mickey-death-status"></p></div>
+<div class="card" data-key="q-wind-down"><h3>Day 7 is also a night the outfit asks. Told &quot;wind it down&quot;, Sheila closes the book on Mickey&#x27;s arrangements, yet Ron would still bring the envelope that evening</h3><div class="row">
+<label class="pick"><input type="radio" name="q-wind-down" id="q-wind-down-ends" value="ends"><span>Winding it down ends the arrangement that night: Ron takes the word down, as he does a no; taking it over never undoes a no (recommended; built this way meanwhile)</span></label>
+<label class="pick"><input type="radio" name="q-wind-down" id="q-wind-down-words" value="words"><span>Her words change instead, and only his no to Ron ends it</span></label>
+</div><textarea id="q-wind-down-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-wind-down-status"></p></div>
+<div class="card" data-key="q-threat"><h3>Threats to a witness (&quot;Say a word and you&#x27;ll regret it&quot;). Built for now: a threat never buys silence, it becomes the street&#x27;s story and makes them warier of him, read from word shapes. Every one of the forty has the same middling nerve, so the old threat code would have silenced everybody; and no word list catches every way of threatening someone, so a threat it misses the town never hears of</h3><div class="row">
+<label class="pick"><input type="radio" name="q-threat" id="q-threat-story-model" value="story-model"><span>A threat never buys silence this week, and the checking model reads each line about a deed for a threat (&quot;is this a threat to keep quiet?&quot;), on your capped key while you play, about a twentieth of a penny a line (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-threat" id="q-threat-story-words" value="story-words"><span>It never buys silence, read from word shapes only, as built: free, with gaps</span></label>
+<label class="pick"><input type="radio" name="q-threat" id="q-threat-nerve" value="nerve"><span>It silences those of low nerve, once each of the forty has their own nerve</span></label>
+</div><textarea id="q-threat-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-threat-status"></p></div>
+<div class="card" data-key="q-fire-draft"><h3>The warehouse fire: nothing says when it burned, whose it was or whether anybody was hurt, so Alison&#x27;s question on day 3 finds a town with nothing to say (Father Walsh&#x27;s old July card would put it around 1970; everything else says last year)</h3><div class="row">
+<label class="pick"><input type="radio" name="q-fire-draft" id="q-fire-draft-recommended" value="recommended"><span>Last November, eleven months before Tom comes: an importer&#x27;s warehouse on the old row, nobody hurt (the night watchman had slipped off home and lied about his rounds); the outfit had it burned as a lesson for the rent it was owed, Mickey found them the men, and his page in the real book says so; the street believes the owner did it for the insurance (recommended)</span></label>
+<label class="pick"><input type="radio" name="q-fire-draft" id="q-fire-draft-long-ago" value="long-ago"><span>Long ago, about 1970, as Father Walsh&#x27;s old card has it: Ellis&#x27;s and Alison&#x27;s thread becomes an old story</span></label>
+<label class="pick"><input type="radio" name="q-fire-draft" id="q-fire-draft-hurt" value="hurt"><span>Last November, but the watchman got out with his hands burned (his secret, that he was not there, goes)</span></label>
+<label class="pick"><input type="radio" name="q-fire-draft" id="q-fire-draft-death" value="death"><span>Last November, and the watchman died: a murder inquiry and an inquest, the whole town still talking of it</span></label>
+</div><textarea id="q-fire-draft-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-fire-draft-status"></p></div>
+<div class="card" data-key="q-fallback"><h3>The talk&#x27;s biggest fault: half of a newcomer&#x27;s first questions end in &quot;that&#x27;s all I know&quot;, because the check against invented facts also stops honest paraphrase. Three attempts failed, so it is set aside under your rule; the route left is retuning the check itself (its standard and worked examples), in small runs on your subscription</h3><div class="row">
+<label class="pick"><input type="radio" name="q-fallback" id="q-fallback-retune" value="retune"><span>Reopen it: retune the check on the bench in small runs over the week, measured on a newcomer&#x27;s questions and on the inventions it must still catch (recommended: it is what most stops the slice being worth playing)</span></label>
+<label class="pick"><input type="radio" name="q-fallback" id="q-fallback-leave" value="leave"><span>Leave it set aside for now</span></label>
+</div><textarea id="q-fallback-note" placeholder="A note, if you want one"></textarea><p class="status" id="q-fallback-status"></p></div>
+</section>
+<section><h2>Steam&#x27;s AI disclosure, drafted</h2><article class="card outline" data-key="steam-ai">
+<p>For the store page and Valve&#x27;s content survey (ROADMAP, the thirty-minute build; checklist AI07). Research: production/research/steam-ai-disclosure/NOTE-2026-09-29.md. Drafted by the town, 29 September. Some answers lock once Valve approves the game, so this is Jafar&#x27;s to approve before the first public build. It names only what the game does today (the Core&#x27;s AiNotice, ContentRule, SafetyRule, ClaimCheck and RealWorld, and the relay&#x27;s limits).</p>
+<h3>The public text (the store page&#x27;s AI block)</h3>
+<p>&gt; The people of LEDGER&#x27;s town talk with you live: each reply is written as you &gt; play by an AI model, Anthropic&#x27;s Claude, and spoken by a voice made on your &gt; own computer. Each character is told only what they have seen, heard and &gt; believe, and every line is checked before you hear it. You can report any &gt; line in the game.</p>
+<p>(62 words.)</p>
+<h3>Live-Generated: what is made while the game runs</h3>
+<ul><li><strong>Text:</strong> each character&#x27;s replies, written by Anthropic&#x27;s Claude (Haiku 4.5, Sonnet 5), through LEDGER&#x27;s own server. The player&#x27;s key is never needed, and no payment is taken outside Steam.</li><li><strong>Audio:</strong> those replies spoken by a text-to-speech model on the player&#x27;s own computer, in the cast&#x27;s voices.</li></ul>
+<h3>The guardrails (Valve&#x27;s field)</h3>
+<p>Every line a character says live is checked before the player hears it:</p>
+<ul><li><strong>The world&#x27;s content rule.</strong> The game&#x27;s world holds: - no alcohol, no gambling and no children; - no prostitution or sexual content; - no drugs, no slurs and no cruelty the rule names.</li></ul>
+<p>A line breaking it is never said. (ContentRule, ContentWords)</p>
+<ul><li><strong>A safety rule.</strong> No line urging the player towards harming or killing themselves is ever said. (SafetyRule)</li><li><strong>Only what the simulation knows.</strong> Each character is given only what they have seen, heard and believe. A second model checks every specific in a line against that. A line claiming what they do not know is written again, and failing that, replaced by the character&#x27;s own &quot;that&#x27;s all I know&quot;. (ClaimCheck)</li><li><strong>No real world.</strong> No real make, brand, shop, club, paper, programme or public figure, and nothing later than 1992. (RealWorld)</li><li><strong>The provider&#x27;s own rules.</strong> Anthropic&#x27;s usage policies apply on top of ours.</li><li><strong>A report button on every reply.</strong> It keeps that line, what the player said before it and their note, for the developers. Steam&#x27;s own overlay report button works too, as long as the packaged game keeps the overlay (the builder&#x27;s).</li><li><strong>Limits.</strong> Every copy has a daily and monthly allowance of live talk. The server stops all calls well below its monthly budget. When talk is paused, characters answer in a few fixed words of their own.</li><li><strong>Told first.</strong> Before the first conversation, the player is told the town talks through an AI model, where their words go (through our server to Anthropic), and that Anthropic deletes them within 30 days and does not train on them.</li></ul>
+<h3>Pre-Generated: what shipped was made with AI help</h3>
+<p>To be completed by the builder before release, since it covers art and voices:</p>
+<ul><li>any AI-made images or textures;</li><li>the crowd voices and fixed lines recorded with text-to-speech;</li><li>the text of the cast&#x27;s cards and fixed lines, written with Claude&#x27;s help and approved by Jafar.</li></ul>
+<h3>Mature content (the content description)</h3>
+<p>&gt; Characters answer what you type, and what you say can steer the tone. They &gt; can be rude, threaten, and talk about crime and violence, as the story does. &gt; Filters block sexual content, drink, gambling, drugs, slurs, anything &gt; urging self-harm, and real people or brands.</p>
+<h3>For the builder</h3>
+<ul><li>Keep the Steam overlay working in the packaged game, so Valve&#x27;s own report button works.</li><li>Never ask a player for their own AI key, or for payment outside Steam.</li></ul>
+<div class="row"><label class="pick"><input type="radio" name="steam-ai" id="steam-ai-approve" value="approve"><span>Approve it as the wording for the store page</span></label><label class="pick"><input type="radio" name="steam-ai" id="steam-ai-redo" value="redo"><span>Change it (say what in the note)</span></label></div><textarea id="steam-ai-note" placeholder="What to change"></textarea><p class="status" id="steam-ai-status"></p></article></section>
+<p class="status" id="store-status"></p></main>
+<script>
+let db = null, canWrite = true;
+const state = {};
+function status(key, text, ok){const s=document.getElementById(key+"-status"); if(s){s.textContent=text; s.className="status"+(ok?" saved":"");}}
+function save(key){
+  const card=document.querySelector('[data-key="'+key+'"]');
+  const picked=card.querySelector('input[type=radio]:checked');
+  const note=document.getElementById(key+"-note").value;
+  state[key]={pick:picked?picked.value:null,note:note,at:new Date().toISOString()};
+  if(!db){status(key,"Not saved: this view cannot store your answer.");return;}
+  if(!canWrite){status(key,"Not saved: you can read this page but not answer on it.");return;}
+  status(key,"Saving...");
+  db.doc("verdicts/"+key).set(state[key]).then(()=>status(key,"Saved",true)).catch(e=>{
+    if(e&&(e.code==="not_granted"||e.code==="permission_denied"||e.code==="invalid_argument")) canWrite=false;
+    status(key,"Not saved: "+(e&&e.message?e.message:"the store refused it")+".");});
+}
+for(const card of document.querySelectorAll("[data-key]")){
+  const key=card.dataset.key;
+  card.querySelectorAll("input[type=radio]").forEach(r=>r.addEventListener("change",()=>save(key)));
+  const t=document.getElementById(key+"-note"); if(t) t.addEventListener("change",()=>save(key));
+}
+(async()=>{
+  try{ db = await window.claude?.use?.("db"); }catch(e){ db=null; }
+  const g=document.getElementById("store-status");
+  if(!db){ g.textContent="Answers cannot be stored in this view."; return; }
+  for(const card of document.querySelectorAll("[data-key]")){
+    const key=card.dataset.key;
+    try{
+      const snap=await db.doc("verdicts/"+key).get();
+      const v=snap&&(snap.data?snap.data():snap);
+      if(v&&v.pick){const r=document.getElementById(key+"-"+v.pick); if(r) r.checked=true;}
+      if(v&&v.note){document.getElementById(key+"-note").value=v.note;}
+      if(v&&(v.pick||v.note)) status(key,"Saved",true);
+    }catch(e){}
+  }
+})();
+</script>
