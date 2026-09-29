@@ -116,6 +116,8 @@
 #include "LedgerJacket.h"
 #include "LedgerTalkLight.h"
 #include "Camera/PlayerCameraManager.h"
+#include "Camera/CameraActor.h"
+#include "Camera/CameraComponent.h"
 #include "Widgets/Layout/SBox.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Text/STextBlock.h"
@@ -3699,7 +3701,12 @@ namespace
 	// he passes and as she looks back (Saved/LookScript). -LookStory=little or
 	// =enough first gives her a story of his night, half remembered or still
 	// told, so each regard can be seen. The game then closes.
-	struct FLookScript { int State = 0; double StartAt = 0.0, LastRow = 0.0; FVector From, To; FString Rows, Story; TSet<FString> Shot; };
+	// -LookCamera films it from in front of her instead, a frame every fifth of
+	// a second (Saved/LookScript/frames-<story>), for the approval page. The
+	// walk runs on the game's clock, as the look does, so a slow frame rate
+	// cannot stretch one against the other.
+	struct FLookScript { int State = 0; double StartAt = 0.0, LastRow = 0.0, LastFrame = -1.0; int Frame = 0; bool bFilm = false;
+	                     FVector From, To; FString Rows, Story; TSet<FString> Shot; };
 	FLookScript GLook;
 
 	void LookShot(const TCHAR* Name)
@@ -3737,31 +3744,55 @@ namespace
 			GLook.To = At - Facing * 800.0 + Side * 120.0;
 			GLook.From.Z = Z;
 			GLook.To.Z = Z;
-			GLook.StartAt = Now + 3.0;   // three seconds at the start, for her regard to be read
+			GLook.StartAt = World->GetTimeSeconds() + 3.0;   // three seconds at the start, for her regard to be read
 			GLook.State = 1;
+			GLook.bFilm = FParse::Param(FCommandLine::Get(), TEXT("LookCamera"));
+			if (GLook.bFilm)
+			{
+				// IN FRONT OF HER, ON THE FAR SIDE FROM HIS PATH, at eye height,
+				// on her head and shoulders: her face as he comes, passes and goes.
+				const FVector Head = At + FVector(0.0, 0.0, 158.0);
+				const FVector Eye = Head + Facing * 260.0 - Side * 110.0 + FVector(0.0, 0.0, 5.0);
+				FActorSpawnParameters P;
+				P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Head - Eye).Rotation(), P))
+				{
+					Cam->GetCameraComponent()->SetFieldOfView(38.0f);
+					Cam->GetCameraComponent()->bConstrainAspectRatio = false;
+					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
+				}
+			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: walking past Sheila, story=%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story);
 		}
 		const FVector Dir = (GLook.To - GLook.From).GetSafeNormal();
 		const double Len = (GLook.To - GLook.From).Size();
-		const double Along = FMath::Clamp((Now - GLook.StartAt) * 140.0, 0.0, Len);
+		const double WNow = World->GetTimeSeconds();
+		const double Along = FMath::Clamp((WNow - GLook.StartAt) * 140.0, 0.0, Len);
 		const FVector Pos = GLook.From + Dir * Along;
 		GPawn->SetActorLocationAndRotation(Pos, Dir.Rotation(), false, nullptr, ETeleportType::TeleportPhysics);
 		if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, (float)Dir.Rotation().Yaw, 0.0f)); }
+		if (GLook.bFilm && WNow - GLook.LastFrame >= 0.2 && WNow >= GLook.StartAt - 1.0)
+		{
+			GLook.LastFrame = WNow;
+			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+				/ TEXT("LookScript") / FString::Printf(TEXT("frames-%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story)
+				/ FString::Printf(TEXT("f_%03d.png"), GLook.Frame++)), false, false);
+		}
 		AActor* Her = GVisualFor(GW1Body);
 		ULedgerPersonAnim* Look = nullptr;
 		if (TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = GLooks.Find(GW1Body))
 		{
 			for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks) { if (L.IsValid() && !L->HeadBone.IsNone()) { Look = L.Get(); break; } }
 		}
-		if (Her != nullptr && Now - GLook.LastRow >= 0.25)
+		if (Her != nullptr && WNow - GLook.LastRow >= 0.25)
 		{
-			GLook.LastRow = Now;
+			GLook.LastRow = WNow;
 			const FVector To = Pos - Her->GetActorLocation();
 			const double Ahead = FVector::DotProduct(To, Her->GetActorRightVector().GetSafeNormal2D()) / 100.0;
 			const double M = To.Size2D() / 100.0;
 			const float Alpha = Look != nullptr ? Look->LookAlpha : -1.0f;
 			GLook.Rows += FString::Printf(TEXT("%s{\"t\":%.2f,\"ahead\":%.2f,\"m\":%.2f,\"alpha\":%.2f,\"first\":%d,\"second\":%d,\"back\":%d}"),
-				GLook.Rows.IsEmpty() ? TEXT("") : TEXT(","), Now - GLook.StartAt, Ahead, M, Alpha,
+				GLook.Rows.IsEmpty() ? TEXT("") : TEXT(","), WNow - GLook.StartAt, Ahead, M, Alpha,
 				Look != nullptr ? (int)Look->bFirstGiven : -1, Look != nullptr ? (int)Look->bSecondGiven : -1,
 				Look != nullptr ? (int)Look->bLookingBack : -1);
 			if (Look != nullptr && Look->bFirstGiven && Alpha > 0.6f) { LookShot(TEXT("1-first")); }
@@ -3769,7 +3800,7 @@ namespace
 			if (Ahead < 0.3 && Ahead > -0.7) { LookShot(TEXT("3-passing")); }
 			if (Look != nullptr && Look->bLookingBack && Alpha > 0.6f) { LookShot(TEXT("4-back")); }
 		}
-		if (Along >= Len && Now - GLook.StartAt > Len / 140.0 + 2.0)
+		if (Along >= Len && WNow - GLook.StartAt > Len / 140.0 + 2.0)
 		{
 			int32 First = 0, Second = 0, Back = 0, People = 0;
 			for (TObjectIterator<ULedgerPersonAnim> It; It; ++It)
