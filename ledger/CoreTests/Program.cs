@@ -5663,6 +5663,24 @@ namespace Ledger.CoreTests
                       "a reply naming a real brand is asked again without it, and the character is told not to in the first place", brandKept);
             }
 
+            // WHOM A TYPED LINE NAMES (town list 6bd): for the session record, ids only.
+            {
+                var hookNm = CastDay.Parse(File.ReadAllText(Root("production/specs/hook-cast.json")));
+                string wrongNm = null;
+                foreach (var (line, want) in new (string, string)[]
+                {
+                    ("Have you seen Sheila?", "lena"), ("Ask Mrs Dunn.", "lena"), ("Ask the bookkeeper.", "lena"), ("Ron Kirby told me.", "rocco"),
+                    ("Kirby's a big lad.", "rocco"), ("Rita said so.", "rita"), ("I was at Rita's.", ""), ("Down Hal's, then Ada's.", ""),
+                    ("Father Emil was at the chapel.", "emil"), ("Did Darren and Alison talk?", "noor,sam"), ("Who's the dispatcher?", "zlata"),
+                    ("Morning.", ""), ("I ran into a ferryman.", ""), ("June was at the funeral.", "june"),
+                })
+                {
+                    var got = hookNm.WhoNamed(line); got.Sort(StringComparer.Ordinal);
+                    if (string.Join(",", got) != want) wrongNm = line + " -> " + string.Join(",", got) + " (want " + want + ")";
+                }
+                Check(wrongNm == null, "whom a typed line names: by name, surname or the street's word for them; a place's name is the place", wrongNm ?? "");
+            }
+
             // SAID TO HIS FACE (town list 6bc): the deed the Core had them raise, in
             // their own words, is reported; a fallback or refusal is not; why they are
             // wary, cited by a clean check, counts as speaking of the deed.
