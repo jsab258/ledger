@@ -7,8 +7,17 @@
 // a sequence player, then FAnimNode_LookAt on the head bone with its aim
 // solver, clamp and easing - because this project makes no Blueprint assets
 // and the engine lets a native instance supply its own node graph. What is
-// ours is only the decision: when the player is within LookRangeCm and in
-// front of the person, the look fades in; otherwise it fades out.
+// ours is only the decision: until 29 September, when the player was within
+// 5 m and in front of the person, the look faded in; otherwise it faded out.
+//
+// THE LOOK A PERSON GIVES HIM, 29 September (town list 1; the gaze research,
+// production/research/gaze-and-knowing): not every head within 5 m alike. A
+// stranger glances at about ten metres for half a second and looks away by
+// 2.4 m; somebody who half remembers a story about him glances the same way,
+// then looks again as he comes past; somebody watching him keeps him in view
+// from further off and looks back after he has gone by. The numbers are
+// StreetVoice::RegardFor's, set by the street for each person who holds a
+// story (SetRegard) and a stranger's for everybody else. Always the head.
 //
 // The automation's shots never look (a head turned to the lens is not a
 // street photograph, and a frame must repeat); the playable street does.
@@ -52,8 +61,36 @@ public:
 	// THE MOST THIS PERSON HAS LOOKED this run, for the verdict.
 	float PeakAlpha = 0.0f;
 
-	static constexpr float LookRangeCm = 500.0f;
+	// HOW THIS PERSON LOOKS AT HIM, from a Regard (StreetVoice.h), in metres
+	// and seconds as it gives them; a first look that holds is infinity, held
+	// while he is within its distance.
+	void SetRegard(double InFirstLookMetres, double InFirstLookSeconds, double InSecondLookMetres,
+	               double InSecondLookSeconds, double InLookAwayMetres, bool bInLooksBack);
+	float FirstLookCm = 1000.0f;
+	float FirstLookSeconds = 0.5f;
+	float SecondLookCm = 0.0f;
+	float SecondLookSeconds = 0.0f;
+	float LookAwayCm = 240.0f;
+	bool bLooksBack = false;
+
+	// THE LOOK AS IT GOES: given yet, how long the one under way has left, and
+	// whether he has been in front of them since he came near.
+	bool bFirstGiven = false;
+	bool bSecondGiven = false;
+	bool bWasInFront = false;
+	bool bLookingBack = false;
+	float LookLeft = 0.0f;
+	// how many of each this person has given this run, for the verdict
+	int32 FirstLooks = 0;
+	int32 SecondLooks = 0;
+	int32 LooksBackGiven = 0;
+
+	// IN FRONT: a person does not turn right round to look at somebody behind
+	// them, unless they are watching him (the look back).
 	static constexpr float LookConeDeg = 100.0f;
+	// Once he is this much further off than their first look reaches, the look
+	// starts over: he can come past again.
+	static constexpr float LookResetCm = 500.0f;
 
 protected:
 	virtual FAnimInstanceProxy* CreateAnimInstanceProxy() override;

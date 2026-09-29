@@ -91,17 +91,18 @@ namespace Ledger.PerceptionGolden
                                   .Append('|').Append(Perception.SymmetryPredictsSeen(m, a, ly, lt, occ) ? "1" : "0").Append('\n');
 
             EmitCrimeSlice(sb);
+            // Ported to StreetVoice.h on 29 September (town list handover 1).
+            EmitKnowing(sb);
+            EmitRecognition(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
             // the port answers them they are emitted only on request, because
             // the port check fails on a row it cannot answer (that is its job).
-            // The port's commit moves EmitKnowing and EmitRecognition above
-            // this line and accepts the table; the handover in NOW.md says so.
+            // Each port's commit moves its emitter above this line and accepts
+            // the table; the handover in NOW.md says so.
             if (Array.IndexOf(args ?? Array.Empty<string>(), "--awaiting-port") >= 0)
             {
-                EmitKnowing(sb);
-                EmitRecognition(sb);
                 EmitCastDay(sb);
                 EmitOriginRung(sb);
                 EmitJustNow(sb);
@@ -432,11 +433,15 @@ namespace Ledger.PerceptionGolden
                 }
             }
 
+            // EVERY ONE OF THE FOURTEEN, and the seeds either side, with the
+            // bank and that it is about him (the independent check, 29
+            // September: five of fourteen were reached and a word changed in
+            // any other went unseen).
             var holderForLines = HolderOf("fl", "player:night_walk:seen:0.1:1:0:0");
-            foreach (var seed in new[] { -15, -1, 0, 1, 5, 13, 14, 27, 100 })
+            foreach (var seed in new[] { -15, -1, 14, 27, 100 }.Concat(Enumerable.Range(0, 14)))
             {
                 var line = StreetVoice.FaintRemark(holderForLines, holderForLines.Rumors[0], seed);
-                Row(sb, "FaintRemark", seed.ToString(Inv), Esc(line.Text));
+                Row(sb, "FaintRemark", seed.ToString(Inv), line.Bank, Esc(line.Text), Bit(line.AboutPlayer));
             }
             Row(sb, "FaintRemark", "nostory", StreetVoice.FaintRemark(holderForLines, null, 0) == null ? "null" : "line");
 
@@ -448,6 +453,27 @@ namespace Ledger.PerceptionGolden
                 bool second = led.RecordFaint("m", r, heard);
                 bool strongAfter = led.Record("m", r, StanceKind.Comments, true);
                 Row(sb, "RecordFaint", Bit(heard), Bit(first) + Bit(second) + Bit(strongAfter) + Bit(led.HasRemarked("m", r)));
+            }
+
+            // HIS OUTFIT NIGHTS (town list 6z): not sensitive, yet they show in
+            // both pickers; a topic that only starts like one does not; a
+            // suppressed one, a suppressed indelible one, and one about
+            // somebody else (the independent check, 29 September).
+            string[] nights =
+            {
+                "player:outfit_d3:did:0.1:0:0:0", "player:outfit_d3:did:0.3:0:0:0",
+                "player:outfit_d3:refused:0.1:0:0:1", "player:outfit_d3:noshow:0.1:0:1:1",
+                "player:outfit:did:0.1:0:0:0", "player:outfit:did:0.3:0:0:0",
+                "player:outfit_d3:did:0.15:0:0:0;player:night_walk:seen:0.15:1:0:0",
+                "rocco:outfit_d3:did:0.1:0:0:0",
+            };
+            foreach (var s in nights)
+            {
+                var g = HolderOf("h", s);
+                var half = StreetVoice.StoryHalfRemembered(g, 0.2);
+                Row(sb, "StoryHalfRemembered", "0.2", s, (half == null ? -1 : g.Rumors.IndexOf(half)).ToString(Inv));
+                var shows = StreetVoice.StoryThatShows(g, 0.2);
+                Row(sb, "StoryThatShows", "0.2", s, (shows == null ? -1 : g.Rumors.IndexOf(shows)).ToString(Inv));
             }
 
             // RegardFor over holders, coats, leashes, suspicion, a remark had,
@@ -473,6 +499,45 @@ namespace Ledger.PerceptionGolden
                                                 D(rg.SecondLookMetres), D(rg.SecondLookSeconds),
                                                 D(rg.LookAwayMetres), Bit(rg.LooksBack), Bit(rg.RemarkedAlready), Bit(rg.Speaks), Bit(rg.Faint));
                                         }
+            // AND AT THE RECOGNITION LINE ITSELF, a step under it, and for
+            // Close and Household; outfit nights; a strong story about somebody
+            // else, which is not about him.
+            foreach (var s in new[] { "player:night_walk:seen:0.1:1:0:0", "player:night_walk:seen:0.3:1:0:0",
+                                      "player:outfit_d3:did:0.1:0:0:0", "player:outfit_d3:did:0.3:0:0:0",
+                                      "rocco:night_walk:seen:0.9:1:0:0" })
+                foreach (var coat in new[] { false, true })
+                    foreach (var leash in new[] { false, true })
+                        foreach (var had in new[] { false, true })
+                            foreach (var id in new[] { "p0", "p1", "p3" })
+                                foreach (var fam in new[] { Math.BitDecrement(Perception.RecognitionFamiliarity), Perception.RecognitionFamiliarity, Acquaintance.Close, Acquaintance.Household })
+                                    foreach (var companion in new[] { false, true })
+                                    {
+                                        var g = HolderOf(id, s, leash, 0.0);
+                                        var led = new RemarkLedger();
+                                        if (had) foreach (var r in g.Rumors) led.RecordFaint(id, r, true);
+                                        var rg = StreetVoice.RegardFor(g, 0.2, coat, led, fam, companion);
+                                        Row(sb, "RegardFor", id, s, Bit(coat), Bit(leash), D(0.0), Bit(had), D(fam), Bit(companion),
+                                            rg.Knowing.ToString(), (rg.Story == null ? -1 : g.Rumors.IndexOf(rg.Story)).ToString(Inv),
+                                            Bit(rg.KnowsItIsHim), rg.Stance.ToString(), D(rg.FirstLookMetres),
+                                            double.IsPositiveInfinity(rg.FirstLookSeconds) ? "inf" : D(rg.FirstLookSeconds),
+                                            D(rg.SecondLookMetres), D(rg.SecondLookSeconds),
+                                            D(rg.LookAwayMetres), Bit(rg.LooksBack), Bit(rg.RemarkedAlready), Bit(rg.Speaks), Bit(rg.Faint));
+                                    }
+            // A FRIEND AND SOMEBODY COLD: loyalty is read (field 9).
+            foreach (var s in new[] { "", "player:night_walk:seen:0.3:1:0:0", "player:seen_about:quay:0.9:0:0:0" })
+                foreach (var loy in new[] { 0.1, 0.95 })
+                    foreach (var sus in new[] { 0.0, 0.5, 1.0 })
+                        foreach (var fam in new[] { Acquaintance.HeardOfYou, Acquaintance.Known })
+                        {
+                            var g = HolderOf("p0", s, false, sus, loy);
+                            var rg = StreetVoice.RegardFor(g, 0.2, false, new RemarkLedger(), fam, false);
+                            Row(sb, "RegardForLoyalty", "p0", s == "" ? "none" : s, "0", "0", D(sus), "0", D(fam), "0", D(loy),
+                                rg.Knowing.ToString(), (rg.Story == null ? -1 : g.Rumors.IndexOf(rg.Story)).ToString(Inv),
+                                Bit(rg.KnowsItIsHim), rg.Stance.ToString(), D(rg.FirstLookMetres),
+                                double.IsPositiveInfinity(rg.FirstLookSeconds) ? "inf" : D(rg.FirstLookSeconds),
+                                D(rg.SecondLookMetres), D(rg.SecondLookSeconds),
+                                D(rg.LookAwayMetres), Bit(rg.LooksBack), Bit(rg.RemarkedAlready), Bit(rg.Speaks), Bit(rg.Faint));
+                        }
         }
 
         /// RECOGNITION, the line said as he passes (StreetVoice.Recognition),
@@ -534,9 +599,23 @@ namespace Ledger.PerceptionGolden
                     {
                         var line = StreetVoice.Recognition(g, about, k, seed);
                         Row(sb, "Recognition", k.ToString(), name, seed.ToString(Inv),
-                            line == null ? "null" : Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                            line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
                     }
             Row(sb, "Recognition", "Comments", "nobody", "0", StreetVoice.Recognition(null, night, StanceKind.Comments, 0) == null ? "null" : "line");
+            // FROM AN OUTFIT NIGHT (town list 6z): each answer, heard (Hops 1) or
+            // his own sight of it (Hops 0), sensitive or not, a value no bank
+            // has, a topic that only starts like a night; every stance, every line.
+            foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                foreach (var (pred, val) in new[] { ("outfit_d3", "did"), ("outfit_d3", "refused"), ("outfit_d3", "noshow"), ("outfit_d3", "other"), ("outfit", "did") })
+                    foreach (var hops in new[] { 0, 1 })
+                        foreach (var sens in new[] { false, true })
+                            for (int seed = 0; seed < 6; seed++)
+                            {
+                                var about = new Rumor { Content = new Fact("player", pred, val), Summary = "s", Confidence = 0.5, Sensitive = sens, Hops = hops };
+                                var line = StreetVoice.Recognition(g, about, k, seed);
+                                Row(sb, "RecognitionOutfit", k.ToString(), pred, val, hops.ToString(Inv), Bit(sens), seed.ToString(Inv),
+                                    line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                            }
         }
 
         /// WHO IS WHERE, AND WHO IS WITH WHOM (CastDay), 28 September, for the

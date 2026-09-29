@@ -50,6 +50,8 @@
 
 #include <cstdio>
 #include <cstdlib>
+#include <limits>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -121,6 +123,9 @@ namespace Golden
 	// runtimes' libm.
 	inline bool Agrees(const std::string& Got, const std::string& Want, double Tol)
 	{
+		// The same text agrees, whatever it spells: "inf" reads as a number,
+		// and infinity less infinity is not a small difference.
+		if (Got == Want) return true;
 		if (IsNumber(Got) && IsNumber(Want))
 		{
 			const double A = D(Got), Bv = D(Want);
@@ -1121,6 +1126,87 @@ namespace Golden
 		return A;
 	}
 
+	// ---- the knowing rows' helpers (29 September) ---------------------
+
+	// A HOLDER, BUILT FROM ITS ROW, as PerceptionGolden's HolderOf writes it:
+	// each rumour subject:predicate:value:confidence:sensitive:indelible:
+	// suppressed, ';' between them, "none" for nobody's. Order is the
+	// rumours in the row's order, for the index the table reports.
+	inline Gossiper HolderFromRow(const std::string& Id, const std::string& Enc, std::vector<RumorPtr>& Order)
+	{
+		Gossiper G(Id, Id, std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+		if (Enc == "none") return G;
+		std::string::size_type Start = 0;
+		while (Start <= Enc.size())
+		{
+			std::string::size_type End = Enc.find(';', Start);
+			if (End == std::string::npos) End = Enc.size();
+			const std::string One = Enc.substr(Start, End - Start);
+			std::vector<std::string> P;
+			std::string::size_type A0 = 0;
+			for (;;)
+			{
+				std::string::size_type C = One.find(':', A0);
+				P.push_back(One.substr(A0, C == std::string::npos ? std::string::npos : C - A0));
+				if (C == std::string::npos) break;
+				A0 = C + 1;
+			}
+			if (P.size() >= 7)
+			{
+				RumorPtr R = std::make_shared<Rumor>(Fact(P[0], P[1], P[2]));
+				R->OriginId = "o"; R->Summary = "s";
+				R->Confidence = D(P[3]); R->Sensitive = B(P[4]); R->Indelible = B(P[5]);
+				G.Rumors.push_back(R);
+				Order.push_back(R);
+				if (B(P[6])) G.Suppressed.push_back(R->TopicKey());
+			}
+			Start = End + 1;
+		}
+		return G;
+	}
+
+	inline long long IndexIn(const std::vector<RumorPtr>& Order, const RumorPtr& R)
+	{
+		for (std::vector<RumorPtr>::size_type Q = 0; R && Q < Order.size(); ++Q)
+		{
+			if (Order[Q] == R) return (long long)Q;
+		}
+		return -1;
+	}
+
+	inline bool StanceNamed(const std::string& Name, StreetVoice::StanceKind& Out)
+	{
+		for (int V = 0; V <= 6; ++V)
+		{
+			if (Name == StreetVoice::StanceName((StreetVoice::StanceKind)V)) { Out = (StreetVoice::StanceKind)V; return true; }
+		}
+		return false;
+	}
+
+	// A look that holds while he is in range is infinity, written "inf".
+	inline std::string FromSeconds(double V)
+	{
+		return V == std::numeric_limits<double>::infinity() ? std::string("inf") : FromDouble(V);
+	}
+
+	// A ROW WITH SEVERAL ANSWERS, from field First on. The comparison reads
+	// the last field only, so every earlier answer is checked here: when all
+	// agree the last is returned, and otherwise all of them, marked, which
+	// can never equal the last field.
+	inline std::string MultiAnswer(const std::vector<std::string>& F, std::vector<std::string>::size_type First,
+	                               const std::vector<std::string>& Outs)
+	{
+		bool bSame = !Outs.empty() && F.size() == First + Outs.size();
+		for (std::vector<std::string>::size_type Q = 0; bSame && Q + 1 < Outs.size(); ++Q)
+		{
+			if (!Agrees(Outs[Q], F[First + Q], 1e-9)) bSame = false;
+		}
+		if (bSame) return Outs.back();
+		std::string All = "earlier-answers-differ:";
+		for (std::vector<std::string>::size_type Q = 0; Q < Outs.size(); ++Q) { All += (Q ? "/" : "") + Outs[Q]; }
+		return All;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -1285,6 +1371,176 @@ namespace Golden
 			for (std::string::size_type Q = 0; Q < K.size(); ++Q) { if (K[Q] == '|') K[Q] = '#'; }
 			A.Known = true;
 			A.Got = K;
+		}
+		// KNOWING A LITTLE AND THE LOOK, answered from StreetVoice.h
+		// (PerceptionGolden EmitKnowing, 29 September). A row with several
+		// answers is checked in full: the earlier answers must all agree, and
+		// the last is what the comparison reads (MultiAnswer).
+		else if (Fn == "StoryHalfRemembered" && F.size() >= 4)
+		{
+			std::vector<RumorPtr> Order;
+			Gossiper G = HolderFromRow("h", F[2], Order);
+			A.Known = true;
+			A.Got = FromInt(IndexIn(Order, StreetVoice::StoryHalfRemembered(G, D(F[1]))));
+		}
+		else if (Fn == "StanceLittle" && F.size() >= 10)
+		{
+			A.Known = true;
+			A.Got = StreetVoice::StanceName(StreetVoice::Stance(D(F[1]), D(F[2]), D(F[3]),
+				B(F[4]), B(F[5]), B(F[6]), B(F[7]), B(F[8])));
+		}
+		else if ((Fn == "FirstLookMetres" || Fn == "LookHoldSeconds" || Fn == "SecondLookMetres"
+		          || Fn == "LookAwayMetres" || Fn == "LooksBack") && F.size() >= 3)
+		{
+			StreetVoice::StanceKind K = StreetVoice::StanceKind::Indifferent;
+			A.Known = true;
+			if (!StanceNamed(F[1], K)) { A.Got = std::string("unknown-stance/") + F[1]; }
+			else if (Fn == "FirstLookMetres")  { A.Got = FromDouble(StreetVoice::FirstLookMetres(K)); }
+			else if (Fn == "LookHoldSeconds")  { A.Got = FromSeconds(StreetVoice::LookHoldSeconds(K)); }
+			else if (Fn == "SecondLookMetres") { A.Got = FromDouble(StreetVoice::SecondLookMetres(K)); }
+			else if (Fn == "LookAwayMetres")   { A.Got = FromDouble(StreetVoice::LookAwayMetres(K)); }
+			else                               { A.Got = FromBool(StreetVoice::LooksBack(K)); }
+		}
+		else if (Fn == "StreetVoiceConst" && F.size() >= 3)
+		{
+			A.Known = true;
+			if      (F[1] == "CivilGlanceMetres")   A.Got = FromDouble(StreetVoice::CivilGlanceMetres);
+			else if (F[1] == "CivilGlanceSeconds")  A.Got = FromDouble(StreetVoice::CivilGlanceSeconds);
+			else if (F[1] == "PassingZoneMetres")   A.Got = FromDouble(StreetVoice::PassingZoneMetres);
+			else if (F[1] == "KnowingLookSeconds")  A.Got = FromDouble(StreetVoice::KnowingLookSeconds);
+			else if (F[1] == "CivilLookAwayMetres") A.Got = FromDouble(StreetVoice::CivilLookAwayMetres);
+			else A.Known = false;
+		}
+		else if (Fn == "FaintDraw" && F.size() >= 3)
+		{
+			// the key carries the table's separator, written '#'
+			std::string Key = F[1];
+			for (std::string::size_type Q = 0; Q < Key.size(); ++Q) { if (Key[Q] == '#') Key[Q] = '|'; }
+			A.Known = true;
+			A.Got = FromDouble(StreetVoice::FaintDraw(Key));
+		}
+		else if (Fn == "MayRemarkFaintly" && F.size() >= 5)
+		{
+			RumorPtr R;
+			if (F[1] != "none")
+			{
+				R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+				R->Confidence = D(F[2]);
+			}
+			A.Known = true;
+			A.Got = FromBool(StreetVoice::MayRemarkFaintly(F[1] == "none" ? std::string("x") : F[1], R, D(F[3])));
+		}
+		else if (Fn == "FaintRemark" && F.size() >= 3)
+		{
+			std::vector<RumorPtr> Order;
+			Gossiper G = HolderFromRow("fl", "player:night_walk:seen:0.1:1:0:0", Order);
+			A.Known = true;
+			if (F[1] == "nostory")
+			{
+				A.Got = StreetVoice::FaintRemark(&G, RumorPtr(), 0) ? "line" : "null";
+			}
+			else
+			{
+				// the bank, the line, and that it is about him
+				const std::shared_ptr<SpokenLine> Line = StreetVoice::FaintRemark(&G, G.Rumors[0], I(F[1]));
+				std::vector<std::string> Outs;
+				if (Line) { Outs.push_back(Line->Bank); Outs.push_back(Escape(Line->Text)); Outs.push_back(FromBool(Line->AboutPlayer)); }
+				else      { Outs.push_back("null"); }
+				A.Got = MultiAnswer(F, 2, Outs);
+			}
+		}
+		else if (Fn == "RecordFaint" && F.size() >= 3)
+		{
+			StreetVoice::RemarkLedger L;
+			RumorPtr R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+			const bool bFirst = L.RecordFaint("m", R, B(F[1]));
+			const bool bSecond = L.RecordFaint("m", R, B(F[1]));
+			const bool bStrongAfter = L.Record("m", R, StreetVoice::StanceKind::Comments, true);
+			A.Known = true;
+			A.Got = FromBool(bFirst) + FromBool(bSecond) + FromBool(bStrongAfter) + FromBool(L.HasRemarked("m", R));
+		}
+		// id, holder, coat, leash, suspicion, had, familiarity, companion (and
+		// for RegardForLoyalty the loyalty); then thirteen answers.
+		else if ((Fn == "RegardFor" && F.size() >= 22) || (Fn == "RegardForLoyalty" && F.size() >= 23))
+		{
+			const bool bLoyalty = Fn == "RegardForLoyalty";
+			std::vector<RumorPtr> Order;
+			Gossiper G = HolderFromRow(F[1], F[2], Order);
+			if (bLoyalty) { G.Loyalty = D(F[9]); }
+			G.Leashed = B(F[4]);
+			if (D(F[5]) > 0) G.Suspicion.Raise(D(F[5]), "golden");
+			StreetVoice::RemarkLedger L;
+			if (B(F[6]) && !G.Rumors.empty())
+			{
+				for (std::vector<RumorPtr>::size_type Q = 0; Q < G.Rumors.size(); ++Q) { L.RecordFaint(G.Id, G.Rumors[Q], true); }
+			}
+			const StreetVoice::Regard Rg = StreetVoice::RegardFor(&G, 0.2, B(F[3]), &L, D(F[7]), B(F[8]));
+			std::vector<std::string> Outs;
+			Outs.push_back(StreetVoice::KnowingName(Rg.HowMuch));
+			Outs.push_back(FromInt(IndexIn(Order, Rg.Story)));
+			Outs.push_back(FromBool(Rg.bKnowsItIsHim));
+			Outs.push_back(StreetVoice::StanceName(Rg.Stance));
+			Outs.push_back(FromDouble(Rg.FirstLookMetres));
+			Outs.push_back(FromSeconds(Rg.FirstLookSeconds));
+			Outs.push_back(FromDouble(Rg.SecondLookMetres));
+			Outs.push_back(FromDouble(Rg.SecondLookSeconds));
+			Outs.push_back(FromDouble(Rg.LookAwayMetres));
+			Outs.push_back(FromBool(Rg.bLooksBack));
+			Outs.push_back(FromBool(Rg.bRemarkedAlready));
+			Outs.push_back(FromBool(Rg.bSpeaks));
+			Outs.push_back(FromBool(Rg.bFaint));
+			A.Known = true;
+			A.Got = MultiAnswer(F, bLoyalty ? 10 : 9, Outs);
+		}
+		// RECOGNITION: stance, story (none, plain, night), seed; the line and
+		// whether it is about him, or null.
+		else if (Fn == "Recognition" && F.size() >= 5)
+		{
+			StreetVoice::StanceKind K = StreetVoice::StanceKind::Indifferent;
+			A.Known = true;
+			if (!StanceNamed(F[1], K)) { A.Got = std::string("unknown-stance/") + F[1]; }
+			else
+			{
+				Gossiper G("rc", "rc", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+				RumorPtr About;
+				if (F[2] == "plain" || F[2] == "night" || F[2] == "nobody")
+				{
+					const bool bNight = F[2] != "plain";
+					About = std::make_shared<Rumor>(bNight ? Fact("player", "night_walk", "seen") : Fact("player", "seen_about", "quay"));
+					About->Summary = "s"; About->Confidence = 0.5; About->Sensitive = bNight;
+				}
+				if (F[2] == "nobody")
+				{
+					A.Got = StreetVoice::Recognition(0, About, K, I(F[3])) ? "line" : "null";
+				}
+				else
+				{
+					const std::shared_ptr<SpokenLine> Line = StreetVoice::Recognition(&G, About, K, I(F[3]));
+					std::vector<std::string> Outs;
+					if (Line) { Outs.push_back(Line->Bank); Outs.push_back(Escape(Line->Text)); Outs.push_back(FromBool(Line->AboutPlayer)); }
+					else      { Outs.push_back("null"); }
+					A.Got = MultiAnswer(F, 4, Outs);
+				}
+			}
+		}
+		// RECOGNITION FROM AN OUTFIT NIGHT: stance, predicate, value, hops,
+		// sensitive, seed; the bank, the line and whether it is about him.
+		else if (Fn == "RecognitionOutfit" && F.size() >= 8)
+		{
+			StreetVoice::StanceKind K = StreetVoice::StanceKind::Indifferent;
+			A.Known = true;
+			if (!StanceNamed(F[1], K)) { A.Got = std::string("unknown-stance/") + F[1]; }
+			else
+			{
+				Gossiper G("rc", "rc", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+				RumorPtr About = std::make_shared<Rumor>(Fact("player", F[2], F[3]));
+				About->Summary = "s"; About->Confidence = 0.5; About->Hops = I(F[4]); About->Sensitive = B(F[5]);
+				const std::shared_ptr<SpokenLine> Line = StreetVoice::Recognition(&G, About, K, I(F[6]));
+				std::vector<std::string> Outs;
+				if (Line) { Outs.push_back(Line->Bank); Outs.push_back(Escape(Line->Text)); Outs.push_back(FromBool(Line->AboutPlayer)); }
+				else      { Outs.push_back("null"); }
+				A.Got = MultiAnswer(F, 7, Outs);
+			}
 		}
 		// THE SCHEDULE, answered from Schedule.h. A resident is its index,
 		// home and work (fields 1 to 5), then the day and the hour. Indoors is

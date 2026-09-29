@@ -62,6 +62,7 @@
 #include "CrimeProbe.h"
 
 #include "VignetteShot.h"
+#include "PersonAnim.h"
 #include "FrameStats.h"
 
 #include "CoreMinimal.h"
@@ -120,7 +121,11 @@
 #include "Engine/GameViewportClient.h"
 #include "Components/CapsuleComponent.h"
 #include "Sound/SoundWaveProcedural.h"
+#include "Animation/SkeletalMeshActor.h"
+#include "EngineUtils.h"
+#include "UObject/UObjectIterator.h"
 
+#include <map>
 #include <set>
 #include <string>
 #include <vector>
@@ -747,6 +752,9 @@ namespace
 	// the witness at Mickey's, Sam the lad in the yard, Rocco his mate.
 	TMap<AActor*, TWeakObjectPtr<AActor>> GVisuals;
 	int32 GVisualsPlaced = 0;
+	// EACH ONE'S HEAD, 29 September (town list 1): the look on every part of
+	// their MetaHuman that plays an idle, body and face alike, by body.
+	TMap<AActor*, TArray<TWeakObjectPtr<ULedgerPersonAnim>>> GLooks;
 	// EPIC'S OWN IDLE, BODY AND FACE (24 September, MetaHumanPortrait.cpp):
 	// the elizabeth idle carried over from an old street figure put the
 	// hands through the body; these are made on the cast's own skeletons.
@@ -840,10 +848,26 @@ namespace
 			{
 				USkeletalMesh* M = C != nullptr ? C->GetSkeletalMeshAsset() : nullptr;
 				if (M == nullptr || M->GetSkeleton() != Idle->GetSkeleton()) { continue; }
+				// Not all in step: each starts at its own point in the loop.
+				const float Start = FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f));
+				// THE HEAD TURNS TO HIM, 29 September (town list 1): the idle
+				// through Unreal's Look At, as the street's people's
+				// (PersonAnim.h), on the body and the face alike so the two
+				// stay one head; how each looks comes from what they hold about
+				// him (RegardTick). The portrait tool's shots never look.
+				const bool bLooks = !FParse::Param(FCommandLine::Get(), TEXT("PortraitInGame"));
+				C->SetAnimationMode(EAnimationMode::AnimationBlueprint);
+				C->SetAnimInstanceClass(ULedgerPersonAnim::StaticClass());
+				if (ULedgerPersonAnim* Look = Cast<ULedgerPersonAnim>(C->GetAnimInstance()))
+				{
+					Look->Setup(Idle, Start, 1.0f, bLooks);
+					C->InitAnim(true);
+					GLooks.FindOrAdd(Body).Add(Look);
+					continue;
+				}
 				C->SetAnimationMode(EAnimationMode::AnimationSingleNode);
 				C->PlayAnimation(Idle, true);
-				// Not all in step: each starts at its own point in the loop.
-				C->SetPosition(FMath::Fmod((float)GVisualsPlaced * 2.3f, FMath::Max(Idle->GetPlayLength(), 1.0f)), false);
+				C->SetPosition(Start, false);
 			}
 		}
 		LedgerJacket::Wear(A, Who);
@@ -2449,6 +2473,14 @@ namespace
 		// he has talked to, and who has since been left (out of earshot, or
 		// they closed it), so the next line to them starts afresh.
 		std::set<std::string> Talked, Left;
+		// HOW EACH ONE REGARDS HIM, 29 September (town list 1): the latest
+		// StreetVoice::RegardFor for each card, who has had their say on which
+		// story, when each last spoke up unasked, and what was said.
+		std::map<std::string, StreetVoice::Regard> Regards;
+		StreetVoice::RemarkLedger Remarks;
+		std::map<std::string, double> LineAt;
+		double RegardAt = 0.0;
+		int LinesSaid = 0, FaintSaid = 0, NextLineId = 900000;
 	};
 
 	// The named cast's bodies by their cast id (the talk program's "who").
@@ -2848,6 +2880,21 @@ namespace
 	std::string JsonField(const std::string& Line, const std::string& Name);
 	void SaveEncounterToDisk();
 
+	// WHAT OF A STORY ABOUT HIM HAS REACHED THEM (town list 1): RegardFor's
+	// Knowing and Story, only when they can tell it is him; otherwise nothing.
+	std::string KnowingJson(const std::string& Card)
+	{
+		auto It = GLive.Regards.find(Card);
+		if (It == GLive.Regards.end()) { return std::string(); }
+		const StreetVoice::Regard& R = It->second;
+		if (!R.bKnowsItIsHim || R.HowMuch == StreetVoice::Knowing::Nothing || !R.Story)
+		{
+			return ",\"knowing\":{\"level\":\"nothing\"}";
+		}
+		return std::string(",\"knowing\":{\"level\":\"") + (R.HowMuch == StreetVoice::Knowing::ALittle ? "little" : "enough")
+			+ "\",\"story\":\"" + JsonEsc(R.Story->Summary.empty() ? R.Story->TopicKey() : R.Story->Summary) + "\"}";
+	}
+
 	// Asks, and returns at once; the answer arrives in LiveHelperPump.
 	bool LiveAsk(const GossiperPtr& G, const std::string& Card, const std::string& Who, int OwnRung, const FString& Name,
 	             const std::string& Said)
@@ -2888,7 +2935,7 @@ namespace
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
 			+ (bFresh ? ",\"fresh\":true" : "") + ",\"present\":[" + Present + "]"
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
-			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + "}\n";
+			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
@@ -3314,6 +3361,200 @@ namespace
 	// window, to people who know nothing yet; after it, to people who might.
 	// Returns true while the typed line is open, when the rest of the phase
 	// should wait.
+	// HOW EACH OF THE CAST REGARDS HIM, each second (town list 1, 29
+	// September): StreetVoice::RegardFor from what they hold, how well they
+	// know him by sight, and whether anybody is beside them; it sets their
+	// head's look, and a line is said when it says so and he is in earshot:
+	// a half-remembered story as a word to the one beside them once he has
+	// gone past (FaintRemark), otherwise as he comes by (Recognition), and
+	// recorded only as heard. Nobody speaks up unasked while he is talking to
+	// them, nor more often than the street's clear words (45 s). NOT YET: the
+	// coat (the outfit's ask brings it, town list 6z), and the remarks kept in
+	// the save (town list 6o), so a reload lets each say theirs again.
+	void RegardTick(UWorld* World, double Now)
+	{
+		if (World == nullptr || GPawn == nullptr || !GMill || Now - GLive.RegardAt < 1.0) { return; }
+		GLive.RegardAt = Now;
+		struct Who { AActor* Body; GossiperPtr G; const char* Card; const TCHAR* Name; double Familiarity; };
+		// HOW WELL EACH KNOWS HIM BY SIGHT (Acquaintance): Sheila and Ron are
+		// Mickey's, kept on, and have dealt with him (Known); Darren knows him
+		// by name as Mickey's nephew and by face not at all (canon, 23
+		// September: HeardOfYou), so nothing he holds shows.
+		const Who People[3] = {
+			{ GW1Body, GW1, "lena", TEXT("Sheila"), 0.50 },
+			{ GN2Body, GN2, "sam", TEXT("Darren"), LedgerCrime::kLadFamiliarity },
+			{ GR3Body, GR3, "rocco", TEXT("Ron"), 0.50 } };
+		const FVector HimAt = GPawn->GetActorLocation();
+		for (const Who& P : People)
+		{
+			if (P.Body == nullptr || !P.G) { continue; }
+			const FVector At = P.Body->GetActorLocation();
+			// ANYBODY BESIDE THEM to say it to: another of the cast, or one of
+			// the street's people, within six metres.
+			bool bCompanion = false;
+			for (const Who& O : People)
+			{
+				if (&O != &P && O.Body != nullptr && FVector::Dist2D(At, O.Body->GetActorLocation()) <= 600.0) { bCompanion = true; }
+			}
+			for (TActorIterator<ASkeletalMeshActor> It(World); It && !bCompanion; ++It)
+			{
+				if (!It->IsHidden() && FVector::Dist2D(At, It->GetActorLocation()) <= 600.0) { bCompanion = true; }
+			}
+			const StreetVoice::Regard R = StreetVoice::RegardFor(P.G.get(), GMill->MinConfidenceToShare, false,
+			                                                     &GLive.Remarks, P.Familiarity, bCompanion);
+			auto Old = GLive.Regards.find(P.Card);
+			if (Old == GLive.Regards.end() || Old->second.Stance != R.Stance || Old->second.HowMuch != R.HowMuch)
+			{
+				UE_LOG(LogTemp, Display, TEXT("LedgerRegard: %s %s knowing=%s itIsHim=%d firstLook=%.0fm/%.1fs second=%.0fm away=%.1fm back=%d speaks=%d faint=%d"),
+					P.Name, UTF8_TO_TCHAR(StreetVoice::StanceName(R.Stance)), UTF8_TO_TCHAR(StreetVoice::KnowingName(R.HowMuch)),
+					(int)R.bKnowsItIsHim, R.FirstLookMetres, FMath::IsFinite(R.FirstLookSeconds) ? R.FirstLookSeconds : -1.0,
+					R.SecondLookMetres, R.LookAwayMetres, (int)R.bLooksBack, (int)R.bSpeaks, (int)R.bFaint);
+			}
+			GLive.Regards[P.Card] = R;
+			if (TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = GLooks.Find(P.Body))
+			{
+				for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks)
+				{
+					if (L.IsValid())
+					{
+						L->SetRegard(R.FirstLookMetres, R.FirstLookSeconds, R.SecondLookMetres, R.SecondLookSeconds,
+						             R.LookAwayMetres, R.bLooksBack);
+					}
+				}
+			}
+			// THE LINE, when it is due and he can hear it.
+			const double M = FVector::Dist2D(HimAt, At) / 100.0;
+			const bool bTalking = GLive.Talked.count(P.Card) && !GLive.Left.count(P.Card);
+			auto Last = GLive.LineAt.find(P.Card);
+			const bool bRested = Last == GLive.LineAt.end() || Now - Last->second >= 45.0;
+			if (!R.bSpeaks || M > LedgerCrime::kEarshotM || bSayOpen || GLive.PendingId != 0 || bTalking || !bRested) { continue; }
+			AActor* Visual = GVisualFor(P.Body);
+			const FVector Facing = Visual != nullptr ? Visual->GetActorRightVector() : P.Body->GetActorForwardVector();
+			const bool bPassed = FVector::DotProduct(Facing.GetSafeNormal2D(), (HimAt - At).GetSafeNormal2D()) < 0.0;
+			const int Seed = (int)(StreetVoice::Hash(P.Card) % 100000u) + GNow.Day * 24 + GNow.Hour + GLive.LinesSaid;
+			std::shared_ptr<SpokenLine> Line;
+			if (R.bFaint)
+			{
+				if (!bPassed) { continue; }
+				Line = StreetVoice::FaintRemark(P.G.get(), R.Story, Seed);
+				if (Line) { GLive.Remarks.RecordFaint(P.G->Id, R.Story, true); ++GLive.FaintSaid; }
+			}
+			else
+			{
+				if (bPassed) { continue; }
+				Line = StreetVoice::Recognition(P.G.get(), R.Story, R.Stance, Seed);
+				if (Line) { GLive.Remarks.Record(P.G->Id, R.Story, R.Stance, true); }
+			}
+			if (!Line) { continue; }
+			GLive.LineAt[P.Card] = Now;
+			++GLive.LinesSaid;
+			Say(FString(P.Name) + (R.bFaint ? TEXT(" (to the one beside them): ") : TEXT(": ")) + Un(Line->Text), 8.0f, FColor::White);
+			LiveVoiceSay(GLive.NextLineId++, P.Card, Line->Text, Visual);
+			UE_LOG(LogTemp, Display, TEXT("LedgerRegard: %s says (%s, %.1f m): %s"), P.Name, UTF8_TO_TCHAR(Line->Bank.c_str()), M, *Un(Line->Text));
+		}
+	}
+
+	// THE LOOK, WALKED PAST (-LookScript, 29 September, town list 1): he is
+	// walked at a walking pace, 1.4 m/s, in a straight line past Sheila, from
+	// 16 m in front of her to 8 m behind, 1.2 m to her side; each quarter
+	// second her head's look and his distance go to look-script.json in the
+	// log folder, with a picture as her first look comes, close in front, as
+	// he passes and as she looks back (Saved/LookScript). -LookStory=little or
+	// =enough first gives her a story of his night, half remembered or still
+	// told, so each regard can be seen. The game then closes.
+	struct FLookScript { int State = 0; double StartAt = 0.0, LastRow = 0.0; FVector From, To; FString Rows, Story; TSet<FString> Shot; };
+	FLookScript GLook;
+
+	void LookShot(const TCHAR* Name)
+	{
+		if (GLook.Shot.Contains(Name)) { return; }
+		GLook.Shot.Add(Name);
+		FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
+			/ TEXT("LookScript") / FString::Printf(TEXT("look-%s-%s.png"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story, Name)), false, false);
+	}
+
+	void LookScriptTick(UWorld* World, double Now)
+	{
+		if (GLook.State < 0 || World == nullptr) { return; }
+		if (GLook.State == 0)
+		{
+			if (!FParse::Param(FCommandLine::Get(), TEXT("LookScript"))) { GLook.State = -1; return; }
+			AActor* Her = GVisualFor(GW1Body);
+			if (Her == nullptr || GPawn == nullptr || !GW1) { return; }
+			FParse::Value(FCommandLine::Get(), TEXT("LookStory="), GLook.Story);
+			if (!GLook.Story.IsEmpty())
+			{
+				RumorPtr R = std::make_shared<Rumor>(Fact("player", "night_walk", "seen"));
+				R->OriginId = "look-script";
+				R->Summary = "the new owner was about the quay after midnight";
+				R->Confidence = GLook.Story == TEXT("little") ? 0.1 : 0.5;
+				R->Sensitive = true;
+				R->Hops = 1;
+				GW1->Rumors.push_back(R);
+			}
+			const FVector At = Her->GetActorLocation();
+			const FVector Facing = Her->GetActorRightVector().GetSafeNormal2D();
+			const FVector Side = FVector::CrossProduct(FVector::UpVector, Facing).GetSafeNormal2D();
+			const double Z = GPawn->GetActorLocation().Z;
+			GLook.From = At + Facing * 1600.0 + Side * 120.0;
+			GLook.To = At - Facing * 800.0 + Side * 120.0;
+			GLook.From.Z = Z;
+			GLook.To.Z = Z;
+			GLook.StartAt = Now + 3.0;   // three seconds at the start, for her regard to be read
+			GLook.State = 1;
+			UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: walking past Sheila, story=%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story);
+		}
+		const FVector Dir = (GLook.To - GLook.From).GetSafeNormal();
+		const double Len = (GLook.To - GLook.From).Size();
+		const double Along = FMath::Clamp((Now - GLook.StartAt) * 140.0, 0.0, Len);
+		const FVector Pos = GLook.From + Dir * Along;
+		GPawn->SetActorLocationAndRotation(Pos, Dir.Rotation(), false, nullptr, ETeleportType::TeleportPhysics);
+		if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, (float)Dir.Rotation().Yaw, 0.0f)); }
+		AActor* Her = GVisualFor(GW1Body);
+		ULedgerPersonAnim* Look = nullptr;
+		if (TArray<TWeakObjectPtr<ULedgerPersonAnim>>* Looks = GLooks.Find(GW1Body))
+		{
+			for (const TWeakObjectPtr<ULedgerPersonAnim>& L : *Looks) { if (L.IsValid() && !L->HeadBone.IsNone()) { Look = L.Get(); break; } }
+		}
+		if (Her != nullptr && Now - GLook.LastRow >= 0.25)
+		{
+			GLook.LastRow = Now;
+			const FVector To = Pos - Her->GetActorLocation();
+			const double Ahead = FVector::DotProduct(To, Her->GetActorRightVector().GetSafeNormal2D()) / 100.0;
+			const double M = To.Size2D() / 100.0;
+			const float Alpha = Look != nullptr ? Look->LookAlpha : -1.0f;
+			GLook.Rows += FString::Printf(TEXT("%s{\"t\":%.2f,\"ahead\":%.2f,\"m\":%.2f,\"alpha\":%.2f,\"first\":%d,\"second\":%d,\"back\":%d}"),
+				GLook.Rows.IsEmpty() ? TEXT("") : TEXT(","), Now - GLook.StartAt, Ahead, M, Alpha,
+				Look != nullptr ? (int)Look->bFirstGiven : -1, Look != nullptr ? (int)Look->bSecondGiven : -1,
+				Look != nullptr ? (int)Look->bLookingBack : -1);
+			if (Look != nullptr && Look->bFirstGiven && Alpha > 0.6f) { LookShot(TEXT("1-first")); }
+			if (Ahead > 1.5 && Ahead < 2.5) { LookShot(TEXT("2-close")); }
+			if (Ahead < 0.3 && Ahead > -0.7) { LookShot(TEXT("3-passing")); }
+			if (Look != nullptr && Look->bLookingBack && Alpha > 0.6f) { LookShot(TEXT("4-back")); }
+		}
+		if (Along >= Len && Now - GLook.StartAt > Len / 140.0 + 2.0)
+		{
+			int32 First = 0, Second = 0, Back = 0, People = 0;
+			for (TObjectIterator<ULedgerPersonAnim> It; It; ++It)
+			{
+				if (It->GetWorld() != World || !It->bLook) { continue; }
+				++People; First += It->FirstLooks; Second += It->SecondLooks; Back += It->LooksBackGiven;
+			}
+			const StreetVoice::Regard* R = GLive.Regards.count("lena") ? &GLive.Regards["lena"] : nullptr;
+			const FString Json = FString::Printf(TEXT("{\"story\":\"%s\",\"stance\":\"%s\",\"knowing\":\"%s\",\"linesSaid\":%d,\"faintSaid\":%d,")
+				TEXT("\"heads\":%d,\"firstLooks\":%d,\"secondLooks\":%d,\"looksBack\":%d,\"rows\":[%s]}"),
+				GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story,
+				R != nullptr ? UTF8_TO_TCHAR(StreetVoice::StanceName(R->Stance)) : TEXT("none"),
+				R != nullptr ? UTF8_TO_TCHAR(StreetVoice::KnowingName(R->HowMuch)) : TEXT("none"),
+				GLive.LinesSaid, GLive.FaintSaid, People, First, Second, Back, *GLook.Rows);
+			FFileHelper::SaveStringToFile(Json, *(FPaths::ProjectLogDir() / TEXT("look-script.json")));
+			UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: done, heads=%d firstLooks=%d secondLooks=%d looksBack=%d lines=%d"),
+				People, First, Second, Back, GLive.LinesSaid);
+			GLook.State = -1;
+			FPlatformMisc::RequestExit(false);
+		}
+	}
+
 	bool HumanTalkTick(UWorld* World, double Now)
 	{
 		LiveHelperStart();
@@ -3321,6 +3562,8 @@ namespace
 		LiveVoiceStart();
 		LiveVoicePump();
 		if (GPawn != nullptr) { LedgerSession::Look(GPawn->GetActorLocation(), bSayOpen); }
+		RegardTick(World, Now);
+		LookScriptTick(World, Now);
 		AskScriptTick(Now);
 		TalkLightTick(World, Now);
 		AckTick();

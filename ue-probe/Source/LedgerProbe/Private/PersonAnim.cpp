@@ -10,7 +10,9 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/World.h"
+#include "GameFramework/Pawn.h"
 #include "GameFramework/PlayerController.h"
+#include "StreetVoice.h"
 
 namespace
 {
@@ -127,6 +129,23 @@ void ULedgerPersonAnim::Setup(UAnimSequenceBase* InSequence, float InStartSecond
 	const FTransform HeadCs = FAnimationRuntime::GetComponentSpaceTransformRefPose(Ref, Head);
 	HeadLookAxis = HeadCs.InverseTransformVectorNoScale(FVector(0.0, 1.0, 0.0)).GetSafeNormal();
 	HeadUpAxis = HeadCs.InverseTransformVectorNoScale(FVector(0.0, 0.0, 1.0)).GetSafeNormal();
+	// A STRANGER'S LOOK until the street says otherwise: RegardFor for
+	// somebody who holds nothing about him.
+	const LedgerCore::Gossiper Stranger("stranger", "stranger", std::shared_ptr<LedgerCore::MemoryStore>(),
+	                                    std::shared_ptr<LedgerCore::KnowledgeBase>());
+	const LedgerCore::StreetVoice::Regard R = LedgerCore::StreetVoice::RegardFor(&Stranger, 0.2, false, nullptr, 0.0, false);
+	SetRegard(R.FirstLookMetres, R.FirstLookSeconds, R.SecondLookMetres, R.SecondLookSeconds, R.LookAwayMetres, R.bLooksBack);
+}
+
+void ULedgerPersonAnim::SetRegard(double InFirstLookMetres, double InFirstLookSeconds, double InSecondLookMetres,
+                                  double InSecondLookSeconds, double InLookAwayMetres, bool bInLooksBack)
+{
+	FirstLookCm = (float)(InFirstLookMetres * 100.0);
+	FirstLookSeconds = FMath::IsFinite(InFirstLookSeconds) ? (float)InFirstLookSeconds : TNumericLimits<float>::Max();
+	SecondLookCm = (float)(InSecondLookMetres * 100.0);
+	SecondLookSeconds = (float)InSecondLookSeconds;
+	LookAwayCm = (float)(InLookAwayMetres * 100.0);
+	bLooksBack = bInLooksBack;
 }
 
 void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
@@ -137,22 +156,67 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 	const UWorld* World = GetWorld();
 	const APlayerController* PC = World != nullptr ? World->GetFirstPlayerController() : nullptr;
 	float Want = 0.0f;
-	if (C != nullptr && PC != nullptr && PC->PlayerCameraManager != nullptr)
+	// HIS HEAD, not the camera behind him: a look at the lens is a look past him.
+	FVector Him = FVector::ZeroVector;
+	bool bHim = false;
+	if (PC != nullptr && PC->GetPawn() != nullptr)
 	{
-		const FVector Eye = PC->PlayerCameraManager->GetCameraLocation();
+		Him = PC->GetPawn()->GetActorLocation() + FVector(0.0, 0.0, 65.0);
+		bHim = true;
+	}
+	else if (PC != nullptr && PC->PlayerCameraManager != nullptr)
+	{
+		Him = PC->PlayerCameraManager->GetCameraLocation();
+		bHim = true;
+	}
+	if (C != nullptr && bHim)
+	{
 		const FVector At = C->GetComponentLocation() + FVector(0.0, 0.0, 160.0);
 		const FVector Facing = C->GetComponentTransform().TransformVectorNoScale(FVector(0.0, 1.0, 0.0)).GetSafeNormal2D();
-		const FVector To = Eye - At;
+		const FVector To = Him - At;
 		const float Dist = (float)To.Size2D();
 		const float Cos = (float)FVector::DotProduct(Facing, To.GetSafeNormal2D());
-		// NEAR AND IN FRONT: a person does not turn to look at someone behind
-		// them, and does not stare across the street.
-		if (Dist < LookRangeCm && Dist > 30.0f && Cos > FMath::Cos(FMath::DegreesToRadians(LookConeDeg)))
+		const bool bInFront = Cos > FMath::Cos(FMath::DegreesToRadians(LookConeDeg));
+		const bool bHolds = FirstLookSeconds >= TNumericLimits<float>::Max();
+		if (Dist > FMath::Max(FirstLookCm, SecondLookCm) + LookResetCm)
 		{
-			Want = 1.0f;
-			LookTarget = Eye;
+			bFirstGiven = bSecondGiven = bWasInFront = bLookingBack = false;
+			LookLeft = 0.0f;
 		}
+		if (Dist > 30.0f)
+		{
+			if (bInFront && Dist <= FirstLookCm) { bWasInFront = true; }
+			// THE FIRST LOOK, as he comes within its distance in front of them.
+			if (!bFirstGiven && bInFront && Dist <= FirstLookCm)
+			{
+				bFirstGiven = true;
+				++FirstLooks;
+				LookLeft = bHolds ? 0.0f : FirstLookSeconds;
+			}
+			// THE SECOND, KNOWING LOOK, once the first is over, in the passing zone.
+			else if (bFirstGiven && LookLeft <= 0.0f && !bSecondGiven && SecondLookCm > 0.0f
+			         && bInFront && Dist <= SecondLookCm)
+			{
+				bSecondGiven = true;
+				++SecondLooks;
+				LookLeft = SecondLookSeconds;
+			}
+			if (LookLeft > 0.0f) { Want = 1.0f; LookLeft -= DeltaSeconds; }
+			// A LOOK THAT HOLDS while he is within its reach.
+			if (bHolds && bFirstGiven && bInFront && Dist <= FirstLookCm) { Want = 1.0f; }
+			// THE LOOK BACK after he has passed, for those who watch him.
+			if (bLooksBack && bWasInFront && !bInFront && Dist <= FirstLookCm)
+			{
+				if (!bLookingBack) { bLookingBack = true; ++LooksBackGiven; }
+				Want = 1.0f;
+			}
+			if (!bInFront && !bLooksBack) { Want = 0.0f; }
+			// CLOSE, THEIR EYES GO ELSEWHERE, as a stranger's do.
+			if (LookAwayCm > 0.0f && Dist <= LookAwayCm) { Want = 0.0f; LookLeft = 0.0f; }
+		}
+		if (Want > 0.0f) { LookTarget = Him; }
 	}
-	LookAlpha = FMath::FInterpTo(LookAlpha, Want, DeltaSeconds, 2.5f);
+	// A glance turns quickly and eases back: half a second must reach him.
+	LookAlpha = FMath::FInterpTo(LookAlpha, Want, DeltaSeconds, Want > LookAlpha ? 6.0f : 3.0f);
 	PeakAlpha = FMath::Max(PeakAlpha, LookAlpha);
 }
