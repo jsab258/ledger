@@ -1,0 +1,10 @@
+{
+ "approves": "production/approvals/2026-09-28/thinking-darren.wav",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: Darren's thinking sounds.",
+ "against": {
+  "production/approvals/2026-09-28/thinking-darren.wav": "4b633870638b23476db7b813941fb6fab13a1b15",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

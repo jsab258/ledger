@@ -1,0 +1,11 @@
+{
+ "approves": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: Ron's voice as the game speaks it (rocco.p227).",
+ "against": {
+  "production/casting/in-game-2026-09-25/voice/ron-kirby.wav": "409dcf3254fd53844fd34c7d89906bc044921efd",
+  "production/casting/ron-kirby/SHEET.md": "7fc22b6dc30fc36c89a7f0dbf38da94d74c8e325",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

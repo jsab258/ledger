@@ -1,0 +1,12 @@
+{
+ "approves": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-front.jpg",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "His pick on Wednesday's page, 29 September: Sheila's face is S4 (MH_LenaS4), with the hair it wears. The face and hair only: her clothes and voice are not yet approved.",
+ "against": {
+  "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-front.jpg": "31916e464c29b3629ff99b35da5ba6d891cd1804",
+  "production/casting/sheila-dunn/SHEET.md": "6fa3d554961d0959b6a9381acc2db8e868fece02",
+  "production/casting/candidates-2026-09-28/gate.json": "f267ab567e41b5b2a90f52af24febc0ffa96b850",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

@@ -1,0 +1,10 @@
+{
+ "approves": "production/approvals/2026-09-28/thinking-ron.wav",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: Ron's thinking sounds.",
+ "against": {
+  "production/approvals/2026-09-28/thinking-ron.wav": "cd5ab53894379ea978f3c3039c8234b6c89c529d",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}

@@ -3,11 +3,11 @@
  "placed": [
   {
    "thing": "production/casting/sheila-dunn/SHEET.md",
-   "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take C1, the candidate Jafar approved; voice lena.parler-d, his pick D)",
+   "what": "Sheila Dunn: face, body, clothes, hair and voice (in the game as the MetaHuman 'Lena', take S4, the face and hair Jafar picked on 29 September; C1 next in line; voice lena.parler-d, his pick D, taken off the page: it leans American)",
    "backup": [
     {
-     "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaC1.uasset",
-     "as": "approved/sheila-dunn/source/MH_LenaC1.uasset",
+     "path": "F:/LedgerTools/mh-dress/Content/Cast/MH_LenaS4.uasset",
+     "as": "approved/sheila-dunn/source/MH_LenaS4.uasset",
      "first": true
     },
     {
@@ -16,8 +16,8 @@
      "first": true
     },
     {
-     "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaC1",
-     "as": "approved/sheila-dunn/built/MH_LenaC1"
+     "path": "F:/LedgerTools/mh-dress/Content/Ledger/MetaHumans/MH_LenaS4",
+     "as": "approved/sheila-dunn/built/MH_LenaS4"
     }
    ]
   },

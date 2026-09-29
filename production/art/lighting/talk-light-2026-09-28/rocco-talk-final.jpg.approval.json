@@ -1,0 +1,10 @@
+{
+ "approves": "production/art/lighting/talk-light-2026-09-28/rocco-talk-final.jpg",
+ "by": "Jafar",
+ "on": "2026-09-29",
+ "note": "Yes on Wednesday's page, 29 September: the conversation light.",
+ "against": {
+  "production/art/lighting/talk-light-2026-09-28/rocco-talk-final.jpg": "22876d9eab5876e71b385b93ffe70d326cbf820b",
+  "production/approvals/2026-09-30/verdicts.json": "77ca67c29beda947059ecec56592ace625ccdb69"
+ }
+}
