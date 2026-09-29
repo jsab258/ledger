@@ -9,7 +9,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ### Needs you
 
-1. **[Cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi)** (builder): C: is at 49.6 GB, under your 60. Two groups: Unreal's cache moved to drive F (12.1 GB) and a spare project copy a helper left (2.4 GB). Recommended: yes to both.
+1. **[Cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi)** (builder): C: is at 49.7 GB, under your 60, and dips to 33 while the build machine builds. Two groups: Unreal's cache moved to drive F (12.1 GB) and a spare project copy a helper left (2.4 GB). Recommended: yes to both.
 2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; Darren with a man's haircut, the reviewer's notes beside it; two calls: hair, and the name plates' font licence. Recommended: yes to both frames and to Darren, A on both calls.
 3. **[Town's page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)** (town): how Mickey died, winding it down, threats. Recommended: the picks marked on it.
 4. **LEDGER's own capped key** (builder; no page): the characters' live talk while you play waits on it (the paid writer won your blind 8 of 12); friends' relay stays keyless, as you ruled. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
