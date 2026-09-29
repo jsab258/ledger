@@ -5,7 +5,7 @@
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
   "Updated Tuesday evening. Your picks of Tuesday morning are acted on and off the page: Sheila's face is S4, with its hair, and goes into the game tonight; Ron's threat keeps the game's own voice (your blind B); Ron's and Darren's voices, their thinking sounds, the conversation light and how Sheila looks at you are approved; Darren's face waits on a man's haircut.",
-  "Left for you: the street by day and at night, as whole frames, and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
+  "Left for you: the street by day and at night, as whole frames; Darren with a man's haircut; and two calls, each with my recommendation. Under your narrowed rule the pillar box's and kiosk's marks are mine within canon (every brand is fictional): made-up marks."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
  "sections": [
@@ -62,10 +62,32 @@
    ]
   },
   {
+   "kind": "faces",
+   "key": "face-darren-milner-s6",
+   "name": "Darren Milner, with a man's haircut",
+   "pron": "him",
+   "note": "His S4 face, which you turned down for its long hair, now with Epic's short casual cut and his bleached ends. It passed my check and a fresh reviewer's. The reviewer's remaining notes: it is not a grown-out perm (no wave, ears bare, nothing at the collar); the tips are a little even and gold, leaning late-90s; the top is slightly clumped; and the face itself, as in S4, is broader and reads nearer 30 than the concept's narrow 25.",
+   "audio": "production/approvals/2026-09-28/speak-darren-milner.wav",
+   "candidates": [
+    {
+     "take": "S6",
+     "front": "production/casting/candidates-2026-09-29-darren-hair/darren-milner/S6-front.jpg",
+     "profile": "production/casting/candidates-2026-09-29-darren-hair/darren-milner/S6-profile.jpg",
+     "speak": {
+      "file": "production/casting/candidates-2026-09-29-darren-hair/darren-milner/S6-speak.jpg",
+      "frames": 82,
+      "cols": 10,
+      "rows": 9,
+      "fps": 15
+     }
+    }
+   ]
+  },
+  {
    "kind": "look",
    "key": "call-hair",
    "name": "Hair: the curls made in Blender failed three times",
-   "note": "Your ruling was curls made in Blender. Three attempts, the last after research into how a 1990 shampoo-and-set is made (on rollers: shape by region, a side parting, the ends rolled under), all fail at a glance: above, the third on Sheila's head shows a hard parting, a stiff raised flap, a woven-looking cap, spikes on top and tassels at the back. Under the two-tries rule it is set aside. Sheila does not need it: the face you picked, S4, wears a short, soft, side-swept cut close to her portrait. Darren does: his S4 wears long hair, your 'woman's haircut'. (A) Epic's own MetaHuman haircuts, free: the nearest man's short cut to his sheet (a grown-out perm, bleached tips) on your next page with his face, and Sheila keeps S4's (recommended; I am doing it meanwhile). (B) Keep at curls made in Blender: days, and uncertain.",
+   "note": "Your ruling was curls made in Blender. Three attempts, the last after research into how a 1990 shampoo-and-set is made (on rollers: shape by region, a side parting, the ends rolled under), all fail at a glance: above, the third on Sheila's head shows a hard parting, a stiff raised flap, a woven-looking cap, spikes on top and tassels at the back. Under the two-tries rule it is set aside. Sheila does not need it: the face you picked, S4, wears a short, soft, side-swept cut close to her portrait. (A) Epic's own MetaHuman haircuts, free: Sheila keeps S4's, and Darren wears the short cut just above (recommended; done meanwhile). (B) Keep at curls made in Blender, for Darren's grown-out perm: days, and uncertain.",
    "pictures": [
     {
      "src": "production/art/hair-2026-09-29/sheila-attempt-3.webp",

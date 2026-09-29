@@ -1,0 +1,28 @@
+{
+ "darren-milner": [
+  {
+   "take": "S5",
+   "front": "darren-milner/S5-front.jpg",
+   "profile": "darren-milner/S5-profile.jpg",
+   "speak": {
+    "file": "darren-milner/S5-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  },
+  {
+   "take": "S6",
+   "front": "darren-milner/S6-front.jpg",
+   "profile": "darren-milner/S6-profile.jpg",
+   "speak": {
+    "file": "darren-milner/S6-speak.jpg",
+    "frames": 82,
+    "cols": 10,
+    "rows": 9,
+    "fps": 15
+   }
+  }
+ ]
+}
