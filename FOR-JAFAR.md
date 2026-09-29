@@ -14,21 +14,25 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 ## Town, 30 September
 
-**[Your page: the police, Sheila's trust, the week's end, threats](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)**, picks marked.
+**[Your page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y):** how Mickey died, winding it down, threats.
 
-**Decide there:** arrests and their words; the police asking; when Sheila trusts Tom (a friend she sees at the slice's crime never gets the real book); day 7; does winding it down end Mickey's arrangement; threats (two). Carried: yesterday's nine, the retune now on your subscription.
+**Decided by me** (a line each in DECISIONS; overturn any): the clock, a sign for every ending cost, Mickey's people knowing his name, privacy later, the check's retune, whose outfit, Ellis, the fire and street facts from the outline, everyone's nerve, arrests, Sheila's trust, names, the design pages.
 
-**Decide here:** friends' talk through our relay needs a key: (A) your capped one (recommended); (B) none yet.
+**Handed over, not done:** names by knowing; a wait that stops for Ron, Ada's tea, the police and Sheila (a plain skip spoils every row of the week, this misses nothing); the landing man's lines; the street's facts.
 
-**Done:** the no to the outfit; 1990 shop hours; arrests; damage found; the town's routines; Sheila's trust; day 7; a threat never buys silence; the whole week on paper, nothing collided; no tool of mine calls the API.
+**Set aside:** the court day, a new system.
 
-**Research:** shop hours, custody, the caution, threats, all 1990; five sweeps; Claude Code's print mode.
+**Talk, your first item:** "one in five" predates a fix; it is 1 in 24. The real failure: "that's all I know" to 31 of a newcomer's 60 questions. On it; timings wait for your key.
 
-**Got wrong:** my pushes set off a paid playtest 46 times unnoticed; one push on a red check; trust, day 7, winding down and threats took seventeen reviews (threats I stopped, much bigger than it looked); a 2.5 GB review copy on C:.
+**Research:** waiting in other games; a 1990 court appearance.
 
-**C: free:** 46.8 GB at the last summary, 54 now. Backup runs with this commit.
+**Got wrong:** the wait took four reviews, past your new rule.
 
-**Next:** your page.
+**This push set off:** tests on GitHub (free) and the Unreal build here.
+
+**C: free:** 46.8 GB at the last summary, 55.9 now. Backup runs with this commit.
+
+**Next:** your three calls.
 
 ## Builder, Tuesday 29 September
 
