@@ -360,8 +360,10 @@ namespace Ledger.Core
                 // His night, or what he did with the outfit's ask, which shows
                 // though only the envelope handed over is a secret (town list 6z),
                 // or the police asking after him (town list 6bq), or taking him
-                // in (town list 6bp).
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r))) continue;
+                // in (town list 6bp), or his answer to Sheila at the week's end
+                // (town list 6ca), which she, who was told it, never remarks on.
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r) || WeeksEnd.IsWeekAnswer(r))) continue;
+                if (WeeksEnd.IsWeekAnswer(r) && g.Id == WeeksEnd.Sheila) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -519,6 +521,9 @@ namespace Ledger.Core
                 // on how they stand to him (town list 6bq, the independent check:
                 // being asked moved a person from Comments to Avoids).
                 if (PoliceFile.IsAsking(r)) continue;
+                // Nor his answer to Sheila: what he means to do, not anything
+                // done; what it does to them is Act II's (town list 6ca).
+                if (WeeksEnd.IsWeekAnswer(r)) continue;
                 if (!(r.Confidence >= 0.0)) continue;   // a NaN must not hide a real story
                 if (strongest == null || r.Confidence > strongest.Confidence) strongest = r;
             }
@@ -998,6 +1003,35 @@ namespace Ledger.Core
                     "Word is you left them waiting. They'll not like that.",
                     "Mickey'd never have kept them waiting, they say.",
                     "Busy, were you? Not at the landing, anyway.",
+                })
+                // HIS ANSWER TO SHEILA AT THE WEEK'S END (town list 6ca): "the
+                // street learns the answer" (the outline), and says so to him.
+                : WeeksEnd.IsWeekAnswer(about) && about.Content.Value == "winddown" ? From("recognition/week-winddown", new[]
+                {
+                    "Heard you're winding Mickey's down.",
+                    "They say you're getting out of Mickey's business.",
+                    "Just the cabs from now on, is it? That's what I heard.",
+                    "Heard you told Sheila you're winding it down.",
+                    "Word is you're shutting up Mickey's side of things.",
+                    "So it's a cab firm and nothing else now, they say.",
+                })
+                : WeeksEnd.IsWeekAnswer(about) && about.Content.Value == "takeover" ? From("recognition/week-takeover", new[]
+                {
+                    "Heard you're taking on Mickey's business.",
+                    "They say you're stepping into Mickey's shoes.",
+                    "Word is you're carrying on where Mickey left off.",
+                    "Heard you told Sheila it's all yours now.",
+                    "So you're the new Mickey, they say.",
+                    "Heard you're keeping Mickey's business going. All of it.",
+                })
+                : WeeksEnd.IsWeekAnswer(about) && about.Content.Value == "wontsay" ? From("recognition/week-wontsay", new[]
+                {
+                    "Heard you wouldn't tell Sheila what you're doing.",
+                    "They say even Sheila can't get a straight answer out of you.",
+                    "Word is you're keeping your plans to yourself.",
+                    "Heard Sheila asked you straight and got nothing.",
+                    "Keeping us all guessing, they say.",
+                    "Heard you won't say what you're doing with Mickey's.",
                 })
                 : about != null && about.Sensitive ? From("recognition/sensitive", new[]
                 {

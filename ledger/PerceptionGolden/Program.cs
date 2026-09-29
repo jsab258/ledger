@@ -127,6 +127,7 @@ namespace Ledger.PerceptionGolden
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
                 EmitTaken(sb);
+                EmitWeeksEnd(sb);
             }
 
             var text = sb.ToString();
@@ -725,6 +726,63 @@ namespace Ledger.PerceptionGolden
                 holder.Rumors.Add(new Rumor { Content = new Fact("player", "taken_d4", "police"), Summary = Custody.TakenSaid, Confidence = c, Sensitive = false });
                 var shows = StreetVoice.StoryThatShows(holder, 0.35);
                 Row(sb, "TakenShows", D(c), shows == null ? "null" : shows.TopicKey);
+            }
+        }
+
+        /// THE WEEK'S END (town list 6ca), awaiting the port: when Sheila asks
+        /// and waits, how long the question stands, what a plain answer and a
+        /// day ended unanswered file (who holds it, her memory), the save
+        /// replayed, and the street's three banks by stance and seed. The
+        /// reading of his words stays in the talk program, not the port.
+        static void EmitWeeksEnd(StringBuilder sb)
+        {
+            foreach (var first in new[] { 0, 1 })
+                foreach (var day in new[] { 5, 6, 7, 8 })
+                    foreach (var hour in new[] { 9, 10, 11, 12 })
+                    {
+                        var w = new WeeksEnd(first);
+                        var at = new GameTime(day + first, hour, 0);
+                        bool waits = w.Waits(at);
+                        bool asked = w.Ask(at, false);
+                        Row(sb, "WeekAsk", first.ToString(Inv), at.TotalMinutes.ToString(Inv), Bit(waits), Bit(asked),
+                            asked ? Bit(w.Stands(new GameTime(at.Day, 23, 59))) + "|" + Bit(w.Stands(new GameTime(at.Day + 1, 0, 0))) : "-");
+                    }
+            var cast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\"],\"names\":[\"Mickey's\"]}}," +
+                "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"mickeys_office\"],[20,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+            foreach (WeekAnswer a in Enum.GetValues(typeof(WeekAnswer)))
+                foreach (var closeInstead in new[] { false, true })
+                {
+                    var mill = new GossipMill(null);
+                    foreach (var id in cast.People) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    var w = new WeeksEnd();
+                    w.Ask(new GameTime(6, 10, 30), true);
+                    bool done = closeInstead ? w.Close(new GameTime(7, 9, 0), mill, cast) : w.Give(a, new GameTime(6, 11, 0), mill, cast);
+                    var holders = new List<string>();
+                    foreach (var id in cast.People) if (mill.Get(id).Rumors.Exists(WeeksEnd.IsWeekAnswer)) holders.Add(id);
+                    var story = mill.Get("lena").Rumors.Find(WeeksEnd.IsWeekAnswer);
+                    var back = WeeksEnd.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(w.ToJson()))));
+                    Row(sb, "WeekFiled", a.ToString(), Bit(closeInstead), Bit(done), w.Answer.ToString(),
+                        w.AnsweredAt.HasValue ? w.AnsweredAt.Value.TotalMinutes.ToString(Inv) : "-", string.Join(",", holders),
+                        story == null ? "null" : story.TopicKey + "|" + story.Content.Value + "|" + Esc(story.Summary),
+                        Bit(mill.Get("lena").Memory.Events.Exists(e => e.Text == WeeksEnd.Remembered(w.Answer))),
+                        back.Answer + "|" + (back.AnsweredAt.HasValue ? back.AnsweredAt.Value.TotalMinutes.ToString(Inv) : "-"));
+                }
+            var g = new Gossiper("wk", "wk", new MemoryStore("wk"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var value in new[] { "winddown", "takeover", "wontsay" })
+                foreach (StanceKind k in Enum.GetValues(typeof(StanceKind)))
+                    for (int seed = 0; seed < 6; seed++)
+                    {
+                        var about = new Rumor { Content = new Fact("player", "week_d6", value), Summary = "x", Confidence = 0.5, Sensitive = false, Hops = 1 };
+                        var line = StreetVoice.Recognition(g, about, k, seed);
+                        Row(sb, "RecognitionWeek", value, k.ToString(), seed.ToString(Inv),
+                            line == null ? "null" : line.Bank + "|" + Esc(line.Text) + "|" + Bit(line.AboutPlayer));
+                    }
+            foreach (var holderId in new[] { "wk", "lena" })
+            {
+                var holder = new Gossiper(holderId, holderId, new MemoryStore(holderId), new KnowledgeBase(), new SuspicionTracker());
+                holder.Rumors.Add(new Rumor { Content = new Fact("player", "week_d6", "takeover"), Summary = "x", Confidence = 0.9, Sensitive = false });
+                var shows = StreetVoice.StoryThatShows(holder, 0.35);
+                Row(sb, "WeekShows", holderId, shows == null ? "null" : shows.TopicKey);
             }
         }
 

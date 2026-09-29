@@ -65,6 +65,7 @@ static class Program
         if (Array.IndexOf(args, "--first-hour") >= 0) return FirstHourOnPaper(cast, double.Parse(Arg(args, "--rate", "2"), Inv));
         if (Array.IndexOf(args, "--found") >= 0) return FoundInTheMorning(cast);
         if (Array.IndexOf(args, "--arrest") >= 0) return TakenIn(cast);
+        if (Array.IndexOf(args, "--week-end") >= 0) return WeekEnd(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -221,6 +222,49 @@ static class Program
     /// (Custody.Take, not owning up); whoever is at Mickey's then sees it
     /// (SeenTaken), and the gossip ticks on the cast's routines. When he is out,
     /// what comes of it, and how many hold it by that evening and the next noon.
+    /// THE WEEK'S END (town list 6ca): Sheila waits at the office on the
+    /// Sunday, the week's seventh day, from ten; he comes at half past ten and,
+    /// asked, tells her plainly he is taking Mickey's business on. Who holds
+    /// it that evening, the Monday noon and the Tuesday noon; and the same for
+    /// a question he never answered, his refusal from midnight.
+    static int WeekEnd(CastDay cast)
+    {
+        foreach (var answer in new[] { WeekAnswer.TakeOver, WeekAnswer.WontSay })
+        {
+            var graph = new SocialGraph();
+            foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+            var mill = new GossipMill(graph);
+            foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+            var week = new WeeksEnd();
+            int Holders() => mill.Agents.Count(a => a.Rumors.Any(WeeksEnd.IsWeekAnswer));
+            var at = new Dictionary<string, int>();
+            var heardFirst = new List<string>();
+            mill.Age(new GameTime(6, 0, 0));
+            for (int abs = 24 * 6; abs < 24 * 9; abs++)
+            {
+                int day = abs / 24, hod = abs % 24;
+                var now = new GameTime(day, hod, 0);
+                if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)))
+                {
+                    week.Ask(new GameTime(day, 10, 30), false);
+                    if (answer != WeekAnswer.WontSay) week.Give(answer, new GameTime(day, 10, 40), mill, cast);
+                    foreach (var g in mill.Agents) if (g.Rumors.Any(WeeksEnd.IsWeekAnswer)) heardFirst.Add(g.Id);
+                }
+                if (week.Close(now, mill, cast)) foreach (var g in mill.Agents) if (g.Rumors.Any(WeeksEnd.IsWeekAnswer)) heardFirst.Add(g.Id);
+                TownRounds.Hour(mill, cast, now);
+                if (day == 6 && hod == 21) at["Sunday evening"] = Holders();
+                if (day == 7 && hod == 11) at["Monday noon"] = Holders();
+                if (day == 8 && hod == 11) at["Tuesday noon"] = Holders();
+            }
+            Console.WriteLine(answer == WeekAnswer.TakeOver
+                ? "the week's end: Sheila asks him at the office on the Sunday at 10:30; he tells her plainly he is taking it on"
+                : "the week's end: Sheila asks him at the office on the Sunday at 10:30; he never answers, his refusal from midnight");
+            Console.WriteLine($"  told first-hand: {string.Join(", ", heardFirst)}");
+            foreach (var kv in at) Console.WriteLine($"  hold it by {kv.Key}: {kv.Value} of {cast.People.Count}");
+        }
+        return 0;
+    }
+
     static int TakenIn(CastDay cast)
     {
         var graph = new SocialGraph();

@@ -106,6 +106,10 @@ static class Program
         // within three game hours, is the no; walking away or a fresh
         // conversation clears it.
         readonly Dictionary<string, GameTime> _askedNo = new Dictionary<string, GameTime>();
+        // Which answer Sheila last asked him plainly to confirm, per person
+        // (town list 6ca): his plain yes as his very next line, to her, is his
+        // answer; any other line, a walk-off, a fresh talk or a load clears it.
+        readonly Dictionary<string, WeekAnswer> _askedWeek = new Dictionary<string, WeekAnswer>();
 
         /// The named cast's routines (production/specs/hook-cast.json), so each
         /// person is told where they are this hour (town list 6u); null without.
@@ -166,6 +170,32 @@ static class Program
 
         public bool Online => _llm != null;
 
+        /// Whether this person trusts Tom now: the game said so, or their own
+        /// talk with him has earned it (town list 6bz). The game's "false" is
+        /// only that it has not decided so: it never undoes trust earned (the
+        /// independent check: a game keeping a plain false never got her trust).
+        bool TrustsHim(string key, ConversationEngine engine)
+        {
+            lock (_trusts)
+                return (_trusts.TryGetValue(key, out var said) && said) || (engine != null && engine.TrustEarned);
+        }
+
+        /// For somebody who names him only on trust, whether they trust him
+        /// after this turn, and whether this turn earned it; null and false for
+        /// anybody else. Earned only on a turn they answered in their own
+        /// words, or with live talk off, when no turn ever is (the independent
+        /// check: a brush-off turn earned it, and with talk off nothing could).
+        (bool? trusts, bool earned) TrustAfter(string key, ConversationEngine engine, int day, bool canEarn)
+        {
+            if (Cast == null || !Cast.NamesHimOnlyOnTrust(key)) return (null, false);
+            bool gameSaid;
+            lock (_trusts) gameSaid = _trusts.TryGetValue(key, out var said) && said;
+            // Trust the game already granted is never announced again (the
+            // independent check: the book's cue could come twice).
+            bool earned = canEarn && Trust.Earn(engine, day) && !gameSaid;
+            return (TrustsHim(key, engine), earned);
+        }
+
         public ConversationEngine EngineFor(string to) => _engines.TryGetValue(to, out var e) ? e : null;
 
         ConversationEngine NewEngine(CharacterCard card)
@@ -200,7 +230,7 @@ static class Program
                 _unwinding.Clear();
                 // Trust is the game's to say again for the timeline it loads.
                 lock (_trusts) _trusts.Clear();
-                lock (_askedNo) _askedNo.Clear();
+                lock (_askedNo) { _askedNo.Clear(); _askedWeek.Clear(); }
                 if (op == "reset") return JsonSerializer.Serialize(new { talk = "reset" }, Plain);
             }
             if (op != "save" && op != "load") return JsonSerializer.Serialize(new { talk = op, error = "unknown" }, Plain);
@@ -346,6 +376,8 @@ static class Program
             string walkedFrom = null, walkedHeard = null;
             string deedTopic = null, sawHimAt = null, heardHimAt = null; int deedDay = -1, deedHour = -1; bool deedGrave = false;
             bool askTonight = false;
+            bool weekAsk = false, weekStands = false, weekRealBook = false, weekDayOff = false;
+            bool sawHimNear = false;
             var heardHeSaid = new List<string>();
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             bool? trustsSent = null;
@@ -432,6 +464,15 @@ static class Program
                 // the game says so for the person who brought it (Ron).
                 if (r.TryGetProperty("ask", out var ak) && ak.ValueKind == JsonValueKind.Object
                     && ak.TryGetProperty("tonight", out var akt) && akt.ValueKind == JsonValueKind.True) askTonight = true;
+                // THE WEEK'S END (town list 6ca): the game says when Sheila puts her
+                // question (WeeksEnd.Ask just returned true) and while it stands.
+                if (r.TryGetProperty("week", out var wk) && wk.ValueKind == JsonValueKind.Object)
+                {
+                    weekAsk = wk.TryGetProperty("ask", out var wkAsk) && wkAsk.ValueKind == JsonValueKind.True;
+                    weekStands = wk.TryGetProperty("stands", out var wkStands) && wkStands.ValueKind == JsonValueKind.True;
+                    weekRealBook = wk.TryGetProperty("realBook", out var wkBook) && wkBook.ValueKind == JsonValueKind.True;
+                    weekDayOff = wk.TryGetProperty("dayOff", out var wkOff) && wkOff.ValueKind == JsonValueKind.True;
+                }
                 // WHO IS REALLY WITH THEM (town list 6ad), as cast ids, when the game knows.
                 if (r.TryGetProperty("present", out v) && v.ValueKind == JsonValueKind.Array)
                 {
@@ -455,6 +496,7 @@ static class Program
                     if (v.TryGetProperty("near", out var n) && n.ValueKind == JsonValueKind.Object)
                     {
                         near.SawHimMyself = Bool(n, "sawHim"); near.HeardHeWasNear = Bool(n, "heard");
+                        sawHimNear = near.SawHimMyself || near.HeardHeWasNear;
                         near.OthersNear = n.TryGetProperty("others", out var o) && o.ValueKind == JsonValueKind.Number ? o.GetInt32() : 0;
                         near.Summary = n.TryGetProperty("summary", out var ns) ? ns.GetString() : null;
                     }
@@ -487,6 +529,7 @@ static class Program
             // A line to anybody but Ron clears his question, even one that goes no
             // further than here (town list 6bn, the independent check).
             if (!string.IsNullOrEmpty(say) && to != Arrangement.Doorman) lock (_askedNo) _askedNo.Clear();
+            if (!string.IsNullOrEmpty(say) && to != WeeksEnd.Sheila) lock (_askedNo) _askedWeek.Clear();
             if (talkOp != null) return await Talk(talkOp, talkPath, talkStamp);
             if (walkedFrom != null)
             {
@@ -495,7 +538,7 @@ static class Program
                 if (already) return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = true }, Plain);
                 var left = EngineFor(walkedFrom);
                 if (left != null) left.WalkedAway(walkedHeard, new GameTime(day, hour, minute));
-                lock (_askedNo) _askedNo.Remove(walkedFrom);
+                lock (_askedNo) { _askedNo.Remove(walkedFrom); _askedWeek.Remove(walkedFrom); }
                 return JsonSerializer.Serialize(new { walkedAway = walkedFrom, noted = left != null }, Plain);
             }
             if (report.HasValue) return await ReportAsync(report.Value, reportWhy);
@@ -526,6 +569,8 @@ static class Program
                 engine = NewEngine(card);
                 _engines[key] = engine;
             }
+            // A day he talked with them, live talk or none (town list 6bz).
+            if (!string.IsNullOrWhiteSpace(say)) engine.TalkDays.Add(day);
             // A card lent to somebody else: their name is not the card's
             // (town list 6be, the independent check).
             engine.SpeakerName = key != to ? "" : null;
@@ -542,7 +587,7 @@ static class Program
                 if (storyOfMemory.TryGetValue(m, out var st)) engine.TagStory(m, st);
             }
             foreach (var f in knows) engine.Knowledge.Learn(f);
-            if (fresh) { engine.StartFresh(); engine.GameMarksFresh = true; lock (_askedNo) _askedNo.Remove(key); }
+            if (fresh) { engine.StartFresh(); engine.GameMarksFresh = true; lock (_askedNo) { _askedNo.Remove(key); _askedWeek.Remove(key); } }
             // Kept until the game sends it again; until the game has ever sent it,
             // read off this conversation's own earlier talk with him.
             // Met is the game's word or their own earlier talk: the game cannot
@@ -552,8 +597,7 @@ static class Program
             // trusts him, whatever name its ladder sends; what it said holds
             // until it says otherwise (the independent check).
             if (trustsSent.HasValue) lock (_trusts) _trusts[key] = trustsSent.Value;
-            bool trustsHim;
-            lock (_trusts) trustsHim = _trusts.TryGetValue(key, out var tv) && tv;
+            bool trustsHim = TrustsHim(key, engine);
             if (acquaintanceSent && !trustsHim && Cast != null && Cast.NamesHimOnlyOnTrust(key)) callsHim = null;
             if (acquaintanceSent)
             {
@@ -581,6 +625,12 @@ static class Program
             double answersBefore = engine.AnswerWeight(deedTopic);
             string AreaWords(string area) => area == null || Cast == null ? null : Cast.AreaNames(area) is var nm && nm.Count > 0 ? nm[0] : area;
             string deedSawArea = Cast?.AreaFor(sawHimAt);
+            // WHAT THEY SAW OR HEARD OF WHERE HE WAS, for trust (town list 6bz).
+            if (deedTopic != null && Cast != null && (deedSawArea != null || Cast.AreaFor(heardHimAt) != null)) engine.NoteEvidence(deedTopic);
+            // Seen or heard of near a deed where no place could be named (the
+            // independent check: a sighting more than a few metres from any
+            // place of the cast's came with no sawHimAt, and counted for nothing).
+            if (sawHimNear) engine.NoteEvidence(deedTopic ?? "near");
             // A LIE FOUND OUT LATER (town list 6am), first: an answer they could not
             // judge, judged again once they know where he was, before anything he
             // says now can replace it (the independent check: a changed story
@@ -693,6 +743,47 @@ static class Program
                 }
                 engine.Tonight = refusedAsk ? Arrangement.TonightToldNo : asked ? Arrangement.TonightNotYes : Arrangement.TonightAsked;
             }
+            // THE WEEK'S END (town list 6ca): her question put in her own fixed
+            // words; while it stands, a line that sounds like one answer gets her
+            // plain question back, and his plain yes to it, as his very next
+            // line to her, is his answer (WeeksEnd.Sounds, Confirms), as his no
+            // to Ron is read. Her lines here are fixed, so they need no model.
+            string weekReply = null;
+            WeekAnswer weekAnswer = WeekAnswer.None;
+            // Trust is never earned while her question stands: she put it over
+            // the book her trust had decided, and says so (the independent
+            // check: the day-book's "the other one stays where it is" came with
+            // trustEarned, the game's cue for the real book).
+            if (key == WeeksEnd.Sheila && (weekAsk || weekStands)) engine.WeekDay = day;
+            bool weekOpen = key == WeeksEnd.Sheila && engine.WeekDay == day;
+            WeekAnswer weekAsked;
+            bool weekAskedBefore;
+            lock (_askedNo) { weekAskedBefore = _askedWeek.TryGetValue(key, out weekAsked); _askedWeek.Clear(); }
+            if (key == WeeksEnd.Sheila && !string.IsNullOrEmpty(say))
+            {
+                if (weekAsk)
+                    weekReply = WeeksEnd.Opening(weekRealBook, weekDayOff);
+                else if (weekStands)
+                {
+                    if (weekAskedBefore && WeeksEnd.Confirms(say, weekAsked))
+                    {
+                        weekAnswer = weekAsked;
+                        weekReply = WeeksEnd.Took(weekAsked);
+                    }
+                    // A clear answer, even with her plain question still waiting
+                    // for another, gets the plain question for this one (the
+                    // independent check: "I'm taking it over." after "Wind it
+                    // down, then?" was never read).
+                    else if (WeeksEnd.Sounds(say) is var sounds && sounds != WeekAnswer.None)
+                    {
+                        weekReply = WeeksEnd.AskPlainly(sounds);
+                        lock (_askedNo) _askedWeek[key] = sounds;
+                    }
+                    // With talk off, the question again, never a brush-off.
+                    else if (_llm == null) weekReply = WeeksEnd.StillAsks;
+                    else engine.Tonight = WeeksEnd.StandingLine(weekRealBook);
+                }
+            }
             // Only the deed this line is sent with: an older deed would come without
             // its gravity (the independent check: a killing kept quiet).
             string silenceTopic = deedTopic;
@@ -733,6 +824,13 @@ static class Program
             var heard = new List<string>();
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
+            if (weekReply != null)
+            {
+                // Sheila's own fixed words, in place of a reply: no model writes them.
+                engine.RememberSaid(say, weekReply, now);
+                var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
+                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
+            }
             if (askPlainly)
             {
                 // Ron's own question, in place of a reply: no model writes it.
@@ -740,7 +838,10 @@ static class Program
                 return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false }, Plain);
             }
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
+            {
+                var (offTrusts, offEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
+                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned }, Plain);
+            }
             string reply;
             string paused = null;
             bool timedOut = false;
@@ -915,7 +1016,11 @@ static class Program
             bool ends = !timedOut && engine.LastEnded;
             // THE TURN'S STEPS (town list 6bx), each with its milliseconds from the start.
             var steps = engine.LastSteps.ConvertAll(x => new object[] { x.step, x.ms });
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps }, Plain);
+            // TRUST EARNED (town list 6bz): for somebody who names him only on
+            // trust, whether they trust him after this turn, and whether this
+            // turn earned it; the game keeps it and sends it back.
+            var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1678,6 +1783,156 @@ static class Program
            && trusted.Contains("you call him Nowak") && stillTrusted.Contains("you call him Nowak")
            && trusting.EngineFor("lena").HowYouKnowHim.Contains("you call him the new owner"), untrusted);
         await trusting.Answer("{\"id\":70,\"to\":\"lena\",\"who\":\"zlata\",\"say\":\"Morning.\"}");
+        // SHE COMES TO TRUST HIM (town list 6bz): talk with her on three different
+        // days and the reply says so, once for the timeline; the game's "false"
+        // never undoes it; it survives a load; with talk off it still comes.
+        {
+            string TalkTo(Helper h, int n, string who, int d, string say = "Morning.", string extra = "") =>
+                h.Answer("{\"id\":" + n + ",\"to\":\"" + who + "\",\"day\":" + d + ",\"hour\":11,\"say\":" + JsonSerializer.Serialize(say) + ",\"acquaintance\":{\"met\":true,\"calls\":\"Nowak\"" + extra + "}}").Result;
+            Helper Fresh(ILlmClient llm)
+            {
+                var h = new Helper(llm, TimeSpan.FromSeconds(8));
+                LoadCards(h, cardsDir);
+                LoadCast(h, cardsDir);
+                return h;
+            }
+            var earns = Fresh(new FakeLlm());
+            string d0 = TalkTo(earns, 71, "lena", 0), d1 = TalkTo(earns, 72, "lena", 1), d2 = TalkTo(earns, 73, "lena", 2);
+            string nextTurn = TalkTo(earns, 74, "lena", 2);
+            string namesHim = earns.EngineFor("lena").HowYouKnowHim;
+            string darren = TalkTo(earns, 75, "sam", 2);
+            string gameSaysNo = TalkTo(earns, 76, "lena", 3, extra: ",\"trusts\":false");
+            // Kept with the talk: after a load, no second "earned", and her name at once.
+            string trustDir = Path.Combine(Path.GetTempPath(), "talkhelper-trust-" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(trustDir);
+            string afterLoad, loadNames;
+            try
+            {
+                string slot = Path.Combine(trustDir, "slot.talk.json");
+                await earns.Answer("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+                await earns.Answer("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(slot) + "}");
+                afterLoad = TalkTo(earns, 77, "lena", 3);
+                loadNames = earns.EngineFor("lena").HowYouKnowHim;
+            }
+            finally { try { Directory.Delete(trustDir, true); } catch (Exception) { } }
+            await earns.Answer("{\"talk\":\"reset\"}");
+            string afterReset = TalkTo(earns, 78, "lena", 3);
+            // A game that keeps a plain false from the start still hears it earned.
+            var keptFalse = Fresh(new FakeLlm());
+            TalkTo(keptFalse, 81, "lena", 0, extra: ",\"trusts\":false"); TalkTo(keptFalse, 82, "lena", 1, extra: ",\"trusts\":false");
+            string falseEarned = TalkTo(keptFalse, 83, "lena", 2, extra: ",\"trusts\":false");
+            // An empty line is no day he talked.
+            var silent = Fresh(new FakeLlm());
+            TalkTo(silent, 84, "lena", 0, ""); TalkTo(silent, 85, "lena", 1, "  ");
+            string silentDay = TalkTo(silent, 86, "lena", 2);
+            // With live talk off, the days still count, and the offline reply says so.
+            var talkOff = Fresh(null);
+            TalkTo(talkOff, 87, "lena", 0); TalkTo(talkOff, 88, "lena", 1);
+            string offEarned = TalkTo(talkOff, 89, "lena", 2);
+            // She saw him by Rita's the night of the window, and he never gave her
+            // a plain answer her eyes bore out: no trust (the independent check).
+            var sawHim = Fresh(new FakeLlm());
+            TalkTo(sawHim, 90, "lena", 2, extra: "}, \"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"ritas_counter\"");
+            TalkTo(sawHim, 91, "lena", 3);
+            string sawNoTrust = TalkTo(sawHim, 92, "lena", 4);
+            // Trust the game granted first is never announced again.
+            var granted = Fresh(new FakeLlm());
+            string grantedFirst = TalkTo(granted, 93, "lena", 0, extra: ",\"trusts\":true");
+            TalkTo(granted, 94, "lena", 1);
+            string grantedThird = TalkTo(granted, 95, "lena", 2);
+            // Her third day of talk is the day she puts her question over the
+            // day-book: not earned that day; the day after, it is.
+            var weekDay = Fresh(new FakeLlm());
+            TalkTo(weekDay, 96, "lena", 0); TalkTo(weekDay, 97, "lena", 3);
+            string weekTurn = weekDay.Answer("{\"id\":98,\"to\":\"lena\",\"day\":6,\"hour\":10,\"say\":\"Morning.\",\"week\":{\"ask\":true,\"realBook\":false,\"dayOff\":true}}").Result;
+            string weekLater = weekDay.Answer("{\"id\":99,\"to\":\"lena\",\"day\":6,\"hour\":11,\"say\":\"How are the books?\",\"week\":{\"stands\":true,\"realBook\":false}}").Result;
+            // Answered, and a line later that day without the question: still not that day.
+            weekDay.Answer("{\"id\":116,\"to\":\"lena\",\"day\":6,\"hour\":11,\"say\":\"None of your business.\",\"week\":{\"stands\":true,\"realBook\":false}}").Wait();
+            string answered = weekDay.Answer("{\"id\":117,\"to\":\"lena\",\"day\":6,\"hour\":11,\"say\":\"Yes.\",\"week\":{\"stands\":true,\"realBook\":false}}").Result;
+            string laterThatDay = weekDay.Answer("{\"id\":118,\"to\":\"lena\",\"day\":6,\"hour\":12,\"say\":\"So can I see the other book now?\"}").Result;
+            string dayAfter = TalkTo(weekDay, 100, "lena", 7);
+            // Seen near a deed with no place named: still a sighting.
+            var nearOnly = Fresh(new FakeLlm());
+            string nearEvidence = "\"evidence\":{\"near\":{\"sawHim\":true,\"others\":0,\"summary\":\"he was about\"},\"familiarity\":0.2}";
+            for (int nd = 1; nd <= 3; nd++) nearOnly.Answer("{\"id\":" + (111 + nd) + ",\"to\":\"lena\",\"day\":" + nd + ",\"hour\":11,\"say\":\"Morning.\"," + nearEvidence + "}").Wait();
+            string nearFourth = TalkTo(nearOnly, 115, "lena", 4);
+            Ok("trust is not earned while her week's question stands, and comes the day after; a sighting near a deed with no place named keeps it back too",
+               weekTurn.Contains("\"trustEarned\":false") && weekLater.Contains("\"trustEarned\":false") && answered.Contains("\"weekAnswer\":\"WontSay\"")
+               && laterThatDay.Contains("\"trustEarned\":false") && dayAfter.Contains("\"trusts\":true,\"trustEarned\":true")
+               && nearFourth.Contains("\"trusts\":false"), weekTurn + " | " + dayAfter + " | " + nearFourth);
+            Ok("a sighting of him at a deed with no plain answer her eyes bore out keeps her trust back; trust the game granted is never announced a second time",
+               sawNoTrust.Contains("\"trusts\":false,\"trustEarned\":false") && grantedFirst.Contains("\"trusts\":true")
+               && grantedThird.Contains("\"trusts\":true,\"trustEarned\":false"), sawNoTrust + " | " + grantedThird);
+            Ok("Sheila comes to trust him on the third day he talks with her, said once for the timeline, a load keeping it and her name at once; the game's false never undoes it, and one kept from the start still hears it; nobody else carries it; an empty line is no day; with talk off it still comes; a reset forgets it",
+               d0.Contains("\"trusts\":false") && d1.Contains("\"trusts\":false,\"trustEarned\":false")
+               && d2.Contains("\"trusts\":true,\"trustEarned\":true") && nextTurn.Contains("\"trusts\":true,\"trustEarned\":false")
+               && namesHim.Contains("you call him Nowak") && darren.Contains("\"trusts\":null")
+               && gameSaysNo.Contains("\"trusts\":true,\"trustEarned\":false")
+               && afterLoad.Contains("\"trusts\":true,\"trustEarned\":false") && loadNames.Contains("you call him Nowak")
+               && afterReset.Contains("\"trusts\":false")
+               && falseEarned.Contains("\"trusts\":true,\"trustEarned\":true")
+               && silentDay.Contains("\"trusts\":false,\"trustEarned\":false")
+               && offEarned.Contains("\"offline\":true") && offEarned.Contains("\"trusts\":true,\"trustEarned\":true"),
+               d2 + " | " + afterLoad + " | " + loadNames + " | " + offEarned);
+        }
+        // THE WEEK'S END (town list 6ca): her question in her own fixed words, her
+        // plain question to a line that sounds like one answer, his yes to it
+        // as his very next line to her is his answer; with talk off too.
+        {
+            string Line(Helper h, int n, string who, string say, string week) =>
+                h.Answer("{\"id\":" + n + ",\"to\":\"" + who + "\",\"day\":6,\"hour\":10,\"say\":" + JsonSerializer.Serialize(say) + (week == null ? "" : ",\"week\":" + week) + "}").Result;
+            Helper WeekHelper(ILlmClient llm)
+            {
+                var h = new Helper(llm, TimeSpan.FromSeconds(8));
+                LoadCards(h, cardsDir);
+                LoadCast(h, cardsDir);
+                return h;
+            }
+            const string Ask = "{\"ask\":true,\"realBook\":true,\"dayOff\":true}", Stands = "{\"stands\":true,\"realBook\":true}";
+            Helper WeekHelperAsked()
+            {
+                var h = WeekHelper(null);
+                Line(h, 119, "lena", "I'm taking it over.", Stands);
+                return h;
+            }
+            var wh = WeekHelper(new FakeLlm());
+            string opened = Line(wh, 101, "lena", "Morning, Sheila.", Ask);
+            string sounds = Line(wh, 102, "lena", "I'm taking it over.", Stands);
+            string yes = Line(wh, 103, "lena", "Yes.", Stands);
+            // Mixed, or not asked: no plain question; a line to somebody else between clears it.
+            string mixed = Line(wh, 104, "lena", "Take it over or wind it down, I can't tell.", Stands);
+            string noWeek = Line(wh, 105, "lena", "I'm taking it over.", null);
+            string windDown = Line(wh, 106, "lena", "I'm winding it down.", Stands);
+            Line(wh, 107, "sam", "Morning.", null);
+            string lateYes = Line(wh, 108, "lena", "Yes.", Stands);
+            string toSam = Line(wh, 109, "sam", "I'm taking it over.", Stands);
+            // With talk off: the fixed lines still come.
+            var weekOff = WeekHelper(null);
+            string offSounds = Line(weekOff, 110, "lena", "Wind it down.", Stands);
+            string offYes = Line(weekOff, 111, "lena", "Yes, that's my answer.", Stands);
+            // A clear answer while her plain question waits for another gets the
+            // plain question for this one, and his yes to it is his answer.
+            var changes = WeekHelper(null);
+            Line(changes, 120, "lena", "Wind it down.", Stands);
+            string otherAnswer = Line(changes, 121, "lena", "I'm taking it over.", Stands);
+            string changedYes = Line(changes, 122, "lena", "Yes.", Stands);
+            string shrug = Line(WeekHelperAsked(), 123, "lena", "Yeah, yeah.", Stands);
+            var weekOff2 = WeekHelper(null);
+            string offWhat = Line(weekOff2, 112, "lena", "What do you mean?", Stands);
+            Ok("the week's end: Sheila's question and her plain question in her own fixed words, his yes to it as his next line to her is his answer; a mixed line, a line without the question, a yes after a line to somebody else, or the question sent to somebody else is nothing; with talk off it all still comes",
+               Reply(opened) == WeeksEnd.Opening(true, true) && opened.Contains("\"generated\":false")
+               && Reply(sounds) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && sounds.Contains("\"weekAnswer\":null")
+               && Reply(yes) == WeeksEnd.Took(WeekAnswer.TakeOver) && yes.Contains("\"weekAnswer\":\"TakeOver\"")
+               && Reply(mixed) != WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && !mixed.Contains("\"weekAnswer\":\"")
+               && Reply(noWeek) != WeeksEnd.AskPlainly(WeekAnswer.TakeOver)
+               && Reply(windDown) == WeeksEnd.AskPlainly(WeekAnswer.WindDown) && !lateYes.Contains("\"weekAnswer\":\"") && Reply(lateYes) != WeeksEnd.Took(WeekAnswer.WindDown)
+               && Reply(toSam) != WeeksEnd.AskPlainly(WeekAnswer.TakeOver)
+               && Reply(offSounds) == WeeksEnd.AskPlainly(WeekAnswer.WindDown) && Reply(offYes) == WeeksEnd.Took(WeekAnswer.WindDown)
+               && offYes.Contains("\"weekAnswer\":\"WindDown\"") && offYes.Contains("\"offline\":true") && Reply(offWhat) == WeeksEnd.StillAsks
+               && Reply(otherAnswer) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver) && Reply(changedYes) == WeeksEnd.Took(WeekAnswer.TakeOver)
+               && changedYes.Contains("\"weekAnswer\":\"TakeOver\"") && !shrug.Contains("\"weekAnswer\":\""),
+               opened + " | " + sounds + " | " + yes + " | " + offYes);
+        }
         Ok("a card lent to somebody else does not lend them its name; its own person keeps theirs",
            trusting.EngineFor("zlata") != null && trusting.EngineFor("zlata").SpeakerName == "" && trusting.EngineFor("lena").SpeakerName == null);
 

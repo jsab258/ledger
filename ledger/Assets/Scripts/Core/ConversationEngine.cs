@@ -553,6 +553,8 @@ namespace Ledger.Core
             var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
             if (a == null || a.Definite || a.Result != ClaimResult.Unknown || a.SawElsewhere || string.IsNullOrEmpty(saw)) return false;
             a.SawElsewhere = true;
+            Doubted = true;
+            NoteEvidence(topic);
             a.Saw = saw;
             Memory.Append(new MemoryEvent(now, "observation", 0.5,
                 $"He told me he was at {a.Said} {WhenWords(a.DeedDay, a.DeedHour)}. I saw him at {saw}, which he never said."));
@@ -574,6 +576,8 @@ namespace Ledger.Core
             var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
             if (a == null || !a.Definite || a.Result != ClaimResult.Unknown || result == ClaimResult.Unknown) return false;
             a.Result = result;
+            if (result == ClaimResult.Contradiction) Doubted = true;
+            NoteEvidence(topic);
             a.Saw = saw;
             string when = WhenWords(a.DeedDay, a.DeedHour);
             Memory.Append(new MemoryEvent(now, "observation", result == ClaimResult.Contradiction ? 0.8 : 0.5,
@@ -589,6 +593,9 @@ namespace Ledger.Core
         public bool HeardOtherwise(string topic, string heardAt, GameTime now)
         {
             var a = topic == null ? null : Answers.Find(x => x.Topic == topic);
+            // Hearsay is evidence for trust whatever the answer's shape: only a
+            // plain answer their own eyes bore out outweighs it (town list 6bz).
+            if (!string.IsNullOrEmpty(heardAt)) NoteEvidence(topic);
             if (a == null || !a.Definite || a.Result != ClaimResult.Unknown || a.HeardSaw != null || string.IsNullOrEmpty(heardAt)) return false;
             a.HeardSaw = heardAt;
             Memory.Append(new MemoryEvent(now, "observation", 0.6,
@@ -603,6 +610,8 @@ namespace Ledger.Core
         {
             if (string.IsNullOrEmpty(topic) || string.IsNullOrEmpty(said) || string.IsNullOrEmpty(saw) || ToldOthers.ContainsKey(topic)) return false;
             ToldOthers[topic] = (said, saw, deedDay, deedHour);
+            Doubted = true;
+            NoteEvidence(topic);
             var e = new MemoryEvent(now, "observation", 0.7,
                 $"I heard he's been telling people he was at {said} {WhenWords(deedDay, deedHour)}. I saw him at {saw}.");
             Memory.Append(e);
@@ -611,6 +620,28 @@ namespace Ledger.Core
         }
 
         public List<Answer> Answers { get; } = new List<Answer>();
+
+        /// THE DAYS HE TALKED WITH THEM (town list 6bz): each game day he said
+        /// something to them, as the talk helper counts his lines, live talk or
+        /// none; never the game's memories, never an empty line.
+        public SortedSet<int> TalkDays { get; } = new SortedSet<int>();
+        /// Whether they have come to trust him by their talk with him
+        /// (Trust.Earn); once earned it holds, and it travels with the talk.
+        public bool TrustEarned { get; set; }
+        /// WHETHER HE HAS EVER BEEN CAUGHT OUT WITH THEM (town list 6bz): a lie
+        /// of his caught, now or later; a sighting of him somewhere his list or
+        /// vague answer did not name; or what he told others, where they saw he
+        /// was not. Never cleared: a changed story replaced the answer and wiped
+        /// the doubt with it (the independent check).
+        public bool Doubted { get; private set; }
+        /// THE DEEDS THEY HAVE SEEN OR HEARD WHERE HE WAS FOR (town list 6bz):
+        /// each deed topic the game has sent a sighting or hearsay with. Any
+        /// keeps trust back (Trust.Earned), whatever he answers.
+        public HashSet<string> DeedEvidence { get; } = new HashSet<string>();
+        public void NoteEvidence(string topic) { if (!string.IsNullOrEmpty(topic)) DeedEvidence.Add(topic); }
+        /// The day Sheila put her week's question (town list 6ca), or -1: no
+        /// trust is earned that day, answered or not (the independent check).
+        public int WeekDay { get; set; } = -1;
 
         /// The deed their suspicion is about this turn (the game's "deed"); the
         /// prompt speaks only of his answers about it.
@@ -678,6 +709,8 @@ namespace Ledger.Core
                 return null;
             }
             Answers.RemoveAll(a => a.Topic == topic);
+            if (result == ClaimResult.Contradiction) Doubted = true;
+            if (saw != null) NoteEvidence(topic);
             var answer = new Answer { Topic = topic, DeedDay = deedDay, DeedHour = deedHour, Said = said, Areas = areaList, Result = result, Saw = saw, Definite = definite };
             Answers.Add(answer);
             Memory.Append(new MemoryEvent(now, "observation", result == ClaimResult.Contradiction ? 0.8 : 0.5,
@@ -807,6 +840,13 @@ namespace Ledger.Core
         /// sees, what they have learned, what they have heard of his nights and
         /// which memories the model has been shown, as plain values for any
         /// save's JSON. Without it a reload forgot every word Tom had said.
+        List<object> TalkDaysJson()
+        {
+            var list = new List<object>();
+            foreach (var d in TalkDays) list.Add(d);
+            return list;
+        }
+
         public Dictionary<string, object> CaptureTalk()
         {
             var memory = new List<object>();
@@ -834,6 +874,7 @@ namespace Ledger.Core
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
                 { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
+                { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay },
             };
         }
 
@@ -861,6 +902,11 @@ namespace Ledger.Core
             LastEnded = false;
             Answers.Clear();
             CurrentDeed = null;
+            TalkDays.Clear();
+            TrustEarned = false;
+            Doubted = false;
+            DeedEvidence.Clear();
+            WeekDay = -1;
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -940,6 +986,31 @@ namespace Ledger.Core
                     if (to is Dictionary<string, object> tod && tod.TryGetValue("topic", out var tt) && tt is string ttopic
                         && tod.TryGetValue("said", out var tsd) && tsd is string tsaid && tod.TryGetValue("saw", out var tsw) && tsw is string tsaw)
                         ToldOthers[ttopic] = (tsaid, tsaw, tod.TryGetValue("day", out var tdy) ? WholeOrMinus(tdy) : -1, tod.TryGetValue("hour", out var thr) ? WholeOrMinus(thr) : -1);
+            // A talk saved before the days were kept (town list 6bz): the days of
+            // his own lines in their memory, which only this engine writes.
+            if (saved.TryGetValue("talkDays", out var td) && td is List<object> days)
+            {
+                foreach (var x in days) { int dd = WholeOrMinus(x); if (dd >= 0) TalkDays.Add(dd); }
+            }
+            else
+                foreach (var e in Memory.Events)
+                    if (e.Kind == "conversation" && e.Text.StartsWith(ClaimCheck.PlayerSaid, StringComparison.Ordinal)
+                        && e.Text.Substring(ClaimCheck.PlayerSaid.Length).Trim().Trim('"').Trim().Length > 0)
+                        TalkDays.Add(e.Time.Day);
+            TrustEarned = saved.TryGetValue("trustEarned", out var te) && te is bool tb && tb;
+            WeekDay = saved.TryGetValue("weekDay", out var wd) ? Math.Max(-1, WholeOrMinus(wd)) : -1;
+            // An older talk: whatever doubt and evidence its answers still show.
+            Doubted = saved.TryGetValue("doubted", out var db) ? db is bool dbb && dbb
+                : ToldOthers.Count > 0 || Answers.Exists(a => a.Result == ClaimResult.Contradiction || a.SawElsewhere);
+            if (saved.TryGetValue("deedEvidence", out var de) && de is List<object> dl)
+            {
+                foreach (var x in dl) if (x is string xs && xs.Length > 0) DeedEvidence.Add(xs);
+            }
+            else
+            {
+                foreach (var a in Answers) if (a.Saw != null || a.HeardSaw != null || a.SawElsewhere) DeedEvidence.Add(a.Topic);
+                foreach (var t in ToldOthers.Keys) DeedEvidence.Add(t);
+            }
         }
 
         List<object> AnswersJson()
