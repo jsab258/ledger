@@ -33,15 +33,15 @@ the brief; reading the photographs is the same work for both.)
 
 | piece | references | state |
 |---|---|---|
-| pillar box (EIIR Type B shape, Carron) | Commons: Post box on Altcross Road (2020), on Clipsley Lane, Haydock (2021) | passed the gate; the cipher, crown and POST OFFICE left off (canon, below) |
-| telephone kiosk (KX100, 1985–91 livery) | the Maraig kiosk (C20 Society, 2024); Geograph 5558709 (2017) | first attempt failed the review (handle, closed foot); second attempt |
-| Belisha beacon (one of the pair) | Geograph 1802863 (Fetter Lane, 2010); SI 1997/2400 | passed the gate |
-| bus stop (diagram 970 flag, timetable case) | Commons: UK traffic sign 970 | first attempt failed the review (no "Bus Stop" panel); second attempt |
-| galvanised dustbin (BS 792) | no free photograph; a 90 litre bin's measurements | from dimensions |
-| cast-iron cannon-and-ball bollard | Historic England list text, Queen Street, Leeds | second attempt, after the listing |
-| telegraph pole with drop wires | Geograph 943497, 2296843; Commons Telegraph_Post_UK_Old.JPG | second attempt (the wires fall towards the houses) |
-| grit bin (yellow glass-fibre) | Wikipedia file Plastic-GRIT-BIN-in-concrete-GRIT-BIN.JPG; Commons, East Riding grit bins | second attempt (the lettering set on the sloping face); the 1990 type is uncertain |
-| litter bin (open-top, on a post) | Geograph 5061057 (Leeds, 1995), weak | the 1990 type is uncertain |
+| pillar box (EIIR Type B shape, Carron) | Commons: Post box on Altcross Road (2020), on Clipsley Lane, Haydock (2021) | passed (review 1); the cipher, crown and POST OFFICE left off (canon, below) |
+| telephone kiosk (KX100, 1985–91 livery) | the Maraig kiosk (C20 Society, 2024); Geograph 5558709 (2017) | attempt 1 failed review 1 (the door's band is the yellow handle panel; the foot is open); attempt 2 passed review 2, only just (the foot's two plates) |
+| Belisha beacon (one of the pair) | Geograph 1802863 (Fetter Lane, 2010); SI 1997/2400 | passed (review 1) |
+| bus stop (diagram 970 flag, timetable case) | Commons: UK traffic sign 970 | attempt 1 failed review 1 (no "Bus Stop" panel); attempt 2 passed review 2 |
+| galvanised dustbin (BS 792) | no free photograph; a 90 litre bin's measurements | from dimensions; passed review 2 (reads as polished aluminium more than dull zinc) |
+| cast-iron cannon-and-ball bollard | Historic England list text, Queen Street, Leeds | attempt 2, after the listing; passed review 2 |
+| telegraph pole with drop wires | Geograph 943497, 2296843; Commons Telegraph_Post_UK_Old.JPG | attempt 2; passed review 2 (no distribution box yet; stubs too steep) |
+| grit bin (yellow glass-fibre) | Wikipedia file Plastic-GRIT-BIN-in-concrete-GRIT-BIN.JPG; Commons, East Riding grit bins | attempt 2 (the lettering set on the sloping face); passed review 2; the 1990 type is uncertain |
+| litter bin (open-top, on a post) | Geograph 5061057 (Leeds, 1995), weak | passed review 2; the 1990 type is uncertain |
 | street name plate | Mid Sussex and LCC specifications; no free photograph of a Kindersley plate | not made: its serif lettering needs a font whose licence is Jafar's call |
 
 The lamp column was the research's third piece; the street already has its
@@ -56,3 +56,10 @@ a reserve, took its place.
   Ministry of Transport's Kindersley capitals is Marcellus SC (SIL Open Font
   License 1.1); the official revival, Kindersley Street, is free of charge but
   "all rights reserved".
+
+## The gate
+
+Review 1 (a fresh reviewer, four pieces): the pillar box and the beacon passed;
+the kiosk and the bus stop failed and were remade. Review 2 (another fresh
+reviewer, the other seven): all passed, with narrow notes, which are beside
+each piece on Wednesday's page (https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ).

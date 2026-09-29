@@ -4,7 +4,7 @@
  "title": "Wednesday's page",
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
-  "New today: how Sheila looks at you as you walk past her, three ways. The rest is Tuesday's, not yet picked.",
+  "New today: how Sheila looks at you as you walk past her, three ways; and nine pieces of 1990 street clutter, each against photographs of the real thing (the tenth, the street name plate, waits on a font). The rest is Tuesday's, not yet picked.",
   "Faces: front and profile in a plain studio light, and the face speaking a line."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
@@ -32,6 +32,204 @@
     [
      "yes",
      "That reads right"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-pillar-box",
+   "name": "Street clutter: The pillar box",
+   "note": "The Post Office cipher and lettering are left off until you choose the postal service's mark (canon: every brand is fictional). Reviewer's notes: the cap's beads are small and round where the real ones are bolder; the cap reads a little like a disc; the collection tablet is a plain white block; the black base is a touch glossy. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/pillar-box.jpg",
+     "alt": "The pillar box: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-kx100-kiosk",
+   "name": "Street clutter: The telephone kiosk (KX100, 1985 livery)",
+   "note": "The telephone company's mark is left off until you name it. Reviewer's notes (passed only just): the foot shows two dark plates where the real one is open to the pavement from about 10 cm; the bands on the sides are deep; the payphone is plain. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/kx100-kiosk.jpg",
+     "alt": "The telephone kiosk (KX100, 1985 livery): front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-belisha-beacon",
+   "name": "Street clutter: The Belisha beacon (one of the pair)",
+   "note": "Reviewer's notes: the white band under the collar is short; a small cap on the globe. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/belisha-beacon.jpg",
+     "alt": "The Belisha beacon (one of the pair): front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-bus-stop",
+   "name": "Street clutter: The bus stop",
+   "note": "The plain official sign, not a bus company's flag. Reviewer's notes: 'Bus Stop' is smaller and lighter than on the real sign; the bus picture is simpler; the border thin. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/bus-stop.jpg",
+     "alt": "The bus stop: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-dustbin",
+   "name": "Street clutter: The dustbin (the yard)",
+   "note": "No free photograph of a 1990 bin was found, so it is made from a 90 litre bin's measurements. Reviewer's notes: it reads more like polished aluminium than dull zinc; the ribs are broad bands; the lid's handle is thin from the side. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/dustbin.jpg",
+     "alt": "The dustbin (the yard): front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-bollard",
+   "name": "Street clutter: The bollard",
+   "note": "After the listed cast-iron cannon-and-ball bollards of Leeds, about 0.75 m. Reviewer's notes: no neck under the ball; a slim shaft; very clean paint. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/bollard.jpg",
+     "alt": "The bollard: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-telegraph-pole",
+   "name": "Street clutter: The telegraph pole",
+   "note": "The street will run its wires to the houses. Reviewer's notes: no distribution box under the ring at the top; the wire stubs slope down too steeply; an even warm brown where real poles weather to grey-brown. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/telegraph-pole.jpg",
+     "alt": "The telegraph pole: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-grit-bin",
+   "name": "Street clutter: The grit bin",
+   "note": "Whether glass-fibre bins had replaced concrete ones by 1990 is uncertain. Reviewer's notes: the lid is a flat slab; the edges are sharp; the yellow is spotless. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/grit-bin.jpg",
+     "alt": "The grit bin: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "clutter-litter-bin",
+   "name": "Street clutter: The litter bin",
+   "note": "The usual 1990 type is uncertain; this is an open-top bin on a post. Reviewer's notes: a few pixels of jagged shadow under the rim; a glossy highlight; the letters slightly uneven. Three views: front, three-quarter, side; the grey figure is 1.80 m.",
+   "pictures": [
+    {
+     "src": "production/art/clutter-2026-09-29/litter-bin.jpg",
+     "alt": "The litter bin: front, three-quarter and side"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Right for the street"
     ],
     [
      "no",
