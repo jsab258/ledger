@@ -978,7 +978,7 @@ def part_thighs(body, apart=0.008, z_lo=0.74, z_full=(0.80, 0.875), z_hi=0.895, 
 
 
 def relax(obj, pairs, fixed, body_bvh, iterations=300, clear=0.004, uv_name="pattern", ramp=100, report=None,
-          gravity=0.0, length_rounds=1):
+          gravity=0.0, length_rounds=1, bend=0.0):
     """The garment sewn by projection, without dynamics: each round every edge is drawn towards its length on
     the flat pattern, every seam pair towards its midpoint (gently at first, `ramp` rounds to full), the
     `fixed` points put back, and anything nearer the body than `clear` put out along its normal. Returns the
@@ -1005,6 +1005,42 @@ def relax(obj, pairs, fixed, body_bvh, iterations=300, clear=0.004, uv_name="pat
             target[(min(va, vb), max(va, vb))] = math.hypot(ua[0] - ub[0], ua[1] - ub[1])
     edges = np.array(list(target.keys()))
     L = np.array([target[tuple(e)] for e in edges])
+    W = np.ones(len(edges))
+    n_true = len(edges)
+    # STIFFNESS (`bend` > 0; 29 September, the flat cap: with lengths alone the
+    # cloth folds freely, and a lined tweed crown crumpled and domed): each pair
+    # of points facing each other across a shared edge is drawn towards its
+    # distance on the flat pattern, so the cloth would rather stay flat, weighted
+    # by `bend`
+    if bend > 0:
+        # per face, each corner's pattern place; a pair counts only if the two faces agree on the shared
+        # edge's pattern places (the same piece: across a welded seam the two faces lie in different
+        # pieces' layouts, and their 'flat distance' is meaningless: it threw the first try apart)
+        opp = {}
+        for poly in me.polygons:
+            vs = list(poly.vertices)
+            if len(vs) != 3:
+                continue
+            uvs = [tuple(uv.data[li].uv) for li in poly.loop_indices]
+            for k in range(3):
+                a_, b_, c_ = vs[k], vs[(k + 1) % 3], vs[(k + 2) % 3]
+                ua, ub, uc = uvs[k], uvs[(k + 1) % 3], uvs[(k + 2) % 3]
+                key = (min(a_, b_), max(a_, b_))
+                ends = (ua, ub) if a_ < b_ else (ub, ua)
+                opp.setdefault(key, []).append((c_, uc, ends))
+        cross = {}
+        for key, lst in opp.items():
+            if len(lst) != 2:
+                continue
+            (c0, u0, e0), (c1, u1, e1) = lst
+            if c0 == c1 or max(math.dist(e0[0], e1[0]), math.dist(e0[1], e1[1])) > 1e-5:
+                continue
+            cross[(min(c0, c1), max(c0, c1))] = math.hypot(u0[0] - u1[0], u0[1] - u1[1])
+        if cross:
+            ce = np.array(list(cross.keys()))
+            edges = np.vstack([edges, ce])
+            L = np.concatenate([L, np.array([cross[tuple(e)] for e in ce])])
+            W = np.concatenate([W, np.full(len(ce), bend)])
     deg = np.bincount(edges.ravel(), minlength=n).astype(float)
     P = np.array(pairs) if len(pairs) else np.zeros((0, 2), dtype=int)
     fx = np.zeros(n, dtype=bool)
@@ -1020,7 +1056,7 @@ def relax(obj, pairs, fixed, body_bvh, iterations=300, clear=0.004, uv_name="pat
         for _r in range(length_rounds):
             d = x[edges[:, 1]] - x[edges[:, 0]]
             ln = np.linalg.norm(d, axis=1)
-            corr = ((ln - L) / np.maximum(ln, 1e-9))[:, None] * d * 0.5
+            corr = (W * (ln - L) / np.maximum(ln, 1e-9))[:, None] * d * 0.5
             acc = np.zeros_like(x)
             np.add.at(acc, edges[:, 0], corr)
             np.add.at(acc, edges[:, 1], -corr)
@@ -1045,8 +1081,8 @@ def relax(obj, pairs, fixed, body_bvh, iterations=300, clear=0.004, uv_name="pat
     for i, v in enumerate(me.vertices):
         v.co = xl[i]
     me.update()
-    ln = np.linalg.norm(x[edges[:, 1]] - x[edges[:, 0]], axis=1)
-    r = ln / np.maximum(L, 1e-9)
+    ln = np.linalg.norm(x[edges[:n_true, 1]] - x[edges[:n_true, 0]], axis=1)
+    r = ln / np.maximum(L[:n_true], 1e-9)
     gap = float(np.max(np.linalg.norm(x[P[:, 0]] - x[P[:, 1]], axis=1))) * 1000 if len(P) else 0.0
     return round(gap, 1), [round(float(np.percentile(r, q)), 3) for q in (5, 50, 95)]
 
