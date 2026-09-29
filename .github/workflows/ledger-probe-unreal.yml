@@ -98,6 +98,15 @@ on:
 permissions:
   contents: write
 
+# ONE BUILD RUNNING AND ONLY THE NEWEST WAITING, 29 September. Two sessions push
+# to main, each build takes about forty minutes on this PC's one runner, and by
+# night eight or more stood queued, each testing a commit the newest already
+# contains, so a day's last push was not built until the next day. A newer run
+# now replaces a waiting one; the running one is never cancelled.
+concurrency:
+  group: ledger-probe-unreal
+  cancel-in-progress: false
+
 jobs:
   probe-unreal:
     runs-on: [self-hosted, ledger-pc]
