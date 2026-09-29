@@ -6910,6 +6910,15 @@ int main(int argc, char** argv)
 		LedgerStreet::Sidecar Bad;
 		Check(!LedgerStreet::ParseSidecar("{\"meshes\": []}", Bad, SErr) && !SErr.empty(),
 		      "an empty sidecar is refused with a reason", SErr);
+		// A PIECE THAT WAITS FOR A DEED, 29 September: the tag is read, and a
+		// row without one is the street as built.
+		LedgerStreet::Sidecar Tagged;
+		Check(LedgerStreet::ParseSidecar(
+		          "{\"meshes\": [{\"mesh\": \"street_shard_a_glass\", \"reveal_on\": \"crime_a\"},"
+		          " {\"mesh\": \"street_slate\"}]}", Tagged, SErr)
+		      && Tagged.Rows.size() == 2 && Tagged.Rows[0].RevealOn == "crime_a"
+		      && Tagged.Rows[1].RevealOn.empty(),
+		      "a sidecar row's reveal_on is read, and a row without one has none", SErr);
 
 		// THE LOOK'S FIRST STEP: every textured surface can be laid the way
 		// Blender lays it - photograph, size, and the palette over it.
@@ -6979,8 +6988,10 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 20 && Lk.bFromFile,
-			      "the committed look file parses and supplies all twenty settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 23 && Lk.bFromFile,
+			      "the committed look file parses and supplies all twenty-three settings", LErr);
+			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
+			      "and the sodium lamps have real lumens and a colour of their own");
 			// THE PEOPLE, 23 September: the committed placements parse, there
 			// are a handful, and every one names a person converted to a glb.
 			{

@@ -4,7 +4,7 @@
  "title": "Wednesday's page",
  "how": [
   "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
-  "New today: how Sheila looks at you as you walk past her, three ways. The rest is Tuesday's, not yet picked.",
+  "New today: how Sheila looks at you as you walk past her, three ways; the street with its new clutter. The rest is Tuesday's, not yet picked.",
   "Faces: front and profile in a plain studio light, and the face speaking a line."
  ],
  "foot": "Anything you do not pick carries onto the next page.",
@@ -36,6 +36,32 @@
     [
      "no",
      "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-street-dressed",
+   "name": "The street, with its 1990 clutter",
+   "note": "The street as the game draws it now, by day. New in it: a KX100 telephone kiosk, a pillar box, galvanised dustbins, cast-iron bollards, council litter bins, a telegraph pole with its wires to the houses, and a grit bin at the top of the street. Each passed my check and a blind reviewer's, which under your rule is their approval; the pillar box and kiosk carry no marks until you choose them. Say if anything jars. The blind reviewer's remaining notes: the kiosk's glass shows no tint or reflection, so it reads a little like an empty frame; the telegraph wires two to the flats opposite seem to end at the chimneys from the far end of the street, and no feed cable reaches the pole; the dustbins and the pillar box's foot are mostly hidden by cars and people in these views. (Its two other notes, the wires' sag and the litter bin crowding the lamp post, are fixed in these frames.)",
+   "pictures": [
+    {
+     "src": "production/approvals/2026-09-30/street-hook-day.webp",
+     "alt": "Looking up the street from Mickey's"
+    },
+    {
+     "src": "production/approvals/2026-09-30/street-camA-day.webp",
+     "alt": "Along the east pavement"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Nothing jars"
+    ],
+    [
+     "no",
+     "Something jars"
     ]
    ]
   },

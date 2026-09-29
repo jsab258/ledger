@@ -131,6 +131,21 @@ namespace LedgerVignetteShot
 	// the Blender glass never blocked a sight line.
 	int32 HideStreetGlassNear(const FBox& Box);
 
+	// THE STREET'S LIGHT CHANGED IN PLAY, 29 September: the AI tester found
+	// "later that week, evening" in broad daylight. Applies one of the shared
+	// file's named conditions to the playable street and moves the player's
+	// exposure pin to the one that condition asks for (the pin the street
+	// started with was the day's, and a night under a day pin is black).
+	// Returns what it did, for the log.
+	FString ApplyPlayCondition(const char* Id);
+
+	// THE SMASHED WINDOW, 29 September (the AI tester: after the deed the
+	// panes "still look whole"). Shows every street mesh the sidecar tagged
+	// reveal_on Tag - the jagged glass left in the frame and the glass on the
+	// pavement - which stood hidden since the street was built. Returns how
+	// many it showed; 0 when the Blender street is not in play.
+	int32 RevealStreetMeshes(const char* Tag);
+
 	// THE CRIME PROBE'S TWO, ruling of 2026-09-08 sections 2 and 4. See
 	// VignetteShot.cpp for what each does and why the probe's pieces are
 	// kept in a map of their own.

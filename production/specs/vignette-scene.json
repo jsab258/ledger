@@ -344,7 +344,7 @@
       "bom": "E8_guard_railing",
       "side": "east",
       "x_m": 10.0,
-      "panels": 3,
+      "panels": 1,
       "panel_length_m": 2.000,
       "height_m": 1.000,
       "post_diameter_m": 0.050,
@@ -352,7 +352,7 @@
       "infill_per_panel": 5,
       "infill_diameter_m": 0.025,
       "setback_from_kerb_m": 0.25,
-      "note": "trade_standard. 1.0 m is the normal British pedestrian guard rail height at a kerb. Three panels of 2.0 m starting at x=10.0, which puts them beside the gully at x=12.0. The held trunk_protection_railing is a TREE PIT GUARD and is a different object; the BOM says so explicitly and this is the line it says it about."
+      "note": "trade_standard. 1.0 m is the normal British pedestrian guard rail height at a kerb. ONE PANEL of 2.0 m from x=10.0, ending beside the gully at x=12.0. It was three, to x=16.0, until 29 September, when the AI tester found the east footway walled: between the railing (3.38 m out) and the fish market's front (4.97 m) there is 1.57 m, and the market's crates (0.92 m deep) left 0.65 m, less than a walking person's 0.68, so the pavement dead-ended with no way down to the road. One panel keeps the rail by the gully and gives the pavement back. The held trunk_protection_railing is a TREE PIT GUARD and is a different object; the BOM says so explicitly and this is the line it says it about."
     },
     {
       "bom": "E13_household_dustbin",
