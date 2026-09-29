@@ -223,7 +223,7 @@
    "places": ["pension_counter"],
    "names": ["the newsagent's", "the paper shop"],
    "hours": {"mon": [6, 17.5], "tue": [6, 17.5], "wed": [6, 17.5], "thu": [6, 17.5], "fri": [6, 17.5], "sat": [6, 17.5], "sun": [7, 12]},
-   "hours_note": "the post office counter nine till half five on weekdays"
+   "hours_note": "the pensions counter nine till half five on weekdays"
   },
   "hals": {
    "places": ["hals_shop"],
@@ -1145,6 +1145,24 @@
     ]
    ],
    "days": {
+    "wed": [
+     [
+      0,
+      "off"
+     ],
+     [
+      5,
+      "fish_dock"
+     ],
+     [
+      7,
+      "fish_counter"
+     ],
+     [
+      13,
+      "off"
+     ]
+    ],
     "sat": [
      [
       0,

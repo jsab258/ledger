@@ -9837,7 +9837,7 @@ namespace Ledger.CoreTests
                     { "market", "Tuesdays, Fridays and Saturdays, eight till four" },
                     { "cafe", "half six in the morning till ten at night, on Sundays eight till twelve" },
                     { "fish_market", "half seven till two, shut on Sundays" },
-                    { "newsagent", "six in the morning till half five, on Sundays seven till twelve, the post office counter nine till half five on weekdays" },
+                    { "newsagent", "six in the morning till half five, on Sundays seven till twelve, the pensions counter nine till half five on weekdays" },
                     { "laundry", "eight till half five, shut on Sundays" },
                 };
                 string wrongWords = null;
