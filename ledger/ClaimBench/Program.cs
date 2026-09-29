@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 
 /// THE BENCH FOR INVENTED FACTS, 28 September (Jafar's town list, item 3: "A
 /// character may only say what the simulation knows. Make the check catch it,
@@ -39,8 +40,11 @@ using Ledger.Core;
 /// and only then is a checker scored. The player's words are shown to the
 /// labellers for context and are never evidence.
 ///
-/// THE KEY is read from ANTHROPIC_API_KEY, or else from the game's own secrets
-/// file (the AI tester's and the voice tools' source), and never printed.
+/// NO KEY (Jafar, 29 September: no API calls in development): every model call
+/// goes through Claude Code on his subscription (ClaudeCodeClient). "usd" is
+/// what the tokens would cost at API rates, for comparing runs; nothing is
+/// billed. The subscription has limits too: run the smallest set that answers
+/// the question.
 static class Program
 {
     static readonly JsonSerializerOptions Plain = new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
@@ -117,7 +121,7 @@ static class Program
                 int times = int.Parse(Arg(args, "--times", "3"));
                 var ids = args.Skip(1).TakeWhile(a => !a.StartsWith("--")).ToList();
                 var drafts = ReadJsonl<Draft>(Path.Combine(dir, "drafts.jsonl")).Where(x => ids.Contains(x.id)).ToList();
-                using var client = new AnthropicClient(Key());
+                using var client = new ClaudeCodeClient();
                 foreach (var d in drafts)
                 {
                     var now = ItemsFor(d);
@@ -155,7 +159,7 @@ static class Program
                 // One line said by one of the cast at 10:00 on the first day, with
                 // who they know on the street, through the live check, every call
                 // printed: `rawline sam "Mickey had a daughter, June."`.
-                using var client = new AnthropicClient(Key());
+                using var client = new ClaudeCodeClient();
                 var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "cast", "cards", args[1] + ".md")));
                 var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
                 var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Dry, grey.", new GameTime(0, 10, 0).ToldAs, null, cast.PeopleFor(args[1], 0, 10));
@@ -169,7 +173,7 @@ static class Program
             {
                 // One draft's checker answer as written, for reading why it flagged.
                 var d = ReadJsonl<Draft>(Path.Combine(dir, "drafts.jsonl")).First(x => x.id == args[1]);
-                using var client = new AnthropicClient(Key());
+                using var client = new ClaudeCodeClient();
                 var items = ItemsFor(d);
                 var known = ClaimCheck.NumberedKnown(items);
                 var r = await client.CompleteAsync(ClaimCheck.RequestItems(Models.Ambient, known, d.reply));
@@ -216,7 +220,7 @@ static class Program
                               ch.GetProperty("says").EnumerateArray().Select(x => x.GetString()).ToList()));
             }
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var drafts = new List<Draft>();
         var gate = new SemaphoreSlim(parallel);
         var failures = 0;
@@ -280,7 +284,7 @@ static class Program
     {
         var drafts = ReadJsonl<Draft>(Path.Combine(dir, "drafts.jsonl"));
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         foreach (var model in Labellers)
         {
             var rows = new List<LabelRow>();
@@ -400,7 +404,7 @@ static class Program
         var gold = ReadJsonl<GoldRow>(Path.Combine(dir, "gold.jsonl"))
             .Where(g => half == "all" || (half == "tune") == TuneSets.Contains(drafts[g.id].set)).ToList();
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var results = new List<object>();
         var ms = new List<long>();
         int tp = 0, fn = 0, fp = 0, tn = 0, unchecked1 = 0;
@@ -450,7 +454,7 @@ static class Program
         };
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var rows = new List<object>();
         var gate = new SemaphoreSlim(parallel);
         foreach (bool rule in new[] { false, true })
@@ -506,7 +510,7 @@ static class Program
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var rows = new List<object>();
         var gate = new SemaphoreSlim(parallel);
         int fallback = 0, refused = 0, n = 0, failed = 0;
@@ -569,7 +573,7 @@ static class Program
         var cast = CastDay.Parse(File.ReadAllText(Path.Combine(RepoRoot(), "production", "specs", "hook-cast.json")));
         var now = new GameTime(2, 14, 30);
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var rows = new List<object>();
         var gate = new SemaphoreSlim(parallel);
         var tally = new Dictionary<string, int[]>();   // with/without -> right, wrong, none
@@ -625,7 +629,7 @@ static class Program
         var now = new GameTime(2, 14, 30);
         var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Dry, grey.", now.ToldAs, null, cast.PeopleFor("lena", now.Day, now.Hour), null, cast.HoursFor(now.Day, now.Hour, now.Minute));
         var known = ClaimCheck.NumberedKnown(items);
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         foreach (var (detail, truth) in new[] { ("Hal's shuts at one on Wednesdays", true), ("the newsagent's opens seven till twelve on Sundays", true), ("the laundry opens at eight", true),
                                                ("the cafe shuts at twelve on Sundays", true), ("Rita's is shut now", true),
                                                ("the laundry opens at half eight", false), ("Rita's shuts at half five on Wednesdays", false), ("the fish shop is shut on Thursdays", false),
@@ -665,7 +669,7 @@ static class Program
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, "rocco.md")));
         var items = ClaimCheck.KnownItems(card, new List<MemoryEvent>(), null, null, "Quay Street, early evening, dry.", new GameTime(2, 18, 0).ToString());
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         int flagged = 0, passed = 0;
         var rows = new List<object>();
         foreach (var line in lines)
@@ -707,7 +711,7 @@ static class Program
         };
         var cardsDir = Path.Combine(RepoRoot(), "production", "cast", "cards");
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var rows = new List<object>();
         var gate = new SemaphoreSlim(parallel);
         foreach (bool now in new[] { false, true })
@@ -903,7 +907,7 @@ static class Program
                               ch.GetProperty("says").EnumerateArray().Select(x => x.GetString()).ToList()));
             }
         var cost = new CostTracker();
-        using var client = new AnthropicClient(Key());
+        using var client = new ClaudeCodeClient();
         var turns = new List<Draft>();
         var meta = new Dictionary<string, (long ms, bool fixedLine, bool redrafted)>();
         var firstHeardMs = new List<long>();
@@ -996,14 +1000,6 @@ static class Program
 
     // ------------------------------------------------------------------ plumbing
 
-    static string Key()
-    {
-        var env = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-        if (!string.IsNullOrEmpty(env)) return env;
-        var p = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json");
-        using var d = JsonDocument.Parse(File.ReadAllText(p));
-        return d.RootElement.GetProperty("anthropic_api_key").GetString();
-    }
 
     static void WriteJsonl<T>(string path, IEnumerable<T> rows)
     {

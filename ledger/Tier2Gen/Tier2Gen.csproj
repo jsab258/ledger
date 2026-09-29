@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../Assets/Scripts/Core/**/*.cs" />
+    <Compile Include="../DevTools/*.cs" />
   </ItemGroup>
 </Project>

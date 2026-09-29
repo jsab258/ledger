@@ -2,6 +2,14 @@
  "about": "Every file or folder of 100 MB or more that Claude created, with what made it and why (tools/large_files.py; CLAUDE.md, Disk).",
  "entries": [
   {
+   "path": "C:/Users/Jafar/ledger-local/.claude/worktrees/agent-a0a0826911959653e",
+   "madeBy": "the town session's third independent check of Sheila's trust (an Agent run with a worktree of its own), 29 September",
+   "why": "a throwaway copy of the repository at 66a6ab9f for the reviewer to build and probe; not needed once its report came back; not gitignored in ledger-local, so it shows as untracked there",
+   "status": "superseded",
+   "recorded": "2026-09-29",
+   "mb": 2561
+  },
+  {
    "path": "F:/LedgerTools/approved-cast-2026-09-25",
    "madeBy": "Claude, 25 Sep",
    "why": "a second copy of the three approved faces while Dropbox has no room for them",

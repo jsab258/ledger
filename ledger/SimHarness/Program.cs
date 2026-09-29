@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 using Ledger.Game;
 
 namespace Ledger.SimHarness
@@ -13,7 +14,8 @@ namespace Ledger.SimHarness
     /// reflection, suspicion, guardrails) without Unity.
     ///
     ///   dotnet run                fake mode  — deterministic, free, runs anywhere
-    ///   dotnet run -- --live      live mode  — real Anthropic API (ANTHROPIC_API_KEY),
+    ///   dotnet run -- --live      live mode  — a real model through Claude Code on
+    ///                             Jafar's subscription (never a key, never in a workflow),
     ///                             an LLM plays the player and an LLM judges Lena.
     ///
     /// Writes sim-report.md; exit code 0 = all checks passed.
@@ -21,7 +23,7 @@ namespace Ledger.SimHarness
     {
         static bool _live;
         static ILlmClient _npcClient;
-        static AnthropicClient _judgeClient;
+        static ILlmClient _judgeClient;
         static readonly CostTracker Cost = new CostTracker();
         static readonly StringBuilder Md = new StringBuilder();
         static int _passed, _failed;          // deterministic — the hard CI gate
@@ -35,15 +37,11 @@ namespace Ledger.SimHarness
             // number in sim-report.md (audit 2026-07-27).
             System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
             _live = Array.IndexOf(args, "--live") >= 0;
-            var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-            if (_live && string.IsNullOrEmpty(key))
-            {
-                Console.WriteLine("--live requires ANTHROPIC_API_KEY");
-                return 2;
-            }
-
-            _npcClient = _live ? (ILlmClient)new AnthropicClient(key) : new FakeLlm();
-            if (_live) _judgeClient = new AnthropicClient(key);
+            // NO API CALLS IN DEVELOPMENT (Jafar, 29 September): live mode runs
+            // through Claude Code on his subscription, never a key, and never
+            // from a workflow.
+            _npcClient = _live ? (ILlmClient)new ClaudeCodeClient() : new FakeLlm();
+            if (_live) _judgeClient = new ClaudeCodeClient();
 
             Md.AppendLine($"# LEDGER AI playtest report ({(_live ? "LIVE" : "fake")} mode)");
             Md.AppendLine();

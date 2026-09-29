@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Ledger.Core;
+using Ledger.DevTools;
 
 /// WHAT THE CHARACTERS ACTUALLY SAY — the half of the writing verdict that has
 /// never been looked at.
@@ -173,14 +174,9 @@ static class Program
             return 0;
         }
 
-        var key = Environment.GetEnvironmentVariable("ANTHROPIC_API_KEY");
-        if (string.IsNullOrEmpty(key))
-        {
-            Console.WriteLine("ConvoProbe: ANTHROPIC_API_KEY is not set; nothing generated.");
-            return 1;
-        }
-
-        var client = new AnthropicClient(key);
+        // NO API CALLS IN DEVELOPMENT (Jafar, 29 September): through Claude
+        // Code on his subscription, never a key.
+        var client = new ClaudeCodeClient();
         var cost = new CostTracker();
         var sb = new StringBuilder();
         sb.AppendLine("# What the characters actually say");

@@ -9,6 +9,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../Assets/Scripts/Core/**/*.cs" />
+    <Compile Include="../DevTools/*.cs" />
     <!-- Engine-independent by design: the same cards and roster here and in-game -->
     <Compile Include="../Assets/Scripts/Game/LenaSetup.cs" />
     <Compile Include="../Assets/Scripts/Game/CastSetup.cs" />
