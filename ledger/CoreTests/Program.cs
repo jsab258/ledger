@@ -5249,6 +5249,105 @@ namespace Ledger.CoreTests
                       "keys are filled as bound and never guessed or left blank; a damaged save counts only a moment's exact name; every moment has words, within the content rule", wordsBad ?? "");
             }
 
+            // MICKEY'S ARRANGEMENT IN THE NEW GAME (town list 6z): the outfit asks
+            // every other night from the first, in order; refusing ends it at once,
+            // three nights not turning up end it, and nothing ends the game; the
+            // night is a story told first-hand either way, and comes back to his face.
+            {
+                var arr = new Arrangement();
+                bool first = arr.AsksOn(0) && !arr.AsksOn(1) && arr.NextNight == 0;
+                bool did = arr.Answer(0, NightAnswer.Did);
+                bool twice = arr.Answer(0, NightAnswer.Refused);
+                bool skipAhead = arr.Answer(4, NightAnswer.NoShow);
+                bool second = arr.AsksOn(2) && !arr.AsksOn(3);
+                arr.Answer(2, NightAnswer.NoShow);
+                arr.Answer(4, NightAnswer.NoShow);
+                bool standing = !arr.Ended && arr.AsksOn(6);
+                arr.Answer(6, NightAnswer.NoShow);
+                Check(first && did && !twice && !skipAhead && second && arr.Nights[0] == NightAnswer.Did && standing
+                      && arr.Ended && arr.EndedWhy == "stopped" && arr.NextNight == -1 && !arr.AsksOn(8) && !arr.Answer(8, NightAnswer.Did),
+                      "the outfit asks on the first night and every other night after, in order; a night done wins patience back, and three nights not turning up end it");
+                var no = new Arrangement();
+                no.Answer(0, NightAnswer.Refused);
+                var three = new Arrangement();
+                three.Answer(0, NightAnswer.NoShow); three.Answer(2, NightAnswer.NoShow); three.Answer(4, NightAnswer.NoShow);
+                Check(no.Ended && no.EndedWhy == "refused" && !no.AsksOn(2) && three.Ended && three.Nights.Count == 3,
+                      "telling them no ends Mickey's arrangement at once; three nights away end it exactly");
+                Check(!typeof(Arrangement).GetProperties().Any(p => p.PropertyType == typeof(Verdict)),
+                      "the new game's arrangement has no verdict to lose: the old week's cast-out rule stays in the legacy Campaign only");
+
+                // The outfit's talk: its man tells every answer first-hand (he took
+                // the envelope, waited in vain, or heard the no from Ron, who
+                // carried it down); Ron tells nobody. Only the envelope raises a day
+                // friend's suspicion; all three come back to his face, from people
+                // who heard it, never the man himself.
+                GossipMill Mill()
+                {
+                    var g = new GossipMill(null);
+                    foreach (var id in new[] { Arrangement.OutfitMan, "rocco" })
+                        g.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    return g;
+                }
+                var night = new GameTime(0, 22, 30);
+                var mDid = Mill(); new Arrangement().Answer(0, NightAnswer.Did, mDid, night);
+                var mNo = Mill(); new Arrangement().Answer(0, NightAnswer.Refused, mNo, night);
+                var mAway = Mill(); new Arrangement().Answer(0, NightAnswer.NoShow, mAway, night);
+                var rDid = mDid.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
+                var rNo = mNo.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
+                var rAway = mAway.Get(Arrangement.OutfitMan).Rumors.Find(x => x.TopicKey == Arrangement.TopicFor(0));
+                string noTime = null;
+                try { new Arrangement().Answer(0, NightAnswer.Did, Mill()); } catch (ArgumentException noTimeErr) { noTime = noTimeErr.Message; }
+                bool manSaw = mNo.Get(Arrangement.OutfitMan).Memory.Events.Exists(e => e.Text == "I saw it myself: Ron came down the landing to say Mickey's nephew told them no");
+                Check(rDid != null && rDid.Sensitive && rDid.Content.Value == "did" && rDid.Hops == 0
+                      && rNo != null && !rNo.Sensitive && rNo.Content.Value == "refused" && mNo.Get("rocco").Rumors.Count == 0 && manSaw
+                      && rAway != null && !rAway.Sensitive && rAway.Content.Value == "noshow"
+                      && noTime != null,
+                      "every night is the outfit's talk, told first-hand by its man, what he himself saw; only the envelope is a secret; Ron tells nobody; never without a time");
+                Rumor Heard(Rumor r) => new Rumor { Content = r.Content, OriginId = r.OriginId, Summary = r.Summary, Confidence = 0.6, Hops = 1, Sensitive = r.Sensitive };
+                var holder = new Gossiper("h", "h", new MemoryStore("h"), new KnowledgeBase(), new SuspicionTracker());
+                var hNo = Heard(rNo); holder.Rumors.Add(hNo);
+                var shows = StreetVoice.StoryThatShows(holder, 0.3);
+                var faceNo = StreetVoice.Recognition(holder, hNo, StanceKind.Comments, 0);
+                var faceDid = StreetVoice.Recognition(holder, Heard(rDid), StanceKind.Comments, 0);
+                var faceAway = StreetVoice.Recognition(holder, Heard(rAway), StanceKind.Comments, 0);
+                var manSays = StreetVoice.Recognition(mNo.Get(Arrangement.OutfitMan), rNo, StanceKind.Comments, 0);
+                Check(shows == hNo && faceNo != null && faceNo.Bank == "recognition/outfit-refused" && faceDid.Bank == "recognition/outfit-did"
+                      && faceAway.Bank == "recognition/outfit-noshow" && ContentRule.SpeechBreaks(faceNo.Text) == null && !faceNo.Text.Contains("last night")
+                      && manSays != null && !manSays.Bank.StartsWith("recognition/outfit"),
+                      "what he did with the ask shows, though only the envelope is a secret, and comes back in its own words from those who heard it (\"Heard you told them no.\"), never from the man who was there", faceNo?.Text ?? "");
+
+                // A night nobody answered is a night he stayed away: the asks never
+                // stop unnoticed.
+                var gap = new Arrangement();
+                gap.Answer(0, NightAnswer.Did);
+                var mGap = Mill();
+                gap.PassedTo(5, mGap, new GameTime(5, 9, 0));
+                bool afterGap = gap.Nights.Count == 3 && gap.Nights[2] == NightAnswer.NoShow && gap.Nights[4] == NightAnswer.NoShow && gap.AsksOn(6) && !gap.Ended
+                                && mGap.Get(Arrangement.OutfitMan).Rumors.Count(x => x.Content.Value == "noshow") == 2;
+                gap.PassedTo(13);
+                Check(afterGap && gap.Ended && gap.EndedWhy == "stopped" && gap.NextNight == -1,
+                      "every ask night that passed unanswered counts as a night he stayed away, told by the outfit's man, until the arrangement ends");
+
+                // The save replays play in order: what play could not reach is dropped.
+                var saved = MiniJson.Serialize(arr.ToJson());
+                var back = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(saved)));
+                var planted = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                    "{\"first\": 3, \"nights\": [[3, \"did\"], [4, \"refused\"], [5, \"did\"]]}")));
+                var outOfOrder = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                    "{\"nights\": [[2, \"noshow\"], [0, \"did\"], [4, \"noshow\"]]}")));
+                var huge = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                    "{\"first\": 1e300, \"nights\": [[1e300, \"did\"]]}")));
+                var fraction = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"first\": 2.7, \"nights\": []}")));
+                var laterStart = new Arrangement(3);
+                laterStart.Answer(3, NightAnswer.Refused);
+                var laterBack = Arrangement.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(laterStart.ToJson()))));
+                Check(back.Ended && back.EndedWhy == "stopped" && back.Nights.Count == 4 && Math.Abs(back.Patience - arr.Patience) < 1e-9
+                      && planted.FirstDay == 3 && planted.Nights.Count == 1 && planted.NextNight == 5
+                      && outOfOrder.Nights.Count == 0 && huge.FirstDay == 0 && huge.Nights.Count == 0 && fraction.FirstDay == 0
+                      && laterBack.FirstDay == 3 && laterBack.Ended && laterBack.EndedWhy == "refused",
+                      "the save keeps the first night and replays the nights in order through the same rules: nothing play could not reach survives a load");
+            }
+
             // A FIRST SENTENCE THAT FAILS ITS OWN CHECK (town list 6a): that draft
             // is stopped there and the second draft asked for at once, streamed,
             // its own first sentence handed over as soon as it passes.
@@ -25297,7 +25396,7 @@ namespace Ledger.CoreTests
             Check(hookPath != null, "the whole cast's file is in the repository");
             if (hookPath == null) return;
             var hook = CastDay.Parse(File.ReadAllText(hookPath));
-            Check(hook.People.Count == 40 && hook.Ties.Count == 80, "forty people, their eighty friendships", $"{hook.People.Count} {hook.Ties.Count}");
+            Check(hook.People.Count == 41 && hook.Ties.Count == 81, "forty-one people (the outfit's man since town list 6z), their eighty-one friendships", $"{hook.People.Count} {hook.Ties.Count}");
             int neverH = 0, shortH = 0;
             string firstShort = "";
             foreach (var (a, b, w) in hook.Ties)
