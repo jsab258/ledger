@@ -2424,8 +2424,37 @@ namespace
 		double AskedAt = 0.0;
 		bool bFirstSaid = false;   // the answer's first sentence came early and is being spoken
 		double FirstAt = 0.0;      // when the answer's first words arrived (-AskScript's measure)
+		// THE AI NOTICE, A REPORT, A PAUSE, 29 September (the town session's
+		// handovers 6c and 6t): the helper's ready line carries the notice and
+		// the report key's label; each reply may say live talk has paused.
+		std::string NoticeTitle, NoticeText, ReportLabel;
+		bool bNoticeShown = false, bPausedShown = false;
+		int LastReplyId = 0;       // the turn R reports
+		FString LastReplyName;
 	};
 	FLiveHelper GLive;
+
+	// THE NOTICE, plainly, before the first conversation and on F1: that the
+	// street's people answer with an AI, and where typed words go (its text is
+	// the helper's own, AiNotice, so the words live in one place).
+	void ShowAiNotice()
+	{
+		if (GLive.NoticeText.empty() || GLive.NoticeText == "none") { return; }
+		Say(Un(GLive.NoticeTitle == "none" ? std::string() : GLive.NoticeTitle + ": ") + Un(GLive.NoticeText), 16.0f, FColor(210, 210, 210));
+		Say(TEXT("(F1 shows this again. R reports the last reply.)"), 16.0f, FColor(170, 170, 170));
+		GLive.bNoticeShown = true;
+	}
+
+	// THE LAST REPLY REPORTED, with no note (R, or -AskReport after the
+	// scripted first line): the helper keeps it with what was said and
+	// answers with its thanks, shown when it comes back.
+	void LiveReportLast()
+	{
+		if (GLive.LastReplyId == 0) { Say(TEXT("Nothing anybody has said to report yet."), 4.0f, FColor(210, 210, 210)); return; }
+		const std::string Req = "{\"report\":" + std::to_string(GLive.LastReplyId) + ",\"why\":\"\"}\n";
+		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: reported turn %d (%s)"), GLive.LastReplyId, *GLive.LastReplyName);
+	}
 
 	void LiveHelperStart()
 	{
@@ -2789,7 +2818,21 @@ namespace
 		{
 			const std::string L = GLive.Buf.substr(0, Nl);
 			GLive.Buf.erase(0, Nl + 1);
-			if (L.find("\"ready\"") != std::string::npos) { GLive.bReady = true; continue; }
+			if (L.find("\"ready\"") != std::string::npos)
+			{
+				GLive.bReady = true;
+				GLive.NoticeTitle = JsonField(L, "title");
+				GLive.NoticeText = JsonField(L, "text");
+				GLive.ReportLabel = JsonField(L, "report");
+				continue;
+			}
+			// A REPORT ANSWERED: the helper keeps the line and thanks the player.
+			if (L.find("\"reported\"") != std::string::npos)
+			{
+				const std::string Thanks = JsonField(L, "thanks");
+				Say(Thanks == "none" ? FString(TEXT("Reported. Thank you.")) : Un(Thanks), 6.0f, FColor(210, 210, 210));
+				continue;
+			}
 			if (GLive.PendingId != 0 && L.find("\"id\":" + std::to_string(GLive.PendingId) + ",") != std::string::npos)
 			{
 				// THE FIRST SENTENCE, EARLY: said and spoken at once; the answer's
@@ -2804,6 +2847,16 @@ namespace
 					continue;
 				}
 				const std::string Reply = JsonField(L, "reply");
+				// LIVE TALK PAUSED, said once and plainly, not in a character's
+				// voice (their brush-off still plays): why, and when it comes back.
+				const std::string Paused = JsonField(L, "paused");
+				if (Paused != "none" && !Paused.empty() && !GLive.bPausedShown)
+				{
+					Say(Un(Paused), 12.0f, FColor(210, 210, 210));
+					GLive.bPausedShown = true;
+				}
+				GLive.LastReplyId = GLive.PendingId;
+				GLive.LastReplyName = GLive.PendingName;
 				if (GLive.bFirstSaid)
 				{
 					const std::string Rest = JsonField(L, "rest");
@@ -2823,6 +2876,15 @@ namespace
 				if (GPhase == ECrimePhase::LiveRoam) { SaveEncounterToDisk(); }
 			}
 		}
+		// R: the last reply reported, with no note; F1: the notice again.
+		int32 Reports = 0, Notices = 0;
+		if (ALedgerSliceCharacter* Slice = Cast<ALedgerSliceCharacter>(GPawn))
+		{
+			Reports = Slice->ConsumeReportRequests();
+			Notices = Slice->ConsumeNoticeRequests();
+		}
+		if (Notices > 0) { ShowAiNotice(); }
+		if (Reports > 0) { LiveReportLast(); }
 		if (GLive.PendingId != 0 && FPlatformTime::Seconds() - GLive.AskedAt > 30.0)
 		{
 			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
@@ -2845,6 +2907,7 @@ namespace
 	void OpenSayBox(UWorld* World)
 	{
 		if (bSayOpen || GEngine == nullptr || GEngine->GameViewport == nullptr || World == nullptr) { return; }
+		if (!GLive.bNoticeShown) { ShowAiNotice(); }
 		bSayCommitted = bSayCancelled = false;
 		GSaid.Reset();
 		SAssignNew(GSayBox, SBox)
@@ -2899,7 +2962,7 @@ namespace
 	// last has been heard out; for each, the seconds from the line sent to the
 	// answer's first words and to its first sound playing are written to
 	// ask-script.json in the game's log folder, and the game then closes.
-	struct FAskScript { int32 Left = 0, N = 0; bool bWaiting = false; double SentAt = 0.0, HeardAt = 0.0; FString Rows; };
+	struct FAskScript { int32 Left = 0, N = 0; bool bWaiting = false, bReported = false; double SentAt = 0.0, HeardAt = 0.0; FString Rows; };
 	FAskScript GAsk;
 
 	void AskScriptTick(double Now)
@@ -2943,6 +3006,8 @@ namespace
 		}
 		if (!GLive.bReady || GLive.PendingId != 0 || (GVoice.bStarted && !GVoice.bReady) || !bVoiceIdle) { return; }
 		const int32 I = GAsk.N - GAsk.Left;
+		if (I == 0 && !GLive.bNoticeShown) { ShowAiNotice(); }
+		if (I == 1 && FParse::Param(FCommandLine::Get(), TEXT("AskReport")) && GAsk.Rows.Len() > 0 && !GAsk.bReported) { LiveReportLast(); GAsk.bReported = true; }
 		const Who& P = People[I % 3];
 		if (P.Body == nullptr || !P.G) { return; }
 		if (LiveAsk(P.G, P.Card, P.Id, P.Rung, FString(P.Name), Lines[I % 6]))

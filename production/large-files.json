@@ -1110,6 +1110,14 @@
    "mb": 13163
   },
   {
+   "path": "F:/LedgerTools/voxcpm2",
+   "madeBy": "uv venv + pip install voxcpm (CPU torch), 29 September",
+   "why": "VoxCPM2 (Apache-2.0) for acted lines made in advance (Jafar's list, item 6); the model itself is in F:/LedgerTools/hf",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 1458
+  },
+  {
    "path": "F:/town-verify",
    "madeBy": "the town session, 28 September: a copy of the code, exported to test one commit on its own",
    "why": "scratch, no longer needed; it sits outside the places I may delete, so it waits for Jafar's yes",

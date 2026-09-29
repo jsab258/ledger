@@ -67,13 +67,22 @@ private:
 	void RequestTalk();
 	// ESC LEAVES THE GAME, 24 September: the encounter saves as it goes.
 	void RequestQuit();
+	// R REPORTS THE LAST REPLY and F1 SHOWS THE AI NOTICE AGAIN, 29 September
+	// (the town session's handover 6c: the EU's AI Act wants the notice by the
+	// first conversation, and players a way to report what a character said).
+	void RequestReport();
+	void RequestNotice();
 public:
 	int32 ConsumeActRequests();
 	int32 ConsumeTalkRequests();
+	int32 ConsumeReportRequests();
+	int32 ConsumeNoticeRequests();
 
 private:
 	int32 ActRequests = 0;
 	int32 TalkRequests = 0;
+	int32 ReportRequests = 0;
+	int32 NoticeRequests = 0;
 	void MarkStreetWalkable();
 	void BuildStreetNavigation();
 
