@@ -63,6 +63,7 @@ static class Program
                                             Arg(args, "--teller", null), int.Parse(Arg(args, "--told-at", "22"), Inv), Arg(args, "--answer", "did"));
         if (Array.IndexOf(args, "--loud") >= 0) return Loud(cast, Array.IndexOf(args, "--second-night") >= 0);
         if (Array.IndexOf(args, "--first-hour") >= 0) return FirstHourOnPaper(cast, double.Parse(Arg(args, "--rate", "2"), Inv));
+        if (Array.IndexOf(args, "--found") >= 0) return FoundInTheMorning(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -208,6 +209,49 @@ static class Program
             Console.WriteLine($"  hearers who say something about the story at least once: {perHearer(storyRemarkers) * 100:0}%  " +
                               $"(half-remembered, to a companion: {(storyRemarkers > 0 ? faintRemarkers / storyRemarkers * 100 : 0):0}% of those who say something)");
         }
+        return 0;
+    }
+
+    /// THE DAMAGE FOUND IN THE MORNING (town list 6br): Rita's window put in at
+    /// half past eleven on a Tuesday night, seen by nobody, mended by the
+    /// glazier at four on the Wednesday; each hour whoever comes into Rita's
+    /// finds it (TownNews.Found), and the gossip ticks on the cast's routines.
+    /// Who finds it and when, and how many hold it at noon and at six on the
+    /// Wednesday and at noon on the Thursday; and that it raised nobody's
+    /// suspicion.
+    static int FoundInTheMorning(CastDay cast)
+    {
+        var graph = new SocialGraph();
+        foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+        var mill = new GossipMill(graph);
+        foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+        var broke = new GameTime(1, 23, 30);
+        var mended = new GameTime(2, 16, 0);
+        const string said = "somebody put Rita's window in";
+        var damage = new Aftermath("ritas", "rita_window", said, broke, mended);
+        double suspicionBefore = mill.Agents.Sum(a => a.Suspicion.Value);
+        var finders = new List<string>();
+        int Holders() => mill.Agents.Count(a => a.Rumors.Any(r => r.Content != null && r.Content.Subject == TownNews.Subject && r.Content.Predicate == "rita_window"));
+        var at = new Dictionary<string, int>();
+        mill.Age(new GameTime(2, 0, 0));
+        for (int abs = 24; abs < 24 * 4; abs++)
+        {
+            int day = abs / 24, hod = abs % 24;
+            var now = new GameTime(day, hod, 0);
+            var nowFound = damage.Tick(mill, cast, now);
+            foreach (var (who, when) in nowFound) finders.Add($"{who} {when.Hour:00}:00");
+            for (int minute = 0; minute < 60; minute += 6)
+                mill.Tick(new GameTime(day, hod, minute), (a, b) => cast.Together(a, b, day, hod));
+            mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
+            if (day == 2 && hod == 11) at["Wednesday noon"] = Holders();
+            if (day == 2 && hod == 17) at["Wednesday six"] = Holders();
+            if (day == 3 && hod == 11) at["Thursday noon"] = Holders();
+        }
+        double suspicionAfter = mill.Agents.Sum(a => a.Suspicion.Value);
+        Console.WriteLine($"found in the morning: Rita's window, put in Tuesday 23:30 unseen, mended Wednesday 16:00");
+        Console.WriteLine($"  found by {finders.Count}: {string.Join(", ", finders)}");
+        foreach (var kv in at) Console.WriteLine($"  hold it by {kv.Key}: {kv.Value} of {cast.People.Count}");
+        Console.WriteLine($"  suspicion of him, summed over the cast: {suspicionBefore:0.###} before, {suspicionAfter:0.###} after");
         return 0;
     }
 

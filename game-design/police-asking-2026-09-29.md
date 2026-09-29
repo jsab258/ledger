@@ -42,8 +42,9 @@ Whoever heard it:
 ## Measured
 
 On the first hour on paper (TownReach --first-hour), when he takes the
-envelope every night she comes on day 5 at minute 48, asks six people, and by
-minute 60 nine hold it; Sheila says it to his face at minute 49 ("That
+envelope every night she comes on day 5 at minute 48 and asks six of the
+street's ten, and by minute 60 nine hold it (on the forty: she asks thirteen,
+and thirty-five hold it); Sheila says it to his face at minute 49 ("That
 detective stopped me about you."). On the other paths she does not come.
 
 ## For Jafar
