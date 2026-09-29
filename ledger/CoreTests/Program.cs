@@ -5663,6 +5663,31 @@ namespace Ledger.CoreTests
                       "a reply naming a real brand is asked again without it, and the character is told not to in the first place", brandKept);
             }
 
+            // SAID TO HIS FACE (town list 6bc): the deed the Core had them raise, in
+            // their own words, is reported; a fallback or refusal is not; why they are
+            // wary, cited by a clean check, counts as speaking of the deed.
+            {
+                var faceTalk = new ScriptedLlm("Was that you at Rita's the other night?");
+                var faceCheck = new ScriptedLlm("{\"specifics\": [{\"detail\": \"he was seen near Rita's\", \"kind\": \"place\", \"source\": \"W1\"}]}");
+                var fe2 = new ConversationEngine(faceTalk, card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = faceCheck };
+                fe2.Suspicion.Raise(0.6, "I saw him near Rita's window");
+                fe2.CurrentDeed = "player.window_d1";
+                await fe2.SayToAsync("Evening.", new GameTime(2, 20, 0), "");
+                var putFirst = new List<string>(fe2.LastPutToHim);
+                var spokeFirst = new List<string>(fe2.LastSpokeOf);
+                var calm = new ConversationEngine(new ScriptedLlm("Evening to you."), card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                calm.CurrentDeed = "player.window_d1";
+                await calm.SayToAsync("Evening.", new GameTime(2, 20, 0), "");
+                var refused = new ConversationEngine(new ScriptedLlm("Was that you? You'd best have a pint and tell me."), card, new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), cost);
+                refused.Suspicion.Raise(0.6, "I saw him near Rita's window");
+                refused.CurrentDeed = "player.window_d1";
+                await refused.SayToAsync("Evening.", new GameTime(2, 20, 0), "");
+                Check(putFirst.Count == 1 && putFirst[0] == "player.window_d1" && spokeFirst.Contains("player.window_d1")
+                      && calm.LastPutToHim.Count == 0 && refused.LastPutToHim.Count == 0,
+                      "a deed they were set to raise with him, said in their own words, is reported as said to his face; not when they were calm, nor when the line was refused",
+                      string.Join(",", putFirst) + " | " + string.Join(",", spokeFirst));
+            }
+
             // TALK DOES NOT START OVER WHILE HE THINKS (town list 6az): a quiet spell of
             // two or three game hours, or midnight, keeps the conversation; six apart
             // start it again; once the game marks fresh talk, only the game does.

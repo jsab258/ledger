@@ -63,6 +63,7 @@ The reply:
 | `suspicion`, `level`, `why`, `manner` | where their suspicion stands, why, and how a story about him made them behave |
 | `invented`, `promised` | details the check refused, and promises the world will not keep, in the first draft (asked again without) |
 | `spokeOf` | the stories a reply drew on, for the session record's `known` event (town list 6ah) |
+| `putToHim` | the deed they raised with him to his face this turn, in their own words: asked him straight out, put a caught or doubted answer to him, or took up his owning up; for the session record's `known` event, how "question" (town list 6bc) |
 | `claim` | his answer about where he was: `topic`, `areas`, `result` (`consistent`, `contradiction`, `unknown`), `definite`, and `later` when judged on a later turn (town list 6ac, 6am) |
 | `ownedUp` | the deed's topic when he owned up to it (town list 6al) |
 | `keepsQuiet` | `topic`, `agreed`, `fragile`: when he asked them to keep it quiet, and the Core's answer (town list 6al) |
