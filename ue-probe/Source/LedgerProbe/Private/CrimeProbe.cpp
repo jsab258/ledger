@@ -3749,18 +3749,27 @@ namespace
 			GLook.bFilm = FParse::Param(FCommandLine::Get(), TEXT("LookCamera"));
 			if (GLook.bFilm)
 			{
-				// IN FRONT OF HER, ON THE FAR SIDE FROM HIS PATH, at eye height,
-				// on her head and shoulders: her face as he comes, passes and goes.
+				// OUT IN THE ROAD, NINE METRES AHEAD OF HER, on a long lens on her head
+				// and shoulders: she
+				// faces along the pavement towards it, the shop wall at her other
+				// side, and he walks away from it past her, so her head is seen
+				// turning to him as he comes, passes and goes (the review: from
+				// close in front of her he was off the frame until he had passed;
+				// her far side is the shop).
 				const FVector Head = At + FVector(0.0, 0.0, 158.0);
-				const FVector Eye = Head + Facing * 260.0 - Side * 110.0 + FVector(0.0, 0.0, 5.0);
+				const FVector Eye = Head + Facing * 900.0 + Side * 300.0 + FVector(0.0, 0.0, 5.0);
+				const FVector Look = Head - FVector(0.0, 0.0, 22.0);
 				FActorSpawnParameters P;
 				P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Head - Eye).Rotation(), P))
+				if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Look - Eye).Rotation(), P))
 				{
-					Cam->GetCameraComponent()->SetFieldOfView(38.0f);
+					Cam->GetCameraComponent()->SetFieldOfView(11.0f);
 					Cam->GetCameraComponent()->bConstrainAspectRatio = false;
 					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
 				}
+				// NO MOTION BLUR in the film: at five frames a second a quick turn
+				// smeared the face.
+				if (GEngine != nullptr) { GEngine->Exec(World, TEXT("r.MotionBlurQuality 0")); }
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: walking past Sheila, story=%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story);
 		}
@@ -3776,7 +3785,7 @@ namespace
 			GLook.LastFrame = WNow;
 			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
 				/ TEXT("LookScript") / FString::Printf(TEXT("frames-%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story)
-				/ FString::Printf(TEXT("f_%03d.png"), GLook.Frame++)), false, false);
+				/ FString::Printf(TEXT("f_%03d.png"), GLook.Frame++)), true, false);   // with the subtitles
 		}
 		AActor* Her = GVisualFor(GW1Body);
 		ULedgerPersonAnim* Look = nullptr;
