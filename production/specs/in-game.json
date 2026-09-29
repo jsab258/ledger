@@ -94,6 +94,18 @@
    "as": "approved/rebuild/init_unreal.py",
    "first": true,
    "why": "how that project runs the repository's scripts"
+  },
+  {
+   "path": "F:/LedgerTools/bodies",
+   "as": "approved/clothing/bodies",
+   "first": false,
+   "why": "the MetaHuman bodies the clothing session sews and drapes on (Jafar, 29 September: back up F:/LedgerTools/bodies)"
+  },
+  {
+   "path": "F:/LedgerTools/garments",
+   "as": "approved/clothing/garments",
+   "first": false,
+   "why": "the garments the clothing session hands back for fitting in Unreal (Jafar, 29 September: back up F:/LedgerTools/garments)"
   }
  ]
 }

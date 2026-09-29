@@ -58,6 +58,15 @@ FROM = argv[argv.index("--from") + 1] if "--from" in argv else None
 # arms, 45 degrees down, close the armpits and the sleeves cannot form)
 POSE = float(argv[argv.index("--pose") + 1]) if "--pose" in argv else None
 RETURN = 60
+# THE ONE-DAY ATTEMPT, 29 September (Jafar: drape with the arms held out, then
+# pose; production/research/clothing-pipeline/SLEEVES-2026-09-29.md). With
+# --from and --pose, the sleeve stage PINS the body panels except a band round
+# each armhole (--pin-band metres), RAMPS the sewing force from nothing and
+# turns self-collision on, and with --noreturn saves every point it settled
+# (settled_all.npy). --keep then starts from such a file as it is (no sleeve
+# re-placement, no pins) for the stage that lowers the arms.
+PIN_BAND = float(argv[argv.index("--pin-band") + 1]) if "--pin-band" in argv else 0.07
+KEEP = "--keep" in argv
 os.makedirs(OUT, exist_ok=True)
 T0 = time.time()
 EDGE = 10.0                       # cloth triangle edge, mm (the research: drape at about 10 mm)
@@ -466,6 +475,36 @@ if FROM and not BODY_ONLY:
     settled = np.load(FROM)
     for i in range(len(settled)):
         verts[i] = tuple(settled[i])
+if FROM and not BODY_ONLY and KEEP:
+    assert len(np.load(FROM)) == len(verts), "--keep needs every point settled (settled_all.npy)"
+    print("THIRD STAGE: every point from %s, nothing re-placed" % FROM, flush=True)
+if FROM and not BODY_ONLY and not KEEP and POSE is not None:
+    # CLOTH INSIDE THE BODY IS PUSHED OUT FIRST (GarmentCodeData, in the
+    # research): the body panels were draped with the arms absent, so near the
+    # back of each armpit they sit inside the raised arm, and the sleeve caps
+    # started there too, to be blasted out by the collision, tearing the back
+    # armholes 32 cm open (29 September).
+    # ONLY OUT OF THE ARMS, and only what is truly inside: pushing everything
+    # within 4 mm of the body moved torso points the wrong way near the armpit
+    # and the side seam blew apart.
+    _arm_v = []
+    for v in body_me.vertices:
+        best, w = "", 0.0
+        for g in v.groups:
+            if g.weight > w:
+                best, w = names.get(g.group, ""), g.weight
+        _arm_v.append(best.startswith(ARMISH) and not best.startswith("clavicle"))
+    _arm_f = [sum(_arm_v[k] for k in poly.vertices) * 2 > len(poly.vertices) for poly in body_me.polygons]
+    pushed = 0
+    for name in ("back", "front"):
+        for i in groups[name]:
+            co = Vector(verts[i])
+            hitp, nrm, fi, _d = BVH.find_nearest(co)
+            if hitp is not None and fi is not None and _arm_f[fi] and (co - hitp).dot(nrm) < -0.001:
+                verts[i] = tuple(hitp + nrm * 0.006)
+                pushed += 1
+    print("PUSHED OUT %d body points that lay inside the posed body" % pushed, flush=True)
+if FROM and not BODY_ONLY and not KEEP:
     armhole_of = {}
     for side in (1, -1):
         for bseg, sseg, rev in (("armhole", "capBack", False), ("armhole", "capFront", True)):
@@ -496,6 +535,31 @@ if FROM and not BODY_ONLY:
             t = max(0.0, min(1.0, y / sp["centerWrist"][1]))
             scale = (width_top + (width_cuff - width_top) * t) / width_top
             pos = centre + axis * down + (rpos - centre) * scale
+            if POSE is not None:
+                # POSED, THE SLEEVE IS A CYLINDER ROUND THE ARM ITSELF, blended
+                # from the armhole's points over its first BLEND metres: copies
+                # of the armhole's outline marched from its centre, which sits
+                # low on the torso's side, ran through the raised arm and the
+                # collision crushed the sleeves into bunches (29 September).
+                # ALONG THE ARM'S TWO SEGMENTS, shoulder to elbow and elbow to
+                # wrist: the elbows are a little bent, and a tube aimed from the
+                # shoulder at the wrist missed the forearm (29 September).
+                el = low_l if side > 0 else low_r
+                a1, a2 = (el - sh), (wr - el)
+                l1 = a1.length
+                sa = 0.03 + y / 1000.0
+                seg_axis = a1.normalized() if sa < l1 else a2.normalized()
+                base = sh + a1.normalized() * sa if sa < l1 else el + a2.normalized() * (sa - l1)
+                up_v = Vector((0, 0, 1))
+                across = seg_axis.cross(up_v).normalized()
+                over = across.cross(seg_axis).normalized()
+                w = width_top + (width_cuff - width_top) * t
+                r = w / (2 * math.pi) / 1000.0 + 0.012
+                th = math.pi * x / (w / 2)
+                cyl = base + (over * math.cos(th) + across * math.sin(th) * side) * r
+                b = max(0.0, min(1.0, down / 0.15))
+                b = b * b * (3 - 2 * b)
+                pos = pos * (1.0 - b) + cyl * b
             verts[at[("sleeve", side, k)]] = tuple(pos)
     print("SECOND STAGE: the body from %s, the sleeves from the settled armholes" % FROM, flush=True)
 
@@ -544,12 +608,75 @@ for poly in me.polygons:
 
 # POSED, the collider is the body on its skeleton, so it moves as the arms come
 # down; otherwise the still copy
-collider = body_src if POSE is not None else body
-if POSE is not None:
+# POSED, THE BODY STAGE COLLIDES WITH THE TORSO ALONE (against the whole
+# posed body, arms included, the panels slid off the shoulders to the chest,
+# 29 September); the sleeve stage collides with the whole body, but only the
+# sleeves do (below).
+collider = body_src if (POSE is not None and not BODY_ONLY) else body
+if POSE is not None and not BODY_ONLY:
     body_src.hide_set(False)
     body_src.hide_render = False
     body.hide_render = True
     body.hide_set(True)
+if FROM and not BODY_ONLY and not KEEP and POSE is not None:
+    # THE SLEEVE STAGE COLLIDES WITH THE ARMS ALONE: where a sleeve's underarm
+    # lay against the torso's side the collision shoved it and dragged the
+    # side seam 16 cm open (29 September). The arms do not move in this stage,
+    # so a still copy of them serves.
+    _am = body_me.copy()
+    _ab = bmesh.new()
+    _ab.from_mesh(_am)
+    _dl2 = _ab.verts.layers.deform.active
+    _keep = set()
+    for v in _ab.verts:
+        best, w = "", 0.0
+        for gi, wt in (v[_dl2].items() if _dl2 is not None else []):
+            if wt > w:
+                best, w = names.get(gi, ""), wt
+        if best.startswith(ARMISH) and not best.startswith("clavicle"):
+            _keep.add(v.index)
+    bmesh.ops.delete(_ab, geom=[v for v in _ab.verts if v.index not in _keep], context="VERTS")
+    _ab.to_mesh(_am)
+    _ab.free()
+    arms_obj = bpy.data.objects.new("Arms", _am)
+    bpy.context.collection.objects.link(arms_obj)
+    arms_obj.hide_render = True
+    collider = arms_obj
+    print("SLEEVE STAGE collides with the arms alone: %d points" % len(_am.vertices), flush=True)
+    # AND NO SLEEVE STARTS INSIDE AN ARM: 599 of 6428 sleeve points did, up to
+    # 7 cm deep, and the collision blasted the sleeves off the arms into a
+    # bunch under the armpit (29 September). Each goes to the arm's surface.
+    _abv = bmesh.new()
+    _abv.from_mesh(_am)
+    _bva = BVHTree.FromBMesh(_abv)
+    _inside = []
+    for i in groups["sleeve"]:
+        co = jacket.data.vertices[i].co.copy()
+        hp, nr, _f, dd = _bva.find_nearest(co)
+        if hp is not None and (co - hp).dot(nr) < 0.0:
+            _inside.append(dd)
+            # OUTWARD FROM THE ARM'S OWN AXIS until clear by 6 mm: all of them
+            # lie in the sleeve's first 20 cm, where the blend from the armhole
+            # cuts through the shoulder; along the surface normal, near the
+            # armpit, the push flipped and the cloth blew apart.
+            side_l = co.x > CX
+            sh_j, el_j = (up_l, low_l) if side_l else (up_r, low_r)
+            seg = el_j - sh_j
+            t_ax = max(0.0, min(1.0, (co - sh_j).dot(seg) / seg.length_squared))
+            c_ax = sh_j + seg * t_ax
+            d_ax = (co - c_ax)
+            if d_ax.length < 1e-6:
+                continue
+            d_ax.normalize()
+            r_ax = (co - c_ax).length
+            for _step in range(40):
+                r_ax += 0.005
+                q = c_ax + d_ax * r_ax
+                hq, nq, _fq, _dq = _bva.find_nearest(q)
+                if hq is None or (q - hq).dot(nq) > 0.006:
+                    break
+            jacket.data.vertices[i].co = c_ax + d_ax * r_ax
+    print("SLEEVE POINTS INSIDE THE ARMS moved out from the arm's axis: %d of %d, deepest %.1f mm" % (len(_inside), len(groups["sleeve"]), max(_inside) * 1000 if _inside else 0), flush=True)
 col = collider.modifiers.new("Collision", "COLLISION")
 collider.collision.thickness_outer = 0.002
 collider.collision.cloth_friction = 10.0
@@ -568,6 +695,37 @@ cs.use_collision = True
 cs.distance_min = 0.002           # the research: about 2 mm; wider rests on air and looks padded
 cs.collision_quality = 4
 cs.use_self_collision = False
+SLEEVE_STAGE = bool(FROM) and not BODY_ONLY and not KEEP and POSE is not None
+if SLEEVE_STAGE:
+    # THE BODY PINNED, except a band round each armhole that fades out, so the
+    # sleeves come to the body and not the body to the sleeves.
+    hole = [Vector(verts[i]) for pair in SEAMS.get("armhole back", []) + SEAMS.get("armhole front", []) for i in pair]
+    pin = jacket.vertex_groups.new(name="pin")
+    for name in ("back", "front"):
+        for i in groups[name]:
+            d = min((Vector(verts[i]) - h).length for h in hole) if hole else 1.0
+            w = max(0.0, min(1.0, (d - PIN_BAND * 0.4) / (PIN_BAND * 0.6)))
+            if w > 0.0:
+                pin.add([i], w, "REPLACE")
+    st.vertex_group_mass = "pin"
+    st.pin_stiffness = 1.0
+    # SELF-COLLISION STAYS OFF: the caps start on the armholes' own points,
+    # and two layers at 0 mm repel each other, tearing the seams 26 cm open in
+    # 20 frames with self-collision on (29 September).
+    cs.use_self_collision = "--self" in argv
+    cs.self_distance_min = 0.003
+    # ONLY THE SLEEVES COLLIDE WITH THE BODY (GarmentCodeData's trick, in
+    # the research): the pinned body panels, draped against the torso alone,
+    # sit where the raised arm's root is, and the arm tore the armholes 30 cm
+    # open shoving them (29 September).
+    hit = jacket.vertex_groups.new(name="collide")
+    hit.add(groups["sleeve"], 1.0, "REPLACE")
+    cs.vertex_group_object_collisions = "collide"
+    st.sewing_force_max = 2.0
+    st.keyframe_insert("sewing_force_max", frame=1)
+    st.sewing_force_max = 10.0
+    st.keyframe_insert("sewing_force_max", frame=20)
+    print("SLEEVE STAGE: body pinned outside a %.0f cm armhole band; sewing ramped 2 to 10 over 20 frames; self-collision %s" % (PIN_BAND * 100, "on" if cs.use_self_collision else "off"), flush=True)
 SEWN = min(100, FRAMES - 40)
 if POSE is not None:
     # sewn by SEWN, settled under gravity 40 frames, the arms brought down over
@@ -607,6 +765,8 @@ for fr in range(1, FRAMES + 1):
 ev = jacket.evaluated_get(bpy.context.evaluated_depsgraph_get())
 if BODY_ONLY:
     np.save(os.path.join(OUT, "settled_body.npy"), np.array([tuple(v.co) for v in ev.data.vertices]))
+if SLEEVE_STAGE:
+    np.save(os.path.join(OUT, "settled_all.npy"), np.array([tuple(v.co) for v in ev.data.vertices]))
 done = bpy.data.meshes.new_from_object(ev)
 jacket.modifiers.clear()
 old = jacket.data

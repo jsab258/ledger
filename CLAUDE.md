@@ -50,13 +50,15 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 
 - Before solving something from memory, check production/research/, which already holds nearly fifty topics.
 - Research when: before a kind of work not yet done in this project; after two failed attempts at the same thing; before relying on memory about a tool, version, API or licence that could have changed; and always before declaring anything impossible, blocked or possible only by hand.
+- THE TWO-TRIES RULE HAS TEETH (Jafar, 29 September): after two failed attempts at the same thing, research it; after one more failure, set it aside and move to the next item on the list. Every daily summary names anything that went past that. The jacket's fourteen overnight rounds must not happen again.
 - The research goes to a separate helper given the problem, not your theory about it, capped at about thirty minutes, with dated sources. Its note is saved in production/research/ under a topic folder, and the day's summary gives it one line.
 - Anything the research suggests that touches money, licences, canon or scope goes to Jafar as a decision.
 
-## Two sessions, one repository (Jafar, 28 September)
+## Three sessions, one repository (Jafar, 28 and 29 September)
 
-- The builder works in C:\Users\Jafar\ledger-local on main: the Unreal project, art, faces, clothes, voices and anything that uses the graphics card.
+- The builder works in C:\Users\Jafar\ledger-local on main: the Unreal project, art, faces, voices and anything that uses the graphics card. The graphics card is the builder's first.
 - The town session works in the git worktree C:\Users\Jafar\ledger-town on the branch town: the town's simulation, the check on invented facts, casting sheets and the story. It never touches the Unreal project, art, voices or anything that uses the graphics card. It leaves work for the builder as single lines under the Handovers heading in NOW.md; the builder wires them into the game.
+- The clothing session (Jafar, 29 September) works only in Blender, in C:\Users\Jafar\ledger-clothes: the jacket and all clothing, sewn and draped on the MetaHuman bodies the builder exports into F:\LedgerTools\bodies (Ron, Darren and Sheila, and a slim, an average and a heavy male build), handed back into F:\LedgerTools\garments. The builder leaves it single lines under the "Handovers to clothing" heading in NOW.md; it leaves the builder single lines under Handovers. The builder fits each garment in Unreal by script (MetaHuman's resizing graph with Strip Sim Mesh false, and Chaos cloth) and puts the dressed characters on Jafar's page: clothes on people are his to approve. It keeps its use of the graphics card light.
 - Each session fetches and rebases before every push, and pushes its work to main.
 
 ## How to work
@@ -70,6 +72,8 @@ canon.md (the world and content rules; it outranks everything), ROADMAP.md (mile
 - Every audit is saved in production/audits/, and each finding ends as a ruling in DECISIONS.md, one of these rules, or an item on the list, never only a prompt; the next audit checks the last one's stuck.
 - Iterate locally: build and render in Unreal on this PC, look, fix, repeat; push only accepted work. Two Unreal builds must not overlap.
 - Commits say in plain words what changed and why. Pushes run the Core tests and the Unreal build; a red run is fixed first.
+- BEFORE EVERY PUSH, KNOW WHAT IT SETS OFF (which workflows, and whether any costs money or holds the build machine), and never push on a failing check (Jafar, 29 September).
+- NOTHING COUNTS AS DONE ON PAPER (Jafar, 29 September): done means in the build and walked by the AI tester.
 - Simulation work (perception, memory, gossip, and their port) keeps its tests: CoreTests, Soak, SaveChaos, PerceptionGolden and StrangerTest before the commit, plus a regression test. The C++ port must match the C# golden table, regenerated from the C# Core for the comparison. It also gets one independent check: a subagent that has not seen your reasoning gets the change, its test, canon and the intended behaviour in plain words, and is told to break it.
 - Visual work: references live in production/reference/ only. The concept sheet governs mood, palette and composition; the photographs (links only) govern what things looked like and win where they disagree. An asset gets two attempts against its reference, then is finished from dimensions or set aside.
 - NO API CALLS IN DEVELOPMENT (Jafar, 29 September: he pays for Max, not for API calls on top). Model work (playing the game as the AI tester, judging, the few talk checks that need a real reply) runs through Claude Code on his subscription: ourselves, our helpers, or its non-interactive mode called from a script; talk tests run against the stand-in. The one exception is the characters talking live while he plays, on LEDGER's own key with a hard monthly cap, which no automated tool or workflow may ever use.
