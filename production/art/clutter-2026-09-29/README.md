@@ -63,3 +63,7 @@ Review 1 (a fresh reviewer, four pieces): the pillar box and the beacon passed;
 the kiosk and the bus stop failed and were remade. Review 2 (another fresh
 reviewer, the other seven): all passed, with narrow notes, which are beside
 each piece on Wednesday's page (https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ).
+
+## Approval
+
+Under Jafar's ruling of 29 September (CLAUDE.md, How to work) street clutter is approved by the gate alone: the nine pieces above passed both checks and go into the street; he sees them there, in the whole-street frames on his page. The pillar box and the kiosk go in plain until he rules on their marks (canon); the street name plate's lettering waits on the font's licence.

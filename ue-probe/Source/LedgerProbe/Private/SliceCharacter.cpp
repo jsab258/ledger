@@ -11,11 +11,14 @@
 #include "Engine/SkeletalMesh.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "Camera/PlayerCameraManager.h"
 #include "InputCoreTypes.h"
 #include "NavigationInvokerComponent.h"
 #include "NavigationSystem.h"
 #include "NavMesh/NavMeshBoundsVolume.h"
 #include "Components/BrushComponent.h"
+#include "Components/BoxComponent.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "TimerManager.h"
 
@@ -37,6 +40,7 @@ const TCHAR* ALedgerSliceCharacter::ClipPath(int32 Index)
 ALedgerSliceCharacter::ALedgerSliceCharacter()
 {
 	GetCapsuleComponent()->InitCapsuleSize(34.0f, 88.0f);
+	PrimaryActorTick.bCanEverTick = true;
 	// THE BODY TURNS TO WHERE IT IS GOING and the camera is the player's,
 	// as a third-person game does it.
 	bUseControllerRotationYaw = false;
@@ -65,10 +69,31 @@ ALedgerSliceCharacter::ALedgerSliceCharacter()
 	GetMesh()->SetRelativeLocationAndRotation(FVector(0.0, 0.0, -88.0), FRotator(0.0f, -90.0f, 0.0f));
 }
 
+void ALedgerSliceCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+	if (GetMesh() == nullptr) { return; }
+	// FROM WHERE THE PLAYER ACTUALLY SEES, to the nearest point of his body's
+	// upright line (feet to head): the first version measured to his head
+	// only, and a camera pressed to his chest stayed 70 cm from it.
+	const APlayerController* PC = Cast<APlayerController>(GetController());
+	const FVector View = PC != nullptr && PC->PlayerCameraManager != nullptr ? PC->PlayerCameraManager->GetCameraLocation()
+	                   : (Camera != nullptr ? Camera->GetComponentLocation() : GetActorLocation());
+	const FVector Feet = GetActorLocation() - FVector(0.0, 0.0, 88.0);
+	const FVector Top = GetActorLocation() + FVector(0.0, 0.0, 88.0);
+	const bool bClose = FVector::Dist(View, FMath::ClosestPointOnSegment(View, Feet, Top)) < HideWithinCm;
+	if (bClose != bBodyHiddenForCamera)
+	{
+		bBodyHiddenForCamera = bClose;
+		GetMesh()->SetVisibility(!bClose, true);
+	}
+}
+
 void ALedgerSliceCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	MarkStreetWalkable();
+	CloseStreetEnds();
 	USkeletalMesh* Body = LoadObject<USkeletalMesh>(nullptr, MeshPath());
 	UAnimSequenceBase* Clips[3] = { nullptr, nullptr, nullptr };
 	for (int32 I = 0; I < 3; ++I)
@@ -165,6 +190,37 @@ int32 ALedgerSliceCharacter::ConsumeActRequests()
 // The street is made at run time, so its volume is too: a box over the road,
 // both pavements and a little past each end, given its size through a box in
 // its body setup because a packaged game cannot build a brush.
+// THE STREET'S TWO ENDS ARE CLOSED, 29 September (the AI tester: running on
+// past the end of the street led onto a bare foggy plaza with buildings that
+// seem to float, an unfinished edge anyone could walk into). An invisible
+// wall across each end, a metre past the street's 42 m, 40 m wide and 4 m
+// tall, so the road, both pavements and the yards behind the frontages end
+// where the street does. Only the player's walking is stopped; nothing is
+// drawn, and a scripted run that places him by hand is not affected.
+void ALedgerSliceCharacter::CloseStreetEnds()
+{
+	UWorld* World = GetWorld();
+	if (World == nullptr) { return; }
+	for (const double X : { -100.0, 4300.0 })
+	{
+		FActorSpawnParameters P;
+		P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AActor* End = World->SpawnActor<AActor>(AActor::StaticClass(), FTransform(FVector(X, 0.0, 200.0)), P);
+		if (End == nullptr) { continue; }
+		UBoxComponent* Wall = NewObject<UBoxComponent>(End, TEXT("StreetEnd"));
+		Wall->SetBoxExtent(FVector(50.0, 2000.0, 400.0));
+		// People only: sight lines, the camera and every trace pass through.
+		Wall->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		Wall->SetCollisionObjectType(ECC_WorldStatic);
+		Wall->SetCollisionResponseToAllChannels(ECR_Ignore);
+		Wall->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);
+		Wall->SetHiddenInGame(true);
+		End->SetRootComponent(Wall);
+		Wall->RegisterComponent();
+		End->SetActorLocation(FVector(X, 0.0, 200.0));
+	}
+}
+
 void ALedgerSliceCharacter::MarkStreetWalkable()
 {
 	UWorld* World = GetWorld();

@@ -28,6 +28,7 @@ public:
 	ALedgerSliceCharacter();
 
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 
 	// The body's asset paths, one place, so the probe's load check reads the
@@ -84,9 +85,17 @@ private:
 	int32 ReportRequests = 0;
 	int32 NoticeRequests = 0;
 	void MarkStreetWalkable();
+	void CloseStreetEnds();
 	void BuildStreetNavigation();
 
 	FTimerHandle NavBuildTimer;
+
+	// THE BODY STEPS OUT OF THE CAMERA'S WAY (the AI tester, 29 September:
+	// with his back to a shopfront the camera arm shortened until his
+	// tracksuit filled the screen): hidden from the camera while it is within
+	// this distance of his body's upright line, shown again beyond it.
+	static constexpr float HideWithinCm = 55.0f;
+	bool bBodyHiddenForCamera = false;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USpringArmComponent> Boom;
