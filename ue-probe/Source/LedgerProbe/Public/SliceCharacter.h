@@ -18,6 +18,8 @@
 class USpringArmComponent;
 class UCameraComponent;
 class UNavigationInvokerComponent;
+class USoundBase;
+class USoundAttenuation;
 
 UCLASS()
 class ALedgerSliceCharacter : public ACharacter
@@ -38,6 +40,8 @@ public:
 
 	static constexpr float WalkSpeedCm = 160.0f;
 	static constexpr float RunSpeedCm = 420.0f;
+	// How far the body is lowered at a full run (SliceCharacter.cpp Tick).
+	static constexpr float RunDropCm = 21.0f;
 
 	bool bBodyLoaded = false;
 	int32 ClipsLoaded = 0;
@@ -101,6 +105,49 @@ private:
 	// this distance of his body's upright line, shown again beyond it.
 	static constexpr float HideWithinCm = 55.0f;
 	bool bBodyHiddenForCamera = false;
+
+	// FOOTSTEPS WHEN HIS FEET LAND, 30 September (the twenty a friend would
+	// notice, 18: he walked the street in silence). Each foot's lowest point
+	// (ankle or ball) above the capsule's floor is watched; a step sounds
+	// when a foot that was lifted comes down and stops, so the sound follows
+	// whatever clip plays, at any speed. Six recorded steps on stone (Fantozzi, CC0; THIRD-PARTY.md),
+	// never the same one twice running, a little louder running than walking.
+	void StepTick(float DeltaSeconds);
+	FName FootBone[2];
+	FName ToeBone[2];
+	float FootLow[2] = { 0.0f, 0.0f };
+	float FootHigh[2] = { 0.0f, 0.0f };
+	float FootPrev[2] = { 0.0f, 0.0f };
+	// Each foot's heights over the last StepWindowS, as (time, height): its
+	// range is theirs, so a jolt (pressed into someone, a kerb) is forgotten
+	// once it leaves the window instead of skewing the range for seconds.
+	TArray<FVector2f> FootSeen[2];
+	static constexpr float StepWindowS = 1.2f;
+	float TraceUntil = -1.0f;
+	bool bTracedRun = false;
+	bool bFootArmed[2] = { false, false };
+	bool bFeetSeeded = false;
+	int32 LastStepClip = -1;
+	int32 LastStepFoot = -1;
+	float StepClock = 0.0f;
+	float LastStepAt = -1.0f;
+	float StepWindowStart = 0.0f;
+	float StepsRecordingUntil = -1.0f;
+	static constexpr float StepWalkVolume = 0.3f;
+	static constexpr float StepRunVolume = 0.5f;
+
+	UPROPERTY()
+	TArray<TObjectPtr<USoundBase>> StepClips;
+
+	UPROPERTY()
+	TObjectPtr<USoundAttenuation> StepAttenuation;
+
+public:
+	int32 Steps = 0;
+	static constexpr int32 MaxStepClips = 8;
+	static FString StepClipPath(int32 Index);
+
+private:
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USpringArmComponent> Boom;

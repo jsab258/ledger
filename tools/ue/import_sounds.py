@@ -13,7 +13,8 @@ assets here, as the street's meshes do.
 WHAT IT MAKES: /Game/Ledger/Sounds/Voice/<voice>/<clip> for each person's
 pre-voiced lines (ledger/Assets/StreamingAssets/Audio/Voice) and
 /Game/Ledger/Sounds/Ambience/<name> for each ambience bed
-(production/assets/sounds), the beds set to loop.
+(production/assets/sounds), the beds set to loop; and, from 30 September,
+/Game/Ledger/Sounds/Steps/<name> for Tom's footsteps (production/assets/steps).
 
 ONE LINE, appended to ue-material.txt: asked, made, and why not.
 """
@@ -25,6 +26,7 @@ import time
 SPEC_REL = "production/specs/street-sounds.json"
 VOICE_REL = "ledger/Assets/StreamingAssets/Audio/Voice"
 AMBIENCE_REL = "production/assets/sounds"
+STEPS_REL = "production/assets/steps"
 PACKAGE_ROOT = "/Game/Ledger/Sounds"
 
 
@@ -59,6 +61,11 @@ def wanted(root):
         voice, leaf = c.split("/", 1)
         out.append((os.path.join(root, VOICE_REL, c), PACKAGE_ROOT + "/Voice/" + voice,
                     os.path.splitext(leaf)[0], False))
+    # TOM'S FOOTSTEPS, 30 September: recorded (Kenney, CC0), kept apart from
+    # the generated beds in production/assets/steps, played one at a time
+    # by the player character when a foot lands; never looped.
+    for c in spec.get("steps", {}).get("clips", []):
+        out.append((os.path.join(root, STEPS_REL, c + ".wav"), PACKAGE_ROOT + "/Steps", c, False))
     return out
 
 
@@ -89,6 +96,7 @@ def selftest():
        str([p for p, _, _, _ in w if not os.path.exists(p)][:3]))
     ok("the ambience loops and the voices do not",
        any(l for _, _, _, l in w) and any(not l for _, _, _, l in w))
+    ok("any steps named are not looped", all(not l for _, f, _, l in w if f.endswith("/Steps")))
     ok("the line carries its denominator", "soundsImported=1/2" in sounds_line(2, 1, 0, 1.0, ["x"]))
     print("import_sounds selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 1 if failed else 0
@@ -123,6 +131,14 @@ def main():
             if not isinstance(a, unreal.SoundWave):
                 notes.append("%s-not-a-soundwave" % name)
                 continue
+            # THE STEPS KEPT IN MEMORY, 30 September: a reviewer heard the first
+            # three steps about a tenth of a second late, as a clip loaded on
+            # its first play; a step is small and heard every half second.
+            if folder.endswith("/Steps"):
+                try:
+                    a.set_editor_property("loading_behavior", unreal.SoundWaveLoadingBehavior.FORCE_INLINE)
+                except Exception as e:
+                    notes.append("%s-inline-%s" % (name, str(e).splitlines()[0][:40] if str(e) else "?"))
             if loop:
                 a.set_editor_property("looping", True)
                 if a.get_editor_property("looping"):

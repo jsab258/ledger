@@ -71,6 +71,8 @@ on:
       - 'production/assets/vehicles/**'
       # AND THE STREET'S SOUNDS, 23 September (tools/ue/import_sounds.py).
       - 'production/assets/sounds/**'
+      # AND TOM'S FOOTSTEPS, 30 September (the same import).
+      - 'production/assets/steps/**'
       #
       # AND THE BLENDER RECIPES ARE NOT HERE ANY MORE. `tools/art-recipes/**`
       # was on this list from the same day and Jafar took it off on the

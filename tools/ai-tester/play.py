@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py start [--editor | --plain] [--force] [--wait 60] [--game-arg X]
+    python tools/ai-tester/play.py start [--editor | --plain | --bare] [--force] [--wait 60] [--game-arg X]
     python tools/ai-tester/play.py shot
     python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
     python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
-    python tools/ai-tester/play.py press E|T|Esc|Q
+    python tools/ai-tester/play.py press E|T|Esc|Q|Enter|Up|Down
     python tools/ai-tester/play.py say "WORDS"
     python tools/ai-tester/play.py wait SECONDS
     python tools/ai-tester/play.py note SEVERITY "WHAT"   (5 unplayable .. 1 cosmetic)
@@ -62,7 +62,10 @@ STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
 STATE = os.path.join(STATE_DIR, "state.json")
 RES = (1280, 720)
 
-SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A, "esc": 0x01, "q": 0x10}
+SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A, "esc": 0x01, "q": 0x10,
+        # THE TITLE'S KEYS, 30 September: Enter takes a choice, the arrows move
+        # between them (0xE000 marks a key Windows sends as "extended").
+        "enter": 0x1C, "up": 0xE048, "down": 0xE050}
 WALK_KEY = {"forward": "w", "back": "s", "left": "a", "right": "d"}
 PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the result and corrects
 
@@ -95,7 +98,8 @@ class INPUT(ctypes.Structure):
 
 
 def send_key(scan, up=False):
-    i = INPUT(type=1, u=_U(ki=KEYBDINPUT(0, scan, 0x0008 | (0x0002 if up else 0), 0, None)))
+    extended = 0x0001 if scan & 0xE000 else 0
+    i = INPUT(type=1, u=_U(ki=KEYBDINPUT(0, scan & 0xFF, 0x0008 | extended | (0x0002 if up else 0), 0, None)))
     user32.SendInput(1, ctypes.byref(i), ctypes.sizeof(INPUT))
 
 
@@ -422,6 +426,10 @@ def start(args):
         # Without the raw-input setting the scripted runs use for mouse turns:
         # a friend's copy has none, and it changes how typed keys reach a box.
         game_args = ["-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash"]
+    # --bare, 30 September: nothing at all on the command line, a friend's
+    # double-click: the first launch's own full screen and picture level.
+    if args.get("bare"):
+        game_args = []
     build = "editor" if args.get("editor") else "packaged"
     print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
     cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
@@ -475,8 +483,9 @@ def act(verb, rest):
         label = "turned %+.0f degrees" % degrees
     elif verb == "press":
         k = (rest[0] if rest else "E").upper()
-        # ESC AND Q, 29 September: the pause (Esc) and quitting from it (Q).
-        tap({"E": "e", "T": "t", "ESC": "esc", "Q": "q"}.get(k, "t"))
+        # ESC AND Q, 29 September: the pause (Esc) and quitting from it (Q);
+        # ENTER, UP AND DOWN, 30 September: the title.
+        tap({"E": "e", "T": "t", "ESC": "esc", "Q": "q", "ENTER": "enter", "UP": "up", "DOWN": "down"}.get(k, "t"))
         label = "pressed %s" % k
     elif verb == "say":
         words = " ".join(rest)[:200]
@@ -595,7 +604,7 @@ if __name__ == "__main__":
     verb = argv[0] if argv else ""
     rest = argv[1:]
     if verb == "start":
-        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "noraw": "--no-raw" in rest}
+        a = {"editor": "--editor" in rest, "force": "--force" in rest, "plain": "--plain" in rest, "bare": "--bare" in rest, "noraw": "--no-raw" in rest}
         if "--wait" in rest:
             a["wait"] = rest[rest.index("--wait") + 1]
         # --game-arg X, repeatable: one more argument for the game, such as a
