@@ -100,6 +100,14 @@ namespace Ledger.PerceptionGolden
             EmitRemarkLedger(sb);
             // Ported to Gossip.h, Suspecting.h and SaveCodec.h on 29 September (town list 6n).
             EmitOriginRung(sb);
+            // The independent reviewer of 6n's port, 29 September: a NaN ranked as
+            // OrderByDescending ranks it (Gossip.h Best, BestOfValue), and each
+            // agent's suspicion through a save (SaveCodec.h), and a hop count that wraps.
+            EmitBestNaN(sb);
+            EmitSuspicionSave(sb);
+            EmitHopsWrap(sb);
+            // The same reviewer's seeded gossip generator, as a family of rows (GossipFuzz.cs; its C++ twin is GossipFuzz.h).
+            GossipFuzz.Emit(sb);
 
             // ROWS AWAITING THE PORT, 28 September: the town session writes the
             // Core and its rows; the builder ports them to StreetVoice.h. Until
@@ -980,6 +988,134 @@ namespace Ledger.PerceptionGolden
                 SaveCodec.RestoreMillAgents(json, back);
                 Row(sb, "OriginRungSave", "roundTrip", string.Join(",", written.Select(x => x.ToString(Inv))), keys.ToString(Inv),
                     string.Join(",", back.Get("w").Rumors.Select(x => x.OriginRung.ToString(Inv))));
+            }
+        }
+
+        // new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker())
+        static Gossiper Ag(string id) => new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+
+        /// A NaN COPY HELD FIRST MUST NOT HIDE A REAL ONE (the independent
+        /// reviewer, 29 September). Best and BestOfValue are
+        /// OrderByDescending(Confidence).FirstOrDefault(), which ranks a NaN
+        /// below every number; the port chose with `>`, which a NaN defeats
+        /// both ways, so a NaN held first stayed "best". Weigh reads it
+        /// (talk: the telling is new to the listener, not held) and so does
+        /// Witness (witness: the faint copy is the one a clearer look firms up).
+        static void EmitBestNaN(StringBuilder sb)
+        {
+            var win = new Fact("player", "window_d1", "seen");
+            {
+                var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                var mill = new GossipMill(g);
+                mill.Add(Ag("s")); mill.Add(Ag("l"));
+                mill.Get("l").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "nan", Confidence = double.NaN, Hops = 1 });
+                mill.Get("l").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "faint", Confidence = 0.1, Hops = 1 });
+                mill.Witness("s", win, "him", true, new GameTime(1, 23, 0), 0.9);
+                var ev = mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                Row(sb, "BestNaN", "talk", ev.Count.ToString(Inv), mill.Get("l").Rumors.Count.ToString(Inv), D(mill.Get("l").Suspicion.Value));
+            }
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Ag("w"));
+                mill.Get("w").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "nan", Confidence = double.NaN, Hops = 1 });
+                mill.Get("w").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "faint", Confidence = 0.3, Hops = 1 });
+                mill.Witness("w", win, "mine", true, new GameTime(1, 23, 0), 0.5);
+                var acc = Suspecting.AccountOf(mill.Get("w"), "player.window_d1");
+                Row(sb, "BestNaN", "witness", acc.SawItMyself ? "1" : "0",
+                    string.Join(";", mill.Get("w").Rumors.Select(r => Esc(r.Summary) + ":" + r.Hops.ToString(Inv) + ":" + D(r.Confidence))));
+            }
+        }
+
+        /// A HOP COUNT AT int.MaxValue, TOLD ON (the independent reviewer, 29
+        /// September). A save can carry it (GetInt saturates "hops":1e18 to
+        /// int.MaxValue), and the C#'s r.Hops + 1 wraps to int.MinValue; in
+        /// C++ a signed overflow is undefined, so the port adds unsigned. In
+        /// talk (Tick) and when asked (CompareNotes).
+        static void EmitHopsWrap(StringBuilder sb)
+        {
+            var win = new Fact("player", "window_d1", "seen");
+            foreach (var asked in new[] { false, true })
+            {
+                var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                var mill = new GossipMill(g);
+                mill.Add(Ag("s")); mill.Add(Ag("l"));
+                mill.Get("s").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "far", Confidence = 0.9, Hops = int.MaxValue, Sensitive = true });
+                var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                var r = mill.Get("l").Best("player.window_d1");
+                Row(sb, "HopsWrap", asked ? "asked" : "talk", ev.Count.ToString(Inv), r == null ? "none" : r.Hops.ToString(Inv));
+            }
+        }
+
+        /// EACH AGENT'S SUSPICION THROUGH A SAVE (the independent reviewer, 29
+        /// September): Capture writes a.Suspicion.Value and RestoreAgents
+        /// gives it back through SuspicionTracker.Restore, clamped. The port
+        /// wrote 0 and read past it, and no row noticed, because every save
+        /// in the table carried a suspicion of 0.
+        ///   read       - a fixture carried in the row, every agent raised to
+        ///                0.5 first so an absent key is seen to restore 0
+        ///   roundTrip  - values through each engine's own writer and reader
+        ///   afterTalk  - a suspicion raised by a caught lie in talk, saved,
+        ///                and read back after a restart
+        ///   csharpSave - that save's bytes as the C# wrote them, read by the port
+        static void EmitSuspicionSave(StringBuilder sb)
+        {
+            {
+                const string fixture = "{\"agents\":["
+                    + "{\"id\":\"s0\",\"suspicion\":0.375},"
+                    + "{\"id\":\"s1\",\"suspicion\":1.5},"
+                    + "{\"id\":\"s2\",\"suspicion\":-0.2},"
+                    + "{\"id\":\"s3\",\"suspicion\":true},"
+                    + "{\"id\":\"s4\",\"suspicion\":false},"
+                    + "{\"id\":\"s5\",\"suspicion\":null},"
+                    + "{\"id\":\"s6\"},"
+                    + "{\"id\":\"s7\",\"suspicion\":1e400},"
+                    + "{\"id\":\"s8\",\"suspicion\":0.12345678901234568},"
+                    + "{\"id\":\"s9\",\"suspicion\":0.1,\"suspicion\":0.7}"
+                    + "]}";
+                var ids = Enumerable.Range(0, 10).Select(i => "s" + i.ToString(Inv)).ToArray();
+                var mill = new GossipMill(new SocialGraph());
+                foreach (var id in ids) { mill.Add(Ag(id)); mill.Get(id).Suspicion.Raise(0.5, "before the load"); }
+                SaveCodec.RestoreMillAgents(fixture, mill);
+                Row(sb, "SuspicionSave", "read", Esc(fixture), string.Join(",", ids.Select(id => D(mill.Get(id).Suspicion.Value))));
+            }
+            {
+                var written = new[] { 0.0, 0.1, 1.0 / 3.0, 0.07776, 0.9999999999999999, 1.0 };
+                var src = new GossipMill(new SocialGraph());
+                for (int i = 0; i < written.Length; i++)
+                {
+                    var id = "r" + i.ToString(Inv);
+                    src.Add(Ag(id));
+                    src.Get(id).Suspicion.Restore(written[i]);
+                }
+                var json = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(),
+                                             new BeatBook(), src, new DebtBook(), new Dictionary<string, object>());
+                var back = new GossipMill(new SocialGraph());
+                for (int i = 0; i < written.Length; i++)
+                {
+                    var id = "r" + i.ToString(Inv);
+                    back.Add(Ag(id));
+                    back.Get(id).Suspicion.Raise(0.5, "before the load");
+                }
+                SaveCodec.RestoreMillAgents(json, back);
+                Row(sb, "SuspicionSave", "roundTrip", string.Join(",", written.Select(D)),
+                    string.Join(",", Enumerable.Range(0, written.Length).Select(i => D(back.Get("r" + i.ToString(Inv)).Suspicion.Value))));
+            }
+            {
+                var win = new Fact("player", "window_d1", "seen");
+                var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                var mill = new GossipMill(g);
+                mill.Add(Ag("s")); mill.Add(Ag("l"));
+                mill.Witness("s", win, "him coming away", true, new GameTime(1, 23, 0), 0.9);
+                mill.Get("l").Knowledge.Learn(new Fact("player", "window_d1", "home all night"));
+                mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                double before = mill.Get("l").Suspicion.Value;
+                var json = SaveCodec.Capture(new GameTime(3, 9, 0), new Wallet(0), new Campaign(), new PlayerKnowledge(), new SecretsBook(),
+                                             new BeatBook(), mill, new DebtBook(), new Dictionary<string, object>());
+                var back = new GossipMill(new SocialGraph());
+                back.Add(Ag("s")); back.Add(Ag("l"));
+                SaveCodec.RestoreMillAgents(json, back);
+                Row(sb, "SuspicionSave", "afterTalk", D(before), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
+                Row(sb, "SuspicionSave", "csharpSave", Esc(json), D(back.Get("s").Suspicion.Value), D(back.Get("l").Suspicion.Value));
             }
         }
 

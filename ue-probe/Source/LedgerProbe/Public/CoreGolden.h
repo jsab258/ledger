@@ -39,6 +39,7 @@
 
 #include "GameTime.h"
 #include "Gossip.h"
+#include "GossipFuzz.h"
 #include "SaveCodec.h"
 #include "MemoryStore.h"
 #include "Observation.h"
@@ -1515,6 +1516,209 @@ namespace Golden
 		    || Fn == "SurestTold" || Fn == "NamingPlaces" || Fn == "AskedAboutBody" || Fn == "OriginRungSave";
 	}
 
+	// ---- the independent reviewer of 6n's port (29 September) ---------
+	//
+	// PerceptionGolden's EmitBestNaN and EmitSuspicionSave, built again here
+	// the same way, and GossipFuzz.cs's seeded worlds, which GossipFuzz.h
+	// builds again draw for draw. Every answer on a row is checked.
+
+	/// A double as the C#'s "R" writes it into the table, where that is a
+	/// word: NaN. By the bits, for the fast-math reason Perception.h gives.
+	inline std::string FromDoubleR(double V) { return IsNaNBits(V) ? std::string("NaN") : FromDouble(V); }
+
+	/// Each named agent's suspicion, ',' between them.
+	inline std::string SuspicionsOf(const GossipMill& Mill, const std::vector<std::string>& Ids)
+	{
+		std::string Out;
+		for (std::vector<std::string>::size_type Q = 0; Q < Ids.size(); ++Q)
+		{
+			const GossiperPtr G = Mill.Get(Ids[Q]);
+			Out += (Q ? "," : "") + (G ? FromDouble(G->Suspicion.Value()) : std::string("none"));
+		}
+		return Out;
+	}
+
+	inline Answer ReviewRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		const Fact Window("player", "window_d1", "seen");
+		const double NaN = std::numeric_limits<double>::quiet_NaN();
+		std::vector<std::string> Outs;
+		std::vector<std::string>::size_type First = 2;
+		// A NaN copy held first, and a faint one after it: a sure telling
+		// is new to the listener, and raises their suspicion.
+		if (Fn == "BestNaN" && F.size() >= 5 && F[1] == "talk")
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Nan = std::make_shared<Rumor>(Window);
+			Nan->OriginId = "x"; Nan->Summary = "nan"; Nan->Confidence = NaN; Nan->Hops = 1;
+			RumorPtr Faint = std::make_shared<Rumor>(Window);
+			Faint->OriginId = "x"; Faint->Summary = "faint"; Faint->Confidence = 0.1; Faint->Hops = 1;
+			Mill.Get("l")->Rumors.push_back(Nan);
+			Mill.Get("l")->Rumors.push_back(Faint);
+			Mill.Witness("s", Window, "him", true, GameTime(1, 23, 0), 0.9);
+			const std::vector<GossipEvent> Ev = Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(FromInt((long long)Mill.Get("l")->Rumors.size()));
+			Outs.push_back(FromDouble(Mill.Get("l")->Suspicion.Value()));
+		}
+		// The same two held by a witness: a clearer look of their own firms
+		// up the faint copy, not the NaN.
+		else if (Fn == "BestNaN" && F.size() >= 4 && F[1] == "witness")
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("w"));
+			RumorPtr Nan = std::make_shared<Rumor>(Window);
+			Nan->OriginId = "x"; Nan->Summary = "nan"; Nan->Confidence = NaN; Nan->Hops = 1;
+			RumorPtr Faint = std::make_shared<Rumor>(Window);
+			Faint->OriginId = "x"; Faint->Summary = "faint"; Faint->Confidence = 0.3; Faint->Hops = 1;
+			Mill.Get("w")->Rumors.push_back(Nan);
+			Mill.Get("w")->Rumors.push_back(Faint);
+			Mill.Witness("w", Window, "mine", true, GameTime(1, 23, 0), 0.5);
+			const GossiperPtr W = Mill.Get("w");
+			const DeedAccount Acc = Suspecting::AccountOf(W.get(), "player.window_d1");
+			std::string Held;
+			for (std::vector<RumorPtr>::size_type Q = 0; Q < W->Rumors.size(); ++Q)
+			{
+				Held += (Q ? ";" : "") + Escape(W->Rumors[Q]->Summary) + ":" + FromInt(W->Rumors[Q]->Hops)
+				      + ":" + FromDoubleR(W->Rumors[Q]->Confidence);
+			}
+			Outs.push_back(FromBool(Acc.SawItMyself));
+			Outs.push_back(Held);
+		}
+		// The C#'s fixture, carried in the row, read over agents at 0.5.
+		else if (Fn == "SuspicionSave" && F.size() >= 4 && F[1] == "read")
+		{
+			First = 3;
+			std::vector<std::string> Ids;
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			for (int Q = 0; Q < 10; ++Q)
+			{
+				Ids.push_back("s" + FromInt(Q));
+				Mill.Add(RungAgent(Ids.back()));
+				Mill.Get(Ids.back())->Suspicion.Raise(0.5, "before the load");
+			}
+			Save::RestoreMillAgents(Unescape(F[2]), Mill);
+			Outs.push_back(SuspicionsOf(Mill, Ids));
+		}
+		// Values through this engine's own writer and reader.
+		else if (Fn == "SuspicionSave" && F.size() >= 4 && F[1] == "roundTrip")
+		{
+			First = 3;
+			std::vector<std::string> Ids;
+			GossipMill Src(std::make_shared<SocialGraph>());
+			GossipMill Back(std::make_shared<SocialGraph>());
+			std::string::size_type Start = 0;
+			for (int Q = 0; Start <= F[2].size(); ++Q)
+			{
+				std::string::size_type End = F[2].find(',', Start);
+				if (End == std::string::npos) End = F[2].size();
+				Ids.push_back("r" + FromInt(Q));
+				Src.Add(RungAgent(Ids.back()));
+				Src.Get(Ids.back())->Suspicion.Restore(D(F[2].substr(Start, End - Start)));
+				Back.Add(RungAgent(Ids.back()));
+				Back.Get(Ids.back())->Suspicion.Raise(0.5, "before the load");
+				Start = End + 1;
+			}
+			Save::RestoreMillAgents(Save::CaptureMillAgents(Src), Back);
+			Outs.push_back(SuspicionsOf(Back, Ids));
+		}
+		// A suspicion raised by a caught lie in talk, saved by this engine
+		// and read back after a restart; and the C#'s save of the same.
+		else if (Fn == "SuspicionSave" && ((F.size() >= 5 && F[1] == "afterTalk") || (F.size() >= 5 && F[1] == "csharpSave")))
+		{
+			std::string Json;
+			if (F[1] == "afterTalk")
+			{
+				std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+				Gr->Link("s", "l", 0.9);
+				GossipMill Mill(Gr);
+				Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+				Mill.Witness("s", Window, "him coming away", true, GameTime(1, 23, 0), 0.9);
+				Mill.Get("l")->Knowledge->Learn(Fact("player", "window_d1", "home all night"));
+				Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+				Outs.push_back(FromDouble(Mill.Get("l")->Suspicion.Value()));
+				Json = Save::CaptureMillAgents(Mill);
+			}
+			else
+			{
+				First = 3;
+				Json = Unescape(F[2]);
+			}
+			GossipMill Back(std::make_shared<SocialGraph>());
+			Back.Add(RungAgent("s")); Back.Add(RungAgent("l"));
+			Save::RestoreMillAgents(Json, Back);
+			Outs.push_back(FromDouble(Back.Get("s")->Suspicion.Value()));
+			Outs.push_back(FromDouble(Back.Get("l")->Suspicion.Value()));
+		}
+		// A hop count at INT_MAX told on, in talk or when asked: it wraps,
+		// as the C#'s int + 1 does.
+		else if (Fn == "HopsWrap" && F.size() >= 4 && (F[1] == "talk" || F[1] == "asked"))
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Far = std::make_shared<Rumor>(Window);
+			Far->OriginId = "x"; Far->Summary = "far"; Far->Confidence = 0.9;
+			Far->Hops = std::numeric_limits<int>::max(); Far->Sensitive = true;
+			Mill.Get("s")->Rumors.push_back(Far);
+			const std::vector<GossipEvent> Ev = F[1] == "asked"
+				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
+				: Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			const RumorPtr Heard = Mill.Get("l")->Best("player.window_d1");
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(Heard ? FromInt(Heard->Hops) : std::string("none"));
+		}
+		else
+		{
+			return A;
+		}
+		A.Known = true;
+		A.Got = MultiAnswer(F, First, Outs);
+		return A;
+	}
+
+	inline bool IsReviewRow(const std::string& Fn)
+	{
+		return Fn == "BestNaN" || Fn == "SuspicionSave" || Fn == "HopsWrap";
+	}
+
+	/// GossipFuzz|scenario|seed|nan|hash|lines and GossipFuzz|save|seed|hash|lines.
+	/// THE HASH IS COMPARED AS TEXT, here, before MultiAnswer sees it: sixteen
+	/// hex digits can all be decimal ones, and two such that differ past a
+	/// double's precision would read as one number.
+	inline Answer GossipFuzzRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		GossipFuzz::Digest Dg;
+		std::vector<std::string>::size_type First = 0;
+		if (F.size() >= 6 && F[1] == "scenario" && (F[3] == "0" || F[3] == "1"))
+		{
+			First = 4;
+			Dg = GossipFuzz::Scenario(std::strtoull(F[2].c_str(), 0, 10), F[3] == "1");
+		}
+		else if (F.size() >= 5 && F[1] == "save")
+		{
+			First = 3;
+			Dg = GossipFuzz::SaveRead(std::strtoull(F[2].c_str(), 0, 10));
+		}
+		else
+		{
+			return A;
+		}
+		std::vector<std::string> Outs;
+		Outs.push_back(Dg.Hash == F[First] ? Dg.Hash : "hash-differs:" + Dg.Hash);
+		Outs.push_back(FromInt(Dg.Lines));
+		A.Known = true;
+		A.Got = MultiAnswer(F, First, Outs);
+		return A;
+	}
+
 	inline Answer Evaluate(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -2272,6 +2476,18 @@ namespace Golden
 		else if (IsOriginRungRow(Fn))
 		{
 			A = OriginRungRow(F);
+		}
+		// THE INDEPENDENT REVIEWER'S ROWS (29 September): a NaN ranked as
+		// OrderByDescending ranks it, suspicion through a save, and the
+		// seeded gossip worlds (PerceptionGolden EmitBestNaN,
+		// EmitSuspicionSave and GossipFuzz.cs; GossipFuzz.h here).
+		else if (IsReviewRow(Fn))
+		{
+			A = ReviewRow(F);
+		}
+		else if (Fn == "GossipFuzz")
+		{
+			A = GossipFuzzRow(F);
 		}
 		// The stateful ones.
 		else if (Fn == "Scenario" && F.size() >= 4)
