@@ -28,21 +28,21 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[Your page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y):** how Mickey died, winding it down, threats.
 
-**Decided by me** (a line each in DECISIONS; overturn any): the clock, a sign for every ending cost, Mickey's people knowing his name, privacy later, the check's retune, whose outfit, Ellis, the fire and street facts from the outline, everyone's nerve, arrests, Sheila's trust, names, the design pages.
+**Decided by me** (a line each in DECISIONS; overturn any): yesterday's other questions and design pages. Relay: no key.
 
-**Handed over, not done:** names by knowing; a wait that stops for Ron, Ada's tea, the police and Sheila (a plain skip spoils every row of the week, this misses nothing); the landing man's lines; the street's facts.
+**Talk:** the brush-off figure was stale (1 in 24). A plain first sentence ("Couldn't tell you.") no longer waits for its check. **Set aside, per your rule:** the fallback. "That's all I know" answers half a newcomer's questions; three attempts failed (repairing replies cut it to 4 in 60 but let a kept "Yes." confirm what was cut). Only the check's retune is left: your call. Timings wait for your key.
+
+**Handed over:** ten short cards in first-hour order, each with what the tester should see; names; the wait; the landing man; the street's facts. Steam's AI disclosure drafted.
 
 **Set aside:** the court day, a new system.
 
-**Talk, your first item:** "one in five" predates a fix; it is 1 in 24. The real failure: "that's all I know" to 31 of a newcomer's 60 questions. On it; timings wait for your key.
+**Research:** grounded replies; Steam's disclosure; waiting; a 1990 court day.
 
-**Research:** waiting in other games; a 1990 court appearance.
+**Got wrong:** the wait took four reviews.
 
-**Got wrong:** the wait took four reviews, past your new rule.
+**Pushes set off:** GitHub's free tests; Core pushes also the Unreal build here.
 
-**This push set off:** tests on GitHub (free) and the Unreal build here.
-
-**C: free:** 46.8 GB at the last summary, 55.9 now. Backup runs with this commit.
+**C: free:** 46.8 GB, 47.9 now. Backup runs with this commit.
 
 **Next:** your three calls.
 
