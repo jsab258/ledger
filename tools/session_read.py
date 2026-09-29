@@ -30,6 +30,8 @@ FIELDS = {
     "load": {"from": (STR, False), "deeds": (STRS, False)},
     "end": {"why": (STR, True), "usd": (NUM, False)},
     "reply": {"who": (STR, True), "how": (STR, True), "s": (NUM, False)},
+    "hint": {"moment": (STR, True)},
+    "ask": {"night": (NUM, True), "answer": (STR, True), "story": (STR, True)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
@@ -37,6 +39,9 @@ HOWS = {"look", "remark", "recognition", "question", "talk"}
 # How a reply went (town list 6bd): all but "own" and "ended" are talk that broke.
 WENT = {"own", "fallback", "refused", "brush", "paused", "ended", "walkedOff"}
 BROKE = {"fallback", "refused", "brush", "paused"}
+# The hints (FirstMoments) and the answers to the outfit's ask (Arrangement), town list 6bh.
+MOMENTS = ["StandingStill", "CanTalk", "FirstAsk", "SeenAtDeed", "OverheardAboutHim", "LedgerOpened"]
+ANSWERS = {"did", "refused", "noshow"}
 THIRTY = 30 * 60
 
 
@@ -101,6 +106,10 @@ def read(path):
             warn.append(f"a way of knowing the spec does not know: {e['how']!r}")
         if e["e"] == "reply" and e["how"] not in WENT:
             warn.append(f"a way a reply went the spec does not know: {e['how']!r}")
+        if e["e"] == "hint" and e["moment"] not in MOMENTS:
+            warn.append(f"a hint the spec does not know: {e['moment']!r}")
+        if e["e"] == "ask" and e["answer"] not in ANSWERS:
+            warn.append(f"an answer to the ask the spec does not know: {e['answer']!r}")
         if e["e"] == "still" and e["s"] > e["t"]:
             warn.append(f"a still spell of {e['s']:.0f} s ending at {e['t']:.0f} s would have begun before the session")
     return events, unread, warn
@@ -131,6 +140,10 @@ def one(events):
                 done_at.setdefault(what, -1.0)
     for d in deeds:
         done_at.setdefault(d["what"], d["t"])
+    # What he did with the outfit's ask is a deed of this session too (town list 6bh).
+    asks = [e for e in events if e["e"] == "ask"]
+    for a in asks:
+        done_at.setdefault(a["story"], a["t"])
     knowns = [e for e in events if e["e"] == "known"]
     # THE TOWN REACTING TO SOMETHING HE HAD DONE: a `known` about a story that
     # is a deed of this session, done at or before it (the independent check).
@@ -150,7 +163,13 @@ def one(events):
             broke.setdefault(e["who"], {}).setdefault(e["how"], 0)
             broke[e["who"]][e["how"]] += 1
     waits = sorted(e["s"] for e in replies if "s" in e and e["how"] in ("own", "ended"))
+    hints = []
+    for e in events:
+        if e["e"] == "hint" and e["moment"] not in [m for _, m in hints]:
+            hints.append((e["t"], e["moment"]))
     return {
+        "hints": hints,
+        "asks": [(e["t"], int(e["night"]), e["answer"], e["story"]) for e in asks],
         "replies": len(replies),
         "broke": broke,
         "wait_median": statistics.median(waits) if waits else None,
@@ -197,6 +216,9 @@ def show(path, facts, unread, warn):
         out.append(f"  the talk cost: ${facts['usd']:.2f}")
     out.append("  named: " + (", ".join(f"{w} ({minute(t)})" for w, t in sorted(facts["named"].items(), key=lambda kv: kv[1])) or "nobody"))
     out.append("  did: " + ("; ".join(f"{what} ({minute(t)}, seen by {len(seen)})" for t, what, seen in facts["deeds"]) or "nothing the town could hold"))
+    if facts["asks"]:
+        out.append("  the outfit's asks: " + "; ".join(f"night {night} {answer} (minute {minute(t)})" for t, night, answer, _ in facts["asks"]))
+    out.append("  hints shown: " + (", ".join(f"{m} ({minute(t)})" for t, m in facts["hints"]) or "none"))
     out.append("  the town showing it knew something they had done: "
                + ("; ".join(describe(k) for k in facts["reacting"]) or "nothing recorded"))
     if facts["before"]:
@@ -249,6 +271,16 @@ def folder(sessions):
     replies = sum(f["replies"] for f in friends)
     if replies:
         out.append(f"  friends' talk: {replies} replies; broke " + (", ".join(f"{how} {n}" for how, n in sorted(broke.items())) or "never"))
+    if friends:
+        shown = {m: sum(1 for f in friends if m in [x for _, x in f["hints"]]) for m in MOMENTS}
+        out.append("  hints shown in friends' sessions: " + ", ".join(f"{m} {n}" for m, n in shown.items()))
+        answers = {}
+        for f in friends:
+            for _, night, answer, _ in f["asks"]:
+                if night == min((x[1] for x in f["asks"]), default=night):
+                    answers[answer] = answers.get(answer, 0) + 1
+        if answers:
+            out.append("  the outfit's first ask, what friends did: " + ", ".join(f"{a} {n}" for a, n in sorted(answers.items())))
     if mine:
         out.append("  your own sessions: " + ", ".join(f"{when_from_name(p) or os.path.basename(p)} for {minute(f['length'])} min" for p, f in mine))
     return "\n".join(out)
@@ -398,6 +430,23 @@ def selftest():
         assert "SESSIONS 1: 1 friends'" in joined_text and "minute 16.7, ron, question, about player.window_d1" in joined_text and ", by thirty" in joined_text, joined_text
         alone = one(read(os.path.join(sit, "2026-10-10-101500.jsonl"))[0])
         assert alone["first_known"] is not None and alone["first_known"]["who"] == "ron", alone
+        # Hints shown, and the outfit's ask answered, its story coming back (town list 6bh).
+        firsthour = write("2026-10-11-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                                      {"t": 4, "e": "hint", "moment": "StandingStill"},
+                                                      {"t": 60, "e": "hint", "moment": "CanTalk"},
+                                                      {"t": 61, "e": "hint", "moment": "CanTalk"},
+                                                      {"t": 400, "e": "hint", "moment": "FirstAsk"},
+                                                      {"t": 430, "e": "ask", "night": 0, "answer": "refused", "story": "player.outfit_d0"},
+                                                      {"t": 800, "e": "known", "who": "darren", "how": "recognition", "story": "player.outfit_d0"},
+                                                      {"t": 900, "e": "hint", "moment": "Nonsense"},
+                                                      {"t": 910, "e": "ask", "night": 2, "answer": "maybe", "story": "player.outfit_d2"},
+                                                      {"t": 1000, "e": "end", "why": "quit"}])
+        eh, uh, wh = read(firsthour)
+        fh_ = one(eh)
+        th = show(firsthour, fh_, uh, wh)
+        assert [m for _, m in fh_["hints"]] == ["StandingStill", "CanTalk", "FirstAsk", "Nonsense"], fh_["hints"]
+        assert fh_["first_known"] is not None and fh_["first_known"]["story"] == "player.outfit_d0" and fh_["known_by_30"], fh_["first_known"]
+        assert "night 0 refused" in th and "hints shown: StandingStill" in th and any("Nonsense" in w for w in wh) and any("maybe" in w for w in wh), (th, wh)
         with open(os.path.join(d, "u16.jsonl"), "w", encoding="utf-16") as fh:
             fh.write(json.dumps({"t": 0, "e": "start", "player": "friend"}))
         assert "not UTF-8" in read(os.path.join(d, "u16.jsonl"))[1][0]
