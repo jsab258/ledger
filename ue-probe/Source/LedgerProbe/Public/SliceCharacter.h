@@ -66,7 +66,12 @@ private:
 	// T TALKS, 24 September: the live encounter's conversation with whoever
 	// is near, counted like the act and consumed by the encounter.
 	void RequestTalk();
-	// ESC LEAVES THE GAME, 24 September: the encounter saves as it goes.
+	// ESC PAUSES, 29 September (the twenty a friend would notice, 19: Esc used
+	// to quit at once, a whole session on one key): Esc pauses and resumes
+	// the world, Q quits while paused; both keys work while it is paused. The
+	// encounter holds its own clock still while the world is paused and says
+	// so on screen; it saves as it goes.
+	void RequestPause();
 	void RequestQuit();
 	// R REPORTS THE LAST REPLY and F1 SHOWS THE AI NOTICE AGAIN, 29 September
 	// (the town session's handover 6c: the EU's AI Act wants the notice by the

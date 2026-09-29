@@ -183,6 +183,19 @@ namespace
 		Done
 	};
 
+	// THE ENCOUNTER'S OWN CLOCK STANDS STILL WHILE THE WORLD IS PAUSED, 29
+	// September (Esc pauses now: the twenty a friend would notice, 19). Its
+	// scenes are timed by the wall clock, so without this the evening would
+	// arrive while the game stood paused.
+	double GPausedTotal = 0.0;
+	double GPausedSince = -1.0;
+	const TCHAR* const kPausedLine = TEXT("Paused. Esc to go on, Q to quit the game.");
+	double NowS()
+	{
+		const double T = FPlatformTime::Seconds();
+		return (GPausedSince >= 0.0 ? GPausedSince : T) - GPausedTotal;
+	}
+
 	FTSTicker::FDelegateHandle GTicker;
 	ECrimePhase GPhase      = ECrimePhase::WaitWorld;
 	double      GPhaseStart = 0.0;
@@ -948,7 +961,7 @@ namespace
 
 	void SubsTick()
 	{
-		const double Now = FPlatformTime::Seconds();
+		const double Now = NowS();
 		const int32 Before = GSubs.Num();
 		GSubs.RemoveAll([Now](const FSubLine& L) { return L.Until < Now; });
 		if (GSubs.Num() != Before) { SubsRebuild(); }
@@ -967,7 +980,7 @@ namespace
 		FSubLine L;
 		L.Text = Line;
 		L.Colour = FLinearColor(Colour);
-		L.Until = FPlatformTime::Seconds() + Seconds;
+		L.Until = NowS() + Seconds;
 		GSubs.Add(L);
 		while (GSubs.Num() > 6) { GSubs.RemoveAt(0); }
 		SubsRebuild();
@@ -2027,7 +2040,7 @@ namespace
 		           "/these-are-the-BANK-rows-at-the-rung/the-clause-is-what-the-mill-filed"
 		           "/the-sentence-is-what-she-said/what-was-said-is-on-the-overheardTellText-line"));
 		Out.Add(FString::Printf(TEXT("crimeTicks=%d crimeSeconds=%.2f crimeFinishReason=%s"),
-		                        GTicks, FPlatformTime::Seconds() - GRunStart, *GFinishReason));
+		                        GTicks, NowS() - GRunStart, *GFinishReason));
 
 		Out.Add(TEXT("crimePhaseReached=done"));
 		Out.Add(TEXT("crimeReached=end"));
@@ -2372,7 +2385,7 @@ namespace
 			bShoutSpatial = Live != nullptr && Live->bSpatialize && Live->bAttenuate;
 			GShoutFalloffM = Live != nullptr ? (Live->AttenuationShapeExtents.X + Live->FalloffDistance) / 100.0 : 0.0;
 		}
-		GShoutAt = FPlatformTime::Seconds();
+		GShoutAt = NowS();
 		if (GPawn != nullptr) { GShoutPlayerM = FVector::Dist(GPawn->GetActorLocation(), At) / 100.0; }
 		GShoutNote = bShoutPlaying ? TEXT("playing") : TEXT("spawned-not-playing");
 	}
@@ -2380,7 +2393,7 @@ namespace
 	void StopShoutRecording(bool bForce)
 	{
 		if (!bShoutRecording) { return; }
-		if (!bForce && FPlatformTime::Seconds() - GShoutAt < 4.0) { return; }
+		if (!bForce && NowS() - GShoutAt < 4.0) { return; }
 		if (UWorld* World = GameWorld())
 		{
 			UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
@@ -2828,10 +2841,10 @@ namespace
 		GVoice.Playing = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
 		GVoice.PlayingWave = W;
-		GVoiceStartedAt = FPlatformTime::Seconds();
+		GVoiceStartedAt = NowS();
 		if (!bVoicePlayed)
 		{
-			GVoicePlayedAt = FPlatformTime::Seconds();
+			GVoicePlayedAt = NowS();
 			// THE SCRIPTED RUN KEEPS WHAT THE STREET HEARD, so the voice can
 			// be listened to rather than only counted.
 			if (bLiveScript && World->GetAudioDevice().IsValid())
@@ -2873,7 +2886,7 @@ namespace
 			}
 			if (bLast) { GVoice.Pending.Remove(Id); bVoiceAllIn = true; }
 		}
-		const double Now = FPlatformTime::Seconds();
+		const double Now = NowS();
 		// A continuing piece goes straight onto the sound still playing.
 		while (GVoice.Queue.Num() > 0 && GVoice.Queue[0].bJoined && GVoice.Playing.IsValid())
 		{
@@ -2978,7 +2991,7 @@ namespace
 		const double Seconds = (double)DataLen / (double)(2 * Channels * Rate);
 		GAck.Sound = UGameplayStatics::SpawnSoundAtLocation(World, W, Who->GetActorLocation() + FVector(0.0f, 0.0f, 160.0f),
 			FRotator::ZeroRotator, 1.0f, 1.0f, 0.0f, Att);
-		GAck.Until = FPlatformTime::Seconds() + Seconds;
+		GAck.Until = NowS() + Seconds;
 		// THE GLANCE: the sound's own face animation, on the face (the part whose
 		// skeleton the animation was made on), then back to the idle where it was.
 		// Named as tools/ue/speech_faces.py names it: AS_ plus the sound's name, dashes as underscores.
@@ -3011,7 +3024,7 @@ namespace
 	{
 		if (!GAck.Sound.IsValid() && !GAck.Face.IsValid()) { return; }
 		if (GVoice.Playing.IsValid()) { AckEnd(true); return; }
-		if (FPlatformTime::Seconds() > GAck.Until + 0.1) { AckEnd(false); }
+		if (NowS() > GAck.Until + 0.1) { AckEnd(false); }
 	}
 
 	void LiveVoiceSay(int32 Id, const std::string& Card, const std::string& Text, AActor* Who)
@@ -3022,7 +3035,7 @@ namespace
 		FPlatformProcess::WritePipe(GVoice.InWrite, Un(Req));
 		GVoice.Pending.Add(Id, Who);
 		bVoiceAsked = true;
-		GVoiceAskedAt = FPlatformTime::Seconds();
+		GVoiceAskedAt = NowS();
 	}
 
 	// THE DEED A STORY IS ABOUT, by the key the session record and the talk
@@ -3154,7 +3167,7 @@ namespace
 		GLive.HeardSoFar.clear();
 		GLive.bWalkedSent = false;
 		GLive.bWasNear = false;
-		GLive.AskedAt = FPlatformTime::Seconds();
+		GLive.AskedAt = NowS();
 		return true;
 	}
 
@@ -3300,8 +3313,8 @@ namespace
 			FPlatformProcess::ClosePipe(GLive.InRead, GLive.InWrite);
 			GLive.InRead = GLive.InWrite = nullptr;
 			std::string Buf;
-			const double T0 = FPlatformTime::Seconds();
-			while (FPlatformTime::Seconds() - T0 < 3.0)
+			const double T0 = NowS();
+			while (NowS() - T0 < 3.0)
 			{
 				Buf += Utf8(FPlatformProcess::ReadPipe(GLive.OutRead));
 				const std::string::size_type At = Buf.find("\"usd\":");
@@ -3317,7 +3330,7 @@ namespace
 		if (GLive.AnswerCard.empty() || GLive.bWalkedSent || GPawn == nullptr) { return; }
 		AActor* Body = GLive.AnswerBody != nullptr ? GLive.AnswerBody : GLive.PendingBody;
 		if (Body == nullptr) { return; }
-		const double Now = FPlatformTime::Seconds();
+		const double Now = NowS();
 		if (GLive.PendingId == 0 && Now >= GVoice.BusyUntil) { return; }
 		const double M = FVector::Dist2D(GPawn->GetActorLocation(), Body->GetActorLocation()) / 100.0;
 		// WALKING AWAY NEEDS HAVING BEEN THERE: a line put from further off
@@ -3360,7 +3373,7 @@ namespace
 			{
 				// THE FIRST SENTENCE, EARLY: said and spoken at once; the answer's
 				// line that follows carries only what is left to say ("rest").
-				if (GLive.FirstAt < GLive.AskedAt) { GLive.FirstAt = FPlatformTime::Seconds(); }
+				if (GLive.FirstAt < GLive.AskedAt) { GLive.FirstAt = NowS(); }
 				const std::string First = JsonField(L, "first");
 				if (First != "none")
 				{
@@ -3407,7 +3420,7 @@ namespace
 						LedgerSession::Write(TEXT("named"), TEXT("\"who\":") + LedgerSession::Str(Who) + TEXT(",\"names\":") + LedgerSession::List(Named));
 					}
 					const std::string Went = JsonField(L, "went");
-					const double Secs = (GLive.FirstAt > GLive.AskedAt ? GLive.FirstAt : FPlatformTime::Seconds()) - GLive.AskedAt;
+					const double Secs = (GLive.FirstAt > GLive.AskedAt ? GLive.FirstAt : NowS()) - GLive.AskedAt;
 					LedgerSession::Write(TEXT("reply"), TEXT("\"who\":") + LedgerSession::Str(Who)
 						+ (Went != "none" ? TEXT(",\"how\":") + LedgerSession::Str(Un(Went)) : FString()) + FString::Printf(TEXT(",\"s\":%.1f"), Secs));
 					for (const FString& Story : JsonList(L, "putToHim"))
@@ -3479,7 +3492,7 @@ namespace
 			UE_LOG(LogTemp, Display, TEXT("LedgerTalk: %s"), GLive.bTalkLoad ? TEXT("the save's talk loaded") : TEXT("a new game's talk cleared"));
 			GLive.bTalkLoad = GLive.bTalkReset = false;
 		}
-		if (GLive.PendingId != 0 && FPlatformTime::Seconds() - GLive.AskedAt > 30.0)
+		if (GLive.PendingId != 0 && NowS() - GLive.AskedAt > 30.0)
 		{
 			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
 			GLive.PendingId = 0;
@@ -3528,7 +3541,7 @@ namespace
 		}
 		FSlateApplication::Get().SetKeyboardFocus(GSayText);
 		bSayOpen = true;
-		GSayOpenedAt = FPlatformTime::Seconds();
+		GSayOpenedAt = NowS();
 	}
 
 	void CloseSayBox(UWorld* World)
@@ -3744,7 +3757,7 @@ namespace
 			// street makes a passing remark (the AI tester, 29 September: Sheila
 			// shouted "Stop. I mean it. Stop." and at once added the everyday
 			// "Mind how you go.", her regard not yet holding what she had seen).
-			const bool bHush = GShoutAt > 0.0 && FPlatformTime::Seconds() - GShoutAt < 60.0;
+			const bool bHush = GShoutAt > 0.0 && NowS() - GShoutAt < 60.0;
 			if (!R.bSpeaks || M > LedgerCrime::kEarshotM || bSayOpen || GLive.PendingId != 0 || bTalking || !bRested || bHush) { continue; }
 			AActor* Visual = GVisualFor(P.Body);
 			const FVector Facing = Visual != nullptr ? Visual->GetActorRightVector() : P.Body->GetActorForwardVector();
@@ -4106,8 +4119,8 @@ namespace
 		std::string Buf;
 		auto LineWith = [&](const char* Key, double Limit) -> std::string
 		{
-			const double T0 = FPlatformTime::Seconds();
-			while (FPlatformTime::Seconds() - T0 < Limit)
+			const double T0 = NowS();
+			while (NowS() - T0 < Limit)
 			{
 				Buf += Utf8(FPlatformProcess::ReadPipe(OutRead));
 				std::string::size_type Nl;
@@ -4244,8 +4257,8 @@ namespace
 			GSuspW1 = Rep3.empty() ? std::string("no-reply") : JsonField(Rep3, "level");
 		}
 		FPlatformProcess::ClosePipe(InRead, InWrite);
-		const double TQuit = FPlatformTime::Seconds();
-		while (FPlatformProcess::IsProcRunning(Proc) && FPlatformTime::Seconds() - TQuit < 5.0)
+		const double TQuit = NowS();
+		while (FPlatformProcess::IsProcRunning(Proc) && NowS() - TQuit < 5.0)
 		{
 			Buf += Utf8(FPlatformProcess::ReadPipe(OutRead));
 			FPlatformProcess::Sleep(0.05f);
@@ -4478,8 +4491,26 @@ namespace
 	// ---- the ticker ------------------------------------------------------
 	bool Tick(float)
 	{
+		// PAUSED: the clock held, the line shown, nothing else runs.
+		{
+			UWorld* PW = GameWorld();
+			const bool bPausedNow = PW != nullptr && UGameplayStatics::IsGamePaused(PW);
+			if (bPausedNow && GPausedSince < 0.0)
+			{
+				GPausedSince = FPlatformTime::Seconds();
+				Say(kPausedLine, 86400.0f, FColor::Yellow);
+			}
+			else if (!bPausedNow && GPausedSince >= 0.0)
+			{
+				GPausedTotal += FPlatformTime::Seconds() - GPausedSince;
+				GPausedSince = -1.0;
+				GSubs.RemoveAll([](const FSubLine& L) { return L.Text == kPausedLine; });
+				SubsRebuild();
+			}
+			if (bPausedNow) { return true; }
+		}
 		++GTicks;
-		const double Now = FPlatformTime::Seconds();
+		const double Now = NowS();
 		if (GRunStart == 0.0) { GRunStart = Now; GPhaseStart = Now; GLastTick = Now; }
 		const double Delta = Now - GLastTick;
 		GLastTick = Now;
