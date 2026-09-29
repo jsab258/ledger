@@ -902,6 +902,19 @@ static class Program
         }
     }
 
+    // A stand-in model that says the next of its lines each call, then the last again.
+    sealed class ScriptFake : ILlmClient
+    {
+        readonly Queue<string> _lines;
+        string _last = "Right.";
+        public ScriptFake(params string[] lines) => _lines = new Queue<string>(lines);
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
+        {
+            if (_lines.Count > 0) _last = _lines.Dequeue();
+            return Task.FromResult(new LlmResponse { Text = _last, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
+        }
+    }
+
     sealed class RefusingFake : ILlmClient
     {
         public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default) =>
@@ -1232,6 +1245,68 @@ static class Program
            && qGrave.Contains("\"agreed\":false") && qNone.Contains("\"keepsQuiet\":null") && qNone.Contains("\"ownedUp\":null")
            && qNoDeed.Contains("\"keepsQuiet\":null") && !quiet.EngineFor("lena").KeepsQuiet.ContainsKey("player.window_d1")
            && quiet.EngineFor("rocco").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("He has owned up to it"), qSam + " | " + qRon + " | " + qGrave);
+
+        // THE REHEARSAL (town list 6aw): a session end to end, every kind of line
+        // the protocol page names, in the order a friend's half hour would bring
+        // them; every answer parses, and says nothing the page does not name.
+        {
+            var specPath = Path.Combine(cardsDir, "..", "..", "specs", "talk-protocol.md");
+            var named = new HashSet<string>();
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(File.ReadAllText(specPath), "[`\"]([A-Za-z]+)[`\"]")) named.Add(m.Groups[1].Value);
+            var talkModel = new ScriptFake(
+                "Morning. You'll be the new owner.",
+                "That's Ron. He keeps the rank.",
+                "Where were you on Tuesday night?",
+                "Were you now.",
+                "Well. We'll see.",
+                "Evening.",
+                "Evening, then.");
+            var rehearse = new Helper(talkModel, TimeSpan.FromSeconds(8));
+            LoadCards(rehearse, cardsDir);
+            LoadCast(rehearse, cardsDir);
+            var outs = new List<string>();
+            async Task<string> Say(string line) { var o = await rehearse.Answer(line); outs.Add(o); return o; }
+            string deed = "\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"ritas_counter\"}";
+            string evidence = "\"evidence\":{\"account\":{\"held\":true,\"seen\":true,\"names\":false,\"rung\":2,\"confidence\":0.8,\"summary\":\"somebody at Rita's window\"},\"near\":{\"sawHim\":true,\"heard\":false,\"others\":1,\"summary\":\"he was about\"},\"familiarity\":0.3}";
+            string savePath = Path.Combine(Path.GetTempPath(), "ledger-rehearsal-" + Guid.NewGuid().ToString("N") + ".talk.json");
+            await Say("{\"talk\":\"reset\"}");
+            await Say("{\"id\":200,\"to\":\"sam\",\"who\":\"sam\",\"say\":\"Morning.\",\"day\":2,\"hour\":9,\"minute\":5,\"scene\":\"Dry, grey.\",\"fresh\":true,\"acquaintance\":{\"met\":false,\"heardOf\":true},\"present\":[\"rocco\"]}");
+            await Say("{\"id\":201,\"to\":\"sam\",\"say\":\"Who's that at the rank?\",\"day\":2,\"hour\":9,\"minute\":6,\"present\":[\"rocco\"],\"knowing\":{\"level\":\"little\",\"story\":\"player.window_d1\"}}");
+            await Say("{\"id\":202,\"to\":\"lena\",\"say\":\"Morning, Sheila.\",\"day\":2,\"hour\":10,\"minute\":0,\"fresh\":true," + evidence + "," + deed + ",\"memories\":[{\"day\":1,\"hour\":23,\"minute\":5,\"kind\":\"observation\",\"importance\":0.8,\"text\":\"Somebody put Rita's window in.\",\"story\":\"player.window_d1\"}]}");
+            string rLie = await Say("{\"id\":203,\"to\":\"lena\",\"say\":\"I was at the chapel all night.\",\"day\":2,\"hour\":10,\"minute\":1," + evidence + "," + deed + "}");
+            string owned = await Say("{\"id\":204,\"to\":\"lena\",\"say\":\"All right, it was me. Keep it to yourself.\",\"day\":2,\"hour\":10,\"minute\":2," + evidence + "," + deed + "}");
+            string level = await Say("{\"id\":205,\"to\":\"rocco\",\"noReply\":true,\"day\":2,\"hour\":11," + evidence + "}");
+            await Say("{\"id\":206,\"to\":\"rocco\",\"say\":\"Evening.\",\"day\":2,\"hour\":18}");
+            await Say("{\"walkedAway\":{\"to\":\"rocco\",\"heard\":\"Evening\"},\"day\":2,\"hour\":18}");
+            string reported = await Say("{\"report\":203,\"why\":\"a test of the button\"}");
+            string saved = await Say("{\"talk\":\"save\",\"path\":" + JsonSerializer.Serialize(savePath) + ",\"stamp\":\"rehearsal\"}");
+            string loaded = await Say("{\"talk\":\"load\",\"path\":" + JsonSerializer.Serialize(savePath) + ",\"stamp\":\"rehearsal\"}");
+            bool keptLie = rehearse.EngineFor("lena") != null && rehearse.EngineFor("lena").OwnedUp.Contains("player.window_d1") && rehearse.EngineFor("lena").Answers.Count == 1;
+            await Say("{\"id\":207,\"to\":\"lena\",\"say\":\"Still here.\",\"day\":2,\"hour\":12}");
+            string reset = await Say("{\"talk\":\"reset\"}");
+            try { File.Delete(savePath); } catch (IOException) { }
+            string stray = null;
+            void Keys(JsonElement e)
+            {
+                if (e.ValueKind != JsonValueKind.Object) return;
+                foreach (var p in e.EnumerateObject())
+                {
+                    if (!named.Contains(p.Name)) stray = p.Name;
+                    if (p.Value.ValueKind == JsonValueKind.Object) Keys(p.Value);
+                }
+            }
+            bool allParse = true;
+            foreach (var o in outs)
+            {
+                try { using var rd = JsonDocument.Parse(o); Keys(rd.RootElement); }
+                catch (JsonException) { allParse = false; }
+            }
+            Ok("a rehearsed session: every kind of line answered, every answer parses and names only what the protocol page names; the lie, the owning up and the silence survive a save and a load",
+               allParse && stray == null && outs.Count == 14 && rLie.Contains("\"result\":\"contradiction\"") && owned.Contains("\"ownedUp\":\"player.window_d1\"")
+               && owned.Contains("\"agreed\":true") && level.Contains("\"level\"") && !level.Contains("\"reply\"") && reported.Contains("\"found\":true")
+               && saved.Contains("\"talk\":\"saved\"") && loaded.Contains("\"talk\":\"loaded\"") && keptLie && reset.Contains("\"talk\":\"reset\""),
+               (stray ?? "") + " | " + rLie + " | " + owned + " | " + saved + " | " + loaded);
+        }
 
         // WHERE THEY ARE (town list 6u): each person told their own place this hour.
         var placed = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
