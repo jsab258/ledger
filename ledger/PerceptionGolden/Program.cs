@@ -129,6 +129,7 @@ namespace Ledger.PerceptionGolden
                 EmitTaken(sb);
                 EmitWeeksEnd(sb);
                 EmitThreats(sb);
+                EmitArrival(sb);
             }
 
             var text = sb.ToString();
@@ -727,6 +728,46 @@ namespace Ledger.PerceptionGolden
                 holder.Rumors.Add(new Rumor { Content = new Fact("player", "taken_d4", "police"), Summary = Custody.TakenSaid, Confidence = c, Sensitive = false });
                 var shows = StreetVoice.StoryThatShows(holder, 0.35);
                 Row(sb, "TakenShows", D(c), shows == null ? "null" : shows.TopicKey);
+            }
+        }
+
+        /// DAY ONE (town list 6cg), awaiting the port: Sheila's walk-round lines,
+        /// who holds his arrival first-hand at each hour of day 0 on a small
+        /// cast, that it gives way to any other story of him, and its lines.
+        static void EmitArrival(StringBuilder sb)
+        {
+            for (int i = 0; i < DayOne.WalkRound.Length; i++) Row(sb, "WalkRound", i.ToString(Inv), DayOne.WalkRound[i].stop, Esc(DayOne.WalkRound[i].line));
+            var cast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"mickeys_rank\":{\"x_m\":5,\"z_m\":0},\"adas_step\":{\"x_m\":20,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                "\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\",\"mickeys_rank\"],\"names\":[\"Mickey's\"]},\"adas\":{\"places\":[\"adas_step\"],\"names\":[\"Ada's\"]},\"quay\":{\"places\":[\"quay\"],\"names\":[\"the quay\"]}}," +
+                "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"rocco\",\"routine\":[[0,\"off\"],[8,\"mickeys_rank\"],[20,\"off\"]]},{\"id\":\"ada\",\"routine\":[[0,\"off\"],[9,\"adas_step\"],[18,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+            foreach (var hour in new[] { 7, 8, 9, 12 })
+            {
+                var mill = new GossipMill(null);
+                foreach (var id in cast.People) mill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var saw = DayOne.Arrived(mill, cast, new GameTime(0, hour, 0));
+                var again = DayOne.Arrived(mill, cast, new GameTime(0, hour, 30));
+                Row(sb, "ArrivalSeen", hour.ToString(Inv), string.Join(",", saw), again.Count.ToString(Inv));
+            }
+            var g = new Gossiper("ag", "ag", new MemoryStore("ag"), new KnowledgeBase(), new SuspicionTracker());
+            foreach (var hops in new[] { 0, 1 })
+                for (int seed = 0; seed < 6; seed++)
+                {
+                    var about = new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.5, Sensitive = false, Hops = hops };
+                    var line = StreetVoice.Recognition(g, about, StanceKind.Comments, seed);
+                    Row(sb, "RecognitionArrival", hops.ToString(Inv), seed.ToString(Inv), line == null ? "null" : line.Bank + "|" + Esc(line.Text));
+                }
+            foreach (var id in new[] { "ah", "lena", "june" })
+            {
+                var holder = new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker());
+                holder.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 1.0 });
+                var ledger = new RemarkLedger();
+                var first = StreetVoice.ArrivalLine(holder, 0.35, ledger, 0, 0.0, false, false);
+                var second = StreetVoice.ArrivalLine(holder, 0.35, ledger, 1, 0.0, false, false);
+                Row(sb, "ArrivalLine", id, "alone", first == null ? "null" : first.Bank + "|" + Esc(first.Text), second == null ? "null" : "again");
+                holder.Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.5, Sensitive = true });
+                var withDeed = StreetVoice.ArrivalLine(holder, 0.35, new RemarkLedger(), 0, 0.0, false, false);
+                Row(sb, "ArrivalLine", id, "in the coat", StreetVoice.ArrivalLine(holder, 0.35, new RemarkLedger(), 0, 1.0, true, false) == null ? "null" : "said");
+                Row(sb, "ArrivalLine", id, "with a deed", withDeed == null ? "null" : withDeed.Bank);
             }
         }
 

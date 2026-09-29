@@ -68,6 +68,7 @@ static class Program
         if (Array.IndexOf(args, "--week-end") >= 0) return WeekEnd(cast);
         if (Array.IndexOf(args, "--threat") >= 0) return Threat(cast);
         if (Array.IndexOf(args, "--week") >= 0) return WeekOnPaper(cast);
+        if (Array.IndexOf(args, "--arrival") >= 0) return ArrivalOnPaper(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -213,6 +214,39 @@ static class Program
             Console.WriteLine($"  hearers who say something about the story at least once: {perHearer(storyRemarkers) * 100:0}%  " +
                               $"(half-remembered, to a companion: {(storyRemarkers > 0 ? faintRemarkers / storyRemarkers * 100 : 0):0}% of those who say something)");
         }
+        return 0;
+    }
+
+    /// HIS ARRIVAL (town list 6cg): he comes to Mickey's at nine on the Monday;
+    /// whoever is about Mickey's then, and Ada on her step, hold it first-hand.
+    /// How many hold it by that evening and by noon on the Tuesday, on the
+    /// game's own hourly call; and whether it ever shows over a deed's story.
+    static int ArrivalOnPaper(CastDay cast)
+    {
+        var graph = new SocialGraph();
+        foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+        var mill = new GossipMill(graph);
+        foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+        int Holders() => mill.Agents.Count(a => a.Rumors.Any(DayOne.IsArrival));
+        // Who would say it to his face on sight, a stranger to them all: only
+        // those who saw him come (the rest cannot tell it is him).
+        int Showing() => mill.Agents.Count(a => StreetVoice.ArrivalLine(a, mill.MinConfidenceToShare, null, 0, 0.0, false, false) != null);
+        var at = new Dictionary<string, string>();
+        List<string> saw = null;
+        mill.Age(new GameTime(0, 9, 0));
+        for (int abs = 9; abs < 24 + 13; abs++)
+        {
+            int day = abs / 24, hod = abs % 24;
+            var now = new GameTime(day, hod, 0);
+            if (abs == 9) saw = DayOne.Arrived(mill, cast, now);
+            TownRounds.Hour(mill, cast, now);
+            if (day == 0 && hod == 12) at["Monday noon"] = $"{Holders()} hold it, {Showing()} would say it";
+            if (day == 0 && hod == 20) at["Monday evening"] = $"{Holders()} hold it, {Showing()} would say it";
+            if (day == 1 && hod == 12) at["Tuesday noon"] = $"{Holders()} hold it, {Showing()} would say it";
+        }
+        Console.WriteLine("his arrival: at Mickey's at nine on the Monday");
+        Console.WriteLine($"  saw him come: {string.Join(", ", saw)}");
+        foreach (var kv in at) Console.WriteLine($"  by {kv.Key}: {kv.Value} of {cast.People.Count}");
         return 0;
     }
 

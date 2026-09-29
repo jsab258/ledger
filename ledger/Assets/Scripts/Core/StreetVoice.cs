@@ -524,6 +524,8 @@ namespace Ledger.Core
                 // Nor his answer to Sheila: what he means to do, not anything
                 // done; what it does to them is Act II's (town list 6ca).
                 if (WeeksEnd.IsWeekAnswer(r)) continue;
+                // Nor his arrival (town list 6cg): news of him, not of anything done.
+                if (DayOne.IsArrival(r)) continue;
                 if (!(r.Confidence >= 0.0)) continue;   // a NaN must not hide a real story
                 if (strongest == null || r.Confidence > strongest.Confidence) strongest = r;
             }
@@ -640,6 +642,9 @@ namespace Ledger.Core
         {
             var lines = new List<SpokenLine>();
             if (r == null || from == null || to == null) return lines;
+            // His arrival passes on unvoiced: it is no story to lower your
+            // voice over (town list 6cg, the independent check).
+            if (DayOne.IsArrival(r)) return lines;
             string what = Trim(r.Summary);
             if (string.IsNullOrEmpty(what)) return lines;
             // With `heard`, a line he has not heard lately from each bank
@@ -867,6 +872,34 @@ namespace Ledger.Core
         /// a story about them. Short, pointed, and STOPPABLE — the player can
         /// turn round and ask what they meant, because the speaker's memory
         /// holds the same rumour this line came from.
+        /// HIS ARRIVAL, SAID TO HIS FACE ONCE (town list 6cg): by somebody who
+        /// holds it at the share floor, can tell it is him (they saw him come,
+        /// or know him well enough to name him: Acquaintance.CanNameYou), and
+        /// has nothing else of him about them, shown or half-remembered; never
+        /// with the coat on, never once he has talked with them (`metHim`), never
+        /// Sheila, who showed him round, nor his family; once a person (the
+        /// ledger records it: ask only when the line will be said). It never
+        /// enters their manner or how they stand to him (the independent checks:
+        /// through StoryThatShows it kept them watching him and hid a deed;
+        /// without the face it named him to people who heard only gossip).
+        public static SpokenLine ArrivalLine(Gossiper g, double shareFloor, RemarkLedger heard, int seed,
+                                             double familiarity, bool wearingCoat, bool metHim)
+        {
+            if (g == null || wearingCoat || metHim || g.Id == DayOne.Sheila || DayOne.Family.Contains(g.Id)) return null;
+            // Any other story of him they hold at all, secret or not, and any
+            // wariness of him, come first (the third review: the game files the
+            // window as no secret, and the line was said over it).
+            if (g.Rumors.Exists(x => x != null && x.Content != null && x.Content.Subject == "player" && !DayOne.IsArrival(x) && x.Confidence > 0)) return null;
+            if (g.Suspicion != null && g.Suspicion.Level != SuspicionLevel.Trusting) return null;
+            var r = g.Rumors.Find(x => DayOne.IsArrival(x) && x.Confidence >= shareFloor);
+            if (r == null || (heard != null && heard.HasRemarked(g.Id, r))) return null;
+            // Who can tell it is him: saw him come, or knows him well enough.
+            if (r.Hops != 0 && !Acquaintance.CanNameYou(familiarity)) return null;
+            var line = Recognition(g, r, StanceKind.Comments, seed, heard);
+            if (line != null) heard?.Record(g.Id, r, StanceKind.Comments, heard: true);
+            return line;
+        }
+
         public static SpokenLine Recognition(Gossiper g, Rumor about, StanceKind stance, int seed, RemarkLedger heard = null)
         {
             if (g == null || stance < StanceKind.Comments) return null;
@@ -1014,6 +1047,26 @@ namespace Ledger.Core
                     "Word is you left them waiting. They'll not like that.",
                     "Mickey'd never have kept them waiting, they say.",
                     "Busy, were you? Not at the landing, anyway.",
+                })
+                // HIS ARRIVAL (town list 6cg): the street's first talk of him, said
+                // to his face once by somebody who can tell it is him.
+                : DayOne.IsArrival(about) && about.Hops == 0 ? From("recognition/arrival-saw", new[]
+                {
+                    "You'll be Mickey's nephew, then.",
+                    "So you're the new owner.",
+                    "Saw you come in. Mickey's nephew, is it?",
+                    "You've the look of Mickey about you.",
+                    "Settling in, are you?",
+                    "New in the office, then.",
+                })
+                : DayOne.IsArrival(about) ? From("recognition/arrival-heard", new[]
+                {
+                    "Heard Mickey's nephew had come. That'll be you.",
+                    "You'll be the new owner they're all on about.",
+                    "Word is Mickey's nephew's taken the office. That you?",
+                    "So you're the one taking on Mickey's.",
+                    "They say you've come to run the cabs.",
+                    "Heard there's a new face at Mickey's.",
                 })
                 // A THREAT TO KEEP QUIET (town list 6cd): the one he threatened
                 // says so to his face, unafraid; whoever heard it, as talk.

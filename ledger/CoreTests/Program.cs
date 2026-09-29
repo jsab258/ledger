@@ -6232,6 +6232,73 @@ namespace Ledger.CoreTests
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
 
+            // DAY ONE (town list 6cg): Sheila's walk-round, the same end played or
+            // skipped; his arrival the street's first story, first-hand for whoever
+            // is about Mickey's and Ada on her step, once; shown only when nothing
+            // else of him shows; weighing nothing.
+            {
+                var dcast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"mickeys_rank\":{\"x_m\":5,\"z_m\":0},\"adas_step\":{\"x_m\":20,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                    "\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\",\"mickeys_rank\"],\"names\":[\"Mickey's\"]},\"adas\":{\"places\":[\"adas_step\"],\"names\":[\"Ada's\"]},\"quay\":{\"places\":[\"quay\"],\"names\":[\"the quay\"]}}," +
+                    "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"rocco\",\"routine\":[[0,\"off\"],[8,\"mickeys_rank\"],[20,\"off\"]]},{\"id\":\"ada\",\"routine\":[[0,\"off\"],[9,\"adas_step\"],[18,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+                var dm = new GossipMill(null);
+                foreach (var id in dcast.People) dm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var sawCome = DayOne.Arrived(dm, dcast, new GameTime(0, 9, 0));
+                var sawAgain = DayOne.Arrived(dm, dcast, new GameTime(0, 9, 30));
+                var arrivalStory = dm.Get("lena").Rumors.Find(DayOne.IsArrival);
+                var hintsPlayed = new FirstMoments(); hintsPlayed.Begin(0, true); hintsPlayed.Moved(1);
+                var hintsSkipped = new FirstMoments(); hintsSkipped.Begin(0, true); hintsSkipped.Moved(1);
+                DayOne.WalkRoundEnds(hintsPlayed, 200);
+                DayOne.WalkRoundEnds(hintsSkipped, 5);
+                var played = hintsPlayed.Due(201);
+                var skipped = hintsSkipped.Due(6);
+                var dayLedger = new RemarkLedger();
+                var inCoat = StreetVoice.ArrivalLine(dm.Get("rocco"), dm.MinConfidenceToShare, dayLedger, 0, 0.0, true, false);
+                var afterTalk = StreetVoice.ArrivalLine(dm.Get("rocco"), dm.MinConfidenceToShare, dayLedger, 0, 0.0, false, true);
+                var sawLine = StreetVoice.ArrivalLine(dm.Get("rocco"), dm.MinConfidenceToShare, dayLedger, 0, 0.0, false, false);
+                var sawTwice = StreetVoice.ArrivalLine(dm.Get("rocco"), dm.MinConfidenceToShare, dayLedger, 1, 0.0, false, false);
+                var sheilaSays = StreetVoice.ArrivalLine(dm.Get("lena"), dm.MinConfidenceToShare, dayLedger, 0, 0.0, false, false);
+                // Heard only: they cannot tell it is him unless they know him.
+                var gossipOnly = new Gossiper("go", "go", new MemoryStore("go"), new KnowledgeBase(), new SuspicionTracker());
+                gossipOnly.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.6, Hops = 1 });
+                var strangerHeard = StreetVoice.ArrivalLine(gossipOnly, dm.MinConfidenceToShare, new RemarkLedger(), 0, 0.0, false, false);
+                var knownHeard = StreetVoice.ArrivalLine(gossipOnly, dm.MinConfidenceToShare, new RemarkLedger(), 0, 1.0, false, false);
+                // A deed half-remembered still comes first.
+                var faintDeed = new Gossiper("fd", "fd", new MemoryStore("fd"), new KnowledgeBase(), new SuspicionTracker());
+                faintDeed.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.65, Hops = 0 });
+                faintDeed.Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "x", Confidence = 0.2, Sensitive = true, Hops = 1 });
+                var underFaint = StreetVoice.ArrivalLine(faintDeed, dm.MinConfidenceToShare, new RemarkLedger(), 0, 0.0, false, false);
+                // A deed filed as no secret, as the game files the window, and wariness alone, come first too (the third review).
+                var plainDeed = new Gossiper("pd", "pd", new MemoryStore("pd"), new KnowledgeBase(), new SuspicionTracker());
+                plainDeed.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Hops = 0 });
+                plainDeed.Rumors.Add(new Rumor { Content = new Fact("player", "broke_a_window", "ritas"), Summary = "x", Confidence = 0.7, Sensitive = false, Hops = 0 });
+                var wary = new Gossiper("wy", "wy", new MemoryStore("wy"), new KnowledgeBase(), new SuspicionTracker());
+                wary.Rumors.Add(new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.9, Hops = 0 });
+                wary.Suspicion.Raise(0.4, "funny hours");
+                underFaint = underFaint ?? StreetVoice.ArrivalLine(plainDeed, dm.MinConfidenceToShare, new RemarkLedger(), 0, 0.0, false, false)
+                             ?? StreetVoice.ArrivalLine(wary, dm.MinConfidenceToShare, new RemarkLedger(), 0, 0.0, false, false);
+                var ronRegard = StreetVoice.RegardFor(dm.Get("rocco"), dm.MinConfidenceToShare, false, new RemarkLedger(), Acquaintance.Known, false);
+                var arrivalExchange = StreetVoice.Exchange(dm.Get("rocco").Rumors.Find(DayOne.IsArrival), dm.Get("rocco"), dm.Get("joey"), 0);
+                var secondArrival = DayOne.Arrived(dm, dcast, new GameTime(0, 20, 0));
+                var heardArrival = StreetVoice.Recognition(dm.Get("joey"), new Rumor { Content = new Fact("player", "arrived", "mickeys"), Summary = DayOne.ArrivalSaid, Confidence = 0.6, Hops = 1 }, StanceKind.Comments, 0);
+                var withDeed = dm.Get("ada");
+                withDeed.Rumors.Add(new Rumor { Content = new Fact("player", "window_d1", "ritas"), Summary = "the new owner put Rita's window in", Confidence = 0.8, Sensitive = true });
+                bool walk = DayOne.WalkRound.Length == 5 && DayOne.WalkRound[3].line.Contains("locked") && DayOne.WalkRound[0].line.StartsWith("New management")
+                            && played != null && played.Moment == Moment.CanTalk && skipped != null && skipped.Moment == Moment.CanTalk
+                            && hintsPlayed.Done.Contains(Moment.CanTalk) && hintsSkipped.Done.Contains(Moment.CanTalk);
+                bool arrival = sawCome.Count == 3 && sawCome.Contains("lena") && sawCome.Contains("rocco") && sawCome.Contains("ada") && !sawCome.Contains("joey") && sawAgain.Count == 0
+                               && arrivalStory != null && !arrivalStory.Sensitive && StreetVoice.StoryThatShows(dm.Get("lena"), dm.MinConfidenceToShare) == null
+                               && inCoat == null && afterTalk == null && sawLine != null && sawLine.Bank == "recognition/arrival-saw" && sawTwice == null && sheilaSays == null
+                               && strangerHeard == null && knownHeard != null && knownHeard.Bank == "recognition/arrival-heard" && underFaint == null
+                               && DayOne.Arrived(dm, dcast, new GameTime(1, 9, 0)).Count == 0
+                               && ronRegard.Knowing == Knowing.Nothing && arrivalExchange.Count == 0 && secondArrival.Count == 0
+                               && heardArrival != null && heardArrival.Bank == "recognition/arrival-heard"
+                               && StreetVoice.ArrivalLine(withDeed, dm.MinConfidenceToShare, new RemarkLedger(), 0, 1.0, false, false) == null
+                               && !DayOne.IsArrival(StreetVoice.StoryThatShows(withDeed, dm.MinConfidenceToShare));
+                Check(walk && arrival,
+                      "day one: Sheila's walk-round ends the same played or skipped, the talk hint's moment come; his arrival is first-hand for whoever is about Mickey's and Ada on her step, once in a game; said to his face once, never by Sheila, only when nothing else of him shows; never in anybody's manner or an overheard exchange",
+                      $"{walk} {arrival}");
+            }
+
             // A THREAT TO KEEP QUIET (town list 6cd, carried until Jafar rules): read
             // in narrow shapes; never an ask for silence; remembered once a deed,
             // warier; the one threatened holds the story first-hand; the street
