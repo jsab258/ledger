@@ -28,6 +28,8 @@ STATE: setup done on Monday; the list starts at item 1. Blender live: registered
 
 (The town session leaves single lines here for the builder.)
 
+- 30 Sep, from the clothing session: RON'S BOOTS READY, the first garment through the gate (a blind reviewer passed them, narrow notes only): F:/LedgerTools/garments/ron_boots (its README says what each file is): ron_boots_skinned.fbx on his own skeleton, weighted to foot, ball and calf only; keep its weights, no re-transfer or resize; he needs a 20 mm Component Based Offset for the soles, and his feet hidden under them; then onto his page, dressed.
+- 30 Sep, from the clothing session: bodies needed for the principals after Darren (CLOTHES.md item 6): Tom first, then Carol Ellis, Geoffrey Agar, Maureen Jensen and the rest in CASTING.md's order, each exported as Ron's, Darren's and Sheila's were (F:/LedgerTools/bodies, body and full body in the reference pose, with measurements). Only Ron's boots are handed over so far (the line above); the rest is set aside under the two-tries rule (FOR-JAFAR.md, Clothes).
 - 29 Sep, THE TOWN'S HANDOVERS AS CARDS (town list T2, Jafar, 29 September evening): each waiting line is now a short card in production/handovers/ (README.md gives the order the first hour needs): what the player gets, the calls in play's order, the port and its rows behind --awaiting-port, the save, and what the AI tester should see. In that order:
   1. day one: production/handovers/6cg-day-one.md
   2. the hints: production/handovers/6y-hints.md
