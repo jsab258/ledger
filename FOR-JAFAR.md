@@ -52,19 +52,19 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **No page today:** nothing has passed the gate yet.
 
-**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its other builds; Ron's work trousers (right standing, broken sitting and on a stair); the flat cap (the side profile right at last, but the band stands off his head). Sheila's skirt walks cleanly but fails sitting.
+**Set aside, per your rule** (three failed reviews each, the last after research): the donkey jacket and its other builds; Ron's work trousers (right standing, broken sitting and on a stair); the flat cap (profile right, band off his head); Sheila's cardigan (body right, collar and neckline broken). Her skirt walks cleanly but fails sitting.
 
 **Decide:**
 - Marvelous Designer is scriptable except one click at each start, online; $39 a month, 14 days free. (A, recommended) you start the trial; I script the jacket once. (B) Leave it.
 - The standing shapes now come close; every failure is how clothes bend sitting or walking, tested in Blender, and Unreal redoes those weights anyway. (A, recommended) I finish shapes to the gate standing; the builder tests the poses in Unreal. (B) Keep testing poses here.
 
-**In hand:** Sheila's cardigan and blouse, two reviews failed; researching, then its last try.
+**Next:** the other principals, in order.
 
-**Research:** sleeves; jacket weight; Marvelous Designer; trousers, caps; skinning; the cap; Sheila's clothes; seated skirts; the cardigan (running).
+**Research:** sleeves; jacket weight; Marvelous Designer; trousers, caps; skinning; the cap; Sheila's clothes; seated skirts; the cardigan.
 
 **Pushes:** free GitHub tests only.
 
-**C: free:** 34 GB when I began, 46.7 now. Backup runs with this commit.
+**C: free:** 34 GB when I began, 42.1 now (the build machine building). Backup runs with this commit.
 
 ## Builder, Wednesday 30 September
 

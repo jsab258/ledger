@@ -30,6 +30,7 @@ import bmesh
 import bpy
 import numpy as np
 from mathutils import Vector
+from mathutils.bvhtree import BVHTree
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tailor  # noqa: E402
@@ -46,7 +47,7 @@ def opt(name, default, kind=float):
 NAME = opt("--name", "sheila_cardigan", str)
 HEM_Z = opt("--hem", 0.905)               # the welt's lower edge, at the top of the hip
 EASE = opt("--ease", 0.028)               # the knit out from her body, m
-V_Z = opt("--v", 1.25)                    # the V's point at the centre front (the concept: at the first button, mid-chest)
+V_Z = opt("--v", 1.30)                    # the V's point, level with her underarm (CARDIGAN-BUILD-2026-09-29.md)
 WELT = opt("--welt", 0.05)
 log = {"body": BODY}
 
@@ -220,7 +221,7 @@ log["hungStraight"] = {"points": hung, "bustZ": round(Z_BUST, 3)}
 # hem, a jagged V): a level hem, square cuffs, the back of the neckline, the V, the opening down the front ----------
 
 FRONT_Y = float(np.median(np.array([v.co[:] for v in knit_me.vertices])[:, 1]))
-NECK_SIDE = opt("--neck-side", 0.072)
+NECK_SIDE = opt("--neck-side", 0.066)
 NECK_NO = Vector((0.0, -0.25, 1.0)).normalized()                    # the throat lower than the back of the neck
 bm = bmesh.new()
 bm.from_mesh(knit_me)
@@ -406,14 +407,17 @@ for sgn, order in ((1.0, 1), (-1.0, -1)):
     else:
         RIGHT_PART = list(reversed(seg_f + seg_v))
 # the back of the neck: the knit's edge there (its boundary points above the shoulders, behind the front)
-_bk = bmesh.new()
-_bk.from_mesh(knit_me)
-_bpts = [v.co.copy() for v in _bk.verts if v.is_boundary and v.co.z > NECK_Z - 0.06 and v.co.y > FRONT_Y - 0.03]
-_bk.free()
+# THE BACK OF THE BAND ALONG A SMOOTH CIRCLE ROUND HER NECK (the second
+# review: the knit's own ragged edge made 'a wavy, frayed double lip'): from
+# where the V's lines reach it, round the back, each point dropped onto the knit
+R_B = opt("--band-r", 0.068)
+a0 = math.asin(min(0.99, NECK_SIDE / R_B))
 BACK_PART = []
-if len(_bpts) > 3:
-    _bpts.sort(key=lambda q: -math.atan2(q.x, q.y - FRONT_Y))        # from her left round to her right
-    BACK_PART = [(q, (0.0, 0.0, -1.0), "back") for q in _bpts]
+for a_ in np.linspace(a0, 2 * math.pi - a0, 60):
+    x_, y_ = NECK_AX.x + R_B * math.sin(a_), NECK_AX.y - R_B * math.cos(a_)
+    hit = KNIT_BVH.ray_cast(Vector((x_, y_, NECK_Z + 0.08)), Vector((0, 0, -1)), 0.3)[0]
+    if hit is not None:
+        BACK_PART.append((hit, (math.sin(a_), -math.cos(a_), -1.0), "back"))
 for q, sd, part in LEFT_PART + BACK_PART + RIGHT_PART:
     if q is not None:
         path.append(q)
@@ -440,7 +444,7 @@ log["band"] = {"left": len(band_left_pts)}
 
 left = band_left_pts
 if left:
-    zs = np.linspace(V_Z - 0.025, HEM_Z + WELT + 0.02, 7)
+    zs = np.linspace(V_Z - 0.012, HEM_Z + 0.015 + 0.006, 7)       # the top one marks the V, the first 1.5 cm over the hem
     for z_ in zs:
         k = int(np.argmin([abs(0.5 * (a.z + b.z) - z_) for a, b in left]))
         a, b = left[k]
@@ -455,134 +459,106 @@ if left:
         extras.append(btn)
     log["buttons"] = len(zs)
 
-# ---- the blouse: its round collar over the neckband, and its front inside the V ------------------------------
+# ---- the blouse: a flat panel across the V with its placket and buttons, then its round collar over all ----------
+#
+# (CARDIGAN-BUILD-2026-09-29.md, after two reviews: the blouse copied from
+# her chest clung to the cleavage and read as bare skin; the collar, five ways,
+# never lay flat.) The panel spans each level's chest hull, 5 mm out, a little
+# wider than the V; a 25 mm placket down the middle, 1.5 mm proud, two buttons.
+# The collar is drafted flat, 55 mm wide, its neckline a circle at the base of
+# her neck, its ends rounded and meeting at the throat, and laid from above
+# on whatever is beneath it (the band and knit at the back and shoulders, the
+# panel at the front), 3 mm clear.
+blouse_rows = []
+for z_ in np.arange(V_Z - 0.035, Zn + 0.012, 0.005):
+    loops = tailor.section_loops(body, (0, 0, float(z_)), (0, 0, 1))
+    pts2 = np.concatenate(loops)[:, :2] if loops else np.zeros((0, 2))
+    pts2 = pts2[np.abs(pts2[:, 0]) < 0.16]
+    if len(pts2) < 3:
+        continue
+    hull = np.array(tailor._hull2(pts2))
+    wv = 0.004 + (NECK_SIDE - 0.004) * max(0.0, min(1.0, (z_ - V_Z) / max(1e-6, Zn - V_Z))) + 0.025
+    row = []
+    for x_ in np.linspace(-wv, wv, 25):
+        # the hull's front at x_
+        best = None
+        for k in range(len(hull)):
+            p0, p1 = hull[k], hull[(k + 1) % len(hull)]
+            if (p0[0] - x_) * (p1[0] - x_) <= 0 and abs(p1[0] - p0[0]) > 1e-9:
+                yy = p0[1] + (p1[1] - p0[1]) * (x_ - p0[0]) / (p1[0] - p0[0])
+                best = yy if best is None else min(best, yy)
+        if best is None:
+            best = float(hull[:, 1].min())
+        row.append(Vector((float(x_), best - 0.005, float(z_))))
+    blouse_rows.append(row)
+if len(blouse_rows) > 2:
+    extras.append(strip("BlouseFront", blouse_rows, blousem, 0.0012))
+    # the placket: a 25 mm strip down the middle, 1.5 mm proud
+    plk = []
+    for row in blouse_rows:
+        mid = len(row) // 2
+        c_ = row[mid]
+        plk.append([c_ + Vector((dx, -0.0015, 0.0)) for dx in (-0.0125, 0.0, 0.0125)])
+    extras.append(strip("Placket", plk, blousem, 0.0012))
+    for z_b in (Zn - 0.018, Zn - 0.018 - 0.085):
+        k = int(np.argmin([abs(r[0].z - z_b) for r in blouse_rows]))
+        c_ = blouse_rows[k][len(blouse_rows[k]) // 2] + Vector((0, -0.003, 0))
+        bpy.ops.mesh.primitive_cylinder_add(vertices=14, radius=0.0052, depth=0.002, location=c_, rotation=(math.pi / 2, 0, 0))
+        b_ = bpy.context.active_object
+        b_.data.materials.append(tailor.material("M_BlouseButton", (0.92, 0.90, 0.84), 0.3))
+        extras.append(b_)
+# the collar: laid on everything made so far, and on her
+_cb = bmesh.new()
+for o_ in [knit] + [e for e in extras if e.type == "MESH"]:
+    _dg = bpy.context.evaluated_depsgraph_get()
+    _m = bpy.data.meshes.new_from_object(o_.evaluated_get(_dg))
+    _m.transform(o_.matrix_world)
+    _cb.from_mesh(_m)
+    bpy.data.meshes.remove(_m)
+UNDER = BVHTree.FromBMesh(_cb)
+_cb.free()
 
-# THE COLLAR LAID ON BY PROJECTION (the first review: 'a flat, jagged white
-# strip ... notched flaps at the back, a split'): the neck's base as a ring
-# just above the knit's neckline, evenly spaced and smoothed; each point's
-# outer edge straight out and down from it by the collar's width, then put on
-# the knit (on the band, 4 mm above) or, in the V, on her; the outer line
-# smoothed; the ends rounded at the throat, where the two halves meet
-# the collar's neckline a circle just inside the knit's own, on her (a section
-# through the body at the neck's base took in her shoulders: a band out to
-# the shoulder points, like a sailor's collar)
-ring = []
-for a_ in np.linspace(-math.pi, math.pi, 141)[:-1]:
-    x_ = NECK_AX.x + (NECK_R - opt("--collar-in", 0.006)) * math.sin(a_)
-    y_ = NECK_AX.y - (NECK_R - opt("--collar-in", 0.006)) * math.cos(a_)     # a_ = 0 at the throat
-    hit, _n, _i, _d = BVH.ray_cast(Vector((x_, y_, NECK_Z + 0.045)), Vector((0, 0, -1)), 0.2)
-    z_ = hit.z if hit is not None else NECK_Z
-    ring.append((x_, y_, z_))
-ring = np.array(ring)
-cm_ = np.array([NECK_AX.x, NECK_AX.y, float(ring[:, 2].mean())])
-for _ in range(6):
-    ring[1:-1] = 0.5 * ring[1:-1] + 0.25 * (ring[:-2] + ring[2:])
-COLLAR = opt("--collar", 0.045)
-inner, outer = [], []
-for p in ring:
-    p = Vector(p)
-    away = Vector((p.x - cm_[0], p.y - cm_[1], 0.0)).normalized()
-    q = p + away * 0.004
-    front_d = abs(math.atan2(p.x - cm_[0], -(p.y - cm_[1])))            # 0 at the throat
-    d_cf = front_d * 0.055                                                # about the arc from the front, m
-    w = COLLAR if d_cf > 0.035 else COLLAR * math.sqrt(max(0.0, 1.0 - ((0.035 - d_cf) / 0.035) ** 2))
-    r_ = q + (away * 0.75 + Vector((0, 0, -0.66))).normalized() * max(w, 0.002)
-    hk, nk, _fk, dk = KNIT_BVH.find_nearest(r_)
-    hb, nb, _fb, db = BVH.find_nearest(r_)
-    if hk is not None and dk < 0.04 and hb is not None and (hk - hb).length > 1e-6:
-        r_ = hk + (hk - hb).normalized() * 0.0065                        # over the knit and its band
-    elif hb is not None:
-        r_ = hb + (r_ - hb).normalized() * 0.006 if (r_ - hb).length > 1e-6 else hb + nb * 0.006
-    inner.append(q)
-    outer.append(r_)
-_o = np.array([tuple(p) for p in outer])
-for _ in range(12):
-    _o[1:-1] = 0.5 * _o[1:-1] + 0.25 * (_o[:-2] + _o[2:])
-outer = [Vector(p) for p in _o]
-# every row on top of the knit (with only the outer edge laid on it, the rest
-# of the collar lay under the knit and showed as a thin line)
+
+def laid(x_, y_):
+    """Dropped from just above the neck's base (from higher, the ray began inside her neck) onto the band,
+    knit or blouse beneath, or her where there is none."""
+    top = Vector((x_, y_, NECK_Z + 0.03))
+    if tailor.depth_inside(BVH, top) > 0.0:
+        return None
+    hu = UNDER.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
+    hb = BVH.ray_cast(top, Vector((0, 0, -1)), 0.3)[0]
+    hits = [h for h in (hu, hb) if h is not None]
+    return max(hits, key=lambda h: h.z) + Vector((0, 0, 0.003)) if hits else None
 
 
-def on_top(p):
-    """Dropped straight down onto whatever lies beneath, the knit or her, and lifted clear of it (found by
-    the nearest point, the rows looped at the back)."""
-    top = p + Vector((0, 0, 0.06))
-    hk = KNIT_BVH.ray_cast(top, Vector((0, 0, -1)), 0.12)[0]
-    hb = BVH.ray_cast(top, Vector((0, 0, -1)), 0.12)[0]
-    zs = [h.z + (0.0065 if h is hk else 0.005) for h in (hk, hb) if h is not None]
-    return Vector((p.x, p.y, max(zs))) if zs else p
-
-
-raw_outer = []
-for q, p in zip(inner, ring):
-    away = Vector((q.x - cm_[0], q.y - cm_[1], 0.0)).normalized()
-    front_d = abs(math.atan2(q.x - cm_[0], -(q.y - cm_[1])))
-    d_cf = front_d * 0.055
-    w = COLLAR if d_cf > 0.035 else COLLAR * math.sqrt(max(0.0, 1.0 - ((0.035 - d_cf) / 0.035) ** 2))
-    raw_outer.append(q + away * max(w, 0.002))
-rows_c = [[on_top(a.lerp(b, f_)) for a, b in zip(inner, raw_outer)] for f_ in (0.0, 0.33, 0.66, 1.0)]
-for r_ in rows_c[1:]:
+COLLAR = opt("--collar", 0.055)
+R_IN = NECK_R - opt("--collar-in", 0.004)
+rows_c = []
+for f_ in np.linspace(0.0, 1.0, 7):
+    row = []
+    for a_ in np.linspace(math.radians(8), math.radians(352), 90):   # a_ = 0 at the throat: the two ends meet there
+        # the ends rounded: within 35 mm of the throat the collar narrows on a quarter circle
+        d_front = min(a_, 2 * math.pi - a_) * R_IN
+        w_ = COLLAR if d_front > 0.035 else COLLAR * math.sqrt(max(0.0, 1.0 - ((0.035 - d_front) / 0.035) ** 2))
+        r_ = R_IN + w_ * f_
+        x_, y_ = NECK_AX.x + r_ * math.sin(a_), NECK_AX.y - r_ * math.cos(a_)
+        q = laid(x_, y_)
+        row.append(q)
+    rows_c.append(row)
+# a point that found nothing takes its neighbour's height
+for row in rows_c:
+    for k in range(len(row)):
+        if row[k] is None:
+            near_ = next((row[j] for j in sorted(range(len(row)), key=lambda j: abs(j - k)) if row[j] is not None), None)
+            a_k = math.radians(8) + (math.radians(344)) * k / (len(row) - 1)
+            row[k] = Vector((NECK_AX.x + R_IN * math.sin(a_k), NECK_AX.y - R_IN * math.cos(a_k), near_.z if near_ else NECK_Z))
+for r_ in rows_c:
     _o = np.array([tuple(p) for p in r_])
-    for _ in range(6):
+    for _ in range(4):
         _o[1:-1] = 0.5 * _o[1:-1] + 0.25 * (_o[:-2] + _o[2:])
     r_[:] = [Vector(p) for p in _o]
-# ONLY THE COLLAR'S FRONT, TWO ROUNDED POINTS AT THE THROAT (the whole collar
-# round the neck failed five ways here: a line, a sailor's band, strips up the
-# neck, loops at the back; under a buttoned cardigan a round collar shows
-# mostly as its two points either side of the throat, as in her concept):
-# each a rounded lobe 5 cm across and 4 cm down from the neck's base, laid
-# from the front on whatever lies beneath it, 5 mm proud
-throat = Vector(tuple(ring[int(np.argmin(np.abs(np.arctan2(ring[:, 0] - cm_[0], -(ring[:, 1] - cm_[1])))))]))
-LOBE_W, LOBE_H, ROUND = opt("--lobe-w", 0.05), opt("--lobe-h", 0.04), opt("--lobe-round", 0.03)
-for sgn in (1.0, -1.0):
-    rows_l = []
-    for vj in np.linspace(0.0, 1.0, 9):
-        row = []
-        for ui in np.linspace(0.0, 1.0, 11):
-            u_, v_ = ui * LOBE_W, vj * LOBE_H
-            # the outer lower corner rounded: pull points outside the rounded corner back onto it
-            cu, cv = LOBE_W - ROUND, LOBE_H - ROUND
-            if u_ > cu and v_ > cv:
-                du, dv = u_ - cu, v_ - cv
-                r_ = math.hypot(du, dv)
-                if r_ > ROUND:
-                    u_, v_ = cu + du * ROUND / r_, cv + dv * ROUND / r_
-            x_ = throat.x + sgn * (0.002 + u_)
-            z_ = throat.z + 0.004 + u_ * 0.35 - v_                        # rising a little towards the shoulder
-            start = Vector((x_, -0.5, z_))
-            hk = KNIT_BVH.ray_cast(start, Vector((0, 1, 0)), 1.0)[0]
-            hb = BVH.ray_cast(start, Vector((0, 1, 0)), 1.0)[0]
-            hits = [(h.y - (0.0065 if h is hk else 0.004), h) for h in (hk, hb) if h is not None]
-            y_ = min(hits)[0] if hits else throat.y - 0.01
-            row.append(Vector((x_, y_, z_)))
-        rows_l.append(row)
-    extras.append(strip("CollarPoint", rows_l, blousem, 0.0015))
-log["collar"] = "the two front points"
-# the blouse front in the V: her chest there, set out a little, cream
-bmf = bmesh.new()
-bmf.from_mesh(body.data)
-bmf.transform(body.matrix_world)
-
-
-def inside(c):
-    return (c.y < FRONT_Y and V_Z - 0.035 < c.z < NECK_Z
-            and abs(c.x) < NECK_SIDE * (c.z - V_Z) / max(1e-6, NECK_Z - V_Z) + 0.03)
-
-
-bmesh.ops.delete(bmf, geom=[f for f in bmf.faces if not inside(f.calc_center_median())], context="FACES")
-bmesh.ops.delete(bmf, geom=[v for v in bmf.verts if not v.link_faces], context="VERTS")
-bmf.normal_update()
-for v in bmf.verts:
-    v.co = v.co + v.normal * 0.005
-bf_me = bpy.data.meshes.new("BlouseFront")
-bmf.to_mesh(bf_me)
-bmf.free()
-bf = bpy.data.objects.new("BlouseFront", bf_me)
-bpy.context.collection.objects.link(bf)
-bf_me.materials.append(blousem)
-for p in bf_me.polygons:
-    p.use_smooth = True
-extras.append(bf)
+extras.append(strip("Collar", rows_c, blousem, 0.002))
+log["blouse"] = {"panelRows": len(blouse_rows), "collarMm": COLLAR * 1000}
 
 # ---- THE WELT AND CUFFS AS FINE RIBBED RINGS OVER THE KNIT (the second try's
 # ribs, cut into the knit's own points, were too coarse to show) -------------------------------------------------
@@ -621,15 +597,42 @@ welt = ring_band("Welt", lambda r: Vector((0.0, mid_y, HEM_Z + 0.002 + (WELT - 0
                  6, 256, 0.0025, 0.007, 0.20, skip=lambda q: q is None or (q.y < FRONT_Y and abs(q.x) < 0.012))
 if welt:
     extras.append(welt)
+# SNUG CUFFS (the second review: 'the sleeve ends flare open with a thin,
+# ragged rim'): each a ribbed tube 5 cm long round the wrist, 8 mm clear of it,
+# the sleeve's last 10 cm drawn in to meet it and ending 5 mm over it
+WRIST_R = opt("--wrist-r", 0.026) + 0.008
 for s_ in ("l", "r"):
     a_, h_ = (Vector(tuple(wrist[s_][0])), Vector(tuple(wrist[s_][1])))
     ax_ = (h_ - a_).normalized()
     L_ = (h_ - a_).length
     t1 = opt("--cuff-t", 0.90) * L_
-    cuff = ring_band("Cuff", lambda r, a_=a_, ax_=ax_, t1=t1: a_ + ax_ * (t1 - 0.055 + 0.057 * r / 5), lambda r, ax_=ax_: ax_,
-                     6, 64, 0.0022, 0.006, 0.045)
-    if cuff:
-        extras.append(cuff)
+    # the sleeve drawn in
+    for v in knit_me.vertices:
+        p = Vector(v.co)
+        if (p.x > 0) != (s_ == "l") or abs(p.x) < 0.2:
+            continue
+        rel = p - a_
+        t = rel.dot(ax_)
+        radial = rel - ax_ * t
+        if t1 - 0.10 < t <= t1 + 0.01 and radial.length < 0.07:            # the sleeve only (not her hip beside it)
+            f = min(1.0, (t - (t1 - 0.10)) / 0.10)
+            r_now = radial.length
+            r_to = r_now + (WRIST_R + 0.003 - r_now) * f
+            if radial.length > 1e-6:
+                v.co = a_ + ax_ * t + radial.normalized() * r_to
+    u_ = ax_.orthogonal().normalized()
+    w_ = ax_.cross(u_).normalized()
+    rows_k = []
+    for r_i in range(6):
+        c_ = a_ + ax_ * (t1 - 0.045 + 0.05 * r_i / 5)
+        row = []
+        for k in range(49):
+            ang = 2 * math.pi * k / 48
+            rib = 0.0012 * math.cos(ang * 16)
+            row.append(c_ + (u_ * math.cos(ang) + w_ * math.sin(ang)) * (WRIST_R + rib))
+        rows_k.append(row)
+    extras.append(strip("Cuff", rows_k, knitm, 0.003))
+knit_me.update()
 log["ribbed"] = {"welt": bool(welt)}
 
 # ---- the render mesh -------------------------------------------------------------------------------------------

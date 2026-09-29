@@ -165,6 +165,33 @@ mask.invert_vertex_group = True
 mask.show_viewport = False
 log_rigid = glued
 side_cut = 0
+# SITTING (CARDIGAN-BUILD-2026-09-29.md): below the waist the back rides the
+# pelvis and lower spine, no thigh; the front's sides take at most 30% of a
+# thigh (the second review: the back ballooned into a hump when she sat)
+Z_WAIST = opt("--waist-z", 0.0)
+if Z_WAIST > 0:
+    cy_g = float(np.mean(gco[:, 1]))
+    names = {g.index: g for g in garment.vertex_groups}
+    pel_g = garment.vertex_groups.get("pelvis") or garment.vertex_groups.new(name="pelvis")
+    sp_g = garment.vertex_groups.get("spine_01") or garment.vertex_groups.new(name="spine_01")
+    for v in garment.data.vertices:
+        p_ = gco[v.index]
+        if p_[2] > Z_WAIST:
+            continue
+        thigh_w = sum(g.weight for g in v.groups if names[g.group].name.startswith("thigh"))
+        if thigh_w <= 0:
+            continue
+        cap = 0.0 if p_[1] > cy_g else 1.0            # the front keeps its own (capped at 30%, the thighs came through it)
+        if thigh_w > cap:
+            k_ = cap / thigh_w
+            for g in list(v.groups):
+                if names[g.group].name.startswith("thigh"):
+                    names[g.group].add([v.index], g.weight * k_, "REPLACE")
+            freed = thigh_w - cap
+            cur_p = next((g.weight for g in v.groups if g.group == pel_g.index), 0.0)
+            cur_s = next((g.weight for g in v.groups if g.group == sp_g.index), 0.0)
+            pel_g.add([v.index], cur_p + freed * 0.7, "REPLACE")
+            sp_g.add([v.index], cur_s + freed * 0.3, "REPLACE")
 am = garment.modifiers.new("Armature", "ARMATURE")
 am.object = arm
 

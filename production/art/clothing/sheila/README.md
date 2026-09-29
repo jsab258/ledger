@@ -1,4 +1,4 @@
-# Sheila's clothes (the clothing session, 29 September)
+# Sheila's clothes (the clothing session, 29 September): SET ASIDE
 
 CLOTHES.md item 5. Her casting sheet: "A beige hand-knitted cardigan buttoned over a cream blouse with a small round collar; a brown knee-length pleated skirt, flesh tights, flat brown lace-up shoes; a brown leather handbag." Her approved concept: production/casting/sheila-dunn/full.jpg. The research: production/research/clothing-pipeline/SHEILA-CLOTHES-2026-09-29.md (FreeSewing has no pleated skirt, cardigan or round collar; knitwear as an offset of the body, not sewn; the pleated skirt modelled, its top skinned, the rest Chaos cloth). Her measurements (body_measurements.py): waist 824, seat 964 (16 cm under the waist), waist to knee 561 mm.
 
@@ -10,4 +10,4 @@ Made by modelling round her own body, the pattern rules giving the sizes (after 
 ## Pose tests
 
 - The skirt (tools/meshgen/blender/pose_skirt.py): walking passes (the cloth skinned, the pelvis at the top and each side blending to its own thigh, held softly to that: nothing inside her). Sitting failed five ways before research (the cloth hanging free, held softly, skinned alone, settled in the pose, moved slowly: the thighs rose through it, or it stood off like a lampshade, or it shredded) and twice after it (production/research/clothing-pipeline/SEATED-SKIRT-2026-09-29.md: the research's first stage, skinned with seated weights, the whole ring below the buttock fold on the thighs: 131 of the cone's points and 743 of the skirt's inside her thighs at the hip, the front a lampshade). SITTING SET ASIDE, 29 September (the two-tries rule); the research's own conclusion: past that stage more cloth settings will not help.
-- The cardigan (tools/meshgen/blender/pose_skinned.py, skinned from her body, the covered body hidden as the game hides it): arms down, arms raised, walking, sitting, nothing torn. Review 1 FAIL (cardigan-review-1.md); the second attempt with a fresh reviewer.
+- The cardigan (tools/meshgen/blender/pose_skinned.py, skinned from her body, the covered body hidden as the game hides it): arms down, arms raised, walking, sitting, nothing torn. Three blind reviews FAIL (cardigan-review-1.md to 3), the last after research (CARDIGAN-BUILD-2026-09-29.md): SET ASIDE.
