@@ -66,6 +66,7 @@ static class Program
         if (Array.IndexOf(args, "--found") >= 0) return FoundInTheMorning(cast);
         if (Array.IndexOf(args, "--arrest") >= 0) return TakenIn(cast);
         if (Array.IndexOf(args, "--week-end") >= 0) return WeekEnd(cast);
+        if (Array.IndexOf(args, "--threat") >= 0) return Threat(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -214,14 +215,37 @@ static class Program
         return 0;
     }
 
-    /// WHAT AN ARREST DOES (town list 6bp): Rita's window put in at half past
-    /// eleven on a Tuesday night, seen plainly by Ada from her window when she
-    /// has cooled on him (loyalty 0.35, as after he stood her up); she goes to
-    /// the police in the morning if WouldReport says so; a constable calls the
-    /// next morning (ConstableComes) and takes him from the office at ten
-    /// (Custody.Take, not owning up); whoever is at Mickey's then sees it
-    /// (SeenTaken), and the gossip ticks on the cast's routines. When he is out,
-    /// what comes of it, and how many hold it by that evening and the next noon.
+    /// A THREAT TO KEEP QUIET (town list 6cd): Ada saw him at Rita's window on
+    /// the Tuesday night; asked about it on the Wednesday at ten, he tells her
+    /// to say a word and she'll regret it. She holds that first-hand; who holds
+    /// it that evening, the Thursday noon and the Friday noon, and how much
+    /// warier the town is of him.
+    static int Threat(CastDay cast)
+    {
+        var graph = new SocialGraph();
+        foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+        var mill = new GossipMill(graph);
+        foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+        int Holders() => mill.Agents.Count(a => a.Rumors.Any(Silence.IsThreat));
+        var at = new Dictionary<string, int>();
+        mill.Age(new GameTime(2, 0, 0));
+        bool filed = false;
+        for (int abs = 24 * 2; abs < 24 * 5; abs++)
+        {
+            int day = abs / 24, hod = abs % 24;
+            var now = new GameTime(day, hod, 0);
+            if (day == 2 && hod == 10) filed = Silence.FileThreat(mill, "ada", "player.window_d1", now);
+            TownRounds.Hour(mill, cast, now);
+            if (day == 2 && hod == 21) at["Wednesday evening"] = Holders();
+            if (day == 3 && hod == 11) at["Thursday noon"] = Holders();
+            if (day == 4 && hod == 11) at["Friday noon"] = Holders();
+        }
+        Console.WriteLine("a threat: Ada, asked on the Wednesday at ten, is told to say a word and she'll regret it");
+        Console.WriteLine($"  filed first-hand for Ada: {(filed ? "yes" : "no")}");
+        foreach (var kv in at) Console.WriteLine($"  hold it by {kv.Key}: {kv.Value} of {cast.People.Count}");
+        return 0;
+    }
+
     /// THE WEEK'S END (town list 6ca): Sheila waits at the office on the
     /// Sunday, the week's seventh day, from ten; he comes at half past ten and,
     /// asked, tells her plainly he is taking Mickey's business on. Who holds
@@ -272,6 +296,14 @@ static class Program
         return 0;
     }
 
+    /// WHAT AN ARREST DOES (town list 6bp): Rita's window put in at half past
+    /// eleven on a Tuesday night, seen plainly by Ada from her window when she
+    /// has cooled on him (loyalty 0.35, as after he stood her up); she goes to
+    /// the police in the morning if WouldReport says so; a constable calls the
+    /// next morning (ConstableComes) and takes him from the office at ten
+    /// (Custody.Take, not owning up); whoever is at Mickey's then sees it
+    /// (SeenTaken), and the gossip ticks on the cast's routines. When he is out,
+    /// what comes of it, and how many hold it by that evening and the next noon.
     static int TakenIn(CastDay cast)
     {
         var graph = new SocialGraph();

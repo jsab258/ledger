@@ -81,6 +81,32 @@ namespace Ledger.Core
             return true;
         }
 
+        /// THE DEEDS HE THREATENED THEM OVER (town list 6cd): a threat never buys
+        /// silence this week (carried until Jafar rules); it is remembered once
+        /// a deed, and makes them warier of him.
+        public readonly HashSet<string> Threatened = new HashSet<string>();
+        /// THE DEEDS HE SPOKE MENACINGLY OVER (the fifth review of 6cd): read
+        /// wide (Silence.Menaces), filing no story and weighing nothing, only
+        /// so that no later ask buys silence and her own promise of it is
+        /// caught; a plain threat (Threatened) is one of them.
+        public readonly HashSet<string> Menaced = new HashSet<string>();
+        public const double ThreatWeight = LieWeight;
+        public const string ThreatMemory = "He threatened me, to keep me quiet about what I saw.";
+
+        /// He threatened them over a deed: remembered once, and they are warier.
+        public bool HeardThreat(string topic, GameTime now)
+        {
+            if (string.IsNullOrEmpty(topic)) return false;
+            Menaced.Add(topic);
+            if (!Threatened.Add(topic)) return false;
+            var e = new MemoryEvent(now, "observation", 0.9, ThreatMemory);
+            Memory.Append(e);
+            TagStory(e, topic);
+            // Its weight is applied with his answers (AnswerWeight, ApplyAnswers),
+            // so the game's own suspicion never wipes it (the independent check).
+            return true;
+        }
+
         /// He asked them to keep a deed quiet, and the Core's answer: remembered
         /// once; asking again changes nothing.
         public bool HeardAskQuiet(string topic, bool agreed, GameTime now)
@@ -105,8 +131,10 @@ namespace Ledger.Core
             // he owned up to the deed or they refused to keep it quiet (the
             // independent check: "Mum's the word, Tom." straight after "yeah, it
             // was me", and "Not a word, then." after "please, Sheila").
+            // After a threat over the deed too (the fourth review of 6cd: "Not a
+            // word." answered a threat the Core never let buy silence).
             bool bare = Silence.SpeaksOfTelling(_turnInput)
-                || (CurrentDeed != null && (OwnedUp.Contains(CurrentDeed) || KeepsQuiet.ContainsKey(CurrentDeed)));
+                || (CurrentDeed != null && (OwnedUp.Contains(CurrentDeed) || KeepsQuiet.ContainsKey(CurrentDeed) || Menaced.Contains(CurrentDeed)));
             if (!agreed)
                 foreach (var p in Promises.FindSilence(text, bare)) if (!found.Contains(p)) found.Add(p);
             return found;
@@ -284,6 +312,9 @@ namespace Ledger.Core
                 sb.AppendLine(keepsQuiet
                     ? "He asked you to keep it to yourself, and you will: you will not pass it on."
                     : "He asked you to keep it to yourself, and you will not. Whatever you tell him, never say you will.");
+            // After a menace over it: never a promise of silence (the fifth review of 6cd).
+            else if (CurrentDeed != null && Menaced.Contains(CurrentDeed))
+                sb.AppendLine("He has leaned on you to keep quiet about it, and you will not keep it quiet for him. Whatever you tell him, never say you will.");
 
             if (!string.IsNullOrEmpty(sceneContext))
             {
@@ -533,6 +564,7 @@ namespace Ledger.Core
                    : a.Result == ClaimResult.Consistent ? -FitsWeight
                    : a.HeardSaw != null ? LieWeight / 2 : 0.0;
             if (ToldOthers.ContainsKey(topic) && (a == null || a.Result != ClaimResult.Contradiction)) w += LieWeight / 2;
+            if (Threatened.Contains(topic)) w += ThreatWeight;
             return w;
         }
 
@@ -543,6 +575,7 @@ namespace Ledger.Core
             if (a != null && a.Result == ClaimResult.Contradiction) return $"he told me he was at {a.Said}, and I saw him at {a.Saw ?? "somewhere else"}";
             if (a != null && a.HeardSaw != null && a.Result == ClaimResult.Unknown) return $"he told me he was at {a.Said}, and I heard he was at {a.HeardSaw}";
             if (topic != null && ToldOthers.TryGetValue(topic, out var t)) return $"I heard he's been saying he was at {t.said}, and I saw him at {t.saw}";
+            if (topic != null && Threatened.Contains(topic)) return "he threatened me to keep me quiet";
             return "his story fits what I saw";
         }
 
@@ -729,6 +762,7 @@ namespace Ledger.Core
             // What he told others, when their own answer from him has not already caught him.
             if (topic != null && ToldOthers.TryGetValue(topic, out var told) && (a == null || a.Result != ClaimResult.Contradiction))
                 Suspicion.Raise(LieWeight / 2, $"I heard he's been saying he was at {told.said}, and I saw him at {told.saw}");
+            if (topic != null && Threatened.Contains(topic)) Suspicion.Raise(ThreatWeight, "he threatened me to keep me quiet");
         }
 
         public void ApplyAnswer(Answer a)
@@ -874,7 +908,7 @@ namespace Ledger.Core
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
                 { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
-                { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay },
+                { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay }, { "threatened", new List<object>(Threatened) }, { "menaced", new List<object>(Menaced) },
             };
         }
 
@@ -907,6 +941,8 @@ namespace Ledger.Core
             Doubted = false;
             DeedEvidence.Clear();
             WeekDay = -1;
+            Threatened.Clear();
+            Menaced.Clear();
             if (saved == null) return;
             // Saved positions to the memories actually restored, so one memory
             // skipped does not move every "shown" mark onto the wrong one.
@@ -999,6 +1035,10 @@ namespace Ledger.Core
                         TalkDays.Add(e.Time.Day);
             TrustEarned = saved.TryGetValue("trustEarned", out var te) && te is bool tb && tb;
             WeekDay = saved.TryGetValue("weekDay", out var wd) ? Math.Max(-1, WholeOrMinus(wd)) : -1;
+            if (saved.TryGetValue("threatened", out var th) && th is List<object> thl)
+                foreach (var x in thl) if (x is string xs && xs.Length > 0) { Threatened.Add(xs); Menaced.Add(xs); }
+            if (saved.TryGetValue("menaced", out var mn) && mn is List<object> mnl)
+                foreach (var x in mnl) if (x is string xs && xs.Length > 0) Menaced.Add(xs);
             // An older talk: whatever doubt and evidence its answers still show.
             Doubted = saved.TryGetValue("doubted", out var db) ? db is bool dbb && dbb
                 : ToldOthers.Count > 0 || Answers.Exists(a => a.Result == ClaimResult.Contradiction || a.SawElsewhere);

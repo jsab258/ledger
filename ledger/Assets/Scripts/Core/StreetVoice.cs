@@ -362,7 +362,7 @@ namespace Ledger.Core
                 // or the police asking after him (town list 6bq), or taking him
                 // in (town list 6bp), or his answer to Sheila at the week's end
                 // (town list 6ca), which she, who was told it, never remarks on.
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r) || WeeksEnd.IsWeekAnswer(r))) continue;
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r) || WeeksEnd.IsWeekAnswer(r) || Silence.IsThreat(r))) continue;
                 if (WeeksEnd.IsWeekAnswer(r) && g.Id == WeeksEnd.Sheila) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
@@ -1014,6 +1014,26 @@ namespace Ledger.Core
                     "Word is you left them waiting. They'll not like that.",
                     "Mickey'd never have kept them waiting, they say.",
                     "Busy, were you? Not at the landing, anyway.",
+                })
+                // A THREAT TO KEEP QUIET (town list 6cd): the one he threatened
+                // says so to his face, unafraid; whoever heard it, as talk.
+                : Silence.IsThreat(about) && about.Hops == 0 ? From("recognition/threat-told", new[]
+                {
+                    "I've not forgotten what you said to me.",
+                    "Say what you like. I'm not frightened of you.",
+                    "I heard you the first time. I'm not deaf.",
+                    "Still here, aren't I? So much for your threats.",
+                    "You can stop looking at me like that.",
+                    "I'll say what I like, thank you.",
+                })
+                : Silence.IsThreat(about) ? From("recognition/threat-heard", new[]
+                {
+                    "Heard you've been leaning on people.",
+                    "They say you've been making threats.",
+                    "Word is you put the frighteners on somebody.",
+                    "Heard you've been telling people to keep their mouths shut.",
+                    "Threatening folk now, are we? That's what I heard.",
+                    "They say you're not above a threat or two.",
                 })
                 // HIS ANSWER TO SHEILA AT THE WEEK'S END (town list 6ca): "the
                 // street learns the answer" (the outline), and says so to him.

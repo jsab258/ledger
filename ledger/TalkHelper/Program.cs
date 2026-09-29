@@ -715,6 +715,9 @@ static class Program
             // suspect him of; the Core decides whether they keep it quiet.
             string ownedUpOut = null;
             object keepsQuietOut = null;
+            // A THREAT TO KEEP QUIET (town list 6cd): never an ask for silence;
+            // the Core remembers it and they are warier; the game files the story.
+            string threatenedOut = null;
             // TELLING RON NO (town list 6bn), in two steps, since it ends Mickey's
             // arrangement for good: while tonight's ask stands, a line that sounds
             // like a no gets Ron's own plain question back in place of a reply,
@@ -792,12 +795,18 @@ static class Program
             if (silenceTopic != null && !string.IsNullOrEmpty(say))
             {
                 if (Silence.OwnsUp(say) && engine.HeardOwnUp(silenceTopic, now)) ownedUpOut = silenceTopic;
+                if (Silence.Threatens(say) && engine.HeardThreat(silenceTopic, now)) threatenedOut = silenceTopic;
+                // Any menace at all over it: no later ask buys silence, and her
+                // own promise of it is caught (the fifth review of 6cd).
+                else if (Silence.Menaces(say)) engine.Menaced.Add(silenceTopic);
                 if (Silence.AsksQuiet(say))
                 {
                     var stance = Cast?.QuietStance(key) ?? KeepsQuietFor.Friend;
                     var ident = new PlayerIdentity();
                     bool firstName = callsHim != null && (callsHim == ident.First || callsHim == ident.Diminutive);
-                    engine.HeardAskQuiet(silenceTopic, Silence.Agrees(stance, firstName, deedGrave), now);
+                    // Never for a man who has threatened them over it (the third
+                    // review of 6cd: the threat on one line, the ask on the next).
+                    engine.HeardAskQuiet(silenceTopic, Silence.Agrees(stance, firstName, deedGrave) && !engine.Menaced.Contains(silenceTopic), now);
                     bool agreed = engine.KeepsQuiet[silenceTopic];
                     keepsQuietOut = new { topic = silenceTopic, agreed, fragile = agreed && Silence.Fragile(stance) };
                 }
@@ -831,18 +840,18 @@ static class Program
                 // Sheila's own fixed words, in place of a reply: no model writes them.
                 engine.RememberSaid(say, weekReply, now);
                 var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
             }
             if (askPlainly)
             {
                 // Ron's own question, in place of a reply: no model writes it.
                 engine.RememberSaid(say, Arrangement.AskPlainly, now);
-                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false }, Plain);
             }
             if (_llm == null)
             {
                 var (offTrusts, offEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned }, Plain);
             }
             string reply;
             string paused = null;
@@ -915,7 +924,7 @@ static class Program
                         lock (_walkedHandled) _walkedHandled.Add(key);
                         // What his line did stands although the reply stopped: the
                         // game still answers a no, an owning up or an ask for silence.
-                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
+                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
                     }
                     if (done != task)
                     {
@@ -1022,7 +1031,7 @@ static class Program
             // trust, whether they trust him after this turn, and whether this
             // turn earned it; the game keeps it and sends it back.
             var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1937,6 +1946,25 @@ static class Program
                && changedYes.Contains("\"weekAnswer\":\"TakeOver\"") && !shrug.Contains("\"weekAnswer\":\"")
                && Reply(endedAsk) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver, true),
                opened + " | " + sounds + " | " + yes + " | " + offYes);
+        }
+        // A THREAT TO KEEP QUIET (town list 6cd): reported once a deed, never an ask for silence.
+        {
+            var th = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+            LoadCards(th, cardsDir);
+            LoadCast(th, cardsDir);
+            string deed = ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}";
+            string threatOnce = th.Answer("{\"id\":131,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"Say a word and you'll regret it.\"" + deed + "}").Result;
+            string threatAgain = th.Answer("{\"id\":132,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"I know where you live.\"" + deed + "}").Result;
+            string noDeed = th.Answer("{\"id\":133,\"to\":\"lena\",\"day\":2,\"hour\":10,\"say\":\"Say a word and you'll regret it.\"}").Result;
+            // An ask after the threat, over the same deed, is refused (the third review).
+            string askAfter = th.Answer("{\"id\":135,\"to\":\"sam\",\"day\":2,\"hour\":10,\"say\":\"Keep it to yourself, please.\"" + deed + "}").Result;
+            // Its weight survives a turn that sends the game's own suspicion (the independent check).
+            string withLevel = th.Answer("{\"id\":134,\"to\":\"sam\",\"day\":2,\"hour\":11,\"say\":\"Morning.\",\"suspicion\":0.2" + deed + "}").Result;
+            Ok("a threat about the deed is reported once, never as an ask for silence, and only about a deed the game sent; its weight stays on the game's own suspicion",
+               withLevel.Contains("\"suspicion\":0.35") &&
+               threatOnce.Contains("\"threatened\":\"player.window_d1\"") && threatOnce.Contains("\"keepsQuiet\":null")
+               && threatAgain.Contains("\"threatened\":null") && noDeed.Contains("\"threatened\":null") && askAfter.Contains("\"agreed\":false")
+               && th.EngineFor("sam").Threatened.Contains("player.window_d1"), threatOnce + " | " + threatAgain);
         }
         Ok("a card lent to somebody else does not lend them its name; its own person keeps theirs",
            trusting.EngineFor("zlata") != null && trusting.EngineFor("zlata").SpeakerName == "" && trusting.EngineFor("lena").SpeakerName == null);

@@ -16,6 +16,9 @@ when that is, so today she never names him and never shows the book.
   afterwards does not win her back this week. Then she calls him by name and the game may show him the
   book. A player who keeps coming by and keeps his nights out of her sight
   earns it in the first hour; one she sees or hears of at a deed does not.
+  Note: in the slice's crime Sheila herself sees the window go in, from
+  Mickey's rank, so a friend who plays that crime never earns her trust in
+  week one and gets the day-book on day 7.
   Built this way meanwhile. (Weighing his answers instead failed four fresh
   reviews: a lie could win her over while the truth could not.)
 - **(B) Only the book's scene**: she trusts him on day 7 whatever he has

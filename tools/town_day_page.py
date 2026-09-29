@@ -128,7 +128,7 @@ DAYS["2026-09-30"] = carried(
      ("q-sheila-trust", "When Sheila trusts him: she calls him new management and keeps Mickey's real book back until she fully trusts the new owner, "
                         "and nothing yet decides when that is, so she never names him",
       [("time", "Time and a clean week: once he has talked with her on three different days (day 3 at the soonest), as long as she has never seen or "
-                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out (recommended; built this way meanwhile)"),
+                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out. In the slice's crime she sees the window go in herself, so a friend who plays it never earns her trust in week one (recommended; built this way meanwhile)"),
        ("book", "Only the book's scene: she trusts him on day 7 whatever he has done, the same for every player"),
        ("ellis", "As the first, and DS Ellis's asking also forces the book out of her, without her naming him (about two hours more)")]),
      ("q-wind-down", "Day 7 is also a night the outfit asks. Told \"wind it down\", Sheila closes the book on Mickey's arrangements, yet Ron would still bring the envelope that evening",
@@ -138,7 +138,12 @@ DAYS["2026-09-30"] = carried(
                   "Every one of the forty has the same middling nerve, so the old threat code would silence everybody",
       [("story", "This week a threat never buys silence: it is the street's story and makes them warier of him (recommended until the forty have their own nerve; built this way meanwhile)"),
        ("nerve", "It silences those of low nerve, once the forty's nerve is settled"),
-       ("unread", "Threats stay unread for now")])],
+       ("unread", "Threats stay unread for now")]),
+     ("q-threat-reading", "How a threat is read. Six reviews: once he menaces someone over a deed, no ask buys their silence, in a few hundred wordings; but a word list "
+                          "cannot cover every way of threatening, or of caving in, and a threat it misses the town never hears of",
+      [("model", "The checking model judges each line about a deed (\"is this a threat to keep quiet?\"), the Core deciding what follows: about a twentieth of a penny a line, on the capped key (recommended)"),
+       ("words", "Word shapes only, as built: free, with gaps"),
+       ("none", "Threats unread for now")])],
     [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
       "Approve how it goes and its lines", "Change it (say what in the note)"),
      ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
@@ -185,7 +190,7 @@ def selftest():
     for key, _, options in DAYS["2026-09-29"]["questions"]:
         assert "recommended" in options[0][1], key
     later = build("2026-09-30")
-    assert 'data-key="q-threat"' in later and 'data-key="q-wind-down"' in later and 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
+    assert 'data-key="q-threat-reading"' in later and 'data-key="q-threat"' in later and 'data-key="q-wind-down"' in later and 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
     assert 'data-key="q-chatter"' not in later and 'data-key="first-hour"' not in later and 'data-key="q-clock"' in later and 'data-key="first-ask"' in later
     for key, _, options in DAYS["2026-09-30"]["questions"]:
         assert "recommended" in options[0][1], key

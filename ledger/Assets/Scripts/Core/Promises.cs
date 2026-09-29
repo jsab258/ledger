@@ -80,6 +80,20 @@ namespace Ledger.Core
             new Regex(@"\b(it|that|this)('ll| will)? (stays?|stay) between us\b", RegexOptions.IgnoreCase),
             new Regex(@"\b(goes|go) no further\b", RegexOptions.IgnoreCase),
             new Regex(@"\byour secret'?s safe\b", RegexOptions.IgnoreCase),
+            // The fifth review of 6cd: what she says caving in to a threat.
+            new Regex(@"\byour secret (is|'s) safe\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(you won't|you wont|you will not|you'll not) hear (anything|owt|a thing|a word|it) from me\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(nobody|no one|no-one) (will|'ll|is going to) hear (it|anything|a word|owt) from me\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(i'm|im|i am) (saying|telling) (nothing|nowt|no one|nobody)\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(i won't|i wont|i will not|i'll not|i'd never|i would never) (grass|grass you up|say nothing|say nowt|squeal)\b", RegexOptions.IgnoreCase),
+            new Regex(@"\bnot a (peep|squeak|dicky bird|dickie bird)\b", RegexOptions.IgnoreCase),
+            // The sixth review: the commonest ways of saying it.
+            new Regex(@"\b(i won't|i wont|i will not|i shan't|i shant|i'll not|i'm not going to|im not going to|i am not going to|i'm not gonna|im not gonna) (tell|mention it|mention this|say a word|say anything|go to the police|go to the law|tell on you|grass)(?=\s*[.!,;]|\s*$| (anyone|anybody|a soul|on you|nobody|them|the police|rita|a living soul|about it|about this|to anyone|to anybody|to a soul|,))", RegexOptions.IgnoreCase),
+            new Regex(@"(^|[.!?]\s+|,\s*)(won't|wont|shan't) say a word\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(i'm|im|i am) not saying a (word|thing)\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(i'll|ill|i will) keep my (gob|mouth|trap|lips) shut\b", RegexOptions.IgnoreCase),
+            new Regex(@"\bsecret'?s safe\b", RegexOptions.IgnoreCase),
+            new Regex(@"\b(nobody|no one|no-one)('ll| will) know\b", RegexOptions.IgnoreCase),
         };
         static readonly Regex[] BareShapes =
         {
@@ -95,13 +109,20 @@ namespace Ledger.Core
             var found = new List<string>();
             if (string.IsNullOrWhiteSpace(text)) return found;
             string t = text.Replace('’', '\'').Replace('‘', '\'');
+            // One promise per stretch of the reply: shapes that overlap ("I won't
+            // tell a soul" and "I won't tell") are the same promise.
+            var spans = new List<(int start, int end)>();
+            void Add(Match m)
+            {
+                foreach (var (a, b) in spans) if (m.Index < b && a < m.Index + m.Length) return;
+                spans.Add((m.Index, m.Index + m.Length));
+                if (!found.Contains(m.Value)) found.Add(m.Value);
+            }
             foreach (var shape in SilenceShapes)
-                foreach (Match m in shape.Matches(t))
-                    if (!found.Contains(m.Value)) found.Add(m.Value);
+                foreach (Match m in shape.Matches(t)) Add(m);
             if (bareToo)
                 foreach (var shape in BareShapes)
-                    foreach (Match m in shape.Matches(t))
-                        if (!found.Contains(m.Value)) found.Add(m.Value);
+                    foreach (Match m in shape.Matches(t)) Add(m);
             return found;
         }
     }
