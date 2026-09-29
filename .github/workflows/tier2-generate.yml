@@ -5,7 +5,7 @@ name: tier2-generate
 # authorization 2026-07-26), validates every card by script, and prints the
 # full manifest to the job log between TIER2-MANIFEST markers so the cards can
 # be harvested from the log (the artifact host is not reachable from the dev
-# environment). Manual dispatch only — generation costs real API tokens.
+# environment). Manual dispatch only. OFF since 29 September (below).
 
 on:
   workflow_dispatch:
@@ -24,6 +24,10 @@ permissions:
 
 jobs:
   generate:
+    # OFF (Jafar, 29 September): nothing in development calls the Anthropic
+    # API. Generation runs through Claude Code on his subscription; this job
+    # no longer reads the key and does not run.
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -64,8 +68,6 @@ jobs:
       - name: What the characters actually say
         id: probe
         if: ${{ hashFiles('game-design/writing-samples.md') == '' }}
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           dotnet run --project ledger/ConvoProbe -c Release -- \
             --model "claude-sonnet-5" \
@@ -139,8 +141,6 @@ jobs:
 
       - name: Give the existing cards a voice
         if: ${{ steps.needvoice.outputs.n != '0' }}
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           dotnet run --project ledger/Tier2Gen -c Release -- \
             --enrich game-design/tier2-batch-1.json \
@@ -236,8 +236,6 @@ jobs:
       # default that eventually spends by accident.
       - name: Generate and validate cards
         if: ${{ github.event.inputs.count != '' && github.event.inputs.count != '0' }}
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           dotnet run --project ledger/Tier2Gen -c Release -- \
             --count "${{ github.event.inputs.count }}" \

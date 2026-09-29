@@ -1,8 +1,10 @@
 name: LEDGER AI playtest
 
-# Exercises Lena's full brain without Unity. Fake mode always runs (free,
-# deterministic). Live mode runs when the ANTHROPIC_API_KEY secret exists:
-# an LLM plays the player, another judges her memory/suspicion/guardrails.
+# Exercises Lena's full brain without Unity, in fake mode (free,
+# deterministic). THE LIVE MODE IS GONE (Jafar, 29 September): nothing in
+# development calls the Anthropic API; model work runs through Claude Code on
+# his subscription. It ran here on every Core push, 46 times on 28 and 29
+# September.
 on:
   workflow_dispatch:
   push:
@@ -24,17 +26,6 @@ jobs:
       - name: Playtest (fake mode)
         working-directory: ledger/SimHarness
         run: dotnet run -c Release
-
-      - name: Playtest (live mode, if key configured)
-        working-directory: ledger/SimHarness
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then
-            echo "ANTHROPIC_API_KEY secret not set — skipping live playtest."
-          else
-            dotnet run -c Release -- --live
-          fi
 
       - name: Upload report
         if: always()
