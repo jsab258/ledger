@@ -64,6 +64,7 @@ static class Program
         if (Array.IndexOf(args, "--loud") >= 0) return Loud(cast, Array.IndexOf(args, "--second-night") >= 0);
         if (Array.IndexOf(args, "--first-hour") >= 0) return FirstHourOnPaper(cast, double.Parse(Arg(args, "--rate", "2"), Inv));
         if (Array.IndexOf(args, "--found") >= 0) return FoundInTheMorning(cast);
+        if (Array.IndexOf(args, "--arrest") >= 0) return TakenIn(cast);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -212,10 +213,59 @@ static class Program
         return 0;
     }
 
+    /// WHAT AN ARREST DOES (town list 6bp): Rita's window put in at half past
+    /// eleven on a Tuesday night, seen plainly by Ada from her window when she
+    /// has cooled on him (loyalty 0.35, as after he stood her up); she goes to
+    /// the police in the morning if WouldReport says so; a constable calls the
+    /// next morning (ConstableComes) and takes him from the office at ten
+    /// (Custody.Take, not owning up); whoever is at Mickey's then sees it
+    /// (SeenTaken), and the gossip ticks on the cast's routines. When he is out,
+    /// what comes of it, and how many hold it by that evening and the next noon.
+    static int TakenIn(CastDay cast)
+    {
+        var graph = new SocialGraph();
+        foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+        var mill = new GossipMill(graph);
+        foreach (var p in cast.People) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+        var ada = mill.Get("ada");
+        ada.Loyalty = 0.35;
+        const string topic = "player.window_d1";
+        var police = new PoliceFile();
+        bool reports = PoliceFile.WouldReport(ada, Offence.Damage, false, topic, cast.NeverToPolice("ada"));
+        if (reports) police.Report("ada", topic, Offence.Damage, 4, 2);
+        Custody custody = null;
+        var saw = new List<string>();
+        int Holders() => mill.Agents.Count(a => a.Rumors.Any(Custody.IsTaken));
+        var at = new Dictionary<string, int>();
+        mill.Age(new GameTime(2, 0, 0));
+        for (int abs = 48; abs < 24 * 5; abs++)
+        {
+            int day = abs / 24, hod = abs % 24;
+            var now = new GameTime(day, hod, 0);
+            if (hod == 10 && custody == null && police.ConstableComes(day) is string t)
+            {
+                custody = police.TakeIn(t, now, false, false);
+                saw = Custody.SeenTaken(mill, cast, "mickeys", now);
+            }
+            for (int minute = 0; minute < 60; minute += 6)
+                mill.Tick(new GameTime(day, hod, minute), (a, b) => cast.Together(a, b, day, hod));
+            mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
+            if (custody != null && day == custody.TakenAt.Day && hod == 21) at["that evening"] = Holders();
+            if (custody != null && day == custody.TakenAt.Day + 1 && hod == 11) at["the next noon"] = Holders();
+        }
+        Console.WriteLine("taken in: Rita's window, Tuesday 23:30, seen plainly by Ada, cooled on him");
+        Console.WriteLine($"  Ada goes to the police: {(reports ? "yes, a statement naming him, Wednesday" : "no")}");
+        if (custody == null) { Console.WriteLine("  nobody comes for him"); return 0; }
+        Console.WriteLine($"  a constable takes him from the office day {custody.TakenAt.Day + 1} at {custody.TakenAt.Hour:00}:00; out at {custody.OutAt.Hour:00}:{custody.OutAt.Minute:00}, {custody.End}, to answer on day {custody.AnswerDay + 1}");
+        Console.WriteLine($"  seen taken by {saw.Count}: {string.Join(", ", saw)}");
+        foreach (var kv in at) Console.WriteLine($"  hold it by {kv.Key}: {kv.Value} of {cast.People.Count}");
+        return 0;
+    }
+
     /// THE DAMAGE FOUND IN THE MORNING (town list 6br): Rita's window put in at
     /// half past eleven on a Tuesday night, seen by nobody, mended by the
     /// glazier at four on the Wednesday; each hour whoever comes into Rita's
-    /// finds it (TownNews.Found), and the gossip ticks on the cast's routines.
+    /// finds it (Aftermath.Tick), and the gossip ticks on the cast's routines.
     /// Who finds it and when, and how many hold it at noon and at six on the
     /// Wednesday and at noon on the Thursday; and that it raised nobody's
     /// suspicion.

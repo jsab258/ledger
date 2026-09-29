@@ -354,8 +354,9 @@ namespace Ledger.Core
             {
                 // His night, or what he did with the outfit's ask, which shows
                 // though only the envelope handed over is a secret (town list 6z),
-                // or the police asking after him (town list 6bq).
-                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r))) continue;
+                // or the police asking after him (town list 6bq), or taking him
+                // in (town list 6bp).
+                if (r == null || r.Content == null || r.Content.Subject != "player" || !(r.Sensitive || Arrangement.IsNight(r) || PoliceFile.IsAsking(r) || Custody.IsTaken(r))) continue;
                 if (!r.Indelible && g.Suppressed.Contains(r.TopicKey)) continue;
                 if (!(r.Confidence >= shareFloor)) continue;
                 if (best == null || r.Confidence > best.Confidence) best = r;
@@ -919,6 +920,26 @@ namespace Ledger.Core
                     "I've got to be somewhere.",
                     "Mind yourself.",
                     "...Evening.",
+                })
+                // THE POLICE TOOK HIM IN (town list 6bp): whoever saw them put him
+                // in the car, or whoever heard it; said once he is out again.
+                : Custody.IsTaken(about) && about.Hops == 0 ? From("recognition/taken-saw", new[]
+                {
+                    "Saw the police put you in the car.",
+                    "They had you in the back of a police car, didn't they.",
+                    "Saw you go off with the police. You're out, then.",
+                    "I watched them take you. Didn't look like a social call.",
+                    "You're back. I saw them take you off.",
+                    "Didn't expect to see you out so soon.",
+                })
+                : Custody.IsTaken(about) ? From("recognition/taken-heard", new[]
+                {
+                    "Heard the police had you in.",
+                    "They say you were taken in.",
+                    "Heard you'd been down the station.",
+                    "Word is the police lifted you.",
+                    "Out already? Heard they'd taken you in.",
+                    "They say the police came for you.",
                 })
                 // THE POLICE ASKING AFTER HIM (town list 6bq): whoever she asked
                 // says so as the one she asked; whoever heard it, as talk.

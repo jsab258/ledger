@@ -16,6 +16,7 @@ namespace Ledger.Core
     ///   heard   RemarkLedger   what he has heard, and who has remarked
     ///   news    TownNews       the town's own stories already filed (ids)
     ///   damage  Aftermath      each deed's damage, who has found it, until mended
+    ///   arrests Custody        each time he was taken in, and what came of it
     public sealed class TownSave
     {
         /// The bundle's version. A file from a later version than this build
@@ -29,6 +30,7 @@ namespace Ledger.Core
         public RemarkLedger Heard = new RemarkLedger();
         public readonly List<string> NewsFiled = new List<string>();
         public readonly List<Aftermath> Damage = new List<Aftermath>();
+        public readonly List<Custody> Arrests = new List<Custody>();
 
         public Dictionary<string, object> ToJson()
         {
@@ -47,6 +49,9 @@ namespace Ledger.Core
             var damage = new List<object>();
             foreach (var a in Damage) damage.Add(a.ToJson());
             d["damage"] = damage;
+            var arrests = new List<object>();
+            foreach (var c in Arrests) arrests.Add(c.ToJson());
+            d["arrests"] = arrests;
             return d;
         }
 
@@ -72,6 +77,14 @@ namespace Ledger.Core
             if (saved.TryGetValue("damage", out var dm) && dm is List<object> dmList)
                 foreach (var x in dmList)
                     if (Aftermath.FromJson(x as Dictionary<string, object>) is Aftermath a && !t.Damage.Exists(o => o.Key == a.Key)) t.Damage.Add(a);
+            // Each deed he was taken in for (the police file says which), once,
+            // the earliest of any given twice, in the order taken.
+            var arrests = new List<Custody>();
+            if (saved.TryGetValue("arrests", out var ar) && ar is List<object> arList)
+                foreach (var x in arList)
+                    if (Custody.FromJson(x as Dictionary<string, object>) is Custody c && t.Police.WasTaken(c.Topic)) arrests.Add(c);
+            arrests.Sort((a, b) => a.TakenAt.TotalMinutes != b.TakenAt.TotalMinutes ? a.TakenAt.TotalMinutes.CompareTo(b.TakenAt.TotalMinutes) : string.CompareOrdinal(a.Topic, b.Topic));
+            foreach (var c in arrests) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
             return t;
         }
     }

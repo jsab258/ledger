@@ -148,8 +148,17 @@ namespace Ledger.Core
 
         /// When a pane put in overnight is mended if the game does not say:
         /// boarded that morning, the glazier by four the working day after the
-        /// night (inferred).
-        public static GameTime DefaultMend(GameTime done) => new GameTime(done.Hour < 6 ? done.Day : done.Day + 1, 16, 0);
+        /// night, never a Sunday, when nobody would come by to find it (the
+        /// independent check) (inferred).
+        public static GameTime DefaultMend(GameTime done)
+        {
+            int d = done.Hour < 6 ? done.Day : done.Day + 1;
+            while (CastDay.Weekday(d) == 6) d++;
+            return new GameTime(d, 16, 0);
+        }
+
+        /// The longest a damage stays unmended, however it is given: ninety days.
+        public const int LongestUnmendedDays = 90;
 
         /// What a finder remembers: the damage they saw, not the deed.
         public string MemoryOf() => "I came by and saw it for myself: " + Said + ". I never saw who did it.";
@@ -164,7 +173,9 @@ namespace Ledger.Core
             if (string.IsNullOrEmpty(area) || string.IsNullOrEmpty(key) || string.IsNullOrEmpty(said))
                 throw new ArgumentException("the damage needs an area, a key and its words");
             Area = area; Key = key; Said = said; DoneAt = doneAt;
-            MendedAt = mendedAt ?? DefaultMend(doneAt);
+            var mend = mendedAt ?? DefaultMend(doneAt);
+            long longest = doneAt.TotalMinutes + LongestUnmendedDays * 24L * 60;
+            MendedAt = mend.TotalMinutes > longest ? GameTime.FromTotalMinutes(longest) : mend;
             foreach (var p in leaveOut ?? Array.Empty<string>()) if (p != null) _leaveOut.Add(p);
             _nextHour = FloorDiv(doneAt.TotalMinutes, 60) + 1;
         }
@@ -176,12 +187,12 @@ namespace Ledger.Core
         {
             var found = new List<(string, GameTime)>();
             if (mill == null || cast == null) return found;
-            // Each hour as it starts, up to now's own hour, never the hour it is
-            // mended in or after.
+            // Each hour as it starts, up to now's own hour; only hours wholly
+            // before it is mended.
             long nowM = now.TotalMinutes, mendM = MendedAt.TotalMinutes;
             var fact = new Fact(TownNews.Subject, Key, "found");
             long h = _nextHour;
-            for (; h * 60 <= nowM && h * 60 < mendM; h++)
+            for (; h * 60 <= nowM && (h + 1) * 60 <= mendM; h++)
             {
                 int day = (int)FloorDiv(h, 24), hour = (int)(h - (long)day * 24);
                 foreach (var p in cast.People)
