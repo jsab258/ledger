@@ -126,8 +126,118 @@ namespace Ledger.SaveChaos
                                   + $"wrongException={wrong} insane={insane}");
             }
 
+            TownPieces(rng, rounds);
+
             Report();
             Environment.Exit(_failed == 0 ? 0 : 1);
+        }
+
+        // ---- the town's own pieces (town list 6bi) ------------------------
+        //
+        // Each piece of the new game's town state keeps its own JSON beside the
+        // game's save (the builder saves each ToJson): the hints shown
+        // (FirstMoments), the outfit's asks (Arrangement), what he has heard
+        // (RemarkLedger). The contract for each is simpler than the codec's:
+        // FromJson NEVER throws on anything that parses, and what it restores
+        // is sane. The same structured families damage them; a file that does
+        // not parse is the codec's to refuse and is only counted.
+        static void TownPieces(Random rng, int rounds)
+        {
+            var fm = new FirstMoments();
+            fm.Begin(0, true);
+            fm.Moved(1);
+            fm.Happened(Moment.CanTalk, 2);
+            fm.Due(2);
+            fm.Happened(Moment.LedgerOpened, 20);
+            var arr = new Arrangement(0);
+            arr.Answer(0, NightAnswer.Did);
+            arr.Answer(2, NightAnswer.NoShow);
+            arr.Answer(4, NightAnswer.Did);
+            var heard = new RemarkLedger();
+            heard.HeardLine("recognition/ordinary", "Evening.");
+            heard.HeardLine("recognition/outfit-refused", "Heard you told them no.");
+            var pieces = new (string name, string good, Func<Dictionary<string, object>, (bool, string)> restore)[]
+            {
+                ("FirstMoments", MiniJson.Serialize(fm.ToJson()), d =>
+                {
+                    var f = FirstMoments.FromJson(d);
+                    foreach (var m in f.Done) if (!Enum.IsDefined(typeof(Moment), m)) return (false, $"moment {(int)m}");
+                    f.Begin(100, false);
+                    f.Happened(Moment.SeenAtDeed, 101);
+                    f.Due(101);
+                    return (true, "ok");
+                }),
+                ("Arrangement", MiniJson.Serialize(arr.ToJson()), d =>
+                {
+                    var a = Arrangement.FromJson(d);
+                    if (a.FirstDay < 0 || a.FirstDay >= 100000) return (false, $"first={a.FirstDay}");
+                    if (double.IsNaN(a.Patience) || a.Patience < 0 || a.Patience > 1) return (false, $"patience={a.Patience}");
+                    int expect = a.FirstDay;
+                    foreach (var kv in a.Nights)
+                    {
+                        if (kv.Key != expect) return (false, $"night {kv.Key} where {expect} was next");
+                        expect += Arrangement.Every;
+                    }
+                    if (a.Ended != (a.EndedWhy != null)) return (false, $"ended={a.Ended} why={a.EndedWhy}");
+                    if (!a.Ended && a.NextNight != expect) return (false, $"next={a.NextNight} expected {expect}");
+                    a.PassedTo(a.FirstDay + 40);
+                    if (!a.Ended) return (false, "twenty nights away did not end it");
+                    return (true, "ok");
+                }),
+                ("RemarkLedger", MiniJson.Serialize(heard.ToJson()), d =>
+                {
+                    var l = RemarkLedger.FromJson(d);
+                    if (l.Count < 0) return (false, $"count={l.Count}");
+                    var line = l.Fresh("recognition/ordinary", new[] { "Evening.", "All right." }, 0);
+                    if (line == null) return (false, "no line");
+                    return (true, "ok");
+                }),
+            };
+            foreach (var (name, good, restore) in pieces)
+            {
+                var (okGood, whyGood) = TryPiece(good, restore);
+                Require(okGood == PieceOutcome.Loaded && whyGood == "ok", $"{name}: the undamaged piece restores sanely ({okGood}: {whyGood})");
+                int changedLoaded = 0, changedUnparsed = 0;
+                foreach (var family in Families())
+                {
+                    int loaded = 0, unparsed = 0, threw = 0, insane = 0;
+                    string first = null;
+                    for (int i = 0; i < rounds; i++)
+                    {
+                        string mutated;
+                        try { mutated = family.mutate(good, rng); }
+                        catch (Exception) { continue; }   // a family with nothing to bite in so small a file
+                        var (outcome, why) = TryPiece(mutated, restore);
+                        if (mutated != good && outcome == PieceOutcome.Loaded) changedLoaded++;
+                        if (mutated != good && outcome == PieceOutcome.Unparsed) changedUnparsed++;
+                        if (outcome == PieceOutcome.Unparsed) unparsed++;
+                        else if (outcome == PieceOutcome.Threw) { threw++; first ??= $"{why} on: {Snip(mutated)}"; }
+                        else { loaded++; if (why != "ok") { insane++; first ??= $"{why} from: {Snip(mutated)}"; } }
+                    }
+                    Require(threw == 0, $"{name}, {family.name}: FromJson never throws on what parses ({threw} threw — {first})");
+                    Require(insane == 0, $"{name}, {family.name}: what loads is sane ({insane} of {loaded} — {first})");
+                }
+                // AND THE FAMILIES HAVE TO BITE: damaged pieces that still load,
+                // and some that do not parse, or the check is watching nothing.
+                Require(changedLoaded > 0 && changedUnparsed > 0,
+                        $"{name}: the damage reaches FromJson ({changedLoaded} damaged loaded, {changedUnparsed} did not parse)");
+                Console.WriteLine($"  town piece {name,-14} damaged and loaded={changedLoaded,-5} did not parse={changedUnparsed}");
+            }
+        }
+
+        enum PieceOutcome { Loaded, Unparsed, Threw }
+
+        static (PieceOutcome, string) TryPiece(string json, Func<Dictionary<string, object>, (bool, string)> restore)
+        {
+            Dictionary<string, object> d;
+            try { d = MiniJson.AsObject(MiniJson.Deserialize(json)); }
+            catch (Exception) { return (PieceOutcome.Unparsed, "does not parse"); }
+            try
+            {
+                var (sane, why) = restore(d);
+                return (PieceOutcome.Loaded, sane ? "ok" : why);
+            }
+            catch (Exception e) { return (PieceOutcome.Threw, e.GetType().Name + " at " + TopFrame(e) + ": " + e.Message); }
         }
 
         static void Report()
