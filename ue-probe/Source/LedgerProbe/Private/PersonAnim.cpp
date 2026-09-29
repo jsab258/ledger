@@ -6,6 +6,7 @@
 #include "Animation/AnimSequenceBase.h"
 #include "AnimationRuntime.h"
 #include "BoneControllers/AnimNode_LookAt.h"
+#include "BoneControllers/AnimNode_ModifyBone.h"
 #include "Camera/PlayerCameraManager.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/SkeletalMesh.h"
@@ -24,6 +25,7 @@ namespace
 	{
 		FAnimNode_SequencePlayer_Standalone Player;
 		FAnimNode_ConvertLocalToComponentSpace ToComponent;
+		FAnimNode_ModifyBone Calm[ULedgerPersonAnim::CalmBones];
 		FAnimNode_LookAt Look;
 		FAnimNode_ConvertComponentToLocalSpace ToLocal;
 
@@ -48,14 +50,30 @@ namespace
 				// A HEAD TURNS ABOUT SIXTY DEGREES before the shoulders have to
 				// follow; the engine's clamp holds it there.
 				Look.LookAtClamp = 60.0f;
-				Look.InterpolationTime = 0.35f;
+				Look.InterpolationTime = 0.2f;
 				Look.InterpolationType = EInterpolationBlend::Sinusoidal;
 				Look.InterpolationTriggerThreashold = 5.0f;
 				Look.Alpha = 0.0f;
 				Look.LookAtLocation = A->LookTarget;
 			}
 			ToComponent.LocalPose.SetLinkNode(&Player);
-			Look.ComponentPose.SetLinkNode(&ToComponent);
+			// THE NECK AND HEAD HELD TOWARD REST against the idle's own turns,
+			// then the look (PersonAnim.h).
+			FAnimNode_Base* Into = &ToComponent;
+			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I)
+			{
+				FAnimNode_ModifyBone& M = Calm[I];
+				M.ComponentPose.SetLinkNode(Into);
+				M.BoneToModify.BoneName = (A != nullptr && bLooks) ? A->CalmBone[I] : NAME_None;
+				M.RotationMode = BMM_Replace;
+				M.RotationSpace = BCS_ParentBoneSpace;
+				M.TranslationMode = BMM_Ignore;
+				M.ScaleMode = BMM_Ignore;
+				M.Rotation = A != nullptr ? A->CalmRest[I] : FRotator::ZeroRotator;
+				M.Alpha = (A != nullptr && bLooks && !A->CalmBone[I].IsNone()) ? ULedgerPersonAnim::CalmAlpha : 0.0f;
+				Into = &M;
+			}
+			Look.ComponentPose.SetLinkNode(Into);
 			ToLocal.ComponentPose.SetLinkNode(bLooks ? static_cast<FAnimNode_Base*>(&Look)
 			                                         : static_cast<FAnimNode_Base*>(&ToComponent));
 			FAnimInstanceProxy::Initialize(InAnimInstance);
@@ -67,6 +85,7 @@ namespace
 		{
 			OutNodes.Add(&Player);
 			OutNodes.Add(&ToComponent);
+			for (int32 I = 0; I < ULedgerPersonAnim::CalmBones; ++I) { OutNodes.Add(&Calm[I]); }
 			OutNodes.Add(&Look);
 			OutNodes.Add(&ToLocal);
 		}
@@ -129,6 +148,13 @@ void ULedgerPersonAnim::Setup(UAnimSequenceBase* InSequence, float InStartSecond
 	const FTransform HeadCs = FAnimationRuntime::GetComponentSpaceTransformRefPose(Ref, Head);
 	HeadLookAxis = HeadCs.InverseTransformVectorNoScale(FVector(0.0, 1.0, 0.0)).GetSafeNormal();
 	HeadUpAxis = HeadCs.InverseTransformVectorNoScale(FVector(0.0, 0.0, 1.0)).GetSafeNormal();
+	// THE HEAD AND ITS TWO PARENTS (the neck), and their rest rotations.
+	for (int32 I = 0, Bone = Head; I < CalmBones; ++I)
+	{
+		CalmBone[I] = Bone != INDEX_NONE ? Ref.GetBoneName(Bone) : NAME_None;
+		CalmRest[I] = Bone != INDEX_NONE ? Ref.GetRefBonePose()[Bone].GetRotation().Rotator() : FRotator::ZeroRotator;
+		Bone = Bone != INDEX_NONE ? Ref.GetParentIndex(Bone) : INDEX_NONE;
+	}
 	// A STRANGER'S LOOK until the street says otherwise: RegardFor for
 	// somebody who holds nothing about him.
 	const LedgerCore::Gossiper Stranger("stranger", "stranger", std::shared_ptr<LedgerCore::MemoryStore>(),
@@ -161,7 +187,7 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 	bool bHim = false;
 	if (PC != nullptr && PC->GetPawn() != nullptr)
 	{
-		Him = PC->GetPawn()->GetActorLocation() + FVector(0.0, 0.0, 65.0);
+		Him = PC->GetPawn()->GetPawnViewLocation();   // his eyes, not his middle
 		bHim = true;
 	}
 	else if (PC != nullptr && PC->PlayerCameraManager != nullptr)
@@ -192,6 +218,7 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 				bFirstGiven = true;
 				++FirstLooks;
 				LookLeft = bHolds ? 0.0f : FirstLookSeconds;
+				Strength = bHolds ? 1.0f : GlanceStrength;
 			}
 			// THE SECOND, KNOWING LOOK, once the first is over, in the passing zone.
 			else if (bFirstGiven && LookLeft <= 0.0f && !bSecondGiven && SecondLookCm > 0.0f
@@ -200,6 +227,7 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 				bSecondGiven = true;
 				++SecondLooks;
 				LookLeft = SecondLookSeconds;
+				Strength = 1.0f;
 			}
 			if (LookLeft > 0.0f) { Want = 1.0f; LookLeft -= DeltaSeconds; }
 			// A LOOK THAT HOLDS while he is within its reach.
@@ -209,14 +237,33 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 			{
 				if (!bLookingBack) { bLookingBack = true; ++LooksBackGiven; }
 				Want = 1.0f;
+				Strength = 1.0f;
 			}
 			if (!bInFront && !bLooksBack) { Want = 0.0f; }
 			// CLOSE, THEIR EYES GO ELSEWHERE, as a stranger's do.
 			if (LookAwayCm > 0.0f && Dist <= LookAwayCm) { Want = 0.0f; LookLeft = 0.0f; }
 		}
-		if (Want > 0.0f) { LookTarget = Him; }
+		if (Want > 0.0f)
+		{
+			// OVER THE SHOULDER ON HIS SIDE, never round the other way: a man
+			// nearly straight behind her is aimed at no further round than
+			// 95 degrees on the side he is, so the head turns to him as far as
+			// a neck turns, not back past the front (the review: at 8 m behind
+			// her the look back swung away from him).
+			LookTarget = Him;
+			const FVector Flat = FVector(To.X, To.Y, 0.0);
+			const float Deg = FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(Cos, -1.0f, 1.0f)));
+			if (Deg > 95.0f && Flat.Size() > 1.0)
+			{
+				const FVector Up(0.0, 0.0, 1.0);
+				const float SideSign = FVector::DotProduct(FVector::CrossProduct(Facing, Flat), Up) >= 0.0 ? 1.0f : -1.0f;
+				const FVector Aim = Facing.RotateAngleAxis(95.0f * SideSign, Up) * Flat.Size();
+				LookTarget = At + Aim + FVector(0.0, 0.0, To.Z);
+			}
+			Want *= Strength;
+		}
 	}
-	// A glance turns quickly and eases back: half a second must reach him.
-	LookAlpha = FMath::FInterpTo(LookAlpha, Want, DeltaSeconds, Want > LookAlpha ? 6.0f : 3.0f);
+	// A glance turns in a quarter of a second and eases back in about half.
+	LookAlpha = FMath::FInterpTo(LookAlpha, Want, DeltaSeconds, Want > LookAlpha ? 9.0f : 5.0f);
 	PeakAlpha = FMath::Max(PeakAlpha, LookAlpha);
 }

@@ -55,6 +55,16 @@ public:
 	FVector HeadLookAxis = FVector(0.0, 1.0, 0.0);
 	FVector HeadUpAxis = FVector(0.0, 0.0, 1.0);
 
+	// THE IDLE'S OWN HEAD TURNS, DAMPED (29 September, the look clips' blind
+	// review): Epic's MetaHuman idle looks about by itself, at the same moments
+	// in every run, so a stranger and somebody who knows looked alike. The two
+	// neck bones and the head are held this much toward their rest rotation
+	// before the look is applied; a little of the idle's life stays.
+	static constexpr int32 CalmBones = 3;
+	FName CalmBone[CalmBones];
+	FRotator CalmRest[CalmBones];
+	static constexpr float CalmAlpha = 0.7f;
+
 	// WHAT THE NODE IS GIVEN each frame, on the game thread.
 	float LookAlpha = 0.0f;
 	FVector LookTarget = FVector::ZeroVector;
@@ -68,6 +78,11 @@ public:
 	               double InSecondLookSeconds, double InLookAwayMetres, bool bInLooksBack);
 	float FirstLookCm = 1000.0f;
 	float FirstLookSeconds = 0.5f;
+	// How far a stranger's glance turns the head, of the whole way: a glance
+	// is a small turn; the knowing look, the watching look and the look back
+	// turn it fully.
+	static constexpr float GlanceStrength = 0.6f;
+	float Strength = 1.0f;
 	float SecondLookCm = 0.0f;
 	float SecondLookSeconds = 0.0f;
 	float LookAwayCm = 240.0f;
