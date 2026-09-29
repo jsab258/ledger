@@ -33,10 +33,13 @@ decimal), and `e`, the event. In the order they happen:
 | `named` | `who`, whom he is talking to; `names`, the ids of the people his line named, by any name the town uses for them; never the line itself | a line the player typed names somebody |
 | `load` | `from`, the save; `deeds`, the topics of the deeds the loaded save holds | a save is loaded |
 | `reply` | `who`; `how`: the talk helper's `went` (`"own"`, `"fallback"`, `"refused"`, `"brush"`, `"paused"`, `"ended"`), or `"walkedOff"`; `s`, seconds from his line to the first word he heard | a person answers him (town list 6bd: where a friend's talk broke) |
+| `hint` | `moment`, FirstMoments's moment (`"StandingStill"`, `"CanTalk"`, `"FirstAsk"`, `"SeenAtDeed"`, `"OverheardAboutHim"`, `"LedgerOpened"`) | a hint shows, what FirstMoments.Happened or Due returned (town list 6bh) |
+| `ask` | `night`, the ask's day; `answer`: `"did"`, `"refused"` or `"noshow"`; `story`, its topic (`"player.outfit_d0"`) | the outfit's ask is answered (Arrangement.Answer, or PassedTo for a night nobody answered); its story counts as a deed of this session for the town's reaction (town list 6bh) |
 | `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
-`story` (known), `who` (talk), `names` (named), `why` (end); `load` needs none.
+`story` (known), `who` (talk), `names` (named), `moment` (hint), `night`, `answer`
+and `story` (ask), `why` (end); `load` needs none.
 The others may be left out. `player` is `"friend"` or `"jafar"` and `how` one
 of the five above; any other value is warned about. Nothing else is written. A line the reader cannot use
 (unknown `e`, a field missing or of the wrong kind) is shown as unread, and a
