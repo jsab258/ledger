@@ -15,6 +15,7 @@ namespace Ledger.Core
     ///   police  PoliceFile     who told the police what, and her visits
     ///   heard   RemarkLedger   what he has heard, and who has remarked
     ///   news    TownNews       the town's own stories already filed (ids)
+    ///   damage  Aftermath      each deed's damage, who has found it, until mended
     public sealed class TownSave
     {
         /// The bundle's version. A file from a later version than this build
@@ -27,6 +28,7 @@ namespace Ledger.Core
         public PoliceFile Police = new PoliceFile();
         public RemarkLedger Heard = new RemarkLedger();
         public readonly List<string> NewsFiled = new List<string>();
+        public readonly List<Aftermath> Damage = new List<Aftermath>();
 
         public Dictionary<string, object> ToJson()
         {
@@ -42,6 +44,9 @@ namespace Ledger.Core
                 { "news", news },
             };
             if (Tea != null) d["tea"] = Tea.ToJson();
+            var damage = new List<object>();
+            foreach (var a in Damage) damage.Add(a.ToJson());
+            d["damage"] = damage;
             return d;
         }
 
@@ -64,6 +69,9 @@ namespace Ledger.Core
             if (saved.TryGetValue("news", out var n) && n is List<object> list)
                 foreach (var x in list)
                     if (x is string id && id.Length > 0 && !t.NewsFiled.Contains(id)) t.NewsFiled.Add(id);
+            if (saved.TryGetValue("damage", out var dm) && dm is List<object> dmList)
+                foreach (var x in dmList)
+                    if (Aftermath.FromJson(x as Dictionary<string, object>) is Aftermath a && !t.Damage.Exists(o => o.Key == a.Key)) t.Damage.Add(a);
             return t;
         }
     }

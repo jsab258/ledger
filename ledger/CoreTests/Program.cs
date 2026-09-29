@@ -6166,6 +6166,53 @@ namespace Ledger.CoreTests
                       "and the character is told not to promise in the first place");
             }
 
+            // THE DAMAGE FOUND AFTERWARDS (town list 6br): whoever comes into the
+            // deed's area before it is mended finds it, as the town's news naming
+            // nobody, once each, never whoever saw the deed, never after hearing it.
+            {
+                var small = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"counter\":{\"x_m\":0,\"z_m\":0},\"step\":{\"x_m\":0,\"z_m\":3},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                    "\"areas\":{\"shop\":{\"places\":[\"counter\",\"step\"],\"names\":[\"the shop\"]},\"quay\":{\"places\":[\"quay\"],\"names\":[\"the quay\"]}}," +
+                    "\"people\":[{\"id\":\"keeper\",\"routine\":[[0,\"off\"],[9,\"counter\"],[17,\"off\"]]},{\"id\":\"early\",\"routine\":[[0,\"off\"],[8,\"step\"],[9,\"off\"]]}," +
+                    "{\"id\":\"docker\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]},{\"id\":\"saw\",\"routine\":[[0,\"off\"],[9,\"step\"],[12,\"off\"]]}," +
+                    "{\"id\":\"told\",\"routine\":[[0,\"off\"],[15,\"step\"],[16,\"off\"]]}],\"ties\":[]}");
+                var fm = new GossipMill(null);
+                foreach (var id in small.People) fm.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var broke = new GameTime(0, 23, 30);
+                var mended = new GameTime(1, 16, 0);
+                var said = "somebody put the shop's window in";
+                // "told" heard it before she came by.
+                fm.Witness("told", new Fact(TownNews.Subject, "shop_window", "found"), said, false, new GameTime(1, 12, 0), 0.6);
+                var dmg = new Aftermath("shop", "shop_window", said, broke, mended, new[] { "saw" });
+                var early = dmg.Tick(fm, small, new GameTime(1, 8, 30));
+                var later = dmg.Tick(fm, small, new GameTime(1, 20, 0));
+                // Faded to nothing, and called for days: nobody finds it twice.
+                foreach (var g0 in fm.Agents) g0.Rumors.Clear();
+                var again = dmg.Tick(fm, small, new GameTime(9, 12, 0));
+                var saved = Aftermath.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(dmg.ToJson()))));
+                var afterLoad = saved.Tick(fm, small, new GameTime(12, 12, 0));
+                var keeperMem = fm.Get("keeper").Memory.Events;
+                // Mended at four: whoever comes at four finds nothing.
+                var four = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"counter\":{\"x_m\":0,\"z_m\":0}},\"areas\":{\"shop\":{\"places\":[\"counter\"],\"names\":[\"the shop\"]}}," +
+                    "\"people\":[{\"id\":\"late\",\"routine\":[[0,\"off\"],[16,\"counter\"],[17,\"off\"]]}],\"ties\":[]}");
+                var fm4 = new GossipMill(null); fm4.Add(new Gossiper("late", "late", new MemoryStore("late"), new KnowledgeBase(), new SuspicionTracker()));
+                bool atFour = new Aftermath("shop", "k", said, broke, mended).Tick(fm4, four, new GameTime(2, 0, 0)).Count == 0;
+                // A deed on the day before day 0, at half eleven: found from midnight.
+                var fmN = new GossipMill(null); fmN.Add(new Gossiper("early", "early", new MemoryStore("early"), new KnowledgeBase(), new SuspicionTracker()));
+                var nightBefore = new Aftermath("shop", "n", said, new GameTime(-1, 23, 30), null).Tick(fmN, small, new GameTime(0, 9, 0));
+                bool badArgs = false;
+                try { new Aftermath("shop", "", said, broke); } catch (ArgumentException) { badArgs = true; }
+                Check(early.Count == 1 && early[0].who == "early" && early[0].when.Equals(new GameTime(1, 8, 0))
+                      && later.Count == 1 && later[0].who == "keeper" && later[0].when.Equals(new GameTime(1, 9, 0)) && again.Count == 0 && afterLoad.Count == 0
+                      && saved != null && saved.FoundBy.Count() == dmg.FoundBy.Count()
+                      && dmg.FoundBy.Contains("told") && !dmg.FoundBy.Contains("saw") && !dmg.FoundBy.Contains("docker")
+                      && keeperMem.Count == 1 && keeperMem[0].Text == dmg.MemoryOf() && keeperMem[0].Text.Contains("never saw who did it")
+                      && fm.Get("keeper").Suspicion.Value == 0.0 && atFour && nightBefore.Count == 1 && nightBefore[0].when.Equals(new GameTime(0, 8, 0)) && badArgs
+                      && Aftermath.DefaultMend(broke).Equals(new GameTime(1, 16, 0)) && Aftermath.DefaultMend(new GameTime(1, 2, 0)).Equals(new GameTime(1, 16, 0))
+                      && Aftermath.FromJson(new Dictionary<string, object> { { "area", "shop" }, { "key", "k" }, { "said", said }, { "done", 100.0 }, { "mended", 50.0 } }) == null,
+                      "whoever comes into the area before the damage is mended finds it, once, however long it stays and across a save, remembering the damage and never the deed; never whoever saw the deed or anybody elsewhere; nothing once mended",
+                      string.Join(",", early.Select(e => e.who + "@" + e.when)) + " | " + string.Join(",", later.Select(e => e.who + "@" + e.when)));
+            }
+
             // THE TOWN'S OWN NEWS (town list 6aq): a happening among the named cast,
             // seen by everybody in its area at its hour, filed once, spread by the
             // same rounds, told as news and never as about him, raising nobody's
