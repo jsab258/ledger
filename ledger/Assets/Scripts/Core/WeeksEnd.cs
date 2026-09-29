@@ -63,13 +63,19 @@ namespace Ledger.Core
             ? "That's Mickey's real book. Everything he ran, in his own hand. You've had your week. " + Question
             : "That's the day-book. The other one stays where it is. You've had your week. " + Question);
 
-        /// When his line sounds like an answer, her plain question back.
-        public static string AskPlainly(WeekAnswer a)
+        /// When his line sounds like an answer, her plain question back; with
+        /// Mickey's arrangement already ended (his no to Ron, or the outfit
+        /// giving up on him), she never offers what is gone (town list 6cc).
+        public static string AskPlainly(WeekAnswer a, bool arrangementEnded = false)
         {
             switch (a)
             {
-                case WeekAnswer.WindDown: return "Wind it down, then? Mickey's arrangements finished, and this a cab firm and nothing more. Say yes and I'll close the book on it.";
-                case WeekAnswer.TakeOver: return "Take it over, then? Mickey's arrangements and everything that comes with them, yours. Say yes and it's your book.";
+                case WeekAnswer.WindDown: return arrangementEnded
+                    ? "Wind it down, then? A cab firm and nothing more, and Mickey's arrangements are finished already. Say yes and I'll close the book on it."
+                    : "Wind it down, then? Mickey's arrangements finished, and this a cab firm and nothing more. Say yes and I'll close the book on it.";
+                case WeekAnswer.TakeOver: return arrangementEnded
+                    ? "Take it over, then? The office and the book, yours. Mickey's arrangements are finished, and that doesn't change. Say yes and it's your book."
+                    : "Take it over, then? Mickey's arrangements and everything that comes with them, yours. Say yes and it's your book.";
                 case WeekAnswer.WontSay: return "You won't say, then? Say yes and I'll take that as your answer.";
                 default: return null;
             }
@@ -162,14 +168,18 @@ namespace Ledger.Core
         public bool Stands(GameTime now) => AskedAt is GameTime at && !Answered && now.Day == at.Day && now.CompareTo(at) >= 0;
 
         /// His plain answer, given while the question stands; filed as the
-        /// street's story and her memory. False when it cannot be.
-        public bool Give(WeekAnswer a, GameTime now, GossipMill mill, CastDay cast)
+        /// street's story and her memory. False when it cannot be. With the
+        /// outfit's arrangement (`asks`), winding it down ends it that night,
+        /// as her words say (town list 6cc, Arrangement.WoundDown); taking it
+        /// over never undoes an ending.
+        public bool Give(WeekAnswer a, GameTime now, GossipMill mill, CastDay cast, Arrangement asks = null)
         {
             if (a == WeekAnswer.None || !Stands(now)) return false;
             bool atOffice = Waits(now);
             Answer = a;
             AnsweredAt = now;
             File(mill, cast, now, atOffice);
+            if (a == WeekAnswer.WindDown) asks?.WoundDown(now, mill);
             return true;
         }
 

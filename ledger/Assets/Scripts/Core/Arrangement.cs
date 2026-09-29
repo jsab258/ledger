@@ -104,10 +104,60 @@ namespace Ledger.Core
         public const string TonightToldNo = "He has just told you no to tonight's envelope. You will take his answer down to the ferry landing tonight, and that is Mickey's arrangement finished: say so plainly.";
         /// What Ron remembers when the game has his no (Answer, Refused).
         public const string HeardNo = "He told me no to the envelope, so I'm taking his answer down to the landing tonight: that's Mickey's arrangement finished.";
+        /// What Ron remembers when Tom has told Sheila he is winding Mickey's
+        /// business down (town list 6cc, WoundDown).
+        public const string HeardWoundDown = "He told Sheila he's winding Mickey's business down, so I'm taking word down to the landing: that's Mickey's arrangement finished.";
+        /// How the outfit's man tells it.
+        public const string SaidWoundDown = "Ron came down the landing to say Mickey's nephew is winding Mickey's business down: no more envelopes";
         /// What Ron remembers when the outfit stops the asks (the last night away).
         public const string HeardStopped = "Word came up from the landing: Mickey's nephew stayed away once too often, and Mickey's arrangement is finished. Nobody down there expects anything from him now.";
 
         public Arrangement(int firstDay = 0) { FirstDay = Math.Max(0, firstDay); }
+
+        // The nights whose no came by his telling Sheila he is winding it down.
+        readonly HashSet<int> _woundDown = new HashSet<int>();
+        // The outfit's man hears it when Ron goes down that night: the story
+        // waits till then (the independent check: told at twenty to ten in the
+        // morning, the street had it before Ron had been anywhere).
+        int _woundTellNight = -1;
+        GameTime _woundTellAt;
+        /// When Ron takes word down: eleven at night, or at once if later.
+        public const int RonGoesDownHour = 23;
+
+        /// HE TOLD SHEILA HE IS WINDING IT DOWN (town list 6cc; the week's end,
+        /// WeeksEnd.Give): her words close the book on Mickey's arrangements,
+        /// so the arrangement ends that night, as his no to Ron does: any ask
+        /// night before tonight that nobody answered passes first (PassedTo),
+        /// then tonight's ask, or the next one, is answered no, Ron carries the
+        /// word down and remembers it, and it is the outfit's talk. The eleventh
+        /// sweep found Ron bringing the envelope the evening she closed the
+        /// book. False, changing nothing, once it has ended.
+        public bool WoundDown(GameTime now, GossipMill mill = null)
+        {
+            if (Ended) return false;
+            PassedTo(NightOf(now), mill, mill != null ? now : (GameTime?)null);
+            if (Ended) return false;
+            int day = NextNight;
+            _woundDown.Add(day);
+            Record(day, NightAnswer.Refused, null, null);
+            // Ron knows at once; the man at the landing when Ron goes down.
+            if (mill != null && mill.Get(Doorman) is Gossiper ron)
+                ron.Memory.Append(new MemoryEvent(now, "observation", 0.8, HeardWoundDown));
+            var goesDown = new GameTime(now.Day, RonGoesDownHour, 0);
+            _woundTellNight = day;
+            _woundTellAt = now.Hour < GaveUpHour || now.TotalMinutes >= goesDown.TotalMinutes ? now : goesDown;
+            TellWoundDown(mill, now);
+            return true;
+        }
+
+        // The outfit's man has the wound-down story once Ron has been down
+        // (at dawn, when the game calls PassedTo, or later).
+        void TellWoundDown(GossipMill mill, GameTime? now)
+        {
+            if (_woundTellNight < 0 || mill == null || !now.HasValue || now.Value.TotalMinutes < _woundTellAt.TotalMinutes) return;
+            mill.Witness(OutfitMan, new Fact("player", "outfit_d" + _woundTellNight, "wounddown"), SaidWoundDown, false, _woundTellAt, 1.0);
+            _woundTellNight = -1;
+        }
 
         /// The nights answered, in order, for the session record and the save.
         public IReadOnlyDictionary<int, NightAnswer> Nights => _nights;
@@ -190,7 +240,7 @@ namespace Ledger.Core
         {
             _nights[day] = what;
             if (what == NightAnswer.Undelivered) return true;
-            if (what == NightAnswer.Refused) { Ended = true; EndedWhy = "refused"; }
+            if (what == NightAnswer.Refused) { Ended = true; EndedWhy = _woundDown.Contains(day) ? "wound down" : "refused"; }
             else if (what == NightAnswer.Did) Patience = Math.Min(1.0, Patience + PatienceGainPerNight);
             else
             {
@@ -199,9 +249,10 @@ namespace Ledger.Core
             }
             if (mill != null)
             {
-                mill.Witness(OutfitMan, new Fact("player", "outfit_d" + day, Value(what)), Said(what), what == NightAnswer.Did, now.Value, 1.0);
+                bool wound = _woundDown.Contains(day);
+                mill.Witness(OutfitMan, new Fact("player", "outfit_d" + day, Value(what)), wound ? SaidWoundDown : Said(what), what == NightAnswer.Did, now.Value, 1.0);
                 if (Ended && mill.Get(Doorman) is Gossiper ron)
-                    ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, what == NightAnswer.Refused ? HeardNo : HeardStopped));
+                    ron.Memory.Append(new MemoryEvent(now.Value, "observation", 0.8, wound ? HeardWoundDown : what == NightAnswer.Refused ? HeardNo : HeardStopped));
             }
             return true;
         }
@@ -220,6 +271,7 @@ namespace Ledger.Core
             // With `now`, a night passes only once the man has given up waiting
             // (the independent check: a load between midnight and one passed a
             // night whose ask still stood).
+            TellWoundDown(mill, now);
             while (!Ended && NextNight < day && (!now.HasValue || GaveUpAt(NextNight).TotalMinutes <= now.Value.TotalMinutes))
             {
                 GameTime? told = null;
@@ -376,7 +428,10 @@ namespace Ledger.Core
             var days = new List<int>(_delivered);
             days.Sort();
             foreach (var d in days) delivered.Add((double)d);
-            return new Dictionary<string, object> { { "first", (double)FirstDay }, { "nights", nights }, { "delivered", delivered } };
+            var d0 = new Dictionary<string, object> { { "first", (double)FirstDay }, { "nights", nights }, { "delivered", delivered } };
+            if (_woundDown.Count > 0) { var w = new List<object>(); foreach (var x in _woundDown) w.Add((double)x); d0["woundDown"] = w; }
+            if (_woundTellNight >= 0) d0["woundTell"] = new List<object> { (double)_woundTellNight, (double)_woundTellAt.TotalMinutes };
+            return d0;
         }
 
         /// From ToJson's values, replayed in order through Answer: the first
@@ -394,6 +449,9 @@ namespace Ledger.Core
             bool before6bn = !saved.ContainsKey("delivered");
             if (saved.TryGetValue("delivered", out var dl) && dl is List<object> dlist)
                 foreach (var x in dlist) if (x is double dd && dd >= 0 && dd < 100000 && dd == Math.Floor(dd)) delivered.Add((int)dd);
+            var wound = new HashSet<int>();
+            if (saved.TryGetValue("woundDown", out var wl) && wl is List<object> wlist)
+                foreach (var x in wlist) if (x is double wd && wd >= 0 && wd < 100000 && wd == Math.Floor(wd)) wound.Add((int)wd);
             if (saved.TryGetValue("nights", out var n) && n is List<object> nights)
                 foreach (var x in nights)
                 {
@@ -410,10 +468,28 @@ namespace Ledger.Core
                         continue;
                     }
                     if (ans.Value == NightAnswer.NoShow && !delivered.Contains(day) && !before6bn) break;
+                    // Wound down only from the week's end (the independent check:
+                    // a save could wind down night 0); otherwise a plain no.
+                    if (ans.Value == NightAnswer.Refused && wound.Contains(day) && day >= first + WeeksEnd.After)
+                    {
+                        // Replayed as it was made: never a night Ron brought (the
+                        // independent check: a load marked it delivered).
+                        a._woundDown.Add(day);
+                        a.Record(day, NightAnswer.Refused, null, null);
+                        continue;
+                    }
                     if (!a.Answer(day, ans.Value) && !(ans.Value == NightAnswer.NoShow && a.Delivered(day) && a.Answer(day, ans.Value))) break;
                 }
             // Tonight's ask, had and not yet answered.
             if (!a.Ended && delivered.Contains(a.NextNight)) a.Delivered(a.NextNight);
+            // A wound-down story the outfit's man has not had yet.
+            if (saved.TryGetValue("woundTell", out var wt) && wt is List<object> wtl && wtl.Count == 2 && wtl[0] is double tn && wtl[1] is double tm
+                && a._woundDown.Contains((int)tn) && tm == Math.Floor(tm)
+                && tm >= ((int)tn - Every) * 24.0 * 60 && tm <= ((int)tn + 1) * 24.0 * 60 + GaveUpHour * 60)
+            {
+                a._woundTellNight = (int)tn;
+                a._woundTellAt = GameTime.FromTotalMinutes((long)tm);
+            }
             return a;
         }
     }

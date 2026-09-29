@@ -229,8 +229,11 @@ static class Program
     /// a question he never answered, his refusal from midnight.
     static int WeekEnd(CastDay cast)
     {
-        foreach (var answer in new[] { WeekAnswer.TakeOver, WeekAnswer.WontSay })
+        foreach (var answer in new[] { WeekAnswer.TakeOver, WeekAnswer.WontSay, WeekAnswer.WindDown })
         {
+            // Mickey's arrangement, kept every night so far (town list 6cc).
+            var asks = new Arrangement(0);
+            asks.Answer(0, NightAnswer.Did); asks.Answer(2, NightAnswer.Did); asks.Answer(4, NightAnswer.Did);
             var graph = new SocialGraph();
             foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
             var mill = new GossipMill(graph);
@@ -247,10 +250,11 @@ static class Program
                 if (day == week.Day && hod == 10 && week.Waits(new GameTime(day, 10, 30)))
                 {
                     week.Ask(new GameTime(day, 10, 30), false);
-                    if (answer != WeekAnswer.WontSay) week.Give(answer, new GameTime(day, 10, 40), mill, cast);
+                    if (answer != WeekAnswer.WontSay) week.Give(answer, new GameTime(day, 10, 40), mill, cast, asks);
                     foreach (var g in mill.Agents) if (g.Rumors.Any(WeeksEnd.IsWeekAnswer)) heardFirst.Add(g.Id);
                 }
                 if (week.Close(now, mill, cast)) foreach (var g in mill.Agents) if (g.Rumors.Any(WeeksEnd.IsWeekAnswer)) heardFirst.Add(g.Id);
+                if (hod == 6) asks.PassedTo(day, mill, now);
                 TownRounds.Hour(mill, cast, now);
                 if (day == 6 && hod == 21) at["Sunday evening"] = Holders();
                 if (day == 7 && hod == 11) at["Monday noon"] = Holders();
@@ -258,7 +262,10 @@ static class Program
             }
             Console.WriteLine(answer == WeekAnswer.TakeOver
                 ? "the week's end: Sheila asks him at the office on the Sunday at 10:30; he tells her plainly he is taking it on"
+                : answer == WeekAnswer.WindDown
+                ? "the week's end: Sheila asks him at the office on the Sunday at 10:30; he tells her plainly he is winding it down"
                 : "the week's end: Sheila asks him at the office on the Sunday at 10:30; he never answers, his refusal from midnight");
+            Console.WriteLine($"  Mickey's arrangement: {(asks.Ended ? "ended, " + asks.EndedWhy + ", that night; no envelope on the Sunday" : "stands; Ron brings the envelope on the Sunday night")}");
             Console.WriteLine($"  told first-hand: {string.Join(", ", heardFirst)}");
             foreach (var kv in at) Console.WriteLine($"  hold it by {kv.Key}: {kv.Value} of {cast.People.Count}");
         }

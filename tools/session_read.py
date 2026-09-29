@@ -35,6 +35,12 @@ FIELDS = {
     "police": {"who": (STR, True), "story": (STR, True), "how": (STR, True)},
     "ellis": {"why": (STR, True), "day": (NUM, False)},
     "taken": {"story": (STR, True), "day": (NUM, True), "end": (STR, False)},
+    # The first week's scenes (town list 6cf): Ada's tea, the damage found,
+    # Sheila's trust and his answer at the week's end.
+    "tea": {"day": (NUM, True), "state": (STR, True)},
+    "found": {"who": (STR, True), "damage": (STR, True), "story": (STR, True)},
+    "trust": {"who": (STR, True)},
+    "week": {"answer": (STR, True), "story": (STR, True)},
 }
 ENDS = {"quit", "crash"}
 PLAYERS = {"friend", "jafar"}
@@ -49,6 +55,10 @@ ANSWERS = {"did", "refused", "noshow"}
 POLICE_HOW = {"statement", "description", "talk"}
 # How a spell in custody ended (Custody.End), town list 6bt.
 CUSTODY_ENDS = {"Cautioned", "Charged", "BailedToReturn"}
+# How Ada's tea went, once the evening closes (TeaState), and his answer at the
+# week's end (WeekAnswer), town list 6cf.
+TEA_STATES = {"Stayed", "LeftEarly", "StoodUp"}
+WEEK_ANSWERS = {"WindDown", "TakeOver", "WontSay"}
 THIRTY = 30 * 60
 
 
@@ -119,6 +129,10 @@ def read(path):
             warn.append(f"an answer to the ask the spec does not know: {e['answer']!r}")
         if e["e"] == "taken" and "end" in e and e["end"] not in CUSTODY_ENDS:
             warn.append(f"a way custody ends the spec does not know: {e['end']!r}")
+        if e["e"] == "tea" and e["state"] not in TEA_STATES:
+            warn.append(f"a way Ada's tea went the spec does not know: {e['state']!r}")
+        if e["e"] == "week" and e["answer"] not in WEEK_ANSWERS:
+            warn.append(f"an answer at the week's end the spec does not know: {e['answer']!r}")
         if e["e"] == "police" and e["how"] not in POLICE_HOW:
             warn.append(f"a way the police hold something the spec does not know: {e['how']!r}")
         if e["e"] == "still" and e["s"] > e["t"]:
@@ -157,7 +171,16 @@ def one(events):
     asks = [e for e in events if e["e"] == "ask" and e["answer"] in ANSWERS]
     for a in asks:
         done_at.setdefault(a["story"], a["t"])
+    # His answer to Sheila is a deed of this session too: the street learns it
+    # (town list 6cf); an answer the spec does not know is none.
+    weeks = [e for e in events if e["e"] == "week" and e["answer"] in WEEK_ANSWERS]
+    for w in weeks:
+        done_at.setdefault(w["story"], w["t"])
     knowns = [e for e in events if e["e"] == "known"]
+    # The damage he did found by somebody who comes by counts as the town
+    # reacting to that deed, though it names nobody (town list 6cf).
+    knowns += [{"t": e["t"], "e": "known", "who": e["who"], "how": "found", "story": e["story"]} for e in events if e["e"] == "found"]
+    knowns.sort(key=lambda k: k["t"])
     # WHAT FOLLOWS A DEED (town list 6bt): his being taken in follows the deed
     # he was taken for; DS Ellis asking after him follows the crime she came
     # for, or, come for the street's talk, whatever he had done by then; what
@@ -215,6 +238,10 @@ def one(events):
         "police": [(e["t"], e["who"], e["story"], e["how"]) for e in events if e["e"] == "police"],
         "ellis": [(e["t"], e["why"]) for e in events if e["e"] == "ellis"],
         "taken": [(e["t"], e["story"], e.get("end", "?")) for e in events if e["e"] == "taken"],
+        "tea": [(e["t"], int(e["day"]), e["state"]) for e in events if e["e"] == "tea"],
+        "found": [(e["t"], e["who"], e["damage"]) for e in events if e["e"] == "found"],
+        "trust": [(e["t"], e["who"]) for e in events if e["e"] == "trust"],
+        "week": [(e["t"], e["answer"]) for e in weeks],
         "asks": [(e["t"], int(e["night"]), e["answer"], e["story"]) for e in asks],
         "replies": len(replies),
         "broke": broke,
@@ -270,6 +297,14 @@ def show(path, facts, unread, warn):
     out.append("  DS Ellis on Quay Street: " + (", ".join(f"minute {minute(t)}, for {why}" for t, why in facts["ellis"]) or "never"))
     if facts["taken"]:
         out.append("  taken in: " + "; ".join(f"for {story}, minute {minute(t)}, {end}" for t, story, end in facts["taken"]))
+    if facts["tea"]:
+        out.append("  Ada's tea: " + "; ".join(f"day {day + 1}, {state} (minute {minute(t)})" for t, day, state in facts["tea"]))
+    if facts["found"]:
+        out.append("  the damage found: " + "; ".join(f"{damage} by {who} (minute {minute(t)})" for t, who, damage in facts["found"]))
+    if facts["trust"]:
+        out.append("  came to trust him: " + ", ".join(f"{who} (minute {minute(t)})" for t, who in facts["trust"]))
+    if facts["week"]:
+        out.append("  his answer at the week's end: " + "; ".join(f"{answer} (minute {minute(t)})" for t, answer in facts["week"]))
     out.append("  the town showing it knew something they had done: "
                + ("; ".join(describe(k) for k in facts["reacting"]) or "nothing recorded"))
     if facts["before"]:
@@ -519,6 +554,24 @@ def selftest():
         assert [k["who"] for k in ff["reacting"]] == ["joey", "lena", "sam"] and all(k["follows"] == "player.window_d1" for k in ff["reacting"]), ff["reacting"]
         assert [k["who"] for k in ff["before"]] == ["rita"] and "following player.window_d1" in tf and "taken in: for player.window_d1" in tf, tf
         assert any("Hanged" in w for w in wf) and not uf, (wf, uf)
+        # The first week's scenes (town list 6cf): the damage found counts as the
+        # town reacting to the deed; his answer is a deed the street can know.
+        week_ = write("2026-10-14-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
+                                                  {"t": 100, "e": "deed", "what": "player.window_d1", "seen": []},
+                                                  {"t": 400, "e": "found", "who": "joey", "damage": "rita_window", "story": "player.window_d1"},
+                                                  {"t": 900, "e": "tea", "day": 2, "state": "Stayed"},
+                                                  {"t": 1200, "e": "trust", "who": "lena"},
+                                                  {"t": 1500, "e": "week", "answer": "TakeOver", "story": "player.week_d6"},
+                                                  {"t": 1700, "e": "known", "who": "ada", "how": "recognition", "story": "player.week_d6"},
+                                                  {"t": 1800, "e": "tea", "day": 4, "state": "Spilt"},
+                                                  {"t": 1900, "e": "week", "answer": "Maybe", "story": "player.week_d8"},
+                                                  {"t": 2000, "e": "end", "why": "quit"}])
+        ew, uw, ww = read(week_)
+        fw = one(ew)
+        tw = show(week_, fw, uw, ww)
+        assert [k["who"] for k in fw["reacting"]] == ["joey", "ada"] and fw["first_known"]["how"] == "found" and fw["known_by_30"], fw["reacting"]
+        assert "Ada's tea: day 3, Stayed" in tw and "rita_window by joey" in tw and "came to trust him: lena" in tw and "TakeOver (minute 25.0)" in tw, tw
+        assert "Maybe" not in tw.split("warning")[0] and any("Spilt" in w for w in ww) and any("Maybe" in w for w in ww) and not uw, (tw, ww, uw)
         # What the police heard, and DS Ellis on the street (town list 6bm).
         policed = write("2026-10-12-100000.jsonl", [{"t": 0, "e": "start", "player": "friend", "fresh": True},
                                                     {"t": 1500, "e": "police", "who": "ron", "story": "player.outfit_d2", "how": "talk"},
