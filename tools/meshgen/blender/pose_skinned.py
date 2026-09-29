@@ -89,6 +89,56 @@ garment.select_set(True)
 bpy.context.view_layer.objects.active = garment
 bpy.ops.object.datalayout_transfer(modifier="Weights")
 bpy.ops.object.modifier_apply(modifier="Weights")
+# ZONE WEIGHTS (--zones; JUMPER-2026-09-30.md, after two reviews failed Ron's
+# jumper: fins at the armpits, the known fault of copying the nearest skin's
+# weights onto a sweater): below the armpit the side panel carries no arm, its
+# arm share going to the spine and a little clavicle; the arm's share rises
+# over 9 cm out from the side; the sleeve's last part rides the forearm's
+# twist bone and the forearm, no hand
+ZONES = "--zones" in argv
+if ZONES:
+    ARMPIT_Z, SIDE_X = opt("--armpit-z", 1.39), opt("--side-x", 0.215)
+    ARMISH_ = ("upperarm", "lowerarm", "hand", "thumb", "index", "middle", "ring", "pinky", "wrist")
+    gnames = {g.index: g.name for g in garment.vertex_groups}
+
+    def grp_(nm):
+        return garment.vertex_groups.get(nm) or garment.vertex_groups.new(name=nm)
+    zoned = 0
+    for v in garment.data.vertices:
+        p_ = garment.matrix_world @ v.co
+        ax_ = abs(p_.x)
+        sd = "l" if p_.x > 0 else "r"
+        if p_.z < ARMPIT_Z + 0.04 and ax_ < SIDE_X + 0.09:
+            f = 0.0 if (ax_ < SIDE_X or p_.z < ARMPIT_Z - 0.06) else (ax_ - SIDE_X) / 0.09
+            f = max(0.0, min(1.0, f))
+            if p_.z < ARMPIT_Z - 0.06 and ax_ >= SIDE_X:
+                f = max(f, min(1.0, (ax_ - SIDE_X - 0.03) / 0.09))      # the sleeve hanging beside the body stays on the arm
+            freed = 0.0
+            for g in list(v.groups):
+                if gnames[g.group].startswith(ARMISH_):
+                    freed += g.weight * (1.0 - f)
+                    garment.vertex_groups[g.group].add([v.index], g.weight * f, "REPLACE")
+            if freed > 0:
+                for nm, share in (("spine_04", 0.5), ("spine_03", 0.3), ("clavicle_" + sd, 0.2)):
+                    gg = grp_(nm)
+                    cur = next((g.weight for g in v.groups if g.group == gg.index), 0.0)
+                    gg.add([v.index], cur + freed * share, "REPLACE")
+                zoned += 1
+    CUFF_T = opt("--cuff-zone-t", 0.0)
+    if CUFF_T > 0:
+        for v in garment.data.vertices:
+            p_ = garment.matrix_world @ v.co
+            sd = "l" if p_.x > 0 else "r"
+            if abs(p_.x) < 0.25:
+                continue
+            a_ = arm.matrix_world @ arm.pose.bones["lowerarm_" + sd].head
+            h_ = arm.matrix_world @ arm.pose.bones["hand_" + sd].head
+            t = (p_ - a_).dot(h_ - a_) / (h_ - a_).length_squared
+            if t > CUFF_T:
+                for g in list(v.groups):
+                    garment.vertex_groups[g.group].remove([v.index])
+                grp_("lowerarm_twist_01_" + sd).add([v.index], 0.6, "REPLACE")
+                grp_("lowerarm_" + sd).add([v.index], 0.4, "REPLACE")
 bpy.ops.object.mode_set(mode="WEIGHT_PAINT")
 bpy.ops.object.vertex_group_smooth(group_select_mode="ALL", factor=0.5, repeat=opt("--smooth", 6, int))
 bpy.ops.object.vertex_group_normalize_all(group_select_mode="ALL", lock_active=False)
@@ -124,10 +174,38 @@ kd.balance()
 names = {g.index: g for g in garment.vertex_groups}
 wmap = {i: [(g.group, g.weight) for g in garment.data.vertices[i].groups] for i in cloth_ids}
 glued = 0
+# the small pieces by their place (--zones): the welt's points take the knit's weights at the same angle a
+# little above the welt (the same up each column: nearest-point copies stepped and stood out as a shelf); the
+# neckband blends from the knit's edge to spine_05 and neck_01 at its top; the cuffs ride the forearm's twist
+comp_z = {}
+for i, c in enumerate(comp):
+    comp_z.setdefault(c, []).append(gco[i][2])
+HEM = opt("--hem", 0.0)
+cxy = np.array([float(np.mean(gco[:, 0])), float(np.mean(gco[:, 1]))])
 for i, c in enumerate(comp):
     if c == main:
         continue
-    _p, k, _d = kd.find(Vector(gco[i]))
+    zc = float(np.mean(comp_z[c]))
+    target = Vector(gco[i])
+    if ZONES and HEM > 0 and zc < HEM + 0.08:
+        d_ = Vector((gco[i][0] - cxy[0], gco[i][1] - cxy[1], 0.0))
+        target = Vector((gco[i][0], gco[i][1], HEM + opt("--welt", 0.05) + 0.02)) + (d_.normalized() * 0.01 if d_.length > 0 else Vector())
+    _p, k, _d = kd.find(target)
+    if ZONES and zc > opt("--neck-above", 9.0):
+        z0, z1 = min(comp_z[c]), max(comp_z[c])
+        t_ = (gco[i][2] - z0) / max(1e-6, z1 - z0)
+        for g in list(garment.data.vertices[i].groups):
+            names[g.group].remove([i])
+        for gi, w in wmap[cloth_ids[k]]:
+            names[gi].add([i], w * (1.0 - t_), "REPLACE")
+        front = gco[i][1] < cxy[1]
+        for nm, w in (("spine_05", 0.7 if front else 0.55), ("neck_01", 0.3 if front else 0.45)):
+            gg = garment.vertex_groups.get(nm) or garment.vertex_groups.new(name=nm)
+            names[gg.index] = gg
+            cur = next((g.weight for g in garment.data.vertices[i].groups if g.group == gg.index), 0.0)
+            gg.add([i], cur + w * t_, "REPLACE")
+        glued += 1
+        continue
     for g in list(garment.data.vertices[i].groups):
         names[g.group].remove([i])
     for gi, w in wmap[cloth_ids[k]]:
@@ -152,12 +230,25 @@ kd3 = KDTree(max(1, len(_edge_pts)))
 for k, q in enumerate(_edge_pts):
     kd3.insert(q, k)
 kd3.balance()
-deep_cloth = [i for i in cloth_ids if not _edge_pts or kd3.find(Vector(gco[i]))[2] > opt("--edge-keep", 0.04)]
+deep_cloth = [i for i in cloth_ids if not _edge_pts or kd3.find(Vector(gco[i]))[2] > opt("--edge-keep", 0.08)]
 kd2 = KDTree(max(1, len(deep_cloth)))
 for k, i in enumerate(deep_cloth):
     kd2.insert(Vector(gco[i]), k)
 kd2.balance()
-ids_cov = [i for i, q in enumerate(bco) if kd2.find(Vector(q))[2] < opt("--cover", 0.03)]
+# and never above --hide-below (the neck's base showed through at the throat when hidden near it)
+ids_cov = [i for i, q in enumerate(bco) if kd2.find(Vector(q))[2] < opt("--cover", 0.025) and opt("--hide-above", -9.0) < q[2] < opt("--hide-below", 9.0)]
+# ERODED (Ron's second review: square holes at the waist, wrists and seat,
+# where a hidden point took its whole large face of the body with it): a
+# point stays hidden only if all its neighbours are covered too, twice over,
+# so no removed face reaches past the covered skin
+_cov = set(ids_cov)
+_bb = bmesh.new()
+_bb.from_mesh(body.data)
+_bb.verts.ensure_lookup_table()
+for _ in range(opt("--erode", 2, int)):
+    _cov = {i for i in _cov if all(e.other_vert(_bb.verts[i]).index in _cov for e in _bb.verts[i].link_edges)}
+_bb.free()
+ids_cov = sorted(_cov)
 covered.add(ids_cov, 1.0, "REPLACE")
 mask = body.modifiers.new("Covered", "MASK")
 mask.vertex_group = "covered"
