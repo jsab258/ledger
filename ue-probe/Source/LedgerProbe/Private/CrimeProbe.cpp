@@ -3728,7 +3728,12 @@ namespace
 			const bool bTalking = GLive.Talked.count(P.Card) && !GLive.Left.count(P.Card);
 			auto Last = GLive.LineAt.find(P.Card);
 			const bool bRested = Last == GLive.LineAt.end() || Now - Last->second >= 45.0;
-			if (!R.bSpeaks || M > LedgerCrime::kEarshotM || bSayOpen || GLive.PendingId != 0 || bTalking || !bRested) { continue; }
+			// A HUSH AFTER THE DEED'S SHOUT: for a minute after it nobody on the
+			// street makes a passing remark (the AI tester, 29 September: Sheila
+			// shouted "Stop. I mean it. Stop." and at once added the everyday
+			// "Mind how you go.", her regard not yet holding what she had seen).
+			const bool bHush = GShoutAt > 0.0 && FPlatformTime::Seconds() - GShoutAt < 60.0;
+			if (!R.bSpeaks || M > LedgerCrime::kEarshotM || bSayOpen || GLive.PendingId != 0 || bTalking || !bRested || bHush) { continue; }
 			AActor* Visual = GVisualFor(P.Body);
 			const FVector Facing = Visual != nullptr ? Visual->GetActorRightVector() : P.Body->GetActorForwardVector();
 			const bool bPassed = FVector::DotProduct(Facing.GetSafeNormal2D(), (HimAt - At).GetSafeNormal2D()) < 0.0;
