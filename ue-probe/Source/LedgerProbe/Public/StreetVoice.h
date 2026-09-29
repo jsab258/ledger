@@ -771,8 +771,9 @@ namespace LedgerCore
 				{
 					const std::string Key = Line.Source->TopicKey();
 					if (!StoryTold.count(Key)) StoryOrder.push_back(Key);
-					// C#'s unchecked int: past int.MaxValue it wraps, here defined
-					StoryTold[Key] = (int)((unsigned)TimesToldHim(Key) + 1u);
+					// at the most an int holds it stays, as the C# (FINDINGS, 29 September)
+					const int Told = TimesToldHim(Key);
+					StoryTold[Key] = Told == std::numeric_limits<int>::max() ? Told : Told + 1;
 				}
 			}
 
@@ -843,10 +844,9 @@ namespace LedgerCore
 						if (T->Obj[I].second.Type == T_NUM && T->Obj[I].second.Num >= 0)
 						{
 							if (!L.StoryTold.count(T->Obj[I].first)) L.StoryOrder.push_back(T->Obj[I].first);
-							// (int)dv in the C#: past int.MaxValue .NET 8 on x64 gives
-							// int.MinValue; here that, defined, rather than undefined
+							// clamped as MiniJson.GetInt clamps, as the C# (FINDINGS, 29 September)
 							const double N = T->Obj[I].second.Num;
-							L.StoryTold[T->Obj[I].first] = N >= 2147483648.0 ? std::numeric_limits<int>::min() : (int)N;
+							L.StoryTold[T->Obj[I].first] = N >= 2147483647.0 ? std::numeric_limits<int>::max() : (int)N;
 						}
 				return L;
 			}

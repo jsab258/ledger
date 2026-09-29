@@ -51825,7 +51825,7 @@ RemarkCase|empty-line|[]
 RemarkCase|banks-apart|[Evening.]
 RemarkCase|damaged-save|[1,0,2,0,z]
 RemarkCase|escapes-saved|[1,other]
-RemarkCase|told-too-big|[-2147483648,2147483647]
+RemarkCase|told-too-big|[2147483647,2147483647]
 OriginRung|-1|w|stranger|0|-1|1|-1|0|Trusting|0
 OriginRung|-1|w|heardOf|0|-1|1|-1|0|Trusting|0
 OriginRung|-1|w|close|0|-1|1|-1|0|Trusting|0
