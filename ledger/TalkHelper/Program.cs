@@ -773,6 +773,8 @@ static class Program
             var promised = timedOut ? new List<string>() : new List<string>(engine.LastPromised);
             // SPOKE OF: the stories this reply drew on (town list 6ah), for the session record.
             var spokeOf = timedOut ? new List<string>() : new List<string>(engine.LastSpokeOf);
+            // PUT TO HIS FACE (town list 6bc): the deed they raised with him, in their own words.
+            var putToHim = timedOut || reply == brush ? new List<string>() : new List<string>(engine.LastPutToHim);
             bool @unchecked = !timedOut && engine.Checker != null && engine.LastUnchecked;
             // THE REST, when the first sentence has already been sent to be spoken:
             // what follows it, or nothing if the reply is no longer its sequel
@@ -802,7 +804,7 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, @unchecked, fellBack, generated, model }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>

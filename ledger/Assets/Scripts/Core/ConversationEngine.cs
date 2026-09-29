@@ -257,6 +257,10 @@ namespace Ledger.Core
                 sb.AppendLine($"You have heard he has been telling people he was at {toldOthers.said} {WhenWords(toldOthers.day, toldOthers.hour)}, and you saw him at {toldOthers.saw} then.");
 
             bool ownedUp = CurrentDeed != null && OwnedUp.Contains(CurrentDeed);
+            _promptRaisesDeed = false;
+            if (CurrentDeed != null && (ownedUp || (answered != null && (answered.Result == ClaimResult.Contradiction || answered.HeardSaw != null || answered.SawElsewhere))
+                                        || ToldOthers.ContainsKey(CurrentDeed)))
+                _promptRaisesDeed = true;
             if (ownedUp)
                 sb.AppendLine("He has owned up to it: he told you himself that it was him. What you make of that is yours.");
             if (CurrentDeed != null && KeepsQuiet.TryGetValue(CurrentDeed, out var keepsQuiet))
@@ -415,6 +419,7 @@ namespace Ledger.Core
                 {
                     sb.AppendLine($"What you want out of this conversation: to find out whether they had anything to do with it ({why}). So in this reply, whatever they said, ask them straight out, your own way.");
                     _promptAsks = true;
+                    if (CurrentDeed != null) _promptRaisesDeed = true;
                 }
             }
             return sb.ToString();
@@ -448,6 +453,16 @@ namespace Ledger.Core
         /// the said reply drawing on, so the game can record the town reacting
         /// to what the player did in talk. Empty when none, or no check ran.
         public IReadOnlyList<string> LastSpokeOf { get; private set; } = new List<string>();
+
+        /// SAID TO HIS FACE (town list 6bc, the fourth sweep): the deed the Core
+        /// set before them this turn to raise with him (to ask him straight out,
+        /// to put a caught or doubted answer to him, to react to his owning up),
+        /// when the reply was the model's own words and not a brush-off, a
+        /// refusal or "that's all I know". A question states nothing, so the
+        /// claim check's citations never showed "Was that you at Rita's?": the
+        /// very line the first hour turns on. Empty otherwise.
+        public IReadOnlyList<string> LastPutToHim { get; private set; } = new List<string>();
+        bool _promptRaisesDeed;
 
         readonly Dictionary<string, string> _storyOf = new Dictionary<string, string>();
         List<string> _lastCleanCited = new List<string>();
@@ -1265,6 +1280,7 @@ namespace Ledger.Core
             LastPromised = new List<string>();
             LastRealNames = new List<string>();
             LastSpokeOf = new List<string>();
+            LastPutToHim = new List<string>();
             _lastCleanCited = new List<string>();
             LastUnchecked = false;
             if (Checker != null)
@@ -1326,7 +1342,11 @@ namespace Ledger.Core
                     }
                     var spoke = new List<string>();
                     foreach (var text in _lastCleanCited)
+                    {
                         if (_storyOf.TryGetValue(text, out var story) && !spoke.Contains(story)) spoke.Add(story);
+                        // Why they are wary is about the deed they suspect him of (town list 6bc).
+                        else if (text.StartsWith("Why they are wary:", StringComparison.Ordinal) && CurrentDeed != null && !spoke.Contains(CurrentDeed)) spoke.Add(CurrentDeed);
+                    }
                     LastSpokeOf = spoke;
                     // ABANDONED WHILE CHECKING: a caller that has given up on the
                     // turn must not find it kept afterwards (the independent check,
@@ -1370,6 +1390,8 @@ namespace Ledger.Core
                 shown = ResponseValidator.IsDeflection(cleaned, Card.Name) ? heardFirst : cleaned;
             }
             reply = shown;
+            LastPutToHim = _promptRaisesDeed && CurrentDeed != null && !ResponseValidator.IsDeflection(reply, Card.Name) && !ClaimCheck.IsKnownOnly(reply, Card)
+                ? new List<string> { CurrentDeed } : new List<string>();
             _transcript.Add(new LlmMessage("assistant", reply));
             if (_promptAsks) _asksThisTalk++;
 

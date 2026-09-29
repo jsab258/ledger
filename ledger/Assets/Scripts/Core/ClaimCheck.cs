@@ -536,8 +536,10 @@ namespace Ledger.Core
                     var src = MiniJson.GetString(MiniJson.AsObject(x), "source");
                     var found = src == null ? null : SourceIds(src.Trim(), ids);
                     if (found == null) continue;
+                    // The memories, and why they are wary (W1), which is about the
+                    // deed they suspect him of (town list 6bc).
                     foreach (var id in found)
-                        if (id[0] == 'M')
+                        if (id[0] == 'M' || id == "W1")
                             foreach (var (itemId, itemText) in items)
                                 if (itemId == id && !cited.Contains(itemText)) cited.Add(itemText);
                 }

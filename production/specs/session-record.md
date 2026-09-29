@@ -28,7 +28,7 @@ decimal), and `e`, the event. In the order they happen:
 | `place` | `at`, a place id from the cast file (production/specs/hook-cast.json) | the player comes within 6 m of a place other than the last one written |
 | `still` | `s`, seconds; `at`, the last place | the player has neither moved nor typed for 20 s or more, written once when the spell ends (so it began `s` seconds before `t`), and before `end` if it is still going then |
 | `deed` | `what`, the story's topic (`"player.window_d1"`); `seen`, the ids who saw it | the player does something the town can hold |
-| `known` | `who`; `how`: `"look"`, `"remark"`, `"recognition"`, `"question"` or `"talk"`; `story`, the topic | somebody visibly shows they know something he did: the second, longer look; a remark to a companion; a line to his face; a question about it in conversation; or a reply of theirs drew on it (the talk helper's `spokeOf`) |
+| `known` | `who`; `how`: `"look"`, `"remark"`, `"recognition"`, `"question"` or `"talk"`; `story`, the topic | somebody visibly shows they know something he did: the second, longer look; a remark to a companion; a line to his face; a question about it in conversation, or anything else the talk helper reports they put to his face (its `putToHim`); or a reply of theirs drew on it (its `spokeOf`) |
 | `talk` | `who` | the player opens a conversation |
 | `named` | `who`, whom he is talking to; `names`, the ids of the people his line named, by any name the town uses for them; never the line itself | a line the player typed names somebody |
 | `load` | `from`, the save | a save is loaded |
