@@ -5137,6 +5137,118 @@ namespace Ledger.CoreTests
                   && AiNotice.ReportThanks("relay") != AiNotice.ReportThanks("local") && AiNotice.ReportThanks("lost").Contains("could not"),
                 "the notice says the town talks through an AI model and how to report a line, within the content rule, and the thanks say where a report went");
 
+            // HINTS THAT FIRE THE FIRST TIME THEY MATTER (town list 6y): never on
+            // the clock, walking first, never two at once, once a game, kept by the
+            // save; the independent check's cases each have a line here.
+            {
+                var fm = new FirstMoments();
+                fm.Begin(0, true);
+                var talkEarly = fm.Happened(Moment.CanTalk, 0.5);
+                var early = fm.Due(3.9);
+                var still = fm.Due(4);
+                var inGap = fm.Due(10);
+                var talkHint = fm.Due(16);
+                fm.Happened(Moment.CanTalk, 20);
+                var twice = fm.Due(40);
+                Check(talkEarly == null && early == null && still != null && still.Moment == Moment.StandingStill && still.Key.Contains("{Move}")
+                      && inGap == null && talkHint != null && talkHint.Moment == Moment.CanTalk && talkHint.Speaker == "lena" && talkHint.Key.Contains("{Talk}")
+                      && twice == null,
+                      "a new game's first hint is how to walk, after four seconds standing still, even when talk came first; the next waits out the gap; each shows once");
+
+                var walker = new FirstMoments();
+                walker.Begin(0, true);
+                walker.Happened(Moment.CanTalk, 1);
+                walker.Moved(2);
+                var talkAtOnce = walker.Due(2);
+                var reloaded = FirstMoments.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(walker.ToJson()))));
+                reloaded.Begin(100, false);
+                var autosave = new FirstMoments();
+                autosave.Begin(500, false);
+                Check(talkAtOnce != null && talkAtOnce.Moment == Moment.CanTalk && reloaded.Due(110) == null && reloaded.Done.Contains(Moment.StandingStill)
+                      && autosave.Due(510) == null,
+                      "a player who walks is never told how, in this game or after any load, an old autosave's included; once he walks, talk shows at once");
+
+                // Ron's beat is spoken as it happens, the coat's key with it, so a
+                // save straight after loses nothing; the Ledger's line is on its
+                // screen when it opens.
+                var night = new FirstMoments();
+                night.Begin(0, true);
+                night.Moved(0.5);
+                night.Happened(Moment.SeenAtDeed, 99);
+                var seenFirst = night.Due(99);
+                var ron = night.Happened(Moment.FirstAsk, 100);
+                var ronAgain = night.Happened(Moment.FirstAsk, 101);
+                night.Happened(Moment.OverheardAboutHim, 101);
+                var overheard = night.Due(112);
+                night.Happened(Moment.OverheardAboutHim, 150);
+                var ledger = night.Happened(Moment.LedgerOpened, 151);
+                var ledgerAgain = night.Happened(Moment.LedgerOpened, 152);
+                Check(seenFirst != null && seenFirst.Moment == Moment.SeenAtDeed && ron != null && ron.AtOnce && ron.Speaker == "rocco"
+                      && ron.Line.StartsWith("If you go tonight") && ron.Key.Contains("{Coat}") && ronAgain == null
+                      && overheard != null && overheard.Moment == Moment.OverheardAboutHim
+                      && ledger != null && ledger.AtOnce && ledgerAgain == null && night.Done.Contains(Moment.FirstAsk),
+                      "Ron's line and the coat's key come together when he hands it over, straight after another hint or not; the Ledger's line when it opens; each once");
+
+                var late = new FirstMoments();
+                late.Begin(0, false);
+                late.Happened(Moment.SeenAtDeed, 200);
+                late.Happened(Moment.OverheardAboutHim, 201);
+                var seen = late.Due(201);
+                var tooLate = late.Due(220);
+                bool leftUndone = !late.Done.Contains(Moment.OverheardAboutHim);
+                late.Happened(Moment.OverheardAboutHim, 300);
+                var nextTime = late.Due(300);
+                Check(seen != null && seen.Moment == Moment.SeenAtDeed && tooLate == null && leftUndone
+                      && nextTime != null && nextTime.Moment == Moment.OverheardAboutHim,
+                      "a hint about what just happened is dropped once it is fifteen seconds stale, and teaches the next time", $"{seen?.Moment} {tooLate?.Moment} {nextTime?.Moment} {string.Join(",", late.Done)}");
+
+                var clock = new FirstMoments();
+                clock.Begin(0, false);
+                clock.Happened(Moment.SeenAtDeed, 10);
+                var shown = clock.Due(10);
+                clock.Happened(Moment.OverheardAboutHim, 11);
+                var nan = clock.Due(double.NaN);
+                var back = clock.Due(5);
+                clock.Begin(15, false);
+                clock.Happened(Moment.OverheardAboutHim, 15);
+                var acrossLoad = clock.Due(16);
+                var afterGap = clock.Due(22);
+                Check(shown != null && nan == null && back == null && acrossLoad == null && afterGap != null && afterGap.Moment == Moment.OverheardAboutHim,
+                      "a clock that sends nothing or runs backwards shows nothing early, and the gap holds across a load");
+                // THE SECOND PASS OF THE INDEPENDENT CHECK: a clock the game restarts
+                // at a load, an infinity, a load's own list, a second new game.
+                var restart = new FirstMoments();
+                restart.Begin(0, true);
+                restart.Moved(1);
+                restart.Happened(Moment.SeenAtDeed, 3000);
+                var atThreeThousand = restart.Due(3000);
+                restart.Begin(0, false, new Dictionary<string, object> { { "done", new List<object> { "SeenAtDeed", "StandingStill" } } });
+                restart.Happened(Moment.OverheardAboutHim, 5);
+                var inGapAfterLoad = restart.Due(5);
+                var afterRestart = restart.Due(12);
+                var inf = restart.Due(double.PositiveInfinity);
+                restart.Happened(Moment.CanTalk, 6);
+                var noDouble = restart.Due(6);
+                restart.Begin(100, true);
+                var newGameStill = restart.Due(104);
+                Check(atThreeThousand != null && inGapAfterLoad == null && afterRestart != null && afterRestart.Moment == Moment.OverheardAboutHim && inf == null && noDouble == null
+                      && restart.Done.Count == 1 && newGameStill != null && newGameStill.Moment == Moment.StandingStill,
+                      "a clock restarted at a load carries on, an infinity is no time, a load takes its save's list, and a new game starts the hints over");
+
+                string filled = FirstMoments.Fill("{Move} walks, {Run} runs; {Nope} stays.", k => k == "Move" ? "WASD" : k == "Run" ? " " : null);
+                var broken = FirstMoments.FromJson(new Dictionary<string, object> { { "done", new List<object> { "CanTalk", "CanTalk, FirstAsk", "5", 7, "Nonsense" } } });
+                string wordsBad = null;
+                foreach (var kv in FirstMoments.Words)
+                {
+                    var h = kv.Value;
+                    if (h.Moment != kv.Key || string.IsNullOrEmpty(h.Key) || ContentRule.SpeechBreaks(h.Key) != null
+                        || (h.Line != null && (ContentRule.SpeechBreaks(h.Line) != null || h.Speaker == null))) wordsBad = h.Key;
+                }
+                Check(filled == "WASD walks, {Run} runs; {Nope} stays." && broken.Done.Count == 1 && broken.Done.Contains(Moment.CanTalk)
+                      && FirstMoments.Words.Count == Enum.GetValues(typeof(Moment)).Length && wordsBad == null,
+                      "keys are filled as bound and never guessed or left blank; a damaged save counts only a moment's exact name; every moment has words, within the content rule", wordsBad ?? "");
+            }
+
             // A FIRST SENTENCE THAT FAILS ITS OWN CHECK (town list 6a): that draft
             // is stopped there and the second draft asked for at once, streamed,
             // its own first sentence handed over as soon as it passes.
