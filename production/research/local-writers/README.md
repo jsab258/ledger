@@ -44,3 +44,22 @@ never would.
 
 The claim check (ClaimCheck.cs) was not applied to any writer here, so
 inventions show as written: this compares writers, not the guard.
+
+## His blind picks, unblinded 29 September
+
+Jafar picked one answer of three for each of the twelve moments on the 25
+September page (10:44 to 10:51, blind). Matched to letters.json on 29
+September, four days late (nobody had unblinded them):
+
+| writer | picked | of |
+|---|---|---|
+| paid | 8 | 12 |
+| Qwen3.5-4B | 3 | 12 |
+| Ministral 3 3B | 1 | 12 (Darren 1) |
+
+By character: Sheila paid 3, Qwen 1; Ron paid 3, Qwen 1; Darren paid 2,
+Qwen 1, Ministral 1. The paid writer is preferred two to one; the better
+local writer (Qwen3.5-4B) won a quarter of the moments, never on the lure
+the content rule had to survive. Which writer the live talk uses is his
+decision (money): since 29 September development makes no API calls, and his
+own play runs on LEDGER's capped key.
