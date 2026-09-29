@@ -21,9 +21,15 @@ not the whole history, so a step costs about the same at the end as at the
 start.
 
 WHAT IT WRITES: production/playtest/ai-tester/<time>/report.md (every note,
-worst first, each with the picture it was looking at), and a short dated
-block in FOR-JAFAR.md with the run's cost. It is not a gate: nothing reads
-its result to pass or fail anything.
+worst first, each with the picture it was looking at) and for-jafar.md beside
+it, the short block with the run's cost, which the day's summary links (one
+summary a day in FOR-JAFAR.md since 28 September). It is not a gate: nothing
+reads its result to pass or fail anything.
+
+NOT WHILE THE BUILD MACHINE PLAYS, 29 September: its test steps start the game
+too and time the slice at his screen size; a second game would skew that
+figure and could take the keys meant for this one. It waits, up to --wait
+minutes (default 60), until the machine runs no game or Unreal of its own.
 
 THE KEY is read from the game's own settings file into this process only,
 never printed, and the game inherits it for its own conversation.
@@ -403,6 +409,9 @@ def run(args):
         title = "LedgerProbe"
     subprocess.run(["dotnet", "build", os.path.join(REPO, "ledger", "TalkHelper"), "-c", "Release", "-nologo", "-v", "q"],
                    capture_output=True)
+    if not wait_for_runner(float(args.get("wait", 60))):
+        print("aiTester status=RUNNER-BUSY: the build machine's game or Unreal was still running")
+        return 1
     game = subprocess.Popen(cmd, env=env)
     hwnd = None
     t0 = time.time()
@@ -498,11 +507,33 @@ def run(args):
         f.write("\n".join(lines) + "\n")
     rel = os.path.relpath(folder, REPO).replace("\\", "/") + "/report.md"
     # A RUN THAT TOOK NO STEP HAS NOTHING TO TELL HIM, and says why here only.
-    fj = os.path.join(REPO, "FOR-JAFAR.md") if done > 0 else os.devnull
-    with open(fj, "a", encoding="utf-8") as f:
+    # THE DAY'S SUMMARY LINKS THE REPORT (FOR-JAFAR.md has one summary a day
+    # since 28 September), so the block is kept beside the report instead.
+    with open(os.path.join(folder, "for-jafar.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(for_jafar_block(worst, cost, done, elapsed, stamp, rel)) + "\n")
     print("aiTester status=RAN steps=%d minutes=%.1f notes=%d costUsd=%.2f report=%s" % (done, elapsed, len(notes), cost, rel))
     return 0
+
+
+def runner_busy():
+    """Whether the build machine runs a game or Unreal of its own (its processes live under actions-runner-ledger)."""
+    try:
+        out = subprocess.run(["powershell", "-NoProfile", "-Command",
+                              "@(Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match 'actions-runner-ledger' -and "
+                              "($_.Name -like 'LedgerProbe*' -or $_.Name -like 'UnrealEditor*' -or $_.Name -like 'UnrealBuildTool*') }).Count"],
+                             capture_output=True, text=True, timeout=60).stdout.strip()
+        return int(out or "0") > 0
+    except Exception:
+        return False
+
+
+def wait_for_runner(minutes):
+    t0 = time.time()
+    while runner_busy():
+        if time.time() - t0 > minutes * 60:
+            return False
+        time.sleep(30)
+    return True
 
 
 def selftest():
@@ -533,7 +564,7 @@ if __name__ == "__main__":
     if "--selftest" in sys.argv:
         sys.exit(selftest())
     a = {"editor": "--editor" in sys.argv, "force": "--force" in sys.argv}
-    for flag in ("--minutes", "--steps"):
+    for flag in ("--minutes", "--steps", "--wait"):
         if flag in sys.argv:
             a[flag[2:]] = sys.argv[sys.argv.index(flag) + 1]
     sys.exit(run(a))
