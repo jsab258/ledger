@@ -32,7 +32,7 @@ import shutil
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATE = "2026-09-29"   # the next page; the 28 September one is carried out (git has it and its verdicts)
+DATE = "2026-09-30"   # the next page; the 29 September one is carried out (git has it and its verdicts)
 HOME = os.path.expanduser("~")
 LOCAL = os.environ.get("LOCALAPPDATA", os.path.join(HOME, "AppData", "Local"))
 RUNNER = r"C:\actions-runner-ledger\_work"
@@ -269,27 +269,28 @@ def delete_renamed():
 
 W = os.path.join(RUNNER, "ledger", "ledger", "ue-probe")
 PLAN = [
-    # 28 September, night: C: back to 53.8 GB after the day's approved cleanup
-    # (74.1 at best): Unreal's store filled to its 20 GB cap again and the
-    # build machine's copy came back as a fresh 9.5 GB, as the page said.
-    {"id": "unreal-store-cap", "title": "Unreal's cache store: capped at 10 GB instead of 20",
-     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen")], "keepGb": 10.0, "cap": 10 * 1024 ** 3,
-     "why": "The compiled shaders and cooked data every editor start and build reuses, capped this morning at 20 GB in Unreal's own settings; it has filled to that cap. Nothing is deleted by hand: the cap in Unreal's settings goes down to 10 GB, and the store trims itself to it at its next cleaning (it cleans every six hours), dropping what was used longest ago.",
-     "after": "The first build after a big change compiles some shaders again, a few minutes longer; day to day nothing you would notice.",
+    # 29 September, midday: his two groups of the 29th carried out (the store's
+    # cap is down to 10 GB and trims itself when Unreal next starts, about 7 GB;
+    # the old cache deleted again). C: at 46 GB while the build machine builds:
+    # the list alone cannot reach 60, so the rest is his to decide (below).
+    {"id": "probe-packaged", "title": "An old packaged copy of the game, from 23 September",
+     "paths": [os.path.join(REPO, "ue-probe", "Packaged")],
+     "why": "The game packaged here once, on 23 September. You play the copy on drive F, and the build machine packages its own; nothing runs this one.",
+     "after": "Nothing you would notice.",
      "recommend": True},
-    {"id": "unreal-old-cache", "title": "Unreal's old cache again, 2 GB back since this afternoon",
-     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache")],
-     "why": "Deleted this afternoon on your yes, and set in Unreal's settings to take nothing new, but 2 GB came back by evening: something still writes to it. I am finding what, so it stops.",
+    {"id": "probe-saved-old", "title": "Superseded film frames and old crash reports",
+     "paths": [os.path.join(REPO, "ue-probe", "Saved", "LookScript"), os.path.join(REPO, "ue-probe", "Saved", "Crashes")],
+     "why": "The frames of Sheila's look films before the ones on your page (recorded as superseded), and the editor's crash reports from earlier in the month.",
      "after": "Nothing you would notice.",
      "recommend": True},
 ]
 
 NOT_IN_LIST = [
     ("Dropbox", os.path.join(HOME, "Dropbox"), "yours; the backup adds to it and never deletes"),
-    ("Windows' hibernation file", r"C:\hiberfil.sys", "a Windows setting you can switch off yourself"),
+    ("Windows' hibernation file", r"C:\hiberfil.sys", "the biggest win and yours alone: a Windows setting I may not change. If you never hibernate the PC, run 'powercfg /h off' in a terminal opened as administrator and it goes, putting C: over 60 GB with the rest"),
     ("Windows' swap file", r"C:\pagefile.sys", "Windows'"),
     ("Windows' temporary files", os.path.join(LOCAL, "Temp"), "not on your list, so untouched"),
-    ("Hugging Face's download cache", os.path.join(HOME, ".cache", "huggingface"), "two speech datasets from August and the voice model; not on your list, so untouched; add it and it can go"),
+    ("Hugging Face's model cache", os.path.join(HOME, ".cache", "huggingface"), "the voice models (the game's live voice loads one from here), not datasets; not on your list, so untouched. It could move to drive F if you say so, with the voice tools pointed there"),
 ]
 
 
