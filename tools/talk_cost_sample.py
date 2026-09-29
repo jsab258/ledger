@@ -10,6 +10,16 @@ no tool reads. What follows is how it measured cost before, on 29 September.
 
     python tools/talk_cost_sample.py [--turns-per-hour 120] [--early] [--out production/playtest/talk-cost-<date>.md]
     python tools/talk_cost_sample.py --early --sizes <file.jsonl>   # what each request sends, by kind (town list T1)
+    python tools/talk_cost_sample.py --early --live                 # the real model, on LEDGER's own key (town list T1)
+
+--live (Jafar, 29 September evening: the LEDGER key "for these measurements
+only, at most about a dollar a day, each run logged with its tokens and
+cost"): the key is read from LEDGER's own file (%LOCALAPPDATA%/LEDGER/
+live-talk-key.txt), put in the talk program's environment and never printed
+or written anywhere; the run is refused under CI or GitHub Actions, and
+refused when today's logged spend and the last run's cost together would pass
+LIVE_DAILY_USD; every run is appended to production/playtest/talk-runs.jsonl
+with its date, turns, calls, tokens by model and dollars.
 
 With --sizes the stand-in streams, the check runs as it would with the real
 model, and every request's size is logged to the file (the talk program's
@@ -41,6 +51,40 @@ import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DLL = os.path.join(ROOT, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.dll")
+RUNS = os.path.join(ROOT, "production", "playtest", "talk-runs.jsonl")
+LIVE_DAILY_USD = 1.00
+# The last real run's cost (29 September, 24 turns), until a logged run replaces it.
+LIVE_RUN_ESTIMATE_USD = 0.36
+
+
+def live_key():
+    """LEDGER's own key, from its file; None when it is not there."""
+    path = os.path.join(os.environ.get("LOCALAPPDATA", ""), "LEDGER", "live-talk-key.txt")
+    try:
+        key = open(path, encoding="utf-8").read().strip()
+    except OSError:
+        return None
+    return key or None
+
+
+def live_allowed():
+    """(allowed, why): never under CI; within the day's allowance."""
+    if os.environ.get("CI") or os.environ.get("GITHUB_ACTIONS"):
+        return False, "refused: an automated run may never use LEDGER's key"
+    today = datetime.date.today().isoformat()
+    spent, last = 0.0, LIVE_RUN_ESTIMATE_USD
+    if os.path.exists(RUNS):
+        for line in open(RUNS, encoding="utf-8"):
+            try:
+                r = json.loads(line)
+            except ValueError:
+                continue
+            last = r.get("usd", last)
+            if r.get("date") == today:
+                spent += r.get("usd", 0.0)
+    if spent + last > LIVE_DAILY_USD:
+        return False, "refused: today's runs cost US$%.2f, and another (about US$%.2f) would pass US$%.2f" % (spent, last, LIVE_DAILY_USD)
+    return True, "today's runs so far US$%.2f" % spent
 
 CONVERSATIONS = [
     ("lena", ["Morning. You keep the books for Mickey's?",
@@ -117,14 +161,25 @@ def main(argv):
     out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(
         ROOT, "production", "playtest", "talk-cost-%s.md" % datetime.date.today().isoformat())
     env = dict(os.environ)
-    env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
+    env.pop("ANTHROPIC_API_KEY", None)   # never a key but LEDGER's own, below
+    live = "--live" in argv
+    if live:
+        ok, why = live_allowed()
+        print(why)
+        if not ok:
+            return 1
+        key = live_key()
+        if key is None:
+            print("no LEDGER key yet: nothing run")
+            return 1
+        env["ANTHROPIC_API_KEY"] = key
     early = "--early" in argv
     sizes = argv[argv.index("--sizes") + 1] if "--sizes" in argv else None
     if sizes:
         if os.path.exists(sizes):
             os.remove(sizes)
         env["LEDGER_TALK_SIZES"] = os.path.abspath(sizes)
-    p = subprocess.Popen(["dotnet", DLL, "--fake"] + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    p = subprocess.Popen(["dotnet", DLL] + ([] if live else ["--fake"]) + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     ready = json.loads(p.stdout.readline())
     if not ready.get("online"):
@@ -198,6 +253,15 @@ def main(argv):
     ] + ["- %s: \"%s\" -> \"%s\" (%.1f s%s%s)" % (r["to"], r["say"], (r["reply"] or "").replace("\n", " "), r["wall_s"],
                                                    ", first sentence %.1f s" % r["first_s"] if r.get("first_s") is not None else "",
                                                    ", " + r["went"] if r.get("went") else "") for r in replies]
+    if live:
+        tokens = {}
+        for l in cost["cost"].splitlines():
+            m = __import__("re").match(r"\s*([\w.-]+): (\d+) calls, (\d+) in / (\d+) out tokens", l)
+            if m:
+                tokens[m.group(1)] = {"calls": int(m.group(2)), "in": int(m.group(3)), "out": int(m.group(4))}
+        with open(RUNS, "a", encoding="utf-8", newline="\n") as fh:
+            fh.write(json.dumps({"date": datetime.date.today().isoformat(), "what": "talk_cost_sample --live" + (" --early" if early else ""),
+                                 "turns": turns, "calls": cost["calls"], "tokens": tokens, "usd": round(cost["usd"], 4)}) + "\n")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w", encoding="utf-8", newline="\n").write("\n".join(lines) + "\n")
     print("talkCost turns=%d calls=%d usd=%.4f perTurn=%.5f perHour@%d=%.2f -> %s" % (
