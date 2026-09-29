@@ -310,6 +310,40 @@ namespace LedgerCore
 		std::string CircleOf(const std::string& Id) const { const std::string C = Lookup(Circle, Id); return C.empty() ? "day" : C; }
 		bool NamesHimOnlyOnTrust(const std::string& Id) const { return NameOnTrust.count(Id) > 0; }
 
+		// THE PLACES AND WHAT PEOPLE CALL AN AREA (the C#'s Places and
+		// AreaNames), for the game's own reads: where he was seen near a deed.
+		std::vector<std::string> Places() const
+		{
+			std::vector<std::string> Out;
+			for (std::map<std::string, std::pair<double, double> >::const_iterator I = PlaceAt.begin(); I != PlaceAt.end(); ++I) Out.push_back(I->first);
+			return Out;
+		}
+		bool PlacePosition(const std::string& Place, double& X, double& Z) const
+		{
+			std::map<std::string, std::pair<double, double> >::const_iterator I = PlaceAt.find(Place);
+			if (I == PlaceAt.end()) return false;
+			X = I->second.first; Z = I->second.second;
+			return true;
+		}
+		std::vector<std::string> AreaNamesOf(const std::string& Area) const
+		{
+			std::map<std::string, std::vector<std::string> >::const_iterator I = AreaNames.find(Area);
+			return I == AreaNames.end() ? std::vector<std::string>() : I->second;
+		}
+		/// The place nearest a point within MaxM metres, or empty.
+		std::string NearestPlace(double X, double Z, double MaxM) const
+		{
+			std::string Best;
+			double BestM = MaxM;
+			for (std::map<std::string, std::pair<double, double> >::const_iterator I = PlaceAt.begin(); I != PlaceAt.end(); ++I)
+			{
+				const double Dx = I->second.first - X, Dz = I->second.second - Z;
+				const double M = std::sqrt(Dx * Dx + Dz * Dz);
+				if (M <= BestM) { BestM = M; Best = I->first; }
+			}
+			return Best;
+		}
+
 	private:
 		std::map<std::string, std::pair<double, double> > PlaceAt;
 		std::map<std::string, std::string> Said, AreaOfPlace, WithinOf, Name, Role, Called, Circle;

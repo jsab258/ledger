@@ -50,6 +50,7 @@
 #include "StreetVoice.h"
 #include "Suspicion.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <string>
@@ -1600,6 +1601,166 @@ namespace LedgerCrime
 			  "/B-is-the-control-and-must-never-arrest";
 	}
 
+
+	// ---- where he was, and what he says about it (29 September) -------------
+	//
+	// The town list's 6ac, 6am, 6au and 6al, the game's half: the talk program
+	// already weighs his answer about where he was (Claims, Suspecting) when
+	// it is told the deed, where the person saw him near its time and what
+	// they have heard; these build what it is told and the stories the street
+	// carries. A deed is keyed as the session record keys it
+	// ("player.window_d1"); its own stories are the ones the mill already
+	// carries about it (for the window: seen broken, or seen fleeing).
+
+	inline const char* WindowDeedKey() { return "player.window_d1"; }
+
+	inline std::string DeedStem(const std::string& DeedKey)
+	{
+		return DeedKey.compare(0, 7, "player.") == 0 ? DeedKey.substr(7) : DeedKey;
+	}
+
+	inline bool IsDeedStory(const LedgerCore::RumorPtr& R, const std::string& DeedKey)
+	{
+		if (!R || R->Content.Subject != "player") return false;
+		if (DeedKey == WindowDeedKey()) return R->Content.Predicate == "broke_a_window" || R->Content.Predicate == NearPredicate();
+		return R->TopicKey() == DeedKey;
+	}
+
+	/// "player.at_window_d1": he was seen at a place near the deed's time.
+	inline std::string SightingPredicate(const std::string& DeedKey) { return "at_" + DeedStem(DeedKey); }
+	/// "player.claim_window_d1": what he says about where he was.
+	inline std::string ClaimPredicate(const std::string& DeedKey) { return "claim_" + DeedStem(DeedKey); }
+
+	inline const char* WeekdayName(int Day)
+	{
+		static const char* const Names[7] = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+		return Names[((Day % 7) + 7) % 7];
+	}
+
+	/// THE STORY THAT HE WAS SEEN AT A PLACE NEAR A DEED'S TIME (town list
+	/// 6au): "the new owner was at the fish market on Tuesday night", its
+	/// value the area id, not sensitive. The gossip carries it like any story;
+	/// it is never learned into anybody's knowledge (it is filed by hand, and
+	/// the mill learns only certain indelible stories), so it is never matched
+	/// against his claims inside the gossip: the talk program judges it.
+	inline LedgerCore::RumorPtr SightingStory(const std::string& DeedKey, const std::string& Area, const std::string& AreaWords,
+	                                          int Day, int Hour, const std::string& WitnessId, double Confidence)
+	{
+		LedgerCore::RumorPtr R = std::make_shared<LedgerCore::Rumor>(LedgerCore::Fact("player", SightingPredicate(DeedKey), Area));
+		R->OriginId = WitnessId;
+		R->Hops = 0;
+		R->Confidence = Confidence;
+		R->Sensitive = false;
+		R->Summary = "the new owner was at " + AreaWords + " on " + WeekdayName(Day) + ((Hour >= 18 || Hour < 6) ? " night" : "");
+		return R;
+	}
+
+	/// WHAT HE SAYS ABOUT WHERE HE WAS (town list 6am), once the talk
+	/// program says the answer was definite: "he says he was at the chapel",
+	/// its value the area ids as the reply gave them, comma-joined, heard from
+	/// him by the person he told it to.
+	inline LedgerCore::RumorPtr ClaimStory(const std::string& DeedKey, const std::vector<std::string>& Areas,
+	                                       const std::string& AreaWords, const std::string& ToldTo)
+	{
+		std::string Value;
+		for (size_t I = 0; I < Areas.size(); ++I) Value += (I ? "," : "") + Areas[I];
+		LedgerCore::RumorPtr R = std::make_shared<LedgerCore::Rumor>(LedgerCore::Fact("player", ClaimPredicate(DeedKey), Value));
+		R->OriginId = ToldTo;
+		R->Hops = 0;
+		R->Confidence = 0.9;
+		R->Sensitive = false;
+		R->Summary = "the new owner says he was at " + AreaWords;
+		return R;
+	}
+
+	/// HE OWNED UP (town list 6al): the deed's story as told by him, certain.
+	inline LedgerCore::RumorPtr OwnedUpStory(const std::string& DeedKey, const std::string& ToldTo)
+	{
+		const bool bWindow = DeedKey == WindowDeedKey();
+		LedgerCore::RumorPtr R = std::make_shared<LedgerCore::Rumor>(bWindow
+			? LedgerCore::Fact("player", "broke_a_window", "mickeys_window")
+			: LedgerCore::Fact("player", DeedStem(DeedKey), "owned_up"));
+		R->OriginId = ToldTo;
+		R->Hops = 0;
+		R->Confidence = 1.0;
+		R->Sensitive = false;
+		R->Summary = bWindow ? "the new owner told me himself that he broke Mickey's window" : "the new owner owned up to it himself";
+		return R;
+	}
+
+	/// A PERSON AGREES TO KEEP A DEED QUIET (town list 6al): its stories, and
+	/// the sighting of him near it, go into their Suppressed, which the mill
+	/// honours; they still remember everything.
+	inline void KeepQuiet(LedgerCore::Gossiper& G, const std::string& DeedKey)
+	{
+		std::vector<std::string> Topics;
+		if (DeedKey == WindowDeedKey()) { Topics.push_back("player.broke_a_window"); Topics.push_back(std::string("player.") + NearPredicate()); }
+		else { Topics.push_back(DeedKey); }
+		Topics.push_back("player." + SightingPredicate(DeedKey));
+		for (size_t I = 0; I < Topics.size(); ++I)
+			if (!G.SuppressedHas(Topics[I])) G.Suppressed.push_back(Topics[I]);
+	}
+
+	inline std::string JsonId(const std::string& S)
+	{
+		std::string Out = "\"";
+		for (size_t I = 0; I < S.size(); ++I)
+		{
+			if (S[I] == '"' || S[I] == '\\') Out += '\\';
+			Out += S[I];
+		}
+		return Out + "\"";
+	}
+
+	/// THE DEED AS THE TALK PROGRAM IS TOLD IT (town list 6ac, 6am, 6au), for
+	/// somebody who holds any of its stories or saw him near it: "topic",
+	/// "day", "hour"; "sawHimAt", the place they saw him; "heardHimAt", the
+	/// area a sighting of him they heard of puts him at; "heardHeSaid", the
+	/// areas of what he has told people, once that has reached them. Empty for
+	/// somebody the deed has not reached.
+	inline std::string DeedJson(const LedgerCore::Gossiper& G, const std::string& DeedKey, int Day, int Hour, const std::string& SawHimAt)
+	{
+		bool bHolds = !SawHimAt.empty();
+		std::string HeardHimAt;
+		double HeardConf = -1.0;
+		std::vector<std::string> HeardHeSaid;
+		for (size_t I = 0; I < G.Rumors.size(); ++I)
+		{
+			const LedgerCore::RumorPtr& R = G.Rumors[I];
+			if (!R || R->Content.Subject != "player") continue;
+			if (IsDeedStory(R, DeedKey)) { bHolds = true; continue; }
+			if (R->Content.Predicate == SightingPredicate(DeedKey) && R->Hops > 0 && R->Confidence > HeardConf)
+			{
+				bHolds = true;
+				HeardConf = R->Confidence;
+				HeardHimAt = R->Content.Value;
+			}
+			else if (R->Content.Predicate == ClaimPredicate(DeedKey))
+			{
+				std::string::size_type Start = 0;
+				while (Start <= R->Content.Value.size())
+				{
+					std::string::size_type End = R->Content.Value.find(',', Start);
+					if (End == std::string::npos) End = R->Content.Value.size();
+					const std::string A = R->Content.Value.substr(Start, End - Start);
+					if (!A.empty() && std::find(HeardHeSaid.begin(), HeardHeSaid.end(), A) == HeardHeSaid.end()) HeardHeSaid.push_back(A);
+					Start = End + 1;
+				}
+			}
+		}
+		if (!bHolds) return std::string();
+		std::string Out = ",\"deed\":{\"topic\":" + JsonId(DeedKey) + ",\"day\":" + Int(Day) + ",\"hour\":" + Int(Hour);
+		if (!SawHimAt.empty()) Out += ",\"sawHimAt\":" + JsonId(SawHimAt);
+		if (!HeardHimAt.empty()) Out += ",\"heardHimAt\":" + JsonId(HeardHimAt);
+		if (!HeardHeSaid.empty())
+		{
+			Out += ",\"heardHeSaid\":[";
+			for (size_t I = 0; I < HeardHeSaid.size(); ++I) Out += (I ? "," : "") + JsonId(HeardHeSaid[I]);
+			Out += "]";
+		}
+		return Out + "}";
+	}
+
 	inline SelftestResult Selftest()
 	{
 		SelftestResult R;
@@ -2240,6 +2401,45 @@ namespace LedgerCrime
 		Expect(R, BeatTextSource(Nothing, true) == "none/nothing-measured",
 		       "beat-source-with-nothing-staged-says-nothing-measured");
 
+		// THE DEED AS THE TALK PROGRAM IS TOLD IT, AND ITS STORIES (29
+		// September, town list 6ac, 6am, 6au, 6al).
+		{
+			using namespace LedgerCore;
+			Gossiper Saw("w1", "w1", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			RumorPtr Glass = std::make_shared<Rumor>(Fact("player", "broke_a_window", "glass_a"));
+			Saw.Rumors.push_back(Glass);
+			Expect(R, DeedJson(Saw, WindowDeedKey(), 1, 23, "mickeys_rank")
+			          == ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"sawHimAt\":\"mickeys_rank\"}",
+			       "deed-told-to-a-witness-with-where-she-saw-him");
+			Gossiper Nobody("n9", "n9", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			Expect(R, DeedJson(Nobody, WindowDeedKey(), 1, 23, "").empty(), "deed-not-told-to-somebody-it-has-not-reached");
+			RumorPtr At = SightingStory(WindowDeedKey(), "fish_market", "the fish market", 1, 23, "w1", 0.8);
+			Expect(R, At->TopicKey() == "player.at_window_d1" && At->Content.Value == "fish_market" && !At->Sensitive,
+			       "sighting-story-keyed-by-the-deed-valued-by-the-area");
+			Expect(R, At->Summary == "the new owner was at the fish market on Tuesday night", "sighting-story-says-where-and-which-night");
+			Gossiper Heard("r3", "r3", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			RumorPtr AtHeard = std::make_shared<Rumor>(*At);
+			AtHeard->Hops = 1;
+			Heard.Rumors.push_back(AtHeard);
+			std::vector<std::string> Areas;
+			Areas.push_back("chapel"); Areas.push_back("quay");
+			Heard.Rumors.push_back(ClaimStory(WindowDeedKey(), Areas, "the chapel", "w1"));
+			Expect(R, DeedJson(Heard, WindowDeedKey(), 1, 23, "")
+			          == ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23,\"heardHimAt\":\"fish_market\",\"heardHeSaid\":[\"chapel\",\"quay\"]}",
+			       "deed-told-with-the-sighting-heard-and-what-he-said");
+			Gossiper OwnSight("w2", "w2", std::shared_ptr<MemoryStore>(), std::shared_ptr<KnowledgeBase>());
+			OwnSight.Rumors.push_back(At);
+			Expect(R, DeedJson(OwnSight, WindowDeedKey(), 1, 23, "").empty(),
+			       "an-own-sighting-is-sent-as-sawHimAt-not-heardHimAt");
+			KeepQuiet(Saw, WindowDeedKey());
+			Expect(R, Saw.SuppressedHas("player.broke_a_window") && Saw.SuppressedHas("player.was_near_the_deed")
+			          && Saw.SuppressedHas("player.at_window_d1") && Saw.Suppressed.size() == 3,
+			       "keeping-quiet-holds-back-the-deed-and-the-sighting");
+			KeepQuiet(Saw, WindowDeedKey());
+			Expect(R, Saw.Suppressed.size() == 3, "keeping-quiet-twice-adds-nothing");
+			Expect(R, OwnedUpStory(WindowDeedKey(), "w1")->Confidence == 1.0 && IsDeedStory(OwnedUpStory(WindowDeedKey(), "w1"), WindowDeedKey()),
+			       "owning-up-gives-the-deed-s-own-story-certain");
+		}
 
 		return R;
 	}
