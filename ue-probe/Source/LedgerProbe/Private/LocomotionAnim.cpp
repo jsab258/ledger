@@ -31,6 +31,12 @@ namespace
 			Idle.SetLoopAnimation(true);
 			Walk.SetLoopAnimation(true);
 			Run.SetLoopAnimation(true);
+			// THE RUN'S LEGS KEEP UP WITH ITS SPEED, 30 September: played as
+			// made, the clip takes a step every 0.55 s (109 a minute) while he
+			// covers 4.2 m a second, slower than his walk's 124; a runner at
+			// that speed takes about 170 (Leacox et al. 2025). Its steps were
+			// heard limping behind him (the footsteps' reviewer).
+			Run.SetPlayRate(ULedgerLocomotionAnim::RunPlayRate);
 			StandWalk.A.SetLinkNode(&Idle);
 			StandWalk.B.SetLinkNode(&Walk);
 			WalkRun.A.SetLinkNode(&StandWalk);

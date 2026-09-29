@@ -35,6 +35,8 @@ public:
 
 	float WalkSpeedCm = 160.0f;
 	float RunSpeedCm = 420.0f;
+	// How much faster than made the run clip plays (LocomotionAnim.cpp).
+	static constexpr float RunPlayRate = 1.5f;
 
 	// WHAT THE NODES ARE GIVEN each frame: how far from standing toward
 	// walking, and from walking toward running, both 0 to 1.

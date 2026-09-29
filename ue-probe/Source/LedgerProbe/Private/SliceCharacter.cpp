@@ -22,6 +22,12 @@
 #include "Components/BoxComponent.h"
 #include "PhysicsEngine/BodySetup.h"
 #include "TimerManager.h"
+#include "AudioMixerBlueprintLibrary.h"
+#include "Misc/CommandLine.h"
+#include "Misc/PackageName.h"
+#include "Misc/Paths.h"
+#include "Sound/SoundAttenuation.h"
+#include "Sound/SoundBase.h"
 
 const TCHAR* ALedgerSliceCharacter::MeshPath()
 {
@@ -81,6 +87,17 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		MoveRight(Side);
 	}
 	if (GetMesh() == nullptr) { return; }
+	// HIS FEET ON THE GROUND WHEN HE RUNS, 30 September. The person export
+	// keeps each clip in place by dropping the hips' travel, which for the
+	// walk loses only a bob; but the run's hips sit lower than standing, so
+	// held at standing height his feet never came within 36 cm of the
+	// pavement (the toes' lowest in the run 24 cm, in the walk 3: measured
+	// from tom-player.glb, and found by the footsteps missing their cue).
+	// The body goes down by that difference as the run blends in.
+	if (const ULedgerLocomotionAnim* Loco = Cast<ULedgerLocomotionAnim>(GetMesh()->GetAnimInstance()))
+	{
+		GetMesh()->SetRelativeLocation(FVector(0.0, 0.0, -88.0 - RunDropCm * Loco->ToRun));
+	}
 	// FROM WHERE THE PLAYER ACTUALLY SEES, to the nearest point of his body's
 	// upright line (feet to head): the first version measured to his head
 	// only, and a camera pressed to his chest stayed 70 cm from it.
@@ -95,6 +112,114 @@ void ALedgerSliceCharacter::Tick(float DeltaSeconds)
 		bBodyHiddenForCamera = bClose;
 		GetMesh()->SetVisibility(!bClose, true);
 	}
+	StepTick(DeltaSeconds);
+}
+
+FString ALedgerSliceCharacter::StepClipPath(int32 Index)
+{
+	return FString::Printf(TEXT("/Game/Ledger/Sounds/Steps/step-%d.step-%d"), Index, Index);
+}
+
+void ALedgerSliceCharacter::StepTick(float DeltaSeconds)
+{
+	USkeletalMeshComponent* M = GetMesh();
+	if (M == nullptr || StepClips.Num() == 0 || FootBone[0].IsNone() || FootBone[1].IsNone() || DeltaSeconds <= 0.0f) { return; }
+	StepClock += DeltaSeconds;
+	UWorld* World = GetWorld();
+	if (StepsRecordingUntil > 0.0f && StepClock >= StepsRecordingUntil && World != nullptr)
+	{
+		UAudioMixerBlueprintLibrary::StopRecordingOutput(World, EAudioRecordingExportType::WavFile,
+			TEXT("ue-steps"), FPaths::ConvertRelativePathToFull(FPaths::ProjectDir()));
+		StepsRecordingUntil = -1.0f;
+		UE_LOG(LogTemp, Log, TEXT("LedgerSteps: the steps' sound written to ue-steps.wav"));
+	}
+	const float Floor = GetActorLocation().Z - GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+	const float Speed = GetVelocity().Size2D();
+	const bool bMoving = Speed > 30.0f && !GetCharacterMovement()->IsFalling();
+	// -LedgerStepsTrace: both feet's heights every frame for twenty seconds
+	// from the first movement, to tune the detector on real strides.
+	// And again for eight seconds at the first run.
+	if (FParse::Param(FCommandLine::Get(), TEXT("LedgerStepsTrace")))
+	{
+		if (TraceUntil < 0.0f && bMoving) { TraceUntil = StepClock + 20.0f; }
+		else if (!bTracedRun && Speed > WalkSpeedCm + 60.0f) { bTracedRun = true; TraceUntil = FMath::Max(TraceUntil, StepClock + 8.0f); }
+	}
+	for (int32 F = 0; F < 2; ++F)
+	{
+		// THE FOOT'S LOWEST POINT, the ankle or the ball of the foot: a walk
+		// lands on the heel and the run on the ball, and the ankle alone dips
+		// two or three times in the run's stride (the stride replayed from
+		// tom-player.glb, 30 September: steps every 0.55 s at a run, even,
+		// at the end of each foot's fall; the ankle alone gave 0.23 and 0.88).
+		float H = M->GetBoneLocation(FootBone[F]).Z - Floor;
+		if (!ToeBone[F].IsNone()) { H = FMath::Min(H, (float)M->GetBoneLocation(ToeBone[F]).Z - Floor); }
+		if (!bFeetSeeded) { FootPrev[F] = H; continue; }
+		// THE LOWEST AND HIGHEST THE FOOT HAS BEEN IN THE LAST 1.2 SECONDS,
+		// longer than one foot's stride at a walk. The first version eased a
+		// remembered range back at 3 cm a second, and a collision with Sheila
+		// stretched it past anything a stride reaches: no steps for seconds
+		// after (the tester, 30 September).
+		FootSeen[F].Add(FVector2f(StepClock, H));
+		int32 Old = 0;
+		while (Old < FootSeen[F].Num() && FootSeen[F][Old].X < StepClock - StepWindowS) { ++Old; }
+		if (Old > 0) { FootSeen[F].RemoveAt(0, Old, EAllowShrinking::No); }
+		FootLow[F] = FootHigh[F] = H;
+		for (const FVector2f& S : FootSeen[F]) { FootLow[F] = FMath::Min(FootLow[F], S.Y); FootHigh[F] = FMath::Max(FootHigh[F], S.Y); }
+		const float Range = FootHigh[F] - FootLow[F];
+		if (TraceUntil > 0.0f && StepClock < TraceUntil)
+		{
+			UE_LOG(LogTemp, Log, TEXT("LedgerStepTrace: %.3f %d %.2f %.0f %d"), StepClock, F, H, Speed, bMoving ? 1 : 0);
+		}
+		const float V = (H - FootPrev[F]) / DeltaSeconds;
+		FootPrev[F] = H;
+		if (!bMoving || Range < 4.0f) { bFootArmed[F] = false; continue; }
+		if (H > FootLow[F] + 0.5f * Range) { bFootArmed[F] = true; continue; }
+		// DOWN AND STOPPED: a lifted foot in the lower third of its travel that
+		// has stopped falling, or has reached the very bottom however fast.
+		if (!bFootArmed[F] || H >= FootLow[F] + 0.33f * Range || (V < -6.0f && H >= FootLow[F] + 0.08f * Range)) { continue; }
+		bFootArmed[F] = false;
+		// NEVER TWO AT ONCE: the first stride after standing brought both feet
+		// down within a seventh of a second.
+		if (LastStepAt >= 0.0f && StepClock - LastStepAt < 0.18f) { continue; }
+		// NOR ONE FOOT TWICE RUNNING within less than its own stride: as the
+		// walk and run clips blend, each foot can dip twice (the reviewer
+		// heard the left twice at the start and the end of a run).
+		if (F == LastStepFoot && StepClock - LastStepAt < 0.65f) { continue; }
+		LastStepFoot = F;
+		int32 Pick = FMath::RandRange(0, StepClips.Num() - 1);
+		if (StepClips.Num() > 1 && Pick == LastStepClip) { Pick = (Pick + 1 + FMath::RandRange(0, StepClips.Num() - 2)) % StepClips.Num(); }
+		LastStepClip = Pick;
+		const float ToRun = FMath::Clamp((Speed - WalkSpeedCm) / (RunSpeedCm - WalkSpeedCm), 0.0f, 1.0f);
+		const float Volume = FMath::Lerp(StepWalkVolume, StepRunVolume, ToRun) * FMath::FRandRange(0.85f, 1.0f);
+		UGameplayStatics::PlaySoundAtLocation(this, StepClips[Pick], M->GetBoneLocation(FootBone[F]), FRotator::ZeroRotator,
+			Volume, FMath::FRandRange(0.93f, 1.05f), 0.0f, StepAttenuation);
+		++Steps;
+		if (Steps <= 8 || StepsRecordingUntil > 0.0f || TraceUntil > 0.0f)
+		{
+			UE_LOG(LogTemp, Log, TEXT("LedgerSteps: step %d, %s foot, %.0f cm/s, %.2f s after the last, foot %.1f cm up of %.1f"),
+				Steps, F == 0 ? TEXT("left") : TEXT("right"), Speed, LastStepAt < 0.0f ? 0.0f : StepClock - LastStepAt, H - FootLow[F], Range);
+		}
+		if (Steps % 20 == 0)
+		{
+			UE_LOG(LogTemp, Log, TEXT("LedgerSteps: %d steps; the last 20 at %.0f a minute, %.0f cm/s"),
+				Steps, 20.0f * 60.0f / FMath::Max(0.01f, StepClock - StepWindowStart), Speed);
+			StepWindowStart = StepClock;
+		}
+		if (Steps == 1)
+		{
+			StepWindowStart = StepClock;
+			// -LedgerStepsRecord KEEPS FIFTEEN SECONDS OF WHAT HE HEARS from
+			// the first step, so the steps' level beside a voice is measured,
+			// not guessed.
+			if (FParse::Param(FCommandLine::Get(), TEXT("LedgerStepsRecord")) && World != nullptr && World->GetAudioDevice().IsValid())
+			{
+				UAudioMixerBlueprintLibrary::StartRecordingOutput(World, 20.0f);
+				StepsRecordingUntil = StepClock + 15.0f;
+			}
+		}
+		LastStepAt = StepClock;
+	}
+	bFeetSeeded = true;
 }
 
 void ALedgerSliceCharacter::BeginPlay()
@@ -113,6 +238,36 @@ void ALedgerSliceCharacter::BeginPlay()
 	if (Body == nullptr || M == nullptr) { return; }
 	M->SetSkeletalMeshAsset(Body);
 	bBodyLoaded = true;
+	// THE FEET AND THEIR STEPS (StepTick). The bones are kept current even
+	// while the body is hidden from a close camera, or the steps would stop.
+	M->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
+	for (int32 B = 0; B < M->GetNumBones(); ++B)
+	{
+		const FName N = M->GetBoneName(B);
+		const FString S = N.ToString();
+		if (S.EndsWith(TEXT("LeftFoot"))) { FootBone[0] = N; }
+		else if (S.EndsWith(TEXT("RightFoot"))) { FootBone[1] = N; }
+		else if (S.EndsWith(TEXT("LeftToeBase"))) { ToeBone[0] = N; }
+		else if (S.EndsWith(TEXT("RightToeBase"))) { ToeBone[1] = N; }
+	}
+	for (int32 I = 0; I < MaxStepClips; ++I)
+	{
+		const FString Path = StepClipPath(I);
+		if (!FPackageName::DoesPackageExist(FPackageName::ObjectPathToPackageName(Path))) { break; }
+		if (USoundBase* S = LoadObject<USoundBase>(nullptr, *Path)) { StepClips.Add(S); }
+	}
+	StepAttenuation = NewObject<USoundAttenuation>(this);
+	{
+		FSoundAttenuationSettings& A = StepAttenuation->Attenuation;
+		A.bAttenuate = true;
+		A.bSpatialize = true;
+		A.AttenuationShape = EAttenuationShape::Sphere;
+		A.AttenuationShapeExtents = FVector(400.0f, 0.0f, 0.0f);
+		A.FalloffDistance = 1800.0f;
+		A.DistanceAlgorithm = EAttenuationDistanceModel::NaturalSound;
+	}
+	UE_LOG(LogTemp, Log, TEXT("LedgerSteps: %d step sound(s), feet %s and %s, toes %s and %s"), StepClips.Num(),
+		*FootBone[0].ToString(), *FootBone[1].ToString(), *ToeBone[0].ToString(), *ToeBone[1].ToString());
 	M->SetAnimInstanceClass(ULedgerLocomotionAnim::StaticClass());
 	if (ULedgerLocomotionAnim* A = Cast<ULedgerLocomotionAnim>(M->GetAnimInstance()))
 	{

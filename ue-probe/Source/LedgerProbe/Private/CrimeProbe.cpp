@@ -73,6 +73,7 @@
 #include "Misc/FileHelper.h"
 #include "Misc/CommandLine.h"
 #include "SaveCodec.h"
+#include "TitleScreen.h"
 #include "Misc/Parse.h"
 #include "Misc/DateTime.h"
 #include "HAL/FileManager.h"
@@ -180,6 +181,7 @@ namespace
 		MeetThird,
 		Talk, SaveDisk, LoadDisk,
 		LiveWaitDeed, LiveAfterDeed, LiveRoam,
+		LiveTitle,
 		Done
 	};
 
@@ -4571,6 +4573,62 @@ namespace
 		PromptSet(Text);
 	}
 
+	// A FRIEND'S GAME OPENS ON THE TITLE (TitleScreen.h); the automation's
+	// scripted runs, the look filming and the talk timing never do.
+	bool TitleWanted()
+	{
+		const TCHAR* C = FCommandLine::Get();
+		int32 Ask = 0;
+		return GEnc == EEncounter::Live && !FParse::Param(C, TEXT("LiveScript")) && !FParse::Param(C, TEXT("LookScript"))
+			&& !FParse::Param(C, TEXT("NoTitle")) && !FParse::Param(C, TEXT("PortraitInGame")) && !FParse::Param(C, TEXT("CastAllNow"))
+			&& !FParse::Value(C, TEXT("AskScript="), Ask);
+	}
+	bool bTitleAsked = false;
+
+	// THE LIVE STORY STARTS, from the save when bTryLoad and one is there, or
+	// new: straight from the street being placed, or from the title's choice.
+	void StartLive(UWorld* World, bool bTryLoad)
+	{
+		// COME BACK AND THE TOWN STILL KNOWS: a save from before is
+		// read, and the street goes straight to what they know.
+		// -LiveFresh STARTS THE STORY AGAIN: the old save is left where it
+		// is and written over once the new story reaches "later".
+		if (bTryLoad && IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json"))))
+		{
+			LoadEncounterFromDisk();
+			if (bLoadedFromDisk)
+			{
+				RespawnMate(World);
+				GPhase = ECrimePhase::LiveRoam;
+				UE_LOG(LogTemp, Log, TEXT("LedgerCrime evening light: %s"),
+				       *LedgerVignetteShot::ApplyPlayCondition(kEveningCondition));
+				Say(TEXT("The street remembers. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
+			}
+		}
+		if (GPhase == ECrimePhase::LiveWaitDeed)
+		{
+			// A NEW GAME: the talk program starts with nobody's talk
+			// (handover 6r), not the last story's.
+			GLive.bTalkReset = true;
+			GLive.bTalkLoad = false;
+			GLive.Remarks = StreetVoice::RemarkLedger();   // and nobody has said anything to him yet
+			GTownHours = TownHours();                      // nor has the town talked an hour (town list 6bs)
+			GWatchSlot = 0;
+			Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
+		}
+		// THE SESSION RECORD STARTS (handover 6p): a new game or a
+		// loaded save, and the deed the save holds.
+		LedgerSession::Start(CrimeSha(), !bLoadedFromDisk, SessionCastFile());
+		if (bLoadedFromDisk)
+		{
+			TArray<FString> Deeds;
+			if (!GFiledSummaryA.empty()) { Deeds.Add(TEXT("player.window_d1")); }
+			LedgerSession::Write(TEXT("load"), TEXT("\"from\":") + LedgerSession::Str(FPaths::ConvertRelativePathToFull(EncSaveDir()))
+				+ TEXT(",\"deeds\":") + LedgerSession::List(Deeds));
+		}
+		FCoreDelegates::OnEnginePreExit.AddStatic(&SessionEndAtExit);
+	}
+
 	bool Tick(float)
 	{
 		// PAUSED: the clock held, the line shown, nothing else runs.
@@ -4599,6 +4657,15 @@ namespace
 		UWorld* World = GameWorld();
 		StopShoutRecording(false);
 		SubsTick();
+		// THE TITLE, as soon as there is a player to show it to; the street
+		// goes on building behind it.
+		if (!bTitleAsked && World != nullptr && World->GetFirstPlayerController() != nullptr)
+		{
+			bTitleAsked = true;
+			if (TitleWanted()) { LedgerTitle::Show(World, IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json")))); }
+		}
+		if (LedgerTitle::IsShown() && GPhase != ECrimePhase::LiveTitle
+		    && LedgerTitle::Tick(World, false) == LedgerTitle::EChoice::Quit) { FPlatformMisc::RequestExit(false); }
 
 		// THE WATCHING CLOCK RUNS UNDER EVERY PHASE INSIDE A CRIME'S WINDOW,
 		// including the seconds the pawn stands at the window while a
@@ -4660,48 +4727,26 @@ namespace
 			       : (GEnc == EEncounter::Unseen) ? ECrimePhase::MoveW1ToYard
 			       : (GEnc == EEncounter::Live) ? ECrimePhase::LiveWaitDeed
 			       : ECrimePhase::ShotStart;
-			if (GEnc == EEncounter::Live)
+			// THE TITLE COMES FIRST in a friend's game (TitleScreen.h): the
+			// story waits in LiveTitle for New game or Continue.
+			if (GEnc == EEncounter::Live && LedgerTitle::IsShown())
 			{
-				// COME BACK AND THE TOWN STILL KNOWS: a save from before is
-				// read, and the street goes straight to what they know.
-				// -LiveFresh STARTS THE STORY AGAIN: the old save is left where it
-				// is and written over once the new story reaches "later".
-				if (!FParse::Param(FCommandLine::Get(), TEXT("LiveFresh"))
-				    && IFileManager::Get().FileExists(*(EncSaveDir() / TEXT("agents.json"))))
-				{
-					LoadEncounterFromDisk();
-					if (bLoadedFromDisk)
-					{
-						RespawnMate(World);
-						GPhase = ECrimePhase::LiveRoam;
-						UE_LOG(LogTemp, Log, TEXT("LedgerCrime evening light: %s"),
-						       *LedgerVignetteShot::ApplyPlayCondition(kEveningCondition));
-						Say(TEXT("The street remembers. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
-					}
-				}
-				if (GPhase == ECrimePhase::LiveWaitDeed)
-				{
-					// A NEW GAME: the talk program starts with nobody's talk
-					// (handover 6r), not the last story's.
-					GLive.bTalkReset = true;
-					GLive.bTalkLoad = false;
-					GLive.Remarks = StreetVoice::RemarkLedger();   // and nobody has said anything to him yet
-					GTownHours = TownHours();                      // nor has the town talked an hour (town list 6bs)
-					GWatchSlot = 0;
-					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
-				}
-				// THE SESSION RECORD STARTS (handover 6p): a new game or a
-				// loaded save, and the deed the save holds.
-				LedgerSession::Start(CrimeSha(), !bLoadedFromDisk, SessionCastFile());
-				if (bLoadedFromDisk)
-				{
-					TArray<FString> Deeds;
-					if (!GFiledSummaryA.empty()) { Deeds.Add(TEXT("player.window_d1")); }
-					LedgerSession::Write(TEXT("load"), TEXT("\"from\":") + LedgerSession::Str(FPaths::ConvertRelativePathToFull(EncSaveDir()))
-						+ TEXT(",\"deeds\":") + LedgerSession::List(Deeds));
-				}
-				FCoreDelegates::OnEnginePreExit.AddStatic(&SessionEndAtExit);
+				GPhase = ECrimePhase::LiveTitle;
+				GPhaseStart = Now;
+				return true;
 			}
+			if (GEnc == EEncounter::Live) { StartLive(World, !FParse::Param(FCommandLine::Get(), TEXT("LiveFresh"))); }
+			GPhaseStart = Now;
+			return true;
+		}
+		case ECrimePhase::LiveTitle:
+		{
+			const LedgerTitle::EChoice Choice = LedgerTitle::Tick(World, true);
+			if (Choice == LedgerTitle::EChoice::None) { return true; }
+			if (Choice == LedgerTitle::EChoice::Quit) { FPlatformMisc::RequestExit(false); return true; }
+			LedgerTitle::Hide(World);
+			GPhase = ECrimePhase::LiveWaitDeed;
+			StartLive(World, Choice == LedgerTitle::EChoice::Continue);
 			GPhaseStart = Now;
 			return true;
 		}
