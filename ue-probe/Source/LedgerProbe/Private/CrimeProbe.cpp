@@ -64,6 +64,7 @@
 #include "VignetteShot.h"
 #include "PersonAnim.h"
 #include "CastDay.h"
+#include "Suspecting.h"
 #include "FrameStats.h"
 
 #include "CoreMinimal.h"
@@ -2184,8 +2185,11 @@ namespace
 				// the resolver measured, which is what everything downstream
 				// inherits.
 				const Fact Content(std::string("player"), std::string("broke_a_window"), VictimId);
+				// THE RUNG SHE REACHED travels with the story in play (town list
+				// 6n), so a retelling whose first teller knew him can name him;
+				// the regression keeps its measured run without it.
 				GMill->Witness(R.WitnessId, Content, Summary, /*bSensitive=*/false, GNow,
-				               R.O.Certainty, /*bIndelible=*/false);
+				               R.O.Certainty, /*bIndelible=*/false, GEnc == EEncounter::Live ? R.O.Rung : -1);
 				// WHERE SHE SAW HIM (town list 6ac, 6au), in play, when what she
 				// saw can be tied to him.
 				if (GEnc == EEncounter::Live && Index == 0 && LedgerCrime::CanTieSighting(R.O.Rung))
@@ -2436,7 +2440,26 @@ namespace
 			}
 		}
 		std::string J = "{\"account\":{";
-		if (Acc)
+		// IN PLAY, THE ACCOUNT AS THE CORE READS IT (town list 6n):
+		// Suspecting::AccountOf over every copy they hold of the window's story,
+		// its rung the one their own look reached, and a heard copy whose first
+		// teller recognised him naming him. The regression keeps the account it
+		// was measured with, below.
+		if (GEnc == EEncounter::Live && G)
+		{
+			const DeedAccount A = Suspecting::AccountOf(G.get(), "player.broke_a_window");
+			if (A.Held)
+			{
+				J += std::string("\"held\":true,\"seen\":") + (A.SawItMyself ? "true" : "false")
+					+ ",\"rung\":" + std::to_string(A.Rung)
+					+ ",\"names\":" + (A.NamesHim ? "true" : "false")
+					+ ",\"confidence\":" + std::to_string(A.Confidence)
+					+ (A.NamesHim ? ",\"namingConfidence\":" + std::to_string(A.NamingConfidence) : std::string())
+					+ ",\"summary\":\"" + JsonEsc(A.Summary) + "\"";
+			}
+			else { J += "\"held\":false"; }
+		}
+		else if (Acc)
 		{
 			// THE RUNG, NOT THE CERTAINTY, says whether a first-hand account
 			// names him: a sighting is capped at 0.94. A heard account does not
@@ -3032,7 +3055,8 @@ namespace
 			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
 			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + KnowingJson(Card) + Acquaintance + DeedField + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
-		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField));
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: to %s%s%s%s evidence=%s"), *Un(Card), *Un(Acquaintance), *Un(KnowingJson(Card)), *Un(DeedField),
+			*Un(EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung)));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
 		GLive.PendingCard = Card;
