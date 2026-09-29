@@ -9,6 +9,12 @@ live talk's own record while Jafar plays, on LEDGER's own capped key, which
 no tool reads. What follows is how it measured cost before, on 29 September.
 
     python tools/talk_cost_sample.py [--turns-per-hour 120] [--early] [--out production/playtest/talk-cost-<date>.md]
+    python tools/talk_cost_sample.py --early --sizes <file.jsonl>   # what each request sends, by kind (town list T1)
+
+With --sizes the stand-in streams, the check runs as it would with the real
+model, and every request's size is logged to the file (the talk program's
+LEDGER_TALK_SIZES); the summary printed is characters by kind of call, and
+tokens at about four characters to a token, an estimate until the key exists.
 
 With --early (town list 6bx) the talk program is started as the game starts it,
 with --early: each reply's first sentence is sent as soon as it passes its
@@ -89,6 +95,23 @@ def timing_lines(replies):
     return out
 
 
+def size_summary(path, turns):
+    """What each kind of request sends, in characters, and tokens estimated."""
+    rows = [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
+    by = {}
+    for r in rows:
+        by.setdefault((r["kind"], r["model"]), []).append(r)
+    out = ["what the talk program sends, %d turns, %d requests (the stand-in; tokens at about four characters each)" % (turns, len(rows))]
+    total = 0
+    for (kind, model), rs in sorted(by.items()):
+        sysc = sum(r["system"] for r in rs) / len(rs)
+        msgc = sum(r["messages"] for r in rs) / len(rs)
+        total += sum(r["system"] + r["messages"] for r in rs)
+        out.append("  %-13s %-18s %3d calls  system %6.0f chars  messages %5.0f chars  ~%5.0f tokens a call" % (kind, model, len(rs), sysc, msgc, (sysc + msgc) / 4))
+    out.append("  all: %.0f characters a turn, ~%.0f tokens a turn" % (total / max(1, turns), total / max(1, turns) / 4))
+    return "\n".join(out)
+
+
 def main(argv):
     per_hour = int(argv[argv.index("--turns-per-hour") + 1]) if "--turns-per-hour" in argv else 120
     out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(
@@ -96,6 +119,11 @@ def main(argv):
     env = dict(os.environ)
     env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
     early = "--early" in argv
+    sizes = argv[argv.index("--sizes") + 1] if "--sizes" in argv else None
+    if sizes:
+        if os.path.exists(sizes):
+            os.remove(sizes)
+        env["LEDGER_TALK_SIZES"] = os.path.abspath(sizes)
     p = subprocess.Popen(["dotnet", DLL, "--fake"] + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     ready = json.loads(p.stdout.readline())
@@ -138,6 +166,9 @@ def main(argv):
             continue
         if "usd" in d:
             cost = d
+    if sizes:
+        print(size_summary(sizes, turns))
+        return 0
     if cost is None:
         print("no cost report from the talk program")
         return 1

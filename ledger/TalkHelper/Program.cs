@@ -382,6 +382,7 @@ static class Program
             bool acquaintanceSent = false, metHim = false, heardOfHim = false, fresh = false;
             bool? trustsSent = null;
             string callsHim = null;
+            bool knowsNameSent = false, gaveNameOut = false, callsSentByGame = false;
             List<string> present = null;
             try
             {
@@ -512,7 +513,9 @@ static class Program
                     acquaintanceSent = true;
                     metHim = Bool(aq, "met");
                     heardOfHim = Bool(aq, "heardOf");
-                    callsHim = aq.TryGetProperty("calls", out var ac) && ac.ValueKind == JsonValueKind.String ? ac.GetString() : null;
+                    callsHim = aq.TryGetProperty("calls", out var ac) && ac.ValueKind == JsonValueKind.String && ac.GetString().Trim().Length > 0 ? ac.GetString() : null;
+                    // They hold his name as the street's fact (town list 6ch).
+                    knowsNameSent = aq.TryGetProperty("knowsName", out var akn) && akn.ValueKind == JsonValueKind.True;
                     if (aq.TryGetProperty("trusts", out var tr) && (tr.ValueKind == JsonValueKind.True || tr.ValueKind == JsonValueKind.False))
                         trustsSent = tr.ValueKind == JsonValueKind.True;
                 }
@@ -598,16 +601,46 @@ static class Program
             // at "the new owner", her "new management", until the game says she
             // trusts him, whatever name its ladder sends; what it said holds
             // until it says otherwise (the independent check).
+            // WHAT THEY CALL HIM, BY KNOWING (town list 6ch, carried until Jafar
+            // rules): when the game sends no name, from what they know of his:
+            // told in this talk, the street's fact the game says they hold, or
+            // Mickey's own people; Tom after two days' talk or when he asks.
+            void LearnsName(int from)
+            {
+                if (engine.NameKnownFrom < 0 || from < engine.NameKnownFrom) engine.NameKnownFrom = from;
+                engine.KnowsHisName = true;
+            }
+            if (!string.IsNullOrEmpty(say))
+            {
+                var (gave, askedFirst) = PlayerIdentity.GivesName(say);
+                if (gave) { LearnsName(day); gaveNameOut = true; }
+                if (askedFirst) engine.AskedFirstName = true;
+            }
+            // Mickey's own knew it before he came (every day of talk counts); the
+            // street's fact from today.
+            if (Cast != null && PlayerIdentity.MickeysOwn.Contains(key)) LearnsName(0);
+            else if (knowsNameSent && !engine.KnowsHisName) LearnsName(day);
+            // A name the game sends is theirs from then on, never back down (the
+            // third review: the next line without one fell to "the new owner").
+            if (callsHim != null && Tom.RungOf(callsHim) is PlayerIdentity.Rung sentRung)
+            {
+                if (sentRung >= PlayerIdentity.Rung.Surname && !engine.KnowsHisName) LearnsName(day);
+                if (sentRung > engine.GameRung) engine.GameRung = sentRung;
+                if (sentRung > engine.CallsRung) engine.CallsRung = sentRung;
+            }
+            engine.CallsRung = PlayerIdentity.RungByKnowing(engine.KnowsHisName, engine.DaysTalkedKnowingHim, engine.AskedFirstName, engine.CallsRung);
+            callsSentByGame = callsHim != null;
+            if (callsHim == null) callsHim = Tom.CallsFor(engine.CallsRung);
             if (trustsSent.HasValue) lock (_trusts) _trusts[key] = trustsSent.Value;
             bool trustsHim = TrustsHim(key, engine);
-            if (acquaintanceSent && !trustsHim && Cast != null && Cast.NamesHimOnlyOnTrust(key)) callsHim = null;
+            if (!trustsHim && Cast != null && Cast.NamesHimOnlyOnTrust(key)) callsHim = null;
             if (acquaintanceSent)
             {
                 engine.HowYouKnowHim = Tom.HowTheyKnowHim(metHim || engine.HasSpokenWithHim, heardOfHim, callsHim, onlyTheirOwnTalk: !metHim);
                 engine.KnowsHimFromGame = true;
             }
             else if (!engine.KnowsHimFromGame)
-                engine.HowYouKnowHim = Tom.HowTheyKnowHim(engine.HasSpokenWithHim, false, null, onlyTheirOwnTalk: true);
+                engine.HowYouKnowHim = Tom.HowTheyKnowHim(engine.HasSpokenWithHim, false, callsHim, onlyTheirOwnTalk: true);
             // WHAT THEY HAVE HEARD OF HIS NIGHTS, as the street's rule counts it
             // (StreetVoice.RegardFor), 28 September; kept until the game sends
             // it again, "nothing" included.
@@ -803,7 +836,10 @@ static class Program
                 {
                     var stance = Cast?.QuietStance(key) ?? KeepsQuietFor.Friend;
                     var ident = new PlayerIdentity();
-                    bool firstName = callsHim != null && (callsHim == ident.First || callsHim == ident.Diminutive);
+                    // First-name terms earned, never merely asked for (the independent
+                    // check of 6ch: "Call me Tom." on a first meeting bought a friend's silence).
+                    bool firstName = callsHim != null && (callsHim == ident.First || callsHim == ident.Diminutive)
+                                     && (callsSentByGame || engine.GameRung >= PlayerIdentity.Rung.First || engine.DaysTalkedKnowingHim >= 2);
                     // Never for a man who has threatened them over it (the third
                     // review of 6cd: the threat on one line, the ask on the next).
                     engine.HeardAskQuiet(silenceTopic, Silence.Agrees(stance, firstName, deedGrave) && !engine.Menaced.Contains(silenceTopic), now);
@@ -840,18 +876,18 @@ static class Program
                 // Sheila's own fixed words, in place of a reply: no model writes them.
                 engine.RememberSaid(say, weekReply, now);
                 var (wTrusts, wEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = weekReply, ms = sw.ElapsedMilliseconds, offline = _llm == null, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut, trusts = wTrusts, trustEarned = wEarned, weekAnswer = weekAnswer == WeekAnswer.None ? null : weekAnswer.ToString() }, Plain);
             }
             if (askPlainly)
             {
                 // Ron's own question, in place of a reply: no model writes it.
                 engine.RememberSaid(say, Arrangement.AskPlainly, now);
-                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = Arrangement.AskPlainly, ms = sw.ElapsedMilliseconds, offline = false, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, went = "own", claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, generated = false, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             if (_llm == null)
             {
                 var (offTrusts, offEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen);
-                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = refusedAsk ? Arrangement.TookNo : brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, trusts = offTrusts, trustEarned = offEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
             }
             string reply;
             string paused = null;
@@ -924,7 +960,7 @@ static class Program
                         lock (_walkedHandled) _walkedHandled.Add(key);
                         // What his line did stands although the reply stopped: the
                         // game still answers a no, an owning up or an ask for silence.
-                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk }, Plain);
+                        return JsonSerializer.Serialize(new { id, to, walkedOff = true, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, gaveName = gaveNameOut }, Plain);
                     }
                     if (done != task)
                     {
@@ -1031,7 +1067,7 @@ static class Program
             // trust, whether they trust him after this turn, and whether this
             // turn earned it; the game keeps it and sends it back.
             var (trusts, trustEarned) = TrustAfter(key, engine, day, canEarn: !weekOpen && (went == "own" || went == "ended" || went == "fallback"));
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned }, Plain);
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, threatened = threatenedOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps, trusts, trustEarned, calls = callsHim ?? Tom.Unplaced, gaveName = gaveNameOut }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1041,6 +1077,61 @@ static class Program
     /// THE STAND-IN MODEL FOR THE ENCOUNTER'S REGRESSION: it answers from the
     /// memories its prompt was given and nothing else, so what the simulation
     /// knew is visible in the reply without a key or a bill.
+    /// PROMPT SIZES (town list T1): each request, one JSON line: its model,
+    /// its kind (the reply; the check's list of specifics, its second look, or
+    /// its one-call check), whether it was streamed, and the characters of its
+    /// system prompt and its messages. The stand-in underneath answers.
+    sealed class SizeRecorder : IStreamingLlmClient
+    {
+        readonly ILlmClient _inner;
+        readonly string _path;
+        readonly object _gate = new object();
+        public SizeRecorder(ILlmClient inner, string path) { _inner = inner; _path = path; }
+
+        public static string Kind(LlmRequest r)
+        {
+            var sys = r.System ?? "";
+            if (sys.Contains("list the specifics it states")) return "check-items";
+            if (sys.StartsWith("You check details against", StringComparison.Ordinal)) return "check-verify";
+            if (sys.Contains("check it against what they know")) return "check-line";
+            return "reply";
+        }
+
+        void Log(LlmRequest r, bool streamed)
+        {
+            int messages = 0;
+            foreach (var m in r.Messages) messages += m.Content?.Length ?? 0;
+            var line = JsonSerializer.Serialize(new { model = r.Model, kind = Kind(r), streamed, system = r.System?.Length ?? 0, messages, turns = r.Messages.Count, maxTokens = r.MaxTokens });
+            lock (_gate)
+            {
+                File.AppendAllText(_path, line + "\n");
+                // The first request of each kind whole, to read what fills it.
+                var whole = _path + "." + Kind(r) + "." + (r.Model ?? "model") + ".txt";
+                if (!File.Exists(whole))
+                {
+                    var sb = new System.Text.StringBuilder("SYSTEM\n" + r.System + "\n");
+                    foreach (var m in r.Messages) sb.Append("\n" + m.Role.ToUpperInvariant() + "\n" + m.Content + "\n");
+                    File.WriteAllText(whole, sb.ToString());
+                }
+            }
+        }
+
+        public Task<LlmResponse> CompleteAsync(LlmRequest r, CancellationToken ct = default)
+        {
+            Log(r, false);
+            return _inner.CompleteAsync(r, ct);
+        }
+
+        public async Task<LlmResponse> StreamAsync(LlmRequest r, Action<string> onText, CancellationToken ct = default)
+        {
+            Log(r, true);
+            var resp = await _inner.CompleteAsync(r, ct);
+            var text = resp.Text ?? "";
+            for (int i = 8; i < text.Length + 8; i += 8) onText(text.Substring(0, Math.Min(text.Length, i)));
+            return resp;
+        }
+    }
+
     sealed class KnowledgeFake : ILlmClient
     {
         public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default)
@@ -1117,7 +1208,9 @@ static class Program
         {
             var card = CharacterCard.Parse(File.ReadAllText(f));
             var key = Path.GetFileNameWithoutExtension(f).ToLowerInvariant();
-            if (card != null) h.Cards[key] = card;
+            if (card == null) continue;
+            // What the street knows that nobody had written (town list ck).
+            h.Cards[key] = StreetFacts.AddTo(card, key);
         }
     }
 
@@ -1134,7 +1227,13 @@ static class Program
         ILlmClient llm = fake ? new KnowledgeFake()
             : relay != null ? (string.IsNullOrEmpty(copy) ? null : new AnthropicClient(null) { BaseUrl = relay, CopyCode = copy })
             : (string.IsNullOrEmpty(key) ? null : new AnthropicClient(key));
-        var helper = new Helper(llm, TimeSpan.FromSeconds(8));
+        // WHAT IS SENT, MEASURED WITHOUT A KEY (town list T1): with the stand-in
+        // and LEDGER_TALK_SIZES naming a file, every request is logged there and
+        // the stand-in streams and checks as the real model would be asked to.
+        string sizesPath = Environment.GetEnvironmentVariable("LEDGER_TALK_SIZES");
+        bool sizes = fake && !string.IsNullOrEmpty(sizesPath);
+        if (sizes) llm = new SizeRecorder(llm, sizesPath);
+        var helper = new Helper(llm, TimeSpan.FromSeconds(8)) { CheckAlways = sizes };
         if (relay != null && !string.IsNullOrEmpty(copy))
         {
             // A player's report goes to our relay, which keeps it for us to act on.
@@ -1947,6 +2046,66 @@ static class Program
                && Reply(endedAsk) == WeeksEnd.AskPlainly(WeekAnswer.TakeOver, true),
                opened + " | " + sounds + " | " + yes + " | " + offYes);
         }
+        // WHAT THE STREET KNOWS (town list ck): every card has the street's plain
+        // facts, the person a fact is about in their own words, never his name.
+        {
+            var sh = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+            LoadCards(sh, cardsDir);
+            bool has(string who, string part) => sh.Cards.TryGetValue(who, out var c) && c.HardFacts.Exists(f => f.Contains(part));
+            var all = new List<string>();
+            foreach (var (_, fact, own) in StreetFacts.All) { all.Add(fact); if (own != null) all.Add(own); }
+            var bad = all.FindAll(f => f.Contains("Tom") || f.Contains("Nowak") || ContentRule.SpeechBreaks(f) != null || SafetyRule.SpeechBreaks(f) != null);
+            Ok("every talking character knows the street's plain facts (the door, the funeral, the will, the flat, the drivers, the hours, the trade, the cafe), the person a fact is about in their own words; none names him, and each passes the content rules",
+               has("rocco", "The cafe is across the street")
+               && has("sam", "Father Walsh's chapel") && has("lena", "and I keep the key") && !has("lena", "Sheila keeps the key") && has("rocco", "Sheila keeps the key")
+               && bad.Count == 0,
+               string.Join(" | ", bad));
+        }
+
+        // WHAT THEY CALL HIM, BY KNOWING (town list 6ch): the new owner until they
+        // know his name, Nowak once he gives it, Tom from the second day; Mickey's
+        // own know it from the start; Sheila only on trust; the game's name wins.
+        {
+            var nh = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+            LoadCards(nh, cardsDir);
+            LoadCast(nh, cardsDir);
+            // Ada and June have no card of their own here: they borrow Darren's.
+            string Say(int n, string who, int d, string say, string extra = "") =>
+                nh.Answer("{\"id\":" + n + ",\"to\":\"" + (who == "ada" || who == "june" ? "sam\",\"who\":\"" + who : who) + "\",\"day\":" + d + ",\"hour\":11,\"say\":" + JsonSerializer.Serialize(say) + ",\"acquaintance\":{\"met\":true" + extra + "}}").Result;
+            string adaFirst = Say(141, "ada", 0, "Morning.");
+            string adaTold = Say(142, "ada", 0, "I'm Tom Nowak, Mickey's nephew.");
+            string adaNext = Say(143, "ada", 1, "Morning, Ada.");
+            string darren = Say(144, "sam", 0, "Morning.");
+            string darrenAsked = Say(145, "sam", 0, "Call me Tom.");
+            string sheila = Say(146, "lena", 3, "Morning.");
+            string gameSays = Say(147, "june", 0, "Morning.", ",\"calls\":\"Tom\"");
+            // Asked, not earned: no friend's silence on a first meeting (the independent check).
+            string deedLine = ",\"deed\":{\"topic\":\"player.window_d1\",\"day\":1,\"hour\":23}";
+            var fh = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));
+            LoadCards(fh, cardsDir);
+            LoadCast(fh, cardsDir);
+            fh.Answer("{\"id\":148,\"to\":\"sam\",\"who\":\"noor\",\"day\":0,\"hour\":11,\"say\":\"Call me Tom.\",\"acquaintance\":{\"met\":true}" + deedLine + "}").Wait();
+            // Days before she knew his name do not count (the second review).
+            fh.Answer("{\"id\":150,\"to\":\"sam\",\"who\":\"rita\",\"day\":0,\"hour\":11,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true}}").Wait();
+            fh.Answer("{\"id\":151,\"to\":\"sam\",\"who\":\"rita\",\"day\":1,\"hour\":11,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true}}").Wait();
+            string toldLate = fh.Answer("{\"id\":152,\"to\":\"sam\",\"who\":\"rita\",\"day\":2,\"hour\":11,\"say\":\"I'm Tom Nowak.\",\"acquaintance\":{\"met\":true}}").Result;
+            string nextDay = fh.Answer("{\"id\":153,\"to\":\"sam\",\"who\":\"rita\",\"day\":3,\"hour\":11,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true}}").Result;
+            // Mickey's own reach Tom on the second day (the third review), and a
+            // name the game sends is kept on the next line without one.
+            string darrenD1 = fh.Answer("{\"id\":154,\"to\":\"sam\",\"day\":0,\"hour\":11,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true}}").Result;
+            string darrenD2 = fh.Answer("{\"id\":155,\"to\":\"sam\",\"day\":1,\"hour\":11,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true}}").Result;
+            fh.Answer("{\"id\":156,\"to\":\"sam\",\"who\":\"june\",\"day\":0,\"hour\":12,\"say\":\"Morning.\",\"acquaintance\":{\"met\":true,\"calls\":\"Tom\"}}").Wait();
+            string juneAfter = fh.Answer("{\"id\":157,\"to\":\"sam\",\"who\":\"june\",\"day\":0,\"hour\":13,\"say\":\"Afternoon.\",\"acquaintance\":{\"met\":true}}").Result;
+            string askedOnly = fh.Answer("{\"id\":149,\"to\":\"sam\",\"who\":\"noor\",\"day\":0,\"hour\":11,\"say\":\"Keep it to yourself.\",\"acquaintance\":{\"met\":true}" + deedLine + "}").Result;
+            Ok("what they call him goes by knowing when the game sends no name: the new owner, Nowak once told, Tom the next day; Darren knows it from Mickey and takes Tom when asked; Sheila only on trust; the game's own name wins",
+               adaFirst.Contains("\"calls\":\"the new owner\"") && adaTold.Contains("\"calls\":\"Nowak\"") && adaTold.Contains("\"gaveName\":true")
+               && adaNext.Contains("\"calls\":\"Tom\"") && darren.Contains("\"calls\":\"Nowak\"") && darrenAsked.Contains("\"calls\":\"Tom\"")
+               && sheila.Contains("\"calls\":\"the new owner\"") && gameSays.Contains("\"calls\":\"Tom\"")
+               && !askedOnly.Contains("\"agreed\":true") && toldLate.Contains("\"calls\":\"Nowak\"") && nextDay.Contains("\"calls\":\"Tom\"")
+               && darrenD1.Contains("\"calls\":\"Nowak\"") && darrenD2.Contains("\"calls\":\"Tom\"") && juneAfter.Contains("\"calls\":\"Tom\""),
+               string.Join(" | ", Array.ConvertAll(new[] { adaFirst, adaTold, adaNext, darren, darrenAsked, sheila, gameSays, askedOnly, toldLate, nextDay, darrenD1, darrenD2, juneAfter }, r => System.Text.RegularExpressions.Regex.Match(r, "\"calls\":\"[^\"]*\"").Value)));
+        }
+
         // A THREAT TO KEEP QUIET (town list 6cd): reported once a deed, never an ask for silence.
         {
             var th = new Helper(new FakeLlm(), TimeSpan.FromSeconds(8));

@@ -522,7 +522,8 @@ static class Program
             await gate.WaitAsync();
             try
             {
-                var card = CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md")));
+                // As the talk helper loads it, with the street's plain facts (town list ck).
+                var card = StreetFacts.AddTo(CharacterCard.Parse(File.ReadAllText(Path.Combine(cardsDir, job.card + ".md"))), job.card);
                 var engine = new ConversationEngine(client, card, new MemoryStore(card.Id), new KnowledgeBase(), new SuspicionTracker(), cost) { Checker = client };
                 engine.People = cast.PeopleFor(job.card, 0, 10);
                 engine.HowYouKnowHim = new PlayerIdentity().HowTheyKnowHim(true, true, null);

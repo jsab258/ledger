@@ -100,15 +100,21 @@ namespace Ledger.Core
         /// detective's crime she takes him on her visit (CanArrest).
         public string ConstableComes(int day)
         {
+            var topic = ConstableWouldCome(day);
+            if (topic != null) _calls.Add((day, topic));
+            return topic;
+        }
+
+        /// The deed a constable would call for on `day`, nothing recorded (a
+        /// wait's look ahead, Waiting.Next).
+        public string ConstableWouldCome(int day)
+        {
             // One call a day (the independent check: two windows took him twice
             // in one morning); the next deed waits for the next morning.
             if (_calls.Exists(c => c.day == day)) return null;
             foreach (var e in _entries)
                 if (e.Offence == Offence.Damage && e.How == Known.Statement && e.Day < day && !_calls.Exists(c => c.topic == e.Topic) && !WasTaken(e.Topic))
-                {
-                    _calls.Add((day, e.Topic));
                     return e.Topic;
-                }
             return null;
         }
 
@@ -261,17 +267,24 @@ namespace Ledger.Core
         /// returns null. Null when nothing brings her today.
         public string EllisComes(GossipMill mill, int day, Inquiry inquiry = Inquiry.None)
         {
-            string Visit(string why)
-            {
-                foreach (var v in _visits) if (v.why == why) return null;
-                _visits.Add((day, why));
-                return why;
-            }
-            if (Police.SummonsEllis(inquiry) && Visit("body") is string body) return body;
+            var all = EllisWouldComeAll(mill, day, inquiry);
+            var why = all.Count > 0 ? all[0] : null;
+            if (why != null) _visits.Add((day, why));
+            return why;
+        }
+
+        /// Every reason that would bring her on `day`, in the order EllisComes
+        /// gives them, the street's talk read as it stands now, nothing recorded (a wait's line says whether any is about
+        /// him: the third review of 6ci, a body and his wounding the same morning).
+        public List<string> EllisWouldComeAll(GossipMill mill, int day, Inquiry inquiry = Inquiry.None)
+        {
+            var all = new List<string>();
+            bool Fresh(string why) => !_visits.Exists(v => v.why == why) && !all.Contains(why);
+            if (Police.SummonsEllis(inquiry) && Fresh("body")) all.Add("body");
             foreach (var e in _entries)
-                if (Detective(e.Offence) && e.How != Known.Talk && Visit(e.Offence + " " + e.Topic) is string crime) return crime;
-            if (day >= TalkNoSoonerThan && Loudness(mill) >= LoudAt && Visit("talk") is string talk) return talk;
-            return null;
+                if (Detective(e.Offence) && e.How != Known.Talk && Fresh(e.Offence + " " + e.Topic)) all.Add(e.Offence + " " + e.Topic);
+            if (day >= TalkNoSoonerThan && Loudness(mill) >= LoudAt && Fresh("talk")) all.Add("talk");
+            return all;
         }
 
         /// Every visit of hers about him is told under this topic and the day.

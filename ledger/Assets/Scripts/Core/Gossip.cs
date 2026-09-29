@@ -814,7 +814,8 @@ namespace Ledger.Core
                 // before their rumours were ever looked at.
                 bool leashed = a.Leashed && subj == "player";
                 foreach (var r in a.Rumors)
-                    if (r.Content.Subject == subj && r.Confidence >= MinConfidenceToShare
+                    // His name is the street's plain fact, never a lead (the fourth review of 6ch).
+                    if (r.Content.Subject == subj && r.Confidence >= MinConfidenceToShare && !PlayerIdentity.IsNameStory(r)
                         && (!leashed || r.Indelible)
                         && (!a.Suppressed.Contains(r.TopicKey) || r.Indelible))
                         list.Add(new Lead
@@ -866,7 +867,7 @@ namespace Ledger.Core
                 if (a == null) continue;
                 foreach (var r in a.Rumors)
                 {
-                    if (r == null || r.Content.Subject != subj) continue;
+                    if (r == null || r.Content.Subject != subj || PlayerIdentity.IsNameStory(r)) continue;
                     bool theirs = viaOthers != null && viaOthers(r.Content.Predicate);
                     if (theirs) { e.Delegated++; e.DelegatedWeight += r.Confidence; }
                     else { e.Yours++; e.YoursWeight += r.Confidence; }
@@ -1098,7 +1099,7 @@ namespace Ledger.Core
 
             if (secret.HookSpent)
                 return Dc(DcOutcome.AlreadyDenied, "You already called that favor in. It doesn't work twice.");
-            var strongest = n.Rumors.Where(r => r.Content.Subject == "player" && !n.Suppressed.Contains(r.TopicKey))
+            var strongest = n.Rumors.Where(r => r.Content.Subject == "player" && !n.Suppressed.Contains(r.TopicKey) && !PlayerIdentity.IsNameStory(r))
                 .OrderByDescending(r => r.Confidence).FirstOrDefault();
             if (strongest == null)
                 return Dc(DcOutcome.NoSuchRumor, "They're not carrying anything worth spending it on. Keep it.");

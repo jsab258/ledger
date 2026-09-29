@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Ledger.Core
@@ -136,6 +137,138 @@ namespace Ledger.Core
 
         public string AddressBy(Gossiper g) =>
             g == null ? Unplaced : AddressBy(KnowsName(g), g.Loyalty);
+
+        // WHAT THE TOWN CALLS HIM, BY KNOWING (town list 6ch; canon: "the new
+        // owner, then Nowak, then Tom, then Tommy. The gate is knowing, not
+        // liking"; carried until Jafar rules on his 30 September page). AddressBy
+        // above runs on goodwill, so after one tea Ada said "Tommy"; this is the
+        // rung by what they know of him: Nowak once they know his name; Tom once
+        // they have talked with him on two different days, or at once if he asked
+        // them to; Tommy for nobody in the first week. A step up never goes back
+        // down (`before`). Sheila, who names him only on trust, is the talk's.
+        public enum Rung { NewOwner = 0, Surname = 1, First = 2, Diminutive = 3 }
+
+        /// Mickey's own people, who know his name from Mickey before he comes
+        /// (the recommended answer on Jafar's 29 September page).
+        public static readonly HashSet<string> MickeysOwn = new HashSet<string> { "lena", "rocco", "sam" };
+
+        public static Rung RungByKnowing(bool knowsName, int daysTalked, bool askedFirstName, Rung before = Rung.NewOwner)
+        {
+            var r = Rung.NewOwner;
+            if (knowsName || askedFirstName) r = Rung.Surname;
+            if (askedFirstName || (knowsName && daysTalked >= 2)) r = Rung.First;
+            return r > before ? r : before;
+        }
+
+        /// The rung a name the game sends stands on, or null for a name that is
+        /// none of them.
+        public Rung? RungOf(string calls)
+        {
+            var c = (calls ?? "").Trim();
+            if (c.Length == 0) return null;
+            if (string.Equals(c, Diminutive, StringComparison.OrdinalIgnoreCase)) return Rung.Diminutive;
+            if (string.Equals(c, First, StringComparison.OrdinalIgnoreCase)) return Rung.First;
+            if (string.Equals(c, Surname, StringComparison.OrdinalIgnoreCase) || string.Equals(c, "Mr " + Surname, StringComparison.OrdinalIgnoreCase)) return Rung.Surname;
+            if (string.Equals(c, Unplaced, StringComparison.OrdinalIgnoreCase)) return Rung.NewOwner;
+            return null;
+        }
+
+        public string CallsFor(Rung r) =>
+            r == Rung.Diminutive ? Diminutive : r == Rung.First ? First : r == Rung.Surname ? Surname : Unplaced;
+
+        // HIS NAME, GIVEN (read as owning up is: a whole sentence of the shape
+        // and the words round it; never a question, somebody else's words or a
+        // quotation): "I'm Tom.", "Tom Nowak, Mickey's nephew.", "The name's
+        // Nowak."; and asked to use it: "Call me Tom.", "Tom's fine.".
+        static string NameWords(string s) =>
+            " " + System.Text.RegularExpressions.Regex.Replace((s ?? "").ToLowerInvariant().Replace('\u2019', '\'').Replace("'", ""), @"[^a-z]+", " ").Trim() + " ";
+        const string NameLead = @"^ (hello |hi |hiya |morning |good morning |evening |good evening |afternoon |good afternoon |alright |right |well |so |yes |yeah |oh |look |sorry |and |how do you do |pleased to meet you |nice to meet you )*";
+        const string NameTail = @"( (mickeys nephew|his nephew|the nephew|the new owner|by the way|then|love|mate|sheila|ron|darren|ada|thanks|thank you|pleased to meet you|nice to meet you|how do you do|here|mickeys lad|from the cab office|from the office|from mickeys|and ive taken over( from mickey)?|and im taking over( from mickey)?|and im taking on the office|and ive come to take over))* $";
+        const string Name = @"(tom nowak|tom|nowak|mr nowak)";
+        // With the words that say it is his name ("I'm", "the name's").
+        static readonly System.Text.RegularExpressions.Regex GivesNameShape = new System.Text.RegularExpressions.Regex(NameLead +
+            @"((im |i am |its |it is |the names |names |my names |my name is |name is |they call me |people call me |call me mr |call me |(im |i am )(mickeys nephew|mickeys lad|the new owner) )" + Name + @"|(toms|tom is|nowaks|nowak is|tom nowaks) the name)" + NameTail);
+        // The name alone, as a whole sentence ("Tom." "Nowak, Tom Nowak.").
+        static readonly System.Text.RegularExpressions.Regex BareName = new System.Text.RegularExpressions.Regex(@"^ (tom nowak|nowak tom nowak|tom|nowak)" + NameTail);
+        // What may stand beside a bare name in the same sentence: saying who he
+        // is ("Tom Nowak, Mickey's nephew.", "I'm the new owner, Tom Nowak.",
+        // "Tom Nowak, from Mickey's.").
+        static readonly System.Text.RegularExpressions.Regex SelfClause = new System.Text.RegularExpressions.Regex(
+            @"^ ((and )?(im |i am )?(mickeys nephew|mickeys lad|the new owner|his nephew|the nephew)|from mickeys|from mickeys office|from the office|from the cab office|by the way|here|then|and you must be [a-z]+|you must be [a-z]+|and you are [a-z]+)( (then|love|mate))* $");
+        // A pleasantry: after his name it is his introduction ("Tom Nowak,
+        // pleased to meet you."); before a name it greets somebody called Tom
+        // ("Nice to meet you, Tom.").
+        static readonly System.Text.RegularExpressions.Regex Pleasantry = new System.Text.RegularExpressions.Regex(
+            @"^ (pleased to meet you|nice to meet you|how do you do|good to meet you)( (then|love|mate))* $");
+        // Quotations: somebody else's words, never his own giving (the third
+        // review: British typists quote in single marks).
+        static readonly System.Text.RegularExpressions.Regex Quoted = new System.Text.RegularExpressions.Regex(
+            "\"[^\"]*\"|\u201c[^\u201d]*\u201d|\u2018[^\u2019]*\u2019|(?<![A-Za-z])'[^']*'(?![A-Za-z])");
+        // A double or curly mark left open; a lone single mark is an elided
+        // word ("'Morning.", "'Scuse me", the fourth review), not a quotation.
+        static readonly System.Text.RegularExpressions.Regex OpenQuote = new System.Text.RegularExpressions.Regex(
+            "[\"\u201c\u201d\u2018]");
+        static readonly System.Text.RegularExpressions.Regex AsksFirstShape = new System.Text.RegularExpressions.Regex(NameLead +
+            @"(call me tom|call me tommy|you can call me tom|just call me tom|please call me tom|its tom please|its just tom|it is just tom|tom will do|toms fine|tom is fine|just tom|tom please|no need for mr nowak|dont call me mr nowak)" + NameTail);
+        // Somebody else's words, or a joke, in the same sentence.
+        static readonly System.Text.RegularExpressions.Regex NotHisOwn = new System.Text.RegularExpressions.Regex(
+            @" ((?!i )[a-z]+ (said|says|told me|reckons|calls)|joking|kidding|as if|yeah right) ");
+
+        /// Whether his line gives his name, and whether it asks them to call him
+        /// Tom: clause by clause, so a question after it ("I'm Tom, and you
+        /// are?") or somebody else's words in another sentence ("I'm Tom
+        /// Nowak. Mickey said you'd help.") do not spoil it (the independent
+        /// check); the name alone only as a whole sentence ("Tom."), never a
+        /// clause ("Thanks, Tom.").
+        public static (bool gave, bool askedFirst) GivesName(string said)
+        {
+            if (string.IsNullOrWhiteSpace(said)) return (false, false);
+            // Quoted words are set aside; a quotation left open spoils the line.
+            said = Quoted.Replace(said, " ");
+            if (OpenQuote.IsMatch(said)) return (false, false);
+            bool gave = false, first = false;
+            foreach (var raw in System.Text.RegularExpressions.Regex.Split(said, @"(?<=[.!?])\s+"))
+            {
+                var sentence = raw.Trim();
+                if (sentence.Length == 0 || NotHisOwn.IsMatch(NameWords(sentence))) continue;
+                bool question = sentence.Contains("?");
+                var clauses = sentence.TrimEnd('.', '!', '?').Split(new[] { ',', ';', ':' }, StringSplitOptions.RemoveEmptyEntries);
+                // The clause a question mark ends is the question; the rest may give it.
+                int upTo = question ? clauses.Length - 1 : clauses.Length;
+                bool bare = false, other = false, bareTom = false, please = false;
+                for (int i = 0; i < upTo; i++)
+                {
+                    var w = NameWords(clauses[i]);
+                    if (AsksFirstShape.IsMatch(w)) { gave = true; first = true; }
+                    else if (GivesNameShape.IsMatch(w)) gave = true;
+                    else if (BareName.IsMatch(w)) { bare = true; bareTom |= w == " tom "; }
+                    else if (w == " please ") please = true;
+                    // A pleasantry before the name greets somebody called Tom.
+                    else if (Pleasantry.IsMatch(w)) { if (!bare) other = true; }
+                    else if (!SelfClause.IsMatch(w)) other = true;
+                }
+                // The name alone, or beside only who he is ("Tom Nowak, Mickey's
+                // nephew.", "Nowak, Tom Nowak."), never beside anything else
+                // ("Thanks, Tom.", "Tom, Dick and Harry.", "Nice to meet you, Tom.").
+                if (bare && !other) { gave = true; if (bareTom && please) first = true; }
+            }
+            return (gave, first);
+        }
+
+        /// HIS NAME AS THE STREET'S PLAIN FACT: told to somebody (the talk's
+        /// `gaveName`), it is theirs first-hand, not a secret, passed on by the
+        /// town's rounds; whoever holds it knows his name (the game then sends
+        /// "knowsName"). Once a person. It never shows in anybody's manner.
+        public const string NameTopic = "player.name";
+        internal static bool IsNameStory(Rumor r) =>
+            r != null && r.Content != null && r.Content.Subject == "player" && r.TopicKey == NameTopic;
+        public bool NameTold(GossipMill mill, string who, GameTime at)
+        {
+            if (mill == null || string.IsNullOrEmpty(who) || !(mill.Get(who) is Gossiper g) || g.Rumors.Exists(r => IsNameStory(r) && r.Hops == 0)) return false;
+            mill.Witness(who, new Fact("player", "name", Surname), $"Mickey's nephew is called {Surname}", false, at, 1.0);
+            return true;
+        }
+        public static bool HoldsHisName(Gossiper g) => g != null && g.Rumors.Exists(IsNameStory);
 
         public Dictionary<string, object> Capture() => new Dictionary<string, object>
         {

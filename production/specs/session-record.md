@@ -42,13 +42,14 @@ decimal), and `e`, the event. In the order they happen:
 | `found` | `who`, who found it; `damage`, the damage's key (`"rita_window"`); `story`, the deed that did it | somebody comes by and finds the damage he did (Aftermath.Tick's finders); counted as the town reacting to that deed, though it names nobody (town list 6cf) |
 | `trust` | `who` | somebody who names him only on trust comes to trust him (the talk helper's `trustEarned`, town list 6cf) |
 | `week` | `answer`: `"WindDown"`, `"TakeOver"` or `"WontSay"`; `story`, its topic (`"player.week_d6"`) | his answer at the week's end is given, or the day she asked ends unanswered (WeeksEnd.Give or Close); its story counts as a deed of this session for the town's reaction (town list 6cf) |
+| `calls` | `who`; `name`, what they call him (the talk's `calls`) | somebody uses his name for the first time, or a new rung of it (town list 6ch) |
 | `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
 `story` (known), `who` (talk), `names` (named), `moment` (hint), `night`, `answer`
 and `story` (ask), `who`, `story` and `how` (police), `why` (ellis, end), `story` and
 `day` (taken), `day` and `state` (tea), `who`, `damage` and `story` (found), `who` (trust),
-`answer` and `story` (week); `load` needs none.
+`answer` and `story` (week), `who` and `name` (calls); `load` needs none.
 The others may be left out. `player` is `"friend"` or `"jafar"` and `how` one
 of the five above; any other value is warned about. Nothing else is written. A line the reader cannot use
 (unknown `e`, a field missing or of the wrong kind) is shown as unread, and a

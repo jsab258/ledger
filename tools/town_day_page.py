@@ -114,52 +114,19 @@ def carried(day, answered, title, lede, new_questions, new_docs):
     }
 
 
-DAYS["2026-09-30"] = carried(
-    "2026-09-29", {"q-sheila-name", "q-chatter", "first-hour"},
-    "The police in the street, and the calls still open",
-    "New: whether an arrest can happen, what one does, word of the police asking about Tom, when Sheila trusts him, the week's end and what winding it down does, and a threat to a witness. Everything else is carried from yesterday, still open. "
-    "Done as you picked: the first hour, the neighbours' talk and Sheila's name. One tap each, and a note if you want.",
-    [("q-arrest", "Which deed may lead to an arrest. Today nothing can: the friends' build has one crime, Rita's window; Rita never goes to the police "
-                  "(her trade), and a witness went only for a crime a detective takes. In 1990 an arrest cost hours, not the game (the research)",
-      [("witness", "A witness to the window can go to the police: only somebody who saw him plainly, is not afraid and has cooled on him (Ada, after he stood "
-                   "her up for her tea); at the town's middle tempers nobody does, so an arrest is rare and earned (recommended; built this way meanwhile)"),
-       ("rita", "Rita reports her own window, for the insurance, as most shopkeepers did, and a witness who cooled on him names him"),
-       ("none", "No arrest in the first build: only for violence, which it does not have yet")]),
-     ("q-sheila-trust", "When Sheila trusts him: she calls him new management and keeps Mickey's real book back until she fully trusts the new owner, "
-                        "and nothing yet decides when that is, so she never names him",
-      [("time", "Time and a clean week: once he has talked with her on three different days (day 3 at the soonest), as long as she has never seen or "
-                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out. In the slice's crime she sees the window go in herself, so a friend who plays it never earns her trust in week one; and trust once earned holds, even through an arrest (recommended; built this way meanwhile)"),
-       ("book", "Only the book's scene: she trusts him on day 7 whatever he has done, the same for every player"),
-       ("ellis", "As the first, and DS Ellis's asking also forces the book out of her, without her naming him (about two hours more)")]),
-     ("q-wind-down", "Day 7 is also a night the outfit asks. Told \"wind it down\", Sheila closes the book on Mickey's arrangements, yet Ron would still bring the envelope that evening",
-      [("ends", "Winding it down ends the arrangement that night: Ron takes the word down, as he does a no; taking it over never undoes a no (recommended; built this way meanwhile)"),
-       ("words", "Her words change instead, and only his no to Ron ends it")]),
-     ("q-threat", "A threat to a witness (\"Say a word and you'll regret it\") does nothing today: nobody grows warier and it never becomes a story. "
-                  "Every one of the forty has the same middling nerve, so the old threat code would silence everybody",
-      [("story", "This week a threat never buys silence: it is the street's story and makes them warier of him (recommended until the forty have their own nerve; built this way meanwhile)"),
-       ("nerve", "It silences those of low nerve, once the forty's nerve is settled"),
-       ("unread", "Threats stay unread for now")]),
-     ("q-threat-reading", "How a threat is read. Six reviews: once he menaces someone over a deed, no ask buys their silence, in a few hundred wordings; but a word list "
-                          "cannot cover every way of threatening, or of caving in, and a threat it misses the town never hears of",
-      [("model", "The checking model judges each line about a deed (\"is this a threat to keep quiet?\"), the Core deciding what follows: about a twentieth of a penny a line, on the capped key (recommended)"),
-       ("words", "Word shapes only, as built: free, with gaps"),
-       ("none", "Threats unread for now")]),
-     ("q-calls-him", "What the town calls him. Canon's ladder is the new owner, Nowak, Tom, Tommy, by knowing, not liking; today the game sends no name, so Darren says "
-                     "\"the new owner\" all week, and the rule written for the game runs on liking, so Ada would say \"Tommy\" after one tea",
-      [("knowing", "By knowing him: Nowak once they know his name, Tom after two days' talk or when he asks them to, Tommy for nobody in week one; never back down (recommended; canon's rule; built this way meanwhile)"),
-       ("liking", "By liking, as the code has it: Tom at once, Nowak for those who cool on him, Tommy after Ada's tea"),
-       ("own", "Only Mickey's own people use his name in week one")])],
-    [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
-      "Approve how it goes and its lines", "Change it (say what in the note)"),
-     ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
-      "Approve how it goes and its lines", "Change it (say what in the note)"),
-     ("arrest-words", "What he is told at the arrest and on release", os.path.join(REPO, "game-design", "arrest-words-2026-09-29.md"),
-      "Approve the words", "Change them (say what in the note)"),
-     ("week-end", "The week's end: Sheila's question and his answer", os.path.join(REPO, "game-design", "week-end-2026-09-29.md"),
-      "Approve how it goes and her words", "Change it (say what in the note)"),
-     ("day-one", "Day one: Sheila's walk-round, and the street's first talk of him", os.path.join(REPO, "game-design", "day-one-2026-09-29.md"),
-      "Approve her words and the street's", "Change them (say what in the note)")])
-
+# Jafar, 29 September: only what shapes the game's identity or is hard to
+# undo reaches him, at most three a day; the rest the town decided, one line
+# each in DECISIONS.md.
+DAYS["2026-09-30"] = {
+    "title": "Three calls: how Mickey died, winding it down, threats",
+    "lede": "Only three, as you asked. Everything else on yesterday's and today's pages I have settled with my recommendations, one line each in the decisions record; tell me any you would overturn. Your relay answer (no key yet) is done. One tap each, and a note if you want.",
+    "questions": [
+        ('q-mickey-death', 'How Mickey died. Neither canon nor the outline says, so asked "How did Mickey die?", Sheila and Ron made up a heart attack and the check stopped them; now they say they don\'t know. Sheila\'s card has her see Ron argue with a stranger in the yard two nights before he died', [('heart', 'His heart, at the office early one morning; Ron found him when he came on at the rank; the doctor said his heart, and nobody on the street thinks otherwise (recommended: the story is what Tom inherited, and a mystery in the death would be a thread the outline has no room for; the argument in the yard stays something Sheila saw)'), ('doubt', 'His heart, as the doctor said, but some on the street wonder, and the argument in the yard keeps the doubt alive; never solved, never a quest'), ('yours', 'Something else, in your note')]),
+        ('q-wind-down', 'Day 7 is also a night the outfit asks. Told "wind it down", Sheila closes the book on Mickey\'s arrangements, yet Ron would still bring the envelope that evening', [('ends', 'Winding it down ends the arrangement that night: Ron takes the word down, as he does a no; taking it over never undoes a no (recommended; built this way meanwhile)'), ('words', 'Her words change instead, and only his no to Ron ends it')]),
+        ('q-threat', 'Threats to a witness ("Say a word and you\'ll regret it"). Built for now: a threat never buys silence, it becomes the street\'s story and makes them warier of him, read from word shapes. Every one of the forty has the same middling nerve, so the old threat code would have silenced everybody; and no word list catches every way of threatening someone, so a threat it misses the town never hears of', [('story-model', 'A threat never buys silence this week, and the checking model reads each line about a deed for a threat ("is this a threat to keep quiet?"), on your capped key while you play, about a twentieth of a penny a line (recommended)'), ('story-words', 'It never buys silence, read from word shapes only, as built: free, with gaps'), ('nerve', 'It silences those of low nerve, once each of the forty has their own nerve')]),
+    ],
+    "docs": [],
+}
 
 def build(date):
     day = DAYS[date]
@@ -197,8 +164,9 @@ def selftest():
     for key, _, options in DAYS["2026-09-29"]["questions"]:
         assert "recommended" in options[0][1], key
     later = build("2026-09-30")
-    assert 'data-key="q-calls-him"' in later and 'data-key="day-one"' in later and 'data-key="q-threat-reading"' in later and 'data-key="q-threat"' in later and 'data-key="q-wind-down"' in later and 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
-    assert 'data-key="q-chatter"' not in later and 'data-key="first-hour"' not in later and 'data-key="q-clock"' in later and 'data-key="first-ask"' in later
+    # Three calls at most (Jafar, 29 September), nothing else.
+    assert later.count('class="card" data-key=') == 3 and 'data-key="q-mickey-death"' in later and 'data-key="q-wind-down"' in later and 'data-key="q-threat"' in later
+    assert 'data-key="q-threat-reading"' not in later and 'data-key="q-clock"' not in later and 'data-key="day-one"' not in later and 'class="card outline"' not in later
     for key, _, options in DAYS["2026-09-30"]["questions"]:
         assert "recommended" in options[0][1], key
     print("town_day_page selftest: ok")

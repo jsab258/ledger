@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -672,6 +673,21 @@ namespace Ledger.Core
         /// keeps trust back (Trust.Earned), whatever he answers.
         public HashSet<string> DeedEvidence { get; } = new HashSet<string>();
         public void NoteEvidence(string topic) { if (!string.IsNullOrEmpty(topic)) DeedEvidence.Add(topic); }
+        /// WHAT THEY KNOW OF HIS NAME (town list 6ch): whether they know it, whether
+        /// he asked them to call him Tom, and the rung they call him by, which
+        /// never falls. Kept with the talk.
+        public bool KnowsHisName { get; set; }
+        /// The day they came to know it (-1 before): Tom counts the days they
+        /// have talked since (the second review of 6ch: days before they knew
+        /// it took a friend from "the new owner" straight to "Tom").
+        public int NameKnownFrom { get; set; } = -1;
+        public int DaysTalkedKnowingHim => NameKnownFrom < 0 ? 0 : TalkDays.Count(d => d >= NameKnownFrom);
+        public bool AskedFirstName { get; set; }
+        public PlayerIdentity.Rung CallsRung { get; set; } = PlayerIdentity.Rung.NewOwner;
+        /// The highest rung the game itself has called him by (the third review
+        /// of 6ch: a name the game sent was forgotten on the next line).
+        public PlayerIdentity.Rung GameRung { get; set; } = PlayerIdentity.Rung.NewOwner;
+
         /// The day Sheila put her week's question (town list 6ca), or -1: no
         /// trust is earned that day, answered or not (the independent check).
         public int WeekDay { get; set; } = -1;
@@ -908,7 +924,7 @@ namespace Ledger.Core
                 { "lastTurn", _lastTurn.HasValue ? (object)new List<object> { _lastTurn.Value.Day, _lastTurn.Value.Hour, _lastTurn.Value.Minute } : null },
                 { "answers", AnswersJson() }, { "currentDeed", CurrentDeed }, { "asksThisTalk", _asksThisTalk },
                 { "ownedUp", new List<object>(OwnedUp) }, { "keepsQuiet", QuietJson() }, { "toldOthers", ToldOthersJson() },
-                { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay }, { "threatened", new List<object>(Threatened) }, { "menaced", new List<object>(Menaced) },
+                { "talkDays", TalkDaysJson() }, { "trustEarned", TrustEarned }, { "doubted", Doubted }, { "deedEvidence", new List<object>(DeedEvidence) }, { "weekDay", WeekDay }, { "knowsHisName", KnowsHisName }, { "nameKnownFrom", NameKnownFrom }, { "askedFirstName", AskedFirstName }, { "callsRung", (int)CallsRung }, { "gameRung", (int)GameRung }, { "threatened", new List<object>(Threatened) }, { "menaced", new List<object>(Menaced) },
             };
         }
 
@@ -941,6 +957,11 @@ namespace Ledger.Core
             Doubted = false;
             DeedEvidence.Clear();
             WeekDay = -1;
+            KnowsHisName = false;
+            NameKnownFrom = -1;
+            AskedFirstName = false;
+            CallsRung = PlayerIdentity.Rung.NewOwner;
+            GameRung = PlayerIdentity.Rung.NewOwner;
             Threatened.Clear();
             Menaced.Clear();
             if (saved == null) return;
@@ -1035,6 +1056,13 @@ namespace Ledger.Core
                         TalkDays.Add(e.Time.Day);
             TrustEarned = saved.TryGetValue("trustEarned", out var te) && te is bool tb && tb;
             WeekDay = saved.TryGetValue("weekDay", out var wd) ? Math.Max(-1, WholeOrMinus(wd)) : -1;
+            KnowsHisName = saved.TryGetValue("knowsHisName", out var kn) && kn is bool knb && knb;
+            NameKnownFrom = saved.TryGetValue("nameKnownFrom", out var nkf) ? Math.Max(-1, WholeOrMinus(nkf)) : (KnowsHisName ? 0 : -1);
+            AskedFirstName = saved.TryGetValue("askedFirstName", out var af) && af is bool afb && afb;
+            int rung = saved.TryGetValue("callsRung", out var cr) ? WholeOrMinus(cr) : 0;
+            CallsRung = rung >= 0 && rung <= (int)PlayerIdentity.Rung.Diminutive ? (PlayerIdentity.Rung)rung : PlayerIdentity.Rung.NewOwner;
+            int gameRung = saved.TryGetValue("gameRung", out var gr) ? WholeOrMinus(gr) : 0;
+            GameRung = gameRung >= 0 && gameRung <= (int)PlayerIdentity.Rung.Diminutive ? (PlayerIdentity.Rung)gameRung : PlayerIdentity.Rung.NewOwner;
             if (saved.TryGetValue("threatened", out var th) && th is List<object> thl)
                 foreach (var x in thl) if (x is string xs && xs.Length > 0) { Threatened.Add(xs); Menaced.Add(xs); }
             if (saved.TryGetValue("menaced", out var mn) && mn is List<object> mnl)

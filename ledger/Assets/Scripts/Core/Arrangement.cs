@@ -121,6 +121,11 @@ namespace Ledger.Core
         // morning, the street had it before Ron had been anywhere).
         int _woundTellNight = -1;
         GameTime _woundTellAt;
+        /// Wound down and Ron not yet down the landing with the word: when he
+        /// goes, and the night it answers (town list 6cj: the man at the landing
+        /// knows only then). Null and -1 otherwise.
+        public GameTime? WoundWordAt => _woundTellNight >= 0 ? _woundTellAt : (GameTime?)null;
+        public int WoundNight => _woundTellNight;
         /// When Ron takes word down: eleven at night, or at once if later.
         public const int RonGoesDownHour = 23;
 
