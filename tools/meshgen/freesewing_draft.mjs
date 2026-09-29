@@ -14,12 +14,19 @@ import { pathToFileURL } from 'node:url'
 import path from 'node:path'
 import fs from 'node:fs'
 
+// OPTIONS TOO, 29 September (the donkey jacket from Brian, production/research/
+// clothing-pipeline/pattern-jacket-2026-09-29.md): an argument opt.NAME=VALUE is
+// one of the design's options (a percentage as a fraction, 0.3 for 30%; true or
+// false; a number), every other NAME=VALUE a measurement in mm.
 const [modules, design, ...rest] = process.argv.slice(2)
 const out = rest.pop()
-const measurements = Object.fromEntries(rest.map((kv) => kv.split('=')).map(([k, v]) => [k, Number(v)]))
+const pairs = rest.map((kv) => kv.split('='))
+const value = (v) => (v === 'true' ? true : v === 'false' ? false : Number.isNaN(Number(v)) ? v : Number(v))
+const measurements = Object.fromEntries(pairs.filter(([k]) => !k.startsWith('opt.')).map(([k, v]) => [k, Number(v)]))
+const options = Object.fromEntries(pairs.filter(([k]) => k.startsWith('opt.')).map(([k, v]) => [k.slice(4), value(v)]))
 const mod = await import(pathToFileURL(path.join(modules, '@freesewing', design, 'src', 'index.mjs')).href)
 const Design = mod[design.charAt(0).toUpperCase() + design.slice(1)]
-const pattern = new Design({ measurements, sa: 0 })
+const pattern = new Design({ measurements, options, sa: 0 })
 pattern.draft()
 
 // Walks the path's own operations (move, line, cubic curve), a point every
