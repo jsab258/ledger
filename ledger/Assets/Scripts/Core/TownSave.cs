@@ -18,6 +18,7 @@ namespace Ledger.Core
     ///   damage  Aftermath      each deed's damage, who has found it, until mended
     ///   arrests Custody        each time he was taken in, and what came of it
     ///   hours   TownHours      the hours the town has talked through
+    ///   week    WeeksEnd       Sheila's question at the week's end, and his answer
     public sealed class TownSave
     {
         /// The bundle's version. A file from a later version than this build
@@ -33,6 +34,7 @@ namespace Ledger.Core
         public readonly List<Aftermath> Damage = new List<Aftermath>();
         public readonly List<Custody> Arrests = new List<Custody>();
         public TownHours Hours = new TownHours();
+        public WeeksEnd Week = new WeeksEnd();
 
         public Dictionary<string, object> ToJson()
         {
@@ -55,6 +57,7 @@ namespace Ledger.Core
             foreach (var c in Arrests) arrests.Add(c.ToJson());
             d["arrests"] = arrests;
             d["hours"] = Hours.ToJson();
+            d["week"] = Week.ToJson();
             return d;
         }
 
@@ -89,6 +92,7 @@ namespace Ledger.Core
             arrests.Sort((a, b) => a.TakenAt.TotalMinutes != b.TakenAt.TotalMinutes ? a.TakenAt.TotalMinutes.CompareTo(b.TakenAt.TotalMinutes) : string.CompareOrdinal(a.Topic, b.Topic));
             foreach (var c in arrests) if (!t.Arrests.Exists(o => o.Topic == c.Topic)) t.Arrests.Add(c);
             t.Hours = TownHours.FromJson(Obj("hours"));
+            t.Week = WeeksEnd.FromJson(Obj("week"));
             return t;
         }
     }

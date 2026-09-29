@@ -86,7 +86,9 @@ canon lines it changes, and canon cites the record at those lines.
   Danby (teacher love interest), the Fixer, Keith Garbutt (broker between all
   three rivals). Ada was never a teacher (Jafar, 2026-09-28).
 - What the town calls you reads out your standing: the new owner, then Nowak, then
-  Tom, then Tommy. The gate is knowing, not liking.
+  Tom, then Tommy. The gate is knowing, not liking. Sheila is the one exception
+  (Jafar, 2026-09-29): she withholds his name until she trusts him, as she
+  promised Mickey she would size up whoever inherited.
 - NAMES, ruled by Jafar 2026-09-24 (DECISIONS, the casting research's renames):
   Lena became Sheila Dunn, Rocco Ron Kirby, Sam Darren Milner, Mara Carol Ellis,
   Aldous Vane Geoffrey Agar, Sera Kest Maureen Jensen, Noor Alison Sedman, Elias

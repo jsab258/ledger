@@ -5673,6 +5673,8 @@ namespace Ledger.CoreTests
                 town.Police.Report("rita", "player.window_d0", Offence.Damage, 4, 1);
                 town.Heard.HeardLine("recognition/ordinary", "Evening.");
                 town.NewsFiled.Add("laundry_row");
+                town.Week.Ask(new GameTime(6, 10, 0), true);
+                town.Week.Give(WeekAnswer.WindDown, new GameTime(6, 10, 5), null, null);
                 var back = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(town.ToJson()))));
                 var noTea = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(new TownSave().ToJson()))));
                 var damaged = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
@@ -5684,7 +5686,8 @@ namespace Ledger.CoreTests
                       && back.Police.Strongest("player.window_d0") == Known.Statement && back.Heard.Fresh("recognition/ordinary", new[] { "Evening.", "All right." }, 0) == "All right."
                       && back.NewsFiled.Count == 1 && back.NewsFiled[0] == "laundry_row"
                       && noTea.Tea == null && damaged.Asks.Nights.Count == 1 && damaged.Hints.Done.Count == 0 && damaged.Tea == null
-                      && damaged.NewsFiled.Count == 1 && future == "FromTheFuture" && TownSave.FromJson(null).Asks.NextNight == 0,
+                      && damaged.NewsFiled.Count == 1 && future == "FromTheFuture" && TownSave.FromJson(null).Asks.NextNight == 0
+                      && back.Week.Answer == WeekAnswer.WindDown && back.Week.RealBook && noTea.Week.AskedAt == null && damaged.Week.AskedAt == null,
                       "the town's pieces travel in one save and come back together; a damaged piece loses only itself; a save from a later version is refused");
             }
 
@@ -6228,6 +6231,291 @@ namespace Ledger.CoreTests
             bool remembered = false;
             foreach (var e in memory.Events) if (e.Text.Contains("lied")) remembered = true;
             Check(remembered, "the lie is remembered");
+
+            // WHEN SHEILA TRUSTS HIM (town list 6bz, carried until Jafar rules):
+            // once he has talked with her on three different days, never caught
+            // in a lie, heard otherwise or telling others otherwise, and not wary.
+            {
+                ConversationEngine TalkedOn(params int[] days)
+                {
+                    var tMem = new MemoryStore("lena");
+                    var te = new ConversationEngine(null, MakeLenaCard(), tMem, new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
+                    foreach (var d in days)
+                    {
+                        tMem.Append(new MemoryEvent(new GameTime(d, 11, 0), "conversation", 0.5, ClaimCheck.PlayerSaid + "\"Morning.\""));
+                        tMem.Append(new MemoryEvent(new GameTime(d, 11, 0), "conversation", 0.5, ClaimCheck.IReplied + "\"Morning.\""));
+                        te.TalkDays.Add(d);
+                    }
+                    return te;
+                }
+                var three = TalkedOn(0, 1, 2);
+                var twice = TalkedOn(0, 0, 2);
+                // The game's memories are never days he talked, whatever they say
+                // (the independent check).
+                var gameSays = TalkedOn(0, 1);
+                gameSays.Memory.Append(new MemoryEvent(new GameTime(2, 9, 0), "conversation", 0.8, "He paid me Mickey's forty."));
+                gameSays.Memory.Append(new MemoryEvent(new GameTime(3, 9, 0), "conversation", 0.8, ClaimCheck.PlayerSaid + "\"Morning.\""));
+                var lied = TalkedOn(0, 1, 2);
+                lied.Answers.Add(new ConversationEngine.Answer { Topic = "player.window_d1", Result = ClaimResult.Contradiction });
+                var heardOther = TalkedOn(0, 1, 2);
+                heardOther.Answers.Add(new ConversationEngine.Answer { Topic = "player.window_d1", Result = ClaimResult.Unknown, HeardSaw = "Rita's" });
+                heardOther.NoteEvidence("player.window_d1");
+                var sawOther = TalkedOn(0, 1, 2);
+                sawOther.Answers.Add(new ConversationEngine.Answer { Topic = "player.window_d1", Result = ClaimResult.Unknown, SawElsewhere = true });
+                // Heard he tells others he was somewhere she saw he was not.
+                var toldOthers = TalkedOn(0, 1, 2);
+                toldOthers.HeardHeToldOthers("player.window_d1", 1, 22, "the fish market", "Rita's", new GameTime(2, 10, 0));
+                var fits = TalkedOn(0, 1, 2);
+                fits.Answers.Add(new ConversationEngine.Answer { Topic = "player.window_d1", Result = ClaimResult.Consistent });
+                var wary = TalkedOn(0, 1, 2);
+                wary.Suspicion.Raise(0.3, "funny hours");
+                Check(Trust.Earned(three, 2) && Trust.Earned(three, 6) && !Trust.Earned(three, 1)
+                      && !Trust.Earned(TalkedOn(0, 1, 5), 4) && Trust.Earned(TalkedOn(0, 1, 5), 5)
+                      && !Trust.Earned(twice, 6) && !Trust.Earned(gameSays, 6)
+                      && !Trust.Earned(lied, 6) && !Trust.Earned(heardOther, 6) && !Trust.Earned(sawOther, 6) && !Trust.Earned(toldOthers, 6) && Trust.Earned(fits, 6)
+                      && !Trust.Earned(wary, 6) && !Trust.Earned(null, 6) && !Trust.Earned(TalkedOn(), 6),
+                      "Sheila trusts him once she has talked with him on three different days, with no lie caught, nothing heard against what he told her or others, and while she is not wary; days count by the lines he said to her, never the game's memories");
+                // Earned once, and it holds; it travels with the talk's save, and a
+                // talk saved before the days were kept reads them off his own lines.
+                var earning = TalkedOn(0, 1, 2);
+                bool firstEarn = Trust.Earn(earning, 2), againEarn = Trust.Earn(earning, 3);
+                earning.Suspicion.Raise(0.6, "a lie at last");
+                var earnedBack = TalkedOn();
+                earnedBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(earning.CaptureTalk()))));
+                var legacySave = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(TalkedOn(0, 1, 2).CaptureTalk())));
+                legacySave.Remove("talkDays"); legacySave.Remove("trustEarned");
+                var legacyBack = TalkedOn();
+                legacyBack.RestoreTalk(legacySave);
+                var emptyLines = TalkedOn();
+                emptyLines.Memory.Append(new MemoryEvent(new GameTime(0, 9, 0), "conversation", 0.5, ClaimCheck.PlayerSaid + "\"\""));
+                var emptySave = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(emptyLines.CaptureTalk())));
+                emptySave.Remove("talkDays");
+                var emptyBack = TalkedOn();
+                emptyBack.RestoreTalk(emptySave);
+                Check(firstEarn && !againEarn && earning.TrustEarned && !Trust.Earn(TalkedOn(0, 1), 5) && !Trust.Earn(null, 5)
+                      && earnedBack.TrustEarned && earnedBack.TalkDays.Count == 3 && !Trust.Earn(earnedBack, 4)
+                      && !legacyBack.TrustEarned && legacyBack.TalkDays.Count == 3 && Trust.Earned(legacyBack, 2) && emptyBack.TalkDays.Count == 0,
+                      "trust is earned once and holds, even once she is wary; it and the days he talked travel with the talk's save, and an older save reads the days off his own non-empty lines");
+                // A doubt never clears (the independent check: a changed story
+                // replaced the answer and wiped the hearsay or sighting with it).
+                var dayT = new GameTime(2, 12, 0);
+                var changedAfterHearsay = TalkedOn(0, 1, 2);
+                changedAfterHearsay.HeardAnswer("player.van_d0", 0, 23, "the market", new[] { "market" }, ClaimResult.Unknown, null, dayT, true);
+                changedAfterHearsay.HeardOtherwise("player.van_d0", "the docks", dayT);
+                changedAfterHearsay.HeardAnswer("player.van_d0", 0, 23, "the docks", new[] { "docks" }, ClaimResult.Unknown, null, dayT, true);
+                var changedAfterSighting = TalkedOn(0, 1, 2);
+                changedAfterSighting.HeardAnswer("player.van_d0", 0, 23, "the docks and the market", new[] { "docks", "market" }, ClaimResult.Unknown, null, dayT, false);
+                bool sawDoubt = changedAfterSighting.SawOtherwise("player.van_d0", "Rita's", dayT);
+                changedAfterSighting.HeardAnswer("player.van_d0", 0, 23, "Rita's", new[] { "ritas" }, ClaimResult.Consistent, "Rita's", dayT, true);
+                var changedAfterLie = TalkedOn(0, 1, 2);
+                changedAfterLie.HeardAnswer("player.van_d0", 0, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, dayT, true);
+                changedAfterLie.JudgeAgain("player.van_d0", ClaimResult.Contradiction, "Rita's", dayT);
+                // Hearsay against a list answer: no weight on suspicion, but a doubt.
+                var listHearsay = TalkedOn(0, 1, 2);
+                listHearsay.HeardAnswer("player.van_d0", 0, 23, "the chapel and the market", new[] { "chapel", "market" }, ClaimResult.Unknown, null, dayT, false);
+                bool listWeighed = listHearsay.HeardOtherwise("player.van_d0", "the docks", dayT);
+                // Her own eyes bore his answer out: hearsay against it is no doubt,
+                // whichever came first (the independent check).
+                var sawItFits = TalkedOn(0, 1, 2);
+                sawItFits.HeardAnswer("player.van_d0", 0, 23, "Rita's", new[] { "ritas" }, ClaimResult.Consistent, "Rita's", dayT, true);
+                sawItFits.HeardOtherwise("player.van_d0", "the docks", dayT);
+                var hearsayThenSeen = TalkedOn(0, 1, 2);
+                hearsayThenSeen.HeardAnswer("player.van_d0", 0, 23, "Rita's", new[] { "ritas" }, ClaimResult.Unknown, null, dayT, true);
+                hearsayThenSeen.HeardOtherwise("player.van_d0", "the docks", dayT);
+                bool earnedBeforeSeen = Trust.Earned(hearsayThenSeen, 6);
+                hearsayThenSeen.JudgeAgain("player.van_d0", ClaimResult.Consistent, "Rita's", dayT);
+                // She saw him, and he gave her nothing she could take down ("I was
+                // at home"), or nothing at all: not enough (the independent check).
+                var sawNoAnswer = TalkedOn(0, 1, 2);
+                sawNoAnswer.NoteEvidence("player.van_d0");
+                // A list her own eyes bore out is still no plain answer.
+                var listSeen = TalkedOn(0, 1, 2);
+                listSeen.HeardAnswer("player.van_d0", 0, 23, "Rita's and the chapel", new[] { "chapel", "ritas" }, ClaimResult.Unknown, "Rita's", dayT, false);
+                // An answer about a deed she never saw or heard anything of asks nothing.
+                var noEvidenceAnswer = TalkedOn(0, 1, 2);
+                noEvidenceAnswer.HeardAnswer("player.van_d0", 0, 23, "the chapel", new[] { "chapel" }, ClaimResult.Unknown, null, dayT, true);
+                var doubtBack = TalkedOn();
+                doubtBack.RestoreTalk(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(changedAfterHearsay.CaptureTalk()))));
+                var olderDoubt = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(changedAfterLie.CaptureTalk())));
+                olderDoubt.Remove("doubted");
+                var olderBack = TalkedOn();
+                olderBack.RestoreTalk(olderDoubt);
+                var spaces = TalkedOn(0, 2);
+                spaces.Memory.Append(new MemoryEvent(new GameTime(1, 9, 0), "conversation", 0.5, ClaimCheck.PlayerSaid + "\"   \""));
+                var spacesSave = MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(spaces.CaptureTalk())));
+                spacesSave.Remove("talkDays");
+                var spacesBack = TalkedOn();
+                spacesBack.RestoreTalk(spacesSave);
+                Check(!Trust.Earned(changedAfterHearsay, 6) && sawDoubt && changedAfterSighting.Doubted && !Trust.Earned(changedAfterSighting, 6)
+                      && changedAfterSighting.Answers.Exists(a => a.Result == ClaimResult.Consistent)
+                      && changedAfterLie.Doubted && !Trust.Earned(changedAfterLie, 6) && !listWeighed && !Trust.Earned(listHearsay, 6)
+                      && !sawItFits.Doubted && !Trust.Earned(sawItFits, 6) && !earnedBeforeSeen && !Trust.Earned(hearsayThenSeen, 6)
+                      && !Trust.Earned(sawNoAnswer, 6) && !Trust.Earned(listSeen, 6) && Trust.Earned(noEvidenceAnswer, 6)
+                      && doubtBack.DeedEvidence.Contains("player.van_d0") && !Trust.Earned(doubtBack, 6) && olderBack.Doubted && spacesBack.TalkDays.Count == 2,
+                      "once she has seen or heard of him about the place when a deed was done, or caught him out, she does not come to trust him this week, whatever he answers, whichever came first, however his story changed; an answer about a deed she knows nothing of asks nothing; it travels with the talk's save, an older save finds it in its answers, and a line of spaces is no day he talked");
+            }
+
+            // THE WEEK'S END (town list 6ca): Sheila's question from day 7, his
+            // answer read in two steps, a day ended unanswered his refusal, the
+            // street's story, and the save.
+            {
+                // Read: which answer a line sounds like, and never a mixed,
+                // questioned, supposed or joking one.
+                var soundsRight = new (string line, WeekAnswer want)[]
+                {
+                    ("Wind it down.", WeekAnswer.WindDown), ("I'm winding it down, Sheila.", WeekAnswer.WindDown), ("I'm getting out of it.", WeekAnswer.WindDown),
+                    ("It stays a cab firm and nothing more.", WeekAnswer.WindDown), ("Shut it down.", WeekAnswer.WindDown), ("No more of Mickey's arrangements.", WeekAnswer.WindDown),
+                    ("Take it over.", WeekAnswer.TakeOver), ("I'm taking it over.", WeekAnswer.TakeOver), ("Well, I'll carry on where Mickey left off.", WeekAnswer.TakeOver),
+                    ("I'm keeping it going.", WeekAnswer.TakeOver), ("It's mine now.", WeekAnswer.TakeOver), ("Right, I'm taking over.", WeekAnswer.TakeOver),
+                    ("I'm not saying.", WeekAnswer.WontSay), ("None of your business.", WeekAnswer.WontSay), ("That's my business, Sheila.", WeekAnswer.WontSay),
+                    ("No comment.", WeekAnswer.WontSay), ("I'm keeping that to myself.", WeekAnswer.WontSay),
+                    ("Take it over. I've thought about it all week.", WeekAnswer.TakeOver),
+                    // Put-offs are no answer; nor refusals, jokes, or an answer beside other words (the independent check).
+                    ("I haven't decided.", WeekAnswer.None), ("We'll see.", WeekAnswer.None), ("I'll let you know.", WeekAnswer.None), ("Ask me later.", WeekAnswer.None),
+                    ("Wind it down, over my dead body.", WeekAnswer.None), ("Take it over, not likely.", WeekAnswer.None), ("Take it over. No chance.", WeekAnswer.None),
+                    ("Take it over, in your dreams.", WeekAnswer.None), ("Take it over. Not.", WeekAnswer.None), ("Take it over! Ha!", WeekAnswer.None),
+                    ("Carry on, Sheila, I'm listening.", WeekAnswer.None), ("I'm not saying, but I'm taking it over.", WeekAnswer.None),
+                    // The second review: refusals in other words, a no before an answer, a put-off or
+                    // joke in a second sentence, idioms, and a question however it ends.
+                    ("It's none of your business.", WeekAnswer.WontSay), ("Never you mind.", WeekAnswer.WontSay), ("I'd rather not say.", WeekAnswer.WontSay),
+                    ("No, I'm taking it over.", WeekAnswer.TakeOver), ("Let's wind it down.", WeekAnswer.WindDown), ("I said wind it down.", WeekAnswer.WindDown),
+                    ("I'm taking it over. I'll let you know.", WeekAnswer.None), ("Take it over. Joke.", WeekAnswer.None), ("I'm taking it over. We'll see.", WeekAnswer.None),
+                    ("Carry on, Sheila.", WeekAnswer.None), ("Pack it in!", WeekAnswer.None), ("Take it over?!", WeekAnswer.None),
+                    // The third review.
+                    ("Wind it down. I take that back.", WeekAnswer.None), ("Wind it down. Scratch that.", WeekAnswer.None), ("Take it over. Do me a favour.", WeekAnswer.None),
+                    ("Take it over, no.", WeekAnswer.None), ("Wind it down, nah.", WeekAnswer.None), ("No. Take it over.", WeekAnswer.TakeOver),
+                    ("I'm taking it over, alright?", WeekAnswer.TakeOver), ("It's my business now.", WeekAnswer.None),
+                    ("That's for me to know and you to find out.", WeekAnswer.WontSay),
+                    // The fourth review's narrow points.
+                    ("I'll keep it.", WeekAnswer.TakeOver), ("Count me in.", WeekAnswer.TakeOver), ("I'm taking it all over.", WeekAnswer.TakeOver),
+                    ("Actually, I'm taking it over.", WeekAnswer.None), ("Just cabs.", WeekAnswer.WindDown), ("I'm not going to tell you.", WeekAnswer.WontSay),
+                    // Questions, suppositions, mixed, jokes, somebody else's words: nothing.
+                    ("Should I wind it down?", WeekAnswer.None), ("Maybe I'll take it over.", WeekAnswer.None), ("Take it over or wind it down, I can't tell.", WeekAnswer.None),
+                    ("Take it over. Only joking.", WeekAnswer.None), ("Ron says take it over.", WeekAnswer.None), ("If the money's right I'll take it over.", WeekAnswer.None),
+                    ("Wind it down? Not likely.", WeekAnswer.None), ("Morning, Sheila.", WeekAnswer.None), ("", WeekAnswer.None), (null, WeekAnswer.None),
+                    ("I'll take it over for now.", WeekAnswer.None), ("The drivers want to take over the rank.", WeekAnswer.None),
+                };
+                var soundsWrong = new List<string>();
+                foreach (var (line, want) in soundsRight)
+                    if (WeeksEnd.Sounds(line) != want) soundsWrong.Add((line ?? "null") + " -> " + WeeksEnd.Sounds(line));
+                Check(soundsWrong.Count == 0, "his line to Sheila sounds like one answer only when a whole clause is that answer, and never a question, a supposition, a joke, a mix or somebody else's words", string.Join(" | ", soundsWrong));
+
+                bool confirms = WeeksEnd.Confirms("Yes.", WeekAnswer.WindDown) && WeeksEnd.Confirms("Yeah, that's my answer.", WeekAnswer.TakeOver)
+                                && WeeksEnd.Confirms("Yes. Wind it down.", WeekAnswer.WindDown) && WeeksEnd.Confirms("That's right, Sheila.", WeekAnswer.WontSay)
+                                && !WeeksEnd.Confirms("Yes. Take it over.", WeekAnswer.WindDown) && !WeeksEnd.Confirms("Yeah yeah.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Yes?", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yes. Only joking.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("No.", WeekAnswer.WindDown) && !WeeksEnd.Confirms("Wind it down.", WeekAnswer.WindDown)
+                                && !WeeksEnd.Confirms("Yes, maybe.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yes.", WeekAnswer.None) && !WeeksEnd.Confirms("", WeekAnswer.WindDown)
+                                && !WeeksEnd.Confirms("Yes. Tell Ron to bring the car round.", WeekAnswer.TakeOver)
+                                // A yes with the answer in the same sentence (the independent check).
+                                && WeeksEnd.Confirms("Yes, take it over.", WeekAnswer.TakeOver) && WeeksEnd.Confirms("Yes take it over", WeekAnswer.TakeOver)
+                                && WeeksEnd.Confirms("Yeah, I'm taking it over.", WeekAnswer.TakeOver) && WeeksEnd.Confirms("Aye, wind it down.", WeekAnswer.WindDown)
+                                && WeeksEnd.Confirms("Yes, I'm out.", WeekAnswer.WindDown) && WeeksEnd.Confirms("Yes. That's final.", WeekAnswer.WindDown)
+                                && WeeksEnd.Confirms("Yes. For good.", WeekAnswer.WindDown) && WeeksEnd.Confirms("I do.", WeekAnswer.TakeOver)
+                                && WeeksEnd.Confirms("Okay.", WeekAnswer.WontSay) && WeeksEnd.Confirms("Go on then.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Yes, wind it down.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yes. No.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Yes. I'll let you know.", WeekAnswer.WontSay)
+                                && !WeeksEnd.Confirms("Yeah, yeah.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Sure, sure.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Yeah... yeah.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yes?!", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Yes, no.", WeekAnswer.TakeOver)
+                                // The third review: a no in the yes, and brush-offs however said.
+                                && !WeeksEnd.Confirms("Yes, well no.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yeah, well nah.", WeekAnswer.WontSay)
+                                && !WeeksEnd.Confirms("Yes... well no.", WeekAnswer.WindDown) && !WeeksEnd.Confirms("Yes, sorry no.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Aye, right.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("OK, OK.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Okay, okay.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Yup, yup.", WeekAnswer.TakeOver)
+                                && !WeeksEnd.Confirms("Of course, of course.", WeekAnswer.TakeOver) && !WeeksEnd.Confirms("Sure, Sheila, sure.", WeekAnswer.TakeOver)
+                                && WeeksEnd.Confirms("Yes. No more of Mickey's arrangements.", WeekAnswer.WindDown)
+                                && WeeksEnd.Confirms("Yes, fine.", WeekAnswer.TakeOver) && WeeksEnd.Confirms("Yes, Mrs Dunn.", WeekAnswer.WindDown)
+                                && WeeksEnd.Sounds(string.Join(" ", Enumerable.Repeat("well", 40)) + " take it over.") == WeekAnswer.TakeOver;
+                Check(confirms, "only his plain yes to her own question is his answer: the same answer said again beside it, never another, a brush-off, a question, a no or a line taken back");
+
+                // Asked from day 7, once; answered while it stands; the day ended
+                // unanswered is his refusal; the story filed first-hand.
+                var weekCast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\"],\"names\":[\"Mickey's\"]}}," +
+                    "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[18,\"off\"]]},{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"mickeys_office\"],[20,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+                GossipMill WeekMill()
+                {
+                    var m = new GossipMill(null);
+                    foreach (var id in weekCast.People) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    return m;
+                }
+                var early = new WeeksEnd();
+                var wm = WeekMill();
+                var we = new WeeksEnd();
+                bool timing = !early.Ask(new GameTime(5, 11, 0), true) && early.AskedAt == null
+                              && !new WeeksEnd().Ask(new GameTime(7, 12, 30), true, atOffice: false)
+                              && we.Waits(new GameTime(6, 10, 0)) && !we.Waits(new GameTime(6, 12, 0)) && !we.Waits(new GameTime(7, 10, 0))
+                              && we.Ask(new GameTime(7, 11, 0), true) && !we.Ask(new GameTime(7, 12, 0), false) && we.RealBook && !we.Waits(new GameTime(6, 10, 0))
+                              && we.Stands(new GameTime(7, 15, 0)) && !we.Stands(new GameTime(8, 9, 0)) && !we.Stands(new GameTime(7, 10, 0))
+                              && !we.Give(WeekAnswer.None, new GameTime(7, 12, 0), wm, weekCast)
+                              && we.Give(WeekAnswer.TakeOver, new GameTime(7, 12, 0), wm, weekCast) && !we.Give(WeekAnswer.WindDown, new GameTime(7, 12, 5), wm, weekCast)
+                              && we.Answer == WeekAnswer.TakeOver && !we.Close(new GameTime(8, 0, 0), wm, weekCast);
+                var heardHer = wm.Get("lena").Rumors.Find(WeeksEnd.IsWeekAnswer);
+                var heardOffice = wm.Get("zlata").Rumors.Find(WeeksEnd.IsWeekAnswer);
+                bool filed = heardHer != null && heardHer.Hops == 0 && !heardHer.Sensitive && heardHer.Summary == WeeksEnd.Said(WeekAnswer.TakeOver)
+                             && heardOffice != null && wm.Get("joey").Rumors.Find(WeeksEnd.IsWeekAnswer) == null
+                             && wm.Get("lena").Memory.Events.Exists(e => e.Text == WeeksEnd.Remembered(WeekAnswer.TakeOver));
+                var unanswered = new WeeksEnd();
+                var um = WeekMill();
+                bool closes = unanswered.Ask(new GameTime(6, 10, 30), false) && !unanswered.Close(new GameTime(6, 23, 59), um, weekCast)
+                              && unanswered.Close(new GameTime(7, 9, 0), um, weekCast) && unanswered.Answer == WeekAnswer.WontSay
+                              && unanswered.AnsweredAt.Value.Equals(new GameTime(7, 0, 0)) && !unanswered.Give(WeekAnswer.TakeOver, new GameTime(7, 9, 5), um, weekCast)
+                              && um.Get("lena").Rumors.Exists(WeeksEnd.IsWeekAnswer) && !um.Get("zlata").Rumors.Exists(WeeksEnd.IsWeekAnswer);
+                var standing = new WeeksEnd();
+                standing.Ask(new GameTime(6, 10, 0), false);
+                bool talk = WeeksEnd.StandingLine(false).Contains("the day-book") && WeeksEnd.StandingLine(true).Contains("Mickey's real book")
+                            && WeeksEnd.StandingLine(false).Contains("which is it going to be") && WeeksEnd.Opening(true, true).StartsWith("I don't come in Sundays.")
+                            && WeeksEnd.Opening(false).EndsWith(WeeksEnd.Question);
+                // On her Sunday she stays while he can answer; an answer is heard
+                // where she is (the second review).
+                var sunday = new WeeksEnd();
+                sunday.Ask(new GameTime(6, 10, 30), false);
+                var late = new WeeksEnd();
+                late.Ask(new GameTime(6, 11, 50), false);
+                bool stays = sunday.Waits(new GameTime(6, 11, 59)) && sunday.Waits(new GameTime(6, 14, 0)) && !sunday.Waits(new GameTime(6, 18, 0))
+                             && late.Waits(new GameTime(6, 12, 10)) && !late.Waits(new GameTime(7, 10, 0))
+                             && new WeeksEnd().Waits(new GameTime(6, 11, 0)) && !new WeeksEnd().Waits(new GameTime(6, 12, 30));
+                var stepCast = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"mickeys_office\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},\"areas\":{\"mickeys\":{\"places\":[\"mickeys_office\"],\"names\":[\"Mickey's\"]},\"quay\":{\"places\":[\"quay\"],\"names\":[\"the quay\"]}}," +
+                    "\"people\":[{\"id\":\"lena\",\"routine\":[[0,\"off\"],[9,\"mickeys_office\"],[17,\"quay\"],[18,\"off\"]]},{\"id\":\"zlata\",\"routine\":[[0,\"off\"],[7,\"mickeys_office\"],[20,\"off\"]]},{\"id\":\"joey\",\"routine\":[[0,\"off\"],[6,\"quay\"],[18,\"off\"]]}],\"ties\":[]}");
+                var stepMill = new GossipMill(null);
+                foreach (var id in stepCast.People) stepMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var monday = new WeeksEnd();
+                monday.Ask(new GameTime(7, 13, 0), true);
+                monday.Give(WeekAnswer.TakeOver, new GameTime(7, 17, 10), stepMill, stepCast);
+                bool heardWhereSheIs = stepMill.Get("joey").Rumors.Exists(WeeksEnd.IsWeekAnswer) && !stepMill.Get("zlata").Rumors.Exists(WeeksEnd.IsWeekAnswer);
+                // After her hours nobody else overhears it.
+                var nightMill = new GossipMill(null);
+                foreach (var id in stepCast.People) nightMill.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                var evening = new WeeksEnd();
+                evening.Ask(new GameTime(7, 13, 0), true);
+                evening.Give(WeekAnswer.WindDown, new GameTime(7, 18, 30), nightMill, stepCast);
+                heardWhereSheIs = heardWhereSheIs && nightMill.Get("lena").Rumors.Exists(WeeksEnd.IsWeekAnswer)
+                                  && !nightMill.Get("zlata").Rumors.Exists(WeeksEnd.IsWeekAnswer) && !nightMill.Get("joey").Rumors.Exists(WeeksEnd.IsWeekAnswer);
+                stays = stays && heardWhereSheIs;
+
+                // The save: replayed through the rules, refusing what play cannot reach.
+                WeeksEnd Round(WeeksEnd w) => WeeksEnd.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(w.ToJson()))));
+                var weBack = Round(we); var unBack = Round(unanswered); var stBack = Round(standing); var freshBack = Round(new WeeksEnd());
+                bool saves = weBack.Answer == WeekAnswer.TakeOver && weBack.AnsweredAt.Value.Equals(new GameTime(7, 12, 0)) && weBack.RealBook
+                             && unBack.Answer == WeekAnswer.WontSay && unBack.AnsweredAt.Value.Equals(new GameTime(7, 0, 0))
+                             && stBack.AskedAt.Value.Equals(new GameTime(6, 10, 0)) && !stBack.Answered && freshBack.AskedAt == null
+                             && WeeksEnd.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asked\": 100}"))).AskedAt == null
+                             && WeeksEnd.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asked\": 9000, \"answer\": \"TakeOver\", \"answered\": 12000}"))).Answered == false
+                             && WeeksEnd.FromJson(MiniJson.AsObject(MiniJson.Deserialize("{\"asked\": 9000, \"answer\": \"Nonsense\", \"answered\": 9010}"))).Answered == false
+                             && WeeksEnd.FromJson(null).AskedAt == null;
+                // The street says it to his face; Sheila, who was told it, does not.
+                var weekStory = wm.Get("zlata").Rumors.Find(WeeksEnd.IsWeekAnswer);
+                var weekLine = StreetVoice.Recognition(wm.Get("zlata"), weekStory, StanceKind.Comments, 0);
+                var heardWontSay = new Rumor { Content = new Fact("player", "week_d6", "wontsay"), Summary = WeeksEnd.Said(WeekAnswer.WontSay), Confidence = 0.6, Sensitive = false, Hops = 1 };
+                var wontSayLine = StreetVoice.Recognition(wm.Get("joey"), heardWontSay, StanceKind.Comments, 0);
+                var windDownLine = StreetVoice.Recognition(wm.Get("joey"), new Rumor { Content = new Fact("player", "week_d6", "winddown"), Summary = WeeksEnd.Said(WeekAnswer.WindDown), Confidence = 0.6, Hops = 1 }, StanceKind.Comments, 0);
+                bool voiced = StreetVoice.StoryThatShows(wm.Get("zlata"), wm.MinConfidenceToShare) == weekStory && StreetVoice.StoryThatShows(wm.Get("lena"), wm.MinConfidenceToShare) == null
+                              && weekLine != null && weekLine.Bank == "recognition/week-takeover" && wontSayLine != null && wontSayLine.Bank == "recognition/week-wontsay"
+                              && windDownLine != null && windDownLine.Bank == "recognition/week-winddown";
+                Check(timing && filed && closes && talk && saves && voiced && stays,
+                      "Sheila asks from day 7, once, waiting at the office that Sunday morning; his plain answer stands only while the question does, a day ended unanswered is his refusal, the story is hers first-hand and whoever was in the office, and a save is replayed through the same rules",
+                      $"{timing} {filed} {closes} {talk} {saves} {voiced} {stays}");
+            }
 
             // WHAT A REPLY SPOKE OF (town list 6ah): the stories of the memories a
             // clean check found it drawing on, for the game's record of the town

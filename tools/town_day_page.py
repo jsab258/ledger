@@ -45,8 +45,8 @@ DAYS = {
             ("q-privacy", "Before your friends play through our server, players should be able to read a short privacy notice, linked from the notice they already see: who is responsible for their words, how long a reported line is kept, and their rights",
              [("draft", "I draft it for your approval, naming you as responsible and keeping reported lines for a year (recommended: the law asks for it at that point, and it is text I can write)"),
               ("later", "Later, before the store: friends see the notice as it stands, which says where their words go and what is kept")]),
-            ("q-bench", "The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time; and in small talk it was far worse: asked \"what biscuits have you got in?\" or \"what do you drive?\", 28 of 36 answers came out as \"That's as far as I can take you\"; a narrow fix tonight brought that to 13, inventions caught as before, and the full retune would go further. Tuning it properly means writing the test conversations again with today's cards, about $20 to $40 of calls",
-             [("yes", "Yes, spend it: every third reply is slower than it needs to be (recommended)"),
+            ("q-bench", "The check that stops characters inventing things flags three honest replies in ten and has them written again, which costs time; and in small talk it was far worse: asked \"what biscuits have you got in?\" or \"what do you drive?\", 28 of 36 answers came out as \"That's as far as I can take you\"; a narrow fix tonight brought that to 13, inventions caught as before, and the full retune would go further. Tuning it properly means writing the test conversations again with today's cards. Since your ruling of 29 September that runs through Claude Code on your subscription, not the API: no money, but a good share of a week's allowance",
+             [("yes", "Yes, on the subscription, in small runs over the week: every third reply is slower than it needs to be (recommended)"),
               ("later", "Not now")]),
             ("q-keep-quiet", "When Tom asks someone to keep what he did to themselves, who does? The game decides, never the AI; this is my reading of the approved cards and canon, built that way meanwhile",
              [("cards", "Nobody keeps a killing quiet; Ron and Sheila, Mickey's inherited loyalists, keep it quiet for the owner they work for; Darren, loyal to whoever helped him last, says yes to anybody and breaks it the moment someone else pays or threatens him; everyone else only for someone on first-name terms (recommended: it follows the cards)"),
@@ -117,20 +117,28 @@ def carried(day, answered, title, lede, new_questions, new_docs):
 DAYS["2026-09-30"] = carried(
     "2026-09-29", {"q-sheila-name", "q-chatter", "first-hour"},
     "The police in the street, and the calls still open",
-    "New: whether an arrest can happen, what one does, and word of the police asking about Tom. Everything else is carried from yesterday, still open. "
+    "New: whether an arrest can happen, what one does, word of the police asking about Tom, when Sheila trusts him, and the week's end. Everything else is carried from yesterday, still open. "
     "Done as you picked: the first hour, the neighbours' talk and Sheila's name. One tap each, and a note if you want.",
     [("q-arrest", "Which deed may lead to an arrest. Today nothing can: the friends' build has one crime, Rita's window; Rita never goes to the police "
                   "(her trade), and a witness went only for a crime a detective takes. In 1990 an arrest cost hours, not the game (the research)",
       [("witness", "A witness to the window can go to the police: only somebody who saw him plainly, is not afraid and has cooled on him (Ada, after he stood "
                    "her up for her tea); at the town's middle tempers nobody does, so an arrest is rare and earned (recommended; built this way meanwhile)"),
        ("rita", "Rita reports her own window, for the insurance, as most shopkeepers did, and a witness who cooled on him names him"),
-       ("none", "No arrest in the first build: only for violence, which it does not have yet")])],
+       ("none", "No arrest in the first build: only for violence, which it does not have yet")]),
+     ("q-sheila-trust", "When Sheila trusts him: she calls him new management and keeps Mickey's real book back until she fully trusts the new owner, "
+                        "and nothing yet decides when that is, so she never names him",
+      [("time", "Time and a clean week: once he has talked with her on three different days (day 3 at the soonest), as long as she has never seen or "
+                "heard of him about the place when something was done, never caught him lying, and she is not wary; then she names him and the book can come out (recommended; built this way meanwhile)"),
+       ("book", "Only the book's scene: she trusts him on day 7 whatever he has done, the same for every player"),
+       ("ellis", "As the first, and DS Ellis's asking also forces the book out of her, without her naming him (about two hours more)")])],
     [("police-asking", "Word that the police are asking", os.path.join(REPO, "game-design", "police-asking-2026-09-29.md"),
       "Approve how it goes and its lines", "Change it (say what in the note)"),
      ("arrest", "What an arrest does", os.path.join(REPO, "game-design", "arrest-2026-09-29.md"),
       "Approve how it goes and its lines", "Change it (say what in the note)"),
      ("arrest-words", "What he is told at the arrest and on release", os.path.join(REPO, "game-design", "arrest-words-2026-09-29.md"),
-      "Approve the words", "Change them (say what in the note)")])
+      "Approve the words", "Change them (say what in the note)"),
+     ("week-end", "The week's end: Sheila's question and his answer", os.path.join(REPO, "game-design", "week-end-2026-09-29.md"),
+      "Approve how it goes and her words", "Change it (say what in the note)")])
 
 
 def build(date):
@@ -169,7 +177,7 @@ def selftest():
     for key, _, options in DAYS["2026-09-29"]["questions"]:
         assert "recommended" in options[0][1], key
     later = build("2026-09-30")
-    assert 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
+    assert 'data-key="week-end"' in later and 'data-key="q-sheila-trust"' in later and 'data-key="q-arrest"' in later and 'data-key="arrest"' in later and 'data-key="police-asking"' in later
     assert 'data-key="q-chatter"' not in later and 'data-key="first-hour"' not in later and 'data-key="q-clock"' in later and 'data-key="first-ask"' in later
     for key, _, options in DAYS["2026-09-30"]["questions"]:
         assert "recommended" in options[0][1], key
