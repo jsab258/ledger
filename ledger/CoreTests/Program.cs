@@ -3691,6 +3691,46 @@ namespace Ledger.CoreTests
             SaveCodec.RestoreMillAgents(jsonR.Replace("\"rung\":4", "\"rung\":\"four\""), millW);
             Check(millV.Get("r77").Rumors[0].OriginRung == -1 && millW.Get("r77").Rumors[0].OriginRung == -1,
                 "a rung that is not a number reads as unknown, not as someone");
+            // A COPY AT NaN OR AN INFINITY IS NOT KEPT (town list 6bw, the
+            // independent check): written bare, it made the save unreadable;
+            // read from a hand-edited save, it was held and told on; and the
+            // two forgettings, the hour's ageing and a discrediting, now take
+            // one, indelible or not.
+            var (millN, _, _) = FreshMill();
+            var ann = new Gossiper("r78", "Ann", new MemoryStore("r78"), new KnowledgeBase(), new SuspicionTracker());
+            ann.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d6", "seen"), Summary = "nan", Confidence = double.NaN, Indelible = true });
+            ann.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d7", "seen"), Summary = "inf", Confidence = double.PositiveInfinity });
+            ann.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d8", "seen"), Summary = "real", Confidence = 0.5 });
+            millN.Add(ann);
+            var jsonN = SaveCodec.Capture(now, new Wallet(10), new Campaign(), new PlayerKnowledge(), new SecretsBook(), new BeatBook(), millN, new DebtBook(), null);
+            var (millN2, _, _) = FreshMill();
+            millN2.Add(new Gossiper("r78", "Ann", new MemoryStore("r78"), new KnowledgeBase(), new SuspicionTracker()));
+            bool nanSaveReads = true;
+            try { SaveCodec.RestoreMillAgents(jsonN, millN2); } catch (Exception) { nanSaveReads = false; }
+            Check(nanSaveReads && millN2.Get("r78").Rumors.Count == 1 && millN2.Get("r78").Rumors[0].Summary == "real",
+                "a copy at NaN or an infinity is never written, so the save reads back");
+            var (millN3, _, _) = FreshMill();
+            millN3.Add(new Gossiper("r78", "Ann", new MemoryStore("r78"), new KnowledgeBase(), new SuspicionTracker()));
+            SaveCodec.RestoreMillAgents(jsonN.Replace("\"conf\":0.5", "\"conf\":\"NaN\""), millN3);
+            Check(millN3.Get("r78").Rumors.Count == 0, "a hand-edited copy at NaN is dropped on reading");
+            var ageMill = new GossipMill(new SocialGraph());
+            var ager = new Gossiper("r79", "Bea", new MemoryStore("r79"), new KnowledgeBase(), new SuspicionTracker());
+            ager.Rumors.Add(new Rumor { Content = new Fact("town", "body_x", "found"), Summary = "b", Confidence = double.NaN, Indelible = true });
+            ager.Rumors.Add(new Rumor { Content = new Fact("town", "row_x", "seen"), Summary = "r", Confidence = double.PositiveInfinity });
+            ager.Rumors.Add(new Rumor { Content = new Fact("town", "real_x", "seen"), Summary = "k", Confidence = 0.5 });
+            ageMill.Add(ager);
+            ageMill.Age(new GameTime(0, 9, 0));
+            ageMill.Age(new GameTime(0, 10, 0));
+            Check(ager.Rumors.Count == 1 && ager.Rumors[0].Summary == "k",
+                "the hour's ageing forgets a copy at NaN or an infinity, indelible or not");
+            var dcMill = new GossipMill(new SocialGraph());
+            var dcHolder = new Gossiper("r80", "Cy", new MemoryStore("r80"), new KnowledgeBase(), new SuspicionTracker());
+            dcHolder.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d9", "seen"), Summary = "n", Confidence = double.NaN, Indelible = true });
+            dcHolder.Rumors.Add(new Rumor { Content = new Fact("player", "night_job_d9", "seen"), Summary = "k", Confidence = 0.9 });
+            dcMill.Add(dcHolder);
+            dcMill.Discredit("player.night_job_d9", null, now);
+            Check(dcHolder.Rumors.Count == 1 && dcHolder.Rumors[0].Summary == "k",
+                "a discrediting forgets a copy at NaN too, indelible or not");
 
             // Open-mode fields are additive: an open city with a Fall behind it
             // must come back exactly, and old saves (no keys) default closed.

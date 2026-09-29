@@ -22,11 +22,13 @@
 // WitnessesDropped 202 to 203, SummariesSaying, SaysWord and IsWordChar 233
 // to 264, Witness 270 to 378 with its rung, Tick 433 to 541 with together as
 // a function argument, Telling, SurestFirst, TellingSlot, TellingSlots and
-// Weigh 559 to 623, and CompareNotes 631 to 724.
+// Weigh 559 to 623 with SameStrength, CompareNotes 631 to 724, and (town
+// list 6bs, 29 September, for the town's hourly rounds in TownRounds.h) Age
+// 1104 to 1131 with RumorHalfLifeHours.
 //
 // OUT OF SCOPE AND NOT HERE, so a reader can tell a missing member from a
 // forgotten one: Forget, PlayerClaims, KnowsSecret, DayCircleHeat, Leads,
-// ExposureOf, Bribe, Intimidate, Discredit, UseHook, Age, HoldsIndelible,
+// ExposureOf, Bribe, Intimidate, Discredit, UseHook, HoldsIndelible,
 // Contain, Backfire, RestoreDiscredited and StrongestSurvivingPlayerLead.
 //
 // SUSPICION IS RAISED AS THE C# RAISES IT since town list 6n: Tick's two
@@ -366,11 +368,12 @@ namespace LedgerCore
 		double MinConfidenceToShare;
 		double ContradictionSuspicion;   // scaled by rumour confidence
 		double LeakSuspicion;            // day NPC hears a night rumour, no prior lie
+		double RumorHalfLifeHours;       // Gossip.cs 1129: Age's half-life
 
 		// Gossip.cs 154.
 		explicit GossipMill(const std::shared_ptr<SocialGraph>& InGraph)
 			: HopDecay(0.8), MinConfidenceToShare(0.2),
-			  ContradictionSuspicion(0.35), LeakSuspicion(0.12),
+			  ContradictionSuspicion(0.35), LeakSuspicion(0.12), RumorHalfLifeHours(96),
 			  Graph(InGraph ? InGraph : std::make_shared<SocialGraph>()),
 			  Offered(0), Dropped(0)
 		{
@@ -519,7 +522,8 @@ namespace LedgerCore
 			// "nothing was offered" and "everything offered was refused"
 			// cannot read the same.
 			Offered++;
-			if (!W) { Dropped++; return; }
+			// A SIGHTING AT NaN IS DROPPED AND COUNTED (town list 6bw).
+			if (!W || IsNaNBits(Confidence)) { Dropped++; return; }
 			Confidence = Clamp(Confidence, 0.0, 1.0);
 			if (Confidence >= 0.95) W->Knowledge->Learn(Content);   // only certainty becomes hard knowledge
 			Rung = Rung < -1 ? -1 : (Rung > 4 ? 4 : Rung);         // C#: Math.Clamp(rung, -1, 4)
@@ -543,7 +547,7 @@ namespace LedgerCore
 				{
 					const RumorPtr& X = W->Rumors[I];
 					if (X->TopicKey() == Topic && X->Content.Value == Content.Value && X->Hops == 0
-					    && (!Own || X->Confidence > Own->Confidence)) Own = X;
+					    && (!Own || NotFiniteBits(Own->Confidence) || X->Confidence > Own->Confidence)) Own = X;
 				}
 				if (!Own)
 				{
@@ -560,11 +564,11 @@ namespace LedgerCore
 					if (bIndelible && !Own->Indelible)
 					{
 						Own->Indelible = true;
-						Own->Confidence = DotNetMax(Own->Confidence, Confidence);
+						Own->Confidence = NotFiniteBits(Own->Confidence) ? Confidence : DotNetMax(Own->Confidence, Confidence);
 						Own->Summary = Summary;
 						if (Own->Confidence >= 0.95) W->Knowledge->Learn(Content);
 					}
-					else if (Confidence > Own->Confidence)
+					else if (Confidence > Own->Confidence || NotFiniteBits(Own->Confidence))   // a copy at NaN gives way (town list 6bw)
 					{
 						Own->Confidence = Confidence;
 						Own->Summary = Summary;
@@ -589,12 +593,12 @@ namespace LedgerCore
 					// is upgraded in place, at whatever certainty the body
 					// carries, rather than sitting alongside as a live maybe.
 					Already->Indelible = true;
-					Already->Confidence = DotNetMax(Already->Confidence, Confidence);
+					Already->Confidence = NotFiniteBits(Already->Confidence) ? Confidence : DotNetMax(Already->Confidence, Confidence);
 					Already->Hops = 0;
 					Already->Summary = Summary;
 					if (Already->Confidence >= 0.95) W->Knowledge->Learn(Content);
 				}
-				else if (Confidence > Already->Confidence)
+				else if (Confidence > Already->Confidence || NotFiniteBits(Already->Confidence))   // a copy at NaN gives way (town list 6bw)
 				{
 					// A clearer second look strengthens a doubtful first one.
 					// This used to drop the repeat on the floor, so no later
@@ -672,6 +676,9 @@ namespace LedgerCore
 					for (std::vector<Told>::size_type RI = 0; RI < Order.size(); ++RI)
 					{
 						const RumorPtr& R = Order[RI].R;
+						// NEVER TOLD AT NaN OR AN INFINITY (town list 6bw); a
+						// copy at either is not held (Gossip.cs NotFinite).
+						if (NotFiniteBits(R->Confidence)) continue;
 						if (R->Confidence < MinConfidenceToShare && !R->Indelible) continue;
 						// Money and hooks buy silence about STORIES. Nobody
 						// keeps a body to themselves because they were paid to.
@@ -681,7 +688,7 @@ namespace LedgerCore
 						// as true as it left. Hop decay is how a story turns
 						// into a maybe; this is not a story.
 						const double Passed = R->Indelible ? R->Confidence : R->Confidence * TieW * HopDecay;
-						if (Passed < MinConfidenceToShare) continue;
+						if (NotFiniteBits(Passed) || Passed < MinConfidenceToShare) continue;   // a tie at NaN passes nothing (town list 6bw)
 
 						// Do not re-tell something the listener already holds
 						// at least as strongly: stops rumours amplifying by
@@ -817,6 +824,7 @@ namespace LedgerCore
 			for (std::vector<Told>::size_type RI = 0; RI < Order.size(); ++RI)
 			{
 				const RumorPtr& R = Order[RI].R;
+				if (NotFiniteBits(R->Confidence)) continue;   // never told at NaN or an infinity, as Tick (town list 6bw)
 				if (R->Content.Subject != "player") continue;
 				if (R->Confidence < MinConfidenceToShare && !R->Indelible) continue;
 				if (!R->Indelible && Partner->SuppressedHas(R->TopicKey())) continue;
@@ -827,7 +835,7 @@ namespace LedgerCore
 				// a witness about a killing gave a weakened copy that could be
 				// talked away, while ordinary talk (Tick) passed it on whole.
 				const double Passed = R->Indelible ? R->Confidence : R->Confidence * TieW * HopDecay;
-				if (Passed < MinConfidenceToShare) continue;
+				if (NotFiniteBits(Passed) || Passed < MinConfidenceToShare) continue;   // as Tick
 				// Value-aware for the same reason as Tick's guard: conflicting
 				// versions must settle, not breed (audit 2026-07-27).
 				Telling Weighed = Weigh(*Checker, *R, Passed);
@@ -1003,16 +1011,24 @@ namespace LedgerCore
 		}
 
 		/// Gossip.cs 614 to 623.
+		/// Gossip.cs 619 to 625. How much stronger a telling must be than what
+		/// the listener holds to be news to them. Not zero: ageing multiplies
+		/// both copies by the same factor, and the same story told again the
+		/// same way then comes out one rounding step stronger about half the
+		/// time, and was taken for news, a copy and a raise each time (town
+		/// list 6bs).
+		static constexpr double SameStrength = 1e-9;
+
 		static Telling Weigh(const Gossiper& Listener, const Rumor& R, double Passed)
 		{
 			const RumorPtr Existing = Listener.BestOfValue(R.TopicKey(), R.Content.Value);
-			if (!Existing || Existing->Confidence < Passed) return Telling::New;
+			if (!Existing || NotFiniteBits(Existing->Confidence) || Existing->Confidence < Passed - SameStrength) return Telling::New;
 			if (R.OriginRung < 4) return Telling::Held;
 			for (std::vector<RumorPtr>::size_type I = 0; I < Listener.Rumors.size(); ++I)
 			{
 				const RumorPtr& X = Listener.Rumors[I];
 				if (X->TopicKey() == R.TopicKey() && X->Content.Value == R.Content.Value
-				    && X->OriginRung >= 4 && X->Confidence >= Passed)
+				    && X->OriginRung >= 4 && !NotFiniteBits(X->Confidence) && X->Confidence >= Passed - SameStrength)
 					return Telling::Held;
 			}
 			return Telling::Quiet;
@@ -1035,11 +1051,48 @@ namespace LedgerCore
 			return false;
 		}
 
+	public:
+		/// Gossip.cs 1104 to 1128. Rumours fade if nobody keeps them alive,
+		/// the "lie low and let it cool" option. Call once per in-game hour;
+		/// confidence decays on a multi-day half-life and spent rumours drop
+		/// out entirely. The town's hourly rounds age the mill (TownRounds.h).
+		void Age(const GameTime& Now)
+		{
+			if (bAged)
+			{
+				const double Hrs = (double)(Now.TotalMinutes() - LastAge.TotalMinutes()) / 60.0;
+				if (Hrs > 0)
+				{
+					const double F = std::pow(0.5, Hrs / RumorHalfLifeHours);
+					for (std::vector<GossiperPtr>::size_type I = 0; I < AgentList.size(); ++I)
+					{
+						std::vector<RumorPtr>& Rs = AgentList[I]->Rumors;
+						// A body does not go cold the way a story does. Lying
+						// low is the answer to talk; it is not the answer to
+						// a corpse.
+						for (std::vector<RumorPtr>::size_type J = 0; J < Rs.size(); ++J)
+						{
+							if (!Rs[J]->Indelible) Rs[J]->Confidence *= F;
+						}
+						// A copy at NaN or an infinity never fades and was
+						// never forgotten: it goes now, indelible or not (town
+						// list 6bw).
+						Rs.erase(std::remove_if(Rs.begin(), Rs.end(), [](const RumorPtr& R)
+							{ return NotFiniteBits(R->Confidence) || (R->Confidence < 0.03 && !R->Indelible); }), Rs.end());
+					}
+				}
+			}
+			LastAge = Now;
+			bAged = true;
+		}
+
 	private:
 		std::shared_ptr<SocialGraph> Graph;
 		std::vector<GossiperPtr>     AgentList;
 		int Offered;
 		int Dropped;
+		GameTime LastAge;        // Gossip.cs 1130 and 1131
+		bool bAged = false;
 
 		static const std::vector<RumorPtr>& SnapshotOf(
 			const std::vector<std::pair<std::string, std::vector<RumorPtr> > >& Snapshot,

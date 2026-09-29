@@ -199,18 +199,23 @@ namespace Ledger.Core
         /// Save-load overlay: value only; the reasons trail restarts.
         public void Restore(double value)
         {
-            Value = Math.Clamp(value, 0.0, 1.0);
+            // A NaN READS AS NONE (town list 6bw): Math.Clamp keeps a NaN, so a
+            // rumour told at NaN left the hearer's suspicion NaN for good, and
+            // the save could not be read back.
+            Value = double.IsNaN(value) ? 0.0 : Math.Clamp(value, 0.0, 1.0);
             Note(0.0, "(restored from save)", showMove: false);
         }
 
         public void Raise(double amount, string reason)
         {
+            if (double.IsNaN(amount) || double.IsInfinity(amount)) return;   // moves nothing, and notes nothing (town list 6bw)
             Value = Math.Clamp(Value + amount, 0.0, 1.0);
             Note(amount, reason);
         }
 
         public void Lower(double amount, string reason)
         {
+            if (double.IsNaN(amount) || double.IsInfinity(amount)) return;   // as Raise
             Value = Math.Clamp(Value - amount, 0.0, 1.0);
             Note(-amount, reason);
         }

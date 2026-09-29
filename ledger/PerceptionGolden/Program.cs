@@ -106,6 +106,12 @@ namespace Ledger.PerceptionGolden
             EmitBestNaN(sb);
             EmitSuspicionSave(sb);
             EmitHopsWrap(sb);
+            // Town list 6bw, 29 September: a rumour at NaN goes nowhere, in both engines.
+            EmitNaNGuard(sb);
+            // Ported to TownRounds.h and Gossip.h (Age, Weigh's SameStrength) on 29 September
+            // (town list 6bs), with the port's own rows for TownHours.
+            EmitTownRounds(sb);
+            EmitTownHours(sb);
             // The same reviewer's seeded gossip generator, as a family of rows (GossipFuzz.cs; its C++ twin is GossipFuzz.h).
             GossipFuzz.Emit(sb);
 
@@ -121,7 +127,6 @@ namespace Ledger.PerceptionGolden
                 EmitTownNews(sb);
                 EmitPoliceAsked(sb);
                 EmitTaken(sb);
-                EmitTownRounds(sb);
             }
 
             var text = sb.ToString();
@@ -576,15 +581,68 @@ namespace Ledger.PerceptionGolden
                     }
         }
 
-        /// THE TOWN TALKS BY ITS ROUTINES (town list 6bs), awaiting the port: a
+        /// THE TOWN TALKS BY ITS ROUTINES (town list 6bs), ported 29 September: a
         /// story's holders and their confidence after each hour of TownRounds.Hour
         /// on a small cast, with nobody, one or both of a pair on the street; and
         /// how many hours CatchUp runs.
+        const string TownRoundsCastJson = "{\"talk_range_m\":6,\"places\":{\"cafe\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                    "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[11,\"quay\"]]},{\"id\":\"q\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[10,\"quay\"]]}," +
+                    "{\"id\":\"r\",\"routine\":[[0,\"off\"],[11,\"quay\"]]}],\"ties\":[[\"p\",\"q\",0.8],[\"q\",\"r\",0.8]]}";
+
+        /// THE HOURS THE TOWN HAS TALKED (town list 6bs; the port's own rows,
+        /// 29 September): TownHours.RunTo over a run of calls on
+        /// EmitTownRounds' small cast, and after each call how many hours it
+        /// ran, the hour next and each person's copy of the row: the first
+        /// call runs only the hour now, the same hour again nothing, a jump
+        /// the hours skipped with nobody on the street and then the hour now
+        /// with the street as given, an earlier time nothing; the hours kept
+        /// through ToJson and FromJson before the fourth call. And FromJson
+        /// over saves good and bad.
+        static readonly (long At, string Street)[] TownHoursCalls =
+        {
+            (9 * 60 + 10, "none"), (9 * 60 + 50, "none"), (12 * 60 + 5, "pq"), (11 * 60, "none"),
+            (13 * 60 + 30, "p"), (24 * 60 + 9 * 60, "none"), (24 * 60 + 9 * 60 + 59, "pq"),
+        };
+
+        static void EmitTownHours(StringBuilder sb)
+        {
+            for (int n = 0; n < TownHoursCalls.Length; n++)
+            {
+                var rc = CastDay.Parse(TownRoundsCastJson);
+                var graph = new SocialGraph();
+                foreach (var (a, b, w) in rc.Ties) graph.Link(a, b, w);
+                var m = new GossipMill(graph);
+                foreach (var id in rc.People) m.Add(Ag(id));
+                m.Witness("p", new Fact(TownNews.Subject, "a_row", "seen"), "somebody had words in the cafe", false, new GameTime(0, 9, 0), 0.9);
+                var t = new TownHours();
+                int ran = 0;
+                for (int i = 0; i <= n; i++)
+                {
+                    if (i == 3) t = TownHours.FromJson(MiniJson.Deserialize(MiniJson.Serialize(t.ToJson())) as Dictionary<string, object>);
+                    var street = TownHoursCalls[i].Street;
+                    Func<string, bool> onStreet = street == "none" ? null : (Func<string, bool>)(id => street.Contains(id));
+                    ran = t.RunTo(m, rc, GameTime.FromTotalMinutes(TownHoursCalls[i].At), onStreet);
+                }
+                Row(sb, "TownHoursRun", n.ToString(Inv), ran.ToString(Inv), t.NextHour.ToString(Inv),
+                    string.Join(";", rc.People.Select(id =>
+                    {
+                        var r = m.Get(id).Rumors.Find(x => x.Content.Predicate == "a_row");
+                        return id + ":" + (r == null ? "none" : D(r.Confidence) + ":" + r.Hops.ToString(Inv));
+                    })));
+            }
+            foreach (var saved in new[] { "{\"next\":5}", "{\"next\":-1}", "{\"next\":-2}", "{\"next\":9999999}", "{\"next\":10000000}",
+                                          "{\"next\":2.5}", "{\"next\":\"5\"}", "{\"next\":true}", "{}", "{\"next\":5,\"next\":7}",
+                                          "{\"next\":1e3}", "{\"next\":-0.0}", "[5]", "not json" })
+            {
+                object d;
+                try { d = MiniJson.Deserialize(saved); } catch (Exception) { d = null; }
+                Row(sb, "TownHoursJson", Esc(saved), TownHours.FromJson(d as Dictionary<string, object>).NextHour.ToString(Inv));
+            }
+        }
+
         static void EmitTownRounds(StringBuilder sb)
         {
-            var rc = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"cafe\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
-                    "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[11,\"quay\"]]},{\"id\":\"q\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[10,\"quay\"]]}," +
-                    "{\"id\":\"r\",\"routine\":[[0,\"off\"],[11,\"quay\"]]}],\"ties\":[[\"p\",\"q\",0.8],[\"q\",\"r\",0.8]]}");
+            var rc = CastDay.Parse(TownRoundsCastJson);
             foreach (var (name, onStreet) in new (string, Func<string, bool>)[] { ("none", null), ("p", (Func<string, bool>)(id => id == "p")), ("pq", (Func<string, bool>)(id => id == "p" || id == "q")) })
             {
                 var graph = new SocialGraph();
@@ -1083,6 +1141,121 @@ namespace Ledger.PerceptionGolden
                     string.Join(";", mill.Get("w").Rumors.Select(r => Esc(r.Summary) + ":" + r.Hops.ToString(Inv) + ":" + D(r.Confidence))));
             }
         }
+
+        /// A RUMOUR AT NaN GOES NOWHERE (town list 6bw):
+        ///   suspicion - Raise and Lower by amounts not finite move nothing;
+        ///               Restore reads NaN as 0 and infinity clamped
+        ///   witness   - a sighting at NaN is dropped and counted; a real one after it is filed
+        ///   talk, asked - a copy at NaN (plain, indelible) is never told, in
+        ///               talk (Tick) or when asked (CompareNotes), and a real
+        ///               copy held beside it still is
+        static void EmitNaNGuard(StringBuilder sb)
+        {
+            var s = new SuspicionTracker();
+            var after = new List<string>();
+            s.Raise(0.3, "a"); after.Add(D(s.Value));
+            s.Raise(double.NaN, "b"); after.Add(D(s.Value));
+            s.Lower(double.PositiveInfinity, "c"); after.Add(D(s.Value));
+            s.Raise(double.NegativeInfinity, "d"); after.Add(D(s.Value));
+            s.Lower(double.NaN, "e"); after.Add(D(s.Value));
+            s.Raise(double.PositiveInfinity, "f"); after.Add(D(s.Value));
+            s.Restore(double.NaN); after.Add(D(s.Value));
+            s.Restore(double.PositiveInfinity); after.Add(D(s.Value));
+            s.Restore(double.NegativeInfinity); after.Add(D(s.Value));
+            Row(sb, "NaNGuard", "suspicion", string.Join(",", after));
+
+            var win = new Fact("player", "window_d1", "seen");
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Ag("w"));
+                mill.Witness("w", win, "nan", true, new GameTime(1, 23, 0), double.NaN);
+                var first = mill.WitnessesOffered.ToString(Inv) + ":" + mill.WitnessesDropped.ToString(Inv) + ":" + mill.Get("w").Rumors.Count.ToString(Inv);
+                mill.Witness("w", win, "real", true, new GameTime(1, 23, 1), 0.6);
+                Row(sb, "NaNGuard", "witness", first,
+                    mill.WitnessesOffered.ToString(Inv) + ":" + mill.WitnessesDropped.ToString(Inv) + ":" + mill.Get("w").Rumors.Count.ToString(Inv));
+            }
+            foreach (var asked in new[] { false, true })
+                foreach (var held in new[] { "plain", "indelible", "beside" })
+                {
+                    var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                    var mill = new GossipMill(g);
+                    mill.Add(Ag("s")); mill.Add(Ag("l"));
+                    mill.Get("s").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = "nan", Confidence = double.NaN, Hops = 1,
+                        Sensitive = true, Indelible = held == "indelible" });
+                    if (held == "beside")
+                        mill.Get("s").Rumors.Add(new Rumor { Content = win, OriginId = "y", Summary = "real", Confidence = 0.8, Hops = 1, Sensitive = true });
+                    var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                    var l = mill.Get("l");
+                    Row(sb, "NaNGuard", asked ? "asked" : "talk", held, ev.Count.ToString(Inv),
+                        l.Rumors.Count == 0 ? "none" : string.Join(";", l.Rumors.Select(r => Esc(r.Summary) + ":" + D(r.Confidence))), D(l.Suspicion.Value));
+                }
+
+            // A COPY AT NaN OR AN INFINITY IS NOT HELD (the independent check of 6bw):
+            //   heldTalk, heldAsked - the listener's copy at NaN or +infinity does not stand in the way of a real telling
+            //   over     - a sighting over the witness's own copy at NaN: plain, indelible, with a rung
+            //   tieTalk, tieAsked - a tie at NaN passes nothing
+            //   age      - the hour's ageing forgets copies at NaN and infinity, indelible or not
+            //   saved    - a save's copy at "NaN", 1e999 or -1e999 is dropped on reading
+            foreach (var asked in new[] { false, true })
+                foreach (var held in new[] { "nan", "inf" })
+                {
+                    var g = new SocialGraph(); g.Link("s", "l", 0.9);
+                    var mill = new GossipMill(g);
+                    mill.Add(Ag("s")); mill.Add(Ag("l"));
+                    mill.Get("l").Rumors.Add(new Rumor { Content = win, OriginId = "x", Summary = held,
+                        Confidence = held == "nan" ? double.NaN : double.PositiveInfinity, Hops = 1, Sensitive = true });
+                    mill.Get("s").Rumors.Add(new Rumor { Content = win, OriginId = "y", Summary = "real", Confidence = 0.8, Hops = 1, Sensitive = true });
+                    var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                    Row(sb, "NaNGuard", asked ? "heldAsked" : "heldTalk", held, ev.Count.ToString(Inv), NaNGuardCopies(mill.Get("l")), D(mill.Get("l").Suspicion.Value));
+                }
+            foreach (var kind in new[] { "plain", "indelible", "rung" })
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Ag("w"));
+                mill.Get("w").Rumors.Add(new Rumor { Content = win, OriginId = "w", Summary = "nan", Confidence = double.NaN, Hops = 0,
+                    Sensitive = true, OriginRung = kind == "rung" ? 1 : -1 });
+                mill.Witness("w", win, "mine", true, new GameTime(1, 23, 0), kind == "indelible" ? 1.0 : 0.6, kind == "indelible", kind == "rung" ? 2 : -1);
+                Row(sb, "NaNGuard", "over", kind, NaNGuardCopies(mill.Get("w")));
+            }
+            foreach (var asked in new[] { false, true })
+            {
+                var g = new SocialGraph(); g.Link("s", "l", double.NaN);
+                var mill = new GossipMill(g);
+                mill.Add(Ag("s")); mill.Add(Ag("l"));
+                mill.Get("s").Rumors.Add(new Rumor { Content = win, OriginId = "y", Summary = "real", Confidence = 0.8, Hops = 1, Sensitive = true });
+                var ev = asked ? mill.CompareNotes("l", "s", new GameTime(1, 23, 6)) : mill.Tick(new GameTime(1, 23, 6), (x, y) => true);
+                Row(sb, "NaNGuard", asked ? "tieAsked" : "tieTalk", ev.Count.ToString(Inv), NaNGuardCopies(mill.Get("l")), D(mill.Get("l").Suspicion.Value));
+            }
+            {
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Ag("a"));
+                foreach (var (name, c, ind) in new[] { ("nan", double.NaN, false), ("nanBody", double.NaN, true), ("inf", double.PositiveInfinity, false),
+                                                       ("infBody", double.PositiveInfinity, true), ("real", 0.5, false), ("body", 1.0, true) })
+                    mill.Get("a").Rumors.Add(new Rumor { Content = new Fact("town", name, "x"), Summary = name, Confidence = c, Indelible = ind });
+                mill.Age(new GameTime(0, 9, 0));
+                var first = NaNGuardCopies(mill.Get("a"));
+                mill.Age(new GameTime(0, 10, 0));
+                Row(sb, "NaNGuard", "age", first, NaNGuardCopies(mill.Get("a")));
+            }
+            {
+                const string fixture = "{\"agents\":[{\"id\":\"s0\",\"rumors\":["
+                    + "{\"subj\":\"player\",\"pred\":\"window_d1\",\"val\":\"seen\",\"origin\":\"x\",\"summary\":\"nan\",\"conf\":\"NaN\",\"hops\":1},"
+                    + "{\"subj\":\"player\",\"pred\":\"window_d1\",\"val\":\"seen\",\"origin\":\"x\",\"summary\":\"inf\",\"conf\":1e999,\"hops\":1},"
+                    + "{\"subj\":\"player\",\"pred\":\"window_d1\",\"val\":\"seen\",\"origin\":\"x\",\"summary\":\"ninf\",\"conf\":-1e999,\"hops\":1},"
+                    + "{\"subj\":\"player\",\"pred\":\"window_d1\",\"val\":\"seen\",\"origin\":\"x\",\"summary\":\"real\",\"conf\":0.4,\"hops\":1}"
+                    + "]}]}";
+                var mill = new GossipMill(new SocialGraph());
+                mill.Add(Ag("s0"));
+                SaveCodec.RestoreMillAgents(fixture, mill);
+                Row(sb, "NaNGuard", "saved", Esc(fixture), NaNGuardCopies(mill.Get("s0")));
+            }
+        }
+
+        /// Each copy as summary:confidence:hops:indelible:rung, a confidence that
+        /// is not finite written "notFinite" (so no row carries an infinity).
+        static string NaNGuardCopies(Gossiper g) => g.Rumors.Count == 0 ? "none" : string.Join(";", g.Rumors.Select(r =>
+            Esc(r.Summary) + ":" + (GossipMill.NotFinite(r.Confidence) ? "notFinite" : D(r.Confidence)) + ":" + r.Hops.ToString(Inv)
+            + ":" + (r.Indelible ? "1" : "0") + ":" + r.OriginRung.ToString(Inv)));
 
         /// A HOP COUNT AT int.MaxValue, TOLD ON (the independent reviewer, 29
         /// September). A save can carry it (GetInt saturates "hops":1e18 to

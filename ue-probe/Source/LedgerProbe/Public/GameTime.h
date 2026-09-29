@@ -13,10 +13,11 @@
 // right until the crime encounter needed a witness's memory to survive a save
 // and a reload: the save format is the memory markdown, reading it back means
 // reading "D2 19:40" back, and that is this function. What is still not here
-// is named here instead. NO SLOTS: TimeSlot, FromTotalMinutes, AddMinutes,
-// HoursUntil, Slot, CompareTo, Equals and GetHashCode are not ported, because
-// nothing the crime run does reads them and a member ported without a caller
-// is a member nobody checks.
+// is named here instead. NO SLOTS: TimeSlot, HoursUntil, Slot, CompareTo,
+// Equals and GetHashCode are not ported, because nothing the crime run does
+// reads them and a member ported without a caller is a member nobody checks.
+// FromTotalMinutes and AddMinutes are, from 29 September, for the town's
+// hourly rounds (TownRounds.h).
 //
 // NO UNREAL TYPE IS IN THIS FILE, deliberately, and it is the standing rule
 // from 25 August rather than a preference: measurement arithmetic and
@@ -55,6 +56,18 @@ namespace LedgerCore
 		{
 			return ((long long)Day * 24 + Hour) * 60 + Minute;
 		}
+
+		// GameTime.cs 34 to 41, for the town's hourly rounds (TownRounds.h,
+		// town list 6bs). C#'s long / and % truncate toward zero, as C++'s
+		// do, so a negative total gives a negative hour and minute in both.
+		static GameTime FromTotalMinutes(long long Total)
+		{
+			const long long D = Total / (24 * 60);
+			const long long Rem = Total % (24 * 60);
+			return GameTime((int)D, (int)(Rem / 60), (int)(Rem % 60));
+		}
+
+		GameTime AddMinutes(int Minutes) const { return FromTotalMinutes(TotalMinutes() + Minutes); }
 
 		// GameTime.cs 51: $"D{Day} {Hour:D2}:{Minute:D2}".
 		//

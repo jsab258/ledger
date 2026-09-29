@@ -50,6 +50,7 @@
 #include "StreetVoice.h"
 #include "Suspecting.h"
 #include "Suspicion.h"
+#include "TownRounds.h"
 
 #include <cstdio>
 #include <cstdlib>
@@ -1538,6 +1539,21 @@ namespace Golden
 		return Out;
 	}
 
+	/// PerceptionGolden's NaNGuardCopies: each copy as
+	/// summary:confidence:hops:indelible:rung, "notFinite" for NaN or an infinity.
+	inline std::string NaNGuardCopies(const GossiperPtr& G)
+	{
+		if (!G || G->Rumors.empty()) return "none";
+		std::string Out;
+		for (std::vector<RumorPtr>::size_type Q = 0; Q < G->Rumors.size(); ++Q)
+		{
+			const RumorPtr& R = G->Rumors[Q];
+			Out += (Q ? ";" : "") + Escape(R->Summary) + ":" + (NotFiniteBits(R->Confidence) ? std::string("notFinite") : FromDouble(R->Confidence))
+			     + ":" + FromInt(R->Hops) + ":" + (R->Indelible ? "1" : "0") + ":" + FromInt(R->OriginRung);
+		}
+		return Out;
+	}
+
 	inline Answer ReviewRow(const std::vector<std::string>& F)
 	{
 		Answer A;
@@ -1674,6 +1690,146 @@ namespace Golden
 			Outs.push_back(FromInt((long long)Ev.size()));
 			Outs.push_back(Heard ? FromInt(Heard->Hops) : std::string("none"));
 		}
+		// A rumour at NaN goes nowhere (town list 6bw): the tracker's
+		// amounts not finite, a sighting at NaN, and a copy at NaN in talk
+		// and when asked.
+		else if (Fn == "NaNGuard" && F.size() >= 3 && F[1] == "suspicion")
+		{
+			const double Inf = std::numeric_limits<double>::infinity();
+			SuspicionTracker S;
+			std::string After;
+			auto Note = [&S, &After]() { After += (After.empty() ? "" : ",") + FromDouble(S.Value()); };
+			S.Raise(0.3, "a"); Note();
+			S.Raise(NaN, "b"); Note();
+			S.Lower(Inf, "c"); Note();
+			S.Raise(-Inf, "d"); Note();
+			S.Lower(NaN, "e"); Note();
+			S.Raise(Inf, "f"); Note();
+			S.Restore(NaN); Note();
+			S.Restore(Inf); Note();
+			S.Restore(-Inf); Note();
+			Outs.push_back(After);
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 4 && F[1] == "witness")
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("w"));
+			auto Counts = [&Mill]() { return FromInt(Mill.WitnessesOffered()) + ":" + FromInt(Mill.WitnessesDropped()) + ":" + FromInt((long long)Mill.Get("w")->Rumors.size()); };
+			Mill.Witness("w", Window, "nan", true, GameTime(1, 23, 0), NaN);
+			Outs.push_back(Counts());
+			Mill.Witness("w", Window, "real", true, GameTime(1, 23, 1), 0.6);
+			Outs.push_back(Counts());
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 6 && (F[1] == "talk" || F[1] == "asked")
+		         && (F[2] == "plain" || F[2] == "indelible" || F[2] == "beside"))
+		{
+			First = 3;
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Nan = std::make_shared<Rumor>(Window);
+			Nan->OriginId = "x"; Nan->Summary = "nan"; Nan->Confidence = NaN; Nan->Hops = 1;
+			Nan->Sensitive = true; Nan->Indelible = F[2] == "indelible";
+			Mill.Get("s")->Rumors.push_back(Nan);
+			if (F[2] == "beside")
+			{
+				RumorPtr Real = std::make_shared<Rumor>(Window);
+				Real->OriginId = "y"; Real->Summary = "real"; Real->Confidence = 0.8; Real->Hops = 1; Real->Sensitive = true;
+				Mill.Get("s")->Rumors.push_back(Real);
+			}
+			const std::vector<GossipEvent> Ev = F[1] == "asked"
+				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
+				: Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			const GossiperPtr L = Mill.Get("l");
+			std::string Held;
+			for (std::vector<RumorPtr>::size_type Q = 0; Q < L->Rumors.size(); ++Q)
+			{
+				Held += (Q ? ";" : "") + Escape(L->Rumors[Q]->Summary) + ":" + FromDouble(L->Rumors[Q]->Confidence);
+			}
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(Held.empty() ? std::string("none") : Held);
+			Outs.push_back(FromDouble(L->Suspicion.Value()));
+		}
+		// A copy at NaN or an infinity is not held (the independent check of
+		// 6bw): the listener's, a witness's own, a tie at NaN, the ageing and
+		// a save.
+		else if (Fn == "NaNGuard" && F.size() >= 6 && (F[1] == "heldTalk" || F[1] == "heldAsked") && (F[2] == "nan" || F[2] == "inf"))
+		{
+			First = 3;
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", 0.9);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Held = std::make_shared<Rumor>(Window);
+			Held->OriginId = "x"; Held->Summary = F[2]; Held->Hops = 1; Held->Sensitive = true;
+			Held->Confidence = F[2] == "nan" ? NaN : std::numeric_limits<double>::infinity();
+			Mill.Get("l")->Rumors.push_back(Held);
+			RumorPtr Real = std::make_shared<Rumor>(Window);
+			Real->OriginId = "y"; Real->Summary = "real"; Real->Confidence = 0.8; Real->Hops = 1; Real->Sensitive = true;
+			Mill.Get("s")->Rumors.push_back(Real);
+			const std::vector<GossipEvent> Ev = F[1] == "heldAsked"
+				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
+				: Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(NaNGuardCopies(Mill.Get("l")));
+			Outs.push_back(FromDouble(Mill.Get("l")->Suspicion.Value()));
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 4 && F[1] == "over" && (F[2] == "plain" || F[2] == "indelible" || F[2] == "rung"))
+		{
+			First = 3;
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("w"));
+			RumorPtr Nan = std::make_shared<Rumor>(Window);
+			Nan->OriginId = "w"; Nan->Summary = "nan"; Nan->Confidence = NaN; Nan->Hops = 0; Nan->Sensitive = true;
+			Nan->OriginRung = F[2] == "rung" ? 1 : -1;
+			Mill.Get("w")->Rumors.push_back(Nan);
+			Mill.Witness("w", Window, "mine", true, GameTime(1, 23, 0), F[2] == "indelible" ? 1.0 : 0.6, F[2] == "indelible", F[2] == "rung" ? 2 : -1);
+			Outs.push_back(NaNGuardCopies(Mill.Get("w")));
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 5 && (F[1] == "tieTalk" || F[1] == "tieAsked"))
+		{
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("s", "l", NaN);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("s")); Mill.Add(RungAgent("l"));
+			RumorPtr Real = std::make_shared<Rumor>(Window);
+			Real->OriginId = "y"; Real->Summary = "real"; Real->Confidence = 0.8; Real->Hops = 1; Real->Sensitive = true;
+			Mill.Get("s")->Rumors.push_back(Real);
+			const std::vector<GossipEvent> Ev = F[1] == "tieAsked"
+				? Mill.CompareNotes("l", "s", GameTime(1, 23, 6))
+				: Mill.Tick(GameTime(1, 23, 6), AlwaysTogether);
+			Outs.push_back(FromInt((long long)Ev.size()));
+			Outs.push_back(NaNGuardCopies(Mill.Get("l")));
+			Outs.push_back(FromDouble(Mill.Get("l")->Suspicion.Value()));
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 4 && F[1] == "age")
+		{
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("a"));
+			const double Inf = std::numeric_limits<double>::infinity();
+			const char* const Names[6] = { "nan", "nanBody", "inf", "infBody", "real", "body" };
+			const double Conf[6] = { NaN, NaN, Inf, Inf, 0.5, 1.0 };
+			const bool Body[6] = { false, true, false, true, false, true };
+			for (int Q = 0; Q < 6; ++Q)
+			{
+				RumorPtr R = std::make_shared<Rumor>(Fact("town", Names[Q], "x"));
+				R->Summary = Names[Q]; R->Confidence = Conf[Q]; R->Indelible = Body[Q];
+				Mill.Get("a")->Rumors.push_back(R);
+			}
+			Mill.Age(GameTime(0, 9, 0));
+			Outs.push_back(NaNGuardCopies(Mill.Get("a")));
+			Mill.Age(GameTime(0, 10, 0));
+			Outs.push_back(NaNGuardCopies(Mill.Get("a")));
+		}
+		else if (Fn == "NaNGuard" && F.size() >= 4 && F[1] == "saved")
+		{
+			First = 3;
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Mill.Add(RungAgent("s0"));
+			Save::RestoreMillAgents(Unescape(F[2]), Mill);
+			Outs.push_back(NaNGuardCopies(Mill.Get("s0")));
+		}
 		else
 		{
 			return A;
@@ -1685,7 +1841,7 @@ namespace Golden
 
 	inline bool IsReviewRow(const std::string& Fn)
 	{
-		return Fn == "BestNaN" || Fn == "SuspicionSave" || Fn == "HopsWrap";
+		return Fn == "BestNaN" || Fn == "SuspicionSave" || Fn == "HopsWrap" || Fn == "NaNGuard";
 	}
 
 	/// GossipFuzz|scenario|seed|nan|hash|lines and GossipFuzz|save|seed|hash|lines.
@@ -1714,6 +1870,158 @@ namespace Golden
 		std::vector<std::string> Outs;
 		Outs.push_back(Dg.Hash == F[First] ? Dg.Hash : "hash-differs:" + Dg.Hash);
 		Outs.push_back(FromInt(Dg.Lines));
+		A.Known = true;
+		A.Got = MultiAnswer(F, First, Outs);
+		return A;
+	}
+
+	// ---- the town's hourly rounds (town list 6bs, 29 September) ------
+	//
+	// PerceptionGolden's EmitTownRounds and EmitTownHours, built again here
+	// the same way; a row's state is rebuilt from the start, as the C# built
+	// it in one run.
+
+	inline const char* TownRoundsCastJson()
+	{
+		return "{\"talk_range_m\":6,\"places\":{\"cafe\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}},"
+		       "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[11,\"quay\"]]},{\"id\":\"q\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[10,\"quay\"]]},"
+		       "{\"id\":\"r\",\"routine\":[[0,\"off\"],[11,\"quay\"]]}],\"ties\":[[\"p\",\"q\",0.8],[\"q\",\"r\",0.8]]}";
+	}
+
+	/// The small cast, and a mill of its people with the row seen by p at
+	/// nine in the morning.
+	inline bool TownRoundsWorld(CastDay& Cast, std::shared_ptr<GossipMill>& Mill)
+	{
+		std::string Err;
+		if (!CastDay::Parse(TownRoundsCastJson(), Cast, Err)) return false;
+		std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+		for (const CastDay::Tie& T : Cast.Ties()) Gr->Link(T.A, T.B, T.W);
+		Mill = std::make_shared<GossipMill>(Gr);
+		for (const std::string& Id : Cast.People()) Mill->Add(RungAgent(Id));
+		Mill->Witness("p", Fact("town", "a_row", "seen"), "somebody had words in the cafe", false, GameTime(0, 9, 0), 0.9);
+		return true;
+	}
+
+	/// Rumors.Find(x => x.Content.Predicate == predicate)
+	inline RumorPtr FirstWithPredicate(const GossiperPtr& G, const std::string& Predicate)
+	{
+		for (std::vector<RumorPtr>::size_type I = 0; G && I < G->Rumors.size(); ++I)
+		{
+			if (G->Rumors[I]->Content.Predicate == Predicate) return G->Rumors[I];
+		}
+		return RumorPtr();
+	}
+
+	inline Answer TownRoundsRow(const std::vector<std::string>& F)
+	{
+		Answer A;
+		const std::string& Fn = F[0];
+		std::vector<std::string> Outs;
+		std::vector<std::string>::size_type First = 2;
+		// TownRoundsHour|street|hour|id|passed|confidence|hops (or null):
+		// the hours from nine to this one, with nobody, p, or p and q on the street.
+		if (Fn == "TownRoundsHour" && F.size() >= 6 && (F[1] == "none" || F[1] == "p" || F[1] == "pq"))
+		{
+			First = 4;
+			const int H = std::atoi(F[2].c_str());
+			CastDay Cast;
+			std::shared_ptr<GossipMill> Mill;
+			if (!TownRoundsWorld(Cast, Mill)) return A;
+			const std::string Street = F[1];
+			TownRounds::OnStreetFn OnStreet;
+			if (Street == "p") OnStreet = [](const std::string& Id) { return Id == "p"; };
+			if (Street == "pq") OnStreet = [](const std::string& Id) { return Id == "p" || Id == "q"; };
+			int Passed = 0;
+			for (int Hr = 9; Hr <= H; ++Hr) Passed = TownRounds::Hour(Mill.get(), &Cast, GameTime(0, Hr, 0), OnStreet);
+			if (!Mill->Get(F[3])) return A;
+			const RumorPtr R = FirstWithPredicate(Mill->Get(F[3]), "a_row");
+			Outs.push_back(FromInt(Passed));
+			if (R) { Outs.push_back(FromDouble(R->Confidence)); Outs.push_back(FromInt(R->Hops)); }
+			else { Outs.push_back("null"); }
+		}
+		// TownRoundsAged|k|b's copies|b's suspicion|b's first copy|the body:
+		// a pair who meet every hour, ageing between, and a body beside it.
+		else if (Fn == "TownRoundsAged" && F.size() >= 6)
+		{
+			const int K = std::atoi(F[1].c_str());
+			std::shared_ptr<SocialGraph> Gr = std::make_shared<SocialGraph>();
+			Gr->Link("a", "b", 0.8);
+			GossipMill Mill(Gr);
+			Mill.Add(RungAgent("a"));
+			Mill.Add(RungAgent("b"));
+			Mill.Witness("a", Fact("player", "night_walk", "seen"), "the new owner out late", true, GameTime(0, 9, 0), 0.9);
+			RumorPtr Body = std::make_shared<Rumor>(Fact("town", "body_quay", "found"));
+			Body->Summary = "a body on the quay";
+			Body->Confidence = 1.0;
+			Body->Indelible = true;
+			Mill.Get("a")->Rumors.push_back(Body);
+			for (int Q = 0; Q <= K; ++Q)
+			{
+				Mill.Tick(GameTime::FromTotalMinutes(540 + Q * 60));
+				Mill.Age(GameTime::FromTotalMinutes(600 + Q * 60));
+			}
+			const GossiperPtr Bg = Mill.Get("b");
+			RumorPtr BodyNow;
+			for (std::vector<RumorPtr>::size_type I = 0; I < Mill.Get("a")->Rumors.size() && !BodyNow; ++I)
+			{
+				if (Mill.Get("a")->Rumors[I]->Indelible) BodyNow = Mill.Get("a")->Rumors[I];
+			}
+			Outs.push_back(FromInt((long long)Bg->Rumors.size()));
+			Outs.push_back(FromDouble(Bg->Suspicion.Value()));
+			Outs.push_back(!Bg->Rumors.empty() ? FromDouble(Bg->Rumors[0]->Confidence) : std::string("none"));
+			Outs.push_back(BodyNow ? FromDouble(BodyNow->Confidence) : std::string("gone"));
+		}
+		// TownRoundsCatchUp|from|to|hours run, on a mill of nobody.
+		else if (Fn == "TownRoundsCatchUp" && F.size() >= 4)
+		{
+			First = 3;
+			CastDay Cast;
+			std::string Err;
+			if (!CastDay::Parse(TownRoundsCastJson(), Cast, Err)) return A;
+			GossipMill Mill(std::make_shared<SocialGraph>());
+			Outs.push_back(FromInt(TownRounds::CatchUp(&Mill, &Cast,
+				GameTime::FromTotalMinutes(std::atoll(F[1].c_str())), GameTime::FromTotalMinutes(std::atoll(F[2].c_str())))));
+		}
+		// TownHoursRun|call|hours run|next|each person's copy, after calls 0 to call.
+		else if (Fn == "TownHoursRun" && F.size() >= 5)
+		{
+			static const long long At[] = { 9 * 60 + 10, 9 * 60 + 50, 12 * 60 + 5, 11 * 60, 13 * 60 + 30, 24 * 60 + 9 * 60, 24 * 60 + 9 * 60 + 59 };
+			static const char* const Street[] = { "none", "none", "pq", "none", "p", "none", "pq" };
+			const int N = std::atoi(F[1].c_str());
+			if (N < 0 || N >= 7) return A;
+			CastDay Cast;
+			std::shared_ptr<GossipMill> Mill;
+			if (!TownRoundsWorld(Cast, Mill)) return A;
+			TownHours T;
+			int Ran = 0;
+			for (int I = 0; I <= N; ++I)
+			{
+				if (I == 3) T = TownHours::FromJson(T.ToJson());
+				const std::string S = Street[I];
+				TownRounds::OnStreetFn OnStreet;
+				if (S != "none") OnStreet = [S](const std::string& Id) { return S.find(Id) != std::string::npos; };
+				Ran = T.RunTo(Mill.get(), &Cast, GameTime::FromTotalMinutes(At[I]), OnStreet);
+			}
+			std::string Copies;
+			for (std::vector<std::string>::size_type I = 0; I < Cast.People().size(); ++I)
+			{
+				const std::string& Id = Cast.People()[I];
+				const RumorPtr R = FirstWithPredicate(Mill->Get(Id), "a_row");
+				Copies += (I ? ";" : "") + Id + ":" + (R ? FromDouble(R->Confidence) + ":" + FromInt(R->Hops) : std::string("none"));
+			}
+			Outs.push_back(FromInt(Ran));
+			Outs.push_back(FromInt(T.NextHour()));
+			Outs.push_back(Copies);
+		}
+		// TownHoursJson|a save|the hour it gives.
+		else if (Fn == "TownHoursJson" && F.size() >= 3)
+		{
+			Outs.push_back(FromInt(TownHours::FromJson(Unescape(F[1])).NextHour()));
+		}
+		else
+		{
+			return A;
+		}
 		A.Known = true;
 		A.Got = MultiAnswer(F, First, Outs);
 		return A;
@@ -2484,6 +2792,12 @@ namespace Golden
 		else if (IsReviewRow(Fn))
 		{
 			A = ReviewRow(F);
+		}
+		// THE TOWN'S HOURLY ROUNDS (town list 6bs): TownRounds.h.
+		else if (Fn == "TownRoundsHour" || Fn == "TownRoundsAged" || Fn == "TownRoundsCatchUp"
+		         || Fn == "TownHoursRun" || Fn == "TownHoursJson")
+		{
+			A = TownRoundsRow(F);
 		}
 		else if (Fn == "GossipFuzz")
 		{
