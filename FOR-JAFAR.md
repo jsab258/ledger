@@ -5,22 +5,22 @@ session's own dated summary, under 200 words. Earlier summaries are in git;
 everything before 24 September afternoon is in
 production/archive/FOR-JAFAR-to-2026-09-24.md.
 
-## Overview (Tuesday 29 September, 19:00)
+## Overview (Tuesday 29 September, 20:00)
 
 ### Needs you
 
 1. **[Cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi)** (builder): C: is at 49.7 GB, under your 60, and dips to 33 while the build machine builds. Two groups: Unreal's cache moved to drive F (12.1 GB) and a spare project copy a helper left (2.4 GB). Recommended: yes to both.
 2. **[Wednesday's page](https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGAJ)** (builder): the street by day and at night, as whole frames; Darren with a man's haircut, the reviewer's notes beside it; two calls: hair, and the name plates' font licence. Recommended: yes to both frames and to Darren, A on both calls.
-3. **[Town's page: three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y)** (town): how Mickey died, winding it down, threats. Recommended: the picks marked on it.
+3. **Town's pages** (town): [three calls](https://claude.ai/artifact/S8N58tCo28wJeRTWHUVx1Y) (how Mickey died, winding it down, threats) and [the next](https://claude.ai/artifact/TXEoUnQoDTaLPfFZdHSYAL) (the warehouse fire, reopening the talk's check, Steam's wording). Recommended: the picks marked on them.
 4. **LEDGER's own capped key** (builder; no page): the characters' live talk while you play waits on it (the paid writer won your blind 8 of 12); friends' relay stays keyless, as you ruled. Recommended: make it with a hard monthly cap and save it alone at %LOCALAPPDATA%\LEDGER\live-talk-key.txt.
 
 ### Road to worth playing
 
 - **Faces approved** (builder): Ron's and Sheila's yes; Darren with a man's haircut is on your page; the packaged game still shows the old faces (fix under way). Since yesterday: your S4 for Sheila, in the game's editor build; hair made in Blender set aside after three tries.
 - **People dressed** (clothing session; the builder fits them in Unreal): nobody dressed yet. Since yesterday: clothing moved to its own session, with Ron's, Darren's and Sheila's bodies; three spare builds set aside after three tries.
-- **Voices** (builder): Ron's and Darren's yes; Sheila's leans American on every free engine. Since yesterday: your yeses; your blind pick keeps the game's own engine.
-- **The delay before a character speaks** (words: town; voice: builder): 5.4 s to the first sound; the thinking sounds cover it for Ron and Darren; timings wait for your key. Since yesterday: your yes to the thinking sounds; paid voices ruled out.
-- **The replies that time out** (town): 1 in 24 since a fix, not 1 in 5; the real fault is "that's all I know" to half a newcomer's questions. Since yesterday: measured again; the street's plain facts written for everyone to say.
+- **Voices** (builder): Ron's and Darren's yes; Sheila's leans American on every free engine. Since yesterday: your yeses; your blind pick keeps the game's own engine; Sopro, a new free engine, holds Ron's accent on 4 of 4 test lines but loses Darren's Scottish.
+- **The delay before a character speaks** (words: town; voice: builder): 5.4 s to the first sound, the voice about 4 s of it; the thinking sounds cover it for Ron and Darren; timings wait for your key. Since yesterday: Sopro, free, speaks Ron's first sound in 0.8 to 1.4 s on the processor (next: in the game, then blind on your page); paid voices ruled out.
+- **The replies that time out** (town): 1 in 24, not 1 in 5; the bigger fault, "that's all I know" to half a newcomer's questions, set aside after three tries, reopening it on the town's next page. Since yesterday: measured again; set aside.
 - **The first week wired into the game** (town writes, builder wires): whole on paper, settled by the town under your narrowed rule; in the game, the first night's window and the evening; about thirty handovers to wire, which first need a running clock, waits and days the game lacks (days of work). Since yesterday: the town settled the week's design pages.
 - **The AI tester walking it** (builder): walks the packaged game, played by me; next after tonight's build. Since yesterday: the three faults it found are fixed.
 - **Checklist gaps for the friends' build** (builder most; town and clothing some): 359 small rows needed in the builder's lane (328 the builder's, 28 shared with the town, 3 the clothing session's), in seventeen packages, from launch and menus to traffic; the town's own sweeps leave 7 open. Since yesterday: the builder's lane swept for the first time since the list was archived.
