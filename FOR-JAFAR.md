@@ -10,29 +10,29 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[Tuesday's cleanup page](https://claude.ai/artifact/CKZN26j6P2cc91khC1uNRX):** C: settled at 54 to 57 GB tonight, under your 60: Unreal's cache refilled to its cap and the build machine's copy came back. Two groups, both recommended: cap that cache at 10 GB (about 12 GB back), and its old cache again (2 GB).
 
-## Builder, Monday 28 September
+## Builder, Tuesday 29 September
 
-**[Monday's page](https://claude.ai/artifact/SFQ1TofkLwLQ5NfYVkMACa):** the two new faces with the reviewer's notes, the conversation light, the voices as the game speaks them, the thinking sounds.
+**[Tuesday's page](https://claude.ai/artifact/TmJnie1Qzo6jE6NdkyqRPo):** Ron threatening, made two ways, blind; Monday's items still wait (Sheila's game voice taken off: it leans American in moments).
 
-**Faces.** Measured to the concepts four times; the closest shown, as you ruled.
+**Jacket.** Fourteen rounds; three blind reviewers failed it (scooped neck, crumpled yoke, padded shape). Set aside: much bigger than it looked.
 
-**Light.** Faint, skin only, 0.2 ms; passed the reviewer at the fifth try.
+**Voices.** VoxCPM2 acts Ron's lines in his voice; it loses Darren's Scottish and keeps Sheila's lean.
 
-**Delay.** Ron and Darren now say "Let me think" at once. Pocket failed again: set aside.
+**Talk.** An hour costs about $1.85; one reply in five times out into a brush-off. New in the game: the AI notice, a report key, talk kept across a reload, a record of each evening's play.
 
-**Jacket.** Hung on Ron's body in Blender; worn in the game as moving cloth; not ready to show.
+**Frame rate.** 70 fps at your screen size: meets 60.
 
-**C:.** 46.4 GB, 74.1 after your cleanup, 54 to 57 settled. Backup OK.
+**C:** 54 to 57 GB, now 38 (a build running). Backup: runs with this commit.
 
-**Builds.** Core tests green again; Unreal green.
+**Builds.** Core tests green; Unreal green to last night, tonight's queued.
 
-**Research.** Paid voices; a whole MetaHuman body in Blender; Unreal cloth by script.
+**Research.** Skirts that hang free, by script.
 
-**Got wrong.** The cleanup note stayed up; I used Sheila's long voice sample unchecked (it read American).
+**Got wrong.** I kept at the jacket far past the two-try rule.
 
 **Decide.**
-- Delay: (A) Inworld: about $0.28 an hour of play, first sound about 1.7 s; Ron's and Darren's recorded voices can't be copied without consent, so they'd be redesigned, you picking; needs your Inworld account (recommended). (B) Keep 5.4 s with the thinking sounds.
-- Hair: (A) curls made in Blender, free (recommended); (B) Fab's curly haircuts, CHF 9 to 17.
+- Jacket: (A) cut from a real pattern, sewn round Ron in Blender like the cap: free, days (recommended); (B) Marvelous Designer, $39, approved, but you install and drive it; (C) park clothes.
+- Carried: the delay (Inworld); hair.
 
 ## Town, 29 September
 
