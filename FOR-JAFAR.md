@@ -38,7 +38,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **[Your page: the first hour, the town's first story, eight calls](https://claude.ai/artifact/JjhXofRjhrbtWjkZ91e5ot)**, picks marked. Still open: [28 September's](https://claude.ai/artifact/FKSwS7qbFsDk4t4mFeR67s).
 
-**Decide there:** Sheila and Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet for Tom; $20–40 to retune the invention check: 13 of 36 small-talk answers still end "that's as far as I can take you" (28 before tonight).
+**Decide there:** Sheila and Tom's name; neighbours' talk; the clock; Tom's reading; Mickey's people knowing his name; a privacy notice; who keeps quiet for Tom; $20–40 to retune the invention check: 13 of 36 small-talk answers still end "that's as far as I can take you" (was 28).
 
 **Your answers, done:** talk server waits (Hetzner first); Tom's reading from his own sight; scratch folder recycled.
 
