@@ -1,3 +1,3 @@
-slicePerf=uw-half status=MEETS frames=1500 medianMs=14.31 p95Ms=16.04 p99Ms=17.96 worstMs=46.96 fps=69.9 gpuMedianMs=12.47 over16.7=40 over33.3=2 gpuMemMB=4665 target=60fps-at-3440x1440/never-below-30
-slicePerfVoice=nano-built-in-voice-on-the-card lines=8 nanoRtfMedian=1.61
+slicePerf=uw-half status=MEETS frames=1501 medianMs=14.42 p95Ms=16.54 p99Ms=19.13 worstMs=1000.00 fps=69.3 gpuMedianMs=12.41 over16.7=71 over33.3=2 gpuMemMB=4672 target=60fps-at-3440x1440/never-below-30
+slicePerfVoice=nano-built-in-voice-on-the-card lines=7 nanoRtfMedian=1.4
 slicePerfResolution=3440x1440
