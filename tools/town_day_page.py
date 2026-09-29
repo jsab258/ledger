@@ -21,8 +21,8 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and fourteen decisions",
-        "lede": "The plan for a player's first hour, the first story of the town's own, and fourteen things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today: the last two calls, what the town cannot say because nobody has written it, the hints, each the first time it matters, the outfit's first ask, with whose outfit it is, when DS Ellis turns up, and day 3: Ada's tea, and the warehouse fire Alison asks about.",
+        "title": "The first hour, and fifteen decisions",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and fifteen things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today: the last two calls, what the town cannot say because nobody has written it, the hints, each the first time it matters, the outfit's first ask, with whose outfit it is, when DS Ellis turns up, and day 3: Ada's tea, and the warehouse fire Alison asks about.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -76,6 +76,10 @@ DAYS = {
              [("draft", "I draft it from the outline for your yes: when and where it burned, whose it was, who was hurt if anybody, and what the street believes, with the truth (the outfit's hand, in Mickey's real book) kept apart from the talk (recommended)"),
               ("yours", "You write it, in your note"),
               ("later", "Leave Alison's question until Act I's thread is written")]),
+            ("q-traits", "Each person's nerve, loyalty and greed. Today all forty-one have the same middle values, so no witness goes to the police unless the story cools them on him. Giving each their own (drafted from the cards, canon and their trades: a third of the town would then report a wounding they saw, as in 1990) also moves bribes, debts, who walks with Tom from the start and how people answer frightening talk, and it showed an old rule the wrong way round (the bravest answer as if frightened), in both the simulation and the game's copy",
+             [("all", "Give everybody their own, checking each thing it moves, and put the old rule right in both: about a day, with a share for the builder (recommended: a town of forty with one temper cannot surprise him)"),
+              ("police", "Only for who goes to the police, as a setting of its own, leaving the rest alike: an hour or two"),
+              ("later", "Leave everybody alike for now")]),
         ],
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),

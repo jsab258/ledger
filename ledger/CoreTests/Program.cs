@@ -6381,6 +6381,17 @@ namespace Ledger.CoreTests
                 Check(hookQ.CircleOf("outfit_man") == "night" && hookQ.CircleOf("rocco") == "day" && hookQ.CircleOf(null) == "day"
                       && badCircle != null && badCircle.Contains("circle"),
                       "which of his worlds each belongs to comes from the cast file, the town by day unless it says otherwise (the outfit's man is his night's); a circle it does not know is refused", badCircle ?? "");
+                // WHO NEVER GOES TO THE POLICE (town list 6bj): their trade keeps
+                // them from it; the cast file says so, and nothing else reads it.
+                string badPolice = null;
+                try { CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"x\",\"police\":\"sometimes\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}"); }
+                catch (FormatException e) { badPolice = e.Message; }
+                var bold9 = new Gossiper("o", "o", new MemoryStore("o"), new KnowledgeBase(), new SuspicionTracker()) { Nerve = 0.9, Loyalty = 0.1 };
+                Check(hookQ.NeverToPolice("outfit_man") && hookQ.NeverToPolice("hal") && hookQ.NeverToPolice("drago") && hookQ.NeverToPolice("victor")
+                      && hookQ.NeverToPolice("rita") && hookQ.NeverToPolice("tibor") && !hookQ.NeverToPolice("ada") && !hookQ.NeverToPolice(null) && badPolice != null && badPolice.Contains("police")
+                      && PoliceFile.WouldReport(bold9, Offence.Killing, false, null) && !PoliceFile.WouldReport(bold9, Offence.Killing, false, null, neverToPolice: true)
+                      && !PoliceFile.WouldReport(bold9, Offence.Damage, true, null, neverToPolice: true),
+                      "whoever's trade keeps them from the police never goes, victim or witness, a body included; the cast file names them, and any other word there is refused");
 
                 var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
                 q.Suspicion.Raise(0.6, "I saw him near the window");
