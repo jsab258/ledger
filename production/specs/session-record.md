@@ -31,8 +31,9 @@ decimal), and `e`, the event. In the order they happen:
 | `known` | `who`; `how`: `"look"`, `"remark"`, `"recognition"`, `"question"` or `"talk"`; `story`, the topic | somebody visibly shows they know something he did: the second, longer look; a remark to a companion; a line to his face; a question about it in conversation, or anything else the talk helper reports they put to his face (its `putToHim`); or a reply of theirs drew on it (its `spokeOf`) |
 | `talk` | `who` | the player opens a conversation |
 | `named` | `who`, whom he is talking to; `names`, the ids of the people his line named, by any name the town uses for them; never the line itself | a line the player typed names somebody |
-| `load` | `from`, the save | a save is loaded |
-| `end` | `why`: `"quit"` or `"crash"` | the session ends |
+| `load` | `from`, the save; `deeds`, the topics of the deeds the loaded save holds | a save is loaded |
+| `reply` | `who`; `how`: the talk helper's `went` (`"own"`, `"fallback"`, `"refused"`, `"brush"`, `"paused"`, `"ended"`), or `"walkedOff"`; `s`, seconds from his line to the first word he heard | a person answers him (town list 6bd: where a friend's talk broke) |
+| `end` | `why`: `"quit"` or `"crash"`; `usd`, what the talk cost this session (the talk helper's closing line) | the session ends |
 
 Required: `player` (start), `at` (place), `s` (still), `what` (deed), `who` and
 `story` (known), `who` (talk), `names` (named), `why` (end); `load` needs none.

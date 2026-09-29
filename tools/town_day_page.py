@@ -21,8 +21,8 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and eight decisions",
-        "lede": "The plan for a player's first hour, the first story of the town's own, and eight things only you can decide. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September; Tom's reading is back, because it failed its review again.",
+        "title": "The first hour, and nine decisions",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and nine things only you can decide. One tap each, and a note if you want. The talk server and Tom's reading you answered on 28 September; Tom's reading is back, because it failed its review again.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -52,6 +52,10 @@ DAYS = {
              [("cards", "Nobody keeps a killing quiet; Ron and Sheila, Mickey's inherited loyalists, keep it quiet for the owner they work for; Darren, loyal to whoever helped him last, says yes to anybody and breaks it the moment someone else pays or threatens him; everyone else only for someone on first-name terms (recommended: it follows the cards)"),
               ("friends", "Stricter: only people on first-name terms with him keep anything quiet, Ron and Sheila included, so the loyalists must come to like him first"),
               ("nobody", "Nobody keeps anything quiet for the asking; only money or a threat works")]),
+            ("q-allowance", "Each friend's copy may spend $0.50 of live talk a day and $5 a month (the relay's allowance). Measured tonight, a line costs about 1.2 cents, most of it the check against invented facts, so about forty lines a day: a talkative friend could run out inside the half hour, and then everyone answers in a few words",
+             [("raise", "$1.50 a day and $10 a month a copy, about 125 lines a day; three friends playing every day would be at most $4.50 a day, and the relay's own stop at $320 of its $400 month still holds (recommended: the thirty minutes should never run dry)"),
+              ("keep", "Keep $0.50 a day and $5 a month; a friend who talks a lot sees the plain note and the short answers"),
+              ("more", "$3 a day and $20 a month a copy, for long sessions")]),
         ],
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),
