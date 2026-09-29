@@ -55,6 +55,18 @@ namespace Ledger.Core
                 ? "This copy cannot reach the town's talk. Check that the game is up to date, or tell the developers."
             : null;
 
+        /// TALK THAT CANNOT BE REACHED (town list 6ax, the fourth sweep): every
+        /// failure but the relay's four refusals used to become the character's
+        /// brush-off with no word to the player (the relay unreachable, a bad
+        /// key, a dropped connection), so a friend could not tell broken talk
+        /// from a town that would not speak to him.
+        public const string TalkUnreachable =
+            "Live talk cannot be reached just now. Until it comes back, people answer in a few words of their own.";
+
+        /// A copy with no way to talk at all (no key and no relay).
+        public const string TalkOff =
+            "Live talk is off in this copy. People answer in a few words of their own.";
+
         /// What the player is told once a report has gone (the helper says where).
         public static string ReportThanks(string saved) =>
             saved == "relay" ? "Thank you. It has gone to the developers."

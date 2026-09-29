@@ -630,7 +630,7 @@ static class Program
             foreach (var m in MemoryRetrieval.Retrieve(engine.Memory, say, now)) heard.Add(m.Text);
 
             if (_llm == null)
-                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut }, Plain);
+                return JsonSerializer.Serialize(new { id, to, day, reply = brush, ms = 0L, offline = true, timedOut = false, paused = AiNotice.TalkOff, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut }, Plain);
             string reply;
             string paused = null;
             bool timedOut = false;
@@ -704,8 +704,11 @@ static class Program
                 }
                 catch (Exception)
                 {
+                    // ANY OTHER FAILURE (town list 6ax): still the brush-off, and now
+                    // the player is told talk cannot be reached, not left to guess.
                     timedOut = true;
                     reply = brush;
+                    paused = AiNotice.TalkUnreachable;
                 }
             }
             // INVENTED: what the first draft claimed that nothing supports, kept
@@ -913,6 +916,12 @@ static class Program
             if (_lines.Count > 0) _last = _lines.Dequeue();
             return Task.FromResult(new LlmResponse { Text = _last, StopReason = "end_turn", InputTokens = 400, OutputTokens = 20, Model = request.Model });
         }
+    }
+
+    sealed class BrokenFake : ILlmClient
+    {
+        public Task<LlmResponse> CompleteAsync(LlmRequest request, CancellationToken ct = default) =>
+            throw new LlmApiException(502, "The model could not be reached.", "upstream_unreachable", null);
     }
 
     sealed class RefusingFake : ILlmClient
@@ -1245,6 +1254,17 @@ static class Program
            && qGrave.Contains("\"agreed\":false") && qNone.Contains("\"keepsQuiet\":null") && qNone.Contains("\"ownedUp\":null")
            && qNoDeed.Contains("\"keepsQuiet\":null") && !quiet.EngineFor("lena").KeepsQuiet.ContainsKey("player.window_d1")
            && quiet.EngineFor("rocco").BuildSystemPrompt("x", new GameTime(2, 10, 5), "").Contains("He has owned up to it"), qSam + " | " + qRon + " | " + qGrave);
+
+        // TALK THAT CANNOT BE REACHED (town list 6ax): the brush-off, and the player told.
+        var broken = new Helper(new BrokenFake(), TimeSpan.FromSeconds(8));
+        LoadCards(broken, cardsDir);
+        string brokenLine = await broken.Answer("{\"id\":150,\"to\":\"rocco\",\"say\":\"Evening.\",\"day\":2,\"hour\":18}");
+        var noModel = new Helper(null, TimeSpan.FromSeconds(8));
+        LoadCards(noModel, cardsDir);
+        string offLine = await noModel.Answer("{\"id\":151,\"to\":\"lena\",\"say\":\"Morning.\",\"day\":2,\"hour\":9}");
+        Ok("talk that cannot be reached, or is off in this copy, says so plainly beside the brush-off",
+           Str(brokenLine, "paused") == AiNotice.TalkUnreachable && broken.Cards["rocco"].OwnWords["brush-off"].Contains(Reply(brokenLine))
+           && Str(offLine, "paused") == AiNotice.TalkOff && Flag(offLine, "offline"), brokenLine + " | " + offLine);
 
         // THE REHEARSAL (town list 6aw): a session end to end, every kind of line
         // the protocol page names, in the order a friend's half hour would bring
