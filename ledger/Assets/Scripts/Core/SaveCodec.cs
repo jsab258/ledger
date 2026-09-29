@@ -151,7 +151,9 @@ namespace Ledger.Core
                 { "id", a.Id }, { "loyalty", a.Loyalty }, { "leashed", a.Leashed },
                 { "suspicion", a.Suspicion.Value },
                 { "suppressed", a.Suppressed.Cast<object>().ToList() },
-                { "rumors", a.Rumors.Select(r => (object)RumorJson(r)).ToList() },
+                // Never a copy at NaN or an infinity (town list 6bw): written
+                // bare, it made the save unreadable.
+                { "rumors", a.Rumors.Where(r => !GossipMill.NotFinite(r.Confidence)).Select(r => (object)RumorJson(r)).ToList() },
                 { "facts", a.Knowledge.Facts.Select(f => (object)new Dictionary<string, object>
                     {
                         { "subj", f.Subject }, { "pred", f.Predicate }, { "val", f.Value },
@@ -333,11 +335,16 @@ namespace Ledger.Core
                     // and `SaveChaos` found it by deleting one key.
                     var content = FactOrNull(r);
                     if (content == null) continue;
+                    // A COPY AT NaN OR AN INFINITY IS DROPPED as one without a
+                    // subject is (town list 6bw): a hand-edited "conf":"NaN" or
+                    // 1e999 was held, told on and written back unreadable.
+                    double conf = Num(r, "conf");
+                    if (GossipMill.NotFinite(conf)) continue;
                     g.Rumors.Add(new Rumor
                     {
                         Content = content,
                         OriginId = MiniJson.GetString(r, "origin"), Summary = MiniJson.GetString(r, "summary"),
-                        Confidence = Num(r, "conf"), Hops = MiniJson.GetInt(r, "hops"), Sensitive = Flag(r, "sensitive"),
+                        Confidence = conf, Hops = MiniJson.GetInt(r, "hops"), Sensitive = Flag(r, "sensitive"),
                         Indelible = Flag(r, "indelible"),
                         // The first teller's rung (town list 6n): absent in older saves, and
                         // then unknown; clamped to the ladder, as a hand-edited file may say anything.

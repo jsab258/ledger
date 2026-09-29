@@ -26,6 +26,7 @@
 #include <cctype>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -222,11 +223,18 @@ namespace LedgerCore
 	{
 		double V;
 		static double Clamp(double X) { return X < 0.0 ? 0.0 : X > 1.0 ? 1.0 : X; }
+		// By the bits, for the fast-math reason Perception.h gives.
+		static unsigned long long Bits(double X) { unsigned long long B = 0ULL; std::memcpy(&B, &X, sizeof(B)); return B; }
+		static bool IsNaN(double X) { return ((Bits(X) >> 52) & 0x7FFULL) == 0x7FFULL && (Bits(X) & 0xFFFFFFFFFFFFFULL) != 0ULL; }
+		static bool IsFinite(double X) { return ((Bits(X) >> 52) & 0x7FFULL) != 0x7FFULL; }
 	public:
 		SuspicionTracker() : V(0.0) {}
 		double Value() const { return V; }
-		void Restore(double Value) { V = Clamp(Value); }
-		void Raise(double Amount, const std::string& /*Reason*/) { V = Clamp(V + Amount); }
-		void Lower(double Amount, const std::string& /*Reason*/) { V = Clamp(V - Amount); }
+		// A NaN reads as none, and an amount that is not finite moves nothing
+		// (town list 6bw): a rumour told at NaN left the hearer's suspicion
+		// NaN for good, and the save could not be read back.
+		void Restore(double Value) { V = IsNaN(Value) ? 0.0 : Clamp(Value); }
+		void Raise(double Amount, const std::string& /*Reason*/) { if (IsFinite(Amount)) { V = Clamp(V + Amount); } }
+		void Lower(double Amount, const std::string& /*Reason*/) { if (IsFinite(Amount)) { V = Clamp(V - Amount); } }
 	};
 }

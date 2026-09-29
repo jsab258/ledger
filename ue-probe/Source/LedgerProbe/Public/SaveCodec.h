@@ -738,11 +738,16 @@ namespace Save
 				QuotedInto(Out, G->Suppressed[T]);
 			}
 			Out += "],\"rumors\":[";
+			bool bFirstRumor = true;
 			for (std::vector<RumorPtr>::size_type Rn = 0; Rn < G->Rumors.size(); ++Rn)
 			{
 				const RumorPtr& Rm = G->Rumors[Rn];
 				if (!Rm) { continue; }
-				if (Rn) { Out += ','; }
+				// Never a copy at NaN or an infinity (town list 6bw): written
+				// bare, it made the save unreadable.
+				if (NotFiniteBits(Rm->Confidence)) { continue; }
+				if (!bFirstRumor) { Out += ','; }
+				bFirstRumor = false;
 				Out += "{\"subj\":";
 				QuotedInto(Out, Rm->Content.Subject);
 				Out += ",\"pred\":";
@@ -865,6 +870,9 @@ namespace Save
 					FieldString(Json, Each[R], "origin", Made->OriginId);
 					FieldString(Json, Each[R], "summary", Made->Summary);
 					Made->Confidence = FieldNumber(Json, Each[R], "conf", 0.0);
+					// A COPY AT NaN OR AN INFINITY IS DROPPED as one without a
+					// subject is (town list 6bw).
+					if (NotFiniteBits(Made->Confidence)) { continue; }
 					Made->Hops = FieldInt(Json, Each[R], "hops");
 					Made->Sensitive = FieldFlag(Json, Each[R], "sensitive");
 					Made->Indelible = FieldFlag(Json, Each[R], "indelible");

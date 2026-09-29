@@ -293,7 +293,9 @@ namespace Ledger.Core
             // refused" cannot read the same. That is the whole lesson of the
             // three zeroes on 4 August.
             WitnessesOffered++;
-            if (w == null) { WitnessesDropped++; return; }
+            // A SIGHTING AT NaN IS DROPPED AND COUNTED (town list 6bw): it was
+            // filed, told on at NaN, and left every hearer's suspicion NaN.
+            if (w == null || double.IsNaN(confidence)) { WitnessesDropped++; return; }
             confidence = Math.Clamp(confidence, 0.0, 1.0);
             if (confidence >= 0.95) w.Knowledge.Learn(content); // only certainty becomes hard knowledge
             rung = Math.Clamp(rung, -1, 4);
@@ -310,7 +312,7 @@ namespace Ledger.Core
             {
                 Rumor own = null;
                 foreach (var x in w.Rumors)
-                    if (x.TopicKey == topic && x.Content.Value == content.Value && x.Hops == 0 && (own == null || x.Confidence > own.Confidence)) own = x;
+                    if (x.TopicKey == topic && x.Content.Value == content.Value && x.Hops == 0 && (own == null || NotFinite(own.Confidence) || x.Confidence > own.Confidence)) own = x;
                 if (own == null)
                 {
                     w.Rumors.Add(new Rumor
@@ -327,11 +329,11 @@ namespace Ledger.Core
                     if (indelible && !own.Indelible)
                     {
                         own.Indelible = true;
-                        own.Confidence = Math.Max(own.Confidence, confidence);
+                        own.Confidence = NotFinite(own.Confidence) ? confidence : Math.Max(own.Confidence, confidence);
                         own.Summary = summary;
                         if (own.Confidence >= 0.95) w.Knowledge.Learn(content);
                     }
-                    else if (confidence > own.Confidence)
+                    else if (confidence > own.Confidence || NotFinite(own.Confidence))   // a copy at NaN gives way (town list 6bw)
                     {
                         own.Confidence = confidence;
                         own.Summary = summary;
@@ -357,12 +359,12 @@ namespace Ledger.Core
                 // is upgraded in place, at whatever certainty the body
                 // carries, rather than sitting alongside as a live maybe.
                 already.Indelible = true;
-                already.Confidence = Math.Max(already.Confidence, confidence);
+                already.Confidence = NotFinite(already.Confidence) ? confidence : Math.Max(already.Confidence, confidence);
                 already.Hops = 0;
                 already.Summary = summary;
                 if (already.Confidence >= 0.95) w.Knowledge.Learn(content);
             }
-            else if (confidence > already.Confidence)
+            else if (confidence > already.Confidence || NotFinite(already.Confidence))   // a copy at NaN gives way (town list 6bw)
             {
                 // A clearer second look strengthens a doubtful first one. This
                 // used to drop the repeat on the floor, so no later sighting
@@ -460,6 +462,9 @@ namespace Ledger.Core
                     HashSet<string> toldThisRound = null;
                     foreach (var (r, version) in SurestFirst(slots, x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
                     {
+                        // NEVER TOLD AT NaN OR AN INFINITY (town list 6bw): no
+                        // comparison below stops a NaN, indelible or not.
+                        if (NotFinite(r.Confidence)) continue;
                         if (r.Confidence < MinConfidenceToShare && !r.Indelible) continue;
                         // Money and hooks buy silence about STORIES. Nobody keeps
                         // a body to themselves because they were paid to.
@@ -469,7 +474,7 @@ namespace Ledger.Core
                         // true as it left. Hop decay is how a story turns into a
                         // maybe; this is not a story.
                         double passed = r.Indelible ? r.Confidence : r.Confidence * tie * HopDecay;
-                        if (passed < MinConfidenceToShare) continue;
+                        if (NotFinite(passed) || passed < MinConfidenceToShare) continue;   // a tie at NaN passes nothing
 
                         // Don't re-tell something the listener already holds at least as
                         // strongly — stops rumors amplifying by bouncing back and forth.
@@ -619,13 +624,22 @@ namespace Ledger.Core
         /// check: 128 of 293 tellings over 72 hours of the forty).
         public const double SameStrength = 1e-9;
 
+        /// A CONFIDENCE THAT IS NOT A NUMBER IS NOT HELD (town list 6bw, the
+        /// independent check): NaN or an infinity, from a hand-edited save or a
+        /// tie at NaN, was told on, stood in a listener's way as "held" so no
+        /// real telling reached them, kept a clearer sighting from replacing
+        /// it, and could not be saved. Such a copy is never told, counts for
+        /// nothing, gives way to any sighting, and is forgotten with the next
+        /// hour's ageing.
+        internal static bool NotFinite(double c) => double.IsNaN(c) || double.IsInfinity(c);
+
         static Telling Weigh(Gossiper listener, Rumor r, double passed)
         {
             var existing = listener.BestOfValue(r.TopicKey, r.Content.Value);
-            if (existing == null || existing.Confidence < passed - SameStrength) return Telling.New;
+            if (existing == null || NotFinite(existing.Confidence) || existing.Confidence < passed - SameStrength) return Telling.New;
             if (r.OriginRung < 4) return Telling.Held;
             foreach (var x in listener.Rumors)
-                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && x.Confidence >= passed - SameStrength)
+                if (x.TopicKey == r.TopicKey && x.Content.Value == r.Content.Value && x.OriginRung >= 4 && !NotFinite(x.Confidence) && x.Confidence >= passed - SameStrength)
                     return Telling.Held;
             return Telling.Quiet;
         }
@@ -672,6 +686,7 @@ namespace Ledger.Core
             HashSet<string> askedToldThisRound = null;
             foreach (var (r, askedVersion) in SurestFirst(TellingSlots(partner.Rumors.ToList()), x => x.Indelible ? x.Confidence : x.Confidence * tie * HopDecay))
             {
+                if (NotFinite(r.Confidence)) continue;   // never told at NaN or an infinity, as Tick (town list 6bw)
                 if (r.Content.Subject != "player") continue;
                 if (r.Confidence < MinConfidenceToShare && !r.Indelible) continue;
                 if (!r.Indelible && partner.Suppressed.Contains(r.TopicKey)) continue;
@@ -682,7 +697,7 @@ namespace Ledger.Core
                 // witness about a killing gave a weakened copy that could be
                 // talked away, while ordinary talk (Tick) passed it on whole.
                 double passed = r.Indelible ? r.Confidence : r.Confidence * tie * HopDecay;
-                if (passed < MinConfidenceToShare) continue;
+                if (NotFinite(passed) || passed < MinConfidenceToShare) continue;
                 // Value-aware for the same reason as Tick's guard: conflicting
                 // versions must settle, not breed (audit 2026-07-27).
                 var weigh = Weigh(checker, r, passed);
@@ -1011,7 +1026,8 @@ namespace Ledger.Core
                 foreach (var r in a.Rumors)
                     if (r.TopicKey == topicKey && (v == null || r.Content.Value == v) && !r.Indelible)
                     { r.Confidence *= DiscreditFactor; affected++; }
-            foreach (var a in _agents.Values) a.Rumors.RemoveAll(r => r.Confidence < 0.03 && !r.Indelible);
+            // A copy at NaN or an infinity is forgotten here too, indelible or not (town list 6bw).
+            foreach (var a in _agents.Values) a.Rumors.RemoveAll(r => NotFinite(r.Confidence) || (r.Confidence < 0.03 && !r.Indelible));
             return new DcResult { Outcome = affected > 0 ? DcOutcome.Contained : DcOutcome.NoSuchRumor, Affected = affected,
                 Message = affected > 0 ? $"Doubt spreads; {affected} telling(s) of it lose weight." : "No such story to discredit." };
         }
@@ -1118,7 +1134,10 @@ namespace Ledger.Core
                         // low is the answer to talk; it is not the answer to
                         // a corpse.
                         foreach (var r in a.Rumors) if (!r.Indelible) r.Confidence *= f;
-                        a.Rumors.RemoveAll(r => r.Confidence < 0.03 && !r.Indelible);
+                        // A copy at NaN or an infinity never fades and was
+                        // never forgotten: it goes now, indelible or not (town
+                        // list 6bw).
+                        a.Rumors.RemoveAll(r => NotFinite(r.Confidence) || (r.Confidence < 0.03 && !r.Indelible));
                     }
                 }
             }
@@ -1135,7 +1154,9 @@ namespace Ledger.Core
             var v = value?.ToLowerInvariant();
             foreach (var a in _agents.Values)
                 foreach (var r in a.Rumors)
-                    if (r.Indelible && r.TopicKey == topicKey && (v == null || r.Content.Value == v))
+                    // A copy at NaN or an infinity is not held (town list 6bw):
+                    // a body at NaN stopped every denial of the story.
+                    if (r.Indelible && !NotFinite(r.Confidence) && r.TopicKey == topicKey && (v == null || r.Content.Value == v))
                         return true;
             return false;
         }

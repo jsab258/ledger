@@ -61,6 +61,14 @@ namespace LedgerCore
 		return ((Bits >> 52) & 0x7FFULL) == 0x7FFULL && (Bits & 0xFFFFFFFFFFFFFULL) != 0ULL;
 	}
 
+	/// Double.IsNaN(v) || Double.IsInfinity(v), by the bits: the exponent all ones.
+	inline bool NotFiniteBits(double V)
+	{
+		unsigned long long Bits = 0ULL;
+		std::memcpy(&Bits, &V, sizeof(Bits));
+		return ((Bits >> 52) & 0x7FFULL) == 0x7FFULL;
+	}
+
 	inline double Clamp01(double V)
 	{
 		if (IsNaNBits(V)) { return V; }
