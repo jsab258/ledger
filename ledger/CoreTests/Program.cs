@@ -231,6 +231,19 @@ namespace Ledger.CoreTests
             var msg = MiniJson.AsObject(MiniJson.GetList(back, "messages")[0]);
             Check(MiniJson.GetString(msg, "content") == "he said \"hi\"\nnew line", "escaping round-trip");
             Check(MiniJson.GetString(MiniJson.AsObject(MiniJson.Deserialize("{\"a\": \"\\u00e9\\t\"}")), "a") == "é\t", "unicode escape parse");
+            // A cut-off or malformed file is a FormatException, which is all a
+            // caller catches (the builder's port review, 29 September).
+            {
+                string notFormat = null;
+                foreach (var bad in new[] { "{", "{ ", "{\"a\": 1,", "{\"a\": 1, ", "[1,", "{\"a\": \"\\u-001\"}", "{\"a\": \"\\u0x12\"}", "{\"a\": \"\\u+001\"}", "{\"a\": \"\\u 001\"}", "\"\\u12" })
+                {
+                    try { MiniJson.Deserialize(bad); notFormat = bad + " (read)"; }
+                    catch (FormatException) { }
+                    catch (Exception ex) { notFormat = bad + " (" + ex.GetType().Name + ")"; }
+                }
+                Check(notFormat == null && MiniJson.GetString(MiniJson.AsObject(MiniJson.Deserialize("{\"a\": \"\\u00C9\\u00e9\"}")), "a") == "Éé",
+                      "a file cut off after '{' or ',', or a \\u escape without four hex digits, is a FormatException; four in either case still read", notFormat ?? "");
+            }
 
             // Adversarial content: backslashes, control chars, a BMP accent, and a
             // non-BMP (surrogate-pair) codepoint must all survive a full round-trip.

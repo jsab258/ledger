@@ -152,7 +152,9 @@ namespace Ledger.Core
 
         static string ParseString(string s, ref int pos)
         {
-            if (s[pos] != '"') throw new FormatException($"Expected string at {pos}");
+            // A file cut off after '{' or ',' ends here: a FormatException like
+            // every other bad file, never an IndexOutOfRangeException.
+            if (pos >= s.Length || s[pos] != '"') throw new FormatException($"Expected string at {pos}");
             pos++;
             var sb = new StringBuilder();
             while (pos < s.Length)
@@ -174,7 +176,12 @@ namespace Ledger.Core
                         case 'b': sb.Append('\b'); break;
                         case 'f': sb.Append('\f'); break;
                         case 'u':
+                            // Four hex digits exactly, as the game's MiniJson.h reads
+                            // them: Convert alone threw ArgumentException on "\u-001"
+                            // and took "\u0x12" as a number.
                             if (pos + 4 > s.Length) throw new FormatException("Bad \\u escape");
+                            for (int h = pos; h < pos + 4; h++)
+                                if (!Uri.IsHexDigit(s[h])) throw new FormatException($"Bad \\u escape at {pos}");
                             sb.Append((char)Convert.ToInt32(s.Substring(pos, 4), 16));
                             pos += 4;
                             break;
