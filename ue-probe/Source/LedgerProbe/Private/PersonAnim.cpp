@@ -263,7 +263,13 @@ void ULedgerPersonAnim::NativeUpdateAnimation(float DeltaSeconds)
 			Want *= Strength;
 		}
 	}
-	// A glance turns in a quarter of a second and eases back in about half.
-	LookAlpha = FMath::FInterpTo(LookAlpha, Want, DeltaSeconds, Want > LookAlpha ? 9.0f : 5.0f);
+	// EASED AT BOTH ENDS (the second review of the look clips: a turn that
+	// began at full speed jumped, smeared and snapped back): the head follows a
+	// driver that itself eases toward the look wanted. A full turn takes about
+	// three quarters of a second and eases back in about a second and a half;
+	// half a second of glance reaches four fifths of its turn.
+	const float Rate = Want > LookAlpha ? 6.0f : 3.0f;
+	LookDrive = FMath::FInterpTo(LookDrive, Want, DeltaSeconds, Rate);
+	LookAlpha = FMath::FInterpTo(LookAlpha, LookDrive, DeltaSeconds, Rate);
 	PeakAlpha = FMath::Max(PeakAlpha, LookAlpha);
 }

@@ -1,0 +1,192 @@
+<title>Wednesday's Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1180px;margin:0 auto;display:grid;gap:40px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(26px,4vw,34px)/1 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.tally,.was,.cap{font:400 13px/1.4 var(--type);color:var(--muted)}
+.tally b{color:var(--ink)}
+section.person{display:grid;gap:22px;background:var(--surface);border:1px solid var(--rule);padding:22px}
+.capgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.capgrid img{width:100%;display:block;background:var(--chip)}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.cand{display:grid;gap:8px;border:1px solid var(--rule);padding:10px;background:var(--ground)}
+.cand.picked{border-color:var(--accent);box-shadow:inset 0 3px 0 var(--accent)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pair img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--chip)}
+.speak{width:100%;aspect-ratio:4/3;background-color:var(--chip);background-repeat:no-repeat}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px/1 var(--display);letter-spacing:.04em;border:1px solid var(--rule);background:var(--surface);color:var(--ink);padding:9px 12px;cursor:pointer;min-height:38px}
+button:hover{border-color:var(--ink)}
+button.playing{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+.take{font:700 20px/1 var(--display)}
+.acting{display:grid;gap:14px}
+.feel{display:grid;gap:8px;border-top:1px solid var(--rule);padding-top:12px}
+.feel .label{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.feel q{font-style:italic}
+textarea{width:100%;min-height:54px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker" id="kicker"></div>
+    <h1 id="title"></h1>
+    <div id="how"></div>
+    <div class="tally" id="tally">Loading your earlier picks…</div>
+  </header>
+  <main class="wrap" id="people"></main>
+  <footer id="foot"></footer>
+</div>
+<script>
+const PAGE = {"tab": "Wednesday's Page", "kicker": "LEDGER · Wednesday 30 September", "title": "Wednesday's page", "how": ["Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.", "New today: how Sheila looks at you as you walk past her, three ways. The rest is Tuesday's, not yet picked.", "Faces: front and profile in a plain studio light, and the face speaking a line."], "foot": "Anything you do not pick carries onto the next page.", "sections": [{"kind": "look", "key": "look-sheila-regard", "name": "Sheila, as you walk past her: three ways", "note": "The same walk three times, filmed in the game. What she has heard of your night changes how she looks at you: knowing nothing, a stranger's glance that lands about ten metres off, lasts half a second and is gone before you are close; half-remembering a story, the same glance and then a second, longer look as you pass; sure it is you, she keeps you in view, says one line, and looks back after you until you are well past. Her voice is not in these (it waits on your paid-voice decision), so her lips do not move; the line is a subtitle. The blind reviewer's remaining notes: her hair and clothes are the game's stand-in, not her casting sheet's (a short greying set, a cardigan and skirt, tinted glasses), so she reads nearer 40 than 53; at the closest moments her eyes are cast steeply down; the look back turns her head but not her shoulders, so it reads as watching where you went more than looking over her shoulder; the first glance barely shows from this camera, as she already faces that way; you are in the picture for only about two of the 24 seconds; and three single frames are missing (a tenth of a second each, not visible).", "pictures": [{"src": "look-sheila-regard/look-sheila-none.webp", "alt": "She knows nothing of you"}, {"src": "look-sheila-regard/look-sheila-little.webp", "alt": "She has half-heard a story"}, {"src": "look-sheila-regard/look-sheila-enough.webp", "alt": "She is sure it is you"}], "options": [["yes", "That reads right"], ["no", "Not like this"]]}, {"kind": "pair", "key": "act-ron-kirby-threat", "name": "Ron, threatening: two ways of making his voice act", "note": "The same line in Ron's voice, made two different ways, heard blind (which is which is kept off the page). Both passed the accent, words and likeness checks and a blind reviewer. Which sounds more like Ron meaning it? Only Ron's threat is here tonight: his other lines, and Sheila's and Darren's, failed the accent check in one way or the other.", "line": "Walk away, son. Thirty years on the docks, and I never once had to ask a man twice.", "takes": [{"label": "A", "audio": "act-ron-kirby-threat/act-ron-threat-A.wav"}, {"label": "B", "audio": "act-ron-kirby-threat/act-ron-threat-B.wav"}], "options": [["A", "A"], ["B", "B"], ["neither", "Neither is him"]]}, {"kind": "faces", "key": "face-sheila-dunn", "name": "Sheila Dunn", "pron": "her", "note": "Her fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: she reads about 45 to 48, not 53 (smooth forehead and upper lip, no smoker's lines); a peach tint on the upper lids and red inner corners; the hair darker and warmer than the concept's ash grey-brown; the proportions close to the concept. In the speaking frames her eyes blur during a blink. The haircut is Epic's nearest, not yet a set; her glasses come with her clothes.", "audio": "face-sheila-dunn/speak-sheila-dunn.wav", "candidates": [{"take": "S4", "front": "face-sheila-dunn/S4-front.jpg", "profile": "face-sheila-dunn/S4-profile.jpg", "speak": {"file": "face-sheila-dunn/S4-speak.jpg", "frames": 94, "cols": 10, "rows": 10, "fps": 15}}]}, {"kind": "faces", "key": "face-darren-milner", "name": "Darren Milner", "pron": "him", "note": "His fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: the lids cut into the iris and the brows are heavy, so he looks sullen rather than quick and amused, and about 30; orange upper lids and red inner corners; the brown of the hair darker and redder than the concept's, the blond a band at the ends. The haircut is Epic's nearest, not yet a grown-out perm.", "audio": "face-darren-milner/speak-darren-milner.wav", "candidates": [{"take": "S4", "front": "face-darren-milner/S4-front.jpg", "profile": "face-darren-milner/S4-profile.jpg", "speak": {"file": "face-darren-milner/S4-speak.jpg", "frames": 82, "cols": 10, "rows": 9, "fps": 15}}]}, {"kind": "look", "key": "look-talk-light", "name": "The conversation light", "note": "A faint light on whoever you are talking to, from above and to one side, and a catch-light in the eyes. It lights only their skin (not their hair), only that person, costs 0.2 ms a frame, and fades six seconds after they stop; a face already in sun gets none. Shown on Ron: judge the light, not the face.", "pictures": [{"src": "look-talk-light/rocco-front-final.jpg", "alt": "Ron in the street's daylight, no conversation light"}, {"src": "look-talk-light/rocco-talk-final.jpg", "alt": "The same moment and camera, with the conversation light"}], "options": [["yes", "Keep it"], ["no", "Not like this"]]}, {"kind": "voice", "key": "game-ron-kirby", "name": "Ron's voice, in the game", "note": "His July voice, as the game speaks it. Carried from 25 September.", "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.", "audio": "game-ron-kirby/ron-kirby.wav", "options": [["yes", "This is him"], ["no", "Not him"]]}, {"kind": "voice", "key": "game-darren-milner", "name": "Darren's voice, in the game", "note": "His approved voice (Scottish, which the sheet notes), as the game speaks it. Carried from 25 September.", "line": "A shape's not much to go on. Half the town could pass for that on a night like this.", "audio": "game-darren-milner/darren-milner.wav", "options": [["yes", "This is him"], ["no", "Not him"]]}, {"kind": "voice", "key": "think-ron-kirby", "name": "Ron, while he thinks", "note": "When you ask him something, he says one of these at once, in his own voice, and stops the moment his answer starts. It covers the wait; there is no loading sign. Both of his, one after the other.", "line": "Let me think.  /  Well, now.", "audio": "think-ron-kirby/thinking-ron.wav", "options": [["yes", "Keep it"], ["no", "Not like this"]]}, {"kind": "voice", "key": "think-darren-milner", "name": "Darren, while he thinks", "note": "The same for Darren. Sheila has none yet: both tries leaned away from her accent.", "line": "Hmm, well now.  /  Let me think.", "audio": "think-darren-milner/thinking-darren.wav", "options": [["yes", "Keep it"], ["no", "Not like this"]]}]};
+const state = {};
+let db = null, canWrite = true, audio = null, playing = null, raf = 0;
+function el(tag, attrs, ...kids){
+  const n = document.createElement(tag);
+  for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); }
+  for (const k of kids) if (k) n.append(k);
+  return n;
+}
+function stop(){ if (audio) audio.pause(); if (playing) playing.classList.remove("playing"); clearInterval(raf); audio = null; playing = null; }
+function play(src, btn, onFrame){
+  const same = playing === btn; stop(); if (same) return;
+  const a = new Audio(src); audio = a; playing = btn; btn.classList.add("playing");
+  a.addEventListener("ended", () => { if (onFrame) onFrame(0); stop(); });
+  a.play().then(() => { if (onFrame) raf = setInterval(() => { if (audio === a) onFrame(a.currentTime); }, 33); }).catch(() => stop());
+}
+function spriteBox(sp){
+  const box = el("div", {class:"speak", role:"img", "aria-label":"speaking"});
+  box.style.backgroundImage = "url(" + sp.file + ")";
+  box.style.backgroundSize = (sp.cols * 100) + "% " + (sp.rows * 100) + "%";
+  const show = i => {
+    i = Math.max(0, Math.min(sp.frames - 1, i));
+    const c = i % sp.cols, r = Math.floor(i / sp.cols);
+    box.style.backgroundPosition = (sp.cols > 1 ? c / (sp.cols - 1) * 100 : 0) + "% " + (sp.rows > 1 ? r / (sp.rows - 1) * 100 : 0) + "%";
+  };
+  show(0);
+  return {box, at: t => show(Math.floor(t * sp.fps))};
+}
+function save(key, patch){
+  state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()});
+  render();
+  if (!db || !canWrite) return;
+  db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(e => { if (e && e.code === "invalid_argument") { canWrite = false; render(); } });
+}
+function picks(key, options, cur){
+  const row = el("div", {class:"row"});
+  for (const [v, t] of options) {
+    const id = "pick-" + key + "-" + v;
+    const r = el("input", {type:"radio", name:"pick-" + key, id, value:v});
+    if (cur === v) r.checked = true;
+    r.addEventListener("change", () => save(key, {pick:v}));
+    row.append(el("label", {class:"pick", for:id}, r, document.createTextNode(t)));
+  }
+  return row;
+}
+function note(key, st){
+  const t = el("textarea", {placeholder:"What is right or wrong, in a few words (optional)"});
+  t.value = st.note || "";
+  t.addEventListener("change", () => save(key, {note:t.value}));
+  return t;
+}
+function render(){
+  const root = document.getElementById("people");
+  root.replaceChildren();
+  let judged = 0, total = 0;
+  for (const s of PAGE.sections) {
+    const st = state[s.key] || {};
+    total++; if (st.pick) judged++;
+    const sec = el("section", {class:"person", id:s.key});
+    sec.append(el("div", {}, el("h2", {text:s.name})));
+    if (s.note) sec.append(el("p", {class:"was", text:s.note}));
+    if (s.kind === "faces") {
+      const grid = el("div", {class:"cands"});
+      for (const c of s.candidates.concat([{take:"none"}])) {
+        const box = el("div", {class:"cand" + (st.pick === c.take ? " picked" : "")});
+        if (c.take !== "none") {
+          box.append(el("div", {class:"take", text:c.take}));
+          box.append(el("div", {class:"pair"},
+            c.front ? el("img", {src:c.front, alt:s.name + " " + c.take + ", front", loading:"lazy"}) : el("div", {class:"speak"}),
+            c.profile ? el("img", {src:c.profile, alt:s.name + " " + c.take + ", profile", loading:"lazy"}) : el("div", {class:"speak"})));
+          if (c.speak && s.audio) {
+            const sp = spriteBox(c.speak);
+            const b = el("button", {type:"button", text:"Play the line"});
+            b.addEventListener("click", () => play(s.audio, b, sp.at));
+            box.append(sp.box, el("div", {class:"row"}, b));
+          }
+        } else {
+          box.append(el("div", {class:"take", text:"None of these"}));
+        }
+        const id = "pick-" + s.key + "-" + c.take;
+        const radio = el("input", {type:"radio", name:"pick-" + s.key, id, value:c.take});
+        if (st.pick === c.take) radio.checked = true;
+        radio.addEventListener("change", () => save(s.key, {pick:c.take}));
+        box.append(el("label", {class:"pick", for:id}, radio, document.createTextNode(c.take === "none" ? "None is " + s.pron : "This is " + s.pron)));
+        grid.append(box);
+      }
+      sec.append(grid);
+    } else if (s.kind === "look") {
+      const g = el("div", {class:"capgrid"});
+      for (const p of s.pictures) g.append(el("figure", {}, el("img", {src:p.src, alt:p.alt, loading:"lazy"}), el("figcaption", {class:"was", text:p.alt})));
+      sec.append(g, picks(s.key, s.options, st.pick));
+    } else if (s.kind === "pair") {
+      const row = el("div", {class:"row"});
+      for (const t of s.takes) {
+        const b = el("button", {type:"button", text:"Play " + t.label});
+        b.addEventListener("click", () => play(t.audio, b));
+        row.append(b);
+      }
+      sec.append(row, el("div", {class:"row"}, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+    } else if (s.kind === "voice") {
+      const b = el("button", {type:"button", text:"Play"});
+      b.addEventListener("click", () => play(s.audio, b));
+      sec.append(el("div", {class:"row"}, b, el("q", {text:s.line})), picks(s.key, s.options, st.pick));
+    }
+    sec.append(note(s.key, st), el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    root.append(sec);
+  }
+  document.getElementById("tally").innerHTML = "<b>" + judged + " of " + total + "</b> picked" + (db ? "" : " · picks are not being stored on this view");
+}
+document.getElementById("kicker").textContent = PAGE.kicker;
+document.getElementById("title").textContent = PAGE.title;
+for (const h of PAGE.how) document.getElementById("how").append(el("p", {class:"how", text:h}));
+document.getElementById("foot").textContent = PAGE.foot || "";
+render();
+(async () => {
+  try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const s of PAGE.sections) {
+    try { const d = await db.doc("verdicts/" + s.key).get(); if (d.exists) state[s.key] = Object.assign({}, d.data()); } catch (e) {}
+  }
+  render();
+})();
+</script>

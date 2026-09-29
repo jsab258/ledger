@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """How long from the player's line to the character's first spoken words, stage by stage.
 
+NO REAL CALLS (Jafar, 29 September: nothing in development calls the
+Anthropic API). The talk program runs here as its stand-in (--fake), with no
+key in its environment: this measures the path after the reply (the voice
+and the game's own steps); the model's own time comes from the live talk's
+record while Jafar plays. What follows is how it measured before.
+
     python tools/voice-live/latency.py --lines 12 [--prewarm] [--early] [--voice nano|pocket] [--out F:/.../latency.json]
     python tools/voice-live/latency.py --selftest
 
@@ -44,7 +50,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 HELPER = os.path.join(ROOT, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.exe")
 VOICE_PY = r"C:\LedgerTools\chatterbox-nano\env-dml\Scripts\python.exe"
 POCKET_PY = r"F:\LedgerTools\pocket-tts\env\Scripts\python.exe"
-SECRETS = os.path.join(os.path.expanduser("~"), "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json")
 FRAME_S = 1 / 60
 PLAY_S = 0.02          # the sound card's start-up buffer for a procedural sound (Unreal's default mixer buffer, 1024 frames at 48 kHz)
 
@@ -127,11 +132,8 @@ def summary(rows, key):
 
 def run(n, prewarm=False, early=False, voice="nano"):
     env = dict(os.environ)
-    try:
-        env["ANTHROPIC_API_KEY"] = json.load(open(SECRETS, encoding="utf-8"))["anthropic_api_key"]
-    except Exception:
-        return {"error": "no key in the game's settings"}
-    hargs = [HELPER] + (["--early"] if early else [])
+    env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
+    hargs = [HELPER, "--fake"] + (["--early"] if early else [])
     if voice == "pocket":
         vargs = [POCKET_PY, os.path.join(ROOT, "tools", "voice-live", "pocket-server.py")]
     else:

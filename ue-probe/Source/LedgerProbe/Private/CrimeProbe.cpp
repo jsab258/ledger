@@ -64,6 +64,7 @@
 #include "VignetteShot.h"
 #include "PersonAnim.h"
 #include "CastDay.h"
+#include "TownRounds.h"
 #include "Suspecting.h"
 #include "FrameStats.h"
 
@@ -946,9 +947,15 @@ namespace
 		if (GSubs.Num() != Before) { SubsRebuild(); }
 	}
 
+	// OFF WHILE THE LOOK IS FILMED: the yellow instructions to the player are
+	// not part of the street (the second review: the walk-to-the-window prompt
+	// sat on every frame).
+	bool GSayInstructions = true;
+
 	void Say(const FString& Line, float Seconds = 12.0f, FColor Colour = FColor::White)
 	{
 		UE_LOG(LogTemp, Display, TEXT("LedgerSay: %s"), *Line);
+		if (!GSayInstructions && Colour == FColor::Yellow) { return; }
 		SubsEnsure();
 		FSubLine L;
 		L.Text = Line;
@@ -2085,6 +2092,45 @@ namespace
 	CastDay GCast;
 	bool bGCast = false;
 
+	// THE HOURS THE TOWN HAS TALKED (town list 6bs): one per game, saved
+	// beside the remarks. As each game hour starts, and after a load, the
+	// town's rounds by the cast file's routines run every hour not yet run:
+	// the hour now for every pair the street does not hold (Sheila, Darren
+	// and Ron are on it and talk by distance, as they did), and any hours
+	// skipped (the night a load passes) with nobody on the street, so whoever
+	// the routines put together talks; and the mill ages once an hour. The
+	// regression keeps its measured rounds without it.
+	TownHours GTownHours;
+
+	// The mill knows them by the probe's ids, the cast file by its own.
+	struct FStreetCast
+	{
+		const CastDay* Cast = nullptr;
+		static std::string CastId(const std::string& Id)
+		{
+			return Id == "w1" ? std::string("lena") : Id == "n2" ? std::string("sam")
+			     : Id == LedgerCrime::kR3Id ? std::string("rocco") : Id;
+		}
+		bool Together(const std::string& A, const std::string& B, int Day, int Hour) const
+		{
+			return Cast != nullptr && Cast->Together(CastId(A), CastId(B), Day, Hour);
+		}
+	};
+
+	void TownHoursTick()
+	{
+		if (GEnc != EEncounter::Live || !GMill || !bGCast) { return; }
+		FStreetCast Street;
+		Street.Cast = &GCast;
+		const int Ran = GTownHours.RunTo(GMill.get(), &Street, GNow,
+			[](const std::string& Id) { return Id == "w1" || Id == "n2" || Id == LedgerCrime::kR3Id; });
+		if (Ran > 0)
+		{
+			UE_LOG(LogTemp, Display, TEXT("LedgerTownHours: %d hour(s) of the town's talk, to %s; next hour %lld"),
+				Ran, *Un(GNow.ToString()), GTownHours.NextHour());
+		}
+	}
+
 	// THE WINDOW AS A DEED THE TOWN HOLDS (town list 6ac, 6au): when it
 	// happened, game time, and where each who saw him near it saw him (a
 	// place id from the cast file), by gossip id.
@@ -2589,6 +2635,43 @@ namespace
 		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: reported turn %d (%s)"), GLive.LastReplyId, *GLive.LastReplyName);
 	}
 
+	// NO KEY BUT LEDGER'S OWN, AND ONLY WHILE SOMEBODY PLAYS (Jafar, 29
+	// September: nothing in development calls the Anthropic API; the one
+	// exception is the characters talking live while he plays, on LEDGER's own
+	// key with a hard monthly cap, which no automated tool or workflow may
+	// ever use). The talk program's key comes from one place, the live-talk
+	// key file (%LOCALAPPDATA%\LEDGER\live-talk-key.txt), which nothing else
+	// reads, and only in a run somebody is at: never -unattended, never a
+	// scripted run (-LiveScript, -AskScript, -AskAfterDeed, -LookScript), never
+	// -TalkFake. Every other run's talk is the stand-in. Either way a key the
+	// game was started with is taken out of its environment first, so no talk
+	// program inherits one (until 29 September the game, and the play
+	// launcher, read another project's key from the game's secrets file).
+	bool LiveTalkPlayed()
+	{
+		const TCHAR* Cmd = FCommandLine::Get();
+		int32 AskN = 0;
+		return !FParse::Param(Cmd, TEXT("unattended")) && !FParse::Param(Cmd, TEXT("TalkFake"))
+		    && !FParse::Param(Cmd, TEXT("LiveScript")) && !FParse::Param(Cmd, TEXT("AskAfterDeed"))
+		    && !FParse::Param(Cmd, TEXT("LookScript")) && !FParse::Value(Cmd, TEXT("AskScript="), AskN);
+	}
+
+	/// The talk program's key for this run, into the game's environment (the
+	/// talk program inherits it) or out of it. True when a key was found for a
+	/// played run; a played run without one leaves the talk offline.
+	bool TalkKeyForThisRun()
+	{
+		FPlatformMisc::SetEnvironmentVar(TEXT("ANTHROPIC_API_KEY"), TEXT(""));
+		if (!LiveTalkPlayed()) { return false; }
+		FString Key;
+		const FString Path = FPaths::Combine(FPlatformMisc::GetEnvironmentVariable(TEXT("LOCALAPPDATA")), TEXT("LEDGER"), TEXT("live-talk-key.txt"));
+		if (!FFileHelper::LoadFileToString(Key, *Path)) { return false; }
+		Key.TrimStartAndEndInline();
+		if (Key.IsEmpty()) { return false; }
+		FPlatformMisc::SetEnvironmentVar(TEXT("ANTHROPIC_API_KEY"), *Key);
+		return true;
+	}
+
 	void LiveHelperStart()
 	{
 		if (GLive.bStarted) { return; }
@@ -2613,19 +2696,6 @@ namespace
 				if (FPaths::FileExists(C)) { Exe = C; break; }
 			}
 			if (Exe.IsEmpty()) { return; }
-			// HIS OWN COPY'S KEY, from the game's secrets file on his PC (never
-			// in the package, never written anywhere), into the talk program's
-			// environment only; a friend's copy has none and goes through the relay.
-			if (FPlatformMisc::GetEnvironmentVariable(TEXT("ANTHROPIC_API_KEY")).IsEmpty())
-			{
-				FString Secrets;
-				const FString SecretsPath = FPaths::Combine(FPlatformProcess::UserDir(), TEXT("../AppData/LocalLow/DefaultCompany/ledger/secrets.json"));
-				if (FFileHelper::LoadFileToString(Secrets, *SecretsPath))
-				{
-					const std::string Key = JsonField(Utf8(Secrets), "anthropic_api_key");
-					if (Key != "none" && !Key.empty()) { FPlatformMisc::SetEnvironmentVar(TEXT("ANTHROPIC_API_KEY"), *Un(Key)); }
-				}
-			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerTalk: the game's own talk program, %s"), *Exe);
 		}
 		if (!FPlatformProcess::CreatePipe(GLive.OutRead, GLive.OutWrite) || !FPlatformProcess::CreatePipe(GLive.InRead, GLive.InWrite, true)) { return; }
@@ -2633,7 +2703,13 @@ namespace
 		// and the character speaking): the helper sends the answer's first
 		// sentence the moment it is written and has passed its own check for
 		// invented details, and the rest after; LiveHelperPump speaks each.
-		GLive.Proc = FPlatformProcess::CreateProc(*Exe, FParse::Param(FCommandLine::Get(), TEXT("TalkFake")) ? TEXT("--fake --early") : TEXT("--early"),
+		// THE KEY, OR THE STAND-IN (29 September, above): a played run's talk is
+		// real on LEDGER's own key, every other run's is the stand-in.
+		const bool bPlayed = LiveTalkPlayed();
+		const bool bKey = TalkKeyForThisRun();
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: %s"), !bPlayed ? TEXT("the stand-in (a scripted or unattended run)")
+			: bKey ? TEXT("live, on LEDGER's own key") : TEXT("offline: no live-talk key file"));
+		GLive.Proc = FPlatformProcess::CreateProc(*Exe, bPlayed ? TEXT("--early") : TEXT("--fake --early"),
 			false, true, true, nullptr, 0, nullptr, GLive.OutWrite, GLive.InRead);
 		GLive.bStarted = GLive.Proc.IsValid();
 	}
@@ -3701,12 +3777,16 @@ namespace
 	// he passes and as she looks back (Saved/LookScript). -LookStory=little or
 	// =enough first gives her a story of his night, half remembered or still
 	// told, so each regard can be seen. The game then closes.
-	// -LookCamera films it from in front of her instead, a frame every fifth of
-	// a second (Saved/LookScript/frames-<story>), for the approval page. The
+	// -LookCamera films it from in front of her instead, a frame every tenth of
+	// a second (frames-<story> in -LookFrames=<folder>, or else in
+	// Saved/LookScript), for the approval page; a film's frames are large, and
+	// scratch goes to drive F. Film it on a fixed step (-benchmark -fps=30):
+	// at the six frames a second a screenshot every frame allows, her hair's
+	// simulation blew apart as her head turned back. The
 	// walk runs on the game's clock, as the look does, so a slow frame rate
 	// cannot stretch one against the other.
 	struct FLookScript { int State = 0; double StartAt = 0.0, LastRow = 0.0, LastFrame = -1.0; int Frame = 0; bool bFilm = false;
-	                     FVector From, To; FString Rows, Story; TSet<FString> Shot; };
+	                     FVector From, To; FString Rows, Story, Frames; TSet<FString> Shot; };
 	FLookScript GLook;
 
 	void LookShot(const TCHAR* Name)
@@ -3741,35 +3821,97 @@ namespace
 			const FVector Side = FVector::CrossProduct(FVector::UpVector, Facing).GetSafeNormal2D();
 			const double Z = GPawn->GetActorLocation().Z;
 			GLook.From = At + Facing * 1600.0 + Side * 120.0;
-			GLook.To = At - Facing * 800.0 + Side * 120.0;
+			GLook.To = At - Facing * 1400.0 + Side * 120.0;   // past a look back's reach, so it is seen to end
 			GLook.From.Z = Z;
 			GLook.To.Z = Z;
 			GLook.StartAt = World->GetTimeSeconds() + 3.0;   // three seconds at the start, for her regard to be read
 			GLook.State = 1;
 			GLook.bFilm = FParse::Param(FCommandLine::Get(), TEXT("LookCamera"));
+			if (!FParse::Value(FCommandLine::Get(), TEXT("LookFrames="), GLook.Frames)) { GLook.Frames = FPaths::ProjectSavedDir() / TEXT("LookScript"); }
+			GLook.Frames = FPaths::ConvertRelativePathToFull(GLook.Frames / FString::Printf(TEXT("frames-%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story));
 			if (GLook.bFilm)
 			{
-				// OUT IN THE ROAD, NINE METRES AHEAD OF HER, on a long lens on her head
-				// and shoulders: she
-				// faces along the pavement towards it, the shop wall at her other
-				// side, and he walks away from it past her, so her head is seen
-				// turning to him as he comes, passes and goes (the review: from
-				// close in front of her he was off the frame until he had passed;
-				// her far side is the shop).
+				// OUT IN THE ROAD AHEAD OF HER AND ABOVE HIS HEAD, the first place
+				// from which rays to her head and shoulders meet nothing but her
+				// and his walk passes below the line to her face (the second
+				// review: from nine metres up the pavement a post stood between
+				// the lens and her, on exactly his side). She faces along the
+				// pavement, the shop wall at her other side; he walks towards
+				// her, past her and away. The lens holds her head and shoulders
+				// and him beside her as he passes.
 				const FVector Head = At + FVector(0.0, 0.0, 158.0);
-				const FVector Eye = Head + Facing * 900.0 + Side * 300.0 + FVector(0.0, 0.0, 5.0);
-				const FVector Look = Head - FVector(0.0, 0.0, 22.0);
+				TArray<AActor*> Skip;
+				Skip.Add(Her);
+				Skip.Add(GW1Body);
+				Skip.Add(GPawn);
+				Her->GetAttachedActors(Skip, false, true);
+				GW1Body->GetAttachedActors(Skip, false, true);
+				GPawn->GetAttachedActors(Skip, false, true);
+				FString Blocked;
+				FCollisionQueryParams Q(TEXT("LedgerLookCamera"), /*bTraceComplex=*/true);
+				Q.AddIgnoredActors(Skip);
+				const double HisHeadZ = Z + GPawn->BaseEyeHeight + 12.0;
+				auto Clear = [&](const FVector& E, bool bOfHim) -> bool
+				{
+					if (World->OverlapAnyTestByChannel(E, FQuat::Identity, ECC_Visibility, FCollisionShape::MakeSphere(30.0f), Q))
+					{
+						if (Blocked.IsEmpty()) { Blocked = TEXT("(the lens inside something)"); }
+						return false;
+					}
+					const FVector Across = FVector::CrossProduct(FVector::UpVector, Head - E).GetSafeNormal();
+					const FVector Down(0.0, 0.0, 35.0);
+					const FVector Aims[] = { Head, Head + Across * 18.0, Head - Across * 18.0, Head - Down + Across * 25.0, Head - Down - Across * 25.0 };
+					for (const FVector& T : Aims)
+					{
+						// A hit within a hand of where the ray is aimed is her.
+						FHitResult H;
+						if (World->LineTraceSingleByChannel(H, E, T, ECC_Visibility, Q) && (H.ImpactPoint - T).Size() > 25.0)
+						{
+							if (Blocked.IsEmpty()) { Blocked = H.GetActor() != nullptr ? H.GetActor()->GetName() : TEXT("?"); }
+							return false;
+						}
+					}
+					for (double Along = -400.0; bOfHim && Along <= 800.0; Along += 40.0)
+					{
+						FVector Him = At + Facing * Along + Side * 120.0;
+						Him.Z = HisHeadZ;
+						if ((FMath::ClosestPointOnSegment(Him, E, Head) - Him).Size() < 30.0) { return false; }
+					}
+					return true;
+				};
+				const double Fs[] = { 400.0, 300.0, 500.0, 600.0 };
+				const double Ss[] = { 380.0, 300.0, 460.0 };
+				const double Us[] = { 140.0, 110.0, 180.0 };
+				FVector Eye = Head + Facing * 400.0 + Side * 380.0 + FVector(0.0, 0.0, 140.0);
+				int32 Found = 0;
+				for (int32 Pass = 0; Pass < 2 && Found == 0; ++Pass)
+				{
+					for (const double U : Us) { for (const double S : Ss) { for (const double F : Fs)
+					{
+						const FVector E = Head + Facing * F + Side * S + FVector(0.0, 0.0, U);
+						if (Found == 0 && Clear(E, Pass == 0)) { Eye = E; Found = Pass + 1; }
+					} } }
+				}
+				UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: camera %s at %s (first in the way: %s)"),
+					Found == 1 ? TEXT("clear of the street and of him") : Found == 2 ? TEXT("clear of the street only") : TEXT("NOT CLEAR"),
+					*(Eye - Head).ToString(), Blocked.IsEmpty() ? TEXT("nothing") : *Blocked);
+				const FVector Look = Head - FVector(0.0, 0.0, 20.0);
+				const double Dist = (Look - Eye).Size();
 				FActorSpawnParameters P;
 				P.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 				if (ACameraActor* Cam = World->SpawnActor<ACameraActor>(Eye, (Look - Eye).Rotation(), P))
 				{
-					Cam->GetCameraComponent()->SetFieldOfView(11.0f);
+					// about two and a half metres across at her
+					Cam->GetCameraComponent()->SetFieldOfView((float)FMath::RadiansToDegrees(2.0 * FMath::Atan(130.0 / Dist)));
 					Cam->GetCameraComponent()->bConstrainAspectRatio = false;
 					if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetViewTargetWithBlend(Cam, 0.0f); }
 				}
 				// NO MOTION BLUR in the film: at five frames a second a quick turn
 				// smeared the face.
 				if (GEngine != nullptr) { GEngine->Exec(World, TEXT("r.MotionBlurQuality 0")); }
+				GSayInstructions = false;
+				GSubs.RemoveAll([](const FSubLine& L) { return L.Colour == FLinearColor(FColor::Yellow); });
+				SubsRebuild();
 			}
 			UE_LOG(LogTemp, Display, TEXT("LedgerLookScript: walking past Sheila, story=%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story);
 		}
@@ -3780,12 +3922,10 @@ namespace
 		const FVector Pos = GLook.From + Dir * Along;
 		GPawn->SetActorLocationAndRotation(Pos, Dir.Rotation(), false, nullptr, ETeleportType::TeleportPhysics);
 		if (APlayerController* PC = World->GetFirstPlayerController()) { PC->SetControlRotation(FRotator(-8.0f, (float)Dir.Rotation().Yaw, 0.0f)); }
-		if (GLook.bFilm && WNow - GLook.LastFrame >= 0.2 && WNow >= GLook.StartAt - 1.0)
+		if (GLook.bFilm && WNow - GLook.LastFrame >= 0.099 && WNow >= GLook.StartAt - 1.0)
 		{
 			GLook.LastFrame = WNow;
-			FScreenshotRequest::RequestScreenshot(FPaths::ConvertRelativePathToFull(FPaths::ProjectSavedDir()
-				/ TEXT("LookScript") / FString::Printf(TEXT("frames-%s"), GLook.Story.IsEmpty() ? TEXT("none") : *GLook.Story)
-				/ FString::Printf(TEXT("f_%03d.png"), GLook.Frame++)), true, false);   // with the subtitles
+			FScreenshotRequest::RequestScreenshot(GLook.Frames / FString::Printf(TEXT("f_%03d.png"), GLook.Frame++), true, false);   // with the subtitles
 		}
 		AActor* Her = GVisualFor(GW1Body);
 		ULedgerPersonAnim* Look = nullptr;
@@ -3840,6 +3980,7 @@ namespace
 		LiveVoicePump();
 		if (GPawn != nullptr) { LedgerSession::Look(GPawn->GetActorLocation(), bSayOpen); }
 		RegardTick(World, Now);
+		TownHoursTick();
 		LookScriptTick(World, Now);
 		AskScriptTick(Now);
 		TalkLightTick(World, Now);
@@ -3919,7 +4060,10 @@ namespace
 			GTalkWhy = "no-TalkHelper-path-given";
 			return;
 		}
-		bTalkFake = FParse::Param(FCommandLine::Get(), TEXT("TalkFake"));
+		// The stand-in unless somebody plays, and then only LEDGER's own key
+		// (29 September, TalkKeyForThisRun).
+		bTalkFake = !LiveTalkPlayed();
+		TalkKeyForThisRun();
 		FString Card = TEXT("sam");
 		FParse::Value(FCommandLine::Get(), TEXT("TalkAs="), Card);
 		GTalkCard = GTalkCardOverride.empty() ? Utf8(Card) : GTalkCardOverride;
@@ -4134,6 +4278,10 @@ namespace
 		// bank over.
 		Ok = FFileHelper::SaveStringToFile(Un(GLive.Remarks.ToJson()), *(Dir / TEXT("remarks.json")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
+		// THE HOURS THE TOWN HAS TALKED (town list 6bs), so a reload runs no
+		// hour twice and loses none.
+		Ok = FFileHelper::SaveStringToFile(Un(GTownHours.ToJson()), *(Dir / TEXT("town-hours.json")),
+			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		bSavedToDisk = Ok;
 		GSavedBytes = (int)Json.size();
 	}
@@ -4192,7 +4340,13 @@ namespace
 		// THE TALK COMES BACK TOO, once the talk program is ready (handover 6r).
 		GLive.bTalkLoad = Ok && !GLive.TalkStamp.empty();
 		GLive.bTalkReset = false;
-		// THE CLOCK COMES BACK WITH THE SAVE, and the night passes.
+		// The hours the town has talked (town list 6bs), from a save the load
+		// took; without them the first hour after the load starts them again.
+		FString HoursText;
+		GTownHours = Ok && FFileHelper::LoadFileToString(HoursText, *(Dir / TEXT("town-hours.json")))
+			? TownHours::FromJson(Utf8(HoursText)) : TownHours();
+		// THE CLOCK COMES BACK WITH THE SAVE, and the night passes (the town's
+		// rounds run its hours at the next tick).
 		GNow = GameTime(GClockDay + 1, 9, 0);
 	}
 
@@ -4400,6 +4554,7 @@ namespace
 					GLive.bTalkReset = true;
 					GLive.bTalkLoad = false;
 					GLive.Remarks = StreetVoice::RemarkLedger();   // and nobody has said anything to him yet
+					GTownHours = TownHours();                      // nor has the town talked an hour (town list 6bs)
 					GWatchSlot = 0;
 					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
 				}

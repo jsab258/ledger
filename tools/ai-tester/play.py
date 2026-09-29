@@ -1,47 +1,51 @@
 #!/usr/bin/env python3
-"""THE AI TESTER, the smallest version that works (Jafar, 24 September).
+"""THE AI TESTER, played by Claude Code itself (Jafar, 29 September).
 
-    python tools/ai-tester/play.py                 # the packaged slice, about eight minutes
-    python tools/ai-tester/play.py --editor        # the same, run from the editor's current build
-    python tools/ai-tester/play.py --minutes 5 --steps 30
+    python tools/ai-tester/play.py start [--editor] [--force] [--wait 60]
+    python tools/ai-tester/play.py shot
+    python tools/ai-tester/play.py walk forward|back|left|right SECONDS [--run]
+    python tools/ai-tester/play.py turn DEGREES          (negative left, positive right)
+    python tools/ai-tester/play.py press E|T
+    python tools/ai-tester/play.py say "WORDS"
+    python tools/ai-tester/play.py wait SECONDS
+    python tools/ai-tester/play.py note SEVERITY "WHAT"   (5 unplayable .. 1 cosmetic)
+    python tools/ai-tester/play.py finish "SUMMARY"
     python tools/ai-tester/play.py --selftest
 
-WHAT HE ASKED FOR: "it plays the packaged slice through the screen and
-keyboard as a person would, runs the encounter and wanders freely, and writes
-what broke into FOR-JAFAR.md, worst first. It is not a gate, and each run's
-cost is reported."
+WHY THIS SHAPE, 29 September. Jafar: "nothing in development calls the
+Anthropic API directly ... The AI tester: you play the game yourselves,
+looking at its screenshots and sending the keys, instead of a script calling
+the API per screenshot." He pays for Max and not for API calls on top. Until
+then this script asked the conversation model for one action per screenshot
+on the game's key. Now the player is the Claude Code session running it: each
+command does one action with real key presses and mouse moves sent to the
+game window, the way a hand would, then saves a picture of the window and
+prints its path, which the session looks at before choosing the next command.
+Nothing here calls a model, and no key is read or passed on: the game's own
+talk runs as its stand-in (-TalkFake).
 
-HOW. It starts the game in the playable encounter, from the start, with its
-own save so Jafar's is never touched. Each step it looks at the game window
-(a screenshot) and asks the conversation model for ONE action: walk, turn,
-press E or T, wait, note a problem, or finish. It then does that action with
-real key presses and mouse moves sent to the window, the way a hand would.
-Each request carries the newest picture and a short log of what it has done,
-not the whole history, so a step costs about the same at the end as at the
-start.
+WHAT HE ASKED FOR, 24 September: "it plays the packaged slice through the
+screen and keyboard as a person would, runs the encounter and wanders freely,
+and writes what broke into FOR-JAFAR.md, worst first. It is not a gate." The
+playbook `start` prints is what to do.
 
-WHAT IT WRITES: production/playtest/ai-tester/<time>/report.md (every note,
-worst first, each with the picture it was looking at) and for-jafar.md beside
-it, the short block with the run's cost, which the day's summary links (one
-summary a day in FOR-JAFAR.md since 28 September). It is not a gate: nothing
-reads its result to pass or fail anything.
+WHAT IT WRITES: production/playtest/ai-tester/<time>/ with each step's
+picture, report.md (every note, worst first, each with the picture it was
+looking at, and the log) and for-jafar.md, the short block the day's summary
+links. The run's state between commands is in F:/LedgerTools/tmp/ai-tester.
 
 NOT WHILE THE BUILD MACHINE PLAYS, 29 September: its test steps start the game
-too and time the slice at his screen size; a second game would skew that
-figure and could take the keys meant for this one. It waits, up to --wait
-minutes (default 60), until the machine runs no game or Unreal of its own.
-
-THE KEY is read from the game's own settings file into this process only,
-never printed, and the game inherits it for its own conversation.
+too; a second game could take the keys meant for this one. `start` waits, up
+to --wait minutes (default 60), until the machine runs no game or Unreal of
+its own.
 
 IT TAKES THE KEYBOARD AND MOUSE while it runs, so nobody should be using the
-PC at the time.
+PC at the time: `start` refuses when the PC was used in the last two minutes,
+unless --force.
 """
-import base64
 import ctypes
 import ctypes.wintypes as wt
 import datetime
-import io
 import json
 import os
 import subprocess
@@ -54,52 +58,19 @@ PACKAGED = r"F:\LedgerTools\played-game\Windows\LedgerProbe.exe"   # 26 Septembe
 EDITOR = r"C:\Program Files\Epic Games\UE_5.8\Engine\Binaries\Win64\UnrealEditor.exe"
 PROJECT = os.path.join(REPO, "ue-probe", "LedgerProbe.uproject")
 HELPER = os.path.join(REPO, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.exe")
-SECRETS = os.path.join(os.path.expanduser("~"), "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json")
-MODEL = "claude-sonnet-5"
-PRICE_IN, PRICE_OUT = 3.0, 15.0          # USD per million tokens, the game's own rate card (LlmClient.cs)
+STATE_DIR = r"F:\LedgerTools\tmp\ai-tester"
+STATE = os.path.join(STATE_DIR, "state.json")
 RES = (1280, 720)
 
 SCAN = {"w": 0x11, "a": 0x1E, "s": 0x1F, "d": 0x20, "e": 0x12, "t": 0x14, "shift": 0x2A}
 WALK_KEY = {"forward": "w", "back": "s", "left": "a", "right": "d"}
-PIXELS_PER_DEGREE = 5.7                  # a first guess; the tester sees the result and corrects
+PIXELS_PER_DEGREE = 5.7                  # a first guess; the player sees the result and corrects
 
-SYSTEM = """You are testing a video game by playing it, the way a careful human playtester would. You see one screenshot of the game window at a time and choose ONE action with a tool.
-
-The game: a street in a British port town, about 1990. You are the man in the grey tracksuit, seen from behind. Controls: walk with W A S D (use the walk tool), turn by moving the mouse (the turn tool), E does the act in front of you. To talk to someone, stand near them and use the say tool: it presses T, types your words into the line that opens at the bottom of the screen, and presses Enter. Yellow and white text lines at the top left are the game telling you things and people speaking; the newest line is at the top.
-
-Your job, in this order:
-1. Play the encounter the game offers: walk to the shop window by Mickey's (Mickey's is the minicab office with the dark blue front) and press E beside it to break it. Someone will shout. Then go round through the yard behind the parade if you can find it. After a while the game says it is later that week and tells you where Darren is; find Darren and talk to him with the say tool; say what a person would. Read what he says and answer him once or twice. Talk to Sheila and Ron too if you find them.
+PLAYBOOK = """THE PLAYBOOK (what the tester does, as before):
+The game: a street in a British port town, about 1990. You are the man in the grey tracksuit, seen from behind. Walk with W A S D (walk), turn with the mouse (turn), E does the act in front of you. To talk, stand near someone and use say: it presses T, types the words and presses Enter; the talk runs as its stand-in, so judge that the talk works, not what is said. Yellow and white lines are the game telling you things and people speaking.
+1. Play the encounter: walk to the shop window by Mickey's (the minicab office with the dark blue front) and press E beside it to break it. Someone will shout. Then go round through the yard behind the parade if you can find it. After a while the game says it is later that week and tells you where Darren is; find him and talk to him; answer him once or twice. Talk to Sheila and Ron too if you find them.
 2. Then wander freely: walk the street, look at the buildings and the people, try the edges, try walking into things.
-
-While you play, report anything broken or wrong with the note tool, as soon as you see it: you are stuck or fell through the world, a person floats, is half in the ground or stands in an odd pose, something flickers or is missing, text is garbled, the game ignores a key, a character says something that makes no sense. Also report anything showing or mentioning alcohol, betting or children, which the game must never have. Severity: 5 the game is unplayable or crashed, 4 a feature does not work, 3 clearly wrong and noticeable, 2 minor, 1 cosmetic. Do not report the same thing twice.
-
-Be efficient: walk for a second or two at a time, then look. When you have done both parts, or you are truly stuck, call finish with a two-sentence summary."""
-
-TOOLS = [
-    {"name": "walk", "description": "Hold a movement key for some seconds.",
-     "input_schema": {"type": "object", "properties": {
-         "direction": {"type": "string", "enum": ["forward", "back", "left", "right"]},
-         "seconds": {"type": "number", "minimum": 0.2, "maximum": 4},
-         "run": {"type": "boolean"}}, "required": ["direction", "seconds"]}},
-    {"name": "turn", "description": "Turn the view left (negative) or right (positive) by about this many degrees.",
-     "input_schema": {"type": "object", "properties": {"degrees": {"type": "number", "minimum": -180, "maximum": 180}},
-                      "required": ["degrees"]}},
-    {"name": "press", "description": "Press E (act) or T (talk) once.",
-     "input_schema": {"type": "object", "properties": {"key": {"type": "string", "enum": ["E", "T"]}}, "required": ["key"]}},
-    {"name": "say", "description": "Talk to the person you are standing near: presses T, types these words, presses Enter.",
-     "input_schema": {"type": "object", "properties": {"words": {"type": "string", "maxLength": 200}}, "required": ["words"]}},
-    {"name": "wait", "description": "Do nothing for some seconds, to let something happen.",
-     "input_schema": {"type": "object", "properties": {"seconds": {"type": "number", "minimum": 1, "maximum": 15}},
-                      "required": ["seconds"]}},
-    {"name": "note", "description": "Report something broken or wrong that you can see now.",
-     "input_schema": {"type": "object", "properties": {
-         "severity": {"type": "integer", "minimum": 1, "maximum": 5},
-         "what": {"type": "string", "description": "One or two plain sentences: what is wrong and where."}},
-         "required": ["severity", "what"]}},
-    {"name": "finish", "description": "End the session.",
-     "input_schema": {"type": "object", "properties": {"summary": {"type": "string"}}, "required": ["summary"]}},
-]
-
+Note anything broken or wrong as soon as you see it (stuck or through the world, a person floating, half in the ground or in an odd pose, flicker, something missing, garbled text, a key ignored, talk that makes no sense), and anything showing or mentioning alcohol, betting or children. Severity: 5 unplayable or crashed, 4 a feature does not work, 3 clearly wrong and noticeable, 2 minor, 1 cosmetic. Not the same thing twice. Walk a second or two at a time, then look. Finish with a two-sentence summary."""
 
 # ---------------------------------------------------------------- the window, the keys, the mouse
 user32 = ctypes.windll.user32 if os.name == "nt" else None
@@ -293,226 +264,6 @@ def game_on_top(hwnd, box):
     return True
 
 
-# ---------------------------------------------------------------- the model
-def ask(key, log_lines, image, step, steps):
-    import requests
-    buf = io.BytesIO()
-    im = image.copy()
-    im.thumbnail((1024, 576))
-    im.save(buf, "JPEG", quality=80)
-    text = ("Step %d of at most %d. What you have done so far, oldest first:\n%s\n\nThe game window now:"
-            % (step, steps, "\n".join(log_lines[-40:]) or "(nothing yet)"))
-    body = {"model": MODEL, "max_tokens": 400, "system": SYSTEM, "tools": TOOLS,
-            "tool_choice": {"type": "any"},
-            "messages": [{"role": "user", "content": [
-                {"type": "text", "text": text},
-                {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
-                                             "data": base64.b64encode(buf.getvalue()).decode()}}]}]}
-    r = requests.post("https://api.anthropic.com/v1/messages", timeout=90,
-                      headers={"x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"},
-                      data=json.dumps(body))
-    r.raise_for_status()
-    d = r.json()
-    u = d.get("usage", {})
-    call = next((c for c in d.get("content", []) if c.get("type") == "tool_use"), None)
-    return call, u.get("input_tokens", 0), u.get("output_tokens", 0)
-
-
-def cost_usd(tin, tout):
-    return tin / 1e6 * PRICE_IN + tout / 1e6 * PRICE_OUT
-
-
-def report_lines(notes, cost, steps, minutes, summary, stamp):
-    worst = sorted(notes, key=lambda n: -n["severity"])
-    out = ["# AI tester, %s" % stamp, "",
-           "%d steps in %.1f minutes, cost $%.2f (%s, the game's own rate card)." % (steps, minutes, cost, MODEL), "",
-           "Its summary: " + (summary or "none; it did not finish by itself."), "", "## What broke, worst first", ""]
-    if not worst:
-        out.append("Nothing reported.")
-    for n in worst:
-        out.append("- **%d** %s (step %d, %s)" % (n["severity"], n["what"].strip(), n["step"], n["picture"]))
-    return out, worst
-
-
-def for_jafar_block(worst, cost, steps, minutes, stamp, folder_rel):
-    lines = ["", "### AI tester, %s" % stamp, "",
-             "%d steps, %.0f minutes, $%.2f. Not a gate. Worst first:" % (steps, minutes, cost)]
-    for n in worst[:6]:
-        lines.append("- (%d) %s" % (n["severity"], n["what"].strip().split("\n")[0][:220]))
-    if not worst:
-        lines.append("- nothing reported")
-    lines.append("Full report: %s" % folder_rel)
-    return lines
-
-
-def run(args):
-    if user32 is None:
-        print("aiTester status=NOT-WINDOWS")
-        return 1
-    try:
-        ctypes.windll.shcore.SetProcessDpiAwareness(2)
-    except Exception:
-        pass
-    # AN EDITOR ON THIS PC BLOCKS THE BUILD MACHINE'S BUILD (24 September: the
-    # tester's editor-run game held the engine's lock, the runner's compile was
-    # refused in three seconds, and it tested a stale game). So the editor form
-    # refuses while the build machine has a job running; the packaged game,
-    # the default, never takes that lock.
-    if args.get("editor"):
-        jobs = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Runner.Worker.exe"], capture_output=True, text=True).stdout
-        if "Runner.Worker.exe" in jobs:
-            print("aiTester status=BUILD-MACHINE-BUSY (an editor now would block its build; run without --editor, or later)")
-            return 2
-    idle = seconds_since_input()
-    if idle < 120 and not args.get("force"):
-        print("aiTester status=PC-IN-USE secondsSinceInput=%.0f (it takes the keyboard and mouse; run it when nobody is at the PC, or --force)" % idle)
-        return 2
-    key = json.load(open(SECRETS, encoding="utf-8"))["anthropic_api_key"]
-    env = dict(os.environ, ANTHROPIC_API_KEY=key)
-    minutes = float(args.get("minutes", 8))
-    steps = int(args.get("steps", 45))
-    stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
-    folder = os.path.join(REPO, "production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
-    os.makedirs(folder, exist_ok=True)
-    save = tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
-    # THE PACKAGED GAME AS A PLAYER GETS IT, 24 September (overnight), Jafar's
-    # rule: the tester walks the packaged release build with the real cast,
-    # dialogue, light and sound. A package made since the game carries its own
-    # run-time files (Content/LedgerData, tools/ue/stage_game_data.py) is run
-    # ALONE: no -LedgerRepo, nothing copied beside it, so a missing file shows
-    # as a fault here instead of being papered over. An older package gets the
-    # old props, and the report says which.
-    pack_root = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe")
-    self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
-        pack_root, "Content", "LedgerData", "production", "assets", "street", "quay-street.json"))
-    shipping = os.path.isfile(os.path.join(pack_root, "Binaries", "Win64", "LedgerProbe-Win64-Shipping.exe"))
-    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER,
-                 "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
-                 "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
-    if not self_contained:
-        game_args.append("-LedgerRepo=" + REPO)
-        # THE STREET'S PIECE LIST AND THE WITNESS LINES GO BESIDE AN OLDER GAME,
-        # as the build machine puts them: without them its street is empty and
-        # the screen black (24 September, the run that reported a dead game).
-        import shutil
-        stage = pack_root if not args.get("editor") else os.path.join(REPO, "ue-probe")
-        if os.path.isdir(stage):
-            shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
-            shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
-    print("aiTester build=%s selfContained=%s config=%s" % ("editor" if args.get("editor") else "packaged",
-                                                           "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
-    if args.get("editor"):
-        cmd = [EDITOR, PROJECT, "-game"] + game_args
-        title = "LedgerProbe"
-    else:
-        cmd = [PACKAGED] + game_args
-        title = "LedgerProbe"
-    subprocess.run(["dotnet", "build", os.path.join(REPO, "ledger", "TalkHelper"), "-c", "Release", "-nologo", "-v", "q"],
-                   capture_output=True)
-    if not wait_for_runner(float(args.get("wait", 60))):
-        print("aiTester status=RUNNER-BUSY: the build machine's game or Unreal was still running")
-        return 1
-    game = subprocess.Popen(cmd, env=env)
-    hwnd = None
-    t0 = time.time()
-    while time.time() - t0 < 180 and hwnd is None:
-        time.sleep(2)
-        hwnd = find_window(title)
-    if hwnd is None:
-        print("aiTester status=NO-WINDOW")
-        game.terminate()
-        return 1
-    time.sleep(25)                                   # the street builds and the encounter places its people
-    for _ in range(10):                              # the first time the window may not take the front at once
-        focus(hwnd)
-        if game_in_front(hwnd):
-            break
-        time.sleep(1.0)
-    log, notes = [], []
-    tin = tout = 0
-    summary = None
-    done = 0
-    start = time.time()
-    for step in range(1, steps + 1):
-        if time.time() - start > minutes * 60 or game.poll() is not None:
-            break
-        focus(hwnd)
-        if not game_in_front(hwnd):
-            log.append("%d. (stopped: the game was not in front, so no keys were sent; in front: %s)" % (step, front_title()[:60]))
-            summary = "Stopped early: another window came to the front, so it stopped sending keys."
-            break
-        try:
-            im = screenshot(hwnd)
-        except RuntimeError as e:
-            log.append("%d. (stopped: %s)" % (step, e))
-            summary = "Stopped early: " + str(e) + "."
-            break
-        pic = "step-%02d.jpg" % step
-        im.save(os.path.join(folder, pic), quality=80)
-        try:
-            call, i, o = ask(key, log, im, step, steps)
-        except Exception as e:
-            log.append("%d. (the model could not be asked: %s)" % (step, type(e).__name__))
-            time.sleep(3)
-            continue
-        tin += i
-        tout += o
-        done = step
-        if call is None:
-            log.append("%d. (no action chosen)" % step)
-            continue
-        name, a = call["name"], call.get("input", {})
-        if name in ("walk", "turn", "press", "say") and not game_in_front(hwnd):
-            log.append("%d. (stopped: the game was not in front, so no keys were sent)" % step)
-            summary = "Stopped early: another window came to the front, so it stopped sending keys."
-            break
-        if name == "walk":
-            hold(WALK_KEY.get(a.get("direction"), "w"), min(4.0, max(0.2, float(a.get("seconds", 1)))), bool(a.get("run")))
-            log.append("%d. walked %s for %.1f s%s" % (step, a.get("direction"), float(a.get("seconds", 1)), " running" if a.get("run") else ""))
-        elif name == "turn":
-            mouse_move(float(a.get("degrees", 0)) * PIXELS_PER_DEGREE)
-            log.append("%d. turned %+.0f degrees" % (step, float(a.get("degrees", 0))))
-        elif name == "press":
-            tap("e" if a.get("key") == "E" else "t")
-            log.append("%d. pressed %s" % (step, a.get("key")))
-        elif name == "say":
-            words = str(a.get("words", ""))[:200]
-            tap("t")
-            time.sleep(0.6)
-            type_text(words)
-            time.sleep(0.2)
-            enter()
-            log.append("%d. said: %s" % (step, words))
-        elif name == "wait":
-            time.sleep(min(15.0, float(a.get("seconds", 2))))
-            log.append("%d. waited %.0f s" % (step, float(a.get("seconds", 2))))
-        elif name == "note":
-            notes.append({"severity": int(a.get("severity", 2)), "what": str(a.get("what", "")), "step": step, "picture": pic})
-            log.append("%d. NOTED (%s): %s" % (step, a.get("severity"), a.get("what")))
-        elif name == "finish":
-            summary = str(a.get("summary", ""))
-            log.append("%d. finished" % step)
-            break
-    elapsed = (time.time() - start) / 60.0
-    user32.PostMessageW(hwnd, 0x0010, 0, 0)          # WM_CLOSE: the game's own window, closed as a person would
-    try:
-        game.wait(timeout=60)
-    except Exception:
-        game.terminate()
-    cost = cost_usd(tin, tout)
-    lines, worst = report_lines(notes, cost, done, elapsed, summary, stamp)
-    lines += ["", "## Its log", ""] + ["- " + l for l in log]
-    lines += ["", "Tokens: %d in, %d out." % (tin, tout)]
-    with open(os.path.join(folder, "report.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(lines) + "\n")
-    rel = os.path.relpath(folder, REPO).replace("\\", "/") + "/report.md"
-    # A RUN THAT TOOK NO STEP HAS NOTHING TO TELL HIM, and says why here only.
-    # THE DAY'S SUMMARY LINKS THE REPORT (FOR-JAFAR.md has one summary a day
-    # since 28 September), so the block is kept beside the report instead.
-    with open(os.path.join(folder, "for-jafar.md"), "w", encoding="utf-8") as f:
-        f.write("\n".join(for_jafar_block(worst, cost, done, elapsed, stamp, rel)) + "\n")
-    print("aiTester status=RAN steps=%d minutes=%.1f notes=%d costUsd=%.2f report=%s" % (done, elapsed, len(notes), cost, rel))
-    return 0
 
 
 def runner_busy():
@@ -536,6 +287,258 @@ def wait_for_runner(minutes):
     return True
 
 
+
+
+# ---------------------------------------------------------------- the run's state between commands
+def load_state():
+    try:
+        return json.load(open(STATE, encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def save_state(st):
+    os.makedirs(STATE_DIR, exist_ok=True)
+    tmp = STATE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(st, f, indent=1)
+    os.replace(tmp, STATE)
+
+
+def pid_alive(pid):
+    h = ctypes.windll.kernel32.OpenProcess(0x1000, False, int(pid))   # PROCESS_QUERY_LIMITED_INFORMATION
+    if not h:
+        return False
+    code = wt.DWORD()
+    ctypes.windll.kernel32.GetExitCodeProcess(h, ctypes.byref(code))
+    ctypes.windll.kernel32.CloseHandle(h)
+    return code.value == 259                                           # STILL_ACTIVE
+
+
+def running_state():
+    st = load_state()
+    if not st or st.get("finished"):
+        print("aiTester status=NO-RUN (start one first)")
+        return None
+    if not pid_alive(st["pid"]) or not user32.IsWindow(st["hwnd"]):
+        print("aiTester status=GAME-GONE (the game has closed; finish the run to write its report)")
+        return None
+    return st
+
+
+def picture(st, label):
+    """Brings the game to the front, saves its picture as the next step and prints the path."""
+    hwnd = st["hwnd"]
+    focus(hwnd)
+    if not game_in_front(hwnd):
+        print("aiTester status=NOT-IN-FRONT front=%s" % front_title()[:60])
+        return None
+    try:
+        im = screenshot(hwnd)
+    except RuntimeError as e:
+        print("aiTester status=NO-PICTURE (%s)" % e)
+        return None
+    st["step"] += 1
+    pic = "step-%03d.jpg" % st["step"]
+    im.save(os.path.join(REPO, st["folder"], pic), quality=80)
+    st["picture"] = pic
+    st["log"].append("%d. %s" % (st["step"], label))
+    save_state(st)
+    print("aiTester step=%d did=%s picture=%s" % (st["step"], label, os.path.join(REPO, st["folder"], pic)))
+    return pic
+
+
+# ---------------------------------------------------------------- the commands
+def start(args):
+    if user32 is None:
+        print("aiTester status=NOT-WINDOWS")
+        return 1
+    try:
+        ctypes.windll.shcore.SetProcessDpiAwareness(2)
+    except Exception:
+        pass
+    st = load_state()
+    if st and not st.get("finished") and pid_alive(st["pid"]):
+        print("aiTester status=ALREADY-RUNNING folder=%s (finish it first)" % st["folder"])
+        return 2
+    # AN EDITOR ON THIS PC BLOCKS THE BUILD MACHINE'S BUILD (24 September), so
+    # the editor form refuses while the build machine has a job running; the
+    # packaged game, the default, never takes that lock.
+    if args.get("editor"):
+        jobs = subprocess.run(["tasklist", "/FI", "IMAGENAME eq Runner.Worker.exe"], capture_output=True, text=True).stdout
+        if "Runner.Worker.exe" in jobs:
+            print("aiTester status=BUILD-MACHINE-BUSY (an editor now would block its build; run without --editor, or later)")
+            return 2
+    idle = seconds_since_input()
+    if idle < 120 and not args.get("force"):
+        print("aiTester status=PC-IN-USE secondsSinceInput=%.0f (it takes the keyboard and mouse; run it when nobody is at the PC, or --force)" % idle)
+        return 2
+    # NO KEY, EVER (29 September): the game's talk runs as its stand-in, and
+    # the game's environment carries no key it could pass on.
+    env = dict(os.environ)
+    env.pop("ANTHROPIC_API_KEY", None)
+    stamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    folder = os.path.join("production", "playtest", "ai-tester", datetime.datetime.now().strftime("%Y-%m-%d-%H%M"))
+    os.makedirs(os.path.join(REPO, folder), exist_ok=True)
+    save = tempfile.mkdtemp(prefix="ledger-ai-tester-save-")
+    # THE PACKAGED GAME AS A PLAYER GETS IT (24 September, Jafar's rule: the
+    # tester walks the packaged release build with the real cast, dialogue,
+    # light and sound). A package that carries its own run-time files is run
+    # ALONE, so a missing file shows as a fault here; an older one gets the
+    # old props, and the report says which.
+    pack_root = os.path.join(os.path.dirname(PACKAGED), "LedgerProbe")
+    self_contained = (not args.get("editor")) and os.path.isfile(os.path.join(
+        pack_root, "Content", "LedgerData", "production", "assets", "street", "quay-street.json"))
+    shipping = os.path.isfile(os.path.join(pack_root, "Binaries", "Win64", "LedgerProbe-Win64-Shipping.exe"))
+    game_args = ["-LedgerSlice", "-LedgerCrime", "-Encounter=live", "-LiveFresh", "-TalkHelper=" + HELPER, "-TalkFake",
+                 "-EncounterSave=" + save, "-windowed", "-ResX=%d" % RES[0], "-ResY=%d" % RES[1], "-nosplash",
+                 "-dpcvars=Slate.ForceRawInputSimulation=1", "-ini:Engine:[Audio]:UnfocusedVolumeMultiplier=1.0"]
+    if not self_contained:
+        game_args.append("-LedgerRepo=" + REPO)
+        import shutil
+        stage = pack_root if not args.get("editor") else os.path.join(REPO, "ue-probe")
+        if os.path.isdir(stage):
+            shutil.copyfile(os.path.join(REPO, "production", "specs", "vignette-pieces.json"), os.path.join(stage, "vignette-pieces.json"))
+            shutil.copyfile(os.path.join(REPO, "content", "dialogue", "crime-witness-v1.json"), os.path.join(stage, "crime-witness-v1.json"))
+    build = "editor" if args.get("editor") else "packaged"
+    print("aiTester build=%s selfContained=%s config=%s" % (build, "yes" if self_contained else "no", "Shipping" if shipping else "Development"))
+    cmd = ([EDITOR, PROJECT, "-game"] if args.get("editor") else [PACKAGED]) + game_args
+    subprocess.run(["dotnet", "build", os.path.join(REPO, "ledger", "TalkHelper"), "-c", "Release", "-nologo", "-v", "q"],
+                   capture_output=True)
+    if not wait_for_runner(float(args.get("wait", 60))):
+        print("aiTester status=RUNNER-BUSY: the build machine's game or Unreal was still running")
+        return 1
+    game = subprocess.Popen(cmd, env=env)
+    hwnd = None
+    t0 = time.time()
+    while time.time() - t0 < 180 and hwnd is None:
+        time.sleep(2)
+        hwnd = find_window("LedgerProbe")
+    if hwnd is None:
+        print("aiTester status=NO-WINDOW")
+        game.terminate()
+        return 1
+    time.sleep(25)                                   # the street builds and the encounter places its people
+    for _ in range(10):                              # the first time the window may not take the front at once
+        focus(hwnd)
+        if game_in_front(hwnd):
+            break
+        time.sleep(1.0)
+    st = {"pid": game.pid, "hwnd": int(hwnd), "folder": folder.replace("\\", "/"), "stamp": stamp, "started": time.time(),
+          "build": build, "selfContained": self_contained, "step": 0, "log": [], "notes": [], "picture": None, "finished": False}
+    save_state(st)
+    print(PLAYBOOK)
+    picture(st, "started")
+    return 0
+
+
+def act(verb, rest):
+    st = running_state()
+    if st is None:
+        return 1
+    hwnd = st["hwnd"]
+    focus(hwnd)
+    if not game_in_front(hwnd):
+        print("aiTester status=NOT-IN-FRONT (no keys sent) front=%s" % front_title()[:60])
+        return 1
+    if verb == "walk":
+        direction = rest[0] if rest else "forward"
+        seconds = min(4.0, max(0.2, float(rest[1]) if len(rest) > 1 else 1.0))
+        running = "--run" in rest
+        hold(WALK_KEY.get(direction, "w"), seconds, running)
+        label = "walked %s for %.1f s%s" % (direction, seconds, " running" if running else "")
+    elif verb == "turn":
+        degrees = max(-180.0, min(180.0, float(rest[0]) if rest else 0.0))
+        mouse_move(degrees * PIXELS_PER_DEGREE)
+        label = "turned %+.0f degrees" % degrees
+    elif verb == "press":
+        k = (rest[0] if rest else "E").upper()
+        tap("e" if k == "E" else "t")
+        label = "pressed %s" % k
+    elif verb == "say":
+        words = " ".join(rest)[:200]
+        tap("t")
+        time.sleep(0.6)
+        type_text(words)
+        time.sleep(0.2)
+        enter()
+        label = "said: %s" % words
+    elif verb == "wait":
+        seconds = min(15.0, max(0.5, float(rest[0]) if rest else 2.0))
+        time.sleep(seconds)
+        label = "waited %.0f s" % seconds
+    else:
+        print("aiTester status=UNKNOWN-COMMAND %s" % verb)
+        return 2
+    time.sleep(0.4)                                  # the frame after the action
+    return 0 if picture(st, label) else 1
+
+
+def note(rest):
+    st = load_state()
+    if not st or st.get("finished"):
+        print("aiTester status=NO-RUN")
+        return 1
+    severity = max(1, min(5, int(rest[0]))) if rest else 2
+    what = " ".join(rest[1:]).strip()
+    st["notes"].append({"severity": severity, "what": what, "step": st["step"], "picture": st.get("picture") or "none"})
+    st["log"].append("%d. NOTED (%d): %s" % (st["step"], severity, what))
+    save_state(st)
+    print("aiTester noted severity=%d at step %d" % (severity, st["step"]))
+    return 0
+
+
+def report_lines(notes, steps, minutes, summary, stamp, build):
+    worst = sorted(notes, key=lambda n: -n["severity"])
+    out = ["# AI tester, %s" % stamp, "",
+           "%d steps in %.1f minutes, the %s game, played by Claude Code on Jafar's subscription: no API calls." % (steps, minutes, build), "",
+           "Its summary: " + (summary or "none; it did not finish by itself."), "", "## What broke, worst first", ""]
+    if not worst:
+        out.append("Nothing reported.")
+    for n in worst:
+        out.append("- **%d** %s (step %d, %s)" % (n["severity"], n["what"].strip(), n["step"], n["picture"]))
+    return out, worst
+
+
+def for_jafar_block(worst, steps, minutes, stamp, folder_rel):
+    lines = ["", "### AI tester, %s" % stamp, "",
+             "%d steps, %.0f minutes, played by Claude Code (no API cost). Not a gate. Worst first:" % (steps, minutes)]
+    for n in worst[:6]:
+        lines.append("- (%d) %s" % (n["severity"], n["what"].strip().split("\n")[0][:220]))
+    if not worst:
+        lines.append("- nothing reported")
+    lines.append("Full report: %s" % folder_rel)
+    return lines
+
+
+def finish(rest):
+    st = load_state()
+    if not st or st.get("finished"):
+        print("aiTester status=NO-RUN")
+        return 1
+    summary = " ".join(rest).strip() or None
+    if pid_alive(st["pid"]) and user32.IsWindow(st["hwnd"]):
+        user32.PostMessageW(st["hwnd"], 0x0010, 0, 0)   # WM_CLOSE: the game's own window, closed as a person would
+        t0 = time.time()
+        while pid_alive(st["pid"]) and time.time() - t0 < 60:
+            time.sleep(1)
+        if pid_alive(st["pid"]):
+            subprocess.run(["taskkill", "/PID", str(st["pid"]), "/F"], capture_output=True)
+    minutes = (time.time() - st["started"]) / 60.0
+    lines, worst = report_lines(st["notes"], st["step"], minutes, summary, st["stamp"], st["build"])
+    lines += ["", "## Its log", ""] + ["- " + l for l in st["log"]]
+    folder = os.path.join(REPO, st["folder"])
+    with open(os.path.join(folder, "report.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lines) + "\n")
+    rel = st["folder"] + "/report.md"
+    with open(os.path.join(folder, "for-jafar.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(for_jafar_block(worst, st["step"], minutes, st["stamp"], rel)) + "\n")
+    st["finished"] = True
+    save_state(st)
+    print("aiTester status=RAN steps=%d minutes=%.1f notes=%d report=%s" % (st["step"], minutes, len(st["notes"]), rel))
+    return 0
+
+
 def selftest():
     ok = bad = 0
 
@@ -546,25 +549,41 @@ def selftest():
         else:
             bad += 1
             print("ai-tester selftest FAIL " + name)
-    check("the rate card is the game's", abs(cost_usd(1_000_000, 1_000_000) - 18.0) < 1e-9)
     notes = [{"severity": 2, "what": "a", "step": 3, "picture": "p"}, {"severity": 5, "what": "b", "step": 9, "picture": "q"}]
-    lines, worst = report_lines(notes, 0.5, 10, 4.0, "s", "x")
+    lines, worst = report_lines(notes, 10, 4.0, "s", "x", "packaged")
     check("worst first", worst[0]["severity"] == 5)
-    check("the report says the cost", any("$0.50" in l for l in lines))
-    block = for_jafar_block(worst, 0.5, 10, 4.0, "x", "r.md")
+    check("the report says no API calls", any("no API calls" in l for l in lines))
+    block = for_jafar_block(worst, 10, 4.0, "x", "r.md")
     check("the block for Jafar is worst first and short", block[4].startswith("- (5)") and len(block) <= 12)
-    check("every tool has a schema", all("input_schema" in t for t in TOOLS))
-    check("the keys the tools send exist", all(v in SCAN for v in WALK_KEY.values()) and "e" in SCAN and "t" in SCAN)
-    check("its save is never the player's", "-EncounterSave=" in " ".join(["-EncounterSave="]))
+    check("the keys the commands send exist", all(v in SCAN for v in WALK_KEY.values()) and "e" in SCAN and "t" in SCAN)
+    src = open(os.path.abspath(__file__), encoding="utf-8").read()
+    check("nothing here calls the API or reads a key",
+          ("api." + "anthropic.com") not in src and ("anthropic" + "_api_key") not in src and ("x-" + "api-key") not in src)
+    check("the game's talk is the stand-in", '"-TalkFake"' in src)
+    check("its save is never the player's", '"-EncounterSave=" + save' in src)
     print("ai-tester selftest: passed=%d/%d failed=%d" % (ok, ok + bad, bad))
     return 1 if bad else 0
 
 
 if __name__ == "__main__":
-    if "--selftest" in sys.argv:
+    argv = sys.argv[1:]
+    if "--selftest" in argv:
         sys.exit(selftest())
-    a = {"editor": "--editor" in sys.argv, "force": "--force" in sys.argv}
-    for flag in ("--minutes", "--steps", "--wait"):
-        if flag in sys.argv:
-            a[flag[2:]] = sys.argv[sys.argv.index(flag) + 1]
-    sys.exit(run(a))
+    verb = argv[0] if argv else ""
+    rest = argv[1:]
+    if verb == "start":
+        a = {"editor": "--editor" in rest, "force": "--force" in rest}
+        if "--wait" in rest:
+            a["wait"] = rest[rest.index("--wait") + 1]
+        sys.exit(start(a))
+    if verb == "shot":
+        s = running_state()
+        sys.exit(0 if s and picture(s, "looked") else 1)
+    if verb in ("walk", "turn", "press", "say", "wait"):
+        sys.exit(act(verb, rest))
+    if verb == "note":
+        sys.exit(note(rest))
+    if verb == "finish":
+        sys.exit(finish(rest))
+    print(__doc__)
+    sys.exit(2)
