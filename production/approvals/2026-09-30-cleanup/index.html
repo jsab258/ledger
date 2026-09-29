@@ -1,0 +1,110 @@
+<title>Drive C Cleanup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+:root{
+  --ground:#e9ecea; --surface:#f6f7f6; --ink:#1b2224; --muted:#56636a; --rule:#c9d0d0;
+  --accent:#9a3e2b; --ok:#2e6a48; --chip:#dde2e1;
+  --display:"Archivo Narrow","Arial Narrow",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --type:"Courier Prime","Courier New",Courier,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+    --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#121617; --surface:#1a2022; --ink:#e3e8e7; --muted:#98a4a7; --rule:#2d3639;
+  --accent:#d27352; --ok:#63b384; --chip:#242c2e; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:16px/1.5 var(--body);padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1000px;margin:0 auto;display:grid;gap:28px}
+header{display:grid;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:18px}
+.kicker{font:700 12px/1 var(--type);letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:700 clamp(30px,5vw,46px)/1.02 var(--display);margin:0;text-wrap:balance}
+h2{font:700 clamp(22px,3.4vw,28px)/1.05 var(--display);margin:0;text-wrap:balance}
+h3{font:600 15px/1 var(--display);letter-spacing:.06em;text-transform:uppercase;margin:0}
+.how{margin:0;max-width:70ch;color:var(--muted)}
+.meter{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.meter div{background:var(--surface);border:1px solid var(--rule);padding:12px}
+.meter b{display:block;font:700 30px/1 var(--display);font-variant-numeric:tabular-nums}
+.meter span{font:400 13px var(--type);color:var(--muted)}
+section.group{display:grid;gap:12px;background:var(--surface);border:1px solid var(--rule);padding:20px}
+section.group.rec{box-shadow:inset 4px 0 0 var(--ok)}
+.gb{font:700 22px/1 var(--display);font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font:400 14px/1.4 var(--type)}
+td{border-top:1px solid var(--rule);padding:6px 4px;vertical-align:top;word-break:break-all}
+td.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;word-break:normal}
+.tbl{overflow-x:auto}
+p{margin:0;max-width:72ch}
+.lbl{font:700 12px/1 var(--type);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+label.pick{display:flex;align-items:center;gap:6px;font:400 14px var(--type)}
+textarea{width:100%;min-height:50px;font:15px/1.4 var(--body);color:var(--ink);background:var(--ground);border:1px solid var(--rule);padding:8px}
+.saved,.tally{font:400 13px var(--type);color:var(--muted)}
+footer{font:400 13px/1.5 var(--type);color:var(--muted);border-top:1px solid var(--rule);padding-top:14px}
+</style>
+<div class="wrap">
+  <header>
+    <div class="kicker">LEDGER · cleanup page · 28 September</div>
+    <h1>What would go from drive C, and why</h1>
+    <p class="how">Nothing has been deleted. Each group below is a folder or a few, with its size, why it can go, and what happens after. Say yes or no to each; only the groups you say yes to go, and only inside the list you gave (now in CLAUDE.md). Anything that must survive is moved to F: first and checked there. Groups I would not delete are shown too, marked, so you see everything I looked at.</p>
+    <div class="meter" id="meter"></div>
+    <div class="tally" id="tally"></div>
+  </header>
+  <main class="wrap" id="groups"></main>
+  <section class="group"><h2>Not on your list, so not touched</h2><div class="tbl"><table id="others"></table></div></section>
+  <section class="group"><h2>What stops it filling again</h2>
+    <p>1. Unreal's cache is capped at 20 GB in its own settings (since 28 September) and trims itself. 2. The build machine clears its build leftovers at the end of each build, and, once you say yes above, its old history too. 3. Every large file I make is recorded (production/large-files.json), and at the end of each day only my own rejected or superseded ones go, only inside your list. 4. My scratch and downloads go to drive F. 5. Each day's summary shows free space on C: before and after; under 60 GB, this page comes first.</p>
+  </section>
+  <footer>Sizes measured 29 September 2026, 11:26 by tools/cleanup.py, which refuses any path outside the list or protected (what you approved, what the game or a build uses, what the backup covers).</footer>
+</div>
+<script>
+const DATA = {"freeC": 42.7, "freeF": 34.0, "groups": [{"id": "probe-packaged", "title": "An old packaged copy of the game, from 23 September", "paths": ["C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged"], "why": "The game packaged here once, on 23 September. You play the copy on drive F, and the build machine packages its own; nothing runs this one.", "after": "Nothing you would notice.", "recommend": true, "sizes": [["C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged", 1.14]], "gb": 1.1, "movedGb": 0}, {"id": "probe-saved-old", "title": "Superseded film frames and old crash reports", "paths": ["C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript", "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes"], "why": "The frames of Sheila's look films before the ones on your page (recorded as superseded), and the editor's crash reports from earlier in the month.", "after": "Nothing you would notice.", "recommend": true, "sizes": [["C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript", 0.36], ["C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes", 0.28]], "gb": 0.6, "movedGb": 0}], "others": [{"name": "Dropbox", "path": "C:\\Users\\Jafar\\Dropbox", "gb": 42.6, "why": "yours; the backup adds to it and never deletes"}, {"name": "Windows' hibernation file", "path": "C:\\hiberfil.sys", "gb": 13.7, "why": "the biggest win and yours alone: a Windows setting I may not change. If you never hibernate the PC, run 'powercfg /h off' in a terminal opened as administrator and it goes, putting C: over 60 GB with the rest"}, {"name": "Windows' swap file", "path": "C:\\pagefile.sys", "gb": 9.6, "why": "Windows'"}, {"name": "Windows' temporary files", "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp", "gb": 4.4, "why": "not on your list, so untouched"}, {"name": "Hugging Face's model cache", "path": "C:\\Users\\Jafar\\.cache\\huggingface", "gb": 8.0, "why": "the voice models (the game's live voice loads one from here), not datasets; not on your list, so untouched. It could move to drive F if you say so, with the voice tools pointed there"}]};
+const state = {};
+let db = null;
+function el(tag, attrs, ...kids){ const n = document.createElement(tag); for (const [k,v] of Object.entries(attrs||{})) { if (k === "class") n.className = v; else if (k === "text") n.textContent = v; else n.setAttribute(k, v); } for (const k of kids) if (k) n.append(k); return n; }
+function save(key, patch){ state[key] = Object.assign({}, state[key] || {}, patch, {at: new Date().toISOString()}); render(); if (db) db.doc("verdicts/" + key).set(Object.assign({}, state[key])).catch(() => {}); }
+function gb(x){ return (Math.round(x * 10) / 10).toFixed(1) + " GB"; }
+function render(){
+  let yes = 0, judged = 0;
+  const root = document.getElementById("groups"); root.replaceChildren();
+  for (const g of DATA.groups) {
+    const k = "cleanup-" + g.id, st = state[k] || {};
+    if (st.pick) judged++;
+    if (st.pick === "yes") yes += g.gb;
+    const sec = el("section", {class:"group" + (g.recommend ? " rec" : "")});
+    sec.append(el("div", {class:"row"}, el("h2", {text:g.title}), el("span", {class:"gb", text:gb(g.gb)})));
+    sec.append(el("div", {class:"lbl", text: g.recommend ? "I recommend: yes" : "I recommend: keep"}));
+    const t = el("table"); for (const [p, s] of g.sizes) t.append(el("tr", {}, el("td", {text:p}), el("td", {class:"n", text:gb(s)})));
+    sec.append(el("div", {class:"tbl"}, t));
+    sec.append(el("p", {}, el("b", {text:"Why it can go. "}), document.createTextNode(g.why)));
+    if (g.moveOut && g.moveOut.length) { const m = el("table"); for (const x of g.moveOut) m.append(el("tr", {}, el("td", {text:"moved first: " + x.from + " → " + x.to + " (" + x.why + ")"}))); sec.append(el("div", {class:"tbl"}, m)); }
+    if (g.saveIntoProject) sec.append(el("p", {}, el("b", {text:"Saved into the project first. "}), document.createTextNode(g.saveIntoProject)));
+    sec.append(el("p", {}, el("b", {text:"After. "}), document.createTextNode(g.after)));
+    const picks = el("div", {class:"row"});
+    for (const [v, txt] of [["yes", "Yes, it can go"], ["no", "No, keep it"]]) { const id = "p-" + g.id + "-" + v; const r = el("input", {type:"radio", name:"p-" + g.id, id, value:v}); if (st.pick === v) r.checked = true; r.addEventListener("change", () => save(k, {pick:v})); picks.append(el("label", {class:"pick", for:id}, r, document.createTextNode(txt))); }
+    const note = el("textarea", {placeholder:"A word, if any (optional)"}); note.value = st.note || ""; note.addEventListener("change", () => save(k, {note:note.value}));
+    sec.append(picks, note, el("span", {class:"saved", text: st.at ? "Saved " + new Date(st.at).toLocaleString() : ""}));
+    root.append(sec);
+  }
+  const rec = DATA.groups.filter(g => g.recommend).reduce((a, g) => a + g.gb, 0);
+  document.getElementById("meter").replaceChildren(
+    el("div", {}, el("b", {text:gb(DATA.freeC)}), el("span", {text:"free on C: now"})),
+    el("div", {}, el("b", {text:gb(DATA.freeC + rec)}), el("span", {text:"free after the groups I recommend"})),
+    el("div", {}, el("b", {text:gb(DATA.freeC + yes)}), el("span", {text:"free after the groups you said yes to"})),
+    el("div", {}, el("b", {text:gb(DATA.freeF - DATA.groups.filter(g => g.recommend).reduce((a, g) => a + (g.movedGb || 0), 0))}), el("span", {text:"free on F: after the moves"})));
+  document.getElementById("tally").textContent = judged + " of " + DATA.groups.length + " groups answered" + (db ? "" : " · answers are not being stored on this view");
+  const o = document.getElementById("others"); o.replaceChildren();
+  for (const x of DATA.others) o.append(el("tr", {}, el("td", {text:x.name}), el("td", {class:"n", text:gb(x.gb)}), el("td", {text:x.why})));
+}
+render();
+(async () => { try { db = window.claude && window.claude.use ? await window.claude.use("db") : null; } catch (e) { db = null; }
+  if (!db) { render(); return; }
+  for (const g of DATA.groups) { try { const s = await db.doc("verdicts/cleanup-" + g.id).get(); if (s.exists) state["cleanup-" + g.id] = Object.assign({}, s.data()); } catch (e) {} }
+  render(); })();
+</script>

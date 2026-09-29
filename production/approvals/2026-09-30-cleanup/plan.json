@@ -1,0 +1,79 @@
+{
+ "freeC": 42.7,
+ "freeF": 34.0,
+ "groups": [
+  {
+   "id": "probe-packaged",
+   "title": "An old packaged copy of the game, from 23 September",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged"
+   ],
+   "why": "The game packaged here once, on 23 September. You play the copy on drive F, and the build machine packages its own; nothing runs this one.",
+   "after": "Nothing you would notice.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Packaged",
+     1.14
+    ]
+   ],
+   "gb": 1.1,
+   "movedGb": 0
+  },
+  {
+   "id": "probe-saved-old",
+   "title": "Superseded film frames and old crash reports",
+   "paths": [
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript",
+    "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes"
+   ],
+   "why": "The frames of Sheila's look films before the ones on your page (recorded as superseded), and the editor's crash reports from earlier in the month.",
+   "after": "Nothing you would notice.",
+   "recommend": true,
+   "sizes": [
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\LookScript",
+     0.36
+    ],
+    [
+     "C:\\Users\\Jafar\\ledger-local\\ue-probe\\Saved\\Crashes",
+     0.28
+    ]
+   ],
+   "gb": 0.6,
+   "movedGb": 0
+  }
+ ],
+ "others": [
+  {
+   "name": "Dropbox",
+   "path": "C:\\Users\\Jafar\\Dropbox",
+   "gb": 42.6,
+   "why": "yours; the backup adds to it and never deletes"
+  },
+  {
+   "name": "Windows' hibernation file",
+   "path": "C:\\hiberfil.sys",
+   "gb": 13.7,
+   "why": "the biggest win and yours alone: a Windows setting I may not change. If you never hibernate the PC, run 'powercfg /h off' in a terminal opened as administrator and it goes, putting C: over 60 GB with the rest"
+  },
+  {
+   "name": "Windows' swap file",
+   "path": "C:\\pagefile.sys",
+   "gb": 9.6,
+   "why": "Windows'"
+  },
+  {
+   "name": "Windows' temporary files",
+   "path": "C:\\Users\\Jafar\\AppData\\Local\\Temp",
+   "gb": 4.4,
+   "why": "not on your list, so untouched"
+  },
+  {
+   "name": "Hugging Face's model cache",
+   "path": "C:\\Users\\Jafar\\.cache\\huggingface",
+   "gb": 8.0,
+   "why": "the voice models (the game's live voice loads one from here), not datasets; not on your list, so untouched. It could move to drive F if you say so, with the voice tools pointed there"
+  }
+ ]
+}

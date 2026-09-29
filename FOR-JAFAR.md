@@ -10,7 +10,7 @@ production/archive/FOR-JAFAR-to-2026-09-24.md.
 
 **No API calls: two things only you can do.** (1) Remove the key named ANTHROPIC_API_KEY from GitHub's secrets (https://github.com/jsab258/ledger/settings/secrets/actions): no workflow reads it any more, but my access cannot delete it. (2) When you make LEDGER's own capped key, save it alone in a text file at %LOCALAPPDATA%\LEDGER\live-talk-key.txt: the game reads it only while you play, and nothing else ever does. Until then the characters' talk is offline when you play.
 
-**[Tuesday's cleanup page](https://claude.ai/artifact/CKZN26j6P2cc91khC1uNRX):** C: settled at 54 to 57 GB tonight, under your 60: Unreal's cache refilled to its cap and the build machine's copy came back. Two groups, both recommended: cap that cache at 10 GB (about 12 GB back), and its old cache again (2 GB).
+**[Wednesday's cleanup page](https://claude.ai/artifact/BKVe5Ypxbv9fh4YD9f2ezi):** your two yeses of Tuesday are done (Unreal's store capped at 10 GB, trimming itself when Unreal next starts, about 7 GB; its old cache deleted again). C: is at 43 GB while the build machine builds; the list alone cannot reach 60. Recommended: two small groups (1.7 GB); the big win is yours alone: the Windows hibernation file, 13.7 GB.
 
 ## Builder, Tuesday 29 September
 
