@@ -18,7 +18,10 @@ when that is, so today she never names him and never shows the book.
   earns it in the first hour; one she sees or hears of at a deed does not.
   Note: in the slice's crime Sheila herself sees the window go in, from
   Mickey's rank, so a friend who plays that crime never earns her trust in
-  week one and gets the day-book on day 7.
+  week one and gets the day-book on day 7. And trust once earned holds: in
+  the whole week on paper, a friend Sheila trusted on day 4 who was then
+  taken in for the window on day 5 still got the real book on day 7
+  (production/playtest/week-on-paper-2026-09-29.md).
   Built this way meanwhile. (Weighing his answers instead failed four fresh
   reviews: a lie could win her over while the truth could not.)
 - **(B) Only the book's scene**: she trusts him on day 7 whatever he has
