@@ -6245,6 +6245,85 @@ namespace Ledger.CoreTests
                       "and the character is told not to promise in the first place");
             }
 
+            // THE TOWN TALKS BY ITS ROUTINES (town list 6bs): one game hour of rounds
+            // by the routines for the pairs the street does not hold, then the
+            // hour's ageing, exactly as TownReach runs them; and skipped hours.
+            {
+                var rc = CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"cafe\":{\"x_m\":0,\"z_m\":0},\"quay\":{\"x_m\":50,\"z_m\":0}}," +
+                    "\"people\":[{\"id\":\"p\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[11,\"quay\"]]},{\"id\":\"q\",\"routine\":[[0,\"off\"],[9,\"cafe\"],[10,\"quay\"]]}," +
+                    "{\"id\":\"r\",\"routine\":[[0,\"off\"],[11,\"quay\"]]}],\"ties\":[[\"p\",\"q\",0.8],[\"q\",\"r\",0.8]]}");
+                GossipMill RoundsMill()
+                {
+                    var graph = new SocialGraph();
+                    foreach (var (a, b, w) in rc.Ties) graph.Link(a, b, w);
+                    var m = new GossipMill(graph);
+                    foreach (var id in rc.People) m.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                    m.Witness("p", new Fact(TownNews.Subject, "a_row", "seen"), "somebody had words in the cafe", false, new GameTime(0, 9, 0), 0.9);
+                    return m;
+                }
+                bool Holds(GossipMill m, string id) => m.Get(id).Rumors.Exists(x => x.Content.Predicate == "a_row");
+                var byHour = RoundsMill();
+                int passed9 = TownRounds.Hour(byHour, rc, new GameTime(0, 9, 30));
+                bool qHeard = Holds(byHour, "q") && !Holds(byHour, "r");
+                TownRounds.Hour(byHour, rc, new GameTime(0, 10, 0));
+                bool rNotYet = !Holds(byHour, "r");
+                TownRounds.Hour(byHour, rc, new GameTime(0, 11, 0));
+                bool rHeard = Holds(byHour, "r");
+                // By hand, as TownReach has always done it: the same.
+                var byHand = RoundsMill();
+                for (int hh = 9; hh < 12; hh++)
+                {
+                    for (int m = 0; m < 60; m += 6) byHand.Tick(new GameTime(0, hh, m), (a, b) => rc.Together(a, b, 0, hh));
+                    byHand.Age(new GameTime(0, hh + 1, 0));
+                }
+                bool same = true;
+                foreach (var id in rc.People)
+                {
+                    var x = byHour.Get(id).Rumors; var y = byHand.Get(id).Rumors;
+                    if (x.Count != y.Count) same = false;
+                    else for (int k = 0; k < x.Count; k++) if (x[k].Confidence != y[k].Confidence || x[k].Hops != y[k].Hops) same = false;
+                }
+                // Both on the street: the game's rounds, not these.
+                var onStreetBoth = RoundsMill();
+                TownRounds.Hour(onStreetBoth, rc, new GameTime(0, 9, 0), id => id == "p" || id == "q");
+                var onStreetOne = RoundsMill();
+                TownRounds.Hour(onStreetOne, rc, new GameTime(0, 9, 0), id => id == "p");
+                var skipped = RoundsMill();
+                int ran = TownRounds.CatchUp(skipped, rc, new GameTime(0, 9, 30), new GameTime(0, 12, 10));
+                int longest = TownRounds.CatchUp(RoundsMill(), rc, new GameTime(0, 0, 0), new GameTime(100, 0, 0));
+                // The same story told again after ageing is no news (the independent
+                // check): one copy, one raise, however often they meet.
+                var pairGraph = new SocialGraph();
+                pairGraph.Link("a", "b", 0.8);
+                var agedPair = new GossipMill(pairGraph);
+                foreach (var id in new[] { "a", "b" }) agedPair.Add(new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker()));
+                agedPair.Witness("a", new Fact("player", "night_walk", "seen"), "the new owner out late", true, new GameTime(0, 9, 0), 0.9);
+                for (int k = 0; k < 72; k++)
+                {
+                    agedPair.Tick(GameTime.FromTotalMinutes(540 + k * 60));
+                    agedPair.Age(GameTime.FromTotalMinutes(600 + k * 60));
+                }
+                int qCopies = agedPair.Get("b").Rumors.Count(x => x.Content.Predicate == "night_walk");
+                bool noRetell = qCopies == 1;
+                // Every hour once, however often it is asked; skipped hours with nobody on the street.
+                var hoursMill = RoundsMill();
+                var hours = new TownHours();
+                int firstRun = hours.RunTo(hoursMill, rc, new GameTime(0, 9, 10), id => id == "p" || id == "q");
+                int sameHour = hours.RunTo(hoursMill, rc, new GameTime(0, 9, 50));
+                bool gameOwnPair = !Holds(hoursMill, "q");
+                int skippedTwo = hours.RunTo(hoursMill, rc, new GameTime(0, 11, 5));
+                var hoursBack = TownHours.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(hours.ToJson()))));
+                int afterLoad = hoursBack.RunTo(hoursMill, rc, new GameTime(0, 11, 30));
+                var townBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(new TownSave { Hours = hours }.ToJson()))));
+                bool hoursOnce = firstRun == 1 && sameHour == 0 && gameOwnPair && skippedTwo == 2 && hours.NextHour == 12 && afterLoad == 0
+                                 && townBack.Hours.NextHour == 12 && TownRounds.HourStart(-1).Equals(new GameTime(-1, 23, 0));
+                Check(passed9 >= 1 && qHeard && rNotYet && rHeard && same && !Holds(onStreetBoth, "q") && Holds(onStreetOne, "q") && noRetell && hoursOnce
+                      && ran == 3 && Holds(skipped, "r") && longest == TownRounds.LongestCatchUpHours
+                      && TownRounds.Hour(null, rc, new GameTime(0, 9, 0)) == 0 && TownRounds.CatchUp(skipped, rc, new GameTime(0, 12, 0), new GameTime(0, 9, 0)) == 0,
+                      "an hour of the town's talk runs the rounds by the routines, as TownReach always has, for every pair the street does not hold, and ages the hour; skipped hours are caught up, two weeks at most",
+                      $"{passed9} {qHeard} {rNotYet} {rHeard} {same} {ran} {longest} {noRetell}/{qCopies} {hoursOnce}");
+            }
+
             // THE DAMAGE FOUND AFTERWARDS (town list 6br): whoever comes into the
             // deed's area before it is mended finds it, as the town's news naming
             // nobody, once each, never whoever saw the deed, never after hearing it.

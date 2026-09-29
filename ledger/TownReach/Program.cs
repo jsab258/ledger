@@ -247,9 +247,7 @@ static class Program
                 custody = police.TakeIn(t, now, false, false);
                 saw = Custody.SeenTaken(mill, cast, "mickeys", now);
             }
-            for (int minute = 0; minute < 60; minute += 6)
-                mill.Tick(new GameTime(day, hod, minute), (a, b) => cast.Together(a, b, day, hod));
-            mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
+            TownRounds.Hour(mill, cast, now);
             if (custody != null && day == custody.TakenAt.Day && hod == 21) at["that evening"] = Holders();
             if (custody != null && day == custody.TakenAt.Day + 1 && hod == 11) at["the next noon"] = Holders();
         }
@@ -290,9 +288,7 @@ static class Program
             var now = new GameTime(day, hod, 0);
             var nowFound = damage.Tick(mill, cast, now);
             foreach (var (who, when) in nowFound) finders.Add($"{who} {when.Hour:00}:00");
-            for (int minute = 0; minute < 60; minute += 6)
-                mill.Tick(new GameTime(day, hod, minute), (a, b) => cast.Together(a, b, day, hod));
-            mill.Age(new GameTime((abs + 1) / 24, (abs + 1) % 24, 0));
+            TownRounds.Hour(mill, cast, now);
             if (day == 2 && hod == 11) at["Wednesday noon"] = Holders();
             if (day == 2 && hod == 17) at["Wednesday six"] = Holders();
             if (day == 3 && hod == 11) at["Thursday noon"] = Holders();
