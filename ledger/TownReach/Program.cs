@@ -58,6 +58,7 @@ static class Program
         string metArg = Arg(args, "--meridian", null);
         if (metArg != null) return Meridian(cast, metArg.Split(','), double.Parse(Arg(args, "--rate", "2"), Inv),
                                             Arg(args, "--teller", null), int.Parse(Arg(args, "--told-at", "22"), Inv), Arg(args, "--answer", "did"));
+        if (Array.IndexOf(args, "--loud") >= 0) return Loud(cast, Array.IndexOf(args, "--second-night") >= 0);
         if (Array.IndexOf(args, "--two-hours") >= 0) return TwoHours(cast, File.ReadAllText(castPath), double.Parse(Arg(args, "--clear-every", StreetVoice.ClearWordsEverySeconds.ToString(Inv)), Inv),
                                                                    double.Parse(Arg(args, "--deed-at", "-1"), Inv),
                                                                    Array.IndexOf(args, "--town-news") >= 0 ? TownNews.Parse(File.ReadAllText(Path.Combine(Path.GetDirectoryName(Path.GetFullPath(castPath)), "town-news.json"))) : null);
@@ -202,6 +203,92 @@ static class Program
             Console.WriteLine($"  showing in the same hour:  most in any run before={peakBefore} after={peakAfter};  a run's busiest hour, mean before={busiestBefore / runs:0.0} after={busiestAfter / runs:0.0}");
             Console.WriteLine($"  hearers who say something about the story at least once: {perHearer(storyRemarkers) * 100:0}%  " +
                               $"(half-remembered, to a companion: {(storyRemarkers > 0 ? faintRemarkers / storyRemarkers * 100 : 0):0}% of those who say something)");
+        }
+        return 0;
+    }
+
+    /// HOW LOUD THE STREET GETS (town list 6ar): every night-one sighting by
+    /// each of the cast out between 22:00 and 04:00, at a first sight of 0.6
+    /// and of 1.0, and PoliceFile.Loudness (people of his day world passing the
+    /// talk round, a retelling each) each morning at nine of days 1 to 5, the
+    /// days the first hour spans; for choosing PoliceFile.LoudAt so that DS
+    /// Ellis comes on days 4 and 5 "if the street has got loud about him".
+    static int Loud(CastDay cast, bool secondNight = false)
+    {
+        var people = cast.People;
+        Console.WriteLine($"loud: night-one sightings, loudness at 09:00 each morning, {people.Count} people");
+        foreach (double firstSight in new[] { 0.6, 1.0 })
+        {
+            var byDay = new List<int>[6];
+            for (int d = 1; d <= 5; d++) byDay[d] = new List<int>();
+            var byWitness = new Dictionary<string, int[]>();
+            var witnesses = new List<string>();
+            var pairs = new Dictionary<string, SortedSet<string>>();
+            int runs = 0;
+            for (int hour = 22; hour <= 28; hour++)
+            {
+                int day = hour / 24, hod = hour % 24;
+                foreach (var witness in people)
+                {
+                    if (cast.Where(witness, day, hod) == null) continue;
+                    runs++;
+                    var graph = new SocialGraph();
+                    foreach (var (a, b, w) in cast.Ties) graph.Link(a, b, w);
+                    var mill = new GossipMill(graph);
+                    foreach (var p in people) mill.Add(new Gossiper(p, p, new MemoryStore(p), new KnowledgeBase(), new SuspicionTracker(), cast.CircleOf(p)));
+                    var start = new GameTime(day, hod, 0);
+                    mill.Age(start);
+                    mill.Witness(witness, new Fact("player", "night_walk_d0", "seen"), "the new owner was about the yard after midnight", true, start, firstSight);
+                    witnesses.Add(witness);
+                    // With --second-night, the night of day index 2 (the second
+                    // ask) is seen too, by the next of the cast out at that hour.
+                    string second = null;
+                    if (secondNight)
+                    {
+                        int i0 = people.ToList().IndexOf(witness);
+                        for (int k = 1; k < people.Count && second == null; k++)
+                        {
+                            var c = people[(i0 + k) % people.Count];
+                            if (c != witness && cast.Where(c, day + 2, hod) != null) second = c;
+                        }
+                    }
+                    int secondAt = hour + 48;
+                    if (second != null)
+                    {
+                        if (!pairs.ContainsKey(witness)) pairs[witness] = new SortedSet<string>();
+                        pairs[witness].Add(second + "@" + (hour % 24));
+                    }
+                    int at = hour + 1;
+                    for (int morning = 1; morning <= 5; morning++)
+                    {
+                        int until = morning * 24 + 9;
+                        for (; at <= until; at++)
+                        {
+                            int dd = at / 24, hh = at % 24;
+                            if (second != null && at == secondAt)
+                                mill.Witness(second, new Fact("player", "night_walk_d2", "seen"), "the new owner was about the quay late", true, new GameTime(dd, hh, 0), firstSight);
+                            for (int minute = 0; minute < 60; minute += 6)
+                                mill.Tick(new GameTime(dd, hh, minute), (x, y) => cast.Together(x, y, dd, hh));
+                            mill.Age(new GameTime(dd, hh, 59));
+                        }
+                        int loudNow = PoliceFile.Loudness(mill);
+                        byDay[morning].Add(loudNow);
+                        if (!byWitness.ContainsKey(witness)) byWitness[witness] = new int[6];
+                        byWitness[witness][morning] = Math.Max(byWitness[witness][morning], loudNow);
+                    }
+                }
+            }
+            Console.WriteLine($"FIRST SIGHT {firstSight.ToString("0.0", Inv)}: runs={runs}, by {byWitness.Count} different first witnesses");
+            foreach (var kv in byWitness.OrderBy(k => k.Key))
+                Console.WriteLine($"  first witness {kv.Key}: loudness at nine on days 2 to 6, at its loudest hour: {string.Join(" ", kv.Value.Skip(1))}"
+                                  + (secondNight && pairs.TryGetValue(kv.Key, out var two) ? $" (second night seen by {string.Join(", ", two)})" : ""));
+            for (int d = 1; d <= 5; d++)
+            {
+                var v = byDay[d];
+                v.Sort();
+                string at = string.Join(" ", new[] { 2, 3, 4, 6, 8 }.Select(k => $">={k}:{v.Count(x => x >= k) * 100 / Math.Max(1, v.Count)}%"));
+                Console.WriteLine($"  morning of day {d + 1} (day index {d}): median {v[v.Count / 2]}, max {v[v.Count - 1]}; {at}");
+            }
         }
         return 0;
     }
