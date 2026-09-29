@@ -226,6 +226,7 @@ WATCHED = {
     # and Parler's obligations, by the same reasoning as the barks.
     "content/voice/acks": "Casting voice candidates",
     "production/approvals/2026-09-28": "Casting voice candidates",
+    "production/approvals/2026-09-29": "Casting voice candidates",
 }
 
 # ASSETS THIS PROJECT MADE ITSELF, which need no attribution and must not be

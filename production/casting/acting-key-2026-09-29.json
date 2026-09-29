@@ -1,0 +1,32 @@
+{
+ "what": "Tuesday's blind pair of Ron's threat line: which letter is which engine. The approval page must not show this file.",
+ "made": "2026-09-29",
+ "line": "Walk away, son. Thirty years on the docks, and I never once had to ask a man twice.",
+ "A": {
+  "engine": "VoxCPM2 (openbmb/VoxCPM2, Apache-2.0), cloned from game-design/picked-clips/rocco.p227.mp3 with the direction (low, slow and cold, quietly menacing)",
+  "tool": "tools/voice-live/voxcpm_takes.py"
+ },
+ "B": {
+  "engine": "the game's voice engine (Chatterbox Nano) from the same clip, its own seeds",
+  "tool": "tools/voice-live/speak_lines.py"
+ },
+ "gate": "both passed tools/voice-live/take_gate.py (English, the words, likeness 0.70 and 0.75) and a blind reviewer (production/casting/acting-2026-09-29/README.md); loudness evened to -20 LUFS",
+ "sources": {
+  "ron-threat-A": {
+   "engine": "voxcpm2-directed",
+   "source": "F:/LedgerTools/tmp/voxcpm-trial/ron-kirby-threat-directed.wav"
+  },
+  "ron-threat-B": {
+   "engine": "game-nano",
+   "source": "F:/LedgerTools/tmp/nano-acting/rocco-1.wav"
+  },
+  "ron-humour-A": {
+   "engine": "game-nano",
+   "source": "F:/LedgerTools/tmp/nano-acting/rocco-4.wav"
+  },
+  "ron-humour-B": {
+   "engine": "voxcpm2-directed",
+   "source": "F:/LedgerTools/tmp/voxcpm-trial/ron-kirby-humour-directed.wav"
+  }
+ }
+}

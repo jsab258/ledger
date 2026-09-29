@@ -1,0 +1,186 @@
+{
+ "tab": "Tuesday's Page",
+ "kicker": "LEDGER · Tuesday 29 September",
+ "title": "Tuesday's page",
+ "how": [
+  "Everything here passed my check and a blind reviewer's for obvious faults; the reviewer's remaining notes are beside each. Pick one per item; a note is optional. Your picks save on the page.",
+  "New today: one blind pair of Ron's voice acting. The rest is Monday's, not yet picked, except Sheila's voice as the game speaks it, taken off: a closer check found it leaning American for a moment.",
+  "Faces: front and profile in a plain studio light, and the face speaking a line."
+ ],
+ "foot": "Anything you do not pick carries onto the next page.",
+ "sections": [
+  {
+   "kind": "pair",
+   "key": "act-ron-kirby-threat",
+   "name": "Ron, threatening: two ways of making his voice act",
+   "note": "The same line in Ron's voice, made two different ways, heard blind (which is which is kept off the page). Both passed the accent, words and likeness checks and a blind reviewer. Which sounds more like Ron meaning it? Only Ron's threat is here tonight: his other lines, and Sheila's and Darren's, failed the accent check in one way or the other.",
+   "line": "Walk away, son. Thirty years on the docks, and I never once had to ask a man twice.",
+   "takes": [
+    {
+     "label": "A",
+     "audio": "production/approvals/2026-09-29/act-ron-threat-A.wav"
+    },
+    {
+     "label": "B",
+     "audio": "production/approvals/2026-09-29/act-ron-threat-B.wav"
+    }
+   ],
+   "options": [
+    [
+     "A",
+     "A"
+    ],
+    [
+     "B",
+     "B"
+    ],
+    [
+     "neither",
+     "Neither is him"
+    ]
+   ]
+  },
+  {
+   "kind": "faces",
+   "key": "face-sheila-dunn",
+   "name": "Sheila Dunn",
+   "pron": "her",
+   "note": "Her fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: she reads about 45 to 48, not 53 (smooth forehead and upper lip, no smoker's lines); a peach tint on the upper lids and red inner corners; the hair darker and warmer than the concept's ash grey-brown; the proportions close to the concept. In the speaking frames her eyes blur during a blink. The haircut is Epic's nearest, not yet a set; her glasses come with her clothes.",
+   "audio": "production/approvals/2026-09-28/speak-sheila-dunn.wav",
+   "candidates": [
+    {
+     "take": "S4",
+     "front": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-front.jpg",
+     "profile": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-profile.jpg",
+     "speak": {
+      "file": "production/casting/candidates-2026-09-28/S4/sheila-dunn/S4-speak.jpg",
+      "frames": 94,
+      "cols": 10,
+      "rows": 10,
+      "fps": 15
+     }
+    }
+   ]
+  },
+  {
+   "kind": "faces",
+   "key": "face-darren-milner",
+   "name": "Darren Milner",
+   "pron": "him",
+   "note": "His fifth face, shaped to the concept portrait by measurement. The blind reviewer's remaining notes: the lids cut into the iris and the brows are heavy, so he looks sullen rather than quick and amused, and about 30; orange upper lids and red inner corners; the brown of the hair darker and redder than the concept's, the blond a band at the ends. The haircut is Epic's nearest, not yet a grown-out perm.",
+   "audio": "production/approvals/2026-09-28/speak-darren-milner.wav",
+   "candidates": [
+    {
+     "take": "S4",
+     "front": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-front.jpg",
+     "profile": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-profile.jpg",
+     "speak": {
+      "file": "production/casting/candidates-2026-09-28/S4/darren-milner/S4-speak.jpg",
+      "frames": 82,
+      "cols": 10,
+      "rows": 9,
+      "fps": 15
+     }
+    }
+   ]
+  },
+  {
+   "kind": "look",
+   "key": "look-talk-light",
+   "name": "The conversation light",
+   "note": "A faint light on whoever you are talking to, from above and to one side, and a catch-light in the eyes. It lights only their skin (not their hair), only that person, costs 0.2 ms a frame, and fades six seconds after they stop; a face already in sun gets none. Shown on Ron: judge the light, not the face.",
+   "pictures": [
+    {
+     "src": "production/art/lighting/talk-light-2026-09-28/rocco-front-final.jpg",
+     "alt": "Ron in the street's daylight, no conversation light"
+    },
+    {
+     "src": "production/art/lighting/talk-light-2026-09-28/rocco-talk-final.jpg",
+     "alt": "The same moment and camera, with the conversation light"
+    }
+   ],
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "game-ron-kirby",
+   "name": "Ron's voice, in the game",
+   "note": "His July voice, as the game speaks it. Carried from 25 September.",
+   "line": "Forty years on the docks and they finished it with a letter. Mickey gave me the door. I don't forget that.",
+   "audio": "production/casting/in-game-2026-09-25/voice/ron-kirby.wav",
+   "options": [
+    [
+     "yes",
+     "This is him"
+    ],
+    [
+     "no",
+     "Not him"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "game-darren-milner",
+   "name": "Darren's voice, in the game",
+   "note": "His approved voice (Scottish, which the sheet notes), as the game speaks it. Carried from 25 September.",
+   "line": "A shape's not much to go on. Half the town could pass for that on a night like this.",
+   "audio": "production/casting/in-game-2026-09-25/voice/darren-milner.wav",
+   "options": [
+    [
+     "yes",
+     "This is him"
+    ],
+    [
+     "no",
+     "Not him"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "think-ron-kirby",
+   "name": "Ron, while he thinks",
+   "note": "When you ask him something, he says one of these at once, in his own voice, and stops the moment his answer starts. It covers the wait; there is no loading sign. Both of his, one after the other.",
+   "line": "Let me think.  /  Well, now.",
+   "audio": "production/approvals/2026-09-28/thinking-ron.wav",
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  },
+  {
+   "kind": "voice",
+   "key": "think-darren-milner",
+   "name": "Darren, while he thinks",
+   "note": "The same for Darren. Sheila has none yet: both tries leaned away from her accent.",
+   "line": "Hmm, well now.  /  Let me think.",
+   "audio": "production/approvals/2026-09-28/thinking-darren.wav",
+   "options": [
+    [
+     "yes",
+     "Keep it"
+    ],
+    [
+     "no",
+     "Not like this"
+    ]
+   ]
+  }
+ ]
+}
