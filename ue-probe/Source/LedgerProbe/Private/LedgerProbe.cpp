@@ -813,6 +813,26 @@ class FLedgerProbeModule : public FDefaultGameModuleImpl
 public:
 	virtual void StartupModule() override
 	{
+		// A FRIEND'S DOUBLE-CLICK PLAYS THE GAME, 29 September (the twenty a
+		// friend would notice, 1: the copy he sends starts from its own
+		// shortcut). A packaged game started with no mode at all used to open
+		// the bare street on the probe's floating camera. Now it is the
+		// playable game: the slice's player and the live encounter, with the
+		// talk program found beside it. Only in a cooked game, never in the
+		// editor or the cook, which load this module too and must see
+		// nothing (below); every scripted run names its own mode.
+		if (FPlatformProperties::RequiresCookedData() && !IsRunningCommandlet() && !GIsEditor)
+		{
+			static const TCHAR* const kModes[] = { TEXT("LedgerVignette"), TEXT("LedgerShot"), TEXT("LedgerWalk"),
+				TEXT("LedgerCrime"), TEXT("LedgerMhCost"), TEXT("LedgerPortrait"), TEXT("LedgerGoldenTest"), TEXT("LedgerSlice") };
+			bool bAnyMode = false;
+			for (const TCHAR* M : kModes) { bAnyMode = bAnyMode || FParse::Param(FCommandLine::Get(), M); }
+			if (!bAnyMode)
+			{
+				FCommandLine::Append(TEXT(" -LedgerSlice -LedgerCrime -Encounter=live"));
+				UE_LOG(LogTemp, Display, TEXT("LedgerProbe: a plain launch plays the game (-LedgerSlice -LedgerCrime -Encounter=live)"));
+			}
+		}
 		// THE TEST RUNS ONLY WHEN ASKED, AND THAT IS NOT FUSSINESS.
 		//
 		// Moving this module to PostConfigInit made the golden test work in
