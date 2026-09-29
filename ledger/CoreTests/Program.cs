@@ -5370,9 +5370,23 @@ namespace Ledger.CoreTests
                 var tsBack = TownSave.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(tsJson))));
                 bool saved6bp = tsBack.Arrests.Count == 1 && tsBack.Arrests[0].Topic == "player.window_d1" && tsBack.Arrests[0].TakenAt.Equals(tenAm)
                                 && tsBack.Police.WasTaken("player.window_d1") && !tsBack.Police.CanArrest("player.window_d1");
-                Check(calls && taken && saveKeeps && saveRefuses && street && saved6bp,
+                // WHAT HE IS TOLD (town list 6bu): the 1990 caution, the gist of his
+                // rights, and on release how it ended, the day he answers and what
+                // not turning up means; all within the content rules.
+                string arrestSaid = denied.ArrestWords(), deniedOut = denied.ReleaseWords(), ownedOut = owned.ReleaseWords(), killedOut = killed.ReleaseWords();
+                bool words = arrestSaid == "I'm arresting you on suspicion of criminal damage. " + Custody.Caution
+                             && Custody.Caution == "You do not have to say anything unless you wish to do so, but what you say may be given in evidence."
+                             && deniedOut.StartsWith("You are charged with the offence(s) shown below. " + Custody.Caution) && deniedOut.Contains("on Thursday at ten o'clock")
+                             && deniedOut.Contains("Not turning up is an offence in itself.") && deniedOut.Contains("keeping the coat")
+                             && ownedOut.StartsWith("You've been cautioned for the criminal damage") && !ownedOut.Contains("coat")
+                             && killedOut.Contains("released on bail without charge") && killedOut.Contains("on a Thursday") && killed.ArrestWords().Contains("suspicion of murder")
+                             && friday.ReleaseWords().Contains("on Monday at ten o'clock");
+                string broke = null;
+                foreach (var line in new[] { arrestSaid, deniedOut, ownedOut, killedOut, cut.ReleaseWords(), friday.ReleaseWords(), Custody.Rights })
+                    if (ContentRule.SpeechBreaks(line) is string b) broke = b + ": " + line;
+                Check(calls && taken && saveKeeps && saveRefuses && street && saved6bp && words && broke == null,
                       "a constable calls the day after a statement about a window, once; he is held the hours the Home Office found, the coat kept, and let go on a caution, a charge with bail to the next weekday's magistrates, or bail to come back, never a game end; the street sees him taken and says so once he is out; the save keeps it",
-                      $"{calls} {taken} {saveKeeps} {saveRefuses} {street} {saved6bp}");
+                      $"{calls} {taken} {saveKeeps} {saveRefuses} {street} {saved6bp} {words} {broke} | {deniedOut} | {killedOut}");
 
                 var file = new PoliceFile();
                 var named = file.Report("bold", "player.cut_d2", Offence.Wounding, 4, 2);

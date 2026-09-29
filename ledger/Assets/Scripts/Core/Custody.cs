@@ -92,6 +92,50 @@ namespace Ledger.Core
             return d;
         }
 
+        /// THE CAUTION IN FORCE IN 1990 (town list 6bu; PACE Code C, 1986, para
+        /// 10.4, unchanged in the 1991 edition): given on arrest and on charge,
+        /// from the Code's own text (production/research/police-response-1990/
+        /// WORDS-2026-09-29.md).
+        public const string Caution = "You do not have to say anything unless you wish to do so, but what you say may be given in evidence.";
+
+        /// What the custody sergeant tells him on arrival: the gist of the
+        /// written notice of his three rights and that he need not use them now
+        /// (Code C, 1986); a London force's notice of the time was found, not
+        /// Humberside's, so these are plain words, not a form's.
+        public const string Rights = "You can have someone told you're here. You can see a solicitor, and the duty solicitor is free. You can read the codes of practice. You don't have to do any of that now.";
+
+        static readonly string[] Weekdays = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
+        /// The offence as the police name it to him.
+        static string OffenceWords(Offence o) =>
+            o == Offence.Damage ? "criminal damage" : o == Offence.Wounding ? "wounding" : o == Offence.Robbery ? "robbery"
+            : o == Offence.Killing ? "murder" : o == Offence.Assault ? "assault" : "being suspicious";
+
+        /// WHAT HE IS TOLD TAKING HIM IN: the arrest and the caution.
+        public string ArrestWords() => "I'm arresting you on suspicion of " + OffenceWords(Offence) + ". " + Caution;
+
+        /// WHAT HE IS TOLD LETTING HIM GO, plainly (town list 6bu; the checklist's
+        /// A15.17, the consequences made clear, and A46.01, plain words): how it
+        /// ended, the day he answers and what not turning up means (the Bail Act
+        /// 1976), and the coat if they kept it. Ten o'clock is the game's hour
+        /// (inferred); a charge's notice begins with the Code's own words.
+        public string ReleaseWords()
+        {
+            string coat = CoatKept ? " We're keeping the coat you had on, as evidence." : "";
+            string day = AnswerDay >= 0 ? Weekdays[CastDay.Weekday(AnswerDay)] : null;
+            switch (End)
+            {
+                case CustodyEnd.Cautioned:
+                    return "You've been cautioned for the " + OffenceWords(Offence) + ": you admitted it, so there's no charge, but the caution stays on your record and can be mentioned in court if you're ever back. You're free to go.";
+                case CustodyEnd.Charged:
+                    return "You are charged with the offence(s) shown below. " + Caution + " The offence: " + OffenceWords(Offence) + ". You're bailed to appear at the magistrates' court on " + day +
+                           " at ten o'clock. Not turning up is an offence in itself." + coat;
+                default:
+                    return "You're released on bail without charge, while enquiries continue. You're to come back to this station in four weeks, on a " + day +
+                           ", at ten o'clock. Not turning up is an offence in itself." + coat;
+            }
+        }
+
         /// Whether he is in the cells at `now`.
         public bool Holds(GameTime now) => now.TotalMinutes >= TakenAt.TotalMinutes && now.TotalMinutes < OutAt.TotalMinutes;
 
