@@ -63,6 +63,7 @@
 
 #include "VignetteShot.h"
 #include "PersonAnim.h"
+#include "CastDay.h"
 #include "FrameStats.h"
 
 #include "CoreMinimal.h"
@@ -2971,6 +2972,36 @@ namespace
 		return FString();
 	}
 
+	// THE LIVE ENCOUNTER'S TIES FROM THE CAST FILE, 29 September (town list
+	// handover 2): Sheila, Darren and Ron are tied to each other as
+	// production/specs/hook-cast.json ties them (lena, sam and rocco there),
+	// read through CastDay.h, the port of the reader the Core's tests use,
+	// rather than by the probe's own 0.6. The regression keeps its measured
+	// ties; a file that cannot be read leaves them too, and says so.
+	void LiveTiesFromCast()
+	{
+		const FString Path = SessionCastFile();
+		FString Text;
+		CastDay Cast;
+		std::string Err;
+		if (Path.IsEmpty() || !FFileHelper::LoadFileToString(Text, *Path) || !CastDay::Parse(Utf8(Text), Cast, Err))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("LedgerCast: the probe's own ties kept: %s"),
+				Path.IsEmpty() ? TEXT("no hook-cast.json found") : *Un(Err.empty() ? std::string("unreadable") : Err));
+			return;
+		}
+		const std::map<std::string, std::string> Street = { { "lena", "w1" }, { "sam", "n2" }, { "rocco", LedgerCrime::kR3Id } };
+		std::string Said;
+		for (const CastDay::Tie& T : Cast.Ties())
+		{
+			auto A = Street.find(T.A), B = Street.find(T.B);
+			if (A == Street.end() || B == Street.end()) { continue; }
+			GGraph->Link(A->second, B->second, T.W);
+			Said += " " + A->second + "-" + B->second + "=" + LedgerCrime::F2(T.W);
+		}
+		UE_LOG(LogTemp, Display, TEXT("LedgerCast: ties from %s:%s"), *Path, *Un(Said));
+	}
+
 	// A list of strings out of a reply line: "name":["a","b"].
 	TArray<FString> JsonList(const std::string& Line, const std::string& Name)
 	{
@@ -4743,6 +4774,7 @@ namespace LedgerCrimeProbe
 		                                 std::shared_ptr<MemoryStore>(),
 		                                 std::shared_ptr<KnowledgeBase>(), "day");
 		GMill->Add(GR3);
+		if (GEnc == EEncounter::Live) { LiveTiesFromCast(); }
 
 		WriteBreadcrumb(TEXT("start-called"));
 		GTicker = FTSTicker::GetCoreTicker().AddTicker(FTickerDelegate::CreateStatic(&Tick), 0.0f);
