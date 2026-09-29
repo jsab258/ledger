@@ -2431,6 +2431,17 @@ namespace
 		bool bNoticeShown = false, bPausedShown = false;
 		int LastReplyId = 0;       // the turn R reports
 		FString LastReplyName;
+		// WALKING OFF MID-REPLY, 29 September (handover 6v): who is answering,
+		// what of it has been said so far, and whether his leaving was sent.
+		std::string AnswerCard, HeardSoFar;
+		AActor* AnswerBody = nullptr;
+		bool bWalkedSent = false, bWasNear = false;
+		// THE TALK KEPT WITH THE SAVE, 29 September (handover 6r): each save
+		// has a stamp, kept in its clock.txt and sent with the talk's own save,
+		// so talk stamped for another save is never loaded; a load or a new
+		// game is sent once the talk program is ready.
+		std::string TalkStamp;
+		bool bTalkLoad = false, bTalkReset = false;
 	};
 	FLiveHelper GLive;
 
@@ -2796,17 +2807,54 @@ namespace
 	{
 		if (!GLive.bStarted || !GLive.bReady || GLive.PendingId != 0) { return false; }
 		const int Id = GLive.NextId++;
+		// WHO IS THE CAST ID, AND THE SCENE IS THE WEATHER AND THE LIGHT, 29
+		// September (the town session's handover 6u): the talk program now
+		// tells each person where they are this hour from the cast's routines
+		// (production/specs/hook-cast.json), keyed by "who" as the cast id
+		// ("sam", not the street's "n2"), so the game no longer names a place.
+		// The street is overcast and dry by day (Perceivers' overcast_day).
+		const int H = GNow.Hour;
+		const char* Light = (H >= 20 || H < 6) ? "Overcast and dry; dark, the street lamps on."
+			: (H < 8 || H >= 18) ? "Overcast and dry; the light going." : "Overcast and dry; grey daylight.";
 		const std::string Req = "{\"id\":" + std::to_string(Id) + ",\"to\":\"" + JsonEsc(Card)
-			+ "\",\"who\":\"" + JsonEsc(Who) + "\",\"say\":\"" + JsonEsc(Said) + "\",\"day\":" + std::to_string(GNow.Day)
+			+ "\",\"who\":\"" + JsonEsc(Card) + "\",\"say\":\"" + JsonEsc(Said) + "\",\"day\":" + std::to_string(GNow.Day)
 			+ ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute)
-			+ ",\"scene\":\"Quay Street, by the parade.\",\"memories\":[" + MemoriesJson(G) + "]"
+			+ ",\"scene\":\"" + Light + "\",\"memories\":[" + MemoriesJson(G) + "]"
 			+ ",\"evidence\":" + EvidenceFor(G, LedgerCrime::kLadFamiliarity, OwnRung) + "}\n";
 		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
 		GLive.PendingId = Id;
 		GLive.PendingName = Name;
 		GLive.PendingCard = Card;
+		GLive.AnswerCard = Card;
+		GLive.HeardSoFar.clear();
+		GLive.bWalkedSent = false;
+		GLive.bWasNear = false;
 		GLive.AskedAt = FPlatformTime::Seconds();
 		return true;
+	}
+
+	// WALKING OFF MID-REPLY, 29 September (the town session's handover 6v): if
+	// the player goes out of earshot (6 m, GossipDirector's) while someone is
+	// still answering, the talk program is told once what he heard before he
+	// left; the character then keeps only that, and remembers that he went.
+	void LiveWalkedAwayCheck()
+	{
+		if (GLive.AnswerCard.empty() || GLive.bWalkedSent || GPawn == nullptr) { return; }
+		AActor* Body = GLive.AnswerBody != nullptr ? GLive.AnswerBody : GLive.PendingBody;
+		if (Body == nullptr) { return; }
+		const double Now = FPlatformTime::Seconds();
+		if (GLive.PendingId == 0 && Now >= GVoice.BusyUntil) { return; }
+		const double M = FVector::Dist2D(GPawn->GetActorLocation(), Body->GetActorLocation()) / 100.0;
+		// WALKING AWAY NEEDS HAVING BEEN THERE: a line put from further off
+		// (the scripted ask, from 25 m) is not walked away from (29 September).
+		if (M <= LedgerCrime::kEarshotM) { GLive.bWasNear = true; return; }
+		if (!GLive.bWasNear) { return; }
+		const std::string Req = "{\"walkedAway\":{\"to\":\"" + JsonEsc(GLive.AnswerCard) + "\",\"heard\":\"" + JsonEsc(GLive.HeardSoFar)
+			+ "\"},\"day\":" + std::to_string(GNow.Day) + ",\"hour\":" + std::to_string(GNow.Hour) + ",\"minute\":" + std::to_string(GNow.Minute) + "}\n";
+		FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+		GLive.bWalkedSent = true;
+		UE_LOG(LogTemp, Display, TEXT("LedgerTalk: walked away from %s at %.1f m, having heard: %s"), UTF8_TO_TCHAR(GLive.AnswerCard.c_str()), M,
+			UTF8_TO_TCHAR(GLive.HeardSoFar.c_str()));
 	}
 
 	void LiveHelperPump()
@@ -2844,6 +2892,8 @@ namespace
 					Say(GLive.PendingName + TEXT(": ") + Un(First), 20.0f, FColor::White);
 					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, First, GVisualFor(GLive.PendingBody));
 					GLive.bFirstSaid = true;
+					GLive.HeardSoFar = First;
+					GLive.AnswerBody = GLive.PendingBody;
 					continue;
 				}
 				const std::string Reply = JsonField(L, "reply");
@@ -2864,12 +2914,15 @@ namespace
 					{
 						Say(GLive.PendingName + TEXT(": ") + Un(Rest), 20.0f, FColor::White);
 						LiveVoiceSay(GLive.PendingId * 10 + 1, GLive.PendingCard, Rest, GVisualFor(GLive.PendingBody));
+						GLive.HeardSoFar += " " + Rest;
 					}
 				}
 				else
 				{
 					Say(GLive.PendingName + TEXT(": ") + Un(Reply == "none" ? std::string("...") : Reply), 20.0f, FColor::White);
 					LiveVoiceSay(GLive.PendingId * 10, GLive.PendingCard, Reply, GVisualFor(GLive.PendingBody));
+					GLive.HeardSoFar = Reply == "none" ? std::string() : Reply;
+					GLive.AnswerBody = GLive.PendingBody;
 				}
 				GLive.PendingId = 0;
 				GLive.bFirstSaid = false;
@@ -2885,6 +2938,21 @@ namespace
 		}
 		if (Notices > 0) { ShowAiNotice(); }
 		if (Reports > 0) { LiveReportLast(); }
+		LiveWalkedAwayCheck();
+		// THE SAVE'S TALK LOADED, or a new game's talk cleared, once ready.
+		if (GLive.bReady && (GLive.bTalkLoad || GLive.bTalkReset))
+		{
+			std::string Req;
+			if (GLive.bTalkLoad)
+			{
+				const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(EncSaveDir() / TEXT("talk.json")));
+				Req = "{\"talk\":\"load\",\"path\":\"" + JsonEsc(Path) + "\",\"stamp\":\"" + GLive.TalkStamp + "\"}\n";
+			}
+			else { Req = "{\"talk\":\"reset\"}\n"; }
+			FPlatformProcess::WritePipe(GLive.InWrite, Un(Req));
+			UE_LOG(LogTemp, Display, TEXT("LedgerTalk: %s"), GLive.bTalkLoad ? TEXT("the save's talk loaded") : TEXT("a new game's talk cleared"));
+			GLive.bTalkLoad = GLive.bTalkReset = false;
+		}
 		if (GLive.PendingId != 0 && FPlatformTime::Seconds() - GLive.AskedAt > 30.0)
 		{
 			if (!GLive.bFirstSaid) { Say(GLive.PendingName + TEXT(" says nothing."), 6.0f, FColor::White); }
@@ -3342,11 +3410,19 @@ namespace
 				*(Dir / FString::Printf(TEXT("memory-%s.md"), *Un(G->Id))),
 				FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		}
+		GLive.TalkStamp = Utf8(FGuid::NewGuid().ToString(EGuidFormats::Digits));
 		const std::string Clock = "day=" + std::to_string(GNow.Day) + "\nhour=" + std::to_string(GNow.Hour)
 			+ "\nminute=" + std::to_string(GNow.Minute) + "\nsummaryA=" + GFiledSummaryA
 			+ "\nrungA=" + std::to_string(GW1RungA)
 			+ "\nothersNear=" + std::to_string(GFleeOthersSeen)
+			+ "\ntalkStamp=" + GLive.TalkStamp
 			+ "\ncommit=" + Utf8(CrimeSha()) + "\n";
+		// THE TALK SAVED BESIDE IT, under the same stamp (handover 6r).
+		if (GLive.bStarted && GLive.bReady)
+		{
+			const std::string Path = Utf8(FPaths::ConvertRelativePathToFull(Dir / TEXT("talk.json")));
+			FPlatformProcess::WritePipe(GLive.InWrite, Un("{\"talk\":\"save\",\"path\":\"" + JsonEsc(Path) + "\",\"stamp\":\"" + GLive.TalkStamp + "\"}\n"));
+		}
 		Ok = FFileHelper::SaveStringToFile(Un(Clock), *(Dir / TEXT("clock.txt")),
 			FFileHelper::EEncodingOptions::ForceUTF8WithoutBOM) && Ok;
 		bSavedToDisk = Ok;
@@ -3386,6 +3462,7 @@ namespace
 				else if (Kv == TEXT("summaryA")) { GFiledSummaryA = Utf8(V); }
 				else if (Kv == TEXT("rungA")) { GW1RungA = FCString::Atoi(*V); }
 				else if (Kv == TEXT("othersNear")) { GFleeOthersSeen = FCString::Atoi(*V); }
+				else if (Kv == TEXT("talkStamp")) { GLive.TalkStamp = Utf8(V); }
 				else if (Kv == TEXT("commit")) { GSavedByCommit = Utf8(V); }
 			}
 		}
@@ -3394,6 +3471,9 @@ namespace
 		// refuses it rather than reading an older town as this one.
 		if (GSavedByCommit != Utf8(CrimeSha())) { Ok = false; }
 		bLoadedFromDisk = Ok;
+		// THE TALK COMES BACK TOO, once the talk program is ready (handover 6r).
+		GLive.bTalkLoad = Ok && !GLive.TalkStamp.empty();
+		GLive.bTalkReset = false;
 		// THE CLOCK COMES BACK WITH THE SAVE, and the night passes.
 		GNow = GameTime(GClockDay + 1, 9, 0);
 	}
@@ -3597,6 +3677,10 @@ namespace
 				}
 				if (GPhase == ECrimePhase::LiveWaitDeed)
 				{
+					// A NEW GAME: the talk program starts with nobody's talk
+					// (handover 6r), not the last story's.
+					GLive.bTalkReset = true;
+					GLive.bTalkLoad = false;
 					GWatchSlot = 0;
 					Say(TEXT("Walk to Mickey's front window, the minicab office with the dark blue front, and press E. Press T near someone to talk to them first, if you like."), 40.0f, FColor::Yellow);
 				}
