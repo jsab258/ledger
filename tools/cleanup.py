@@ -46,6 +46,9 @@ ALLOWED = [
     r"C:\LedgerTools",
     RUNNER,
     os.path.join(LOCAL, "UnrealEngine", "Common"),
+    # THE PROJECT'S OWN SCRATCH, gitignored (29 September): a helper run in
+    # isolation leaves a whole spare checkout here.
+    os.path.join(REPO, ".claude", "worktrees"),
 ]
 
 PROTECTED = [
@@ -212,7 +215,36 @@ def delete_group(gid):
         return [{"group": gid, "refused": "the build machine is building; try again when it is idle"}]
     if g.get("cap"):
         return [cap_store(g["cap"])]
-    return [delete(p) for p in g["paths"]]
+    if g.get("move"):
+        return move_store(g)
+    out = [delete(p) for p in g["paths"]]
+    if gid == "helper-checkout":
+        import subprocess
+        subprocess.run(["git", "-C", REPO, "worktree", "prune"], capture_output=True)
+        out.append({"group": gid, "git": "worktree records pruned"})
+    return out
+
+
+def move_store(g):
+    """Points Unreal's cache server at the new place in its own user-wide settings (and the repository's copy
+    of them), then deletes the old copies on C: - only while no cache server and nothing Unreal is running,
+    so nothing can be reading them. Refuses, deleting nothing, while one is."""
+    import re
+    import subprocess
+    out = {"group": g["id"], "dataPath": g["move"]}
+    for f in (os.path.join(LOCAL, "Unreal Engine", "Engine", "Config", "UserEngine.ini"), os.path.join(REPO, "tools", "ue", "UserEngine.ini")):
+        text = open(f, encoding="utf-8").read()
+        if re.search(r"(?m)^DataPath=", text):
+            new = re.sub(r"(?m)^DataPath=.*$", "DataPath=" + g["move"], text)
+        else:
+            new = text.replace("[Zen.AutoLaunch]\n", "[Zen.AutoLaunch]\n; Drive F, not C: (Jafar's rule; his yes on the cleanup page).\nDataPath=%s\n" % g["move"], 1)
+        open(f, "w", encoding="utf-8", newline="\n").write(new)
+        out[f] = "changed" if new != text else "already so"
+    busy = subprocess.run(["tasklist"], capture_output=True, text=True).stdout
+    if any(n in busy for n in ("zenserver", "UnrealEditor", "Runner.Worker", "UnrealBuildTool")):
+        out["deleted"] = "nothing yet: Unreal or its cache server is running; run again when it is closed"
+        return [out]
+    return [out] + [delete(p) for p in g["paths"]]
 
 
 def cap_store(limit_bytes):
@@ -273,14 +305,20 @@ PLAN = [
     # cap is down to 10 GB and trims itself when Unreal next starts, about 7 GB;
     # the old cache deleted again). C: at 46 GB while the build machine builds:
     # the list alone cannot reach 60, so the rest is his to decide (below).
-    {"id": "probe-packaged", "title": "An old packaged copy of the game, from 23 September",
-     "paths": [os.path.join(REPO, "ue-probe", "Packaged")],
-     "why": "The game packaged here once, on 23 September. You play the copy on drive F, and the build machine packages its own; nothing runs this one.",
-     "after": "Nothing you would notice.",
+    # His two groups of 30 September's first page (the old packaged copy,
+    # the superseded film frames) are carried out, 29 September afternoon:
+    # C: 53 to 55 GB. Git has them and their verdicts.
+    # 29 September, afternoon: C: at 48 GB once the day's builds ran. Your rule
+    # says new caches go to drive F; Unreal's is the biggest thing on the list.
+    {"id": "unreal-cache-to-f", "title": "Move Unreal's cache to drive F, and delete the copy on C:",
+     "paths": [os.path.join(LOCAL, "UnrealEngine", "Common", "Zen"), os.path.join(LOCAL, "UnrealEngine", "Common", "DerivedDataCache")],
+     "why": "Unreal keeps a cache of built shaders and assets (capped at 10 GB on your yes of Tuesday), and an older cache it is draining. Your rule is that caches live on drive F, not C: (F has 31 GB free). On your yes I point Unreal's own settings at the LedgerTools folder on drive F, and once Unreal is closed I delete both old copies on C:.",
+     "after": "The next build or two are a few minutes slower while the cache refills on F. It stays at 10 GB there.",
+     "move": "F:/LedgerTools/zen/Data",
      "recommend": True},
-    {"id": "probe-saved-old", "title": "Superseded film frames and old crash reports",
-     "paths": [os.path.join(REPO, "ue-probe", "Saved", "LookScript"), os.path.join(REPO, "ue-probe", "Saved", "Crashes")],
-     "why": "The frames of Sheila's look films before the ones on your page (recorded as superseded), and the editor's crash reports from earlier in the month.",
+    {"id": "helper-checkout", "title": "A spare copy of the project a helper left behind",
+     "paths": [os.path.join(REPO, ".claude", "worktrees")],
+     "why": "A helper I ran on Tuesday worked in its own spare copy of the project, and the copy stayed. Everything in it is on GitHub; nothing uses it. I no longer run helpers that way.",
      "after": "Nothing you would notice.",
      "recommend": True},
 ]

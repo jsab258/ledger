@@ -6988,8 +6988,8 @@ int main(int argc, char** argv)
 			const std::string LText = Slurp("production/specs/unreal-look.json", LOk);
 			LedgerStreet::Look Lk;
 			std::string LErr;
-			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 23 && Lk.bFromFile,
-			      "the committed look file parses and supplies all twenty-three settings", LErr);
+			Check(LOk && LedgerStreet::ParseLook(LText, Lk, LErr) && Lk.Read == 27 && Lk.bFromFile,
+			      "the committed look file parses and supplies all twenty-seven settings", LErr);
 			Check(Lk.LanternLumens > 0.0 && Lk.bLanternRgb && Lk.LanternLightY > 4.0,
 			      "and the sodium lamps have real lumens and a colour of their own");
 			// THE PEOPLE, 23 September: the committed placements parse, there

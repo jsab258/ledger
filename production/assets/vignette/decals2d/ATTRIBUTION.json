@@ -114,6 +114,24 @@
    "measured": "900x450 colourType=2",
    "blankCheck": "varied",
    "why": "luminance spread 177/255, stdev 68.257, 88 distinct levels over 25425 of 405000 pixels"
+  },
+  {
+   "file": "net_curtain_a_lit.png",
+   "bom": "C12_net_curtain",
+   "note": "net_curtain_a with a room lit behind it: warm tungsten through the weave",
+   "bytes": 903260,
+   "measured": "1024x1024 colourType=6",
+   "blankCheck": "varied",
+   "why": "luminance spread 47/255, stdev 8.596, 48 distinct levels"
+  },
+  {
+   "file": "net_curtain_b_lit.png",
+   "bom": "C12_net_curtain",
+   "note": "net_curtain_b with a room lit behind it: warm tungsten through the weave",
+   "bytes": 975343,
+   "measured": "1024x1024 colourType=6",
+   "blankCheck": "varied",
+   "why": "luminance spread 44/255, stdev 7.827, 45 distinct levels"
   }
  ],
  "added": "2026-09-22: fascia_mickeys_plain.png and board_to_let.png, written by the same tool at the same seed; the files already here were NOT rewritten, because a regeneration on this PC differs from the committed plates by font rendering alone and churning eight accepted files for two new ones is noise"
