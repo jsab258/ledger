@@ -149,6 +149,12 @@ static class Program
 
         public Helper(ILlmClient llm, TimeSpan patience) { _llm = llm; _patience = patience; }
         public bool Early;
+        /// THE REST'S OWN LIMIT (town list 6bx): once the first sentence has
+        /// been heard, the rest of the reply has this long beyond the turn's
+        /// patience before it is cut, so a turn whose first words came quickly
+        /// is not thrown away at eight seconds as a brush-off. The player is
+        /// already listening; what is cut is recorded "cut".
+        public TimeSpan RestPatience = TimeSpan.FromSeconds(6);
         // A turn abandoned at the patience limit may still be unwinding; the
         // same character's next line waits for it (the independent check: a
         // late unwind disturbed the next turn's transcript).
@@ -750,7 +756,9 @@ static class Program
             _walkCts[key] = walkCts;
             try
             {
-            using (var cts = new CancellationTokenSource(_patience))
+            // With the rest's own limit, a second beyond it, so the turn is cut by
+            // the wait below (and recorded "cut"), never by the token racing it.
+            using (var cts = new CancellationTokenSource(Early ? _patience + RestPatience + TimeSpan.FromSeconds(1) : _patience))
             {
                 try
                 {
@@ -776,7 +784,20 @@ static class Program
                     }
                     var task = engine.SayToAsync(say, now, scene, cts.Token, onFirst);
                     var walkedOff = Task.Delay(Timeout.Infinite, walkCts.Token).ContinueWith(_ => { }, TaskScheduler.Default);
-                    var done = await Task.WhenAny(task, Task.Delay(_patience), walkedOff);
+                    var timeout = Task.Delay(_patience);
+                    var done = await Task.WhenAny(task, timeout, walkedOff);
+                    // The first sentence heard: the rest has its own limit.
+                    if (done == timeout)
+                    {
+                        bool heardFirst;
+                        lock (gate) heardFirst = earlyFirst != null;
+                        if (heardFirst)
+                        {
+                            var more = Task.Delay(RestPatience);
+                            done = await Task.WhenAny(task, more, walkedOff);
+                            if (done == more) done = timeout;
+                        }
+                    }
                     if (done == walkedOff)
                     {
                         // HE WALKED OFF (town list 6ay): the reply stops, and they keep
@@ -857,6 +878,7 @@ static class Program
             // HOW THE REPLY WENT (town list 6bd), for the session record's `reply` line:
             // where a friend's talk broke, beside the "still" it may explain.
             string went = paused != null ? "paused"
+                : timedOut && earlyFirst != null ? "cut"
                 : timedOut ? "brush"
                 : ClaimCheck.IsKnownOnly(reply, card) ? "fallback"
                 : ResponseValidator.IsDeflection(reply, card.Name) ? "refused"
@@ -891,7 +913,9 @@ static class Program
                             Model = model, Invented = invented, Unchecked = @unchecked, Ms = sw.ElapsedMilliseconds });
             // ENDED: the character closed the conversation (town list 6ae).
             bool ends = !timedOut && engine.LastEnded;
-            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model }, Plain);
+            // THE TURN'S STEPS (town list 6bx), each with its milliseconds from the start.
+            var steps = engine.LastSteps.ConvertAll(x => new object[] { x.step, x.ms });
+            return JsonSerializer.Serialize(new { id, to, day, reply, rest, ms = sw.ElapsedMilliseconds, offline = false, timedOut, paused, ends, heard, suspicion = holds, level, why = suspicionWhy ?? engine.Suspicion.LatestReason(), manner, invented, promised, spokeOf, putToHim, named, went, claim = claimOut, ownedUp = ownedUpOut, keepsQuiet = keepsQuietOut, refusedAsk, @unchecked, fellBack, generated, model, steps }, Plain);
         }
 
         static bool Bool(JsonElement e, string name) =>
@@ -1221,7 +1245,8 @@ static class Program
 
         async Task<(List<(long at, string line)> firsts, string last, long lastAt, StreamFake llm, Helper helper)> Early(StreamFake llm, string say, TimeSpan patience)
         {
-            var eh = new Helper(llm, patience) { Early = true, CheckAlways = true };
+            // The rest's own limit off here: these cases are about the turn's patience.
+            var eh = new Helper(llm, patience) { Early = true, CheckAlways = true, RestPatience = TimeSpan.Zero };
             LoadCards(eh, cardsDir);
             var clock = Stopwatch.StartNew();
             var firsts = new List<(long, string)>();
@@ -1235,6 +1260,25 @@ static class Program
             foreach (var ev in eh.EngineFor("sam").Memory.Events)
                 if (ev.Kind == "conversation" && ev.Text.StartsWith(ClaimCheck.IReplied)) o = ev.Text;
             return o;
+        }
+
+        // THE REST'S OWN LIMIT (town list 6bx): the first sentence heard before the
+        // turn's patience, the rest comes in its own time; past that it is cut,
+        // recorded "cut", never a brush-off.
+        {
+            var slowRest = new StreamFake("Aye. I saw him go by the chip shop at nine.") { Pause = TimeSpan.FromMilliseconds(1500) };
+            var restHelper = new Helper(slowRest, TimeSpan.FromMilliseconds(1000)) { Early = true, CheckAlways = true, RestPatience = TimeSpan.FromSeconds(4) };
+            LoadCards(restHelper, cardsDir);
+            restHelper.Emit = _ => { };
+            var within = await restHelper.Answer("{\"id\":21,\"to\":\"sam\",\"say\":\"See anything?\"}");
+            var cutRest = new StreamFake("Aye. I saw him go by the chip shop at nine.") { Pause = TimeSpan.FromMilliseconds(3000) };
+            var cutHelper = new Helper(cutRest, TimeSpan.FromMilliseconds(1000)) { Early = true, CheckAlways = true, RestPatience = TimeSpan.FromMilliseconds(500) };
+            LoadCards(cutHelper, cardsDir);
+            cutHelper.Emit = _ => { };
+            var cutOff = await cutHelper.Answer("{\"id\":22,\"to\":\"sam\",\"say\":\"See anything?\"}");
+            Ok("a rest slower than the turn's patience still comes when the first sentence was heard, within its own limit; past it the turn is cut after the first sentence, recorded as cut",
+               Reply(within) == "Aye. I saw him go by the chip shop at nine." && within.Contains("\"went\":\"own\"") && within.Contains("\"steps\":[[\"draft\"")
+               && Reply(cutOff) == "Aye." && cutOff.Contains("\"went\":\"cut\""), within + " | " + cutOff);
         }
 
         var clean = await Early(new StreamFake("Aye. I saw him go by the chip shop at nine."), "See anything?", TimeSpan.FromSeconds(8));
