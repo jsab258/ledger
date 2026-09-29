@@ -5249,6 +5249,125 @@ namespace Ledger.CoreTests
                       "keys are filled as bound and never guessed or left blank; a damaged save counts only a moment's exact name; every moment has words, within the content rule", wordsBad ?? "");
             }
 
+            // WHO TELLS THE POLICE, WHEN DS ELLIS COMES, WHAT SHE CAN PUT TO HIM
+            // (town list 6ar; production/research/police-response-1990), with
+            // the independent check's cases.
+            {
+                Gossiper P(string id, double nerve, double loyalty, string circle = "day")
+                {
+                    var g = new Gossiper(id, id, new MemoryStore(id), new KnowledgeBase(), new SuspicionTracker(), circle);
+                    g.Nerve = nerve; g.Loyalty = loyalty;
+                    return g;
+                }
+                var rita = P("rita", 0.5, 0.5);
+                var bold = P("bold", 0.7, 0.2);
+                var plain = P("plain", 0.5, 0.5);
+                var timid = P("timid", 0.2, 0.3);
+                var close = P("close", 0.7, 0.5);
+                var hooked = P("hooked", 0.7, 0.2); hooked.Leashed = true;
+                var bought = P("bought", 0.7, 0.2); bought.Suppressed.Add("player.cut_d2");
+                var loyalVictim = P("loyalVictim", 0.9, 0.9);
+                Check(PoliceFile.WouldReport(rita, Offence.Damage, true, null) && !PoliceFile.WouldReport(bold, Offence.Damage, false, null)
+                      && !PoliceFile.WouldReport(bold, Offence.Suspicious, false, null) && !PoliceFile.WouldReport(bold, Offence.Assault, false, null)
+                      && PoliceFile.WouldReport(bold, Offence.Wounding, false, null) && PoliceFile.WouldReport(bold, Offence.Killing, false, null)
+                      && !PoliceFile.WouldReport(plain, Offence.Wounding, false, null) && !PoliceFile.WouldReport(plain, Offence.Killing, false, null)
+                      && PoliceFile.WouldReport(timid, Offence.Killing, false, null) && !PoliceFile.WouldReport(timid, Offence.Wounding, false, null)
+                      && PoliceFile.WouldReport(P("middling", 0.37, 0.2), Offence.Killing, false, null)
+                      && !PoliceFile.WouldReport(close, Offence.Wounding, false, null)
+                      && PoliceFile.WouldReport(bold, Offence.Assault, true, null) && !PoliceFile.WouldReport(close, Offence.Assault, true, null)
+                      && PoliceFile.WouldReport(close, Offence.Wounding, true, null) && !PoliceFile.WouldReport(loyalVictim, Offence.Robbery, true, null)
+                      && !PoliceFile.WouldReport(bold, Offence.Killing, true, null)
+                      && !PoliceFile.WouldReport(hooked, Offence.Wounding, false, null) && !PoliceFile.WouldReport(hooked, Offence.Killing, false, null)
+                      && !PoliceFile.WouldReport(bought, Offence.Wounding, false, "player.cut_d2") && PoliceFile.WouldReport(bought, Offence.Killing, false, "player.cut_d2")
+                      && !PoliceFile.WouldReport(null, Offence.Killing, false, null),
+                      "a shopkeeper reports her window; a victim reports unless they would settle it or are afraid, and a dead one reports nothing; a witness reports a detective's crime unafraid and not on his side, and the nervous crack over a body; an ordinary witness says nothing; the hooked say nothing, the bought nothing but a body");
+
+                var file = new PoliceFile();
+                var named = file.Report("bold", "player.cut_d2", Offence.Wounding, 4, 2);
+                var sameAgain = file.Report("bold", "player.cut_d2", Offence.Wounding, 4, 3);
+                var ada = file.Report("x", "player.cut_d2", Offence.Wounding, 2, 2);
+                bool adaFirst = ada.How == Known.Description;
+                var adaLater = file.Report("x", "player.cut_d2", Offence.Wounding, 4, 4);
+                Check(named != null && named.How == Known.Statement && sameAgain == null
+                      && adaFirst && adaLater != null && adaLater.How == Known.Statement && file.Report("x", "player.cut_d2", Offence.Wounding, 4, 5) == null
+                      && file.Report("y", "player.cut_d2", Offence.Wounding, 3, 2).How == Known.Description,
+                      "a statement names him only when the teller saw him well enough to, a face included only as a description; a description is raised when the same person later names him");
+
+                var quiet = new GossipMill(null);
+                var window = new PoliceFile();
+                window.Report("rita", "player.window_d0", Offence.Damage, 4, 1);
+                string forWindow = window.EllisComes(quiet, 5);
+                string forCut = file.EllisComes(quiet, 2);
+                string cutAgain = file.EllisComes(quiet, 3);
+                var bodyFile = new PoliceFile();
+                string forBody = bodyFile.EllisComes(quiet, 1, Inquiry.Procedure);
+                Check(forWindow == null && window.EllisCameOn == -1 && forCut == "Wounding player.cut_d2" && cutAgain == null && file.EllisCameOn == 2
+                      && forBody == "body" && bodyFile.EllisComes(quiet, 2, Inquiry.Procedure) == null
+                      && window.CanArrest("player.window_d0") && window.Strongest("player.window_d0") == Known.Statement
+                      && file.CanArrest("player.cut_d2"),
+                      "a window brings a constable, not the detective; a named statement makes criminal damage an arrest, as the law of 1990 had it; a reported wounding brings her; a body always brings her; each reason once");
+                var push = new PoliceFile();
+                push.Report("bold", "player.shove_d1", Offence.Assault, 4, 1);
+                Check(!push.CanArrest("player.shove_d1") && push.Strongest("player.shove_d1") == Known.Statement
+                      && PoliceFile.Arrestable(Offence.Damage) && !PoliceFile.Arrestable(Offence.Assault) && PoliceFile.Arrestable(Offence.Killing)
+                      && !PoliceFile.Arrestable(Offence.Suspicious),
+                      "a common assault, even named, is a summons: it was no arrestable offence in 1990");
+
+                // Loud: people of his day world passing talk of his nights round,
+                // a retelling each; never before the first hour's day 4.
+                GossipMill Street(int talkers, double confidence, int hops, string circle = "day", bool leashed = false, bool indelible = false)
+                {
+                    var m = new GossipMill(null);
+                    for (int i = 0; i < 6; i++)
+                    {
+                        var g = P("t" + i, 0.5, 0.5, circle);
+                        g.Leashed = leashed;
+                        if (i < talkers) g.Rumors.Add(new Rumor { Content = new Fact("player", "night_walk_d0", "seen"), Summary = "about late", Confidence = confidence, Hops = hops, Sensitive = true, Indelible = indelible });
+                        m.Add(g);
+                    }
+                    return m;
+                }
+                var loud = Street(PoliceFile.LoudAt, 0.5, 1);
+                var talkFile = new PoliceFile();
+                string tooSoon = talkFile.EllisComes(loud, PoliceFile.TalkNoSoonerThan - 1);
+                string forTalk = talkFile.EllisComes(loud, PoliceFile.TalkNoSoonerThan);
+                talkFile.HearTheStreet(loud, 3, t => Offence.Suspicious);
+                var seenOnly = new PoliceFile();
+                seenOnly.HearTheStreet(Street(5, 0.5, 0), 3, t => Offence.Suspicious);
+                talkFile.Report("bold", "player.cut_d5", Offence.Wounding, 4, 5);
+                string laterCrime = talkFile.EllisComes(loud, 5);
+                Check(PoliceFile.Loudness(loud) == PoliceFile.LoudAt && PoliceFile.Loudness(Street(5, 0.5, 0)) == 0
+                      && PoliceFile.Loudness(Street(5, 0.1, 1)) == 0 && PoliceFile.Loudness(Street(5, 0.5, 1, "night")) == 0
+                      && PoliceFile.Loudness(Street(5, 0.5, 1, "both")) == 0 && PoliceFile.Loudness(Street(5, 0.5, 1, leashed: true)) == 0
+                      && PoliceFile.Loudness(Street(5, 0.5, 1, leashed: true, indelible: true)) == 5
+                      && tooSoon == null && forTalk == "talk" && laterCrime == "Wounding player.cut_d5"
+                      && talkFile.Entries.Count(e => e.How == Known.Talk) == PoliceFile.LoudAt && seenOnly.Entries.Count == 0
+                      && talkFile.Strongest("player.night_walk_d0") == Known.Talk && !talkFile.CanArrest("player.night_walk_d0"),
+                      "she comes for the street's talk from the first hour's day 4 once enough of his day world pass it round (a witness is not talk; a body is talked of whatever the leash); what she hears lets her ask, never arrest; a later crime brings her again");
+
+                var kill = new PoliceFile();
+                kill.Report("a", "player.killed_x", Offence.Killing, 2, 5);
+                kill.Report("b", "player.killed_x", Offence.Killing, 0, 5);
+                bool twoFaceless = kill.CanArrest("player.killed_x");
+                kill.Report("c", "player.killed_x", Offence.Killing, 4, 5);
+                var mixed = new PoliceFile();
+                mixed.Report("rita", "player.shove_d0", Offence.Assault, 4, 1);
+                mixed.Heard("t", "player.shove_d0", Offence.Wounding, 1);
+                Check(!twoFaceless && kill.CanArrest("player.killed_x") && !mixed.CanArrest("player.shove_d0"),
+                      "descriptions that cannot say who never arrest him, however many; a named statement about a killing does; each statement is judged by its own offence");
+
+                var both = new PoliceFile();
+                both.Heard("rita", "player.window_d0", Offence.Damage, 1);
+                both.Report("rita", "player.window_d0", Offence.Damage, 4, 1);
+                both.EllisComes(loud, 4);
+                var back = PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(MiniJson.Serialize(both.ToJson()))));
+                var damaged = PoliceFile.FromJson(MiniJson.AsObject(MiniJson.Deserialize(
+                    "{\"entries\": [{\"who\": \"a\", \"topic\": \"t\", \"offence\": \"Arson\", \"how\": \"Talk\", \"day\": 1}, {\"who\": \"b\", \"topic\": \"t\", \"offence\": \"Damage\", \"how\": \"Statement\", \"day\": 2.5}, 7, {\"who\": \"c\", \"topic\": \"t\", \"offence\": \"Damage\", \"how\": \"Statement\", \"day\": 3}], \"visits\": [[-4, \"talk\"], [2, \"Arson\"], [3, \"Arson x\"], [3, \"Suspicious x\"], [3, \"Killing \"], [4, \"body\"], [5, \"body\"], [1, \"Wounding player.cut_d1\"]]}")));
+                Check(back.Entries.Count == 2 && back.EllisCameOn == 4 && back.EllisCameFor == "talk" && back.Strongest("player.window_d0") == Known.Statement
+                      && damaged.Entries.Count == 1 && damaged.Entries[0].Who == "c" && damaged.Visits.Count == 2 && damaged.EllisCameFor == "Wounding player.cut_d1" && damaged.EllisCameOn == 1,
+                      "the police file keeps across a save, talk and a statement from one person both; a damaged file keeps only what it can read");
+            }
+
             // MICKEY'S ARRANGEMENT IN THE NEW GAME (town list 6z): the outfit asks
             // every other night from the first, in order; refusing ends it at once,
             // three nights not turning up end it, and nothing ends the game; the
@@ -6145,6 +6264,12 @@ namespace Ledger.CoreTests
                 Check(hookQ.NamesHimOnlyOnTrust("lena") && !hookQ.NamesHimOnlyOnTrust("rocco") && !hookQ.NamesHimOnlyOnTrust("sam")
                       && !hookQ.NamesHimOnlyOnTrust(null) && badName != null && badName.Contains("namesHim"),
                       "Sheila alone calls him by name only once she trusts him, from the cast file; any other word there is refused", badName ?? "");
+                string badCircle = null;
+                try { CastDay.Parse("{\"talk_range_m\":6,\"places\":{\"a\":{\"x_m\":0,\"z_m\":0}},\"people\":[{\"id\":\"x\",\"circle\":\"evening\",\"routine\":[[0,\"a\"]]}],\"ties\":[]}"); }
+                catch (FormatException e) { badCircle = e.Message; }
+                Check(hookQ.CircleOf("outfit_man") == "night" && hookQ.CircleOf("rocco") == "day" && hookQ.CircleOf(null) == "day"
+                      && badCircle != null && badCircle.Contains("circle"),
+                      "which of his worlds each belongs to comes from the cast file, the town by day unless it says otherwise (the outfit's man is his night's); a circle it does not know is refused", badCircle ?? "");
 
                 var q = new ConversationEngine(new FakeLlm { NextReply = "Not a word, boss." }, MakeLenaCard(), new MemoryStore("lena"), new KnowledgeBase(), new SuspicionTracker(), new CostTracker());
                 q.Suspicion.Raise(0.6, "I saw him near the window");

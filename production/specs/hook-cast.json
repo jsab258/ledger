@@ -2947,6 +2947,7 @@
   },
   {
    "id": "outfit_man",
+   "circle": "night",
    "called": "a man who hangs about the ferry landing at night",
    "role": "one of the outfit Mickey had his arrangement with, never named; at the ferry landing at night (town list 6z)",
    "routine": [

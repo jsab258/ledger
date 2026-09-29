@@ -58,6 +58,7 @@ namespace Ledger.Core
         readonly Dictionary<string, string> _called = new Dictionary<string, string>();
         readonly Dictionary<string, KeepsQuietFor> _quiet = new Dictionary<string, KeepsQuietFor>();
         readonly HashSet<string> _nameOnTrust = new HashSet<string>();
+        readonly Dictionary<string, string> _circle = new Dictionary<string, string>();
         readonly List<(string a, string b, double w)> _ties = new List<(string, string, double)>();
 
         public IReadOnlyList<string> People => _people;
@@ -111,6 +112,12 @@ namespace Ledger.Core
                 if (MiniJson.GetString(p, "role") is string rl && rl.Trim().Length > 0) c._role[id] = rl.Trim();
                 if (MiniJson.GetString(p, "called") is string cl && cl.Trim().Length > 0) c._called[id] = cl.Trim();
                 if (MiniJson.GetString(p, "keepsQuiet") is string kq) c._quiet[id] = Silence.Parse(kq.Trim());
+                if (p.ContainsKey("circle"))
+                {
+                    if (!(p["circle"] is string cr) || (cr != "day" && cr != "night" && cr != "both"))
+                        throw new FormatException($"cast file: {id}'s circle must be \"day\", \"night\" or \"both\"");
+                    c._circle[id] = cr;
+                }
                 if (p.ContainsKey("namesHim"))
                 {
                     if (!(p["namesHim"] is string nh) || nh.Trim() != "on-trust")
@@ -291,6 +298,11 @@ namespace Ledger.Core
         /// ladder sends (Jafar, on the 29 September page: Sheila is the exception by
         /// her own choice, as she promised Mickey to size him up).
         public bool NamesHimOnlyOnTrust(string id) => id != null && _nameOnTrust.Contains(id);
+
+        /// Which of his worlds somebody belongs to, for the gossip (Gossiper.Circle):
+        /// the file's "circle", else "day", the town he lives among by day
+        /// (town list 6ar: the outfit's man is his night world's).
+        public string CircleOf(string id) => id != null && _circle.TryGetValue(id, out var c) ? c : "day";
 
         // The street's words for the named people, beside their names (town list 6bd).
         static readonly Dictionary<string, string[]> RoleWords = new Dictionary<string, string[]>

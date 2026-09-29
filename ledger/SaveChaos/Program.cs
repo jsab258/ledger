@@ -153,6 +153,11 @@ namespace Ledger.SaveChaos
             arr.Answer(0, NightAnswer.Did);
             arr.Answer(2, NightAnswer.NoShow);
             arr.Answer(4, NightAnswer.Did);
+            var police = new PoliceFile();
+            police.Report("rita", "player.window_d0", Offence.Damage, 4, 1);
+            police.Heard("ron", "player.night_walk_d0", Offence.Suspicious, 3);
+            police.Report("bold", "player.cut_d2", Offence.Wounding, 2, 2);
+            police.EllisComes(null, 2);
             var heard = new RemarkLedger();
             heard.HeardLine("recognition/ordinary", "Evening.");
             heard.HeardLine("recognition/outfit-refused", "Heard you told them no.");
@@ -182,6 +187,24 @@ namespace Ledger.SaveChaos
                     if (!a.Ended && a.NextNight != expect) return (false, $"next={a.NextNight} expected {expect}");
                     a.PassedTo(a.FirstDay + 40);
                     if (!a.Ended) return (false, "twenty nights away did not end it");
+                    return (true, "ok");
+                }),
+                ("PoliceFile", MiniJson.Serialize(police.ToJson()), d =>
+                {
+                    var f = PoliceFile.FromJson(d);
+                    foreach (var e in f.Entries)
+                    {
+                        if (string.IsNullOrEmpty(e.Who) || string.IsNullOrEmpty(e.Topic)) return (false, "an entry without who or topic");
+                        if (e.Day < 0 || e.Day >= 100000) return (false, $"day={e.Day}");
+                        if (!Enum.IsDefined(typeof(Offence), e.Offence) || !Enum.IsDefined(typeof(Known), e.How)) return (false, "an offence or kind that does not exist");
+                    }
+                    var seen = new HashSet<string>();
+                    foreach (var v in f.Visits)
+                    {
+                        if (v.day < 0 || string.IsNullOrEmpty(v.why) || !seen.Add(v.why)) return (false, $"visit {v.day} {v.why}");
+                    }
+                    f.CanArrest("player.cut_d2");
+                    f.Strongest("player.window_d0");
                     return (true, "ok");
                 }),
                 ("RemarkLedger", MiniJson.Serialize(heard.ToJson()), d =>

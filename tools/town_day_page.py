@@ -21,8 +21,8 @@ REPO = town_page.REPO
 
 DAYS = {
     "2026-09-29": {
-        "title": "The first hour, and twelve decisions",
-        "lede": "The plan for a player's first hour, the first story of the town's own, and twelve things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today: the last two calls, what the town cannot say because nobody has written it, the hints, each the first time it matters, and the outfit's first ask, with whose outfit it is.",
+        "title": "The first hour, and thirteen decisions",
+        "lede": "The plan for a player's first hour, the first story of the town's own, and thirteen things only you can decide. One tap each, and a note if you want. Done as you picked: the first hour, the neighbours' talk and Sheila's name, and everything on the 28 September page (Father Emil is now Father Brendan Walsh). New today: the last two calls, what the town cannot say because nobody has written it, the hints, each the first time it matters, the outfit's first ask, with whose outfit it is, and when DS Ellis turns up.",
         "questions": [
             ("q-sheila-name", "Sheila's card keeps Tom at \"new management\" until he earns a name; canon says names follow knowing, not liking",
              [("exception", "Sheila is the exception by choice: she withholds his name until she trusts him, as she promised Mickey she would size him up; everyone else follows canon (recommended: it is her character, and the rule stays the town's)"),
@@ -68,6 +68,10 @@ DAYS = {
              [("mickeys-place", "Somebody else's: Tom inherits Mickey's place in it, so they ask and he can say no, and it is not one of the three rivals (recommended: it is how the July drafts and the outline you approved tell it, \"Mickey's arrangements outlive him\", \"refusing breaks his deal\")"),
               ("his", "His own: Mickey's crew, now Tom's to run; the asks come from whoever Mickey's crew answered to"),
               ("other", "Something else, in your note")]),
+            ("q-loud", "When the street's talk brings DS Ellis. On night one only four of the cast are out to see him, and how far the talk goes depends on which: plainly seen by Ron, who meets half the street, five to eight people pass it round by days 3 to 5; by Dusan, two; by the other two, one or none",
+             [("three", "When three of his day world are passing it round, from day 4: she comes in the first hour if Ron saw him plainly, or if he was seen two nights (recommended: \"if the street has got loud about him\", and talk rarely brought a detective in 1990)"),
+              ("two", "When two are: Dusan's sighting brings her too, so she comes more often"),
+              ("never", "Never for talk alone: only for a reported crime a detective takes, or a body")]),
         ],
         "docs": [
             ("first-hour", "The first hour, on paper", os.path.join(REPO, "game-design", "first-hour-2026-09-29.md"),
@@ -78,6 +82,8 @@ DAYS = {
              "Approve the moments and their words", "Change them (say what in the note)"),
             ("first-ask", "The outfit's first ask", os.path.join(REPO, "game-design", "first-ask-2026-09-29.md"),
              "Approve the ask and its lines", "Change it (say what in the note)"),
+            ("ellis", "When DS Ellis turns up, and what she has", os.path.join(REPO, "game-design", "ellis-2026-09-29.md"),
+             "Approve how she comes and what she has", "Change it (say what in the note)"),
         ],
     },
 }
