@@ -6,7 +6,9 @@
 REPORT.json lists takes ({"reference": <the approved voice's clip>, "takes": [{"file", "text", ...}]},
 as F:/LedgerTools/tmp/voxcpm-trial/trial.py writes). For each take:
   ACCENT   CommonAccent's classifier (tools/voice-live/accent_check.py's model) over the whole take and
-           its worst 2.5 s window: REJECT if American (US + Canada) tops or passes 0.30 anywhere;
+           2.5 s windows every 0.5 s: REJECT if American (US + Canada) tops the whole take, reaches 0.5
+           over it, or reads 0.30 or more in windows running for more than 3 s (the rule calibrated on
+           genuine English speech, 29 September: see WHY);
   WORDS    Whisper small.en's transcript against the line (word error rate; over 0.15 fails);
   LIKENESS ECAPA speaker embeddings (SpeechBrain spkrec-ecapa-voxceleb), cosine against the
            reference: under 0.45 fails (the approved voices' own lines score 0.5 to 0.8 against
@@ -14,6 +16,13 @@ as F:/LedgerTools/tmp/voxcpm-trial/trial.py writes). For each take:
            so 0.45 is a floor, not a pass on likeness).
 WHY, 29 September (Jafar's list, item 6: VoxCPM2's acted lines on a blind page; CLAUDE.md's
 gate: a voice drifting American or away from the named accent is rejected before he hears it).
+THE WINDOW RULE, CALIBRATED, the same day (production/research/voice-alternatives-2026-09-24/
+ACCENT-WINDOWS-2026-09-29.md): the first rule failed a take on any single 2.5 s window at 0.30
+American, and it failed 11 of 50 clips of genuine northern English women (OpenSLR 83) as well
+as three of their four ten-second references; their American stretches run up to 4.5 s. A run
+of such windows longer than 3 s, or 0.5 over the whole take, still catches all 40 clips the
+project had already judged American (the 39 casting clips taken out on 25 September and Pocket's
+rejected take) and flags 3 of the 50 genuine ones.
 """
 import json
 import os
@@ -25,6 +34,7 @@ warnings.filterwarnings("ignore")
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SPK_MODEL = os.environ.get("LEDGER_SPK_MODEL", "speechbrain/spkrec-ecapa-voxceleb")   # Apache-2.0; fetched to drive F
 WER_MAX, LIKE_MIN, AMERICAN_MAX = 0.15, 0.45, 0.30
+AMERICAN_RUN_MAX_S, AMERICAN_WHOLE_MAX = 3.0, 0.5
 
 
 ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
@@ -98,14 +108,20 @@ def main(argv):
         sc = acc(y)
         verdict, top, us = ac.verdict(sc, want)
         worst = 0.0
+        run = longest = 0
         for s in range(0, max(1, len(y) - 40000 + 1), 8000):
             sw = acc(y[s:s + 40000])
-            worst = max(worst, sum(sw.get(a, 0.0) for a in ac.AMERICAN))
+            a = sum(sw.get(x, 0.0) for x in ac.AMERICAN)
+            worst = max(worst, a)
+            run = run + 1 if a >= AMERICAN_MAX else 0
+            longest = max(longest, run)
+        # seconds the American-reading windows run for: 2.5 s for one, 0.5 s more for each after it
+        run_s = (longest - 1) * 0.5 + 2.5 if longest else 0.0
         heard = asr({"raw": y, "sampling_rate": 16000})["text"].strip()
         w = wer(t["text"], heard)
         like = float(torch.nn.functional.cosine_similarity(sv.encode_batch(torch.tensor(y).unsqueeze(0))[0, 0], ref_emb, dim=0))
         fails = []
-        if verdict == "REJECT" or worst >= AMERICAN_MAX:
+        if verdict == "REJECT" or us >= AMERICAN_WHOLE_MAX or run_s > AMERICAN_RUN_MAX_S:
             fails.append("american")
         elif verdict != "PASS":
             fails.append("accent:" + top)
@@ -119,12 +135,13 @@ def main(argv):
             fails.append("stray-start:" + hw[0])
         if like < LIKE_MIN:
             fails.append("likeness")
-        row = dict(t, accentTop=top, want=round(sc.get(want, 0.0), 2), american=round(us, 2), worstWindowAmerican=round(worst, 2),
+        row = dict(t, accentTop=top, want=round(sc.get(want, 0.0), 2), american=round(us, 2), worstWindowAmerican=round(worst, 2), americanRunS=round(run_s, 1),
                    heard=heard, wer=round(w, 2), likeness=round(like, 2), verdict="PASS" if not fails else "FAIL:" + ",".join(fails))
         rows.append(row)
         print("%-9s %-38s %s=%.2f us=%.2f worst=%.2f wer=%.2f like=%.2f" % (row["verdict"], os.path.basename(t["file"]), want,
                                                                               row["want"], us, worst, w, like), flush=True)
-    json.dump({"reference": rep["reference"], "rules": {"werMax": WER_MAX, "likenessMin": LIKE_MIN, "americanMax": AMERICAN_MAX},
+    json.dump({"reference": rep["reference"], "rules": {"werMax": WER_MAX, "likenessMin": LIKE_MIN, "americanWindow": AMERICAN_MAX,
+                                                        "americanRunMaxS": AMERICAN_RUN_MAX_S, "americanWholeMax": AMERICAN_WHOLE_MAX},
                "takes": rows}, open(out, "w", encoding="utf-8"), indent=1)
     return 0
 
