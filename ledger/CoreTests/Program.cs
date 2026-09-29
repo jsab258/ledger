@@ -25149,14 +25149,15 @@ namespace Ledger.CoreTests
             Console.WriteLine("    " + shapes);
             // THE PIPE COUNTS ARE ASSERTED AS WELL AS PRINTED, because the
             // circular-in-plan guard below is satisfied by a pipe shrunk to
-            // a disc. Ten lie along the street (two gutters, two booms, six
+            // a disc. Six lie along the street (two gutters, two booms, two
             // rail bars) and thirty-two are pitched (twenty aerial elements,
             // twelve swan-neck segments); read off this print on the live
             // tree, 2 Sep, and the second gutter is the ship chandler's,
-            // added 24 Sep. Planting on_stacks [1] in the JSON drops the
-            // counts and goes red here.
-            Check(shapes.Contains("cylRolled=10 cylPitched=32 "),
-                  "ten cylinders lie along the street and thirty-two are pitched, as printed on the live tree",
+            // added 24 Sep; the railing went from three panels to one on
+            // 29 Sep, which took four rail bars. Planting on_stacks [1] in
+            // the JSON drops the counts and goes red here.
+            Check(shapes.Contains("cylRolled=6 cylPitched=32 "),
+                  "six cylinders lie along the street and thirty-two are pitched, as printed on the live tree",
                   shapes);
 
             // A CYLINDER HAS ONE DIAMETER, NOT TWO, AND THIS GUARD WENT RED

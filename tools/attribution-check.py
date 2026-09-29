@@ -278,7 +278,7 @@ OURS = {
     # plays. Kept on this PC only (the folder is ignored by git), because a
     # picture of a desktop is private.
     "production/playtest/ai-tester": "frames of this project's own game window taken by tools/ai-tester/play.py; kept on this PC, never committed",
-    "production/assets/street": "exported by tools/art-recipes/terrace-front.py --export-glb: this project's own street geometry, built from primitives by the recipe, with placeholder materials and no textures; the base-mesh lamps and props are not exported; and surfaces/, drawn by tools/props/make_street_surfaces.py from the recipe's numbers with no fetched input",
+    "production/assets/street": "exported by tools/art-recipes/terrace-front.py --export-glb: this project's own street geometry, built from primitives by the recipe and from its own 1990 street clutter (clutter/, made by tools/meshgen/blender/clutter/*.py from measurements, no fetched asset as an input), with placeholder materials and no textures; the base-mesh lamps and props are not exported; and surfaces/, drawn by tools/props/make_street_surfaces.py from the recipe's numbers with no fetched input",
     # THE ART LINE'S PREVIEWS, added 2026-09-08 before the first one landed,
     # because the builder that wrote the recipe flagged that the first
     # successful commit would turn this check red on the art branch and said

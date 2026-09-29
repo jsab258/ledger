@@ -67,3 +67,18 @@ each piece on Wednesday's page (https://claude.ai/artifact/Gbu86NurpJTnXCca6vsGA
 ## Approval
 
 Under Jafar's ruling of 29 September (CLAUDE.md, How to work) street clutter is approved by the gate alone: the nine pieces above passed both checks and go into the street; he sees them there, in the whole-street frames on his page. The pillar box and the kiosk go in plain until he rules on their marks (canon); the street name plate's lettering waits on the font's licence.
+
+## In the street (29 September)
+
+The seven that have a place stand in the street, built by the street recipe
+(tools/art-recipes/terrace-front.py, `_street_furniture`) from the passed
+models, which are now in the repository (production/assets/street/clutter/):
+the kiosk and the pillar box where the scene file's own stood, the two
+dustbins likewise, the cannon bollards at the yard entrance's two corners,
+and a litter bin at each of the scene file's three public-bin spots (the near
+one 0.55 m up the street, out of the lamp column the old bin stood inside).
+The telegraph pole (west kerb, 12 m) and the grit bin (west kerb, 41 m, at
+the top of the street) are additions the scene file had no line for. Each
+keeps its own colours, and each is mirrored before the street's export so
+that its lettering reads the right way in Unreal. The Belisha beacon and the
+bus stop stay on drive F: the street has no crossing and no stop.

@@ -466,6 +466,43 @@ MATERIALS = (
     ("galvanised",  (0.300, 0.310, 0.320), 0.48),
     ("kiosk_frame", (0.340, 0.345, 0.350), 0.35),
     ("kiosk_band",  (0.018, 0.024, 0.045), 0.40),
+    # THE 1990 STREET CLUTTER'S OWN, 29 September (_clutter): each piece's
+    # colours as its gated model carries them (production/assets/street/
+    # clutter, glTF base colour factors, linear), COPIED rather than chosen
+    # again, and the selftest reads the files to say so. The kiosk's glass
+    # is the street's own glass and has no row here. A METAL is the one
+    # exception: the street reaches Unreal as flat paint with no metalness,
+    # and a metal's base colour painted flat reads as white enamel (the
+    # kiosk's stainless steel did, in the first Unreal frame), so a material
+    # the model marks metallic is painted at CLUTTER_METAL_AS_PAINT of its
+    # colour, which the selftest applies too.
+    ("cl_bollard_bollard_black", (0.005, 0.005, 0.005), 0.55),
+    ("cl_dustbin_galvanised", (0.156, 0.160, 0.156), 0.55),
+    ("cl_grit_bin_grit_yellow", (0.812, 0.465, 0.004), 0.55),
+    ("cl_grit_bin_grit_black", (0.006, 0.006, 0.006), 0.60),
+    ("cl_kx100_kiosk_black", (0.003, 0.003, 0.003), 0.60),
+    ("cl_kx100_kiosk_stainless", (0.293, 0.300, 0.310), 0.35),
+    ("cl_kx100_kiosk_phone_grey", (0.157, 0.164, 0.173), 0.50),
+    ("cl_kx100_kiosk_yellow", (0.916, 0.586, 0.000), 0.45),
+    ("cl_litter_bin_council_green", (0.009, 0.045, 0.017), 0.50),
+    ("cl_litter_bin_inside_dark", (0.001, 0.001, 0.001), 0.90),
+    ("cl_litter_bin_letters_white", (0.836, 0.836, 0.782), 0.50),
+    ("cl_pillar_box_pillar_red", (0.523, 0.009, 0.013), 0.45),
+    ("cl_pillar_box_base_black", (0.004, 0.004, 0.004), 0.50),
+    ("cl_pillar_box_slot_dark", (0.000, 0.000, 0.000), 0.90),
+    ("cl_pillar_box_plate_white", (0.836, 0.836, 0.782), 0.40),
+    ("cl_pillar_box_plate_ink", (0.017, 0.017, 0.022), 0.60),
+    ("cl_telegraph_pole_creosote_timber", (0.074, 0.041, 0.019), 0.85),
+    ("cl_telegraph_pole_galvanised", (0.114, 0.118, 0.114), 0.50),
+    ("cl_telegraph_pole_wire_black", (0.002, 0.002, 0.002), 0.60),
+    ("cl_telegraph_pole_plate", (0.652, 0.652, 0.586), 0.50),
+    # THE SMASHED WINDOW'S GLASS (_broken_windows): opaque, near-black
+    # grey-green and nearly mirror-smooth in the frame, its broken edges a
+    # pale green (the thickness of float glass catching the light), and the
+    # pieces on the pavement a shade lighter so they glint.
+    ("shard_a_glass", (0.018, 0.026, 0.024), 0.04),
+    ("shard_a_edge",  (0.320, 0.460, 0.400), 0.20),
+    ("shard_a_ground", (0.090, 0.120, 0.110), 0.03),
     ("grime",       (0.078, 0.061, 0.048), 0.90),
     ("lens_amber",  (0.780, 0.360, 0.040), 0.20),
     # WHAT A WINDOW SHOWS IS THE INSIDE, and the first render of this bay is
@@ -1994,6 +2031,7 @@ def plan_street(root, spec_rel=SPEC_REL):
     _north_approach(out)
     _pavement_dressing(out)
     _street_furniture(out, root)
+    _broken_windows(out)
     _standing_water(out, root)
     # THE DISH, on the cab office, where the approved sheet has it.
     _dish(out)
@@ -2582,105 +2620,388 @@ def _dome_part(out, pid, material, cx, cy, z0, r, h, sides=24, rings=5, note="")
     out.append({"id": pid, "material": material, "kind": "mesh", "verts": vs, "faces": fs, "note": note})
 
 
-#: THE STREET FURNITURE THE SCENE FILE STOOD AS BOXES AND CYLINDERS, built to
-#: its own dimensions, 23 September, for the presentable checklist ("nothing
-#: in frame is a placeholder"). Each is read from the scene file's pieces -
-#: the kiosk's plinth, posts and cornice, the pillar box's body, cap and dome,
-#: the dustbins - so it stands where they stood, at their sizes, and the
-#: pieces it replaces go (STREET_REPLACES_PREFIXES). In the recipe's frame:
-#: x along the street, y across it (the scene file's z), z the height.
-def _street_furniture(out, root=None):
+#: THE STREET FURNITURE, FROM THE 1990 CLUTTER THAT PASSED THE GATE, 29
+#: September. Each piece was made by script against photographs of the real
+#: thing and passed two checks (production/art/clutter-2026-09-29), which is
+#: its approval under Jafar's ruling of that day. They take the places of the
+#: boxes and cylinders this recipe built for the scene file's kiosk, pillar box
+#: and dustbins on 23 September (STREET_REPLACES_PREFIXES), and of the fetched
+#: bollards and public bins the scene file places (CLUTTER_FOR_HELD, which
+#: Unreal is told to skip). EVERY POSITION IS THE SCENE FILE'S, except the two
+#: pieces it has no line for (CLUTTER_ADDED) and one public bin moved out of
+#: the lamp column it stood inside. In the recipe's frame: x along the street,
+#: y across it (the scene file's z, east positive), z the height.
+CLUTTER_DIR = os.path.join("production", "assets", "street", "clutter")
+#: A clutter material the street already has: the kiosk's glazing is the
+#: street's own glass, so it reads as glass in Unreal and not as grey paint.
+CLUTTER_SAME_AS = {("kx100-kiosk", "glass"): "glass"}
+#: Which clutter model stands where the scene file puts a held prop.
+CLUTTER_FOR_HELD = {"decorative_bollard_02": "bollard", "swing_bin": "litter-bin",
+                    "outdoor_bin": "litter-bin"}
+#: The two the scene file has no line for: (piece, x, side, kerb face to the
+#: piece's centre, why here).
+CLUTTER_ADDED = (
+    ("telegraph-pole", 12.0, "west", 0.35,
+     "the terrace's telephone drop wires: a pole at the kerb between two front doors, "
+     "clear of the lamp columns at 18 and 38 and of the yard entrance"),
+    ("grit-bin", 41.0, "west", 0.55,
+     "at the top of the street where it meets the rise, where a council puts one"),
+)
+#: The scene file stands the near public bin (swing_bin, x 8.0, 0.65 m from
+#: the kerb) inside lamp column 0's base (x 8.0, 0.73 m): a bin strapped to a
+#: column was the fetched mesh's idea, and a bin on its own post cannot share
+#: the spot, so it stands this far up the street from any column it would hit
+#: (0.9 since the blind review of 29 September: at 0.55 the column cut the
+#: bin in half from the pavement's own camera).
+CLUTTER_CLEAR_OF_COLUMN_M = 0.9
+#: What share of a metal's base colour the street paints it (MATERIALS, above).
+CLUTTER_METAL_AS_PAINT = 0.5
+#: THE TELEGRAPH POLE'S DROP WIRES, which its model leaves to the street (its
+#: own are 1.6 m stubs, "the wires themselves drawn by the street to each
+#: house"; in the first Unreal frame the stubs read as an umbrella aerial).
+#: Its ring is POLE_RING_M above the pavement; each wire runs to a house
+#: front DROP_AT_M above the footway, sagging DROP_SAG of its span at mid
+#: span (0.05 since the blind review of 29 September: at 0.025 they read
+#: ruler-straight): the three houses of west_south behind the pole and, across the
+#: road, the two flats over the shops opposite (their side doors at 9.77 and
+#: 15.77). (x along the street, side.)
+POLE_RING_M = 8.534 - 0.35
+DROP_AT_M = 5.7
+DROP_SAG = 0.05
+DROP_TO = ((5.2, "west"), (11.2, "west"), (17.2, "west"), (10.2, "east"), (16.2, "east"))
+
+
+def _read_glb(path):
+    """[(material, verts, triangles)] from a .glb, in Blender's frame (z up).
+
+    PURE PYTHON, because this layer imports without Blender. It reads what the
+    clutter scripts write - nodes without transforms, triangle primitives,
+    float positions, unsigned indices - and refuses anything else by name
+    rather than half-reading it."""
     import json
+    import struct
+    with open(path, "rb") as fh:
+        data = fh.read()
+    if data[:4] != b"glTF":
+        raise ValueError("not-a-glb")
+    jlen = struct.unpack_from("<I", data, 12)[0]
+    doc = json.loads(data[20:20 + jlen].decode("utf-8"))
+    boff = 20 + jlen
+    blob = data[boff + 8:boff + 8 + struct.unpack_from("<I", data, boff)[0]]
+    for node in doc.get("nodes", []):
+        if any(k in node for k in ("rotation", "scale", "translation", "matrix")):
+            raise ValueError("node-transform")
+
+    def read(i):
+        acc = doc["accessors"][i]
+        view = doc["bufferViews"][acc["bufferView"]]
+        start = view.get("byteOffset", 0) + acc.get("byteOffset", 0)
+        comps = {"SCALAR": 1, "VEC3": 3}[acc["type"]]
+        fmt = {5126: "f", 5125: "I", 5123: "H", 5121: "B"}[acc["componentType"]]
+        stride = view.get("byteStride", struct.calcsize("<" + fmt) * comps)
+        vals = [struct.unpack_from("<" + fmt * comps, blob, start + k * stride)
+                for k in range(acc["count"])]
+        return vals if comps > 1 else [v[0] for v in vals]
+
+    parts = []
+    for mesh in doc["meshes"]:
+        for prim in mesh["primitives"]:
+            if prim.get("mode", 4) != 4:
+                raise ValueError("not-triangles")
+            pos = read(prim["attributes"]["POSITION"])
+            idx = read(prim["indices"]) if "indices" in prim else list(range(len(pos)))
+            mat = doc["materials"][prim["material"]]["name"] if "material" in prim else "none"
+            # glTF is y up with -z forward; Blender z up with +y forward.
+            verts = [(p[0], -p[2], p[1]) for p in pos]
+            parts.append((mat, verts, [tuple(idx[k:k + 3]) for k in range(0, len(idx) - 2, 3)]))
+    return parts
+
+
+def _clutter_material(piece, mat):
+    return CLUTTER_SAME_AS.get((piece, mat)) or "cl_%s_%s" % (piece.replace("-", "_"),
+                                                             mat.replace("-", "_"))
+
+
+def _place_clutter(out, root, piece, n, cx, cy, note="", skip=()):
+    """Stand one gated model on the footway at (cx, cy), its front to the
+    footway, and return its footprint (x0, x1, y0, y1).
+
+    PRE-MIRRORED, and without this the lettering reads backwards. The export
+    reflects the whole street once on its way to Unreal (_export_street), so a
+    model placed as it was made arrives back to front: LITTER and GRIT would
+    read as mirror writing. Mirrored here, the export's reflection puts it
+    right; a mirror turns faces inside out, so every triangle is re-wound.
+
+    THE FRONT FACES THE FOOTWAY. Every clutter script builds its front at -y;
+    the mirror turns that to +y, which is away from the road on the east side
+    (east is +y here) and towards it on the west, which is turned half round.
+
+    THE GROUND IS THE FOOTWAY'S AT THE PIECE'S KERB EDGE, the lowest point of
+    its footprint on the 1 in 40 fall, so nothing floats; the far edge sinks
+    into the flags by the fall across it, 2 cm under the kiosk."""
+    parts = _read_glb(os.path.join(root or ROOT, CLUTTER_DIR, piece + ".glb"))
+    turn = 0.0 if cy > 0 else math.pi
+    c, s = math.cos(turn), math.sin(turn)
+    placed = []
+    for mat, verts, tris in parts:
+        if mat in skip:
+            continue
+        # mirror (x, y) -> (x, -y), then turn, then stand at (cx, cy)
+        xy = [(cx + c * v[0] + s * v[1], cy + s * v[0] - c * v[1], v[2]) for v in verts]
+        placed.append((mat, xy, tris))
+    base = [p for _m, xy, _t in placed for p in xy if p[2] < 0.02] or [(cx, cy, 0.0)]
+    ground = min(footway_z(p[1]) for p in base)
+    lo = [1e9, 1e9]
+    hi = [-1e9, -1e9]
+    for mat, xy, tris in placed:
+        vs = [(x, y, ground + z) for x, y, z in xy]
+        for x, y, _z in vs:
+            lo[0], hi[0] = min(lo[0], x), max(hi[0], x)
+            lo[1], hi[1] = min(lo[1], y), max(hi[1], y)
+        out.append({"id": "furn_cl_%s%d_%s" % (piece.replace("-", "_"), n, mat.replace("-", "_")),
+                    "material": _clutter_material(piece, mat), "kind": "mesh",
+                    "verts": vs, "faces": [tuple(reversed(t)) for t in tris], "note": note})
+    return (lo[0], hi[0], lo[1], hi[1])
+
+
+def _drop_wires(out, n, cx, cy):
+    """The pole's drop wires, each a sagging line of four rods from the ring
+    to a house front, in the wire's own colour."""
+    ring = footway_z(cy) + POLE_RING_M
+    made = 0
+    for k, (x, side) in enumerate(DROP_TO):
+        y = (1.0 if side == "east" else -1.0) * (STREET_FRONTAGE_M - 0.02)
+        z = footway_z(y) + DROP_AT_M
+        dx, dy = x - cx, y - cy
+        span = math.hypot(dx, dy)
+        a = (cx + 0.16 * dx / span, cy + 0.16 * dy / span, ring)
+        pts = []
+        for t in (0.0, 0.25, 0.5, 0.75, 1.0):
+            pts.append((a[0] + (x - a[0]) * t, a[1] + (y - a[1]) * t,
+                        a[2] + (z - a[2]) * t - 4.0 * DROP_SAG * span * t * (1.0 - t)))
+        for m in range(4):
+            _rod(out, "furn_cl_telegraph_pole%d_drop%d_%d" % (n, k, m),
+                 "cl_telegraph_pole_wire_black", pts[m], pts[m + 1], 0.01, "a-drop-wire")
+        made += 1
+    return made
+
+
+def clutter_placements(root=None):
+    """[(piece, x, y, note)]: where each clutter model stands, and a list of
+    notes on what could not be placed as the scene file says. Pure, so the
+    selftest reads it."""
+    import json
+    root = root or ROOT
+    notes = []
+    spots = []
     try:
-        with open(os.path.join(root or ROOT, PIECES_REL), encoding="utf-8") as fh:
+        with open(os.path.join(root, PIECES_REL), encoding="utf-8") as fh:
             pieces = {p["name"]: p for p in json.load(fh)["pieces"]}
     except (OSError, ValueError, KeyError):
-        return "no-pieces"
-
-    def at(name):
+        return [], ["no-pieces"]
+    columns = [(p["x_m"], p["z_m"]) for name, p in pieces.items()
+               if name.startswith("column") and name.endswith("_base")]
+    for name, piece in (("kiosk_plinth", "kx100-kiosk"), ("pillarbox_body", "pillar-box")):
         p = pieces.get(name)
-        return None if p is None else (p["x_m"], p["z_m"], p["y_m"], p["sx_m"], p["sy_m"], p["sz_m"])
-    built = []
-    # THE KIOSK: an anodised frame with rounded corner posts, three glass
-    # sides and a glass door each crossed by a mid-rail, a phone on the back,
-    # a dark fascia band under a shallow cap.
-    k = at("kiosk_plinth")
-    if k is not None:
-        cx, cy = k[0], k[1]
-        half = k[3] / 2.0
-        z0 = k[2] + k[4] / 2.0
-        top = z0 + 2.02
-        _box(out, "furn_kiosk_plinth", "stone", cx - half, cx + half, cy - half, cy + half,
-             k[2] - k[4] / 2.0, z0, "the-kiosk's-plinth")
-        for n, (sx, sy) in enumerate(((-1, -1), (-1, 1), (1, -1), (1, 1))):
-            _cylinder_part(out, "furn_kiosk_post%d" % n, "kiosk_frame",
-                           cx + sx * (half - 0.05), cy + sy * (half - 0.05), z0, top, 0.05, sides=12)
-        pane = half - 0.09
-        for n, (ax, ay) in enumerate(((1, 0), (-1, 0), (0, 1), (0, -1))):
-            if ax:
-                x0, x1 = cx + ax * (half - 0.03) - 0.006, cx + ax * (half - 0.03) + 0.006
-                y0, y1 = cy - pane, cy + pane
-            else:
-                x0, x1 = cx - pane, cx + pane
-                y0, y1 = cy + ay * (half - 0.03) - 0.006, cy + ay * (half - 0.03) + 0.006
-            _box(out, "furn_kiosk_pane%d" % n, "glass", x0, x1, y0, y1, z0 + 0.12, top - 0.10,
-                 "a-glass-side")
-            # THE RAILS: a kick plate at the foot, a rail at waist height, a head rail.
-            for m, (za, zb) in enumerate(((z0, z0 + 0.12), (z0 + 0.95, z0 + 1.00), (top - 0.10, top))):
-                _box(out, "furn_kiosk_rail%d_%d" % (n, m), "kiosk_frame",
-                     min(x0, x1) - (0.012 if not ax else 0.004), max(x0, x1) + (0.012 if not ax else 0.004),
-                     min(y0, y1) - (0.012 if ax else 0.004), max(y0, y1) + (0.012 if ax else 0.004),
-                     za, zb, "a-rail")
-        _box(out, "furn_kiosk_phone", "steel_dark", cx - 0.14, cx + 0.14, cy + half - 0.18,
-             cy + half - 0.08, z0 + 1.15, z0 + 1.55, "the-phone-on-the-back-panel")
-        _box(out, "furn_kiosk_band", "kiosk_band", cx - half - 0.035, cx + half + 0.035,
-             cy - half - 0.035, cy + half + 0.035, top, top + 0.16, "the-fascia-band")
-        _box(out, "furn_kiosk_cap", "kiosk_frame", cx - half - 0.06, cx + half + 0.06,
-             cy - half - 0.06, cy + half + 0.06, top + 0.16, top + 0.22, "the-cap")
-        built.append("kiosk")
-    # THE PILLAR BOX: a Type A in red cast iron on a black foot, a lip round
-    # its cap and a dome over it, the slot facing the road.
-    b = at("pillarbox_body")
-    if b is not None:
-        cx, cy = b[0], b[1]
-        r = b[3] / 2.0
-        z0 = b[2] - b[4] / 2.0
-        z1 = b[2] + b[4] / 2.0
-        _cylinder_part(out, "furn_pillar_foot", "steel_dark", cx, cy, z0, z0 + 0.09, r + 0.012, r + 0.012)
-        _cylinder_part(out, "furn_pillar_body", "pillarbox_red", cx, cy, z0 + 0.09, z1, r)
-        cap = at("pillarbox_cap")
-        cr = (cap[3] / 2.0) if cap else r + 0.03
-        _cylinder_part(out, "furn_pillar_cap", "pillarbox_red", cx, cy, z1, z1 + 0.10, cr, cr - 0.01)
-        _dome_part(out, "furn_pillar_dome", "pillarbox_red", cx, cy, z1 + 0.10, cr - 0.03, 0.15)
-        road = -1.0 if cy > 0 else 1.0
-        _box(out, "furn_pillar_slot", "steel_dark", cx - 0.16, cx + 0.16,
-             min(cy + road * (r - 0.004), cy + road * (r + 0.012)),
-             max(cy + road * (r - 0.004), cy + road * (r + 0.012)),
-             z1 - 0.24, z1 - 0.195, "the-aperture-facing-the-road")
-        _box(out, "furn_pillar_plate", "paint_white", cx - 0.08, cx + 0.08,
-             min(cy + road * (r - 0.002), cy + road * (r + 0.008)),
-             max(cy + road * (r - 0.002), cy + road * (r + 0.008)),
-             z1 - 0.44, z1 - 0.33, "the-collection-plate")
-        built.append("pillarbox")
-    # THE DUSTBINS: galvanised, three ribs, a domed lid with a handle.
+        if p is None:
+            notes.append("%s=no-scene-piece" % piece)
+        else:
+            spots.append((piece, p["x_m"], p["z_m"], "the-scene-file's-" + name))
     for n in range(8):
-        d = at("dustbin%d" % n)
-        if d is None:
+        p = pieces.get("dustbin%d" % n)
+        if p is not None:
+            spots.append(("dustbin", p["x_m"], p["z_m"], "the-scene-file's-dustbin%d" % n))
+    held, err = prop_placements(root)
+    if err:
+        notes.append("held=%s" % err)
+    for h in held:
+        piece = CLUTTER_FOR_HELD.get(h["asset"])
+        if piece is None:
             continue
-        cx, cy = d[0], d[1]
-        r = d[3] / 2.0
-        z0 = d[2] - d[4] / 2.0
-        z1 = d[2] + d[4] / 2.0
-        _cylinder_part(out, "furn_bin%d_body" % n, "galvanised", cx, cy, z0, z1, r * 0.94, r)
-        for m, zr in enumerate((0.18, 0.42, 0.66)):
-            zz = z0 + zr * (z1 - z0)
-            _cylinder_part(out, "furn_bin%d_rib%d" % (n, m), "galvanised", cx, cy, zz, zz + 0.022,
-                           r * (0.94 + 0.06 * zr) + 0.01, sides=24)
-        _dome_part(out, "furn_bin%d_lid" % n, "galvanised", cx, cy, z1, r + 0.02, 0.06)
-        _box(out, "furn_bin%d_handle" % n, "steel_dark", cx - 0.06, cx + 0.06, cy - 0.012, cy + 0.012,
-             z1 + 0.06, z1 + 0.085, "the-lid-handle")
-        built.append("dustbin%d" % n)
-    return "built/" + ",".join(built)
+        x = h["x"]
+        for colx, coly in columns:
+            if abs(colx - x) < CLUTTER_CLEAR_OF_COLUMN_M and abs(coly - h["y"]) < 0.5:
+                x = colx + CLUTTER_CLEAR_OF_COLUMN_M
+                notes.append("%s@%.1f=moved-%.2f-clear-of-the-column"
+                             % (h["asset"], h["x"], CLUTTER_CLEAR_OF_COLUMN_M))
+        spots.append((piece, x, h["y"], "the-scene-file's-" + h["asset"]))
+    for piece, x, side, across, why in CLUTTER_ADDED:
+        spots.append((piece, x, (1.0 if side == "east" else -1.0) * (ROAD_HALF_M + across),
+                      "added/" + why.replace(" ", "-")[:60]))
+    return spots, notes
+
+
+def _street_furniture(out, root=None):
+    spots, notes = clutter_placements(root)
+    built = []
+    count = {}
+    for piece, x, y, note in spots:
+        n = count.get(piece, 0)
+        count[piece] = n + 1
+        try:
+            if piece == "telegraph-pole":
+                _place_clutter(out, root, piece, n, x, y, note, skip=("wire-black",))
+                built.append("%s%d+%dwires" % (piece, n, _drop_wires(out, n, x, y)))
+            else:
+                _place_clutter(out, root, piece, n, x, y, note)
+                built.append("%s%d" % (piece, n))
+        except (OSError, ValueError, KeyError, IndexError) as exc:
+            notes.append("%s%d=refused/%s" % (piece, n, type(exc).__name__))
+    return "built/" + ",".join(built) + ("" if not notes else " notes/" + ",".join(notes))
+
+
+#: THE SMASHED WINDOW, 29 September. The AI tester, looking after the deed:
+#: the panes "still look whole" - the pane goes, and plate glass that is gone
+#: looks like glass that is there. The research (production/research/
+#: broken-window-look) ranks what reads afterwards: jagged glass left in the
+#: frame, whose outline makes the hole, then a glittering band of glass on
+#: the pavement, dense at the shop front and thinning fast out to 2 or 3 m.
+#: Both are built here, OPAQUE (see-through glass lights flat under Lumen and
+#: smears under the upscaler; opaque glass reflects and holds still), with
+#: the broken edges pale, the glass's thickness catching the light. Unreal
+#: keeps them hidden until the deed (the sidecar's reveal_on, which the
+#: export writes for every shard_<deed>_ material). (deed, the glazing part.)
+BROKEN_WINDOWS = (("a", "east_parade_display_glazing_bay0"),)
+#: One seed, so the same glass falls the same way on every export.
+BROKEN_SEED = 19900929
+#: How many pieces lie on the pavement, and how far out the fan reaches.
+PAVEMENT_SHARDS = 90
+PAVEMENT_REACH_M = 2.4
+
+
+def _outward(verts, face, centre):
+    """The face, wound so its normal points away from centre."""
+    pts = [verts[i] for i in face]
+    n = [0.0, 0.0, 0.0]
+    for k in range(len(pts)):
+        a, b = pts[k], pts[(k + 1) % len(pts)]
+        n[0] += (a[1] - b[1]) * (a[2] + b[2])
+        n[1] += (a[2] - b[2]) * (a[0] + b[0])
+        n[2] += (a[0] - b[0]) * (a[1] + b[1])
+    mid = [sum(p[i] for p in pts) / len(pts) for i in range(3)]
+    d = sum(n[i] * (mid[i] - centre[i]) for i in range(3))
+    return tuple(face) if d >= 0 else tuple(reversed(face))
+
+
+def _slab(glass, edge, poly, yf, yb):
+    """A flat piece of glass between the planes y=yf and y=yb, its outline
+    poly [(x, z), ...] (convex, in order), its LAST side the broken edge.
+    Faces go into glass or edge, each a (verts, faces) pair."""
+    n = len(poly)
+    ym = (yf + yb) / 2.0
+    centre = (sum(p[0] for p in poly) / n, ym, sum(p[1] for p in poly) / n)
+    gv, gf = glass
+    base = len(gv)
+    gv.extend((x, yf, z) for x, z in poly)
+    gv.extend((x, yb, z) for x, z in poly)
+    gf.append(_outward(gv, list(range(base, base + n)), centre))
+    gf.append(_outward(gv, list(range(base + n, base + 2 * n)), centre))
+    for k in range(n - 1):
+        j = k + 1
+        gf.append(_outward(gv, [base + k, base + j, base + n + j, base + n + k], centre))
+    ev, ef = edge
+    e0 = len(ev)
+    a, b = poly[n - 1], poly[0]
+    ev.extend([(a[0], yf, a[1]), (b[0], yf, b[1]), (b[0], yb, b[1]), (a[0], yb, a[1])])
+    ef.append(_outward(ev, [e0, e0 + 1, e0 + 2, e0 + 3], centre))
+
+
+def _teeth(rng, glass, edge, xa, xb, za, zb, yf, yb):
+    """The glass left in one light of the window: an uneven band of teeth
+    5 to 25 cm deep along the bottom, the sides and the top, and a long
+    dagger or two hanging from the top, chunky rather than fine (fine teeth
+    shimmer when the picture is upscaled)."""
+    def band(length, depth_lo, depth_hi, emit):
+        t = 0.0
+        prev = rng.uniform(depth_lo, depth_hi)
+        while t < length - 1e-6:
+            step = min(length - t, rng.uniform(0.07, 0.16))
+            nxt = rng.uniform(depth_lo, depth_hi)
+            emit(t, t + step, prev, nxt)
+            t, prev = t + step, nxt
+    # the bottom, standing up from the sill; the last side is the broken edge
+    band(xb - xa, 0.03, 0.22, lambda a, b, ha, hb: _slab(
+        glass, edge, [(xa + a, za + ha), (xa + a, za), (xa + b, za), (xa + b, za + hb)], yf, yb))
+    # the top, hanging from the transom
+    band(xb - xa, 0.05, 0.25, lambda a, b, ha, hb: _slab(
+        glass, edge, [(xa + b, zb - hb), (xa + b, zb), (xa + a, zb), (xa + a, zb - ha)], yf, yb))
+    # the sides, between the bottom and top bands
+    lo, hi = za + 0.15, zb - 0.18
+    band(hi - lo, 0.02, 0.12, lambda a, b, wa, wb: _slab(
+        glass, edge, [(xa + wb, lo + b), (xa, lo + b), (xa, lo + a), (xa + wa, lo + a)], yf, yb))
+    band(hi - lo, 0.02, 0.12, lambda a, b, wa, wb: _slab(
+        glass, edge, [(xb - wa, lo + a), (xb, lo + a), (xb, lo + b), (xb - wb, lo + b)], yf, yb))
+    # the daggers: a long sliver from the top, pointing down
+    for _ in range(rng.choice((1, 1, 2))):
+        w = rng.uniform(0.09, 0.2)
+        x0 = rng.uniform(xa + 0.15, xb - 0.15 - w)
+        tip = zb - rng.uniform(0.35, 0.75)
+        tipx = x0 + w * rng.uniform(0.2, 0.8)
+        _slab(glass, edge, [(x0 + w, zb), (x0, zb), (tipx, tip)], yf, yb)
+
+
+def _pavement_glass(rng, ground, x0, x1, face_y, toward_road):
+    """The fan of glass in front of the window: flat pieces, most small, a
+    few large by the stall riser, dense at the shop front and thinning
+    fast towards the kerb (Pounds and Smalldon 1978: out to about 3 m,
+    falling off roughly exponentially)."""
+    gv, gf = ground
+    for _ in range(PAVEMENT_SHARDS):
+        # ON THE PAVEMENT ONLY: its 1.85 m is shorter than the fan's reach,
+        # and a piece past the kerb would float at the pavement's height.
+        reach = min(PAVEMENT_REACH_M, abs(face_y) - (ROAD_HALF_M + KERB_W_M) - 0.08)
+        d = min(reach, -0.45 * math.log(1.0 - rng.random() * 0.995) + 0.02)
+        cx = rng.uniform(x0 - 0.35, x1 + 0.35)
+        cy = face_y + toward_road * d
+        big = d < 0.45 and rng.random() < 0.25
+        r = rng.uniform(0.06, 0.13) if big else rng.uniform(0.012, 0.045)
+        a0 = rng.uniform(0.0, 2.0 * math.pi)
+        z = footway_z(cy) + 0.004
+        base = len(gv)
+        for k in range(3):
+            a = a0 + k * 2.0 * math.pi / 3.0 + rng.uniform(-0.5, 0.5)
+            rr = r * rng.uniform(0.55, 1.25)
+            gv.append((cx + rr * math.cos(a), cy + rr * math.sin(a), z + rng.uniform(0.0, 0.004)))
+        face = (base, base + 1, base + 2)
+        gf.append(_outward(gv, face, (cx, cy, z - 1.0)))
+
+
+def _broken_windows(out):
+    """The smashed windows' glass, as hidden parts, one mesh per material and
+    deed: shard_<deed>_glass (in the frame), shard_<deed>_edge (its broken
+    edges) and shard_<deed>_ground (on the pavement)."""
+    import random
+    by_id = {p["id"]: p for p in out}
+    notes = []
+    for deed, gid in BROKEN_WINDOWS:
+        g = by_id.get(gid)
+        if g is None:
+            notes.append("%s=no-glazing" % deed)
+            continue
+        prefix, bay = gid.split("_display_glazing_")
+        frames = sorted((p for p in out if p["id"] in (
+            "%s_display_jamb_left_%s" % (prefix, bay), "%s_display_jamb_right_%s" % (prefix, bay))
+            or p["id"].startswith("%s_display_mullion_" % prefix) and p["id"].endswith("_" + bay)),
+            key=lambda p: p["x0"])
+        sill = by_id.get("%s_display_sill_rail_%s" % (prefix, bay))
+        za = sill["z1"] if sill else g["z0"]
+        zb = g["z1"]
+        east = (g["y0"] + g["y1"]) > 0
+        # the pane's plane, 8 mm thick, a hair in front of where the pane stood
+        yf = g["y0"] if east else g["y1"]
+        yb = yf + (0.008 if east else -0.008)
+        rng = random.Random(BROKEN_SEED + ord(deed))
+        glass, edge, ground = ([], []), ([], []), ([], [])
+        for k in range(len(frames) - 1):
+            _teeth(rng, glass, edge, frames[k]["x1"], frames[k + 1]["x0"], za, zb, yf, yb)
+        riser = by_id.get("%s_stallriser_%s" % (prefix, bay))
+        face_y = (riser["y0"] if east else riser["y1"]) if riser else yf
+        _pavement_glass(rng, ground, g["x0"], g["x1"], face_y, -1.0 if east else 1.0)
+        for kind, (vs, fs) in (("glass", glass), ("edge", edge), ("ground", ground)):
+            out.append({"id": "shard_%s_%s" % (deed, kind), "material": "shard_%s_%s" % (deed, kind),
+                        "kind": "mesh", "verts": vs, "faces": fs, "note": "the-smashed-window/" + deed})
+        notes.append("%s=%dlights/%dpieces/%dground" % (deed, len(frames) - 1, len(edge[1]), len(ground[1])))
+    return " ".join(notes)
 
 
 #: THE STANDING WATER, 23 September: the third try at the wet shine, and a
@@ -2725,6 +3046,8 @@ def _water_obstacles(root):
                     feet.append((p["x_m"] - hx, p["x_m"] + hx, p["z_m"] - hy, p["z_m"] + hy))
     except (OSError, ValueError, KeyError):
         pass
+    for _piece, x, y, _note in clutter_placements(root)[0]:
+        feet.append((x - 0.6, x + 0.6, y - 0.6, y + 0.6))
     try:
         with open(os.path.join(root or ROOT, "production", "specs", "street-people.json"),
                   encoding="utf-8") as fh:
@@ -4625,6 +4948,9 @@ def _place_props(bpy, root, mats):
         return
     notes, placed, refused = [], 0, 0
     for n, p in enumerate(placements):
+        if p["asset"] in CLUTTER_FOR_HELD:
+            # BUILT BY _street_furniture from the gated clutter, where it stands.
+            continue
         path = os.path.join(root, PROP_DIR, p["asset"] + ".glb")
         if not os.path.exists(path):
             notes.append("%s=missing" % p["asset"]); refused += 1
@@ -5649,6 +5975,10 @@ def build_and_render(args):
         removed += 1
     print("tfNote sceneReset=dataApi/removed=%d-objects" % removed)
 
+    if not (street and args.get("export_glb")):
+        # A STILL FROM BLENDER IS THE STREET BEFORE ANY DEED: the smashed
+        # window's glass travels to Unreal hidden, and has no place here.
+        parts = [q for q in parts if not str(q.get("material", "")).startswith("shard_")]
     mats = _materials(bpy, args["root"])
     signs = []
     built = 0
@@ -6109,9 +6439,10 @@ def _street_mesh_name(key, decal):
 #: WHAT OF THE SCENE FILE'S OWN PIECES THIS STREET STANDS IN FOR, written
 #: into the sidecar so Unreal reads it rather than keeping a second copy.
 #: The recipe builds the terraces, the pavements, the kerbs, the yellow
-#: lines, the signs and everything fixed to a frontage or a roof; it does
-#: not build the lamp columns, the kiosk, the pillar box, the railing, the
-#: bins, the litter or the ground props, so those stay the scene file's.
+#: lines, the signs and everything fixed to a frontage or a roof, the lamp
+#: columns, and (29 September) the kiosk, pillar box, dustbins, bollards and
+#: public bins from the gated clutter; the railing, the litter and the other
+#: ground props stay the scene file's.
 STREET_REPLACES_PREFIXES = ("east_", "west_", "ground_", "kerb", "yellow_", "gully_",
                             "column", "lantern", "kiosk", "pillarbox", "dustbin")
 STREET_REPLACES_SHAPES = ("decal",)
@@ -6131,11 +6462,15 @@ def _street_replaces(args):
                 assets.append(it.get("asset"))
     except (OSError, ValueError):
         assets = []
+    # AND THE GROUND PROPS THE RECIPE NOW BUILDS FROM THE GATED CLUTTER
+    # (_street_furniture), which would otherwise stand twice.
+    assets.extend(a for a in CLUTTER_FOR_HELD if a not in assets)
     return {"piece_name_prefixes": list(STREET_REPLACES_PREFIXES),
             "piece_shapes": list(STREET_REPLACES_SHAPES),
             "held_prop_assets": sorted(a for a in assets if a),
-            "why": "the recipe builds these itself; lamps, kiosk, pillar box, railing, "
-                   "bins, litter and ground props are the scene file's and stay"}
+            "why": "the recipe builds these itself, the kiosk, pillar box, dustbins, bollards "
+                   "and public bins from the gated 1990 clutter; lamps, railing, litter and "
+                   "the other ground props are the scene file's and stay"}
 
 
 def _street_emit(key, lettered, night):
@@ -6271,7 +6606,12 @@ def _export_street(bpy, args, parts):
         part = by_id.get(obj.name, {})
         M = obj.matrix_world
         world = [M @ v.co for v in obj.data.vertices]
-        if key == "glass" and world:
+        if key == "glass" and world and obj.name.startswith("furn_cl_"):
+            # THE CLUTTER'S OWN GLAZING (the kiosk's) IS ITS OWN MESH, not the
+            # nearest shop bay's: the crime hides a bay's glass mesh when its
+            # window goes in, and a kiosk's panes must not vanish with it.
+            key = "glass_" + obj.name[len("furn_cl_"):].rsplit("_glass", 1)[0]
+        elif key == "glass" and world:
             key = _glass_key([p.x for p in world], [p.y for p in world], [p.z for p in world])
         # THE REFLECTION, y to -y, and nothing else moves.
         world = [mathutils.Vector((p.x, -p.y, p.z)) for p in world]
@@ -6306,6 +6646,9 @@ def _export_street(bpy, args, parts):
                 "drawn_tile_m": drawn.get(base, {}).get("tile_m"),
                 "emit_day": _street_emit(key, lettered, False),
                 "emit_night": _street_emit(key, lettered, True),
+                # SHOWN ONLY WHEN THE DEED HAPPENS: the smashed window's glass
+                # (_broken_windows), hidden in Unreal until then.
+                "reveal_on": ("crime_" + key.split("_")[1]) if key.startswith("shard_") else None,
                 "faces": 0,
             }
         for poly in obj.data.polygons:
@@ -7271,6 +7614,78 @@ def selftest():
     b = parse_args(["x.py", "--", "--not-a-flag-9xz"])
     check("reject/an-unknown-flag-is-refused", b["error"].startswith("unknown-flag"), b["error"])
 
+    # THE SMASHED WINDOW (29 September): its glass stays inside the frame it
+    # was left in, and its fan lies on the pavement in front of it, never in
+    # the shop or the road.
+    sp, _e = plan_street(ROOT)
+    byid = {q["id"]: q for q in sp}
+    gl = byid.get("east_parade_display_glazing_bay0")
+    teeth = byid.get("shard_a_glass")
+    fan = byid.get("shard_a_ground")
+    check("accept/the-smashed-window-has-glass-in-its-frame-and-on-the-pavement",
+          gl is not None and teeth is not None and fan is not None
+          and len(teeth["faces"]) > 100 and len(fan["faces"]) == PAVEMENT_SHARDS,
+          "glazing=%s teeth=%s fan=%s" % (gl is not None, teeth is not None, fan is not None))
+    if gl is not None and teeth is not None and fan is not None:
+        inside = all(gl["x0"] - 1e-6 <= v[0] <= gl["x1"] + 1e-6 and gl["z0"] - 1e-6 <= v[2] <= gl["z1"] + 1e-6
+                     for v in teeth["verts"])
+        check("accept/the-glass-left-in-the-frame-stays-inside-the-frame", inside)
+        kerb = ROAD_HALF_M + KERB_W_M
+        onpave = all(kerb <= v[1] <= STREET_FRONTAGE_M for v in fan["verts"])
+        check("accept/the-glass-on-the-ground-lies-on-the-pavement-before-the-window", onpave,
+              "y range %.3f..%.3f" % (min(v[1] for v in fan["verts"]), max(v[1] for v in fan["verts"])))
+    # THE GATED CLUTTER (29 September). Its colours here are the models' own,
+    # read back off the files; every piece stands somewhere; and a model's
+    # front lands on the footway side. That the lettering reads the right way
+    # round after the export's reflection is a fact about the importer, and is
+    # judged on an Unreal frame, not here.
+    table = {n: (rgb, rough) for n, rgb, rough in MATERIALS}
+    spots, cnotes = clutter_placements(ROOT)
+    for piece in sorted({sp[0] for sp in spots}):
+        try:
+            parts = _read_glb(os.path.join(ROOT, CLUTTER_DIR, piece + ".glb"))
+        except (OSError, ValueError, KeyError) as exc:
+            check("accept/clutter-%s-reads" % piece, False, type(exc).__name__)
+            continue
+        import json as _json
+        import struct as _struct
+        with open(os.path.join(ROOT, CLUTTER_DIR, piece + ".glb"), "rb") as fh:
+            raw = fh.read()
+        doc = _json.loads(raw[20:20 + _struct.unpack_from("<I", raw, 12)[0]].decode("utf-8"))
+        worst = 0.0
+        missing = []
+        for m in doc["materials"]:
+            name = _clutter_material(piece, m["name"])
+            if name == "glass":
+                continue
+            if name not in table:
+                missing.append(name)
+                continue
+            pbr = m.get("pbrMetallicRoughness", {})
+            rgb = pbr.get("baseColorFactor", [1, 1, 1, 1])[:3]
+            if pbr.get("metallicFactor", 1.0) >= 0.5:
+                rgb = [v * CLUTTER_METAL_AS_PAINT for v in rgb]
+            worst = max([worst, abs(pbr.get("roughnessFactor", 1.0) - table[name][1])]
+                        + [abs(a - b) for a, b in zip(rgb, table[name][0])])
+        check("accept/clutter-%s-colours-are-the-model's-own" % piece,
+              not missing and worst < 0.006, "missing=%s worst=%.4f" % (missing, worst))
+    placed_kinds = sorted({sp[0] for sp in spots})
+    check("accept/seven-kinds-of-clutter-stand-in-the-street",
+          placed_kinds == ["bollard", "dustbin", "grit-bin", "kx100-kiosk", "litter-bin",
+                           "pillar-box", "telegraph-pole"], "%s %s" % (placed_kinds, cnotes))
+    check("accept/no-clutter-shares-a-lamp-column's-spot",
+          all(abs(sp[1] - 8.0) >= CLUTTER_CLEAR_OF_COLUMN_M - 1e-9 or sp[2] < 0
+              for sp in spots if sp[0] == "litter-bin"), "%s" % spots)
+    for cy, side in ((4.0, "east"), (-4.0, "west")):
+        out = []
+        _place_clutter(out, ROOT, "grit-bin", 0, 10.0, cy)
+        # the model's front is its -y face; after the pre-mirror and the
+        # turn, the lettering part (grit-black) must sit on the footway side
+        # of the bin's centre, which is further from the road
+        ink = [v for p_ in out if p_["id"].endswith("grit_black") for v in p_["verts"]]
+        mean_y = sum(v[1] for v in ink) / max(1, len(ink))
+        check("accept/clutter-front-faces-the-%s-footway" % side,
+              ink and abs(mean_y) > abs(cy), "ink mean y=%.3f centre=%.1f" % (mean_y, cy))
     print("terrace-front selftest: passed=%d/%d failed=%d" % (passed, passed + failed, failed))
     return 0 if failed == 0 else 4
 

@@ -1984,6 +1984,13 @@ namespace
 #endif
 			GStreetActors[(int32)I] = A;
 			++GStreetLoaded;
+			// A PIECE THAT WAITS FOR A DEED (the smashed window's glass):
+			// there, hidden and walked through, until RevealStreetMeshes.
+			if (!Rw.RevealOn.empty())
+			{
+				A->SetActorHiddenInGame(true);
+				A->SetActorEnableCollision(false);
+			}
 			if (GLook.bGlassSeeThrough && Rw.Base == "glass")
 			{
 				if (GGlassMaterial == nullptr)
@@ -2716,15 +2723,31 @@ namespace
 		// H4: A POINT LIGHT UNDER EVERY EMISSIVE PIECE, which is what the
 		// file's lantern block says in as many words: one point light 0.05 m
 		// below the centre of each emissive piece.
-		const FLinearColor Lamp = LinearFromGamma(GSpec.Lantern.R, GSpec.Lantern.G, GSpec.Lantern.B);
+		// THE SODIUM LAMPS IN REAL UNITS when the look file gives them
+		// (29 September; a -LanternLumens= on the command line wins, for a
+		// series), else the scene file's Unity-era number as before.
+		double LampLumens = GLook.LanternLumens;
+		FParse::Value(FCommandLine::Get(), TEXT("LanternLumens="), LampLumens);
+		const FLinearColor Lamp = (LampLumens > 0.0 && GLook.bLanternRgb)
+			? FLinearColor((float)GLook.LanternR, (float)GLook.LanternG, (float)GLook.LanternB, 1.0f)
+			: LinearFromGamma(GSpec.Lantern.R, GSpec.Lantern.G, GSpec.Lantern.B);
 		for (size_t I = 0; I < GSpec.Pieces.size(); ++I)
 		{
 			const Piece& P = GSpec.Pieces[I];
 			if (!P.Emissive) { continue; }
+			const double LightY = GLook.LanternLightY > 0.0 ? GLook.LanternLightY : P.Y - 0.05;
 			APointLight* L = SpawnPointLight(
-				World, FVector(P.X * 100.0, P.Z * 100.0, (P.Y - 0.05) * 100.0),
+				World, FVector(P.X * 100.0, P.Z * 100.0, LightY * 100.0),
 				Lamp, (float)GSpec.Lantern.RangeM,
 				(float)GSpec.Lantern.Intensity * kLampGainUnitless, true);
+			if (L != nullptr && LampLumens > 0.0)
+			{
+				if (UPointLightComponent* PC = Cast<UPointLightComponent>(L->GetLightComponent()))
+				{
+					PC->SetIntensityUnits(ELightUnits::Lumens);
+					PC->SetIntensity((float)LampLumens);
+				}
+			}
 			if (L != nullptr)
 			{
 				GLanterns.Add(L);
@@ -8094,6 +8117,10 @@ namespace LedgerVignetteShot
 
 	// QUEUE 138 ITEM 1. See VignetteShot.h for the call-site contract; this
 	// is what it does.
+	// THE PLAYER'S EXPOSURE VOLUME, kept so a change of light in play can move
+	// its pin (ApplyPlayCondition). Null when the day asked for no pin.
+	TWeakObjectPtr<APostProcessVolume> GPlayPPV;
+
 	void BuildInteractiveStreet(UWorld* World)
 	{
 		if (GInteractiveBuilt) { return; }
@@ -8142,6 +8169,7 @@ namespace LedgerVignetteShot
 			if (PPV != nullptr)
 			{
 				PPV->bUnbound = true;
+				GPlayPPV = PPV;
 				FPostProcessSettings& S = PPV->Settings;
 				S.bOverride_AutoExposureMinBrightness = true;
 				S.bOverride_AutoExposureMaxBrightness = true;
@@ -8232,6 +8260,46 @@ namespace LedgerVignetteShot
 			++Hidden;
 		}
 		return Hidden;
+	}
+
+	int32 RevealStreetMeshes(const char* Tag)
+	{
+		int32 Shown = 0;
+		for (int32 I = 0; I < GStreetActors.Num() && I < (int32)GStreet.Rows.size(); ++I)
+		{
+			AStaticMeshActor* A = GStreetActors[I];
+			if (A == nullptr || GStreet.Rows[(size_t)I].RevealOn != Tag) { continue; }
+			A->SetActorHiddenInGame(false);
+			++Shown;
+		}
+		return Shown;
+	}
+
+	FString ApplyPlayCondition(const char* Id)
+	{
+		const Condition* C = FindCondition(Id);
+		if (C == nullptr) { return FString::Printf(TEXT("no-such-condition/%s"), UTF8_TO_TCHAR(Id)); }
+		ApplyCondition(*C);
+		// THE PIN FOLLOWS THE LIGHT. ApplyCondition has set GExposurePinNow
+		// (a night row with no pin of its own takes the look file's night
+		// pin); the volume the player looks through takes the same number,
+		// or goes back to metering itself when there is none.
+		APostProcessVolume* PPV = GPlayPPV.Get();
+		if (PPV != nullptr)
+		{
+			FPostProcessSettings& S = PPV->Settings;
+			const bool bPin = GExposurePinNow > 0.0;
+			S.bOverride_AutoExposureMinBrightness = bPin;
+			S.bOverride_AutoExposureMaxBrightness = bPin;
+			if (bPin)
+			{
+				S.AutoExposureMinBrightness = (float)GExposurePinNow;
+				S.AutoExposureMaxBrightness = (float)GExposurePinNow;
+			}
+		}
+		return FString::Printf(TEXT("%s/sun-%s/lanterns-%s/pin-%.3f/volume-%s"), UTF8_TO_TCHAR(Id),
+			C->SunOn ? TEXT("on") : TEXT("off"), C->LanternsOn ? TEXT("on") : TEXT("off"),
+			GExposurePinNow, PPV != nullptr ? TEXT("moved") : TEXT("none"));
 	}
 
 	int32 ControlQuadsSpawnedCount()

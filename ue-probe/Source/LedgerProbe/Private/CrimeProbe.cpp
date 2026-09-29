@@ -154,6 +154,9 @@ namespace
 	const double kSeqFileCeiling        = 5.0;
 
 	const TCHAR* kGlassA = TEXT("east_parade_glass0");
+	// The light the story's "later that week, evening" is played in: the
+	// shared scene file's own night row, lamps lit.
+	const char* kEveningCondition = "wet_night";
 	const TCHAR* kGlassB = TEXT("east_parade_glass1");
 
 	// The bank, found the same way the piece list is (VignetteShot.cpp's
@@ -1397,6 +1400,11 @@ namespace
 		// The pane's bounds WITH its non-colliding parts: its collision went
 		// off two lines up, and the default bounds would be empty.
 		C.StreetPanes = LedgerVignetteShot::HideStreetGlassNear(Glass->GetComponentsBoundingBox(true));
+		// AND WHAT A SMASHED WINDOW LEAVES: glass still in the frame, glass
+		// over the pavement (production/research/broken-window-look).
+		UE_LOG(LogTemp, Log, TEXT("LedgerCrime smashed window %s: %d street pieces shown"),
+		       Index == 0 ? TEXT("a") : TEXT("b"),
+		       LedgerVignetteShot::RevealStreetMeshes(Index == 0 ? "crime_a" : "crime_b"));
 
 		// The glass's own bounds give the window foot; the shards are laid on
 		// the footway in front of it and each one sits on the ground a
@@ -4549,6 +4557,8 @@ namespace
 					{
 						RespawnMate(World);
 						GPhase = ECrimePhase::LiveRoam;
+						UE_LOG(LogTemp, Log, TEXT("LedgerCrime evening light: %s"),
+						       *LedgerVignetteShot::ApplyPlayCondition(kEveningCondition));
 						Say(TEXT("The street remembers. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 					}
 				}
@@ -5062,6 +5072,10 @@ namespace
 			RunRound3(GRound3);
 			GNow = GameTime(LedgerCrime::kRound3Day, LedgerCrime::kRound3Hour, 30);
 			SaveEncounterToDisk();
+			// EVENING, AND IT LOOKS IT (29 September; the AI tester found it
+			// in daylight): the shared file's night, lamps lit.
+			UE_LOG(LogTemp, Log, TEXT("LedgerCrime evening light: %s"),
+			       *LedgerVignetteShot::ApplyPlayCondition(kEveningCondition));
 			Say(TEXT("Later that week, evening. Darren, Sheila and Ron are in the yard across the road from Rita's pawn shop, through the gap between the houses. Press T near one of them to talk."), 40.0f, FColor::Yellow);
 			WriteBreadcrumb(TEXT("live-later"));
 			GPhase = ECrimePhase::LiveRoam;

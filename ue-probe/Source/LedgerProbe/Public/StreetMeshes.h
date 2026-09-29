@@ -63,6 +63,11 @@ namespace LedgerStreet
 		// colour, so it is graded by one, and it wins over the photograph.
 		std::string DrawnMap;
 		double      DrawnW, DrawnH;
+		// SHOWN ONLY WHEN A DEED HAPPENS, 29 September: "" for the street as
+		// built, or the deed's tag ("crime_a") for a piece that stays hidden
+		// until then - the glass left in a smashed window's frame and the
+		// glass on the pavement in front of it.
+		std::string RevealOn;
 		Row() : bHasRgb(false), R(0), G(0), B(0), Roughness(-1.0), TileM(0.0),
 		        bHasMean(false), MeanR(0), MeanG(0), MeanB(0), EmitDay(-1.0), EmitNight(-1.0),
 		        DrawnW(0.0), DrawnH(0.0) {}
@@ -179,6 +184,7 @@ namespace LedgerStreet
 			if (Ed != 0 && Ed->Type == T_NUM) { Rw.EmitDay = Ed->Num; }
 			const Value* En = M.Find("emit_night");
 			if (En != 0 && En->Type == T_NUM) { Rw.EmitNight = En->Num; }
+			Rw.RevealOn = StrOr(M, "reveal_on");
 			Out.Rows.push_back(Rw);
 		}
 		if (Out.Rows.empty()) { Err = "sidecar-meshes-list-is-empty"; return false; }
@@ -329,14 +335,30 @@ namespace LedgerStreet
 		// see-through glass stays out of every sight line, and the scene
 		// file's pieces it replaces lose their collision.
 		bool   bStreetCollision;
-		int    Read;             // how many of the twenty the file supplied
+		// THE SODIUM LAMPS IN REAL UNITS, 29 September (production/research/
+		// evening-light-1990): the scene file's lantern intensity, 3.2, is a
+		// Unity number and lights almost nothing here, so the night had no
+		// pools of light. When above zero, each lantern is a light of this many
+		// lumens (a 35 W low-pressure sodium lamp gives about 4,550) in this
+		// linear colour (589 nm is about 1.0, 0.25, 0.0), not the file's.
+		double LanternLumens;
+		// WHERE THE LIGHT HANGS, metres above the road's crown, when above
+		// zero: the Blender street's lamp head is lower than the scene file's
+		// box, and a light at the box's height sat inside the head, above its
+		// glass, which then shaded everything under it (29 September: the
+		// upper storeys lit, the pavement under the lamp dark).
+		double LanternLightY;
+		bool   bLanternRgb;
+		double LanternR, LanternG, LanternB;
+		int    Read;             // how many of the twenty-three the file supplied
 		bool   bFromFile;
 		Look() : SkySeenGain(1.0), GlowGain(0.10), FogDayR(0.55), FogDayG(0.58), FogDayB(0.62),
 		         FogFalloff(0.02), WetFilmFrom(2.0), RoomGain(1.0), bGlassSeeThrough(false),
 		         SunGain(1.0), SkyLightGain(1.0), SkySeenGainNight(1.0), SkyLightGainNight(1.0),
 		         NightExposureBias(0.0), GlassOpacity(0.25), GlassRoughness(0.05),
 		         bStreetInPlay(false), FogCapGainDay(1.0), NightExposurePin(0.0),
-		         bStreetCollision(false),
+		         bStreetCollision(false), LanternLumens(0.0), LanternLightY(0.0), bLanternRgb(false),
+		         LanternR(1.0), LanternG(1.0), LanternB(1.0),
 		         Read(0), bFromFile(false) {}
 	};
 
@@ -685,6 +707,18 @@ namespace LedgerStreet
 		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.NightExposurePin = V->Num; ++Out.Read; }
 		V = Root.Find("fog_cap_gain_day");
 		if (V != 0 && V->Type == T_NUM && V->Num > 0.0) { Out.FogCapGainDay = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_lumens");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLumens = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_light_y_m");
+		if (V != 0 && V->Type == T_NUM && V->Num >= 0.0) { Out.LanternLightY = V->Num; ++Out.Read; }
+		V = Root.Find("lantern_linear_rgb");
+		if (V != 0 && V->Type == T_ARR && V->Arr.size() >= 3 && V->Arr[0].Type == T_NUM
+		    && V->Arr[1].Type == T_NUM && V->Arr[2].Type == T_NUM)
+		{
+			Out.bLanternRgb = true;
+			Out.LanternR = V->Arr[0].Num; Out.LanternG = V->Arr[1].Num; Out.LanternB = V->Arr[2].Num;
+			++Out.Read;
+		}
 		V = Root.Find("street_in_play");
 		if (V != 0 && V->Type == T_BOOL) { Out.bStreetInPlay = V->Bool; ++Out.Read; }
 		V = Root.Find("wet_floor");
