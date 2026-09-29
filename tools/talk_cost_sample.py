@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""What an hour of conversation costs, from real calls: a scripted sample of turns through the game's own talk program.
+"""A scripted sample of turns through the game's own talk program, run against its stand-in.
+
+NO REAL CALLS (Jafar, 29 September: nothing in development calls the
+Anthropic API). The talk program runs here as its stand-in (--fake), with no
+key in its environment, so this checks the sample's plumbing and timing only
+and every cost it reports is nothing. What live talk costs now comes from the
+live talk's own record while Jafar plays, on LEDGER's own capped key, which
+no tool reads. What follows is how it measured cost before, on 29 September.
 
     python tools/talk_cost_sample.py [--turns-per-hour 120] [--early] [--out production/playtest/talk-cost-<date>.md]
 
@@ -27,7 +34,6 @@ import sys
 import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SECRETS = os.path.join(os.path.expanduser("~"), "AppData", "LocalLow", "DefaultCompany", "ledger", "secrets.json")
 DLL = os.path.join(ROOT, "ledger", "TalkHelper", "bin", "Release", "net8.0", "TalkHelper.dll")
 
 CONVERSATIONS = [
@@ -88,10 +94,9 @@ def main(argv):
     out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(
         ROOT, "production", "playtest", "talk-cost-%s.md" % datetime.date.today().isoformat())
     env = dict(os.environ)
-    env["ANTHROPIC_API_KEY"] = json.load(open(SECRETS, encoding="utf-8"))["anthropic_api_key"]
-    env.pop("LEDGER_TALK_FAKE", None)
+    env.pop("ANTHROPIC_API_KEY", None)   # never a key: the stand-in only (29 September)
     early = "--early" in argv
-    p = subprocess.Popen(["dotnet", DLL] + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
+    p = subprocess.Popen(["dotnet", DLL, "--fake"] + (["--early"] if early else []), cwd=ROOT, env=env, stdin=subprocess.PIPE, stdout=subprocess.PIPE,
                          stderr=subprocess.DEVNULL, text=True, encoding="utf-8", bufsize=1)
     ready = json.loads(p.stdout.readline())
     if not ready.get("online"):

@@ -58,3 +58,23 @@ independent test; the run half is what the calibration adds, and it keeps all
   https://www.openslr.org/83/, CC BY-SA 4.0; on this PC since 26 September.
 - CommonAccent (Zuluaga-Gomez and others, 2023), the classifier in
   tools/voice-live/accent_check.py.
+
+## New voices for Sheila, two attempts, and what they show
+
+Both cloned by the game's own voice engine (Chatterbox Nano, tools/voice-live/speak_lines.py)
+from real northern English women in OpenSLR 83, and gated with the calibrated rule on her
+sheet's three lines and the acting test's four:
+
+1. From ten-second references of two clips each: nof_06136 passed all seven, but a blind
+   reviewer (who measured what it could not hear) found it far higher than its own
+   reference (median 228 to 269 Hz against 198; five pitch jumps to 400 Hz and more) and
+   quick (up to 6.7 syllables a second), not the sheet's "low, dry, unhurried"; the
+   reference held only about 5 s of speech. D, the same seven lines, failed 4 (confirmed).
+2. From references rebuilt of 14 to 15 s of calm, continuous speech: nof_03397 came out
+   low (median 186 to 206 Hz) but off English on 4 of 7 lines (three American, one
+   "African"); nof_06136 off English on 2 of 7 (Australian, Irish), still high on some.
+
+Every voice tried for her, designed or real, drifts off English in the engine on some
+lines; the references themselves read English. So the engine is the limit, not the
+voice: Sheila's voice waits on the paid-voice decision (Jafar's list, item 6), and new
+candidates through Nano stop here under the two-attempt rule.

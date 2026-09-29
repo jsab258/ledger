@@ -1029,6 +1029,22 @@
    "deleted": "2026-09-26, the end-of-sitting sweep (tools/cleanup.py sweep-record)"
   },
   {
+   "path": "F:/LedgerTools/tmp/look/fourth",
+   "madeBy": "the look script's film on a fixed step (-benchmark -fps=30), 29 September",
+   "why": "the frames behind the look clips on Wednesday's page, for the reviewer",
+   "status": "kept",
+   "recorded": "2026-09-29",
+   "mb": 837
+  },
+  {
+   "path": "F:/LedgerTools/tmp/look/third",
+   "madeBy": "the look script's film (-LookCamera), 29 September, third attempt",
+   "why": "frames of Sheila's look; superseded: her hair blew apart at six frames a second",
+   "status": "superseded",
+   "recorded": "2026-09-29",
+   "mb": 553
+  },
+  {
    "path": "F:/LedgerTools/tmp/pip-cache",
    "madeBy": "a reviewer's installs, 25 Sep",
    "why": "a download cache",
@@ -1133,6 +1149,14 @@
    "recorded": "2026-09-28",
    "mb": 905,
    "statusWhy": "Removed on Jafar's yes, 28 September: sent to F:'s Recycle Bin (863 MB), recoverable until he empties it"
+  },
+  {
+   "path": "ue-probe/Saved/LookScript",
+   "madeBy": "the look script's film (-LookCamera), 29 September",
+   "why": "frames of Sheila's look for the approval page; the refilm writes to drive F",
+   "status": "superseded",
+   "recorded": "2026-09-29",
+   "mb": 363
   }
  ]
 }

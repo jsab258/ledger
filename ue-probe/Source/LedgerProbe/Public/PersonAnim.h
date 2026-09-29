@@ -67,6 +67,9 @@ public:
 
 	// WHAT THE NODE IS GIVEN each frame, on the game thread.
 	float LookAlpha = 0.0f;
+	// What the turn eases toward: itself eased toward the look wanted, so a
+	// turn starts slowly, runs and settles, as a head does.
+	float LookDrive = 0.0f;
 	FVector LookTarget = FVector::ZeroVector;
 	// THE MOST THIS PERSON HAS LOOKED this run, for the verdict.
 	float PeakAlpha = 0.0f;

@@ -6,7 +6,9 @@
 #
 # The game copies the folder into its own and starts LedgerTalk.exe from there:
 # through the relay for a friend's copy (--relay <address> --copy <code>), with
-# ANTHROPIC_API_KEY for Jafar's own. The output goes to drive F by default, not C.
+# LEDGER's own capped live-talk key for Jafar's own, which the game puts into
+# its environment only while he plays (CrimeProbe.cpp TalkKeyForThisRun; 29
+# September). The output goes to drive F by default, not C.
 param([string]$Out = "F:\town-scratch\talk")
 $ErrorActionPreference = "Stop"
 $repo = Split-Path -Parent $PSScriptRoot

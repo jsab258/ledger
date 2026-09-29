@@ -8,11 +8,13 @@ REM  you say and press Enter. Esc, or the window's close button, whenever you
 REM  like: the street is saved, and when you come back it still knows.
 REM  WASD to walk, the mouse to look, Shift to run.
 REM
-REM  The conversation uses the real model: your key is read from the game's
-REM  own settings into this window only, and never shown.
+REM  The conversation uses the real model on LEDGER's own key, with its hard
+REM  monthly cap: put the key alone in a text file at
+REM  %LOCALAPPDATA%\LEDGER\live-talk-key.txt and the game reads it while you
+REM  play. Nothing else ever reads it: no tool, no test, no build (29 September).
+REM  Without the file the characters' talk is offline.
 cd /d "%~dp0..\.."
 dotnet build ledger\TalkHelper -c Release -nologo -v q >nul
-for /f "usebackq delims=" %%K in (`powershell -NoProfile -Command "(Get-Content -Raw \"$env:USERPROFILE\AppData\LocalLow\DefaultCompany\ledger\secrets.json\" | ConvertFrom-Json).anthropic_api_key"`) do set "ANTHROPIC_API_KEY=%%K"
 REM  THE PACKAGED GAME WHEN THERE IS ONE: the build the build machine checked,
 REM  copied to a steady place after every run, told where this checkout is so
 REM  it finds the street's files - without that its street was grey, the AI
